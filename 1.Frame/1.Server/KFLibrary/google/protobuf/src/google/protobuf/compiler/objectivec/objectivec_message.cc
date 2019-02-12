@@ -32,6 +32,7 @@
 #include <iostream>
 #include <sstream>
 
+#include <google/protobuf/stubs/hash.h>
 #include <google/protobuf/compiler/objectivec/objectivec_message.h>
 #include <google/protobuf/compiler/objectivec/objectivec_enum.h>
 #include <google/protobuf/compiler/objectivec/objectivec_extension.h>
@@ -604,9 +605,7 @@ void MessageGenerator::GenerateSource(io::Printer* printer) {
           "suffix", suffix_added);
     }
     printer->Print(
-        "    #if defined(DEBUG) && DEBUG\n"
-        "      NSAssert(descriptor == nil, @\"Startup recursed!\");\n"
-        "    #endif  // DEBUG\n"
+        "    NSAssert(descriptor == nil, @\"Startup recursed!\");\n"
         "    descriptor = localDescriptor;\n"
         "  }\n"
         "  return descriptor;\n"

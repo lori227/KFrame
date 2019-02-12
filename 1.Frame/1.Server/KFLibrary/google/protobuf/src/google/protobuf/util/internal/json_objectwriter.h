@@ -38,8 +38,6 @@
 #include <google/protobuf/util/internal/structured_objectwriter.h>
 #include <google/protobuf/stubs/bytestream.h>
 
-#include <google/protobuf/port_def.inc>
-
 namespace google {
 namespace protobuf {
 namespace util {
@@ -84,13 +82,14 @@ namespace converter {
 // uint64 would lose precision if rendered as numbers.
 //
 // JsonObjectWriter is thread-unsafe.
-class PROTOBUF_EXPORT JsonObjectWriter : public StructuredObjectWriter {
+class LIBPROTOBUF_EXPORT JsonObjectWriter : public StructuredObjectWriter {
  public:
-  JsonObjectWriter(StringPiece indent_string, io::CodedOutputStream* out)
+  JsonObjectWriter(StringPiece indent_string,
+                   google::protobuf::io::CodedOutputStream* out)
       : element_(new Element(/*parent=*/nullptr, /*is_json_object=*/false)),
         stream_(out),
         sink_(out),
-        indent_string_(indent_string),
+        indent_string_(indent_string.ToString()),
         use_websafe_base64_for_bytes_(false) {}
   virtual ~JsonObjectWriter();
 
@@ -106,8 +105,7 @@ class PROTOBUF_EXPORT JsonObjectWriter : public StructuredObjectWriter {
   virtual JsonObjectWriter* RenderUint64(StringPiece name, uint64 value);
   virtual JsonObjectWriter* RenderDouble(StringPiece name, double value);
   virtual JsonObjectWriter* RenderFloat(StringPiece name, float value);
-  virtual JsonObjectWriter* RenderString(StringPiece name,
-                                         StringPiece value);
+  virtual JsonObjectWriter* RenderString(StringPiece name, StringPiece value);
   virtual JsonObjectWriter* RenderBytes(StringPiece name, StringPiece value);
   virtual JsonObjectWriter* RenderNull(StringPiece name);
   virtual JsonObjectWriter* RenderNullAsEmpty(StringPiece name);
@@ -117,7 +115,7 @@ class PROTOBUF_EXPORT JsonObjectWriter : public StructuredObjectWriter {
   }
 
  protected:
-  class PROTOBUF_EXPORT Element : public BaseElement {
+  class LIBPROTOBUF_EXPORT Element : public BaseElement {
    public:
     Element(Element* parent, bool is_json_object)
         : BaseElement(parent),
@@ -145,21 +143,22 @@ class PROTOBUF_EXPORT JsonObjectWriter : public StructuredObjectWriter {
     GOOGLE_DISALLOW_IMPLICIT_CONSTRUCTORS(Element);
   };
 
-  Element* element() override { return element_.get(); }
+  virtual Element* element() { return element_.get(); }
 
  private:
-  class PROTOBUF_EXPORT ByteSinkWrapper : public strings::ByteSink {
+  class LIBPROTOBUF_EXPORT ByteSinkWrapper : public strings::ByteSink {
    public:
-    explicit ByteSinkWrapper(io::CodedOutputStream* stream) : stream_(stream) {}
-    ~ByteSinkWrapper() override {}
+    explicit ByteSinkWrapper(google::protobuf::io::CodedOutputStream* stream)
+        : stream_(stream) {}
+    virtual ~ByteSinkWrapper() {}
 
     // ByteSink methods.
-    void Append(const char* bytes, size_t n) override {
+    virtual void Append(const char* bytes, size_t n) {
       stream_->WriteRaw(bytes, n);
     }
 
    private:
-    io::CodedOutputStream* stream_;
+    google::protobuf::io::CodedOutputStream* stream_;
 
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(ByteSinkWrapper);
   };
@@ -167,7 +166,7 @@ class PROTOBUF_EXPORT JsonObjectWriter : public StructuredObjectWriter {
   // Renders a simple value as a string. By default all non-string Render
   // methods convert their argument to a string and call this method. This
   // method can then be used to render the simple value without escaping it.
-  JsonObjectWriter* RenderSimple(StringPiece name, const std::string& value) {
+  JsonObjectWriter* RenderSimple(StringPiece name, const string& value) {
     WritePrefix(name);
     stream_->WriteString(value);
     return this;
@@ -210,9 +209,9 @@ class PROTOBUF_EXPORT JsonObjectWriter : public StructuredObjectWriter {
   void WriteChar(const char c) { stream_->WriteRaw(&c, sizeof(c)); }
 
   std::unique_ptr<Element> element_;
-  io::CodedOutputStream* stream_;
+  google::protobuf::io::CodedOutputStream* stream_;
   ByteSinkWrapper sink_;
-  const std::string indent_string_;
+  const string indent_string_;
 
   // Whether to use regular or websafe base64 encoding for byte fields. Defaults
   // to regular base64 encoding.
@@ -224,8 +223,6 @@ class PROTOBUF_EXPORT JsonObjectWriter : public StructuredObjectWriter {
 }  // namespace converter
 }  // namespace util
 }  // namespace protobuf
+
 }  // namespace google
-
-#include <google/protobuf/port_undef.inc>
-
 #endif  // GOOGLE_PROTOBUF_UTIL_CONVERTER_JSON_OBJECTWRITER_H__

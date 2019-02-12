@@ -35,7 +35,6 @@
 #include <google/protobuf/compiler/java/java_name_resolver.h>
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/stubs/strutil.h>
-
 #include <google/protobuf/stubs/map_util.h>
 
 namespace google {
@@ -160,8 +159,8 @@ void Context::InitializeFieldGeneratorInfoForFields(
     // For fields conflicting with some other fields, we append the field
     // number to their field names in generated code to avoid conflicts.
     if (is_conflict[i]) {
-      info.name += StrCat(field->number());
-      info.capitalized_name += StrCat(field->number());
+      info.name += SimpleItoa(field->number());
+      info.capitalized_name += SimpleItoa(field->number());
       info.disambiguated_reason = conflict_reason[i];
     }
     field_generator_info_map_[field] = info;

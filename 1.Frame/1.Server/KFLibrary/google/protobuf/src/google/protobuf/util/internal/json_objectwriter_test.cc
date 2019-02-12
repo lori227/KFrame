@@ -39,8 +39,8 @@ namespace protobuf {
 namespace util {
 namespace converter {
 
-using io::CodedOutputStream;
-using io::StringOutputStream;
+using google::protobuf::io::CodedOutputStream;
+using google::protobuf::io::StringOutputStream;
 
 class JsonObjectWriterTest : public ::testing::Test {
  protected:

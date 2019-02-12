@@ -47,13 +47,6 @@
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/message.h>
 #include <google/protobuf/message_lite.h>
-#include <google/protobuf/port.h>
-
-#include <google/protobuf/port_def.inc>
-
-#ifdef SWIG
-#error "You cannot SWIG proto headers"
-#endif
 
 namespace google {
 namespace protobuf {
@@ -67,7 +60,7 @@ namespace io {
 // of messages.
 //
 // This class is really a namespace that contains only static methods.
-class PROTOBUF_EXPORT TextFormat {
+class LIBPROTOBUF_EXPORT TextFormat {
  public:
   // Outputs a textual representation of the given message to the given
   // output stream. Returns false if printing fails.
@@ -82,12 +75,12 @@ class PROTOBUF_EXPORT TextFormat {
   // Like Print(), but outputs directly to a string.
   // Note: output will be cleared prior to printing, and will be left empty
   // even if printing fails. Returns false if printing fails.
-  static bool PrintToString(const Message& message, std::string* output);
+  static bool PrintToString(const Message& message, string* output);
 
   // Like PrintUnknownFields(), but outputs directly to a string. Returns false
   // if printing fails.
   static bool PrintUnknownFieldsToString(const UnknownFieldSet& unknown_fields,
-                                         std::string* output);
+                                         string* output);
 
   // Outputs a textual representation of the value of the field supplied on
   // the message supplied. For non-repeated fields, an index of -1 must
@@ -96,9 +89,9 @@ class PROTOBUF_EXPORT TextFormat {
   static void PrintFieldValueToString(const Message& message,
                                       const FieldDescriptor* field,
                                       int index,
-                                      std::string* output);
+                                      string* output);
 
-  class PROTOBUF_EXPORT BaseTextGenerator {
+  class LIBPROTOBUF_EXPORT BaseTextGenerator {
    public:
     virtual ~BaseTextGenerator();
 
@@ -108,7 +101,7 @@ class PROTOBUF_EXPORT TextFormat {
     // Print text to the output stream.
     virtual void Print(const char* text, size_t size) = 0;
 
-    void PrintString(const std::string& str) { Print(str.data(), str.size()); }
+    void PrintString(const string& str) { Print(str.data(), str.size()); }
 
     template <size_t n>
     void PrintLiteral(const char (&text)[n]) {
@@ -120,7 +113,7 @@ class PROTOBUF_EXPORT TextFormat {
   // string representation.
   // You can derive from this FastFieldValuePrinter if you want to have fields
   // to be printed in a different way and register it at the Printer.
-  class PROTOBUF_EXPORT FastFieldValuePrinter {
+  class LIBPROTOBUF_EXPORT FastFieldValuePrinter {
    public:
     FastFieldValuePrinter();
     virtual ~FastFieldValuePrinter();
@@ -131,11 +124,11 @@ class PROTOBUF_EXPORT TextFormat {
     virtual void PrintUInt64(uint64 val, BaseTextGenerator* generator) const;
     virtual void PrintFloat(float val, BaseTextGenerator* generator) const;
     virtual void PrintDouble(double val, BaseTextGenerator* generator) const;
-    virtual void PrintString(const std::string& val,
+    virtual void PrintString(const string& val,
                              BaseTextGenerator* generator) const;
-    virtual void PrintBytes(const std::string& val,
+    virtual void PrintBytes(const string& val,
                             BaseTextGenerator* generator) const;
-    virtual void PrintEnum(int32 val, const std::string& name,
+    virtual void PrintEnum(int32 val, const string& name,
                            BaseTextGenerator* generator) const;
     virtual void PrintFieldName(const Message& message, int field_index,
                                 int field_count, const Reflection* reflection,
@@ -156,29 +149,29 @@ class PROTOBUF_EXPORT TextFormat {
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(FastFieldValuePrinter);
   };
 
-  class PROTOBUF_EXPORT PROTOBUF_DEPRECATED_MSG(
-      "Please use FastFieldValuePrinter") FieldValuePrinter {
+  class LIBPROTOBUF_EXPORT PROTOBUF_RUNTIME_DEPRECATED("Please use FastFieldValuePrinter")
+      FieldValuePrinter {
    public:
     FieldValuePrinter();
     virtual ~FieldValuePrinter();
-    virtual std::string PrintBool(bool val) const;
-    virtual std::string PrintInt32(int32 val) const;
-    virtual std::string PrintUInt32(uint32 val) const;
-    virtual std::string PrintInt64(int64 val) const;
-    virtual std::string PrintUInt64(uint64 val) const;
-    virtual std::string PrintFloat(float val) const;
-    virtual std::string PrintDouble(double val) const;
-    virtual std::string PrintString(const std::string& val) const;
-    virtual std::string PrintBytes(const std::string& val) const;
-    virtual std::string PrintEnum(int32 val, const std::string& name) const;
-    virtual std::string PrintFieldName(const Message& message,
+    virtual string PrintBool(bool val) const;
+    virtual string PrintInt32(int32 val) const;
+    virtual string PrintUInt32(uint32 val) const;
+    virtual string PrintInt64(int64 val) const;
+    virtual string PrintUInt64(uint64 val) const;
+    virtual string PrintFloat(float val) const;
+    virtual string PrintDouble(double val) const;
+    virtual string PrintString(const string& val) const;
+    virtual string PrintBytes(const string& val) const;
+    virtual string PrintEnum(int32 val, const string& name) const;
+    virtual string PrintFieldName(const Message& message,
                                   const Reflection* reflection,
                                   const FieldDescriptor* field) const;
-    virtual std::string PrintMessageStart(const Message& message,
+    virtual string PrintMessageStart(const Message& message,
                                      int field_index,
                                      int field_count,
                                      bool single_line_mode) const;
-    virtual std::string PrintMessageEnd(const Message& message,
+    virtual string PrintMessageEnd(const Message& message,
                                    int field_index,
                                    int field_count,
                                    bool single_line_mode) const;
@@ -188,7 +181,7 @@ class PROTOBUF_EXPORT TextFormat {
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(FieldValuePrinter);
   };
 
-  class PROTOBUF_EXPORT MessagePrinter {
+  class LIBPROTOBUF_EXPORT MessagePrinter {
    public:
     MessagePrinter() {}
     virtual ~MessagePrinter() {}
@@ -201,7 +194,7 @@ class PROTOBUF_EXPORT TextFormat {
 
   // Interface that Printers or Parsers can use to find extensions, or types
   // referenced in Any messages.
-  class PROTOBUF_EXPORT Finder {
+  class LIBPROTOBUF_EXPORT Finder {
    public:
     virtual ~Finder();
 
@@ -210,7 +203,7 @@ class PROTOBUF_EXPORT TextFormat {
     // The base implementation uses the extensions already known by the message.
     virtual const FieldDescriptor* FindExtension(
         Message* message,
-        const std::string& name) const;
+        const string& name) const;
 
     // Find the message type for an Any proto.
     // Returns NULL if no message is known for this name.
@@ -218,13 +211,13 @@ class PROTOBUF_EXPORT TextFormat {
     // type.googleapis.com/, and searches the DescriptorPool of the parent
     // message.
     virtual const Descriptor* FindAnyType(const Message& message,
-                                          const std::string& prefix,
-                                          const std::string& name) const;
+                                          const string& prefix,
+                                          const string& name) const;
   };
 
   // Class for those users which require more fine-grained control over how
   // a protobuffer message is printed out.
-  class PROTOBUF_EXPORT Printer {
+  class LIBPROTOBUF_EXPORT Printer {
    public:
     Printer();
     ~Printer();
@@ -235,15 +228,15 @@ class PROTOBUF_EXPORT TextFormat {
     bool PrintUnknownFields(const UnknownFieldSet& unknown_fields,
                             io::ZeroCopyOutputStream* output) const;
     // Like TextFormat::PrintToString
-    bool PrintToString(const Message& message, std::string* output) const;
+    bool PrintToString(const Message& message, string* output) const;
     // Like TextFormat::PrintUnknownFieldsToString
     bool PrintUnknownFieldsToString(const UnknownFieldSet& unknown_fields,
-                                    std::string* output) const;
+                                    string* output) const;
     // Like TextFormat::PrintFieldValueToString
     void PrintFieldValueToString(const Message& message,
                                  const FieldDescriptor* field,
                                  int index,
-                                 std::string* output) const;
+                                 string* output) const;
 
     // Adjust the initial indent level of all output.  Each indent level is
     // equal to two spaces.
@@ -320,7 +313,9 @@ class PROTOBUF_EXPORT TextFormat {
     }
 
     // Set how parser finds message for Any payloads.
-    void SetFinder(const Finder* finder) { finder_ = finder; }
+    void SetFinder(Finder* finder) {
+      finder_ = finder;
+    }
 
     // If non-zero, we truncate all string fields that are  longer than this
     // threshold.  This is useful when the proto message has very long strings,
@@ -437,18 +432,18 @@ class PROTOBUF_EXPORT TextFormat {
   // google::protobuf::MessageLite::ParseFromString().
   static bool Parse(io::ZeroCopyInputStream* input, Message* output);
   // Like Parse(), but reads directly from a string.
-  static bool ParseFromString(const std::string& input, Message* output);
+  static bool ParseFromString(const string& input, Message* output);
 
   // Like Parse(), but the data is merged into the given message, as if
   // using Message::MergeFrom().
   static bool Merge(io::ZeroCopyInputStream* input, Message* output);
   // Like Merge(), but reads directly from a string.
-  static bool MergeFromString(const std::string& input, Message* output);
+  static bool MergeFromString(const string& input, Message* output);
 
   // Parse the given text as a single field value and store it into the
   // given field of the given message. If the field is a repeated field,
   // the new value will be added to the end
-  static bool ParseFieldValueFromString(const std::string& input,
+  static bool ParseFieldValueFromString(const string& input,
                                         const FieldDescriptor* field,
                                         Message* message);
 
@@ -464,7 +459,7 @@ class PROTOBUF_EXPORT TextFormat {
 
   // Data structure which is populated with the locations of each field
   // value parsed from the text.
-  class PROTOBUF_EXPORT ParseInfoTree {
+  class LIBPROTOBUF_EXPORT ParseInfoTree {
    public:
     ParseInfoTree();
     ~ParseInfoTree();
@@ -506,7 +501,7 @@ class PROTOBUF_EXPORT TextFormat {
   };
 
   // For more control over parsing, use this class.
-  class PROTOBUF_EXPORT Parser {
+  class LIBPROTOBUF_EXPORT Parser {
    public:
     Parser();
     ~Parser();
@@ -514,11 +509,11 @@ class PROTOBUF_EXPORT TextFormat {
     // Like TextFormat::Parse().
     bool Parse(io::ZeroCopyInputStream* input, Message* output);
     // Like TextFormat::ParseFromString().
-    bool ParseFromString(const std::string& input, Message* output);
+    bool ParseFromString(const string& input, Message* output);
     // Like TextFormat::Merge().
     bool Merge(io::ZeroCopyInputStream* input, Message* output);
     // Like TextFormat::MergeFromString().
-    bool MergeFromString(const std::string& input, Message* output);
+    bool MergeFromString(const string& input, Message* output);
 
     // Set where to report parse errors.  If NULL (the default), errors will
     // be printed to stderr.
@@ -529,7 +524,9 @@ class PROTOBUF_EXPORT TextFormat {
     // Set how parser finds extensions.  If NULL (the default), the
     // parser will use the standard Reflection object associated with
     // the message being parsed.
-    void SetFinder(const Finder* finder) { finder_ = finder; }
+    void SetFinder(Finder* finder) {
+      finder_ = finder;
+    }
 
     // Sets where location information about the parse will be written. If NULL
     // (the default), then no location will be written.
@@ -552,16 +549,9 @@ class PROTOBUF_EXPORT TextFormat {
     }
 
     // Like TextFormat::ParseFieldValueFromString
-    bool ParseFieldValueFromString(const std::string& input,
+    bool ParseFieldValueFromString(const string& input,
                                    const FieldDescriptor* field,
                                    Message* output);
-
-    // When an unknown extension is met, parsing will fail if this option is set
-    // to false (the default). If true, unknown extensions will be ignored and
-    // a warning message will be generated.
-    void AllowUnknownExtension(bool allow) {
-      allow_unknown_extension_ = allow;
-    }
 
 
     void AllowFieldNumber(bool allow) {
@@ -585,7 +575,6 @@ class PROTOBUF_EXPORT TextFormat {
     bool allow_partial_;
     bool allow_case_insensitive_field_;
     bool allow_unknown_field_;
-    bool allow_unknown_extension_;
     bool allow_unknown_enum_;
     bool allow_field_number_;
     bool allow_relaxed_whitespace_;
@@ -620,8 +609,6 @@ inline TextFormat::ParseInfoTree* TextFormat::CreateNested(
 }
 
 }  // namespace protobuf
+
 }  // namespace google
-
-#include <google/protobuf/port_undef.inc>
-
 #endif  // GOOGLE_PROTOBUF_TEXT_FORMAT_H__

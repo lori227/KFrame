@@ -45,11 +45,10 @@
 #include <google/protobuf/io/zero_copy_stream_impl.h>
 
 
-
 namespace google {
-namespace protobuf {
+using google::protobuf::internal::ArenaStringPtr;
 
-using internal::ArenaStringPtr;
+namespace protobuf {
 
 
 static string WrapString(const char* value) {
@@ -82,7 +81,7 @@ TEST(ArenaStringPtrTest, ArenaStringPtrOnHeap) {
 }
 
 TEST(ArenaStringPtrTest, ArenaStringPtrOnArena) {
-  Arena arena;
+  google::protobuf::Arena arena;
   ArenaStringPtr field;
   ::std::string default_value = "default";
   field.UnsafeSetDefault(&default_value);
@@ -108,7 +107,7 @@ TEST(ArenaStringPtrTest, ArenaStringPtrOnArena) {
 }
 
 TEST(ArenaStringPtrTest, ArenaStringPtrOnArenaNoSSO) {
-  Arena arena;
+  google::protobuf::Arena arena;
   ArenaStringPtr field;
   ::std::string default_value = "default";
   field.UnsafeSetDefault(&default_value);

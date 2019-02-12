@@ -44,9 +44,6 @@ class EnumFieldGenerator : public SingleFieldGenerator {
   friend FieldGenerator* FieldGenerator::Make(const FieldDescriptor* field,
                                               const Options& options);
 
-  EnumFieldGenerator(const EnumFieldGenerator&) = delete;
-  EnumFieldGenerator& operator=(const EnumFieldGenerator&) = delete;
-
  public:
   virtual void GenerateCFunctionDeclarations(io::Printer* printer) const;
   virtual void GenerateCFunctionImplementations(io::Printer* printer) const;
@@ -55,6 +52,9 @@ class EnumFieldGenerator : public SingleFieldGenerator {
  protected:
   EnumFieldGenerator(const FieldDescriptor* descriptor, const Options& options);
   virtual ~EnumFieldGenerator();
+
+ private:
+  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(EnumFieldGenerator);
 };
 
 class RepeatedEnumFieldGenerator : public RepeatedFieldGenerator {
@@ -68,6 +68,9 @@ class RepeatedEnumFieldGenerator : public RepeatedFieldGenerator {
   RepeatedEnumFieldGenerator(const FieldDescriptor* descriptor,
                              const Options& options);
   virtual ~RepeatedEnumFieldGenerator();
+
+ private:
+  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(RepeatedEnumFieldGenerator);
 };
 
 }  // namespace objectivec

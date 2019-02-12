@@ -73,12 +73,12 @@ class ZipWriter {
   ZipWriter(io::ZeroCopyOutputStream* raw_output);
   ~ZipWriter();
 
-  bool Write(const std::string& filename, const std::string& contents);
+  bool Write(const string& filename, const string& contents);
   bool WriteDirectory();
 
  private:
   struct FileInfo {
-    std::string name;
+    string name;
     uint32 offset;
     uint32 size;
     uint32 crc32;

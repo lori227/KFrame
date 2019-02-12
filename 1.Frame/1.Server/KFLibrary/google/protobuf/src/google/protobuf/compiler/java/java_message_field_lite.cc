@@ -36,14 +36,13 @@
 #include <string>
 
 #include <google/protobuf/compiler/java/java_context.h>
+#include <google/protobuf/compiler/java/java_message_field_lite.h>
 #include <google/protobuf/compiler/java/java_doc_comment.h>
 #include <google/protobuf/compiler/java/java_helpers.h>
-#include <google/protobuf/compiler/java/java_message_field_lite.h>
 #include <google/protobuf/compiler/java/java_name_resolver.h>
 #include <google/protobuf/io/printer.h>
 #include <google/protobuf/wire_format.h>
 #include <google/protobuf/stubs/strutil.h>
-
 
 namespace google {
 namespace protobuf {
@@ -105,21 +104,27 @@ void SetMessageVariables(const FieldDescriptor* descriptor,
 
 // ===================================================================
 
-ImmutableMessageFieldLiteGenerator::ImmutableMessageFieldLiteGenerator(
-    const FieldDescriptor* descriptor, int messageBitIndex, Context* context)
-    : descriptor_(descriptor),
-      messageBitIndex_(messageBitIndex),
-      context_(context),
-      name_resolver_(context->GetNameResolver()) {
-  SetMessageVariables(descriptor, messageBitIndex, 0,
-                      context->GetFieldGeneratorInfo(descriptor),
-                      name_resolver_, &variables_);
+ImmutableMessageFieldLiteGenerator::
+ImmutableMessageFieldLiteGenerator(const FieldDescriptor* descriptor,
+                      int messageBitIndex,
+                      int builderBitIndex,
+                      Context* context)
+  : descriptor_(descriptor), messageBitIndex_(messageBitIndex),
+    builderBitIndex_(builderBitIndex), context_(context),
+    name_resolver_(context->GetNameResolver()) {
+    SetMessageVariables(descriptor, messageBitIndex, builderBitIndex,
+                        context->GetFieldGeneratorInfo(descriptor),
+                        name_resolver_, &variables_);
 }
 
 ImmutableMessageFieldLiteGenerator::~ImmutableMessageFieldLiteGenerator() {}
 
 int ImmutableMessageFieldLiteGenerator::GetNumBitsForMessage() const {
   return 1;
+}
+
+int ImmutableMessageFieldLiteGenerator::GetNumBitsForBuilder() const {
+  return 0;
 }
 
 void ImmutableMessageFieldLiteGenerator::
@@ -382,10 +387,12 @@ string ImmutableMessageFieldLiteGenerator::GetBoxedType() const {
 // ===================================================================
 
 ImmutableMessageOneofFieldLiteGenerator::
-    ImmutableMessageOneofFieldLiteGenerator(const FieldDescriptor* descriptor,
-                                            int messageBitIndex,
-                                            Context* context)
-    : ImmutableMessageFieldLiteGenerator(descriptor, messageBitIndex, context) {
+ImmutableMessageOneofFieldLiteGenerator(const FieldDescriptor* descriptor,
+                                 int messageBitIndex,
+                                 int builderBitIndex,
+                                 Context* context)
+    : ImmutableMessageFieldLiteGenerator(
+          descriptor, messageBitIndex, builderBitIndex, context) {
   const OneofGeneratorInfo* info =
       context->GetOneofGeneratorInfo(descriptor->containing_oneof());
   SetCommonOneofVariables(descriptor, info, &variables_);
@@ -586,14 +593,14 @@ GenerateSerializedSizeCode(io::Printer* printer) const {
 // ===================================================================
 
 RepeatedImmutableMessageFieldLiteGenerator::
-    RepeatedImmutableMessageFieldLiteGenerator(
-        const FieldDescriptor* descriptor, int messageBitIndex,
-        Context* context)
-    : descriptor_(descriptor),
-      messageBitIndex_(messageBitIndex),
-      context_(context),
-      name_resolver_(context->GetNameResolver()) {
-  SetMessageVariables(descriptor, messageBitIndex, 0,
+RepeatedImmutableMessageFieldLiteGenerator(const FieldDescriptor* descriptor,
+                                       int messageBitIndex,
+                                       int builderBitIndex,
+                                       Context* context)
+  : descriptor_(descriptor), messageBitIndex_(messageBitIndex),
+    builderBitIndex_(builderBitIndex), context_(context),
+    name_resolver_(context->GetNameResolver())  {
+  SetMessageVariables(descriptor, messageBitIndex, builderBitIndex,
                       context->GetFieldGeneratorInfo(descriptor),
                       name_resolver_, &variables_);
 }
@@ -602,6 +609,10 @@ RepeatedImmutableMessageFieldLiteGenerator::
 ~RepeatedImmutableMessageFieldLiteGenerator() {}
 
 int RepeatedImmutableMessageFieldLiteGenerator::GetNumBitsForMessage() const {
+  return 0;
+}
+
+int RepeatedImmutableMessageFieldLiteGenerator::GetNumBitsForBuilder() const {
   return 0;
 }
 

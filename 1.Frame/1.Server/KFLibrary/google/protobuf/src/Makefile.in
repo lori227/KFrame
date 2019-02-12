@@ -156,8 +156,7 @@ am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(bindir)" \
 	"$(DESTDIR)$(protodir)" "$(DESTDIR)$(includedir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
 am__DEPENDENCIES_1 =
-libprotobuf_lite_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1)
+libprotobuf_lite_la_DEPENDENCIES = $(am__DEPENDENCIES_1)
 am__dirstamp = $(am__leading_dot)dirstamp
 am_libprotobuf_lite_la_OBJECTS = google/protobuf/stubs/bytestream.lo \
 	google/protobuf/stubs/common.lo \
@@ -169,16 +168,15 @@ am_libprotobuf_lite_la_OBJECTS = google/protobuf/stubs/bytestream.lo \
 	google/protobuf/stubs/stringprintf.lo \
 	google/protobuf/stubs/structurally_valid.lo \
 	google/protobuf/stubs/strutil.lo google/protobuf/stubs/time.lo \
-	google/protobuf/arena.lo google/protobuf/extension_set.lo \
+	google/protobuf/arena.lo google/protobuf/arenastring.lo \
+	google/protobuf/extension_set.lo \
 	google/protobuf/generated_message_util.lo \
 	google/protobuf/generated_message_table_driven_lite.lo \
 	google/protobuf/implicit_weak_message.lo \
 	google/protobuf/message_lite.lo \
-	google/protobuf/parse_context.lo \
 	google/protobuf/repeated_field.lo \
 	google/protobuf/wire_format_lite.lo \
 	google/protobuf/io/coded_stream.lo \
-	google/protobuf/io/strtod.lo \
 	google/protobuf/io/zero_copy_stream.lo \
 	google/protobuf/io/zero_copy_stream_impl_lite.lo
 libprotobuf_lite_la_OBJECTS = $(am_libprotobuf_lite_la_OBJECTS)
@@ -190,8 +188,7 @@ libprotobuf_lite_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
 	$(AM_CXXFLAGS) $(CXXFLAGS) $(libprotobuf_lite_la_LDFLAGS) \
 	$(LDFLAGS) -o $@
-libprotobuf_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1)
+libprotobuf_la_DEPENDENCIES = $(am__DEPENDENCIES_1)
 am__objects_1 = google/protobuf/stubs/bytestream.lo \
 	google/protobuf/stubs/common.lo \
 	google/protobuf/stubs/int128.lo \
@@ -202,16 +199,15 @@ am__objects_1 = google/protobuf/stubs/bytestream.lo \
 	google/protobuf/stubs/stringprintf.lo \
 	google/protobuf/stubs/structurally_valid.lo \
 	google/protobuf/stubs/strutil.lo google/protobuf/stubs/time.lo \
-	google/protobuf/arena.lo google/protobuf/extension_set.lo \
+	google/protobuf/arena.lo google/protobuf/arenastring.lo \
+	google/protobuf/extension_set.lo \
 	google/protobuf/generated_message_util.lo \
 	google/protobuf/generated_message_table_driven_lite.lo \
 	google/protobuf/implicit_weak_message.lo \
 	google/protobuf/message_lite.lo \
-	google/protobuf/parse_context.lo \
 	google/protobuf/repeated_field.lo \
 	google/protobuf/wire_format_lite.lo \
 	google/protobuf/io/coded_stream.lo \
-	google/protobuf/io/strtod.lo \
 	google/protobuf/io/zero_copy_stream.lo \
 	google/protobuf/io/zero_copy_stream_impl_lite.lo
 am_libprotobuf_la_OBJECTS = $(am__objects_1) google/protobuf/any.pb.lo \
@@ -235,7 +231,8 @@ am_libprotobuf_la_OBJECTS = $(am__objects_1) google/protobuf/any.pb.lo \
 	google/protobuf/unknown_field_set.lo \
 	google/protobuf/wire_format.lo google/protobuf/wrappers.pb.lo \
 	google/protobuf/io/gzip_stream.lo \
-	google/protobuf/io/printer.lo google/protobuf/io/tokenizer.lo \
+	google/protobuf/io/printer.lo google/protobuf/io/strtod.lo \
+	google/protobuf/io/tokenizer.lo \
 	google/protobuf/io/zero_copy_stream_impl.lo \
 	google/protobuf/compiler/importer.lo \
 	google/protobuf/compiler/parser.lo \
@@ -300,6 +297,8 @@ am_libprotoc_la_OBJECTS = google/protobuf/compiler/code_generator.lo \
 	google/protobuf/compiler/java/java_generator.lo \
 	google/protobuf/compiler/java/java_generator_factory.lo \
 	google/protobuf/compiler/java/java_helpers.lo \
+	google/protobuf/compiler/java/java_lazy_message_field.lo \
+	google/protobuf/compiler/java/java_lazy_message_field_lite.lo \
 	google/protobuf/compiler/java/java_map_field.lo \
 	google/protobuf/compiler/java/java_map_field_lite.lo \
 	google/protobuf/compiler/java/java_message.lo \
@@ -388,7 +387,6 @@ am__objects_3 = $(am__objects_2) \
 	google/protobuf/no_warning_test-unittest.pb.$(OBJEXT) \
 	google/protobuf/no_warning_test-unittest_preserve_unknown_enum2.pb.$(OBJEXT) \
 	google/protobuf/no_warning_test-unittest_preserve_unknown_enum.pb.$(OBJEXT) \
-	google/protobuf/no_warning_test-unittest_proto3.pb.$(OBJEXT) \
 	google/protobuf/no_warning_test-unittest_proto3_arena.pb.$(OBJEXT) \
 	google/protobuf/no_warning_test-unittest_proto3_arena_lite.pb.$(OBJEXT) \
 	google/protobuf/no_warning_test-unittest_proto3_lite.pb.$(OBJEXT) \
@@ -404,7 +402,6 @@ am__objects_3 = $(am__objects_2) \
 	google/protobuf/util/internal/testdata/no_warning_test-struct.pb.$(OBJEXT) \
 	google/protobuf/util/internal/testdata/no_warning_test-timestamp_duration.pb.$(OBJEXT) \
 	google/protobuf/util/internal/testdata/no_warning_test-wrappers.pb.$(OBJEXT) \
-	google/protobuf/util/no_warning_test-json_format.pb.$(OBJEXT) \
 	google/protobuf/util/no_warning_test-json_format_proto3.pb.$(OBJEXT) \
 	google/protobuf/util/no_warning_test-message_differencer_unittest.pb.$(OBJEXT)
 nodist_no_warning_test_OBJECTS =  \
@@ -456,7 +453,6 @@ am__objects_6 = $(am__objects_5) \
 	google/protobuf/protobuf_lazy_descriptor_test-unittest.pb.$(OBJEXT) \
 	google/protobuf/protobuf_lazy_descriptor_test-unittest_preserve_unknown_enum2.pb.$(OBJEXT) \
 	google/protobuf/protobuf_lazy_descriptor_test-unittest_preserve_unknown_enum.pb.$(OBJEXT) \
-	google/protobuf/protobuf_lazy_descriptor_test-unittest_proto3.pb.$(OBJEXT) \
 	google/protobuf/protobuf_lazy_descriptor_test-unittest_proto3_arena.pb.$(OBJEXT) \
 	google/protobuf/protobuf_lazy_descriptor_test-unittest_proto3_arena_lite.pb.$(OBJEXT) \
 	google/protobuf/protobuf_lazy_descriptor_test-unittest_proto3_lite.pb.$(OBJEXT) \
@@ -472,7 +468,6 @@ am__objects_6 = $(am__objects_5) \
 	google/protobuf/util/internal/testdata/protobuf_lazy_descriptor_test-struct.pb.$(OBJEXT) \
 	google/protobuf/util/internal/testdata/protobuf_lazy_descriptor_test-timestamp_duration.pb.$(OBJEXT) \
 	google/protobuf/util/internal/testdata/protobuf_lazy_descriptor_test-wrappers.pb.$(OBJEXT) \
-	google/protobuf/util/protobuf_lazy_descriptor_test-json_format.pb.$(OBJEXT) \
 	google/protobuf/util/protobuf_lazy_descriptor_test-json_format_proto3.pb.$(OBJEXT) \
 	google/protobuf/util/protobuf_lazy_descriptor_test-message_differencer_unittest.pb.$(OBJEXT)
 nodist_protobuf_lazy_descriptor_test_OBJECTS = $(am__objects_6)
@@ -644,7 +639,6 @@ am__objects_13 = $(am__objects_12) \
 	google/protobuf/protobuf_test-unittest.pb.$(OBJEXT) \
 	google/protobuf/protobuf_test-unittest_preserve_unknown_enum2.pb.$(OBJEXT) \
 	google/protobuf/protobuf_test-unittest_preserve_unknown_enum.pb.$(OBJEXT) \
-	google/protobuf/protobuf_test-unittest_proto3.pb.$(OBJEXT) \
 	google/protobuf/protobuf_test-unittest_proto3_arena.pb.$(OBJEXT) \
 	google/protobuf/protobuf_test-unittest_proto3_arena_lite.pb.$(OBJEXT) \
 	google/protobuf/protobuf_test-unittest_proto3_lite.pb.$(OBJEXT) \
@@ -660,7 +654,6 @@ am__objects_13 = $(am__objects_12) \
 	google/protobuf/util/internal/testdata/protobuf_test-struct.pb.$(OBJEXT) \
 	google/protobuf/util/internal/testdata/protobuf_test-timestamp_duration.pb.$(OBJEXT) \
 	google/protobuf/util/internal/testdata/protobuf_test-wrappers.pb.$(OBJEXT) \
-	google/protobuf/util/protobuf_test-json_format.pb.$(OBJEXT) \
 	google/protobuf/util/protobuf_test-json_format_proto3.pb.$(OBJEXT) \
 	google/protobuf/util/protobuf_test-message_differencer_unittest.pb.$(OBJEXT)
 nodist_protobuf_test_OBJECTS = $(am__objects_13)
@@ -779,10 +772,10 @@ am__nobase_include_HEADERS_DIST = google/protobuf/stubs/callback.h \
 	google/protobuf/stubs/logging.h google/protobuf/stubs/macros.h \
 	google/protobuf/stubs/mutex.h google/protobuf/stubs/once.h \
 	google/protobuf/stubs/platform_macros.h \
-	google/protobuf/stubs/port.h google/protobuf/stubs/status.h \
+	google/protobuf/stubs/port.h google/protobuf/stubs/singleton.h \
+	google/protobuf/stubs/status.h \
 	google/protobuf/stubs/stl_util.h \
 	google/protobuf/stubs/stringpiece.h \
-	google/protobuf/stubs/strutil.h \
 	google/protobuf/stubs/template_util.h google/protobuf/any.pb.h \
 	google/protobuf/api.pb.h google/protobuf/any.h \
 	google/protobuf/arena.h google/protobuf/arena_impl.h \
@@ -792,7 +785,6 @@ am__nobase_include_HEADERS_DIST = google/protobuf/stubs/callback.h \
 	google/protobuf/duration.pb.h \
 	google/protobuf/dynamic_message.h google/protobuf/empty.pb.h \
 	google/protobuf/extension_set.h \
-	google/protobuf/extension_set_inl.h \
 	google/protobuf/field_mask.pb.h \
 	google/protobuf/generated_enum_reflection.h \
 	google/protobuf/generated_enum_util.h \
@@ -807,10 +799,8 @@ am__nobase_include_HEADERS_DIST = google/protobuf/stubs/callback.h \
 	google/protobuf/map_field_lite.h google/protobuf/map.h \
 	google/protobuf/map_type_handler.h google/protobuf/message.h \
 	google/protobuf/message_lite.h google/protobuf/metadata.h \
-	google/protobuf/metadata_lite.h \
-	google/protobuf/parse_context.h google/protobuf/port.h \
-	google/protobuf/port_def.inc google/protobuf/port_undef.inc \
-	google/protobuf/reflection.h google/protobuf/reflection_ops.h \
+	google/protobuf/metadata_lite.h google/protobuf/reflection.h \
+	google/protobuf/reflection_ops.h \
 	google/protobuf/repeated_field.h google/protobuf/service.h \
 	google/protobuf/source_context.pb.h \
 	google/protobuf/struct.pb.h google/protobuf/text_format.h \
@@ -1105,7 +1095,6 @@ ISAINFO = @ISAINFO@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
 LDFLAGS_FOR_BUILD = @LDFLAGS_FOR_BUILD@
-LIBATOMIC_LIBS = @LIBATOMIC_LIBS@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
@@ -1219,7 +1208,6 @@ top_srcdir = @top_srcdir@
 @HAVE_ZLIB_TRUE@ZLIB_DEF = -DHAVE_ZLIB=1
 @HAVE_PTHREAD_FALSE@PTHREAD_DEF = 
 @HAVE_PTHREAD_TRUE@PTHREAD_DEF = -DHAVE_PTHREAD=1
-PROTOBUF_VERSION = 18:0:0
 @GCC_FALSE@NO_OPT_CXXFLAGS = $(PTHREAD_CFLAGS) $(PTHREAD_DEF) $(ZLIB_DEF)
 
 # Turn on all warnings except for sign comparison (we ignore sign comparison
@@ -1268,10 +1256,10 @@ nobase_include_HEADERS = \
   google/protobuf/stubs/once.h                                   \
   google/protobuf/stubs/platform_macros.h                        \
   google/protobuf/stubs/port.h                                   \
+  google/protobuf/stubs/singleton.h                              \
   google/protobuf/stubs/status.h                                 \
   google/protobuf/stubs/stl_util.h                               \
   google/protobuf/stubs/stringpiece.h                            \
-  google/protobuf/stubs/strutil.h                                \
   google/protobuf/stubs/template_util.h                          \
   google/protobuf/any.pb.h                                       \
   google/protobuf/api.pb.h                                       \
@@ -1286,7 +1274,6 @@ nobase_include_HEADERS = \
   google/protobuf/dynamic_message.h                              \
   google/protobuf/empty.pb.h                                     \
   google/protobuf/extension_set.h                                \
-  google/protobuf/extension_set_inl.h                            \
   google/protobuf/field_mask.pb.h                                \
   google/protobuf/generated_enum_reflection.h                    \
   google/protobuf/generated_enum_util.h                          \
@@ -1307,10 +1294,6 @@ nobase_include_HEADERS = \
   google/protobuf/message_lite.h                                 \
   google/protobuf/metadata.h                                     \
   google/protobuf/metadata_lite.h                                \
-  google/protobuf/parse_context.h                                \
-  google/protobuf/port.h                                         \
-  google/protobuf/port_def.inc                                   \
-  google/protobuf/port_undef.inc                                 \
   google/protobuf/reflection.h                                   \
   google/protobuf/reflection_ops.h                               \
   google/protobuf/repeated_field.h                               \
@@ -1361,9 +1344,9 @@ nobase_include_HEADERS = \
   google/protobuf/util/message_differencer.h
 
 lib_LTLIBRARIES = libprotobuf-lite.la libprotobuf.la libprotoc.la
-libprotobuf_lite_la_LIBADD = $(PTHREAD_LIBS) $(LIBATOMIC_LIBS)
-libprotobuf_lite_la_LDFLAGS = -version-info $(PROTOBUF_VERSION) \
-	-export-dynamic -no-undefined $(am__append_1)
+libprotobuf_lite_la_LIBADD = $(PTHREAD_LIBS)
+libprotobuf_lite_la_LDFLAGS = -version-info 17:0:0 -export-dynamic \
+	-no-undefined $(am__append_1)
 @HAVE_LD_VERSION_SCRIPT_TRUE@EXTRA_libprotobuf_lite_la_DEPENDENCIES = libprotobuf-lite.map
 libprotobuf_lite_la_SOURCES = \
   google/protobuf/stubs/bytestream.cc                          \
@@ -1387,27 +1370,27 @@ libprotobuf_lite_la_SOURCES = \
   google/protobuf/stubs/stringprintf.h                         \
   google/protobuf/stubs/structurally_valid.cc                  \
   google/protobuf/stubs/strutil.cc                             \
+  google/protobuf/stubs/strutil.h                              \
   google/protobuf/stubs/time.cc                                \
   google/protobuf/stubs/time.h                                 \
   google/protobuf/arena.cc                                     \
+  google/protobuf/arenastring.cc                               \
   google/protobuf/extension_set.cc                             \
   google/protobuf/generated_message_util.cc                    \
   google/protobuf/generated_message_table_driven_lite.h        \
   google/protobuf/generated_message_table_driven_lite.cc       \
   google/protobuf/implicit_weak_message.cc                     \
   google/protobuf/message_lite.cc                              \
-  google/protobuf/parse_context.cc                              \
   google/protobuf/repeated_field.cc                            \
   google/protobuf/wire_format_lite.cc                          \
   google/protobuf/io/coded_stream.cc                           \
   google/protobuf/io/coded_stream_inl.h                        \
-  google/protobuf/io/strtod.cc                                 \
   google/protobuf/io/zero_copy_stream.cc                       \
   google/protobuf/io/zero_copy_stream_impl_lite.cc
 
-libprotobuf_la_LIBADD = $(PTHREAD_LIBS) $(LIBATOMIC_LIBS)
-libprotobuf_la_LDFLAGS = -version-info $(PROTOBUF_VERSION) \
-	-export-dynamic -no-undefined $(am__append_2)
+libprotobuf_la_LIBADD = $(PTHREAD_LIBS)
+libprotobuf_la_LDFLAGS = -version-info 17:0:0 -export-dynamic \
+	-no-undefined $(am__append_2)
 @HAVE_LD_VERSION_SCRIPT_TRUE@EXTRA_libprotobuf_la_DEPENDENCIES = libprotobuf.map
 libprotobuf_la_SOURCES = \
   $(libprotobuf_lite_la_SOURCES)                               \
@@ -1444,6 +1427,7 @@ libprotobuf_la_SOURCES = \
   google/protobuf/wrappers.pb.cc                               \
   google/protobuf/io/gzip_stream.cc                            \
   google/protobuf/io/printer.cc                                \
+  google/protobuf/io/strtod.cc                                 \
   google/protobuf/io/tokenizer.cc                              \
   google/protobuf/io/zero_copy_stream_impl.cc                  \
   google/protobuf/compiler/importer.cc                         \
@@ -1493,15 +1477,14 @@ libprotobuf_la_SOURCES = \
 
 nodist_libprotobuf_la_SOURCES = $(nodist_libprotobuf_lite_la_SOURCES)
 libprotoc_la_LIBADD = $(PTHREAD_LIBS) libprotobuf.la
-libprotoc_la_LDFLAGS = -version-info $(PROTOBUF_VERSION) \
-	-export-dynamic -no-undefined $(am__append_3)
+libprotoc_la_LDFLAGS = -version-info 17:0:0 -export-dynamic \
+	-no-undefined $(am__append_3)
 @HAVE_LD_VERSION_SCRIPT_TRUE@EXTRA_libprotoc_la_DEPENDENCIES = libprotoc.map
 libprotoc_la_SOURCES = \
   google/protobuf/compiler/code_generator.cc                   \
   google/protobuf/compiler/command_line_interface.cc           \
   google/protobuf/compiler/plugin.cc                           \
   google/protobuf/compiler/plugin.pb.cc                        \
-  google/protobuf/compiler/scc.h                               \
   google/protobuf/compiler/subprocess.cc                       \
   google/protobuf/compiler/subprocess.h                        \
   google/protobuf/compiler/zip_writer.cc                       \
@@ -1558,6 +1541,10 @@ libprotoc_la_SOURCES = \
   google/protobuf/compiler/java/java_generator_factory.h       \
   google/protobuf/compiler/java/java_helpers.cc                \
   google/protobuf/compiler/java/java_helpers.h                 \
+  google/protobuf/compiler/java/java_lazy_message_field.cc     \
+  google/protobuf/compiler/java/java_lazy_message_field.h      \
+  google/protobuf/compiler/java/java_lazy_message_field_lite.cc\
+  google/protobuf/compiler/java/java_lazy_message_field_lite.h \
   google/protobuf/compiler/java/java_map_field.cc              \
   google/protobuf/compiler/java/java_map_field.h               \
   google/protobuf/compiler/java/java_map_field_lite.cc         \
@@ -1612,7 +1599,6 @@ libprotoc_la_SOURCES = \
   google/protobuf/compiler/objectivec/objectivec_message.h     \
   google/protobuf/compiler/objectivec/objectivec_message_field.cc \
   google/protobuf/compiler/objectivec/objectivec_message_field.h \
-  google/protobuf/compiler/objectivec/objectivec_nsobject_methods.h  \
   google/protobuf/compiler/objectivec/objectivec_oneof.cc      \
   google/protobuf/compiler/objectivec/objectivec_oneof.h       \
   google/protobuf/compiler/objectivec/objectivec_primitive_field.cc \
@@ -1689,7 +1675,6 @@ protoc_inputs = \
   google/protobuf/unittest_preserve_unknown_enum2.proto           \
   google/protobuf/unittest_preserve_unknown_enum.proto            \
   google/protobuf/unittest.proto                                  \
-  google/protobuf/unittest_proto3.proto                           \
   google/protobuf/unittest_proto3_arena.proto                     \
   google/protobuf/unittest_proto3_arena_lite.proto                \
   google/protobuf/unittest_proto3_lite.proto                      \
@@ -1705,14 +1690,15 @@ protoc_inputs = \
   google/protobuf/util/internal/testdata/struct.proto             \
   google/protobuf/util/internal/testdata/timestamp_duration.proto \
   google/protobuf/util/internal/testdata/wrappers.proto           \
-  google/protobuf/util/json_format.proto                          \
   google/protobuf/util/json_format_proto3.proto                   \
   google/protobuf/util/message_differencer_unittest.proto         \
   google/protobuf/compiler/cpp/cpp_test_large_enum_value.proto
 
 EXTRA_DIST = \
   $(protoc_inputs)                                             \
+  $(js_well_known_types_sources)                               \
   solaris/libstdc++.la                                         \
+  google/protobuf/unittest_proto3.proto                        \
   google/protobuf/test_messages_proto3.proto                   \
   google/protobuf/test_messages_proto2.proto                   \
   google/protobuf/io/gzip_stream.h                             \
@@ -1735,8 +1721,6 @@ EXTRA_DIST = \
   google/protobuf/util/package_info.h                          \
   google/protobuf/compiler/ruby/ruby_generated_code.proto      \
   google/protobuf/compiler/ruby/ruby_generated_code_pb.rb      \
-  google/protobuf/compiler/ruby/ruby_generated_code_proto2.proto \
-  google/protobuf/compiler/ruby/ruby_generated_code_proto2_pb.rb \
   google/protobuf/compiler/package_info.h                      \
   google/protobuf/compiler/zip_output_unittest.sh              \
   libprotobuf-lite.map                                         \
@@ -1812,8 +1796,6 @@ protoc_outputs = \
   google/protobuf/unittest_preserve_unknown_enum2.pb.h            \
   google/protobuf/unittest_preserve_unknown_enum.pb.cc            \
   google/protobuf/unittest_preserve_unknown_enum.pb.h             \
-  google/protobuf/unittest_proto3.pb.cc                           \
-  google/protobuf/unittest_proto3.pb.h                            \
   google/protobuf/unittest_proto3_arena.pb.cc                     \
   google/protobuf/unittest_proto3_arena.pb.h                      \
   google/protobuf/unittest_proto3_arena_lite.pb.cc                \
@@ -1844,8 +1826,6 @@ protoc_outputs = \
   google/protobuf/util/internal/testdata/timestamp_duration.pb.h  \
   google/protobuf/util/internal/testdata/wrappers.pb.cc           \
   google/protobuf/util/internal/testdata/wrappers.pb.h            \
-  google/protobuf/util/json_format.pb.cc                          \
-  google/protobuf/util/json_format.pb.h                           \
   google/protobuf/util/json_format_proto3.pb.cc                   \
   google/protobuf/util/json_format_proto3.pb.h                    \
   google/protobuf/util/message_differencer_unittest.pb.cc         \
@@ -1860,7 +1840,6 @@ COMMON_TEST_SOURCES = \
   google/protobuf/test_util.cc                                 \
   google/protobuf/test_util.h                                  \
   google/protobuf/test_util.inc                                \
-  google/protobuf/test_util2.h                                 \
   google/protobuf/testing/googletest.cc                        \
   google/protobuf/testing/googletest.h                         \
   google/protobuf/testing/file.cc                              \
@@ -1913,7 +1892,6 @@ protobuf_test_SOURCES = \
   google/protobuf/proto3_arena_lite_unittest.cc                \
   google/protobuf/proto3_arena_unittest.cc                     \
   google/protobuf/proto3_lite_unittest.cc                      \
-  google/protobuf/proto3_lite_unittest.inc                     \
   google/protobuf/reflection_ops_unittest.cc                   \
   google/protobuf/repeated_field_reflection_unittest.cc        \
   google/protobuf/repeated_field_unittest.cc                   \
@@ -2043,7 +2021,7 @@ test_plugin_SOURCES = \
 @HAVE_ZLIB_TRUE@zcgunzip_SOURCES = google/protobuf/testing/zcgunzip.cc
 no_warning_test_LDADD = $(PTHREAD_LIBS) libprotobuf.la libprotoc.la
 no_warning_test_CXXFLAGS = $(PTHREAD_CFLAGS) $(PTHREAD_DEF) $(ZLIB_DEF) \
-                           -Wall -Wextra -Werror -Wno-unused-parameter -Og
+                           -Wall -Wextra -Werror -Wno-unused-parameter
 
 nodist_no_warning_test_SOURCES = no_warning_test.cc $(protoc_outputs)
 all: all-am
@@ -2160,6 +2138,8 @@ google/protobuf/$(DEPDIR)/$(am__dirstamp):
 	@: > google/protobuf/$(DEPDIR)/$(am__dirstamp)
 google/protobuf/arena.lo: google/protobuf/$(am__dirstamp) \
 	google/protobuf/$(DEPDIR)/$(am__dirstamp)
+google/protobuf/arenastring.lo: google/protobuf/$(am__dirstamp) \
+	google/protobuf/$(DEPDIR)/$(am__dirstamp)
 google/protobuf/extension_set.lo: google/protobuf/$(am__dirstamp) \
 	google/protobuf/$(DEPDIR)/$(am__dirstamp)
 google/protobuf/generated_message_util.lo:  \
@@ -2173,8 +2153,6 @@ google/protobuf/implicit_weak_message.lo:  \
 	google/protobuf/$(DEPDIR)/$(am__dirstamp)
 google/protobuf/message_lite.lo: google/protobuf/$(am__dirstamp) \
 	google/protobuf/$(DEPDIR)/$(am__dirstamp)
-google/protobuf/parse_context.lo: google/protobuf/$(am__dirstamp) \
-	google/protobuf/$(DEPDIR)/$(am__dirstamp)
 google/protobuf/repeated_field.lo: google/protobuf/$(am__dirstamp) \
 	google/protobuf/$(DEPDIR)/$(am__dirstamp)
 google/protobuf/wire_format_lite.lo: google/protobuf/$(am__dirstamp) \
@@ -2187,8 +2165,6 @@ google/protobuf/io/$(DEPDIR)/$(am__dirstamp):
 	@: > google/protobuf/io/$(DEPDIR)/$(am__dirstamp)
 google/protobuf/io/coded_stream.lo:  \
 	google/protobuf/io/$(am__dirstamp) \
-	google/protobuf/io/$(DEPDIR)/$(am__dirstamp)
-google/protobuf/io/strtod.lo: google/protobuf/io/$(am__dirstamp) \
 	google/protobuf/io/$(DEPDIR)/$(am__dirstamp)
 google/protobuf/io/zero_copy_stream.lo:  \
 	google/protobuf/io/$(am__dirstamp) \
@@ -2262,6 +2238,8 @@ google/protobuf/wrappers.pb.lo: google/protobuf/$(am__dirstamp) \
 google/protobuf/io/gzip_stream.lo: google/protobuf/io/$(am__dirstamp) \
 	google/protobuf/io/$(DEPDIR)/$(am__dirstamp)
 google/protobuf/io/printer.lo: google/protobuf/io/$(am__dirstamp) \
+	google/protobuf/io/$(DEPDIR)/$(am__dirstamp)
+google/protobuf/io/strtod.lo: google/protobuf/io/$(am__dirstamp) \
 	google/protobuf/io/$(DEPDIR)/$(am__dirstamp)
 google/protobuf/io/tokenizer.lo: google/protobuf/io/$(am__dirstamp) \
 	google/protobuf/io/$(DEPDIR)/$(am__dirstamp)
@@ -2464,6 +2442,12 @@ google/protobuf/compiler/java/java_generator_factory.lo:  \
 	google/protobuf/compiler/java/$(am__dirstamp) \
 	google/protobuf/compiler/java/$(DEPDIR)/$(am__dirstamp)
 google/protobuf/compiler/java/java_helpers.lo:  \
+	google/protobuf/compiler/java/$(am__dirstamp) \
+	google/protobuf/compiler/java/$(DEPDIR)/$(am__dirstamp)
+google/protobuf/compiler/java/java_lazy_message_field.lo:  \
+	google/protobuf/compiler/java/$(am__dirstamp) \
+	google/protobuf/compiler/java/$(DEPDIR)/$(am__dirstamp)
+google/protobuf/compiler/java/java_lazy_message_field_lite.lo:  \
 	google/protobuf/compiler/java/$(am__dirstamp) \
 	google/protobuf/compiler/java/$(DEPDIR)/$(am__dirstamp)
 google/protobuf/compiler/java/java_map_field.lo:  \
@@ -2806,9 +2790,6 @@ google/protobuf/no_warning_test-unittest_preserve_unknown_enum2.pb.$(OBJEXT):  \
 google/protobuf/no_warning_test-unittest_preserve_unknown_enum.pb.$(OBJEXT):  \
 	google/protobuf/$(am__dirstamp) \
 	google/protobuf/$(DEPDIR)/$(am__dirstamp)
-google/protobuf/no_warning_test-unittest_proto3.pb.$(OBJEXT):  \
-	google/protobuf/$(am__dirstamp) \
-	google/protobuf/$(DEPDIR)/$(am__dirstamp)
 google/protobuf/no_warning_test-unittest_proto3_arena.pb.$(OBJEXT):  \
 	google/protobuf/$(am__dirstamp) \
 	google/protobuf/$(DEPDIR)/$(am__dirstamp)
@@ -2860,9 +2841,6 @@ google/protobuf/util/internal/testdata/no_warning_test-timestamp_duration.pb.$(O
 google/protobuf/util/internal/testdata/no_warning_test-wrappers.pb.$(OBJEXT):  \
 	google/protobuf/util/internal/testdata/$(am__dirstamp) \
 	google/protobuf/util/internal/testdata/$(DEPDIR)/$(am__dirstamp)
-google/protobuf/util/no_warning_test-json_format.pb.$(OBJEXT):  \
-	google/protobuf/util/$(am__dirstamp) \
-	google/protobuf/util/$(DEPDIR)/$(am__dirstamp)
 google/protobuf/util/no_warning_test-json_format_proto3.pb.$(OBJEXT):  \
 	google/protobuf/util/$(am__dirstamp) \
 	google/protobuf/util/$(DEPDIR)/$(am__dirstamp)
@@ -2993,9 +2971,6 @@ google/protobuf/protobuf_lazy_descriptor_test-unittest_preserve_unknown_enum2.pb
 google/protobuf/protobuf_lazy_descriptor_test-unittest_preserve_unknown_enum.pb.$(OBJEXT):  \
 	google/protobuf/$(am__dirstamp) \
 	google/protobuf/$(DEPDIR)/$(am__dirstamp)
-google/protobuf/protobuf_lazy_descriptor_test-unittest_proto3.pb.$(OBJEXT):  \
-	google/protobuf/$(am__dirstamp) \
-	google/protobuf/$(DEPDIR)/$(am__dirstamp)
 google/protobuf/protobuf_lazy_descriptor_test-unittest_proto3_arena.pb.$(OBJEXT):  \
 	google/protobuf/$(am__dirstamp) \
 	google/protobuf/$(DEPDIR)/$(am__dirstamp)
@@ -3041,9 +3016,6 @@ google/protobuf/util/internal/testdata/protobuf_lazy_descriptor_test-timestamp_d
 google/protobuf/util/internal/testdata/protobuf_lazy_descriptor_test-wrappers.pb.$(OBJEXT):  \
 	google/protobuf/util/internal/testdata/$(am__dirstamp) \
 	google/protobuf/util/internal/testdata/$(DEPDIR)/$(am__dirstamp)
-google/protobuf/util/protobuf_lazy_descriptor_test-json_format.pb.$(OBJEXT):  \
-	google/protobuf/util/$(am__dirstamp) \
-	google/protobuf/util/$(DEPDIR)/$(am__dirstamp)
 google/protobuf/util/protobuf_lazy_descriptor_test-json_format_proto3.pb.$(OBJEXT):  \
 	google/protobuf/util/$(am__dirstamp) \
 	google/protobuf/util/$(DEPDIR)/$(am__dirstamp)
@@ -3437,9 +3409,6 @@ google/protobuf/protobuf_test-unittest_preserve_unknown_enum2.pb.$(OBJEXT):  \
 google/protobuf/protobuf_test-unittest_preserve_unknown_enum.pb.$(OBJEXT):  \
 	google/protobuf/$(am__dirstamp) \
 	google/protobuf/$(DEPDIR)/$(am__dirstamp)
-google/protobuf/protobuf_test-unittest_proto3.pb.$(OBJEXT):  \
-	google/protobuf/$(am__dirstamp) \
-	google/protobuf/$(DEPDIR)/$(am__dirstamp)
 google/protobuf/protobuf_test-unittest_proto3_arena.pb.$(OBJEXT):  \
 	google/protobuf/$(am__dirstamp) \
 	google/protobuf/$(DEPDIR)/$(am__dirstamp)
@@ -3485,9 +3454,6 @@ google/protobuf/util/internal/testdata/protobuf_test-timestamp_duration.pb.$(OBJ
 google/protobuf/util/internal/testdata/protobuf_test-wrappers.pb.$(OBJEXT):  \
 	google/protobuf/util/internal/testdata/$(am__dirstamp) \
 	google/protobuf/util/internal/testdata/$(DEPDIR)/$(am__dirstamp)
-google/protobuf/util/protobuf_test-json_format.pb.$(OBJEXT):  \
-	google/protobuf/util/$(am__dirstamp) \
-	google/protobuf/util/$(DEPDIR)/$(am__dirstamp)
 google/protobuf/util/protobuf_test-json_format_proto3.pb.$(OBJEXT):  \
 	google/protobuf/util/$(am__dirstamp) \
 	google/protobuf/util/$(DEPDIR)/$(am__dirstamp)
@@ -3574,6 +3540,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/$(DEPDIR)/any.pb.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/$(DEPDIR)/api.pb.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/$(DEPDIR)/arena.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/$(DEPDIR)/arenastring.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/$(DEPDIR)/descriptor.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/$(DEPDIR)/descriptor.pb.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/$(DEPDIR)/descriptor_database.Plo@am__quote@
@@ -3621,12 +3588,10 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/$(DEPDIR)/no_warning_test-unittest_optimize_for.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/$(DEPDIR)/no_warning_test-unittest_preserve_unknown_enum.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/$(DEPDIR)/no_warning_test-unittest_preserve_unknown_enum2.pb.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/$(DEPDIR)/no_warning_test-unittest_proto3.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/$(DEPDIR)/no_warning_test-unittest_proto3_arena.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/$(DEPDIR)/no_warning_test-unittest_proto3_arena_lite.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/$(DEPDIR)/no_warning_test-unittest_proto3_lite.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/$(DEPDIR)/no_warning_test-unittest_well_known_types.pb.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/$(DEPDIR)/parse_context.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/$(DEPDIR)/protobuf_lazy_descriptor_test-any_test.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/$(DEPDIR)/protobuf_lazy_descriptor_test-arena_test_util.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/$(DEPDIR)/protobuf_lazy_descriptor_test-map_lite_unittest.pb.Po@am__quote@
@@ -3660,7 +3625,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/$(DEPDIR)/protobuf_lazy_descriptor_test-unittest_optimize_for.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/$(DEPDIR)/protobuf_lazy_descriptor_test-unittest_preserve_unknown_enum.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/$(DEPDIR)/protobuf_lazy_descriptor_test-unittest_preserve_unknown_enum2.pb.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/$(DEPDIR)/protobuf_lazy_descriptor_test-unittest_proto3.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/$(DEPDIR)/protobuf_lazy_descriptor_test-unittest_proto3_arena.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/$(DEPDIR)/protobuf_lazy_descriptor_test-unittest_proto3_arena_lite.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/$(DEPDIR)/protobuf_lazy_descriptor_test-unittest_proto3_lite.pb.Po@am__quote@
@@ -3737,7 +3701,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/$(DEPDIR)/protobuf_test-unittest_optimize_for.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/$(DEPDIR)/protobuf_test-unittest_preserve_unknown_enum.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/$(DEPDIR)/protobuf_test-unittest_preserve_unknown_enum2.pb.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/$(DEPDIR)/protobuf_test-unittest_proto3.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/$(DEPDIR)/protobuf_test-unittest_proto3_arena.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/$(DEPDIR)/protobuf_test-unittest_proto3_arena_lite.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/$(DEPDIR)/protobuf_test-unittest_proto3_lite.pb.Po@am__quote@
@@ -3830,6 +3793,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/compiler/java/$(DEPDIR)/java_generator.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/compiler/java/$(DEPDIR)/java_generator_factory.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/compiler/java/$(DEPDIR)/java_helpers.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/compiler/java/$(DEPDIR)/java_lazy_message_field.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/compiler/java/$(DEPDIR)/java_lazy_message_field_lite.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/compiler/java/$(DEPDIR)/java_map_field.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/compiler/java/$(DEPDIR)/java_map_field_lite.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/compiler/java/$(DEPDIR)/java_message.Plo@am__quote@
@@ -3916,16 +3881,13 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/util/$(DEPDIR)/field_mask_util.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/util/$(DEPDIR)/json_util.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/util/$(DEPDIR)/message_differencer.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/util/$(DEPDIR)/no_warning_test-json_format.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/util/$(DEPDIR)/no_warning_test-json_format_proto3.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/util/$(DEPDIR)/no_warning_test-message_differencer_unittest.pb.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/util/$(DEPDIR)/protobuf_lazy_descriptor_test-json_format.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/util/$(DEPDIR)/protobuf_lazy_descriptor_test-json_format_proto3.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/util/$(DEPDIR)/protobuf_lazy_descriptor_test-message_differencer_unittest.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/util/$(DEPDIR)/protobuf_test-delimited_message_util_test.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/util/$(DEPDIR)/protobuf_test-field_comparator_test.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/util/$(DEPDIR)/protobuf_test-field_mask_util_test.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/util/$(DEPDIR)/protobuf_test-json_format.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/util/$(DEPDIR)/protobuf_test-json_format_proto3.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/util/$(DEPDIR)/protobuf_test-json_util_test.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@google/protobuf/util/$(DEPDIR)/protobuf_test-message_differencer_unittest.Po@am__quote@
@@ -4474,20 +4436,6 @@ google/protobuf/no_warning_test-unittest_preserve_unknown_enum.pb.obj: google/pr
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(no_warning_test_CXXFLAGS) $(CXXFLAGS) -c -o google/protobuf/no_warning_test-unittest_preserve_unknown_enum.pb.obj `if test -f 'google/protobuf/unittest_preserve_unknown_enum.pb.cc'; then $(CYGPATH_W) 'google/protobuf/unittest_preserve_unknown_enum.pb.cc'; else $(CYGPATH_W) '$(srcdir)/google/protobuf/unittest_preserve_unknown_enum.pb.cc'; fi`
 
-google/protobuf/no_warning_test-unittest_proto3.pb.o: google/protobuf/unittest_proto3.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(no_warning_test_CXXFLAGS) $(CXXFLAGS) -MT google/protobuf/no_warning_test-unittest_proto3.pb.o -MD -MP -MF google/protobuf/$(DEPDIR)/no_warning_test-unittest_proto3.pb.Tpo -c -o google/protobuf/no_warning_test-unittest_proto3.pb.o `test -f 'google/protobuf/unittest_proto3.pb.cc' || echo '$(srcdir)/'`google/protobuf/unittest_proto3.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) google/protobuf/$(DEPDIR)/no_warning_test-unittest_proto3.pb.Tpo google/protobuf/$(DEPDIR)/no_warning_test-unittest_proto3.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='google/protobuf/unittest_proto3.pb.cc' object='google/protobuf/no_warning_test-unittest_proto3.pb.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(no_warning_test_CXXFLAGS) $(CXXFLAGS) -c -o google/protobuf/no_warning_test-unittest_proto3.pb.o `test -f 'google/protobuf/unittest_proto3.pb.cc' || echo '$(srcdir)/'`google/protobuf/unittest_proto3.pb.cc
-
-google/protobuf/no_warning_test-unittest_proto3.pb.obj: google/protobuf/unittest_proto3.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(no_warning_test_CXXFLAGS) $(CXXFLAGS) -MT google/protobuf/no_warning_test-unittest_proto3.pb.obj -MD -MP -MF google/protobuf/$(DEPDIR)/no_warning_test-unittest_proto3.pb.Tpo -c -o google/protobuf/no_warning_test-unittest_proto3.pb.obj `if test -f 'google/protobuf/unittest_proto3.pb.cc'; then $(CYGPATH_W) 'google/protobuf/unittest_proto3.pb.cc'; else $(CYGPATH_W) '$(srcdir)/google/protobuf/unittest_proto3.pb.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) google/protobuf/$(DEPDIR)/no_warning_test-unittest_proto3.pb.Tpo google/protobuf/$(DEPDIR)/no_warning_test-unittest_proto3.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='google/protobuf/unittest_proto3.pb.cc' object='google/protobuf/no_warning_test-unittest_proto3.pb.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(no_warning_test_CXXFLAGS) $(CXXFLAGS) -c -o google/protobuf/no_warning_test-unittest_proto3.pb.obj `if test -f 'google/protobuf/unittest_proto3.pb.cc'; then $(CYGPATH_W) 'google/protobuf/unittest_proto3.pb.cc'; else $(CYGPATH_W) '$(srcdir)/google/protobuf/unittest_proto3.pb.cc'; fi`
-
 google/protobuf/no_warning_test-unittest_proto3_arena.pb.o: google/protobuf/unittest_proto3_arena.pb.cc
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(no_warning_test_CXXFLAGS) $(CXXFLAGS) -MT google/protobuf/no_warning_test-unittest_proto3_arena.pb.o -MD -MP -MF google/protobuf/$(DEPDIR)/no_warning_test-unittest_proto3_arena.pb.Tpo -c -o google/protobuf/no_warning_test-unittest_proto3_arena.pb.o `test -f 'google/protobuf/unittest_proto3_arena.pb.cc' || echo '$(srcdir)/'`google/protobuf/unittest_proto3_arena.pb.cc
 @am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) google/protobuf/$(DEPDIR)/no_warning_test-unittest_proto3_arena.pb.Tpo google/protobuf/$(DEPDIR)/no_warning_test-unittest_proto3_arena.pb.Po
@@ -4697,20 +4645,6 @@ google/protobuf/util/internal/testdata/no_warning_test-wrappers.pb.obj: google/p
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='google/protobuf/util/internal/testdata/wrappers.pb.cc' object='google/protobuf/util/internal/testdata/no_warning_test-wrappers.pb.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(no_warning_test_CXXFLAGS) $(CXXFLAGS) -c -o google/protobuf/util/internal/testdata/no_warning_test-wrappers.pb.obj `if test -f 'google/protobuf/util/internal/testdata/wrappers.pb.cc'; then $(CYGPATH_W) 'google/protobuf/util/internal/testdata/wrappers.pb.cc'; else $(CYGPATH_W) '$(srcdir)/google/protobuf/util/internal/testdata/wrappers.pb.cc'; fi`
-
-google/protobuf/util/no_warning_test-json_format.pb.o: google/protobuf/util/json_format.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(no_warning_test_CXXFLAGS) $(CXXFLAGS) -MT google/protobuf/util/no_warning_test-json_format.pb.o -MD -MP -MF google/protobuf/util/$(DEPDIR)/no_warning_test-json_format.pb.Tpo -c -o google/protobuf/util/no_warning_test-json_format.pb.o `test -f 'google/protobuf/util/json_format.pb.cc' || echo '$(srcdir)/'`google/protobuf/util/json_format.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) google/protobuf/util/$(DEPDIR)/no_warning_test-json_format.pb.Tpo google/protobuf/util/$(DEPDIR)/no_warning_test-json_format.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='google/protobuf/util/json_format.pb.cc' object='google/protobuf/util/no_warning_test-json_format.pb.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(no_warning_test_CXXFLAGS) $(CXXFLAGS) -c -o google/protobuf/util/no_warning_test-json_format.pb.o `test -f 'google/protobuf/util/json_format.pb.cc' || echo '$(srcdir)/'`google/protobuf/util/json_format.pb.cc
-
-google/protobuf/util/no_warning_test-json_format.pb.obj: google/protobuf/util/json_format.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(no_warning_test_CXXFLAGS) $(CXXFLAGS) -MT google/protobuf/util/no_warning_test-json_format.pb.obj -MD -MP -MF google/protobuf/util/$(DEPDIR)/no_warning_test-json_format.pb.Tpo -c -o google/protobuf/util/no_warning_test-json_format.pb.obj `if test -f 'google/protobuf/util/json_format.pb.cc'; then $(CYGPATH_W) 'google/protobuf/util/json_format.pb.cc'; else $(CYGPATH_W) '$(srcdir)/google/protobuf/util/json_format.pb.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) google/protobuf/util/$(DEPDIR)/no_warning_test-json_format.pb.Tpo google/protobuf/util/$(DEPDIR)/no_warning_test-json_format.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='google/protobuf/util/json_format.pb.cc' object='google/protobuf/util/no_warning_test-json_format.pb.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(no_warning_test_CXXFLAGS) $(CXXFLAGS) -c -o google/protobuf/util/no_warning_test-json_format.pb.obj `if test -f 'google/protobuf/util/json_format.pb.cc'; then $(CYGPATH_W) 'google/protobuf/util/json_format.pb.cc'; else $(CYGPATH_W) '$(srcdir)/google/protobuf/util/json_format.pb.cc'; fi`
 
 google/protobuf/util/no_warning_test-json_format_proto3.pb.o: google/protobuf/util/json_format_proto3.pb.cc
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(no_warning_test_CXXFLAGS) $(CXXFLAGS) -MT google/protobuf/util/no_warning_test-json_format_proto3.pb.o -MD -MP -MF google/protobuf/util/$(DEPDIR)/no_warning_test-json_format_proto3.pb.Tpo -c -o google/protobuf/util/no_warning_test-json_format_proto3.pb.o `test -f 'google/protobuf/util/json_format_proto3.pb.cc' || echo '$(srcdir)/'`google/protobuf/util/json_format_proto3.pb.cc
@@ -5272,20 +5206,6 @@ google/protobuf/protobuf_lazy_descriptor_test-unittest_preserve_unknown_enum.pb.
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(protobuf_lazy_descriptor_test_CPPFLAGS) $(CPPFLAGS) $(protobuf_lazy_descriptor_test_CXXFLAGS) $(CXXFLAGS) -c -o google/protobuf/protobuf_lazy_descriptor_test-unittest_preserve_unknown_enum.pb.obj `if test -f 'google/protobuf/unittest_preserve_unknown_enum.pb.cc'; then $(CYGPATH_W) 'google/protobuf/unittest_preserve_unknown_enum.pb.cc'; else $(CYGPATH_W) '$(srcdir)/google/protobuf/unittest_preserve_unknown_enum.pb.cc'; fi`
 
-google/protobuf/protobuf_lazy_descriptor_test-unittest_proto3.pb.o: google/protobuf/unittest_proto3.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(protobuf_lazy_descriptor_test_CPPFLAGS) $(CPPFLAGS) $(protobuf_lazy_descriptor_test_CXXFLAGS) $(CXXFLAGS) -MT google/protobuf/protobuf_lazy_descriptor_test-unittest_proto3.pb.o -MD -MP -MF google/protobuf/$(DEPDIR)/protobuf_lazy_descriptor_test-unittest_proto3.pb.Tpo -c -o google/protobuf/protobuf_lazy_descriptor_test-unittest_proto3.pb.o `test -f 'google/protobuf/unittest_proto3.pb.cc' || echo '$(srcdir)/'`google/protobuf/unittest_proto3.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) google/protobuf/$(DEPDIR)/protobuf_lazy_descriptor_test-unittest_proto3.pb.Tpo google/protobuf/$(DEPDIR)/protobuf_lazy_descriptor_test-unittest_proto3.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='google/protobuf/unittest_proto3.pb.cc' object='google/protobuf/protobuf_lazy_descriptor_test-unittest_proto3.pb.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(protobuf_lazy_descriptor_test_CPPFLAGS) $(CPPFLAGS) $(protobuf_lazy_descriptor_test_CXXFLAGS) $(CXXFLAGS) -c -o google/protobuf/protobuf_lazy_descriptor_test-unittest_proto3.pb.o `test -f 'google/protobuf/unittest_proto3.pb.cc' || echo '$(srcdir)/'`google/protobuf/unittest_proto3.pb.cc
-
-google/protobuf/protobuf_lazy_descriptor_test-unittest_proto3.pb.obj: google/protobuf/unittest_proto3.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(protobuf_lazy_descriptor_test_CPPFLAGS) $(CPPFLAGS) $(protobuf_lazy_descriptor_test_CXXFLAGS) $(CXXFLAGS) -MT google/protobuf/protobuf_lazy_descriptor_test-unittest_proto3.pb.obj -MD -MP -MF google/protobuf/$(DEPDIR)/protobuf_lazy_descriptor_test-unittest_proto3.pb.Tpo -c -o google/protobuf/protobuf_lazy_descriptor_test-unittest_proto3.pb.obj `if test -f 'google/protobuf/unittest_proto3.pb.cc'; then $(CYGPATH_W) 'google/protobuf/unittest_proto3.pb.cc'; else $(CYGPATH_W) '$(srcdir)/google/protobuf/unittest_proto3.pb.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) google/protobuf/$(DEPDIR)/protobuf_lazy_descriptor_test-unittest_proto3.pb.Tpo google/protobuf/$(DEPDIR)/protobuf_lazy_descriptor_test-unittest_proto3.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='google/protobuf/unittest_proto3.pb.cc' object='google/protobuf/protobuf_lazy_descriptor_test-unittest_proto3.pb.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(protobuf_lazy_descriptor_test_CPPFLAGS) $(CPPFLAGS) $(protobuf_lazy_descriptor_test_CXXFLAGS) $(CXXFLAGS) -c -o google/protobuf/protobuf_lazy_descriptor_test-unittest_proto3.pb.obj `if test -f 'google/protobuf/unittest_proto3.pb.cc'; then $(CYGPATH_W) 'google/protobuf/unittest_proto3.pb.cc'; else $(CYGPATH_W) '$(srcdir)/google/protobuf/unittest_proto3.pb.cc'; fi`
-
 google/protobuf/protobuf_lazy_descriptor_test-unittest_proto3_arena.pb.o: google/protobuf/unittest_proto3_arena.pb.cc
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(protobuf_lazy_descriptor_test_CPPFLAGS) $(CPPFLAGS) $(protobuf_lazy_descriptor_test_CXXFLAGS) $(CXXFLAGS) -MT google/protobuf/protobuf_lazy_descriptor_test-unittest_proto3_arena.pb.o -MD -MP -MF google/protobuf/$(DEPDIR)/protobuf_lazy_descriptor_test-unittest_proto3_arena.pb.Tpo -c -o google/protobuf/protobuf_lazy_descriptor_test-unittest_proto3_arena.pb.o `test -f 'google/protobuf/unittest_proto3_arena.pb.cc' || echo '$(srcdir)/'`google/protobuf/unittest_proto3_arena.pb.cc
 @am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) google/protobuf/$(DEPDIR)/protobuf_lazy_descriptor_test-unittest_proto3_arena.pb.Tpo google/protobuf/$(DEPDIR)/protobuf_lazy_descriptor_test-unittest_proto3_arena.pb.Po
@@ -5495,20 +5415,6 @@ google/protobuf/util/internal/testdata/protobuf_lazy_descriptor_test-wrappers.pb
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='google/protobuf/util/internal/testdata/wrappers.pb.cc' object='google/protobuf/util/internal/testdata/protobuf_lazy_descriptor_test-wrappers.pb.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(protobuf_lazy_descriptor_test_CPPFLAGS) $(CPPFLAGS) $(protobuf_lazy_descriptor_test_CXXFLAGS) $(CXXFLAGS) -c -o google/protobuf/util/internal/testdata/protobuf_lazy_descriptor_test-wrappers.pb.obj `if test -f 'google/protobuf/util/internal/testdata/wrappers.pb.cc'; then $(CYGPATH_W) 'google/protobuf/util/internal/testdata/wrappers.pb.cc'; else $(CYGPATH_W) '$(srcdir)/google/protobuf/util/internal/testdata/wrappers.pb.cc'; fi`
-
-google/protobuf/util/protobuf_lazy_descriptor_test-json_format.pb.o: google/protobuf/util/json_format.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(protobuf_lazy_descriptor_test_CPPFLAGS) $(CPPFLAGS) $(protobuf_lazy_descriptor_test_CXXFLAGS) $(CXXFLAGS) -MT google/protobuf/util/protobuf_lazy_descriptor_test-json_format.pb.o -MD -MP -MF google/protobuf/util/$(DEPDIR)/protobuf_lazy_descriptor_test-json_format.pb.Tpo -c -o google/protobuf/util/protobuf_lazy_descriptor_test-json_format.pb.o `test -f 'google/protobuf/util/json_format.pb.cc' || echo '$(srcdir)/'`google/protobuf/util/json_format.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) google/protobuf/util/$(DEPDIR)/protobuf_lazy_descriptor_test-json_format.pb.Tpo google/protobuf/util/$(DEPDIR)/protobuf_lazy_descriptor_test-json_format.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='google/protobuf/util/json_format.pb.cc' object='google/protobuf/util/protobuf_lazy_descriptor_test-json_format.pb.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(protobuf_lazy_descriptor_test_CPPFLAGS) $(CPPFLAGS) $(protobuf_lazy_descriptor_test_CXXFLAGS) $(CXXFLAGS) -c -o google/protobuf/util/protobuf_lazy_descriptor_test-json_format.pb.o `test -f 'google/protobuf/util/json_format.pb.cc' || echo '$(srcdir)/'`google/protobuf/util/json_format.pb.cc
-
-google/protobuf/util/protobuf_lazy_descriptor_test-json_format.pb.obj: google/protobuf/util/json_format.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(protobuf_lazy_descriptor_test_CPPFLAGS) $(CPPFLAGS) $(protobuf_lazy_descriptor_test_CXXFLAGS) $(CXXFLAGS) -MT google/protobuf/util/protobuf_lazy_descriptor_test-json_format.pb.obj -MD -MP -MF google/protobuf/util/$(DEPDIR)/protobuf_lazy_descriptor_test-json_format.pb.Tpo -c -o google/protobuf/util/protobuf_lazy_descriptor_test-json_format.pb.obj `if test -f 'google/protobuf/util/json_format.pb.cc'; then $(CYGPATH_W) 'google/protobuf/util/json_format.pb.cc'; else $(CYGPATH_W) '$(srcdir)/google/protobuf/util/json_format.pb.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) google/protobuf/util/$(DEPDIR)/protobuf_lazy_descriptor_test-json_format.pb.Tpo google/protobuf/util/$(DEPDIR)/protobuf_lazy_descriptor_test-json_format.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='google/protobuf/util/json_format.pb.cc' object='google/protobuf/util/protobuf_lazy_descriptor_test-json_format.pb.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(protobuf_lazy_descriptor_test_CPPFLAGS) $(CPPFLAGS) $(protobuf_lazy_descriptor_test_CXXFLAGS) $(CXXFLAGS) -c -o google/protobuf/util/protobuf_lazy_descriptor_test-json_format.pb.obj `if test -f 'google/protobuf/util/json_format.pb.cc'; then $(CYGPATH_W) 'google/protobuf/util/json_format.pb.cc'; else $(CYGPATH_W) '$(srcdir)/google/protobuf/util/json_format.pb.cc'; fi`
 
 google/protobuf/util/protobuf_lazy_descriptor_test-json_format_proto3.pb.o: google/protobuf/util/json_format_proto3.pb.cc
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(protobuf_lazy_descriptor_test_CPPFLAGS) $(CPPFLAGS) $(protobuf_lazy_descriptor_test_CXXFLAGS) $(CXXFLAGS) -MT google/protobuf/util/protobuf_lazy_descriptor_test-json_format_proto3.pb.o -MD -MP -MF google/protobuf/util/$(DEPDIR)/protobuf_lazy_descriptor_test-json_format_proto3.pb.Tpo -c -o google/protobuf/util/protobuf_lazy_descriptor_test-json_format_proto3.pb.o `test -f 'google/protobuf/util/json_format_proto3.pb.cc' || echo '$(srcdir)/'`google/protobuf/util/json_format_proto3.pb.cc
@@ -7288,20 +7194,6 @@ google/protobuf/protobuf_test-unittest_preserve_unknown_enum.pb.obj: google/prot
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(protobuf_test_CPPFLAGS) $(CPPFLAGS) $(protobuf_test_CXXFLAGS) $(CXXFLAGS) -c -o google/protobuf/protobuf_test-unittest_preserve_unknown_enum.pb.obj `if test -f 'google/protobuf/unittest_preserve_unknown_enum.pb.cc'; then $(CYGPATH_W) 'google/protobuf/unittest_preserve_unknown_enum.pb.cc'; else $(CYGPATH_W) '$(srcdir)/google/protobuf/unittest_preserve_unknown_enum.pb.cc'; fi`
 
-google/protobuf/protobuf_test-unittest_proto3.pb.o: google/protobuf/unittest_proto3.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(protobuf_test_CPPFLAGS) $(CPPFLAGS) $(protobuf_test_CXXFLAGS) $(CXXFLAGS) -MT google/protobuf/protobuf_test-unittest_proto3.pb.o -MD -MP -MF google/protobuf/$(DEPDIR)/protobuf_test-unittest_proto3.pb.Tpo -c -o google/protobuf/protobuf_test-unittest_proto3.pb.o `test -f 'google/protobuf/unittest_proto3.pb.cc' || echo '$(srcdir)/'`google/protobuf/unittest_proto3.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) google/protobuf/$(DEPDIR)/protobuf_test-unittest_proto3.pb.Tpo google/protobuf/$(DEPDIR)/protobuf_test-unittest_proto3.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='google/protobuf/unittest_proto3.pb.cc' object='google/protobuf/protobuf_test-unittest_proto3.pb.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(protobuf_test_CPPFLAGS) $(CPPFLAGS) $(protobuf_test_CXXFLAGS) $(CXXFLAGS) -c -o google/protobuf/protobuf_test-unittest_proto3.pb.o `test -f 'google/protobuf/unittest_proto3.pb.cc' || echo '$(srcdir)/'`google/protobuf/unittest_proto3.pb.cc
-
-google/protobuf/protobuf_test-unittest_proto3.pb.obj: google/protobuf/unittest_proto3.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(protobuf_test_CPPFLAGS) $(CPPFLAGS) $(protobuf_test_CXXFLAGS) $(CXXFLAGS) -MT google/protobuf/protobuf_test-unittest_proto3.pb.obj -MD -MP -MF google/protobuf/$(DEPDIR)/protobuf_test-unittest_proto3.pb.Tpo -c -o google/protobuf/protobuf_test-unittest_proto3.pb.obj `if test -f 'google/protobuf/unittest_proto3.pb.cc'; then $(CYGPATH_W) 'google/protobuf/unittest_proto3.pb.cc'; else $(CYGPATH_W) '$(srcdir)/google/protobuf/unittest_proto3.pb.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) google/protobuf/$(DEPDIR)/protobuf_test-unittest_proto3.pb.Tpo google/protobuf/$(DEPDIR)/protobuf_test-unittest_proto3.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='google/protobuf/unittest_proto3.pb.cc' object='google/protobuf/protobuf_test-unittest_proto3.pb.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(protobuf_test_CPPFLAGS) $(CPPFLAGS) $(protobuf_test_CXXFLAGS) $(CXXFLAGS) -c -o google/protobuf/protobuf_test-unittest_proto3.pb.obj `if test -f 'google/protobuf/unittest_proto3.pb.cc'; then $(CYGPATH_W) 'google/protobuf/unittest_proto3.pb.cc'; else $(CYGPATH_W) '$(srcdir)/google/protobuf/unittest_proto3.pb.cc'; fi`
-
 google/protobuf/protobuf_test-unittest_proto3_arena.pb.o: google/protobuf/unittest_proto3_arena.pb.cc
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(protobuf_test_CPPFLAGS) $(CPPFLAGS) $(protobuf_test_CXXFLAGS) $(CXXFLAGS) -MT google/protobuf/protobuf_test-unittest_proto3_arena.pb.o -MD -MP -MF google/protobuf/$(DEPDIR)/protobuf_test-unittest_proto3_arena.pb.Tpo -c -o google/protobuf/protobuf_test-unittest_proto3_arena.pb.o `test -f 'google/protobuf/unittest_proto3_arena.pb.cc' || echo '$(srcdir)/'`google/protobuf/unittest_proto3_arena.pb.cc
 @am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) google/protobuf/$(DEPDIR)/protobuf_test-unittest_proto3_arena.pb.Tpo google/protobuf/$(DEPDIR)/protobuf_test-unittest_proto3_arena.pb.Po
@@ -7511,20 +7403,6 @@ google/protobuf/util/internal/testdata/protobuf_test-wrappers.pb.obj: google/pro
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='google/protobuf/util/internal/testdata/wrappers.pb.cc' object='google/protobuf/util/internal/testdata/protobuf_test-wrappers.pb.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(protobuf_test_CPPFLAGS) $(CPPFLAGS) $(protobuf_test_CXXFLAGS) $(CXXFLAGS) -c -o google/protobuf/util/internal/testdata/protobuf_test-wrappers.pb.obj `if test -f 'google/protobuf/util/internal/testdata/wrappers.pb.cc'; then $(CYGPATH_W) 'google/protobuf/util/internal/testdata/wrappers.pb.cc'; else $(CYGPATH_W) '$(srcdir)/google/protobuf/util/internal/testdata/wrappers.pb.cc'; fi`
-
-google/protobuf/util/protobuf_test-json_format.pb.o: google/protobuf/util/json_format.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(protobuf_test_CPPFLAGS) $(CPPFLAGS) $(protobuf_test_CXXFLAGS) $(CXXFLAGS) -MT google/protobuf/util/protobuf_test-json_format.pb.o -MD -MP -MF google/protobuf/util/$(DEPDIR)/protobuf_test-json_format.pb.Tpo -c -o google/protobuf/util/protobuf_test-json_format.pb.o `test -f 'google/protobuf/util/json_format.pb.cc' || echo '$(srcdir)/'`google/protobuf/util/json_format.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) google/protobuf/util/$(DEPDIR)/protobuf_test-json_format.pb.Tpo google/protobuf/util/$(DEPDIR)/protobuf_test-json_format.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='google/protobuf/util/json_format.pb.cc' object='google/protobuf/util/protobuf_test-json_format.pb.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(protobuf_test_CPPFLAGS) $(CPPFLAGS) $(protobuf_test_CXXFLAGS) $(CXXFLAGS) -c -o google/protobuf/util/protobuf_test-json_format.pb.o `test -f 'google/protobuf/util/json_format.pb.cc' || echo '$(srcdir)/'`google/protobuf/util/json_format.pb.cc
-
-google/protobuf/util/protobuf_test-json_format.pb.obj: google/protobuf/util/json_format.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(protobuf_test_CPPFLAGS) $(CPPFLAGS) $(protobuf_test_CXXFLAGS) $(CXXFLAGS) -MT google/protobuf/util/protobuf_test-json_format.pb.obj -MD -MP -MF google/protobuf/util/$(DEPDIR)/protobuf_test-json_format.pb.Tpo -c -o google/protobuf/util/protobuf_test-json_format.pb.obj `if test -f 'google/protobuf/util/json_format.pb.cc'; then $(CYGPATH_W) 'google/protobuf/util/json_format.pb.cc'; else $(CYGPATH_W) '$(srcdir)/google/protobuf/util/json_format.pb.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) google/protobuf/util/$(DEPDIR)/protobuf_test-json_format.pb.Tpo google/protobuf/util/$(DEPDIR)/protobuf_test-json_format.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='google/protobuf/util/json_format.pb.cc' object='google/protobuf/util/protobuf_test-json_format.pb.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(protobuf_test_CPPFLAGS) $(CPPFLAGS) $(protobuf_test_CXXFLAGS) $(CXXFLAGS) -c -o google/protobuf/util/protobuf_test-json_format.pb.obj `if test -f 'google/protobuf/util/json_format.pb.cc'; then $(CYGPATH_W) 'google/protobuf/util/json_format.pb.cc'; else $(CYGPATH_W) '$(srcdir)/google/protobuf/util/json_format.pb.cc'; fi`
 
 google/protobuf/util/protobuf_test-json_format_proto3.pb.o: google/protobuf/util/json_format_proto3.pb.cc
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(protobuf_test_CPPFLAGS) $(CPPFLAGS) $(protobuf_test_CXXFLAGS) $(CXXFLAGS) -MT google/protobuf/util/protobuf_test-json_format_proto3.pb.o -MD -MP -MF google/protobuf/util/$(DEPDIR)/protobuf_test-json_format_proto3.pb.Tpo -c -o google/protobuf/util/protobuf_test-json_format_proto3.pb.o `test -f 'google/protobuf/util/json_format_proto3.pb.cc' || echo '$(srcdir)/'`google/protobuf/util/json_format_proto3.pb.cc

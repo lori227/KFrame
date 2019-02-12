@@ -1,17 +1,16 @@
-import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.ByteString;
-import com.google.protobuf.CodedInputStream;
-import com.google.protobuf.ExtensionRegistry;
-import com.google.protobuf.InvalidProtocolBufferException;
+import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.Parser;
-import com.google.protobuf.TextFormat;
+import com.google.protobuf.CodedInputStream;
 import com.google.protobuf.conformance.Conformance;
-import com.google.protobuf.util.JsonFormat;
-import com.google.protobuf.util.JsonFormat.TypeRegistry;
-import com.google.protobuf_test_messages.proto2.TestMessagesProto2;
-import com.google.protobuf_test_messages.proto2.TestMessagesProto2.TestAllTypesProto2;
+import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf_test_messages.proto3.TestMessagesProto3;
 import com.google.protobuf_test_messages.proto3.TestMessagesProto3.TestAllTypesProto3;
+import com.google.protobuf_test_messages.proto2.TestMessagesProto2;
+import com.google.protobuf_test_messages.proto2.TestMessagesProto2.TestAllTypesProto2;
+import com.google.protobuf.ExtensionRegistry;
+import com.google.protobuf.util.JsonFormat;
+import com.google.protobuf.util.JsonFormat.TypeRegistry;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
@@ -234,27 +233,12 @@ class ConformanceJava {
       }
       case JSON_PAYLOAD: {
         try {
-          TestMessagesProto3.TestAllTypesProto3.Builder builder =
+          TestMessagesProto3.TestAllTypesProto3.Builder builder = 
               TestMessagesProto3.TestAllTypesProto3.newBuilder();
-          JsonFormat.Parser parser = JsonFormat.parser().usingTypeRegistry(typeRegistry);
-          if (request.getTestCategory()
-              == Conformance.TestCategory.JSON_IGNORE_UNKNOWN_PARSING_TEST) {
-            parser = parser.ignoringUnknownFields();
-          }
-          parser.merge(request.getJsonPayload(), builder);
+          JsonFormat.parser().usingTypeRegistry(typeRegistry)
+              .merge(request.getJsonPayload(), builder);
           testMessage = builder.build();
         } catch (InvalidProtocolBufferException e) {
-          return Conformance.ConformanceResponse.newBuilder().setParseError(e.getMessage()).build();
-        }
-        break;
-      }
-      case TEXT_PAYLOAD: {
-        try {
-          TestMessagesProto3.TestAllTypesProto3.Builder builder =
-              TestMessagesProto3.TestAllTypesProto3.newBuilder();
-          TextFormat.merge(request.getTextPayload(), builder);
-          testMessage = builder.build();
-        } catch (TextFormat.ParseException e) {
           return Conformance.ConformanceResponse.newBuilder().setParseError(e.getMessage()).build();
         }
         break;
@@ -285,10 +269,6 @@ class ConformanceJava {
           return Conformance.ConformanceResponse.newBuilder().setSerializeError(
               e.getMessage()).build();
         }
-
-      case TEXT_FORMAT:
-        return Conformance.ConformanceResponse.newBuilder().setTextPayload(
-            TextFormat.printToString(testMessage)).build();
 
       default: {
         throw new RuntimeException("Unexpected request output.");

@@ -142,8 +142,6 @@ conformance_objc_LINK = $(LIBTOOL) $(AM_V_lt) $(AM_LIBTOOLFLAGS) \
 	$(OBJCFLAGS) $(conformance_objc_LDFLAGS) $(LDFLAGS) -o $@
 am_conformance_test_runner_OBJECTS =  \
 	conformance_test_runner-conformance_test.$(OBJEXT) \
-	conformance_test_runner-binary_json_conformance_main.$(OBJEXT) \
-	conformance_test_runner-binary_json_conformance_suite.$(OBJEXT) \
 	conformance_test_runner-conformance_test_runner.$(OBJEXT) \
 	third_party/jsoncpp/conformance_test_runner-jsoncpp.$(OBJEXT)
 nodist_conformance_test_runner_OBJECTS =  \
@@ -313,7 +311,6 @@ ISAINFO = @ISAINFO@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
 LDFLAGS_FOR_BUILD = @LDFLAGS_FOR_BUILD@
-LIBATOMIC_LIBS = @LIBATOMIC_LIBS@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
@@ -524,7 +521,6 @@ other_language_protoc_outputs = \
   google/protobuf/wrappers_pb2.py                              \
   Conformance/ConformanceRequest.php                           \
   Conformance/ConformanceResponse.php                          \
-  Conformance/FailureSet.php                                   \
   Conformance/WireFormat.php                                   \
   GPBMetadata/Conformance.php                                  \
   GPBMetadata/Google/Protobuf/Any.php                          \
@@ -583,9 +579,6 @@ EXTRA_DIST = \
 
 conformance_test_runner_LDADD = $(top_srcdir)/src/libprotobuf.la
 conformance_test_runner_SOURCES = conformance_test.h conformance_test.cc \
-                                  binary_json_conformance_main.cc        \
-                                  binary_json_conformance_suite.h        \
-                                  binary_json_conformance_suite.cc       \
                                   conformance_test_runner.cc             \
                                   third_party/jsoncpp/json.h             \
                                   third_party/jsoncpp/jsoncpp.cpp
@@ -760,8 +753,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/conformance_cpp-conformance_cpp.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/conformance_objc-Conformance.pbobjc.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/conformance_objc-conformance_objc.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/conformance_test_runner-binary_json_conformance_main.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/conformance_test_runner-binary_json_conformance_suite.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/conformance_test_runner-conformance.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/conformance_test_runner-conformance_test.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/conformance_test_runner-conformance_test_runner.Po@am__quote@
@@ -866,34 +857,6 @@ conformance_test_runner-conformance_test.obj: conformance_test.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='conformance_test.cc' object='conformance_test_runner-conformance_test.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(conformance_test_runner_CPPFLAGS) $(CPPFLAGS) $(conformance_test_runner_CXXFLAGS) $(CXXFLAGS) -c -o conformance_test_runner-conformance_test.obj `if test -f 'conformance_test.cc'; then $(CYGPATH_W) 'conformance_test.cc'; else $(CYGPATH_W) '$(srcdir)/conformance_test.cc'; fi`
-
-conformance_test_runner-binary_json_conformance_main.o: binary_json_conformance_main.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(conformance_test_runner_CPPFLAGS) $(CPPFLAGS) $(conformance_test_runner_CXXFLAGS) $(CXXFLAGS) -MT conformance_test_runner-binary_json_conformance_main.o -MD -MP -MF $(DEPDIR)/conformance_test_runner-binary_json_conformance_main.Tpo -c -o conformance_test_runner-binary_json_conformance_main.o `test -f 'binary_json_conformance_main.cc' || echo '$(srcdir)/'`binary_json_conformance_main.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/conformance_test_runner-binary_json_conformance_main.Tpo $(DEPDIR)/conformance_test_runner-binary_json_conformance_main.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='binary_json_conformance_main.cc' object='conformance_test_runner-binary_json_conformance_main.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(conformance_test_runner_CPPFLAGS) $(CPPFLAGS) $(conformance_test_runner_CXXFLAGS) $(CXXFLAGS) -c -o conformance_test_runner-binary_json_conformance_main.o `test -f 'binary_json_conformance_main.cc' || echo '$(srcdir)/'`binary_json_conformance_main.cc
-
-conformance_test_runner-binary_json_conformance_main.obj: binary_json_conformance_main.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(conformance_test_runner_CPPFLAGS) $(CPPFLAGS) $(conformance_test_runner_CXXFLAGS) $(CXXFLAGS) -MT conformance_test_runner-binary_json_conformance_main.obj -MD -MP -MF $(DEPDIR)/conformance_test_runner-binary_json_conformance_main.Tpo -c -o conformance_test_runner-binary_json_conformance_main.obj `if test -f 'binary_json_conformance_main.cc'; then $(CYGPATH_W) 'binary_json_conformance_main.cc'; else $(CYGPATH_W) '$(srcdir)/binary_json_conformance_main.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/conformance_test_runner-binary_json_conformance_main.Tpo $(DEPDIR)/conformance_test_runner-binary_json_conformance_main.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='binary_json_conformance_main.cc' object='conformance_test_runner-binary_json_conformance_main.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(conformance_test_runner_CPPFLAGS) $(CPPFLAGS) $(conformance_test_runner_CXXFLAGS) $(CXXFLAGS) -c -o conformance_test_runner-binary_json_conformance_main.obj `if test -f 'binary_json_conformance_main.cc'; then $(CYGPATH_W) 'binary_json_conformance_main.cc'; else $(CYGPATH_W) '$(srcdir)/binary_json_conformance_main.cc'; fi`
-
-conformance_test_runner-binary_json_conformance_suite.o: binary_json_conformance_suite.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(conformance_test_runner_CPPFLAGS) $(CPPFLAGS) $(conformance_test_runner_CXXFLAGS) $(CXXFLAGS) -MT conformance_test_runner-binary_json_conformance_suite.o -MD -MP -MF $(DEPDIR)/conformance_test_runner-binary_json_conformance_suite.Tpo -c -o conformance_test_runner-binary_json_conformance_suite.o `test -f 'binary_json_conformance_suite.cc' || echo '$(srcdir)/'`binary_json_conformance_suite.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/conformance_test_runner-binary_json_conformance_suite.Tpo $(DEPDIR)/conformance_test_runner-binary_json_conformance_suite.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='binary_json_conformance_suite.cc' object='conformance_test_runner-binary_json_conformance_suite.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(conformance_test_runner_CPPFLAGS) $(CPPFLAGS) $(conformance_test_runner_CXXFLAGS) $(CXXFLAGS) -c -o conformance_test_runner-binary_json_conformance_suite.o `test -f 'binary_json_conformance_suite.cc' || echo '$(srcdir)/'`binary_json_conformance_suite.cc
-
-conformance_test_runner-binary_json_conformance_suite.obj: binary_json_conformance_suite.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(conformance_test_runner_CPPFLAGS) $(CPPFLAGS) $(conformance_test_runner_CXXFLAGS) $(CXXFLAGS) -MT conformance_test_runner-binary_json_conformance_suite.obj -MD -MP -MF $(DEPDIR)/conformance_test_runner-binary_json_conformance_suite.Tpo -c -o conformance_test_runner-binary_json_conformance_suite.obj `if test -f 'binary_json_conformance_suite.cc'; then $(CYGPATH_W) 'binary_json_conformance_suite.cc'; else $(CYGPATH_W) '$(srcdir)/binary_json_conformance_suite.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/conformance_test_runner-binary_json_conformance_suite.Tpo $(DEPDIR)/conformance_test_runner-binary_json_conformance_suite.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='binary_json_conformance_suite.cc' object='conformance_test_runner-binary_json_conformance_suite.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(conformance_test_runner_CPPFLAGS) $(CPPFLAGS) $(conformance_test_runner_CXXFLAGS) $(CXXFLAGS) -c -o conformance_test_runner-binary_json_conformance_suite.obj `if test -f 'binary_json_conformance_suite.cc'; then $(CYGPATH_W) 'binary_json_conformance_suite.cc'; else $(CYGPATH_W) '$(srcdir)/binary_json_conformance_suite.cc'; fi`
 
 conformance_test_runner-conformance_test_runner.o: conformance_test_runner.cc
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(conformance_test_runner_CPPFLAGS) $(CPPFLAGS) $(conformance_test_runner_CXXFLAGS) $(CXXFLAGS) -MT conformance_test_runner-conformance_test_runner.o -MD -MP -MF $(DEPDIR)/conformance_test_runner-conformance_test_runner.Tpo -c -o conformance_test_runner-conformance_test_runner.o `test -f 'conformance_test_runner.cc' || echo '$(srcdir)/'`conformance_test_runner.cc
@@ -1438,9 +1401,6 @@ test_csharp: protoc_middleman conformance-test-runner conformance-csharp
 
 test_ruby: protoc_middleman conformance-test-runner $(other_language_protoc_outputs)
 	RUBYLIB=../ruby/lib:. ./conformance-test-runner --enforce_recommended --failure_list failure_list_ruby.txt ./conformance_ruby.rb
-
-test_ruby_mac: protoc_middleman conformance-test-runner $(other_language_protoc_outputs)
-	RUBYLIB=../ruby/lib:. ./conformance-test-runner --enforce_recommended --failure_list failure_list_ruby_mac.txt ./conformance_ruby.rb
 
 test_php: protoc_middleman conformance-test-runner conformance-php $(other_language_protoc_outputs)
 	./conformance-test-runner --enforce_recommended --failure_list failure_list_php.txt ./conformance-php

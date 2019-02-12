@@ -48,9 +48,9 @@ namespace compiler {
 namespace csharp {
 
 MapFieldGenerator::MapFieldGenerator(const FieldDescriptor* descriptor,
-                                     int presenceIndex,
+                                     int fieldOrdinal,
                                      const Options* options)
-    : FieldGeneratorBase(descriptor, presenceIndex, options) {
+    : FieldGeneratorBase(descriptor, fieldOrdinal, options) {
 }
 
 MapFieldGenerator::~MapFieldGenerator() {

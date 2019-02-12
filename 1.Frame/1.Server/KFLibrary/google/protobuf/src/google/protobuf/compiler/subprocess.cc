@@ -124,17 +124,14 @@ void Subprocess::Start(const string& program, SearchMode search_mode) {
                       << Win32ErrorMessage(GetLastError());
   }
 
-  // Invoking cmd.exe allows for '.bat' files from the path as well as '.exe'.
-  // Using a malloc'ed string because CreateProcess() can mutate its second
-  // parameter.
-  char *command_line =
-      portable_strdup(("cmd.exe /c \"" + program + "\"").c_str());
+  // CreateProcess() mutates its second parameter.  WTF?
+  char* name_copy = portable_strdup(program.c_str());
 
   // Create the process.
   PROCESS_INFORMATION process_info;
 
   if (CreateProcessA((search_mode == SEARCH_PATH) ? NULL : program.c_str(),
-                     (search_mode == SEARCH_PATH) ? command_line : NULL,
+                     (search_mode == SEARCH_PATH) ? name_copy : NULL,
                      NULL,  // process security attributes
                      NULL,  // thread security attributes
                      TRUE,  // inherit handles?
@@ -155,7 +152,7 @@ void Subprocess::Start(const string& program, SearchMode search_mode) {
 
   CloseHandleOrDie(stdin_pipe_read);
   CloseHandleOrDie(stdout_pipe_write);
-  free(command_line);
+  free(name_copy);
 }
 
 bool Subprocess::Communicate(const Message& input, Message* output,

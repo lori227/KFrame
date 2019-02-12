@@ -38,12 +38,6 @@
 #include <google/protobuf/message.h>
 #include <google/protobuf/generated_enum_util.h>
 
-#ifdef SWIG
-#error "You cannot SWIG proto headers"
-#endif
-
-#include <google/protobuf/port_def.inc>
-
 namespace google {
 namespace protobuf {
 namespace internal {
@@ -346,13 +340,14 @@ namespace internal {
 //
 // You can map from T to the actual type using RefTypeTraits:
 //   typedef RefTypeTraits<T>::AccessorValueType ActualType;
-class PROTOBUF_EXPORT RepeatedFieldAccessor {
+class LIBPROTOBUF_EXPORT RepeatedFieldAccessor {
  public:
   // Typedefs for clarity.
   typedef void Field;
   typedef void Value;
   typedef void Iterator;
 
+  virtual ~RepeatedFieldAccessor();
   virtual bool IsEmpty(const Field* data) const = 0;
   virtual int Size(const Field* data) const = 0;
   // Depends on the underlying representation of the repeated field, this
@@ -430,13 +425,6 @@ class PROTOBUF_EXPORT RepeatedFieldAccessor {
     ActualType tmp = static_cast<ActualType>(value);
     Add(data, static_cast<const Value*>(&tmp));
   }
-
- protected:
-  // We want the destructor to be completely trivial as to allow it to be
-  // a function local static. Hence we make it non-virtual and protected,
-  // this class only live as part of a global singleton and should not be
-  // deleted.
-  ~RepeatedFieldAccessor() = default;
 };
 
 // Implement (Mutable)RepeatedFieldRef::iterator
@@ -575,12 +563,12 @@ struct RefTypeTraits<
 
 template<typename T>
 struct RefTypeTraits<
-    T, typename std::enable_if<std::is_same<std::string, T>::value>::type> {
+    T, typename std::enable_if<std::is_same<string, T>::value>::type> {
   typedef RepeatedFieldRefIterator<T> iterator;
   typedef RepeatedFieldAccessor AccessorType;
-  typedef std::string AccessorValueType;
-  typedef const std::string IteratorValueType;
-  typedef const std::string* IteratorPointerType;
+  typedef string AccessorValueType;
+  typedef const string IteratorValueType;
+  typedef const string* IteratorPointerType;
   static const FieldDescriptor::CppType cpp_type =
       FieldDescriptor::CPPTYPE_STRING;
   static const Descriptor* GetMessageFieldDescriptor() {
@@ -618,7 +606,5 @@ struct RefTypeTraits<
 }  // namespace internal
 }  // namespace protobuf
 }  // namespace google
-
-#include <google/protobuf/port_undef.inc>
 
 #endif  // GOOGLE_PROTOBUF_REFLECTION_H__

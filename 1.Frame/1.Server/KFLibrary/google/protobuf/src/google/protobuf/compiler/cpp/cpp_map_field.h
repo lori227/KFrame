@@ -62,8 +62,11 @@ class MapFieldGenerator : public FieldGenerator {
 
  private:
   // A helper for GenerateSerializeWithCachedSizes{,ToArray}.
-  void GenerateSerializeWithCachedSizes(io::Printer* printer,
-                                        bool to_array) const;
+  void GenerateSerializeWithCachedSizes(
+      io::Printer* printer, const std::map<string, string>& variables) const;
+
+  const FieldDescriptor* descriptor_;
+  std::map<string, string> variables_;
 
   GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(MapFieldGenerator);
 };
@@ -71,6 +74,6 @@ class MapFieldGenerator : public FieldGenerator {
 }  // namespace cpp
 }  // namespace compiler
 }  // namespace protobuf
-}  // namespace google
 
+}  // namespace google
 #endif  // GOOGLE_PROTOBUF_COMPILER_CPP_MAP_FIELD_H__

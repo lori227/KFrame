@@ -90,7 +90,7 @@ TEST(PythonPluginTest, PluginTest) {
                              "}\n",
                              true));
 
-  compiler::CommandLineInterface cli;
+  google::protobuf::compiler::CommandLineInterface cli;
   cli.SetInputsAreProtoPathRelative(true);
 
   python::Generator python_generator;
@@ -133,7 +133,7 @@ TEST(PythonPluginTest, ImportTest) {
                              "message Message2 {}\n",
                              true));
 
-  compiler::CommandLineInterface cli;
+  google::protobuf::compiler::CommandLineInterface cli;
   cli.SetInputsAreProtoPathRelative(true);
   python::Generator python_generator;
   cli.RegisterGenerator("--python_out", &python_generator, "");

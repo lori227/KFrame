@@ -34,8 +34,6 @@
 #include <google/protobuf/stubs/common.h>
 #include <google/protobuf/stubs/stringpiece.h>
 
-#include <google/protobuf/port_def.inc>
-
 namespace google {
 namespace protobuf {
 namespace util {
@@ -57,7 +55,7 @@ class DataPiece;
 //
 // TODO(xinb): seems like a prime candidate to apply the RAII paradigm
 // and get rid the need to call EndXXX().
-class PROTOBUF_EXPORT ObjectWriter {
+class LIBPROTOBUF_EXPORT ObjectWriter {
  public:
   virtual ~ObjectWriter() {}
 
@@ -95,8 +93,7 @@ class PROTOBUF_EXPORT ObjectWriter {
   virtual ObjectWriter* RenderFloat(StringPiece name, float value) = 0;
 
   // Renders a StringPiece value. This is for rendering strings.
-  virtual ObjectWriter* RenderString(StringPiece name,
-                                     StringPiece value) = 0;
+  virtual ObjectWriter* RenderString(StringPiece name, StringPiece value) = 0;
 
   // Renders a bytes value.
   virtual ObjectWriter* RenderBytes(StringPiece name, StringPiece value) = 0;
@@ -137,8 +134,6 @@ class PROTOBUF_EXPORT ObjectWriter {
 }  // namespace converter
 }  // namespace util
 }  // namespace protobuf
+
 }  // namespace google
-
-#include <google/protobuf/port_undef.inc>
-
 #endif  // GOOGLE_PROTOBUF_UTIL_CONVERTER_OBJECT_WRITER_H__

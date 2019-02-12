@@ -40,13 +40,14 @@ namespace java {
 
 class ImmutableMapFieldLiteGenerator : public ImmutableFieldLiteGenerator {
  public:
-  explicit ImmutableMapFieldLiteGenerator(const FieldDescriptor* descriptor,
-                                          int messageBitIndex,
-                                          Context* context);
+  explicit ImmutableMapFieldLiteGenerator(
+      const FieldDescriptor* descriptor, int messageBitIndex,
+      int builderBitIndex, Context* context);
   ~ImmutableMapFieldLiteGenerator();
 
   // implements ImmutableFieldLiteGenerator ------------------------------------
   int GetNumBitsForMessage() const;
+  int GetNumBitsForBuilder() const;
   void GenerateInterfaceMembers(io::Printer* printer) const;
   void GenerateMembers(io::Printer* printer) const;
   void GenerateBuilderMembers(io::Printer* printer) const;
@@ -62,18 +63,17 @@ class ImmutableMapFieldLiteGenerator : public ImmutableFieldLiteGenerator {
   void GenerateHashCode(io::Printer* printer) const;
 
 
-  std::string GetBoxedType() const;
+  string GetBoxedType() const;
 
  private:
   const FieldDescriptor* descriptor_;
-  std::map<std::string, std::string> variables_;
-  Context* context_;
+  std::map<string, string> variables_;
   ClassNameResolver* name_resolver_;
 };
 
 }  // namespace java
 }  // namespace compiler
 }  // namespace protobuf
-}  // namespace google
 
+}  // namespace google
 #endif  // GOOGLE_PROTOBUF_COMPILER_JAVA_MAP_FIELD_LITE_H__

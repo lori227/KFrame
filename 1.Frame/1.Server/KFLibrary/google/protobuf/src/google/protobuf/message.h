@@ -115,22 +115,15 @@
 #include <type_traits>
 #include <vector>
 
-#include <google/protobuf/stubs/casts.h>
-#include <google/protobuf/stubs/common.h>
 #include <google/protobuf/arena.h>
-#include <google/protobuf/descriptor.h>
 #include <google/protobuf/message_lite.h>
-#include <google/protobuf/port.h>
+
+#include <google/protobuf/stubs/common.h>
+#include <google/protobuf/descriptor.h>
 
 
 #define GOOGLE_PROTOBUF_HAS_ONEOF
 #define GOOGLE_PROTOBUF_HAS_ARENAS
-
-#include <google/protobuf/port_def.inc>
-
-#ifdef SWIG
-#error "You cannot SWIG proto headers"
-#endif
 
 namespace google {
 namespace protobuf {
@@ -163,13 +156,8 @@ namespace expr {
 class CelMapReflectionFriend;  // field_backed_map_impl.cc
 }
 
-namespace internal {
-class MapFieldPrinterHelper;   // text_format.cc
-}
-
 
 namespace internal {
-class ReflectionAccessor;  // message.cc
 class ReflectionOps;     // reflection_ops.h
 class MapKeySorter;      // wire_format.cc
 class WireFormat;        // wire_format.h
@@ -198,22 +186,22 @@ struct Metadata {
 // optimized for speed will want to override these with faster implementations,
 // but classes optimized for code size may be happy with keeping them.  See
 // the optimize_for option in descriptor.proto.
-class PROTOBUF_EXPORT Message : public MessageLite {
+class LIBPROTOBUF_EXPORT Message : public MessageLite {
  public:
   inline Message() {}
-  ~Message() override {}
+  virtual ~Message() {}
 
   // Basic Operations ------------------------------------------------
 
   // Construct a new instance of the same type.  Ownership is passed to the
   // caller.  (This is also defined in MessageLite, but is defined again here
   // for return-type covariance.)
-  Message* New() const override = 0;
+  virtual Message* New() const = 0;
 
   // Construct a new instance on the arena. Ownership is passed to the caller
   // if arena is a NULL. Default implementation allows for API compatibility
   // during the Arena transition.
-  Message* New(Arena* arena) const override {
+  virtual Message* New(::google::protobuf::Arena* arena) const {
     Message* message = New();
     if (arena != NULL) {
       arena->Own(message);
@@ -241,11 +229,11 @@ class PROTOBUF_EXPORT Message : public MessageLite {
   // This is much, much slower than IsInitialized() as it is implemented
   // purely via reflection.  Generally, you should not call this unless you
   // have already determined that an error exists by calling IsInitialized().
-  void FindInitializationErrors(std::vector<std::string>* errors) const;
+  void FindInitializationErrors(std::vector<string>* errors) const;
 
   // Like FindInitializationErrors, but joins all the strings, delimited by
   // commas, and returns them.
-  std::string InitializationErrorString() const override;
+  string InitializationErrorString() const;
 
   // Clears all unknown fields from this message and all embedded messages.
   // Normally, if unknown tag numbers are encountered when parsing a message,
@@ -269,18 +257,18 @@ class PROTOBUF_EXPORT Message : public MessageLite {
   // fields defined for the proto.
   virtual size_t SpaceUsedLong() const;
 
-  PROTOBUF_DEPRECATED_MSG("Please use SpaceUsedLong() instead")
+  PROTOBUF_RUNTIME_DEPRECATED("Please use SpaceUsedLong() instead")
   int SpaceUsed() const { return internal::ToIntSize(SpaceUsedLong()); }
 
   // Debugging & Testing----------------------------------------------
 
   // Generates a human readable form of this message, useful for debugging
   // and other purposes.
-  std::string DebugString() const;
+  string DebugString() const;
   // Like DebugString(), but with less whitespace.
-  std::string ShortDebugString() const;
+  string ShortDebugString() const;
   // Like DebugString(), but do not escape UTF-8 byte sequences.
-  std::string Utf8DebugString() const;
+  string Utf8DebugString() const;
   // Convenience function useful in GDB.  Prints DebugString() to stdout.
   void PrintDebugString() const;
 
@@ -317,23 +305,13 @@ class PROTOBUF_EXPORT Message : public MessageLite {
   // These methods are pure-virtual in MessageLite, but Message provides
   // reflection-based default implementations.
 
-  std::string GetTypeName() const override;
-  void Clear() override;
-  bool IsInitialized() const override;
-  void CheckTypeAndMergeFrom(const MessageLite& other) override;
-#if !GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
-  bool MergePartialFromCodedStream(io::CodedInputStream* input) override;
-#endif
-  size_t ByteSizeLong() const override;
-  void SerializeWithCachedSizes(io::CodedOutputStream* output) const override;
-
-#if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
-  internal::ParseFunc _ParseFunc() const override { return _InternalParse; }
-
-  // Reflective parser
-  static const char* _InternalParse(const char* begin, const char* end,
-                                    void* object, internal::ParseContext* ctx);
-#endif
+  virtual string GetTypeName() const;
+  virtual void Clear();
+  virtual bool IsInitialized() const;
+  virtual void CheckTypeAndMergeFrom(const MessageLite& other);
+  virtual bool MergePartialFromCodedStream(io::CodedInputStream* input);
+  virtual size_t ByteSizeLong() const;
+  virtual void SerializeWithCachedSizes(io::CodedOutputStream* output) const;
 
  private:
   // This is called only by the default implementation of ByteSize(), to
@@ -349,6 +327,8 @@ class PROTOBUF_EXPORT Message : public MessageLite {
 
   // Introspection ---------------------------------------------------
 
+  // Typedef for backwards-compatibility.
+  typedef google::protobuf::Reflection Reflection;
 
   // Get a non-owning pointer to a Descriptor for this message's type.  This
   // describes what fields the message contains, the types of those fields, etc.
@@ -429,25 +409,28 @@ class MutableRepeatedFieldRef;
 // double the message's memory footprint, probably worse.  Allocating the
 // objects on-demand, on the other hand, would be expensive and prone to
 // memory leaks.  So, instead we ended up with this flat interface.
-class PROTOBUF_EXPORT Reflection {
+class LIBPROTOBUF_EXPORT Reflection {
  public:
   inline Reflection() {}
   virtual ~Reflection();
 
   // Get the UnknownFieldSet for the message.  This contains fields which
   // were seen when the Message was parsed but were not recognized according
-  // to the Message's definition.
+  // to the Message's definition. For proto3 protos, this method will always
+  // return an empty UnknownFieldSet.
   virtual const UnknownFieldSet& GetUnknownFields(
       const Message& message) const = 0;
   // Get a mutable pointer to the UnknownFieldSet for the message.  This
   // contains fields which were seen when the Message was parsed but were not
-  // recognized according to the Message's definition.
+  // recognized according to the Message's definition. For proto3 protos, this
+  // method will return a valid mutable UnknownFieldSet pointer but modifying
+  // it won't affect the serialized bytes of the message.
   virtual UnknownFieldSet* MutableUnknownFields(Message* message) const = 0;
 
   // Estimate the amount of memory used by the message object.
   virtual size_t SpaceUsedLong(const Message& message) const = 0;
 
-  PROTOBUF_DEPRECATED_MSG("Please use SpaceUsedLong() instead")
+  PROTOBUF_RUNTIME_DEPRECATED("Please use SpaceUsedLong() instead")
   int SpaceUsed(const Message& message) const {
     return internal::ToIntSize(SpaceUsedLong(message));
   }
@@ -544,7 +527,7 @@ class PROTOBUF_EXPORT Reflection {
                            const FieldDescriptor* field) const = 0;
   virtual bool   GetBool  (const Message& message,
                            const FieldDescriptor* field) const = 0;
-  virtual std::string GetString(const Message& message,
+  virtual string GetString(const Message& message,
                            const FieldDescriptor* field) const = 0;
   virtual const EnumValueDescriptor* GetEnum(
       const Message& message, const FieldDescriptor* field) const = 0;
@@ -571,15 +554,15 @@ class PROTOBUF_EXPORT Reflection {
   // *scratch and return that.
   //
   // Note:  It is perfectly reasonable and useful to write code like:
-  //     str = reflection->GetStringReference(message, field, &str);
+  //     str = reflection->GetStringReference(field, &str);
   //   This line would ensure that only one copy of the string is made
   //   regardless of the field's underlying representation.  When initializing
   //   a newly-constructed string, though, it's just as fast and more readable
   //   to use code like:
   //     string str = reflection->GetString(message, field);
-  virtual const std::string& GetStringReference(const Message& message,
+  virtual const string& GetStringReference(const Message& message,
                                            const FieldDescriptor* field,
-                                           std::string* scratch) const = 0;
+                                           string* scratch) const = 0;
 
 
   // Singular field mutators -----------------------------------------
@@ -601,17 +584,14 @@ class PROTOBUF_EXPORT Reflection {
                          const FieldDescriptor* field, bool   value) const = 0;
   virtual void SetString(Message* message,
                          const FieldDescriptor* field,
-                         const std::string& value) const = 0;
+                         const string& value) const = 0;
   virtual void SetEnum  (Message* message,
                          const FieldDescriptor* field,
                          const EnumValueDescriptor* value) const = 0;
   // Set an enum field's value with an integer rather than EnumValueDescriptor.
-  // For proto3 this is just setting the enum field to the value specified, for
-  // proto2 it's more complicated. If value is a known enum value the field is
-  // set as usual. If the value is unknown then it is added to the unknown field
-  // set. Note this matches the behavior of parsing unknown enum values.
-  // If multiple calls with unknown values happen than they are all added to the
-  // unknown field set in order of the calls.
+  // If the value does not correspond to a known enum value, either behavior is
+  // undefined (for proto2 messages), or the value is accepted silently for
+  // messages with new unknown-enum-value semantics.
   virtual void SetEnumValue(Message* message,
                             const FieldDescriptor* field,
                             int value) const = 0;
@@ -672,7 +652,7 @@ class PROTOBUF_EXPORT Reflection {
   virtual bool   GetRepeatedBool  (const Message& message,
                                    const FieldDescriptor* field,
                                    int index) const = 0;
-  virtual std::string GetRepeatedString(const Message& message,
+  virtual string GetRepeatedString(const Message& message,
                                    const FieldDescriptor* field,
                                    int index) const = 0;
   virtual const EnumValueDescriptor* GetRepeatedEnum(
@@ -691,9 +671,9 @@ class PROTOBUF_EXPORT Reflection {
       const FieldDescriptor* field, int index) const = 0;
 
   // See GetStringReference(), above.
-  virtual const std::string& GetRepeatedStringReference(
+  virtual const string& GetRepeatedStringReference(
       const Message& message, const FieldDescriptor* field,
-      int index, std::string* scratch) const = 0;
+      int index, string* scratch) const = 0;
 
 
   // Repeated field mutators -----------------------------------------
@@ -722,17 +702,14 @@ class PROTOBUF_EXPORT Reflection {
                                  int index, bool   value) const = 0;
   virtual void SetRepeatedString(Message* message,
                                  const FieldDescriptor* field,
-                                 int index, const std::string& value) const = 0;
+                                 int index, const string& value) const = 0;
   virtual void SetRepeatedEnum(Message* message,
                                const FieldDescriptor* field, int index,
                                const EnumValueDescriptor* value) const = 0;
   // Set an enum field's value with an integer rather than EnumValueDescriptor.
-  // For proto3 this is just setting the enum field to the value specified, for
-  // proto2 it's more complicated. If value is a known enum value the field is
-  // set as usual. If the value is unknown then it is added to the unknown field
-  // set. Note this matches the behavior of parsing unknown enum values.
-  // If multiple calls with unknown values happen than they are all added to the
-  // unknown field set in order of the calls.
+  // If the value does not correspond to a known enum value, either behavior is
+  // undefined (for proto2 messages), or the value is accepted silently for
+  // messages with new unknown-enum-value semantics.
   virtual void SetRepeatedEnumValue(Message* message,
                                     const FieldDescriptor* field, int index,
                                     int value) const = 0;
@@ -761,17 +738,14 @@ class PROTOBUF_EXPORT Reflection {
                          const FieldDescriptor* field, bool   value) const = 0;
   virtual void AddString(Message* message,
                          const FieldDescriptor* field,
-                         const std::string& value) const = 0;
+                         const string& value) const = 0;
   virtual void AddEnum  (Message* message,
                          const FieldDescriptor* field,
                          const EnumValueDescriptor* value) const = 0;
-  // Add an integer value to a repeated enum field rather than
-  // EnumValueDescriptor. For proto3 this is just setting the enum field to the
-  // value specified, for proto2 it's more complicated. If value is a known enum
-  // value the field is set as usual. If the value is unknown then it is added
-  // to the unknown field set. Note this matches the behavior of parsing unknown
-  // enum values. If multiple calls with unknown values happen than they are all
-  // added to the unknown field set in order of the calls.
+  // Set an enum field's value with an integer rather than EnumValueDescriptor.
+  // If the value does not correspond to a known enum value, either behavior is
+  // undefined (for proto2 messages), or the value is accepted silently for
+  // messages with new unknown-enum-value semantics.
   virtual void AddEnumValue(Message* message,
                             const FieldDescriptor* field,
                             int value) const = 0;
@@ -781,7 +755,7 @@ class PROTOBUF_EXPORT Reflection {
                               MessageFactory* factory = NULL) const = 0;
 
   // Appends an already-allocated object 'new_entry' to the repeated field
-  // specified by 'field' passing ownership to the message.
+  // specifyed by 'field' passing ownership to the message.
   // TODO(tmarek): Make virtual after all subclasses have been
   // updated.
   virtual void AddAllocatedMessage(Message* message,
@@ -811,7 +785,7 @@ class PROTOBUF_EXPORT Reflection {
   // long as the message is not destroyed.
   //
   // Note that to use this method users need to include the header file
-  // "net/proto2/public/reflection.h" (which defines the RepeatedFieldRef
+  // "google/protobuf/reflection.h" (which defines the RepeatedFieldRef
   // class templates).
   template<typename T>
   RepeatedFieldRef<T> GetRepeatedFieldRef(
@@ -840,43 +814,43 @@ class PROTOBUF_EXPORT Reflection {
   // DEPRECATED. Please use GetRepeatedFieldRef().
   //
   // for T = Cord and all protobuf scalar types except enums.
-  template <typename T>
-  PROTOBUF_DEPRECATED_MSG("Please use GetRepeatedFieldRef() instead")
-  const RepeatedField<T>& GetRepeatedField(const Message&,
-                                           const FieldDescriptor*) const;
+  template<typename T>
+  PROTOBUF_RUNTIME_DEPRECATED("Please use GetRepeatedFieldRef() instead")
+  const RepeatedField<T>& GetRepeatedField(
+      const Message&, const FieldDescriptor*) const;
 
   // DEPRECATED. Please use GetMutableRepeatedFieldRef().
   //
   // for T = Cord and all protobuf scalar types except enums.
-  template <typename T>
-  PROTOBUF_DEPRECATED_MSG("Please use GetMutableRepeatedFieldRef() instead")
-  RepeatedField<T>* MutableRepeatedField(Message*,
-                                         const FieldDescriptor*) const;
+  template<typename T>
+  PROTOBUF_RUNTIME_DEPRECATED("Please use GetMutableRepeatedFieldRef() instead")
+  RepeatedField<T>* MutableRepeatedField(
+      Message*, const FieldDescriptor*) const;
 
   // DEPRECATED. Please use GetRepeatedFieldRef().
   //
   // for T = string, google::protobuf::internal::StringPieceField
   //         google::protobuf::Message & descendants.
-  template <typename T>
-  PROTOBUF_DEPRECATED_MSG("Please use GetRepeatedFieldRef() instead")
-  const RepeatedPtrField<T>& GetRepeatedPtrField(const Message&,
-                                                 const FieldDescriptor*) const;
+  template<typename T>
+  PROTOBUF_RUNTIME_DEPRECATED("Please use GetRepeatedFieldRef() instead")
+  const RepeatedPtrField<T>& GetRepeatedPtrField(
+      const Message&, const FieldDescriptor*) const;
 
   // DEPRECATED. Please use GetMutableRepeatedFieldRef().
   //
   // for T = string, google::protobuf::internal::StringPieceField
   //         google::protobuf::Message & descendants.
-  template <typename T>
-  PROTOBUF_DEPRECATED_MSG("Please use GetMutableRepeatedFieldRef() instead")
-  RepeatedPtrField<T>* MutableRepeatedPtrField(Message*,
-                                               const FieldDescriptor*) const;
+  template<typename T>
+  PROTOBUF_RUNTIME_DEPRECATED("Please use GetMutableRepeatedFieldRef() instead")
+  RepeatedPtrField<T>* MutableRepeatedPtrField(
+      Message*, const FieldDescriptor*) const;
 
   // Extensions ----------------------------------------------------------------
 
   // Try to find an extension of this message type by fully-qualified field
   // name.  Returns NULL if no extension is known for this name or number.
   virtual const FieldDescriptor* FindKnownExtensionByName(
-      const std::string& name) const = 0;
+      const string& name) const = 0;
 
   // Try to find an extension of this message type by field number.
   // Returns NULL if no extension is known for this name or number.
@@ -978,16 +952,13 @@ class PROTOBUF_EXPORT Reflection {
   friend class RepeatedFieldRef;
   template<typename T, typename Enable>
   friend class MutableRepeatedFieldRef;
-  friend class python::MapReflectionFriend;
+  friend class ::google::protobuf::python::MapReflectionFriend;
 #define GOOGLE_PROTOBUF_HAS_CEL_MAP_REFLECTION_FRIEND
-  friend class expr::CelMapReflectionFriend;
+  friend class ::google::protobuf::expr::CelMapReflectionFriend;
   friend class internal::MapFieldReflectionTest;
   friend class internal::MapKeySorter;
   friend class internal::WireFormat;
   friend class internal::ReflectionOps;
-  // Needed for implementing text format for map.
-  friend class internal::MapFieldPrinterHelper;
-  friend class internal::ReflectionAccessor;
 
   // Special version for specialized implementations of string.  We can't call
   // MutableRawRepeatedField directly here because we don't have access to
@@ -1049,13 +1020,8 @@ class PROTOBUF_EXPORT Reflection {
 
   // Help method for MapIterator.
   friend class MapIterator;
-  virtual internal::MapFieldBase* MutableMapData(
+  virtual internal::MapFieldBase* MapData(
       Message* /* message */, const FieldDescriptor* /* field */) const {
-    return NULL;
-  }
-
-  virtual const internal::MapFieldBase* GetMapData(
-      const Message& /* message */, const FieldDescriptor* /* field */) const {
     return NULL;
   }
 
@@ -1063,7 +1029,7 @@ class PROTOBUF_EXPORT Reflection {
 };
 
 // Abstract interface for a factory for message objects.
-class PROTOBUF_EXPORT MessageFactory {
+class LIBPROTOBUF_EXPORT MessageFactory {
  public:
   inline MessageFactory() {}
   virtual ~MessageFactory();
@@ -1112,8 +1078,8 @@ class PROTOBUF_EXPORT MessageFactory {
   // in the file.  This strange mechanism is necessary because descriptors are
   // built lazily, so we can't register types by their descriptor until we
   // know that the descriptor exists.  |filename| must be a permanent string.
-  static void InternalRegisterGeneratedFile(const char* filename,
-                                            void* assign_descriptors_table);
+  static void InternalRegisterGeneratedFile(
+      const char* filename, void (*register_messages)(const string&));
 
   // For internal use only:  Registers a message type.  Called only by the
   // functions which are registered with InternalRegisterGeneratedFile(),
@@ -1126,15 +1092,16 @@ class PROTOBUF_EXPORT MessageFactory {
   GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(MessageFactory);
 };
 
-#define DECLARE_GET_REPEATED_FIELD(TYPE)                                       \
-  template <>                                                                  \
-  PROTOBUF_EXPORT const RepeatedField<TYPE>&                                   \
-  Reflection::GetRepeatedField<TYPE>(const Message& message,                   \
-                                     const FieldDescriptor* field) const;      \
-                                                                               \
-  template <>                                                                  \
-  PROTOBUF_EXPORT RepeatedField<TYPE>* Reflection::MutableRepeatedField<TYPE>( \
-      Message * message, const FieldDescriptor* field) const;
+#define DECLARE_GET_REPEATED_FIELD(TYPE)                         \
+template<>                                                       \
+LIBPROTOBUF_EXPORT                                               \
+const RepeatedField<TYPE>& Reflection::GetRepeatedField<TYPE>(   \
+    const Message& message, const FieldDescriptor* field) const; \
+                                                                 \
+template<>                                                       \
+LIBPROTOBUF_EXPORT                                               \
+RepeatedField<TYPE>* Reflection::MutableRepeatedField<TYPE>(     \
+    Message* message, const FieldDescriptor* field) const;
 
 DECLARE_GET_REPEATED_FIELD(int32)
 DECLARE_GET_REPEATED_FIELD(int64)
@@ -1146,53 +1113,6 @@ DECLARE_GET_REPEATED_FIELD(bool)
 
 #undef DECLARE_GET_REPEATED_FIELD
 
-// Tries to downcast this message to a generated message type.  Returns NULL if
-// this class is not an instance of T.  This works even if RTTI is disabled.
-//
-// This also has the effect of creating a strong reference to T that will
-// prevent the linker from stripping it out at link time.  This can be important
-// if you are using a DynamicMessageFactory that delegates to the generated
-// factory.
-template <typename T>
-const T* DynamicCastToGenerated(const Message* from) {
-  // Compile-time assert that T is a generated type that has a
-  // default_instance() accessor, but avoid actually calling it.
-  const T&(*get_default_instance)() = &T::default_instance;
-  (void)get_default_instance;
-
-  // Compile-time assert that T is a subclass of google::protobuf::Message.
-  const Message* unused = static_cast<T*>(nullptr);
-  (void)unused;
-
-#ifdef GOOGLE_PROTOBUF_NO_RTTI
-  bool ok = T::default_instance().GetReflection() == from->GetReflection();
-  return ok ? down_cast<const T*>(from) : nullptr;
-#else
-  return dynamic_cast<const T*>(from);
-#endif
-}
-
-template <typename T>
-T* DynamicCastToGenerated(Message* from) {
-  const Message* message_const = from;
-  return const_cast<T*>(DynamicCastToGenerated<T>(message_const));
-}
-
-namespace internal {
-
-// Legacy functions, to preserve compatibility with existing callers.
-// These had a slightly different signature, so we have to adjust "T".
-template <typename T>
-T dynamic_cast_if_available(const Message* from) {
-  return DynamicCastToGenerated<typename std::remove_pointer<T>::type>(from);
-}
-template <typename T>
-T dynamic_cast_if_available(Message* from) {
-  return DynamicCastToGenerated<typename std::remove_pointer<T>::type>(from);
-}
-
-}  // namespace internal
-
 // =============================================================================
 // Implementation details for {Get,Mutable}RawRepeatedPtrField.  We provide
 // specializations for <string>, <StringPieceField> and <Message> and handle
@@ -1201,16 +1121,16 @@ T dynamic_cast_if_available(Message* from) {
 // Such a type presumably is a descendant of google::protobuf::Message.
 
 template<>
-inline const RepeatedPtrField<std::string>& Reflection::GetRepeatedPtrField<std::string>(
+inline const RepeatedPtrField<string>& Reflection::GetRepeatedPtrField<string>(
     const Message& message, const FieldDescriptor* field) const {
-  return *static_cast<RepeatedPtrField<std::string>* >(
+  return *static_cast<RepeatedPtrField<string>* >(
       MutableRawRepeatedString(const_cast<Message*>(&message), field, true));
 }
 
 template<>
-inline RepeatedPtrField<std::string>* Reflection::MutableRepeatedPtrField<std::string>(
+inline RepeatedPtrField<string>* Reflection::MutableRepeatedPtrField<string>(
     Message* message, const FieldDescriptor* field) const {
-  return static_cast<RepeatedPtrField<std::string>* >(
+  return static_cast<RepeatedPtrField<string>* >(
       MutableRawRepeatedString(message, field, true));
 }
 
@@ -1251,8 +1171,6 @@ inline RepeatedPtrField<PB>* Reflection::MutableRepeatedPtrField(
           PB::default_instance().GetDescriptor()));
 }
 }  // namespace protobuf
+
 }  // namespace google
-
-#include <google/protobuf/port_undef.inc>
-
 #endif  // GOOGLE_PROTOBUF_MESSAGE_H__

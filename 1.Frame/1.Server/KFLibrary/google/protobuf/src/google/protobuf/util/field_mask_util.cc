@@ -53,8 +53,7 @@ void FieldMaskUtil::FromString(StringPiece str, FieldMask* out) {
   }
 }
 
-bool FieldMaskUtil::SnakeCaseToCamelCase(StringPiece input,
-                                         string* output) {
+bool FieldMaskUtil::SnakeCaseToCamelCase(StringPiece input, string* output) {
   output->clear();
   bool after_underscore = false;
   for (int i = 0; i < input.size(); ++i) {
@@ -83,8 +82,7 @@ bool FieldMaskUtil::SnakeCaseToCamelCase(StringPiece input,
   return true;
 }
 
-bool FieldMaskUtil::CamelCaseToSnakeCase(StringPiece input,
-                                         string* output) {
+bool FieldMaskUtil::CamelCaseToSnakeCase(StringPiece input, string* output) {
   output->clear();
   for (int i = 0; i < input.size(); ++i) {
     if (input[i] == '_') {
@@ -160,7 +158,7 @@ bool FieldMaskUtil::GetFieldDescriptors(
   return true;
 }
 
-void FieldMaskUtil::GetFieldMaskForAllFields(
+void FieldMaskUtil::InternalGetFieldMaskForAllFields(
     const Descriptor* descriptor, FieldMask* out) {
   for (int i = 0; i < descriptor->field_count(); ++i) {
     out->add_paths(descriptor->field(i)->name());
@@ -230,13 +228,12 @@ class FieldMaskTree {
   }
 
   // Trims all fields not specified by this tree from the given message.
-  // Returns true if the message is modified.
-  bool TrimMessage(Message* message) {
+  void TrimMessage(Message* message) {
     // Do nothing if the tree is empty.
     if (root_.children.empty()) {
-      return false;
+      return;
     }
-    return TrimMessage(&root_, message);
+    TrimMessage(&root_, message);
   }
 
  private:
@@ -279,8 +276,7 @@ class FieldMaskTree {
   void AddRequiredFieldPath(Node* node, const Descriptor* descriptor);
 
   // Trims all fields not specified by this sub-tree from the given message.
-  // Returns true if the message is actually modified
-  bool TrimMessage(const Node* node, Message* message);
+  void TrimMessage(const Node* node, Message* message);
 
   Node root_;
 
@@ -580,39 +576,26 @@ void FieldMaskTree::AddRequiredFieldPath(
   }
 }
 
-bool FieldMaskTree::TrimMessage(const Node* node, Message* message) {
+void FieldMaskTree::TrimMessage(const Node* node, Message* message) {
   GOOGLE_DCHECK(!node->children.empty());
   const Reflection* reflection = message->GetReflection();
   const Descriptor* descriptor = message->GetDescriptor();
   const int32 field_count = descriptor->field_count();
-  bool modified = false;
   for (int index = 0; index < field_count; ++index) {
     const FieldDescriptor* field = descriptor->field(index);
     std::map<string, Node*>::const_iterator it =
         node->children.find(field->name());
     if (it == node->children.end()) {
-      if (field->is_repeated()) {
-        if (reflection->FieldSize(*message, field) != 0) {
-          modified = true;
-        }
-      } else {
-        if (reflection->HasField(*message, field)) {
-          modified = true;
-        }
-      }
       reflection->ClearField(message, field);
     } else {
       if (field->cpp_type() == FieldDescriptor::CPPTYPE_MESSAGE) {
         Node* child = it->second;
         if (!child->children.empty() && reflection->HasField(*message, field)) {
-          bool nestedMessageChanged =
-              TrimMessage(child, reflection->MutableMessage(message, field));
-          modified = nestedMessageChanged || modified;
+          TrimMessage(child, reflection->MutableMessage(message, field));
         }
       }
     }
   }
-  return modified;
 }
 
 }  // namespace
@@ -644,9 +627,9 @@ void FieldMaskUtil::Intersect(const FieldMask& mask1, const FieldMask& mask2,
   intersection.MergeToFieldMask(out);
 }
 
-void FieldMaskUtil::Subtract(const Descriptor* descriptor,
-                             const FieldMask& mask1, const FieldMask& mask2,
-                             FieldMask* out) {
+void FieldMaskUtil::InternalSubtract(const Descriptor* descriptor,
+                                     const FieldMask& mask1,
+                                     const FieldMask& mask2, FieldMask* out) {
   if (mask1.paths().empty()) {
     out->Clear();
     return;
@@ -660,8 +643,7 @@ void FieldMaskUtil::Subtract(const Descriptor* descriptor,
   tree.MergeToFieldMask(out);
 }
 
-bool FieldMaskUtil::IsPathInFieldMask(StringPiece path,
-                                      const FieldMask& mask) {
+bool FieldMaskUtil::IsPathInFieldMask(StringPiece path, const FieldMask& mask) {
   for (int i = 0; i < mask.paths_size(); ++i) {
     const string& mask_path = mask.paths(i);
     if (path == mask_path) {
@@ -688,15 +670,15 @@ void FieldMaskUtil::MergeMessageTo(const Message& source, const FieldMask& mask,
   tree.MergeMessage(source, options, destination);
 }
 
-bool FieldMaskUtil::TrimMessage(const FieldMask& mask, Message* message) {
+void FieldMaskUtil::TrimMessage(const FieldMask& mask, Message* destination) {
   // Build a FieldMaskTree and walk through the tree to merge all specified
   // fields.
   FieldMaskTree tree;
   tree.MergeFromFieldMask(mask);
-  return tree.TrimMessage(GOOGLE_CHECK_NOTNULL(message));
+  tree.TrimMessage(GOOGLE_CHECK_NOTNULL(destination));
 }
 
-bool FieldMaskUtil::TrimMessage(const FieldMask& mask, Message* message,
+void FieldMaskUtil::TrimMessage(const FieldMask& mask, Message* destination,
                                 const TrimOptions& options) {
   // Build a FieldMaskTree and walk through the tree to merge all specified
   // fields.
@@ -705,9 +687,9 @@ bool FieldMaskUtil::TrimMessage(const FieldMask& mask, Message* message,
   // If keep_required_fields is true, implicitely add required fields of
   // a message present in the tree to prevent from trimming.
   if (options.keep_required_fields()) {
-    tree.AddRequiredFieldPath(GOOGLE_CHECK_NOTNULL(message->GetDescriptor()));
+    tree.AddRequiredFieldPath(GOOGLE_CHECK_NOTNULL(destination->GetDescriptor()));
   }
-  return tree.TrimMessage(GOOGLE_CHECK_NOTNULL(message));
+  tree.TrimMessage(GOOGLE_CHECK_NOTNULL(destination));
 }
 
 }  // namespace util

@@ -46,7 +46,6 @@
 #include <errno.h>
 
 #include <google/protobuf/stubs/io_win32.h>
-#include <google/protobuf/stubs/logging.h>
 
 namespace google {
 namespace protobuf {
@@ -70,9 +69,9 @@ bool File::Exists(const string& name) {
   return access(name.c_str(), F_OK) == 0;
 }
 
-bool File::ReadFileToString(const string& name, string* output, bool text_mode) {
+bool File::ReadFileToString(const string& name, string* output) {
   char buffer[1024];
-  FILE* file = fopen(name.c_str(), text_mode ? "rt" : "rb");
+  FILE* file = fopen(name.c_str(), "rb");
   if (file == NULL) return false;
 
   while (true) {

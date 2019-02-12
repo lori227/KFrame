@@ -41,10 +41,8 @@
 #include <google/protobuf/descriptor.pb.h>
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/map_field.h>
-#include <google/protobuf/map_field_inl.h>
 #include <google/protobuf/unknown_field_set.h>
 #include <google/protobuf/stubs/strutil.h>
-
 
 namespace google {
 namespace protobuf {
@@ -78,10 +76,6 @@ void ReflectionOps::Merge(const Message& from, Message* to) {
 
   const Reflection* from_reflection = GetReflectionOrDie(from);
   const Reflection* to_reflection = GetReflectionOrDie(*to);
-  bool is_from_generated = (from_reflection->GetMessageFactory() ==
-                            google::protobuf::MessageFactory::generated_factory());
-  bool is_to_generated = (to_reflection->GetMessageFactory() ==
-                          google::protobuf::MessageFactory::generated_factory());
 
   std::vector<const FieldDescriptor*> fields;
   from_reflection->ListFields(from, &fields);
@@ -89,21 +83,6 @@ void ReflectionOps::Merge(const Message& from, Message* to) {
     const FieldDescriptor* field = fields[i];
 
     if (field->is_repeated()) {
-      // Use map reflection if both are in map status and have the
-      // same map type to avoid sync with repeated field.
-      // Note: As from and to messages have the same descriptor, the
-      // map field types are the same if they are both generated
-      // messages or both dynamic messages.
-      if (is_from_generated == is_to_generated && field->is_map()) {
-        const MapFieldBase* from_field =
-            from_reflection->GetMapData(from, field);
-        MapFieldBase* to_field =
-            to_reflection->MutableMapData(to, field);
-        if (to_field->IsMapValid() && from_field->IsMapValid()) {
-          to_field->MergeFrom(*from_field);
-          continue;
-        }
-      }
       int count = from_reflection->FieldSize(from, field);
       for (int j = 0; j < count; j++) {
         switch (field->cpp_type()) {
@@ -196,8 +175,8 @@ bool ReflectionOps::IsInitialized(const Message& message) {
       if (field->is_map()) {
         const FieldDescriptor* value_field = field->message_type()->field(1);
         if (value_field->cpp_type() == FieldDescriptor::CPPTYPE_MESSAGE) {
-          const MapFieldBase* map_field =
-              reflection->GetMapData(message, field);
+          MapFieldBase* map_field =
+              reflection->MapData(const_cast<Message*>(&message), field);
           if (map_field->IsMapValid()) {
             MapIterator iter(const_cast<Message*>(&message), field);
             MapIterator end(const_cast<Message*>(&message), field);
@@ -245,25 +224,6 @@ void ReflectionOps::DiscardUnknownFields(Message* message) {
     const FieldDescriptor* field = fields[i];
     if (field->cpp_type() == FieldDescriptor::CPPTYPE_MESSAGE) {
       if (field->is_repeated()) {
-        if (field->is_map()) {
-          const FieldDescriptor* value_field = field->message_type()->field(1);
-          if (value_field->cpp_type() == FieldDescriptor::CPPTYPE_MESSAGE) {
-            const MapFieldBase* map_field =
-                reflection->MutableMapData(message, field);
-            if (map_field->IsMapValid()) {
-              MapIterator iter(message, field);
-              MapIterator end(message, field);
-              for (map_field->MapBegin(&iter), map_field->MapEnd(&end);
-                   iter != end; ++iter) {
-                iter.MutableValueRef()->MutableMessageValue()
-                    ->DiscardUnknownFields();
-              }
-              continue;
-            }
-          } else {
-            continue;
-          }
-        }
         int size = reflection->FieldSize(*message, field);
         for (int j = 0; j < size; j++) {
           reflection->MutableRepeatedMessage(message, field, j)
@@ -289,7 +249,7 @@ static string SubMessagePrefix(const string& prefix,
   }
   if (index != -1) {
     result.append("[");
-    result.append(StrCat(index));
+    result.append(SimpleItoa(index));
     result.append("]");
   }
   result.append(".");

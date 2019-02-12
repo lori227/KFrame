@@ -1,0 +1,336 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{793CC305-218E-3735-BCF8-DBF2279B2804}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>x64</Platform>
+    <ProjectName>libprotobuf-lite</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">x64\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">libprotobuf-lite.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">libprotobuf-lited</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">x64\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">libprotobuf-lite.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">libprotobuf-lite</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">libprotobuf-lite.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">libprotobuf-lite</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">libprotobuf-lite.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">libprotobuf-lite</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
+      <AssemblerListingLocation>Debug/</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4018;4065;4146;4244;4251;4267;4305;4307;4309;4334;4355;4506;4800;4996</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;GOOGLE_PROTOBUF_CMAKE_BUILD;CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;GOOGLE_PROTOBUF_CMAKE_BUILD;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /ignore:4221</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
+      <AssemblerListingLocation>Release/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DisableSpecificWarnings>4018;4065;4146;4244;4251;4267;4305;4307;4309;4334;4355;4506;4800;4996</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;GOOGLE_PROTOBUF_CMAKE_BUILD;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;GOOGLE_PROTOBUF_CMAKE_BUILD;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /ignore:4221</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
+      <AssemblerListingLocation>MinSizeRel/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DisableSpecificWarnings>4018;4065;4146;4244;4251;4267;4305;4307;4309;4334;4355;4506;4800;4996</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;GOOGLE_PROTOBUF_CMAKE_BUILD;CMAKE_INTDIR="MinSizeRel";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;GOOGLE_PROTOBUF_CMAKE_BUILD;CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /ignore:4221</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
+      <AssemblerListingLocation>RelWithDebInfo/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4018;4065;4146;4244;4251;4267;4305;4307;4309;4334;4355;4506;4800;4996</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;GOOGLE_PROTOBUF_CMAKE_BUILD;CMAKE_INTDIR="RelWithDebInfo";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;GOOGLE_PROTOBUF_CMAKE_BUILD;CMAKE_INTDIR=\"RelWithDebInfo\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /ignore:4221</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\CMakeLists.txt">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule E:/KFrame/1.Frame/1.Server/KFLibrary/google/protobuf/cmake/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SE:/KFrame/1.Frame/1.Server/KFLibrary/google/protobuf/cmake -BE:/KFrame/1.Frame/1.Server/KFLibrary/google/protobuf/cmake/vsbuild --check-stamp-file E:/KFrame/1.Frame/1.Server/KFLibrary/google/protobuf/cmake/vsbuild/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:/KFrame/1.Frame/1.Server/KFLibrary/google/protobuf/cmake/CMakeLists.txt;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCCompilerABI.c;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCXXCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCXXCompilerABI.cpp;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeDependentOption.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeDetermineCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeDetermineCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeDetermineCompileFeatures.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeDetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeDetermineCompilerABI.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeDetermineRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeDetermineSystem.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeFindBinUtils.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeParseImplicitLinkInfo.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeRCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeSystem.cmake.in;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeTestCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeTestCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeTestRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CheckSymbolExists.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\ARMCC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Comeau-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\GNU-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\HP-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\MIPSpro-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\MSVC-C-FeatureTests.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\MSVC-CXX-FeatureTests.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\TI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\XL-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\zOS-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CompilerId\VS-10.vcxproj.in;C:\Program Files\CMake\share\cmake-3.13\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\FindThreads.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Internal\FeatureTesting.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Platform\Windows-Determine-CXX.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Platform\WindowsPaths.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\CMakeLists.txt;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\extract_includes.bat.in;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\install.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\libprotobuf-lite.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\libprotobuf.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\libprotoc.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\protobuf-config-version.cmake.in;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\protobuf-config.cmake.in;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\protobuf-lite.pc.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\protobuf-module.cmake.in;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\protobuf-options.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\protobuf.pc.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\protoc.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\3.13.2\CMakeCCompiler.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\3.13.2\CMakeCXXCompiler.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\3.13.2\CMakeRCCompiler.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\3.13.2\CMakeSystem.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\feature_tests.c;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\feature_tests.cxx;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule E:/KFrame/1.Frame/1.Server/KFLibrary/google/protobuf/cmake/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SE:/KFrame/1.Frame/1.Server/KFLibrary/google/protobuf/cmake -BE:/KFrame/1.Frame/1.Server/KFLibrary/google/protobuf/cmake/vsbuild --check-stamp-file E:/KFrame/1.Frame/1.Server/KFLibrary/google/protobuf/cmake/vsbuild/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:/KFrame/1.Frame/1.Server/KFLibrary/google/protobuf/cmake/CMakeLists.txt;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCCompilerABI.c;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCXXCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCXXCompilerABI.cpp;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeDependentOption.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeDetermineCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeDetermineCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeDetermineCompileFeatures.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeDetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeDetermineCompilerABI.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeDetermineRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeDetermineSystem.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeFindBinUtils.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeParseImplicitLinkInfo.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeRCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeSystem.cmake.in;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeTestCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeTestCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeTestRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CheckSymbolExists.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\ARMCC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Comeau-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\GNU-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\HP-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\MIPSpro-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\MSVC-C-FeatureTests.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\MSVC-CXX-FeatureTests.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\TI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\XL-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\zOS-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CompilerId\VS-10.vcxproj.in;C:\Program Files\CMake\share\cmake-3.13\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\FindThreads.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Internal\FeatureTesting.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Platform\Windows-Determine-CXX.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Platform\WindowsPaths.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\CMakeLists.txt;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\extract_includes.bat.in;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\install.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\libprotobuf-lite.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\libprotobuf.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\libprotoc.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\protobuf-config-version.cmake.in;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\protobuf-config.cmake.in;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\protobuf-lite.pc.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\protobuf-module.cmake.in;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\protobuf-options.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\protobuf.pc.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\protoc.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\3.13.2\CMakeCCompiler.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\3.13.2\CMakeCXXCompiler.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\3.13.2\CMakeRCCompiler.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\3.13.2\CMakeSystem.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\feature_tests.c;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\feature_tests.cxx;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule E:/KFrame/1.Frame/1.Server/KFLibrary/google/protobuf/cmake/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SE:/KFrame/1.Frame/1.Server/KFLibrary/google/protobuf/cmake -BE:/KFrame/1.Frame/1.Server/KFLibrary/google/protobuf/cmake/vsbuild --check-stamp-file E:/KFrame/1.Frame/1.Server/KFLibrary/google/protobuf/cmake/vsbuild/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">E:/KFrame/1.Frame/1.Server/KFLibrary/google/protobuf/cmake/CMakeLists.txt;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCCompilerABI.c;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCXXCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCXXCompilerABI.cpp;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeDependentOption.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeDetermineCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeDetermineCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeDetermineCompileFeatures.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeDetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeDetermineCompilerABI.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeDetermineRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeDetermineSystem.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeFindBinUtils.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeParseImplicitLinkInfo.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeRCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeSystem.cmake.in;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeTestCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeTestCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeTestRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CheckSymbolExists.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\ARMCC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Comeau-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\GNU-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\HP-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\MIPSpro-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\MSVC-C-FeatureTests.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\MSVC-CXX-FeatureTests.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\TI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\XL-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\zOS-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CompilerId\VS-10.vcxproj.in;C:\Program Files\CMake\share\cmake-3.13\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\FindThreads.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Internal\FeatureTesting.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Platform\Windows-Determine-CXX.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Platform\WindowsPaths.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\CMakeLists.txt;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\extract_includes.bat.in;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\install.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\libprotobuf-lite.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\libprotobuf.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\libprotoc.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\protobuf-config-version.cmake.in;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\protobuf-config.cmake.in;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\protobuf-lite.pc.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\protobuf-module.cmake.in;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\protobuf-options.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\protobuf.pc.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\protoc.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\3.13.2\CMakeCCompiler.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\3.13.2\CMakeCXXCompiler.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\3.13.2\CMakeRCCompiler.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\3.13.2\CMakeSystem.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\feature_tests.c;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\feature_tests.cxx;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule E:/KFrame/1.Frame/1.Server/KFLibrary/google/protobuf/cmake/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SE:/KFrame/1.Frame/1.Server/KFLibrary/google/protobuf/cmake -BE:/KFrame/1.Frame/1.Server/KFLibrary/google/protobuf/cmake/vsbuild --check-stamp-file E:/KFrame/1.Frame/1.Server/KFLibrary/google/protobuf/cmake/vsbuild/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:/KFrame/1.Frame/1.Server/KFLibrary/google/protobuf/cmake/CMakeLists.txt;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCCompilerABI.c;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCXXCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCXXCompilerABI.cpp;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeDependentOption.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeDetermineCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeDetermineCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeDetermineCompileFeatures.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeDetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeDetermineCompilerABI.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeDetermineRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeDetermineSystem.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeFindBinUtils.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeParseImplicitLinkInfo.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeRCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeSystem.cmake.in;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeTestCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeTestCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeTestRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CheckSymbolExists.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\ARMCC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Comeau-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\GNU-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\HP-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\MIPSpro-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\MSVC-C-FeatureTests.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\MSVC-CXX-FeatureTests.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\TI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\XL-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\zOS-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\CompilerId\VS-10.vcxproj.in;C:\Program Files\CMake\share\cmake-3.13\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\FindThreads.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Internal\FeatureTesting.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Platform\Windows-Determine-CXX.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.13\Modules\Platform\WindowsPaths.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\CMakeLists.txt;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\extract_includes.bat.in;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\install.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\libprotobuf-lite.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\libprotobuf.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\libprotoc.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\protobuf-config-version.cmake.in;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\protobuf-config.cmake.in;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\protobuf-lite.pc.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\protobuf-module.cmake.in;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\protobuf-options.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\protobuf.pc.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\protoc.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\3.13.2\CMakeCCompiler.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\3.13.2\CMakeCXXCompiler.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\3.13.2\CMakeRCCompiler.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\3.13.2\CMakeSystem.cmake;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\feature_tests.c;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\feature_tests.cxx;E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\arena.cc" />
+    <ClCompile Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\arenastring.cc" />
+    <ClCompile Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\extension_set.cc" />
+    <ClCompile Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\generated_message_table_driven_lite.cc" />
+    <ClCompile Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\generated_message_util.cc" />
+    <ClCompile Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\implicit_weak_message.cc" />
+    <ClCompile Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\io\coded_stream.cc" />
+    <ClCompile Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\io\zero_copy_stream.cc" />
+    <ClCompile Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\io\zero_copy_stream_impl_lite.cc" />
+    <ClCompile Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\message_lite.cc" />
+    <ClCompile Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\repeated_field.cc" />
+    <ClCompile Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\stubs\bytestream.cc" />
+    <ClCompile Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\stubs\common.cc" />
+    <ClCompile Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\stubs\int128.cc" />
+    <ClCompile Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\stubs\io_win32.cc" />
+    <ClCompile Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\stubs\status.cc" />
+    <ClCompile Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\stubs\statusor.cc" />
+    <ClCompile Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\stubs\stringpiece.cc" />
+    <ClCompile Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\stubs\stringprintf.cc" />
+    <ClCompile Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\stubs\structurally_valid.cc" />
+    <ClCompile Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\stubs\strutil.cc" />
+    <ClCompile Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\stubs\time.cc" />
+    <ClCompile Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\wire_format_lite.cc" />
+    <ClInclude Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\arena.h" />
+    <ClInclude Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\arenastring.h" />
+    <ClInclude Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\extension_set.h" />
+    <ClInclude Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\generated_message_util.h" />
+    <ClInclude Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\implicit_weak_message.h" />
+    <ClInclude Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\io\coded_stream.h" />
+    <ClInclude Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\io\zero_copy_stream.h" />
+    <ClInclude Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\io\zero_copy_stream_impl_lite.h" />
+    <ClInclude Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\message_lite.h" />
+    <ClInclude Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\repeated_field.h" />
+    <ClInclude Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\stubs\bytestream.h" />
+    <ClInclude Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\stubs\common.h" />
+    <ClInclude Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\stubs\int128.h" />
+    <ClInclude Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\stubs\once.h" />
+    <ClInclude Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\stubs\status.h" />
+    <ClInclude Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\stubs\statusor.h" />
+    <ClInclude Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\stubs\stringpiece.h" />
+    <ClInclude Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\stubs\stringprintf.h" />
+    <ClInclude Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\stubs\strutil.h" />
+    <ClInclude Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\stubs\time.h" />
+    <ClInclude Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\src\google\protobuf\wire_format_lite.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\vsbuild\ZERO_CHECK.vcxproj">
+      <Project>{BF91D99F-5A3F-3926-81C0-8C3B413974E8}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

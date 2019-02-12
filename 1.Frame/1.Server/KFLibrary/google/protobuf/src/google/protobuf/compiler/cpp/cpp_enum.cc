@@ -46,7 +46,7 @@ namespace cpp {
 
 namespace {
 // The GOOGLE_ARRAYSIZE constant is the max enum value plus 1. If the max enum value
-// is kint32max, GOOGLE_ARRAYSIZE will overflow. In such cases we should omit the
+// is ::google::protobuf::kint32max, GOOGLE_ARRAYSIZE will overflow. In such cases we should omit the
 // generation of the GOOGLE_ARRAYSIZE constant.
 bool ShouldGenerateArraySize(const EnumDescriptor* descriptor) {
   int32 max_value = descriptor->value(0)->number();
@@ -55,53 +55,61 @@ bool ShouldGenerateArraySize(const EnumDescriptor* descriptor) {
       max_value = descriptor->value(i)->number();
     }
   }
-  return max_value != kint32max;
+  return max_value != ::google::protobuf::kint32max;
 }
 }  // namespace
 
 EnumGenerator::EnumGenerator(const EnumDescriptor* descriptor,
-                             const std::map<string, string>& vars,
                              const Options& options)
-    : descriptor_(descriptor),
-      classname_(ClassName(descriptor, false)),
-      options_(options),
-      generate_array_size_(ShouldGenerateArraySize(descriptor)),
-      variables_(vars) {
-  variables_["classname"] = classname_;
-  variables_["classtype"] = QualifiedClassName(descriptor_);
-  variables_["short_name"] = descriptor_->name();
-  variables_["enumbase"] = options_.proto_h ? " : int" : "";
-  variables_["nested_name"] = descriptor_->name();
-  variables_["constexpr"] = options_.proto_h ? "constexpr" : "";
-  variables_["prefix"] =
-      (descriptor_->containing_type() == NULL) ? "" : classname_ + "_";
+  : descriptor_(descriptor),
+    classname_(ClassName(descriptor, false)),
+    options_(options),
+    generate_array_size_(ShouldGenerateArraySize(descriptor)) {
 }
 
 EnumGenerator::~EnumGenerator() {}
 
+void EnumGenerator::FillForwardDeclaration(
+    std::map<string, const EnumDescriptor*>* enum_names) {
+  if (!options_.proto_h) {
+    return;
+  }
+  (*enum_names)[classname_] = descriptor_;
+}
+
 void EnumGenerator::GenerateDefinition(io::Printer* printer) {
-  Formatter format(printer, variables_);
-  format("enum ${1$$classname$$}$$enumbase$ {\n", descriptor_);
-  format.Indent();
+  std::map<string, string> vars;
+  vars["classname"] = classname_;
+  vars["short_name"] = descriptor_->name();
+  vars["enumbase"] = options_.proto_h ? " : int" : "";
+  // These variables are placeholders to pick out the beginning and ends of
+  // identifiers for annotations (when doing so with existing variables would
+  // be ambiguous or impossible). They should never be set to anything but the
+  // empty string.
+  vars["{"] = "";
+  vars["}"] = "";
+
+  printer->Print(vars, "enum $classname$$enumbase$ {\n");
+  printer->Annotate("classname", descriptor_);
+  printer->Indent();
 
   const EnumValueDescriptor* min_value = descriptor_->value(0);
   const EnumValueDescriptor* max_value = descriptor_->value(0);
 
   for (int i = 0; i < descriptor_->value_count(); i++) {
-    auto format_value = format;
-    format_value.Set("name", EnumValueName(descriptor_->value(i)));
+    vars["name"] = EnumValueName(descriptor_->value(i));
     // In C++, an value of -2147483648 gets interpreted as the negative of
     // 2147483648, and since 2147483648 can't fit in an integer, this produces a
     // compiler warning.  This works around that issue.
-    format_value.Set("number", Int32ToString(descriptor_->value(i)->number()));
-    format_value.Set(
-        "deprecation",
-        DeprecatedAttribute(options_,
-                            descriptor_->value(i)->options().deprecated()));
+    vars["number"] = Int32ToString(descriptor_->value(i)->number());
+    vars["prefix"] = (descriptor_->containing_type() == NULL) ?
+      "" : classname_ + "_";
+    vars["deprecation"] = descriptor_->value(i)->options().deprecated() ?
+        " PROTOBUF_DEPRECATED" : "";
 
-    if (i > 0) format_value(",\n");
-    format_value("${1$$prefix$$name$$}$ $deprecation$= $number$",
-                 descriptor_->value(i));
+    if (i > 0) printer->Print(",\n");
+    printer->Print(vars, "${$$prefix$$name$$}$$deprecation$ = $number$");
+    printer->Annotate("{", "}", descriptor_->value(i));
 
     if (descriptor_->value(i)->number() < min_value->number()) {
       min_value = descriptor_->value(i);
@@ -114,163 +122,153 @@ void EnumGenerator::GenerateDefinition(io::Printer* printer) {
   if (HasPreservingUnknownEnumSemantics(descriptor_->file())) {
     // For new enum semantics: generate min and max sentinel values equal to
     // INT32_MIN and INT32_MAX
-    if (descriptor_->value_count() > 0) format(",\n");
-    format(
-        "$classname$_$prefix$INT_MIN_SENTINEL_DO_NOT_USE_ = "
-        "std::numeric_limits<$int32$>::min(),\n"
-        "$classname$_$prefix$INT_MAX_SENTINEL_DO_NOT_USE_ = "
-        "std::numeric_limits<$int32$>::max()");
+    if (descriptor_->value_count() > 0) printer->Print(",\n");
+    printer->Print(vars,
+        "$classname$_$prefix$INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,\n"
+        "$classname$_$prefix$INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max");
   }
 
-  format.Outdent();
-  format("\n};\n");
+  printer->Outdent();
+  printer->Print("\n};\n");
 
-  format(
-      "$dllexport_decl $bool $classname$_IsValid(int value);\n"
-      "const $classname$ ${1$$prefix$$short_name$_MIN$}$ = "
-      "$prefix$$2$;\n"
-      "const $classname$ ${1$$prefix$$short_name$_MAX$}$ = "
-      "$prefix$$3$;\n",
-      descriptor_, EnumValueName(min_value), EnumValueName(max_value));
+  vars["min_name"] = EnumValueName(min_value);
+  vars["max_name"] = EnumValueName(max_value);
+
+  if (options_.dllexport_decl.empty()) {
+    vars["dllexport"] = "";
+  } else {
+    vars["dllexport"] = options_.dllexport_decl + " ";
+  }
+
+  printer->Print(vars,
+                 "$dllexport$bool $classname$_IsValid(int value);\n"
+                 "const $classname$ ${$$prefix$$short_name$_MIN$}$ = "
+                 "$prefix$$min_name$;\n");
+  printer->Annotate("{", "}", descriptor_);
+  printer->Print(vars,
+                 "const $classname$ ${$$prefix$$short_name$_MAX$}$ = "
+                 "$prefix$$max_name$;\n");
+  printer->Annotate("{", "}", descriptor_);
 
   if (generate_array_size_) {
-    format(
-        "const int ${1$$prefix$$short_name$_ARRAYSIZE$}$ = "
-        "$prefix$$short_name$_MAX + 1;\n\n",
-        descriptor_);
+    printer->Print(vars,
+                   "const int ${$$prefix$$short_name$_ARRAYSIZE$}$ = "
+                   "$prefix$$short_name$_MAX + 1;\n\n");
+    printer->Annotate("{", "}", descriptor_);
   }
 
   if (HasDescriptorMethods(descriptor_->file(), options_)) {
-    format(
-        "$dllexport_decl $const ::$proto_ns$::EnumDescriptor* "
-        "$classname$_descriptor();\n");
+    printer->Print(vars,
+      "$dllexport$const ::google::protobuf::EnumDescriptor* $classname$_descriptor();\n");
     // The _Name and _Parse methods
-    if (options_.opensource_runtime) {
-      // TODO(haberman): consider removing this in favor of the stricter
-      // version below.  Would this break our compatibility guarantees?
-      format(
-          "inline const $string$& $classname$_Name($classname$ value) {\n"
-          "  return ::$proto_ns$::internal::NameOfEnum(\n"
-          "    $classname$_descriptor(), value);\n"
-          "}\n");
-    } else {
-      // Support a stricter, type-checked enum-to-string method that
-      // statically checks whether the parameter is the exact enum type or is
-      // an integral type.
-      format(
-          "template<typename T>\n"
-          "inline const $string$& $classname$_Name(T enum_t_value) {\n"
-          "  static_assert(::std::is_same<T, $classname$>::value ||\n"
-          "    ::std::is_integral<T>::value,\n"
-          "    \"Incorrect type passed to function $classname$_Name.\");\n"
-          "  return ::$proto_ns$::internal::NameOfEnum(\n"
-          "    $classname$_descriptor(), enum_t_value);\n"
-          "}\n");
-    }
-    format(
-        "inline bool $classname$_Parse(\n"
-        "    const $string$& name, $classname$* value) {\n"
-        "  return ::$proto_ns$::internal::ParseNamedEnum<$classname$>(\n"
-        "    $classname$_descriptor(), name, value);\n"
+    printer->Print(
+        vars,
+        "inline const ::std::string& $classname$_Name($classname$ value) {\n"
+        "  return ::google::protobuf::internal::NameOfEnum(\n"
+        "    $classname$_descriptor(), value);\n"
         "}\n");
+    printer->Print(vars,
+      "inline bool $classname$_Parse(\n"
+      "    const ::std::string& name, $classname$* value) {\n"
+      "  return ::google::protobuf::internal::ParseNamedEnum<$classname$>(\n"
+      "    $classname$_descriptor(), name, value);\n"
+      "}\n");
   }
 }
 
-void EnumGenerator::GenerateGetEnumDescriptorSpecializations(
-    io::Printer* printer) {
-  Formatter format(printer, variables_);
-  format(
-      "template <> struct is_proto_enum< $classtype$> : ::std::true_type "
-      "{};\n");
+void EnumGenerator::
+GenerateGetEnumDescriptorSpecializations(io::Printer* printer) {
+  printer->Print(
+      "template <> struct is_proto_enum< $classname$> : ::std::true_type "
+      "{};\n",
+      "classname", ClassName(descriptor_, true));
   if (HasDescriptorMethods(descriptor_->file(), options_)) {
-    format(
-        "template <>\n"
-        "inline const EnumDescriptor* GetEnumDescriptor< $classtype$>() {\n"
-        "  return $classtype$_descriptor();\n"
-        "}\n");
+    printer->Print(
+      "template <>\n"
+      "inline const EnumDescriptor* GetEnumDescriptor< $classname$>() {\n"
+      "  return $classname$_descriptor();\n"
+      "}\n",
+      "classname", ClassName(descriptor_, true));
   }
 }
 
-void EnumGenerator::GenerateSymbolImports(io::Printer* printer) const {
-  Formatter format(printer, variables_);
-  format("typedef $classname$ $nested_name$;\n");
+void EnumGenerator::GenerateSymbolImports(io::Printer* printer) {
+  std::map<string, string> vars;
+  vars["nested_name"] = descriptor_->name();
+  vars["classname"] = classname_;
+  vars["constexpr"] = options_.proto_h ? "constexpr " : "";
+  vars["{"] = "";
+  vars["}"] = "";
+  printer->Print(vars, "typedef $classname$ $nested_name$;\n");
 
   for (int j = 0; j < descriptor_->value_count(); j++) {
-    string deprecated_attr = DeprecatedAttribute(
-        options_, descriptor_->value(j)->options().deprecated());
-    format(
-        "$1$static $constexpr $const $nested_name$ ${2$$3$$}$ =\n"
-        "  $classname$_$3$;\n",
-        deprecated_attr, descriptor_->value(j),
-        EnumValueName(descriptor_->value(j)));
+    vars["tag"] = EnumValueName(descriptor_->value(j));
+    vars["deprecated_attr"] = descriptor_->value(j)->options().deprecated() ?
+      "GOOGLE_PROTOBUF_DEPRECATED_ATTR " : "";
+    printer->Print(vars,
+      "$deprecated_attr$static $constexpr$const $nested_name$ ${$$tag$$}$ =\n"
+      "  $classname$_$tag$;\n");
+    printer->Annotate("{", "}", descriptor_->value(j));
   }
 
-  format(
-      "static inline bool $nested_name$_IsValid(int value) {\n"
-      "  return $classname$_IsValid(value);\n"
-      "}\n"
-      "static const $nested_name$ ${1$$nested_name$_MIN$}$ =\n"
-      "  $classname$_$nested_name$_MIN;\n"
-      "static const $nested_name$ ${1$$nested_name$_MAX$}$ =\n"
-      "  $classname$_$nested_name$_MAX;\n",
-      descriptor_);
+  printer->Print(vars,
+    "static inline bool $nested_name$_IsValid(int value) {\n"
+    "  return $classname$_IsValid(value);\n"
+    "}\n"
+    "static const $nested_name$ ${$$nested_name$_MIN$}$ =\n"
+    "  $classname$_$nested_name$_MIN;\n");
+  printer->Annotate("{", "}", descriptor_);
+  printer->Print(vars,
+    "static const $nested_name$ ${$$nested_name$_MAX$}$ =\n"
+    "  $classname$_$nested_name$_MAX;\n");
+  printer->Annotate("{", "}", descriptor_);
   if (generate_array_size_) {
-    format(
-        "static const int ${1$$nested_name$_ARRAYSIZE$}$ =\n"
-        "  $classname$_$nested_name$_ARRAYSIZE;\n",
-        descriptor_);
+    printer->Print(vars,
+      "static const int ${$$nested_name$_ARRAYSIZE$}$ =\n"
+      "  $classname$_$nested_name$_ARRAYSIZE;\n");
+    printer->Annotate("{", "}", descriptor_);
   }
 
   if (HasDescriptorMethods(descriptor_->file(), options_)) {
-    format(
-        "static inline const ::$proto_ns$::EnumDescriptor*\n"
-        "$nested_name$_descriptor() {\n"
-        "  return $classname$_descriptor();\n"
-        "}\n");
-    if (options_.opensource_runtime) {
-      // TODO(haberman): consider removing this in favor of the stricter
-      // version below.  Would this break our compatibility guarantees?
-      format(
-          "static inline const $string$& "
-          "$nested_name$_Name($nested_name$ value) {"
-          "\n"
-          "  return $classname$_Name(value);\n"
-          "}\n");
-    } else {
-      // Support a stricter, type-checked enum-to-string method that
-      // statically checks whether the parameter is the exact enum type or is
-      // an integral type.
-      format(
-          "template<typename T>\n"
-          "static inline const $string$& $nested_name$_Name(T enum_t_value) {\n"
-          "  static_assert(::std::is_same<T, $nested_name$>::value ||\n"
-          "    ::std::is_integral<T>::value,\n"
-          "    \"Incorrect type passed to function $nested_name$_Name.\");\n"
-          "  return $classname$_Name(enum_t_value);\n"
-          "}\n");
-    }
-    format(
-        "static inline bool $nested_name$_Parse(const $string$& name,\n"
-        "    $nested_name$* value) {\n"
-        "  return $classname$_Parse(name, value);\n"
-        "}\n");
+    printer->Print(vars,
+      "static inline const ::google::protobuf::EnumDescriptor*\n"
+      "$nested_name$_descriptor() {\n"
+      "  return $classname$_descriptor();\n"
+      "}\n");
+    printer->Print(vars,
+                   "static inline const ::std::string& "
+                   "$nested_name$_Name($nested_name$ value) {"
+                   "\n"
+                   "  return $classname$_Name(value);\n"
+                   "}\n");
+    printer->Print(vars,
+      "static inline bool $nested_name$_Parse(const ::std::string& name,\n"
+      "    $nested_name$* value) {\n"
+      "  return $classname$_Parse(name, value);\n"
+      "}\n");
   }
 }
 
 void EnumGenerator::GenerateMethods(int idx, io::Printer* printer) {
-  Formatter format(printer, variables_);
+  std::map<string, string> vars;
+  vars["classname"] = classname_;
+  vars["index_in_metadata"] = SimpleItoa(idx);
+  vars["constexpr"] = options_.proto_h ? "constexpr " : "";
+  vars["file_namespace"] = FileLevelNamespace(descriptor_->file()->name());
+
   if (HasDescriptorMethods(descriptor_->file(), options_)) {
-    format(
-        "const ::$proto_ns$::EnumDescriptor* $classname$_descriptor() {\n"
-        "  ::$proto_ns$::internal::AssignDescriptors(&$assign_desc_table$);\n"
-        "  return $file_level_enum_descriptors$[$1$];\n"
-        "}\n",
-        idx);
+    printer->Print(
+        vars,
+        "const ::google::protobuf::EnumDescriptor* $classname$_descriptor() {\n"
+        "  $file_namespace$::protobuf_AssignDescriptorsOnce();\n"
+        "  return "
+        "$file_namespace$::file_level_enum_descriptors[$index_in_metadata$];\n"
+        "}\n");
   }
 
-  format(
-      "bool $classname$_IsValid(int value) {\n"
-      "  switch (value) {\n");
+  printer->Print(vars,
+    "bool $classname$_IsValid(int value) {\n"
+    "  switch (value) {\n");
 
   // Multiple values may have the same number.  Make sure we only cover
   // each number once by first constructing a set containing all valid
@@ -282,40 +280,44 @@ void EnumGenerator::GenerateMethods(int idx, io::Printer* printer) {
     numbers.insert(value->number());
   }
 
-  for (std::set<int>::iterator iter = numbers.begin(); iter != numbers.end();
-       ++iter) {
-    format("    case $1$:\n", Int32ToString(*iter));
+  for (std::set<int>::iterator iter = numbers.begin();
+       iter != numbers.end(); ++iter) {
+    printer->Print(
+      "    case $number$:\n",
+      "number", Int32ToString(*iter));
   }
 
-  format(
-      "      return true;\n"
-      "    default:\n"
-      "      return false;\n"
-      "  }\n"
-      "}\n"
-      "\n");
+  printer->Print(vars,
+    "      return true;\n"
+    "    default:\n"
+    "      return false;\n"
+    "  }\n"
+    "}\n"
+    "\n");
 
   if (descriptor_->containing_type() != NULL) {
-    string parent = ClassName(descriptor_->containing_type(), false);
     // We need to "define" the static constants which were declared in the
     // header, to give the linker a place to put them.  Or at least the C++
     // standard says we have to.  MSVC actually insists that we do _not_ define
     // them again in the .cc file, prior to VC++ 2015.
-    format("#if !defined(_MSC_VER) || _MSC_VER >= 1900\n");
+    printer->Print("#if !defined(_MSC_VER) || _MSC_VER >= 1900\n");
 
+    vars["parent"] = ClassName(descriptor_->containing_type(), false);
+    vars["nested_name"] = descriptor_->name();
     for (int i = 0; i < descriptor_->value_count(); i++) {
-      format("$constexpr $const $classname$ $1$::$2$;\n", parent,
-             EnumValueName(descriptor_->value(i)));
+      vars["value"] = EnumValueName(descriptor_->value(i));
+      printer->Print(vars,
+        "$constexpr$const $classname$ $parent$::$value$;\n");
     }
-    format(
-        "const $classname$ $1$::$nested_name$_MIN;\n"
-        "const $classname$ $1$::$nested_name$_MAX;\n",
-        parent);
+    printer->Print(vars,
+      "const $classname$ $parent$::$nested_name$_MIN;\n"
+      "const $classname$ $parent$::$nested_name$_MAX;\n");
     if (generate_array_size_) {
-      format("const int $1$::$nested_name$_ARRAYSIZE;\n", parent);
+      printer->Print(vars,
+        "const int $parent$::$nested_name$_ARRAYSIZE;\n");
     }
 
-    format("#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900\n");
+    printer->Print("#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900\n");
   }
 }
 

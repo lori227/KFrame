@@ -12,7 +12,7 @@ using google::protobuf::FileDescriptor;
 using google::protobuf::DescriptorPool;
 using google::protobuf::io::Printer;
 using google::protobuf::util::SchemaGroupStripper;
-using google::protobuf::util::EnumScrubber;
+using google::protobuf::util::SchemaAddZeroEnumValue;
 
 namespace google {
 namespace protobuf {
@@ -74,7 +74,7 @@ class GoGoProtoGenerator : public CodeGenerator {
     file->CopyTo(&new_file);
     SchemaGroupStripper::StripFile(file, &new_file);
 
-    EnumScrubber enum_scrubber;
+    SchemaAddZeroEnumValue enum_scrubber;
     enum_scrubber.ScrubFile(&new_file);
 
     string filename = file->name();

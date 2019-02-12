@@ -1,5 +1,5 @@
 
-:  build log4cxx
+:  build libuv
 
 "%VS150COMNTOOLS%..\IDE\Devenv" uv.sln /build "Debug|X64" /project libuv
 copy /y .\Debug\lib\libuv.lib ..\..\_lib\win64\3rd\libuvd.lib

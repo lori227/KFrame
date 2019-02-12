@@ -47,7 +47,6 @@
 #include <google/protobuf/wire_format.h>
 #include <google/protobuf/stubs/strutil.h>
 
-
 namespace google {
 namespace protobuf {
 namespace compiler {
@@ -73,8 +72,8 @@ void SetPrimitiveVariables(const FieldDescriptor* descriptor,
       "= " + ImmutableDefaultValue(descriptor, name_resolver);
   (*variables)["capitalized_type"] = "String";
   (*variables)["tag"] =
-      StrCat(static_cast<int32>(WireFormat::MakeTag(descriptor)));
-  (*variables)["tag_size"] = StrCat(
+      SimpleItoa(static_cast<int32>(WireFormat::MakeTag(descriptor)));
+  (*variables)["tag_size"] = SimpleItoa(
       WireFormat::TagSize(descriptor->number(), GetType(descriptor)));
   (*variables)["null_check"] =
       "  if (value == null) {\n"
@@ -452,8 +451,8 @@ GenerateSerializedSizeCode(io::Printer* printer) const {
 void ImmutableStringFieldGenerator::
 GenerateEqualsCode(io::Printer* printer) const {
   printer->Print(variables_,
-    "if (!get$capitalized_name$()\n"
-    "    .equals(other.get$capitalized_name$())) return false;\n");
+    "result = result && get$capitalized_name$()\n"
+    "    .equals(other.get$capitalized_name$());\n");
 }
 
 void ImmutableStringFieldGenerator::
@@ -1017,8 +1016,8 @@ GenerateSerializedSizeCode(io::Printer* printer) const {
 void RepeatedImmutableStringFieldGenerator::
 GenerateEqualsCode(io::Printer* printer) const {
   printer->Print(variables_,
-    "if (!get$capitalized_name$List()\n"
-    "    .equals(other.get$capitalized_name$List())) return false;\n");
+    "result = result && get$capitalized_name$List()\n"
+    "    .equals(other.get$capitalized_name$List());\n");
 }
 
 void RepeatedImmutableStringFieldGenerator::

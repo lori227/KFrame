@@ -219,7 +219,7 @@ TEST(CppPluginTest, PluginTest) {
                              "}\n",
                              true));
 
-  CommandLineInterface cli;
+  google::protobuf::compiler::CommandLineInterface cli;
   cli.SetInputsAreProtoPathRelative(true);
 
   CppGenerator cpp_generator;

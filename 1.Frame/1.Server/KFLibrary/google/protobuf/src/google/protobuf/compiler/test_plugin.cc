@@ -38,24 +38,13 @@
 #include <google/protobuf/compiler/plugin.h>
 #include <google/protobuf/compiler/mock_code_generator.h>
 
-namespace google {
-namespace protobuf {
-namespace compiler {
-
-int ProtobufMain(int argc, char* argv[]) {
-  MockCodeGenerator generator("test_plugin");
-  return PluginMain(argc, argv, &generator);
-}
-
-}  // namespace compiler
-}  // namespace protobuf
-}  // namespace google
-
 int main(int argc, char* argv[]) {
 #ifdef _MSC_VER
   // Don't print a silly message or stick a modal dialog box in my face,
   // please.
   _set_abort_behavior(0, ~0);
 #endif  // !_MSC_VER
-  return google::protobuf::compiler::ProtobufMain(argc, argv);
+
+  google::protobuf::compiler::MockCodeGenerator generator("test_plugin");
+  return google::protobuf::compiler::PluginMain(argc, argv, &generator);
 }

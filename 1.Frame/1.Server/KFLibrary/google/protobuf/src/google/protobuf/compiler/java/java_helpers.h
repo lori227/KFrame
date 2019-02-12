@@ -60,89 +60,79 @@ extern const char kThinSeparator[];
 // annotation_file should be generated from the filename of the source file
 // being annotated (which in turn must be a Java identifier plus ".java").
 void PrintGeneratedAnnotation(io::Printer* printer, char delimiter = '$',
-                              const std::string& annotation_file = "");
-
-// If a GeneratedMessageLite contains non-lite enums, then its verifier
-// must be instantiated inline, rather than retrieved from the enum class.
-void PrintEnumVerifierLogic(io::Printer* printer,
-                            const FieldDescriptor* descriptor,
-                            const std::map<std::string, std::string>& variables,
-                            const char* var_name,
-                            const char* terminating_string,
-                            bool enforce_lite);
+                              const string& annotation_file = "");
 
 // Converts a name to camel-case. If cap_first_letter is true, capitalize the
 // first letter.
-std::string UnderscoresToCamelCase(const std::string& name, bool cap_first_letter);
+string UnderscoresToCamelCase(const string& name, bool cap_first_letter);
 // Converts the field's name to camel-case, e.g. "foo_bar_baz" becomes
 // "fooBarBaz" or "FooBarBaz", respectively.
-std::string UnderscoresToCamelCase(const FieldDescriptor* field);
-std::string UnderscoresToCapitalizedCamelCase(const FieldDescriptor* field);
+string UnderscoresToCamelCase(const FieldDescriptor* field);
+string UnderscoresToCapitalizedCamelCase(const FieldDescriptor* field);
 
 // Similar, but for method names.  (Typically, this merely has the effect
 // of lower-casing the first letter of the name.)
-std::string UnderscoresToCamelCase(const MethodDescriptor* method);
+string UnderscoresToCamelCase(const MethodDescriptor* method);
 
 // Similar to UnderscoresToCamelCase, but guarentees that the result is a
 // complete Java identifier by adding a _ if needed.
-std::string CamelCaseFieldName(const FieldDescriptor* field);
+string CamelCaseFieldName(const FieldDescriptor* field);
 
 // Get an identifier that uniquely identifies this type within the file.
 // This is used to declare static variables related to this type at the
 // outermost file scope.
-std::string UniqueFileScopeIdentifier(const Descriptor* descriptor);
+string UniqueFileScopeIdentifier(const Descriptor* descriptor);
 
 // Strips ".proto" or ".protodevel" from the end of a filename.
-std::string StripProto(const std::string& filename);
+string StripProto(const string& filename);
 
 // Gets the unqualified class name for the file.  For each .proto file, there
 // will be one Java class containing all the immutable messages and another
 // Java class containing all the mutable messages.
 // TODO(xiaofeng): remove the default value after updating client code.
-std::string FileClassName(const FileDescriptor* file, bool immutable = true);
+string FileClassName(const FileDescriptor* file, bool immutable = true);
 
 // Returns the file's Java package name.
-std::string FileJavaPackage(const FileDescriptor* file);
-std::string FileJavaPackage(const FileDescriptor* file, bool immutable);
+string FileJavaPackage(const FileDescriptor* file, bool immutable = true);
 
 // Returns output directory for the given package name.
-std::string JavaPackageToDir(std::string package_name);
+string JavaPackageToDir(string package_name);
 
 // Converts the given fully-qualified name in the proto namespace to its
 // fully-qualified name in the Java namespace, given that it is in the given
 // file.
 // TODO(xiaofeng): this method is deprecated and should be removed in the
 // future.
-std::string ToJavaName(const std::string& full_name,
+string ToJavaName(const string& full_name,
                   const FileDescriptor* file);
 
 // TODO(xiaofeng): the following methods are kept for they are exposed
-// publicly in //net/proto2/compiler/java/public/names.h. They return
+// publicly in //google/protobuf/compiler/java/names.h. They return
 // immutable names only and should be removed after mutable API is
 // integrated into google3.
-std::string ClassName(const Descriptor* descriptor);
-std::string ClassName(const EnumDescriptor* descriptor);
-std::string ClassName(const ServiceDescriptor* descriptor);
-std::string ClassName(const FileDescriptor* descriptor);
+string ClassName(const Descriptor* descriptor);
+string ClassName(const EnumDescriptor* descriptor);
+string ClassName(const ServiceDescriptor* descriptor);
+string ClassName(const FileDescriptor* descriptor);
 
 // Comma-separate list of option-specified interfaces implemented by the
 // Message, to follow the "implements" declaration of the Message definition.
-std::string ExtraMessageInterfaces(const Descriptor* descriptor);
+string ExtraMessageInterfaces(const Descriptor* descriptor);
 // Comma-separate list of option-specified interfaces implemented by the
 // MutableMessage, to follow the "implements" declaration of the MutableMessage
 // definition.
-std::string ExtraMutableMessageInterfaces(const Descriptor* descriptor);
+string ExtraMutableMessageInterfaces(const Descriptor* descriptor);
 // Comma-separate list of option-specified interfaces implemented by the
 // Builder, to follow the "implements" declaration of the Builder definition.
-std::string ExtraBuilderInterfaces(const Descriptor* descriptor);
+string ExtraBuilderInterfaces(const Descriptor* descriptor);
 // Comma-separate list of option-specified interfaces extended by the
 // MessageOrBuilder, to follow the "extends" declaration of the
 // MessageOrBuilder definition.
-std::string ExtraMessageOrBuilderInterfaces(const Descriptor* descriptor);
+string ExtraMessageOrBuilderInterfaces(const Descriptor* descriptor);
 
 // Get the unqualified Java class name for mutable messages. i.e. without
 // package or outer classnames.
-inline std::string ShortMutableJavaClassName(const Descriptor* descriptor) {
+inline string ShortMutableJavaClassName(const Descriptor* descriptor) {
   return descriptor->name();
 }
 
@@ -150,8 +140,7 @@ inline std::string ShortMutableJavaClassName(const Descriptor* descriptor) {
 // cannot currently use the new runtime with core protos since there is a
 // bootstrapping problem with obtaining their descriptors.
 inline bool IsDescriptorProto(const Descriptor* descriptor) {
-  return descriptor->file()->name() == "net/proto2/proto/descriptor.proto" ||
-         descriptor->file()->name() == "google/protobuf/descriptor.proto";
+  return descriptor->file()->name() == "google/protobuf/descriptor.proto";
 }
 
 
@@ -179,14 +168,14 @@ inline bool IsOwnFile(const ServiceDescriptor* descriptor, bool immutable) {
 // annotation data for that descriptor. `suffix` is usually empty, but may
 // (e.g.) be "OrBuilder" for some generated interfaces.
 template <typename Descriptor>
-std::string AnnotationFileName(const Descriptor* descriptor, const std::string& suffix) {
+string AnnotationFileName(const Descriptor* descriptor, const string& suffix) {
   return descriptor->name() + suffix + ".java.pb.meta";
 }
 
 template <typename Descriptor>
 void MaybePrintGeneratedAnnotation(Context* context, io::Printer* printer,
                                    Descriptor* descriptor, bool immutable,
-                                   const std::string& suffix = "") {
+                                   const string& suffix = "") {
   if (context->options().annotate_code && IsOwnFile(descriptor, immutable)) {
     PrintGeneratedAnnotation(printer, '$',
                              AnnotationFileName(descriptor, suffix));
@@ -195,7 +184,7 @@ void MaybePrintGeneratedAnnotation(Context* context, io::Printer* printer,
 
 // Get the unqualified name that should be used for a field's field
 // number constant.
-std::string FieldConstantName(const FieldDescriptor *field);
+string FieldConstantName(const FieldDescriptor *field);
 
 // Returns the type of the FieldDescriptor.
 // This does nothing interesting for the open source release, but is used for
@@ -229,9 +218,9 @@ const char* BoxedPrimitiveTypeName(JavaType type);
 const char* FieldTypeName(const FieldDescriptor::Type field_type);
 
 class ClassNameResolver;
-std::string DefaultValue(const FieldDescriptor* field, bool immutable,
+string DefaultValue(const FieldDescriptor* field, bool immutable,
                     ClassNameResolver* name_resolver);
-inline std::string ImmutableDefaultValue(const FieldDescriptor* field,
+inline string ImmutableDefaultValue(const FieldDescriptor* field,
                                     ClassNameResolver* name_resolver) {
   return DefaultValue(field, true, name_resolver);
 }
@@ -267,50 +256,50 @@ inline bool HasGenericServices(const FileDescriptor *file, bool enforce_lite) {
 // Methods for shared bitfields.
 
 // Gets the name of the shared bitfield for the given index.
-std::string GetBitFieldName(int index);
+string GetBitFieldName(int index);
 
 // Gets the name of the shared bitfield for the given bit index.
 // Effectively, GetBitFieldName(bitIndex / 32)
-std::string GetBitFieldNameForBit(int bitIndex);
+string GetBitFieldNameForBit(int bitIndex);
 
 // Generates the java code for the expression that returns the boolean value
 // of the bit of the shared bitfields for the given bit index.
 // Example: "((bitField1_ & 0x04) == 0x04)"
-std::string GenerateGetBit(int bitIndex);
+string GenerateGetBit(int bitIndex);
 
 // Generates the java code for the expression that sets the bit of the shared
 // bitfields for the given bit index.
 // Example: "bitField1_ = (bitField1_ | 0x04)"
-std::string GenerateSetBit(int bitIndex);
+string GenerateSetBit(int bitIndex);
 
 // Generates the java code for the expression that clears the bit of the shared
 // bitfields for the given bit index.
 // Example: "bitField1_ = (bitField1_ & ~0x04)"
-std::string GenerateClearBit(int bitIndex);
+string GenerateClearBit(int bitIndex);
 
 // Does the same as GenerateGetBit but operates on the bit field on a local
 // variable. This is used by the builder to copy the value in the builder to
 // the message.
 // Example: "((from_bitField1_ & 0x04) == 0x04)"
-std::string GenerateGetBitFromLocal(int bitIndex);
+string GenerateGetBitFromLocal(int bitIndex);
 
 // Does the same as GenerateSetBit but operates on the bit field on a local
 // variable. This is used by the builder to copy the value in the builder to
 // the message.
 // Example: "to_bitField1_ = (to_bitField1_ | 0x04)"
-std::string GenerateSetBitToLocal(int bitIndex);
+string GenerateSetBitToLocal(int bitIndex);
 
 // Does the same as GenerateGetBit but operates on the bit field on a local
 // variable. This is used by the parsing constructor to record if a repeated
 // field is mutable.
 // Example: "((mutable_bitField1_ & 0x04) == 0x04)"
-std::string GenerateGetBitMutableLocal(int bitIndex);
+string GenerateGetBitMutableLocal(int bitIndex);
 
 // Does the same as GenerateSetBit but operates on the bit field on a local
 // variable. This is used by the parsing constructor to record if a repeated
 // field is mutable.
 // Example: "mutable_bitField1_ = (mutable_bitField1_ | 0x04)"
-std::string GenerateSetBitMutableLocal(int bitIndex);
+string GenerateSetBitMutableLocal(int bitIndex);
 
 // Returns whether the JavaType is a reference type.
 bool IsReferenceType(JavaType type);
@@ -398,8 +387,12 @@ inline bool CheckUtf8(const FieldDescriptor* descriptor) {
       descriptor->file()->options().java_string_check_utf8();
 }
 
-inline std::string GeneratedCodeVersionSuffix() {
+inline string GeneratedCodeVersionSuffix() {
   return "V3";
+}
+
+inline bool EnableExperimentalRuntime(Context* context) {
+  return false;
 }
 
 void WriteUInt32ToUtf16CharSequence(uint32 number, std::vector<uint16>* output);
@@ -410,7 +403,7 @@ inline void WriteIntToUtf16CharSequence(int value,
 }
 
 // Escape a UTF-16 character so it can be embedded in a Java string literal.
-void EscapeUtf16ToString(uint16 code, std::string* output);
+void EscapeUtf16ToString(uint16 code, string* output);
 
 // Only the lowest two bytes of the return value are used. The lowest byte
 // is the integer value of a j/c/g/protobuf/FieldType enum. For the other
@@ -429,6 +422,6 @@ std::pair<int, int> GetTableDrivenNumberOfEntriesAndLookUpStartFieldNumber(
 }  // namespace java
 }  // namespace compiler
 }  // namespace protobuf
-}  // namespace google
 
+}  // namespace google
 #endif  // GOOGLE_PROTOBUF_COMPILER_JAVA_HELPERS_H__

@@ -36,14 +36,12 @@
 
 #include <string>
 
-#include <google/protobuf/port_def.inc>
-
 namespace google {
 namespace protobuf {
 namespace compiler {
 namespace php {
 
-class PROTOC_EXPORT Generator
+class LIBPROTOC_EXPORT Generator
     : public google::protobuf::compiler::CodeGenerator {
   virtual bool Generate(
       const FileDescriptor* file,
@@ -55,23 +53,16 @@ class PROTOC_EXPORT Generator
 // To skip reserved keywords in php, some generated classname are prefixed.
 // Other code generators may need following API to figure out the actual
 // classname.
-PROTOC_EXPORT std::string GeneratedClassName(
+LIBPROTOC_EXPORT std::string GeneratedClassName(
     const google::protobuf::Descriptor* desc);
-PROTOC_EXPORT std::string GeneratedClassName(
+LIBPROTOC_EXPORT std::string GeneratedClassName(
     const google::protobuf::EnumDescriptor* desc);
-PROTOC_EXPORT std::string GeneratedClassName(
+LIBPROTOC_EXPORT std::string GeneratedClassName(
     const google::protobuf::ServiceDescriptor* desc);
-
-inline bool IsWrapperType(const FieldDescriptor* descriptor) {
-  return descriptor->cpp_type() == FieldDescriptor::CPPTYPE_MESSAGE &&
-      descriptor->message_type()->file()->name() == "google/protobuf/wrappers.proto";
-}
 
 }  // namespace php
 }  // namespace compiler
 }  // namespace protobuf
 }  // namespace google
-
-#include <google/protobuf/port_undef.inc>
 
 #endif  // GOOGLE_PROTOBUF_COMPILER_PHP_GENERATOR_H__

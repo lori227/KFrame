@@ -91,9 +91,7 @@ build_triplet = @build@
 host_triplet = @host@
 target_triplet = @target@
 bin_PROGRAMS = cpp-benchmark$(EXEEXT) cpp-no-group-benchmark$(EXEEXT) \
-	protoc-gen-gogoproto$(EXEEXT) gogo-data-scrubber$(EXEEXT) \
-	protoc-gen-proto2_to_proto3$(EXEEXT) \
-	proto3-data-stripper$(EXEEXT)
+	protoc-gen-gogoproto$(EXEEXT) gogo-data-scrubber$(EXEEXT)
 subdir = benchmarks
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/ac_system_extensions.m4 \
@@ -251,40 +249,10 @@ nodist_gogo_data_scrubber_OBJECTS = $(am__objects_8) $(am__objects_9) \
 gogo_data_scrubber_OBJECTS = $(am_gogo_data_scrubber_OBJECTS) \
 	$(nodist_gogo_data_scrubber_OBJECTS)
 gogo_data_scrubber_DEPENDENCIES = $(top_srcdir)/src/libprotobuf.la
-am_proto3_data_stripper_OBJECTS =  \
-	util/proto3_data_stripper-proto3_data_stripper.$(OBJEXT)
-am__objects_10 = cpp/proto3_data_stripper-benchmarks.pb.$(OBJEXT) \
-	cpp/datasets/google_message1/proto3/proto3_data_stripper-benchmark_message1_proto3.pb.$(OBJEXT)
-am__objects_11 = cpp/datasets/google_message1/proto2/proto3_data_stripper-benchmark_message1_proto2.pb.$(OBJEXT) \
-	cpp/datasets/google_message2/proto3_data_stripper-benchmark_message2.pb.$(OBJEXT) \
-	cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3.pb.$(OBJEXT) \
-	cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_1.pb.$(OBJEXT) \
-	cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_2.pb.$(OBJEXT) \
-	cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_3.pb.$(OBJEXT) \
-	cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_4.pb.$(OBJEXT) \
-	cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_5.pb.$(OBJEXT) \
-	cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_6.pb.$(OBJEXT) \
-	cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_7.pb.$(OBJEXT) \
-	cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_8.pb.$(OBJEXT) \
-	cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4.pb.$(OBJEXT) \
-	cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4_1.pb.$(OBJEXT) \
-	cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4_2.pb.$(OBJEXT) \
-	cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4_3.pb.$(OBJEXT)
-nodist_proto3_data_stripper_OBJECTS = $(am__objects_10) \
-	$(am__objects_11) $(am__objects_3) $(am__objects_3)
-proto3_data_stripper_OBJECTS = $(am_proto3_data_stripper_OBJECTS) \
-	$(nodist_proto3_data_stripper_OBJECTS)
-proto3_data_stripper_DEPENDENCIES = $(top_srcdir)/src/libprotobuf.la
 am_protoc_gen_gogoproto_OBJECTS =  \
 	util/protoc_gen_gogoproto-protoc-gen-gogoproto.$(OBJEXT)
 protoc_gen_gogoproto_OBJECTS = $(am_protoc_gen_gogoproto_OBJECTS)
 protoc_gen_gogoproto_DEPENDENCIES = $(top_srcdir)/src/libprotobuf.la \
-	$(top_srcdir)/src/libprotoc.la
-am_protoc_gen_proto2_to_proto3_OBJECTS = util/protoc_gen_proto2_to_proto3-protoc-gen-proto2_to_proto3.$(OBJEXT)
-protoc_gen_proto2_to_proto3_OBJECTS =  \
-	$(am_protoc_gen_proto2_to_proto3_OBJECTS)
-protoc_gen_proto2_to_proto3_DEPENDENCIES =  \
-	$(top_srcdir)/src/libprotobuf.la \
 	$(top_srcdir)/src/libprotoc.la
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
@@ -345,15 +313,10 @@ SOURCES = $(libbenchmark_messages_la_SOURCES) \
 	$(nodist_cpp_no_group_benchmark_SOURCES) \
 	$(gogo_data_scrubber_SOURCES) \
 	$(nodist_gogo_data_scrubber_SOURCES) \
-	$(proto3_data_stripper_SOURCES) \
-	$(nodist_proto3_data_stripper_SOURCES) \
-	$(protoc_gen_gogoproto_SOURCES) \
-	$(protoc_gen_proto2_to_proto3_SOURCES)
+	$(protoc_gen_gogoproto_SOURCES)
 DIST_SOURCES = $(libbenchmark_messages_la_SOURCES) \
 	$(cpp_benchmark_SOURCES) $(cpp_no_group_benchmark_SOURCES) \
-	$(gogo_data_scrubber_SOURCES) $(proto3_data_stripper_SOURCES) \
-	$(protoc_gen_gogoproto_SOURCES) \
-	$(protoc_gen_proto2_to_proto3_SOURCES)
+	$(gogo_data_scrubber_SOURCES) $(protoc_gen_gogoproto_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -431,7 +394,6 @@ ISAINFO = @ISAINFO@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
 LDFLAGS_FOR_BUILD = @LDFLAGS_FOR_BUILD@
-LIBATOMIC_LIBS = @LIBATOMIC_LIBS@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
@@ -558,7 +520,7 @@ benchmarks_protoc_inputs_proto2 = \
 	datasets/google_message4/benchmark_message4_2.proto                      \
 	datasets/google_message4/benchmark_message4_3.proto
 
-all_data = $$(find $$(cd $(srcdir) && pwd) -type f -name "dataset.*.pb" -not -path "$$(cd $(srcdir) && pwd)/tmp/*")
+all_data = $$(find $(srcdir) -type f -name "dataset.*.pb" -not -path "./tmp/*")
 
 ############# CPP RULES ##############
 benchmarks_protoc_outputs = \
@@ -714,7 +676,8 @@ nodist_cpp_no_group_benchmark_SOURCES = \
 	$(cpp_no_group_benchmarks_protoc_outputs_header)                         \
 	$(cpp_no_group_benchmarks_protoc_outputs_proto2_header)
 
-gogo_data = $$(for data in $(all_data); do echo "tmp/gogo_data$${data\#$(srcdir)}"; done | xargs)
+new_data = $$(for data in $(all_data); do echo "tmp$${data\#$(srcdir)}"; done | xargs)
+gogo_data = $$(find . -type f -name "dataset.*.pb" -path "./tmp/*")
 protoc_gen_gogoproto_LDADD = $(top_srcdir)/src/libprotobuf.la $(top_srcdir)/src/libprotoc.la
 protoc_gen_gogoproto_SOURCES = util/protoc-gen-gogoproto.cc
 protoc_gen_gogoproto_CPPFLAGS = -I$(top_srcdir)/src -I$(srcdir)/cpp -I$(srcdir)/util
@@ -727,22 +690,8 @@ nodist_gogo_data_scrubber_SOURCES = \
 	$(benchmarks_protoc_outputs_proto2_header)                               \
 	$(benchmarks_protoc_outputs_header)
 
-protoc_gen_proto2_to_proto3_LDADD = $(top_srcdir)/src/libprotobuf.la $(top_srcdir)/src/libprotoc.la
-protoc_gen_proto2_to_proto3_SOURCES = util/protoc-gen-proto2_to_proto3.cc
-protoc_gen_proto2_to_proto3_CPPFLAGS = -I$(top_srcdir)/src -I$(srcdir)/cpp -I$(srcdir)/util
-proto3_data_stripper_LDADD = $(top_srcdir)/src/libprotobuf.la
-proto3_data_stripper_SOURCES = util/proto3_data_stripper.cc
-proto3_data_stripper_CPPFLAGS = -I$(top_srcdir)/src -I$(srcdir)/cpp -I$(srcdir)/util
-nodist_proto3_data_stripper_SOURCES = \
-	$(benchmarks_protoc_outputs)                                             \
-	$(benchmarks_protoc_outputs_proto2)                                      \
-	$(benchmarks_protoc_outputs_proto2_header)                               \
-	$(benchmarks_protoc_outputs_header)
 
-full_srcdir = $$(cd $(srcdir) && pwd)
-proto3_data = $$(for data in $(all_data); do echo $(full_srcdir)"/tmp/proto3_data$${data\#$(full_srcdir)}"; done | xargs)
-
-############ JS RULE END #############
+############ UTIL RULES END ############
 MAINTAINERCLEANFILES = \
 	Makefile.in
 
@@ -785,18 +734,7 @@ CLEANFILES = \
 	gogoslick_protoc_middleman                                               \
 	gogoslick                                                                \
 	gogo-benchmark                                                           \
-	gogo/cpp_no_group/cpp_benchmark.*                                        \
-	proto3_proto_middleman                                                   \
-	generate_proto3_data                                                     \
-	php-benchmark                                                            \
-	php-c-benchmark                                                          \
-	proto3_middleman_php                                                     \
-	pbjs_preparation                                                         \
-	pbjs_middleman                                                           \
-	pbjs-benchmark                                                           \
-	js_preparation                                                           \
-	js_middleman                                                             \
-	js-benchmark
+	gogo/cpp_no_group/cpp_benchmark.* 
 
 all: all-am
 
@@ -1222,74 +1160,12 @@ cpp/datasets/google_message4/gogo_data_scrubber-benchmark_message4_3.pb.$(OBJEXT
 gogo-data-scrubber$(EXEEXT): $(gogo_data_scrubber_OBJECTS) $(gogo_data_scrubber_DEPENDENCIES) $(EXTRA_gogo_data_scrubber_DEPENDENCIES) 
 	@rm -f gogo-data-scrubber$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(gogo_data_scrubber_OBJECTS) $(gogo_data_scrubber_LDADD) $(LIBS)
-util/proto3_data_stripper-proto3_data_stripper.$(OBJEXT):  \
-	util/$(am__dirstamp) util/$(DEPDIR)/$(am__dirstamp)
-cpp/proto3_data_stripper-benchmarks.pb.$(OBJEXT): cpp/$(am__dirstamp) \
-	cpp/$(DEPDIR)/$(am__dirstamp)
-cpp/datasets/google_message1/proto3/proto3_data_stripper-benchmark_message1_proto3.pb.$(OBJEXT):  \
-	cpp/datasets/google_message1/proto3/$(am__dirstamp) \
-	cpp/datasets/google_message1/proto3/$(DEPDIR)/$(am__dirstamp)
-cpp/datasets/google_message1/proto2/proto3_data_stripper-benchmark_message1_proto2.pb.$(OBJEXT):  \
-	cpp/datasets/google_message1/proto2/$(am__dirstamp) \
-	cpp/datasets/google_message1/proto2/$(DEPDIR)/$(am__dirstamp)
-cpp/datasets/google_message2/proto3_data_stripper-benchmark_message2.pb.$(OBJEXT):  \
-	cpp/datasets/google_message2/$(am__dirstamp) \
-	cpp/datasets/google_message2/$(DEPDIR)/$(am__dirstamp)
-cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3.pb.$(OBJEXT):  \
-	cpp/datasets/google_message3/$(am__dirstamp) \
-	cpp/datasets/google_message3/$(DEPDIR)/$(am__dirstamp)
-cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_1.pb.$(OBJEXT):  \
-	cpp/datasets/google_message3/$(am__dirstamp) \
-	cpp/datasets/google_message3/$(DEPDIR)/$(am__dirstamp)
-cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_2.pb.$(OBJEXT):  \
-	cpp/datasets/google_message3/$(am__dirstamp) \
-	cpp/datasets/google_message3/$(DEPDIR)/$(am__dirstamp)
-cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_3.pb.$(OBJEXT):  \
-	cpp/datasets/google_message3/$(am__dirstamp) \
-	cpp/datasets/google_message3/$(DEPDIR)/$(am__dirstamp)
-cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_4.pb.$(OBJEXT):  \
-	cpp/datasets/google_message3/$(am__dirstamp) \
-	cpp/datasets/google_message3/$(DEPDIR)/$(am__dirstamp)
-cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_5.pb.$(OBJEXT):  \
-	cpp/datasets/google_message3/$(am__dirstamp) \
-	cpp/datasets/google_message3/$(DEPDIR)/$(am__dirstamp)
-cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_6.pb.$(OBJEXT):  \
-	cpp/datasets/google_message3/$(am__dirstamp) \
-	cpp/datasets/google_message3/$(DEPDIR)/$(am__dirstamp)
-cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_7.pb.$(OBJEXT):  \
-	cpp/datasets/google_message3/$(am__dirstamp) \
-	cpp/datasets/google_message3/$(DEPDIR)/$(am__dirstamp)
-cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_8.pb.$(OBJEXT):  \
-	cpp/datasets/google_message3/$(am__dirstamp) \
-	cpp/datasets/google_message3/$(DEPDIR)/$(am__dirstamp)
-cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4.pb.$(OBJEXT):  \
-	cpp/datasets/google_message4/$(am__dirstamp) \
-	cpp/datasets/google_message4/$(DEPDIR)/$(am__dirstamp)
-cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4_1.pb.$(OBJEXT):  \
-	cpp/datasets/google_message4/$(am__dirstamp) \
-	cpp/datasets/google_message4/$(DEPDIR)/$(am__dirstamp)
-cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4_2.pb.$(OBJEXT):  \
-	cpp/datasets/google_message4/$(am__dirstamp) \
-	cpp/datasets/google_message4/$(DEPDIR)/$(am__dirstamp)
-cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4_3.pb.$(OBJEXT):  \
-	cpp/datasets/google_message4/$(am__dirstamp) \
-	cpp/datasets/google_message4/$(DEPDIR)/$(am__dirstamp)
-
-proto3-data-stripper$(EXEEXT): $(proto3_data_stripper_OBJECTS) $(proto3_data_stripper_DEPENDENCIES) $(EXTRA_proto3_data_stripper_DEPENDENCIES) 
-	@rm -f proto3-data-stripper$(EXEEXT)
-	$(AM_V_CXXLD)$(CXXLINK) $(proto3_data_stripper_OBJECTS) $(proto3_data_stripper_LDADD) $(LIBS)
 util/protoc_gen_gogoproto-protoc-gen-gogoproto.$(OBJEXT):  \
 	util/$(am__dirstamp) util/$(DEPDIR)/$(am__dirstamp)
 
 protoc-gen-gogoproto$(EXEEXT): $(protoc_gen_gogoproto_OBJECTS) $(protoc_gen_gogoproto_DEPENDENCIES) $(EXTRA_protoc_gen_gogoproto_DEPENDENCIES) 
 	@rm -f protoc-gen-gogoproto$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(protoc_gen_gogoproto_OBJECTS) $(protoc_gen_gogoproto_LDADD) $(LIBS)
-util/protoc_gen_proto2_to_proto3-protoc-gen-proto2_to_proto3.$(OBJEXT):  \
-	util/$(am__dirstamp) util/$(DEPDIR)/$(am__dirstamp)
-
-protoc-gen-proto2_to_proto3$(EXEEXT): $(protoc_gen_proto2_to_proto3_OBJECTS) $(protoc_gen_proto2_to_proto3_DEPENDENCIES) $(EXTRA_protoc_gen_proto2_to_proto3_DEPENDENCIES) 
-	@rm -f protoc-gen-proto2_to_proto3$(EXEEXT)
-	$(AM_V_CXXLD)$(CXXLINK) $(protoc_gen_proto2_to_proto3_OBJECTS) $(protoc_gen_proto2_to_proto3_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -1322,19 +1198,15 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@cpp/$(DEPDIR)/cpp_benchmark-cpp_benchmark.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@cpp/$(DEPDIR)/gogo_data_scrubber-benchmarks.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@cpp/$(DEPDIR)/libbenchmark_messages_la-benchmarks.pb.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@cpp/$(DEPDIR)/proto3_data_stripper-benchmarks.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@cpp/datasets/google_message1/proto2/$(DEPDIR)/cpp_benchmark-benchmark_message1_proto2.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@cpp/datasets/google_message1/proto2/$(DEPDIR)/gogo_data_scrubber-benchmark_message1_proto2.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@cpp/datasets/google_message1/proto2/$(DEPDIR)/libbenchmark_messages_la-benchmark_message1_proto2.pb.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@cpp/datasets/google_message1/proto2/$(DEPDIR)/proto3_data_stripper-benchmark_message1_proto2.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@cpp/datasets/google_message1/proto3/$(DEPDIR)/cpp_benchmark-benchmark_message1_proto3.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@cpp/datasets/google_message1/proto3/$(DEPDIR)/gogo_data_scrubber-benchmark_message1_proto3.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@cpp/datasets/google_message1/proto3/$(DEPDIR)/libbenchmark_messages_la-benchmark_message1_proto3.pb.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@cpp/datasets/google_message1/proto3/$(DEPDIR)/proto3_data_stripper-benchmark_message1_proto3.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@cpp/datasets/google_message2/$(DEPDIR)/cpp_benchmark-benchmark_message2.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@cpp/datasets/google_message2/$(DEPDIR)/gogo_data_scrubber-benchmark_message2.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@cpp/datasets/google_message2/$(DEPDIR)/libbenchmark_messages_la-benchmark_message2.pb.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@cpp/datasets/google_message2/$(DEPDIR)/proto3_data_stripper-benchmark_message2.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@cpp/datasets/google_message3/$(DEPDIR)/cpp_benchmark-benchmark_message3.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@cpp/datasets/google_message3/$(DEPDIR)/cpp_benchmark-benchmark_message3_1.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@cpp/datasets/google_message3/$(DEPDIR)/cpp_benchmark-benchmark_message3_2.pb.Po@am__quote@
@@ -1362,15 +1234,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@cpp/datasets/google_message3/$(DEPDIR)/libbenchmark_messages_la-benchmark_message3_6.pb.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@cpp/datasets/google_message3/$(DEPDIR)/libbenchmark_messages_la-benchmark_message3_7.pb.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@cpp/datasets/google_message3/$(DEPDIR)/libbenchmark_messages_la-benchmark_message3_8.pb.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3.pb.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_1.pb.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_2.pb.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_3.pb.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_4.pb.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_5.pb.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_6.pb.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_7.pb.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_8.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@cpp/datasets/google_message4/$(DEPDIR)/cpp_benchmark-benchmark_message4.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@cpp/datasets/google_message4/$(DEPDIR)/cpp_benchmark-benchmark_message4_1.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@cpp/datasets/google_message4/$(DEPDIR)/cpp_benchmark-benchmark_message4_2.pb.Po@am__quote@
@@ -1383,10 +1246,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@cpp/datasets/google_message4/$(DEPDIR)/libbenchmark_messages_la-benchmark_message4_1.pb.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@cpp/datasets/google_message4/$(DEPDIR)/libbenchmark_messages_la-benchmark_message4_2.pb.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@cpp/datasets/google_message4/$(DEPDIR)/libbenchmark_messages_la-benchmark_message4_3.pb.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@cpp/datasets/google_message4/$(DEPDIR)/proto3_data_stripper-benchmark_message4.pb.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@cpp/datasets/google_message4/$(DEPDIR)/proto3_data_stripper-benchmark_message4_1.pb.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@cpp/datasets/google_message4/$(DEPDIR)/proto3_data_stripper-benchmark_message4_2.pb.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@cpp/datasets/google_message4/$(DEPDIR)/proto3_data_stripper-benchmark_message4_3.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@gogo/cpp_no_group/$(DEPDIR)/cpp_no_group_benchmark-benchmarks.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@gogo/cpp_no_group/$(DEPDIR)/cpp_no_group_benchmark-cpp_benchmark.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@gogo/cpp_no_group/datasets/google_message1/proto2/$(DEPDIR)/cpp_no_group_benchmark-benchmark_message1_proto2.pb.Po@am__quote@
@@ -1407,9 +1266,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@gogo/cpp_no_group/datasets/google_message4/$(DEPDIR)/cpp_no_group_benchmark-benchmark_message4_3.pb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@python/$(DEPDIR)/libbenchmark_messages_la-python_benchmark_messages.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@util/$(DEPDIR)/gogo_data_scrubber-gogo_data_scrubber.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@util/$(DEPDIR)/proto3_data_stripper-proto3_data_stripper.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@util/$(DEPDIR)/protoc_gen_gogoproto-protoc-gen-gogoproto.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@util/$(DEPDIR)/protoc_gen_proto2_to_proto3-protoc-gen-proto2_to_proto3.Po@am__quote@
 
 .cc.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
@@ -2317,258 +2174,6 @@ cpp/datasets/google_message4/gogo_data_scrubber-benchmark_message4_3.pb.obj: cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(gogo_data_scrubber_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cpp/datasets/google_message4/gogo_data_scrubber-benchmark_message4_3.pb.obj `if test -f 'cpp/datasets/google_message4/benchmark_message4_3.pb.cc'; then $(CYGPATH_W) 'cpp/datasets/google_message4/benchmark_message4_3.pb.cc'; else $(CYGPATH_W) '$(srcdir)/cpp/datasets/google_message4/benchmark_message4_3.pb.cc'; fi`
 
-util/proto3_data_stripper-proto3_data_stripper.o: util/proto3_data_stripper.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT util/proto3_data_stripper-proto3_data_stripper.o -MD -MP -MF util/$(DEPDIR)/proto3_data_stripper-proto3_data_stripper.Tpo -c -o util/proto3_data_stripper-proto3_data_stripper.o `test -f 'util/proto3_data_stripper.cc' || echo '$(srcdir)/'`util/proto3_data_stripper.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) util/$(DEPDIR)/proto3_data_stripper-proto3_data_stripper.Tpo util/$(DEPDIR)/proto3_data_stripper-proto3_data_stripper.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='util/proto3_data_stripper.cc' object='util/proto3_data_stripper-proto3_data_stripper.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o util/proto3_data_stripper-proto3_data_stripper.o `test -f 'util/proto3_data_stripper.cc' || echo '$(srcdir)/'`util/proto3_data_stripper.cc
-
-util/proto3_data_stripper-proto3_data_stripper.obj: util/proto3_data_stripper.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT util/proto3_data_stripper-proto3_data_stripper.obj -MD -MP -MF util/$(DEPDIR)/proto3_data_stripper-proto3_data_stripper.Tpo -c -o util/proto3_data_stripper-proto3_data_stripper.obj `if test -f 'util/proto3_data_stripper.cc'; then $(CYGPATH_W) 'util/proto3_data_stripper.cc'; else $(CYGPATH_W) '$(srcdir)/util/proto3_data_stripper.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) util/$(DEPDIR)/proto3_data_stripper-proto3_data_stripper.Tpo util/$(DEPDIR)/proto3_data_stripper-proto3_data_stripper.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='util/proto3_data_stripper.cc' object='util/proto3_data_stripper-proto3_data_stripper.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o util/proto3_data_stripper-proto3_data_stripper.obj `if test -f 'util/proto3_data_stripper.cc'; then $(CYGPATH_W) 'util/proto3_data_stripper.cc'; else $(CYGPATH_W) '$(srcdir)/util/proto3_data_stripper.cc'; fi`
-
-cpp/proto3_data_stripper-benchmarks.pb.o: cpp/benchmarks.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cpp/proto3_data_stripper-benchmarks.pb.o -MD -MP -MF cpp/$(DEPDIR)/proto3_data_stripper-benchmarks.pb.Tpo -c -o cpp/proto3_data_stripper-benchmarks.pb.o `test -f 'cpp/benchmarks.pb.cc' || echo '$(srcdir)/'`cpp/benchmarks.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) cpp/$(DEPDIR)/proto3_data_stripper-benchmarks.pb.Tpo cpp/$(DEPDIR)/proto3_data_stripper-benchmarks.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='cpp/benchmarks.pb.cc' object='cpp/proto3_data_stripper-benchmarks.pb.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cpp/proto3_data_stripper-benchmarks.pb.o `test -f 'cpp/benchmarks.pb.cc' || echo '$(srcdir)/'`cpp/benchmarks.pb.cc
-
-cpp/proto3_data_stripper-benchmarks.pb.obj: cpp/benchmarks.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cpp/proto3_data_stripper-benchmarks.pb.obj -MD -MP -MF cpp/$(DEPDIR)/proto3_data_stripper-benchmarks.pb.Tpo -c -o cpp/proto3_data_stripper-benchmarks.pb.obj `if test -f 'cpp/benchmarks.pb.cc'; then $(CYGPATH_W) 'cpp/benchmarks.pb.cc'; else $(CYGPATH_W) '$(srcdir)/cpp/benchmarks.pb.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) cpp/$(DEPDIR)/proto3_data_stripper-benchmarks.pb.Tpo cpp/$(DEPDIR)/proto3_data_stripper-benchmarks.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='cpp/benchmarks.pb.cc' object='cpp/proto3_data_stripper-benchmarks.pb.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cpp/proto3_data_stripper-benchmarks.pb.obj `if test -f 'cpp/benchmarks.pb.cc'; then $(CYGPATH_W) 'cpp/benchmarks.pb.cc'; else $(CYGPATH_W) '$(srcdir)/cpp/benchmarks.pb.cc'; fi`
-
-cpp/datasets/google_message1/proto3/proto3_data_stripper-benchmark_message1_proto3.pb.o: cpp/datasets/google_message1/proto3/benchmark_message1_proto3.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cpp/datasets/google_message1/proto3/proto3_data_stripper-benchmark_message1_proto3.pb.o -MD -MP -MF cpp/datasets/google_message1/proto3/$(DEPDIR)/proto3_data_stripper-benchmark_message1_proto3.pb.Tpo -c -o cpp/datasets/google_message1/proto3/proto3_data_stripper-benchmark_message1_proto3.pb.o `test -f 'cpp/datasets/google_message1/proto3/benchmark_message1_proto3.pb.cc' || echo '$(srcdir)/'`cpp/datasets/google_message1/proto3/benchmark_message1_proto3.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) cpp/datasets/google_message1/proto3/$(DEPDIR)/proto3_data_stripper-benchmark_message1_proto3.pb.Tpo cpp/datasets/google_message1/proto3/$(DEPDIR)/proto3_data_stripper-benchmark_message1_proto3.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='cpp/datasets/google_message1/proto3/benchmark_message1_proto3.pb.cc' object='cpp/datasets/google_message1/proto3/proto3_data_stripper-benchmark_message1_proto3.pb.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cpp/datasets/google_message1/proto3/proto3_data_stripper-benchmark_message1_proto3.pb.o `test -f 'cpp/datasets/google_message1/proto3/benchmark_message1_proto3.pb.cc' || echo '$(srcdir)/'`cpp/datasets/google_message1/proto3/benchmark_message1_proto3.pb.cc
-
-cpp/datasets/google_message1/proto3/proto3_data_stripper-benchmark_message1_proto3.pb.obj: cpp/datasets/google_message1/proto3/benchmark_message1_proto3.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cpp/datasets/google_message1/proto3/proto3_data_stripper-benchmark_message1_proto3.pb.obj -MD -MP -MF cpp/datasets/google_message1/proto3/$(DEPDIR)/proto3_data_stripper-benchmark_message1_proto3.pb.Tpo -c -o cpp/datasets/google_message1/proto3/proto3_data_stripper-benchmark_message1_proto3.pb.obj `if test -f 'cpp/datasets/google_message1/proto3/benchmark_message1_proto3.pb.cc'; then $(CYGPATH_W) 'cpp/datasets/google_message1/proto3/benchmark_message1_proto3.pb.cc'; else $(CYGPATH_W) '$(srcdir)/cpp/datasets/google_message1/proto3/benchmark_message1_proto3.pb.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) cpp/datasets/google_message1/proto3/$(DEPDIR)/proto3_data_stripper-benchmark_message1_proto3.pb.Tpo cpp/datasets/google_message1/proto3/$(DEPDIR)/proto3_data_stripper-benchmark_message1_proto3.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='cpp/datasets/google_message1/proto3/benchmark_message1_proto3.pb.cc' object='cpp/datasets/google_message1/proto3/proto3_data_stripper-benchmark_message1_proto3.pb.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cpp/datasets/google_message1/proto3/proto3_data_stripper-benchmark_message1_proto3.pb.obj `if test -f 'cpp/datasets/google_message1/proto3/benchmark_message1_proto3.pb.cc'; then $(CYGPATH_W) 'cpp/datasets/google_message1/proto3/benchmark_message1_proto3.pb.cc'; else $(CYGPATH_W) '$(srcdir)/cpp/datasets/google_message1/proto3/benchmark_message1_proto3.pb.cc'; fi`
-
-cpp/datasets/google_message1/proto2/proto3_data_stripper-benchmark_message1_proto2.pb.o: cpp/datasets/google_message1/proto2/benchmark_message1_proto2.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cpp/datasets/google_message1/proto2/proto3_data_stripper-benchmark_message1_proto2.pb.o -MD -MP -MF cpp/datasets/google_message1/proto2/$(DEPDIR)/proto3_data_stripper-benchmark_message1_proto2.pb.Tpo -c -o cpp/datasets/google_message1/proto2/proto3_data_stripper-benchmark_message1_proto2.pb.o `test -f 'cpp/datasets/google_message1/proto2/benchmark_message1_proto2.pb.cc' || echo '$(srcdir)/'`cpp/datasets/google_message1/proto2/benchmark_message1_proto2.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) cpp/datasets/google_message1/proto2/$(DEPDIR)/proto3_data_stripper-benchmark_message1_proto2.pb.Tpo cpp/datasets/google_message1/proto2/$(DEPDIR)/proto3_data_stripper-benchmark_message1_proto2.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='cpp/datasets/google_message1/proto2/benchmark_message1_proto2.pb.cc' object='cpp/datasets/google_message1/proto2/proto3_data_stripper-benchmark_message1_proto2.pb.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cpp/datasets/google_message1/proto2/proto3_data_stripper-benchmark_message1_proto2.pb.o `test -f 'cpp/datasets/google_message1/proto2/benchmark_message1_proto2.pb.cc' || echo '$(srcdir)/'`cpp/datasets/google_message1/proto2/benchmark_message1_proto2.pb.cc
-
-cpp/datasets/google_message1/proto2/proto3_data_stripper-benchmark_message1_proto2.pb.obj: cpp/datasets/google_message1/proto2/benchmark_message1_proto2.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cpp/datasets/google_message1/proto2/proto3_data_stripper-benchmark_message1_proto2.pb.obj -MD -MP -MF cpp/datasets/google_message1/proto2/$(DEPDIR)/proto3_data_stripper-benchmark_message1_proto2.pb.Tpo -c -o cpp/datasets/google_message1/proto2/proto3_data_stripper-benchmark_message1_proto2.pb.obj `if test -f 'cpp/datasets/google_message1/proto2/benchmark_message1_proto2.pb.cc'; then $(CYGPATH_W) 'cpp/datasets/google_message1/proto2/benchmark_message1_proto2.pb.cc'; else $(CYGPATH_W) '$(srcdir)/cpp/datasets/google_message1/proto2/benchmark_message1_proto2.pb.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) cpp/datasets/google_message1/proto2/$(DEPDIR)/proto3_data_stripper-benchmark_message1_proto2.pb.Tpo cpp/datasets/google_message1/proto2/$(DEPDIR)/proto3_data_stripper-benchmark_message1_proto2.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='cpp/datasets/google_message1/proto2/benchmark_message1_proto2.pb.cc' object='cpp/datasets/google_message1/proto2/proto3_data_stripper-benchmark_message1_proto2.pb.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cpp/datasets/google_message1/proto2/proto3_data_stripper-benchmark_message1_proto2.pb.obj `if test -f 'cpp/datasets/google_message1/proto2/benchmark_message1_proto2.pb.cc'; then $(CYGPATH_W) 'cpp/datasets/google_message1/proto2/benchmark_message1_proto2.pb.cc'; else $(CYGPATH_W) '$(srcdir)/cpp/datasets/google_message1/proto2/benchmark_message1_proto2.pb.cc'; fi`
-
-cpp/datasets/google_message2/proto3_data_stripper-benchmark_message2.pb.o: cpp/datasets/google_message2/benchmark_message2.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cpp/datasets/google_message2/proto3_data_stripper-benchmark_message2.pb.o -MD -MP -MF cpp/datasets/google_message2/$(DEPDIR)/proto3_data_stripper-benchmark_message2.pb.Tpo -c -o cpp/datasets/google_message2/proto3_data_stripper-benchmark_message2.pb.o `test -f 'cpp/datasets/google_message2/benchmark_message2.pb.cc' || echo '$(srcdir)/'`cpp/datasets/google_message2/benchmark_message2.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) cpp/datasets/google_message2/$(DEPDIR)/proto3_data_stripper-benchmark_message2.pb.Tpo cpp/datasets/google_message2/$(DEPDIR)/proto3_data_stripper-benchmark_message2.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='cpp/datasets/google_message2/benchmark_message2.pb.cc' object='cpp/datasets/google_message2/proto3_data_stripper-benchmark_message2.pb.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cpp/datasets/google_message2/proto3_data_stripper-benchmark_message2.pb.o `test -f 'cpp/datasets/google_message2/benchmark_message2.pb.cc' || echo '$(srcdir)/'`cpp/datasets/google_message2/benchmark_message2.pb.cc
-
-cpp/datasets/google_message2/proto3_data_stripper-benchmark_message2.pb.obj: cpp/datasets/google_message2/benchmark_message2.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cpp/datasets/google_message2/proto3_data_stripper-benchmark_message2.pb.obj -MD -MP -MF cpp/datasets/google_message2/$(DEPDIR)/proto3_data_stripper-benchmark_message2.pb.Tpo -c -o cpp/datasets/google_message2/proto3_data_stripper-benchmark_message2.pb.obj `if test -f 'cpp/datasets/google_message2/benchmark_message2.pb.cc'; then $(CYGPATH_W) 'cpp/datasets/google_message2/benchmark_message2.pb.cc'; else $(CYGPATH_W) '$(srcdir)/cpp/datasets/google_message2/benchmark_message2.pb.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) cpp/datasets/google_message2/$(DEPDIR)/proto3_data_stripper-benchmark_message2.pb.Tpo cpp/datasets/google_message2/$(DEPDIR)/proto3_data_stripper-benchmark_message2.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='cpp/datasets/google_message2/benchmark_message2.pb.cc' object='cpp/datasets/google_message2/proto3_data_stripper-benchmark_message2.pb.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cpp/datasets/google_message2/proto3_data_stripper-benchmark_message2.pb.obj `if test -f 'cpp/datasets/google_message2/benchmark_message2.pb.cc'; then $(CYGPATH_W) 'cpp/datasets/google_message2/benchmark_message2.pb.cc'; else $(CYGPATH_W) '$(srcdir)/cpp/datasets/google_message2/benchmark_message2.pb.cc'; fi`
-
-cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3.pb.o: cpp/datasets/google_message3/benchmark_message3.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3.pb.o -MD -MP -MF cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3.pb.Tpo -c -o cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3.pb.o `test -f 'cpp/datasets/google_message3/benchmark_message3.pb.cc' || echo '$(srcdir)/'`cpp/datasets/google_message3/benchmark_message3.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3.pb.Tpo cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='cpp/datasets/google_message3/benchmark_message3.pb.cc' object='cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3.pb.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3.pb.o `test -f 'cpp/datasets/google_message3/benchmark_message3.pb.cc' || echo '$(srcdir)/'`cpp/datasets/google_message3/benchmark_message3.pb.cc
-
-cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3.pb.obj: cpp/datasets/google_message3/benchmark_message3.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3.pb.obj -MD -MP -MF cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3.pb.Tpo -c -o cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3.pb.obj `if test -f 'cpp/datasets/google_message3/benchmark_message3.pb.cc'; then $(CYGPATH_W) 'cpp/datasets/google_message3/benchmark_message3.pb.cc'; else $(CYGPATH_W) '$(srcdir)/cpp/datasets/google_message3/benchmark_message3.pb.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3.pb.Tpo cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='cpp/datasets/google_message3/benchmark_message3.pb.cc' object='cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3.pb.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3.pb.obj `if test -f 'cpp/datasets/google_message3/benchmark_message3.pb.cc'; then $(CYGPATH_W) 'cpp/datasets/google_message3/benchmark_message3.pb.cc'; else $(CYGPATH_W) '$(srcdir)/cpp/datasets/google_message3/benchmark_message3.pb.cc'; fi`
-
-cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_1.pb.o: cpp/datasets/google_message3/benchmark_message3_1.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_1.pb.o -MD -MP -MF cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_1.pb.Tpo -c -o cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_1.pb.o `test -f 'cpp/datasets/google_message3/benchmark_message3_1.pb.cc' || echo '$(srcdir)/'`cpp/datasets/google_message3/benchmark_message3_1.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_1.pb.Tpo cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_1.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='cpp/datasets/google_message3/benchmark_message3_1.pb.cc' object='cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_1.pb.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_1.pb.o `test -f 'cpp/datasets/google_message3/benchmark_message3_1.pb.cc' || echo '$(srcdir)/'`cpp/datasets/google_message3/benchmark_message3_1.pb.cc
-
-cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_1.pb.obj: cpp/datasets/google_message3/benchmark_message3_1.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_1.pb.obj -MD -MP -MF cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_1.pb.Tpo -c -o cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_1.pb.obj `if test -f 'cpp/datasets/google_message3/benchmark_message3_1.pb.cc'; then $(CYGPATH_W) 'cpp/datasets/google_message3/benchmark_message3_1.pb.cc'; else $(CYGPATH_W) '$(srcdir)/cpp/datasets/google_message3/benchmark_message3_1.pb.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_1.pb.Tpo cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_1.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='cpp/datasets/google_message3/benchmark_message3_1.pb.cc' object='cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_1.pb.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_1.pb.obj `if test -f 'cpp/datasets/google_message3/benchmark_message3_1.pb.cc'; then $(CYGPATH_W) 'cpp/datasets/google_message3/benchmark_message3_1.pb.cc'; else $(CYGPATH_W) '$(srcdir)/cpp/datasets/google_message3/benchmark_message3_1.pb.cc'; fi`
-
-cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_2.pb.o: cpp/datasets/google_message3/benchmark_message3_2.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_2.pb.o -MD -MP -MF cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_2.pb.Tpo -c -o cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_2.pb.o `test -f 'cpp/datasets/google_message3/benchmark_message3_2.pb.cc' || echo '$(srcdir)/'`cpp/datasets/google_message3/benchmark_message3_2.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_2.pb.Tpo cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_2.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='cpp/datasets/google_message3/benchmark_message3_2.pb.cc' object='cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_2.pb.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_2.pb.o `test -f 'cpp/datasets/google_message3/benchmark_message3_2.pb.cc' || echo '$(srcdir)/'`cpp/datasets/google_message3/benchmark_message3_2.pb.cc
-
-cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_2.pb.obj: cpp/datasets/google_message3/benchmark_message3_2.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_2.pb.obj -MD -MP -MF cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_2.pb.Tpo -c -o cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_2.pb.obj `if test -f 'cpp/datasets/google_message3/benchmark_message3_2.pb.cc'; then $(CYGPATH_W) 'cpp/datasets/google_message3/benchmark_message3_2.pb.cc'; else $(CYGPATH_W) '$(srcdir)/cpp/datasets/google_message3/benchmark_message3_2.pb.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_2.pb.Tpo cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_2.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='cpp/datasets/google_message3/benchmark_message3_2.pb.cc' object='cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_2.pb.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_2.pb.obj `if test -f 'cpp/datasets/google_message3/benchmark_message3_2.pb.cc'; then $(CYGPATH_W) 'cpp/datasets/google_message3/benchmark_message3_2.pb.cc'; else $(CYGPATH_W) '$(srcdir)/cpp/datasets/google_message3/benchmark_message3_2.pb.cc'; fi`
-
-cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_3.pb.o: cpp/datasets/google_message3/benchmark_message3_3.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_3.pb.o -MD -MP -MF cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_3.pb.Tpo -c -o cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_3.pb.o `test -f 'cpp/datasets/google_message3/benchmark_message3_3.pb.cc' || echo '$(srcdir)/'`cpp/datasets/google_message3/benchmark_message3_3.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_3.pb.Tpo cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_3.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='cpp/datasets/google_message3/benchmark_message3_3.pb.cc' object='cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_3.pb.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_3.pb.o `test -f 'cpp/datasets/google_message3/benchmark_message3_3.pb.cc' || echo '$(srcdir)/'`cpp/datasets/google_message3/benchmark_message3_3.pb.cc
-
-cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_3.pb.obj: cpp/datasets/google_message3/benchmark_message3_3.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_3.pb.obj -MD -MP -MF cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_3.pb.Tpo -c -o cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_3.pb.obj `if test -f 'cpp/datasets/google_message3/benchmark_message3_3.pb.cc'; then $(CYGPATH_W) 'cpp/datasets/google_message3/benchmark_message3_3.pb.cc'; else $(CYGPATH_W) '$(srcdir)/cpp/datasets/google_message3/benchmark_message3_3.pb.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_3.pb.Tpo cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_3.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='cpp/datasets/google_message3/benchmark_message3_3.pb.cc' object='cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_3.pb.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_3.pb.obj `if test -f 'cpp/datasets/google_message3/benchmark_message3_3.pb.cc'; then $(CYGPATH_W) 'cpp/datasets/google_message3/benchmark_message3_3.pb.cc'; else $(CYGPATH_W) '$(srcdir)/cpp/datasets/google_message3/benchmark_message3_3.pb.cc'; fi`
-
-cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_4.pb.o: cpp/datasets/google_message3/benchmark_message3_4.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_4.pb.o -MD -MP -MF cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_4.pb.Tpo -c -o cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_4.pb.o `test -f 'cpp/datasets/google_message3/benchmark_message3_4.pb.cc' || echo '$(srcdir)/'`cpp/datasets/google_message3/benchmark_message3_4.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_4.pb.Tpo cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_4.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='cpp/datasets/google_message3/benchmark_message3_4.pb.cc' object='cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_4.pb.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_4.pb.o `test -f 'cpp/datasets/google_message3/benchmark_message3_4.pb.cc' || echo '$(srcdir)/'`cpp/datasets/google_message3/benchmark_message3_4.pb.cc
-
-cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_4.pb.obj: cpp/datasets/google_message3/benchmark_message3_4.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_4.pb.obj -MD -MP -MF cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_4.pb.Tpo -c -o cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_4.pb.obj `if test -f 'cpp/datasets/google_message3/benchmark_message3_4.pb.cc'; then $(CYGPATH_W) 'cpp/datasets/google_message3/benchmark_message3_4.pb.cc'; else $(CYGPATH_W) '$(srcdir)/cpp/datasets/google_message3/benchmark_message3_4.pb.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_4.pb.Tpo cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_4.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='cpp/datasets/google_message3/benchmark_message3_4.pb.cc' object='cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_4.pb.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_4.pb.obj `if test -f 'cpp/datasets/google_message3/benchmark_message3_4.pb.cc'; then $(CYGPATH_W) 'cpp/datasets/google_message3/benchmark_message3_4.pb.cc'; else $(CYGPATH_W) '$(srcdir)/cpp/datasets/google_message3/benchmark_message3_4.pb.cc'; fi`
-
-cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_5.pb.o: cpp/datasets/google_message3/benchmark_message3_5.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_5.pb.o -MD -MP -MF cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_5.pb.Tpo -c -o cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_5.pb.o `test -f 'cpp/datasets/google_message3/benchmark_message3_5.pb.cc' || echo '$(srcdir)/'`cpp/datasets/google_message3/benchmark_message3_5.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_5.pb.Tpo cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_5.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='cpp/datasets/google_message3/benchmark_message3_5.pb.cc' object='cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_5.pb.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_5.pb.o `test -f 'cpp/datasets/google_message3/benchmark_message3_5.pb.cc' || echo '$(srcdir)/'`cpp/datasets/google_message3/benchmark_message3_5.pb.cc
-
-cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_5.pb.obj: cpp/datasets/google_message3/benchmark_message3_5.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_5.pb.obj -MD -MP -MF cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_5.pb.Tpo -c -o cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_5.pb.obj `if test -f 'cpp/datasets/google_message3/benchmark_message3_5.pb.cc'; then $(CYGPATH_W) 'cpp/datasets/google_message3/benchmark_message3_5.pb.cc'; else $(CYGPATH_W) '$(srcdir)/cpp/datasets/google_message3/benchmark_message3_5.pb.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_5.pb.Tpo cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_5.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='cpp/datasets/google_message3/benchmark_message3_5.pb.cc' object='cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_5.pb.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_5.pb.obj `if test -f 'cpp/datasets/google_message3/benchmark_message3_5.pb.cc'; then $(CYGPATH_W) 'cpp/datasets/google_message3/benchmark_message3_5.pb.cc'; else $(CYGPATH_W) '$(srcdir)/cpp/datasets/google_message3/benchmark_message3_5.pb.cc'; fi`
-
-cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_6.pb.o: cpp/datasets/google_message3/benchmark_message3_6.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_6.pb.o -MD -MP -MF cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_6.pb.Tpo -c -o cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_6.pb.o `test -f 'cpp/datasets/google_message3/benchmark_message3_6.pb.cc' || echo '$(srcdir)/'`cpp/datasets/google_message3/benchmark_message3_6.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_6.pb.Tpo cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_6.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='cpp/datasets/google_message3/benchmark_message3_6.pb.cc' object='cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_6.pb.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_6.pb.o `test -f 'cpp/datasets/google_message3/benchmark_message3_6.pb.cc' || echo '$(srcdir)/'`cpp/datasets/google_message3/benchmark_message3_6.pb.cc
-
-cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_6.pb.obj: cpp/datasets/google_message3/benchmark_message3_6.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_6.pb.obj -MD -MP -MF cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_6.pb.Tpo -c -o cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_6.pb.obj `if test -f 'cpp/datasets/google_message3/benchmark_message3_6.pb.cc'; then $(CYGPATH_W) 'cpp/datasets/google_message3/benchmark_message3_6.pb.cc'; else $(CYGPATH_W) '$(srcdir)/cpp/datasets/google_message3/benchmark_message3_6.pb.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_6.pb.Tpo cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_6.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='cpp/datasets/google_message3/benchmark_message3_6.pb.cc' object='cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_6.pb.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_6.pb.obj `if test -f 'cpp/datasets/google_message3/benchmark_message3_6.pb.cc'; then $(CYGPATH_W) 'cpp/datasets/google_message3/benchmark_message3_6.pb.cc'; else $(CYGPATH_W) '$(srcdir)/cpp/datasets/google_message3/benchmark_message3_6.pb.cc'; fi`
-
-cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_7.pb.o: cpp/datasets/google_message3/benchmark_message3_7.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_7.pb.o -MD -MP -MF cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_7.pb.Tpo -c -o cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_7.pb.o `test -f 'cpp/datasets/google_message3/benchmark_message3_7.pb.cc' || echo '$(srcdir)/'`cpp/datasets/google_message3/benchmark_message3_7.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_7.pb.Tpo cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_7.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='cpp/datasets/google_message3/benchmark_message3_7.pb.cc' object='cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_7.pb.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_7.pb.o `test -f 'cpp/datasets/google_message3/benchmark_message3_7.pb.cc' || echo '$(srcdir)/'`cpp/datasets/google_message3/benchmark_message3_7.pb.cc
-
-cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_7.pb.obj: cpp/datasets/google_message3/benchmark_message3_7.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_7.pb.obj -MD -MP -MF cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_7.pb.Tpo -c -o cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_7.pb.obj `if test -f 'cpp/datasets/google_message3/benchmark_message3_7.pb.cc'; then $(CYGPATH_W) 'cpp/datasets/google_message3/benchmark_message3_7.pb.cc'; else $(CYGPATH_W) '$(srcdir)/cpp/datasets/google_message3/benchmark_message3_7.pb.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_7.pb.Tpo cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_7.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='cpp/datasets/google_message3/benchmark_message3_7.pb.cc' object='cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_7.pb.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_7.pb.obj `if test -f 'cpp/datasets/google_message3/benchmark_message3_7.pb.cc'; then $(CYGPATH_W) 'cpp/datasets/google_message3/benchmark_message3_7.pb.cc'; else $(CYGPATH_W) '$(srcdir)/cpp/datasets/google_message3/benchmark_message3_7.pb.cc'; fi`
-
-cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_8.pb.o: cpp/datasets/google_message3/benchmark_message3_8.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_8.pb.o -MD -MP -MF cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_8.pb.Tpo -c -o cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_8.pb.o `test -f 'cpp/datasets/google_message3/benchmark_message3_8.pb.cc' || echo '$(srcdir)/'`cpp/datasets/google_message3/benchmark_message3_8.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_8.pb.Tpo cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_8.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='cpp/datasets/google_message3/benchmark_message3_8.pb.cc' object='cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_8.pb.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_8.pb.o `test -f 'cpp/datasets/google_message3/benchmark_message3_8.pb.cc' || echo '$(srcdir)/'`cpp/datasets/google_message3/benchmark_message3_8.pb.cc
-
-cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_8.pb.obj: cpp/datasets/google_message3/benchmark_message3_8.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_8.pb.obj -MD -MP -MF cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_8.pb.Tpo -c -o cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_8.pb.obj `if test -f 'cpp/datasets/google_message3/benchmark_message3_8.pb.cc'; then $(CYGPATH_W) 'cpp/datasets/google_message3/benchmark_message3_8.pb.cc'; else $(CYGPATH_W) '$(srcdir)/cpp/datasets/google_message3/benchmark_message3_8.pb.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_8.pb.Tpo cpp/datasets/google_message3/$(DEPDIR)/proto3_data_stripper-benchmark_message3_8.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='cpp/datasets/google_message3/benchmark_message3_8.pb.cc' object='cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_8.pb.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cpp/datasets/google_message3/proto3_data_stripper-benchmark_message3_8.pb.obj `if test -f 'cpp/datasets/google_message3/benchmark_message3_8.pb.cc'; then $(CYGPATH_W) 'cpp/datasets/google_message3/benchmark_message3_8.pb.cc'; else $(CYGPATH_W) '$(srcdir)/cpp/datasets/google_message3/benchmark_message3_8.pb.cc'; fi`
-
-cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4.pb.o: cpp/datasets/google_message4/benchmark_message4.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4.pb.o -MD -MP -MF cpp/datasets/google_message4/$(DEPDIR)/proto3_data_stripper-benchmark_message4.pb.Tpo -c -o cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4.pb.o `test -f 'cpp/datasets/google_message4/benchmark_message4.pb.cc' || echo '$(srcdir)/'`cpp/datasets/google_message4/benchmark_message4.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) cpp/datasets/google_message4/$(DEPDIR)/proto3_data_stripper-benchmark_message4.pb.Tpo cpp/datasets/google_message4/$(DEPDIR)/proto3_data_stripper-benchmark_message4.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='cpp/datasets/google_message4/benchmark_message4.pb.cc' object='cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4.pb.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4.pb.o `test -f 'cpp/datasets/google_message4/benchmark_message4.pb.cc' || echo '$(srcdir)/'`cpp/datasets/google_message4/benchmark_message4.pb.cc
-
-cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4.pb.obj: cpp/datasets/google_message4/benchmark_message4.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4.pb.obj -MD -MP -MF cpp/datasets/google_message4/$(DEPDIR)/proto3_data_stripper-benchmark_message4.pb.Tpo -c -o cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4.pb.obj `if test -f 'cpp/datasets/google_message4/benchmark_message4.pb.cc'; then $(CYGPATH_W) 'cpp/datasets/google_message4/benchmark_message4.pb.cc'; else $(CYGPATH_W) '$(srcdir)/cpp/datasets/google_message4/benchmark_message4.pb.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) cpp/datasets/google_message4/$(DEPDIR)/proto3_data_stripper-benchmark_message4.pb.Tpo cpp/datasets/google_message4/$(DEPDIR)/proto3_data_stripper-benchmark_message4.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='cpp/datasets/google_message4/benchmark_message4.pb.cc' object='cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4.pb.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4.pb.obj `if test -f 'cpp/datasets/google_message4/benchmark_message4.pb.cc'; then $(CYGPATH_W) 'cpp/datasets/google_message4/benchmark_message4.pb.cc'; else $(CYGPATH_W) '$(srcdir)/cpp/datasets/google_message4/benchmark_message4.pb.cc'; fi`
-
-cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4_1.pb.o: cpp/datasets/google_message4/benchmark_message4_1.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4_1.pb.o -MD -MP -MF cpp/datasets/google_message4/$(DEPDIR)/proto3_data_stripper-benchmark_message4_1.pb.Tpo -c -o cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4_1.pb.o `test -f 'cpp/datasets/google_message4/benchmark_message4_1.pb.cc' || echo '$(srcdir)/'`cpp/datasets/google_message4/benchmark_message4_1.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) cpp/datasets/google_message4/$(DEPDIR)/proto3_data_stripper-benchmark_message4_1.pb.Tpo cpp/datasets/google_message4/$(DEPDIR)/proto3_data_stripper-benchmark_message4_1.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='cpp/datasets/google_message4/benchmark_message4_1.pb.cc' object='cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4_1.pb.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4_1.pb.o `test -f 'cpp/datasets/google_message4/benchmark_message4_1.pb.cc' || echo '$(srcdir)/'`cpp/datasets/google_message4/benchmark_message4_1.pb.cc
-
-cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4_1.pb.obj: cpp/datasets/google_message4/benchmark_message4_1.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4_1.pb.obj -MD -MP -MF cpp/datasets/google_message4/$(DEPDIR)/proto3_data_stripper-benchmark_message4_1.pb.Tpo -c -o cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4_1.pb.obj `if test -f 'cpp/datasets/google_message4/benchmark_message4_1.pb.cc'; then $(CYGPATH_W) 'cpp/datasets/google_message4/benchmark_message4_1.pb.cc'; else $(CYGPATH_W) '$(srcdir)/cpp/datasets/google_message4/benchmark_message4_1.pb.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) cpp/datasets/google_message4/$(DEPDIR)/proto3_data_stripper-benchmark_message4_1.pb.Tpo cpp/datasets/google_message4/$(DEPDIR)/proto3_data_stripper-benchmark_message4_1.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='cpp/datasets/google_message4/benchmark_message4_1.pb.cc' object='cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4_1.pb.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4_1.pb.obj `if test -f 'cpp/datasets/google_message4/benchmark_message4_1.pb.cc'; then $(CYGPATH_W) 'cpp/datasets/google_message4/benchmark_message4_1.pb.cc'; else $(CYGPATH_W) '$(srcdir)/cpp/datasets/google_message4/benchmark_message4_1.pb.cc'; fi`
-
-cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4_2.pb.o: cpp/datasets/google_message4/benchmark_message4_2.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4_2.pb.o -MD -MP -MF cpp/datasets/google_message4/$(DEPDIR)/proto3_data_stripper-benchmark_message4_2.pb.Tpo -c -o cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4_2.pb.o `test -f 'cpp/datasets/google_message4/benchmark_message4_2.pb.cc' || echo '$(srcdir)/'`cpp/datasets/google_message4/benchmark_message4_2.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) cpp/datasets/google_message4/$(DEPDIR)/proto3_data_stripper-benchmark_message4_2.pb.Tpo cpp/datasets/google_message4/$(DEPDIR)/proto3_data_stripper-benchmark_message4_2.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='cpp/datasets/google_message4/benchmark_message4_2.pb.cc' object='cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4_2.pb.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4_2.pb.o `test -f 'cpp/datasets/google_message4/benchmark_message4_2.pb.cc' || echo '$(srcdir)/'`cpp/datasets/google_message4/benchmark_message4_2.pb.cc
-
-cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4_2.pb.obj: cpp/datasets/google_message4/benchmark_message4_2.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4_2.pb.obj -MD -MP -MF cpp/datasets/google_message4/$(DEPDIR)/proto3_data_stripper-benchmark_message4_2.pb.Tpo -c -o cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4_2.pb.obj `if test -f 'cpp/datasets/google_message4/benchmark_message4_2.pb.cc'; then $(CYGPATH_W) 'cpp/datasets/google_message4/benchmark_message4_2.pb.cc'; else $(CYGPATH_W) '$(srcdir)/cpp/datasets/google_message4/benchmark_message4_2.pb.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) cpp/datasets/google_message4/$(DEPDIR)/proto3_data_stripper-benchmark_message4_2.pb.Tpo cpp/datasets/google_message4/$(DEPDIR)/proto3_data_stripper-benchmark_message4_2.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='cpp/datasets/google_message4/benchmark_message4_2.pb.cc' object='cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4_2.pb.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4_2.pb.obj `if test -f 'cpp/datasets/google_message4/benchmark_message4_2.pb.cc'; then $(CYGPATH_W) 'cpp/datasets/google_message4/benchmark_message4_2.pb.cc'; else $(CYGPATH_W) '$(srcdir)/cpp/datasets/google_message4/benchmark_message4_2.pb.cc'; fi`
-
-cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4_3.pb.o: cpp/datasets/google_message4/benchmark_message4_3.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4_3.pb.o -MD -MP -MF cpp/datasets/google_message4/$(DEPDIR)/proto3_data_stripper-benchmark_message4_3.pb.Tpo -c -o cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4_3.pb.o `test -f 'cpp/datasets/google_message4/benchmark_message4_3.pb.cc' || echo '$(srcdir)/'`cpp/datasets/google_message4/benchmark_message4_3.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) cpp/datasets/google_message4/$(DEPDIR)/proto3_data_stripper-benchmark_message4_3.pb.Tpo cpp/datasets/google_message4/$(DEPDIR)/proto3_data_stripper-benchmark_message4_3.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='cpp/datasets/google_message4/benchmark_message4_3.pb.cc' object='cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4_3.pb.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4_3.pb.o `test -f 'cpp/datasets/google_message4/benchmark_message4_3.pb.cc' || echo '$(srcdir)/'`cpp/datasets/google_message4/benchmark_message4_3.pb.cc
-
-cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4_3.pb.obj: cpp/datasets/google_message4/benchmark_message4_3.pb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4_3.pb.obj -MD -MP -MF cpp/datasets/google_message4/$(DEPDIR)/proto3_data_stripper-benchmark_message4_3.pb.Tpo -c -o cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4_3.pb.obj `if test -f 'cpp/datasets/google_message4/benchmark_message4_3.pb.cc'; then $(CYGPATH_W) 'cpp/datasets/google_message4/benchmark_message4_3.pb.cc'; else $(CYGPATH_W) '$(srcdir)/cpp/datasets/google_message4/benchmark_message4_3.pb.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) cpp/datasets/google_message4/$(DEPDIR)/proto3_data_stripper-benchmark_message4_3.pb.Tpo cpp/datasets/google_message4/$(DEPDIR)/proto3_data_stripper-benchmark_message4_3.pb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='cpp/datasets/google_message4/benchmark_message4_3.pb.cc' object='cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4_3.pb.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(proto3_data_stripper_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cpp/datasets/google_message4/proto3_data_stripper-benchmark_message4_3.pb.obj `if test -f 'cpp/datasets/google_message4/benchmark_message4_3.pb.cc'; then $(CYGPATH_W) 'cpp/datasets/google_message4/benchmark_message4_3.pb.cc'; else $(CYGPATH_W) '$(srcdir)/cpp/datasets/google_message4/benchmark_message4_3.pb.cc'; fi`
-
 util/protoc_gen_gogoproto-protoc-gen-gogoproto.o: util/protoc-gen-gogoproto.cc
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(protoc_gen_gogoproto_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT util/protoc_gen_gogoproto-protoc-gen-gogoproto.o -MD -MP -MF util/$(DEPDIR)/protoc_gen_gogoproto-protoc-gen-gogoproto.Tpo -c -o util/protoc_gen_gogoproto-protoc-gen-gogoproto.o `test -f 'util/protoc-gen-gogoproto.cc' || echo '$(srcdir)/'`util/protoc-gen-gogoproto.cc
 @am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) util/$(DEPDIR)/protoc_gen_gogoproto-protoc-gen-gogoproto.Tpo util/$(DEPDIR)/protoc_gen_gogoproto-protoc-gen-gogoproto.Po
@@ -2582,20 +2187,6 @@ util/protoc_gen_gogoproto-protoc-gen-gogoproto.obj: util/protoc-gen-gogoproto.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='util/protoc-gen-gogoproto.cc' object='util/protoc_gen_gogoproto-protoc-gen-gogoproto.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(protoc_gen_gogoproto_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o util/protoc_gen_gogoproto-protoc-gen-gogoproto.obj `if test -f 'util/protoc-gen-gogoproto.cc'; then $(CYGPATH_W) 'util/protoc-gen-gogoproto.cc'; else $(CYGPATH_W) '$(srcdir)/util/protoc-gen-gogoproto.cc'; fi`
-
-util/protoc_gen_proto2_to_proto3-protoc-gen-proto2_to_proto3.o: util/protoc-gen-proto2_to_proto3.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(protoc_gen_proto2_to_proto3_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT util/protoc_gen_proto2_to_proto3-protoc-gen-proto2_to_proto3.o -MD -MP -MF util/$(DEPDIR)/protoc_gen_proto2_to_proto3-protoc-gen-proto2_to_proto3.Tpo -c -o util/protoc_gen_proto2_to_proto3-protoc-gen-proto2_to_proto3.o `test -f 'util/protoc-gen-proto2_to_proto3.cc' || echo '$(srcdir)/'`util/protoc-gen-proto2_to_proto3.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) util/$(DEPDIR)/protoc_gen_proto2_to_proto3-protoc-gen-proto2_to_proto3.Tpo util/$(DEPDIR)/protoc_gen_proto2_to_proto3-protoc-gen-proto2_to_proto3.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='util/protoc-gen-proto2_to_proto3.cc' object='util/protoc_gen_proto2_to_proto3-protoc-gen-proto2_to_proto3.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(protoc_gen_proto2_to_proto3_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o util/protoc_gen_proto2_to_proto3-protoc-gen-proto2_to_proto3.o `test -f 'util/protoc-gen-proto2_to_proto3.cc' || echo '$(srcdir)/'`util/protoc-gen-proto2_to_proto3.cc
-
-util/protoc_gen_proto2_to_proto3-protoc-gen-proto2_to_proto3.obj: util/protoc-gen-proto2_to_proto3.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(protoc_gen_proto2_to_proto3_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT util/protoc_gen_proto2_to_proto3-protoc-gen-proto2_to_proto3.obj -MD -MP -MF util/$(DEPDIR)/protoc_gen_proto2_to_proto3-protoc-gen-proto2_to_proto3.Tpo -c -o util/protoc_gen_proto2_to_proto3-protoc-gen-proto2_to_proto3.obj `if test -f 'util/protoc-gen-proto2_to_proto3.cc'; then $(CYGPATH_W) 'util/protoc-gen-proto2_to_proto3.cc'; else $(CYGPATH_W) '$(srcdir)/util/protoc-gen-proto2_to_proto3.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) util/$(DEPDIR)/protoc_gen_proto2_to_proto3-protoc-gen-proto2_to_proto3.Tpo util/$(DEPDIR)/protoc_gen_proto2_to_proto3-protoc-gen-proto2_to_proto3.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='util/protoc-gen-proto2_to_proto3.cc' object='util/protoc_gen_proto2_to_proto3-protoc-gen-proto2_to_proto3.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(protoc_gen_proto2_to_proto3_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o util/protoc_gen_proto2_to_proto3-protoc-gen-proto2_to_proto3.obj `if test -f 'util/protoc-gen-proto2_to_proto3.cc'; then $(CYGPATH_W) 'util/protoc-gen-proto2_to_proto3.cc'; else $(CYGPATH_W) '$(srcdir)/util/protoc-gen-proto2_to_proto3.cc'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -2875,7 +2466,8 @@ $(benchmarks_protoc_outputs_proto2_header): protoc_middleman2
 
 initialize_submodule:
 	oldpwd=`pwd`
-	cd $(top_srcdir) && git submodule update --init -r third_party/benchmark
+	cd $(top_srcdir)/third_party
+	git submodule update --init -r
 	cd $(top_srcdir)/third_party/benchmark && cmake -DCMAKE_BUILD_TYPE=Release && make
 	cd $$oldpwd
 	touch initialize_submodule
@@ -2891,10 +2483,8 @@ cpp: protoc_middleman protoc_middleman2 cpp-benchmark initialize_submodule
 	./cpp-benchmark $(all_data)
 
 javac_middleman: $(java_benchmark_testing_files) protoc_middleman protoc_middleman2
-	cp -r $(srcdir)/java tmp 
-	mkdir -p tmp/java/lib
-	cp $(top_srcdir)/java/core/target/*.jar tmp/java/lib/protobuf-java.jar
-	cd tmp/java && mvn clean compile assembly:single -Dprotobuf.version=$(PACKAGE_VERSION) && cd ../..
+	cp -r $(srcdir)/java tmp && cd tmp/java &&  mvn clean compile assembly:single
+	cd ../..
 	@touch javac_middleman
 
 java-benchmark: javac_middleman
@@ -2904,10 +2494,10 @@ java-benchmark: javac_middleman
 	@echo 'conf=()' >> java-benchmark
 	@echo 'data_files=""' >> java-benchmark
 	@echo 'for arg in $$@; do if [[ $${arg:0:1} == "-" ]]; then conf+=($$arg); else data_files+="$$arg,"; fi; done' >> java-benchmark
-	@echo 'java -cp '\"tmp/java/target/*:$(top_srcdir)/java/core/target/*:$(top_srcdir)/java/util/target/*\"" \\" >>java-benchmark
-	@echo '   com.google.caliper.runner.CaliperMain com.google.protobuf.ProtoCaliperBenchmark -i runtime '"\\"  >> java-benchmark
-	@echo '   -b serializeToByteArray,serializeToMemoryStream,deserializeFromByteArray,deserializeFromMemoryStream '"\\" >> java-benchmark
-	@echo '   -DdataFile=$${data_files:0:-1} $${conf[*]}' >> java-benchmark
+	@echo 'java -cp '"tmp/java/target/*.jar"' com.google.caliper.runner.CaliperMain com.google.protobuf.ProtoCaliperBenchmark -i runtime '"\\"  >> java-benchmark
+	@echo '-b serializeToByteString,serializeToByteArray,serializeToMemoryStream,'"\\"  >> java-benchmark
+	@echo 'deserializeFromByteString,deserializeFromByteArray,deserializeFromMemoryStream '"\\" >> java-benchmark
+	@echo '-DdataFile=$${data_files:0:-1} $${conf[*]}' >> java-benchmark
 	@chmod +x java-benchmark
 
 java: protoc_middleman protoc_middleman2 java-benchmark
@@ -2932,8 +2522,8 @@ libbenchmark_messages_la-python_benchmark_messages.$(OBJEXT): $(benchmarks_proto
 python-pure-python-benchmark: python_add_init
 	@echo "Writing shortcut script python-pure-python-benchmark..."
 	@echo '#! /bin/bash' > python-pure-python-benchmark
-	@echo export LD_LIBRARY_PATH=$(top_srcdir)/src/.libs >> python-pure-python-benchmark
-	@echo export DYLD_LIBRARY_PATH=$(top_srcdir)/src/.libs >> python-pure-python-benchmark
+	@echo export LD_LIBRARY_PATH=$(top_srcdir)/src/libprotobuf.la >> python-pure-python-benchmark
+	@echo export DYLD_LIBRARY_PATH=$(top_srcdir)/src/libprotobuf.la >> python-pure-python-benchmark
 	@echo export PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=\'python\' >> python-pure-python-benchmark
 	@echo cp $(srcdir)/python/py_benchmark.py tmp >> python-pure-python-benchmark
 	@echo python tmp/py_benchmark.py '$$@' >> python-pure-python-benchmark
@@ -2942,8 +2532,8 @@ python-pure-python-benchmark: python_add_init
 python-cpp-reflection-benchmark: python_add_init
 	@echo "Writing shortcut script python-cpp-reflection-benchmark..."
 	@echo '#! /bin/bash' > python-cpp-reflection-benchmark
-	@echo export LD_LIBRARY_PATH=$(top_srcdir)/src/.libs >> python-cpp-reflection-benchmark
-	@echo export DYLD_LIBRARY_PATH=$(top_srcdir)/src/.libs >> python-cpp-reflection-benchmark
+	@echo export LD_LIBRARY_PATH=$(top_srcdir)/src/libprotobuf.la >> python-cpp-reflection-benchmark
+	@echo export DYLD_LIBRARY_PATH=$(top_srcdir)/src/libprotobuf.la >> python-cpp-reflection-benchmark
 	@echo export PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=\'cpp\' >> python-cpp-reflection-benchmark
 	@echo cp $(srcdir)/python/py_benchmark.py tmp >> python-cpp-reflection-benchmark
 	@echo python tmp/py_benchmark.py '$$@' >> python-cpp-reflection-benchmark
@@ -2952,8 +2542,8 @@ python-cpp-reflection-benchmark: python_add_init
 python-cpp-generated-code-benchmark: python_add_init libbenchmark_messages.la
 	@echo "Writing shortcut script python-cpp-generated-code-benchmark..."
 	@echo '#! /bin/bash' > python-cpp-generated-code-benchmark
-	@echo export LD_LIBRARY_PATH=$(top_srcdir)/src/.libs >> python-cpp-generated-code-benchmark
-	@echo export DYLD_LIBRARY_PATH=$(top_srcdir)/src/.libs >> python-cpp-generated-code-benchmark
+	@echo export LD_LIBRARY_PATH=$(top_srcdir)/src/libprotobuf.la >> python-cpp-generated-code-benchmark
+	@echo export DYLD_LIBRARY_PATH=$(top_srcdir)/src/libprotobuf.la >> python-cpp-generated-code-benchmark
 	@echo export PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=\'cpp\' >> python-cpp-generated-code-benchmark
 	@echo cp $(srcdir)/python/py_benchmark.py tmp >> python-cpp-generated-code-benchmark
 	@echo python tmp/py_benchmark.py --cpp_generated '$$@' >> python-cpp-generated-code-benchmark
@@ -2984,7 +2574,7 @@ go-benchmark: go_protoc_middleman
 	@echo 'all_data=""' >> go-benchmark
 	@echo 'conf=()' >> go-benchmark
 	@echo 'data_files=()' >> go-benchmark
-	@echo 'for arg in $$@; do if [[ $${arg:0:1} == "-" ]]; then conf+=($$arg); else data_files+=("$$arg"); fi; done' >> go-benchmark
+	@echo 'for arg in $$@; do if [[ $${arg:0:1} == "-" ]]; then conf+=($$arg); else data_files+=("../$$arg"); fi; done' >> go-benchmark
 	@echo 'go test -bench=. $${conf[*]} -- $${data_files[*]}' >> go-benchmark
 	@echo 'cd ..' >> go-benchmark
 	@chmod +x go-benchmark
@@ -3018,8 +2608,8 @@ gogo_proto_middleman: protoc-gen-gogoproto
 	touch gogo_proto_middleman
 
 generate_gogo_data: protoc_middleman protoc_middleman2 gogo-data-scrubber
-	mkdir -p `dirname $(gogo_data)`
-	./gogo-data-scrubber $(all_data) $(gogo_data)
+	mkdir -p `dirname $(new_data)`
+	./gogo-data-scrubber $(all_data) $(new_data)
 	touch generate_gogo_data
 
 make_tmp_dir_gogo:
@@ -3111,116 +2701,6 @@ gogofaster: gogofaster_protoc_middleman  generate_gogo_data gogo-benchmark gener
 gogoslick: gogoslick_protoc_middleman  generate_gogo_data gogo-benchmark generate_all_gogo_benchmark_code
 	./gogo-benchmark gogoslick $(gogo_data)
 util/gogo_data_scrubber-gogo_data_scrubber.$(OBJEXT): $(benchmarks_protoc_outputs) $(benchmarks_protoc_outputs_proto2) $(benchmarks_protoc_outputs_header) $(benchmarks_protoc_outputs_proto2_header)
-util/proto3_data_stripper-proto3_data_stripper.$(OBJEXT): $(benchmarks_protoc_outputs) $(benchmarks_protoc_outputs_proto2) $(benchmarks_protoc_outputs_header) $(benchmarks_protoc_outputs_proto2_header)
-
-############ UTIL RULES END ############
-
-############ PROTO3 PREPARATION BEGIN #############
-
-proto3_proto_middleman: protoc-gen-proto2_to_proto3
-	mkdir -p "tmp/proto3_proto"
-	oldpwd=`pwd` && ( cd $(srcdir) && $$oldpwd/../src/protoc$(EXEEXT) -I$(srcdir) -I$(top_srcdir) --plugin=protoc-gen-proto2_to_proto3 --proto2_to_proto3_out=$$oldpwd/tmp/proto3_proto $(benchmarks_protoc_inputs) $(benchmarks_protoc_inputs_benchmark_wrapper) $(benchmarks_protoc_inputs_proto2) )
-	touch proto3_proto_middleman
-
-generate_proto3_data: protoc_middleman protoc_middleman2 proto3-data-stripper
-	mkdir -p `dirname $(proto3_data)`
-	./proto3-data-stripper $(all_data) $(proto3_data)
-	touch generate_proto3_data
-
-############ PROTO3 PREPARATION END #############
-
-############ PHP RULES BEGIN #################
-
-proto3_middleman_php: proto3_proto_middleman
-	mkdir -p "tmp/php"
-	oldpwd=`pwd` && ( cd tmp/proto3_proto && $$oldpwd/../src/protoc$(EXEEXT) -I$(srcdir) -I$(top_srcdir) --php_out=$$oldpwd/tmp/php $(benchmarks_protoc_inputs) $(benchmarks_protoc_inputs_benchmark_wrapper) $(benchmarks_protoc_inputs_proto2) )
-	touch proto3_middleman_php
-
-php-benchmark: proto3_middleman_php generate_proto3_data
-	mkdir -p "tmp/php/Google/Protobuf/Benchmark" && cp php/PhpBenchmark.php "tmp/php/Google/Protobuf/Benchmark"
-	cp php/autoload.php "tmp/php"  
-	@echo "Writing shortcut script php-benchmark..."
-	@echo '#! /bin/bash' > php-benchmark
-	@echo 'export PROTOBUF_PHP_SRCDIR="$$(cd $(top_srcdir) && pwd)/php/src"' >> php-benchmark
-	@echo 'cd tmp/php' >> php-benchmark
-	@echo 'export CURRENT_DIR=$$(pwd)' >> php-benchmark
-	@echo 'php -d auto_prepend_file="autoload.php" -d include_path="$$(pwd)" Google/Protobuf/Benchmark/PhpBenchmark.php $$@' >> php-benchmark
-	@echo 'cd ../..' >> php-benchmark
-	@chmod +x php-benchmark
-
-php: php-benchmark proto3_middleman_php
-	./php-benchmark --behavior_prefix="php" $(proto3_data)
-
-php_c_extension:
-	cd $(top_srcdir)/php/ext/google/protobuf && phpize && ./configure CFLAGS='-O3' && make -j8
-
-php-c-benchmark: proto3_middleman_php generate_proto3_data php_c_extension php_c_extension
-	mkdir -p "tmp/php/Google/Protobuf/Benchmark" && cp php/PhpBenchmark.php "tmp/php/Google/Protobuf/Benchmark" 
-	cp php/autoload.php "tmp/php"  
-	@echo "Writing shortcut script php-c-benchmark..."
-	@echo '#! /bin/bash' > php-c-benchmark
-	@echo 'export PROTOBUF_PHP_SRCDIR="$$(cd $(top_srcdir) && pwd)/php/src"' >> php-c-benchmark
-	@echo 'export PROTOBUF_PHP_EXTDIR="$$PROTOBUF_PHP_SRCDIR/../ext/google/protobuf/modules"' >> php-c-benchmark
-	@echo 'cd tmp/php' >> php-c-benchmark
-	@echo 'export CURRENT_DIR=$$(pwd)' >> php-c-benchmark
-	@echo 'php -d auto_prepend_file="autoload.php" -d include_path="$$(pwd)" -d extension="$$PROTOBUF_PHP_EXTDIR/protobuf.so" Google/Protobuf/Benchmark/PhpBenchmark.php $$@' >> php-c-benchmark
-	@echo 'cd ../..' >> php-c-benchmark
-	@chmod +x php-c-benchmark
-
-php_c: php-c-benchmark proto3_middleman_php
-	./php-c-benchmark --behavior_prefix="php_c" $(proto3_data)
-
-############ PHP RULES END #################
-
-############ protobuf.js RULE BEGIN #############
-
-pbjs_preparation:
-	mkdir -p tmp/protobuf.js
-	cd tmp/protobuf.js && git clone https://github.com/dcodeIO/protobuf.js.git && \
-			cd protobuf.js && npm install && npm run build
-	cd tmp/protobuf.js && npm install benchmark
-	cp protobuf.js/* tmp/protobuf.js
-	cp js/benchmark_suite.js tmp/protobuf.js
-	touch pbjs_preparation
-
-pbjs_middleman: pbjs_preparation
-	export OLDDIR=$$(pwd) && cd tmp/protobuf.js && node generate_pbjs_files.js --target static-module --include_path=$$OLDDIR -o generated_bundle_code.js $(benchmarks_protoc_inputs) $(benchmarks_protoc_inputs_benchmark_wrapper) $(benchmarks_protoc_inputs_proto2)
-	touch pbjs_middleman
-
-pbjs-benchmark: pbjs_middleman
-	@echo '#! /bin/bash' > pbjs-benchmark
-	@echo 'cd tmp/protobuf.js' >> pbjs-benchmark
-	@echo 'sed -i "s/protobufjs/.\/protobuf.js/g" generated_bundle_code.js' >> pbjs-benchmark
-	@echo 'env NODE_PATH=".:./node_modules:$$NODE_PATH" node protobufjs_benchmark.js $$@' >> pbjs-benchmark
-	@chmod +x pbjs-benchmark
-
-pbjs: pbjs-benchmark
-	./pbjs-benchmark $(all_data)
-
-############ protobuf.js RULE END #############
-
-############ JS RULE BEGIN #############
-
-js_preparation:
-	mkdir -p tmp/js
-	oldpwd=$$(pwd) && cd $(top_srcdir)/js && npm install && npm test
-	cd tmp/js && npm install benchmark
-	cp js/* tmp/js
-	touch js_preparation
-
-js_middleman: js_preparation
-	oldpwd=`pwd` && ( cd $(srcdir) && $$oldpwd/../src/protoc$(EXEEXT) -I. -I$(top_srcdir)/src --js_out=import_style=commonjs,binary:$$oldpwd/tmp/js $(benchmarks_protoc_inputs) $(benchmarks_protoc_inputs_benchmark_wrapper) $(benchmarks_protoc_inputs_proto2))
-	touch js_middleman
-
-js-benchmark: js_middleman
-	@echo '#! /bin/bash' > js-benchmark
-	@echo 'export TOP_JS_SRCDIR=$$(cd $(top_srcdir)/js && pwd)' >> js-benchmark
-	@echo 'cd tmp/js' >> js-benchmark
-	@echo 'env NODE_PATH="$$TOP_JS_SRCDIR:.:./node_modules:$$NODE_PATH" node --max-old-space-size=4096 js_benchmark.js $$@' >> js-benchmark
-	@chmod +x js-benchmark
-
-js: js-benchmark
-	./js-benchmark $(all_data)
 
 clean-local:
 	-rm -rf tmp/*

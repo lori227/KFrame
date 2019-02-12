@@ -34,7 +34,6 @@
 #include <google/protobuf/type.pb.h>
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/util/internal/utility.h>
-
 #include <google/protobuf/stubs/strutil.h>
 #include <google/protobuf/stubs/mathlimits.h>
 #include <google/protobuf/stubs/mathutil.h>
@@ -44,6 +43,8 @@ namespace protobuf {
 namespace util {
 namespace converter {
 
+using google::protobuf::EnumDescriptor;
+using google::protobuf::EnumValueDescriptor;
 ;
 ;
 ;
@@ -129,8 +130,7 @@ StatusOr<int32> DataPiece::ToInt32() const {
 }
 
 StatusOr<uint32> DataPiece::ToUint32() const {
-  if (type_ == TYPE_STRING)
-    return StringToNumber<uint32>(safe_strtou32);
+  if (type_ == TYPE_STRING) return StringToNumber<uint32>(safe_strtou32);
 
   if (type_ == TYPE_DOUBLE)
     return FloatingPointToIntConvertAndCheck<uint32, double>(double_);
@@ -154,8 +154,7 @@ StatusOr<int64> DataPiece::ToInt64() const {
 }
 
 StatusOr<uint64> DataPiece::ToUint64() const {
-  if (type_ == TYPE_STRING)
-    return StringToNumber<uint64>(safe_strtou64);
+  if (type_ == TYPE_STRING) return StringToNumber<uint64>(safe_strtou64);
 
   if (type_ == TYPE_DOUBLE)
     return FloatingPointToIntConvertAndCheck<uint64, double>(double_);
@@ -216,7 +215,7 @@ StatusOr<bool> DataPiece::ToBool() const {
 StatusOr<string> DataPiece::ToString() const {
   switch (type_) {
     case TYPE_STRING:
-      return string(str_);
+      return str_.ToString();
     case TYPE_BYTES: {
       string base64;
       Base64Escape(str_, &base64);
@@ -228,17 +227,16 @@ StatusOr<string> DataPiece::ToString() const {
   }
 }
 
-string DataPiece::ValueAsStringOrDefault(
-    StringPiece default_string) const {
+string DataPiece::ValueAsStringOrDefault(StringPiece default_string) const {
   switch (type_) {
     case TYPE_INT32:
-      return StrCat(i32_);
+      return SimpleItoa(i32_);
     case TYPE_INT64:
-      return StrCat(i64_);
+      return SimpleItoa(i64_);
     case TYPE_UINT32:
-      return StrCat(u32_);
+      return SimpleItoa(u32_);
     case TYPE_UINT64:
-      return StrCat(u64_);
+      return SimpleItoa(u64_);
     case TYPE_DOUBLE:
       return DoubleAsString(double_);
     case TYPE_FLOAT:
@@ -255,7 +253,7 @@ string DataPiece::ValueAsStringOrDefault(
     case TYPE_NULL:
       return "null";
     default:
-      return string(default_string);
+      return default_string.ToString();
   }
 }
 
@@ -275,14 +273,12 @@ StatusOr<string> DataPiece::ToBytes() const {
 
 StatusOr<int> DataPiece::ToEnum(const google::protobuf::Enum* enum_type,
                                 bool use_lower_camel_for_enums,
-                                bool case_insensitive_enum_parsing,
-                                bool ignore_unknown_enum_values,
-                                bool* is_unknown_enum_value) const {
+                                bool ignore_unknown_enum_values) const {
   if (type_ == TYPE_NULL) return google::protobuf::NULL_VALUE;
 
   if (type_ == TYPE_STRING) {
     // First try the given value as a name.
-    string enum_name = string(str_);
+    string enum_name = str_.ToString();
     const google::protobuf::EnumValue* value =
         FindEnumValueByNameOrNull(enum_type, enum_name);
     if (value != nullptr) return value->number();
@@ -297,16 +293,11 @@ StatusOr<int> DataPiece::ToEnum(const google::protobuf::Enum* enum_type,
     }
 
     // Next try a normalized name.
-    bool should_normalize_enum =
-        case_insensitive_enum_parsing || use_lower_camel_for_enums;
-    if (should_normalize_enum) {
-      for (string::iterator it = enum_name.begin(); it != enum_name.end();
-           ++it) {
-        *it = *it == '-' ? '_' : ascii_toupper(*it);
-      }
-      value = FindEnumValueByNameOrNull(enum_type, enum_name);
-      if (value != nullptr) return value->number();
+    for (string::iterator it = enum_name.begin(); it != enum_name.end(); ++it) {
+      *it = *it == '-' ? '_' : ascii_toupper(*it);
     }
+    value = FindEnumValueByNameOrNull(enum_type, enum_name);
+    if (value != nullptr) return value->number();
 
     // If use_lower_camel_for_enums is true try with enum name without
     // underscore. This will also accept camel case names as the enum_name has
@@ -316,11 +307,9 @@ StatusOr<int> DataPiece::ToEnum(const google::protobuf::Enum* enum_type,
       if (value != nullptr) return value->number();
     }
 
-    // If ignore_unknown_enum_values is true an unknown enum value is ignored.
-    if (ignore_unknown_enum_values) {
-      *is_unknown_enum_value = true;
-      return enum_type->enumvalue(0).number();
-    }
+    // If ignore_unknown_enum_values is true an unknown enum value is treated
+    // as the default
+    if (ignore_unknown_enum_values) return enum_type->enumvalue(0).number();
   } else {
     // We don't need to check whether the value is actually declared in the
     // enum because we preserve unknown enum values as well.
@@ -353,14 +342,13 @@ StatusOr<To> DataPiece::GenericConvert() const {
 }
 
 template <typename To>
-StatusOr<To> DataPiece::StringToNumber(bool (*func)(StringPiece,
-                                                    To*)) const {
+StatusOr<To> DataPiece::StringToNumber(bool (*func)(StringPiece, To*)) const {
   if (str_.size() > 0 && (str_[0] == ' ' || str_[str_.size() - 1] == ' ')) {
     return InvalidArgument(StrCat("\"", str_, "\""));
   }
   To result;
   if (func(str_, &result)) return result;
-  return InvalidArgument(StrCat("\"", string(str_), "\""));
+  return InvalidArgument(StrCat("\"", str_.ToString(), "\""));
 }
 
 bool DataPiece::DecodeBase64(StringPiece src, string* dest) const {
@@ -374,7 +362,7 @@ bool DataPiece::DecodeBase64(StringPiece src, string* dest) const {
       WebSafeBase64Escape(*dest, &encoded);
       // Remove trailing padding '=' characters before comparison.
       StringPiece src_no_padding = StringPiece(src).substr(
-          0, HasSuffixString(src, "=") ? src.find_last_not_of('=') + 1
+          0, StringEndsWith(src, "=") ? src.find_last_not_of('=') + 1
                                       : src.length());
       return encoded == src_no_padding;
     }
@@ -388,7 +376,7 @@ bool DataPiece::DecodeBase64(StringPiece src, string* dest) const {
           reinterpret_cast<const unsigned char*>(dest->data()), dest->length(),
           &encoded, false);
       StringPiece src_no_padding = StringPiece(src).substr(
-          0, HasSuffixString(src, "=") ? src.find_last_not_of('=') + 1
+          0, StringEndsWith(src, "=") ? src.find_last_not_of('=') + 1
                                       : src.length());
       return encoded == src_no_padding;
     }

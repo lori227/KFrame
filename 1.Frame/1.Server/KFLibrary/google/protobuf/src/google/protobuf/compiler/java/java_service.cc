@@ -41,7 +41,6 @@
 #include <google/protobuf/io/printer.h>
 #include <google/protobuf/stubs/strutil.h>
 
-
 namespace google {
 namespace protobuf {
 namespace compiler {
@@ -85,13 +84,13 @@ void ImmutableServiceGenerator::Generate(io::Printer* printer) {
 
   // Generate getDescriptor() and getDescriptorForType().
   printer->Print(
-      "public static final\n"
-      "    com.google.protobuf.Descriptors.ServiceDescriptor\n"
-      "    getDescriptor() {\n"
-      "  return $file$.getDescriptor().getServices().get($index$);\n"
-      "}\n",
-      "file", name_resolver_->GetImmutableClassName(descriptor_->file()),
-      "index", StrCat(descriptor_->index()));
+    "public static final\n"
+    "    com.google.protobuf.Descriptors.ServiceDescriptor\n"
+    "    getDescriptor() {\n"
+    "  return $file$.getDescriptor().getServices().get($index$);\n"
+    "}\n",
+    "file", name_resolver_->GetImmutableClassName(descriptor_->file()),
+    "index", SimpleItoa(descriptor_->index()));
   GenerateGetDescriptorForType(printer);
 
   // Generate more stuff.
@@ -210,7 +209,7 @@ void ImmutableServiceGenerator::GenerateCallMethod(io::Printer* printer) {
   for (int i = 0; i < descriptor_->method_count(); i++) {
     const MethodDescriptor* method = descriptor_->method(i);
     std::map<string, string> vars;
-    vars["index"] = StrCat(i);
+    vars["index"] = SimpleItoa(i);
     vars["method"] = UnderscoresToCamelCase(method);
     vars["input"] = name_resolver_->GetImmutableClassName(
         method->input_type());
@@ -257,7 +256,7 @@ void ImmutableServiceGenerator::GenerateCallBlockingMethod(
   for (int i = 0; i < descriptor_->method_count(); i++) {
     const MethodDescriptor* method = descriptor_->method(i);
     std::map<string, string> vars;
-    vars["index"] = StrCat(i);
+    vars["index"] = SimpleItoa(i);
     vars["method"] = UnderscoresToCamelCase(method);
     vars["input"] = name_resolver_->GetImmutableClassName(
         method->input_type());
@@ -303,7 +302,7 @@ void ImmutableServiceGenerator::GenerateGetPrototype(RequestOrResponse which,
   for (int i = 0; i < descriptor_->method_count(); i++) {
     const MethodDescriptor* method = descriptor_->method(i);
     std::map<string, string> vars;
-    vars["index"] = StrCat(i);
+    vars["index"] = SimpleItoa(i);
     vars["type"] = name_resolver_->GetImmutableClassName(
       (which == REQUEST) ? method->input_type() : method->output_type());
     printer->Print(vars,
@@ -355,7 +354,7 @@ void ImmutableServiceGenerator::GenerateStub(io::Printer* printer) {
     printer->Indent();
 
     std::map<string, string> vars;
-    vars["index"] = StrCat(i);
+    vars["index"] = SimpleItoa(i);
     vars["output"] = GetOutput(method);
     printer->Print(vars,
       "channel.callMethod(\n"
@@ -419,7 +418,7 @@ void ImmutableServiceGenerator::GenerateBlockingStub(io::Printer* printer) {
     printer->Indent();
 
     std::map<string, string> vars;
-    vars["index"] = StrCat(i);
+    vars["index"] = SimpleItoa(i);
     vars["output"] = GetOutput(method);
     printer->Print(vars,
       "return ($output$) channel.callBlockingMethod(\n"

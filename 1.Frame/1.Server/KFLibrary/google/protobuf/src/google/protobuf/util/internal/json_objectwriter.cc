@@ -36,7 +36,6 @@
 #include <google/protobuf/stubs/logging.h>
 #include <google/protobuf/stubs/common.h>
 #include <google/protobuf/util/internal/utility.h>
-
 #include <google/protobuf/util/internal/json_escaping.h>
 #include <google/protobuf/stubs/strutil.h>
 #include <google/protobuf/stubs/mathlimits.h>
@@ -50,7 +49,7 @@ using strings::ArrayByteSource;
 ;
 
 JsonObjectWriter::~JsonObjectWriter() {
-  if (element_ && !element_->is_root()) {
+  if (!element_->is_root()) {
     GOOGLE_LOG(WARNING) << "JsonObjectWriter was not fully closed.";
   }
 }
@@ -65,7 +64,7 @@ JsonObjectWriter* JsonObjectWriter::StartObject(StringPiece name) {
 JsonObjectWriter* JsonObjectWriter::EndObject() {
   Pop();
   WriteChar('}');
-  if (element() && element()->is_root()) NewLine();
+  if (element()->is_root()) NewLine();
   return this;
 }
 
@@ -83,26 +82,23 @@ JsonObjectWriter* JsonObjectWriter::EndList() {
   return this;
 }
 
-JsonObjectWriter* JsonObjectWriter::RenderBool(StringPiece name,
-                                               bool value) {
+JsonObjectWriter* JsonObjectWriter::RenderBool(StringPiece name, bool value) {
   return RenderSimple(name, value ? "true" : "false");
 }
 
-JsonObjectWriter* JsonObjectWriter::RenderInt32(StringPiece name,
-                                                int32 value) {
-  return RenderSimple(name, StrCat(value));
+JsonObjectWriter* JsonObjectWriter::RenderInt32(StringPiece name, int32 value) {
+  return RenderSimple(name, SimpleItoa(value));
 }
 
 JsonObjectWriter* JsonObjectWriter::RenderUint32(StringPiece name,
                                                  uint32 value) {
-  return RenderSimple(name, StrCat(value));
+  return RenderSimple(name, SimpleItoa(value));
 }
 
-JsonObjectWriter* JsonObjectWriter::RenderInt64(StringPiece name,
-                                                int64 value) {
+JsonObjectWriter* JsonObjectWriter::RenderInt64(StringPiece name, int64 value) {
   WritePrefix(name);
   WriteChar('"');
-  stream_->WriteString(StrCat(value));
+  stream_->WriteString(SimpleItoa(value));
   WriteChar('"');
   return this;
 }
@@ -111,7 +107,7 @@ JsonObjectWriter* JsonObjectWriter::RenderUint64(StringPiece name,
                                                  uint64 value) {
   WritePrefix(name);
   WriteChar('"');
-  stream_->WriteString(StrCat(value));
+  stream_->WriteString(SimpleItoa(value));
   WriteChar('"');
   return this;
 }
@@ -126,8 +122,7 @@ JsonObjectWriter* JsonObjectWriter::RenderDouble(StringPiece name,
   return RenderString(name, DoubleAsString(value));
 }
 
-JsonObjectWriter* JsonObjectWriter::RenderFloat(StringPiece name,
-                                                float value) {
+JsonObjectWriter* JsonObjectWriter::RenderFloat(StringPiece name, float value) {
   if (MathLimits<float>::IsFinite(value)) {
     return RenderSimple(name, SimpleFtoa(value));
   }

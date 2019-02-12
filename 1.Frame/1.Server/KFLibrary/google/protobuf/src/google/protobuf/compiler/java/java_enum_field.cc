@@ -46,7 +46,6 @@
 #include <google/protobuf/wire_format.h>
 #include <google/protobuf/stubs/strutil.h>
 
-
 namespace google {
 namespace protobuf {
 namespace compiler {
@@ -67,11 +66,11 @@ void SetEnumVariables(const FieldDescriptor* descriptor,
   (*variables)["mutable_type"] =
       name_resolver->GetMutableClassName(descriptor->enum_type());
   (*variables)["default"] = ImmutableDefaultValue(descriptor, name_resolver);
-  (*variables)["default_number"] =
-      StrCat(descriptor->default_value_enum()->number());
-  (*variables)["tag"] = StrCat(
-      static_cast<int32>(internal::WireFormat::MakeTag(descriptor)));
-  (*variables)["tag_size"] = StrCat(
+  (*variables)["default_number"] = SimpleItoa(
+      descriptor->default_value_enum()->number());
+  (*variables)["tag"] =
+      SimpleItoa(static_cast<int32>(internal::WireFormat::MakeTag(descriptor)));
+  (*variables)["tag_size"] = SimpleItoa(
       internal::WireFormat::TagSize(descriptor->number(), GetType(descriptor)));
   // TODO(birdo): Add @deprecated javadoc when generating javadoc is supported
   // by the proto compiler
@@ -359,7 +358,7 @@ GenerateSerializedSizeCode(io::Printer* printer) const {
 void ImmutableEnumFieldGenerator::
 GenerateEqualsCode(io::Printer* printer) const {
   printer->Print(variables_,
-    "if ($name$_ != other.$name$_) return false;\n");
+    "result = result && $name$_ == other.$name$_;\n");
 }
 
 void ImmutableEnumFieldGenerator::
@@ -555,12 +554,12 @@ void ImmutableEnumOneofFieldGenerator::
 GenerateEqualsCode(io::Printer* printer) const {
   if (SupportUnknownEnumValue(descriptor_->file())) {
     printer->Print(variables_,
-      "if (get$capitalized_name$Value()\n"
-      "    != other.get$capitalized_name$Value()) return false;\n");
+      "result = result && get$capitalized_name$Value()\n"
+      "    == other.get$capitalized_name$Value();\n");
   } else {
     printer->Print(variables_,
-      "if (!get$capitalized_name$()\n"
-      "    .equals(other.get$capitalized_name$())) return false;\n");
+      "result = result && get$capitalized_name$()\n"
+      "    .equals(other.get$capitalized_name$());\n");
   }
 }
 
@@ -984,7 +983,7 @@ GenerateSerializedSizeCode(io::Printer* printer) const {
 void RepeatedImmutableEnumFieldGenerator::
 GenerateEqualsCode(io::Printer* printer) const {
   printer->Print(variables_,
-    "if (!$name$_.equals(other.$name$_)) return false;\n");
+    "result = result && $name$_.equals(other.$name$_);\n");
 }
 
 void RepeatedImmutableEnumFieldGenerator::

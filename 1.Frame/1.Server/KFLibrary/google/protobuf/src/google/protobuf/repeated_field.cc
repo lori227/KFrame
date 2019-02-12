@@ -38,8 +38,6 @@
 #include <google/protobuf/stubs/logging.h>
 #include <google/protobuf/stubs/common.h>
 
-#include <google/protobuf/port_def.inc>
-
 namespace google {
 namespace protobuf {
 
@@ -64,7 +62,8 @@ void** RepeatedPtrFieldBase::InternalExtend(int extend_amount) {
   if (arena == NULL) {
     rep_ = reinterpret_cast<Rep*>(::operator new(bytes));
   } else {
-    rep_ = reinterpret_cast<Rep*>(Arena::CreateArray<char>(arena, bytes));
+    rep_ = reinterpret_cast<Rep*>(
+        ::google::protobuf::Arena::CreateArray<char>(arena, bytes));
   }
 #if defined(__GXX_DELETE_WITH_SIZE__) || defined(__cpp_sized_deallocation)
   const int old_total_size = total_size_;
@@ -104,32 +103,24 @@ void RepeatedPtrFieldBase::CloseGap(int start, int num) {
   rep_->allocated_size -= num;
 }
 
-MessageLite* RepeatedPtrFieldBase::AddWeak(const MessageLite* prototype) {
+google::protobuf::MessageLite* RepeatedPtrFieldBase::AddWeak(
+    const google::protobuf::MessageLite* prototype) {
   if (rep_ != NULL && current_size_ < rep_->allocated_size) {
-    return reinterpret_cast<MessageLite*>(rep_->elements[current_size_++]);
+    return reinterpret_cast<google::protobuf::MessageLite*>(
+        rep_->elements[current_size_++]);
   }
   if (!rep_ || rep_->allocated_size == total_size_) {
     Reserve(total_size_ + 1);
   }
   ++rep_->allocated_size;
-  MessageLite* result = prototype
-                            ? prototype->New(arena_)
-                            : Arena::CreateMessage<ImplicitWeakMessage>(arena_);
+  google::protobuf::MessageLite* result = prototype ? prototype->New(arena_) :
+      Arena::CreateMessage<ImplicitWeakMessage>(arena_);
   rep_->elements[current_size_++] = result;
   return result;
 }
 
 }  // namespace internal
 
-
-template class PROTOBUF_EXPORT RepeatedField<bool>;
-template class PROTOBUF_EXPORT RepeatedField<int32>;
-template class PROTOBUF_EXPORT RepeatedField<uint32>;
-template class PROTOBUF_EXPORT RepeatedField<int64>;
-template class PROTOBUF_EXPORT RepeatedField<uint64>;
-template class PROTOBUF_EXPORT RepeatedField<float>;
-template class PROTOBUF_EXPORT RepeatedField<double>;
-template class PROTOBUF_EXPORT RepeatedPtrField<string>;
 
 }  // namespace protobuf
 }  // namespace google

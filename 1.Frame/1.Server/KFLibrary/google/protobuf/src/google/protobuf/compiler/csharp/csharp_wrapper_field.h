@@ -46,7 +46,7 @@ struct Options;
 class WrapperFieldGenerator : public FieldGeneratorBase {
  public:
   WrapperFieldGenerator(const FieldDescriptor* descriptor,
-                        int presenceIndex,
+                        int fieldOrdinal,
                         const Options *options);
   ~WrapperFieldGenerator();
 
@@ -70,7 +70,7 @@ class WrapperFieldGenerator : public FieldGeneratorBase {
 class WrapperOneofFieldGenerator : public WrapperFieldGenerator {
  public:
   WrapperOneofFieldGenerator(const FieldDescriptor* descriptor,
-                             int presenceIndex,
+                             int fieldOrdinal,
                              const Options *options);
   ~WrapperOneofFieldGenerator();
 

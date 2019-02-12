@@ -95,7 +95,7 @@ TEST(JavaPluginTest, PluginTest) {
                              "enum Qux { BLAH = 1; }\n",
                              true));
 
-  CommandLineInterface cli;
+  google::protobuf::compiler::CommandLineInterface cli;
   cli.SetInputsAreProtoPathRelative(true);
 
   JavaGenerator java_generator;

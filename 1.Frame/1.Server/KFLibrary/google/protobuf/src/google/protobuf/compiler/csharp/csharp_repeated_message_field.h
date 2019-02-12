@@ -46,7 +46,7 @@ struct Options;
 class RepeatedMessageFieldGenerator : public FieldGeneratorBase {
  public:
   RepeatedMessageFieldGenerator(const FieldDescriptor* descriptor,
-                                int presenceIndex,
+                                int fieldOrdinal,
                                 const Options *options);
   ~RepeatedMessageFieldGenerator();
 
