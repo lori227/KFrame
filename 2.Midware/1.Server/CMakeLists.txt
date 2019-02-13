@@ -15,7 +15,7 @@ include_directories(
     ${ROOT_DIR}/KFLibrary
     ${ROOT_DIR}/KFPlugin
     ${ROOT_DIR}/KFInterface
-    ${ROOT_DIR}/KFLibrary/lua53
+    ${ROOT_DIR}/KFLibrary/lua/lua53
 )
 
 set(3RD_LIB_DIR ${ROOT_DIR}/_lib/linux ${ROOT_DIR}/_lib/linux/3rd)
