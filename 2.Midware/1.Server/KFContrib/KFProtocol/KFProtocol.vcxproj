@@ -77,7 +77,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WIN32_WINDOWS;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;POCO_EXTERNAL_OPENSSL;POCO_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\;..\..\KFLibrary\;..\..\KFCommon\;..\..\KFInclude\;..\..\KFLibrary\google\protobuf\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\;..\..\KFLibrary\;..\..\KFCommon\;..\..\KFInclude\;;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4244;4267;4996</DisableSpecificWarnings>
       <ForcedIncludeFiles>google\protobuf\descriptor.h;google\protobuf\unknown_field_set.h</ForcedIncludeFiles>
       <BrowseInformation>false</BrowseInformation>
@@ -87,12 +87,12 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>..\..\_lib\win64\;..\..\_lib\win64\3rd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\_lib\win64\debug;..\..\_lib\win64\debug\3rd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>LIBCD.lib LIBCMTD.lib MSVCRT.lib</IgnoreSpecificDefaultLibraries>
     </Lib>
     <PostBuildEvent>
-      <Command>copy /Y "$(TargetPath)" "..\..\_lib\win64\"</Command>
+      <Command>copy /Y "$(TargetPath)" "..\..\_lib\win64\debug\"</Command>
     </PostBuildEvent>
     <BuildLog>
       <Path>..\..\_out\$(ProjectName)\$(Configuration)\$(ProjectName).log</Path>
@@ -119,12 +119,12 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>..\..\_lib\win64\;..\..\_lib\win64\3rd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\_lib\win64\release;..\..\_lib\win64\release\3rd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>LIBCD.lib LIBCMTD.lib MSVCRT.lib</IgnoreSpecificDefaultLibraries>
     </Lib>
     <PostBuildEvent>
-      <Command>copy /Y "$(TargetPath)" "..\..\_lib\win64\"</Command>
+      <Command>copy /Y "$(TargetPath)" "..\..\_lib\win64\release\"</Command>
     </PostBuildEvent>
     <BuildLog>
       <Path>..\..\_out\$(ProjectName)\$(Configuration)\$(ProjectName).log</Path>

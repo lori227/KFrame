@@ -35,8 +35,7 @@ rem bin=================================
 echo "release bin begin"
 set binpath=_bin\bin
 if not exist %releasepath%\%binpath% (mkdir %releasepath%\%binpath% )
-xcopy /y %localpath%\%binpath%\*.dll %releasepath%\%binpath%\
-xcopy /y %localpath%\%binpath%\*.exe %releasepath%\%binpath%\
+xcopy /y /S %localpath%\%binpath% %releasepath%\%binpath%\
 echo "release bin end"
 rem ====================================
 
@@ -64,19 +63,14 @@ rem ===========================================================================
 echo "release _lib path begin"
 set libpath=_lib
 
-if not exist %releasepath%\%libpath%\linux (mkdir %releasepath%\%libpath%\linux )
-xcopy /y %localpath%\%libpath%\linux\*.a %releasepath%\%libpath%\linux
-del %releasepath%\%libpath%\linux\KFProtocol*.a
+if not exist %releasepath%\%libpath% (mkdir %releasepath%\%libpath%)
+xcopy /y /S %localpath%\%libpath% %releasepath%\%libpath%\
 
-if not exist %releasepath%\%libpath%\linux\3rd (mkdir %releasepath%\%libpath%\linux\3rd )
-xcopy /y /S %localpath%\%libpath%\linux\3rd %releasepath%\%libpath%\linux\3rd\
+del %releasepath%\%libpath%\linux\debug\KFProtocol*.a
+del %releasepath%\%libpath%\linux\release\KFProtocol*.a
 
-if not exist %releasepath%\%libpath%\win64 (mkdir %releasepath%\%libpath%\win64 )
-xcopy /y %localpath%\%libpath%\win64\*.lib %releasepath%\%libpath%\win64
-del %releasepath%\%libpath%\win64\KFProtocol*.lib
-
-if not exist %releasepath%\%libpath%\win64\3rd (mkdir %releasepath%\%libpath%\win64\3rd )
-xcopy /y /S %localpath%\%libpath%\win64\3rd %releasepath%\%libpath%\win64\3rd\
+del %releasepath%\%libpath%\win64\debug\KFProtocol*.lib
+del %releasepath%\%libpath%\win64\release\KFProtocol*.lib
 
 echo "release _lib path end"
 rem ===========================================================================
