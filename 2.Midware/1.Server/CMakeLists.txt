@@ -14,6 +14,7 @@ include_directories(
     ${ROOT_DIR}/KFContrib
     ${ROOT_DIR}/KFLibrary
     ${ROOT_DIR}/KFPlugin
+    ${ROOT_DIR}/KFInterface
     ${ROOT_DIR}/KFLibrary/lua53
 )
 
