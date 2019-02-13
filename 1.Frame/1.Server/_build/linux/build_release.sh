@@ -6,10 +6,13 @@ cd ../../../3.Resource/protocol
 sh 2.linux.sh
 cd -
 
-cmake ../../ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release 
+mkdir -p build
+cd build
+cmake ../../../ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release 
 make -j 6
-mkdir -p ../../../9.Template/1.Server/_bin/bin/release
+cd ../
 
+mkdir -p ../../../9.Template/1.Server/_bin/bin/release
 cp -a -f ../../_lib/linux/3rd/*.so* ../../_bin/lib/
 cp -a -f ../../_lib/linux/*.a ../../../9.Template/1.Server/_lib/linux/
 cp -a -f ../../_lib/linux/3rd/* ../../../9.Template/1.Server/_lib/linux/3rd/

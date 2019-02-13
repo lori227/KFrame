@@ -9,6 +9,10 @@ cd ../../../3.Resource/proto
 sh 2.linux.sh
 cd -
 
-cmake ../../ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release 
+mkdir -p build
+cd build
+cmake ../../../ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release 
 make -j 6
+cd ../
+
 cp -a -f ../../_lib/linux/3rd/*.so* ../../_bin/lib

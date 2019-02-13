@@ -11,7 +11,8 @@ cd -
 
 mkdir -p build
 cd build
-cmake ../../ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug
+cmake ../../../ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug
 make -j 6
 cd ../
+
 cp -a -f ../../_lib/linux/3rd/*.so* ../../_bin/lib
