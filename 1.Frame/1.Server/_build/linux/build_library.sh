@@ -160,9 +160,9 @@ bash config
 make clean
 make -j 4
 cp -R -f ./libssl.a ../../$libpath
-cp -R -f ./libssl.so.* ../../$libpath
+cp -R -f ./libssl.so* ../../$libpath
 cp -R -f ./libcrypto.a ../../$libpath
-cp -R -f ./libcrypto.so.* ../../$libpath
+cp -R -f ./libcrypto.so* ../../$libpath
 cd ../
 
 blue "end building openssl"
