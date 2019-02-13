@@ -7,4 +7,7 @@ cd -
 
 cmake ../../ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release 
 make -j 6
+mkdir -p ../../../9.Template/1.Server/_bin/bin/release
+
 cp -a -f ../../_lib/linux/3rd/*.so* ../../_bin/lib/
+cp -a -f ../../_bin/bin/release ../../../9.Template/1.Server/_bin/bin/

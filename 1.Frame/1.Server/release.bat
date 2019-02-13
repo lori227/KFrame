@@ -84,12 +84,6 @@ if not exist %releasepath%\%buildpath%\linux (mkdir %releasepath%\%buildpath%\li
 
 if not exist %releasepath%\%buildpath%\linux\tool (mkdir %releasepath%\%buildpath%\linux\tool )
 xcopy /y %localpath%\%buildpath%\linux\tool\* %releasepath%\%buildpath%\linux\tool\
-copy /y %localpath%\%buildpath%\linux\build_clean.sh %releasepath%\%buildpath%\linux\
-copy /y %localpath%\%buildpath%\linux\build_debug.sh %releasepath%\%buildpath%\linux\
-copy /y %localpath%\%buildpath%\linux\build_release.sh %releasepath%\%buildpath%\linux\
-copy /y %localpath%\%buildpath%\linux\make_develop.sh %releasepath%\%buildpath%\linux\
-copy /y %localpath%\%buildpath%\linux\make_online.sh %releasepath%\%buildpath%\linux\
-copy /y %localpath%\%buildpath%\linux\make_version.sh %releasepath%\%buildpath%\linux\
 
 echo "release _build path end"
 rem ===========================================================================
