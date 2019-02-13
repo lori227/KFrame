@@ -83,7 +83,7 @@ bash ./configure --prefix=/usr/local
 make clean
 make -j 4
 make install
-cp -R -f /usr/local/lib/libtcmalloc* ../../$libpath
+cp -R -f /usr/local/lib/libtcmalloc_minimal.* ../../$libpath
 cd ../
 
 blue "end building tcmalloc"
