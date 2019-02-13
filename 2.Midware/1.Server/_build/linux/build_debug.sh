@@ -1,10 +1,12 @@
-mkdir -p ../../_bin/lib
+mkdir -p ../../_bin/lib/linux
 mkdir -p ../../_bin/bin/debug
 
 cp -a -f ../../../../1.Frame/9.Template/1.Server/_bin/bin/debug ../../_bin/bin/
 
+cp -a -f ../../../../1.Frame/9.Template/1.Server/_lib/linux/debug ../../_bin/bin/
+
 cd ../../../3.Resource/proto
-sh linux.sh
+sh 2.linux.sh
 cd -
 
 cmake ../../ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug
