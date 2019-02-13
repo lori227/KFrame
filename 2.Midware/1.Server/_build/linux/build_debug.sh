@@ -1,9 +1,9 @@
-mkdir -p ../../_bin/lib/linux
+mkdir -p ../../_bin/lib/
+mkdir -p ../../_lib/linux/
 mkdir -p ../../_bin/bin/debug
 
 cp -a -f ../../../../1.Frame/9.Template/1.Server/_bin/bin/debug ../../_bin/bin/
-
-cp -a -f ../../../../1.Frame/9.Template/1.Server/_lib/linux/debug ../../_bin/bin/
+cp -a -f ../../../../1.Frame/9.Template/1.Server/_lib/linux/ ../../_lib/linux/
 
 cd ../../../3.Resource/proto
 sh 2.linux.sh

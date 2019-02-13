@@ -1,5 +1,6 @@
 mkdir -p ../../_bin/lib
 mkdir -p ../../_bin/bin/release
+mkdir -p ../../../9.Template/1.Server/_lib/linux/3rd/
 
 cd ../../../Resource/protocol
 sh linux.sh
