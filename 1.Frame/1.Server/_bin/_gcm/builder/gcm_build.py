@@ -94,7 +94,7 @@ def write_file(run_file, kill_file, node):
 
 
 def copy_version():
-    shutil.copytree(base_path + bin_path, os.path.join(output_folder, bin_path))
+    shutil.copytree(base_path + bin_path + '/' + args['mode'], os.path.join(output_folder, bin_path))
     shutil.copytree(base_path + setting_path, os.path.join(output_folder, setting_path))
     shutil.copytree(base_path + config_path, os.path.join(output_folder, config_path))
     shutil.copytree(base_path + startup_path, os.path.join(output_folder, startup_path))
@@ -104,8 +104,6 @@ def copy_version():
     if is_linux():
         return
     else:
-        shutil.copy(win_other_dll_path + '/libeay32.dll', os.path.join(output_folder, 'bin'))
-        shutil.copy(win_other_dll_path + '/ssleay32.dll', os.path.join(output_folder, 'bin'))
         shutil.copy(win_other_dll_path + '/libmysql.dll', os.path.join(output_folder, 'bin'))
         shutil.copy(win_other_dll_path + '/libtcmalloc_minimal.dll', os.path.join(output_folder, 'bin'))
 
