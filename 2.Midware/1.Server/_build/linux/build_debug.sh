@@ -9,6 +9,9 @@ cd ../../../3.Resource/proto
 sh 2.linux.sh
 cd -
 
+mkdir -p build
+cd build
 cmake ../../ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug
 make -j 6
+cd ../
 cp -a -f ../../_lib/linux/3rd/*.so* ../../_bin/lib

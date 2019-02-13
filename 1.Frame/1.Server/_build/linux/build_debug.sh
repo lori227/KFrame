@@ -7,8 +7,11 @@ cd ../../../3.Resource/protocol
 sh 2.linux.sh
 cd -
 
+mkdir -p build
+cd build
 cmake ../../ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug
 make -j 6
+cd ../
 
 mkdir -p ../../../9.Template/1.Server/_bin/bin/debug
 
