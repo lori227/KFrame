@@ -16,23 +16,19 @@ include_directories(
     ${ROOT_DIR}/KFPlugin
     ${ROOT_DIR}/KFLibrary/lua53
 )
-#set(LIB_DIR /data/_lib)
-#set(BIN_DIR /data/_bin)
 
 set(3RD_LIB_DIR ${ROOT_DIR}/_lib/linux ${ROOT_DIR}/_lib/linux/3rd)
 set(LIB_DIR ${ROOT_DIR}/_lib/linux)
-set(BIN_DIR ${ROOT_DIR}/../Bin/bin)
-
-#LINK_DIRECTORIES("/usr/local/lib" "/usr/lib64/mysql")
-#LINK_DIRECTORIES("${ROOT_DIR}/_lib/linux")
 LINK_DIRECTORIES(${3RD_LIB_DIR})
 
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fPIC -Wall")
 if(CMAKE_BUILD_TYPE MATCHES "Debug")
+    set(BIN_DIR ${ROOT_DIR}/_bin/bin/debug)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0 -g -ggdb -D_DEBUG")
 else()
     set(CMAKE_BUILD_TYPE "Release")
+    set(BIN_DIR ${ROOT_DIR}/_bin/bin/release)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
 endif()
 

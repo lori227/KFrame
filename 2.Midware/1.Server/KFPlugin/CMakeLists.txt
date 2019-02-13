@@ -31,9 +31,6 @@ endmacro(BUILD_PLUGIN_MACRO project_name)
 add_subdirectory(KFAuth)
 add_subdirectory(KFChannel)
 
-add_subdirectory(KFDataClient)
-add_subdirectory(KFDataShard)
-
 add_subdirectory(KFGame)
 add_subdirectory(KFGate)
 add_subdirectory(KFLogin)
@@ -41,15 +38,14 @@ add_subdirectory(KFWorld)
 add_subdirectory(KFZone)
 
 add_subdirectory(KFDisplay)
-
 add_subdirectory(KFLua)
 
 add_subdirectory(KFCommand)
 add_subdirectory(KFAttribute)
 add_subdirectory(KFAchieve)
-add_subdirectory(KFTask)
 add_subdirectory(KFActivity)
 add_subdirectory(KFCompound)
+add_subdirectory(KFTask)
 add_subdirectory(KFItem)
 add_subdirectory(KFHero)
 add_subdirectory(KFSkin)
@@ -62,5 +58,6 @@ add_subdirectory(KFStore)
 add_subdirectory(KFMailClient)
 add_subdirectory(KFMailShard)
 
-
+add_subdirectory(KFDataClient)
+add_subdirectory(KFDataShard)
 
