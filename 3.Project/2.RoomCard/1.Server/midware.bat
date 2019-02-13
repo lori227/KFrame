@@ -25,16 +25,13 @@ rem ===========================================================================
 
 if not exist %localpath%\KFPlugin (
     mkdir %localpath%\KFPlugin
-    copy /y %framepath%\Midware.sln %localpath%\Survival.sln
+    copy /y %framepath%\Midware.sln %localpath%\RoomCard.sln
     copy /y %framepath%\CMakeLists.txt %localpath%\
  )
 
 cd %framepath%\KFPlugin
 set pluginpath=..\..\..\3.Project\1.Survival\1.Server\KFPlugin
-for /d %%i in (*) do (
-	if not exist %pluginpath%\%%i (
-	    xcopy /y /S %%i %pluginpath%\%%i\
-    )
-)
+
+if not exist %pluginpath%\%%i ( xcopy /y /S %%i %pluginpath%\%%i\ )
 rem ===========================================================================
 
