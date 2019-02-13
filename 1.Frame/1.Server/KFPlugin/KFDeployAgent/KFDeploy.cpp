@@ -2,11 +2,17 @@
 
 namespace KFrame
 {
-    KFLaunchSetting::KFLaunchSetting()
+    KFDeployData::KFDeployData()
     {
+        _process_id = 0;
+        _startup_time = 0;
+        _zone_id = 0;
+        _is_startup = false;
+        _is_shutdown = false;
+        _is_debug = false;
     }
 
-    std::string KFLaunchSetting::GetAppPath()
+    std::string KFDeployData::GetAppPath()
     {
         auto apppath = _invalid_str;
         if ( _app_path.empty() )
@@ -21,7 +27,7 @@ namespace KFrame
         return apppath;
     }
 
-    std::string KFLaunchSetting::GetStartupFile( bool isdebug )
+    std::string KFDeployData::GetStartupFile( bool isdebug )
     {
         auto file = _app_file;
         if ( isdebug )
@@ -34,40 +40,6 @@ namespace KFrame
 #endif
         auto apppath = GetAppPath();
         return apppath + file;
-    }
-
-
-    void KFLaunchSetting::CopyFrom( MapString& values )
-    {
-        _deploy_path = values[ __KF_STRING__( deploypath ) ];
-        _app_name = values[ __KF_STRING__( appname ) ];
-        _app_type = values[ __KF_STRING__( apptype ) ];
-        _app_path = values[ __KF_STRING__( apppath ) ];
-        _app_file = values[ __KF_STRING__( appfile ) ];
-        _app_config = values[ __KF_STRING__( appconfig ) ];
-        _service = values[ __KF_STRING__( service ) ];
-    }
-
-    void KFLaunchSetting::SaveTo( MapString& values )
-    {
-        values[ __KF_STRING__( deploypath ) ] = _deploy_path;
-        values[ __KF_STRING__( appname ) ] = _app_name;
-        values[ __KF_STRING__( apptype ) ] = _app_type;
-        values[ __KF_STRING__( apppath ) ] = _app_path;
-        values[ __KF_STRING__( appfile ) ] = _app_file;
-        values[ __KF_STRING__( appconfig ) ] = _app_config;
-        values[ __KF_STRING__( service ) ] = _service;
-    }
-
-    KFDeployData::KFDeployData()
-    {
-        _process_id = 0;
-        _startup_time = 0;
-        _zone_id = 0;
-        _is_startup = false;
-        _is_shutdown = false;
-        _is_debug = false;
-        _kf_launch = nullptr;
     }
 
     bool KFDeployData::IsAppServer( const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid )
@@ -115,6 +87,10 @@ namespace KFrame
 
     void KFDeployData::CopyFrom( MapString& values )
     {
+        _deploy_path = values[ __KF_STRING__( deploypath ) ];
+        _app_path = values[ __KF_STRING__( apppath ) ];
+        _app_file = values[ __KF_STRING__( appfile ) ];
+
         _app_id = values[ __KF_STRING__( appid ) ];
 
         KFAppID kfappid( _app_id );
@@ -131,10 +107,15 @@ namespace KFrame
         _local_ip = values[ __KF_STRING__( localip ) ];
         _log_type = values[ __KF_STRING__( logtype ) ];
         _service_type = values[ __KF_STRING__( service ) ];
+
     }
 
     void KFDeployData::SaveTo( MapString& values )
     {
+        values[ __KF_STRING__( deploypath ) ] = _deploy_path;
+        values[ __KF_STRING__( apppath ) ] = _app_path;
+        values[ __KF_STRING__( appfile ) ] = _app_file;
+
         values[ __KF_STRING__( appid ) ] = _app_id;
         values[ __KF_STRING__( appname ) ] = _app_name;
         values[ __KF_STRING__( apptype ) ] = _app_type;

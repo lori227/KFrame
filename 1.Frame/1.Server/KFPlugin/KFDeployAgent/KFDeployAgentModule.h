@@ -207,10 +207,6 @@ namespace KFrame
         // deploy列表
         KFMap< std::string, const std::string&, KFDeployData > _deploy_list;
 
-        // launch列表
-        typedef std::pair< std::string, std::string > LaunchKey;
-        KFMap< LaunchKey, const LaunchKey&, KFLaunchSetting > _launch_list;
-
         // 当前执行的任务
         KFDeployTask* _kf_task{ nullptr };
 

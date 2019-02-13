@@ -143,21 +143,7 @@ namespace KFrame
 
     void KFDeployAgentModule::LoadTotalLaunchData()
     {
-        _launch_list.Clear();
         _deploy_list.Clear();
-
-        // 加载launch设定
-        {
-            auto querylaunchdata = _deploy_driver->Select( __KF_STRING__( launch ) );
-            for ( auto& values : querylaunchdata->_value )
-            {
-                auto kfsetting = __KF_NEW__( KFLaunchSetting );
-                kfsetting->CopyFrom( values );
-
-                LaunchKey key( kfsetting->_app_name, kfsetting->_app_type );
-                _launch_list.Insert( key, kfsetting );
-            }
-        }
 
         // 部署信息
         {
@@ -168,12 +154,6 @@ namespace KFrame
             {
                 auto deploydata = __KF_NEW__( KFDeployData );
                 deploydata->CopyFrom( values );
-                deploydata->_kf_launch = _launch_list.Find( LaunchKey( deploydata->_app_name, deploydata->_app_type ) );
-                if ( deploydata->_kf_launch == nullptr )
-                {
-                    __LOG_ERROR__( "[{}:{}] can't find launch data!", deploydata->_app_name, deploydata->_app_type );
-                }
-
                 _deploy_list.Insert( deploydata->_app_id, deploydata );
             }
         }
@@ -251,7 +231,7 @@ namespace KFrame
 
     void KFDeployAgentModule::CheckServerProcess( KFDeployData* deploydata )
     {
-        if ( deploydata->_process_id == _invalid_int || deploydata->_kf_launch == nullptr )
+        if ( deploydata->_process_id == _invalid_int )
         {
             return;
         }
@@ -317,12 +297,6 @@ namespace KFrame
 #if __KF_SYSTEM__ == __KF_WIN__
     bool KFDeployAgentModule::StartupWinProcess( KFDeployData* deploydata )
     {
-        auto kflaunch = deploydata->_kf_launch;
-        if ( kflaunch == nullptr )
-        {
-            return false;
-        }
-
         auto kfglobal = KFGlobal::Instance();
 
         // 启动进程
@@ -333,13 +307,14 @@ namespace KFrame
         startupinfo.dwFlags = STARTF_USESHOWWINDOW;
 
         uint32 createflag = CREATE_NO_WINDOW;
-        auto apppath = kflaunch->GetAppPath();
-        auto startupfile = kflaunch->GetStartupFile( deploydata->_is_debug );
-        auto param = __FORMAT__( " {}={} {}={} {}={} {}={} {}={}|{}|{}",
+        auto apppath = deploydata->GetAppPath();
+        auto startupfile = deploydata->GetStartupFile( deploydata->_is_debug );
+        auto param = __FORMAT__( " {}={} {}={} {}={} {}={} {}={} {}={}|{}|{}",
+                                 __KF_STRING__( appname ), deploydata->_app_name,
+                                 __KF_STRING__( apptype ), deploydata->_app_type,
                                  __KF_STRING__( appid ), deploydata->_app_id,
                                  __KF_STRING__( log ), deploydata->_log_type,
                                  __KF_STRING__( service ), deploydata->_service_type,
-                                 __KF_STRING__( startup ), kflaunch->_app_config,
                                  __KF_STRING__( agent ), kfglobal->_str_app_id, kfglobal->_local_ip, kfglobal->_listen_port );
 
         // 启动进程
@@ -396,17 +371,17 @@ namespace KFrame
 #else
     bool KFDeployAgentModule::StartupLinuxProcess( KFDeployData* deploydata )
     {
-        auto kflaunch = deploydata->_kf_launch;
-        if ( kflaunch == nullptr )
-        {
-            return false;
-        }
-
         std::vector<char*> args;
         auto kfglobal = KFGlobal::Instance();
 
-        auto startupfile = kflaunch->GetStartupFile( deploydata->_is_debug );
+        auto startupfile = deploydata->GetStartupFile( deploydata->_is_debug );
         args.push_back( const_cast< char* >( startupfile.c_str() ) );
+
+        auto strappname = __FORMAT__( "{}={}", __KF_STRING__( appname ), deploydata->_app_name );
+        args.push_back( const_cast< char* >( strappname.c_str() ) );
+
+        auto strapptype = __FORMAT__( "{}={}", __KF_STRING__( apptype ), deploydata->_app_type );
+        args.push_back( const_cast< char* >( strapptype.c_str() ) );
 
         auto strappid = __FORMAT__( "{}={}", __KF_STRING__( appid ), deploydata->_app_id );
         args.push_back( const_cast< char* >( strappid.c_str() ) );
@@ -417,9 +392,6 @@ namespace KFrame
         auto strservice = __FORMAT__( "{}={}", __KF_STRING__( service ), deploydata->_service_type );
         args.push_back( const_cast< char* >( strservice.c_str() ) );
 
-        auto strfile = __FORMAT__( "{}={}", __KF_STRING__( startup ), kflaunch->_app_config );
-        args.push_back( const_cast< char* >( strfile.c_str() ) );
-
         auto stragent = __FORMAT__( "{}={}|{}|{}", __KF_STRING__( agent ), kfglobal->_str_app_id, kfglobal->_local_ip, kfglobal->_listen_port );
         args.push_back( const_cast< char* >( stragent.c_str() ) );
 
@@ -429,7 +401,7 @@ namespace KFrame
         if ( pid == 0 )	 // 子进程
         {
             // 新的目录
-            auto apppath = kflaunch->GetAppPath();
+            auto apppath = deploydata->GetAppPath();
             if ( chdir( apppath.c_str() ) != 0 )
             {
                 _exit( 72 );
@@ -584,22 +556,18 @@ namespace KFrame
         for ( auto& iter : _deploy_list._objects )
         {
             auto deploydata = iter.second;
-            if ( deploydata->_kf_launch == nullptr )
-            {
-                continue;
-            }
 
             if ( appname != _globbing_str )
             {
                 if ( appname == deploydata->_app_name )
                 {
-                    deploypathlist.insert( deploydata->_kf_launch->_deploy_path );
+                    deploypathlist.insert( deploydata->_deploy_path );
                     break;
                 }
             }
             else
             {
-                deploypathlist.insert( deploydata->_kf_launch->_deploy_path );
+                deploypathlist.insert( deploydata->_deploy_path );
             }
         }
     }

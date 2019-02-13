@@ -5,14 +5,18 @@
 
 namespace KFrame
 {
-    class KFLaunchSetting
+    /////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////
+    class KFDeployData
     {
     public:
-        KFLaunchSetting();
+        KFDeployData();
+
 
         std::string GetAppPath();
         std::string GetStartupFile( bool isdebug );
 
+        bool IsAppServer( const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid );
         void CopyFrom( MapString& values );
         void SaveTo( MapString& values );
 
@@ -26,31 +30,6 @@ namespace KFrame
         // 运行程序路径
         std::string _app_file;
 
-        // 启动文件
-        std::string _app_config;
-
-        // 程序名称( 给web显示用 )
-        std::string _app_name;
-
-        // 程序类型( 给web显示用 );
-        std::string _app_type;
-
-        // 服务类型
-        std::string _service;
-    };
-
-    /////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////
-    class KFDeployData
-    {
-    public:
-        KFDeployData();
-
-        bool IsAppServer( const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid );
-        void CopyFrom( MapString& values );
-        void SaveTo( MapString& values );
-
-    public:
         // 程序名称( 给web显示用 )
         std::string _app_name;
 
@@ -90,8 +69,6 @@ namespace KFrame
 
         // 是否关闭
         bool _is_shutdown;
-
-        KFLaunchSetting* _kf_launch;
     };
 }
 
