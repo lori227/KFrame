@@ -1,8 +1,17 @@
 cd ../../
 
 mkdir _lib
-mkdir _lib\win64
-mkdir _lib\win64\3rd
+mkdir _lib\win64\debug
+mkdir _lib\win64\release
+mkdir _lib\win64\debug\3rd
+mkdir _lib\win64\release\3rd
+
+mkdir _bin\bin
+mkdir _bin\bin\debug
+mkdir _bin\bin\release
+
+xcopy /y _lib\win64\debug\3rd\*.dll _bin\bin\debug\
+xcopy /y _lib\win64\release\3rd\*.dll _bin\bin\release\
 :================================================================
 
 cd KFLibrary

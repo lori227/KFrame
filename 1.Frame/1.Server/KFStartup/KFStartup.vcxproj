@@ -86,13 +86,13 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\_lib\win64\;..\_lib\win64\3rd\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\_lib\win64\debug;..\_lib\win64\debug\3rd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libtcmalloc_minimal.lib</AdditionalDependencies>
       <ForceSymbolReferences>__tcmalloc</ForceSymbolReferences>
       <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PostBuildEvent>
-      <Command>copy /Y "$(TargetPath)" "..\_bin\bin\"</Command>
+      <Command>copy /Y "$(TargetPath)" "..\_bin\bin\debug\"</Command>
     </PostBuildEvent>
     <BuildLog>
       <Path>..\_out\$(ProjectName)\$(Configuration)\$(ProjectName).log</Path>
@@ -117,13 +117,13 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\_lib\win64\;..\_lib\win64\3rd\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\_lib\win64\release;..\_lib\win64\release\3rd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libtcmalloc_minimal.lib</AdditionalDependencies>
       <ForceSymbolReferences>__tcmalloc</ForceSymbolReferences>
       <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PostBuildEvent>
-      <Command>copy /Y "$(TargetPath)" "..\_bin\bin\"</Command>
+      <Command>copy /Y "$(TargetPath)" "..\_bin\bin\release\"</Command>
     </PostBuildEvent>
     <BuildLog>
       <Path>..\_out\$(ProjectName)\$(Configuration)\$(ProjectName).log</Path>

@@ -77,13 +77,13 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>..\..\_lib\win64\;..\..\_lib\win64\3rd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\_lib\win64\debug;..\..\_lib\win64\debug\3rd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>
       </AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>LIBCD.lib LIBCMTD.lib MSVCRT.lib</IgnoreSpecificDefaultLibraries>
     </Lib>
     <PostBuildEvent>
-      <Command> copy /Y "$(TargetPath)" "..\..\_lib\win64\"</Command>
+      <Command> copy /Y "$(TargetPath)" "..\..\_lib\win64\debug\"</Command>
     </PostBuildEvent>
     <BuildLog>
       <Path>..\..\_out\$(ProjectName)\$(Configuration)\$(ProjectName).log</Path>
@@ -108,13 +108,13 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>..\..\_lib\win64\;..\..\_lib\win64\3rd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\_lib\win64\release;..\..\_lib\win64\release\3rd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>
       </AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>LIBCD.lib LIBCMTD.lib MSVCRT.lib</IgnoreSpecificDefaultLibraries>
     </Lib>
     <PostBuildEvent>
-      <Command> copy /Y "$(TargetPath)" "..\..\_lib\win64\"</Command>
+      <Command> copy /Y "$(TargetPath)" "..\..\_lib\win64\release\"</Command>
     </PostBuildEvent>
     <BuildLog>
       <Path>..\..\_out\$(ProjectName)\$(Configuration)\$(ProjectName).log</Path>
