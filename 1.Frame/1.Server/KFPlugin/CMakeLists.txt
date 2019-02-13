@@ -63,3 +63,12 @@ add_subdirectory(KFSchedule)
 add_subdirectory(KFTimer)
 add_subdirectory(KFKernel)
 add_subdirectory(KFOption)
+add_subdirectory(KFFilter)
+add_subdirectory(KFPlayer)
+
+add_subdirectory(KFDeployAgent)
+add_subdirectory(KFDeployClient)
+add_subdirectory(KFDeployServer)
+
+add_subdirectory(KFLogClient)
+add_subdirectory(KFLogShard)
