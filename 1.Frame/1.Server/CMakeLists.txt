@@ -41,11 +41,11 @@ LINK_DIRECTORIES(${3RD_LIB_DIR})
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fPIC -Wall")
 if(CMAKE_BUILD_TYPE MATCHES "Debug")
-    set(BIN_DIR ${ROOT_DIR}/../_bin/bin/debug)
+    set(BIN_DIR ${ROOT_DIR}/_bin/bin/debug)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0 -g -ggdb -D_DEBUG")
 else()
     set(CMAKE_BUILD_TYPE "Release")
-    set(BIN_DIR ${ROOT_DIR}/../_bin/bin/release)
+    set(BIN_DIR ${ROOT_DIR}/_bin/bin/release)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
 endif()
 
