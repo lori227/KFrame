@@ -50,8 +50,8 @@ rem ====================================
 rem startup=================================
 echo "release startup begin"
 set startuppath=_bin\startup
-if not exist %releasepath%\%startuppath%\common (mkdir %releasepath%\%startuppath%\common )
-xcopy /y %localpath%\%startuppath%\* %releasepath%\%startuppath%\common\
+if not exist %releasepath%\%startuppath% (mkdir %releasepath%\%startuppath% )
+xcopy /y %localpath%\%startuppath%\ %releasepath%\%startuppath%\
 echo "release startup end"
 rem ====================================
 
