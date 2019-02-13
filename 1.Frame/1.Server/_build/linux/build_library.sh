@@ -56,6 +56,7 @@ cd zlib
 bash ./configure --prefix=/usr/local
 make -j 4
 cp -R -f *.so* ../../$libpath
+cp -R -f *.so* ../../$libpath
 cd ../
 
 blue "end building zlib"
