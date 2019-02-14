@@ -25,7 +25,7 @@ cp -a -rf  $respath/startup/* $deploypath/startup/
 cp -f $respath/lib/* $deploypath/lib/
 
 #bin
-cp -f $respath/bin/release/KFStartup $deploypath/bin/deploy
+cp -f $respath/bin/release/KFStartup $deploypath/bin/kfdeploy
 
 cp -f $respath/bin/release/KFBus.so $deploypath/bin/
 cp -f $respath/bin/release/KFIpAddress.so $deploypath/bin/

@@ -1,1 +1,1 @@
-ps -ef|grep "deployserver" | grep -v grep | cut -c 9-15 | xargs kill -9
+ps -ef|grep "kfdeploy" | grep -v grep | cut -c 9-15 | xargs kill -9

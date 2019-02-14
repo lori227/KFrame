@@ -1,5 +1,4 @@
 mkdir -p ../../_bin/lib/
-mkdir -p ../../_bin/lib/3rd
 mkdir -p ../../_bin/bin/debug
 mkdir -p ../../../9.Template/1.Server/_lib/linux/3rd/
 
