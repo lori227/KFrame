@@ -13,10 +13,14 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFHttpHandle::handleRequest( Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response )
     {
-        std::string url = request.getURI();
-        std::string data = ReadRequestData( request );
+        auto& stream = request.stream();
+        std::ostringstream os;
+        stream >> os.rdbuf();
+        auto data = os.str();
 
+        auto url = request.getURI();
         KFUtility::SplitString( url, "/" );
+
         __LOG_DEBUG__( "url=[{}] data=[{}]", url, data );
         if ( data.empty() )
         {
@@ -35,16 +39,5 @@ namespace KFrame
         send.flush();
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    std::string KFHttpHandle::ReadRequestData( Poco::Net::HTTPServerRequest& request )
-    {
-        auto& stream = request.stream();
-
-        std::ostringstream os;
-        stream >> os.rdbuf();
-
-        std::string data;
-        data = os.str();
-        return data;
-    }
 
 }

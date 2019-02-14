@@ -15,10 +15,6 @@ namespace KFrame
         // 处理请求
         virtual void handleRequest( Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response );
 
-    protected:
-        //  读取数据
-        std::string ReadRequestData( Poco::Net::HTTPServerRequest& request );
-
     private:
         // httpserver
         KFHttpServer* _http_server;
