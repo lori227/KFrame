@@ -144,9 +144,10 @@ blue "end building luaplus"
 blue "start building redis"
 
 cd redis/linux/deps/hiredis
+make clean
 make -j 4
-cp -R -f *.so ../../../../../$libpath
-cp -R -f *.a ../../../../../$libpath
+make install
+cp -R -f /usr/local/lib/libhiredis.* ../../../../../$libpath
 cd ../../../../
 
 blue "end building redis"
