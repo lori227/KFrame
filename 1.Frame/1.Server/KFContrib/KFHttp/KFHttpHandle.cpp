@@ -15,6 +15,10 @@ namespace KFrame
     {
         std::string url = request.getURI();
         std::string data = ReadRequestData( request );
+        if ( data.empty() )
+        {
+            return;
+        }
 
         KFUtility::SplitString( url, "/" );
 
