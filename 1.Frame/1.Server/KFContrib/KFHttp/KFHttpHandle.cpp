@@ -15,14 +15,13 @@ namespace KFrame
     {
         std::string url = request.getURI();
         std::string data = ReadRequestData( request );
+
+        KFUtility::SplitString( url, "/" );
+        __LOG_DEBUG__( "url=[{}] data=[{}]", url, data );
         if ( data.empty() )
         {
             return;
         }
-
-        KFUtility::SplitString( url, "/" );
-
-        __LOG_DEBUG__( "url=[{}] data=[{}]", url, data );
 
         auto& address = request.clientAddress();
         auto ip = address.host().toString();
