@@ -38,6 +38,7 @@ echo $version
 
 cp -a -f ../3.Resource/config/* ./_bin/config/
 cd _bin/_gcm/builder/
-sh gcm_build -s $svnversion -b $2 -c $1 -m $3 -v $version
+chmod 777 gcm_build
+./gcm_build -s $svnversion -b $2 -c $1 -m $3 -v $version
 
 cd ../../../../../
