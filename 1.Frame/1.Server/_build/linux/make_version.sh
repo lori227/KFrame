@@ -14,12 +14,14 @@ if  [ ! -n "$3" ] ;then
 	exit 0
 fi
 
-# ±‡“Î∞Ê±æ 
-sh build_clean.sh
-if [ "$3" = "debug" ];then
-	sh build_debug.sh
-else
-	sh build_release.sh
+	# ±‡“Î∞Ê±æ 
+if  [  "$4" = "1" ] ;then
+	sh build_clean.sh
+	if [ "$3" = "debug" ];then
+		sh build_debug.sh
+	else
+		sh build_release.sh
+	fi
 fi
 
 # make version
