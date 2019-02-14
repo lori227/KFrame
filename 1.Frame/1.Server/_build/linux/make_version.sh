@@ -15,11 +15,11 @@ if  [ ! -n "$3" ] ;then
 fi
 
 if  [ ! -n "$4" ] ;then
-	$4 = "1"
+	$4="1"
 fi
 
 	# ±‡“Î∞Ê±æ 
-if  [  "$4" = "1" ] ;then
+if  [ "$4" = "1" ] ;then
 	sh build_clean.sh
 	if [ "$3" = "debug" ];then
 		sh build_debug.sh
