@@ -29,11 +29,11 @@ lib库路径: `Server/_lib/linux/3rd/`
 
 ```shell
 #编译debug版本
-./build_debug.sh
+sh build_debug.sh
 
 #编译Release版本
-./build_release.sh
+sh build_release.sh
 
 #清空编译文件
-./build_clean.sh
+sh build_clean.sh
 ```
