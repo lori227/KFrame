@@ -2,7 +2,7 @@
 
 ## win64
 
-Server\_build\win64  
+1.Frame\4.Document\\#001 - tool  
 解压redis-3.2.0.zip到d盘根目录,路径为d:\redis-3.2.0  
 然后执行server_start.bat 启动redis服务器  
 
