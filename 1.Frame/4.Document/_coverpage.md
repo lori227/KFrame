@@ -1,10 +1,10 @@
-![logo](/images/jhqs_logo.png)
+<!--![logo](/images/jhqs_logo.png)-->
 
-# <small>武侠求生竞技游戏</small>
+# <small>kframe服务器框架</small>
 
 > 服务端文档
 
-[开始阅读](#江湖求生)
+[开始阅读](#kframe)
 
 <!-- background image -->
 ![background](images/bg.jpg)
