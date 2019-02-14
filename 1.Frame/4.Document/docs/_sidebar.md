@@ -2,7 +2,7 @@
 
 - 安装编译
   
-  - [下载地址](/docs/下载地址.md)
+  - [SVN地址](/docs/svn地址.md)
   - [环境搭建](/docs/环境搭建.md)
   - [Windows编译](/docs/win64编译.md)
   - [Linux编译](/docs/linux编译.md)
