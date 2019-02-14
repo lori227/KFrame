@@ -31,9 +31,9 @@ fi
 # resource
 cd ../../
 days=$(((($(date +%s ) - $(date +%s -d '20190101'))/86400) + 1));
-clientversion=`cat ../3.Resource/proto/version.txt | cut -d "." -f 1`
-battleversion=`cat ../3.Resource/proto/version.txt | cut -d "." -f 2`
-version=$clientversion.$battleversion.$days.$svnversion
+defineversion=`cat ../3.Resource/proto/6.version.txt | cut -d "." -f 1`
+clientversion=`cat ../3.Resource/proto/6.version.txt | cut -d "." -f 2`
+version=$defineversion.$clientversion.$days.$svnversion
 echo $version
 
 cp -a -f ../3.Resource/config/* ./_bin/config/
