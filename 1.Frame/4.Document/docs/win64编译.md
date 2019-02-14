@@ -20,6 +20,10 @@ lib库路径: `Server/_lib/win64/3rd/`
 进入`Server/_build/win64`目录下, 
 执行`build150-library-x64.bat`, 等待编译结束,生成的结果在默认链接目录下.
 
+ps: tcmalloc 和openssl 是已经编号的动态库, 如果需要请自己重新编译.
+
+    openssl : https://www.cnblogs.com/lpxblog/p/5382653.html
+
 # 编译框架工程
 
 - 编译Frame.sln
