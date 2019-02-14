@@ -11,4 +11,4 @@ if [ ! -n "$2" ] ;then
 fi
 
 cd /data/deploy
-./bin/deployserver appid=$1.0.1.1 log=1.1 service=1.$2 startup=./startup/deploy.server.startup
+./bin/deployserver appname=deploy apptype=server appid=$1.11.0.1 log=1.1 service=1.$2
