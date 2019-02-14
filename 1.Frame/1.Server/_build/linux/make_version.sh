@@ -29,16 +29,15 @@ if [ "$svnversion" = "" ];then
 fi
 
 # resource
-cd ../../../
-days=$(((($(date +%s ) - $(date +%s -d '20181101'))/86400) + 1));
-clientversion=`cat ./Resource/protocol/version.txt | cut -d "." -f 1`
-battleversion=`cat ./Resource/protocol/version.txt | cut -d "." -f 2`
+cd ../../
+days=$(((($(date +%s ) - $(date +%s -d '20190101'))/86400) + 1));
+clientversion=`cat ../3.Resource/proto/version.txt | cut -d "." -f 1`
+battleversion=`cat ../3.Resource/proto/version.txt | cut -d "." -f 2`
 version=$clientversion.$battleversion.$days.$svnversion
 echo $version
 
-\cp -f ./Resource/config/* ./Bin/config/
-cd Bin/tool/gcm/builder/
-chmod 777 gcm_build
-./gcm_build -s $svnversion -b $2 -c $1 -m $3 -v $version
+cp -a -f ../3.Resource/config/* ./_bin/config/
+cd _bin/_gcm/builder/
+sh gcm_build -s $svnversion -b $2 -c $1 -m $3 -v $version
 
-cd ../../../../../../../
+cd ../../../../../
