@@ -96,10 +96,16 @@ def write_file(run_file, kill_file, node):
 def copy_version():
     shutil.copytree(base_path + bin_path + '/' + args['mode'], os.path.join(output_folder, bin_path))
     shutil.copytree(base_path + setting_path, os.path.join(output_folder, setting_path))
-    shutil.copytree(base_path + config_path, os.path.join(output_folder, config_path))
     shutil.copytree(base_path + startup_path, os.path.join(output_folder, startup_path))
-    shutil.copytree(base_path + lib_path, os.path.join(output_folder, lib_path))
-    shutil.copytree(base_path + script_path, os.path.join(output_folder, script_path))
+    
+    if os.path.exists(base_path + config_path):
+        shutil.copytree(base_path + config_path, os.path.join(output_folder, config_path))
+
+    if os.path.exists(base_path + lib_path):
+        shutil.copytree(base_path + lib_path, os.path.join(output_folder, lib_path))
+
+    if os.path.exists(base_path + script_path):
+        shutil.copytree(base_path + script_path, os.path.join(output_folder, script_path))
 
     if is_linux():
         return
