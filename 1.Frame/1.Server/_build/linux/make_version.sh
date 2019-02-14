@@ -14,12 +14,13 @@ if  [ ! -n "$3" ] ;then
 	exit 0
 fi
 
-if  [ ! -n "$4" ] ;then
-	$4="1"
+build="1"
+if  [ "$4" = "0" ] ;then
+	build="0"
 fi
 
 	# ±‡“Î∞Ê±æ 
-if  [ "$4" = "1" ] ;then
+if  [ "$build" = "1" ] ;then
 	sh build_clean.sh
 	if [ "$3" = "debug" ];then
 		sh build_debug.sh
