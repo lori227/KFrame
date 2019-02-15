@@ -14,12 +14,19 @@ if  [ ! -n "$3" ] ;then
 	exit 0
 fi
 
-# ±‡“Î∞Ê±æ 
-sh build_clean.sh
-if [ "$3" = "debug" ];then
-	sh build_debug.sh
-else
-	sh build_release.sh
+build="1"
+if  [ "$4" = "0" ] ;then
+	build="0"
+fi
+
+	# ±‡“Î∞Ê±æ 
+if  [ "$build" = "1" ] ;then
+	sh build_clean.sh
+	if [ "$3" = "debug" ];then
+		sh build_debug.sh
+	else
+		sh build_release.sh
+	fi
 fi
 
 # make version
@@ -29,16 +36,16 @@ if [ "$svnversion" = "" ];then
 fi
 
 # resource
-cd ../../../
-days=$(((($(date +%s ) - $(date +%s -d '20181101'))/86400) + 1));
-clientversion=`cat ./Resource/protocol/version.txt | cut -d "." -f 1`
-battleversion=`cat ./Resource/protocol/version.txt | cut -d "." -f 2`
-version=$clientversion.$battleversion.$days.$svnversion
+cd ../../
+days=$(((($(date +%s ) - $(date +%s -d '20190101'))/86400) + 1));
+defineversion=`cat ../3.Resource/proto/6.version.txt | cut -d "." -f 1`
+clientversion=`cat ../3.Resource/proto/6.version.txt | cut -d "." -f 2`
+version=$defineversion.$clientversion.$days.$svnversion
 echo $version
 
-\cp -f ./Resource/config/* ./Bin/config/
-cd Bin/tool/gcm/builder/
+cp -a -f ../3.Resource/config/* ./_bin/config/
+cd _bin/_gcm/builder/
 chmod 777 gcm_build
 ./gcm_build -s $svnversion -b $2 -c $1 -m $3 -v $version
 
-cd ../../../../../../../
+cd ../../../../../
