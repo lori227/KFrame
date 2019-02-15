@@ -8,5 +8,7 @@
 	<Plugins>
 		<Plugin Name="KFMySQL" Config="./setting/{}_{}_mysql.setting"/>
 		<Plugin Name="KFDeployAgent" Config=""/>
+		<Plugin Name="KFSchedule" Config=""/>
+		<Plugin Name="KFTimer" Config=""/>
 	</Plugins>
 </Setting>
