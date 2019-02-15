@@ -227,7 +227,7 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFTcpServerModule::HandleRegisterReq )
     {
-        auto sessionid = __ROUTE_SEND_ID__;
+        auto sessionid = __ROUTE_SERVER_ID__;
         __PROTO_PARSE__( KFMsg::RegisterToServerReq );
 
         auto listendata = &kfmsg.listen();
