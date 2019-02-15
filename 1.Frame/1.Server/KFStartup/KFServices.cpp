@@ -92,13 +92,12 @@ namespace KFrame
 
         // 初始化logger
         auto strlog = params[ __KF_STRING__( log ) ];
-        KFLogger::Instance()->InitLogger( strlog );
+        auto loglevel = KFUtility::SplitValue< uint32 >( strlog, "." );
+        KFLogger::Instance()->InitLogger( loglevel );
 
-#ifdef __KF_DEBUG__
-        KFMalloc::Instance()->SetLogOpen( true );
-#else
-        KFMalloc::Instance()->SetLogOpen( false );
-#endif
+        // 内存日志
+        auto memorylog = KFUtility::SplitValue< uint32 >( strlog, "." );
+        KFMalloc::Instance()->SetLogOpen( memorylog == 1 );
 
         // 读取启动配置
         std::string startupfile = "";
