@@ -33,15 +33,17 @@ makeversion KFDefineMessage.proto
 defineversion=$?
 echo "define version=$defineversion"
 
-makeversion KFMidwareClientMessage.proto
-clientversion=$?
-echo "client version=$clientversion"
+# makeversion KFClientMessage.proto
+# clientversion=$?
+# echo "client version=$clientversion"
+
+clientversion=0
 
 # write in version file
 echo "$defineversion.$clientversion.0.0" > 6.version.txt
 
 #svn 
-# svn ci -m "proto version" 5.md5list 6.version.txt
+#svn ci -m "proto version" 5.md5list 6.version.txt
 
 #git
 git commit -m "proto version" 5.md5list 6.version.txt
