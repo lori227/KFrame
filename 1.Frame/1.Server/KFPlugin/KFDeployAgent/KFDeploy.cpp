@@ -44,14 +44,6 @@ namespace KFrame
 
     bool KFDeployData::IsAppServer( const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid )
     {
-        if ( zoneid != _invalid_int )
-        {
-            if ( zoneid != _zone_id )
-            {
-                return false;
-            }
-        }
-
         if ( appname == _globbing_str )
         {
             return true;
@@ -70,6 +62,14 @@ namespace KFrame
         if ( apptype != _app_type )
         {
             return false;
+        }
+
+        if ( zoneid != _invalid_int )
+        {
+            if ( zoneid != _zone_id )
+            {
+                return false;
+            }
         }
 
         if ( appid == _globbing_str )
