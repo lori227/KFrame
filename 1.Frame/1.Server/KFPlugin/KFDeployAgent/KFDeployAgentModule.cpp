@@ -26,8 +26,8 @@ namespace KFrame
 
         // 获得本机ip, 查询appid
         auto localip = _kf_ip_address->GetLocalIp();
-        auto kfquery = _deploy_driver->QueryMap( "select * from `{}_{}_{}` where `{}`='{}'",
-                       kfglobal->_app_id._union._app_data._channel_id, kfglobal->_service_type, __KF_STRING__( agent ), __KF_STRING__( localip ), localip );
+        auto kfquery = _deploy_driver->QueryMap( "select * from `{}_{}_agent` where `{}`='{}'",
+                       kfglobal->_app_id._union._app_data._channel_id, kfglobal->_service_type, __KF_STRING__( localip ), localip );
         if ( !kfquery->IsOk() || kfquery->_value.empty() )
         {
             return __LOG_ERROR__( "query agent=[{}] data failed!", localip );
