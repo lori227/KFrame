@@ -157,7 +157,6 @@ namespace KFrame
 
     __KF_TIMER_FUNCTION__( KFDeployAgentModule::OnTimerStartupProcess )
     {
-
         try
         {
             for ( auto& iter : _deploy_list._objects )
