@@ -143,7 +143,6 @@ namespace KFrame
         }
 
         return true;
-
     }
 
     void KFDeployClientModule::ShutDownServer( const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid, uint32 delaytime )
