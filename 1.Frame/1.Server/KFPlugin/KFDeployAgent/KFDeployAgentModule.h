@@ -195,8 +195,11 @@ namespace KFrame
 
         void SendLogMessage( const std::string& url, const std::string& msg );
     private:
-        // 部署服务器的
-        uint64 _deploy_server_id{ 0 };
+
+        // 部署服务器
+        std::string _deploy_server_id = 0u;
+        std::string _deploy_server_ip;
+        uint32 _deploy_server_port = 0u;
 
         // mysql
         KFMySQLDriver* _deploy_driver{ nullptr };

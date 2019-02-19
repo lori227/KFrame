@@ -24,49 +24,27 @@ namespace KFrame
             return __LOG_ERROR__( "deploy mysql is nullprt" );
         }
 
-        _deploy_table_name = __FORMAT__( "{}_{}_deploy", kfglobal->_app_id._union._app_data._channel_id, kfglobal->_service_type );
-
         // 获得本机ip, 查询appid
         auto localip = _kf_ip_address->GetLocalIp();
-        auto queryappid = _deploy_driver->QueryString( "select `{}` from `{}` where `{}`='{}'",
-                          __KF_STRING__( strappid ), __KF_STRING__( agent ), __KF_STRING__( localip ), localip );
-        if ( !queryappid->IsOk() )
+        auto kfquery = _deploy_driver->QueryMap( "select * from `{}_{}_{}` where `{}`='{}'",
+                       kfglobal->_app_id._union._app_data._channel_id, kfglobal->_service_type, __KF_STRING__( agent ), __KF_STRING__( localip ), localip );
+        if ( !kfquery->IsOk() || kfquery->_value.empty() )
         {
-            return;
+            return __LOG_ERROR__( "query agent=[{}] data failed!", localip );
         }
 
-        auto strappid = queryappid->_value;
-        if ( strappid.empty() )
-        {
-            // 插入新的appid
-            MapString values;
-            values[ __KF_STRING__( localip ) ] = localip;
-            _deploy_driver->Insert( __KF_STRING__( agent ), values );
-
-            // 查询新的appid
-            auto queryid = _deploy_driver->QueryString( "select `{}` from `{}` where `{}`='{}'",
-                           __KF_STRING__( id ), __KF_STRING__( agent ), __KF_STRING__( localip ), localip );
-            if ( !queryid->IsOk() || queryid->_value.empty() )
-            {
-                return;
-            }
-
-            KFAppID kfappid( 0 );
-            kfappid._union._app_data._channel_id = kfglobal->_app_id._union._app_data._channel_id;
-            kfappid._union._app_data._zone_id = 0;
-            kfappid._union._app_data._server_type = KFServerEnum::DeployAgent;
-            kfappid._union._app_data._worker_id = KFUtility::ToValue< uint16 >( queryid->_value );
-
-            strappid = kfappid.ToString();
-            values[ __KF_STRING__( id ) ] = queryid->_value;
-            values[ __KF_STRING__( strappid ) ] = strappid;
-            values[ __KF_STRING__( appid ) ] = __TO_STRING__( kfappid._union._id );
-            _deploy_driver->Insert( __KF_STRING__( agent ), values );
-        }
-
+        auto strappid = kfquery->_value[ __KF_STRING__( strappid ) ];
         KFAppID kfappid( strappid );
         kfglobal->_app_id = kfappid;
         kfglobal->_str_app_id = strappid;
+
+        // 部署表
+        _deploy_table_name = __FORMAT__( "{}_{}_deploy", kfglobal->_app_id._union._app_data._channel_id, kfglobal->_service_type );
+
+        // deploy server
+        _deploy_server_id = kfquery->_value[ "serverid" ];
+        _deploy_server_ip = kfquery->_value[ "serverip" ];
+        _deploy_server_port = KFUtility::ToValue< uint32>( kfquery->_value[ "serverport" ] );
     }
 
     void KFDeployAgentModule::BeforeRun()
@@ -126,20 +104,14 @@ namespace KFrame
 
     void KFDeployAgentModule::StartConnectDeployServer()
     {
-        auto deploydata = KFGlobal::Instance()->_startup_params[ __KF_STRING__( deploy ) ];
-        if ( deploydata.empty() )
+        if ( _deploy_server_id.empty() || _deploy_server_ip.empty() || _deploy_server_port == 0u )
         {
             return;
         }
 
-        auto serverid = KFUtility::SplitString( deploydata, "|" );
-        auto ip = KFUtility::SplitString( deploydata, "|" );
-        auto port = KFUtility::SplitValue< uint32 >( deploydata, "|" );
-
-        auto appid = KFAppID::ToUInt64( serverid );
-        _kf_tcp_client->StartClient( __KF_STRING__( deploy ), __KF_STRING__( server ), appid, ip, port );
+        auto appid = KFAppID::ToUInt64( _deploy_server_id );
+        _kf_tcp_client->StartClient( __KF_STRING__( deploy ), __KF_STRING__( server ), appid, _deploy_server_ip, _deploy_server_port );
     }
-
 
     void KFDeployAgentModule::LoadTotalLaunchData()
     {
