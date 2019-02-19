@@ -43,7 +43,7 @@ namespace KFrame
         // deploy server
         _deploy_server_id = kfquery->_value[ "serverid" ];
         _deploy_server_ip = kfquery->_value[ "serverip" ];
-        _deploy_server_port = KFUtility::ToValue< uint32>( kfquery->_value[ "serverport" ] );
+        _deploy_server_port = KFUtility::ToValue<uint32>( kfquery->_value[ "serverport" ] );
     }
 
     void KFDeployAgentModule::BeforeRun()
