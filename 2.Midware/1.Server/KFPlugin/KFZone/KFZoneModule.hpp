@@ -25,14 +25,15 @@ namespace KFrame
         // 初始化
         virtual void InitModule();
 
-        virtual void AfterLoad();
-
         // 关闭
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 游戏分区id
-        virtual const KFZone* GetZone() const;
+        virtual const KFZone* GetZone();
+
+        // 游戏分区信息
+        virtual const KFZone* GetZone( uint32 zoneid );
 
         // 判断游戏分区id
         virtual bool IsServerSameZone( uint64 serverid );

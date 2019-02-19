@@ -18,9 +18,22 @@ namespace KFrame
         // 加载配置
         bool LoadConfig();
 
+        // 查找小区信息
+        const KFZone* FindZone( uint32 zoneid );
+
+    protected:
+        // 设置小区信息
+        void SetZoneData( KFZone* zone, uint32 zoneid );
+
     public:
-        // 默认的分区属性
+        // 本分区属性
         KFZone _zone;
+
+        // 小区模板
+        KFZone _zone_template;
+
+        // 小区列表
+        KFMap< uint32, uint32, KFZone > _zone_list;
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////

@@ -41,6 +41,9 @@ namespace KFrame
         // 小区信息更新
         __KF_HTTP_FUNCTION__( HandleZoneUpdate );
 
+        // 小区信息删除
+        __KF_HTTP_FUNCTION__( HandleZoneRemove );
+
         // 查询小区列表
         __KF_HTTP_FUNCTION__( HandleQueryZoneList );
 
@@ -80,6 +83,7 @@ namespace KFrame
 
         // 创建登录Token
         std::string CreateLoginToken( uint64 accountid, MapString& accountdata );
+        void SaveLoginToken( const std::string& token, uint64 accountid, MapString& accountdata, uint32 zoneid, uint32 zonelogicid );
 
         // 踢人下线
         bool KickAccountOffline( MapString& accountdata );

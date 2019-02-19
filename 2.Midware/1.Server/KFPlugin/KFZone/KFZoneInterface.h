@@ -9,14 +9,17 @@ namespace KFrame
     class KFZone
     {
     public:
-        // 游戏分区id
-        uint32 _id{ 0 };
-
-        // 逻辑id
-        uint32 _logic_id{ 0 };
-
         // 游戏服名字
         std::string _name;
+
+        // 游戏分区id
+        uint32 _id = 0;
+
+        // 逻辑id
+        uint32 _logic_id = 0;
+
+        // 登录id
+        uint32 _login_id = 0;
     };
 
     /////////////////////////////////////////////////////////////////////////////////////////////
@@ -25,8 +28,11 @@ namespace KFrame
     public:
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // 游戏分区id
-        virtual const KFZone* GetZone() const = 0;
+        // 游戏分区
+        virtual const KFZone* GetZone() = 0;
+
+        // 游戏分区信息
+        virtual const KFZone* GetZone( uint32 zoneid ) = 0;
 
         // 判断游戏分区id
         virtual bool IsServerSameZone( uint64 serverid ) = 0;

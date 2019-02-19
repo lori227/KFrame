@@ -79,10 +79,12 @@ namespace KFrame
         // midware
         __STRING_DEFINE__( zoneregister );
         __STRING_DEFINE__( zoneupdate );
+        __STRING_DEFINE__( zoneremove );
         __STRING_DEFINE__( zonelist );
         __STRING_DEFINE__( zoneip );
         __STRING_DEFINE__( zoneurl );
         __STRING_DEFINE__( zonelogicid );
+        __STRING_DEFINE__( zoneloginid );
         __STRING_DEFINE__( auth );
         __STRING_DEFINE__( verify );
         __STRING_DEFINE__( activation );

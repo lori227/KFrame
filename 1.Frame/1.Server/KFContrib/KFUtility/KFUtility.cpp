@@ -17,6 +17,12 @@ namespace KFrame
 
     uint64 KFUtility::CalcPlayerid( uint64 id, uint32 zoneid )
     {
+        // 超过设定最大的角色数量, 返回错误
+        if ( id >= KFZoneEnum::MaxPlayerCount )
+        {
+            return _invalid_int;
+        }
+
         return id + static_cast< uint64 >( zoneid ) * KFZoneEnum::MaxPlayerCount;
     }
 

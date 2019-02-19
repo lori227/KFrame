@@ -98,17 +98,13 @@ namespace KFrame
 
         __LOG_DEBUG__( "accountid[{}] login verify", accountid );
 
-        auto kfzone = _kf_zone->GetZone();
-
         // 访问平台服务器, 验证token
         __JSON_DOCUMENT__( sendjson );
+        __JSON_SET_VALUE__( sendjson, __KF_STRING__( ip ), kfmsg.ip() );
         __JSON_SET_VALUE__( sendjson, __KF_STRING__( gateid ), gateid );
+        __JSON_SET_VALUE__( sendjson, __KF_STRING__( token ), kfmsg.token() );
         __JSON_SET_VALUE__( sendjson, __KF_STRING__( sessionid ), sessionid );
         __JSON_SET_VALUE__( sendjson, __KF_STRING__( accountid ), kfmsg.accountid() );
-        __JSON_SET_VALUE__( sendjson, __KF_STRING__( ip ), kfmsg.ip() );
-        __JSON_SET_VALUE__( sendjson, __KF_STRING__( zoneid ), kfzone->_id );
-        __JSON_SET_VALUE__( sendjson, __KF_STRING__( zonelogicid ), kfzone->_logic_id );
-        __JSON_SET_VALUE__( sendjson, __KF_STRING__( token ), kfmsg.token() );
 
         static auto _url = _kf_ip_address->GetAuthUrl() + __KF_STRING__( verify );
         _kf_http_client->MTGet( _url, sendjson, this, &KFLoginModule::OnHttpAuthLoginVerifyCallBack );

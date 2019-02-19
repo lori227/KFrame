@@ -89,8 +89,10 @@ namespace KFrame
 
         // 注册小区信息
         __JSON_DOCUMENT__( kfjson );
-        __JSON_SET_VALUE__( kfjson, __KF_STRING__( id ), zone->_id );
+        __JSON_SET_VALUE__( kfjson, __KF_STRING__( zoneid ), zone->_id );
         __JSON_SET_VALUE__( kfjson, __KF_STRING__( name ), zone->_name );
+        __JSON_SET_VALUE__( kfjson, __KF_STRING__( zonelogicid ), zone->_logic_id );
+        __JSON_SET_VALUE__( kfjson, __KF_STRING__( zoneloginid ), zone->_login_id );
         __JSON_SET_VALUE__( kfjson, __KF_STRING__( url ), _kf_http_server->GetHttpUrl() );
 
         auto recvdata = _kf_http_client->STGet( _url, kfjson );
@@ -120,9 +122,11 @@ namespace KFrame
         static auto _url = _kf_ip_address->GetAuthUrl() + __KF_STRING__( zoneupdate );
 
         __JSON_DOCUMENT__( kfjson );
-        __JSON_SET_VALUE__( kfjson, __KF_STRING__( id ), kfzone->_id );
+        __JSON_SET_VALUE__( kfjson, __KF_STRING__( zoneid ), kfzone->_id );
+        __JSON_SET_VALUE__( kfjson, __KF_STRING__( zoneloginid ), kfzone->_login_id );
         __JSON_SET_VALUE__( kfjson, __KF_STRING__( ip ), _zone_data.ip() );
         __JSON_SET_VALUE__( kfjson, __KF_STRING__( port ), _zone_data.port() );
+        __JSON_SET_VALUE__( kfjson, __KF_STRING__( count ), _zone_data.count() );
         _kf_http_client->MTGet< KFWorldModule >( _url, kfjson );
     }
 
@@ -136,6 +140,15 @@ namespace KFrame
         }
 
         _zone_data.Clear();
+
+        // 除小区信息到auth
+        auto kfzone = _kf_zone->GetZone();
+        static auto _url = _kf_ip_address->GetAuthUrl() + __KF_STRING__( zoneremove );
+
+        __JSON_DOCUMENT__( kfjson );
+        __JSON_SET_VALUE__( kfjson, __KF_STRING__( zoneid ), kfzone->_id );
+        __JSON_SET_VALUE__( kfjson, __KF_STRING__( zoneloginid ), kfzone->_login_id );
+        _kf_http_client->MTGet< KFWorldModule >( _url, kfjson );
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////
@@ -233,7 +246,7 @@ namespace KFrame
         {
             __JSON_SET_VALUE__( sendjson, __KF_STRING__( online ), 1 );
             __JSON_SET_VALUE__( sendjson, __KF_STRING__( playerid ), playerid );
-            __JSON_SET_VALUE__( sendjson, __KF_STRING__( zoneid ), _kf_zone->GetZone()->_id );
+            __JSON_SET_VALUE__( sendjson, __KF_STRING__( zoneid ), KFUtility::CalcZoneId( playerid ) );
         }
         else
         {
