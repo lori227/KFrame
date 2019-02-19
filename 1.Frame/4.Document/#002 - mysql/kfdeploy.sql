@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50722
 File Encoding         : 65001
 
-Date: 2019-02-15 15:47:49
+Date: 2019-02-19 16:19:39
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -49,19 +49,19 @@ INSERT INTO `1_1_deploy` VALUES ('/data/sgserver', '', 'bin/KFStartup', 'auth', 
 -- ----------------------------
 DROP TABLE IF EXISTS `agent`;
 CREATE TABLE `agent` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `localip` varchar(50) NOT NULL DEFAULT '',
   `strappid` varchar(50) NOT NULL DEFAULT '',
-  `appid` bigint(20) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
+  `serverid` varchar(50) NOT NULL DEFAULT '',
+  `serverip` varchar(50) NOT NULL DEFAULT '',
+  `serverport` int(10) unsigned NOT NULL DEFAULT '10000',
+  PRIMARY KEY (`localip`),
   KEY `ip` (`localip`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of agent
 -- ----------------------------
-INSERT INTO `agent` VALUES ('1', '172.31.192.96', '1.12.0.1', '281474977497089');
-INSERT INTO `agent` VALUES ('2', '192.168.79.26', '1.12.0.2', '562949954207745');
+INSERT INTO `agent` VALUES ('172.31.192.96', '1.12.0.1', '1.11.0.1', '172.31.192.96', '10000');
 
 -- ----------------------------
 -- Table structure for `file`
@@ -122,4 +122,5 @@ CREATE TABLE `version` (
 INSERT INTO `version` VALUES ('2019-02-14 11:02:00', 'sgserver_develop_1.0.45.22b150d.tar.gz', 'http://172.31.192.96/upload/sgserver_develop_1.0.45.22b150d.tar.gz', '573d808ac3bc0038eaff92f4d4cdf0df');
 INSERT INTO `version` VALUES ('2019-02-14 13:34:26', 'sgserver_develop_1.0.45.a0abbc7.tar.gz', 'http://172.31.192.96/upload/sgserver_develop_1.0.45.a0abbc7.tar.gz', '19f6a4a2d0a9532b65d355b99b945241');
 INSERT INTO `version` VALUES ('2019-02-14 11:28:48', 'sgserver_develop_1.0.45.cef3745.tar.gz', 'http://172.31.192.96/upload/sgserver_develop_1.0.45.cef3745.tar.gz', 'd0c98caa95318f218da90eef3fd14de1');
+INSERT INTO `version` VALUES ('2019-02-15 17:04:56', 'sgserver_develop_1.0.46.b1826c8.tar.gz', 'http://172.31.192.96:8080/upload/sgserver_develop_1.0.46.b1826c8.tar.gz', 'fe76068b7b679ffbbe712820782371ba');
 INSERT INTO `version` VALUES ('2019-02-15 14:05:52', 'sgserver_develop_1.0.46.de8fad8.tar.gz', 'http://172.31.192.96:8080/upload/sgserver_develop_1.0.46.de8fad8.tar.gz', '37cfab6f283664192cf73d6e59e99d66');
