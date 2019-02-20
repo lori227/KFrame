@@ -4,7 +4,7 @@ namespace KFrame
 {
     KFLogShardModule::~KFLogShardModule()
     {
-        for ( auto iter : _log_list )
+        for ( auto& iter : _log_list )
         {
             delete iter.second;
         }
