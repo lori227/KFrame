@@ -8,4 +8,5 @@ _parse.exe %%~nx.xlsx --xml=..\config
 )
 
 
-xcopy /y ..\config\* ..\..\Bin\config\
+if not exist ..\..\1.Server\_bin\config\ ( mkdir ..\..\1.Server\_bin\config\ )
+xcopy /y ..\config\* ..\..\1.Server\_bin\config\
