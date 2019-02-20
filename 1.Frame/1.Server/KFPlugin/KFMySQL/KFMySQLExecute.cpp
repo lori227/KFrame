@@ -28,7 +28,7 @@ namespace KFrame
 
     bool KFMySQLExecute::ExecuteSql( Statement& statement )
     {
-        uint32 repeatcount = 0;
+        uint32 repeatcount = 0u;
 
         do
         {
@@ -165,7 +165,7 @@ namespace KFrame
         std::ostringstream ossupdate;
 
         bool isbegin = true;
-        for ( auto iter : invalue )
+        for ( auto& iter : invalue )
         {
             if ( isbegin )
             {
