@@ -70,10 +70,9 @@ namespace KFrame
         keyvalue[ __KF_STRING__( localip ) ] = kfagent->_local_ip;
 
         MapString updatevalue;
-        updatevalue[ __KF_STRING__( agentid ) ] = kfagent->_agent_id;
         updatevalue[ __KF_STRING__( status ) ] = __TO_STRING__( status );
         updatevalue[ __KF_STRING__( port ) ] = __TO_STRING__( kfagent->_port );
-        _mysql_driver->Update( __KF_STRING__( machine ), keyvalue, updatevalue );
+        _mysql_driver->Update( __KF_STRING__( agent ), keyvalue, updatevalue );
     }
 
     __KF_HTTP_FUNCTION__( KFDeployServerModule::HandleDeployCommand )

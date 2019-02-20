@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50722
 File Encoding         : 65001
 
-Date: 2019-02-19 16:19:39
+Date: 2019-02-20 09:55:00
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -50,10 +50,13 @@ INSERT INTO `1_1_deploy` VALUES ('/data/sgserver', '', 'bin/KFStartup', 'auth', 
 DROP TABLE IF EXISTS `agent`;
 CREATE TABLE `agent` (
   `localip` varchar(50) NOT NULL DEFAULT '',
+  `interanetip` varchar(50) NOT NULL DEFAULT '',
   `strappid` varchar(50) NOT NULL DEFAULT '',
   `serverid` varchar(50) NOT NULL DEFAULT '',
   `serverip` varchar(50) NOT NULL DEFAULT '',
   `serverport` int(10) unsigned NOT NULL DEFAULT '10000',
+  `status` int(10) unsigned NOT NULL DEFAULT '0',
+  `port` int(10) NOT NULL DEFAULT '0',
   PRIMARY KEY (`localip`),
   KEY `ip` (`localip`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -61,7 +64,7 @@ CREATE TABLE `agent` (
 -- ----------------------------
 -- Records of agent
 -- ----------------------------
-INSERT INTO `agent` VALUES ('172.31.192.96', '1.12.0.1', '1.11.0.1', '172.31.192.96', '10000');
+INSERT INTO `agent` VALUES ('172.31.192.96', '47.104.228.135', '1.12.0.1', '1.11.0.1', '172.31.192.96', '10000', '0', '0');
 
 -- ----------------------------
 -- Table structure for `file`
@@ -79,30 +82,6 @@ CREATE TABLE `file` (
 -- ----------------------------
 -- Records of file
 -- ----------------------------
-
--- ----------------------------
--- Table structure for `machine`
--- ----------------------------
-DROP TABLE IF EXISTS `machine`;
-CREATE TABLE `machine` (
-  `name` varchar(50) NOT NULL DEFAULT '' COMMENT '机器名',
-  `localip` varchar(50) NOT NULL DEFAULT '' COMMENT '局域网ip',
-  `interanetip` varchar(50) NOT NULL COMMENT '外网ip',
-  `cpu` int(10) NOT NULL DEFAULT '8',
-  `thread` int(10) NOT NULL DEFAULT '16',
-  `memory` int(10) NOT NULL DEFAULT '16',
-  `harddisk` int(10) NOT NULL DEFAULT '100',
-  `agentid` varchar(50) NOT NULL DEFAULT '0' COMMENT '开启的agentid',
-  `status` int(10) NOT NULL DEFAULT '0' COMMENT '状态 0 agent断开连接 1 agent保持连接',
-  `port` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`localip`),
-  KEY `ip` (`localip`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of machine
--- ----------------------------
-INSERT INTO `machine` VALUES ('小兵测试机', '192.168.1.9', '192.168.1.9', '4', '8', '16', '320', '1.0.3.1', '1', '12074');
 
 -- ----------------------------
 -- Table structure for `version`
