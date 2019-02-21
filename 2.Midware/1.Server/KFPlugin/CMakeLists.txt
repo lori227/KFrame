@@ -61,3 +61,7 @@ add_subdirectory(KFMailShard)
 add_subdirectory(KFDataClient)
 add_subdirectory(KFDataShard)
 
+add_subdirectory(KFRankClient)
+add_subdirectory(KFRankShard)
+add_subdirectory(KFRankMaster)
+

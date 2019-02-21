@@ -57,7 +57,9 @@ enum MidwareServerProtocol
 	S2S_UPDATE_RANK_DATA_REQ 			= 20601;	// 更新排行榜数据
 	S2S_QUERY_RANK_LIST_REQ 			= 20602;	// 查询全服排行榜
 	S2S_QUERY_FRIEND_RANK_LIST_REQ 		= 20603;	// 查询好友排行榜
-
+	S2S_REFRESH_RANK_REQ				= 20604;	// 刷新排行榜
+	S2S_REFRESH_RANK_ACK				= 20605;	// 刷新排行榜
+	S2S_TELL_REFRESH_RANK				= 20606;	// 刷新排行榜
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -363,17 +365,36 @@ message S2SUpdateRankDataReq
 // S2S_QUERY_RANK_LIST_REQ
 message S2SQueryRankListReq
 {
-	uint64 playerid = 1;		// 玩家id
-	uint32 rankid = 2;			// 排行榜id
-	uint32 zoneid = 3;			// 小区id
+	uint32 rankid = 1;			// 排行榜id
+	uint32 zoneid = 2;			// 小区id
 }
 
 // 查询好友排行榜
 // S2S_QUERY_FRIEND_RANK_LIST_REQ
 message S2SQueryFriendRankListReq
 {
-	uint64 playerid = 1;			// 玩家id
-	uint32 rankid = 2;				// 榜单类型
-	repeated uint64 friendid = 3;	// 待查询的玩家好友id
+	uint32 rankid = 1;				// 榜单类型
+	repeated uint64 friendid = 2;	// 待查询的玩家好友id
 }
+
+// 刷新排行榜请求
+// S2S_REFRESH_RANK_REQ
+message S2SRefreshRankReq
+{
+	uint32 rankid = 1;				// 榜单类型
+}
+
+// 刷新排行榜完成
+// S2S_REFRESH_RANK_ACK
+message S2SRefreshRankAck
+{
+	uint32 rankid = 1;				// 榜单类型
+}
+
+// S2S_TELL_REFRESH_RANK
+message S2STellRefreshRank
+{
+	uint32 rankid = 1;				// 榜单类型
+}
+
 /////////////////////////////////////////////////////////////////////////////////

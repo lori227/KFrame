@@ -79,6 +79,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KFRankClient", "KFPlugin\KF
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KFRankShard", "KFPlugin\KFRankShard\KFRankShard.vcxproj", "{C38661BC-6CC3-4C10-98E3-C0B3D9A7277F}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KFRankMaster", "KFPlugin\KFRankMaster\KFRankMaster.vcxproj", "{3C19DF98-4E41-48C8-9EB0-BF85A3BE0437}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -201,6 +203,10 @@ Global
 		{C38661BC-6CC3-4C10-98E3-C0B3D9A7277F}.Debug|x64.Build.0 = Debug|x64
 		{C38661BC-6CC3-4C10-98E3-C0B3D9A7277F}.Release|x64.ActiveCfg = Release|x64
 		{C38661BC-6CC3-4C10-98E3-C0B3D9A7277F}.Release|x64.Build.0 = Release|x64
+		{3C19DF98-4E41-48C8-9EB0-BF85A3BE0437}.Debug|x64.ActiveCfg = Debug|x64
+		{3C19DF98-4E41-48C8-9EB0-BF85A3BE0437}.Debug|x64.Build.0 = Debug|x64
+		{3C19DF98-4E41-48C8-9EB0-BF85A3BE0437}.Release|x64.ActiveCfg = Release|x64
+		{3C19DF98-4E41-48C8-9EB0-BF85A3BE0437}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -243,9 +249,10 @@ Global
 		{064DE116-FAD4-452D-8C59-EDB410E3B80E} = {85F208C1-96A0-4D9A-8582-A348FF5F3B41}
 		{4D1DABCD-A74D-4434-AC66-EF83597B0765} = {064DE116-FAD4-452D-8C59-EDB410E3B80E}
 		{C38661BC-6CC3-4C10-98E3-C0B3D9A7277F} = {064DE116-FAD4-452D-8C59-EDB410E3B80E}
+		{3C19DF98-4E41-48C8-9EB0-BF85A3BE0437} = {064DE116-FAD4-452D-8C59-EDB410E3B80E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {0F58A6B8-C040-4A92-9898-1E6968E55CF1}
 		Qt5Version = msvc2015_86
+		SolutionGuid = {0F58A6B8-C040-4A92-9898-1E6968E55CF1}
 	EndGlobalSection
 EndGlobal

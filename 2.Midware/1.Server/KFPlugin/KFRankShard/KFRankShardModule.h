@@ -9,16 +9,12 @@
 //    @Date             :    2018-5-16
 ************************************************************************/
 
-#include "KFrame.h"
 #include "KFRankShardInterface.h"
-#include "KFTimer/KFTimerInterface.h"
 #include "KFRedis/KFRedisInterface.h"
 #include "KFConfig/KFConfigInterface.h"
-#include "KFWorker/KFWorkerInterface.h"
 #include "KFMessage/KFMessageInterface.h"
-#include "KFSchedule/KFScheduleInterface.h"
-#include "KFTcpServer/KFTcpServerInterface.h"
-#include "KFClusterShard/KFClusterShardInterface.h"
+#include "KFTcpClient/KFTcpClientInterface.h"
+#include "KFRouteClient/KFRouteClientInterface.h"
 #include "KFRankShardConfig.h"
 #include "KFProtocol/KFProtocol.h"
 
@@ -68,22 +64,15 @@ namespace KFrame
         virtual void BeforeShut();
 
     protected:
-        // 客户端连接
-        __KF_SERVER_DISCOVER_FUNCTION__( OnServerDiscoverClient );
+        // 刷新排行榜
+        __KF_MESSAGE_FUNCTION__( HandleRefreshRankReq );
 
-        // 刷新排行榜定时器
-        __KF_TIMER_FUNCTION__( OnTimerRefreshRankData );
+        // 刷新排行榜
+        __KF_MESSAGE_FUNCTION__( HandleTellRefreshRank );
 
-        // 计划任务
-        __KF_SCHEDULE_FUNCTION__( OnScheduleRefreshRankData );
-
-        // 分配排行榜回调
-        __KF_ALLOC_OBJECT_FUNCTION__( OnAllocRankCallBack );
-    protected:
         // 更新排行榜
         __KF_MESSAGE_FUNCTION__( HandleUpdateRankDataReq );
-        ////////////////////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////////////
+
         // 查询全服排行榜数据
         __KF_MESSAGE_FUNCTION__( HandleQueryRanklistReq );
 
@@ -91,28 +80,22 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleQueryFriendRanklistReq );
 
     protected:
+        // 格式化排行榜数据key
+        std::string& FormatRankDataKey( uint32 rankid, uint32 zoneid );
+        std::string& FormatRankSortKey( uint32 rankid, uint32 zoneid );
+
         // 判断是否需要更新排行榜数据
         bool IsNeedUpdateRankData( uint32 rankid, uint32 zoneid, uint64 rankscore );
 
         // 读取排行榜数据
         void LoadTotalRankData();
+        void LoadRankData( uint32 rankid );
 
         // 保存
         void SaveRankData( KFRankData* kfrankdata );
 
-        // 启动刷新定时器
-        void StartRefreshRankDataTimer();
-        void StartRefreshRankDataTimer( const KFRankSetting* kfsetting );
-
         // 刷新排行榜
         void RefreshRankData( uint32 rankid );
-
-        // 加载玩家显示数据
-        void LoadPlayerShowData( KFMsg::PBStrings* pbdatas, uint64 playerid );
-
-        // 格式化排行榜数据key
-        std::string& FormatRankDataKey( uint32 rankid, uint32 zoneid );
-        std::string& FormatRankSortKey( uint32 rankid, uint32 zoneid );
 
         // 计算zoneid
         uint32 CalcRankZoneId( uint64 playerid, const KFRankSetting* kfsetting );

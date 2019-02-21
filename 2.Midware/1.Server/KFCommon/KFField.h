@@ -173,6 +173,10 @@ namespace KFrame
         __STRING_DEFINE__( delmail );
         __STRING_DEFINE__( rank );
         __STRING_DEFINE__( friend );
+        __STRING_DEFINE__( rankdata );
+        __STRING_DEFINE__( ranksort );
+        __STRING_DEFINE__( ranksortlist );
+        __STRING_DEFINE__( minrankscore );
 
     }
 }

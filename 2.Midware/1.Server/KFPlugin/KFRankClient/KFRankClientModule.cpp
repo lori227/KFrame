@@ -167,7 +167,6 @@ namespace KFrame
         }
 
         KFMsg::S2SQueryRankListReq req;
-        req.set_playerid( playerid );
         req.set_rankid( kfmsg.rankid() );
         req.set_zoneid( CalcRankZoneId( playerid, kfsetting ) );
         auto ok = SendMessageToRank( playerid, KFMsg::S2S_QUERY_RANK_LIST_REQ, &req );
@@ -188,7 +187,6 @@ namespace KFrame
         }
 
         KFMsg::S2SQueryFriendRankListReq req;
-        req.set_playerid( playerid );
         req.set_rankid( kfmsg.rankid() );
 
         auto kfobject = player->GetData();

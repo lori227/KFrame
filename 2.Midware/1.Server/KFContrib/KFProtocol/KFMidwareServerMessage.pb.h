@@ -44,7 +44,7 @@ namespace protobuf_KFMidwareServerMessage_2eproto {
 struct LIBPROTOC_EXPORT TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[39];
+  static const ::google::protobuf::internal::ParseTable schema[42];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -142,6 +142,12 @@ LIBPROTOC_EXPORT extern S2SQueryPlayerToGameAckDefaultTypeInternal _S2SQueryPlay
 class S2SQueryRankListReq;
 class S2SQueryRankListReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2SQueryRankListReqDefaultTypeInternal _S2SQueryRankListReq_default_instance_;
+class S2SRefreshRankAck;
+class S2SRefreshRankAckDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2SRefreshRankAckDefaultTypeInternal _S2SRefreshRankAck_default_instance_;
+class S2SRefreshRankReq;
+class S2SRefreshRankReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2SRefreshRankReqDefaultTypeInternal _S2SRefreshRankReq_default_instance_;
 class S2SSavePlayerToDataReq;
 class S2SSavePlayerToDataReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2SSavePlayerToDataReqDefaultTypeInternal _S2SSavePlayerToDataReq_default_instance_;
@@ -151,6 +157,9 @@ LIBPROTOC_EXPORT extern S2SSetPlayerNameToDataReqDefaultTypeInternal _S2SSetPlay
 class S2SSetPlayerNameToGameAck;
 class S2SSetPlayerNameToGameAckDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2SSetPlayerNameToGameAckDefaultTypeInternal _S2SSetPlayerNameToGameAck_default_instance_;
+class S2STellRefreshRank;
+class S2STellRefreshRankDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2STellRefreshRankDefaultTypeInternal _S2STellRefreshRank_default_instance_;
 class S2STransmitToPlayer;
 class S2STransmitToPlayerDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2STransmitToPlayerDefaultTypeInternal _S2STransmitToPlayer_default_instance_;
@@ -202,9 +211,12 @@ template<> LIBPROTOC_EXPORT ::KFMsg::S2SQueryMailReq* Arena::CreateMaybeMessage<
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SQueryPlayerToDataReq* Arena::CreateMaybeMessage<::KFMsg::S2SQueryPlayerToDataReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SQueryPlayerToGameAck* Arena::CreateMaybeMessage<::KFMsg::S2SQueryPlayerToGameAck>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SQueryRankListReq* Arena::CreateMaybeMessage<::KFMsg::S2SQueryRankListReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2SRefreshRankAck* Arena::CreateMaybeMessage<::KFMsg::S2SRefreshRankAck>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2SRefreshRankReq* Arena::CreateMaybeMessage<::KFMsg::S2SRefreshRankReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SSavePlayerToDataReq* Arena::CreateMaybeMessage<::KFMsg::S2SSavePlayerToDataReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SSetPlayerNameToDataReq* Arena::CreateMaybeMessage<::KFMsg::S2SSetPlayerNameToDataReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SSetPlayerNameToGameAck* Arena::CreateMaybeMessage<::KFMsg::S2SSetPlayerNameToGameAck>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2STellRefreshRank* Arena::CreateMaybeMessage<::KFMsg::S2STellRefreshRank>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2STransmitToPlayer* Arena::CreateMaybeMessage<::KFMsg::S2STransmitToPlayer>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SUpdateMailStatusAck* Arena::CreateMaybeMessage<::KFMsg::S2SUpdateMailStatusAck>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SUpdateMailStatusReq* Arena::CreateMaybeMessage<::KFMsg::S2SUpdateMailStatusReq>(Arena*);
@@ -253,12 +265,15 @@ enum MidwareServerProtocol {
   S2S_UPDATE_RANK_DATA_REQ = 20601,
   S2S_QUERY_RANK_LIST_REQ = 20602,
   S2S_QUERY_FRIEND_RANK_LIST_REQ = 20603,
+  S2S_REFRESH_RANK_REQ = 20604,
+  S2S_REFRESH_RANK_ACK = 20605,
+  S2S_TELL_REFRESH_RANK = 20606,
   MidwareServerProtocol_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   MidwareServerProtocol_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 LIBPROTOC_EXPORT bool MidwareServerProtocol_IsValid(int value);
 const MidwareServerProtocol MidwareServerProtocol_MIN = S2S_MIDWARE_SERVER_PROTOCOL_BEGIN;
-const MidwareServerProtocol MidwareServerProtocol_MAX = S2S_QUERY_FRIEND_RANK_LIST_REQ;
+const MidwareServerProtocol MidwareServerProtocol_MAX = S2S_TELL_REFRESH_RANK;
 const int MidwareServerProtocol_ARRAYSIZE = MidwareServerProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* MidwareServerProtocol_descriptor();
@@ -4583,21 +4598,15 @@ class LIBPROTOC_EXPORT S2SQueryRankListReq : public ::google::protobuf::Message 
 
   // accessors -------------------------------------------------------
 
-  // uint64 playerid = 1;
-  void clear_playerid();
-  static const int kPlayeridFieldNumber = 1;
-  ::google::protobuf::uint64 playerid() const;
-  void set_playerid(::google::protobuf::uint64 value);
-
-  // uint32 rankid = 2;
+  // uint32 rankid = 1;
   void clear_rankid();
-  static const int kRankidFieldNumber = 2;
+  static const int kRankidFieldNumber = 1;
   ::google::protobuf::uint32 rankid() const;
   void set_rankid(::google::protobuf::uint32 value);
 
-  // uint32 zoneid = 3;
+  // uint32 zoneid = 2;
   void clear_zoneid();
-  static const int kZoneidFieldNumber = 3;
+  static const int kZoneidFieldNumber = 2;
   ::google::protobuf::uint32 zoneid() const;
   void set_zoneid(::google::protobuf::uint32 value);
 
@@ -4605,7 +4614,6 @@ class LIBPROTOC_EXPORT S2SQueryRankListReq : public ::google::protobuf::Message 
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::uint64 playerid_;
   ::google::protobuf::uint32 rankid_;
   ::google::protobuf::uint32 zoneid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
@@ -4700,10 +4708,10 @@ class LIBPROTOC_EXPORT S2SQueryFriendRankListReq : public ::google::protobuf::Me
 
   // accessors -------------------------------------------------------
 
-  // repeated uint64 friendid = 3;
+  // repeated uint64 friendid = 2;
   int friendid_size() const;
   void clear_friendid();
-  static const int kFriendidFieldNumber = 3;
+  static const int kFriendidFieldNumber = 2;
   ::google::protobuf::uint64 friendid(int index) const;
   void set_friendid(int index, ::google::protobuf::uint64 value);
   void add_friendid(::google::protobuf::uint64 value);
@@ -4712,15 +4720,9 @@ class LIBPROTOC_EXPORT S2SQueryFriendRankListReq : public ::google::protobuf::Me
   ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >*
       mutable_friendid();
 
-  // uint64 playerid = 1;
-  void clear_playerid();
-  static const int kPlayeridFieldNumber = 1;
-  ::google::protobuf::uint64 playerid() const;
-  void set_playerid(::google::protobuf::uint64 value);
-
-  // uint32 rankid = 2;
+  // uint32 rankid = 1;
   void clear_rankid();
-  static const int kRankidFieldNumber = 2;
+  static const int kRankidFieldNumber = 1;
   ::google::protobuf::uint32 rankid() const;
   void set_rankid(::google::protobuf::uint32 value);
 
@@ -4730,7 +4732,315 @@ class LIBPROTOC_EXPORT S2SQueryFriendRankListReq : public ::google::protobuf::Me
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::RepeatedField< ::google::protobuf::uint64 > friendid_;
   mutable int _friendid_cached_byte_size_;
-  ::google::protobuf::uint64 playerid_;
+  ::google::protobuf::uint32 rankid_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_KFMidwareServerMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2SRefreshRankReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SRefreshRankReq) */ {
+ public:
+  S2SRefreshRankReq();
+  virtual ~S2SRefreshRankReq();
+
+  S2SRefreshRankReq(const S2SRefreshRankReq& from);
+
+  inline S2SRefreshRankReq& operator=(const S2SRefreshRankReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  S2SRefreshRankReq(S2SRefreshRankReq&& from) noexcept
+    : S2SRefreshRankReq() {
+    *this = ::std::move(from);
+  }
+
+  inline S2SRefreshRankReq& operator=(S2SRefreshRankReq&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2SRefreshRankReq& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const S2SRefreshRankReq* internal_default_instance() {
+    return reinterpret_cast<const S2SRefreshRankReq*>(
+               &_S2SRefreshRankReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    39;
+
+  void Swap(S2SRefreshRankReq* other);
+  friend void swap(S2SRefreshRankReq& a, S2SRefreshRankReq& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline S2SRefreshRankReq* New() const final {
+    return CreateMaybeMessage<S2SRefreshRankReq>(NULL);
+  }
+
+  S2SRefreshRankReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2SRefreshRankReq>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const S2SRefreshRankReq& from);
+  void MergeFrom(const S2SRefreshRankReq& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(S2SRefreshRankReq* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // uint32 rankid = 1;
+  void clear_rankid();
+  static const int kRankidFieldNumber = 1;
+  ::google::protobuf::uint32 rankid() const;
+  void set_rankid(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SRefreshRankReq)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 rankid_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_KFMidwareServerMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2SRefreshRankAck : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SRefreshRankAck) */ {
+ public:
+  S2SRefreshRankAck();
+  virtual ~S2SRefreshRankAck();
+
+  S2SRefreshRankAck(const S2SRefreshRankAck& from);
+
+  inline S2SRefreshRankAck& operator=(const S2SRefreshRankAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  S2SRefreshRankAck(S2SRefreshRankAck&& from) noexcept
+    : S2SRefreshRankAck() {
+    *this = ::std::move(from);
+  }
+
+  inline S2SRefreshRankAck& operator=(S2SRefreshRankAck&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2SRefreshRankAck& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const S2SRefreshRankAck* internal_default_instance() {
+    return reinterpret_cast<const S2SRefreshRankAck*>(
+               &_S2SRefreshRankAck_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    40;
+
+  void Swap(S2SRefreshRankAck* other);
+  friend void swap(S2SRefreshRankAck& a, S2SRefreshRankAck& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline S2SRefreshRankAck* New() const final {
+    return CreateMaybeMessage<S2SRefreshRankAck>(NULL);
+  }
+
+  S2SRefreshRankAck* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2SRefreshRankAck>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const S2SRefreshRankAck& from);
+  void MergeFrom(const S2SRefreshRankAck& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(S2SRefreshRankAck* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // uint32 rankid = 1;
+  void clear_rankid();
+  static const int kRankidFieldNumber = 1;
+  ::google::protobuf::uint32 rankid() const;
+  void set_rankid(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SRefreshRankAck)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 rankid_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_KFMidwareServerMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2STellRefreshRank : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2STellRefreshRank) */ {
+ public:
+  S2STellRefreshRank();
+  virtual ~S2STellRefreshRank();
+
+  S2STellRefreshRank(const S2STellRefreshRank& from);
+
+  inline S2STellRefreshRank& operator=(const S2STellRefreshRank& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  S2STellRefreshRank(S2STellRefreshRank&& from) noexcept
+    : S2STellRefreshRank() {
+    *this = ::std::move(from);
+  }
+
+  inline S2STellRefreshRank& operator=(S2STellRefreshRank&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2STellRefreshRank& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const S2STellRefreshRank* internal_default_instance() {
+    return reinterpret_cast<const S2STellRefreshRank*>(
+               &_S2STellRefreshRank_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    41;
+
+  void Swap(S2STellRefreshRank* other);
+  friend void swap(S2STellRefreshRank& a, S2STellRefreshRank& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline S2STellRefreshRank* New() const final {
+    return CreateMaybeMessage<S2STellRefreshRank>(NULL);
+  }
+
+  S2STellRefreshRank* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2STellRefreshRank>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const S2STellRefreshRank& from);
+  void MergeFrom(const S2STellRefreshRank& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(S2STellRefreshRank* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // uint32 rankid = 1;
+  void clear_rankid();
+  static const int kRankidFieldNumber = 1;
+  ::google::protobuf::uint32 rankid() const;
+  void set_rankid(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2STellRefreshRank)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::uint32 rankid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_KFMidwareServerMessage_2eproto::TableStruct;
@@ -6887,21 +7197,7 @@ inline void S2SUpdateRankDataReq::set_allocated_pbrankdata(::KFMsg::PBRankData* 
 
 // S2SQueryRankListReq
 
-// uint64 playerid = 1;
-inline void S2SQueryRankListReq::clear_playerid() {
-  playerid_ = GOOGLE_ULONGLONG(0);
-}
-inline ::google::protobuf::uint64 S2SQueryRankListReq::playerid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SQueryRankListReq.playerid)
-  return playerid_;
-}
-inline void S2SQueryRankListReq::set_playerid(::google::protobuf::uint64 value) {
-  
-  playerid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SQueryRankListReq.playerid)
-}
-
-// uint32 rankid = 2;
+// uint32 rankid = 1;
 inline void S2SQueryRankListReq::clear_rankid() {
   rankid_ = 0u;
 }
@@ -6915,7 +7211,7 @@ inline void S2SQueryRankListReq::set_rankid(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:KFMsg.S2SQueryRankListReq.rankid)
 }
 
-// uint32 zoneid = 3;
+// uint32 zoneid = 2;
 inline void S2SQueryRankListReq::clear_zoneid() {
   zoneid_ = 0u;
 }
@@ -6933,21 +7229,7 @@ inline void S2SQueryRankListReq::set_zoneid(::google::protobuf::uint32 value) {
 
 // S2SQueryFriendRankListReq
 
-// uint64 playerid = 1;
-inline void S2SQueryFriendRankListReq::clear_playerid() {
-  playerid_ = GOOGLE_ULONGLONG(0);
-}
-inline ::google::protobuf::uint64 S2SQueryFriendRankListReq::playerid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SQueryFriendRankListReq.playerid)
-  return playerid_;
-}
-inline void S2SQueryFriendRankListReq::set_playerid(::google::protobuf::uint64 value) {
-  
-  playerid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SQueryFriendRankListReq.playerid)
-}
-
-// uint32 rankid = 2;
+// uint32 rankid = 1;
 inline void S2SQueryFriendRankListReq::clear_rankid() {
   rankid_ = 0u;
 }
@@ -6961,7 +7243,7 @@ inline void S2SQueryFriendRankListReq::set_rankid(::google::protobuf::uint32 val
   // @@protoc_insertion_point(field_set:KFMsg.S2SQueryFriendRankListReq.rankid)
 }
 
-// repeated uint64 friendid = 3;
+// repeated uint64 friendid = 2;
 inline int S2SQueryFriendRankListReq::friendid_size() const {
   return friendid_.size();
 }
@@ -6991,9 +7273,69 @@ S2SQueryFriendRankListReq::mutable_friendid() {
   return &friendid_;
 }
 
+// -------------------------------------------------------------------
+
+// S2SRefreshRankReq
+
+// uint32 rankid = 1;
+inline void S2SRefreshRankReq::clear_rankid() {
+  rankid_ = 0u;
+}
+inline ::google::protobuf::uint32 S2SRefreshRankReq::rankid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SRefreshRankReq.rankid)
+  return rankid_;
+}
+inline void S2SRefreshRankReq::set_rankid(::google::protobuf::uint32 value) {
+  
+  rankid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SRefreshRankReq.rankid)
+}
+
+// -------------------------------------------------------------------
+
+// S2SRefreshRankAck
+
+// uint32 rankid = 1;
+inline void S2SRefreshRankAck::clear_rankid() {
+  rankid_ = 0u;
+}
+inline ::google::protobuf::uint32 S2SRefreshRankAck::rankid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SRefreshRankAck.rankid)
+  return rankid_;
+}
+inline void S2SRefreshRankAck::set_rankid(::google::protobuf::uint32 value) {
+  
+  rankid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SRefreshRankAck.rankid)
+}
+
+// -------------------------------------------------------------------
+
+// S2STellRefreshRank
+
+// uint32 rankid = 1;
+inline void S2STellRefreshRank::clear_rankid() {
+  rankid_ = 0u;
+}
+inline ::google::protobuf::uint32 S2STellRefreshRank::rankid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2STellRefreshRank.rankid)
+  return rankid_;
+}
+inline void S2STellRefreshRank::set_rankid(::google::protobuf::uint32 value) {
+  
+  rankid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2STellRefreshRank.rankid)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
