@@ -83,7 +83,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_SERVER_LOST_FUNCTION__( KFClusterMasterModule::OnServerLostClusterProxy )
     {
-        __LOG_ERROR__( "[{}:{}:{}] lost!", handlename, handletype, KFAppID::ToString( handleid ) );
+        __LOG_ERROR__( "[{}:{}:{}] lost!", handlename, handletype, KFAppId::ToString( handleid ) );
 
         if ( handlename == __KF_STRING__( proxy ) )
         {
@@ -96,7 +96,7 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SClusterRegisterToMasterReq );
 
         // SendAllocShardToProxy( kfmsg.id() );
-        __LOG_DEBUG__( "[{}:{}:{}|{}:{}] discovered!", kfmsg.name(), kfmsg.type(), KFAppID::ToString( kfmsg.id() ), kfmsg.ip(), kfmsg.port() );
+        __LOG_DEBUG__( "[{}:{}:{}|{}:{}] discovered!", kfmsg.name(), kfmsg.type(), KFAppId::ToString( kfmsg.id() ), kfmsg.ip(), kfmsg.port() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFClusterMasterModule::HandleClusterUpdateToMasterReq )
@@ -110,7 +110,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SClusterAuthToMasterReq );
 
-        auto strclientid = KFAppID::ToString( kfmsg.clientid() );
+        auto strclientid = KFAppId::ToString( kfmsg.clientid() );
         __LOG_DEBUG__( "cluster client[{}:{}] auth req!", strclientid, kfmsg.clusterkey() );
 
         static auto* _option = _kf_option->FindOption( __KF_STRING__( clusterkey ) );
@@ -125,7 +125,7 @@ namespace KFrame
             return __LOG_ERROR__( "cluster client[{}] no proxy error!", strclientid );
         }
 
-        __LOG_DEBUG__( "cluster client[{}] auth proxy[{}] ok!", strclientid, KFAppID::ToString( kfproxy->_id ) );
+        __LOG_DEBUG__( "cluster client[{}] auth proxy[{}] ok!", strclientid, KFAppId::ToString( kfproxy->_id ) );
 
         // 创建token
         auto id = KFGlobal::Instance()->MakeUUID();

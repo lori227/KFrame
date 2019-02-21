@@ -93,8 +93,8 @@ namespace KFrame
 
         _app_id = values[ __KF_STRING__( appid ) ];
 
-        KFAppID kfappid( _app_id );
-        _zone_id = kfappid._union._app_data._zone_id;
+        KFAppId kfappid( _app_id );
+        _zone_id = kfappid.GetZoneId();
 
         _app_name = values[ __KF_STRING__( appname ) ];
         _app_type = values[ __KF_STRING__( apptype ) ];

@@ -27,16 +27,15 @@ namespace KFrame
             {
                 auto strappid = servernode.GetString( "AppId" );
 
-                KFAppID appid( strappid );
-                auto zoneid = appid._union._app_data._zone_id;
-                if ( zoneid == _invalid_int ||
-                        zoneid == kfglobal->_app_id._union._app_data._zone_id )
+                KFAppId appid( strappid );
+                auto zoneid = appid.GetZoneId();
+                if ( zoneid == _invalid_int || zoneid == kfglobal->_app_id->GetZoneId() )
                 {
                     KFIpAddress kfaddress;
 
-                    appid._union._app_data._channel_id = kfglobal->_app_id._union._app_data._channel_id;
+                    appid.SetChannelId( kfglobal->_app_id->GetChannelId() );
+                    kfaddress._app_id = appid.GetId();
                     kfaddress._str_app_id = appid.ToString();
-                    kfaddress._app_id = appid._union._id;
 
                     // 集群 或者 相同小区
                     kfaddress._app_name = servernode.GetString( "AppName" );

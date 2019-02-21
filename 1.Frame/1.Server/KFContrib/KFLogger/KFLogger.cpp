@@ -31,7 +31,7 @@ namespace KFrame
 
         auto kfglobal = KFGlobal::Instance();
         std::string outpath = __FORMAT__( ".{}_output", spdlog::details::os::folder_sep );
-        _local_log->Initialize( outpath, kfglobal->_app_name, kfglobal->_app_type, kfglobal->_str_app_id );
+        _local_log->Initialize( outpath, kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->ToString() );
 
         // 注册函数
         RegisterLogFunction( this, &KFLogger::Log );

@@ -20,13 +20,13 @@ namespace KFrame
 
     public:
         // 发送服务器id
-        uint64 _server_id{ 0u };
+        uint64 _server_id = 0u;
 
         // 发送者id
-        uint64 _send_id{ 0u };
+        uint64 _send_id = 0u;
 
         // 接受者id
-        uint64 _recv_id{ 0u };
+        uint64 _recv_id = 0u;
     };
 
 

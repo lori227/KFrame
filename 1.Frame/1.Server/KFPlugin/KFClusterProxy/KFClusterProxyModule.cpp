@@ -80,7 +80,7 @@ namespace KFrame
         KFMsg::S2SClusterRegisterToMasterReq req;
         req.set_name( kfglobal->_app_name );
         req.set_type( kfglobal->_app_type );
-        req.set_id( kfglobal->_app_id._union._id );
+        req.set_id( kfglobal->_app_id->GetId() );
         req.set_ip( kfglobal->_interanet_ip );
         req.set_port( kfglobal->_listen_port );
         _kf_tcp_client->SendNetMessage( serverid, KFMsg::S2S_CLUSTER_REGISTER_TO_MASTER_REQ, &req );
@@ -101,7 +101,7 @@ namespace KFrame
         KFMsg::S2SClusterUpdateToMasterReq req;
         req.set_name( kfglobal->_app_name );
         req.set_type( kfglobal->_app_type );
-        req.set_id( kfglobal->_app_id._union._id );
+        req.set_id( kfglobal->_app_id->GetId() );
         req.set_ip( kfglobal->_interanet_ip );
         req.set_port( kfglobal->_listen_port );
         req.set_count( _kf_tcp_server->GetHandleCount() );
@@ -193,7 +193,7 @@ namespace KFrame
         kftoken->_client_id = kfmsg.clientid();
         kftoken->_valid_time = KFGlobal::Instance()->_game_time + 60000;
 
-        __LOG_DEBUG__( "update client[{}] token[{}]!", KFAppID::ToString( kftoken->_client_id ), kftoken->_token );
+        __LOG_DEBUG__( "update client[{}] token[{}]!", KFAppId::ToString( kftoken->_client_id ), kftoken->_token );
     }
 
     __KF_MESSAGE_FUNCTION__( KFClusterProxyModule::HandleClusterVerifyToProxyReq )
@@ -209,7 +209,7 @@ namespace KFrame
 
         if ( serverid == _invalid_int )
         {
-            return __LOG_ERROR__( "cluster client[{}] verify failed!", KFAppID::ToString( kfmsg.serverid() ) );
+            return __LOG_ERROR__( "cluster client[{}] verify failed!", KFAppId::ToString( kfmsg.serverid() ) );
         }
 
         // 删除定时器
@@ -219,7 +219,7 @@ namespace KFrame
         KFMsg::S2SClusterClientDiscoverToShardReq req;
         req.add_clientid( serverid );
         _kf_tcp_client->SendMessageToType( __KF_STRING__( shard ), KFMsg::S2S_CLUSTER_CLIENT_DISCOVER_TO_SHARD_REQ, &req );
-        __LOG_DEBUG__( "cluster client [{}] verify ok!", KFAppID::ToString( kfmsg.serverid() ) );
+        __LOG_DEBUG__( "cluster client [{}] verify ok!", KFAppId::ToString( kfmsg.serverid() ) );
     }
 
     uint64 KFClusterProxyModule::ClusterVerifyLogin( const std::string& token, uint64 serverid )

@@ -259,7 +259,7 @@ namespace KFrame
         auto kfglobal = KFGlobal::Instance();
 
         auto kfbasic = kfobject->FindData( __KF_STRING__( basic ) );
-        kfbasic->SetValue( __KF_STRING__( serverid ), kfglobal->_app_id._union._id );
+        kfbasic->SetValue( __KF_STRING__( serverid ), kfglobal->_app_id->GetId() );
 
         // 设置名字
         player->SetName( kfbasic->GetValue< std::string >( __KF_STRING__( name ) ) );

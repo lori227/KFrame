@@ -1,12 +1,13 @@
 ﻿#ifndef __KF_GOLBAL_H__
 #define __KF_GOLBAL_H__
 
-#include "KFAppID.h"
+#include "KFInclude.h"
 
 namespace KFrame
 {
     class KFRand;
     class KFUUID;
+    class KFAppId;
     class KFVersion;
 
     class KFGlobal
@@ -63,8 +64,7 @@ namespace KFrame
         uint64 _game_time;
 
         // appid
-        KFAppID _app_id;
-        std::string _str_app_id;
+        KFAppId* _app_id;
 
         // 类型
         std::string _app_type;

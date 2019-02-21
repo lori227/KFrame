@@ -16,6 +16,5 @@
     <ClInclude Include="KFLibrary.h" />
     <ClInclude Include="KFServices.h" />
     <ClInclude Include="KFStartup.h" />
-    <ClInclude Include="..\KFCommon\KFAppID.h" />
   </ItemGroup>
 </Project>

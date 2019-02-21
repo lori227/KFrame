@@ -75,13 +75,10 @@ namespace KFrame
         kfglobal->_real_time = KFDate::GetTimeEx();
         kfglobal->_app_name = params[ __KF_STRING__( appname ) ];
         kfglobal->_app_type = params[ __KF_STRING__( apptype ) ];
-        kfglobal->_str_app_id = params[ __KF_STRING__( appid ) ];
-
-        KFAppID kfappid( kfglobal->_str_app_id );
-        kfglobal->_app_id = kfappid;
+        kfglobal->_app_id->FromString( params[ __KF_STRING__( appid ) ] );
 
 #if __KF_SYSTEM__ == __KF_WIN__
-        KFDump kfdump( kfglobal->_app_name.c_str(), kfglobal->_app_type.c_str(), kfglobal->_str_app_id.c_str() );
+        KFDump kfdump( kfglobal->_app_name.c_str(), kfglobal->_app_type.c_str(), kfglobal->_app_id->ToString().c_str() );
 #endif
 
         // 初始化服务类型
@@ -119,13 +116,13 @@ namespace KFrame
         KFPluginManage::Instance()->InitPlugin();
 
         // 设置标题
-        kfglobal->_title_text = KFUtility::FormatTitleText( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_str_app_id );
+        kfglobal->_title_text = KFUtility::FormatTitleText( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->ToString() );
         _application->SetTitleText( kfglobal->_title_text.c_str() );
 
         // 初始化内存日志定时器
         InitLogMemoryTimer();
 
-        __LOG_INFO__( "[{}:{}:{}] version[{}] startup ok!", kfglobal->_app_name, kfglobal->_app_type, kfglobal->_str_app_id, kfglobal->GetVersion() );
+        __LOG_INFO__( "[{}:{}:{}] version[{}] startup ok!", kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->ToString(), kfglobal->GetVersion() );
 
         // 开启主逻辑线程
         KFThread::CreateThread( this, &KFServices::Run, __FUNC_LINE__ );
@@ -160,7 +157,7 @@ namespace KFrame
         auto kfglobal = KFGlobal::Instance();
 
         // 把log时间分来, 每日切换的时候, 有可能创建文件夹的时候被占用, 然后切换日志失败
-        auto spacetime = kfglobal->_app_id._union._id % 10000 + kfglobal->RandInRange( 100, 1000, 0 );
+        auto spacetime = kfglobal->_app_id->GetId() % 10000 + kfglobal->RandInRange( 100, 1000, 0 );
         _memory_timer.StartTimer( kfglobal->_game_time, 5 * KFTimeEnum::OneMinuteMicSecond + spacetime );
     }
 

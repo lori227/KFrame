@@ -169,7 +169,7 @@ namespace KFrame
 
     bool KFNetServerEngine::CloseHandle( uint64 id, uint32 delaytime, const char* function, uint32 line )
     {
-        __LOG_DEBUG_FUNCTION__( function, line, "add close handle[{}:{}]!", id, KFAppID::ToString( id ) );
+        __LOG_DEBUG_FUNCTION__( function, line, "add close handle[{}:{}]!", id, KFAppId::ToString( id ) );
 
         _close_handles[ id ] = _net_server_services->_now_time + delaytime;
         return true;
@@ -199,7 +199,7 @@ namespace KFrame
         // 已经在列表中
         if ( _kf_handles.Find( handleid ) != nullptr )
         {
-            __LOG_ERROR__( "handle[{}:{}] already exist!", handleid, KFAppID::ToString( handleid ) );
+            __LOG_ERROR__( "handle[{}:{}] already exist!", handleid, KFAppId::ToString( handleid ) );
             return nullptr;
         }
 
@@ -337,7 +337,7 @@ namespace KFrame
         KFNetHandle* handle = FindNetHandle( handleid );
         if ( handle == nullptr )
         {
-            __LOG_ERROR__( "msgid[{}] can't find handle[{}]!", msgid, KFAppID::ToString( handleid ) );
+            __LOG_ERROR__( "msgid[{}] can't find handle[{}]!", msgid, KFAppId::ToString( handleid ) );
             return false;
         }
 
@@ -349,7 +349,7 @@ namespace KFrame
         KFNetHandle* handle = FindNetHandle( handleid );
         if ( handle == nullptr )
         {
-            __LOG_ERROR__( "msgid[{}] can't find handle[{}]!", msgid, KFAppID::ToString( handleid ) );
+            __LOG_ERROR__( "msgid[{}] can't find handle[{}]!", msgid, KFAppId::ToString( handleid ) );
             return false;
         }
 

@@ -46,12 +46,12 @@ namespace KFrame
         // 计算端口
         if ( kftcpsetting->_port == _invalid_int )
         {
-            auto kfaddress = _kf_ip_address->FindIpAddress( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_str_app_id );
+            auto kfaddress = _kf_ip_address->FindIpAddress( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->ToString() );
             kftcpsetting->_port_type = kfaddress->_port_type;
             kftcpsetting->_port = kfaddress->_port;
         }
 
-        kftcpsetting->_port = _kf_ip_address->CalcListenPort( kftcpsetting->_port_type, kftcpsetting->_port, kfglobal->_app_id._union._id );
+        kftcpsetting->_port = _kf_ip_address->CalcListenPort( kftcpsetting->_port_type, kftcpsetting->_port, kfglobal->_app_id->GetId() );
         return kftcpsetting;
     }
 
@@ -256,7 +256,7 @@ namespace KFrame
         KFMsg::RegisterToServerAck ack;
         ack.set_apptype( kfglobal->_app_type );
         ack.set_appname( kfglobal->_app_name );
-        ack.set_appid( kfglobal->_app_id._union._id );
+        ack.set_appid( kfglobal->_app_id->GetId() );
         auto strdata = ack.SerializeAsString();
         SendNetMessage( handlid, KFMsg::S2S_REGISTER_TO_SERVER_ACK, &ack );
 
@@ -268,7 +268,7 @@ namespace KFrame
 
         CallDiscoverFunction( kfhandle );
 
-        __LOG_INFO__( "[{}:{}:{}|{}:{}] register ok!", name, type, KFAppID::ToString( handlid ), listendata->ip(), listendata->port() );
+        __LOG_INFO__( "[{}:{}:{}|{}:{}] register ok!", name, type, KFAppId::ToString( handlid ), listendata->ip(), listendata->port() );
     }
 
     void KFTcpServerModule::BroadcastRegisterToServer( KFNetHandle* kfhandle )
@@ -277,7 +277,7 @@ namespace KFrame
 
         KFMsg::TellRegisterToServer tell;
         tell.set_servername( kfglobal->_app_name );
-        tell.set_serverzoneid( kfglobal->_app_id._union._app_data._zone_id );
+        tell.set_serverzoneid( kfglobal->_app_id->GetZoneId() );
 
         auto listendata = tell.mutable_listen();
         listendata->set_appid( kfhandle->_app_id );
@@ -303,7 +303,7 @@ namespace KFrame
 
             KFMsg::TellRegisterToServer tell;
             tell.set_servername( kfglobal->_app_name );
-            tell.set_serverzoneid( kfglobal->_app_id._union._app_data._zone_id );
+            tell.set_serverzoneid( kfglobal->_app_id->GetZoneId() );
 
             auto listendata = tell.mutable_listen();
             listendata->set_appid( nethandle->_app_id );
@@ -331,11 +331,11 @@ namespace KFrame
         tell.set_apptype( kfhandle->_app_type );
         tell.set_zoneid( kfhandle->_zone_id );
         tell.set_servername( kfglobal->_app_name );
-        tell.set_serverzoneid( kfglobal->_app_id._union._app_data._zone_id );
+        tell.set_serverzoneid( kfglobal->_app_id->GetZoneId() );
         SendNetMessage( KFMsg::S2S_TELL_UNREGISTER_FROM_SERVER, &tell, kfhandle->_object_id );
 
         __LOG_DEBUG__( "[{}:{}:{}|{}:{}] lost connect!",
-                       kfhandle->_app_name, kfhandle->_app_type, KFAppID::ToString( kfhandle->_app_id ),
+                       kfhandle->_app_name, kfhandle->_app_type, KFAppId::ToString( kfhandle->_app_id ),
                        kfhandle->_listen_ip, kfhandle->_listen_port );
     }
 

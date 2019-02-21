@@ -57,7 +57,7 @@ namespace KFrame
             return;
         }
 
-        auto strid = KFAppID::ToString( serverid );
+        auto strid = KFAppId::ToString( serverid );
         __LOG_DEBUG__( "connect route cluster server[{}:{}:{}]", servername, servertype, strid );
 
         if ( servertype == __KF_STRING__( master ) )
@@ -84,7 +84,7 @@ namespace KFrame
         // 请求认证
         KFMsg::S2SClusterAuthToMasterReq req;
         req.set_clusterkey( _option->_str_value );
-        req.set_clientid( KFGlobal::Instance()->_app_id._union._id );
+        req.set_clientid( KFGlobal::Instance()->_app_id->GetId() );
         auto ok = _kf_tcp_client->SendNetMessage( _cluster_master_id, KFMsg::S2S_CLUSTER_AUTH_TO_MASTER_REQ, &req );
         if ( !ok )
         {
@@ -97,7 +97,7 @@ namespace KFrame
         // 请求认证
         KFMsg::S2SClusterVerifyToProxyReq req;
         req.set_token( _auth_token );
-        req.set_serverid( KFGlobal::Instance()->_app_id._union._id );
+        req.set_serverid( KFGlobal::Instance()->_app_id->GetId() );
         auto ok = _kf_tcp_client->SendNetMessage( objectid, KFMsg::S2S_CLUSTER_VERIFY_TO_PROXY_REQ, &req );
         if ( !ok )
         {
@@ -158,7 +158,7 @@ namespace KFrame
             // 回调函数
             CallClusterConnectionFunction( _cluster_proxy_id );
 
-            __LOG_INFO__( "[{}][{}] cluster services ok!", _cluster_name, KFAppID::ToString( _cluster_proxy_id ) );
+            __LOG_INFO__( "[{}][{}] cluster services ok!", _cluster_name, KFAppId::ToString( _cluster_proxy_id ) );
         }
     }
 

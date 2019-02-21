@@ -28,7 +28,7 @@ namespace KFrame
     {
         if ( _kfseting == nullptr )
         {
-            auto index = KFGlobal::Instance()->_app_id._union._id % static_cast< uint32 >( _redis_list.size() );
+            auto index = KFGlobal::Instance()->_app_id->GetId() % static_cast< uint32 >( _redis_list.size() );
             _kfseting = &_redis_list[ index ];
         }
 

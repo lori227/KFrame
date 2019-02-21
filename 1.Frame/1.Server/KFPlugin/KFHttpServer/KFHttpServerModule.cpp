@@ -28,7 +28,7 @@ namespace KFrame
         auto kfsetting = _kf_http_server_config->FindHttpSetting( kfglogal->_app_name, kfglogal->_app_type );
 
         // 计算端口
-        kfsetting->_port = _kf_ip_address->CalcListenPort( kfsetting->_port_type, kfsetting->_port, kfglogal->_app_id._union._id );
+        kfsetting->_port = _kf_ip_address->CalcListenPort( kfsetting->_port_type, kfsetting->_port, kfglogal->_app_id->GetId() );
 
         _http_server->Start( kfsetting->_local_ip, kfsetting->_port, kfsetting->_max_thread,
                              kfsetting->_max_queue, kfsetting->_idle_time, kfsetting->_keep_alive );

@@ -21,7 +21,7 @@ namespace KFrame
         __JSON_DOCUMENT__( request );
         __JSON_SET_VALUE__( request, __KF_STRING__( appname ), KFGlobal::Instance()->_app_name );
         __JSON_SET_VALUE__( request, __KF_STRING__( apptype ), KFGlobal::Instance()->_app_type );
-        __JSON_SET_VALUE__( request, __KF_STRING__( appid ), KFGlobal::Instance()->_str_app_id );
+        __JSON_SET_VALUE__( request, __KF_STRING__( appid ), KFGlobal::Instance()->_app_id->ToString() );
 
         auto data = __JSON_SERIALIZE__( request );
         auto recvdata = _kf_http_client->STGet( url, _invalid_str );
@@ -47,7 +47,7 @@ namespace KFrame
     {
         if ( servername == __KF_STRING__( log ) )
         {
-            __LOG_INFO__( "remote log[{}] ok!", KFAppID::ToString( serverid ) );
+            __LOG_INFO__( "remote log[{}] ok!", KFAppId::ToString( serverid ) );
 
             _log_server_id = serverid;
             KFLogger::Instance()->RegisterLogFunction( this, &KFLogClientModule::LogRemote );
@@ -82,9 +82,9 @@ namespace KFrame
         KFMsg::S2SRemoteLogToServerReq req;
         req.set_appname( kfglobal->_app_name );
         req.set_apptype( kfglobal->_app_type );
-        req.set_strappid( kfglobal->_str_app_id );
-        req.set_appid( kfglobal->_app_id._union._id );
-        req.set_zoneid( kfglobal->_app_id._union._app_data._zone_id );
+        req.set_strappid( kfglobal->_app_id->ToString() );
+        req.set_appid( kfglobal->_app_id->GetId() );
+        req.set_zoneid( kfglobal->_app_id->GetZoneId() );
 
         for ( auto kfdata : templist )
         {
@@ -99,7 +99,7 @@ namespace KFrame
         if ( !ok )
         {
             KFLogger::Instance()->UnRegisterLogFunction( this );
-            __LOG_INFO__( "remote log[{}] failed!", KFAppID::ToString( _log_server_id ) );
+            __LOG_INFO__( "remote log[{}] failed!", KFAppId::ToString( _log_server_id ) );
         }
     }
 }

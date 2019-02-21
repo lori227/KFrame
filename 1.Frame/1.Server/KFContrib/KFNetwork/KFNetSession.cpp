@@ -164,14 +164,14 @@ namespace KFrame
     {
         if ( length == 0 )
         {
-            return __LOG_DEBUG__( "session[{}:{}:{}] recv length=0!", _session_id, _object_id, KFAppID::ToString( _session_id ) );
+            return __LOG_DEBUG__( "session[{}:{}:{}] recv length=0!", _session_id, _object_id, KFAppId::ToString( _session_id ) );
         }
 
         // 消息长度增加
         if ( _receive_length + length > KFNetDefine::MaxRecvBuffLength )
         {
             __LOG_ERROR__( "session[{}:{}:{}] recv length[{}:{}] error",
-                           _session_id, _object_id, KFAppID::ToString( _session_id ), _receive_length, length );
+                           _session_id, _object_id, KFAppId::ToString( _session_id ), _receive_length, length );
             _receive_length = 0;
         }
 
@@ -237,7 +237,7 @@ namespace KFrame
         if ( nethead->_length > KFNetDefine::MaxMessageLength )
         {
             __LOG_ERROR__( "session[{}:{}:{}] recv msgid[{}] length[{}] position[{}] totallength[{}] error",
-                           _session_id, _object_id, KFAppID::ToString( _session_id ),
+                           _session_id, _object_id, KFAppId::ToString( _session_id ),
                            nethead->_msgid, nethead->_length, position, _receive_length );
             _receive_length = 0;
             return nullptr;
@@ -301,7 +301,7 @@ namespace KFrame
     {
         _is_connected = false;
         __LOG_DEBUG_FUNCTION__( function, line, "session[{}:{}:{}] disconnect[{}:{}]!",
-                                _session_id, _object_id, KFAppID::ToString( _session_id ), code, uv_err_name( code ) );
+                                _session_id, _object_id, KFAppId::ToString( _session_id ), code, uv_err_name( code ) );
     }
 
     bool KFNetSession::AddSendMessage( KFNetMessage* message )
@@ -313,7 +313,7 @@ namespace KFrame
             {
                 _is_send_queue_full = true;
                 __LOG_ERROR__( "session[{}:{}:{}] send msgid[{}] failed!",
-                               _session_id, _object_id, KFAppID::ToString( _session_id ), message->_msgid );
+                               _session_id, _object_id, KFAppId::ToString( _session_id ), message->_msgid );
             }
         }
         else
@@ -335,7 +335,7 @@ namespace KFrame
             {
                 _is_recv_queue_full = true;
                 __LOG_ERROR__( "session[{}:{}:{}] recv msgid[{}] failed!",
-                               _session_id, _object_id, KFAppID::ToString( _session_id ), message->_msgid );
+                               _session_id, _object_id, KFAppId::ToString( _session_id ), message->_msgid );
             }
         }
         else

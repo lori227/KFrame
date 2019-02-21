@@ -54,8 +54,8 @@ namespace KFrame
         {
         case __ID_PORT__:
         {
-            KFAppID kfappid( appid );
-            port = port + kfappid._union._app_data._worker_id;
+            KFAppId kfappid( appid );
+            port = port + kfappid.GetWorkId();
         }
         break;
         case __SH_PORT__:

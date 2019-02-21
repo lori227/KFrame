@@ -20,7 +20,6 @@
     <ClCompile Include="KFStartup.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\KFCommon\KFAppID.h" />
     <ClInclude Include="KFAppConfig.h" />
     <ClInclude Include="KFApplication.h" />
     <ClInclude Include="KFDump.h" />

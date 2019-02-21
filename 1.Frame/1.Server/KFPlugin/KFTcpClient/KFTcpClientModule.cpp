@@ -56,10 +56,10 @@ namespace KFrame
 
         listendata->set_appname( kfglobal->_app_name );
         listendata->set_apptype( kfglobal->_app_type );
-        listendata->set_appid( kfglobal->_app_id._union._id );
+        listendata->set_appid( kfglobal->_app_id->GetId() );
         listendata->set_ip( kfglobal->_interanet_ip );
         listendata->set_port( kfglobal->_listen_port );
-        listendata->set_zoneid( kfglobal->_app_id._union._app_data._zone_id );
+        listendata->set_zoneid( kfglobal->_app_id->GetZoneId() );
 
         auto strdata = req.SerializeAsString();
         SendNetMessage( serverid, KFMsg::S2S_REGISTER_TO_SERVER_REQ, strdata.data(), strdata.size() );
@@ -171,7 +171,7 @@ namespace KFrame
         auto ok = _kf_client_engine->StartClient( name, type, id, ip, port );
         if ( ok )
         {
-            __LOG_DEBUG__( "[{}:{}:{}|{}:{}] start connect!", name, type, KFAppID::ToString( id ), ip, port );
+            __LOG_DEBUG__( "[{}:{}:{}|{}:{}] start connect!", name, type, KFAppId::ToString( id ), ip, port );
         }
     }
 
@@ -192,7 +192,7 @@ namespace KFrame
     {
         _kf_client_engine->CloseClient( serverid, function, line );
 
-        __LOG_DEBUG_FUNCTION__( function, line, "[{}] connect close!", KFAppID::ToString( serverid ) );
+        __LOG_DEBUG_FUNCTION__( function, line, "[{}] connect close!", KFAppId::ToString( serverid ) );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -265,7 +265,7 @@ namespace KFrame
             auto kfsetting = &kfclient->_net_setting;
 
             __LOG_INFO__( "[{}:{}:{}|{}:{}] service ok!",
-                          servername, servertype, KFAppID::ToString( serverid ),
+                          servername, servertype, KFAppId::ToString( serverid ),
                           kfsetting->_ip, kfsetting->_port );
         }
     }

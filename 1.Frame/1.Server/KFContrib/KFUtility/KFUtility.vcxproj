@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="KFAppId.cpp" />
     <ClCompile Include="KFClock.cpp" />
     <ClCompile Include="KFCompress.cpp" />
     <ClCompile Include="KFConHash.cpp" />
@@ -29,6 +30,7 @@
     <ClCompile Include="KFXml.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="KFAppId.h" />
     <ClInclude Include="KFClock.h" />
     <ClInclude Include="KFCompress.h" />
     <ClInclude Include="KFConHash.h" />

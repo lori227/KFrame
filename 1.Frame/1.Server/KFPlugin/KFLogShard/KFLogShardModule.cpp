@@ -41,7 +41,7 @@ namespace KFrame
         __JSON_DOCUMENT__( response );
         __JSON_SET_VALUE__( response, __KF_STRING__( appname ), kfglobal->_app_name );
         __JSON_SET_VALUE__( response, __KF_STRING__( apptype ), kfglobal->_app_type );
-        __JSON_SET_VALUE__( response, __KF_STRING__( appid ), kfglobal->_app_id._union._id );
+        __JSON_SET_VALUE__( response, __KF_STRING__( appid ), kfglobal->_app_id->GetId() );
         __JSON_SET_VALUE__( response, __KF_STRING__( ip ), kfglobal->_interanet_ip );
         __JSON_SET_VALUE__( response, __KF_STRING__( port ), kfglobal->_listen_port );
         return _kf_http_server->SendResponse( response );

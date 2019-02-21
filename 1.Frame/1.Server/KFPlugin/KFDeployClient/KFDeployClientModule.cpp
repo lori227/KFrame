@@ -27,7 +27,7 @@ namespace KFrame
         auto ip = KFUtility::SplitString( agentdata, "|" );
         auto port = KFUtility::SplitValue< uint32 >( agentdata, "|" );
 
-        auto appid = KFAppID::ToUInt64( agentid );
+        auto appid = KFAppId::ToUInt64( agentid );
         _kf_tcp_client->StartClient( __KF_STRING__( deploy ), __KF_STRING__( agent ), appid, ip, port );
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -106,7 +106,7 @@ namespace KFrame
 
         if ( zoneid != _invalid_int )
         {
-            if ( zoneid != kfglobal->_app_id._union._app_data._zone_id )
+            if ( zoneid != kfglobal->_app_id->GetZoneId() )
             {
                 return false;
             }
@@ -137,7 +137,7 @@ namespace KFrame
             return true;
         }
 
-        if ( appid != kfglobal->_str_app_id )
+        if ( appid != kfglobal->_app_id->ToString() )
         {
             return false;
         }
@@ -148,7 +148,7 @@ namespace KFrame
     void KFDeployClientModule::ShutDownServer( const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid, uint32 delaytime )
     {
         auto kfglobal = KFGlobal::Instance();
-        __LOG_INFO__( "[{}:{}:{}:{}] shutdown start!", kfglobal->_app_name, kfglobal->_app_type, kfglobal->_str_app_id, delaytime );
+        __LOG_INFO__( "[{}:{}:{}:{}] shutdown start!", kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->ToString(), delaytime );
 
         // 如果是服务
         if ( appname != __KF_STRING__( zone ) )
@@ -157,7 +157,7 @@ namespace KFrame
         }
 
         // 启动一个定时器
-        __REGISTER_DELAY_TIMER__( KFAppID::ToUInt64( appid ), delaytime, &KFDeployClientModule::OnTimerShutDownPrepare );
+        __REGISTER_DELAY_TIMER__( KFAppId::ToUInt64( appid ), delaytime, &KFDeployClientModule::OnTimerShutDownPrepare );
     }
 
     __KF_TIMER_FUNCTION__( KFDeployClientModule::OnTimerShutDownPrepare )
@@ -165,7 +165,7 @@ namespace KFrame
         __REGISTER_LIMIT_TIMER__( objectid, 10000, 1, &KFDeployClientModule::OnTimerShutDownServer );
 
         auto kfglobal = KFGlobal::Instance();
-        __LOG_INFO__( "[{}:{}:{}] shutdown prepare!", kfglobal->_app_name, kfglobal->_app_type, kfglobal->_str_app_id );
+        __LOG_INFO__( "[{}:{}:{}] shutdown prepare!", kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->ToString() );
 
         auto kfcommand = _command_data.Find( __KF_STRING__( shutdown ) );
         if ( kfcommand != nullptr )
@@ -182,7 +182,7 @@ namespace KFrame
     {
         auto kfglobal = KFGlobal::Instance();
 
-        __LOG_INFO__( "[{}:{}:{}:{}] shutdown ok!", kfglobal->_app_name, kfglobal->_app_type, kfglobal->_str_app_id );
+        __LOG_INFO__( "[{}:{}:{}:{}] shutdown ok!", kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->ToString() );
 
         // linux程序正常退出时会core, 应该是每个so文件中的同名全局变量造成的
         // 这里不让程序退出, 由agent等待超时kill

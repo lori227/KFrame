@@ -3,7 +3,6 @@
 #include "KFUUID.h"
 #include "KFVersion.h"
 
-
 namespace KFrame
 {
     KFGlobal* KFGlobal::_kf_global = nullptr;
@@ -16,11 +15,13 @@ namespace KFrame
         _real_time = 0;
         _listen_port = 0;
         _kf_rand = new KFRand();
+        _app_id = new KFAppId();
         _kf_version = new KFVersion();
     }
 
     KFGlobal::~KFGlobal()
     {
+        __DELETE_OBJECT__( _app_id );
         __DELETE_OBJECT__( _kf_rand );
         __DELETE_OBJECT__( _kf_version );
 
@@ -109,8 +110,8 @@ namespace KFrame
             iter = _kf_uuids.insert( std::make_pair( type, uuid ) ).first;
         }
 
-        auto zoneid = KFGlobal::Instance()->_app_id._union._app_data._zone_id;
-        auto workerid = KFGlobal::Instance()->_app_id._union._app_data._worker_id;
+        auto zoneid = _app_id->GetZoneId();
+        auto workerid = _app_id->GetWorkId();
 
         return iter->second->Make( zoneid, workerid, _real_time );
     }
@@ -133,7 +134,7 @@ namespace KFrame
     // 判断渠道和服务类型
     bool KFGlobal::CheckChannelService( uint32 channel, uint32 service )
     {
-        if ( channel != 0 && channel != _app_id._union._app_data._channel_id )
+        if ( channel != 0 && channel != _app_id->GetChannelId() )
         {
             return false;
         }

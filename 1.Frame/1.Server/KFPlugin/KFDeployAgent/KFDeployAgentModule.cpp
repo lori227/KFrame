@@ -32,13 +32,10 @@ namespace KFrame
             return __LOG_ERROR__( "query agent=[{}] data failed!", localip );
         }
 
-        auto strappid = kfquery->_value[ __KF_STRING__( strappid ) ];
-        KFAppID kfappid( strappid );
-        kfglobal->_app_id = kfappid;
-        kfglobal->_str_app_id = strappid;
+        kfglobal->_app_id->FromString( kfquery->_value[ __KF_STRING__( strappid ) ] );
 
         // 部署表
-        _deploy_table_name = __FORMAT__( "{}_{}_deploy", kfglobal->_app_id._union._app_data._channel_id, kfglobal->_service_type );
+        _deploy_table_name = __FORMAT__( "{}_{}_deploy", kfglobal->_app_id->GetChannelId(), kfglobal->_service_type );
 
         // deploy server
         _deploy_server_id = kfquery->_value[ "serverid" ];
@@ -108,7 +105,7 @@ namespace KFrame
             return;
         }
 
-        auto appid = KFAppID::ToUInt64( _deploy_server_id );
+        auto appid = KFAppId::ToUInt64( _deploy_server_id );
         _kf_tcp_client->StartClient( __KF_STRING__( deploy ), __KF_STRING__( server ), appid, _deploy_server_ip, _deploy_server_port );
     }
 
@@ -139,13 +136,13 @@ namespace KFrame
         {
             auto kfglobal = KFGlobal::Instance();
 
-            KFAppID kfappid( serverid );
-            kfappid._union._app_data._channel_id = kfglobal->_app_id._union._app_data._channel_id;
-            _deploy_server_id = kfappid._union._id;
+            KFAppId kfappid( serverid );
+            kfappid.SetChannelId( kfglobal->_app_id->GetChannelId() );
+            _deploy_server_id = kfappid.GetId();
 
             // 把自己注册到Services
             KFMsg::S2SRegisterAgentToServerReq req;
-            req.set_agentid( kfglobal->_str_app_id );
+            req.set_agentid( kfglobal->_app_id->ToString() );
             req.set_name( kfglobal->_app_name );
             req.set_type( kfglobal->_app_type );
             req.set_port( kfglobal->_listen_port );
@@ -285,7 +282,7 @@ namespace KFrame
                                  __KF_STRING__( appid ), deploydata->_app_id,
                                  __KF_STRING__( log ), deploydata->_log_type,
                                  __KF_STRING__( service ), deploydata->_service_type,
-                                 __KF_STRING__( agent ), kfglobal->_str_app_id, kfglobal->_local_ip, kfglobal->_listen_port );
+                                 __KF_STRING__( agent ), kfglobal->_app_id->ToString(), kfglobal->_local_ip, kfglobal->_listen_port );
 
         // 启动进程
         PROCESS_INFORMATION processinfo;
@@ -362,7 +359,7 @@ namespace KFrame
         auto strservice = __FORMAT__( "{}={}", __KF_STRING__( service ), deploydata->_service_type );
         args.push_back( const_cast< char* >( strservice.c_str() ) );
 
-        auto stragent = __FORMAT__( "{}={}|{}|{}", __KF_STRING__( agent ), kfglobal->_str_app_id, kfglobal->_local_ip, kfglobal->_listen_port );
+        auto stragent = __FORMAT__( "{}={}|{}|{}", __KF_STRING__( agent ), kfglobal->_app_id->ToString(), kfglobal->_local_ip, kfglobal->_listen_port );
         args.push_back( const_cast< char* >( stragent.c_str() ) );
 
         args.push_back( nullptr );
@@ -449,7 +446,7 @@ namespace KFrame
         updatevalues[ __KF_STRING__( shutdown ) ] = __TO_STRING__( deploydata->_is_shutdown ? 1 : 0 );
         updatevalues[ __KF_STRING__( process ) ] = __TO_STRING__( deploydata->_process_id );
         updatevalues[ __KF_STRING__( time ) ] = __TO_STRING__( deploydata->_startup_time );
-        updatevalues[ __KF_STRING__( agentid ) ] = KFGlobal::Instance()->_str_app_id;
+        updatevalues[ __KF_STRING__( agentid ) ] = KFGlobal::Instance()->_app_id->ToString();
 
         MapString keyvalues;
         keyvalues[ __KF_STRING__( appid ) ] = deploydata->_app_id;
@@ -548,7 +545,7 @@ namespace KFrame
 
         if ( !url.empty() )
         {
-            auto strmsg = __FORMAT__( "agent[{}] {}", KFGlobal::Instance()->_str_app_id, msg );
+            auto strmsg = __FORMAT__( "agent[{}] {}", KFGlobal::Instance()->_app_id->ToString(), msg );
 
             __JSON_DOCUMENT__( response );
             __JSON_SET_VALUE__( response, __KF_STRING__( msg ), strmsg );

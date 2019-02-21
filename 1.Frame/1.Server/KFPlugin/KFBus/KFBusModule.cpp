@@ -47,13 +47,13 @@ namespace KFrame
         // 如果是不同小区, 不能连接
         if ( connectname != kfglobal->_app_name ||
                 connecttype == __KF_STRING__( master ) ||
-                zoneid != kfglobal->_app_id._union._app_data._zone_id )
+                zoneid != kfglobal->_app_id->GetZoneId() )
         {
             return false;
         }
 
-        auto strconnectid = KFAppID::ToString( connectid );
-        auto ok = _kf_bus_config->IsValidConnection( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_str_app_id,
+        auto strconnectid = KFAppId::ToString( connectid );
+        auto ok = _kf_bus_config->IsValidConnection( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->ToString(),
                   connectname, connecttype, strconnectid );
 
         return ok;
@@ -65,7 +65,7 @@ namespace KFrame
 
         auto kfglobal = KFGlobal::Instance();
         std::set< KFConnection* > connectionlist;
-        _kf_bus_config->FindConnection( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_str_app_id, connectionlist );
+        _kf_bus_config->FindConnection( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->ToString(), connectionlist );
 
         // 查找连接的ip地址
         for ( auto kfconnection : connectionlist )
@@ -83,7 +83,7 @@ namespace KFrame
 
         auto kfglobal = KFGlobal::Instance();
         if ( kfmsg.servername() != kfglobal->_app_name ||
-                kfmsg.serverzoneid() != kfglobal->_app_id._union._app_data._zone_id )
+                kfmsg.serverzoneid() != kfglobal->_app_id->GetZoneId() )
         {
             return;
         }
@@ -103,7 +103,7 @@ namespace KFrame
 
         auto kfglobal = KFGlobal::Instance();
         if ( kfmsg.servername() != kfglobal->_app_name ||
-                kfmsg.serverzoneid() != kfglobal->_app_id._union._app_data._zone_id )
+                kfmsg.serverzoneid() != kfglobal->_app_id->GetZoneId() )
         {
             return;
         }

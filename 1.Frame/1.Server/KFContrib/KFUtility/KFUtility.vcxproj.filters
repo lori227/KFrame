@@ -21,6 +21,7 @@
     <ClInclude Include="KFHashData.hpp" />
     <ClInclude Include="KFHashFunction.hpp" />
     <ClInclude Include="KFHashLogic.hpp" />
+    <ClInclude Include="KFAppId.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KFUtility.cpp" />
@@ -39,5 +40,6 @@
     <ClCompile Include="KFHashData.cpp" />
     <ClCompile Include="KFHashFunction.cpp" />
     <ClCompile Include="KFHashLogic.cpp" />
+    <ClCompile Include="KFAppId.cpp" />
   </ItemGroup>
 </Project>

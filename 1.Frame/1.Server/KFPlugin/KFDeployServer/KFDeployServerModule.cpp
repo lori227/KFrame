@@ -39,7 +39,7 @@ namespace KFrame
     {
         if ( handlename == __KF_STRING__( deploy ) )
         {
-            auto strhandleid = KFAppID::ToString( handleid );
+            auto strhandleid = KFAppId::ToString( handleid );
 
             auto kfagent = _agent_list.Find( strhandleid );
             if ( kfagent != nullptr )

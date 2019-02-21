@@ -52,7 +52,7 @@ namespace KFrame
 
         auto pbroute = req.mutable_pbroute();
         pbroute->set_sendid( sendid );
-        pbroute->set_serverid( KFGlobal::Instance()->_app_id._union._id );
+        pbroute->set_serverid( KFGlobal::Instance()->_app_id->GetId() );
 
         req.set_name( name );
         req.set_msgid( msgid );
@@ -66,7 +66,7 @@ namespace KFrame
 
         auto pbroute = req.mutable_pbroute();
         pbroute->set_sendid( sendid );
-        pbroute->set_serverid( KFGlobal::Instance()->_app_id._union._id );
+        pbroute->set_serverid( KFGlobal::Instance()->_app_id->GetId() );
 
         req.set_name( name );
         req.set_msgid( msgid );
@@ -80,7 +80,7 @@ namespace KFrame
 
         auto pbroute = req.mutable_pbroute();
         pbroute->set_sendid( sendid );
-        pbroute->set_serverid( KFGlobal::Instance()->_app_id._union._id );
+        pbroute->set_serverid( KFGlobal::Instance()->_app_id->GetId() );
 
         req.set_name( name );
         req.set_msgid( msgid );
@@ -95,7 +95,7 @@ namespace KFrame
         auto pbroute = req.mutable_pbroute();
         pbroute->set_sendid( sendid );
         pbroute->set_recvid( objectid );
-        pbroute->set_serverid( KFGlobal::Instance()->_app_id._union._id );
+        pbroute->set_serverid( KFGlobal::Instance()->_app_id->GetId() );
 
         req.set_name( name );
         req.set_msgid( msgid );
@@ -110,7 +110,7 @@ namespace KFrame
         auto pbroute = req.mutable_pbroute();
         pbroute->set_sendid( sendid );
         pbroute->set_recvid( serverid );
-        pbroute->set_serverid( KFGlobal::Instance()->_app_id._union._id );
+        pbroute->set_serverid( KFGlobal::Instance()->_app_id->GetId() );
 
         req.set_msgid( msgid );
         req.set_msgdata( message->SerializeAsString() );
@@ -124,7 +124,7 @@ namespace KFrame
         auto pbroute = req.mutable_pbroute();
         pbroute->set_sendid( sendid );
         pbroute->set_recvid( playerid );
-        pbroute->set_serverid( KFGlobal::Instance()->_app_id._union._id );
+        pbroute->set_serverid( KFGlobal::Instance()->_app_id->GetId() );
 
         req.set_targetid( serverid );
         req.set_msgid( msgid );
@@ -195,7 +195,7 @@ namespace KFrame
         KFMsg::S2SRouteSyncObjectToProxyReq req;
         req.set_name( _service_name );
         req.set_shardid( shardid );
-        req.set_clientid( KFGlobal::Instance()->_app_id._union._id );
+        req.set_clientid( KFGlobal::Instance()->_app_id->GetId() );
 
         for ( auto objectid : _service_object_list )
         {
@@ -216,7 +216,7 @@ namespace KFrame
         KFMsg::S2SRouteAddObjectToProxyReq req;
         req.set_name( _service_name );
         req.set_objectid( objectid );
-        req.set_clientid( KFGlobal::Instance()->_app_id._union._id );
+        req.set_clientid( KFGlobal::Instance()->_app_id->GetId() );
         auto ok = _kf_cluster_client->SendToProxy( KFMsg::S2S_ROUTE_ADD_OBJECT_TO_PROXY_REQ, &req );
         if ( !ok )
         {
@@ -231,7 +231,7 @@ namespace KFrame
         KFMsg::S2SRouteRemoveObjectToProxyReq req;
         req.set_name( _service_name );
         req.set_objectid( objectid );
-        req.set_clientid( KFGlobal::Instance()->_app_id._union._id );
+        req.set_clientid( KFGlobal::Instance()->_app_id->GetId() );
         auto ok = _kf_cluster_client->SendToProxy( KFMsg::S2S_ROUTE_REMOVE_OBJECT_TO_PROXY_REQ, &req );
         if ( !ok )
         {
