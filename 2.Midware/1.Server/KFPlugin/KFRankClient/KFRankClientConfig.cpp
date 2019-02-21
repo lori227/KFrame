@@ -31,8 +31,8 @@ namespace KFrame
 
             kfsetting->_rank_id = id;
             kfsetting->_zone_type = ranknode.GetUInt32( "ZoneType" );
-            kfsetting->_parent_data = ranknode.GetString( "ParentData" );
-            kfsetting->_rank_data = ranknode.GetString( "RankData" );
+            kfsetting->_parent_name = ranknode.GetString( "ParentData" );
+            kfsetting->_rank_name = ranknode.GetString( "RankData" );
 
             // 计算的数据
             auto calcnodes = ranknode.FindNode( "CalcData" );
@@ -48,18 +48,6 @@ namespace KFrame
                 _kf_rank_data_list[ key ].push_back( kfsetting );
 
                 calcnode.NextNode();
-            }
-
-            // 显示的属性
-            auto shownodes = ranknode.FindNode( "ShowData" );
-            auto shownode = shownodes.FindNode( "Data" );
-            while ( shownode.IsValid() )
-            {
-                auto parentname = shownode.GetString( "Parent" );
-                auto dataname = shownode.GetString( "Name" );
-
-                kfsetting->_show_data.push_back( DataType( parentname, dataname ) );
-                shownode.NextNode();
             }
 
             ranknode.NextNode();

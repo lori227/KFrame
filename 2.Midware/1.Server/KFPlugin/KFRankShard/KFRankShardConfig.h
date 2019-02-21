@@ -11,10 +11,6 @@ namespace KFrame
         KFRankSetting()
         {
             _rank_id = 0;
-            _refresh_type = 0;
-            _refresh_time = 0;
-            _refresh_hour = 0;
-            _refresh_minute = 0;
             _zone_type = 0;
             _max_count = 0;
             _is_reset_data = false;
@@ -32,19 +28,6 @@ namespace KFrame
 
         // 分区类型 0 全区全服排行榜  1 分区排行榜
         uint32 _zone_type;
-
-        // 刷新类型
-        // 0 间隔时间 1 每小时  2 每天 3 每周 4 每月
-        uint32 _refresh_type;
-
-        // 刷新时间
-        uint32 _refresh_time;
-
-        // 刷新小时
-        uint32 _refresh_hour;
-
-        // 刷新分钟
-        uint32 _refresh_minute;
 
         // 最大数量
         uint32 _max_count;
@@ -64,13 +47,7 @@ namespace KFrame
 
         // 查找排行榜设定
         const KFRankSetting* FindRankSetting( uint32 rankid ) const;
-
-    protected:
-        // 添加ranksetting
-        void AddRankSetting( KFRankSetting* kfsetting );
-
     public:
-
         // 排行榜配置列表
         KFMap< uint32, uint32, KFRankSetting > _kf_rank_setting;
     };

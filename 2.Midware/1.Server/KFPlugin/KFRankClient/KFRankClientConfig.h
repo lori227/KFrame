@@ -5,8 +5,18 @@
 
 namespace KFrame
 {
-    typedef std::pair< std::string, std::string > DataType;
-
+    /////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////
+    class KFCalcData
+    {
+    public:
+        std::string _parent_name;
+        std::string _data_name;
+        uint64 _max_value = 0;
+        std::string _text;
+    };
+    /////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////
     class KFRankSetting
     {
     public:
@@ -21,19 +31,16 @@ namespace KFrame
         uint32 _rank_id;
 
         // 父属性
-        std::string _parent_data;
+        std::string _parent_name;
 
         // 排行榜属性
-        std::string _rank_data;
+        std::string _data_name;
 
         // 分区类型 0 全区全服排行榜  1 分区排行榜
         uint32 _zone_type;
 
         // 计算属性
-        std::vector< DataType > _calc_data;
-
-        // 显示属性
-        std::vector< DataType > _show_data;
+        std::vector< KFCalcData > _calc_data;
     };
 
     class KFRankClientConfig : public KFConfig, public KFSingleton< KFRankClientConfig >
@@ -53,7 +60,7 @@ namespace KFrame
 
     public:
         // 玩家属性
-        std::vector< DataType > _player_data;
+        std::vector< KFCalcData > _player_data;
 
         // 排行榜配置列表
         KFMap< uint32, uint32, KFRankSetting > _kf_rank_setting;

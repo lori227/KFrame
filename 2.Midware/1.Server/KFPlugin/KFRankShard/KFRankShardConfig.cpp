@@ -22,10 +22,6 @@ namespace KFrame
             kfsetting->_parent_data = ranknode.GetString( "ParentData" );
             kfsetting->_rank_data = ranknode.GetString( "RankData" );
             kfsetting->_max_count = ranknode.GetUInt32( "MaxCount" );
-            kfsetting->_refresh_type = ranknode.GetUInt32( "RefreshType" );
-            kfsetting->_refresh_time = ranknode.GetUInt32( "RefreshTime" );
-            kfsetting->_refresh_hour = ranknode.GetUInt32( "RefreshHour" );
-            kfsetting->_refresh_minute = ranknode.GetUInt32( "RefreshMinute" );
             kfsetting->_is_reset_data = ranknode.GetBoolen( "Reset" );
 
             ranknode.NextNode();
