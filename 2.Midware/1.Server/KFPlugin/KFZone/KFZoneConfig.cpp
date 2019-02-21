@@ -35,7 +35,7 @@ namespace KFrame
             zone->_login_id = loginid;
 
             // 本小区
-            if ( KFGlobal::Instance()->_app_id._union._app_data._zone_id == id )
+            if ( KFGlobal::Instance()->_app_id->GetZoneId() == id )
             {
                 _zone._id = id;
                 _zone._name = xmlnode.GetString( "Name" );
@@ -49,7 +49,7 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////
         if ( _zone._id == _invalid_int )
         {
-            SetZoneData( &_zone, KFGlobal::Instance()->_app_id._union._app_data._zone_id );
+            SetZoneData( &_zone, KFGlobal::Instance()->_app_id->GetZoneId() );
         }
         /////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////

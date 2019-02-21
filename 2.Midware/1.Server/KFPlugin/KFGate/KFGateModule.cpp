@@ -58,7 +58,7 @@ namespace KFrame
     {
         auto kfglobal = KFGlobal::Instance();
 
-        auto loginid = _kf_login_conhash.FindHashNode( kfglobal->_app_id._union._id );
+        auto loginid = _kf_login_conhash.FindHashNode( kfglobal->_app_id->GetId() );
         if ( loginid == _invalid_int )
         {
             return;

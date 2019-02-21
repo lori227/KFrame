@@ -66,7 +66,7 @@ namespace KFrame
     {
         KFMsg::S2SNewPlayerMailReq req;
         req.set_playerid( player->GetKeyID() );
-        req.set_zoneid( KFGlobal::Instance()->_app_id._union._app_data._zone_id );
+        req.set_zoneid( KFGlobal::Instance()->_app_id->GetZoneId() );
         SendMessageToMail( player->GetKeyID(), KFMsg::S2S_NEW_PLAYER_MAIL_REQ, &req );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -100,7 +100,7 @@ namespace KFrame
         auto kfobject = player->GetData();
         auto maxmailid = kfobject->GetValue( __KF_STRING__( maxmailid ) );
 
-        auto zoneid = KFGlobal::Instance()->_app_id._union._app_data._zone_id;
+        auto zoneid = KFGlobal::Instance()->_app_id->GetZoneId();
 
         KFMsg::S2SQueryMailReq req;
         req.set_zoneid( zoneid );
@@ -406,7 +406,7 @@ namespace KFrame
             return false;
         }
 
-        auto zoneid = KFGlobal::Instance()->_app_id._union._app_data._zone_id;
+        auto zoneid = KFGlobal::Instance()->_app_id->GetZoneId();
 
         auto& maildata = FormatMailData( nullptr, kfsetting, kfelements );
         return SendAddMailToShard( _invalid_int, KFMsg::GlobalMail, zoneid, maildata );

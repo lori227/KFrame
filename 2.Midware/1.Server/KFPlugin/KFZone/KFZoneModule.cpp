@@ -28,14 +28,16 @@ namespace KFrame
 
     bool KFZoneModule::IsServerSameZone( uint64 serverid )
     {
-        KFAppID kfappid( serverid );
-        return kfappid._union._app_data._zone_id == KFGlobal::Instance()->_app_id._union._app_data._zone_id;
+        static KFAppId _kf_app_id;
+        _kf_app_id.FromUInt64( serverid );
+
+        return _kf_app_id.GetZoneId() == KFGlobal::Instance()->_app_id->GetZoneId();
     }
 
     bool KFZoneModule::IsPlayerSameZone( uint64 playerid )
     {
         auto zoneid = KFUtility::CalcZoneId( playerid );
-        return zoneid == KFGlobal::Instance()->_app_id._union._app_data._zone_id;
+        return zoneid == KFGlobal::Instance()->_app_id->GetZoneId();
     }
 
 }

@@ -161,7 +161,7 @@ namespace KFrame
     bool KFGameModule::SendToPlayer( uint64 sendid, uint64 serverid, uint64 playerid, uint32 msgid, ::google::protobuf::Message* message )
     {
         // 本服务器
-        if ( serverid == KFGlobal::Instance()->_app_id._union._id )
+        if ( serverid == KFGlobal::Instance()->_app_id->GetId() )
         {
             auto player = _kf_player->FindPlayer( playerid );
             if ( player == nullptr )
@@ -173,8 +173,7 @@ namespace KFrame
         }
 
         // 本小区
-        KFAppID appid( serverid );
-        if ( appid._union._app_data._zone_id == KFGlobal::Instance()->_app_id._union._app_data._zone_id )
+        if ( _kf_zone->IsServerSameZone( serverid ) )
         {
             KFMsg::S2STransmitToPlayer req;
             req.set_playerid( playerid );

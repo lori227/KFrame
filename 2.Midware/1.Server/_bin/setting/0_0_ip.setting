@@ -16,7 +16,5 @@
 		<!-- zone master, 每个小区一条 -->
 		<Server AppName="zone" AppType="master" AppId="0.1.1.1" Ip="127.0.0.1" Type="0" Port="11000"/>
 	</TcpServer>
-
-
 </Config>
 

@@ -475,7 +475,7 @@ namespace KFrame
         __JSON_SET_VALUE__( postjson, __KF_STRING__( accountid ), accountid );
         __JSON_SET_VALUE__( postjson, __KF_STRING__( activationcode ), activationcode );
         __JSON_SET_VALUE__( postjson, __KF_STRING__( openid ), account );
-        __JSON_SET_VALUE__( postjson, __KF_STRING__( channel ), KFGlobal::Instance()->_app_id._union._app_data._channel_id );
+        __JSON_SET_VALUE__( postjson, __KF_STRING__( channel ), KFGlobal::Instance()->_app_id->GetChannelId() );
 
         //去平台通过激活码激活
         auto result = _kf_http_client->STGet( apiurl, postjson );

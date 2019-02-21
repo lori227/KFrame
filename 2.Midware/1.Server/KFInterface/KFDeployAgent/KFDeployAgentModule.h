@@ -195,8 +195,11 @@ namespace KFrame
 
         void SendLogMessage( const std::string& url, const std::string& msg );
     private:
-        // 部署服务器的
-        uint64 _deploy_server_id{ 0 };
+
+        // 部署服务器
+        std::string _deploy_server_id = 0u;
+        std::string _deploy_server_ip;
+        uint32 _deploy_server_port = 0u;
 
         // mysql
         KFMySQLDriver* _deploy_driver{ nullptr };
@@ -206,10 +209,6 @@ namespace KFrame
 
         // deploy列表
         KFMap< std::string, const std::string&, KFDeployData > _deploy_list;
-
-        // launch列表
-        typedef std::pair< std::string, std::string > LaunchKey;
-        KFMap< LaunchKey, const LaunchKey&, KFLaunchSetting > _launch_list;
 
         // 当前执行的任务
         KFDeployTask* _kf_task{ nullptr };
