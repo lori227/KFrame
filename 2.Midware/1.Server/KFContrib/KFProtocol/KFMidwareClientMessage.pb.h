@@ -32,6 +32,7 @@
 #include <google/protobuf/generated_enum_reflection.h>
 #include <google/protobuf/unknown_field_set.h>
 #include "KFDefineMessage.pb.h"
+#include "KFMidwareDefineMessage.pb.h"
 // @@protoc_insertion_point(includes)
 #define PROTOBUF_INTERNAL_EXPORT_protobuf_KFMidwareClientMessage_2eproto LIBPROTOC_EXPORT
 
@@ -40,7 +41,7 @@ namespace protobuf_KFMidwareClientMessage_2eproto {
 struct LIBPROTOC_EXPORT TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[30];
+  static const ::google::protobuf::internal::ParseTable schema[34];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -84,6 +85,12 @@ LIBPROTOC_EXPORT extern MsgQueryBasicAckDefaultTypeInternal _MsgQueryBasicAck_de
 class MsgQueryBasicReq;
 class MsgQueryBasicReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgQueryBasicReqDefaultTypeInternal _MsgQueryBasicReq_default_instance_;
+class MsgQueryFriendRankListAck;
+class MsgQueryFriendRankListAckDefaultTypeInternal;
+LIBPROTOC_EXPORT extern MsgQueryFriendRankListAckDefaultTypeInternal _MsgQueryFriendRankListAck_default_instance_;
+class MsgQueryFriendRankListReq;
+class MsgQueryFriendRankListReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern MsgQueryFriendRankListReqDefaultTypeInternal _MsgQueryFriendRankListReq_default_instance_;
 class MsgQueryMailReq;
 class MsgQueryMailReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgQueryMailReqDefaultTypeInternal _MsgQueryMailReq_default_instance_;
@@ -93,6 +100,12 @@ LIBPROTOC_EXPORT extern MsgQueryPlayerAckDefaultTypeInternal _MsgQueryPlayerAck_
 class MsgQueryPlayerReq;
 class MsgQueryPlayerReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgQueryPlayerReqDefaultTypeInternal _MsgQueryPlayerReq_default_instance_;
+class MsgQueryRankListAck;
+class MsgQueryRankListAckDefaultTypeInternal;
+LIBPROTOC_EXPORT extern MsgQueryRankListAckDefaultTypeInternal _MsgQueryRankListAck_default_instance_;
+class MsgQueryRankListReq;
+class MsgQueryRankListReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern MsgQueryRankListReqDefaultTypeInternal _MsgQueryRankListReq_default_instance_;
 class MsgQueryStoreAck;
 class MsgQueryStoreAckDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgQueryStoreAckDefaultTypeInternal _MsgQueryStoreAck_default_instance_;
@@ -153,9 +166,13 @@ template<> LIBPROTOC_EXPORT ::KFMsg::MsgLogoutReq* Arena::CreateMaybeMessage<::K
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgMailRewardReq* Arena::CreateMaybeMessage<::KFMsg::MsgMailRewardReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgQueryBasicAck* Arena::CreateMaybeMessage<::KFMsg::MsgQueryBasicAck>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgQueryBasicReq* Arena::CreateMaybeMessage<::KFMsg::MsgQueryBasicReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::MsgQueryFriendRankListAck* Arena::CreateMaybeMessage<::KFMsg::MsgQueryFriendRankListAck>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::MsgQueryFriendRankListReq* Arena::CreateMaybeMessage<::KFMsg::MsgQueryFriendRankListReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgQueryMailReq* Arena::CreateMaybeMessage<::KFMsg::MsgQueryMailReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgQueryPlayerAck* Arena::CreateMaybeMessage<::KFMsg::MsgQueryPlayerAck>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgQueryPlayerReq* Arena::CreateMaybeMessage<::KFMsg::MsgQueryPlayerReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::MsgQueryRankListAck* Arena::CreateMaybeMessage<::KFMsg::MsgQueryRankListAck>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::MsgQueryRankListReq* Arena::CreateMaybeMessage<::KFMsg::MsgQueryRankListReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgQueryStoreAck* Arena::CreateMaybeMessage<::KFMsg::MsgQueryStoreAck>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgQueryStoreReq* Arena::CreateMaybeMessage<::KFMsg::MsgQueryStoreReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgRemoveDataReq* Arena::CreateMaybeMessage<::KFMsg::MsgRemoveDataReq>(Arena*);
@@ -208,12 +225,16 @@ enum MidwareClientProtocol {
   MSG_BUY_STORE_REQ = 411,
   MSG_QUERY_STORE_REQ = 412,
   MSG_QUERY_STORE_ACK = 413,
+  MSG_QUERY_RANK_LIST_REQ = 431,
+  MSG_QUERY_RANK_LIST_ACK = 432,
+  MSG_QUERY_FRIEND_RANK_LIST_REQ = 433,
+  MSG_QUERY_FRIEND_RANK_LIST_ACK = 434,
   MidwareClientProtocol_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   MidwareClientProtocol_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 LIBPROTOC_EXPORT bool MidwareClientProtocol_IsValid(int value);
 const MidwareClientProtocol MidwareClientProtocol_MIN = MSG_MIDWARE_CLIENT_BEGIN;
-const MidwareClientProtocol MidwareClientProtocol_MAX = MSG_QUERY_STORE_ACK;
+const MidwareClientProtocol MidwareClientProtocol_MAX = MSG_QUERY_FRIEND_RANK_LIST_ACK;
 const int MidwareClientProtocol_ARRAYSIZE = MidwareClientProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* MidwareClientProtocol_descriptor();
@@ -3565,6 +3586,444 @@ class LIBPROTOC_EXPORT MsgQueryStoreAck : public ::google::protobuf::Message /* 
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_KFMidwareClientMessage_2eproto::TableStruct;
 };
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgQueryRankListReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgQueryRankListReq) */ {
+ public:
+  MsgQueryRankListReq();
+  virtual ~MsgQueryRankListReq();
+
+  MsgQueryRankListReq(const MsgQueryRankListReq& from);
+
+  inline MsgQueryRankListReq& operator=(const MsgQueryRankListReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  MsgQueryRankListReq(MsgQueryRankListReq&& from) noexcept
+    : MsgQueryRankListReq() {
+    *this = ::std::move(from);
+  }
+
+  inline MsgQueryRankListReq& operator=(MsgQueryRankListReq&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgQueryRankListReq& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MsgQueryRankListReq* internal_default_instance() {
+    return reinterpret_cast<const MsgQueryRankListReq*>(
+               &_MsgQueryRankListReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    30;
+
+  void Swap(MsgQueryRankListReq* other);
+  friend void swap(MsgQueryRankListReq& a, MsgQueryRankListReq& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MsgQueryRankListReq* New() const final {
+    return CreateMaybeMessage<MsgQueryRankListReq>(NULL);
+  }
+
+  MsgQueryRankListReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MsgQueryRankListReq>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const MsgQueryRankListReq& from);
+  void MergeFrom(const MsgQueryRankListReq& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MsgQueryRankListReq* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // uint32 rankid = 1;
+  void clear_rankid();
+  static const int kRankidFieldNumber = 1;
+  ::google::protobuf::uint32 rankid() const;
+  void set_rankid(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgQueryRankListReq)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 rankid_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_KFMidwareClientMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgQueryRankListAck : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgQueryRankListAck) */ {
+ public:
+  MsgQueryRankListAck();
+  virtual ~MsgQueryRankListAck();
+
+  MsgQueryRankListAck(const MsgQueryRankListAck& from);
+
+  inline MsgQueryRankListAck& operator=(const MsgQueryRankListAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  MsgQueryRankListAck(MsgQueryRankListAck&& from) noexcept
+    : MsgQueryRankListAck() {
+    *this = ::std::move(from);
+  }
+
+  inline MsgQueryRankListAck& operator=(MsgQueryRankListAck&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgQueryRankListAck& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MsgQueryRankListAck* internal_default_instance() {
+    return reinterpret_cast<const MsgQueryRankListAck*>(
+               &_MsgQueryRankListAck_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    31;
+
+  void Swap(MsgQueryRankListAck* other);
+  friend void swap(MsgQueryRankListAck& a, MsgQueryRankListAck& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MsgQueryRankListAck* New() const final {
+    return CreateMaybeMessage<MsgQueryRankListAck>(NULL);
+  }
+
+  MsgQueryRankListAck* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MsgQueryRankListAck>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const MsgQueryRankListAck& from);
+  void MergeFrom(const MsgQueryRankListAck& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MsgQueryRankListAck* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // .KFMsg.PBRankDatas rankdatas = 2;
+  bool has_rankdatas() const;
+  void clear_rankdatas();
+  static const int kRankdatasFieldNumber = 2;
+  private:
+  const ::KFMsg::PBRankDatas& _internal_rankdatas() const;
+  public:
+  const ::KFMsg::PBRankDatas& rankdatas() const;
+  ::KFMsg::PBRankDatas* release_rankdatas();
+  ::KFMsg::PBRankDatas* mutable_rankdatas();
+  void set_allocated_rankdatas(::KFMsg::PBRankDatas* rankdatas);
+
+  // uint32 rankid = 1;
+  void clear_rankid();
+  static const int kRankidFieldNumber = 1;
+  ::google::protobuf::uint32 rankid() const;
+  void set_rankid(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgQueryRankListAck)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::KFMsg::PBRankDatas* rankdatas_;
+  ::google::protobuf::uint32 rankid_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_KFMidwareClientMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgQueryFriendRankListReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgQueryFriendRankListReq) */ {
+ public:
+  MsgQueryFriendRankListReq();
+  virtual ~MsgQueryFriendRankListReq();
+
+  MsgQueryFriendRankListReq(const MsgQueryFriendRankListReq& from);
+
+  inline MsgQueryFriendRankListReq& operator=(const MsgQueryFriendRankListReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  MsgQueryFriendRankListReq(MsgQueryFriendRankListReq&& from) noexcept
+    : MsgQueryFriendRankListReq() {
+    *this = ::std::move(from);
+  }
+
+  inline MsgQueryFriendRankListReq& operator=(MsgQueryFriendRankListReq&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgQueryFriendRankListReq& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MsgQueryFriendRankListReq* internal_default_instance() {
+    return reinterpret_cast<const MsgQueryFriendRankListReq*>(
+               &_MsgQueryFriendRankListReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    32;
+
+  void Swap(MsgQueryFriendRankListReq* other);
+  friend void swap(MsgQueryFriendRankListReq& a, MsgQueryFriendRankListReq& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MsgQueryFriendRankListReq* New() const final {
+    return CreateMaybeMessage<MsgQueryFriendRankListReq>(NULL);
+  }
+
+  MsgQueryFriendRankListReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MsgQueryFriendRankListReq>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const MsgQueryFriendRankListReq& from);
+  void MergeFrom(const MsgQueryFriendRankListReq& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MsgQueryFriendRankListReq* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // uint32 rankid = 1;
+  void clear_rankid();
+  static const int kRankidFieldNumber = 1;
+  ::google::protobuf::uint32 rankid() const;
+  void set_rankid(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgQueryFriendRankListReq)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 rankid_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_KFMidwareClientMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgQueryFriendRankListAck : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgQueryFriendRankListAck) */ {
+ public:
+  MsgQueryFriendRankListAck();
+  virtual ~MsgQueryFriendRankListAck();
+
+  MsgQueryFriendRankListAck(const MsgQueryFriendRankListAck& from);
+
+  inline MsgQueryFriendRankListAck& operator=(const MsgQueryFriendRankListAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  MsgQueryFriendRankListAck(MsgQueryFriendRankListAck&& from) noexcept
+    : MsgQueryFriendRankListAck() {
+    *this = ::std::move(from);
+  }
+
+  inline MsgQueryFriendRankListAck& operator=(MsgQueryFriendRankListAck&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgQueryFriendRankListAck& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MsgQueryFriendRankListAck* internal_default_instance() {
+    return reinterpret_cast<const MsgQueryFriendRankListAck*>(
+               &_MsgQueryFriendRankListAck_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    33;
+
+  void Swap(MsgQueryFriendRankListAck* other);
+  friend void swap(MsgQueryFriendRankListAck& a, MsgQueryFriendRankListAck& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MsgQueryFriendRankListAck* New() const final {
+    return CreateMaybeMessage<MsgQueryFriendRankListAck>(NULL);
+  }
+
+  MsgQueryFriendRankListAck* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MsgQueryFriendRankListAck>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const MsgQueryFriendRankListAck& from);
+  void MergeFrom(const MsgQueryFriendRankListAck& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MsgQueryFriendRankListAck* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // .KFMsg.PBRankDatas rankdatas = 2;
+  bool has_rankdatas() const;
+  void clear_rankdatas();
+  static const int kRankdatasFieldNumber = 2;
+  private:
+  const ::KFMsg::PBRankDatas& _internal_rankdatas() const;
+  public:
+  const ::KFMsg::PBRankDatas& rankdatas() const;
+  ::KFMsg::PBRankDatas* release_rankdatas();
+  ::KFMsg::PBRankDatas* mutable_rankdatas();
+  void set_allocated_rankdatas(::KFMsg::PBRankDatas* rankdatas);
+
+  // uint32 rankid = 1;
+  void clear_rankid();
+  static const int kRankidFieldNumber = 1;
+  ::google::protobuf::uint32 rankid() const;
+  void set_rankid(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgQueryFriendRankListAck)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::KFMsg::PBRankDatas* rankdatas_;
+  ::google::protobuf::uint32 rankid_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_KFMidwareClientMessage_2eproto::TableStruct;
+};
 // ===================================================================
 
 
@@ -5087,9 +5546,185 @@ inline void MsgQueryStoreAck::set_allocated_data(::std::string* data) {
   // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgQueryStoreAck.data)
 }
 
+// -------------------------------------------------------------------
+
+// MsgQueryRankListReq
+
+// uint32 rankid = 1;
+inline void MsgQueryRankListReq::clear_rankid() {
+  rankid_ = 0u;
+}
+inline ::google::protobuf::uint32 MsgQueryRankListReq::rankid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgQueryRankListReq.rankid)
+  return rankid_;
+}
+inline void MsgQueryRankListReq::set_rankid(::google::protobuf::uint32 value) {
+  
+  rankid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.MsgQueryRankListReq.rankid)
+}
+
+// -------------------------------------------------------------------
+
+// MsgQueryRankListAck
+
+// uint32 rankid = 1;
+inline void MsgQueryRankListAck::clear_rankid() {
+  rankid_ = 0u;
+}
+inline ::google::protobuf::uint32 MsgQueryRankListAck::rankid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgQueryRankListAck.rankid)
+  return rankid_;
+}
+inline void MsgQueryRankListAck::set_rankid(::google::protobuf::uint32 value) {
+  
+  rankid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.MsgQueryRankListAck.rankid)
+}
+
+// .KFMsg.PBRankDatas rankdatas = 2;
+inline bool MsgQueryRankListAck::has_rankdatas() const {
+  return this != internal_default_instance() && rankdatas_ != NULL;
+}
+inline const ::KFMsg::PBRankDatas& MsgQueryRankListAck::_internal_rankdatas() const {
+  return *rankdatas_;
+}
+inline const ::KFMsg::PBRankDatas& MsgQueryRankListAck::rankdatas() const {
+  const ::KFMsg::PBRankDatas* p = rankdatas_;
+  // @@protoc_insertion_point(field_get:KFMsg.MsgQueryRankListAck.rankdatas)
+  return p != NULL ? *p : *reinterpret_cast<const ::KFMsg::PBRankDatas*>(
+      &::KFMsg::_PBRankDatas_default_instance_);
+}
+inline ::KFMsg::PBRankDatas* MsgQueryRankListAck::release_rankdatas() {
+  // @@protoc_insertion_point(field_release:KFMsg.MsgQueryRankListAck.rankdatas)
+  
+  ::KFMsg::PBRankDatas* temp = rankdatas_;
+  rankdatas_ = NULL;
+  return temp;
+}
+inline ::KFMsg::PBRankDatas* MsgQueryRankListAck::mutable_rankdatas() {
+  
+  if (rankdatas_ == NULL) {
+    auto* p = CreateMaybeMessage<::KFMsg::PBRankDatas>(GetArenaNoVirtual());
+    rankdatas_ = p;
+  }
+  // @@protoc_insertion_point(field_mutable:KFMsg.MsgQueryRankListAck.rankdatas)
+  return rankdatas_;
+}
+inline void MsgQueryRankListAck::set_allocated_rankdatas(::KFMsg::PBRankDatas* rankdatas) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete reinterpret_cast< ::google::protobuf::MessageLite*>(rankdatas_);
+  }
+  if (rankdatas) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      rankdatas = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, rankdatas, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  rankdatas_ = rankdatas;
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgQueryRankListAck.rankdatas)
+}
+
+// -------------------------------------------------------------------
+
+// MsgQueryFriendRankListReq
+
+// uint32 rankid = 1;
+inline void MsgQueryFriendRankListReq::clear_rankid() {
+  rankid_ = 0u;
+}
+inline ::google::protobuf::uint32 MsgQueryFriendRankListReq::rankid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgQueryFriendRankListReq.rankid)
+  return rankid_;
+}
+inline void MsgQueryFriendRankListReq::set_rankid(::google::protobuf::uint32 value) {
+  
+  rankid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.MsgQueryFriendRankListReq.rankid)
+}
+
+// -------------------------------------------------------------------
+
+// MsgQueryFriendRankListAck
+
+// uint32 rankid = 1;
+inline void MsgQueryFriendRankListAck::clear_rankid() {
+  rankid_ = 0u;
+}
+inline ::google::protobuf::uint32 MsgQueryFriendRankListAck::rankid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgQueryFriendRankListAck.rankid)
+  return rankid_;
+}
+inline void MsgQueryFriendRankListAck::set_rankid(::google::protobuf::uint32 value) {
+  
+  rankid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.MsgQueryFriendRankListAck.rankid)
+}
+
+// .KFMsg.PBRankDatas rankdatas = 2;
+inline bool MsgQueryFriendRankListAck::has_rankdatas() const {
+  return this != internal_default_instance() && rankdatas_ != NULL;
+}
+inline const ::KFMsg::PBRankDatas& MsgQueryFriendRankListAck::_internal_rankdatas() const {
+  return *rankdatas_;
+}
+inline const ::KFMsg::PBRankDatas& MsgQueryFriendRankListAck::rankdatas() const {
+  const ::KFMsg::PBRankDatas* p = rankdatas_;
+  // @@protoc_insertion_point(field_get:KFMsg.MsgQueryFriendRankListAck.rankdatas)
+  return p != NULL ? *p : *reinterpret_cast<const ::KFMsg::PBRankDatas*>(
+      &::KFMsg::_PBRankDatas_default_instance_);
+}
+inline ::KFMsg::PBRankDatas* MsgQueryFriendRankListAck::release_rankdatas() {
+  // @@protoc_insertion_point(field_release:KFMsg.MsgQueryFriendRankListAck.rankdatas)
+  
+  ::KFMsg::PBRankDatas* temp = rankdatas_;
+  rankdatas_ = NULL;
+  return temp;
+}
+inline ::KFMsg::PBRankDatas* MsgQueryFriendRankListAck::mutable_rankdatas() {
+  
+  if (rankdatas_ == NULL) {
+    auto* p = CreateMaybeMessage<::KFMsg::PBRankDatas>(GetArenaNoVirtual());
+    rankdatas_ = p;
+  }
+  // @@protoc_insertion_point(field_mutable:KFMsg.MsgQueryFriendRankListAck.rankdatas)
+  return rankdatas_;
+}
+inline void MsgQueryFriendRankListAck::set_allocated_rankdatas(::KFMsg::PBRankDatas* rankdatas) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete reinterpret_cast< ::google::protobuf::MessageLite*>(rankdatas_);
+  }
+  if (rankdatas) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      rankdatas = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, rankdatas, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  rankdatas_ = rankdatas;
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgQueryFriendRankListAck.rankdatas)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

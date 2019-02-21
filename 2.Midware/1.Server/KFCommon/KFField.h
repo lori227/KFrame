@@ -171,6 +171,8 @@ namespace KFrame
         __STRING_DEFINE__( mailid );
         __STRING_DEFINE__( addmail );
         __STRING_DEFINE__( delmail );
+        __STRING_DEFINE__( rank );
+        __STRING_DEFINE__( friend );
 
     }
 }

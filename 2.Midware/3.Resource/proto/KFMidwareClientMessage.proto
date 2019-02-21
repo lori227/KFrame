@@ -1,55 +1,62 @@
 syntax = "proto3";
 import "KFDefineMessage.proto";
+import "KFMidwareDefineMessage.proto";
 
 package KFMsg;
 
 // 协议号区间 : 1-1000
 enum MidwareClientProtocol
  {
-	MSG_MIDWARE_CLIENT_BEGIN 	= 0;				// pb3 需要0
+	MSG_MIDWARE_CLIENT_BEGIN 		= 0;		// pb3 需要0
 
 	// display
-	MSG_RESULT_DISPLAY 			= 1;				// 提示显示
-	MSG_COMMAND_REQ 			= 2;				// 客户端发送GM指令请求
+	MSG_RESULT_DISPLAY 				= 1;		// 提示显示
+	MSG_COMMAND_REQ 				= 2;		// 客户端发送GM指令请求
 
 	// login
-	MSG_LOGIN_REQ 				= 100;				// 客户端登录验证请求
-	MSG_LOGIN_ACK 				= 101;				// 客户端登录验证结果
-	MSG_LOGOUT_REQ 				= 102;				// 客户端请求登出游戏
-	MSG_TELL_BE_KICK 			= 103;				// 被踢下线了
+	MSG_LOGIN_REQ 					= 100;		// 客户端登录验证请求
+	MSG_LOGIN_ACK 					= 101;		// 客户端登录验证结果
+	MSG_LOGOUT_REQ 					= 102;		// 客户端请求登出游戏
+	MSG_TELL_BE_KICK 				= 103;		// 被踢下线了
 
 	// data
-	MSG_LOGIN_ENTER_GAME 		= 200;				// 通知进入游戏
- 	MSG_SYNC_UPDATE_DATA 		= 201;				// 同步更新属性
-	MSG_SYNC_ADD_DATA 			= 202;				// 同步增加属性
-	MSG_SYNC_REMOVE_DATA 		= 203;				// 同步删除属性
-	MSG_REMOVE_DATA_REQ 		= 204;				// 请求删除属性
-	MSG_QUERY_PLAYER_REQ 		= 205;				// 查询玩家数据
-	MSG_QUERY_PLAYER_ACK 		= 206;			    // 查询玩家数据
-	MSG_QUERY_BASIC_REQ			= 207;				// 查询玩家基本数据
-	MSG_QUERY_BASIC_ACK			= 208;				// 查询基础数据
-	MSG_SHOW_ELEMENT 			= 209;				// 显示奖励
+	MSG_LOGIN_ENTER_GAME 			= 200;		// 通知进入游戏
+ 	MSG_SYNC_UPDATE_DATA 			= 201;		// 同步更新属性
+	MSG_SYNC_ADD_DATA 				= 202;		// 同步增加属性
+	MSG_SYNC_REMOVE_DATA 			= 203;		// 同步删除属性
+	MSG_REMOVE_DATA_REQ 			= 204;		// 请求删除属性
+	MSG_QUERY_PLAYER_REQ 			= 205;		// 查询玩家数据
+	MSG_QUERY_PLAYER_ACK 			= 206;		// 查询玩家数据
+	MSG_QUERY_BASIC_REQ				= 207;		// 查询玩家基本数据
+	MSG_QUERY_BASIC_ACK				= 208;		// 查询基础数据
+	MSG_SHOW_ELEMENT 				= 209;		// 显示奖励
 
 	// attribute
-	MSG_SET_NAME_REQ 			= 300;				// 设置名字
-	MSG_SET_SEX_REQ 			= 301;				// 设置性别
-	MSG_ACHIEVE_REWARD_REQ		= 302;				// 领取成就奖励
-	MSG_TASK_REWARD_REQ 		= 303;				// 领取任务奖励
-	MSG_ACTIVITY_REWARD_REQ 	= 304;				// 领取活动奖励
-	MSG_COMPOUND_REQ			= 305;				// 属性合成请求
-	MSG_USE_ITEM_REQ			= 306;				// 使用道具
-	MSG_SEVEN_SIGNIN_REWARD_REQ	= 307;				// 领取7天签到奖励
+	MSG_SET_NAME_REQ 				= 300;		// 设置名字
+	MSG_SET_SEX_REQ 				= 301;		// 设置性别
+	MSG_ACHIEVE_REWARD_REQ			= 302;		// 领取成就奖励
+	MSG_TASK_REWARD_REQ 			= 303;		// 领取任务奖励
+	MSG_ACTIVITY_REWARD_REQ 		= 304;		// 领取活动奖励
+	MSG_COMPOUND_REQ				= 305;		// 属性合成请求
+	MSG_USE_ITEM_REQ				= 306;		// 使用道具
+	MSG_SEVEN_SIGNIN_REWARD_REQ		= 307;		// 领取7天签到奖励
 
 	// mail
-	MSG_VIEW_MAIL_REQ 			= 401;				// 查看邮件
-	MSG_DELETE_MAIL_REQ 		= 402;				// 删除邮件
-	MSG_QUERY_MAIL_REQ 			= 403;				// 请求查询邮件
-	MSG_MAIL_REWARD_REQ 		= 404;				// 领取邮件奖励
+	MSG_VIEW_MAIL_REQ 				= 401;		// 查看邮件
+	MSG_DELETE_MAIL_REQ 			= 402;		// 删除邮件
+	MSG_QUERY_MAIL_REQ 				= 403;		// 请求查询邮件
+	MSG_MAIL_REWARD_REQ 			= 404;		// 领取邮件奖励
 
 	// store
-	MSG_BUY_STORE_REQ 			= 411;					// 购买商品请求
-	MSG_QUERY_STORE_REQ 		= 412;					// 请求商城信息
-	MSG_QUERY_STORE_ACK 		= 413;					// 请求商城信息反馈
+	MSG_BUY_STORE_REQ 				= 411;		// 购买商品请求
+	MSG_QUERY_STORE_REQ 			= 412;		// 请求商城信息
+	MSG_QUERY_STORE_ACK 			= 413;		// 请求商城信息反馈
+
+	// rank
+	MSG_QUERY_RANK_LIST_REQ 		= 431;		// 查询全服排行榜
+	MSG_QUERY_RANK_LIST_ACK	 		= 432;		// 查询排行榜反馈
+	MSG_QUERY_FRIEND_RANK_LIST_REQ 	= 433;		// 查询好友排行榜
+	MSG_QUERY_FRIEND_RANK_LIST_ACK	= 434;		// 查询好友排行榜
  }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -283,3 +290,36 @@ message MsgQueryStoreAck
 	bytes version = 1;		// 版本号
 	bytes data = 2;			// 商城数据( 保存成xml, 然后自己解析文件 )
 }
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+// 查询全服排行榜
+// MSG_QUERY_RANK_LIST_REQ	
+message MsgQueryRankListReq
+{
+	uint32 rankid = 1;
+}
+
+// 查询排行榜反馈
+// MSG_QUERY_RANK_LIST_ACK
+message MsgQueryRankListAck
+{
+	uint32 rankid = 1;			// 排行榜id
+	PBRankDatas rankdatas = 2;	// 榜单数据
+}
+
+// 查询好友排行榜
+// MSG_QUERY_FRIEND_RANK_LIST_REQ
+message MsgQueryFriendRankListReq
+{
+	uint32 rankid = 1;
+}
+
+// 查询好友排行榜反馈
+// MSG_QUERY_FRIEND_RANK_LIST_ACK
+message MsgQueryFriendRankListAck
+{
+	uint32 rankid = 1;			// 排行榜id
+	PBRankDatas rankdatas = 2;	// 榜单数据
+}
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////

@@ -174,6 +174,7 @@ enum ServerProtocol
 	S2S_QUERY_RANK_LIST_REQ = 21187;				// 查询全服排行榜
 	S2S_QUERY_FRIEND_RANK_LIST_REQ = 21188;			// 查询好友排行榜
 	S2S_TELL_MATCH_GROUP_DATA_ACK = 21192;			// 通知队伍数据
+	
 	S2S_UPDATE_RANK_DATA_REQ = 21193;				// 更新排行榜数据
 	S2S_ADD_RECENT_PLAYER_DATA_REQ = 21194;			// 结算最近的人相关数据
 	S2S_QUERY_RECENT_LIST_REQ = 21195;				// 请求最近游戏列表

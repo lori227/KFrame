@@ -6,6 +6,7 @@
     <ClCompile Include="KFMidwareEnumMessage.pb.cc" />
     <ClCompile Include="KFMidwareServerMessage.pb.cc" />
     <ClCompile Include="KFMidwareClientMessage.pb.cc" />
+    <ClCompile Include="KFMidwareDefineMessage.pb.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFProtocol.h" />
@@ -14,5 +15,6 @@
     <ClInclude Include="KFMidwareEnumMessage.pb.h" />
     <ClInclude Include="KFMidwareServerMessage.pb.h" />
     <ClInclude Include="KFMidwareClientMessage.pb.h" />
+    <ClInclude Include="KFMidwareDefineMessage.pb.h" />
   </ItemGroup>
 </Project>

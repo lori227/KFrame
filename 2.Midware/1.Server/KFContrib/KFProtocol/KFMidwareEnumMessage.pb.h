@@ -165,6 +165,28 @@ inline bool MailEnum_Parse(
   return ::google::protobuf::internal::ParseNamedEnum<MailEnum>(
     MailEnum_descriptor(), name, value);
 }
+enum RankEnum {
+  UnknowRank = 0,
+  TotalRank = 1,
+  ZoneRank = 2,
+  RankEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  RankEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+LIBPROTOC_EXPORT bool RankEnum_IsValid(int value);
+const RankEnum RankEnum_MIN = UnknowRank;
+const RankEnum RankEnum_MAX = ZoneRank;
+const int RankEnum_ARRAYSIZE = RankEnum_MAX + 1;
+
+LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* RankEnum_descriptor();
+inline const ::std::string& RankEnum_Name(RankEnum value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    RankEnum_descriptor(), value);
+}
+inline bool RankEnum_Parse(
+    const ::std::string& name, RankEnum* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<RankEnum>(
+    RankEnum_descriptor(), name, value);
+}
 // ===================================================================
 
 
@@ -212,6 +234,11 @@ template <> struct is_proto_enum< ::KFMsg::MailEnum> : ::std::true_type {};
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::MailEnum>() {
   return ::KFMsg::MailEnum_descriptor();
+}
+template <> struct is_proto_enum< ::KFMsg::RankEnum> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::RankEnum>() {
+  return ::KFMsg::RankEnum_descriptor();
 }
 
 }  // namespace protobuf

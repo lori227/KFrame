@@ -1,5 +1,6 @@
 syntax = "proto3";
 import "KFDefineMessage.proto";
+import "KFMidwareDefineMessage.proto";
 
 package KFMsg;
 
@@ -51,7 +52,13 @@ enum MidwareServerProtocol
 	S2S_NOTICE_NEW_MAIL_REQ 			= 20505;	// 通知新邮件
 	S2S_UPDATE_MAIL_STATUS_REQ 			= 20506;	// 设置邮件状态请求
 	S2S_UPDATE_MAIL_STATUS_ACK 			= 20507;	// 设置邮件状态响应
- }
+	
+	// rank
+	S2S_UPDATE_RANK_DATA_REQ 			= 20601;	// 更新排行榜数据
+	S2S_QUERY_RANK_LIST_REQ 			= 20602;	// 查询全服排行榜
+	S2S_QUERY_FRIEND_RANK_LIST_REQ 		= 20603;	// 查询好友排行榜
+
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 message PBZoneData
@@ -340,3 +347,33 @@ message S2SUpdateMailStatusAck
 	uint64 id = 2;
 	uint32 status = 3;
 }
+
+/////////////////////////////////////////////////////////////////////////////////
+// 更新排行榜数据
+// S2S_UPDATE_RANK_DATA_REQ
+message S2SUpdateRankDataReq
+{
+	uint64 playerid = 1;		// 玩家id
+	uint32 rankid = 2;			// 榜单id
+	uint32 zoneid = 3;			// 小区id
+	PBRankData pbrankdata = 4;	// 排行榜数据
+}
+
+// 查询全服排行榜
+// S2S_QUERY_RANK_LIST_REQ
+message S2SQueryRankListReq
+{
+	uint64 playerid = 1;		// 玩家id
+	uint32 rankid = 2;			// 排行榜id
+	uint32 zoneid = 3;			// 小区id
+}
+
+// 查询好友排行榜
+// S2S_QUERY_FRIEND_RANK_LIST_REQ
+message S2SQueryFriendRankListReq
+{
+	uint64 playerid = 1;			// 玩家id
+	uint32 rankid = 2;				// 榜单类型
+	repeated uint64 friendid = 3;	// 待查询的玩家好友id
+}
+/////////////////////////////////////////////////////////////////////////////////
