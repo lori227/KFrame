@@ -169,15 +169,14 @@ namespace KFrame
                 // 最小积分
                 //auto playerid = idlist.back();
                 //std::string minscore = "";
-                //_rank_driver->StringExecute( minscore, "zscore {}:{}:{} {}",
-                //                             __KF_STRING__( ranksort ), rankid, zoneid, playerid );
+                //_rank_driver->StringExecute( minscore, "zscore {}:{}:{} {}", __KF_STRING__( ranksort ), rankid, zoneid, playerid );
                 //kfrankdata->_min_rank_score = KFUtility::ToValue< uint64 >( minscore );
 
                 // 删除指定数量以后的排序
                 auto rankcount = _rank_redis_driver->QueryUInt64( "zcard {}", ranksortkey );
                 if ( rankcount->_value > kfsetting->_max_count + 1 )
                 {
-                    _rank_redis_driver->Execute( "zremrangebyrank {} 0 {}", ranksortkey, rankcount->_value - kfsetting->_max_count - 1 );
+                    _rank_redis_driver->Execute( "zremrangebyrank {} 0 {}", ranksortkey, rankcount->_value - ( kfsetting->_max_count + 1 ) );
                 }
             }
         }
