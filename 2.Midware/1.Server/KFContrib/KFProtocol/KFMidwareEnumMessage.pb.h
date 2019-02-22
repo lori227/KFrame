@@ -212,6 +212,30 @@ inline bool StateEnum_Parse(
   return ::google::protobuf::internal::ParseNamedEnum<StateEnum>(
     StateEnum_descriptor(), name, value);
 }
+enum InviteEnum {
+  UnknowInvite = 0,
+  Consent = 1,
+  Refuse = 2,
+  Delete = 3,
+  RefuseMinute = 4,
+  InviteEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  InviteEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+LIBPROTOC_EXPORT bool InviteEnum_IsValid(int value);
+const InviteEnum InviteEnum_MIN = UnknowInvite;
+const InviteEnum InviteEnum_MAX = RefuseMinute;
+const int InviteEnum_ARRAYSIZE = InviteEnum_MAX + 1;
+
+LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* InviteEnum_descriptor();
+inline const ::std::string& InviteEnum_Name(InviteEnum value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    InviteEnum_descriptor(), value);
+}
+inline bool InviteEnum_Parse(
+    const ::std::string& name, InviteEnum* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<InviteEnum>(
+    InviteEnum_descriptor(), name, value);
+}
 // ===================================================================
 
 
@@ -269,6 +293,11 @@ template <> struct is_proto_enum< ::KFMsg::StateEnum> : ::std::true_type {};
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::StateEnum>() {
   return ::KFMsg::StateEnum_descriptor();
+}
+template <> struct is_proto_enum< ::KFMsg::InviteEnum> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::InviteEnum>() {
+  return ::KFMsg::InviteEnum_descriptor();
 }
 
 }  // namespace protobuf

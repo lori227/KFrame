@@ -41,7 +41,7 @@ namespace protobuf_KFMidwareClientMessage_2eproto {
 struct LIBPROTOC_EXPORT TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[34];
+  static const ::google::protobuf::internal::ParseTable schema[38];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -55,6 +55,9 @@ LIBPROTOC_EXPORT extern MsgAchieveRewardReqDefaultTypeInternal _MsgAchieveReward
 class MsgActivityRewardReq;
 class MsgActivityRewardReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgActivityRewardReqDefaultTypeInternal _MsgActivityRewardReq_default_instance_;
+class MsgAddFriendInviteReq;
+class MsgAddFriendInviteReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern MsgAddFriendInviteReqDefaultTypeInternal _MsgAddFriendInviteReq_default_instance_;
 class MsgBuyStoreReq;
 class MsgBuyStoreReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgBuyStoreReqDefaultTypeInternal _MsgBuyStoreReq_default_instance_;
@@ -64,6 +67,9 @@ LIBPROTOC_EXPORT extern MsgCommandReqDefaultTypeInternal _MsgCommandReq_default_
 class MsgCompoundReq;
 class MsgCompoundReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgCompoundReqDefaultTypeInternal _MsgCompoundReq_default_instance_;
+class MsgDelFriendReq;
+class MsgDelFriendReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern MsgDelFriendReqDefaultTypeInternal _MsgDelFriendReq_default_instance_;
 class MsgDeleteMailReq;
 class MsgDeleteMailReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgDeleteMailReqDefaultTypeInternal _MsgDeleteMailReq_default_instance_;
@@ -115,12 +121,18 @@ LIBPROTOC_EXPORT extern MsgQueryStoreReqDefaultTypeInternal _MsgQueryStoreReq_de
 class MsgRemoveDataReq;
 class MsgRemoveDataReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgRemoveDataReqDefaultTypeInternal _MsgRemoveDataReq_default_instance_;
+class MsgReplyFriendInviteReq;
+class MsgReplyFriendInviteReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern MsgReplyFriendInviteReqDefaultTypeInternal _MsgReplyFriendInviteReq_default_instance_;
 class MsgResultDisplay;
 class MsgResultDisplayDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgResultDisplayDefaultTypeInternal _MsgResultDisplay_default_instance_;
 class MsgSetNameReq;
 class MsgSetNameReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgSetNameReqDefaultTypeInternal _MsgSetNameReq_default_instance_;
+class MsgSetRefuseFriendInviteReq;
+class MsgSetRefuseFriendInviteReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern MsgSetRefuseFriendInviteReqDefaultTypeInternal _MsgSetRefuseFriendInviteReq_default_instance_;
 class MsgSetSexReq;
 class MsgSetSexReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgSetSexReqDefaultTypeInternal _MsgSetSexReq_default_instance_;
@@ -156,9 +168,11 @@ namespace google {
 namespace protobuf {
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgAchieveRewardReq* Arena::CreateMaybeMessage<::KFMsg::MsgAchieveRewardReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgActivityRewardReq* Arena::CreateMaybeMessage<::KFMsg::MsgActivityRewardReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::MsgAddFriendInviteReq* Arena::CreateMaybeMessage<::KFMsg::MsgAddFriendInviteReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgBuyStoreReq* Arena::CreateMaybeMessage<::KFMsg::MsgBuyStoreReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgCommandReq* Arena::CreateMaybeMessage<::KFMsg::MsgCommandReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgCompoundReq* Arena::CreateMaybeMessage<::KFMsg::MsgCompoundReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::MsgDelFriendReq* Arena::CreateMaybeMessage<::KFMsg::MsgDelFriendReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgDeleteMailReq* Arena::CreateMaybeMessage<::KFMsg::MsgDeleteMailReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgLoginAck* Arena::CreateMaybeMessage<::KFMsg::MsgLoginAck>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgLoginReq* Arena::CreateMaybeMessage<::KFMsg::MsgLoginReq>(Arena*);
@@ -176,8 +190,10 @@ template<> LIBPROTOC_EXPORT ::KFMsg::MsgQueryRankListReq* Arena::CreateMaybeMess
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgQueryStoreAck* Arena::CreateMaybeMessage<::KFMsg::MsgQueryStoreAck>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgQueryStoreReq* Arena::CreateMaybeMessage<::KFMsg::MsgQueryStoreReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgRemoveDataReq* Arena::CreateMaybeMessage<::KFMsg::MsgRemoveDataReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::MsgReplyFriendInviteReq* Arena::CreateMaybeMessage<::KFMsg::MsgReplyFriendInviteReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgResultDisplay* Arena::CreateMaybeMessage<::KFMsg::MsgResultDisplay>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgSetNameReq* Arena::CreateMaybeMessage<::KFMsg::MsgSetNameReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::MsgSetRefuseFriendInviteReq* Arena::CreateMaybeMessage<::KFMsg::MsgSetRefuseFriendInviteReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgSetSexReq* Arena::CreateMaybeMessage<::KFMsg::MsgSetSexReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgSevenSignInRewardReq* Arena::CreateMaybeMessage<::KFMsg::MsgSevenSignInRewardReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgShowElement* Arena::CreateMaybeMessage<::KFMsg::MsgShowElement>(Arena*);
@@ -229,12 +245,16 @@ enum MidwareClientProtocol {
   MSG_QUERY_RANK_LIST_ACK = 432,
   MSG_QUERY_FRIEND_RANK_LIST_REQ = 433,
   MSG_QUERY_FRIEND_RANK_LIST_ACK = 434,
+  MSG_ADD_FRIEND_INVITE_REQ = 451,
+  MSG_REPLY_FRIEND_INVITE_REQ = 452,
+  MSG_DEL_FRIEND_REQ = 453,
+  MSG_SET_REFUSE_FRIEND_INVITE_REQ = 454,
   MidwareClientProtocol_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   MidwareClientProtocol_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 LIBPROTOC_EXPORT bool MidwareClientProtocol_IsValid(int value);
 const MidwareClientProtocol MidwareClientProtocol_MIN = MSG_MIDWARE_CLIENT_BEGIN;
-const MidwareClientProtocol MidwareClientProtocol_MAX = MSG_QUERY_FRIEND_RANK_LIST_ACK;
+const MidwareClientProtocol MidwareClientProtocol_MAX = MSG_SET_REFUSE_FRIEND_INVITE_REQ;
 const int MidwareClientProtocol_ARRAYSIZE = MidwareClientProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* MidwareClientProtocol_descriptor();
@@ -4024,6 +4044,455 @@ class LIBPROTOC_EXPORT MsgQueryFriendRankListAck : public ::google::protobuf::Me
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_KFMidwareClientMessage_2eproto::TableStruct;
 };
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgAddFriendInviteReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgAddFriendInviteReq) */ {
+ public:
+  MsgAddFriendInviteReq();
+  virtual ~MsgAddFriendInviteReq();
+
+  MsgAddFriendInviteReq(const MsgAddFriendInviteReq& from);
+
+  inline MsgAddFriendInviteReq& operator=(const MsgAddFriendInviteReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  MsgAddFriendInviteReq(MsgAddFriendInviteReq&& from) noexcept
+    : MsgAddFriendInviteReq() {
+    *this = ::std::move(from);
+  }
+
+  inline MsgAddFriendInviteReq& operator=(MsgAddFriendInviteReq&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgAddFriendInviteReq& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MsgAddFriendInviteReq* internal_default_instance() {
+    return reinterpret_cast<const MsgAddFriendInviteReq*>(
+               &_MsgAddFriendInviteReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    34;
+
+  void Swap(MsgAddFriendInviteReq* other);
+  friend void swap(MsgAddFriendInviteReq& a, MsgAddFriendInviteReq& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MsgAddFriendInviteReq* New() const final {
+    return CreateMaybeMessage<MsgAddFriendInviteReq>(NULL);
+  }
+
+  MsgAddFriendInviteReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MsgAddFriendInviteReq>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const MsgAddFriendInviteReq& from);
+  void MergeFrom(const MsgAddFriendInviteReq& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MsgAddFriendInviteReq* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // bytes name = 1;
+  void clear_name();
+  static const int kNameFieldNumber = 1;
+  const ::std::string& name() const;
+  void set_name(const ::std::string& value);
+  #if LANG_CXX11
+  void set_name(::std::string&& value);
+  #endif
+  void set_name(const char* value);
+  void set_name(const void* value, size_t size);
+  ::std::string* mutable_name();
+  ::std::string* release_name();
+  void set_allocated_name(::std::string* name);
+
+  // bytes message = 3;
+  void clear_message();
+  static const int kMessageFieldNumber = 3;
+  const ::std::string& message() const;
+  void set_message(const ::std::string& value);
+  #if LANG_CXX11
+  void set_message(::std::string&& value);
+  #endif
+  void set_message(const char* value);
+  void set_message(const void* value, size_t size);
+  ::std::string* mutable_message();
+  ::std::string* release_message();
+  void set_allocated_message(::std::string* message);
+
+  // uint64 playerid = 2;
+  void clear_playerid();
+  static const int kPlayeridFieldNumber = 2;
+  ::google::protobuf::uint64 playerid() const;
+  void set_playerid(::google::protobuf::uint64 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgAddFriendInviteReq)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr name_;
+  ::google::protobuf::internal::ArenaStringPtr message_;
+  ::google::protobuf::uint64 playerid_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_KFMidwareClientMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgReplyFriendInviteReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgReplyFriendInviteReq) */ {
+ public:
+  MsgReplyFriendInviteReq();
+  virtual ~MsgReplyFriendInviteReq();
+
+  MsgReplyFriendInviteReq(const MsgReplyFriendInviteReq& from);
+
+  inline MsgReplyFriendInviteReq& operator=(const MsgReplyFriendInviteReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  MsgReplyFriendInviteReq(MsgReplyFriendInviteReq&& from) noexcept
+    : MsgReplyFriendInviteReq() {
+    *this = ::std::move(from);
+  }
+
+  inline MsgReplyFriendInviteReq& operator=(MsgReplyFriendInviteReq&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgReplyFriendInviteReq& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MsgReplyFriendInviteReq* internal_default_instance() {
+    return reinterpret_cast<const MsgReplyFriendInviteReq*>(
+               &_MsgReplyFriendInviteReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    35;
+
+  void Swap(MsgReplyFriendInviteReq* other);
+  friend void swap(MsgReplyFriendInviteReq& a, MsgReplyFriendInviteReq& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MsgReplyFriendInviteReq* New() const final {
+    return CreateMaybeMessage<MsgReplyFriendInviteReq>(NULL);
+  }
+
+  MsgReplyFriendInviteReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MsgReplyFriendInviteReq>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const MsgReplyFriendInviteReq& from);
+  void MergeFrom(const MsgReplyFriendInviteReq& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MsgReplyFriendInviteReq* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // uint64 playerid = 1;
+  void clear_playerid();
+  static const int kPlayeridFieldNumber = 1;
+  ::google::protobuf::uint64 playerid() const;
+  void set_playerid(::google::protobuf::uint64 value);
+
+  // uint32 operate = 2;
+  void clear_operate();
+  static const int kOperateFieldNumber = 2;
+  ::google::protobuf::uint32 operate() const;
+  void set_operate(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgReplyFriendInviteReq)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint64 playerid_;
+  ::google::protobuf::uint32 operate_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_KFMidwareClientMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgDelFriendReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgDelFriendReq) */ {
+ public:
+  MsgDelFriendReq();
+  virtual ~MsgDelFriendReq();
+
+  MsgDelFriendReq(const MsgDelFriendReq& from);
+
+  inline MsgDelFriendReq& operator=(const MsgDelFriendReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  MsgDelFriendReq(MsgDelFriendReq&& from) noexcept
+    : MsgDelFriendReq() {
+    *this = ::std::move(from);
+  }
+
+  inline MsgDelFriendReq& operator=(MsgDelFriendReq&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgDelFriendReq& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MsgDelFriendReq* internal_default_instance() {
+    return reinterpret_cast<const MsgDelFriendReq*>(
+               &_MsgDelFriendReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    36;
+
+  void Swap(MsgDelFriendReq* other);
+  friend void swap(MsgDelFriendReq& a, MsgDelFriendReq& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MsgDelFriendReq* New() const final {
+    return CreateMaybeMessage<MsgDelFriendReq>(NULL);
+  }
+
+  MsgDelFriendReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MsgDelFriendReq>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const MsgDelFriendReq& from);
+  void MergeFrom(const MsgDelFriendReq& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MsgDelFriendReq* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // uint64 playerid = 1;
+  void clear_playerid();
+  static const int kPlayeridFieldNumber = 1;
+  ::google::protobuf::uint64 playerid() const;
+  void set_playerid(::google::protobuf::uint64 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgDelFriendReq)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint64 playerid_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_KFMidwareClientMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgSetRefuseFriendInviteReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgSetRefuseFriendInviteReq) */ {
+ public:
+  MsgSetRefuseFriendInviteReq();
+  virtual ~MsgSetRefuseFriendInviteReq();
+
+  MsgSetRefuseFriendInviteReq(const MsgSetRefuseFriendInviteReq& from);
+
+  inline MsgSetRefuseFriendInviteReq& operator=(const MsgSetRefuseFriendInviteReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  MsgSetRefuseFriendInviteReq(MsgSetRefuseFriendInviteReq&& from) noexcept
+    : MsgSetRefuseFriendInviteReq() {
+    *this = ::std::move(from);
+  }
+
+  inline MsgSetRefuseFriendInviteReq& operator=(MsgSetRefuseFriendInviteReq&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgSetRefuseFriendInviteReq& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MsgSetRefuseFriendInviteReq* internal_default_instance() {
+    return reinterpret_cast<const MsgSetRefuseFriendInviteReq*>(
+               &_MsgSetRefuseFriendInviteReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    37;
+
+  void Swap(MsgSetRefuseFriendInviteReq* other);
+  friend void swap(MsgSetRefuseFriendInviteReq& a, MsgSetRefuseFriendInviteReq& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MsgSetRefuseFriendInviteReq* New() const final {
+    return CreateMaybeMessage<MsgSetRefuseFriendInviteReq>(NULL);
+  }
+
+  MsgSetRefuseFriendInviteReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MsgSetRefuseFriendInviteReq>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const MsgSetRefuseFriendInviteReq& from);
+  void MergeFrom(const MsgSetRefuseFriendInviteReq& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MsgSetRefuseFriendInviteReq* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // uint32 refuse = 1;
+  void clear_refuse();
+  static const int kRefuseFieldNumber = 1;
+  ::google::protobuf::uint32 refuse() const;
+  void set_refuse(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgSetRefuseFriendInviteReq)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 refuse_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_KFMidwareClientMessage_2eproto::TableStruct;
+};
 // ===================================================================
 
 
@@ -5714,9 +6183,209 @@ inline void MsgQueryFriendRankListAck::set_allocated_rankdatas(::KFMsg::PBRankDa
   // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgQueryFriendRankListAck.rankdatas)
 }
 
+// -------------------------------------------------------------------
+
+// MsgAddFriendInviteReq
+
+// bytes name = 1;
+inline void MsgAddFriendInviteReq::clear_name() {
+  name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& MsgAddFriendInviteReq::name() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgAddFriendInviteReq.name)
+  return name_.GetNoArena();
+}
+inline void MsgAddFriendInviteReq::set_name(const ::std::string& value) {
+  
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.MsgAddFriendInviteReq.name)
+}
+#if LANG_CXX11
+inline void MsgAddFriendInviteReq::set_name(::std::string&& value) {
+  
+  name_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgAddFriendInviteReq.name)
+}
+#endif
+inline void MsgAddFriendInviteReq::set_name(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.MsgAddFriendInviteReq.name)
+}
+inline void MsgAddFriendInviteReq::set_name(const void* value, size_t size) {
+  
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgAddFriendInviteReq.name)
+}
+inline ::std::string* MsgAddFriendInviteReq::mutable_name() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.MsgAddFriendInviteReq.name)
+  return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* MsgAddFriendInviteReq::release_name() {
+  // @@protoc_insertion_point(field_release:KFMsg.MsgAddFriendInviteReq.name)
+  
+  return name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgAddFriendInviteReq::set_allocated_name(::std::string* name) {
+  if (name != NULL) {
+    
+  } else {
+    
+  }
+  name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgAddFriendInviteReq.name)
+}
+
+// uint64 playerid = 2;
+inline void MsgAddFriendInviteReq::clear_playerid() {
+  playerid_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 MsgAddFriendInviteReq::playerid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgAddFriendInviteReq.playerid)
+  return playerid_;
+}
+inline void MsgAddFriendInviteReq::set_playerid(::google::protobuf::uint64 value) {
+  
+  playerid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.MsgAddFriendInviteReq.playerid)
+}
+
+// bytes message = 3;
+inline void MsgAddFriendInviteReq::clear_message() {
+  message_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& MsgAddFriendInviteReq::message() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgAddFriendInviteReq.message)
+  return message_.GetNoArena();
+}
+inline void MsgAddFriendInviteReq::set_message(const ::std::string& value) {
+  
+  message_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.MsgAddFriendInviteReq.message)
+}
+#if LANG_CXX11
+inline void MsgAddFriendInviteReq::set_message(::std::string&& value) {
+  
+  message_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgAddFriendInviteReq.message)
+}
+#endif
+inline void MsgAddFriendInviteReq::set_message(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  message_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.MsgAddFriendInviteReq.message)
+}
+inline void MsgAddFriendInviteReq::set_message(const void* value, size_t size) {
+  
+  message_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgAddFriendInviteReq.message)
+}
+inline ::std::string* MsgAddFriendInviteReq::mutable_message() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.MsgAddFriendInviteReq.message)
+  return message_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* MsgAddFriendInviteReq::release_message() {
+  // @@protoc_insertion_point(field_release:KFMsg.MsgAddFriendInviteReq.message)
+  
+  return message_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgAddFriendInviteReq::set_allocated_message(::std::string* message) {
+  if (message != NULL) {
+    
+  } else {
+    
+  }
+  message_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), message);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgAddFriendInviteReq.message)
+}
+
+// -------------------------------------------------------------------
+
+// MsgReplyFriendInviteReq
+
+// uint64 playerid = 1;
+inline void MsgReplyFriendInviteReq::clear_playerid() {
+  playerid_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 MsgReplyFriendInviteReq::playerid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgReplyFriendInviteReq.playerid)
+  return playerid_;
+}
+inline void MsgReplyFriendInviteReq::set_playerid(::google::protobuf::uint64 value) {
+  
+  playerid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.MsgReplyFriendInviteReq.playerid)
+}
+
+// uint32 operate = 2;
+inline void MsgReplyFriendInviteReq::clear_operate() {
+  operate_ = 0u;
+}
+inline ::google::protobuf::uint32 MsgReplyFriendInviteReq::operate() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgReplyFriendInviteReq.operate)
+  return operate_;
+}
+inline void MsgReplyFriendInviteReq::set_operate(::google::protobuf::uint32 value) {
+  
+  operate_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.MsgReplyFriendInviteReq.operate)
+}
+
+// -------------------------------------------------------------------
+
+// MsgDelFriendReq
+
+// uint64 playerid = 1;
+inline void MsgDelFriendReq::clear_playerid() {
+  playerid_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 MsgDelFriendReq::playerid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgDelFriendReq.playerid)
+  return playerid_;
+}
+inline void MsgDelFriendReq::set_playerid(::google::protobuf::uint64 value) {
+  
+  playerid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.MsgDelFriendReq.playerid)
+}
+
+// -------------------------------------------------------------------
+
+// MsgSetRefuseFriendInviteReq
+
+// uint32 refuse = 1;
+inline void MsgSetRefuseFriendInviteReq::clear_refuse() {
+  refuse_ = 0u;
+}
+inline ::google::protobuf::uint32 MsgSetRefuseFriendInviteReq::refuse() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgSetRefuseFriendInviteReq.refuse)
+  return refuse_;
+}
+inline void MsgSetRefuseFriendInviteReq::set_refuse(::google::protobuf::uint32 value) {
+  
+  refuse_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.MsgSetRefuseFriendInviteReq.refuse)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

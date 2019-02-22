@@ -6,65 +6,83 @@ package KFMsg;
 
 enum MidwareServerProtocol
 {	
-	S2S_MIDWARE_SERVER_PROTOCOL_BEGIN = 0;			// pb3 0 开始
+	S2S_MIDWARE_SERVER_PROTOCOL_BEGIN 		= 0;		// pb3 0 开始
 
 	// zone
-	S2S_UPDATE_ZONE_TO_LOGIN_REQ 		= 20001;	// 更新小区到login服务器
-	S2S_UPDATE_ZONE_TO_WORLD_REQ 		= 20002;	// 更新小区到world服务器
-	S2S_DISCONNECT_ZONE_TO_WORLD_REQ 	= 20003;	// 断开小区到world服务器
+	S2S_UPDATE_ZONE_TO_LOGIN_REQ 			= 20001;	// 更新小区到login服务器
+	S2S_UPDATE_ZONE_TO_WORLD_REQ 			= 20002;	// 更新小区到world服务器
+	S2S_DISCONNECT_ZONE_TO_WORLD_REQ 		= 20003;	// 断开小区到world服务器
 
 	// login
-	S2S_LOGIN_TO_LOGIN_REQ				= 20101;	// 登录请求到login服务器
-	S2S_LOGIN_TO_GATE_ACK				= 20102;	// 登录回应道gate服务器
-	S2S_LOGIN_TO_WORLD_REQ				= 20103;	// 登录请求到world服务器
-	S2S_LOGIN_TO_LOGIN_ACK				= 20104;	// 登录回应到login服务器
-	S2S_LOGIN_TO_GAME_REQ				= 20105;	// 登录请求到game服务器
-	S2S_LOGOUT_TO_GAME_REQ				= 20106;	// 登出游戏到game服务器
-	S2S_DISCONNECT_TO_GAME_REQ			= 20107;	// 断线到gate服务器
-	S2S_ENTER_TO_GATE_ACK				= 20108;	// 进入游戏到gate服务器
+	S2S_LOGIN_TO_LOGIN_REQ					= 20101;	// 登录请求到login服务器
+	S2S_LOGIN_TO_GATE_ACK					= 20102;	// 登录回应道gate服务器
+	S2S_LOGIN_TO_WORLD_REQ					= 20103;	// 登录请求到world服务器
+	S2S_LOGIN_TO_LOGIN_ACK					= 20104;	// 登录回应到login服务器
+	S2S_LOGIN_TO_GAME_REQ					= 20105;	// 登录请求到game服务器
+	S2S_LOGOUT_TO_GAME_REQ					= 20106;	// 登出游戏到game服务器
+	S2S_DISCONNECT_TO_GAME_REQ				= 20107;	// 断线到gate服务器
+	S2S_ENTER_TO_GATE_ACK					= 20108;	// 进入游戏到gate服务器
 
 	// world
-	S2S_PLAYER_SYNC_TO_WORLD_REQ		= 20201;	// 同步在线人家
-	S2S_PLAYER_ENTER_TO_WORLD_REQ 		= 20202;	// 游戏玩家进入游戏
-	S2S_PLAYER_LEAVE_TO_WORLD_REQ 		= 20203;	// 游戏玩家离开游戏
-	S2S_KICK_PLAYER_TO_GAME_REQ			= 20204;	// 踢人请求到game服务器
-	S2S_KICK_PLAYER_TO_GATE_REQ			= 20205;	// 踢人请求到gate服务器
+	S2S_PLAYER_SYNC_TO_WORLD_REQ			= 20201;	// 同步在线人家
+	S2S_PLAYER_ENTER_TO_WORLD_REQ 			= 20202;	// 游戏玩家进入游戏
+	S2S_PLAYER_LEAVE_TO_WORLD_REQ 			= 20203;	// 游戏玩家离开游戏
+	S2S_KICK_PLAYER_TO_GAME_REQ				= 20204;	// 踢人请求到game服务器
+	S2S_KICK_PLAYER_TO_GATE_REQ				= 20205;	// 踢人请求到gate服务器
 
 	// server
-	S2S_BROADCAST_TO_GAME 				= 20301;	// 广播消息
-	S2S_BROADCAST_TO_GATE				= 20302;	// 广播消息
-	S2S_TRANSMIT_TO_PLAYER 				= 20303;	// 转发消息
+	S2S_BROADCAST_TO_GAME 					= 20301;	// 广播消息
+	S2S_BROADCAST_TO_GATE					= 20302;	// 广播消息
+	S2S_TRANSMIT_TO_PLAYER 					= 20303;	// 转发消息
 	
 	// data
-	S2S_LOAD_PLAYER_TO_DATA_REQ			= 20401;	// 加载玩家数据
-	S2S_LOAD_PLAYER_TO_GAME_ACK			= 20402;	// 加载玩家数据
-	S2S_SAVE_PLAYER_TO_DATA_REQ			= 20403;	// 保存玩家数据
-	S2S_QUERY_PLAYER_TO_DATA_REQ		= 20404;	// 查询玩家
-	S2S_QUERY_PLAYER_TO_GAME_ACK		= 20405;	// 查询玩家
-	S2S_SET_PLAYERNAME_TO_DATA_REQ 		= 20406;	// 设置玩家名字
-	S2S_SET_PLAYERNAME_TO_GAME_ACK		= 20407;	// 设置玩家名字
+	S2S_LOAD_PLAYER_TO_DATA_REQ				= 20401;	// 加载玩家数据
+	S2S_LOAD_PLAYER_TO_GAME_ACK				= 20402;	// 加载玩家数据
+	S2S_SAVE_PLAYER_TO_DATA_REQ				= 20403;	// 保存玩家数据
+	S2S_QUERY_PLAYER_TO_DATA_REQ			= 20404;	// 查询玩家
+	S2S_QUERY_PLAYER_TO_GAME_ACK			= 20405;	// 查询玩家
+	S2S_SET_PLAYERNAME_TO_DATA_REQ 			= 20406;	// 设置玩家名字
+	S2S_SET_PLAYERNAME_TO_GAME_ACK			= 20407;	// 设置玩家名字
 
 	// mail
-	S2S_NEW_PLAYER_MAIL_REQ 			= 20501;	// 新玩家登陆邮件服务
-	S2S_QUERY_MAIL_REQ 					= 20502;	// 查询邮件
-	S2S_QUERY_MAIL_ACK 					= 20503;	// 查询邮件
-	S2S_ADD_MAIL_REQ 					= 20504;	// 添加邮件
-	S2S_NOTICE_NEW_MAIL_REQ 			= 20505;	// 通知新邮件
-	S2S_UPDATE_MAIL_STATUS_REQ 			= 20506;	// 设置邮件状态请求
-	S2S_UPDATE_MAIL_STATUS_ACK 			= 20507;	// 设置邮件状态响应
+	S2S_NEW_PLAYER_MAIL_REQ 				= 20501;	// 新玩家登陆邮件服务
+	S2S_QUERY_MAIL_REQ 						= 20502;	// 查询邮件
+	S2S_QUERY_MAIL_ACK 						= 20503;	// 查询邮件
+	S2S_ADD_MAIL_REQ 						= 20504;	// 添加邮件
+	S2S_NOTICE_NEW_MAIL_REQ 				= 20505;	// 通知新邮件
+	S2S_UPDATE_MAIL_STATUS_REQ 				= 20506;	// 设置邮件状态请求
+	S2S_UPDATE_MAIL_STATUS_ACK 				= 20507;	// 设置邮件状态响应
 	
 	// rank
-	S2S_UPDATE_RANK_DATA_REQ 			= 20601;	// 更新排行榜数据
-	S2S_QUERY_RANK_LIST_REQ 			= 20602;	// 查询全服排行榜
-	S2S_QUERY_FRIEND_RANK_LIST_REQ 		= 20603;	// 查询好友排行榜
-	S2S_REFRESH_RANK_REQ				= 20604;	// 刷新排行榜
-	S2S_REFRESH_RANK_ACK				= 20605;	// 刷新排行榜
-	S2S_TELL_REFRESH_RANK				= 20606;	// 刷新排行榜
+	S2S_UPDATE_RANK_DATA_REQ 				= 20601;	// 更新排行榜数据
+	S2S_QUERY_RANK_LIST_REQ 				= 20602;	// 查询全服排行榜
+	S2S_QUERY_FRIEND_RANK_LIST_REQ 			= 20603;	// 查询好友排行榜
+	S2S_REFRESH_RANK_REQ					= 20604;	// 刷新排行榜
+	S2S_REFRESH_RANK_ACK					= 20605;	// 刷新排行榜
+	S2S_TELL_REFRESH_RANK					= 20606;	// 刷新排行榜
 
 	// public
-	S2S_UPDATE_DATA_TO_PUBLIC_REQ 		= 20701;	// 更新公共数据
-	S2S_QUERY_BASIC_TO_PUBLIC_REQ 		= 20702;	// 查询玩家基础数据
-	S2S_QUERY_BASIC_TO_GAME_ACK 		= 20703;	// 查询玩家基础数据
+	S2S_UPDATE_DATA_TO_PUBLIC_REQ 			= 20701;	// 更新公共数据
+	S2S_QUERY_BASIC_TO_PUBLIC_REQ 			= 20702;	// 查询玩家基础数据
+	S2S_QUERY_BASIC_TO_GAME_ACK 			= 20703;	// 查询玩家基础数据
+
+	// relation
+	S2S_QUERY_FRIEND_TO_RELATION_REQ 		= 20801;	// 查询好友信息
+	S2S_QUERY_FRIEND_TO_GAME_ACK 			= 20802;	// 查询好友信息
+	S2S_QUERY_FRIEND_INVITE_TO_RELATION_REQ = 20803;	// 查询好友申请信息
+	S2S_QUERY_FRIEND_INVITE_TO_GAME_ACK 	= 20804;	// 查询好友申请信息
+	S2S_UPDATE_DATA_TO_FRIEND_REQ 			= 20805;	// 更新好友属性
+	S2S_ADD_FRIEND_INVITE_TO_RELATION_REQ 	= 20806;	// 添加好友请求
+	S2S_ADD_FRIEND_INVITE_TO_GAME_ACK 		= 20807;	// 添加好友请求
+	S2S_DEL_FRIEND_INVITE_TO_RELATION_REQ 	= 20808;	// 删除好友邀请
+	S2S_ADD_FRIEND_TO_RELATION_REQ 			= 20809;	// 添加好友请求
+	S2S_ADD_FRIEND_TO_GAME_ACK 				= 20810;	// 添加好友回应
+	S2S_DEL_FRIEND_TO_RELATION_REQ 			= 20811;	// 删除好友请求
+	S2S_DEL_FRIEND_TO_GAME_ACK 				= 20812;	// 删除好友回应
+	S2S_UPDATE_FRIENDLINESS_TO_RELATION_REQ = 20813;	// 更新好友度
+	S2S_UPDATE_FRIENDLINESS_TO_GAME_ACK 	= 20814;	// 更新好友度反馈
+	
+	
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -429,4 +447,128 @@ message S2SQueryBasicToGameAck
 	bytes name = 1;
 	uint32 result = 2;
 	map<string, bytes> pbdata = 3;	// 属性
+}
+///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+message PBRelation
+{
+	uint64 playerid = 1;
+	map<string, bytes> playerdata = 2;
+	map<string, bytes> relationdata = 3;
+}
+
+// 查询好友信息
+// S2S_QUERY_FRIEND_TO_RELATION_REQ
+message S2SQueryFriendToRelationReq
+{
+	uint64 playerid = 1;	// 玩家id
+}
+
+// 查询好友信息
+// S2S_QUERY_FRIEND_TO_GAME_ACK
+message S2SQueryFriendToGameAck
+{
+	uint64 playerid = 1;				// 玩家id
+	repeated PBRelation pbfriend = 2;	// 好友数据	
+}
+
+// 查询好友申请信息
+// S2S_QUERY_FRIEND_INVITE_TO_RELATION_REQ
+message S2SQueryFriendInviteToRelationReq
+{
+	uint64 playerid = 1;	// 玩家id
+}
+
+// 查询好友信息
+// S2S_QUERY_FRIEND_INVITE_TO_GAME_ACK
+message S2SQueryFriendInviteToGameAck
+{
+	uint64 playerid = 1;				// 玩家id
+	repeated PBRelation pbinvite = 2;	// 邀请数据	
+}
+
+// 更新好友属性
+// S2S_UPDATE_DATA_TO_FRIEND_REQ
+message S2SUpdateDataToFriendReq
+{
+	uint64 playerid = 1;
+	map<string, bytes> pbdata = 3;
+}
+
+// 添加好友请求
+// S2S_ADD_FRIEND_INVITE_TO_RELATION_REQ
+message S2SAddFriendInviteToRelationReq
+{
+	bytes name = 1;			// 对方名字
+	uint64 playerid = 2;	// 对方id
+	bytes message = 3;		// 留言	
+}
+
+// 添加好友申请
+// S2S_ADD_FRIEND_INVITE_TO_GAME_ACK
+message S2SAddFriendInviteToGameAck
+{
+	uint64 playerid = 1;		// 玩家id
+	PBRelation pbinvite = 2;	// 好友数据	
+}
+
+// 删除好友请求
+// S2S_DEL_FRIEND_INVITE_TO_RELATION_REQ
+message S2SDelFriendInviteToRelationReq
+{
+	uint64 selfplayerid = 1;	// 申请id
+	uint64 targetplayerid = 2;	// 对方id
+}
+
+// 添加好友
+// S2S_ADD_FRIEND_TO_RELATION_REQ
+message S2SAddFriendToRelationReq
+{
+	bytes name = 1;			// 对方名字
+	uint64 playerid = 2;	// 对方id
+}
+
+// 添加好友
+// S2S_ADD_FRIEND_TO_GAME_ACK
+message S2SAddFriendToGameAck
+{
+	uint64 playerid = 1;		// 玩家id
+	PBRelation pbfriend = 2;	// 好友信息
+}
+
+// 删除好友请求
+// S2S_DEL_FRIEND_TO_RELATION_REQ
+message S2SDelFriendToRelationReq
+{
+	uint64 playerid = 1;	// 好友id
+}
+
+// 删除好友
+// S2S_DEL_FRIEND_TO_GAME_ACK
+message S2SDelFriendToGameAck
+{
+	uint64 playerid = 1;	// 申请id
+	uint64 friendid = 2;	// 对方id
+}
+
+// 更新好友度
+// S2S_UPDATE_FRIENDLINESS_TO_RELATION_REQ
+message S2SUpdateFriendLinessToRelationReq
+{
+	uint32 type = 1;			// 类型
+	uint64 selfplayerid = 2;	// 申请id
+	uint64 targetplayerid = 3;	// 对方id
+	uint32 friendliness = 4;	// 好友度
+}
+
+// 更新好友度反馈
+// S2S_UPDATE_FRIENDLINESS_TO_GAME_ACK
+message S2SUpdateFriendLinessToGameAck
+{
+	uint64 playerid = 1;		// 申请id
+	uint64 targetplayerid = 2;	// 对方id
+	uint32 friendliness = 3;	// 好友度
 }

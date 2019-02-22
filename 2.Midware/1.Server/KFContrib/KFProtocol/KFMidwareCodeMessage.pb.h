@@ -61,6 +61,7 @@ enum MidwareCodeEnum {
   MailServerBusy = 10007,
   RankServerBusy = 10008,
   PublicDatabaseBusy = 10009,
+  RelationServerBusy = 10010,
   AccountIsEmpty = 11001,
   ActivationAccount = 11002,
   InvalidActivationCode = 11003,
@@ -134,12 +135,27 @@ enum MidwareCodeEnum {
   StoreBuyOK = 12306,
   RankNotExist = 12400,
   QueryBasicNotExist = 12500,
+  MessageFilterError = 12600,
+  FriendAlready = 12601,
+  FriendSelfLimit = 12602,
+  FriendInviteReq = 12603,
+  FriendRefuseYourInvite = 12604,
+  FriendAddOk = 12605,
+  FriendNotExist = 12606,
+  FriendDelOk = 12607,
+  FriendLinessAdd = 12608,
+  FriendRefuseInvite = 12609,
+  FriendTargetLimit = 12610,
+  FriendInviteAlready = 12611,
+  FriendInviteLimit = 12612,
+  FriendInviteOk = 12613,
+  FriendInviteNotExist = 12614,
   MidwareCodeEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   MidwareCodeEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 LIBPROTOC_EXPORT bool MidwareCodeEnum_IsValid(int value);
 const MidwareCodeEnum MidwareCodeEnum_MIN = Error;
-const MidwareCodeEnum MidwareCodeEnum_MAX = QueryBasicNotExist;
+const MidwareCodeEnum MidwareCodeEnum_MAX = FriendInviteNotExist;
 const int MidwareCodeEnum_ARRAYSIZE = MidwareCodeEnum_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* MidwareCodeEnum_descriptor();

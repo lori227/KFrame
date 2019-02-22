@@ -183,7 +183,7 @@ namespace KFrame
         auto querytargetdata = _public_redis_driver->QueryMap( "hgetall {}:{}", __KF_STRING__( public ), kfmsg.playerid() );
         if ( querytargetdata->_value.empty() )
         {
-            return _kf_display->SendToPlayer( route, KFMsg::PublicDatabaseError );
+            return _kf_display->SendToPlayer( route, KFMsg::PublicDatabaseBusy );
         }
 
         auto refuseinvite = KFUtility::ToValue< uint64 >( querytargetdata->_value[ __KF_STRING__( refusefriend ) ] );

@@ -50,12 +50,12 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFRelationClientModule::SendMessageToRelation( uint64 playerid, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFRelationClientModule::SendToRelation( uint64 playerid, uint32 msgid, ::google::protobuf::Message* message )
     {
         return _kf_route->SendToRand( playerid, __KF_STRING__( relation ), msgid, message );
     }
 
-    bool KFRelationClientModule::SendMessageToRelation( uint64 playerid, KFData* kfrelation, uint32 msgid, google::protobuf::Message* message )
+    bool KFRelationClientModule::SendToRelation( uint64 playerid, KFData* kfrelation, uint32 msgid, google::protobuf::Message* message )
     {
         auto kfbasic = kfrelation->FindData( __KF_STRING__( basic ) );
         return _kf_game->SendToPlayer( playerid, kfbasic, msgid, message );
@@ -69,7 +69,7 @@ namespace KFrame
         auto kffriend = kffriendrecord->FirstData();
         while ( kffriend != nullptr )
         {
-            SendMessageToRelation( player->GetKeyID(), kffriend, msgid, message );
+            SendToRelation( player->GetKeyID(), kffriend, msgid, message );
             kffriend = kffriendrecord->NextData();
         }
     }
@@ -86,14 +86,14 @@ namespace KFrame
             // 查询好友列表
             KFMsg::S2SQueryFriendToRelationReq req;
             req.set_playerid( player->GetKeyID() );
-            SendMessageToRelation( player->GetKeyID(), KFMsg::S2S_QUERY_FRIEND_TO_RELATION_REQ, &req );
+            SendToRelation( player->GetKeyID(), KFMsg::S2S_QUERY_FRIEND_TO_RELATION_REQ, &req );
         }
 
         {
             // 查询好友申请列表
             KFMsg::S2SQueryFriendInviteToRelationReq req;
             req.set_playerid( player->GetKeyID() );
-            SendMessageToRelation( player->GetKeyID(), KFMsg::S2S_QUERY_FRIEND_INVITE_TO_RELATION_REQ, &req );
+            SendToRelation( player->GetKeyID(), KFMsg::S2S_QUERY_FRIEND_INVITE_TO_RELATION_REQ, &req );
         }
     }
 
@@ -213,7 +213,7 @@ namespace KFrame
         MapString values;
         values[ __KF_STRING__( status ) ] = __TO_STRING__( KFMsg::OnlineState );
         values[ __KF_STRING__( statustime ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time );
-        values[ __KF_STRING__( serverid ) ] = __TO_STRING__( KFGlobal::Instance()->_app_id._union._id );
+        values[ __KF_STRING__( serverid ) ] = __TO_STRING__( KFGlobal::Instance()->_app_id->GetId() );
         SendUpdateToFriend( player, values );
     }
 
@@ -302,10 +302,10 @@ namespace KFrame
         req.set_name( kfmsg.name() );
         req.set_playerid( kfmsg.playerid() );
         req.set_message( message );
-        auto ok = SendMessageToRelation( playerid, KFMsg::S2S_ADD_FRIEND_INVITE_TO_RELATION_REQ, &req );
+        auto ok = SendToRelation( playerid, KFMsg::S2S_ADD_FRIEND_INVITE_TO_RELATION_REQ, &req );
         if ( !ok )
         {
-            _kf_display->SendToClient( player, KFMsg::RouteServerBusy );
+            _kf_display->SendToClient( player, KFMsg::RelationServerBusy );
         }
     }
 
@@ -408,7 +408,7 @@ namespace KFrame
             KFMsg::S2SDelFriendInviteToRelationReq req;
             req.set_selfplayerid( player->GetKeyID() );
             req.set_targetplayerid( kfinvite->GetKeyID() );
-            SendMessageToRelation( player->GetKeyID(), KFMsg::S2S_DEL_FRIEND_INVITE_TO_RELATION_REQ, &req );
+            SendToRelation( player->GetKeyID(), KFMsg::S2S_DEL_FRIEND_INVITE_TO_RELATION_REQ, &req );
         }
         break;
         default:
@@ -434,10 +434,10 @@ namespace KFrame
         KFMsg::S2SAddFriendToRelationReq req;
         req.set_playerid( kfinvite->GetKeyID() );
         req.set_name( kfinvite->GetValue< std::string >( __KF_STRING__( basic ), __KF_STRING__( name ) ) );
-        auto ok = SendMessageToRelation( player->GetKeyID(), KFMsg::S2S_ADD_FRIEND_TO_RELATION_REQ, &req );
+        auto ok = SendToRelation( player->GetKeyID(), KFMsg::S2S_ADD_FRIEND_TO_RELATION_REQ, &req );
         if ( !ok )
         {
-            _kf_display->SendToClient( player, KFMsg::RouteServerBusy );
+            _kf_display->SendToClient( player, KFMsg::RelationServerBusy );
         }
     }
 
@@ -475,10 +475,10 @@ namespace KFrame
         // 发送好友集群处理
         KFMsg::S2SDelFriendToRelationReq req;
         req.set_playerid( kfmsg.playerid() );
-        auto ok = SendMessageToRelation( playerid, KFMsg::S2S_DEL_FRIEND_TO_RELATION_REQ, &req );
+        auto ok = SendToRelation( playerid, KFMsg::S2S_DEL_FRIEND_TO_RELATION_REQ, &req );
         if ( !ok )
         {
-            _kf_display->SendToClient( player, KFMsg::RouteServerBusy );
+            _kf_display->SendToClient( player, KFMsg::RelationServerBusy );
         }
     }
 
@@ -530,7 +530,7 @@ namespace KFrame
         req.set_friendliness( value );
         req.set_targetplayerid( friendid );
         req.set_selfplayerid( player->GetKeyID() );
-        SendMessageToRelation( player->GetKeyID(), KFMsg::S2S_UPDATE_FRIENDLINESS_TO_RELATION_REQ, &req );
+        SendToRelation( player->GetKeyID(), KFMsg::S2S_UPDATE_FRIENDLINESS_TO_RELATION_REQ, &req );
     }
 
     void KFRelationClientModule::AddFriendLinessOnce( KFEntity* player, uint64 friendid, uint32 type, uint32 value )

@@ -178,6 +178,23 @@ namespace KFrame
         __STRING_DEFINE__( ranksortlist );
         __STRING_DEFINE__( minrankscore );
         __STRING_DEFINE__( statustime );
+        __STRING_DEFINE__( relation );
+        __STRING_DEFINE__( freindmaxcount );
+        __STRING_DEFINE__( friendinvite );
+        __STRING_DEFINE__( friendliness );
+        __STRING_DEFINE__( refusefriend );
+        __STRING_DEFINE__( freindlinessmax );
+        __STRING_DEFINE__( invite );
+        __STRING_DEFINE__( friendlist );
+        __STRING_DEFINE__( friendlinesslimit );
+        __STRING_DEFINE__( invitelist );
+        __STRING_DEFINE__( message );
+        __STRING_DEFINE__( freindinvitecount );
+        __STRING_DEFINE__( newadd );
+        __STRING_DEFINE__( freindinvitekeeptime );
+        __STRING_DEFINE__( freindlinessresettime );
+        __STRING_DEFINE__( freindlinessdailymax );
+
     }
 }
 

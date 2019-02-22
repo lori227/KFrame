@@ -88,10 +88,10 @@ namespace KFrame
 
     private:
         // 发送消息到关系集群
-        bool SendMessageToRelation( uint64 playerid, uint32 msgid, ::google::protobuf::Message* message );
+        bool SendToRelation( uint64 playerid, uint32 msgid, ::google::protobuf::Message* message );
 
         // 发送消息到关系属性
-        bool SendMessageToRelation( uint64 playerid, KFData* kfrelation, uint32 msgid, google::protobuf::Message* message );
+        bool SendToRelation( uint64 playerid, KFData* kfrelation, uint32 msgid, google::protobuf::Message* message );
 
         // 发送消息到好友
         void SendMessageToFriend( KFEntity* player, uint32 msgid, google::protobuf::Message* message );

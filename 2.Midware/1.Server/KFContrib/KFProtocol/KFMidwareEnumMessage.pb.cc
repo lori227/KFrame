@@ -25,7 +25,7 @@ namespace protobuf_KFMidwareEnumMessage_2eproto {
 void InitDefaults() {
 }
 
-const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[7];
+const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[8];
 const ::google::protobuf::uint32 TableStruct::offsets[1] = {};
 static const ::google::protobuf::internal::MigrationSchema* schemas = NULL;
 static const ::google::protobuf::Message* const* file_default_instances = NULL;
@@ -65,10 +65,12 @@ void AddDescriptorsImpl() {
       "otalRank\020\001\022\014\n\010ZoneRank\020\002*q\n\tStateEnum\022\017\n"
       "\013UnknowState\020\000\022\017\n\013OnlineState\020\001\022\016\n\nGroup"
       "State\020\002\022\016\n\nMatchState\020\003\022\020\n\014PlayingState\020"
-      "\004\022\020\n\014OfflineState\020\005b\006proto3"
+      "\004\022\020\n\014OfflineState\020\005*U\n\nInviteEnum\022\020\n\014Unk"
+      "nowInvite\020\000\022\013\n\007Consent\020\001\022\n\n\006Refuse\020\002\022\n\n\006"
+      "Delete\020\003\022\020\n\014RefuseMinute\020\004b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 627);
+      descriptor, 714);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFMidwareEnumMessage.proto", &protobuf_RegisterTypes);
 }
@@ -194,6 +196,23 @@ bool StateEnum_IsValid(int value) {
     case 3:
     case 4:
     case 5:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::google::protobuf::EnumDescriptor* InviteEnum_descriptor() {
+  protobuf_KFMidwareEnumMessage_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_KFMidwareEnumMessage_2eproto::file_level_enum_descriptors[7];
+}
+bool InviteEnum_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+    case 4:
       return true;
     default:
       return false;
