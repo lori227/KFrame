@@ -16,12 +16,13 @@ namespace KFrame
         {
             auto id = ranknode.GetUInt32( "Id" );
             auto kfsetting = _kf_rank_setting.Create( id );
-
             kfsetting->_rank_id = id;
-            kfsetting->_refresh_type = ranknode.GetUInt32( "RefreshType" );
-            kfsetting->_refresh_time = ranknode.GetUInt32( "RefreshTime" );
-            kfsetting->_refresh_hour = ranknode.GetUInt32( "RefreshHour" );
-            kfsetting->_refresh_minute = ranknode.GetUInt32( "RefreshMinute" );
+
+            auto refreshnode = ranknode.FindNode( "Refresh" );
+            kfsetting->_refresh_type = refreshnode.GetUInt32( "RefreshType" );
+            kfsetting->_refresh_time = refreshnode.GetUInt32( "RefreshTime" );
+            kfsetting->_refresh_hour = refreshnode.GetUInt32( "RefreshHour" );
+            kfsetting->_refresh_minute = refreshnode.GetUInt32( "RefreshMinute" );
 
             ranknode.NextNode();
         }

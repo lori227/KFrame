@@ -18,11 +18,14 @@ namespace KFrame
             auto kfsetting = _kf_rank_setting.Create( id );
 
             kfsetting->_rank_id = id;
-            kfsetting->_zone_type = ranknode.GetUInt32( "ZoneType" );
+
             kfsetting->_parent_data = ranknode.GetString( "ParentData" );
             kfsetting->_rank_data = ranknode.GetString( "RankData" );
+            kfsetting->_zone_type = ranknode.GetUInt32( "ZoneType" );
             kfsetting->_max_count = ranknode.GetUInt32( "MaxCount" );
-            kfsetting->_is_reset_data = ranknode.GetBoolen( "Reset" );
+
+            auto refreshnode = ranknode.FindNode( "Refresh" );
+            kfsetting->_is_reset_data = refreshnode.GetBoolen( "Reset" );
 
             ranknode.NextNode();
         }

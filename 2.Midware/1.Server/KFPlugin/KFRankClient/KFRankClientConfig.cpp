@@ -15,9 +15,10 @@ namespace KFrame
         auto datanode = playernode.FindNode( "Data" );
         while ( datanode.IsValid() )
         {
-            auto parentname = datanode.GetString( "Parent" );
-            auto dataname = datanode.GetString( "Name" );
-            _player_data.push_back( DataType( parentname, dataname ) );
+            KFCalcData calcdata;
+            calcdata._parent_name = datanode.GetString( "ParentName" );
+            calcdata._data_name = datanode.GetString( "DataName" );
+            _player_data.push_back( calcdata );
 
             datanode.NextNode();
         }
@@ -30,22 +31,29 @@ namespace KFrame
             auto kfsetting = _kf_rank_setting.Create( id );
 
             kfsetting->_rank_id = id;
+            kfsetting->_parent_name = ranknode.GetString( "ParentName" );
+            kfsetting->_data_name = ranknode.GetString( "DataName" );
             kfsetting->_zone_type = ranknode.GetUInt32( "ZoneType" );
-            kfsetting->_parent_name = ranknode.GetString( "ParentData" );
-            kfsetting->_rank_name = ranknode.GetString( "RankData" );
 
             // 计算的数据
             auto calcnodes = ranknode.FindNode( "CalcData" );
             auto calcnode = calcnodes.FindNode( "Data" );
             while ( calcnode.IsValid() )
             {
-                auto parentname = calcnode.GetString( "Parent" );
-                auto dataname = calcnode.GetString( "Name" );
-                kfsetting->_calc_data.push_back( DataType( parentname, dataname ) );
+                // 计算的属性
+                KFCalcData calcdata;
+                calcdata._parent_name = datanode.GetString( "ParentName" );
+                calcdata._data_name = datanode.GetString( "DataName" );
+                calcdata._max_value = datanode.GetUInt32( "Max" );
+                calcdata._text = datanode.GetString( "Text" );
+                kfsetting->_calc_data.push_back( calcdata );
 
                 // 数据关联的内标
-                RankDataType key( parentname, dataname );
-                _kf_rank_data_list[ key ].push_back( kfsetting );
+                if ( calcdata.IsCalcData() )
+                {
+                    RankDataType key( calcdata._parent_name, calcdata._data_name );
+                    _kf_rank_data_list[ key ].push_back( kfsetting );
+                }
 
                 calcnode.NextNode();
             }
@@ -76,6 +84,4 @@ namespace KFrame
 
         return iter->second;
     }
-
-
 }

@@ -10,9 +10,20 @@ namespace KFrame
     class KFCalcData
     {
     public:
+        bool IsShowData() const
+        {
+            return !_text.empty();
+        }
+
+        bool IsCalcData() const
+        {
+            return _max_value != 0u;
+        }
+
+    public:
         std::string _parent_name;
         std::string _data_name;
-        uint64 _max_value = 0;
+        uint64 _max_value = 0u;
         std::string _text;
     };
     /////////////////////////////////////////////////////////////////
