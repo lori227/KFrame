@@ -60,6 +60,7 @@ enum MidwareCodeEnum {
   DataServerBusy = 10006,
   MailServerBusy = 10007,
   RankServerBusy = 10008,
+  PublicDatabaseBusy = 10009,
   AccountIsEmpty = 11001,
   ActivationAccount = 11002,
   InvalidActivationCode = 11003,
@@ -132,12 +133,13 @@ enum MidwareCodeEnum {
   StoreBuyTypeError = 12305,
   StoreBuyOK = 12306,
   RankNotExist = 12400,
+  QueryBasicNotExist = 12500,
   MidwareCodeEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   MidwareCodeEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 LIBPROTOC_EXPORT bool MidwareCodeEnum_IsValid(int value);
 const MidwareCodeEnum MidwareCodeEnum_MIN = Error;
-const MidwareCodeEnum MidwareCodeEnum_MAX = RankNotExist;
+const MidwareCodeEnum MidwareCodeEnum_MAX = QueryBasicNotExist;
 const int MidwareCodeEnum_ARRAYSIZE = MidwareCodeEnum_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* MidwareCodeEnum_descriptor();

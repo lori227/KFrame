@@ -60,10 +60,10 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleQueryBasicToGameAck );
     private:
         // 组件
-        KFComponent* _kf_component{ nullptr };
+        KFComponent* _kf_component = nullptr;
 
         // 基础模块
-        KFData* _kf_basic{ nullptr };
+        KFData* _kf_basic = nullptr;
     };
 }
 

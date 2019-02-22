@@ -177,7 +177,7 @@ namespace KFrame
         __STRING_DEFINE__( ranksort );
         __STRING_DEFINE__( ranksortlist );
         __STRING_DEFINE__( minrankscore );
-
+        __STRING_DEFINE__( statustime );
     }
 }
 

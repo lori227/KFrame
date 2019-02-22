@@ -25,7 +25,7 @@ namespace protobuf_KFMidwareEnumMessage_2eproto {
 void InitDefaults() {
 }
 
-const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[6];
+const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[7];
 const ::google::protobuf::uint32 TableStruct::offsets[1] = {};
 static const ::google::protobuf::internal::MigrationSchema* schemas = NULL;
 static const ::google::protobuf::Message* const* file_default_instances = NULL;
@@ -62,10 +62,13 @@ void AddDescriptorsImpl() {
       "UUidGuild\020\005\022\016\n\nUUidBattle\020\006*:\n\010MailEnum\022"
       "\016\n\nUnknowMail\020\000\022\016\n\nGlobalMail\020\001\022\016\n\nPerso"
       "nMail\020\002*7\n\010RankEnum\022\016\n\nUnknowRank\020\000\022\r\n\tT"
-      "otalRank\020\001\022\014\n\010ZoneRank\020\002b\006proto3"
+      "otalRank\020\001\022\014\n\010ZoneRank\020\002*q\n\tStateEnum\022\017\n"
+      "\013UnknowState\020\000\022\017\n\013OnlineState\020\001\022\016\n\nGroup"
+      "State\020\002\022\016\n\nMatchState\020\003\022\020\n\014PlayingState\020"
+      "\004\022\020\n\014OfflineState\020\005b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 512);
+      descriptor, 627);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "KFMidwareEnumMessage.proto", &protobuf_RegisterTypes);
 }
@@ -173,6 +176,24 @@ bool RankEnum_IsValid(int value) {
     case 0:
     case 1:
     case 2:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::google::protobuf::EnumDescriptor* StateEnum_descriptor() {
+  protobuf_KFMidwareEnumMessage_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_KFMidwareEnumMessage_2eproto::file_level_enum_descriptors[6];
+}
+bool StateEnum_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
       return true;
     default:
       return false;

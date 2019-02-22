@@ -19,7 +19,7 @@ enum MidwareCodeEnum
 	DataServerBusy			= 10006;		// 数据服务器繁忙
 	MailServerBusy			= 10007;		// 邮件服务器繁忙
 	RankServerBusy			= 10008;		// 排行服务器繁忙
-
+	PublicDatabaseBusy		= 10009;		// 公共数据库错误
 
 	// auth
 	AccountIsEmpty 			= 11001;		// 账号不能为空
@@ -116,4 +116,7 @@ enum MidwareCodeEnum
 
 	// rank
 	RankNotExist			= 12400;		// 没有排行榜配置
+
+	// public
+	QueryBasicNotExist		= 12500;		// 查询不到玩家信息
 }

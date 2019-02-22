@@ -58,7 +58,7 @@ namespace KFrame
                 auto querydata = _public_redis_driver->QueryMap( "hgetall {}:{}", __KF_STRING__( public ), queryid->_value );
                 if ( !querydata->IsOk() )
                 {
-                    ack.set_result( KFMsg::PublicDatabaseError );
+                    ack.set_result( KFMsg::PublicDatabaseBusy );
                 }
                 else
                 {
