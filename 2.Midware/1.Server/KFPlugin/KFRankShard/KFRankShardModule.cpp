@@ -148,10 +148,6 @@ namespace KFrame
                 auto pbrankdata = kfrankdata->_rank_datas.add_rankdata();
                 pbrankdata->set_rankindex( ++rankindex );
                 KFProto::Parse( pbrankdata, queryrankdata->_value, KFCompressEnum::Convert );
-
-                // 加载玩家显示数据
-                // todo : 更新的时候pbdata里面包含玩家数据
-                // LoadPlayerShowData( pbdatas, playerid );
             }
 
             // 保存排行榜信息
