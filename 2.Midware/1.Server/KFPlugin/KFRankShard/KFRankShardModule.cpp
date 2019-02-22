@@ -263,7 +263,7 @@ namespace KFrame
         auto kfsetting = _kf_rank_config->FindRankSetting( kfmsg.rankid() );
         if ( kfsetting == nullptr )
         {
-            return ;
+            return;
         }
 
         // 查询

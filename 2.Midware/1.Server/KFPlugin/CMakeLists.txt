@@ -65,3 +65,8 @@ add_subdirectory(KFRankClient)
 add_subdirectory(KFRankShard)
 add_subdirectory(KFRankMaster)
 
+add_subdirectory(KFRelationClient)
+add_subdirectory(KFRelationShard)
+
+
+
