@@ -21,7 +21,7 @@
     class KFServerHead : public KFNetHead
     {
     public:
-        KFId _kfid;		// 数据id
+        KFRoute _route;		// 路由信息
     };
 
 
@@ -32,8 +32,8 @@
 
 服务器与服务器之间网络传送消息结构如下:  
 
-	_length | _msgid | _child | _kfid | _data |
-	4字节   | 2字节   | 2字节  | 16字节 | proto消息序列化的数据, 长度为_length |
+	_length | _msgid | _child | _route | _data |
+	4字节   | 2字节   | 2字节  | 24字节 | proto消息序列化的数据, 长度为_length |
 
 网络端接收到的数据长度是不确定的( 因为网络`mtu`一般是1500 字节),  
 可能是1条完整消息, 可能是n条消息, 也可能是消息的一小半部分  
