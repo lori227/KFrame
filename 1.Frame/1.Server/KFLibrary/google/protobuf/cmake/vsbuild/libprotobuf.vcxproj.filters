@@ -398,14 +398,14 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="E:\KFrame\1.Frame\1.Server\KFLibrary\google\protobuf\cmake\CMakeLists.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <Filter Include="Header Files">
       <UniqueIdentifier>{31864CDD-998D-3EE7-8DA5-BEE343F1CCFB}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files">
       <UniqueIdentifier>{93B4B842-0614-3D0E-A77B-4D5910077B89}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\CMakeLists.txt" />
   </ItemGroup>
 </Project>
