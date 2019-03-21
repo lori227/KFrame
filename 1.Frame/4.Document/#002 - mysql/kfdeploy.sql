@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : #100 - 小兵部署
+Source Server         : #100 - 战旗版本机
 Source Server Version : 50722
-Source Host           : 47.104.228.135:3306
+Source Host           : 192.168.1.250:3306
 Source Database       : kfdeploy
 
 Target Server Type    : MYSQL
 Target Server Version : 50722
 File Encoding         : 65001
 
-Date: 2019-02-20 09:55:00
+Date: 2019-03-21 20:58:34
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -42,7 +42,16 @@ CREATE TABLE `1_1_deploy` (
 -- ----------------------------
 -- Records of 1_1_deploy
 -- ----------------------------
-INSERT INTO `1_1_deploy` VALUES ('/data/sgserver', '', 'bin/KFStartup', 'auth', 'auth', '1.21.0.1', '1.2', '1.0', '172.31.192.96', '1', '1', '0', '12803', '1550212921', '1.12.0.1', 'sgserver_develop_1.0.46.de8fad8.tar.gz');
+INSERT INTO `1_1_deploy` VALUES ('/data/chess', '', 'bin/KFStartup', 'auth', 'auth', '1.21.0.1', '1.2', '1.0', '192.168.1.250', '1', '1', '0', '12803', '1550212921', '1.12.0.1', 'sgserver_develop_1.0.46.de8fad8.tar.gz');
+INSERT INTO `1_1_deploy` VALUES ('/data/chess', '', 'bin/KFStartup', 'route', 'master', '1.22.0.1', '1.2', '1.0', '192.168.1.250', '1', '1', '0', '12803', '1550212921', '1.12.0.1', 'sgserver_develop_1.0.46.de8fad8.tar.gz');
+INSERT INTO `1_1_deploy` VALUES ('/data/chess', '', 'bin/KFStartup', 'route', 'proxy', '1.23.0.1', '1.2', '1.0', '192.168.1.250', '1', '1', '0', '12803', '1550212921', '1.12.0.1', 'sgserver_develop_1.0.46.de8fad8.tar.gz');
+INSERT INTO `1_1_deploy` VALUES ('/data/chess', '', 'bin/KFStartup', 'route', 'master', '1.24.0.1', '1.2', '1.0', '192.168.1.250', '1', '1', '0', '12803', '1550212921', '1.12.0.1', 'sgserver_develop_1.0.46.de8fad8.tar.gz');
+INSERT INTO `1_1_deploy` VALUES ('/data/chess', '', 'bin/KFStartup', 'data', 'shard', '1.31.0.1', '1.2', '1.0', '192.168.1.250', '1', '1', '0', '12803', '1550212921', '1.12.0.1', 'sgserver_develop_1.0.46.de8fad8.tar.gz');
+INSERT INTO `1_1_deploy` VALUES ('/data/chess', '', 'bin/KFStartup', 'zone', 'master', '1.91.1.1', '1.2', '1.0', '192.168.1.250', '1', '1', '0', '12803', '1550212921', '1.12.0.1', 'sgserver_develop_1.0.46.de8fad8.tar.gz');
+INSERT INTO `1_1_deploy` VALUES ('/data/chess', '', 'bin/KFStartup', 'zone', 'world', '1.92.1.1', '1.2', '1.0', '192.168.1.250', '1', '1', '0', '12803', '1550212921', '1.12.0.1', 'sgserver_develop_1.0.46.de8fad8.tar.gz');
+INSERT INTO `1_1_deploy` VALUES ('/data/chess', '', 'bin/KFStartup', 'zone', 'gate', '1.93.1.1', '1.2', '1.0', '192.168.1.250', '1', '1', '0', '12803', '1550212921', '1.12.0.1', 'sgserver_develop_1.0.46.de8fad8.tar.gz');
+INSERT INTO `1_1_deploy` VALUES ('/data/chess', '', 'bin/KFStartup', 'zone', 'login', '1.94.1.1', '1.2', '1.0', '192.168.1.250', '1', '1', '0', '12803', '1550212921', '1.12.0.1', 'sgserver_develop_1.0.46.de8fad8.tar.gz');
+INSERT INTO `1_1_deploy` VALUES ('/data/chess', '', 'bin/KFStartup', 'zone', 'game', '1.95.1.1', '1.2', '1.0', '192.168.1.250', '1', '1', '0', '12803', '1550212921', '1.12.0.1', 'sgserver_develop_1.0.46.de8fad8.tar.gz');
 
 -- ----------------------------
 -- Table structure for `agent`
@@ -98,8 +107,4 @@ CREATE TABLE `version` (
 -- ----------------------------
 -- Records of version
 -- ----------------------------
-INSERT INTO `version` VALUES ('2019-02-14 11:02:00', 'sgserver_develop_1.0.45.22b150d.tar.gz', 'http://172.31.192.96/upload/sgserver_develop_1.0.45.22b150d.tar.gz', '573d808ac3bc0038eaff92f4d4cdf0df');
-INSERT INTO `version` VALUES ('2019-02-14 13:34:26', 'sgserver_develop_1.0.45.a0abbc7.tar.gz', 'http://172.31.192.96/upload/sgserver_develop_1.0.45.a0abbc7.tar.gz', '19f6a4a2d0a9532b65d355b99b945241');
-INSERT INTO `version` VALUES ('2019-02-14 11:28:48', 'sgserver_develop_1.0.45.cef3745.tar.gz', 'http://172.31.192.96/upload/sgserver_develop_1.0.45.cef3745.tar.gz', 'd0c98caa95318f218da90eef3fd14de1');
-INSERT INTO `version` VALUES ('2019-02-15 17:04:56', 'sgserver_develop_1.0.46.b1826c8.tar.gz', 'http://172.31.192.96:8080/upload/sgserver_develop_1.0.46.b1826c8.tar.gz', 'fe76068b7b679ffbbe712820782371ba');
-INSERT INTO `version` VALUES ('2019-02-15 14:05:52', 'sgserver_develop_1.0.46.de8fad8.tar.gz', 'http://172.31.192.96:8080/upload/sgserver_develop_1.0.46.de8fad8.tar.gz', '37cfab6f283664192cf73d6e59e99d66');
+INSERT INTO `version` VALUES ('2019-03-21 19:54:34', 'dark_develop_1.0.80.34.tar.gz', 'http://192.168.1.250/upload/dark_develop_1.0.80.34.tar.gz', 'd36d1465c5b183f1936bdfed3c811e7b');
