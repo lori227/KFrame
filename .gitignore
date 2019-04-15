@@ -14,3 +14,15 @@ x64
 KFLibrary/libuv/Debug/
 KFLibrary/libuv/Release/
 
+_lib/win64/debug/3rd/hiredisd.lib
+_lib/win64/debug/3rd/libiconvd.lib
+_lib/win64/debug/3rd/libuvd.lib
+_lib/win64/debug/3rd/LuaPlusd.lib
+_lib/win64/debug/3rd/Win32_Interopd.lib
+_lib/win64/debug/3rd/zlibd.lib
+_lib/win64/release/3rd/hiredis.lib
+_lib/win64/release/3rd/libiconv.lib
+_lib/win64/release/3rd/libuv.lib
+_lib/win64/release/3rd/LuaPlus.lib
+_lib/win64/release/3rd/Win32_Interop.lib
+_lib/win64/release/3rd/zlib.lib
