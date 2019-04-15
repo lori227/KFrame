@@ -1,0 +1,364 @@
+syntax = "proto3";
+import "FrameDefineMessage.proto";
+
+package KFMsg;
+
+// 协议号区间 : 1-1000
+enum FrameClientProtocol
+ {
+	MSG_FRAME_CLIENT_BEGIN 				= 0;	// pb3 需要0
+
+	// display
+	MSG_RESULT_DISPLAY 					= 1;	// 提示显示
+	MSG_COMMAND_REQ 					= 2;	// 客户端发送GM指令请求
+
+	// login
+	MSG_LOGIN_REQ 						= 100;	// 客户端登录验证请求
+	MSG_LOGIN_ACK 						= 101;	// 客户端登录验证结果
+	MSG_LOGOUT_REQ 						= 102;	// 客户端请求登出游戏
+	MSG_TELL_BE_KICK 					= 103;	// 被踢下线了
+
+	// data
+	MSG_LOGIN_ENTER_GAME 				= 200;	// 通知进入游戏
+ 	MSG_SYNC_UPDATE_DATA 				= 201;	// 同步更新属性
+	MSG_SYNC_ADD_DATA 					= 202;	// 同步增加属性
+	MSG_SYNC_REMOVE_DATA 				= 203;	// 同步删除属性
+	MSG_REMOVE_DATA_REQ 				= 204;	// 请求删除属性
+	MSG_QUERY_PLAYER_REQ 				= 205;	// 查询玩家数据
+	MSG_QUERY_PLAYER_ACK 				= 206;	// 查询玩家数据
+	MSG_QUERY_BASIC_REQ					= 207;	// 查询玩家基本数据
+	MSG_QUERY_BASIC_ACK					= 208;	// 查询基础数据
+	MSG_SHOW_ELEMENT 					= 209;	// 显示奖励
+
+	// attribute
+	MSG_SET_NAME_REQ 					= 300;	// 设置名字
+	MSG_SET_SEX_REQ 					= 301;	// 设置性别
+	MSG_ACHIEVE_REWARD_REQ				= 302;	// 领取成就奖励
+	MSG_TASK_REWARD_REQ 				= 303;	// 领取任务奖励
+	MSG_ACTIVITY_REWARD_REQ 			= 304;	// 领取活动奖励
+	MSG_COMPOUND_REQ					= 305;	// 属性合成请求
+	MSG_USE_ITEM_REQ					= 306;	// 使用道具
+	MSG_SEVEN_SIGNIN_REWARD_REQ			= 307;	// 领取7天签到奖励
+
+	// mail
+	MSG_VIEW_MAIL_REQ 					= 401;	// 查看邮件
+	MSG_DELETE_MAIL_REQ 				= 402;	// 删除邮件
+	MSG_QUERY_MAIL_REQ 					= 403;	// 请求查询邮件
+	MSG_MAIL_REWARD_REQ 				= 404;	// 领取邮件奖励
+
+	// store
+	MSG_BUY_STORE_REQ 					= 411;	// 购买商品请求
+	MSG_QUERY_STORE_REQ 				= 412;	// 请求商城信息
+	MSG_QUERY_STORE_ACK 				= 413;	// 请求商城信息反馈
+
+	// rank
+	MSG_QUERY_RANK_LIST_REQ 			= 431;	// 查询全服排行榜
+	MSG_QUERY_RANK_LIST_ACK	 			= 432;	// 查询排行榜反馈
+	MSG_QUERY_FRIEND_RANK_LIST_REQ 		= 433;	// 查询好友排行榜
+	MSG_QUERY_FRIEND_RANK_LIST_ACK		= 434;	// 查询好友排行榜
+
+	// relation
+	MSG_ADD_FRIEND_INVITE_REQ 			= 451;	// 申请添加好友
+	MSG_REPLY_FRIEND_INVITE_REQ 		= 452;	// 回复好友申请
+	MSG_DEL_FRIEND_REQ					= 453;	// 删除好友
+	MSG_SET_REFUSE_FRIEND_INVITE_REQ 	= 454;	// 设置拒绝添加好友
+ }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 结果提示
+// MSG_RESULT_DISPLAY
+message MsgResultDisplay
+{
+	uint32 result = 1;
+	repeated bytes param = 2;
+}
+
+// 客户端发送GM指令请求
+// MSG_COMMAND_REQ
+message MsgCommandReq
+{
+	bytes command = 1;				// 命令
+	repeated bytes params = 2;		// 参数列表
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 登录请求
+// MSG_LOGIN_REQ
+message MsgLoginReq
+{
+	bytes token = 1;		// token
+	uint64 accountid = 2;	// 账号id
+	bytes version = 3;		// 客户端版本号
+}
+
+// 通知进入游戏世界
+// MSG_LOGIN_ACK
+message MsgLoginAck
+{
+	uint64 playerid = 1;
+	PBObject playerdata = 2;
+	uint64 servertime = 3;
+}
+
+// 登出游戏
+// MSG_LOGOUT_REQ
+message MsgLogoutReq
+{
+
+}
+
+// 通知被踢下线
+// MSG_TELL_BE_KICK
+message MsgTellBeKick
+{
+	uint32 type = 1;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// 所有的游戏属性同通过这3个消息来完成同步
+// MSG_SYNC_UPDATE_DATA
+message MsgSyncUpdateData
+{
+	PBObject pbdata = 1;	
+}
+
+// MSG_SYNC_ADD_DATA
+message MsgSyncAddData
+{
+	PBObject pbdata = 1;	
+}
+
+// MSG_SYNC_REMOVE_DATA
+message MsgSyncRemoveData
+{
+	PBObject pbdata = 1;	
+}
+
+// 显示奖励的物品
+// MSG_SHOW_ELEMENT
+message MsgShowElement
+{
+	bytes element = 1;	// 奖励字串( 客户端需要解析 )
+}
+
+// 删除属性
+// MSG_REMOVE_DATA_REQ
+message MsgRemoveDataReq
+{
+	bytes dataname = 1;		// 属性名称
+	uint64 key = 2;			// id
+	uint32 count = 3;		// 数量
+}
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+// 查询玩家
+// MSG_QUERY_BASIC_REQ
+message MsgQueryBasicReq
+{
+	bytes name = 1;
+}
+
+// 玩家基础信息
+// MSG_QUERY_BASIC_ACK
+message MsgQueryBasicAck
+{
+	PBObject player = 1;	
+}
+
+// 查询其他玩家数据，不能查询自己的数据
+// MSG_QUERY_PLAYER_REQ
+message MsgQueryPlayerReq
+{
+	uint64 playerid = 1;
+}
+
+// 查询玩家信息
+// MSG_QUERY_PLAYER_ACK
+message MsgQueryPlayerAck
+{
+	PBObject player = 1;
+}
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+// 设置名字
+// MSG_SET_NAME_REQ
+message MsgSetNameReq
+{
+	bytes name = 1;
+}
+
+// 设置性别
+// MSG_SET_SEX_REQ
+message MsgSetSexReq
+{
+	uint32 sex = 1;
+}
+////////////////////////////////////////////////////////////////////
+// 合成属性
+// MSG_COMPOUND_REQ
+message MsgCompoundReq
+{
+	bytes dataname = 1;	// 属性名称( 在class中 )
+	uint32 key = 2;		// 属性id
+}
+////////////////////////////////////////////////////////////////////
+
+// 领取成就奖励
+// MSG_ACHIEVE_REWARD_REQ
+message MsgAchieveRewardReq
+{
+	uint32 id = 1;
+}
+
+// 领取任务奖励
+// MSG_TASK_REWARD_REQ
+message MsgTaskRewardReq
+{
+	uint32 id = 1;
+}
+
+// 领取活动奖励
+// MSG_ACTIVITY_REWARD_REQ
+message MsgActivityRewardReq
+{
+	uint32 type = 1;	// 活动类型
+	uint32 id = 2;		// 活动子id
+}
+
+// 使用道具
+// MSG_USE_ITEM_REQ
+message MsgUseItemReq
+{
+	uint64 uuid = 1;
+}
+
+// 领取7天签到奖励
+// MSG_SEVEN_SIGNIN_REWARD_REQ
+message MsgSevenSignInRewardReq
+{
+	uint32 day = 1;		// 第几天的奖励( 根据角色属性singin的sevenday的天数, 和sevenreward奖励标记来判断 )
+}
+
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+// 查看邮件
+// MSG_VIEW_MAIL_REQ
+message MsgViewMailReq
+{
+	uint64 id = 1;
+}
+
+// 删除邮件
+// MSG_DELETE_MAIL_REQ
+message MsgDeleteMailReq
+{
+	uint64 id =1;	// 邮件id
+}
+
+// 查询邮件
+// MSG_QUERY_MAIL_REQ
+message MsgQueryMailReq
+{
+
+}
+
+// 领取邮件奖励
+// MSG_MAIL_REWARD_REQ
+message MsgMailRewardReq
+{
+	uint64 id = 1;
+}
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+// 客户端请求购买物品
+//	MSG_BUY_STORE_REQ;
+message MsgBuyStoreReq
+{
+	bytes version = 1;		// 版本号
+	bytes buytype = 2;		// 使用什么购买
+	uint32 id = 3;			// 商品id
+	uint32 count = 4;		// 购买数量
+}
+
+// 请求商城信息
+// MSG_QUERY_STORE_REQ
+message MsgQueryStoreReq
+{
+	bytes version = 1;		// 版本号
+}
+
+// 请求商城信息反馈
+// MSG_QUERY_STORE_ACK
+message MsgQueryStoreAck
+{
+	bytes version = 1;		// 版本号
+	bytes data = 2;			// 商城数据( 保存成xml, 然后自己解析文件 )
+}
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+// 查询全服排行榜
+// MSG_QUERY_RANK_LIST_REQ	
+message MsgQueryRankListReq
+{
+	uint32 rankid = 1;
+}
+
+// 查询排行榜反馈
+// MSG_QUERY_RANK_LIST_ACK
+message MsgQueryRankListAck
+{
+	uint32 rankid = 1;			// 排行榜id
+	PBRankDatas rankdatas = 2;	// 榜单数据
+}
+
+// 查询好友排行榜
+// MSG_QUERY_FRIEND_RANK_LIST_REQ
+message MsgQueryFriendRankListReq
+{
+	uint32 rankid = 1;
+}
+
+// 查询好友排行榜反馈
+// MSG_QUERY_FRIEND_RANK_LIST_ACK
+message MsgQueryFriendRankListAck
+{
+	uint32 rankid = 1;			// 排行榜id
+	PBRankDatas rankdatas = 2;	// 榜单数据
+}
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+// 申请添加好友
+// MSG_ADD_FRIEND_INVITE_REQ
+message MsgAddFriendInviteReq
+{
+	bytes name = 1;			// 玩家名字
+	uint64 playerid = 2;	// 玩家id
+	bytes message = 3;		// 留言
+
+}
+
+// 回复添加好友请求
+// MSG_REPLY_FRIEND_INVITE_REQ
+message MsgReplyFriendInviteReq
+{
+	uint64 playerid = 1;	// 玩家id 0 表示所有
+	uint32 operate = 2;	// 1=同意 2=拒绝 3=直接删除请求 
+}
+
+// 删除好友
+// MSG_DEL_FRIEND_REQ
+message MsgDelFriendReq
+{
+	uint64 playerid = 1;	// 玩家id
+}
+
+// 设置拒绝添加好友
+// MSG_SET_REFUSE_FRIEND_INVITE_REQ
+message MsgSetRefuseFriendInviteReq
+{
+	uint32 refuse = 1;	 // 1=拒绝申请 0=同意接受
+}
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////

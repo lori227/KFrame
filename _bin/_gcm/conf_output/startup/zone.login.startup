@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Setting>
+	<Includes>
+		<Include File="./startup/common/tcpserver.startup"/>
+		<Include File="./startup/common/tcpclient.startup"/>
+		<Include File="./startup/common/remotelog.startup"/>
+	</Includes>
+
+	<Plugins>
+		<Plugin Name="KFRedis" Config="./setting/{}_{}_redis.setting"/>
+		<Plugin Name="KFZone" Config="./setting/{}_{}_zone.setting"/>	
+		<Plugin Name="KFTimer" Config=""/>	
+		<Plugin Name="KFLogin" Config=""/>	
+	</Plugins>
+</Setting>

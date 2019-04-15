@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<gcm>
+    <setting>
+			<file Name="ip.setting" Type="1"/>
+			<file Name="mysql.setting" Type="1"/>
+			<file Name="redis.setting" Type="1"/>
+			<file Name="zone.setting" Type="1"/>
+
+			<file Name="bus.setting" Type="0"/>
+			<file Name="channel.setting" Type="0"/>
+			<file Name="filter.setting" Type="0"/>
+			<file Name="httpserver.setting" Type="0"/>
+			<file Name="robot.setting" Type="0"/>
+			<file Name="tcpserver.setting" Type="0"/>
+    </setting>
+</gcm>

@@ -1,0 +1,143 @@
+syntax = "proto3";
+package KFMsg;
+
+//////////////////////////////////////////////////////////////////////////////////
+enum FrameCodeEnum
+{
+	Error					= 0;		// 失败	
+	Ok 						= 1;	 	// 成功
+//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+	HttpDataError			= 10000;	// http数据错误
+	AuthDatabaseBusy 		= 10001;	// 认证数据库出错了 
+	AuthServerBusy			= 10002;	// 认证服务器繁忙
+	ZoneServerBusy			= 10003;	// 小区服务器繁忙
+	ZoneDatabaseBusy		= 10004;	// 小区数据库错误
+	NameDatabaseBusy		= 10005;	// 名字数据库错误
+	DataServerBusy			= 10006;	// 数据服务器繁忙
+	MailServerBusy			= 10007;	// 邮件服务器繁忙
+	RankServerBusy			= 10008;	// 排行服务器繁忙
+	PublicDatabaseBusy		= 10009;	// 公共数据库错误
+	RelationServerBusy		= 10010;	// 关系服务器繁忙
+	MatchServerBusy			= 10011;	// 匹配服务器繁忙
+	LoginDatabaseBusy		= 10012;	// 登录数据库繁忙
+
+	// auth
+	AccountIsEmpty 			= 11001;	// 账号不能为空
+	ActivationAccount		= 11002;	// 请先激活账号
+	InvalidActivationCode 	= 11003;	// 无效的激活码
+	ActivationCodeError		= 11004;	// 激活码错误
+	LoginTokenError			= 11005;	// 登录token错误
+	BanForbidLogin			= 11006;	// 黑名单禁止登录
+	ChannelNotSupport		= 11007;	// 不支持的渠道
+	ChannelNotOpen			= 11008;	// 渠道未开放
+	ChannelError			= 11009;	// 渠道错误
+	WeiXinError				= 11010;	// 查询微信渠道错误
+	WeiXinUserError			= 11011;	// 查询微信玩家数据错误
+	WeiXinTokenError		= 11012;	// 微信token错误
+	WeiXinCodeError			= 11013;	// 微信code错误
+	WeiXinTokenTimeout		= 11014;	// 微信token过期
+	SteamError				= 11015;	// 查询Steam错误
+	SteamDataError			= 11016;	// 查询Steam数据错误
+	SteamAuthError			= 11017;	// Steam认证错误
+
+	// login
+	VersionNotCompatibility = 12001;	// 版本号不兼容
+	LoginIsClose			= 12002;	// 服务器登录已经关闭
+	LoginNoLoginServer		= 12003;	// 没有可用的登录服务器
+	LoginSystemBusy			= 12004;	// Login服务器出错了
+	LoginWorldSystemBusy	= 12005;	// World服务器出错了
+	LoginNoGameServer		= 12006;	// 没有可用的游戏服务器
+	LoginGameServerBusy		= 12007;	// 游戏服务器出错了
+	LoginBindPlayerError	= 12008;	// 绑定角色出错了
+	LoginLoadDataFailed		= 12009;	// 加载角色数据出错了
+	LoginAlreadyOnline		= 12010;	// 已经在线
+
+	// attribute
+	QueryPlayerFailed		= 12101;	// 查询角色数据出错了
+	NameAlreadyExist		= 12102;	// 名字已经存在
+	NameSetOk				= 12103;	// 名字设置成功
+	NameLengthError			= 12104;	// 名字长度超过限制
+	NameFilterError			= 12105;	// 名字含有非法字符
+	NameEmpty				= 12106;	// 名字不能为空
+	NameAlreadySet			= 12107;	// 不能重复设定名字
+	SexSetOK				= 12108;	// 性别设置成功
+
+	// achieve
+	AchieveCanNotFind		= 12110;	// 找不到该成就配置
+	AchieveCanNotFindData	= 12111;	// 没有该成就数据
+	AchieveNotDone			= 12112;	// 没有完成该成就
+	AchieveAlreadyReceived	= 12113;	// 已经领取成就
+	AchieveReceiveOk  		= 12114;	// 领取成就奖励成功
+
+	// task
+	TaskCanNotFind			= 12120;	// 找不到任务配置
+	TaskCanNotFindData		= 12121;	// 没有任务数据
+	TaskNotDone				= 12122;	// 任务还没有完成
+	TaskAlreadyReceived		= 12123;	// 已经领取任务奖励
+	TaskRewardOk			= 12124;	// 领取任务奖励成功
+
+	//activity
+	ActivityCanNotFind		= 12130;	// 找不到活动配置
+	ActivityCanNotFindData	= 12131;	// 没有活动数据
+	ActivityAlreadyReceived = 12132;	// 已经领取活动奖励
+	ActivityNotDone			= 12133;	// 活动还没完成
+	ActivityRewardOk		= 12134;	// 领取活动奖励成功
+
+	// compound
+	CompoundNotExist		= 12140;	// 合成配置不存在
+	CompoundNotEnoughData	= 12141;	// 没有足够的合成材料
+	CompoundOk				= 12142;	// 合成成功
+
+	// item
+	ItemCanNotFind			= 12150;	// 找不到道具配置
+	ItemCanNotFindData		= 12151;	// 找不到道具数据
+	ItemCanNotUse			= 12152;	// 该道具不能使用
+
+	// signin
+	SignInNotDay			= 12170;	// 没有签到数据
+	SignInCanNotFind		= 12171;	// 找不到签到配置
+	SignInRewardAlready		= 12172;	// 已经领取签到奖励
+	SignInRewardOk			= 12173;	// 领取签到奖励成功
+
+	// mail
+	MailNotExist			= 12200;	// 找不到邮件信息
+	MailTimeOut				= 12201;	// 邮件已经过期
+	MailDeleteFailed		= 12202;	// 还有附件未领取
+	MailAlreadyReceived		= 12203;	// 邮件附件已经领取
+	MailNotHaveReward		= 12204;	// 邮件没有附件
+
+	// store
+	StoreNotFind			= 12300;	// 找不到商品配置
+	StoreBuyCountError		= 12301;	// 购买数量错误
+	StoreOutOfLimitOwm		= 12302;	// 商品拥有购买限制
+	StoreOutOfLimits		= 12303;	// 购买次数限制
+	StoreLackCost			= 12304;	// 没有足够的资源购买
+	StoreBuyTypeError		= 12305;	// 购买类型错误
+	StoreBuyOK				= 12306;	// 购买成功
+
+	// rank
+	RankNotExist			= 12400;	// 没有排行榜配置
+
+	// public
+	QueryBasicNotExist		= 12500;	// 查询不到玩家信息
+
+	// relation
+	MessageFilterError		= 12600;	// 留言内有屏蔽字符
+	FriendAlready			= 12601;	// 与<Text>%s</Text>已经是好友关系, 不能重复申请
+	FriendSelfLimit			= 12602;	// 你的好友数量已经达到上限<Text>%s</Text>个
+	FriendInviteReq			= 12603;	// <Text>%s</Text>向你发送了好友申请
+	FriendRefuseYourInvite	= 12604;	// <Text>%s</Text>拒绝了你的好友请求
+	FriendAddOk				= 12605;	// 与<Text>%s</Text>已为知交
+	FriendNotExist			= 12606;	// 好友不存在
+	FriendDelOk				= 12607;	// 你与<Player id=%s>%s</Player>不再是好友了
+	FriendLinessAdd			= 12608;	// 与<Text>%s</Text>情义小涨<Text>%s</Text>
+	FriendRefuseInvite		= 12609;	// <Text>%s</Text>设置拒绝添加好友
+	FriendTargetLimit		= 12610;	// <Text>%s</Text>的好友数量已经超过最大限制
+	FriendInviteAlready		= 12611;	// 已经向<Text>%s</Text>申请添加好友了
+	FriendInviteLimit		= 12612;	// <Text>%s</Text>的好友申请列表满了
+	FriendInviteOk			= 12613;	// 向<Text>%s</Text>发送好友申请成功
+	FriendInviteNotExist	= 12614;	// 招不到好友申请信息
+}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Setting>
+	<Includes>
+		<Include File="./startup/common/httpserver.startup"/>
+		<Include File="./startup/common/tcpserver.startup"/>
+	</Includes>
+
+	<Plugins>
+		<Plugin Name="KFMySQL" Config="./setting/{}_{}_mysql.setting"/>
+		<Plugin Name="KFSchedule" Config=""/>
+		<Plugin Name="KFDeployServer" Config=""/>
+	</Plugins>
+</Setting>

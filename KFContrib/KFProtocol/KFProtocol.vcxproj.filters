@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="KFProtocol.h" />
+    <ClInclude Include="FrameClientMessage.pb.h" />
+    <ClInclude Include="FrameCodeMessage.pb.h" />
+    <ClInclude Include="FrameDefineMessage.pb.h" />
+    <ClInclude Include="FrameEnumMessage.pb.h" />
+    <ClInclude Include="FrameMessage.pb.h" />
+    <ClInclude Include="FrameServerMessage.pb.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="FrameClientMessage.pb.cc" />
+    <ClCompile Include="FrameCodeMessage.pb.cc" />
+    <ClCompile Include="FrameDefineMessage.pb.cc" />
+    <ClCompile Include="FrameEnumMessage.pb.cc" />
+    <ClCompile Include="FrameMessage.pb.cc" />
+    <ClCompile Include="FrameServerMessage.pb.cc" />
+  </ItemGroup>
+</Project>

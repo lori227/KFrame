@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="KFCompoundConfig.cpp" />
+    <ClCompile Include="KFCompoundModule.cpp" />
+    <ClCompile Include="KFCompoundPlugin.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="KFCompoundInterface.h" />
+    <ClInclude Include="KFCompoundConfig.hpp" />
+    <ClInclude Include="KFCompoundModule.hpp" />
+    <ClInclude Include="KFCompoundPlugin.hpp" />
+  </ItemGroup>
+</Project>

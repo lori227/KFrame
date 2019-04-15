@@ -1,0 +1,522 @@
+syntax = "proto3";
+package KFMsg;
+
+enum FrameProtocol
+{
+	S2S_FRAME_PROTOCOL_BEGIN = 0;						// 框架协议开始
+	S2S_REGISTER_TO_SERVER_REQ = 10001;					// 请求注册
+	S2S_REGISTER_TO_SERVER_ACK = 10002;					// 回馈注册
+	S2S_TELL_REGISTER_TO_SERVER = 10003;				// 通知注册
+	S2S_TELL_UNREGISTER_FROM_SERVER = 10004;			// 通知取消注册
+	S2S_TELL_DISCOVER_SERVER_TO_MASTER = 10005;			// 发现新服务器
+	S2S_TELL_LOST_SERVER_TO_MASTER = 10006;				// 丢失服务器
+	S2S_TELL_REGISTER_SERVER_TO_MASTER = 10007;			// 通知注册
+	S2S_TELL_SERVER_LIST_TO_MASTER = 10008;				// 服务器列表
+	
+	S2S_REMOTE_LOG_TO_SERVER_REQ = 10010;				// 记录日志到日志服务器
+	S2S_REGISTER_AGENT_TO_SERVER_REQ = 10011;			// 注册Agent到Server
+	S2S_DEPLOY_COMMAND_TO_AGENT_REQ = 10012;			// 部署命令
+	S2S_DEPLOY_COMMAND_TO_CLIENT_REQ = 10013;			// 部署命令
+	S2S_DEPLOY_TOOL_EXECUTE_MYSQL_REQ = 10014;			// 部署工具执行mysql语句
+	S2S_DEPLOY_TOOL_EXECUTE_MYSQL_ACK = 10015;			// 部署工具执行mysql语句
+	S2S_DEPLOY_TOOL_QUERY_MYSQL_REQ = 10016;			// 部署工具查询mysql语句
+	S2S_DEPLOY_TOOL_QUERY_MYSQL_ACK = 10017;			// 部署工具查询mysql语句
+	S2S_DEPLOY_TOOL_COMMAND_REQ	= 10018;				// 部署命令
+	S2S_DEPLOY_LOG_TO_TOOL_ACK = 10019;					// 部署日志
+	S2S_DEPLOY_LOG_TO_SERVER_ACK = 10020;				// 部署日志
+	S2S_DEPLOY_TOOL_DELETE_MYSQL_REQ = 10021;			// 部署工具删除mysql语句
+	S2S_DEPLOY_TOOL_DELETE_MYSQL_ACK = 10022;			// 部署工具删除mysql语句
+
+
+	S2S_CLUSTER_REGISTER_TO_MASTER_REQ = 10101;			// 注册proxy
+	S2S_CLUSTER_SYNC_PROXY_TO_MASTER_REQ = 10102;		// 注册proxy
+	S2S_CLUSTER_AUTH_TO_MASTER_REQ = 10103;				// 集群登录认证
+	S2S_CLUSTER_AUTH_TO_CLIENT_ACK = 10104;				// 集群登录认证
+	S2S_CLUSTER_TOKEN_TO_PROXY_REQ = 10105;				// 集群Token
+	S2S_CLUSTER_VERIFY_TO_PROXY_REQ = 10106;			// 验证token请求
+	S2S_CLUSTER_VERIFY_TO_CLIENT_ACK = 10107;			// 验证token回馈
+	S2S_CLUSTER_CLIENT_DISCOVER_TO_SHARD_REQ = 10108;	// 发现客户端列表
+	S2S_CLUSTER_CLIENT_LOST_TO_SHARD_REQ = 10109;		// 丢失客户端列表
+	S2S_CLUSTER_LOST_PROXY_TO_MASTER_REQ = 10110;		// 丢失proxy
+	S2S_CLUSTER_TOKEN_TO_MASTER_REQ = 10111;			// 更新token
+	S2S_CLUSTER_TOKEN_TO_PROXY_ACK = 10112;				// 更新token
+	S2S_CLUSTER_TOKEN_TO_MASTER_ACK = 10113;			// 更新token
+
+	S2S_ROUTE_MESSAGE_TO_CLIENT_ACK = 10201;			// 转发消息
+	S2S_ROUTE_MESSAGE_TO_NAME_ALL_REQ = 10202;			// 转发消息到某类型所有服务器
+	S2S_ROUTE_MESSAGE_TO_NAME_RAND_REQ = 10203;			// 转发消息到随机服务器
+	S2S_ROUTE_MESSAGE_TO_NAME_BALANCE_REQ = 10204;		// 转发消息到负载最小服务器
+	S2S_ROUTE_MESSAGE_TO_NAME_OBJECT_REQ = 10205;		// 转发消息到对象所在服务器
+	S2S_ROUTE_MESSAGE_TO_SERVER_REQ = 10206;			// 转发消息到指定服务器
+	S2S_ROUTE_MESSAGE_TO_PLAYER_REQ = 10207;			// 转发消息到指定玩家
+	S2S_ROUTE_CLIENT_LOST_TO_SHARD_REQ = 10208;			// Route客户端丢失
+	S2S_ROUTE_DISCOVER_TO_CLIENT_REQ = 10209;			// 通知客户端发现新的服务器
+	S2S_ROUTE_SYNC_OBJECT_TO_PROXY_REQ = 10210;			// 同步对象列表到Proxy
+	S2S_ROUTE_ADD_OBJECT_TO_PROXY_REQ = 10211;			// 添加对象列表到Proxy
+	S2S_ROUTE_REMOVE_OBJECT_TO_PROXY_REQ = 10212;		// 删除对象列表到Proxy
+	S2S_ROUTE_SYNC_OBJECT_TO_SHARD_REQ = 10213;			// 同步对象列表到shard
+	S2S_ROUTE_ADD_OBJECT_TO_SHARD_REQ = 10214;			// 添加对象列表到shard
+	S2S_ROUTE_REMOVE_OBJECT_TO_SHARD_REQ = 10215;		// 删除对象列表到shard
+
+ }
+
+////////////////////////////////////////////////////////////////////////////////
+message ListenData
+{
+	bytes appname = 1;
+	bytes apptype = 2;
+	uint64 appid = 3;
+	bytes ip = 4;
+	uint32 port = 5;	
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// 注册到服务器请求
+// S2S_REGISTER_TO_SERVER_REQ
+message RegisterToServerReq
+{
+	ListenData listen = 1;
+}
+
+// 注册到服务器返回
+// S2S_REGISTER_TO_SERVER_ACK
+message RegisterToServerAck
+{
+	uint64 appid = 1;
+	bytes appname = 2;
+	bytes apptype = 3;
+}
+
+// S2S_TELL_REGISTER_TO_SERVER
+message TellRegisterToServer
+{
+	ListenData listen = 1;
+}
+
+// S2S_TELL_UNREGISTER_FROM_SERVER
+message TellUnRegisterFromServer
+{
+	bytes appname = 1;
+	bytes apptype = 2;
+	uint64 appid = 3;
+}
+
+// S2S_TELL_DISCOVER_SERVER_TO_MASTER
+message S2STellDiscoverServerToMaster
+{
+	uint64 serverid = 1;
+	ListenData listen = 2;
+}
+
+// S2S_TELL_LOST_SERVER_TO_MASTER
+message S2STellLostServerToMaster
+{
+	bytes appname = 1;
+	bytes apptype = 2;
+	uint64 appid = 3;
+}
+
+// S2S_TELL_REGISTER_SERVER_TO_MASTER
+message S2STellRegisterServerToMaster
+{
+	uint64 serverid = 1;
+	ListenData listen = 2;
+}
+
+// 服务器列表
+// S2S_TELL_SERVER_LIST_TO_MASTER
+message S2STellServerListToMaster
+{
+	repeated ListenData listen = 1;
+}
+////////////////////////////////////////////////////////////////////////////////////
+// 注册proxy
+// S2S_CLUSTER_REGISTER_TO_MASTER_REQ
+message S2SClusterRegisterToMasterReq
+{
+	ListenData listen = 1;
+}
+
+// 注册proxy
+// S2S_CLUSTER_SYNC_PROXY_TO_MASTER_REQ
+message S2SClusterSyncProxyToMasterReq
+{
+	repeated ListenData listen = 1;
+}
+
+// 集群登录认证
+// S2S_CLUSTER_AUTH_TO_MASTER_REQ
+message S2SClusterAuthToMasterReq
+{
+	uint64 clientid = 1;
+	bytes clusterkey = 2;
+}
+
+// 集群登录认证回馈
+// S2S_CLUSTER_AUTH_TO_CLIENT_ACK
+message S2SClusterAuthToClientAck
+{
+	bytes token = 1;
+	ListenData listen = 2;
+}
+
+// 更新token信息
+// S2S_CLUSTER_TOKEN_TO_PROXY_REQ
+message S2SClusterTokenToProxyReq
+{
+	bytes token = 1;
+	uint64 clientid = 2;
+	uint64 proxyid = 3;
+	uint64 masterid = 4;
+}
+
+// 更新token信息
+// S2S_CLUSTER_TOKEN_TO_MASTER_REQ
+message S2SClusterTokenToMasterReq
+{
+	bytes token = 1;
+	uint64 clientid = 2;
+	uint64 proxyid = 3;
+	uint64 masterid = 4;
+}
+
+// 验证token
+// S2S_CLUSTER_VERIFY_TO_PROXY_REQ
+message S2SClusterVerifyToProxyReq
+{
+	bytes token = 1;
+	uint64 serverid = 2;
+}
+
+// 更新token信息
+// S2S_CLUSTER_TOKEN_TO_PROXY_ACK
+message S2SClusterTokenToProxyAck
+{
+	bytes token = 1;
+	uint64 clientid = 2;
+	uint64 proxyid = 3;
+	uint64 masterid = 4;
+}
+
+// 更新token信息
+// S2S_CLUSTER_TOKEN_TO_MASTER_ACK
+message S2SClusterTokenToMasterAck
+{
+	bytes token = 1;
+	uint64 clientid = 2;
+	uint64 proxyid = 3;
+}
+
+// 认证回馈
+// S2S_CLUSTER_VERIFY_TO_CLIENT_ACK
+message S2SClusterVerifyToClientAck
+{
+	uint64 serverid = 1;	// =0 认证不成功, 重新连接集群master地址
+}
+
+// 发现客户端列表
+// S2S_CLUSTER_CLIENT_DISCOVER_TO_SHARD_REQ
+message S2SClusterClientDiscoverToShardReq
+{
+	repeated uint64 clientid = 1;	// 客户端列表
+}
+
+// 丢失客户端列表
+// S2S_CLUSTER_CLIENT_LOST_REQ
+message S2SClusterClientLostToShardReq
+{
+	uint64 clientid = 1;	// 客户端列表
+}
+
+// 丢失proxy
+// S2S_CLUSTER_LOST_PROXY_TO_MASTER_REQ
+message S2SClusterLostProxyToMasterReq
+{
+	uint64 proxyid = 1;		// proxyid
+}
+////////////////////////////////////////////////////////////////////////////////////
+// 路由信息
+message PBRoute
+{
+	uint64 serverid = 1;	// 发送服务器id
+	uint64 sendid = 2;		// 发送者id
+	uint64 recvid = 3;		// 接受者id
+}
+
+// 转发消息回馈
+// S2S_ROUTE_MESSAGE_TO_CLIENT_ACK
+message S2SRouteMessageToClientAck
+{
+	PBRoute pbroute = 1;	// 路由信息
+	uint32 msgid = 2;		// 消息id
+	bytes msgdata = 3;		// 消息内容
+}
+
+// 转发消息到某类型所有服务器
+// S2S_ROUTE_MESSAGE_TO_NAME_ALL_REQ
+message S2SRouteMessageToNameAllReq
+{
+	PBRoute pbroute = 1;	// 路由信息
+	bytes name = 2;			// 类型名字
+	uint32 msgid = 3;		// 消息id
+	bytes msgdata = 4;		// 消息内容
+}
+
+// 转发消息到随机服务器
+// S2S_ROUTE_MESSAGE_TO_NAME_RAND_REQ
+message S2SRouteMessageToNameRandReq
+{
+	PBRoute pbroute = 1;	// 路由信息
+	bytes name = 2;			// 类型名字
+	uint32 msgid = 3;		// 消息id
+	bytes msgdata = 4;		// 消息内容
+}
+
+// 转发消息到负载最小服务器
+// S2S_ROUTE_MESSAGE_TO_NAME_BALANCE_REQ
+message S2SRouteMessageToNameBalanceReq
+{
+	PBRoute pbroute = 1;	// 路由信息
+	bytes name = 2;			// 类型名字
+	uint32 msgid = 3;		// 消息id
+	bytes msgdata = 4;		// 消息内容
+}
+
+// 转发消息到对象所在服务器
+// S2S_ROUTE_MESSAGE_TO_NAME_OBJECT_REQ
+message S2SRouteMessageToNameObjectReq
+{
+	PBRoute pbroute = 1;	// 路由信息
+	bytes name = 2;			// 类型名字
+	uint32 msgid = 3;		// 消息id
+	bytes msgdata = 4;		// 消息内容
+}
+
+// 转发消息到指定服务器
+// S2S_ROUTE_MESSAGE_TO_SERVER_REQ
+message S2SRouteMessageToServerReq
+{
+	PBRoute pbroute = 1;	// 路由信息
+	uint64 targetid = 2;	// 目标服务器
+	uint32 msgid = 3;		// 消息id
+	bytes msgdata = 4;		// 消息内容
+}
+
+// 转发消息到指定玩家
+// S2S_ROUTE_MESSAGE_TO_PLAYER_REQ
+message S2SRouteMessageToPlayerReq
+{
+	PBRoute pbroute = 1;	// 路由信息
+	uint64 targetid = 2;	// 目标服务器
+	uint32 msgid = 3;		// 消息id
+	bytes msgdata = 4;		// 消息内容
+}
+
+// Route客户端丢失
+// S2S_ROUTE_CLIENT_LOST_TO_SHARD_REQ
+message S2SRouteClientLostToShardReq
+{
+	bytes name = 1;
+	uint64 clientid = 2;
+}
+
+// 通知客户端发现新的服务器
+// S2S_ROUTE_DISCOVER_TO_CLIENT_REQ
+message S2SRouteDiscoverToClientReq
+{
+	uint64 shardid = 1;
+}
+
+// 同步对象列表到Proxy
+// S2S_ROUTE_SYNC_OBJECT_TO_PROXY_REQ
+message S2SRouteSyncObjectToProxyReq
+{
+	bytes name = 1;
+	uint64 clientid = 2;
+	uint64 shardid = 3;
+	repeated uint64 objectid = 4;
+}
+
+// 同步对象列表到shard
+// S2S_ROUTE_SYNC_OBJECT_TO_SHARD_REQ
+message S2SRouteSyncObjectToShardReq
+{
+	bytes name = 1;
+	uint64 clientid = 2;
+	repeated uint64 objectid = 3;
+}
+
+// 添加对象列表到proxy
+// S2S_ROUTE_ADD_OBJECT_TO_PROXY_REQ
+message S2SRouteAddObjectToProxyReq
+{
+	bytes name = 1;
+	uint64 clientid = 2;
+	uint64 objectid = 3;
+	uint32 objectcount = 4;
+}
+
+// 添加对象列表到shard
+// S2S_ROUTE_ADD_OBJECT_TO_SHARD_REQ
+message S2SRouteAddObjectToShardReq
+{
+	bytes name = 1;
+	uint64 clientid = 2;
+	uint64 objectid = 3;
+	uint32 objectcount = 4;
+}
+
+// 删除对象列表到proxy
+// S2S_ROUTE_REMOVE_OBJECT_TO_PROXY_REQ
+message S2SRouteRemoveObjectToProxyReq
+{
+	bytes name = 1;
+	uint64 clientid = 2;
+	uint64 objectid = 3;
+	uint32 objectcount = 4;
+}
+
+// 删除对象列表到shard
+// S2S_ROUTE_REMOVE_OBJECT_TO_SHARD_REQ
+message S2SRouteRemoveObjectToShardReq
+{
+	bytes name = 1;
+	uint64 clientid = 2;
+	uint64 objectid = 3;
+	uint32 objectcount = 4;
+}
+//////////////////////////////////////////////////////////////////////////////////
+// 注册Agent到Services
+// S2S_REGISTER_AGENT_TO_SERVER_REQ
+message S2SRegisterAgentToServerReq
+{
+	bytes agentid = 1;
+	bytes localip = 2;
+	bytes name = 3;
+	bytes type = 4;
+	uint32 port = 5;
+	uint32 service = 6;
+}
+
+message PBDeployCommand
+{
+	bytes command = 1;		// command
+	bytes appname = 2;		// appname
+	bytes apptype = 3;		// apptype
+	bytes appid = 4;		// appid
+	uint32 zoneid = 5;		// 分区
+	bytes value = 6;		// 数值
+	bytes logurl = 7; 		// 日志记录url
+	uint64 toolid = 8; 		// 工具id
+}
+
+// 部署命令
+// S2S_DEPLOY_COMMAND_TO_AGENT_REQ
+message S2SDeployCommandToAgentReq
+{
+	PBDeployCommand deploycommand = 1;
+}
+
+// S2S_DEPLOY_COMMAND_TO_CLIENT_REQ
+message S2SDeployCommandToClientReq
+{
+	PBDeployCommand deploycommand = 1;
+}
+
+// 部署命令
+// S2S_DEPLOY_TOOL_COMMAND_REQ
+message S2SDeployToolCommandReq
+{
+	PBDeployCommand deploycommand = 1;
+	uint64 time = 2;
+}
+
+// S2S_DEPLOY_LOG_TO_TOOL_ACK
+message S2SDeployLogToToolAck
+{
+	uint64 agentid = 1;
+	bytes content = 2;
+}
+
+// S2S_DEPLOY_LOG_TO_SERVER_ACK
+message S2SDeployLogToServerAck
+{
+	uint64 toolid = 1;
+	uint64 agentid = 2;
+	bytes content = 3;
+}
+
+// S2S_DEPLOY_TOOL_DELETE_MYSQL_REQ
+message S2SDeployToolDeleteMySQLReq
+{
+	bytes table = 1;	// 表
+	map<string, bytes> keys = 2;	// 数值
+}
+
+// S2S_DEPLOY_TOOL_DELETE_MYSQL_ACK
+message S2SDeployToolDeleteMySQLAck
+{
+	bytes table = 1;	// 表
+	map<string, bytes> keys = 2;	// 数值
+	bool result = 3;	// 结果
+}
+
+// S2S_DEPLOY_TOOL_EXECUTE_MYSQL_REQ
+message S2SDeployToolExecuteMySQLReq
+{
+	bytes table = 1;	// 表
+	map<string, bytes> values = 2;	// 数值
+}
+
+// S2S_DEPLOY_TOOL_EXECUTE_MYSQL_ACK
+message S2SDeployToolExecuteMySQLAck
+{
+	bytes table = 1;	// 表
+	map<string, bytes> values = 2;	// 数值
+	bool result = 3;	// 结果
+}
+
+// S2S_DEPLOY_TOOL_QUERY_MYSQL_REQ
+message S2SDeployToolQueryMySQLReq
+{
+	bytes table = 1;	// 表
+	map<string, bytes> keys = 2;	// 键值
+}
+
+message PBMySQLData
+{
+	map<string, bytes> values = 1;	// 数值
+}
+
+message PBMySQLDatas
+{
+	repeated PBMySQLData data = 2;	// 数据表
+}
+
+// S2S_DEPLOY_TOOL_QUERY_MYSQL_ACK
+message S2SDeployToolQueryMySQLAck
+{
+	bytes table = 1;	// 表
+	PBMySQLDatas datas = 2;	// 数据表
+	bool result = 3;	// 结果
+}
+//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+message PBRemoteLog
+{
+	uint32 level	= 1;
+	bytes content	= 2;
+}
+
+// 记录log到服务器
+// S2S_REMOTE_LOG_TO_SERVER_REQ
+message S2SRemoteLogToServerReq
+{
+	bytes appname	= 1;
+	bytes apptype	= 2;
+	bytes strappid	= 3;
+	uint64 appid	= 4;
+	uint32 zoneid	= 5;
+
+	repeated PBRemoteLog logdata = 6;
+}

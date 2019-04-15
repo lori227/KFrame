@@ -1,7 +1,0 @@
-E:/KFrame/1.Frame/1.Server/KFLibrary/google/protobuf/cmake/vsbuild/CMakeFiles/protoc.dir
-E:/KFrame/1.Frame/1.Server/KFLibrary/google/protobuf/cmake/vsbuild/CMakeFiles/libprotobuf-lite.dir
-E:/KFrame/1.Frame/1.Server/KFLibrary/google/protobuf/cmake/vsbuild/CMakeFiles/libprotoc.dir
-E:/KFrame/1.Frame/1.Server/KFLibrary/google/protobuf/cmake/vsbuild/CMakeFiles/libprotobuf.dir
-E:/KFrame/1.Frame/1.Server/KFLibrary/google/protobuf/cmake/vsbuild/CMakeFiles/INSTALL.dir
-E:/KFrame/1.Frame/1.Server/KFLibrary/google/protobuf/cmake/vsbuild/CMakeFiles/ALL_BUILD.dir
-E:/KFrame/1.Frame/1.Server/KFLibrary/google/protobuf/cmake/vsbuild/CMakeFiles/ZERO_CHECK.dir

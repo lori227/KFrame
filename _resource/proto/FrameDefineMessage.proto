@@ -1,0 +1,89 @@
+syntax = "proto3";
+package KFMsg;
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+message PBObject
+{
+	// int32 属性列表
+	map< string, sint32 > pbint32 = 1;		
+	
+	// uint32 属性列表
+	map< string, uint32 > pbuint32 = 2;	
+
+	// int64 属性列表
+	map< string, sint64 > pbint64 = 3;	
+
+	// uint64 属性列表
+	map< string, uint64 > pbuint64 = 4;	
+
+	// double 属性列表
+	map< string, double > pbdouble = 5;	
+
+	// string 属性列表
+	map< string, bytes > pbstring = 6;	
+
+	// 数组列表
+	map< string, PBArray > pbarray = 7;	
+
+	// 对象列表
+	map< string, PBObject > pbobject = 8;	
+
+	// 集合列表
+	map< string, PBRecord > pbrecord = 9;	
+}
+
+// 游戏中只存在uint64的数值
+message PBArray
+{
+	map<uint32, uint64> pbuint64 = 1;	
+}
+
+message PBRecord
+{
+	// 对象列表
+	map< uint64, PBObject > pbobject = 1;	
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 登录信息
+message PBLoginData
+{
+	// token
+	bytes token = 1;
+
+	// 服务器id				
+	uint64 gateid = 2;	
+	
+	// sessionid
+	uint64 sessionid = 3;		
+	
+	// 渠道id
+	uint32 channel = 4;		
+	
+	// 账号
+	bytes account = 5;	
+	
+	// 账号id
+	uint64 accountid = 6;	
+	
+	// 角色id
+	uint64 playerid = 7;			
+	
+	// 渠道数据	
+	map<string, bytes> channeldata = 8;	
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+message PBRankData
+{
+	uint32 rankindex = 1;				// 从1开始
+	uint64 playerid = 2;				// 玩家id
+	uint64 rankscore = 3;				// 排行的数据( 客户端好友排行根据这个排序 )
+	map< string, bytes > pbdata = 4;	// 排行榜数据
+}
+
+message PBRankDatas
+{
+	repeated PBRankData rankdata = 1;	// 排行榜列表
+}

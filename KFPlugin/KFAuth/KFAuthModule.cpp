@@ -1,0 +1,455 @@
+﻿#include "KFAuthModule.hpp"
+#include "KFProtocol/KFProtocol.h"
+
+namespace KFrame
+{
+#define __LOGIN_REDIS_DRIVER__ _kf_redis->Create( __KF_STRING__( login ) )
+#define __ACCOUNT_REDIS_DRIVER__ _kf_redis->Create( __KF_STRING__( account ) )
+#define __PUBLIC_REDIS_DRIVER__ _kf_redis->Create( __KF_STRING__( public ) )
+
+    void KFAuthModule::BeforeRun()
+    {
+        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( zoneregister ), false, &KFAuthModule::HandleZoneRegister );
+        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( zoneupdate ), false, &KFAuthModule::HandleZoneUpdate );
+        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( zoneremove ), false, &KFAuthModule::HandleZoneRemove );
+        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( zonelist ), false, &KFAuthModule::HandleQueryZoneList );
+        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( zoneip ), false, &KFAuthModule::HandleQueryZoneIp );
+        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( zonebalance ), false, &KFAuthModule::HandleZoneBalance );
+        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( worldregister ), false, &KFAuthModule::HandleWorldRegister );
+
+        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( auth ), false, &KFAuthModule::HandleAuthLogin );
+        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( verify ), false, &KFAuthModule::HandleVerifyToken );
+        /////////////////////////////////////////////////////////////////////////////////////////
+    }
+
+    void KFAuthModule::BeforeShut()
+    {
+        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( zoneregister ) );
+        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( zoneupdate ) );
+        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( zoneremove ) );
+        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( zonelist ) );
+        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( zoneip ) );
+        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( zonebalance ) );
+        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( worldregister ) );
+
+        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( auth ) );
+        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( verify ) );
+        ///////////////////////////////////////////////////////////////////////////
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    __KF_HTTP_FUNCTION__( KFAuthModule::HandleZoneBalance )
+    {
+        __JSON_PARSE_STRING__( request, data );
+        auto zoneid = __JSON_GET_UINT32__( request, __KF_STRING__( zoneid ) );
+        auto count = __JSON_GET_UINT64__( request, __KF_STRING__( count ) );
+        auto accountid = __JSON_GET_UINT64__( request, __KF_STRING__( accountid ) );
+
+        auto redisdriver = __LOGIN_REDIS_DRIVER__;
+        redisdriver->Execute( "zadd {} {} {}", __KF_STRING__( zonelist ), count, zoneid );
+        return _kf_http_server->SendCode( KFMsg::Ok );
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    __KF_HTTP_FUNCTION__( KFAuthModule::HandleZoneRegister )
+    {
+        __JSON_PARSE_STRING__( request, data );
+        auto zoneid = __JSON_GET_UINT32__( request, __KF_STRING__( zoneid ) );
+
+        MapString values;
+        __JSON_TO_MAP__( request, values );
+
+        // 先保存小区基本信息
+        auto redisdriver = __LOGIN_REDIS_DRIVER__;
+        redisdriver->Append( "zincrby {} 0 {}", __KF_STRING__( zonelist ), zoneid );
+        redisdriver->Append( values, "hmset {}:{}", __KF_STRING__( zone ), zoneid );
+        auto kfresult = redisdriver->Pipeline();
+        if ( !kfresult->IsOk() )
+        {
+            return _kf_http_server->SendCode( KFMsg::Error );
+        }
+
+        return _kf_http_server->SendCode( KFMsg::Ok );
+    }
+
+    __KF_HTTP_FUNCTION__( KFAuthModule::HandleZoneUpdate )
+    {
+        __JSON_PARSE_STRING__( request, data );
+
+        // 判断最小负载
+        auto redisdriver = __LOGIN_REDIS_DRIVER__;
+        auto zoneid = __JSON_GET_UINT32__( request, __KF_STRING__( zoneid ) );
+        auto count = __JSON_GET_UINT32__( request, __KF_STRING__( count ) );
+
+        MapString values;
+        values[ __KF_STRING__( time ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time );
+
+        auto kfresult = redisdriver->QueryUInt64( "hget {}:{} {}", __KF_STRING__( zone ), zoneid, __KF_STRING__( count ) );
+        if ( kfresult->_value >= count )
+        {
+            __JSON_TO_MAP__( request, values );
+        }
+
+        redisdriver->Update( values, "hmset {}:{}", __KF_STRING__( zone ), zoneid );
+        return _kf_http_client->SendCode( KFMsg::Ok );
+    }
+
+    __KF_HTTP_FUNCTION__( KFAuthModule::HandleZoneRemove )
+    {
+        __JSON_PARSE_STRING__( request, data );
+
+        auto redisdriver = __LOGIN_REDIS_DRIVER__;
+        auto zoneid = __JSON_GET_UINT32__( request, __KF_STRING__( zoneid ) );
+        auto appid = __JSON_GET_STRING__( request, __KF_STRING__( appid ) );
+
+        auto kfresult = redisdriver->QueryString( "hget {}:{} {}", __KF_STRING__( zone ), zoneid, __KF_STRING__( appid ) );
+        if ( kfresult->_value == appid )
+        {
+            // 如果是本小区, 更新数量到最大, 方便后面更新
+            redisdriver->Execute( "hset {}:{} {} {}", __KF_STRING__( zone ), zoneid, __KF_STRING__( count ), __MAX_UINT32__ );
+        }
+
+        return _kf_http_client->SendCode( KFMsg::Ok );
+    }
+
+    __KF_HTTP_FUNCTION__( KFAuthModule::HandleQueryZoneList )
+    {
+        auto redisdriver = __LOGIN_REDIS_DRIVER__;
+        auto kflist = redisdriver->QueryList( "zrange {} 0 -1", __KF_STRING__( zonelist ) );
+        if ( !kflist->IsOk() )
+        {
+            return _kf_http_server->SendCode( KFMsg::AuthDatabaseBusy );
+        }
+
+        __JSON_DOCUMENT__( response );
+        __JSON_ARRAY__( kfarray );
+        for ( auto& strid : kflist->_value )
+        {
+            auto kfmap = redisdriver->QueryMap( "hgetall {}:{}", __KF_STRING__( zone ), strid );
+            if ( kfmap->_value.empty() )
+            {
+                __JSON_OBJECT__( kfzone );
+                __JSON_SET_VALUE__( kfzone, __KF_STRING__( zoneid ), KFUtility::ToValue<uint32>( kfmap->_value[ __KF_STRING__( zoneid ) ] ) );
+                __JSON_SET_VALUE__( kfzone, __KF_STRING__( name ), kfmap->_value[ __KF_STRING__( name ) ] );
+                __JSON_ADD_VALUE__( kfarray, kfzone );
+            }
+        }
+        __JSON_SET_VALUE__( response, __KF_STRING__( zonelist ), kfarray );
+
+        return _kf_http_server->SendResponse( response );
+    }
+
+    __KF_HTTP_FUNCTION__( KFAuthModule::HandleQueryZoneIp )
+    {
+        __JSON_PARSE_STRING__( request, data );
+
+        auto redisdriver = __LOGIN_REDIS_DRIVER__;
+        auto zoneid = __JSON_GET_UINT32__( request, __KF_STRING__( zoneid ) );
+
+        // 查询登录信息
+        auto kfmap = redisdriver->QueryMap( "hgetall {}:{}", __KF_STRING__( zone ), zoneid );
+        if ( !kfmap->IsOk() )
+        {
+            return _kf_http_server->SendCode( KFMsg::ZoneDatabaseBusy );
+        }
+
+        __JSON_DOCUMENT__( response );
+        __JSON_SET_VALUE__( response, __KF_STRING__( zoneid ), zoneid );
+        __JSON_SET_VALUE__( response, __KF_STRING__( ip ), kfmap->_value[ __KF_STRING__( ip ) ] );
+        __JSON_SET_VALUE__( response, __KF_STRING__( port ), KFUtility::ToValue( kfmap->_value[ __KF_STRING__( port ) ] ) );
+
+        return _kf_http_server->SendResponse( response );
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    __KF_HTTP_FUNCTION__( KFAuthModule::HandleWorldRegister )
+    {
+        __JSON_PARSE_STRING__( request, data );
+
+        auto appid = __JSON_GET_STRING__( request, __KF_STRING__( world ) );
+        auto url = __JSON_GET_STRING__( request, __KF_STRING__( url ) );
+
+        auto redisdriver = __LOGIN_REDIS_DRIVER__;
+        auto kfresult = redisdriver->Execute( "sadd {} {}", __KF_STRING__( worldurl ), url );
+        if ( !kfresult->IsOk() )
+        {
+            return _kf_http_server->SendCode( KFMsg::Error );
+        }
+
+        return _kf_http_server->SendCode( KFMsg::Ok );
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    __KF_HTTP_FUNCTION__( KFAuthModule::HandleAuthLogin )
+    {
+        // 渠道验证
+        auto authdata = _kf_channel->AuthChannelLogin( data );
+
+        __JSON_PARSE_STRING__( authjson, authdata );
+        auto retcode = _kf_http_server->GetCode( authjson );
+        if ( retcode != KFMsg::Ok )
+        {
+            return _kf_http_server->SendCode( retcode );
+        }
+
+        auto account = __JSON_GET_STRING__( authjson, __KF_STRING__( account ) );
+        auto channel = __JSON_GET_UINT32__( authjson, __KF_STRING__( channel ) );
+        if ( account.empty() )
+        {
+            return _kf_http_server->SendCode( KFMsg::AccountIsEmpty );
+        }
+
+        __LOG_DEBUG__( "account[{}] channel[{}] auth login!", account, channel );
+
+        // 查询创建账号
+        auto accountdata = QueryCreateAccount( account, channel );
+        auto accountid = KFUtility::ToValue( accountdata[ __KF_STRING__( accountid ) ] );
+        if ( accountid == 0 )
+        {
+            return _kf_http_server->SendCode( KFMsg::AuthServerBusy );
+        }
+
+        // 保存渠道的数据
+        UpdateChannelData( accountid, channel, authjson );
+
+        // 保存token
+        auto token = SaveLoginToken( accountid, accountdata );
+
+        // 查询小区信息, 返回给客户端
+        return QueryZoneData( accountid, token, accountdata );
+    }
+
+    void KFAuthModule::UpdateChannelData( uint64 accountid, uint32 channel, KFJson& kfjson )
+    {
+        if ( !__JSON_HAS_MEMBER__( kfjson, __KF_STRING__( extend ) ) )
+        {
+            return;
+        }
+
+        auto& kfextend = kfjson[ __KF_STRING__( extend ) ];
+
+        MapString values;
+        __JSON_TO_MAP__( kfextend, values );
+
+        auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
+        redisdriver->Update( values, "hmset {}:{}", __KF_STRING__( extend ), accountid );
+    }
+
+    MapString KFAuthModule::QueryCreateAccount( const std::string& account, uint32 channel )
+    {
+        MapString accountdata;
+        auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
+
+        // 先查询redis
+        auto kfquery = redisdriver->QueryUInt64( "hget {}:{}:{} {}", __KF_STRING__( account ), account, channel, __KF_STRING__( accountid ) );
+        if ( !kfquery->IsOk() )
+        {
+            __LOG_DEBUG__( "account[{}] channel[{}] query accountid failed!", account, channel );
+            return accountdata;
+        }
+
+        auto accountid = kfquery->_value;
+        if ( accountid != _invalid_int )
+        {
+            auto queryaccountdata = redisdriver->QueryMap( "hgetall {}:{}", __KF_STRING__( accountid ), accountid );
+            if ( !queryaccountdata->IsOk() || !queryaccountdata->_value.empty() )
+            {
+                return queryaccountdata->_value;
+            }
+        }
+        else
+        {
+            auto newid = redisdriver->Execute( "incr {}", __KF_STRING__( accountmake ) );
+            if ( newid->_value == _invalid_int )
+            {
+                __LOG_DEBUG__( "account[{}] channel[{}] incr newid failed!", account, channel );
+                return accountdata;
+            }
+
+            accountid = newid->_value + 500000u;
+        }
+
+        // 创建账号id
+        accountdata[ __KF_STRING__( account ) ] = account;
+        accountdata[ __KF_STRING__( channel ) ] = __TO_STRING__( channel );
+        accountdata[ __KF_STRING__( accountid ) ] = __TO_STRING__( accountid );
+
+        redisdriver->Append( "hset {}:{}:{} {} {}", __KF_STRING__( account ), account, channel, __KF_STRING__( accountid ), accountid );
+        redisdriver->Append( "sadd {} {}", __KF_STRING__( accountlist ), accountid );
+        redisdriver->Append( accountdata, "hmset {}:{}", __KF_STRING__( accountid ), accountid );
+        auto kfresult = redisdriver->Pipeline();
+        if ( kfresult->IsOk() )
+        {
+            __LOG_DEBUG__( "create account successfully, account[{}] accountid[{}] channel[{}] ", account, accountid, channel );
+        }
+        else
+        {
+            // 失败清空数据
+            accountdata.clear();
+            __LOG_DEBUG__( "account[{}] channel[{}] save account failed!", account, channel );
+        }
+
+        return accountdata;
+    }
+
+    std::string KFAuthModule::SaveLoginToken( uint64 accountid, MapString& accountdata )
+    {
+        // token 保留1个小时
+        static auto _token_expire_time = 3600;
+        static auto _token_serial = 0;
+        auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
+
+        auto channel = accountdata[ __KF_STRING__( channel ) ];
+        auto account = accountdata[ __KF_STRING__( account ) ];
+        auto md5temp = __FORMAT__( "{}:{}:{}:{}:{}", accountid, KFGlobal::Instance()->_game_time, channel, account, ++_token_serial );
+        auto token = KFCrypto::Md5Encode( md5temp );
+
+        auto tokenkey = __FORMAT__( "{}:{}", __KF_STRING__( token ), accountid );
+        redisdriver->Append( "hmset {} {} {} {} {} {} {}",
+                             tokenkey,
+                             __KF_STRING__( token ), token,
+                             __KF_STRING__( account ), account,
+                             __KF_STRING__( channel ), channel );
+        redisdriver->Append( "expire {} {}", tokenkey, _token_expire_time );
+        redisdriver->Pipeline();
+
+        return token;
+    }
+
+    bool KFAuthModule::KickAccountOffline( uint64 playerid )
+    {
+        auto redisdriver = __LOGIN_REDIS_DRIVER__;
+
+        __JSON_DOCUMENT__( sendjson );
+        __JSON_SET_VALUE__( sendjson, __KF_STRING__( playerid ), playerid );
+
+        do
+        {
+            auto kfresult = redisdriver->QueryString( "srandmember {}", __KF_STRING__( worldurl ) );
+            if ( kfresult->_value.empty() )
+            {
+                break;
+            }
+
+            auto kickurl = kfresult->_value + __KF_STRING__( kickonline );
+            auto resultdata = _kf_http_client->STGet( kickurl, sendjson );
+
+            __JSON_PARSE_STRING__( recvjson, resultdata );
+            auto retcode = __JSON_GET_UINT32__( recvjson, __KF_STRING__( retcode ) );
+            if ( retcode == KFMsg::Ok )
+            {
+                return true;
+            }
+
+            // 不能访问, 删除这个地址
+            redisdriver->Execute( "srem {} {}", __KF_STRING__( worldurl ), kfresult->_value );
+        } while ( true );
+
+        return false;
+    }
+
+    uint32 KFAuthModule::BalanceAllocZoneId()
+    {
+        // 选择一个最小人数的分区
+        auto redisdriver = __LOGIN_REDIS_DRIVER__;
+        auto zonelist = redisdriver->QueryList( "zrange {} 0 -1", __KF_STRING__( zonelist ) );
+        if ( zonelist->_value.empty() )
+        {
+            return _invalid_int;
+        }
+
+        for ( auto& strid : zonelist->_value )
+        {
+            auto querytime = redisdriver->QueryUInt64( "hget {}:{} {}", __KF_STRING__( zone ), strid, __KF_STRING__( time ) );
+            if ( KFGlobal::Instance()->_real_time < ( querytime->_value + 300 ) )
+            {
+                return KFUtility::ToValue< uint32 >( strid );
+            }
+        }
+
+        return 1u;
+    }
+
+    std::string KFAuthModule::QueryZoneData( uint64 accountid, const std::string& token, MapString& accountdata )
+    {
+        // 上次登录的小区id
+        auto zoneid = KFUtility::ToValue< uint32 >( accountdata[ __KF_STRING__( zoneid ) ] );
+        if ( zoneid == _invalid_int )
+        {
+            // 没有登录, 说明是个新号, 找到负载最小的一个小区信息
+            zoneid = BalanceAllocZoneId();
+            if ( zoneid == _invalid_int )
+            {
+                return _kf_http_server->SendCode( KFMsg::ZoneServerBusy );
+            }
+        }
+
+        // 小区信息
+        auto redisdriver = __LOGIN_REDIS_DRIVER__;
+        auto kfzonemap = redisdriver->QueryMap( "hgetall {}:{}", __KF_STRING__( zone ), zoneid );
+
+        __JSON_DOCUMENT__( response );
+        __JSON_SET_VALUE__( response, __KF_STRING__( token ), token );
+        __JSON_SET_VALUE__( response, __KF_STRING__( accountid ), accountid );
+
+        __JSON_OBJECT__( kfzone );
+        __JSON_SET_VALUE__( kfzone, __KF_STRING__( name ), kfzonemap->_value[ __KF_STRING__( name ) ] );
+        __JSON_SET_VALUE__( kfzone, __KF_STRING__( ip ), kfzonemap->_value[ __KF_STRING__( ip ) ] );
+        __JSON_SET_VALUE__( kfzone, __KF_STRING__( port ), KFUtility::ToValue<uint32>( kfzonemap->_value[ __KF_STRING__( port ) ] ) );
+        __JSON_SET_VALUE__( kfzone, __KF_STRING__( zoneid ), KFUtility::ToValue<uint32>( kfzonemap->_value[ __KF_STRING__( zoneid ) ] ) );
+        __JSON_SET_VALUE__( response, __KF_STRING__( zone ), kfzone );
+        return _kf_http_server->SendResponse( response );
+    }
+
+    __KF_HTTP_FUNCTION__( KFAuthModule::HandleVerifyToken )
+    {
+        __JSON_PARSE_STRING__( request, data );
+
+        auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
+
+        auto token = __JSON_GET_STRING__( request, __KF_STRING__( token ) );
+        auto accountid = __JSON_GET_UINT64__( request, __KF_STRING__( accountid ) );
+
+        // 判断token是否正确
+        auto tokenkey = __FORMAT__( "{}:{}", __KF_STRING__( token ), accountid );
+        auto kftokenresult = redisdriver->QueryMap( "hgetall {}", tokenkey );
+        if ( !kftokenresult->IsOk() )
+        {
+            return _kf_http_server->SendCode( KFMsg::AuthDatabaseBusy );
+        }
+
+        // 获得账号和渠道 小区信息
+        auto querytoken = kftokenresult->_value[ __KF_STRING__( token ) ];
+        auto account = kftokenresult->_value[ __KF_STRING__( account ) ];
+        auto channel = KFUtility::ToValue< uint32 >( kftokenresult->_value[ __KF_STRING__( channel ) ] );
+        if ( querytoken.empty() || querytoken != token || channel == _invalid_int )
+        {
+            return _kf_http_server->SendCode( KFMsg::LoginTokenError );
+        }
+
+        // 保存玩家登陆ip
+        {
+            MapString values;
+            values[ __KF_STRING__( ip ) ] = __JSON_GET_STRING__( request, __KF_STRING__( ip ) );
+            values[ __KF_STRING__( zoneid ) ] = __JSON_GET_STRING__( request, __KF_STRING__( zoneid ) );
+            redisdriver->Update( values, "hmset {}:{}", __KF_STRING__( accountid ), accountid );
+        }
+
+        // 返回结果
+        __JSON_DOCUMENT__( response );
+        __JSON_SET_VALUE__( response, __KF_STRING__( token ), token );
+        __JSON_SET_VALUE__( response, __KF_STRING__( channel ), channel );
+        __JSON_SET_VALUE__( response, __KF_STRING__( account ), account );
+        __JSON_SET_VALUE__( response, __KF_STRING__( accountid ), accountid );
+
+        // 加载渠道数据
+        auto kfresult = redisdriver->QueryMap( "hgetall {}:{}", __KF_STRING__( extend ), accountid );
+        if ( !kfresult->_value.empty() )
+        {
+            KFJson kfchanneljson;
+            __JSON_FROM_MAP__( kfchanneljson, kfresult->_value );
+            __JSON_SET_VALUE__( response, __KF_STRING__( channeldata ), kfchanneljson );
+        }
+
+        return _kf_http_server->SendResponse( response );
+    }
+}

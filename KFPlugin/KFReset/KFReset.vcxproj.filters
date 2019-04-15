@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="KFResetConfig.cpp" />
+    <ClCompile Include="KFResetModule.cpp" />
+    <ClCompile Include="KFResetPlugin.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="KFResetInterface.h" />
+    <ClInclude Include="KFResetConfig.hpp" />
+    <ClInclude Include="KFResetModule.hpp" />
+    <ClInclude Include="KFResetPlugin.hpp" />
+  </ItemGroup>
+</Project>

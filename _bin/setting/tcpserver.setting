@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<Config>
+	<!-- AppName 服务器名字 -->
+	<!-- AppType 服务器类型 -->
+	<!-- Type 端口计算类型 0=固定端口 1=由id计算 2=共享内存计算 -->
+	<!-- Port 端口 -->
+	<!-- InteranetIp 外网ip 127.0.0.1 提供局域网ip  0.0.0.0 提供公网ip -->
+	<!-- MaxQueue 最大队列数量 默认20000 -->
+	<!-- TimeOut 掉线监测时间 默认20 -->
+	<!-- MessageType 消息类型  1 服务器之间通讯  2 服务器与客户端之间通讯-->
+	
+	<!-- tcp服务器配置 -->
+	<TcpServer>
+		<!-- 通用服务器 -->
+		<Server AppName="*" AppType="*" Type="2" Port="12000" MaxQueue="20000"/>
+
+		<!-- deploy server 服务器-->
+		<Server AppName="deploy" AppType="server" Type="0" Port="10000" MaxQueue="20000"/>
+
+		<!-- master服务器 -->
+		<Server AppName="*" AppType="master" Type="0" Port="0" MaxQueue="20000"/>
+
+		<!-- gate服务器 -->
+		<Server AppName="zone" AppType="gate" Type="2" Port="12000" MaxQueue="200" MessageType="2"/>
+	</TcpServer>
+</Config>
+

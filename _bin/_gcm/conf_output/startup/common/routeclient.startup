@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Setting>
+	<Plugins>
+		<Plugin Name="KFBus" Config="./setting/bus.setting"/>
+		<Plugin Name="KFIpAddress" Config="./setting/{}_{}_ip.setting"/>
+		<Plugin Name="KFOption" Config="./config/option.config"/>
+		<Plugin Name="KFConfig" Config=""/>
+		<Plugin Name="KFTimer" Config=""/>
+		<Plugin Name="KFHttpClient" Config=""/>
+		<Plugin Name="KFTcpClient" Config=""/>
+		<Plugin Name="KFMessage" Config=""/>
+		<Plugin Name="KFClusterClient" Config=""/>
+		<Plugin Name="KFRouteClient" Config=""/>
+	</Plugins>
+</Setting>

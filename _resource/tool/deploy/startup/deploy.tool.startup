@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Setting>
+	<Includes>
+	</Includes>
+
+	<Plugins>
+		<Plugin Name="KFTcpClient" Config=""/>
+		<Plugin Name="KFMessage" Config=""/>
+	</Plugins>
+</Setting>

@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="KFRobotModule.cpp" />
+    <ClCompile Include="KFRobotPlugin.cpp" />
+    <ClCompile Include="KFRobotConfig.cpp" />
+    <ClCompile Include="KFRobot.cpp" />
+    <ClCompile Include="KFStateManage.cpp">
+      <Filter>FSM\State</Filter>
+    </ClCompile>
+    <ClCompile Include="KFFsm.cpp">
+      <Filter>FSM</Filter>
+    </ClCompile>
+    <ClCompile Include="KFState.cpp">
+      <Filter>FSM\State</Filter>
+    </ClCompile>
+    <ClCompile Include="KFStateAuth.cpp">
+      <Filter>FSM\State\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="KFStateLogin.cpp">
+      <Filter>FSM\State\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="KFStateWait.cpp">
+      <Filter>FSM\State\Logic</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="KFRobotInterface.h" />
+    <ClInclude Include="KFRobotModule.hpp" />
+    <ClInclude Include="KFRobotPlugin.hpp" />
+    <ClInclude Include="KFRobotConfig.hpp" />
+    <ClInclude Include="KFRobot.hpp" />
+    <ClInclude Include="KFStateManage.hpp">
+      <Filter>FSM\State</Filter>
+    </ClInclude>
+    <ClInclude Include="KFState.hpp">
+      <Filter>FSM\State</Filter>
+    </ClInclude>
+    <ClInclude Include="KFStateDefine.hpp">
+      <Filter>FSM\State</Filter>
+    </ClInclude>
+    <ClInclude Include="KFFsm.hpp">
+      <Filter>FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="KFStateAuth.hpp">
+      <Filter>FSM\State\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="KFStateLogin.hpp">
+      <Filter>FSM\State\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="KFStateWait.hpp">
+      <Filter>FSM\State\Logic</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="FSM">
+      <UniqueIdentifier>{76ece994-fa90-4788-b80e-09895a4c80d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FSM\State">
+      <UniqueIdentifier>{66c2fb68-f069-4877-a35f-15390911ff09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FSM\State\Logic">
+      <UniqueIdentifier>{667a9b46-2ffb-485c-878f-cf19b5ee6e96}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

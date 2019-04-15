@@ -1,0 +1,16 @@
+﻿<?xml version='1.0' encoding='utf-8' ?>
+<Config>
+	<!-- 认证服务器地址 -->
+	<Auth Address="Http://192.168.1.155:7001/auth"/>
+
+	<!-- 基本信息 -->
+	<!-- Count 最大机器人数量 -->
+	<!-- Interval 登录间隔时间, 单位: 毫秒 -->
+	<Login Count="1" Interval="5000"/>
+
+	<!-- 日志开关 -->
+	<!-- Data 属性更新日志 -->
+	<Log Data="1"/>
+
+</Config>
+

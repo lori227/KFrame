@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<Config>
+	<!--Name 数据库名字 -->
+	<!--Ip 数据库地址 -->
+	<!--Port 数据库端口 -->
+	<!--User 登录用户名 -->
+	<!--Password 登录密码 -->
+	<!--MinLogicId 最小逻辑id -->
+	<!--MaxLogicId 最大逻辑id -->
+
+	<!--登录信息-->
+	<Module Name="login">
+		<Redis MinLogicId="0" MaxLogicId="0">
+			<Write IP="127.0.0.1" Port="6379" Password="redis@lori227-="/>
+			<Read IP="127.0.0.1" Port="6379" Password="redis@lori227-="/>
+		</Redis>			 
+	</Module>
+
+	<!--保存账号信息-->
+	<Module Name="account">
+		<Redis MinLogicId="0" MaxLogicId="1">
+			<Write IP="127.0.0.1" Port="6379" Password="redis@lori227-="/>
+			<Read IP="127.0.0.1" Port="6379" Password="redis@lori227-="/>
+		</Redis>			 
+	</Module>
+
+	<!--公共数据信息-->
+	<Module Name="public">
+		<Redis MinLogicId="0" MaxLogicId="0">
+			<Write IP="127.0.0.1" Port="6379" Password="redis@lori227-="/>
+			<Read IP="127.0.0.1" Port="6379" Password="redis@lori227-="/>
+		</Redis>			 
+	</Module>
+
+	<!--房间数据-->
+	<Module Name="room">
+		<Redis MinLogicId="0" MaxLogicId="0">
+			<Write IP="127.0.0.1" Port="6379" Password="redis@lori227-="/>
+			<Read IP="127.0.0.1" Port="6379" Password="redis@lori227-="/>
+		</Redis>			 
+	</Module>
+
+	<!--关系数据信息-->
+	<Module Name="relation">
+		<Redis MinLogicId="0" MaxLogicId="0">
+			<Write IP="127.0.0.1" Port="6379" Password="redis@lori227-="/>
+			<Read IP="127.0.0.1" Port="6379" Password="redis@lori227-="/>
+		</Redis>			 
+	</Module>
+
+	<!--保存邮件信息-->
+	<Module Name="mail">
+		<Redis MinLogicId="0" MaxLogicId="0">
+			<Write IP="127.0.0.1" Port="6379" Password="redis@lori227-="/>
+			<Read IP="127.0.0.1" Port="6379" Password="redis@lori227-="/>
+		</Redis>			 
+	</Module>
+
+	<!--保存排行榜信息-->
+	<Module Name="rank">
+		<Redis MinLogicId="0" MaxLogicId="0">
+			<Write IP="127.0.0.1" Port="6379" Password="redis@lori227-="/>
+			<Read IP="127.0.0.1" Port="6379" Password="redis@lori227-="/>
+		</Redis>			 
+	</Module>
+
+	<!--帮派信息-->
+	<Module Name="guild">
+		<Redis MinLogicId="0" MaxLogicId="0">
+			<Write IP="127.0.0.1" Port="6379" Password="redis@lori227-="/>
+			<Read IP="127.0.0.1" Port="6379" Password="redis@lori227-="/>
+		</Redis>			 
+	</Module>
+
+	<!--保存全局名字的数据库-->
+	<Module Name="name">
+		<Redis MinLogicId="0" MaxLogicId="0">
+			<Write IP="127.0.0.1" Port="6379" Password="redis@lori227-="/>
+			<Read IP="127.0.0.1" Port="6379" Password="redis@lori227-="/>
+		</Redis>			 
+	</Module>
+
+	<!--保存小区玩家数据信息-->
+	<Module Name="data">
+		<Redis MinLogicId="0" MaxLogicId="0">
+			<Write IP="127.0.0.1" Port="6379" Password="redis@lori227-="/>
+			<Read IP="127.0.0.1" Port="6379" Password="redis@lori227-="/>
+		</Redis>			 
+	</Module>
+</Config>

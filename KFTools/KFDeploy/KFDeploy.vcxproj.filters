@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="KFrame">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="MFC">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="KFDeploy.h">
+      <Filter>MFC</Filter>
+    </ClInclude>
+    <ClInclude Include="KFDeployDlg.h">
+      <Filter>MFC</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>MFC</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>MFC</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>MFC</Filter>
+    </ClInclude>
+    <ClInclude Include="KFDeployStartup.h">
+      <Filter>KFrame</Filter>
+    </ClInclude>
+    <ClInclude Include="KFDeployService.h">
+      <Filter>KFrame</Filter>
+    </ClInclude>
+    <ClInclude Include="KFDeployLibrary.h">
+      <Filter>KFrame</Filter>
+    </ClInclude>
+    <ClInclude Include="KFDeployDump.h">
+      <Filter>KFrame</Filter>
+    </ClInclude>
+    <ClInclude Include="KFDeployConfig.h">
+      <Filter>KFrame</Filter>
+    </ClInclude>
+    <ClInclude Include="KFDeployDefine.h">
+      <Filter>KFrame</Filter>
+    </ClInclude>
+    <ClInclude Include="KFDeployData.h">
+      <Filter>KFrame</Filter>
+    </ClInclude>
+    <ClInclude Include="CAddAgentDlg.h">
+      <Filter>MFC</Filter>
+    </ClInclude>
+    <ClInclude Include="CAddServerDlg.h">
+      <Filter>MFC</Filter>
+    </ClInclude>
+    <ClInclude Include="CVersionDlg.h">
+      <Filter>MFC</Filter>
+    </ClInclude>
+    <ClInclude Include="CFileDlg.h">
+      <Filter>MFC</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="KFDeploy.cpp">
+      <Filter>MFC</Filter>
+    </ClCompile>
+    <ClCompile Include="KFDeployDlg.cpp">
+      <Filter>MFC</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>MFC</Filter>
+    </ClCompile>
+    <ClCompile Include="KFDeployStartup.cpp">
+      <Filter>KFrame</Filter>
+    </ClCompile>
+    <ClCompile Include="KFDeployService.cpp">
+      <Filter>KFrame</Filter>
+    </ClCompile>
+    <ClCompile Include="KFDeployLibrary.cpp">
+      <Filter>KFrame</Filter>
+    </ClCompile>
+    <ClCompile Include="KFDeployDump.cpp">
+      <Filter>KFrame</Filter>
+    </ClCompile>
+    <ClCompile Include="KFDeployConfig.cpp">
+      <Filter>KFrame</Filter>
+    </ClCompile>
+    <ClCompile Include="CAddAgentDlg.cpp">
+      <Filter>MFC</Filter>
+    </ClCompile>
+    <ClCompile Include="CAddServerDlg.cpp">
+      <Filter>MFC</Filter>
+    </ClCompile>
+    <ClCompile Include="CVersionDlg.cpp">
+      <Filter>MFC</Filter>
+    </ClCompile>
+    <ClCompile Include="CFileDlg.cpp">
+      <Filter>MFC</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="KFDeploy.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\KFDeploy.rc2">
+      <Filter>资源文件</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\KFDeploy.ico">
+      <Filter>资源文件</Filter>
+    </Image>
+  </ItemGroup>
+</Project>

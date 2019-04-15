@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<Config>
+	<!-- 日志服务器 -->
+	<LogServer Url="Http://127.0.0.1:6001/"/>
+
+	<!-- 认证服务器地址 -->
+	<AuthServer Url="http://127.0.0.1:7001/"/>
+
+	<!--Port 端口-->
+	<!-- Type 端口计算类型 0=固定端口 1=由id计算 2=共享内存计算--> 
+	<!-- tcp服务器配置 -->
+	<TcpServer>
+		<!-- route服务器 -->
+		<Server AppName="route" AppType="master">
+			<App Id="0.22.0.1" Ip="127.0.0.1" Type="1" Port="10000"/>
+		</Server>
+
+		<!-- zone master -->
+		<!-- 通用小区id填0, 如果特殊设置填写设定的小区id, 只能是在后面-->
+		<Server AppName="zone" AppType="master">
+			<App Id="0.91.0.1" Ip="127.0.0.1" Type="1" Port="11000"/>
+		</Server>
+	</TcpServer>
+</Config>
+

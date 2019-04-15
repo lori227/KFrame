@@ -1,0 +1,1 @@
+sh make_version.sh 3 steam release $1
