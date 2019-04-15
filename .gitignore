@@ -10,3 +10,7 @@ _output
 bin64
 obj64
 lib64
+x64
+KFLibrary/libuv/Debug/
+KFLibrary/libuv/Release/
+
