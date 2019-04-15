@@ -56,3 +56,5 @@ _lib/win64/debug/3rd/PocoDataMySQLmdd.lib
 _lib/win64/debug/3rd/PocoDatamdd.lib
 _lib/win64/debug/3rd/PocoCryptomdd.lib
 _lib/win64/debug/3rd/CppUnitmdd.lib
+KFLibrary/google/protobuf/cmake/vsbuild/Release
+KFLibrary/google/protobuf/cmake/vsbuild/Debug
