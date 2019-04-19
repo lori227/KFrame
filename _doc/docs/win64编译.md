@@ -20,18 +20,23 @@ lib库路径: `Server/_lib/win64/3rd/`
 进入`Server/_build/win64`目录下, 
 执行`build150-library-x64.bat`, 等待编译结束,生成的结果在默认链接目录下.
 
-ps: tcmalloc 和openssl 已经编译好, 如果需要请自己重新编译.
+!> ps: tcmalloc 和openssl 已经编译好, 如果需要请自己重新编译.
 
     openssl : https://www.cnblogs.com/lpxblog/p/5382653.html
+
+!> protobuf 请自己安装cmake生成sln工程( 因为camke生成的都带绝对路径 )
+
+	http://blog.sina.com.cn/s/blog_62949ff40102x2wo.html
 
 # 编译框架工程
 
 - 编译Frame.sln
 	
-?> 工程包含了框架使用的lib库和最基础的插件模块  
-打开Frame.sln  
-先编译KFContrib目录( 框架封装的lib库 )  
-然后编译KFPlugin目录( 模块插件目录 )  
-最后编译KFStartup( 进程启动程序 )  
-KFTool可以不编译
-		
+!> 	工程包含了框架使用的lib库和最基础的插件模块  
+
+	打开Frame.sln  
+	先编译KFContrib目录( 框架封装的lib库 )  
+	然后编译KFPlugin目录( 模块插件目录 )  
+	最后编译KFStartup( 进程启动程序 )  
+	KFTool可以不编译
+			

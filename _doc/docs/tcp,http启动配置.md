@@ -1,9 +1,10 @@
-# 服务器配置启动配置
+# tcp, http配置启动配置
 
-	服务器配置都在Bin/setting/server.network中
 
 ## HttpServer配置
-	
+
+配置文件位置: `_bin/setting/httpserver.setting`
+
 	<!-- http服务器配置 -->
 	<HttpServer KeepAlive="0" MaxThread="4" MaxQueue="64" IdleTime="1000">
 		<!-- 认证服务器 -->
@@ -33,7 +34,9 @@ type是端口类型, 0=固定端口 1=由id计算 2=共享内存计算
 Port 端口 如果计算端口, 这个端口是计算的起始端口号
 
 ## TcpServer配置
-	
+
+配置文件位置: `_bin/setting/tcpserver.setting`	
+
 	<!-- tcp服务器配置 -->
 	<TcpServer>
 		<!-- 通用服务器 -->
