@@ -24,6 +24,7 @@ namespace KFrame
         __STRING_DEFINE__( appfile );
         __STRING_DEFINE__( appconfig );
         __STRING_DEFINE__( appid );
+        __STRING_DEFINE__( net );
         __STRING_DEFINE__( service );
         __STRING_DEFINE__( log );
         __STRING_DEFINE__( address );

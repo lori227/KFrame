@@ -20,10 +20,6 @@ namespace KFrame
         void FromUInt64( uint64 appid );
         void FromString( std::string strappid );
         /////////////////////////////////////////////////////////////////////////////////////
-        // 渠道
-        uint32 GetChannelId() const;
-        void SetChannelId( uint32 value );
-
         // 类型
         uint32 GetType() const;
         void SetType( uint32 value );
@@ -43,7 +39,7 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////
         // 转换
-        static const std::string& ToString( uint64 appid );
+        static std::string ToString( uint64 appid );
         static uint64 ToUInt64( const std::string& strappid );
 
     private:

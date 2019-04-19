@@ -48,10 +48,9 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
-    void KFFsm::StartTimer( uint64 starttime, uint64 intervaltime )
+    void KFFsm::StartTimer( uint32 interval, bool immediately )
     {
-        _fsm_timer.StopTimer();
-        _fsm_timer.StartTimer( starttime, intervaltime );
+        _fsm_timer.StartLoop( interval, immediately );
     }
 
     void KFFsm::StopTimer()
@@ -66,6 +65,6 @@ namespace KFrame
             return true;
         }
 
-        return _fsm_timer.DoneTimer( KFGlobal::Instance()->_game_time, true );
+        return _fsm_timer.DoneTimer();
     }
 }

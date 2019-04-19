@@ -131,30 +131,39 @@ namespace KFrame
         return iter->second->Make( zoneid, workerid, _real_time );
     }
 
-    void KFGlobal::InitNetService( std::string& strtype )
+    void KFGlobal::InitNetType( std::string& strtype )
     {
-        _net_type = KFUtility::SplitValue< uint32 >( strtype, "." );
-        if ( _net_type == 0 )
+        _net_type = KFUtility::ToValue< uint32 >( strtype );
+        if ( _net_type == 0u )
         {
             _net_type = KFServerEnum::Local;
         }
+    }
 
-        _service_type = KFUtility::SplitValue< uint32 >( strtype, "." );
-        if ( _service_type == 0 )
+    void KFGlobal::InitChannelService( std::string& strtype )
+    {
+        _channel = KFUtility::SplitValue< uint32 >( strtype, "." );
+        if ( _channel == 0 )
         {
-            _service_type = KFServerEnum::Debug;
+            _channel = 1;
+        }
+
+        _service = KFUtility::SplitValue< uint32 >( strtype, "." );
+        if ( _service == 0u )
+        {
+            _service = KFServerEnum::Debug;
         }
     }
 
     // 判断渠道和服务类型
     bool KFGlobal::CheckChannelService( uint32 channel, uint32 service )
     {
-        if ( channel != 0 && channel != _app_id->GetChannelId() )
+        if ( channel != 0 && channel != _channel )
         {
             return false;
         }
 
-        if ( service != 0 && service != _service_type )
+        if ( service != 0 && service != _service )
         {
             return false;
         }

@@ -19,3 +19,4 @@ _lib/win64/debug/
 _lib/win64/release/
 _bin/bin/win64/debug/
 _bin/bin/win64/release/
+conf_output

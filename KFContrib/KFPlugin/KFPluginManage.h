@@ -97,7 +97,7 @@ namespace KFrame
 
         ///////////////////////////////////////////////////////////////////////////
         // 初始化
-        void InitPlugin();
+        bool InitPlugin();
 
         // 关闭
         void ShutDown();

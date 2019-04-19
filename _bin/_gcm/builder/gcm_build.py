@@ -70,9 +70,9 @@ def write_file(run_file, kill_file, node):
     func_name = node.get('Name')
     func_type = node.get('Type')
 
-    channel_id = args['channel']
     zone_id = args['zone']
     log_type = args['log']
+    net_type = args['net']
     service_type = args['service']
     if func_name != 'zone':
         zone_id = 0
@@ -80,14 +80,14 @@ def write_file(run_file, kill_file, node):
     execute_file = default_startup + default_mode_suffix + platform_exe
     run_file.write('echo Starting [%s.%s] server\n' % (func_name, func_type) )
     if is_linux():
-        run_file.write('./bin/%s app=%s.%s id=%d.%d.%d.%d log=%s service=%s\n\n' %
-                       (execute_file, func_name, func_type, channel_id, int(func_id), zone_id, 1, log_type, service_type ))
+        run_file.write('./bin/%s app=%s.%s id=%d.%d.%d service=%s net=%s log=%s \n\n' %
+                       (execute_file, func_name, func_type, int(func_id), zone_id, 1, service_type, net_type, log_type ))
 
         kill_file.write('ps -ef|grep "%s app=%s.%s" | grep -v grep | cut -c 9-15 | xargs kill -9\n\n' %
                         (execute_file, func_name, func_type))
     else:
-        run_file.write('start "%s" bin\\%s app=%s.%s id=%d.%d.%d.%d log=%s service=%s\n\n' %
-                       (func_name, execute_file, func_name, func_type, channel_id, int(func_id), zone_id, 1, log_type, service_type ))
+        run_file.write('start "%s" bin\\%s app=%s.%s id=%d.%d.%d service=%s net=%s log=%s\n\n' %
+                       (func_name, execute_file, func_name, func_type, int(func_id), zone_id, 1, service_type, net_type, log_type ))
 
         kill_file.write('TASKKILL /F /FI "WINDOWTITLE eq %s.%s*"\n\n' % (func_name, func_type))
 
@@ -95,9 +95,8 @@ def copy_setting():
     os.mkdir( os.path.join( output_folder, setting_path ) )
     local_path = base_path + setting_path + '/'
 
-    channel_id = args['channel']
     service = args['service']
-    (net_type, service_type ) = service.split('.')
+    (channel_id, service_type ) = service.split('.')
 
     for key in g_setting_config.files:
         node = g_setting_config.files[key]
@@ -107,11 +106,11 @@ def copy_setting():
         if file_type == "0":
              shutil.copy( local_path + file_name, os.path.join(output_folder, setting_path) )
         else:
-            new_file = '%d_%s_%s' % ( channel_id, service_type, file_name )
+            new_file = '%s_%s_%s' % ( channel_id, service_type, file_name )
             if os.path.exists( local_path + new_file ):
                 shutil.copy( local_path + new_file, os.path.join(output_folder, setting_path) )
             else:
-                new_file = '%d_%s_%s' % ( 0, '0', file_name )
+                new_file = '%s_%s_%s' % ( '0', '0', file_name )
                 shutil.copy( local_path + new_file, os.path.join(output_folder, setting_path) )
 
 def copy_version():
@@ -167,10 +166,10 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('-p', '--project', type=str, default='server', help="project name")
     parser.add_argument('-m', '--mode', type=str, default='release', help="runtime mode, debug/release")
-    parser.add_argument('-c', '--channel', type=int, default=1, help="channel id")
+    parser.add_argument('-c', '--service', type=str, default='1.1', help="service type")
     parser.add_argument('-z', '--zone', type=int, default=1, help="zone id")
     parser.add_argument('-l', '--log', type=str, default='1.0', help="log type")
-    parser.add_argument('-n', '--service', type=str, default='1.1', help="service type")
+    parser.add_argument('-n', '--net', type=str, default='1', help="net type")
     parser.add_argument('-t', '--type', type=int, default='1', help="update type 1 version 2 reload")
     parser.add_argument('-f', '--file', type=str, default='none', help="update file name")
     parser.add_argument('-b', '--branch', type=str, default='develop', help="develop/online/steam")

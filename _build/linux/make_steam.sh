@@ -1,1 +1,1 @@
-sh make_version.sh 3 steam release $1
+sh make_version.sh 3.1 steam release $1

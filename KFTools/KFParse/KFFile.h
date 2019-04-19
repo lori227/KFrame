@@ -1,8 +1,7 @@
 ﻿#ifndef __KF_FILE_H__
 #define __KF_FILE_H__
 
-#include "KFSingleton.h"
-#include "KFMap.h"
+#include "KFInclude.h"
 
 namespace KFrame
 {

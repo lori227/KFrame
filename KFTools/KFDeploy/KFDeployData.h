@@ -9,7 +9,8 @@ public:
     uint64 _id;
     std::string _str_id;
     std::string _name;
-    std::string _channel;
+    uint32 _channel;
+    std::string _channel_name;
     std::string _ip;
     uint32 _port = 0;
 };
@@ -26,7 +27,7 @@ class AgentData
 {
 public:
     std::string _id;
-    uint32 _service;
+    std::string _service;
     std::string _ip;
 };
 
@@ -90,7 +91,7 @@ public:
     }
 
     // 添加日志
-    void AddAgentData( const std::string& id, const std::string& ip, uint32 service )
+    void AddAgentData( const std::string& id, const std::string& ip, const std::string& service )
     {
         auto data = new AgentData();
         data->_id = id;
@@ -108,8 +109,11 @@ public:
         {
             if ( data->_id == agentid )
             {
+                auto service = data->_service;
+                KFUtility::ReplaceString( service, ".", "_" );
+
                 KFAppId appid( data->_id );
-                _result = __FORMAT__( "{}_{}_{}", appid.GetChannelId(), data->_service, __KF_STRING__( deploy )  );
+                _result = __FORMAT__( "{}_{}", service, __KF_STRING__( deploy )  );
                 break;
             }
         }
@@ -236,6 +240,7 @@ public:
     KFHashMap< std::string, const std::string&, DeployData > _deploy_data;
 
     // 正在连接的id
+    uint32 _channel = 0u;
     uint64 _connect_deploy_id = 0u;
     std::string _connect_deploy_strid;
 
@@ -246,6 +251,7 @@ public:
     std::list< AgentData* > _agent_data;
 
     // service列表
+    std::map< uint32, std::string > _channel_name;
     std::map< uint32, std::string > _service_name;
 
     // appdata

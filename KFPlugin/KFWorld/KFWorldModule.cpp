@@ -74,9 +74,7 @@ namespace KFrame
             auto kfconhash = _gate_conhash.Create( gateid );
             kfconhash->AddHashNode( __KF_STRING__( game ), kfmsg.gameid(), 50 );
 
-            std::string strgateid = KFAppId::ToString( gateid );
-            std::string strgameid = KFAppId::ToString( kfmsg.gameid() );
-            __LOG_INFO__( "add gate=[{}] game=[{}]!", strgateid, strgameid );
+            __LOG_INFO__( "add gate=[{}] game=[{}]!", KFAppId::ToString( gateid ), KFAppId::ToString( kfmsg.gameid() ) );
         }
     }
 
@@ -92,9 +90,7 @@ namespace KFrame
 
         kfconhash->RemoveHashNode( kfmsg.gameid() );
 
-        std::string strgateid = KFAppId::ToString( kfmsg.gateid() );
-        std::string strgameid = KFAppId::ToString( kfmsg.gameid() );
-        __LOG_ERROR__( "remove gate=[{}] game=[{}]!", strgateid, strgameid );
+        __LOG_ERROR__( "remove gate=[{}] game=[{}]!", KFAppId::ToString( kfmsg.gateid() ), KFAppId::ToString( kfmsg.gameid() ) );
     }
 
     __KF_NET_EVENT_FUNCTION__( KFWorldModule::OnServerLostGame )
@@ -111,9 +107,7 @@ namespace KFrame
             auto ok = kfconhash->RemoveHashNode( netdata->_id );
             if ( ok )
             {
-                std::string strgateid = KFAppId::ToString( iter.first );
-                std::string strgameid = KFAppId::ToString( netdata->_id );
-                __LOG_ERROR__( "remove gate=[{}] game=[{}]!", strgateid, strgameid );
+                __LOG_ERROR__( "remove gate=[{}] game=[{}]!", KFAppId::ToString( iter.first ), KFAppId::ToString( netdata->_id ) );
             }
         }
     }

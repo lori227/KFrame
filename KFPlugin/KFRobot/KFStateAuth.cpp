@@ -9,7 +9,7 @@ namespace KFrame
         robot->_login_gate_port = 0u;
 
         // 10验证一次
-        fsm->StartTimer( 1, 10000 );
+        fsm->StartTimer( 10000, true );
     }
 
     void KFStateAuth::RunState( KFFsm* fsm, KFRobot* robot )

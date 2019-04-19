@@ -102,6 +102,7 @@ namespace KFrame
         _local_ip = values[ __KF_STRING__( localip ) ];
         _log_type = values[ __KF_STRING__( logtype ) ];
         _service_type = values[ __KF_STRING__( service ) ];
+        _net_type = values[ __KF_STRING__( net ) ];
         _params = values[ __KF_STRING__( param ) ];
     }
 
@@ -123,6 +124,7 @@ namespace KFrame
         values[ __KF_STRING__( localip ) ] = _local_ip;
         values[ __KF_STRING__( logtype ) ] = _log_type;
         values[ __KF_STRING__( service ) ] = _service_type;
+        values[ __KF_STRING__( net ) ] = _net_type;
         values[ __KF_STRING__( param ) ] = _params;
     }
 

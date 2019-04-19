@@ -93,7 +93,7 @@ namespace KFrame
             return false;
         }
 
-        __LOG_INFO__( "player [{}:{}] save ok!", zoneid, playerid );
+        __LOG_INFO__( "player [{}:{}] size=[{}] save ok!", zoneid, playerid, strdata.size() );
         return true;
     }
 

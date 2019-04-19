@@ -75,6 +75,7 @@ namespace KFrame
         // 日志记录
         void LuaLogDebug( const char* data );
         void LuaLogInfo( const char* data );
+        void LuaLogWarn( const char* data );
         void LuaLogError( const char* data );
 
         // 获得基础属性

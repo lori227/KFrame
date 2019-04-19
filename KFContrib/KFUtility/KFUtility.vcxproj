@@ -26,6 +26,7 @@
     <ClCompile Include="KFNode.cpp" />
     <ClCompile Include="KFRunable.cpp" />
     <ClCompile Include="KFThread.cpp" />
+    <ClCompile Include="KFTimer.cpp" />
     <ClCompile Include="KFUtility.cpp" />
     <ClCompile Include="KFXml.cpp" />
   </ItemGroup>

@@ -59,7 +59,7 @@ namespace KFrame
         std::list< std::tuple< std::string, uint64 > > _kf_schedule_remove;
 
         // 更新定时器
-        KFClockTimer _update_timer;
+        KFTimer _update_timer;
     };
 }
 

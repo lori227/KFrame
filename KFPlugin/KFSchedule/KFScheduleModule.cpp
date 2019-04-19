@@ -5,7 +5,7 @@ namespace KFrame
     KFScheduleModule::KFScheduleModule()
     {
         // 25秒检查一次, 太频繁浪费性能
-        _update_timer.StartTimer( 1, 25000 );
+        _update_timer.StartLoop( 25000 );
     }
 
     KFScheduleModule::~KFScheduleModule()
@@ -106,8 +106,7 @@ namespace KFrame
 
     void KFScheduleModule::RunScheduleUpdate()
     {
-        auto gametime = KFGlobal::Instance()->_game_time;
-        if ( !_update_timer.DoneTimer( gametime, true ) )
+        if ( !_update_timer.DoneTimer() )
         {
             return;
         }

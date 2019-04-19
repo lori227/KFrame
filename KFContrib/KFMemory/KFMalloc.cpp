@@ -96,7 +96,6 @@ namespace KFrame
         return memory;
     }
 
-
     void KFMalloc::AddLogMemory( const std::string& name, uint32 size )
     {
         auto iter = _log_data_list.find( name );
@@ -125,32 +124,47 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////
+    static uint64 _log_interval_time = 300000u;
+    void KFMalloc::Run()
+    {
+        auto nowtime = KFGlobal::Instance()->_game_time;
+        if ( _next_log_time == 0u || nowtime < _next_log_time )
+        {
+            return;
+        }
+
+        PrintMemoryLog();
+        _next_log_time = nowtime + _log_interval_time;
+    }
 
     void KFMalloc::SetLogOpen( bool open )
     {
         _log_open = open;
+        if ( _log_open )
+        {
+            _next_log_time = 1u;
+        }
+        else
+        {
+            _next_log_time = 0u;
+        }
     }
 
 #define MILLION_SIZE 1048576.0f
     void KFMalloc::PrintMemoryLog()
     {
-        if ( !_log_open )
-        {
-            return;
-        }
-
         uint64 totalsize = 0;
-        __LOG_DEBUG__( "****************print memory start*****************" );
+        __LOG_INFO__( "****************print memory start*****************" );
         {
             KFLocker locker( *_memory_list_mutex );
             for ( auto& iter : _log_data_list )
             {
                 auto logdata = &iter.second;
                 totalsize += logdata->_total_size;
-                __LOG_DEBUG__( "count[{}] total[{}] name[{}]", logdata->_count, logdata->_total_size, iter.first );
+                __LOG_INFO__( "count[{}] total[{}] name[{}]", logdata->_count, logdata->_total_size, iter.first );
             }
         }
-        __LOG_DEBUG__( "*********print memory end, total[{}]********", totalsize );
+        __LOG_INFO__( "*********print memory end, total[{}]********", totalsize );
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////

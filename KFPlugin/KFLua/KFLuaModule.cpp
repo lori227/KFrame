@@ -143,6 +143,7 @@ namespace KFrame
 
         metatableobject.RegisterObjectDirect( "LogDebug", this, &KFLuaModule::LuaLogDebug );
         metatableobject.RegisterObjectDirect( "LogInfo", this, &KFLuaModule::LuaLogInfo );
+        metatableobject.RegisterObjectDirect( "LogWarn", this, &KFLuaModule::LuaLogWarn );
         metatableobject.RegisterObjectDirect( "LogError", this, &KFLuaModule::LuaLogError );
         metatableobject.RegisterObjectDirect( "Md5Encode", this, &KFLuaModule::LuaMd5Encode );
         metatableobject.RegisterObjectDirect( "GetValue", this, &KFLuaModule::LuaGetValue );
@@ -179,6 +180,11 @@ namespace KFrame
     void KFLuaModule::LuaLogInfo( const char* data )
     {
         __LOG_INFO__( "{}", data );
+    }
+
+    void KFLuaModule::LuaLogWarn( const char* data )
+    {
+        __LOG_WARN__( "{}", data );
     }
 
     void KFLuaModule::LuaLogError( const char* data )

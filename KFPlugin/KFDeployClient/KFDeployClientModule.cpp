@@ -155,6 +155,13 @@ namespace KFrame
         {
             delaytime += 30000;
         }
+        else
+        {
+            if ( apptype == __KF_STRING__( world ) )
+            {
+                delaytime += 20000;
+            }
+        }
 
         // 启动一个定时器
         __REGISTER_DELAY_TIMER__( kfglobal->_app_id->GetId(), delaytime, &KFDeployClientModule::OnTimerShutDownPrepare );

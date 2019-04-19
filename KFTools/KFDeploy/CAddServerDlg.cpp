@@ -191,6 +191,7 @@ void CAddServerDlg::OnBnClickedButtonAddServer()
     {
         net = KFServerEnum::Local;
     }
+    values[ __KF_STRING__( net ) ] = __TO_STRING__( net );
 
     uint32 service = KFServerEnum::Debug;
     _combo_service.GetWindowTextA( strtext );
@@ -202,7 +203,7 @@ void CAddServerDlg::OnBnClickedButtonAddServer()
             service = iter.first;
         }
     }
-    values[ __KF_STRING__( service ) ] = __FORMAT__( "{}.{}", net, service );
+    values[ __KF_STRING__( service ) ] = __FORMAT__( "{}.{}", _deploy_manage->_channel, service );
 
     auto startup = _combo_startup.GetCurSel();
     values[ __KF_STRING__( startup ) ] = __TO_STRING__( startup );

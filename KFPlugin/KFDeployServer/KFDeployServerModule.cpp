@@ -15,6 +15,7 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_TOOL_QUERY_MYSQL_REQ, &KFDeployServerModule::HandleQueryMySQLReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_TOOL_COMMAND_REQ, &KFDeployServerModule::HandleDeployToolCommandReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_LOG_TO_SERVER_ACK, &KFDeployServerModule::HandleDeployLogToServerReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_TOOL_QUERY_TOOL_ID_REQ, &KFDeployServerModule::HandleDeployQueryToolIdReq );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
@@ -32,6 +33,7 @@ namespace KFrame
         __UNREGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_TOOL_DELETE_MYSQL_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_TOOL_COMMAND_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_LOG_TO_SERVER_ACK );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_TOOL_QUERY_TOOL_ID_REQ );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
@@ -78,7 +80,7 @@ namespace KFrame
         MapString updatevalue;
         updatevalue[ __KF_STRING__( status ) ] = __TO_STRING__( status );
         updatevalue[ __KF_STRING__( port ) ] = __TO_STRING__( kfagent->_port );
-        updatevalue[ __KF_STRING__( service ) ] = __TO_STRING__( kfagent->_service );
+        updatevalue[ __KF_STRING__( service ) ] = kfagent->_service;
         _mysql_driver->Update( __KF_STRING__( agent ), keyvalue, updatevalue );
     }
 
@@ -153,6 +155,45 @@ namespace KFrame
         }
 
         _kf_tcp_server->SendNetMessage( __ROUTE_SERVER_ID__, KFMsg::S2S_DEPLOY_TOOL_QUERY_MYSQL_ACK, &ack );
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFDeployServerModule::HandleDeployQueryToolIdReq )
+    {
+        __PROTO_PARSE__( KFMsg::S2SDeployToolQueryToolIdReq );
+
+        static const char* _sql = "select `id` from `tool` where `toolip`='{}';";
+
+        // 查询id
+        auto kfqueryid = _mysql_driver->QueryUInt32( _sql, kfmsg.ip() );
+        if ( kfqueryid->IsOk() )
+        {
+            auto toolid = 0u;
+            if ( kfqueryid->_value == 0u )
+            {
+                MapString values;
+                values[ "toolip" ] = kfmsg.ip();
+                _mysql_driver->Insert( "tool", values );
+
+                auto kfresult = _mysql_driver->QueryUInt32( _sql, kfmsg.ip() );
+                if ( kfresult->_value != 0u )
+                {
+                    toolid = kfresult->_value;
+                }
+            }
+            else
+            {
+                toolid = kfqueryid->_value;
+            }
+
+            if ( toolid != 0u )
+            {
+                KFMsg::S2SDeployToolQueryToolIdAck ack;
+                ack.set_id( toolid );
+                _kf_tcp_server->SendNetMessage( __ROUTE_SERVER_ID__, KFMsg::S2S_DEPLOY_TOOL_QUERY_TOOL_ID_ACK, &ack );
+            }
+        }
+
+        _kf_tcp_server->CloseNetHandle( __ROUTE_SERVER_ID__, 1000, __FUNC_LINE__ );
     }
 
     __KF_MESSAGE_FUNCTION__( KFDeployServerModule::HandleDeployLogToServerReq )

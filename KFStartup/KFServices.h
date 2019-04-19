@@ -10,8 +10,8 @@ namespace KFrame
     {
     public:
         // 构造
-        KFServices();
-        ~KFServices();
+        KFServices() = default;
+        ~KFServices() = default;
 
         // run
         void Run();
@@ -27,21 +27,10 @@ namespace KFrame
 
         // 是否已经关闭
         bool IsShutDown();
-
-    protected:
-        ////////////////////////////////////////////////////////////////////////////
-        // 初始化定时器
-        void InitLogMemoryTimer();
-
-        // 打印内存信息
-        void PrintLogMemory();
-
     protected:
         // 进程
-        KFApplication* _application;
+        KFApplication* _application = nullptr;
 
-        // 打印定时器
-        KFClockTimer _memory_timer;
     };
 }
 #endif

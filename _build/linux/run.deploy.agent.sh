@@ -10,4 +10,4 @@ if [ ! -n "$2" ] ;then
 fi
 
 cd /data/deploy
-./bin/kfdeploy app=deploy.agent id=$1.12.0.1 log=1.0 service=1.$2
+./bin/kfdeploy app=deploy.agent id=12.0.1 log=1.0 service=$1.$2

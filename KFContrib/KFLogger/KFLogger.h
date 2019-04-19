@@ -1,6 +1,8 @@
 ﻿#ifndef __KF_LOGGER_H__
 #define __KF_LOGGER_H__
 
+#include "KFInclude.h"
+
 namespace KFrame
 {
     // 日志函数

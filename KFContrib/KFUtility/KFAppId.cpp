@@ -10,10 +10,10 @@ namespace KFrame
         uint64 _id;
         struct AppData
         {
-            uint16 _channel_id;
-            uint16 _server_type;
-            uint16 _zone_id;
-            uint16 _worker_id;
+            uint16 _reserve;		// 保留
+            uint16 _server_type;	// 服务器类型
+            uint16 _zone_id;		// 小区id
+            uint16 _worker_id;		// 进程id
         } _app_data;
     };
 
@@ -21,7 +21,7 @@ namespace KFrame
     {
         _data = __NEW_OBJECT__( AppIdData );
         _data->_id = 0;
-        _str_app_id = "0.0.0.0";
+        _str_app_id = "0.0.0";
     }
 
     KFAppId::KFAppId( uint64 appid )
@@ -66,31 +66,21 @@ namespace KFrame
     void KFAppId::FromUInt64( uint64 appid )
     {
         _data->_id = appid;
-        _str_app_id = __FORMAT__( "{}.{}.{}.{}", _data->_app_data._channel_id, _data->_app_data._server_type, _data->_app_data._zone_id, _data->_app_data._worker_id );
+        _str_app_id = __FORMAT__( "{}.{}.{}", _data->_app_data._server_type, _data->_app_data._zone_id, _data->_app_data._worker_id );
     }
 
     void KFAppId::FromString( std::string strappid )
     {
         _str_app_id = strappid;
-        _data->_app_data._channel_id = KFUtility::SplitValue< uint16 >( strappid, "." );
-        _data->_app_data._server_type = KFUtility::SplitValue< uint16 >( strappid, "." );
-        _data->_app_data._zone_id = KFUtility::SplitValue< uint16 >( strappid, "." );
-        _data->_app_data._worker_id = KFUtility::SplitValue< uint16 >( strappid, "." );
+
+        int32 type, zoneid, workid = 0;
+        sscanf( strappid.c_str(), "%d.%d.%d", &type, &zoneid, &workid );
+        _data->_app_data._server_type = type;
+        _data->_app_data._zone_id = zoneid;
+        _data->_app_data._worker_id = workid;
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    // 渠道
-    uint32 KFAppId::GetChannelId() const
-    {
-        return _data->_app_data._channel_id;
-    }
-
-    void KFAppId::SetChannelId( uint32 value )
-    {
-        _data->_app_data._channel_id = static_cast< uint16 >( value );
-        FromUInt64( _data->_id );
-    }
-
     // 类型
     uint32 KFAppId::GetType() const
     {
@@ -141,7 +131,7 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
     // 转换
-    const std::string& KFAppId::ToString( uint64 appid )
+    std::string KFAppId::ToString( uint64 appid )
     {
         static KFAppId _app_id;
         _app_id.FromUInt64( appid );
@@ -153,6 +143,7 @@ namespace KFrame
     {
         static KFAppId _app_id;
         _app_id.FromString( strappid );
+
         return _app_id.GetId();
     }
 }

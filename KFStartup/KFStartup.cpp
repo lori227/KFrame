@@ -9,10 +9,16 @@ namespace KFrame
         // 加载配置
         if ( !_app_config->LoadStartupConfig( file ) )
         {
+            __LOG_ERROR__( "load [{}] failed!", file );
             return false;
         }
 
-        return LoadPlugin();
+        if ( !LoadPlugin() )
+        {
+            return false;
+        }
+
+        return KFPluginManage::Instance()->InitPlugin();
     }
 
     bool KFStartup::LoadPlugin()
@@ -25,8 +31,7 @@ namespace KFrame
 #ifdef __KF_DEBUG__
             loadplguin += "d";
 #endif
-            bool result = LoadPluginLibrary( loadplguin, &kfsetting );
-            if ( !result )
+            if ( !LoadPluginLibrary( loadplguin, &kfsetting ) )
             {
                 return false;
             }

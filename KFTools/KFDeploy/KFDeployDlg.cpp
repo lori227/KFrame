@@ -200,8 +200,8 @@ void CKFDeployDlg::InitDialogData()
         _list_agent.InsertColumn( index++, "Ip", LVCFMT_CENTER, width * 3 );
         _list_agent.InsertColumn( index++, "端口", LVCFMT_CENTER, width * 1.5 );
         _list_agent.InsertColumn( index++, "状态", LVCFMT_CENTER, width * 1 );
-        _list_agent.InsertColumn( index++, "执行命令", LVCFMT_CENTER, width * 10 );
-        _list_agent.InsertColumn( index++, "类型", LVCFMT_CENTER, width * 2 );
+        _list_agent.InsertColumn( index++, "执行命令", LVCFMT_CENTER, width * 9.2 );
+        _list_agent.InsertColumn( index++, "类型", LVCFMT_CENTER, width * 2.8 );
         _list_agent.InsertColumn( index++, "中控服务器", LVCFMT_CENTER, width * 2 );
         _list_agent.InsertColumn( index++, "中控Ip", LVCFMT_CENTER, width * 3 );
         _list_agent.InsertColumn( index++, "中控端口", LVCFMT_CENTER, width * 2 );
@@ -220,17 +220,18 @@ void CKFDeployDlg::InitDialogData()
 
         int index = 0;
         _list_server.InsertColumn( index++, "", LVCFMT_CENTER, width * 2 );
-        _list_server.InsertColumn( index++, "Id", LVCFMT_CENTER, width * 1.8 );
+        _list_server.InsertColumn( index++, "Id", LVCFMT_CENTER, width * 1.5 );
         _list_server.InsertColumn( index++, "App", LVCFMT_CENTER, width * 2 );
         _list_server.InsertColumn( index++, "类型", LVCFMT_CENTER, width * 1.8 );
+        _list_server.InsertColumn( index++, "网络", LVCFMT_CENTER, width * 1 );
         _list_server.InsertColumn( index++, "日志", LVCFMT_CENTER, width * 1.8 );
-        _list_server.InsertColumn( index++, "Agent", LVCFMT_CENTER, width * 1.8 );
+        _list_server.InsertColumn( index++, "Agent", LVCFMT_CENTER, width * 1.5 );
         _list_server.InsertColumn( index++, "启动", LVCFMT_CENTER, width * 1.1 );
         _list_server.InsertColumn( index++, "模式", LVCFMT_CENTER, width * 1.1 );
         _list_server.InsertColumn( index++, "状态", LVCFMT_CENTER, width * 1.1 );
-        _list_server.InsertColumn( index++, "进程", LVCFMT_CENTER, width * 1.1 );
         _list_server.InsertColumn( index++, "版本号", LVCFMT_CENTER, width * 4 );
         _list_server.InsertColumn( index++, "启动时间", LVCFMT_CENTER, width * 2.5 );
+        _list_server.InsertColumn( index++, "进程", LVCFMT_CENTER, width * 1.1 );
         _list_server.InsertColumn( index++, "路径", LVCFMT_CENTER, width * 2 );
         _list_server.InsertColumn( index++, "参数", LVCFMT_CENTER, width * 5 );
         _list_server.DeleteColumn( 0 );
@@ -311,7 +312,8 @@ void CKFDeployDlg::LoadDeployData( const char* file )
             deploydata->_id = appid.GetId();
 
             deploydata->_name = KFConvert::ToAscii( deploynode.GetString( "Name" ) );
-            deploydata->_channel = KFConvert::ToAscii( deploynode.GetString( "Channel" ) );
+            deploydata->_channel = deploynode.GetUInt32( "Channel" );
+            deploydata->_channel_name = KFConvert::ToAscii( deploynode.GetString( "ChannelName" ) );
             deploydata->_ip = deploynode.GetString( "Ip" );
             deploydata->_port = deploynode.GetUInt32( "Port" );
 
@@ -374,6 +376,21 @@ void CKFDeployDlg::LoadServiceName( const char* file )
             servicenode.NextNode();
         }
     }
+
+    //////////////////////////////////////////////////////////////////////////
+    auto channelsnode = root.FindNode( "Channels" );
+    if ( channelsnode.IsValid() )
+    {
+        auto channelnode = channelsnode.FindNode( "Channel" );
+        while ( channelnode.IsValid() )
+        {
+            auto name = channelnode.GetString( "Name" );
+            auto type = channelnode.GetUInt32( "Type" );
+            _deploy_manage->_channel_name[ type ] = KFConvert::ToAscii( name );
+
+            channelnode.NextNode();
+        }
+    }
 }
 
 void CKFDeployDlg::LoadCommandData( const char* file )
@@ -430,7 +447,10 @@ void CKFDeployDlg::OnLbnSelchangeListDeploy()
     }
 
     _edit_deploy_name.SetWindowTextA( deploydata->_name.c_str() );
-    _edit_deploy_channel.SetWindowTextA( deploydata->_channel.c_str() );
+
+    auto channeltext = __FORMAT__( "{}|{}", deploydata->_channel, deploydata->_channel_name );
+    _edit_deploy_channel.SetWindowTextA( channeltext.c_str() );
+
     _edit_deploy_id.SetWindowTextA( deploydata->_str_id.c_str() );
     _edit_deploy_ip.SetWindowTextA( deploydata->_ip.c_str() );
     _edit_deploy_port.SetWindowTextA( __TO_STRING__( deploydata->_port ).c_str() );
@@ -456,6 +476,7 @@ void CKFDeployDlg::RegisterEventMessage()
     __REGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_TOOL_QUERY_MYSQL_ACK, &CKFDeployDlg::HandleDeployQueryMySQLAck );
     __REGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_TOOL_DELETE_MYSQL_ACK, &CKFDeployDlg::HandleDeployDeleteMySQLAck );
     __REGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_TOOL_EXECUTE_MYSQL_ACK, &CKFDeployDlg::HandleDeployExecuteMySQLAck );
+    __REGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_TOOL_QUERY_TOOL_ID_ACK, &CKFDeployDlg::HandleDeployQueryToolIdAck );
 }
 
 void CKFDeployDlg::AddDeployLog( uint64 id, std::string content )
@@ -491,6 +512,7 @@ void CKFDeployDlg::OnBnClickedButtonConnectDeploy()
     }
 
     // 开始新连接
+    _deploy_manage->_channel = deploydata->_channel;
     _deploy_manage->_connect_deploy_strid = strid;
     _deploy_manage->_connect_deploy_id = deploydata->_id;
     _kf_tcp_client->StartClient( __KF_STRING__( deploy ), __KF_STRING__( server ), deploydata->_id, deploydata->_ip, deploydata->_port );
@@ -499,12 +521,51 @@ void CKFDeployDlg::OnBnClickedButtonConnectDeploy()
     AddDeployLog( 0, __FORMAT__( "{}:{} connect start!", deploydata->_ip, deploydata->_port ) );
 }
 
+std::string CKFDeployDlg::GetLocalIp()
+{
+    WSADATA wsadata = { 0 };
+    if ( WSAStartup( MAKEWORD( 2, 1 ), &wsadata ) != 0 )
+    {
+        return _invalid_str;
+    }
+
+    std::string ip = "";
+    char hostname[ MAX_PATH ] = { 0 };
+    auto retcode = gethostname( hostname, sizeof( hostname ) );
+    if ( retcode == 0 )
+    {
+        auto hostinfo = gethostbyname( hostname );
+        ip = inet_ntoa( *( struct in_addr* )*hostinfo->h_addr_list );
+    }
+
+    WSACleanup();
+    return ip;
+}
+
 __KF_NET_EVENT_FUNCTION__( CKFDeployDlg::OnClientConnectServer )
 {
-    AddDeployLog( 0, __FORMAT__( "{}:{} connect ok!", netdata->_ip, netdata->_port ) );
+    if ( KFGlobal::Instance()->_app_id->GetWorkId() == 0u )
+    {
+        // 查询
+        KFMsg::S2SDeployToolQueryToolIdReq req;
+        req.set_ip( GetLocalIp() );
+        _kf_tcp_client->SendNetMessage( _deploy_manage->_connect_deploy_id, KFMsg::S2S_DEPLOY_TOOL_QUERY_TOOL_ID_REQ, &req );
+    }
+    else
+    {
+        AddDeployLog( 0, __FORMAT__( "{}:{} connect ok!", netdata->_ip, netdata->_port ) );
 
-    // 查询agent列表
-    QueryAgentData();
+        // 查询agent列表
+        QueryAgentData();
+    }
+}
+
+__KF_MESSAGE_FUNCTION__( CKFDeployDlg::HandleDeployQueryToolIdAck )
+{
+    __PROTO_PARSE__( KFMsg::S2SDeployToolQueryToolIdAck );
+
+    KFGlobal::Instance()->_app_id->SetWorkId( kfmsg.id() );
+    AddDeployLog( 0, __FORMAT__( "query id=[{}] ok!", kfmsg.id() ) );
 }
 
 __KF_NET_EVENT_FUNCTION__( CKFDeployDlg::OnClientConnectFailed )
@@ -658,7 +719,7 @@ void CKFDeployDlg::RefreshAgentData( const KFMsg::PBMySQLDatas* pbdatas )
         auto pbdata = &pbdatas->data( i );
         auto pbvalues = pbdata->values();
 
-        auto service = KFUtility::ToValue< uint32>( pbvalues[ __KF_STRING__( service ) ] );
+        auto service = pbvalues[ __KF_STRING__( service ) ];
         _deploy_manage->AddAgentData( pbvalues[ __KF_STRING__( strappid ) ], pbvalues[ __KF_STRING__( localip ) ], service );
 
         // agengid
@@ -679,8 +740,13 @@ void CKFDeployDlg::RefreshAgentData( const KFMsg::PBMySQLDatas* pbdatas )
         _list_agent.SetItemText( i, ++column, pbvalues[ __KF_STRING__( command ) ].c_str() );
 
         // service
-        auto strservice = __FORMAT__( "{}|{}", _deploy_manage->_service_name[ service ], service );
-        _list_agent.SetItemText( i, ++column, strservice.c_str() );
+        {
+            auto temp = service;
+            auto channel = KFUtility::SplitValue<uint32>( temp, "." );
+            auto servicetype = KFUtility::SplitValue<uint32>( temp, "." );
+            auto strservice = __FORMAT__( "{}{}|{}", _deploy_manage->_channel_name[ channel ], _deploy_manage->_service_name[ servicetype ], service );
+            _list_agent.SetItemText( i, ++column, strservice.c_str() );
+        }
 
         // 中控id
         _list_agent.SetItemText( i, ++column, pbvalues[ __KF_STRING__( serverid ) ].c_str() );
@@ -804,13 +870,19 @@ void CKFDeployDlg::RefreshServerList( const KFMsg::PBMySQLDatas* pbdatas )
         // service
         {
             auto strservice = pbvalues[ __KF_STRING__( service ) ];
-            auto nettype = KFUtility::SplitValue< uint32 >( strservice, "." );
+            auto channel = KFUtility::SplitValue< uint32 >( strservice, "." );
             auto service = KFUtility::SplitValue< uint32 >( strservice, "." );
             strservice = __FORMAT__( "{}{}|{}.{}",
-                                     KFDeploy::_net_name[ nettype ],
+                                     _deploy_manage->_channel_name[ channel ],
                                      _deploy_manage->_service_name[ service ],
-                                     nettype, service );
+                                     channel, service );
             _list_server.SetItemText( i, ++column, strservice.c_str() );
+        }
+
+        // net
+        {
+            auto nettype = KFUtility::ToValue<uint32 >( pbvalues[ __KF_STRING__( net ) ] );
+            _list_server.SetItemText( i, ++column, KFDeploy::_net_name[ nettype ] );
         }
 
         // log
@@ -836,9 +908,6 @@ void CKFDeployDlg::RefreshServerList( const KFMsg::PBMySQLDatas* pbdatas )
         auto shutdown = KFUtility::ToValue< uint32 >( pbvalues[ __KF_STRING__( shutdown ) ] ) == 1 ? 0 : 1;
         _list_server.SetItemText( i, ++column,  KFDeploy::_status_name[shutdown] );
 
-        // 进程
-        _list_server.SetItemText( i, ++column, pbvalues[ __KF_STRING__( process ) ].c_str() );
-
         // 版本
         _list_server.SetItemText( i, ++column, pbvalues[ __KF_STRING__( version ) ].c_str() );
 
@@ -848,6 +917,9 @@ void CKFDeployDlg::RefreshServerList( const KFMsg::PBMySQLDatas* pbdatas )
             auto strtime = KFDate::GetTimeString( time );
             _list_server.SetItemText( i, ++column, strtime.c_str() );
         }
+
+        // 进程
+        _list_server.SetItemText( i, ++column, pbvalues[ __KF_STRING__( process ) ].c_str() );
 
         // 路径
         _list_server.SetItemText( i, ++column, pbvalues[ __KF_STRING__( deploypath ) ].c_str() );

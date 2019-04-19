@@ -45,7 +45,7 @@ namespace KFrame
         std::string _type;
 
         // 服务
-        uint32 _service;
+        std::string _service;
 
         // 端口
         uint32 _port;
@@ -97,6 +97,9 @@ namespace KFrame
 
         // 日志
         __KF_MESSAGE_FUNCTION__( HandleDeployLogToServerReq );
+
+        // 查询toolid
+        __KF_MESSAGE_FUNCTION__( HandleDeployQueryToolIdReq );
 
     protected:
         // 更新Agnet状态

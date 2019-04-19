@@ -3,7 +3,7 @@
 SETLOCAL ENABLEDELAYEDEXPANSION
 
 rem ===========================================================================
-set framepath=..\..\..\Frame\trunk
+set framepath=..\..\..\..\Frame\trunk
 set localpath=.
 
 rem ===========================================================================
@@ -77,8 +77,8 @@ if not exist  %localpath%\%binpath%\config (
 rem script=================================
 if not exist  %localpath%\%binpath%\script ( 
     mkdir %localpath%\%binpath%\script
-    xcopy /y /S %framepath%\%binpath%\script\* %localpath%\%binpath%\script
 )
+xcopy /y /S %framepath%\%binpath%\script\* %localpath%\%binpath%\script
 
 echo "update _bin path end"
 
@@ -113,51 +113,61 @@ if not exist %localpath%\%contribpath%\CMakeLists.txt (
 )
 
 set subcontribpath=KFCore
+rd /s /q %localpath%\%contribpath%\%subcontribpath%
 if not exist %localpath%\%contribpath%\%subcontribpath% (mkdir %localpath%\%contribpath%\%subcontribpath% )
 xcopy /y %framepath%\%contribpath%\%subcontribpath%\*.h %localpath%\%contribpath%\%subcontribpath%\
 xcopy /y %framepath%\%contribpath%\%subcontribpath%\*.inl %localpath%\%contribpath%\%subcontribpath%\
 
 set subcontribpath=KFGlobal
+rd /s /q %localpath%\%contribpath%\%subcontribpath%
 if not exist %localpath%\%contribpath%\%subcontribpath% (mkdir %localpath%\%contribpath%\%subcontribpath% )
 xcopy /y %framepath%\%contribpath%\%subcontribpath%\*.h %localpath%\%contribpath%\%subcontribpath%\
 xcopy /y %framepath%\%contribpath%\%subcontribpath%\*.inl %localpath%\%contribpath%\%subcontribpath%\
 
 set subcontribpath=KFHttp
+rd /s /q %localpath%\%contribpath%\%subcontribpath%
 if not exist %localpath%\%contribpath%\%subcontribpath% (mkdir %localpath%\%contribpath%\%subcontribpath% )
 xcopy /y %framepath%\%contribpath%\%subcontribpath%\*.h %localpath%\%contribpath%\%subcontribpath%\
 xcopy /y %framepath%\%contribpath%\%subcontribpath%\*.inl %localpath%\%contribpath%\%subcontribpath%\
 
 set subcontribpath=KFLogger
+rd /s /q %localpath%\%contribpath%\%subcontribpath%
 if not exist %localpath%\%contribpath%\%subcontribpath% (mkdir %localpath%\%contribpath%\%subcontribpath% )
 xcopy /y %framepath%\%contribpath%\%subcontribpath%\*.h %localpath%\%contribpath%\%subcontribpath%\
 xcopy /y %framepath%\%contribpath%\%subcontribpath%\*.inl %localpath%\%contribpath%\%subcontribpath%\
 
 set subcontribpath=KFMath3D
+rd /s /q %localpath%\%contribpath%\%subcontribpath%
 if not exist %localpath%\%contribpath%\%subcontribpath% (mkdir %localpath%\%contribpath%\%subcontribpath% )
 xcopy /y %framepath%\%contribpath%\%subcontribpath%\*.h %localpath%\%contribpath%\%subcontribpath%\
 xcopy /y %framepath%\%contribpath%\%subcontribpath%\*.inl %localpath%\%contribpath%\%subcontribpath%\
 
 set subcontribpath=KFMemory
+rd /s /q %localpath%\%contribpath%\%subcontribpath%
 if not exist %localpath%\%contribpath%\%subcontribpath% (mkdir %localpath%\%contribpath%\%subcontribpath% )
 xcopy /y %framepath%\%contribpath%\%subcontribpath%\*.h %localpath%\%contribpath%\%subcontribpath%\
 xcopy /y %framepath%\%contribpath%\%subcontribpath%\*.inl %localpath%\%contribpath%\%subcontribpath%\
 
 set subcontribpath=KFNetwork
+rd /s /q %localpath%\%contribpath%\%subcontribpath%
 if not exist %localpath%\%contribpath%\%subcontribpath% (mkdir %localpath%\%contribpath%\%subcontribpath% )
 xcopy /y %framepath%\%contribpath%\%subcontribpath%\*.h %localpath%\%contribpath%\%subcontribpath%\
 xcopy /y %framepath%\%contribpath%\%subcontribpath%\*.inl %localpath%\%contribpath%\%subcontribpath%\
 
 set subcontribpath=KFPlugin
+rd /s /q %localpath%\%contribpath%\%subcontribpath%
 if not exist %localpath%\%contribpath%\%subcontribpath% (mkdir %localpath%\%contribpath%\%subcontribpath% )
 xcopy /y %framepath%\%contribpath%\%subcontribpath%\*.h %localpath%\%contribpath%\%subcontribpath%\
 xcopy /y %framepath%\%contribpath%\%subcontribpath%\*.inl %localpath%\%contribpath%\%subcontribpath%\
 
 set subcontribpath=KFProto
+rd /s /q %localpath%\%contribpath%\%subcontribpath%
 if not exist %localpath%\%contribpath%\%subcontribpath% (mkdir %localpath%\%contribpath%\%subcontribpath% )
 xcopy /y %framepath%\%contribpath%\%subcontribpath%\*.h %localpath%\%contribpath%\%subcontribpath%\
 xcopy /y %framepath%\%contribpath%\%subcontribpath%\*.inl %localpath%\%contribpath%\%subcontribpath%\
 
 set subcontribpath=KFUtility
+rd /s /q %localpath%\%contribpath%\%subcontribpath%
 if not exist %localpath%\%contribpath%\%subcontribpath% (mkdir %localpath%\%contribpath%\%subcontribpath% )
 xcopy /y %framepath%\%contribpath%\%subcontribpath%\*.h %localpath%\%contribpath%\%subcontribpath%\
 xcopy /y %framepath%\%contribpath%\%subcontribpath%\*.inl %localpath%\%contribpath%\%subcontribpath%\
@@ -176,6 +186,7 @@ rem ===========================================================================
 rem ===========================================================================
 echo "release KFLibrary path begin"
 set librarypath=KFLibrary
+rd /s /q %localpath%\%librarypath%
 if not exist %localpath%\%librarypath% ( mkdir %localpath%\%librarypath% )
 
 set sublibrarypath=rapidjson
@@ -190,18 +201,12 @@ set sublibrarypath=google
 if not exist %localpath%\%librarypath%\%sublibrarypath% ( mkdir %localpath%\%librarypath%\%sublibrarypath% )
 xcopy /y /S %framepath%\%librarypath%\%sublibrarypath%\protobuf\src\google\*.h %localpath%\%librarypath%\%sublibrarypath%\
 
-set sublibrarypath=lua\lua53
-if not exist %localpath%\%librarypath%\%sublibrarypath% ( mkdir %localpath%\%librarypath%\%sublibrarypath% )
-xcopy /y %framepath%\%librarypath%\%sublibrarypath%\*.h %localpath%\%librarypath%\%sublibrarypath%\
-xcopy /y %framepath%\%librarypath%\%sublibrarypath%\*.inl %localpath%\%librarypath%\%sublibrarypath%\
-
 set sublibrarypath=luaplus
 if not exist %localpath%\%librarypath%\%sublibrarypath% ( mkdir %localpath%\%librarypath%\%sublibrarypath% )
 if not exist %localpath%\%librarypath%\%sublibrarypath%\tilde ( mkdir %localpath%\%librarypath%\%sublibrarypath%\tilde )
-xcopy /y %framepath%\%librarypath%\%sublibrarypath%\*.h %localpath%\%librarypath%\%sublibrarypath%\
-xcopy /y %framepath%\%librarypath%\%sublibrarypath%\*.inl %localpath%\%librarypath%\%sublibrarypath%\
-xcopy /y %framepath%\%librarypath%\%sublibrarypath%\tilde\*.h %localpath%\%librarypath%\%sublibrarypath%\tilde\
-xcopy /y %framepath%\%librarypath%\%sublibrarypath%\tilde\*.inl %localpath%\%librarypath%\%sublibrarypath%\tilde\
+xcopy /y /S %framepath%\%librarypath%\%sublibrarypath%\*.h %localpath%\%librarypath%\%sublibrarypath%\
+xcopy /y /S %framepath%\%librarypath%\%sublibrarypath%\*.inl %localpath%\%librarypath%\%sublibrarypath%\
+
 
 echo "update KFLibrary path end"
 
@@ -269,14 +274,7 @@ xcopy /y %framepath%\_resource\proto\*.proto %resourcepath%\proto
 
 echo "update _resource path end"
 
-rem ===========================================================================
-rem ===========================================================================
-rem set currpath=%cd%
-rem cd ..\Resource\proto
-rem call 1.win64.bat
-rem cd %currpath%
-rem ===========================================================================
-rem ===========================================================================
+
 rem ===========================================================================
 rem ===========================================================================
 rem ===========================================================================
@@ -365,8 +363,17 @@ rem ===========================================================================
 rem ===========================================================================
 rem Attribute
 call :CopyPlugin KFAttribute
+call :CopyPlugin KFRobot
 
 rem ===========================================================================
+rem ===========================================================================
+rem ===========================================================================
+rem ===========================================================================
+rem ===========================================================================
+set currpath=%cd%
+cd ..\Resource\proto
+call 1.win64.bat
+cd %currpath%
 rem ===========================================================================
 rem ===========================================================================
 rem ===========================================================================

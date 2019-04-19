@@ -125,25 +125,40 @@ namespace KFrame
         }
     }
 
-    void KFPluginManage::InitPlugin()
+    bool KFPluginManage::InitPlugin()
     {
-        // 安装插件
-        InstallPlugin();
+        try
+        {
+            // 安装插件
+            InstallPlugin();
 
-        // 加载模块
-        LoadModule();
+            // 加载模块
+            LoadModule();
 
-        // 初始化
-        InitModule();
+            // 初始化
+            InitModule();
 
-        // 加载配置
-        LoadConfig();
+            // 加载配置
+            LoadConfig();
 
-        // 准备运行
-        BeforeRun();
+            // 准备运行
+            BeforeRun();
 
-        // 执行一次
-        OnceRun();
+            // 执行一次
+            OnceRun();
+
+            return true;
+        }
+        catch ( std::exception& ex )
+        {
+            __LOG_ERROR__( "init exception=[{}]!", ex.what() );
+        }
+        catch ( ... )                                                                                                                            \
+        {
+            __LOG_ERROR__( "init exception unknown!" );
+        }
+
+        return false;
     }
 
     void KFPluginManage::ShutDown()

@@ -11,4 +11,4 @@ if [ ! -n "$2" ] ;then
 fi
 
 cd /data/deploy
-./bin/kfdeploy app=deploy.server id=$1.11.0.1 log=1.0 service=1.$2
+./bin/kfdeploy app=deploy.server id=11.0.1 log=1.0 service=$1.$2

@@ -2,11 +2,11 @@
 
 ## win64
 
-1.Frame\4.Document\\#001 - tool  
-解压redis-3.2.0.zip到d盘根目录,路径为d:\redis-3.2.0  
-然后执行server_start.bat 启动redis服务器  
+	_doc\#001 - tool  
+	解压redis-3.2.0.zip到d盘根目录,路径为d:\redis-3.2.0  
+	然后执行server_start.bat 启动redis服务器  
 
-?> 可以解压到随意路径, 需要修改server_start.bat脚本中的路径
+!> 可以解压到随意路径, 需要修改server_start.bat脚本中的路径
 
 ## linux
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Setting>
 	<Deploys>
-		<Deploy Name="内网测试中控" Channel="内网测试" Id="1.11.0.1" Ip="192.168.1.250" Port="10000"/>
+		<Deploy Name="内网测试中控" Channel="1" ChannelName="内网测试" Id="11.0.1" Ip="192.168.1.250" Port="10000"/>
 	</Deploys>
 
 	<Apps>
@@ -21,6 +21,11 @@
 		<App Name="zone" Type="login" Flag="94"/>
 		<App Name="zone" Type="game" Flag="95"/>
 	</Apps>
+
+	<Channels>
+		<Channel Type="1" Name="内网"/>
+		<Channel Type="2" Name="微信"/>
+	</Channels>
 
 	<Services>
 		<Service Type="1" Name="研发服"/>

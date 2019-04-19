@@ -89,6 +89,9 @@ namespace KFrame
         }
 
         ///////////////////////////////////////////////////////////////////////////////////
+        // run
+        void Run();
+
         // 设置打开内存日志
         void SetLogOpen( bool open );
 
@@ -120,6 +123,8 @@ namespace KFrame
     private:
         // 日志是否打开
         bool _log_open;
+        // 打印日志时间
+        uint64 _next_log_time = 0u;
 
         // 内存列表锁
         KFMutex* _memory_list_mutex;

@@ -21,7 +21,7 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////
         // 开启定时器
-        void StartTimer( uint64 starttime, uint64 intervaltime );
+        void StartTimer( uint32 interval, bool immediately );
 
         // 停止定时器
         void StopTimer();
@@ -38,7 +38,7 @@ namespace KFrame
         KFState* _state;
 
         // 定时器
-        KFClockTimer _fsm_timer;
+        KFTimer _fsm_timer;
     };
 }
 

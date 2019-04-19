@@ -36,7 +36,6 @@ namespace KFrame
                 auto zoneid = appid.GetZoneId();
                 if ( zoneid == _invalid_int || zoneid == kfglobal->_app_id->GetZoneId() )
                 {
-                    appid.SetChannelId( kfglobal->_app_id->GetChannelId() );
                     if ( appname == "zone" )
                     {
                         appid.SetZoneId( kfglobal->_app_id->GetZoneId() );

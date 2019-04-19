@@ -35,7 +35,7 @@ namespace KFrame
         kfglobal->_app_id->FromString( kfquery->_value[ __KF_STRING__( strappid ) ] );
 
         // 部署表
-        _deploy_table_name = __FORMAT__( "{}_{}_deploy", kfglobal->_app_id->GetChannelId(), kfglobal->_service_type );
+        _deploy_table_name = __FORMAT__( "{}_{}_deploy", kfglobal->_channel, kfglobal->_service );
 
         // deploy server
         _deploy_server_strid = kfquery->_value[ "serverid" ];
@@ -128,7 +128,7 @@ namespace KFrame
             req.set_type( kfglobal->_app_type );
             req.set_port( kfglobal->_listen_port );
             req.set_localip( _kf_ip_address->GetLocalIp() );
-            req.set_service( kfglobal->_service_type );
+            req.set_service( __FORMAT__( "{}.{}", kfglobal->_channel, kfglobal->_service ) );
             _kf_tcp_client->SendNetMessage( netdata->_id, KFMsg::S2S_REGISTER_AGENT_TO_SERVER_REQ, &req );
         }
     }
@@ -261,8 +261,9 @@ namespace KFrame
         auto param = __FORMAT__( " {}={}.{} {}={} {}={} {}={} {}={}|{}|{}",
                                  __KF_STRING__( app ), deploydata->_app_name, deploydata->_app_type,
                                  __KF_STRING__( id ), deploydata->_app_id,
-                                 __KF_STRING__( log ), deploydata->_log_type,
                                  __KF_STRING__( service ), deploydata->_service_type,
+                                 __KF_STRING__( net ), deploydata->_net_type,
+                                 __KF_STRING__( log ), deploydata->_log_type,
                                  __KF_STRING__( agent ), kfglobal->_app_id->ToString(), kfglobal->_local_ip, kfglobal->_listen_port );
 
         // 启动进程
@@ -340,11 +341,14 @@ namespace KFrame
         auto strappid = __FORMAT__( "{}={}", __KF_STRING__( id ), deploydata->_app_id );
         __ADD_ARGS__( strappid );
 
-        auto strlogtype = __FORMAT__( "{}={}", __KF_STRING__( log ), deploydata->_log_type );
-        __ADD_ARGS__( strlogtype );
-
         auto strservice = __FORMAT__( "{}={}", __KF_STRING__( service ), deploydata->_service_type );
         __ADD_ARGS__( strservice );
+
+        auto strnet = __FORMAT__( "{}={}", __KF_STRING__( net ), deploydata->_net_type );
+        __ADD_ARGS__( strnet );
+
+        auto strlogtype = __FORMAT__( "{}={}", __KF_STRING__( log ), deploydata->_log_type );
+        __ADD_ARGS__( strlogtype );
 
         auto stragent = __FORMAT__( "{}={}|{}|{}", __KF_STRING__( agent ), kfglobal->_app_id->ToString(), kfglobal->_local_ip, kfglobal->_listen_port );
         __ADD_ARGS__( stragent );

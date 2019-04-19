@@ -1,54 +1,52 @@
-#ifndef __KF_PARSE_H__
+ï»¿#ifndef __KF_PARSE_H__
 #define __KF_PARSE_H__
 
+#include "KFSingleton.h"
 #include "KFInterfaces.h"
 #include "KFExcel/KFExcelFile.h"
 #include "KFFile.h"
 
 namespace KFrame
 {
-	class KFParse : public KFSingleton< KFParse >
-	{
-	public:
-		KFParse();
-		~KFParse();
+    class KFParse : public KFSingleton< KFParse >
+    {
+    public:
+        bool LoadFromExcel( const char* file, bool utf8 );
+        bool SaveToHpp( const char* file );
+        bool SaveToCpp( const char* file );
 
-		bool LoadFromExcel( const char* file, bool utf8 );
-		bool SaveToHpp( const char* file );
-		bool SaveToCpp( const char* file );
-
-		bool SaveToXml( const char* path );
-		bool SaveToCSV( const char* path );
+        bool SaveToXml( const char* path );
+        bool SaveToCSV( const char* path );
 
 
-		// ±£´æµ½c#ÎÄ¼ş
-		bool SaveToCSharp( const char* path );
+        // ä¿å­˜åˆ°c#æ–‡ä»¶
+        bool SaveToCSharp( const char* path );
 
-		//ÔÚÃ¿¸ö´óĞ´×ÖÄ¸Ç°¼ÓÏÂ»®Ïß£¬°Ñ´óĞ´×ÖÄ¸×ªÎªĞ¡Ğ´×ÖÄ¸
-		std::string changeString( std::string& oldstring );
+        //åœ¨æ¯ä¸ªå¤§å†™å­—æ¯å‰åŠ ä¸‹åˆ’çº¿ï¼ŒæŠŠå¤§å†™å­—æ¯è½¬ä¸ºå°å†™å­—æ¯
+        std::string changeString( std::string& oldstring );
 
-	private:
-		bool LoadFromExcel( KFExcelSheet* sheet );
+    private:
+        bool LoadFromExcel( KFExcelSheet* sheet );
 
-		KFFile* AddFile( std::string& name );
+        KFFile* AddFile( std::string& name );
 
-		bool SaveToHpp( const std::string& path, KFFile* kffile );
-		bool SaveToCpp( const std::string& path, KFFile* kffile );
+        bool SaveToHpp( const std::string& path, KFFile* kffile );
+        bool SaveToCpp( const std::string& path, KFFile* kffile );
 
-		bool SaveToXml( const std::string& path, KFFile* kffile );
-		bool SaveToCSV( const std::string& path, KFFile* kffile );
+        bool SaveToXml( const std::string& path, KFFile* kffile );
+        bool SaveToCSV( const std::string& path, KFFile* kffile );
 
-		bool SaveToCSharp( const std::string& path, KFFile* kffile );
+        bool SaveToCSharp( const std::string& path, KFFile* kffile );
 
-	private:
-		bool _utf8 = false;
+    private:
+        bool _utf8 = false;
 
-		// ÎÄ¼ş
-		std::map< std::string, KFFile > _files;
-	};
+        // æ–‡ä»¶
+        std::map< std::string, KFFile > _files;
+    };
 
-	///////////////////////////////////////////////////////////////////////////
-	static auto _kf_parse = KFParse::Instance();
-	///////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
+    static auto _kf_parse = KFParse::Instance();
+    ///////////////////////////////////////////////////////////////////////////
 }
 #endif

@@ -42,13 +42,13 @@ namespace KFrame
 
         kfglobal->_app_name = __KF_STRING__( deploy );
         kfglobal->_app_type = __KF_STRING__( tool );
-        kfglobal->_app_id->FromString( "1.10.0.1" );
+        kfglobal->_app_id->FromString( "10.0.0" );
 
-        KFDeployDump kfdump( kfglobal->_app_name.c_str(), kfglobal->_app_type.c_str(), "1.10.0.1" );
+        KFDeployDump kfdump( kfglobal->_app_name.c_str(), kfglobal->_app_type.c_str(), "10.0.0" );
 
         // 初始化服务类型
         std::string strnetservice = "1.1";
-        kfglobal->InitNetService( strnetservice );
+        kfglobal->InitChannelService( strnetservice );
 
         // 初始化logger
         KFLogger::Instance()->InitLogger( 1, false );

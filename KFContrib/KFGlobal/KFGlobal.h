@@ -1,7 +1,7 @@
 ﻿#ifndef __KF_GOLBAL_H__
 #define __KF_GOLBAL_H__
 
-#include "KFInclude.h"
+#include "KFDefine.h"
 
 namespace KFrame
 {
@@ -45,12 +45,16 @@ namespace KFrame
         // 创建guid
         uint64 MakeUUID();
         uint64 MakeUUID( uint32 type );
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // 初始化类型
-        void InitNetService( std::string& strtype );
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 初始化网络
+        void InitNetType( std::string& strtype );
+
+        // 渠道类型
+        void InitChannelService( std::string& strtype );
 
         // 判断渠道和服务类型
         bool CheckChannelService( uint32 channel, uint32 service );
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     protected:
         KFGlobal();
@@ -79,8 +83,11 @@ namespace KFrame
         // 网络类型( 内外网)
         uint32 _net_type;
 
+        // 渠道id
+        uint32 _channel;
+
         // 运行类型( 正式 测试 )
-        uint32 _service_type;
+        uint32 _service;
 
         // 内网ip
         std::string _local_ip;

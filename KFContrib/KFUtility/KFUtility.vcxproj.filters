@@ -14,7 +14,6 @@
     <ClInclude Include="KFNode.h" />
     <ClInclude Include="KFRunable.hpp" />
     <ClInclude Include="KFThread.h" />
-    <ClInclude Include="KFTimer.h" />
     <ClInclude Include="KFXml.h" />
     <ClInclude Include="KFConHash.h" />
     <ClInclude Include="KFCrypto.h" />
@@ -22,6 +21,7 @@
     <ClInclude Include="KFHashFunction.hpp" />
     <ClInclude Include="KFHashLogic.hpp" />
     <ClInclude Include="KFAppId.h" />
+    <ClInclude Include="KFTimer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KFUtility.cpp" />
@@ -41,5 +41,6 @@
     <ClCompile Include="KFHashFunction.cpp" />
     <ClCompile Include="KFHashLogic.cpp" />
     <ClCompile Include="KFAppId.cpp" />
+    <ClCompile Include="KFTimer.cpp" />
   </ItemGroup>
 </Project>

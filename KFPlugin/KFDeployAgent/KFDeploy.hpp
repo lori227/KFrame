@@ -45,6 +45,9 @@ namespace KFrame
         // 日志类型
         std::string _log_type;
 
+        // 网络类型
+        std::string _net_type;
+
         // 服务类型
         std::string _service_type;
 

@@ -26,6 +26,9 @@ enum FrameProtocol
 	S2S_DEPLOY_LOG_TO_SERVER_ACK = 10020;				// 部署日志
 	S2S_DEPLOY_TOOL_DELETE_MYSQL_REQ = 10021;			// 部署工具删除mysql语句
 	S2S_DEPLOY_TOOL_DELETE_MYSQL_ACK = 10022;			// 部署工具删除mysql语句
+	S2S_DEPLOY_TOOL_QUERY_TOOL_ID_REQ = 10023;			// 查询toolid
+	S2S_DEPLOY_TOOL_QUERY_TOOL_ID_ACK = 10024;			// 查询toolid
+
 
 
 	S2S_CLUSTER_REGISTER_TO_MASTER_REQ = 10101;			// 注册proxy
@@ -395,7 +398,7 @@ message S2SRegisterAgentToServerReq
 	bytes name = 3;
 	bytes type = 4;
 	uint32 port = 5;
-	uint32 service = 6;
+	bytes service = 6;
 }
 
 message PBDeployCommand
@@ -499,6 +502,18 @@ message S2SDeployToolQueryMySQLAck
 	bytes table = 1;	// 表
 	PBMySQLDatas datas = 2;	// 数据表
 	bool result = 3;	// 结果
+}
+
+// S2S_DEPLOY_TOOL_QUERY_TOOL_ID_REQ
+message S2SDeployToolQueryToolIdReq
+{
+	bytes ip = 1;
+}
+
+// S2S_DEPLOY_TOOL_QUERY_TOOL_ID_ACK
+message S2SDeployToolQueryToolIdAck
+{
+	uint32 id = 1;
 }
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////

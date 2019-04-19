@@ -2,19 +2,10 @@
 #include "Utf8ToGbk.hpp"
 #include "KFUtility/KFUtility.h"
 #include "KFUtility/KFDate.h"
+#include "KFrame.h"
 
 namespace KFrame
 {
-    KFParse::KFParse()
-    {
-
-    }
-
-    KFParse::~KFParse()
-    {
-
-    }
-
     KFFile* KFParse::AddFile( std::string& name )
     {
         return &_files[ name ];
