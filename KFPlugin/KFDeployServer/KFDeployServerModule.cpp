@@ -23,7 +23,6 @@ namespace KFrame
     {
         __UNREGISTER_SCHEDULE__();
         __UNREGISTER_SERVER_LOST_FUNCTION__();
-        __UNREGISTER_SERVER_DISCOVER_FUNCTION__();
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( deploy ) );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -48,11 +47,14 @@ namespace KFrame
     {
         if ( netdata->_name == __KF_STRING__( deploy ) )
         {
-            auto kfagent = _agent_list.Find( netdata->_str_id );
-            if ( kfagent != nullptr )
+            if ( netdata->_type == __KF_STRING__( agent ) )
             {
-                UpdateAgentToDatabase( kfagent, 0u );
-                _agent_list.Remove( netdata->_str_id );
+                auto kfagent = _agent_list.Find( netdata->_str_id );
+                if ( kfagent != nullptr )
+                {
+                    UpdateAgentToDatabase( kfagent, 0u );
+                    _agent_list.Remove( netdata->_str_id );
+                }
             }
         }
     }
@@ -200,7 +202,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SDeployLogToServerAck );
 
-        LogDeploy( kfmsg.toolid(), kfmsg.agentid(), "{}", kfmsg.content() );
+        LogDeploy( kfmsg.agentid(), "{}", kfmsg.content() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFDeployServerModule::HandleDeployToolCommandReq )
@@ -208,7 +210,8 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SDeployToolCommandReq );
 
         auto pbcommand = &kfmsg.deploycommand();
-        LogDeploy( __ROUTE_SERVER_ID__, 0, "recv command=[{}:{} | {}:{}:{}:{}]",
+        LogDeploy( 0, "deploy tool=[{}|{}] req!", kfmsg.toolid(), kfmsg.ip() );
+        LogDeploy( 0, "recv=[{}:{} | {}:{}:{}:{}]",
                    pbcommand->command(), pbcommand->value(),
                    pbcommand->appname(), pbcommand->apptype(), pbcommand->zoneid(), pbcommand->appid() );
 
@@ -230,7 +233,7 @@ namespace KFrame
                 kfsetting->SetData( ++_schedule_id, data, length );
                 __REGISTER_SCHEDULE__( kfsetting, &KFDeployServerModule::OnTcpDeployCommandToAgent );
 
-                LogDeploy( pbcommand->toolid(), 0, "schedule=[{}] time=[{}]", _schedule_id, KFDate::GetTimeString( kfmsg.time() ) );
+                LogDeploy( 0, "schedule=[{}] time=[{}]", _schedule_id, KFDate::GetTimeString( kfmsg.time() ) );
             }
         }
     }
@@ -246,15 +249,22 @@ namespace KFrame
         req.mutable_deploycommand()->CopyFrom( kfmsg.deploycommand() );
         _kf_tcp_server->SendNetMessage( KFMsg::S2S_DEPLOY_COMMAND_TO_AGENT_REQ, &req );
 
-        LogDeploy( pbcommand->toolid(), 0, "distribute command=[{}:{}]", pbcommand->command(), pbcommand->value() );
+        LogDeploy( 0, "distribute=[{}:{}]", pbcommand->command(), pbcommand->value() );
     }
 
     __KF_HTTP_FUNCTION__( KFDeployServerModule::HandleDeployCommand )
     {
         __JSON_PARSE_STRING__( request, data );
 
+        _web_deploy_url.clear();
         auto logurl = __JSON_GET_STRING__( request, __KF_STRING__( logurl ) );
-        LogDeploy( logurl, "recv command=[{}]", data );
+        if ( !logurl.empty() )
+        {
+            _web_deploy_url = logurl;
+        }
+
+        LogDeploy( 0, "web deploy=[{}] command req!", ip );
+        LogDeploy( 0, "recv=[{}]", data );
 
         auto command = __JSON_GET_STRING__( request, __KF_STRING__( command ) );
         if ( command == __KF_STRING__( unschedule ) )
@@ -276,7 +286,7 @@ namespace KFrame
                 kfsetting->SetData( ++_schedule_id, data.c_str(), data.size() );
                 __REGISTER_SCHEDULE__( kfsetting, &KFDeployServerModule::OnHttpDeployCommandToAgent );
 
-                LogDeploy( logurl, "schedule=[{}] time=[{}]", _schedule_id, KFDate::GetTimeString( scheduletime ) );
+                LogDeploy( 0, "schedule=[{}] time=[{}]", _schedule_id, KFDate::GetTimeString( scheduletime ) );
             }
         }
 
@@ -295,35 +305,28 @@ namespace KFrame
         pbdeploy->set_apptype( __JSON_GET_STRING__( request, __KF_STRING__( apptype ) ) );
         pbdeploy->set_appid( __JSON_GET_STRING__( request, __KF_STRING__( appid ) ) );
         pbdeploy->set_zoneid( __JSON_GET_UINT32__( request, __KF_STRING__( zoneid ) ) );
-        pbdeploy->set_logurl( __JSON_GET_STRING__( request, __KF_STRING__( logurl ) ) );
         _kf_tcp_server->SendNetMessage( KFMsg::S2S_DEPLOY_COMMAND_TO_AGENT_REQ, &req );
 
-        auto logurl = __JSON_GET_STRING__( request, __KF_STRING__( logurl ) );
-        LogDeploy( logurl, "distribute command=[{}]", data );
+        LogDeploy( 0, "distribute=[{}]", data );
     }
 
-    void KFDeployServerModule::SendLogMessage( const std::string& url, const std::string& msg )
+    void KFDeployServerModule::SendLogMessage( uint64 agentid, const std::string& msg )
     {
         __LOG_DEBUG__( "{}", msg );
 
-        if ( !url.empty() )
+        // 广播给所有工具
+        KFMsg::S2SDeployLogToToolAck ack;
+        ack.set_agentid( agentid );
+        ack.set_content( msg );
+        _kf_tcp_server->SendMessageToType( __KF_STRING__( tool ), KFMsg::S2S_DEPLOY_LOG_TO_TOOL_ACK, &ack );
+
+        // 广播给所有web工具
+        if ( !_web_deploy_url.empty() )
         {
             __JSON_DOCUMENT__( response );
             __JSON_SET_VALUE__( response, __KF_STRING__( msg ), msg );
-            _kf_http_client->MTGet< KFDeployServerModule >( url, response );
-        }
-    }
-
-    void KFDeployServerModule::SendLogMessage( uint64 toolid, uint64 agentid, const std::string& msg )
-    {
-        __LOG_DEBUG__( "{}", msg );
-
-        if ( toolid != _invalid_int )
-        {
-            KFMsg::S2SDeployLogToToolAck ack;
-            ack.set_agentid( agentid );
-            ack.set_content( msg );
-            _kf_tcp_server->SendNetMessage( toolid, KFMsg::S2S_DEPLOY_LOG_TO_TOOL_ACK, &ack );
+            __JSON_SET_VALUE__( response, __KF_STRING__( agent ), agentid );
+            _kf_http_client->MTGet< KFDeployServerModule >( _web_deploy_url, response );
         }
     }
 }

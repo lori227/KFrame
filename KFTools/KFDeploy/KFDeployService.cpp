@@ -18,7 +18,6 @@ namespace KFrame
         __except ( KFDeployDump::MyExceptionFilter( GetExceptionInformation() ) )
         {
         }
-
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////

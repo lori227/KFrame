@@ -107,22 +107,13 @@ namespace KFrame
 
         // 回发日志消息
         template<typename... P>
-        void LogDeploy( const std::string& url, const char* myfmt, P&& ... args )
+        void LogDeploy( uint64 agentid, const char* myfmt, P&& ... args )
         {
             auto msg = __FORMAT__( myfmt, std::forward<P>( args )... );
-            return SendLogMessage( url, msg );
+            return SendLogMessage( agentid, msg );
         }
 
-        // 回发日志消息
-        template<typename... P>
-        void LogDeploy( uint64 toolid, uint64 agentid, const char* myfmt, P&& ... args )
-        {
-            auto msg = __FORMAT__( myfmt, std::forward<P>( args )... );
-            return SendLogMessage( toolid, agentid, msg );
-        }
-
-        void SendLogMessage( const std::string& url, const std::string& msg );
-        void SendLogMessage( uint64 toolid, uint64 agentid, const std::string& msg );
+        void SendLogMessage( uint64 agentid, const std::string& msg );
 
     private:
         KFMySQLDriver* _mysql_driver{ nullptr };
@@ -132,6 +123,9 @@ namespace KFrame
 
         // 计划任务id
         uint64 _schedule_id = 0u;
+
+        // web列表
+        std::string _web_deploy_url;
     };
 }
 

@@ -198,10 +198,6 @@ namespace KFrame
         std::string _deploy_server_ip;
         uint32 _deploy_server_port = 0u;
 
-        // 日志地址
-        std::string _log_url;
-        uint64 _log_id = 0u;
-
         // mysql
         KFMySQLDriver* _deploy_driver = nullptr;
 

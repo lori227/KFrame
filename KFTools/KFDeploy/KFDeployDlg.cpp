@@ -481,10 +481,13 @@ void CKFDeployDlg::RegisterEventMessage()
 
 void CKFDeployDlg::AddDeployLog( uint64 id, std::string content )
 {
-    _deploy_manage->AddLogData( id, content );
-    _list_log.AddString( content.c_str() );
+    auto strid = KFAppId::ToString( id );
+    auto msg = __FORMAT__( "[{}] [{}] {}", KFDate::GetTimeString(), strid, content );
 
-    __LOG_INFO__( "{}", content );
+    _deploy_manage->AddLogData( id, msg );
+    _list_log.AddString( msg.c_str() );
+
+    __LOG_INFO__( "[{}] {}", strid, content );
 }
 
 void CKFDeployDlg::ClearDeployLog()
@@ -546,9 +549,11 @@ __KF_NET_EVENT_FUNCTION__( CKFDeployDlg::OnClientConnectServer )
 {
     if ( KFGlobal::Instance()->_app_id->GetWorkId() == 0u )
     {
+        KFGlobal::Instance()->_local_ip = GetLocalIp();
+
         // 查询
         KFMsg::S2SDeployToolQueryToolIdReq req;
-        req.set_ip( GetLocalIp() );
+        req.set_ip( KFGlobal::Instance()->_local_ip );
         _kf_tcp_client->SendNetMessage( _deploy_manage->_connect_deploy_id, KFMsg::S2S_DEPLOY_TOOL_QUERY_TOOL_ID_REQ, &req );
     }
     else
@@ -1302,6 +1307,7 @@ void CKFDeployDlg::OnBnClickedButtonAddCommand()
     std::string message = "";
     if ( scheduletime <= KFGlobal::Instance()->_real_time )
     {
+        scheduletime = 0;
         message = __FORMAT__( "command:{}\nparam:{}\nappname:{}\napptype:{}\nzoneid:{}\nappid:{}\n确认需要发送命令吗?",
                               commanddata->_command, param, name, type, zoneid, appid );
     }
@@ -1324,9 +1330,10 @@ void CKFDeployDlg::OnBnClickedButtonAddCommand()
     pbcommand->set_apptype( type );
     pbcommand->set_zoneid( zoneid );
     pbcommand->set_appid( appid );
-    pbcommand->set_toolid( KFGlobal::Instance()->_app_id->GetId() );
 
-    req.set_time( 0 );
+    req.set_time( scheduletime );
+    req.set_ip( KFGlobal::Instance()->_local_ip );
+    req.set_toolid( KFGlobal::Instance()->_app_id->ToString() );
     SendDeployMessage( KFMsg::S2S_DEPLOY_TOOL_COMMAND_REQ, &req );
 
     ClearDeployLog();

@@ -549,23 +549,10 @@ namespace KFrame
     {
         __LOG_DEBUG__( "{}", msg );
 
-        auto strmsg = __FORMAT__( "agent=[{}] {}", KFGlobal::Instance()->_app_id->ToString(), msg );
-
-        if ( !_log_url.empty() )
-        {
-            __JSON_DOCUMENT__( response );
-            __JSON_SET_VALUE__( response, __KF_STRING__( msg ), strmsg );
-            _kf_http_client->MTGet< KFDeployAgentModule >( _log_url, response );
-        }
-
-        if ( _log_id != _invalid_int )
-        {
-            KFMsg::S2SDeployLogToServerAck ack;
-            ack.set_toolid( _log_id );
-            ack.set_content( strmsg );
-            ack.set_agentid( KFGlobal::Instance()->_app_id->GetId() );
-            _kf_tcp_client->SendNetMessage( _deploy_server_id, KFMsg::S2S_DEPLOY_LOG_TO_SERVER_ACK, &ack );
-        }
+        KFMsg::S2SDeployLogToServerAck ack;
+        ack.set_content( msg );
+        ack.set_agentid( KFGlobal::Instance()->_app_id->GetId() );
+        _kf_tcp_client->SendNetMessage( _deploy_server_id, KFMsg::S2S_DEPLOY_LOG_TO_SERVER_ACK, &ack );
     }
 
     __KF_MESSAGE_FUNCTION__( KFDeployAgentModule::HandleDeployCommandReq )
@@ -573,9 +560,6 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SDeployCommandToAgentReq );
 
         auto pbdeploy = kfmsg.mutable_deploycommand();
-
-        _log_id = pbdeploy->toolid();
-        _log_url = pbdeploy->logurl();
 
         LogDeploy( "command=[{}:{}|{}:{}:{}:{}]!",
                    pbdeploy->command(), pbdeploy->value(), pbdeploy->appname(), pbdeploy->apptype(), pbdeploy->appid(), pbdeploy->zoneid() );
@@ -653,7 +637,7 @@ namespace KFrame
         {
             _deploy_task.push_back( kftask );
 
-            LogDeploy( "add task [{}:{} | {}:{}:{}:{}] tasklist cout[{}]!",
+            LogDeploy( "add [{}:{} | {}:{}:{}:{}] count[{}]!",
                        kftask->_command, kftask->_value,
                        kftask->_app_name, kftask->_app_type,
                        kftask->_app_id, kftask->_zone_id, _deploy_task.size() );
@@ -904,8 +888,6 @@ namespace KFrame
         pbdeploy->set_apptype( _kf_task->_app_type );
         pbdeploy->set_appid( _kf_task->_app_id );
         pbdeploy->set_zoneid( _kf_task->_zone_id );
-        pbdeploy->set_logurl( _log_url );
-        pbdeploy->set_toolid( _log_id );
         _kf_tcp_server->SendNetMessage( KFMsg::S2S_DEPLOY_COMMAND_TO_CLIENT_REQ, &req );
     }
 

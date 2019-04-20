@@ -409,8 +409,6 @@ message PBDeployCommand
 	bytes appid = 4;		// appid
 	uint32 zoneid = 5;		// 分区
 	bytes value = 6;		// 数值
-	bytes logurl = 7; 		// 日志记录url
-	uint64 toolid = 8; 		// 工具id
 }
 
 // 部署命令
@@ -432,6 +430,8 @@ message S2SDeployToolCommandReq
 {
 	PBDeployCommand deploycommand = 1;
 	uint64 time = 2;
+	bytes toolid = 3;
+	bytes ip = 4;	
 }
 
 // S2S_DEPLOY_LOG_TO_TOOL_ACK
@@ -444,9 +444,8 @@ message S2SDeployLogToToolAck
 // S2S_DEPLOY_LOG_TO_SERVER_ACK
 message S2SDeployLogToServerAck
 {
-	uint64 toolid = 1;
-	uint64 agentid = 2;
-	bytes content = 3;
+	uint64 agentid = 1;
+	bytes content = 2;
 }
 
 // S2S_DEPLOY_TOOL_DELETE_MYSQL_REQ
