@@ -114,6 +114,7 @@ namespace KFrame
         return _interane_ip;
     }
 
+    static std::string _default_ip = "127.0.0.1";
     const std::string& KFIpAddressModule::GetLocalIp()
     {
         if ( _local_ip.empty() )
@@ -123,6 +124,10 @@ namespace KFrame
 #else
             _local_ip = GetLinuxLocalIp();
 #endif
+            if ( _local_ip.empty() )
+            {
+                _local_ip = _default_ip;
+            }
         }
 
         return _local_ip;
@@ -153,31 +158,35 @@ namespace KFrame
     std::string KFIpAddressModule::GetLinuxLocalIp()
     {
         auto sd = socket( AF_INET, SOCK_DGRAM, 0 );
-        if ( -1 == sd )
+        if ( sd < 0 )
         {
             return _invalid_str;
         }
 
-        static const char* _keys[] = { "eth0", "enp3s0" };
-        static uint32 _count = std::extent<decltype( _keys )>::value;
+        uint8 buff[ 1024 ] = { 0 };
+
+        struct ifconf ifc;
+        ifc.ifc_buf = ( caddr_t )buff;
+        ifc.ifc_len = sizeof( buff );
+
+        // 获得所有接口信息
+        ioctl( sd, SIOCGIFCONF, &ifc );
+
+        auto ifr = ( struct ifreq* )buff;
+        auto size = ifc.ifc_len / sizeof( struct ifreq );
 
         std::string ip = "";
-        for ( auto i = 0u; i < _count; ++i )
+        for ( auto i = size; i > 0; --i )
         {
-            struct ifreq ifr;
-            strncpy( ifr.ifr_name, _keys[ i ], IFNAMSIZ );
-            ifr.ifr_name[ IFNAMSIZ - 1 ] = 0;
-
-            if ( ioctl( sd, SIOCGIFADDR, &ifr ) >= 0 )
+            std::string addr = inet_ntoa( ( ( struct sockaddr_in* ) & ( ifr->ifr_addr ) )->sin_addr );
+            if ( !addr.empty() && addr != _default_ip )
             {
-                struct sockaddr_in sin;
-                memcpy( &sin, &ifr.ifr_addr, sizeof( sin ) );
-                ip = inet_ntoa( sin.sin_addr );
-                if ( !ip.empty() )
-                {
-                    break;
-                }
+                __LOG_INFO__( "name=[{}] ip=[{}]", ifr->ifr_name, addr );
+                ip = addr;
+                break;
             }
+
+            ++ifr;
         }
 
         close( sd );
