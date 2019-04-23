@@ -104,42 +104,37 @@ namespace KFrame
     {
         auto kfglobal = KFGlobal::Instance();
 
+        // 指定appid
+        if ( appid != _globbing_str )
+        {
+            return ( appid == kfglobal->_app_id->ToString() );
+        }
+
+        // appname
+        if ( appname != _globbing_str )
+        {
+            if ( appname != kfglobal->_app_name )
+            {
+                return false;
+            }
+        }
+
+        // apptype
+        if ( apptype != _globbing_str )
+        {
+            if ( apptype != kfglobal->_app_type )
+            {
+                return false;
+            }
+        }
+
+        // zoneid
         if ( zoneid != _invalid_int )
         {
             if ( zoneid != kfglobal->_app_id->GetZoneId() )
             {
                 return false;
             }
-        }
-
-        if ( appname == _globbing_str )
-        {
-            return true;
-        }
-
-        if ( appname != kfglobal->_app_name )
-        {
-            return false;
-        }
-
-        if ( apptype == _globbing_str )
-        {
-            return true;
-        }
-
-        if ( apptype != kfglobal->_app_type )
-        {
-            return false;
-        }
-
-        if ( appid == _globbing_str )
-        {
-            return true;
-        }
-
-        if ( appid != kfglobal->_app_id->ToString() )
-        {
-            return false;
         }
 
         return true;

@@ -210,6 +210,7 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SDeployToolCommandReq );
 
         auto pbcommand = &kfmsg.deploycommand();
+
         LogDeploy( 0, "deploy tool=[{}|{}] req!", kfmsg.toolid(), kfmsg.ip() );
         LogDeploy( 0, "recv=[{}:{} | {}:{}:{}:{}]",
                    pbcommand->command(), pbcommand->value(),

@@ -61,6 +61,8 @@ namespace KFrame
         __STRING_DEFINE__( reloadconfig );
         __STRING_DEFINE__( loadconfig );
         __STRING_DEFINE__( loadscript );
+        __STRING_DEFINE__( resource );
+        __STRING_DEFINE__( downresource );
         __STRING_DEFINE__( time );
         __STRING_DEFINE__( restart );
         __STRING_DEFINE__( reloadscript );

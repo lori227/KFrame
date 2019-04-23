@@ -81,10 +81,13 @@ namespace KFrame
                 continue;
             }
 
-            auto pos = kfdata->_file.find( file );
-            if ( pos == std::string::npos )
+            if ( file != _globbing_str )
             {
-                continue;
+                auto pos = kfdata->_file.find( file );
+                if ( pos == std::string::npos )
+                {
+                    continue;
+                }
             }
 
             LoadConfig( kfdata->_config, kfdata->_file );

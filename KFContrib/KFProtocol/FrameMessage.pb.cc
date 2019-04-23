@@ -1640,8 +1640,6 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBDeployCommand, appid_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBDeployCommand, zoneid_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBDeployCommand, value_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBDeployCommand, logurl_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBDeployCommand, toolid_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SDeployCommandToAgentReq, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -1661,6 +1659,8 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _weak_field_map_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SDeployToolCommandReq, deploycommand_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SDeployToolCommandReq, time_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SDeployToolCommandReq, toolid_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SDeployToolCommandReq, ip_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SDeployLogToToolAck, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -1673,7 +1673,6 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SDeployLogToServerAck, toolid_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SDeployLogToServerAck, agentid_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SDeployLogToServerAck, content_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SDeployToolDeleteMySQLReq_KeysEntry_DoNotUse, _has_bits_),
@@ -1859,29 +1858,29 @@ static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROT
   { 285, -1, sizeof(::KFMsg::S2SRouteRemoveObjectToShardReq)},
   { 294, -1, sizeof(::KFMsg::S2SRegisterAgentToServerReq)},
   { 305, -1, sizeof(::KFMsg::PBDeployCommand)},
-  { 318, -1, sizeof(::KFMsg::S2SDeployCommandToAgentReq)},
-  { 324, -1, sizeof(::KFMsg::S2SDeployCommandToClientReq)},
-  { 330, -1, sizeof(::KFMsg::S2SDeployToolCommandReq)},
+  { 316, -1, sizeof(::KFMsg::S2SDeployCommandToAgentReq)},
+  { 322, -1, sizeof(::KFMsg::S2SDeployCommandToClientReq)},
+  { 328, -1, sizeof(::KFMsg::S2SDeployToolCommandReq)},
   { 337, -1, sizeof(::KFMsg::S2SDeployLogToToolAck)},
   { 344, -1, sizeof(::KFMsg::S2SDeployLogToServerAck)},
-  { 352, 359, sizeof(::KFMsg::S2SDeployToolDeleteMySQLReq_KeysEntry_DoNotUse)},
-  { 361, -1, sizeof(::KFMsg::S2SDeployToolDeleteMySQLReq)},
-  { 368, 375, sizeof(::KFMsg::S2SDeployToolDeleteMySQLAck_KeysEntry_DoNotUse)},
-  { 377, -1, sizeof(::KFMsg::S2SDeployToolDeleteMySQLAck)},
-  { 385, 392, sizeof(::KFMsg::S2SDeployToolExecuteMySQLReq_ValuesEntry_DoNotUse)},
-  { 394, -1, sizeof(::KFMsg::S2SDeployToolExecuteMySQLReq)},
-  { 401, 408, sizeof(::KFMsg::S2SDeployToolExecuteMySQLAck_ValuesEntry_DoNotUse)},
-  { 410, -1, sizeof(::KFMsg::S2SDeployToolExecuteMySQLAck)},
-  { 418, 425, sizeof(::KFMsg::S2SDeployToolQueryMySQLReq_KeysEntry_DoNotUse)},
-  { 427, -1, sizeof(::KFMsg::S2SDeployToolQueryMySQLReq)},
-  { 434, 441, sizeof(::KFMsg::PBMySQLData_ValuesEntry_DoNotUse)},
-  { 443, -1, sizeof(::KFMsg::PBMySQLData)},
-  { 449, -1, sizeof(::KFMsg::PBMySQLDatas)},
-  { 455, -1, sizeof(::KFMsg::S2SDeployToolQueryMySQLAck)},
-  { 463, -1, sizeof(::KFMsg::S2SDeployToolQueryToolIdReq)},
-  { 469, -1, sizeof(::KFMsg::S2SDeployToolQueryToolIdAck)},
-  { 475, -1, sizeof(::KFMsg::PBRemoteLog)},
-  { 482, -1, sizeof(::KFMsg::S2SRemoteLogToServerReq)},
+  { 351, 358, sizeof(::KFMsg::S2SDeployToolDeleteMySQLReq_KeysEntry_DoNotUse)},
+  { 360, -1, sizeof(::KFMsg::S2SDeployToolDeleteMySQLReq)},
+  { 367, 374, sizeof(::KFMsg::S2SDeployToolDeleteMySQLAck_KeysEntry_DoNotUse)},
+  { 376, -1, sizeof(::KFMsg::S2SDeployToolDeleteMySQLAck)},
+  { 384, 391, sizeof(::KFMsg::S2SDeployToolExecuteMySQLReq_ValuesEntry_DoNotUse)},
+  { 393, -1, sizeof(::KFMsg::S2SDeployToolExecuteMySQLReq)},
+  { 400, 407, sizeof(::KFMsg::S2SDeployToolExecuteMySQLAck_ValuesEntry_DoNotUse)},
+  { 409, -1, sizeof(::KFMsg::S2SDeployToolExecuteMySQLAck)},
+  { 417, 424, sizeof(::KFMsg::S2SDeployToolQueryMySQLReq_KeysEntry_DoNotUse)},
+  { 426, -1, sizeof(::KFMsg::S2SDeployToolQueryMySQLReq)},
+  { 433, 440, sizeof(::KFMsg::PBMySQLData_ValuesEntry_DoNotUse)},
+  { 442, -1, sizeof(::KFMsg::PBMySQLData)},
+  { 448, -1, sizeof(::KFMsg::PBMySQLDatas)},
+  { 454, -1, sizeof(::KFMsg::S2SDeployToolQueryMySQLAck)},
+  { 462, -1, sizeof(::KFMsg::S2SDeployToolQueryToolIdReq)},
+  { 468, -1, sizeof(::KFMsg::S2SDeployToolQueryToolIdAck)},
+  { 474, -1, sizeof(::KFMsg::PBRemoteLog)},
+  { 481, -1, sizeof(::KFMsg::S2SRemoteLogToServerReq)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -2053,107 +2052,107 @@ void AddDescriptorsImpl() {
       "z\n\033S2SRegisterAgentToServerReq\022\017\n\007agenti"
       "d\030\001 \001(\014\022\017\n\007localip\030\002 \001(\014\022\014\n\004name\030\003 \001(\014\022\014"
       "\n\004type\030\004 \001(\014\022\014\n\004port\030\005 \001(\r\022\017\n\007service\030\006 "
-      "\001(\014\"\222\001\n\017PBDeployCommand\022\017\n\007command\030\001 \001(\014"
-      "\022\017\n\007appname\030\002 \001(\014\022\017\n\007apptype\030\003 \001(\014\022\r\n\005ap"
-      "pid\030\004 \001(\014\022\016\n\006zoneid\030\005 \001(\r\022\r\n\005value\030\006 \001(\014"
-      "\022\016\n\006logurl\030\007 \001(\014\022\016\n\006toolid\030\010 \001(\004\"K\n\032S2SD"
-      "eployCommandToAgentReq\022-\n\rdeploycommand\030"
-      "\001 \001(\0132\026.KFMsg.PBDeployCommand\"L\n\033S2SDepl"
-      "oyCommandToClientReq\022-\n\rdeploycommand\030\001 "
-      "\001(\0132\026.KFMsg.PBDeployCommand\"V\n\027S2SDeploy"
-      "ToolCommandReq\022-\n\rdeploycommand\030\001 \001(\0132\026."
-      "KFMsg.PBDeployCommand\022\014\n\004time\030\002 \001(\004\"9\n\025S"
-      "2SDeployLogToToolAck\022\017\n\007agentid\030\001 \001(\004\022\017\n"
-      "\007content\030\002 \001(\014\"K\n\027S2SDeployLogToServerAc"
-      "k\022\016\n\006toolid\030\001 \001(\004\022\017\n\007agentid\030\002 \001(\004\022\017\n\007co"
-      "ntent\030\003 \001(\014\"\225\001\n\033S2SDeployToolDeleteMySQL"
-      "Req\022\r\n\005table\030\001 \001(\014\022:\n\004keys\030\002 \003(\0132,.KFMsg"
-      ".S2SDeployToolDeleteMySQLReq.KeysEntry\032+"
-      "\n\tKeysEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:"
-      "\0028\001\"\245\001\n\033S2SDeployToolDeleteMySQLAck\022\r\n\005t"
-      "able\030\001 \001(\014\022:\n\004keys\030\002 \003(\0132,.KFMsg.S2SDepl"
-      "oyToolDeleteMySQLAck.KeysEntry\022\016\n\006result"
-      "\030\003 \001(\010\032+\n\tKeysEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005valu"
-      "e\030\002 \001(\014:\0028\001\"\235\001\n\034S2SDeployToolExecuteMySQ"
-      "LReq\022\r\n\005table\030\001 \001(\014\022\?\n\006values\030\002 \003(\0132/.KF"
-      "Msg.S2SDeployToolExecuteMySQLReq.ValuesE"
-      "ntry\032-\n\013ValuesEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005valu"
-      "e\030\002 \001(\014:\0028\001\"\255\001\n\034S2SDeployToolExecuteMySQ"
-      "LAck\022\r\n\005table\030\001 \001(\014\022\?\n\006values\030\002 \003(\0132/.KF"
-      "Msg.S2SDeployToolExecuteMySQLAck.ValuesE"
-      "ntry\022\016\n\006result\030\003 \001(\010\032-\n\013ValuesEntry\022\013\n\003k"
-      "ey\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:\0028\001\"\223\001\n\032S2SDeplo"
-      "yToolQueryMySQLReq\022\r\n\005table\030\001 \001(\014\0229\n\004key"
-      "s\030\002 \003(\0132+.KFMsg.S2SDeployToolQueryMySQLR"
-      "eq.KeysEntry\032+\n\tKeysEntry\022\013\n\003key\030\001 \001(\t\022\r"
-      "\n\005value\030\002 \001(\014:\0028\001\"l\n\013PBMySQLData\022.\n\006valu"
-      "es\030\001 \003(\0132\036.KFMsg.PBMySQLData.ValuesEntry"
-      "\032-\n\013ValuesEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 "
-      "\001(\014:\0028\001\"0\n\014PBMySQLDatas\022 \n\004data\030\002 \003(\0132\022."
-      "KFMsg.PBMySQLData\"_\n\032S2SDeployToolQueryM"
-      "ySQLAck\022\r\n\005table\030\001 \001(\014\022\"\n\005datas\030\002 \001(\0132\023."
-      "KFMsg.PBMySQLDatas\022\016\n\006result\030\003 \001(\010\")\n\033S2"
-      "SDeployToolQueryToolIdReq\022\n\n\002ip\030\001 \001(\014\")\n"
-      "\033S2SDeployToolQueryToolIdAck\022\n\n\002id\030\001 \001(\r"
-      "\"-\n\013PBRemoteLog\022\r\n\005level\030\001 \001(\r\022\017\n\007conten"
-      "t\030\002 \001(\014\"\221\001\n\027S2SRemoteLogToServerReq\022\017\n\007a"
-      "ppname\030\001 \001(\014\022\017\n\007apptype\030\002 \001(\014\022\020\n\010strappi"
-      "d\030\003 \001(\014\022\r\n\005appid\030\004 \001(\004\022\016\n\006zoneid\030\005 \001(\r\022#"
-      "\n\007logdata\030\006 \003(\0132\022.KFMsg.PBRemoteLog*\362\017\n\r"
-      "FrameProtocol\022\034\n\030S2S_FRAME_PROTOCOL_BEGI"
-      "N\020\000\022\037\n\032S2S_REGISTER_TO_SERVER_REQ\020\221N\022\037\n\032"
-      "S2S_REGISTER_TO_SERVER_ACK\020\222N\022 \n\033S2S_TEL"
-      "L_REGISTER_TO_SERVER\020\223N\022$\n\037S2S_TELL_UNRE"
-      "GISTER_FROM_SERVER\020\224N\022\'\n\"S2S_TELL_DISCOV"
-      "ER_SERVER_TO_MASTER\020\225N\022#\n\036S2S_TELL_LOST_"
-      "SERVER_TO_MASTER\020\226N\022\'\n\"S2S_TELL_REGISTER"
-      "_SERVER_TO_MASTER\020\227N\022#\n\036S2S_TELL_SERVER_"
-      "LIST_TO_MASTER\020\230N\022!\n\034S2S_REMOTE_LOG_TO_S"
-      "ERVER_REQ\020\232N\022%\n S2S_REGISTER_AGENT_TO_SE"
-      "RVER_REQ\020\233N\022$\n\037S2S_DEPLOY_COMMAND_TO_AGE"
-      "NT_REQ\020\234N\022%\n S2S_DEPLOY_COMMAND_TO_CLIEN"
-      "T_REQ\020\235N\022&\n!S2S_DEPLOY_TOOL_EXECUTE_MYSQ"
-      "L_REQ\020\236N\022&\n!S2S_DEPLOY_TOOL_EXECUTE_MYSQ"
-      "L_ACK\020\237N\022$\n\037S2S_DEPLOY_TOOL_QUERY_MYSQL_"
-      "REQ\020\240N\022$\n\037S2S_DEPLOY_TOOL_QUERY_MYSQL_AC"
-      "K\020\241N\022 \n\033S2S_DEPLOY_TOOL_COMMAND_REQ\020\242N\022\037"
-      "\n\032S2S_DEPLOY_LOG_TO_TOOL_ACK\020\243N\022!\n\034S2S_D"
-      "EPLOY_LOG_TO_SERVER_ACK\020\244N\022%\n S2S_DEPLOY"
-      "_TOOL_DELETE_MYSQL_REQ\020\245N\022%\n S2S_DEPLOY_"
-      "TOOL_DELETE_MYSQL_ACK\020\246N\022&\n!S2S_DEPLOY_T"
-      "OOL_QUERY_TOOL_ID_REQ\020\247N\022&\n!S2S_DEPLOY_T"
-      "OOL_QUERY_TOOL_ID_ACK\020\250N\022\'\n\"S2S_CLUSTER_"
-      "REGISTER_TO_MASTER_REQ\020\365N\022)\n$S2S_CLUSTER"
-      "_SYNC_PROXY_TO_MASTER_REQ\020\366N\022#\n\036S2S_CLUS"
-      "TER_AUTH_TO_MASTER_REQ\020\367N\022#\n\036S2S_CLUSTER"
-      "_AUTH_TO_CLIENT_ACK\020\370N\022#\n\036S2S_CLUSTER_TO"
-      "KEN_TO_PROXY_REQ\020\371N\022$\n\037S2S_CLUSTER_VERIF"
-      "Y_TO_PROXY_REQ\020\372N\022%\n S2S_CLUSTER_VERIFY_"
-      "TO_CLIENT_ACK\020\373N\022-\n(S2S_CLUSTER_CLIENT_D"
-      "ISCOVER_TO_SHARD_REQ\020\374N\022)\n$S2S_CLUSTER_C"
-      "LIENT_LOST_TO_SHARD_REQ\020\375N\022)\n$S2S_CLUSTE"
-      "R_LOST_PROXY_TO_MASTER_REQ\020\376N\022$\n\037S2S_CLU"
-      "STER_TOKEN_TO_MASTER_REQ\020\377N\022#\n\036S2S_CLUST"
-      "ER_TOKEN_TO_PROXY_ACK\020\200O\022$\n\037S2S_CLUSTER_"
-      "TOKEN_TO_MASTER_ACK\020\201O\022$\n\037S2S_ROUTE_MESS"
-      "AGE_TO_CLIENT_ACK\020\331O\022&\n!S2S_ROUTE_MESSAG"
-      "E_TO_NAME_ALL_REQ\020\332O\022\'\n\"S2S_ROUTE_MESSAG"
-      "E_TO_NAME_RAND_REQ\020\333O\022*\n%S2S_ROUTE_MESSA"
-      "GE_TO_NAME_BALANCE_REQ\020\334O\022)\n$S2S_ROUTE_M"
-      "ESSAGE_TO_NAME_OBJECT_REQ\020\335O\022$\n\037S2S_ROUT"
-      "E_MESSAGE_TO_SERVER_REQ\020\336O\022$\n\037S2S_ROUTE_"
-      "MESSAGE_TO_PLAYER_REQ\020\337O\022\'\n\"S2S_ROUTE_CL"
-      "IENT_LOST_TO_SHARD_REQ\020\340O\022%\n S2S_ROUTE_D"
-      "ISCOVER_TO_CLIENT_REQ\020\341O\022\'\n\"S2S_ROUTE_SY"
-      "NC_OBJECT_TO_PROXY_REQ\020\342O\022&\n!S2S_ROUTE_A"
-      "DD_OBJECT_TO_PROXY_REQ\020\343O\022)\n$S2S_ROUTE_R"
-      "EMOVE_OBJECT_TO_PROXY_REQ\020\344O\022\'\n\"S2S_ROUT"
-      "E_SYNC_OBJECT_TO_SHARD_REQ\020\345O\022&\n!S2S_ROU"
-      "TE_ADD_OBJECT_TO_SHARD_REQ\020\346O\022)\n$S2S_ROU"
-      "TE_REMOVE_OBJECT_TO_SHARD_REQ\020\347Ob\006proto3"
+      "\001(\014\"r\n\017PBDeployCommand\022\017\n\007command\030\001 \001(\014\022"
+      "\017\n\007appname\030\002 \001(\014\022\017\n\007apptype\030\003 \001(\014\022\r\n\005app"
+      "id\030\004 \001(\014\022\016\n\006zoneid\030\005 \001(\r\022\r\n\005value\030\006 \001(\014\""
+      "K\n\032S2SDeployCommandToAgentReq\022-\n\rdeployc"
+      "ommand\030\001 \001(\0132\026.KFMsg.PBDeployCommand\"L\n\033"
+      "S2SDeployCommandToClientReq\022-\n\rdeploycom"
+      "mand\030\001 \001(\0132\026.KFMsg.PBDeployCommand\"r\n\027S2"
+      "SDeployToolCommandReq\022-\n\rdeploycommand\030\001"
+      " \001(\0132\026.KFMsg.PBDeployCommand\022\014\n\004time\030\002 \001"
+      "(\004\022\016\n\006toolid\030\003 \001(\014\022\n\n\002ip\030\004 \001(\014\"9\n\025S2SDep"
+      "loyLogToToolAck\022\017\n\007agentid\030\001 \001(\004\022\017\n\007cont"
+      "ent\030\002 \001(\014\";\n\027S2SDeployLogToServerAck\022\017\n\007"
+      "agentid\030\001 \001(\004\022\017\n\007content\030\002 \001(\014\"\225\001\n\033S2SDe"
+      "ployToolDeleteMySQLReq\022\r\n\005table\030\001 \001(\014\022:\n"
+      "\004keys\030\002 \003(\0132,.KFMsg.S2SDeployToolDeleteM"
+      "ySQLReq.KeysEntry\032+\n\tKeysEntry\022\013\n\003key\030\001 "
+      "\001(\t\022\r\n\005value\030\002 \001(\014:\0028\001\"\245\001\n\033S2SDeployTool"
+      "DeleteMySQLAck\022\r\n\005table\030\001 \001(\014\022:\n\004keys\030\002 "
+      "\003(\0132,.KFMsg.S2SDeployToolDeleteMySQLAck."
+      "KeysEntry\022\016\n\006result\030\003 \001(\010\032+\n\tKeysEntry\022\013"
+      "\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:\0028\001\"\235\001\n\034S2SDe"
+      "ployToolExecuteMySQLReq\022\r\n\005table\030\001 \001(\014\022\?"
+      "\n\006values\030\002 \003(\0132/.KFMsg.S2SDeployToolExec"
+      "uteMySQLReq.ValuesEntry\032-\n\013ValuesEntry\022\013"
+      "\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:\0028\001\"\255\001\n\034S2SDe"
+      "ployToolExecuteMySQLAck\022\r\n\005table\030\001 \001(\014\022\?"
+      "\n\006values\030\002 \003(\0132/.KFMsg.S2SDeployToolExec"
+      "uteMySQLAck.ValuesEntry\022\016\n\006result\030\003 \001(\010\032"
+      "-\n\013ValuesEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001"
+      "(\014:\0028\001\"\223\001\n\032S2SDeployToolQueryMySQLReq\022\r\n"
+      "\005table\030\001 \001(\014\0229\n\004keys\030\002 \003(\0132+.KFMsg.S2SDe"
+      "ployToolQueryMySQLReq.KeysEntry\032+\n\tKeysE"
+      "ntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:\0028\001\"l\n\013"
+      "PBMySQLData\022.\n\006values\030\001 \003(\0132\036.KFMsg.PBMy"
+      "SQLData.ValuesEntry\032-\n\013ValuesEntry\022\013\n\003ke"
+      "y\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:\0028\001\"0\n\014PBMySQLDat"
+      "as\022 \n\004data\030\002 \003(\0132\022.KFMsg.PBMySQLData\"_\n\032"
+      "S2SDeployToolQueryMySQLAck\022\r\n\005table\030\001 \001("
+      "\014\022\"\n\005datas\030\002 \001(\0132\023.KFMsg.PBMySQLDatas\022\016\n"
+      "\006result\030\003 \001(\010\")\n\033S2SDeployToolQueryToolI"
+      "dReq\022\n\n\002ip\030\001 \001(\014\")\n\033S2SDeployToolQueryTo"
+      "olIdAck\022\n\n\002id\030\001 \001(\r\"-\n\013PBRemoteLog\022\r\n\005le"
+      "vel\030\001 \001(\r\022\017\n\007content\030\002 \001(\014\"\221\001\n\027S2SRemote"
+      "LogToServerReq\022\017\n\007appname\030\001 \001(\014\022\017\n\007appty"
+      "pe\030\002 \001(\014\022\020\n\010strappid\030\003 \001(\014\022\r\n\005appid\030\004 \001("
+      "\004\022\016\n\006zoneid\030\005 \001(\r\022#\n\007logdata\030\006 \003(\0132\022.KFM"
+      "sg.PBRemoteLog*\362\017\n\rFrameProtocol\022\034\n\030S2S_"
+      "FRAME_PROTOCOL_BEGIN\020\000\022\037\n\032S2S_REGISTER_T"
+      "O_SERVER_REQ\020\221N\022\037\n\032S2S_REGISTER_TO_SERVE"
+      "R_ACK\020\222N\022 \n\033S2S_TELL_REGISTER_TO_SERVER\020"
+      "\223N\022$\n\037S2S_TELL_UNREGISTER_FROM_SERVER\020\224N"
+      "\022\'\n\"S2S_TELL_DISCOVER_SERVER_TO_MASTER\020\225"
+      "N\022#\n\036S2S_TELL_LOST_SERVER_TO_MASTER\020\226N\022\'"
+      "\n\"S2S_TELL_REGISTER_SERVER_TO_MASTER\020\227N\022"
+      "#\n\036S2S_TELL_SERVER_LIST_TO_MASTER\020\230N\022!\n\034"
+      "S2S_REMOTE_LOG_TO_SERVER_REQ\020\232N\022%\n S2S_R"
+      "EGISTER_AGENT_TO_SERVER_REQ\020\233N\022$\n\037S2S_DE"
+      "PLOY_COMMAND_TO_AGENT_REQ\020\234N\022%\n S2S_DEPL"
+      "OY_COMMAND_TO_CLIENT_REQ\020\235N\022&\n!S2S_DEPLO"
+      "Y_TOOL_EXECUTE_MYSQL_REQ\020\236N\022&\n!S2S_DEPLO"
+      "Y_TOOL_EXECUTE_MYSQL_ACK\020\237N\022$\n\037S2S_DEPLO"
+      "Y_TOOL_QUERY_MYSQL_REQ\020\240N\022$\n\037S2S_DEPLOY_"
+      "TOOL_QUERY_MYSQL_ACK\020\241N\022 \n\033S2S_DEPLOY_TO"
+      "OL_COMMAND_REQ\020\242N\022\037\n\032S2S_DEPLOY_LOG_TO_T"
+      "OOL_ACK\020\243N\022!\n\034S2S_DEPLOY_LOG_TO_SERVER_A"
+      "CK\020\244N\022%\n S2S_DEPLOY_TOOL_DELETE_MYSQL_RE"
+      "Q\020\245N\022%\n S2S_DEPLOY_TOOL_DELETE_MYSQL_ACK"
+      "\020\246N\022&\n!S2S_DEPLOY_TOOL_QUERY_TOOL_ID_REQ"
+      "\020\247N\022&\n!S2S_DEPLOY_TOOL_QUERY_TOOL_ID_ACK"
+      "\020\250N\022\'\n\"S2S_CLUSTER_REGISTER_TO_MASTER_RE"
+      "Q\020\365N\022)\n$S2S_CLUSTER_SYNC_PROXY_TO_MASTER"
+      "_REQ\020\366N\022#\n\036S2S_CLUSTER_AUTH_TO_MASTER_RE"
+      "Q\020\367N\022#\n\036S2S_CLUSTER_AUTH_TO_CLIENT_ACK\020\370"
+      "N\022#\n\036S2S_CLUSTER_TOKEN_TO_PROXY_REQ\020\371N\022$"
+      "\n\037S2S_CLUSTER_VERIFY_TO_PROXY_REQ\020\372N\022%\n "
+      "S2S_CLUSTER_VERIFY_TO_CLIENT_ACK\020\373N\022-\n(S"
+      "2S_CLUSTER_CLIENT_DISCOVER_TO_SHARD_REQ\020"
+      "\374N\022)\n$S2S_CLUSTER_CLIENT_LOST_TO_SHARD_R"
+      "EQ\020\375N\022)\n$S2S_CLUSTER_LOST_PROXY_TO_MASTE"
+      "R_REQ\020\376N\022$\n\037S2S_CLUSTER_TOKEN_TO_MASTER_"
+      "REQ\020\377N\022#\n\036S2S_CLUSTER_TOKEN_TO_PROXY_ACK"
+      "\020\200O\022$\n\037S2S_CLUSTER_TOKEN_TO_MASTER_ACK\020\201"
+      "O\022$\n\037S2S_ROUTE_MESSAGE_TO_CLIENT_ACK\020\331O\022"
+      "&\n!S2S_ROUTE_MESSAGE_TO_NAME_ALL_REQ\020\332O\022"
+      "\'\n\"S2S_ROUTE_MESSAGE_TO_NAME_RAND_REQ\020\333O"
+      "\022*\n%S2S_ROUTE_MESSAGE_TO_NAME_BALANCE_RE"
+      "Q\020\334O\022)\n$S2S_ROUTE_MESSAGE_TO_NAME_OBJECT"
+      "_REQ\020\335O\022$\n\037S2S_ROUTE_MESSAGE_TO_SERVER_R"
+      "EQ\020\336O\022$\n\037S2S_ROUTE_MESSAGE_TO_PLAYER_REQ"
+      "\020\337O\022\'\n\"S2S_ROUTE_CLIENT_LOST_TO_SHARD_RE"
+      "Q\020\340O\022%\n S2S_ROUTE_DISCOVER_TO_CLIENT_REQ"
+      "\020\341O\022\'\n\"S2S_ROUTE_SYNC_OBJECT_TO_PROXY_RE"
+      "Q\020\342O\022&\n!S2S_ROUTE_ADD_OBJECT_TO_PROXY_RE"
+      "Q\020\343O\022)\n$S2S_ROUTE_REMOVE_OBJECT_TO_PROXY"
+      "_REQ\020\344O\022\'\n\"S2S_ROUTE_SYNC_OBJECT_TO_SHAR"
+      "D_REQ\020\345O\022&\n!S2S_ROUTE_ADD_OBJECT_TO_SHAR"
+      "D_REQ\020\346O\022)\n$S2S_ROUTE_REMOVE_OBJECT_TO_S"
+      "HARD_REQ\020\347Ob\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 7200);
+      descriptor, 7179);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "FrameMessage.proto", &protobuf_RegisterTypes);
 }
@@ -14235,8 +14234,6 @@ const int PBDeployCommand::kApptypeFieldNumber;
 const int PBDeployCommand::kAppidFieldNumber;
 const int PBDeployCommand::kZoneidFieldNumber;
 const int PBDeployCommand::kValueFieldNumber;
-const int PBDeployCommand::kLogurlFieldNumber;
-const int PBDeployCommand::kToolidFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 PBDeployCommand::PBDeployCommand()
@@ -14270,13 +14267,7 @@ PBDeployCommand::PBDeployCommand(const PBDeployCommand& from)
   if (from.value().size() > 0) {
     value_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.value_);
   }
-  logurl_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  if (from.logurl().size() > 0) {
-    logurl_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.logurl_);
-  }
-  ::memcpy(&toolid_, &from.toolid_,
-    static_cast<size_t>(reinterpret_cast<char*>(&zoneid_) -
-    reinterpret_cast<char*>(&toolid_)) + sizeof(zoneid_));
+  zoneid_ = from.zoneid_;
   // @@protoc_insertion_point(copy_constructor:KFMsg.PBDeployCommand)
 }
 
@@ -14286,10 +14277,7 @@ void PBDeployCommand::SharedCtor() {
   apptype_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   appid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   value_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  logurl_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&toolid_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&zoneid_) -
-      reinterpret_cast<char*>(&toolid_)) + sizeof(zoneid_));
+  zoneid_ = 0u;
 }
 
 PBDeployCommand::~PBDeployCommand() {
@@ -14303,7 +14291,6 @@ void PBDeployCommand::SharedDtor() {
   apptype_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   appid_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   value_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  logurl_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 void PBDeployCommand::SetCachedSize(int size) const {
@@ -14331,10 +14318,7 @@ void PBDeployCommand::Clear() {
   apptype_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   appid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   value_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  logurl_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&toolid_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&zoneid_) -
-      reinterpret_cast<char*>(&toolid_)) + sizeof(zoneid_));
+  zoneid_ = 0u;
   _internal_metadata_.Clear();
 }
 
@@ -14422,32 +14406,6 @@ bool PBDeployCommand::MergePartialFromCodedStream(
         break;
       }
 
-      // bytes logurl = 7;
-      case 7: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(58u /* 58 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
-                input, this->mutable_logurl()));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // uint64 toolid = 8;
-      case 8: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(64u /* 64 & 0xFF */)) {
-
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
-                 input, &toolid_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
       default: {
       handle_unusual:
         if (tag == 0) {
@@ -14509,17 +14467,6 @@ void PBDeployCommand::SerializeWithCachedSizes(
       6, this->value(), output);
   }
 
-  // bytes logurl = 7;
-  if (this->logurl().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
-      7, this->logurl(), output);
-  }
-
-  // uint64 toolid = 8;
-  if (this->toolid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt64(8, this->toolid(), output);
-  }
-
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
@@ -14574,18 +14521,6 @@ void PBDeployCommand::SerializeWithCachedSizes(
         6, this->value(), target);
   }
 
-  // bytes logurl = 7;
-  if (this->logurl().size() > 0) {
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
-        7, this->logurl(), target);
-  }
-
-  // uint64 toolid = 8;
-  if (this->toolid() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(8, this->toolid(), target);
-  }
-
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
@@ -14636,20 +14571,6 @@ size_t PBDeployCommand::ByteSizeLong() const {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::BytesSize(
         this->value());
-  }
-
-  // bytes logurl = 7;
-  if (this->logurl().size() > 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::BytesSize(
-        this->logurl());
-  }
-
-  // uint64 toolid = 8;
-  if (this->toolid() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt64Size(
-        this->toolid());
   }
 
   // uint32 zoneid = 5;
@@ -14706,13 +14627,6 @@ void PBDeployCommand::MergeFrom(const PBDeployCommand& from) {
 
     value_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.value_);
   }
-  if (from.logurl().size() > 0) {
-
-    logurl_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.logurl_);
-  }
-  if (from.toolid() != 0) {
-    set_toolid(from.toolid());
-  }
   if (from.zoneid() != 0) {
     set_zoneid(from.zoneid());
   }
@@ -14752,9 +14666,6 @@ void PBDeployCommand::InternalSwap(PBDeployCommand* other) {
     GetArenaNoVirtual());
   value_.Swap(&other->value_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
-  logurl_.Swap(&other->logurl_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-    GetArenaNoVirtual());
-  swap(toolid_, other->toolid_);
   swap(zoneid_, other->zoneid_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
@@ -15242,6 +15153,8 @@ void S2SDeployToolCommandReq::InitAsDefaultInstance() {
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int S2SDeployToolCommandReq::kDeploycommandFieldNumber;
 const int S2SDeployToolCommandReq::kTimeFieldNumber;
+const int S2SDeployToolCommandReq::kToolidFieldNumber;
+const int S2SDeployToolCommandReq::kIpFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 S2SDeployToolCommandReq::S2SDeployToolCommandReq()
@@ -15255,6 +15168,14 @@ S2SDeployToolCommandReq::S2SDeployToolCommandReq(const S2SDeployToolCommandReq& 
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
+  toolid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.toolid().size() > 0) {
+    toolid_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.toolid_);
+  }
+  ip_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.ip().size() > 0) {
+    ip_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.ip_);
+  }
   if (from.has_deploycommand()) {
     deploycommand_ = new ::KFMsg::PBDeployCommand(*from.deploycommand_);
   } else {
@@ -15265,6 +15186,8 @@ S2SDeployToolCommandReq::S2SDeployToolCommandReq(const S2SDeployToolCommandReq& 
 }
 
 void S2SDeployToolCommandReq::SharedCtor() {
+  toolid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ip_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&deploycommand_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&time_) -
       reinterpret_cast<char*>(&deploycommand_)) + sizeof(time_));
@@ -15276,6 +15199,8 @@ S2SDeployToolCommandReq::~S2SDeployToolCommandReq() {
 }
 
 void S2SDeployToolCommandReq::SharedDtor() {
+  toolid_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ip_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (this != internal_default_instance()) delete deploycommand_;
 }
 
@@ -15299,6 +15224,8 @@ void S2SDeployToolCommandReq::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
+  toolid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ip_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (GetArenaNoVirtual() == NULL && deploycommand_ != NULL) {
     delete deploycommand_;
   }
@@ -15343,6 +15270,30 @@ bool S2SDeployToolCommandReq::MergePartialFromCodedStream(
         break;
       }
 
+      // bytes toolid = 3;
+      case 3: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(26u /* 26 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
+                input, this->mutable_toolid()));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // bytes ip = 4;
+      case 4: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(34u /* 34 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
+                input, this->mutable_ip()));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
       default: {
       handle_unusual:
         if (tag == 0) {
@@ -15380,6 +15331,18 @@ void S2SDeployToolCommandReq::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt64(2, this->time(), output);
   }
 
+  // bytes toolid = 3;
+  if (this->toolid().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
+      3, this->toolid(), output);
+  }
+
+  // bytes ip = 4;
+  if (this->ip().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
+      4, this->ip(), output);
+  }
+
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
@@ -15406,6 +15369,20 @@ void S2SDeployToolCommandReq::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(2, this->time(), target);
   }
 
+  // bytes toolid = 3;
+  if (this->toolid().size() > 0) {
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
+        3, this->toolid(), target);
+  }
+
+  // bytes ip = 4;
+  if (this->ip().size() > 0) {
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
+        4, this->ip(), target);
+  }
+
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
@@ -15423,6 +15400,20 @@ size_t S2SDeployToolCommandReq::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
   }
+  // bytes toolid = 3;
+  if (this->toolid().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::BytesSize(
+        this->toolid());
+  }
+
+  // bytes ip = 4;
+  if (this->ip().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::BytesSize(
+        this->ip());
+  }
+
   // .KFMsg.PBDeployCommand deploycommand = 1;
   if (this->has_deploycommand()) {
     total_size += 1 +
@@ -15464,6 +15455,14 @@ void S2SDeployToolCommandReq::MergeFrom(const S2SDeployToolCommandReq& from) {
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
+  if (from.toolid().size() > 0) {
+
+    toolid_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.toolid_);
+  }
+  if (from.ip().size() > 0) {
+
+    ip_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.ip_);
+  }
   if (from.has_deploycommand()) {
     mutable_deploycommand()->::KFMsg::PBDeployCommand::MergeFrom(from.deploycommand());
   }
@@ -15496,6 +15495,10 @@ void S2SDeployToolCommandReq::Swap(S2SDeployToolCommandReq* other) {
 }
 void S2SDeployToolCommandReq::InternalSwap(S2SDeployToolCommandReq* other) {
   using std::swap;
+  toolid_.Swap(&other->toolid_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  ip_.Swap(&other->ip_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
   swap(deploycommand_, other->deploycommand_);
   swap(time_, other->time_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
@@ -15781,7 +15784,6 @@ void S2SDeployLogToToolAck::InternalSwap(S2SDeployLogToToolAck* other) {
 void S2SDeployLogToServerAck::InitAsDefaultInstance() {
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int S2SDeployLogToServerAck::kToolidFieldNumber;
 const int S2SDeployLogToServerAck::kAgentidFieldNumber;
 const int S2SDeployLogToServerAck::kContentFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
@@ -15801,17 +15803,13 @@ S2SDeployLogToServerAck::S2SDeployLogToServerAck(const S2SDeployLogToServerAck& 
   if (from.content().size() > 0) {
     content_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.content_);
   }
-  ::memcpy(&toolid_, &from.toolid_,
-    static_cast<size_t>(reinterpret_cast<char*>(&agentid_) -
-    reinterpret_cast<char*>(&toolid_)) + sizeof(agentid_));
+  agentid_ = from.agentid_;
   // @@protoc_insertion_point(copy_constructor:KFMsg.S2SDeployLogToServerAck)
 }
 
 void S2SDeployLogToServerAck::SharedCtor() {
   content_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&toolid_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&agentid_) -
-      reinterpret_cast<char*>(&toolid_)) + sizeof(agentid_));
+  agentid_ = GOOGLE_ULONGLONG(0);
 }
 
 S2SDeployLogToServerAck::~S2SDeployLogToServerAck() {
@@ -15844,9 +15842,7 @@ void S2SDeployLogToServerAck::Clear() {
   (void) cached_has_bits;
 
   content_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&toolid_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&agentid_) -
-      reinterpret_cast<char*>(&toolid_)) + sizeof(agentid_));
+  agentid_ = GOOGLE_ULONGLONG(0);
   _internal_metadata_.Clear();
 }
 
@@ -15860,24 +15856,10 @@ bool S2SDeployLogToServerAck::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // uint64 toolid = 1;
+      // uint64 agentid = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
-
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
-                 input, &toolid_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // uint64 agentid = 2;
-      case 2: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
@@ -15888,10 +15870,10 @@ bool S2SDeployLogToServerAck::MergePartialFromCodedStream(
         break;
       }
 
-      // bytes content = 3;
-      case 3: {
+      // bytes content = 2;
+      case 2: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(26u /* 26 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_content()));
         } else {
@@ -15926,20 +15908,15 @@ void S2SDeployLogToServerAck::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // uint64 toolid = 1;
-  if (this->toolid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->toolid(), output);
-  }
-
-  // uint64 agentid = 2;
+  // uint64 agentid = 1;
   if (this->agentid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt64(2, this->agentid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->agentid(), output);
   }
 
-  // bytes content = 3;
+  // bytes content = 2;
   if (this->content().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
-      3, this->content(), output);
+      2, this->content(), output);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -15956,21 +15933,16 @@ void S2SDeployLogToServerAck::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // uint64 toolid = 1;
-  if (this->toolid() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->toolid(), target);
-  }
-
-  // uint64 agentid = 2;
+  // uint64 agentid = 1;
   if (this->agentid() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(2, this->agentid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->agentid(), target);
   }
 
-  // bytes content = 3;
+  // bytes content = 2;
   if (this->content().size() > 0) {
     target =
       ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
-        3, this->content(), target);
+        2, this->content(), target);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -15990,21 +15962,14 @@ size_t S2SDeployLogToServerAck::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
   }
-  // bytes content = 3;
+  // bytes content = 2;
   if (this->content().size() > 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::BytesSize(
         this->content());
   }
 
-  // uint64 toolid = 1;
-  if (this->toolid() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt64Size(
-        this->toolid());
-  }
-
-  // uint64 agentid = 2;
+  // uint64 agentid = 1;
   if (this->agentid() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt64Size(
@@ -16042,9 +16007,6 @@ void S2SDeployLogToServerAck::MergeFrom(const S2SDeployLogToServerAck& from) {
 
     content_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.content_);
   }
-  if (from.toolid() != 0) {
-    set_toolid(from.toolid());
-  }
   if (from.agentid() != 0) {
     set_agentid(from.agentid());
   }
@@ -16076,7 +16038,6 @@ void S2SDeployLogToServerAck::InternalSwap(S2SDeployLogToServerAck* other) {
   using std::swap;
   content_.Swap(&other->content_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
-  swap(toolid_, other->toolid_);
   swap(agentid_, other->agentid_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }

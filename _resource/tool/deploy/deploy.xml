@@ -43,6 +43,7 @@
 		<Command Name="杀死服务器" Value="kill" Text="" Server="1"/>
 		<Command Name="重启服务器" Value="restart" Text="" Server="1"/>
 		<Command Name="更新服务器" Value="version" Text="请输入服务器版本文件名!" Server="1"/>
+		<Command Name="更新资源" Value="resource" Text="请输入资源版本文件名!" Server="1"/>
 		<Command Name="重新加载配置" Value="reloadconfig" Text="请输入配置文件名!" Server="1"/>
 		<Command Name="重新加载脚本" Value="reloadscript" Text="请输入脚本文件名!" Server="1"/>
 		<Command Name="修改服务器日志等级" Value="loglevel" Text="请输入日志等级!" Server="1"/>

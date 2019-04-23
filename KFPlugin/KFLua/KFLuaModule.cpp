@@ -15,13 +15,18 @@ namespace KFrame
 
     __KF_DEPLOY_FUNCTION__( KFLuaModule::LoadScript )
     {
-        auto kfluascript = _lua_script.Find( param );
-        if ( kfluascript == nullptr )
+        if ( param == _globbing_str )
         {
-            return;
+            _lua_script.Clear();
         }
-
-        kfluascript->LoadScript( param );
+        else
+        {
+            auto kfluascript = _lua_script.Find( param );
+            if ( kfluascript != nullptr )
+            {
+                kfluascript->LoadScript( param );
+            }
+        }
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////

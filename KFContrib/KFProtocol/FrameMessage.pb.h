@@ -5476,26 +5476,6 @@ class LIBPROTOC_EXPORT PBDeployCommand : public ::google::protobuf::Message /* @
   ::std::string* release_value();
   void set_allocated_value(::std::string* value);
 
-  // bytes logurl = 7;
-  void clear_logurl();
-  static const int kLogurlFieldNumber = 7;
-  const ::std::string& logurl() const;
-  void set_logurl(const ::std::string& value);
-  #if LANG_CXX11
-  void set_logurl(::std::string&& value);
-  #endif
-  void set_logurl(const char* value);
-  void set_logurl(const void* value, size_t size);
-  ::std::string* mutable_logurl();
-  ::std::string* release_logurl();
-  void set_allocated_logurl(::std::string* logurl);
-
-  // uint64 toolid = 8;
-  void clear_toolid();
-  static const int kToolidFieldNumber = 8;
-  ::google::protobuf::uint64 toolid() const;
-  void set_toolid(::google::protobuf::uint64 value);
-
   // uint32 zoneid = 5;
   void clear_zoneid();
   static const int kZoneidFieldNumber = 5;
@@ -5511,8 +5491,6 @@ class LIBPROTOC_EXPORT PBDeployCommand : public ::google::protobuf::Message /* @
   ::google::protobuf::internal::ArenaStringPtr apptype_;
   ::google::protobuf::internal::ArenaStringPtr appid_;
   ::google::protobuf::internal::ArenaStringPtr value_;
-  ::google::protobuf::internal::ArenaStringPtr logurl_;
-  ::google::protobuf::uint64 toolid_;
   ::google::protobuf::uint32 zoneid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameMessage_2eproto::TableStruct;
@@ -5824,6 +5802,34 @@ class LIBPROTOC_EXPORT S2SDeployToolCommandReq : public ::google::protobuf::Mess
 
   // accessors -------------------------------------------------------
 
+  // bytes toolid = 3;
+  void clear_toolid();
+  static const int kToolidFieldNumber = 3;
+  const ::std::string& toolid() const;
+  void set_toolid(const ::std::string& value);
+  #if LANG_CXX11
+  void set_toolid(::std::string&& value);
+  #endif
+  void set_toolid(const char* value);
+  void set_toolid(const void* value, size_t size);
+  ::std::string* mutable_toolid();
+  ::std::string* release_toolid();
+  void set_allocated_toolid(::std::string* toolid);
+
+  // bytes ip = 4;
+  void clear_ip();
+  static const int kIpFieldNumber = 4;
+  const ::std::string& ip() const;
+  void set_ip(const ::std::string& value);
+  #if LANG_CXX11
+  void set_ip(::std::string&& value);
+  #endif
+  void set_ip(const char* value);
+  void set_ip(const void* value, size_t size);
+  ::std::string* mutable_ip();
+  ::std::string* release_ip();
+  void set_allocated_ip(::std::string* ip);
+
   // .KFMsg.PBDeployCommand deploycommand = 1;
   bool has_deploycommand() const;
   void clear_deploycommand();
@@ -5846,6 +5852,8 @@ class LIBPROTOC_EXPORT S2SDeployToolCommandReq : public ::google::protobuf::Mess
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr toolid_;
+  ::google::protobuf::internal::ArenaStringPtr ip_;
   ::KFMsg::PBDeployCommand* deploycommand_;
   ::google::protobuf::uint64 time_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
@@ -6058,9 +6066,9 @@ class LIBPROTOC_EXPORT S2SDeployLogToServerAck : public ::google::protobuf::Mess
 
   // accessors -------------------------------------------------------
 
-  // bytes content = 3;
+  // bytes content = 2;
   void clear_content();
-  static const int kContentFieldNumber = 3;
+  static const int kContentFieldNumber = 2;
   const ::std::string& content() const;
   void set_content(const ::std::string& value);
   #if LANG_CXX11
@@ -6072,15 +6080,9 @@ class LIBPROTOC_EXPORT S2SDeployLogToServerAck : public ::google::protobuf::Mess
   ::std::string* release_content();
   void set_allocated_content(::std::string* content);
 
-  // uint64 toolid = 1;
-  void clear_toolid();
-  static const int kToolidFieldNumber = 1;
-  ::google::protobuf::uint64 toolid() const;
-  void set_toolid(::google::protobuf::uint64 value);
-
-  // uint64 agentid = 2;
+  // uint64 agentid = 1;
   void clear_agentid();
-  static const int kAgentidFieldNumber = 2;
+  static const int kAgentidFieldNumber = 1;
   ::google::protobuf::uint64 agentid() const;
   void set_agentid(::google::protobuf::uint64 value);
 
@@ -6089,7 +6091,6 @@ class LIBPROTOC_EXPORT S2SDeployLogToServerAck : public ::google::protobuf::Mess
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::ArenaStringPtr content_;
-  ::google::protobuf::uint64 toolid_;
   ::google::protobuf::uint64 agentid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameMessage_2eproto::TableStruct;
@@ -11828,73 +11829,6 @@ inline void PBDeployCommand::set_allocated_value(::std::string* value) {
   // @@protoc_insertion_point(field_set_allocated:KFMsg.PBDeployCommand.value)
 }
 
-// bytes logurl = 7;
-inline void PBDeployCommand::clear_logurl() {
-  logurl_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline const ::std::string& PBDeployCommand::logurl() const {
-  // @@protoc_insertion_point(field_get:KFMsg.PBDeployCommand.logurl)
-  return logurl_.GetNoArena();
-}
-inline void PBDeployCommand::set_logurl(const ::std::string& value) {
-  
-  logurl_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.PBDeployCommand.logurl)
-}
-#if LANG_CXX11
-inline void PBDeployCommand::set_logurl(::std::string&& value) {
-  
-  logurl_.SetNoArena(
-    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.PBDeployCommand.logurl)
-}
-#endif
-inline void PBDeployCommand::set_logurl(const char* value) {
-  GOOGLE_DCHECK(value != NULL);
-  
-  logurl_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.PBDeployCommand.logurl)
-}
-inline void PBDeployCommand::set_logurl(const void* value, size_t size) {
-  
-  logurl_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.PBDeployCommand.logurl)
-}
-inline ::std::string* PBDeployCommand::mutable_logurl() {
-  
-  // @@protoc_insertion_point(field_mutable:KFMsg.PBDeployCommand.logurl)
-  return logurl_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline ::std::string* PBDeployCommand::release_logurl() {
-  // @@protoc_insertion_point(field_release:KFMsg.PBDeployCommand.logurl)
-  
-  return logurl_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline void PBDeployCommand::set_allocated_logurl(::std::string* logurl) {
-  if (logurl != NULL) {
-    
-  } else {
-    
-  }
-  logurl_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), logurl);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.PBDeployCommand.logurl)
-}
-
-// uint64 toolid = 8;
-inline void PBDeployCommand::clear_toolid() {
-  toolid_ = GOOGLE_ULONGLONG(0);
-}
-inline ::google::protobuf::uint64 PBDeployCommand::toolid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.PBDeployCommand.toolid)
-  return toolid_;
-}
-inline void PBDeployCommand::set_toolid(::google::protobuf::uint64 value) {
-  
-  toolid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.PBDeployCommand.toolid)
-}
-
 // -------------------------------------------------------------------
 
 // S2SDeployCommandToAgentReq
@@ -12083,6 +12017,112 @@ inline void S2SDeployToolCommandReq::set_time(::google::protobuf::uint64 value) 
   // @@protoc_insertion_point(field_set:KFMsg.S2SDeployToolCommandReq.time)
 }
 
+// bytes toolid = 3;
+inline void S2SDeployToolCommandReq::clear_toolid() {
+  toolid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& S2SDeployToolCommandReq::toolid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SDeployToolCommandReq.toolid)
+  return toolid_.GetNoArena();
+}
+inline void S2SDeployToolCommandReq::set_toolid(const ::std::string& value) {
+  
+  toolid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.S2SDeployToolCommandReq.toolid)
+}
+#if LANG_CXX11
+inline void S2SDeployToolCommandReq::set_toolid(::std::string&& value) {
+  
+  toolid_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SDeployToolCommandReq.toolid)
+}
+#endif
+inline void S2SDeployToolCommandReq::set_toolid(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  toolid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.S2SDeployToolCommandReq.toolid)
+}
+inline void S2SDeployToolCommandReq::set_toolid(const void* value, size_t size) {
+  
+  toolid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SDeployToolCommandReq.toolid)
+}
+inline ::std::string* S2SDeployToolCommandReq::mutable_toolid() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SDeployToolCommandReq.toolid)
+  return toolid_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* S2SDeployToolCommandReq::release_toolid() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SDeployToolCommandReq.toolid)
+  
+  return toolid_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void S2SDeployToolCommandReq::set_allocated_toolid(::std::string* toolid) {
+  if (toolid != NULL) {
+    
+  } else {
+    
+  }
+  toolid_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), toolid);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SDeployToolCommandReq.toolid)
+}
+
+// bytes ip = 4;
+inline void S2SDeployToolCommandReq::clear_ip() {
+  ip_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& S2SDeployToolCommandReq::ip() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SDeployToolCommandReq.ip)
+  return ip_.GetNoArena();
+}
+inline void S2SDeployToolCommandReq::set_ip(const ::std::string& value) {
+  
+  ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.S2SDeployToolCommandReq.ip)
+}
+#if LANG_CXX11
+inline void S2SDeployToolCommandReq::set_ip(::std::string&& value) {
+  
+  ip_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SDeployToolCommandReq.ip)
+}
+#endif
+inline void S2SDeployToolCommandReq::set_ip(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.S2SDeployToolCommandReq.ip)
+}
+inline void S2SDeployToolCommandReq::set_ip(const void* value, size_t size) {
+  
+  ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SDeployToolCommandReq.ip)
+}
+inline ::std::string* S2SDeployToolCommandReq::mutable_ip() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SDeployToolCommandReq.ip)
+  return ip_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* S2SDeployToolCommandReq::release_ip() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SDeployToolCommandReq.ip)
+  
+  return ip_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void S2SDeployToolCommandReq::set_allocated_ip(::std::string* ip) {
+  if (ip != NULL) {
+    
+  } else {
+    
+  }
+  ip_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ip);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SDeployToolCommandReq.ip)
+}
+
 // -------------------------------------------------------------------
 
 // S2SDeployLogToToolAck
@@ -12158,21 +12198,7 @@ inline void S2SDeployLogToToolAck::set_allocated_content(::std::string* content)
 
 // S2SDeployLogToServerAck
 
-// uint64 toolid = 1;
-inline void S2SDeployLogToServerAck::clear_toolid() {
-  toolid_ = GOOGLE_ULONGLONG(0);
-}
-inline ::google::protobuf::uint64 S2SDeployLogToServerAck::toolid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SDeployLogToServerAck.toolid)
-  return toolid_;
-}
-inline void S2SDeployLogToServerAck::set_toolid(::google::protobuf::uint64 value) {
-  
-  toolid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SDeployLogToServerAck.toolid)
-}
-
-// uint64 agentid = 2;
+// uint64 agentid = 1;
 inline void S2SDeployLogToServerAck::clear_agentid() {
   agentid_ = GOOGLE_ULONGLONG(0);
 }
@@ -12186,7 +12212,7 @@ inline void S2SDeployLogToServerAck::set_agentid(::google::protobuf::uint64 valu
   // @@protoc_insertion_point(field_set:KFMsg.S2SDeployLogToServerAck.agentid)
 }
 
-// bytes content = 3;
+// bytes content = 2;
 inline void S2SDeployLogToServerAck::clear_content() {
   content_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }

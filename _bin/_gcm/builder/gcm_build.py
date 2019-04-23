@@ -113,22 +113,22 @@ def copy_setting():
                 new_file = '%s_%s_%s' % ( '0', '0', file_name )
                 shutil.copy( local_path + new_file, os.path.join(output_folder, setting_path) )
 
-def copy_version():
-    if is_linux():
-        shutil.copytree(base_path + bin_path + '/linux/' + args['mode'], os.path.join(output_folder, bin_path))
-    else:
-        shutil.copytree(base_path + bin_path + '/win64/' + args['mode'], os.path.join(output_folder, bin_path))
+def copy_version( copybin ):
+    if copybin == True:
+        if is_linux():
+            shutil.copytree(base_path + bin_path + '/linux/' + args['mode'], os.path.join(output_folder, bin_path))
+        else:
+            shutil.copytree(base_path + bin_path + '/win64/' + args['mode'], os.path.join(output_folder, bin_path))
 
-    #shutil.copytree(base_path + setting_path, os.path.join(output_folder, setting_path))
-    shutil.copytree(base_path + startup_path, os.path.join(output_folder, startup_path))
+        shutil.copytree(base_path + startup_path, os.path.join(output_folder, startup_path))
 
-    copy_setting()
+        copy_setting()
+
+        if os.path.exists(base_path + lib_path):
+            shutil.copytree(base_path + lib_path, os.path.join(output_folder, lib_path))
     
     if os.path.exists(base_path + config_path):
         shutil.copytree(base_path + config_path, os.path.join(output_folder, config_path))
-
-    if os.path.exists(base_path + lib_path):
-        shutil.copytree(base_path + lib_path, os.path.join(output_folder, lib_path))
 
     if os.path.exists(base_path + script_path):
         shutil.copytree(base_path + script_path, os.path.join(output_folder, script_path))
@@ -139,7 +139,7 @@ def gen_shell():
     if not os.path.exists(output_folder):
         os.mkdir(output_folder)
 
-    copy_version()
+    copy_version( True )
 
     run_file_name = os.path.join(output_folder, run_shell_file + default_mode_suffix + shell_ext)
     kill_file_name = os.path.join(output_folder, kill_shell_file + default_mode_suffix + shell_ext)
@@ -170,7 +170,7 @@ def parse_args():
     parser.add_argument('-z', '--zone', type=int, default=1, help="zone id")
     parser.add_argument('-l', '--log', type=str, default='1.0', help="log type")
     parser.add_argument('-n', '--net', type=str, default='1', help="net type")
-    parser.add_argument('-t', '--type', type=int, default='1', help="update type 1 version 2 reload")
+    parser.add_argument('-t', '--type', type=int, default='1', help="update type 1=version 2=file 3=resource")
     parser.add_argument('-f', '--file', type=str, default='none', help="update file name")
     parser.add_argument('-b', '--branch', type=str, default='develop', help="develop/online/steam")
     parser.add_argument('-o', '--onlyzone', help="only zone servers", action="store_false")
@@ -250,6 +250,42 @@ elif args['type'] == 2:
     gcm_db.insert_mysql_db(mysql_db_info, sql)
 
     print 'update file finished'
+elif args['type'] == 3:
+    # resource
+    print '\nstart to generate shell'
+    if os.path.exists(output_folder):
+        shutil.rmtree(output_folder)
+    if not os.path.exists(output_folder):
+        os.mkdir(output_folder)
+
+    copy_version( False )
+    print 'generate shell finished'
+
+    if is_linux() and (args['svn'] is not None) and (args['version'] is not None):
+        print 'start pack RELEASE VERSION'
+        release_version_name = '%s_%s_%s.tar.gz' % ( args['project'], 'resource', args['version'])
+
+        tar_cmd = ('tar -zcvf %s %s/*') % (release_version_name, output_folder)
+        print tar_cmd
+        commands.getoutput(tar_cmd)
+        print 'pack RELEASE_VERSION finished'
+
+        # Post to web server
+        gcm_http.do_post(global_conf['web_api'], release_version_name)
+
+        # get md5
+        (status, output) = commands.getstatusoutput('md5sum %s' % release_version_name)
+        md5output = output[0: output.find(' ')]
+
+        # insert into db
+        db_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        sql = "INSERT INTO resource (resource_time, resource_name, resource_url, resource_md5) VALUES ('%s', '%s', '%s', '%s') on duplicate key update resource_time='%s', resource_md5='%s';" % (db_time, release_version_name,  global_conf['web_url'] + release_version_name, md5output, db_time, md5output)
+        mysql_db_info = gcm_db.db_info(global_conf['mysql_host'], global_conf['mysql_port'], global_conf['mysql_user'], global_conf['mysql_pwd'], global_conf['mysql_db'])
+        gcm_db.insert_mysql_db(mysql_db_info, sql)
+
+        # rm version_name
+        rm_cmd = ('rm -rf %s') % (release_version_name)
+        commands.getoutput(rm_cmd)   
 else:
     print 'error type!'
 

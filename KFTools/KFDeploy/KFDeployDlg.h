@@ -7,12 +7,14 @@
 #include "KFProtocol/KFProtocol.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"
+#include "CMyListBox.h"
 using namespace KFrame;
 
 class CAddAgentDlg;
 class CAddServerDlg;
 class CVersionDlg;
 class CFileDlg;
+class CResourceDlg;
 
 // CKFDeployDlg 对话框
 class CKFDeployDlg : public CDialogEx
@@ -107,6 +109,7 @@ protected:
     CAddServerDlg* _add_server_dlg = nullptr;
     CVersionDlg* _version_dlg = nullptr;
     CFileDlg* _file_dlg = nullptr;
+    CResourceDlg* _resource_dlg = nullptr;
 
     // 实现
 protected:
@@ -131,7 +134,7 @@ public:
     CEdit _edit_deploy_port;
     CButton _button_connect;
     afx_msg void OnBnClickedButtonConnectDeploy();
-    CListBox _list_log;
+    CMyListBox _list_log;
     CListCtrl _list_agent;
     afx_msg void OnNMRClickListAgent( NMHDR* pNMHDR, LRESULT* pResult );
     afx_msg void OnNMRClickListServer( NMHDR* pNMHDR, LRESULT* pResult );
@@ -160,4 +163,7 @@ public:
     afx_msg void OnCbnSelchangeComboZone();
     afx_msg void OnBnClickedButtonQueryVersion();
     afx_msg void OnBnClickedButtonQueryFile();
+    afx_msg void OnEnumClearLog();
+    afx_msg void OnBnClickedButtonQueryResource();
+    CButton _button_resource;
 };

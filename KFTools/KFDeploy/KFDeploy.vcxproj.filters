@@ -63,6 +63,12 @@
     <ClInclude Include="CFileDlg.h">
       <Filter>MFC</Filter>
     </ClInclude>
+    <ClInclude Include="CMyListBox.h">
+      <Filter>MFC</Filter>
+    </ClInclude>
+    <ClInclude Include="CResourceDlg.h">
+      <Filter>MFC</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KFDeploy.cpp">
@@ -99,6 +105,12 @@
       <Filter>MFC</Filter>
     </ClCompile>
     <ClCompile Include="CFileDlg.cpp">
+      <Filter>MFC</Filter>
+    </ClCompile>
+    <ClCompile Include="CResourceDlg.cpp">
+      <Filter>MFC</Filter>
+    </ClCompile>
+    <ClCompile Include="CMyListBox.cpp">
       <Filter>MFC</Filter>
     </ClCompile>
   </ItemGroup>

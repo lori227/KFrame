@@ -103,7 +103,7 @@ namespace KFrame
             return _rand_list;
         }
 
-    protected:
+    public:
         // 总权重
         uint32 _total_weight = 0u;
 

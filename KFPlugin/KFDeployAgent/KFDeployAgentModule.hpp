@@ -163,6 +163,7 @@ namespace KFrame
         void StartStartupServerTask();
         void StartWgetVersionTask();
         void StartDownFileTask();
+        void StartWgetResourceTask();
 
         // 检查任务完成
         bool CheckTaskFinish();
@@ -170,6 +171,7 @@ namespace KFrame
         bool CheckStartupServerTaskFinish();
         bool CheckWgetVersionTaskFinish();
         bool CheckDownFileTaskFinish();
+        bool CheckDownResourceTaskFinish();
 
         // 发送消息到master
         void SendTaskToMaster();

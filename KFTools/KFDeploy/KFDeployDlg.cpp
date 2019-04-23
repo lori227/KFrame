@@ -11,6 +11,7 @@
 #include "CAddServerDlg.h"
 #include "CVersionDlg.h"
 #include "CFileDlg.h"
+#include "CResourceDlg.h"
 
 
 #define __SERVICE_TIMER_ID__ 666
@@ -52,6 +53,7 @@ void CKFDeployDlg::DoDataExchange( CDataExchange* pDX )
     DDX_Control( pDX, IDC_COMBO12, _combo_zone );
     DDX_Control( pDX, IDC_COMBO13, _combo_id );
     DDX_Control( pDX, IDC_DATETIMEPICKER1, _date_time );
+    DDX_Control( pDX, IDC_BUTTON5, _button_resource );
 }
 
 BEGIN_MESSAGE_MAP( CKFDeployDlg, CDialogEx )
@@ -77,6 +79,9 @@ BEGIN_MESSAGE_MAP( CKFDeployDlg, CDialogEx )
     ON_CBN_SELCHANGE( IDC_COMBO12, &CKFDeployDlg::OnCbnSelchangeComboZone )
     ON_BN_CLICKED( IDC_BUTTON2, &CKFDeployDlg::OnBnClickedButtonQueryVersion )
     ON_BN_CLICKED( IDC_BUTTON3, &CKFDeployDlg::OnBnClickedButtonQueryFile )
+    ON_COMMAND( ID_32778, &CKFDeployDlg::OnEnumClearLog )
+    ON_WM_RBUTTONUP()
+    ON_BN_CLICKED( IDC_BUTTON5, &CKFDeployDlg::OnBnClickedButtonQueryResource )
 END_MESSAGE_MAP()
 
 
@@ -270,6 +275,11 @@ void CKFDeployDlg::DestoryDialogData()
     if ( _file_dlg != nullptr )
     {
         delete _file_dlg;
+    }
+
+    if ( _resource_dlg != nullptr )
+    {
+        delete _resource_dlg;
     }
 }
 
@@ -673,6 +683,10 @@ __KF_MESSAGE_FUNCTION__( CKFDeployDlg::HandleDeployQueryMySQLAck )
     {
         _file_dlg->RefreshFileList( &kfmsg.datas() );
     }
+    else if ( kfmsg.table() == __KF_STRING__( resource ) )
+    {
+        _resource_dlg->RefreshResourceList( &kfmsg.datas() );
+    }
 }
 
 __KF_MESSAGE_FUNCTION__( CKFDeployDlg::HandleDeployDeleteMySQLAck )
@@ -1026,6 +1040,7 @@ void CKFDeployDlg::OnCbnSelchangeComboCommand()
         return;
     }
 
+    _edit_param.SetWindowTextA( "" );
     if ( commanddata->_text.empty() )
     {
         _edit_param.EnableWindow( FALSE );
@@ -1037,6 +1052,7 @@ void CKFDeployDlg::OnCbnSelchangeComboCommand()
 
     _button_version.ShowWindow( FALSE );
     _button_file.ShowWindow( FALSE );
+    _button_resource.ShowWindow( FALSE );
     _combo_log.ShowWindow( FALSE );
     if ( commanddata->_command == __KF_STRING__( version ) )
     {
@@ -1059,6 +1075,11 @@ void CKFDeployDlg::OnCbnSelchangeComboCommand()
     {
         _edit_param.SetWindowTextA( "0" );
     }
+    else if ( commanddata->_command == __KF_STRING__( resource ) )
+    {
+        _button_resource.ShowWindow( TRUE );
+    }
+
 
     if ( commanddata->_is_server )
     {
@@ -1337,4 +1358,29 @@ void CKFDeployDlg::OnBnClickedButtonAddCommand()
     SendDeployMessage( KFMsg::S2S_DEPLOY_TOOL_COMMAND_REQ, &req );
 
     ClearDeployLog();
+}
+
+
+void CKFDeployDlg::OnEnumClearLog()
+{
+    // TODO: 在此添加命令处理程序代码
+    ClearDeployLog();
+}
+
+
+void CKFDeployDlg::OnBnClickedButtonQueryResource()
+{
+    // TODO: 在此添加控件通知处理程序代码
+    if ( _resource_dlg == nullptr )
+    {
+        _resource_dlg = new CResourceDlg();
+        _resource_dlg->Create( IDD_DIALOG5, this );
+        _resource_dlg->InitDialogData();
+    }
+
+    _resource_dlg->ShowWindow( SW_SHOW );
+
+    // 查询
+    MapString keys;
+    QueryTableValues( __KF_STRING__( resource ), keys );
 }

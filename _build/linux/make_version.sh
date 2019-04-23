@@ -14,15 +14,22 @@ if  [ ! -n "$3" ] ;then
 	exit 0
 fi
 
+svn up ../../../Resource
+
 build="1"
+uptype = 1
 if  [ "$4" = "0" ] ;then
 	build="0"
+	uptype = 3
 fi
 
-
 if  [ "$build" = "1" ] ;then
-	sh build_clean.sh $3
-	sh build_$3.sh
+	sh build_clean.sh
+	if [ "$3" = "debug" ];then
+		sh build_debug.sh
+	else
+		sh build_release.sh
+	fi
 fi
 
 # make version
@@ -33,14 +40,18 @@ fi
 
 # resource
 cd ../../
-days=$(((($(date +%s ) - $(date +%s -d '20190101'))/86400) + 1));
-defineversion=`cat ../3.Resource/proto/6.version.txt | cut -d "." -f 1`
-clientversion=`cat ../3.Resource/proto/6.version.txt | cut -d "." -f 2`
+days=$(((($(date +%s ) - $(date +%s -d '20190401'))/86400) + 1));
+defineversion=`cat ../Resource/proto/6.version.txt | cut -d "." -f 1`
+clientversion=`cat ../Resource/proto/6.version.txt | cut -d "." -f 2`
 version=$defineversion.$clientversion.$days.$svnversion
 echo $version
 
+# config
+cp -rf ../Resource/config/ _bin/
+cp -rf ../Resource/script/ _bin/
+
 cd _bin/_gcm/builder/
 chmod 777 gcm_build
-./gcm_build -s $svnversion -b $2 -c $1 -m $3 -v $version
+./gcm_build -p "chess" -s $svnversion -b $2 -c $1 -m $3 -v $version -n 1.2 -t $uptype
 
 cd ../../../../../

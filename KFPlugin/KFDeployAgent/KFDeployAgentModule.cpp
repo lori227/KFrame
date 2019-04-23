@@ -595,6 +595,14 @@ namespace KFrame
             AddDeployTask( __KF_STRING__( downfile ), pbdeploy );
             AddDeployTask( __KF_STRING__( loadscript ), pbdeploy );
         }
+        else if ( pbdeploy->command() == __KF_STRING__( resource ) )
+        {
+            AddDeployTask( __KF_STRING__( downresource ), pbdeploy );
+
+            pbdeploy->set_value( _globbing_str );
+            AddDeployTask( __KF_STRING__( loadconfig ), pbdeploy );
+            AddDeployTask( __KF_STRING__( loadscript ), pbdeploy );
+        }
         else if ( pbdeploy->command() == __KF_STRING__( cleantask ) )
         {
             for ( auto kftask : _deploy_task )
@@ -715,7 +723,10 @@ namespace KFrame
         {
             ok = CheckDownFileTaskFinish();
         }
-
+        else if ( _kf_task->_command == __KF_STRING__( downresource ) )
+        {
+            ok = CheckDownResourceTaskFinish();
+        }
         return ok;
     }
 
@@ -767,6 +778,10 @@ namespace KFrame
             else if ( _kf_task->_command == __KF_STRING__( downfile ) )
             {
                 StartDownFileTask();
+            }
+            else if ( _kf_task->_command == __KF_STRING__( downresource ) )
+            {
+                StartWgetResourceTask();
             }
             else
             {
@@ -945,7 +960,7 @@ namespace KFrame
         }
 
         ExecuteShell( "rm wget-log*" );
-        ExecuteShell( "rm -f ./version/{}", _kf_task->_value );
+        ExecuteShell( "rm -rf ./version/*" );
         LogDeploy( "[{}] update version ok!", _kf_task->_app_name );
 #endif
 
@@ -1028,4 +1043,64 @@ namespace KFrame
 
         return true;
     }
+
+    void KFDeployAgentModule::StartWgetResourceTask()
+    {
+        // 查询版本路径
+        auto queryurl = _deploy_driver->QueryString( "select `resource_url` from resource where `resource_name`='{}';", _kf_task->_value );
+        if ( !queryurl->IsOk() || queryurl->_value.empty() )
+        {
+            return LogDeploy( "can't find [{}] url!", _kf_task->_value );
+        }
+
+#if __KF_SYSTEM__ == __KF_WIN__
+        // todo win64暂时没有实现
+#else
+        // 执行下载命令
+        ExecuteShell( "wget -c -P ./version/ {}", queryurl->_value );
+#endif
+    }
+
+    bool KFDeployAgentModule::CheckDownResourceTaskFinish()
+    {
+        auto querymd5 = _deploy_driver->QueryString( "select `resource_md5` from `resource` where `resource_name`='{}';", _kf_task->_value );
+        if ( !querymd5->IsOk() || querymd5->_value.empty() )
+        {
+            return true;
+        }
+
+#if __KF_SYSTEM__ == __KF_WIN__
+        // todo win64暂时没有实现
+
+#else
+        // 执行下载命令
+        auto md5 = ExecuteShell( "md5sum ./version/{} | awk '{{print $1}}'", _kf_task->_value );
+        if ( md5 != querymd5->_value )
+        {
+            StartDeployTask();
+            return false;
+        }
+
+        // 解压
+        ExecuteShell( "rm -rf ./version/conf_output/" );
+        ExecuteShell( "tar -zxf ./version/{} -C ./version/", _kf_task->_value );
+
+        // 把文件拷贝过去
+        std::set< std::string > deploypathlist;
+        FindAppDeployPath( _kf_task->_app_name, deploypathlist );
+        for ( auto& deploypath : deploypathlist )
+        {
+            ExecuteShell( "mkdir -p {}", deploypath );
+            ExecuteShell( "cp -rf ./version/conf_output/* {}", deploypath );
+            ExecuteShell( "echo {} > {}/resource.txt", _kf_task->_value, deploypath );
+        }
+
+        ExecuteShell( "rm wget-log*" );
+        ExecuteShell( "rm -rf ./version/*" );
+        LogDeploy( "[{}] update resource ok!", _kf_task->_app_name );
+#endif
+
+        return true;
+    }
+
 }
