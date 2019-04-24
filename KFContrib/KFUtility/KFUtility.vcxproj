@@ -20,7 +20,6 @@
     <ClCompile Include="KFDate.cpp" />
     <ClCompile Include="KFDecode.cpp" />
     <ClCompile Include="KFHashData.cpp" />
-    <ClCompile Include="KFHashFunction.cpp" />
     <ClCompile Include="KFHashLogic.cpp" />
     <ClCompile Include="KFMutex.cpp" />
     <ClCompile Include="KFNode.cpp" />
@@ -40,7 +39,6 @@
     <ClInclude Include="KFDate.h" />
     <ClInclude Include="KFDecode.h" />
     <ClInclude Include="KFHashData.hpp" />
-    <ClInclude Include="KFHashFunction.hpp" />
     <ClInclude Include="KFHashLogic.hpp" />
     <ClInclude Include="KFMutex.h" />
     <ClInclude Include="KFNode.h" />

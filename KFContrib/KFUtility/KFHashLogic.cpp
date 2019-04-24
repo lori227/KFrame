@@ -1,5 +1,5 @@
 ﻿#include "KFHashLogic.hpp"
-#include "KFDefine.h"
+#include "KFUtility/KFUtility.h"
 
 namespace KFrame
 {
@@ -24,7 +24,7 @@ namespace KFrame
         {
             auto temp = __FORMAT__( "{}:{}:{}", node->_name, node->_id, i );
 
-            auto hashkey = _hash_function.GetHashValue( temp );
+            auto hashkey = KFUtility::GetHashValue( temp );
             node->_virtual_list.push_back( hashkey );
 
             auto virtualnode = _virtual_list.Create( hashkey );
@@ -68,7 +68,7 @@ namespace KFrame
             return _invalid_int;
         }
 
-        auto hashkey = _hash_function.GetHashValue( data );
+        auto hashkey = KFUtility::GetHashValue( data );
 
         // 查找
         auto iter = _virtual_list._objects.lower_bound( hashkey );

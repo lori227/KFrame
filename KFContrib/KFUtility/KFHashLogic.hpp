@@ -4,7 +4,6 @@
 #include "KFInclude.h"
 #include "KFMap.h"
 #include "KFHashData.hpp"
-#include "KFHashFunction.hpp"
 
 namespace KFrame
 {
@@ -44,9 +43,6 @@ namespace KFrame
         // 查找已经选择的节点
         uint64 FindSelectNode( const std::string& data );
     private:
-        // Hash 生产函数
-        MD5HashFunction _hash_function;
-
         // 节点列表
         KFHashMap< uint64, uint64, HashNode > _node_list;
 

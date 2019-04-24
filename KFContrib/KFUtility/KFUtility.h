@@ -54,6 +54,9 @@ namespace KFrame
         // 判断是否在距离范围内
         static bool CheckInDistance( uint32 nowx, uint32 nowy, uint32 targetx, uint32 targety, uint32 distance );
 
+        // 计算hash值
+        static uint32 GetHashValue( const std::string& data );
+
         // 切割字符串
         static std::string SplitString( std::string& srcstring, std::string split );
 

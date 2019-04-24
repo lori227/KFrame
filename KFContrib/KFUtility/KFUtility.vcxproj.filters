@@ -18,7 +18,6 @@
     <ClInclude Include="KFConHash.h" />
     <ClInclude Include="KFCrypto.h" />
     <ClInclude Include="KFHashData.hpp" />
-    <ClInclude Include="KFHashFunction.hpp" />
     <ClInclude Include="KFHashLogic.hpp" />
     <ClInclude Include="KFAppId.h" />
     <ClInclude Include="KFTimer.h" />
@@ -38,7 +37,6 @@
     <ClCompile Include="KFConHash.cpp" />
     <ClCompile Include="KFCrypto.cpp" />
     <ClCompile Include="KFHashData.cpp" />
-    <ClCompile Include="KFHashFunction.cpp" />
     <ClCompile Include="KFHashLogic.cpp" />
     <ClCompile Include="KFAppId.cpp" />
     <ClCompile Include="KFTimer.cpp" />
