@@ -38,7 +38,7 @@
 	}' http://192.168.1.250:9999/deploy]
 
 
-## 打开Postman
+## postman更新
 !> 请先安装postman工具
 
 	输入url, 输入命令参数 点击发送即可!
