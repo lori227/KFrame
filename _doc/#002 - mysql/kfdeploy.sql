@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50722
 File Encoding         : 65001
 
-Date: 2019-04-16 15:48:44
+Date: 2019-04-22 23:02:12
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -27,6 +27,7 @@ CREATE TABLE `1_2_deploy` (
   `apptype` varchar(50) NOT NULL DEFAULT '' COMMENT '服务器类型',
   `appid` varchar(50) NOT NULL DEFAULT '' COMMENT '服务器id',
   `service` varchar(50) NOT NULL DEFAULT '1.2',
+  `net` varchar(50) NOT NULL DEFAULT '0',
   `logtype` varchar(50) NOT NULL DEFAULT '1.0' COMMENT 'x.y x 0 不打日志 1 本地日志  2远程日志 y 日志级别',
   `param` varchar(500) NOT NULL DEFAULT '',
   `agentid` varchar(50) NOT NULL DEFAULT '' COMMENT '部署agentid',
@@ -43,18 +44,18 @@ CREATE TABLE `1_2_deploy` (
 -- ----------------------------
 -- Records of 1_2_deploy
 -- ----------------------------
-INSERT INTO `1_2_deploy` VALUES ('/data/chess', '', 'bin/KFStartup', 'auth', 'auth', '1.21.0.1', '1.2', '1.0', '', '1.12.0.1', '1', '1', '0', '18056', '1555400500', '1.11.0.1', 'chess_develop_1.0.16.124.tar.gz');
-INSERT INTO `1_2_deploy` VALUES ('/data/chess', '', 'bin/KFStartup', 'route', 'master', '1.22.0.1', '1.2', '1.0', '', '1.12.0.1', '1', '1', '0', '18077', '1555400500', '1.11.0.1', 'chess_develop_1.0.16.124.tar.gz');
-INSERT INTO `1_2_deploy` VALUES ('/data/chess', '', 'bin/KFStartup', 'route', 'proxy', '1.23.0.1', '1.2', '1.0', '', '1.12.0.1', '1', '1', '0', '18106', '1555400500', '1.11.0.1', 'chess_develop_1.0.16.124.tar.gz');
-INSERT INTO `1_2_deploy` VALUES ('/data/chess', '', 'bin/KFStartup', 'route', 'shard', '1.24.0.1', '1.2', '1.0', '', '1.12.0.1', '1', '1', '0', '18172', '1555400500', '1.11.0.1', 'chess_develop_1.0.16.124.tar.gz');
-INSERT INTO `1_2_deploy` VALUES ('/data/chess', '', 'bin/KFStartup', 'data', 'shard', '1.31.0.1', '1.2', '1.0', '', '1.12.0.1', '1', '1', '0', '18092', '1555400500', '1.11.0.1', 'chess_develop_1.0.16.124.tar.gz');
-INSERT INTO `1_2_deploy` VALUES ('/data/chess', '', 'bin/KFStartup', 'match', 'shard', '1.38.0.1', '1.2', '1.0', '', '1.12.0.1', '1', '1', '0', '18121', '1555400500', '1.11.0.1', 'chess_develop_1.0.16.124.tar.gz');
-INSERT INTO `1_2_deploy` VALUES ('/data/chess', '', 'bin/KFStartup', 'room', 'shard', '1.39.0.1', '1.2', '1.0', '', '1.12.0.1', '1', '1', '0', '18135', '1555400500', '1.11.0.1', 'chess_develop_1.0.16.124.tar.gz');
-INSERT INTO `1_2_deploy` VALUES ('/data/chess', '', 'bin/KFStartup', 'zone', 'master', '1.91.1.1', '1.2', '1.0', '', '1.12.0.1', '1', '1', '0', '18143', '1555400500', '1.11.0.1', 'chess_develop_1.0.16.124.tar.gz');
-INSERT INTO `1_2_deploy` VALUES ('/data/chess', '', 'bin/KFStartup', 'zone', 'world', '1.92.1.1', '1.2', '1.0', '', '1.12.0.1', '1', '1', '0', '18163', '1555400500', '1.11.0.1', 'chess_develop_1.0.16.124.tar.gz');
-INSERT INTO `1_2_deploy` VALUES ('/data/chess', '', 'bin/KFStartup', 'zone', 'gate', '1.93.1.1', '1.2', '1.0', '', '1.12.0.1', '1', '1', '0', '18197', '1555400500', '1.11.0.1', 'chess_develop_1.0.16.124.tar.gz');
-INSERT INTO `1_2_deploy` VALUES ('/data/chess', '', 'bin/KFStartup', 'zone', 'login', '1.94.1.1', '1.2', '1.0', '', '1.12.0.1', '1', '1', '0', '18046', '1555400500', '1.11.0.1', 'chess_develop_1.0.16.124.tar.gz');
-INSERT INTO `1_2_deploy` VALUES ('/data/chess', '', 'bin/KFStartup', 'zone', 'game', '1.95.1.1', '1.2', '1.0', '', '1.12.0.1', '1', '1', '0', '18030', '1555400500', '1.11.0.1', 'chess_develop_1.0.16.124.tar.gz');
+INSERT INTO `1_2_deploy` VALUES ('/data/chess', '', 'bin/KFStartup', 'auth', 'auth', '21.0.1', '1.2', '1', '1.0', '', '12.0.1', '1', '1', '0', '28301', '1555774762', '11.0.1', 'chess_develop_1.0.20.134.tar.gz');
+INSERT INTO `1_2_deploy` VALUES ('/data/chess', '', 'bin/KFStartup', 'route', 'master', '22.0.1', '1.2', '1', '1.0', '', '12.0.1', '1', '1', '0', '28324', '1555774762', '11.0.1', 'chess_develop_1.0.20.134.tar.gz');
+INSERT INTO `1_2_deploy` VALUES ('/data/chess', '', 'bin/KFStartup', 'route', 'proxy', '23.0.1', '1.2', '1', '1.0', '', '12.0.1', '1', '1', '0', '28345', '1555774762', '11.0.1', 'chess_develop_1.0.20.134.tar.gz');
+INSERT INTO `1_2_deploy` VALUES ('/data/chess', '', 'bin/KFStartup', 'route', 'shard', '24.0.1', '1.2', '1', '1.0', '', '12.0.1', '1', '1', '0', '28356', '1555774762', '11.0.1', 'chess_develop_1.0.20.134.tar.gz');
+INSERT INTO `1_2_deploy` VALUES ('/data/chess', '', 'bin/KFStartup', 'data', 'shard', '31.0.1', '1.2', '1', '1.0', '', '12.0.1', '1', '1', '0', '28335', '1555774762', '11.0.1', 'chess_develop_1.0.20.134.tar.gz');
+INSERT INTO `1_2_deploy` VALUES ('/data/chess', '', 'bin/KFStartup', 'match', 'shard', '38.0.1', '1.2', '1', '1.0', '', '12.0.1', '1', '1', '0', '28387', '1555774762', '11.0.1', 'chess_develop_1.0.20.134.tar.gz');
+INSERT INTO `1_2_deploy` VALUES ('/data/chess', '', 'bin/KFStartup', 'room', 'shard', '39.0.1', '1.2', '1', '1.0', '', '12.0.1', '1', '1', '0', '28367', '1555774762', '11.0.1', 'chess_develop_1.0.20.134.tar.gz');
+INSERT INTO `1_2_deploy` VALUES ('/data/chess', '', 'bin/KFStartup', 'zone', 'master', '91.1.1', '1.2', '1', '1.0', '', '12.0.1', '1', '1', '0', '28313', '1555774762', '11.0.1', 'chess_develop_1.0.20.134.tar.gz');
+INSERT INTO `1_2_deploy` VALUES ('/data/chess', '', 'bin/KFStartup', 'zone', 'world', '92.1.1', '1.2', '1', '1.0', '', '12.0.1', '1', '1', '0', '28375', '1555774762', '11.0.1', 'chess_develop_1.0.20.134.tar.gz');
+INSERT INTO `1_2_deploy` VALUES ('/data/chess', '', 'bin/KFStartup', 'zone', 'gate', '93.1.1', '1.2', '1', '1.0', '', '12.0.1', '1', '1', '0', '28401', '1555774762', '11.0.1', 'chess_develop_1.0.20.134.tar.gz');
+INSERT INTO `1_2_deploy` VALUES ('/data/chess', '', 'bin/KFStartup', 'zone', 'login', '94.1.1', '1.2', '1', '1.0', '', '12.0.1', '1', '1', '0', '28290', '1555774762', '11.0.1', 'chess_develop_1.0.20.134.tar.gz');
+INSERT INTO `1_2_deploy` VALUES ('/data/chess', '', 'bin/KFStartup', 'zone', 'game', '95.1.1', '1.2', '1', '1.0', '', '12.0.1', '1', '1', '0', '28279', '1555774762', '11.0.1', 'chess_develop_1.0.20.134.tar.gz');
 
 -- ----------------------------
 -- Table structure for `agent`
@@ -79,7 +80,7 @@ CREATE TABLE `agent` (
 -- ----------------------------
 -- Records of agent
 -- ----------------------------
-INSERT INTO `agent` VALUES ('192.168.1.155', '192.168.1.155', '1.12.0.1', '2', '1.11.0.1', '192.168.1.250', '10000', '1', '12001', '');
+INSERT INTO `agent` VALUES ('192.168.1.155', '192.168.1.155', '12.0.1', '1.2', '11.0.1', '192.168.1.250', '10000', '1', '12008', '');
 
 -- ----------------------------
 -- Table structure for `file`
@@ -99,6 +100,23 @@ CREATE TABLE `file` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for `resource`
+-- ----------------------------
+DROP TABLE IF EXISTS `resource`;
+CREATE TABLE `resource` (
+  `resource_time` datetime NOT NULL,
+  `resource_name` varchar(128) NOT NULL,
+  `resource_url` varchar(512) NOT NULL,
+  `resource_md5` varchar(32) NOT NULL,
+  PRIMARY KEY (`resource_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of resource
+-- ----------------------------
+INSERT INTO `resource` VALUES ('2019-04-22 20:32:10', 'chess_develop_1.0.22.139.tar.gz', 'http://192.168.1.250/upload/chess_develop_1.0.22.139.tar.gz', '95d7a102a1e65113b20b33303ea6e37b');
+
+-- ----------------------------
 -- Table structure for `tool`
 -- ----------------------------
 DROP TABLE IF EXISTS `tool`;
@@ -107,11 +125,13 @@ CREATE TABLE `tool` (
   `toolip` varchar(50) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   KEY `tool` (`toolip`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tool
 -- ----------------------------
+INSERT INTO `tool` VALUES ('3', '172.28.166.193');
+INSERT INTO `tool` VALUES ('4', '192.168.1.42');
 INSERT INTO `tool` VALUES ('2', '192.168.1.47');
 INSERT INTO `tool` VALUES ('1', '192.168.1.71');
 
@@ -140,4 +160,13 @@ INSERT INTO `version` VALUES ('2019-04-13 13:14:30', 'chess_develop_1.0.13.115.t
 INSERT INTO `version` VALUES ('2019-04-13 18:55:05', 'chess_develop_1.0.13.116.tar.gz', 'http://192.168.1.250/upload/chess_develop_1.0.13.116.tar.gz', '6af7c77422e42b9bcfe9d6c3591f6c85');
 INSERT INTO `version` VALUES ('2019-04-15 21:16:53', 'chess_develop_1.0.15.120.tar.gz', 'http://192.168.1.250/upload/chess_develop_1.0.15.120.tar.gz', 'd339b654d65819360185b632aeddc3ec');
 INSERT INTO `version` VALUES ('2019-04-16 11:14:54', 'chess_develop_1.0.16.121.tar.gz', 'http://192.168.1.250/upload/chess_develop_1.0.16.121.tar.gz', '73a0530cd3bfde5aa615a8c834150469');
-INSERT INTO `version` VALUES ('2019-04-16 15:39:50', 'chess_develop_1.0.16.124.tar.gz', 'http://192.168.1.250/upload/chess_develop_1.0.16.124.tar.gz', '4b7702ff39be85b19fa34be93ac1ffdb');
+INSERT INTO `version` VALUES ('2019-04-16 19:52:09', 'chess_develop_1.0.16.124.tar.gz', 'http://192.168.1.250/upload/chess_develop_1.0.16.124.tar.gz', 'd2912ffdf4edd094927bd463b49aaa18');
+INSERT INTO `version` VALUES ('2019-04-16 19:57:14', 'chess_develop_1.0.16.125.tar.gz', 'http://192.168.1.250/upload/chess_develop_1.0.16.125.tar.gz', '1a81b40b67c5d5e25d6d2ae6230b4357');
+INSERT INTO `version` VALUES ('2019-04-18 18:12:21', 'chess_develop_1.0.18.127.tar.gz', 'http://192.168.1.250/upload/chess_develop_1.0.18.127.tar.gz', '4f1e93ceab493c8a8dee3051a45071c2');
+INSERT INTO `version` VALUES ('2019-04-19 14:31:43', 'chess_develop_1.0.19.129.tar.gz', 'http://192.168.1.250/upload/chess_develop_1.0.19.129.tar.gz', '361c649167636baf2dd8ee28ee776f15');
+INSERT INTO `version` VALUES ('2019-04-19 15:31:54', 'chess_develop_1.0.19.130.tar.gz', 'http://192.168.1.250/upload/chess_develop_1.0.19.130.tar.gz', '1be99556bc320fb7a2bea903ce68a203');
+INSERT INTO `version` VALUES ('2019-04-19 22:15:40', 'chess_develop_1.0.19.131.tar.gz', 'http://192.168.1.250/upload/chess_develop_1.0.19.131.tar.gz', '8a8dc6c6de3ffce99fe6b140896058b2');
+INSERT INTO `version` VALUES ('2019-04-20 15:46:27', 'chess_develop_1.0.20.132.tar.gz', 'http://192.168.1.250/upload/chess_develop_1.0.20.132.tar.gz', '325dfb5a6359ac50af6b32b5135a6e86');
+INSERT INTO `version` VALUES ('2019-04-20 23:37:13', 'chess_develop_1.0.20.134.tar.gz', 'http://192.168.1.250/upload/chess_develop_1.0.20.134.tar.gz', '60d9282f599d5b859c1f22ddc5823043');
+INSERT INTO `version` VALUES ('2019-04-22 15:54:21', 'chess_develop_1.0.22.134.tar.gz', 'http://192.168.1.250/upload/chess_develop_1.0.22.134.tar.gz', 'd914d8fda57e5f6412bf0dffa9bc02d4');
+INSERT INTO `version` VALUES ('2019-04-22 23:01:53', 'chess_develop_1.0.22.140.tar.gz', 'http://192.168.1.250/upload/chess_develop_1.0.22.140.tar.gz', '524352786c6cc1c11614f4fe99d68257');
