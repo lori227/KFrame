@@ -549,10 +549,13 @@ namespace KFrame
     {
         __LOG_DEBUG__( "{}", msg );
 
-        KFMsg::S2SDeployLogToServerAck ack;
-        ack.set_content( msg );
-        ack.set_agentid( KFGlobal::Instance()->_app_id->GetId() );
-        _kf_tcp_client->SendNetMessage( _deploy_server_id, KFMsg::S2S_DEPLOY_LOG_TO_SERVER_ACK, &ack );
+        if ( _deploy_server_id != 0u )
+        {
+            KFMsg::S2SDeployLogToServerAck ack;
+            ack.set_content( msg );
+            ack.set_agentid( KFGlobal::Instance()->_app_id->GetId() );
+            _kf_tcp_client->SendNetMessage( _deploy_server_id, KFMsg::S2S_DEPLOY_LOG_TO_SERVER_ACK, &ack );
+        }
     }
 
     __KF_MESSAGE_FUNCTION__( KFDeployAgentModule::HandleDeployCommandReq )
