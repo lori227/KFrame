@@ -96,6 +96,7 @@ bash ./configure --enable-shared=yes --prefix=/usr/local/
 make clean
 make -j 4
 cp -R -f src/.libs/*.so* ../../../$libpath
+make install
 cd ../../
 
 blue "end building google protobuf"
