@@ -44,7 +44,8 @@ cp -f $binpath/KFSchedule.so $deploypath/bin/
 
 
 cd /tmp
-tar -zxvf deploy.tar.gz deploy/*
+tar -zcvf deploy.tar.gz deploy/*
 rm $deploypath -rf
 
+mkdir -p /data
 mv deploy.tar.gz /data/
