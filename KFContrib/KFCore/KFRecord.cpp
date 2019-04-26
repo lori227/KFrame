@@ -204,51 +204,21 @@ namespace KFrame
 
     std::string KFRecord::ToString()
     {
-        // [1={xxxx}=1,2={xxxx}=2]
+        MapString values;
+        ToMap( values );
 
-        std::string result = "";
-        result += "[";
-
-        for ( auto& iter : _data._objects )
-        {
-            auto key = __TO_STRING__( iter.first );
-            auto kfdata = iter.second;
-
-            auto strdata = kfdata->ToString();
-            auto temp = __FORMAT__( "{}={}={},", key, strdata, key );
-            result += temp;
-        }
-
-        result += "]";
-
-        return result;
+        __JSON_DOCUMENT__( kfjson );
+        __JSON_FROM_MAP__( kfjson, values );
+        return __JSON_SERIALIZE__( kfjson );
     }
 
     void KFRecord::FromString( const std::string& value )
     {
-        auto temp = value;
-        KFUtility::SplitString( temp, "[" );
+        __JSON_PARSE_STRING__( kfjson, value );
 
-        while ( !temp.empty() )
-        {
-            auto strkey = KFUtility::SplitString( temp, "=" );
-
-            auto split = "=" + strkey;
-            auto data = KFUtility::SplitString( temp, split );
-            if ( !data.empty() )
-            {
-                auto kfdata = KFDataFactory::CreateData( _data_setting );
-                if ( kfdata != nullptr )
-                {
-                    auto key = KFUtility::ToValue< uint64 >( strkey );
-                    kfdata->SetKeyID( key );
-                    kfdata->FromString( data );
-                    AddData( key, kfdata );
-                }
-            }
-
-            KFUtility::SplitString( temp, "," );
-        }
+        MapString values;
+        __JSON_TO_MAP__( kfjson, values );
+        FromMap( values );
     }
 
     void KFRecord::ToMap( MapString& values )

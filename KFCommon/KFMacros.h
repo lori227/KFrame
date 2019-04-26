@@ -49,6 +49,14 @@
     #define __FORMAT__( myfmt, ... ) fmt::format( fmt(myfmt), ##__VA_ARGS__ )
 #endif
 
+#ifndef __PROTO_TO_MAP__
+#define __PROTO_TO_MAP__( pbdata, values )\
+    for ( auto iter = pbdata->begin(); iter != pbdata->end(); ++iter )\
+    {\
+        values[ iter->first ] = iter->second;\
+    }
+#endif
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 #ifndef __TOP_ONE__

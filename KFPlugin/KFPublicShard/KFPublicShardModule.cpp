@@ -31,7 +31,7 @@ namespace KFrame
         auto pbdata = &kfmsg.pbdata();
 
         MapString values;
-        values.insert( pbdata->begin(), pbdata->end() );
+        __PROTO_TO_MAP__( pbdata, values );
         _public_redis_driver->Update( values, "hmset {}:{}", __KF_STRING__( public ), playerid );
     }
 

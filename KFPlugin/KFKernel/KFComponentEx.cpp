@@ -28,7 +28,7 @@ namespace KFrame
 
     KFComponentEx::~KFComponentEx()
     {
-
+        _sync_entitys.clear();
     }
 
     void KFComponentEx::InitEntity( KFEntity* kfentity )
@@ -52,30 +52,36 @@ namespace KFrame
 
     void KFComponentEx::Run()
     {
-        if ( _entity_run_function == nullptr )
+        if ( _entity_run_function != nullptr )
         {
-            return;
-        }
-
-        for ( auto& iter : _entitys._objects )
-        {
-            auto kfentity = iter.second;
-            _entity_run_function( kfentity );
+            for ( auto& iter : _entitys._objects )
+            {
+                auto kfentity = iter.second;
+                _entity_run_function( kfentity );
+            }
         }
     }
 
     void KFComponentEx::AfterRun()
     {
-        for ( auto& iter : _entitys._objects )
+        if ( _entity_after_run_function != nullptr )
         {
-            auto kfentity = static_cast< KFEntityEx* >( iter.second );
-            if ( _entity_after_run_function != nullptr )
+            for ( auto& iter : _entitys._objects )
             {
+                auto kfentity = static_cast< KFEntityEx* >( iter.second );
                 _entity_after_run_function( kfentity );
             }
+        }
 
-            // 同步到客户端
-            kfentity->SyncEntityToClient();
+        if ( !_sync_entitys.empty() )
+        {
+            for ( auto entity : _sync_entitys )
+            {
+                // 同步到客户端
+                auto kfentity = static_cast< KFEntityEx* >( entity );
+                kfentity->SyncEntityToClient();
+            }
+            _sync_entitys.clear();
         }
     }
 
@@ -181,7 +187,13 @@ namespace KFrame
         UnInitEntity( kfentity );
         DeleteSaveEntity( kfentity );
 
+        _sync_entitys.erase( kfentity );
         return _entitys.Remove( kfentity->GetKeyID() );
+    }
+
+    void KFComponentEx::AddSyncEntity( KFEntity* entity )
+    {
+        _sync_entitys.insert( entity );
     }
     ////////////////////////////////////////////////////////////////////////////////////////
     void KFComponentEx::BindAddElementFunction( const std::string& dataname, KFAddElementFunction& function )

@@ -51,14 +51,17 @@ namespace KFrame
         // 随机
         const T* Rand() const
         {
-            auto value = 0u;
-            auto rand = KFGlobal::Instance()->RandRatio( _total_weight );
-            for ( auto data : _weight_data )
+            if ( _total_weight != 0u )
             {
-                value += data->_weight;
-                if ( rand < value )
+                auto value = 0u;
+                auto rand = KFGlobal::Instance()->RandRatio( _total_weight );
+                for ( auto data : _weight_data )
                 {
-                    return data;
+                    value += data->_weight;
+                    if ( rand < value )
+                    {
+                        return data;
+                    }
                 }
             }
 

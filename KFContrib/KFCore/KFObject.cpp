@@ -220,46 +220,22 @@ namespace KFrame
 
     std::string KFObject::ToString()
     {
-        // {money:10000:money,login:{day:1,reward:2}:login,item:[1={xxxx},2={xxxx}]:item}
+        MapString values;
+        ToMap( values );
 
-        std::string result = "";
-        result += "{";
-
-        for ( auto& iter : _data._objects )
-        {
-            auto& key = iter.first;
-            auto kfdata = iter.second;
-
-            auto strdata = kfdata->ToString();
-            auto temp = __FORMAT__( "{}:{}:{},", key, strdata, key );
-            result += temp;
-        }
-
-        result += "}";
-
-        return result;
+        __JSON_DOCUMENT__( kfjson );
+        __JSON_FROM_MAP__( kfjson, values );
+        return __JSON_SERIALIZE__( kfjson );
     }
 
     void KFObject::FromString( const std::string& value )
     {
-        auto temp = value;
-        KFUtility::SplitString( temp, "{" );
+        __JSON_PARSE_STRING__( kfjson, value );
 
-        while ( !temp.empty() )
-        {
-            auto dataname = KFUtility::SplitString( temp, ":" );
+        MapString values;
+        __JSON_TO_MAP__( kfjson, values );
 
-            auto split = ":" + dataname;
-            auto data = KFUtility::SplitString( temp, split );
-
-            auto kfdata = FindData( dataname );
-            if ( kfdata != nullptr )
-            {
-                kfdata->FromString( data );
-            }
-
-            KFUtility::SplitString( temp, "," );
-        }
+        FromMap( values );
     }
 
     void KFObject::ToMap( MapString& values )

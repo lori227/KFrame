@@ -52,9 +52,6 @@ namespace KFrame
 
         // 停止保存定时器
         void DeleteSaveEntity( KFEntity* kfentity );
-
-        // 保存数据到数据库
-        __KF_TIMER_FUNCTION__( OnTimerSaveEntity );
         //////////////////////////////////////////////////////////////////////////////////////
 
         // 遍历列表
@@ -71,6 +68,8 @@ namespace KFrame
         // 属性删除回调函数
         void RemoveDataCallBack( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata );
 
+        // 添加更新的对象
+        void AddSyncEntity( KFEntity* entity );
         ///////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////
         virtual void BindAddElementFunction( const std::string& dataname, KFAddElementFunction& function );
@@ -136,6 +135,11 @@ namespace KFrame
         virtual void UnRegisterShowElementFunction();
 
     protected:
+
+
+        // 保存数据到数据库
+        __KF_TIMER_FUNCTION__( OnTimerSaveEntity );
+
         // 保存
         void SaveEntity( KFEntity* kfentity, const char* function, uint32 line );
 
@@ -203,6 +207,9 @@ namespace KFrame
 
         // 保存间隔时间
         uint32 _entity_delay_save_time;
+
+        // 需要发送消息的对象
+        std::set< KFEntity* > _sync_entitys;
     };
 }
 

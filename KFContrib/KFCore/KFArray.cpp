@@ -142,34 +142,29 @@ namespace KFrame
 
     std::string KFArray::ToString()
     {
-        // [1,2,3]
-        std::string result = "";
-        result += "[";
+        __JSON_DOCUMENT__( kfjson );
+        kfjson.SetArray();
 
         for ( auto kfdata : _data._objects )
         {
-            result += kfdata->ToString();
-            result += ",";
+            __JSON_ADD_STRING__( kfjson, kfdata->ToString() );
         }
 
-        result += "]";
-        return result;
+        return __JSON_SERIALIZE__( kfjson ) ;
     }
 
     void KFArray::FromString( const std::string& value )
     {
-        auto temp = value;
-        KFUtility::SplitString( temp, "[" );
-        auto context = KFUtility::SplitString( temp, "]" );
+        __JSON_PARSE_STRING__( kfjson, value );
 
-        auto index = 0;
-        while ( !context.empty() )
+        auto size = __JSON_ARRAY_SIZE__( kfjson );
+        for ( auto i = 0u; i < size; ++i )
         {
-            auto data = KFUtility::SplitString( context, "," );
-            auto kfdata = FindData( index++ );
+            auto kfdata = FindData( i );
             if ( kfdata != nullptr )
             {
-                kfdata->FromString( data );
+                auto& object = __JSON_ARRAY_INDEX__( kfjson, i );
+                kfdata->FromString( object.GetString() );
             }
         }
     }

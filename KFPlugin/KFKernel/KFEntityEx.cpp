@@ -800,6 +800,7 @@ namespace KFrame
 
         // 设置有添加属性
         _have_add_pb_object = true;
+        _kf_component->AddSyncEntity( this );
     }
 
     void KFEntityEx::SyncRemoveData( KFData* kfdata, uint64 key )
@@ -833,6 +834,7 @@ namespace KFrame
         } while ( !datahierarchy.empty() );
 
         _have_remove_pb_object = true;
+        _kf_component->AddSyncEntity( this );
     }
 
     void KFEntityEx::SyncUpdateData( KFData* kfdata, uint64 key )
@@ -887,6 +889,7 @@ namespace KFrame
 
         // 设置有添加属性
         _have_update_pb_object = true;
+        _kf_component->AddSyncEntity( this );
     }
 
     void KFEntityEx::AddSyncUpdateDataToPBObject( KFData* kfdata, KFMsg::PBObject* pbobject )

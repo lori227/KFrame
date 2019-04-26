@@ -61,7 +61,7 @@ namespace KFrame
 
     typedef std::list< std::string > ListString;
     typedef std::vector< std::string > VectorString;
-    typedef std::map< std::string, std::string > MapString;
+    typedef std::unordered_map< std::string, std::string > MapString;
     /////////////////////////////////////////////////////////////////////////
 
     /////////////////////////////////////////////////////////////////////////
