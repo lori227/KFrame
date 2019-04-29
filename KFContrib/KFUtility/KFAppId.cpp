@@ -10,10 +10,9 @@ namespace KFrame
         uint64 _id;
         struct AppData
         {
-            uint16 _reserve;		// 保留
             uint16 _server_type;	// 服务器类型
             uint16 _zone_id;		// 小区id
-            uint16 _worker_id;		// 进程id
+            uint32 _worker_id;		// 进程id
         } _app_data;
     };
 

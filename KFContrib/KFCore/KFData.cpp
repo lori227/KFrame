@@ -231,7 +231,10 @@ namespace KFrame
         _data_setting = datasetting;
         _class_setting = classsetting;
 
-        FromString( datasetting->_init_value );
+        if ( !datasetting->_init_value.empty() )
+        {
+            FromString( datasetting->_init_value );
+        }
     }
 
     const std::string& KFData::GetName() const

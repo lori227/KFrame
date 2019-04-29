@@ -336,8 +336,11 @@ namespace KFrame
         // 绑定角色id
         if ( !_kf_tcp_server->BindObjectId( pblogin->sessionid(), pblogin->playerid() ) )
         {
-            __LOG_ERROR__( "player[{}:{}] session[{}] failed!", pblogin->accountid(), pblogin->playerid(), pblogin->sessionid() );
-            return SendLoginAckMessage( pblogin->sessionid(), KFMsg::LoginBindPlayerError, 0 );
+            // 发送消息给game, 踢掉玩家
+            KFMsg::S2SLeaveToGameReq req;
+            req.set_playerid( pblogin->playerid() );
+            _kf_tcp_client->SendNetMessage( __ROUTE_SERVER_ID__, KFMsg::S2S_LEAVE_TO_GAME_REQ, &req );
+            return __LOG_ERROR__( "player[{}:{}] session[{}] failed!", pblogin->accountid(), pblogin->playerid(), pblogin->sessionid() );;
         }
 
         // 删除掉线定时器
