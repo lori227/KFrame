@@ -339,7 +339,7 @@ namespace KFrame
             // 创建玩家
             auto player = _kf_player->CreatePlayer( pblogin, pbplayerdata );
 
-            // 同步给客户端
+            // 序列化玩家数据
             _kf_kernel->SerializeToClient( player->GetData(), pbplayerdata );
 
             KFMsg::S2SEnterToGateAck ack;
@@ -369,8 +369,8 @@ namespace KFrame
 
             auto pblogin = ack.mutable_pblogin();
             pblogin->set_token( kfmsg.token() );
-            pblogin->set_sessionid( kfmsg.sessionid() );
             pblogin->set_playerid( kfmsg.playerid() );
+            pblogin->set_sessionid( kfmsg.sessionid() );
             pblogin->set_accountid( kfmsg.accountid() );
 
             _kf_kernel->SerializeToClient( kfobject, ack.mutable_playerdata() );
@@ -384,8 +384,8 @@ namespace KFrame
         {
             KFMsg::S2SReLoginToGateAck ack;
             ack.set_token( kfmsg.token() );
-            ack.set_sessionid( kfmsg.sessionid() );
             ack.set_playerid( kfmsg.playerid() );
+            ack.set_sessionid( kfmsg.sessionid() );
             ack.set_accountid( kfmsg.accountid() );
             auto ok = SendToGate( __ROUTE_SERVER_ID__, KFMsg::S2S_RELOGIN_TO_GATE_ACK, &ack );
             if ( !ok )

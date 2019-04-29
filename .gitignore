@@ -20,3 +20,8 @@ _lib/win64/release/
 _bin/bin/win64/debug/
 _bin/bin/win64/release/
 conf_output
+_resource/tool/deploy/deployd.exe
+_resource/tool/deploy/deployd.exe
+_bin/bin/linux/debug/KFStartupd
+_bin/bin/linux/release/KFStartup
+_resource/tool/deploy/deployd.exe
