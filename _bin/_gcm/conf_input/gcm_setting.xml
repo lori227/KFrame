@@ -8,7 +8,6 @@
 
 			<file Name="bus.setting" Type="0"/>
 			<file Name="channel.setting" Type="0"/>
-			<file Name="filter.setting" Type="0"/>
 			<file Name="httpserver.setting" Type="0"/>
 			<file Name="robot.setting" Type="0"/>
 			<file Name="tcpserver.setting" Type="0"/>

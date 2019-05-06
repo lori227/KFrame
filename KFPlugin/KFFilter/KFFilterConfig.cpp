@@ -95,10 +95,10 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////
         KFXml kfxml( _file );
         auto config = kfxml.RootNode();
-        auto wordnode = config.FindNode( "word" );
+        auto wordnode = config.FindNode( "Setting" );
         while ( wordnode.IsValid() )
         {
-            auto word = wordnode.GetString( "value" );
+            auto word = wordnode.GetString( "Word" );
             InsertWord( &_root_word_data, word.data(), static_cast< uint32 >( word.length() ), 0 );
 
             wordnode.NextNode();
