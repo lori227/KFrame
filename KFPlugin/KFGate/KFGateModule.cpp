@@ -340,7 +340,7 @@ namespace KFrame
             KFMsg::S2SLeaveToGameReq req;
             req.set_playerid( pblogin->playerid() );
             _kf_tcp_client->SendNetMessage( __ROUTE_SERVER_ID__, KFMsg::S2S_LEAVE_TO_GAME_REQ, &req );
-            return __LOG_ERROR__( "player[{}:{}] session[{}] failed!", pblogin->accountid(), pblogin->playerid(), pblogin->sessionid() );;
+            return __LOG_ERROR__( "player[{}:{}] session[{}] failed!", pblogin->accountid(), pblogin->playerid(), pblogin->sessionid() );
         }
 
         // 删除掉线定时器

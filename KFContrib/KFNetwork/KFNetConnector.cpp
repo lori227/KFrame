@@ -17,6 +17,7 @@ namespace KFrame
     void KFNetConnector::InitConnector( uint64 id, KFNetServices* netservices )
     {
         _net_services = netservices;
+        _last_message_time = _net_services->_now_time;
 
         // 消息头长度
         uint32 headlength = ( netservices->_message_type == KFMessageEnum::Server ? sizeof( KFServerHead ) : sizeof( KFClientHead ) );
