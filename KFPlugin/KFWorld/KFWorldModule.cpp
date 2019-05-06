@@ -320,6 +320,7 @@ namespace KFrame
         auto ok = _kf_tcp_server->SendNetMessage( gameid, KFMsg::S2S_KICK_PLAYER_TO_GAME_REQ, &req );
         if ( !ok )
         {
+            __LOG_ERROR__( "kick player=[{}] game=[{}]failed!", playerid, KFAppId::ToString( gameid ) );
             UpdateOnlineData( playerid, _invalid_int );
         }
     }
