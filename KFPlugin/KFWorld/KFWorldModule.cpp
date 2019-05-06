@@ -317,7 +317,11 @@ namespace KFrame
         KFMsg::S2SKickPlayerToGameReq req;
         req.set_type( type );
         req.set_playerid( playerid );
-        _kf_tcp_server->SendNetMessage( gameid, KFMsg::S2S_KICK_PLAYER_TO_GAME_REQ, &req );
+        auto ok = _kf_tcp_server->SendNetMessage( gameid, KFMsg::S2S_KICK_PLAYER_TO_GAME_REQ, &req );
+        if ( !ok )
+        {
+            UpdateOnlineData( playerid, _invalid_int );
+        }
     }
 
     __KF_HTTP_FUNCTION__( KFWorldModule::HandleHttpKickOnline )

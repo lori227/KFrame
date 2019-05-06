@@ -71,7 +71,7 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_TIMER_FUNCTION__( KFMailClientModule::OnTimerQueryMail )
     {
-        auto player = _kf_player->FindPlayer( objectid, __FUNC_LINE__ );
+        auto player = _kf_player->FindPlayer( objectid );
         if ( player == nullptr )
         {
             return __UNREGISTER_OBJECT_TIMER__( objectid );

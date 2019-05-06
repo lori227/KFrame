@@ -119,7 +119,7 @@ namespace KFrame
 
     __KF_TIMER_FUNCTION__( KFHeroModule::OnTimerCheckHeroValidTime )
     {
-        auto player = _kf_player->FindPlayer( objectid, __FUNC_LINE__ );
+        auto player = _kf_player->FindPlayer( objectid );
         if ( player == nullptr )
         {
             return;

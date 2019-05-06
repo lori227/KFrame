@@ -49,7 +49,7 @@ namespace KFrame
     {
         _application = application;
 
-        // 全区变量
+        // 全局变量
         KFGlobal::Initialize( nullptr );
 
         // 对象池

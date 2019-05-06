@@ -213,6 +213,7 @@ namespace KFrame
         __STRING_DEFINE__( freindinvitekeeptime );
         __STRING_DEFINE__( freindlinessresettime );
         __STRING_DEFINE__( freindlinessdailymax );
+        __STRING_DEFINE__( playersavetime );
 
     }
 }
