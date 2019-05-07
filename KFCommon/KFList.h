@@ -44,9 +44,13 @@ namespace KFrame
             return object;
         }
 
-        void Remove( T* object )
+        void Remove( T* object, bool isdelete = true )
         {
             _objects.remove( object );
+            if ( isdelete )
+            {
+                __KF_DELETE__( T, object );
+            }
         }
 
         T* PopBack()
