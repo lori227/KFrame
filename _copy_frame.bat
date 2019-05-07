@@ -30,6 +30,10 @@ rd /s /q %localpath%\%subpath%
 if not exist %localpath%\%subpath% ( mkdir %localpath%\%subpath% )
 xcopy /y /S %framepath%\%subpath%\* %localpath%\%subpath%\
 
+set subpath=_doc
+rd /s /q %localpath%\%subpath%
+if not exist %localpath%\%subpath% ( mkdir %localpath%\%subpath% )
+xcopy /y /S %framepath%\%subpath%\* %localpath%\%subpath%\
 
 set subpath=_resource
 rd /s /q %localpath%\%subpath%

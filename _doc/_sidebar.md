@@ -16,6 +16,7 @@
   - [Tcp,Http启动配置](/docs/tcp,http启动配置.md)
 
 - 服务器部署
+
   - [版本打包工具](/docs/版本打包工具.md)
   - [部署后台安装](/docs/部署后台安装.md)
   - [部署中控和Agent](/docs/部署中控和Agent.md)
@@ -23,17 +24,24 @@
   - [更新版本-deploy](/docs/更新版本-deploy.md)
   - [更新版本-postman](/docs/更新版本-postman.md)  
   - [更新版本-jenkins](/docs/Jenkins配置.md)
+ 
 - 代码相关
 
-  - [代码目录结构](/docs/代码目录结构)
+  - [代码目录结构](/docs/代码目录结构.md)
   - [代码规范](/docs/代码规范.md)
   - [插件加载](/docs/插件加载说明.md)
   - [如何开发新插件](/docs/开发新插件.md)
   - [Tcp消息结构说明](/docs/Tcp消息结构说明.md)
   - [登录流程](/docs/登录流程.md)
 
+- 属性
+
+  - [属性说明(KFCore)](/docs/属性说明.md)
+  - [属性配置](/docs/属性配置.md)
+  - [属性插件(KFKernel)](/docs/属性插件.md)
 
 - 平台相关
+
   - [平台API](/docs/平台API.md)
   - [平台错误码](/docs/平台错误码.md)
 
