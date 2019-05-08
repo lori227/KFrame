@@ -148,7 +148,7 @@ namespace KFrame
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFMySQLExecute::Pipeline( const ListString& commands )
+    void KFWriteExecute::Pipeline( const ListString& commands )
     {
         for ( auto& command : commands )
         {
@@ -156,9 +156,7 @@ namespace KFrame
         }
     }
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFMySQLExecute::Insert( const std::string& table, const MapString& invalue )
+    bool KFWriteExecute::Insert( const std::string& table, const MapString& invalue )
     {
         std::ostringstream ossfields;
         std::ostringstream ossvalues;
@@ -190,52 +188,69 @@ namespace KFrame
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFMySQLExecute::Delete( const std::string& table )
+    bool KFWriteExecute::Delete( const std::string& table )
     {
         auto sql = __FORMAT__( "truncate table {};", table );
         return ExecuteSql( sql );
     }
 
-    bool KFMySQLExecute::Delete( const std::string& table, const std::string& key )
+    bool KFWriteExecute::Delete( const std::string& table, const std::string& key )
     {
         MapString keyvalue;
         keyvalue[ __KF_STRING__( id ) ] = key;
         return Delete( table, keyvalue );
     }
 
-    bool KFMySQLExecute::Delete( const std::string& table, const MapString& keyvalues )
+    bool KFWriteExecute::Delete( const std::string& table, const MapString& keyvalues )
     {
         auto strkey = FormatKeyString( keyvalues );
         auto sql = __FORMAT__( "delete from {} where {};", table, strkey );
         return ExecuteSql( sql );
     }
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFMySQLExecute::Update( const std::string& table, const MapString& invalue )
+    bool KFWriteExecute::Update( const std::string& table, const MapString& invalue )
     {
         auto strupdate = FormatUpdateString( invalue );
         auto sql = __FORMAT__( "update {} set {};", table, strupdate );
         return ExecuteSql( sql );
     }
 
-    bool KFMySQLExecute::Update( const std::string& table, const std::string& key, const MapString& invalue )
+    bool KFWriteExecute::Update( const std::string& table, const std::string& key, const MapString& invalue )
     {
         MapString keyvalue;
         keyvalue[ __KF_STRING__( id ) ] = key;
         return Update( table, keyvalue, invalue );
     }
 
-    bool KFMySQLExecute::Update( const std::string& table, const MapString& keyvalue, const MapString& invalue )
+    bool KFWriteExecute::Update( const std::string& table, const MapString& keyvalue, const MapString& invalue )
     {
         auto strupdate = FormatUpdateString( invalue );
         auto strkey = FormatKeyString( keyvalue );
         auto sql = __FORMAT__( "update {} set {} where {};", table, strupdate, strkey );
         return ExecuteSql( sql );
     }
+
+    KFResult< voidptr >::UniqueType KFWriteExecute::VoidExecute( const std::string& strsql )
+    {
+        __NEW_RESULT__( voidptr );
+
+        Statement statement( *_session );
+        statement << strsql;
+        auto ok = ExecuteSql( statement );
+        if ( ok )
+        {
+            kfresult->SetResult( KFEnum::Ok );
+        }
+        else
+        {
+            kfresult->SetResult( KFEnum::Error );
+        }
+
+        return kfresult;
+    }
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    KFResult< std::list< MapString > >::UniqueType KFMySQLExecute::Select( const std::string& table )
+    KFResult< std::list< MapString > >::UniqueType KFReadExecute::Select( const std::string& table )
     {
         static MapString _empty_key;
         static ListString _empty_field;
@@ -243,13 +258,13 @@ namespace KFrame
         return Select( table, _empty_key, _empty_field );
     }
 
-    KFResult< std::list< MapString > >::UniqueType KFMySQLExecute::Select( const std::string& table, const ListString& fields )
+    KFResult< std::list< MapString > >::UniqueType KFReadExecute::Select( const std::string& table, const ListString& fields )
     {
         static MapString _empty_key;
         return Select( table, _empty_key, fields );
     }
 
-    KFResult< std::list< MapString > >::UniqueType KFMySQLExecute::Select( const std::string& table, const std::string& key )
+    KFResult< std::list< MapString > >::UniqueType KFReadExecute::Select( const std::string& table, const std::string& key )
     {
         static ListString _empty_field;
 
@@ -258,20 +273,20 @@ namespace KFrame
         return Select( table, keyvalue, _empty_field );
     }
 
-    KFResult< std::list< MapString > >::UniqueType KFMySQLExecute::Select( const std::string& table, const std::string& key, const ListString& fields )
+    KFResult< std::list< MapString > >::UniqueType KFReadExecute::Select( const std::string& table, const std::string& key, const ListString& fields )
     {
         MapString keyvalue;
         keyvalue[ __KF_STRING__( id ) ] = key;
         return Select( table, keyvalue, fields );
     }
 
-    KFResult< std::list< MapString > >::UniqueType KFMySQLExecute::Select( const std::string& table, const MapString& keyvalue )
+    KFResult< std::list< MapString > >::UniqueType KFReadExecute::Select( const std::string& table, const MapString& keyvalue )
     {
         static ListString _empty_field;
         return Select( table, keyvalue, _empty_field );
     }
 
-    KFResult< std::list< MapString > >::UniqueType KFMySQLExecute::Select( const std::string& table, const MapString& keyvalue, const ListString& fields )
+    KFResult< std::list< MapString > >::UniqueType KFReadExecute::Select( const std::string& table, const MapString& keyvalue, const ListString& fields )
     {
         __NEW_RESULT__( std::list< MapString > );
 
@@ -331,26 +346,9 @@ namespace KFrame
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    KFResult< voidptr >::UniqueType KFMySQLExecute::VoidExecute( const std::string& strsql )
-    {
-        __NEW_RESULT__( voidptr );
 
-        Statement statement( *_session );
-        statement << strsql;
-        auto ok = ExecuteSql( statement );
-        if ( ok )
-        {
-            kfresult->SetResult( KFEnum::Ok );
-        }
-        else
-        {
-            kfresult->SetResult( KFEnum::Error );
-        }
 
-        return kfresult;
-    }
-
-    KFResult< uint32 >::UniqueType KFMySQLExecute::UInt32Execute( const std::string& strsql )
+    KFResult< uint32 >::UniqueType KFReadExecute::UInt32Execute( const std::string& strsql )
     {
         __NEW_RESULT__( uint32 );
 
@@ -373,7 +371,7 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< uint64 >::UniqueType KFMySQLExecute::UInt64Execute( const std::string& strsql )
+    KFResult< uint64 >::UniqueType KFReadExecute::UInt64Execute( const std::string& strsql )
     {
         __NEW_RESULT__( uint64 );
 
@@ -396,7 +394,7 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< std::string >::UniqueType KFMySQLExecute::StringExecute( const std::string& strsql )
+    KFResult< std::string >::UniqueType KFReadExecute::StringExecute( const std::string& strsql )
     {
         __NEW_RESULT__( std::string );
 
@@ -419,7 +417,7 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< MapString >::UniqueType KFMySQLExecute::MapExecute( const std::string& strsql )
+    KFResult< MapString >::UniqueType KFReadExecute::MapExecute( const std::string& strsql )
     {
         __NEW_RESULT__( MapString );
 
@@ -451,7 +449,7 @@ namespace KFrame
     }
 
 
-    KFResult< ListString >::UniqueType KFMySQLExecute::ListExecute( const std::string& strsql )
+    KFResult< ListString >::UniqueType KFReadExecute::ListExecute( const std::string& strsql )
     {
         __NEW_RESULT__( ListString );
 
@@ -477,7 +475,7 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< std::list< MapString > >::UniqueType KFMySQLExecute::ListMapExecute( const std::string& strsql )
+    KFResult< std::list< MapString > >::UniqueType KFReadExecute::ListMapExecute( const std::string& strsql )
     {
         __NEW_RESULT__( std::list< MapString > );
 

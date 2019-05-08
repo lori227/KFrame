@@ -122,7 +122,11 @@ namespace KFrame
         ack.set_msgid( msgid );
         ack.set_msgdata( msgdata );
         ack.mutable_pbroute()->CopyFrom( *pbroute );
-        _kf_cluster_shard->SendToClient( clientid, KFMsg::S2S_ROUTE_MESSAGE_TO_CLIENT_ACK, &ack );
+        auto ok = _kf_cluster_shard->SendToClient( clientid, KFMsg::S2S_ROUTE_MESSAGE_TO_CLIENT_ACK, &ack );
+        if ( !ok )
+        {
+            __LOG_ERROR__( "send msg[{}] to client=[{}] failed!", msgid, KFAppId::ToString( clientid ) );
+        }
     }
 
     __KF_MESSAGE_FUNCTION__( KFRouteShardModule::HandleRouteSyncObjectToShardReq )

@@ -11,7 +11,7 @@
 
 #include "KFrame.h"
 #include "KFMySQLInterface.h"
-#include "KFMySQLExecute.hpp"
+#include "KFMySQLLogic.hpp"
 #include "KFConfig/KFConfigInterface.h"
 
 namespace KFrame
@@ -30,15 +30,14 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 创建Execute
-        virtual KFMySQLDriver* CreateExecute( const std::string& module, uint32 logicid = 0 );
-        virtual KFMySQLDriver* CreateExecute( uint32 id, const std::string& user, const std::string& password, const std::string& database, const std::string& ip, uint32 port );
+        virtual KFMySQLDriver* Create( const std::string& module, uint32 logicid = 0 );
 
     protected:
         // 查询
-        KFMySQLDriver* FindMySQLExecute( uint32 id );
+        KFMySQLLogic* FindMySQLLogic( uint32 id );
 
         // 插入
-        void InsertMySQLExecute( uint32 id, KFMySQLExecute* kfexecute );
+        void InsertMySQLLogic( uint32 id, KFMySQLLogic* kflogic );
 
     private:
         // 互斥量
@@ -46,7 +45,7 @@ namespace KFrame
 
         // 数据库列表
         typedef std::pair< uint32, uint32 > MySQLKey;
-        KFMap< MySQLKey, const MySQLKey&, KFMySQLExecute > _mysql_execute_map;
+        KFMap< MySQLKey, const MySQLKey&, KFMySQLLogic > _mysql_logic_map;
     };
 }
 

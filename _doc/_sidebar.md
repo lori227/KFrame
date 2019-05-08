@@ -24,7 +24,7 @@
   - [更新版本-deploy](/docs/更新版本-deploy.md)
   - [更新版本-postman](/docs/更新版本-postman.md)  
   - [更新版本-jenkins](/docs/Jenkins配置.md)
- 
+
 - 代码相关
 
   - [代码目录结构](/docs/代码目录结构.md)
@@ -33,6 +33,17 @@
   - [如何开发新插件](/docs/开发新插件.md)
   - [Tcp消息结构说明](/docs/Tcp消息结构说明.md)
   - [登录流程](/docs/登录流程.md)
+  
+- 网络
+
+  - [Ip地址(KFIpAddress)](/docs/Ip地址.md)
+  - [连接关系(KFBus)](/docs/连接关系.md)
+  - [服务器发现(KFTcpDiscover)](/docs/服务器发现.md)
+
+- 数据库
+
+  - [KFRedis](/docs/数据库-KFRedis.md)
+  - [KFMySQL](/docs/数据库-KFMySQL.md)
 
 - 属性
 

@@ -96,7 +96,6 @@ namespace KFrame
         auto proxyid = FindProxyId( clientid );
         if ( proxyid == _invalid_int )
         {
-            __LOG_ERROR__( "msg[{}] can't find client[{}] proxy!", msgid, KFAppId::ToString( clientid ) );
             return false;
         }
 

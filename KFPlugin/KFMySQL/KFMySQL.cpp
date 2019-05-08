@@ -16,7 +16,7 @@ namespace KFrame
         delete _session;
     }
 
-    bool KFMySQL::InitMySQL( uint32 id, const std::string& user, const std::string& password, const std::string& database, const std::string& ip, uint32 port )
+    bool KFMySQL::InitMySQL( const std::string& user, const std::string& password, const std::string& database, const std::string& ip, uint32 port )
     {
         _connect_data = __FORMAT__( "host={};port={};user={};password={};db={};compress=true;auto-reconnect=true;character-set=utf8",
                                     ip, port, user, password, database );
@@ -27,22 +27,22 @@ namespace KFrame
             auto ok = _session->isConnected();
             if ( ok )
             {
-                __LOG_INFO__( "mysql[{}] connect[ {}|{}:{} ] ok!", id, database, ip, port );
+                __LOG_INFO__( "mysql connect[ {}|{}:{} ] ok!", database, ip, port );
             }
             else
             {
-                __LOG_ERROR__( "mysql[{}] connect[ {}|{}:{} ] failed!", id, database, ip, port );
+                __LOG_ERROR__( "mysql connect[ {}|{}:{} ] failed!", database, ip, port );
             }
 
             return ok;
         }
         catch ( Poco::Exception& ex )
         {
-            __LOG_ERROR__( "mysql[{}:{}] connect failed = [{}]!", id, _connect_data, ex.displayText() );
+            __LOG_ERROR__( "mysql[{}] connect failed = [{}]!", _connect_data, ex.displayText() );
         }
         catch ( ... )
         {
-            __LOG_ERROR__( "mysql[{}:{}] connect failed = unknown!", id, _connect_data );
+            __LOG_ERROR__( "mysql[{}] connect failed = unknown!", _connect_data );
         }
 
         return false;

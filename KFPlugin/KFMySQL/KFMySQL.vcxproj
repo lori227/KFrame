@@ -15,6 +15,7 @@
     <ClCompile Include="KFMySQL.cpp" />
     <ClCompile Include="KFMySQLConfig.cpp" />
     <ClCompile Include="KFMySQLExecute.cpp" />
+    <ClCompile Include="KFMySQLLogic.cpp" />
     <ClCompile Include="KFMySQLModule.cpp" />
     <ClCompile Include="KFMySQLPlugin.cpp" />
   </ItemGroup>
@@ -23,6 +24,7 @@
     <ClInclude Include="KFMySQLConfig.hpp" />
     <ClInclude Include="KFMySQLExecute.hpp" />
     <ClInclude Include="KFMySQLInterface.h" />
+    <ClInclude Include="KFMySQLLogic.hpp" />
     <ClInclude Include="KFMySQLModule.hpp" />
     <ClInclude Include="KFMySQLPlugin.hpp" />
   </ItemGroup>

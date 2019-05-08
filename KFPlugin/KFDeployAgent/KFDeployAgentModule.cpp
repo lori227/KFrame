@@ -18,7 +18,7 @@ namespace KFrame
     void KFDeployAgentModule::AfterLoad()
     {
         auto kfglobal = KFGlobal::Instance();
-        _deploy_driver = _kf_mysql->CreateExecute( __KF_STRING__( deploy ) );
+        _deploy_driver = _kf_mysql->Create( __KF_STRING__( deploy ) );
         if ( _deploy_driver == nullptr )
         {
             return __LOG_ERROR__( "deploy mysql is nullprt" );

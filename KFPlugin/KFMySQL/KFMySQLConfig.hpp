@@ -16,6 +16,40 @@ namespace KFrame
         std::string _password;
         std::string _database;
         std::string _name;
+        uint32 _type;
+    };
+
+    class KFMySQLList
+    {
+    public:
+        // 清空
+        void Reset();
+
+        const KFMySQLSetting* FindSetting();
+        void AddSetting( KFMySQLSetting& kfsetting );
+
+    private:
+        std::vector< KFMySQLSetting > _mysql_list;
+
+        // 返回的连接设置
+        KFMySQLSetting* _kfseting;
+    };
+
+
+    class KFMySQLType
+    {
+    public:
+        // 查询redislist
+        KFMySQLList* FindMySQLList( uint32 type );
+
+        // 添加redislist
+        KFMySQLList* AddMySQLList( uint32 type );
+
+    public:
+        uint32 _id;
+
+        // Redis列表
+        KFHashMap< uint32, uint32, KFMySQLList > _mysql_list;
     };
 
     class KFMySQLConfig : public KFConfig, public KFSingleton< KFMySQLConfig >
@@ -26,18 +60,17 @@ namespace KFrame
         bool LoadConfig();
 
         // 查找配置
-        const KFMySQLSetting* FindSetting( const std::string& module, uint32 logicid ) const;
+        KFMySQLType* FindMySQLType( const std::string& module, uint32 logicid );
 
     public:
         // 逻辑数据库映射
         typedef std::pair< std::string, uint32 > ModuleKey;
-        KFMap< ModuleKey, const ModuleKey&, KFMySQLSetting > _mysql_setting;
+        KFMap< ModuleKey, const ModuleKey&, KFMySQLType > _mysql_type;
     };
+
+    ////////////////////////////////////////////////////////////////////////////
+    static auto* _kf_mysql_config = KFrame::KFMySQLConfig::Instance();
+    ////////////////////////////////////////////////////////////////////////////
 }
-
-////////////////////////////////////////////////////////////////////////////
-static auto* _kf_mysql_config = KFrame::KFMySQLConfig::Instance();
-////////////////////////////////////////////////////////////////////////////
-
 
 #endif

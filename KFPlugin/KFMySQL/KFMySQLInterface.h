@@ -1,4 +1,4 @@
-#ifndef __KF_MYSQL_INTERFACE_H__
+ï»¿#ifndef __KF_MYSQL_INTERFACE_H__
 #define __KF_MYSQL_INTERFACE_H__
 
 #include "KFrame.h"
@@ -8,16 +8,16 @@ namespace KFrame
     class KFMySQLDriver
     {
     public:
-        // ²åÈë¼ÇÂ¼
+        // æ’å…¥è®°å½•
         virtual bool Insert( const std::string& table, const MapString& invalue ) = 0;
 
-        // É¾³ı¼¸ÂÊ
+        // åˆ é™¤å‡ ç‡
         virtual bool Delete( const std::string& table ) = 0;
         virtual bool Delete( const std::string& table, const std::string& key ) = 0;
         virtual bool Delete( const std::string& table, const MapString& keyvalues ) = 0;
 
         ///////////////////////////////////////////////////////////////////////////////////////
-        // ¸üĞÂ×Ö¶Î
+        // æ›´æ–°å­—æ®µ
         template< class T >
         bool Update( const std::string& table, const std::string& field, T invalue )
         {
@@ -26,7 +26,7 @@ namespace KFrame
             return Update( table, updatevalue );
         }
 
-        // Ä¬ÈÏ×Ö¶Î
+        // é»˜è®¤å­—æ®µ
         template< class T >
         bool Update( const std::string& table, const std::string& key, const std::string& field, T invalue )
         {
@@ -39,7 +39,7 @@ namespace KFrame
             return Update( table, keyvalue, updatevalue );
         }
 
-        // ¸üĞÂ¶à¸ö×Ö¶Î
+        // æ›´æ–°å¤šä¸ªå­—æ®µ
         virtual bool Update( const std::string& table, const MapString& invalue ) = 0;
         virtual bool Update( const std::string& table, const std::string& key, const MapString& invalue ) = 0;
         virtual bool Update( const std::string& table, const MapString& keyvalue, const MapString& invalue ) = 0;
@@ -94,7 +94,7 @@ namespace KFrame
             return ListMapExecute( strsql );
         }
 
-        // ²éÑ¯ËùÓĞ
+        // æŸ¥è¯¢æ‰€æœ‰
         virtual KFResult< std::list< MapString > >::UniqueType Select( const std::string& table ) = 0;
         virtual KFResult< std::list< MapString > >::UniqueType Select( const std::string& table, const ListString& fields ) = 0;
         virtual KFResult< std::list< MapString > >::UniqueType Select( const std::string& table, const std::string& key ) = 0;
@@ -104,7 +104,7 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        // ÊÂÎñ( Ä¿Ç°Ö»ÅúÁ¿Ö´ĞĞ, Ã»ÓĞ¼ÓÉÏmysqlÊÂÎñËø )
+        // äº‹åŠ¡( ç›®å‰åªæ‰¹é‡æ‰§è¡Œ, æ²¡æœ‰åŠ ä¸Šmysqläº‹åŠ¡é” )
         virtual void Pipeline( const ListString& commands ) = 0;
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
     protected:
@@ -121,8 +121,8 @@ namespace KFrame
     class KFMySQLInterface : public KFModule
     {
     public:
-        // ´´½¨Execute
-        virtual KFMySQLDriver* CreateExecute( const std::string& module, uint32 logicid = 0 ) = 0;
+        // åˆ›å»ºExecute
+        virtual KFMySQLDriver* Create( const std::string& module, uint32 logicid = 0 ) = 0;
 
     };
 

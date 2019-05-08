@@ -57,11 +57,11 @@ namespace KFrame
         virtual ~KFWriteExecute() = default;
 
         // 写操作
-        virtual KFResult< voidptr >::UniqueType VoidExecute( const std::string& strsql );
-        virtual KFResult< uint64 >::UniqueType UpdateExecute( const std::string& strsql );
+        KFResult< voidptr >::UniqueType VoidExecute( const std::string& strsql );
+        KFResult< uint64 >::UniqueType UpdateExecute( const std::string& strsql );
 
         // 批量写
-        virtual KFResult< voidptr >::UniqueType Pipeline( const ListString& commands );
+        KFResult< voidptr >::UniqueType Pipeline( const ListString& commands );
 
         /////////////////////////////////////////////////////////////////////////////////////////////
     };
@@ -75,15 +75,15 @@ namespace KFrame
 
         ///////////////////////////////////////////////////////
         // 读操作
-        virtual KFResult< uint64 >::UniqueType UInt64Execute( const std::string& strsql );
-        virtual KFResult< std::string >::UniqueType StringExecute( const std::string& strsql );
-        virtual KFResult< MapString >::UniqueType MapExecute( const std::string& strsql );
-        virtual KFResult< ListString >::UniqueType ListExecute( const std::string& strsql );
-        virtual KFResult< VectorString >::UniqueType VectorExecute( const std::string& strsql );
+        KFResult< uint64 >::UniqueType UInt64Execute( const std::string& strsql );
+        KFResult< std::string >::UniqueType StringExecute( const std::string& strsql );
+        KFResult< MapString >::UniqueType MapExecute( const std::string& strsql );
+        KFResult< ListString >::UniqueType ListExecute( const std::string& strsql );
+        KFResult< VectorString >::UniqueType VectorExecute( const std::string& strsql );
 
         // 添加执行命令
-        virtual KFResult< ListString >::UniqueType ListPipelineExecute( const ListString& commands );
-        virtual KFResult< std::list< MapString > >::UniqueType ListMapPipelineExecute( const ListString& commands );
+        KFResult< ListString >::UniqueType ListPipelineExecute( const ListString& commands );
+        KFResult< std::list< MapString > >::UniqueType ListMapPipelineExecute( const ListString& commands );
         ///////////////////////////////////////////////////////
     };
 }

@@ -13,7 +13,7 @@ namespace KFrame
     {
         ShutDown();
 
-        __KF_DELETE__( KFRedisExecute, _read_execute );
+        __KF_DELETE__( KFReadExecute, _read_execute );
         __KF_DELETE__( KFWriteExecute, _write_execute );
     }
 

@@ -18,7 +18,7 @@
 
 	<!--保存账号信息-->
 	<Module Name="account">
-		<Redis MinLogicId="0" MaxLogicId="1">
+		<Redis MinLogicId="0" MaxLogicId="0">
 			<Write IP="127.0.0.1" Port="6379" Password="redis@lori227-="/>
 			<Read IP="127.0.0.1" Port="6379" Password="redis@lori227-="/>
 		</Redis>			 

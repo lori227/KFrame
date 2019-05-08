@@ -20,47 +20,44 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    KFMySQLDriver* KFMySQLModule::FindMySQLExecute( uint32 id )
+    KFMySQLLogic* KFMySQLModule::FindMySQLLogic( uint32 id )
     {
         auto threadid = KFThread::GetThreadID();
         auto key = MySQLKey( threadid, id );
 
         KFLocker lock( _kf_mutex );
-        return _mysql_execute_map.Find( key );
+        return _mysql_logic_map.Find( key );
     }
 
-    void KFMySQLModule::InsertMySQLExecute( uint32 id, KFMySQLExecute* kfexecute )
+    void KFMySQLModule::InsertMySQLLogic( uint32 id, KFMySQLLogic* kflogic )
     {
         auto threadid = KFThread::GetThreadID();
         auto key = MySQLKey( threadid, id );
 
         KFLocker lock( _kf_mutex );
-        _mysql_execute_map.Insert( key, kfexecute );
+        _mysql_logic_map.Insert( key, kflogic );
     }
 
-    KFMySQLDriver* KFMySQLModule::CreateExecute( const std::string& module, uint32 logicid /* = 0 */ )
+    KFMySQLDriver* KFMySQLModule::Create( const std::string& module, uint32 logicid /* = 0 */ )
     {
-        auto kfsetting = _kf_mysql_config->FindSetting( module, logicid );
-        if ( kfsetting == nullptr )
+        auto kfmysqltype = _kf_mysql_config->FindMySQLType( module, logicid );
+        if ( kfmysqltype == nullptr )
         {
+            __LOG_ERROR__( "[{}:{}] can't find mysql type!", module, logicid );
             return nullptr;
         }
 
-        return CreateExecute( kfsetting->_id, kfsetting->_user, kfsetting->_password, kfsetting->_database, kfsetting->_ip, kfsetting->_port );
-    }
-
-    KFMySQLDriver* KFMySQLModule::CreateExecute( uint32 id, const std::string& user, const std::string& password, const std::string& database, const std::string& ip, uint32 port )
-    {
-        auto kfdriver = FindMySQLExecute( id );
-        if ( kfdriver != nullptr )
+        auto kflogic = FindMySQLLogic( kfmysqltype->_id );
+        if ( kflogic != nullptr )
         {
-            return kfdriver;
+            return kflogic;
         }
 
-        auto kfexecute = __KF_NEW__( KFMySQLExecute );
-        kfexecute->InitMySQL( id, user, password, database, ip, port );
+        kflogic = __KF_NEW__( KFMySQLLogic );
+        kflogic->Initialize( kfmysqltype );
+        InsertMySQLLogic( kfmysqltype->_id, kflogic );
 
-        InsertMySQLExecute( id, kfexecute );
-        return kfexecute;
+        return kflogic;
     }
+
 }

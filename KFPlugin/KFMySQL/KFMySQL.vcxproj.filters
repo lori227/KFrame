@@ -7,6 +7,7 @@
     <ClCompile Include="KFMySQLModule.cpp" />
     <ClCompile Include="KFMySQLPlugin.cpp" />
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="KFMySQLLogic.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFMySQLInterface.h" />
@@ -15,5 +16,6 @@
     <ClInclude Include="KFMySQLExecute.hpp" />
     <ClInclude Include="KFMySQLModule.hpp" />
     <ClInclude Include="KFMySQLPlugin.hpp" />
+    <ClInclude Include="KFMySQLLogic.hpp" />
   </ItemGroup>
 </Project>
