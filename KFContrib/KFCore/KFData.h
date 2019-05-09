@@ -89,11 +89,23 @@ namespace KFrame
         virtual void FromMap( const MapString& values );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         // object
+
+        // 如:money
         virtual KFData* FindData( const std::string& dataname );
+
+        // 如:hero->1
         virtual KFData* FindData( const std::string& dataname, uint64 key );
+
+        // 如: basic->id
         virtual KFData* FindData( const std::string& parentname, const std::string& childname );
+
+        // 如: hero->1->level
         virtual KFData* FindData( const std::string& parentname, uint64 key, const std::string& childname );
+
+        // 如: sign->day->1
         virtual KFData* FindData( const std::string& parentname, const std::string& childname, uint64 key );
+
+        // 如: sign->day->value
         virtual KFData* FindData( const std::string& parentname, const std::string& childname, const std::string& dataname );
 
         virtual bool AddData( const std::string& dataname, KFData* data );

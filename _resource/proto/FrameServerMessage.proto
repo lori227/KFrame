@@ -19,11 +19,13 @@ enum FrameServerProtocol
 	S2S_LOGIN_TO_LOGIN_ACK					= 20104;	// 登录回应到login服务器
 	S2S_LOGIN_TO_GAME_REQ					= 20105;	// 登录请求到game服务器
 	S2S_LOGOUT_TO_GAME_REQ					= 20106;	// 登出游戏到game服务器
-	S2S_DISCONNECT_TO_GAME_REQ				= 20107;	// 断线到gate服务器
+	S2S_DISCONNECT_TO_GAME_REQ				= 20107;	// 断线到game服务器
 	S2S_LEAVE_TO_GAME_REQ					= 20108;	// 离开到game服务器
 	S2S_ENTER_TO_GATE_ACK					= 20109;	// 进入游戏到gate服务器
 	S2S_RELOGIN_TO_GAME_REQ					= 20110;	// 重新登录到game
 	S2S_RELOGIN_TO_GATE_ACK					= 20111;	// 重新登录到gate
+	S2S_CONNECT_TO_GAME_REQ					= 20112;	// 连接到game服务器
+
 
 	// world
 	S2S_PLAYER_ENTER_TO_WORLD_REQ 			= 20202;	// 游戏玩家进入游戏
@@ -193,6 +195,13 @@ message S2SDisconnectToGameReq
 message S2SLeaveToGameReq
 {
 	uint64 playerid = 1; 
+}
+
+// 连接到game服务器
+// S2S_CONNECT_TO_GAME_REQ
+message S2SConnectToGameReq
+{
+	repeated PBLoginData pblogin = 1;	
 }
 
 // 重新登录到game

@@ -38,10 +38,10 @@ namespace KFrame
 
     protected:
         // 连接成功
-        __KF_NET_EVENT_FUNCTION__( OnClientConnectionLogin );
+        __KF_NET_EVENT_FUNCTION__( OnClientConnectionServer );
 
         // 断开连接
-        __KF_NET_EVENT_FUNCTION__( OnClientLostLogin );
+        __KF_NET_EVENT_FUNCTION__( OnClientLostServer );
 
         // 玩家掉线
         __KF_NET_EVENT_FUNCTION__( OnPlayerDisconnection );

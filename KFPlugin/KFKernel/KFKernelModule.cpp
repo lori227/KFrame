@@ -88,6 +88,7 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFKernelModule::ParseFromProto( KFData* kfdata, const KFMsg::PBObject* proto )
     {
+        kfdata->Reset();
         CopyFromObject( kfdata, proto );
         return true;
     }

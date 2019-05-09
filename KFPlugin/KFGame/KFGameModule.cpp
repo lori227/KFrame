@@ -30,6 +30,7 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFMsg::S2S_KICK_PLAYER_TO_GAME_REQ, &KFGameModule::HandleKickPlayerToGameReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_RELOGIN_TO_GAME_REQ, &KFGameModule::HandleReLoginToGameReq );
 
+        __REGISTER_MESSAGE__( KFMsg::S2S_CONNECT_TO_GAME_REQ, &KFGameModule::HandleConnectToGameReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_DISCONNECT_TO_GAME_REQ, &KFGameModule::HandleDisconnectToGameReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_LEAVE_TO_GAME_REQ, &KFGameModule::HandleLeaveToGameReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_LOGOUT_TO_GAME_REQ, &KFGameModule::HandleLogoutToGameReq );
@@ -55,6 +56,7 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_LOGIN_TO_GAME_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_KICK_PLAYER_TO_GAME_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_CONNECT_TO_GAME_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_DISCONNECT_TO_GAME_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_RELOGIN_TO_GAME_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_LEAVE_TO_GAME_REQ );
@@ -393,6 +395,21 @@ namespace KFrame
             if ( !ok )
             {
                 __LOG_ERROR__( "player[{}:{}] ack failed!", kfmsg.accountid(), kfmsg.playerid() );
+            }
+        }
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFGameModule::HandleConnectToGameReq )
+    {
+        __PROTO_PARSE__( KFMsg::S2SConnectToGameReq );
+
+        for ( auto i = 0; i < kfmsg.pblogin_size(); ++i )
+        {
+            auto pblogin = &kfmsg.pblogin( i );
+            auto player = _kf_player->FindPlayer( pblogin->playerid() );
+            if ( player == nullptr )
+            {
+                _kf_data_client->LoadPlayerData( pblogin );
             }
         }
     }

@@ -70,6 +70,9 @@ namespace KFrame
         // 处理玩家掉线
         __KF_MESSAGE_FUNCTION__( HandleDisconnectToGameReq );
 
+        // 连接
+        __KF_MESSAGE_FUNCTION__( HandleConnectToGameReq );
+
         // 玩家断线离开
         __KF_MESSAGE_FUNCTION__( HandleLeaveToGameReq );
 

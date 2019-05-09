@@ -169,7 +169,6 @@ namespace KFrame
                 pblogin.set_sessionid( sessionid );
                 pblogin.set_account( kftoken->_value[ __KF_STRING__( account ) ] );
                 pblogin.set_channel( KFUtility::ToValue( kftoken->_value[ __KF_STRING__( channel ) ] ) );
-
                 return LoginToWorld( &pblogin );
             }
         }

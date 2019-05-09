@@ -119,10 +119,14 @@ namespace KFrame
 
     KFEntity* KFComponentEx::CreateEntity( uint64 key )
     {
-        auto kfentity = __KF_NEW__( KFEntityEx );
-        kfentity->InitData( this, _component_name );
+        auto kfentity = _entitys.Find( key );
+        if ( kfentity == nullptr )
+        {
+            kfentity = __KF_NEW__( KFEntityEx );
+            static_cast< KFEntityEx* >( kfentity )->InitData( this, _component_name );
+            AddEntity( key, kfentity );
+        }
 
-        AddEntity( key, kfentity );
         return kfentity;
     }
 
