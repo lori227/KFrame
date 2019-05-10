@@ -25,27 +25,28 @@ namespace KFrame
             ////////////////////////////////////////////////////////////////////////////
             ////////////////////////////////////////////////////////////////////////////
 
-            Mask_Null_Value = 0,			// 无效值
-            Mask_Sync_Client = 1 << 1,		// 更新同步玩家
-            Mask_Sync_View = 1 << 2,		// 同步给附近玩家
-            Mask_Save_Database = 1 << 3,	// 同步给附近玩家
-            Mask_System_Log = 1 << 4,		// 打印日志
-            Mask_Public_Data = 1 << 5,		// 公共属性
-            Mask_Relation_Data = 1 << 6,	// 关系属性
-            Mask_Group_Data = 1 << 7,		// 队伍属性
-            Mask_Guild_Data = 1 << 8,		// 帮派属性
-            Mask_Rank_Data = 1 << 9,		// 排行榜属性
+            Mask_Null = 0,				// 无效值
+            Mask_Client = 1 << 1,		// 更新同步玩家
+            Mask_View = 1 << 2,			// 同步给附近玩家
+            Mask_Save = 1 << 3,			// 同步给附近玩家
+            Mask_Log = 1 << 4,			// 打印日志
+            Mask_Multiple = 1 << 5,		// 是否支持倍数
+            Mask_Show = 1 << 6,			// 是否显示给客户端
 
-            Mask_Save_Delete = 1 << 30,		// 删除同步到服务器
-            Mask_Sync_Delete = 1 << 31,		// 删除同步到客户端
-            //Flag_Show			= 1 << 9,		// 通知客户端显示
+            Mask_Public = 1 << 20,		// 公共属性
+            Mask_Relation = 1 << 21,	// 关系属性
+            Mask_Group = 1 << 22,		// 队伍属性
+            Mask_Guild = 1 << 23,		// 帮派属性
+            Mask_Rank = 1 << 24,		// 排行榜属性
             ////////////////////////////////////////////////////////////////////////////
-            // 数据的保存和同步类型
-            Data_Operate_None = 0,		// 不执行
-            Data_Operate_AtOnce = 1,	// 马上
-            Data_Operate_Delay = 2,		// 延迟
+            Data_Save = 1 << 1,				// 需要保存
+            Data_Delete_Remove = 1 << 2,	// 删除数据库
+            Data_Delete_Save = 1 << 3,		// 删除保存数据库
             ////////////////////////////////////////////////////////////////////////////
-
+            ////////////////////////////////////////////////////////////////////////////
+            Show_None = 1,					// 不显示
+            Show_Element = 2,				// 使用Element显示
+            Show_Data = 3,					// 使用Data显示
         };
 
         static uint32 ConvertDataType( const std::string& stringtype )

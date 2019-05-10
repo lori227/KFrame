@@ -6,22 +6,55 @@
 namespace KFrame
 {
     class KFData;
+    class KFDataSetting;
+    class KFClassSetting;
     class KFValue
     {
     public:
         // 设置数值
-        virtual bool SetValue( std::string value ) = 0;
-
-        // 计算数值
-        virtual const std::string& CalcValue( float multiple = 1.0f ) = 0;
-        virtual uint64 CalcUInt64( float multiple = 1.0f ) = 0;
+        virtual void SetValue( std::string value ) = 0;
 
         // 获得使用的数值
-        virtual const std::string& GetValue( float multiple = 1.0f ) = 0;
+        virtual const std::string& GetValue()
+        {
+            return _invalid_str;
+        }
+
+        // 计算数值
+        virtual uint32 CalcUseValue( const KFDataSetting* kfsetting, float multiple )
+        {
+            return _invalid_int;
+        }
+
+        virtual uint32 CalcUseValue( const KFClassSetting* kfsetting, const std::string& dataname, float multiple )
+        {
+            return _invalid_int;
+        }
+
+        // 获得使用数值
+        virtual uint32 GetUseValue()
+        {
+            return _invalid_int;
+        }
+
+        // 是否是string
+        virtual bool IsString()
+        {
+            return false;
+        }
+
+        // 是否是数值
+        virtual bool IsInt()
+        {
+            return false;
+        }
+
+        // 是否需要显示
+        bool IsNeedShow();
 
     public:
-        std::string _str_value;
-        std::string _use_value;
+        // 配置属性
+        const KFDataSetting* _data_setting = nullptr;
     };
     //////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////
@@ -29,56 +62,54 @@ namespace KFrame
     {
     public:
         // 设置数值
-        virtual bool SetValue( std::string value );
+        virtual void SetValue( std::string value );
 
         // 计算数值
-        virtual const std::string& CalcValue( float multiple = 1.0f );
-        virtual uint64 CalcUInt64( float multiple = 1.0f );
+        virtual uint32 CalcUseValue( const KFDataSetting* kfsetting, float multiple );
+        virtual uint32 CalcUseValue( const KFClassSetting* kfsetting, const std::string& dataname, float multiple );
 
-        // 获得使用的数值
-        virtual const std::string& GetValue( float multiple = 1.0f );
+        // 获得使用数值
+        virtual uint32 GetUseValue();
 
-    public:
-        uint64 _min_value = 0u;
-        uint64 _max_value = 0u;
+        // 是否是数值
+        virtual bool IsInt();
+
+    private:
+        uint32 _min_value = _invalid_int;
+        uint32 _max_value = _invalid_int;
+        uint32 _use_value = _invalid_int;
     };
     //////////////////////////////////////////////////////////////////
     class KFStrValue : public KFValue
     {
     public:
         // 设置数值
-        virtual bool SetValue( std::string value );
-
-        // 计算数值
-        virtual const std::string& CalcValue( float multiple = 1.0f );
-        virtual uint64 CalcUInt64( float multiple = 1.0f );
+        virtual void SetValue( std::string value );
 
         // 获得使用的数值
-        virtual const std::string& GetValue( float multiple = 1.0f );
+        virtual const std::string& GetValue();
+
+        // 是否是string
+        virtual bool IsString();
+    private:
+        std::string _str_value;
     };
 
     //////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////
-    enum KFElementEnum
-    {
-        Value = 1,
-        Object = 2,
-    };
-
-    class KFElements;
     class KFElement
     {
     public:
         virtual ~KFElement() = default;
 
-        bool IsValue() const
+        virtual bool IsValue() const
         {
-            return _type == KFElementEnum::Value;
+            return false;
         }
 
-        bool IsObject() const
+        virtual bool IsObject() const
         {
-            return _type == KFElementEnum::Object;
+            return false;
         }
 
         // 设置操作类型
@@ -87,60 +118,63 @@ namespace KFrame
             _operate = operate;
         }
 
-    protected:
-        // 类型
-        uint32 _type = 0u;
+        // 格式化
+        virtual const std::string& ToString() const
+        {
+            return _invalid_str;
+        }
+
+        // 是否需要显示
+        bool IsNeedShow() const;
     public:
         // 属性名
         std::string _data_name;
 
-        // 父属性
-        KFElements* _parent{ nullptr };
-
         // 操作 +-=* 等.....
-        uint32 _operate{ KFEnum::Add };
+        uint32 _operate = KFEnum::Add;
+
+        // 配置属性
+        const KFDataSetting* _data_setting = nullptr;
     };
 
-    /////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////
     // 数值元素
     class KFElementValue : public KFElement
     {
     public:
-        KFElementValue();
         ~KFElementValue();
 
-        // 设置数值
-        bool SetValue( std::string value );
+        virtual bool IsValue() const;
 
-        // 计算数值
-        const std::string& CalcValue( float multiple = 1.0f );
-        uint64 CalcUInt64( float multiple = 1.0f );
-        const std::string& GetValue( float multiple = 1.0f );
+        // 设置数值
+        void SetValue( std::string value );
+
+        // 格式化
+        virtual const std::string& ToString() const;
 
     public:
         // 属性值
-        KFValue* _value;
+        KFValue* _value = nullptr;
     };
     /////////////////////////////////////////////////////////////////////////////////
     // 对象元素
     class KFElementObject : public KFElement
     {
     public:
-        KFElementObject()
-        {
-            _type = KFElementEnum::Object;
-        }
+        virtual bool IsObject() const;
 
-        bool SetValue( const std::string& dataname, std::string value );
+        // 设置数值
+        void SetValue( const std::string& dataname, std::string value );
 
-        // 计算数值
-        const std::string& CalcValue( const std::string& name, float multiple = 1.0f );
-        uint64 CalcUInt64( const std::string& name, float multiple = 1.0f );
+        // 获得数值
+        uint32 GetValue( const KFClassSetting* kfsetting, const std::string& dataname, float multiple );
 
+        // 格式化
+        virtual const std::string& ToString() const;
     public:
-
         // 配置id( 如果有的话 )
-        uint32 _config_id = 0u ;
+        uint32 _config_id = _invalid_int;
 
         // 属性数据
         KFHashMap< std::string, const std::string&, KFValue > _values;
@@ -152,14 +186,11 @@ namespace KFrame
         KFElements();
         ~KFElements();
 
-        // 解析字符串奖励
-        bool Parse( const std::string& strdata, const char* function, uint32 line );
-
-        // 格式化字串
-        const std::string& Serialize( float multiple = 1.0f ) const;
-
         // 设置操作
         void SetOperate( uint32 operate );
+
+        // 解析字符串奖励
+        bool Parse( const std::string& strdata, const char* function, uint32 line );
 
         // non-copy
     private:
@@ -169,15 +200,9 @@ namespace KFrame
         // 重置
         void Cleanup();
 
-        // 添加
-        void AddElement( KFElement* kfelement );
-
     public:
-        // 原始配置数据
-        std::string _data;
-
-        // 是否有随机奖励
-        bool _is_rand_value = false;
+        // 原始数据
+        std::string _str_element;
 
         // 元素列表
         std::vector< KFElement* > _element_list;

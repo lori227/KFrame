@@ -51,7 +51,7 @@ namespace KFrame
         player->UpdateData( kfsignin, __KF_STRING__( sevenreward ), KFEnum::ABit, kfmsg.day() );
 
         // 添加奖励
-        player->AddElement( __FUNC_LINE__, &kfsetting->_reward, true );
+        player->AddElement( &kfsetting->_reward, true, __FUNC_LINE__ );
 
         _kf_display->SendToClient( player, KFMsg::SignInRewardOk );
     }

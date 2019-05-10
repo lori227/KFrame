@@ -41,7 +41,15 @@ namespace KFrame
 
     bool KFArray::IsValid()
     {
-        return true;
+        for ( auto kfdata : _data._objects )
+        {
+            if ( kfdata->IsValid() )
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -147,7 +155,7 @@ namespace KFrame
 
         for ( auto kfdata : _data._objects )
         {
-            __JSON_ADD_STRING__( kfjson, kfdata->ToString() );
+            __JSON_ADD_VALUE__( kfjson, kfdata->GetValue() );
         }
 
         return __JSON_SERIALIZE__( kfjson ) ;

@@ -81,16 +81,16 @@ namespace KFrame
         }
 
         // 检测扣除物品是否足够
-        if ( !player->CheckElement( __FUNC_LINE__, kfagents, count ) )
+        if ( !player->CheckElement( kfagents, __FUNC_LINE__, count ) )
         {
             return KFMsg::StoreLackCost;
         }
 
         // 扣除道具
-        player->RemoveElement( __FUNC_LINE__, kfagents, count );
+        player->RemoveElement( kfagents, __FUNC_LINE__, count );
 
         // 发送道具
-        player->AddElement( __FUNC_LINE__, &kfsetting->_buy_elements, true, count );
+        player->AddElement( &kfsetting->_buy_elements, true, __FUNC_LINE__, count );
 
         // 记录购买次数
         SaveBuyLimit( player, kfsetting, count );
@@ -106,7 +106,7 @@ namespace KFrame
         }
 
         // 只判断是否存在, 不判断数量
-        return player->CheckElement( __FUNC_LINE__, &kfsetting->_buy_elements );
+        return player->CheckElement( &kfsetting->_buy_elements, __FUNC_LINE__ );
     }
 
     bool KFStoreModule::CheckBuyLimit( KFEntity* player, const KFStoreSetting* kfsetting, uint32 count )

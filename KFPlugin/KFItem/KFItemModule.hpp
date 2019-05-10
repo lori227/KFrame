@@ -61,10 +61,10 @@ namespace KFrame
     protected:
 
         // 添加新物品
-        uint64 AddNewItemData( KFEntity* player, KFData* kfparent, KFElementObject* kfelementobject, const KFItemSetting* itemsetting, uint64 count );
+        uint32 AddNewItemData( KFEntity* player, KFData* kfparent, KFElementObject* kfelementobject, const KFItemSetting* itemsetting, uint32 count );
 
         // 添加数量叠加数据
-        uint64 AddOverlayCountItemData( KFEntity* player, KFData* kfparent, KFElementObject* kfelementobject, const KFItemSetting* itemsetting, uint64 count );
+        uint32 AddOverlayCountItemData( KFEntity* player, KFData* kfparent, KFElementObject* kfelementobject, const KFItemSetting* itemsetting, uint32 count );
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////

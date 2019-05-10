@@ -75,16 +75,14 @@ namespace KFrame
         virtual uint64 UpdateData( uint64 key, KFData* kfdata, uint64 index, uint32 operate, uint64 value ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // 只有可以有倍率的属性才能有倍数参数
-
         // 添加元数据
-        virtual void AddElement( const char* function, uint32 line, const KFElements* kfelements, bool showclient, float multiple = 1.0f ) = 0;
+        virtual void AddElement( const KFElements* kfelements, bool showclient, const char* function, uint32 line, float multiple = 1.0f ) = 0;
 
         // 判断元数据是否满足条件
-        virtual bool CheckElement( const char* function, uint32 line, const KFElements* kfelements, float multiple = 1.0f ) = 0;
+        virtual bool CheckElement( const KFElements* kfelements, const char* function, uint32 line, float multiple = 1.0f ) = 0;
 
         // 删除元数据
-        virtual void RemoveElement( const char* function, uint32 line, const KFElements* kfelements, float multiple = 1.0f ) = 0;
+        virtual void RemoveElement( const KFElements* kfelements, const char* function, uint32 line, float multiple = 1.0f ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

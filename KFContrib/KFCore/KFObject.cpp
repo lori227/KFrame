@@ -7,7 +7,6 @@ namespace KFrame
         _key = 0;
         _class_setting = nullptr;
         _type = KFDataDefine::Type_Object;
-
     }
 
     KFObject::~KFObject()
@@ -17,11 +16,6 @@ namespace KFrame
 
     uint64 KFObject::GetKeyID()
     {
-        if ( _key == 0 )
-        {
-            _key = GetValue< uint64 >( _data_setting->_key_name );
-        }
-
         return _key;
     }
 

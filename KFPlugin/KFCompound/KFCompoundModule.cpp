@@ -36,17 +36,16 @@ namespace KFrame
         }
 
         // 判断是否足够
-        if ( player->CheckElement( __FUNC_LINE__, &kfsetting->_cost_data ) )
+        if ( player->CheckElement( &kfsetting->_cost_data, __FUNC_LINE__ ) )
         {
             return _kf_display->SendToClient( player, KFMsg::CompoundNotEnoughData );
         }
 
         // 扣除材料
-        player->RemoveElement( __FUNC_LINE__, &kfsetting->_cost_data  );
+        player->RemoveElement( &kfsetting->_cost_data, __FUNC_LINE__ );
 
         // 添加合成的属性
-        player->AddElement( __FUNC_LINE__, &kfsetting->_compound_data, true );
-
+        player->AddElement( &kfsetting->_compound_data, true, __FUNC_LINE__ );
         _kf_display->SendToClient( player, KFMsg::CompoundOk );
     }
 }

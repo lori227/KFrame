@@ -104,7 +104,7 @@ namespace KFrame
         void SendRemoveDataToClient( KFEntity* player, const KFMsg::PBObject& pbobect );
 
         // 显示添加奖励消息
-        void SendElementToClient( KFEntity* player, const std::string& element );
+        void SendElementToClient( KFEntity* player, const KFMsg::PBShowElement& pbelement );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private:

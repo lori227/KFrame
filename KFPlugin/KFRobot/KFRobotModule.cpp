@@ -187,7 +187,8 @@ namespace KFrame
     {
         __ROBOT_PROTO_PARSE__( KFMsg::MsgShowElement );
 
-        __LOG_INFO__( "robot=[{}|{}:{}], reward={}", robot->_id, robot->_account_id, robot->_player_id, kfmsg.element() );
+
+        __LOG_INFO__( "robot=[{}|{}:{}], reward={}", robot->_id, robot->_account_id, robot->_player_id, kfmsg.element().DebugString() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRobotModule::HandleSyncAddData )

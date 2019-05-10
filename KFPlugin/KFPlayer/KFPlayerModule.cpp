@@ -318,7 +318,7 @@ namespace KFrame
         auto ok = kfelements.Parse( strdata, __FUNC_LINE__ );
         if ( ok )
         {
-            player->AddElement( __FUNC_LINE__, &kfelements, true );
+            player->AddElement( &kfelements, true, __FUNC_LINE__ );
         }
     }
 
@@ -336,7 +336,7 @@ namespace KFrame
         if ( ok )
         {
             kfelements.SetOperate( KFEnum::Set );
-            player->AddElement( __FUNC_LINE__, &kfelements, true );
+            player->AddElement( &kfelements, true, __FUNC_LINE__ );
         }
     }
 
@@ -353,7 +353,7 @@ namespace KFrame
         auto ok = kfelements.Parse( stragent, __FUNC_LINE__ );
         if ( ok )
         {
-            player->RemoveElement( __FUNC_LINE__, &kfelements );
+            player->RemoveElement( &kfelements, __FUNC_LINE__ );
         }
     }
 
@@ -407,10 +407,10 @@ namespace KFrame
         SendToClient( player, KFMsg::MSG_SYNC_REMOVE_DATA, &sync );
     }
 
-    void KFPlayerModule::SendElementToClient( KFEntity* player, const std::string& element )
+    void KFPlayerModule::SendElementToClient( KFEntity* player, const KFMsg::PBShowElement& pbelement )
     {
         KFMsg::MsgShowElement show;
-        show.set_element( element );
+        show.mutable_element()->CopyFrom( pbelement );
         SendToClient( player, KFMsg::MSG_SHOW_ELEMENT, &show );
     }
 }

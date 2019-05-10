@@ -17,7 +17,7 @@ namespace KFrame
 
         _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
         _kf_component->RegisterEntitySaveFunction( this, &KFGameModule::SavePlayer );
-        _kf_component->SetEntityDataMask( __NEED_TO_SAVE__ | __DELETE_AND_SAVE__, ( savetime != 0u ? savetime : 60000 ) );
+        _kf_component->SetEntityDataMask( KFDataDefine::Data_Save | KFDataDefine::Data_Delete_Save, ( savetime != 0u ? savetime : 60000 ) );
 
         _kf_player->RegisterEnterFunction( this, &KFGameModule::OnEnterGame );
         _kf_player->RegisterLeaveFunction( this, &KFGameModule::OnLeaveGame );

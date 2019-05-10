@@ -41,29 +41,33 @@ namespace KFrame
     {
         if ( !kfelement->IsObject() )
         {
-            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_parent->_data );
+            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_data_name );
+            return std::make_tuple( KFDataDefine::Show_None, nullptr );
         }
 
         auto kfelementobject = reinterpret_cast< KFElementObject* >( kfelement );
         if ( kfelementobject->_config_id == _invalid_int )
         {
-            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id!", kfelement->_parent->_data );
+            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id!", kfelement->_data_name );
+            return std::make_tuple( KFDataDefine::Show_None, nullptr );
         }
 
         auto kfsetting = _kf_item_config->FindItemSetting( kfelementobject->_config_id );
         if ( kfsetting == nullptr )
         {
-            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] itemsetting = null!", kfelement->_parent->_data );
+            __LOG_ERROR_FUNCTION__( function, line, "id=[{}] itemsetting = null!", kfelementobject->_config_id );
+            return std::make_tuple( KFDataDefine::Show_None, nullptr );
         }
 
         // 只有真正的实体道具才会添加到背包中
         if ( kfsetting->IsRealItem() )
         {
             // 计算物品数量
-            auto itemcount = kfelementobject->CalcUInt64( __KF_STRING__( count ), multiple );
+            auto itemcount = kfelementobject->GetValue( kfparent->GetClassSetting(), __KF_STRING__( count ), multiple );
             if ( itemcount == _invalid_int )
             {
-                return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] itemcount = null!", kfelement->_parent->_data );
+                __LOG_ERROR_FUNCTION__( function, line, "item id=[{}] count = 0!", kfelementobject->_config_id );
+                return std::make_tuple( KFDataDefine::Show_None, nullptr );
             }
 
             do
@@ -74,9 +78,10 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         CallItemLuaFunction( player, kfsetting, KFItemEnum::AddFunction );
+        return std::make_tuple( KFDataDefine::Show_Element, kfparent );
     }
 
-    uint64 KFItemModule::AddOverlayCountItemData( KFEntity* player, KFData* kfparent, KFElementObject* kfelementobject, const KFItemSetting* kfsetting, uint64 count )
+    uint32 KFItemModule::AddOverlayCountItemData( KFEntity* player, KFData* kfparent, KFElementObject* kfelementobject, const KFItemSetting* kfsetting, uint32 count )
     {
         auto datasetting = kfparent->GetDataSetting();
 
@@ -113,10 +118,10 @@ namespace KFrame
         return AddNewItemData( player, kfparent, kfelementobject, kfsetting, count );
     }
 
-    uint64 KFItemModule::AddNewItemData( KFEntity* player, KFData* kfparent, KFElementObject* kfelementobject, const KFItemSetting* kfsetting, uint64 count )
+    uint32 KFItemModule::AddNewItemData( KFEntity* player, KFData* kfparent, KFElementObject* kfelementobject, const KFItemSetting* kfsetting, uint32 count )
     {
         auto datasetting = kfparent->GetDataSetting();
-        uint64 addcount = __MIN__( count, kfsetting->_overlay_count );
+        auto addcount = __MIN__( count, kfsetting->_overlay_count );
 
         auto kfitem = _kf_kernel->CreateObject( datasetting );
         kfitem->SetValue( datasetting->_config_key_name, kfsetting->_id );
@@ -131,8 +136,23 @@ namespace KFrame
                 continue;
             }
 
-            auto value = iter.second->GetValue( 1.0f );
-            kfitem->SetValue( name, value );
+            auto kfchild = kfitem->FindData( name );
+            if ( kfchild == nullptr )
+            {
+                continue;
+            }
+
+
+            auto kfelementvalue = reinterpret_cast< KFElementValue* >( iter.second );
+            if ( kfelementvalue->_value->IsInt() )
+            {
+                auto value = kfelementvalue->_value->CalcUseValue( kfchild->GetDataSetting(), 1.0f );
+                kfchild->SetValue( value );
+            }
+            else
+            {
+                kfchild->SetValue( kfelementvalue->_value->GetValue() );
+            }
         }
 
         // guid
@@ -218,22 +238,22 @@ namespace KFrame
     {
         if ( !kfelement->IsObject() )
         {
-            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_parent->_data );
+            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_data_name );
             return false;
         }
 
         auto kfelementobject = reinterpret_cast< KFElementObject* >( kfelement );
         if ( kfelementobject->_config_id == _invalid_int )
         {
-            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id!", kfelement->_parent->_data );
+            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id!", kfelement->_data_name );
             return false;
         }
 
         // 判断数量
-        auto itemcount = kfelementobject->CalcUInt64( __KF_STRING__( count ), multiple );
+        auto itemcount = kfelementobject->GetValue( kfparent->GetClassSetting(), __KF_STRING__( count ), multiple );
         if ( itemcount == _invalid_int )
         {
-            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no count!", kfelement->_parent->_data );
+            __LOG_ERROR_FUNCTION__( function, line, "item id=[{}] count = 0!", kfelementobject->_config_id );
             return false;
         }
 
@@ -245,11 +265,11 @@ namespace KFrame
             return false;
         }
 
-        uint64 totalcount = _invalid_int;
+        uint32 totalcount = _invalid_int;
         for ( auto kfitem : finditem )
         {
             // 累计数量
-            totalcount += kfitem->GetValue( __KF_STRING__( count ) );
+            totalcount += kfitem->GetValue<uint32>( __KF_STRING__( count ) );
             if ( totalcount >= itemcount )
             {
                 return true;
@@ -263,19 +283,19 @@ namespace KFrame
     {
         if ( !kfelement->IsObject() )
         {
-            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_parent->_data );
+            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_data_name );
         }
 
         auto kfelementobject = reinterpret_cast< KFElementObject* >( kfelement );
         if ( kfelementobject->_config_id == _invalid_int )
         {
-            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id!", kfelement->_parent->_data );
+            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id!", kfelement->_data_name );
         }
 
-        auto itemcount = kfelementobject->CalcUInt64( __KF_STRING__( count ), multiple );
+        auto itemcount = kfelementobject->GetValue( kfparent->GetClassSetting(), __KF_STRING__( count ), multiple );
         if ( itemcount == _invalid_int )
         {
-            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no count!", kfelement->_parent->_data );
+            return __LOG_ERROR_FUNCTION__( function, line, "item id=[{}] count = 0!", kfelementobject->_config_id );
         }
 
         // 获取item列表
@@ -331,7 +351,7 @@ namespace KFrame
         // 添加奖励
         if ( kfsetting->_reward_type == KFItemEnum::ConfigReward )
         {
-            player->AddElement( __FUNC_LINE__, &kfsetting->_rewards, true );
+            player->AddElement( &kfsetting->_rewards, true, __FUNC_LINE__ );
         }
 
         // 调用lua脚本

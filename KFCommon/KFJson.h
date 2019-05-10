@@ -11,7 +11,7 @@ namespace KFrame
     typedef rapidjson::Document KFJson;
 
     // 序列化
-    static inline std::string JsonSerialize( rapidjson::Document& kfjson )
+    static inline std::string JsonSerialize( rapidjson::Value& kfjson )
     {
         rapidjson::StringBuffer buffer;
         rapidjson::Writer<rapidjson::StringBuffer> writer( buffer );
@@ -98,7 +98,12 @@ namespace KFrame
 #define __JSON_SET_VALUE__( kfjson, name, value ) kfjson.AddMember( rapidjson::StringRef( name.c_str() ), value, allocator )
 
 #define  __JSON_ADD_VALUE__( kfjson, value ) kfjson.PushBack( value, allocator );
-#define  __JSON_ADD_STRING__( kfjson, value ) kfjson.PushBack( rapidjson::StringRef( value.c_str() ), allocator )
+#define  __JSON_ADD_STRING__( kfjson, value )\
+    {\
+        rapidjson::Value jsonvalue;\
+        jsonvalue.SetString( value.c_str(), value.size(), allocator );\
+        kfjson.PushBack( jsonvalue.Move(), allocator );\
+    }
 
 #define __JSON_HAS_MEMBER__( kfjson, name ) kfjson.HasMember( name )
 #define __JOSN_REMOVE__( kfjson, name ) kfjson.RemoveMember( name )

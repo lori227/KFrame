@@ -77,7 +77,7 @@ namespace KFrame
         player->UpdateData( kfactivity, __KF_STRING__( received ), KFEnum::ABit, activityid );
 
         // 添加奖励
-        player->AddElement( __FUNC_LINE__, &kfsetting->_rewards, true );
+        player->AddElement( &kfsetting->_rewards, true, __FUNC_LINE__ );
         return KFMsg::ActivityRewardOk;
     }
 

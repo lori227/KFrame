@@ -1,7 +1,7 @@
 ﻿<?xml version='1.0' encoding='utf-8' ?>
 <Config>
 	<!-- 认证服务器地址 -->
-	<Auth Address="Http://192.168.1.155:7001/auth"/>
+	<Auth Address="Http://192.168.1.71:7001/auth"/>
 
 	<!-- 基本信息 -->
 	<!-- Count 最大机器人数量 -->

@@ -310,7 +310,7 @@ namespace KFrame
         auto ok = kfelements.Parse( stragent, __FUNC_LINE__ );
         if ( ok )
         {
-            kfentity->AddElement( __FUNC_LINE__, &kfelements, showclient );
+            kfentity->AddElement( &kfelements, showclient, __FUNC_LINE__ );
         }
     }
 
@@ -327,7 +327,7 @@ namespace KFrame
         if ( ok )
         {
             kfelements.SetOperate( KFEnum::Set );
-            kfentity->AddElement( __FUNC_LINE__, &kfelements, showclient );
+            kfentity->AddElement( &kfelements, showclient, __FUNC_LINE__ );
         }
     }
 
@@ -343,7 +343,7 @@ namespace KFrame
         auto ok = kfelements.Parse( stragent, __FUNC_LINE__ );
         if ( ok )
         {
-            kfentity->RemoveElement( __FUNC_LINE__, &kfelements );
+            kfentity->RemoveElement( &kfelements, __FUNC_LINE__ );
         }
     }
 

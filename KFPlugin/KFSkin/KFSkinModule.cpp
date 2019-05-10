@@ -140,22 +140,26 @@ namespace KFrame
     {
         if ( !kfelement->IsObject() )
         {
-            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_parent->_data );
+            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_data_name );
+            return std::make_tuple( KFDataDefine::Show_None, nullptr );
         }
 
         auto kfelementobject = reinterpret_cast< KFElementObject* >( kfelement );
         if ( kfelementobject->_config_id == _invalid_int )
         {
-            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id!", kfelement->_parent->_data );
+            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id!", kfelement->_data_name );
+            return std::make_tuple( KFDataDefine::Show_None, nullptr );
         }
 
         auto kfsetting = _kf_skin_config->FindSkinSetting( kfelementobject->_config_id );
         if ( kfsetting == nullptr )
         {
-            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] skinsetting = null!", kfelement->_parent->_data );
+            __LOG_ERROR_FUNCTION__( function, line, "skin id=[{}] skinsetting = null!", kfelementobject->_config_id );
+            return std::make_tuple( KFDataDefine::Show_None, nullptr );
         }
 
         auto kfobject = player->GetData();
+        auto elementtime = kfelementobject->GetValue( kfparent->GetClassSetting(), __KF_STRING__( time ), multiple );
 
         // 判断是否存在该皮肤
         auto kfskin = kfparent->FindData( kfelementobject->_config_id );
@@ -165,7 +169,6 @@ namespace KFrame
             kfskin = _kf_kernel->CreateObject( kfparent->GetDataSetting() );
 
             // 设置时间
-            auto elementtime = kfelementobject->CalcUInt64( __KF_STRING__( time ), multiple );
             if ( elementtime != _invalid_int )
             {
                 kfskin->OperateValue( __KF_STRING__( time ), kfelementobject->_operate, KFGlobal::Instance()->_real_time + elementtime );
@@ -178,7 +181,6 @@ namespace KFrame
         {
             // 存在, 判断有效时间
             auto datatime = kfskin->GetValue( __KF_STRING__( time ) );
-            auto elementtime = kfelementobject->CalcUInt64( __KF_STRING__( time ), multiple );
             if ( datatime != _invalid_int )
             {
                 // 时限皮肤
@@ -199,6 +201,8 @@ namespace KFrame
                 // 按照规则换算成其他奖励
             }
         }
+
+        return std::make_tuple( KFDataDefine::Show_Element, kfskin );
     }
 
     __KF_ADD_DATA_FUNCTION__( KFSkinModule::OnAddSkinCallBack )

@@ -108,8 +108,8 @@ namespace KFrame
 
     __KF_UPDATE_DATA_FUNCTION__( KFRelationClientModule::OnRelationValueUpdate )
     {
-        if ( !kfdata->HaveFlagMask( KFDataDefine::Mask_Relation_Data ) ||
-                !kfdata->GetParent()->HaveFlagMask( KFDataDefine::Mask_Relation_Data ) )
+        if ( !kfdata->HaveFlagMask( KFDataDefine::Mask_Relation ) ||
+                !kfdata->GetParent()->HaveFlagMask( KFDataDefine::Mask_Relation ) )
         {
             return;
         }
@@ -122,8 +122,8 @@ namespace KFrame
 
     __KF_UPDATE_STRING_FUNCTION__( KFRelationClientModule::OnRelationStringUpdate )
     {
-        if ( !kfdata->HaveFlagMask( KFDataDefine::Mask_Relation_Data ) ||
-                !kfdata->GetParent()->HaveFlagMask( KFDataDefine::Mask_Relation_Data ) )
+        if ( !kfdata->HaveFlagMask( KFDataDefine::Mask_Relation ) ||
+                !kfdata->GetParent()->HaveFlagMask( KFDataDefine::Mask_Relation ) )
         {
             return;
         }

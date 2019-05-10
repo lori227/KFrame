@@ -320,7 +320,7 @@ namespace KFrame
         }
 
         player->UpdateData( kfmail, __KF_STRING__( status ), KFEnum::Set, KFMsg::ReceiveStatus );
-        player->AddElement( __FUNC_LINE__, &kfelements, true );
+        player->AddElement( &kfelements, true, __FUNC_LINE__ );
     }
 
     MapString& KFMailClientModule::FormatMailData( KFEntity* sender, const KFMailSetting* kfsetting, const KFElements* kfelements )
@@ -348,11 +348,11 @@ namespace KFrame
         // 奖励
         if ( kfelements != nullptr )
         {
-            _mail_data.insert( std::make_pair( __KF_STRING__( reward ), kfelements->_data ) );
+            _mail_data.insert( std::make_pair( __KF_STRING__( reward ), kfelements->_str_element ) );
         }
-        else if ( !kfsetting->_rewards._data.empty() )
+        else if ( !kfsetting->_rewards._str_element.empty() )
         {
-            _mail_data.insert( std::make_pair( __KF_STRING__( reward ), kfsetting->_rewards._data ) );
+            _mail_data.insert( std::make_pair( __KF_STRING__( reward ), kfsetting->_rewards._str_element ) );
         }
 
         // 发送者信息

@@ -197,7 +197,7 @@ namespace KFrame
             return _invalid_int;
         }
 
-        return UpdateData( kfdata, operate, value );
+        return UpdateData( kfparent->GetKeyID(), kfdata, operate, value );
     }
 
     uint64 KFEntityEx::UpdateData( KFData* kfparent, uint64 key, const std::string& dataname, uint32 operate, uint64 value )
@@ -224,8 +224,7 @@ namespace KFrame
 
     uint64 KFEntityEx::UpdateData( KFData* kfdata, uint32 operate, uint64 value )
     {
-        auto key = kfdata->GetKeyID();
-        return UpdateData( key, kfdata, operate, value );
+        return UpdateData( _invalid_int, kfdata, operate, value );
     }
 
     uint64 KFEntityEx::UpdateData( uint64 key, KFData* kfdata, uint32 operate, uint64 value )
@@ -237,7 +236,7 @@ namespace KFrame
             kfdata->SetValue< uint64 >( newvalue );
 
             // 属性更新回调
-            _kf_component->UpdateDataCallBack( this, key, kfdata, 0, operate, value, oldvalue, newvalue );
+            _kf_component->UpdateDataCallBack( this, key, kfdata, _invalid_int, operate, value, oldvalue, newvalue );
         }
 
         return newvalue;
@@ -372,122 +371,258 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
+    void KFEntityEx::AddShowElement( uint32 showtype, const KFElement* kfelement, KFData* kfdata, bool showclient, const char* function, uint32 line )
+    {
+        // 打印日志
+        if ( showtype == KFDataDefine::Show_Element )
+        {
+            if ( showclient )
+            {
+                AddElementToShow( kfelement );
+            }
+            __LOG_INFO_FUNCTION__( function, line, "add={}", kfelement->ToString() );
+        }
+        else if ( showtype == KFDataDefine::Show_Data )
+        {
+            if ( showclient )
+            {
+                AddDataToShow( kfdata );
+            }
+            __LOG_INFO_FUNCTION__( function, line, "add={{\"{}\":{}}}", kfelement->_data_name, kfdata->ToString() );
+        }
+    }
+
+    void KFEntityEx::AddElementToShow( const KFElement* kfelement )
+    {
+        if ( kfelement->IsValue() )
+        {
+            auto kfelementvalue = reinterpret_cast< const KFElementValue* >( kfelement );
+            if ( kfelementvalue->_value->IsNeedShow() )
+            {
+                auto pbdata = _pb_show_element.add_pbdata();
+                pbdata->set_name( kfelementvalue->_data_name );
+                pbdata->set_value( kfelementvalue->_value->GetUseValue() );
+
+                _have_show_client = true;
+                _kf_component->AddSyncEntity( this );
+            }
+        }
+        else if ( kfelement->IsObject() )
+        {
+            auto kfelementobject = reinterpret_cast< const KFElementObject* >( kfelement );
+            if ( kfelementobject->IsNeedShow() )
+            {
+                auto pbobject = _pb_show_element.add_pbobject();
+                pbobject->set_name( kfelementobject->_data_name );
+                pbobject->set_key( kfelementobject->_config_id );
+
+                for ( auto& iter : kfelementobject->_values._objects )
+                {
+                    auto kfvalue = iter.second;
+                    if ( kfvalue->IsNeedShow() )
+                    {
+                        ( *pbobject->mutable_pbuint64() )[ iter.first ] = kfvalue->GetUseValue();
+                    }
+                }
+
+                _have_show_client = true;
+                _kf_component->AddSyncEntity( this );
+            }
+        }
+    }
+
+    void KFEntityEx::AddDataToShow( KFData* kfdata )
+    {
+        if ( !kfdata->GetDataSetting()->HaveFlagMask( KFDataDefine::Mask_Show ) )
+        {
+            return;
+        }
+
+        switch ( kfdata->GetType() )
+        {
+        case KFDataDefine::Type_Int32:
+        case KFDataDefine::Type_UInt32:
+        case KFDataDefine::Type_Int64:
+        case KFDataDefine::Type_UInt64:
+        {
+            auto pbdata = _pb_show_element.add_pbdata();
+            pbdata->set_value( kfdata->GetValue() );
+            pbdata->set_name( kfdata->GetDataSetting()->_name );
+
+            _have_show_client = true;
+            _kf_component->AddSyncEntity( this );
+            break;
+        }
+        case KFDataDefine::Type_Object:
+        case KFDataDefine::Type_Record:
+        {
+            auto pbobject = _pb_show_element.add_pbobject();
+            pbobject->set_key( kfdata->GetKeyID() );
+            pbobject->set_name( kfdata->GetDataSetting()->_name );
+
+            for ( auto kfchild = kfdata->FirstData(); kfchild != nullptr; kfchild = kfdata->NextData() )
+            {
+                if ( !kfchild->GetDataSetting()->HaveFlagMask( KFDataDefine::Mask_Show ) ||
+                        !kfchild->IsValid() )
+                {
+                    continue;
+                }
+
+                ( *pbobject->mutable_pbuint64() )[ kfchild->GetDataSetting()->_name ] = kfchild->GetValue();
+            }
+
+            _have_show_client = true;
+            _kf_component->AddSyncEntity( this );
+            break;
+        }
+        }
+    }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFEntityEx::AddElement( const char* function, uint32 line, const KFElements* kfelements, bool showclient, float multiple /* = 1.0f */ )
+    void KFEntityEx::AddElement( const KFElements* kfelements, bool showclient, const char* function, uint32 line, float multiple )
     {
         if ( kfelements->_element_list.empty() )
         {
             return;
         }
 
+        __LOG_INFO_FUNCTION__( function, line, "entity=[{}] multiple=[{:0.2f}] elements={}!", GetKeyID(), multiple, kfelements->_str_element );
+
         for ( auto& kfelement : kfelements->_element_list )
         {
-            AddElement( function, line, kfelement, multiple );
-        }
-
-        auto& strdata = kfelements->Serialize( multiple );
-        __LOG_INFO_FUNCTION__( function, line, "entity={} add element=[{}][{}]!", GetKeyID(), multiple, strdata );
-
-        // 显示给客户端
-        if ( _kf_component->_show_element_function != nullptr && showclient )
-        {
-            _kf_component->_show_element_function( this, strdata );
+            AddElement( kfelement, showclient, function, line, multiple );
         }
     }
 
     // 添加元数据
-    void KFEntityEx::AddElement( const char* function, uint32 line, const KFElement* kfelement, float multiple )
+    void KFEntityEx::AddElement( const KFElement* kfelement, bool showclient, const char* function, uint32 line, float multiple )
     {
         auto kfdata = _kf_object->FindData( kfelement->_data_name );
         if ( kfdata == nullptr )
         {
-            return __LOG_ERROR_FUNCTION__( function, line, "can't find data[{}]! ", kfelement->_parent->_data );
+            return __LOG_ERROR_FUNCTION__( function, line, "can't find data=[{}]! ", kfelement->_data_name );
         }
+
+        KFData* showdata = nullptr;
+        uint32 showtype = KFDataDefine::Show_None;
+        const_cast< KFElement* >( kfelement )->_data_setting = kfdata->GetDataSetting();
 
         // 如果有注册的特殊处理函数
         auto kffunction = _kf_component->_add_element_function.Find( kfelement->_data_name );
         if ( kffunction != nullptr )
         {
-            return kffunction->_function( function, line, this, kfdata, const_cast< KFElement* >( kfelement ), multiple );
+            std::tie( showtype, showdata ) = kffunction->_function( this, kfdata, const_cast< KFElement* >( kfelement ), function, line, multiple );
+        }
+        else
+        {
+            // 没有注册的函数
+            switch ( kfdata->GetType() )
+            {
+            case KFDataDefine::Type_Object:
+                std::tie( showtype, showdata ) = AddObjectElement( kfdata, const_cast< KFElement* >( kfelement ), function, line, multiple );
+                break;
+            case KFDataDefine::Type_Record:
+                std::tie( showtype, showdata ) = AddRecordElement( kfdata, const_cast< KFElement* >( kfelement ), function, line, multiple );
+                break;
+            default:
+                std::tie( showtype, showdata ) = AddNormalElement( kfdata, const_cast< KFElement* >( kfelement ), function, line, multiple );
+                break;
+            }
         }
 
-        // 没有注册的函数
-        switch ( kfdata->GetType() )
+        if ( showtype != KFDataDefine::Show_None )
         {
-        case KFDataDefine::Type_Object:
-            AddObjectElement( function, line, kfdata, const_cast< KFElement* >( kfelement ), multiple );
-            break;
-        case KFDataDefine::Type_Record:
-            AddRecordElement( function, line, kfdata, const_cast< KFElement* >( kfelement ), multiple );
-            break;
-        case KFDataDefine::Type_Int32:
-        case KFDataDefine::Type_UInt32:
-        case KFDataDefine::Type_Int64:
-        case KFDataDefine::Type_UInt64:
-        case KFDataDefine::Type_Double:
-            AddNormalElement( function, line, kfdata, const_cast< KFElement* >( kfelement ), multiple );
-            break;
+            AddShowElement( showtype, kfelement, showdata, showclient, __FUNC_LINE__ );
         }
     }
 
-    void KFEntityEx::AddNormalElement( const char* function, uint32 line, KFData* kfdata, KFElement* kfelement, float multiple )
+    std::tuple<uint32, KFData*> KFEntityEx::AddNormalElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line, float multiple )
     {
         if ( !kfelement->IsValue() )
         {
-            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not value!", kfelement->_parent->_data );
+            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not value!", kfelement->_data_name );
+            return std::make_tuple( KFDataDefine::Show_None, nullptr );
         }
 
         auto kfelementvalue = reinterpret_cast< KFElementValue* >( kfelement );
-        auto value = kfelementvalue->CalcUInt64( multiple );
 
-        // 更新数据
-        UpdateData( kfdata, 0, kfelementvalue->_operate, value );
+        if ( kfelementvalue->_value->IsInt() )
+        {
+            auto value = kfelementvalue->_value->CalcUseValue( kfdata->GetDataSetting(), multiple );
+            UpdateData( 0, kfdata, kfelementvalue->_operate, value );
+        }
+        else if ( kfelementvalue->_value->IsString() )
+        {
+            UpdateData( kfdata, kfelementvalue->_value->GetValue() );
+        }
+
+        return std::make_tuple( KFDataDefine::Show_Element, kfdata );
     }
 
-    void KFEntityEx::AddObjectElement( const char* function, uint32 line, KFData* kfdata, KFElement* kfelement, float multiple )
+    std::tuple<uint32, KFData*> KFEntityEx::AddObjectElement( KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple )
     {
         if ( !kfelement->IsObject() )
         {
-            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_parent->_data );
+            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_data_name );
+            return std::make_tuple( KFDataDefine::Show_None, nullptr );
         }
 
         auto kfelementobject = reinterpret_cast< KFElementObject* >( kfelement );
-
         for ( auto& iter : kfelementobject->_values._objects )
         {
             auto& name = iter.first;
-            auto value = iter.second->CalcUInt64( multiple );
-            UpdateData( kfdata, name, kfelementobject->_operate, value );
+            auto kfelementvalue = reinterpret_cast< KFElementValue* >( iter.second );
+            if ( kfelementvalue->_value->IsInt() )
+            {
+                auto value = kfelementvalue->_value->CalcUseValue( kfparent->GetClassSetting(), name, multiple );
+                UpdateData( kfparent, name, kfelementobject->_operate, value );
+            }
+            else if ( kfelementvalue->_value->IsString() )
+            {
+                UpdateData( kfparent, name, kfelementvalue->_value->GetValue() );
+            }
         }
+
+        return std::make_tuple( KFDataDefine::Show_Element, kfparent );
     }
 
-    void KFEntityEx::AddRecordElement( const char* function, uint32 line, KFData* kfdata, KFElement* kfelement, float multiple )
+    std::tuple<uint32, KFData*> KFEntityEx::AddRecordElement( KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple )
     {
         if ( !kfelement->IsObject() )
         {
-            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_parent->_data );
+            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_data_name );
+            return std::make_tuple( KFDataDefine::Show_None, nullptr );
         }
 
         auto kfelementobject = reinterpret_cast< KFElementObject* >( kfelement );
         if ( kfelementobject->_config_id == _invalid_int )
         {
-            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id!", kfelement->_parent->_data );
+            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id!", kfelement->_data_name );
+            return std::make_tuple( KFDataDefine::Show_None, nullptr );
         }
 
-        auto kfchild = kfdata->FindData( kfelementobject->_config_id );
+        auto kfchild = kfparent->FindData( kfelementobject->_config_id );
         if ( kfchild == nullptr )
         {
             // 不存在, 创建一个, 并更新属性
-            kfchild = KFDataFactory::CreateData( kfdata->GetDataSetting() );
+            kfchild = KFDataFactory::CreateData( kfparent->GetDataSetting() );
             for ( auto& iter : kfelementobject->_values._objects )
             {
                 auto& name = iter.first;
-                auto value = iter.second->CalcUInt64( multiple );
-                kfchild->OperateValue( name, kfelementobject->_operate, value );
+                auto kfelementvalue = reinterpret_cast< KFElementValue* >( iter.second );
+
+                if ( kfelementvalue->_value->IsInt() )
+                {
+                    auto value = kfelementvalue->_value->CalcUseValue( kfparent->GetClassSetting(), name, multiple );
+                    kfchild->OperateValue( name, kfelementobject->_operate, value );
+                }
+                else if ( kfelementvalue->_value->IsString() )
+                {
+                    kfchild->SetValue( name, kfelementvalue->_value->GetValue() );
+                }
             }
 
-            AddData( kfdata, kfelementobject->_config_id, kfchild );
+            AddData( kfparent, kfelementobject->_config_id, kfchild );
         }
         else
         {
@@ -495,21 +630,30 @@ namespace KFrame
             for ( auto& iter : kfelementobject->_values._objects )
             {
                 auto& name = iter.first;
-                auto value = iter.second->CalcUInt64( multiple );
-                UpdateData( kfchild, name, kfelementobject->_operate, value );
+                auto kfelementvalue = reinterpret_cast< KFElementValue* >( iter.second );
+
+                if ( kfelementvalue->_value->IsInt() )
+                {
+                    auto value = kfelementvalue->_value->CalcUseValue( kfparent->GetClassSetting(), name, multiple );
+                    UpdateData( kfchild, name, kfelementobject->_operate, value );
+                }
+                else if ( kfelementvalue->_value->IsString() )
+                {
+                    UpdateData( kfchild, name, kfelementvalue->_value->GetValue() );
+                }
             }
         }
+
+        return std::make_tuple( KFDataDefine::Show_Element, kfchild );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
     // 判断元数据是否满足条件
-    bool KFEntityEx::CheckElement( const char* function, uint32 line, const KFElements* kfelements, float multiple /* = 1.0f */ )
+    bool KFEntityEx::CheckElement( const KFElements* kfelements, const char* function, uint32 line, float multiple /* = 1.0f */ )
     {
         for ( auto& kfelement : kfelements->_element_list )
         {
-            if ( !CheckElement( function, line, kfelement, multiple ) )
+            if ( !CheckElement( kfelement, function, line, multiple ) )
             {
                 return false;
             }
@@ -518,12 +662,12 @@ namespace KFrame
         return true;
     }
 
-    bool KFEntityEx::CheckElement( const char* function, uint32 line, const KFElement* kfelement, float multiple )
+    bool KFEntityEx::CheckElement( const KFElement* kfelement, const char* function, uint32 line, float multiple )
     {
         auto kfdata = _kf_object->FindData( kfelement->_data_name );
         if ( kfdata == nullptr )
         {
-            __LOG_ERROR_FUNCTION__( function, line, "can't find data[{}]! ", kfelement->_parent->_data );
+            __LOG_ERROR_FUNCTION__( function, line, "can't find data=[{}]! ", kfelement->_data_name );
             return false;
         }
 
@@ -531,65 +675,66 @@ namespace KFrame
         auto kffunction = _kf_component->_check_element_function.Find( kfelement->_data_name );
         if ( kffunction != nullptr )
         {
-            return kffunction->_function( function, line, this, kfdata, const_cast< KFElement* >( kfelement ), multiple  );
+            return kffunction->_function( this, kfdata, const_cast< KFElement* >( kfelement ), function, line, multiple );
         }
 
         // 找不到处理函数, 用基础函数来处理
         switch ( kfdata->GetType() )
         {
         case KFDataDefine::Type_Record:
-            return CheckRecordElement( function, line, kfdata, const_cast< KFElement* >( kfelement ), multiple );
+            return CheckRecordElement( kfdata, const_cast< KFElement* >( kfelement ), function, line, multiple );
             break;
         case KFDataDefine::Type_Object:
-            return CheckObjectElement( function, line, kfdata, const_cast< KFElement* >( kfelement ), multiple );
+            return CheckObjectElement( kfdata, const_cast< KFElement* >( kfelement ), function, line, multiple );
             break;
-        case KFDataDefine::Type_Int32:
-        case KFDataDefine::Type_UInt32:
-        case KFDataDefine::Type_Int64:
-        case KFDataDefine::Type_UInt64:
-        case KFDataDefine::Type_Double:
-            return CheckNormalElement( function, line, kfdata, const_cast< KFElement* >( kfelement ), multiple );
+        default:
+            return CheckNormalElement( kfdata, const_cast< KFElement* >( kfelement ), function, line, multiple );
             break;
         }
 
         return false;
     }
 
-    bool KFEntityEx::CheckNormalElement( const char* function, uint32 line, KFData* kfdata, KFElement* kfelement, float multiple )
+    bool KFEntityEx::CheckNormalElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line, float multiple )
     {
         if ( !kfelement->IsValue() )
         {
-            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not value!", kfelement->_parent->_data );
+            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not value!", kfelement->_data_name );
             return false;
         }
 
         auto kfelementvalue = reinterpret_cast< KFElementValue* >( kfelement );
+        if ( kfelementvalue->_value->IsString() )
+        {
+            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] is not int!", kfelement->_data_name );
+            return false;
+        }
 
         auto datavalue = kfdata->GetValue();
-        auto elementvalue = kfelementvalue->CalcUInt64( multiple );
+        auto elementvalue = kfelementvalue->_value->CalcUseValue( kfdata->GetDataSetting(), multiple );
         return datavalue >= elementvalue;
     }
 
-    bool KFEntityEx::CheckObjectElement( const char* function, uint32 line, KFData* kfdata, KFElement* kfelement, float multiple )
+    bool KFEntityEx::CheckObjectElement( KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple )
     {
         if ( !kfelement->IsObject() )
         {
-            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_parent->_data );
+            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_data_name );
             return false;
         }
 
         auto kfelementobject = reinterpret_cast< KFElementObject* >( kfelement );
-
         for ( auto& iter : kfelementobject->_values._objects )
         {
-            auto kfchild = kfdata->FindData( iter.first );
-            if ( kfchild == nullptr )
+            auto kfelementvalue = reinterpret_cast< KFElementValue* >( iter.second );
+            if ( kfelementvalue->_value->IsString() )
             {
+                __LOG_ERROR_FUNCTION__( function, line, "element=[{}] is not int!", kfelementvalue->_data_name );
                 return false;
             }
 
-            auto datavalue = kfchild->GetValue();
-            auto elementvalue = iter.second->CalcUInt64( multiple );
+            auto datavalue = kfparent->GetValue( iter.first );
+            auto elementvalue = kfelementvalue->_value->CalcUseValue( kfparent->GetClassSetting(), iter.first, multiple );
             if ( datavalue < elementvalue )
             {
                 return false;
@@ -599,18 +744,18 @@ namespace KFrame
         return true;
     }
 
-    bool KFEntityEx::CheckRecordElement( const char* function, uint32 line, KFData* kfparent, KFElement* kfelement, float multiple )
+    bool KFEntityEx::CheckRecordElement( KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple )
     {
         if ( !kfelement->IsObject() )
         {
-            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_parent->_data );
+            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_data_name );
             return false;
         }
 
         auto kfelementobject = reinterpret_cast< KFElementObject* >( kfelement );
         if ( kfelementobject->_config_id == _invalid_int )
         {
-            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id!", kfelement->_parent->_data );
+            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id!", kfelement->_data_name );
             return false;
         }
 
@@ -622,14 +767,15 @@ namespace KFrame
 
         for ( auto& iter : kfelementobject->_values._objects )
         {
-            auto kfchild = kfdata->FindData( iter.first );
-            if ( kfchild == nullptr )
+            auto kfelementvalue = reinterpret_cast< KFElementValue* >( iter.second );
+            if ( kfelementvalue->_value->IsString() )
             {
+                __LOG_ERROR_FUNCTION__( function, line, "element=[{}] is not int!", kfelementvalue->_data_name );
                 return false;
             }
 
-            auto datavalue = kfchild->GetValue();
-            auto elementvalue = iter.second->CalcUInt64( multiple );
+            auto datavalue = kfdata->GetValue( iter.first );
+            auto elementvalue = kfelementvalue->_value->CalcUseValue( kfparent->GetClassSetting(), iter.first, multiple );
             if ( datavalue < elementvalue )
             {
                 return false;
@@ -641,113 +787,122 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////
-    void KFEntityEx::RemoveElement( const char* function, uint32 line, const KFElements* kfelements, float multiple /* = 1.0f */ )
+    void KFEntityEx::RemoveElement( const KFElements* kfelements, const char* function, uint32 line, float multiple /* = 1.0f */ )
     {
+        __LOG_INFO_FUNCTION__( function, line, "entity={} remove elements=[{}]!", GetKeyID(), kfelements->_str_element );
         for ( auto& kfelement : kfelements->_element_list )
         {
-            RemoveElement( function, line, kfelement, multiple );
+            RemoveElement( kfelement, function, line, multiple );
         }
-
-        auto& strdata = kfelements->Serialize( multiple );
-        __LOG_INFO_FUNCTION__( function, line, "entity={} remove element=[{}][{}]!", GetKeyID(), multiple, strdata );
     }
 
     // 删除元数据
-    void KFEntityEx::RemoveElement( const char* function, uint32 line, const KFElement* kfelement, float multiple )
+    void KFEntityEx::RemoveElement( const KFElement* kfelement, const char* function, uint32 line, float multiple )
     {
         auto kfdata = _kf_object->FindData( kfelement->_data_name );
         if ( kfdata == nullptr )
         {
-            return __LOG_ERROR_FUNCTION__( function, line, "can't find data[{}]! ", kfelement->_parent->_data );
+            return __LOG_ERROR_FUNCTION__( function, line, "can't find data=[{}]! ", kfelement->_data_name );
         }
 
         // 如果有注册函数, 执行注册函数
         auto kffunction = _kf_component->_remove_element_function.Find( kfelement->_data_name );
         if ( kffunction != nullptr )
         {
-            return kffunction->_function( function, line, this, kfdata, const_cast< KFElement* >( kfelement ), multiple );
+            return kffunction->_function( this, kfdata, const_cast< KFElement* >( kfelement ), function, line, multiple );
         }
 
         // 找不到处理函数, 用基础函数来处理
         switch ( kfdata->GetType() )
         {
         case KFDataDefine::Type_Record:
-            RemoveRecordElement( function, line, kfdata, const_cast< KFElement* >( kfelement ), multiple );
+            RemoveRecordElement( kfdata, const_cast< KFElement* >( kfelement ), function, line, multiple );
             break;
         case KFDataDefine::Type_Object:
-            RemoveObjectElement( function, line, kfdata, const_cast< KFElement* >( kfelement ), multiple );
+            RemoveObjectElement( kfdata, const_cast< KFElement* >( kfelement ), function, line, multiple );
             break;
-        case KFDataDefine::Type_Int32:
-        case KFDataDefine::Type_UInt32:
-        case KFDataDefine::Type_Int64:
-        case KFDataDefine::Type_UInt64:
-        case KFDataDefine::Type_Double:
-            RemoveNormalElement( function, line, kfdata, const_cast< KFElement* >( kfelement ), multiple );
+        default:
+            RemoveNormalElement( kfdata, const_cast< KFElement* >( kfelement ), function, line, multiple );
             break;
         }
     }
 
-    void KFEntityEx::RemoveNormalElement( const char* function, uint32 line, KFData* kfdata, KFElement* kfelement, float multiple )
+    void KFEntityEx::RemoveNormalElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line, float multiple )
     {
         if ( !kfelement->IsValue() )
         {
-            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not value!", kfelement->_parent->_data );
+            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not value!", kfelement->_data_name );
         }
 
         auto kfelementvalue = reinterpret_cast< KFElementValue* >( kfelement );
-        auto value = kfelementvalue->CalcUInt64( multiple );
-        UpdateData( kfdata, 0, KFEnum::Dec, value );
+        if ( kfelementvalue->_value->IsString() )
+        {
+            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] is not int!", kfelement->_data_name );
+        }
+
+        auto value = kfelementvalue->_value->CalcUseValue( kfdata->GetDataSetting(), multiple );
+        UpdateData( _invalid_int, kfdata, KFEnum::Dec, value );
     }
 
-    void KFEntityEx::RemoveObjectElement( const char* function, uint32 line, KFData* kfdata, KFElement* kfelement, float multiple )
+    void KFEntityEx::RemoveObjectElement( KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple )
     {
         if ( !kfelement->IsObject() )
         {
-            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_parent->_data );
+            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_data_name );
         }
 
         auto kfelementobject = reinterpret_cast< KFElementObject* >( kfelement );
         for ( auto& iter : kfelementobject->_values._objects )
         {
+            auto kfelementvalue = reinterpret_cast< KFElementValue* >( iter.second );
+            if ( kfelementvalue->_value->IsString() )
+            {
+                __LOG_ERROR_FUNCTION__( function, line, "element=[{}] is not int!", kfelementvalue->_data_name );
+                continue;
+            }
+
             auto& name = iter.first;
-            auto value = iter.second->CalcUInt64( multiple );
-            UpdateData( kfdata, name, KFEnum::Dec, value );
+            auto value = kfelementvalue->_value->CalcUseValue( kfparent->GetClassSetting(), name, multiple );
+            UpdateData( kfparent, name, KFEnum::Dec, value );
         }
     }
 
-    void KFEntityEx::RemoveRecordElement( const char* function, uint32 line, KFData* kfparent, KFElement* kfelement, float multiple )
+    void KFEntityEx::RemoveRecordElement( KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple )
     {
         if ( !kfelement->IsObject() )
         {
-            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_parent->_data );
+            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_data_name );
         }
 
         auto kfelementobject = reinterpret_cast< KFElementObject* >( kfelement );
         if ( kfelementobject->_config_id == _invalid_int )
         {
-            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id!", kfelement->_parent->_data );
+            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id!", kfelement->_data_name );
         }
 
         auto kfdata = kfparent->FindData( kfelementobject->_config_id );
         if ( kfdata == nullptr )
         {
-            return;
+            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] can't find id=[{}]!", kfelementobject->_data_name, kfelementobject->_config_id );
         }
 
         for ( auto& iter : kfelementobject->_values._objects )
         {
+            auto kfelementvalue = reinterpret_cast< KFElementValue* >( iter.second );
+            if ( kfelementvalue->_value->IsString() )
+            {
+                __LOG_ERROR_FUNCTION__( function, line, "element=[{}] is not int!", kfelementvalue->_data_name );
+                continue;
+            }
+
             auto& name = iter.first;
-            auto value = iter.second->CalcUInt64( multiple );
+            auto value = kfelementvalue->_value->CalcUseValue( kfdata->GetClassSetting(), name, multiple );
             UpdateData( kfdata, name, KFEnum::Dec, value );
         }
     }
     /////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////
-
-    ////////////////////////////////////////////////////////////////////
 
 #define __FIND_PROTO_OBJECT__\
     auto savedata = datahierarchy.front();\
@@ -768,7 +923,7 @@ namespace KFrame
     {
         // 不需要同步
         if ( _kf_component->_entity_sync_add_function == nullptr ||
-                !kfdata->HaveFlagMask( KFDataDefine::Mask_Sync_Client ) )
+                !kfdata->HaveFlagMask( KFDataDefine::Mask_Client ) )
         {
             return;
         }
@@ -794,7 +949,7 @@ namespace KFrame
             __FIND_PROTO_OBJECT__;
             if ( savedata == kfdata )
             {
-                _kf_component->_kf_kernel_module->SaveToObject( savedata, pbobject, KFDataDefine::Mask_Sync_Client );
+                _kf_component->_kf_kernel_module->SaveToObject( savedata, pbobject, KFDataDefine::Mask_Client );
             }
         } while ( !datahierarchy.empty() );
 
@@ -807,7 +962,7 @@ namespace KFrame
     {
         // 不需要同步
         if ( _kf_component->_entity_sync_remove_function == nullptr ||
-                !kfdata->HaveFlagMask( KFDataDefine::Mask_Sync_Client ) )
+                !kfdata->HaveFlagMask( KFDataDefine::Mask_Client ) )
         {
             return;
         }
@@ -841,7 +996,7 @@ namespace KFrame
     {
         // 不需要同步
         if ( _kf_component->_entity_sync_update_function == nullptr ||
-                !kfdata->HaveFlagMask( KFDataDefine::Mask_Sync_Client ) )
+                !kfdata->HaveFlagMask( KFDataDefine::Mask_Client ) )
         {
             return;
         }
@@ -929,6 +1084,9 @@ namespace KFrame
 
         // 同步更新
         SyncUpdateDataToClient();
+
+        // 同步显示奖励
+        SendShowElementToClient();
     }
 
     void KFEntityEx::SyncAddDataToClient()
@@ -965,5 +1123,17 @@ namespace KFrame
         _have_remove_pb_object = false;
         _kf_component->_entity_sync_remove_function( this, _remove_pb_object );
         _remove_pb_object.Clear();
+    }
+
+    void KFEntityEx::SendShowElementToClient()
+    {
+        if ( !_have_show_client )
+        {
+            return;
+        }
+
+        _have_show_client = false;
+        _kf_component->_show_element_function( this, _pb_show_element );
+        _pb_show_element.Clear();
     }
 }

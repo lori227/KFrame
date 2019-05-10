@@ -140,7 +140,7 @@ message MsgSyncRemoveData
 // MSG_SHOW_ELEMENT
 message MsgShowElement
 {
-	bytes element = 1;	// 奖励字串( 客户端需要解析 )
+	PBShowElement element = 1;	// 奖励数据
 }
 
 // 删除属性

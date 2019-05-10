@@ -435,7 +435,7 @@ namespace KFrame
         }
 
         // 开启保存数据库定时器
-        if ( kfdata->GetDataSetting()->HaveFlagMask( KFDataDefine::Mask_Save_Database ) )
+        if ( kfdata->GetDataSetting()->HaveFlagMask( KFDataDefine::Mask_Save ) )
         {
             StartSaveEntityTimer( kfentity );
         }
@@ -469,7 +469,7 @@ namespace KFrame
         }
 
         // 开启保存数据库定时器
-        if ( kfdata->GetDataSetting()->HaveFlagMask( KFDataDefine::Mask_Save_Database ) )
+        if ( kfdata->GetDataSetting()->HaveFlagMask( KFDataDefine::Mask_Save ) )
         {
             StartSaveEntityTimer( kfentity );
         }
@@ -503,7 +503,7 @@ namespace KFrame
         }
 
         // 开启保存数据库定时器
-        if ( kfdata->GetDataSetting()->HaveFlagMask( KFDataDefine::Mask_Save_Database ) )
+        if ( kfdata->GetDataSetting()->HaveFlagMask( KFDataDefine::Mask_Save ) )
         {
             StartSaveEntityTimer( kfentity );
         }
@@ -536,7 +536,7 @@ namespace KFrame
         }
 
         // 开启保存数据库定时器
-        if ( kfdata->GetDataSetting()->HaveFlagMask( KFDataDefine::Mask_Save_Database ) )
+        if ( kfdata->GetDataSetting()->HaveFlagMask( KFDataDefine::Mask_Save ) )
         {
             StartSaveEntityTimer( kfentity );
         }
@@ -563,7 +563,7 @@ namespace KFrame
     void KFComponentEx::StartSaveEntityTimer( KFEntity* kfentity )
     {
         // 不需要保存
-        if ( !KFUtility::HaveBitMask< uint32 >( _entity_data_mask, __NEED_TO_SAVE__ ) )
+        if ( !KFUtility::HaveBitMask< uint32 >( _entity_data_mask, KFDataDefine::Data_Save ) )
         {
             return;
         }
@@ -589,15 +589,15 @@ namespace KFrame
 
     void KFComponentEx::DeleteSaveEntity( KFEntity* kfentity )
     {
-        if ( KFUtility::HaveBitMask< uint32 >( _entity_data_mask, __NEED_TO_SAVE__ ) )
+        if ( KFUtility::HaveBitMask< uint32 >( _entity_data_mask, KFDataDefine::Data_Save ) )
         {
             SaveEntity( kfentity, __FUNC_LINE__ );
         }
-        else if ( KFUtility::HaveBitMask< uint32 >( _entity_data_mask, __DELETE_AND_SAVE__ ) )
+        else if ( KFUtility::HaveBitMask< uint32 >( _entity_data_mask, KFDataDefine::Data_Delete_Save ) )
         {
             SaveEntity( kfentity, __FUNC_LINE__ );
         }
-        else if ( KFUtility::HaveBitMask< uint32 >( _entity_data_mask, __DELETE_AND_REMOVE__ ) )
+        else if ( KFUtility::HaveBitMask< uint32 >( _entity_data_mask, KFDataDefine::Data_Delete_Remove ) )
         {
             DeleteEntity( kfentity );
         }

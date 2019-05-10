@@ -136,19 +136,22 @@ namespace KFrame
     {
         if ( !kfelement->IsObject() )
         {
-            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_parent->_data );
+            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_data_name );
+            return std::make_tuple( KFDataDefine::Show_None, nullptr );
         }
 
         auto kfelementobject = reinterpret_cast< KFElementObject* >( kfelement );
         if ( kfelementobject->_config_id == _invalid_int )
         {
-            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id!", kfelement->_parent->_data );
+            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id!", kfelement->_data_name );
+            return std::make_tuple( KFDataDefine::Show_None, nullptr );
         }
 
         auto kfsetting = _kf_hero_config->FindHeroSetting( kfelementobject->_config_id );
         if ( kfsetting == nullptr )
         {
-            return __LOG_ERROR_FUNCTION__( function, line, "[{}] hero setting = null!", kfelement->_parent->_data );
+            __LOG_ERROR_FUNCTION__( function, line, " hero id=[{}] setting = null!", kfelementobject->_config_id );
+            return std::make_tuple( KFDataDefine::Show_None, nullptr );
         }
 
         // 判断是否存在该英雄
@@ -165,7 +168,7 @@ namespace KFrame
         {
             // 存在, 判断有效时间
             auto datatime = kfhero->GetValue( __KF_STRING__( time ) );
-            auto elementtime = kfelementobject->CalcUInt64( __KF_STRING__( time ), multiple );
+            auto elementtime = kfelementobject->GetValue( kfhero->GetClassSetting(), __KF_STRING__( time ), multiple );
             if ( datatime != _invalid_int )
             {
                 if ( elementtime == _invalid_int )
@@ -184,6 +187,8 @@ namespace KFrame
                 // 按照规则换算成碎片
             }
         }
+
+        return std::make_tuple( KFDataDefine::Show_Element, kfhero );
     }
 
     __KF_ADD_DATA_FUNCTION__( KFHeroModule::OnAddHeroCallBack )

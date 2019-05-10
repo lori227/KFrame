@@ -96,19 +96,19 @@ namespace KFrame
     void KFKernelModule::SerializeToClient( KFData* kfdata, KFMsg::PBObject* proto )
     {
         proto->Clear();
-        SaveToObject( kfdata, proto, KFDataDefine::Mask_Sync_Client );
+        SaveToObject( kfdata, proto, KFDataDefine::Mask_Client );
     }
 
     void KFKernelModule::SerializeToData( KFData* kfdata, KFMsg::PBObject* proto )
     {
         proto->Clear();
-        SaveToObject( kfdata, proto, KFDataDefine::Mask_Save_Database );
+        SaveToObject( kfdata, proto, KFDataDefine::Mask_Save );
     }
 
     void KFKernelModule::SerializeToView( KFData* kfdata, KFMsg::PBObject* proto )
     {
         proto->Clear();
-        SaveToObject( kfdata, proto, KFDataDefine::Mask_Sync_View );
+        SaveToObject( kfdata, proto, KFDataDefine::Mask_View );
     }
 
 #define __COPY_FROM_PROTO__( kfdata, proto, pbdata ) \

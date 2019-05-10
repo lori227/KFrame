@@ -73,14 +73,13 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
         // 添加元数据
-        virtual void AddElement( const char* function, uint32 line, const KFElements* kfelements, bool showclient, float multiple = 1.0f );
+        virtual void AddElement( const KFElements* kfelements, bool showclient, const char* function, uint32 line, float multiple = 1.0f );
 
         // 判断元数据是否满足条件
-        virtual bool CheckElement( const char* function, uint32 line, const KFElements* kfelements, float multiple = 1.0f );
+        virtual bool CheckElement( const KFElements* kfelements, const char* function, uint32 line, float multiple = 1.0f );
 
         // 删除元数据
-        virtual void RemoveElement( const char* function, uint32 line, const KFElements* kfelements, float multiple = 1.0f );
-
+        virtual void RemoveElement( const KFElements* kfelements, const char* function, uint32 line, float multiple = 1.0f );
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
@@ -100,24 +99,33 @@ namespace KFrame
 
     protected:
         // 添加元数据
-        void AddElement( const char* function, uint32 line, const KFElement* kfelement, float multiple );
-        void AddNormalElement( const char* function, uint32 line, KFData* kfdata, KFElement* kfelement, float multiple );
-        void AddObjectElement( const char* function, uint32 line, KFData* kfdata, KFElement* kfelement, float multiple );
-        void AddRecordElement( const char* function, uint32 line, KFData* kfdata, KFElement* kfelement, float multiple );
+        void AddElement( const KFElement* kfelement, bool showclient, const char* function, uint32 line, float multiple );
+        std::tuple<uint32, KFData*> AddNormalElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line, float multiple );
+        std::tuple<uint32, KFData*> AddObjectElement( KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple );
+        std::tuple<uint32, KFData*> AddRecordElement( KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple );
 
         // 判断元数据
-        bool CheckElement( const char* function, uint32 line, const KFElement* kfelement, float multiple );
-        bool CheckNormalElement( const char* function, uint32 line, KFData* kfdata, KFElement* kfelement, float multiple );
-        bool CheckObjectElement( const char* function, uint32 line, KFData* kfdata, KFElement* kfelement, float multiple );
-        bool CheckRecordElement( const char* function, uint32 line, KFData* kfparent, KFElement* kfelement, float multiple );
+        bool CheckElement( const KFElement* kfelement, const char* function, uint32 line, float multiple );
+        bool CheckNormalElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line, float multiple );
+        bool CheckObjectElement( KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple );
+        bool CheckRecordElement( KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple );
 
         // 删除元数据
-        void RemoveElement( const char* function, uint32 line, const KFElement* kfelement, float multiple );
-        void RemoveNormalElement( const char* function, uint32 line, KFData* kfdata, KFElement* kfelement, float multiple );
-        void RemoveObjectElement( const char* function, uint32 line, KFData* kfdata, KFElement* kfelement, float multiple );
-        void RemoveRecordElement( const char* function, uint32 line, KFData* kfparent, KFElement* kfelement, float multiple );
+        void RemoveElement( const KFElement* kfelement, const char* function, uint32 line, float multiple );
+        void RemoveNormalElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line, float multiple );
+        void RemoveObjectElement( KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple );
+        void RemoveRecordElement( KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple );
+
+        // 添加显示的元数据
+        void AddShowElement( uint32 showtype, const KFElement* kfelement, KFData* kfdata, bool showclient, const char* function, uint32 line );
+        void AddElementToShow( const KFElement* kfelement );
+        void AddDataToShow( KFData* kfdata );
 
     protected:
+
+        // 添加属性到pb中
+        void AddSyncUpdateDataToPBObject( KFData* kfdata, KFMsg::PBObject* pbobject );
+
         // 同步添加数据
         void SyncAddDataToClient();
 
@@ -127,36 +135,42 @@ namespace KFrame
         // 同步更新数据
         void SyncUpdateDataToClient();
 
-        // 添加属性到pb中
-        void AddSyncUpdateDataToPBObject( KFData* kfdata, KFMsg::PBObject* pbobject );
+        // 发送显示奖励
+        void SendShowElementToClient();
 
-    public:
-        // 组件
-        KFComponentEx* _kf_component;
     protected:
+        // 组件
+        KFComponentEx* _kf_component = nullptr;
+
         // 数据
-        KFData* _kf_object;
+        KFData* _kf_object = nullptr;
 
         // 名字
         std::string _name;
 
         // 是否初始化
-        bool _is_inited;
+        bool _is_inited = false;
 
         // 是否需要保存数据库
-        bool _is_need_to_save;
+        bool _is_need_to_save = false;
 
         // 添加的数据
-        bool _have_add_pb_object;
+        bool _have_add_pb_object = false;
         KFMsg::PBObject _add_pb_object;
 
         // 删除的数据
-        bool _have_remove_pb_object;
+        bool _have_remove_pb_object = false;
         KFMsg::PBObject _remove_pb_object;
 
         // 更新的数据
-        bool _have_update_pb_object;
+        bool _have_update_pb_object = false;
         KFMsg::PBObject _update_pb_object;
+
+        // 是否通知客户端
+        bool _have_show_client = false;
+
+        // 需要显示的element
+        KFMsg::PBShowElement _pb_show_element;
     };
 }
 
