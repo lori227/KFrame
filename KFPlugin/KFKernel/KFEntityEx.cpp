@@ -483,7 +483,7 @@ namespace KFrame
     {
         if ( kfelements->_element_list.empty() )
         {
-            return;
+            return __LOG_ERROR_FUNCTION__( function, line, "entity=[{}] element=[{}] is empty!", GetKeyID(), kfelements->_str_element );
         }
 
         __LOG_INFO_FUNCTION__( function, line, "entity=[{}] multiple=[{:0.2f}] elements={}!", GetKeyID(), multiple, kfelements->_str_element );

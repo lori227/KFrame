@@ -425,9 +425,8 @@ namespace KFrame
             return;
         }
 
-        // 掉线了, 先保存玩家信息
-        // 后面会加上各种逻辑回调
-        SavePlayer( player );
+        // 掉线了, 设置掉线时间
+        player->UpdateData( __KF_STRING__( offlinetime ), KFEnum::Set, KFGlobal::Instance()->_real_time );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGameModule::HandleLeaveToGameReq )

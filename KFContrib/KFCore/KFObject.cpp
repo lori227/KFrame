@@ -238,8 +238,10 @@ namespace KFrame
         {
             auto& key = iter.first;
             auto kfdata = iter.second;
-
-            values[ key ] = kfdata->ToString();
+            if ( kfdata->IsValid() )
+            {
+                values[ key ] = kfdata->ToString();
+            }
         }
     }
 
