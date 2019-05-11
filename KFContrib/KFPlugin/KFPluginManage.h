@@ -20,37 +20,42 @@
     }\
 
 #if __KF_SYSTEM__ == __KF_WIN__
-#define __CHECK_PLUGIN_FUNCTION__( name, function )\
-    if ( true )\
-        //if ( &KFModule::function != &name##Module::function )\
+#define __CHECK_PLUGIN_FUNCTION__( module, function )\
+    std::string basename = typeid( &KFModule::function ).name();\
+    std::string childname = typeid( &module::function ).name();\
+    if ( basename != childname )\
 
 #else
-#define __CHECK_PLUGIN_FUNCTION__( name, function )\
+#define __CHECK_PLUGIN_FUNCTION__( module, function )\
     KFModule kfbase;\
     void ( KFModule::*basemfp )() = &KFModule::function; \
     auto bassaddress = ( void* )( kfbase.*basemfp ); \
-    auto kfmodule = static_cast < name##Module* >( _kf_module );\
-    void ( name##Module::*childmfp )() = &name##Module::function; \
+    auto kfmodule = static_cast < module* >( _kf_module );\
+    void ( module::*childmfp )() = &module::function; \
     auto childaddress = (void*)( kfmodule->*childmfp );\
     if ( bassaddress != childaddress )\
 
 #endif
 
-#define __REGISTER_PLUGIN_FUNCTION__( name, function )\
+#define __REGISTER_PLUGIN_FUNCTION__( module, function )\
     {\
-        __CHECK_PLUGIN_FUNCTION__( name, function )\
+        __CHECK_PLUGIN_FUNCTION__( module, function )\
         {   \
-            auto ok = _kf_plugin_manage->Register##function##Function< name##Module >( _sort, kfmodule, &name##Module::function );\
+            auto ok = _kf_plugin_manage->Register##function##Function< module >( _sort, kfmodule, &module::function );\
             if ( !ok )\
             {\
-                __LOG_ERROR__( "sort[{}] {} is already register!", #function, _sort );\
+                __LOG_ERROR__( "module=[{}] sort=[{}] function=[{}] is already register!", #module, _sort, #function );\
+            }\
+            else\
+            {\
+                __LOG_INFO__( "module=[{}] sort=[{}] register function=[{}] ok!", #module, _sort, #function );\
             }\
         }\
     }
 
-#define __UNREGISTER_PLUGIN_FUNCTION__( name, function )\
+#define __UNREGISTER_PLUGIN_FUNCTION__( module, function )\
     {\
-        __CHECK_PLUGIN_FUNCTION__( name, function )\
+        __CHECK_PLUGIN_FUNCTION__( module, function )\
         {   \
             _kf_plugin_manage->UnRegister##function##Function( _sort );\
         }\
@@ -60,13 +65,13 @@
 #define __REGISTER_MODULE__( name ) \
     auto kfmodule = new name##Module();\
     _kf_plugin_manage->RegistModule< name##Plugin, name##Interface >( kfmodule );\
-    __REGISTER_PLUGIN_FUNCTION__( name, Run );\
-    __REGISTER_PLUGIN_FUNCTION__( name, AfterRun );\
+    __REGISTER_PLUGIN_FUNCTION__( name##Module, Run );\
+    __REGISTER_PLUGIN_FUNCTION__( name##Module, AfterRun );\
 
 // 卸载模块
 #define __UNREGISTER_MODULE__( name ) \
-    __UNREGISTER_PLUGIN_FUNCTION__( name, Run );\
-    __UNREGISTER_PLUGIN_FUNCTION__( name, AfterRun );\
+    __UNREGISTER_PLUGIN_FUNCTION__( name##Module, Run );\
+    __UNREGISTER_PLUGIN_FUNCTION__( name##Module, AfterRun );\
     _kf_plugin_manage->UnRegistModule< name##Plugin >();\
 
 #define __FIND_MODULE__( module, classname ) \
