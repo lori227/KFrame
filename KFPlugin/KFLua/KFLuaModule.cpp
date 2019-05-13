@@ -141,35 +141,40 @@ namespace KFrame
                                    param4.c_str(), param5.c_str(), param6.c_str() );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#define __LUA_FUNCTION__( name, function ) \
+    metatableobject.RegisterObjectDirect( name, this, function );
+
+
     void KFLuaModule::RegisterLuaFunction( KFLuaScript* kfscript )
     {
         auto metatableobject = kfscript->_lua_state->GetGlobals().CreateTable( "MultiObjectMetaTable" );
         metatableobject.SetObject( "__index", metatableobject );
 
-        metatableobject.RegisterObjectDirect( "LogDebug", this, &KFLuaModule::LuaLogDebug );
-        metatableobject.RegisterObjectDirect( "LogInfo", this, &KFLuaModule::LuaLogInfo );
-        metatableobject.RegisterObjectDirect( "LogWarn", this, &KFLuaModule::LuaLogWarn );
-        metatableobject.RegisterObjectDirect( "LogError", this, &KFLuaModule::LuaLogError );
-        metatableobject.RegisterObjectDirect( "Md5Encode", this, &KFLuaModule::LuaMd5Encode );
-        metatableobject.RegisterObjectDirect( "GetValue", this, &KFLuaModule::LuaGetValue );
-        metatableobject.RegisterObjectDirect( "OperateValue", this, &KFLuaModule::LuaOperateValue );
-        metatableobject.RegisterObjectDirect( "GetObjectValue", this, &KFLuaModule::LuaGetObjectValue );
-        metatableobject.RegisterObjectDirect( "OperateObjectValue", this, &KFLuaModule::LuaOperateObjectValue );
-        metatableobject.RegisterObjectDirect( "GetRecordValue", this, &KFLuaModule::LuaGetRecordValue );
-        metatableobject.RegisterObjectDirect( "OperateRecordValue", this, &KFLuaModule::LuaOperateRecordValue );
-        metatableobject.RegisterObjectDirect( "GetVariable", this, &KFLuaModule::LuaGetVariable );
-        metatableobject.RegisterObjectDirect( "OperateVariable", this, &KFLuaModule::LuaOperateVariable );
-        metatableobject.RegisterObjectDirect( "GetGameTime", this, &KFLuaModule::LuaGetGameTime );
-        metatableobject.RegisterObjectDirect( "GetRealTime", this, &KFLuaModule::LuaGetRealTime );
-        metatableobject.RegisterObjectDirect( "AddData", this, &KFLuaModule::LuaAddData );
-        metatableobject.RegisterObjectDirect( "SetData", this, &KFLuaModule::LuaSetData );
-        metatableobject.RegisterObjectDirect( "DecData", this, &KFLuaModule::LuaDecData );
-        metatableobject.RegisterObjectDirect( "STHttpGet", this, &KFLuaModule::LuaSTGet );
-        metatableobject.RegisterObjectDirect( "STHttpPost", this, &KFLuaModule::LuaSTPost );
-        metatableobject.RegisterObjectDirect( "MTHttpGet", this, &KFLuaModule::LuaMTGet );
-        metatableobject.RegisterObjectDirect( "MTHttpPost", this, &KFLuaModule::LuaMTPost );
-        metatableobject.RegisterObjectDirect( "GetOptionString", this, &KFLuaModule::LuaGetOptionString );
-        metatableobject.RegisterObjectDirect( "GetOptionUint32", this, &KFLuaModule::LuaGetOptionUint32 );
+        __LUA_FUNCTION__( "LogDebug", &KFLuaModule::LuaLogDebug );
+        __LUA_FUNCTION__( "LogInfo", &KFLuaModule::LuaLogInfo );
+        __LUA_FUNCTION__( "LogWarn", &KFLuaModule::LuaLogWarn );
+        __LUA_FUNCTION__( "LogError", &KFLuaModule::LuaLogError );
+        __LUA_FUNCTION__( "Md5Encode", &KFLuaModule::LuaMd5Encode );
+        __LUA_FUNCTION__( "GetValue", &KFLuaModule::LuaGetValue );
+        __LUA_FUNCTION__( "OperateValue", &KFLuaModule::LuaOperateValue );
+        __LUA_FUNCTION__( "GetObjectValue", &KFLuaModule::LuaGetObjectValue );
+        __LUA_FUNCTION__( "OperateObjectValue", &KFLuaModule::LuaOperateObjectValue );
+        __LUA_FUNCTION__( "GetRecordValue", &KFLuaModule::LuaGetRecordValue );
+        __LUA_FUNCTION__( "OperateRecordValue", &KFLuaModule::LuaOperateRecordValue );
+        __LUA_FUNCTION__( "GetVariable", &KFLuaModule::LuaGetVariable );
+        __LUA_FUNCTION__( "OperateVariable", &KFLuaModule::LuaOperateVariable );
+        __LUA_FUNCTION__( "GetGameTime", &KFLuaModule::LuaGetGameTime );
+        __LUA_FUNCTION__( "GetRealTime", &KFLuaModule::LuaGetRealTime );
+        __LUA_FUNCTION__( "AddData", &KFLuaModule::LuaAddData );
+        __LUA_FUNCTION__( "SetData", &KFLuaModule::LuaSetData );
+        __LUA_FUNCTION__( "DecData", &KFLuaModule::LuaDecData );
+        __LUA_FUNCTION__( "STHttpGet", &KFLuaModule::LuaSTGet );
+        __LUA_FUNCTION__( "STHttpPost", &KFLuaModule::LuaSTPost );
+        __LUA_FUNCTION__( "MTHttpGet", &KFLuaModule::LuaMTGet );
+        __LUA_FUNCTION__( "MTHttpPost", &KFLuaModule::LuaMTPost );
+        __LUA_FUNCTION__( "GetOptionString", &KFLuaModule::LuaGetOptionString );
+        __LUA_FUNCTION__( "GetOptionUInt32", &KFLuaModule::LuaGetOptionUInt32 );
 
         LuaPlus::LuaObject kframeobject = kfscript->_lua_state->BoxPointer( this );
         kframeobject.SetMetatable( metatableobject );
@@ -298,7 +303,7 @@ namespace KFrame
         return KFGlobal::Instance()->_real_time;
     }
 
-    void KFLuaModule::LuaAddData( uint64 objectid, const char* stragent, bool showclient )
+    void KFLuaModule::LuaAddData( uint64 objectid, const char* strelement, bool showclient )
     {
         auto kfentity = _kf_player->FindEntity( objectid, __FUNC_LINE__ );
         if ( kfentity == nullptr )
@@ -307,14 +312,14 @@ namespace KFrame
         }
 
         KFElements kfelements;
-        auto ok = kfelements.Parse( stragent, __FUNC_LINE__ );
+        auto ok = kfelements.Parse( strelement, __FUNC_LINE__ );
         if ( ok )
         {
             kfentity->AddElement( &kfelements, showclient, __FUNC_LINE__ );
         }
     }
 
-    void KFLuaModule::LuaSetData( uint64 objectid, const char* stragent, bool showclient )
+    void KFLuaModule::LuaSetData( uint64 objectid, const char* strelement, bool showclient )
     {
         auto kfentity = _kf_player->FindEntity( objectid, __FUNC_LINE__ );
         if ( kfentity == nullptr )
@@ -323,7 +328,7 @@ namespace KFrame
         }
 
         KFElements kfelements;
-        auto ok = kfelements.Parse( stragent, __FUNC_LINE__ );
+        auto ok = kfelements.Parse( strelement, __FUNC_LINE__ );
         if ( ok )
         {
             kfelements.SetOperate( KFEnum::Set );
@@ -331,7 +336,7 @@ namespace KFrame
         }
     }
 
-    void KFLuaModule::LuaDecData( uint64 objectid, const char* stragent )
+    void KFLuaModule::LuaDecData( uint64 objectid, const char* strelement )
     {
         auto kfentity = _kf_player->FindEntity( objectid, __FUNC_LINE__ );
         if ( kfentity == nullptr )
@@ -340,7 +345,7 @@ namespace KFrame
         }
 
         KFElements kfelements;
-        auto ok = kfelements.Parse( stragent, __FUNC_LINE__ );
+        auto ok = kfelements.Parse( strelement, __FUNC_LINE__ );
         if ( ok )
         {
             kfentity->RemoveElement( &kfelements, __FUNC_LINE__ );
@@ -373,9 +378,13 @@ namespace KFrame
 
     __KF_HTTP_CALL_BACK_FUNCTION__( KFLuaModule::OnLuaHttpCallBack )
     {
+        if ( args.empty() )
+        {
+            return;
+        }
+
         __JSON_PARSE_STRING__( kfjson, args );
 
-        auto objectid = __JSON_GET_UINT64__( kfjson, __KF_STRING__( playerid ) );
         auto luafile = __JSON_GET_STRING__( kfjson, __KF_STRING__( luafile ) );
         auto luafunction = __JSON_GET_STRING__( kfjson, __KF_STRING__( luafunction ) );
         if ( luafile.empty() || luafunction.empty() )
@@ -383,6 +392,7 @@ namespace KFrame
             return;
         }
 
+        auto objectid = __JSON_GET_UINT64__( kfjson, __KF_STRING__( playerid ) );
         Call( luafile, luafunction, objectid, senddata, recvdata );
     }
 
@@ -392,7 +402,7 @@ namespace KFrame
         return strvalue.c_str();
     }
 
-    uint32 KFLuaModule::LuaGetOptionUint32( const char* name, const char* logicid )
+    uint32 KFLuaModule::LuaGetOptionUInt32( const char* name, const char* logicid )
     {
         return _kf_option->GetUInt32( name, logicid );
     }

@@ -109,13 +109,13 @@ namespace KFrame
         uint64 LuaGetRealTime();
 
         // 添加数据
-        void LuaAddData( uint64 objectid, const char* stragent, bool showclient );
+        void LuaAddData( uint64 objectid, const char* strelement, bool showclient );
 
         // 设置数据
-        void LuaSetData( uint64 objectid, const char* stragent, bool showclient );
+        void LuaSetData( uint64 objectid, const char* strelement, bool showclient );
 
         // 减少数据
-        void LuaDecData( uint64 objectid, const char* stragent );
+        void LuaDecData( uint64 objectid, const char* strelement );
 
         // http访问
         const char* LuaSTGet( const char* url, const char* data );
@@ -126,7 +126,7 @@ namespace KFrame
 
         // 获得配置变量
         const char* LuaGetOptionString( const char* name, const char* logicid );
-        uint32 LuaGetOptionUint32( const char* name, const char* logicid );
+        uint32 LuaGetOptionUInt32( const char* name, const char* logicid );
 
     protected:
         // 重新加载脚本文件

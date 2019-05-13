@@ -92,7 +92,9 @@ namespace KFrame
     {
         for ( auto kfplugin : _plugins )
         {
+            __LOG_DEBUG__( "module=[{}] start!", kfplugin->_plugin_name );
             kfplugin->InitModule();
+            __LOG_DEBUG__( "module=[{}] ok!", kfplugin->_plugin_name );
         }
     }
 
@@ -113,7 +115,9 @@ namespace KFrame
     {
         for ( auto kfplugin : _plugins )
         {
+            __LOG_DEBUG__( "module=[{}] start!", kfplugin->_plugin_name );
             kfplugin->BeforeRun();
+            __LOG_DEBUG__( "module=[{}] ok!", kfplugin->_plugin_name );
         }
     }
 
@@ -121,7 +125,9 @@ namespace KFrame
     {
         for ( auto kfplugin : _plugins )
         {
+            __LOG_DEBUG__( "module=[{}] start!", kfplugin->_plugin_name );
             kfplugin->OnceRun();
+            __LOG_DEBUG__( "module=[{}] ok!", kfplugin->_plugin_name );
         }
     }
 
@@ -153,7 +159,7 @@ namespace KFrame
         {
             __LOG_ERROR__( "init exception=[{}]!", ex.what() );
         }
-        catch ( ... )                                                                                                                            \
+        catch ( ... )
         {
             __LOG_ERROR__( "init exception unknown!" );
         }

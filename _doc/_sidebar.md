@@ -51,6 +51,10 @@
   - [属性配置](/docs/属性配置.md)
   - [属性插件(KFKernel)](/docs/属性插件.md)
 
+- Lua接口
+
+  - [Lua脚本接口](/docs/Lua脚本接口.md)
+
 - 平台相关
 
   - [平台API](/docs/平台API.md)
