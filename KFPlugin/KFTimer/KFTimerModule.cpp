@@ -63,7 +63,7 @@ namespace KFrame
         auto iter = _kf_timer_data.find( module );
         if ( iter == _kf_timer_data.end() )
         {
-            std::map< uint64, KFTimerData* > temp;
+            std::unordered_map< uint64, KFTimerData* > temp;
             iter = _kf_timer_data.insert( std::make_pair( module, temp ) ).first;
         }
 

@@ -105,7 +105,7 @@ namespace KFrame
 
     protected:
         // 等待启动的客户端
-        std::map< uint64, KFNetData > _wait_clients;
+        std::unordered_map< uint64, KFNetData > _wait_clients;
 
         // 客户端列表
         KFHashMap< uint64, uint64, KFNetClient > _kf_clients;

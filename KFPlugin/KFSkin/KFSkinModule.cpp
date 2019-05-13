@@ -93,7 +93,7 @@ namespace KFrame
         auto kfskinrecord = kfobject->FindData( __KF_STRING__( skin ) );
 
         // 查找时间皮肤
-        std::map< KFData*, uint64 > timeskins;
+        std::unordered_map< KFData*, uint64 > timeskins;
         auto kfskin = kfskinrecord->FirstData();
         while ( kfskin != nullptr )
         {

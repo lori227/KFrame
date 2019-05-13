@@ -141,7 +141,7 @@ namespace KFrame
         auto iter = _kf_schedule_data.find( kfdata->_module );
         if ( iter == _kf_schedule_data.end() )
         {
-            std::map< uint64, KFScheduleData* > temp;
+            std::unordered_map< uint64, KFScheduleData* > temp;
             iter = _kf_schedule_data.insert( std::make_pair( kfdata->_module, temp ) ).first;
         }
 

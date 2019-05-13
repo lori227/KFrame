@@ -24,7 +24,7 @@ namespace KFrame
     protected:
 
         // 状态列表
-        std::map< uint32, KFState* > _states;
+        std::unordered_map< uint32, KFState* > _states;
     };
 
     ///////////////////////////////////////////////////

@@ -75,7 +75,7 @@ namespace KFrame
         KFComponent* _kf_component = nullptr;
 
         // 更新的排行榜操作
-        std::map< uint64, std::set< KFRankSetting* > > _update_rank_list;
+        std::unordered_map< uint64, std::set< KFRankSetting* > > _update_rank_list;
     };
 }
 

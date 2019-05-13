@@ -37,7 +37,7 @@ namespace KFrame
         std::string _class_name;
 
         // 属性列表
-        std::map< uint32, KFAttribute > _attributes;
+        std::unordered_map< uint32, KFAttribute > _attributes;
     };
 
     /////////////////////////////////////////////////////////////////////////////////////////////
@@ -50,7 +50,7 @@ namespace KFrame
         }
 
     public:
-        std::map< uint32, std::string > _datas;
+        std::unordered_map< uint32, std::string > _datas;
     };
     /////////////////////////////////////////////////////////////////////////////////////////////
 

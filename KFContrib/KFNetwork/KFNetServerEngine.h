@@ -109,7 +109,7 @@ namespace KFrame
         std::set< uint64 > _remove_trustees;
 
         // 需要关闭的连接
-        std::map< uint64, uint64 > _close_handles;
+        std::unordered_map< uint64, uint64 > _close_handles;
     private:
 
         // 消息函数

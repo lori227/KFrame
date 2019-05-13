@@ -98,7 +98,7 @@ namespace KFrame
         KFHashMap< uint64, uint64, KFProxyData > _kf_proxy_list;
 
         // token列表
-        std::map< uint64, std::string > _token_list;
+        std::unordered_map< uint64, std::string > _token_list;
     };
 }
 

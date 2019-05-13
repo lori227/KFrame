@@ -10,29 +10,29 @@
 
 namespace KFrame
 {
-	class ZipEntryInfo
-	{
-	public:
-		unz_file_pos pos;
-		uLong uncompressed_size;
-	};
+    class ZipEntryInfo
+    {
+    public:
+        unz_file_pos pos;
+        uLong uncompressed_size;
+    };
 
-	class KFExcelZip
-	{
-	public:
-		KFExcelZip();
-		~KFExcelZip();
+    class KFExcelZip
+    {
+    public:
+        KFExcelZip();
+        ~KFExcelZip();
 
-		bool Open( const char* file );
-		bool OpenXML( const char* filename, rapidxml::xml_document<>& doc );
+        bool Open( const char* file );
+        bool OpenXML( const char* filename, rapidxml::xml_document<>& doc );
 
-	private:
-		char* GetFileData( const char* filename, unsigned long& size );
+    private:
+        char* GetFileData( const char* filename, unsigned long& size );
 
-	public:
-		std::map<std::string, ZipEntryInfo> _files;
-		unzFile _zipFile;
-	};
+    public:
+        std::unordered_map<std::string, ZipEntryInfo> _files;
+        unzFile _zipFile;
+    };
 }
 
 

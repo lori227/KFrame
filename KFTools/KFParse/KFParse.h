@@ -42,7 +42,7 @@ namespace KFrame
         bool _utf8 = false;
 
         // 文件
-        std::map< std::string, KFFile > _files;
+        std::unordered_map< std::string, KFFile > _files;
     };
 
     ///////////////////////////////////////////////////////////////////////////

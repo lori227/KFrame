@@ -89,7 +89,7 @@ namespace KFrame
         uint64 _last_update_time;
 
         // 定时器数据
-        std::map< std::string, std::map< uint64, KFTimerData* > > _kf_timer_data;
+        std::unordered_map< std::string, std::unordered_map< uint64, KFTimerData* > > _kf_timer_data;
 
         // 需要注册的定时器
         std::list< KFTimerData* > _register_timer_data;

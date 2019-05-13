@@ -53,7 +53,7 @@ namespace KFrame
         std::list< KFScheduleData* > _kf_schedule_register;
 
         // 计划任务
-        std::map< std::string, std::map< uint64, KFScheduleData* > > _kf_schedule_data;
+        std::unordered_map< std::string, std::unordered_map< uint64, KFScheduleData* > > _kf_schedule_data;
 
         // 需要删除的任务
         std::list< std::tuple< std::string, uint64 > > _kf_schedule_remove;
