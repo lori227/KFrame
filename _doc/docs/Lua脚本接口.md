@@ -230,9 +230,12 @@
 	参数: 
 	url : http访问地址
 	data : 发送的数据
+
+	返回值:
+	http访问的结果字串
 	
 	用例 : 
-	KFrame:STHttpGet( "http://127.0.0.1/test", "test" )
+	local recvdata = KFrame:STHttpGet( "http://127.0.0.1/test", "test" )
 
 ### STHttpPost
 	
@@ -241,9 +244,12 @@
 	参数: 
 	url : http访问地址
 	data : 发送的数据
+
+	返回值:
+	http访问的结果字串
 	
 	用例 : 
-	KFrame:STHttpPost( "http://127.0.0.1/test", "test" )
+	local recvdata = KFrame:STHttpPost( "http://127.0.0.1/test", "test" )
 
 
 ### MTHttpGet
