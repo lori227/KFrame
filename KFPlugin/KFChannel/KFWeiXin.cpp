@@ -5,7 +5,7 @@
 
 namespace KFrame
 {
-#define __ACCOUNT_REDIS_DRIVER__ _kf_redis->Create( __KF_STRING__( account ) )
+#define __AUTH_REDIS_DRIVER__ _kf_redis->Create( __KF_STRING__( auth ) )
 #define __Execute_Redis__( query ) \
     if ( !query ) \
     { \
@@ -47,7 +47,7 @@ namespace KFrame
             auto scope = __JSON_GET_STRING__( accessjson, __KF_STRING__( scope ) );
 
             // 保存access_token
-            auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
+            auto redisdriver = __AUTH_REDIS_DRIVER__;
             redisdriver->Append( "hmset {}:{} {} {} {} {} {} {}",
                                  __KF_STRING__( access_token ), machinecode, __KF_STRING__( access_token ), accesstoken,
                                  __KF_STRING__( openid ), openid, __KF_STRING__( scope ), scope );
@@ -59,7 +59,7 @@ namespace KFrame
         else
         {
             // 机器码获得账号的access_token
-            auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
+            auto redisdriver = __AUTH_REDIS_DRIVER__;
             auto weixindata = redisdriver->QueryMap( "hgetall {}:{}", __KF_STRING__( access_token ), machinecode );
             if ( !weixindata->IsOk() )
             {

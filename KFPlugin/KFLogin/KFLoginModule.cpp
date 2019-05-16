@@ -35,7 +35,7 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFLoginModule::OnceRun()
     {
-        _login_redis = _kf_redis->Create( __KF_STRING__( login ) );
+        _auth_redis = _kf_redis->Create( __KF_STRING__( auth ) );
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -155,7 +155,7 @@ namespace KFrame
         __LOG_DEBUG__( "accountid[{}] login verify", accountid );
 
         // 本小区的token验证
-        auto kftoken = _login_redis->QueryMap( "hgetall {}:{}:{}", __KF_STRING__( token ), _kf_zone->GetZone()->_id, accountid );
+        auto kftoken = _auth_redis->QueryMap( "hgetall {}:{}:{}", __KF_STRING__( token ), _kf_zone->GetZone()->_id, accountid );
         if ( !kftoken->_value.empty() )
         {
             auto querytoken = kftoken->_value[ __KF_STRING__( token ) ];
@@ -221,9 +221,9 @@ namespace KFrame
         values[ __KF_STRING__( account ) ] = account;
         values[ __KF_STRING__( channel ) ] = __TO_STRING__( channel );
         values[ __KF_STRING__( accountid ) ] = __TO_STRING__( accountid );
-        _login_redis->Append( values, "hmset {}", tokenkey );
-        _login_redis->Append( "expire {} {}", tokenkey, _token_expire_time );
-        _login_redis->Pipeline();
+        _auth_redis->Append( values, "hmset {}", tokenkey );
+        _auth_redis->Append( "expire {} {}", tokenkey, _token_expire_time );
+        _auth_redis->Pipeline();
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // 发送到world服务器
         KFMsg::PBLoginData pblogin;

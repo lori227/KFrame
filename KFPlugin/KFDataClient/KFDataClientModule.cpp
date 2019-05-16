@@ -9,7 +9,6 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFMsg::S2S_SAVE_PLAYER_TO_GAME_ACK, &KFDataClientModule::HandleSavePlayerToGameAck );
         __REGISTER_MESSAGE__( KFMsg::S2S_LOAD_PLAYER_TO_GAME_ACK, &KFDataClientModule::HandleLoadPlayerToGameAck );
         __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_PLAYER_TO_GAME_ACK, &KFDataClientModule::HandleQueryPlayerToGameAck );
-        __REGISTER_MESSAGE__( KFMsg::S2S_SET_PLAYERNAME_TO_GAME_ACK, &KFDataClientModule::HandleSetPlayerNameToGameAck );
     }
 
     void KFDataClientModule::BeforeShut()
@@ -17,7 +16,6 @@ namespace KFrame
         __UNREGISTER_MESSAGE__( KFMsg::S2S_SAVE_PLAYER_TO_GAME_ACK );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_LOAD_PLAYER_TO_GAME_ACK );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_PLAYER_TO_GAME_ACK );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_SET_PLAYERNAME_TO_GAME_ACK );
     }
 
     void KFDataClientModule::Run()
@@ -52,11 +50,6 @@ namespace KFrame
     void KFDataClientModule::SetQueryPlayerFunction( KFQueryPlayerFunction& function )
     {
         _query_player_function = function;
-    }
-
-    void KFDataClientModule::SetPlayerNameFunction( KFSetPlayerNameFunction& function )
-    {
-        _set_player_name_function = function;
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -179,20 +172,4 @@ namespace KFrame
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFDataClientModule::SetPlayerName( uint64 playerid, const std::string& oldname, const std::string& newname, uint64 itemuuid )
-    {
-        KFMsg::S2SSetPlayerNameToDataReq req;
-        req.set_playerid( playerid );
-        req.set_oldname( oldname );
-        req.set_newname( newname );
-        req.set_itemuuid( itemuuid );
-        return _kf_route->SendToRand( playerid, __KF_STRING__( data ), KFMsg::S2S_SET_PLAYERNAME_TO_DATA_REQ, &req );
-    }
-
-    __KF_MESSAGE_FUNCTION__( KFDataClientModule::HandleSetPlayerNameToGameAck )
-    {
-        __PROTO_PARSE__( KFMsg::S2SSetPlayerNameToGameAck );
-
-        _set_player_name_function( kfmsg.result(), kfmsg.playerid(), kfmsg.name(), kfmsg.itemuuid() );
-    }
 }

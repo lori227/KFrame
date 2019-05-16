@@ -51,17 +51,24 @@ enum FrameClientProtocol
 	MSG_QUERY_STORE_REQ 				= 412;	// 请求商城信息
 	MSG_QUERY_STORE_ACK 				= 413;	// 请求商城信息反馈
 
-	// rank
-	MSG_QUERY_RANK_LIST_REQ 			= 431;	// 查询全服排行榜
-	MSG_QUERY_RANK_LIST_ACK	 			= 432;	// 查询排行榜反馈
-	MSG_QUERY_FRIEND_RANK_LIST_REQ 		= 433;	// 查询好友排行榜
-	MSG_QUERY_FRIEND_RANK_LIST_ACK		= 434;	// 查询好友排行榜
+	// pay
+	MSG_APPLY_PAY_ORDER_REQ 			= 431;	// 请求订单
+	MSG_APPLY_PAY_ORDER_ACK 			= 432;	// 请求订单
+	MSG_PAY_RESULT_REQ					= 433;	// 充值结果
+	MSG_QUERY_PAY_REQ					= 434;	// 查询充值
 
 	// relation
 	MSG_ADD_FRIEND_INVITE_REQ 			= 451;	// 申请添加好友
 	MSG_REPLY_FRIEND_INVITE_REQ 		= 452;	// 回复好友申请
 	MSG_DEL_FRIEND_REQ					= 453;	// 删除好友
 	MSG_SET_REFUSE_FRIEND_INVITE_REQ 	= 454;	// 设置拒绝添加好友
+
+	
+	// rank
+	MSG_QUERY_RANK_LIST_REQ 			= 471;	// 查询全服排行榜
+	MSG_QUERY_RANK_LIST_ACK	 			= 472;	// 查询排行榜反馈
+	MSG_QUERY_FRIEND_RANK_LIST_REQ 		= 473;	// 查询好友排行榜
+	MSG_QUERY_FRIEND_RANK_LIST_ACK		= 474;	// 查询好友排行榜
  }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -295,6 +302,38 @@ message MsgQueryStoreAck
 {
 	bytes version = 1;		// 版本号
 	bytes data = 2;			// 商城数据( 保存成xml, 然后自己解析文件 )
+}
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+// 请求生成订单
+// MSG_APPLY_PAY_ORDER_REQ 
+message MsgApplyPayOrderReq
+{
+	string payid = 1;	// 充值id
+}
+
+// 生成订单回复
+// MSG_APPLY_PAY_ORDER_ACK
+message MsgApplyPayOrderAck
+{
+	string payid = 1;	// 充值id
+	string order = 2;	// 订单号( 传给充值平台作为参数 )
+}
+
+// 通知充值结果
+// MSG_PAY_RESULT_REQ
+message MsgPayResultReq
+{
+	string payid = 1;	// 充值id
+	string order = 2;	// 订单号
+	bool result = 3;	// 结果
+}
+
+// 请求充值查询
+// MSG_QUERY_PAY_REQ
+message MsgQueryPayReq
+{
+	
 }
 ////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////

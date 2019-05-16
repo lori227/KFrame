@@ -5,25 +5,24 @@ namespace KFrame
     void KFAttributeModule::BeforeRun()
     {
         _kf_data_client->BindQueryPlayerFunction( this, &KFAttributeModule::OnAfterQueryPlayerData );
-        _kf_data_client->BindSetNameFunction( this, &KFAttributeModule::OnAfterSetPlayerName );
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_REMOVE_DATA_REQ, &KFAttributeModule::HandleRemoveDataReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_QUERY_PLAYER_REQ, &KFAttributeModule::HandleQueryPlayerReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_SET_NAME_REQ, &KFAttributeModule::HandleSetNameReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_SET_SEX_REQ, &KFAttributeModule::HandleSetSexReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_SET_PLAYERNAME_TO_GAME_ACK, &KFAttributeModule::HandleSetPlayerNameToGameAck );
     }
 
     void KFAttributeModule::BeforeShut()
     {
         _kf_data_client->UnBindLoadPlayerFunction( this );
-        _kf_data_client->UnBindSetNameFunction( this );
-
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::MSG_REMOVE_DATA_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::MSG_QUERY_PLAYER_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::MSG_SET_NAME_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::MSG_SET_SEX_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_SET_PLAYERNAME_TO_GAME_ACK );
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -107,31 +106,38 @@ namespace KFrame
         }
 
         // 修改名字
-        auto ok = _kf_data_client->SetPlayerName( playerid, name, kfmsg.name(), _invalid_int );
+        KFMsg::S2SSetPlayerNameToDataReq req;
+        req.set_playerid( playerid );
+        req.set_oldname( name );
+        req.set_newname( kfmsg.name() );
+        req.set_itemuuid( _invalid_int );
+        auto ok = _kf_route->SendToRand( playerid, __KF_STRING__( public ), KFMsg::S2S_SET_PLAYERNAME_TO_DATA_REQ, &req );
         if ( !ok )
         {
-            _kf_display->SendToClient( player, KFMsg::DataServerBusy );
+            _kf_display->SendToClient( player, KFMsg::PublicServerBusy );
         }
     }
 
-    void KFAttributeModule::OnAfterSetPlayerName( uint32 result, uint64 playerid, const std::string& name, uint64 itemuuid )
+    __KF_MESSAGE_FUNCTION__( KFAttributeModule::HandleSetPlayerNameToGameAck )
     {
-        auto player = _kf_player->FindPlayer( playerid );
+        __PROTO_PARSE__( KFMsg::S2SSetPlayerNameToGameAck );
+
+        auto player = _kf_player->FindPlayer( kfmsg.playerid() );
         if ( player == nullptr )
         {
-            return __LOG_ERROR__( "player[{}] set name[{}] item[{}] failed!", playerid, name, itemuuid );
+            return __LOG_ERROR__( "player[{}] set name[{}] item[{}] failed!", kfmsg.playerid(), kfmsg.name(), kfmsg.itemuuid() );
         }
 
-        _kf_display->SendToClient( player, result, name );
-        if ( result != KFMsg::NameSetOk )
+        _kf_display->SendToClient( player, kfmsg.result(), kfmsg.name() );
+        if ( kfmsg.result() != KFMsg::NameSetOk )
         {
             return;
         }
 
-        if ( itemuuid != _invalid_int )
+        if ( kfmsg.itemuuid() != _invalid_int )
         {
             // 删除改名卡
-            player->RemoveData( __KF_STRING__( item ), itemuuid );
+            player->RemoveData( __KF_STRING__( item ), kfmsg.itemuuid() );
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////

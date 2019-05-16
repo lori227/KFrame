@@ -85,7 +85,7 @@ namespace KFrame
         KFMsg::PBZoneData _zone_data;
 
         // redis
-        KFRedisDriver* _login_redis = nullptr;
+        KFRedisDriver* _auth_redis = nullptr;
     };
 }
 

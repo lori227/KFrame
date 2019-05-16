@@ -50,7 +50,7 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\026FrameCodeMessage.proto\022\005KFMsg*\252\022\n\rFram"
+      "\n\026FrameCodeMessage.proto\022\005KFMsg*\345\022\n\rFram"
       "eCodeEnum\022\t\n\005Error\020\000\022\006\n\002Ok\020\001\022\022\n\rHttpData"
       "Error\020\220N\022\025\n\020AuthDatabaseBusy\020\221N\022\023\n\016AuthS"
       "erverBusy\020\222N\022\023\n\016ZoneServerBusy\020\223N\022\025\n\020Zon"
@@ -58,61 +58,63 @@ void AddDescriptorsImpl() {
       "\023\n\016DataServerBusy\020\226N\022\023\n\016MailServerBusy\020\227"
       "N\022\023\n\016RankServerBusy\020\230N\022\027\n\022PublicDatabase"
       "Busy\020\231N\022\027\n\022RelationServerBusy\020\232N\022\024\n\017Matc"
-      "hServerBusy\020\233N\022\026\n\021LoginDatabaseBusy\020\234N\022\023"
-      "\n\016AccountIsEmpty\020\371U\022\026\n\021ActivationAccount"
-      "\020\372U\022\032\n\025InvalidActivationCode\020\373U\022\030\n\023Activ"
-      "ationCodeError\020\374U\022\024\n\017LoginTokenError\020\375U\022"
-      "\023\n\016BanForbidLogin\020\376U\022\026\n\021ChannelNotSuppor"
-      "t\020\377U\022\023\n\016ChannelNotOpen\020\200V\022\021\n\014ChannelErro"
-      "r\020\201V\022\020\n\013WeiXinError\020\202V\022\024\n\017WeiXinUserErro"
-      "r\020\203V\022\025\n\020WeiXinTokenError\020\204V\022\024\n\017WeiXinCod"
-      "eError\020\205V\022\027\n\022WeiXinTokenTimeout\020\206V\022\017\n\nSt"
-      "eamError\020\207V\022\023\n\016SteamDataError\020\210V\022\023\n\016Stea"
-      "mAuthError\020\211V\022\034\n\027VersionNotCompatibility"
-      "\020\341]\022\021\n\014LoginIsClose\020\342]\022\027\n\022LoginNoLoginSe"
-      "rver\020\343]\022\024\n\017LoginSystemBusy\020\344]\022\031\n\024LoginWo"
-      "rldSystemBusy\020\345]\022\026\n\021LoginNoGameServer\020\346]"
-      "\022\030\n\023LoginGameServerBusy\020\347]\022\031\n\024LoginBindP"
-      "layerError\020\350]\022\030\n\023LoginLoadDataFailed\020\351]\022"
-      "\027\n\022LoginAlreadyOnline\020\352]\022\026\n\021QueryPlayerF"
-      "ailed\020\305^\022\025\n\020NameAlreadyExist\020\306^\022\016\n\tNameS"
-      "etOk\020\307^\022\024\n\017NameLengthError\020\310^\022\024\n\017NameFil"
-      "terError\020\311^\022\016\n\tNameEmpty\020\312^\022\023\n\016NameAlrea"
-      "dySet\020\313^\022\r\n\010SexSetOK\020\314^\022\026\n\021AchieveCanNot"
-      "Find\020\316^\022\032\n\025AchieveCanNotFindData\020\317^\022\023\n\016A"
-      "chieveNotDone\020\320^\022\033\n\026AchieveAlreadyReceiv"
-      "ed\020\321^\022\025\n\020AchieveReceiveOk\020\322^\022\023\n\016TaskCanN"
-      "otFind\020\330^\022\027\n\022TaskCanNotFindData\020\331^\022\020\n\013Ta"
-      "skNotDone\020\332^\022\030\n\023TaskAlreadyReceived\020\333^\022\021"
-      "\n\014TaskRewardOk\020\334^\022\027\n\022ActivityCanNotFind\020"
-      "\342^\022\033\n\026ActivityCanNotFindData\020\343^\022\034\n\027Activ"
-      "ityAlreadyReceived\020\344^\022\024\n\017ActivityNotDone"
-      "\020\345^\022\025\n\020ActivityRewardOk\020\346^\022\025\n\020CompoundNo"
-      "tExist\020\354^\022\032\n\025CompoundNotEnoughData\020\355^\022\017\n"
-      "\nCompoundOk\020\356^\022\023\n\016ItemCanNotFind\020\366^\022\027\n\022I"
-      "temCanNotFindData\020\367^\022\022\n\rItemCanNotUse\020\370^"
-      "\022\021\n\014SignInNotDay\020\212_\022\025\n\020SignInCanNotFind\020"
-      "\213_\022\030\n\023SignInRewardAlready\020\214_\022\023\n\016SignInRe"
-      "wardOk\020\215_\022\021\n\014MailNotExist\020\250_\022\020\n\013MailTime"
-      "Out\020\251_\022\025\n\020MailDeleteFailed\020\252_\022\030\n\023MailAlr"
-      "eadyReceived\020\253_\022\026\n\021MailNotHaveReward\020\254_\022"
-      "\021\n\014StoreNotFind\020\214`\022\027\n\022StoreBuyCountError"
-      "\020\215`\022\027\n\022StoreOutOfLimitOwm\020\216`\022\025\n\020StoreOut"
-      "OfLimits\020\217`\022\022\n\rStoreLackCost\020\220`\022\026\n\021Store"
-      "BuyTypeError\020\221`\022\017\n\nStoreBuyOK\020\222`\022\021\n\014Rank"
-      "NotExist\020\360`\022\027\n\022QueryBasicNotExist\020\324a\022\027\n\022"
-      "MessageFilterError\020\270b\022\022\n\rFriendAlready\020\271"
-      "b\022\024\n\017FriendSelfLimit\020\272b\022\024\n\017FriendInviteR"
-      "eq\020\273b\022\033\n\026FriendRefuseYourInvite\020\274b\022\020\n\013Fr"
-      "iendAddOk\020\275b\022\023\n\016FriendNotExist\020\276b\022\020\n\013Fri"
-      "endDelOk\020\277b\022\024\n\017FriendLinessAdd\020\300b\022\027\n\022Fri"
-      "endRefuseInvite\020\301b\022\026\n\021FriendTargetLimit\020"
-      "\302b\022\030\n\023FriendInviteAlready\020\303b\022\026\n\021FriendIn"
-      "viteLimit\020\304b\022\023\n\016FriendInviteOk\020\305b\022\031\n\024Fri"
-      "endInviteNotExist\020\306bb\006proto3"
+      "hServerBusy\020\233N\022\026\n\021LoginDatabaseBusy\020\234N\022\025"
+      "\n\020PublicServerBusy\020\235N\022\023\n\016AccountIsEmpty\020"
+      "\371U\022\026\n\021ActivationAccount\020\372U\022\032\n\025InvalidAct"
+      "ivationCode\020\373U\022\030\n\023ActivationCodeError\020\374U"
+      "\022\024\n\017LoginTokenError\020\375U\022\023\n\016BanForbidLogin"
+      "\020\376U\022\026\n\021ChannelNotSupport\020\377U\022\023\n\016ChannelNo"
+      "tOpen\020\200V\022\021\n\014ChannelError\020\201V\022\020\n\013WeiXinErr"
+      "or\020\202V\022\024\n\017WeiXinUserError\020\203V\022\025\n\020WeiXinTok"
+      "enError\020\204V\022\024\n\017WeiXinCodeError\020\205V\022\027\n\022WeiX"
+      "inTokenTimeout\020\206V\022\017\n\nSteamError\020\207V\022\023\n\016St"
+      "eamDataError\020\210V\022\023\n\016SteamAuthError\020\211V\022\034\n\027"
+      "VersionNotCompatibility\020\341]\022\021\n\014LoginIsClo"
+      "se\020\342]\022\027\n\022LoginNoLoginServer\020\343]\022\024\n\017LoginS"
+      "ystemBusy\020\344]\022\031\n\024LoginWorldSystemBusy\020\345]\022"
+      "\026\n\021LoginNoGameServer\020\346]\022\030\n\023LoginGameServ"
+      "erBusy\020\347]\022\031\n\024LoginBindPlayerError\020\350]\022\030\n\023"
+      "LoginLoadDataFailed\020\351]\022\027\n\022LoginAlreadyOn"
+      "line\020\352]\022\026\n\021QueryPlayerFailed\020\305^\022\025\n\020NameA"
+      "lreadyExist\020\306^\022\016\n\tNameSetOk\020\307^\022\024\n\017NameLe"
+      "ngthError\020\310^\022\024\n\017NameFilterError\020\311^\022\016\n\tNa"
+      "meEmpty\020\312^\022\023\n\016NameAlreadySet\020\313^\022\r\n\010SexSe"
+      "tOK\020\314^\022\026\n\021AchieveCanNotFind\020\316^\022\032\n\025Achiev"
+      "eCanNotFindData\020\317^\022\023\n\016AchieveNotDone\020\320^\022"
+      "\033\n\026AchieveAlreadyReceived\020\321^\022\025\n\020AchieveR"
+      "eceiveOk\020\322^\022\023\n\016TaskCanNotFind\020\330^\022\027\n\022Task"
+      "CanNotFindData\020\331^\022\020\n\013TaskNotDone\020\332^\022\030\n\023T"
+      "askAlreadyReceived\020\333^\022\021\n\014TaskRewardOk\020\334^"
+      "\022\027\n\022ActivityCanNotFind\020\342^\022\033\n\026ActivityCan"
+      "NotFindData\020\343^\022\034\n\027ActivityAlreadyReceive"
+      "d\020\344^\022\024\n\017ActivityNotDone\020\345^\022\025\n\020ActivityRe"
+      "wardOk\020\346^\022\025\n\020CompoundNotExist\020\354^\022\032\n\025Comp"
+      "oundNotEnoughData\020\355^\022\017\n\nCompoundOk\020\356^\022\023\n"
+      "\016ItemCanNotFind\020\366^\022\027\n\022ItemCanNotFindData"
+      "\020\367^\022\022\n\rItemCanNotUse\020\370^\022\021\n\014SignInNotDay\020"
+      "\212_\022\025\n\020SignInCanNotFind\020\213_\022\030\n\023SignInRewar"
+      "dAlready\020\214_\022\023\n\016SignInRewardOk\020\215_\022\021\n\014Mail"
+      "NotExist\020\250_\022\020\n\013MailTimeOut\020\251_\022\025\n\020MailDel"
+      "eteFailed\020\252_\022\030\n\023MailAlreadyReceived\020\253_\022\026"
+      "\n\021MailNotHaveReward\020\254_\022\021\n\014StoreNotFind\020\214"
+      "`\022\027\n\022StoreBuyCountError\020\215`\022\027\n\022StoreOutOf"
+      "LimitOwm\020\216`\022\025\n\020StoreOutOfLimits\020\217`\022\022\n\rSt"
+      "oreLackCost\020\220`\022\026\n\021StoreBuyTypeError\020\221`\022\017"
+      "\n\nStoreBuyOK\020\222`\022\017\n\nPayIdError\020\276`\022\021\n\014PayD"
+      "ataError\020\277`\022\021\n\014RankNotExist\020\360`\022\027\n\022QueryB"
+      "asicNotExist\020\324a\022\027\n\022MessageFilterError\020\270b"
+      "\022\022\n\rFriendAlready\020\271b\022\024\n\017FriendSelfLimit\020"
+      "\272b\022\024\n\017FriendInviteReq\020\273b\022\033\n\026FriendRefuse"
+      "YourInvite\020\274b\022\020\n\013FriendAddOk\020\275b\022\023\n\016Frien"
+      "dNotExist\020\276b\022\020\n\013FriendDelOk\020\277b\022\024\n\017Friend"
+      "LinessAdd\020\300b\022\027\n\022FriendRefuseInvite\020\301b\022\026\n"
+      "\021FriendTargetLimit\020\302b\022\030\n\023FriendInviteAlr"
+      "eady\020\303b\022\026\n\021FriendInviteLimit\020\304b\022\023\n\016Frien"
+      "dInviteOk\020\305b\022\031\n\024FriendInviteNotExist\020\306bb"
+      "\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 2388);
+      descriptor, 2447);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "FrameCodeMessage.proto", &protobuf_RegisterTypes);
 }
@@ -150,6 +152,7 @@ bool FrameCodeEnum_IsValid(int value) {
     case 10010:
     case 10011:
     case 10012:
+    case 10013:
     case 11001:
     case 11002:
     case 11003:
@@ -222,6 +225,8 @@ bool FrameCodeEnum_IsValid(int value) {
     case 12304:
     case 12305:
     case 12306:
+    case 12350:
+    case 12351:
     case 12400:
     case 12500:
     case 12600:

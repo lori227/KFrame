@@ -2,8 +2,6 @@
 
 namespace KFrame
 {
-#define __LOGIN_REDIS_DRIVER__ _kf_redis->Create( __KF_STRING__( login ) )
-
     void KFWorldModule::BeforeRun()
     {
         __REGISTER_LOOP_TIMER__( 0, 5000, 1000, &KFWorldModule::OnTimerWorldRegister );
@@ -44,6 +42,10 @@ namespace KFrame
         __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( kickonline ) );
     }
 
+    void KFWorldModule::OnceRun()
+    {
+        _auth_redis = _kf_redis->Create( __KF_STRING__( auth ) );
+    }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_TIMER_FUNCTION__( KFWorldModule::OnTimerWorldRegister )
     {
@@ -185,10 +187,9 @@ namespace KFrame
     uint64 KFWorldModule::QueryCreatePlayerId( uint64 accountid )
     {
         auto kfzone = _kf_zone->GetZone();
-        auto redisdriver = __LOGIN_REDIS_DRIVER__;
 
         // 查询是否存在
-        auto queryplayerid = redisdriver->QueryUInt64( "hget {}:{} {}", __KF_STRING__( user ), accountid, kfzone->_logic_id );
+        auto queryplayerid = _auth_redis->QueryUInt64( "hget {}:{} {}", __KF_STRING__( user ), accountid, kfzone->_logic_id );
         if ( !queryplayerid->IsOk() )
         {
             return _invalid_int;
@@ -201,7 +202,7 @@ namespace KFrame
         }
 
         // 创建playerid
-        auto uint64result = redisdriver->Execute( "incr {}:{}", __KF_STRING__( playeridcreate ), kfzone->_id );
+        auto uint64result = _auth_redis->Execute( "incr {}:{}", __KF_STRING__( playeridcreate ), kfzone->_id );
         if ( !uint64result->IsOk() || uint64result->_value == _invalid_int )
         {
             return _invalid_int;
@@ -214,8 +215,8 @@ namespace KFrame
             return _invalid_int;
         }
 
-        redisdriver->Execute( "hset {}:{} {} {}", __KF_STRING__( player ), playerid, __KF_STRING__( accountid ), accountid );
-        auto voidresult = redisdriver->Execute( "hset {}:{} {} {}", __KF_STRING__( user ), accountid, kfzone->_logic_id, playerid );
+        _auth_redis->Execute( "hset {}:{} {} {}", __KF_STRING__( player ), playerid, __KF_STRING__( accountid ), accountid );
+        auto voidresult = _auth_redis->Execute( "hset {}:{} {} {}", __KF_STRING__( user ), accountid, kfzone->_logic_id, playerid );
         if ( !voidresult->IsOk() )
         {
             return _invalid_int;
@@ -251,19 +252,15 @@ namespace KFrame
 
     void KFWorldModule::UpdateOnlineData( uint64 playerid, uint64 gameid )
     {
-        auto redisdriver = __LOGIN_REDIS_DRIVER__;
-
         MapString values;
         values[ __KF_STRING__( game ) ] = __TO_STRING__( gameid );
         values[ __KF_STRING__( world ) ] = __TO_STRING__( KFGlobal::Instance()->_app_id->GetId() );
-        redisdriver->Update( values, "hmset {}:{}", __KF_STRING__( player ), playerid );
+        _auth_redis->Update( values, "hmset {}:{}", __KF_STRING__( player ), playerid );
     }
 
     bool KFWorldModule::KickOnline( uint32 type, uint64 playerid, const char* function, uint32 line )
     {
-        auto redisdriver = __LOGIN_REDIS_DRIVER__;
-
-        auto kfresult = redisdriver->QueryMap( "hgetall {}:{}", __KF_STRING__( player ), playerid );
+        auto kfresult = _auth_redis->QueryMap( "hgetall {}:{}", __KF_STRING__( player ), playerid );
         if ( kfresult->_value.empty() )
         {
             return false;

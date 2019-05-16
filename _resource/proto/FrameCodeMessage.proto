@@ -23,6 +23,7 @@ enum FrameCodeEnum
 	RelationServerBusy		= 10010;	// 关系服务器繁忙
 	MatchServerBusy			= 10011;	// 匹配服务器繁忙
 	LoginDatabaseBusy		= 10012;	// 登录数据库繁忙
+	PublicServerBusy		= 10013;	// 公共数据服务器繁忙
 
 	// auth
 	AccountIsEmpty 			= 11001;	// 账号不能为空
@@ -117,6 +118,10 @@ enum FrameCodeEnum
 	StoreLackCost			= 12304;	// 没有足够的资源购买
 	StoreBuyTypeError		= 12305;	// 购买类型错误
 	StoreBuyOK				= 12306;	// 购买成功
+
+	// pay
+	PayIdError				= 12350;	// 充值信息错误
+	PayDataError			= 12351;	// 数据错误
 
 	// rank
 	RankNotExist			= 12400;	// 没有排行榜配置

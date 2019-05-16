@@ -32,7 +32,7 @@ namespace KFrame
 
     void KFRankShardModule::OnceRun()
     {
-        _rank_redis_driver = _kf_redis->Create( __KF_STRING__( rank ) );
+        _rank_redis_driver = _kf_redis->Create( __KF_STRING__( logic ) );
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -19,6 +19,7 @@
 #include "KFCommand/KFCommandInterface.h"
 #include "KFOption/KFOptionInterface.h"
 #include "KFDataClient/KFDataClientInterface.h"
+#include "KFRouteClient/KFRouteClientInterface.h"
 
 namespace KFrame
 {
@@ -42,6 +43,9 @@ namespace KFrame
         // 处理设置名字请求
         __KF_MESSAGE_FUNCTION__( HandleSetNameReq );
 
+        // 处理设置名字回馈
+        __KF_MESSAGE_FUNCTION__( HandleSetPlayerNameToGameAck );
+
         // 处理设置性别请求
         __KF_MESSAGE_FUNCTION__( HandleSetSexReq );
 
@@ -54,9 +58,6 @@ namespace KFrame
 
         // 检查名字的有效性
         uint32 CheckNameValid( const std::string& name );
-
-        // 设置名字回调
-        void OnAfterSetPlayerName( uint32 result, uint64 playerid, const std::string& name, uint64 itemuuid );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     };
 }

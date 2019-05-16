@@ -52,14 +52,26 @@ namespace KFrame
         // 查询小区ip
         __KF_HTTP_FUNCTION__( HandleQueryZoneIp );
 
+        // 更新小区玩家注册数量
+        __KF_HTTP_FUNCTION__( HandleZoneBalance );
+
         // 处理登录请求
         __KF_HTTP_FUNCTION__( HandleAuthLogin );
 
         // 验证token
         __KF_HTTP_FUNCTION__( HandleVerifyToken );
 
-        // 更新小区玩家注册数量
-        __KF_HTTP_FUNCTION__( HandleZoneBalance );
+        // 申请订单
+        __KF_HTTP_FUNCTION__( HandleApplyOrder );
+
+        // 删除订单
+        __KF_HTTP_FUNCTION__( HandleRemoveOrder );
+
+        // 查询充值
+        __KF_HTTP_FUNCTION__( HandleQueryPay );
+
+        // 完成充值
+        __KF_HTTP_FUNCTION__( HandleFinishPay );
 
     protected:
         // 查询创建账号

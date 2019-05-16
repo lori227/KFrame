@@ -163,7 +163,7 @@ namespace KFrame
         auto kfentity = _entitys.Find( key );
         if ( kfentity == nullptr )
         {
-            __LOG_INFO_FUNCTION__( function, line, "can't find entity[{}:{}]!", _component_name, key );
+            __LOG_ERROR_FUNCTION__( function, line, "can't find entity[{}:{}]!", _component_name, key );
         }
 
         return kfentity;

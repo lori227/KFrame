@@ -35,13 +35,16 @@ namespace KFrame
         // 更新公共数据
         __KF_MESSAGE_FUNCTION__( HandleUpdateDataToPublicReq );
 
+        // 处理设置名字
+        __KF_MESSAGE_FUNCTION__( HandleSetPlayerNameToDataReq );
+
         // 查询基础数据
         __KF_MESSAGE_FUNCTION__( HandleQueryBasicToPublicReq );
 
+    protected:
+        // 设置名字
+        uint32 SetPlayerName( uint64 playerid, const std::string& oldname, const std::string& newname );
     private:
-        // 名字数据库
-        KFRedisDriver* _name_redis_driver = nullptr;
-
         // 公共属性
         KFRedisDriver* _public_redis_driver = nullptr;
     };

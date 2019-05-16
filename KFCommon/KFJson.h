@@ -106,7 +106,7 @@ namespace KFrame
     }
 
 #define __JSON_HAS_MEMBER__( kfjson, name ) kfjson.HasMember( name )
-#define __JOSN_REMOVE__( kfjson, name ) kfjson.RemoveMember( name )
+#define __JSON_REMOVE__( kfjson, name ) kfjson.RemoveMember( name )
 
 #define  __JSON_ARRAY_SIZE__( kfjson ) kfjson.Size()
 #define  __JSON_ARRAY_INDEX__( kfjson, index ) kfjson[ index ]

@@ -175,6 +175,26 @@ class MsgQueryStoreAckDefaultTypeInternal {
   ::google::protobuf::internal::ExplicitlyConstructed<MsgQueryStoreAck>
       _instance;
 } _MsgQueryStoreAck_default_instance_;
+class MsgApplyPayOrderReqDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<MsgApplyPayOrderReq>
+      _instance;
+} _MsgApplyPayOrderReq_default_instance_;
+class MsgApplyPayOrderAckDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<MsgApplyPayOrderAck>
+      _instance;
+} _MsgApplyPayOrderAck_default_instance_;
+class MsgPayResultReqDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<MsgPayResultReq>
+      _instance;
+} _MsgPayResultReq_default_instance_;
+class MsgQueryPayReqDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<MsgQueryPayReq>
+      _instance;
+} _MsgQueryPayReq_default_instance_;
 class MsgQueryRankListReqDefaultTypeInternal {
  public:
   ::google::protobuf::internal::ExplicitlyConstructed<MsgQueryRankListReq>
@@ -644,6 +664,62 @@ static void InitDefaultsMsgQueryStoreAck() {
 LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<0> scc_info_MsgQueryStoreAck =
     {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsMsgQueryStoreAck}, {}};
 
+static void InitDefaultsMsgApplyPayOrderReq() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::KFMsg::_MsgApplyPayOrderReq_default_instance_;
+    new (ptr) ::KFMsg::MsgApplyPayOrderReq();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::KFMsg::MsgApplyPayOrderReq::InitAsDefaultInstance();
+}
+
+LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<0> scc_info_MsgApplyPayOrderReq =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsMsgApplyPayOrderReq}, {}};
+
+static void InitDefaultsMsgApplyPayOrderAck() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::KFMsg::_MsgApplyPayOrderAck_default_instance_;
+    new (ptr) ::KFMsg::MsgApplyPayOrderAck();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::KFMsg::MsgApplyPayOrderAck::InitAsDefaultInstance();
+}
+
+LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<0> scc_info_MsgApplyPayOrderAck =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsMsgApplyPayOrderAck}, {}};
+
+static void InitDefaultsMsgPayResultReq() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::KFMsg::_MsgPayResultReq_default_instance_;
+    new (ptr) ::KFMsg::MsgPayResultReq();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::KFMsg::MsgPayResultReq::InitAsDefaultInstance();
+}
+
+LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<0> scc_info_MsgPayResultReq =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsMsgPayResultReq}, {}};
+
+static void InitDefaultsMsgQueryPayReq() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::KFMsg::_MsgQueryPayReq_default_instance_;
+    new (ptr) ::KFMsg::MsgQueryPayReq();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::KFMsg::MsgQueryPayReq::InitAsDefaultInstance();
+}
+
+LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<0> scc_info_MsgQueryPayReq =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsMsgQueryPayReq}, {}};
+
 static void InitDefaultsMsgQueryRankListReq() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -789,6 +865,10 @@ void InitDefaults() {
   ::google::protobuf::internal::InitSCC(&scc_info_MsgBuyStoreReq.base);
   ::google::protobuf::internal::InitSCC(&scc_info_MsgQueryStoreReq.base);
   ::google::protobuf::internal::InitSCC(&scc_info_MsgQueryStoreAck.base);
+  ::google::protobuf::internal::InitSCC(&scc_info_MsgApplyPayOrderReq.base);
+  ::google::protobuf::internal::InitSCC(&scc_info_MsgApplyPayOrderAck.base);
+  ::google::protobuf::internal::InitSCC(&scc_info_MsgPayResultReq.base);
+  ::google::protobuf::internal::InitSCC(&scc_info_MsgQueryPayReq.base);
   ::google::protobuf::internal::InitSCC(&scc_info_MsgQueryRankListReq.base);
   ::google::protobuf::internal::InitSCC(&scc_info_MsgQueryRankListAck.base);
   ::google::protobuf::internal::InitSCC(&scc_info_MsgQueryFriendRankListReq.base);
@@ -799,7 +879,7 @@ void InitDefaults() {
   ::google::protobuf::internal::InitSCC(&scc_info_MsgSetRefuseFriendInviteReq.base);
 }
 
-::google::protobuf::Metadata file_level_metadata[38];
+::google::protobuf::Metadata file_level_metadata[42];
 const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[1];
 
 const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
@@ -996,6 +1076,32 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::MsgQueryStoreAck, version_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::MsgQueryStoreAck, data_),
   ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::MsgApplyPayOrderReq, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::MsgApplyPayOrderReq, payid_),
+  ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::MsgApplyPayOrderAck, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::MsgApplyPayOrderAck, payid_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::MsgApplyPayOrderAck, order_),
+  ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::MsgPayResultReq, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::MsgPayResultReq, payid_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::MsgPayResultReq, order_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::MsgPayResultReq, result_),
+  ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::MsgQueryPayReq, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::MsgQueryRankListReq, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
@@ -1080,14 +1186,18 @@ static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROT
   { 170, -1, sizeof(::KFMsg::MsgBuyStoreReq)},
   { 179, -1, sizeof(::KFMsg::MsgQueryStoreReq)},
   { 185, -1, sizeof(::KFMsg::MsgQueryStoreAck)},
-  { 192, -1, sizeof(::KFMsg::MsgQueryRankListReq)},
-  { 198, -1, sizeof(::KFMsg::MsgQueryRankListAck)},
-  { 205, -1, sizeof(::KFMsg::MsgQueryFriendRankListReq)},
-  { 211, -1, sizeof(::KFMsg::MsgQueryFriendRankListAck)},
-  { 218, -1, sizeof(::KFMsg::MsgAddFriendInviteReq)},
-  { 226, -1, sizeof(::KFMsg::MsgReplyFriendInviteReq)},
-  { 233, -1, sizeof(::KFMsg::MsgDelFriendReq)},
-  { 239, -1, sizeof(::KFMsg::MsgSetRefuseFriendInviteReq)},
+  { 192, -1, sizeof(::KFMsg::MsgApplyPayOrderReq)},
+  { 198, -1, sizeof(::KFMsg::MsgApplyPayOrderAck)},
+  { 205, -1, sizeof(::KFMsg::MsgPayResultReq)},
+  { 213, -1, sizeof(::KFMsg::MsgQueryPayReq)},
+  { 218, -1, sizeof(::KFMsg::MsgQueryRankListReq)},
+  { 224, -1, sizeof(::KFMsg::MsgQueryRankListAck)},
+  { 231, -1, sizeof(::KFMsg::MsgQueryFriendRankListReq)},
+  { 237, -1, sizeof(::KFMsg::MsgQueryFriendRankListAck)},
+  { 244, -1, sizeof(::KFMsg::MsgAddFriendInviteReq)},
+  { 252, -1, sizeof(::KFMsg::MsgReplyFriendInviteReq)},
+  { 259, -1, sizeof(::KFMsg::MsgDelFriendReq)},
+  { 265, -1, sizeof(::KFMsg::MsgSetRefuseFriendInviteReq)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -1121,6 +1231,10 @@ static ::google::protobuf::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_MsgBuyStoreReq_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_MsgQueryStoreReq_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_MsgQueryStoreAck_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_MsgApplyPayOrderReq_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_MsgApplyPayOrderAck_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_MsgPayResultReq_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_MsgQueryPayReq_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_MsgQueryRankListReq_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_MsgQueryRankListAck_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_MsgQueryFriendRankListReq_default_instance_),
@@ -1146,7 +1260,7 @@ void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) GOOGLE_PROTOBUF_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 38);
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 42);
 }
 
 void AddDescriptorsImpl() {
@@ -1187,49 +1301,56 @@ void AddDescriptorsImpl() {
       "e\030\002 \001(\014\022\n\n\002id\030\003 \001(\r\022\r\n\005count\030\004 \001(\r\"#\n\020Ms"
       "gQueryStoreReq\022\017\n\007version\030\001 \001(\014\"1\n\020MsgQu"
       "eryStoreAck\022\017\n\007version\030\001 \001(\014\022\014\n\004data\030\002 \001"
-      "(\014\"%\n\023MsgQueryRankListReq\022\016\n\006rankid\030\001 \001("
-      "\r\"L\n\023MsgQueryRankListAck\022\016\n\006rankid\030\001 \001(\r"
-      "\022%\n\trankdatas\030\002 \001(\0132\022.KFMsg.PBRankDatas\""
-      "+\n\031MsgQueryFriendRankListReq\022\016\n\006rankid\030\001"
-      " \001(\r\"R\n\031MsgQueryFriendRankListAck\022\016\n\006ran"
-      "kid\030\001 \001(\r\022%\n\trankdatas\030\002 \001(\0132\022.KFMsg.PBR"
-      "ankDatas\"H\n\025MsgAddFriendInviteReq\022\014\n\004nam"
-      "e\030\001 \001(\014\022\020\n\010playerid\030\002 \001(\004\022\017\n\007message\030\003 \001"
-      "(\014\"<\n\027MsgReplyFriendInviteReq\022\020\n\010playeri"
-      "d\030\001 \001(\004\022\017\n\007operate\030\002 \001(\r\"#\n\017MsgDelFriend"
-      "Req\022\020\n\010playerid\030\001 \001(\004\"-\n\033MsgSetRefuseFri"
-      "endInviteReq\022\016\n\006refuse\030\001 \001(\r*\275\010\n\023FrameCl"
-      "ientProtocol\022\032\n\026MSG_FRAME_CLIENT_BEGIN\020\000"
-      "\022\026\n\022MSG_RESULT_DISPLAY\020\001\022\023\n\017MSG_COMMAND_"
-      "REQ\020\002\022\021\n\rMSG_LOGIN_REQ\020d\022\021\n\rMSG_LOGIN_AC"
-      "K\020e\022\022\n\016MSG_LOGOUT_REQ\020f\022\024\n\020MSG_TELL_BE_K"
-      "ICK\020g\022\031\n\024MSG_LOGIN_ENTER_GAME\020\310\001\022\031\n\024MSG_"
-      "SYNC_UPDATE_DATA\020\311\001\022\026\n\021MSG_SYNC_ADD_DATA"
-      "\020\312\001\022\031\n\024MSG_SYNC_REMOVE_DATA\020\313\001\022\030\n\023MSG_RE"
-      "MOVE_DATA_REQ\020\314\001\022\031\n\024MSG_QUERY_PLAYER_REQ"
-      "\020\315\001\022\031\n\024MSG_QUERY_PLAYER_ACK\020\316\001\022\030\n\023MSG_QU"
-      "ERY_BASIC_REQ\020\317\001\022\030\n\023MSG_QUERY_BASIC_ACK\020"
-      "\320\001\022\025\n\020MSG_SHOW_ELEMENT\020\321\001\022\025\n\020MSG_SET_NAM"
-      "E_REQ\020\254\002\022\024\n\017MSG_SET_SEX_REQ\020\255\002\022\033\n\026MSG_AC"
-      "HIEVE_REWARD_REQ\020\256\002\022\030\n\023MSG_TASK_REWARD_R"
-      "EQ\020\257\002\022\034\n\027MSG_ACTIVITY_REWARD_REQ\020\260\002\022\025\n\020M"
-      "SG_COMPOUND_REQ\020\261\002\022\025\n\020MSG_USE_ITEM_REQ\020\262"
-      "\002\022 \n\033MSG_SEVEN_SIGNIN_REWARD_REQ\020\263\002\022\026\n\021M"
-      "SG_VIEW_MAIL_REQ\020\221\003\022\030\n\023MSG_DELETE_MAIL_R"
-      "EQ\020\222\003\022\027\n\022MSG_QUERY_MAIL_REQ\020\223\003\022\030\n\023MSG_MA"
-      "IL_REWARD_REQ\020\224\003\022\026\n\021MSG_BUY_STORE_REQ\020\233\003"
-      "\022\030\n\023MSG_QUERY_STORE_REQ\020\234\003\022\030\n\023MSG_QUERY_"
-      "STORE_ACK\020\235\003\022\034\n\027MSG_QUERY_RANK_LIST_REQ\020"
-      "\257\003\022\034\n\027MSG_QUERY_RANK_LIST_ACK\020\260\003\022#\n\036MSG_"
-      "QUERY_FRIEND_RANK_LIST_REQ\020\261\003\022#\n\036MSG_QUE"
-      "RY_FRIEND_RANK_LIST_ACK\020\262\003\022\036\n\031MSG_ADD_FR"
-      "IEND_INVITE_REQ\020\303\003\022 \n\033MSG_REPLY_FRIEND_I"
-      "NVITE_REQ\020\304\003\022\027\n\022MSG_DEL_FRIEND_REQ\020\305\003\022%\n"
-      " MSG_SET_REFUSE_FRIEND_INVITE_REQ\020\306\003b\006pr"
-      "oto3"
+      "(\014\"$\n\023MsgApplyPayOrderReq\022\r\n\005payid\030\001 \001(\t"
+      "\"3\n\023MsgApplyPayOrderAck\022\r\n\005payid\030\001 \001(\t\022\r"
+      "\n\005order\030\002 \001(\t\"\?\n\017MsgPayResultReq\022\r\n\005payi"
+      "d\030\001 \001(\t\022\r\n\005order\030\002 \001(\t\022\016\n\006result\030\003 \001(\010\"\020"
+      "\n\016MsgQueryPayReq\"%\n\023MsgQueryRankListReq\022"
+      "\016\n\006rankid\030\001 \001(\r\"L\n\023MsgQueryRankListAck\022\016"
+      "\n\006rankid\030\001 \001(\r\022%\n\trankdatas\030\002 \001(\0132\022.KFMs"
+      "g.PBRankDatas\"+\n\031MsgQueryFriendRankListR"
+      "eq\022\016\n\006rankid\030\001 \001(\r\"R\n\031MsgQueryFriendRank"
+      "ListAck\022\016\n\006rankid\030\001 \001(\r\022%\n\trankdatas\030\002 \001"
+      "(\0132\022.KFMsg.PBRankDatas\"H\n\025MsgAddFriendIn"
+      "viteReq\022\014\n\004name\030\001 \001(\014\022\020\n\010playerid\030\002 \001(\004\022"
+      "\017\n\007message\030\003 \001(\014\"<\n\027MsgReplyFriendInvite"
+      "Req\022\020\n\010playerid\030\001 \001(\004\022\017\n\007operate\030\002 \001(\r\"#"
+      "\n\017MsgDelFriendReq\022\020\n\010playerid\030\001 \001(\004\"-\n\033M"
+      "sgSetRefuseFriendInviteReq\022\016\n\006refuse\030\001 \001"
+      "(\r*\252\t\n\023FrameClientProtocol\022\032\n\026MSG_FRAME_"
+      "CLIENT_BEGIN\020\000\022\026\n\022MSG_RESULT_DISPLAY\020\001\022\023"
+      "\n\017MSG_COMMAND_REQ\020\002\022\021\n\rMSG_LOGIN_REQ\020d\022\021"
+      "\n\rMSG_LOGIN_ACK\020e\022\022\n\016MSG_LOGOUT_REQ\020f\022\024\n"
+      "\020MSG_TELL_BE_KICK\020g\022\031\n\024MSG_LOGIN_ENTER_G"
+      "AME\020\310\001\022\031\n\024MSG_SYNC_UPDATE_DATA\020\311\001\022\026\n\021MSG"
+      "_SYNC_ADD_DATA\020\312\001\022\031\n\024MSG_SYNC_REMOVE_DAT"
+      "A\020\313\001\022\030\n\023MSG_REMOVE_DATA_REQ\020\314\001\022\031\n\024MSG_QU"
+      "ERY_PLAYER_REQ\020\315\001\022\031\n\024MSG_QUERY_PLAYER_AC"
+      "K\020\316\001\022\030\n\023MSG_QUERY_BASIC_REQ\020\317\001\022\030\n\023MSG_QU"
+      "ERY_BASIC_ACK\020\320\001\022\025\n\020MSG_SHOW_ELEMENT\020\321\001\022"
+      "\025\n\020MSG_SET_NAME_REQ\020\254\002\022\024\n\017MSG_SET_SEX_RE"
+      "Q\020\255\002\022\033\n\026MSG_ACHIEVE_REWARD_REQ\020\256\002\022\030\n\023MSG"
+      "_TASK_REWARD_REQ\020\257\002\022\034\n\027MSG_ACTIVITY_REWA"
+      "RD_REQ\020\260\002\022\025\n\020MSG_COMPOUND_REQ\020\261\002\022\025\n\020MSG_"
+      "USE_ITEM_REQ\020\262\002\022 \n\033MSG_SEVEN_SIGNIN_REWA"
+      "RD_REQ\020\263\002\022\026\n\021MSG_VIEW_MAIL_REQ\020\221\003\022\030\n\023MSG"
+      "_DELETE_MAIL_REQ\020\222\003\022\027\n\022MSG_QUERY_MAIL_RE"
+      "Q\020\223\003\022\030\n\023MSG_MAIL_REWARD_REQ\020\224\003\022\026\n\021MSG_BU"
+      "Y_STORE_REQ\020\233\003\022\030\n\023MSG_QUERY_STORE_REQ\020\234\003"
+      "\022\030\n\023MSG_QUERY_STORE_ACK\020\235\003\022\034\n\027MSG_APPLY_"
+      "PAY_ORDER_REQ\020\257\003\022\034\n\027MSG_APPLY_PAY_ORDER_"
+      "ACK\020\260\003\022\027\n\022MSG_PAY_RESULT_REQ\020\261\003\022\026\n\021MSG_Q"
+      "UERY_PAY_REQ\020\262\003\022\036\n\031MSG_ADD_FRIEND_INVITE"
+      "_REQ\020\303\003\022 \n\033MSG_REPLY_FRIEND_INVITE_REQ\020\304"
+      "\003\022\027\n\022MSG_DEL_FRIEND_REQ\020\305\003\022%\n MSG_SET_RE"
+      "FUSE_FRIEND_INVITE_REQ\020\306\003\022\034\n\027MSG_QUERY_R"
+      "ANK_LIST_REQ\020\327\003\022\034\n\027MSG_QUERY_RANK_LIST_A"
+      "CK\020\330\003\022#\n\036MSG_QUERY_FRIEND_RANK_LIST_REQ\020"
+      "\331\003\022#\n\036MSG_QUERY_FRIEND_RANK_LIST_ACK\020\332\003b"
+      "\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 2964);
+      descriptor, 3247);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "FrameClientMessage.proto", &protobuf_RegisterTypes);
   ::protobuf_FrameDefineMessage_2eproto::AddDescriptors();
@@ -1293,6 +1414,10 @@ bool FrameClientProtocol_IsValid(int value) {
     case 452:
     case 453:
     case 454:
+    case 471:
+    case 472:
+    case 473:
+    case 474:
       return true;
     default:
       return false;
@@ -8660,6 +8785,1064 @@ void MsgQueryStoreAck::InternalSwap(MsgQueryStoreAck* other) {
 
 // ===================================================================
 
+void MsgApplyPayOrderReq::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int MsgApplyPayOrderReq::kPayidFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+MsgApplyPayOrderReq::MsgApplyPayOrderReq()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  ::google::protobuf::internal::InitSCC(
+      &protobuf_FrameClientMessage_2eproto::scc_info_MsgApplyPayOrderReq.base);
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:KFMsg.MsgApplyPayOrderReq)
+}
+MsgApplyPayOrderReq::MsgApplyPayOrderReq(const MsgApplyPayOrderReq& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  payid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.payid().size() > 0) {
+    payid_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.payid_);
+  }
+  // @@protoc_insertion_point(copy_constructor:KFMsg.MsgApplyPayOrderReq)
+}
+
+void MsgApplyPayOrderReq::SharedCtor() {
+  payid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+
+MsgApplyPayOrderReq::~MsgApplyPayOrderReq() {
+  // @@protoc_insertion_point(destructor:KFMsg.MsgApplyPayOrderReq)
+  SharedDtor();
+}
+
+void MsgApplyPayOrderReq::SharedDtor() {
+  payid_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+
+void MsgApplyPayOrderReq::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const ::google::protobuf::Descriptor* MsgApplyPayOrderReq::descriptor() {
+  ::protobuf_FrameClientMessage_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_FrameClientMessage_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const MsgApplyPayOrderReq& MsgApplyPayOrderReq::default_instance() {
+  ::google::protobuf::internal::InitSCC(&protobuf_FrameClientMessage_2eproto::scc_info_MsgApplyPayOrderReq.base);
+  return *internal_default_instance();
+}
+
+
+void MsgApplyPayOrderReq::Clear() {
+// @@protoc_insertion_point(message_clear_start:KFMsg.MsgApplyPayOrderReq)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  payid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  _internal_metadata_.Clear();
+}
+
+bool MsgApplyPayOrderReq::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:KFMsg.MsgApplyPayOrderReq)
+  for (;;) {
+    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // string payid = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_payid()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->payid().data(), static_cast<int>(this->payid().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "KFMsg.MsgApplyPayOrderReq.payid"));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:KFMsg.MsgApplyPayOrderReq)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:KFMsg.MsgApplyPayOrderReq)
+  return false;
+#undef DO_
+}
+
+void MsgApplyPayOrderReq::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:KFMsg.MsgApplyPayOrderReq)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string payid = 1;
+  if (this->payid().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->payid().data(), static_cast<int>(this->payid().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "KFMsg.MsgApplyPayOrderReq.payid");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      1, this->payid(), output);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
+  // @@protoc_insertion_point(serialize_end:KFMsg.MsgApplyPayOrderReq)
+}
+
+::google::protobuf::uint8* MsgApplyPayOrderReq::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:KFMsg.MsgApplyPayOrderReq)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string payid = 1;
+  if (this->payid().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->payid().data(), static_cast<int>(this->payid().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "KFMsg.MsgApplyPayOrderReq.payid");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        1, this->payid(), target);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:KFMsg.MsgApplyPayOrderReq)
+  return target;
+}
+
+size_t MsgApplyPayOrderReq::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:KFMsg.MsgApplyPayOrderReq)
+  size_t total_size = 0;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
+  // string payid = 1;
+  if (this->payid().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->payid());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void MsgApplyPayOrderReq::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:KFMsg.MsgApplyPayOrderReq)
+  GOOGLE_DCHECK_NE(&from, this);
+  const MsgApplyPayOrderReq* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const MsgApplyPayOrderReq>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:KFMsg.MsgApplyPayOrderReq)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:KFMsg.MsgApplyPayOrderReq)
+    MergeFrom(*source);
+  }
+}
+
+void MsgApplyPayOrderReq::MergeFrom(const MsgApplyPayOrderReq& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:KFMsg.MsgApplyPayOrderReq)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.payid().size() > 0) {
+
+    payid_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.payid_);
+  }
+}
+
+void MsgApplyPayOrderReq::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:KFMsg.MsgApplyPayOrderReq)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MsgApplyPayOrderReq::CopyFrom(const MsgApplyPayOrderReq& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:KFMsg.MsgApplyPayOrderReq)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MsgApplyPayOrderReq::IsInitialized() const {
+  return true;
+}
+
+void MsgApplyPayOrderReq::Swap(MsgApplyPayOrderReq* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void MsgApplyPayOrderReq::InternalSwap(MsgApplyPayOrderReq* other) {
+  using std::swap;
+  payid_.Swap(&other->payid_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+}
+
+::google::protobuf::Metadata MsgApplyPayOrderReq::GetMetadata() const {
+  protobuf_FrameClientMessage_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_FrameClientMessage_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
+// ===================================================================
+
+void MsgApplyPayOrderAck::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int MsgApplyPayOrderAck::kPayidFieldNumber;
+const int MsgApplyPayOrderAck::kOrderFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+MsgApplyPayOrderAck::MsgApplyPayOrderAck()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  ::google::protobuf::internal::InitSCC(
+      &protobuf_FrameClientMessage_2eproto::scc_info_MsgApplyPayOrderAck.base);
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:KFMsg.MsgApplyPayOrderAck)
+}
+MsgApplyPayOrderAck::MsgApplyPayOrderAck(const MsgApplyPayOrderAck& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  payid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.payid().size() > 0) {
+    payid_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.payid_);
+  }
+  order_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.order().size() > 0) {
+    order_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.order_);
+  }
+  // @@protoc_insertion_point(copy_constructor:KFMsg.MsgApplyPayOrderAck)
+}
+
+void MsgApplyPayOrderAck::SharedCtor() {
+  payid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  order_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+
+MsgApplyPayOrderAck::~MsgApplyPayOrderAck() {
+  // @@protoc_insertion_point(destructor:KFMsg.MsgApplyPayOrderAck)
+  SharedDtor();
+}
+
+void MsgApplyPayOrderAck::SharedDtor() {
+  payid_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  order_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+
+void MsgApplyPayOrderAck::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const ::google::protobuf::Descriptor* MsgApplyPayOrderAck::descriptor() {
+  ::protobuf_FrameClientMessage_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_FrameClientMessage_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const MsgApplyPayOrderAck& MsgApplyPayOrderAck::default_instance() {
+  ::google::protobuf::internal::InitSCC(&protobuf_FrameClientMessage_2eproto::scc_info_MsgApplyPayOrderAck.base);
+  return *internal_default_instance();
+}
+
+
+void MsgApplyPayOrderAck::Clear() {
+// @@protoc_insertion_point(message_clear_start:KFMsg.MsgApplyPayOrderAck)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  payid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  order_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  _internal_metadata_.Clear();
+}
+
+bool MsgApplyPayOrderAck::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:KFMsg.MsgApplyPayOrderAck)
+  for (;;) {
+    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // string payid = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_payid()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->payid().data(), static_cast<int>(this->payid().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "KFMsg.MsgApplyPayOrderAck.payid"));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // string order = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_order()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->order().data(), static_cast<int>(this->order().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "KFMsg.MsgApplyPayOrderAck.order"));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:KFMsg.MsgApplyPayOrderAck)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:KFMsg.MsgApplyPayOrderAck)
+  return false;
+#undef DO_
+}
+
+void MsgApplyPayOrderAck::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:KFMsg.MsgApplyPayOrderAck)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string payid = 1;
+  if (this->payid().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->payid().data(), static_cast<int>(this->payid().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "KFMsg.MsgApplyPayOrderAck.payid");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      1, this->payid(), output);
+  }
+
+  // string order = 2;
+  if (this->order().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->order().data(), static_cast<int>(this->order().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "KFMsg.MsgApplyPayOrderAck.order");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      2, this->order(), output);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
+  // @@protoc_insertion_point(serialize_end:KFMsg.MsgApplyPayOrderAck)
+}
+
+::google::protobuf::uint8* MsgApplyPayOrderAck::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:KFMsg.MsgApplyPayOrderAck)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string payid = 1;
+  if (this->payid().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->payid().data(), static_cast<int>(this->payid().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "KFMsg.MsgApplyPayOrderAck.payid");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        1, this->payid(), target);
+  }
+
+  // string order = 2;
+  if (this->order().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->order().data(), static_cast<int>(this->order().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "KFMsg.MsgApplyPayOrderAck.order");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        2, this->order(), target);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:KFMsg.MsgApplyPayOrderAck)
+  return target;
+}
+
+size_t MsgApplyPayOrderAck::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:KFMsg.MsgApplyPayOrderAck)
+  size_t total_size = 0;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
+  // string payid = 1;
+  if (this->payid().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->payid());
+  }
+
+  // string order = 2;
+  if (this->order().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->order());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void MsgApplyPayOrderAck::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:KFMsg.MsgApplyPayOrderAck)
+  GOOGLE_DCHECK_NE(&from, this);
+  const MsgApplyPayOrderAck* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const MsgApplyPayOrderAck>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:KFMsg.MsgApplyPayOrderAck)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:KFMsg.MsgApplyPayOrderAck)
+    MergeFrom(*source);
+  }
+}
+
+void MsgApplyPayOrderAck::MergeFrom(const MsgApplyPayOrderAck& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:KFMsg.MsgApplyPayOrderAck)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.payid().size() > 0) {
+
+    payid_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.payid_);
+  }
+  if (from.order().size() > 0) {
+
+    order_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.order_);
+  }
+}
+
+void MsgApplyPayOrderAck::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:KFMsg.MsgApplyPayOrderAck)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MsgApplyPayOrderAck::CopyFrom(const MsgApplyPayOrderAck& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:KFMsg.MsgApplyPayOrderAck)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MsgApplyPayOrderAck::IsInitialized() const {
+  return true;
+}
+
+void MsgApplyPayOrderAck::Swap(MsgApplyPayOrderAck* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void MsgApplyPayOrderAck::InternalSwap(MsgApplyPayOrderAck* other) {
+  using std::swap;
+  payid_.Swap(&other->payid_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  order_.Swap(&other->order_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+}
+
+::google::protobuf::Metadata MsgApplyPayOrderAck::GetMetadata() const {
+  protobuf_FrameClientMessage_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_FrameClientMessage_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
+// ===================================================================
+
+void MsgPayResultReq::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int MsgPayResultReq::kPayidFieldNumber;
+const int MsgPayResultReq::kOrderFieldNumber;
+const int MsgPayResultReq::kResultFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+MsgPayResultReq::MsgPayResultReq()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  ::google::protobuf::internal::InitSCC(
+      &protobuf_FrameClientMessage_2eproto::scc_info_MsgPayResultReq.base);
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:KFMsg.MsgPayResultReq)
+}
+MsgPayResultReq::MsgPayResultReq(const MsgPayResultReq& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  payid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.payid().size() > 0) {
+    payid_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.payid_);
+  }
+  order_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.order().size() > 0) {
+    order_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.order_);
+  }
+  result_ = from.result_;
+  // @@protoc_insertion_point(copy_constructor:KFMsg.MsgPayResultReq)
+}
+
+void MsgPayResultReq::SharedCtor() {
+  payid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  order_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  result_ = false;
+}
+
+MsgPayResultReq::~MsgPayResultReq() {
+  // @@protoc_insertion_point(destructor:KFMsg.MsgPayResultReq)
+  SharedDtor();
+}
+
+void MsgPayResultReq::SharedDtor() {
+  payid_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  order_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+
+void MsgPayResultReq::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const ::google::protobuf::Descriptor* MsgPayResultReq::descriptor() {
+  ::protobuf_FrameClientMessage_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_FrameClientMessage_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const MsgPayResultReq& MsgPayResultReq::default_instance() {
+  ::google::protobuf::internal::InitSCC(&protobuf_FrameClientMessage_2eproto::scc_info_MsgPayResultReq.base);
+  return *internal_default_instance();
+}
+
+
+void MsgPayResultReq::Clear() {
+// @@protoc_insertion_point(message_clear_start:KFMsg.MsgPayResultReq)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  payid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  order_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  result_ = false;
+  _internal_metadata_.Clear();
+}
+
+bool MsgPayResultReq::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:KFMsg.MsgPayResultReq)
+  for (;;) {
+    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // string payid = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_payid()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->payid().data(), static_cast<int>(this->payid().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "KFMsg.MsgPayResultReq.payid"));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // string order = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_order()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->order().data(), static_cast<int>(this->order().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "KFMsg.MsgPayResultReq.order"));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // bool result = 3;
+      case 3: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &result_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:KFMsg.MsgPayResultReq)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:KFMsg.MsgPayResultReq)
+  return false;
+#undef DO_
+}
+
+void MsgPayResultReq::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:KFMsg.MsgPayResultReq)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string payid = 1;
+  if (this->payid().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->payid().data(), static_cast<int>(this->payid().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "KFMsg.MsgPayResultReq.payid");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      1, this->payid(), output);
+  }
+
+  // string order = 2;
+  if (this->order().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->order().data(), static_cast<int>(this->order().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "KFMsg.MsgPayResultReq.order");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      2, this->order(), output);
+  }
+
+  // bool result = 3;
+  if (this->result() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(3, this->result(), output);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
+  // @@protoc_insertion_point(serialize_end:KFMsg.MsgPayResultReq)
+}
+
+::google::protobuf::uint8* MsgPayResultReq::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:KFMsg.MsgPayResultReq)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string payid = 1;
+  if (this->payid().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->payid().data(), static_cast<int>(this->payid().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "KFMsg.MsgPayResultReq.payid");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        1, this->payid(), target);
+  }
+
+  // string order = 2;
+  if (this->order().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->order().data(), static_cast<int>(this->order().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "KFMsg.MsgPayResultReq.order");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        2, this->order(), target);
+  }
+
+  // bool result = 3;
+  if (this->result() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(3, this->result(), target);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:KFMsg.MsgPayResultReq)
+  return target;
+}
+
+size_t MsgPayResultReq::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:KFMsg.MsgPayResultReq)
+  size_t total_size = 0;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
+  // string payid = 1;
+  if (this->payid().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->payid());
+  }
+
+  // string order = 2;
+  if (this->order().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->order());
+  }
+
+  // bool result = 3;
+  if (this->result() != 0) {
+    total_size += 1 + 1;
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void MsgPayResultReq::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:KFMsg.MsgPayResultReq)
+  GOOGLE_DCHECK_NE(&from, this);
+  const MsgPayResultReq* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const MsgPayResultReq>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:KFMsg.MsgPayResultReq)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:KFMsg.MsgPayResultReq)
+    MergeFrom(*source);
+  }
+}
+
+void MsgPayResultReq::MergeFrom(const MsgPayResultReq& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:KFMsg.MsgPayResultReq)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.payid().size() > 0) {
+
+    payid_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.payid_);
+  }
+  if (from.order().size() > 0) {
+
+    order_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.order_);
+  }
+  if (from.result() != 0) {
+    set_result(from.result());
+  }
+}
+
+void MsgPayResultReq::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:KFMsg.MsgPayResultReq)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MsgPayResultReq::CopyFrom(const MsgPayResultReq& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:KFMsg.MsgPayResultReq)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MsgPayResultReq::IsInitialized() const {
+  return true;
+}
+
+void MsgPayResultReq::Swap(MsgPayResultReq* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void MsgPayResultReq::InternalSwap(MsgPayResultReq* other) {
+  using std::swap;
+  payid_.Swap(&other->payid_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  order_.Swap(&other->order_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  swap(result_, other->result_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+}
+
+::google::protobuf::Metadata MsgPayResultReq::GetMetadata() const {
+  protobuf_FrameClientMessage_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_FrameClientMessage_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
+// ===================================================================
+
+void MsgQueryPayReq::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+MsgQueryPayReq::MsgQueryPayReq()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  ::google::protobuf::internal::InitSCC(
+      &protobuf_FrameClientMessage_2eproto::scc_info_MsgQueryPayReq.base);
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:KFMsg.MsgQueryPayReq)
+}
+MsgQueryPayReq::MsgQueryPayReq(const MsgQueryPayReq& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  // @@protoc_insertion_point(copy_constructor:KFMsg.MsgQueryPayReq)
+}
+
+void MsgQueryPayReq::SharedCtor() {
+}
+
+MsgQueryPayReq::~MsgQueryPayReq() {
+  // @@protoc_insertion_point(destructor:KFMsg.MsgQueryPayReq)
+  SharedDtor();
+}
+
+void MsgQueryPayReq::SharedDtor() {
+}
+
+void MsgQueryPayReq::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const ::google::protobuf::Descriptor* MsgQueryPayReq::descriptor() {
+  ::protobuf_FrameClientMessage_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_FrameClientMessage_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const MsgQueryPayReq& MsgQueryPayReq::default_instance() {
+  ::google::protobuf::internal::InitSCC(&protobuf_FrameClientMessage_2eproto::scc_info_MsgQueryPayReq.base);
+  return *internal_default_instance();
+}
+
+
+void MsgQueryPayReq::Clear() {
+// @@protoc_insertion_point(message_clear_start:KFMsg.MsgQueryPayReq)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _internal_metadata_.Clear();
+}
+
+bool MsgQueryPayReq::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:KFMsg.MsgQueryPayReq)
+  for (;;) {
+    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+  handle_unusual:
+    if (tag == 0) {
+      goto success;
+    }
+    DO_(::google::protobuf::internal::WireFormat::SkipField(
+          input, tag, _internal_metadata_.mutable_unknown_fields()));
+  }
+success:
+  // @@protoc_insertion_point(parse_success:KFMsg.MsgQueryPayReq)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:KFMsg.MsgQueryPayReq)
+  return false;
+#undef DO_
+}
+
+void MsgQueryPayReq::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:KFMsg.MsgQueryPayReq)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
+  // @@protoc_insertion_point(serialize_end:KFMsg.MsgQueryPayReq)
+}
+
+::google::protobuf::uint8* MsgQueryPayReq::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:KFMsg.MsgQueryPayReq)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:KFMsg.MsgQueryPayReq)
+  return target;
+}
+
+size_t MsgQueryPayReq::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:KFMsg.MsgQueryPayReq)
+  size_t total_size = 0;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void MsgQueryPayReq::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:KFMsg.MsgQueryPayReq)
+  GOOGLE_DCHECK_NE(&from, this);
+  const MsgQueryPayReq* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const MsgQueryPayReq>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:KFMsg.MsgQueryPayReq)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:KFMsg.MsgQueryPayReq)
+    MergeFrom(*source);
+  }
+}
+
+void MsgQueryPayReq::MergeFrom(const MsgQueryPayReq& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:KFMsg.MsgQueryPayReq)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+}
+
+void MsgQueryPayReq::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:KFMsg.MsgQueryPayReq)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MsgQueryPayReq::CopyFrom(const MsgQueryPayReq& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:KFMsg.MsgQueryPayReq)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MsgQueryPayReq::IsInitialized() const {
+  return true;
+}
+
+void MsgQueryPayReq::Swap(MsgQueryPayReq* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void MsgQueryPayReq::InternalSwap(MsgQueryPayReq* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+}
+
+::google::protobuf::Metadata MsgQueryPayReq::GetMetadata() const {
+  protobuf_FrameClientMessage_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_FrameClientMessage_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
+// ===================================================================
+
 void MsgQueryRankListReq::InitAsDefaultInstance() {
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
@@ -10783,6 +11966,18 @@ template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::KFMsg::MsgQueryStoreReq* Arena::
 }
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::KFMsg::MsgQueryStoreAck* Arena::CreateMaybeMessage< ::KFMsg::MsgQueryStoreAck >(Arena* arena) {
   return Arena::CreateInternal< ::KFMsg::MsgQueryStoreAck >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::KFMsg::MsgApplyPayOrderReq* Arena::CreateMaybeMessage< ::KFMsg::MsgApplyPayOrderReq >(Arena* arena) {
+  return Arena::CreateInternal< ::KFMsg::MsgApplyPayOrderReq >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::KFMsg::MsgApplyPayOrderAck* Arena::CreateMaybeMessage< ::KFMsg::MsgApplyPayOrderAck >(Arena* arena) {
+  return Arena::CreateInternal< ::KFMsg::MsgApplyPayOrderAck >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::KFMsg::MsgPayResultReq* Arena::CreateMaybeMessage< ::KFMsg::MsgPayResultReq >(Arena* arena) {
+  return Arena::CreateInternal< ::KFMsg::MsgPayResultReq >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::KFMsg::MsgQueryPayReq* Arena::CreateMaybeMessage< ::KFMsg::MsgQueryPayReq >(Arena* arena) {
+  return Arena::CreateInternal< ::KFMsg::MsgQueryPayReq >(arena);
 }
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::KFMsg::MsgQueryRankListReq* Arena::CreateMaybeMessage< ::KFMsg::MsgQueryRankListReq >(Arena* arena) {
   return Arena::CreateInternal< ::KFMsg::MsgQueryRankListReq >(arena);

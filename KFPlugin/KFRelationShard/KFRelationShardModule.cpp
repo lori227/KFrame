@@ -30,7 +30,7 @@ namespace KFrame
     void KFRelationShardModule::OnceRun()
     {
         _public_redis_driver = _kf_redis->Create( __KF_STRING__( public ) );
-        _relation_redis_driver = _kf_redis->Create( __KF_STRING__( relation ) );
+        _relation_redis_driver = _kf_redis->Create( __KF_STRING__( logic ) );
 
         auto kfsetting = _kf_schedule->CreateScheduleSetting();
         kfsetting->SetDate( KFScheduleEnum::Loop, 0, _kf_option->GetUInt32( __KF_STRING__( freindlinessresettime ) ) );

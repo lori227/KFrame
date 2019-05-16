@@ -7,18 +7,19 @@ namespace KFrame
     {
         __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_DATA_TO_PUBLIC_REQ, &KFPublicShardModule::HandleUpdateDataToPublicReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_BASIC_TO_PUBLIC_REQ, &KFPublicShardModule::HandleQueryBasicToPublicReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_SET_PLAYERNAME_TO_DATA_REQ, &KFPublicShardModule::HandleSetPlayerNameToDataReq );
     }
 
     void KFPublicShardModule::BeforeShut()
     {
         __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_DATA_TO_PUBLIC_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_BASIC_TO_PUBLIC_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_SET_PLAYERNAME_TO_DATA_REQ );
     }
 
     void KFPublicShardModule::OnceRun()
     {
         // 初始化redis
-        _name_redis_driver = _kf_redis->Create( __KF_STRING__( name ) );
         _public_redis_driver = _kf_redis->Create( __KF_STRING__( public ) );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -42,7 +43,7 @@ namespace KFrame
         KFMsg::S2SQueryBasicToGameAck ack;
         ack.set_name( kfmsg.name() );
 
-        auto queryid = _name_redis_driver->QueryUInt64( "get {}:{}:{}", __KF_STRING__( player ), __KF_STRING__( name ), kfmsg.name() );
+        auto queryid = _public_redis_driver->QueryUInt64( "get {}:{}:{}", __KF_STRING__( player ), __KF_STRING__( name ), kfmsg.name() );
         if ( !queryid->IsOk() )
         {
             ack.set_result( KFMsg::NameDatabaseBusy );
@@ -72,5 +73,54 @@ namespace KFrame
         }
 
         _kf_route->SendToRoute( route, KFMsg::S2S_QUERY_BASIC_TO_GAME_ACK, &ack );
+    }
+
+
+    __KF_MESSAGE_FUNCTION__( KFPublicShardModule::HandleSetPlayerNameToDataReq )
+    {
+        __PROTO_PARSE__( KFMsg::S2SSetPlayerNameToDataReq );
+
+        // 先查询名字
+        uint32 result = SetPlayerName( kfmsg.playerid(), kfmsg.oldname(), kfmsg.newname() );
+
+        KFMsg::S2SSetPlayerNameToGameAck ack;
+        ack.set_result( result );
+        ack.set_name( kfmsg.newname() );
+        ack.set_playerid( kfmsg.playerid() );
+        ack.set_itemuuid( kfmsg.itemuuid() );
+        _kf_route->SendToRoute( route, KFMsg::S2S_SET_PLAYERNAME_TO_GAME_ACK, &ack );
+    }
+
+    uint32 KFPublicShardModule::SetPlayerName( uint64 playerid, const std::string& oldname, const std::string& newname )
+    {
+        auto kfplayerid = _public_redis_driver->QueryUInt64( "get {}:{}:{}", __KF_STRING__( player ), __KF_STRING__( name ), newname );
+        if ( !kfplayerid->IsOk() )
+        {
+            return KFMsg::NameDatabaseBusy;
+        }
+
+        // 如果不存在, 设置新名字
+        if ( kfplayerid->_value == _invalid_int )
+        {
+            // 保存名字
+            auto kfresult = _public_redis_driver->Execute( "set {}:{}:{} {}", __KF_STRING__( player ), __KF_STRING__( name ), newname, playerid );
+            if ( !kfresult->IsOk() )
+            {
+                return KFMsg::NameDatabaseBusy;
+            }
+
+            // 删除旧的名字关联
+            if ( !oldname.empty() )
+            {
+                _public_redis_driver->Execute( "del {}:{}:{}", __KF_STRING__( player ), __KF_STRING__( name ), oldname );
+            }
+        }
+        else if ( kfplayerid->_value != playerid )
+        {
+            // 存在, 并且不是设定者
+            return KFMsg::NameAlreadyExist;
+        }
+
+        return KFMsg::NameSetOk;
     }
 }

@@ -21,7 +21,7 @@ namespace KFrame
         KFWordData* FindChild( int8 word );
     private:
         // 包含的单词列表
-        std::unordered_map< int8, KFWordData > _child;
+        std::map< int8, KFWordData > _child;
     };
 
 

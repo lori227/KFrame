@@ -12,7 +12,6 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFMsg::S2S_LOAD_PLAYER_TO_DATA_REQ, &KFDataShardModule::HandleLoadPlayerToDataReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_SAVE_PLAYER_TO_DATA_REQ, &KFDataShardModule::HandleSavePlayerToDataReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_PLAYER_TO_DATA_REQ, &KFDataShardModule::HandleQueryPlayerToDataReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_SET_PLAYERNAME_TO_DATA_REQ, &KFDataShardModule::HandleSetPlayerNameToDataReq );
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
@@ -24,12 +23,6 @@ namespace KFrame
         __UNREGISTER_MESSAGE__( KFMsg::S2S_LOAD_PLAYER_TO_DATA_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_SAVE_PLAYER_TO_DATA_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_PLAYER_TO_DATA_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_SET_PLAYERNAME_TO_DATA_REQ );
-    }
-
-    void KFDataShardModule::OnceRun()
-    {
-        _name_redis_driver = _kf_redis->Create( __KF_STRING__( name ) );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -185,53 +178,5 @@ namespace KFrame
         }
 
         _kf_route->SendToRoute( route, KFMsg::S2S_QUERY_PLAYER_TO_GAME_ACK, &ack );
-    }
-
-    __KF_MESSAGE_FUNCTION__( KFDataShardModule::HandleSetPlayerNameToDataReq )
-    {
-        __PROTO_PARSE__( KFMsg::S2SSetPlayerNameToDataReq );
-
-        // 先查询名字
-        uint32 result = SetPlayerName( kfmsg.playerid(), kfmsg.oldname(), kfmsg.newname() );
-
-        KFMsg::S2SSetPlayerNameToGameAck ack;
-        ack.set_result( result );
-        ack.set_name( kfmsg.newname() );
-        ack.set_playerid( kfmsg.playerid() );
-        ack.set_itemuuid( kfmsg.itemuuid() );
-        _kf_route->SendToRoute( route, KFMsg::S2S_SET_PLAYERNAME_TO_GAME_ACK, &ack );
-    }
-
-    uint32 KFDataShardModule::SetPlayerName( uint64 playerid, const std::string& oldname, const std::string& newname )
-    {
-        auto kfplayerid = _name_redis_driver->QueryUInt64( "get {}:{}:{}", __KF_STRING__( player ), __KF_STRING__( name ), newname );
-        if ( !kfplayerid->IsOk() )
-        {
-            return KFMsg::NameDatabaseBusy;
-        }
-
-        // 如果不存在, 设置新名字
-        if ( kfplayerid->_value == _invalid_int )
-        {
-            // 保存名字
-            auto kfresult = _name_redis_driver->Execute( "set {}:{}:{} {}", __KF_STRING__( player ), __KF_STRING__( name ), newname, playerid );
-            if ( !kfresult->IsOk() )
-            {
-                return KFMsg::NameDatabaseBusy;
-            }
-
-            // 删除旧的名字关联
-            if ( !oldname.empty() )
-            {
-                _name_redis_driver->Execute( "del {}:{}:{}", __KF_STRING__( player ), __KF_STRING__( name ), oldname );
-            }
-        }
-        else if ( kfplayerid->_value != playerid )
-        {
-            // 存在, 并且不是设定者
-            return KFMsg::NameAlreadyExist;
-        }
-
-        return KFMsg::NameSetOk;
     }
 }

@@ -31,6 +31,7 @@ namespace KFrame
 
         // 刷新
         virtual void BeforeRun();
+        virtual void OnceRun();
 
         // 关闭
         virtual void BeforeShut();
@@ -96,6 +97,9 @@ namespace KFrame
 
         // 广播的序号
         uint32 _broadcast_serial = 0u;
+
+        // redis
+        KFRedisDriver* _auth_redis = nullptr;
     };
 }
 

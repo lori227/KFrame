@@ -3,12 +3,11 @@
 
 namespace KFrame
 {
-#define __LOGIN_REDIS_DRIVER__ _kf_redis->Create( __KF_STRING__( login ) )
-#define __ACCOUNT_REDIS_DRIVER__ _kf_redis->Create( __KF_STRING__( account ) )
-#define __PUBLIC_REDIS_DRIVER__ _kf_redis->Create( __KF_STRING__( public ) )
+#define __AUTH_REDIS_DRIVER__ _kf_redis->Create( __KF_STRING__( auth ) )
 
     void KFAuthModule::BeforeRun()
     {
+        // zone
         __REGISTER_HTTP_FUNCTION__( __KF_STRING__( zoneregister ), false, &KFAuthModule::HandleZoneRegister );
         __REGISTER_HTTP_FUNCTION__( __KF_STRING__( zoneupdate ), false, &KFAuthModule::HandleZoneUpdate );
         __REGISTER_HTTP_FUNCTION__( __KF_STRING__( zoneremove ), false, &KFAuthModule::HandleZoneRemove );
@@ -17,13 +16,22 @@ namespace KFrame
         __REGISTER_HTTP_FUNCTION__( __KF_STRING__( zonebalance ), false, &KFAuthModule::HandleZoneBalance );
         __REGISTER_HTTP_FUNCTION__( __KF_STRING__( worldregister ), false, &KFAuthModule::HandleWorldRegister );
 
+        // auth
         __REGISTER_HTTP_FUNCTION__( __KF_STRING__( auth ), false, &KFAuthModule::HandleAuthLogin );
         __REGISTER_HTTP_FUNCTION__( __KF_STRING__( verify ), false, &KFAuthModule::HandleVerifyToken );
+
+        // pay
+        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( applyorder ), false, &KFAuthModule::HandleApplyOrder );
+        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( removeorder ), false, &KFAuthModule::HandleRemoveOrder );
+        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( querypay ), false, &KFAuthModule::HandleQueryPay );
+        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( finishpay ), false, &KFAuthModule::HandleFinishPay );
+
         /////////////////////////////////////////////////////////////////////////////////////////
     }
 
     void KFAuthModule::BeforeShut()
     {
+        // zone
         __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( zoneregister ) );
         __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( zoneupdate ) );
         __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( zoneremove ) );
@@ -32,8 +40,15 @@ namespace KFrame
         __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( zonebalance ) );
         __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( worldregister ) );
 
+        // auth
         __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( auth ) );
         __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( verify ) );
+
+        // pay
+        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( applyorder ) );
+        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( removeorder ) );
+        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( querypay ) );
+        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( finishpay ) );
         ///////////////////////////////////////////////////////////////////////////
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -44,7 +59,7 @@ namespace KFrame
         auto count = __JSON_GET_UINT64__( request, __KF_STRING__( count ) );
         auto accountid = __JSON_GET_UINT64__( request, __KF_STRING__( accountid ) );
 
-        auto redisdriver = __LOGIN_REDIS_DRIVER__;
+        auto redisdriver = __AUTH_REDIS_DRIVER__;
         redisdriver->Execute( "zadd {} {} {}", __KF_STRING__( zonelist ), count, zoneid );
         return _kf_http_server->SendCode( KFMsg::Ok );
     }
@@ -58,7 +73,7 @@ namespace KFrame
         __JSON_TO_MAP__( request, values );
 
         // 先保存小区基本信息
-        auto redisdriver = __LOGIN_REDIS_DRIVER__;
+        auto redisdriver = __AUTH_REDIS_DRIVER__;
         redisdriver->Append( "zincrby {} 0 {}", __KF_STRING__( zonelist ), zoneid );
         redisdriver->Append( values, "hmset {}:{}", __KF_STRING__( zone ), zoneid );
         auto kfresult = redisdriver->Pipeline();
@@ -75,7 +90,7 @@ namespace KFrame
         __JSON_PARSE_STRING__( request, data );
 
         // 判断最小负载
-        auto redisdriver = __LOGIN_REDIS_DRIVER__;
+        auto redisdriver = __AUTH_REDIS_DRIVER__;
         auto zoneid = __JSON_GET_UINT32__( request, __KF_STRING__( zoneid ) );
         auto count = __JSON_GET_UINT32__( request, __KF_STRING__( count ) );
 
@@ -96,7 +111,7 @@ namespace KFrame
     {
         __JSON_PARSE_STRING__( request, data );
 
-        auto redisdriver = __LOGIN_REDIS_DRIVER__;
+        auto redisdriver = __AUTH_REDIS_DRIVER__;
         auto zoneid = __JSON_GET_UINT32__( request, __KF_STRING__( zoneid ) );
         auto appid = __JSON_GET_STRING__( request, __KF_STRING__( appid ) );
 
@@ -112,7 +127,7 @@ namespace KFrame
 
     __KF_HTTP_FUNCTION__( KFAuthModule::HandleQueryZoneList )
     {
-        auto redisdriver = __LOGIN_REDIS_DRIVER__;
+        auto redisdriver = __AUTH_REDIS_DRIVER__;
         auto kflist = redisdriver->QueryList( "zrange {} 0 -1", __KF_STRING__( zonelist ) );
         if ( !kflist->IsOk() )
         {
@@ -141,7 +156,7 @@ namespace KFrame
     {
         __JSON_PARSE_STRING__( request, data );
 
-        auto redisdriver = __LOGIN_REDIS_DRIVER__;
+        auto redisdriver = __AUTH_REDIS_DRIVER__;
         auto zoneid = __JSON_GET_UINT32__( request, __KF_STRING__( zoneid ) );
 
         // 查询登录信息
@@ -168,7 +183,7 @@ namespace KFrame
         auto appid = __JSON_GET_STRING__( request, __KF_STRING__( world ) );
         auto url = __JSON_GET_STRING__( request, __KF_STRING__( url ) );
 
-        auto redisdriver = __LOGIN_REDIS_DRIVER__;
+        auto redisdriver = __AUTH_REDIS_DRIVER__;
         auto kfresult = redisdriver->Execute( "sadd {} {}", __KF_STRING__( worldurl ), url );
         if ( !kfresult->IsOk() )
         {
@@ -230,14 +245,14 @@ namespace KFrame
         MapString values;
         __JSON_TO_MAP__( kfextend, values );
 
-        auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
+        auto redisdriver = __AUTH_REDIS_DRIVER__;
         redisdriver->Update( values, "hmset {}:{}", __KF_STRING__( extend ), accountid );
     }
 
     MapString KFAuthModule::QueryCreateAccount( const std::string& account, uint32 channel )
     {
         MapString accountdata;
-        auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
+        auto redisdriver = __AUTH_REDIS_DRIVER__;
 
         // 先查询redis
         auto kfquery = redisdriver->QueryUInt64( "hget {}:{}:{} {}", __KF_STRING__( account ), account, channel, __KF_STRING__( accountid ) );
@@ -296,7 +311,7 @@ namespace KFrame
         // token 保留1个小时
         static auto _token_expire_time = 3600;
         static auto _token_serial = 0;
-        auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
+        auto redisdriver = __AUTH_REDIS_DRIVER__;
 
         auto channel = accountdata[ __KF_STRING__( channel ) ];
         auto account = accountdata[ __KF_STRING__( account ) ];
@@ -317,7 +332,7 @@ namespace KFrame
 
     bool KFAuthModule::KickAccountOffline( uint64 playerid )
     {
-        auto redisdriver = __LOGIN_REDIS_DRIVER__;
+        auto redisdriver = __AUTH_REDIS_DRIVER__;
 
         __JSON_DOCUMENT__( sendjson );
         __JSON_SET_VALUE__( sendjson, __KF_STRING__( playerid ), playerid );
@@ -350,7 +365,7 @@ namespace KFrame
     uint32 KFAuthModule::BalanceAllocZoneId()
     {
         // 选择一个最小人数的分区
-        auto redisdriver = __LOGIN_REDIS_DRIVER__;
+        auto redisdriver = __AUTH_REDIS_DRIVER__;
         auto zonelist = redisdriver->QueryList( "zrange {} 0 -1", __KF_STRING__( zonelist ) );
         if ( zonelist->_value.empty() )
         {
@@ -384,7 +399,7 @@ namespace KFrame
         }
 
         // 小区信息
-        auto redisdriver = __LOGIN_REDIS_DRIVER__;
+        auto redisdriver = __AUTH_REDIS_DRIVER__;
         auto kfzonemap = redisdriver->QueryMap( "hgetall {}:{}", __KF_STRING__( zone ), zoneid );
 
         __JSON_DOCUMENT__( response );
@@ -404,7 +419,7 @@ namespace KFrame
     {
         __JSON_PARSE_STRING__( request, data );
 
-        auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
+        auto redisdriver = __AUTH_REDIS_DRIVER__;
 
         auto token = __JSON_GET_STRING__( request, __KF_STRING__( token ) );
         auto accountid = __JSON_GET_UINT64__( request, __KF_STRING__( accountid ) );
@@ -452,4 +467,130 @@ namespace KFrame
 
         return _kf_http_server->SendResponse( response );
     }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    __KF_HTTP_FUNCTION__( KFAuthModule::HandleApplyOrder )
+    {
+        __JSON_PARSE_STRING__( request, data );
+
+        auto order = __JSON_GET_STRING__( request, __KF_STRING__( order ) );
+        auto payid = __JSON_GET_STRING__( request, __KF_STRING__( payid ) );
+        auto playerid = __JSON_GET_UINT64__( request, __KF_STRING__( playerid ) );
+        if ( playerid == _invalid_int || payid.empty() || order.empty() )
+        {
+            return _kf_http_server->SendCode( KFMsg::PayDataError );
+        }
+
+        // 订单保存时间( 1个月 )
+        static auto _order_expire_time = 3600 * 24 * 30;
+        auto orderkey = __FORMAT__( "{}:{}", __KF_STRING__( order ), order );
+
+        // 保存到数据库
+        auto redisdriver = __AUTH_REDIS_DRIVER__;
+
+        __JSON_DOCUMENT__( response );
+        __JSON_SET_VALUE__( response, __KF_STRING__( playerid ), playerid );
+
+        // 删除order
+        __JSON_REMOVE__( request, __KF_STRING__( order ) );
+
+        // 保存订单信息
+        MapString values;
+        __JSON_TO_MAP__( request, values );
+        redisdriver->Append( values, "hmset {}", orderkey );
+        redisdriver->Append( "expire {} {}", orderkey, _order_expire_time );
+        auto kfresult = redisdriver->Pipeline();
+        if ( kfresult->IsOk() )
+        {
+            __JSON_SET_VALUE__( response, __KF_STRING__( payid ), payid );
+            __JSON_SET_VALUE__( response, __KF_STRING__( order ), order );
+            __JSON_SET_VALUE__( response, __KF_STRING__( retcode ), KFMsg::Ok );
+        }
+        else
+        {
+            __JSON_SET_VALUE__( response, __KF_STRING__( retcode ), KFMsg::AuthDatabaseBusy );
+        }
+
+        return _kf_http_server->SendResponse( response );
+    }
+
+    __KF_HTTP_FUNCTION__( KFAuthModule::HandleRemoveOrder )
+    {
+        __JSON_PARSE_STRING__( request, data );
+
+        // 删除订单
+        auto order = __JSON_GET_STRING__( request, __KF_STRING__( order ) );
+
+        auto redisdriver = __AUTH_REDIS_DRIVER__;
+        redisdriver->Execute( "del {}:{}", __KF_STRING__( order ), order );
+
+        return _kf_http_server->SendCode( KFMsg::Ok );
+    }
+
+    __KF_HTTP_FUNCTION__( KFAuthModule::HandleQueryPay )
+    {
+        __JSON_PARSE_STRING__( request, data );
+        auto playerid = __JSON_GET_UINT64__( request, __KF_STRING__( playerid ) );
+
+        __JSON_DOCUMENT__( response );
+        __JSON_SET_VALUE__( response, __KF_STRING__( playerid ), playerid );
+
+        // 查询玩家充值列表
+        auto redisdriver = __AUTH_REDIS_DRIVER__;
+        auto kfresult = redisdriver->QueryList( "smembers {}:{}", __KF_STRING__( paydata ), playerid );
+        if ( !kfresult->_value.empty() )
+        {
+            __JSON_ARRAY__( payarray );
+            for ( auto& order : kfresult->_value )
+            {
+                auto kfpaydata = redisdriver->QueryMap( "hgetall {}:{}", __KF_STRING__( pay ), order );
+                if ( !kfpaydata->_value.empty() )
+                {
+                    auto flag = KFUtility::ToValue( kfpaydata->_value[ __KF_STRING__( flag ) ] );
+                    if ( flag == _invalid_int )
+                    {
+                        __JSON_OBJECT__( payjson );
+                        __JSON_SET_VALUE__( payjson, __KF_STRING__( order ), kfpaydata->_value[ __KF_STRING__( order ) ] );
+                        __JSON_SET_VALUE__( payjson, __KF_STRING__( payid ), kfpaydata->_value[ __KF_STRING__( payid ) ] );
+
+                        __JSON_ADD_VALUE__( payarray, payjson );
+
+                        // 更新状态
+                        auto updataresult = redisdriver->Execute( "hset {}:{} {} {}", __KF_STRING__( pay ), order, __KF_STRING__( flag ), 1 );
+                        if ( !updataresult->IsOk() )
+                        {
+                            __LOG_ERROR__( "update player=[{}] pay=[{}] flag failed!", playerid, order );
+                        }
+                    }
+                }
+            }
+
+            // 如果不为空, 返回给玩家
+            auto size = __JSON_ARRAY_SIZE__( payarray );
+            if ( size > 0u )
+            {
+                __JSON_SET_VALUE__( response, __KF_STRING__( paydata ), payarray );
+            }
+        }
+
+        return _kf_http_server->SendResponse( response );
+    }
+
+    __KF_HTTP_FUNCTION__( KFAuthModule::HandleFinishPay )
+    {
+        __JSON_PARSE_STRING__( request, data );
+        auto order = __JSON_GET_STRING__( request, __KF_STRING__( order ) );
+        auto playerid = __JSON_GET_UINT64__( request, __KF_STRING__( playerid ) );
+
+        // 删除充值信息
+        auto redisdriver = __AUTH_REDIS_DRIVER__;
+        redisdriver->Append( "del {}:{}", __KF_STRING__( order ), order );
+        redisdriver->Append( "srem {}:{} {}", __KF_STRING__( paydata ), playerid, order );
+        redisdriver->Pipeline();
+
+        return _kf_http_server->SendCode( KFMsg::Ok );
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////
 }

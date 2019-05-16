@@ -62,14 +62,10 @@ namespace KFrame
 
         // 查询玩家数据
         virtual bool QueryPlayerData( uint64 sendid, uint64 playerid );
-
-        // 设置名字
-        virtual bool SetPlayerName( uint64 playerid, const std::string& oldname, const std::string& newname, uint64 itemuuid );
     protected:
         // 设置回调函数
         virtual void SetLoadPlayerFunction( KFLoadPlayerFunction& function );
         virtual void SetQueryPlayerFunction( KFQueryPlayerFunction& function );
-        virtual void SetPlayerNameFunction( KFSetPlayerNameFunction& function );
 
         // 保存数据
         void SaveKeeperData( uint64 playerid, const KFMsg::PBObject* pbplayerdata );
@@ -87,13 +83,10 @@ namespace KFrame
         // 查询玩家数据
         __KF_MESSAGE_FUNCTION__( HandleQueryPlayerToGameAck );
 
-        // 处理设置名字回馈
-        __KF_MESSAGE_FUNCTION__( HandleSetPlayerNameToGameAck );
 
     private:
         KFLoadPlayerFunction _load_player_function = nullptr;
         KFQueryPlayerFunction _query_player_function = nullptr;
-        KFSetPlayerNameFunction _set_player_name_function = nullptr;
 
         // 数据保存
         KFHashMap< uint64, uint64, KFDataKeeper > _data_keeper;

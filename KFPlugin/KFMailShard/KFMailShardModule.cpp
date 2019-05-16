@@ -32,7 +32,7 @@ namespace KFrame
     {
         // 初始化redis
         _mail_driver = _kf_redis->Create( __KF_STRING__( mail ) );
-        _login_driver = _kf_redis->Create( __KF_STRING__( login ) );
+        _auth_driver = _kf_redis->Create( __KF_STRING__( auth ) );
 
         // 每天5点 清理过期的全局邮件
         auto kfsetting = _kf_schedule->CreateScheduleSetting();
@@ -63,7 +63,7 @@ namespace KFrame
                     playerlist.insert( playerid );
                 }
             }
-            __JOSN_REMOVE__( request, __KF_STRING__( playerid ) );
+            __JSON_REMOVE__( request, __KF_STRING__( playerid ) );
         }
 
         // 小区列表
@@ -79,7 +79,7 @@ namespace KFrame
                     zonelist.insert( zoneid );
                 }
             }
-            __JOSN_REMOVE__( request, __KF_STRING__( zoneid ) );
+            __JSON_REMOVE__( request, __KF_STRING__( zoneid ) );
         }
 
         // 邮件内容
@@ -273,21 +273,7 @@ namespace KFrame
 
         // 添加邮件
         auto mailid = AddMail( kfmsg.flag(), kfmsg.objectid(), maildata );
-        if ( mailid != _invalid_int )
-        {
-            if ( kfmsg.flag() == KFMsg::PersonMail )
-            {
-                // 通知有新邮件
-                auto kfresult = _login_driver->QueryUInt64( "hget {}:{} {}", __KF_STRING__( player ), kfmsg.objectid(), __KF_STRING__( game ) );
-                if ( kfresult->_value != _invalid_int )
-                {
-                    KFMsg::S2SNoticeNewMailReq notice;
-                    notice.set_playerid( kfmsg.objectid() );
-                    _kf_route->SendToServer( kfresult->_value, KFMsg::S2S_NOTICE_NEW_MAIL_REQ, &notice );
-                }
-            }
-        }
-        else
+        if ( mailid == _invalid_int )
         {
             std::string strdata;
             google::protobuf::util::MessageToJsonString( kfmsg, &strdata );
@@ -336,7 +322,21 @@ namespace KFrame
 
         // 执行添加
         auto kfresult = _mail_driver->Pipeline();
-        if ( !kfresult->IsOk() )
+        if ( kfresult->IsOk() )
+        {
+            if ( flag == KFMsg::PersonMail )
+            {
+                // 通知有新邮件
+                auto kfresult = _auth_driver->QueryUInt64( "hget {}:{} {}", __KF_STRING__( player ), objectid, __KF_STRING__( game ) );
+                if ( kfresult->_value != _invalid_int )
+                {
+                    KFMsg::S2SNoticeNewMailReq notice;
+                    notice.set_playerid( objectid );
+                    _kf_route->SendToServer( kfresult->_value, KFMsg::S2S_NOTICE_NEW_MAIL_REQ, &notice );
+                }
+            }
+        }
+        else
         {
             mailid = _invalid_int;
         }

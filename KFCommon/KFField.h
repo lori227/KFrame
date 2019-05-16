@@ -9,6 +9,7 @@ namespace KFrame
     namespace KFField
     {
         __STRING_DEFINE__( retcode );
+        __STRING_DEFINE__( sign );
         __STRING_DEFINE__( app );
         __STRING_DEFINE__( id );
         __STRING_DEFINE__( master );
@@ -128,6 +129,7 @@ namespace KFrame
         __STRING_DEFINE__( code );
         __STRING_DEFINE__( verifyactivationcode );
         __STRING_DEFINE__( public );
+        __STRING_DEFINE__( logic );
         __STRING_DEFINE__( openactivation );
         __STRING_DEFINE__( activationcode );
         __STRING_DEFINE__( online );
@@ -214,6 +216,18 @@ namespace KFrame
         __STRING_DEFINE__( freindlinessresettime );
         __STRING_DEFINE__( freindlinessdailymax );
         __STRING_DEFINE__( playersavetime );
+        __STRING_DEFINE__( order );
+        __STRING_DEFINE__( pay );
+        __STRING_DEFINE__( payid );
+        __STRING_DEFINE__( paydata );
+        __STRING_DEFINE__( price );
+        __STRING_DEFINE__( applyorder );
+        __STRING_DEFINE__( removeorder );
+        __STRING_DEFINE__( payquerytime );
+        __STRING_DEFINE__( payquerycount );
+        __STRING_DEFINE__( querypay );
+        __STRING_DEFINE__( finishpay );
+        __STRING_DEFINE__( variable );
 
     }
 }

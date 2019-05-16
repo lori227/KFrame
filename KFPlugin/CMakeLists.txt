@@ -101,6 +101,7 @@ add_subdirectory(KFReset)
 add_subdirectory(KFEnter)
 add_subdirectory(KFLeave)
 add_subdirectory(KFStore)
+add_subdirectory(KFPay)
 
 add_subdirectory(KFMailClient)
 add_subdirectory(KFMailShard)

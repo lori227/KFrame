@@ -40,7 +40,7 @@ namespace protobuf_FrameClientMessage_2eproto {
 struct LIBPROTOC_EXPORT TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[38];
+  static const ::google::protobuf::internal::ParseTable schema[42];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -57,6 +57,12 @@ LIBPROTOC_EXPORT extern MsgActivityRewardReqDefaultTypeInternal _MsgActivityRewa
 class MsgAddFriendInviteReq;
 class MsgAddFriendInviteReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgAddFriendInviteReqDefaultTypeInternal _MsgAddFriendInviteReq_default_instance_;
+class MsgApplyPayOrderAck;
+class MsgApplyPayOrderAckDefaultTypeInternal;
+LIBPROTOC_EXPORT extern MsgApplyPayOrderAckDefaultTypeInternal _MsgApplyPayOrderAck_default_instance_;
+class MsgApplyPayOrderReq;
+class MsgApplyPayOrderReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern MsgApplyPayOrderReqDefaultTypeInternal _MsgApplyPayOrderReq_default_instance_;
 class MsgBuyStoreReq;
 class MsgBuyStoreReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgBuyStoreReqDefaultTypeInternal _MsgBuyStoreReq_default_instance_;
@@ -84,6 +90,9 @@ LIBPROTOC_EXPORT extern MsgLogoutReqDefaultTypeInternal _MsgLogoutReq_default_in
 class MsgMailRewardReq;
 class MsgMailRewardReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgMailRewardReqDefaultTypeInternal _MsgMailRewardReq_default_instance_;
+class MsgPayResultReq;
+class MsgPayResultReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern MsgPayResultReqDefaultTypeInternal _MsgPayResultReq_default_instance_;
 class MsgQueryBasicAck;
 class MsgQueryBasicAckDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgQueryBasicAckDefaultTypeInternal _MsgQueryBasicAck_default_instance_;
@@ -99,6 +108,9 @@ LIBPROTOC_EXPORT extern MsgQueryFriendRankListReqDefaultTypeInternal _MsgQueryFr
 class MsgQueryMailReq;
 class MsgQueryMailReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgQueryMailReqDefaultTypeInternal _MsgQueryMailReq_default_instance_;
+class MsgQueryPayReq;
+class MsgQueryPayReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern MsgQueryPayReqDefaultTypeInternal _MsgQueryPayReq_default_instance_;
 class MsgQueryPlayerAck;
 class MsgQueryPlayerAckDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgQueryPlayerAckDefaultTypeInternal _MsgQueryPlayerAck_default_instance_;
@@ -168,6 +180,8 @@ namespace protobuf {
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgAchieveRewardReq* Arena::CreateMaybeMessage<::KFMsg::MsgAchieveRewardReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgActivityRewardReq* Arena::CreateMaybeMessage<::KFMsg::MsgActivityRewardReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgAddFriendInviteReq* Arena::CreateMaybeMessage<::KFMsg::MsgAddFriendInviteReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::MsgApplyPayOrderAck* Arena::CreateMaybeMessage<::KFMsg::MsgApplyPayOrderAck>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::MsgApplyPayOrderReq* Arena::CreateMaybeMessage<::KFMsg::MsgApplyPayOrderReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgBuyStoreReq* Arena::CreateMaybeMessage<::KFMsg::MsgBuyStoreReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgCommandReq* Arena::CreateMaybeMessage<::KFMsg::MsgCommandReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgCompoundReq* Arena::CreateMaybeMessage<::KFMsg::MsgCompoundReq>(Arena*);
@@ -177,11 +191,13 @@ template<> LIBPROTOC_EXPORT ::KFMsg::MsgLoginAck* Arena::CreateMaybeMessage<::KF
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgLoginReq* Arena::CreateMaybeMessage<::KFMsg::MsgLoginReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgLogoutReq* Arena::CreateMaybeMessage<::KFMsg::MsgLogoutReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgMailRewardReq* Arena::CreateMaybeMessage<::KFMsg::MsgMailRewardReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::MsgPayResultReq* Arena::CreateMaybeMessage<::KFMsg::MsgPayResultReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgQueryBasicAck* Arena::CreateMaybeMessage<::KFMsg::MsgQueryBasicAck>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgQueryBasicReq* Arena::CreateMaybeMessage<::KFMsg::MsgQueryBasicReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgQueryFriendRankListAck* Arena::CreateMaybeMessage<::KFMsg::MsgQueryFriendRankListAck>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgQueryFriendRankListReq* Arena::CreateMaybeMessage<::KFMsg::MsgQueryFriendRankListReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgQueryMailReq* Arena::CreateMaybeMessage<::KFMsg::MsgQueryMailReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::MsgQueryPayReq* Arena::CreateMaybeMessage<::KFMsg::MsgQueryPayReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgQueryPlayerAck* Arena::CreateMaybeMessage<::KFMsg::MsgQueryPlayerAck>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgQueryPlayerReq* Arena::CreateMaybeMessage<::KFMsg::MsgQueryPlayerReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgQueryRankListAck* Arena::CreateMaybeMessage<::KFMsg::MsgQueryRankListAck>(Arena*);
@@ -240,20 +256,24 @@ enum FrameClientProtocol {
   MSG_BUY_STORE_REQ = 411,
   MSG_QUERY_STORE_REQ = 412,
   MSG_QUERY_STORE_ACK = 413,
-  MSG_QUERY_RANK_LIST_REQ = 431,
-  MSG_QUERY_RANK_LIST_ACK = 432,
-  MSG_QUERY_FRIEND_RANK_LIST_REQ = 433,
-  MSG_QUERY_FRIEND_RANK_LIST_ACK = 434,
+  MSG_APPLY_PAY_ORDER_REQ = 431,
+  MSG_APPLY_PAY_ORDER_ACK = 432,
+  MSG_PAY_RESULT_REQ = 433,
+  MSG_QUERY_PAY_REQ = 434,
   MSG_ADD_FRIEND_INVITE_REQ = 451,
   MSG_REPLY_FRIEND_INVITE_REQ = 452,
   MSG_DEL_FRIEND_REQ = 453,
   MSG_SET_REFUSE_FRIEND_INVITE_REQ = 454,
+  MSG_QUERY_RANK_LIST_REQ = 471,
+  MSG_QUERY_RANK_LIST_ACK = 472,
+  MSG_QUERY_FRIEND_RANK_LIST_REQ = 473,
+  MSG_QUERY_FRIEND_RANK_LIST_ACK = 474,
   FrameClientProtocol_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   FrameClientProtocol_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 LIBPROTOC_EXPORT bool FrameClientProtocol_IsValid(int value);
 const FrameClientProtocol FrameClientProtocol_MIN = MSG_FRAME_CLIENT_BEGIN;
-const FrameClientProtocol FrameClientProtocol_MAX = MSG_SET_REFUSE_FRIEND_INVITE_REQ;
+const FrameClientProtocol FrameClientProtocol_MAX = MSG_QUERY_FRIEND_RANK_LIST_ACK;
 const int FrameClientProtocol_ARRAYSIZE = FrameClientProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* FrameClientProtocol_descriptor();
@@ -3612,6 +3632,472 @@ class LIBPROTOC_EXPORT MsgQueryStoreAck : public ::google::protobuf::Message /* 
 };
 // -------------------------------------------------------------------
 
+class LIBPROTOC_EXPORT MsgApplyPayOrderReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgApplyPayOrderReq) */ {
+ public:
+  MsgApplyPayOrderReq();
+  virtual ~MsgApplyPayOrderReq();
+
+  MsgApplyPayOrderReq(const MsgApplyPayOrderReq& from);
+
+  inline MsgApplyPayOrderReq& operator=(const MsgApplyPayOrderReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  MsgApplyPayOrderReq(MsgApplyPayOrderReq&& from) noexcept
+    : MsgApplyPayOrderReq() {
+    *this = ::std::move(from);
+  }
+
+  inline MsgApplyPayOrderReq& operator=(MsgApplyPayOrderReq&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgApplyPayOrderReq& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MsgApplyPayOrderReq* internal_default_instance() {
+    return reinterpret_cast<const MsgApplyPayOrderReq*>(
+               &_MsgApplyPayOrderReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    30;
+
+  void Swap(MsgApplyPayOrderReq* other);
+  friend void swap(MsgApplyPayOrderReq& a, MsgApplyPayOrderReq& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MsgApplyPayOrderReq* New() const final {
+    return CreateMaybeMessage<MsgApplyPayOrderReq>(NULL);
+  }
+
+  MsgApplyPayOrderReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MsgApplyPayOrderReq>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const MsgApplyPayOrderReq& from);
+  void MergeFrom(const MsgApplyPayOrderReq& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MsgApplyPayOrderReq* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string payid = 1;
+  void clear_payid();
+  static const int kPayidFieldNumber = 1;
+  const ::std::string& payid() const;
+  void set_payid(const ::std::string& value);
+  #if LANG_CXX11
+  void set_payid(::std::string&& value);
+  #endif
+  void set_payid(const char* value);
+  void set_payid(const char* value, size_t size);
+  ::std::string* mutable_payid();
+  ::std::string* release_payid();
+  void set_allocated_payid(::std::string* payid);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgApplyPayOrderReq)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr payid_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_FrameClientMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgApplyPayOrderAck : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgApplyPayOrderAck) */ {
+ public:
+  MsgApplyPayOrderAck();
+  virtual ~MsgApplyPayOrderAck();
+
+  MsgApplyPayOrderAck(const MsgApplyPayOrderAck& from);
+
+  inline MsgApplyPayOrderAck& operator=(const MsgApplyPayOrderAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  MsgApplyPayOrderAck(MsgApplyPayOrderAck&& from) noexcept
+    : MsgApplyPayOrderAck() {
+    *this = ::std::move(from);
+  }
+
+  inline MsgApplyPayOrderAck& operator=(MsgApplyPayOrderAck&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgApplyPayOrderAck& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MsgApplyPayOrderAck* internal_default_instance() {
+    return reinterpret_cast<const MsgApplyPayOrderAck*>(
+               &_MsgApplyPayOrderAck_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    31;
+
+  void Swap(MsgApplyPayOrderAck* other);
+  friend void swap(MsgApplyPayOrderAck& a, MsgApplyPayOrderAck& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MsgApplyPayOrderAck* New() const final {
+    return CreateMaybeMessage<MsgApplyPayOrderAck>(NULL);
+  }
+
+  MsgApplyPayOrderAck* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MsgApplyPayOrderAck>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const MsgApplyPayOrderAck& from);
+  void MergeFrom(const MsgApplyPayOrderAck& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MsgApplyPayOrderAck* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string payid = 1;
+  void clear_payid();
+  static const int kPayidFieldNumber = 1;
+  const ::std::string& payid() const;
+  void set_payid(const ::std::string& value);
+  #if LANG_CXX11
+  void set_payid(::std::string&& value);
+  #endif
+  void set_payid(const char* value);
+  void set_payid(const char* value, size_t size);
+  ::std::string* mutable_payid();
+  ::std::string* release_payid();
+  void set_allocated_payid(::std::string* payid);
+
+  // string order = 2;
+  void clear_order();
+  static const int kOrderFieldNumber = 2;
+  const ::std::string& order() const;
+  void set_order(const ::std::string& value);
+  #if LANG_CXX11
+  void set_order(::std::string&& value);
+  #endif
+  void set_order(const char* value);
+  void set_order(const char* value, size_t size);
+  ::std::string* mutable_order();
+  ::std::string* release_order();
+  void set_allocated_order(::std::string* order);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgApplyPayOrderAck)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr payid_;
+  ::google::protobuf::internal::ArenaStringPtr order_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_FrameClientMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgPayResultReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgPayResultReq) */ {
+ public:
+  MsgPayResultReq();
+  virtual ~MsgPayResultReq();
+
+  MsgPayResultReq(const MsgPayResultReq& from);
+
+  inline MsgPayResultReq& operator=(const MsgPayResultReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  MsgPayResultReq(MsgPayResultReq&& from) noexcept
+    : MsgPayResultReq() {
+    *this = ::std::move(from);
+  }
+
+  inline MsgPayResultReq& operator=(MsgPayResultReq&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgPayResultReq& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MsgPayResultReq* internal_default_instance() {
+    return reinterpret_cast<const MsgPayResultReq*>(
+               &_MsgPayResultReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    32;
+
+  void Swap(MsgPayResultReq* other);
+  friend void swap(MsgPayResultReq& a, MsgPayResultReq& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MsgPayResultReq* New() const final {
+    return CreateMaybeMessage<MsgPayResultReq>(NULL);
+  }
+
+  MsgPayResultReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MsgPayResultReq>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const MsgPayResultReq& from);
+  void MergeFrom(const MsgPayResultReq& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MsgPayResultReq* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string payid = 1;
+  void clear_payid();
+  static const int kPayidFieldNumber = 1;
+  const ::std::string& payid() const;
+  void set_payid(const ::std::string& value);
+  #if LANG_CXX11
+  void set_payid(::std::string&& value);
+  #endif
+  void set_payid(const char* value);
+  void set_payid(const char* value, size_t size);
+  ::std::string* mutable_payid();
+  ::std::string* release_payid();
+  void set_allocated_payid(::std::string* payid);
+
+  // string order = 2;
+  void clear_order();
+  static const int kOrderFieldNumber = 2;
+  const ::std::string& order() const;
+  void set_order(const ::std::string& value);
+  #if LANG_CXX11
+  void set_order(::std::string&& value);
+  #endif
+  void set_order(const char* value);
+  void set_order(const char* value, size_t size);
+  ::std::string* mutable_order();
+  ::std::string* release_order();
+  void set_allocated_order(::std::string* order);
+
+  // bool result = 3;
+  void clear_result();
+  static const int kResultFieldNumber = 3;
+  bool result() const;
+  void set_result(bool value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgPayResultReq)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr payid_;
+  ::google::protobuf::internal::ArenaStringPtr order_;
+  bool result_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_FrameClientMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgQueryPayReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgQueryPayReq) */ {
+ public:
+  MsgQueryPayReq();
+  virtual ~MsgQueryPayReq();
+
+  MsgQueryPayReq(const MsgQueryPayReq& from);
+
+  inline MsgQueryPayReq& operator=(const MsgQueryPayReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  MsgQueryPayReq(MsgQueryPayReq&& from) noexcept
+    : MsgQueryPayReq() {
+    *this = ::std::move(from);
+  }
+
+  inline MsgQueryPayReq& operator=(MsgQueryPayReq&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgQueryPayReq& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MsgQueryPayReq* internal_default_instance() {
+    return reinterpret_cast<const MsgQueryPayReq*>(
+               &_MsgQueryPayReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    33;
+
+  void Swap(MsgQueryPayReq* other);
+  friend void swap(MsgQueryPayReq& a, MsgQueryPayReq& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MsgQueryPayReq* New() const final {
+    return CreateMaybeMessage<MsgQueryPayReq>(NULL);
+  }
+
+  MsgQueryPayReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MsgQueryPayReq>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const MsgQueryPayReq& from);
+  void MergeFrom(const MsgQueryPayReq& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MsgQueryPayReq* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgQueryPayReq)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_FrameClientMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
 class LIBPROTOC_EXPORT MsgQueryRankListReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgQueryRankListReq) */ {
  public:
   MsgQueryRankListReq();
@@ -3647,7 +4133,7 @@ class LIBPROTOC_EXPORT MsgQueryRankListReq : public ::google::protobuf::Message 
                &_MsgQueryRankListReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    30;
+    34;
 
   void Swap(MsgQueryRankListReq* other);
   friend void swap(MsgQueryRankListReq& a, MsgQueryRankListReq& b) {
@@ -3750,7 +4236,7 @@ class LIBPROTOC_EXPORT MsgQueryRankListAck : public ::google::protobuf::Message 
                &_MsgQueryRankListAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    31;
+    35;
 
   void Swap(MsgQueryRankListAck* other);
   friend void swap(MsgQueryRankListAck& a, MsgQueryRankListAck& b) {
@@ -3866,7 +4352,7 @@ class LIBPROTOC_EXPORT MsgQueryFriendRankListReq : public ::google::protobuf::Me
                &_MsgQueryFriendRankListReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    32;
+    36;
 
   void Swap(MsgQueryFriendRankListReq* other);
   friend void swap(MsgQueryFriendRankListReq& a, MsgQueryFriendRankListReq& b) {
@@ -3969,7 +4455,7 @@ class LIBPROTOC_EXPORT MsgQueryFriendRankListAck : public ::google::protobuf::Me
                &_MsgQueryFriendRankListAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    33;
+    37;
 
   void Swap(MsgQueryFriendRankListAck* other);
   friend void swap(MsgQueryFriendRankListAck& a, MsgQueryFriendRankListAck& b) {
@@ -4085,7 +4571,7 @@ class LIBPROTOC_EXPORT MsgAddFriendInviteReq : public ::google::protobuf::Messag
                &_MsgAddFriendInviteReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    34;
+    38;
 
   void Swap(MsgAddFriendInviteReq* other);
   friend void swap(MsgAddFriendInviteReq& a, MsgAddFriendInviteReq& b) {
@@ -4218,7 +4704,7 @@ class LIBPROTOC_EXPORT MsgReplyFriendInviteReq : public ::google::protobuf::Mess
                &_MsgReplyFriendInviteReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    35;
+    39;
 
   void Swap(MsgReplyFriendInviteReq* other);
   friend void swap(MsgReplyFriendInviteReq& a, MsgReplyFriendInviteReq& b) {
@@ -4328,7 +4814,7 @@ class LIBPROTOC_EXPORT MsgDelFriendReq : public ::google::protobuf::Message /* @
                &_MsgDelFriendReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    36;
+    40;
 
   void Swap(MsgDelFriendReq* other);
   friend void swap(MsgDelFriendReq& a, MsgDelFriendReq& b) {
@@ -4431,7 +4917,7 @@ class LIBPROTOC_EXPORT MsgSetRefuseFriendInviteReq : public ::google::protobuf::
                &_MsgSetRefuseFriendInviteReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    37;
+    41;
 
   void Swap(MsgSetRefuseFriendInviteReq* other);
   friend void swap(MsgSetRefuseFriendInviteReq& a, MsgSetRefuseFriendInviteReq& b) {
@@ -6030,6 +6516,301 @@ inline void MsgQueryStoreAck::set_allocated_data(::std::string* data) {
 
 // -------------------------------------------------------------------
 
+// MsgApplyPayOrderReq
+
+// string payid = 1;
+inline void MsgApplyPayOrderReq::clear_payid() {
+  payid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& MsgApplyPayOrderReq::payid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgApplyPayOrderReq.payid)
+  return payid_.GetNoArena();
+}
+inline void MsgApplyPayOrderReq::set_payid(const ::std::string& value) {
+  
+  payid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.MsgApplyPayOrderReq.payid)
+}
+#if LANG_CXX11
+inline void MsgApplyPayOrderReq::set_payid(::std::string&& value) {
+  
+  payid_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgApplyPayOrderReq.payid)
+}
+#endif
+inline void MsgApplyPayOrderReq::set_payid(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  payid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.MsgApplyPayOrderReq.payid)
+}
+inline void MsgApplyPayOrderReq::set_payid(const char* value, size_t size) {
+  
+  payid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgApplyPayOrderReq.payid)
+}
+inline ::std::string* MsgApplyPayOrderReq::mutable_payid() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.MsgApplyPayOrderReq.payid)
+  return payid_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* MsgApplyPayOrderReq::release_payid() {
+  // @@protoc_insertion_point(field_release:KFMsg.MsgApplyPayOrderReq.payid)
+  
+  return payid_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgApplyPayOrderReq::set_allocated_payid(::std::string* payid) {
+  if (payid != NULL) {
+    
+  } else {
+    
+  }
+  payid_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), payid);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgApplyPayOrderReq.payid)
+}
+
+// -------------------------------------------------------------------
+
+// MsgApplyPayOrderAck
+
+// string payid = 1;
+inline void MsgApplyPayOrderAck::clear_payid() {
+  payid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& MsgApplyPayOrderAck::payid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgApplyPayOrderAck.payid)
+  return payid_.GetNoArena();
+}
+inline void MsgApplyPayOrderAck::set_payid(const ::std::string& value) {
+  
+  payid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.MsgApplyPayOrderAck.payid)
+}
+#if LANG_CXX11
+inline void MsgApplyPayOrderAck::set_payid(::std::string&& value) {
+  
+  payid_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgApplyPayOrderAck.payid)
+}
+#endif
+inline void MsgApplyPayOrderAck::set_payid(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  payid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.MsgApplyPayOrderAck.payid)
+}
+inline void MsgApplyPayOrderAck::set_payid(const char* value, size_t size) {
+  
+  payid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgApplyPayOrderAck.payid)
+}
+inline ::std::string* MsgApplyPayOrderAck::mutable_payid() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.MsgApplyPayOrderAck.payid)
+  return payid_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* MsgApplyPayOrderAck::release_payid() {
+  // @@protoc_insertion_point(field_release:KFMsg.MsgApplyPayOrderAck.payid)
+  
+  return payid_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgApplyPayOrderAck::set_allocated_payid(::std::string* payid) {
+  if (payid != NULL) {
+    
+  } else {
+    
+  }
+  payid_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), payid);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgApplyPayOrderAck.payid)
+}
+
+// string order = 2;
+inline void MsgApplyPayOrderAck::clear_order() {
+  order_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& MsgApplyPayOrderAck::order() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgApplyPayOrderAck.order)
+  return order_.GetNoArena();
+}
+inline void MsgApplyPayOrderAck::set_order(const ::std::string& value) {
+  
+  order_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.MsgApplyPayOrderAck.order)
+}
+#if LANG_CXX11
+inline void MsgApplyPayOrderAck::set_order(::std::string&& value) {
+  
+  order_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgApplyPayOrderAck.order)
+}
+#endif
+inline void MsgApplyPayOrderAck::set_order(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  order_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.MsgApplyPayOrderAck.order)
+}
+inline void MsgApplyPayOrderAck::set_order(const char* value, size_t size) {
+  
+  order_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgApplyPayOrderAck.order)
+}
+inline ::std::string* MsgApplyPayOrderAck::mutable_order() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.MsgApplyPayOrderAck.order)
+  return order_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* MsgApplyPayOrderAck::release_order() {
+  // @@protoc_insertion_point(field_release:KFMsg.MsgApplyPayOrderAck.order)
+  
+  return order_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgApplyPayOrderAck::set_allocated_order(::std::string* order) {
+  if (order != NULL) {
+    
+  } else {
+    
+  }
+  order_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), order);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgApplyPayOrderAck.order)
+}
+
+// -------------------------------------------------------------------
+
+// MsgPayResultReq
+
+// string payid = 1;
+inline void MsgPayResultReq::clear_payid() {
+  payid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& MsgPayResultReq::payid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgPayResultReq.payid)
+  return payid_.GetNoArena();
+}
+inline void MsgPayResultReq::set_payid(const ::std::string& value) {
+  
+  payid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.MsgPayResultReq.payid)
+}
+#if LANG_CXX11
+inline void MsgPayResultReq::set_payid(::std::string&& value) {
+  
+  payid_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgPayResultReq.payid)
+}
+#endif
+inline void MsgPayResultReq::set_payid(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  payid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.MsgPayResultReq.payid)
+}
+inline void MsgPayResultReq::set_payid(const char* value, size_t size) {
+  
+  payid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgPayResultReq.payid)
+}
+inline ::std::string* MsgPayResultReq::mutable_payid() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.MsgPayResultReq.payid)
+  return payid_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* MsgPayResultReq::release_payid() {
+  // @@protoc_insertion_point(field_release:KFMsg.MsgPayResultReq.payid)
+  
+  return payid_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgPayResultReq::set_allocated_payid(::std::string* payid) {
+  if (payid != NULL) {
+    
+  } else {
+    
+  }
+  payid_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), payid);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgPayResultReq.payid)
+}
+
+// string order = 2;
+inline void MsgPayResultReq::clear_order() {
+  order_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& MsgPayResultReq::order() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgPayResultReq.order)
+  return order_.GetNoArena();
+}
+inline void MsgPayResultReq::set_order(const ::std::string& value) {
+  
+  order_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.MsgPayResultReq.order)
+}
+#if LANG_CXX11
+inline void MsgPayResultReq::set_order(::std::string&& value) {
+  
+  order_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgPayResultReq.order)
+}
+#endif
+inline void MsgPayResultReq::set_order(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  order_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.MsgPayResultReq.order)
+}
+inline void MsgPayResultReq::set_order(const char* value, size_t size) {
+  
+  order_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgPayResultReq.order)
+}
+inline ::std::string* MsgPayResultReq::mutable_order() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.MsgPayResultReq.order)
+  return order_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* MsgPayResultReq::release_order() {
+  // @@protoc_insertion_point(field_release:KFMsg.MsgPayResultReq.order)
+  
+  return order_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgPayResultReq::set_allocated_order(::std::string* order) {
+  if (order != NULL) {
+    
+  } else {
+    
+  }
+  order_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), order);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgPayResultReq.order)
+}
+
+// bool result = 3;
+inline void MsgPayResultReq::clear_result() {
+  result_ = false;
+}
+inline bool MsgPayResultReq::result() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgPayResultReq.result)
+  return result_;
+}
+inline void MsgPayResultReq::set_result(bool value) {
+  
+  result_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.MsgPayResultReq.result)
+}
+
+// -------------------------------------------------------------------
+
+// MsgQueryPayReq
+
+// -------------------------------------------------------------------
+
 // MsgQueryRankListReq
 
 // uint32 rankid = 1;
@@ -6391,6 +7172,14 @@ inline void MsgSetRefuseFriendInviteReq::set_refuse(::google::protobuf::uint32 v
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

@@ -69,7 +69,7 @@ namespace KFrame
     private:
         // 邮件数据库
         KFRedisDriver* _mail_driver = nullptr;
-        KFRedisDriver* _login_driver = nullptr;
+        KFRedisDriver* _auth_driver = nullptr;
     };
 }
 
