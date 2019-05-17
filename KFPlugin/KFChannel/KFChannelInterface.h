@@ -1,4 +1,4 @@
-#ifndef __KF_CHANNEL_INTERFACE_H__
+﻿#ifndef __KF_CHANNEL_INTERFACE_H__
 #define __KF_CHANNEL_INTERFACE_H__
 
 #include "KFrame.h"
@@ -9,7 +9,10 @@ namespace KFrame
     {
     public:
         // 登陆验证
-        virtual std::string AuthChannelLogin( const std::string& data ) = 0;
+        virtual std::string AuthLogin( const std::string& data ) = 0;
+
+        // 充值回调
+        virtual std::string AuthPay( uint32 channel, const std::string& data ) = 0;
     };
 
     /////////////////////////////////////////////////////////////////////////////////////////

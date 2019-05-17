@@ -1,4 +1,5 @@
 ﻿#include "KFInternal.hpp"
+#include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
@@ -13,8 +14,16 @@ namespace KFrame
         return _kf_http_server->SendResponse( response );
     }
 
-    std::string KFInternal::RequestPay( KFJson& json, const KFChannelSetting* kfchannelsetting )
+    std::string KFInternal::RequestPay( const std::string& data, const KFChannelSetting* kfchannelsetting )
     {
-        return _invalid_str;
+        __JSON_PARSE_STRING__( request, data );
+
+        auto order = __JSON_GET_STRING__( request, __KF_STRING__( order ) );
+
+        MapString values;
+        __JSON_TO_MAP__( request, values );
+
+        auto ok = SavePayData( order, values );
+        return _kf_http_server->SendCode( ok ? KFMsg::Ok : KFMsg::Error );
     }
 }

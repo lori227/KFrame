@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="KFChannel.cpp" />
     <ClCompile Include="KFChannelConfig.cpp" />
     <ClCompile Include="KFChannelModule.cpp" />
     <ClCompile Include="KFChannelPlugin.cpp" />

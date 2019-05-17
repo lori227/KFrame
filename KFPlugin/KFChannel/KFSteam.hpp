@@ -15,7 +15,7 @@ namespace KFrame
         std::string RequestLogin( KFJson& json, const KFChannelSetting* kfsetting );
 
         // 充值请求
-        std::string RequestPay( KFJson& json, const KFChannelSetting* kfsetting );
+        std::string RequestPay( const std::string& data, const KFChannelSetting* kfsetting );
     };
 }
 

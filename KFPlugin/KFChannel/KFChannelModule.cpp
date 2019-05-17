@@ -40,7 +40,7 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    std::string KFChannelModule::AuthChannelLogin( const std::string& data )
+    std::string KFChannelModule::AuthLogin( const std::string& data )
     {
         __JSON_PARSE_STRING__( request, data );
 
@@ -66,5 +66,31 @@ namespace KFrame
 
         // 执行回调
         return kffunction->_function( request, kfsetting );
+    }
+
+    std::string KFChannelModule::AuthPay( uint32 channel, const std::string& data )
+    {
+        if ( !_kf_channel_config->IsChannelOpen( channel ) )
+        {
+            __LOG_ERROR__( "channel=[{}] not open!", channel );
+            return _invalid_str;
+        }
+
+        // 渠道是否开启
+        auto kfsetting = _kf_channel_config->FindChannelSetting( channel );
+        if ( kfsetting == nullptr || !kfsetting->IsOpen() )
+        {
+            __LOG_ERROR__( "channel=[{}] no setting!", channel );
+            return _invalid_str;
+        }
+
+        auto kffunction = _kf_pay_function.Find( channel );
+        if ( kffunction == nullptr )
+        {
+            __LOG_ERROR__( "channel=[{}] no function!", channel );
+            return _invalid_str;
+        }
+
+        return kffunction->_function( data, kfsetting );
     }
 }

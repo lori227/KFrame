@@ -73,6 +73,9 @@ namespace KFrame
         // 完成充值
         __KF_HTTP_FUNCTION__( HandleFinishPay );
 
+        // 内部测试充值回调
+        __KF_HTTP_FUNCTION__( HandleInternalPay );
+
     protected:
         // 查询创建账号
         MapString QueryCreateAccount( const std::string& account, uint32 channel );

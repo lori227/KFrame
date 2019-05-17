@@ -210,6 +210,7 @@ namespace KFrame
         __STRING_DEFINE__( friendlinesslimit );
         __STRING_DEFINE__( invitelist );
         __STRING_DEFINE__( message );
+        __STRING_DEFINE__( variable );
         __STRING_DEFINE__( freindinvitecount );
         __STRING_DEFINE__( newadd );
         __STRING_DEFINE__( freindinvitekeeptime );
@@ -227,7 +228,7 @@ namespace KFrame
         __STRING_DEFINE__( payquerycount );
         __STRING_DEFINE__( querypay );
         __STRING_DEFINE__( finishpay );
-        __STRING_DEFINE__( variable );
+        __STRING_DEFINE__( internalpay );
 
     }
 }

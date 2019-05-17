@@ -25,6 +25,7 @@ namespace KFrame
         __REGISTER_HTTP_FUNCTION__( __KF_STRING__( removeorder ), false, &KFAuthModule::HandleRemoveOrder );
         __REGISTER_HTTP_FUNCTION__( __KF_STRING__( querypay ), false, &KFAuthModule::HandleQueryPay );
         __REGISTER_HTTP_FUNCTION__( __KF_STRING__( finishpay ), false, &KFAuthModule::HandleFinishPay );
+        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( internalpay ), false, &KFAuthModule::HandleInternalPay );
 
         /////////////////////////////////////////////////////////////////////////////////////////
     }
@@ -49,6 +50,7 @@ namespace KFrame
         __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( removeorder ) );
         __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( querypay ) );
         __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( finishpay ) );
+        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( internalpay ) );
         ///////////////////////////////////////////////////////////////////////////
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -197,7 +199,7 @@ namespace KFrame
     __KF_HTTP_FUNCTION__( KFAuthModule::HandleAuthLogin )
     {
         // 渠道验证
-        auto authdata = _kf_channel->AuthChannelLogin( data );
+        auto authdata = _kf_channel->AuthLogin( data );
 
         __JSON_PARSE_STRING__( authjson, authdata );
         auto retcode = _kf_http_server->GetCode( authjson );
@@ -492,9 +494,6 @@ namespace KFrame
         __JSON_DOCUMENT__( response );
         __JSON_SET_VALUE__( response, __KF_STRING__( playerid ), playerid );
 
-        // 删除order
-        __JSON_REMOVE__( request, __KF_STRING__( order ) );
-
         // 保存订单信息
         MapString values;
         __JSON_TO_MAP__( request, values );
@@ -585,11 +584,21 @@ namespace KFrame
 
         // 删除充值信息
         auto redisdriver = __AUTH_REDIS_DRIVER__;
-        redisdriver->Append( "del {}:{}", __KF_STRING__( order ), order );
+        redisdriver->Append( "del {}:{}", __KF_STRING__( pay ), order );
         redisdriver->Append( "srem {}:{} {}", __KF_STRING__( paydata ), playerid, order );
-        redisdriver->Pipeline();
+        auto kfresult = redisdriver->Pipeline();
+        if ( !kfresult->IsOk() )
+        {
+            __LOG_WARN__( "player=[{}] finish pay=[{}] failed!", playerid, order );
+        }
 
         return _kf_http_server->SendCode( KFMsg::Ok );
+    }
+
+    __KF_HTTP_FUNCTION__( KFAuthModule::HandleInternalPay )
+    {
+        __LOG_INFO__( "channel=[{}] pay=[{}]", KFMsg::Internal, data );
+        return _kf_channel->AuthPay( KFMsg::Internal, data );
     }
     ///////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////

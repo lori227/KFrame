@@ -19,6 +19,9 @@
     <ClCompile Include="KFSteam.cpp">
       <Filter>Channel</Filter>
     </ClCompile>
+    <ClCompile Include="KFChannel.cpp">
+      <Filter>Channel</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFChannelInterface.h" />

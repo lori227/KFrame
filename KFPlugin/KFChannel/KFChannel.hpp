@@ -16,7 +16,11 @@ namespace KFrame
         virtual std::string RequestLogin( KFJson& json, const KFChannelSetting* kfsetting ) = 0;
 
         // 充值请求
-        virtual std::string RequestPay( KFJson& json, const KFChannelSetting* kfsetting ) = 0;
+        virtual std::string RequestPay( const std::string& data, const KFChannelSetting* kfsetting ) = 0;
+
+    protected:
+        // 保存订单信息
+        bool SavePayData( const std::string& order, MapString& values );
     };
 }
 

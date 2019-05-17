@@ -142,7 +142,7 @@ namespace KFrame
         return _kf_http_server->SendResponse( response );
     }
 
-    std::string KFWeiXin::RequestPay( KFJson& json, const KFChannelSetting* kfsetting )
+    std::string KFWeiXin::RequestPay( const std::string& data, const KFChannelSetting* kfsetting )
     {
         return _invalid_str;
     }

@@ -50,7 +50,7 @@ namespace KFrame
         return _kf_http_server->SendResponse( response );
     }
 
-    std::string KFSteam::RequestPay( KFJson& json, const KFChannelSetting* kfsetting )
+    std::string KFSteam::RequestPay( const std::string& data, const KFChannelSetting* kfsetting )
     {
         return _invalid_str;
     }

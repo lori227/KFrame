@@ -41,13 +41,13 @@ namespace KFrame
             _kf_channel_list.insert( std::make_pair( channel, object ) );
 
             {
-                KFChannelFunction loginfunction = std::bind( &T::RequestLogin, object, std::placeholders::_1, std::placeholders::_2 );
+                KFLoginFunction loginfunction = std::bind( &T::RequestLogin, object, std::placeholders::_1, std::placeholders::_2 );
                 auto kfloginfunction = _kf_login_function.Create( channel );
                 kfloginfunction->_function = loginfunction;
             }
 
             {
-                KFChannelFunction payfunction = std::bind( &T::RequestPay, object, std::placeholders::_1, std::placeholders::_2 );
+                KFPayFunction payfunction = std::bind( &T::RequestPay, object, std::placeholders::_1, std::placeholders::_2 );
                 auto kfpayfunction = _kf_pay_function.Create( channel );
                 kfpayfunction->_function = payfunction;
             }
@@ -55,16 +55,19 @@ namespace KFrame
         }
 
         // 处理登录请求
-        virtual std::string AuthChannelLogin( const std::string& data );
+        virtual std::string AuthLogin( const std::string& data );
 
+        // 充值回调
+        virtual std::string AuthPay( uint32 channel, const std::string& data );
     private:
-        typedef std::function< std::string( KFJson& request, const KFChannelSetting* )> KFChannelFunction;
+        typedef std::function< std::string( KFJson&, const KFChannelSetting* )> KFLoginFunction;
+        typedef std::function< std::string( const std::string&, const KFChannelSetting* )> KFPayFunction;
 
         // 绑定的登录函数
-        KFBind< uint32, uint32, KFChannelFunction > _kf_login_function;
+        KFBind< uint32, uint32, KFLoginFunction > _kf_login_function;
 
         // 充值函数
-        KFBind< uint32, uint32, KFChannelFunction > _kf_pay_function;
+        KFBind< uint32, uint32, KFPayFunction > _kf_pay_function;
 
         // 注册的渠道
         std::unordered_map< uint32, KFChannel* > _kf_channel_list;
