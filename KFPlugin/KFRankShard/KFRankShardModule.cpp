@@ -306,7 +306,7 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SQueryRankListReq );
 
         auto kfrankdata = _kf_rank_data.Find( RankKey( kfmsg.rankid(), kfmsg.zoneid() ) );
-        if ( kfrankdata = nullptr )
+        if ( kfrankdata == nullptr )
         {
             kfrankdata = LoadRankData( kfmsg.rankid(), kfmsg.zoneid() );
         }

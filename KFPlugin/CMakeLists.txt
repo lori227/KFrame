@@ -111,7 +111,6 @@ add_subdirectory(KFDataShard)
 
 add_subdirectory(KFRankClient)
 add_subdirectory(KFRankShard)
-add_subdirectory(KFRankMaster)
 
 add_subdirectory(KFPublicClient)
 add_subdirectory(KFPublicShard)
