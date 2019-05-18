@@ -2,23 +2,19 @@
 #include "KFProtocol/KFProtocol.h"
 #include "KFRedis/KFRedisInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
+#include "KFHttpServer/KFHttpServerInterface.h"
 
 namespace KFrame
 {
 #define __AUTH_REDIS_DRIVER__ _kf_redis->Create( __KF_STRING__( auth ) )
-#define __Execute_Redis__( query ) \
-    if ( !query ) \
-    { \
-        return _kf_http_server->SendCode( KFMsg::LoginDatabaseError );\
-    }
 
     std::string KFWeiXin::RequestLogin( KFJson& json, const KFChannelSetting* kfsetting )
     {
         auto machinecode = __JSON_GET_STRING__( json, __KF_STRING__( machine ) );
         auto weixincode = __JSON_GET_STRING__( json, __KF_STRING__( code ) );
 
-        std::string accesstoken = "";
         std::string openid = "";
+        std::string accesstoken = "";
 
         if ( !weixincode.empty() )
         {

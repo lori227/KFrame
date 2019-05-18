@@ -327,7 +327,7 @@ namespace KFrame
             if ( flag == KFMsg::PersonMail )
             {
                 // 通知有新邮件
-                auto kfresult = _auth_driver->QueryUInt64( "hget {}:{} {}", __KF_STRING__( player ), objectid, __KF_STRING__( game ) );
+                auto kfresult = _auth_driver->QueryUInt64( "hget {}:{} {}", __KF_STRING__( online ), objectid, __KF_STRING__( game ) );
                 if ( kfresult->_value != _invalid_int )
                 {
                     KFMsg::S2SNoticeNewMailReq notice;

@@ -19,6 +19,9 @@ namespace KFrame
 {
     class KFChannel;
     class KFChannelSetting;
+    typedef std::function< std::string( KFJson&, const KFChannelSetting* )> KFLoginFunction;
+    typedef std::function< std::string( const std::string&, const KFChannelSetting* )> KFPayFunction;
+
     class KFChannelModule : public KFChannelInterface
     {
     public:
@@ -51,7 +54,6 @@ namespace KFrame
                 auto kfpayfunction = _kf_pay_function.Create( channel );
                 kfpayfunction->_function = payfunction;
             }
-
         }
 
         // 处理登录请求
@@ -60,9 +62,6 @@ namespace KFrame
         // 充值回调
         virtual std::string AuthPay( uint32 channel, const std::string& data );
     private:
-        typedef std::function< std::string( KFJson&, const KFChannelSetting* )> KFLoginFunction;
-        typedef std::function< std::string( const std::string&, const KFChannelSetting* )> KFPayFunction;
-
         // 绑定的登录函数
         KFBind< uint32, uint32, KFLoginFunction > _kf_login_function;
 

@@ -215,7 +215,7 @@ namespace KFrame
             return _invalid_int;
         }
 
-        _auth_redis->Execute( "hset {}:{} {} {}", __KF_STRING__( player ), playerid, __KF_STRING__( accountid ), accountid );
+        _auth_redis->Execute( "hset {}:{} {} {}", __KF_STRING__( online ), playerid, __KF_STRING__( accountid ), accountid );
         auto voidresult = _auth_redis->Execute( "hset {}:{} {} {}", __KF_STRING__( user ), accountid, kfzone->_logic_id, playerid );
         if ( !voidresult->IsOk() )
         {
@@ -255,12 +255,12 @@ namespace KFrame
         MapString values;
         values[ __KF_STRING__( game ) ] = __TO_STRING__( gameid );
         values[ __KF_STRING__( world ) ] = __TO_STRING__( KFGlobal::Instance()->_app_id->GetId() );
-        _auth_redis->Update( values, "hmset {}:{}", __KF_STRING__( player ), playerid );
+        _auth_redis->Update( values, "hmset {}:{}", __KF_STRING__( online ), playerid );
     }
 
     bool KFWorldModule::KickOnline( uint32 type, uint64 playerid, const char* function, uint32 line )
     {
-        auto kfresult = _auth_redis->QueryMap( "hgetall {}:{}", __KF_STRING__( player ), playerid );
+        auto kfresult = _auth_redis->QueryMap( "hgetall {}:{}", __KF_STRING__( online ), playerid );
         if ( kfresult->_value.empty() )
         {
             return false;
