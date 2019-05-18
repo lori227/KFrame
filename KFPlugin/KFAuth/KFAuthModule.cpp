@@ -366,6 +366,7 @@ namespace KFrame
 
     uint32 KFAuthModule::BalanceAllocZoneId()
     {
+        // todo:如果有推荐的服务器, 直接返回
         // 选择一个最小人数的分区
         auto redisdriver = __AUTH_REDIS_DRIVER__;
         auto zonelist = redisdriver->QueryList( "zrange {} 0 -1", __KF_STRING__( zonelist ) );
@@ -377,12 +378,13 @@ namespace KFrame
         for ( auto& strid : zonelist->_value )
         {
             auto querytime = redisdriver->QueryUInt64( "hget {}:{} {}", __KF_STRING__( zone ), strid, __KF_STRING__( time ) );
-            if ( KFGlobal::Instance()->_real_time < ( querytime->_value + 300 ) )
+            if ( KFGlobal::Instance()->_real_time < ( querytime->_value + 3600 ) )
             {
                 return KFUtility::ToValue< uint32 >( strid );
             }
         }
 
+        // 推荐的服务器
         return 1u;
     }
 

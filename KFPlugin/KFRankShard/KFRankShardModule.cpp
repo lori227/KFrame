@@ -9,9 +9,10 @@ namespace KFrame
 
     void KFRankShardModule::BeforeRun()
     {
+        _kf_cluster_client->RegisterConnectionFunction( this, &KFRankShardModule::OnRouteConnectCluster );
         //////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::S2S_REFRESH_RANK_REQ, &KFRankShardModule::HandleRefreshRankReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_TELL_REFRESH_RANK, &KFRankShardModule::HandleTellRefreshRank );
+        __REGISTER_MESSAGE__( KFMsg::S2S_NOTICE_RANK_WORKER_REQ, &KFRankShardModule::HandleNoticeRankWorkerReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_SYNC_REFRESH_RANK, &KFRankShardModule::HandleSyncRefreshRank );
 
         __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_RANK_DATA_REQ, &KFRankShardModule::HandleUpdateRankDataReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_RANK_LIST_REQ, &KFRankShardModule::HandleQueryRanklistReq );
@@ -20,11 +21,15 @@ namespace KFrame
 
     void KFRankShardModule::BeforeShut()
     {
+        __UNREGISTER_TIMER__();
+        __UNREGISTER_SCHEDULE__();
         __KF_REMOVE_CONFIG__( _kf_rank_config );
+        _kf_cluster_client->UnRegisterConnectionFunction( this );
         //////////////////////////////////////////////////////////////////////////////////////////////////
 
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_REFRESH_RANK_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_TELL_REFRESH_RANK );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_NOTICE_RANK_WORKER_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_SYNC_REFRESH_RANK );
+
         __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_RANK_DATA_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_RANK_LIST_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_FRIEND_RANK_LIST_REQ );
@@ -35,6 +40,14 @@ namespace KFrame
         _rank_redis_driver = _kf_redis->Create( __KF_STRING__( logic ) );
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    void KFRankShardModule::OnRouteConnectCluster( uint64 serverid )
+    {
+        // 把worker id广播给所有的rank shard
+        KFMsg::S2SNoticeRankWorkerReq req;
+        req.set_workerid( KFGlobal::Instance()->_app_id->GetWorkId() );
+        _kf_route->SendToAll( __KF_STRING__( rank ), KFMsg::S2S_NOTICE_RANK_WORKER_REQ, &req );
+    }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     std::string& KFRankShardModule::FormatRankDataKey( uint32 rankid, uint32 zoneid )
     {
@@ -50,46 +63,22 @@ namespace KFrame
         return ranksortkey;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFRankShardModule::LoadTotalRankData()
+    KFRankData* KFRankShardModule::LoadRankData( uint32 rankid, uint32 zoneid )
     {
-        _kf_rank_data.Clear();
+        auto kfrankdata = _kf_rank_data.Create( RankKey( rankid, zoneid ) );
+        kfrankdata->_rank_id = rankid;
+        kfrankdata->_zone_id = zoneid;
 
-        for ( auto& iter : _kf_rank_config->_kf_rank_setting._objects )
+        auto querydata = _rank_redis_driver->QueryMap( "hgetall {}:{}:{}", __KF_STRING__( rank ), rankid, zoneid );
+        if ( !querydata->_value.empty() )
         {
-            auto kfsetting = iter.second;
-            LoadRankData( kfsetting->_rank_id );
-        }
-    }
-
-    void KFRankShardModule::LoadRankData( uint32 rankid )
-    {
-        // 排行榜的种类列表
-        auto queryzonelist = _rank_redis_driver->QueryList( "smembers {}:{}", __KF_STRING__( ranksortlist ), rankid );
-        if ( !queryzonelist->IsOk() )
-        {
-            return;
-        }
-
-        // 排行榜的数据
-        for ( auto& strzoneid : queryzonelist->_value )
-        {
-            auto queryrankdata = _rank_redis_driver->QueryMap( "hgetall {}:{}:{}", __KF_STRING__( rank ), rankid, strzoneid );
-            if ( !queryrankdata->IsOk() || queryrankdata->_value.empty() )
-            {
-                continue;
-            }
-
-            auto rankid = KFUtility::ToValue< uint32 >( queryrankdata->_value[ __KF_STRING__( id ) ] );
-            auto zoneid = KFUtility::ToValue< uint32 >( queryrankdata->_value[ __KF_STRING__( zoneid ) ] );
-
-            auto kfrankdata = _kf_rank_data.Create( RankKey( rankid, zoneid ) );
-            kfrankdata->_rank_id = rankid;
-            kfrankdata->_zone_id = zoneid;
-            kfrankdata->_min_rank_score = KFUtility::ToValue< uint64 >( queryrankdata->_value[ __KF_STRING__( minrankscore ) ] );
-
-            auto strrankata = queryrankdata->_value[ __KF_STRING__( rankdata ) ];
+            auto strrankata = querydata->_value[ __KF_STRING__( rankdata ) ];
             KFProto::Parse( &kfrankdata->_rank_datas, strrankata, KFCompressEnum::Compress );
+
+            kfrankdata->_min_rank_score = KFUtility::ToValue< uint64 >( querydata->_value[ __KF_STRING__( minrankscore ) ] );
         }
+
+        return kfrankdata;
     }
 
     void KFRankShardModule::SaveRankData( KFRankData* kfrankdata )
@@ -108,12 +97,85 @@ namespace KFrame
         }
     }
 
-    void KFRankShardModule::RefreshRankData( uint32 rankid )
+    __KF_MESSAGE_FUNCTION__( KFRankShardModule::HandleNoticeRankWorkerReq )
+    {
+        __PROTO_PARSE__( KFMsg::S2SNoticeRankWorkerReq );
+        if ( kfmsg.workerid() < _max_rank_worker_id )
+        {
+            return;
+        }
+
+        __UNREGISTER_TIMER__();
+        __UNREGISTER_SCHEDULE__();
+        _max_rank_worker_id = kfmsg.workerid();
+        for ( auto& iter : _kf_rank_config->_kf_rank_setting._objects )
+        {
+            auto kfsetting = iter.second;
+            StartRefreshRankDataTimer( kfsetting );
+        }
+    }
+
+    void KFRankShardModule::StartRefreshRankDataTimer( const KFRankSetting* kfsetting )
+    {
+        if ( kfsetting->_refresh_type == KFTimeEnum::None )
+        {
+            // 每5分钟 就在5分钟就在0, 5, 10... 整除关系
+            auto passtime = KFGlobal::Instance()->_real_time % kfsetting->_refresh_time;
+            auto delaytime = ( passtime == 0u ? 0u : kfsetting->_refresh_time - passtime );
+
+            // 配置_refresh_time 单位:秒
+            __REGISTER_LOOP_TIMER__( kfsetting->_rank_id, kfsetting->_refresh_time * 1000, delaytime * 1000, &KFRankShardModule::OnTimerRefreshRankData );
+        }
+        else
+        {
+            auto kfschedulesetting = _kf_schedule->CreateScheduleSetting();
+            kfschedulesetting->SetData( kfsetting->_rank_id, nullptr, 0 );
+            switch ( kfsetting->_refresh_type )
+            {
+            case KFTimeEnum::Week:
+                kfschedulesetting->SetDayOfWeek( KFScheduleEnum::Loop, kfsetting->_refresh_minute, kfsetting->_refresh_hour, kfsetting->_refresh_time );
+                break;
+            default:
+                kfschedulesetting->SetDate( KFScheduleEnum::Loop, kfsetting->_refresh_minute, kfsetting->_refresh_hour, kfsetting->_refresh_time );
+                break;
+            }
+
+            __REGISTER_SCHEDULE__( kfschedulesetting, &KFRankShardModule::OnScheduleRefreshRankData );
+        }
+    }
+
+    __KF_TIMER_FUNCTION__( KFRankShardModule::OnTimerRefreshRankData )
+    {
+        SyncRefreshRankData( static_cast< uint32 >( objectid ) );
+    }
+
+    __KF_SCHEDULE_FUNCTION__( KFRankShardModule::OnScheduleRefreshRankData )
+    {
+        SyncRefreshRankData( static_cast< uint32 >( objectid ) );
+    }
+
+    void KFRankShardModule::SyncRefreshRankData( uint32 rankid )
+    {
+        auto ok = RefreshRankData( rankid );
+        if ( ok )
+        {
+            // 返回结果
+            KFMsg::S2SSyncRefreshRank sync;
+            sync.set_rankid( rankid );
+            auto ok = _kf_route->SendToAll( __KF_STRING__( rank ), KFMsg::S2S_SYNC_REFRESH_RANK, &sync );
+            if ( !ok )
+            {
+                __LOG_ERROR__( "rank=[{}] refresh failed!", rankid );
+            }
+        }
+    }
+
+    bool KFRankShardModule::RefreshRankData( uint32 rankid )
     {
         auto kfsetting = _kf_rank_config->FindRankSetting( rankid );
         if ( kfsetting == nullptr )
         {
-            return;
+            return false;
         }
 
         // 获得排行榜列表
@@ -176,29 +238,29 @@ namespace KFrame
                 }
             }
         }
+
+        return true;
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRankShardModule::HandleRefreshRankReq )
+    __KF_MESSAGE_FUNCTION__( KFRankShardModule::HandleSyncRefreshRank )
     {
-        __PROTO_PARSE__( KFMsg::S2SRefreshRankReq );
+        __PROTO_PARSE__( KFMsg::S2SSyncRefreshRank );
 
-        RefreshRankData( kfmsg.rankid() );
-
-        // 返回结果
-        KFMsg::S2SRefreshRankAck ack;
-        ack.set_rankid( kfmsg.rankid() );
-        auto ok = _kf_tcp_client->SendNetMessage( __ROUTE_SERVER_ID__, KFMsg::S2S_REFRESH_RANK_ACK, &ack );
-        if ( !ok )
+        // 这里只删除, 防止同一时间加载, 造成数据压力
+        std::set< RankKey > removes;
+        for ( auto& iter : _kf_rank_data._objects )
         {
-            __LOG_ERROR__( "rank=[{}] refresh failed!", kfmsg.rankid() );
+            auto kfdata = iter.second;
+            if ( kfdata->_rank_id )
+            {
+                removes.insert( iter.first );
+            }
         }
-    }
 
-    __KF_MESSAGE_FUNCTION__( KFRankShardModule::HandleTellRefreshRank )
-    {
-        __PROTO_PARSE__( KFMsg::S2STellRefreshRank );
-
-        LoadRankData( kfmsg.rankid() );
+        for ( auto& iter : removes )
+        {
+            _kf_rank_data.Remove( iter );
+        }
     }
 
     // 处理打榜请求
@@ -243,16 +305,15 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SQueryRankListReq );
 
-        KFMsg::MsgQueryRankListAck ack;
-        ack.set_rankid( kfmsg.rankid() );
-        auto pbrankdatas = ack.mutable_rankdatas();
-
         auto kfrankdata = _kf_rank_data.Find( RankKey( kfmsg.rankid(), kfmsg.zoneid() ) );
-        if ( kfrankdata != nullptr )
+        if ( kfrankdata = nullptr )
         {
-            pbrankdatas->CopyFrom( kfrankdata->_rank_datas );
+            kfrankdata = LoadRankData( kfmsg.rankid(), kfmsg.zoneid() );
         }
 
+        KFMsg::MsgQueryRankListAck ack;
+        ack.set_rankid( kfmsg.rankid() );
+        ack.mutable_rankdatas()->CopyFrom( kfrankdata->_rank_datas );
         _kf_route->SendToRoute( route, KFMsg::MSG_QUERY_RANK_LIST_ACK, &ack );
     }
 

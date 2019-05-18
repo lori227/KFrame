@@ -9,14 +9,16 @@
 //    @Date             :    2018-5-16
 ************************************************************************/
 
+#include "KFRankShardConfig.hpp"
 #include "KFRankShardInterface.h"
+#include "KFProtocol/KFProtocol.h"
 #include "KFRedis/KFRedisInterface.h"
+#include "KFTimer/KFTimerInterface.h"
 #include "KFConfig/KFConfigInterface.h"
 #include "KFMessage/KFMessageInterface.h"
-#include "KFTcpClient/KFTcpClientInterface.h"
+#include "KFSchedule/KFScheduleInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"
-#include "KFRankShardConfig.hpp"
-#include "KFProtocol/KFProtocol.h"
+#include "KFClusterClient/KFClusterClientInterface.h"
 
 namespace KFrame
 {
@@ -64,11 +66,11 @@ namespace KFrame
         virtual void BeforeShut();
 
     protected:
-        // 刷新排行榜
-        __KF_MESSAGE_FUNCTION__( HandleRefreshRankReq );
+        // 通知rank worker
+        __KF_MESSAGE_FUNCTION__( HandleNoticeRankWorkerReq );
 
         // 刷新排行榜
-        __KF_MESSAGE_FUNCTION__( HandleTellRefreshRank );
+        __KF_MESSAGE_FUNCTION__( HandleSyncRefreshRank );
 
         // 更新排行榜
         __KF_MESSAGE_FUNCTION__( HandleUpdateRankDataReq );
@@ -80,6 +82,21 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleQueryFriendRanklistReq );
 
     protected:
+        // 连接成功
+        void OnRouteConnectCluster( uint64 serverid );
+        //////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////
+        // 开启刷新定时器
+        void StartRefreshRankDataTimer( const KFRankSetting* kfsetting );
+
+        // 刷新排行榜定时器
+        __KF_TIMER_FUNCTION__( OnTimerRefreshRankData );
+
+        // 计划任务
+        __KF_SCHEDULE_FUNCTION__( OnScheduleRefreshRankData );
+        //////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////
+
         // 格式化排行榜数据key
         std::string& FormatRankDataKey( uint32 rankid, uint32 zoneid );
         std::string& FormatRankSortKey( uint32 rankid, uint32 zoneid );
@@ -88,20 +105,23 @@ namespace KFrame
         bool IsNeedUpdateRankData( uint32 rankid, uint32 zoneid, uint64 rankscore );
 
         // 读取排行榜数据
-        void LoadTotalRankData();
-        void LoadRankData( uint32 rankid );
+        KFRankData* LoadRankData( uint32 rankid, uint32 zoneid );
 
         // 保存
         void SaveRankData( KFRankData* kfrankdata );
 
         // 刷新排行榜
-        void RefreshRankData( uint32 rankid );
+        void SyncRefreshRankData( uint32 rankid );
+        bool RefreshRankData( uint32 rankid );
 
         // 计算zoneid
         uint32 CalcRankZoneId( uint64 playerid, const KFRankSetting* kfsetting );
     private:
         // 排行榜
-        KFRedisDriver* _rank_redis_driver{ nullptr };
+        KFRedisDriver* _rank_redis_driver = nullptr;
+
+        // 最大的rank worker id
+        uint32 _max_rank_worker_id = 0u;
 
         // 排行榜列表
         typedef std::pair< uint32, uint32 > RankKey;

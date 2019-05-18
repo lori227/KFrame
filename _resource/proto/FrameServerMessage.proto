@@ -62,12 +62,11 @@ enum FrameServerProtocol
 	S2S_UPDATE_MAIL_STATUS_ACK 				= 20507;	// 设置邮件状态响应
 	
 	// rank
-	S2S_UPDATE_RANK_DATA_REQ 				= 20601;	// 更新排行榜数据
-	S2S_QUERY_RANK_LIST_REQ 				= 20602;	// 查询全服排行榜
-	S2S_QUERY_FRIEND_RANK_LIST_REQ 			= 20603;	// 查询好友排行榜
-	S2S_REFRESH_RANK_REQ					= 20604;	// 刷新排行榜
-	S2S_REFRESH_RANK_ACK					= 20605;	// 刷新排行榜
-	S2S_TELL_REFRESH_RANK					= 20606;	// 刷新排行榜
+	S2S_NOTICE_RANK_WORKER_REQ				= 20601;	// 通知排行榜worker
+	S2S_SYNC_REFRESH_RANK					= 20602;	// 刷新排行榜
+	S2S_UPDATE_RANK_DATA_REQ 				= 20603;	// 更新排行榜数据
+	S2S_QUERY_RANK_LIST_REQ 				= 20604;	// 查询全服排行榜
+	S2S_QUERY_FRIEND_RANK_LIST_REQ 			= 20605;	// 查询好友排行榜
 
 	// public
 	S2S_UPDATE_DATA_TO_PUBLIC_REQ 			= 20701;	// 更新公共数据
@@ -454,6 +453,20 @@ message S2SUpdateMailStatusAck
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
+// 通知rank worker
+// S2S_NOTICE_RANK_WORKER_REQ
+message S2SNoticeRankWorkerReq
+{
+	uint32 workerid = 1;
+}
+
+// 刷新排行榜完成
+// S2S_SYNC_REFRESH_RANK
+message S2SSyncRefreshRank
+{
+	uint32 rankid = 1;				// 榜单id
+}
+
 // 更新排行榜数据
 // S2S_UPDATE_RANK_DATA_REQ
 message S2SUpdateRankDataReq
@@ -480,25 +493,7 @@ message S2SQueryFriendRankListReq
 	repeated uint64 friendid = 2;	// 待查询的玩家好友id
 }
 
-// 刷新排行榜请求
-// S2S_REFRESH_RANK_REQ
-message S2SRefreshRankReq
-{
-	uint32 rankid = 1;				// 榜单类型
-}
 
-// 刷新排行榜完成
-// S2S_REFRESH_RANK_ACK
-message S2SRefreshRankAck
-{
-	uint32 rankid = 1;				// 榜单类型
-}
-
-// S2S_TELL_REFRESH_RANK
-message S2STellRefreshRank
-{
-	uint32 rankid = 1;				// 榜单类型
-}
 
 //////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////
