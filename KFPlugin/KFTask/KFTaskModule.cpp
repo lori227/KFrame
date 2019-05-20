@@ -69,6 +69,7 @@ namespace KFrame
             return KFMsg::TaskNotDone;
         }
 
+        // 已经领取
         if ( taskstatus == KFMsg::ReceiveStatus )
         {
             return KFMsg::TaskAlreadyReceived;
@@ -84,12 +85,10 @@ namespace KFrame
 
     __KF_UPDATE_DATA_FUNCTION__( KFTaskModule::OnUpdateDataCallBack )
     {
-        if ( value == 0 )
+        if ( value != _invalid_int )
         {
-            return;
+            UpdateDataTaskValue( player, key, kfdata, operate, value, newvalue );
         }
-
-        UpdateDataTaskValue( player, key, kfdata, operate, value, newvalue );
     }
 
     __KF_ADD_DATA_FUNCTION__( KFTaskModule::OnAddDataCallBack )
@@ -104,16 +103,14 @@ namespace KFrame
 
     void KFTaskModule::UpdateObjectTaskValue( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate )
     {
-        auto kfchild = kfdata->FirstData();
-        while ( kfchild != nullptr )
+        // 遍历对象所有的值
+        for ( auto kfchild = kfdata->FirstData(); kfchild != nullptr; kfchild = kfdata->NextData() )
         {
             auto value = kfchild->GetValue();
-            if ( value != 0 )
+            if ( value != _invalid_int )
             {
                 UpdateDataTaskValue( player, key, kfchild, operate, value, value );
             }
-
-            kfchild = kfdata->NextData();
         }
     }
 
@@ -129,23 +126,34 @@ namespace KFrame
         auto kftaskrecord = kfobject->FindData( __KF_STRING__( task ) );
         auto level = kfobject->GetValue( __KF_STRING__( basic ), __KF_STRING__( level ) );
 
-        for ( auto kfsetting : kftasktypelist->_task_type )
+        for ( auto kfsetting : kftasktypelist->_task_list )
         {
-            if ( !kfsetting->CheckCanUpdate( key, level, operate ) )
+            // 如果需要领取任务
+            if ( kfsetting->_need_receive )
+            {
+                auto kftask = kftaskrecord->FindData( kfsetting->_id );
+                if ( kftask == nullptr )
+                {
+                    continue;
+                }
+            }
+
+            // 已经完成
+            auto taskstatus = kftaskrecord->GetValue( kfsetting->_id, __KF_STRING__( status ) );
+            if ( taskstatus != KFMsg::InitStatus )
             {
                 continue;
             }
 
             // 判断触发值
             auto operatevalue = kfsetting->CheckTriggerValue( value, nowvalue );
-            if ( operatevalue == 0 )
+            if ( operatevalue == 0u )
             {
                 continue;
             }
 
-            // 已经完成
-            auto taskstatus = kftaskrecord->GetValue( kfsetting->_id, __KF_STRING__( status ) );
-            if ( taskstatus != KFMsg::InitStatus )
+            // 是否能更新
+            if ( !kfsetting->CheckCanUpdate( key, level, operate ) )
             {
                 continue;
             }
@@ -158,14 +166,9 @@ namespace KFrame
 
     __KF_UPDATE_DATA_FUNCTION__( KFTaskModule::OnUpdateTaskValueCallBack )
     {
-        auto kfsetting = _kf_task_config->FindTaskSetting( static_cast< uint32 >( key ) );
-        if ( kfsetting == nullptr )
-        {
-            return;
-        }
-
         // 判断是否满足完成条件
-        if ( newvalue < kfsetting->_done_value )
+        auto kfsetting = _kf_task_config->FindTaskSetting( static_cast< uint32 >( key ) );
+        if ( kfsetting == nullptr || newvalue < kfsetting->_done_value )
         {
             return;
         }

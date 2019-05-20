@@ -111,7 +111,16 @@ namespace KFrame
         for ( auto& iter : _kf_rank_config->_kf_rank_setting._objects )
         {
             auto kfsetting = iter.second;
-            StartRefreshRankDataTimer( kfsetting );
+            auto value = kfsetting->_rank_id % _max_rank_worker_id;
+            if ( value == 0u )
+            {
+                value = _max_rank_worker_id;
+            }
+
+            if ( value == KFGlobal::Instance()->_app_id->GetWorkId() )
+            {
+                StartRefreshRankDataTimer( kfsetting );
+            }
         }
     }
 
