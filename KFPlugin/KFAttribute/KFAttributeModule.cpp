@@ -66,7 +66,7 @@ namespace KFrame
         req.set_playerid( playerid );
         req.set_oldname( name );
         req.set_newname( kfmsg.name() );
-        req.set_itemuuid( _invalid_int );
+        req.set_costdata( _invalid_str );
         auto ok = _kf_route->SendToRand( playerid, __KF_STRING__( public ), KFMsg::S2S_SET_PLAYERNAME_TO_DATA_REQ, &req );
         if ( !ok )
         {
@@ -90,10 +90,14 @@ namespace KFrame
             return;
         }
 
-        if ( kfmsg.itemuuid() != _invalid_int )
+        if ( kfmsg.costdata() != _invalid_str )
         {
-            // 删除改名卡
-            player->RemoveData( __KF_STRING__( item ), kfmsg.itemuuid() );
+            KFElements kfelements;
+            auto ok = kfelements.Parse( kfmsg.costdata(), __FUNC_LINE__ );
+            if ( ok )
+            {
+                player->RemoveElement( &kfelements, __FUNC_LINE__ );
+            }
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////

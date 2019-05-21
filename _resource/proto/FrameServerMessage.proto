@@ -276,7 +276,7 @@ message S2SSetPlayerNameToDataReq
 	uint64 playerid = 1;
 	bytes oldname = 2;
 	bytes newname = 3;
-	uint64 itemuuid = 4;
+	bytes costdata = 4;
 }
 
 // S2S_SET_PLAYERNAME_TO_GAME_ACK
@@ -285,7 +285,7 @@ message S2SSetPlayerNameToGameAck
 	uint32 result = 1;
 	uint64 playerid = 2;
 	bytes name = 3;
-	uint64 itemuuid = 4;
+	bytes costdata = 4;
 }
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////

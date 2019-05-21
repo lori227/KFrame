@@ -3107,17 +3107,25 @@ class LIBPROTOC_EXPORT S2SSetPlayerNameToDataReq : public ::google::protobuf::Me
   ::std::string* release_newname();
   void set_allocated_newname(::std::string* newname);
 
+  // bytes costdata = 4;
+  void clear_costdata();
+  static const int kCostdataFieldNumber = 4;
+  const ::std::string& costdata() const;
+  void set_costdata(const ::std::string& value);
+  #if LANG_CXX11
+  void set_costdata(::std::string&& value);
+  #endif
+  void set_costdata(const char* value);
+  void set_costdata(const void* value, size_t size);
+  ::std::string* mutable_costdata();
+  ::std::string* release_costdata();
+  void set_allocated_costdata(::std::string* costdata);
+
   // uint64 playerid = 1;
   void clear_playerid();
   static const int kPlayeridFieldNumber = 1;
   ::google::protobuf::uint64 playerid() const;
   void set_playerid(::google::protobuf::uint64 value);
-
-  // uint64 itemuuid = 4;
-  void clear_itemuuid();
-  static const int kItemuuidFieldNumber = 4;
-  ::google::protobuf::uint64 itemuuid() const;
-  void set_itemuuid(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.S2SSetPlayerNameToDataReq)
  private:
@@ -3125,8 +3133,8 @@ class LIBPROTOC_EXPORT S2SSetPlayerNameToDataReq : public ::google::protobuf::Me
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::ArenaStringPtr oldname_;
   ::google::protobuf::internal::ArenaStringPtr newname_;
+  ::google::protobuf::internal::ArenaStringPtr costdata_;
   ::google::protobuf::uint64 playerid_;
-  ::google::protobuf::uint64 itemuuid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameServerMessage_2eproto::TableStruct;
 };
@@ -3233,17 +3241,25 @@ class LIBPROTOC_EXPORT S2SSetPlayerNameToGameAck : public ::google::protobuf::Me
   ::std::string* release_name();
   void set_allocated_name(::std::string* name);
 
+  // bytes costdata = 4;
+  void clear_costdata();
+  static const int kCostdataFieldNumber = 4;
+  const ::std::string& costdata() const;
+  void set_costdata(const ::std::string& value);
+  #if LANG_CXX11
+  void set_costdata(::std::string&& value);
+  #endif
+  void set_costdata(const char* value);
+  void set_costdata(const void* value, size_t size);
+  ::std::string* mutable_costdata();
+  ::std::string* release_costdata();
+  void set_allocated_costdata(::std::string* costdata);
+
   // uint64 playerid = 2;
   void clear_playerid();
   static const int kPlayeridFieldNumber = 2;
   ::google::protobuf::uint64 playerid() const;
   void set_playerid(::google::protobuf::uint64 value);
-
-  // uint64 itemuuid = 4;
-  void clear_itemuuid();
-  static const int kItemuuidFieldNumber = 4;
-  ::google::protobuf::uint64 itemuuid() const;
-  void set_itemuuid(::google::protobuf::uint64 value);
 
   // uint32 result = 1;
   void clear_result();
@@ -3256,8 +3272,8 @@ class LIBPROTOC_EXPORT S2SSetPlayerNameToGameAck : public ::google::protobuf::Me
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::ArenaStringPtr name_;
+  ::google::protobuf::internal::ArenaStringPtr costdata_;
   ::google::protobuf::uint64 playerid_;
-  ::google::protobuf::uint64 itemuuid_;
   ::google::protobuf::uint32 result_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameServerMessage_2eproto::TableStruct;
@@ -9707,18 +9723,57 @@ inline void S2SSetPlayerNameToDataReq::set_allocated_newname(::std::string* newn
   // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SSetPlayerNameToDataReq.newname)
 }
 
-// uint64 itemuuid = 4;
-inline void S2SSetPlayerNameToDataReq::clear_itemuuid() {
-  itemuuid_ = GOOGLE_ULONGLONG(0);
+// bytes costdata = 4;
+inline void S2SSetPlayerNameToDataReq::clear_costdata() {
+  costdata_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::google::protobuf::uint64 S2SSetPlayerNameToDataReq::itemuuid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SSetPlayerNameToDataReq.itemuuid)
-  return itemuuid_;
+inline const ::std::string& S2SSetPlayerNameToDataReq::costdata() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SSetPlayerNameToDataReq.costdata)
+  return costdata_.GetNoArena();
 }
-inline void S2SSetPlayerNameToDataReq::set_itemuuid(::google::protobuf::uint64 value) {
+inline void S2SSetPlayerNameToDataReq::set_costdata(const ::std::string& value) {
   
-  itemuuid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SSetPlayerNameToDataReq.itemuuid)
+  costdata_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.S2SSetPlayerNameToDataReq.costdata)
+}
+#if LANG_CXX11
+inline void S2SSetPlayerNameToDataReq::set_costdata(::std::string&& value) {
+  
+  costdata_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SSetPlayerNameToDataReq.costdata)
+}
+#endif
+inline void S2SSetPlayerNameToDataReq::set_costdata(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  costdata_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.S2SSetPlayerNameToDataReq.costdata)
+}
+inline void S2SSetPlayerNameToDataReq::set_costdata(const void* value, size_t size) {
+  
+  costdata_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SSetPlayerNameToDataReq.costdata)
+}
+inline ::std::string* S2SSetPlayerNameToDataReq::mutable_costdata() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SSetPlayerNameToDataReq.costdata)
+  return costdata_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* S2SSetPlayerNameToDataReq::release_costdata() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SSetPlayerNameToDataReq.costdata)
+  
+  return costdata_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void S2SSetPlayerNameToDataReq::set_allocated_costdata(::std::string* costdata) {
+  if (costdata != NULL) {
+    
+  } else {
+    
+  }
+  costdata_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), costdata);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SSetPlayerNameToDataReq.costdata)
 }
 
 // -------------------------------------------------------------------
@@ -9806,18 +9861,57 @@ inline void S2SSetPlayerNameToGameAck::set_allocated_name(::std::string* name) {
   // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SSetPlayerNameToGameAck.name)
 }
 
-// uint64 itemuuid = 4;
-inline void S2SSetPlayerNameToGameAck::clear_itemuuid() {
-  itemuuid_ = GOOGLE_ULONGLONG(0);
+// bytes costdata = 4;
+inline void S2SSetPlayerNameToGameAck::clear_costdata() {
+  costdata_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::google::protobuf::uint64 S2SSetPlayerNameToGameAck::itemuuid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SSetPlayerNameToGameAck.itemuuid)
-  return itemuuid_;
+inline const ::std::string& S2SSetPlayerNameToGameAck::costdata() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SSetPlayerNameToGameAck.costdata)
+  return costdata_.GetNoArena();
 }
-inline void S2SSetPlayerNameToGameAck::set_itemuuid(::google::protobuf::uint64 value) {
+inline void S2SSetPlayerNameToGameAck::set_costdata(const ::std::string& value) {
   
-  itemuuid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SSetPlayerNameToGameAck.itemuuid)
+  costdata_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.S2SSetPlayerNameToGameAck.costdata)
+}
+#if LANG_CXX11
+inline void S2SSetPlayerNameToGameAck::set_costdata(::std::string&& value) {
+  
+  costdata_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SSetPlayerNameToGameAck.costdata)
+}
+#endif
+inline void S2SSetPlayerNameToGameAck::set_costdata(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  costdata_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.S2SSetPlayerNameToGameAck.costdata)
+}
+inline void S2SSetPlayerNameToGameAck::set_costdata(const void* value, size_t size) {
+  
+  costdata_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SSetPlayerNameToGameAck.costdata)
+}
+inline ::std::string* S2SSetPlayerNameToGameAck::mutable_costdata() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SSetPlayerNameToGameAck.costdata)
+  return costdata_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* S2SSetPlayerNameToGameAck::release_costdata() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SSetPlayerNameToGameAck.costdata)
+  
+  return costdata_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void S2SSetPlayerNameToGameAck::set_allocated_costdata(::std::string* costdata) {
+  if (costdata != NULL) {
+    
+  } else {
+    
+  }
+  costdata_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), costdata);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SSetPlayerNameToGameAck.costdata)
 }
 
 // -------------------------------------------------------------------
