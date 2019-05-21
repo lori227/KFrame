@@ -18,7 +18,6 @@
 #include "KFFilter/KFFilterInterface.h"
 #include "KFCommand/KFCommandInterface.h"
 #include "KFOption/KFOptionInterface.h"
-#include "KFDataClient/KFDataClientInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"
 
 namespace KFrame
@@ -37,8 +36,6 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
     protected:
-        // 查询玩家所有数据
-        __KF_MESSAGE_FUNCTION__( HandleQueryPlayerReq );
 
         // 处理设置名字请求
         __KF_MESSAGE_FUNCTION__( HandleSetNameReq );
@@ -53,8 +50,6 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleRemoveDataReq );
 
     protected:
-        // 查询玩家数据
-        void OnAfterQueryPlayerData( uint32 result, uint64 playerid, KFMsg::PBObject* playerdata );
 
         // 检查名字的有效性
         uint32 CheckNameValid( const std::string& name );

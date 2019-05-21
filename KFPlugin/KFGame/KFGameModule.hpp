@@ -15,6 +15,7 @@
 #include "KFKernel/KFKernelInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFMessage/KFMessageInterface.h"
+#include "KFDisplay/KFDisplayInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"
 #include "KFDataClient/KFDataClientInterface.h"
@@ -84,6 +85,10 @@ namespace KFrame
 
         // 处理消息转发
         __KF_MESSAGE_FUNCTION__( HandleBroadcastToGameAck );
+
+        // 查询玩家所有数据
+        __KF_MESSAGE_FUNCTION__( HandleQueryPlayerReq );
+
     protected:
         // 发现新Gate
         __KF_NET_EVENT_FUNCTION__( OnServerDiscoverGate );
@@ -116,6 +121,8 @@ namespace KFrame
         // 保存玩家
         void SavePlayer( KFEntity* player );
 
+        // 查询玩家数据
+        void OnAfterQueryPlayerData( uint32 result, uint64 playerid, KFMsg::PBObject* playerdata );
     private:
         // 世界服务器id
         KFConHash _world_hash;

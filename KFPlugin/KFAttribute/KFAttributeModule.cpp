@@ -4,11 +4,8 @@ namespace KFrame
 {
     void KFAttributeModule::BeforeRun()
     {
-        _kf_data_client->BindQueryPlayerFunction( this, &KFAttributeModule::OnAfterQueryPlayerData );
-
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_REMOVE_DATA_REQ, &KFAttributeModule::HandleRemoveDataReq );
-        __REGISTER_MESSAGE__( KFMsg::MSG_QUERY_PLAYER_REQ, &KFAttributeModule::HandleQueryPlayerReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_SET_NAME_REQ, &KFAttributeModule::HandleSetNameReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_SET_SEX_REQ, &KFAttributeModule::HandleSetSexReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_SET_PLAYERNAME_TO_GAME_ACK, &KFAttributeModule::HandleSetPlayerNameToGameAck );
@@ -16,53 +13,12 @@ namespace KFrame
 
     void KFAttributeModule::BeforeShut()
     {
-        _kf_data_client->UnBindLoadPlayerFunction( this );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::MSG_REMOVE_DATA_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_QUERY_PLAYER_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::MSG_SET_NAME_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::MSG_SET_SEX_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_SET_PLAYERNAME_TO_GAME_ACK );
     }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_MESSAGE_FUNCTION__( KFAttributeModule::HandleQueryPlayerReq )
-    {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgQueryPlayerReq );
-
-        // 不能查询自己的数据，客户端本地可以获取到
-        if ( playerid == kfmsg.playerid() )
-        {
-            return;
-        }
-
-        //查询玩家数据
-        auto ok = _kf_data_client->QueryPlayerData( playerid, kfmsg.playerid() );
-        if ( !ok )
-        {
-            _kf_display->SendToClient( player, KFMsg::DataServerBusy );
-        }
-    }
-
-    void KFAttributeModule::OnAfterQueryPlayerData( uint32 result, uint64 playerid, KFMsg::PBObject* pbplayerdata )
-    {
-        auto player = _kf_player->FindPlayer( playerid );
-        if ( player == nullptr )
-        {
-            return;
-        }
-
-        if ( result != KFMsg::Ok )
-        {
-            return _kf_display->SendToClient( playerid, result );
-        }
-
-        KFMsg::MsgQueryPlayerAck ack;
-        ack.mutable_player()->CopyFrom( *pbplayerdata );
-        _kf_player->SendToClient( player, KFMsg::MSG_QUERY_PLAYER_ACK, &ack );
-    }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     uint32 KFAttributeModule::CheckNameValid( const std::string& name )
