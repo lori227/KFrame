@@ -17,11 +17,11 @@ namespace KFrame
             kfsetting->_key = setting.GetUInt32( "DataKey" );
             kfsetting->_data_name = setting.GetString( "DataName" );
 
-            auto strcompounddata = setting.GetString( "CompoundData" );
-            kfsetting->_compound_data.Parse( strcompounddata, __FUNC_LINE__ );
-
             auto strcostdata = setting.GetString( "CostData" );
             kfsetting->_cost_data.Parse( strcostdata, __FUNC_LINE__ );
+
+            auto strcompounddata = setting.GetString( "CompoundData" );
+            kfsetting->_compound_data.Parse( strcompounddata, __FUNC_LINE__ );
 
             setting.NextNode();
         }
