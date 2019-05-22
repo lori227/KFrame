@@ -2297,32 +2297,17 @@ class LIBPROTOC_EXPORT MsgCompoundReq : public ::google::protobuf::Message /* @@
 
   // accessors -------------------------------------------------------
 
-  // bytes dataname = 1;
-  void clear_dataname();
-  static const int kDatanameFieldNumber = 1;
-  const ::std::string& dataname() const;
-  void set_dataname(const ::std::string& value);
-  #if LANG_CXX11
-  void set_dataname(::std::string&& value);
-  #endif
-  void set_dataname(const char* value);
-  void set_dataname(const void* value, size_t size);
-  ::std::string* mutable_dataname();
-  ::std::string* release_dataname();
-  void set_allocated_dataname(::std::string* dataname);
-
-  // uint32 key = 2;
-  void clear_key();
-  static const int kKeyFieldNumber = 2;
-  ::google::protobuf::uint32 key() const;
-  void set_key(::google::protobuf::uint32 value);
+  // uint32 id = 1;
+  void clear_id();
+  static const int kIdFieldNumber = 1;
+  ::google::protobuf::uint32 id() const;
+  void set_id(::google::protobuf::uint32 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.MsgCompoundReq)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::internal::ArenaStringPtr dataname_;
-  ::google::protobuf::uint32 key_;
+  ::google::protobuf::uint32 id_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameClientMessage_2eproto::TableStruct;
 };
@@ -5980,71 +5965,18 @@ inline void MsgSetSexReq::set_sex(::google::protobuf::uint32 value) {
 
 // MsgCompoundReq
 
-// bytes dataname = 1;
-inline void MsgCompoundReq::clear_dataname() {
-  dataname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+// uint32 id = 1;
+inline void MsgCompoundReq::clear_id() {
+  id_ = 0u;
 }
-inline const ::std::string& MsgCompoundReq::dataname() const {
-  // @@protoc_insertion_point(field_get:KFMsg.MsgCompoundReq.dataname)
-  return dataname_.GetNoArena();
+inline ::google::protobuf::uint32 MsgCompoundReq::id() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgCompoundReq.id)
+  return id_;
 }
-inline void MsgCompoundReq::set_dataname(const ::std::string& value) {
+inline void MsgCompoundReq::set_id(::google::protobuf::uint32 value) {
   
-  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.MsgCompoundReq.dataname)
-}
-#if LANG_CXX11
-inline void MsgCompoundReq::set_dataname(::std::string&& value) {
-  
-  dataname_.SetNoArena(
-    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgCompoundReq.dataname)
-}
-#endif
-inline void MsgCompoundReq::set_dataname(const char* value) {
-  GOOGLE_DCHECK(value != NULL);
-  
-  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.MsgCompoundReq.dataname)
-}
-inline void MsgCompoundReq::set_dataname(const void* value, size_t size) {
-  
-  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgCompoundReq.dataname)
-}
-inline ::std::string* MsgCompoundReq::mutable_dataname() {
-  
-  // @@protoc_insertion_point(field_mutable:KFMsg.MsgCompoundReq.dataname)
-  return dataname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline ::std::string* MsgCompoundReq::release_dataname() {
-  // @@protoc_insertion_point(field_release:KFMsg.MsgCompoundReq.dataname)
-  
-  return dataname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline void MsgCompoundReq::set_allocated_dataname(::std::string* dataname) {
-  if (dataname != NULL) {
-    
-  } else {
-    
-  }
-  dataname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), dataname);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgCompoundReq.dataname)
-}
-
-// uint32 key = 2;
-inline void MsgCompoundReq::clear_key() {
-  key_ = 0u;
-}
-inline ::google::protobuf::uint32 MsgCompoundReq::key() const {
-  // @@protoc_insertion_point(field_get:KFMsg.MsgCompoundReq.key)
-  return key_;
-}
-inline void MsgCompoundReq::set_key(::google::protobuf::uint32 value) {
-  
-  key_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.MsgCompoundReq.key)
+  id_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.MsgCompoundReq.id)
 }
 
 // -------------------------------------------------------------------

@@ -207,8 +207,7 @@ message MsgSetSexReq
 // MSG_COMPOUND_REQ
 message MsgCompoundReq
 {
-	bytes dataname = 1;	// 属性名称( 在class中 )
-	uint32 key = 2;		// 属性id
+	uint32 id = 1;	// 合成id
 }
 ////////////////////////////////////////////////////////////////////
 
