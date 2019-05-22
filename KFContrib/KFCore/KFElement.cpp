@@ -198,6 +198,11 @@ namespace KFrame
         Cleanup();
     }
 
+    bool KFElements::IsEmpty() const
+    {
+        return _element_list.empty();
+    }
+
     void KFElements::Cleanup()
     {
         for ( auto kfelenemt : _element_list )

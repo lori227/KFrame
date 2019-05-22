@@ -11,8 +11,8 @@
 #include "KFAchieveInterface.h"
 #include "KFConfig/KFConfigInterface.h"
 #include "KFKernel/KFKernelInterface.h"
-#include "KFMessage/KFMessageInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
+#include "KFMessage/KFMessageInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
 
 namespace KFrame

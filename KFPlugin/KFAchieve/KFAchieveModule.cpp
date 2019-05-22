@@ -58,13 +58,13 @@ namespace KFrame
             return KFMsg::AchieveCanNotFindData;
         }
 
-        auto achievestatus = kfachieve->GetValue( __KF_STRING__( status ) );
-        if ( achievestatus == KFMsg::InitStatus )
+        auto status = kfachieve->GetValue( __KF_STRING__( status ) );
+        if ( status == KFMsg::InitStatus )
         {
             return KFMsg::AchieveNotDone;
         }
 
-        if ( achievestatus == KFMsg::ReceiveStatus )
+        if ( status == KFMsg::ReceiveStatus )
         {
             return KFMsg::AchieveAlreadyReceived;
         }
@@ -117,70 +117,65 @@ namespace KFrame
 
     void KFAchieveModule::UpdateObjectAchieveValue( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate )
     {
-        auto child = kfdata->FirstData();
-        while ( child != nullptr )
-        {
-            auto value = child->GetValue();
-            if ( value != 0 )
-            {
-                UpdateDataAchieveValue( player, key, child, operate, value, value );
-            }
 
-            child = kfdata->NextData();
+        for ( auto kfchild = kfdata->FirstData(); kfchild != nullptr; kfchild = kfdata->NextData() )
+        {
+            auto value = kfchild->GetValue();
+            if ( value != 0u )
+            {
+                UpdateDataAchieveValue( player, key, kfchild, operate, value, value );
+            }
         }
     }
 
     void KFAchieveModule::UpdateDataAchieveValue( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 nowvalue )
     {
-        if ( value == 0 )
+        if ( value == 0u )
         {
             return;
         }
 
-        auto& parentname = kfdata->GetParent()->GetName();
-        auto& dataname = kfdata->GetName();
-
-        auto kfachievetypesetting = _kf_achieve_config->FindTypeAchieve( parentname, dataname );
-        if ( kfachievetypesetting == nullptr )
+        auto kfachievetype = _kf_achieve_config->FindTypeAchieve( kfdata->GetParent()->GetName(), kfdata->GetName() );
+        if ( kfachievetype == nullptr )
         {
             return;
         }
 
         auto kfobject = player->GetData();
         auto kfachieves = kfobject->FindData( __KF_STRING__( achieve ) );
-        if ( kfachieves == nullptr )
-        {
-            return;
-        }
 
-        auto level = kfobject->GetValue( __KF_STRING__( level ) );
-        for ( auto achievesetting : kfachievetypesetting->_achieve_type )
+        for ( auto kfsetting : kfachievetype->_achieve_list )
         {
-            if ( !achievesetting->CheckCanUpdate( key, level, operate ) )
+            // 是否已经完成
+            auto flag = kfachieves->GetValue< uint32 >( kfsetting->_id, __KF_STRING__( status ) );
+            if ( flag != KFMsg::InitStatus )
             {
                 continue;
             }
 
-            // 判断触发值
-            auto operatevalue = achievesetting->CheckTriggerValue( value, nowvalue );
-            if ( operatevalue == 0 )
+            // 判断是否满足条件
+            if ( kfsetting->_limits.IsEmpty() )
             {
-                continue;
-            }
-
-            auto kfachieve = kfachieves->FindData( achievesetting->_id );
-            if ( kfachieve != nullptr )
-            {
-                auto flag = kfachieve->GetValue( __KF_STRING__( status ) );
-                if ( flag != KFMsg::InitStatus )
+                if ( player->CheckElement( &kfsetting->_limits, __FUNC_LINE__ ) )
                 {
                     continue;
                 }
             }
 
-            // 获得使用的数值
-            auto usevalue = achievesetting->GetUseValue( operatevalue );
-            player->UpdateData( kfachieves, achievesetting->_id, __KF_STRING__( value ), achievesetting->_operate, usevalue );
+            // 判断key和操作operate
+            if ( !kfsetting->CheckCanUpdate( key, operate ) )
+            {
+                continue;
+            }
+
+            // 判断触发值
+            auto operatevalue = kfsetting->CheckTriggerValue( value, nowvalue );
+            if ( operatevalue == 0u )
+            {
+                continue;
+            }
+
+            player->UpdateData( kfachieves, kfsetting->_id, __KF_STRING__( value ), kfsetting->_operate, operatevalue );
         }
     }
 }

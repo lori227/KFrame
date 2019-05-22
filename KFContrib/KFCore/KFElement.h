@@ -186,6 +186,9 @@ namespace KFrame
         KFElements();
         ~KFElements();
 
+        // 是否为空
+        bool IsEmpty() const;
+
         // 设置操作
         void SetOperate( uint32 operate );
 

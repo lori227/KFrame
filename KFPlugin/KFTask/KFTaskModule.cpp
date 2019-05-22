@@ -124,10 +124,16 @@ namespace KFrame
 
         auto kfobject = player->GetData();
         auto kftaskrecord = kfobject->FindData( __KF_STRING__( task ) );
-        auto level = kfobject->GetValue( __KF_STRING__( basic ), __KF_STRING__( level ) );
 
         for ( auto kfsetting : kftasktypelist->_task_list )
         {
+            // 已经完成
+            auto taskstatus = kftaskrecord->GetValue( kfsetting->_id, __KF_STRING__( status ) );
+            if ( taskstatus != KFMsg::InitStatus )
+            {
+                continue;
+            }
+
             // 如果需要领取任务
             if ( kfsetting->_need_receive )
             {
@@ -138,9 +144,17 @@ namespace KFrame
                 }
             }
 
-            // 已经完成
-            auto taskstatus = kftaskrecord->GetValue( kfsetting->_id, __KF_STRING__( status ) );
-            if ( taskstatus != KFMsg::InitStatus )
+            // 限制条件
+            if ( kfsetting->_limits.IsEmpty() )
+            {
+                if ( player->CheckElement( &kfsetting->_limits, __FUNC_LINE__ ) )
+                {
+                    continue;
+                }
+            }
+
+            // 是否能更新
+            if ( !kfsetting->CheckCanUpdate( key, operate ) )
             {
                 continue;
             }
@@ -152,15 +166,7 @@ namespace KFrame
                 continue;
             }
 
-            // 是否能更新
-            if ( !kfsetting->CheckCanUpdate( key, level, operate ) )
-            {
-                continue;
-            }
-
-            // 获得使用的数值, 更新任务数值
-            auto usevalue = kfsetting->CalcUseValue( operatevalue );
-            player->UpdateData( kftaskrecord, kfsetting->_id, __KF_STRING__( value ), kfsetting->_operate, usevalue );
+            player->UpdateData( kftaskrecord, kfsetting->_id, __KF_STRING__( value ), kfsetting->_operate, operatevalue );
         }
     }
 
@@ -184,9 +190,14 @@ namespace KFrame
         player->UpdateData( kfparent, __KF_STRING__( status ), KFEnum::Set, KFMsg::DoneStatus );
 
         // 更新下一个任务
-        if ( kfsetting->_next_value != 0 && kfsetting->_next_id != 0 )
+        if ( kfsetting->_next_id != 0u )
         {
-            auto taskvalue = kfparent->GetValue( __KF_STRING__( value ) );
+            auto taskvalue = 0u;
+            if ( kfsetting->_next_value != 0u )
+            {
+                taskvalue = newvalue;
+            }
+
             player->UpdateData( __KF_STRING__( task ), kfsetting->_next_id, __KF_STRING__( value ), KFEnum::Set, taskvalue );
         }
     }

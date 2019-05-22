@@ -23,7 +23,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     uint32 KFAttributeModule::CheckNameValid( const std::string& name )
     {
-        static auto* _option = _kf_option->FindOption( __KF_STRING__( playernamelength ) );
+        static auto _option = _kf_option->FindOption( __KF_STRING__( playernamelength ) );
         if ( name.size() > _option->_uint32_value )
         {
             return KFMsg::NameLengthError;
