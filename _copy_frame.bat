@@ -65,9 +65,9 @@ rd /s /q %localpath%\%subpath%
 if not exist %localpath%\%subpath% ( mkdir %localpath%\%subpath% )
 xcopy /y /S %framepath%\%subpath%\* %localpath%\%subpath%\
 
-copy /y %framepath%\%subpath%\.gitignore  %localpath%\%subpath%\
-copy /y %framepath%\%subpath%\_update_frame.bat  %localpath%\%subpath%\
-copy /y %framepath%\%subpath%\CMakeLists.txt  %localpath%\%subpath%\
-copy /y %framepath%\%subpath%\Frame.sln  %localpath%\%subpath%\
-copy /y %framepath%\%subpath%\LICENSE  %localpath%\%subpath%\
-copy /y %framepath%\%subpath%\README.md  %localpath%\%subpath%\
+copy /y %framepath%\.gitignore  %localpath%\
+copy /y %framepath%\_update_frame.bat  %localpath%\
+copy /y %framepath%\CMakeLists.txt  %localpath%\
+copy /y %framepath%\Frame.sln  %localpath%\
+copy /y %framepath%\LICENSE  %localpath%\
+copy /y %framepath%\README.md  %localpath%\

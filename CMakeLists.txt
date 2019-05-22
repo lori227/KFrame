@@ -34,20 +34,20 @@ include_directories(
     ${ROOT_DIR}/KFLibrary/poco/Data/include
 )
 
-set(3RD_LIB_DIR ${ROOT_DIR}/_lib/linux ${ROOT_DIR}/_lib/linux/3rd)
-set(LIB_DIR ${ROOT_DIR}/_lib/linux)
-LINK_DIRECTORIES(${3RD_LIB_DIR})
-
+set(3RD_LIB_DIR ${ROOT_DIR}/_lib/linux/3rd)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fPIC -Wall")
 if(CMAKE_BUILD_TYPE MATCHES "Debug")
+    set(LIB_DIR ${ROOT_DIR}/_lib/linux/debug)
     set(BIN_DIR ${ROOT_DIR}/_bin/bin/linux/debug)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0 -g -ggdb -D_DEBUG")
 else()
     set(CMAKE_BUILD_TYPE "Release")
+    set(LIB_DIR ${ROOT_DIR}/_lib/linux/release)
     set(BIN_DIR ${ROOT_DIR}/_bin/bin/linux/release)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
 endif()
 
+LINK_DIRECTORIES(${LIB_DIR} ${3RD_LIB_DIR})
 if(COROUTINE MATCHES "Enable")
     message("use coroutine...")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_COROUTINE")
