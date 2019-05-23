@@ -201,7 +201,7 @@ namespace KFrame
         __STRING_DEFINE__( minrankscore );
         __STRING_DEFINE__( statustime );
         __STRING_DEFINE__( relation );
-        __STRING_DEFINE__( freindmaxcount );
+        __STRING_DEFINE__( relationmaxcount );
         __STRING_DEFINE__( friendinvite );
         __STRING_DEFINE__( friendliness );
         __STRING_DEFINE__( refusefriend );

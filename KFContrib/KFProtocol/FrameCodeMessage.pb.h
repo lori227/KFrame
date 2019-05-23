@@ -142,26 +142,28 @@ enum FrameCodeEnum {
   RankNotExist = 12400,
   QueryBasicNotExist = 12500,
   MessageFilterError = 12600,
-  FriendAlready = 12601,
-  FriendSelfLimit = 12602,
-  FriendInviteReq = 12603,
-  FriendRefuseYourInvite = 12604,
-  FriendAddOk = 12605,
-  FriendNotExist = 12606,
-  FriendDelOk = 12607,
-  FriendLinessAdd = 12608,
-  FriendRefuseInvite = 12609,
-  FriendTargetLimit = 12610,
-  FriendInviteAlready = 12611,
-  FriendInviteLimit = 12612,
-  FriendInviteOk = 12613,
-  FriendInviteNotExist = 12614,
+  RelationAlready = 12601,
+  RelationSelfLimit = 12602,
+  RelationInviteReq = 12603,
+  RelationRefuseYourInvite = 12604,
+  RelationAddOk = 12605,
+  RelationNotExist = 12606,
+  RelationDelOk = 12607,
+  RelationRefuseInvite = 12608,
+  RelationTargetLimit = 12609,
+  RelationInviteAlready = 12610,
+  RelationInviteLimit = 12611,
+  RelationInviteOk = 12612,
+  RelationInviteNotExist = 12613,
+  RelationSettingError = 12614,
+  RelationDataError = 12615,
+  FriendLinessAdd = 12616,
   FrameCodeEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   FrameCodeEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 LIBPROTOC_EXPORT bool FrameCodeEnum_IsValid(int value);
 const FrameCodeEnum FrameCodeEnum_MIN = Error;
-const FrameCodeEnum FrameCodeEnum_MAX = FriendInviteNotExist;
+const FrameCodeEnum FrameCodeEnum_MAX = FriendLinessAdd;
 const int FrameCodeEnum_ARRAYSIZE = FrameCodeEnum_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* FrameCodeEnum_descriptor();

@@ -18,10 +18,9 @@ namespace KFrame
     void KFRelationShardPlugin::LoadModule()
     {
         __FIND_MODULE__( _kf_redis, KFRedisInterface );
-        __FIND_MODULE__( _kf_option, KFOptionInterface );
+        __FIND_MODULE__( _kf_config, KFConfigInterface );
         __FIND_MODULE__( _kf_message, KFMessageInterface );
         __FIND_MODULE__( _kf_display, KFDisplayInterface );
-        __FIND_MODULE__( _kf_schedule, KFScheduleInterface );
         __FIND_MODULE__( _kf_route, KFRouteClientInterface );
     }
 }

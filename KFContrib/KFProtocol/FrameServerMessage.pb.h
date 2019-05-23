@@ -69,24 +69,24 @@ LIBPROTOC_EXPORT extern PBRelation_RelationdataEntry_DoNotUseDefaultTypeInternal
 class PBZoneData;
 class PBZoneDataDefaultTypeInternal;
 LIBPROTOC_EXPORT extern PBZoneDataDefaultTypeInternal _PBZoneData_default_instance_;
-class S2SAddFriendInviteToGameAck;
-class S2SAddFriendInviteToGameAckDefaultTypeInternal;
-LIBPROTOC_EXPORT extern S2SAddFriendInviteToGameAckDefaultTypeInternal _S2SAddFriendInviteToGameAck_default_instance_;
-class S2SAddFriendInviteToRelationReq;
-class S2SAddFriendInviteToRelationReqDefaultTypeInternal;
-LIBPROTOC_EXPORT extern S2SAddFriendInviteToRelationReqDefaultTypeInternal _S2SAddFriendInviteToRelationReq_default_instance_;
-class S2SAddFriendToGameAck;
-class S2SAddFriendToGameAckDefaultTypeInternal;
-LIBPROTOC_EXPORT extern S2SAddFriendToGameAckDefaultTypeInternal _S2SAddFriendToGameAck_default_instance_;
-class S2SAddFriendToRelationReq;
-class S2SAddFriendToRelationReqDefaultTypeInternal;
-LIBPROTOC_EXPORT extern S2SAddFriendToRelationReqDefaultTypeInternal _S2SAddFriendToRelationReq_default_instance_;
 class S2SAddGateToWorldReq;
 class S2SAddGateToWorldReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2SAddGateToWorldReqDefaultTypeInternal _S2SAddGateToWorldReq_default_instance_;
 class S2SAddMailReq;
 class S2SAddMailReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2SAddMailReqDefaultTypeInternal _S2SAddMailReq_default_instance_;
+class S2SAddRelationToGameAck;
+class S2SAddRelationToGameAckDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2SAddRelationToGameAckDefaultTypeInternal _S2SAddRelationToGameAck_default_instance_;
+class S2SAddRelationToRelationReq;
+class S2SAddRelationToRelationReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2SAddRelationToRelationReqDefaultTypeInternal _S2SAddRelationToRelationReq_default_instance_;
+class S2SApplyAddRelationToGameAck;
+class S2SApplyAddRelationToGameAckDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2SApplyAddRelationToGameAckDefaultTypeInternal _S2SApplyAddRelationToGameAck_default_instance_;
+class S2SApplyAddRelationToRelationReq;
+class S2SApplyAddRelationToRelationReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2SApplyAddRelationToRelationReqDefaultTypeInternal _S2SApplyAddRelationToRelationReq_default_instance_;
 class S2SBroadcastToGameAck;
 class S2SBroadcastToGameAckDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2SBroadcastToGameAckDefaultTypeInternal _S2SBroadcastToGameAck_default_instance_;
@@ -108,15 +108,15 @@ LIBPROTOC_EXPORT extern S2SClearOnlineToPublicReqDefaultTypeInternal _S2SClearOn
 class S2SConnectToGameReq;
 class S2SConnectToGameReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2SConnectToGameReqDefaultTypeInternal _S2SConnectToGameReq_default_instance_;
-class S2SDelFriendInviteToRelationReq;
-class S2SDelFriendInviteToRelationReqDefaultTypeInternal;
-LIBPROTOC_EXPORT extern S2SDelFriendInviteToRelationReqDefaultTypeInternal _S2SDelFriendInviteToRelationReq_default_instance_;
-class S2SDelFriendToGameAck;
-class S2SDelFriendToGameAckDefaultTypeInternal;
-LIBPROTOC_EXPORT extern S2SDelFriendToGameAckDefaultTypeInternal _S2SDelFriendToGameAck_default_instance_;
-class S2SDelFriendToRelationReq;
-class S2SDelFriendToRelationReqDefaultTypeInternal;
-LIBPROTOC_EXPORT extern S2SDelFriendToRelationReqDefaultTypeInternal _S2SDelFriendToRelationReq_default_instance_;
+class S2SDelRelationInviteToRelationReq;
+class S2SDelRelationInviteToRelationReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2SDelRelationInviteToRelationReqDefaultTypeInternal _S2SDelRelationInviteToRelationReq_default_instance_;
+class S2SDelRelationToGameAck;
+class S2SDelRelationToGameAckDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2SDelRelationToGameAckDefaultTypeInternal _S2SDelRelationToGameAck_default_instance_;
+class S2SDelRelationToRelationReq;
+class S2SDelRelationToRelationReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2SDelRelationToRelationReqDefaultTypeInternal _S2SDelRelationToRelationReq_default_instance_;
 class S2SDisconnectToGameReq;
 class S2SDisconnectToGameReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2SDisconnectToGameReqDefaultTypeInternal _S2SDisconnectToGameReq_default_instance_;
@@ -186,21 +186,9 @@ LIBPROTOC_EXPORT extern S2SQueryBasicToGameAck_PbdataEntry_DoNotUseDefaultTypeIn
 class S2SQueryBasicToPublicReq;
 class S2SQueryBasicToPublicReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2SQueryBasicToPublicReqDefaultTypeInternal _S2SQueryBasicToPublicReq_default_instance_;
-class S2SQueryFriendInviteToGameAck;
-class S2SQueryFriendInviteToGameAckDefaultTypeInternal;
-LIBPROTOC_EXPORT extern S2SQueryFriendInviteToGameAckDefaultTypeInternal _S2SQueryFriendInviteToGameAck_default_instance_;
-class S2SQueryFriendInviteToRelationReq;
-class S2SQueryFriendInviteToRelationReqDefaultTypeInternal;
-LIBPROTOC_EXPORT extern S2SQueryFriendInviteToRelationReqDefaultTypeInternal _S2SQueryFriendInviteToRelationReq_default_instance_;
 class S2SQueryFriendRankListReq;
 class S2SQueryFriendRankListReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2SQueryFriendRankListReqDefaultTypeInternal _S2SQueryFriendRankListReq_default_instance_;
-class S2SQueryFriendToGameAck;
-class S2SQueryFriendToGameAckDefaultTypeInternal;
-LIBPROTOC_EXPORT extern S2SQueryFriendToGameAckDefaultTypeInternal _S2SQueryFriendToGameAck_default_instance_;
-class S2SQueryFriendToRelationReq;
-class S2SQueryFriendToRelationReqDefaultTypeInternal;
-LIBPROTOC_EXPORT extern S2SQueryFriendToRelationReqDefaultTypeInternal _S2SQueryFriendToRelationReq_default_instance_;
 class S2SQueryMailAck;
 class S2SQueryMailAckDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2SQueryMailAckDefaultTypeInternal _S2SQueryMailAck_default_instance_;
@@ -216,6 +204,18 @@ LIBPROTOC_EXPORT extern S2SQueryPlayerToGameAckDefaultTypeInternal _S2SQueryPlay
 class S2SQueryRankListReq;
 class S2SQueryRankListReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2SQueryRankListReqDefaultTypeInternal _S2SQueryRankListReq_default_instance_;
+class S2SQueryRelationInviteToGameAck;
+class S2SQueryRelationInviteToGameAckDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2SQueryRelationInviteToGameAckDefaultTypeInternal _S2SQueryRelationInviteToGameAck_default_instance_;
+class S2SQueryRelationInviteToRelationReq;
+class S2SQueryRelationInviteToRelationReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2SQueryRelationInviteToRelationReqDefaultTypeInternal _S2SQueryRelationInviteToRelationReq_default_instance_;
+class S2SQueryRelationToGameAck;
+class S2SQueryRelationToGameAckDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2SQueryRelationToGameAckDefaultTypeInternal _S2SQueryRelationToGameAck_default_instance_;
+class S2SQueryRelationToRelationReq;
+class S2SQueryRelationToRelationReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2SQueryRelationToRelationReqDefaultTypeInternal _S2SQueryRelationToRelationReq_default_instance_;
 class S2SReLoginToGameReq;
 class S2SReLoginToGameReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2SReLoginToGameReqDefaultTypeInternal _S2SReLoginToGameReq_default_instance_;
@@ -240,18 +240,18 @@ LIBPROTOC_EXPORT extern S2SSetPlayerNameToGameAckDefaultTypeInternal _S2SSetPlay
 class S2SSyncRefreshRank;
 class S2SSyncRefreshRankDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2SSyncRefreshRankDefaultTypeInternal _S2SSyncRefreshRank_default_instance_;
-class S2SUpdateDataToFriendReq;
-class S2SUpdateDataToFriendReqDefaultTypeInternal;
-LIBPROTOC_EXPORT extern S2SUpdateDataToFriendReqDefaultTypeInternal _S2SUpdateDataToFriendReq_default_instance_;
-class S2SUpdateDataToFriendReq_PbdataEntry_DoNotUse;
-class S2SUpdateDataToFriendReq_PbdataEntry_DoNotUseDefaultTypeInternal;
-LIBPROTOC_EXPORT extern S2SUpdateDataToFriendReq_PbdataEntry_DoNotUseDefaultTypeInternal _S2SUpdateDataToFriendReq_PbdataEntry_DoNotUse_default_instance_;
 class S2SUpdateDataToPublicReq;
 class S2SUpdateDataToPublicReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2SUpdateDataToPublicReqDefaultTypeInternal _S2SUpdateDataToPublicReq_default_instance_;
 class S2SUpdateDataToPublicReq_PbdataEntry_DoNotUse;
 class S2SUpdateDataToPublicReq_PbdataEntry_DoNotUseDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2SUpdateDataToPublicReq_PbdataEntry_DoNotUseDefaultTypeInternal _S2SUpdateDataToPublicReq_PbdataEntry_DoNotUse_default_instance_;
+class S2SUpdateDataToRelationReq;
+class S2SUpdateDataToRelationReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2SUpdateDataToRelationReqDefaultTypeInternal _S2SUpdateDataToRelationReq_default_instance_;
+class S2SUpdateDataToRelationReq_PbdataEntry_DoNotUse;
+class S2SUpdateDataToRelationReq_PbdataEntry_DoNotUseDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2SUpdateDataToRelationReq_PbdataEntry_DoNotUseDefaultTypeInternal _S2SUpdateDataToRelationReq_PbdataEntry_DoNotUse_default_instance_;
 class S2SUpdateFriendLinessToGameAck;
 class S2SUpdateFriendLinessToGameAckDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2SUpdateFriendLinessToGameAckDefaultTypeInternal _S2SUpdateFriendLinessToGameAck_default_instance_;
@@ -279,12 +279,12 @@ template<> LIBPROTOC_EXPORT ::KFMsg::PBRelation* Arena::CreateMaybeMessage<::KFM
 template<> LIBPROTOC_EXPORT ::KFMsg::PBRelation_PlayerdataEntry_DoNotUse* Arena::CreateMaybeMessage<::KFMsg::PBRelation_PlayerdataEntry_DoNotUse>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::PBRelation_RelationdataEntry_DoNotUse* Arena::CreateMaybeMessage<::KFMsg::PBRelation_RelationdataEntry_DoNotUse>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::PBZoneData* Arena::CreateMaybeMessage<::KFMsg::PBZoneData>(Arena*);
-template<> LIBPROTOC_EXPORT ::KFMsg::S2SAddFriendInviteToGameAck* Arena::CreateMaybeMessage<::KFMsg::S2SAddFriendInviteToGameAck>(Arena*);
-template<> LIBPROTOC_EXPORT ::KFMsg::S2SAddFriendInviteToRelationReq* Arena::CreateMaybeMessage<::KFMsg::S2SAddFriendInviteToRelationReq>(Arena*);
-template<> LIBPROTOC_EXPORT ::KFMsg::S2SAddFriendToGameAck* Arena::CreateMaybeMessage<::KFMsg::S2SAddFriendToGameAck>(Arena*);
-template<> LIBPROTOC_EXPORT ::KFMsg::S2SAddFriendToRelationReq* Arena::CreateMaybeMessage<::KFMsg::S2SAddFriendToRelationReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SAddGateToWorldReq* Arena::CreateMaybeMessage<::KFMsg::S2SAddGateToWorldReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SAddMailReq* Arena::CreateMaybeMessage<::KFMsg::S2SAddMailReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2SAddRelationToGameAck* Arena::CreateMaybeMessage<::KFMsg::S2SAddRelationToGameAck>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2SAddRelationToRelationReq* Arena::CreateMaybeMessage<::KFMsg::S2SAddRelationToRelationReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2SApplyAddRelationToGameAck* Arena::CreateMaybeMessage<::KFMsg::S2SApplyAddRelationToGameAck>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2SApplyAddRelationToRelationReq* Arena::CreateMaybeMessage<::KFMsg::S2SApplyAddRelationToRelationReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SBroadcastToGameAck* Arena::CreateMaybeMessage<::KFMsg::S2SBroadcastToGameAck>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SBroadcastToGameReq* Arena::CreateMaybeMessage<::KFMsg::S2SBroadcastToGameReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SBroadcastToGateReq* Arena::CreateMaybeMessage<::KFMsg::S2SBroadcastToGateReq>(Arena*);
@@ -292,9 +292,9 @@ template<> LIBPROTOC_EXPORT ::KFMsg::S2SBroadcastToWorldAck* Arena::CreateMaybeM
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SBroadcastToWorldReq* Arena::CreateMaybeMessage<::KFMsg::S2SBroadcastToWorldReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SClearOnlineToPublicReq* Arena::CreateMaybeMessage<::KFMsg::S2SClearOnlineToPublicReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SConnectToGameReq* Arena::CreateMaybeMessage<::KFMsg::S2SConnectToGameReq>(Arena*);
-template<> LIBPROTOC_EXPORT ::KFMsg::S2SDelFriendInviteToRelationReq* Arena::CreateMaybeMessage<::KFMsg::S2SDelFriendInviteToRelationReq>(Arena*);
-template<> LIBPROTOC_EXPORT ::KFMsg::S2SDelFriendToGameAck* Arena::CreateMaybeMessage<::KFMsg::S2SDelFriendToGameAck>(Arena*);
-template<> LIBPROTOC_EXPORT ::KFMsg::S2SDelFriendToRelationReq* Arena::CreateMaybeMessage<::KFMsg::S2SDelFriendToRelationReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2SDelRelationInviteToRelationReq* Arena::CreateMaybeMessage<::KFMsg::S2SDelRelationInviteToRelationReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2SDelRelationToGameAck* Arena::CreateMaybeMessage<::KFMsg::S2SDelRelationToGameAck>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2SDelRelationToRelationReq* Arena::CreateMaybeMessage<::KFMsg::S2SDelRelationToRelationReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SDisconnectToGameReq* Arena::CreateMaybeMessage<::KFMsg::S2SDisconnectToGameReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SEnterToGateAck* Arena::CreateMaybeMessage<::KFMsg::S2SEnterToGateAck>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SKickPlayerToGameReq* Arena::CreateMaybeMessage<::KFMsg::S2SKickPlayerToGameReq>(Arena*);
@@ -318,16 +318,16 @@ template<> LIBPROTOC_EXPORT ::KFMsg::S2SPlayerLeaveToWorldReq* Arena::CreateMayb
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SQueryBasicToGameAck* Arena::CreateMaybeMessage<::KFMsg::S2SQueryBasicToGameAck>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SQueryBasicToGameAck_PbdataEntry_DoNotUse* Arena::CreateMaybeMessage<::KFMsg::S2SQueryBasicToGameAck_PbdataEntry_DoNotUse>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SQueryBasicToPublicReq* Arena::CreateMaybeMessage<::KFMsg::S2SQueryBasicToPublicReq>(Arena*);
-template<> LIBPROTOC_EXPORT ::KFMsg::S2SQueryFriendInviteToGameAck* Arena::CreateMaybeMessage<::KFMsg::S2SQueryFriendInviteToGameAck>(Arena*);
-template<> LIBPROTOC_EXPORT ::KFMsg::S2SQueryFriendInviteToRelationReq* Arena::CreateMaybeMessage<::KFMsg::S2SQueryFriendInviteToRelationReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SQueryFriendRankListReq* Arena::CreateMaybeMessage<::KFMsg::S2SQueryFriendRankListReq>(Arena*);
-template<> LIBPROTOC_EXPORT ::KFMsg::S2SQueryFriendToGameAck* Arena::CreateMaybeMessage<::KFMsg::S2SQueryFriendToGameAck>(Arena*);
-template<> LIBPROTOC_EXPORT ::KFMsg::S2SQueryFriendToRelationReq* Arena::CreateMaybeMessage<::KFMsg::S2SQueryFriendToRelationReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SQueryMailAck* Arena::CreateMaybeMessage<::KFMsg::S2SQueryMailAck>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SQueryMailReq* Arena::CreateMaybeMessage<::KFMsg::S2SQueryMailReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SQueryPlayerToDataReq* Arena::CreateMaybeMessage<::KFMsg::S2SQueryPlayerToDataReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SQueryPlayerToGameAck* Arena::CreateMaybeMessage<::KFMsg::S2SQueryPlayerToGameAck>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SQueryRankListReq* Arena::CreateMaybeMessage<::KFMsg::S2SQueryRankListReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2SQueryRelationInviteToGameAck* Arena::CreateMaybeMessage<::KFMsg::S2SQueryRelationInviteToGameAck>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2SQueryRelationInviteToRelationReq* Arena::CreateMaybeMessage<::KFMsg::S2SQueryRelationInviteToRelationReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2SQueryRelationToGameAck* Arena::CreateMaybeMessage<::KFMsg::S2SQueryRelationToGameAck>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2SQueryRelationToRelationReq* Arena::CreateMaybeMessage<::KFMsg::S2SQueryRelationToRelationReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SReLoginToGameReq* Arena::CreateMaybeMessage<::KFMsg::S2SReLoginToGameReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SReLoginToGateAck* Arena::CreateMaybeMessage<::KFMsg::S2SReLoginToGateAck>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SRemoveGateToWorldReq* Arena::CreateMaybeMessage<::KFMsg::S2SRemoveGateToWorldReq>(Arena*);
@@ -336,10 +336,10 @@ template<> LIBPROTOC_EXPORT ::KFMsg::S2SSavePlayerToGameAck* Arena::CreateMaybeM
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SSetPlayerNameToDataReq* Arena::CreateMaybeMessage<::KFMsg::S2SSetPlayerNameToDataReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SSetPlayerNameToGameAck* Arena::CreateMaybeMessage<::KFMsg::S2SSetPlayerNameToGameAck>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SSyncRefreshRank* Arena::CreateMaybeMessage<::KFMsg::S2SSyncRefreshRank>(Arena*);
-template<> LIBPROTOC_EXPORT ::KFMsg::S2SUpdateDataToFriendReq* Arena::CreateMaybeMessage<::KFMsg::S2SUpdateDataToFriendReq>(Arena*);
-template<> LIBPROTOC_EXPORT ::KFMsg::S2SUpdateDataToFriendReq_PbdataEntry_DoNotUse* Arena::CreateMaybeMessage<::KFMsg::S2SUpdateDataToFriendReq_PbdataEntry_DoNotUse>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SUpdateDataToPublicReq* Arena::CreateMaybeMessage<::KFMsg::S2SUpdateDataToPublicReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SUpdateDataToPublicReq_PbdataEntry_DoNotUse* Arena::CreateMaybeMessage<::KFMsg::S2SUpdateDataToPublicReq_PbdataEntry_DoNotUse>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2SUpdateDataToRelationReq* Arena::CreateMaybeMessage<::KFMsg::S2SUpdateDataToRelationReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2SUpdateDataToRelationReq_PbdataEntry_DoNotUse* Arena::CreateMaybeMessage<::KFMsg::S2SUpdateDataToRelationReq_PbdataEntry_DoNotUse>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SUpdateFriendLinessToGameAck* Arena::CreateMaybeMessage<::KFMsg::S2SUpdateFriendLinessToGameAck>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SUpdateFriendLinessToRelationReq* Arena::CreateMaybeMessage<::KFMsg::S2SUpdateFriendLinessToRelationReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SUpdateMailStatusAck* Arena::CreateMaybeMessage<::KFMsg::S2SUpdateMailStatusAck>(Arena*);
@@ -402,18 +402,18 @@ enum FrameServerProtocol {
   S2S_QUERY_BASIC_TO_PUBLIC_REQ = 20702,
   S2S_QUERY_BASIC_TO_GAME_ACK = 20703,
   S2S_CLEAR_ONLINE_TO_PUBLIC_REQ = 20704,
-  S2S_QUERY_FRIEND_TO_RELATION_REQ = 20801,
-  S2S_QUERY_FRIEND_TO_GAME_ACK = 20802,
-  S2S_QUERY_FRIEND_INVITE_TO_RELATION_REQ = 20803,
-  S2S_QUERY_FRIEND_INVITE_TO_GAME_ACK = 20804,
-  S2S_UPDATE_DATA_TO_FRIEND_REQ = 20805,
-  S2S_ADD_FRIEND_INVITE_TO_RELATION_REQ = 20806,
-  S2S_ADD_FRIEND_INVITE_TO_GAME_ACK = 20807,
-  S2S_DEL_FRIEND_INVITE_TO_RELATION_REQ = 20808,
-  S2S_ADD_FRIEND_TO_RELATION_REQ = 20809,
-  S2S_ADD_FRIEND_TO_GAME_ACK = 20810,
-  S2S_DEL_FRIEND_TO_RELATION_REQ = 20811,
-  S2S_DEL_FRIEND_TO_GAME_ACK = 20812,
+  S2S_UPDATE_DATA_TO_RELATION_REQ = 20801,
+  S2S_QUERY_RELATION_TO_RELATION_REQ = 20802,
+  S2S_QUERY_RELATION_TO_GAME_ACK = 20803,
+  S2S_QUERY_RELATION_INVITE_TO_RELATION_REQ = 20804,
+  S2S_QUERY_RELATION_INVITE_TO_GAME_ACK = 20805,
+  S2S_APPLY_ADD_RELATION_TO_RELATION_REQ = 20806,
+  S2S_APPLY_ADD_RELATION_TO_GAME_ACK = 20807,
+  S2S_DEL_RELATION_INVITE_TO_RELATION_REQ = 20808,
+  S2S_ADD_RELATION_TO_RELATION_REQ = 20809,
+  S2S_ADD_RELATION_TO_GAME_ACK = 20810,
+  S2S_DEL_RELATION_TO_RELATION_REQ = 20811,
+  S2S_DEL_RELATION_TO_GAME_ACK = 20812,
   S2S_UPDATE_FRIENDLINESS_TO_RELATION_REQ = 20813,
   S2S_UPDATE_FRIENDLINESS_TO_GAME_ACK = 20814,
   FrameServerProtocol_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
@@ -6747,24 +6747,24 @@ class LIBPROTOC_EXPORT PBRelation : public ::google::protobuf::Message /* @@prot
 };
 // -------------------------------------------------------------------
 
-class LIBPROTOC_EXPORT S2SQueryFriendToRelationReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SQueryFriendToRelationReq) */ {
+class LIBPROTOC_EXPORT S2SQueryRelationToRelationReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SQueryRelationToRelationReq) */ {
  public:
-  S2SQueryFriendToRelationReq();
-  virtual ~S2SQueryFriendToRelationReq();
+  S2SQueryRelationToRelationReq();
+  virtual ~S2SQueryRelationToRelationReq();
 
-  S2SQueryFriendToRelationReq(const S2SQueryFriendToRelationReq& from);
+  S2SQueryRelationToRelationReq(const S2SQueryRelationToRelationReq& from);
 
-  inline S2SQueryFriendToRelationReq& operator=(const S2SQueryFriendToRelationReq& from) {
+  inline S2SQueryRelationToRelationReq& operator=(const S2SQueryRelationToRelationReq& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  S2SQueryFriendToRelationReq(S2SQueryFriendToRelationReq&& from) noexcept
-    : S2SQueryFriendToRelationReq() {
+  S2SQueryRelationToRelationReq(S2SQueryRelationToRelationReq&& from) noexcept
+    : S2SQueryRelationToRelationReq() {
     *this = ::std::move(from);
   }
 
-  inline S2SQueryFriendToRelationReq& operator=(S2SQueryFriendToRelationReq&& from) noexcept {
+  inline S2SQueryRelationToRelationReq& operator=(S2SQueryRelationToRelationReq&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -6774,34 +6774,34 @@ class LIBPROTOC_EXPORT S2SQueryFriendToRelationReq : public ::google::protobuf::
   }
   #endif
   static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SQueryFriendToRelationReq& default_instance();
+  static const S2SQueryRelationToRelationReq& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const S2SQueryFriendToRelationReq* internal_default_instance() {
-    return reinterpret_cast<const S2SQueryFriendToRelationReq*>(
-               &_S2SQueryFriendToRelationReq_default_instance_);
+  static inline const S2SQueryRelationToRelationReq* internal_default_instance() {
+    return reinterpret_cast<const S2SQueryRelationToRelationReq*>(
+               &_S2SQueryRelationToRelationReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     58;
 
-  void Swap(S2SQueryFriendToRelationReq* other);
-  friend void swap(S2SQueryFriendToRelationReq& a, S2SQueryFriendToRelationReq& b) {
+  void Swap(S2SQueryRelationToRelationReq* other);
+  friend void swap(S2SQueryRelationToRelationReq& a, S2SQueryRelationToRelationReq& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline S2SQueryFriendToRelationReq* New() const final {
-    return CreateMaybeMessage<S2SQueryFriendToRelationReq>(NULL);
+  inline S2SQueryRelationToRelationReq* New() const final {
+    return CreateMaybeMessage<S2SQueryRelationToRelationReq>(NULL);
   }
 
-  S2SQueryFriendToRelationReq* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<S2SQueryFriendToRelationReq>(arena);
+  S2SQueryRelationToRelationReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2SQueryRelationToRelationReq>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const S2SQueryFriendToRelationReq& from);
-  void MergeFrom(const S2SQueryFriendToRelationReq& from);
+  void CopyFrom(const S2SQueryRelationToRelationReq& from);
+  void MergeFrom(const S2SQueryRelationToRelationReq& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -6818,7 +6818,7 @@ class LIBPROTOC_EXPORT S2SQueryFriendToRelationReq : public ::google::protobuf::
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(S2SQueryFriendToRelationReq* other);
+  void InternalSwap(S2SQueryRelationToRelationReq* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -6834,40 +6834,55 @@ class LIBPROTOC_EXPORT S2SQueryFriendToRelationReq : public ::google::protobuf::
 
   // accessors -------------------------------------------------------
 
-  // uint64 playerid = 1;
+  // bytes dataname = 1;
+  void clear_dataname();
+  static const int kDatanameFieldNumber = 1;
+  const ::std::string& dataname() const;
+  void set_dataname(const ::std::string& value);
+  #if LANG_CXX11
+  void set_dataname(::std::string&& value);
+  #endif
+  void set_dataname(const char* value);
+  void set_dataname(const void* value, size_t size);
+  ::std::string* mutable_dataname();
+  ::std::string* release_dataname();
+  void set_allocated_dataname(::std::string* dataname);
+
+  // uint64 playerid = 2;
   void clear_playerid();
-  static const int kPlayeridFieldNumber = 1;
+  static const int kPlayeridFieldNumber = 2;
   ::google::protobuf::uint64 playerid() const;
   void set_playerid(::google::protobuf::uint64 value);
 
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SQueryFriendToRelationReq)
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SQueryRelationToRelationReq)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr dataname_;
   ::google::protobuf::uint64 playerid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameServerMessage_2eproto::TableStruct;
 };
 // -------------------------------------------------------------------
 
-class LIBPROTOC_EXPORT S2SQueryFriendToGameAck : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SQueryFriendToGameAck) */ {
+class LIBPROTOC_EXPORT S2SQueryRelationToGameAck : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SQueryRelationToGameAck) */ {
  public:
-  S2SQueryFriendToGameAck();
-  virtual ~S2SQueryFriendToGameAck();
+  S2SQueryRelationToGameAck();
+  virtual ~S2SQueryRelationToGameAck();
 
-  S2SQueryFriendToGameAck(const S2SQueryFriendToGameAck& from);
+  S2SQueryRelationToGameAck(const S2SQueryRelationToGameAck& from);
 
-  inline S2SQueryFriendToGameAck& operator=(const S2SQueryFriendToGameAck& from) {
+  inline S2SQueryRelationToGameAck& operator=(const S2SQueryRelationToGameAck& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  S2SQueryFriendToGameAck(S2SQueryFriendToGameAck&& from) noexcept
-    : S2SQueryFriendToGameAck() {
+  S2SQueryRelationToGameAck(S2SQueryRelationToGameAck&& from) noexcept
+    : S2SQueryRelationToGameAck() {
     *this = ::std::move(from);
   }
 
-  inline S2SQueryFriendToGameAck& operator=(S2SQueryFriendToGameAck&& from) noexcept {
+  inline S2SQueryRelationToGameAck& operator=(S2SQueryRelationToGameAck&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -6877,34 +6892,34 @@ class LIBPROTOC_EXPORT S2SQueryFriendToGameAck : public ::google::protobuf::Mess
   }
   #endif
   static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SQueryFriendToGameAck& default_instance();
+  static const S2SQueryRelationToGameAck& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const S2SQueryFriendToGameAck* internal_default_instance() {
-    return reinterpret_cast<const S2SQueryFriendToGameAck*>(
-               &_S2SQueryFriendToGameAck_default_instance_);
+  static inline const S2SQueryRelationToGameAck* internal_default_instance() {
+    return reinterpret_cast<const S2SQueryRelationToGameAck*>(
+               &_S2SQueryRelationToGameAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     59;
 
-  void Swap(S2SQueryFriendToGameAck* other);
-  friend void swap(S2SQueryFriendToGameAck& a, S2SQueryFriendToGameAck& b) {
+  void Swap(S2SQueryRelationToGameAck* other);
+  friend void swap(S2SQueryRelationToGameAck& a, S2SQueryRelationToGameAck& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline S2SQueryFriendToGameAck* New() const final {
-    return CreateMaybeMessage<S2SQueryFriendToGameAck>(NULL);
+  inline S2SQueryRelationToGameAck* New() const final {
+    return CreateMaybeMessage<S2SQueryRelationToGameAck>(NULL);
   }
 
-  S2SQueryFriendToGameAck* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<S2SQueryFriendToGameAck>(arena);
+  S2SQueryRelationToGameAck* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2SQueryRelationToGameAck>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const S2SQueryFriendToGameAck& from);
-  void MergeFrom(const S2SQueryFriendToGameAck& from);
+  void CopyFrom(const S2SQueryRelationToGameAck& from);
+  void MergeFrom(const S2SQueryRelationToGameAck& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -6921,7 +6936,7 @@ class LIBPROTOC_EXPORT S2SQueryFriendToGameAck : public ::google::protobuf::Mess
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(S2SQueryFriendToGameAck* other);
+  void InternalSwap(S2SQueryRelationToGameAck* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -6937,53 +6952,68 @@ class LIBPROTOC_EXPORT S2SQueryFriendToGameAck : public ::google::protobuf::Mess
 
   // accessors -------------------------------------------------------
 
-  // repeated .KFMsg.PBRelation pbfriend = 2;
-  int pbfriend_size() const;
-  void clear_pbfriend();
-  static const int kPbfriendFieldNumber = 2;
-  ::KFMsg::PBRelation* mutable_pbfriend(int index);
+  // repeated .KFMsg.PBRelation pbrelation = 3;
+  int pbrelation_size() const;
+  void clear_pbrelation();
+  static const int kPbrelationFieldNumber = 3;
+  ::KFMsg::PBRelation* mutable_pbrelation(int index);
   ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRelation >*
-      mutable_pbfriend();
-  const ::KFMsg::PBRelation& pbfriend(int index) const;
-  ::KFMsg::PBRelation* add_pbfriend();
+      mutable_pbrelation();
+  const ::KFMsg::PBRelation& pbrelation(int index) const;
+  ::KFMsg::PBRelation* add_pbrelation();
   const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRelation >&
-      pbfriend() const;
+      pbrelation() const;
 
-  // uint64 playerid = 1;
+  // bytes dataname = 1;
+  void clear_dataname();
+  static const int kDatanameFieldNumber = 1;
+  const ::std::string& dataname() const;
+  void set_dataname(const ::std::string& value);
+  #if LANG_CXX11
+  void set_dataname(::std::string&& value);
+  #endif
+  void set_dataname(const char* value);
+  void set_dataname(const void* value, size_t size);
+  ::std::string* mutable_dataname();
+  ::std::string* release_dataname();
+  void set_allocated_dataname(::std::string* dataname);
+
+  // uint64 playerid = 2;
   void clear_playerid();
-  static const int kPlayeridFieldNumber = 1;
+  static const int kPlayeridFieldNumber = 2;
   ::google::protobuf::uint64 playerid() const;
   void set_playerid(::google::protobuf::uint64 value);
 
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SQueryFriendToGameAck)
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SQueryRelationToGameAck)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRelation > pbfriend_;
+  ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRelation > pbrelation_;
+  ::google::protobuf::internal::ArenaStringPtr dataname_;
   ::google::protobuf::uint64 playerid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameServerMessage_2eproto::TableStruct;
 };
 // -------------------------------------------------------------------
 
-class LIBPROTOC_EXPORT S2SQueryFriendInviteToRelationReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SQueryFriendInviteToRelationReq) */ {
+class LIBPROTOC_EXPORT S2SQueryRelationInviteToRelationReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SQueryRelationInviteToRelationReq) */ {
  public:
-  S2SQueryFriendInviteToRelationReq();
-  virtual ~S2SQueryFriendInviteToRelationReq();
+  S2SQueryRelationInviteToRelationReq();
+  virtual ~S2SQueryRelationInviteToRelationReq();
 
-  S2SQueryFriendInviteToRelationReq(const S2SQueryFriendInviteToRelationReq& from);
+  S2SQueryRelationInviteToRelationReq(const S2SQueryRelationInviteToRelationReq& from);
 
-  inline S2SQueryFriendInviteToRelationReq& operator=(const S2SQueryFriendInviteToRelationReq& from) {
+  inline S2SQueryRelationInviteToRelationReq& operator=(const S2SQueryRelationInviteToRelationReq& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  S2SQueryFriendInviteToRelationReq(S2SQueryFriendInviteToRelationReq&& from) noexcept
-    : S2SQueryFriendInviteToRelationReq() {
+  S2SQueryRelationInviteToRelationReq(S2SQueryRelationInviteToRelationReq&& from) noexcept
+    : S2SQueryRelationInviteToRelationReq() {
     *this = ::std::move(from);
   }
 
-  inline S2SQueryFriendInviteToRelationReq& operator=(S2SQueryFriendInviteToRelationReq&& from) noexcept {
+  inline S2SQueryRelationInviteToRelationReq& operator=(S2SQueryRelationInviteToRelationReq&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -6993,34 +7023,34 @@ class LIBPROTOC_EXPORT S2SQueryFriendInviteToRelationReq : public ::google::prot
   }
   #endif
   static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SQueryFriendInviteToRelationReq& default_instance();
+  static const S2SQueryRelationInviteToRelationReq& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const S2SQueryFriendInviteToRelationReq* internal_default_instance() {
-    return reinterpret_cast<const S2SQueryFriendInviteToRelationReq*>(
-               &_S2SQueryFriendInviteToRelationReq_default_instance_);
+  static inline const S2SQueryRelationInviteToRelationReq* internal_default_instance() {
+    return reinterpret_cast<const S2SQueryRelationInviteToRelationReq*>(
+               &_S2SQueryRelationInviteToRelationReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     60;
 
-  void Swap(S2SQueryFriendInviteToRelationReq* other);
-  friend void swap(S2SQueryFriendInviteToRelationReq& a, S2SQueryFriendInviteToRelationReq& b) {
+  void Swap(S2SQueryRelationInviteToRelationReq* other);
+  friend void swap(S2SQueryRelationInviteToRelationReq& a, S2SQueryRelationInviteToRelationReq& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline S2SQueryFriendInviteToRelationReq* New() const final {
-    return CreateMaybeMessage<S2SQueryFriendInviteToRelationReq>(NULL);
+  inline S2SQueryRelationInviteToRelationReq* New() const final {
+    return CreateMaybeMessage<S2SQueryRelationInviteToRelationReq>(NULL);
   }
 
-  S2SQueryFriendInviteToRelationReq* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<S2SQueryFriendInviteToRelationReq>(arena);
+  S2SQueryRelationInviteToRelationReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2SQueryRelationInviteToRelationReq>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const S2SQueryFriendInviteToRelationReq& from);
-  void MergeFrom(const S2SQueryFriendInviteToRelationReq& from);
+  void CopyFrom(const S2SQueryRelationInviteToRelationReq& from);
+  void MergeFrom(const S2SQueryRelationInviteToRelationReq& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -7037,7 +7067,7 @@ class LIBPROTOC_EXPORT S2SQueryFriendInviteToRelationReq : public ::google::prot
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(S2SQueryFriendInviteToRelationReq* other);
+  void InternalSwap(S2SQueryRelationInviteToRelationReq* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -7053,40 +7083,55 @@ class LIBPROTOC_EXPORT S2SQueryFriendInviteToRelationReq : public ::google::prot
 
   // accessors -------------------------------------------------------
 
-  // uint64 playerid = 1;
+  // bytes dataname = 1;
+  void clear_dataname();
+  static const int kDatanameFieldNumber = 1;
+  const ::std::string& dataname() const;
+  void set_dataname(const ::std::string& value);
+  #if LANG_CXX11
+  void set_dataname(::std::string&& value);
+  #endif
+  void set_dataname(const char* value);
+  void set_dataname(const void* value, size_t size);
+  ::std::string* mutable_dataname();
+  ::std::string* release_dataname();
+  void set_allocated_dataname(::std::string* dataname);
+
+  // uint64 playerid = 3;
   void clear_playerid();
-  static const int kPlayeridFieldNumber = 1;
+  static const int kPlayeridFieldNumber = 3;
   ::google::protobuf::uint64 playerid() const;
   void set_playerid(::google::protobuf::uint64 value);
 
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SQueryFriendInviteToRelationReq)
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SQueryRelationInviteToRelationReq)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr dataname_;
   ::google::protobuf::uint64 playerid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameServerMessage_2eproto::TableStruct;
 };
 // -------------------------------------------------------------------
 
-class LIBPROTOC_EXPORT S2SQueryFriendInviteToGameAck : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SQueryFriendInviteToGameAck) */ {
+class LIBPROTOC_EXPORT S2SQueryRelationInviteToGameAck : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SQueryRelationInviteToGameAck) */ {
  public:
-  S2SQueryFriendInviteToGameAck();
-  virtual ~S2SQueryFriendInviteToGameAck();
+  S2SQueryRelationInviteToGameAck();
+  virtual ~S2SQueryRelationInviteToGameAck();
 
-  S2SQueryFriendInviteToGameAck(const S2SQueryFriendInviteToGameAck& from);
+  S2SQueryRelationInviteToGameAck(const S2SQueryRelationInviteToGameAck& from);
 
-  inline S2SQueryFriendInviteToGameAck& operator=(const S2SQueryFriendInviteToGameAck& from) {
+  inline S2SQueryRelationInviteToGameAck& operator=(const S2SQueryRelationInviteToGameAck& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  S2SQueryFriendInviteToGameAck(S2SQueryFriendInviteToGameAck&& from) noexcept
-    : S2SQueryFriendInviteToGameAck() {
+  S2SQueryRelationInviteToGameAck(S2SQueryRelationInviteToGameAck&& from) noexcept
+    : S2SQueryRelationInviteToGameAck() {
     *this = ::std::move(from);
   }
 
-  inline S2SQueryFriendInviteToGameAck& operator=(S2SQueryFriendInviteToGameAck&& from) noexcept {
+  inline S2SQueryRelationInviteToGameAck& operator=(S2SQueryRelationInviteToGameAck&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -7096,34 +7141,34 @@ class LIBPROTOC_EXPORT S2SQueryFriendInviteToGameAck : public ::google::protobuf
   }
   #endif
   static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SQueryFriendInviteToGameAck& default_instance();
+  static const S2SQueryRelationInviteToGameAck& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const S2SQueryFriendInviteToGameAck* internal_default_instance() {
-    return reinterpret_cast<const S2SQueryFriendInviteToGameAck*>(
-               &_S2SQueryFriendInviteToGameAck_default_instance_);
+  static inline const S2SQueryRelationInviteToGameAck* internal_default_instance() {
+    return reinterpret_cast<const S2SQueryRelationInviteToGameAck*>(
+               &_S2SQueryRelationInviteToGameAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     61;
 
-  void Swap(S2SQueryFriendInviteToGameAck* other);
-  friend void swap(S2SQueryFriendInviteToGameAck& a, S2SQueryFriendInviteToGameAck& b) {
+  void Swap(S2SQueryRelationInviteToGameAck* other);
+  friend void swap(S2SQueryRelationInviteToGameAck& a, S2SQueryRelationInviteToGameAck& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline S2SQueryFriendInviteToGameAck* New() const final {
-    return CreateMaybeMessage<S2SQueryFriendInviteToGameAck>(NULL);
+  inline S2SQueryRelationInviteToGameAck* New() const final {
+    return CreateMaybeMessage<S2SQueryRelationInviteToGameAck>(NULL);
   }
 
-  S2SQueryFriendInviteToGameAck* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<S2SQueryFriendInviteToGameAck>(arena);
+  S2SQueryRelationInviteToGameAck* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2SQueryRelationInviteToGameAck>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const S2SQueryFriendInviteToGameAck& from);
-  void MergeFrom(const S2SQueryFriendInviteToGameAck& from);
+  void CopyFrom(const S2SQueryRelationInviteToGameAck& from);
+  void MergeFrom(const S2SQueryRelationInviteToGameAck& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -7140,7 +7185,7 @@ class LIBPROTOC_EXPORT S2SQueryFriendInviteToGameAck : public ::google::protobuf
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(S2SQueryFriendInviteToGameAck* other);
+  void InternalSwap(S2SQueryRelationInviteToGameAck* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -7156,10 +7201,10 @@ class LIBPROTOC_EXPORT S2SQueryFriendInviteToGameAck : public ::google::protobuf
 
   // accessors -------------------------------------------------------
 
-  // repeated .KFMsg.PBRelation pbinvite = 2;
+  // repeated .KFMsg.PBRelation pbinvite = 3;
   int pbinvite_size() const;
   void clear_pbinvite();
-  static const int kPbinviteFieldNumber = 2;
+  static const int kPbinviteFieldNumber = 3;
   ::KFMsg::PBRelation* mutable_pbinvite(int index);
   ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRelation >*
       mutable_pbinvite();
@@ -7168,62 +7213,77 @@ class LIBPROTOC_EXPORT S2SQueryFriendInviteToGameAck : public ::google::protobuf
   const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRelation >&
       pbinvite() const;
 
-  // uint64 playerid = 1;
+  // bytes dataname = 1;
+  void clear_dataname();
+  static const int kDatanameFieldNumber = 1;
+  const ::std::string& dataname() const;
+  void set_dataname(const ::std::string& value);
+  #if LANG_CXX11
+  void set_dataname(::std::string&& value);
+  #endif
+  void set_dataname(const char* value);
+  void set_dataname(const void* value, size_t size);
+  ::std::string* mutable_dataname();
+  ::std::string* release_dataname();
+  void set_allocated_dataname(::std::string* dataname);
+
+  // uint64 playerid = 2;
   void clear_playerid();
-  static const int kPlayeridFieldNumber = 1;
+  static const int kPlayeridFieldNumber = 2;
   ::google::protobuf::uint64 playerid() const;
   void set_playerid(::google::protobuf::uint64 value);
 
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SQueryFriendInviteToGameAck)
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SQueryRelationInviteToGameAck)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRelation > pbinvite_;
+  ::google::protobuf::internal::ArenaStringPtr dataname_;
   ::google::protobuf::uint64 playerid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameServerMessage_2eproto::TableStruct;
 };
 // -------------------------------------------------------------------
 
-class S2SUpdateDataToFriendReq_PbdataEntry_DoNotUse : public ::google::protobuf::internal::MapEntry<S2SUpdateDataToFriendReq_PbdataEntry_DoNotUse, 
+class S2SUpdateDataToRelationReq_PbdataEntry_DoNotUse : public ::google::protobuf::internal::MapEntry<S2SUpdateDataToRelationReq_PbdataEntry_DoNotUse, 
     ::std::string, ::std::string,
     ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
     ::google::protobuf::internal::WireFormatLite::TYPE_BYTES,
     0 > {
 public:
-  typedef ::google::protobuf::internal::MapEntry<S2SUpdateDataToFriendReq_PbdataEntry_DoNotUse, 
+  typedef ::google::protobuf::internal::MapEntry<S2SUpdateDataToRelationReq_PbdataEntry_DoNotUse, 
     ::std::string, ::std::string,
     ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
     ::google::protobuf::internal::WireFormatLite::TYPE_BYTES,
     0 > SuperType;
-  S2SUpdateDataToFriendReq_PbdataEntry_DoNotUse();
-  S2SUpdateDataToFriendReq_PbdataEntry_DoNotUse(::google::protobuf::Arena* arena);
-  void MergeFrom(const S2SUpdateDataToFriendReq_PbdataEntry_DoNotUse& other);
-  static const S2SUpdateDataToFriendReq_PbdataEntry_DoNotUse* internal_default_instance() { return reinterpret_cast<const S2SUpdateDataToFriendReq_PbdataEntry_DoNotUse*>(&_S2SUpdateDataToFriendReq_PbdataEntry_DoNotUse_default_instance_); }
+  S2SUpdateDataToRelationReq_PbdataEntry_DoNotUse();
+  S2SUpdateDataToRelationReq_PbdataEntry_DoNotUse(::google::protobuf::Arena* arena);
+  void MergeFrom(const S2SUpdateDataToRelationReq_PbdataEntry_DoNotUse& other);
+  static const S2SUpdateDataToRelationReq_PbdataEntry_DoNotUse* internal_default_instance() { return reinterpret_cast<const S2SUpdateDataToRelationReq_PbdataEntry_DoNotUse*>(&_S2SUpdateDataToRelationReq_PbdataEntry_DoNotUse_default_instance_); }
   void MergeFrom(const ::google::protobuf::Message& other) final;
   ::google::protobuf::Metadata GetMetadata() const;
 };
 
 // -------------------------------------------------------------------
 
-class LIBPROTOC_EXPORT S2SUpdateDataToFriendReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SUpdateDataToFriendReq) */ {
+class LIBPROTOC_EXPORT S2SUpdateDataToRelationReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SUpdateDataToRelationReq) */ {
  public:
-  S2SUpdateDataToFriendReq();
-  virtual ~S2SUpdateDataToFriendReq();
+  S2SUpdateDataToRelationReq();
+  virtual ~S2SUpdateDataToRelationReq();
 
-  S2SUpdateDataToFriendReq(const S2SUpdateDataToFriendReq& from);
+  S2SUpdateDataToRelationReq(const S2SUpdateDataToRelationReq& from);
 
-  inline S2SUpdateDataToFriendReq& operator=(const S2SUpdateDataToFriendReq& from) {
+  inline S2SUpdateDataToRelationReq& operator=(const S2SUpdateDataToRelationReq& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  S2SUpdateDataToFriendReq(S2SUpdateDataToFriendReq&& from) noexcept
-    : S2SUpdateDataToFriendReq() {
+  S2SUpdateDataToRelationReq(S2SUpdateDataToRelationReq&& from) noexcept
+    : S2SUpdateDataToRelationReq() {
     *this = ::std::move(from);
   }
 
-  inline S2SUpdateDataToFriendReq& operator=(S2SUpdateDataToFriendReq&& from) noexcept {
+  inline S2SUpdateDataToRelationReq& operator=(S2SUpdateDataToRelationReq&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -7233,34 +7293,34 @@ class LIBPROTOC_EXPORT S2SUpdateDataToFriendReq : public ::google::protobuf::Mes
   }
   #endif
   static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SUpdateDataToFriendReq& default_instance();
+  static const S2SUpdateDataToRelationReq& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const S2SUpdateDataToFriendReq* internal_default_instance() {
-    return reinterpret_cast<const S2SUpdateDataToFriendReq*>(
-               &_S2SUpdateDataToFriendReq_default_instance_);
+  static inline const S2SUpdateDataToRelationReq* internal_default_instance() {
+    return reinterpret_cast<const S2SUpdateDataToRelationReq*>(
+               &_S2SUpdateDataToRelationReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     63;
 
-  void Swap(S2SUpdateDataToFriendReq* other);
-  friend void swap(S2SUpdateDataToFriendReq& a, S2SUpdateDataToFriendReq& b) {
+  void Swap(S2SUpdateDataToRelationReq* other);
+  friend void swap(S2SUpdateDataToRelationReq& a, S2SUpdateDataToRelationReq& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline S2SUpdateDataToFriendReq* New() const final {
-    return CreateMaybeMessage<S2SUpdateDataToFriendReq>(NULL);
+  inline S2SUpdateDataToRelationReq* New() const final {
+    return CreateMaybeMessage<S2SUpdateDataToRelationReq>(NULL);
   }
 
-  S2SUpdateDataToFriendReq* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<S2SUpdateDataToFriendReq>(arena);
+  S2SUpdateDataToRelationReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2SUpdateDataToRelationReq>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const S2SUpdateDataToFriendReq& from);
-  void MergeFrom(const S2SUpdateDataToFriendReq& from);
+  void CopyFrom(const S2SUpdateDataToRelationReq& from);
+  void MergeFrom(const S2SUpdateDataToRelationReq& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -7277,7 +7337,7 @@ class LIBPROTOC_EXPORT S2SUpdateDataToFriendReq : public ::google::protobuf::Mes
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(S2SUpdateDataToFriendReq* other);
+  void InternalSwap(S2SUpdateDataToRelationReq* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -7303,46 +7363,61 @@ class LIBPROTOC_EXPORT S2SUpdateDataToFriendReq : public ::google::protobuf::Mes
   ::google::protobuf::Map< ::std::string, ::std::string >*
       mutable_pbdata();
 
-  // uint64 playerid = 1;
+  // bytes dataname = 1;
+  void clear_dataname();
+  static const int kDatanameFieldNumber = 1;
+  const ::std::string& dataname() const;
+  void set_dataname(const ::std::string& value);
+  #if LANG_CXX11
+  void set_dataname(::std::string&& value);
+  #endif
+  void set_dataname(const char* value);
+  void set_dataname(const void* value, size_t size);
+  ::std::string* mutable_dataname();
+  ::std::string* release_dataname();
+  void set_allocated_dataname(::std::string* dataname);
+
+  // uint64 playerid = 2;
   void clear_playerid();
-  static const int kPlayeridFieldNumber = 1;
+  static const int kPlayeridFieldNumber = 2;
   ::google::protobuf::uint64 playerid() const;
   void set_playerid(::google::protobuf::uint64 value);
 
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SUpdateDataToFriendReq)
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SUpdateDataToRelationReq)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::MapField<
-      S2SUpdateDataToFriendReq_PbdataEntry_DoNotUse,
+      S2SUpdateDataToRelationReq_PbdataEntry_DoNotUse,
       ::std::string, ::std::string,
       ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
       ::google::protobuf::internal::WireFormatLite::TYPE_BYTES,
       0 > pbdata_;
+  ::google::protobuf::internal::ArenaStringPtr dataname_;
   ::google::protobuf::uint64 playerid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameServerMessage_2eproto::TableStruct;
 };
 // -------------------------------------------------------------------
 
-class LIBPROTOC_EXPORT S2SAddFriendInviteToRelationReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SAddFriendInviteToRelationReq) */ {
+class LIBPROTOC_EXPORT S2SApplyAddRelationToRelationReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SApplyAddRelationToRelationReq) */ {
  public:
-  S2SAddFriendInviteToRelationReq();
-  virtual ~S2SAddFriendInviteToRelationReq();
+  S2SApplyAddRelationToRelationReq();
+  virtual ~S2SApplyAddRelationToRelationReq();
 
-  S2SAddFriendInviteToRelationReq(const S2SAddFriendInviteToRelationReq& from);
+  S2SApplyAddRelationToRelationReq(const S2SApplyAddRelationToRelationReq& from);
 
-  inline S2SAddFriendInviteToRelationReq& operator=(const S2SAddFriendInviteToRelationReq& from) {
+  inline S2SApplyAddRelationToRelationReq& operator=(const S2SApplyAddRelationToRelationReq& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  S2SAddFriendInviteToRelationReq(S2SAddFriendInviteToRelationReq&& from) noexcept
-    : S2SAddFriendInviteToRelationReq() {
+  S2SApplyAddRelationToRelationReq(S2SApplyAddRelationToRelationReq&& from) noexcept
+    : S2SApplyAddRelationToRelationReq() {
     *this = ::std::move(from);
   }
 
-  inline S2SAddFriendInviteToRelationReq& operator=(S2SAddFriendInviteToRelationReq&& from) noexcept {
+  inline S2SApplyAddRelationToRelationReq& operator=(S2SApplyAddRelationToRelationReq&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -7352,34 +7427,34 @@ class LIBPROTOC_EXPORT S2SAddFriendInviteToRelationReq : public ::google::protob
   }
   #endif
   static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SAddFriendInviteToRelationReq& default_instance();
+  static const S2SApplyAddRelationToRelationReq& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const S2SAddFriendInviteToRelationReq* internal_default_instance() {
-    return reinterpret_cast<const S2SAddFriendInviteToRelationReq*>(
-               &_S2SAddFriendInviteToRelationReq_default_instance_);
+  static inline const S2SApplyAddRelationToRelationReq* internal_default_instance() {
+    return reinterpret_cast<const S2SApplyAddRelationToRelationReq*>(
+               &_S2SApplyAddRelationToRelationReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     64;
 
-  void Swap(S2SAddFriendInviteToRelationReq* other);
-  friend void swap(S2SAddFriendInviteToRelationReq& a, S2SAddFriendInviteToRelationReq& b) {
+  void Swap(S2SApplyAddRelationToRelationReq* other);
+  friend void swap(S2SApplyAddRelationToRelationReq& a, S2SApplyAddRelationToRelationReq& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline S2SAddFriendInviteToRelationReq* New() const final {
-    return CreateMaybeMessage<S2SAddFriendInviteToRelationReq>(NULL);
+  inline S2SApplyAddRelationToRelationReq* New() const final {
+    return CreateMaybeMessage<S2SApplyAddRelationToRelationReq>(NULL);
   }
 
-  S2SAddFriendInviteToRelationReq* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<S2SAddFriendInviteToRelationReq>(arena);
+  S2SApplyAddRelationToRelationReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2SApplyAddRelationToRelationReq>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const S2SAddFriendInviteToRelationReq& from);
-  void MergeFrom(const S2SAddFriendInviteToRelationReq& from);
+  void CopyFrom(const S2SApplyAddRelationToRelationReq& from);
+  void MergeFrom(const S2SApplyAddRelationToRelationReq& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -7396,7 +7471,7 @@ class LIBPROTOC_EXPORT S2SAddFriendInviteToRelationReq : public ::google::protob
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(S2SAddFriendInviteToRelationReq* other);
+  void InternalSwap(S2SApplyAddRelationToRelationReq* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -7412,23 +7487,37 @@ class LIBPROTOC_EXPORT S2SAddFriendInviteToRelationReq : public ::google::protob
 
   // accessors -------------------------------------------------------
 
-  // bytes name = 1;
-  void clear_name();
-  static const int kNameFieldNumber = 1;
-  const ::std::string& name() const;
-  void set_name(const ::std::string& value);
+  // bytes dataname = 1;
+  void clear_dataname();
+  static const int kDatanameFieldNumber = 1;
+  const ::std::string& dataname() const;
+  void set_dataname(const ::std::string& value);
   #if LANG_CXX11
-  void set_name(::std::string&& value);
+  void set_dataname(::std::string&& value);
   #endif
-  void set_name(const char* value);
-  void set_name(const void* value, size_t size);
-  ::std::string* mutable_name();
-  ::std::string* release_name();
-  void set_allocated_name(::std::string* name);
+  void set_dataname(const char* value);
+  void set_dataname(const void* value, size_t size);
+  ::std::string* mutable_dataname();
+  ::std::string* release_dataname();
+  void set_allocated_dataname(::std::string* dataname);
 
-  // bytes message = 3;
+  // bytes playername = 2;
+  void clear_playername();
+  static const int kPlayernameFieldNumber = 2;
+  const ::std::string& playername() const;
+  void set_playername(const ::std::string& value);
+  #if LANG_CXX11
+  void set_playername(::std::string&& value);
+  #endif
+  void set_playername(const char* value);
+  void set_playername(const void* value, size_t size);
+  ::std::string* mutable_playername();
+  ::std::string* release_playername();
+  void set_allocated_playername(::std::string* playername);
+
+  // bytes message = 4;
   void clear_message();
-  static const int kMessageFieldNumber = 3;
+  static const int kMessageFieldNumber = 4;
   const ::std::string& message() const;
   void set_message(const ::std::string& value);
   #if LANG_CXX11
@@ -7440,17 +7529,18 @@ class LIBPROTOC_EXPORT S2SAddFriendInviteToRelationReq : public ::google::protob
   ::std::string* release_message();
   void set_allocated_message(::std::string* message);
 
-  // uint64 playerid = 2;
+  // uint64 playerid = 3;
   void clear_playerid();
-  static const int kPlayeridFieldNumber = 2;
+  static const int kPlayeridFieldNumber = 3;
   ::google::protobuf::uint64 playerid() const;
   void set_playerid(::google::protobuf::uint64 value);
 
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SAddFriendInviteToRelationReq)
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SApplyAddRelationToRelationReq)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::internal::ArenaStringPtr name_;
+  ::google::protobuf::internal::ArenaStringPtr dataname_;
+  ::google::protobuf::internal::ArenaStringPtr playername_;
   ::google::protobuf::internal::ArenaStringPtr message_;
   ::google::protobuf::uint64 playerid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
@@ -7458,24 +7548,24 @@ class LIBPROTOC_EXPORT S2SAddFriendInviteToRelationReq : public ::google::protob
 };
 // -------------------------------------------------------------------
 
-class LIBPROTOC_EXPORT S2SAddFriendInviteToGameAck : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SAddFriendInviteToGameAck) */ {
+class LIBPROTOC_EXPORT S2SApplyAddRelationToGameAck : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SApplyAddRelationToGameAck) */ {
  public:
-  S2SAddFriendInviteToGameAck();
-  virtual ~S2SAddFriendInviteToGameAck();
+  S2SApplyAddRelationToGameAck();
+  virtual ~S2SApplyAddRelationToGameAck();
 
-  S2SAddFriendInviteToGameAck(const S2SAddFriendInviteToGameAck& from);
+  S2SApplyAddRelationToGameAck(const S2SApplyAddRelationToGameAck& from);
 
-  inline S2SAddFriendInviteToGameAck& operator=(const S2SAddFriendInviteToGameAck& from) {
+  inline S2SApplyAddRelationToGameAck& operator=(const S2SApplyAddRelationToGameAck& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  S2SAddFriendInviteToGameAck(S2SAddFriendInviteToGameAck&& from) noexcept
-    : S2SAddFriendInviteToGameAck() {
+  S2SApplyAddRelationToGameAck(S2SApplyAddRelationToGameAck&& from) noexcept
+    : S2SApplyAddRelationToGameAck() {
     *this = ::std::move(from);
   }
 
-  inline S2SAddFriendInviteToGameAck& operator=(S2SAddFriendInviteToGameAck&& from) noexcept {
+  inline S2SApplyAddRelationToGameAck& operator=(S2SApplyAddRelationToGameAck&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -7485,34 +7575,34 @@ class LIBPROTOC_EXPORT S2SAddFriendInviteToGameAck : public ::google::protobuf::
   }
   #endif
   static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SAddFriendInviteToGameAck& default_instance();
+  static const S2SApplyAddRelationToGameAck& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const S2SAddFriendInviteToGameAck* internal_default_instance() {
-    return reinterpret_cast<const S2SAddFriendInviteToGameAck*>(
-               &_S2SAddFriendInviteToGameAck_default_instance_);
+  static inline const S2SApplyAddRelationToGameAck* internal_default_instance() {
+    return reinterpret_cast<const S2SApplyAddRelationToGameAck*>(
+               &_S2SApplyAddRelationToGameAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     65;
 
-  void Swap(S2SAddFriendInviteToGameAck* other);
-  friend void swap(S2SAddFriendInviteToGameAck& a, S2SAddFriendInviteToGameAck& b) {
+  void Swap(S2SApplyAddRelationToGameAck* other);
+  friend void swap(S2SApplyAddRelationToGameAck& a, S2SApplyAddRelationToGameAck& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline S2SAddFriendInviteToGameAck* New() const final {
-    return CreateMaybeMessage<S2SAddFriendInviteToGameAck>(NULL);
+  inline S2SApplyAddRelationToGameAck* New() const final {
+    return CreateMaybeMessage<S2SApplyAddRelationToGameAck>(NULL);
   }
 
-  S2SAddFriendInviteToGameAck* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<S2SAddFriendInviteToGameAck>(arena);
+  S2SApplyAddRelationToGameAck* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2SApplyAddRelationToGameAck>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const S2SAddFriendInviteToGameAck& from);
-  void MergeFrom(const S2SAddFriendInviteToGameAck& from);
+  void CopyFrom(const S2SApplyAddRelationToGameAck& from);
+  void MergeFrom(const S2SApplyAddRelationToGameAck& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -7529,7 +7619,7 @@ class LIBPROTOC_EXPORT S2SAddFriendInviteToGameAck : public ::google::protobuf::
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(S2SAddFriendInviteToGameAck* other);
+  void InternalSwap(S2SApplyAddRelationToGameAck* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -7545,10 +7635,24 @@ class LIBPROTOC_EXPORT S2SAddFriendInviteToGameAck : public ::google::protobuf::
 
   // accessors -------------------------------------------------------
 
-  // .KFMsg.PBRelation pbinvite = 2;
+  // bytes dataname = 1;
+  void clear_dataname();
+  static const int kDatanameFieldNumber = 1;
+  const ::std::string& dataname() const;
+  void set_dataname(const ::std::string& value);
+  #if LANG_CXX11
+  void set_dataname(::std::string&& value);
+  #endif
+  void set_dataname(const char* value);
+  void set_dataname(const void* value, size_t size);
+  ::std::string* mutable_dataname();
+  ::std::string* release_dataname();
+  void set_allocated_dataname(::std::string* dataname);
+
+  // .KFMsg.PBRelation pbinvite = 3;
   bool has_pbinvite() const;
   void clear_pbinvite();
-  static const int kPbinviteFieldNumber = 2;
+  static const int kPbinviteFieldNumber = 3;
   private:
   const ::KFMsg::PBRelation& _internal_pbinvite() const;
   public:
@@ -7557,16 +7661,17 @@ class LIBPROTOC_EXPORT S2SAddFriendInviteToGameAck : public ::google::protobuf::
   ::KFMsg::PBRelation* mutable_pbinvite();
   void set_allocated_pbinvite(::KFMsg::PBRelation* pbinvite);
 
-  // uint64 playerid = 1;
+  // uint64 playerid = 2;
   void clear_playerid();
-  static const int kPlayeridFieldNumber = 1;
+  static const int kPlayeridFieldNumber = 2;
   ::google::protobuf::uint64 playerid() const;
   void set_playerid(::google::protobuf::uint64 value);
 
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SAddFriendInviteToGameAck)
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SApplyAddRelationToGameAck)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr dataname_;
   ::KFMsg::PBRelation* pbinvite_;
   ::google::protobuf::uint64 playerid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
@@ -7574,24 +7679,24 @@ class LIBPROTOC_EXPORT S2SAddFriendInviteToGameAck : public ::google::protobuf::
 };
 // -------------------------------------------------------------------
 
-class LIBPROTOC_EXPORT S2SDelFriendInviteToRelationReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SDelFriendInviteToRelationReq) */ {
+class LIBPROTOC_EXPORT S2SDelRelationInviteToRelationReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SDelRelationInviteToRelationReq) */ {
  public:
-  S2SDelFriendInviteToRelationReq();
-  virtual ~S2SDelFriendInviteToRelationReq();
+  S2SDelRelationInviteToRelationReq();
+  virtual ~S2SDelRelationInviteToRelationReq();
 
-  S2SDelFriendInviteToRelationReq(const S2SDelFriendInviteToRelationReq& from);
+  S2SDelRelationInviteToRelationReq(const S2SDelRelationInviteToRelationReq& from);
 
-  inline S2SDelFriendInviteToRelationReq& operator=(const S2SDelFriendInviteToRelationReq& from) {
+  inline S2SDelRelationInviteToRelationReq& operator=(const S2SDelRelationInviteToRelationReq& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  S2SDelFriendInviteToRelationReq(S2SDelFriendInviteToRelationReq&& from) noexcept
-    : S2SDelFriendInviteToRelationReq() {
+  S2SDelRelationInviteToRelationReq(S2SDelRelationInviteToRelationReq&& from) noexcept
+    : S2SDelRelationInviteToRelationReq() {
     *this = ::std::move(from);
   }
 
-  inline S2SDelFriendInviteToRelationReq& operator=(S2SDelFriendInviteToRelationReq&& from) noexcept {
+  inline S2SDelRelationInviteToRelationReq& operator=(S2SDelRelationInviteToRelationReq&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -7601,34 +7706,34 @@ class LIBPROTOC_EXPORT S2SDelFriendInviteToRelationReq : public ::google::protob
   }
   #endif
   static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SDelFriendInviteToRelationReq& default_instance();
+  static const S2SDelRelationInviteToRelationReq& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const S2SDelFriendInviteToRelationReq* internal_default_instance() {
-    return reinterpret_cast<const S2SDelFriendInviteToRelationReq*>(
-               &_S2SDelFriendInviteToRelationReq_default_instance_);
+  static inline const S2SDelRelationInviteToRelationReq* internal_default_instance() {
+    return reinterpret_cast<const S2SDelRelationInviteToRelationReq*>(
+               &_S2SDelRelationInviteToRelationReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     66;
 
-  void Swap(S2SDelFriendInviteToRelationReq* other);
-  friend void swap(S2SDelFriendInviteToRelationReq& a, S2SDelFriendInviteToRelationReq& b) {
+  void Swap(S2SDelRelationInviteToRelationReq* other);
+  friend void swap(S2SDelRelationInviteToRelationReq& a, S2SDelRelationInviteToRelationReq& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline S2SDelFriendInviteToRelationReq* New() const final {
-    return CreateMaybeMessage<S2SDelFriendInviteToRelationReq>(NULL);
+  inline S2SDelRelationInviteToRelationReq* New() const final {
+    return CreateMaybeMessage<S2SDelRelationInviteToRelationReq>(NULL);
   }
 
-  S2SDelFriendInviteToRelationReq* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<S2SDelFriendInviteToRelationReq>(arena);
+  S2SDelRelationInviteToRelationReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2SDelRelationInviteToRelationReq>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const S2SDelFriendInviteToRelationReq& from);
-  void MergeFrom(const S2SDelFriendInviteToRelationReq& from);
+  void CopyFrom(const S2SDelRelationInviteToRelationReq& from);
+  void MergeFrom(const S2SDelRelationInviteToRelationReq& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -7645,7 +7750,7 @@ class LIBPROTOC_EXPORT S2SDelFriendInviteToRelationReq : public ::google::protob
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(S2SDelFriendInviteToRelationReq* other);
+  void InternalSwap(S2SDelRelationInviteToRelationReq* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -7661,22 +7766,52 @@ class LIBPROTOC_EXPORT S2SDelFriendInviteToRelationReq : public ::google::protob
 
   // accessors -------------------------------------------------------
 
-  // uint64 selfplayerid = 1;
+  // bytes dataname = 1;
+  void clear_dataname();
+  static const int kDatanameFieldNumber = 1;
+  const ::std::string& dataname() const;
+  void set_dataname(const ::std::string& value);
+  #if LANG_CXX11
+  void set_dataname(::std::string&& value);
+  #endif
+  void set_dataname(const char* value);
+  void set_dataname(const void* value, size_t size);
+  ::std::string* mutable_dataname();
+  ::std::string* release_dataname();
+  void set_allocated_dataname(::std::string* dataname);
+
+  // bytes listname = 2;
+  void clear_listname();
+  static const int kListnameFieldNumber = 2;
+  const ::std::string& listname() const;
+  void set_listname(const ::std::string& value);
+  #if LANG_CXX11
+  void set_listname(::std::string&& value);
+  #endif
+  void set_listname(const char* value);
+  void set_listname(const void* value, size_t size);
+  ::std::string* mutable_listname();
+  ::std::string* release_listname();
+  void set_allocated_listname(::std::string* listname);
+
+  // uint64 selfplayerid = 3;
   void clear_selfplayerid();
-  static const int kSelfplayeridFieldNumber = 1;
+  static const int kSelfplayeridFieldNumber = 3;
   ::google::protobuf::uint64 selfplayerid() const;
   void set_selfplayerid(::google::protobuf::uint64 value);
 
-  // uint64 targetplayerid = 2;
+  // uint64 targetplayerid = 4;
   void clear_targetplayerid();
-  static const int kTargetplayeridFieldNumber = 2;
+  static const int kTargetplayeridFieldNumber = 4;
   ::google::protobuf::uint64 targetplayerid() const;
   void set_targetplayerid(::google::protobuf::uint64 value);
 
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SDelFriendInviteToRelationReq)
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SDelRelationInviteToRelationReq)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr dataname_;
+  ::google::protobuf::internal::ArenaStringPtr listname_;
   ::google::protobuf::uint64 selfplayerid_;
   ::google::protobuf::uint64 targetplayerid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
@@ -7684,24 +7819,24 @@ class LIBPROTOC_EXPORT S2SDelFriendInviteToRelationReq : public ::google::protob
 };
 // -------------------------------------------------------------------
 
-class LIBPROTOC_EXPORT S2SAddFriendToRelationReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SAddFriendToRelationReq) */ {
+class LIBPROTOC_EXPORT S2SAddRelationToRelationReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SAddRelationToRelationReq) */ {
  public:
-  S2SAddFriendToRelationReq();
-  virtual ~S2SAddFriendToRelationReq();
+  S2SAddRelationToRelationReq();
+  virtual ~S2SAddRelationToRelationReq();
 
-  S2SAddFriendToRelationReq(const S2SAddFriendToRelationReq& from);
+  S2SAddRelationToRelationReq(const S2SAddRelationToRelationReq& from);
 
-  inline S2SAddFriendToRelationReq& operator=(const S2SAddFriendToRelationReq& from) {
+  inline S2SAddRelationToRelationReq& operator=(const S2SAddRelationToRelationReq& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  S2SAddFriendToRelationReq(S2SAddFriendToRelationReq&& from) noexcept
-    : S2SAddFriendToRelationReq() {
+  S2SAddRelationToRelationReq(S2SAddRelationToRelationReq&& from) noexcept
+    : S2SAddRelationToRelationReq() {
     *this = ::std::move(from);
   }
 
-  inline S2SAddFriendToRelationReq& operator=(S2SAddFriendToRelationReq&& from) noexcept {
+  inline S2SAddRelationToRelationReq& operator=(S2SAddRelationToRelationReq&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -7711,34 +7846,34 @@ class LIBPROTOC_EXPORT S2SAddFriendToRelationReq : public ::google::protobuf::Me
   }
   #endif
   static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SAddFriendToRelationReq& default_instance();
+  static const S2SAddRelationToRelationReq& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const S2SAddFriendToRelationReq* internal_default_instance() {
-    return reinterpret_cast<const S2SAddFriendToRelationReq*>(
-               &_S2SAddFriendToRelationReq_default_instance_);
+  static inline const S2SAddRelationToRelationReq* internal_default_instance() {
+    return reinterpret_cast<const S2SAddRelationToRelationReq*>(
+               &_S2SAddRelationToRelationReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     67;
 
-  void Swap(S2SAddFriendToRelationReq* other);
-  friend void swap(S2SAddFriendToRelationReq& a, S2SAddFriendToRelationReq& b) {
+  void Swap(S2SAddRelationToRelationReq* other);
+  friend void swap(S2SAddRelationToRelationReq& a, S2SAddRelationToRelationReq& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline S2SAddFriendToRelationReq* New() const final {
-    return CreateMaybeMessage<S2SAddFriendToRelationReq>(NULL);
+  inline S2SAddRelationToRelationReq* New() const final {
+    return CreateMaybeMessage<S2SAddRelationToRelationReq>(NULL);
   }
 
-  S2SAddFriendToRelationReq* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<S2SAddFriendToRelationReq>(arena);
+  S2SAddRelationToRelationReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2SAddRelationToRelationReq>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const S2SAddFriendToRelationReq& from);
-  void MergeFrom(const S2SAddFriendToRelationReq& from);
+  void CopyFrom(const S2SAddRelationToRelationReq& from);
+  void MergeFrom(const S2SAddRelationToRelationReq& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -7755,7 +7890,7 @@ class LIBPROTOC_EXPORT S2SAddFriendToRelationReq : public ::google::protobuf::Me
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(S2SAddFriendToRelationReq* other);
+  void InternalSwap(S2SAddRelationToRelationReq* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -7771,19 +7906,33 @@ class LIBPROTOC_EXPORT S2SAddFriendToRelationReq : public ::google::protobuf::Me
 
   // accessors -------------------------------------------------------
 
-  // bytes name = 1;
-  void clear_name();
-  static const int kNameFieldNumber = 1;
-  const ::std::string& name() const;
-  void set_name(const ::std::string& value);
+  // bytes dataname = 1;
+  void clear_dataname();
+  static const int kDatanameFieldNumber = 1;
+  const ::std::string& dataname() const;
+  void set_dataname(const ::std::string& value);
   #if LANG_CXX11
-  void set_name(::std::string&& value);
+  void set_dataname(::std::string&& value);
   #endif
-  void set_name(const char* value);
-  void set_name(const void* value, size_t size);
-  ::std::string* mutable_name();
-  ::std::string* release_name();
-  void set_allocated_name(::std::string* name);
+  void set_dataname(const char* value);
+  void set_dataname(const void* value, size_t size);
+  ::std::string* mutable_dataname();
+  ::std::string* release_dataname();
+  void set_allocated_dataname(::std::string* dataname);
+
+  // bytes playername = 3;
+  void clear_playername();
+  static const int kPlayernameFieldNumber = 3;
+  const ::std::string& playername() const;
+  void set_playername(const ::std::string& value);
+  #if LANG_CXX11
+  void set_playername(::std::string&& value);
+  #endif
+  void set_playername(const char* value);
+  void set_playername(const void* value, size_t size);
+  ::std::string* mutable_playername();
+  ::std::string* release_playername();
+  void set_allocated_playername(::std::string* playername);
 
   // uint64 playerid = 2;
   void clear_playerid();
@@ -7791,35 +7940,36 @@ class LIBPROTOC_EXPORT S2SAddFriendToRelationReq : public ::google::protobuf::Me
   ::google::protobuf::uint64 playerid() const;
   void set_playerid(::google::protobuf::uint64 value);
 
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SAddFriendToRelationReq)
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SAddRelationToRelationReq)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::internal::ArenaStringPtr name_;
+  ::google::protobuf::internal::ArenaStringPtr dataname_;
+  ::google::protobuf::internal::ArenaStringPtr playername_;
   ::google::protobuf::uint64 playerid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameServerMessage_2eproto::TableStruct;
 };
 // -------------------------------------------------------------------
 
-class LIBPROTOC_EXPORT S2SAddFriendToGameAck : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SAddFriendToGameAck) */ {
+class LIBPROTOC_EXPORT S2SAddRelationToGameAck : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SAddRelationToGameAck) */ {
  public:
-  S2SAddFriendToGameAck();
-  virtual ~S2SAddFriendToGameAck();
+  S2SAddRelationToGameAck();
+  virtual ~S2SAddRelationToGameAck();
 
-  S2SAddFriendToGameAck(const S2SAddFriendToGameAck& from);
+  S2SAddRelationToGameAck(const S2SAddRelationToGameAck& from);
 
-  inline S2SAddFriendToGameAck& operator=(const S2SAddFriendToGameAck& from) {
+  inline S2SAddRelationToGameAck& operator=(const S2SAddRelationToGameAck& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  S2SAddFriendToGameAck(S2SAddFriendToGameAck&& from) noexcept
-    : S2SAddFriendToGameAck() {
+  S2SAddRelationToGameAck(S2SAddRelationToGameAck&& from) noexcept
+    : S2SAddRelationToGameAck() {
     *this = ::std::move(from);
   }
 
-  inline S2SAddFriendToGameAck& operator=(S2SAddFriendToGameAck&& from) noexcept {
+  inline S2SAddRelationToGameAck& operator=(S2SAddRelationToGameAck&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -7829,34 +7979,34 @@ class LIBPROTOC_EXPORT S2SAddFriendToGameAck : public ::google::protobuf::Messag
   }
   #endif
   static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SAddFriendToGameAck& default_instance();
+  static const S2SAddRelationToGameAck& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const S2SAddFriendToGameAck* internal_default_instance() {
-    return reinterpret_cast<const S2SAddFriendToGameAck*>(
-               &_S2SAddFriendToGameAck_default_instance_);
+  static inline const S2SAddRelationToGameAck* internal_default_instance() {
+    return reinterpret_cast<const S2SAddRelationToGameAck*>(
+               &_S2SAddRelationToGameAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     68;
 
-  void Swap(S2SAddFriendToGameAck* other);
-  friend void swap(S2SAddFriendToGameAck& a, S2SAddFriendToGameAck& b) {
+  void Swap(S2SAddRelationToGameAck* other);
+  friend void swap(S2SAddRelationToGameAck& a, S2SAddRelationToGameAck& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline S2SAddFriendToGameAck* New() const final {
-    return CreateMaybeMessage<S2SAddFriendToGameAck>(NULL);
+  inline S2SAddRelationToGameAck* New() const final {
+    return CreateMaybeMessage<S2SAddRelationToGameAck>(NULL);
   }
 
-  S2SAddFriendToGameAck* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<S2SAddFriendToGameAck>(arena);
+  S2SAddRelationToGameAck* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2SAddRelationToGameAck>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const S2SAddFriendToGameAck& from);
-  void MergeFrom(const S2SAddFriendToGameAck& from);
+  void CopyFrom(const S2SAddRelationToGameAck& from);
+  void MergeFrom(const S2SAddRelationToGameAck& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -7873,7 +8023,7 @@ class LIBPROTOC_EXPORT S2SAddFriendToGameAck : public ::google::protobuf::Messag
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(S2SAddFriendToGameAck* other);
+  void InternalSwap(S2SAddRelationToGameAck* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -7889,53 +8039,68 @@ class LIBPROTOC_EXPORT S2SAddFriendToGameAck : public ::google::protobuf::Messag
 
   // accessors -------------------------------------------------------
 
-  // .KFMsg.PBRelation pbfriend = 2;
-  bool has_pbfriend() const;
-  void clear_pbfriend();
-  static const int kPbfriendFieldNumber = 2;
-  private:
-  const ::KFMsg::PBRelation& _internal_pbfriend() const;
-  public:
-  const ::KFMsg::PBRelation& pbfriend() const;
-  ::KFMsg::PBRelation* release_pbfriend();
-  ::KFMsg::PBRelation* mutable_pbfriend();
-  void set_allocated_pbfriend(::KFMsg::PBRelation* pbfriend);
+  // bytes dataname = 1;
+  void clear_dataname();
+  static const int kDatanameFieldNumber = 1;
+  const ::std::string& dataname() const;
+  void set_dataname(const ::std::string& value);
+  #if LANG_CXX11
+  void set_dataname(::std::string&& value);
+  #endif
+  void set_dataname(const char* value);
+  void set_dataname(const void* value, size_t size);
+  ::std::string* mutable_dataname();
+  ::std::string* release_dataname();
+  void set_allocated_dataname(::std::string* dataname);
 
-  // uint64 playerid = 1;
+  // .KFMsg.PBRelation pbrelation = 4;
+  bool has_pbrelation() const;
+  void clear_pbrelation();
+  static const int kPbrelationFieldNumber = 4;
+  private:
+  const ::KFMsg::PBRelation& _internal_pbrelation() const;
+  public:
+  const ::KFMsg::PBRelation& pbrelation() const;
+  ::KFMsg::PBRelation* release_pbrelation();
+  ::KFMsg::PBRelation* mutable_pbrelation();
+  void set_allocated_pbrelation(::KFMsg::PBRelation* pbrelation);
+
+  // uint64 playerid = 2;
   void clear_playerid();
-  static const int kPlayeridFieldNumber = 1;
+  static const int kPlayeridFieldNumber = 2;
   ::google::protobuf::uint64 playerid() const;
   void set_playerid(::google::protobuf::uint64 value);
 
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SAddFriendToGameAck)
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SAddRelationToGameAck)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::KFMsg::PBRelation* pbfriend_;
+  ::google::protobuf::internal::ArenaStringPtr dataname_;
+  ::KFMsg::PBRelation* pbrelation_;
   ::google::protobuf::uint64 playerid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameServerMessage_2eproto::TableStruct;
 };
 // -------------------------------------------------------------------
 
-class LIBPROTOC_EXPORT S2SDelFriendToRelationReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SDelFriendToRelationReq) */ {
+class LIBPROTOC_EXPORT S2SDelRelationToRelationReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SDelRelationToRelationReq) */ {
  public:
-  S2SDelFriendToRelationReq();
-  virtual ~S2SDelFriendToRelationReq();
+  S2SDelRelationToRelationReq();
+  virtual ~S2SDelRelationToRelationReq();
 
-  S2SDelFriendToRelationReq(const S2SDelFriendToRelationReq& from);
+  S2SDelRelationToRelationReq(const S2SDelRelationToRelationReq& from);
 
-  inline S2SDelFriendToRelationReq& operator=(const S2SDelFriendToRelationReq& from) {
+  inline S2SDelRelationToRelationReq& operator=(const S2SDelRelationToRelationReq& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  S2SDelFriendToRelationReq(S2SDelFriendToRelationReq&& from) noexcept
-    : S2SDelFriendToRelationReq() {
+  S2SDelRelationToRelationReq(S2SDelRelationToRelationReq&& from) noexcept
+    : S2SDelRelationToRelationReq() {
     *this = ::std::move(from);
   }
 
-  inline S2SDelFriendToRelationReq& operator=(S2SDelFriendToRelationReq&& from) noexcept {
+  inline S2SDelRelationToRelationReq& operator=(S2SDelRelationToRelationReq&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -7945,34 +8110,34 @@ class LIBPROTOC_EXPORT S2SDelFriendToRelationReq : public ::google::protobuf::Me
   }
   #endif
   static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SDelFriendToRelationReq& default_instance();
+  static const S2SDelRelationToRelationReq& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const S2SDelFriendToRelationReq* internal_default_instance() {
-    return reinterpret_cast<const S2SDelFriendToRelationReq*>(
-               &_S2SDelFriendToRelationReq_default_instance_);
+  static inline const S2SDelRelationToRelationReq* internal_default_instance() {
+    return reinterpret_cast<const S2SDelRelationToRelationReq*>(
+               &_S2SDelRelationToRelationReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     69;
 
-  void Swap(S2SDelFriendToRelationReq* other);
-  friend void swap(S2SDelFriendToRelationReq& a, S2SDelFriendToRelationReq& b) {
+  void Swap(S2SDelRelationToRelationReq* other);
+  friend void swap(S2SDelRelationToRelationReq& a, S2SDelRelationToRelationReq& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline S2SDelFriendToRelationReq* New() const final {
-    return CreateMaybeMessage<S2SDelFriendToRelationReq>(NULL);
+  inline S2SDelRelationToRelationReq* New() const final {
+    return CreateMaybeMessage<S2SDelRelationToRelationReq>(NULL);
   }
 
-  S2SDelFriendToRelationReq* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<S2SDelFriendToRelationReq>(arena);
+  S2SDelRelationToRelationReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2SDelRelationToRelationReq>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const S2SDelFriendToRelationReq& from);
-  void MergeFrom(const S2SDelFriendToRelationReq& from);
+  void CopyFrom(const S2SDelRelationToRelationReq& from);
+  void MergeFrom(const S2SDelRelationToRelationReq& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -7989,7 +8154,7 @@ class LIBPROTOC_EXPORT S2SDelFriendToRelationReq : public ::google::protobuf::Me
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(S2SDelFriendToRelationReq* other);
+  void InternalSwap(S2SDelRelationToRelationReq* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -8005,40 +8170,55 @@ class LIBPROTOC_EXPORT S2SDelFriendToRelationReq : public ::google::protobuf::Me
 
   // accessors -------------------------------------------------------
 
-  // uint64 playerid = 1;
+  // bytes dataname = 1;
+  void clear_dataname();
+  static const int kDatanameFieldNumber = 1;
+  const ::std::string& dataname() const;
+  void set_dataname(const ::std::string& value);
+  #if LANG_CXX11
+  void set_dataname(::std::string&& value);
+  #endif
+  void set_dataname(const char* value);
+  void set_dataname(const void* value, size_t size);
+  ::std::string* mutable_dataname();
+  ::std::string* release_dataname();
+  void set_allocated_dataname(::std::string* dataname);
+
+  // uint64 playerid = 2;
   void clear_playerid();
-  static const int kPlayeridFieldNumber = 1;
+  static const int kPlayeridFieldNumber = 2;
   ::google::protobuf::uint64 playerid() const;
   void set_playerid(::google::protobuf::uint64 value);
 
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SDelFriendToRelationReq)
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SDelRelationToRelationReq)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr dataname_;
   ::google::protobuf::uint64 playerid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameServerMessage_2eproto::TableStruct;
 };
 // -------------------------------------------------------------------
 
-class LIBPROTOC_EXPORT S2SDelFriendToGameAck : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SDelFriendToGameAck) */ {
+class LIBPROTOC_EXPORT S2SDelRelationToGameAck : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SDelRelationToGameAck) */ {
  public:
-  S2SDelFriendToGameAck();
-  virtual ~S2SDelFriendToGameAck();
+  S2SDelRelationToGameAck();
+  virtual ~S2SDelRelationToGameAck();
 
-  S2SDelFriendToGameAck(const S2SDelFriendToGameAck& from);
+  S2SDelRelationToGameAck(const S2SDelRelationToGameAck& from);
 
-  inline S2SDelFriendToGameAck& operator=(const S2SDelFriendToGameAck& from) {
+  inline S2SDelRelationToGameAck& operator=(const S2SDelRelationToGameAck& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  S2SDelFriendToGameAck(S2SDelFriendToGameAck&& from) noexcept
-    : S2SDelFriendToGameAck() {
+  S2SDelRelationToGameAck(S2SDelRelationToGameAck&& from) noexcept
+    : S2SDelRelationToGameAck() {
     *this = ::std::move(from);
   }
 
-  inline S2SDelFriendToGameAck& operator=(S2SDelFriendToGameAck&& from) noexcept {
+  inline S2SDelRelationToGameAck& operator=(S2SDelRelationToGameAck&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -8048,34 +8228,34 @@ class LIBPROTOC_EXPORT S2SDelFriendToGameAck : public ::google::protobuf::Messag
   }
   #endif
   static const ::google::protobuf::Descriptor* descriptor();
-  static const S2SDelFriendToGameAck& default_instance();
+  static const S2SDelRelationToGameAck& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const S2SDelFriendToGameAck* internal_default_instance() {
-    return reinterpret_cast<const S2SDelFriendToGameAck*>(
-               &_S2SDelFriendToGameAck_default_instance_);
+  static inline const S2SDelRelationToGameAck* internal_default_instance() {
+    return reinterpret_cast<const S2SDelRelationToGameAck*>(
+               &_S2SDelRelationToGameAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     70;
 
-  void Swap(S2SDelFriendToGameAck* other);
-  friend void swap(S2SDelFriendToGameAck& a, S2SDelFriendToGameAck& b) {
+  void Swap(S2SDelRelationToGameAck* other);
+  friend void swap(S2SDelRelationToGameAck& a, S2SDelRelationToGameAck& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline S2SDelFriendToGameAck* New() const final {
-    return CreateMaybeMessage<S2SDelFriendToGameAck>(NULL);
+  inline S2SDelRelationToGameAck* New() const final {
+    return CreateMaybeMessage<S2SDelRelationToGameAck>(NULL);
   }
 
-  S2SDelFriendToGameAck* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<S2SDelFriendToGameAck>(arena);
+  S2SDelRelationToGameAck* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2SDelRelationToGameAck>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const S2SDelFriendToGameAck& from);
-  void MergeFrom(const S2SDelFriendToGameAck& from);
+  void CopyFrom(const S2SDelRelationToGameAck& from);
+  void MergeFrom(const S2SDelRelationToGameAck& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -8092,7 +8272,7 @@ class LIBPROTOC_EXPORT S2SDelFriendToGameAck : public ::google::protobuf::Messag
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(S2SDelFriendToGameAck* other);
+  void InternalSwap(S2SDelRelationToGameAck* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -8108,24 +8288,39 @@ class LIBPROTOC_EXPORT S2SDelFriendToGameAck : public ::google::protobuf::Messag
 
   // accessors -------------------------------------------------------
 
-  // uint64 playerid = 1;
+  // bytes dataname = 1;
+  void clear_dataname();
+  static const int kDatanameFieldNumber = 1;
+  const ::std::string& dataname() const;
+  void set_dataname(const ::std::string& value);
+  #if LANG_CXX11
+  void set_dataname(::std::string&& value);
+  #endif
+  void set_dataname(const char* value);
+  void set_dataname(const void* value, size_t size);
+  ::std::string* mutable_dataname();
+  ::std::string* release_dataname();
+  void set_allocated_dataname(::std::string* dataname);
+
+  // uint64 playerid = 2;
   void clear_playerid();
-  static const int kPlayeridFieldNumber = 1;
+  static const int kPlayeridFieldNumber = 2;
   ::google::protobuf::uint64 playerid() const;
   void set_playerid(::google::protobuf::uint64 value);
 
-  // uint64 friendid = 2;
-  void clear_friendid();
-  static const int kFriendidFieldNumber = 2;
-  ::google::protobuf::uint64 friendid() const;
-  void set_friendid(::google::protobuf::uint64 value);
+  // uint64 relationid = 3;
+  void clear_relationid();
+  static const int kRelationidFieldNumber = 3;
+  ::google::protobuf::uint64 relationid() const;
+  void set_relationid(::google::protobuf::uint64 value);
 
-  // @@protoc_insertion_point(class_scope:KFMsg.S2SDelFriendToGameAck)
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SDelRelationToGameAck)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr dataname_;
   ::google::protobuf::uint64 playerid_;
-  ::google::protobuf::uint64 friendid_;
+  ::google::protobuf::uint64 relationid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameServerMessage_2eproto::TableStruct;
 };
@@ -11445,133 +11640,345 @@ PBRelation::mutable_relationdata() {
 
 // -------------------------------------------------------------------
 
-// S2SQueryFriendToRelationReq
+// S2SQueryRelationToRelationReq
 
-// uint64 playerid = 1;
-inline void S2SQueryFriendToRelationReq::clear_playerid() {
+// bytes dataname = 1;
+inline void S2SQueryRelationToRelationReq::clear_dataname() {
+  dataname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& S2SQueryRelationToRelationReq::dataname() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SQueryRelationToRelationReq.dataname)
+  return dataname_.GetNoArena();
+}
+inline void S2SQueryRelationToRelationReq::set_dataname(const ::std::string& value) {
+  
+  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.S2SQueryRelationToRelationReq.dataname)
+}
+#if LANG_CXX11
+inline void S2SQueryRelationToRelationReq::set_dataname(::std::string&& value) {
+  
+  dataname_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SQueryRelationToRelationReq.dataname)
+}
+#endif
+inline void S2SQueryRelationToRelationReq::set_dataname(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.S2SQueryRelationToRelationReq.dataname)
+}
+inline void S2SQueryRelationToRelationReq::set_dataname(const void* value, size_t size) {
+  
+  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SQueryRelationToRelationReq.dataname)
+}
+inline ::std::string* S2SQueryRelationToRelationReq::mutable_dataname() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SQueryRelationToRelationReq.dataname)
+  return dataname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* S2SQueryRelationToRelationReq::release_dataname() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SQueryRelationToRelationReq.dataname)
+  
+  return dataname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void S2SQueryRelationToRelationReq::set_allocated_dataname(::std::string* dataname) {
+  if (dataname != NULL) {
+    
+  } else {
+    
+  }
+  dataname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), dataname);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SQueryRelationToRelationReq.dataname)
+}
+
+// uint64 playerid = 2;
+inline void S2SQueryRelationToRelationReq::clear_playerid() {
   playerid_ = GOOGLE_ULONGLONG(0);
 }
-inline ::google::protobuf::uint64 S2SQueryFriendToRelationReq::playerid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SQueryFriendToRelationReq.playerid)
+inline ::google::protobuf::uint64 S2SQueryRelationToRelationReq::playerid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SQueryRelationToRelationReq.playerid)
   return playerid_;
 }
-inline void S2SQueryFriendToRelationReq::set_playerid(::google::protobuf::uint64 value) {
+inline void S2SQueryRelationToRelationReq::set_playerid(::google::protobuf::uint64 value) {
   
   playerid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SQueryFriendToRelationReq.playerid)
+  // @@protoc_insertion_point(field_set:KFMsg.S2SQueryRelationToRelationReq.playerid)
 }
 
 // -------------------------------------------------------------------
 
-// S2SQueryFriendToGameAck
+// S2SQueryRelationToGameAck
 
-// uint64 playerid = 1;
-inline void S2SQueryFriendToGameAck::clear_playerid() {
+// bytes dataname = 1;
+inline void S2SQueryRelationToGameAck::clear_dataname() {
+  dataname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& S2SQueryRelationToGameAck::dataname() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SQueryRelationToGameAck.dataname)
+  return dataname_.GetNoArena();
+}
+inline void S2SQueryRelationToGameAck::set_dataname(const ::std::string& value) {
+  
+  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.S2SQueryRelationToGameAck.dataname)
+}
+#if LANG_CXX11
+inline void S2SQueryRelationToGameAck::set_dataname(::std::string&& value) {
+  
+  dataname_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SQueryRelationToGameAck.dataname)
+}
+#endif
+inline void S2SQueryRelationToGameAck::set_dataname(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.S2SQueryRelationToGameAck.dataname)
+}
+inline void S2SQueryRelationToGameAck::set_dataname(const void* value, size_t size) {
+  
+  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SQueryRelationToGameAck.dataname)
+}
+inline ::std::string* S2SQueryRelationToGameAck::mutable_dataname() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SQueryRelationToGameAck.dataname)
+  return dataname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* S2SQueryRelationToGameAck::release_dataname() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SQueryRelationToGameAck.dataname)
+  
+  return dataname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void S2SQueryRelationToGameAck::set_allocated_dataname(::std::string* dataname) {
+  if (dataname != NULL) {
+    
+  } else {
+    
+  }
+  dataname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), dataname);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SQueryRelationToGameAck.dataname)
+}
+
+// uint64 playerid = 2;
+inline void S2SQueryRelationToGameAck::clear_playerid() {
   playerid_ = GOOGLE_ULONGLONG(0);
 }
-inline ::google::protobuf::uint64 S2SQueryFriendToGameAck::playerid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SQueryFriendToGameAck.playerid)
+inline ::google::protobuf::uint64 S2SQueryRelationToGameAck::playerid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SQueryRelationToGameAck.playerid)
   return playerid_;
 }
-inline void S2SQueryFriendToGameAck::set_playerid(::google::protobuf::uint64 value) {
+inline void S2SQueryRelationToGameAck::set_playerid(::google::protobuf::uint64 value) {
   
   playerid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SQueryFriendToGameAck.playerid)
+  // @@protoc_insertion_point(field_set:KFMsg.S2SQueryRelationToGameAck.playerid)
 }
 
-// repeated .KFMsg.PBRelation pbfriend = 2;
-inline int S2SQueryFriendToGameAck::pbfriend_size() const {
-  return pbfriend_.size();
+// repeated .KFMsg.PBRelation pbrelation = 3;
+inline int S2SQueryRelationToGameAck::pbrelation_size() const {
+  return pbrelation_.size();
 }
-inline void S2SQueryFriendToGameAck::clear_pbfriend() {
-  pbfriend_.Clear();
+inline void S2SQueryRelationToGameAck::clear_pbrelation() {
+  pbrelation_.Clear();
 }
-inline ::KFMsg::PBRelation* S2SQueryFriendToGameAck::mutable_pbfriend(int index) {
-  // @@protoc_insertion_point(field_mutable:KFMsg.S2SQueryFriendToGameAck.pbfriend)
-  return pbfriend_.Mutable(index);
+inline ::KFMsg::PBRelation* S2SQueryRelationToGameAck::mutable_pbrelation(int index) {
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SQueryRelationToGameAck.pbrelation)
+  return pbrelation_.Mutable(index);
 }
 inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRelation >*
-S2SQueryFriendToGameAck::mutable_pbfriend() {
-  // @@protoc_insertion_point(field_mutable_list:KFMsg.S2SQueryFriendToGameAck.pbfriend)
-  return &pbfriend_;
+S2SQueryRelationToGameAck::mutable_pbrelation() {
+  // @@protoc_insertion_point(field_mutable_list:KFMsg.S2SQueryRelationToGameAck.pbrelation)
+  return &pbrelation_;
 }
-inline const ::KFMsg::PBRelation& S2SQueryFriendToGameAck::pbfriend(int index) const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SQueryFriendToGameAck.pbfriend)
-  return pbfriend_.Get(index);
+inline const ::KFMsg::PBRelation& S2SQueryRelationToGameAck::pbrelation(int index) const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SQueryRelationToGameAck.pbrelation)
+  return pbrelation_.Get(index);
 }
-inline ::KFMsg::PBRelation* S2SQueryFriendToGameAck::add_pbfriend() {
-  // @@protoc_insertion_point(field_add:KFMsg.S2SQueryFriendToGameAck.pbfriend)
-  return pbfriend_.Add();
+inline ::KFMsg::PBRelation* S2SQueryRelationToGameAck::add_pbrelation() {
+  // @@protoc_insertion_point(field_add:KFMsg.S2SQueryRelationToGameAck.pbrelation)
+  return pbrelation_.Add();
 }
 inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRelation >&
-S2SQueryFriendToGameAck::pbfriend() const {
-  // @@protoc_insertion_point(field_list:KFMsg.S2SQueryFriendToGameAck.pbfriend)
-  return pbfriend_;
+S2SQueryRelationToGameAck::pbrelation() const {
+  // @@protoc_insertion_point(field_list:KFMsg.S2SQueryRelationToGameAck.pbrelation)
+  return pbrelation_;
 }
 
 // -------------------------------------------------------------------
 
-// S2SQueryFriendInviteToRelationReq
+// S2SQueryRelationInviteToRelationReq
 
-// uint64 playerid = 1;
-inline void S2SQueryFriendInviteToRelationReq::clear_playerid() {
+// bytes dataname = 1;
+inline void S2SQueryRelationInviteToRelationReq::clear_dataname() {
+  dataname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& S2SQueryRelationInviteToRelationReq::dataname() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SQueryRelationInviteToRelationReq.dataname)
+  return dataname_.GetNoArena();
+}
+inline void S2SQueryRelationInviteToRelationReq::set_dataname(const ::std::string& value) {
+  
+  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.S2SQueryRelationInviteToRelationReq.dataname)
+}
+#if LANG_CXX11
+inline void S2SQueryRelationInviteToRelationReq::set_dataname(::std::string&& value) {
+  
+  dataname_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SQueryRelationInviteToRelationReq.dataname)
+}
+#endif
+inline void S2SQueryRelationInviteToRelationReq::set_dataname(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.S2SQueryRelationInviteToRelationReq.dataname)
+}
+inline void S2SQueryRelationInviteToRelationReq::set_dataname(const void* value, size_t size) {
+  
+  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SQueryRelationInviteToRelationReq.dataname)
+}
+inline ::std::string* S2SQueryRelationInviteToRelationReq::mutable_dataname() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SQueryRelationInviteToRelationReq.dataname)
+  return dataname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* S2SQueryRelationInviteToRelationReq::release_dataname() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SQueryRelationInviteToRelationReq.dataname)
+  
+  return dataname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void S2SQueryRelationInviteToRelationReq::set_allocated_dataname(::std::string* dataname) {
+  if (dataname != NULL) {
+    
+  } else {
+    
+  }
+  dataname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), dataname);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SQueryRelationInviteToRelationReq.dataname)
+}
+
+// uint64 playerid = 3;
+inline void S2SQueryRelationInviteToRelationReq::clear_playerid() {
   playerid_ = GOOGLE_ULONGLONG(0);
 }
-inline ::google::protobuf::uint64 S2SQueryFriendInviteToRelationReq::playerid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SQueryFriendInviteToRelationReq.playerid)
+inline ::google::protobuf::uint64 S2SQueryRelationInviteToRelationReq::playerid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SQueryRelationInviteToRelationReq.playerid)
   return playerid_;
 }
-inline void S2SQueryFriendInviteToRelationReq::set_playerid(::google::protobuf::uint64 value) {
+inline void S2SQueryRelationInviteToRelationReq::set_playerid(::google::protobuf::uint64 value) {
   
   playerid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SQueryFriendInviteToRelationReq.playerid)
+  // @@protoc_insertion_point(field_set:KFMsg.S2SQueryRelationInviteToRelationReq.playerid)
 }
 
 // -------------------------------------------------------------------
 
-// S2SQueryFriendInviteToGameAck
+// S2SQueryRelationInviteToGameAck
 
-// uint64 playerid = 1;
-inline void S2SQueryFriendInviteToGameAck::clear_playerid() {
+// bytes dataname = 1;
+inline void S2SQueryRelationInviteToGameAck::clear_dataname() {
+  dataname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& S2SQueryRelationInviteToGameAck::dataname() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SQueryRelationInviteToGameAck.dataname)
+  return dataname_.GetNoArena();
+}
+inline void S2SQueryRelationInviteToGameAck::set_dataname(const ::std::string& value) {
+  
+  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.S2SQueryRelationInviteToGameAck.dataname)
+}
+#if LANG_CXX11
+inline void S2SQueryRelationInviteToGameAck::set_dataname(::std::string&& value) {
+  
+  dataname_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SQueryRelationInviteToGameAck.dataname)
+}
+#endif
+inline void S2SQueryRelationInviteToGameAck::set_dataname(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.S2SQueryRelationInviteToGameAck.dataname)
+}
+inline void S2SQueryRelationInviteToGameAck::set_dataname(const void* value, size_t size) {
+  
+  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SQueryRelationInviteToGameAck.dataname)
+}
+inline ::std::string* S2SQueryRelationInviteToGameAck::mutable_dataname() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SQueryRelationInviteToGameAck.dataname)
+  return dataname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* S2SQueryRelationInviteToGameAck::release_dataname() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SQueryRelationInviteToGameAck.dataname)
+  
+  return dataname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void S2SQueryRelationInviteToGameAck::set_allocated_dataname(::std::string* dataname) {
+  if (dataname != NULL) {
+    
+  } else {
+    
+  }
+  dataname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), dataname);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SQueryRelationInviteToGameAck.dataname)
+}
+
+// uint64 playerid = 2;
+inline void S2SQueryRelationInviteToGameAck::clear_playerid() {
   playerid_ = GOOGLE_ULONGLONG(0);
 }
-inline ::google::protobuf::uint64 S2SQueryFriendInviteToGameAck::playerid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SQueryFriendInviteToGameAck.playerid)
+inline ::google::protobuf::uint64 S2SQueryRelationInviteToGameAck::playerid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SQueryRelationInviteToGameAck.playerid)
   return playerid_;
 }
-inline void S2SQueryFriendInviteToGameAck::set_playerid(::google::protobuf::uint64 value) {
+inline void S2SQueryRelationInviteToGameAck::set_playerid(::google::protobuf::uint64 value) {
   
   playerid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SQueryFriendInviteToGameAck.playerid)
+  // @@protoc_insertion_point(field_set:KFMsg.S2SQueryRelationInviteToGameAck.playerid)
 }
 
-// repeated .KFMsg.PBRelation pbinvite = 2;
-inline int S2SQueryFriendInviteToGameAck::pbinvite_size() const {
+// repeated .KFMsg.PBRelation pbinvite = 3;
+inline int S2SQueryRelationInviteToGameAck::pbinvite_size() const {
   return pbinvite_.size();
 }
-inline void S2SQueryFriendInviteToGameAck::clear_pbinvite() {
+inline void S2SQueryRelationInviteToGameAck::clear_pbinvite() {
   pbinvite_.Clear();
 }
-inline ::KFMsg::PBRelation* S2SQueryFriendInviteToGameAck::mutable_pbinvite(int index) {
-  // @@protoc_insertion_point(field_mutable:KFMsg.S2SQueryFriendInviteToGameAck.pbinvite)
+inline ::KFMsg::PBRelation* S2SQueryRelationInviteToGameAck::mutable_pbinvite(int index) {
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SQueryRelationInviteToGameAck.pbinvite)
   return pbinvite_.Mutable(index);
 }
 inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRelation >*
-S2SQueryFriendInviteToGameAck::mutable_pbinvite() {
-  // @@protoc_insertion_point(field_mutable_list:KFMsg.S2SQueryFriendInviteToGameAck.pbinvite)
+S2SQueryRelationInviteToGameAck::mutable_pbinvite() {
+  // @@protoc_insertion_point(field_mutable_list:KFMsg.S2SQueryRelationInviteToGameAck.pbinvite)
   return &pbinvite_;
 }
-inline const ::KFMsg::PBRelation& S2SQueryFriendInviteToGameAck::pbinvite(int index) const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SQueryFriendInviteToGameAck.pbinvite)
+inline const ::KFMsg::PBRelation& S2SQueryRelationInviteToGameAck::pbinvite(int index) const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SQueryRelationInviteToGameAck.pbinvite)
   return pbinvite_.Get(index);
 }
-inline ::KFMsg::PBRelation* S2SQueryFriendInviteToGameAck::add_pbinvite() {
-  // @@protoc_insertion_point(field_add:KFMsg.S2SQueryFriendInviteToGameAck.pbinvite)
+inline ::KFMsg::PBRelation* S2SQueryRelationInviteToGameAck::add_pbinvite() {
+  // @@protoc_insertion_point(field_add:KFMsg.S2SQueryRelationInviteToGameAck.pbinvite)
   return pbinvite_.Add();
 }
 inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBRelation >&
-S2SQueryFriendInviteToGameAck::pbinvite() const {
-  // @@protoc_insertion_point(field_list:KFMsg.S2SQueryFriendInviteToGameAck.pbinvite)
+S2SQueryRelationInviteToGameAck::pbinvite() const {
+  // @@protoc_insertion_point(field_list:KFMsg.S2SQueryRelationInviteToGameAck.pbinvite)
   return pbinvite_;
 }
 
@@ -11579,218 +11986,377 @@ S2SQueryFriendInviteToGameAck::pbinvite() const {
 
 // -------------------------------------------------------------------
 
-// S2SUpdateDataToFriendReq
+// S2SUpdateDataToRelationReq
 
-// uint64 playerid = 1;
-inline void S2SUpdateDataToFriendReq::clear_playerid() {
+// bytes dataname = 1;
+inline void S2SUpdateDataToRelationReq::clear_dataname() {
+  dataname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& S2SUpdateDataToRelationReq::dataname() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SUpdateDataToRelationReq.dataname)
+  return dataname_.GetNoArena();
+}
+inline void S2SUpdateDataToRelationReq::set_dataname(const ::std::string& value) {
+  
+  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.S2SUpdateDataToRelationReq.dataname)
+}
+#if LANG_CXX11
+inline void S2SUpdateDataToRelationReq::set_dataname(::std::string&& value) {
+  
+  dataname_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SUpdateDataToRelationReq.dataname)
+}
+#endif
+inline void S2SUpdateDataToRelationReq::set_dataname(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.S2SUpdateDataToRelationReq.dataname)
+}
+inline void S2SUpdateDataToRelationReq::set_dataname(const void* value, size_t size) {
+  
+  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SUpdateDataToRelationReq.dataname)
+}
+inline ::std::string* S2SUpdateDataToRelationReq::mutable_dataname() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SUpdateDataToRelationReq.dataname)
+  return dataname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* S2SUpdateDataToRelationReq::release_dataname() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SUpdateDataToRelationReq.dataname)
+  
+  return dataname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void S2SUpdateDataToRelationReq::set_allocated_dataname(::std::string* dataname) {
+  if (dataname != NULL) {
+    
+  } else {
+    
+  }
+  dataname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), dataname);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SUpdateDataToRelationReq.dataname)
+}
+
+// uint64 playerid = 2;
+inline void S2SUpdateDataToRelationReq::clear_playerid() {
   playerid_ = GOOGLE_ULONGLONG(0);
 }
-inline ::google::protobuf::uint64 S2SUpdateDataToFriendReq::playerid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SUpdateDataToFriendReq.playerid)
+inline ::google::protobuf::uint64 S2SUpdateDataToRelationReq::playerid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SUpdateDataToRelationReq.playerid)
   return playerid_;
 }
-inline void S2SUpdateDataToFriendReq::set_playerid(::google::protobuf::uint64 value) {
+inline void S2SUpdateDataToRelationReq::set_playerid(::google::protobuf::uint64 value) {
   
   playerid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SUpdateDataToFriendReq.playerid)
+  // @@protoc_insertion_point(field_set:KFMsg.S2SUpdateDataToRelationReq.playerid)
 }
 
 // map<string, bytes> pbdata = 3;
-inline int S2SUpdateDataToFriendReq::pbdata_size() const {
+inline int S2SUpdateDataToRelationReq::pbdata_size() const {
   return pbdata_.size();
 }
-inline void S2SUpdateDataToFriendReq::clear_pbdata() {
+inline void S2SUpdateDataToRelationReq::clear_pbdata() {
   pbdata_.Clear();
 }
 inline const ::google::protobuf::Map< ::std::string, ::std::string >&
-S2SUpdateDataToFriendReq::pbdata() const {
-  // @@protoc_insertion_point(field_map:KFMsg.S2SUpdateDataToFriendReq.pbdata)
+S2SUpdateDataToRelationReq::pbdata() const {
+  // @@protoc_insertion_point(field_map:KFMsg.S2SUpdateDataToRelationReq.pbdata)
   return pbdata_.GetMap();
 }
 inline ::google::protobuf::Map< ::std::string, ::std::string >*
-S2SUpdateDataToFriendReq::mutable_pbdata() {
-  // @@protoc_insertion_point(field_mutable_map:KFMsg.S2SUpdateDataToFriendReq.pbdata)
+S2SUpdateDataToRelationReq::mutable_pbdata() {
+  // @@protoc_insertion_point(field_mutable_map:KFMsg.S2SUpdateDataToRelationReq.pbdata)
   return pbdata_.MutableMap();
 }
 
 // -------------------------------------------------------------------
 
-// S2SAddFriendInviteToRelationReq
+// S2SApplyAddRelationToRelationReq
 
-// bytes name = 1;
-inline void S2SAddFriendInviteToRelationReq::clear_name() {
-  name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+// bytes dataname = 1;
+inline void S2SApplyAddRelationToRelationReq::clear_dataname() {
+  dataname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& S2SAddFriendInviteToRelationReq::name() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SAddFriendInviteToRelationReq.name)
-  return name_.GetNoArena();
+inline const ::std::string& S2SApplyAddRelationToRelationReq::dataname() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SApplyAddRelationToRelationReq.dataname)
+  return dataname_.GetNoArena();
 }
-inline void S2SAddFriendInviteToRelationReq::set_name(const ::std::string& value) {
+inline void S2SApplyAddRelationToRelationReq::set_dataname(const ::std::string& value) {
   
-  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.S2SAddFriendInviteToRelationReq.name)
+  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.S2SApplyAddRelationToRelationReq.dataname)
 }
 #if LANG_CXX11
-inline void S2SAddFriendInviteToRelationReq::set_name(::std::string&& value) {
+inline void S2SApplyAddRelationToRelationReq::set_dataname(::std::string&& value) {
   
-  name_.SetNoArena(
+  dataname_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SAddFriendInviteToRelationReq.name)
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SApplyAddRelationToRelationReq.dataname)
 }
 #endif
-inline void S2SAddFriendInviteToRelationReq::set_name(const char* value) {
+inline void S2SApplyAddRelationToRelationReq::set_dataname(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
-  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.S2SAddFriendInviteToRelationReq.name)
+  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.S2SApplyAddRelationToRelationReq.dataname)
 }
-inline void S2SAddFriendInviteToRelationReq::set_name(const void* value, size_t size) {
+inline void S2SApplyAddRelationToRelationReq::set_dataname(const void* value, size_t size) {
   
-  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SAddFriendInviteToRelationReq.name)
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SApplyAddRelationToRelationReq.dataname)
 }
-inline ::std::string* S2SAddFriendInviteToRelationReq::mutable_name() {
+inline ::std::string* S2SApplyAddRelationToRelationReq::mutable_dataname() {
   
-  // @@protoc_insertion_point(field_mutable:KFMsg.S2SAddFriendInviteToRelationReq.name)
-  return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SApplyAddRelationToRelationReq.dataname)
+  return dataname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* S2SAddFriendInviteToRelationReq::release_name() {
-  // @@protoc_insertion_point(field_release:KFMsg.S2SAddFriendInviteToRelationReq.name)
+inline ::std::string* S2SApplyAddRelationToRelationReq::release_dataname() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SApplyAddRelationToRelationReq.dataname)
   
-  return name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  return dataname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void S2SAddFriendInviteToRelationReq::set_allocated_name(::std::string* name) {
-  if (name != NULL) {
+inline void S2SApplyAddRelationToRelationReq::set_allocated_dataname(::std::string* dataname) {
+  if (dataname != NULL) {
     
   } else {
     
   }
-  name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SAddFriendInviteToRelationReq.name)
+  dataname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), dataname);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SApplyAddRelationToRelationReq.dataname)
 }
 
-// uint64 playerid = 2;
-inline void S2SAddFriendInviteToRelationReq::clear_playerid() {
-  playerid_ = GOOGLE_ULONGLONG(0);
+// bytes playername = 2;
+inline void S2SApplyAddRelationToRelationReq::clear_playername() {
+  playername_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::google::protobuf::uint64 S2SAddFriendInviteToRelationReq::playerid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SAddFriendInviteToRelationReq.playerid)
-  return playerid_;
+inline const ::std::string& S2SApplyAddRelationToRelationReq::playername() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SApplyAddRelationToRelationReq.playername)
+  return playername_.GetNoArena();
 }
-inline void S2SAddFriendInviteToRelationReq::set_playerid(::google::protobuf::uint64 value) {
+inline void S2SApplyAddRelationToRelationReq::set_playername(const ::std::string& value) {
   
-  playerid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SAddFriendInviteToRelationReq.playerid)
-}
-
-// bytes message = 3;
-inline void S2SAddFriendInviteToRelationReq::clear_message() {
-  message_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline const ::std::string& S2SAddFriendInviteToRelationReq::message() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SAddFriendInviteToRelationReq.message)
-  return message_.GetNoArena();
-}
-inline void S2SAddFriendInviteToRelationReq::set_message(const ::std::string& value) {
-  
-  message_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.S2SAddFriendInviteToRelationReq.message)
+  playername_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.S2SApplyAddRelationToRelationReq.playername)
 }
 #if LANG_CXX11
-inline void S2SAddFriendInviteToRelationReq::set_message(::std::string&& value) {
+inline void S2SApplyAddRelationToRelationReq::set_playername(::std::string&& value) {
+  
+  playername_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SApplyAddRelationToRelationReq.playername)
+}
+#endif
+inline void S2SApplyAddRelationToRelationReq::set_playername(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  playername_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.S2SApplyAddRelationToRelationReq.playername)
+}
+inline void S2SApplyAddRelationToRelationReq::set_playername(const void* value, size_t size) {
+  
+  playername_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SApplyAddRelationToRelationReq.playername)
+}
+inline ::std::string* S2SApplyAddRelationToRelationReq::mutable_playername() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SApplyAddRelationToRelationReq.playername)
+  return playername_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* S2SApplyAddRelationToRelationReq::release_playername() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SApplyAddRelationToRelationReq.playername)
+  
+  return playername_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void S2SApplyAddRelationToRelationReq::set_allocated_playername(::std::string* playername) {
+  if (playername != NULL) {
+    
+  } else {
+    
+  }
+  playername_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), playername);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SApplyAddRelationToRelationReq.playername)
+}
+
+// uint64 playerid = 3;
+inline void S2SApplyAddRelationToRelationReq::clear_playerid() {
+  playerid_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 S2SApplyAddRelationToRelationReq::playerid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SApplyAddRelationToRelationReq.playerid)
+  return playerid_;
+}
+inline void S2SApplyAddRelationToRelationReq::set_playerid(::google::protobuf::uint64 value) {
+  
+  playerid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SApplyAddRelationToRelationReq.playerid)
+}
+
+// bytes message = 4;
+inline void S2SApplyAddRelationToRelationReq::clear_message() {
+  message_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& S2SApplyAddRelationToRelationReq::message() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SApplyAddRelationToRelationReq.message)
+  return message_.GetNoArena();
+}
+inline void S2SApplyAddRelationToRelationReq::set_message(const ::std::string& value) {
+  
+  message_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.S2SApplyAddRelationToRelationReq.message)
+}
+#if LANG_CXX11
+inline void S2SApplyAddRelationToRelationReq::set_message(::std::string&& value) {
   
   message_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SAddFriendInviteToRelationReq.message)
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SApplyAddRelationToRelationReq.message)
 }
 #endif
-inline void S2SAddFriendInviteToRelationReq::set_message(const char* value) {
+inline void S2SApplyAddRelationToRelationReq::set_message(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   message_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.S2SAddFriendInviteToRelationReq.message)
+  // @@protoc_insertion_point(field_set_char:KFMsg.S2SApplyAddRelationToRelationReq.message)
 }
-inline void S2SAddFriendInviteToRelationReq::set_message(const void* value, size_t size) {
+inline void S2SApplyAddRelationToRelationReq::set_message(const void* value, size_t size) {
   
   message_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SAddFriendInviteToRelationReq.message)
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SApplyAddRelationToRelationReq.message)
 }
-inline ::std::string* S2SAddFriendInviteToRelationReq::mutable_message() {
+inline ::std::string* S2SApplyAddRelationToRelationReq::mutable_message() {
   
-  // @@protoc_insertion_point(field_mutable:KFMsg.S2SAddFriendInviteToRelationReq.message)
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SApplyAddRelationToRelationReq.message)
   return message_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* S2SAddFriendInviteToRelationReq::release_message() {
-  // @@protoc_insertion_point(field_release:KFMsg.S2SAddFriendInviteToRelationReq.message)
+inline ::std::string* S2SApplyAddRelationToRelationReq::release_message() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SApplyAddRelationToRelationReq.message)
   
   return message_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void S2SAddFriendInviteToRelationReq::set_allocated_message(::std::string* message) {
+inline void S2SApplyAddRelationToRelationReq::set_allocated_message(::std::string* message) {
   if (message != NULL) {
     
   } else {
     
   }
   message_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), message);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SAddFriendInviteToRelationReq.message)
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SApplyAddRelationToRelationReq.message)
 }
 
 // -------------------------------------------------------------------
 
-// S2SAddFriendInviteToGameAck
+// S2SApplyAddRelationToGameAck
 
-// uint64 playerid = 1;
-inline void S2SAddFriendInviteToGameAck::clear_playerid() {
+// bytes dataname = 1;
+inline void S2SApplyAddRelationToGameAck::clear_dataname() {
+  dataname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& S2SApplyAddRelationToGameAck::dataname() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SApplyAddRelationToGameAck.dataname)
+  return dataname_.GetNoArena();
+}
+inline void S2SApplyAddRelationToGameAck::set_dataname(const ::std::string& value) {
+  
+  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.S2SApplyAddRelationToGameAck.dataname)
+}
+#if LANG_CXX11
+inline void S2SApplyAddRelationToGameAck::set_dataname(::std::string&& value) {
+  
+  dataname_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SApplyAddRelationToGameAck.dataname)
+}
+#endif
+inline void S2SApplyAddRelationToGameAck::set_dataname(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.S2SApplyAddRelationToGameAck.dataname)
+}
+inline void S2SApplyAddRelationToGameAck::set_dataname(const void* value, size_t size) {
+  
+  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SApplyAddRelationToGameAck.dataname)
+}
+inline ::std::string* S2SApplyAddRelationToGameAck::mutable_dataname() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SApplyAddRelationToGameAck.dataname)
+  return dataname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* S2SApplyAddRelationToGameAck::release_dataname() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SApplyAddRelationToGameAck.dataname)
+  
+  return dataname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void S2SApplyAddRelationToGameAck::set_allocated_dataname(::std::string* dataname) {
+  if (dataname != NULL) {
+    
+  } else {
+    
+  }
+  dataname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), dataname);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SApplyAddRelationToGameAck.dataname)
+}
+
+// uint64 playerid = 2;
+inline void S2SApplyAddRelationToGameAck::clear_playerid() {
   playerid_ = GOOGLE_ULONGLONG(0);
 }
-inline ::google::protobuf::uint64 S2SAddFriendInviteToGameAck::playerid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SAddFriendInviteToGameAck.playerid)
+inline ::google::protobuf::uint64 S2SApplyAddRelationToGameAck::playerid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SApplyAddRelationToGameAck.playerid)
   return playerid_;
 }
-inline void S2SAddFriendInviteToGameAck::set_playerid(::google::protobuf::uint64 value) {
+inline void S2SApplyAddRelationToGameAck::set_playerid(::google::protobuf::uint64 value) {
   
   playerid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SAddFriendInviteToGameAck.playerid)
+  // @@protoc_insertion_point(field_set:KFMsg.S2SApplyAddRelationToGameAck.playerid)
 }
 
-// .KFMsg.PBRelation pbinvite = 2;
-inline bool S2SAddFriendInviteToGameAck::has_pbinvite() const {
+// .KFMsg.PBRelation pbinvite = 3;
+inline bool S2SApplyAddRelationToGameAck::has_pbinvite() const {
   return this != internal_default_instance() && pbinvite_ != NULL;
 }
-inline void S2SAddFriendInviteToGameAck::clear_pbinvite() {
+inline void S2SApplyAddRelationToGameAck::clear_pbinvite() {
   if (GetArenaNoVirtual() == NULL && pbinvite_ != NULL) {
     delete pbinvite_;
   }
   pbinvite_ = NULL;
 }
-inline const ::KFMsg::PBRelation& S2SAddFriendInviteToGameAck::_internal_pbinvite() const {
+inline const ::KFMsg::PBRelation& S2SApplyAddRelationToGameAck::_internal_pbinvite() const {
   return *pbinvite_;
 }
-inline const ::KFMsg::PBRelation& S2SAddFriendInviteToGameAck::pbinvite() const {
+inline const ::KFMsg::PBRelation& S2SApplyAddRelationToGameAck::pbinvite() const {
   const ::KFMsg::PBRelation* p = pbinvite_;
-  // @@protoc_insertion_point(field_get:KFMsg.S2SAddFriendInviteToGameAck.pbinvite)
+  // @@protoc_insertion_point(field_get:KFMsg.S2SApplyAddRelationToGameAck.pbinvite)
   return p != NULL ? *p : *reinterpret_cast<const ::KFMsg::PBRelation*>(
       &::KFMsg::_PBRelation_default_instance_);
 }
-inline ::KFMsg::PBRelation* S2SAddFriendInviteToGameAck::release_pbinvite() {
-  // @@protoc_insertion_point(field_release:KFMsg.S2SAddFriendInviteToGameAck.pbinvite)
+inline ::KFMsg::PBRelation* S2SApplyAddRelationToGameAck::release_pbinvite() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SApplyAddRelationToGameAck.pbinvite)
   
   ::KFMsg::PBRelation* temp = pbinvite_;
   pbinvite_ = NULL;
   return temp;
 }
-inline ::KFMsg::PBRelation* S2SAddFriendInviteToGameAck::mutable_pbinvite() {
+inline ::KFMsg::PBRelation* S2SApplyAddRelationToGameAck::mutable_pbinvite() {
   
   if (pbinvite_ == NULL) {
     auto* p = CreateMaybeMessage<::KFMsg::PBRelation>(GetArenaNoVirtual());
     pbinvite_ = p;
   }
-  // @@protoc_insertion_point(field_mutable:KFMsg.S2SAddFriendInviteToGameAck.pbinvite)
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SApplyAddRelationToGameAck.pbinvite)
   return pbinvite_;
 }
-inline void S2SAddFriendInviteToGameAck::set_allocated_pbinvite(::KFMsg::PBRelation* pbinvite) {
+inline void S2SApplyAddRelationToGameAck::set_allocated_pbinvite(::KFMsg::PBRelation* pbinvite) {
   ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
   if (message_arena == NULL) {
     delete pbinvite_;
@@ -11806,232 +12372,550 @@ inline void S2SAddFriendInviteToGameAck::set_allocated_pbinvite(::KFMsg::PBRelat
     
   }
   pbinvite_ = pbinvite;
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SAddFriendInviteToGameAck.pbinvite)
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SApplyAddRelationToGameAck.pbinvite)
 }
 
 // -------------------------------------------------------------------
 
-// S2SDelFriendInviteToRelationReq
+// S2SDelRelationInviteToRelationReq
 
-// uint64 selfplayerid = 1;
-inline void S2SDelFriendInviteToRelationReq::clear_selfplayerid() {
-  selfplayerid_ = GOOGLE_ULONGLONG(0);
+// bytes dataname = 1;
+inline void S2SDelRelationInviteToRelationReq::clear_dataname() {
+  dataname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::google::protobuf::uint64 S2SDelFriendInviteToRelationReq::selfplayerid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SDelFriendInviteToRelationReq.selfplayerid)
-  return selfplayerid_;
+inline const ::std::string& S2SDelRelationInviteToRelationReq::dataname() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SDelRelationInviteToRelationReq.dataname)
+  return dataname_.GetNoArena();
 }
-inline void S2SDelFriendInviteToRelationReq::set_selfplayerid(::google::protobuf::uint64 value) {
+inline void S2SDelRelationInviteToRelationReq::set_dataname(const ::std::string& value) {
   
-  selfplayerid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SDelFriendInviteToRelationReq.selfplayerid)
-}
-
-// uint64 targetplayerid = 2;
-inline void S2SDelFriendInviteToRelationReq::clear_targetplayerid() {
-  targetplayerid_ = GOOGLE_ULONGLONG(0);
-}
-inline ::google::protobuf::uint64 S2SDelFriendInviteToRelationReq::targetplayerid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SDelFriendInviteToRelationReq.targetplayerid)
-  return targetplayerid_;
-}
-inline void S2SDelFriendInviteToRelationReq::set_targetplayerid(::google::protobuf::uint64 value) {
-  
-  targetplayerid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SDelFriendInviteToRelationReq.targetplayerid)
-}
-
-// -------------------------------------------------------------------
-
-// S2SAddFriendToRelationReq
-
-// bytes name = 1;
-inline void S2SAddFriendToRelationReq::clear_name() {
-  name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline const ::std::string& S2SAddFriendToRelationReq::name() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SAddFriendToRelationReq.name)
-  return name_.GetNoArena();
-}
-inline void S2SAddFriendToRelationReq::set_name(const ::std::string& value) {
-  
-  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.S2SAddFriendToRelationReq.name)
+  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.S2SDelRelationInviteToRelationReq.dataname)
 }
 #if LANG_CXX11
-inline void S2SAddFriendToRelationReq::set_name(::std::string&& value) {
+inline void S2SDelRelationInviteToRelationReq::set_dataname(::std::string&& value) {
   
-  name_.SetNoArena(
+  dataname_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SAddFriendToRelationReq.name)
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SDelRelationInviteToRelationReq.dataname)
 }
 #endif
-inline void S2SAddFriendToRelationReq::set_name(const char* value) {
+inline void S2SDelRelationInviteToRelationReq::set_dataname(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
-  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.S2SAddFriendToRelationReq.name)
+  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.S2SDelRelationInviteToRelationReq.dataname)
 }
-inline void S2SAddFriendToRelationReq::set_name(const void* value, size_t size) {
+inline void S2SDelRelationInviteToRelationReq::set_dataname(const void* value, size_t size) {
   
-  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SAddFriendToRelationReq.name)
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SDelRelationInviteToRelationReq.dataname)
 }
-inline ::std::string* S2SAddFriendToRelationReq::mutable_name() {
+inline ::std::string* S2SDelRelationInviteToRelationReq::mutable_dataname() {
   
-  // @@protoc_insertion_point(field_mutable:KFMsg.S2SAddFriendToRelationReq.name)
-  return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SDelRelationInviteToRelationReq.dataname)
+  return dataname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* S2SAddFriendToRelationReq::release_name() {
-  // @@protoc_insertion_point(field_release:KFMsg.S2SAddFriendToRelationReq.name)
+inline ::std::string* S2SDelRelationInviteToRelationReq::release_dataname() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SDelRelationInviteToRelationReq.dataname)
   
-  return name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  return dataname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void S2SAddFriendToRelationReq::set_allocated_name(::std::string* name) {
-  if (name != NULL) {
+inline void S2SDelRelationInviteToRelationReq::set_allocated_dataname(::std::string* dataname) {
+  if (dataname != NULL) {
     
   } else {
     
   }
-  name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SAddFriendToRelationReq.name)
+  dataname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), dataname);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SDelRelationInviteToRelationReq.dataname)
 }
 
-// uint64 playerid = 2;
-inline void S2SAddFriendToRelationReq::clear_playerid() {
-  playerid_ = GOOGLE_ULONGLONG(0);
+// bytes listname = 2;
+inline void S2SDelRelationInviteToRelationReq::clear_listname() {
+  listname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::google::protobuf::uint64 S2SAddFriendToRelationReq::playerid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SAddFriendToRelationReq.playerid)
-  return playerid_;
+inline const ::std::string& S2SDelRelationInviteToRelationReq::listname() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SDelRelationInviteToRelationReq.listname)
+  return listname_.GetNoArena();
 }
-inline void S2SAddFriendToRelationReq::set_playerid(::google::protobuf::uint64 value) {
+inline void S2SDelRelationInviteToRelationReq::set_listname(const ::std::string& value) {
   
-  playerid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SAddFriendToRelationReq.playerid)
+  listname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.S2SDelRelationInviteToRelationReq.listname)
+}
+#if LANG_CXX11
+inline void S2SDelRelationInviteToRelationReq::set_listname(::std::string&& value) {
+  
+  listname_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SDelRelationInviteToRelationReq.listname)
+}
+#endif
+inline void S2SDelRelationInviteToRelationReq::set_listname(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  listname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.S2SDelRelationInviteToRelationReq.listname)
+}
+inline void S2SDelRelationInviteToRelationReq::set_listname(const void* value, size_t size) {
+  
+  listname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SDelRelationInviteToRelationReq.listname)
+}
+inline ::std::string* S2SDelRelationInviteToRelationReq::mutable_listname() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SDelRelationInviteToRelationReq.listname)
+  return listname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* S2SDelRelationInviteToRelationReq::release_listname() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SDelRelationInviteToRelationReq.listname)
+  
+  return listname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void S2SDelRelationInviteToRelationReq::set_allocated_listname(::std::string* listname) {
+  if (listname != NULL) {
+    
+  } else {
+    
+  }
+  listname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), listname);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SDelRelationInviteToRelationReq.listname)
+}
+
+// uint64 selfplayerid = 3;
+inline void S2SDelRelationInviteToRelationReq::clear_selfplayerid() {
+  selfplayerid_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 S2SDelRelationInviteToRelationReq::selfplayerid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SDelRelationInviteToRelationReq.selfplayerid)
+  return selfplayerid_;
+}
+inline void S2SDelRelationInviteToRelationReq::set_selfplayerid(::google::protobuf::uint64 value) {
+  
+  selfplayerid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SDelRelationInviteToRelationReq.selfplayerid)
+}
+
+// uint64 targetplayerid = 4;
+inline void S2SDelRelationInviteToRelationReq::clear_targetplayerid() {
+  targetplayerid_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 S2SDelRelationInviteToRelationReq::targetplayerid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SDelRelationInviteToRelationReq.targetplayerid)
+  return targetplayerid_;
+}
+inline void S2SDelRelationInviteToRelationReq::set_targetplayerid(::google::protobuf::uint64 value) {
+  
+  targetplayerid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SDelRelationInviteToRelationReq.targetplayerid)
 }
 
 // -------------------------------------------------------------------
 
-// S2SAddFriendToGameAck
+// S2SAddRelationToRelationReq
 
-// uint64 playerid = 1;
-inline void S2SAddFriendToGameAck::clear_playerid() {
+// bytes dataname = 1;
+inline void S2SAddRelationToRelationReq::clear_dataname() {
+  dataname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& S2SAddRelationToRelationReq::dataname() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SAddRelationToRelationReq.dataname)
+  return dataname_.GetNoArena();
+}
+inline void S2SAddRelationToRelationReq::set_dataname(const ::std::string& value) {
+  
+  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.S2SAddRelationToRelationReq.dataname)
+}
+#if LANG_CXX11
+inline void S2SAddRelationToRelationReq::set_dataname(::std::string&& value) {
+  
+  dataname_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SAddRelationToRelationReq.dataname)
+}
+#endif
+inline void S2SAddRelationToRelationReq::set_dataname(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.S2SAddRelationToRelationReq.dataname)
+}
+inline void S2SAddRelationToRelationReq::set_dataname(const void* value, size_t size) {
+  
+  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SAddRelationToRelationReq.dataname)
+}
+inline ::std::string* S2SAddRelationToRelationReq::mutable_dataname() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SAddRelationToRelationReq.dataname)
+  return dataname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* S2SAddRelationToRelationReq::release_dataname() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SAddRelationToRelationReq.dataname)
+  
+  return dataname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void S2SAddRelationToRelationReq::set_allocated_dataname(::std::string* dataname) {
+  if (dataname != NULL) {
+    
+  } else {
+    
+  }
+  dataname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), dataname);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SAddRelationToRelationReq.dataname)
+}
+
+// uint64 playerid = 2;
+inline void S2SAddRelationToRelationReq::clear_playerid() {
   playerid_ = GOOGLE_ULONGLONG(0);
 }
-inline ::google::protobuf::uint64 S2SAddFriendToGameAck::playerid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SAddFriendToGameAck.playerid)
+inline ::google::protobuf::uint64 S2SAddRelationToRelationReq::playerid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SAddRelationToRelationReq.playerid)
   return playerid_;
 }
-inline void S2SAddFriendToGameAck::set_playerid(::google::protobuf::uint64 value) {
+inline void S2SAddRelationToRelationReq::set_playerid(::google::protobuf::uint64 value) {
   
   playerid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SAddFriendToGameAck.playerid)
+  // @@protoc_insertion_point(field_set:KFMsg.S2SAddRelationToRelationReq.playerid)
 }
 
-// .KFMsg.PBRelation pbfriend = 2;
-inline bool S2SAddFriendToGameAck::has_pbfriend() const {
-  return this != internal_default_instance() && pbfriend_ != NULL;
+// bytes playername = 3;
+inline void S2SAddRelationToRelationReq::clear_playername() {
+  playername_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void S2SAddFriendToGameAck::clear_pbfriend() {
-  if (GetArenaNoVirtual() == NULL && pbfriend_ != NULL) {
-    delete pbfriend_;
+inline const ::std::string& S2SAddRelationToRelationReq::playername() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SAddRelationToRelationReq.playername)
+  return playername_.GetNoArena();
+}
+inline void S2SAddRelationToRelationReq::set_playername(const ::std::string& value) {
+  
+  playername_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.S2SAddRelationToRelationReq.playername)
+}
+#if LANG_CXX11
+inline void S2SAddRelationToRelationReq::set_playername(::std::string&& value) {
+  
+  playername_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SAddRelationToRelationReq.playername)
+}
+#endif
+inline void S2SAddRelationToRelationReq::set_playername(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  playername_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.S2SAddRelationToRelationReq.playername)
+}
+inline void S2SAddRelationToRelationReq::set_playername(const void* value, size_t size) {
+  
+  playername_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SAddRelationToRelationReq.playername)
+}
+inline ::std::string* S2SAddRelationToRelationReq::mutable_playername() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SAddRelationToRelationReq.playername)
+  return playername_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* S2SAddRelationToRelationReq::release_playername() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SAddRelationToRelationReq.playername)
+  
+  return playername_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void S2SAddRelationToRelationReq::set_allocated_playername(::std::string* playername) {
+  if (playername != NULL) {
+    
+  } else {
+    
   }
-  pbfriend_ = NULL;
+  playername_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), playername);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SAddRelationToRelationReq.playername)
 }
-inline const ::KFMsg::PBRelation& S2SAddFriendToGameAck::_internal_pbfriend() const {
-  return *pbfriend_;
+
+// -------------------------------------------------------------------
+
+// S2SAddRelationToGameAck
+
+// bytes dataname = 1;
+inline void S2SAddRelationToGameAck::clear_dataname() {
+  dataname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::KFMsg::PBRelation& S2SAddFriendToGameAck::pbfriend() const {
-  const ::KFMsg::PBRelation* p = pbfriend_;
-  // @@protoc_insertion_point(field_get:KFMsg.S2SAddFriendToGameAck.pbfriend)
+inline const ::std::string& S2SAddRelationToGameAck::dataname() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SAddRelationToGameAck.dataname)
+  return dataname_.GetNoArena();
+}
+inline void S2SAddRelationToGameAck::set_dataname(const ::std::string& value) {
+  
+  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.S2SAddRelationToGameAck.dataname)
+}
+#if LANG_CXX11
+inline void S2SAddRelationToGameAck::set_dataname(::std::string&& value) {
+  
+  dataname_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SAddRelationToGameAck.dataname)
+}
+#endif
+inline void S2SAddRelationToGameAck::set_dataname(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.S2SAddRelationToGameAck.dataname)
+}
+inline void S2SAddRelationToGameAck::set_dataname(const void* value, size_t size) {
+  
+  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SAddRelationToGameAck.dataname)
+}
+inline ::std::string* S2SAddRelationToGameAck::mutable_dataname() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SAddRelationToGameAck.dataname)
+  return dataname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* S2SAddRelationToGameAck::release_dataname() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SAddRelationToGameAck.dataname)
+  
+  return dataname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void S2SAddRelationToGameAck::set_allocated_dataname(::std::string* dataname) {
+  if (dataname != NULL) {
+    
+  } else {
+    
+  }
+  dataname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), dataname);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SAddRelationToGameAck.dataname)
+}
+
+// uint64 playerid = 2;
+inline void S2SAddRelationToGameAck::clear_playerid() {
+  playerid_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 S2SAddRelationToGameAck::playerid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SAddRelationToGameAck.playerid)
+  return playerid_;
+}
+inline void S2SAddRelationToGameAck::set_playerid(::google::protobuf::uint64 value) {
+  
+  playerid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SAddRelationToGameAck.playerid)
+}
+
+// .KFMsg.PBRelation pbrelation = 4;
+inline bool S2SAddRelationToGameAck::has_pbrelation() const {
+  return this != internal_default_instance() && pbrelation_ != NULL;
+}
+inline void S2SAddRelationToGameAck::clear_pbrelation() {
+  if (GetArenaNoVirtual() == NULL && pbrelation_ != NULL) {
+    delete pbrelation_;
+  }
+  pbrelation_ = NULL;
+}
+inline const ::KFMsg::PBRelation& S2SAddRelationToGameAck::_internal_pbrelation() const {
+  return *pbrelation_;
+}
+inline const ::KFMsg::PBRelation& S2SAddRelationToGameAck::pbrelation() const {
+  const ::KFMsg::PBRelation* p = pbrelation_;
+  // @@protoc_insertion_point(field_get:KFMsg.S2SAddRelationToGameAck.pbrelation)
   return p != NULL ? *p : *reinterpret_cast<const ::KFMsg::PBRelation*>(
       &::KFMsg::_PBRelation_default_instance_);
 }
-inline ::KFMsg::PBRelation* S2SAddFriendToGameAck::release_pbfriend() {
-  // @@protoc_insertion_point(field_release:KFMsg.S2SAddFriendToGameAck.pbfriend)
+inline ::KFMsg::PBRelation* S2SAddRelationToGameAck::release_pbrelation() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SAddRelationToGameAck.pbrelation)
   
-  ::KFMsg::PBRelation* temp = pbfriend_;
-  pbfriend_ = NULL;
+  ::KFMsg::PBRelation* temp = pbrelation_;
+  pbrelation_ = NULL;
   return temp;
 }
-inline ::KFMsg::PBRelation* S2SAddFriendToGameAck::mutable_pbfriend() {
+inline ::KFMsg::PBRelation* S2SAddRelationToGameAck::mutable_pbrelation() {
   
-  if (pbfriend_ == NULL) {
+  if (pbrelation_ == NULL) {
     auto* p = CreateMaybeMessage<::KFMsg::PBRelation>(GetArenaNoVirtual());
-    pbfriend_ = p;
+    pbrelation_ = p;
   }
-  // @@protoc_insertion_point(field_mutable:KFMsg.S2SAddFriendToGameAck.pbfriend)
-  return pbfriend_;
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SAddRelationToGameAck.pbrelation)
+  return pbrelation_;
 }
-inline void S2SAddFriendToGameAck::set_allocated_pbfriend(::KFMsg::PBRelation* pbfriend) {
+inline void S2SAddRelationToGameAck::set_allocated_pbrelation(::KFMsg::PBRelation* pbrelation) {
   ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
   if (message_arena == NULL) {
-    delete pbfriend_;
+    delete pbrelation_;
   }
-  if (pbfriend) {
+  if (pbrelation) {
     ::google::protobuf::Arena* submessage_arena = NULL;
     if (message_arena != submessage_arena) {
-      pbfriend = ::google::protobuf::internal::GetOwnedMessage(
-          message_arena, pbfriend, submessage_arena);
+      pbrelation = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, pbrelation, submessage_arena);
     }
     
   } else {
     
   }
-  pbfriend_ = pbfriend;
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SAddFriendToGameAck.pbfriend)
+  pbrelation_ = pbrelation;
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SAddRelationToGameAck.pbrelation)
 }
 
 // -------------------------------------------------------------------
 
-// S2SDelFriendToRelationReq
+// S2SDelRelationToRelationReq
 
-// uint64 playerid = 1;
-inline void S2SDelFriendToRelationReq::clear_playerid() {
+// bytes dataname = 1;
+inline void S2SDelRelationToRelationReq::clear_dataname() {
+  dataname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& S2SDelRelationToRelationReq::dataname() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SDelRelationToRelationReq.dataname)
+  return dataname_.GetNoArena();
+}
+inline void S2SDelRelationToRelationReq::set_dataname(const ::std::string& value) {
+  
+  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.S2SDelRelationToRelationReq.dataname)
+}
+#if LANG_CXX11
+inline void S2SDelRelationToRelationReq::set_dataname(::std::string&& value) {
+  
+  dataname_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SDelRelationToRelationReq.dataname)
+}
+#endif
+inline void S2SDelRelationToRelationReq::set_dataname(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.S2SDelRelationToRelationReq.dataname)
+}
+inline void S2SDelRelationToRelationReq::set_dataname(const void* value, size_t size) {
+  
+  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SDelRelationToRelationReq.dataname)
+}
+inline ::std::string* S2SDelRelationToRelationReq::mutable_dataname() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SDelRelationToRelationReq.dataname)
+  return dataname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* S2SDelRelationToRelationReq::release_dataname() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SDelRelationToRelationReq.dataname)
+  
+  return dataname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void S2SDelRelationToRelationReq::set_allocated_dataname(::std::string* dataname) {
+  if (dataname != NULL) {
+    
+  } else {
+    
+  }
+  dataname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), dataname);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SDelRelationToRelationReq.dataname)
+}
+
+// uint64 playerid = 2;
+inline void S2SDelRelationToRelationReq::clear_playerid() {
   playerid_ = GOOGLE_ULONGLONG(0);
 }
-inline ::google::protobuf::uint64 S2SDelFriendToRelationReq::playerid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SDelFriendToRelationReq.playerid)
+inline ::google::protobuf::uint64 S2SDelRelationToRelationReq::playerid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SDelRelationToRelationReq.playerid)
   return playerid_;
 }
-inline void S2SDelFriendToRelationReq::set_playerid(::google::protobuf::uint64 value) {
+inline void S2SDelRelationToRelationReq::set_playerid(::google::protobuf::uint64 value) {
   
   playerid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SDelFriendToRelationReq.playerid)
+  // @@protoc_insertion_point(field_set:KFMsg.S2SDelRelationToRelationReq.playerid)
 }
 
 // -------------------------------------------------------------------
 
-// S2SDelFriendToGameAck
+// S2SDelRelationToGameAck
 
-// uint64 playerid = 1;
-inline void S2SDelFriendToGameAck::clear_playerid() {
+// bytes dataname = 1;
+inline void S2SDelRelationToGameAck::clear_dataname() {
+  dataname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& S2SDelRelationToGameAck::dataname() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SDelRelationToGameAck.dataname)
+  return dataname_.GetNoArena();
+}
+inline void S2SDelRelationToGameAck::set_dataname(const ::std::string& value) {
+  
+  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.S2SDelRelationToGameAck.dataname)
+}
+#if LANG_CXX11
+inline void S2SDelRelationToGameAck::set_dataname(::std::string&& value) {
+  
+  dataname_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SDelRelationToGameAck.dataname)
+}
+#endif
+inline void S2SDelRelationToGameAck::set_dataname(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.S2SDelRelationToGameAck.dataname)
+}
+inline void S2SDelRelationToGameAck::set_dataname(const void* value, size_t size) {
+  
+  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SDelRelationToGameAck.dataname)
+}
+inline ::std::string* S2SDelRelationToGameAck::mutable_dataname() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SDelRelationToGameAck.dataname)
+  return dataname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* S2SDelRelationToGameAck::release_dataname() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SDelRelationToGameAck.dataname)
+  
+  return dataname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void S2SDelRelationToGameAck::set_allocated_dataname(::std::string* dataname) {
+  if (dataname != NULL) {
+    
+  } else {
+    
+  }
+  dataname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), dataname);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SDelRelationToGameAck.dataname)
+}
+
+// uint64 playerid = 2;
+inline void S2SDelRelationToGameAck::clear_playerid() {
   playerid_ = GOOGLE_ULONGLONG(0);
 }
-inline ::google::protobuf::uint64 S2SDelFriendToGameAck::playerid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SDelFriendToGameAck.playerid)
+inline ::google::protobuf::uint64 S2SDelRelationToGameAck::playerid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SDelRelationToGameAck.playerid)
   return playerid_;
 }
-inline void S2SDelFriendToGameAck::set_playerid(::google::protobuf::uint64 value) {
+inline void S2SDelRelationToGameAck::set_playerid(::google::protobuf::uint64 value) {
   
   playerid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SDelFriendToGameAck.playerid)
+  // @@protoc_insertion_point(field_set:KFMsg.S2SDelRelationToGameAck.playerid)
 }
 
-// uint64 friendid = 2;
-inline void S2SDelFriendToGameAck::clear_friendid() {
-  friendid_ = GOOGLE_ULONGLONG(0);
+// uint64 relationid = 3;
+inline void S2SDelRelationToGameAck::clear_relationid() {
+  relationid_ = GOOGLE_ULONGLONG(0);
 }
-inline ::google::protobuf::uint64 S2SDelFriendToGameAck::friendid() const {
-  // @@protoc_insertion_point(field_get:KFMsg.S2SDelFriendToGameAck.friendid)
-  return friendid_;
+inline ::google::protobuf::uint64 S2SDelRelationToGameAck::relationid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SDelRelationToGameAck.relationid)
+  return relationid_;
 }
-inline void S2SDelFriendToGameAck::set_friendid(::google::protobuf::uint64 value) {
+inline void S2SDelRelationToGameAck::set_relationid(::google::protobuf::uint64 value) {
   
-  friendid_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.S2SDelFriendToGameAck.friendid)
+  relationid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SDelRelationToGameAck.relationid)
 }
 
 // -------------------------------------------------------------------

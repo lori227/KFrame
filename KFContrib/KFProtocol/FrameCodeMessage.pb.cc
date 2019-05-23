@@ -50,7 +50,7 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\026FrameCodeMessage.proto\022\005KFMsg*\345\022\n\rFram"
+      "\n\026FrameCodeMessage.proto\022\005KFMsg*\262\023\n\rFram"
       "eCodeEnum\022\t\n\005Error\020\000\022\006\n\002Ok\020\001\022\022\n\rHttpData"
       "Error\020\220N\022\025\n\020AuthDatabaseBusy\020\221N\022\023\n\016AuthS"
       "erverBusy\020\222N\022\023\n\016ZoneServerBusy\020\223N\022\025\n\020Zon"
@@ -103,18 +103,20 @@ void AddDescriptorsImpl() {
       "\n\nStoreBuyOK\020\222`\022\017\n\nPayIdError\020\276`\022\021\n\014PayD"
       "ataError\020\277`\022\021\n\014RankNotExist\020\360`\022\027\n\022QueryB"
       "asicNotExist\020\324a\022\027\n\022MessageFilterError\020\270b"
-      "\022\022\n\rFriendAlready\020\271b\022\024\n\017FriendSelfLimit\020"
-      "\272b\022\024\n\017FriendInviteReq\020\273b\022\033\n\026FriendRefuse"
-      "YourInvite\020\274b\022\020\n\013FriendAddOk\020\275b\022\023\n\016Frien"
-      "dNotExist\020\276b\022\020\n\013FriendDelOk\020\277b\022\024\n\017Friend"
-      "LinessAdd\020\300b\022\027\n\022FriendRefuseInvite\020\301b\022\026\n"
-      "\021FriendTargetLimit\020\302b\022\030\n\023FriendInviteAlr"
-      "eady\020\303b\022\026\n\021FriendInviteLimit\020\304b\022\023\n\016Frien"
-      "dInviteOk\020\305b\022\031\n\024FriendInviteNotExist\020\306bb"
-      "\006proto3"
+      "\022\024\n\017RelationAlready\020\271b\022\026\n\021RelationSelfLi"
+      "mit\020\272b\022\026\n\021RelationInviteReq\020\273b\022\035\n\030Relati"
+      "onRefuseYourInvite\020\274b\022\022\n\rRelationAddOk\020\275"
+      "b\022\025\n\020RelationNotExist\020\276b\022\022\n\rRelationDelO"
+      "k\020\277b\022\031\n\024RelationRefuseInvite\020\300b\022\030\n\023Relat"
+      "ionTargetLimit\020\301b\022\032\n\025RelationInviteAlrea"
+      "dy\020\302b\022\030\n\023RelationInviteLimit\020\303b\022\025\n\020Relat"
+      "ionInviteOk\020\304b\022\033\n\026RelationInviteNotExist"
+      "\020\305b\022\031\n\024RelationSettingError\020\306b\022\026\n\021Relati"
+      "onDataError\020\307b\022\024\n\017FriendLinessAdd\020\310bb\006pr"
+      "oto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 2447);
+      descriptor, 2524);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "FrameCodeMessage.proto", &protobuf_RegisterTypes);
 }
@@ -244,6 +246,8 @@ bool FrameCodeEnum_IsValid(int value) {
     case 12612:
     case 12613:
     case 12614:
+    case 12615:
+    case 12616:
       return true;
     default:
       return false;

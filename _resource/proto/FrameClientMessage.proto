@@ -58,10 +58,10 @@ enum FrameClientProtocol
 	MSG_QUERY_PAY_REQ					= 434;	// 查询充值
 
 	// relation
-	MSG_ADD_FRIEND_INVITE_REQ 			= 451;	// 申请添加好友
-	MSG_REPLY_FRIEND_INVITE_REQ 		= 452;	// 回复好友申请
-	MSG_DEL_FRIEND_REQ					= 453;	// 删除好友
-	MSG_SET_REFUSE_FRIEND_INVITE_REQ 	= 454;	// 设置拒绝添加好友
+	MSG_ADD_RELATION_REQ 				= 451;	// 申请添加关系
+	MSG_DEL_RELATION_REQ				= 452;	// 申请删除关系
+	MSG_REPLY_RELATION_INVITE_REQ 		= 453;	// 回复关系申请
+	MSG_SET_REFUSE_RELATION_INVITE_REQ 	= 454;	// 设置拒绝添加好友
 
 	
 	// rank
@@ -367,36 +367,39 @@ message MsgQueryFriendRankListAck
 }
 ////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
-// 申请添加好友
-// MSG_ADD_FRIEND_INVITE_REQ
-message MsgAddFriendInviteReq
+// 申请添加关系
+// MSG_ADD_RELATION_REQ
+message MsgAddRelationReq
 {
-	bytes name = 1;			// 玩家名字
-	uint64 playerid = 2;	// 玩家id
-	bytes message = 3;		// 留言
+	bytes dataname = 1;		// 属性名
+	bytes playername = 2;	// 玩家名字
+	uint64 playerid = 3;	// 玩家id
+	bytes message = 4;		// 留言
+}
 
+// 删除关系
+// MSG_DEL_RELATION_REQ
+message MsgDelRelationReq
+{
+	bytes dataname = 1;		// 属性名
+	uint64 playerid = 2;	// 玩家id
 }
 
 // 回复添加好友请求
-// MSG_REPLY_FRIEND_INVITE_REQ
-message MsgReplyFriendInviteReq
+// MSG_REPLY_RELATION_INVITE_REQ
+message MsgReplyRelationInviteReq
 {
-	uint64 playerid = 1;	// 玩家id 0 表示所有
-	uint32 operate = 2;	// 1=同意 2=拒绝 3=直接删除请求 
-}
-
-// 删除好友
-// MSG_DEL_FRIEND_REQ
-message MsgDelFriendReq
-{
-	uint64 playerid = 1;	// 玩家id
+	bytes dataname = 1;		// 申请列表属性名
+	uint64 playerid = 2;	// 玩家id 0 表示所有
+	uint32 operate = 3;		// 1=同意 2=拒绝 3=直接删除请求 
 }
 
 // 设置拒绝添加好友
-// MSG_SET_REFUSE_FRIEND_INVITE_REQ
-message MsgSetRefuseFriendInviteReq
+// MSG_SET_REFUSE_RELATION_INVITE_REQ
+message MsgSetRefuseRelationInviteReq
 {
-	uint32 refuse = 1;	 // 1=拒绝申请 0=同意接受
+	bytes dataname = 1;		// 申请列表属性名
+	uint32 refuse = 2;	 // 1=拒绝申请 0=同意接受
 }
 ////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////

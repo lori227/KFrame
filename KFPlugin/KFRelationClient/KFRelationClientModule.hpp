@@ -10,9 +10,9 @@
 ************************************************************************/
 
 #include "KFProtocol/KFProtocol.h"
-#include "KFRelationClientInterface.h"
 #include "KFGame/KFGameInterface.h"
-#include "KFOption/KFOptionInterface.h"
+#include "KFRelationClientInterface.h"
+#include "KFRelationClientConfig.hpp"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFKernel/KFKernelInterface.h"
 #include "KFFilter/KFFilterInterface.h"
@@ -31,6 +31,9 @@ namespace KFrame
         ~KFRelationClientModule() = default;
 
         // 初始化
+        virtual void InitModule();
+
+        // 初始化
         virtual void BeforeRun();
 
         // 关闭
@@ -43,45 +46,48 @@ namespace KFrame
 
     protected:
         // 上线查询好友数据
-        void OnEnterQueryFriend( KFEntity* player );
+        void OnEnterQueryRelation( KFEntity* player );
 
         // 下线通知
-        void OnLeaveUpdateFriend( KFEntity* player );
+        void OnLeaveUpdateRelation( KFEntity* player );
 
         // 属性更新回调
         __KF_UPDATE_DATA_FUNCTION__( OnRelationValueUpdate );
         __KF_UPDATE_STRING_FUNCTION__( OnRelationStringUpdate );
 
+        // 更新关系属性值
+        void OnRelationValueUpdate( KFEntity* player, KFData* kfdata );
+
     protected:
         // 查询好友回馈
-        __KF_MESSAGE_FUNCTION__( HandleQueryFriendToGameAck );
+        __KF_MESSAGE_FUNCTION__( HandleQueryRelationToGameAck );
 
         // 查询好友申请回馈
-        __KF_MESSAGE_FUNCTION__( HandleQueryFriendInviteToGameAck );
+        __KF_MESSAGE_FUNCTION__( HandleQueryRelationInviteToGameAck );
+
+        // 申请添加关系请求
+        __KF_MESSAGE_FUNCTION__( HandleAddRelationReq );
+
+        // 删除关系请求
+        __KF_MESSAGE_FUNCTION__( HandleDelRelationReq );
 
         // 申请添加好友请求
-        __KF_MESSAGE_FUNCTION__( HandleAddFriendInviteReq );
-
-        // 申请添加好友请求
-        __KF_MESSAGE_FUNCTION__( HandleAddFriendInviteToGameAck );
-
-        // 删除好友请求
-        __KF_MESSAGE_FUNCTION__( HandleDelFriendReq );
+        __KF_MESSAGE_FUNCTION__( HandleApplyAddRelationToGameAck );
 
         // 删除好友回馈
-        __KF_MESSAGE_FUNCTION__( HandleDelFriendToGameAck );
-
-        // 好友申请回复
-        __KF_MESSAGE_FUNCTION__( HandleReplyInviteReq );
+        __KF_MESSAGE_FUNCTION__( HandleDelRelationToGameAck );
 
         // 添加好友
-        __KF_MESSAGE_FUNCTION__( HandleAddFriendToGameAck );
+        __KF_MESSAGE_FUNCTION__( HandleAddRelationToGameAck );
 
         // 更新好友
-        __KF_MESSAGE_FUNCTION__( HandleUpdateDataToFriendReq );
+        __KF_MESSAGE_FUNCTION__( HandleUpdateDataToRelationReq );
+
+        // 关系申请回复
+        __KF_MESSAGE_FUNCTION__( HandleReplyRelationInviteReq );
 
         // 拒绝好友申请设置
-        __KF_MESSAGE_FUNCTION__( HandleSetRefuseFriendInviteReq );
+        __KF_MESSAGE_FUNCTION__( HandleSetRefuseRelationInviteReq );
 
         // 更新好感度
         __KF_MESSAGE_FUNCTION__( HandleUpdateFriendLinessToGameAck );
@@ -90,28 +96,25 @@ namespace KFrame
         // 发送消息到关系集群
         bool SendToRelation( uint64 playerid, uint32 msgid, ::google::protobuf::Message* message );
 
-        // 发送消息到关系属性
-        bool SendToRelation( uint64 playerid, KFData* kfrelation, uint32 msgid, google::protobuf::Message* message );
-
         // 发送消息到好友
-        void SendMessageToFriend( KFEntity* player, uint32 msgid, google::protobuf::Message* message );
+        void SendMessageToRelation( KFEntity* player, const std::string& dataname, uint32 msgid, google::protobuf::Message* message );
+
+        // 发送好友更新消息
+        void SendUpdateToRelation( KFEntity* player, const std::string& dataname, MapString& values );
 
         // 解析好友信息
         void PBRelationToKFData( const KFMsg::PBRelation* pbfriend, KFData* kffriend );
 
         // 好友申请操作
-        void ReplyFriendInvite( KFEntity* player, uint32 operate );
-        void ReplyFriendInvite( KFEntity* player, uint64 playerid, uint32 operate );
-        uint64 ReplyFriendInvite( KFEntity* player, KFData* kfinvite, uint32 operate );
+        void ReplyRelationInvite( KFEntity* player, uint32 operate, const KFRelationSetting* kfsetting );
+        void ReplyRelationInvite( KFEntity* player, uint64 playerid, uint32 operate, const KFRelationSetting* kfsetting );
+        uint64 ReplyRelationInvite( KFEntity* player, KFData* kfinvite, uint32 operate, const KFRelationSetting* kfsetting );
 
-        // 添加好友
-        void ProcessAddFriend( KFEntity* player, KFData* kfinvite );
+        // 添加关系
+        void AddRelationToRelation( KFEntity* player, uint64 playerid, const std::string& playername, const KFRelationSetting* kfsetting );
 
-        // 发送好友更新消息
-        void SendUpdateToFriend( KFEntity* player, MapString& values );
-
-        // 获得好友最大设定数量
-        uint32 GetMaxFriendCount();
+        // 查询关系列表
+        void SendQueryToRelation( uint64 playerid, const KFRelationSetting* kfsetting );
 
     private:
         // 玩家组件
