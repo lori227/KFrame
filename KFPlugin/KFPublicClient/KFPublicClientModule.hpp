@@ -33,11 +33,11 @@ namespace KFrame
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
-        // 更新公共数据
-        virtual bool UpdatePublicData( uint64 playerid, MapString& values );
-        virtual bool UpdatePublicData( KFEntity* player, MapString& values );
+
 
     protected:
+        // 连接成功
+        void OnRouteConnectCluster( uint64 serverid );
 
         // 更新属性回调
         __KF_UPDATE_DATA_FUNCTION__( OnUpdateDataCallBack );
@@ -52,6 +52,10 @@ namespace KFrame
         // 离线更新公共数据
         void OnLeaveUpdatePublicData( KFEntity* player );
 
+        // 更新公共数据
+        void UpdatePublicData( uint64 playerid, MapString& values );
+        void UpdatePublicData( KFEntity* player, MapString& values );
+
     protected:
         // 查询玩家基本数据
         __KF_MESSAGE_FUNCTION__( HandleQueryBasicReq );
@@ -64,6 +68,9 @@ namespace KFrame
 
         // 基础模块
         KFData* _kf_basic = nullptr;
+
+        // 是否需要重置在线数据
+        bool _need_refresh_online = true;
     };
 }
 

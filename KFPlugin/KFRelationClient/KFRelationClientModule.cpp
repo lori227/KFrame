@@ -150,45 +150,17 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleUpdateDataToFriendReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SUpdateDataToFriendReq );
+        __ROUTE_PROTO_PARSE__( KFMsg::S2SUpdateDataToFriendReq );
 
-        auto playerid = __ROUTE_RECV_ID__;
-        auto player = _kf_player->FindPlayer( playerid );
-        if ( player != nullptr )
+        // 玩家存在, 就更新好友属性
+        auto kfobject = player->GetData();
+        auto kfbasic = kfobject->FindData( __KF_STRING__( friend ), kfmsg.playerid(), __KF_STRING__( basic ) );
+        if ( kfbasic != nullptr )
         {
-            // 玩家存在, 就更新好友属性
-            auto kfobject = player->GetData();
-            auto kfbasic = kfobject->FindData( __KF_STRING__( friend ), kfmsg.playerid(), __KF_STRING__( basic ) );
-            if ( kfbasic != nullptr )
+            auto pbdata = &kfmsg.pbdata();
+            for ( auto iter = pbdata->begin(); iter != pbdata->end(); ++iter )
             {
-                auto pbdata = &kfmsg.pbdata();
-                for ( auto iter = pbdata->begin(); iter != pbdata->end(); ++iter )
-                {
-                    player->UpdateData( kfbasic, iter->first, iter->second );
-                }
-            }
-        }
-        else
-        {
-            // 信息不同步时候, 设置玩家不在线
-            // 如果game宕机, 不会发送下线消息, 然后该玩家不在上线, 状态会一直显示在线
-            MapString values;
-            values[ __KF_STRING__( serverid ) ] = "0";
-            values[ __KF_STRING__( status ) ] = __TO_STRING__( KFMsg::OfflineState );
-            values[ __KF_STRING__( statustime ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time );
-            _kf_public->UpdatePublicData( playerid, values );
-
-            if ( route._send_id != _invalid_int )
-            {
-                // 同步给好友, 避免每次都更新消息过来
-                KFMsg::S2SUpdateDataToFriendReq req;
-                req.set_playerid( playerid );
-                auto pbdata = req.mutable_pbdata();
-                for ( auto& iter : values )
-                {
-                    ( *pbdata )[ iter.first ] = iter.second;
-                }
-                _kf_game->SendToPlayer( _invalid_int, route._server_id, route._send_id, KFMsg::S2S_UPDATE_DATA_TO_FRIEND_REQ, &req );
+                player->UpdateData( kfbasic, iter->first, iter->second );
             }
         }
     }

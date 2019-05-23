@@ -11,8 +11,8 @@
 	<!-- 部署数据库 -->
 	<Module Name="deploy">
 		<MySQL MinLogicId="0" MaxLogicId="0">
-			<Write IP="180.169.238.146" Port="13306" Database="kfdeploy" User="root" Password="mysql@lori227-="/>
-			<Read IP="180.169.238.146" Port="13306" Database="kfdeploy" User="root" Password="mysql@lori227-="/>
+			<Write IP="192.168.1.250" Port="3306" Database="kfdeploy" User="root" Password="mysql@lori227-="/>
+			<Read IP="192.168.1.250" Port="3306" Database="kfdeploy" User="root" Password="mysql@lori227-="/>
 		</MySQL>			 
 	</Module>
 </Config>

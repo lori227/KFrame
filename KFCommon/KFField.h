@@ -134,6 +134,7 @@ namespace KFrame
         __STRING_DEFINE__( openactivation );
         __STRING_DEFINE__( activationcode );
         __STRING_DEFINE__( kickonline );
+        __STRING_DEFINE__( onlinelist );
         __STRING_DEFINE__( accountlist );
         __STRING_DEFINE__( accountmake );
         __STRING_DEFINE__( access_token );

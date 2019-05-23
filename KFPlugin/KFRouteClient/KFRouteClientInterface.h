@@ -47,6 +47,22 @@ namespace KFrame
         virtual void RemoveObject( uint64 objectid ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 注册连接回调
+        template< class T >
+        void RegisterConnectionFunction( T* object, void ( T::*handle )( uint64 ) )
+        {
+            KFClusterConnectionFunction function = std::bind( handle, object, std::placeholders::_1 );
+            AddConnectionFunction( typeid( T ).name(), function );
+        }
+
+        // 取消注册
+        template< class T >
+        void UnRegisterConnectionFunction( T* object )
+        {
+            RemoveConnectionFunction( typeid( T ).name() );
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 注册转发消息
         template< class T >
         void RegisterTranspondFunction( T* object, bool ( T::*handle )( const Route& route, uint32 msgid, const char* data, uint32 length ) )
@@ -64,6 +80,9 @@ namespace KFrame
         }
 
     protected:
+        virtual void AddConnectionFunction( const std::string& name, KFClusterConnectionFunction& function ) = 0;
+        virtual void RemoveConnectionFunction( const std::string& name ) = 0;
+
         virtual void SetTranspondFunction( KFTranspondFunction& function ) = 0;
     };
 

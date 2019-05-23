@@ -72,6 +72,10 @@ namespace KFrame
         virtual void RemoveObject( uint64 objectid );
 
     protected:
+        // 添加连接回调
+        virtual void AddConnectionFunction( const std::string& name, KFClusterConnectionFunction& function );
+        virtual void RemoveConnectionFunction( const std::string& name );
+
         // 注册
         virtual void SetTranspondFunction( KFTranspondFunction& function );
 
@@ -100,6 +104,9 @@ namespace KFrame
 
         // 对象列表, 一个进程只挂载一种服务
         RouteObjectList _service_object_list;
+
+        // 集群认证成功的回调函数
+        KFBind< std::string, const std::string&, KFClusterConnectionFunction >_kf_connection_function;
     };
 }
 

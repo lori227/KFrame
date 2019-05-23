@@ -6,6 +6,7 @@ namespace KFrame
     void KFPublicShardModule::BeforeRun()
     {
         __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_DATA_TO_PUBLIC_REQ, &KFPublicShardModule::HandleUpdateDataToPublicReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_CLEAR_ONLINE_TO_PUBLIC_REQ, &KFPublicShardModule::HandleClearOnlineToPublicReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_BASIC_TO_PUBLIC_REQ, &KFPublicShardModule::HandleQueryBasicToPublicReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_SET_PLAYERNAME_TO_DATA_REQ, &KFPublicShardModule::HandleSetPlayerNameToDataReq );
     }
@@ -13,6 +14,7 @@ namespace KFrame
     void KFPublicShardModule::BeforeShut()
     {
         __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_DATA_TO_PUBLIC_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_CLEAR_ONLINE_TO_PUBLIC_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_BASIC_TO_PUBLIC_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_SET_PLAYERNAME_TO_DATA_REQ );
     }
@@ -20,7 +22,7 @@ namespace KFrame
     void KFPublicShardModule::OnceRun()
     {
         // 初始化redis
-        _public_redis_driver = _kf_redis->Create( __KF_STRING__( public ) );
+        _public_redis = _kf_redis->Create( __KF_STRING__( public ) );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -33,7 +35,42 @@ namespace KFrame
 
         MapString values;
         __PROTO_TO_MAP__( pbdata, values );
-        _public_redis_driver->Update( values, "hmset {}:{}", __KF_STRING__( public ), playerid );
+        _public_redis->Update( values, "hmset {}:{}", __KF_STRING__( public ), playerid );
+
+        auto status = KFUtility::ToValue< uint32 >( values[ __KF_STRING__( status ) ] );
+        if ( status == KFMsg::OnlineState )
+        {
+            _public_redis->Execute( "sadd {}:{} {}", __KF_STRING__( onlinelist ), __ROUTE_SERVER_ID__, playerid );
+        }
+        else if ( status == KFMsg::OfflineState )
+        {
+            _public_redis->Execute( "srem {}:{} {}", __KF_STRING__( onlinelist ), __ROUTE_SERVER_ID__, playerid );
+        }
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFPublicShardModule::HandleClearOnlineToPublicReq )
+    {
+        __PROTO_PARSE__( KFMsg::S2SClearOnlineToPublicReq );
+
+        auto kfplayerlist = _public_redis->QueryList( "smembers {}:{}", __KF_STRING__( onlinelist ), kfmsg.serverid() );
+        if ( kfplayerlist->_value.empty() )
+        {
+            return;
+        }
+
+        for ( auto& id : kfplayerlist->_value )
+        {
+            auto queryserverid = _public_redis->QueryUInt64( "hget {}:{} {}", __KF_STRING__( public ), id, __KF_STRING__( serverid ) );
+            if ( queryserverid->_value == kfmsg.serverid() )
+            {
+                _public_redis->Execute( "hmset {}:{} {} {} {} {}", __KF_STRING__( public ), id,
+                                        __KF_STRING__( serverid ), 0,
+                                        __KF_STRING__( status ), KFMsg::OfflineState );
+            }
+
+        }
+
+        _public_redis->Execute( "del {}:{}", __KF_STRING__( onlinelist ), kfmsg.serverid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFPublicShardModule::HandleQueryBasicToPublicReq )
@@ -43,7 +80,7 @@ namespace KFrame
         KFMsg::S2SQueryBasicToGameAck ack;
         ack.set_name( kfmsg.name() );
 
-        auto queryid = _public_redis_driver->QueryUInt64( "get {}:{}:{}", __KF_STRING__( player ), __KF_STRING__( name ), kfmsg.name() );
+        auto queryid = _public_redis->QueryUInt64( "get {}:{}:{}", __KF_STRING__( player ), __KF_STRING__( name ), kfmsg.name() );
         if ( !queryid->IsOk() )
         {
             ack.set_result( KFMsg::NameDatabaseBusy );
@@ -56,7 +93,7 @@ namespace KFrame
             }
             else
             {
-                auto querydata = _public_redis_driver->QueryMap( "hgetall {}:{}", __KF_STRING__( public ), queryid->_value );
+                auto querydata = _public_redis->QueryMap( "hgetall {}:{}", __KF_STRING__( public ), queryid->_value );
                 if ( !querydata->IsOk() )
                 {
                     ack.set_result( KFMsg::PublicDatabaseBusy );
@@ -93,7 +130,7 @@ namespace KFrame
 
     uint32 KFPublicShardModule::SetPlayerName( uint64 playerid, const std::string& oldname, const std::string& newname )
     {
-        auto kfplayerid = _public_redis_driver->QueryUInt64( "get {}:{}:{}", __KF_STRING__( player ), __KF_STRING__( name ), newname );
+        auto kfplayerid = _public_redis->QueryUInt64( "get {}:{}:{}", __KF_STRING__( player ), __KF_STRING__( name ), newname );
         if ( !kfplayerid->IsOk() )
         {
             return KFMsg::NameDatabaseBusy;
@@ -103,7 +140,7 @@ namespace KFrame
         if ( kfplayerid->_value == _invalid_int )
         {
             // 保存名字
-            auto kfresult = _public_redis_driver->Execute( "set {}:{}:{} {}", __KF_STRING__( player ), __KF_STRING__( name ), newname, playerid );
+            auto kfresult = _public_redis->Execute( "set {}:{}:{} {}", __KF_STRING__( player ), __KF_STRING__( name ), newname, playerid );
             if ( !kfresult->IsOk() )
             {
                 return KFMsg::NameDatabaseBusy;
@@ -112,7 +149,7 @@ namespace KFrame
             // 删除旧的名字关联
             if ( !oldname.empty() )
             {
-                _public_redis_driver->Execute( "del {}:{}:{}", __KF_STRING__( player ), __KF_STRING__( name ), oldname );
+                _public_redis->Execute( "del {}:{}:{}", __KF_STRING__( player ), __KF_STRING__( name ), oldname );
             }
         }
         else if ( kfplayerid->_value != playerid )

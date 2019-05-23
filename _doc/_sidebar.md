@@ -34,6 +34,7 @@
   - [Tcp消息结构说明](/docs/Tcp消息结构说明.md)
   - [登录流程](/docs/登录流程.md)
   - [消息协议](/docs/消息协议.md)
+  
 - 网络
 
   - [Ip地址(KFIpAddress)](/docs/Ip地址.md)
@@ -54,6 +55,10 @@
 - Lua接口
 
   - [Lua脚本接口](/docs/Lua脚本接口.md)
+  
+- 通用模块
+
+  - [全局配置](/docs/全局配置.md)
  
 - 系统逻辑
 

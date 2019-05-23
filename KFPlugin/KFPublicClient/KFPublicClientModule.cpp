@@ -12,9 +12,9 @@ namespace KFrame
         _kf_player->RegisterEnterFunction( this, &KFPublicClientModule::OnEnterUpdatePublicData );
         _kf_player->RegisterLeaveFunction( this, &KFPublicClientModule::OnLeaveUpdatePublicData );
 
+        _kf_route->RegisterConnectionFunction( this, &KFPublicClientModule::OnRouteConnectCluster );
         ///////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_QUERY_BASIC_REQ, &KFPublicClientModule::HandleQueryBasicReq );
-
         __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_BASIC_TO_GAME_ACK, &KFPublicClientModule::HandleQueryBasicToGameAck );
     }
 
@@ -26,9 +26,10 @@ namespace KFrame
 
         _kf_player->UnRegisterEnterFunction( this );
         _kf_player->UnRegisterLeaveFunction( this );
+
+        _kf_route->UnRegisterConnectionFunction( this );
         ///////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::MSG_QUERY_BASIC_REQ );
-
         __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_BASIC_TO_GAME_ACK );
     }
 
@@ -37,17 +38,31 @@ namespace KFrame
         _kf_basic = _kf_kernel->CreateObject( __KF_STRING__( basic ) );
     }
 
-    /////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFPublicClientModule::UpdatePublicData( KFEntity* player, MapString& values )
+    void KFPublicClientModule::OnRouteConnectCluster( uint64 serverid )
     {
-        return UpdatePublicData( player->GetKeyID(), values );
+        if ( !_need_refresh_online )
+        {
+            return;
+        }
+
+        _need_refresh_online = false;
+
+        // 刷新在线逻辑
+        KFMsg::S2SClearOnlineToPublicReq req;
+        req.set_serverid( KFGlobal::Instance()->_app_id->GetId() );
+        _kf_route->SendToRand( __KF_STRING__( public ), KFMsg::S2S_CLEAR_ONLINE_TO_PUBLIC_REQ, &req );
+    }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    void KFPublicClientModule::UpdatePublicData( KFEntity* player, MapString& values )
+    {
+        UpdatePublicData( player->GetKeyID(), values );
     }
 
-    bool KFPublicClientModule::UpdatePublicData( uint64 playerid, MapString& values )
+    void KFPublicClientModule::UpdatePublicData( uint64 playerid, MapString& values )
     {
         KFMsg::S2SUpdateDataToPublicReq req;
         req.mutable_pbdata()->insert( values.begin(), values.end() );
-        return _kf_route->SendToRand( playerid, __KF_STRING__( public ), KFMsg::S2S_UPDATE_DATA_TO_PUBLIC_REQ, &req );
+        _kf_route->SendToRand( playerid, __KF_STRING__( public ), KFMsg::S2S_UPDATE_DATA_TO_PUBLIC_REQ, &req );
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////

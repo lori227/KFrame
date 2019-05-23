@@ -36,6 +36,17 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    void KFRouteClientModule::AddConnectionFunction( const std::string& name, KFClusterConnectionFunction& function )
+    {
+        auto kffunction = _kf_connection_function.Create( name );
+        kffunction->_function = function;
+    }
+
+    void KFRouteClientModule::RemoveConnectionFunction( const std::string& name )
+    {
+        _kf_connection_function.Remove( name );
+    }
+
     void KFRouteClientModule::SetTranspondFunction( KFTranspondFunction& function )
     {
         _kf_transpond_function = function;
@@ -44,6 +55,13 @@ namespace KFrame
     void KFRouteClientModule::OnRouteConnectCluster( uint64 serverid )
     {
         RouteSyncObjectToProxy( _invalid_int );
+
+        // 连接成功回调
+        for ( auto& iter : _kf_connection_function._objects )
+        {
+            auto kffunction = iter.second;
+            kffunction->_function( serverid );
+        }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////

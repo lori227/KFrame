@@ -35,6 +35,9 @@ namespace KFrame
         // 更新公共数据
         __KF_MESSAGE_FUNCTION__( HandleUpdateDataToPublicReq );
 
+        // 清空在线数据
+        __KF_MESSAGE_FUNCTION__( HandleClearOnlineToPublicReq );
+
         // 处理设置名字
         __KF_MESSAGE_FUNCTION__( HandleSetPlayerNameToDataReq );
 
@@ -46,7 +49,7 @@ namespace KFrame
         uint32 SetPlayerName( uint64 playerid, const std::string& oldname, const std::string& newname );
     private:
         // 公共属性
-        KFRedisDriver* _public_redis_driver = nullptr;
+        KFRedisDriver* _public_redis = nullptr;
     };
 }
 

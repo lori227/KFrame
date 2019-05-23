@@ -9,7 +9,7 @@ namespace KFrame
 
     void KFRankShardModule::BeforeRun()
     {
-        _kf_cluster_client->RegisterConnectionFunction( this, &KFRankShardModule::OnRouteConnectCluster );
+        _kf_route->RegisterConnectionFunction( this, &KFRankShardModule::OnRouteConnectCluster );
         //////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_NOTICE_RANK_WORKER_REQ, &KFRankShardModule::HandleNoticeRankWorkerReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_SYNC_REFRESH_RANK, &KFRankShardModule::HandleSyncRefreshRank );
@@ -24,7 +24,7 @@ namespace KFrame
         __UNREGISTER_TIMER__();
         __UNREGISTER_SCHEDULE__();
         __KF_REMOVE_CONFIG__( _kf_rank_config );
-        _kf_cluster_client->UnRegisterConnectionFunction( this );
+        _kf_route->UnRegisterConnectionFunction( this );
         //////////////////////////////////////////////////////////////////////////////////////////////////
 
         __UNREGISTER_MESSAGE__( KFMsg::S2S_NOTICE_RANK_WORKER_REQ );

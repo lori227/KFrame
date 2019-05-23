@@ -18,7 +18,6 @@
 #include "KFMessage/KFMessageInterface.h"
 #include "KFSchedule/KFScheduleInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"
-#include "KFClusterClient/KFClusterClientInterface.h"
 
 namespace KFrame
 {

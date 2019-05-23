@@ -9,9 +9,6 @@ namespace KFrame
     class KFPublicClientInterface : public KFModule
     {
     public:
-        // 更新公共数据
-        virtual bool UpdatePublicData( uint64 playerid, MapString& values ) = 0;
-        virtual bool UpdatePublicData( KFEntity* player, MapString& values ) = 0;
     };
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

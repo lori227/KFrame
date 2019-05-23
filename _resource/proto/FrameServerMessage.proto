@@ -72,6 +72,7 @@ enum FrameServerProtocol
 	S2S_UPDATE_DATA_TO_PUBLIC_REQ 			= 20701;	// 更新公共数据
 	S2S_QUERY_BASIC_TO_PUBLIC_REQ 			= 20702;	// 查询玩家基础数据
 	S2S_QUERY_BASIC_TO_GAME_ACK 			= 20703;	// 查询玩家基础数据
+	S2S_CLEAR_ONLINE_TO_PUBLIC_REQ			= 20704;	// 清除在线信息
 
 	// relation
 	S2S_QUERY_FRIEND_TO_RELATION_REQ 		= 20801;	// 查询好友信息
@@ -503,6 +504,13 @@ message S2SQueryFriendRankListReq
 message S2SUpdateDataToPublicReq
 {
 	map<string, bytes> pbdata = 1;	// 属性
+}
+
+// 清除在线逻辑
+// S2S_CLEAR_ONLINE_TO_PUBLIC_REQ
+message S2SClearOnlineToPublicReq
+{
+	uint64 serverid = 1;
 }
 
 // 查询基础数据

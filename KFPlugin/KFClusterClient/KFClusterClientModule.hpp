@@ -62,9 +62,6 @@ namespace KFrame
         // 发送Token消息
         __KF_TIMER_FUNCTION__( OnTimerSendClusterTokenMessage );
     private:
-
-
-
         // 调用注册函数
         void CallClusterConnectionFunction( uint64 serverid );
 
@@ -86,7 +83,7 @@ namespace KFrame
         uint64 _cluster_proxy_id{ 0 };
 
         // 是否可以服务
-        bool _cluster_in_services{ false };
+        bool _cluster_in_services = false;
 
         // 集群认证成功的回调函数
         KFBind< std::string, const std::string&, KFClusterConnectionFunction >_kf_connection_function;
