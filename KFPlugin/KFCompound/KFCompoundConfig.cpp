@@ -2,9 +2,9 @@
 
 namespace KFrame
 {
-    bool KFCompoundConfig::LoadConfig()
+    bool KFCompoundConfig::LoadConfig( const std::string& file )
     {
-        KFXml kfxml( _file );
+        KFXml kfxml( file );
         auto config = kfxml.RootNode();
         auto setting = config.FindNode( "Setting" );
         while ( setting.IsValid() )

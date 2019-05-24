@@ -3,11 +3,11 @@
 namespace KFrame
 {
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFLeaveConfig::LoadConfig()
+    bool KFLeaveConfig::LoadConfig( const std::string& file )
     {
         _kf_leave_setting.clear();
         //////////////////////////////////////////////////////////////////
-        KFXml kfxml( _file );
+        KFXml kfxml( file );
         auto config = kfxml.RootNode();
         auto node = config.FindNode( "Setting" );
         while ( node.IsValid() )

@@ -21,7 +21,7 @@ namespace KFrame
         KFLeaveConfig() = default;
         ~KFLeaveConfig() = default;
 
-        bool LoadConfig();
+        bool LoadConfig( const std::string& file );
 
     public:
         std::vector< KFLeaveSetting > _kf_leave_setting;

@@ -28,11 +28,11 @@ namespace KFrame
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFChannelConfig::LoadConfig()
+    bool KFChannelConfig::LoadConfig( const std::string& file )
     {
         _open_channel_list.clear();
         //////////////////////////////////////////////////////////////////
-        KFXml kfxml( _file );
+        KFXml kfxml( file );
         auto config = kfxml.RootNode();
 
         auto channels = config.FindNode( "Channels" );

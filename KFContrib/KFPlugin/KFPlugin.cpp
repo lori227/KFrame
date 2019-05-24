@@ -18,11 +18,6 @@ namespace KFrame
         _kf_module->InitModule();
     }
 
-    void KFPlugin::LoadConfig()
-    {
-        _kf_module->LoadConfig();
-    }
-
     void KFPlugin::AfterLoad()
     {
         _kf_module->AfterLoad();
@@ -52,6 +47,16 @@ namespace KFrame
     {
         _kf_module->OnceRun();
     }
+
+    void KFPlugin::Reload()
+    {
+        _kf_module->InitModule();
+        _kf_module->AfterLoad();
+        _kf_module->BeforeRun();
+        _kf_module->OnceRun();
+        _kf_module->LoadData();
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////
     KFModule* KFPlugin::FindModule( const std::string& name )
@@ -73,8 +78,13 @@ namespace KFrame
         _kf_module->_kf_plugin_manage = _kf_plugin_manage;
     }
 
-    void KFPlugin::UnBindModule()
+    void KFPlugin::UnBindModule( bool savedata )
     {
+        if ( savedata )
+        {
+            _kf_module->SaveData();
+        }
+
         _kf_module->BeforeShut();
         _kf_module->ShutDown();
         _kf_module->AfterShut();

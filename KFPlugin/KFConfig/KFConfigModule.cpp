@@ -2,16 +2,6 @@
 
 namespace KFrame
 {
-    void KFConfigModule::LoadConfig()
-    {
-        for ( auto& iter : _kf_config_data._objects )
-        {
-            auto kfdata = iter.second;
-
-            LoadConfig( kfdata->_config, kfdata->_file );
-        }
-    }
-
     void KFConfigModule::ShutDown()
     {
         _kf_config_data.Clear();
@@ -40,6 +30,8 @@ namespace KFrame
             kfdata->_file = _path + config->_file;
         }
 
+        // 加载配置文件
+        LoadConfig( config, kfdata->_file );
         return true;
     }
 

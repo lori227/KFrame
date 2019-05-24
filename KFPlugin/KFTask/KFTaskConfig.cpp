@@ -2,13 +2,13 @@
 
 namespace KFrame
 {
-    bool KFTaskConfig::LoadConfig()
+    bool KFTaskConfig::LoadConfig( const std::string& file )
     {
         _task_types.clear();
         _task_setting.Clear();
 
         //////////////////////////////////////////////////////////////////
-        KFXml kfxml( _file );
+        KFXml kfxml( file );
         auto config = kfxml.RootNode();
         auto xmlnode = config.FindNode( "Setting" );
         while ( xmlnode.IsValid() )

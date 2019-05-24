@@ -2,11 +2,11 @@
 
 namespace KFrame
 {
-    bool KFPayConfig::LoadConfig()
+    bool KFPayConfig::LoadConfig( const std::string& file )
     {
         _pay_list.Clear();
         //////////////////////////////////////////////////////////////////
-        KFXml kfxml( _file );
+        KFXml kfxml( file );
         auto config = kfxml.RootNode();
         auto xmlnode = config.FindNode( "Setting" );
         while ( xmlnode.IsValid() )

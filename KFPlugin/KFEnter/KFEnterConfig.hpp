@@ -21,7 +21,7 @@ namespace KFrame
         KFEnterConfig() = default;
         ~KFEnterConfig() = default;
 
-        bool LoadConfig();
+        bool LoadConfig( const std::string& file );
 
     public:
         std::vector< KFEnterSetting > _kf_enter_setting;

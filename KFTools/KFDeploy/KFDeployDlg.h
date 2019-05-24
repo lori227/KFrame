@@ -15,6 +15,7 @@ class CAddServerDlg;
 class CVersionDlg;
 class CFileDlg;
 class CResourceDlg;
+class CPluginDlg;
 
 // CKFDeployDlg 对话框
 class CKFDeployDlg : public CDialogEx
@@ -110,6 +111,7 @@ protected:
     CVersionDlg* _version_dlg = nullptr;
     CFileDlg* _file_dlg = nullptr;
     CResourceDlg* _resource_dlg = nullptr;
+    CPluginDlg* _plugin_dlg = nullptr;
 
     // 实现
 protected:
@@ -166,4 +168,6 @@ public:
     afx_msg void OnEnumClearLog();
     afx_msg void OnBnClickedButtonQueryResource();
     CButton _button_resource;
+    CButton _button_plugin;
+    afx_msg void OnBnClickedButtonQueryPlugin();
 };

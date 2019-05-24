@@ -1,11 +1,14 @@
 ﻿#include "KFStartup.h"
 #include "KFLibrary.h"
 #include "KFAppConfig.h"
+#include "Poco/File.h"
 
 namespace KFrame
 {
     bool KFStartup::InitStartup( const std::string& file )
     {
+        KFPluginManage::Instance()->RegisterCommandFunction( __KF_STRING__( loadplugin ), this, &KFStartup::ReloadPlugin );
+
         // 加载配置
         if ( !_app_config->LoadStartupConfig( file ) )
         {
@@ -23,15 +26,10 @@ namespace KFrame
 
     bool KFStartup::LoadPlugin()
     {
-        auto kfglobal = KFGlobal::Instance();
-
         for ( auto& kfsetting : _app_config->_startups )
         {
-            auto loadplguin = kfsetting._name;
-#ifdef __KF_DEBUG__
-            loadplguin += "d";
-#endif
-            if ( !LoadPluginLibrary( loadplguin, &kfsetting ) )
+            auto kfplugin = LoadPluginLibrary( &kfsetting );
+            if ( kfplugin == nullptr )
             {
                 return false;
             }
@@ -41,33 +39,35 @@ namespace KFrame
     }
 
     typedef KFPlugin* ( *PluginEntryFunction )( KFPluginManage* manage, KFGlobal* kfglobal, KFMalloc* kfmalloc, KFLogger* kflogger );
-    bool KFStartup::LoadPluginLibrary( const std::string& file, const KFAppSetting* kfsetting )
+    KFPlugin* KFStartup::LoadPluginLibrary( const KFAppSetting* kfsetting )
     {
         auto library = _kf_library.Create( kfsetting->_name );
+
+        auto file = kfsetting->GetName();
         if ( !library->Load( _app_config->_plugin_path, file ) )
         {
             __LOG_ERROR__( "load [{}] failed!", library->_path );
-            return false;
+            return nullptr;
         }
 
         PluginEntryFunction function = ( PluginEntryFunction )library->GetFunction( "DllPluginEntry" );
         if ( function == nullptr )
         {
             __LOG_ERROR__( "entry [{}] failed!", library->_path );
-            return false;
+            return nullptr;
         }
 
         // 设置插件信息
-        auto plugin = function( KFPluginManage::Instance(), KFGlobal::Instance(), KFMalloc::Instance(), KFLogger::Instance() );
-        plugin->_sort = kfsetting->_sort;
-        plugin->_plugin_name = kfsetting->_name;
-        plugin->_config = kfsetting->_config_file;
+        auto kfplugin = function( KFPluginManage::Instance(), KFGlobal::Instance(), KFMalloc::Instance(), KFLogger::Instance() );
+        kfplugin->_sort = kfsetting->_sort;
+        kfplugin->_plugin_name = kfsetting->_name;
+        kfplugin->_config = kfsetting->_config_file;
 
         __LOG_INFO__( "load [{}] ok!", library->_path );
-        return true;
+        return kfplugin;
     }
 
-    typedef void( *PluginLeaveFunction )( KFPluginManage* manage );
+    typedef void( *PluginLeaveFunction )( KFPluginManage* manage, bool savedata );
 
     bool KFStartup::UnLoadPluginLibrary( const std::string& pluginname )
     {
@@ -78,22 +78,99 @@ namespace KFrame
         }
 
         PluginLeaveFunction function = ( PluginLeaveFunction )library->GetFunction( "DllPluginLeave" );
-        function( KFPluginManage::Instance() );
+        function( KFPluginManage::Instance(), true );
 
         library->UnLoad();
-        _kf_library.Remove( pluginname );
-        return true;
+        return _kf_library.Remove( pluginname );
     }
 
     void KFStartup::ShutDown()
     {
+        KFPluginManage::Instance()->UnRegisterCommandFunction( __KF_STRING__( loadplugin ) );
+
         for ( auto& iter : _kf_library._objects )
         {
             auto library = iter.second;
             PluginLeaveFunction function = ( PluginLeaveFunction )library->GetFunction( "DllPluginLeave" );
-            function( KFPluginManage::Instance() );
+            function( KFPluginManage::Instance(), false );
         }
 
         _kf_library.Clear();
+    }
+
+    void KFStartup::ReloadPlugin( const VectorString& params )
+    {
+        if ( params.size() < 3u )
+        {
+            return __LOG_ERROR__( "reload param error!" );
+        }
+
+        auto pluginname = params[ 0 ];
+        auto kfsetting = _app_config->FindStartupSetting( pluginname );
+        if ( kfsetting == nullptr )
+        {
+            return;
+        }
+
+        auto name = params[ 1 ];
+        auto path = params[ 2 ];
+        auto filename = __FORMAT__( "{}{}", path, name );
+
+        try
+        {
+            // 修改文件名
+            auto newfilename = __FORMAT__( "{}.new", filename );
+            Poco::File newfile( newfilename );
+            if ( !newfile.exists() )
+            {
+                return __LOG_ERROR__( "plugin=[{}] not exist!", filename );
+            }
+        }
+        catch ( ... )
+        {
+            __LOG_ERROR__( "plugin=[{}] init failed!", filename );
+        }
+
+        __LOG_INFO__( "plugin=[{}] uninstall start!", pluginname );
+        // 卸载
+        auto ok = UnLoadPluginLibrary( pluginname );
+        if ( ok )
+        {
+            __LOG_INFO__( "plugin=[{}] uninstall ok!", pluginname );
+        }
+        else
+        {
+            __LOG_INFO__( "plugin=[{}] uninstall failed!", pluginname );
+        }
+
+        try
+        {
+            // 删除旧文件
+            Poco::File oldfile( filename );
+            oldfile.remove();
+
+            // 修改文件名
+            auto newfilename = __FORMAT__( "{}.new", filename );
+            Poco::File newfile( newfilename );
+            newfile.renameTo( filename );
+        }
+        catch ( ... )
+        {
+            __LOG_ERROR__( "plugin=[{}] rename failed!", filename );
+        }
+
+        // 加载
+        __LOG_INFO__( "plugin=[{}] install start!", pluginname );
+        auto kfplugin = LoadPluginLibrary( kfsetting );
+        if ( kfplugin == nullptr )
+        {
+            return __LOG_INFO__( "plugin=[{}] install failed!", pluginname );
+        }
+
+        // 重新load
+        kfplugin->Install();
+        KFPluginManage::Instance()->LoadModule();
+        kfplugin->Reload();
+        __LOG_INFO__( "plugin=[{}] install ok!", pluginname );
     }
 }

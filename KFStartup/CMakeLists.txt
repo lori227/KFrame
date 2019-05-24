@@ -1,3 +1,5 @@
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -rdynamic")
+
 include_directories(
     ${ROOT_DIR}/KFLibrary/poco/Foundation/include
     ${ROOT_DIR}/KFLibrary/poco/Net/include

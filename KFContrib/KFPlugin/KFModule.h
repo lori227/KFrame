@@ -23,7 +23,6 @@ namespace KFrame
         virtual void InitModule() {}
 
         // 加载配置
-        virtual void LoadConfig() {}
         virtual void AfterLoad() {}
 
         // 执行
@@ -36,6 +35,9 @@ namespace KFrame
         virtual void BeforeShut() {}
         virtual void ShutDown() {}
         virtual void AfterShut() {}
+
+        virtual void SaveData() {}
+        virtual void LoadData() {}
         //////////////////////////////////////////////////////////////
 
     public:

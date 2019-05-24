@@ -34,7 +34,7 @@ namespace KFrame
         ~KFFilterConfig() = default;
 
         // 读取配置
-        bool LoadConfig();
+        bool LoadConfig( const std::string& file );
 
         // 检查是否有屏蔽字符
         bool CheckFilter( const char* source, uint32 length );

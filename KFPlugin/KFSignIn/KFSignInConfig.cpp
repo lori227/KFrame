@@ -14,11 +14,11 @@ namespace KFrame
         return _signin_setting.Find( key );
     }
 
-    bool KFSignInConfig::LoadConfig()
+    bool KFSignInConfig::LoadConfig( const std::string& file )
     {
         _signin_setting.Clear();
         //////////////////////////////////////////////////////////////////
-        KFXml kfxml( _file );
+        KFXml kfxml( file );
         auto config = kfxml.RootNode();
         auto xmlnode = config.FindNode( "Setting" );
         while ( xmlnode.IsValid() )

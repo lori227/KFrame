@@ -14,9 +14,9 @@
     }\
 
 #define __KF_PLUGIN_LEAVE__( classname ) \
-    void DllPluginLeave( KFrame::KFPluginManage* pluginmanage )\
+    void DllPluginLeave( KFrame::KFPluginManage* pluginmanage, bool savedata )\
     {\
-        pluginmanage->UnRegistPlugin< classname >();\
+        pluginmanage->UnRegistPlugin< classname >( savedata );\
     }\
 
 #if __KF_SYSTEM__ == __KF_WIN__
@@ -72,7 +72,7 @@
 #define __UNREGISTER_MODULE__( name ) \
     __UNREGISTER_PLUGIN_FUNCTION__( name##Module, Run );\
     __UNREGISTER_PLUGIN_FUNCTION__( name##Module, AfterRun );\
-    _kf_plugin_manage->UnRegistModule< name##Plugin >();\
+    _kf_plugin_manage->UnRegistModule< name##Plugin >( _save_data );\
 
 #define __FIND_MODULE__( module, classname ) \
     module = _kf_plugin_manage->FindModule< classname >( __FILE__, __LINE__ )
@@ -112,6 +112,9 @@ namespace KFrame
 
         // 添加命令
         void AddCommand( std::string command );
+
+        // 加载模块
+        void LoadModule();
         /////////////////////////////////////////////////////////////////////////
 
         // 注册插件
@@ -124,10 +127,10 @@ namespace KFrame
 
         // 卸载插件
         template< class T >
-        void UnRegistPlugin()
+        void UnRegistPlugin( bool savedata )
         {
             std::string name = typeid( T ).name();
-            UnRegistPlugin( name );
+            UnRegistPlugin( name, savedata );
         }
 
         // 查找插件
@@ -150,10 +153,10 @@ namespace KFrame
 
         // 卸载模块
         template< class PluginType >
-        void UnRegistModule()
+        void UnRegistModule( bool savedata )
         {
             auto plugin = FindPlugin< PluginType >();
-            plugin->UnBindModule();
+            plugin->UnBindModule( savedata );
         }
 
         // 查找模块
@@ -229,14 +232,11 @@ namespace KFrame
         // 安装模块
         void InstallPlugin();
 
-        // 加载模块
-        void LoadModule();
-
         // 初始化模块
         void InitModule();
 
         // 加载配置
-        void LoadConfig();
+        void AfterLoad();
 
         // 准备执行
         void BeforeRun();
@@ -244,15 +244,15 @@ namespace KFrame
         // 执行一次
         void OnceRun();
 
+        ////////////////////////////////////////////////////////////////////
         // 执行命令
         void RunCommand();
         ////////////////////////////////////////////////////////////////////
-
         // 注册插件
         KFPlugin* RegistPlugin( const std::string& name, KFPlugin* plugin );
 
         // 卸载插件
-        void UnRegistPlugin( const std::string& name );
+        void UnRegistPlugin( const std::string& name, bool savedata );
 
         // 查找插件
         KFPlugin* FindPlugin( const std::string& name );

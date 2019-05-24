@@ -18,7 +18,7 @@ namespace KFrame
         const KFItemSetting* FindItemSetting( uint32 itemid ) const;
 
         // 读取配置
-        bool LoadConfig();
+        bool LoadConfig( const std::string& file );
 
     private:
         // 物品列表

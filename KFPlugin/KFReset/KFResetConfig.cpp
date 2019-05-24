@@ -27,11 +27,11 @@ namespace KFrame
         kfsetting->_reset_data_list.push_back( resetdata );
     }
 
-    bool KFResetConfig::LoadConfig()
+    bool KFResetConfig::LoadConfig( const std::string& file )
     {
         _reset_setting.Clear();
         //////////////////////////////////////////////////////////////////
-        KFXml kfxml( _file );
+        KFXml kfxml( file );
         auto config = kfxml.RootNode();
         auto setting = config.FindNode( "Setting" );
         while ( setting.IsValid() )

@@ -26,14 +26,14 @@ namespace KFrame
         _instance = LoadLibraryEx( _path.c_str(), NULL, LOAD_WITH_ALTERED_SEARCH_PATH );
         if ( _instance == nullptr )
         {
-            __LOG_ERROR__( "load dll - {}", GetLastError() );
+            __LOG_ERROR__( "open result=[{}]", GetLastError() );
         }
 #else
         _path = path + name + ".so";
-        _instance = dlopen( _path.c_str(), RTLD_GLOBAL | RTLD_LAZY );
+        _instance = dlopen( _path.c_str(), RTLD_GLOBAL | RTLD_NOW );
         if ( _instance == nullptr )
         {
-            __LOG_ERROR__( "dlopen - {}", dlerror() );
+            __LOG_ERROR__( "open result=[{}]", dlerror() );
         }
 #endif
 
@@ -48,9 +48,18 @@ namespace KFrame
         }
 
 #if __KF_SYSTEM__ == __KF_WIN__
-        FreeLibrary( ( HMODULE )_instance );
+        auto result = FreeLibrary( ( HMODULE )_instance );
+        if ( result == TRUE )
+        {
+            __LOG_INFO__( "close [{}] ok!", _path );
+        }
+        else
+        {
+            __LOG_ERROR__( "close [{}] failed=[{}]!", _path, GetLastError() );
+        }
 #else
-        dlclose( _instance );
+        auto result = dlclose( _instance );
+        __LOG_INFO__( "close [{}] result=[{}]!", _path, result );
 #endif
 
         _instance = nullptr;

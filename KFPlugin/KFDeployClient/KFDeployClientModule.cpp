@@ -78,11 +78,16 @@ namespace KFrame
         else if ( command == __KF_STRING__( logmemory ) )
         {
             auto memory = KFUtility::ToValue< uint32 >( value );
-            KFMalloc::Instance()->SetLogOpen( memory == 1 ? true : false );
+            return KFMalloc::Instance()->SetLogOpen( memory == 1 ? true : false );
         }
         else if ( command == __KF_STRING__( loadconfig ) )
         {
-            _kf_config->ReloadConfig( value );
+            return _kf_config->ReloadConfig( value );
+        }
+        else if ( command == __KF_STRING__( loadplugin ) )
+        {
+            auto strcommand = __FORMAT__( "{}={}", command, value );
+            return _kf_plugin_manage->AddCommand( strcommand );
         }
 
         auto kfcommand = _command_data.Find( command );

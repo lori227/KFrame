@@ -53,7 +53,7 @@ namespace KFrame
     {
     public:
         // 加载配置文件
-        bool LoadConfig();
+        bool LoadConfig( const std::string& file );
 
         // 查找配置
         KFHttpSetting* FindHttpSetting( const std::string& appname, const std::string& apptype );

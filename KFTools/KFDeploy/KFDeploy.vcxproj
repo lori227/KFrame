@@ -210,6 +210,7 @@
     <ClInclude Include="CAddServerDlg.h" />
     <ClInclude Include="CFileDlg.h" />
     <ClInclude Include="CMyListBox.h" />
+    <ClInclude Include="CPluginDlg.h" />
     <ClInclude Include="CResourceDlg.h" />
     <ClInclude Include="CVersionDlg.h" />
     <ClInclude Include="KFDeployConfig.h" />
@@ -230,6 +231,7 @@
     <ClCompile Include="CAddServerDlg.cpp" />
     <ClCompile Include="CFileDlg.cpp" />
     <ClCompile Include="CMyListBox.cpp" />
+    <ClCompile Include="CPluginDlg.cpp" />
     <ClCompile Include="CResourceDlg.cpp" />
     <ClCompile Include="CVersionDlg.cpp" />
     <ClCompile Include="KFDeployConfig.cpp" />

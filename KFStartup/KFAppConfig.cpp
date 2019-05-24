@@ -3,6 +3,15 @@
 
 namespace KFrame
 {
+    std::string KFAppSetting::GetName() const
+    {
+        auto name = _name;
+#ifdef __KF_DEBUG__
+        name += "d";
+#endif
+        return name;
+    }
+
     void KFAppConfig::AddStartupSetting( KFAppSetting& setting )
     {
         for ( auto& startup : _startups )
@@ -15,6 +24,20 @@ namespace KFrame
 
         setting._sort = static_cast< uint32 >( _startups.size() + 1 );
         _startups.push_back( setting );
+    }
+
+
+    const KFAppSetting* KFAppConfig::FindStartupSetting( const std::string& name )
+    {
+        for ( auto& startup : _startups )
+        {
+            if ( startup._name == name )
+            {
+                return &startup;
+            }
+        }
+
+        return nullptr;
     }
 
     bool KFAppConfig::LoadStartupConfig( const std::string& file )

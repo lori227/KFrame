@@ -71,7 +71,7 @@ namespace KFrame
         }
 
         // 读取配置
-        bool LoadConfig();
+        bool LoadConfig( const std::string& file );
 
         // 获得成就配置
         const KFAchieveSetting* FindAchieveSetting( uint32 id ) const;

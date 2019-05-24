@@ -30,7 +30,7 @@ namespace KFrame
         KFSignInConfig() = default;
         ~KFSignInConfig();
 
-        bool LoadConfig();
+        bool LoadConfig( const std::string& file );
 
         const KFSignInSetting* FindSignInSetting( uint32 type, uint32 day ) const;
 

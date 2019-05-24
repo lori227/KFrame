@@ -2,12 +2,12 @@
 
 namespace KFrame
 {
-    bool KFAchieveConfig::LoadConfig()
+    bool KFAchieveConfig::LoadConfig( const std::string& file )
     {
         _achieve_types.clear();
         _achieve_setting.Clear();
         //////////////////////////////////////////////////////////////////
-        KFXml kfxml( _file );
+        KFXml kfxml( file );
         auto config = kfxml.RootNode();
         auto xmlnode = config.FindNode( "Setting" );
         while ( xmlnode.IsValid() )

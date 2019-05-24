@@ -16,7 +16,7 @@ namespace KFrame
         ~KFZoneConfig() = default;
 
         // 加载配置
-        bool LoadConfig();
+        bool LoadConfig( const std::string& file );
 
         // 查找小区信息
         const KFZone* FindZone( uint32 zoneid );

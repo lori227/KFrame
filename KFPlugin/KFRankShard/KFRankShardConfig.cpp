@@ -3,11 +3,11 @@
 namespace KFrame
 {
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFRankShardConfig::LoadConfig()
+    bool KFRankShardConfig::LoadConfig( const std::string& file )
     {
         _kf_rank_setting.Clear();
         //////////////////////////////////////////////////////////////////
-        KFXml kfxml( _file );
+        KFXml kfxml( file );
         auto config = kfxml.RootNode();
 
         auto ranksnode = config.FindNode( "Ranks" );

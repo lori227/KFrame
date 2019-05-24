@@ -36,7 +36,7 @@ namespace KFrame
     {
     public:
         // 加载配置文件
-        bool LoadConfig();
+        bool LoadConfig( const std::string& file );
 
         // 查找TcpData
         KFTcpSetting* FindTcpSetting( const std::string& appname, const std::string& apptype );

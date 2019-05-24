@@ -35,7 +35,7 @@ namespace KFrame
     {
     public:
 
-        bool LoadConfig();
+        bool LoadConfig( const std::string& file );
 
         // 查找连接
         void FindConnection( const std::string& appname, const std::string& apptype, const std::string& appid, std::set< KFConnection* >& outlist );

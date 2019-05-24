@@ -12,6 +12,7 @@
 #include "CVersionDlg.h"
 #include "CFileDlg.h"
 #include "CResourceDlg.h"
+#include "CPluginDlg.h"
 
 
 #define __SERVICE_TIMER_ID__ 666
@@ -54,6 +55,7 @@ void CKFDeployDlg::DoDataExchange( CDataExchange* pDX )
     DDX_Control( pDX, IDC_COMBO13, _combo_id );
     DDX_Control( pDX, IDC_DATETIMEPICKER1, _date_time );
     DDX_Control( pDX, IDC_BUTTON5, _button_resource );
+    DDX_Control( pDX, IDC_BUTTON6, _button_plugin );
 }
 
 BEGIN_MESSAGE_MAP( CKFDeployDlg, CDialogEx )
@@ -82,6 +84,7 @@ BEGIN_MESSAGE_MAP( CKFDeployDlg, CDialogEx )
     ON_COMMAND( ID_32778, &CKFDeployDlg::OnEnumClearLog )
     ON_WM_RBUTTONUP()
     ON_BN_CLICKED( IDC_BUTTON5, &CKFDeployDlg::OnBnClickedButtonQueryResource )
+    ON_BN_CLICKED( IDC_BUTTON6, &CKFDeployDlg::OnBnClickedButtonQueryPlugin )
 END_MESSAGE_MAP()
 
 
@@ -687,6 +690,10 @@ __KF_MESSAGE_FUNCTION__( CKFDeployDlg::HandleDeployQueryMySQLAck )
     {
         _resource_dlg->RefreshResourceList( &kfmsg.datas() );
     }
+    else if ( kfmsg.table() == __KF_STRING__( plugin ) )
+    {
+        _plugin_dlg->RefreshPluginList( &kfmsg.datas() );
+    }
 }
 
 __KF_MESSAGE_FUNCTION__( CKFDeployDlg::HandleDeployDeleteMySQLAck )
@@ -1054,6 +1061,7 @@ void CKFDeployDlg::OnCbnSelchangeComboCommand()
     _button_file.ShowWindow( FALSE );
     _button_resource.ShowWindow( FALSE );
     _combo_log.ShowWindow( FALSE );
+    _button_plugin.ShowWindow( FALSE );
     if ( commanddata->_command == __KF_STRING__( version ) )
     {
         _button_version.ShowWindow( TRUE );
@@ -1079,7 +1087,10 @@ void CKFDeployDlg::OnCbnSelchangeComboCommand()
     {
         _button_resource.ShowWindow( TRUE );
     }
-
+    else if ( commanddata->_command == __KF_STRING__( reloadplugin ) )
+    {
+        _button_plugin.ShowWindow( TRUE );
+    }
 
     if ( commanddata->_is_server )
     {
@@ -1383,4 +1394,22 @@ void CKFDeployDlg::OnBnClickedButtonQueryResource()
     // 查询
     MapString keys;
     QueryTableValues( __KF_STRING__( resource ), keys );
+}
+
+
+void CKFDeployDlg::OnBnClickedButtonQueryPlugin()
+{
+    // TODO: 在此添加控件通知处理程序代码
+    if ( _plugin_dlg == nullptr )
+    {
+        _plugin_dlg = new CPluginDlg();
+        _plugin_dlg->Create( IDD_DIALOG6, this );
+        _plugin_dlg->InitDialogData();
+    }
+
+    _plugin_dlg->ShowWindow( SW_SHOW );
+
+    // 查询
+    MapString keys;
+    QueryTableValues( __KF_STRING__( plugin ), keys );
 }

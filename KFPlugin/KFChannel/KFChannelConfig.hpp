@@ -33,7 +33,7 @@ namespace KFrame
     public:
 
         // 加载配置文件
-        bool LoadConfig();
+        bool LoadConfig( const std::string& file );
 
         // 渠道是否开放
         bool IsChannelOpen( uint32 channel );

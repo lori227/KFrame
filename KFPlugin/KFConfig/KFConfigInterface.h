@@ -9,16 +9,9 @@ namespace KFrame
     {
     public:
         // 加载配置
-        virtual bool LoadConfig() = 0;
+        virtual bool LoadConfig( const std::string& file ) = 0;
         ////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////
-        // 加载配置
-        bool LoadConfig( const std::string& file )
-        {
-            _file = file;
-            return LoadConfig();
-        }
-
     public:
         // 配置文件
         std::string _file;

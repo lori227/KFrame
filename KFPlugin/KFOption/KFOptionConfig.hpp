@@ -16,7 +16,7 @@ namespace KFrame
         ~KFOptionConfig() = default;
 
         // 加载配置
-        bool LoadConfig();
+        bool LoadConfig( const std::string& file );
 
         // 查找配置选项
         const KFOption* FindOption( const std::string& name, const std::string& key ) const;

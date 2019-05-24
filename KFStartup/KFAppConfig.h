@@ -9,6 +9,9 @@ namespace KFrame
     class KFAppSetting
     {
     public:
+        // 获取名字
+        std::string GetName() const;
+    public:
         uint32 _sort = 0;
 
         // 名字
@@ -28,6 +31,9 @@ namespace KFrame
 
         // 加载启动配置
         bool LoadStartupConfig( const std::string& file );
+
+        // 查找启动配置
+        const KFAppSetting* FindStartupSetting( const std::string& name );
 
     protected:
         void ReadStartupConfig( const std::string& file );

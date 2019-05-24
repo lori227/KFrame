@@ -3,11 +3,11 @@
 namespace KFrame
 {
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFIpAddressConfig::LoadConfig()
+    bool KFIpAddressConfig::LoadConfig( const std::string& file )
     {
         _ip_address_list.clear();
         //////////////////////////////////////////////////////////////////
-        KFXml kfxml( _file );
+        KFXml kfxml( file );
         auto config = kfxml.RootNode();
 
         auto authnode = config.FindNode( "AuthServer" );

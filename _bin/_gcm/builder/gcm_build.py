@@ -170,10 +170,11 @@ def parse_args():
     parser.add_argument('-z', '--zone', type=int, default=1, help="zone id")
     parser.add_argument('-l', '--log', type=str, default='1.0', help="log type")
     parser.add_argument('-n', '--net', type=str, default='1', help="net type")
-    parser.add_argument('-t', '--type', type=int, default='1', help="update type 1=version 2=file 3=resource")
+    parser.add_argument('-t', '--type', type=int, default='1', help="update type 1=version 2=file 3=resource 4=plugin")
     parser.add_argument('-f', '--file', type=str, default='none', help="update file name")
     parser.add_argument('-b', '--branch', type=str, default='develop', help="develop/online/steam")
     parser.add_argument('-o', '--onlyzone', help="only zone servers", action="store_false")
+    parser.add_argument('-r', '--plugin', type=str, default='none', help="plugin name")
 
     if is_linux():
         parser.add_argument('-s', '--svn', type=str, help="svn version")
@@ -286,6 +287,30 @@ elif args['type'] == 3:
         # rm version_name
         rm_cmd = ('rm -rf %s') % (release_version_name)
         commands.getoutput(rm_cmd)   
+
+elif args['type'] == 4:
+    # plugin
+    print '\nstart to update plugin'
+
+
+    # Post to web server
+    update_file = args['file']
+    gcm_http.do_post(global_conf['web_api'], base_path + update_file)
+
+    (status, output) = commands.getstatusoutput('md5sum %s' % base_path + update_file)
+    md5output = output[0: output.find(' ')]
+
+    (update_path, update_name) = os.path.split(update_file)
+
+    # insert into db
+    file_path = './bin/'
+    plugin_name = args['plugin']
+    db_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    sql = "INSERT INTO plugin (file_name, file_path, plugin_name, file_url, file_time, file_md5) VALUES ('%s', '%s', '%s', '%s', '%s', '%s') on duplicate key update file_time='%s', file_md5='%s';" % (update_name, file_path, plugin_name, global_conf['web_url'] + update_name, db_time, md5output, db_time, md5output)
+    mysql_db_info = gcm_db.db_info(global_conf['mysql_host'], global_conf['mysql_port'], global_conf['mysql_user'], global_conf['mysql_pwd'], global_conf['mysql_db'])
+    gcm_db.insert_mysql_db(mysql_db_info, sql)
+
+    print 'update plugin finished'
 else:
     print 'error type!'
 

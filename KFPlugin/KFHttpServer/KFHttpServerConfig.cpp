@@ -18,11 +18,11 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    bool KFHttpServerConfig::LoadConfig()
+    bool KFHttpServerConfig::LoadConfig( const std::string& file )
     {
         _http_setting_list.clear();
         //////////////////////////////////////////////////////////////////
-        KFXml kfxml( _file );
+        KFXml kfxml( file );
         auto config = kfxml.RootNode();
         auto httpserver = config.FindNode( "HttpServer" );
         if ( httpserver.IsValid() )

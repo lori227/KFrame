@@ -606,6 +606,11 @@ namespace KFrame
             AddDeployTask( __KF_STRING__( loadconfig ), pbdeploy );
             AddDeployTask( __KF_STRING__( loadscript ), pbdeploy );
         }
+        else if ( pbdeploy->command() == __KF_STRING__( reloadplugin ) )
+        {
+            AddDeployTask( __KF_STRING__( downplugin ), pbdeploy );
+            AddDeployTask( __KF_STRING__( loadplugin ), pbdeploy );
+        }
         else if ( pbdeploy->command() == __KF_STRING__( cleantask ) )
         {
             for ( auto kftask : _deploy_task )
@@ -730,6 +735,10 @@ namespace KFrame
         {
             ok = CheckDownResourceTaskFinish();
         }
+        else if ( _kf_task->_command == __KF_STRING__( downplugin ) )
+        {
+            ok = CheckDownPluginTaskFinish();
+        }
         return ok;
     }
 
@@ -785,6 +794,10 @@ namespace KFrame
             else if ( _kf_task->_command == __KF_STRING__( downresource ) )
             {
                 StartWgetResourceTask();
+            }
+            else if ( _kf_task->_command == __KF_STRING__( downplugin ) )
+            {
+                StartDownPluginTask();
             }
             else
             {
@@ -1106,4 +1119,71 @@ namespace KFrame
         return true;
     }
 
+    void KFDeployAgentModule::StartDownPluginTask()
+    {
+        auto value = _kf_task->_value;
+        KFUtility::SplitString( value, "=" );
+        auto filename = KFUtility::SplitString( value, "=" );
+
+        // 查询版本路径
+        auto queryurl = _deploy_driver->QueryString( "select `file_url` from `plugin` where `file_name`='{}';", filename );
+        if ( !queryurl->IsOk() || queryurl->_value.empty() )
+        {
+            return;
+        }
+
+#if __KF_SYSTEM__ == __KF_WIN__
+        // todo win64暂时没有实现
+#else
+        // 执行下载命令
+        ExecuteShell( "wget -c -P ./version/ {}", queryurl->_value );
+#endif
+    }
+
+    bool KFDeployAgentModule::CheckDownPluginTaskFinish()
+    {
+        auto value = _kf_task->_value;
+        KFUtility::SplitString( value, "=" );
+        auto filename = KFUtility::SplitString( value, "=" );
+
+        auto querymap = _deploy_driver->QueryMap( "select * from `plugin` where `file_name`='{}';", filename );
+        if ( !querymap->IsOk() || querymap->_value.empty() )
+        {
+            LogDeploy( "plugin data [{}] empty!", filename );
+            return true;
+        }
+
+        auto querymd5 = querymap->_value[ "file_md5" ];
+        auto querypath = querymap->_value[ "file_path" ];
+        if ( querymd5.empty() || querypath.empty() )
+        {
+            return false;
+        }
+
+#if __KF_SYSTEM__ == __KF_WIN__
+        // todo win64暂时没有实现
+
+#else
+        // 执行下载命令
+        auto md5 = ExecuteShell( "md5sum ./version/{} | awk '{{print $1}}'", filename );
+        if ( md5 != querymd5 )
+        {
+            StartDownPluginTask();
+            return false;
+        }
+
+        // 把文件拷贝过去
+        std::set< std::string > deploypathlist;
+        FindAppDeployPath( _kf_task->_app_name, deploypathlist );
+        for ( auto& deploypath : deploypathlist )
+        {
+            ExecuteShell( "mkdir -p {}", deploypath );
+            ExecuteShell( "mv -f ./version/{} {}/bin/{}.new", filename, deploypath, filename );
+        }
+
+        LogDeploy( "down plugin [{}] ok!", filename );
+#endif
+
+        return true;
+    }
 }

@@ -47,7 +47,7 @@ namespace KFrame
         ~KFRankShardConfig() = default;
 
         // 加载配置
-        bool LoadConfig();
+        bool LoadConfig( const std::string& file );
 
         // 查找排行榜设定
         const KFRankSetting* FindRankSetting( uint32 rankid ) const;

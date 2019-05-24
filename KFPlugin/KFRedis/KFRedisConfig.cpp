@@ -42,12 +42,12 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////
-    bool KFRedisConfig::LoadConfig()
+    bool KFRedisConfig::LoadConfig( const std::string& file )
     {
         auto _redis_id = 0u;
         _redis_type.Clear();
         //////////////////////////////////////////////////////////////////
-        KFXml kfxml( _file );
+        KFXml kfxml( file );
         auto config = kfxml.RootNode();
 
         auto modulenode = config.FindNode( "Module" );

@@ -18,7 +18,7 @@ namespace KFrame
 
     KFPlugin* KFPluginManage::RegistPlugin( const std::string& name, KFPlugin* plugin )
     {
-        UnRegistPlugin( name );
+        UnRegistPlugin( name, false );
 
         plugin->_class_name = name;
         plugin->_kf_plugin_manage = this;
@@ -26,13 +26,14 @@ namespace KFrame
         return plugin;
     }
 
-    void KFPluginManage::UnRegistPlugin( const std::string& name )
+    void KFPluginManage::UnRegistPlugin( const std::string& name, bool savedata )
     {
         for ( auto iter = _plugins.begin(); iter != _plugins.end(); ++iter )
         {
             auto plugin = *iter;
             if ( plugin->_class_name == name )
             {
+                plugin->_save_data = savedata;
                 plugin->UnInstall();
 
                 delete plugin;
@@ -98,13 +99,8 @@ namespace KFrame
         }
     }
 
-    void KFPluginManage::LoadConfig()
+    void KFPluginManage::AfterLoad()
     {
-        for ( auto kfplugin : _plugins )
-        {
-            kfplugin->LoadConfig();
-        }
-
         for ( auto kfplugin : _plugins )
         {
             kfplugin->AfterLoad();
@@ -145,7 +141,7 @@ namespace KFrame
             InitModule();
 
             // 加载配置
-            LoadConfig();
+            AfterLoad();
 
             // 准备运行
             BeforeRun();

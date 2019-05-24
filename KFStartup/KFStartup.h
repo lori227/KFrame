@@ -25,11 +25,13 @@ namespace KFrame
         void ShutDown();
 
     public:
-        bool LoadPluginLibrary( const std::string& file, const KFAppSetting* appsetting  );
+        KFPlugin* LoadPluginLibrary( const KFAppSetting* kfsetting );
 
         // 卸载
         bool UnLoadPluginLibrary( const std::string& pluginname );
 
+        // 重新加载插件
+        void ReloadPlugin( const VectorString& params );
     private:
         // 插件列表
         KFHashMap< std::string, const std::string&, KFLibrary > _kf_library;

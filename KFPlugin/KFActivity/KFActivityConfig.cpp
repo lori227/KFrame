@@ -174,7 +174,7 @@ namespace KFrame
         _activity_setting.Clear();
     }
 
-    bool KFActivityConfig::LoadConfig()
+    bool KFActivityConfig::LoadConfig( const std::string& file )
     {
         _activity_setting.Clear();
 

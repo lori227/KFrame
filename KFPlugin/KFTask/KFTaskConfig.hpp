@@ -73,7 +73,7 @@ namespace KFrame
     {
     public:
         // 加载配置
-        bool LoadConfig();
+        bool LoadConfig( const std::string& file );
 
         // 获得活动配置
         const KFTaskSetting* FindTaskSetting( uint32 taskid ) const;

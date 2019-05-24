@@ -56,7 +56,7 @@ namespace KFrame
         KFMailConfig() = default;
         ~KFMailConfig() = default;
 
-        bool LoadConfig();
+        bool LoadConfig( const std::string& file );
 
         // 查找邮件设定
         const KFMailSetting* FindMailSetting( uint32 configid ) const;

@@ -3,8 +3,8 @@
 
 namespace KFrame
 {
-    bool KFKernelConfig::LoadConfig()
+    bool KFKernelConfig::LoadConfig( const std::string& file )
     {
-        return _kf_data_config->LoadDataConfig( _file );
+        return _kf_data_config->LoadDataConfig( file );
     }
 }

@@ -9,7 +9,7 @@ namespace KFrame
     {
     public:
         // 读取配置
-        bool LoadConfig();
+        bool LoadConfig( const std::string& file );
 
     public:
         // 认证服务器地址

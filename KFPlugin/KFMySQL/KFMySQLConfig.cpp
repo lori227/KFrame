@@ -44,12 +44,12 @@ namespace KFrame
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFMySQLConfig::LoadConfig()
+    bool KFMySQLConfig::LoadConfig( const std::string& file )
     {
         auto _mysql_id = 0u;
         _mysql_type.Clear();
         //////////////////////////////////////////////////////////////////
-        KFXml kfxml( _file );
+        KFXml kfxml( file );
         auto config = kfxml.RootNode();
 
         auto modulenode = config.FindNode( "Module" );

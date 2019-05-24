@@ -34,7 +34,7 @@ namespace KFrame
         KFCompoundConfig() = default;
         ~KFCompoundConfig() = default;
 
-        bool LoadConfig();
+        bool LoadConfig( const std::string& file );
 
         // 查找配置
         const KFCompoundSetting* FindCompoundSetting( uint32 id );

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:KFAgent"
         mc:Ignorable="d"
         Title="道具奖励配置工具" Height="674.3" MinHeight="800" MaxHeight="800" Width="1264" MaxWidth="1264" MinWidth="900"
-         ResizeMode="NoResize" >
+         ResizeMode="CanMinimize" >
     <Grid>
         <Button Content="浏览" HorizontalAlignment="Left" Margin="687,14,0,0" VerticalAlignment="Top" Width="104" Height="29" Click="Button_Click_Data_File_Path"/>
         <Label Content="属性配置表路径:" HorizontalAlignment="Left" Margin="50,15,0,0" VerticalAlignment="Top" Width="112"/>

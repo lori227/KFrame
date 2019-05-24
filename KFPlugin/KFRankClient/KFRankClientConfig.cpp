@@ -3,13 +3,13 @@
 namespace KFrame
 {
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFRankClientConfig::LoadConfig()
+    bool KFRankClientConfig::LoadConfig( const std::string& file )
     {
         _player_data.clear();
         _kf_rank_data_list.clear();
         _kf_rank_setting.Clear();
         //////////////////////////////////////////////////////////////////
-        KFXml kfxml( _file );
+        KFXml kfxml( file );
         auto config = kfxml.RootNode();
         auto playernode = config.FindNode( "PlayerData" );
         auto datanode = playernode.FindNode( "Data" );

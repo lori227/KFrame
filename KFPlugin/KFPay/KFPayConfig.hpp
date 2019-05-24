@@ -38,7 +38,7 @@ namespace KFrame
         }
 
         // 加载配置
-        bool LoadConfig();
+        bool LoadConfig( const std::string& file );
 
         // 查找商品配置
         const KFPaySetting* FindPaySetting( const std::string& id ) const;

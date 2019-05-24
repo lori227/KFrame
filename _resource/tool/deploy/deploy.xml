@@ -46,6 +46,7 @@
 		<Command Name="更新资源" Value="resource" Text="请输入资源版本文件名!" Server="1"/>
 		<Command Name="重新加载配置" Value="reloadconfig" Text="请输入配置文件名!" Server="1"/>
 		<Command Name="重新加载脚本" Value="reloadscript" Text="请输入脚本文件名!" Server="1"/>
+		<Command Name="重新加载插件" Value="reloadplugin" Text="请输入插件文件名!" Server="1"/>
 		<Command Name="修改服务器日志等级" Value="loglevel" Text="请输入日志等级!" Server="1"/>
 		<Command Name="设置是否打印内存日志" Value="logmemory" Text="请输入是否打印内存! 0=不打印, 1=打印" Server="1"/>
 		<Command Name="取消定时命令" Value="unschedule" Text="请输入定时命令id, 0=取消所有!" Server="0"/>

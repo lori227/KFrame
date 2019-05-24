@@ -14,7 +14,7 @@ namespace KFrame
         KFIpAddressConfig() = default;
         ~KFIpAddressConfig() = default;
 
-        bool LoadConfig();
+        bool LoadConfig( const std::string& file );
 
         // 查找连接
         const KFIpAddress* FindIpAddress( const std::string& appname, const std::string& apptype, const std::string& appid );

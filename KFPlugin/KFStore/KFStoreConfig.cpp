@@ -2,7 +2,7 @@
 
 namespace KFrame
 {
-    bool KFStoreConfig::LoadConfig()
+    bool KFStoreConfig::LoadConfig( const std::string& file )
     {
         if ( _store_xml != nullptr )
         {
@@ -13,7 +13,7 @@ namespace KFrame
         _version.clear();
         _store_list.Clear();
         //////////////////////////////////////////////////////////////////
-        _store_xml = new KFXml( _file );
+        _store_xml = new KFXml( file );
         auto config = _store_xml->RootNode();
         auto xmlnode = config.FindNode( "Setting" );
         while ( xmlnode.IsValid() )

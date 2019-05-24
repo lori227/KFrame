@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['gcm_build.py'],
-             pathex=['E:\\Work\\Frame\\trunk\\_bin\\_gcm\\builder'],
+             pathex=['D:\\Work\\Frame\\trunk\\_bin\\_gcm\\builder'],
              binaries=[],
              datas=[],
              hiddenimports=[],

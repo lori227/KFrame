@@ -26,7 +26,7 @@ namespace KFrame
         ~KFSkinConfig() = default;
 
         // 读取配置
-        bool LoadConfig();
+        bool LoadConfig( const std::string& file );
 
         // 查找配置
         const KFSkinSetting* FindSkinSetting( uint32 id ) const;

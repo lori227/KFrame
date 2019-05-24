@@ -41,9 +41,6 @@ namespace KFrame
         // 关闭
         virtual void ShutDown();
 
-        // 加载配置
-        virtual void LoadConfig();
-
         // 加载一个配置
         virtual bool AddConfig( KFConfig* config, const std::string& file, bool canreload );
 

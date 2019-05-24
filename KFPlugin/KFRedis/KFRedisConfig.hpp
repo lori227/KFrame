@@ -73,7 +73,7 @@ namespace KFrame
         KFRedisConfig() = default;
         ~KFRedisConfig() = default;
 
-        bool LoadConfig();
+        bool LoadConfig( const std::string& file );
 
         // 查找redis配置
         KFRedisType* FindRedisType( const std::string& module, uint32 logicid );

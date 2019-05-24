@@ -2,12 +2,12 @@
 
 namespace KFrame
 {
-    bool KFZoneConfig::LoadConfig()
+    bool KFZoneConfig::LoadConfig( const std::string& file )
     {
         _zone_list.Clear();
         ////////////////////////////////////////////////////////////////////////////////
 
-        KFXml kfxml( _file );
+        KFXml kfxml( file );
         auto config = kfxml.RootNode();
 
         auto defaultnode = config.FindNode( "Default" );

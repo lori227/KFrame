@@ -8,11 +8,11 @@ namespace KFrame
         return _mail_setting.Find( configid );
     }
 
-    bool KFMailConfig::LoadConfig()
+    bool KFMailConfig::LoadConfig( const std::string& file )
     {
         _mail_setting.Clear();
         //////////////////////////////////////////////////////////////////
-        KFXml kfxml( _file );
+        KFXml kfxml( file );
         auto config = kfxml.RootNode();
         auto setting = config.FindNode( "Setting" );
         while ( setting.IsValid() )

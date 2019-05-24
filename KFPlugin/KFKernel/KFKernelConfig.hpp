@@ -13,7 +13,7 @@ namespace KFrame
         ~KFKernelConfig() = default;
 
         // 加载配置
-        bool LoadConfig();
+        bool LoadConfig( const std::string& file );
 
     public:
 

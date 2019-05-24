@@ -36,7 +36,7 @@ namespace KFrame
         const KFHeroSetting* FindHeroSetting( uint32 heroid ) const;
 
         // 读取配置
-        bool LoadConfig();
+        bool LoadConfig( const std::string& file );
     private:
         // 英雄列表
         KFHashMap< uint32, uint32, KFHeroSetting > _hero_setting;
