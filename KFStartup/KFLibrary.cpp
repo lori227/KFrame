@@ -59,7 +59,7 @@ namespace KFrame
         }
 #else
         auto result = dlclose( _instance );
-        __LOG_INFO__( "close [{}] result=[{}]!", _path, result );
+        __LOG_INFO__( "close [{}] result=[{}:{}]!", _path, result, dlerror() );
 #endif
 
         _instance = nullptr;
