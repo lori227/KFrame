@@ -106,8 +106,8 @@ namespace KFrame
         }
 
         KFMsg::S2SAddGateToWorldReq req;
-        req.set_gameid( KFGlobal::Instance()->_app_id->GetId() );
         req.add_gateid( netdata->_id );
+        req.set_gameid( KFGlobal::Instance()->_app_id->GetId() );
         _kf_tcp_client->SendMessageToType( __KF_STRING__( world ), KFMsg::S2S_ADD_GATE_TO_WORLD_REQ, &req );
     }
 
@@ -119,8 +119,8 @@ namespace KFrame
         }
 
         KFMsg::S2SRemoveGateToWorldReq req;
-        req.set_gameid( KFGlobal::Instance()->_app_id->GetId() );
         req.set_gateid( netdata->_id );
+        req.set_gameid( KFGlobal::Instance()->_app_id->GetId() );
         _kf_tcp_client->SendMessageToType( __KF_STRING__( world ), KFMsg::S2S_REMOVE_GATE_TO_WORLD_REQ, &req );
     }
 
@@ -140,9 +140,9 @@ namespace KFrame
                 req.set_gameid( KFGlobal::Instance()->_app_id->GetId() );
                 for ( auto ipaddress : outlist )
                 {
-                    if ( netdata->_type == __KF_STRING__( gate ) )
+                    if ( ipaddress->_type == __KF_STRING__( gate ) )
                     {
-                        req.add_gateid( netdata->_id );
+                        req.add_gateid( ipaddress->_id );
                     }
                 }
                 _kf_tcp_client->SendNetMessage( netdata->_id, KFMsg::S2S_ADD_GATE_TO_WORLD_REQ, &req );

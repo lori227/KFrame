@@ -180,6 +180,11 @@ namespace KFrame
         robot->_player_id = kfmsg.playerid();
         robot->_player = robot->_kf_component->CreateEntity( kfmsg.playerid(), &kfmsg.playerdata() );
 
+        if ( _kf_robot_config->_open_data_log )
+        {
+            auto temp = kfmsg.playerdata().DebugString();
+            __LOG_DEBUG__( "playerdata = {}", temp );
+        }
         __LOG_INFO__( "robot=[{}|{}:{}] enter game ok!", robot->_id, robot->_account_id, robot->_player_id );
     }
 
