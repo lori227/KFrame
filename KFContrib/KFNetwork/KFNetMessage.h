@@ -11,9 +11,14 @@ namespace KFrame
     class KFNetHead
     {
     public:
-        uint32 _length;		// 消息长度
-        uint16 _msgid;		// 消息类型
-        uint16 _child;		// 子消息个数( 包括自己 )
+        // 消息长度
+        uint32 _length = 0u;
+
+        // 消息类型
+        uint16 _msgid = 0u;
+
+        // 子消息个数
+        uint16 _child = 0u;
     };
 
     // 客户端与服务器之间的消息头
@@ -31,35 +36,30 @@ namespace KFrame
     };
     ///////////////////////////////////////////////////////////////////////////////////////////
     // 消息基类
-    class KFNetMessage : public KFServerHead
+    class KFNetMessage
     {
     public:
-        KFNetMessage();
+        KFNetMessage( uint32 length );
         ~KFNetMessage();
 
         static KFNetMessage* Create( uint32 length );
         void Release();
 
-        static uint32 HeadLength() {
-            return sizeof( KFServerHead );
-        }
+        static uint32 HeadLength();
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
-
         void CopyData( const int8* data, uint32 length );
 
         // 复制消息
         void CopyFrom( KFNetMessage* message );
         void CopyFrom( const Route& route, uint32 msgid, const int8* data, uint32 length );
         ///////////////////////////////////////////////////////////////////////////////
-
-    protected:
-        // 分配内存
-        void MallocData( uint32 length );
-        void FreeData();
-
     public:
-        int8* _data;		// 消息数据
+        // 消息头
+        KFServerHead _head;
+
+        // 消息数据
+        int8* _data = nullptr;
     };
 
     /////////////////////////////////////////////////////////////////////////////

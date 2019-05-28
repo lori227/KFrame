@@ -35,9 +35,6 @@ namespace KFrame
         // 开始连接服务器
         void StartConnectGate();
 
-        // 处理命令
-        void ProcessCommand( const VectorString& params );
-
     public:
         // 同步添加对象
         void SyncAddObject( KFData* kfobject, const KFMsg::PBObject* pbobject );
@@ -78,9 +75,6 @@ namespace KFrame
 
         // 状态机
         KFFsm* _fsm;
-
-        // 回调函数逻辑
-        KFBind< std::string, const std::string&, KFCmdFunction > _cmd_function;
     };
 
 }

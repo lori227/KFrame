@@ -65,10 +65,18 @@ namespace KFrame
             break;
         }
 
-        auto ok = proto->ParseFromString( result );
-        if ( !ok )
+        auto ok = false;
+        if ( !result.empty() )
         {
-            __LOG_ERROR__( "message[{}] parse failed!", proto->GetTypeName() );
+            ok = proto->ParseFromString( result );
+            if ( !ok )
+            {
+                __LOG_ERROR__( "message[{}] parse failed!", proto->GetTypeName() );
+            }
+        }
+        else
+        {
+            __LOG_ERROR__( "message[{}] data empty!", proto->GetTypeName() );
         }
 
         return ok;

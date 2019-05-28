@@ -74,7 +74,7 @@ namespace KFrame
         void ParseBuffToMessage();
 
         // 判断消息的有效性
-        KFNetHead* CheckReciveBuffValid( uint32 position );
+        KFNetHead* CheckRecvBuffValid( uint32 position );
 
     protected:
 
@@ -130,8 +130,8 @@ namespace KFrame
         uint32 _message_head_length = 0u;
 
         // 接收消息buffer
-        uint32 _receive_length = 0u;
-        char _receive_buff[ KFNetDefine::MaxRecvBuffLength ];
+        uint32 _recv_length = 0u;
+        char _recv_buff[ KFNetDefine::MaxRecvBuffLength ];
 
         // 请求发送的buffer
         uint32 _send_length = 0u;

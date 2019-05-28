@@ -84,7 +84,7 @@ namespace KFrame
                 return true;
             }
 
-            auto* oldobject = _objects[ _push_index ];
+            auto oldobject = _objects[ _push_index ];
             return oldobject != nullptr;
         }
 
@@ -98,7 +98,7 @@ namespace KFrame
         bool PushObject( T* object )
         {
             // 如果还有数据, 不能再push了,否则覆盖会造成内存泄漏
-            auto* oldobject = _objects[ _push_index ];
+            auto oldobject = _objects[ _push_index ];
             if ( oldobject != nullptr )
             {
                 __KF_DELETE__( T, object );
@@ -132,7 +132,7 @@ namespace KFrame
         // 删除掉一个元素
         void PopRemove()
         {
-            auto* object = _objects[ _pop_index ];
+            auto object = _objects[ _pop_index ];
             if ( object == nullptr )
             {
                 return;

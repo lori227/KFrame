@@ -116,13 +116,13 @@ namespace KFrame
         void OnLeaveGame( KFEntity* player );
 
         // 加载玩家数据
-        void OnAfterLoadPlayerData( uint32 result, const KFMsg::PBLoginData* pblogin, KFMsg::PBObject* pbplayerdata );
+        void OnAfterLoadPlayerData( uint32 result, const KFMsg::PBLoginData* pblogin, const KFMsg::PBObject* pbplayerdata );
 
         // 保存玩家
         void SavePlayer( KFEntity* player );
 
         // 查询玩家数据
-        void OnAfterQueryPlayerData( uint32 result, uint64 playerid, KFMsg::PBObject* playerdata );
+        void OnAfterQueryPlayerData( uint32 result, uint64 playerid, const KFMsg::PBObject* playerdata );
     private:
         // 世界服务器id
         KFConHash _world_hash;

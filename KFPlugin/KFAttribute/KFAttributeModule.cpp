@@ -90,6 +90,7 @@ namespace KFrame
             return;
         }
 
+        player->UpdateData( __KF_STRING__( basic ), __KF_STRING__( name ), kfmsg.name() );
         if ( kfmsg.costdata() != _invalid_str )
         {
             KFElements kfelements;

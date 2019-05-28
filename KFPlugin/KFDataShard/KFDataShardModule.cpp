@@ -33,6 +33,7 @@ namespace KFrame
         if ( kfkeeper != nullptr )
         {
             pbobject->CopyFrom( kfkeeper->_pb_object );
+            __LOG_INFO__( "player[{}:{}] load keeper!", zoneid, playerid );
             return true;
         }
 
@@ -58,6 +59,10 @@ namespace KFrame
                 __LOG_ERROR__( "player[{}:{}] parse failed!", zoneid, playerid );
                 return false;
             }
+        }
+        else
+        {
+            __LOG_INFO__( "player[{}:{}] new data!", zoneid, playerid );
         }
 
         return true;

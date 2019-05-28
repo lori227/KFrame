@@ -93,22 +93,28 @@ namespace KFrame
         return true;
     }
 
-    void KFKernelModule::SerializeToClient( KFData* kfdata, KFMsg::PBObject* proto )
+    KFMsg::PBObject* KFKernelModule::SerializeToClient( KFData* kfdata )
     {
-        proto->Clear();
-        SaveToObject( kfdata, proto, KFDataDefine::Mask_Client );
+        static KFMsg::PBObject pbobject;
+        pbobject.Clear();
+        SaveToObject( kfdata, &pbobject, KFDataDefine::Mask_Client );
+        return &pbobject;
     }
 
-    void KFKernelModule::SerializeToData( KFData* kfdata, KFMsg::PBObject* proto )
+    KFMsg::PBObject* KFKernelModule::SerializeToData( KFData* kfdata )
     {
-        proto->Clear();
-        SaveToObject( kfdata, proto, KFDataDefine::Mask_Save );
+        static KFMsg::PBObject pbobject;
+        pbobject.Clear();
+        SaveToObject( kfdata, &pbobject, KFDataDefine::Mask_Save );
+        return &pbobject;
     }
 
-    void KFKernelModule::SerializeToView( KFData* kfdata, KFMsg::PBObject* proto )
+    KFMsg::PBObject* KFKernelModule::SerializeToView( KFData* kfdata )
     {
-        proto->Clear();
-        SaveToObject( kfdata, proto, KFDataDefine::Mask_View );
+        static KFMsg::PBObject pbobject;
+        pbobject.Clear();
+        SaveToObject( kfdata, &pbobject, KFDataDefine::Mask_View );
+        return &pbobject;
     }
 
 #define __COPY_FROM_PROTO__( kfdata, proto, pbdata ) \

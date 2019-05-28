@@ -22,6 +22,7 @@
 
 namespace KFrame
 {
+    typedef std::function<void( KFRobot*, const VectorString& )> KFRobotCmdFunction;
     class KFRobotModule : public KFRobotInterface
     {
     public:
@@ -53,11 +54,6 @@ namespace KFrame
         // 关闭连接
         __KF_NET_EVENT_FUNCTION__( OnClientShutdownGate );
 
-        // 处理消息
-        void HandleNetMessage( const Route& route, uint32 msgid, const char* data, uint32 length );
-
-        // 处理机器人命令
-        void ProcessRobotCommand( const VectorString& params );
 
     protected:
         // 处理错误码
@@ -78,6 +74,16 @@ namespace KFrame
         // 删除属性
         __KF_MESSAGE_FUNCTION__( HandlesyncRemoveData );
 
+    protected:
+        // 处理消息
+        void HandleNetMessage( const Route& route, uint32 msgid, const char* data, uint32 length );
+
+        // 处理机器人命令
+        void ProcessRobotCommand( const VectorString& params );
+        void ProcessRobotCommand( KFRobot* robot, const VectorString& params );
+
+        // 设置名字
+        void CommandSetName( KFRobot* robot, const VectorString& params );
 
     private:
         // 机器人序列号
@@ -91,6 +97,9 @@ namespace KFrame
 
         // 处理器函数
         KFBind< uint32, uint32, KFMessageFunction > _message_function;
+
+        // 回调函数逻辑
+        KFBind< std::string, const std::string&, KFRobotCmdFunction > _cmd_function;
     };
 }
 

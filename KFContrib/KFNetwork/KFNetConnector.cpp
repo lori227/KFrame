@@ -25,7 +25,7 @@ namespace KFrame
     }
 
     // 弹出一个消息
-    KFNetMessage* KFNetConnector::PopMessage()
+    KFNetMessage* KFNetConnector::PopNetMessage()
     {
         auto message = _recv_queue.Front();
         if ( message == nullptr )
@@ -34,97 +34,107 @@ namespace KFrame
         }
 
         KFNetMessage* retmessage = nullptr;
-        switch ( message->_msgid )
+        switch ( message->_head._msgid )
         {
         case KFNetDefine::CUT_MSGCHILDBEGIN:	// 子消息头
-        {
-            // 这里的子消息没有包括消息头
-            auto childcount = message->_child;
-            auto queuesize = _recv_queue.Size();
-            if ( queuesize >= ( childcount + 1u ) )
-            {
-                // 不能强转成KFNetMessage, headmessage->_data的长度只包括KFNetHead
-
-                // 重新计算buff大小
-                auto tempmessage = reinterpret_cast< KFNetHead* >( message->_data );
-                auto totallength = tempmessage->_length + static_cast< uint32 >( sizeof( KFNetMessage ) );
-                auto buffaddress = _net_services->GetBuffAddress( tempmessage->_msgid, totallength );
-
-                if ( _net_services->_buff_length < totallength )
-                {
-                    // 长度异常, 直接丢弃
-                    _recv_queue.PopRemove();
-                }
-                else
-                {
-                    // 先将消息头拷贝过去
-                    memcpy( buffaddress, message->_data, message->_length );
-                    _recv_queue.PopRemove();
-
-                    retmessage = reinterpret_cast< KFNetMessage* >( buffaddress );
-                    retmessage->_data = buffaddress + sizeof( KFNetMessage );
-
-                    // 合并子消息
-                    auto copylength = 0u;
-                    auto leftlength = _net_services->_buff_length - sizeof( KFNetMessage );
-
-                    for ( auto i = 0u; i < childcount; ++i )
-                    {
-                        auto childmessage = _recv_queue.Front();
-
-                        // 不是子消息, 直接返回null
-                        if ( childmessage == nullptr || childmessage->_msgid != KFNetDefine::CUT_MSGCHILD )
-                        {
-                            return nullptr;
-                        }
-
-                        // 长度不足, 返回null
-                        if ( leftlength < childmessage->_length )
-                        {
-                            _recv_queue.PopRemove();
-                            return nullptr;
-                        }
-
-                        memcpy( retmessage->_data + copylength, childmessage->_data, childmessage->_length );
-                        copylength += childmessage->_length;
-                        leftlength -= childmessage->_length;
-
-                        _recv_queue.PopRemove();
-                    }
-                }
-
-                retmessage->_route._send_id = _object_id;
-                retmessage->_route._server_id = _session_id;
-            }
-            else
-            {
-                // 如果超出了最大的队列长度
-                if ( childcount >= _recv_queue.Capacity() )
-                {
-                    _recv_queue.PopRemove();
-                }
-            }
+            retmessage = PopMultiMessage( message );
+            break;
+        case KFNetDefine::CUT_MSGCHILD:			// 如果取到的是子消息, 直接丢掉
+            _recv_queue.PopRemove();
+            break;
+        default:		// 不是拆包消息, 直接返回
+            retmessage = PopSingleMessage( message );
+            break;
         }
-        break;
-        case KFNetDefine::CUT_MSGCHILD:		// 如果取到的是子消息, 直接丢掉
+
+        return retmessage;
+    }
+
+    KFNetMessage* KFNetConnector::PopSingleMessage( KFNetMessage* message )
+    {
+        KFNetMessage* retmessage = nullptr;
+        if ( message->_head._length + sizeof( KFNetMessage ) <= _net_services->_buff_length )
+        {
+            retmessage = reinterpret_cast< KFNetMessage* >( _net_services->_buff_address );
+            retmessage->_data = _net_services->_buff_address + sizeof( KFNetMessage );
+            retmessage->CopyFrom( message );
+        }
+
+        _recv_queue.PopRemove();
+        return retmessage;
+    }
+
+    KFNetMessage* KFNetConnector::PopMultiMessage( KFNetMessage* message )
+    {
+        if ( message->_data == nullptr || message->_head._length < sizeof( KFNetHead ) )
+        {
+            // 消息异常, 直接丢弃
+            _recv_queue.PopRemove();
+            return nullptr;
+        }
+
+        // 如果超出了最大的队列长度
+        auto childcount = message->_head._child;
+        if ( childcount >= _recv_queue.Capacity() )
         {
             _recv_queue.PopRemove();
+            return nullptr;
         }
-        break;
-        default:	// 不是拆包消息, 直接返回
+
+        // 这里的子消息没有包括消息头
+        auto queuesize = _recv_queue.Size();
+        if ( queuesize < ( childcount + 1u ) )
         {
-            if ( message->_length + sizeof( KFNetMessage ) <= _net_services->_buff_length )
+            return nullptr;
+        }
+
+        // 重新计算buff大小
+        auto nethead = reinterpret_cast< KFNetHead* >( message->_data );
+        auto totallength = nethead->_length + static_cast< uint32 >( sizeof( KFNetMessage ) );
+        auto buffaddress = _net_services->GetBuffAddress( nethead->_msgid, totallength );
+        if ( _net_services->_buff_length < totallength )
+        {
+            // 长度异常, 直接丢弃
+            _recv_queue.PopRemove();
+            return nullptr;
+        }
+
+        // 先将消息头拷贝过去
+        memcpy( buffaddress, message->_data, message->_head._length );
+        _recv_queue.PopRemove();
+
+        auto retmessage = reinterpret_cast< KFNetMessage* >( buffaddress );
+        retmessage->_data = buffaddress + sizeof( KFNetMessage );
+
+        // 合并子消息
+        auto copylength = 0u;
+        auto leftlength = _net_services->_buff_length - sizeof( KFNetMessage );
+        for ( auto i = 0u; i < childcount; ++i )
+        {
+            auto childmessage = _recv_queue.Front();
+
+            // 不是子消息, 直接返回null
+            if ( childmessage == nullptr || childmessage->_head._msgid != KFNetDefine::CUT_MSGCHILD )
             {
-                retmessage = reinterpret_cast< KFNetMessage* >( _net_services->_buff_address );
-                retmessage->_data = _net_services->_buff_address + sizeof( KFNetMessage );
-                retmessage->CopyFrom( message );
+                return nullptr;
             }
+
+            // 长度不足, 返回null
+            if ( leftlength < childmessage->_head._length )
+            {
+                _recv_queue.PopRemove();
+                return nullptr;
+            }
+
+            memcpy( retmessage->_data + copylength, childmessage->_data, childmessage->_head._length );
+            copylength += childmessage->_head._length;
+            leftlength -= childmessage->_head._length;
 
             _recv_queue.PopRemove();
         }
-        break;
-        }
 
+        retmessage->_head._route._send_id = _object_id;
+        retmessage->_head._route._server_id = _session_id;
         return retmessage;
     }
 
@@ -140,24 +150,23 @@ namespace KFrame
 
     bool KFNetConnector::SendMultiMessage( uint64 recvid, uint32 msgid, const char* data, uint32 length )
     {
-        auto ok = true;
-
         // 子消息个数
         uint32 datalength = length;
         uint32 messagecount = ( datalength + KFNetDefine::MaxMessageLength - 1 ) / KFNetDefine::MaxMessageLength;
 
         // 消息头
-        Route route( 0, 0, recvid );
-        auto message = reinterpret_cast< KFNetMessage* >( _net_services->_buff_address );
-        message->CopyFrom( route, msgid, nullptr, length );
+        KFServerHead head;
+        head._msgid = msgid;
+        head._length = length;
+        head._route._recv_id = recvid;
 
         // 子消息头
         auto headmessage = KFNetMessage::Create( KFNetMessage::HeadLength() );
-        headmessage->_child = messagecount;
-        headmessage->CopyFrom( route, KFNetDefine::CUT_MSGCHILDBEGIN, _net_services->_buff_address, KFNetMessage::HeadLength() );
+        headmessage->_head._child = messagecount;
+        headmessage->CopyFrom( head._route, KFNetDefine::CUT_MSGCHILDBEGIN, reinterpret_cast< int8*>( &head ), KFNetMessage::HeadLength() );
         if ( !AddSendMessage( headmessage ) )
         {
-            ok = false;
+            return false;
         }
 
         // 子消息
@@ -169,11 +178,11 @@ namespace KFrame
 
             // 消息拷贝
             auto childmessage = KFNetMessage::Create( sendlength );
-            childmessage->_child = i + 1;
-            childmessage->CopyFrom( route, KFNetDefine::CUT_MSGCHILD, data + copydatalength, sendlength );
+            childmessage->_head._child = i + 1;
+            childmessage->CopyFrom( head._route, KFNetDefine::CUT_MSGCHILD, data + copydatalength, sendlength );
             if ( !AddSendMessage( childmessage ) )
             {
-                ok = false;
+                return false;
             }
 
             // 游标设置
@@ -181,18 +190,7 @@ namespace KFrame
             copydatalength += sendlength;
         }
 
-        return ok;
-    }
-
-    KFNetMessage* KFNetConnector::PopNetMessage()
-    {
-        auto message = PopMessage();
-        if ( message != nullptr )
-        {
-            // 解密
-        }
-
-        return message;
+        return true;
     }
 
     bool KFNetConnector::SendNetMessage( uint32 msgid, const char* data, uint32 length )
@@ -254,7 +252,7 @@ namespace KFrame
         while ( message != nullptr )
         {
             // 处理回调函数
-            netfunction( message->_route, message->_msgid, message->_data, message->_length );
+            netfunction( message->_head._route, message->_head._msgid, message->_data, message->_head._length );
 
             // 每次处理200个消息
             ++messagecount;

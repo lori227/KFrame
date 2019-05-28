@@ -149,9 +149,11 @@ namespace KFrame
             }
         }
 
+        auto pbplayerdata = _kf_kernel->SerializeToView( _kf_basic );
+
         // 发送给客户端
         KFMsg::MsgQueryBasicAck ack;
-        _kf_kernel->SerializeToView( _kf_basic, ack.mutable_player() );
+        ack.mutable_player()->CopyFrom( *pbplayerdata );
         _kf_player->SendToClient( player, KFMsg::MSG_QUERY_BASIC_ACK, &ack );
     }
 }

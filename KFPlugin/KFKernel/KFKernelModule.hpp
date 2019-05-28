@@ -45,13 +45,13 @@ namespace KFrame
         // 释放数据
         virtual void ReleaseObject( KFData* kfdata );
         /////////////////////////////////////////////////////////////////////////////////////////////
-
-        // proto 序列化
+        // 反序列化
         virtual bool ParseFromProto( KFData* kfdata, const KFMsg::PBObject* proto );
 
-        virtual void SerializeToClient( KFData* kfdata, KFMsg::PBObject* proto );
-        virtual void SerializeToData( KFData* kfdata, KFMsg::PBObject* proto );
-        virtual void SerializeToView( KFData* kfdata, KFMsg::PBObject* proto );
+        // 序列化
+        virtual KFMsg::PBObject* SerializeToClient( KFData* kfdata );
+        virtual KFMsg::PBObject* SerializeToData( KFData* kfdata );
+        virtual KFMsg::PBObject* SerializeToView( KFData* kfdata );
     public:
         // 初始化
         void CopyFromObject( KFData* kfdata, const KFMsg::PBObject* proto );

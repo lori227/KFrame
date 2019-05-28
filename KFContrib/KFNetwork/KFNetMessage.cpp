@@ -3,22 +3,44 @@
 
 namespace KFrame
 {
-    KFNetMessage::KFNetMessage()
+    KFNetMessage::KFNetMessage( uint32 length )
     {
-        _msgid = 0;
-        _length = 0;
-        _child = 0;
-        _data = nullptr;
+        _head._length = length;
+        if ( _head._length > 0 )
+        {
+            _data = __KF_MALLOC__( int8, length );
+        }
     }
 
     KFNetMessage::~KFNetMessage()
     {
-        FreeData();
+        if ( _data != nullptr )
+        {
+            __KF_FREE__( int8, _data );
+        }
+
+        _data = nullptr;
+        _head._length = 0;
+    }
+
+    uint32 KFNetMessage::HeadLength()
+    {
+        return sizeof( _head );
+    }
+
+    KFNetMessage* KFNetMessage::Create( uint32 length )
+    {
+        return __KF_NEW__( KFNetMessage, length );
+    }
+
+    void KFNetMessage::Release()
+    {
+        __KF_DELETE__( KFNetMessage, this );
     }
 
     void KFNetMessage::CopyData( const int8* data, uint32 length )
     {
-        _length = length;
+        _head._length = length;
         if ( length == 0 || data == nullptr )
         {
             return;
@@ -27,55 +49,19 @@ namespace KFrame
         memcpy( _data, data, length );
     }
 
-    KFNetMessage* KFNetMessage::Create( uint32 length )
-    {
-        KFNetMessage* message = __KF_NEW__( KFNetMessage );
-        message->MallocData( length );
-        return message;
-    }
-
-    void KFNetMessage::Release()
-    {
-        FreeData();
-        __KF_DELETE__( KFNetMessage, this );
-    }
-
     void KFNetMessage::CopyFrom( KFNetMessage* message )
     {
-        _route = message->_route;
-        _msgid = message->_msgid;
-        _length = message->_length;
-        _child = message->_child;
-        if ( message->_length > 0 )
+        _head = message->_head;
+        if ( message->_head._length > 0 )
         {
-            CopyData( message->_data, message->_length );
+            CopyData( message->_data, message->_head._length );
         }
     }
 
     void KFNetMessage::CopyFrom( const Route& route, uint32 msgid, const int8* data, uint32 length )
     {
-        _route = route;
-        _msgid = msgid;
+        _head._route = route;
+        _head._msgid = msgid;
         CopyData( data, length );
-    }
-
-    void KFNetMessage::MallocData( uint32 length )
-    {
-        _length = length;
-        if ( _length > 0 )
-        {
-            _data = __KF_MALLOC__( int8, length );
-        }
-    }
-
-    void KFNetMessage::FreeData()
-    {
-        if ( _data != nullptr )
-        {
-            __KF_FREE__( int8, _data );
-        }
-
-        _data = nullptr;
-        _length = 0;
     }
 }

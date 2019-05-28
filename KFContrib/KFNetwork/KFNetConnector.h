@@ -27,15 +27,14 @@ namespace KFrame
         void RunUpdate( KFNetFunction& netfunction, uint32 maxcount );
 
     protected:
-        // 弹出一个消息
-        KFNetMessage* PopMessage();
-
         // 发送单一消息
         bool SendSingleMessage( uint64 recvid, uint32 msgid, const char* data, uint32 length );
 
         // 发送拆包消息
         bool SendMultiMessage( uint64 recvid, uint32 msgid, const char* data, uint32 length );
         //////////////////////////////////////////////////////////////////////////////////////////////////
+        KFNetMessage* PopSingleMessage( KFNetMessage* message );
+        KFNetMessage* PopMultiMessage( KFNetMessage* message );
         //////////////////////////////////////////////////////////////////////////////////////////////////
         // 发送ping逻辑
         void RunSendPing();

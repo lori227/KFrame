@@ -15,11 +15,20 @@ namespace KFrame
         kffunction->_function = function;\
     }
 
+
+#define __REGISTER_ROBOT_COMMAND__( command, handle ) \
+    {\
+        KFRobotCmdFunction function = std::bind( handle, this, std::placeholders::_1, std::placeholders::_2 );\
+        auto kffunction = _cmd_function.Create( command );\
+        kffunction->_function = function;\
+    }
+
     void KFRobotModule::BeforeRun()
     {
         _kf_plugin_manage->RegisterCommandFunction( __KF_STRING__( robot ), this, &KFRobotModule::ProcessRobotCommand );
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        __REGISTER_ROBOT_COMMAND__( "setname", &KFRobotModule::CommandSetName );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_ROBOT_MESSAGE__( KFMsg::MSG_RESULT_DISPLAY, &KFRobotModule::HandleResultDisplay );
         __REGISTER_ROBOT_MESSAGE__( KFMsg::MSG_LOGIN_ACK, &KFRobotModule::HandleLoginAck );
@@ -140,7 +149,7 @@ namespace KFrame
             for ( auto& iter : _robots._objects )
             {
                 auto robot = iter.second;
-                robot->ProcessCommand( paramlist );
+                ProcessRobotCommand( robot, paramlist );
             }
         }
         else
@@ -148,9 +157,52 @@ namespace KFrame
             auto robot = _robots.Find( robotid );
             if ( robot != nullptr )
             {
-                robot->ProcessCommand( paramlist );
+                ProcessRobotCommand( robot, paramlist );
             }
         }
+    }
+
+    void KFRobotModule::ProcessRobotCommand( KFRobot* robot, const VectorString& params )
+    {
+        if ( params.size() < 1 )
+        {
+            return;
+        }
+
+        auto& command = params[ 0 ];
+        auto kffunction = _cmd_function.Find( command );
+        if ( kffunction != nullptr )
+        {
+            VectorString paramlist;
+            paramlist.assign( params.begin() + 1, params.end() );
+            kffunction->_function( robot, paramlist );
+        }
+        else
+        {
+            if ( params.size() < 2 )
+            {
+                return;
+            }
+
+            auto& strdata = params[ 1 ];
+
+            KFMsg::MsgCommandReq req;
+            req.set_command( command );
+            req.add_params( strdata );
+            robot->SendNetMessage( KFMsg::MSG_COMMAND_REQ, &req );
+        }
+    }
+
+    void KFRobotModule::CommandSetName( KFRobot* robot, const VectorString& params )
+    {
+        if ( params.size() < 1 )
+        {
+            return;
+        }
+
+        KFMsg::MsgSetNameReq req;
+        req.set_name( params[ 0 ] );
+        robot->SendNetMessage( KFMsg::MSG_SET_NAME_REQ, &req );
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////

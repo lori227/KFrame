@@ -118,18 +118,18 @@ namespace KFrame
                 }
 
                 // 超过最大长度
-                if ( !CheckBufferLength( _send_length, message->_length ) )
+                if ( !CheckBufferLength( _send_length, message->_head._length ) )
                 {
                     break;
                 }
 
-                memcpy( _req_send_buffer + _send_length, message, _message_head_length );
+                memcpy( _req_send_buffer + _send_length, &message->_head, _message_head_length );
                 _send_length += _message_head_length;
 
-                if ( message->_length > 0 )	// 不是空消息
+                if ( message->_head._length > 0 )	// 不是空消息
                 {
-                    memcpy( _req_send_buffer + _send_length, message->_data, message->_length );
-                    _send_length += message->_length;
+                    memcpy( _req_send_buffer + _send_length, message->_data, message->_head._length );
+                    _send_length += message->_head._length;
                 }
 
                 // 释放内存
@@ -165,22 +165,22 @@ namespace KFrame
         }
 
         // 消息长度增加
-        if ( _receive_length + length > KFNetDefine::MaxRecvBuffLength )
+        if ( _recv_length + length > KFNetDefine::MaxRecvBuffLength )
         {
             if ( IsServerSession() )
             {
-                __LOG_ERROR__( "session[{}:{}] length[{}:{}] error", _session_id, KFAppId::ToString( _session_id ), _receive_length, length );
+                __LOG_ERROR__( "session[{}:{}] length[{}:{}] error", _session_id, KFAppId::ToString( _session_id ), _recv_length, length );
             }
             else
             {
-                __LOG_ERROR__( "session[{}:{}] length[{}:{}] error", _session_id, _object_id, _receive_length, length );
+                __LOG_ERROR__( "session[{}:{}] length[{}:{}] error", _session_id, _object_id, _recv_length, length );
             }
 
-            _receive_length = 0;
+            _recv_length = 0;
         }
 
-        memcpy( _receive_buff + _receive_length, buffer, length );
-        _receive_length += length;
+        memcpy( _recv_buff + _recv_length, buffer, length );
+        _recv_length += length;
 
         // 处理消息
         ParseBuffToMessage();
@@ -190,28 +190,28 @@ namespace KFrame
     {
         // 长度不足一个消息头
         uint32 nowposition = 0;
-        auto nethead = CheckReciveBuffValid( nowposition );
+        auto nethead = CheckRecvBuffValid( nowposition );
         if ( nethead == nullptr )
         {
             return;
         }
 
-        while ( _receive_length >= ( nowposition + _message_head_length + nethead->_length ) )
+        while ( _recv_length >= ( nowposition + _message_head_length + nethead->_length ) )
         {
             auto recvmessage = KFNetMessage::Create( nethead->_length );
-            memcpy( recvmessage, nethead, _message_head_length );
+            memcpy( &recvmessage->_head, nethead, _message_head_length );
 
             nowposition += _message_head_length;
             if ( nethead->_length > 0 )
             {
-                recvmessage->CopyData( _receive_buff + nowposition, nethead->_length );
+                recvmessage->CopyData( _recv_buff + nowposition, nethead->_length );
                 nowposition += nethead->_length;
             }
 
             AddRecvMessage( recvmessage );
 
             // 检查消息的有效性
-            nethead = CheckReciveBuffValid( nowposition );
+            nethead = CheckRecvBuffValid( nowposition );
             if ( nethead == nullptr )
             {
                 break;
@@ -219,23 +219,23 @@ namespace KFrame
         }
 
         // 设置长度
-        _receive_length -= __MIN__( _receive_length, nowposition );
+        _recv_length -= __MIN__( _recv_length, nowposition );
 
         // 移动消息buff
-        if ( _receive_length > 0 && nowposition > 0 )
+        if ( _recv_length > 0 && nowposition > 0 )
         {
-            memmove( _receive_buff, _receive_buff + nowposition, _receive_length );
+            memmove( _recv_buff, _recv_buff + nowposition, _recv_length );
         }
     }
 
-    KFNetHead* KFNetSession::CheckReciveBuffValid( uint32 position )
+    KFNetHead* KFNetSession::CheckRecvBuffValid( uint32 position )
     {
-        if ( _receive_length < ( position + _message_head_length ) )
+        if ( _recv_length < ( position + _message_head_length ) )
         {
             return nullptr;
         }
 
-        auto nethead = reinterpret_cast< KFNetHead* >( _receive_buff + position );
+        auto nethead = reinterpret_cast< KFNetHead* >( _recv_buff + position );
 
         // 收到的消息长度有错误
         if ( nethead->_length > KFNetDefine::MaxMessageLength )
@@ -243,14 +243,14 @@ namespace KFrame
             if ( IsServerSession() )
             {
                 __LOG_ERROR__( "session[{}:{}] msgid[{}] length[{}] position[{}] totallength[{}] error",
-                               _session_id, KFAppId::ToString( _session_id ), nethead->_msgid, nethead->_length, position, _receive_length );
+                               _session_id, KFAppId::ToString( _session_id ), nethead->_msgid, nethead->_length, position, _recv_length );
             }
             else
             {
                 __LOG_ERROR__( "session[{}:{} recv msgid[{}] length[{}] position[{}] totallength[{}] error",
-                               _session_id, _object_id, nethead->_msgid, nethead->_length, position, _receive_length );
+                               _session_id, _object_id, nethead->_msgid, nethead->_length, position, _recv_length );
             }
-            _receive_length = 0;
+            _recv_length = 0;
             return nullptr;
         }
 
@@ -332,11 +332,11 @@ namespace KFrame
 
                 if ( IsServerSession() )
                 {
-                    __LOG_ERROR__( "session[{}:{}] send msgid[{}] failed!", _session_id, KFAppId::ToString( _session_id ), message->_msgid );
+                    __LOG_ERROR__( "session[{}:{}] send msgid[{}] failed!", _session_id, KFAppId::ToString( _session_id ), message->_head._msgid );
                 }
                 else
                 {
-                    __LOG_ERROR__( "session[{}:{}] send msgid[{}] failed!", _session_id, _object_id, message->_msgid );
+                    __LOG_ERROR__( "session[{}:{}] send msgid[{}] failed!", _session_id, _object_id, message->_head._msgid );
                 }
             }
         }
@@ -350,8 +350,8 @@ namespace KFrame
 
     bool KFNetSession::AddRecvMessage( KFNetMessage* message )
     {
-        message->_route._send_id = _object_id;
-        message->_route._server_id = _session_id;
+        message->_head._route._send_id = _object_id;
+        message->_head._route._server_id = _session_id;
         auto ok = _recv_queue.PushObject( message );
         if ( !ok )
         {
@@ -361,11 +361,11 @@ namespace KFrame
 
                 if ( IsServerSession() )
                 {
-                    __LOG_ERROR__( "session[{}:{}] recv msgid[{}] failed!", _session_id, KFAppId::ToString( _session_id ), message->_msgid );
+                    __LOG_ERROR__( "session[{}:{}] recv msgid[{}] failed!", _session_id, KFAppId::ToString( _session_id ), message->_head._msgid );
                 }
                 else
                 {
-                    __LOG_ERROR__( "session[{}:{}] recv msgid[{}] failed!", _session_id, _object_id, message->_msgid );
+                    __LOG_ERROR__( "session[{}:{}] recv msgid[{}] failed!", _session_id, _object_id, message->_head._msgid );
                 }
             }
         }

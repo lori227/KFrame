@@ -24,6 +24,10 @@ namespace KFrame
         {
             result.assign( reinterpret_cast< int8* >( zipbuffer ), ziplength );
         }
+        else
+        {
+            __LOG_ERROR__( "compress failed=[{}]", recode );
+        }
 
         return recode;
     }
@@ -50,6 +54,10 @@ namespace KFrame
             auto savelength = KFDecode::UByteToString( zipbuffer, ziplength, savebuffer, maxlength );
             result.assign( savebuffer, savelength );
         }
+        else
+        {
+            __LOG_ERROR__( "compress failed=[{}]", recode );
+        }
 
         return recode;
     }
@@ -71,6 +79,10 @@ namespace KFrame
         {
             result.assign( reinterpret_cast< int8* >( zipbuffer ), ziplength );
         }
+        else
+        {
+            __LOG_ERROR__( "uncompress failed=[{}]", recode );
+        }
 
         return recode;
     }
@@ -90,13 +102,17 @@ namespace KFrame
         auto length = KFDecode::StringToUByte( value.data(), static_cast< uint32 >( value.size() ), zipbuffer, ziplength );
 
         uLongf maxlength = KFBufferEnum::Buff_40M;
-        auto resultbuffer = __KF_UINT8__( maxlength );
+        auto resultbuffer = __KF_INT8__( maxlength );
 
         // 解压缩
-        auto recode = uncompress( resultbuffer, &maxlength, zipbuffer, length );
+        auto recode = uncompress( reinterpret_cast<Bytef*>( resultbuffer ), &maxlength, zipbuffer, length );
         if ( recode == Z_OK )
         {
             result.assign( reinterpret_cast< int8* >( resultbuffer ), maxlength );
+        }
+        else
+        {
+            __LOG_ERROR__( "uncompress failed=[{}]", recode );
         }
 
         return recode;

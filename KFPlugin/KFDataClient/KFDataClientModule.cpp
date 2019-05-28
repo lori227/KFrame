@@ -102,7 +102,7 @@ namespace KFrame
         __LOG_INFO__( "load palyer=[{}] ok!", pblogin->playerid() );
 
         // 回调函数
-        _load_player_function( kfmsg.result(), &kfmsg.pblogin(), kfmsg.mutable_playerdata() );
+        _load_player_function( kfmsg.result(), &kfmsg.pblogin(), &kfmsg.playerdata() );
     }
 
     void KFDataClientModule::RemoveLoadData( uint64 playerid )
@@ -167,7 +167,7 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SQueryPlayerToGameAck );
 
         // 回调函数
-        _query_player_function( kfmsg.result(), playerid, kfmsg.mutable_playerdata() );
+        _query_player_function( kfmsg.result(), playerid, &kfmsg.playerdata() );
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////

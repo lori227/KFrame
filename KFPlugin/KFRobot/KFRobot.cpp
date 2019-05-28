@@ -19,14 +19,6 @@ namespace KFrame
         _kf_component->RemoveEntity( _player_id );
     }
 
-
-#define __REGISTER_ROBOT_COMMAND__( command, handle ) \
-    {\
-        KFCmdFunction function = std::bind( handle, this, std::placeholders::_1 );\
-        auto kffunction = _cmd_function.Create( command );\
-        kffunction->_function = function;\
-    }
-
     void KFRobot::Init( uint64 id, KFNetClientEngine* netclient )
     {
         _id = id;
@@ -67,38 +59,6 @@ namespace KFrame
     {
         auto strdata = message->SerializeAsString();
         return _net_client->SendNetMessage( _client_id, msgid, strdata.data(), strdata.size() );
-    }
-
-    void KFRobot::ProcessCommand( const VectorString& params )
-    {
-        if ( params.size() < 1 )
-        {
-            return;
-        }
-
-        auto& command = params[ 0 ];
-        auto kffunction = _cmd_function.Find( command );
-        if ( kffunction != nullptr )
-        {
-            VectorString paramlist;
-            paramlist.assign( params.begin() + 1, params.end() );
-
-            kffunction->_function( paramlist );
-        }
-        else
-        {
-            if ( params.size() < 2 )
-            {
-                return;
-            }
-
-            auto& strdata = params[ 1 ];
-
-            KFMsg::MsgCommandReq req;
-            req.set_command( command );
-            req.add_params( strdata );
-            SendNetMessage( KFMsg::MSG_COMMAND_REQ, &req );
-        }
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
