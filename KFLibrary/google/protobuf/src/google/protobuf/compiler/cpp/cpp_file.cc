@@ -269,6 +269,8 @@ namespace google {
                         "	#pragma warning(push)\n"
                         "	#pragma warning(disable : 4125)\n"
                         "	#pragma warning(disable : 4668)\n"
+                        "	#pragma warning(disable : 4800)\n"
+                        "	#pragma warning(disable : 4647)\n"
                         "#endif\n"
                         "\n"
                         "#include $left$$header$$right$\n"
