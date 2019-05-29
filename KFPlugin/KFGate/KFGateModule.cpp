@@ -246,11 +246,16 @@ namespace KFrame
         auto accountid = kfmsg.accountid();
 
         __LOG_DEBUG__( "session[{}] accountid[{}] version[{}] token[{}] login req!", sessionid, accountid, kfmsg.version(), token );
-
         // 注册连接器
         if ( !_kf_tcp_server->RegisteNetHandle( sessionid, sessionid, _invalid_int ) )
         {
             return __LOG_ERROR__( "accountid[{}] register[{}] failed!", accountid, sessionid );
+        }
+
+        // 消息是否有效
+        if ( accountid == 0u || token.empty() )
+        {
+            return SendLoginAckMessage( sessionid, KFMsg::LoginTokenError, 0 );
         }
 
         // 判断版本号

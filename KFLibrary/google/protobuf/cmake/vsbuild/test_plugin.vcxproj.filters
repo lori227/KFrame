@@ -1,27 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="E:\KFrame\KFLibrary\google\protobuf\src\google\protobuf\compiler\mock_code_generator.cc">
+    <ClCompile Include="D:\Work\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\compiler\mock_code_generator.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="E:\KFrame\KFLibrary\google\protobuf\src\google\protobuf\testing\file.cc">
+    <ClCompile Include="D:\Work\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\testing\file.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="E:\KFrame\KFLibrary\google\protobuf\src\google\protobuf\compiler\test_plugin.cc">
+    <ClCompile Include="D:\Work\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\compiler\test_plugin.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="E:\KFrame\KFLibrary\google\protobuf\src\google\protobuf\testing\file.h">
+    <ClInclude Include="D:\Work\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\testing\file.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <CustomBuild Include="D:\Work\Frame\trunk\KFLibrary\google\protobuf\cmake\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
     <Filter Include="Header Files">
-      <UniqueIdentifier>{15BEEF8B-C59C-30B0-8471-EC3CA5E732AA}</UniqueIdentifier>
+      <UniqueIdentifier>{BD911276-031F-3CD8-BE7D-2AA815EEB741}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{8A205485-8D89-3B07-9F30-C00EA57FFB25}</UniqueIdentifier>
+      <UniqueIdentifier>{BCC3E6A4-58C3-3446-A6D0-9A6E676C5207}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
