@@ -1152,6 +1152,11 @@ namespace google {
                         "#ifndef PROTOBUF_INCLUDED_$filename_identifier$\n"
                         "#define PROTOBUF_INCLUDED_$filename_identifier$\n"
                         "\n"
+                        "#ifdef _MSC_VER\n"
+                        "	#pragma warning(push)\n"
+                        "	#pragma warning(disable : 4946)\n"
+                        "#endif\n"
+                        "\n"
                         "#include <string>\n",
                         "filename", file_->name(), "filename_identifier", filename_identifier );
                     printer->Print( "\n" );
@@ -1160,6 +1165,10 @@ namespace google {
                 void FileGenerator::GenerateBottomHeaderGuard(
                     io::Printer* printer, const string& filename_identifier ) {
                     printer->Print(
+                        "\n"
+                        "#ifdef _MSC_VER\n"
+                        "	#pragma warning(  pop  )\n"
+                        "#endif\n"
                         "#endif  // PROTOBUF_INCLUDED_$filename_identifier$\n",
                         "filename_identifier", filename_identifier );
                 }
