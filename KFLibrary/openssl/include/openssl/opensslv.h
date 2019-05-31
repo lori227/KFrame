@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright 1999-2018 The OpenSSL Project Authors. All Rights Reserved.
  *
  * Licensed under the OpenSSL license (the "License").  You may not use
@@ -102,17 +102,16 @@ extern "C" {
 
 /* begin POCO OpenSSL script generated, do not edit manually */
 
+
+//#ifndef POCO_EXTERNAL_OPENSSL
+//    #define POCO_EXTERNAL_OPENSSL
+//#endif
+
 #ifndef POCO_OPENSSLV_H_INCLUDED
-
-  #define POCO_OPENSSLV_H_INCLUDED
-
-  #define POCO_INTERNAL_OPENSSL_MSVC_VER 150
-
+    #define POCO_OPENSSLV_H_INCLUDED
+    #define POCO_INTERNAL_OPENSSL_MSVC_VER 150
 #endif // POCO_OPENSSLV_H_INCLUDED
 
-#ifndef POCO_EXTERNAL_OPENSSL
-  #define POCO_EXTERNAL_OPENSSL
-#endif
 
 /* end POCO OpenSSL script generated */
 
