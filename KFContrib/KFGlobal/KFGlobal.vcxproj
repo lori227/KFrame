@@ -24,7 +24,7 @@
     <ProjectGuid>{C8B331DD-A70B-4B02-9F88-6E5296DFEEA5}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Net</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
     <ProjectName>KFGlobal</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

@@ -99,3 +99,20 @@ extern "C" {
 }
 #endif
 #endif                          /* HEADER_OPENSSLV_H */
+
+/* begin POCO OpenSSL script generated, do not edit manually */
+
+#ifndef POCO_OPENSSLV_H_INCLUDED
+
+  #define POCO_OPENSSLV_H_INCLUDED
+
+  #define POCO_INTERNAL_OPENSSL_MSVC_VER 150
+
+#endif // POCO_OPENSSLV_H_INCLUDED
+
+#ifndef POCO_EXTERNAL_OPENSSL
+  #define POCO_EXTERNAL_OPENSSL
+#endif
+
+/* end POCO OpenSSL script generated */
+

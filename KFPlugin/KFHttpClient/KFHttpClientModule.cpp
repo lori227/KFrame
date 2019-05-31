@@ -1,5 +1,7 @@
 ﻿#include "KFHttpClientModule.hpp"
 #include "KFHttp/KFHttpCommon.h"
+#include "KFHttp/KFHttpClient.h"
+#include "KFHttp/KFHttpsClient.h"
 
 namespace KFrame
 {

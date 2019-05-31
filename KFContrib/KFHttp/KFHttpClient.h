@@ -2,7 +2,14 @@
 #define __KF_HTTP_CLIENT_H__
 
 #include "KFHttp.h"
-#include "Poco/Net/HTTPClientSession.h"
+
+namespace Poco
+{
+    namespace Net
+    {
+        class HTTPClientSession;
+    }
+}
 
 namespace KFrame
 {
@@ -16,7 +23,7 @@ namespace KFrame
         virtual Poco::Net::HTTPClientSession* GetHttpSession();
 
     protected:
-        Poco::Net::HTTPClientSession _http_session;
+        Poco::Net::HTTPClientSession* _http_session;
     };
 }
 

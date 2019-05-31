@@ -94,6 +94,10 @@ namespace KFrame
     void KFDeployAgentModule::LoadTotalLaunchData()
     {
         _deploy_list.Clear();
+        if ( _deploy_table_name.empty() )
+        {
+            return __LOG_ERROR__( "depoly table name is empty!" );
+        }
 
         // 部署信息
         {

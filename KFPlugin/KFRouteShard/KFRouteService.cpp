@@ -83,9 +83,9 @@ namespace KFrame
         }
     }
 
-    uint64 KFRouteService::RandServer( uint64 clientid )
+    uint64 KFRouteService::RandServer( uint64 randid )
     {
-        return _server_hash.FindHashNode( clientid, true );
+        return _server_hash.FindHashNode( randid, false );
     }
 
     uint64 KFRouteService::BalanceServer()

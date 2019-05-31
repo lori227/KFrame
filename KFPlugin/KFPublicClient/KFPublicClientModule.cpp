@@ -62,7 +62,7 @@ namespace KFrame
     {
         KFMsg::S2SUpdateDataToPublicReq req;
         req.mutable_pbdata()->insert( values.begin(), values.end() );
-        _kf_route->SendToRand( playerid, __KF_STRING__( public ), KFMsg::S2S_UPDATE_DATA_TO_PUBLIC_REQ, &req );
+        _kf_route->SendToRand( __KF_STRING__( public ), KFMsg::S2S_UPDATE_DATA_TO_PUBLIC_REQ, &req );
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////

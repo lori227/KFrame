@@ -4,7 +4,6 @@
 
 namespace KFrame
 {
-    using namespace Poco::Data;
 
     KFMySQL::KFMySQL()
     {

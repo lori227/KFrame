@@ -37,7 +37,7 @@
     <ProjectGuid>{F2393635-A025-481D-9286-A6C58BE0EECF}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Net</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -84,7 +84,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_WIN32_WINDOWS;POCO_EXTERNAL_OPENSSL;POCO_STATIC;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WIN32_WINDOWS;POCO_STATIC;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;OPENSSL_NO_ECDH;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\KFCommon\;..\..\KFLibrary\;..\..\KFInclude\;..\..\KFContrib\;..\..\KFLibrary\openssl\include\;..\..\KFLibrary\poco\Net\include\;..\..\KFLibrary\poco\Foundation\include\;..\..\KFLibrary\poco\Util\include\;..\..\KFLibrary\poco\Crypto\include\;..\..\KFLibrary\poco\NetSSL_OpenSSL\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <BrowseInformation>false</BrowseInformation>
     </ClCompile>
@@ -111,7 +111,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;_WIN32_WINDOWS;POCO_STATIC;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;POCO_EXTERNAL_OPENSSL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WIN32_WINDOWS;POCO_STATIC;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\KFCommon\;..\..\KFLibrary\;..\..\KFInclude\;..\..\KFContrib\;..\..\KFLibrary\openssl\include\;..\..\KFLibrary\poco\Net\include\;..\..\KFLibrary\poco\Foundation\include\;..\..\KFLibrary\poco\Util\include\;..\..\KFLibrary\poco\Crypto\include\;..\..\KFLibrary\poco\NetSSL_OpenSSL\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <BrowseInformation>false</BrowseInformation>

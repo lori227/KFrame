@@ -22,7 +22,7 @@
     <ProjectGuid>{AC7BB0E3-FA01-4217-A8E3-A6BE5F407411}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Net</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
     <ProjectName>KFLogger</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

@@ -59,9 +59,10 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SRouteMessageToNameRandReq );
 
         auto pbroute = kfmsg.mutable_pbroute();
-
         __FIND_ROUTE_SERVICE__( kfmsg.name() );
-        auto serverid = routeservice->RandServer( pbroute->serverid() );
+
+        auto randid = ( pbroute->sendid() != 0u ? pbroute->sendid() : pbroute->serverid() );
+        auto serverid = routeservice->RandServer( randid );
         if ( serverid == _invalid_int )
         {
             return __LOG_ERROR__( "service[{}] no server!", kfmsg.name() );

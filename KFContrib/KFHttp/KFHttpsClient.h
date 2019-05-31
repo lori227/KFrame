@@ -1,9 +1,15 @@
-#ifndef __KF_HTTPS_CLIENT_H__
+﻿#ifndef __KF_HTTPS_CLIENT_H__
 #define __KF_HTTPS_CLIENT_H__
 
 #include "KFHttp.h"
-#include "Poco/Net/Context.h"
-#include "Poco/Net/HTTPSClientSession.h"
+
+namespace Poco
+{
+    namespace Net
+    {
+        class HTTPSClientSession;
+    }
+}
 
 namespace KFrame
 {
@@ -20,7 +26,6 @@ namespace KFrame
 
     protected:
 
-        static Poco::Net::Context::Ptr _context;
         Poco::Net::HTTPSClientSession* _https_session;
     };
 }

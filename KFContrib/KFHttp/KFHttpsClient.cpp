@@ -5,11 +5,13 @@
 #include "Poco/Net/ConsoleCertificateHandler.h"
 #include "Poco/Net/AcceptCertificateHandler.h"
 #include "Poco/Net/PrivateKeyPassphraseHandler.h"
+#include "Poco/Net/Context.h"
+#include "Poco/Net/HTTPSClientSession.h"
 
 namespace KFrame
 {
     using namespace Poco::Net;
-    Context::Ptr KFHttpsClient::_context = nullptr;
+    static Poco::Net::Context::Ptr _context = nullptr;
 
     KFHttpsClient::KFHttpsClient()
     {
@@ -19,10 +21,10 @@ namespace KFrame
     void KFHttpsClient::Initialize()
     {
         Poco::Net::initializeSSL();
-
-        Poco::SharedPtr<InvalidCertificateHandler> pCert = new AcceptCertificateHandler( false );
         _context = __KF_NEW__( Context, Context::CLIENT_USE, "", Context::VERIFY_RELAXED, 9, true );
         _context->disableProtocols( Context::PROTO_SSLV2 | Context::PROTO_SSLV3 );
+
+        Poco::SharedPtr<InvalidCertificateHandler> pCert = new AcceptCertificateHandler( false );
         Poco::Net::SSLManager::instance().initializeClient( 0, pCert, _context );
     }
 

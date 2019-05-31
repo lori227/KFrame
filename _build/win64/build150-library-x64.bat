@@ -6,15 +6,15 @@ mkdir _lib\win64\release
 mkdir _lib\win64\debug\3rd
 mkdir _lib\win64\release\3rd
 
-mkdir _bin\bin
-mkdir _bin\bin\debug
-mkdir _bin\bin\release
-
-xcopy /y _lib\win64\debug\3rd\*.dll _bin\bin\debug\
-xcopy /y _lib\win64\release\3rd\*.dll _bin\bin\release\
 :================================================================
-
 cd KFLibrary
+:================================================================
+:  build tcmalloc
+
+cd tcmalloc
+call build150-tcmalloc-x64.bat
+
+cd ../
 :================================================================
 :  build protobuf
 
@@ -67,7 +67,15 @@ cd ../../
 :  build poco
 
 cd poco
+
 call build150-poco-x64.bat
 
 cd ../
 :================================================================
+cd ../
+mkdir _bin\bin
+mkdir _bin\bin\win64
+mkdir _bin\bin\win64\debug
+mkdir _bin\bin\win64\release
+xcopy /y _lib\win64\debug\3rd\*.dll _bin\bin\win64\debug\
+xcopy /y _lib\win64\release\3rd\*.dll _bin\bin\win64\release\

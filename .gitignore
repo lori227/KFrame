@@ -25,3 +25,13 @@ _resource/tool/deploy/deployd.exe
 _bin/bin/linux/debug/KFStartupd
 _bin/bin/linux/release/KFStartup
 _resource/tool/deploy/deployd.exe
+_resource/tool/deploy/deploy.exe
+_resource/tool/deploy/KFMessage.dll
+_resource/tool/deploy/KFMessaged.dll
+_resource/tool/deploy/KFTcpClient.dll
+_resource/tool/deploy/KFTcpClientd.dll
+_resource/tool/deploy/libtcmalloc_minimal.dll
+_bin/bin/win64/debug/libmysql.dll
+_bin/bin/win64/debug/libtcmalloc_minimal.dll
+_bin/bin/win64/release/libmysql.dll
+_bin/bin/win64/release/libtcmalloc_minimal.dll

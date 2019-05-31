@@ -129,7 +129,7 @@ namespace KFrame
         KFMsg::S2SSavePlayerToDataReq req;
         req.set_id( playerid );
         req.mutable_data()->CopyFrom( *pbplayerdata );
-        auto ok = _kf_route->SendToRand( __KF_STRING__( data ), KFMsg::S2S_SAVE_PLAYER_TO_DATA_REQ, &req );
+        auto ok = _kf_route->SendToRand( playerid, __KF_STRING__( data ), KFMsg::S2S_SAVE_PLAYER_TO_DATA_REQ, &req );
         if ( !ok )
         {
             __LOG_ERROR__( "save palyer=[{}] failed!", playerid );

@@ -173,7 +173,6 @@ blue "end building openssl"
 #pause
 
 #-----------------------------------------------------
-
 blue "start building poco"
 
 cd poco

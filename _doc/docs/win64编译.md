@@ -1,7 +1,7 @@
 # win64编译方法
 
-需要`vs2017 15.8.0`以上, 如没有请自行安装.  
-sdk版本号为`10.0.16299.0`, 如果不是请自己项目重定向到自己的sdk版本.
+需要`vs2017 15.9.2`以上, 如没有请自行安装.  
+sdk版本号为`10.0.17763.0`, 如果不是请自己项目重定向到自己的sdk版本.
 
 ## 设置vs环境变量
 
@@ -20,13 +20,23 @@ lib库路径: `Server/_lib/win64/3rd/`
 进入`Server/_build/win64`目录下, 
 执行`build150-library-x64.bat`, 等待编译结束,生成的结果在默认链接目录下.
 
-!> ps: tcmalloc 和openssl 已经编译好, 如果需要请自己重新编译.
+!> ps: openssl 已经编译好, 如果需要请自己重新编译.
 
-    openssl : https://www.cnblogs.com/lpxblog/p/5382653.html
+	安装 perl
+	https://downloads.activestate.com/ActivePerl/releases/5.26.3.2603/ActivePerl-5.26.3.2603-MSWin32-x64-a95bce075.exe
+	
+	打开vs2017 x64工具集
+	ppm install dmake
+
+	进入openssl目录
+	perl Configure VC-WIN64A no-asm no-shared no-tests --release --prefix=e:\openssl
+	nmake
+	nmake install
+	
 
 !> protobuf 请自己安装cmake生成sln工程( 因为camke生成的都带绝对路径 )
 
-	http://blog.sina.com.cn/s/blog_62949ff40102x2wo.html
+	https://blog.csdn.net/hp_cpp/article/details/81561310
 
 # 编译框架工程
 

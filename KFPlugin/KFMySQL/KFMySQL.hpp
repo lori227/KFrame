@@ -12,6 +12,7 @@
 
 namespace KFrame
 {
+    using namespace Poco::Data;
     class KFMySQL
     {
     public:
@@ -25,9 +26,7 @@ namespace KFrame
         bool IsConnected();
 
     protected:
-        Poco::Data::Session* _session;
-
-    private:
+        Session* _session;
         std::string _connect_data;
     };
 }

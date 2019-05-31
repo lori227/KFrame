@@ -12,8 +12,6 @@
 #include "KFrame.h"
 #include "KFHttpClientInterface.h"
 #include "KFHttp/KFHttpData.h"
-#include "KFHttp/KFHttpClient.h"
-#include "KFHttp/KFHttpsClient.h"
 
 namespace KFrame
 {

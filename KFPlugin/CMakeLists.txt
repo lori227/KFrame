@@ -4,9 +4,9 @@ message("${CMAKE_CXX_FLAGS}")
 macro(LINK_SDK_MACRO project_name)
 
     if(CMAKE_BUILD_TYPE MATCHES "Debug") 
-        target_link_libraries(${project_name} KFGlobald KFLoggerd KFPlugind KFMemoryd KFProtod KFProtocold KFHttpd KFCored KFNetworkd KFUtilityd KFMath3Dd PocoNetd PocoNetSSLd PocoCryptod PocoJSONd PocoUtild PocoFoundationd PocoXMLd PocoDataMySQLd PocoDatad z dl ssl crypto pthread uv luaplus53d iconv protobuf hiredis mysqlclient)
+        target_link_libraries(${project_name} KFGlobald KFLoggerd KFPlugind KFMemoryd KFProtod KFProtocold KFHttpd KFCored KFNetworkd KFUtilityd KFMath3Dd PocoNetd PocoNetSSLd PocoCryptod PocoJSONd PocoUtild PocoXMLd PocoDataMySQLd PocoDatad PocoFoundationd z dl ssl crypto pthread uv luaplus53d iconv protobuf hiredis mysqlclient)
     else()
-        target_link_libraries(${project_name} KFGlobal KFLogger KFPlugin KFMemory KFProto KFProtocol KFHttp KFCore KFNetwork KFUtility KFMath3D PocoNet PocoNetSSL PocoCrypto PocoJSON PocoUtil PocoFoundation PocoXML PocoDataMySQL PocoData z dl ssl crypto pthread uv luaplus53 iconv protobuf hiredis mysqlclient)  
+        target_link_libraries(${project_name} KFGlobal KFLogger KFPlugin KFMemory KFProto KFProtocol KFHttp KFCore KFNetwork KFUtility KFMath3D PocoNet PocoNetSSL PocoCrypto PocoJSON PocoUtil PocoXML PocoDataMySQL PocoData PocoFoundation z dl ssl crypto pthread uv luaplus53 iconv protobuf hiredis mysqlclient)  
     endif()
 
 endmacro(LINK_SDK_MACRO project_name)

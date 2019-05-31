@@ -105,7 +105,7 @@
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>..\..\_lib\win64\debug;..\..\_lib\win64\debug\3rd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>libtcmalloc_minimal.lib</AdditionalDependencies>
+      <AdditionalDependencies>libtcmalloc_minimald.lib</AdditionalDependencies>
       <ForceSymbolReferences>__tcmalloc</ForceSymbolReferences>
     </Link>
     <Midl>
