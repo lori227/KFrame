@@ -34,28 +34,28 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
 
         // 转给给指定类型的所有
-        virtual bool SendToAll( const std::string& name, uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool SendToAll( uint64 sendid, const std::string& name, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToAll( const std::string& name, uint32 msgid, ::google::protobuf::Message* message, bool resend );
+        virtual bool SendToAll( uint64 sendid, const std::string& name, uint32 msgid, ::google::protobuf::Message* message, bool resend );
 
         // 转发给随机服务器
-        virtual bool SendToRand( const std::string& name, uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool SendToRand( uint64 sendid, const std::string& name, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToRand( const std::string& name, uint32 msgid, ::google::protobuf::Message* message, bool resend );
+        virtual bool SendToRand( uint64 sendid, const std::string& name, uint32 msgid, ::google::protobuf::Message* message, bool resend );
 
         // 转发到负载最小的服务器
-        virtual bool SendToBalance( const std::string& name, uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool SendToBalance( uint64 sendid, const std::string& name, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToBalance( const std::string& name, uint32 msgid, ::google::protobuf::Message* message, bool resend );
+        virtual bool SendToBalance( uint64 sendid, const std::string& name, uint32 msgid, ::google::protobuf::Message* message, bool resend );
 
         // 发送到对象所在的服务器
-        virtual bool SendToObject( const std::string& name, uint64 objectid, uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool SendToObject( uint64 sendid, const std::string& name, uint64 objectid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToObject( const std::string& name, uint64 objectid, uint32 msgid, ::google::protobuf::Message* message, bool resend );
+        virtual bool SendToObject( uint64 sendid, const std::string& name, uint64 objectid, uint32 msgid, ::google::protobuf::Message* message, bool resend );
 
         // 转发给指定服务器
-        virtual bool SendToServer( uint64 serverid, uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool SendToServer( uint64 sendid, uint64 serverid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToServer( uint64 serverid, uint32 msgid, ::google::protobuf::Message* message, bool resend );
+        virtual bool SendToServer( uint64 sendid, uint64 serverid, uint32 msgid, ::google::protobuf::Message* message, bool resend );
 
         // 发送到指定玩家
-        virtual bool SendToPlayer( uint64 serverid, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool SendToPlayer( uint64 sendid, uint64 serverid, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToPlayer( uint64 serverid, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message, bool resend );
+        virtual bool SendToPlayer( uint64 sendid, uint64 serverid, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message, bool resend );
 
         // 发送到路由
         virtual bool SendToRoute( const Route& route, uint32 msgid, ::google::protobuf::Message* message );

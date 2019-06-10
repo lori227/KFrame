@@ -245,12 +245,12 @@ case datatype:\
                 auto& pbarray = ( *proto->mutable_pbarray() )[ datasetting->_name ];
 
                 auto size = kfchild->Size();
-                for ( auto i = 0u; i < size; ++i )
+                for ( uint32 i = KFDataDefine::Array_Index; i < size; ++i )
                 {
-                    auto kfobject = kfchild->FindData( i );
-                    if ( kfobject != nullptr )
+                    auto kfuint64 = kfchild->FindData( i );
+                    if ( kfuint64 != nullptr && kfuint64->IsValid() )
                     {
-                        ( *pbarray.mutable_pbuint64() )[ i ] = kfobject->GetValue<uint64>();
+                        ( *pbarray.mutable_pbuint64() )[ i ] = kfuint64->GetValue<uint64>() ;
                     }
                 }
                 break;

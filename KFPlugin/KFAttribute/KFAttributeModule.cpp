@@ -67,7 +67,7 @@ namespace KFrame
         req.set_oldname( name );
         req.set_newname( kfmsg.name() );
         req.set_costdata( _invalid_str );
-        auto ok = _kf_route->SendToRand( playerid, __KF_STRING__( public ), KFMsg::S2S_SET_PLAYERNAME_TO_DATA_REQ, &req );
+        auto ok = _kf_route->SendToRand( playerid, __KF_STRING__( public ), KFMsg::S2S_SET_PLAYERNAME_TO_DATA_REQ, &req, false );
         if ( !ok )
         {
             _kf_display->SendToClient( player, KFMsg::PublicServerBusy );

@@ -46,7 +46,6 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SRouteMessageToNameAllReq );
 
         auto pbroute = kfmsg.mutable_pbroute();
-
         __FIND_ROUTE_SERVICE__( kfmsg.name() );
         for ( auto& iter : routeservice->_server_object_count_list )
         {
@@ -60,7 +59,6 @@ namespace KFrame
 
         auto pbroute = kfmsg.mutable_pbroute();
         __FIND_ROUTE_SERVICE__( kfmsg.name() );
-
         auto randid = ( pbroute->sendid() != 0u ? pbroute->sendid() : pbroute->serverid() );
         auto serverid = routeservice->RandServer( randid );
         if ( serverid == _invalid_int )
@@ -89,8 +87,8 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFRouteShardModule::HandleRouteMessageToNameObjectReq )
     {
         __PROTO_PARSE__( KFMsg::S2SRouteMessageToNameObjectReq );
-        auto pbroute = kfmsg.mutable_pbroute();
 
+        auto pbroute = kfmsg.mutable_pbroute();
         __FIND_ROUTE_SERVICE__( kfmsg.name() );
         auto serverid = routeservice->ObjectServer( pbroute->recvid() );
         if ( serverid == _invalid_int )
@@ -104,16 +102,16 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFRouteShardModule::HandleRouteMessageToServerReq )
     {
         __PROTO_PARSE__( KFMsg::S2SRouteMessageToServerReq );
-        auto pbroute = kfmsg.mutable_pbroute();
 
+        auto pbroute = kfmsg.mutable_pbroute();
         SendRouteMessage( kfmsg.targetid(), pbroute, kfmsg.msgid(), kfmsg.msgdata() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRouteShardModule::HandleRouteMessageToPlayerReq )
     {
         __PROTO_PARSE__( KFMsg::S2SRouteMessageToPlayerReq );
-        auto pbroute = kfmsg.mutable_pbroute();
 
+        auto pbroute = kfmsg.mutable_pbroute();
         SendRouteMessage( kfmsg.targetid(), pbroute, kfmsg.msgid(), kfmsg.msgdata() );
     }
 
@@ -126,7 +124,7 @@ namespace KFrame
         auto ok = _kf_cluster_shard->SendToClient( clientid, KFMsg::S2S_ROUTE_MESSAGE_TO_CLIENT_ACK, &ack );
         if ( !ok )
         {
-            __LOG_ERROR__( "send msg[{}] to client=[{}] failed!", msgid, KFAppId::ToString( clientid ) );
+            __LOG_ERROR__( "send=[{}] msg[{}] to recv=[{}] failed!", KFAppId::ToString( pbroute->serverid() ), msgid, KFAppId::ToString( clientid ) );
         }
     }
 

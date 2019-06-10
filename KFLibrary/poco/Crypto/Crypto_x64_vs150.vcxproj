@@ -122,14 +122,14 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug_shared|x64'">
     <PreBuildEvent>
-      <Command>xcopy /y ..\openssl\VS_120\win64\bin\debug\*.dll ..\bin64\* 1&gt;nul
-xcopy /y ..\openssl\VS_120\win64\bin\debug\*.lib ..\lib64\* 1&gt;nul
-xcopy /y ..\openssl\VS_120\win64\bin\debug\*.pdb ..\lib64\* 1&gt;nul
+      <Command>xcopy /y ..\openssl\build\win64\bin\debug\*.dll ..\bin64\* 1&gt;nul
+xcopy /y ..\openssl\build\win64\bin\debug\*.lib ..\lib64\* 1&gt;nul
+xcopy /y ..\openssl\build\win64\bin\debug\*.pdb ..\lib64\* 1&gt;nul
 exit 0</Command>
     </PreBuildEvent>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>.\include;..\openssl\VS_120\include;..\Foundation\include;..\..\openssl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\include;..\openssl\build\include;..\Foundation\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;Crypto_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
@@ -158,8 +158,8 @@ exit 0</Command>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release_shared|x64'">
     <PreBuildEvent>
-      <Command>xcopy /y ..\openssl\VS_120\win64\bin\release\*.dll ..\bin64\* 1&gt;nul
-xcopy /y ..\openssl\VS_120\win64\bin\release\*.lib ..\lib64\* 1&gt;nul
+      <Command>xcopy /y ..\openssl\build\win64\bin\release\*.dll ..\bin64\* 1&gt;nul
+xcopy /y ..\openssl\build\win64\bin\release\*.lib ..\lib64\* 1&gt;nul
 exit 0</Command>
     </PreBuildEvent>
     <ClCompile>
@@ -168,7 +168,7 @@ exit 0</Command>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
-      <AdditionalIncludeDirectories>.\include;..\openssl\VS_120\include;..\Foundation\include;..\..\openssl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\include;..\openssl\build\include;..\Foundation\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;Crypto_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -196,13 +196,13 @@ exit 0</Command>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug_static_mt|x64'">
     <PreBuildEvent>
-      <Command>xcopy /y ..\openssl\VS_120\win64\lib\debug\*.lib ..\lib64\* 1&gt;nul
-xcopy /y ..\openssl\VS_120\win64\lib\debug\*.pdb ..\lib64\* 1&gt;nul
+      <Command>xcopy /y ..\openssl\build\win64\lib\debug\*.lib ..\lib64\* 1&gt;nul
+xcopy /y ..\openssl\build\win64\lib\debug\*.pdb ..\lib64\* 1&gt;nul
 exit 0</Command>
     </PreBuildEvent>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>.\include;..\openssl\VS_120\include;..\Foundation\include;..\..\openssl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\include;..\openssl\build\include;..\Foundation\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;POCO_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
@@ -224,7 +224,7 @@ exit 0</Command>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release_static_mt|x64'">
     <PreBuildEvent>
-      <Command>xcopy /y ..\openssl\VS_120\win64\lib\release\*.lib ..\lib64\* 1&gt;nul
+      <Command>xcopy /y ..\openssl\build\win64\lib\release\*.lib ..\lib64\* 1&gt;nul
 exit 0</Command>
     </PreBuildEvent>
     <ClCompile>
@@ -233,7 +233,7 @@ exit 0</Command>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
-      <AdditionalIncludeDirectories>.\include;..\openssl\VS_120\include;..\Foundation\include;..\..\openssl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\include;..\openssl\build\include;..\Foundation\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;POCO_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -252,15 +252,13 @@ exit 0</Command>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug_static_md|x64'">
     <PreBuildEvent>
-      <Command>xcopy /y ..\openssl\VS_120\win64\bin\debug\*.dll ..\bin64\* 1&gt;nul
-xcopy /y ..\openssl\VS_120\win64\bin\debug\*.lib ..\lib64\* 1&gt;nul
-xcopy /y ..\openssl\VS_120\win64\bin\debug\*.pdb ..\lib64\* 1&gt;nul
-exit 0</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>.\include;..\openssl\VS_120\include;..\Foundation\include;..\..\openssl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;POCO_STATIC;POCO_EXTERNAL_OPENSSL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\include;..\..\openssl\include;..\Foundation\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;POCO_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -281,9 +279,8 @@ exit 0</Command>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release_static_md|x64'">
     <PreBuildEvent>
-      <Command>xcopy /y ..\openssl\VS_120\win64\bin\release\*.dll ..\bin64\* 1&gt;nul
-xcopy /y ..\openssl\VS_120\win64\bin\release\*.lib ..\lib64\* 1&gt;nul
-exit 0</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
@@ -291,8 +288,8 @@ exit 0</Command>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
-      <AdditionalIncludeDirectories>.\include;..\openssl\VS_120\include;..\Foundation\include;..\..\openssl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;POCO_STATIC;POCO_EXTERNAL_OPENSSL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\include;..\..\openssl\include;..\Foundation\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;POCO_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <BufferSecurityCheck>false</BufferSecurityCheck>

@@ -248,7 +248,7 @@ namespace KFrame
                 MapString friendvaluse;
                 friendvaluse[ __KF_STRING__( message ) ] = kfmsg.message();
                 MapStringToPBRelation( friendvaluse, pbinvite, true );
-                _kf_route->SendToPlayer( selfid, serverid, kfmsg.playerid(), KFMsg::S2S_APPLY_ADD_RELATION_TO_GAME_ACK, &ack );
+                _kf_route->SendToPlayer( selfid, serverid, kfmsg.playerid(), KFMsg::S2S_APPLY_ADD_RELATION_TO_GAME_ACK, &ack, true );
             }
         }
     }
@@ -340,7 +340,7 @@ namespace KFrame
 
                 MapString friendvalues;
                 MapStringToPBRelation( friendvalues, pbrelation, true );
-                _kf_route->SendToPlayer( playerid, queryserverid->_value, playerid, KFMsg::S2S_ADD_RELATION_TO_GAME_ACK, &ack );
+                _kf_route->SendToPlayer( playerid, queryserverid->_value, playerid, KFMsg::S2S_ADD_RELATION_TO_GAME_ACK, &ack, true );
             }
         }
     }
@@ -380,7 +380,7 @@ namespace KFrame
             ack.set_dataname( kfsetting->_data_name );
             ack.set_playerid( playerid );
             ack.set_relationid( relationid );
-            _kf_route->SendToPlayer( playerid, queryserverid->_value, playerid, KFMsg::S2S_DEL_RELATION_TO_GAME_ACK, &ack );
+            _kf_route->SendToPlayer( playerid, queryserverid->_value, playerid, KFMsg::S2S_DEL_RELATION_TO_GAME_ACK, &ack, true );
         }
     }
 
@@ -442,7 +442,7 @@ namespace KFrame
         ack.set_playerid( selfid );
         ack.set_targetplayerid( targetid );
         ack.set_friendliness( friendliness );
-        _kf_route->SendToPlayer( selfid, queryserverid->_value, selfid, KFMsg::S2S_UPDATE_FRIENDLINESS_TO_GAME_ACK, &ack );
+        _kf_route->SendToPlayer( selfid, queryserverid->_value, selfid, KFMsg::S2S_UPDATE_FRIENDLINESS_TO_GAME_ACK, &ack, true );
     }
 
     //__KF_MESSAGE_FUNCTION__( KFRelationShardModule::HandleAddRecentPlayerDataReq )

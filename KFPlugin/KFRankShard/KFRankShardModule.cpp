@@ -46,7 +46,7 @@ namespace KFrame
         // 把worker id广播给所有的rank shard
         KFMsg::S2SNoticeRankWorkerReq req;
         req.set_workerid( KFGlobal::Instance()->_app_id->GetWorkId() );
-        _kf_route->SendToAll( __KF_STRING__( rank ), KFMsg::S2S_NOTICE_RANK_WORKER_REQ, &req );
+        _kf_route->SendToAll( __KF_STRING__( rank ), KFMsg::S2S_NOTICE_RANK_WORKER_REQ, &req, true );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     std::string& KFRankShardModule::FormatRankDataKey( uint32 rankid, uint32 zoneid )
@@ -171,7 +171,7 @@ namespace KFrame
             // 返回结果
             KFMsg::S2SSyncRefreshRank sync;
             sync.set_rankid( rankid );
-            auto ok = _kf_route->SendToAll( __KF_STRING__( rank ), KFMsg::S2S_SYNC_REFRESH_RANK, &sync );
+            auto ok = _kf_route->SendToAll( __KF_STRING__( rank ), KFMsg::S2S_SYNC_REFRESH_RANK, &sync, true );
             if ( !ok )
             {
                 __LOG_ERROR__( "rank=[{}] refresh failed!", rankid );

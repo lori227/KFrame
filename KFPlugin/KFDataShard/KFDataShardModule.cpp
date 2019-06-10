@@ -3,7 +3,7 @@
 
 namespace KFrame
 {
-#define __DATA_REDIS_DRIVER__( zoneid ) _kf_redis->Create( __KF_STRING__( data ), _invalid_int )
+#define __DATA_REDIS_DRIVER__( zoneid ) _kf_redis->Create( __KF_STRING__( data ), zoneid )
 
     void KFDataShardModule::BeforeRun()
     {

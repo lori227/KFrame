@@ -52,7 +52,7 @@ namespace KFrame
         {
             display.add_param( param );
         }
-        _kf_route->SendToPlayer( 0u, serverid, playerid, KFMsg::MSG_RESULT_DISPLAY, &display );
+        _kf_route->SendToPlayer( 0u, serverid, playerid, KFMsg::MSG_RESULT_DISPLAY, &display, true );
     }
 
     void KFDisplayModule::SendToPlayer( KFData* kfbasic, uint32 result, ListString& params )

@@ -50,7 +50,7 @@ if not exist %localpath%\%binpath%\bin\win64\debug ( mkdir  %localpath%\%binpath
 if not exist %localpath%\%binpath%\bin\win64\release ( mkdir  %localpath%\%binpath%\bin\win64\release )
 copy /y %framepath%\%binpath%\bin\win64\debug\KFStartupd.exe %localpath%\%binpath%\bin\win64\debug
 copy /y %framepath%\%binpath%\bin\win64\debug\libmysql.dll %localpath%\%binpath%\bin\win64\debug
-copy /y %framepath%\%binpath%\bin\win64\debug\libtcmalloc_minimal.dll %localpath%\%binpath%\bin\win64\debug
+copy /y %framepath%\%binpath%\bin\win64\debug\libtcmalloc_minimald.dll %localpath%\%binpath%\bin\win64\debug
 
 copy /y %framepath%\%binpath%\bin\win64\release\KFStartup.exe %localpath%\%binpath%\bin\win64\release
 copy /y %framepath%\%binpath%\bin\win64\release\libmysql.dll %localpath%\%binpath%\bin\win64\release
@@ -88,6 +88,7 @@ rem ===========================================================================
 rem ===========================================================================
 echo "update _lib path begin"
 set libpath=_lib
+rd /s /q %localpath%\%libpath%
 if not exist %localpath%\%libpath% ( mkdir %localpath%\%libpath% )
 if not exist %localpath%\%libpath%\win64 ( mkdir %localpath%\%libpath%\win64 )
 xcopy /y /S %framepath%\%libpath%\win64\* %localpath%\%libpath%\win64 
@@ -238,8 +239,8 @@ if not exist %resourcepath%\config\rank.config (
 )
 
 rem tool=================================
-if not exist %resourcepath%\tool ( mkdir %resourcepath%\tool )
-xcopy /y %framepath%\_resource\tool\* %resourcepath%\tool 
+rem if not exist %resourcepath%\tool ( mkdir %resourcepath%\tool )
+rem xcopy /y %framepath%\_resource\tool\* %resourcepath%\tool 
 
 rem excel=================================
 if not exist %resourcepath%\excel ( mkdir %resourcepath%\excel )
@@ -293,7 +294,7 @@ call :CopyInterface KFClusterShard
 call :CopyInterface KFLogClient
 call :CopyInterface KFLogShard
 call :CopyInterface KFKernel class.xlsx
-call :CopyInterface KFFilter
+call :CopyInterface KFFilter filter.xlsx
 call :CopyInterface KFPlayer
 call :CopyInterface KFHttpClient
 call :CopyInterface KFHttpServer
@@ -335,8 +336,8 @@ rem call :CopyInterface KFRankShard
 copy /y %framepath%\%binpath%\config\rank.config ..\Resource\config\
 
 rem public
-rem call :CopyInterface KFPublicClient
-rem call :CopyInterface KFPublicShard
+call :CopyInterface KFPublicClient
+call :CopyInterface KFPublicShard
 
 rem relation
 rem call :CopyInterface KFRelationClient

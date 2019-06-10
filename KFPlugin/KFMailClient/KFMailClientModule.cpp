@@ -46,7 +46,7 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFMailClientModule::SendMessageToMail( uint64 playerid, uint32 msgid, ::google::protobuf::Message* message )
     {
-        return _kf_route->SendToRand( playerid, __KF_STRING__( mail ), msgid, message );
+        return _kf_route->SendToRand( playerid, __KF_STRING__( mail ), msgid, message, true );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFMailClientModule::OnEnterQueryMail( KFEntity* player )

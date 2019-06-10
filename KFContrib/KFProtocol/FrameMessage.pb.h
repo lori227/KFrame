@@ -4,6 +4,11 @@
 #ifndef PROTOBUF_INCLUDED_FrameMessage_2eproto
 #define PROTOBUF_INCLUDED_FrameMessage_2eproto
 
+#ifdef _MSC_VER
+	#pragma warning(push)
+	#pragma warning(disable : 4946)
+#endif
+
 #include <string>
 
 #include <google/protobuf/stubs/common.h>
@@ -13374,4 +13379,8 @@ inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::FrameProtocol>() {
 
 // @@protoc_insertion_point(global_scope)
 
+
+#ifdef _MSC_VER
+	#pragma warning(  pop  )
+#endif
 #endif  // PROTOBUF_INCLUDED_FrameMessage_2eproto

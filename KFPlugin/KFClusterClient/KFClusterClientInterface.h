@@ -12,8 +12,8 @@ namespace KFrame
         virtual bool IsInService() = 0;
 
         // 发送消息
-        virtual bool SendToProxy( uint32 msgid, google::protobuf::Message* message ) = 0;
-        virtual bool SendToProxy( uint64 shardid, uint32 msgid, google::protobuf::Message* message ) = 0;
+        virtual bool SendToProxy( uint32 msgid, google::protobuf::Message* message, bool resend ) = 0;
+        virtual bool SendToProxy( uint64 shardid, uint32 msgid, google::protobuf::Message* message, bool resend ) = 0;
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 注册回调

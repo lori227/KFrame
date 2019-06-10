@@ -21,8 +21,8 @@ namespace KFrame
         Limit = 2,
         //////////////////////////////////////////////////////////
         MaxSlot = 30000,	// 定时器最大槽数量
-        SlotTime = 10,		// 每个槽时间
-        WheelTime = MaxSlot * SlotTime,	// 300秒一轮, 可以满足大多功能需求只在一圈内完成
+        SlotTime = 20,		// 每个槽时间
+        WheelTime = MaxSlot * SlotTime,	// 600秒一轮, 可以满足大多功能需求只在一圈内完成
     };
 
     class KFTimerModule : public KFTimerInterface

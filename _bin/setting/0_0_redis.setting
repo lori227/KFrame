@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8' ?>
+﻿<?xml version='1.0' encoding='utf-8' ?>
 <Config>
 	<!--Name 数据库名字 -->
 	<!--Ip 数据库地址 -->
@@ -18,7 +18,7 @@
 
 	<!--保存小区玩家数据信息-->
 	<Module Name="data">
-		<Redis MinLogicId="0" MaxLogicId="0">
+		<Redis MinLogicId="1" MaxLogicId="10">
 			<Write IP="127.0.0.1" Port="6379" Password="redis@lori227-="/>
 			<Read IP="127.0.0.1" Port="6379" Password="redis@lori227-="/>
 		</Redis>			 

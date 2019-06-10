@@ -65,12 +65,12 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFRouteClientModule::SendToAll( const std::string& name, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFRouteClientModule::SendToAll( const std::string& name, uint32 msgid, ::google::protobuf::Message* message, bool resend )
     {
-        return SendToAll( 0u, name, msgid, message );
+        return SendToAll( 0u, name, msgid, message, resend );
     }
 
-    bool KFRouteClientModule::SendToAll( uint64 sendid, const std::string& name, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFRouteClientModule::SendToAll( uint64 sendid, const std::string& name, uint32 msgid, ::google::protobuf::Message* message, bool resend )
     {
         KFMsg::S2SRouteMessageToNameAllReq req;
 
@@ -81,15 +81,15 @@ namespace KFrame
         req.set_name( name );
         req.set_msgid( msgid );
         req.set_msgdata( message->SerializeAsString() );
-        return _kf_cluster_client->SendToProxy( KFMsg::S2S_ROUTE_MESSAGE_TO_NAME_ALL_REQ, &req );
+        return _kf_cluster_client->SendToProxy( KFMsg::S2S_ROUTE_MESSAGE_TO_NAME_ALL_REQ, &req, resend );
     }
 
-    bool KFRouteClientModule::SendToRand( const std::string& name, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFRouteClientModule::SendToRand( const std::string& name, uint32 msgid, ::google::protobuf::Message* message, bool resend )
     {
-        return SendToRand( 0u, name, msgid, message );
+        return SendToRand( 0u, name, msgid, message, resend );
     }
 
-    bool KFRouteClientModule::SendToRand( uint64 sendid, const std::string& name, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFRouteClientModule::SendToRand( uint64 sendid, const std::string& name, uint32 msgid, ::google::protobuf::Message* message, bool resend )
     {
         KFMsg::S2SRouteMessageToNameRandReq req;
 
@@ -100,15 +100,15 @@ namespace KFrame
         req.set_name( name );
         req.set_msgid( msgid );
         req.set_msgdata( message->SerializeAsString() );
-        return _kf_cluster_client->SendToProxy( KFMsg::S2S_ROUTE_MESSAGE_TO_NAME_RAND_REQ, &req );
+        return _kf_cluster_client->SendToProxy( KFMsg::S2S_ROUTE_MESSAGE_TO_NAME_RAND_REQ, &req, resend );
     }
 
-    bool KFRouteClientModule::SendToBalance( const std::string& name, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFRouteClientModule::SendToBalance( const std::string& name, uint32 msgid, ::google::protobuf::Message* message, bool resend )
     {
-        return SendToBalance( 0u, name, msgid, message );
+        return SendToBalance( 0u, name, msgid, message, resend );
     }
 
-    bool KFRouteClientModule::SendToBalance( uint64 sendid, const std::string& name, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFRouteClientModule::SendToBalance( uint64 sendid, const std::string& name, uint32 msgid, ::google::protobuf::Message* message, bool resend )
     {
         KFMsg::S2SRouteMessageToNameBalanceReq req;
 
@@ -119,15 +119,15 @@ namespace KFrame
         req.set_name( name );
         req.set_msgid( msgid );
         req.set_msgdata( message->SerializeAsString() );
-        return _kf_cluster_client->SendToProxy( KFMsg::S2S_ROUTE_MESSAGE_TO_NAME_BALANCE_REQ, &req );
+        return _kf_cluster_client->SendToProxy( KFMsg::S2S_ROUTE_MESSAGE_TO_NAME_BALANCE_REQ, &req, resend );
     }
 
-    bool KFRouteClientModule::SendToObject( const std::string& name, uint64 objectid, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFRouteClientModule::SendToObject( const std::string& name, uint64 objectid, uint32 msgid, ::google::protobuf::Message* message, bool resend )
     {
-        return SendToObject( 0u, name, objectid, msgid, message );
+        return SendToObject( 0u, name, objectid, msgid, message, resend );
     }
 
-    bool KFRouteClientModule::SendToObject( uint64 sendid, const std::string& name, uint64 objectid, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFRouteClientModule::SendToObject( uint64 sendid, const std::string& name, uint64 objectid, uint32 msgid, ::google::protobuf::Message* message, bool resend )
     {
         KFMsg::S2SRouteMessageToNameObjectReq req;
 
@@ -139,15 +139,15 @@ namespace KFrame
         req.set_name( name );
         req.set_msgid( msgid );
         req.set_msgdata( message->SerializeAsString() );
-        return _kf_cluster_client->SendToProxy( KFMsg::S2S_ROUTE_MESSAGE_TO_NAME_OBJECT_REQ, &req );
+        return _kf_cluster_client->SendToProxy( KFMsg::S2S_ROUTE_MESSAGE_TO_NAME_OBJECT_REQ, &req, resend );
     }
 
-    bool KFRouteClientModule::SendToServer( uint64 serverid, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFRouteClientModule::SendToServer( uint64 serverid, uint32 msgid, ::google::protobuf::Message* message, bool resend )
     {
-        return SendToServer( 0u, serverid, msgid, message );
+        return SendToServer( 0u, serverid, msgid, message, resend );
     }
 
-    bool KFRouteClientModule::SendToServer( uint64 sendid, uint64 serverid, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFRouteClientModule::SendToServer( uint64 sendid, uint64 serverid, uint32 msgid, ::google::protobuf::Message* message, bool resend )
     {
         KFMsg::S2SRouteMessageToServerReq req;
 
@@ -159,15 +159,15 @@ namespace KFrame
         req.set_targetid( serverid );
         req.set_msgid( msgid );
         req.set_msgdata( message->SerializeAsString() );
-        return _kf_cluster_client->SendToProxy( KFMsg::S2S_ROUTE_MESSAGE_TO_SERVER_REQ, &req );
+        return _kf_cluster_client->SendToProxy( KFMsg::S2S_ROUTE_MESSAGE_TO_SERVER_REQ, &req, resend );
     }
 
-    bool KFRouteClientModule::SendToPlayer( uint64 serverid, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFRouteClientModule::SendToPlayer( uint64 serverid, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message, bool resend )
     {
-        return SendToPlayer( recvid, serverid, recvid, msgid, message );
+        return SendToPlayer( recvid, serverid, recvid, msgid, message, resend );
     }
 
-    bool KFRouteClientModule::SendToPlayer( uint64 sendid, uint64 serverid, uint64 playerid, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFRouteClientModule::SendToPlayer( uint64 sendid, uint64 serverid, uint64 playerid, uint32 msgid, ::google::protobuf::Message* message, bool resend )
     {
         KFMsg::S2SRouteMessageToPlayerReq req;
 
@@ -179,7 +179,7 @@ namespace KFrame
         req.set_targetid( serverid );
         req.set_msgid( msgid );
         req.set_msgdata( message->SerializeAsString() );
-        return _kf_cluster_client->SendToProxy( KFMsg::S2S_ROUTE_MESSAGE_TO_PLAYER_REQ, &req );
+        return _kf_cluster_client->SendToProxy( KFMsg::S2S_ROUTE_MESSAGE_TO_PLAYER_REQ, &req, resend );
     }
 
     bool KFRouteClientModule::SendToRoute( const Route& route, uint32 msgid, ::google::protobuf::Message* message )
@@ -188,7 +188,7 @@ namespace KFrame
         auto sendid = __ROUTE_RECV_ID__;
         auto recvid = __ROUTE_SEND_ID__;
 
-        return SendToPlayer( sendid, serverid, recvid, msgid, message );
+        return SendToPlayer( sendid, serverid, recvid, msgid, message, true );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRouteClientModule::HandleRouteMessageToClientAck )
@@ -252,7 +252,7 @@ namespace KFrame
             req.add_objectid( objectid );
         }
 
-        auto ok = _kf_cluster_client->SendToProxy( KFMsg::S2S_ROUTE_SYNC_OBJECT_TO_PROXY_REQ, &req );
+        auto ok = _kf_cluster_client->SendToProxy( KFMsg::S2S_ROUTE_SYNC_OBJECT_TO_PROXY_REQ, &req, true );
         if ( !ok )
         {
             __LOG_ERROR__( "service=[{}] sync object list failed!", _service_name );
@@ -268,7 +268,7 @@ namespace KFrame
         req.set_objectid( objectid );
         req.set_objectcount( _service_object_list.size() );
         req.set_clientid( KFGlobal::Instance()->_app_id->GetId() );
-        auto ok = _kf_cluster_client->SendToProxy( KFMsg::S2S_ROUTE_ADD_OBJECT_TO_PROXY_REQ, &req );
+        auto ok = _kf_cluster_client->SendToProxy( KFMsg::S2S_ROUTE_ADD_OBJECT_TO_PROXY_REQ, &req, true );
         if ( !ok )
         {
             __LOG_ERROR__( "service[{}] add object[{}] failed!", _service_name, objectid );
@@ -284,7 +284,7 @@ namespace KFrame
         req.set_objectid( objectid );
         req.set_objectcount( _service_object_list.size() );
         req.set_clientid( KFGlobal::Instance()->_app_id->GetId() );
-        auto ok = _kf_cluster_client->SendToProxy( KFMsg::S2S_ROUTE_REMOVE_OBJECT_TO_PROXY_REQ, &req );
+        auto ok = _kf_cluster_client->SendToProxy( KFMsg::S2S_ROUTE_REMOVE_OBJECT_TO_PROXY_REQ, &req, true );
         if ( !ok )
         {
             __LOG_ERROR__( "service[{}] remove object[{}] failed!", _service_name, objectid );

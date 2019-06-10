@@ -18,14 +18,45 @@
 
 namespace KFrame
 {
+    class SendKeeper
+    {
+    public:
+        SendKeeper( uint32 length )
+        {
+            if ( length != 0u )
+            {
+                _length = length;
+                _data = __KF_MALLOC__( char, length );
+            }
+        }
+
+        ~SendKeeper()
+        {
+            if ( _data != nullptr )
+            {
+                __KF_FREE__( char, _data );
+            }
+        }
+
+    public:
+        uint64 _shard_id = 0u;
+        uint32 _msg_id = 0u;
+        char* _data = nullptr;
+        uint32 _length = 0u;
+    };
+
+    /////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////
+
     class KFClusterClientModule : public KFClusterClientInterface
     {
     public:
         KFClusterClientModule() = default;
-        ~KFClusterClientModule() = default;
+        ~KFClusterClientModule();
 
         // 初始化
         virtual void BeforeRun();
+        virtual void Run();
 
         // 关闭
         virtual void BeforeShut();
@@ -35,8 +66,8 @@ namespace KFrame
         virtual bool IsInService();
 
         // 发送消息
-        virtual bool SendToProxy( uint32 msgid, google::protobuf::Message* message );
-        virtual bool SendToProxy( uint64 shardid, uint32 msgid, google::protobuf::Message* message );
+        virtual bool SendToProxy( uint32 msgid, google::protobuf::Message* message, bool resend );
+        virtual bool SendToProxy( uint64 shardid, uint32 msgid, google::protobuf::Message* message, bool resend );
 
         // 注册回调函数
         virtual void AddConnectionFunction( const std::string& name, KFClusterConnectionFunction& function );
@@ -68,6 +99,9 @@ namespace KFrame
         // 连接master
         void ReconnectClusterMaster();
 
+        // 添加重发消息
+        void AddSendKeeper( uint64 shardid, uint32 msgid, google::protobuf::Message* message );
+
     private:
         // cluster name
         std::string _cluster_name;
@@ -87,6 +121,9 @@ namespace KFrame
 
         // 集群认证成功的回调函数
         KFBind< std::string, const std::string&, KFClusterConnectionFunction >_kf_connection_function;
+
+        // 需要重新发送的消息
+        std::list < SendKeeper* > _send_keeper;
     };
 }
 

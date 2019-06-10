@@ -4,9 +4,9 @@ namespace KFrame
 {
     KFTimerModule::KFTimerModule()
     {
-        _now_slot = 0;
-        _last_update_time = 0;
-        memset( _slot_timer_data, 0, sizeof( _slot_timer_data ) );
+        _now_slot = 0u;
+        _last_update_time = 0u;
+        memset( _slot_timer_data, 0u, sizeof( _slot_timer_data ) );
     }
 
     KFTimerModule::~KFTimerModule()
@@ -31,7 +31,7 @@ namespace KFrame
         }
 
         _kf_timer_data.clear();
-        memset( _slot_timer_data, 0, sizeof( _slot_timer_data ) );
+        memset( _slot_timer_data, 0u, sizeof( _slot_timer_data ) );
     }
 
     void KFTimerModule::Run()
@@ -150,8 +150,11 @@ namespace KFrame
             ticks = kfdata->_interval / TimerEnum::SlotTime;
         }
 
+        // 最少需要1个刻度
+        ticks = __MAX__( 1u, ticks );
+
         kfdata->_rotation = ticks / TimerEnum::MaxSlot;
-        auto slot = __MAX__( 1u, ( ticks % TimerEnum::MaxSlot ) );
+        auto slot = ticks % TimerEnum::MaxSlot;
         kfdata->_slot = ( slot + _now_slot ) % TimerEnum::MaxSlot;
 
         auto wheeldata = _slot_timer_data[ kfdata->_slot ];
@@ -293,7 +296,7 @@ namespace KFrame
         auto timerdata = FindTimerData( module, objectid );
         if ( timerdata == nullptr )
         {
-            return 0;
+            return 0u;
         }
 
         auto lefttime = timerdata->_rotation * TimerEnum::WheelTime;
@@ -335,7 +338,7 @@ namespace KFrame
     {
         auto nowtime = KFGlobal::Instance()->_game_time;
         auto passslot = ( nowtime - _last_update_time ) / TimerEnum::SlotTime;
-        if ( passslot == 0 )
+        if ( passslot == 0u )
         {
             return;
         }
@@ -343,7 +346,7 @@ namespace KFrame
 
         for ( auto i = 0u; i < passslot; ++i )
         {
-            _now_slot = ( _now_slot + 1 ) % TimerEnum::MaxSlot;
+            _now_slot = ( _now_slot + 1u ) % TimerEnum::MaxSlot;
             RunSlotTimer();
         }
     }
@@ -355,12 +358,11 @@ namespace KFrame
         auto timerdata = _slot_timer_data[ _now_slot ];
         while ( timerdata != nullptr )
         {
-            if ( timerdata->_rotation > 0 )
+            if ( timerdata->_rotation > 0u )
             {
                 --timerdata->_rotation;
             }
-
-            if ( timerdata->_rotation == 0 )
+            else
             {
                 _done_data.push_front( timerdata );
             }
@@ -382,7 +384,7 @@ namespace KFrame
             else if ( timerdata->_type == TimerEnum::Limit )
             {
                 --timerdata->_count;
-                if ( timerdata->_count == 0 )
+                if ( timerdata->_count == 0u )
                 {
                     RemoveTimerData( timerdata->_module, timerdata->_id );
                 }

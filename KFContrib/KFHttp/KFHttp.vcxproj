@@ -85,7 +85,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WIN32_WINDOWS;POCO_STATIC;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;OPENSSL_NO_ECDH;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\KFCommon\;..\..\KFLibrary\;..\..\KFInclude\;..\..\KFContrib\;..\..\KFLibrary\openssl\include\;..\..\KFLibrary\poco\Net\include\;..\..\KFLibrary\poco\Foundation\include\;..\..\KFLibrary\poco\Util\include\;..\..\KFLibrary\poco\Crypto\include\;..\..\KFLibrary\poco\NetSSL_OpenSSL\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\KFCommon\;..\..\KFLibrary\;..\..\KFInclude\;..\..\KFContrib\;..\..\KFLibrary\openssl\include\;..\..\KFLibrary\poco\Net\include\;..\..\KFLibrary\poco\Foundation\include\;..\..\KFLibrary\poco\Util\include\;..\..\KFLibrary\poco\Crypto\include\;..\..\KFLibrary\poco\NetSSL_Win\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <BrowseInformation>false</BrowseInformation>
     </ClCompile>
     <Link>
@@ -94,7 +94,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>..\..\_lib\win64\debug;..\..\_lib\win64\debug\3rd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Advapi32.lib;Crypt32.lib;ws2_32.lib;User32.lib;libssl.lib;libcrypto.lib</AdditionalDependencies>
+      <AdditionalDependencies>Advapi32.lib;Crypt32.lib;ws2_32.lib;User32.lib;libssld.lib;libcryptod.lib</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>LIBCD.lib LIBCMTD.lib MSVCRT.lib</IgnoreSpecificDefaultLibraries>
     </Lib>
     <PostBuildEvent>
@@ -112,7 +112,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;_WIN32_WINDOWS;POCO_STATIC;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\KFCommon\;..\..\KFLibrary\;..\..\KFInclude\;..\..\KFContrib\;..\..\KFLibrary\openssl\include\;..\..\KFLibrary\poco\Net\include\;..\..\KFLibrary\poco\Foundation\include\;..\..\KFLibrary\poco\Util\include\;..\..\KFLibrary\poco\Crypto\include\;..\..\KFLibrary\poco\NetSSL_OpenSSL\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\KFCommon\;..\..\KFLibrary\;..\..\KFInclude\;..\..\KFContrib\;..\..\KFLibrary\openssl\include\;..\..\KFLibrary\poco\Net\include\;..\..\KFLibrary\poco\Foundation\include\;..\..\KFLibrary\poco\Util\include\;..\..\KFLibrary\poco\Crypto\include\;..\..\KFLibrary\poco\NetSSL_OpenSSL\include\;..\..\KFLibrary\poco\NetSSL_Win\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <BrowseInformation>false</BrowseInformation>
     </ClCompile>

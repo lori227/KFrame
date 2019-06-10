@@ -59,7 +59,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFRelationClientModule::SendToRelation( uint64 playerid, uint32 msgid, ::google::protobuf::Message* message )
     {
-        return _kf_route->SendToRand( playerid, __KF_STRING__( relation ), msgid, message );
+        return _kf_route->SendToRand( playerid, __KF_STRING__( relation ), msgid, message, true );
     }
 
     void KFRelationClientModule::SendMessageToRelation( KFEntity* player, const std::string& dataname, uint32 msgid, google::protobuf::Message* message )
