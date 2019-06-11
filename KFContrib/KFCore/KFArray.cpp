@@ -66,6 +66,12 @@ namespace KFrame
 
     KFData* KFArray::FirstData()
     {
+        uint32 index = KFDataDefine::Array_Index;
+        if ( index == 0u )
+        {
+            return _data.First();
+        }
+
         _data.First();
         return _data.Next();
     }

@@ -202,7 +202,7 @@ namespace KFrame
                 auto kfobject = KFDataFactory::CreateData( kfrecord->GetDataSetting() );
 
                 CopyFromObject( kfobject, &citer->second );
-                kfrecord->AddData( iter->first, kfobject );
+                kfrecord->AddData( citer->first, kfobject );
             }
         }
     }

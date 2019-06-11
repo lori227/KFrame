@@ -331,11 +331,10 @@ namespace KFrame
         }
 
         std::list<uint64> keyvector;
-        auto kfdata = kfparent->FirstData();
-        while ( kfdata != nullptr )
+        ;
+        for ( auto kfdata = kfparent->FirstData(); kfdata != nullptr; kfdata = kfparent->NextData() )
         {
             keyvector.push_back( kfdata->GetKeyID() );
-            kfdata = kfparent->NextData();
         }
 
         for ( auto key : keyvector )
