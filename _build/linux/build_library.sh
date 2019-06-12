@@ -44,6 +44,7 @@ function yellow(){
 }
 #-----------------------------------------------------
 yum install -y gcc-c++
+yum install -y dos2unix
 yum install -y autoconf automake libtool
 #-----------------------------------------------------
 
@@ -97,6 +98,7 @@ make clean
 make -j 4
 make install
 cp -R -f src/.libs/*.so* ../../../$libpath
+cp -R -f src/protoc ../../../_resource/proto/4.protoc
 cd ../../
 
 blue "end building google protobuf"
@@ -159,13 +161,12 @@ blue "end building redis"
 blue "start building openssl"
 
 cd openssl
-bash config
+rm -f makefile
+bash config -fPIC no-shared
 make clean
 make -j 4
 cp -R -f ./libssl.a ../../$libpath
-cp -R -f ./libssl.so* ../../$libpath
 cp -R -f ./libcrypto.a ../../$libpath
-cp -R -f ./libcrypto.so* ../../$libpath
 cd ../
 
 blue "end building openssl"
@@ -177,7 +178,7 @@ blue "start building poco"
 
 cd poco
 chmod -R 755 *
-bash ./configure --prefix=/usr/local --config=Linux --cflags=-fPIC --static --no-tests --no-samples --omit=PageCompiler,Data/ODBC --include-path=../../openssl/include,../../../mysql/include --library-path=../../_lib/linux/3rd
+bash ./configure --prefix=/usr/local --config=Linux --cflags=-fPIC --static --no-tests --no-samples --omit=PageCompiler,Data/ODBC --include-path=../../openssl/include,../../../mysql/include --library-path=../../_lib/linux/3rd/,./lib/,../lib/
 make -j 4
 cp -R -f lib/Linux/x86_64/*.a ../../$libpath
 cd ../

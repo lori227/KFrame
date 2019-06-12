@@ -6,7 +6,7 @@
 1. 安装cmake-3.10.1
 
 ```shell
-cd _doc/#001 - tool
+cd _doc/tool
 tar zxvf cmake-3.10.1.tar.gz
 cd cmake-3.10.1
 ./bootstrap

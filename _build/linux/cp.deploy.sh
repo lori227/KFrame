@@ -24,23 +24,28 @@ cp -a -rf  $respath/startup/* $deploypath/startup/
 #lib
 cp -f $respath/lib/* $deploypath/lib/
 
-#bin
-binpath=$respath/bin/linux/release
-cp -f $binpath/KFStartup $deploypath/bin/kfdeploy
+filename=""
+if [ $1 == "debug" ];then
+	filename="d"
+fi
 
-cp -f $binpath/KFBus.so $deploypath/bin/
-cp -f $binpath/KFIpAddress.so $deploypath/bin/
-cp -f $binpath/KFTimer.so $deploypath/bin/
-cp -f $binpath/KFHttpClient.so $deploypath/bin/
-cp -f $binpath/KFHttpServer.so $deploypath/bin/
-cp -f $binpath/KFTcpServer.so $deploypath/bin/
-cp -f $binpath/KFTcpClient.so $deploypath/bin/
-cp -f $binpath/KFMessage.so $deploypath/bin/
-cp -f $binpath/KFConfig.so $deploypath/bin/
-cp -f $binpath/KFDeployAgent.so $deploypath/bin/
-cp -f $binpath/KFDeployServer.so $deploypath/bin/
-cp -f $binpath/KFMySQL.so $deploypath/bin/
-cp -f $binpath/KFSchedule.so $deploypath/bin/
+#bin
+binpath=$respath/bin/linux/$1
+cp -f $binpath/KFStartup$filename $deploypath/bin/kfdeploy
+
+cp -f $binpath/KFBus$filename.so $deploypath/bin/
+cp -f $binpath/KFIpAddress$filename.so $deploypath/bin/
+cp -f $binpath/KFTimer$filename.so $deploypath/bin/
+cp -f $binpath/KFHttpClient$filename.so $deploypath/bin/
+cp -f $binpath/KFHttpServer$filename.so $deploypath/bin/
+cp -f $binpath/KFTcpServer$filename.so $deploypath/bin/
+cp -f $binpath/KFTcpClient$filename.so $deploypath/bin/
+cp -f $binpath/KFMessage$filename.so $deploypath/bin/
+cp -f $binpath/KFConfig$filename.so $deploypath/bin/
+cp -f $binpath/KFDeployAgent$filename.so $deploypath/bin/
+cp -f $binpath/KFDeployServer$filename.so $deploypath/bin/
+cp -f $binpath/KFMySQL$filename.so $deploypath/bin/
+cp -f $binpath/KFSchedule$filename.so $deploypath/bin/
 
 
 cd /tmp

@@ -98,6 +98,10 @@ namespace KFrame
         for ( auto& iter : classsetting->_static_data._objects )
         {
             auto childdatasetting = iter.second;
+            if ( !childdatasetting->HaveFlagMask( KFDataDefine::Mask_Create ) )
+            {
+                continue;
+            }
 
             KFData* kfchilddata = nullptr;
             switch ( childdatasetting->_type )

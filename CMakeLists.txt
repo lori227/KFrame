@@ -36,7 +36,6 @@ include_directories(
     ${ROOT_DIR}/KFLibrary/poco/MongoDBL/include
 )
 
-set(3RD_LIB_DIR ${ROOT_DIR}/_lib/linux/3rd)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fPIC -Wall")
 if(CMAKE_BUILD_TYPE MATCHES "Debug")
     set(LIB_DIR ${ROOT_DIR}/_lib/linux/debug)
@@ -49,6 +48,7 @@ else()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
 endif()
 
+set(3RD_LIB_DIR ${ROOT_DIR}/_lib/linux/3rd)
 LINK_DIRECTORIES(${LIB_DIR} ${3RD_LIB_DIR})
 if(COROUTINE MATCHES "Enable")
     message("use coroutine...")
