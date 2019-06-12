@@ -895,20 +895,6 @@ namespace KFrame
 
     bool KFDeployAgentModule::CheckStartupServerTaskFinish()
     {
-        for ( auto& iter : _deploy_list._objects )
-        {
-            auto deploydata = iter.second;
-
-            auto isserver = deploydata->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
-            if ( isserver )
-            {
-                if ( deploydata->_process_id == _invalid_int )
-                {
-                    return false;
-                }
-            }
-        }
-
         return true;
     }
 
