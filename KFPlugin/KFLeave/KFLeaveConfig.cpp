@@ -9,7 +9,7 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////
         KFXml kfxml( file );
         auto config = kfxml.RootNode();
-        auto node = config.FindNode( "Setting" );
+        auto node = config.FindNode( "item" );
         while ( node.IsValid() )
         {
             auto channelid = node.GetUInt32( "ChannelId" );

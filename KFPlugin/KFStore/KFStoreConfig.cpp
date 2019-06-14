@@ -15,7 +15,7 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////
         _store_xml = new KFXml( file );
         auto config = _store_xml->RootNode();
-        auto xmlnode = config.FindNode( "Setting" );
+        auto xmlnode = config.FindNode( "item" );
         while ( xmlnode.IsValid() )
         {
             auto id = xmlnode.GetUInt32( "Id" );

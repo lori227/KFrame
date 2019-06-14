@@ -17,15 +17,15 @@ namespace KFrame
     void KFNetConnector::InitConnector( uint64 id, KFNetServices* netservices )
     {
         _net_services = netservices;
-        _last_message_time = _net_services->_now_time;
+        _last_recv_time = _net_services->_now_time;
+        _last_send_time = _net_services->_now_time;
 
         // 消息头长度
         uint32 headlength = ( netservices->_message_type == KFMessageEnum::Server ? sizeof( KFServerHead ) : sizeof( KFClientHead ) );
         InitSession( id, netservices->_queue_size, headlength );
     }
 
-    // 弹出一个消息
-    KFNetMessage* KFNetConnector::PopNetMessage()
+    KFNetMessage* KFNetConnector::PopMessage()
     {
         auto message = _recv_queue.Front();
         if ( message == nullptr )
@@ -48,6 +48,40 @@ namespace KFrame
         }
 
         return retmessage;
+    }
+
+    // 弹出一个消息
+    KFNetMessage* KFNetConnector::PopNetMessage()
+    {
+        auto message = PopMessage();
+        if ( message != nullptr )
+        {
+            // 收到消息时间
+            _last_recv_time = _net_services->_now_time;
+
+            // ping 消息不处理
+            if ( message->_head._msgid == 0 )
+            {
+                message = nullptr;
+            }
+        }
+        else
+        {
+            if ( _is_connected )
+            {
+                // 计算收到消息时间, 超过60秒没有消息, 则认为是断线了
+                if ( _last_recv_time + KFNetDefine::PingTimeout < _net_services->_now_time )
+                {
+                    // 防止多次调用
+                    _last_recv_time = _net_services->_now_time;
+
+                    // 断线处理
+                    // _net_services->SendEventToServices( this, KFNetDefine::DisconnectEvent );
+                }
+            }
+        }
+
+        return message;
     }
 
     KFNetMessage* KFNetConnector::PopSingleMessage( KFNetMessage* message )
@@ -213,8 +247,12 @@ namespace KFrame
         }
 
         // 发送消息
-        _net_services->SendNetMessage( this );
-        _last_message_time = _net_services->_now_time;
+        _last_send_time = _net_services->_now_time;
+        if ( IsNeedSend() )
+        {
+            _net_services->SendEventToServices( this, KFNetDefine::SendEvent );
+        }
+
         return ok;
     }
 
@@ -230,14 +268,14 @@ namespace KFrame
         RunMessage( netfunction, maxcount );
 
         // ping 消息
-        RunSendPing();
+        RunSendPingMessage();
     }
 
-    void KFNetConnector::RunSendPing()
+    void KFNetConnector::RunSendPingMessage()
     {
         // 20秒没有消息通讯, 发送一次ping消息
         // keeplive 经常会失灵, 很久才检测到断开 问题待查
-        if ( _net_services->_now_time < _last_message_time + 20000u )
+        if ( _last_send_time + KFNetDefine::PingTime > _net_services->_now_time )
         {
             return;
         }
@@ -261,12 +299,6 @@ namespace KFrame
                 break;
             }
             message = PopNetMessage();
-        }
-
-        // 设置处理消息时间
-        if ( messagecount != _invalid_int )
-        {
-            _last_message_time = _net_services->_now_time;
         }
     }
 }

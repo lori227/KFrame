@@ -35,62 +35,79 @@ namespace KFrame
 
         auto sheetname = sheet->_name;
 
-        kffile->_class._class_name = KFUtility::SplitString( sheetname, "-" );
-        if ( sheetname == "Server" )
+        // 第1行 第2列为文件名
+        auto kfname = sheet->FindCell( 1, 2 );
+        if ( kfname == nullptr || kfname->_value.empty() )
         {
-            kffile->_is_server = true;
-        }
-        else if ( sheetname == "Client" )
-        {
-            kffile->_is_client = true;
-        }
-        else
-        {
-            kffile->_is_client = true;
-            kffile->_is_server = true;
+            std::cout << "请输入文件名" << std::endl;
+            system( "pause" );
+            return false;
         }
 
-        // 第1行属性名
+        auto name = kfname->_value;
+        KFUtility::SplitString( name, "#" );
+        kffile->_class._class_name = name;
+
+        // 第2行字段描述, 不读
+        // 第3行字段保存属性 1 服务器 2 客户端 3所有
+
+
+        // 第4行字段名
+        static auto _begin_row = 4;
         static auto _begin_col = 1;
-        static auto _begin_row = 1;
         std::unordered_map< int32, std::string > _names;
         for ( auto i = _begin_col; i <= sheet->_dimension._last_col; ++i )
         {
             auto kfname = sheet->FindCell( _begin_row, i );
-            //auto kfcomment = sheet->FindCell( 2, i );
-            //auto kftype = sheet->FindCell( 3, i );
-
-            if ( kfname == nullptr || kfname->_value.empty()
-                    /*				kftype == nullptr || kftype->_value.empty()*/ )
+            if ( kfname == nullptr || kfname->_value.empty() )
             {
                 continue;
             }
 
+
             KFUtility::ReplaceString( kfname->_value, " ", "" );
-            //KFUtility::ReplaceString( kftype->_value, " ", "" );
-            //KFUtility::ReplaceString( kfcomment->_value, " ", "" );
+
+            auto strname = kfname->_value;
 
             KFAttribute attribute;
-            attribute._name = kfname->_value;
-            //attribute._type = kftype->_value;
-            //attribute._comment = KFConvert::ToAscii( kfcomment->_value );
+            attribute._name = KFUtility::SplitString( strname, "(" );
+            attribute._type = KFUtility::SplitString( strname, ")" );
+            std::transform( attribute._type.begin(), attribute._type.end(), attribute._type.begin(), ::tolower );
+
+            auto kfsave = sheet->FindCell( _begin_row - 1, i );
+            if ( kfsave != nullptr && !kfsave->_value.empty() )
+            {
+                if ( kfsave->_value == "1" )
+                {
+                    attribute._is_server = true;
+                    attribute._is_client = false;
+                }
+                else if ( kfsave->_value == "2" )
+                {
+                    attribute._is_server = false;
+                    attribute._is_client = true;
+                }
+                else if ( kfsave->_value == "3" )
+                {
+                    attribute._is_server = true;
+                    attribute._is_client = true;
+                }
+                else
+                {
+                    attribute._is_client = false;
+                    attribute._is_server = false;
+                }
+            }
+
             kffile->_class.AddAttribute( i, attribute );
         }
 
         // 第2行, 开始读取配置
-        static auto _data_row = _begin_row + 3;
+        static auto _data_row = _begin_row + 1;
         for ( auto i = _data_row; i <= sheet->_dimension._last_row; ++i )
         {
-            auto kfvalue = sheet->FindCell( i, _begin_col );
-            if ( kfvalue == nullptr || kfvalue->_value.empty() )
-            {
-                continue;
-            }
-
             KFData data;
-            data.AddData( _begin_col, kfvalue->_value );
-
-            for ( auto j = _begin_col + 1; j <= sheet->_dimension._last_col; ++j )
+            for ( auto j = _begin_col; j <= sheet->_dimension._last_col; ++j )
             {
                 auto attribute = kffile->_class.GetAttribute( j );
                 if ( attribute == nullptr )
@@ -438,23 +455,31 @@ namespace KFrame
         }
 
 
-        xmlfile << "<?xml version = '1.0' encoding = 'utf-8' ?>\n";
-        xmlfile << "<Settings>\n";
+        //xmlfile << "<?xml version = '1.0' encoding = 'utf-8' ?>\n";
+        xmlfile << "<root version=\"00000\">\n";
 
         for ( auto& iter : kffile->_datas )
         {
             auto kfdata = &iter;
-            xmlfile << "\t<Setting";
+            if ( !kfdata->IsValid() )
+            {
+                continue;
+            }
+
+            xmlfile << "\t<item";
 
             for ( auto& miter : kfdata->_datas )
             {
-                auto name = kffile->_class.GetAttribute( miter.first )->_name;
-                xmlfile << __FORMAT__( " {}=\"{}\"", name, miter.second );
+                auto attribute = kffile->_class.GetAttribute( miter.first );
+                if ( attribute->_is_server )
+                {
+                    xmlfile << __FORMAT__( " {}=\"{}\"", attribute->_name, miter.second );
+                }
             }
 
             xmlfile << "/>\n";
         }
-        xmlfile << "</Settings>\n";
+        xmlfile << "</root>\n";
 
         xmlfile.flush();
         xmlfile.close();
@@ -534,7 +559,6 @@ namespace KFrame
 
     bool KFParse::SaveToCSharp( const std::string& path, KFFile* kffile )
     {
-        if ( !kffile->_is_client )
         {
             return true;
         }

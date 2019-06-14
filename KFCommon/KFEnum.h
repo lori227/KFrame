@@ -155,11 +155,13 @@ namespace KFrame
         };
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    namespace KFRatioEnum
+    namespace KFRandEnum
     {
         enum MyEnum
         {
-            Ratio = 10000,	// 积分比率
+            Hundred = 100,
+            Thousand = 1000,
+            TenThousand = 10000,
         };
     }
 

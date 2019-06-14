@@ -95,7 +95,7 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////
         KFXml kfxml( file );
         auto config = kfxml.RootNode();
-        auto wordnode = config.FindNode( "Setting" );
+        auto wordnode = config.FindNode( "item" );
         while ( wordnode.IsValid() )
         {
             auto word = wordnode.GetString( "Word" );

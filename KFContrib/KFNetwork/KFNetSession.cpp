@@ -36,20 +36,8 @@ namespace KFrame
 
     bool KFNetSession::IsNeedSend()
     {
-        // 断开连接
-        if ( !_is_connected )
-        {
-            return false;
-        }
-
-        // 已经关闭
-        if ( _is_shutdown )
-        {
-            return false;
-        }
-
-        // 已经在发送
-        if ( _is_sending )
+        // 已经在发送 断开连接 已经关闭
+        if ( _is_sending || !_is_connected || _is_shutdown  )
         {
             return false;
         }

@@ -30,27 +30,14 @@ namespace KFrame
         // 获得buffer
         char* GetBuffAddress( uint32 msgid, uint32 length );
 
-        // 发送消息
-        void SendNetMessage( KFNetSession* netsession );
-
-        // 开始连接
-        void StartSession( KFNetSession* netsession );
-
-        // 关闭连接
-        void CloseSession( KFNetSession* netsession );
-
+        // 发送事件到网络服务
+        void SendEventToServices( KFNetSession* netsession, uint32 evnettype );
     protected:
         // 线程逻辑
         static void RunServices( void* argument );
 
-        // 异步关闭回调
-        static void OnAsyncShutCallBack( uv_async_t* handle );
-
-        // 异步发送回调
-        static void OnAsyncSendCallBack( uv_async_t* handle );
-
-        // 异步连接回调
-        static void OnAsyncConnectCallBack( uv_async_t* handle );
+        // 异步事件回调
+        static void OnAsyncEventCallBack( uv_async_t* handle );
 
         // 关闭服务
         static void OnAsyncCloseCallBack( uv_async_t* handle );
@@ -83,20 +70,10 @@ namespace KFrame
         // 线程id
         int64 _thread_id = 0u;
 
-        // 异步发消息
-        void* _uv_send_mutex = nullptr;
-        uv_async_t* _uv_send_async = nullptr;
-        std::set< KFNetSession* > _send_session;
-
-        // 异步关闭
-        void* _uv_shut_mutex = nullptr;
-        uv_async_t* _uv_shut_async = nullptr;
-        std::set< KFNetSession* > _shut_session;
-
-        // 异步连接( 客户端使用 )
-        void* _uv_connect_mutex = nullptr;
-        uv_async_t* _uv_connect_async = nullptr;
-        std::set< KFNetSession* > _connect_session;
+        // 异步事件
+        uv_async_t* _uv_event_async = nullptr;
+        void* _uv_event_mutex = nullptr;
+        std::map< KFNetSession*, uint32 > _event_session;
 
         // 关闭服务
         uv_async_t* _uv_close_async = nullptr;

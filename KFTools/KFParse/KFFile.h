@@ -11,6 +11,8 @@ namespace KFrame
         std::string _name;
         std::string _type;
         std::string _comment;
+        bool _is_client = true;
+        bool _is_server = true;
     };
 
     class KFClass
@@ -49,6 +51,19 @@ namespace KFrame
             _datas[ index ] = value;
         }
 
+        bool IsValid()
+        {
+            for ( auto& iter : _datas )
+            {
+                if ( !iter.second.empty() )
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
     public:
         std::unordered_map< uint32, std::string > _datas;
     };
@@ -60,8 +75,6 @@ namespace KFrame
     public:
         KFFile()
         {
-            _is_server = false;
-            _is_client = false;
         }
 
         // 添加数据属性
@@ -69,12 +82,6 @@ namespace KFrame
         bool AddData( uint32 index, const std::string& value );
 
     public:
-        // 保存客户端
-        bool _is_server;
-
-        // 保存服务器
-        bool _is_client;
-
         // 类定义
         KFClass _class;
 

@@ -293,8 +293,8 @@ call :CopyInterface KFClusterProxy
 call :CopyInterface KFClusterShard
 call :CopyInterface KFLogClient
 call :CopyInterface KFLogShard
-call :CopyInterface KFKernel class.xlsx
-call :CopyInterface KFFilter filter.xlsx
+call :CopyInterface KFKernel 1000-属性配置.xlsx
+call :CopyInterface KFFilter 1010-屏蔽字符.xlsx
 call :CopyInterface KFPlayer
 call :CopyInterface KFHttpClient
 call :CopyInterface KFHttpServer
@@ -304,7 +304,7 @@ call :CopyInterface KFTcpServer
 call :CopyInterface KFTcpClient
 call :CopyInterface KFTcpDiscover
 call :CopyInterface KFIpAddress
-call :CopyInterface KFOption option.xlsx
+call :CopyInterface KFOption 1020-全局配置.xlsx
 call :CopyInterface KFRouteClient
 call :CopyInterface KFRouteProxy
 call :CopyInterface KFRouteShard
@@ -353,9 +353,9 @@ call :CopyInterface KFZone
 
 rem player
 call :CopyInterface KFCommand
-call :CopyInterface KFEnter enter.xlsx
-call :CopyInterface KFLeave leave.xlsx
-call :CopyInterface KFReset reset.xlsx
+call :CopyInterface KFEnter 1101-进入游戏.xlsx
+call :CopyInterface KFReset 1102-属性重置.xlsx
+call :CopyInterface KFLeave 1103-离开游戏.xlsx
 
 rem ===========================================================================
 rem ===========================================================================

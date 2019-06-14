@@ -41,7 +41,7 @@ namespace KFrame
         InitConnector( _net_data._id, netservices );
 
         // 启动连接
-        netservices->StartSession( this );
+        netservices->SendEventToServices( this, KFNetDefine::ConnectEvent );
     }
 
     void KFNetClient::StartSession()
@@ -126,7 +126,11 @@ namespace KFrame
     void KFNetClient::CloseClient()
     {
         // 关闭连接
-        _net_services->CloseSession( this );
+        if ( !_is_shutdown )
+        {
+            _is_shutdown = true;
+            _net_services->SendEventToServices( this, KFNetDefine::CloseEvent );
+        }
     }
 
     void KFNetClient::CloseSession()

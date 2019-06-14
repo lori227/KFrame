@@ -6,7 +6,7 @@ namespace KFrame
     {
         KFXml kfxml( file );
         auto config = kfxml.RootNode();
-        auto setting = config.FindNode( "Setting" );
+        auto setting = config.FindNode( "item" );
         while ( setting.IsValid() )
         {
 

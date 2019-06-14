@@ -10,13 +10,8 @@ namespace KFrame
         _is_shutdown = false;
         _thread_run = false;
 
-        _uv_shut_mutex = new uv_mutex_t();
-        _uv_send_mutex = new uv_mutex_t();
-        _uv_connect_mutex = new uv_mutex_t();
-
-        _uv_shut_async = new uv_async_t();
-        _uv_send_async = new uv_async_t();
-        _uv_connect_async = new uv_async_t();
+        _uv_event_mutex = new uv_mutex_t();
+        _uv_event_async = new uv_async_t();
         _uv_close_async = new uv_async_t();
     }
 
@@ -29,14 +24,9 @@ namespace KFrame
         uv_loop_delete( _uv_loop );
         _uv_loop = nullptr;
 
-        delete _uv_shut_async;
-        delete _uv_send_async;
-        delete _uv_connect_async;
+        delete _uv_event_async;
         delete _uv_close_async;
-
-        delete ( uv_mutex_t* )_uv_shut_mutex;
-        delete ( uv_mutex_t* )_uv_send_mutex;
-        delete ( uv_mutex_t* )_uv_connect_mutex;
+        delete ( uv_mutex_t* )_uv_event_mutex;
     }
 
     void KFNetServices::InitServices( uint32 eventcount, uint32 queuecount, uint32 messagetype )
@@ -54,13 +44,8 @@ namespace KFrame
         _buff_address = reinterpret_cast< char* >( malloc( _buff_length ) );
 
         _uv_loop = uv_loop_new();
-        uv_mutex_init( ( uv_mutex_t* )_uv_shut_mutex );
-        uv_mutex_init( ( uv_mutex_t* )_uv_send_mutex );
-        uv_mutex_init( ( uv_mutex_t* )_uv_connect_mutex );
-
-        uv_async_init( _uv_loop, _uv_shut_async, OnAsyncShutCallBack );
-        uv_async_init( _uv_loop, _uv_send_async, OnAsyncSendCallBack );
-        uv_async_init( _uv_loop, _uv_connect_async, OnAsyncConnectCallBack );
+        uv_mutex_init( ( uv_mutex_t* )_uv_event_mutex );
+        uv_async_init( _uv_loop, _uv_event_async, OnAsyncEventCallBack );
         uv_async_init( _uv_loop, _uv_close_async, OnAsyncCloseCallBack );
     }
 
@@ -95,118 +80,57 @@ namespace KFrame
     {
         auto netservices = reinterpret_cast< KFNetServices* >( handle->data );
 
-        uv_mutex_destroy( ( uv_mutex_t* )netservices->_uv_shut_mutex );
-        uv_mutex_destroy( ( uv_mutex_t* )netservices->_uv_send_mutex );
-        uv_mutex_destroy( ( uv_mutex_t* )netservices->_uv_connect_mutex );
+        uv_mutex_destroy( ( uv_mutex_t* )netservices->_uv_event_mutex );
 
-        uv_close( ( uv_handle_t* )( netservices->_uv_shut_async ), nullptr );
-        uv_close( ( uv_handle_t* )( netservices->_uv_send_async ), nullptr );
-        uv_close( ( uv_handle_t* )( netservices->_uv_connect_async ), nullptr );
+        uv_close( ( uv_handle_t* )( netservices->_uv_event_async ), nullptr );
         uv_close( ( uv_handle_t* )( netservices->_uv_close_async ), nullptr );
 
         uv_stop( netservices->_uv_loop );
         uv_loop_close( netservices->_uv_loop );
     }
 
-    void KFNetServices::SendNetMessage( KFNetSession* netsession )
+
+    void KFNetServices::SendEventToServices( KFNetSession* netsession, uint32 evnettype )
     {
-        if ( !netsession->IsNeedSend() )
+        // 加入事件列表
         {
-            return;
+            KFNetLocker locker( ( uv_mutex_t* )_uv_event_mutex );
+            _event_session[ netsession ] = evnettype;
         }
 
-        // 加入发送列表
-        {
-            KFNetLocker locker( ( uv_mutex_t* )_uv_send_mutex );
-            _send_session.insert( netsession );
-        }
-
-        _uv_send_async->data = this;
-        uv_async_send( _uv_send_async );
+        _uv_event_async->data = this;
+        uv_async_send( _uv_event_async );
     }
 
-    void KFNetServices::OnAsyncSendCallBack( uv_async_t* handle )
+    void KFNetServices::OnAsyncEventCallBack( uv_async_t* handle )
     {
         auto netservices = reinterpret_cast< KFNetServices* >( handle->data );
-        std::set< KFNetSession* > templist;
+        std::map< KFNetSession*, uint32 > templist;
         {
-            KFNetLocker locker( ( uv_mutex_t* )netservices->_uv_send_mutex );
-            templist.swap( netservices->_send_session );
+            KFNetLocker locker( ( uv_mutex_t* )netservices->_uv_event_mutex );
+            templist.swap( netservices->_event_session );
         }
 
-        for ( auto netsession : templist )
+        for ( auto& iter : templist )
         {
-            netsession->StartSendMessage();
-        }
-    }
-
-    void KFNetServices::CloseSession( KFNetSession* netsession )
-    {
-        if ( netsession->_is_shutdown )
-        {
-            return;
-        }
-
-        netsession->_is_shutdown = true;
-
-        {
-            // 加入到列表中
-            KFNetLocker locker( ( uv_mutex_t* )_uv_shut_mutex );
-            _shut_session.insert( netsession );
-        }
-
-        {
-            // 删除发送列表
-            KFNetLocker locker( ( uv_mutex_t* )_uv_send_mutex );
-            _send_session.erase( netsession );
-        }
-
-        _uv_shut_async->data = this;
-        uv_async_send( _uv_shut_async );
-    }
-
-    void KFNetServices::OnAsyncShutCallBack( uv_async_t* handle )
-    {
-        auto netservices = reinterpret_cast< KFNetServices* >( handle->data );
-
-        std::set< KFNetSession* > templist;
-        {
-            KFNetLocker locker( ( uv_mutex_t* )netservices->_uv_shut_mutex );
-            templist.swap( netservices->_shut_session );
-        }
-
-        for ( auto netsession : templist )
-        {
-            netsession->CloseSession();
-        }
-    }
-
-    void KFNetServices::StartSession( KFNetSession* netsession )
-    {
-        {
-            // 加入到列表中
-            KFNetLocker locker( ( uv_mutex_t* )_uv_connect_mutex );
-            _connect_session.insert( netsession );
-        }
-
-        // 启动连接
-        _uv_connect_async->data = this;
-        uv_async_send( _uv_connect_async );
-    }
-
-    void KFNetServices::OnAsyncConnectCallBack( uv_async_t* handle )
-    {
-        auto netservices = reinterpret_cast< KFNetServices* >( handle->data );
-
-        std::set< KFNetSession* > templist;
-        {
-            KFNetLocker locker( ( uv_mutex_t* )netservices->_uv_connect_mutex );
-            templist.swap( netservices->_connect_session );
-        }
-
-        for ( auto netsession : templist )
-        {
-            netsession->StartSession();
+            auto netsession = iter.first;
+            switch ( iter.second )
+            {
+            case KFNetDefine::ConnectEvent:
+                netsession->StartSession();
+                break;
+            case KFNetDefine::SendEvent:
+                netsession->StartSendMessage();
+                break;
+            case KFNetDefine::CloseEvent:
+                netsession->CloseSession();
+                break;
+            case KFNetDefine::DisconnectEvent:
+                netsession->OnDisconnect( 0, __FUNC_LINE__ );
+                break;
+            default:
+                break;
+            }
         }
     }
 

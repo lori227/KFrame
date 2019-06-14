@@ -35,6 +35,8 @@ namespace KFrame
         template< class T = uint32 > static void ClearBitMask( T& value, T bitmask );
         template< class T = uint32 > static void AddBitMask( T& value, T bitmask );
 
+        template< class T > static T SplitList( std::string& srcstring, std::string split );
+        template< class T > static T SplitSet( std::string& srcstring, std::string split );
         ////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////
         // 获得玩家zoneid

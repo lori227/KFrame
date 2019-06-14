@@ -33,11 +33,12 @@ namespace KFrame
         // 发送拆包消息
         bool SendMultiMessage( uint64 recvid, uint32 msgid, const char* data, uint32 length );
         //////////////////////////////////////////////////////////////////////////////////////////////////
+        KFNetMessage* PopMessage();
         KFNetMessage* PopSingleMessage( KFNetMessage* message );
         KFNetMessage* PopMultiMessage( KFNetMessage* message );
         //////////////////////////////////////////////////////////////////////////////////////////////////
         // 发送ping逻辑
-        void RunSendPing();
+        void RunSendPingMessage();
 
         // 处理消息
         void RunMessage( KFNetFunction& netfunction, uint32 maxcount );
@@ -47,7 +48,8 @@ namespace KFrame
         KFNetServices* _net_services;
 
         // 上一次通讯时间
-        uint64 _last_message_time;
+        uint64 _last_send_time;
+        uint64 _last_recv_time;
     };
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////

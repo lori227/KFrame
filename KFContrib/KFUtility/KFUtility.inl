@@ -9,7 +9,7 @@ namespace KFrame
     template< class T >
     inline T KFUtility::Operate( uint32 operate, T basevalue, T value )
     {
-        static T element = 1;
+        static T element = 1u;
 
         switch ( operate )
         {
@@ -35,7 +35,7 @@ namespace KFrame
             basevalue = ( basevalue * value );
             break;
         case KFEnum::Div:
-            if ( value != 0 )
+            if ( value != 0u )
             {
                 basevalue = ( basevalue / value );
             }
@@ -135,6 +135,36 @@ namespace KFrame
         return ToValue< T >( data );
     }
 
+    template< class T >
+    inline T KFUtility::SplitList( std::string& srcstring, std::string split )
+    {
+        T result;
+        while ( !srcstring.empty() )
+        {
+            auto value = SplitValue< uint32 >( srcstring, split );
+            if ( value != 0u )
+            {
+                result.push_back( value );
+            }
+        }
+
+        return result;
+    }
+
+    template< class T >
+    inline T KFUtility::SplitSet( std::string& srcstring, std::string split )
+    {
+        T result;
+        while ( !srcstring.empty() )
+        {
+            auto value = SplitValue< uint32 >( srcstring, split );
+            if ( value != 0u )
+            {
+                result.insert( value );
+            }
+        }
+        return result;
+    }
     ///////////////////////////////////////////////////////////////////////
     template<>
     inline double KFUtility::ToValue( const char* srcstring )
@@ -146,7 +176,7 @@ namespace KFrame
     template< class T >
     inline bool KFUtility::HaveBitMask( T value, T bitmask )
     {
-        return ( value & bitmask ) != 0;
+        return ( value & bitmask ) != 0u;
     }
 
     template< class T >

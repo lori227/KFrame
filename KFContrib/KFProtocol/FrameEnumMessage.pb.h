@@ -76,6 +76,28 @@ inline bool ChannelEnum_Parse(
   return ::google::protobuf::internal::ParseNamedEnum<ChannelEnum>(
     ChannelEnum_descriptor(), name, value);
 }
+enum SexEnum {
+  UnknowSex = 0,
+  Male = 1,
+  Female = 2,
+  SexEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  SexEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+LIBPROTOC_EXPORT bool SexEnum_IsValid(int value);
+const SexEnum SexEnum_MIN = UnknowSex;
+const SexEnum SexEnum_MAX = Female;
+const int SexEnum_ARRAYSIZE = SexEnum_MAX + 1;
+
+LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* SexEnum_descriptor();
+inline const ::std::string& SexEnum_Name(SexEnum value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    SexEnum_descriptor(), value);
+}
+inline bool SexEnum_Parse(
+    const ::std::string& name, SexEnum* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<SexEnum>(
+    SexEnum_descriptor(), name, value);
+}
 enum KickEnum {
   UnknowKick = 0,
   KickByLogin = 1,
@@ -269,6 +291,11 @@ template <> struct is_proto_enum< ::KFMsg::ChannelEnum> : ::std::true_type {};
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::ChannelEnum>() {
   return ::KFMsg::ChannelEnum_descriptor();
+}
+template <> struct is_proto_enum< ::KFMsg::SexEnum> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::SexEnum>() {
+  return ::KFMsg::SexEnum_descriptor();
 }
 template <> struct is_proto_enum< ::KFMsg::KickEnum> : ::std::true_type {};
 template <>
