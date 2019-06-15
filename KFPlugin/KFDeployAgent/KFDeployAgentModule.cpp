@@ -15,39 +15,13 @@
 
 namespace KFrame
 {
-    void KFDeployAgentModule::AfterLoad()
-    {
-        auto kfglobal = KFGlobal::Instance();
-        _deploy_driver = _kf_mysql->Create( __KF_STRING__( deploy ) );
-        if ( _deploy_driver == nullptr )
-        {
-            return __LOG_ERROR__( "deploy mysql is nullprt" );
-        }
-
-        // 获得本机ip, 查询appid
-        auto localip = _kf_ip_address->GetLocalIp();
-        auto kfquery = _deploy_driver->QueryMap( "select * from `agent` where `{}`='{}'", __KF_STRING__( localip ), localip );
-        if ( !kfquery->IsOk() || kfquery->_value.empty() )
-        {
-            return __LOG_ERROR__( "query agent=[{}] data failed!", localip );
-        }
-
-        kfglobal->_app_id->FromString( kfquery->_value[ __KF_STRING__( strappid ) ] );
-
-        // 部署表
-        _deploy_table_name = __FORMAT__( "{}_{}_deploy", kfglobal->_channel, kfglobal->_service );
-
-        // deploy server
-        _deploy_server_strid = kfquery->_value[ "serverid" ];
-        _deploy_server_ip = kfquery->_value[ "serverip" ];
-        _deploy_server_port = KFUtility::ToValue<uint32>( kfquery->_value[ "serverport" ] );
-    }
-
+    static std::string _pid_path = "./pid";
     void KFDeployAgentModule::BeforeRun()
     {
-        __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFDeployAgentModule::OnClientConnectServer );
         __REGISTER_LOOP_TIMER__( 1, 20000, 100, &KFDeployAgentModule::OnTimerStartupProcess );
         __REGISTER_LOOP_TIMER__( 2, 1000, 0, &KFDeployAgentModule::OnTimerCheckTaskFinish );
+        __REGISTER_LOOP_TIMER__( 3, 5000, 1000, &KFDeployAgentModule::OnTimerQueryAgentData );
+        __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFDeployAgentModule::OnClientConnectServer );
         ////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_COMMAND_TO_AGENT_REQ, &KFDeployAgentModule::HandleDeployCommandReq );
     }
@@ -60,24 +34,57 @@ namespace KFrame
         __UNREGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_COMMAND_TO_AGENT_REQ );
     }
 
-    static std::string _pid_path = "./pid";
-
     void KFDeployAgentModule::OnceRun()
     {
         __MKDIR__( _pid_path );
+        _deploy_driver = _kf_mysql->Create( __KF_STRING__( deploy ) );
+    }
 
-        // 加载部署信息
-        try
+    __KF_TIMER_FUNCTION__( KFDeployAgentModule::OnTimerQueryAgentData )
+    {
+        // 获得本机ip, 查询appid
+        auto localip = _kf_ip_address->GetLocalIp();
+        auto kfquery = _deploy_driver->QueryMap( "select * from `agent` where `{}`='{}'", __KF_STRING__( localip ), localip );
+        if ( kfquery->_value.empty() )
         {
-            LoadTotalLaunchData();
+            return __LOG_ERROR__( "query agent=[{}] data failed!", localip );
         }
-        catch ( ... )
+
+        auto strappid = kfquery->_value[ __KF_STRING__( strappid ) ];
+        if ( strappid.empty() )
         {
-            __LOG_ERROR__( "load launch exception!" );
+            return __LOG_ERROR__( "agent=[{}] appid is empty!", localip );
         }
+
+        auto kfglobal = KFGlobal::Instance();
+        kfglobal->_app_id->FromString( strappid );
+
+        auto strservice = kfquery->_value[ __KF_STRING__( service ) ];
+        if ( strservice.empty() )
+        {
+            return __LOG_ERROR__( "agent=[{}] service is empty!", localip );
+        }
+
+        kfglobal->_channel = KFUtility::SplitValue< uint32 >( strservice, "." );
+        kfglobal->_service = KFUtility::SplitValue< uint32 >( strservice, "." );
+
+        // 部署表
+        _deploy_table_name = __FORMAT__( "{}_{}_deploy", kfglobal->_channel, kfglobal->_service );
+        __LOG_INFO__( "agent table name = [{}]", _deploy_table_name );
+
+        // deploy server
+        _deploy_server_strid = kfquery->_value[ "serverid" ];
+        _deploy_server_ip = kfquery->_value[ "serverip" ];
+        _deploy_server_port = KFUtility::ToValue<uint32>( kfquery->_value[ "serverport" ] );
+
+        // 关闭定时器
+        __UNREGISTER_OBJECT_TIMER__( objectid );
 
         // 启动连接deployserver
         StartConnectDeployServer();
+
+        // 读取进程启动配置
+        LoadTotalLaunchData();
     }
 
     void KFDeployAgentModule::StartConnectDeployServer()
@@ -93,28 +100,34 @@ namespace KFrame
 
     void KFDeployAgentModule::LoadTotalLaunchData()
     {
-        _deploy_list.Clear();
         if ( _deploy_table_name.empty() )
         {
             return __LOG_ERROR__( "depoly table name is empty!" );
         }
 
-        // 部署信息
+        try
         {
             MapString keyvalue;
             keyvalue[ __KF_STRING__( agentid ) ] = KFGlobal::Instance()->_app_id->ToString();
             auto querydeploydata = _deploy_driver->Select( _deploy_table_name, keyvalue );
-            for ( auto& values : querydeploydata->_value )
+            if ( !querydeploydata->_value.empty() )
             {
-                auto deploydata = __KF_NEW__( KFDeployData );
-                deploydata->CopyFrom( values );
-                _deploy_list.Insert( deploydata->_app_id, deploydata );
+                _deploy_list.Clear();
+                for ( auto& values : querydeploydata->_value )
+                {
+                    auto deploydata = __KF_NEW__( KFDeployData );
+                    deploydata->CopyFrom( values );
+                    _deploy_list.Insert( deploydata->_app_id, deploydata );
+                    __LOG_INFO__( "add server[{}:{}:{}] deploy!", deploydata->_app_name, deploydata->_app_type, deploydata->_app_id );
+                }
 
-                __LOG_INFO__( "add server[{}:{}:{}] deploy!", deploydata->_app_name, deploydata->_app_type, deploydata->_app_id );
+                BindServerProcess();
             }
         }
-
-        BindServerProcess();
+        catch ( ... )
+        {
+            __LOG_ERROR__( "load launch exception!" );
+        }
     }
 
     __KF_NET_EVENT_FUNCTION__( KFDeployAgentModule::OnClientConnectServer )

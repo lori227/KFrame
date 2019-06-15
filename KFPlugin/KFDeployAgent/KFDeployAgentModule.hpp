@@ -64,9 +64,6 @@ namespace KFrame
         KFDeployAgentModule() = default;
         ~KFDeployAgentModule() = default;
 
-        // 加载
-        virtual void AfterLoad();
-
         // 逻辑
         virtual void BeforeRun();
         virtual void OnceRun();
@@ -82,6 +79,9 @@ namespace KFrame
 
         // 检查任务完成
         __KF_TIMER_FUNCTION__( OnTimerCheckTaskFinish );
+
+        // 查询启动信息
+        __KF_TIMER_FUNCTION__( OnTimerQueryAgentData );
 
     protected:
         // 启动服务器
