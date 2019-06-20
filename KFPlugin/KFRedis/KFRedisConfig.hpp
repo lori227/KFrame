@@ -70,12 +70,12 @@ namespace KFrame
     class KFRedisConfig : public KFConfig, public KFSingleton< KFRedisConfig >
     {
     public:
-        KFRedisConfig( const std::string& file, bool isclear )
-            : KFConfig( file, isclear )
+        KFRedisConfig( const std::string& file )
+            : KFConfig( file )
         {
         }
 
-        bool LoadConfig( const std::string& file );
+        void LoadConfig( const std::string& file );
 
         // 查找redis配置
         KFRedisType* FindRedisType( const std::string& module, uint32 logicid );
@@ -87,7 +87,7 @@ namespace KFrame
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_redis_config = KFRedisConfig::Instance( "redis.setting", true );
+    static auto _kf_redis_config = KFRedisConfig::Instance( "redis.setting" );
     //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 

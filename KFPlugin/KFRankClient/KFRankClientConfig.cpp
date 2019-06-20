@@ -3,7 +3,7 @@
 namespace KFrame
 {
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFRankClientConfig::LoadConfig( const std::string& file )
+    void KFRankClientConfig::LoadConfig( const std::string& file )
     {
         _player_data.clear();
         _kf_rank_data_list.clear();
@@ -61,8 +61,6 @@ namespace KFrame
             ranknode.NextNode();
         }
         //////////////////////////////////////////////////////////////////
-
-        return true;
     }
 
 

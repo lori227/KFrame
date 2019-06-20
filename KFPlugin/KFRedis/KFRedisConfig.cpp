@@ -42,7 +42,7 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////
-    bool KFRedisConfig::LoadConfig( const std::string& file )
+    void KFRedisConfig::LoadConfig( const std::string& file )
     {
         auto _redis_id = 0u;
         _redis_type.Clear();
@@ -108,7 +108,5 @@ namespace KFrame
 
             modulenode.NextNode();
         }
-
-        return true;
     }
 }

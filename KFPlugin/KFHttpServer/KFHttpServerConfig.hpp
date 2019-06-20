@@ -52,13 +52,13 @@ namespace KFrame
     class KFHttpServerConfig : public KFConfig, public KFSingleton< KFHttpServerConfig >
     {
     public:
-        KFHttpServerConfig( const std::string& file, bool isclear )
-            : KFConfig( file, isclear )
+        KFHttpServerConfig( const std::string& file )
+            : KFConfig( file )
         {
         }
 
         // 加载配置文件
-        bool LoadConfig( const std::string& file );
+        void LoadConfig( const std::string& file );
 
         // 查找配置
         KFHttpSetting* FindHttpSetting( const std::string& appname, const std::string& apptype );
@@ -69,7 +69,7 @@ namespace KFrame
     };
 
     ////////////////////////////////////////////////////////////////////////////
-    static auto _kf_http_server_config = KFHttpServerConfig::Instance( "httpserver.setting", true );
+    static auto _kf_http_server_config = KFHttpServerConfig::Instance( "httpserver.setting" );
     ////////////////////////////////////////////////////////////////////////////
 }
 

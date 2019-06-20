@@ -30,13 +30,13 @@ namespace KFrame
     class KFFilterConfig : public KFConfig, public KFSingleton< KFFilterConfig >
     {
     public:
-        KFFilterConfig( const std::string& file, bool isclear )
-            : KFConfig( file, isclear )
+        KFFilterConfig( const std::string& file )
+            : KFConfig( file )
         {
         }
 
         // 读取配置
-        bool LoadConfig( const std::string& file );
+        void LoadConfig( const std::string& file );
 
         // 检查是否有屏蔽字符
         bool CheckFilter( const char* source, uint32 length );
@@ -57,7 +57,7 @@ namespace KFrame
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_filter_config = KFFilterConfig::Instance( "filter.xml", true );
+    static auto _kf_filter_config = KFFilterConfig::Instance( "filter.xml" );
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 

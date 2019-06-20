@@ -89,7 +89,7 @@ namespace KFrame
         return FindWord( &_root_word_data, source, length, 0, count );
     }
 
-    bool KFFilterConfig::LoadConfig( const std::string& file )
+    void KFFilterConfig::LoadConfig( const std::string& file )
     {
         _root_word_data.Clear();
         //////////////////////////////////////////////////////////////////
@@ -104,7 +104,5 @@ namespace KFrame
             wordnode.NextNode();
         }
         //////////////////////////////////////////////////////////////////
-
-        return true;
     }
 }

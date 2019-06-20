@@ -34,12 +34,12 @@ namespace KFrame
     class KFBusConfig : public KFConfig, public KFSingleton< KFBusConfig >
     {
     public:
-        KFBusConfig( const std::string& file, bool isclear )
-            : KFConfig( file, isclear )
+        KFBusConfig( const std::string& file )
+            : KFConfig( file )
         {
         }
 
-        bool LoadConfig( const std::string& file );
+        void LoadConfig( const std::string& file );
 
         // 查找连接
         void FindConnection( const std::string& appname, const std::string& apptype, const std::string& appid, std::set< KFConnection* >& outlist );
@@ -52,7 +52,7 @@ namespace KFrame
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_bus_config = KFBusConfig::Instance( "bus.setting", true );
+    static auto _kf_bus_config = KFBusConfig::Instance( "bus.setting" );
     //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 

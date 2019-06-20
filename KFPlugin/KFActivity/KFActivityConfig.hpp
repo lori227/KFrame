@@ -96,8 +96,8 @@ namespace KFrame
     class KFActivityConfig : public KFConfig, public KFSingleton< KFActivityConfig >
     {
     public:
-        KFActivityConfig( const std::string& file, bool isclear )
-            : KFConfig( file, isclear )
+        KFActivityConfig( const std::string& file )
+            : KFConfig( file )
         {
 
         }
@@ -109,7 +109,7 @@ namespace KFrame
         // 获得某种类型的所有成就
         const KFActivityType* FindActivityType( const std::string& parentname, const std::string& dataname ) const;
 
-        bool LoadConfig( const std::string& file );
+        void LoadConfig( const std::string& file );
 
     protected:
         void AddActivitySetting( KFActivitySetting* setting, KFActivityData* eventdata );
@@ -125,7 +125,7 @@ namespace KFrame
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_activity_config = KFActivityConfig::Instance( "activity.xml", true );
+    static auto _kf_activity_config = KFActivityConfig::Instance( "activity.xml" );
     //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 

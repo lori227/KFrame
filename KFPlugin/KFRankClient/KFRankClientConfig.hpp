@@ -57,13 +57,13 @@ namespace KFrame
     class KFRankClientConfig : public KFConfig, public KFSingleton< KFRankClientConfig >
     {
     public:
-        KFRankClientConfig( const std::string& file, bool isclear )
-            : KFConfig( file, isclear )
+        KFRankClientConfig( const std::string& file )
+            : KFConfig( file )
         {
         }
 
         // 加载配置
-        bool LoadConfig( const std::string& file );
+        void LoadConfig( const std::string& file );
 
         // 查找排行榜设定
         const KFRankSetting* FindRankSetting( uint32 rankid ) const;
@@ -83,7 +83,7 @@ namespace KFrame
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_rank_config = KFRankClientConfig::Instance( "rank.xml", true );
+    static auto _kf_rank_config = KFRankClientConfig::Instance( "rank.xml" );
     //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 

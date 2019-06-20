@@ -55,13 +55,13 @@ namespace KFrame
     class KFMySQLConfig : public KFConfig, public KFSingleton< KFMySQLConfig >
     {
     public:
-        KFMySQLConfig( const std::string& file, bool isclear )
-            : KFConfig( file, isclear )
+        KFMySQLConfig( const std::string& file )
+            : KFConfig( file )
         {
         }
 
         // 加载配置文件
-        bool LoadConfig( const std::string& file );
+        void LoadConfig( const std::string& file );
 
         // 查找配置
         KFMySQLType* FindMySQLType( const std::string& module, uint32 logicid );
@@ -73,7 +73,7 @@ namespace KFrame
     };
 
     ////////////////////////////////////////////////////////////////////////////
-    static auto* _kf_mysql_config = KFMySQLConfig::Instance( "mysql.setting", true );
+    static auto* _kf_mysql_config = KFMySQLConfig::Instance( "mysql.setting" );
     ////////////////////////////////////////////////////////////////////////////
 }
 

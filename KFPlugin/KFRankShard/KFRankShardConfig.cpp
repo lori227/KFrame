@@ -3,7 +3,7 @@
 namespace KFrame
 {
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFRankShardConfig::LoadConfig( const std::string& file )
+    void KFRankShardConfig::LoadConfig( const std::string& file )
     {
         _kf_rank_setting.Clear();
         //////////////////////////////////////////////////////////////////
@@ -34,8 +34,6 @@ namespace KFrame
             ranknode.NextNode();
         }
         //////////////////////////////////////////////////////////////////
-
-        return true;
     }
 
     const KFRankSetting* KFRankShardConfig::FindRankSetting( uint32 rankid ) const

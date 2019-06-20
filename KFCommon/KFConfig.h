@@ -13,41 +13,41 @@ namespace KFrame
         virtual ~KFSetting() = default;
     };
 
-    template< class T >
-    class KFSettingT : public KFSetting
+    ///////////////////////////////////////////////////////////////
+    class KFIntSetting : public KFSetting
     {
     public:
         // 类型
-        typedef T Type;
+        typedef uint64 Type;
+        typedef uint64 ParamType;
 
-        // 配置id
-        T _id;
+    public:
+        uint64 _id;
     };
     ///////////////////////////////////////////////////////////////
-    class KFIntSetting : public KFSettingT< uint32 >
+    class KFStrSetting : public KFSetting
     {
     public:
-        typedef uint32 ParamType;
-    };
-    ///////////////////////////////////////////////////////////////
-    class KFStrSetting : public KFSettingT< std::string >
-    {
-    public:
+        // 类型
+        typedef std::string Type;
         typedef const std::string& ParamType;
+
+    public:
+        std::string _id;
     };
     ///////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////
     class KFConfig
     {
     public:
-        KFConfig( const std::string& file, bool isclear )
+        KFConfig( const std::string& file, bool isclear = true )
             : _file( file ), _is_clear( isclear )
         {
         }
         virtual ~KFConfig() = default;
 
         // 加载配置
-        virtual bool LoadConfig( const std::string& file ) = 0;
+        virtual void LoadConfig( const std::string& file ) {};
 
         // 加载完配置
         virtual void LoadComplete() {}
@@ -62,6 +62,7 @@ namespace KFrame
         bool _is_clear = true;
     };
     ///////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////
     template< class T >
     class KFIntConfigT : public KFConfig
     {
@@ -72,7 +73,7 @@ namespace KFrame
         }
 
         // 加载配置
-        bool LoadConfig( const std::string& file )
+        void LoadConfig( const std::string& file )
         {
             ClearSetting();
 
@@ -90,19 +91,15 @@ namespace KFrame
                 }
                 xmlnode.NextNode();
             }
-
-            return true;
         }
 
         // 获取配置
-        const T* FindSetting( uint32 id )
+        const T* FindSetting( uint64 id )
         {
             return _settings.Find( id );
         }
 
-
     protected:
-        // 清空配置
         virtual void ClearSetting()
         {
             if ( _is_clear )
@@ -113,7 +110,7 @@ namespace KFrame
 
         virtual T* CreateSetting( KFNode& xmlnode )
         {
-            auto id = xmlnode.GetUInt32( "Id" );
+            auto id = xmlnode.GetUInt64( "Id" );
             auto kfsetting = _settings.Create( id );
             kfsetting->_id = id;
 
@@ -122,10 +119,9 @@ namespace KFrame
 
         // 读取配置
         virtual void ReadSetting( KFNode& xmlnode, T* kfsetting ) = 0;
-
     public:
         // 列表
-        KFHashMap< uint32, uint32, T > _settings;
+        KFHashMap< uint64, uint64, T > _settings;
     };
 
     ///////////////////////////////////////////////////////////////
@@ -140,7 +136,7 @@ namespace KFrame
         }
 
         // 加载配置
-        bool LoadConfig( const std::string& file )
+        void LoadConfig( const std::string& file )
         {
             ClearSetting();
 
@@ -158,8 +154,6 @@ namespace KFrame
                 }
                 xmlnode.NextNode();
             }
-
-            return true;
         }
 
         // 获取配置
@@ -169,7 +163,6 @@ namespace KFrame
         }
 
     protected:
-        // 清空配置
         virtual void ClearSetting()
         {
             if ( _is_clear )
@@ -189,6 +182,7 @@ namespace KFrame
 
         // 读取配置
         virtual void ReadSetting( KFNode& xmlnode, T* kfsetting ) = 0;
+
     public:
         // 列表
         KFHashMap< std::string, const std::string&, T > _settings;

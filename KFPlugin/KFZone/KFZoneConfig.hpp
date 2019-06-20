@@ -12,13 +12,13 @@ namespace KFrame
     class KFZoneConfig : public KFConfig, public KFSingleton< KFZoneConfig >
     {
     public:
-        KFZoneConfig( const std::string& file, bool isclear )
-            : KFConfig( file, isclear )
+        KFZoneConfig( const std::string& file )
+            : KFConfig( file )
         {
         }
 
         // 加载配置
-        bool LoadConfig( const std::string& file );
+        void LoadConfig( const std::string& file );
 
         // 查找小区信息
         const KFZone* FindZone( uint32 zoneid );
@@ -39,7 +39,7 @@ namespace KFrame
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_zone_config = KFZoneConfig::Instance( "zone.setting", true );
+    static auto _kf_zone_config = KFZoneConfig::Instance( "zone.setting" );
     //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 

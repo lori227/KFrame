@@ -41,23 +41,15 @@ namespace KFrame
         __LOG_INFO__( "load [{}] start!", file );
         try
         {
-            auto ok = config->LoadConfig( file );
-            if ( ok )
-            {
-                config->LoadComplete();
-                __LOG_INFO__( "load [{}] ok!", file );
-            }
-            else
-            {
-                __LOG_ERROR__( "load [{}] failed!", file );
-            }
+            config->LoadConfig( file );
+            config->LoadComplete();
+            __LOG_INFO__( "load [{}] ok!", file );
         }
         catch ( ... )
         {
-            __LOG_ERROR__( "load [{}] exception!", file );
+            __LOG_ERROR__( "load [{}] failed!", file );
         }
     }
-
 
     void KFConfigModule::ReloadConfig( const std::string& file )
     {

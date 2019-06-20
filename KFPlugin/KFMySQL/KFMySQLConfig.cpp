@@ -44,7 +44,7 @@ namespace KFrame
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFMySQLConfig::LoadConfig( const std::string& file )
+    void KFMySQLConfig::LoadConfig( const std::string& file )
     {
         auto _mysql_id = 0u;
         _mysql_type.Clear();
@@ -114,7 +114,5 @@ namespace KFrame
 
             modulenode.NextNode();
         }
-
-        return true;
     }
 }

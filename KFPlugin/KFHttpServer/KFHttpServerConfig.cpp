@@ -18,7 +18,7 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    bool KFHttpServerConfig::LoadConfig( const std::string& file )
+    void KFHttpServerConfig::LoadConfig( const std::string& file )
     {
         _http_setting_list.clear();
         //////////////////////////////////////////////////////////////////
@@ -50,9 +50,6 @@ namespace KFrame
                 servernode.NextNode();
             }
         }
-        //////////////////////////////////////////////////////////////////
-
-        return true;
     }
 
 }

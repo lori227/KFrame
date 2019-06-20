@@ -11,12 +11,12 @@ namespace KFrame
     class KFIpAddressConfig : public KFConfig, public KFSingleton< KFIpAddressConfig >
     {
     public:
-        KFIpAddressConfig( const std::string& file, bool isclear )
-            : KFConfig( file, isclear )
+        KFIpAddressConfig( const std::string& file )
+            : KFConfig( file )
         {
         }
 
-        bool LoadConfig( const std::string& file );
+        void LoadConfig( const std::string& file );
 
         // 查找连接
         const KFIpAddress* FindIpAddress( const std::string& appname, const std::string& apptype, const std::string& appid );
@@ -34,7 +34,7 @@ namespace KFrame
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_ip_config = KFIpAddressConfig::Instance( "ip.setting", true );
+    static auto _kf_ip_config = KFIpAddressConfig::Instance( "ip.setting" );
     //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
