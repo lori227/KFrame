@@ -35,3 +35,5 @@ _bin/bin/win64/debug/libmysql.dll
 _bin/bin/win64/debug/libtcmalloc_minimal.dll
 _bin/bin/win64/release/libmysql.dll
 _bin/bin/win64/release/libtcmalloc_minimal.dll
+KFTools/Element/bin/
+KFTools/Element/obj/
