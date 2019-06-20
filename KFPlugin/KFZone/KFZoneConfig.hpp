@@ -13,7 +13,7 @@ namespace KFrame
     {
     public:
         KFZoneConfig( const std::string& file, bool isclear )
-            : KFConfig( file, bool isclear )
+            : KFConfig( file, isclear )
         {
         }
 
