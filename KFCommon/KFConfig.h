@@ -7,8 +7,14 @@
 namespace KFrame
 {
     ///////////////////////////////////////////////////////////////
-    template< class T >
     class KFSetting
+    {
+    public:
+        virtual ~KFSetting() = default;
+    };
+
+    template< class T >
+    class KFSettingT : public KFSetting
     {
     public:
         // 类型
@@ -18,13 +24,13 @@ namespace KFrame
         T _id;
     };
     ///////////////////////////////////////////////////////////////
-    class KFIntSetting : public KFSetting< uint32 >
+    class KFIntSetting : public KFSettingT< uint32 >
     {
     public:
         typedef uint32 ParamType;
     };
     ///////////////////////////////////////////////////////////////
-    class KFStrSetting : public KFSetting< std::string >
+    class KFStrSetting : public KFSettingT< std::string >
     {
     public:
         typedef const std::string& ParamType;
@@ -34,8 +40,8 @@ namespace KFrame
     class KFConfig
     {
     public:
-        KFConfig( const std::string& file )
-            : _file( file )
+        KFConfig( const std::string& file, bool isclear )
+            : _file( file ), _is_clear( isclear )
         {
         }
         virtual ~KFConfig() = default;
@@ -48,14 +54,20 @@ namespace KFrame
     public:
         // 配置文件
         std::string _file;
+
+        // 版本号
+        std::string _version;
+    protected:
+        // 是否是要清除原来的数据
+        bool _is_clear = true;
     };
     ///////////////////////////////////////////////////////////////
     template< class T >
-    class KFConfigT : public KFConfig
+    class KFIntConfigT : public KFConfig
     {
     public:
-        KFConfigT( const std::string& file, bool isclear )
-            : KFConfig( file ), _is_clear( isclear )
+        KFIntConfigT( const std::string& file, bool isclear )
+            : KFConfig( file, isclear )
         {
         }
 
@@ -82,10 +94,65 @@ namespace KFrame
             return true;
         }
 
-        // 获取配置
-        const T* FindSetting( typename T::ParamType id )
+    protected:
+        // 清空配置
+        virtual void ClearSetting()
         {
-            return _settings.Find( id );
+            if ( _is_clear )
+            {
+                _settings.Clear();
+            }
+        }
+
+        virtual T* CreateSetting( KFNode& xmlnode )
+        {
+            auto id = xmlnode.GetUInt32( "Id" );
+            auto kfsetting = _settings.Create( id );
+            kfsetting->_id = id;
+
+            return kfsetting;
+        }
+
+        // 读取配置
+        virtual void ReadSetting( KFNode& xmlnode, T* kfsetting ) = 0;
+
+    public:
+        // 列表
+        KFHashMap< uint32, uint32, T > _settings;
+    };
+
+    ///////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////
+    template< class T >
+    class KFStrConfigT : public KFConfig
+    {
+    public:
+        KFStrConfigT( const std::string& file, bool isclear )
+            : KFConfig( file, isclear )
+        {
+        }
+
+        // 加载配置
+        bool LoadConfig( const std::string& file )
+        {
+            ClearSetting();
+
+            KFXml kfxml( file );
+            auto config = kfxml.RootNode();
+            _version = config.GetString( "version" );
+
+            auto xmlnode = config.FindNode( "item" );
+            while ( xmlnode.IsValid() )
+            {
+                auto kfsetting = CreateSetting( xmlnode );
+                if ( kfsetting != nullptr )
+                {
+                    ReadSetting( xmlnode, kfsetting );
+                }
+                xmlnode.NextNode();
+            }
+
+            return true;
         }
 
     protected:
@@ -98,56 +165,6 @@ namespace KFrame
             }
         }
 
-        // 创建配置
-        virtual T* CreateSetting( KFNode& xmlnode ) = 0;
-
-        // 读取配置
-        virtual void ReadSetting( KFNode& xmlnode, T* kfsetting ) = 0;
-    public:
-        // 版本号
-        std::string _version;
-
-        // 列表
-        KFHashMap< typename T::Type, typename T::ParamType, T > _settings;
-
-    protected:
-        // 是否是要清除原来的数据
-        bool _is_clear = true;
-    };
-    ///////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////
-    template< class T >
-    class KFIntConfigT : public KFConfigT< T >
-    {
-    public:
-        KFIntConfigT( const std::string& file, bool isclear )
-            : KFConfigT< T >( file, isclear )
-        {
-        }
-
-    protected:
-        virtual T* CreateSetting( KFNode& xmlnode )
-        {
-            auto id = xmlnode.GetUInt32( "Id" );
-            auto kfsetting = _settings.Create( id );
-            kfsetting->_id = id;
-
-            return kfsetting;
-        }
-    };
-
-    ///////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////
-    template< class T >
-    class KFStrConfigT : public KFConfigT< T >
-    {
-    public:
-        KFStrConfigT( const std::string& file, bool isclear )
-            : KFConfigT< T >( file, isclear )
-        {
-        }
-
-    protected:
         virtual T* CreateSetting( KFNode& xmlnode )
         {
             auto id = xmlnode.GetString( "Id" );
@@ -156,6 +173,13 @@ namespace KFrame
 
             return kfsetting;
         }
+
+        // 读取配置
+        virtual void ReadSetting( KFNode& xmlnode, T* kfsetting ) = 0;
+
+    public:
+        // 列表
+        KFHashMap< std::string, const std::string&, T > _settings;
     };
 }
 
