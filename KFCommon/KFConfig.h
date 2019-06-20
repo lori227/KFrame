@@ -41,8 +41,9 @@ namespace KFrame
     {
     public:
         KFConfig( const std::string& file, bool isclear )
-            : _file( file ), _is_clear( isclear )
         {
+            _file = file;
+            _is_clear = isclear;
         }
         virtual ~KFConfig() = default;
 
@@ -67,7 +68,7 @@ namespace KFrame
     {
     public:
         KFIntConfigT( const std::string& file, bool isclear )
-            : KFConfig( file, isclear )
+            : KFConfig( file )
         {
         }
 
