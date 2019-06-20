@@ -40,17 +40,29 @@ namespace KFrame
         // 创建子属性
         virtual KFData* CreateData( const std::string& dataname );
         virtual KFData* CreateData( const std::string& dataname, uint64 key );
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////
 
         // 添加属性
         virtual bool AddData( KFData* kfparent, KFData* kfdata );
         virtual bool AddData( KFData* kfparent, uint64 key, KFData* kfdata );
         virtual bool AddData( const std::string& parentname, uint64 key, KFData* kfdata );
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////
 
         // 删除属性
         virtual bool RemoveData( const std::string& parentname, uint64 key );
         virtual bool RemoveData( KFData* kfparent, uint64 key );
         virtual bool RemoveData( const std::string& parentname );
         virtual bool RemoveData( const std::string& parentname, const std::string& dataname );
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        // 移动属性
+        virtual bool MoveData( const std::string& sourcename, uint64 key, const std::string& targetname );
+        virtual bool MoveData( KFData* sourcedata, uint64 key, KFData* targetdata );
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////
 
         // 更新属性
         virtual void UpdateData( const std::string& dataname, const std::string& value );
@@ -80,6 +92,10 @@ namespace KFrame
 
         // 删除元数据
         virtual void RemoveElement( const KFElements* kfelements, const char* function, uint32 line, float multiple = 1.0f );
+
+        // 设置element到kfdata对象
+        virtual void UpdateElementToData( KFElementObject* kfelement, KFData* kfdata, float multiple = 1.0f );
+        virtual void SetElementToData( KFElementObject* kfelement, KFData* kfdata, float multiple = 1.0f );
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
@@ -109,6 +125,7 @@ namespace KFrame
         bool CheckNormalElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line, float multiple );
         bool CheckObjectElement( KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple );
         bool CheckRecordElement( KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple );
+
 
         // 删除元数据
         void RemoveElement( const KFElement* kfelement, const char* function, uint32 line, float multiple );

@@ -125,9 +125,9 @@ namespace KFrame
 
         //auto openid = __JSON_GET_STRING__( userjson, __KF_STRING__( openid ) );
 
-        __JSON_DOCUMENT__( response );
+        __JSON_OBJECT_DOCUMENT__( response );
         __JSON_SET_VALUE__( response, __KF_STRING__( account ), openid );
-        __JSON_SET_VALUE__( response, __KF_STRING__( channel ), kfsetting->_channel_id );
+        __JSON_SET_VALUE__( response, __KF_STRING__( channel ), kfsetting->_id );
 
         //KFJson kfextend;
         //kfextend.SetValue( __KF_STRING__( name ), userjson.GetString( __KF_STRING__( nickname ) ) );

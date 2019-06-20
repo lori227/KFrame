@@ -68,6 +68,10 @@ namespace KFrame
         // 属性删除回调函数
         void RemoveDataCallBack( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata );
 
+        // 移动属性回调函数
+        void MoveRemoveDataCallBack( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata );
+        void MoveAddDataCallBack( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata );
+
         // 添加更新的对象
         void AddSyncEntity( KFEntity* entity );
         ///////////////////////////////////////////////////////////////////////////////////////////////

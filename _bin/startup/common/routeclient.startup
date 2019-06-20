@@ -3,7 +3,7 @@
 	<Plugins>
 		<Plugin Name="KFBus" Config="./setting/bus.setting"/>
 		<Plugin Name="KFIpAddress" Config="./setting/{}_{}_ip.setting"/>
-		<Plugin Name="KFOption" Config="./config/option.config"/>
+		<Plugin Name="KFOption" Config="./config/option.xml"/>
 		<Plugin Name="KFConfig" Config=""/>
 		<Plugin Name="KFTimer" Config=""/>
 		<Plugin Name="KFHttpClient" Config=""/>

@@ -44,9 +44,9 @@ namespace KFrame
 
         auto steamid = __JSON_GET_STRING__( kfparams, __KF_STRING__( steamid ) );
 
-        __JSON_DOCUMENT__( response );
+        __JSON_OBJECT_DOCUMENT__( response );
         __JSON_SET_VALUE__( response, __KF_STRING__( account ), steamid );
-        __JSON_SET_VALUE__( response, __KF_STRING__( channel ), kfsetting->_channel_id );
+        __JSON_SET_VALUE__( response, __KF_STRING__( channel ), kfsetting->_id );
         return _kf_http_server->SendResponse( response );
     }
 

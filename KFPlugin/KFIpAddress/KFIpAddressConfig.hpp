@@ -11,8 +11,10 @@ namespace KFrame
     class KFIpAddressConfig : public KFConfig, public KFSingleton< KFIpAddressConfig >
     {
     public:
-        KFIpAddressConfig() = default;
-        ~KFIpAddressConfig() = default;
+        KFIpAddressConfig( const std::string& file )
+            : KFConfig( file )
+        {
+        }
 
         bool LoadConfig( const std::string& file );
 
@@ -32,7 +34,7 @@ namespace KFrame
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_ip_config = KFIpAddressConfig::Instance();
+    static auto _kf_ip_config = KFIpAddressConfig::Instance( "ip.setting" );
     //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 

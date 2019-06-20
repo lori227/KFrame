@@ -35,6 +35,11 @@ namespace KFrame
     class KFTcpServerConfig : public KFConfig, public KFSingleton< KFTcpServerConfig >
     {
     public:
+        KFTcpServerConfig( const std::string& file )
+            : KFConfig( file )
+        {
+        }
+
         // 加载配置文件
         bool LoadConfig( const std::string& file );
 
@@ -45,11 +50,10 @@ namespace KFrame
         // 服务器列表
         std::vector < KFTcpSetting > _tcp_setting_list;
     };
+
+    ////////////////////////////////////////////////////////////////////////////
+    static auto _kf_server_config = KFTcpServerConfig::Instance( "tcpserver.setting" );
+    ////////////////////////////////////////////////////////////////////////////
 }
-
-////////////////////////////////////////////////////////////////////////////
-static auto _kf_server_config = KFrame::KFTcpServerConfig::Instance();
-////////////////////////////////////////////////////////////////////////////
-
 
 #endif

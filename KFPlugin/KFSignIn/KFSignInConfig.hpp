@@ -1,7 +1,6 @@
 ﻿#ifndef __KF_SIGNIN_CONFIG_H__
 #define __KF_SIGNIN_CONFIG_H__
 
-#include "KFrame.h"
 #include "KFCore/KFElement.h"
 #include "KFConfig/KFConfigInterface.h"
 
@@ -13,35 +12,41 @@ namespace KFrame
     };
 
     /////////////////////////////////////////////////////////////////////////////////
-    class KFSignInSetting
+    class KFSignInSetting : public KFIntSetting
     {
     public:
-        uint32 _day;			// 签到天数
-        KFElements _reward;		// 奖励
-        uint32 _probability;	// 概率( 万分比 )
-        KFElements _extend;		// 额外的奖励
+        // 签到类型
+        uint32 _type = 0u;
+
+        // 签到天数
+        uint32 _day = 0u;
+
+        // 奖励
+        KFElements _reward;
+
+        // 概率( 万分比 )
+        uint32 _probability = 0u;
+
+        // 额外的奖励
+        KFElements _extend;
     };
 
     ////////////////////////////////////////////////////////////////////////////////////
-
-    class KFSignInConfig : public KFConfig, public KFSingleton< KFSignInConfig >
+    class KFSignInConfig : public KFIntConfigT< KFSignInSetting >, public KFSingleton< KFSignInConfig >
     {
     public:
-        KFSignInConfig() = default;
-        ~KFSignInConfig();
+        KFSignInConfig( const std::string& file, bool isclear )
+            : KFIntConfigT< KFSignInSetting >( file, isclear )
+        {
+        }
 
-        bool LoadConfig( const std::string& file );
-
-        const KFSignInSetting* FindSignInSetting( uint32 type, uint32 day ) const;
-
-    public:
-        // 称号列表
-        typedef std::pair< uint32, uint32 > SignInKey;
-        KFMap< SignInKey, const SignInKey&, KFSignInSetting > _signin_setting;
+    protected:
+        // 赌球配置
+        void ReadSetting( KFNode& xmlnode, KFSignInSetting* kfsetting );
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_signin_config = KFSignInConfig::Instance();
+    static auto _kf_signin_config = KFSignInConfig::Instance( "signin.xml", true );
     //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 

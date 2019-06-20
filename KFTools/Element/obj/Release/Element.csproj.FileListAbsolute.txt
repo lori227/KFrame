@@ -16,7 +16,6 @@ E:\Work\Frame\trunk\KFTools\Element\obj\Release\elementtool.pdb
 D:\Work\Frame\trunk\KFTools\Element\bin\Release\elementtool.exe.config
 D:\Work\Frame\trunk\KFTools\Element\bin\Release\elementtool.exe
 D:\Work\Frame\trunk\KFTools\Element\bin\Release\elementtool.pdb
-D:\Work\Frame\trunk\KFTools\Element\obj\Release\Element.csprojAssemblyReference.cache
 D:\Work\Frame\trunk\KFTools\Element\obj\Release\MainWindow.g.cs
 D:\Work\Frame\trunk\KFTools\Element\obj\Release\App.g.cs
 D:\Work\Frame\trunk\KFTools\Element\obj\Release\elementtool_MarkupCompile.cache
@@ -28,3 +27,4 @@ D:\Work\Frame\trunk\KFTools\Element\obj\Release\Element.csproj.GenerateResource.
 D:\Work\Frame\trunk\KFTools\Element\obj\Release\Element.csproj.CoreCompileInputs.cache
 D:\Work\Frame\trunk\KFTools\Element\obj\Release\elementtool.exe
 D:\Work\Frame\trunk\KFTools\Element\obj\Release\elementtool.pdb
+D:\Work\Frame\trunk\KFTools\Element\obj\Release\Element.csprojAssemblyReference.cache

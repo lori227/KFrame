@@ -61,7 +61,6 @@ namespace KFrame
 
     private:
         KFHashMap< std::string, const std::string, KFComponentEx > _kf_component;
-
     };
 }
 

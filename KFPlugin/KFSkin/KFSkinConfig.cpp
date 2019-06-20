@@ -2,31 +2,10 @@
 
 namespace KFrame
 {
-    const KFSkinSetting* KFSkinConfig::FindSkinSetting( uint32 id ) const
+    void KFSkinConfig::ReadSetting( KFNode& xmlnode, KFSkinSetting* kfsetting )
     {
-        return _skin_setting.Find( id );
+        kfsetting->_quality = xmlnode.GetUInt32( "Quality" );
     }
-
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
-    bool KFSkinConfig::LoadConfig( const std::string& file )
-    {
-        //////////////////////////////////////////////////////////////////
-        KFXml kfxml( file );
-        auto config = kfxml.RootNode();
-        auto xmlnode = config.FindNode( "item" );
-        while ( xmlnode.IsValid() )
-        {
-            auto id = xmlnode.GetUInt32( "Id" );
-            auto kfsetting = _skin_setting.Create( id );
-
-            kfsetting->_id = id;
-            kfsetting->_quality = xmlnode.GetUInt32( "Quality" );
-
-            xmlnode.NextNode();
-        }
-        //////////////////////////////////////////////////////////////////
-
-        return true;
-    }
 }

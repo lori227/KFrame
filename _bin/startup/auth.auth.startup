@@ -7,7 +7,7 @@
 
 	<Plugins>
 		<Plugin Name="KFRedis" Config="./setting/{}_{}_redis.setting"/>
-		<Plugin Name="KFChannel" Config="./setting/channel.setting"/>
+		<Plugin Name="KFChannel" Config="./config/channel.config"/>
 		<Plugin Name="KFAuth" Config=""/>	
 	</Plugins>
 </Setting>

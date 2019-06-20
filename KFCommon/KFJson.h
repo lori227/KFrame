@@ -74,10 +74,15 @@ namespace KFrame
 
 #define __JSON_SERIALIZE__( kfjson ) JsonSerialize( kfjson )
 
-#define  __JSON_DOCUMENT__( kfjson )\
+#define  __JSON_OBJECT_DOCUMENT__( kfjson )\
     rapidjson::Document kfjson;\
     auto &allocator = kfjson.GetAllocator();\
     kfjson.SetObject();\
+
+#define  __JSON_ARRAY_DOCUMENT__( kfjson )\
+    rapidjson::Document kfjson;\
+    auto &allocator = kfjson.GetAllocator();\
+    kfjson.SetArray();\
 
 #define  __JSON_OBJECT__( kfjson )\
     rapidjson::Value kfjson( rapidjson::kObjectType )

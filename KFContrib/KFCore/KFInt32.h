@@ -13,6 +13,9 @@ namespace KFrame
 
         virtual void Reset();
 
+        // 是否达到了最大值
+        virtual bool IsFull();
+
         // 是否有效
         virtual bool IsValid();
         //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -26,12 +29,8 @@ namespace KFrame
         virtual void FromString( const std::string& value );
     protected:
         //////////////////////////////////////////////////////////////////////////////////////////////////////
-        virtual int32 GetInt32() {
-            return _data;
-        }
-        virtual void SetInt32( int32 value ) {
-            _data = value;
-        }
+        virtual int32 GetInt32();
+        virtual int32 SetInt32( int32 value );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
     private:
 

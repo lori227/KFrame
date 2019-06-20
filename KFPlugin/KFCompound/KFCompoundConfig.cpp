@@ -2,37 +2,15 @@
 
 namespace KFrame
 {
-    bool KFCompoundConfig::LoadConfig( const std::string& file )
+    void KFCompoundConfig::ReadSetting( KFNode& xmlnode, KFCompoundSetting* kfsetting )
     {
-        KFXml kfxml( file );
-        auto config = kfxml.RootNode();
-        auto setting = config.FindNode( "item" );
-        while ( setting.IsValid() )
-        {
+        kfsetting->_key = xmlnode.GetUInt32( "DataKey" );
+        kfsetting->_data_name = xmlnode.GetString( "DataName" );
 
-            auto id = setting.GetUInt32( "Id" );
-            auto kfsetting = _compound_setting.Create( id );
+        auto strcostdata = xmlnode.GetString( "CostData" );
+        kfsetting->_cost_data.Parse( strcostdata, __FUNC_LINE__ );
 
-            kfsetting->_id = id;
-            kfsetting->_key = setting.GetUInt32( "DataKey" );
-            kfsetting->_data_name = setting.GetString( "DataName" );
-
-            auto strcostdata = setting.GetString( "CostData" );
-            kfsetting->_cost_data.Parse( strcostdata, __FUNC_LINE__ );
-
-            auto strcompounddata = setting.GetString( "CompoundData" );
-            kfsetting->_compound_data.Parse( strcompounddata, __FUNC_LINE__ );
-
-            setting.NextNode();
-        }
-        //////////////////////////////////////////////////////////////////
-
-        return true;
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    const KFCompoundSetting* KFCompoundConfig::FindCompoundSetting( uint32 id )
-    {
-        return _compound_setting.Find( id );
+        auto strcompounddata = xmlnode.GetString( "CompoundData" );
+        kfsetting->_compound_data.Parse( strcompounddata, __FUNC_LINE__ );
     }
 }

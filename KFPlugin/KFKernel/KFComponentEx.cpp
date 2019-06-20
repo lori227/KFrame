@@ -38,8 +38,6 @@ namespace KFrame
         {
             _entity_initialize_function( kfentity );
         }
-
-        kfentity->SetInited();
     }
 
     void KFComponentEx::UnInitEntity( KFEntity* kfentity )
@@ -557,6 +555,34 @@ namespace KFrame
             {
                 kffunction->_function( kfentity, kfparent, key, kfdata );
             }
+        }
+    }
+
+    void KFComponentEx::MoveRemoveDataCallBack( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata )
+    {
+        if ( kfentity->IsInited() )
+        {
+            static_cast< KFEntityEx* >( kfentity )->SyncRemoveData( kfdata, key );
+        }
+
+        // 开启保存数据库定时器
+        if ( kfdata->GetDataSetting()->HaveFlagMask( KFDataDefine::Mask_Save ) )
+        {
+            StartSaveEntityTimer( kfentity );
+        }
+    }
+
+    void KFComponentEx::MoveAddDataCallBack( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata )
+    {
+        if ( kfentity->IsInited() )
+        {
+            static_cast< KFEntityEx* >( kfentity )->SyncAddData( kfdata, key );
+        }
+
+        // 开启保存数据库定时器
+        if ( kfdata->GetDataSetting()->HaveFlagMask( KFDataDefine::Mask_Save ) )
+        {
+            StartSaveEntityTimer( kfentity );
         }
     }
 

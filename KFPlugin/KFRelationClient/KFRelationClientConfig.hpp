@@ -5,12 +5,9 @@
 
 namespace KFrame
 {
-    class KFRelationSetting
+    class KFRelationSetting : public KFStrSetting
     {
     public:
-        // 关系属性名
-        std::string _data_name;
-
         // 最大数量
         uint32 _max_count = 0u;
 
@@ -35,28 +32,24 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
-    class KFRelationClientConfig : public KFConfig, public KFSingleton< KFRelationClientConfig >
+    class KFRelationClientConfig : public KFStrConfigT< KFRelationSetting >, public KFSingleton< KFRelationClientConfig >
     {
     public:
-        KFRelationClientConfig()
+        KFRelationClientConfig( const std::string& file, bool isclear )
+            : KFStrConfigT< KFRelationSetting >( file, isclear )
         {
-            _file = "relation.config";
         }
 
-        // 加载配置
-        bool LoadConfig( const std::string& file );
-
-        // 查找配置选项
-        const KFRelationSetting* FindRelationSetting( const std::string& name );
+        // 查找关系配置
         const KFRelationSetting* FindRelationSettingByInviteName( const std::string& name );
 
-    public:
-        // 关系配置列表
-        KFMap< std::string, const std::string&, KFRelationSetting > _relation_list;
+    protected:
+        // 读取配置
+        void ReadSetting( KFNode& xmlnode, KFRelationSetting* kfsetting );
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_relation_client_config = KFRelationClientConfig::Instance();
+    static auto _kf_relation_client_config = KFRelationClientConfig::Instance( "relation.xml", true );
     //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 

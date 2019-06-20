@@ -12,18 +12,20 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="KFKernelConfig.cpp" />
+    <ClCompile Include="KFDataFactory.cpp" />
     <ClCompile Include="KFEntityEx.cpp" />
     <ClCompile Include="KFComponentEx.cpp" />
-    <ClCompile Include="KFKernelConfig.cpp" />
     <ClCompile Include="KFKernelModule.cpp" />
     <ClCompile Include="KFKernelPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFComponent.h" />
+    <ClInclude Include="KFKernelConfig.hpp" />
+    <ClInclude Include="KFDataFactory.hpp" />
     <ClInclude Include="KFEntity.h" />
     <ClInclude Include="KFEntityEx.hpp" />
     <ClInclude Include="KFComponentEx.hpp" />
-    <ClInclude Include="KFKernelConfig.hpp" />
     <ClInclude Include="KFKernelInterface.h" />
     <ClInclude Include="KFKernelModule.hpp" />
     <ClInclude Include="KFKernelPlugin.hpp" />

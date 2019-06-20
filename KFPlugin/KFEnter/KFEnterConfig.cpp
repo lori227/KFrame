@@ -2,32 +2,22 @@
 
 namespace KFrame
 {
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFEnterConfig::LoadConfig( const std::string& file )
+    KFEnterSetting* KFEnterConfig::CreateSetting( KFNode& xmlnode )
     {
-        _kf_enter_setting.clear();
-        //////////////////////////////////////////////////////////////////
-        KFXml kfxml( file );
-        auto config = kfxml.RootNode();
-        auto node = config.FindNode( "item" );
-        while ( node.IsValid() )
+        auto service = xmlnode.GetUInt32( "Service" );
+        auto channel = xmlnode.GetUInt32( "Channel" );
+        auto ok = KFGlobal::Instance()->CheckChannelService( channel, service );
+        if ( !ok )
         {
-            auto channelid = node.GetUInt32( "ChannelId" );
-            auto service = node.GetUInt32( "Service" );
-            if ( KFGlobal::Instance()->CheckChannelService( channelid, service ) )
-            {
-                KFEnterSetting setting;
-                setting._note_id = node.GetUInt32( "NoteId" );
-                setting._lua_file = node.GetString( "LuaFile" );
-                setting._lua_function = node.GetString( "LuaFunction" );
-
-                _kf_enter_setting.push_back( setting );
-            }
-
-            node.NextNode();
+            return nullptr;
         }
-        //////////////////////////////////////////////////////////////////
 
-        return true;
+        return KFIntConfigT< KFEnterSetting >::CreateSetting( xmlnode );
+    }
+
+    void KFEnterConfig::ReadSetting( KFNode& xmlnode, KFEnterSetting* kfsetting )
+    {
+        kfsetting->_lua_file = xmlnode.GetString( "LuaFile" );
+        kfsetting->_lua_function = xmlnode.GetString( "LuaFunction" );
     }
 }

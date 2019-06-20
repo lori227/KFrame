@@ -55,6 +55,10 @@ namespace KFrame
     class KFMySQLConfig : public KFConfig, public KFSingleton< KFMySQLConfig >
     {
     public:
+        KFMySQLConfig( const std::string& file )
+            : KFConfig( file )
+        {
+        }
 
         // 加载配置文件
         bool LoadConfig( const std::string& file );
@@ -69,7 +73,7 @@ namespace KFrame
     };
 
     ////////////////////////////////////////////////////////////////////////////
-    static auto* _kf_mysql_config = KFrame::KFMySQLConfig::Instance();
+    static auto* _kf_mysql_config = KFMySQLConfig::Instance( "mysql.setting" );
     ////////////////////////////////////////////////////////////////////////////
 }
 

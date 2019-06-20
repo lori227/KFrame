@@ -79,7 +79,7 @@ namespace KFrame
         {
             KFMsg::S2SQueryRelationToRelationReq req;
             req.set_playerid( playerid );
-            req.set_dataname( kfsetting->_data_name );
+            req.set_dataname( kfsetting->_id );
             SendToRelation( playerid, KFMsg::S2S_QUERY_RELATION_TO_RELATION_REQ, &req );
         }
 
@@ -88,14 +88,14 @@ namespace KFrame
         {
             KFMsg::S2SQueryRelationInviteToRelationReq req;
             req.set_playerid( playerid );
-            req.set_dataname( kfsetting->_data_name );
+            req.set_dataname( kfsetting->_id );
             SendToRelation( playerid, KFMsg::S2S_QUERY_RELATION_INVITE_TO_RELATION_REQ, &req );
         }
     }
 
     void KFRelationClientModule::OnEnterQueryRelation( KFEntity* player )
     {
-        for ( auto& iter : _kf_relation_client_config->_relation_list._objects )
+        for ( auto& iter : _kf_relation_client_config->_settings._objects )
         {
             auto kfsetting = iter.second;
             if ( !kfsetting->_online_load )
@@ -109,7 +109,7 @@ namespace KFrame
 
     void KFRelationClientModule::OnLeaveUpdateRelation( KFEntity* player )
     {
-        for ( auto& iter : _kf_relation_client_config->_relation_list._objects )
+        for ( auto& iter : _kf_relation_client_config->_settings._objects )
         {
             auto kfsetting = iter.second;
             if ( !kfsetting->_need_update )
@@ -121,7 +121,7 @@ namespace KFrame
             MapString values;
             values[ __KF_STRING__( status ) ] = __TO_STRING__( KFMsg::OfflineState );
             values[ __KF_STRING__( statustime ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time );
-            SendUpdateToRelation( player, kfsetting->_data_name, values );
+            SendUpdateToRelation( player, kfsetting->_id, values );
         }
     }
 
@@ -134,7 +134,7 @@ namespace KFrame
         }
 
         // 更新给关系, 属性变化了
-        for ( auto& iter : _kf_relation_client_config->_relation_list._objects )
+        for ( auto& iter : _kf_relation_client_config->_settings._objects )
         {
             auto kfsetting = iter.second;
             if ( !kfsetting->_need_update )
@@ -144,7 +144,7 @@ namespace KFrame
 
             MapString values;
             values[ kfdata->GetName() ] = kfdata->ToString();
-            SendUpdateToRelation( player, kfsetting->_data_name, values );
+            SendUpdateToRelation( player, kfsetting->_id, values );
         }
     }
 
@@ -246,7 +246,7 @@ namespace KFrame
             player->AddData( kfrecord, kfdata );
         }
 
-        auto kfsetting = _kf_relation_client_config->FindRelationSetting( kfmsg.dataname() );
+        auto kfsetting = _kf_relation_client_config->FindSetting( kfmsg.dataname() );
         if ( kfsetting != nullptr && kfsetting->_need_update )
         {
             // 通知关系,我上线了
@@ -286,7 +286,7 @@ namespace KFrame
             return;
         }
 
-        auto kfsetting = _kf_relation_client_config->FindRelationSetting( kfmsg.dataname() );
+        auto kfsetting = _kf_relation_client_config->FindSetting( kfmsg.dataname() );
         if ( kfsetting == nullptr )
         {
             return _kf_display->SendToClient( player, KFMsg::RelationSettingError );
@@ -459,7 +459,7 @@ namespace KFrame
             KFMsg::S2SDelRelationInviteToRelationReq req;
             req.set_selfplayerid( player->GetKeyID() );
             req.set_targetplayerid( kfinvite->GetKeyID() );
-            req.set_dataname( kfsetting->_data_name );
+            req.set_dataname( kfsetting->_id );
             SendToRelation( player->GetKeyID(), KFMsg::S2S_DEL_RELATION_INVITE_TO_RELATION_REQ, &req );
         }
         break;
@@ -474,10 +474,10 @@ namespace KFrame
     {
         // 判断自己的好友数量
         auto kfobject = player->GetData();
-        auto kfrecord = kfobject->FindData( kfsetting->_data_name );
+        auto kfrecord = kfobject->FindData( kfsetting->_id );
         if ( kfrecord == nullptr )
         {
-            return __LOG_ERROR__( "relation=[{}] record is null!", kfsetting->_data_name );
+            return __LOG_ERROR__( "relation=[{}] record is null!", kfsetting->_id );
         }
 
         // 判断数量
@@ -490,7 +490,7 @@ namespace KFrame
         KFMsg::S2SAddRelationToRelationReq req;
         req.set_playerid( playerid );
         req.set_playername( playername );
-        req.set_dataname( kfsetting->_data_name );
+        req.set_dataname( kfsetting->_id );
         auto ok = SendToRelation( player->GetKeyID(), KFMsg::S2S_ADD_RELATION_TO_RELATION_REQ, &req );
         if ( !ok )
         {
@@ -502,7 +502,7 @@ namespace KFrame
     {
         __SERVER_PROTO_PARSE__( KFMsg::S2SAddRelationToGameAck );
 
-        auto kfsetting = _kf_relation_client_config->FindRelationSetting( kfmsg.dataname() );
+        auto kfsetting = _kf_relation_client_config->FindSetting( kfmsg.dataname() );
         if ( kfsetting == nullptr )
         {
             return __LOG_ERROR__( "relation=[{}] no setting!", kfmsg.dataname() );
@@ -575,7 +575,7 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgSetRefuseRelationInviteReq );
 
-        auto kfsetting = _kf_relation_client_config->FindRelationSetting( kfmsg.dataname() );
+        auto kfsetting = _kf_relation_client_config->FindSetting( kfmsg.dataname() );
         if ( kfsetting == nullptr )
         {
             return __LOG_ERROR__( "relation=[{}] no setting!", kfmsg.dataname() );

@@ -8,12 +8,9 @@
 namespace KFrame
 {
     /////////////////////////////////////////////////////////////////////////////////
-    class KFCompoundSetting
+    class KFCompoundSetting : public KFIntSetting
     {
     public:
-        // 合成id
-        uint32 _id = 0u;
-
         // 属性名字
         std::string _data_name;
 
@@ -28,24 +25,21 @@ namespace KFrame
     };
 
     ////////////////////////////////////////////////////////////////////////////////////
-    class KFCompoundConfig : public KFConfig, public KFSingleton< KFCompoundConfig >
+    class KFCompoundConfig : public KFIntConfigT< KFCompoundSetting >, public KFSingleton< KFCompoundConfig >
     {
     public:
-        KFCompoundConfig() = default;
-        ~KFCompoundConfig() = default;
+        KFCompoundConfig( const std::string& file, bool isclear )
+            : KFIntConfigT< KFCompoundSetting >( file, isclear )
+        {
+        }
 
-        bool LoadConfig( const std::string& file );
-
-        // 查找配置
-        const KFCompoundSetting* FindCompoundSetting( uint32 id );
-
-    public:
-        // 称号列表
-        KFMap< uint32, uint32, KFCompoundSetting > _compound_setting;
+    protected:
+        // 读取配置
+        void ReadSetting( KFNode& xmlnode, KFCompoundSetting* kfsetting );
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_compound_config = KFCompoundConfig::Instance();
+    static auto _kf_compound_config = KFCompoundConfig::Instance( "compound.xml", true );
     //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 

@@ -56,7 +56,7 @@ namespace KFrame
         __CLIENT_PROTO_PARSE__( KFMsg::MsgApplyPayOrderReq );
 
         // 申请充值订单号
-        auto kfsetting = _kf_pay_config->FindPaySetting( kfmsg.payid() );
+        auto kfsetting = _kf_pay_config->FindSetting( kfmsg.payid() );
         if ( kfsetting == nullptr )
         {
             return _kf_display->SendToClient( player, KFMsg::PayIdError );
@@ -68,7 +68,7 @@ namespace KFrame
         // 发送给auth服务器
         static auto _url = _kf_ip_address->GetAuthUrl() + __KF_STRING__( applyorder );
 
-        __JSON_DOCUMENT__( kfjson );
+        __JSON_OBJECT_DOCUMENT__( kfjson );
         __JSON_SET_VALUE__( kfjson, __KF_STRING__( order ), order );
         __JSON_SET_VALUE__( kfjson, __KF_STRING__( playerid ), playerid );
         __JSON_SET_VALUE__( kfjson, __KF_STRING__( payid ), kfsetting->_id );
@@ -122,7 +122,7 @@ namespace KFrame
         {
             static auto _url = _kf_ip_address->GetAuthUrl() + __KF_STRING__( removeorder );
 
-            __JSON_DOCUMENT__( kfjson );
+            __JSON_OBJECT_DOCUMENT__( kfjson );
             __JSON_SET_VALUE__( kfjson, __KF_STRING__( order ), kfmsg.order() );
             _kf_http_client->MTGet< KFPayModule >( _url, kfjson );
         }
@@ -152,7 +152,7 @@ namespace KFrame
     {
         static auto _url = _kf_ip_address->GetAuthUrl() + __KF_STRING__( querypay );
 
-        __JSON_DOCUMENT__( kfjson );
+        __JSON_OBJECT_DOCUMENT__( kfjson );
         __JSON_SET_VALUE__( kfjson, __KF_STRING__( playerid ), playerid );
         _kf_http_client->MTGet< KFPayModule >( _url, kfjson, this, &KFPayModule::OnHttpQueryPayCallBack );
     }
@@ -197,7 +197,7 @@ namespace KFrame
     {
         __LOG_INFO__( "player=[{}] payid=[{}] order=[{}] add element!", player->GetKeyID(), payid, order );
 
-        auto kfsetting = _kf_pay_config->FindPaySetting( payid );
+        auto kfsetting = _kf_pay_config->FindSetting( payid );
         if ( kfsetting == nullptr )
         {
             return __LOG_ERROR__( "payid=[{}] can't find setting!", payid );
@@ -228,7 +228,7 @@ namespace KFrame
         // 通知服务器, 更新充值状态
         static auto _url = _kf_ip_address->GetAuthUrl() + __KF_STRING__( finishpay );
 
-        __JSON_DOCUMENT__( kfjson );
+        __JSON_OBJECT_DOCUMENT__( kfjson );
         __JSON_SET_VALUE__( kfjson, __KF_STRING__( order ), order );
         __JSON_SET_VALUE__( kfjson, __KF_STRING__( playerid ), player->GetKeyID() );
         _kf_http_client->MTGet< KFPayModule >( _url, kfjson );

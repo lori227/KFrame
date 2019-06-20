@@ -48,7 +48,7 @@ namespace KFrame
 
     uint32 KFTaskModule::ReceiveTaskReward( KFEntity* player, uint32 taskid )
     {
-        auto kfsetting = _kf_task_config->FindTaskSetting( taskid );
+        auto kfsetting = _kf_task_config->FindSetting( taskid );
         if ( kfsetting == nullptr )
         {
             return KFMsg::TaskCanNotFind;
@@ -173,7 +173,7 @@ namespace KFrame
     __KF_UPDATE_DATA_FUNCTION__( KFTaskModule::OnUpdateTaskValueCallBack )
     {
         // 判断是否满足完成条件
-        auto kfsetting = _kf_task_config->FindTaskSetting( static_cast< uint32 >( key ) );
+        auto kfsetting = _kf_task_config->FindSetting( static_cast< uint32 >( key ) );
         if ( kfsetting == nullptr || newvalue < kfsetting->_done_value )
         {
             return;
@@ -204,7 +204,7 @@ namespace KFrame
 
     __KF_UPDATE_DATA_FUNCTION__( KFTaskModule::OnUpdateTaskStatusCallBack )
     {
-        auto kfsetting = _kf_task_config->FindTaskSetting( static_cast< uint32 >( key ) );
+        auto kfsetting = _kf_task_config->FindSetting( static_cast< uint32 >( key ) );
         if ( kfsetting == nullptr )
         {
             return;

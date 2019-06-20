@@ -147,7 +147,7 @@ namespace KFrame
             return std::make_tuple( KFDataDefine::Show_None, nullptr );
         }
 
-        auto kfsetting = _kf_hero_config->FindHeroSetting( kfelementobject->_config_id );
+        auto kfsetting = _kf_hero_config->FindSetting( kfelementobject->_config_id );
         if ( kfsetting == nullptr )
         {
             __LOG_ERROR_FUNCTION__( function, line, " hero id=[{}] setting = null!", kfelementobject->_config_id );
@@ -205,7 +205,7 @@ namespace KFrame
 
     __KF_REMOVE_DATA_FUNCTION__( KFHeroModule::OnRemoveHeroCallBack )
     {
-        auto kfsetting = _kf_hero_config->FindHeroSetting( static_cast< uint32 >( key ) );
+        auto kfsetting = _kf_hero_config->FindSetting( static_cast< uint32 >( key ) );
         if ( kfsetting == nullptr )
         {
             return;

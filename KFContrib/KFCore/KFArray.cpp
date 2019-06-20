@@ -1,5 +1,4 @@
 ﻿#include "KFArray.h"
-#include "KFDataFactory.h"
 
 namespace KFrame
 {
@@ -17,18 +16,8 @@ namespace KFrame
     {
         KFData::Initialize( classsetting, datasetting );
 
-        auto size = KFUtility::ToValue<uint32>( datasetting->_init_value ) + KFDataDefine::Array_Index;
+        auto size = datasetting->_max_value + KFDataDefine::Array_Index;
         _data.Resize( size );
-
-        for ( uint32 i = KFDataDefine::Array_Index; i < size; ++i )
-        {
-            auto kfdata = KFDataFactory::Create( _data_setting->_contain_class );
-            kfdata->SetParent( this );
-            kfdata->Initialize( classsetting, datasetting );
-
-            kfdata->SetValue( 0u );
-            _data.Insert( i, kfdata );
-        }
     }
 
     void KFArray::Reset()
@@ -119,6 +108,7 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFArray::AddData( uint64 key, KFData* data )
     {
+        data->SetParent( this );
         _data.Insert( static_cast<uint32>( key ), data );
         return true;
     }
@@ -163,9 +153,7 @@ namespace KFrame
 
     std::string KFArray::ToString()
     {
-        __JSON_DOCUMENT__( kfjson );
-        kfjson.SetArray();
-
+        __JSON_ARRAY_DOCUMENT__( kfjson );
         for ( auto kfdata : _data._objects )
         {
             if ( kfdata != nullptr )
@@ -188,7 +176,7 @@ namespace KFrame
             if ( kfdata != nullptr )
             {
                 auto& object = __JSON_ARRAY_INDEX__( kfjson, i );
-                kfdata->FromString( object.GetString() );
+                kfdata->SetValue( object.GetUint() );
             }
         }
     }

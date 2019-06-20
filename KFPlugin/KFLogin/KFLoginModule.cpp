@@ -86,7 +86,7 @@ namespace KFrame
         auto _url = _kf_ip_address->GetAuthUrl() + __KF_STRING__( zoneregister );
 
         // 注册小区信息
-        __JSON_DOCUMENT__( kfjson );
+        __JSON_OBJECT_DOCUMENT__( kfjson );
         __JSON_SET_VALUE__( kfjson, __KF_STRING__( zoneid ), zone->_id );
         __JSON_SET_VALUE__( kfjson, __KF_STRING__( name ), zone->_name );
 
@@ -115,7 +115,7 @@ namespace KFrame
             auto kfzone = _kf_zone->GetZone();
             static auto _url = _kf_ip_address->GetAuthUrl() + __KF_STRING__( zoneupdate );
 
-            __JSON_DOCUMENT__( kfjson );
+            __JSON_OBJECT_DOCUMENT__( kfjson );
             __JSON_SET_VALUE__( kfjson, __KF_STRING__( zoneid ), kfzone->_id );
             __JSON_SET_VALUE__( kfjson, __KF_STRING__( ip ), _zone_data.ip() );
             __JSON_SET_VALUE__( kfjson, __KF_STRING__( port ), _zone_data.port() );
@@ -138,7 +138,7 @@ namespace KFrame
         auto kfzone = _kf_zone->GetZone();
         static auto _url = _kf_ip_address->GetAuthUrl() + __KF_STRING__( zoneremove );
 
-        __JSON_DOCUMENT__( kfjson );
+        __JSON_OBJECT_DOCUMENT__( kfjson );
         __JSON_SET_VALUE__( kfjson, __KF_STRING__( zoneid ), kfzone->_id );
         __JSON_SET_VALUE__( kfjson, __KF_STRING__( appid ), netdata->_id );
         _kf_http_client->MTGet< KFLoginModule >( _url, kfjson );
@@ -174,7 +174,7 @@ namespace KFrame
         }
 
         // 访问平台服务器, 验证token
-        __JSON_DOCUMENT__( sendjson );
+        __JSON_OBJECT_DOCUMENT__( sendjson );
         __JSON_SET_VALUE__( sendjson, __KF_STRING__( ip ), kfmsg.ip() );
         __JSON_SET_VALUE__( sendjson, __KF_STRING__( gateid ), gateid );
         __JSON_SET_VALUE__( sendjson, __KF_STRING__( token ), kfmsg.token() );

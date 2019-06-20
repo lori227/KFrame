@@ -1,59 +1,62 @@
 ﻿#ifndef __KF_CHANNEL_CONFIG_H__
 #define __KF_CHANNEL_CONFIG_H__
 
-#include "KFrame.h"
 #include "KFConfig/KFConfigInterface.h"
 
 namespace KFrame
 {
-    class KFChannelSetting
+    class KFChannelSetting : public KFIntSetting
     {
     public:
-        KFChannelSetting()
-        {
-            _channel_id = 0;
-            _debug_open = true;
-            _release_open = false;
-        }
-
+        // 是否开启
         bool IsOpen() const;
 
+        // 是否支持
+        bool IsSupport( uint32 channel ) const;
     public:
-        uint32 _channel_id;
+        // 登录验证地址
         std::string _login_url;
-        std::string _pay_url;
-        std::string _app_id;
-        std::string _app_key;
-        bool _release_open;
-        bool _debug_open;
-    };
 
-    class KFChannelConfig : public KFConfig, public KFSingleton< KFChannelConfig >
+        // 充值验证地址
+        std::string _pay_url;
+
+        // appid
+        std::string _app_id;
+
+        // appkey
+        std::string _app_key;
+
+        // debug 是否开放
+        bool _debug_open = true;
+
+        // release 是否开放
+        bool _release_open = true;
+
+        // 额外开放的渠道
+        std::set< uint32 > _support_list;
+    };
+    ////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////
+    class KFChannelConfig : public KFIntConfigT< KFChannelSetting >, public KFSingleton< KFChannelConfig >
     {
     public:
-
-        // 加载配置文件
-        bool LoadConfig( const std::string& file );
+        KFChannelConfig( const std::string& file, bool isclear )
+            : KFIntConfigT< KFChannelSetting >( file, isclear )
+        {
+        }
 
         // 渠道是否开放
-        bool IsChannelOpen( uint32 channel );
+    protected:
+        // 创建配置
+        KFChannelSetting* CreateSetting( KFNode& xmlnode );
 
-        // 查找渠道配置
-        const KFChannelSetting* FindChannelSetting( uint32 channel );
-
-    public:
-        //////////////////////////////////////////////
-        KFHashMap< uint32, uint32, KFChannelSetting > _kf_channel;
-
-        // 渠道开放列表
-        std::set< uint32 > _open_channel_list;
+        // 读取配置
+        void ReadSetting( KFNode& xmlnode, KFChannelSetting* kfsetting );
     };
 
-
     ////////////////////////////////////////////////////////////////////////////
-    static auto _kf_channel_config = KFChannelConfig::Instance();
+    static auto _kf_channel_config = KFChannelConfig::Instance( "channel.xml", true );
     ////////////////////////////////////////////////////////////////////////////
-
 }
 
 

@@ -2,7 +2,7 @@
 #define __KF_ENTITY_H__
 
 #include "KFCore/KFElement.h"
-#include "KFCore/KFClassSetting.h"
+#include "KFCore/KFDataSetting.h"
 
 namespace KFrame
 {
@@ -34,17 +34,29 @@ namespace KFrame
         // 创建属性
         virtual KFData* CreateData( const std::string& dataname ) = 0;
         virtual KFData* CreateData( const std::string& dataname, uint64 key ) = 0;
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // 添加属性
         virtual bool AddData( KFData* kfparent, KFData* kfdata ) = 0;
         virtual bool AddData( KFData* kfparent, uint64 key, KFData* kfdata ) = 0;
         virtual bool AddData( const std::string& parentname, uint64 key, KFData* kfdata ) = 0;
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // 删除属性
         virtual bool RemoveData( const std::string& dataname, uint64 key ) = 0;
         virtual bool RemoveData( KFData* kfparent, uint64 key ) = 0;
         virtual bool RemoveData( const std::string& dataname ) = 0;
         virtual bool RemoveData( const std::string& parentname, const std::string& dataname ) = 0;
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        // 移动属性
+        virtual bool MoveData( const std::string& sourcename, uint64 key, const std::string& targetname ) = 0;
+        virtual bool MoveData( KFData* sourcedata, uint64 key, KFData* targetdata ) = 0;
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // 更新属性
         // 更新1层属性 如:money 直接属于player下的属性
@@ -85,7 +97,9 @@ namespace KFrame
         virtual void RemoveElement( const KFElements* kfelements, const char* function, uint32 line, float multiple = 1.0f ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+        // 设置element到kfdata对象
+        virtual void UpdateElementToData( KFElementObject* kfelement, KFData* kfdata, float multiple = 1.0f ) = 0;
+        virtual void SetElementToData( KFElementObject* kfelement, KFData* kfdata, float multiple = 1.0f ) = 0;
     };
 }
 

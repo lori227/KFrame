@@ -20,17 +20,9 @@ namespace KFrame
     void KFIpAddressModule::InitModule()
     {
         __KF_ADD_CONFIG__( _kf_ip_config, false );
-    }
 
-    void KFIpAddressModule::ShutDown()
-    {
-        __KF_REMOVE_CONFIG__( _kf_ip_config );
-    }
-
-    void KFIpAddressModule::AfterLoad()
-    {
+        // 计算ip地址
         auto kfglobal = KFGlobal::Instance();
-
         kfglobal->_local_ip = GetLocalIp();
         if ( kfglobal->_net_type == KFServerEnum::Internet )
         {
@@ -44,6 +36,10 @@ namespace KFrame
         __LOG_INFO__( "localip=[{}], interanetip=[{}]", kfglobal->_local_ip, kfglobal->_interanet_ip );
     }
 
+    void KFIpAddressModule::ShutDown()
+    {
+        __KF_REMOVE_CONFIG__( _kf_ip_config );
+    }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////

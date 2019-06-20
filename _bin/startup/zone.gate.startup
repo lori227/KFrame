@@ -8,7 +8,7 @@
 
 	<Plugins>
 		<Plugin Name="KFZone" Config="./setting/{}_{}_zone.setting"/>	
-		<Plugin Name="KFOption" Config="./config/option.config"/>	
+		<Plugin Name="KFOption" Config="./config/option.xml"/>	
 		<Plugin Name="KFDeployClient" Config=""/>	
 		<Plugin Name="KFTimer" Config=""/>	
 		<Plugin Name="KFDisplay" Config=""/>	

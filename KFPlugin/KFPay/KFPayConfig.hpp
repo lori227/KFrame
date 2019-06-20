@@ -10,12 +10,9 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     // 充值配置
-    class KFPaySetting
+    class KFPaySetting : public KFStrSetting
     {
     public:
-        // 充值id
-        std::string _id;
-
         // 价钱( 单位: 分 )
         uint32 _price;
 
@@ -29,27 +26,21 @@ namespace KFrame
         KFElements _first_elements;
     };
 
-    class KFPayConfig : public KFConfig, public KFSingleton< KFPayConfig >
+    class KFPayConfig : public KFStrConfigT< KFPaySetting >, public KFSingleton< KFPayConfig >
     {
     public:
-        KFPayConfig()
+        KFPayConfig( const std::string& file, bool isclear )
+            : KFStrConfigT<KFPaySetting >( file, isclear )
         {
-            _file = "pay.config";
         }
 
-        // 加载配置
-        bool LoadConfig( const std::string& file );
-
-        // 查找商品配置
-        const KFPaySetting* FindPaySetting( const std::string& id ) const;
-
-    private:
-        // 商品列表
-        KFHashMap< std::string, const std::string&, KFPaySetting > _pay_list;
+    protected:
+        // 读取配置
+        void ReadSetting( KFNode& xmlnode, KFPaySetting* kfsetting );
     };
 
     //////////////////////////////////////////////////////////////////////////
-    static auto _kf_pay_config = KFPayConfig::Instance();
+    static auto _kf_pay_config = KFPayConfig::Instance( "pay.xml", true );
     //////////////////////////////////////////////////////////////////////////
 }
 

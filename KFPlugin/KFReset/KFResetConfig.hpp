@@ -25,10 +25,9 @@ namespace KFrame
         uint32 _value;				// 操作的初始值
     };
 
-    class KFResetSetting
+    class KFResetSetting : public KFIntSetting
     {
     public:
-        uint32 _note_id;		// 保存时间的变量id
         uint32 _time_type;		// 重置时间类型
         uint32 _time_value;		// 重置的时间点( 根据类型来判断 )
         uint32 _time_hour;		// 时间点( 小时 )
@@ -36,26 +35,21 @@ namespace KFrame
     };
 
     ////////////////////////////////////////////////////////////////////////////////////
-
-    class KFResetConfig : public KFConfig, public KFSingleton< KFResetConfig >
+    class KFResetConfig : public KFIntConfigT< KFResetSetting >, public KFSingleton< KFResetConfig >
     {
     public:
-        KFResetConfig();
-        ~KFResetConfig();
-
-        bool LoadConfig( const std::string& file );
+        KFResetConfig( const std::string& file, bool isclear )
+            : KFIntConfigT< KFResetSetting >( file, isclear )
+        {
+        }
 
     protected:
-        // 添加重置数据
-        void AddResetData( uint32 noteid, uint32 resettype, uint32 resettime, uint32 timehour, const KFResetData& resetdata );
-
-    public:
-        // 重置列表
-        KFHashMap< uint32, uint32, KFResetSetting > _reset_setting;
+        // 读取配置
+        void ReadSetting( KFNode& xmlnode, KFResetSetting* kfsetting );
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_reset_config = KFResetConfig::Instance();
+    static auto _kf_reset_config = KFResetConfig::Instance( "reset.xml", true );
     //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 

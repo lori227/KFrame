@@ -3,44 +3,22 @@
 namespace KFrame
 {
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    const KFMailSetting* KFMailConfig::FindMailSetting( uint32 configid ) const
+    void KFMailConfig::ReadSetting( KFNode& xmlnode, KFMailSetting* kfsetting )
     {
-        return _mail_setting.Find( configid );
-    }
+        kfsetting->_type = xmlnode.GetUInt32( "Type" );
+        kfsetting->_reply_id = xmlnode.GetUInt32( "ReplyId" );
 
-    bool KFMailConfig::LoadConfig( const std::string& file )
-    {
-        _mail_setting.Clear();
-        //////////////////////////////////////////////////////////////////
-        KFXml kfxml( file );
-        auto config = kfxml.RootNode();
-        auto setting = config.FindNode( "item" );
-        while ( setting.IsValid() )
-        {
-            auto configid = setting.GetUInt32( "ConfigId" );
-            auto kfsetting = _mail_setting.Create( configid );
+        kfsetting->_title = xmlnode.GetString( "Title" );
+        KFUtility::ReplaceString( kfsetting->_title, " ", "" );
 
-            kfsetting->_config_id = configid;
-            kfsetting->_type = setting.GetUInt32( "Type" );
-            kfsetting->_reply_id = setting.GetUInt32( "ReplyId" );
+        kfsetting->_content = xmlnode.GetString( "Content" );
+        KFUtility::ReplaceString( kfsetting->_content, " ", "" );
 
-            kfsetting->_title = setting.GetString( "Title" );
-            KFUtility::ReplaceString( kfsetting->_title, " ", "" );
+        kfsetting->_valid_time = xmlnode.GetUInt32( "ValidTime" ) * KFTimeEnum::OneDaySecond;
+        kfsetting->_extend = xmlnode.GetString( "Extend" );
+        KFUtility::ReplaceString( kfsetting->_extend, " ", "" );
 
-            kfsetting->_content = setting.GetString( "Content" );
-            KFUtility::ReplaceString( kfsetting->_content, " ", "" );
-
-            kfsetting->_valid_time = setting.GetUInt32( "ValidTime" ) * KFTimeEnum::OneDaySecond;
-            kfsetting->_extend = setting.GetString( "Extend" );
-            KFUtility::ReplaceString( kfsetting->_extend, " ", "" );
-
-            auto stragent = setting.GetString( "Reward" );
-            kfsetting->_rewards.Parse( stragent, __FUNC_LINE__ );
-
-            setting.NextNode();
-        }
-        //////////////////////////////////////////////////////////////////
-
-        return true;
+        auto stragent = xmlnode.GetString( "Reward" );
+        kfsetting->_rewards.Parse( stragent, __FUNC_LINE__ );
     }
 }

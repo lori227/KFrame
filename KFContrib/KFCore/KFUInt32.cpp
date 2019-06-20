@@ -6,11 +6,29 @@ namespace KFrame
     {
         _data = _invalid_int;
         _type = KFDataDefine::Type_UInt32;
-
     }
 
     KFUInt32::~KFUInt32()
     {
+    }
+
+    uint32 KFUInt32::GetUInt32()
+    {
+        return _data;
+    }
+
+    uint32 KFUInt32::SetUInt32( uint32 value )
+    {
+        _data = value;
+        if ( _data_setting->_max_value != 0 )
+        {
+            if ( _data > _data_setting->_max_value )
+            {
+                _data = _data_setting->_max_value;
+            }
+        }
+
+        return _data;
     }
 
     void KFUInt32::Reset()
@@ -23,6 +41,18 @@ namespace KFrame
         return _data != _invalid_int;
     }
 
+    bool KFUInt32::IsFull()
+    {
+        if ( _data_setting->_max_value != 0 )
+        {
+            if ( _data >= _data_setting->_max_value )
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
     ////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////
     void KFUInt32::CopyFrom( KFData* kfother )
@@ -43,6 +73,6 @@ namespace KFrame
 
     void KFUInt32::FromString( const std::string& value )
     {
-        _data = KFUtility::ToValue<uint32>( value );
+        SetUInt32( KFUtility::ToValue<uint32>( value ) );
     }
 }

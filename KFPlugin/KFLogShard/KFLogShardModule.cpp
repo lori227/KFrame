@@ -39,7 +39,7 @@ namespace KFrame
 
         auto kfglobal = KFGlobal::Instance();
 
-        __JSON_DOCUMENT__( response );
+        __JSON_OBJECT_DOCUMENT__( response );
         __JSON_SET_VALUE__( response, __KF_STRING__( appname ), kfglobal->_app_name );
         __JSON_SET_VALUE__( response, __KF_STRING__( apptype ), kfglobal->_app_type );
         __JSON_SET_VALUE__( response, __KF_STRING__( appid ), kfglobal->_app_id->GetId() );

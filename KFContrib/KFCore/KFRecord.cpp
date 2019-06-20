@@ -1,5 +1,4 @@
 ﻿#include "KFRecord.h"
-#include "KFDataFactory.h"
 
 namespace KFrame
 {
@@ -29,6 +28,19 @@ namespace KFrame
         return _data.Size();
     }
 
+    bool KFRecord::IsFull()
+    {
+        if ( _data_setting->_max_value != 0u )
+        {
+            if ( Size() >= _data_setting->_max_value )
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     KFData* KFRecord::FirstData()
     {
         return _data.First();
@@ -41,18 +53,19 @@ namespace KFrame
 
     void KFRecord::CopyFrom( KFData* kfother )
     {
-        auto kfchild = kfother->FirstData();
-        while ( kfchild != nullptr )
-        {
-            auto kfdata = KFDataFactory::CreateData( kfchild->GetDataSetting() );
-            if ( kfdata != nullptr )
-            {
-                kfdata->CopyFrom( kfchild );
-                AddData( kfdata->GetKeyID(), kfdata );
-            }
+        __LOG_ERROR__( "record can't copy anohter!" );
+        //auto kfchild = kfother->FirstData();
+        //while ( kfchild != nullptr )
+        //{
+        //    auto kfdata = KFDataFactory::CreateData( kfchild->GetDataSetting() );
+        //    if ( kfdata != nullptr )
+        //    {
+        //        kfdata->CopyFrom( kfchild );
+        //        AddData( kfdata->GetKeyID(), kfdata );
+        //    }
 
-            kfchild = kfother->NextData();
-        }
+        //    kfchild = kfother->NextData();
+        //}
     }
 
     void KFRecord::SaveTo( KFData* kfother )
@@ -145,6 +158,17 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    KFData* KFRecord::MoveData( uint64 key )
+    {
+        auto kfdata = _data.Find( key );
+        if ( kfdata != nullptr )
+        {
+            _data.Remove( key, false );
+        }
+
+        return kfdata;
+    }
+
     bool KFRecord::RemoveData( uint64 key )
     {
         return _data.Remove( key );
@@ -207,7 +231,7 @@ namespace KFrame
         MapString values;
         ToMap( values );
 
-        __JSON_DOCUMENT__( kfjson );
+        __JSON_OBJECT_DOCUMENT__( kfjson );
         __JSON_FROM_MAP__( kfjson, values );
         return __JSON_SERIALIZE__( kfjson );
     }
@@ -234,18 +258,20 @@ namespace KFrame
 
     void KFRecord::FromMap( const MapString& values )
     {
-        for ( auto iter : values )
-        {
-            auto kfdata = KFDataFactory::CreateData( _data_setting );
-            if ( kfdata == nullptr )
-            {
-                continue;
-            }
+        __LOG_ERROR__( "record can't copy from map!" );
 
-            auto key = KFUtility::ToValue< uint64 >( iter.first );
-            kfdata->SetKeyID( key );
-            kfdata->FromString( iter.second );
-            AddData( key, kfdata );
-        }
+        //for ( auto iter : values )
+        //{
+        //    auto kfdata = KFDataFactory::CreateData( _data_setting );
+        //    if ( kfdata == nullptr )
+        //    {
+        //        continue;
+        //    }
+
+        //    auto key = KFUtility::ToValue< uint64 >( iter.first );
+        //    kfdata->SetKeyID( key );
+        //    kfdata->FromString( iter.second );
+        //    AddData( key, kfdata );
+        //}
     }
 }

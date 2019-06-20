@@ -185,6 +185,17 @@ namespace KFrame
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    KFData* KFObject::MoveData( const std::string& dataname )
+    {
+        auto kfdata = _data.Find( dataname );
+        if ( kfdata != nullptr )
+        {
+            _data.Remove( dataname, false );
+        }
+
+        return kfdata;
+    }
+
     bool KFObject::RemoveData( const std::string& dataname )
     {
         return _data.Remove( dataname );
@@ -217,7 +228,7 @@ namespace KFrame
         MapString values;
         ToMap( values );
 
-        __JSON_DOCUMENT__( kfjson );
+        __JSON_OBJECT_DOCUMENT__( kfjson );
         __JSON_FROM_MAP__( kfjson, values );
         return __JSON_SERIALIZE__( kfjson );
     }

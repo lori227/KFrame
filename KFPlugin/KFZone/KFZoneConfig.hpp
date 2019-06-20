@@ -12,8 +12,10 @@ namespace KFrame
     class KFZoneConfig : public KFConfig, public KFSingleton< KFZoneConfig >
     {
     public:
-        KFZoneConfig() = default;
-        ~KFZoneConfig() = default;
+        KFZoneConfig( const std::string& file )
+            : KFConfig( file )
+        {
+        }
 
         // 加载配置
         bool LoadConfig( const std::string& file );
@@ -37,7 +39,7 @@ namespace KFrame
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_zone_config = KFZoneConfig::Instance();
+    static auto _kf_zone_config = KFZoneConfig::Instance( "zone.setting" );
     //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 

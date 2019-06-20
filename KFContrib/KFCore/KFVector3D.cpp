@@ -12,6 +12,17 @@ namespace KFrame
     {
     }
 
+    const Math3D::Vector3D& KFVector3D::GetVector3D()
+    {
+        return _data;
+    }
+
+    const Math3D::Vector3D& KFVector3D::SetVector3D( Math3D::Vector3D& value )
+    {
+        _data = value;
+        return _data;
+    }
+
     void KFVector3D::Reset()
     {
         _data.Set( 0.0f, 0.0f, 0.0f );

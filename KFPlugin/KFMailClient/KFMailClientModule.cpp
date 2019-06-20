@@ -331,7 +331,7 @@ namespace KFrame
         _mail_data.clear();
 
         // 配置id
-        _mail_data.insert( std::make_pair( __KF_STRING__( configid ), __TO_STRING__( kfsetting->_config_id ) ) );
+        _mail_data.insert( std::make_pair( __KF_STRING__( configid ), __TO_STRING__( kfsetting->_id ) ) );
 
         // 类型
         _mail_data.insert( std::make_pair( __KF_STRING__( type ), __TO_STRING__( kfsetting->_type ) ) );
@@ -399,7 +399,7 @@ namespace KFrame
 
     bool KFMailClientModule::SendMail( uint32 configid, const KFElements* kfelements )
     {
-        auto kfsetting = _kf_mail_config->FindMailSetting( configid );
+        auto kfsetting = _kf_mail_config->FindSetting( configid );
         if ( kfsetting == nullptr )
         {
             return false;
@@ -414,7 +414,7 @@ namespace KFrame
 
     bool KFMailClientModule::SendMail( uint64 recvid, uint32 configid, const KFElements* kfelements )
     {
-        auto kfsetting = _kf_mail_config->FindMailSetting( configid );
+        auto kfsetting = _kf_mail_config->FindSetting( configid );
         if ( kfsetting == nullptr )
         {
             return false;
@@ -426,7 +426,7 @@ namespace KFrame
 
     bool KFMailClientModule::SendMail( KFEntity* player, uint64 recvid, uint32 configid, const KFElements* kfelements )
     {
-        auto kfsetting = _kf_mail_config->FindMailSetting( configid );
+        auto kfsetting = _kf_mail_config->FindSetting( configid );
         if ( kfsetting == nullptr )
         {
             return false;

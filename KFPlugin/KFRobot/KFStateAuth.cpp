@@ -14,7 +14,7 @@ namespace KFrame
 
     void KFStateAuth::RunState( KFFsm* fsm, KFRobot* robot )
     {
-        __JSON_DOCUMENT__( kfjson );
+        __JSON_OBJECT_DOCUMENT__( kfjson );
         __JSON_SET_VALUE__( kfjson, __KF_STRING__( channel ), 1 );
         __JSON_SET_VALUE__( kfjson, __KF_STRING__( account ), robot->_account );
 

@@ -5,16 +5,12 @@
 
 namespace KFrame
 {
-    class KFHeroSetting
+    class KFHeroSetting : public KFIntSetting
     {
     public:
         // 是否拥有皮肤
         bool HaveSkin( uint32 skinid ) const;
     public:
-
-        // 英雄id
-        uint32 _id{ 0 };
-
         // 品质
         uint32 _quality;
 
@@ -26,24 +22,21 @@ namespace KFrame
     };
     ////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
-    class KFHeroConfig : public KFConfig, public KFSingleton< KFHeroConfig >
+    class KFHeroConfig : public KFIntConfigT< KFHeroSetting >, public KFSingleton< KFHeroConfig >
     {
     public:
-        KFHeroConfig() = default;
-        ~KFHeroConfig() = default;
+        KFHeroConfig( const std::string& file, bool isclear )
+            : KFIntConfigT< KFHeroSetting >( file, isclear )
+        {
+        }
 
-        // 查找配置
-        const KFHeroSetting* FindHeroSetting( uint32 heroid ) const;
-
+    protected:
         // 读取配置
-        bool LoadConfig( const std::string& file );
-    private:
-        // 英雄列表
-        KFHashMap< uint32, uint32, KFHeroSetting > _hero_setting;
+        void ReadSetting( KFNode& xmlnode, KFHeroSetting* kfsetting );
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_hero_config = KFHeroConfig::Instance();
+    static auto _kf_hero_config = KFHeroConfig::Instance( "hero.xml", true );
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 

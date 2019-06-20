@@ -3,31 +3,22 @@
 namespace KFrame
 {
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFLeaveConfig::LoadConfig( const std::string& file )
+    KFLeaveSetting* KFLeaveConfig::CreateSetting( KFNode& xmlnode )
     {
-        _kf_leave_setting.clear();
-        //////////////////////////////////////////////////////////////////
-        KFXml kfxml( file );
-        auto config = kfxml.RootNode();
-        auto node = config.FindNode( "item" );
-        while ( node.IsValid() )
+        auto service = xmlnode.GetUInt32( "Service" );
+        auto channel = xmlnode.GetUInt32( "Channel" );
+        auto ok = KFGlobal::Instance()->CheckChannelService( channel, service );
+        if ( !ok )
         {
-            auto channelid = node.GetUInt32( "ChannelId" );
-            auto service = node.GetUInt32( "Service" );
-            if ( KFGlobal::Instance()->CheckChannelService( channelid, service ) )
-            {
-                KFLeaveSetting setting;
-                setting._note_id = node.GetUInt32( "NoteId" );
-                setting._lua_file = node.GetString( "LuaFile" );
-                setting._lua_function = node.GetString( "LuaFunction" );
-
-                _kf_leave_setting.push_back( setting );
-            }
-
-            node.NextNode();
+            return nullptr;
         }
-        //////////////////////////////////////////////////////////////////
 
-        return true;
+        return KFIntConfigT< KFLeaveSetting >::CreateSetting( xmlnode );
+    }
+
+    void KFLeaveConfig::ReadSetting( KFNode& xmlnode, KFLeaveSetting* kfsetting )
+    {
+        kfsetting->_lua_file = xmlnode.GetString( "LuaFile" );
+        kfsetting->_lua_function = xmlnode.GetString( "LuaFunction" );
     }
 }

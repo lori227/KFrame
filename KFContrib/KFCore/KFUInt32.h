@@ -16,6 +16,9 @@ namespace KFrame
         // 是否有效
         virtual bool IsValid();
 
+        // 是否达到了最大值
+        virtual bool IsFull();
+
         // 保存 赋值
         virtual void CopyFrom( KFData* kfother );
         virtual void SaveTo( KFData* kfother );
@@ -26,12 +29,8 @@ namespace KFrame
 
     protected:
         //////////////////////////////////////////////////////////////////////////////////////////////////////
-        virtual uint32 GetUInt32() {
-            return _data;
-        }
-        virtual void SetUInt32( uint32 value ) {
-            _data = value;
-        }
+        virtual uint32 GetUInt32();
+        virtual uint32 SetUInt32( uint32 value );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private:

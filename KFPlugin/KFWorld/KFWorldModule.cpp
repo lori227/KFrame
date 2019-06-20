@@ -52,7 +52,7 @@ namespace KFrame
         // 更新给auth
         static auto _url = _kf_ip_address->GetAuthUrl() + __KF_STRING__( worldregister );
 
-        __JSON_DOCUMENT__( sendjson );
+        __JSON_OBJECT_DOCUMENT__( sendjson );
         __JSON_SET_VALUE__( sendjson, __KF_STRING__( world ), KFGlobal::Instance()->_app_id->ToString() );
         __JSON_SET_VALUE__( sendjson, __KF_STRING__( url ), _kf_http_server->GetHttpUrl() );
         auto resultdata = _kf_http_client->STGet( _url, sendjson );
@@ -225,7 +225,7 @@ namespace KFrame
         {
             // 更新给auth
             static auto _update_url = _kf_ip_address->GetAuthUrl() + __KF_STRING__( zonebalance );
-            __JSON_DOCUMENT__( sendjson );
+            __JSON_OBJECT_DOCUMENT__( sendjson );
             __JSON_SET_VALUE__( sendjson, __KF_STRING__( count ), newuserid );
             __JSON_SET_VALUE__( sendjson, __KF_STRING__( zoneid ), kfzone->_id );
             _kf_http_client->MTGet< KFWorldModule >( _update_url, sendjson );

@@ -8,25 +8,20 @@ namespace KFrame
 {
     ////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
-    class KFItemConfig : public KFConfig, public KFSingleton< KFItemConfig >
+    class KFItemConfig : public KFIntConfigT< KFItemSetting >, public KFSingleton< KFItemConfig >
     {
     public:
-        KFItemConfig() = default;
-        ~KFItemConfig() = default;
-
-        // 获得成就配置
-        const KFItemSetting* FindItemSetting( uint32 itemid ) const;
-
+        KFItemConfig( const std::string& file, bool isclear )
+            : KFIntConfigT< KFItemSetting >( file, isclear )
+        {
+        }
+    protected:
         // 读取配置
-        bool LoadConfig( const std::string& file );
-
-    private:
-        // 物品列表
-        KFHashMap< uint32, uint32, KFItemSetting > _item_setting;
+        void ReadSetting( KFNode& xmlnode, KFItemSetting* kfsetting );
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_item_config = KFItemConfig::Instance();
+    static auto _kf_item_config = KFItemConfig::Instance( "item.xml", true );
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 

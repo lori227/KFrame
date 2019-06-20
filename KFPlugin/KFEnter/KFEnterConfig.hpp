@@ -1,34 +1,38 @@
 ﻿#ifndef __KF_ENTER_CONFIG_H__
 #define __KF_ENTER_CONFIG_H__
 
-#include "KFrame.h"
 #include "KFConfig/KFConfigInterface.h"
 
 namespace KFrame
 {
-    class KFEnterSetting
+    class KFEnterSetting : public KFIntSetting
     {
     public:
-        uint32 _note_id{ 0 };		// 服务器noteid
-        std::string _lua_file;		// lua脚本
-        std::string _lua_function;	// lua函数
+        // lua脚本
+        std::string _lua_file;
+
+        // lua函数
+        std::string _lua_function;
     };
     ////////////////////////////////////////////////////////////////////////////////////
-
-    class KFEnterConfig : public KFConfig, public KFSingleton< KFEnterConfig >
+    class KFEnterConfig : public KFIntConfigT< KFEnterSetting >, public KFSingleton< KFEnterConfig >
     {
     public:
-        KFEnterConfig() = default;
-        ~KFEnterConfig() = default;
+        KFEnterConfig( const std::string& file, bool isclear )
+            : KFIntConfigT< KFEnterSetting >( file, isclear )
+        {
+        }
 
-        bool LoadConfig( const std::string& file );
+    protected:
+        // 创建配置
+        KFEnterSetting* CreateSetting( KFNode& xmlnode );
 
-    public:
-        std::vector< KFEnterSetting > _kf_enter_setting;
+        // 读取配置
+        void ReadSetting( KFNode& xmlnode, KFEnterSetting* kfsetting );
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_enter_config = KFEnterConfig::Instance();
+    static auto _kf_enter_config = KFEnterConfig::Instance( "enter.xml", true );
     //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 

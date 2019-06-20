@@ -108,6 +108,11 @@ namespace KFAgent
                 InitDataComboBox();
             }
         }
+        private void Button_Click_Data_File_Refresh(object sender, RoutedEventArgs e)
+        {
+            DataConfig.Instance().LoadDataConfig(editDataConfigPath.Text);
+            InitDataComboBox();
+        }
 
         private void Button_Click_Item_File_Path(object sender, RoutedEventArgs e)
         {
@@ -185,7 +190,7 @@ namespace KFAgent
             bool isvalid = false;
             foreach( var datavalue in datalist )
             {
-                if ( datavalue._value != "0" )
+                if ( datavalue._value != "0" && datavalue._value != "" )
                 {
                     isvalid = true;
                     break;
@@ -203,9 +208,9 @@ namespace KFAgent
             addsetting._isobject = _select_object;
             foreach (var datavalue in datalist)
             {
-                if (datavalue._value != "0")
+                if (datavalue._value != "0" && datavalue._value != "" )
                 {
-                    addsetting.AddDataValue(datavalue._text, datavalue._name, datavalue._value);
+                    addsetting.AddDataValue(datavalue._text, datavalue._name, datavalue._value, datavalue._contain);
                 }
             }
 
@@ -367,12 +372,20 @@ namespace KFAgent
 
             stragent += "]";
 
-            editAgentString.Text = stragent;
+            editAgentString.Text = stragent.Replace(" ", "");
         }
 
         private void Button_Click_Copy(object sender, RoutedEventArgs e)
         {
-            Clipboard.SetText(editAgentString.Text);
+            try
+            {
+                Clipboard.SetText(editAgentString.Text);
+            }
+            catch (Exception ex)
+            {
+            }
         }
+
+
     }
 }

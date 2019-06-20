@@ -30,10 +30,19 @@ public class DataConfig
         return _instance;
     }
 
+
     public class DataValue
     {
+        // 显示文字
         public string _text { get; set; }
+
+        // 游戏内属性名
         public string _name { get; set; }
+        
+        // 包含的子类
+        public string _contain { get; set; }
+
+        // 数值
         public string _value { get; set; }
     }
 
@@ -49,19 +58,20 @@ public class DataConfig
 
         // 属性名字
         public string _name;
-
+        
         // 是否是对象
         public bool _isobject;
 
         // 子属性列表
         public List<DataValue> _child_list;
 
-        public void AddDataValue(string text, string name, string value)
+        public void AddDataValue(string text, string name, string value, string contain)
         {
             var datavalue = new DataValue();
             datavalue._text = text;
             datavalue._name = name;
             datavalue._value = value;
+            datavalue._contain = contain;
 
             _child_list.Add(datavalue);
         }
@@ -81,51 +91,73 @@ public class DataConfig
             IEnumerable<XElement> enumerable = root.Elements();
             foreach (XElement item in enumerable)
             {
-                var classname = item.Attribute("Class").Value;
+                var classname = item.Attribute("Id").Value;
                 var dataname = item.Attribute("Name").Value;
                 var datatext = item.Attribute("Element").Value;
+                var containclass = item.Attribute("ContainClass").Value;
 
                 if (datatext != "" && classname != "Player")
                 {
-
                     DataSetting datastting = null;
                     FindDataSetting(ref classlist, classname, out datastting);
                     datastting._text = datatext;
-                    datastting.AddDataValue(datatext, dataname, "0");
+                    datastting.AddDataValue(datatext, dataname, "0", containclass);
                 }
             }
 
             // 
             foreach (XElement item in enumerable)
             {
-                var classname = item.Attribute("Class").Value;
+                var classname = item.Attribute("Id").Value;
                 var dataname = item.Attribute("Name").Value;
                 var datatext = item.Attribute("Element").Value;
 
                 if (datatext != "" && classname == "Player")
                 {
-                    DataSetting datastting = new DataSetting();
-                    datastting._name = dataname;
-                    datastting._text = datatext;
+                    DataSetting datasetting = new DataSetting();
+                    datasetting._name = dataname;
+                    datasetting._text = datatext;
 
                     {
                         DataSetting childstting = null;
                         var containclass = item.Attribute("ContainClass").Value;
                         if (containclass != "")
                         {
-                            datastting._isobject = true;
-
+                            datasetting._isobject = true;
                             FindDataSetting(ref classlist, containclass, out childstting);
-                            datastting._child_list = childstting._child_list;
+                            foreach( DataValue datavalue in childstting._child_list)
+                            {
+                                DataSetting substting = null;
+                                FindDataSetting(ref classlist, datavalue._contain, out substting);
+                                if ( substting._text == null || substting._text == "" )
+                                {
+                                    if ( datavalue._contain!= "" )
+                                    {
+                                        datavalue._value = "";
+                                    }
+                                    datasetting._child_list.Add(datavalue);
+                                }
+                                else
+                                {
+                                    foreach (DataValue subvalue in substting._child_list)
+                                    {
+                                        var addvalue = new DataValue();
+                                        addvalue._text = datavalue._text + "-" + subvalue._text;
+                                        addvalue._name = datavalue._name + "-" + subvalue._name;
+                                        addvalue._value = "0";
+                                        datasetting._child_list.Add(addvalue);
+                                    }
+                                }
+                            }
                         }
                         else
                         {
-                            datastting._isobject = false;
-                            datastting.AddDataValue(datatext, dataname, "0");
+                            datasetting._isobject = false;
+                            datasetting.AddDataValue(datatext, dataname, "0", containclass);
                         }
                     }
 
-                    _data_list.Add(datatext, datastting);
+                    _data_list.Add(datatext, datasetting);
                 }
             }
         }

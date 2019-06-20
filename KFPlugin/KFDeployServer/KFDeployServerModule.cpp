@@ -324,7 +324,7 @@ namespace KFrame
         // 广播给所有web工具
         if ( !_web_deploy_url.empty() )
         {
-            __JSON_DOCUMENT__( response );
+            __JSON_OBJECT_DOCUMENT__( response );
             __JSON_SET_VALUE__( response, __KF_STRING__( msg ), msg );
             __JSON_SET_VALUE__( response, __KF_STRING__( agent ), agentid );
             _kf_http_client->MTGet< KFDeployServerModule >( _web_deploy_url, response );

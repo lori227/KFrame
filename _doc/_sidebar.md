@@ -51,6 +51,7 @@
   - [属性说明(KFCore)](/docs/属性说明.md)
   - [属性配置](/docs/属性配置.md)
   - [属性插件(KFKernel)](/docs/属性插件.md)
+  - [属性道具(elemenettool)](/docs/属性道具.md)
 
 - Lua接口
 

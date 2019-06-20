@@ -8,6 +8,11 @@ namespace KFrame
     class KFRobotConfig : public KFConfig, public KFSingleton< KFRobotConfig >
     {
     public:
+        KFRobotConfig( const std::string& file )
+            : KFConfig( file )
+        {
+        }
+
         // 读取配置
         bool LoadConfig( const std::string& file );
 
@@ -26,7 +31,7 @@ namespace KFrame
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_robot_config = KFRobotConfig::Instance();
+    static auto _kf_robot_config = KFRobotConfig::Instance( "robot.setting" );
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 

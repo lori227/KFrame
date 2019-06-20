@@ -43,8 +43,10 @@ namespace KFrame
     class KFRankShardConfig : public KFConfig, public KFSingleton< KFRankShardConfig >
     {
     public:
-        KFRankShardConfig() = default;
-        ~KFRankShardConfig() = default;
+        KFRankShardConfig( const std::string& file )
+            : KFConfig( file )
+        {
+        }
 
         // 加载配置
         bool LoadConfig( const std::string& file );
@@ -57,7 +59,7 @@ namespace KFrame
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_rank_config = KFRankShardConfig::Instance();
+    static auto _kf_rank_config = KFRankShardConfig::Instance( "rank.xml" );
     //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 

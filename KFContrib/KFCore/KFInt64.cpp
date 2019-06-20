@@ -6,11 +6,21 @@ namespace KFrame
     {
         _data = _invalid_int;
         _type = KFDataDefine::Type_Int64;
-
     }
 
     KFInt64::~KFInt64()
     {
+    }
+
+    int64 KFInt64::GetInt64()
+    {
+        return _data;
+    }
+
+    int64 KFInt64::SetInt64( int64 value )
+    {
+        _data = value;
+        return _data;
     }
 
     void KFInt64::Reset()
@@ -21,6 +31,11 @@ namespace KFrame
     bool KFInt64::IsValid()
     {
         return _data != _invalid_int;
+    }
+
+    bool KFInt64::IsFull()
+    {
+        return false;
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -42,6 +57,6 @@ namespace KFrame
 
     void KFInt64::FromString( const std::string& value )
     {
-        _data = KFUtility::ToValue<int64>( value );
+        SetInt64( KFUtility::ToValue<int64>( value ) );
     }
 }

@@ -11,6 +11,17 @@ namespace KFrame
     {
     }
 
+    const std::string& KFString::GetString()
+    {
+        return _data;
+    }
+
+    const std::string& KFString::SetString( const std::string& value )
+    {
+        _data = value;
+        return _data;
+    }
+
     void KFString::Reset()
     {
         _data.clear();

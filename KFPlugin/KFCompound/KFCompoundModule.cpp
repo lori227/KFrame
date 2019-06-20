@@ -27,7 +27,7 @@ namespace KFrame
         __CLIENT_PROTO_PARSE__( KFMsg::MsgCompoundReq );
 
         // 查找合成信息
-        auto kfsetting = _kf_compound_config->FindCompoundSetting( kfmsg.id() );
+        auto kfsetting = _kf_compound_config->FindSetting( kfmsg.id() );
         if ( kfsetting == nullptr )
         {
             return _kf_display->SendToClient( player, KFMsg::CompoundNotExist );
@@ -36,7 +36,7 @@ namespace KFrame
         // 判断是否足够
         if ( player->CheckElement( &kfsetting->_cost_data, __FUNC_LINE__ ) )
         {
-            return _kf_display->SendToClient( player, KFMsg::CompoundNotEnoughData );
+            return _kf_display->SendToClient( player, KFMsg::NotEnoughData );
         }
 
         // 扣除材料

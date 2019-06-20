@@ -136,7 +136,7 @@ namespace KFrame
             return _kf_http_server->SendCode( KFMsg::AuthDatabaseBusy );
         }
 
-        __JSON_DOCUMENT__( response );
+        __JSON_OBJECT_DOCUMENT__( response );
         __JSON_ARRAY__( kfarray );
         for ( auto& strid : kflist->_value )
         {
@@ -168,7 +168,7 @@ namespace KFrame
             return _kf_http_server->SendCode( KFMsg::ZoneDatabaseBusy );
         }
 
-        __JSON_DOCUMENT__( response );
+        __JSON_OBJECT_DOCUMENT__( response );
         __JSON_SET_VALUE__( response, __KF_STRING__( zoneid ), zoneid );
         __JSON_SET_VALUE__( response, __KF_STRING__( ip ), kfmap->_value[ __KF_STRING__( ip ) ] );
         __JSON_SET_VALUE__( response, __KF_STRING__( port ), KFUtility::ToValue( kfmap->_value[ __KF_STRING__( port ) ] ) );
@@ -336,7 +336,7 @@ namespace KFrame
     {
         auto redisdriver = __AUTH_REDIS_DRIVER__;
 
-        __JSON_DOCUMENT__( sendjson );
+        __JSON_OBJECT_DOCUMENT__( sendjson );
         __JSON_SET_VALUE__( sendjson, __KF_STRING__( playerid ), playerid );
 
         do
@@ -406,7 +406,7 @@ namespace KFrame
         auto redisdriver = __AUTH_REDIS_DRIVER__;
         auto kfzonemap = redisdriver->QueryMap( "hgetall {}:{}", __KF_STRING__( zone ), zoneid );
 
-        __JSON_DOCUMENT__( response );
+        __JSON_OBJECT_DOCUMENT__( response );
         __JSON_SET_VALUE__( response, __KF_STRING__( token ), token );
         __JSON_SET_VALUE__( response, __KF_STRING__( accountid ), accountid );
 
@@ -454,7 +454,7 @@ namespace KFrame
         }
 
         // 返回结果
-        __JSON_DOCUMENT__( response );
+        __JSON_OBJECT_DOCUMENT__( response );
         __JSON_SET_VALUE__( response, __KF_STRING__( token ), token );
         __JSON_SET_VALUE__( response, __KF_STRING__( channel ), channel );
         __JSON_SET_VALUE__( response, __KF_STRING__( account ), account );
@@ -493,7 +493,7 @@ namespace KFrame
         // 保存到数据库
         auto redisdriver = __AUTH_REDIS_DRIVER__;
 
-        __JSON_DOCUMENT__( response );
+        __JSON_OBJECT_DOCUMENT__( response );
         __JSON_SET_VALUE__( response, __KF_STRING__( playerid ), playerid );
 
         // 保存订单信息
@@ -534,7 +534,7 @@ namespace KFrame
         __JSON_PARSE_STRING__( request, data );
         auto playerid = __JSON_GET_UINT64__( request, __KF_STRING__( playerid ) );
 
-        __JSON_DOCUMENT__( response );
+        __JSON_OBJECT_DOCUMENT__( response );
         __JSON_SET_VALUE__( response, __KF_STRING__( playerid ), playerid );
 
         // 查询玩家充值列表

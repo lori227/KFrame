@@ -65,6 +65,7 @@ enum FrameCodeEnum
 	NameEmpty					= 12106;	// 名字不能为空
 	NameAlreadySet				= 12107;	// 不能重复设定名字
 	SexSetOK					= 12108;	// 性别设置成功
+	NotEnoughData				= 12109;	// 没有足够的资源
 
 	// achieve
 	AchieveCanNotFind			= 12110;	// 找不到该成就配置
@@ -89,8 +90,7 @@ enum FrameCodeEnum
 
 	// compound
 	CompoundNotExist			= 12140;	// 合成配置不存在
-	CompoundNotEnoughData		= 12141;	// 没有足够的合成材料
-	CompoundOk					= 12142;	// 合成成功
+	CompoundOk					= 12141;	// 合成成功
 
 	// item
 	ItemCanNotFind				= 12150;	// 找不到道具配置

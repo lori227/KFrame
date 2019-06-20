@@ -2,9 +2,7 @@
 #define __KF_DATA_H__
 
 #include "KFrame.h"
-#include "KFDataDefine.h"
 #include "KFDataSetting.h"
-#include "KFClassSetting.h"
 #include "KFMath3D/Math3D.h"
 
 namespace KFrame
@@ -12,8 +10,8 @@ namespace KFrame
     class KFData
     {
     public:
-        KFData();
-        virtual ~KFData();
+        KFData() = default;
+        virtual ~KFData() = default;
 
         template< class T > T InvalidValue();
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -24,11 +22,11 @@ namespace KFrame
         template< class T = uint64 > T GetValue( const std::string& parentname, uint64 key, const std::string& dataname );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        template< class T = uint64 > void SetValue( T value );
-        template< class T = uint64 > void SetValue( const std::string& dataname, T value );
-        template< class T = uint64 > void SetValue( const std::string& parentname, const std::string& dataname, T value );
-        template< class T = uint64 > void SetValue( uint64 key, const std::string& dataname, T value );
-        template< class T = uint64 > void SetValue( const std::string& parentname, uint64 key, const std::string& dataname, T value );
+        template< class T = uint64 > T SetValue( T value );
+        template< class T = uint64 > T SetValue( const std::string& dataname, T value );
+        template< class T = uint64 > T SetValue( const std::string& parentname, const std::string& dataname, T value );
+        template< class T = uint64 > T SetValue( uint64 key, const std::string& dataname, T value );
+        template< class T = uint64 > T SetValue( const std::string& parentname, uint64 key, const std::string& dataname, T value );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         template< class T = uint64 > T OperateValue( uint32 operate, T value );
@@ -47,6 +45,9 @@ namespace KFrame
 
         // 数量
         virtual uint32 Size();
+
+        // 是否达到了最大值
+        virtual bool IsFull();
 
         // 名字
         virtual const std::string& GetName() const;
@@ -112,6 +113,7 @@ namespace KFrame
         virtual bool AddData( const std::string& dataname, uint64 key, KFData* data );
         virtual bool AddData( const std::string& parentname, const std::string& childname, KFData* data );
 
+        virtual KFData* MoveData( const std::string& dataname );
         virtual bool RemoveData( const std::string& dataname );
         virtual bool RemoveData( const std::string& dataname, uint64 key );
         virtual bool RemoveData( const std::string& parentname, const std::string& childname );
@@ -128,6 +130,7 @@ namespace KFrame
         virtual bool AddData( uint64 parentkey, uint64 childkey, KFData* data );
         virtual bool AddData( uint64 key, const std::string& dataname, KFData* data );
 
+        virtual KFData* MoveData( uint64 key );
         virtual bool RemoveData( uint64 key );
         virtual bool RemoveData( uint64 key, const std::string& dataname );
 
@@ -137,39 +140,39 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////////////////
     protected:
         virtual int32 GetInt32();
-        virtual void SetInt32( int32 );
+        virtual int32 SetInt32( int32 );
 
         virtual uint32 GetUInt32();
-        virtual void SetUInt32( uint32 );
+        virtual uint32 SetUInt32( uint32 );
 
         virtual int64 GetInt64();
-        virtual void SetInt64( int64 );
+        virtual int64 SetInt64( int64 );
 
         virtual uint64 GetUInt64();
-        virtual void SetUInt64( uint64 );
+        virtual uint64 SetUInt64( uint64 );
 
         virtual double GetDouble();
-        virtual void SetDouble( double );
+        virtual double SetDouble( double );
 
         virtual const std::string& GetString();
-        virtual void SetString( const std::string& );
+        virtual const std::string& SetString( const std::string& );
 
         virtual const Math3D::Vector3D& GetVector3D();
-        virtual void SetVector3D( const Math3D::Vector3D& );
+        virtual const Math3D::Vector3D& SetVector3D( const Math3D::Vector3D& );
 
     public:
         // 属性配置
-        const KFDataSetting* _data_setting;
+        const KFDataSetting* _data_setting = nullptr;
 
         // 类配置
-        const KFClassSetting* _class_setting;
+        const KFClassSetting* _class_setting = nullptr;
 
     protected:
         // 类型
         uint32 _type = 0u;
 
         // 父属性
-        KFData* _parent;
+        KFData* _parent = nullptr;
     };
 }
 

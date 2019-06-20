@@ -25,7 +25,7 @@ namespace KFrame
     class KFChannelModule : public KFChannelInterface
     {
     public:
-        KFChannelModule();
+        KFChannelModule() = default;
         ~KFChannelModule();
 
         // 初始化

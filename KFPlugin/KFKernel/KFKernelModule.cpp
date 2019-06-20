@@ -1,8 +1,7 @@
 ﻿#include "KFKernelModule.hpp"
 #include "KFEntityEx.hpp"
 #include "KFKernelConfig.hpp"
-#include "KFCore/KFDataConfig.h"
-#include "KFCore/KFDataFactory.h"
+#include "KFDataFactory.hpp"
 #include "KFProtocol/KFProtocol.h"
 
 namespace KFrame

@@ -78,7 +78,7 @@ namespace KFrame
             id2 = __MAX__( firstid, secondid );
         }
 
-        return __FORMAT__( "{}:{}:{}", kfsetting->_data_name, id1, id2 );
+        return __FORMAT__( "{}:{}:{}", kfsetting->_id, id1, id2 );
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -87,7 +87,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SQueryRelationToRelationReq );
 
-        auto kfsetting = _kf_relation_shard_config->FindRelationSetting( kfmsg.dataname() );
+        auto kfsetting = _kf_relation_shard_config->FindSetting( kfmsg.dataname() );
         if ( kfsetting == nullptr )
         {
             return __LOG_ERROR__( "relatiion=[{}] no setting!", kfmsg.dataname() );
@@ -131,7 +131,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SQueryRelationInviteToRelationReq );
 
-        auto kfsetting = _kf_relation_shard_config->FindRelationSetting( kfmsg.dataname() );
+        auto kfsetting = _kf_relation_shard_config->FindSetting( kfmsg.dataname() );
         if ( kfsetting == nullptr )
         {
             return __LOG_ERROR__( "relatiion=[{}] no setting!", kfmsg.dataname() );
@@ -186,7 +186,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SApplyAddRelationToRelationReq );
 
-        auto kfsetting = _kf_relation_shard_config->FindRelationSetting( kfmsg.dataname() );
+        auto kfsetting = _kf_relation_shard_config->FindSetting( kfmsg.dataname() );
         if ( kfsetting == nullptr )
         {
             return __LOG_ERROR__( "relation=[{}] no setting!", kfmsg.dataname() );
@@ -257,7 +257,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SDelRelationInviteToRelationReq );
 
-        auto kfsetting = _kf_relation_shard_config->FindRelationSetting( kfmsg.dataname() );
+        auto kfsetting = _kf_relation_shard_config->FindSetting( kfmsg.dataname() );
         if ( kfsetting == nullptr )
         {
             return __LOG_ERROR__( "relation=[{}] no setting!", kfmsg.dataname() );
@@ -272,7 +272,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SAddRelationToRelationReq );
 
-        auto kfsetting = _kf_relation_shard_config->FindRelationSetting( kfmsg.dataname() );
+        auto kfsetting = _kf_relation_shard_config->FindSetting( kfmsg.dataname() );
         if ( kfsetting == nullptr )
         {
             return __LOG_ERROR__( "relation=[{}] no setting!", kfmsg.dataname() );
@@ -333,7 +333,7 @@ namespace KFrame
             {
                 KFMsg::S2SAddRelationToGameAck ack;
                 ack.set_playerid( playerid );
-                ack.set_dataname( kfsetting->_data_name );
+                ack.set_dataname( kfsetting->_id );
 
                 auto pbrelation = ack.mutable_pbrelation();
                 MapStringToPBPlayer( querydata->_value, relationid, pbrelation );
@@ -350,7 +350,7 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SDelRelationToRelationReq );
 
         auto selfid = __ROUTE_SEND_ID__;
-        auto kfsetting = _kf_relation_shard_config->FindRelationSetting( kfmsg.dataname() );
+        auto kfsetting = _kf_relation_shard_config->FindSetting( kfmsg.dataname() );
         if ( kfsetting == nullptr )
         {
             return __LOG_ERROR__( "relation=[{}] no setting!", kfmsg.dataname() );
@@ -377,7 +377,7 @@ namespace KFrame
         if ( queryserverid->_value != _invalid_int )
         {
             KFMsg::S2SDelRelationToGameAck ack;
-            ack.set_dataname( kfsetting->_data_name );
+            ack.set_dataname( kfsetting->_id );
             ack.set_playerid( playerid );
             ack.set_relationid( relationid );
             _kf_route->SendToPlayer( playerid, queryserverid->_value, playerid, KFMsg::S2S_DEL_RELATION_TO_GAME_ACK, &ack, true );

@@ -7,7 +7,7 @@
 	</Includes>
 
 	<Plugins>
-		<Plugin Name="KFOption" Config="./config/option.config"/>	
+		<Plugin Name="KFOption" Config="./config/option.xml"/>	
 		<Plugin Name="KFTimer" Config=""/>	
 		<Plugin Name="KFClusterProxy" Config=""/>	
 		<Plugin Name="KFRouteProxy" Config=""/>	

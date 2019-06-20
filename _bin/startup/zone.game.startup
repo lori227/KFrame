@@ -10,8 +10,8 @@
 
 	<Plugins>
 		<Plugin Name="KFZone" Config="./setting/{}_{}_zone.setting"/>	
-		<Plugin Name="KFKernel" Config="./config/class.config"/>	
-		<Plugin Name="KFOption" Config="./config/option.config"/>	
+		<Plugin Name="KFKernel" Config="./config/class.xml"/>	
+		<Plugin Name="KFOption" Config="./config/option.xml"/>	
 		<Plugin Name="KFGame" Config=""/>	
 		<Plugin Name="KFDisplay" Config=""/>	
 		<Plugin Name="KFPlayer" Config=""/>	

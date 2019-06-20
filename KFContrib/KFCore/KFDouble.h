@@ -26,12 +26,8 @@ namespace KFrame
 
     protected:
         //////////////////////////////////////////////////////////////////////////////////////////////////////
-        virtual double GetDouble() {
-            return _data;
-        }
-        virtual void SetDouble( double value ) {
-            _data = value;
-        }
+        virtual double GetDouble();
+        virtual double SetDouble( double value );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private:

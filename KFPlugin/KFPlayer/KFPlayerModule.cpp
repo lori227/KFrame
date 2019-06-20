@@ -273,6 +273,7 @@ namespace KFrame
             kffunction->_function( player );
         }
 
+        player->SetInited();
         return player;
     }
 

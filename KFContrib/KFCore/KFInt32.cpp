@@ -6,16 +6,47 @@ namespace KFrame
     {
         _data = _invalid_int;
         _type = KFDataDefine::Type_Int32;
-
     }
 
     KFInt32::~KFInt32()
     {
     }
 
+    int32 KFInt32::GetInt32()
+    {
+        return _data;
+    }
+
+    int32 KFInt32::SetInt32( int32 value )
+    {
+        _data = value;
+        if ( _data_setting->_max_value != 0 )
+        {
+            if ( _data > ( int32 )_data_setting->_max_value )
+            {
+                _data = ( int32 )_data_setting->_max_value;
+            }
+        }
+
+        return _data;
+    }
+
     void KFInt32::Reset()
     {
         _data = _invalid_int;
+    }
+
+    bool KFInt32::IsFull()
+    {
+        if ( _data_setting->_max_value != 0 )
+        {
+            if ( _data >= ( int32 )_data_setting->_max_value )
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     bool KFInt32::IsValid()
@@ -43,6 +74,6 @@ namespace KFrame
 
     void KFInt32::FromString( const std::string& value )
     {
-        _data = KFUtility::ToValue<int32>( value );
+        SetInt32( KFUtility::ToValue<int32>( value ) );
     }
 }

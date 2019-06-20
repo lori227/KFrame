@@ -45,7 +45,7 @@ namespace KFrame
 
     uint32 KFAchieveModule::ReceiveAchieveReward( KFEntity* player, uint32 achieveid )
     {
-        auto kfsetting = _kf_achieve_config->FindAchieveSetting( achieveid );
+        auto kfsetting = _kf_achieve_config->FindSetting( achieveid );
         if ( kfsetting == nullptr )
         {
             return KFMsg::AchieveCanNotFind;
@@ -81,7 +81,7 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_UPDATE_DATA_FUNCTION__( KFAchieveModule::OnAchieveValueUpdateCallBack )
     {
-        auto achievesetting = _kf_achieve_config->FindAchieveSetting( key );
+        auto achievesetting = _kf_achieve_config->FindSetting( key );
         if ( achievesetting == nullptr )
         {
             return;

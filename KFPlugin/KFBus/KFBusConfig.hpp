@@ -34,6 +34,10 @@ namespace KFrame
     class KFBusConfig : public KFConfig, public KFSingleton< KFBusConfig >
     {
     public:
+        KFBusConfig( const std::string& file )
+            : KFConfig( file )
+        {
+        }
 
         bool LoadConfig( const std::string& file );
 
@@ -48,7 +52,7 @@ namespace KFrame
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_bus_config = KFBusConfig::Instance();
+    static auto _kf_bus_config = KFBusConfig::Instance( "bus.setting" );
     //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 

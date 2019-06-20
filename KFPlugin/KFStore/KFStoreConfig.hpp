@@ -10,12 +10,9 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     // 商品配置
-    class KFStoreSetting
+    class KFStoreSetting : public KFIntSetting
     {
     public:
-        // 商品id
-        uint32 _id = 0u;
-
         // 商品类型
         std::string _data_name;
 
@@ -56,34 +53,23 @@ namespace KFrame
 
         // 判断是否在折扣时间内
         bool CheckInDiscount( uint64 nowtime ) const;
-
     };
 
-    class KFStoreConfig : public KFConfig, public KFSingleton< KFStoreConfig >
+    class KFStoreConfig : public KFIntConfigT< KFStoreSetting >, public KFSingleton< KFStoreConfig >
     {
     public:
-        KFStoreConfig() = default;
-        ~KFStoreConfig() = default;
+        KFStoreConfig( const std::string& file, bool isclear )
+            : KFIntConfigT< KFStoreSetting >( file, isclear )
+        {
+        }
 
-        // 加载配置
-        bool LoadConfig( const std::string& file );
-
-        // 查找商品配置
-        const KFStoreSetting* FindStoreSetting( uint32 id ) const;
-
-    public:
-
-        KFXml* _store_xml = nullptr;
-
-        // 商店版本号
-        std::string _version;
-
-        // 商品列表
-        KFHashMap< uint32, uint32, KFStoreSetting > _store_list;
+    protected:
+        // 读取配置
+        void ReadSetting( KFNode& xmlnode, KFStoreSetting* kfsetting );
     };
 
     //////////////////////////////////////////////////////////////////////////
-    static auto _kf_store_config = KFStoreConfig::Instance();
+    static auto _kf_store_config = KFStoreConfig::Instance( "store.xml", true );
     //////////////////////////////////////////////////////////////////////////
 }
 

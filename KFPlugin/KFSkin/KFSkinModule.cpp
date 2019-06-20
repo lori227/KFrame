@@ -151,7 +151,7 @@ namespace KFrame
             return std::make_tuple( KFDataDefine::Show_None, nullptr );
         }
 
-        auto kfsetting = _kf_skin_config->FindSkinSetting( kfelementobject->_config_id );
+        auto kfsetting = _kf_skin_config->FindSetting( kfelementobject->_config_id );
         if ( kfsetting == nullptr )
         {
             __LOG_ERROR_FUNCTION__( function, line, "skin id=[{}] skinsetting = null!", kfelementobject->_config_id );

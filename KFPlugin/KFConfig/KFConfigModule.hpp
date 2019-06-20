@@ -33,14 +33,6 @@ namespace KFrame
     class KFConfigModule : public KFConfigInterface
     {
     public:
-        KFConfigModule() = default;
-        ~KFConfigModule() = default;
-
-        // 初始化
-
-        // 关闭
-        virtual void ShutDown();
-
         // 加载一个配置
         virtual bool AddConfig( KFConfig* config, const std::string& file, bool canreload );
 

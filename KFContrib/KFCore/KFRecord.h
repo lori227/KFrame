@@ -20,7 +20,8 @@ namespace KFrame
         // common
         virtual uint32 Size();
 
-
+        // 是否达到了最大值
+        virtual bool IsFull();
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         virtual KFData* FirstData();
         virtual KFData* NextData();
@@ -38,6 +39,7 @@ namespace KFrame
         virtual bool AddData( uint64 parentkey, uint64 childkey, KFData* data );
         virtual bool AddData( uint64 key, const std::string& dataname, KFData* data );
 
+        virtual KFData* MoveData( uint64 key );
         virtual bool RemoveData( uint64 key );
         virtual bool RemoveData( uint64 key, const std::string& dataname );
 

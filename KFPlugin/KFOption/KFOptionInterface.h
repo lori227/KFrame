@@ -7,7 +7,7 @@ namespace KFrame
 {
     // 优化逻辑, 很多地方使用static, 然而option配置需要可以重新加载, 所以使用KFOption指针,
     // 重新读取配置后KFOption指针不会改变
-    class KFOption
+    class KFOption : public KFIntSetting
     {
     public:
         // 整型数值

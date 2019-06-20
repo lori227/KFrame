@@ -2,46 +2,17 @@
 
 namespace KFrame
 {
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    KFSignInConfig::~KFSignInConfig()
+
+    void KFSignInConfig::ReadSetting( KFNode& xmlnode, KFSignInSetting* kfsetting )
     {
-        _signin_setting.Clear();
-    }
+        kfsetting->_type = xmlnode.GetUInt32( "Type" );
+        kfsetting->_day = xmlnode.GetUInt32( "Day" );
+        kfsetting->_probability = xmlnode.GetUInt32( "Probability" );
 
-    const KFSignInSetting* KFSignInConfig::FindSignInSetting( uint32 type, uint32 day ) const
-    {
-        SignInKey key( type, day );
-        return _signin_setting.Find( key );
-    }
+        auto strreward = xmlnode.GetString( "Reward" );
+        kfsetting->_reward.Parse( strreward, __FUNC_LINE__ );
 
-    bool KFSignInConfig::LoadConfig( const std::string& file )
-    {
-        _signin_setting.Clear();
-        //////////////////////////////////////////////////////////////////
-        KFXml kfxml( file );
-        auto config = kfxml.RootNode();
-        auto xmlnode = config.FindNode( "item" );
-        while ( xmlnode.IsValid() )
-        {
-            auto type = xmlnode.GetUInt32( "Type" );
-            auto day = xmlnode.GetUInt32( "Day" );
-
-            SignInKey signkey( type, day );
-            auto kfsetting = _signin_setting.Create( signkey );
-
-            kfsetting->_day = day;
-            kfsetting->_probability = xmlnode.GetUInt32( "Probability" );
-
-            auto strreward = xmlnode.GetString( "Reward" );
-            kfsetting->_reward.Parse( strreward, __FUNC_LINE__ );
-
-            auto strextend = xmlnode.GetString( "ExtendReward" );
-            kfsetting->_extend.Parse( strextend, __FUNC_LINE__ );
-
-            xmlnode.NextNode();
-        }
-        //////////////////////////////////////////////////////////////////
-
-        return true;
+        auto strextend = xmlnode.GetString( "ExtendReward" );
+        kfsetting->_extend.Parse( strextend, __FUNC_LINE__ );
     }
 }

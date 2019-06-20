@@ -6,11 +6,21 @@ namespace KFrame
     {
         _data = 0.0f;
         _type = KFDataDefine::Type_Double;
-
     }
 
     KFDouble::~KFDouble()
     {
+    }
+
+    double KFDouble::GetDouble()
+    {
+        return _data;
+    }
+
+    double KFDouble::SetDouble( double value )
+    {
+        _data = value;
+        return _data;
     }
 
     void KFDouble::Reset()

@@ -2,11 +2,6 @@
 
 namespace KFrame
 {
-    void KFConfigModule::ShutDown()
-    {
-        _kf_config_data.Clear();
-    }
-
     bool KFConfigModule::AddConfig( KFConfig* config, const std::string& file, bool canreload )
     {
         if ( file.empty() && config->_file.empty() )
@@ -49,6 +44,7 @@ namespace KFrame
             auto ok = config->LoadConfig( file );
             if ( ok )
             {
+                config->LoadComplete();
                 __LOG_INFO__( "load [{}] ok!", file );
             }
             else

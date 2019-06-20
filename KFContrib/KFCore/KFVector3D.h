@@ -27,12 +27,8 @@ namespace KFrame
 
     protected:
         //////////////////////////////////////////////////////////////////////////////////////////////////////
-        virtual const Math3D::Vector3D& GetVector3D() {
-            return _data;
-        }
-        virtual void SetVector3D( Math3D::Vector3D& value ) {
-            _data = value;
-        }
+        virtual const Math3D::Vector3D& GetVector3D();
+        virtual const Math3D::Vector3D& SetVector3D( Math3D::Vector3D& value );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private:

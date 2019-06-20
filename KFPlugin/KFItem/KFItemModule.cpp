@@ -52,7 +52,7 @@ namespace KFrame
             return std::make_tuple( KFDataDefine::Show_None, nullptr );
         }
 
-        auto kfsetting = _kf_item_config->FindItemSetting( kfelementobject->_config_id );
+        auto kfsetting = _kf_item_config->FindSetting( kfelementobject->_config_id );
         if ( kfsetting == nullptr )
         {
             __LOG_ERROR_FUNCTION__( function, line, "id=[{}] itemsetting = null!", kfelementobject->_config_id );
@@ -124,36 +124,13 @@ namespace KFrame
         auto addcount = __MIN__( count, kfsetting->_overlay_count );
 
         auto kfitem = _kf_kernel->CreateObject( datasetting );
-        kfitem->SetValue( datasetting->_config_key_name, kfsetting->_id );
-        kfitem->SetValue( __KF_STRING__( count ), addcount );
 
         // 设置属性
-        for ( auto& iter : kfelementobject->_values._objects )
-        {
-            auto& name = iter.first;
-            if ( name == __KF_STRING__( count ) )
-            {
-                continue;
-            }
+        player->SetElementToData( kfelementobject, kfitem, 1.0f );
 
-            auto kfchild = kfitem->FindData( name );
-            if ( kfchild == nullptr )
-            {
-                continue;
-            }
-
-
-            auto kfelementvalue = reinterpret_cast< KFElementValue* >( iter.second );
-            if ( kfelementvalue->_value->IsInt() )
-            {
-                auto value = kfelementvalue->_value->CalcUseValue( kfchild->GetDataSetting(), 1.0f );
-                kfchild->SetValue( value );
-            }
-            else
-            {
-                kfchild->SetValue( kfelementvalue->_value->GetValue() );
-            }
-        }
+        // id count
+        kfitem->SetValue( __KF_STRING__( count ), addcount );
+        kfitem->SetValue( datasetting->_config_key_name, kfsetting->_id );
 
         // guid
         auto itemguid = KFGlobal::Instance()->MakeUUID( KFMsg::UUidItem );
@@ -207,7 +184,7 @@ namespace KFrame
         // 调用删除脚本
         auto kfitem = kfdata->GetParent();
         auto itemid = kfitem->GetValue( kfitem->GetDataSetting()->_config_key_name );
-        auto kfsetting = _kf_item_config->FindItemSetting( itemid );
+        auto kfsetting = _kf_item_config->FindSetting( itemid );
         if ( kfsetting != nullptr )
         {
             CallItemLuaFunction( player, kfsetting, KFItemEnum::RemoveFunction );
@@ -334,7 +311,7 @@ namespace KFrame
         }
 
         auto itemid = kfitem->GetValue( __KF_STRING__( id ) );
-        auto kfsetting = _kf_item_config->FindItemSetting( itemid );
+        auto kfsetting = _kf_item_config->FindSetting( itemid );
         if ( kfsetting == nullptr )
         {
             return _kf_display->SendToClient( player, KFMsg::ItemCanNotFindData, itemid );

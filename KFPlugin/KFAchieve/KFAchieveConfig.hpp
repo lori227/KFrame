@@ -1,13 +1,12 @@
 ﻿#ifndef __KF_ACHIEVE_CONFIG_H__
 #define __KF_ACHIEVE_CONFIG_H__
 
-#include "KFrame.h"
 #include "KFCore/KFElement.h"
 #include "KFConfig/KFConfigInterface.h"
 
 namespace KFrame
 {
-    class KFAchieveSetting
+    class KFAchieveSetting : public KFIntSetting
     {
     public:
         // 判断是否可以更新
@@ -17,7 +16,6 @@ namespace KFrame
         uint64 CheckTriggerValue( uint64 operatevalue, uint64 nowvalue ) const;
 
     public:
-        uint32 _id = 0;					// id
         std::string _parent_name;		// 类型
         std::string _data_name;			// 属性
         uint32 _data_key = 0;			// 键值
@@ -62,36 +60,33 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////
-    class KFAchieveConfig : public KFConfig, public KFSingleton< KFAchieveConfig >
+    class KFAchieveConfig : public KFIntConfigT< KFAchieveSetting >, public KFSingleton< KFAchieveConfig >
     {
     public:
-        KFAchieveConfig()
+        KFAchieveConfig( const std::string& file, bool isclear )
+            : KFIntConfigT< KFAchieveSetting >( file, isclear )
         {
-            _file = "achieve.config";
         }
-
-        // 读取配置
-        bool LoadConfig( const std::string& file );
-
-        // 获得成就配置
-        const KFAchieveSetting* FindAchieveSetting( uint32 id ) const;
 
         // 获得某种类型的所有成就
         const KFAchieveType* FindTypeAchieve( const std::string& parentname, const std::string& dataname ) const;
     protected:
+        // 清除配置
+        void ClearSetting();
+
+        // 读取配置
+        void ReadSetting( KFNode& xmlnode, KFAchieveSetting* kfsetting );
+
         // 添加成就类型
         void AddAchieveType( KFAchieveSetting* kfsetting );
 
     private:
-        // 成就列表
-        KFHashMap< uint32, uint32, KFAchieveSetting > _achieve_setting;
-
         // 类型列表
         std::unordered_map< std::string, KFAchieveTypes > _achieve_types;
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_achieve_config = KFAchieveConfig::Instance();
+    static auto _kf_achieve_config = KFAchieveConfig::Instance( "achieve.xml", true );
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 

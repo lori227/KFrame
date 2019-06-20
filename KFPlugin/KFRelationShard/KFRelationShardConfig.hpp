@@ -5,12 +5,9 @@
 
 namespace KFrame
 {
-    class KFRelationSetting
+    class KFRelationSetting : public KFStrSetting
     {
     public:
-        // 关系属性名
-        std::string _data_name;
-
         // 数据库列表名
         std::string _data_list_name;
 
@@ -44,27 +41,21 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
-    class KFRelationShardConfig : public KFConfig, public KFSingleton< KFRelationShardConfig >
+    class KFRelationShardConfig : public KFStrConfigT< KFRelationSetting >, public KFSingleton< KFRelationShardConfig >
     {
     public:
-        KFRelationShardConfig()
+        KFRelationShardConfig( const std::string& file, bool isclear )
+            : KFStrConfigT< KFRelationSetting >( file, isclear )
         {
-            _file = "relation.config";
         }
 
-        // 加载配置
-        bool LoadConfig( const std::string& file );
-
-        // 查找配置选项
-        const KFRelationSetting* FindRelationSetting( const std::string& name );
-
-    public:
-        // 关系配置列表
-        KFMap< std::string, const std::string&, KFRelationSetting > _relation_list;
+    protected:
+        // 读取配置
+        void ReadSetting( KFNode& xmlnode, KFRelationSetting* kfsetting );
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_relation_shard_config = KFRelationShardConfig::Instance();
+    static auto _kf_relation_shard_config = KFRelationShardConfig::Instance( "relation.xml", true );
     //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 

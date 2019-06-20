@@ -58,7 +58,7 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\026FrameCodeMessage.proto\022\005KFMsg*\262\023\n\rFram"
+      "\n\026FrameCodeMessage.proto\022\005KFMsg*\252\023\n\rFram"
       "eCodeEnum\022\t\n\005Error\020\000\022\006\n\002Ok\020\001\022\022\n\rHttpData"
       "Error\020\220N\022\025\n\020AuthDatabaseBusy\020\221N\022\023\n\016AuthS"
       "erverBusy\020\222N\022\023\n\016ZoneServerBusy\020\223N\022\025\n\020Zon"
@@ -87,44 +87,43 @@ void AddDescriptorsImpl() {
       "lreadyExist\020\306^\022\016\n\tNameSetOk\020\307^\022\024\n\017NameLe"
       "ngthError\020\310^\022\024\n\017NameFilterError\020\311^\022\016\n\tNa"
       "meEmpty\020\312^\022\023\n\016NameAlreadySet\020\313^\022\r\n\010SexSe"
-      "tOK\020\314^\022\026\n\021AchieveCanNotFind\020\316^\022\032\n\025Achiev"
-      "eCanNotFindData\020\317^\022\023\n\016AchieveNotDone\020\320^\022"
-      "\033\n\026AchieveAlreadyReceived\020\321^\022\025\n\020AchieveR"
-      "eceiveOk\020\322^\022\023\n\016TaskCanNotFind\020\330^\022\027\n\022Task"
-      "CanNotFindData\020\331^\022\020\n\013TaskNotDone\020\332^\022\030\n\023T"
-      "askAlreadyReceived\020\333^\022\021\n\014TaskRewardOk\020\334^"
-      "\022\027\n\022ActivityCanNotFind\020\342^\022\033\n\026ActivityCan"
-      "NotFindData\020\343^\022\034\n\027ActivityAlreadyReceive"
-      "d\020\344^\022\024\n\017ActivityNotDone\020\345^\022\025\n\020ActivityRe"
-      "wardOk\020\346^\022\025\n\020CompoundNotExist\020\354^\022\032\n\025Comp"
-      "oundNotEnoughData\020\355^\022\017\n\nCompoundOk\020\356^\022\023\n"
-      "\016ItemCanNotFind\020\366^\022\027\n\022ItemCanNotFindData"
-      "\020\367^\022\022\n\rItemCanNotUse\020\370^\022\021\n\014SignInNotDay\020"
-      "\212_\022\025\n\020SignInCanNotFind\020\213_\022\030\n\023SignInRewar"
-      "dAlready\020\214_\022\023\n\016SignInRewardOk\020\215_\022\021\n\014Mail"
-      "NotExist\020\250_\022\020\n\013MailTimeOut\020\251_\022\025\n\020MailDel"
-      "eteFailed\020\252_\022\030\n\023MailAlreadyReceived\020\253_\022\026"
-      "\n\021MailNotHaveReward\020\254_\022\021\n\014StoreNotFind\020\214"
-      "`\022\027\n\022StoreBuyCountError\020\215`\022\027\n\022StoreOutOf"
-      "LimitOwm\020\216`\022\025\n\020StoreOutOfLimits\020\217`\022\022\n\rSt"
-      "oreLackCost\020\220`\022\026\n\021StoreBuyTypeError\020\221`\022\017"
-      "\n\nStoreBuyOK\020\222`\022\017\n\nPayIdError\020\276`\022\021\n\014PayD"
-      "ataError\020\277`\022\021\n\014RankNotExist\020\360`\022\027\n\022QueryB"
-      "asicNotExist\020\324a\022\027\n\022MessageFilterError\020\270b"
-      "\022\024\n\017RelationAlready\020\271b\022\026\n\021RelationSelfLi"
-      "mit\020\272b\022\026\n\021RelationInviteReq\020\273b\022\035\n\030Relati"
-      "onRefuseYourInvite\020\274b\022\022\n\rRelationAddOk\020\275"
-      "b\022\025\n\020RelationNotExist\020\276b\022\022\n\rRelationDelO"
-      "k\020\277b\022\031\n\024RelationRefuseInvite\020\300b\022\030\n\023Relat"
-      "ionTargetLimit\020\301b\022\032\n\025RelationInviteAlrea"
-      "dy\020\302b\022\030\n\023RelationInviteLimit\020\303b\022\025\n\020Relat"
-      "ionInviteOk\020\304b\022\033\n\026RelationInviteNotExist"
-      "\020\305b\022\031\n\024RelationSettingError\020\306b\022\026\n\021Relati"
-      "onDataError\020\307b\022\024\n\017FriendLinessAdd\020\310bb\006pr"
-      "oto3"
+      "tOK\020\314^\022\022\n\rNotEnoughData\020\315^\022\026\n\021AchieveCan"
+      "NotFind\020\316^\022\032\n\025AchieveCanNotFindData\020\317^\022\023"
+      "\n\016AchieveNotDone\020\320^\022\033\n\026AchieveAlreadyRec"
+      "eived\020\321^\022\025\n\020AchieveReceiveOk\020\322^\022\023\n\016TaskC"
+      "anNotFind\020\330^\022\027\n\022TaskCanNotFindData\020\331^\022\020\n"
+      "\013TaskNotDone\020\332^\022\030\n\023TaskAlreadyReceived\020\333"
+      "^\022\021\n\014TaskRewardOk\020\334^\022\027\n\022ActivityCanNotFi"
+      "nd\020\342^\022\033\n\026ActivityCanNotFindData\020\343^\022\034\n\027Ac"
+      "tivityAlreadyReceived\020\344^\022\024\n\017ActivityNotD"
+      "one\020\345^\022\025\n\020ActivityRewardOk\020\346^\022\025\n\020Compoun"
+      "dNotExist\020\354^\022\017\n\nCompoundOk\020\355^\022\023\n\016ItemCan"
+      "NotFind\020\366^\022\027\n\022ItemCanNotFindData\020\367^\022\022\n\rI"
+      "temCanNotUse\020\370^\022\021\n\014SignInNotDay\020\212_\022\025\n\020Si"
+      "gnInCanNotFind\020\213_\022\030\n\023SignInRewardAlready"
+      "\020\214_\022\023\n\016SignInRewardOk\020\215_\022\021\n\014MailNotExist"
+      "\020\250_\022\020\n\013MailTimeOut\020\251_\022\025\n\020MailDeleteFaile"
+      "d\020\252_\022\030\n\023MailAlreadyReceived\020\253_\022\026\n\021MailNo"
+      "tHaveReward\020\254_\022\021\n\014StoreNotFind\020\214`\022\027\n\022Sto"
+      "reBuyCountError\020\215`\022\027\n\022StoreOutOfLimitOwm"
+      "\020\216`\022\025\n\020StoreOutOfLimits\020\217`\022\022\n\rStoreLackC"
+      "ost\020\220`\022\026\n\021StoreBuyTypeError\020\221`\022\017\n\nStoreB"
+      "uyOK\020\222`\022\017\n\nPayIdError\020\276`\022\021\n\014PayDataError"
+      "\020\277`\022\021\n\014RankNotExist\020\360`\022\027\n\022QueryBasicNotE"
+      "xist\020\324a\022\027\n\022MessageFilterError\020\270b\022\024\n\017Rela"
+      "tionAlready\020\271b\022\026\n\021RelationSelfLimit\020\272b\022\026"
+      "\n\021RelationInviteReq\020\273b\022\035\n\030RelationRefuse"
+      "YourInvite\020\274b\022\022\n\rRelationAddOk\020\275b\022\025\n\020Rel"
+      "ationNotExist\020\276b\022\022\n\rRelationDelOk\020\277b\022\031\n\024"
+      "RelationRefuseInvite\020\300b\022\030\n\023RelationTarge"
+      "tLimit\020\301b\022\032\n\025RelationInviteAlready\020\302b\022\030\n"
+      "\023RelationInviteLimit\020\303b\022\025\n\020RelationInvit"
+      "eOk\020\304b\022\033\n\026RelationInviteNotExist\020\305b\022\031\n\024R"
+      "elationSettingError\020\306b\022\026\n\021RelationDataEr"
+      "ror\020\307b\022\024\n\017FriendLinessAdd\020\310bb\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 2524);
+      descriptor, 2516);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "FrameCodeMessage.proto", &protobuf_RegisterTypes);
 }
@@ -198,6 +197,7 @@ bool FrameCodeEnum_IsValid(int value) {
     case 12106:
     case 12107:
     case 12108:
+    case 12109:
     case 12110:
     case 12111:
     case 12112:
@@ -215,7 +215,6 @@ bool FrameCodeEnum_IsValid(int value) {
     case 12134:
     case 12140:
     case 12141:
-    case 12142:
     case 12150:
     case 12151:
     case 12152:

@@ -28,7 +28,7 @@ namespace KFrame
 
     std::string KFHttpCommon::SendResponseCode( uint32 code )
     {
-        __JSON_DOCUMENT__( response );
+        __JSON_OBJECT_DOCUMENT__( response );
         __JSON_SET_VALUE__( response, __KF_STRING__( retcode ), code );
         return SendResponse( response );
     }

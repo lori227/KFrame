@@ -164,16 +164,6 @@ namespace KFrame
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    KFActivityConfig::KFActivityConfig()
-    {
-
-    }
-
-    KFActivityConfig::~KFActivityConfig()
-    {
-        _activity_setting.Clear();
-    }
-
     bool KFActivityConfig::LoadConfig( const std::string& file )
     {
         _activity_setting.Clear();

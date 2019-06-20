@@ -34,7 +34,7 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::SignInNotDay );
         }
 
-        auto kfsetting = _kf_signin_config->FindSignInSetting( KFSignInEnum::SevenDay, kfmsg.day() );
+        auto kfsetting = _kf_signin_config->FindSetting( kfmsg.day() );
         if ( kfsetting == nullptr )
         {
             return _kf_display->SendToClient( player, KFMsg::SignInCanNotFind );

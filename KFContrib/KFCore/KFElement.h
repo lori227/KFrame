@@ -37,22 +37,19 @@ namespace KFrame
             return _invalid_int;
         }
 
-        // 是否是string
-        virtual bool IsString()
-        {
-            return false;
-        }
-
-        // 是否是数值
-        virtual bool IsInt()
-        {
-            return false;
-        }
-
         // 是否需要显示
         bool IsNeedShow();
 
+        // 是否类型
+        bool IsType( uint32 type ) const
+        {
+            return _type == type;
+        }
+
     public:
+        // 类型
+        uint32 _type;
+
         // 配置属性
         const KFDataSetting* _data_setting = nullptr;
     };
@@ -61,6 +58,8 @@ namespace KFrame
     class KFIntValue : public KFValue
     {
     public:
+        KFIntValue();
+
         // 设置数值
         virtual void SetValue( std::string value );
 
@@ -71,9 +70,6 @@ namespace KFrame
         // 获得使用数值
         virtual uint32 GetUseValue();
 
-        // 是否是数值
-        virtual bool IsInt();
-
     private:
         uint32 _min_value = _invalid_int;
         uint32 _max_value = _invalid_int;
@@ -83,16 +79,30 @@ namespace KFrame
     class KFStrValue : public KFValue
     {
     public:
+        KFStrValue();
+
         // 设置数值
         virtual void SetValue( std::string value );
 
         // 获得使用的数值
         virtual const std::string& GetValue();
 
-        // 是否是string
-        virtual bool IsString();
     private:
         std::string _str_value;
+    };
+
+    //////////////////////////////////////////////////////////////////
+    class KFElementObject;
+    class KFObjValue : public KFValue
+    {
+    public:
+        KFObjValue();
+        ~KFObjValue();
+
+        virtual void SetValue( std::string value ) {};
+    public:
+        // 元素列表
+        KFElementObject* _element = nullptr;;
     };
 
     //////////////////////////////////////////////////////////////////
@@ -172,6 +182,10 @@ namespace KFrame
 
         // 格式化
         virtual const std::string& ToString() const;
+
+        // 创建对象数值
+        KFObjValue* CreateObjectValue( const std::string& dataname );
+
     public:
         // 配置id( 如果有的话 )
         uint32 _config_id = _invalid_int;
@@ -183,7 +197,7 @@ namespace KFrame
     class KFElements
     {
     public:
-        KFElements();
+        KFElements() = default;
         ~KFElements();
 
         // 是否为空
@@ -195,14 +209,16 @@ namespace KFrame
         // 解析字符串奖励
         bool Parse( const std::string& strdata, const char* function, uint32 line );
 
+        // 计算返回元素
+        const std::string& CalcElement( float multiple );
+
         // non-copy
     private:
         KFElements( const KFElements& other ) = delete;
         KFElements& operator=( const KFElements& other ) = delete;
 
         // 重置
-        void Cleanup();
-
+        void Clear();
     public:
         // 原始数据
         std::string _str_element;

@@ -1,13 +1,12 @@
 ﻿#ifndef __KF_TASK_CONFIG_H__
 #define __KF_TASK_CONFIG_H__
 
-#include "KFrame.h"
 #include "KFCore/KFElement.h"
 #include "KFConfig/KFConfigInterface.h"
 
 namespace KFrame
 {
-    class KFTaskSetting
+    class KFTaskSetting : public KFIntSetting
     {
     public:
         // 判断是否能更新
@@ -17,7 +16,6 @@ namespace KFrame
         uint64 CheckTriggerValue( uint64 operatevalue, uint64 nowvalue ) const;
 
     public:
-        uint32 _id = 0;					// 任务id
         uint32 _start_hour = 0;			// 开始时间
         uint32 _start_minute = 0;		// 开始时间
         uint32 _end_hour = 0;			// 结束时间
@@ -69,29 +67,34 @@ namespace KFrame
     };
     /////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////
-    class KFTaskConfig : public KFConfig, public KFSingleton< KFTaskConfig >
+    class KFTaskConfig : public KFIntConfigT< KFTaskSetting >, public KFSingleton< KFTaskConfig >
     {
     public:
-        // 加载配置
-        bool LoadConfig( const std::string& file );
+        KFTaskConfig( const std::string& file, bool isclear )
+            : KFIntConfigT< KFTaskSetting >( file, isclear )
+        {
+        }
 
-        // 获得活动配置
-        const KFTaskSetting* FindTaskSetting( uint32 taskid ) const;
+        // 查找任务类型列表
         const KFTaskType* FindTypeTaskList( const std::string& parentname, const std::string& dataname ) const;
 
     protected:
+        // 清除配置
+        void ClearSetting();
+
+        // 读取配置
+        void ReadSetting( KFNode& xmlnode, KFTaskSetting* kfsetting );
+
+        // 添加任务类型
         void AddTaskType( KFTaskSetting* kfsetting );
 
-    public:
-        // 任务列表
-        KFHashMap< uint32, uint32, KFTaskSetting > _task_setting;
-
+    private:
         // 类型列表
         std::unordered_map< std::string, KFTaskTypes > _task_types;
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    static auto _kf_task_config = KFTaskConfig::Instance();
+    static auto _kf_task_config = KFTaskConfig::Instance( "task.xml", true );
     ///////////////////////////////////////////////////////////////////////////
 }
 #endif

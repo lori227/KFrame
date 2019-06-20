@@ -30,6 +30,7 @@ namespace KFrame
             AddFunction = 1,
             UseFunction = 2,
             RemoveFunction = 3,
+            MaxFunction = 4,
             /////////////////////////////////////////////////////////////////////////////////////////////////////
             /////////////////////////////////////////////////////////////////////////////////////////////////////
         };
@@ -37,12 +38,9 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////
-
-    class KFItemSetting
+    class KFItemSetting : public KFIntSetting
     {
     public:
-        KFItemSetting();
-
         // 判断是否能使用
         bool CheckCanUse() const;
 
@@ -53,41 +51,38 @@ namespace KFrame
         bool IsRealItem() const;
 
     public:
-        // 物品id
-        uint32 _id;
-
         // 物品类型
-        uint32 _type;
+        uint32 _type = 0u;
 
         // 可叠加类型
-        uint32 _overlay_type;
+        uint32 _overlay_type = 0u;
 
         // 可叠加数量
-        uint32 _overlay_count;
+        uint32 _overlay_count = 0u;
 
         // 1 = 获得物品是开始计时 2 = 使用物品是开始计时
-        uint32 _time_type;
+        uint32 _time_type = 0u;
 
         // 物品有效时间( 单位为秒 )
-        uint32 _valid_time;
+        uint32 _valid_time = 0u;
 
         // 可使用次数( 0 = 不能使用 )
-        uint32 _use_count;
+        uint32 _use_count = 0u;
 
         // 删除物品发送的邮件id
-        uint32 _mail_id;
+        uint32 _mail_id = 0u;
 
         // 品质
-        uint32 _quality;
+        uint32 _quality = 0u;
 
         // lua文件
         std::string _lua_file;
 
         // lua函数
-        std::unordered_map< uint32, std::string > _function;
+        std::string _function[ KFItemEnum::MaxFunction ];
 
         // 奖励类型
-        uint32 _reward_type;
+        uint32 _reward_type = 0u;
 
         // 奖励列表
         KFElements _rewards;

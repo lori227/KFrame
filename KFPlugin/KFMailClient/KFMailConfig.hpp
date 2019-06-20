@@ -8,23 +8,11 @@
 namespace KFrame
 {
     /////////////////////////////////////////////////////////////////////////////////
-    class KFMailSetting
+    class KFMailSetting : public KFIntSetting
     {
     public:
-        KFMailSetting()
-        {
-            _config_id = 0;
-            _type = 0;
-            _valid_time = 0;
-            _reply_id = 0;
-        }
-
-    public:
-        // 配置id
-        uint32 _config_id;
-
         // 邮件的类型
-        uint32 _type;
+        uint32 _type = 0u;
 
         // 标题
         std::string _title;
@@ -33,16 +21,16 @@ namespace KFrame
         std::string _content;
 
         // 有效时间
-        uint32 _valid_time;
+        uint32 _valid_time = 0u;
 
         // 附件奖励配置
         KFElements _rewards;
 
         // 读取/领取完成后是否立即删除
-        uint32 _del_now;
+        uint32 _del_now = 0u;
 
         // 领取邮件的回复邮件id
-        uint32 _reply_id;
+        uint32 _reply_id = 0u;
 
         // 附加信息
         std::string _extend;
@@ -50,25 +38,21 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////
 
-    class KFMailConfig : public KFConfig, public KFSingleton< KFMailConfig >
+    class KFMailConfig : public KFIntConfigT< KFMailSetting >, public KFSingleton< KFMailConfig >
     {
     public:
-        KFMailConfig() = default;
-        ~KFMailConfig() = default;
+        KFMailConfig( const std::string& file, bool isclear )
+            : KFIntConfigT< KFMailSetting >( file, isclear )
+        {
+        }
 
-        bool LoadConfig( const std::string& file );
-
-        // 查找邮件设定
-        const KFMailSetting* FindMailSetting( uint32 configid ) const;
-
-    public:
-        // 邮件配置列表
-        KFHashMap< uint32, uint32, KFMailSetting > _mail_setting;
-
+    protected:
+        // 读取配置
+        void ReadSetting( KFNode& xmlnode, KFMailSetting* kfsetting );
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_mail_config = KFMailConfig::Instance();
+    static auto _kf_mail_config = KFMailConfig::Instance( "mail.xml", true );
     //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 

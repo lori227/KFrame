@@ -36,7 +36,7 @@ namespace KFrame
 
         KFMsg::MsgQueryStoreAck ack;
         ack.set_version( _kf_store_config->_version );
-        ack.set_data( _kf_store_config->_store_xml->Data(), _kf_store_config->_store_xml->Size() );
+        //ack.set_data( _kf_store_config->_store_xml->Data(), _kf_store_config->_store_xml->Size() );
         _kf_player->SendToClient( player, KFMsg::MSG_QUERY_STORE_ACK, &ack );
     }
 
@@ -50,7 +50,7 @@ namespace KFrame
 
     uint32 KFStoreModule::ProcessBuyStore( KFEntity* player, const std::string& buytype, uint32 id, uint32 count )
     {
-        auto kfsetting = _kf_store_config->FindStoreSetting( id );
+        auto kfsetting = _kf_store_config->FindSetting( id );
         if ( kfsetting == nullptr )
         {
             return KFMsg::StoreNotFind;

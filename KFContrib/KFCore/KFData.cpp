@@ -2,20 +2,6 @@
 
 namespace KFrame
 {
-    KFData::KFData()
-    {
-        _parent = nullptr;
-        _class_setting = nullptr;
-        _data_setting = nullptr;
-    }
-
-    KFData::~KFData()
-    {
-        _parent = nullptr;
-        _data_setting = nullptr;
-        _class_setting = nullptr;
-    }
-
     // 父属性
     void KFData::SetParent( KFData* data )
     {
@@ -58,56 +44,64 @@ namespace KFrame
     {
         return 0;
     }
-    void KFData::SetInt32( int32 )
+    int32 KFData::SetInt32( int32 value )
     {
+        return value;
     }
 
     uint32 KFData::GetUInt32()
     {
         return 0;
     }
-    void KFData::SetUInt32( uint32 )
+    uint32 KFData::SetUInt32( uint32 value )
     {
+        return value;
     }
 
     int64 KFData::GetInt64()
     {
         return 0;
     }
-    void KFData::SetInt64( int64 )
+    int64 KFData::SetInt64( int64 value )
     {
+        return value;
     }
 
     uint64 KFData::GetUInt64()
     {
         return 0;
     }
-    void KFData::SetUInt64( uint64 )
+    uint64 KFData::SetUInt64( uint64 value )
     {
+        return value;
     }
 
     double KFData::GetDouble()
     {
         return 0.0f;
     }
-    void KFData::SetDouble( double )
+    double KFData::SetDouble( double value )
     {
+        return value;
     }
 
     const std::string& KFData::GetString()
     {
         return _invalid_str;
     }
-    void KFData::SetString( const std::string& )
+    const std::string& KFData::SetString( const std::string& value )
     {
+        return value;
     }
 
     const Math3D::Vector3D& KFData::GetVector3D()
     {
         return Math3D::Vector3D::xAxis;
     }
-    void KFData::SetVector3D( const Math3D::Vector3D& )
+
+    const Math3D::Vector3D& KFData::SetVector3D( const Math3D::Vector3D& value )
     {
+        return value;
     }
 
     void KFData::ToMap( MapString& values )
@@ -159,6 +153,16 @@ namespace KFrame
         return false;
     }
 
+    KFData* KFData::MoveData( uint64 key )
+    {
+        return nullptr;
+    }
+
+    KFData* KFData::MoveData( const std::string& dataname )
+    {
+        return nullptr;
+    }
+
     bool KFData::RemoveData( const std::string& dataname )
     {
         return false;
@@ -174,6 +178,11 @@ namespace KFrame
 
 
     // record
+    bool KFData::IsFull()
+    {
+        return false;
+    }
+
     KFData* KFData::FindData( uint64 key )
     {
         return nullptr;

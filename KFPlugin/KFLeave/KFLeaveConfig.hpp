@@ -1,34 +1,38 @@
 ﻿#ifndef __KF_LEAVE_CONFIG_H__
 #define __KF_LEAVE_CONFIG_H__
 
-#include "KFrame.h"
 #include "KFConfig/KFConfigInterface.h"
 
 namespace KFrame
 {
-    class KFLeaveSetting
+    class KFLeaveSetting : public KFIntSetting
     {
     public:
-        uint32 _note_id{ 0 };		// 服务器noteid
-        std::string _lua_file;		// lua脚本
-        std::string _lua_function;	// lua函数
+        // lua脚本
+        std::string _lua_file;
+
+        // lua函数
+        std::string _lua_function;
     };
     ////////////////////////////////////////////////////////////////////////////////////
-
-    class KFLeaveConfig : public KFConfig, public KFSingleton< KFLeaveConfig >
+    class KFLeaveConfig : public KFIntConfigT< KFLeaveSetting >, public KFSingleton< KFLeaveConfig >
     {
     public:
-        KFLeaveConfig() = default;
-        ~KFLeaveConfig() = default;
+        KFLeaveConfig( const std::string& file, bool isclear )
+            : KFIntConfigT< KFLeaveSetting >( file, isclear )
+        {
+        }
 
-        bool LoadConfig( const std::string& file );
+    protected:
+        // 创建配置
+        KFLeaveSetting* CreateSetting( KFNode& xmlnode );
 
-    public:
-        std::vector< KFLeaveSetting > _kf_leave_setting;
+        // 读取配置
+        void ReadSetting( KFNode& xmlnode, KFLeaveSetting* kfsetting );
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_leave_config = KFLeaveConfig::Instance();
+    static auto _kf_leave_config = KFLeaveConfig::Instance( "leave.xml", true );
     //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 

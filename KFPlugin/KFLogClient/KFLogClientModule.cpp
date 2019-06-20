@@ -18,7 +18,7 @@ namespace KFrame
     {
         auto url = _kf_ip_address->GetLogUrl() + __KF_STRING__( address );
 
-        __JSON_DOCUMENT__( request );
+        __JSON_OBJECT_DOCUMENT__( request );
         __JSON_SET_VALUE__( request, __KF_STRING__( appname ), KFGlobal::Instance()->_app_name );
         __JSON_SET_VALUE__( request, __KF_STRING__( apptype ), KFGlobal::Instance()->_app_type );
         __JSON_SET_VALUE__( request, __KF_STRING__( appid ), KFGlobal::Instance()->_app_id->ToString() );

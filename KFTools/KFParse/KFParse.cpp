@@ -31,27 +31,25 @@ namespace KFrame
 
     bool KFParse::LoadFromExcel( KFExcelSheet* sheet )
     {
-        auto kffile = AddFile( sheet->_name );
-
-        auto sheetname = sheet->_name;
-
         // 第1行 第2列为文件名
         auto kfname = sheet->FindCell( 1, 2 );
-        if ( kfname == nullptr || kfname->_value.empty() )
+        if ( kfname == nullptr )
         {
-            std::cout << "请输入文件名" << std::endl;
-            system( "pause" );
             return false;
         }
 
         auto name = kfname->_value;
         KFUtility::SplitString( name, "#" );
+        if ( name.empty() )
+        {
+            return false;
+        }
+
+        auto kffile = AddFile( name );
         kffile->_class._class_name = name;
 
         // 第2行字段描述, 不读
         // 第3行字段保存属性 1 服务器 2 客户端 3所有
-
-
         // 第4行字段名
         static auto _begin_row = 4;
         static auto _begin_col = 1;
@@ -117,9 +115,14 @@ namespace KFrame
 
                 std::string value = "";
                 auto kfvalue = sheet->FindCell( i, j );
-                if ( nullptr != kfvalue )
+                if ( kfvalue != nullptr )
                 {
                     value = kfvalue->_value;
+                }
+
+                if ( attribute->_name == "Id" && value.empty() )
+                {
+                    break;
                 }
 
                 KFUtility::ReplaceString( value, "\"", "&quot;" );
@@ -445,7 +448,7 @@ namespace KFrame
     {
         std::string filename = kffile->_class._class_name;
         std::transform( filename.begin(), filename.end(), filename.begin(), ::tolower );
-        auto file = path + "/" + filename + ".config";
+        auto file = path + "/" + filename + ".xml";
 
         std::ofstream xmlfile( file );
         if ( !xmlfile )

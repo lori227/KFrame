@@ -11,6 +11,6 @@
 		<Plugin Name="KFMessage" Config=""/>	
 		<Plugin Name="KFIpAddress" Config="./setting/{}_{}_ip.setting"/>	
 		<Plugin Name="KFRobot" Config="./setting/robot.setting"/>	
-		<Plugin Name="KFKernel" Config="./config/class.config"/>	
+		<Plugin Name="KFKernel" Config="./config/class.xml"/>	
 	</Plugins>
 </Setting>

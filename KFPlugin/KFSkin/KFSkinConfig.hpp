@@ -5,39 +5,30 @@
 
 namespace KFrame
 {
-
     ////////////////////////////////////////////////////////////////////////////////
-    class KFSkinSetting
+    class KFSkinSetting : public KFIntSetting
     {
     public:
-        // 物品id
-        uint32 _id{ 0 };
-
         // 品质
-        uint32 _quality{ 0 };
+        uint32 _quality = 0u;
     };
 
     ////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
-    class KFSkinConfig : public KFConfig, public KFSingleton< KFSkinConfig >
+    class KFSkinConfig : public KFIntConfigT< KFSkinSetting >, public KFSingleton< KFSkinConfig >
     {
     public:
-        KFSkinConfig() = default;
-        ~KFSkinConfig() = default;
-
+        KFSkinConfig( const std::string& file, bool isclear )
+            : KFIntConfigT< KFSkinSetting >( file, isclear )
+        {
+        }
+    protected:
         // 读取配置
-        bool LoadConfig( const std::string& file );
-
-        // 查找配置
-        const KFSkinSetting* FindSkinSetting( uint32 id ) const;
-
-    private:
-        // 皮肤列表
-        KFHashMap< uint32, uint32, KFSkinSetting > _skin_setting;
+        void ReadSetting( KFNode& xmlnode, KFSkinSetting* kfsetting );
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_skin_config = KFSkinConfig::Instance();
+    static auto _kf_skin_config = KFSkinConfig::Instance( "skin.xml", true );
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 

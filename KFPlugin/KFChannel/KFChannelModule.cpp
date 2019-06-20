@@ -7,11 +7,6 @@
 
 namespace KFrame
 {
-    KFChannelModule::KFChannelModule()
-    {
-
-    }
-
     KFChannelModule::~KFChannelModule()
     {
         for ( auto iter : _kf_channel_list )
@@ -45,13 +40,18 @@ namespace KFrame
         __JSON_PARSE_STRING__( request, data );
 
         auto channel = __JSON_GET_UINT32__( request, __KF_STRING__( channel ) );
-        if ( !_kf_channel_config->IsChannelOpen( channel ) )
+        if ( channel != KFGlobal::Instance()->_channel )
         {
-            return _kf_http_server->SendCode( KFMsg::ChannelNotSupport );
+            // 渠道不同, 判断是否支持
+            auto kfsetting = _kf_channel_config->FindSetting( KFGlobal::Instance()->_channel );
+            if ( !kfsetting->IsSupport( channel ) )
+            {
+                return _kf_http_server->SendCode( KFMsg::ChannelNotSupport );
+            }
         }
 
         // 渠道是否开启
-        auto kfsetting = _kf_channel_config->FindChannelSetting( channel );
+        auto kfsetting = _kf_channel_config->FindSetting( channel );
         if ( kfsetting == nullptr || !kfsetting->IsOpen() )
         {
             return _kf_http_server->SendCode( KFMsg::ChannelNotOpen );
@@ -70,14 +70,19 @@ namespace KFrame
 
     std::string KFChannelModule::AuthPay( uint32 channel, const std::string& data )
     {
-        if ( !_kf_channel_config->IsChannelOpen( channel ) )
+        if ( channel != KFGlobal::Instance()->_channel )
         {
-            __LOG_ERROR__( "channel=[{}] not open!", channel );
-            return _invalid_str;
+            // 渠道不同, 判断是否支持
+            auto kfsetting = _kf_channel_config->FindSetting( KFGlobal::Instance()->_channel );
+            if ( !kfsetting->IsSupport( channel ) )
+            {
+                __LOG_ERROR__( "channel=[{}] not support!", channel );
+                return _invalid_str;
+            }
         }
 
         // 渠道是否开启
-        auto kfsetting = _kf_channel_config->FindChannelSetting( channel );
+        auto kfsetting = _kf_channel_config->FindSetting( channel );
         if ( kfsetting == nullptr || !kfsetting->IsOpen() )
         {
             __LOG_ERROR__( "channel=[{}] no setting!", channel );

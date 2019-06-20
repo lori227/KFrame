@@ -11,73 +11,39 @@ namespace KFrame
 #endif
     }
 
-    bool KFChannelConfig::IsChannelOpen( uint32 channel )
+    bool KFChannelSetting::IsSupport( uint32 channel ) const
     {
-        if ( _open_channel_list.empty() )
+        if ( _support_list.empty() )
         {
-            return true;
+            return false;
         }
 
-        auto iter = _open_channel_list.find( channel );
-        return iter != _open_channel_list.end();
-    }
-
-    const KFChannelSetting* KFChannelConfig::FindChannelSetting( uint32 channel )
-    {
-        return _kf_channel.Find( channel );
+        return _support_list.find( channel ) != _support_list.end();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFChannelConfig::LoadConfig( const std::string& file )
+    KFChannelSetting* KFChannelConfig::CreateSetting( KFNode& xmlnode )
     {
-        _open_channel_list.clear();
-        //////////////////////////////////////////////////////////////////
-        KFXml kfxml( file );
-        auto config = kfxml.RootNode();
-
-        auto channels = config.FindNode( "Channels" );
-        auto channel = channels.FindNode( "Channel" );
-        while ( channel.IsValid() )
+        auto service = xmlnode.GetUInt32( "Service", true, _invalid_int );
+        auto ok = KFGlobal::Instance()->CheckChannelService( _invalid_int, service );
+        if ( !ok )
         {
-            auto service = channel.GetUInt32( "Service", true, _invalid_int );
-            if ( KFGlobal::Instance()->CheckChannelService( _invalid_int, service ) )
-            {
-                auto channelid = channel.GetUInt32( "Id" );
-                auto kfchannelsetting = _kf_channel.Create( channelid );
-
-                kfchannelsetting->_channel_id = channelid;
-                kfchannelsetting->_login_url = channel.GetString( "LoginUrl" );
-                kfchannelsetting->_pay_url = channel.GetString( "PayUrl" );
-                kfchannelsetting->_app_id = channel.GetString( "AppId" );
-                kfchannelsetting->_app_key = channel.GetString( "AppKey" );
-                kfchannelsetting->_release_open = channel.GetBoolen( "Release" );
-                kfchannelsetting->_debug_open = channel.GetBoolen( "Debug" );
-            }
-
-            channel.NextNode();
+            return nullptr;
         }
 
-        auto opens = config.FindNode( "Opens" );
-        auto opennode = opens.FindNode( "Open" );
-        while ( opennode.IsValid() )
-        {
-            auto channelid = opennode.GetUInt32( "ChannelId" );
-            auto service = opennode.GetUInt32( "Service" );
-            if ( KFGlobal::Instance()->CheckChannelService( channelid, service ) )
-            {
-                auto strlist = opennode.GetString( "List" );
-                while ( !strlist.empty() )
-                {
-                    _open_channel_list.insert( KFUtility::SplitValue< uint32 >( strlist, "," ) );
-                }
+        return KFIntConfigT< KFChannelSetting >::CreateSetting( xmlnode );
+    }
 
-                break;
-            }
+    void KFChannelConfig::ReadSetting( KFNode& xmlnode, KFChannelSetting* kfsetting )
+    {
+        kfsetting->_login_url = xmlnode.GetString( "LoginUrl" );
+        kfsetting->_pay_url = xmlnode.GetString( "PayUrl" );
+        kfsetting->_app_id = xmlnode.GetString( "AppId" );
+        kfsetting->_app_key = xmlnode.GetString( "AppKey" );
+        kfsetting->_debug_open = xmlnode.GetBoolen( "Debug" );
+        kfsetting->_release_open = xmlnode.GetBoolen( "Release" );
 
-            opennode.NextNode();
-        }
-        //////////////////////////////////////////////////////////////////
-
-        return true;
+        auto stropen = xmlnode.GetString( "Support" );
+        kfsetting->_support_list = KFUtility::SplitSet< std::set< uint32 > >( stropen, DEFAULT_SPLIT_STRING );
     }
 }

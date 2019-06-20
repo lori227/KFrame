@@ -6,6 +6,7 @@
     <ClCompile Include="KFKernelModule.cpp" />
     <ClCompile Include="KFEntityEx.cpp" />
     <ClCompile Include="KFComponentEx.cpp" />
+    <ClCompile Include="KFDataFactory.cpp" />
     <ClCompile Include="KFKernelConfig.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -14,8 +15,9 @@
     <ClInclude Include="KFComponent.h" />
     <ClInclude Include="KFComponentEx.hpp" />
     <ClInclude Include="KFEntityEx.hpp" />
-    <ClInclude Include="KFKernelConfig.hpp" />
     <ClInclude Include="KFKernelModule.hpp" />
     <ClInclude Include="KFKernelPlugin.hpp" />
+    <ClInclude Include="KFKernelConfig.hpp" />
+    <ClInclude Include="KFDataFactory.hpp" />
   </ItemGroup>
 </Project>

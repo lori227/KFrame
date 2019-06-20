@@ -19,7 +19,6 @@ enum FrameClientProtocol
 	MSG_TELL_BE_KICK 					= 103;	// 被踢下线了
 
 	// data
-	MSG_LOGIN_ENTER_GAME 				= 200;	// 通知进入游戏
  	MSG_SYNC_UPDATE_DATA 				= 201;	// 同步更新属性
 	MSG_SYNC_ADD_DATA 					= 202;	// 同步增加属性
 	MSG_SYNC_REMOVE_DATA 				= 203;	// 同步删除属性

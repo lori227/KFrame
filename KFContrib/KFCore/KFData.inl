@@ -60,51 +60,51 @@ namespace KFrame
     }
 
     template< class T >
-    void KFData::SetValue( const std::string& dataname, T value )
+    T KFData::SetValue( const std::string& dataname, T value )
     {
         auto kfdata = FindData( dataname );
         if ( kfdata == nullptr )
         {
-            return;
+            return value;
         }
 
-        kfdata->SetValue< T >( value );
+        return kfdata->SetValue< T >( value );
     }
 
     template< class T >
-    void KFData::SetValue( const std::string& parentname, const std::string& dataname, T value )
+    T KFData::SetValue( const std::string& parentname, const std::string& dataname, T value )
     {
         auto kfdata = FindData( parentname, dataname );
         if ( kfdata == nullptr )
         {
-            return;
+            return value;
         }
 
-        kfdata->SetValue< T >( value );
+        return kfdata->SetValue< T >( value );
     }
 
     template< class T >
-    void KFData::SetValue( uint64 key, const std::string& dataname, T value )
+    T KFData::SetValue( uint64 key, const std::string& dataname, T value )
     {
         auto kfdata = FindData( key, dataname );
         if ( kfdata == nullptr )
         {
-            return;
+            return value;
         }
 
-        kfdata->SetValue< T >( value );
+        return kfdata->SetValue< T >( value );
     }
 
     template< class T >
-    void KFData::SetValue( const std::string& parentname, uint64 key, const std::string& dataname, T value )
+    T KFData::SetValue( const std::string& parentname, uint64 key, const std::string& dataname, T value )
     {
         auto kfdata = FindData( parentname, key );
         if ( kfdata == nullptr )
         {
-            return;
+            return value;
         }
 
-        kfdata->SetValue< T >( dataname, value );
+        return kfdata->SetValue< T >( dataname, value );
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -113,8 +113,7 @@ namespace KFrame
     {
         auto base = GetValue< T >();
         auto final = KFUtility::Operate< T >( operate, base, value );
-        SetValue< T >( final );
-
+        final = SetValue< T >( final );
         return final;
     }
 
@@ -207,28 +206,30 @@ namespace KFrame
     }
 
     template< class T >
-    void KFData::SetValue( T value )
+    T KFData::SetValue( T value )
     {
         switch ( _type )
         {
         case KFDataDefine::Type_Int32:
-            SetInt32( static_cast<int32>( value ) );
+            return static_cast< T >( SetInt32( static_cast<int32>( value ) ) );
             break;
         case KFDataDefine::Type_UInt32:
-            SetUInt32( static_cast<uint32>( value ) );
+            return static_cast< T >( SetUInt32( static_cast<uint32>( value ) ) );
             break;
         case KFDataDefine::Type_Int64:
-            SetInt64( static_cast<int64>( value ) );
+            return static_cast< T >( SetInt64( static_cast<int64>( value ) ) );
             break;
         case KFDataDefine::Type_UInt64:
-            SetUInt64( static_cast<uint64>( value ) );
+            return static_cast< T >( SetUInt64( static_cast<uint64>( value ) ) );
             break;
         case KFDataDefine::Type_Double:
-            SetDouble( static_cast<double>( value ) );
+            return static_cast< T >( SetDouble( static_cast<double>( value ) ) );
             break;
         default:
             break;
         }
+
+        return value;
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -246,9 +247,10 @@ namespace KFrame
     }
 
     template<>
-    inline void KFData::SetValue( std::string value )
+    inline std::string KFData::SetValue( std::string value )
     {
         FromString( value );
+        return value;
     }
     ///////////////////////////////////////////////////////////////////////////
     template<>
@@ -258,9 +260,10 @@ namespace KFrame
     }
 
     template<>
-    inline void KFData::SetValue( Math3D::Vector3D value )
+    inline Math3D::Vector3D  KFData::SetValue( Math3D::Vector3D value )
     {
         SetVector3D( value );
+        return value;
     }
     ///////////////////////////////////////////////////////////////////////////
 }

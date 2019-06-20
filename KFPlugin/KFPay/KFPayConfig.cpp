@@ -2,41 +2,16 @@
 
 namespace KFrame
 {
-    bool KFPayConfig::LoadConfig( const std::string& file )
+    void KFPayConfig::ReadSetting( KFNode& xmlnode, KFPaySetting* kfsetting )
     {
-        _pay_list.Clear();
-        //////////////////////////////////////////////////////////////////
-        KFXml kfxml( file );
-        auto config = kfxml.RootNode();
-        auto xmlnode = config.FindNode( "item" );
-        while ( xmlnode.IsValid() )
-        {
-            auto id = xmlnode.GetString( "Id" );
-            auto kfsetting = _pay_list.Create( id );
+        kfsetting->_price = xmlnode.GetUInt32( "Price" );
 
-            kfsetting->_id = id;
-            kfsetting->_price = xmlnode.GetUInt32( "Price" );
+        auto strbuyelement = xmlnode.GetString( "BuyElement" );
+        kfsetting->_buy_elements.Parse( strbuyelement, __FUNC_LINE__ );
 
-            auto strbuyelement = xmlnode.GetString( "BuyElement" );
-            kfsetting->_buy_elements.Parse( strbuyelement, __FUNC_LINE__ );
+        kfsetting->_first_variable_id = xmlnode.GetUInt32( "FirstVarId" );
 
-            kfsetting->_first_variable_id = xmlnode.GetUInt32( "FirstVarId" );
-
-            auto strfirstelement = xmlnode.GetString( "FirstElement" );
-            kfsetting->_first_elements.Parse( strfirstelement, __FUNC_LINE__ );
-
-            xmlnode.NextNode();
-        }
-        //////////////////////////////////////////////////////////////////
-        return true;
+        auto strfirstelement = xmlnode.GetString( "FirstElement" );
+        kfsetting->_first_elements.Parse( strfirstelement, __FUNC_LINE__ );
     }
-
-    //////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////
-    const KFPaySetting* KFPayConfig::FindPaySetting( const std::string& id ) const
-    {
-        return _pay_list.Find( id );
-    }
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////////
 }
