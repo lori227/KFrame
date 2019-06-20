@@ -12,8 +12,8 @@ namespace KFrame
     class KFZoneConfig : public KFConfig, public KFSingleton< KFZoneConfig >
     {
     public:
-        KFZoneConfig( const std::string& file )
-            : KFConfig( file )
+        KFZoneConfig( const std::string& file, bool isclear )
+            : KFConfig( file, bool isclear )
         {
         }
 
@@ -39,7 +39,7 @@ namespace KFrame
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_zone_config = KFZoneConfig::Instance( "zone.setting" );
+    static auto _kf_zone_config = KFZoneConfig::Instance( "zone.setting", true );
     //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 

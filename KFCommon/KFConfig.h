@@ -95,7 +95,7 @@ namespace KFrame
         }
 
         // 获取配置
-        const T* FindSetting( typename T::ParamType id )
+        const T* FindSetting( uint32 id )
         {
             return _settings.Find( id );
         }
@@ -185,11 +185,10 @@ namespace KFrame
         virtual void ReadSetting( KFNode& xmlnode, T* kfsetting ) = 0;
 
         // 获取配置
-        const T* FindSetting( typename T::ParamType id )
+        const T* FindSetting( const std::string& id )
         {
             return _settings.Find( id );
         }
-
 
     public:
         // 列表

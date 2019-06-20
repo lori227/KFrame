@@ -57,8 +57,8 @@ namespace KFrame
     class KFRankClientConfig : public KFConfig, public KFSingleton< KFRankClientConfig >
     {
     public:
-        KFRankClientConfig( const std::string& file )
-            : KFConfig( file )
+        KFRankClientConfig( const std::string& file, bool isclear )
+            : KFConfig( file, isclear )
         {
         }
 
@@ -83,7 +83,7 @@ namespace KFrame
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_rank_config = KFRankClientConfig::Instance( "rank.xml" );
+    static auto _kf_rank_config = KFRankClientConfig::Instance( "rank.xml", true );
     //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 

@@ -55,8 +55,8 @@ namespace KFrame
     class KFMySQLConfig : public KFConfig, public KFSingleton< KFMySQLConfig >
     {
     public:
-        KFMySQLConfig( const std::string& file )
-            : KFConfig( file )
+        KFMySQLConfig( const std::string& file, bool isclear )
+            : KFConfig( file, isclear )
         {
         }
 
@@ -73,7 +73,7 @@ namespace KFrame
     };
 
     ////////////////////////////////////////////////////////////////////////////
-    static auto* _kf_mysql_config = KFMySQLConfig::Instance( "mysql.setting" );
+    static auto* _kf_mysql_config = KFMySQLConfig::Instance( "mysql.setting", true );
     ////////////////////////////////////////////////////////////////////////////
 }
 

@@ -30,8 +30,8 @@ namespace KFrame
     class KFFilterConfig : public KFConfig, public KFSingleton< KFFilterConfig >
     {
     public:
-        KFFilterConfig( const std::string& file )
-            : KFConfig( file )
+        KFFilterConfig( const std::string& file, bool isclear )
+            : KFConfig( file, isclear )
         {
         }
 
@@ -57,7 +57,7 @@ namespace KFrame
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_filter_config = KFFilterConfig::Instance( "filter.xml" );
+    static auto _kf_filter_config = KFFilterConfig::Instance( "filter.xml", true );
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 

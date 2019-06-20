@@ -43,8 +43,8 @@ namespace KFrame
     class KFRankShardConfig : public KFConfig, public KFSingleton< KFRankShardConfig >
     {
     public:
-        KFRankShardConfig( const std::string& file )
-            : KFConfig( file )
+        KFRankShardConfig( const std::string& file, bool isclear )
+            : KFConfig( file, isclear )
         {
         }
 
@@ -59,7 +59,7 @@ namespace KFrame
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_rank_config = KFRankShardConfig::Instance( "rank.xml" );
+    static auto _kf_rank_config = KFRankShardConfig::Instance( "rank.xml", true );
     //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
