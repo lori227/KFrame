@@ -608,7 +608,7 @@ namespace KFrame
         csharpfile << "\t{\n";
 
         // load
-        csharpfile << "\t\t" << "public override bool LoadConfig()" << "\n";
+        csharpfile << "\t\t" << "public override void LoadConfig()" << "\n";
         csharpfile << "\t\t" << "{" << "\n";
         csharpfile << "\t\t\t" << "var configreader = new FileReader();" << "\n";
         csharpfile << "\t\t\t" << "var datareader = new DataReader();" << "\n";
