@@ -41,9 +41,8 @@ namespace KFrame
     {
     public:
         KFConfig( const std::string& file, bool isclear )
+            : _file( file ), _is_clear( isclear )
         {
-            _file = file;
-            _is_clear = isclear;
         }
         virtual ~KFConfig() = default;
 
@@ -68,7 +67,7 @@ namespace KFrame
     {
     public:
         KFIntConfigT( const std::string& file, bool isclear )
-            : KFConfig( file )
+            : KFConfig( file, isclear )
         {
         }
 
@@ -94,6 +93,13 @@ namespace KFrame
 
             return true;
         }
+
+        // 获取配置
+        const T* FindSetting( typename T::ParamType id )
+        {
+            return _settings.Find( id );
+        }
+
 
     protected:
         // 清空配置
@@ -177,6 +183,13 @@ namespace KFrame
 
         // 读取配置
         virtual void ReadSetting( KFNode& xmlnode, T* kfsetting ) = 0;
+
+        // 获取配置
+        const T* FindSetting( typename T::ParamType id )
+        {
+            return _settings.Find( id );
+        }
+
 
     public:
         // 列表

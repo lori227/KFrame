@@ -35,8 +35,8 @@ namespace KFrame
     class KFTcpServerConfig : public KFConfig, public KFSingleton< KFTcpServerConfig >
     {
     public:
-        KFTcpServerConfig( const std::string& file )
-            : KFConfig( file )
+        KFTcpServerConfig( const std::string& file, bool isclear )
+            : KFConfig( file, isclear )
         {
         }
 
@@ -52,7 +52,7 @@ namespace KFrame
     };
 
     ////////////////////////////////////////////////////////////////////////////
-    static auto _kf_server_config = KFTcpServerConfig::Instance( "tcpserver.setting" );
+    static auto _kf_server_config = KFTcpServerConfig::Instance( "tcpserver.setting", true );
     ////////////////////////////////////////////////////////////////////////////
 }
 

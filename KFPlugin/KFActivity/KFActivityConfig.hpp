@@ -96,8 +96,8 @@ namespace KFrame
     class KFActivityConfig : public KFConfig, public KFSingleton< KFActivityConfig >
     {
     public:
-        KFActivityConfig( const std::string& file )
-            : KFConfig( file )
+        KFActivityConfig( const std::string& file, bool isclear )
+            : KFConfig( file, isclear )
         {
 
         }
@@ -125,7 +125,7 @@ namespace KFrame
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_activity_config = KFActivityConfig::Instance( "activity.xml" );
+    static auto _kf_activity_config = KFActivityConfig::Instance( "activity.xml", true );
     //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 

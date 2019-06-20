@@ -52,8 +52,8 @@ namespace KFrame
     class KFHttpServerConfig : public KFConfig, public KFSingleton< KFHttpServerConfig >
     {
     public:
-        KFHttpServerConfig( const std::string& file )
-            : KFConfig( file )
+        KFHttpServerConfig( const std::string& file, bool isclear )
+            : KFConfig( file, isclear )
         {
         }
 
@@ -69,7 +69,7 @@ namespace KFrame
     };
 
     ////////////////////////////////////////////////////////////////////////////
-    static auto _kf_http_server_config = KFHttpServerConfig::Instance( "httpserver.setting" );
+    static auto _kf_http_server_config = KFHttpServerConfig::Instance( "httpserver.setting", true );
     ////////////////////////////////////////////////////////////////////////////
 }
 

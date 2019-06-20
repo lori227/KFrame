@@ -34,8 +34,8 @@ namespace KFrame
     class KFBusConfig : public KFConfig, public KFSingleton< KFBusConfig >
     {
     public:
-        KFBusConfig( const std::string& file )
-            : KFConfig( file )
+        KFBusConfig( const std::string& file, bool isclear )
+            : KFConfig( file, isclear )
         {
         }
 

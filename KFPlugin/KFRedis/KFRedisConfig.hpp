@@ -70,8 +70,8 @@ namespace KFrame
     class KFRedisConfig : public KFConfig, public KFSingleton< KFRedisConfig >
     {
     public:
-        KFRedisConfig( const std::string& file )
-            : KFConfig( file )
+        KFRedisConfig( const std::string& file, bool isclear )
+            : KFConfig( file, isclear )
         {
         }
 
@@ -87,7 +87,7 @@ namespace KFrame
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_redis_config = KFRedisConfig::Instance( "redis.setting" );
+    static auto _kf_redis_config = KFRedisConfig::Instance( "redis.setting", true );
     //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
