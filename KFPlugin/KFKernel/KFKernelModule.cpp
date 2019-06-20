@@ -6,6 +6,22 @@
 
 namespace KFrame
 {
+    KFKernelModule* KFKernelModule::_kernel_module = nullptr;
+    KFKernelModule::KFKernelModule()
+    {
+        _kernel_module = this;
+    }
+
+    KFKernelModule::~KFKernelModule()
+    {
+        _kernel_module = nullptr;
+    }
+
+    KFKernelModule* KFKernelModule::Instance()
+    {
+        return _kernel_module;
+    }
+
     void KFKernelModule::InitModule()
     {
         __KF_ADD_CONFIG__( _kf_kernel_config, true );
@@ -42,7 +58,6 @@ namespace KFrame
         {
             kfcomponent = _kf_component.Create( dataname );
             kfcomponent->SetName( dataname );
-            static_cast< KFComponentEx* >( kfcomponent )->SetKernelModule( this );
         }
 
         return kfcomponent;

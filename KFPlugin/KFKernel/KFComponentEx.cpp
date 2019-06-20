@@ -8,8 +8,6 @@ namespace KFrame
 {
     KFComponentEx::KFComponentEx()
     {
-        _kf_kernel_module = nullptr;
-
         _entity_initialize_function = nullptr;
         _entity_uninitialize_function = nullptr;
         _entity_run_function = nullptr;
@@ -84,11 +82,6 @@ namespace KFrame
     }
 
     /////////////////////////////////////////////////////////////////////////////////////
-    void KFComponentEx::SetKernelModule( KFKernelModule* module )
-    {
-        _kf_kernel_module = module;
-    }
-
     void KFComponentEx::SetEntityDataMask( uint32 mask, uint32 savedelaytime )
     {
         _entity_data_mask = mask;
@@ -131,7 +124,7 @@ namespace KFrame
     KFEntity* KFComponentEx::CreateEntity( uint64 key, const KFMsg::PBObject* proto )
     {
         auto kfentity = CreateEntity( key );
-        auto ok = _kf_kernel_module->ParseFromProto( kfentity->GetData(), proto );
+        auto ok = KFKernelModule::Instance()->ParseFromProto( kfentity->GetData(), proto );
         if ( ok )
         {
             kfentity->SetKeyID( key );

@@ -1008,7 +1008,7 @@ namespace KFrame
             __FIND_PROTO_OBJECT__;
             if ( savedata == kfdata )
             {
-                _kf_component->_kf_kernel_module->SaveToObject( savedata, pbobject, KFDataDefine::Mask_Client );
+                KFKernelModule::Instance()->SaveToObject( savedata, pbobject, KFDataDefine::Mask_Client );
             }
         } while ( !datahierarchy.empty() );
 

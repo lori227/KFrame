@@ -7,7 +7,6 @@
 
 namespace KFrame
 {
-    class KFKernelModule;
     class KFComponentEx : public KFComponent
     {
     public:
@@ -22,8 +21,6 @@ namespace KFrame
 
         virtual void SetName( const std::string& name );
         virtual const std::string& GetName();
-
-        void SetKernelModule( KFKernelModule* module );
         //////////////////////////////////////////////////////////////////////////////////////////////
         // 创建实体
         virtual KFEntity* CreateEntity( uint64 key );
@@ -150,8 +147,6 @@ namespace KFrame
         // 删除
         void DeleteEntity( KFEntity* kfentity );
     public:
-        KFKernelModule* _kf_kernel_module;
-
         // 对象实例列表
         KFHashMap< uint64, uint64, KFEntity > _entitys;
         /////////////////////////////////////////////////////////////////////////////////////////////
