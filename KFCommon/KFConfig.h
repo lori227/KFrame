@@ -162,6 +162,12 @@ namespace KFrame
             return true;
         }
 
+        // 获取配置
+        const T* FindSetting( const std::string& id )
+        {
+            return _settings.Find( id );
+        }
+
     protected:
         // 清空配置
         virtual void ClearSetting()
@@ -183,13 +189,6 @@ namespace KFrame
 
         // 读取配置
         virtual void ReadSetting( KFNode& xmlnode, T* kfsetting ) = 0;
-
-        // 获取配置
-        const T* FindSetting( const std::string& id )
-        {
-            return _settings.Find( id );
-        }
-
     public:
         // 列表
         KFHashMap< std::string, const std::string&, T > _settings;
