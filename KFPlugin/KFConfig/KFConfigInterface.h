@@ -2,6 +2,7 @@
 #define __KF_CONFIG_INTERFACE_H__
 
 #include "KFrame.h"
+#include "KFConfig.h"
 
 namespace KFrame
 {
