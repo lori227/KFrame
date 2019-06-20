@@ -143,7 +143,7 @@ namespace KFrame
     {
     public:
         KFStrConfigT( const std::string& file, bool isclear )
-            : KFConfigT( file, isclear )
+            : KFConfigT< T >( file, isclear )
         {
         }
 
