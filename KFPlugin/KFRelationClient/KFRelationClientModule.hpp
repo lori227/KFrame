@@ -13,6 +13,7 @@
 #include "KFGame/KFGameInterface.h"
 #include "KFRelationClientInterface.h"
 #include "KFRelationClientConfig.hpp"
+#include "KFConfig/KFConfigInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFKernel/KFKernelInterface.h"
 #include "KFFilter/KFFilterInterface.h"

@@ -13,6 +13,7 @@
 #include "KFRelationShardConfig.hpp"
 #include "KFRelationShardInterface.h"
 #include "KFRedis/KFRedisInterface.h"
+#include "KFConfig/KFConfigInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"

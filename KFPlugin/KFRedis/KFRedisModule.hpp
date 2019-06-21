@@ -12,6 +12,7 @@
 #include "KFrame.h"
 #include "KFRedisInterface.h"
 #include "KFRedisLogic.hpp"
+#include "KFConfig/KFConfigInterface.h"
 
 namespace KFrame
 {

@@ -158,7 +158,7 @@ namespace KFrame
         {
             if ( kfdata != nullptr )
             {
-                __JSON_ADD_VALUE__( kfjson, kfdata->GetValue() );
+                __JSON_ADD_VALUE__( kfjson, kfdata->GetValue< int64 >() );
             }
         }
 
@@ -176,7 +176,7 @@ namespace KFrame
             if ( kfdata != nullptr )
             {
                 auto& object = __JSON_ARRAY_INDEX__( kfjson, i );
-                kfdata->SetValue( object.GetUint() );
+                kfdata->SetValue( object.GetInt64() );
             }
         }
     }

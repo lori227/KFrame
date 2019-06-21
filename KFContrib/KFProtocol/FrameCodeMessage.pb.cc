@@ -58,7 +58,7 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\026FrameCodeMessage.proto\022\005KFMsg*\252\023\n\rFram"
+      "\n\026FrameCodeMessage.proto\022\005KFMsg*\273\023\n\rFram"
       "eCodeEnum\022\t\n\005Error\020\000\022\006\n\002Ok\020\001\022\022\n\rHttpData"
       "Error\020\220N\022\025\n\020AuthDatabaseBusy\020\221N\022\023\n\016AuthS"
       "erverBusy\020\222N\022\023\n\016ZoneServerBusy\020\223N\022\025\n\020Zon"
@@ -87,43 +87,44 @@ void AddDescriptorsImpl() {
       "lreadyExist\020\306^\022\016\n\tNameSetOk\020\307^\022\024\n\017NameLe"
       "ngthError\020\310^\022\024\n\017NameFilterError\020\311^\022\016\n\tNa"
       "meEmpty\020\312^\022\023\n\016NameAlreadySet\020\313^\022\r\n\010SexSe"
-      "tOK\020\314^\022\022\n\rNotEnoughData\020\315^\022\026\n\021AchieveCan"
-      "NotFind\020\316^\022\032\n\025AchieveCanNotFindData\020\317^\022\023"
-      "\n\016AchieveNotDone\020\320^\022\033\n\026AchieveAlreadyRec"
-      "eived\020\321^\022\025\n\020AchieveReceiveOk\020\322^\022\023\n\016TaskC"
-      "anNotFind\020\330^\022\027\n\022TaskCanNotFindData\020\331^\022\020\n"
-      "\013TaskNotDone\020\332^\022\030\n\023TaskAlreadyReceived\020\333"
-      "^\022\021\n\014TaskRewardOk\020\334^\022\027\n\022ActivityCanNotFi"
-      "nd\020\342^\022\033\n\026ActivityCanNotFindData\020\343^\022\034\n\027Ac"
-      "tivityAlreadyReceived\020\344^\022\024\n\017ActivityNotD"
-      "one\020\345^\022\025\n\020ActivityRewardOk\020\346^\022\025\n\020Compoun"
-      "dNotExist\020\354^\022\017\n\nCompoundOk\020\355^\022\023\n\016ItemCan"
-      "NotFind\020\366^\022\027\n\022ItemCanNotFindData\020\367^\022\022\n\rI"
-      "temCanNotUse\020\370^\022\021\n\014SignInNotDay\020\212_\022\025\n\020Si"
-      "gnInCanNotFind\020\213_\022\030\n\023SignInRewardAlready"
-      "\020\214_\022\023\n\016SignInRewardOk\020\215_\022\021\n\014MailNotExist"
-      "\020\250_\022\020\n\013MailTimeOut\020\251_\022\025\n\020MailDeleteFaile"
-      "d\020\252_\022\030\n\023MailAlreadyReceived\020\253_\022\026\n\021MailNo"
-      "tHaveReward\020\254_\022\021\n\014StoreNotFind\020\214`\022\027\n\022Sto"
-      "reBuyCountError\020\215`\022\027\n\022StoreOutOfLimitOwm"
-      "\020\216`\022\025\n\020StoreOutOfLimits\020\217`\022\022\n\rStoreLackC"
-      "ost\020\220`\022\026\n\021StoreBuyTypeError\020\221`\022\017\n\nStoreB"
-      "uyOK\020\222`\022\017\n\nPayIdError\020\276`\022\021\n\014PayDataError"
-      "\020\277`\022\021\n\014RankNotExist\020\360`\022\027\n\022QueryBasicNotE"
-      "xist\020\324a\022\027\n\022MessageFilterError\020\270b\022\024\n\017Rela"
-      "tionAlready\020\271b\022\026\n\021RelationSelfLimit\020\272b\022\026"
-      "\n\021RelationInviteReq\020\273b\022\035\n\030RelationRefuse"
-      "YourInvite\020\274b\022\022\n\rRelationAddOk\020\275b\022\025\n\020Rel"
-      "ationNotExist\020\276b\022\022\n\rRelationDelOk\020\277b\022\031\n\024"
-      "RelationRefuseInvite\020\300b\022\030\n\023RelationTarge"
-      "tLimit\020\301b\022\032\n\025RelationInviteAlready\020\302b\022\030\n"
-      "\023RelationInviteLimit\020\303b\022\025\n\020RelationInvit"
-      "eOk\020\304b\022\033\n\026RelationInviteNotExist\020\305b\022\031\n\024R"
-      "elationSettingError\020\306b\022\026\n\021RelationDataEr"
-      "ror\020\307b\022\024\n\017FriendLinessAdd\020\310bb\006proto3"
+      "tOK\020\314^\022\022\n\rDataNotEnough\020\315^\022\017\n\nDataIsFull"
+      "\020\316^\022\026\n\021AchieveCanNotFind\020\250_\022\032\n\025AchieveCa"
+      "nNotFindData\020\251_\022\023\n\016AchieveNotDone\020\252_\022\033\n\026"
+      "AchieveAlreadyReceived\020\253_\022\025\n\020AchieveRece"
+      "iveOk\020\254_\022\023\n\016TaskCanNotFind\020\214`\022\027\n\022TaskCan"
+      "NotFindData\020\215`\022\020\n\013TaskNotDone\020\216`\022\030\n\023Task"
+      "AlreadyReceived\020\217`\022\021\n\014TaskRewardOk\020\220`\022\027\n"
+      "\022ActivityCanNotFind\020\360`\022\033\n\026ActivityCanNot"
+      "FindData\020\361`\022\034\n\027ActivityAlreadyReceived\020\362"
+      "`\022\024\n\017ActivityNotDone\020\363`\022\025\n\020ActivityRewar"
+      "dOk\020\364`\022\025\n\020CompoundNotExist\020\324a\022\017\n\nCompoun"
+      "dOk\020\325a\022\023\n\016ItemCanNotFind\020\270b\022\027\n\022ItemCanNo"
+      "tFindData\020\271b\022\022\n\rItemCanNotUse\020\272b\022\021\n\014Sign"
+      "InNotDay\020\234c\022\025\n\020SignInCanNotFind\020\235c\022\030\n\023Si"
+      "gnInRewardAlready\020\236c\022\023\n\016SignInRewardOk\020\237"
+      "c\022\021\n\014MailNotExist\020\200d\022\020\n\013MailTimeOut\020\201d\022\025"
+      "\n\020MailDeleteFailed\020\202d\022\030\n\023MailAlreadyRece"
+      "ived\020\203d\022\026\n\021MailNotHaveReward\020\204d\022\021\n\014Store"
+      "NotFind\020\344d\022\027\n\022StoreBuyCountError\020\345d\022\027\n\022S"
+      "toreOutOfLimitOwm\020\346d\022\025\n\020StoreOutOfLimits"
+      "\020\347d\022\022\n\rStoreLackCost\020\350d\022\026\n\021StoreBuyTypeE"
+      "rror\020\351d\022\017\n\nStoreBuyOK\020\352d\022\017\n\nPayIdError\020\310"
+      "e\022\021\n\014PayDataError\020\311e\022\021\n\014RankNotExist\020\254f\022"
+      "\027\n\022QueryBasicNotExist\020\220g\022\027\n\022MessageFilte"
+      "rError\020\364g\022\024\n\017RelationAlready\020\365g\022\026\n\021Relat"
+      "ionSelfLimit\020\366g\022\026\n\021RelationInviteReq\020\367g\022"
+      "\035\n\030RelationRefuseYourInvite\020\370g\022\022\n\rRelati"
+      "onAddOk\020\371g\022\025\n\020RelationNotExist\020\372g\022\022\n\rRel"
+      "ationDelOk\020\373g\022\031\n\024RelationRefuseInvite\020\374g"
+      "\022\030\n\023RelationTargetLimit\020\375g\022\032\n\025RelationIn"
+      "viteAlready\020\376g\022\030\n\023RelationInviteLimit\020\377g"
+      "\022\025\n\020RelationInviteOk\020\200h\022\033\n\026RelationInvit"
+      "eNotExist\020\201h\022\031\n\024RelationSettingError\020\202h\022"
+      "\026\n\021RelationDataError\020\203h\022\024\n\017FriendLinessA"
+      "dd\020\204hb\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 2516);
+      descriptor, 2533);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "FrameCodeMessage.proto", &protobuf_RegisterTypes);
 }
@@ -199,29 +200,6 @@ bool FrameCodeEnum_IsValid(int value) {
     case 12108:
     case 12109:
     case 12110:
-    case 12111:
-    case 12112:
-    case 12113:
-    case 12114:
-    case 12120:
-    case 12121:
-    case 12122:
-    case 12123:
-    case 12124:
-    case 12130:
-    case 12131:
-    case 12132:
-    case 12133:
-    case 12134:
-    case 12140:
-    case 12141:
-    case 12150:
-    case 12151:
-    case 12152:
-    case 12170:
-    case 12171:
-    case 12172:
-    case 12173:
     case 12200:
     case 12201:
     case 12202:
@@ -232,29 +210,53 @@ bool FrameCodeEnum_IsValid(int value) {
     case 12302:
     case 12303:
     case 12304:
-    case 12305:
-    case 12306:
-    case 12350:
-    case 12351:
     case 12400:
+    case 12401:
+    case 12402:
+    case 12403:
+    case 12404:
     case 12500:
+    case 12501:
     case 12600:
     case 12601:
     case 12602:
-    case 12603:
-    case 12604:
-    case 12605:
-    case 12606:
-    case 12607:
-    case 12608:
-    case 12609:
-    case 12610:
-    case 12611:
-    case 12612:
-    case 12613:
-    case 12614:
-    case 12615:
-    case 12616:
+    case 12700:
+    case 12701:
+    case 12702:
+    case 12703:
+    case 12800:
+    case 12801:
+    case 12802:
+    case 12803:
+    case 12804:
+    case 12900:
+    case 12901:
+    case 12902:
+    case 12903:
+    case 12904:
+    case 12905:
+    case 12906:
+    case 13000:
+    case 13001:
+    case 13100:
+    case 13200:
+    case 13300:
+    case 13301:
+    case 13302:
+    case 13303:
+    case 13304:
+    case 13305:
+    case 13306:
+    case 13307:
+    case 13308:
+    case 13309:
+    case 13310:
+    case 13311:
+    case 13312:
+    case 13313:
+    case 13314:
+    case 13315:
+    case 13316:
       return true;
     default:
       return false;

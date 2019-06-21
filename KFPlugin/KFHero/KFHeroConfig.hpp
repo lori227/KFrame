@@ -1,7 +1,7 @@
 ﻿#ifndef __KF_HERO_CONFIG_H__
 #define __KF_HERO_CONFIG_H__
 
-#include "KFConfig/KFConfigInterface.h"
+#include "KFrame.h"
 
 namespace KFrame
 {

@@ -31,8 +31,7 @@ namespace KFrame
     {
         for ( auto& iter : _kf_component._objects )
         {
-            auto kfcomponent = iter.second;
-            kfcomponent->Run();
+            iter.second->Run();
         }
     }
 
@@ -40,8 +39,7 @@ namespace KFrame
     {
         for ( auto& iter : _kf_component._objects )
         {
-            auto kfcomponent = iter.second;
-            kfcomponent->AfterRun();
+            iter.second->AfterRun();
         }
     }
 
@@ -181,7 +179,7 @@ namespace KFrame
                 auto kfchild = kfarray->FindData( citer->first );
                 if ( kfchild != nullptr )
                 {
-                    kfchild->SetValue( citer->second );
+                    kfchild->SetValue<int64>( citer->second );
                 }
             }
         }
@@ -264,7 +262,7 @@ case datatype:\
                     auto kfuint64 = kfchild->FindData( i );
                     if ( kfuint64 != nullptr && kfuint64->IsValid() )
                     {
-                        ( *pbarray.mutable_pbuint64() )[ i ] = kfuint64->GetValue<uint64>() ;
+                        ( *pbarray.mutable_pbuint64() )[ i ] = kfuint64->GetValue<int64>() ;
                     }
                 }
                 break;

@@ -512,6 +512,20 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
+    const std::string& KFEntityEx::CheckAddElement( const KFElements* kfelements )
+    {
+        for ( auto kfelement : kfelements->_element_list )
+        {
+            auto kfdata = _kf_object->FindData( kfelement->_data_name );
+            if ( kfdata == nullptr || kfdata->IsFull() )
+            {
+                return kfelement->_data_name;
+            }
+        }
+
+        return _invalid_str;
+    }
+
     void KFEntityEx::AddElement( const KFElements* kfelements, bool showclient, const char* function, uint32 line, float multiple )
     {
         if ( kfelements->_element_list.empty() )
@@ -521,7 +535,7 @@ namespace KFrame
 
         __LOG_INFO_FUNCTION__( function, line, "entity=[{}] multiple=[{:0.2f}] elements={}!", GetKeyID(), multiple, kfelements->_str_element );
 
-        for ( auto& kfelement : kfelements->_element_list )
+        for ( auto kfelement : kfelements->_element_list )
         {
             AddElement( kfelement, showclient, function, line, multiple );
         }
@@ -716,20 +730,21 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     // 判断元数据是否满足条件
-    bool KFEntityEx::CheckElement( const KFElements* kfelements, const char* function, uint32 line, float multiple /* = 1.0f */ )
+    const std::string& KFEntityEx::CheckRemoveElement( const KFElements* kfelements, const char* function, uint32 line, float multiple /* = 1.0f */ )
     {
-        for ( auto& kfelement : kfelements->_element_list )
+        for ( auto kfelement : kfelements->_element_list )
         {
-            if ( !CheckElement( kfelement, function, line, multiple ) )
+            auto ok = CheckRemoveElement( kfelement, function, line, multiple );
+            if ( !ok )
             {
-                return false;
+                return kfelement->_data_name;
             }
         }
 
-        return true;
+        return _invalid_str;
     }
 
-    bool KFEntityEx::CheckElement( const KFElement* kfelement, const char* function, uint32 line, float multiple )
+    bool KFEntityEx::CheckRemoveElement( const KFElement* kfelement, const char* function, uint32 line, float multiple )
     {
         auto kfdata = _kf_object->FindData( kfelement->_data_name );
         if ( kfdata == nullptr )
@@ -851,7 +866,7 @@ namespace KFrame
             __LOG_INFO_FUNCTION__( function, line, "entity={} remove elements=[{}]!", GetKeyID(), kfelements->_str_element );
         }
 
-        for ( auto& kfelement : kfelements->_element_list )
+        for ( auto kfelement : kfelements->_element_list )
         {
             RemoveElement( kfelement, function, line, multiple );
         }
@@ -1090,7 +1105,7 @@ namespace KFrame
                 savedata = datahierarchy.front();
                 datahierarchy.pop_front();
 
-                ( *pbarray->mutable_pbuint64() )[ key ] = savedata->GetValue< uint64 >();
+                ( *pbarray->mutable_pbuint64() )[ key ] = savedata->GetValue<int64>();
             }
             else
             {

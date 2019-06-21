@@ -2,7 +2,6 @@
 #define __KF_IP_ADDRESS_CONFIG_H__
 
 #include "KFIpAddressInterface.h"
-#include "KFConfig/KFConfigInterface.h"
 
 namespace KFrame
 {

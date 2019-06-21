@@ -2,7 +2,6 @@
 #define __KF_TASK_CONFIG_H__
 
 #include "KFCore/KFElement.h"
-#include "KFConfig/KFConfigInterface.h"
 
 namespace KFrame
 {

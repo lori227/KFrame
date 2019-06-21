@@ -84,11 +84,14 @@ namespace KFrame
 
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
+        // 判断是否能够添加元数据
+        virtual const std::string& CheckAddElement( const KFElements* kfelements );
+
         // 添加元数据
         virtual void AddElement( const KFElements* kfelements, bool showclient, const char* function, uint32 line, float multiple = 1.0f );
 
         // 判断元数据是否满足条件
-        virtual bool CheckElement( const KFElements* kfelements, const char* function, uint32 line, float multiple = 1.0f );
+        virtual const std::string& CheckRemoveElement( const KFElements* kfelements, const char* function, uint32 line, float multiple = 1.0f );
 
         // 删除元数据
         virtual void RemoveElement( const KFElements* kfelements, const char* function, uint32 line, float multiple = 1.0f );
@@ -121,7 +124,7 @@ namespace KFrame
         std::tuple<uint32, KFData*> AddRecordElement( KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple );
 
         // 判断元数据
-        bool CheckElement( const KFElement* kfelement, const char* function, uint32 line, float multiple );
+        bool CheckRemoveElement( const KFElement* kfelement, const char* function, uint32 line, float multiple );
         bool CheckNormalElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line, float multiple );
         bool CheckObjectElement( KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple );
         bool CheckRecordElement( KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple );

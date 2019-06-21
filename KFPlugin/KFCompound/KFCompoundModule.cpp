@@ -34,9 +34,10 @@ namespace KFrame
         }
 
         // 判断是否足够
-        if ( player->CheckElement( &kfsetting->_cost_data, __FUNC_LINE__ ) )
+        auto& dataname = player->CheckRemoveElement( &kfsetting->_cost_data, __FUNC_LINE__ );
+        if ( !dataname.empty() )
         {
-            return _kf_display->SendToClient( player, KFMsg::NotEnoughData );
+            return _kf_display->SendToClient( player, KFMsg::DataNotEnough, dataname );
         }
 
         // 扣除材料

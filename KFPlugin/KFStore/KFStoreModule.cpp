@@ -81,7 +81,8 @@ namespace KFrame
         }
 
         // 检测扣除物品是否足够
-        if ( !player->CheckElement( kfagents, __FUNC_LINE__, count ) )
+        auto& dataname = player->CheckRemoveElement( kfagents, __FUNC_LINE__, count );
+        if ( !dataname.empty() )
         {
             return KFMsg::StoreLackCost;
         }
@@ -106,7 +107,7 @@ namespace KFrame
         }
 
         // 只判断是否存在, 不判断数量
-        return player->CheckElement( &kfsetting->_buy_elements, __FUNC_LINE__ );
+        return player->CheckRemoveElement( &kfsetting->_buy_elements, __FUNC_LINE__ ).empty();
     }
 
     bool KFStoreModule::CheckBuyLimit( KFEntity* player, const KFStoreSetting* kfsetting, uint32 count )

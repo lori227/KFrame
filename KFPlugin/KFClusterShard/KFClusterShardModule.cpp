@@ -28,7 +28,7 @@ namespace KFrame
         {
             auto clientid = kfmsg.clientid( i );
             _proxy_client_list[ clientid ] = proxyid;
-            __LOG_ERROR__( "route discover client=[{}] proxy=[{}] !", KFAppId::ToString( clientid ), KFAppId::ToString( proxyid ) );
+            __LOG_INFO__( "route discover client=[{}] proxy=[{}] !", KFAppId::ToString( clientid ), KFAppId::ToString( proxyid ) );
         }
     }
 

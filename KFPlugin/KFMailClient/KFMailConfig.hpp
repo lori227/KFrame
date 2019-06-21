@@ -3,7 +3,6 @@
 
 #include "KFrame.h"
 #include "KFCore/KFElement.h"
-#include "KFConfig/KFConfigInterface.h"
 
 namespace KFrame
 {

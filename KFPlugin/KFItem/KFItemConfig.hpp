@@ -2,7 +2,6 @@
 #define __KF_ITEM_CONFIG_H__
 
 #include "KFItemSetting.hpp"
-#include "KFConfig/KFConfigInterface.h"
 
 namespace KFrame
 {
