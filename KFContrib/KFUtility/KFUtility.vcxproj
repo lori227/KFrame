@@ -112,7 +112,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>..\..\_lib\win64\debug;..\..\_lib\win64\debug\3rd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libiconvd.lib;zlibd.lib;libssld.lib;libcryptod.lib;Crypt32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libiconvd.lib;liblz4d.lib;libssld.lib;libcryptod.lib;Crypt32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>LIBCD.lib LIBCMTD.lib MSVCRT.lib</IgnoreSpecificDefaultLibraries>
     </Lib>
     <PostBuildEvent>
@@ -142,7 +142,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>..\..\_lib\win64\release;..\..\_lib\win64\release\3rd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libiconv.lib;zlib.lib;libssl.lib;libcrypto.lib;Crypt32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libiconv.lib;liblz4.lib;libssl.lib;libcrypto.lib;Crypt32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>LIBCD.lib LIBCMTD.lib MSVCRT.lib</IgnoreSpecificDefaultLibraries>
     </Lib>
     <PostBuildEvent>
