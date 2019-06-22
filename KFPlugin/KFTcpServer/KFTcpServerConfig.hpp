@@ -8,27 +8,17 @@ namespace KFrame
     class KFTcpSetting
     {
     public:
-        KFTcpSetting()
-        {
-            _port = 0;
-            _port_type = 0;
-            _max_connection = 20000;
-            _max_queue_size = 10000;
-            _time_out = 20;
-            _local_ip = "0.0.0.0";
-            _message_type = KFMessageEnum::Server;
-        }
-
         std::string _app_name;
         std::string _app_type;
-        std::string _local_ip;
+        std::string _local_ip = "0.0.0.0";
 
-        uint32 _port_type;
-        uint32 _port;
-        uint32 _time_out;
-        uint32 _max_connection;
-        uint32 _max_queue_size;
-        uint32 _message_type;
+        uint32 _port = 0u;
+        uint32 _port_type = 0u;
+        uint32 _time_out = 20;
+        uint32 _max_connection = 20000;
+        uint32 _max_queue_size = 10000;
+        uint32 _compress_level = 0u;
+        uint32 _message_type = KFMessageEnum::Server;
     };
 
     class KFTcpServerConfig : public KFConfig, public KFSingleton< KFTcpServerConfig >

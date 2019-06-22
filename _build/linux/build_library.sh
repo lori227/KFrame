@@ -56,12 +56,22 @@ blue "start building zlib"
 cd zlib
 bash ./configure --prefix=/usr/local
 make -j 4
-cp -R -f *.so* ../../$libpath
-cp -R -f *.so* ../../$libpath
+cp -R -f libz.a ../../$libpath
+cp -R -f libz.so* ../../$libpath
 cd ../
 
 blue "end building zlib"
+#-----------------------------------------------------
+blue "start building lz4"
 
+cd lz4
+make clean
+make -j 4
+cp -R -f ./lib/liblz4.a ../../$libpath
+cp -R -f ./lib/liblz4.so* ../../$libpath
+cd ../
+
+blue "end building lz4"
 #pause
 #-----------------------------------------------------
 blue "start building libunwind"

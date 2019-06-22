@@ -22,7 +22,7 @@ namespace KFrame
 
     void KFTcpClientModule::BeforeRun()
     {
-        _client_engine->InitEngine( 10000, KFMessageEnum::Server );
+        _client_engine->InitEngine( 10000, KFMessageEnum::Server, 0u );
 
         _client_engine->BindNetFunction( this, &KFTcpClientModule::HandleNetMessage );
         _client_engine->BindConnectFunction( this, &KFTcpClientModule::OnClientConnected );

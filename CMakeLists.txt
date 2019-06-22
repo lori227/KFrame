@@ -17,6 +17,7 @@ include_directories(
     ${ROOT_DIR}/KFLibrary/google/protobuf/src
     ${ROOT_DIR}/KFLibrary/libuv/include
     ${ROOT_DIR}/KFLibrary/luaplus
+    ${ROOT_DIR}/KFLibrary/lz4
     ${ROOT_DIR}/KFLibrary/libgo
     ${ROOT_DIR}/KFLibrary/libgo/libgo/linux
     ${ROOT_DIR}/KFLibrary/redis/linux/deps

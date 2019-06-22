@@ -17,11 +17,11 @@ namespace KFrame
         delete _net_client_services;
     }
 
-    void KFNetClientEngine::InitEngine( uint32 queuesize, uint32 type )
+    void KFNetClientEngine::InitEngine( uint32 queuesize, uint32 type, uint32 compress )
     {
         // 网络服务
         _net_client_services = new KFNetClientServices();
-        _net_client_services->InitServices( 100, queuesize, type );
+        _net_client_services->InitServices( 100, queuesize, type, compress );
         _net_client_services->StartServices( nullptr );
 
         // 注册网络时间

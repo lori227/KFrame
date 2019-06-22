@@ -11,12 +11,12 @@ macro(LINK_SDK_MACRO project_name)
         target_link_libraries(${project_name} 
         KFGlobald  KFLoggerd KFPlugind KFMemoryd KFProtod KFProtocold KFHttpd KFCored KFNetworkd KFUtilityd KFMath3Dd 
         PocoNetd PocoNetSSLd PocoCryptod PocoJSONd PocoUtild PocoXMLd PocoDataMySQLd PocoDatad PocoFoundationd luaplus53d 
-        dl pthread uv iconv protobuf hiredis mysqlclient z ssl crypto )
+        dl pthread uv iconv protobuf hiredis mysqlclient z ssl crypto lz4 )
     else()
         target_link_libraries(${project_name}
         KFGlobal KFLogger KFPlugin KFMemory KFProto KFProtocol KFHttp KFCore KFNetwork KFUtility KFMath3D 
         PocoNet PocoNetSSL PocoCrypto PocoJSON PocoUtil PocoXML PocoDataMySQL PocoData PocoFoundation luaplus53 
-        dl pthread uv iconv protobuf hiredis mysqlclient z ssl crypto )  
+        dl pthread uv iconv protobuf hiredis mysqlclient z ssl crypto lz4 )  
     endif()
 
 endmacro(LINK_SDK_MACRO project_name)

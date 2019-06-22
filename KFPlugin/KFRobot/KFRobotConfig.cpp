@@ -16,6 +16,11 @@ namespace KFrame
         }
 
         {
+            auto xmlnode = config.FindNode( "Net" );
+            _compress_level = xmlnode.GetUInt32( "Compress" );
+        }
+
+        {
             auto xmlnode = config.FindNode( "Login" );
             _total_robot_count = xmlnode.GetUInt32( "Count" );
             _login_interval_time = xmlnode.GetUInt32( "Interval" );

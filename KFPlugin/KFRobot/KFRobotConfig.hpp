@@ -20,6 +20,9 @@ namespace KFrame
         // 认证服务器地址
         std::string _auth_address;
 
+        // 加密等级
+        uint32 _compress_level = 0u;
+
         // 机器人总数
         uint32 _total_robot_count = 1u;
 

@@ -15,10 +15,10 @@ namespace KFrame
     }
 
     ////////////////////////////////////////////////////
-    void KFNetServerEngine::InitEngine( uint32 maxqueuesize, uint32 messagetype )
+    void KFNetServerEngine::InitEngine( uint32 maxqueuesize, uint32 messagetype, uint32 compress )
     {
         _net_server_services = new KFNetServerServices();
-        _net_server_services->InitServices( 10000, maxqueuesize, messagetype );
+        _net_server_services->InitServices( 10000, maxqueuesize, messagetype, compress );
         ///////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////
         _net_server_services->_net_event->BindConnectFunction( this, &KFNetServerEngine::OnServerConnected );

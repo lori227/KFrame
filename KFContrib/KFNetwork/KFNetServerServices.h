@@ -16,7 +16,7 @@ namespace KFrame
         virtual ~KFNetServerServices();
 
         // 初始化
-        virtual void InitServices( uint32 eventcount, uint32 queuesize, uint32 messagetype );
+        virtual void InitServices( uint32 eventcount, uint32 queuesize, uint32 messagetype, uint32 compress );
 
         // 开启服务
         int32 StartServices( const KFNetData* netdata );

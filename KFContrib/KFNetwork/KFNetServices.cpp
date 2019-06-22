@@ -2,6 +2,7 @@
 #include "KFNetServices.h"
 #include "KFNetSession.h"
 #include "KFNetLocker.h"
+#include "lz4/lib/lz4.h"
 
 namespace KFrame
 {
@@ -29,7 +30,7 @@ namespace KFrame
         delete ( uv_mutex_t* )_uv_event_mutex;
     }
 
-    void KFNetServices::InitServices( uint32 eventcount, uint32 queuecount, uint32 messagetype )
+    void KFNetServices::InitServices( uint32 eventcount, uint32 queuecount, uint32 messagetype, uint32 compress )
     {
         if ( queuecount != 0 )
         {
@@ -42,6 +43,13 @@ namespace KFrame
         _message_type = messagetype;
         _buff_length = KFNetDefine::SerializeBuffLength;
         _buff_address = reinterpret_cast< char* >( malloc( _buff_length ) );
+
+        _compress = compress;
+        if ( _compress > 0 )
+        {
+            _compress_length = KFNetDefine::SerializeBuffLength;
+            _compress_address = reinterpret_cast< char* >( malloc( _buff_length ) );
+        }
 
         _uv_loop = uv_loop_new();
         uv_mutex_init( ( uv_mutex_t* )_uv_event_mutex );
@@ -145,5 +153,43 @@ namespace KFrame
         }
 
         return _buff_address;
+    }
+
+    void KFNetServices::CalcCompressLength( uint32 length )
+    {
+        auto compresslength = LZ4_compressBound( length );
+        if ( ( uint32 )compresslength > _compress_length )
+        {
+            _compress_length = compresslength;
+            _compress_address = reinterpret_cast< char* >( realloc( _compress_address, compresslength ) );
+        }
+    }
+
+    const char* KFNetServices::Encode( const char* data, uint32& length )
+    {
+        if ( _compress > 0u )
+        {
+            CalcCompressLength( length );
+
+            // 压缩
+            length = LZ4_compress_fast( data, _compress_address, length, _compress_length, _compress );
+            data = _compress_address;
+        }
+
+        return data;
+    }
+
+    const char* KFNetServices::Decode( const char* data, uint32& length )
+    {
+        if ( _compress > 0u )
+        {
+            CalcCompressLength( length );
+
+            // 解压
+            length = LZ4_decompress_safe( data, _compress_address, length, _compress_length );
+            data = _compress_address;
+        }
+
+        return data;
     }
 }

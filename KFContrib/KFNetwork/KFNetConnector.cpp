@@ -234,9 +234,10 @@ namespace KFrame
 
     bool KFNetConnector::SendNetMessage( uint64 recvid, uint32 msgid, const char* data, uint32 length )
     {
-        bool ok = false;
+        // 消息加密
+        data = _net_services->Encode( data, length );
 
-        // 小于发送的最大buff, 直接添加消息
+        bool ok = false;
         if ( length <= KFNetDefine::MaxMessageLength )
         {
             ok = SendSingleMessage( recvid, msgid, data, length );
@@ -289,8 +290,12 @@ namespace KFrame
         auto message = PopNetMessage();
         while ( message != nullptr )
         {
+            // 消息解密
+            auto length = message->_head._length;
+            auto data = _net_services->Decode( message->_data, length );
+
             // 处理回调函数
-            netfunction( message->_head._route, message->_head._msgid, message->_data, message->_head._length );
+            netfunction( message->_head._route, message->_head._msgid, data, length );
 
             // 每次处理200个消息
             ++messagecount;

@@ -51,7 +51,7 @@ namespace KFrame
         __REGISTER_LOOP_TIMER__( 0, _kf_robot_config->_login_interval_time, 1000, &KFRobotModule::OnTimerCreateRobot );
 
         _net_client = new KFNetClientEngine();
-        _net_client->InitEngine( 200, KFMessageEnum::Client );
+        _net_client->InitEngine( 200, KFMessageEnum::Client, _kf_robot_config->_compress_level );
         _net_client->BindNetFunction( this, &KFRobotModule::HandleNetMessage );
         _net_client->BindConnectFunction( this, &KFRobotModule::OnClientConnectGate );
         _net_client->BindDisconnectFunction( this, &KFRobotModule::OnClientLostGate );

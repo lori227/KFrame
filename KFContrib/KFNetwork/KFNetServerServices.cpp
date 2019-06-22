@@ -15,9 +15,9 @@ namespace KFrame
         delete _uv_server;
     }
 
-    void KFNetServerServices::InitServices( uint32 eventcount, uint32 queuesize, uint32 messagetype )
+    void KFNetServerServices::InitServices( uint32 eventcount, uint32 queuesize, uint32 messagetype, uint32 compress )
     {
-        KFNetServices::InitServices( eventcount, queuesize, messagetype );
+        KFNetServices::InitServices( eventcount, queuesize, messagetype, compress );
 
         _uv_server->data = this;
         uv_tcp_init( _uv_loop, _uv_server );

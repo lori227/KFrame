@@ -19,7 +19,7 @@ namespace KFrame
         virtual ~KFNetServices();
 
         // 初始化
-        virtual void InitServices( uint32 eventcount, uint32 queuecount, uint32 messagetype );
+        virtual void InitServices( uint32 eventcount, uint32 queuecount, uint32 messagetype, uint32 compress );
 
         // 开始服务
         virtual int32 StartServices( const KFNetData* netdata );
@@ -32,6 +32,13 @@ namespace KFrame
 
         // 发送事件到网络服务
         void SendEventToServices( KFNetSession* netsession, uint32 evnettype );
+
+        // 消息加密
+        const char* Encode( const char* data, uint32& length );
+
+        // 消息解密
+        const char* Decode( const char* data, uint32& length );
+
     protected:
         // 线程逻辑
         static void RunServices( void* argument );
@@ -41,10 +48,17 @@ namespace KFrame
 
         // 关闭服务
         static void OnAsyncCloseCallBack( uv_async_t* handle );
+
+        // 计算压缩buff长度
+        void CalcCompressLength( uint32 length );
     public:
         // 消息序列化buff地址
         char* _buff_address = nullptr;
         uint32 _buff_length = 0u;
+
+        // 解压buff
+        char* _compress_address = nullptr;
+        uint32 _compress_length = 0u;
 
         // 网络事件
         KFNetEvent* _net_event = nullptr;
@@ -69,6 +83,9 @@ namespace KFrame
 
         // 线程id
         int64 _thread_id = 0u;
+
+        // 压缩等级
+        uint32 _compress = 0u;
 
         // 异步事件
         uv_async_t* _uv_event_async = nullptr;
