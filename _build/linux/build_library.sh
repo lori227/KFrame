@@ -51,17 +51,6 @@ yum install -y autoconf automake libtool
 cd ../../KFLibrary
 libpath=_lib/linux/3rd/
 #-----------------------------------------------------
-blue "start building zlib"
-
-cd zlib
-bash ./configure --prefix=/usr/local
-make -j 4
-cp -R -f libz.a ../../$libpath
-cp -R -f libz.so* ../../$libpath
-cd ../
-
-blue "end building zlib"
-#-----------------------------------------------------
 blue "start building lz4"
 
 cd lz4
