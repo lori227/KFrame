@@ -49,6 +49,10 @@ namespace KFrame
         {
             KFUtility::AddBitMask< uint32 >( kfdatasetting->_data_mask, KFDataDefine::Mask_Client );
         }
+        if ( xmlnode.GetString( "Delay" ) == "1" )
+        {
+            KFUtility::AddBitMask< uint32 >( kfdatasetting->_data_mask, KFDataDefine::Mask_Delay );
+        }
         if ( xmlnode.GetString( "View" ) == "1" )
         {
             KFUtility::AddBitMask< uint32 >( kfdatasetting->_data_mask, KFDataDefine::Mask_View );

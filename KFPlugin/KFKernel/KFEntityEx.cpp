@@ -84,7 +84,7 @@ namespace KFrame
             return nullptr;
         }
 
-        return KFDataFactory::CreateData( kfdata->GetDataSetting() );
+        return KFDataFactory::CreateData( kfdata->_data_setting );
     }
 
     KFData* KFEntityEx::CreateData( const std::string& dataname, uint64 key )
@@ -207,7 +207,7 @@ namespace KFrame
         auto kfobject = kfparent->FindData( key );
         if ( kfobject == nullptr )
         {
-            kfobject = KFDataFactory::CreateData( kfparent->GetDataSetting() );
+            kfobject = KFDataFactory::CreateData( kfparent->_data_setting );
             kfobject->OperateValue( dataname, operate, value );
             AddData( kfparent, key, kfobject );
             return value;
@@ -231,11 +231,9 @@ namespace KFrame
     uint64 KFEntityEx::UpdateData( uint64 key, KFData* kfdata, uint32 operate, uint64 value )
     {
         auto oldvalue = kfdata->GetValue< uint64 >();
-        auto newvalue = KFUtility::Operate< uint64 >( operate, oldvalue, value );
+        auto newvalue = kfdata->OperateValue( operate, value );
         if ( oldvalue != newvalue )
         {
-            kfdata->SetValue< uint64 >( newvalue );
-
             // 属性更新回调
             _kf_component->UpdateDataCallBack( this, key, kfdata, _invalid_int, operate, value, oldvalue, newvalue );
         }
@@ -252,11 +250,9 @@ namespace KFrame
         }
 
         auto oldvalue = kfchild->GetValue< uint64 >();
-        auto newvalue = KFUtility::Operate< uint64 >( operate, oldvalue, value );
+        auto newvalue = kfchild->OperateValue( operate, value );
         if ( oldvalue != newvalue )
         {
-            kfchild->SetValue< uint64 >( newvalue );
-
             // 属性更新回调
             _kf_component->UpdateDataCallBack( this, key, kfchild, index, operate, value, oldvalue, newvalue );
         }
@@ -466,7 +462,7 @@ namespace KFrame
 
     void KFEntityEx::AddDataToShow( KFData* kfdata )
     {
-        if ( !kfdata->GetDataSetting()->HaveFlagMask( KFDataDefine::Mask_Show ) )
+        if ( !kfdata->_data_setting->HaveMask( KFDataDefine::Mask_Show ) )
         {
             return;
         }
@@ -480,7 +476,7 @@ namespace KFrame
         {
             auto pbdata = _pb_show_element.add_pbdata();
             pbdata->set_value( kfdata->GetValue() );
-            pbdata->set_name( kfdata->GetDataSetting()->_name );
+            pbdata->set_name( kfdata->_data_setting->_name );
 
             _have_show_client = true;
             _kf_component->AddSyncEntity( this );
@@ -491,17 +487,17 @@ namespace KFrame
         {
             auto pbobject = _pb_show_element.add_pbobject();
             pbobject->set_key( kfdata->GetKeyID() );
-            pbobject->set_name( kfdata->GetDataSetting()->_name );
+            pbobject->set_name( kfdata->_data_setting->_name );
 
             for ( auto kfchild = kfdata->FirstData(); kfchild != nullptr; kfchild = kfdata->NextData() )
             {
-                if ( !kfchild->GetDataSetting()->HaveFlagMask( KFDataDefine::Mask_Show ) ||
+                if ( !kfchild->_data_setting->HaveMask( KFDataDefine::Mask_Show ) ||
                         !kfchild->IsValid() )
                 {
                     continue;
                 }
 
-                ( *pbobject->mutable_pbuint64() )[ kfchild->GetDataSetting()->_name ] = kfchild->GetValue();
+                ( *pbobject->mutable_pbuint64() )[ kfchild->_data_setting->_name ] = kfchild->GetValue();
             }
 
             _have_show_client = true;
@@ -552,7 +548,7 @@ namespace KFrame
 
         KFData* showdata = nullptr;
         uint32 showtype = KFDataDefine::Show_None;
-        const_cast< KFElement* >( kfelement )->_data_setting = kfdata->GetDataSetting();
+        const_cast< KFElement* >( kfelement )->_data_setting = kfdata->_data_setting;
 
         // 如果有注册的特殊处理函数
         auto kffunction = _kf_component->_add_element_function.Find( kfelement->_data_name );
@@ -596,7 +592,7 @@ namespace KFrame
         {
         case KFDataDefine::Type_UInt32:
         {
-            auto value = kfelementvalue->_value->CalcUseValue( kfdata->GetDataSetting(), multiple );
+            auto value = kfelementvalue->_value->CalcUseValue( kfdata->_data_setting, multiple );
             UpdateData( 0, kfdata, kfelementvalue->_operate, value );
         }
         break;
@@ -627,7 +623,7 @@ namespace KFrame
             {
             case KFDataDefine::Type_UInt32:
             {
-                auto value = kfvalue->CalcUseValue( kfchild->GetDataSetting(), multiple );
+                auto value = kfvalue->CalcUseValue( kfchild->_data_setting, multiple );
                 UpdateData( 0, kfchild, kfelement->_operate, value );
             }
             break;
@@ -663,7 +659,7 @@ namespace KFrame
             {
             case KFDataDefine::Type_UInt32:
             {
-                auto value = kfvalue->CalcUseValue( kfchild->GetDataSetting(), multiple );
+                auto value = kfvalue->CalcUseValue( kfchild->_data_setting, multiple );
                 kfchild->SetValue( value );
             }
             break;
@@ -715,7 +711,7 @@ namespace KFrame
         if ( kfchild == nullptr )
         {
             // 不存在, 创建一个, 并更新属性
-            kfchild = KFDataFactory::CreateData( kfparent->GetDataSetting() );
+            kfchild = KFDataFactory::CreateData( kfparent->_data_setting );
             SetElementToData( kfelementobject, kfchild, multiple );
             AddData( kfparent, kfelementobject->_config_id, kfchild );
         }
@@ -793,7 +789,7 @@ namespace KFrame
         }
 
         auto datavalue = kfdata->GetValue();
-        auto elementvalue = kfelementvalue->_value->CalcUseValue( kfdata->GetDataSetting(), multiple );
+        auto elementvalue = kfelementvalue->_value->CalcUseValue( kfdata->_data_setting, multiple );
         return datavalue >= elementvalue;
     }
 
@@ -823,7 +819,7 @@ namespace KFrame
             }
 
             auto datavalue = kfchild->GetValue() ;
-            auto elementvalue = kfvalue->CalcUseValue( kfchild->GetDataSetting(), multiple );
+            auto elementvalue = kfvalue->CalcUseValue( kfchild->_data_setting, multiple );
             if ( datavalue < elementvalue )
             {
                 return false;
@@ -916,7 +912,7 @@ namespace KFrame
             return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] is not int!", kfelement->_data_name );
         }
 
-        auto value = kfelementvalue->_value->CalcUseValue( kfdata->GetDataSetting(), multiple );
+        auto value = kfelementvalue->_value->CalcUseValue( kfdata->_data_setting, multiple );
         UpdateData( _invalid_int, kfdata, KFEnum::Dec, value );
     }
 
@@ -977,6 +973,29 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////
+#define __PREPARE_SYNC__( function )\
+    if ( function == nullptr ||\
+            !IsInited() || !kfdata->IsNeedSyncToClient() )\
+    {\
+        return;\
+    }\
+    std::list< KFData* > datahierarchy;\
+    datahierarchy.push_front( kfdata );\
+    auto kfparent = kfdata->GetParent();\
+    while ( kfparent != nullptr )\
+    {\
+        if ( !kfparent->IsNeedSyncToClient() )\
+        {\
+            return;\
+        }\
+        datahierarchy.push_front( kfparent );\
+        kfparent = kfparent->GetParent();\
+    }\
+    datahierarchy.pop_front();\
+    if ( datahierarchy.empty() )\
+    {\
+        return;\
+    }\
 
 #define __FIND_PROTO_OBJECT__\
     auto savedata = datahierarchy.front();\
@@ -995,28 +1014,7 @@ namespace KFrame
 
     void KFEntityEx::SyncAddData( KFData* kfdata, uint64 key )
     {
-        // 不需要同步
-        if ( _kf_component->_entity_sync_add_function == nullptr ||
-                !kfdata->HaveFlagMask( KFDataDefine::Mask_Client ) )
-        {
-            return;
-        }
-
-        // 先遍历父节点
-        std::list< KFData* > datahierarchy;
-        datahierarchy.push_front( kfdata );
-
-        auto kfparent = kfdata->GetParent();
-        while ( kfparent != nullptr )
-        {
-            datahierarchy.push_front( kfparent );
-            kfparent = kfparent->GetParent();
-        }
-
-        // 根据层级来确定属性的位置
-        // 先pop player这一层
-        datahierarchy.pop_front();
-
+        __PREPARE_SYNC__( _kf_component->_entity_sync_add_function );
         auto pbobject = &_add_pb_object;
         do
         {
@@ -1034,28 +1032,7 @@ namespace KFrame
 
     void KFEntityEx::SyncRemoveData( KFData* kfdata, uint64 key )
     {
-        // 不需要同步
-        if ( _kf_component->_entity_sync_remove_function == nullptr ||
-                !kfdata->HaveFlagMask( KFDataDefine::Mask_Client ) )
-        {
-            return;
-        }
-
-        // 先遍历父节点
-        std::list< KFData* > datahierarchy;
-        datahierarchy.push_front( kfdata );
-
-        auto kfparent = kfdata->GetParent();
-        while ( kfparent != nullptr )
-        {
-            datahierarchy.push_front( kfparent );
-            kfparent = kfparent->GetParent();
-        }
-
-        // 根据层级来确定属性的位置
-        // 先pop player这一层
-        datahierarchy.pop_front();
-
+        __PREPARE_SYNC__( _kf_component->_entity_sync_remove_function );
         auto pbobject = &_remove_pb_object;
         do
         {
@@ -1068,37 +1045,11 @@ namespace KFrame
 
     void KFEntityEx::SyncUpdateData( KFData* kfdata, uint64 key )
     {
-        // 不需要同步
-        if ( _kf_component->_entity_sync_update_function == nullptr ||
-                !kfdata->HaveFlagMask( KFDataDefine::Mask_Client ) )
-        {
-            return;
-        }
-
-        // 先遍历父节点
-        std::list< KFData* > datahierarchy;
-        datahierarchy.push_front( kfdata );
-
-        auto kfparent = kfdata->GetParent();
-        while ( kfparent != nullptr )
-        {
-            datahierarchy.push_front( kfparent );
-            kfparent = kfparent->GetParent();
-        }
-
-        // 根据层级来确定属性的位置
-        // 先pop player这一层
-        datahierarchy.pop_front();
-        if ( datahierarchy.empty() )
-        {
-            return;
-        }
-
+        __PREPARE_SYNC__( _kf_component->_entity_sync_update_function );
         auto pbobject = &_update_pb_object;
         do
         {
             __FIND_PROTO_OBJECT__;
-
             if ( savedata->GetType() == KFDataDefine::Type_Array )
             {
                 auto pbarray = &( ( *pbobject->mutable_pbarray() )[ savedata->GetName() ] );
@@ -1123,7 +1074,7 @@ namespace KFrame
 
     void KFEntityEx::AddSyncUpdateDataToPBObject( KFData* kfdata, KFMsg::PBObject* pbobject )
     {
-        auto datasetting = kfdata->GetDataSetting();
+        auto datasetting = kfdata->_data_setting;
         switch ( datasetting->_type )
         {
         case KFDataDefine::Type_Int32:
@@ -1143,6 +1094,9 @@ namespace KFrame
             break;
         case KFDataDefine::Type_String:
             ( *pbobject->mutable_pbstring() )[ datasetting->_name ] = kfdata->GetValue< std::string >();
+            break;
+        case KFDataDefine::Type_Object:
+            KFKernelModule::Instance()->SaveToObject( kfdata, pbobject, KFDataDefine::Mask_Client );
             break;
         }
     }

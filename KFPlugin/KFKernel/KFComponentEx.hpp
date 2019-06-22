@@ -45,7 +45,7 @@ namespace KFrame
         virtual void SetEntityDataMask( uint32 mask, uint32 savedelaytime );
 
         // 启动保存定时器
-        void StartSaveEntityTimer( KFEntity* kfentity );
+        void StartSaveEntityTimer( KFEntity* kfentity, KFData* kfdata );
 
         // 停止保存定时器
         void DeleteSaveEntity( KFEntity* kfentity );
@@ -136,8 +136,6 @@ namespace KFrame
         virtual void UnRegisterShowElementFunction();
 
     protected:
-
-
         // 保存数据到数据库
         __KF_TIMER_FUNCTION__( OnTimerSaveEntity );
 

@@ -121,7 +121,7 @@ namespace KFrame
         for ( auto i = 0; i < kfmsg.mail_size(); ++i )
         {
             auto pbmail = &kfmsg.mail( i );
-            auto kfmail = ParsePBMailToData( pbmail, kfmailrecord->GetDataSetting() );
+            auto kfmail = ParsePBMailToData( pbmail, kfmailrecord->_data_setting );
             if ( kfmail == nullptr )
             {
                 continue;

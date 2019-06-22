@@ -103,13 +103,13 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
         // 同步更新数据
-        void SyncUpdateData( KFData* kfdata, uint64 key );
+        virtual void SyncUpdateData( KFData* kfdata, uint64 key );
 
         // 同步添加数据
-        void SyncAddData( KFData* kfdata, uint64 key );
+        virtual void SyncAddData( KFData* kfdata, uint64 key );
 
         // 同步删除数据
-        void SyncRemoveData( KFData* kfdata, uint64 key );
+        virtual void SyncRemoveData( KFData* kfdata, uint64 key );
 
         // 同步数据到客户端
         void SyncEntityToClient();

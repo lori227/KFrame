@@ -8,8 +8,8 @@ namespace KFrame
     class KFInt32 : public KFData
     {
     public:
-        KFInt32();
-        virtual ~KFInt32();
+        KFInt32() = default;
+        virtual ~KFInt32() = default;
 
         virtual void Reset();
 
@@ -33,9 +33,8 @@ namespace KFrame
         virtual int32 SetInt32( int32 value );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
     private:
-
         // 属性
-        int32 _data;
+        int32 _data = 0;
     };
 
 

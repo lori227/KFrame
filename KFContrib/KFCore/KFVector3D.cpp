@@ -2,16 +2,6 @@
 
 namespace KFrame
 {
-    KFVector3D::KFVector3D()
-    {
-        _data.Set( 0.0f, 0.0f, 0.0f );
-        _type = KFDataDefine::Type_Vector3D;
-    }
-
-    KFVector3D::~KFVector3D()
-    {
-    }
-
     const Math3D::Vector3D& KFVector3D::GetVector3D()
     {
         return _data;

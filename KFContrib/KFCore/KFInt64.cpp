@@ -2,16 +2,6 @@
 
 namespace KFrame
 {
-    KFInt64::KFInt64()
-    {
-        _data = _invalid_int;
-        _type = KFDataDefine::Type_Int64;
-    }
-
-    KFInt64::~KFInt64()
-    {
-    }
-
     int64 KFInt64::GetInt64()
     {
         return _data;

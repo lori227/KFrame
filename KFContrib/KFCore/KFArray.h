@@ -9,8 +9,8 @@ namespace KFrame
     class KFArray : public KFData
     {
     public:
-        KFArray();
-        virtual ~KFArray();
+        KFArray() = default;
+        virtual ~KFArray() = default;
 
         virtual void Reset();
 

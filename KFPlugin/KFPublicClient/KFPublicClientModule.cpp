@@ -70,8 +70,8 @@ namespace KFrame
     {
         // 只有公共属性才更新
         if ( !player->IsInited() ||
-                !kfdata->HaveFlagMask( KFDataDefine::Mask_Public ) ||
-                !kfdata->GetParent()->HaveFlagMask( KFDataDefine::Mask_Public ) )
+                !kfdata->HaveMask( KFDataDefine::Mask_Public ) ||
+                !kfdata->GetParent()->HaveMask( KFDataDefine::Mask_Public ) )
         {
             return;
         }

@@ -2,15 +2,6 @@
 
 namespace KFrame
 {
-    KFString::KFString()
-    {
-        _type = KFDataDefine::Type_String;
-    }
-
-    KFString::~KFString()
-    {
-    }
-
     const std::string& KFString::GetString()
     {
         return _data;

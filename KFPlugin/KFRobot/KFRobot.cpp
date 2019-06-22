@@ -100,7 +100,7 @@ namespace KFrame
         auto pbchild = &pbrecord->pbobject();
         for ( auto iter = pbchild->begin(); iter != pbchild->end(); ++iter )
         {
-            auto kfdata = _kf_kernel->CreateObject( kfrecord->GetDataSetting(), &iter->second );
+            auto kfdata = _kf_kernel->CreateObject( kfrecord->_data_setting, &iter->second );
             kfrecord->AddData( iter->first, kfdata );
         }
     }

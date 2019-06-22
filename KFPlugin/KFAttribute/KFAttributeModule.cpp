@@ -5,7 +5,6 @@ namespace KFrame
     void KFAttributeModule::BeforeRun()
     {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::MSG_REMOVE_DATA_REQ, &KFAttributeModule::HandleRemoveDataReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_SET_NAME_REQ, &KFAttributeModule::HandleSetNameReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_SET_SEX_REQ, &KFAttributeModule::HandleSetSexReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_SET_PLAYERNAME_TO_GAME_ACK, &KFAttributeModule::HandleSetPlayerNameToGameAck );
@@ -14,7 +13,6 @@ namespace KFrame
     void KFAttributeModule::BeforeShut()
     {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_REMOVE_DATA_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::MSG_SET_NAME_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::MSG_SET_SEX_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_SET_PLAYERNAME_TO_GAME_ACK );
@@ -111,13 +109,5 @@ namespace KFrame
         player->UpdateData( __KF_STRING__( basic ), __KF_STRING__( sex ), KFEnum::Set, kfmsg.sex() );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFAttributeModule::HandleRemoveDataReq )
-    {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgRemoveDataReq );
-
-        player->UpdateData( kfmsg.dataname(), kfmsg.key(), __KF_STRING__( count ), KFEnum::Dec, kfmsg.count() );
-
-        __LOG_INFO__( "remove data[{}:{}:{}] ok!", kfmsg.dataname(), kfmsg.key(), kfmsg.count() );
-    }
 
 }

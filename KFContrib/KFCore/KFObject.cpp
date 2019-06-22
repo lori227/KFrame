@@ -2,18 +2,6 @@
 
 namespace KFrame
 {
-    KFObject::KFObject()
-    {
-        _key = 0;
-        _class_setting = nullptr;
-        _type = KFDataDefine::Type_Object;
-    }
-
-    KFObject::~KFObject()
-    {
-        _class_setting = nullptr;
-    }
-
     uint64 KFObject::GetKeyID()
     {
         return _key;
@@ -23,11 +11,6 @@ namespace KFrame
     {
         _key = id;
         SetValue<uint64>( _data_setting->_key_name, id );
-    }
-
-    uint32 KFObject::GetType() const
-    {
-        return KFDataDefine::Type_Object;
     }
 
     void KFObject::Reset()

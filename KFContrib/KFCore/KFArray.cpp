@@ -2,16 +2,6 @@
 
 namespace KFrame
 {
-    KFArray::KFArray()
-    {
-        _type = KFDataDefine::Type_Array;
-    }
-
-    KFArray::~KFArray()
-    {
-
-    }
-
     void KFArray::Initialize( const KFClassSetting* classsetting, const KFDataSetting* datasetting )
     {
         KFData::Initialize( classsetting, datasetting );

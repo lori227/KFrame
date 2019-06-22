@@ -7,7 +7,7 @@ namespace KFrame
 {
     bool KFValue::IsNeedShow()
     {
-        return _data_setting != nullptr && _data_setting->HaveFlagMask( KFDataDefine::Mask_Show );
+        return _data_setting != nullptr && _data_setting->HaveMask( KFDataDefine::Mask_Show );
     }
     /////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////
@@ -39,7 +39,7 @@ namespace KFrame
             _use_value = KFGlobal::Instance()->RandRange( _min_value, _max_value, 1 );
         }
 
-        if ( multiple != 1.0f && _data_setting != nullptr && _data_setting->HaveFlagMask( KFDataDefine::Mask_Multiple ) )
+        if ( multiple != 1.0f && _data_setting != nullptr && _data_setting->HaveMask( KFDataDefine::Mask_Multiple ) )
         {
             _use_value = static_cast<uint32>( _use_value * multiple );
         }
@@ -93,7 +93,7 @@ namespace KFrame
 
     bool KFElement::IsNeedShow() const
     {
-        return _data_setting != nullptr && _data_setting->HaveFlagMask( KFDataDefine::Mask_Show );
+        return _data_setting != nullptr && _data_setting->HaveMask( KFDataDefine::Mask_Show );
     }
     //////////////////////////////////////////////////////////////////////////////////////
 

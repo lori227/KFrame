@@ -159,7 +159,7 @@ namespace KFrame
         if ( kfhero == nullptr )
         {
             // 不存在, 创建
-            kfhero = _kf_kernel->CreateObject( kfparent->GetDataSetting() );
+            kfhero = _kf_kernel->CreateObject( kfparent->_data_setting );
 
             // 添加英雄
             player->AddData( kfparent, kfelementobject->_config_id, kfhero );
@@ -168,7 +168,7 @@ namespace KFrame
         {
             // 存在, 判断有效时间
             auto datatime = kfhero->GetValue( __KF_STRING__( time ) );
-            auto elementtime = kfelementobject->GetValue( kfhero->GetClassSetting(), __KF_STRING__( time ), multiple );
+            auto elementtime = kfelementobject->GetValue( kfhero->_class_setting, __KF_STRING__( time ), multiple );
             if ( datatime != _invalid_int )
             {
                 if ( elementtime == _invalid_int )

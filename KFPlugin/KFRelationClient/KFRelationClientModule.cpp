@@ -127,8 +127,7 @@ namespace KFrame
 
     void KFRelationClientModule::OnRelationValueUpdate( KFEntity* player, KFData* kfdata )
     {
-        if ( !kfdata->HaveFlagMask( KFDataDefine::Mask_Relation ) ||
-                !kfdata->GetParent()->HaveFlagMask( KFDataDefine::Mask_Relation ) )
+        if ( !kfdata->HaveMask( KFDataDefine::Mask_Relation ) || !kfdata->GetParent()->HaveMask( KFDataDefine::Mask_Relation ) )
         {
             return;
         }
@@ -240,7 +239,7 @@ namespace KFrame
         for ( auto i = 0; i < kfmsg.pbrelation_size(); ++i )
         {
             auto pbrelation = &kfmsg.pbrelation( i );
-            auto kfdata = _kf_kernel->CreateObject( kfrecord->GetDataSetting() );
+            auto kfdata = _kf_kernel->CreateObject( kfrecord->_data_setting );
 
             PBRelationToKFData( pbrelation, kfdata );
             player->AddData( kfrecord, kfdata );
@@ -269,7 +268,7 @@ namespace KFrame
         for ( auto i = 0; i < kfmsg.pbinvite_size(); ++i )
         {
             auto pbinvite = &kfmsg.pbinvite( i );
-            auto kfinvite = _kf_kernel->CreateObject( kfinviterecord->GetDataSetting() );
+            auto kfinvite = _kf_kernel->CreateObject( kfinviterecord->_data_setting );
 
             PBRelationToKFData( pbinvite, kfinvite );
             player->AddData( kfinviterecord, kfinvite );
@@ -353,7 +352,7 @@ namespace KFrame
             return __LOG_ERROR__( "invitelist=[{}] is null!", kfmsg.dataname() );
         }
 
-        auto kfinvite = _kf_kernel->CreateObject( kfinviterecord->GetDataSetting() );
+        auto kfinvite = _kf_kernel->CreateObject( kfinviterecord->_data_setting );
 
         PBRelationToKFData( &kfmsg.pbinvite(), kfinvite );
         player->AddData( kfinviterecord, kfinvite );
@@ -516,7 +515,7 @@ namespace KFrame
         }
 
         // 添加关系
-        auto kfrelation = _kf_kernel->CreateObject( kfrecord->GetDataSetting() );
+        auto kfrelation = _kf_kernel->CreateObject( kfrecord->_data_setting );
         PBRelationToKFData( &kfmsg.pbrelation(), kfrelation );
         player->AddData( kfrecord, kfrelation );
 
@@ -708,7 +707,7 @@ namespace KFrame
     //        {
     //            auto pbrelation = &kfmsg.pbrelation( i );
     //
-    //            auto kfrelation = _kf_kernel->CreateObject( kfrecentplayer->GetDataSetting() );
+    //            auto kfrelation = _kf_kernel->CreateObject( kfrecentplayer->_data_setting );
     //            PBRelationToKFData( pbrelation, kfrelation );
     //            player->AddData( kfrecentplayer, kfrelation );
     //        }

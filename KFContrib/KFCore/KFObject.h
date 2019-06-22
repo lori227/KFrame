@@ -9,11 +9,8 @@ namespace KFrame
     class KFObject : public KFData
     {
     public:
-        KFObject();
-        virtual ~KFObject();
-
-        // 类型
-        virtual uint32 GetType() const;
+        KFObject() = default;
+        virtual ~KFObject() = default;
 
         // 重置
         virtual void Reset();
@@ -61,7 +58,7 @@ namespace KFrame
 
     protected:
         // key
-        uint64 _key;
+        uint64 _key = 0u;
 
         // 列表
         KFHashMap< std::string, const std::string&, KFData > _data;

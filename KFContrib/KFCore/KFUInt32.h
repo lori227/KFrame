@@ -8,8 +8,8 @@ namespace KFrame
     class KFUInt32 : public KFData
     {
     public:
-        KFUInt32();
-        virtual ~KFUInt32();
+        KFUInt32() = default;
+        virtual ~KFUInt32() = default;
 
         virtual void Reset();
 
@@ -35,7 +35,7 @@ namespace KFrame
 
     private:
         // 属性
-        uint32 _data;
+        uint32 _data = 0u;
     };
 }
 

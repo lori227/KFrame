@@ -17,6 +17,7 @@ namespace KFrame
     {
         __FIND_MODULE__( _kf_kernel, KFKernelInterface );
         __FIND_MODULE__( _kf_command, KFCommandInterface );
+        __FIND_MODULE__( _kf_message, KFMessageInterface );
         __FIND_MODULE__( _kf_tcp_server, KFTcpServerInterface );
     }
 

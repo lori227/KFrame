@@ -2,16 +2,6 @@
 
 namespace KFrame
 {
-    KFRecord::KFRecord()
-    {
-        _type = KFDataDefine::Type_Record;
-    }
-
-    KFRecord::~KFRecord()
-    {
-
-    }
-
     void KFRecord::Reset()
     {
         _data.Clear();
@@ -57,7 +47,7 @@ namespace KFrame
         //auto kfchild = kfother->FirstData();
         //while ( kfchild != nullptr )
         //{
-        //    auto kfdata = KFDataFactory::CreateData( kfchild->GetDataSetting() );
+        //    auto kfdata = KFDataFactory::CreateData( kfchild->_data_setting );
         //    if ( kfdata != nullptr )
         //    {
         //        kfdata->CopyFrom( kfchild );

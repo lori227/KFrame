@@ -211,7 +211,7 @@ namespace KFrame
             auto pbobject = &( iter->second.pbobject() );
             for ( auto citer = pbobject->begin(); citer != pbobject->end(); ++citer )
             {
-                auto kfobject = KFDataFactory::CreateData( kfrecord->GetDataSetting() );
+                auto kfobject = KFDataFactory::CreateData( kfrecord->_data_setting );
 
                 CopyFromObject( kfobject, &citer->second );
                 kfrecord->AddData( citer->first, kfobject );
@@ -229,16 +229,16 @@ case datatype:\
 
     void KFKernelModule::SaveToObject( KFData* kfdata, KFMsg::PBObject* proto, uint32 datamask )
     {
-        auto datasetting = kfdata->GetDataSetting();
-        if ( !datasetting->HaveFlagMask( datamask ) )
+        auto datasetting = kfdata->_data_setting;
+        if ( !datasetting->HaveMask( datamask ) )
         {
             return;
         }
 
         for ( auto kfchild = kfdata->FirstData(); kfchild != nullptr; kfchild = kfdata->NextData() )
         {
-            auto datasetting = kfchild->GetDataSetting();
-            if ( !datasetting->HaveFlagMask( datamask ) || !kfchild->IsValid() )
+            auto datasetting = kfchild->_data_setting;
+            if ( !datasetting->HaveMask( datamask ) || !kfchild->IsValid() )
             {
                 continue;
             }
@@ -262,7 +262,7 @@ case datatype:\
                     auto kfuint64 = kfchild->FindData( i );
                     if ( kfuint64 != nullptr && kfuint64->IsValid() )
                     {
-                        ( *pbarray.mutable_pbuint64() )[ i ] = kfuint64->GetValue<int64>() ;
+                        ( *pbarray.mutable_pbuint64() )[ i ] = kfuint64->GetValue<int64>();
                     }
                 }
                 break;
@@ -281,7 +281,6 @@ case datatype:\
                     auto& pbobject = ( *pbrecord.mutable_pbobject() )[ kfobject->GetKeyID() ];
                     SaveToObject( kfobject, &pbobject, datamask );
                 }
-
                 break;
             }
             }

@@ -253,22 +253,36 @@ namespace KFrame
 
     uint32 KFData::GetType() const
     {
-        return _type;
+        return _data_setting->_type;
     }
 
-    const KFDataSetting* KFData::GetDataSetting() const
+    bool KFData::HaveMask( uint32 mask ) const
     {
-        return _data_setting;
+        return _data_setting->HaveMask( mask ) || KFUtility::HaveBitMask( _run_mask, mask );
     }
 
-    const KFClassSetting* KFData::GetClassSetting() const
+    void KFData::AddMask( uint32 mask )
     {
-        return _class_setting;
+        KFUtility::AddBitMask( _run_mask, mask );
     }
 
-    bool KFData::HaveFlagMask( uint32 mask )
+    void KFData::RemoveMask( uint32 mask )
     {
-        return _data_setting->HaveFlagMask( mask );
+        KFUtility::ClearBitMask( _run_mask, mask );
+    }
+
+    bool KFData::IsNeedSyncToClient() const
+    {
+        if ( _data_setting->HaveMask( KFDataDefine::Mask_Client ) )
+        {
+            if ( !_data_setting->HaveMask( KFDataDefine::Mask_Delay ) ||
+                    KFUtility::HaveBitMask<uint32>( _run_mask, KFDataDefine::Mask_Client ) )
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////

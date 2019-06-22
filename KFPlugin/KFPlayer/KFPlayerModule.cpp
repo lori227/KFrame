@@ -22,6 +22,12 @@ namespace KFrame
         __REGISTER_COMMAND_FUNCTION__( __KF_STRING__( adddata ), &KFPlayerModule::OnCommandAddData );
         __REGISTER_COMMAND_FUNCTION__( __KF_STRING__( setdata ), &KFPlayerModule::OnCommandSetData );
         __REGISTER_COMMAND_FUNCTION__( __KF_STRING__( decdata ), &KFPlayerModule::OnCommandDecData );
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////
+        __REGISTER_MESSAGE__( KFMsg::MSG_REMOVE_DATA_REQ, &KFPlayerModule::HandleRemoveDataReq );
+        __REGISTER_MESSAGE__( KFMsg::MSG_REQUEST_SYNC_REQ, &KFPlayerModule::HandleRequestSyncReq );
+        __REGISTER_MESSAGE__( KFMsg::MSG_CANCEL_SYNC_REQ, &KFPlayerModule::HandleCancelSyncReq );
+
     }
 
     void KFPlayerModule::BeforeShut()
@@ -42,6 +48,10 @@ namespace KFrame
         __UNREGISTER_COMMAND_FUNCTION__( __KF_STRING__( adddata ) );
         __UNREGISTER_COMMAND_FUNCTION__( __KF_STRING__( setdata ) );
         __UNREGISTER_COMMAND_FUNCTION__( __KF_STRING__( decdata ) );
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////
+        __UNREGISTER_MESSAGE__( KFMsg::MSG_REMOVE_DATA_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::MSG_REQUEST_SYNC_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::MSG_CANCEL_SYNC_REQ );
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -413,5 +423,54 @@ namespace KFrame
         KFMsg::MsgShowElement show;
         show.mutable_element()->CopyFrom( pbelement );
         SendToClient( player, KFMsg::MSG_SHOW_ELEMENT, &show );
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleRemoveDataReq )
+    {
+        __CLIENT_PROTO_PARSE__( KFMsg::MsgRemoveDataReq );
+
+        player->RemoveData( kfmsg.dataname(), kfmsg.key() );
+        __LOG_INFO__( "remove data[{}:{}] ok!", kfmsg.dataname(), kfmsg.key() );
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleRequestSyncReq )
+    {
+        __CLIENT_PROTO_PARSE__( KFMsg::MsgRequestSyncReq );
+
+        auto kfobject = player->GetData();
+        auto kfdata = kfobject->FindData( kfmsg.dataname() );
+        if ( kfdata == nullptr )
+        {
+            return;
+        }
+
+        kfdata->AddMask( KFDataDefine::Mask_Client );
+        if ( kfdata->GetType() == KFDataDefine::Type_Object )
+        {
+            player->SyncUpdateData( kfdata, kfdata->GetKeyID() );
+        }
+        else if ( kfdata->GetType() == KFDataDefine::Type_Record )
+        {
+            for ( auto kfchild = kfdata->FirstData(); kfchild != nullptr; kfchild = kfdata->NextData() )
+            {
+                player->SyncAddData( kfchild, kfchild->GetKeyID() );
+            }
+        }
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleCancelSyncReq )
+    {
+        __CLIENT_PROTO_PARSE__( KFMsg::MsgCancelSyncReq );
+
+        auto kfobject = player->GetData();
+        auto kfdata = kfobject->FindData( kfmsg.dataname() );
+        if ( kfdata == nullptr )
+        {
+            return;
+        }
+
+        kfdata->RemoveMask( KFDataDefine::Mask_Client );
     }
 }

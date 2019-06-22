@@ -59,15 +59,20 @@ namespace KFrame
         virtual uint64 GetKeyID();
         virtual void SetKeyID( uint64 id );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
-        // 属性配置
-        const KFClassSetting* GetClassSetting() const;
-        const KFDataSetting* GetDataSetting() const;
-
-        // 属性标识
-        bool HaveFlagMask( uint32 mask );
-
         // 初始化
         virtual void Initialize( const KFClassSetting* classsetting, const KFDataSetting* datasetting );
+
+        // 属性标识
+        bool HaveMask( uint32 mask ) const;
+
+        // 添加标识
+        void AddMask( uint32 mask );
+
+        // 删除标识
+        void RemoveMask( uint32 mask );
+
+        // 是否需要同步给客户端
+        bool IsNeedSyncToClient() const;
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 父属性
         KFData* GetParent();
@@ -168,8 +173,8 @@ namespace KFrame
         const KFClassSetting* _class_setting = nullptr;
 
     protected:
-        // 类型
-        uint32 _type = 0u;
+        // 运行时标记
+        uint32 _run_mask = 0u;
 
         // 父属性
         KFData* _parent = nullptr;

@@ -46,9 +46,6 @@ namespace KFrame
         // 处理设置性别请求
         __KF_MESSAGE_FUNCTION__( HandleSetSexReq );
 
-        // 删除属性请求
-        __KF_MESSAGE_FUNCTION__( HandleRemoveDataReq );
-
     protected:
 
         // 检查名字的有效性

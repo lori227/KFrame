@@ -103,6 +103,16 @@ namespace KFrame
         // 设置element到kfdata对象
         virtual void UpdateElementToData( KFElementObject* kfelement, KFData* kfdata, float multiple = 1.0f ) = 0;
         virtual void SetElementToData( KFElementObject* kfelement, KFData* kfdata, float multiple = 1.0f ) = 0;
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 同步更新数据
+        virtual void SyncUpdateData( KFData* kfdata, uint64 key ) = 0;
+
+        // 同步添加数据
+        virtual void SyncAddData( KFData* kfdata, uint64 key ) = 0;
+
+        // 同步删除数据
+        virtual void SyncRemoveData( KFData* kfdata, uint64 key ) = 0;
     };
 }
 

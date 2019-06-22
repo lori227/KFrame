@@ -63,7 +63,7 @@ namespace KFrame
         if ( kfsetting->IsRealItem() )
         {
             // 计算物品数量
-            auto itemcount = kfelementobject->GetValue( kfparent->GetClassSetting(), __KF_STRING__( count ), multiple );
+            auto itemcount = kfelementobject->GetValue( kfparent->_class_setting, __KF_STRING__( count ), multiple );
             if ( itemcount == _invalid_int )
             {
                 __LOG_ERROR_FUNCTION__( function, line, "item id=[{}] count = 0!", kfelementobject->_config_id );
@@ -83,7 +83,7 @@ namespace KFrame
 
     uint32 KFItemModule::AddOverlayCountItemData( KFEntity* player, KFData* kfparent, KFElementObject* kfelementobject, const KFItemSetting* kfsetting, uint32 count )
     {
-        auto datasetting = kfparent->GetDataSetting();
+        auto datasetting = kfparent->_data_setting;
 
         // 叠加数量 > 1
         if ( kfsetting->_overlay_count > 1u )
@@ -120,7 +120,7 @@ namespace KFrame
 
     uint32 KFItemModule::AddNewItemData( KFEntity* player, KFData* kfparent, KFElementObject* kfelementobject, const KFItemSetting* kfsetting, uint32 count )
     {
-        auto datasetting = kfparent->GetDataSetting();
+        auto datasetting = kfparent->_data_setting;
         auto addcount = __MIN__( count, kfsetting->_overlay_count );
 
         auto kfitem = _kf_kernel->CreateObject( datasetting );
@@ -143,7 +143,7 @@ namespace KFrame
 
     KFData* KFItemModule::MoveItem( KFEntity* player, KFData* kfsource, KFData* kftarget, uint64 itemcount  )
     {
-        auto datasetting = kfsource->GetDataSetting();
+        auto datasetting = kfsource->_data_setting;
         if ( kftarget == nullptr )
         {
             kftarget = _kf_kernel->CreateObject( datasetting );
@@ -183,7 +183,7 @@ namespace KFrame
 
         // 调用删除脚本
         auto kfitem = kfdata->GetParent();
-        auto itemid = kfitem->GetValue( kfitem->GetDataSetting()->_config_key_name );
+        auto itemid = kfitem->GetValue( kfitem->_data_setting->_config_key_name );
         auto kfsetting = _kf_item_config->FindSetting( itemid );
         if ( kfsetting != nullptr )
         {
@@ -227,7 +227,7 @@ namespace KFrame
         }
 
         // 判断数量
-        auto itemcount = kfelementobject->GetValue( kfparent->GetClassSetting(), __KF_STRING__( count ), multiple );
+        auto itemcount = kfelementobject->GetValue( kfparent->_class_setting, __KF_STRING__( count ), multiple );
         if ( itemcount == _invalid_int )
         {
             __LOG_ERROR_FUNCTION__( function, line, "item id=[{}] count = 0!", kfelementobject->_config_id );
@@ -236,7 +236,7 @@ namespace KFrame
 
         // 获取item列表
         std::list< KFData* > finditem;
-        kfparent->FindData( kfparent->GetDataSetting()->_config_key_name, kfelementobject->_config_id, finditem );
+        kfparent->FindData( kfparent->_data_setting->_config_key_name, kfelementobject->_config_id, finditem );
         if ( finditem.empty() )
         {
             return false;
@@ -269,7 +269,7 @@ namespace KFrame
             return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id!", kfelement->_data_name );
         }
 
-        auto itemcount = kfelementobject->GetValue( kfparent->GetClassSetting(), __KF_STRING__( count ), multiple );
+        auto itemcount = kfelementobject->GetValue( kfparent->_class_setting, __KF_STRING__( count ), multiple );
         if ( itemcount == _invalid_int )
         {
             return __LOG_ERROR_FUNCTION__( function, line, "item id=[{}] count = 0!", kfelementobject->_config_id );
@@ -277,7 +277,7 @@ namespace KFrame
 
         // 获取item列表
         std::list< KFData* > finditem;
-        kfparent->FindData( kfparent->GetDataSetting()->_config_key_name, kfelementobject->_config_id, finditem );
+        kfparent->FindData( kfparent->_data_setting->_config_key_name, kfelementobject->_config_id, finditem );
         if ( finditem.empty() )
         {
             return;

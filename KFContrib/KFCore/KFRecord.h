@@ -9,8 +9,8 @@ namespace KFrame
     class KFRecord : public KFData
     {
     public:
-        KFRecord();
-        virtual ~KFRecord();
+        KFRecord() = default;
+        virtual ~KFRecord() = default;
 
         virtual void Reset();
 

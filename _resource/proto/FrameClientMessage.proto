@@ -28,6 +28,9 @@ enum FrameClientProtocol
 	MSG_QUERY_BASIC_REQ					= 207;	// 查询玩家基本数据
 	MSG_QUERY_BASIC_ACK					= 208;	// 查询基础数据
 	MSG_SHOW_ELEMENT 					= 209;	// 显示奖励
+	MSG_REQUEST_SYNC_REQ				= 210;	// 客户端请求同步
+	MSG_CANCEL_SYNC_REQ					= 211;	// 客户端取消同步
+
 
 	// attribute
 	MSG_SET_NAME_REQ 					= 300;	// 设置名字
@@ -38,6 +41,7 @@ enum FrameClientProtocol
 	MSG_COMPOUND_REQ					= 305;	// 属性合成请求
 	MSG_USE_ITEM_REQ					= 306;	// 使用道具
 	MSG_SEVEN_SIGNIN_REWARD_REQ			= 307;	// 领取7天签到奖励
+
 
 	// mail
 	MSG_VIEW_MAIL_REQ 					= 401;	// 查看邮件
@@ -155,7 +159,20 @@ message MsgRemoveDataReq
 {
 	bytes dataname = 1;		// 属性名称
 	uint64 key = 2;			// id
-	uint32 count = 3;		// 数量
+}
+
+// 请求同步属性
+// MSG_REQUEST_SYNC_REQ
+message MsgRequestSyncReq
+{
+	bytes dataname = 1;
+}
+
+// 取消同步属性
+// MSG_CANCEL_SYNC_REQ
+message MsgCancelSyncReq
+{
+	bytes dataname = 1;
 }
 ////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////

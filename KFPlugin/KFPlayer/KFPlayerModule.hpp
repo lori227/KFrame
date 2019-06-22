@@ -12,6 +12,7 @@
 #include "KFPlayerInterface.h"
 #include "KFProtocol/KFProtocol.h"
 #include "KFKernel/KFKernelInterface.h"
+#include "KFMessage/KFMessageInterface.h"
 #include "KFCommand/KFCommandInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
 
@@ -71,7 +72,7 @@ namespace KFrame
         virtual void AddNewPlayerFunction( const std::string& moudle, KFEntityFunction& function );
         virtual void RemoveNewPlayerFunction( const std::string& moudle );
 
-    private:
+    protected:
         // 初始化
         void InitPlayer( KFEntity* player );
         void UnInitPlayer( KFEntity* player );
@@ -106,6 +107,15 @@ namespace KFrame
         // 显示添加奖励消息
         void SendElementToClient( KFEntity* player, const KFMsg::PBShowElement& pbelement );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    protected:
+        // 删除属性请求
+        __KF_MESSAGE_FUNCTION__( HandleRemoveDataReq );
+
+        // 请求同步属性
+        __KF_MESSAGE_FUNCTION__( HandleRequestSyncReq );
+
+        // 请求取消同步
+        __KF_MESSAGE_FUNCTION__( HandleCancelSyncReq );
 
     private:
         // 玩家组件

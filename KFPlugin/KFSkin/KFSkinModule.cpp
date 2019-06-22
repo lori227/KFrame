@@ -159,14 +159,14 @@ namespace KFrame
         }
 
         auto kfobject = player->GetData();
-        auto elementtime = kfelementobject->GetValue( kfparent->GetClassSetting(), __KF_STRING__( time ), multiple );
+        auto elementtime = kfelementobject->GetValue( kfparent->_class_setting, __KF_STRING__( time ), multiple );
 
         // 判断是否存在该皮肤
         auto kfskin = kfparent->FindData( kfelementobject->_config_id );
         if ( kfskin == nullptr )
         {
             // 不存在, 创建新的皮肤
-            kfskin = _kf_kernel->CreateObject( kfparent->GetDataSetting() );
+            kfskin = _kf_kernel->CreateObject( kfparent->_data_setting );
 
             // 设置时间
             if ( elementtime != _invalid_int )

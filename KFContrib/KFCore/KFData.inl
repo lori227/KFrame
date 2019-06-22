@@ -181,7 +181,7 @@ namespace KFrame
     template< class T >
     T KFData::GetValue()
     {
-        switch ( _type )
+        switch ( _data_setting->_type )
         {
         case KFDataDefine::Type_Int32:
             return static_cast<T>( GetInt32() );
@@ -208,7 +208,7 @@ namespace KFrame
     template< class T >
     T KFData::SetValue( T value )
     {
-        switch ( _type )
+        switch ( _data_setting->_type )
         {
         case KFDataDefine::Type_Int32:
             return static_cast< T >( SetInt32( static_cast<int32>( value ) ) );

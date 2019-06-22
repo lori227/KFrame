@@ -8,8 +8,8 @@ namespace KFrame
     class KFDouble : public KFData
     {
     public:
-        KFDouble();
-        virtual ~KFDouble();
+        KFDouble() = default;
+        virtual ~KFDouble() = default;
 
         virtual void Reset();
 
@@ -31,7 +31,7 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private:
-        double _data;
+        double _data = 0.0f;
     };
 }
 
