@@ -24,6 +24,7 @@ namespace KFrame
     void KFInt32::Reset()
     {
         _data = _invalid_int;
+        KFData::Reset();
     }
 
     bool KFInt32::IsFull()

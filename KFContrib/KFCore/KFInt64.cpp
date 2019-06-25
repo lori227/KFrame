@@ -16,6 +16,7 @@ namespace KFrame
     void KFInt64::Reset()
     {
         _data = _invalid_int;
+        KFData::Reset();
     }
 
     bool KFInt64::IsValid()

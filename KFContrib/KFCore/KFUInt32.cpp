@@ -24,6 +24,7 @@ namespace KFrame
     void KFUInt32::Reset()
     {
         _data = _invalid_int;
+        KFData::Reset();
     }
 
     bool KFUInt32::IsValid()

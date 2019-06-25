@@ -239,10 +239,14 @@ namespace KFrame
     {
         _data_setting = datasetting;
         _class_setting = classsetting;
+        KFData::Reset();
+    }
 
-        if ( !datasetting->_init_value.empty() )
+    void KFData::Reset()
+    {
+        if ( !_data_setting->_init_value.empty() )
         {
-            FromString( datasetting->_init_value );
+            FromString( _data_setting->_init_value );
         }
     }
 

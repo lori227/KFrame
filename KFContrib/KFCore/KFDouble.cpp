@@ -16,6 +16,7 @@ namespace KFrame
     void KFDouble::Reset()
     {
         _data = 0.0f;
+        KFData::Reset();
     }
 
     bool KFDouble::IsValid()

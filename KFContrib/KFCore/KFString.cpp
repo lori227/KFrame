@@ -16,6 +16,7 @@ namespace KFrame
     void KFString::Reset()
     {
         _data.clear();
+        KFData::Reset();
     }
 
     bool KFString::IsValid()
