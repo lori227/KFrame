@@ -6,6 +6,7 @@
 
 namespace KFrame
 {
+    using namespace Poco::MongoDB;
     class KFMongo
     {
     public:
@@ -21,6 +22,10 @@ namespace KFrame
         // 是否连接
         bool IsConnected();
 
+        ///////////////////////////////////////////////////////////////////////////////
+        bool SendRequest( RequestMessage& request );
+        bool SendRequest( RequestMessage& request, ResponseMessage& response );
+        ///////////////////////////////////////////////////////////////////////////////
     protected:
         // 连接字串
         std::string _connect_data;
@@ -29,10 +34,10 @@ namespace KFrame
         bool _is_connected = false;
 
         // 连接
-        Poco::MongoDB::Connection _connection;
+        Connection _connection;
 
         // 连接工厂
-        Poco::MongoDB::Connection::SocketFactory _factory;
+        Connection::SocketFactory _factory;
     };
 }
 

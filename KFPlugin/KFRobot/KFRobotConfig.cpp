@@ -22,6 +22,7 @@ namespace KFrame
 
         {
             auto xmlnode = config.FindNode( "Login" );
+            _robot_account = xmlnode.GetString( "Account" );
             _total_robot_count = xmlnode.GetUInt32( "Count" );
             _login_interval_time = xmlnode.GetUInt32( "Interval" );
         }

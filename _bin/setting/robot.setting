@@ -9,7 +9,7 @@
 	<!-- 基本信息 -->
 	<!-- Count 最大机器人数量 -->
 	<!-- Interval 登录间隔时间, 单位: 毫秒 -->
-	<Login Count="1" Interval="5000"/>
+	<Login Account="Robot" Count="1" Interval="5000"/>
 
 	<!-- 日志开关 -->
 	<!-- Data 属性更新日志 -->

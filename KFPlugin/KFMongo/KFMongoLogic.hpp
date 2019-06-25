@@ -16,8 +16,11 @@ namespace KFrame
         virtual ~KFMongoLogic();
 
         void ShutDown();
-
         void Initialize( KFMongoType* kfmongotype );
+        /////////////////////////////////////////////////////////////////////////////////////////////
+        // 插入数据
+        virtual bool Insert( const std::string& table, uint64 key, const MapString& invalue );
+        virtual bool Insert( const std::string& table, const std::string& key, const MapString& invalue );
         /////////////////////////////////////////////////////////////////////////////////////////////
 
     private:

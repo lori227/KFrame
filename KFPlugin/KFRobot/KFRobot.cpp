@@ -22,7 +22,7 @@ namespace KFrame
     void KFRobot::Init( uint64 id, KFNetClientEngine* netclient )
     {
         _id = id;
-        _account = __FORMAT__( "robot{}", id );
+        _account = __FORMAT__( "{}{}", _kf_robot_config->_robot_account, id );
 
         _net_client = netclient;
         _fsm = new KFFsm( this );

@@ -23,7 +23,8 @@ namespace KFrame
         KFWriteExecute() = default;
         virtual ~KFWriteExecute() = default;
 
-
+        // 插入数据
+        bool Insert( const std::string& table, const std::string& key, const MapString& invalue );
     };
 
     class KFReadExecute : public KFMongoExecute

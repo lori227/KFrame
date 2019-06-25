@@ -33,4 +33,41 @@ namespace KFrame
         return _is_connected;
     }
 
+    bool KFMongo::SendRequest( RequestMessage& request )
+    {
+        if ( !_is_connected )
+        {
+
+        }
+
+        try
+        {
+            _connection.sendRequest( request );
+        }
+        catch ( Poco::Exception& ex )
+        {
+
+        }
+
+        return true;
+    }
+
+    bool KFMongo::SendRequest( RequestMessage& request, ResponseMessage& response )
+    {
+        if ( !_is_connected )
+        {
+
+        }
+
+        try
+        {
+            _connection.sendRequest( request, response );
+        }
+        catch ( Poco::Exception& ex )
+        {
+
+        }
+
+        return true;
+    }
 }

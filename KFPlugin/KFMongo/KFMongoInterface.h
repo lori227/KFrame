@@ -8,7 +8,11 @@ namespace KFrame
     class KFMongoDriver
     {
     public:
+        virtual ~KFMongoDriver() = default;
 
+        // 插入数据
+        virtual bool Insert( const std::string& table, uint64 key, const MapString& invalue ) = 0;
+        virtual bool Insert( const std::string& table, const std::string& key, const MapString& invalue ) = 0;
     };
 
     /////////////////////////////////////////////////////////////////////////////////////////
