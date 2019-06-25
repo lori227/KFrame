@@ -48,7 +48,7 @@ namespace KFrame
         virtual void RemoveLoadData( uint64 playerid ) = 0;
 
         // 保存玩家数据
-        virtual bool SavePlayerData( uint64 playerid, const KFMsg::PBObject* pbplayerdata ) = 0;
+        virtual bool SavePlayerData( uint64 playerid, const KFMsg::PBObject* pbplayerdata, uint32 saveflag ) = 0;
 
         // 查询玩家数据
         virtual bool QueryPlayerData( uint64 sendid, uint64 playerid ) = 0;

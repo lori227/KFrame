@@ -34,7 +34,7 @@ include_directories(
     ${ROOT_DIR}/KFLibrary/poco/Data/SQLite/include
     ${ROOT_DIR}/KFLibrary/poco/Data/PostgreSQL/include
     ${ROOT_DIR}/KFLibrary/poco/NetSSL_OpenSSL/include
-    ${ROOT_DIR}/KFLibrary/poco/MongoDBL/include
+    ${ROOT_DIR}/KFLibrary/poco/MongoDB/include
 )
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fPIC -Wall")

@@ -39,12 +39,6 @@ namespace KFrame
         template< class T > static T SplitSet( std::string& srcstring, std::string split );
         ////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////
-        // 获得玩家zoneid
-        static uint32 CalcZoneId( uint64 playerid );
-
-        // 计算玩家id
-        static uint64 CalcPlayerid( uint64 id, uint64 zoneid );
-
         // 判断float double 是否为0
         static bool IsZeroFloat( float value, float epsilon = 1e-6 );
         static bool IsZeroDouble( double value, double epsilon = 1e-15 );

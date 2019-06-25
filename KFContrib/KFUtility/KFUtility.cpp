@@ -10,17 +10,6 @@
 
 namespace KFrame
 {
-#define __MAX_PLAYER_ID__ 10000000000
-    uint64 KFUtility::CalcPlayerid( uint64 id, uint64 zoneid )
-    {
-        return ( zoneid * __MAX_PLAYER_ID__ ) + id;
-    }
-
-    uint32 KFUtility::CalcZoneId( uint64 playerid )
-    {
-        return static_cast< uint32 >( playerid / __MAX_PLAYER_ID__ );
-    }
-
     bool KFUtility::IsNumber( const std::string& value )
     {
         // 这里只判断第一个字符

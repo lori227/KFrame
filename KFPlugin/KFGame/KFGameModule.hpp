@@ -119,7 +119,7 @@ namespace KFrame
         void OnAfterLoadPlayerData( uint32 result, const KFMsg::PBLoginData* pblogin, const KFMsg::PBObject* pbplayerdata );
 
         // 保存玩家
-        void SavePlayer( KFEntity* player );
+        void SavePlayer( KFEntity* player, uint32 saveflag );
 
         // 查询玩家数据
         void OnAfterQueryPlayerData( uint32 result, uint64 playerid, const KFMsg::PBObject* playerdata );

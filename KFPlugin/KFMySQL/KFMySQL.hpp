@@ -2,6 +2,7 @@
 #define __KF_MYSQL_H__
 
 #include "KFrame.h"
+#include "KFMySQLConfig.hpp"
 #include "Poco/Data/Session.h"
 #include "Poco/Data/Binding.h"
 #include "Poco/Data/MySQL/MySQL.h"
@@ -20,7 +21,10 @@ namespace KFrame
         virtual ~KFMySQL();
 
         // 初始化
-        bool InitMySQL( const std::string& user, const std::string& password, const std::string& database, const std::string& ip, uint32 port );
+        virtual void InitMySQL( const KFMySQLSetting* kfsetting );
+
+        // 关闭
+        virtual void ShutDown();
 
         // 是否连接
         bool IsConnected();

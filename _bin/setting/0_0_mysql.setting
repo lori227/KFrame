@@ -15,4 +15,12 @@
 			<Read IP="180.169.238.146" Port="13306" Database="kfdeploy" User="root" Password="mysql@lori227-="/>
 		</MySQL>			 
 	</Module>
+
+	<!-- 玩家数据 -->
+	<Module Name="data">
+		<MySQL MinLogicId="1" MaxLogicId="10">
+			<Write IP="180.169.238.146" Port="13306" Database="fighter" User="root" Password="mysql@lori227-="/>
+			<Read IP="180.169.238.146" Port="13306" Database="fighter" User="root" Password="mysql@lori227-="/>
+		</MySQL>			 
+	</Module>
 </Config>

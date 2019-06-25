@@ -114,7 +114,7 @@ namespace KFrame
         virtual void BindEntityAfterRunFunction( KFEntityFunction& function );
         virtual void UnRegisterEntityAfterRunFunction();
 
-        virtual void BindEntitySaveFunction( KFEntityFunction& function );
+        virtual void BindEntitySaveFunction( KFSaveEntityFunction& function );
         virtual void UnRegisterEntitySaveFunction();
 
         virtual void BindEntityDeleteFunction( KFEntityFunction& function );
@@ -140,7 +140,7 @@ namespace KFrame
         __KF_TIMER_FUNCTION__( OnTimerSaveEntity );
 
         // 保存
-        void SaveEntity( KFEntity* kfentity, const char* function, uint32 line );
+        void SaveEntity( KFEntity* kfentity, uint32 flag, const char* function, uint32 line );
 
         // 删除
         void DeleteEntity( KFEntity* kfentity );
@@ -179,8 +179,8 @@ namespace KFrame
         KFEntityFunction _entity_uninitialize_function;
         KFEntityFunction _entity_run_function;
         KFEntityFunction _entity_after_run_function;
-        KFEntityFunction _entity_save_function;
         KFEntityFunction _entity_delete_function;
+        KFSaveEntityFunction _entity_save_function;
         /////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////
         // 对象同步更新函数

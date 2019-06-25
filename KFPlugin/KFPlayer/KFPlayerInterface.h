@@ -143,6 +143,7 @@ namespace KFrame
 
         // 删除玩家
         virtual void RemovePlayer( uint64 playerid ) = 0;
+        virtual void RemovePlayer( KFEntity* player ) = 0;
 
         // 发送消息
         virtual bool SendToClient( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message ) = 0;

@@ -14,8 +14,6 @@ namespace KFrame
         std::string _user;
         std::string _password;
         std::string _database;
-        std::string _name;
-        uint32 _type;
     };
 
     class KFMySQLList
@@ -31,23 +29,23 @@ namespace KFrame
         std::vector< KFMySQLSetting > _mysql_list;
 
         // 返回的连接设置
-        KFMySQLSetting* _kfseting;
+        KFMySQLSetting* _kf_seting;
     };
 
 
     class KFMySQLType
     {
     public:
-        // 查询redislist
+        // 查询list
         KFMySQLList* FindMySQLList( uint32 type );
 
-        // 添加redislist
+        // 添加list
         KFMySQLList* AddMySQLList( uint32 type );
 
     public:
         uint32 _id;
 
-        // Redis列表
+        // 列表
         KFHashMap< uint32, uint32, KFMySQLList > _mysql_list;
     };
 

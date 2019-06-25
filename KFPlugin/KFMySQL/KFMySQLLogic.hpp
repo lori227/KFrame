@@ -3,7 +3,6 @@
 
 #include "KFMySQLInterface.h"
 #include "KFMySQLExecute.hpp"
-#include "KFMySQLConfig.hpp"
 
 namespace KFrame
 {
@@ -45,18 +44,18 @@ namespace KFrame
         virtual KFResult< std::list< MapString > >::UniqueType Select( const std::string& table, const MapString& key, const ListString& fields );
 
         // 事务( 目前没有加mysql事务功能 )
-        virtual void Pipeline( const ListString& commands );
+        virtual void Pipeline( ListString& commands );
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
     protected:
 
-        virtual KFResult< voidptr >::UniqueType VoidExecute( const std::string& strsql );
-        virtual KFResult< uint32 >::UniqueType UInt32Execute( const std::string& strsql );
-        virtual KFResult< uint64 >::UniqueType UInt64Execute( const std::string& strsql );
-        virtual KFResult< std::string >::UniqueType StringExecute( const std::string& strsql );
-        virtual KFResult< MapString >::UniqueType MapExecute( const std::string& strsql );
-        virtual KFResult< ListString >::UniqueType ListExecute( const std::string& strsql );
-        virtual KFResult< std::list< MapString > >::UniqueType ListMapExecute( const std::string& strsql );
+        virtual KFResult< voidptr >::UniqueType VoidExecute( std::string& strsql );
+        virtual KFResult< uint32 >::UniqueType UInt32Execute( std::string& strsql );
+        virtual KFResult< uint64 >::UniqueType UInt64Execute( std::string& strsql );
+        virtual KFResult< std::string >::UniqueType StringExecute( std::string& strsql );
+        virtual KFResult< MapString >::UniqueType MapExecute( std::string& strsql );
+        virtual KFResult< ListString >::UniqueType ListExecute( std::string& strsql );
+        virtual KFResult< std::list< MapString > >::UniqueType ListMapExecute( std::string& strsql );
 
     private:
         // 读执行器

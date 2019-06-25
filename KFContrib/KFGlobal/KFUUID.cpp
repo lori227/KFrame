@@ -3,7 +3,7 @@
 
 namespace KFrame
 {
-#define __START_TIME__ 1542902400	// 项目开始时间 2018-11-23 0:0:0
+#define __START_TIME__ 1559318400	// 项目开始时间 2019-06-1 0:0:0
 
     KFUUID::KFUUID( uint32 timebits, uint32 zonebits, uint32 workerbits, uint32 seqbits )
     {
@@ -45,15 +45,21 @@ namespace KFrame
         return ( time << _time_shift ) | ( zoneid << _zone_shift ) | ( workerid << _worker_shift ) | _sequence;
     }
 
-    void KFUUID::Print( uint64 guid )
+    uint32 KFUUID::ZoneId( uint64 uuid )
     {
-        auto sequence = ( guid & _max_seq );
-        auto workerid = ( ( guid >> _worker_shift ) & _max_worker );
-        auto zoneid = ( ( guid >> _zone_shift ) & _max_zone );
-        auto time = ( ( guid >> _time_shift ) & _max_time ) + __START_TIME__;
+        auto zoneid = ( ( uuid >> _zone_shift ) & _max_zone );
+        return ( uint32 )zoneid;
+    }
+
+    void KFUUID::Print( uint64 uuid )
+    {
+        auto sequence = ( uuid & _max_seq );
+        auto workerid = ( ( uuid >> _worker_shift ) & _max_worker );
+        auto zoneid = ( ( uuid >> _zone_shift ) & _max_zone );
+        auto time = ( ( uuid >> _time_shift ) & _max_time ) + __START_TIME__;
         auto strtime = KFDate::GetTimeString( time );
 
-        __LOG_INFO__( "guid[{}] time[{}] zoneid[{}] workerid[{}] sequence[{}]", guid, strtime, zoneid, workerid, sequence );
+        __LOG_INFO__( "guid[{}] time[{}] zoneid[{}] workerid[{}] sequence[{}]", uuid, strtime, zoneid, workerid, sequence );
     }
 }
 

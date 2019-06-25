@@ -36,7 +36,6 @@ namespace KFrame
 
         // 判断游戏分区id
         virtual bool IsServerSameZone( uint64 serverid );
-        virtual bool IsPlayerSameZone( uint64 playerid );
     };
 }
 

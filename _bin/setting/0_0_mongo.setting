@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<Config>
+	<!--Id 配置id -->
+	<!--Database 数据库名字 -->
+	<!--Ip 数据库地址 -->
+	<!--Port 数据库端口 -->
+	<!--User 登录用户名 -->
+	<!--Password 登录密码 -->
+	<!--UseSSL 是否用使用ssl连接 -->
+	<!--ConnectTimeout 连接超时时间(毫秒) -->
+	<!--ExecuteTimeout 执行超时时间(毫秒) -->
+	<!--Auth 认证方式 SCRAM-SHA-1/MONGODB-CR-->
+
+	<!-- 保存玩家数据数据库 -->
+	<Module Name="data" ConnectTimeout="10000" ExecuteTimeout="10000" UseSSL="false" Auth="SCRAM-SHA-1">
+		<Mongo MinLogicId="1" MaxLogicId="10">
+			<Write IP="192.168.2.31" Port="27017" Database="chess" User="root" Password="mongo@lori227-="/>
+			<Read IP="192.168.2.31" Port="27017" Database="chess" User="root" Password="mongo@lori227-="/>
+		</Mongo>			 
+	</Module>
+</Config>

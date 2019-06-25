@@ -9,16 +9,16 @@ namespace KFrame
     +------+---------------+----------+----------------+----------+
     | sign | delta seconds | zone id  | worker node id | sequence |
     +------+---------------+----------+----------------+----------+
-    | 1bit |     29bits    |  14bits  |     8bits      |  12bits  |
+    | 1bit |     29bits    |  10bits  |     10bits      |  14bits  |
     +------+---------------+----------+----------------+----------+
     */
 
     // 默认
     // 1	符号位
     // 29	时间( 大概可以支持17年, 可以修改项目开始时间 )
-    // 14	zoneid  可以支持16383个小区不会重复
-    // 8	workerid 255个工作者进程不会重复
-    // 12	序列号 同一进程1秒钟内超过4095个就会重复 -- 应该不可能, 除非你要疯
+    // 10	zoneid  可以支持1023个小区不会重复
+    // 10	workerid 1023个工作者进程不会重复
+    // 14	序列号 同一进程1秒钟内超过‭16383‬个就会重复 -- 应该不可能, 除非你要疯
     // 可以保证同一模块生成的guid不相同, 不同模块可能会一样
 
     class KFUUID
@@ -30,8 +30,11 @@ namespace KFrame
         // 生产guid
         uint64 Make( uint32 zoneid, uint32 workerid, uint64 nowtime );
 
+        // 获得zoneid
+        uint32 ZoneId( uint64 uuid );
+
         // 打印guid
-        void Print( uint64 guid );
+        void Print( uint64 uuid );
     private:
         // 上一次时间
         uint64 _last_time{ 0 };

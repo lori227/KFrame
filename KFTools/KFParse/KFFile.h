@@ -11,8 +11,7 @@ namespace KFrame
         std::string _name;
         std::string _type;
         std::string _comment;
-        bool _is_client = true;
-        bool _is_server = true;
+        uint32 _flag = 0u;
     };
 
     class KFClass

@@ -9,7 +9,6 @@
 //    @Date             :    2018-5-10
 ************************************************************************/
 
-#include "KFrame.h"
 #include "KFMySQLInterface.h"
 #include "KFMySQLLogic.hpp"
 #include "KFConfig/KFConfigInterface.h"
@@ -27,6 +26,7 @@ namespace KFrame
 
         // 关闭
         virtual void BeforeShut();
+        virtual void ShutDown();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 创建Execute

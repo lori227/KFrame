@@ -169,6 +169,7 @@ namespace KFrame
         auto player = _kf_player->FindPlayer( playerid );
         if ( player == nullptr )
         {
+            // 应该重置订单状态
             return __LOG_WARN__( "player=[{}] not online!", playerid );
         }
 

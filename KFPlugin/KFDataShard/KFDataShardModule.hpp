@@ -11,32 +11,16 @@
 
 #include "KFProtocol/KFProtocol.h"
 #include "KFDataShardInterface.h"
-#include "KFTimer/KFTimerInterface.h"
 #include "KFRedis/KFRedisInterface.h"
+#include "KFMySQL/KFMySQLInterface.h"
+#include "KFMongo/KFMongoInterface.h"
+#include "KFConfig/KFConfigInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"
+#include "KFDataExecute.hpp"
 
 namespace KFrame
 {
-    class KFDataKeeper
-    {
-    public:
-        KFDataKeeper()
-        {
-            _zone_id = 0;
-            _player_id = 0;
-        }
-
-        // 小区id
-        uint32 _zone_id;
-
-        // 玩家id
-        uint64 _player_id;
-
-        // 玩家数据
-        KFMsg::PBObject _pb_object;
-    };
-
     class KFDataShardModule : public KFDataShardInterface
     {
     public:
@@ -44,16 +28,17 @@ namespace KFrame
         ~KFDataShardModule() = default;
 
         // 初始化
+        virtual void InitModule();
         virtual void BeforeRun();
+        virtual void OnceRun();
+
+        // 逻辑
+        virtual void Run();
 
         // 关闭
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
-    protected:
-        // 定时保存数据
-        __KF_TIMER_FUNCTION__( OnTimerSaveDataKeeper );
-
     protected:
         // 玩家登陆
         __KF_MESSAGE_FUNCTION__( HandleLoadPlayerToDataReq );
@@ -64,16 +49,15 @@ namespace KFrame
         // 查询玩家属性
         __KF_MESSAGE_FUNCTION__( HandleQueryPlayerToDataReq );
 
-
     protected:
         // 加载数据
         bool LoadPlayerData( uint32 zoneid, uint64 playerid, KFMsg::PBObject* pbobject );
 
         // 保存数据
-        bool SavePlayerData( uint32 zoneid, uint64 playerid, const KFMsg::PBObject* pbobject );
+        bool SavePlayerData( uint32 zoneid, uint64 playerid, const KFMsg::PBObject* pbobject, uint32 saveflag );
     private:
-        // 数据保存
-        KFHashMap< uint64, uint64, KFDataKeeper > _kf_data_keeper;
+        // 数据库逻辑
+        KFMap< uint32, uint32, KFDataExecute > _data_execute;
     };
 }
 

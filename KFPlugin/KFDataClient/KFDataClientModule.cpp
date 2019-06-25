@@ -27,7 +27,7 @@ namespace KFrame
             if ( keeper->_save_time <= nowtime )
             {
                 keeper->_save_time = nowtime + __KEEPER_SAVE_TIMER__;
-                SaveKeeperData( keeper->_player_id, &keeper->_pb_object );
+                SaveKeeperData( keeper->_player_id, &keeper->_pb_object, keeper->_save_flag );
             }
         }
 
@@ -111,23 +111,25 @@ namespace KFrame
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFDataClientModule::SavePlayerData( uint64 playerid, const KFMsg::PBObject* pbplayerdata )
+    bool KFDataClientModule::SavePlayerData( uint64 playerid, const KFMsg::PBObject* pbplayerdata, uint32 saveflag )
     {
-        SaveKeeperData( playerid, pbplayerdata );
+        SaveKeeperData( playerid, pbplayerdata, saveflag );
 
         auto keeper = _data_keeper.Create( playerid );
         keeper->_player_id = playerid;
+        keeper->_save_flag = saveflag;
         keeper->_pb_object.CopyFrom( *pbplayerdata );
         keeper->_save_time = KFGlobal::Instance()->_game_time + __KEEPER_SAVE_TIMER__;
         return true;
     }
 
-    void KFDataClientModule::SaveKeeperData( uint64 playerid, const KFMsg::PBObject* pbplayerdata )
+    void KFDataClientModule::SaveKeeperData( uint64 playerid, const KFMsg::PBObject* pbplayerdata, uint32 saveflag )
     {
         __LOG_INFO__( "save palyer=[{}] req!", playerid );
 
         KFMsg::S2SSavePlayerToDataReq req;
         req.set_id( playerid );
+        req.set_flag( saveflag );
         req.mutable_data()->CopyFrom( *pbplayerdata );
         auto ok = _kf_route->SendToRand( playerid, __KF_STRING__( data ), KFMsg::S2S_SAVE_PLAYER_TO_DATA_REQ, &req, false );
         if ( !ok )

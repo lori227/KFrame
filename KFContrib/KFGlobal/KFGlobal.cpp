@@ -111,6 +111,18 @@ namespace KFrame
         return min + rand * range;
     }
 
+    KFUUID* KFGlobal::CreateUUID( uint32 type )
+    {
+        auto iter = _kf_uuids.find( type );
+        if ( iter == _kf_uuids.end() )
+        {
+            auto uuid = new KFUUID( 29, 10, 10, 14 );
+            iter = _kf_uuids.insert( std::make_pair( type, uuid ) ).first;
+        }
+
+        return iter->second;
+    }
+
     uint64 KFGlobal::MakeUUID()
     {
         return MakeUUID( 0 );
@@ -118,17 +130,17 @@ namespace KFrame
 
     uint64 KFGlobal::MakeUUID( uint32 type )
     {
-        auto iter = _kf_uuids.find( type );
-        if ( iter == _kf_uuids.end() )
-        {
-            auto uuid = new KFUUID( 29, 14, 8, 12 );
-            iter = _kf_uuids.insert( std::make_pair( type, uuid ) ).first;
-        }
-
         auto zoneid = _app_id->GetZoneId();
         auto workerid = _app_id->GetWorkId();
 
-        return iter->second->Make( zoneid, workerid, _real_time );
+        auto kfuuid = CreateUUID( type );
+        return kfuuid->Make( zoneid, workerid, _real_time );
+    }
+
+    uint32 KFGlobal::UUIDZoneId( uint32 type, uint64 uuid )
+    {
+        auto kfuuid = CreateUUID( type );
+        return kfuuid->ZoneId( uuid );
     }
 
     void KFGlobal::InitNetType( std::string& strtype )

@@ -247,6 +247,7 @@ message S2SLoadPlayerToGameAck
 message S2SSavePlayerToDataReq
 {
 	uint64 id = 1;
+	uint32 flag = 2;
 	PBObject data = 3;
 }
 

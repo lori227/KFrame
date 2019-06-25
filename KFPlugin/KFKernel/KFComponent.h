@@ -19,6 +19,7 @@ namespace KFrame
     typedef std::function<void( KFEntity*, KFData* kfdata, const std::string& value )> KFUpdateStringFunction;
 
     typedef std::function< void( KFEntity* ) > KFEntityFunction;
+    typedef std::function< void( KFEntity*, uint32 ) > KFSaveEntityFunction;
     typedef std::function< void( KFEntity*, const KFMsg::PBObject&  ) > KFSyncFunction;
     typedef std::function< void( KFEntity*, const KFMsg::PBShowElement& ) > KFShowElementFunction;
 
@@ -269,9 +270,9 @@ namespace KFrame
         virtual void UnRegisterEntityAfterRunFunction() = 0;
 
         template< class T >
-        void RegisterEntitySaveFunction( T* object, void ( T::*handle )( KFEntity* kfentity ) )
+        void RegisterEntitySaveFunction( T* object, void ( T::*handle )( KFEntity* kfentity, uint32 flag ) )
         {
-            KFEntityFunction function = std::bind( handle, object, std::placeholders::_1 );
+            KFSaveEntityFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2 );
             BindEntitySaveFunction( function );
         }
         virtual void UnRegisterEntitySaveFunction() = 0;
@@ -350,7 +351,7 @@ namespace KFrame
         virtual void BindSyncAddFunction( KFSyncFunction& function ) = 0;
         virtual void BindSyncRemoveFunction( KFSyncFunction& function ) = 0;
         virtual void BindShowElementFunction( KFShowElementFunction& function ) = 0;
-        virtual void BindEntitySaveFunction( KFEntityFunction& function ) = 0;
+        virtual void BindEntitySaveFunction( KFSaveEntityFunction& function ) = 0;
     };
 }
 

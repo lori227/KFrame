@@ -358,7 +358,7 @@ namespace KFrame
         _entity_after_run_function = nullptr;
     }
 
-    void KFComponentEx::BindEntitySaveFunction( KFEntityFunction& function )
+    void KFComponentEx::BindEntitySaveFunction( KFSaveEntityFunction& function )
     {
         _entity_save_function = function;
     }
@@ -570,18 +570,15 @@ namespace KFrame
             return;
         }
 
-        SaveEntity( kfentity, __FUNC_LINE__ );
+        SaveEntity( kfentity, KFSaveEnum::UpdateSave, __FUNC_LINE__ );
     }
 
     void KFComponentEx::DeleteSaveEntity( KFEntity* kfentity )
     {
-        if ( KFUtility::HaveBitMask< uint32 >( _entity_data_mask, KFDataDefine::Data_Save ) )
+        if ( KFUtility::HaveBitMask< uint32 >( _entity_data_mask, KFDataDefine::Data_Save ) ||
+                KFUtility::HaveBitMask< uint32 >( _entity_data_mask, KFDataDefine::Data_Delete_Save ) )
         {
-            SaveEntity( kfentity, __FUNC_LINE__ );
-        }
-        else if ( KFUtility::HaveBitMask< uint32 >( _entity_data_mask, KFDataDefine::Data_Delete_Save ) )
-        {
-            SaveEntity( kfentity, __FUNC_LINE__ );
+            SaveEntity( kfentity, KFSaveEnum::OfflineSave, __FUNC_LINE__ );
         }
         else if ( KFUtility::HaveBitMask< uint32 >( _entity_data_mask, KFDataDefine::Data_Delete_Remove ) )
         {
@@ -592,11 +589,11 @@ namespace KFrame
         __UNREGISTER_OBJECT_TIMER__( kfentity->GetKeyID() );
     }
 
-    void KFComponentEx::SaveEntity( KFEntity* kfentity, const char* function, uint32 line )
+    void KFComponentEx::SaveEntity( KFEntity* kfentity, uint32 flag, const char* function, uint32 line )
     {
         if ( _entity_save_function != nullptr )
         {
-            _entity_save_function( kfentity );
+            _entity_save_function( kfentity, flag );
         }
     }
 

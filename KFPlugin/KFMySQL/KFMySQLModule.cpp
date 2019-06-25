@@ -1,5 +1,4 @@
 ﻿#include "KFMySQLModule.hpp"
-#include "KFMySQLConfig.hpp"
 #include "Poco/Data/MySQL/Connector.h"
 
 namespace KFrame
@@ -13,9 +12,18 @@ namespace KFrame
     void KFMySQLModule::BeforeShut()
     {
         __KF_REMOVE_CONFIG__( _kf_mysql_config );
+    }
+
+    void KFMySQLModule::ShutDown()
+    {
+        KFLocker lock( _kf_mutex );
+        for ( auto& iter : _mysql_logic_map._objects )
+        {
+            auto kflogic = iter.second;
+            kflogic->ShutDown();
+        }
+
         MySQL::Connector::unregisterConnector();
-        ////////////////////////////////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////////////////////////
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////

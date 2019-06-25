@@ -25,6 +25,9 @@ namespace KFrame
         // 玩家数据
         KFMsg::PBObject _pb_object;
 
+        // 保存标记
+        uint32 _save_flag = 0u;
+
         // 保存时间
         uint64 _save_time = 0u;
     };
@@ -58,7 +61,7 @@ namespace KFrame
         virtual void RemoveLoadData( uint64 playerid );
 
         // 保存玩家数据
-        virtual bool SavePlayerData( uint64 playerid, const KFMsg::PBObject* pbplayerdata );
+        virtual bool SavePlayerData( uint64 playerid, const KFMsg::PBObject* pbplayerdata, uint32 saveflag );
 
         // 查询玩家数据
         virtual bool QueryPlayerData( uint64 sendid, uint64 playerid );
@@ -68,7 +71,7 @@ namespace KFrame
         virtual void SetQueryPlayerFunction( KFQueryPlayerFunction& function );
 
         // 保存数据
-        void SaveKeeperData( uint64 playerid, const KFMsg::PBObject* pbplayerdata );
+        void SaveKeeperData( uint64 playerid, const KFMsg::PBObject* pbplayerdata, uint32 saveflag );
 
         // 加载数据
         void LoadKeeperData( const KFMsg::PBLoginData* pblogin );

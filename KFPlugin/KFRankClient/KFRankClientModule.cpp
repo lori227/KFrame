@@ -79,7 +79,7 @@ namespace KFrame
         auto zoneid = _invalid_int;
         if ( kfsetting->_zone_type == KFMsg::ZoneRank )
         {
-            zoneid = KFUtility::CalcZoneId( playerid );
+            zoneid = KFGlobal::Instance()->UUIDZoneId( KFMsg::UUidPlayer, playerid );
         }
 
         return zoneid;

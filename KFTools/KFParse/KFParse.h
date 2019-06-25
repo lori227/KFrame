@@ -15,7 +15,7 @@ namespace KFrame
         bool SaveToHpp( const char* file );
         bool SaveToCpp( const char* file );
 
-        bool SaveToXml( const char* path );
+        bool SaveToXml( const char* path, uint32 saveflag );
         bool SaveToCSV( const char* path );
 
 
@@ -33,7 +33,7 @@ namespace KFrame
         bool SaveToHpp( const std::string& path, KFFile* kffile );
         bool SaveToCpp( const std::string& path, KFFile* kffile );
 
-        bool SaveToXml( const std::string& path, KFFile* kffile );
+        bool SaveToXml( const std::string& path, KFFile* kffile, uint32 saveflag );
         bool SaveToCSV( const std::string& path, KFFile* kffile );
 
         bool SaveToCSharp( const std::string& path, KFFile* kffile );

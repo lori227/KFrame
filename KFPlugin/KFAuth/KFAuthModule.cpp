@@ -5,6 +5,18 @@ namespace KFrame
 {
 #define __AUTH_REDIS_DRIVER__ _kf_redis->Create( __KF_STRING__( auth ) )
 
+    KFAuthModule::KFAuthModule()
+    {
+        _kf_mutex = new KFMutex();
+        _account_make = new KFUUID( 31, 2, 10, 20 );
+    }
+
+    KFAuthModule::~KFAuthModule()
+    {
+        __DELETE_OBJECT__( _kf_mutex );
+        __DELETE_OBJECT__( _account_make );
+    }
+
     void KFAuthModule::BeforeRun()
     {
         // zone
@@ -62,7 +74,7 @@ namespace KFrame
         auto accountid = __JSON_GET_UINT64__( request, __KF_STRING__( accountid ) );
 
         auto redisdriver = __AUTH_REDIS_DRIVER__;
-        redisdriver->Execute( "zadd {} {} {}", __KF_STRING__( zonelist ), count, zoneid );
+        redisdriver->Execute( "zincrby {} {} {}", __KF_STRING__( zonelist ), count, zoneid );
         return _kf_http_server->SendCode( KFMsg::Ok );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -275,14 +287,8 @@ namespace KFrame
         }
         else
         {
-            auto newid = redisdriver->Execute( "incr {}", __KF_STRING__( accountmake ) );
-            if ( newid->_value == _invalid_int )
-            {
-                __LOG_DEBUG__( "account[{}] channel[{}] incr newid failed!", account, channel );
-                return accountdata;
-            }
-
-            accountid = newid->_value + 500000u;
+            KFLocker locker( *_kf_mutex );
+            accountid = _account_make->Make( 0, KFGlobal::Instance()->_app_id->GetWorkId(), KFGlobal::Instance()->_real_time );
         }
 
         // 创建账号id

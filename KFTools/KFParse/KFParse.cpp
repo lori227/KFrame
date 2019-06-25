@@ -75,26 +75,7 @@ namespace KFrame
             auto kfsave = sheet->FindCell( _begin_row - 1, i );
             if ( kfsave != nullptr && !kfsave->_value.empty() )
             {
-                if ( kfsave->_value == "1" )
-                {
-                    attribute._is_server = true;
-                    attribute._is_client = false;
-                }
-                else if ( kfsave->_value == "2" )
-                {
-                    attribute._is_server = false;
-                    attribute._is_client = true;
-                }
-                else if ( kfsave->_value == "3" )
-                {
-                    attribute._is_server = true;
-                    attribute._is_client = true;
-                }
-                else
-                {
-                    attribute._is_client = false;
-                    attribute._is_server = false;
-                }
+                attribute._flag = KFUtility::ToValue< uint32 >( kfsave->_value );
             }
 
             kffile->_class.AddAttribute( i, attribute );
@@ -431,11 +412,11 @@ namespace KFrame
         return true;
     }
 
-    bool KFParse::SaveToXml( const char* path )
+    bool KFParse::SaveToXml( const char* path, uint32 saveflag )
     {
         for ( auto iter : _files )
         {
-            if ( !SaveToXml( path, &iter.second ) )
+            if ( !SaveToXml( path, &iter.second, saveflag ) )
             {
                 return false;
             }
@@ -444,7 +425,7 @@ namespace KFrame
         return true;
     }
 
-    bool KFParse::SaveToXml( const std::string& path, KFFile* kffile )
+    bool KFParse::SaveToXml( const std::string& path, KFFile* kffile, uint32 saveflag )
     {
         std::string filename = kffile->_class._class_name;
         std::transform( filename.begin(), filename.end(), filename.begin(), ::tolower );
@@ -474,7 +455,7 @@ namespace KFrame
             for ( auto& miter : kfdata->_datas )
             {
                 auto attribute = kffile->_class.GetAttribute( miter.first );
-                if ( attribute->_is_server )
+                if ( KFUtility::HaveBitMask( attribute->_flag, saveflag ) )
                 {
                     xmlfile << __FORMAT__( " {}=\"{}\"", attribute->_name, miter.second );
                 }

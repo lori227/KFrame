@@ -3,11 +3,13 @@
 
 namespace KFrame
 {
-#define __DATA_REDIS_DRIVER__( zoneid ) _kf_redis->Create( __KF_STRING__( data ), zoneid )
+    void KFDataShardModule::InitModule()
+    {
+        __KF_ADD_CONFIG__( _kf_data_shard_config, false );
+    }
 
     void KFDataShardModule::BeforeRun()
     {
-        __REGISTER_LOOP_TIMER__( 1, 10000, 0, &KFDataShardModule::OnTimerSaveDataKeeper );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_LOAD_PLAYER_TO_DATA_REQ, &KFDataShardModule::HandleLoadPlayerToDataReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_SAVE_PLAYER_TO_DATA_REQ, &KFDataShardModule::HandleSavePlayerToDataReq );
@@ -18,113 +20,86 @@ namespace KFrame
 
     void KFDataShardModule::BeforeShut()
     {
-        __UNREGISTER_TIMER__();
+        __KF_REMOVE_CONFIG__( _kf_data_shard_config );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_LOAD_PLAYER_TO_DATA_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_SAVE_PLAYER_TO_DATA_REQ );
         __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_PLAYER_TO_DATA_REQ );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFDataShardModule::LoadPlayerData( uint32 zoneid, uint64 playerid, KFMsg::PBObject* pbobject )
+    void KFDataShardModule::OnceRun()
     {
-        // 先判断在keeper中是否存在
-        auto kfkeeper = _kf_data_keeper.Find( playerid );
-        if ( kfkeeper != nullptr )
+        for ( auto& iter : _kf_data_shard_config->_settings._objects )
         {
-            pbobject->CopyFrom( kfkeeper->_pb_object );
-            __LOG_INFO__( "player[{}:{}] load keeper!", zoneid, playerid );
-            return true;
-        }
-
-        auto redisdriver = __DATA_REDIS_DRIVER__( zoneid );
-        if ( redisdriver == nullptr )
-        {
-            __LOG_ERROR__( "player[{}:{}] can't find redis!", zoneid, playerid );
-            return false;
-        }
-
-        auto kfresult = redisdriver->QueryString( "hget {}:{} {}", __KF_STRING__( player ), playerid, __KF_STRING__( data ) );
-        if ( !kfresult->IsOk() )
-        {
-            __LOG_ERROR__( "player[{}:{}] query failed!", zoneid, playerid );
-            return false;
-        }
-
-        if ( !kfresult->_value.empty() )
-        {
-            auto ok = KFProto::Parse( pbobject, kfresult->_value, KFCompressEnum::Compress );
-            if ( !ok )
+            auto kfsetting = iter.second;
+            if ( !kfsetting->_is_open )
             {
-                __LOG_ERROR__( "player[{}:{}] parse failed!", zoneid, playerid );
-                return false;
+                continue;
             }
-        }
-        else
-        {
-            __LOG_INFO__( "player[{}:{}] new data!", zoneid, playerid );
-        }
 
-        return true;
-    }
-
-    bool KFDataShardModule::SavePlayerData( uint32 zoneid, uint64 playerid, const KFMsg::PBObject* pbobject )
-    {
-        auto strdata = KFProto::Serialize( pbobject, KFCompressEnum::Compress );
-        if ( strdata == _invalid_str )
-        {
-            __LOG_ERROR__( "player[{}:{}] serialize failed!", zoneid, playerid );
-            return false;
-        }
-
-        auto redisdriver = __DATA_REDIS_DRIVER__( zoneid );
-        if ( redisdriver == nullptr )
-        {
-            __LOG_ERROR__( "player[{}:{}] can't find redis!", zoneid, playerid );
-            return false;
-        }
-
-        auto kfresult = redisdriver->Execute( "hset {}:{} {} {}", __KF_STRING__( player ), playerid, __KF_STRING__( data ), strdata );
-        if ( !kfresult->IsOk() )
-        {
-            __LOG_ERROR__( "player[{}:{}] save failed!", zoneid, playerid );
-            return false;
-        }
-
-        __LOG_INFO__( "player [{}:{}] size=[{}] save ok!", zoneid, playerid, strdata.size() );
-        return true;
-    }
-
-    __KF_TIMER_FUNCTION__( KFDataShardModule::OnTimerSaveDataKeeper )
-    {
-        std::set< uint64 > removes;
-        for ( auto iter : _kf_data_keeper._objects )
-        {
-            auto kfkeeper = iter.second;
-
-            auto ok = SavePlayerData( kfkeeper->_zone_id, kfkeeper->_player_id, &kfkeeper->_pb_object );
-            if ( ok )
+            // 创建数据执行器
+            auto sort = kfsetting->_sort;
+            auto kfexecute = _data_execute.Find( sort );
+            if ( kfexecute != nullptr )
             {
-                removes.insert( iter.first );
+                sort = _data_execute._objects.rbegin()->first + 1;
+                __LOG_WARN__( "dataexecute=[{}] sort=[{}] already exist!", kfsetting->_name, kfsetting->_sort );
             }
-        }
 
-        for ( auto playerid : removes )
-        {
-            _kf_data_keeper.Remove( playerid );
+            if ( kfsetting->_name == "redis" )
+            {
+                kfexecute = __KF_NEW__( KFRedisDataExecute );
+            }
+            else if ( kfsetting->_name == "mongo" )
+            {
+                kfexecute = __KF_NEW__( KFMongoDataExecute );
+            }
+            else if ( kfsetting->_name == "mysql" )
+            {
+                kfexecute = __KF_NEW__( KFMySQLDataExecute );
+            }
+            else
+            {
+                __LOG_ERROR__( "dataexecute=[{}] not support!" );
+                continue;
+            }
+
+            kfexecute->InitExecute( kfsetting );
+            _data_execute.Insert( sort, kfexecute );
         }
     }
 
+    void KFDataShardModule::Run()
+    {
+        for ( auto& iter : _data_execute._objects )
+        {
+            auto dataexecute = iter.second;
+            dataexecute->RunDataKeeper();
+        }
+    }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    __KF_MESSAGE_FUNCTION__( KFDataShardModule::HandleSavePlayerToDataReq )
+    {
+        __PROTO_PARSE__( KFMsg::S2SSavePlayerToDataReq );
+
+        auto zoneid = KFGlobal::Instance()->UUIDZoneId( KFMsg::UUidPlayer, kfmsg.id() );
+        auto ok = SavePlayerData( zoneid, kfmsg.id(), &kfmsg.data(), kfmsg.flag() );
+        if ( ok )
+        {
+            KFMsg::S2SSavePlayerToGameAck ack;
+            ack.set_id( kfmsg.id() );
+            _kf_route->SendToRoute( route, KFMsg::S2S_SAVE_PLAYER_TO_GAME_ACK, &ack );
+        }
+    }
+
     __KF_MESSAGE_FUNCTION__( KFDataShardModule::HandleLoadPlayerToDataReq )
     {
         __PROTO_PARSE__( KFMsg::S2SLoadPlayerToDataReq );
 
         auto pblogin = &kfmsg.pblogin();
-        __LOG_INFO__( "player[{}:{}:{}] loaddata!", pblogin->account(), pblogin->accountid(), pblogin->playerid() );
-
-        auto zoneid = KFUtility::CalcZoneId( pblogin->playerid() );
+        auto zoneid = KFGlobal::Instance()->UUIDZoneId( KFMsg::UUidPlayer, pblogin->playerid() );
+        __LOG_INFO__( "player[{}:{}:{}:{}] load req!", pblogin->account(), pblogin->accountid(), pblogin->playerid(), zoneid );
 
         KFMsg::S2SLoadPlayerToGameAck ack;
         ack.mutable_pblogin()->CopyFrom( *pblogin );
@@ -141,35 +116,11 @@ namespace KFrame
         _kf_route->SendToRoute( route, KFMsg::S2S_LOAD_PLAYER_TO_GAME_ACK, &ack );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFDataShardModule::HandleSavePlayerToDataReq )
-    {
-        __PROTO_PARSE__( KFMsg::S2SSavePlayerToDataReq );
-
-        auto zoneid = KFUtility::CalcZoneId( kfmsg.id() );
-        auto ok = SavePlayerData( zoneid, kfmsg.id(), &kfmsg.data() );
-        if ( ok )
-        {
-            _kf_data_keeper.Remove( kfmsg.id() );
-        }
-        else
-        {
-            // 保存失败 先缓存下来
-            auto kfkeeper = _kf_data_keeper.Create( kfmsg.id() );
-            kfkeeper->_zone_id = zoneid;
-            kfkeeper->_player_id = kfmsg.id();
-            kfkeeper->_pb_object.CopyFrom( kfmsg.data() );
-        }
-
-        KFMsg::S2SSavePlayerToGameAck ack;
-        ack.set_id( kfmsg.id() );
-        _kf_route->SendToRoute( route, KFMsg::S2S_SAVE_PLAYER_TO_GAME_ACK, &ack );
-    }
-
     __KF_MESSAGE_FUNCTION__( KFDataShardModule::HandleQueryPlayerToDataReq )
     {
         __PROTO_PARSE__( KFMsg::S2SQueryPlayerToDataReq );
 
-        auto zoneid = KFUtility::CalcZoneId( kfmsg.playerid() );
+        auto zoneid = KFGlobal::Instance()->UUIDZoneId( KFMsg::UUidPlayer, kfmsg.playerid() );
 
         KFMsg::S2SQueryPlayerToGameAck ack;
         auto ok = LoadPlayerData( zoneid, kfmsg.playerid(), ack.mutable_playerdata() );
@@ -183,5 +134,64 @@ namespace KFrame
         }
 
         _kf_route->SendToRoute( route, KFMsg::S2S_QUERY_PLAYER_TO_GAME_ACK, &ack );
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    bool KFDataShardModule::LoadPlayerData( uint32 zoneid, uint64 playerid, KFMsg::PBObject* pbobject )
+    {
+        auto loadok = false;
+        for ( auto& iter : _data_execute._objects )
+        {
+            loadok = false;
+            auto dataexecute = iter.second;
+
+            // 加载数据
+            auto kfresult = dataexecute->LoadPlayerData( zoneid, playerid );
+            if ( kfresult == nullptr )
+            {
+                continue;
+            }
+
+            loadok = kfresult->IsOk();
+            if ( !kfresult->IsOk() || kfresult->_value.empty() )
+            {
+                continue;
+            }
+
+            // 反序列化数据
+            auto ok = KFProto::Parse( pbobject, kfresult->_value, KFCompressEnum::Compress );
+            if ( !ok )
+            {
+                __LOG_ERROR__( "database=[{}] player[{}:{}] parse failed!", dataexecute->GetName(), zoneid, playerid );
+                continue;
+            }
+            else
+            {
+                __LOG_INFO__( "database=[{}] player[{}:{}] load ok!", dataexecute->GetName(), zoneid, playerid );
+                return true;
+            }
+        }
+
+        return loadok;
+    }
+
+    bool KFDataShardModule::SavePlayerData( uint32 zoneid, uint64 playerid, const KFMsg::PBObject* pbobject, uint32 saveflag )
+    {
+        // 序列化数据
+        auto strdata = KFProto::Serialize( pbobject, KFCompressEnum::Compress );
+        if ( strdata == _invalid_str )
+        {
+            __LOG_ERROR__( "player[{}:{}] serialize failed!", zoneid, playerid );
+            return false;
+        }
+
+        // 保存数据
+        for ( auto& iter : _data_execute._objects )
+        {
+            auto dataexecute = iter.second;
+            dataexecute->SavePlayerData( zoneid, playerid, strdata, saveflag );
+        }
+
+        return true;
     }
 }

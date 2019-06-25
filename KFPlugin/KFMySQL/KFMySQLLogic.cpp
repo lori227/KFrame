@@ -11,39 +11,38 @@ namespace KFrame
 
     KFMySQLLogic::~KFMySQLLogic()
     {
-        ShutDown();
-
         __KF_DELETE__( KFReadExecute, _read_execute );
         __KF_DELETE__( KFWriteExecute, _write_execute );
     }
 
     void KFMySQLLogic::ShutDown()
     {
-
+        _read_execute->ShutDown();
+        _write_execute->ShutDown();
     }
 
     void KFMySQLLogic::Initialize( KFMySQLType* kfmysqltype )
     {
         {
-            auto kfredislist = kfmysqltype->FindMySQLList( KFDatabaseEnum::Read );
-            if ( kfredislist != nullptr )
+            auto kfmysqllist = kfmysqltype->FindMySQLList( KFDatabaseEnum::Read );
+            if ( kfmysqllist != nullptr )
             {
-                auto kfsetting = kfredislist->FindSetting();
+                auto kfsetting = kfmysqllist->FindSetting();
                 if ( kfsetting != nullptr )
                 {
-                    _read_execute->InitMySQL( kfsetting->_user, kfsetting->_password, kfsetting->_database, kfsetting->_ip, kfsetting->_port );
+                    _read_execute->InitMySQL( kfsetting );
                 }
             }
         }
 
         {
-            auto kfredislist = kfmysqltype->FindMySQLList( KFDatabaseEnum::Write );
-            if ( kfredislist != nullptr )
+            auto kfmysqllist = kfmysqltype->FindMySQLList( KFDatabaseEnum::Write );
+            if ( kfmysqllist != nullptr )
             {
-                auto kfsetting = kfredislist->FindSetting();
+                auto kfsetting = kfmysqllist->FindSetting();
                 if ( kfsetting != nullptr )
                 {
-                    _write_execute->InitMySQL( kfsetting->_user, kfsetting->_password, kfsetting->_database, kfsetting->_ip, kfsetting->_port );
+                    _write_execute->InitMySQL( kfsetting );
                 }
             }
         }
@@ -87,12 +86,12 @@ namespace KFrame
         return _write_execute->Update( table, keyvalue, invalue );
     }
 
-    void KFMySQLLogic::Pipeline( const ListString& commands )
+    void KFMySQLLogic::Pipeline( ListString& commands )
     {
         _write_execute->Pipeline( commands );
     }
 
-    KFResult< voidptr >::UniqueType KFMySQLLogic::VoidExecute( const std::string& strsql )
+    KFResult< voidptr >::UniqueType KFMySQLLogic::VoidExecute( std::string& strsql )
     {
         return _write_execute->VoidExecute( strsql );
     }
@@ -129,32 +128,32 @@ namespace KFrame
         return _read_execute->Select( table, key, fields );
     }
 
-    KFResult< uint32 >::UniqueType KFMySQLLogic::UInt32Execute( const std::string& strsql )
+    KFResult< uint32 >::UniqueType KFMySQLLogic::UInt32Execute( std::string& strsql )
     {
         return _read_execute->UInt32Execute( strsql );
     }
 
-    KFResult< uint64 >::UniqueType KFMySQLLogic::UInt64Execute( const std::string& strsql )
+    KFResult< uint64 >::UniqueType KFMySQLLogic::UInt64Execute( std::string& strsql )
     {
         return _read_execute->UInt64Execute( strsql );
     }
 
-    KFResult< std::string >::UniqueType KFMySQLLogic::StringExecute( const std::string& strsql )
+    KFResult< std::string >::UniqueType KFMySQLLogic::StringExecute( std::string& strsql )
     {
         return _read_execute->StringExecute( strsql );
     }
 
-    KFResult< MapString >::UniqueType KFMySQLLogic::MapExecute( const std::string& strsql )
+    KFResult< MapString >::UniqueType KFMySQLLogic::MapExecute( std::string& strsql )
     {
         return _read_execute->MapExecute( strsql );
     }
 
-    KFResult< ListString >::UniqueType KFMySQLLogic::ListExecute( const std::string& strsql )
+    KFResult< ListString >::UniqueType KFMySQLLogic::ListExecute( std::string& strsql )
     {
         return _read_execute->ListExecute( strsql );
     }
 
-    KFResult< std::list< MapString > >::UniqueType KFMySQLLogic::ListMapExecute( const std::string& strsql )
+    KFResult< std::list< MapString > >::UniqueType KFMySQLLogic::ListMapExecute( std::string& strsql )
     {
         return _read_execute->ListMapExecute( strsql );
     }

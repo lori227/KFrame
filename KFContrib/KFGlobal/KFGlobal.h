@@ -2,11 +2,11 @@
 #define __KF_GOLBAL_H__
 
 #include "KFDefine.h"
+#include "KFUUID.h"
 
 namespace KFrame
 {
     class KFRand;
-    class KFUUID;
     class KFAppId;
     class KFVersion;
 
@@ -42,10 +42,14 @@ namespace KFrame
         double RandDouble();
         double RandDouble( double first, double second );
 
-        // 创建guid
+        // 创建uuid
         uint64 MakeUUID();
         uint64 MakeUUID( uint32 type );
+
+        // 获得zoneid
+        uint32 UUIDZoneId( uint32 type, uint64 uuid );
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         // 初始化网络
         void InitNetType( std::string& strtype );
 
@@ -60,6 +64,9 @@ namespace KFrame
         KFGlobal();
         // 接口
         static KFGlobal* _kf_global;
+
+        // 创建uuid
+        KFUUID* CreateUUID( uint32 type );
 
     public:
         // 程序运行
@@ -111,7 +118,7 @@ namespace KFrame
         // 单线程随机类
         KFRand* _kf_rand;
 
-        // guid
+        // uuid
         std::unordered_map< uint32, KFUUID*> _kf_uuids;
     };
     //////////////////////////////////////////////////////////////////////////////////////////

@@ -59,6 +59,7 @@ add_subdirectory(KFTcpDiscover)
 
 add_subdirectory(KFRedis)
 add_subdirectory(KFMySQL)
+add_subdirectory(KFMongo)
 add_subdirectory(KFWorker)
 
 add_subdirectory(KFClusterClient)

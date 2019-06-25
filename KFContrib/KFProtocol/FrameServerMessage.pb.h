@@ -2669,12 +2669,19 @@ class LIBPROTOC_EXPORT S2SSavePlayerToDataReq : public ::google::protobuf::Messa
   ::google::protobuf::uint64 id() const;
   void set_id(::google::protobuf::uint64 value);
 
+  // uint32 flag = 2;
+  void clear_flag();
+  static const int kFlagFieldNumber = 2;
+  ::google::protobuf::uint32 flag() const;
+  void set_flag(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:KFMsg.S2SSavePlayerToDataReq)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::KFMsg::PBObject* data_;
   ::google::protobuf::uint64 id_;
+  ::google::protobuf::uint32 flag_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameServerMessage_2eproto::TableStruct;
 };
@@ -9755,6 +9762,20 @@ inline void S2SSavePlayerToDataReq::set_id(::google::protobuf::uint64 value) {
   
   id_ = value;
   // @@protoc_insertion_point(field_set:KFMsg.S2SSavePlayerToDataReq.id)
+}
+
+// uint32 flag = 2;
+inline void S2SSavePlayerToDataReq::clear_flag() {
+  flag_ = 0u;
+}
+inline ::google::protobuf::uint32 S2SSavePlayerToDataReq::flag() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SSavePlayerToDataReq.flag)
+  return flag_;
+}
+inline void S2SSavePlayerToDataReq::set_flag(::google::protobuf::uint32 value) {
+  
+  flag_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SSavePlayerToDataReq.flag)
 }
 
 // .KFMsg.PBObject data = 3;

@@ -22,13 +22,14 @@ using namespace KFrame;
 
 void Parse( int argc, char* argv[] )
 {
-    if ( argc < 2 )
+    if ( argc < 3 )
     {
         std::cout << "Param Error!" << std::endl;
         return;
     }
 
     std::string excelfile = argv[ 1 ];
+    uint32 saveflag = atoi( argv[ 2 ] );
     std::cout << "Start Parse Excel File = " << excelfile << "!" << std::endl;
 
     bool load = _kf_parse->LoadFromExcel( excelfile.c_str(), true );
@@ -38,7 +39,8 @@ void Parse( int argc, char* argv[] )
         return;
     }
 
-    for ( auto i = 2; i < argc; ++i )
+
+    for ( auto i = 3; i < argc; ++i )
     {
         std::string param = argv[ i ];
 
@@ -47,7 +49,7 @@ void Parse( int argc, char* argv[] )
 
         if ( prefix == "--xml" )
         {
-            _kf_parse->SaveToXml( path.c_str() );
+            _kf_parse->SaveToXml( path.c_str(), saveflag );
         }
         else if ( prefix == "--csv" )
         {

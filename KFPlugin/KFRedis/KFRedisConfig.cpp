@@ -16,7 +16,7 @@ namespace KFrame
     void KFRedisList::Reset()
     {
         _redis_list.clear();
-        _kfseting = nullptr;
+        _kf_seting = nullptr;
     }
 
     void KFRedisList::AddSetting( KFRedisSetting& kfsetting )
@@ -26,13 +26,13 @@ namespace KFrame
 
     const KFRedisSetting* KFRedisList::FindSetting()
     {
-        if ( _kfseting == nullptr )
+        if ( _kf_seting == nullptr )
         {
             auto index = KFGlobal::Instance()->_app_id->GetId() % static_cast< uint32 >( _redis_list.size() );
-            _kfseting = &_redis_list[ index ];
+            _kf_seting = &_redis_list[ index ];
         }
 
-        return _kfseting;
+        return _kf_seting;
     }
 
     KFRedisType* KFRedisConfig::FindRedisType( const std::string& module, uint32 logicid )
@@ -72,8 +72,7 @@ namespace KFrame
                     {
                         KFRedisSetting kfsetting;
 
-                        kfsetting._name = name;
-                        kfsetting._type = KFDatabaseEnum::Write;
+                        kfsetting._module = name;
                         kfsetting._ip = writenode.GetString( "IP" );
                         kfsetting._port = writenode.GetUInt32( "Port" );
                         kfsetting._password = writenode.GetString( "Password" );
@@ -90,8 +89,7 @@ namespace KFrame
                     {
 
                         KFRedisSetting kfsetting;
-                        kfsetting._name = name;
-                        kfsetting._type = KFDatabaseEnum::Read;
+                        kfsetting._module = name;
                         kfsetting._ip = readnode.GetString( "IP" );
                         kfsetting._port = readnode.GetUInt32( "Port" );
                         kfsetting._password = readnode.GetString( "Password" );

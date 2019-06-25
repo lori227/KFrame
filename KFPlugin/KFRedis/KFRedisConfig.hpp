@@ -10,23 +10,14 @@ namespace KFrame
     class KFRedisSetting
     {
     public:
-        KFRedisSetting()
-        {
-            _port = 6379;
-            _type = KFDatabaseEnum::Write;
-        }
-
         // 名字
-        std::string _name;
-
-        // 类型
-        uint32 _type;
+        std::string _module;
 
         // ip
         std::string _ip;
 
         // port
-        uint32 _port;
+        uint32 _port = 6379;
 
         // 密码
         std::string _password;
@@ -45,7 +36,7 @@ namespace KFrame
         std::vector< KFRedisSetting > _redis_list;
 
         // 返回的连接设置
-        KFRedisSetting* _kfseting;
+        KFRedisSetting* _kf_seting;
     };
 
     class KFRedisType

@@ -19,15 +19,18 @@ namespace KFrame
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFMySQLExecute::ExecuteSql( const std::string& sql )
+    bool KFMySQLExecute::ExecuteSql( std::string& sql )
     {
         Statement statement( *_session );
-        statement << sql;
-        return ExecuteSql( statement );
+        return ExecuteSql( statement, sql );
     }
 
-    bool KFMySQLExecute::ExecuteSql( Statement& statement )
+    bool KFMySQLExecute::ExecuteSql( Statement& statement, std::string& sql )
     {
+        // 消除转义字符
+        FormatSlashes( sql );
+
+        statement << sql;
         uint32 repeatcount = 0u;
 
         do
@@ -56,24 +59,9 @@ namespace KFrame
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    char* KFMySQLExecute::FormatSlashes( char* buffer, uint32 length )
+    void KFMySQLExecute::FormatSlashes( std::string& sql )
     {
-        std::string temp = buffer;
-        memset( buffer, 0, length );
-
-        int32 index = 0;
-        for ( auto iter = temp.begin(); iter != temp.end(); ++iter )
-        {
-            auto ch = *iter;
-            buffer[ index++ ] = ch;
-
-            if ( ch == '\\' )
-            {
-                buffer[ index++ ] = ch;
-            }
-        }
-
-        return buffer;
+        KFUtility::ReplaceString( sql, "\\", "\\\\" );
     }
 
     std::string KFMySQLExecute::FormatKeyString( const MapString& keyvalue )
@@ -148,7 +136,7 @@ namespace KFrame
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFWriteExecute::Pipeline( const ListString& commands )
+    void KFWriteExecute::Pipeline( ListString& commands )
     {
         for ( auto& command : commands )
         {
@@ -230,13 +218,12 @@ namespace KFrame
         return ExecuteSql( sql );
     }
 
-    KFResult< voidptr >::UniqueType KFWriteExecute::VoidExecute( const std::string& strsql )
+    KFResult< voidptr >::UniqueType KFWriteExecute::VoidExecute( std::string& strsql )
     {
         __NEW_RESULT__( voidptr );
 
         Statement statement( *_session );
-        statement << strsql;
-        auto ok = ExecuteSql( statement );
+        auto ok = ExecuteSql( statement, strsql );
         if ( ok )
         {
             kfresult->SetResult( KFEnum::Ok );
@@ -304,8 +291,7 @@ namespace KFrame
         }
 
         Statement statement( *_session );
-        statement << sql;
-        auto ok = ExecuteSql( statement );
+        auto ok = ExecuteSql( statement, sql );
         if ( ok )
         {
             RecordSet recordset( statement );
@@ -348,13 +334,12 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-    KFResult< uint32 >::UniqueType KFReadExecute::UInt32Execute( const std::string& strsql )
+    KFResult< uint32 >::UniqueType KFReadExecute::UInt32Execute( std::string& strsql )
     {
         __NEW_RESULT__( uint32 );
 
         Statement statement( *_session );
-        statement << strsql;
-        auto ok = ExecuteSql( statement );
+        auto ok = ExecuteSql( statement, strsql );
         if ( ok )
         {
             RecordSet recordset( statement );
@@ -371,13 +356,12 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< uint64 >::UniqueType KFReadExecute::UInt64Execute( const std::string& strsql )
+    KFResult< uint64 >::UniqueType KFReadExecute::UInt64Execute( std::string& strsql )
     {
         __NEW_RESULT__( uint64 );
 
         Statement statement( *_session );
-        statement << strsql;
-        auto ok = ExecuteSql( statement );
+        auto ok = ExecuteSql( statement, strsql );
         if ( ok )
         {
             RecordSet recordset( statement );
@@ -394,13 +378,12 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< std::string >::UniqueType KFReadExecute::StringExecute( const std::string& strsql )
+    KFResult< std::string >::UniqueType KFReadExecute::StringExecute( std::string& strsql )
     {
         __NEW_RESULT__( std::string );
 
         Statement statement( *_session );
-        statement << strsql;
-        auto ok = ExecuteSql( statement );
+        auto ok = ExecuteSql( statement, strsql );
         if ( ok )
         {
             RecordSet recordset( statement );
@@ -417,13 +400,12 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< MapString >::UniqueType KFReadExecute::MapExecute( const std::string& strsql )
+    KFResult< MapString >::UniqueType KFReadExecute::MapExecute( std::string& strsql )
     {
         __NEW_RESULT__( MapString );
 
         Statement statement( *_session );
-        statement << strsql;
-        auto ok = ExecuteSql( statement );
+        auto ok = ExecuteSql( statement, strsql );
         if ( ok )
         {
             RecordSet recordset( statement );
@@ -449,13 +431,12 @@ namespace KFrame
     }
 
 
-    KFResult< ListString >::UniqueType KFReadExecute::ListExecute( const std::string& strsql )
+    KFResult< ListString >::UniqueType KFReadExecute::ListExecute( std::string& strsql )
     {
         __NEW_RESULT__( ListString );
 
         Statement statement( *_session );
-        statement << strsql;
-        auto ok = ExecuteSql( statement );
+        auto ok = ExecuteSql( statement, strsql );
         if ( ok )
         {
             RecordSet recordset( statement );
@@ -475,13 +456,12 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< std::list< MapString > >::UniqueType KFReadExecute::ListMapExecute( const std::string& strsql )
+    KFResult< std::list< MapString > >::UniqueType KFReadExecute::ListMapExecute( std::string& strsql )
     {
         __NEW_RESULT__( std::list< MapString > );
 
         Statement statement( *_session );
-        statement << strsql;
-        auto ok = ExecuteSql( statement );
+        auto ok = ExecuteSql( statement, strsql );
         if ( ok )
         {
             RecordSet recordset( statement );

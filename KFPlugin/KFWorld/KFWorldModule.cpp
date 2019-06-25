@@ -202,18 +202,7 @@ namespace KFrame
         }
 
         // 创建playerid
-        auto uint64result = _auth_redis->Execute( "incr {}:{}", __KF_STRING__( playeridcreate ), kfzone->_id );
-        if ( !uint64result->IsOk() || uint64result->_value == _invalid_int )
-        {
-            return _invalid_int;
-        }
-
-        auto newuserid = uint64result->_value + 100000u;
-        auto playerid = KFUtility::CalcPlayerid( newuserid, kfzone->_id );
-        if ( playerid == _invalid_int )
-        {
-            return _invalid_int;
-        }
+        auto playerid = KFGlobal::Instance()->MakeUUID( KFMsg::UUidPlayer );
 
         _auth_redis->Execute( "hset {}:{} {} {}", __KF_STRING__( online ), playerid, __KF_STRING__( accountid ), accountid );
         auto voidresult = _auth_redis->Execute( "hset {}:{} {} {}", __KF_STRING__( user ), accountid, kfzone->_logic_id, playerid );
@@ -226,7 +215,7 @@ namespace KFrame
             // 更新给auth
             static auto _update_url = _kf_ip_address->GetAuthUrl() + __KF_STRING__( zonebalance );
             __JSON_OBJECT_DOCUMENT__( sendjson );
-            __JSON_SET_VALUE__( sendjson, __KF_STRING__( count ), newuserid );
+            __JSON_SET_VALUE__( sendjson, __KF_STRING__( count ), 1 );
             __JSON_SET_VALUE__( sendjson, __KF_STRING__( zoneid ), kfzone->_id );
             _kf_http_client->MTGet< KFWorldModule >( _update_url, sendjson );
         }

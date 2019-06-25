@@ -6,7 +6,6 @@
 #include "Poco/Data/Statement.h"
 #include "Poco/Data/Extraction.h"
 #include "Poco/Data/AbstractBinding.h"
-#include "KFMySQLInterface.h"
 
 namespace KFrame
 {
@@ -20,11 +19,11 @@ namespace KFrame
 
     protected:
         // 转译字符
-        char* FormatSlashes( char* buffer, uint32 length );
+        void FormatSlashes( std::string& sql );
 
         // 执行操作
-        bool ExecuteSql( const std::string& sql );
-        bool ExecuteSql( Statement& statement );
+        bool ExecuteSql( std::string& sql );
+        bool ExecuteSql( Statement& statement, std::string& sql );
 
         // 判断是否断线
         bool CheckDisconnected( int32 code );
@@ -56,10 +55,10 @@ namespace KFrame
         bool Update( const std::string& table, const MapString& keyvalue, const MapString& invalue );
 
         // 事务( 目前没有加mysql事务功能 )
-        void Pipeline( const ListString& commands );
+        void Pipeline( ListString& commands );
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
-        KFResult< voidptr >::UniqueType VoidExecute( const std::string& strsql );
+        KFResult< voidptr >::UniqueType VoidExecute( std::string& strsql );
     };
 
     class KFReadExecute : public KFMySQLExecute
@@ -78,12 +77,12 @@ namespace KFrame
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
-        KFResult< uint32 >::UniqueType UInt32Execute( const std::string& strsql );
-        KFResult< uint64 >::UniqueType UInt64Execute( const std::string& strsql );
-        KFResult< std::string >::UniqueType StringExecute( const std::string& strsql );
-        KFResult< MapString >::UniqueType MapExecute( const std::string& strsql );
-        KFResult< ListString >::UniqueType ListExecute( const std::string& strsql );
-        KFResult< std::list< MapString > >::UniqueType ListMapExecute( const std::string& strsql );
+        KFResult< uint32 >::UniqueType UInt32Execute( std::string& strsql );
+        KFResult< uint64 >::UniqueType UInt64Execute( std::string& strsql );
+        KFResult< std::string >::UniqueType StringExecute( std::string& strsql );
+        KFResult< MapString >::UniqueType MapExecute( std::string& strsql );
+        KFResult< ListString >::UniqueType ListExecute( std::string& strsql );
+        KFResult< std::list< MapString > >::UniqueType ListMapExecute( std::string& strsql );
     };
 }
 

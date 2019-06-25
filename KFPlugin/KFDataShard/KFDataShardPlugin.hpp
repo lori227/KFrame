@@ -1,4 +1,4 @@
-#ifndef __KF_DATA_SHARD_PLUGIN_H__
+﻿#ifndef __KF_DATA_SHARD_PLUGIN_H__
 #define __KF_DATA_SHARD_PLUGIN_H__
 #include "KFrame.h"
 

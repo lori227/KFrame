@@ -7,7 +7,7 @@ namespace KFrame
     void KFMySQLList::Reset()
     {
         _mysql_list.clear();
-        _kfseting = nullptr;
+        _kf_seting = nullptr;
     }
 
     void KFMySQLList::AddSetting( KFMySQLSetting& kfsetting )
@@ -17,13 +17,13 @@ namespace KFrame
 
     const KFMySQLSetting* KFMySQLList::FindSetting()
     {
-        if ( _kfseting == nullptr )
+        if ( _kf_seting == nullptr )
         {
             auto index = KFGlobal::Instance()->_app_id->GetId() % static_cast< uint32 >( _mysql_list.size() );
-            _kfseting = &_mysql_list[ index ];
+            _kf_seting = &_mysql_list[ index ];
         }
 
-        return _kfseting;
+        return _kf_seting;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     KFMySQLList* KFMySQLType::FindMySQLList( uint32 type )
@@ -74,8 +74,6 @@ namespace KFrame
                     {
                         KFMySQLSetting kfsetting;
 
-                        kfsetting._name = name;
-                        kfsetting._type = KFDatabaseEnum::Write;
                         kfsetting._ip = writenode.GetString( "IP" );
                         kfsetting._port = writenode.GetUInt32( "Port" );
                         kfsetting._database = writenode.GetString( "Database" );
@@ -94,8 +92,6 @@ namespace KFrame
                     {
 
                         KFMySQLSetting kfsetting;
-                        kfsetting._name = name;
-                        kfsetting._type = KFDatabaseEnum::Read;
                         kfsetting._ip = readnode.GetString( "IP" );
                         kfsetting._port = readnode.GetUInt32( "Port" );
                         kfsetting._database = readnode.GetString( "Database" );

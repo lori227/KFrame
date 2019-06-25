@@ -33,11 +33,4 @@ namespace KFrame
 
         return _kf_app_id.GetZoneId() == KFGlobal::Instance()->_app_id->GetZoneId();
     }
-
-    bool KFZoneModule::IsPlayerSameZone( uint64 playerid )
-    {
-        auto zoneid = KFUtility::CalcZoneId( playerid );
-        return zoneid == KFGlobal::Instance()->_app_id->GetZoneId();
-    }
-
 }

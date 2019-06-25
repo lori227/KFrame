@@ -74,15 +74,19 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_DEPLOY_FUNCTION__( KFGameModule::OnDeployShutDownServer )
     {
-        auto player = _kf_player->FirstPlayer();
-        while ( player != nullptr )
+        std::list< KFEntity* > playerlist;
+        for ( auto player = _kf_player->FirstPlayer(); player != nullptr; player = _kf_player->NextPlayer() )
         {
-            SavePlayer( player );
-            player = _kf_player->NextPlayer();
+            playerlist.push_back( player );
+        }
+
+        for ( auto player : playerlist )
+        {
+            _kf_player->RemovePlayer( player );
         }
     }
 
-    void KFGameModule::SavePlayer( KFEntity* player )
+    void KFGameModule::SavePlayer( KFEntity* player, uint32 saveflag )
     {
         if ( !player->IsInited() || !player->IsNeedToSave() )
         {
@@ -93,7 +97,7 @@ namespace KFrame
 
         // 保存数据库
         auto pbplayerdata = _kf_kernel->SerializeToData( player->GetData() );
-        _kf_data_client->SavePlayerData( player->GetKeyID(), pbplayerdata );
+        _kf_data_client->SavePlayerData( player->GetKeyID(), pbplayerdata, saveflag );
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

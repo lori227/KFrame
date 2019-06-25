@@ -32,10 +32,10 @@ namespace KFrame
                 auto kfsetting = kfredislist->FindSetting();
                 if ( kfsetting != nullptr )
                 {
-                    auto result = _read_execute->Initialize( kfsetting->_name, kfsetting->_ip, kfsetting->_port, kfsetting->_password );
+                    auto result = _read_execute->Initialize( kfsetting->_module, kfsetting->_ip, kfsetting->_port, kfsetting->_password );
                     if ( result != KFEnum::Ok )
                     {
-                        __LOG_ERROR__( "redis connect[module={} ip={}:{}] failed!", kfsetting->_name, kfsetting->_ip, kfsetting->_port );
+                        __LOG_ERROR__( "redis connect[module={} ip={}:{}] failed!", kfsetting->_module, kfsetting->_ip, kfsetting->_port );
                     }
                 }
             }
@@ -48,10 +48,10 @@ namespace KFrame
                 auto kfsetting = kfredislist->FindSetting();
                 if ( kfsetting != nullptr )
                 {
-                    auto result = _write_execute->Initialize( kfsetting->_name, kfsetting->_ip, kfsetting->_port, kfsetting->_password );
+                    auto result = _write_execute->Initialize( kfsetting->_module, kfsetting->_ip, kfsetting->_port, kfsetting->_password );
                     if ( result != KFEnum::Ok )
                     {
-                        __LOG_ERROR__( "redis connect[module={} ip={}:{}] failed!", kfsetting->_name, kfsetting->_ip, kfsetting->_port );
+                        __LOG_ERROR__( "redis connect[module={} ip={}:{}] failed!", kfsetting->_module, kfsetting->_ip, kfsetting->_port );
                     }
                 }
             }

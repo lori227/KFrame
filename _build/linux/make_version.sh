@@ -47,7 +47,12 @@ version=$defineversion.$clientversion.$days.$svnversion
 echo $version
 
 # config
-cp -rf ../Resource/config/ _bin/
+mkdir -p _bin/config
+cp -f ../Resource/config/*.xml _bin/
+cp -f ../Resource/config/server/*.xml _bin/
+
+#script
+mkdir -p _bin/script
 cp -rf ../Resource/script/ _bin/
 
 cd _bin/_gcm/builder/
