@@ -22,6 +22,10 @@ namespace KFrame
         virtual bool Insert( const std::string& table, uint64 key, const MapString& invalue );
         virtual bool Insert( const std::string& table, const std::string& key, const MapString& invalue );
         /////////////////////////////////////////////////////////////////////////////////////////////
+        // 更新数据
+        virtual bool Update( const std::string& table, uint64 key, const MapString& invalue );
+        virtual bool Update( const std::string& table, const std::string& key, const MapString& invalue );
+        /////////////////////////////////////////////////////////////////////////////////////////////
 
     private:
         // 读执行器

@@ -13,6 +13,10 @@ namespace KFrame
         // 插入数据
         virtual bool Insert( const std::string& table, uint64 key, const MapString& invalue ) = 0;
         virtual bool Insert( const std::string& table, const std::string& key, const MapString& invalue ) = 0;
+
+        // 更新数据
+        virtual bool Update( const std::string& table, uint64 key, const MapString& invalue ) = 0;
+        virtual bool Update( const std::string& table, const std::string& key, const MapString& invalue ) = 0;
     };
 
     /////////////////////////////////////////////////////////////////////////////////////////

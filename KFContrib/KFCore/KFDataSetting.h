@@ -127,6 +127,7 @@ namespace KFrame
 
         // 属性类型
         uint32 _type = 0u;
+        uint32 _logic_type = 0u;
 
         // 包含类型
         std::string _contain_class;

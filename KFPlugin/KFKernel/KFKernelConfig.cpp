@@ -18,8 +18,19 @@ namespace KFrame
         auto dataname = xmlnode.GetString( "Name" );
         auto kfdatasetting = kfsetting->_static_data.Create( dataname );
         kfdatasetting->_name = dataname;
+
         kfdatasetting->_type = KFDataDefine::ConvertDataType( xmlnode.GetString( "Type" ) );
+        kfdatasetting->_logic_type = kfdatasetting->_type;
         kfdatasetting->_contain_class = xmlnode.GetString( "ContainClass" );
+        if ( !kfdatasetting->_contain_class.empty() )
+        {
+            auto type = KFDataDefine::ConvertDataType( kfdatasetting->_contain_class );
+            if ( type != KFDataDefine::Type_Unknow )
+            {
+                kfdatasetting->_logic_type = type;
+            }
+        }
+
         kfdatasetting->_init_value = xmlnode.GetString( "InitValue" );
         kfdatasetting->_max_value = xmlnode.GetUInt32( "MaxValue" );
         kfdatasetting->_key_name = xmlnode.GetString( "KeyName" );

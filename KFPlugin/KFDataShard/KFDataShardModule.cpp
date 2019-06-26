@@ -16,6 +16,21 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_PLAYER_TO_DATA_REQ, &KFDataShardModule::HandleQueryPlayerToDataReq );
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        //auto kfdriver = _kf_mongo->Create( __KF_STRING__( data ), 1 );
+
+        //MapString values;
+        //values[ __KF_STRING__( id ) ] = "1";
+        //values[ __KF_STRING__( sex ) ] = "2";
+        ////values[ "age" ] = "30";
+        ////values[ __KF_STRING__( level ) ] = "40";
+        //values[ __KF_STRING__( name ) ] = "lori227";
+        //values[ "money" ] = "1000";
+        //auto ok = kfdriver->Update( __KF_STRING__( player ), 1, values );
+        //if ( !ok )
+        //{
+        //    __LOG_ERROR__( "mongo error!" );
+        //}
     }
 
     void KFDataShardModule::BeforeShut()

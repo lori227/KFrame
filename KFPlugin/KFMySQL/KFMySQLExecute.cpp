@@ -29,10 +29,9 @@ namespace KFrame
     {
         // 消除转义字符
         FormatSlashes( sql );
-
         statement << sql;
-        uint32 repeatcount = 0u;
 
+        uint32 repeatcount = 0u;
         do
         {
             try

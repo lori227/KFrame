@@ -14,8 +14,8 @@
 	<!-- 保存玩家数据数据库 -->
 	<Module Name="data" ConnectTimeout="10000" ExecuteTimeout="10000" UseSSL="false" Auth="SCRAM-SHA-1">
 		<Mongo MinLogicId="1" MaxLogicId="10">
-			<Write IP="192.168.2.31" Port="27017" Database="chess" User="root" Password="mongo@lori227-="/>
-			<Read IP="192.168.2.31" Port="27017" Database="chess" User="root" Password="mongo@lori227-="/>
+			<Write IP="192.168.2.31" Port="27017" Database="chess" User="root" Password="mongo=lori227-="/>
+			<Read IP="192.168.2.31" Port="27017" Database="chess" User="root" Password="mongo=lori227-="/>
 		</Mongo>			 
 	</Module>
 </Config>

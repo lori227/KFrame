@@ -60,4 +60,16 @@ namespace KFrame
     {
         return _write_execute->Insert( table, key, invalue );
     }
+    /////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////
+    bool KFMongoLogic::Update( const std::string& table, uint64 key, const MapString& invalue )
+    {
+        auto strkey = __TO_STRING__( key );
+        return Update( table, strkey, invalue );
+    }
+
+    bool KFMongoLogic::Update( const std::string& table, const std::string& key, const MapString& invalue )
+    {
+        return _write_execute->Update( table, key, invalue );
+    }
 }

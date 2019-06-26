@@ -26,6 +26,14 @@ namespace KFrame
         bool SendRequest( RequestMessage& request );
         bool SendRequest( RequestMessage& request, ResponseMessage& response );
         ///////////////////////////////////////////////////////////////////////////////
+
+    protected:
+        // 连接
+        bool ConnectMongo();
+
+        // 判断是否掉线
+        bool CheckDisconnected( int32 code );
+
     protected:
         // 连接字串
         std::string _connect_data;

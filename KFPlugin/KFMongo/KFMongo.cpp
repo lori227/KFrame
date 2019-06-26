@@ -10,16 +10,7 @@ namespace KFrame
                                     kfsetting->_user, kfsetting->_password, kfsetting->_ip, kfsetting->_port, kfsetting->_database,
                                     kfsetting->_use_ssl, kfsetting->_connect_timeout, kfsetting->_execute_timeout, kfsetting->_auth_type );
 
-        try
-        {
-            _is_connected = true;
-            _connection.connect( _connect_data, _factory );
-        }
-        catch ( Poco::Exception& ex )
-        {
-            _is_connected = false;
-            __LOG_ERROR__( "mongo[{}] connect failed = [{}]!", _connect_data, ex.displayText() );
-        }
+        ConnectMongo();
     }
 
     void KFMongo::ShutDown()
@@ -33,41 +24,86 @@ namespace KFrame
         return _is_connected;
     }
 
-    bool KFMongo::SendRequest( RequestMessage& request )
+    bool KFMongo::ConnectMongo()
     {
-        if ( !_is_connected )
-        {
-
-        }
-
         try
         {
-            _connection.sendRequest( request );
+            _is_connected = true;
+            _connection.connect( _connect_data, _factory );
+            __LOG_INFO__( "mongo[{}] connect ok!", _connect_data );
         }
         catch ( Poco::Exception& ex )
         {
-
+            _is_connected = false;
+            __LOG_ERROR__( "mongo[{}] connect failed = [{}]!", _connect_data, ex.displayText() );
         }
 
-        return true;
+        return _is_connected;
+    }
+
+    bool KFMongo::CheckDisconnected( int32 code )
+    {
+        switch ( code )
+        {
+        case 2013:
+            return true;
+        default:
+            break;
+        }
+
+        return false;
+    }
+
+
+    bool KFMongo::SendRequest( RequestMessage& request )
+    {
+        uint32 repeatcount = 0u;
+        do
+        {
+            try
+            {
+                _connection.sendRequest( request );
+                return true;
+            }
+            catch ( Poco::Exception& ex )
+            {
+                if ( !CheckDisconnected( ex.code() ) )
+                {
+                    __LOG_ERROR__( "mongo failed [{}]!", ex.displayText() );
+                    return false;
+                }
+
+                ConnectMongo();
+            }
+        } while ( ++repeatcount < 3 );
+
+        __LOG_ERROR__( "mongo disconnected!" );
+        return false;
     }
 
     bool KFMongo::SendRequest( RequestMessage& request, ResponseMessage& response )
     {
-        if ( !_is_connected )
+        uint32 repeatcount = 0u;
+        do
         {
+            try
+            {
+                _connection.sendRequest( request, response );
+                return true;
+            }
+            catch ( Poco::Exception& ex )
+            {
+                if ( !CheckDisconnected( ex.code() ) )
+                {
+                    __LOG_ERROR__( "mongo failed [{}]!", ex.displayText() );
+                    return false;
+                }
 
-        }
+                ConnectMongo();
+            }
+        } while ( ++repeatcount < 3 );
 
-        try
-        {
-            _connection.sendRequest( request, response );
-        }
-        catch ( Poco::Exception& ex )
-        {
-
-        }
-
-        return true;
+        __LOG_ERROR__( "mongo disconnected!" );
+        return false;
     }
 }

@@ -257,7 +257,7 @@ namespace KFrame
 
     uint32 KFData::GetType() const
     {
-        return _data_setting->_type;
+        return _data_setting->_logic_type;
     }
 
     bool KFData::HaveMask( uint32 mask ) const
