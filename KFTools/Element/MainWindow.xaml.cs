@@ -96,7 +96,7 @@ namespace KFAgent
         {
             System.Windows.Forms.OpenFileDialog openFileDialog = new System.Windows.Forms.OpenFileDialog();
             openFileDialog.InitialDirectory = "c:\\";
-            openFileDialog.Filter = "config files (*.config)|*.config";
+            openFileDialog.Filter = "config files (*.xml)|*.xml";
             openFileDialog.FilterIndex = 2;
             openFileDialog.RestoreDirectory = true;
             if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
@@ -118,7 +118,7 @@ namespace KFAgent
         {
             System.Windows.Forms.OpenFileDialog openFileDialog = new System.Windows.Forms.OpenFileDialog();
             openFileDialog.InitialDirectory = "c:\\";
-            openFileDialog.Filter = "config files (*.config)|*.config";
+            openFileDialog.Filter = "config files (*.xml)|*.xml";
             openFileDialog.FilterIndex = 2;
             openFileDialog.RestoreDirectory = true;
             if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)

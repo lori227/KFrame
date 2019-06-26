@@ -6,6 +6,9 @@
   - [Linux编译](/docs/linux编译.md)
   - [环境搭建](/docs/环境搭建.md)
   - [Redis安装](/docs/redis安装)
+  - [Mongo安装](/docs/mongo安装)
+
+
 	
 - 启动相关
 

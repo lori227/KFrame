@@ -9,6 +9,7 @@ namespace KFrame
 #define __PER_SAVE_TIME__ 10000
 #define __REDIS_DATA_DRIVER__( zoneid ) _kf_redis->Create( __KF_STRING__( data ), zoneid )
 #define __MYSQL_DATA_DRIVER__( zoneid ) _kf_mysql->Create( __KF_STRING__( data ), zoneid )
+#define __MONGO_DATA_DRIVER__( zoneid ) _kf_mongo->Create( __KF_STRING__( data ), zoneid )
     /////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -139,12 +140,35 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFMongoDataExecute::SaveData( uint32 zoneid, uint64 playerid, const std::string& playerdata )
     {
-        return true;
+        auto mongodriver = __MONGO_DATA_DRIVER__( zoneid );
+        if ( mongodriver == nullptr )
+        {
+            __LOG_ERROR__( "player[{}:{}] can't find mongo!", zoneid, playerid );
+            return false;
+        }
+
+        auto ok = mongodriver->Insert( __KF_STRING__( player ), playerid, __KF_STRING__( data ), playerdata );
+        if ( ok )
+        {
+            if ( _kf_setting->_cache_time != 0u )
+            {
+
+            }
+        }
+
+        return ok;
     }
 
     KFResult< std::string >::UniqueType KFMongoDataExecute::LoadData( uint32 zoneid, uint64 playerid )
     {
-        return nullptr;
+        auto mongodriver = __MONGO_DATA_DRIVER__( zoneid );
+        if ( mongodriver == nullptr )
+        {
+            __LOG_ERROR__( "player[{}:{}] can't find mongo!", zoneid, playerid );
+            return nullptr;
+        }
+
+        return mongodriver->QueryString( __KF_STRING__( player ), playerid, __KF_STRING__( data ) );
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFMySQLDataExecute::SaveData( uint32 zoneid, uint64 playerid, const std::string& playerdata )

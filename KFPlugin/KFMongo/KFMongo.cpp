@@ -69,7 +69,7 @@ namespace KFrame
             {
                 if ( !CheckDisconnected( ex.code() ) )
                 {
-                    __LOG_ERROR__( "mongo failed [{}]!", ex.displayText() );
+                    __LOG_ERROR__( "mongo failed code=[{}] message=[{}]!", ex.code(), ex.displayText() );
                     return false;
                 }
 
@@ -95,7 +95,7 @@ namespace KFrame
             {
                 if ( !CheckDisconnected( ex.code() ) )
                 {
-                    __LOG_ERROR__( "mongo failed [{}]!", ex.displayText() );
+                    __LOG_ERROR__( "mongo failed code=[{}] message=[{}]!", ex.code(), ex.displayText() );
                     return false;
                 }
 

@@ -8,7 +8,7 @@
 
 	<Save>
 		<Database Name="redis" Open="1" SaveFlag="3" Sort="1" CacheTime="2592000‬"/>
-		<Database Name="mongo" Open="1" SaveFlag="2" Sort="2" CacheTime="0"/>
+		<Database Name="mongo" Open="0" SaveFlag="2" Sort="2" CacheTime="0"/>
 		<Database Name="mysql" Open="0" SaveFlag="2" Sort="3" CacheTime="0"/>
 	</Save>	
 </Config>
