@@ -74,8 +74,17 @@ namespace KFrame
         // 连接成功
         __KF_NET_EVENT_FUNCTION__( OnClientConnectServer );
 
+        // client连接连接
+        __KF_NET_EVENT_FUNCTION__( OnServerDiscoverClient );
+
+        // client断开连接
+        __KF_NET_EVENT_FUNCTION__( OnServerLostClient );
+
         // 启动服务器
         __KF_TIMER_FUNCTION__( OnTimerStartupProcess );
+
+        // 判断超时定时器
+        __KF_TIMER_FUNCTION__( OnTimerCheckHeartbeat );
 
         // 检查任务完成
         __KF_TIMER_FUNCTION__( OnTimerCheckTaskFinish );
@@ -86,6 +95,9 @@ namespace KFrame
     protected:
         // 启动服务器
         __KF_MESSAGE_FUNCTION__( HandleDeployCommandReq );
+
+        // 心跳消息
+        __KF_MESSAGE_FUNCTION__( HandleClientHeartbeatReq );
 
     protected:
         // 连接deployserver

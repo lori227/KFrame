@@ -75,6 +75,12 @@ namespace KFrame
 
         // 是否关闭
         bool _is_shutdown;
+
+        // 心跳超时时间
+        uint64 _heartbeat_timeout = 0;
+
+        // 是否连接
+        bool _is_conencted = false;
     };
 }
 

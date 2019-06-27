@@ -5,12 +5,17 @@ namespace KFrame
 {
     void KFDeployClientModule::BeforeRun()
     {
+        __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFDeployClientModule::OnClientConnectAgent );
+        __REGISTER_CLIENT_LOST_FUNCTION__( &KFDeployClientModule::OnClientLostAgent );
         ////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_COMMAND_TO_CLIENT_REQ, &KFDeployClientModule::HandleDeployCommandToClientReq );
     }
 
     void KFDeployClientModule::ShutDown()
     {
+        __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
+        __UNREGISTER_CLIENT_LOST_FUNCTION__();
+        __UNREGISTER_TIMER__();
         /////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_COMMAND_TO_CLIENT_REQ );
     }
@@ -27,8 +32,32 @@ namespace KFrame
         auto ip = KFUtility::SplitString( agentdata, "|" );
         auto port = KFUtility::SplitValue< uint32 >( agentdata, "|" );
 
-        auto appid = KFAppId::ToUInt64( agentid );
-        _kf_tcp_client->StartClient( __KF_STRING__( deploy ), __KF_STRING__( agent ), appid, ip, port );
+        _agent_id = KFAppId::ToUInt64( agentid );
+        _kf_tcp_client->StartClient( __KF_STRING__( deploy ), __KF_STRING__( agent ), _agent_id, ip, port );
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    __KF_NET_EVENT_FUNCTION__( KFDeployClientModule::OnClientConnectAgent )
+    {
+        if ( netdata->_id == _agent_id )
+        {
+            // 启动定时器
+            __REGISTER_LOOP_TIMER__( _agent_id, 45000, 10000, &KFDeployClientModule::OnTimerSendHeartbeatToAgent );
+        }
+    }
+
+    __KF_NET_EVENT_FUNCTION__( KFDeployClientModule::OnClientLostAgent )
+    {
+        if ( netdata->_id == _agent_id )
+        {
+            __UNREGISTER_OBJECT_TIMER__( _agent_id );
+        }
+    }
+
+    __KF_TIMER_FUNCTION__( KFDeployClientModule::OnTimerSendHeartbeatToAgent )
+    {
+        KFMsg::S2SDeployHeartbeatToAgentReq req;
+        req.set_id( KFGlobal::Instance()->_app_id->GetId() );
+        _kf_tcp_client->SendNetMessage( _agent_id, KFMsg::S2S_DEPLOY_HEARTBEAT_TO_AGENT_REQ, &req );
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFDeployClientModule::AddFunction( const std::string& command, const std::string& module, KFDeployFunction& function )

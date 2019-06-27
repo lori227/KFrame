@@ -19,11 +19,13 @@ namespace KFrame
     void KFDeployAgentModule::BeforeRun()
     {
         __REGISTER_LOOP_TIMER__( 1, 20000, 100, &KFDeployAgentModule::OnTimerStartupProcess );
+        __REGISTER_LOOP_TIMER__( 1, 30000, 100, &KFDeployAgentModule::OnTimerCheckHeartbeat );
         __REGISTER_LOOP_TIMER__( 2, 1000, 0, &KFDeployAgentModule::OnTimerCheckTaskFinish );
         __REGISTER_LOOP_TIMER__( 3, 5000, 1000, &KFDeployAgentModule::OnTimerQueryAgentData );
         __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFDeployAgentModule::OnClientConnectServer );
         ////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_COMMAND_TO_AGENT_REQ, &KFDeployAgentModule::HandleDeployCommandReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_HEARTBEAT_TO_AGENT_REQ, &KFDeployAgentModule::HandleClientHeartbeatReq );
     }
 
     void KFDeployAgentModule::ShutDown()
@@ -32,6 +34,7 @@ namespace KFrame
         __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
         //////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_COMMAND_TO_AGENT_REQ );
+        __UNREGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_HEARTBEAT_TO_AGENT_REQ );
     }
 
     void KFDeployAgentModule::OnceRun()
@@ -147,6 +150,63 @@ namespace KFrame
             req.set_localip( _kf_ip_address->GetLocalIp() );
             req.set_service( __FORMAT__( "{}.{}", kfglobal->_channel, kfglobal->_service ) );
             _kf_tcp_client->SendNetMessage( netdata->_id, KFMsg::S2S_REGISTER_AGENT_TO_SERVER_REQ, &req );
+        }
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFDeployAgentModule::HandleClientHeartbeatReq )
+    {
+        __PROTO_PARSE__( KFMsg::S2SDeployHeartbeatToAgentReq );
+        auto strid = KFAppId::ToString( kfmsg.id() );
+
+        auto kfdeploydata = _deploy_list.Find( strid );
+        if ( kfdeploydata == nullptr )
+        {
+            return;
+        }
+
+        // 5分钟判断超时
+        kfdeploydata->_heartbeat_timeout = KFGlobal::Instance()->_game_time + 5 * KFTimeEnum::OneMinuteMicSecond;
+    }
+
+    __KF_NET_EVENT_FUNCTION__( KFDeployAgentModule::OnServerDiscoverClient )
+    {
+        auto kfdeploydata = _deploy_list.Find( netdata->_str_id );
+        if ( kfdeploydata == nullptr )
+        {
+            return;
+        }
+
+        kfdeploydata->_is_conencted = true;
+    }
+
+    __KF_NET_EVENT_FUNCTION__( KFDeployAgentModule::OnServerLostClient )
+    {
+        auto kfdeploydata = _deploy_list.Find( netdata->_str_id );
+        if ( kfdeploydata == nullptr )
+        {
+            return;
+        }
+
+        kfdeploydata->_is_conencted = false;
+    }
+
+    __KF_TIMER_FUNCTION__( KFDeployAgentModule::OnTimerCheckHeartbeat )
+    {
+        for ( auto& iter : _deploy_list._objects )
+        {
+            auto deploydata = iter.second;
+            if ( deploydata->_heartbeat_timeout == 0 ||
+                    deploydata->_process_id == 0 ||
+                    deploydata->_is_shutdown ||
+                    !deploydata->_is_startup ||
+                    !deploydata->_is_conencted ||
+                    deploydata->_heartbeat_timeout > KFGlobal::Instance()->_game_time )
+            {
+                continue;
+            }
+
+            // 超时了, 认为client卡死了
+            KillServerProcess( deploydata->_process_id );
         }
     }
 

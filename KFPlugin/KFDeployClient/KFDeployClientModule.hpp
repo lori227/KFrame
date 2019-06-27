@@ -38,7 +38,6 @@ namespace KFrame
         // 关闭
         virtual void ShutDown();
 
-
     protected:
         virtual void AddFunction( const std::string& command, const std::string& module, KFDeployFunction& function );
         virtual void RemoveFunction( const std::string& command, const std::string& module );
@@ -58,11 +57,21 @@ namespace KFrame
         // 关闭服务器
         __KF_TIMER_FUNCTION__( OnTimerShutDownServer );
 
+        // 连接成功
+        __KF_NET_EVENT_FUNCTION__( OnClientConnectAgent );
+
+        // 断开连接
+        __KF_NET_EVENT_FUNCTION__( OnClientLostAgent );
+
+        // 发送心跳消息
+        __KF_TIMER_FUNCTION__( OnTimerSendHeartbeatToAgent );
     protected:
         // 关闭服务器
         __KF_MESSAGE_FUNCTION__( HandleDeployCommandToClientReq );
 
     private:
+        // agentid
+        uint64 _agent_id = 0;
 
         // 命令回调函数
         KFHashMap< std::string, const std::string&, KFDeployCommand > _command_data;

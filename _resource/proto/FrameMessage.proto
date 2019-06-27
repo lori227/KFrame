@@ -28,6 +28,7 @@ enum FrameProtocol
 	S2S_DEPLOY_TOOL_DELETE_MYSQL_ACK = 10022;			// 部署工具删除mysql语句
 	S2S_DEPLOY_TOOL_QUERY_TOOL_ID_REQ = 10023;			// 查询toolid
 	S2S_DEPLOY_TOOL_QUERY_TOOL_ID_ACK = 10024;			// 查询toolid
+	S2S_DEPLOY_HEARTBEAT_TO_AGENT_REQ = 10025;			// 心跳逻辑
 
 
 
@@ -513,6 +514,13 @@ message S2SDeployToolQueryToolIdReq
 message S2SDeployToolQueryToolIdAck
 {
 	uint32 id = 1;
+}
+
+// 心跳逻辑
+// S2S_DEPLOY_HEARTBEAT_TO_AGENT_REQ
+message S2SDeployHeartbeatToAgentReq
+{
+	uint64 id = 1;
 }
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////

@@ -228,16 +228,6 @@ namespace KFrame
         // 收到的消息长度有错误
         if ( nethead->_length > KFNetDefine::MaxMessageLength )
         {
-            if ( IsServerSession() )
-            {
-                __LOG_ERROR__( "session[{}:{}] msgid[{}] length[{}] position[{}] totallength[{}] error",
-                               _session_id, KFAppId::ToString( _session_id ), nethead->_msgid, nethead->_length, position, _recv_length );
-            }
-            else
-            {
-                __LOG_ERROR__( "session[{}:{} recv msgid[{}] length[{}] position[{}] totallength[{}] error",
-                               _session_id, _object_id, nethead->_msgid, nethead->_length, position, _recv_length );
-            }
             _recv_length = 0;
             return nullptr;
         }
