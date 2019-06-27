@@ -1,1 +1,1 @@
-BUILD_PLUGIN_MACRO("KFRelationClient")
+BUILD_PLUGIN_WITH_LOGIC("KFRelationClient")

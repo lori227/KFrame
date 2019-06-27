@@ -1,1 +1,1 @@
-BUILD_PLUGIN_MACRO("KFClusterMaster")
+BUILD_PLUGIN_WITH_PROTO("KFClusterMaster")

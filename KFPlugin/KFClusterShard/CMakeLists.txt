@@ -1,1 +1,1 @@
-BUILD_PLUGIN_MACRO("KFClusterShard")
+BUILD_PLUGIN_WITH_PROTO("KFClusterShard")

@@ -1,1 +1,1 @@
-BUILD_PLUGIN_MACRO("KFRelationShard")
+BUILD_PLUGIN_WITH_PROTO("KFRelationShard")

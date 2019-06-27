@@ -1,1 +1,1 @@
-BUILD_PLUGIN_MACRO("KFDeployServer")
+BUILD_PLUGIN_WITH_PROTO("KFDeployServer")

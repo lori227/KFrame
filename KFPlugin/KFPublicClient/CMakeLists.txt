@@ -1,1 +1,1 @@
-BUILD_PLUGIN_MACRO("KFPublicClient")
+BUILD_PLUGIN_WITH_LOGIC("KFPublicClient")

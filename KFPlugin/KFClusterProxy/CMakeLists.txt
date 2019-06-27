@@ -1,1 +1,1 @@
-BUILD_PLUGIN_MACRO("KFClusterProxy")
+BUILD_PLUGIN_WITH_PROTO("KFClusterProxy")
