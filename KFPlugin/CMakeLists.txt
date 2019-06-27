@@ -71,8 +71,8 @@ macro(BUILD_PLUGIN_WITH_LOGIC project_name)
     PLUGIN_PROPERTIES_MACRO(${project_name})
 
     ## extend
-    set(EXTEND_LIB_DEBUG KFProtod KFProtocold protobuf KFCored KFMath3Dd luaplus53d ${EXTEND_LIB_DEBUG} )
-    set(EXTEND_LIB_RELEASE KFProto KFProtocol protobuf KFCore KFMath3D luaplus53 ${EXTEND_LIB_DEBUG} )
+    set(EXTEND_LIB_DEBUG KFProtod KFProtocold protobuf KFCored KFMath3Dd ${EXTEND_LIB_DEBUG} )
+    set(EXTEND_LIB_RELEASE KFProto KFProtocol protobuf KFCore KFMath3D ${EXTEND_LIB_DEBUG} )
 
     ## link
     LINK_PLUGIN_MACRO(${project_name})
