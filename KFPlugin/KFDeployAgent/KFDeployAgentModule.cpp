@@ -19,9 +19,9 @@ namespace KFrame
     void KFDeployAgentModule::BeforeRun()
     {
         __REGISTER_LOOP_TIMER__( 1, 20000, 100, &KFDeployAgentModule::OnTimerStartupProcess );
-        __REGISTER_LOOP_TIMER__( 1, 30000, 100, &KFDeployAgentModule::OnTimerCheckHeartbeat );
         __REGISTER_LOOP_TIMER__( 2, 1000, 0, &KFDeployAgentModule::OnTimerCheckTaskFinish );
         __REGISTER_LOOP_TIMER__( 3, 5000, 1000, &KFDeployAgentModule::OnTimerQueryAgentData );
+        __REGISTER_LOOP_TIMER__( 4, 30000, 100, &KFDeployAgentModule::OnTimerCheckHeartbeat );
         __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFDeployAgentModule::OnClientConnectServer );
         ////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_COMMAND_TO_AGENT_REQ, &KFDeployAgentModule::HandleDeployCommandReq );
