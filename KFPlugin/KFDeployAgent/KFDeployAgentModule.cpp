@@ -207,6 +207,7 @@ namespace KFrame
 
             // 超时了, 认为client卡死了
             KillServerProcess( deploydata->_process_id );
+            __LOG_INFO__( "app=[{}.{}] id=[{}] heartbeat timeout!", deploydata->_app_name, deploydata->_app_type, deploydata->_app_id );
         }
     }
 
