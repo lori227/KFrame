@@ -57,7 +57,7 @@ macro(BUILD_PLUGIN_WITH_PROTO project_name)
 
     ## extend
     set(EXTEND_LIB_DEBUG KFProtod KFProtocold protobuf ${EXTEND_LIB_DEBUG} )
-    set(EXTEND_LIB_RELEASE KFProto KFProtocol protobuf ${EXTEND_LIB_DEBUG} )
+    set(EXTEND_LIB_RELEASE KFProto KFProtocol protobuf ${EXTEND_LIB_RELEASE} )
 
     ## link
     LINK_PLUGIN_MACRO(${project_name})
@@ -72,7 +72,7 @@ macro(BUILD_PLUGIN_WITH_LOGIC project_name)
 
     ## extend
     set(EXTEND_LIB_DEBUG KFProtod KFProtocold protobuf KFCored KFMath3Dd ${EXTEND_LIB_DEBUG} )
-    set(EXTEND_LIB_RELEASE KFProto KFProtocol protobuf KFCore KFMath3D ${EXTEND_LIB_DEBUG} )
+    set(EXTEND_LIB_RELEASE KFProto KFProtocol protobuf KFCore KFMath3D ${EXTEND_LIB_RELEASE} )
 
     ## link
     LINK_PLUGIN_MACRO(${project_name})

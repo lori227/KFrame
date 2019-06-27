@@ -7,7 +7,7 @@
   - [环境搭建](/docs/环境搭建.md)
   - [Redis安装](/docs/redis安装)
   - [Mongo安装](/docs/mongo安装)
-
+  - [mysql安装](/docs/mysql安装)
 
 	
 - 启动相关
