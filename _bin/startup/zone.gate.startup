@@ -4,12 +4,12 @@
 		<Include File="./startup/common/tcpserver.startup"/>
 		<Include File="./startup/common/tcpclient.startup"/>
 		<Include File="./startup/common/remotelog.startup"/>
+		<Include File="./startup/common/deployclient.startup"/>
 	</Includes>
 
 	<Plugins>
 		<Plugin Name="KFZone" Config="./setting/{}_{}_zone.setting"/>	
 		<Plugin Name="KFOption" Config="./config/option.xml"/>	
-		<Plugin Name="KFDeployClient" Config=""/>	
 		<Plugin Name="KFTimer" Config=""/>	
 		<Plugin Name="KFDisplay" Config=""/>	
 		<Plugin Name="KFGate" Config=""/>	

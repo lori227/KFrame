@@ -3,6 +3,7 @@
 	<Includes>
 		<Include File="./startup/common/httpserver.startup"/>
 		<Include File="./startup/common/remotelog.startup"/>
+		<Include File="./startup/common/deployclient.startup"/>
 	</Includes>
 
 	<Plugins>

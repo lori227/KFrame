@@ -4,6 +4,7 @@
 		<Include File="./startup/common/tcpserver.startup"/>
 		<Include File="./startup/common/tcpclient.startup"/>
 		<Include File="./startup/common/remotelog.startup"/>
+		<Include File="./startup/common/deployclient.startup"/>
 	</Includes>
 
 	<Plugins>
