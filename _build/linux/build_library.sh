@@ -182,7 +182,7 @@ blue "start building poco"
 
 cd poco
 chmod -R 755 *
-bash ./configure --prefix=/usr/local --config=Linux --cflags=-fPIC --static --no-tests --no-samples --omit=PageCompiler,Data/ODBC --include-path=../../../mysql/include --library-path=../../_lib/linux/3rd/,./lib/,../lib/
+bash ./configure --prefix=/usr/local --config=Linux --cflags=-fPIC --static --no-tests --no-samples --omit=PageCompiler,Data/ODBC --include-path=../../../mysql/include,../../openssl/include --library-path=../../_lib/linux/3rd/,./lib/,../lib/
 make clean
 make -j 4
 cp -R -f lib/Linux/x86_64/*.a ../../$libpath
