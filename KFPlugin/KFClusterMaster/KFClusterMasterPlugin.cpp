@@ -16,7 +16,6 @@ namespace KFrame
 
     void KFClusterMasterPlugin::LoadModule()
     {
-        __FIND_MODULE__( _kf_option, KFOptionInterface );
         __FIND_MODULE__( _kf_message, KFMessageInterface );
         __FIND_MODULE__( _kf_tcp_server, KFTcpServerInterface );
         __FIND_MODULE__( _kf_tcp_client, KFTcpClientInterface );

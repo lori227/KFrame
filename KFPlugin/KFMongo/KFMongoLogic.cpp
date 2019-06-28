@@ -49,6 +49,11 @@ namespace KFrame
     }
 
     /////////////////////////////////////////////////////////////////////////////
+    bool KFMongoLogic::Insert( const std::string& table, const MapString& values )
+    {
+        return _write_execute->Insert( table, values, InsertRequest::INSERT_DEFAULT );
+    }
+
     bool KFMongoLogic::Insert( const std::string& table, uint64 key, const MapString& values )
     {
         MapString keys;

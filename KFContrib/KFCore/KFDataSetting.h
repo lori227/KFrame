@@ -44,9 +44,9 @@ namespace KFrame
             Mask_Guild = 1 << 23,		// 帮派属性
             Mask_Rank = 1 << 24,		// 排行榜属性
             ////////////////////////////////////////////////////////////////////////////
-            Data_Save = 1 << 1,				// 需要保存
-            Data_Delete_Remove = 1 << 2,	// 删除数据库
-            Data_Delete_Save = 1 << 3,		// 删除保存数据库
+            Data_Delete_None  = 0,		// 需要保存
+            Data_Delete_Remove = 1,		// 删除数据库
+            Data_Delete_Save = 2,		// 删除保存数据库
             ////////////////////////////////////////////////////////////////////////////
             ////////////////////////////////////////////////////////////////////////////
             Show_None = 1,					// 不显示
@@ -141,6 +141,12 @@ namespace KFrame
 
         // 属性标记
         uint32 _data_mask = 0u;
+
+        // 延迟保存时间
+        uint32 _delay_save_time = 0u;
+
+        // 删除时操作
+        uint32 _delete_type;
 
         // 索引字段
         std::string _key_name;

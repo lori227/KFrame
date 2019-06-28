@@ -11,7 +11,6 @@
 
 #include "KFGameInterface.h"
 #include "KFZone/KFZoneInterface.h"
-#include "KFOption/KFOptionInterface.h"
 #include "KFKernel/KFKernelInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFMessage/KFMessageInterface.h"

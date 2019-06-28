@@ -36,6 +36,9 @@ namespace KFrame
         KFWriteExecute() = default;
         virtual ~KFWriteExecute() = default;
 
+        // 查询数据
+        bool Insert( const std::string& table, const MapString& values, uint32 inserttype );
+
         // 更新数据
         bool Update( const std::string& table, const MapString& keys, const MapString& values, uint32 updatetype );
 

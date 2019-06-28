@@ -8,7 +8,6 @@
 	</Includes>
 
 	<Plugins>
-		<Plugin Name="KFOption" Config="./config/option.xml"/>	
 		<Plugin Name="KFTcpDiscover" Config=""/>	
 		<Plugin Name="KFClusterMaster" Config=""/>	
 	</Plugins>

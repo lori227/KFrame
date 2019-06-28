@@ -41,9 +41,6 @@ namespace KFrame
         virtual uint32 GetEntityCount();
 
         //////////////////////////////////////////////////////////////////////////////////////
-        // 设置保存标记
-        virtual void SetEntityDataMask( uint32 mask, uint32 savedelaytime );
-
         // 启动保存定时器
         void StartSaveEntityTimer( KFEntity* kfentity, KFData* kfdata );
 
@@ -198,12 +195,6 @@ namespace KFrame
     private:
         // 组件名称
         std::string _component_name;
-
-        // 是否需要保存
-        uint32 _entity_data_mask;
-
-        // 保存间隔时间
-        uint32 _entity_delay_save_time;
 
         // 需要发送消息的对象
         std::set< KFEntity* > _sync_entitys;

@@ -19,6 +19,7 @@ namespace KFrame
         void Initialize( KFMongoType* kfmongotype );
         /////////////////////////////////////////////////////////////////////////////////////////////
         // 插入数据( 存在更新, 不存在插入 )
+        virtual bool Insert( const std::string& table, const MapString& values );
         virtual bool Insert( const std::string& table, uint64 key, const MapString& values );
         virtual bool Insert( const std::string& table, const std::string& key, const MapString& values );
         virtual bool Insert( const std::string& table, uint64 key, const std::string& field, const std::string& value );

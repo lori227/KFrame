@@ -13,11 +13,8 @@ namespace KFrame
         __REGISTER_ROUTE_MESSAGE_FUNCTION__( &KFGameModule::TranspondToPlayer );
         __REGISTER_CLIENT_TRANSPOND_FUNCTION__( &KFGameModule::TranspondToPlayer );
 
-        auto savetime = _kf_option->GetUInt32( __KF_STRING__( playersavetime ) );
-
         _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
         _kf_component->RegisterEntitySaveFunction( this, &KFGameModule::SavePlayer );
-        _kf_component->SetEntityDataMask( KFDataDefine::Data_Save | KFDataDefine::Data_Delete_Save, ( savetime != 0u ? savetime : 60000 ) );
 
         _kf_player->RegisterEnterFunction( this, &KFGameModule::OnEnterGame );
         _kf_player->RegisterLeaveFunction( this, &KFGameModule::OnLeaveGame );

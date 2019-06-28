@@ -26,6 +26,8 @@ namespace KFrame
     static const uint64 _invalid_int = 0u;
     static const std::string _invalid_str = "";
     static const std::string _globbing_str = "*";
+    static const std::string _route_cluster_name = "route";
+    static const std::string _route_cluster_key = "route@kframe,./";
     /////////////////////////////////////////////////////////////////////////
     // Ip地址配置
     class KFNetData

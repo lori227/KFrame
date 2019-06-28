@@ -10,6 +10,20 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////
+    bool KFWriteExecute::Insert( const std::string& table, const MapString& values, uint32 inserttype )
+    {
+        auto fullname = __FORMAT__( "{}.{}", _database, table );
+        InsertRequest request( fullname, ( InsertRequest::Flags )inserttype );
+
+        // values
+        for ( auto& iter : values )
+        {
+            request.addNewDocument().add( iter.first, iter.second );
+        }
+
+        return SendRequest( request );
+    }
+
     bool KFWriteExecute::Update( const std::string& table, const MapString& keys, const MapString& values, uint32 updatetype )
     {
         auto fullname = __FORMAT__( "{}.{}", _database, table );

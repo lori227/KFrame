@@ -19,9 +19,6 @@ namespace KFrame
         _entity_sync_update_function = nullptr;
         _entity_sync_remove_function = nullptr;
         _show_element_function = nullptr;
-
-        _entity_data_mask = 0;
-        _entity_delay_save_time = 0;
     }
 
     KFComponentEx::~KFComponentEx()
@@ -82,12 +79,6 @@ namespace KFrame
     }
 
     /////////////////////////////////////////////////////////////////////////////////////
-    void KFComponentEx::SetEntityDataMask( uint32 mask, uint32 savedelaytime )
-    {
-        _entity_data_mask = mask;
-        _entity_delay_save_time = savedelaytime;
-    }
-
     void KFComponentEx::SetName( const std::string& name )
     {
         _component_name = name;
@@ -548,8 +539,9 @@ namespace KFrame
     void KFComponentEx::StartSaveEntityTimer( KFEntity* kfentity, KFData* kfdata )
     {
         // 不需要保存
+        auto kfobject = kfentity->GetData();
         if ( !kfdata->HaveMask( KFDataDefine::Mask_Save ) ||
-                !KFUtility::HaveBitMask< uint32 >( _entity_data_mask, KFDataDefine::Data_Save ) )
+                !kfobject->HaveMask( KFDataDefine::Mask_Save ) )
         {
             return;
         }
@@ -558,7 +550,7 @@ namespace KFrame
         if ( !kfentity->IsNeedToSave() )
         {
             kfentity->SetNeetToSave( true );
-            __REGISTER_DELAY_TIMER__( kfentity->GetKeyID(), _entity_delay_save_time, &KFComponentEx::OnTimerSaveEntity );
+            __REGISTER_DELAY_TIMER__( kfentity->GetKeyID(), kfobject->_data_setting->_delay_save_time, &KFComponentEx::OnTimerSaveEntity );
         }
     }
 
@@ -575,14 +567,17 @@ namespace KFrame
 
     void KFComponentEx::DeleteSaveEntity( KFEntity* kfentity )
     {
-        if ( KFUtility::HaveBitMask< uint32 >( _entity_data_mask, KFDataDefine::Data_Save ) ||
-                KFUtility::HaveBitMask< uint32 >( _entity_data_mask, KFDataDefine::Data_Delete_Save ) )
+        auto kfobject = kfentity->GetData();
+        switch ( kfobject->_data_setting->_delete_type )
         {
+        case KFDataDefine::Data_Delete_Save:
             SaveEntity( kfentity, KFSaveEnum::OfflineSave, __FUNC_LINE__ );
-        }
-        else if ( KFUtility::HaveBitMask< uint32 >( _entity_data_mask, KFDataDefine::Data_Delete_Remove ) )
-        {
+            break;
+        case KFDataDefine::Data_Delete_Remove:
             DeleteEntity( kfentity );
+            break;
+        default:
+            break;
         }
 
         // 删除定时器
