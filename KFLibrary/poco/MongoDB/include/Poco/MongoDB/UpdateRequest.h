@@ -1,4 +1,4 @@
-//
+﻿//
 // UpdateRequest.h
 //
 // Library: MongoDB
@@ -24,91 +24,92 @@
 
 
 namespace Poco {
-namespace MongoDB {
+    namespace MongoDB {
 
 
-class UpdateRequest: public RequestMessage
-	/// This request is used to update a document in a database
-	/// using the OP_UPDATE client request. 
-{
-public:
-	enum Flags
-	{
-		UPDATE_DEFAULT = 0,
-			/// If set, the database will insert the supplied object into the
-			/// collection if no matching document is found.
-			
-		UPDATE_UPSERT = 1,
-			/// If set, the database will update all matching objects in the collection.
-			/// Otherwise only updates first matching doc.
+        class UpdateRequest: public RequestMessage
+        /// This request is used to update a document in a database
+        /// using the OP_UPDATE client request.
+        {
+        public:
+            enum Flags
+            {
+                UPDATE_DEFAULT = 0,
+                /// If set, the database will insert the supplied object into the
+                /// collection if no matching document is found.
 
-		UPDATE_MULTIUPDATE = 2
-			/// If set to, updates multiple documents that meet the query criteria.
-			/// Otherwise only updates one document.
-	};
+                UPDATE_UPSERT = 1,
+                /// If set, the database will update all matching objects in the collection.
+                /// Otherwise only updates first matching doc.
 
-	UpdateRequest(const std::string& collectionName, Flags flags = UPDATE_DEFAULT);
-		/// Creates the UpdateRequest.
-		///
-		/// The full collection name is the concatenation of the database 
-		/// name with the collection name, using a "." for the concatenation. For example, 
-		/// for the database "foo" and the collection "bar", the full collection name is 
-		/// "foo.bar".
+                UPDATE_MULTIUPDATE = 2
+                                     /// If set to, updates multiple documents that meet the query criteria.
+                                     /// Otherwise only updates one document.
+            };
 
-	virtual ~UpdateRequest();
-		/// Destroys the UpdateRequest.
+            UpdateRequest( const std::string& collectionName, Flags flags = UPDATE_DEFAULT );
+            /// Creates the UpdateRequest.
+            ///
+            /// The full collection name is the concatenation of the database
+            /// name with the collection name, using a "." for the concatenation. For example,
+            /// for the database "foo" and the collection "bar", the full collection name is
+            /// "foo.bar".
 
-	Document& selector();
-		/// Returns the selector document.
+            virtual ~UpdateRequest();
+            /// Destroys the UpdateRequest.
 
-	Document& update();
-		/// Returns the document to update.
+            Document& selector();
+            /// Returns the selector document.
 
-	Flags flags() const;
-		/// Returns the flags
+            Document& update();
+            /// Returns the document to update.
 
-	void flags(Flags flags);
-		/// Sets the flags
+            Flags flags() const;
+            /// Returns the flags
 
-protected:
-	void buildRequest(BinaryWriter& writer);
+            void flags( Flags flags );
+            /// Sets the flags
 
-private:
-	Flags       _flags;
-	std::string _fullCollectionName;
-	Document    _selector;
-	Document    _update;
-};
+        protected:
+            void buildRequest( BinaryWriter& writer );
 
-
-//
-// inlines
-//
-inline UpdateRequest::Flags UpdateRequest::flags() const
-{
-	return _flags;
-}
+        private:
+            Flags       _flags;
+            std::string _fullCollectionName;
+            Document    _selector;
+            Document    _update;
+        };
 
 
-inline void UpdateRequest::flags(UpdateRequest::Flags flags)
-{
-	_flags = flags;
-}
+        //
+        // inlines
+        //
+        inline UpdateRequest::Flags UpdateRequest::flags() const
+        {
+            return _flags;
+        }
 
 
-inline Document& UpdateRequest::selector()
-{
-	return _selector;
-}
+        inline void UpdateRequest::flags( UpdateRequest::Flags flags )
+        {
+            _flags = flags;
+        }
 
 
-inline Document& UpdateRequest::update()
-{
-	return _update;
-}
+        inline Document& UpdateRequest::selector()
+        {
+            return _selector;
+        }
 
 
-} } // namespace Poco::MongoDB
+        inline Document& UpdateRequest::update()
+        {
+            return _update;
+        }
+
+
+    }
+} // namespace Poco::MongoDB
 
 
 #endif // MongoDB_UpdateRequest_INCLUDED
