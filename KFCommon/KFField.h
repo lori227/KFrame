@@ -222,15 +222,13 @@ namespace KFrame
         __STRING_DEFINE__( freindlinessresettime );
         __STRING_DEFINE__( freindlinessdailymax );
         __STRING_DEFINE__( playersavetime );
-        __STRING_DEFINE__( order );
+        __STRING_DEFINE__( payorder );
         __STRING_DEFINE__( pay );
         __STRING_DEFINE__( payid );
         __STRING_DEFINE__( paydata );
         __STRING_DEFINE__( price );
         __STRING_DEFINE__( applyorder );
         __STRING_DEFINE__( removeorder );
-        __STRING_DEFINE__( payquerytime );
-        __STRING_DEFINE__( payquerycount );
         __STRING_DEFINE__( querypay );
         __STRING_DEFINE__( finishpay );
         __STRING_DEFINE__( internalpay );

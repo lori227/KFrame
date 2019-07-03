@@ -9,7 +9,7 @@ namespace KFrame
     {
         auto redisdriver = __AUTH_REDIS_DRIVER__;
 
-        auto kforderdata = redisdriver->QueryMap( "hgetall {}:{}", __KF_STRING__( order ), order );
+        auto kforderdata = redisdriver->QueryMap( "hgetall {}:{}", __KF_STRING__( payorder ), order );
         if ( kforderdata->_value.empty() )
         {
             __LOG_ERROR__( "order=[{}] no record!", order );
@@ -18,7 +18,7 @@ namespace KFrame
 
         auto payid = kforderdata->_value[ __KF_STRING__( payid ) ];
         auto playerid = kforderdata->_value[ __KF_STRING__( playerid ) ];
-        auto queryorder = kforderdata->_value[ __KF_STRING__( order ) ];
+        auto queryorder = kforderdata->_value[ __KF_STRING__( payorder ) ];
         if ( payid.empty() || playerid.empty() || queryorder != order )
         {
             __LOG_ERROR__( "order=[{}] payid=[{}] playerid=[{}] error!", order, payid, playerid );
@@ -28,7 +28,7 @@ namespace KFrame
         // 保存充值纪录
         {
             values[ __KF_STRING__( payid ) ] = payid;
-            values[ __KF_STRING__( order ) ] = order;
+            values[ __KF_STRING__( payorder ) ] = order;
             values[ __KF_STRING__( playerid ) ] = playerid;
         }
 
@@ -42,7 +42,7 @@ namespace KFrame
         if ( kfresult->IsOk() )
         {
             // 删除订单信息
-            redisdriver->Execute( "del {}:{}", __KF_STRING__( order ), order );
+            redisdriver->Execute( "del {}:{}", __KF_STRING__( payorder ), order );
         }
 
         return kfresult->IsOk();

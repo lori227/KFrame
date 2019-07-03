@@ -6,7 +6,6 @@
 #include "KFTimer/KFTimerInterface.h"
 #include "KFConfig/KFConfigInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
-#include "KFOption/KFOptionInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFIpAddress/KFIpAddressInterface.h"
@@ -46,7 +45,7 @@ namespace KFrame
         void OnLeaveQueryPayOrder( KFEntity* player );
 
         // 开启查询充值定时器
-        void StartQueryPayTimer( uint64 playerid );
+        void StartQueryPayTimer( KFEntity* player );
         __KF_TIMER_FUNCTION__( OnTimerQueryPayData );
 
         // 查询充值信息

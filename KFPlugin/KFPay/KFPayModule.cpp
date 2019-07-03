@@ -35,7 +35,7 @@ namespace KFrame
     void KFPayModule::OnEnterQueryPayOrder( KFEntity* player )
     {
         auto kfobject = player->GetData();
-        auto order = kfobject->GetValue< std::string >( __KF_STRING__( order ) );
+        auto order = kfobject->GetValue< std::string >( __KF_STRING__( payorder ) );
         if ( order.empty() )
         {
             return;
@@ -69,7 +69,7 @@ namespace KFrame
         static auto _url = _kf_ip_address->GetAuthUrl() + __KF_STRING__( applyorder );
 
         __JSON_OBJECT_DOCUMENT__( kfjson );
-        __JSON_SET_VALUE__( kfjson, __KF_STRING__( order ), order );
+        __JSON_SET_VALUE__( kfjson, __KF_STRING__( payorder ), order );
         __JSON_SET_VALUE__( kfjson, __KF_STRING__( playerid ), playerid );
         __JSON_SET_VALUE__( kfjson, __KF_STRING__( payid ), kfsetting->_id );
         __JSON_SET_VALUE__( kfjson, __KF_STRING__( price ), kfsetting->_price );
@@ -94,7 +94,7 @@ namespace KFrame
         }
 
         auto payid = __JSON_GET_STRING__( kfjson, __KF_STRING__( payid ) );
-        auto order = __JSON_GET_STRING__( kfjson, __KF_STRING__( order ) );
+        auto order = __JSON_GET_STRING__( kfjson, __KF_STRING__( payorder ) );
         if ( payid.empty() || order.empty() )
         {
             return _kf_display->SendToClient( player, KFMsg::HttpDataError );
@@ -113,8 +113,8 @@ namespace KFrame
         if ( kfmsg.result() )
         {
             // 启动定时器, 查询充值信息
-            StartQueryPayTimer( playerid );
-            player->UpdateData( __KF_STRING__( order ), kfmsg.order() );
+            StartQueryPayTimer( player );
+            player->UpdateData( __KF_STRING__( payorder ), kfmsg.order() );
 
             __LOG_INFO__( "player=[{}] payid=[{}] order=[{}] pay ok!", playerid, kfmsg.payid(), kfmsg.order() );
         }
@@ -123,7 +123,7 @@ namespace KFrame
             static auto _url = _kf_ip_address->GetAuthUrl() + __KF_STRING__( removeorder );
 
             __JSON_OBJECT_DOCUMENT__( kfjson );
-            __JSON_SET_VALUE__( kfjson, __KF_STRING__( order ), kfmsg.order() );
+            __JSON_SET_VALUE__( kfjson, __KF_STRING__( payorder ), kfmsg.order() );
             _kf_http_client->MTGet< KFPayModule >( _url, kfjson );
         }
     }
@@ -136,11 +136,12 @@ namespace KFrame
         QueryPayData( playerid );
     }
 
-    void KFPayModule::StartQueryPayTimer( uint64 playerid )
+    void KFPayModule::StartQueryPayTimer( KFEntity* player )
     {
-        static auto _time_option = _kf_option->FindOption( __KF_STRING__( payquerytime ) );
-        static auto _count_option = _kf_option->FindOption( __KF_STRING__( payquerycount ) );
-        __REGISTER_LIMIT_TIMER__( playerid, _time_option->_uint32_value, _count_option->_uint32_value, &KFPayModule::OnTimerQueryPayData );
+        auto kfpayorder = player->GetData()->FindData( __KF_STRING__( payorder ) );
+        auto querytime = kfpayorder->_data_setting->_logic_value;
+        auto querycount = kfpayorder->_data_setting->_max_value;
+        __REGISTER_LIMIT_TIMER__( player->GetKeyID(), querytime, querycount, &KFPayModule::OnTimerQueryPayData );
     }
 
     __KF_TIMER_FUNCTION__( KFPayModule::OnTimerQueryPayData )
@@ -180,7 +181,7 @@ namespace KFrame
             auto& kfpay = __JSON_ARRAY_INDEX__( paydata, i );
 
             auto payid = __JSON_GET_STRING__( kfpay, __KF_STRING__( payid ) );
-            auto order = __JSON_GET_STRING__( kfpay, __KF_STRING__( order ) );
+            auto order = __JSON_GET_STRING__( kfpay, __KF_STRING__( payorder ) );
             if ( payid.empty() || order.empty() )
             {
                 __LOG_ERROR__( "player=[{}] payid=[{}] order=[{}] empty!", playerid, payid, order );
@@ -220,17 +221,17 @@ namespace KFrame
         }
 
         // 清空order
-        auto playerorder = kfobject->GetValue< std::string>( __KF_STRING__( order ) );
+        auto playerorder = kfobject->GetValue< std::string>( __KF_STRING__( payorder ) );
         if ( playerorder == order )
         {
-            player->UpdateData( __KF_STRING__( order ), _invalid_str );
+            player->UpdateData( __KF_STRING__( payorder ), _invalid_str );
         }
 
         // 通知服务器, 更新充值状态
         static auto _url = _kf_ip_address->GetAuthUrl() + __KF_STRING__( finishpay );
 
         __JSON_OBJECT_DOCUMENT__( kfjson );
-        __JSON_SET_VALUE__( kfjson, __KF_STRING__( order ), order );
+        __JSON_SET_VALUE__( kfjson, __KF_STRING__( payorder ), order );
         __JSON_SET_VALUE__( kfjson, __KF_STRING__( playerid ), player->GetKeyID() );
         _kf_http_client->MTGet< KFPayModule >( _url, kfjson );
     }

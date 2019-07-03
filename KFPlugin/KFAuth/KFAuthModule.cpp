@@ -484,7 +484,7 @@ namespace KFrame
     {
         __JSON_PARSE_STRING__( request, data );
 
-        auto order = __JSON_GET_STRING__( request, __KF_STRING__( order ) );
+        auto order = __JSON_GET_STRING__( request, __KF_STRING__( payorder ) );
         auto payid = __JSON_GET_STRING__( request, __KF_STRING__( payid ) );
         auto playerid = __JSON_GET_UINT64__( request, __KF_STRING__( playerid ) );
         if ( playerid == _invalid_int || payid.empty() || order.empty() )
@@ -494,7 +494,7 @@ namespace KFrame
 
         // 订单保存时间( 1个月 )
         static auto _order_expire_time = 3600 * 24 * 30;
-        auto orderkey = __FORMAT__( "{}:{}", __KF_STRING__( order ), order );
+        auto orderkey = __FORMAT__( "{}:{}", __KF_STRING__( payorder ), order );
 
         // 保存到数据库
         auto redisdriver = __AUTH_REDIS_DRIVER__;
@@ -511,7 +511,7 @@ namespace KFrame
         if ( kfresult->IsOk() )
         {
             __JSON_SET_VALUE__( response, __KF_STRING__( payid ), payid );
-            __JSON_SET_VALUE__( response, __KF_STRING__( order ), order );
+            __JSON_SET_VALUE__( response, __KF_STRING__( payorder ), order );
             __JSON_SET_VALUE__( response, __KF_STRING__( retcode ), KFMsg::Ok );
         }
         else
@@ -527,10 +527,10 @@ namespace KFrame
         __JSON_PARSE_STRING__( request, data );
 
         // 删除订单
-        auto order = __JSON_GET_STRING__( request, __KF_STRING__( order ) );
+        auto order = __JSON_GET_STRING__( request, __KF_STRING__( payorder ) );
 
         auto redisdriver = __AUTH_REDIS_DRIVER__;
-        redisdriver->Execute( "del {}:{}", __KF_STRING__( order ), order );
+        redisdriver->Execute( "del {}:{}", __KF_STRING__( payorder ), order );
 
         return _kf_http_server->SendCode( KFMsg::Ok );
     }
@@ -558,7 +558,7 @@ namespace KFrame
                     if ( flag == _invalid_int )
                     {
                         __JSON_OBJECT__( payjson );
-                        __JSON_SET_VALUE__( payjson, __KF_STRING__( order ), kfpaydata->_value[ __KF_STRING__( order ) ] );
+                        __JSON_SET_VALUE__( payjson, __KF_STRING__( payorder ), kfpaydata->_value[ __KF_STRING__( payorder ) ] );
                         __JSON_SET_VALUE__( payjson, __KF_STRING__( payid ), kfpaydata->_value[ __KF_STRING__( payid ) ] );
 
                         __JSON_ADD_VALUE__( payarray, payjson );
@@ -587,7 +587,7 @@ namespace KFrame
     __KF_HTTP_FUNCTION__( KFAuthModule::HandleFinishPay )
     {
         __JSON_PARSE_STRING__( request, data );
-        auto order = __JSON_GET_STRING__( request, __KF_STRING__( order ) );
+        auto order = __JSON_GET_STRING__( request, __KF_STRING__( payorder ) );
         auto playerid = __JSON_GET_UINT64__( request, __KF_STRING__( playerid ) );
 
         // 删除充值信息
