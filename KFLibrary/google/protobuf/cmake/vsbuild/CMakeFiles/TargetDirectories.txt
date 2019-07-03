@@ -1,14 +1,7 @@
-D:/Work/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/CMakeFiles/libprotobuf-lite.dir
 D:/Work/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/CMakeFiles/protoc.dir
+D:/Work/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/CMakeFiles/libprotobuf-lite.dir
 D:/Work/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/CMakeFiles/libprotoc.dir
 D:/Work/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/CMakeFiles/libprotobuf.dir
-D:/Work/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/CMakeFiles/lite-test.dir
-D:/Work/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/CMakeFiles/gmock_main.dir
-D:/Work/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/CMakeFiles/gmock.dir
-D:/Work/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/CMakeFiles/tests.dir
-D:/Work/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/CMakeFiles/test_plugin.dir
-D:/Work/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/CMakeFiles/lite-arena-test.dir
-D:/Work/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/CMakeFiles/check.dir
 D:/Work/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/CMakeFiles/INSTALL.dir
 D:/Work/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/CMakeFiles/ALL_BUILD.dir
 D:/Work/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/CMakeFiles/ZERO_CHECK.dir
