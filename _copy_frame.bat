@@ -12,18 +12,12 @@ echo "update _bin path begin"
 set subpath=_bin
 rd /s /q %localpath%\%subpath%
 if not exist %localpath%\%subpath% ( mkdir %localpath%\%subpath% )
-xcopy /y /S %framepath%\%subpath%\_gcm\* %localpath%\%subpath%\_gcm\
-xcopy /y /S %framepath%\%subpath%\config\* %localpath%\%subpath%\config\
-xcopy /y /S %framepath%\%subpath%\script\* %localpath%\%subpath%\script\
-xcopy /y /S %framepath%\%subpath%\setting\* %localpath%\%subpath%\setting\
-xcopy /y /S %framepath%\%subpath%\startup\* %localpath%\%subpath%\startup\
-mkdir %localpath%\%subpath%\bin\win64\debug
-copy /y %framepath%\%subpath%\bin\win64\debug\libmysql.dll  %localpath%\%subpath%\bin\win64\debug\
-copy /y %framepath%\%subpath%\bin\win64\debug\libtcmalloc_minimal.dll  %localpath%\%subpath%\bin\win64\debug\
+xcopy /y /S %framepath%\%subpath%\* %localpath%\%subpath%\
 
-mkdir %localpath%\%subpath%\bin\win64\release
-copy /y %framepath%\%subpath%\bin\win64\release\libmysql.dll  %localpath%\%subpath%\bin\win64\release\
-copy /y %framepath%\%subpath%\bin\win64\release\libtcmalloc_minimal.dll  %localpath%\%subpath%\bin\win64\release\
+set subpath=_lib
+rd /s /q %localpath%\%subpath%
+if not exist %localpath%\%subpath% ( mkdir %localpath%\%subpath% )
+xcopy /y /S %framepath%\%subpath%\* %localpath%\%subpath%\
 
 set subpath=_build
 rd /s /q %localpath%\%subpath%

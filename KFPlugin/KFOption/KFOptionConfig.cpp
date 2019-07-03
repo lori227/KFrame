@@ -4,8 +4,8 @@ namespace KFrame
 {
     KFOption* KFOptionConfig::CreateSetting( KFNode& xmlnode )
     {
-        auto service = xmlnode.GetUInt32( "Service" );
-        auto channel = xmlnode.GetUInt32( "Channel" );
+        auto service = xmlnode.GetUInt32( "Service", true );
+        auto channel = xmlnode.GetUInt32( "Channel", true );
         auto ok = KFGlobal::Instance()->CheckChannelService( channel, service );
         if ( !ok )
         {

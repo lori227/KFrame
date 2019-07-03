@@ -36,14 +36,14 @@ namespace KFrame
 
     void KFChannelConfig::ReadSetting( KFNode& xmlnode, KFChannelSetting* kfsetting )
     {
-        kfsetting->_login_url = xmlnode.GetString( "LoginUrl" );
-        kfsetting->_pay_url = xmlnode.GetString( "PayUrl" );
-        kfsetting->_app_id = xmlnode.GetString( "AppId" );
-        kfsetting->_app_key = xmlnode.GetString( "AppKey" );
-        kfsetting->_debug_open = xmlnode.GetBoolen( "Debug" );
-        kfsetting->_release_open = xmlnode.GetBoolen( "Release" );
+        kfsetting->_login_url = xmlnode.GetString( "LoginUrl", true );
+        kfsetting->_pay_url = xmlnode.GetString( "PayUrl", true );
+        kfsetting->_app_id = xmlnode.GetString( "AppId", true );
+        kfsetting->_app_key = xmlnode.GetString( "AppKey", true );
+        kfsetting->_debug_open = xmlnode.GetBoolen( "Debug", true );
+        kfsetting->_release_open = xmlnode.GetBoolen( "Release", true );
 
-        auto stropen = xmlnode.GetString( "Support" );
+        auto stropen = xmlnode.GetString( "Support", true );
         kfsetting->_support_list = KFUtility::SplitSet< std::set< uint32 > >( stropen, DEFAULT_SPLIT_STRING );
     }
 }

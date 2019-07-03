@@ -454,10 +454,14 @@ namespace KFrame
 
             for ( auto& miter : kfdata->_datas )
             {
-                auto attribute = kffile->_class.GetAttribute( miter.first );
-                if ( KFUtility::HaveBitMask( attribute->_flag, saveflag ) )
+                auto& strvalue = miter.second;
+                if ( !strvalue.empty() && strvalue != "0" )
                 {
-                    xmlfile << __FORMAT__( " {}=\"{}\"", attribute->_name, miter.second );
+                    auto attribute = kffile->_class.GetAttribute( miter.first );
+                    if ( KFUtility::HaveBitMask( attribute->_flag, saveflag ) )
+                    {
+                        xmlfile << __FORMAT__( " {}=\"{}\"", attribute->_name, strvalue );
+                    }
                 }
             }
 

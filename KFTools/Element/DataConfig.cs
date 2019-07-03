@@ -79,6 +79,18 @@ public class DataConfig
 
     public Dictionary<string, DataSetting> _data_list = new Dictionary<string, DataSetting>();
 
+    private string ReadXmlData( XElement item, string name )
+    {
+        var value = "";
+        var xmlobject = item.Attribute(name);
+        if (xmlobject != null)
+        {
+            value = xmlobject.Value;
+        }
+
+        return value;
+    }
+
     public void LoadDataConfig(string xmlfile)
     {
         _data_list.Clear();
@@ -91,11 +103,10 @@ public class DataConfig
             IEnumerable<XElement> enumerable = root.Elements();
             foreach (XElement item in enumerable)
             {
-                var classname = item.Attribute("Id").Value;
-                var dataname = item.Attribute("Name").Value;
-                var datatext = item.Attribute("Element").Value;
-                var containclass = item.Attribute("ContainClass").Value;
-
+                var classname = ReadXmlData(item, "Id");
+                var dataname = ReadXmlData(item, "Name");
+                var datatext = ReadXmlData(item,"Element");
+                var containclass = ReadXmlData(item, "ContainClass");
                 if (datatext != "" && classname != "Player")
                 {
                     DataSetting datastting = null;
@@ -108,9 +119,9 @@ public class DataConfig
             // 
             foreach (XElement item in enumerable)
             {
-                var classname = item.Attribute("Id").Value;
-                var dataname = item.Attribute("Name").Value;
-                var datatext = item.Attribute("Element").Value;
+                var classname = ReadXmlData(item, "Id");
+                var dataname = ReadXmlData(item, "Name");
+                var datatext = ReadXmlData(item, "Element");
 
                 if (datatext != "" && classname == "Player")
                 {
@@ -120,7 +131,7 @@ public class DataConfig
 
                     {
                         DataSetting childstting = null;
-                        var containclass = item.Attribute("ContainClass").Value;
+                        var containclass = ReadXmlData(item, "ContainClass");
                         if (containclass != "")
                         {
                             datasetting._isobject = true;

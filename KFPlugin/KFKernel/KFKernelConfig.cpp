@@ -13,6 +13,23 @@ namespace KFrame
         return classsetting->FindSetting( dataname );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    static std::map< std::string, uint32 > _data_mask_list =
+    {
+        {"Create", KFDataDefine::Mask_Create},
+        {"Show", KFDataDefine::Mask_Show},
+        {"Multiple", KFDataDefine::Mask_Multiple},
+        {"Save", KFDataDefine::Mask_Save},
+        {"Sync", KFDataDefine::Mask_Client},
+        {"Delay", KFDataDefine::Mask_Delay},
+        {"View", KFDataDefine::Mask_View},
+        {"Log", KFDataDefine::Mask_Log},
+        {"Public", KFDataDefine::Mask_Public},
+        {"Relation", KFDataDefine::Mask_Relation},
+        {"Team", KFDataDefine::Mask_Team},
+        {"Guild", KFDataDefine::Mask_Guild},
+        {"Rank", KFDataDefine::Mask_Rank},
+    };
+
     void KFKernelConfig::ReadSetting( KFNode& xmlnode, KFClassSetting* kfsetting )
     {
         auto dataname = xmlnode.GetString( "Name" );
@@ -21,7 +38,7 @@ namespace KFrame
 
         kfdatasetting->_type = KFDataDefine::ConvertDataType( xmlnode.GetString( "Type" ) );
         kfdatasetting->_logic_type = kfdatasetting->_type;
-        kfdatasetting->_contain_class = xmlnode.GetString( "ContainClass" );
+        kfdatasetting->_contain_class = xmlnode.GetString( "ContainClass", true );
         if ( !kfdatasetting->_contain_class.empty() )
         {
             auto type = KFDataDefine::ConvertDataType( kfdatasetting->_contain_class );
@@ -31,69 +48,24 @@ namespace KFrame
             }
         }
 
-        kfdatasetting->_delay_save_time = xmlnode.GetUInt32( "SaveTime" );
-        kfdatasetting->_delete_type = xmlnode.GetUInt32( "DeleteType" );
-        kfdatasetting->_init_value = xmlnode.GetString( "InitValue" );
-        kfdatasetting->_max_value = xmlnode.GetUInt32( "MaxValue" );
-        kfdatasetting->_logic_value = xmlnode.GetUInt32( "LogicValue" );
-        kfdatasetting->_key_name = xmlnode.GetString( "KeyName" );
-        kfdatasetting->_config_key_name = xmlnode.GetString( "ConfigKeyName" );
-        kfdatasetting->_lua_file = xmlnode.GetString( "LuaFile" );
-        kfdatasetting->_add_function = xmlnode.GetString( "AddFunction" );
-        kfdatasetting->_update_function = xmlnode.GetString( "UpdateFunction" );
-        kfdatasetting->_remove_function = xmlnode.GetString( "RemoveFunction" );
+        kfdatasetting->_delay_save_time = xmlnode.GetUInt32( "SaveTime", true );
+        kfdatasetting->_delete_type = xmlnode.GetUInt32( "DeleteType", true );
+        kfdatasetting->_init_value = xmlnode.GetString( "InitValue", true );
+        kfdatasetting->_max_value = xmlnode.GetUInt32( "MaxValue", true );
+        kfdatasetting->_logic_value = xmlnode.GetUInt32( "LogicValue", true );
+        kfdatasetting->_key_name = xmlnode.GetString( "KeyName", true );
+        kfdatasetting->_config_key_name = xmlnode.GetString( "ConfigKeyName", true );
+        kfdatasetting->_lua_file = xmlnode.GetString( "LuaFile", true );
+        kfdatasetting->_add_function = xmlnode.GetString( "AddFunction", true );
+        kfdatasetting->_update_function = xmlnode.GetString( "UpdateFunction", true );
+        kfdatasetting->_remove_function = xmlnode.GetString( "RemoveFunction", true );
 
-        if ( xmlnode.GetString( "Create" ) == "1" )
+        for ( auto& iter : _data_mask_list )
         {
-            KFUtility::AddBitMask< uint32 >( kfdatasetting->_data_mask, KFDataDefine::Mask_Create );
-        }
-        if ( xmlnode.GetString( "Show" ) == "1" )
-        {
-            KFUtility::AddBitMask< uint32 >( kfdatasetting->_data_mask, KFDataDefine::Mask_Show );
-        }
-        if ( xmlnode.GetString( "Multiple" ) == "1" )
-        {
-            KFUtility::AddBitMask< uint32 >( kfdatasetting->_data_mask, KFDataDefine::Mask_Multiple );
-        }
-        if ( xmlnode.GetString( "Save" ) == "1" )
-        {
-            KFUtility::AddBitMask< uint32 >( kfdatasetting->_data_mask, KFDataDefine::Mask_Save );
-        }
-        if ( xmlnode.GetString( "Sync" ) == "1" )
-        {
-            KFUtility::AddBitMask< uint32 >( kfdatasetting->_data_mask, KFDataDefine::Mask_Client );
-        }
-        if ( xmlnode.GetString( "Delay" ) == "1" )
-        {
-            KFUtility::AddBitMask< uint32 >( kfdatasetting->_data_mask, KFDataDefine::Mask_Delay );
-        }
-        if ( xmlnode.GetString( "View" ) == "1" )
-        {
-            KFUtility::AddBitMask< uint32 >( kfdatasetting->_data_mask, KFDataDefine::Mask_View );
-        }
-        if ( xmlnode.GetString( "Log" ) == "1" )
-        {
-            KFUtility::AddBitMask< uint32 >( kfdatasetting->_data_mask, KFDataDefine::Mask_Log );
-        }
-        if ( xmlnode.GetString( "Public" ) == "1" )
-        {
-            KFUtility::AddBitMask< uint32 >( kfdatasetting->_data_mask, KFDataDefine::Mask_Public );
-        }
-        if ( xmlnode.GetString( "Relation" ) == "1" )
-        {
-            KFUtility::AddBitMask< uint32 >( kfdatasetting->_data_mask, KFDataDefine::Mask_Relation );
-        }
-        if ( xmlnode.GetString( "Group" ) == "1" )
-        {
-            KFUtility::AddBitMask< uint32 >( kfdatasetting->_data_mask, KFDataDefine::Mask_Group );
-        }
-        if ( xmlnode.GetString( "Guild" ) == "1" )
-        {
-            KFUtility::AddBitMask< uint32 >( kfdatasetting->_data_mask, KFDataDefine::Mask_Guild );
-        }
-        if ( xmlnode.GetString( "Rank" ) == "1" )
-        {
-            KFUtility::AddBitMask< uint32 >( kfdatasetting->_data_mask, KFDataDefine::Mask_Rank );
+            if ( xmlnode.GetString( iter.first.c_str(), true ) == "1" )
+            {
+                KFUtility::AddBitMask< uint32 >( kfdatasetting->_data_mask, iter.second );
+            }
         }
     }
 
