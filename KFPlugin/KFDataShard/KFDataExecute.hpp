@@ -60,7 +60,7 @@ namespace KFrame
         virtual KFResult< std::string >::UniqueType LoadData( uint32 zoneid, uint64 playerid ) = 0;
     protected:
         // 数据配置
-        const KFDatabaseSetting* _kf_setting;
+        const KFDatabaseSetting* _kf_setting = nullptr;
 
         // 保存失败的数据
         KFHashMap< uint64, uint64, KFDataKeeper > _data_keeper;

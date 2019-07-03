@@ -22,7 +22,7 @@ namespace KFrame
         typedef uint64 ParamType;
 
     public:
-        uint64 _id;
+        uint64 _id = 0u;
     };
     ///////////////////////////////////////////////////////////////
     class KFStrSetting : public KFSetting

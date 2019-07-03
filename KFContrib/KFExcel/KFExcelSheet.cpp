@@ -4,7 +4,8 @@ namespace KFrame
 {
     KFExcelSheet::KFExcelSheet()
     {
-
+        _sheet_id = 0;
+        _visible = true;
     }
 
     KFExcelSheet::~KFExcelSheet()

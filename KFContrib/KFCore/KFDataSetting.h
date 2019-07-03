@@ -149,7 +149,7 @@ namespace KFrame
         uint32 _delay_save_time = 0u;
 
         // 删除时操作
-        uint32 _delete_type;
+        uint32 _delete_type = 0u;
 
         // 索引字段
         std::string _key_name;

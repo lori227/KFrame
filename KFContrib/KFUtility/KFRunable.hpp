@@ -24,7 +24,7 @@ namespace KFrame
 
         // 回调函数
         std::string _file;
-        uint32 _line;
+        uint32 _line = 0;
         KFThreadFunction _function;
     };
 

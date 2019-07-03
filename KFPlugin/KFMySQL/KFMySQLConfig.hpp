@@ -8,9 +8,9 @@ namespace KFrame
     class KFMySQLSetting
     {
     public:
-        uint32 _id;
+        uint32 _id = 0;
         std::string _ip;
-        uint32 _port;
+        uint32 _port = 0;
         std::string _user;
         std::string _password;
         std::string _database;
@@ -29,7 +29,7 @@ namespace KFrame
         std::vector< KFMySQLSetting > _mysql_list;
 
         // 返回的连接设置
-        KFMySQLSetting* _kf_seting;
+        KFMySQLSetting* _kf_seting = nullptr;
     };
 
 
@@ -43,7 +43,7 @@ namespace KFrame
         KFMySQLList* AddMySQLList( uint32 type );
 
     public:
-        uint32 _id;
+        uint32 _id = 0;
 
         // 列表
         KFHashMap< uint32, uint32, KFMySQLList > _mysql_list;

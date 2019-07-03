@@ -6,6 +6,7 @@ namespace KFrame
 {
     KFHttpData::KFHttpData()
     {
+        _type = 0;
         _http = nullptr;
         _function = nullptr;
     }

@@ -13,6 +13,7 @@ namespace KFrame
         _is_sending = false;
 
         _uv_write = new uv_write_t();
+        memset( _recv_buff, 0, sizeof( _recv_buff ) );
     }
 
     KFNetSession::~KFNetSession()

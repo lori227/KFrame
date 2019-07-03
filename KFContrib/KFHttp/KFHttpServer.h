@@ -20,14 +20,14 @@ namespace KFrame
         KFHttpMethodFunction _function;
 
         // 是否同步( 在主逻辑线程执行 )
-        bool _sync;
+        bool _sync = true;
     };
 
     class KFFunctionData
     {
     public:
         // 执行函数
-        KFHttpFuncton* _kf_function;
+        KFHttpFuncton* _kf_function = nullptr;
 
         // ip
         std::string _ip;

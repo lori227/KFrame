@@ -14,6 +14,7 @@ namespace KFrame
         _game_time = 0;
         _real_time = 0;
         _listen_port = 0;
+        _net_type = 0;
         _kf_rand = new KFRand();
         _app_id = new KFAppId();
         _kf_version = new KFVersion();

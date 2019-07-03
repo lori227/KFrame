@@ -6,7 +6,7 @@
 class DeployData
 {
 public:
-    uint64 _id;
+    uint64 _id = 0;
     std::string _str_id;
     std::string _name;
     uint32 _channel;

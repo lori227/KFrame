@@ -36,7 +36,7 @@ namespace KFrame
         std::vector< KFRedisSetting > _redis_list;
 
         // 返回的连接设置
-        KFRedisSetting* _kf_seting;
+        KFRedisSetting* _kf_seting = nullptr;
     };
 
     class KFRedisType
@@ -49,7 +49,7 @@ namespace KFrame
         KFRedisList* AddRedisList( uint32 type );
 
     public:
-        uint32 _id;
+        uint32 _id = 0;
 
         // Redis列表
         KFHashMap< uint32, uint32, KFRedisList > _redis_list;

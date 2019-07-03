@@ -209,7 +209,7 @@ namespace KFrame
     private:
 
         // 部署服务器
-        uint64 _deploy_server_id;
+        uint64 _deploy_server_id = 0u;
         std::string _deploy_server_strid;
         std::string _deploy_server_ip;
         uint32 _deploy_server_port = 0u;

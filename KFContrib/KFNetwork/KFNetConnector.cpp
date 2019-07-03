@@ -6,6 +6,8 @@ namespace KFrame
 {
     KFNetConnector::KFNetConnector()
     {
+        _last_recv_time = 0;
+        _last_send_time = 0;
         _net_services = nullptr;
     }
 

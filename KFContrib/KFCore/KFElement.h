@@ -48,7 +48,7 @@ namespace KFrame
 
     public:
         // 类型
-        uint32 _type;
+        uint32 _type = 0;
 
         // 配置属性
         const KFDataSetting* _data_setting = nullptr;

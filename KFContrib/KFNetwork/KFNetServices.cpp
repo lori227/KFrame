@@ -148,7 +148,12 @@ namespace KFrame
         {
             if ( length < 2 * KFNetDefine::SerializeBuffLength )
             {
-                _buff_address = reinterpret_cast< char* >( realloc( _buff_address, length ) );
+                auto newaddress = reinterpret_cast< char* >( realloc( _buff_address, length ) );
+                if ( newaddress != nullptr )
+                {
+                    _buff_length = length;
+                    _buff_address = newaddress;
+                }
             }
         }
 
@@ -160,8 +165,12 @@ namespace KFrame
         auto compresslength = LZ4_compressBound( length );
         if ( ( uint32 )compresslength > _compress_length )
         {
-            _compress_length = compresslength;
-            _compress_address = reinterpret_cast< char* >( realloc( _compress_address, compresslength ) );
+            auto newaddress = reinterpret_cast< char* >( realloc( _compress_address, compresslength ) );
+            if ( newaddress != nullptr )
+            {
+                _compress_length = compresslength;
+                _compress_address = newaddress;
+            }
         }
     }
 

@@ -1,4 +1,4 @@
-#include "KFScheduleTime.hpp"
+﻿#include "KFScheduleTime.hpp"
 
 namespace KFrame
 {
@@ -14,6 +14,7 @@ namespace KFrame
         _control = Loop;
         _data = nullptr;
         _size = 0;
+        _object_id = 0;
     }
 
     KFScheduleTime::~KFScheduleTime()

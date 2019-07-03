@@ -149,7 +149,7 @@ namespace KFrame
         std::unordered_map< uint32, uint32 > _run_variable;
 
         // 玩家组件
-        KFComponent* _kf_player;
+        KFComponent* _kf_player = nullptr;
     };
 }
 

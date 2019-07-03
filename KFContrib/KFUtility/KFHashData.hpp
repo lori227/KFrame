@@ -10,7 +10,7 @@ namespace KFrame
     {
     public:
         // 节点id
-        uint64 _id;
+        uint64 _id = 0;
 
         // 节点名字
         std::string _name;
