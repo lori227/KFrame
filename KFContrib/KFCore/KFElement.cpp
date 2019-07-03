@@ -346,7 +346,7 @@ namespace KFrame
         return true;
     }
 
-    const std::string& KFElements::CalcElement( float multiple )
+    const std::string& KFElements::CalcElement( float multiple ) const
     {
         static std::string _result;
         _result.clear();

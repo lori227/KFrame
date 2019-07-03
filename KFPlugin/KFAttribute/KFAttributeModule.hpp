@@ -17,7 +17,6 @@
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFFilter/KFFilterInterface.h"
 #include "KFCommand/KFCommandInterface.h"
-#include "KFOption/KFOptionInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"
 
 namespace KFrame
@@ -49,7 +48,7 @@ namespace KFrame
     protected:
 
         // 检查名字的有效性
-        uint32 CheckNameValid( const std::string& name );
+        uint32 CheckNameValid( const std::string& name, uint32 maxlength );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     };
 }

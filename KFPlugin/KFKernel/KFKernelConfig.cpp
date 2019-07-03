@@ -35,6 +35,7 @@ namespace KFrame
         kfdatasetting->_delete_type = xmlnode.GetUInt32( "DeleteType" );
         kfdatasetting->_init_value = xmlnode.GetString( "InitValue" );
         kfdatasetting->_max_value = xmlnode.GetUInt32( "MaxValue" );
+        kfdatasetting->_logic_value = xmlnode.GetUInt32( "LogicValue" );
         kfdatasetting->_key_name = xmlnode.GetString( "KeyName" );
         kfdatasetting->_config_key_name = xmlnode.GetString( "ConfigKeyName" );
         kfdatasetting->_lua_file = xmlnode.GetString( "LuaFile" );

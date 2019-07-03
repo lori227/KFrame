@@ -139,6 +139,9 @@ namespace KFrame
         // 最大值
         uint32 _max_value = 0u;
 
+        // 逻辑值
+        uint32 _logic_value = 0u;
+
         // 属性标记
         uint32 _data_mask = 0u;
 

@@ -210,7 +210,7 @@ namespace KFrame
         bool Parse( const std::string& strdata, const char* function, uint32 line );
 
         // 计算返回元素
-        const std::string& CalcElement( float multiple );
+        const std::string& CalcElement( float multiple ) const;
 
         // non-copy
     private:

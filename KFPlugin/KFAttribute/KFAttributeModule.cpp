@@ -19,10 +19,9 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    uint32 KFAttributeModule::CheckNameValid( const std::string& name )
+    uint32 KFAttributeModule::CheckNameValid( const std::string& name, uint32 maxlength )
     {
-        static auto _option = _kf_option->FindOption( __KF_STRING__( playernamelength ) );
-        if ( name.size() > _option->_uint32_value )
+        if ( name.size() > maxlength )
         {
             return KFMsg::NameLengthError;
         }
@@ -46,14 +45,15 @@ namespace KFrame
         }
 
         auto kfobject = player->GetData();
-        auto name = kfobject->GetValue<std::string>( __KF_STRING__( basic ), __KF_STRING__( name ) );
+        auto kfname = kfobject->FindData( __KF_STRING__( basic ), __KF_STRING__( name ) );
+        auto name = kfname->GetValue<std::string>();
         if ( !name.empty() )
         {
             return _kf_display->SendToClient( player, KFMsg::NameAlreadySet );
         }
 
         // 检查名字的有效性
-        auto result = CheckNameValid( kfmsg.name() );
+        auto result = CheckNameValid( kfmsg.name(), kfname->_data_setting->_logic_value );
         if ( result != KFMsg::Ok )
         {
             return _kf_display->SendToClient( player, result );
