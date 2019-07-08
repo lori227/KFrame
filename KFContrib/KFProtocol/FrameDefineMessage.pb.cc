@@ -781,7 +781,7 @@ void AddDescriptorsImpl() {
       "\022\013\n\003key\030\001 \001(\t\022\036\n\005value\030\002 \001(\0132\017.KFMsg.PBR"
       "ecord:\0028\001\"j\n\007PBArray\022.\n\010pbuint64\030\001 \003(\0132\034"
       ".KFMsg.PBArray.Pbuint64Entry\032/\n\rPbuint64"
-      "Entry\022\013\n\003key\030\001 \001(\r\022\r\n\005value\030\002 \001(\003:\0028\001\"}\n"
+      "Entry\022\013\n\003key\030\001 \001(\r\022\r\n\005value\030\002 \001(\004:\0028\001\"}\n"
       "\010PBRecord\022/\n\010pbobject\030\001 \003(\0132\035.KFMsg.PBRe"
       "cord.PbobjectEntry\032@\n\rPbobjectEntry\022\013\n\003k"
       "ey\030\001 \001(\004\022\036\n\005value\030\002 \001(\0132\017.KFMsg.PBObject"
@@ -2542,17 +2542,17 @@ bool PBArray::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // map<uint32, int64> pbuint64 = 1;
+      // map<uint32, uint64> pbuint64 = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
           PBArray_Pbuint64Entry_DoNotUse::Parser< ::google::protobuf::internal::MapField<
               PBArray_Pbuint64Entry_DoNotUse,
-              ::google::protobuf::uint32, ::google::protobuf::int64,
+              ::google::protobuf::uint32, ::google::protobuf::uint64,
               ::google::protobuf::internal::WireFormatLite::TYPE_UINT32,
-              ::google::protobuf::internal::WireFormatLite::TYPE_INT64,
+              ::google::protobuf::internal::WireFormatLite::TYPE_UINT64,
               0 >,
-            ::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::int64 > > parser(&pbuint64_);
+            ::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::uint64 > > parser(&pbuint64_);
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
               input, &parser));
         } else {
@@ -2587,9 +2587,9 @@ void PBArray::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // map<uint32, int64> pbuint64 = 1;
+  // map<uint32, uint64> pbuint64 = 1;
   if (!this->pbuint64().empty()) {
-    typedef ::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::int64 >::const_pointer
+    typedef ::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::uint64 >::const_pointer
         ConstPtr;
     typedef ::google::protobuf::internal::SortItem< ::google::protobuf::uint32, ConstPtr > SortItem;
     typedef ::google::protobuf::internal::CompareByFirstField<SortItem> Less;
@@ -2598,9 +2598,9 @@ void PBArray::SerializeWithCachedSizes(
         this->pbuint64().size() > 1) {
       ::std::unique_ptr<SortItem[]> items(
           new SortItem[this->pbuint64().size()]);
-      typedef ::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::int64 >::size_type size_type;
+      typedef ::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::uint64 >::size_type size_type;
       size_type n = 0;
-      for (::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::int64 >::const_iterator
+      for (::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::uint64 >::const_iterator
           it = this->pbuint64().begin();
           it != this->pbuint64().end(); ++it, ++n) {
         items[static_cast<ptrdiff_t>(n)] = SortItem(&*it);
@@ -2615,7 +2615,7 @@ void PBArray::SerializeWithCachedSizes(
       }
     } else {
       ::std::unique_ptr<PBArray_Pbuint64Entry_DoNotUse> entry;
-      for (::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::int64 >::const_iterator
+      for (::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::uint64 >::const_iterator
           it = this->pbuint64().begin();
           it != this->pbuint64().end(); ++it) {
         entry.reset(pbuint64_.NewEntryWrapper(
@@ -2640,9 +2640,9 @@ void PBArray::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // map<uint32, int64> pbuint64 = 1;
+  // map<uint32, uint64> pbuint64 = 1;
   if (!this->pbuint64().empty()) {
-    typedef ::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::int64 >::const_pointer
+    typedef ::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::uint64 >::const_pointer
         ConstPtr;
     typedef ::google::protobuf::internal::SortItem< ::google::protobuf::uint32, ConstPtr > SortItem;
     typedef ::google::protobuf::internal::CompareByFirstField<SortItem> Less;
@@ -2651,9 +2651,9 @@ void PBArray::SerializeWithCachedSizes(
         this->pbuint64().size() > 1) {
       ::std::unique_ptr<SortItem[]> items(
           new SortItem[this->pbuint64().size()]);
-      typedef ::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::int64 >::size_type size_type;
+      typedef ::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::uint64 >::size_type size_type;
       size_type n = 0;
-      for (::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::int64 >::const_iterator
+      for (::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::uint64 >::const_iterator
           it = this->pbuint64().begin();
           it != this->pbuint64().end(); ++it, ++n) {
         items[static_cast<ptrdiff_t>(n)] = SortItem(&*it);
@@ -2670,7 +2670,7 @@ void PBArray::SerializeWithCachedSizes(
       }
     } else {
       ::std::unique_ptr<PBArray_Pbuint64Entry_DoNotUse> entry;
-      for (::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::int64 >::const_iterator
+      for (::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::uint64 >::const_iterator
           it = this->pbuint64().begin();
           it != this->pbuint64().end(); ++it) {
         entry.reset(pbuint64_.NewEntryWrapper(
@@ -2700,12 +2700,12 @@ size_t PBArray::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
   }
-  // map<uint32, int64> pbuint64 = 1;
+  // map<uint32, uint64> pbuint64 = 1;
   total_size += 1 *
       ::google::protobuf::internal::FromIntSize(this->pbuint64_size());
   {
     ::std::unique_ptr<PBArray_Pbuint64Entry_DoNotUse> entry;
-    for (::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::int64 >::const_iterator
+    for (::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::uint64 >::const_iterator
         it = this->pbuint64().begin();
         it != this->pbuint64().end(); ++it) {
       entry.reset(pbuint64_.NewEntryWrapper(it->first, it->second));

@@ -508,18 +508,38 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    const std::string& KFEntityEx::CheckAddElement( const KFElements* kfelements )
+    const std::string& KFEntityEx::CheckAddElement( const KFElements* kfelements, const char* function, uint32 line, float multiple /* = 1.0f */ )
     {
         for ( auto kfelement : kfelements->_element_list )
         {
-            auto kfdata = _kf_object->FindData( kfelement->_data_name );
-            if ( kfdata == nullptr || kfdata->IsFull() )
+            auto ok = CheckAddElement( kfelement, function, line, multiple );
+            if ( !ok )
             {
                 return kfelement->_data_name;
             }
         }
 
         return _invalid_str;
+    }
+
+    bool KFEntityEx::CheckAddElement( const KFElement* kfelement, const char* function, uint32 line, float multiple )
+    {
+        auto kfdata = _kf_object->FindData( kfelement->_data_name );
+        if ( kfdata == nullptr )
+        {
+            __LOG_ERROR_FUNCTION__( function, line, "can't find data=[{}]! ", kfelement->_data_name );
+            return false;
+        }
+
+        // 如果有注册函数, 执行注册函数
+        auto kffunction = _kf_component->_check_add_element_function.Find( kfelement->_data_name );
+        if ( kffunction != nullptr )
+        {
+            return kffunction->_function( this, kfdata, const_cast< KFElement* >( kfelement ), function, line, multiple );
+        }
+
+        // 找不到处理函数, 用基础函数来处理
+        return !kfdata->IsFull();
     }
 
     void KFEntityEx::AddElement( const KFElements* kfelements, bool showclient, const char* function, uint32 line, float multiple )
@@ -750,7 +770,7 @@ namespace KFrame
         }
 
         // 如果有注册函数, 执行注册函数
-        auto kffunction = _kf_component->_check_element_function.Find( kfelement->_data_name );
+        auto kffunction = _kf_component->_check_remove_element_function.Find( kfelement->_data_name );
         if ( kffunction != nullptr )
         {
             return kffunction->_function( this, kfdata, const_cast< KFElement* >( kfelement ), function, line, multiple );
@@ -1056,7 +1076,7 @@ namespace KFrame
                 savedata = datahierarchy.front();
                 datahierarchy.pop_front();
 
-                ( *pbarray->mutable_pbuint64() )[ key ] = savedata->GetValue<int64>();
+                ( *pbarray->mutable_pbuint64() )[ key ] = savedata->GetValue<uint64>();
             }
             else
             {

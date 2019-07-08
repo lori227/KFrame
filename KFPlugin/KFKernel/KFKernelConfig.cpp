@@ -69,7 +69,7 @@ namespace KFrame
         }
     }
 
-    void KFKernelConfig::LoadComplete()
+    void KFKernelConfig::LoadComplete( const std::string& file )
     {
         // 初始化包含的类, 优化每次创建都要去查找的问题
         for ( auto& iter : _settings._objects )

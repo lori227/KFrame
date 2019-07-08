@@ -178,7 +178,7 @@ namespace KFrame
                 auto kfchild = kfarray->FindData( citer->first );
                 if ( kfchild != nullptr )
                 {
-                    kfchild->SetValue<int64>( citer->second );
+                    kfchild->SetValue<uint64>( citer->second );
                 }
             }
         }
@@ -261,7 +261,7 @@ case datatype:\
                     auto kfuint64 = kfchild->FindData( i );
                     if ( kfuint64 != nullptr && kfuint64->IsValid() )
                     {
-                        ( *pbarray.mutable_pbuint64() )[ i ] = kfuint64->GetValue<int64>();
+                        ( *pbarray.mutable_pbuint64() )[ i ] = kfuint64->GetValue<uint64>();
                     }
                 }
                 break;

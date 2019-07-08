@@ -35,7 +35,7 @@ message PBObject
 // 游戏中只存在uint64的数值
 message PBArray
 {
-	map<uint32, int64> pbuint64 = 1;	
+	map<uint32, uint64> pbuint64 = 1;	
 }
 
 message PBRecord

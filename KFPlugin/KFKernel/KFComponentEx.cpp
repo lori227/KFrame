@@ -182,6 +182,17 @@ namespace KFrame
         _sync_entitys.insert( entity );
     }
     ////////////////////////////////////////////////////////////////////////////////////////
+    void KFComponentEx::BindCheckAddElementFunction( const std::string& dataname, KFCheckAddElementFunction& function )
+    {
+        auto kffunction = _check_add_element_function.Create( dataname );
+        kffunction->_function = function;
+    }
+
+    void KFComponentEx::UnRegisterCheckAddElementFunction( const std::string& dataname )
+    {
+        _check_add_element_function.Remove( dataname );
+    }
+
     void KFComponentEx::BindAddElementFunction( const std::string& dataname, KFAddElementFunction& function )
     {
         auto kffunction = _add_element_function.Create( dataname );
@@ -193,15 +204,15 @@ namespace KFrame
         _add_element_function.Remove( dataname );
     }
 
-    void KFComponentEx::BindCheckElementFunction( const std::string& dataname, KFCheckElementFunction& function )
+    void KFComponentEx::BindCheckRemoveElementFunction( const std::string& dataname, KFCheckRemoveElementFunction& function )
     {
-        auto kffunction = _check_element_function.Create( dataname );
+        auto kffunction = _check_remove_element_function.Create( dataname );
         kffunction->_function = function;
     }
 
-    void KFComponentEx::UnRegisterCheckElementFunction( const std::string& dataname )
+    void KFComponentEx::UnRegisterCheckRemoveElementFunction( const std::string& dataname )
     {
-        _check_element_function.Remove( dataname );
+        _check_remove_element_function.Remove( dataname );
     }
 
     void KFComponentEx::BindRemoveElementFunction( const std::string& dataname, KFRemoveElementFunction& function )

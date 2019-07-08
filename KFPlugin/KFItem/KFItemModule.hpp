@@ -47,7 +47,7 @@ namespace KFrame
         __KF_ADD_ELEMENT_FUNCTION__( AddItemElement );
 
         // 判断物品
-        __KF_CHECK_ELEMENT_FUNCTION__( CheckItemElement );
+        __KF_CHECK_REMOVE_ELEMENT_FUNCTION__( CheckItemElement );
 
         // 删除物品
         __KF_REMOVE_ELEMENT_FUNCTION__( RemoveItemElement );

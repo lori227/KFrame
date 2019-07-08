@@ -70,11 +70,14 @@ namespace KFrame
         void AddSyncEntity( KFEntity* entity );
         ///////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////
+        virtual void BindCheckAddElementFunction( const std::string& dataname, KFCheckAddElementFunction& function );
+        virtual void UnRegisterCheckAddElementFunction( const std::string& dataname );
+
         virtual void BindAddElementFunction( const std::string& dataname, KFAddElementFunction& function );
         virtual void UnRegisterAddElementFunction( const std::string& dataname );
 
-        virtual void BindCheckElementFunction( const std::string& dataname, KFCheckElementFunction& function );
-        virtual void UnRegisterCheckElementFunction( const std::string& dataname );
+        virtual void BindCheckRemoveElementFunction( const std::string& dataname, KFCheckRemoveElementFunction& function );
+        virtual void UnRegisterCheckRemoveElementFunction( const std::string& dataname );
 
         virtual void BindRemoveElementFunction( const std::string& dataname, KFRemoveElementFunction& function );
         virtual void UnRegisterRemoveElementFunction( const std::string& dataname );
@@ -145,12 +148,14 @@ namespace KFrame
         // 对象实例列表
         KFHashMap< uint64, uint64, KFEntity > _entitys;
         /////////////////////////////////////////////////////////////////////////////////////////////
+        // 判断是否能添加
+        KFBind< std::string, const std::string&, KFCheckAddElementFunction > _check_add_element_function;
 
         // 添加元数据函数
         KFBind< std::string, const std::string&, KFAddElementFunction > _add_element_function;
 
         // 判断元数据满足
-        KFBind< std::string, const std::string&, KFCheckElementFunction > _check_element_function;
+        KFBind< std::string, const std::string&, KFCheckRemoveElementFunction > _check_remove_element_function;
 
         // 删除元数据函数
         KFBind< std::string, const std::string&, KFRemoveElementFunction > _remove_element_function;

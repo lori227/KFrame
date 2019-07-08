@@ -21,8 +21,7 @@ namespace KFrame
         }
         else
         {
-            static std::string _path = "./config/";
-            kfdata->_file = _path + config->_file;
+            kfdata->_file = _confit_path + config->_file;
         }
 
         // 加载配置文件
@@ -42,7 +41,7 @@ namespace KFrame
         try
         {
             config->LoadConfig( file );
-            config->LoadComplete();
+            config->LoadComplete( config->_file );
             __LOG_INFO__( "load [{}] ok!", file );
         }
         catch ( ... )
@@ -63,8 +62,8 @@ namespace KFrame
 
             if ( file != _globbing_str )
             {
-                auto pos = kfdata->_file.find( file );
-                if ( pos == std::string::npos )
+                auto ok = kfdata->_config->IsFile( kfdata->_file, file );
+                if ( !ok )
                 {
                     continue;
                 }

@@ -6,6 +6,7 @@
 
 namespace KFrame
 {
+    static std::string _confit_path = "./config/";
     ///////////////////////////////////////////////////////////////
     class KFSetting
     {
@@ -50,7 +51,13 @@ namespace KFrame
         virtual void LoadConfig( const std::string& file ) {};
 
         // 加载完配置
-        virtual void LoadComplete() {}
+        virtual void LoadComplete( const std::string& file ) {}
+
+        // 是否是配置文件
+        virtual bool IsFile( const std::string& configfile, const std::string& file )
+        {
+            return configfile.find( file ) != std::string::npos;
+        }
     public:
         // 配置文件
         std::string _file;

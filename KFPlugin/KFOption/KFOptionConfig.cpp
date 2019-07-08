@@ -2,6 +2,16 @@
 
 namespace KFrame
 {
+    bool KFOptionConfig::IsFile( const std::string& configfile, const std::string& file )
+    {
+        if ( _file_list.find( file ) != _file_list.end() )
+        {
+            return true;
+        }
+
+        return KFIntConfigT< KFOption >::IsFile( configfile, file );
+    }
+
     KFOption* KFOptionConfig::CreateSetting( KFNode& xmlnode )
     {
         auto service = xmlnode.GetUInt32( "Service", true );
@@ -20,11 +30,17 @@ namespace KFrame
         auto name = xmlnode.GetString( "Name" );
         auto key = xmlnode.GetString( "Key", true );
         auto value = xmlnode.GetString( "Value" );
-
-        auto kfoption = _option_list.Create( OptionKey( name, key ) );
-        kfoption->_str_value = value;
-        kfoption->_uint32_value = KFUtility::ToValue<uint32>( value );
-        kfoption->_double_value = KFUtility::ToValue<double>( value );
+        if ( name == "optionfile" )
+        {
+            _file_list.insert( value );
+        }
+        else
+        {
+            auto kfoption = _option_list.Create( OptionKey( name, key ) );
+            kfoption->_str_value = value;
+            kfoption->_uint32_value = KFUtility::ToValue<uint32>( value );
+            kfoption->_double_value = KFUtility::ToValue<double>( value );
+        }
     }
 
     const KFOption* KFOptionConfig::FindOption( const std::string& name, const std::string& key ) const
@@ -37,5 +53,24 @@ namespace KFrame
         }
 
         return kfoption;
+    }
+
+    void KFOptionConfig::LoadComplete( const std::string& file )
+    {
+        for ( auto& file : _file_list )
+        {
+            auto filename = _confit_path + file;
+
+            try
+            {
+                __LOG_INFO__( "load [{}] start!", filename );
+                LoadConfig( filename );
+                __LOG_INFO__( "load [{}] ok!", filename );
+            }
+            catch ( ... )
+            {
+                __LOG_ERROR__( "load [{}] failed!", filename );
+            }
+        }
     }
 }

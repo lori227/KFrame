@@ -88,7 +88,7 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 判断是否能够添加元数据
-        virtual const std::string& CheckAddElement( const KFElements* kfelements ) = 0;
+        virtual const std::string& CheckAddElement( const KFElements* kfelements, const char* function, uint32 line, float multiple = 1.0f ) = 0;
 
         // 添加元数据
         virtual void AddElement( const KFElements* kfelements, bool showclient, const char* function, uint32 line, float multiple = 1.0f ) = 0;

@@ -16,17 +16,17 @@
         <Button Content="浏览" HorizontalAlignment="Left" Margin="687,57,0,0" VerticalAlignment="Top" Width="104" Height="29" Click="Button_Click_Item_File_Path"/>
         <Label Content="请选择属性:" HorizontalAlignment="Left" Margin="50,107,0,0" VerticalAlignment="Top" Width="81"/>
         <ComboBox Name="comboDataSelect" HorizontalAlignment="Left" Margin="147,110,0,0" VerticalAlignment="Top" Width="154" SelectionChanged="ComboBox_SelectionChanged"/>
-        <Button Content="添加属性" HorizontalAlignment="Left" Margin="350,198,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_Add_Agent"/>
-        <Button Content="删除属性" HorizontalAlignment="Left" Margin="350,257,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.453,5.105" Click="Button_Click_Remove_Agent"/>
+        <Button Content="添加属性" HorizontalAlignment="Left" Margin="473,198,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_Add_Agent"/>
+        <Button Content="删除属性" HorizontalAlignment="Left" Margin="473,257,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.453,5.105" Click="Button_Click_Remove_Agent"/>
 
-        <DataGrid Name="gridData" HorizontalAlignment="Left" Height="504" Margin="50,148,0,0" VerticalAlignment="Top" Width="284" AutoGenerateColumns="false" CanUserAddRows="False" CanUserSortColumns="false">
+        <DataGrid Name="gridData" HorizontalAlignment="Left" Height="504" Margin="50,148,0,0" VerticalAlignment="Top" Width="408" AutoGenerateColumns="false" CanUserAddRows="False" CanUserSortColumns="false">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="属性名称" Width="*" IsReadOnly="true"  Binding="{Binding _text}"/>
-                <DataGridTextColumn Header="属性数值" Width="*" Binding="{Binding _value}"/>
+                <DataGridTextColumn Header="属性名称" Width="250" IsReadOnly="true"  Binding="{Binding _text}"/>
+                <DataGridTextColumn Header="属性数值" Width="150" Binding="{Binding _value}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <ListBox Name="agentList" HorizontalAlignment="Left" Height="504" Margin="452,148,0,0" VerticalAlignment="Top" Width="785"/>
-        <Button Content="清空属性" HorizontalAlignment="Left" Margin="351,345,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_Clear_Agent"/>
+        <ListBox Name="agentList" HorizontalAlignment="Left" Height="504" Margin="570,148,0,0" VerticalAlignment="Top" Width="667"/>
+        <Button Content="清空属性" HorizontalAlignment="Left" Margin="474,345,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_Clear_Agent"/>
         <TextBox Name="editAgentString" HorizontalAlignment="Left" Height="59" Margin="53,693,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="1184" IsReadOnly="True"/>
         <Label Content="属性表字串:" HorizontalAlignment="Left" Margin="64,657,0,0" VerticalAlignment="Top" Width="78"/>
         <Button Content="复制" HorizontalAlignment="Left" Margin="323,662,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_Copy"/>

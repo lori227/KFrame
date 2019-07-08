@@ -15,7 +15,7 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////////////
 
         _kf_component->RegisterAddElementFunction( __KF_STRING__( item ), this, &KFItemModule::AddItemElement );
-        _kf_component->RegisterCheckElementFunction( __KF_STRING__( item ), this, &KFItemModule::CheckItemElement );
+        _kf_component->RegisterCheckRemoveElementFunction( __KF_STRING__( item ), this, &KFItemModule::CheckItemElement );
         _kf_component->RegisterRemoveElementFunction( __KF_STRING__( item ), this, &KFItemModule::RemoveItemElement );
         ///////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_USE_ITEM_REQ, &KFItemModule::HandleUseItemReq );
@@ -30,7 +30,7 @@ namespace KFrame
         _kf_component->UnRegisterUpdateDataFunction( this, __KF_STRING__( item ), __KF_STRING__( count ) );
 
         _kf_component->UnRegisterAddElementFunction( __KF_STRING__( item ) );
-        _kf_component->UnRegisterCheckElementFunction( __KF_STRING__( item ) );
+        _kf_component->UnRegisterCheckRemoveElementFunction( __KF_STRING__( item ) );
         _kf_component->UnRegisterRemoveElementFunction( __KF_STRING__( item ) );
         //////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::MSG_USE_ITEM_REQ );
@@ -211,7 +211,7 @@ namespace KFrame
         _kf_lua->Call( kfsetting->_lua_file, luafunction, playerid, kfsetting->_id );
     }
 
-    __KF_CHECK_ELEMENT_FUNCTION__( KFItemModule::CheckItemElement )
+    __KF_CHECK_REMOVE_ELEMENT_FUNCTION__( KFItemModule::CheckItemElement )
     {
         if ( !kfelement->IsObject() )
         {
