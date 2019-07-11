@@ -11,27 +11,19 @@ namespace KFrame
 
     KFTimerModule::~KFTimerModule()
     {
+        for ( auto& iter : _kf_timer_data )
+        {
+            __KF_DELETE__( KFModuleData, iter.second );
+        }
+        _kf_timer_data.clear();
 
+        memset( _slot_timer_data, 0u, sizeof( _slot_timer_data ) );
     }
 
     void KFTimerModule::BeforeRun()
     {
         _now_slot = 0;
         _last_update_time = KFGlobal::Instance()->_game_time;
-    }
-
-    void KFTimerModule::ShutDown()
-    {
-        for ( auto iter : _kf_timer_data )
-        {
-            for ( auto miter : iter.second )
-            {
-                __KF_DELETE__( KFTimerData, miter.second );
-            }
-        }
-
-        _kf_timer_data.clear();
-        memset( _slot_timer_data, 0u, sizeof( _slot_timer_data ) );
     }
 
     void KFTimerModule::Run()
@@ -41,7 +33,7 @@ namespace KFrame
         RunTimerUpdate();
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    KFTimerData* KFTimerModule::FindTimerData( const std::string& module, uint64 objectid )
+    KFTimerData* KFTimerModule::FindTimerData( const std::string& module, uint64 objectid, uint64 subid )
     {
         auto iter = _kf_timer_data.find( module );
         if ( iter == _kf_timer_data.end() )
@@ -49,34 +41,29 @@ namespace KFrame
             return nullptr;
         }
 
-        auto miter = iter->second.find( objectid );
-        if ( miter == iter->second.end() )
-        {
-            return nullptr;
-        }
-
-        return miter->second;
+        return iter->second->FindTimerData( objectid, subid );
     }
 
-    bool KFTimerModule::AddTimerData( const std::string& module, uint64 objectid, KFTimerData* kfdata )
+    bool KFTimerModule::AddTimerData( const std::string& module, KFTimerData* kfdata )
     {
         auto iter = _kf_timer_data.find( module );
         if ( iter == _kf_timer_data.end() )
         {
-            std::unordered_map< uint64, KFTimerData* > temp;
-            iter = _kf_timer_data.insert( std::make_pair( module, temp ) ).first;
+            auto moduledata = __KF_NEW__( KFModuleData );
+            iter = _kf_timer_data.insert( std::make_pair( module, moduledata ) ).first;
         }
 
-        return iter->second.insert( std::make_pair( objectid, kfdata ) ).second;
+        return iter->second->AddTimerData( kfdata );
     }
 
-    void KFTimerModule::RemoveRegisterData( const std::string& module, uint64 objectid )
+    void KFTimerModule::RemoveRegisterData( const std::string& module, uint64 objectid, uint64 subid )
     {
         for ( auto iter = _register_timer_data.begin(); iter != _register_timer_data.end(); )
         {
             auto kfdata = *iter;
             if ( kfdata->_module == module &&
-                    ( objectid == _invalid_int || kfdata->_id == objectid ) )
+                    ( objectid == 0u || kfdata->_object_id == objectid ) &&
+                    ( subid == 0u || subid == kfdata->_sub_id ) )
             {
                 __KF_DELETE__( KFTimerData, kfdata );
                 iter = _register_timer_data.erase( iter );
@@ -88,7 +75,7 @@ namespace KFrame
         }
     }
 
-    bool KFTimerModule::RemoveTimerData( const std::string& module )
+    bool KFTimerModule::RemoveTimerData( const std::string& module, uint64 objectid, uint64 subid )
     {
         auto iter = _kf_timer_data.find( module );
         if ( iter == _kf_timer_data.end() )
@@ -96,42 +83,42 @@ namespace KFrame
             return false;
         }
 
-        for ( auto miter : iter->second )
+        auto moduledata = iter->second;
+
+        // 删除所有
+        if ( objectid == 0u )
         {
-            auto kfdata = miter.second;
-
-            RemoveSlotTimer( kfdata );
-            __KF_DELETE__( KFTimerData, kfdata );
-        }
-        iter->second.clear();
-
-        _kf_timer_data.erase( iter );
-
-        return true;
-    }
-
-    bool KFTimerModule::RemoveTimerData( const std::string& module, uint64 objectid )
-    {
-        auto iter = _kf_timer_data.find( module );
-        if ( iter == _kf_timer_data.end() )
-        {
-            return false;
-        }
-
-        auto miter = iter->second.find( objectid );
-        if ( miter == iter->second.end() )
-        {
-            return false;
-        }
-
-        auto kfdata = miter->second;
-        RemoveSlotTimer( kfdata );
-        __KF_DELETE__( KFTimerData, kfdata );
-
-        iter->second.erase( miter );
-        if ( iter->second.empty() )
-        {
+            for ( auto& siter : moduledata->_object_list )
+            {
+                auto objectdata = siter.second;
+                for ( auto& miter : objectdata->_timer_list )
+                {
+                    RemoveSlotTimer( miter.second );
+                }
+            }
+            __KF_DELETE__( KFModuleData, moduledata );
             _kf_timer_data.erase( iter );
+        }
+        else if ( subid == 0 )
+        {
+            auto objectdata = moduledata->FindObjectData( objectid );
+            if ( objectdata != nullptr )
+            {
+                for ( auto& miter : objectdata->_timer_list )
+                {
+                    RemoveSlotTimer( miter.second );
+                }
+                moduledata->RemoveObjectData( objectid );
+            }
+        }
+        else
+        {
+            auto timerdata = moduledata->FindTimerData( objectid, subid );
+            if ( timerdata != nullptr )
+            {
+                RemoveSlotTimer( timerdata );
+                moduledata->RemoveTimerData( objectid, subid );
+            }
         }
 
         return true;
@@ -139,7 +126,7 @@ namespace KFrame
 
     void KFTimerModule::AddSlotTimer( KFTimerData* kfdata )
     {
-        uint32 ticks = 0u;
+        auto ticks = 0u;
         if ( kfdata->_delay != 0u )
         {
             ticks = kfdata->_delay / TimerEnum::SlotTime;
@@ -190,7 +177,7 @@ namespace KFrame
         kfdata->_next = nullptr;
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFTimerModule::AddLoopTimer( const std::string& module, uint64 objectid, uint32 intervaltime, uint32 delaytime, KFTimerFunction& function )
+    void KFTimerModule::AddLoopTimer( const std::string& module, uint64 objectid, uint64 subid, uint32 intervaltime, uint32 delaytime, KFTimerFunction& function )
     {
         if ( intervaltime == 0u )
         {
@@ -199,7 +186,8 @@ namespace KFrame
         }
 
         auto kfdata = __KF_NEW__( KFTimerData );
-        kfdata->_id = objectid;
+        kfdata->_object_id = objectid;
+        kfdata->_sub_id = subid;
         kfdata->_module = module;
         kfdata->_type = TimerEnum::Loop;
         kfdata->_function = function;
@@ -208,7 +196,7 @@ namespace KFrame
         _register_timer_data.push_back( kfdata );
     }
 
-    void KFTimerModule::AddLimitTimer( const std::string& module, uint64 objectid, uint32 intervaltime, uint32 count, KFTimerFunction& function )
+    void KFTimerModule::AddLimitTimer( const std::string& module, uint64 objectid, uint64 subid, uint32 intervaltime, uint32 count, KFTimerFunction& function )
     {
         if ( intervaltime == 0u )
         {
@@ -217,7 +205,8 @@ namespace KFrame
         }
 
         auto kfdata = __KF_NEW__( KFTimerData );
-        kfdata->_id = objectid;
+        kfdata->_object_id = objectid;
+        kfdata->_sub_id = subid;
         kfdata->_module = module;
         kfdata->_type = TimerEnum::Limit;
         kfdata->_count = __MAX__( 1u, count );
@@ -227,7 +216,7 @@ namespace KFrame
         _register_timer_data.push_back( kfdata );
     }
 
-    void KFTimerModule::AddDelayTimer( const std::string& module, uint64 objectid, uint32 intervaltime, KFTimerFunction& function )
+    void KFTimerModule::AddDelayTimer( const std::string& module, uint64 objectid, uint64 subid, uint32 intervaltime, KFTimerFunction& function )
     {
         if ( intervaltime == 0u )
         {
@@ -236,14 +225,15 @@ namespace KFrame
         }
 
         // 已经存在就不继续注册
-        auto kfdata = FindTimerData( module, objectid );
+        auto kfdata = FindTimerData( module, objectid, subid );
         if ( kfdata != nullptr )
         {
             return;
         }
 
         kfdata = __KF_NEW__( KFTimerData );
-        kfdata->_id = objectid;
+        kfdata->_object_id = objectid;
+        kfdata->_sub_id = subid;
         kfdata->_module = module;
         kfdata->_type = TimerEnum::Limit;
         kfdata->_count = 1u;
@@ -253,14 +243,9 @@ namespace KFrame
         _register_timer_data.push_back( kfdata );
     }
 
-    void KFTimerModule::RemoveTimer( const std::string& module )
+    void KFTimerModule::RemoveTimer( const std::string& module, uint64 objectid, uint64 subid )
     {
-        RemoveTimer( module, _invalid_int );
-    }
-
-    void KFTimerModule::RemoveTimer( const std::string& module, uint64 objectid )
-    {
-        auto remove = std::make_tuple( module, objectid );
+        auto remove = std::make_tuple( module, objectid, subid );
         _remove_timer_data.push_back( remove );
     }
 
@@ -275,25 +260,19 @@ namespace KFrame
         {
             std::string module;
             uint64 objectid = 0u;
-            std::tie( module, objectid ) = data;
+            uint64 subid = 0u;
+            std::tie( module, objectid, subid ) = data;
 
-            RemoveRegisterData( module, objectid );
-            if ( objectid == _invalid_int )
-            {
-                RemoveTimerData( module );
-            }
-            else
-            {
-                RemoveTimerData( module, objectid );
-            }
+            RemoveRegisterData( module, objectid, subid );
+            RemoveTimerData( module, objectid, subid );
         }
 
         _remove_timer_data.clear();
     }
 
-    uint32 KFTimerModule::FindLeftTime( const std::string& module, uint64 objectid )
+    uint32 KFTimerModule::FindLeftTime( const std::string& module, uint64 objectid, uint64 subid )
     {
-        auto timerdata = FindTimerData( module, objectid );
+        auto timerdata = FindTimerData( module, objectid, subid );
         if ( timerdata == nullptr )
         {
             return 0u;
@@ -322,10 +301,10 @@ namespace KFrame
         for ( auto kfdata : _register_timer_data )
         {
             // 先删除列表
-            RemoveTimerData( kfdata->_module, kfdata->_id );
+            RemoveTimerData( kfdata->_module, kfdata->_object_id, kfdata->_sub_id );
 
             // 添加进列表
-            AddTimerData( kfdata->_module, kfdata->_id, kfdata );
+            AddTimerData( kfdata->_module, kfdata );
 
             // 加入时间轮中
             AddSlotTimer( kfdata );
@@ -376,7 +355,7 @@ namespace KFrame
             RemoveSlotTimer( timerdata );
 
             // 执行回调函数
-            timerdata->_function( timerdata->_module, timerdata->_id );
+            timerdata->_function( timerdata->_module, timerdata->_object_id, timerdata->_sub_id );
             if ( timerdata->_type == TimerEnum::Loop )
             {
                 AddSlotTimer( timerdata );
@@ -386,7 +365,7 @@ namespace KFrame
                 --timerdata->_count;
                 if ( timerdata->_count == 0u )
                 {
-                    RemoveTimerData( timerdata->_module, timerdata->_id );
+                    RemoveTimerData( timerdata->_module, timerdata->_object_id, timerdata->_sub_id );
                 }
                 else
                 {
@@ -395,7 +374,7 @@ namespace KFrame
             }
             else
             {
-                RemoveTimerData( timerdata->_module, timerdata->_id );
+                RemoveTimerData( timerdata->_module, timerdata->_object_id, timerdata->_sub_id );
             }
         }
     }

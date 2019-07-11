@@ -43,7 +43,7 @@ namespace KFrame
         virtual bool RemoveData( uint64 key );
         virtual bool RemoveData( uint64 key, const std::string& dataname );
 
-        virtual void FindData( const std::string& dataname, uint64 value, std::list< KFData* >& findlist );
+        virtual void FindData( const std::string& dataname, uint64 value, std::list< KFData* >& findlist, bool findall );
         virtual bool CheckData( const std::string& dataname, uint64 value, const std::string& checkname, uint64 checkvalue );
 
         // 格式化成字串

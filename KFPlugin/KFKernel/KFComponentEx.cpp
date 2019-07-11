@@ -79,16 +79,6 @@ namespace KFrame
     }
 
     /////////////////////////////////////////////////////////////////////////////////////
-    void KFComponentEx::SetName( const std::string& name )
-    {
-        _component_name = name;
-    }
-
-    const std::string& KFComponentEx::GetName()
-    {
-        return _component_name;
-    }
-
     KFEntity* KFComponentEx::FirstEntity()
     {
         return _entitys.First();
@@ -105,7 +95,7 @@ namespace KFrame
         if ( kfentity == nullptr )
         {
             kfentity = __KF_NEW__( KFEntityEx );
-            static_cast< KFEntityEx* >( kfentity )->InitData( this, _component_name );
+            static_cast< KFEntityEx* >( kfentity )->InitData( this );
             AddEntity( key, kfentity );
         }
 
@@ -440,7 +430,7 @@ namespace KFrame
         {
             // 注册的函数
             auto kfparent = kfdata->GetParent();
-            auto findkey = DataKeyType( kfparent->GetName(), kfdata->GetName() );
+            auto findkey = DataKeyType( kfparent->_data_setting->_name, kfdata->_data_setting->_name );
             auto kffunction = _update_data_function.Find( findkey );
             if ( kffunction != nullptr )
             {
@@ -468,7 +458,7 @@ namespace KFrame
         {
             // 注册的函数
             auto kfparent = kfdata->GetParent();
-            auto findkey = DataKeyType( kfparent->GetName(), kfdata->GetName() );
+            auto findkey = DataKeyType( kfparent->_data_setting->_name, kfdata->_data_setting->_name );
             auto kffunction = _update_string_function.Find( findkey );
             if ( kffunction != nullptr )
             {
@@ -496,7 +486,7 @@ namespace KFrame
 
         {
             // 注册的函数
-            auto kffunction = _add_data_function.Find( kfdata->GetName() );
+            auto kffunction = _add_data_function.Find( kfdata->_data_setting->_name );
             if ( kffunction != nullptr )
             {
                 kffunction->_function( kfentity, kfparent, key, kfdata );
@@ -523,7 +513,7 @@ namespace KFrame
 
         {
             // 注册的函数
-            auto kffunction = _remove_data_function.Find( kfdata->GetName() );
+            auto kffunction = _remove_data_function.Find( kfdata->_data_setting->_name );
             if ( kffunction != nullptr )
             {
                 kffunction->_function( kfentity, kfparent, key, kfdata );
@@ -561,7 +551,7 @@ namespace KFrame
         if ( !kfentity->IsNeedToSave() )
         {
             kfentity->SetNeetToSave( true );
-            __REGISTER_DELAY_TIMER__( kfentity->GetKeyID(), kfobject->_data_setting->_delay_save_time, &KFComponentEx::OnTimerSaveEntity );
+            __DELAY_TIMER_ONE_PARAM__( kfentity->GetKeyID(), kfobject->_data_setting->_delay_save_time, &KFComponentEx::OnTimerSaveEntity );
         }
     }
 
@@ -592,7 +582,7 @@ namespace KFrame
         }
 
         // 删除定时器
-        __UNREGISTER_OBJECT_TIMER__( kfentity->GetKeyID() );
+        __UN_TIMER_ONE_PARAM__( kfentity->GetKeyID() );
     }
 
     void KFComponentEx::SaveEntity( KFEntity* kfentity, uint32 flag, const char* function, uint32 line )

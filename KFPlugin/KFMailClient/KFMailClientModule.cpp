@@ -52,13 +52,13 @@ namespace KFrame
     void KFMailClientModule::OnEnterQueryMail( KFEntity* player )
     {
         auto playerid = player->GetKeyID();
-        __REGISTER_LOOP_TIMER__( playerid, KFTimeEnum::OneMinuteMicSecond * 5, 0, &KFMailClientModule::OnTimerQueryMail );
+        __LOOP_TIMER_ONE_PARAM__( playerid, KFTimeEnum::OneMinuteMicSecond * 5, 0, &KFMailClientModule::OnTimerQueryMail );
     }
 
     void KFMailClientModule::OnLeaveQueryMail( KFEntity* player )
     {
         auto playerid = player->GetKeyID();
-        __UNREGISTER_OBJECT_TIMER__( playerid );
+        __UN_TIMER_ONE_PARAM__( playerid );
     }
 
     void KFMailClientModule::OnNewPlayerMail( KFEntity* player )
@@ -74,7 +74,7 @@ namespace KFrame
         auto player = _kf_player->FindPlayer( objectid );
         if ( player == nullptr )
         {
-            return __UNREGISTER_OBJECT_TIMER__( objectid );
+            return __UN_TIMER_ONE_PARAM__( objectid );
         }
 
         SendQueryMailMessage( player );

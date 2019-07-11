@@ -135,7 +135,7 @@ namespace KFrame
             return;
         }
 
-        auto kfachievetype = _kf_achieve_config->FindTypeAchieve( kfdata->GetParent()->GetName(), kfdata->GetName() );
+        auto kfachievetype = _kf_achieve_config->FindTypeAchieve( kfdata->GetParent()->_data_setting->_name, kfdata->_data_setting->_name );
         if ( kfachievetype == nullptr )
         {
             return;

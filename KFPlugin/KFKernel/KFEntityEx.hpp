@@ -16,6 +16,9 @@ namespace KFrame
         KFEntityEx();
         ~KFEntityEx();
 
+        // 初始化
+        void InitData( KFComponentEx* kfcomponent );
+
         // 数据
         virtual KFData* GetData();
 
@@ -26,8 +29,6 @@ namespace KFrame
         virtual const char* GetName();
         virtual void SetName( const std::string& name );
 
-        // 初始化
-        void InitData( KFComponentEx* kfcomponent, const std::string& dataname );
 
         // 是否初始化完成
         virtual bool IsInited();
@@ -78,6 +79,7 @@ namespace KFrame
 
         virtual uint64 UpdateData( KFData* kfdata, uint32 operate, uint64 value );
         virtual uint64 UpdateData( uint64 key, KFData* kfdata, uint32 operate, uint64 value );
+        virtual uint64 UpdateData( KFData* kfdata, uint64 index, uint32 operate, uint64 value );
         virtual uint64 UpdateData( uint64 key, KFData* kfdata, uint64 index, uint32 operate, uint64 value );
         virtual uint64 UpdateData( KFData* kfparent, const std::string& dataname, uint32 operate, uint64 value );
         virtual uint64 UpdateData( KFData* kfparent, uint64 key, const std::string& dataname, uint32 operate, uint64 value );

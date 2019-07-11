@@ -31,7 +31,6 @@ enum FrameClientProtocol
 	MSG_REQUEST_SYNC_REQ				= 210;	// 客户端请求同步
 	MSG_CANCEL_SYNC_REQ					= 211;	// 客户端取消同步
 
-
 	// attribute
 	MSG_SET_NAME_REQ 					= 300;	// 设置名字
 	MSG_SET_SEX_REQ 					= 301;	// 设置性别
@@ -39,39 +38,44 @@ enum FrameClientProtocol
 	MSG_TASK_REWARD_REQ 				= 303;	// 领取任务奖励
 	MSG_ACTIVITY_REWARD_REQ 			= 304;	// 领取活动奖励
 	MSG_COMPOUND_REQ					= 305;	// 属性合成请求
-	MSG_USE_ITEM_REQ					= 306;	// 使用道具
 	MSG_SEVEN_SIGNIN_REWARD_REQ			= 307;	// 领取7天签到奖励
 
+	// item
+	MSG_SPLIT_ITEM_REQ					= 401;	// 拆分道具( 把一堆堆叠物品拆分成2个 )
+	MSG_MERGE_ITEM_REQ					= 402;	// 合并道具( 把2个堆叠物品合并成一个 )
+	MSG_USE_ITEM_REQ					= 403;	// 使用道具
+	MSG_MOVE_ITEM_REQ					= 404;	// 移动物品(从背包到仓库 或者从仓库到背包)
+	
 
 	// mail
-	MSG_VIEW_MAIL_REQ 					= 401;	// 查看邮件
-	MSG_DELETE_MAIL_REQ 				= 402;	// 删除邮件
-	MSG_QUERY_MAIL_REQ 					= 403;	// 请求查询邮件
-	MSG_MAIL_REWARD_REQ 				= 404;	// 领取邮件奖励
+	MSG_VIEW_MAIL_REQ 					= 501;	// 查看邮件
+	MSG_DELETE_MAIL_REQ 				= 502;	// 删除邮件
+	MSG_QUERY_MAIL_REQ 					= 503;	// 请求查询邮件
+	MSG_MAIL_REWARD_REQ 				= 504;	// 领取邮件奖励
 
 	// store
-	MSG_BUY_STORE_REQ 					= 411;	// 购买商品请求
-	MSG_QUERY_STORE_REQ 				= 412;	// 请求商城信息
-	MSG_QUERY_STORE_ACK 				= 413;	// 请求商城信息反馈
+	MSG_BUY_STORE_REQ 					= 511;	// 购买商品请求
+	MSG_QUERY_STORE_REQ 				= 512;	// 请求商城信息
+	MSG_QUERY_STORE_ACK 				= 513;	// 请求商城信息反馈
 
 	// pay
-	MSG_APPLY_PAY_ORDER_REQ 			= 431;	// 请求订单
-	MSG_APPLY_PAY_ORDER_ACK 			= 432;	// 请求订单
-	MSG_PAY_RESULT_REQ					= 433;	// 充值结果
-	MSG_QUERY_PAY_REQ					= 434;	// 查询充值
+	MSG_APPLY_PAY_ORDER_REQ 			= 531;	// 请求订单
+	MSG_APPLY_PAY_ORDER_ACK 			= 532;	// 请求订单
+	MSG_PAY_RESULT_REQ					= 533;	// 充值结果
+	MSG_QUERY_PAY_REQ					= 534;	// 查询充值
 
 	// relation
-	MSG_ADD_RELATION_REQ 				= 451;	// 申请添加关系
-	MSG_DEL_RELATION_REQ				= 452;	// 申请删除关系
-	MSG_REPLY_RELATION_INVITE_REQ 		= 453;	// 回复关系申请
-	MSG_SET_REFUSE_RELATION_INVITE_REQ 	= 454;	// 设置拒绝添加好友
+	MSG_ADD_RELATION_REQ 				= 551;	// 申请添加关系
+	MSG_DEL_RELATION_REQ				= 552;	// 申请删除关系
+	MSG_REPLY_RELATION_INVITE_REQ 		= 553;	// 回复关系申请
+	MSG_SET_REFUSE_RELATION_INVITE_REQ 	= 554;	// 设置拒绝添加好友
 
 	
 	// rank
-	MSG_QUERY_RANK_LIST_REQ 			= 471;	// 查询全服排行榜
-	MSG_QUERY_RANK_LIST_ACK	 			= 472;	// 查询排行榜反馈
-	MSG_QUERY_FRIEND_RANK_LIST_REQ 		= 473;	// 查询好友排行榜
-	MSG_QUERY_FRIEND_RANK_LIST_ACK		= 474;	// 查询好友排行榜
+	MSG_QUERY_RANK_LIST_REQ 			= 571;	// 查询全服排行榜
+	MSG_QUERY_RANK_LIST_ACK	 			= 572;	// 查询排行榜反馈
+	MSG_QUERY_FRIEND_RANK_LIST_REQ 		= 573;	// 查询好友排行榜
+	MSG_QUERY_FRIEND_RANK_LIST_ACK		= 574;	// 查询好友排行榜
  }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -249,13 +253,6 @@ message MsgActivityRewardReq
 	uint32 id = 2;		// 活动子id
 }
 
-// 使用道具
-// MSG_USE_ITEM_REQ
-message MsgUseItemReq
-{
-	uint64 uuid = 1;
-}
-
 // 领取7天签到奖励
 // MSG_SEVEN_SIGNIN_REWARD_REQ
 message MsgSevenSignInRewardReq
@@ -263,6 +260,43 @@ message MsgSevenSignInRewardReq
 	uint32 day = 1;		// 第几天的奖励( 根据角色属性singin的sevenday的天数, 和sevenreward奖励标记来判断 )
 }
 
+////////////////////////////////////////////////////////////////////
+// 使用道具
+// MSG_USE_ITEM_REQ
+message MsgUseItemReq
+{
+	bytes name = 1;	// 背包名字
+	uint64 uuid = 2;
+}
+
+// MSG_SPLIT_ITEM_REQ
+// 拆分道具( 把一堆堆叠物品拆分成2个 )
+message MsgSplitItemReq
+{
+	bytes sourcename = 1;	// 源背包名字
+	uint64 sourceuuid = 2;	// 道具uuid
+	uint32 sourcecount = 3;	// 移动数量
+	bytes targetname = 4;	// 目标背包名字
+}
+
+// MSG_MERGE_ITEM_REQ
+// 合并道具( 把2个堆叠物品合并成一个 )
+message MsgMergeItemReq
+{
+	bytes sourcename = 1;	// 源背包名字
+	uint64 sourceuuid = 2;	// 道具uuid
+	bytes targetname = 3;	// 目标背包名字
+	uint64 targetuuid = 4;	// 合并的目标道具
+}
+
+// MSG_MOVE_ITEM_REQ
+// 移动物品(从背包到仓库 或者从仓库到背包)
+message MsgMoveItemReq
+{
+	bytes sourcename = 1;	// 源背包名字
+	uint64 sourceuuid = 2;	// 道具uuid
+	bytes targetname = 4;	// 目标背包名字
+}
 ////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
 // 查看邮件

@@ -2,38 +2,122 @@
 
 namespace KFrame
 {
+    static std::set< std::string > _file_list =
+    {
+        "itemgift.xml",		// 礼包
+        "itemequip.xml",	// 装备
+        "itemmedicine.xml",	// 药品
+    };
+
+    bool KFItemConfig::IsFile( const std::string& configfile, const std::string& file )
+    {
+        if ( _file_list.find( file ) != _file_list.end() )
+        {
+            return true;
+        }
+
+        return KFIntConfigT< KFItemSetting >::IsFile( configfile, file );
+    }
+
+    void KFItemConfig::LoadComplete( const std::string& file )
+    {
+        for ( auto& itemfile : _file_list )
+        {
+            auto filename = _confit_path + itemfile;
+
+            try
+            {
+                __LOG_INFO__( "load [{}] start!", filename );
+                LoadConfig( filename );
+                __LOG_INFO__( "load [{}] ok!", filename );
+            }
+            catch ( ... )
+            {
+                __LOG_ERROR__( "load [{}] failed!", filename );
+            }
+        }
+    }
+
     void KFItemConfig::ReadSetting( KFNode& xmlnode, KFItemSetting* kfsetting )
+    {
+        switch ( kfsetting->_type )
+        {
+        case KFItemEnum::GiftBag:
+            ReadGiftSetting( xmlnode, kfsetting );
+            break;
+        case KFItemEnum::Medicine:
+            ReadMedicineSetting( xmlnode, kfsetting );
+            break;
+        case KFItemEnum::Equip:
+            ReadEquipSetting( xmlnode, kfsetting );
+            break;
+        default:
+            ReadCommonSetting( xmlnode, kfsetting );
+            break;
+        }
+    }
+
+    void KFItemConfig::ReadCommonSetting( KFNode& xmlnode, KFItemSetting* kfsetting )
     {
         kfsetting->_type = xmlnode.GetUInt32( "Type" );
         kfsetting->_quality = xmlnode.GetUInt32( "Quality" );
-        kfsetting->_use_count = xmlnode.GetUInt32( "UseCount" );
+        kfsetting->_use_count = xmlnode.GetUInt32( "UseCount", true );
         kfsetting->_overlay_type = xmlnode.GetUInt32( "OverlayType" );
-        kfsetting->_overlay_count = xmlnode.GetUInt32( "OverlayValue" );
-        kfsetting->_time_type = xmlnode.GetUInt32( "TimeType" );
-        kfsetting->_valid_time = xmlnode.GetUInt32( "TimeValue" );
-        kfsetting->_mail_id = xmlnode.GetUInt32( "MailId" );
-        kfsetting->_reward_type = xmlnode.GetUInt32( "RewardType" );
+        kfsetting->_overlay_count = xmlnode.GetUInt32( "OverlayCount" );
+        kfsetting->_add_type = xmlnode.GetString( "AddType" );
 
-        auto rewardvalue = xmlnode.GetString( "RewardValue" );
-        kfsetting->_rewards.Parse( rewardvalue, __FUNC_LINE__ );
+        kfsetting->_use_limit = KFItemEnum::UseInAll;
+        auto struselimit = xmlnode.GetString( "UseLimit", true );
+        while ( !struselimit.empty() )
+        {
+            auto usemask = KFUtility::SplitValue< uint32 >( struselimit, DEFAULT_SPLIT_STRING );
+            KFUtility::AddBitMask( kfsetting->_use_limit, usemask );
+        }
 
-        kfsetting->_lua_file = xmlnode.GetString( "LuaFile" );
-        auto addfunction = xmlnode.GetString( "AddFunction" );
+        auto strsell = xmlnode.GetString( "Sell", true );
+        kfsetting->_sell_elements.Parse( strsell, __FUNC_LINE__ );
+
+        kfsetting->_lua_file = xmlnode.GetString( "LuaFile", true );
+        auto addfunction = xmlnode.GetString( "AddFunction", true );
         if ( !addfunction.empty() )
         {
             kfsetting->_function[ KFItemEnum::AddFunction ] = addfunction;
         }
 
-        auto usefunction = xmlnode.GetString( "UseFunction" );
+        auto usefunction = xmlnode.GetString( "UseFunction", true );
         if ( !usefunction.empty() )
         {
             kfsetting->_function[ KFItemEnum::UseFunction ] = usefunction;
         }
 
-        auto removefunction = xmlnode.GetString( "RemoveFunction" );
+        auto removefunction = xmlnode.GetString( "RemoveFunction", true );
         if ( !removefunction.empty() )
         {
             kfsetting->_function[ KFItemEnum::RemoveFunction ] = removefunction;
         }
+    }
+
+    void KFItemConfig::ReadGiftSetting( KFNode& xmlnode, KFItemSetting* kfsetting )
+    {
+        auto rewardvalue = xmlnode.GetString( "Reward" );
+        kfsetting->_rewards.Parse( rewardvalue, __FUNC_LINE__ );
+
+        kfsetting->_drop_id = xmlnode.GetUInt32( "DropId" );
+    }
+
+    void KFItemConfig::ReadMedicineSetting( KFNode& xmlnode, KFItemSetting* kfsetting )
+    {
+        kfsetting->_medicine_type = xmlnode.GetUInt32( "MedicineType" );
+        kfsetting->_buff_id = xmlnode.GetUInt32( "BuffId", true );
+    }
+
+    void KFItemConfig::ReadEquipSetting( KFNode& xmlnode, KFItemSetting* kfsetting )
+    {
+        kfsetting->_equip_type = xmlnode.GetUInt32( "EquipType" );
+        kfsetting->_level_limit = xmlnode.GetUInt32( "LevelLimit", true );
+        kfsetting->_durability = xmlnode.GetUInt32( "Durability", true );
+
+        auto strskill = xmlnode.GetString( "Skill", true );
+        kfsetting->_skills = KFUtility::SplitSet< std::set<uint32> >( strskill, DEFAULT_SPLIT_STRING );
     }
 }

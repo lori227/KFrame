@@ -3,12 +3,9 @@
 
 namespace KFrame
 {
-#define __ZONE_REGISTER_TIMER_ID__ 1
-
     void KFLoginModule::BeforeRun()
     {
-        __REGISTER_LOOP_TIMER__( __ZONE_REGISTER_TIMER_ID__, 10000, 5000, &KFLoginModule::OnTimerZoneRegister );
-
+        __LOOP_TIMER_NO_PARAM__( 10000, 5000, &KFLoginModule::OnTimerZoneRegister );
         __REGISTER_SERVER_LOST_FUNCTION__( &KFLoginModule::OnServerLostGate );
         __REGISTER_CLIENT_LOST_FUNCTION__( &KFLoginModule::OnClientLostWorld );
         __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFLoginModule::OnClientConnectionWorld );
@@ -22,7 +19,7 @@ namespace KFrame
 
     void KFLoginModule::BeforeShut()
     {
-        __UNREGISTER_TIMER__();
+        __UN_TIMER_NO_PARAM__();
         __UNREGISTER_SERVER_LOST_FUNCTION__();
         __UNREGISTER_CLIENT_LOST_FUNCTION__();
         __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
@@ -95,7 +92,7 @@ namespace KFrame
         auto retcode = _kf_http_client->GetCode( kfresult );
         if ( retcode == KFMsg::Ok )
         {
-            __UNREGISTER_OBJECT_TIMER__( __ZONE_REGISTER_TIMER_ID__ );
+            __UN_TIMER_NO_PARAM__();
         }
     }
 

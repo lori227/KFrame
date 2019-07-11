@@ -18,10 +18,11 @@ namespace KFrame
     static std::string _pid_path = "./pid";
     void KFDeployAgentModule::BeforeRun()
     {
-        __REGISTER_LOOP_TIMER__( 1, 20000, 100, &KFDeployAgentModule::OnTimerStartupProcess );
-        __REGISTER_LOOP_TIMER__( 2, 1000, 0, &KFDeployAgentModule::OnTimerCheckTaskFinish );
-        __REGISTER_LOOP_TIMER__( 3, 5000, 1000, &KFDeployAgentModule::OnTimerQueryAgentData );
-        __REGISTER_LOOP_TIMER__( 4, 30000, 100, &KFDeployAgentModule::OnTimerCheckHeartbeat );
+        auto timerid = 0;
+        __LOOP_TIMER_ONE_PARAM__( ++timerid, 20000, 100, &KFDeployAgentModule::OnTimerStartupProcess );
+        __LOOP_TIMER_ONE_PARAM__( ++timerid, 1000, 0, &KFDeployAgentModule::OnTimerCheckTaskFinish );
+        __LOOP_TIMER_ONE_PARAM__( ++timerid, 5000, 1000, &KFDeployAgentModule::OnTimerQueryAgentData );
+        __LOOP_TIMER_ONE_PARAM__( ++timerid, 30000, 100, &KFDeployAgentModule::OnTimerCheckHeartbeat );
         __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFDeployAgentModule::OnClientConnectServer );
         ////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_COMMAND_TO_AGENT_REQ, &KFDeployAgentModule::HandleDeployCommandReq );
@@ -30,7 +31,7 @@ namespace KFrame
 
     void KFDeployAgentModule::ShutDown()
     {
-        __UNREGISTER_TIMER__();
+        __UN_TIMER_NO_PARAM__();
         __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
         //////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_COMMAND_TO_AGENT_REQ );
@@ -81,7 +82,7 @@ namespace KFrame
         _deploy_server_port = KFUtility::ToValue<uint32>( kfquery->_value[ "serverport" ] );
 
         // 关闭定时器
-        __UNREGISTER_OBJECT_TIMER__( objectid );
+        __UN_TIMER_ONE_PARAM__( objectid );
 
         // 启动连接deployserver
         StartConnectDeployServer();
@@ -952,8 +953,6 @@ namespace KFrame
 
     void KFDeployAgentModule::StartStartupServerTask()
     {
-        __REGISTER_LOOP_TIMER__( 1, 20000, 0, &KFDeployAgentModule::OnTimerStartupProcess );
-
         for ( auto& iter : _deploy_list._objects )
         {
             auto deploydata = iter.second;

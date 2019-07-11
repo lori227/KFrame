@@ -2,7 +2,7 @@ mkdir -p ../../_bin/lib
 mkdir -p ../../_bin/bin/linux/release
 
 cd ../../_resource/proto
-sh 2.linux.sh
+#sh 2.linux.sh
 cd -
 
 mkdir -p .build

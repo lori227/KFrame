@@ -2,16 +2,6 @@
 
 namespace KFrame
 {
-    bool KFOptionConfig::IsFile( const std::string& configfile, const std::string& file )
-    {
-        if ( _file_list.find( file ) != _file_list.end() )
-        {
-            return true;
-        }
-
-        return KFIntConfigT< KFOption >::IsFile( configfile, file );
-    }
-
     KFOption* KFOptionConfig::CreateSetting( KFNode& xmlnode )
     {
         auto service = xmlnode.GetUInt32( "Service", true );
@@ -43,23 +33,21 @@ namespace KFrame
         }
     }
 
-    const KFOption* KFOptionConfig::FindOption( const std::string& name, const std::string& key ) const
+    bool KFOptionConfig::IsFile( const std::string& configfile, const std::string& file )
     {
-        auto kfoption = _option_list.Find( OptionKey( name, key ) );
-        if ( kfoption == nullptr )
+        if ( _file_list.find( file ) != _file_list.end() )
         {
-            static KFOption _option;
-            kfoption = &_option;
+            return true;
         }
 
-        return kfoption;
+        return KFIntConfigT< KFOption >::IsFile( configfile, file );
     }
 
     void KFOptionConfig::LoadComplete( const std::string& file )
     {
-        for ( auto& file : _file_list )
+        for ( auto& optionfile : _file_list )
         {
-            auto filename = _confit_path + file;
+            auto filename = _confit_path + optionfile;
 
             try
             {
@@ -72,5 +60,18 @@ namespace KFrame
                 __LOG_ERROR__( "load [{}] failed!", filename );
             }
         }
+    }
+
+
+    const KFOption* KFOptionConfig::FindOption( const std::string& name, const std::string& key ) const
+    {
+        auto kfoption = _option_list.Find( OptionKey( name, key ) );
+        if ( kfoption == nullptr )
+        {
+            static KFOption _option;
+            kfoption = &_option;
+        }
+
+        return kfoption;
     }
 }

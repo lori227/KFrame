@@ -4,7 +4,7 @@ namespace KFrame
 {
     void KFWorldModule::BeforeRun()
     {
-        __REGISTER_LOOP_TIMER__( 0, 5000, 1000, &KFWorldModule::OnTimerWorldRegister );
+        __LOOP_TIMER_NO_PARAM__( 5000, 1000, &KFWorldModule::OnTimerWorldRegister );
         __REGISTER_SERVER_LOST_FUNCTION__( &KFWorldModule::OnServerLostGame );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_ADD_GATE_TO_WORLD_REQ, &KFWorldModule::HandleAddGateToWorldReq );
@@ -24,7 +24,7 @@ namespace KFrame
 
     void KFWorldModule::BeforeShut()
     {
-        __UNREGISTER_TIMER__();
+        __UN_TIMER_NO_PARAM__();
         __UNREGISTER_SERVER_LOST_FUNCTION__();
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_ADD_GATE_TO_WORLD_REQ );
@@ -61,7 +61,7 @@ namespace KFrame
         auto retcode = __JSON_GET_UINT32__( recvjson, __KF_STRING__( retcode ) );
         if ( retcode == KFMsg::Ok )
         {
-            __UNREGISTER_OBJECT_TIMER__( objectid );
+            __UN_TIMER_ONE_PARAM__( objectid );
         }
     }
 

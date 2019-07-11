@@ -226,7 +226,7 @@ namespace KFrame
         return false;
     }
 
-    void KFData::FindData( const std::string& dataname, uint64 value, std::list< KFData* >& findlist )
+    void KFData::FindData( const std::string& dataname, uint64 value, std::list< KFData* >& findlist, bool findall )
     {
     }
     bool KFData::CheckData( const std::string& dataname, uint64 value, const std::string& checkname, uint64 checkvalue )
@@ -250,15 +250,6 @@ namespace KFrame
         }
     }
 
-    const std::string& KFData::GetName() const
-    {
-        return _data_setting->_name;
-    }
-
-    uint32 KFData::GetType() const
-    {
-        return _data_setting->_logic_type;
-    }
 
     bool KFData::HaveMask( uint32 mask ) const
     {

@@ -19,14 +19,15 @@ namespace KFrame
         void ReleaseScript();
 
         template< class ... T >
-        void CallFunction( const std::string& function, uint64 objectid, T&& ...params )
+        uint64 CallFunction( const std::string& function, uint64 objectid, T&& ...params )
         {
             try
             {
                 LuaPlus::LuaObject luaobject = _lua_state->GetGlobal( function.c_str() );
                 if ( luaobject.IsFunction() )
                 {
-                    ( ( LuaPlus::LuaFunction< int32 > )luaobject )( objectid, std::forward<T>( params )... );
+                    auto result = ( ( LuaPlus::LuaFunction< uint64 > )luaobject )( objectid, std::forward<T>( params )... );
+                    return result;
                 }
             }
             catch ( LuaPlus::LuaException& e )
@@ -37,6 +38,8 @@ namespace KFrame
             {
                 __LOG_ERROR__( "call [{}] [{}] failed unknown!", _lua_file, function );
             }
+
+            return 0u;
         }
 
     public:

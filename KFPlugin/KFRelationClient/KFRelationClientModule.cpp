@@ -142,7 +142,7 @@ namespace KFrame
             }
 
             MapString values;
-            values[ kfdata->GetName() ] = kfdata->ToString();
+            values[ kfdata->_data_setting->_name ] = kfdata->ToString();
             SendUpdateToRelation( player, kfsetting->_id, values );
         }
     }

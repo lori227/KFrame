@@ -95,12 +95,12 @@ namespace KFrame
             _cluster_master_id = netdata->_id;
 
             // 开启认证定时器
-            __REGISTER_LOOP_TIMER__( netdata->_id, 10000, 0, &KFClusterClientModule::OnTimerSendClusterAuthMessage );
+            __LOOP_TIMER_ONE_PARAM__( netdata->_id, 10000, 0, &KFClusterClientModule::OnTimerSendClusterAuthMessage );
         }
         else if ( netdata->_type == __KF_STRING__( proxy ) )
         {
             // 发送登录消息定时器
-            __REGISTER_LOOP_TIMER__( netdata->_id, 3000, 0, &KFClusterClientModule::OnTimerSendClusterTokenMessage );
+            __LOOP_TIMER_ONE_PARAM__( netdata->_id, 3000, 0, &KFClusterClientModule::OnTimerSendClusterTokenMessage );
         }
     }
 
@@ -127,7 +127,7 @@ namespace KFrame
         if ( !ok )
         {
             // 删除定时器
-            __UNREGISTER_OBJECT_TIMER__( objectid );
+            __UN_TIMER_ONE_PARAM__( objectid );
 
             // 重新连接
             ReconnectClusterMaster();
@@ -155,7 +155,7 @@ namespace KFrame
         _cluster_proxy_id = listen->appid();
 
         // 停止定时器
-        __UNREGISTER_OBJECT_TIMER__( _cluster_master_id );
+        __UN_TIMER_ONE_PARAM__( _cluster_master_id );
 
         // 删除master连接
         _kf_tcp_client->CloseClient( _cluster_master_id, __FUNC_LINE__ );
@@ -169,7 +169,7 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SClusterVerifyToClientAck );
 
         // 停止定时器
-        __UNREGISTER_OBJECT_TIMER__( _cluster_proxy_id );
+        __UN_TIMER_ONE_PARAM__( _cluster_proxy_id );
 
         if ( kfmsg.serverid() == 0 )
         {

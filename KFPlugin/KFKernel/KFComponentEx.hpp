@@ -12,15 +12,9 @@ namespace KFrame
     public:
         KFComponentEx();
         ~KFComponentEx();
-
-        virtual void InitEntity( KFEntity* kfentity );
-        virtual void UnInitEntity( KFEntity* kfentity );
-
-        virtual void Run();
-        virtual void AfterRun();
-
-        virtual void SetName( const std::string& name );
-        virtual const std::string& GetName();
+        //////////////////////////////////////////////////////////////////////////////////////////////
+        void Run();
+        void AfterRun();
         //////////////////////////////////////////////////////////////////////////////////////////////
         // 创建实体
         virtual KFEntity* CreateEntity( uint64 key );
@@ -139,6 +133,12 @@ namespace KFrame
         // 保存数据到数据库
         __KF_TIMER_FUNCTION__( OnTimerSaveEntity );
 
+        // 初始化
+        void InitEntity( KFEntity* kfentity );
+
+        // 卸载
+        void UnInitEntity( KFEntity* kfentity );
+
         // 保存
         void SaveEntity( KFEntity* kfentity, uint32 flag, const char* function, uint32 line );
 
@@ -197,12 +197,16 @@ namespace KFrame
         // 显示奖励函数
         KFShowElementFunction _show_element_function;
 
-    private:
+    protected:
+        // 需要发送消息的对象
+        std::set< KFEntity* > _sync_entitys;
+
+    public:
         // 组件名称
         std::string _component_name;
 
-        // 需要发送消息的对象
-        std::set< KFEntity* > _sync_entitys;
+        // 属性配置
+        const KFDataSetting* _data_setting = nullptr;
     };
 }
 

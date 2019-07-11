@@ -40,7 +40,7 @@ namespace KFrame
 
     void KFRobotModule::BeforeShut()
     {
-        __UNREGISTER_TIMER__();
+        __UN_TIMER_NO_PARAM__();
         __KF_REMOVE_CONFIG__( _kf_robot_config );
         _kf_plugin_manage->UnRegisterCommandFunction( __KF_STRING__( robot ) );
     }
@@ -48,7 +48,7 @@ namespace KFrame
     void KFRobotModule::OnceRun()
     {
         _kf_state_manage->Initialize();
-        __REGISTER_LOOP_TIMER__( 0, _kf_robot_config->_login_interval_time, 1000, &KFRobotModule::OnTimerCreateRobot );
+        __LOOP_TIMER_NO_PARAM__( _kf_robot_config->_login_interval_time, 1000, &KFRobotModule::OnTimerCreateRobot );
 
         _net_client = new KFNetClientEngine();
         _net_client->InitEngine( 200, KFMessageEnum::Client, _kf_robot_config->_compress_level );

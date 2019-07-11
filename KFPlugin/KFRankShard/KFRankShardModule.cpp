@@ -21,7 +21,7 @@ namespace KFrame
 
     void KFRankShardModule::BeforeShut()
     {
-        __UNREGISTER_TIMER__();
+        __UN_TIMER_NO_PARAM__();
         __UNREGISTER_SCHEDULE__();
         __KF_REMOVE_CONFIG__( _kf_rank_config );
         _kf_route->UnRegisterConnectionFunction( this );
@@ -105,7 +105,7 @@ namespace KFrame
             return;
         }
 
-        __UNREGISTER_TIMER__();
+        __UN_TIMER_NO_PARAM__();
         __UNREGISTER_SCHEDULE__();
         _max_rank_worker_id = kfmsg.workerid();
         for ( auto& iter : _kf_rank_config->_kf_rank_setting._objects )
@@ -133,7 +133,7 @@ namespace KFrame
             auto delaytime = ( passtime == 0u ? 0u : kfsetting->_refresh_time - passtime );
 
             // 配置_refresh_time 单位:秒
-            __REGISTER_LOOP_TIMER__( kfsetting->_rank_id, kfsetting->_refresh_time * 1000, delaytime * 1000, &KFRankShardModule::OnTimerRefreshRankData );
+            __LOOP_TIMER_ONE_PARAM__( kfsetting->_rank_id, kfsetting->_refresh_time * 1000, delaytime * 1000, &KFRankShardModule::OnTimerRefreshRankData );
         }
         else
         {

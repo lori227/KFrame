@@ -12,7 +12,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFTimerData.cpp" />
     <ClCompile Include="KFTimerModule.cpp" />
     <ClCompile Include="KFTimerPlugin.cpp" />
   </ItemGroup>

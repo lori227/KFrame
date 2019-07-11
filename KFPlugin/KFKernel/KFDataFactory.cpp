@@ -85,7 +85,7 @@ namespace KFrame
             return nullptr;
         }
 
-        auto kfdata = KFDataFactory::Create( KFDataDefine::Type_Object );
+        auto kfdata = KFDataFactory::Create( datasetting->_logic_type );
         InitData( kfdata, datasetting->_class_setting, datasetting );
         return kfdata;
     }

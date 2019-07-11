@@ -45,7 +45,6 @@ namespace KFrame
         // 删除物品回调
         __KF_REMOVE_DATA_FUNCTION__( OnRemoveHeroCallBack );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
         // 检测时间道具
         __KF_TIMER_FUNCTION__( OnTimerCheckHeroValidTime );
     protected:

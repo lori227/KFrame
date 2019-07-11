@@ -177,7 +177,7 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFRecord::FindData( const std::string& dataname, uint64 value, std::list<KFData*>& findlist )
+    void KFRecord::FindData( const std::string& dataname, uint64 value, std::list<KFData*>& findlist, bool findall )
     {
         auto child = FirstData();
         while ( child != nullptr )
@@ -186,6 +186,10 @@ namespace KFrame
             if ( datavalue == value )
             {
                 findlist.push_back( child );
+                if ( !findall )
+                {
+                    break;
+                }
             }
 
             child = NextData();

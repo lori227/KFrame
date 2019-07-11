@@ -78,7 +78,7 @@ namespace KFrame
 
         // 更新到公共属性集群
         MapString values;
-        values[ kfdata->GetName() ] = kfdata->ToString();
+        values[ kfdata->_data_setting->_name ] = kfdata->ToString();
         UpdatePublicData( player, values );
     }
 

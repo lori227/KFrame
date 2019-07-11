@@ -13,9 +13,9 @@ namespace KFrame
 
     void KFDeployClientModule::ShutDown()
     {
+        __UN_TIMER_NO_PARAM__();
         __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
         __UNREGISTER_CLIENT_LOST_FUNCTION__();
-        __UNREGISTER_TIMER__();
         /////////////////////////////////////////////////////////////////////////
         __UNREGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_COMMAND_TO_CLIENT_REQ );
     }
@@ -41,7 +41,7 @@ namespace KFrame
         if ( netdata->_id == _agent_id )
         {
             // 启动定时器
-            __REGISTER_LOOP_TIMER__( _agent_id, 45000, 10000, &KFDeployClientModule::OnTimerSendHeartbeatToAgent );
+            __LOOP_TIMER_ONE_PARAM__( _agent_id, 45000, 10000, &KFDeployClientModule::OnTimerSendHeartbeatToAgent );
         }
     }
 
@@ -49,7 +49,7 @@ namespace KFrame
     {
         if ( netdata->_id == _agent_id )
         {
-            __UNREGISTER_OBJECT_TIMER__( _agent_id );
+            __UN_TIMER_ONE_PARAM__( _agent_id );
         }
     }
 
@@ -193,12 +193,12 @@ namespace KFrame
         }
 
         // 启动一个定时器
-        __REGISTER_DELAY_TIMER__( kfglobal->_app_id->GetId(), delaytime, &KFDeployClientModule::OnTimerShutDownPrepare );
+        __DELAY_TIMER_ONE_PARAM__( kfglobal->_app_id->GetId(), delaytime, &KFDeployClientModule::OnTimerShutDownPrepare );
     }
 
     __KF_TIMER_FUNCTION__( KFDeployClientModule::OnTimerShutDownPrepare )
     {
-        __REGISTER_LIMIT_TIMER__( objectid, 10000, 1, &KFDeployClientModule::OnTimerShutDownServer );
+        __LIMIT_TIMER_ONE_PARAM__( objectid, 10000, 1, &KFDeployClientModule::OnTimerShutDownServer );
 
         auto kfglobal = KFGlobal::Instance();
         __LOG_INFO__( "[{}:{}:{}] shutdown prepare!", kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->ToString() );

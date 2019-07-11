@@ -1,0 +1,3 @@
+<root version="00000">
+	<item Operate="1" Id="1" Limits="[&quot;level&quot;:&quot;10&quot;]" ParentName="totalscore" DataName="count" TriggerType="1" DoneType="11" DoneValue="30" Rewards="[{&quot;money&quot;:&quot;50&quot;}]"/>
+</root>

@@ -49,13 +49,15 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    static std::string _global_class = "Global";
     KFComponent* KFKernelModule::FindComponent( const std::string& dataname )
     {
         auto kfcomponent = _kf_component.Find( dataname );
         if ( kfcomponent == nullptr )
         {
             kfcomponent = _kf_component.Create( dataname );
-            kfcomponent->SetName( dataname );
+            kfcomponent->_component_name = dataname;
+            kfcomponent->_data_setting = _kf_kernel_config->FindDataSetting( _global_class, dataname );
         }
 
         return kfcomponent;
@@ -66,12 +68,11 @@ namespace KFrame
         auto kfcomponet = FindComponent( dataname );
         return kfcomponet->FindEntity( key, function, line );
     }
-
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////
     KFData* KFKernelModule::CreateObject( const std::string& dataname )
     {
-        return KFDataFactory::CreateData( "Global", dataname );
+        return KFDataFactory::CreateData( _global_class, dataname );
     }
 
     KFData* KFKernelModule::CreateObject( const KFDataSetting* datasetting )

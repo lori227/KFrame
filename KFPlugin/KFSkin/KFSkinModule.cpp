@@ -48,7 +48,7 @@ namespace KFrame
 
     void KFSkinModule::OnLeaveStopSkinTimer( KFEntity* player )
     {
-        __UNREGISTER_OBJECT_TIMER__( player->GetKeyID() );
+        __UN_TIMER_ONE_PARAM__( player->GetKeyID() );
     }
 
     void KFSkinModule::CheckStartSkinTimer( KFEntity* player )
@@ -84,7 +84,7 @@ namespace KFrame
 
         // 转换成间隔时间(毫秒) 启动定时器
         auto intervaltime = ( _min_valid_time - KFGlobal::Instance()->_real_time + 1 ) * 1000;
-        __REGISTER_LIMIT_TIMER__( player->GetKeyID(), intervaltime, 1, &KFSkinModule::OnTimerCheckSkinValidTime );
+        __LIMIT_TIMER_ONE_PARAM__( player->GetKeyID(), intervaltime, 1, &KFSkinModule::OnTimerCheckSkinValidTime );
     }
 
     void KFSkinModule::RemoveInvalidTimeSkin( KFEntity* player )

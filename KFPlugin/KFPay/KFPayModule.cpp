@@ -20,7 +20,7 @@ namespace KFrame
 
     void KFPayModule::BeforeShut()
     {
-        __UNREGISTER_TIMER__();
+        __UN_TIMER_NO_PARAM__();
         __KF_REMOVE_CONFIG__( _kf_pay_config );
         _kf_player->UnRegisterEnterFunction( this );
         _kf_player->UnRegisterLeaveFunction( this );
@@ -46,7 +46,7 @@ namespace KFrame
 
     void KFPayModule::OnLeaveQueryPayOrder( KFEntity* player )
     {
-        __UNREGISTER_OBJECT_TIMER__( player->GetKeyID() );
+        __UN_TIMER_ONE_PARAM__( player->GetKeyID() );
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -141,7 +141,7 @@ namespace KFrame
         auto kfpayorder = player->GetData()->FindData( __KF_STRING__( payorder ) );
         auto querytime = kfpayorder->_data_setting->_logic_value;
         auto querycount = kfpayorder->_data_setting->_max_value;
-        __REGISTER_LIMIT_TIMER__( player->GetKeyID(), querytime, querycount, &KFPayModule::OnTimerQueryPayData );
+        __LIMIT_TIMER_ONE_PARAM__( player->GetKeyID(), querytime, querycount, &KFPayModule::OnTimerQueryPayData );
     }
 
     __KF_TIMER_FUNCTION__( KFPayModule::OnTimerQueryPayData )
@@ -192,7 +192,7 @@ namespace KFrame
         }
 
         // 停止定时器
-        __UNREGISTER_OBJECT_TIMER__( playerid );
+        __UN_TIMER_ONE_PARAM__( playerid );
     }
 
     void KFPayModule::ProcessPay( KFEntity* player, const std::string& payid, const std::string& order )

@@ -49,12 +49,6 @@ namespace KFrame
         // 是否达到了最大值
         virtual bool IsFull();
 
-        // 名字
-        virtual const std::string& GetName() const;
-
-        // 类型
-        virtual uint32 GetType() const;
-
         // keyid
         virtual uint64 GetKeyID();
         virtual void SetKeyID( uint64 id );
@@ -139,7 +133,7 @@ namespace KFrame
         virtual bool RemoveData( uint64 key );
         virtual bool RemoveData( uint64 key, const std::string& dataname );
 
-        virtual void FindData( const std::string& dataname, uint64 value, std::list< KFData* >& findlist );
+        virtual void FindData( const std::string& dataname, uint64 value, std::list< KFData* >& findlist, bool findall );
         virtual bool CheckData( const std::string& dataname, uint64 value, const std::string& checkname, uint64 checkvalue );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -45,100 +45,100 @@ namespace KFrame
         return kfluascript;
     }
 
-    void KFLuaModule::Call( const std::string& luafile, const std::string& function, uint64 objectid )
+    uint64 KFLuaModule::Call( const std::string& luafile, const std::string& function, uint64 objectid )
     {
         auto kfluascript = FindLuaScript( luafile );
-        kfluascript->CallFunction( function, objectid );
+        return kfluascript->CallFunction( function, objectid );
     }
 
-    void KFLuaModule::Call( const std::string& luafile, const std::string& function, uint64 objectid,
-                            uint64 param1 )
+    uint64 KFLuaModule::Call( const std::string& luafile, const std::string& function, uint64 objectid,
+                              uint64 param1 )
     {
         auto kfluascript = FindLuaScript( luafile );
-        kfluascript->CallFunction( function, objectid, param1 );
+        return kfluascript->CallFunction( function, objectid, param1 );
     }
 
-    void KFLuaModule::Call( const std::string& luafile, const std::string& function, uint64 objectid,
-                            uint64 param1, uint64 param2 )
+    uint64 KFLuaModule::Call( const std::string& luafile, const std::string& function, uint64 objectid,
+                              uint64 param1, uint64 param2 )
     {
         auto kfluascript = FindLuaScript( luafile );
-        kfluascript->CallFunction( function, objectid, param1, param2 );
+        return kfluascript->CallFunction( function, objectid, param1, param2 );
     }
 
-    void KFLuaModule::Call( const std::string& luafile, const std::string& function, uint64 objectid,
-                            uint64 param1, uint64 param2, uint64 param3 )
+    uint64 KFLuaModule::Call( const std::string& luafile, const std::string& function, uint64 objectid,
+                              uint64 param1, uint64 param2, uint64 param3 )
     {
         auto kfluascript = FindLuaScript( luafile );
-        kfluascript->CallFunction( function, objectid, param1, param2, param3 );
+        return kfluascript->CallFunction( function, objectid, param1, param2, param3 );
     }
 
-    void KFLuaModule::Call( const std::string& luafile, const std::string& function, uint64 objectid,
-                            uint64 param1, uint64 param2, uint64 param3, uint64 param4 )
+    uint64 KFLuaModule::Call( const std::string& luafile, const std::string& function, uint64 objectid,
+                              uint64 param1, uint64 param2, uint64 param3, uint64 param4 )
     {
         auto kfluascript = FindLuaScript( luafile );
-        kfluascript->CallFunction( function, objectid, param1, param2, param3, param4 );
+        return kfluascript->CallFunction( function, objectid, param1, param2, param3, param4 );
     }
 
-    void KFLuaModule::Call( const std::string& luafile, const std::string& function, uint64 objectid,
-                            uint64 param1, uint64 param2, uint64 param3, uint64 param4, uint64 param5 )
+    uint64 KFLuaModule::Call( const std::string& luafile, const std::string& function, uint64 objectid,
+                              uint64 param1, uint64 param2, uint64 param3, uint64 param4, uint64 param5 )
     {
         auto kfluascript = FindLuaScript( luafile );
-        kfluascript->CallFunction( function, objectid, param1, param2, param3, param4, param5 );
+        return kfluascript->CallFunction( function, objectid, param1, param2, param3, param4, param5 );
     }
 
-    void KFLuaModule::Call( const std::string& luafile, const std::string& function, uint64 objectid,
-                            uint64 param1, uint64 param2, uint64 param3, uint64 param4, uint64 param5, uint64 param6 )
+    uint64 KFLuaModule::Call( const std::string& luafile, const std::string& function, uint64 objectid,
+                              uint64 param1, uint64 param2, uint64 param3, uint64 param4, uint64 param5, uint64 param6 )
     {
         auto kfluascript = FindLuaScript( luafile );
-        kfluascript->CallFunction( function, objectid, param1, param2, param3, param4, param5, param6 );
+        return kfluascript->CallFunction( function, objectid, param1, param2, param3, param4, param5, param6 );
     }
 
-    void KFLuaModule::Call( const std::string& luafile, const std::string& function, uint64 objectid,
-                            const std::string& param1 )
+    uint64 KFLuaModule::Call( const std::string& luafile, const std::string& function, uint64 objectid,
+                              const std::string& param1 )
     {
         auto kfluascript = FindLuaScript( luafile );
-        kfluascript->CallFunction( function, objectid, param1.c_str() );
+        return kfluascript->CallFunction( function, objectid, param1.c_str() );
     }
 
-    void KFLuaModule::Call( const std::string& luafile, const std::string& function, uint64 objectid,
-                            const std::string& param1, const std::string& param2 )
+    uint64 KFLuaModule::Call( const std::string& luafile, const std::string& function, uint64 objectid,
+                              const std::string& param1, const std::string& param2 )
     {
         auto kfluascript = FindLuaScript( luafile );
-        kfluascript->CallFunction( function, objectid, param1.c_str(), param2.c_str() );
+        return kfluascript->CallFunction( function, objectid, param1.c_str(), param2.c_str() );
     }
 
-    void KFLuaModule::Call( const std::string& luafile, const std::string& function, uint64 objectid,
-                            const std::string& param1, const std::string& param2, const std::string& param3 )
+    uint64 KFLuaModule::Call( const std::string& luafile, const std::string& function, uint64 objectid,
+                              const std::string& param1, const std::string& param2, const std::string& param3 )
     {
         auto kfluascript = FindLuaScript( luafile );
-        kfluascript->CallFunction( function, objectid, param1.c_str(), param2.c_str(), param3.c_str() );
+        return kfluascript->CallFunction( function, objectid, param1.c_str(), param2.c_str(), param3.c_str() );
     }
 
-    void KFLuaModule::Call( const std::string& luafile, const std::string& function, uint64 objectid,
-                            const std::string& param1, const std::string& param2, const std::string& param3,
-                            const std::string& param4 )
+    uint64 KFLuaModule::Call( const std::string& luafile, const std::string& function, uint64 objectid,
+                              const std::string& param1, const std::string& param2, const std::string& param3,
+                              const std::string& param4 )
     {
         auto kfluascript = FindLuaScript( luafile );
-        kfluascript->CallFunction( function, objectid, param1.c_str(), param2.c_str(), param3.c_str(),
-                                   param4.c_str() );
+        return kfluascript->CallFunction( function, objectid, param1.c_str(), param2.c_str(), param3.c_str(),
+                                          param4.c_str() );
     }
 
-    void KFLuaModule::Call( const std::string& luafile, const std::string& function, uint64 objectid,
-                            const std::string& param1, const std::string& param2, const std::string& param3,
-                            const std::string& param4, const std::string& param5 )
+    uint64 KFLuaModule::Call( const std::string& luafile, const std::string& function, uint64 objectid,
+                              const std::string& param1, const std::string& param2, const std::string& param3,
+                              const std::string& param4, const std::string& param5 )
     {
         auto kfluascript = FindLuaScript( luafile );
-        kfluascript->CallFunction( function, objectid, param1.c_str(), param2.c_str(), param3.c_str(),
-                                   param4.c_str(), param5.c_str() );
+        return kfluascript->CallFunction( function, objectid, param1.c_str(), param2.c_str(), param3.c_str(),
+                                          param4.c_str(), param5.c_str() );
     }
 
-    void KFLuaModule::Call( const std::string& luafile, const std::string& function, uint64 objectid,
-                            const std::string& param1, const std::string& param2, const std::string& param3,
-                            const std::string& param4, const std::string& param5, const std::string& param6 )
+    uint64 KFLuaModule::Call( const std::string& luafile, const std::string& function, uint64 objectid,
+                              const std::string& param1, const std::string& param2, const std::string& param3,
+                              const std::string& param4, const std::string& param5, const std::string& param6 )
     {
         auto kfluascript = FindLuaScript( luafile );
-        kfluascript->CallFunction( function, objectid, param1.c_str(), param2.c_str(), param3.c_str(),
-                                   param4.c_str(), param5.c_str(), param6.c_str() );
+        return kfluascript->CallFunction( function, objectid, param1.c_str(), param2.c_str(), param3.c_str(),
+                                          param4.c_str(), param5.c_str(), param6.c_str() );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

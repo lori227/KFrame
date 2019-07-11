@@ -70,10 +70,10 @@ namespace KFrame
         _is_need_to_save = needtosave;
     }
 
-    void KFEntityEx::InitData( KFComponentEx* kfcomponent, const std::string& dataname )
+    void KFEntityEx::InitData( KFComponentEx* kfcomponent )
     {
         _kf_component = kfcomponent;
-        _kf_object = KFDataFactory::CreateData( "Global", dataname );
+        _kf_object = KFDataFactory::CreateData( _kf_component->_data_setting );
     }
 
     KFData* KFEntityEx::CreateData( const std::string& dataname )
@@ -239,6 +239,11 @@ namespace KFrame
         }
 
         return newvalue;
+    }
+
+    uint64 KFEntityEx::UpdateData( KFData* kfdata, uint64 index, uint32 operate, uint64 value )
+    {
+        return UpdateData( 0u, kfdata, index, operate, value );
     }
 
     uint64 KFEntityEx::UpdateData( uint64 key, KFData* kfdata, uint64 index, uint32 operate, uint64 value )
@@ -467,7 +472,7 @@ namespace KFrame
             return;
         }
 
-        switch ( kfdata->GetType() )
+        switch ( kfdata->_data_setting->_type )
         {
         case KFDataDefine::Type_Int32:
         case KFDataDefine::Type_UInt32:
@@ -579,7 +584,7 @@ namespace KFrame
         else
         {
             // 没有注册的函数
-            switch ( kfdata->GetType() )
+            switch ( kfdata->_data_setting->_type )
             {
             case KFDataDefine::Type_Object:
                 std::tie( showtype, showdata ) = AddObjectElement( kfdata, const_cast< KFElement* >( kfelement ), function, line, multiple );
@@ -777,7 +782,7 @@ namespace KFrame
         }
 
         // 找不到处理函数, 用基础函数来处理
-        switch ( kfdata->GetType() )
+        switch ( kfdata->_data_setting->_type )
         {
         case KFDataDefine::Type_Record:
             return CheckRecordElement( kfdata, const_cast< KFElement* >( kfelement ), function, line, multiple );
@@ -905,7 +910,7 @@ namespace KFrame
         }
 
         // 找不到处理函数, 用基础函数来处理
-        switch ( kfdata->GetType() )
+        switch ( kfdata->_data_setting->_type )
         {
         case KFDataDefine::Type_Record:
             RemoveRecordElement( kfdata, const_cast< KFElement* >( kfelement ), function, line, multiple );
@@ -1020,13 +1025,13 @@ namespace KFrame
 #define __FIND_PROTO_OBJECT__\
     auto savedata = datahierarchy.front();\
     datahierarchy.pop_front();\
-    if ( savedata->GetType() == KFDataDefine::Type_Object )\
+    if ( savedata->_data_setting->_type == KFDataDefine::Type_Object )\
     {\
-        pbobject = &( ( *pbobject->mutable_pbobject() )[ savedata->GetName() ] );\
+        pbobject = &( ( *pbobject->mutable_pbobject() )[ savedata->_data_setting->_name ] );\
     }\
-    else if ( savedata->GetType() == KFDataDefine::Type_Record )\
+    else if ( savedata->_data_setting->_type == KFDataDefine::Type_Record )\
     {\
-        auto pbrecord = &( ( *pbobject->mutable_pbrecord() )[ savedata->GetName() ] );\
+        auto pbrecord = &( ( *pbobject->mutable_pbrecord() )[ savedata->_data_setting->_name ] );\
         savedata = datahierarchy.front();\
         datahierarchy.pop_front(); \
         pbobject = &( ( *pbrecord->mutable_pbobject() )[ savedata->GetKeyID() ] ); \
@@ -1070,9 +1075,9 @@ namespace KFrame
         do
         {
             __FIND_PROTO_OBJECT__;
-            if ( savedata->GetType() == KFDataDefine::Type_Array )
+            if ( savedata->_data_setting->_type == KFDataDefine::Type_Array )
             {
-                auto pbarray = &( ( *pbobject->mutable_pbarray() )[ savedata->GetName() ] );
+                auto pbarray = &( ( *pbobject->mutable_pbarray() )[ savedata->_data_setting->_name ] );
                 savedata = datahierarchy.front();
                 datahierarchy.pop_front();
 

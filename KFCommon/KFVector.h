@@ -80,14 +80,12 @@ namespace KFrame
 
         void Insert( uint32 index, T* object )
         {
-            if ( IsValid( index ) )
+            if ( !IsValid( index ) )
             {
-                _objects[ index ] = object;
+                _objects.resize( index + 1, nullptr );
             }
-            else
-            {
-                _objects.push_back( object );
-            }
+
+            _objects[ index ] = object;
         }
 
         // 查找

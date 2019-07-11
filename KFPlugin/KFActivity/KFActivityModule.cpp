@@ -108,7 +108,7 @@ namespace KFrame
         }
 
         auto kfparent = kfdata->GetParent();
-        auto kfactivitytypesetting = _kf_activity_config->FindActivityType( kfparent->GetName(), kfdata->GetName() );
+        auto kfactivitytypesetting = _kf_activity_config->FindActivityType( kfparent->_data_setting->_name, kfdata->_data_setting->_name );
         if ( kfactivitytypesetting == nullptr )
         {
             return;

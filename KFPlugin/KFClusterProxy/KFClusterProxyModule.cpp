@@ -20,7 +20,7 @@ namespace KFrame
 
     void KFClusterProxyModule::BeforeShut()
     {
-        __UNREGISTER_TIMER__();
+        __UN_TIMER_NO_PARAM__();
         __UNREGISTER_CLIENT_LOST_FUNCTION__();
         __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
         __UNREGISTER_CLIENT_TRANSPOND_FUNCTION__();
@@ -78,7 +78,7 @@ namespace KFrame
     void KFClusterProxyModule::OnClientConnectionClusterMaster( const std::string& servername, uint64 serverid )
     {
         // 注册定时器
-        __REGISTER_LOOP_TIMER__( serverid, 5000, 0, &KFClusterProxyModule::OnTimerSendClusterRegisterMessage );
+        __LOOP_TIMER_ONE_PARAM__( serverid, 5000, 0, &KFClusterProxyModule::OnTimerSendClusterRegisterMessage );
     }
 
     __KF_TIMER_FUNCTION__( KFClusterProxyModule::OnTimerSendClusterRegisterMessage )
@@ -102,7 +102,7 @@ namespace KFrame
         if ( ok )
         {
             // 取消定时器
-            __UNREGISTER_OBJECT_TIMER__( objectid );
+            __UN_TIMER_ONE_PARAM__( objectid );
             __LOG_INFO__( "cluster proxy register to master ok!" );
         }
     }
@@ -133,7 +133,7 @@ namespace KFrame
             if ( kftoken->_client_id == netdata->_id )
             {
                 // 启动定时器, 10秒钟内不验证, 关闭连接
-                __REGISTER_LIMIT_TIMER__( netdata->_id, 10000, 1, &KFClusterProxyModule::OnTimerClusterAuthTimeOut );
+                __LIMIT_TIMER_ONE_PARAM__( netdata->_id, 10000, 1, &KFClusterProxyModule::OnTimerClusterAuthTimeOut );
                 return;
             }
         }
@@ -175,7 +175,7 @@ namespace KFrame
 
     void KFClusterProxyModule::OnClientLostClusterMaster( const std::string& servername, uint64 serverid )
     {
-        __UNREGISTER_OBJECT_TIMER__( serverid );
+        __UN_TIMER_ONE_PARAM__( serverid );
     }
 
     void KFClusterProxyModule::OnClientLostClusterShard( const std::string& servername, uint64 serverid )
@@ -219,7 +219,7 @@ namespace KFrame
         }
 
         // 删除定时器
-        __UNREGISTER_OBJECT_TIMER__( serverid );
+        __UN_TIMER_ONE_PARAM__( serverid );
 
         // 通知shard
         KFMsg::S2SClusterClientDiscoverToShardReq req;

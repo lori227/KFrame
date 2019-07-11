@@ -116,7 +116,7 @@ namespace KFrame
 
     void KFTaskModule::UpdateDataTaskValue( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 nowvalue )
     {
-        auto kftasktypelist = _kf_task_config->FindTypeTaskList( kfdata->GetParent()->GetName(), kfdata->GetName() );
+        auto kftasktypelist = _kf_task_config->FindTypeTaskList( kfdata->GetParent()->_data_setting->_name, kfdata->_data_setting->_name );
         if ( kftasktypelist == nullptr )
         {
             return;

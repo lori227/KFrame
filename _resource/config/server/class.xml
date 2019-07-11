@@ -1,0 +1,65 @@
+<root version="00000">
+	<item ContainClass="BasicPlayer" Id="Global" Name="basic" Type="object" KeyName="id" Create="1" Save="1" SaveTime="60000" Sync="1" View="1" Public="1" Relation="1" Team="1" Guild="1" Rank="1"/>
+	<item ContainClass="Player" Id="Global" Name="player" Type="object" KeyName="id" Create="1" Save="1" SaveTime="60000" DeleteType="1" Sync="1" View="1" Public="1" Relation="1" Team="1" Guild="1" Rank="1"/>
+	<item Id="Player" Name="id" Type="uint64" Create="1" Save="1" Sync="1" View="1" Public="1" Relation="1" Team="1" Guild="1" Rank="1"/>
+	<item ContainClass="BasicPlayer" Id="Player" Name="basic" Type="object" KeyName="id" Create="1" Save="1" Sync="1" View="1" Public="1" Relation="1" Team="1" Guild="1" Rank="1"/>
+	<item Id="Player" Name="account" Type="string" Create="1"/>
+	<item Id="Player" Name="accountid" Type="uint64" Create="1"/>
+	<item Id="Player" Name="channel" Type="uint32" Create="1"/>
+	<item Id="Player" Name="gateid" Type="uint64" Create="1"/>
+	<item Id="Player" Name="birthday" Type="uint64" Create="1" Save="1"/>
+	<item Id="Player" Name="onlinetime" Type="uint64" Create="1"/>
+	<item Id="Player" Name="offlinetime" Type="uint64" Create="1" Save="1"/>
+	<item Id="Player" Name="totaltime" Type="uint64" Create="1" Save="1"/>
+	<item Id="Player" Name="matchid" Type="uint32" Create="1" Save="1" Sync="1"/>
+	<item Id="Player" Name="matchserverid" Type="uint64" Create="1" Save="1"/>
+	<item Id="Player" Name="roomid" Type="uint64" Create="1" Save="1"/>
+	<item Id="Player" Name="roomserverid" Type="uint64" Create="1" Save="1"/>
+	<item ContainClass="KeyValue" Id="Player" Name="note" Type="record" KeyName="id" ConfigKeyName="id" Create="1" Save="1"/>
+	<item ContainClass="KeyValue" Id="Player" Name="variable" Type="record" KeyName="id" ConfigKeyName="id" Create="1" Save="1" Sync="1"/>
+	<item Id="Player" Name="order" Type="string" Create="1" Save="1"/>
+	<item Id="Player" Name="diamond" Type="uint32" Element="钻石" Create="1" Show="1" Multiple="1" Save="1" Sync="1"/>
+	<item Id="Player" Name="money" Type="uint32" Element="金币" Create="1" Show="1" Multiple="1" Save="1" Sync="1"/>
+	<item ContainClass="Hero" Id="Player" Name="hero" Type="record" Element="英雄" KeyName="uuid" Create="1" Show="1" Save="1" Sync="1"/>
+	<item Id="Player" Name="recruitcount" Type="uint32" Element="招募次数" InitValue="5" MaxValue="5" Create="1" Save="1" Sync="1"/>
+	<item Id="Player" Name="recruittime" Type="uint64" LogicValue="60" Create="1" Save="1" Sync="1"/>
+	<item ContainClass="RecruitHero" Id="Player" Name="recruit" Type="record" Element="招募英雄" KeyName="uuid" Create="1" Save="1" Sync="1"/>
+	<item ContainClass="Divisor" Id="Player" Name="divisor" Type="record" KeyName="id" Create="1" Save="1" Sync="1"/>
+	<item Id="BasicPlayer" Name="id" Type="uint64" Create="1" Save="1" Sync="1" View="1" Public="1" Relation="1" Team="1" Guild="1" Rank="1"/>
+	<item Id="BasicPlayer" Name="name" Type="string" LogicValue="14" Create="1" Save="1" Sync="1" View="1" Public="1" Relation="1" Team="1" Guild="1" Rank="1"/>
+	<item Id="BasicPlayer" Name="sex" Type="uint32" Create="1" Save="1" Sync="1" View="1" Public="1" Relation="1" Team="1" Guild="1" Rank="1"/>
+	<item Id="BasicPlayer" Name="status" Type="uint32" Create="1" Sync="1" View="1" Public="1" Relation="1" Team="1" Guild="1" Rank="1"/>
+	<item Id="BasicPlayer" Name="statustime" Type="uint64" Create="1" Sync="1" View="1" Public="1" Relation="1" Team="1" Guild="1" Rank="1"/>
+	<item Id="BasicPlayer" Name="serverid" Type="uint64" Create="1" View="1" Public="1" Relation="1" Team="1" Guild="1" Rank="1"/>
+	<item Id="KeyValue" Name="id" Type="uint32" Create="1" Save="1"/>
+	<item Id="KeyValue" Name="value" Type="uint64" Create="1" Save="1"/>
+	<item Id="Hero" Name="generateid" Type="uint32" Element="生成池Id"/>
+	<item Id="Hero" Name="usedivisor" Type="uint32" Element="是否使用权重因子"/>
+	<item Id="Hero" Name="uuid" Type="uint64" Create="1" Save="1" Sync="1"/>
+	<item Id="Hero" Name="race" Type="uint32" Element="种族" LogicValue="1" Create="1" Show="1" Save="1" Sync="1"/>
+	<item Id="Hero" Name="sex" Type="uint32" Element="性别" LogicValue="1" Create="1" Show="1" Save="1" Sync="1"/>
+	<item Id="Hero" Name="profession" Type="uint32" Element="职业" LogicValue="1" Create="1" Show="1" Save="1" Sync="1"/>
+	<item Id="Hero" Name="background" Type="uint32" Element="背景" LogicValue="1" Create="1" Show="1" Save="1" Sync="1"/>
+	<item ContainClass="int64" Id="Hero" Name="character" Type="array" Element="性格" MaxValue="6" LogicValue="1" Create="1" Save="1" Sync="1"/>
+	<item ContainClass="int64" Id="Hero" Name="innate" Type="array" Element="天赋" MaxValue="2" LogicValue="1" Create="1" Save="1" Sync="1"/>
+	<item ContainClass="int64" Id="Hero" Name="active" Type="array" Element="主动技能" MaxValue="2" LogicValue="1" Create="1" Save="1" Sync="1"/>
+	<item Id="Hero" Name="name" Type="string" Create="1" Save="1" Sync="1"/>
+	<item Id="Hero" Name="level" Type="uint32" Element="等级" MaxValue="40" Create="1" Save="1" Sync="1"/>
+	<item Id="Hero" Name="weapontype" Type="uint32" LogicValue="1" Create="1" Save="1" Sync="1"/>
+	<item Id="Hero" Name="dip" Type="uint32" Element="浸染值" MaxValue="1000" Create="1" Save="1" Sync="1"/>
+	<item ContainClass="FighterAttribute" Id="Hero" Name="fighter" Type="object" Element="战斗属性" LogicValue="11" Create="1" Save="1" Sync="1"/>
+	<item ContainClass="FighterAttribute" Id="Hero" Name="growth" Type="object" Element="成长属性" Create="1" Save="1"/>
+	<item ContainClass="int64" Id="Hero" Name="head" Type="array" Element="捏脸数据" MaxValue="15" Create="1" Save="1" Sync="1"/>
+	<item Id="FighterAttribute" Name="atk" Type="uint32" Element="攻击" Create="1" Save="1" Sync="1"/>
+	<item Id="FighterAttribute" Name="def" Type="uint32" Element="物理防御" Create="1" Save="1" Sync="1"/>
+	<item Id="FighterAttribute" Name="res" Type="uint32" Element="魔法防御" Create="1" Save="1" Sync="1"/>
+	<item Id="FighterAttribute" Name="maxhp" Type="uint32" Element="最大生命值" Create="1" Save="1" Sync="1"/>
+	<item Id="FighterAttribute" Name="tal" Type="uint32" Element="技巧值" Create="1" Save="1" Sync="1"/>
+	<item Id="FighterAttribute" Name="spd" Type="uint32" Element="速度值" Create="1" Save="1" Sync="1"/>
+	<item Id="FighterAttribute" Name="luk" Type="uint32" Element="幸运值" Create="1" Save="1" Sync="1"/>
+	<item Id="Divisor" Name="id" Type="uint32" Create="1" Save="1" Sync="1"/>
+	<item Id="RecruitHero" Name="usecost" Type="uint32" Element="需要花费资源"/>
+	<item Id="RecruitHero" Name="uuid" Type="uint64" Create="1" Save="1" Sync="1"/>
+	<item Id="RecruitHero" Name="cost" Type="string" Create="1" Save="1" Sync="1"/>
+	<item ContainClass="Hero" Id="RecruitHero" Name="hero" Type="object" Element="英雄" KeyName="uuid" Create="1" Save="1" Sync="1"/>
+</root>

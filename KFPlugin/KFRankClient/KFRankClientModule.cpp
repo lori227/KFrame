@@ -42,7 +42,7 @@ namespace KFrame
             return;
         }
 
-        auto& ranksettinglist = _kf_rank_config->FindRankSetting( kfparent->GetName(), kfdata->GetName() );
+        auto& ranksettinglist = _kf_rank_config->FindRankSetting( kfparent->_data_setting->_name, kfdata->_data_setting->_name );
         for ( auto kfsetting : ranksettinglist )
         {
             // 属性更新顺序无法保证, 所以先保存到一个列表中, 在AfterRun中更新排行榜数据

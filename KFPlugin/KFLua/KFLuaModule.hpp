@@ -32,40 +32,40 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 调用lua函数
-        virtual void Call( const std::string& luafile, const std::string& function, uint64 objectid );
-        virtual void Call( const std::string& luafile, const std::string& function, uint64 objectid,
-                           uint64 param1 );
-        virtual void Call( const std::string& luafile, const std::string& function, uint64 objectid,
-                           uint64 param1, uint64 param2 );
-        virtual void Call( const std::string& luafile, const std::string& function, uint64 objectid,
-                           uint64 param1, uint64 param2, uint64 param3 );
-        virtual void Call( const std::string& luafile, const std::string& function, uint64 objectid,
-                           uint64 param1, uint64 param2, uint64 param3, uint64 param4 );
-        virtual void Call( const std::string& luafile, const std::string& function, uint64 objectid,
-                           uint64 param1, uint64 param2, uint64 param3, uint64 param4, uint64 param5 );
-        virtual void Call( const std::string& luafile, const std::string& function, uint64 objectid,
-                           uint64 param1, uint64 param2, uint64 param3, uint64 param4, uint64 param5, uint64 param6 );
+        virtual uint64 Call( const std::string& luafile, const std::string& function, uint64 objectid );
+        virtual uint64 Call( const std::string& luafile, const std::string& function, uint64 objectid,
+                             uint64 param1 );
+        virtual uint64 Call( const std::string& luafile, const std::string& function, uint64 objectid,
+                             uint64 param1, uint64 param2 );
+        virtual uint64 Call( const std::string& luafile, const std::string& function, uint64 objectid,
+                             uint64 param1, uint64 param2, uint64 param3 );
+        virtual uint64 Call( const std::string& luafile, const std::string& function, uint64 objectid,
+                             uint64 param1, uint64 param2, uint64 param3, uint64 param4 );
+        virtual uint64 Call( const std::string& luafile, const std::string& function, uint64 objectid,
+                             uint64 param1, uint64 param2, uint64 param3, uint64 param4, uint64 param5 );
+        virtual uint64 Call( const std::string& luafile, const std::string& function, uint64 objectid,
+                             uint64 param1, uint64 param2, uint64 param3, uint64 param4, uint64 param5, uint64 param6 );
         ////////////////////////////////////////////////////////////////////////////////
 
-        virtual void Call( const std::string& luafile, const std::string& function, uint64 objectid,
-                           const std::string& param1 );
-        virtual void Call( const std::string& luafile, const std::string& function, uint64 objectid,
-                           const std::string& param1, const std::string& param2 );
-        virtual void Call( const std::string& luafile, const std::string& function, uint64 objectid,
-                           const std::string& param1, const std::string& param2, const std::string& param3 );
+        virtual uint64 Call( const std::string& luafile, const std::string& function, uint64 objectid,
+                             const std::string& param1 );
+        virtual uint64 Call( const std::string& luafile, const std::string& function, uint64 objectid,
+                             const std::string& param1, const std::string& param2 );
+        virtual uint64 Call( const std::string& luafile, const std::string& function, uint64 objectid,
+                             const std::string& param1, const std::string& param2, const std::string& param3 );
 
 
-        virtual void Call( const std::string& luafile, const std::string& function, uint64 objectid,
-                           const std::string& param1, const std::string& param2, const std::string& param3,
-                           const std::string& param4 );
+        virtual uint64 Call( const std::string& luafile, const std::string& function, uint64 objectid,
+                             const std::string& param1, const std::string& param2, const std::string& param3,
+                             const std::string& param4 );
 
-        virtual void Call( const std::string& luafile, const std::string& function, uint64 objectid,
-                           const std::string& param1, const std::string& param2, const std::string& param3,
-                           const std::string& param4, const std::string& param5 );
+        virtual uint64 Call( const std::string& luafile, const std::string& function, uint64 objectid,
+                             const std::string& param1, const std::string& param2, const std::string& param3,
+                             const std::string& param4, const std::string& param5 );
 
-        virtual void Call( const std::string& luafile, const std::string& function, uint64 objectid,
-                           const std::string& param1, const std::string& param2, const std::string& param3,
-                           const std::string& param4, const std::string& param5, const std::string& param6 );
+        virtual uint64 Call( const std::string& luafile, const std::string& function, uint64 objectid,
+                             const std::string& param1, const std::string& param2, const std::string& param3,
+                             const std::string& param4, const std::string& param5, const std::string& param6 );
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
 

@@ -5,7 +5,7 @@ namespace KFrame
 {
     void KFGateModule::BeforeRun()
     {
-        __REGISTER_LOOP_TIMER__( 1, 30000, 5000, &KFGateModule::OnTimerUpdateOnlineToAuth );
+        __LOOP_TIMER_NO_PARAM__( 30000, 5000, &KFGateModule::OnTimerUpdateOnlineToAuth );
 
         __REGISTER_CLIENT_LOST_FUNCTION__( &KFGateModule::OnClientLostServer );
         __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFGateModule::OnClientConnectionServer );
@@ -29,7 +29,7 @@ namespace KFrame
 
     void KFGateModule::BeforeShut()
     {
-        __UNREGISTER_TIMER__();
+        __UN_TIMER_NO_PARAM__();
         __UNREGISTER_CLIENT_LOST_FUNCTION__();
         __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
         __UNREGISTER_SERVER_LOST_FUNCTION__();
@@ -282,7 +282,7 @@ namespace KFrame
 
             // 设置连接成功
             kfrole->_session_id = sessionid;
-            __UNREGISTER_OBJECT_TIMER__( kfrole->_id );
+            __UN_TIMER_ONE_PARAM__( kfrole->_id );
 
             // 发送重新登录消息
             KFMsg::S2SReLoginToGameReq req;
@@ -382,7 +382,7 @@ namespace KFrame
             }
 
             // 删除掉线定时器
-            __UNREGISTER_OBJECT_TIMER__( pblogin->playerid() );
+            __UN_TIMER_ONE_PARAM__( pblogin->playerid() );
 
             // 创建角色
             kfrole = __KF_NEW__( KFRole );
@@ -423,7 +423,7 @@ namespace KFrame
         // 添加一个定时器
         kfrole->_session_id = _invalid_int;
         static auto _option = _kf_option->FindOption( __KF_STRING__( disconnettime ) );
-        __REGISTER_LIMIT_TIMER__( kfrole->_id, _option->_uint32_value, 1, &KFGateModule::OnTimerPlayerDisconnetion );
+        __LIMIT_TIMER_ONE_PARAM__( kfrole->_id, _option->_uint32_value, 1, &KFGateModule::OnTimerPlayerDisconnetion );
     }
 
     __KF_TIMER_FUNCTION__( KFGateModule::OnTimerPlayerDisconnetion )

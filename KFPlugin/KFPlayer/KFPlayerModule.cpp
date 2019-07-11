@@ -452,16 +452,19 @@ namespace KFrame
         }
 
         kfdata->AddMask( KFDataDefine::Mask_Client );
-        if ( kfdata->GetType() == KFDataDefine::Type_Object )
+        switch (  kfdata->_data_setting->_type )
         {
+        case KFDataDefine::Type_Object:
             player->SyncUpdateData( kfdata, kfdata->GetKeyID() );
-        }
-        else if ( kfdata->GetType() == KFDataDefine::Type_Record )
-        {
+            break;
+        case KFDataDefine::Type_Record:
             for ( auto kfchild = kfdata->FirstData(); kfchild != nullptr; kfchild = kfdata->NextData() )
             {
                 player->SyncAddData( kfchild, kfchild->GetKeyID() );
             }
+            break;
+        default:
+            break;
         }
     }
 

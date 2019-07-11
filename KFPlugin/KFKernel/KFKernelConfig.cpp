@@ -46,6 +46,10 @@ namespace KFrame
             {
                 kfdatasetting->_logic_type = type;
             }
+            else
+            {
+                kfdatasetting->_logic_type = KFDataDefine::Type_Object;
+            }
         }
 
         kfdatasetting->_delay_save_time = xmlnode.GetUInt32( "SaveTime", true );

@@ -1,68 +1,36 @@
 ﻿#ifndef __KF_COMPONENT_H__
 #define __KF_COMPONENT_H__
 
-#include "KFrame.h"
 #include "KFEntity.h"
 #include "KFCore/KFData.h"
 
 namespace KFrame
 {
+    typedef std::function< void( KFEntity* ) > KFEntityFunction;
+    typedef std::function< void( KFEntity*, uint32 ) > KFSaveEntityFunction;
+    typedef std::function< void( KFEntity*, const KFMsg::PBObject& ) > KFSyncFunction;
+    typedef std::function< void( KFEntity*, const KFMsg::PBShowElement& ) > KFShowElementFunction;
+    ////////////////////////////////////////////////////////////////////////////////////////////
 
-
-    typedef std::function< std::tuple<uint32, KFData*> ( KFEntity*, KFData*, KFElement*, const char*, uint32, float ) > KFAddElementFunction;
     typedef std::function< bool( KFEntity*, KFData*, KFElement*, const char*, uint32, float ) > KFCheckAddElementFunction;
+    typedef std::function< std::tuple<uint32, KFData*>( KFEntity*, KFData*, KFElement*, const char*, uint32, float ) > KFAddElementFunction;
     typedef std::function< bool( KFEntity*, KFData*, KFElement*, const char*, uint32, float ) > KFCheckRemoveElementFunction;
     typedef std::function< void( KFEntity*, KFData*, KFElement*, const char*, uint32, float ) > KFRemoveElementFunction;
+    ////////////////////////////////////////////////////////////////////////////////////////////
 
     typedef std::function<void( KFEntity*, KFData* kfparent, uint64 key, KFData* kfdata )> KFAddDataFunction;
     typedef std::function<void( KFEntity*, KFData* kfparent, uint64 key, KFData* kfdata )> KFRemoveDataFunction;
     typedef std::function<void( KFEntity*, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue )> KFUpdateDataFunction;
     typedef std::function<void( KFEntity*, KFData* kfdata, const std::string& value )> KFUpdateStringFunction;
-
-    typedef std::function< void( KFEntity* ) > KFEntityFunction;
-    typedef std::function< void( KFEntity*, uint32 ) > KFSaveEntityFunction;
-    typedef std::function< void( KFEntity*, const KFMsg::PBObject&  ) > KFSyncFunction;
-    typedef std::function< void( KFEntity*, const KFMsg::PBShowElement& ) > KFShowElementFunction;
-
-#define  __KF_CHECK_ADD_ELEMENT_FUNCTION__( checkfunction ) \
-    bool checkfunction( KFEntity* player, KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple )
-
-#define __KF_ADD_ELEMENT_FUNCTION__( addfunction ) \
-    std::tuple<uint32, KFData*> addfunction( KFEntity* player, KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple )
-
-#define  __KF_CHECK_REMOVE_ELEMENT_FUNCTION__( checkfunction ) \
-    bool checkfunction( KFEntity* player, KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple )
-
-#define  __KF_REMOVE_ELEMENT_FUNCTION__( removefunction ) \
-    void removefunction( KFEntity* player, KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple)
-
-#define __KF_ADD_DATA_FUNCTION__( addfunction ) \
-    void addfunction( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata )
-
-#define __KF_REMOVE_DATA_FUNCTION__( removefunction ) \
-    void removefunction( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata )
-
-#define __KF_UPDATE_DATA_FUNCTION__( updatefunction ) \
-    void updatefunction( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue )
-
-#define  __KF_UPDATE_STRING_FUNCTION__( updatefunction ) \
-    void updatefunction( KFEntity* player, KFData* kfdata, const std::string& value )
     ////////////////////////////////////////////////////////////////////////////////////////////
-
     // 游戏中的组件, 负责属性回调时间
     class KFComponent
     {
     public:
-
-        virtual void InitEntity( KFEntity* kfentity ) = 0;
-        virtual void UnInitEntity( KFEntity* kfentity ) = 0;
-
-        virtual void Run() = 0;
-        virtual void AfterRun() = 0;
-
-        virtual void SetName( const std::string& name ) = 0;
-        virtual const std::string& GetName() = 0;
-        /////////////////////////////////////////////////////////////////
+        KFComponent() = default;
+        virtual ~KFComponent() = default;
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 创建实体
         virtual KFEntity* CreateEntity( uint64 key ) = 0;
         virtual KFEntity* CreateEntity( uint64 key, const KFMsg::PBObject* data ) = 0;
@@ -84,7 +52,6 @@ namespace KFrame
         // 遍历列表
         virtual KFEntity* FirstEntity() = 0;
         virtual KFEntity* NextEntity() = 0;
-
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 注册判断属性函数
@@ -366,6 +333,34 @@ namespace KFrame
         virtual void BindShowElementFunction( KFShowElementFunction& function ) = 0;
         virtual void BindEntitySaveFunction( KFSaveEntityFunction& function ) = 0;
     };
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+#define  __KF_CHECK_ADD_ELEMENT_FUNCTION__( checkfunction ) \
+    bool checkfunction( KFEntity* player, KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple )
+
+#define __KF_ADD_ELEMENT_FUNCTION__( addfunction ) \
+    std::tuple<uint32, KFData*> addfunction( KFEntity* player, KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple )
+
+#define  __KF_CHECK_REMOVE_ELEMENT_FUNCTION__( checkfunction ) \
+    bool checkfunction( KFEntity* player, KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple )
+
+#define  __KF_REMOVE_ELEMENT_FUNCTION__( removefunction ) \
+    void removefunction( KFEntity* player, KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple)
+
+#define __KF_ADD_DATA_FUNCTION__( addfunction ) \
+    void addfunction( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata )
+
+#define __KF_REMOVE_DATA_FUNCTION__( removefunction ) \
+    void removefunction( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata )
+
+#define __KF_UPDATE_DATA_FUNCTION__( updatefunction ) \
+    void updatefunction( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue )
+
+#define  __KF_UPDATE_STRING_FUNCTION__( updatefunction ) \
+    void updatefunction( KFEntity* player, KFData* kfdata, const std::string& value )
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 #endif

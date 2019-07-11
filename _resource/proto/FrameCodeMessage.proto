@@ -94,9 +94,17 @@ enum FrameCodeEnum
 	CompoundOk					= 12501;	// 合成成功
 
 	// item
-	ItemCanNotFind				= 12600;	// 找不到道具配置
-	ItemCanNotFindData			= 12601;	// 找不到道具数据
-	ItemCanNotUse				= 12602;	// 该道具不能使用
+	ItemSettingNotExist			= 12600;	// 找不到道具配置
+	ItemDataNotExist			= 12601;	// 找不到道具数据
+	ItemSplitCountError			= 12602;	// 道具拆分数量错误
+	ItemMergeIdError			= 12603;	// 不同道具不能合并
+	ItemOverlayCountMax			= 12604;	// 堆叠数量已经达到了上线
+	ItemCanNotUse				= 12605;	// 该道具不能使用
+	ItemUseFailed				= 12606;	// 使用道具失败
+	ItemBagNameError			= 12607;	// 道具背包(仓库)名字错误
+	ItemMoveCountError			= 12608;	// 移动道具的数量错误
+	ItemBagFull					= 12609;	// %s道具背包已经满了
+	ItemMoveFailed				= 12610;	// 移动道具失败
 
 	// signin
 	SignInNotDay				= 12700;	// 没有签到数据
