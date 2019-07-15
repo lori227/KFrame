@@ -16,7 +16,6 @@ namespace KFrame
     void KFUInt64::Reset()
     {
         _data = _invalid_int;
-        KFData::Reset();
     }
 
     bool KFUInt64::IsValid()
@@ -27,6 +26,14 @@ namespace KFrame
     bool KFUInt64::IsFull()
     {
         return false;
+    }
+
+    void KFUInt64::InitData()
+    {
+        if ( _data_setting->_int_init_value != 0u )
+        {
+            _data = _data_setting->_int_init_value;
+        }
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////

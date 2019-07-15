@@ -16,16 +16,20 @@ namespace KFrame
         template< class T > T InvalidValue();
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         template< class T = uint64 > T GetValue();
+        template< class T = uint64 > T GetValue( uint64 key );
         template< class T = uint64 > T GetValue( const std::string& dataname );
         template< class T = uint64 > T GetValue( const std::string& parentname, const std::string& dataname );
         template< class T = uint64 > T GetValue( uint64 key, const std::string& dataname );
+        template< class T = uint64 > T GetValue( const std::string& dataname, uint64 key );
         template< class T = uint64 > T GetValue( const std::string& parentname, uint64 key, const std::string& dataname );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         template< class T = uint64 > T SetValue( T value );
+        template< class T = uint64 > T SetValue( uint64 key, T value );
         template< class T = uint64 > T SetValue( const std::string& dataname, T value );
         template< class T = uint64 > T SetValue( const std::string& parentname, const std::string& dataname, T value );
         template< class T = uint64 > T SetValue( uint64 key, const std::string& dataname, T value );
+        template< class T = uint64 > T SetValue( const std::string& dataname, uint64 key, T value );
         template< class T = uint64 > T SetValue( const std::string& parentname, uint64 key, const std::string& dataname, T value );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -55,6 +59,9 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         // 初始化
         virtual void Initialize( const KFClassSetting* classsetting, const KFDataSetting* datasetting );
+
+        // 初始化数值
+        virtual void InitData();
 
         // 属性标识
         bool HaveMask( uint32 mask ) const;

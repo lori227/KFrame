@@ -10,12 +10,9 @@ namespace KFrame
     uint32 KFUInt32::SetUInt32( uint32 value )
     {
         _data = value;
-        if ( _data_setting->_max_value != 0 )
+        if ( _data > _data_setting->_int_max_value )
         {
-            if ( _data > _data_setting->_max_value )
-            {
-                _data = _data_setting->_max_value;
-            }
+            _data = _data_setting->_int_max_value;
         }
 
         return _data;
@@ -24,7 +21,6 @@ namespace KFrame
     void KFUInt32::Reset()
     {
         _data = _invalid_int;
-        KFData::Reset();
     }
 
     bool KFUInt32::IsValid()
@@ -34,15 +30,15 @@ namespace KFrame
 
     bool KFUInt32::IsFull()
     {
-        if ( _data_setting->_max_value != 0 )
-        {
-            if ( _data >= _data_setting->_max_value )
-            {
-                return true;
-            }
-        }
+        return _data >= _data_setting->_int_max_value;
+    }
 
-        return false;
+    void KFUInt32::InitData()
+    {
+        if ( _data_setting->_int_init_value != 0u )
+        {
+            _data = _data_setting->_int_init_value;
+        }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////

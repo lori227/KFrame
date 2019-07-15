@@ -20,15 +20,7 @@ namespace KFrame
 
     bool KFRecord::IsFull()
     {
-        if ( _data_setting->_max_value != 0u )
-        {
-            if ( Size() >= _data_setting->_max_value )
-            {
-                return true;
-            }
-        }
-
-        return false;
+        return _data.Size() >= _data_setting->_int_max_value;
     }
 
     KFData* KFRecord::FirstData()

@@ -72,10 +72,10 @@ namespace KFrame
         // 程序运行
         std::atomic<bool> _app_run;
 
-        // 现实时间
+        // 现实时间( 单位 : 秒 )
         uint64 _real_time;
 
-        // 游戏时间
+        // 游戏时间( 单位 : 毫秒 )
         uint64 _game_time;
 
         // appid

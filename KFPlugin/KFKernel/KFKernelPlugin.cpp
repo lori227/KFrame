@@ -17,6 +17,7 @@ namespace KFrame
     void KFKernelPlugin::LoadModule()
     {
         __FIND_MODULE__( _kf_timer, KFTimerInterface );
+        __FIND_MODULE__( _kf_option, KFOptionInterface );
         __FIND_MODULE__( _kf_config, KFConfigInterface );
     }
 }

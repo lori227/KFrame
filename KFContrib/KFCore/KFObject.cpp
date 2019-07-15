@@ -16,12 +16,17 @@ namespace KFrame
     void KFObject::Reset()
     {
         _key = _invalid_int;
-
-        auto child = _data.First();
-        while ( child != nullptr )
+        for ( auto& iter : _data._objects )
         {
-            child->Reset();
-            child = _data.Next();
+            iter.second->Reset();
+        }
+    }
+
+    void KFObject::InitData()
+    {
+        for ( auto& iter : _data._objects )
+        {
+            iter.second->InitData();
         }
     }
 
@@ -51,7 +56,7 @@ namespace KFrame
     {
         SetKeyID( kfother->GetKeyID() );
 
-        for ( auto iter : _data._objects )
+        for ( auto& iter : _data._objects )
         {
             auto& key = iter.first;
             auto kfdata = iter.second;
@@ -241,7 +246,7 @@ namespace KFrame
 
     void KFObject::FromMap( const MapString& values )
     {
-        for ( auto iter : values )
+        for ( auto& iter : values )
         {
             auto kfdata = FindData( iter.first );
             if ( kfdata == nullptr )

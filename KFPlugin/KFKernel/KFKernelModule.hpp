@@ -13,6 +13,7 @@
 #include "KFKernelInterface.h"
 #include "KFComponentEx.hpp"
 #include "KFTimer/KFTimerInterface.h"
+#include "KFOption/KFOptionInterface.h"
 #include "KFConfig/KFConfigInterface.h"
 
 namespace KFrame
@@ -24,6 +25,7 @@ namespace KFrame
         ~KFKernelModule();
 
         virtual void InitModule();
+        virtual void AfterLoad();
         virtual void Run();
         virtual void AfterRun();
         virtual void ShutDown();

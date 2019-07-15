@@ -20,6 +20,9 @@ namespace KFrame
         // 初始化
         virtual void Initialize( const KFClassSetting* classsetting, const KFDataSetting* datasetting );
 
+        // 初始化数值
+        virtual void InitData();
+
         // common
         virtual uint32 Size();
         //////////////////////////////////////////////////////////////////////////////////////////////////////

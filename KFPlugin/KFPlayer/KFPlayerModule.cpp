@@ -243,6 +243,7 @@ namespace KFrame
     KFEntity* KFPlayerModule::CreatePlayer( const KFMsg::PBLoginData* pblogin, const KFMsg::PBObject* pbplayerdata )
     {
         auto player = _kf_component->CreateEntity( pblogin->playerid(), pbplayerdata );
+        OnEnterCreatePlayer( player, pblogin->playerid() );
 
         auto kfobject = player->GetData();
         kfobject->SetValue( __KF_STRING__( gateid ), pblogin->gateid() );
@@ -270,9 +271,6 @@ namespace KFrame
 
             kfdata->SetValue( value );
         }
-
-        // 创建玩家
-        OnEnterCreatePlayer( player, pblogin->playerid() );
 
         // 调用重置函数
         for ( auto iter : _player_reset_function._objects )
@@ -310,6 +308,7 @@ namespace KFrame
             return;
         }
 
+        kfobject->InitData();
         kfbasic->SetValue( __KF_STRING__( id ), playerid );
         kfbasic->SetValue( __KF_STRING__( birthday ), kfglobal->_real_time );
 

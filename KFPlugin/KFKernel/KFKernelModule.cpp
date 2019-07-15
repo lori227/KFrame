@@ -47,6 +47,58 @@ namespace KFrame
     {
         __KF_REMOVE_CONFIG__( _kf_kernel_config );
     }
+
+    void KFKernelModule::AfterLoad()
+    {
+        for ( auto& iter : _kf_kernel_config->_settings._objects )
+        {
+            auto kfclasssetting = iter.second;
+
+            for ( auto& siter : kfclasssetting->_static_data._objects )
+            {
+                auto kfdatasetting = siter.second;
+
+                // 初始值
+                if ( kfdatasetting->_str_init_value != _invalid_str )
+                {
+                    if ( KFUtility::IsNumber( kfdatasetting->_str_init_value ) )
+                    {
+                        kfdatasetting->_int_init_value = KFUtility::ToValue< uint32 >( kfdatasetting->_str_init_value );
+                    }
+                    else
+                    {
+                        kfdatasetting->_int_init_value = _kf_option->GetUInt32( kfdatasetting->_str_init_value );
+                    }
+                }
+
+                // 最大值
+                if ( kfdatasetting->_str_max_value != _invalid_str )
+                {
+                    if ( KFUtility::IsNumber( kfdatasetting->_str_max_value ) )
+                    {
+                        kfdatasetting->_int_max_value = KFUtility::ToValue< uint32 >( kfdatasetting->_str_max_value );
+                    }
+                    else
+                    {
+                        kfdatasetting->_int_max_value = _kf_option->GetUInt32( kfdatasetting->_str_max_value );
+                    }
+                }
+
+                // 逻辑值
+                if ( kfdatasetting->_str_logic_value != _invalid_str )
+                {
+                    if ( KFUtility::IsNumber( kfdatasetting->_str_logic_value ) )
+                    {
+                        kfdatasetting->_int_logic_value = KFUtility::ToValue< uint32 >( kfdatasetting->_str_logic_value );
+                    }
+                    else
+                    {
+                        kfdatasetting->_int_logic_value = _kf_option->GetUInt32( kfdatasetting->_str_logic_value );
+                    }
+                }
+            }
+        }
+    }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     static std::string _global_class = "Global";
@@ -72,22 +124,28 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////////
     KFData* KFKernelModule::CreateObject( const std::string& dataname )
     {
-        return KFDataFactory::CreateData( _global_class, dataname );
+        auto kfdata = KFDataFactory::CreateData( _global_class, dataname );
+        kfdata->InitData();
+        return kfdata;
     }
 
     KFData* KFKernelModule::CreateObject( const KFDataSetting* datasetting )
     {
-        return KFDataFactory::CreateData( datasetting );
+        auto kfdata = KFDataFactory::CreateData( datasetting );
+        kfdata->InitData();
+        return kfdata;
     }
 
     KFData* KFKernelModule::CreateObject( const std::string& classname, const std::string& dataname )
     {
-        return KFDataFactory::CreateData( classname, dataname );
+        auto kfdata = KFDataFactory::CreateData( classname, dataname );
+        kfdata->InitData();
+        return kfdata;
     }
 
     KFData* KFKernelModule::CreateObject( const KFDataSetting* datasetting, const KFMsg::PBObject* proto )
     {
-        auto kfdata = CreateObject( datasetting );
+        auto kfdata = KFDataFactory::CreateData( datasetting );
         ParseFromProto( kfdata, proto );
         return kfdata;
     }

@@ -16,12 +16,19 @@ namespace KFrame
     void KFDouble::Reset()
     {
         _data = 0.0f;
-        KFData::Reset();
     }
 
     bool KFDouble::IsValid()
     {
         return _data != 0.0f;
+    }
+
+    void KFDouble::InitData()
+    {
+        if ( _data_setting->_int_init_value != 0.0f )
+        {
+            _data = _data_setting->_int_init_value;
+        }
     }
 
     void KFDouble::CopyFrom( KFData* kfother )

@@ -8,7 +8,19 @@ namespace KFrame
     template< class T >
     T KFData::InvalidValue()
     {
-        return static_cast<T>( _invalid_int );
+        return 0;
+    }
+
+    template< class T >
+    T KFData::GetValue( uint64 key )
+    {
+        auto kfdata = FindData( key );
+        if ( kfdata == nullptr )
+        {
+            return InvalidValue< T >();
+        }
+
+        return kfdata->GetValue< T >();
     }
 
     template< class T >
@@ -48,6 +60,18 @@ namespace KFrame
     }
 
     template< class T >
+    T KFData::GetValue( const std::string& dataname, uint64 key )
+    {
+        auto kfdata = FindData( dataname, key );
+        if ( kfdata == nullptr )
+        {
+            return InvalidValue< T >();
+        }
+
+        return kfdata->GetValue< T >();
+    }
+
+    template< class T >
     T KFData::GetValue( const std::string& parentname, uint64 key, const std::string& dataname )
     {
         auto kfdata = FindData( parentname, key );
@@ -57,6 +81,18 @@ namespace KFrame
         }
 
         return kfdata->GetValue< T >( dataname );
+    }
+
+    template< class T >
+    T KFData::SetValue( uint64 key, T value )
+    {
+        auto kfdata = FindData( key );
+        if ( kfdata == nullptr )
+        {
+            return value;
+        }
+
+        return kfdata->SetValue< T >( value );
     }
 
     template< class T >
@@ -87,6 +123,18 @@ namespace KFrame
     T KFData::SetValue( uint64 key, const std::string& dataname, T value )
     {
         auto kfdata = FindData( key, dataname );
+        if ( kfdata == nullptr )
+        {
+            return value;
+        }
+
+        return kfdata->SetValue< T >( value );
+    }
+
+    template< class T >
+    T KFData::SetValue( const std::string& dataname, uint64 key, T value )
+    {
+        auto kfdata = FindData( dataname, key );
         if ( kfdata == nullptr )
         {
             return value;

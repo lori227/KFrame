@@ -52,11 +52,27 @@ namespace KFrame
             }
         }
 
+        switch ( kfdatasetting->_type )
+        {
+        case KFDataDefine::Type_Int32:
+            kfdatasetting->_int_max_value = __MAX_INT32__;
+            break;
+        case KFDataDefine::Type_UInt32:
+            kfdatasetting->_int_max_value = __MAX_UINT32__;
+            break;
+        case KFDataDefine::Type_Int64:
+            kfdatasetting->_int_max_value = __MAX_INT64__;
+            break;
+        case KFDataDefine::Type_UInt64:
+            kfdatasetting->_int_max_value = __MAX_UINT64__;
+            break;
+        }
+
         kfdatasetting->_delay_save_time = xmlnode.GetUInt32( "SaveTime", true );
         kfdatasetting->_delete_type = xmlnode.GetUInt32( "DeleteType", true );
-        kfdatasetting->_init_value = xmlnode.GetString( "InitValue", true );
-        kfdatasetting->_max_value = xmlnode.GetUInt32( "MaxValue", true );
-        kfdatasetting->_logic_value = xmlnode.GetUInt32( "LogicValue", true );
+        kfdatasetting->_str_init_value = xmlnode.GetString( "InitValue", true );
+        kfdatasetting->_str_max_value = xmlnode.GetString( "MaxValue", true );
+        kfdatasetting->_str_logic_value = xmlnode.GetString( "LogicValue", true );
         kfdatasetting->_key_name = xmlnode.GetString( "KeyName", true );
         kfdatasetting->_config_key_name = xmlnode.GetString( "ConfigKeyName", true );
         kfdatasetting->_lua_file = xmlnode.GetString( "LuaFile", true );

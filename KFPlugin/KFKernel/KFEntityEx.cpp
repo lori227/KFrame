@@ -332,7 +332,6 @@ namespace KFrame
         }
 
         std::list<uint64> keyvector;
-        ;
         for ( auto kfdata = kfparent->FirstData(); kfdata != nullptr; kfdata = kfparent->NextData() )
         {
             keyvector.push_back( kfdata->GetKeyID() );
@@ -618,7 +617,7 @@ namespace KFrame
         case KFDataDefine::Type_UInt32:
         {
             auto value = kfelementvalue->_value->CalcUseValue( kfdata->_data_setting, multiple );
-            UpdateData( 0, kfdata, kfelementvalue->_operate, value );
+            UpdateData( kfdata, kfelementvalue->_operate, value );
         }
         break;
         case KFDataDefine::Type_String:
@@ -938,7 +937,7 @@ namespace KFrame
         }
 
         auto value = kfelementvalue->_value->CalcUseValue( kfdata->_data_setting, multiple );
-        UpdateData( _invalid_int, kfdata, KFEnum::Dec, value );
+        UpdateData( kfdata, KFEnum::Dec, value );
     }
 
     void KFEntityEx::RemoveObjectElement( KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple )

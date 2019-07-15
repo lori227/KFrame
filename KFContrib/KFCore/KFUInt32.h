@@ -19,6 +19,9 @@ namespace KFrame
         // 是否达到了最大值
         virtual bool IsFull();
 
+        // 初始化数值
+        virtual void InitData();
+
         // 保存 赋值
         virtual void CopyFrom( KFData* kfother );
         virtual void SaveTo( KFData* kfother );

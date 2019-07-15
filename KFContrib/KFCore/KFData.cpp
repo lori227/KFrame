@@ -242,14 +242,15 @@ namespace KFrame
         KFData::Reset();
     }
 
-    void KFData::Reset()
+    void KFData::InitData()
     {
-        if ( !_data_setting->_init_value.empty() )
-        {
-            FromString( _data_setting->_init_value );
-        }
+
     }
 
+    void KFData::Reset()
+    {
+
+    }
 
     bool KFData::HaveMask( uint32 mask ) const
     {

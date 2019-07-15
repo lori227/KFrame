@@ -95,12 +95,12 @@ namespace KFrame
             _cluster_master_id = netdata->_id;
 
             // 开启认证定时器
-            __LOOP_TIMER_ONE_PARAM__( netdata->_id, 10000, 0, &KFClusterClientModule::OnTimerSendClusterAuthMessage );
+            __LOOP_TIMER_ONE_PARAM__( netdata->_id, 10000, 1000, &KFClusterClientModule::OnTimerSendClusterAuthMessage );
         }
         else if ( netdata->_type == __KF_STRING__( proxy ) )
         {
             // 发送登录消息定时器
-            __LOOP_TIMER_ONE_PARAM__( netdata->_id, 3000, 0, &KFClusterClientModule::OnTimerSendClusterTokenMessage );
+            __LOOP_TIMER_ONE_PARAM__( netdata->_id, 3000, 1, &KFClusterClientModule::OnTimerSendClusterTokenMessage );
         }
     }
 

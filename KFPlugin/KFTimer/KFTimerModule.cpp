@@ -191,8 +191,8 @@ namespace KFrame
         kfdata->_module = module;
         kfdata->_type = TimerEnum::Loop;
         kfdata->_function = function;
+        kfdata->_delay = delaytime;
         kfdata->_interval = intervaltime;
-        kfdata->_delay = __MAX__( delaytime, 1u );
         _register_timer_data.push_back( kfdata );
     }
 

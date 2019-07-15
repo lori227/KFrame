@@ -134,13 +134,16 @@ namespace KFrame
         const KFClassSetting* _class_setting = nullptr;
 
         // 初始值
-        std::string _init_value;
+        std::string _str_init_value;
+        uint32 _int_init_value = 0u;
 
         // 最大值
-        uint32 _max_value = 0u;
+        std::string _str_max_value;
+        uint32 _int_max_value = __MAX_UINT32__;
 
         // 逻辑值
-        uint32 _logic_value = 0u;
+        std::string _str_logic_value;
+        uint32 _int_logic_value = 0u;
 
         // 属性标记
         uint32 _data_mask = 0u;

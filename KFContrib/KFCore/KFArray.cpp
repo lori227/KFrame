@@ -6,7 +6,7 @@ namespace KFrame
     {
         KFData::Initialize( classsetting, datasetting );
 
-        auto size = datasetting->_max_value + KFDataDefine::Array_Index;
+        auto size = datasetting->_int_max_value + KFDataDefine::Array_Index;
         _data.Resize( size );
     }
 
@@ -35,6 +35,20 @@ namespace KFrame
         }
 
         return false;
+    }
+
+    void KFArray::InitData()
+    {
+        if ( _data_setting->_int_init_value != _invalid_int )
+        {
+            for ( auto kfdata : _data._objects )
+            {
+                if ( kfdata != nullptr )
+                {
+                    kfdata->SetValue( _data_setting->_int_init_value );
+                }
+            }
+        }
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -16,6 +16,9 @@ namespace KFrame
         // 是否有效
         virtual bool IsValid();
 
+        // 初始化数值
+        virtual void InitData();
+
         // 保存 赋值
         virtual void CopyFrom( KFData* kfother );
         virtual void SaveTo( KFData* kfother );
