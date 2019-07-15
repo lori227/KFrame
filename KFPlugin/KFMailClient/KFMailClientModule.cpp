@@ -52,7 +52,7 @@ namespace KFrame
     void KFMailClientModule::OnEnterQueryMail( KFEntity* player )
     {
         auto playerid = player->GetKeyID();
-        __LOOP_TIMER_ONE_PARAM__( playerid, KFTimeEnum::OneMinuteMicSecond * 5, 0, &KFMailClientModule::OnTimerQueryMail );
+        __LOOP_TIMER_ONE_PARAM__( playerid, KFTimeEnum::OneMinuteMicSecond * 5, 1, &KFMailClientModule::OnTimerQueryMail );
     }
 
     void KFMailClientModule::OnLeaveQueryMail( KFEntity* player )

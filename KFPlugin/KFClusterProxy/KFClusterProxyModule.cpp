@@ -78,7 +78,7 @@ namespace KFrame
     void KFClusterProxyModule::OnClientConnectionClusterMaster( const std::string& servername, uint64 serverid )
     {
         // 注册定时器
-        __LOOP_TIMER_ONE_PARAM__( serverid, 5000, 0, &KFClusterProxyModule::OnTimerSendClusterRegisterMessage );
+        __LOOP_TIMER_ONE_PARAM__( serverid, 5000, 1, &KFClusterProxyModule::OnTimerSendClusterRegisterMessage );
     }
 
     __KF_TIMER_FUNCTION__( KFClusterProxyModule::OnTimerSendClusterRegisterMessage )
