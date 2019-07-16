@@ -45,13 +45,13 @@ namespace KFrame
         _kf_component->UnRegisterShowElementFunction();
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 取消注册command函数
-        __UNREGISTER_COMMAND_FUNCTION__( __KF_STRING__( adddata ) );
-        __UNREGISTER_COMMAND_FUNCTION__( __KF_STRING__( setdata ) );
-        __UNREGISTER_COMMAND_FUNCTION__( __KF_STRING__( decdata ) );
+        __UN_COMMAND_FUNCTION__( __KF_STRING__( adddata ) );
+        __UN_COMMAND_FUNCTION__( __KF_STRING__( setdata ) );
+        __UN_COMMAND_FUNCTION__( __KF_STRING__( decdata ) );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_REMOVE_DATA_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_REQUEST_SYNC_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_CANCEL_SYNC_REQ );
+        __UN_MESSAGE__( KFMsg::MSG_REMOVE_DATA_REQ );
+        __UN_MESSAGE__( KFMsg::MSG_REQUEST_SYNC_REQ );
+        __UN_MESSAGE__( KFMsg::MSG_CANCEL_SYNC_REQ );
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

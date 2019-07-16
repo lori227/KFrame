@@ -18,8 +18,8 @@ namespace KFrame
     {
         __KF_REMOVE_CONFIG__( _kf_store_config );
         //////////////////////////////////////////////////////////////////
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_BUY_STORE_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_QUERY_STORE_REQ );
+        __UN_MESSAGE__( KFMsg::MSG_BUY_STORE_REQ );
+        __UN_MESSAGE__( KFMsg::MSG_QUERY_STORE_REQ );
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////

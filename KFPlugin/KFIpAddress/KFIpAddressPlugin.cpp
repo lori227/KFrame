@@ -10,7 +10,7 @@ namespace KFrame
 
     void KFIpAddressPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFIpAddress );
+        __UN_MODULE__( KFIpAddress );
     }
 
     void KFIpAddressPlugin::LoadModule()

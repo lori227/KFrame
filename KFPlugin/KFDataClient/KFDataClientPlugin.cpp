@@ -10,7 +10,7 @@ namespace KFrame
 
     void KFDataClientPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFDataClient );
+        __UN_MODULE__( KFDataClient );
     }
 
     void KFDataClientPlugin::LoadModule()

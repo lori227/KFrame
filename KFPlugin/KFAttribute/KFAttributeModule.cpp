@@ -13,9 +13,9 @@ namespace KFrame
     void KFAttributeModule::BeforeShut()
     {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_SET_NAME_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_SET_SEX_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_SET_PLAYERNAME_TO_GAME_ACK );
+        __UN_MESSAGE__( KFMsg::MSG_SET_NAME_REQ );
+        __UN_MESSAGE__( KFMsg::MSG_SET_SEX_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_SET_PLAYERNAME_TO_GAME_ACK );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////

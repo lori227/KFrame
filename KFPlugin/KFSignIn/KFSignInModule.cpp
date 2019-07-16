@@ -18,7 +18,7 @@ namespace KFrame
     {
         __KF_REMOVE_CONFIG__( _kf_signin_config );
 
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_SEVEN_SIGNIN_REWARD_REQ );
+        __UN_MESSAGE__( KFMsg::MSG_SEVEN_SIGNIN_REWARD_REQ );
     }
 
     __KF_MESSAGE_FUNCTION__( KFSignInModule::HandleReceiveSevenRewardReq )

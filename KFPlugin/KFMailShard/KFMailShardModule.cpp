@@ -4,8 +4,8 @@ namespace KFrame
 {
     void KFMailShardModule::BeforeRun()
     {
-        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( addmail ), true, &KFMailShardModule::HandleGMAddMailReq );
-        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( delmail ), true, &KFMailShardModule::HandleGMDeleteMailReq );
+        __REGISTER_HTTP__( __KF_STRING__( addmail ), true, &KFMailShardModule::HandleGMAddMailReq );
+        __REGISTER_HTTP__( __KF_STRING__( delmail ), true, &KFMailShardModule::HandleGMDeleteMailReq );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_MAIL_REQ, &KFMailShardModule::HandleQueryMailReq );
@@ -17,15 +17,15 @@ namespace KFrame
 
     void KFMailShardModule::BeforeShut()
     {
-        __UNREGISTER_SCHEDULE__();
-        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( addmail ) );
-        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( delmail ) );
+        __UN_SCHEDULE__();
+        __UN_HTTP__( __KF_STRING__( addmail ) );
+        __UN_HTTP__( __KF_STRING__( delmail ) );
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_MAIL_ACK );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_ADD_MAIL_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_MAIL_STATUS_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_NEW_PLAYER_MAIL_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_QUERY_MAIL_ACK );
+        __UN_MESSAGE__( KFMsg::S2S_ADD_MAIL_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_UPDATE_MAIL_STATUS_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_NEW_PLAYER_MAIL_REQ );
     }
 
     void KFMailShardModule::OnceRun()

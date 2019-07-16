@@ -32,7 +32,7 @@ namespace KFrame
 
     void KFItemModule::BeforeShut()
     {
-        __UN_TIMER_NO_PARAM__();
+        __UN_TIMER_0__();
         __KF_REMOVE_CONFIG__( _kf_item_config );
         //////////////////////////////////////////////////////////////////////////////////////////////////
         _kf_component->UnRegisterAddDataFunction( this, __KF_STRING__( item ) );
@@ -47,10 +47,10 @@ namespace KFrame
         _kf_player->UnRegisterEnterFunction( this );
         _kf_player->UnRegisterLeaveFunction( this );
         //////////////////////////////////////////////////////////////////////////////////////////////////
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_SPLIT_ITEM_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_MERGE_ITEM_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_MOVE_ITEM_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_USE_ITEM_REQ );
+        __UN_MESSAGE__( KFMsg::MSG_SPLIT_ITEM_REQ );
+        __UN_MESSAGE__( KFMsg::MSG_MERGE_ITEM_REQ );
+        __UN_MESSAGE__( KFMsg::MSG_MOVE_ITEM_REQ );
+        __UN_MESSAGE__( KFMsg::MSG_USE_ITEM_REQ );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -420,7 +420,7 @@ namespace KFrame
             {
                 intervaltime = ( mintime - nowtime + 1 ) * 1000;
             }
-            __LIMIT_TIMER_ONE_PARAM__( player->GetKeyID(), intervaltime, 1, &KFItemModule::OnTimerRemoveTimeItem );
+            __LIMIT_TIMER_1__( player->GetKeyID(), intervaltime, 1, &KFItemModule::OnTimerRemoveTimeItem );
         }
     }
 
@@ -480,7 +480,7 @@ namespace KFrame
 
     void KFItemModule::OnLeaveItemModule( KFEntity* player )
     {
-        __UN_TIMER_ONE_PARAM__( player->GetKeyID() );
+        __UN_TIMER_1__( player->GetKeyID() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFItemModule::HandleSplitItemReq )

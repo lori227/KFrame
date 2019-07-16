@@ -40,7 +40,7 @@ namespace KFrame
 #define __REGISTER_DEPLOY_FUNCTION__( command, function ) \
     _kf_deploy_client->RegisterFunction( command, this, function )
 
-#define __UNREGISTER_DEPLOY_FUNCTION__( command ) \
+#define __UN_DEPLOY_FUNCTION__( command ) \
     _kf_deploy_client->UnRegisterFunction( command, this )
 }
 

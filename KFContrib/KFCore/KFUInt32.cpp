@@ -14,6 +14,10 @@ namespace KFrame
         {
             _data = _data_setting->_int_max_value;
         }
+        else if ( _data < _data_setting->_int_min_value )
+        {
+            _data = _data_setting->_int_min_value;
+        }
 
         return _data;
     }

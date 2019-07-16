@@ -47,17 +47,17 @@ namespace KFrame
 
     protected:
         // 上线查询好友数据
-        void OnEnterQueryRelation( KFEntity* player );
+        __KF_ENTER_PLAYER_FUNCTION__( OnEnterQueryRelation );
 
         // 下线通知
-        void OnLeaveUpdateRelation( KFEntity* player );
+        __KF_LEAVE_PLAYER_FUNCTION__( OnLeaveUpdateRelation );
 
         // 属性更新回调
         __KF_UPDATE_DATA_FUNCTION__( OnRelationValueUpdate );
         __KF_UPDATE_STRING_FUNCTION__( OnRelationStringUpdate );
 
         // 更新关系属性值
-        void OnRelationValueUpdate( KFEntity* player, KFData* kfdata );
+        void UpdateValueToRelation( KFEntity* player, KFData* kfdata );
 
     protected:
         // 查询好友回馈

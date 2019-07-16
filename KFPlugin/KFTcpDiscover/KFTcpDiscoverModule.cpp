@@ -5,9 +5,9 @@ namespace KFrame
 {
     void KFTcpDiscoverModule::BeforeRun()
     {
-        __REGISTER_SERVER_DISCOVER_FUNCTION__( &KFTcpDiscoverModule::OnServerDiscoverClient );
-        __REGISTER_SERVER_LOST_FUNCTION__( &KFTcpDiscoverModule::OnServerLostClient );
-        __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFTcpDiscoverModule::OnClientConnectServer );
+        __REGISTER_SERVER_DISCOVER__( &KFTcpDiscoverModule::OnServerDiscoverClient );
+        __REGISTER_SERVER_LOST__( &KFTcpDiscoverModule::OnServerLostClient );
+        __REGISTER_CLIENT_CONNECTION__( &KFTcpDiscoverModule::OnClientConnectServer );
         //////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_TELL_DISCOVER_SERVER_TO_MASTER, &KFTcpDiscoverModule::HandleTellDiscoverServerToMaster );
         __REGISTER_MESSAGE__( KFMsg::S2S_TELL_LOST_SERVER_TO_MASTER, &KFTcpDiscoverModule::HandleTellLostServerToMaster );
@@ -17,14 +17,14 @@ namespace KFrame
 
     void KFTcpDiscoverModule::ShutDown()
     {
-        __UNREGISTER_SERVER_DISCOVER_FUNCTION__();
-        __UNREGISTER_SERVER_LOST_FUNCTION__();
-        __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
+        __UN_SERVER_DISCOVER__();
+        __UN_SERVER_LOST__();
+        __UN_CLIENT_CONNECTION__();
         //////////////////////////////////////////////////////////////////////////////////////////////////
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_TELL_DISCOVER_SERVER_TO_MASTER );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_TELL_LOST_SERVER_TO_MASTER );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_TELL_REGISTER_SERVER_TO_MASTER );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_TELL_SERVER_LIST_TO_MASTER );
+        __UN_MESSAGE__( KFMsg::S2S_TELL_DISCOVER_SERVER_TO_MASTER );
+        __UN_MESSAGE__( KFMsg::S2S_TELL_LOST_SERVER_TO_MASTER );
+        __UN_MESSAGE__( KFMsg::S2S_TELL_REGISTER_SERVER_TO_MASTER );
+        __UN_MESSAGE__( KFMsg::S2S_TELL_SERVER_LIST_TO_MASTER );
     }
 
     void KFTcpDiscoverModule::OnceRun()

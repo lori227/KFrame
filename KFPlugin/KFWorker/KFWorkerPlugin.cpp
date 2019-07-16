@@ -11,7 +11,7 @@ namespace KFrame
 
     void KFWorkerPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFWorker );
+        __UN_MODULE__( KFWorker );
     }
 
     void KFWorkerPlugin::LoadModule()

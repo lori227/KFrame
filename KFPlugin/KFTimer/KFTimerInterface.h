@@ -59,32 +59,32 @@ namespace KFrame
 #define __KF_TIMER_FUNCTION__( function ) \
     void function( const std::string& module, uint64 objectid, uint64 subid )
 
-#define __LOOP_TIMER_NO_PARAM__( intervaltime, delaytime, function ) \
+#define __LOOP_TIMER_0__( intervaltime, delaytime, function ) \
     _kf_timer->RegisterLoopTimer( 0u, 0u, intervaltime, delaytime, this, function )
-#define __LOOP_TIMER_ONE_PARAM__( objectid, intervaltime, delaytime, function ) \
+#define __LOOP_TIMER_1__( objectid, intervaltime, delaytime, function ) \
     _kf_timer->RegisterLoopTimer( objectid, 0u, intervaltime, delaytime, this, function )
-#define __LOOP_TIMER_TWO_PARAM__( objectid, subid, intervaltime, delaytime, function ) \
+#define __LOOP_TIMER_2__( objectid, subid, intervaltime, delaytime, function ) \
     _kf_timer->RegisterLoopTimer( objectid, subid, intervaltime, delaytime, this, function )
 
-#define __LIMIT_TIMER_NO_PARAM__( intervaltime, count, function ) \
+#define __LIMIT_TIMER_0__( intervaltime, count, function ) \
     _kf_timer->RegisterLimitTimer( 0u, 0u, intervaltime, count, this, function )
-#define __LIMIT_TIMER_ONE_PARAM__( objectid, intervaltime, count, function ) \
+#define __LIMIT_TIMER_1__( objectid, intervaltime, count, function ) \
     _kf_timer->RegisterLimitTimer( objectid, 0u, intervaltime, count, this, function )
-#define __LIMIT_TIMER_TWO_PARAM__( objectid, subid, intervaltime, count, function ) \
+#define __LIMIT_TIMER_2__( objectid, subid, intervaltime, count, function ) \
     _kf_timer->RegisterLimitTimer( objectid, subid, intervaltime, count, this, function )
 
-#define __DELAY_TIMER_NO_PARAM__( intervaltime, function ) \
+#define __DELAY_TIMER_0__( intervaltime, function ) \
     _kf_timer->RegisterDelayTimer( 0u, 0u,intervaltime, this, function )
-#define __DELAY_TIMER_ONE_PARAM__( objectid, intervaltime, function ) \
+#define __DELAY_TIMER_1__( objectid, intervaltime, function ) \
     _kf_timer->RegisterDelayTimer( objectid, 0u,intervaltime, this, function )
-#define __DELAY_TIMER_TWO_PARAM__( objectid, subid, intervaltime, function ) \
+#define __DELAY_TIMER_2__( objectid, subid, intervaltime, function ) \
     _kf_timer->RegisterDelayTimer( objectid, subid, intervaltime, this, function )
 
-#define __UN_TIMER_NO_PARAM__() \
+#define __UN_TIMER_0__() \
     _kf_timer->UnRegisterTimer( this, 0u, 0u )
-#define __UN_TIMER_ONE_PARAM__( objectid ) \
+#define __UN_TIMER_1__( objectid ) \
     _kf_timer->UnRegisterTimer( this, objectid, 0u )
-#define __UN_TIMER_TWO_PARAM__( objectid, subid ) \
+#define __UN_TIMER_2__( objectid, subid ) \
     _kf_timer->UnRegisterTimer( this, objectid, subid )
 }
 

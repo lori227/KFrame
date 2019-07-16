@@ -10,16 +10,16 @@ namespace KFrame
 
     void KFLeaveModule::BeforeRun()
     {
-        _kf_player->RegisterLeaveFunction( this, &KFLeaveModule::LeaveGameWorld );
+        __REGISTER_LEAVE_PLAYER__( &KFLeaveModule::LeaveGameWorld );
     }
 
     void KFLeaveModule::BeforeShut()
     {
+        __UN_LEAVE_PLAYER__();
         __KF_REMOVE_CONFIG__( _kf_leave_config );
-        _kf_player->UnRegisterLeaveFunction( this );
     }
 
-    void KFLeaveModule::LeaveGameWorld( KFEntity* player )
+    __KF_LEAVE_PLAYER_FUNCTION__( KFLeaveModule::LeaveGameWorld )
     {
         auto kfobject = player->GetData();
         //////////////////////////////////////////////////////////////////////////

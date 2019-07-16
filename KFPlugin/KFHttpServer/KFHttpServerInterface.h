@@ -47,10 +47,10 @@ namespace KFrame
 #define __KF_HTTP_FUNCTION__( function ) \
     std::string function( const std::string& ip, const std::string& data )
 
-#define __REGISTER_HTTP_FUNCTION__( url, sync, function )\
+#define __REGISTER_HTTP__( url, sync, function )\
     _kf_http_server->RegisterFunction( url, sync, this, function )
 
-#define __UNREGISTER_HTTP_FUNCTION__( url )\
+#define __UN_HTTP__( url )\
     _kf_http_server->UnRegisterFunction( url )
 }
 

@@ -71,6 +71,7 @@ namespace KFrame
         kfdatasetting->_delay_save_time = xmlnode.GetUInt32( "SaveTime", true );
         kfdatasetting->_delete_type = xmlnode.GetUInt32( "DeleteType", true );
         kfdatasetting->_str_init_value = xmlnode.GetString( "InitValue", true );
+        kfdatasetting->_str_min_value = xmlnode.GetString( "MinValue", true );
         kfdatasetting->_str_max_value = xmlnode.GetString( "MaxValue", true );
         kfdatasetting->_str_logic_value = xmlnode.GetString( "LogicValue", true );
         kfdatasetting->_key_name = xmlnode.GetString( "KeyName", true );

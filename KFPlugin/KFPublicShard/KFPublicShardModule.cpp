@@ -13,10 +13,10 @@ namespace KFrame
 
     void KFPublicShardModule::BeforeShut()
     {
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_DATA_TO_PUBLIC_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_CLEAR_ONLINE_TO_PUBLIC_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_BASIC_TO_PUBLIC_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_SET_PLAYERNAME_TO_DATA_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_UPDATE_DATA_TO_PUBLIC_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_CLEAR_ONLINE_TO_PUBLIC_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_QUERY_BASIC_TO_PUBLIC_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_SET_PLAYERNAME_TO_DATA_REQ );
     }
 
     void KFPublicShardModule::OnceRun()

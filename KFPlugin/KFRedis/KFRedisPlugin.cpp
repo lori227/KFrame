@@ -11,7 +11,7 @@ namespace KFrame
 
     void KFRedisPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFRedis );
+        __UN_MODULE__( KFRedis );
     }
 
     void KFRedisPlugin::LoadModule()

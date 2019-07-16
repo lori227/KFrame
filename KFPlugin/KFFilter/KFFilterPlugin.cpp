@@ -11,7 +11,7 @@ namespace KFrame
 
     void KFFilterPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFFilter );
+        __UN_MODULE__( KFFilter );
     }
 
     void KFFilterPlugin::LoadModule()

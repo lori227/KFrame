@@ -13,9 +13,9 @@ namespace KFrame
 
     void KFDataClientModule::BeforeShut()
     {
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_SAVE_PLAYER_TO_GAME_ACK );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_LOAD_PLAYER_TO_GAME_ACK );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_PLAYER_TO_GAME_ACK );
+        __UN_MESSAGE__( KFMsg::S2S_SAVE_PLAYER_TO_GAME_ACK );
+        __UN_MESSAGE__( KFMsg::S2S_LOAD_PLAYER_TO_GAME_ACK );
+        __UN_MESSAGE__( KFMsg::S2S_QUERY_PLAYER_TO_GAME_ACK );
     }
 
     void KFDataClientModule::Run()

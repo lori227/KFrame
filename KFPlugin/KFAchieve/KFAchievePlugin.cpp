@@ -12,7 +12,7 @@ namespace KFrame
 
     void KFAchievePlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFAchieve );
+        __UN_MODULE__( KFAchieve );
     }
 
     void KFAchievePlugin::LoadModule()

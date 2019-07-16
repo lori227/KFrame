@@ -92,7 +92,7 @@ namespace KFrame
     void KFTcpServerModule::BeforeShut()
     {
         ///////////////////////////////////////////////////////////////////////////////////////////////
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_REGISTER_TO_SERVER_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_REGISTER_TO_SERVER_REQ );
     }
 
     void KFTcpServerModule::ShutDown()

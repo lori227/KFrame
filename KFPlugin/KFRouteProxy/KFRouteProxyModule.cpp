@@ -5,8 +5,8 @@ namespace KFrame
 {
     void KFRouteProxyModule::BeforeRun()
     {
-        __REGISTER_SERVER_LOST_FUNCTION__( &KFRouteProxyModule::OnServerLostClient );
-        __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFRouteProxyModule::OnClientConnectServer );
+        __REGISTER_SERVER_LOST__( &KFRouteProxyModule::OnServerLostClient );
+        __REGISTER_CLIENT_CONNECTION__( &KFRouteProxyModule::OnClientConnectServer );
 
         //////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_ROUTE_SYNC_OBJECT_TO_PROXY_REQ, &KFRouteProxyModule::HandleRouteSyncObjectToProxyReq );
@@ -18,15 +18,15 @@ namespace KFrame
 
     void KFRouteProxyModule::BeforeShut()
     {
-        __UNREGISTER_SERVER_LOST_FUNCTION__();
-        __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
+        __UN_SERVER_LOST__();
+        __UN_CLIENT_CONNECTION__();
 
         //////////////////////////////////////////////////////////////////////////////////////////////////
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_ROUTE_SYNC_OBJECT_TO_PROXY_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_ROUTE_ADD_OBJECT_TO_PROXY_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_ROUTE_REMOVE_OBJECT_TO_PROXY_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_ROUTE_MESSAGE_TO_SERVER_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_ROUTE_MESSAGE_TO_PLAYER_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_ROUTE_SYNC_OBJECT_TO_PROXY_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_ROUTE_ADD_OBJECT_TO_PROXY_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_ROUTE_REMOVE_OBJECT_TO_PROXY_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_ROUTE_MESSAGE_TO_SERVER_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_ROUTE_MESSAGE_TO_PLAYER_REQ );
 
     }
     //////////////////////////////////////////////////////////////////////////////////////////////

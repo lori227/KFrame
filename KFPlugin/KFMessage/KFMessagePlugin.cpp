@@ -11,7 +11,7 @@ namespace KFrame
 
     void KFMessagePlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFMessage );
+        __UN_MODULE__( KFMessage );
     }
 
     void KFMessagePlugin::LoadModule()

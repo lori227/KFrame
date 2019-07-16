@@ -10,7 +10,7 @@ namespace KFrame
 
     void KFLogClientPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFLogClient );
+        __UN_MODULE__( KFLogClient );
     }
 
     void KFLogClientPlugin::LoadModule()

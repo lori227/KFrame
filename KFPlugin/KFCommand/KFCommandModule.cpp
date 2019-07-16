@@ -10,7 +10,7 @@ namespace KFrame
 
     void KFCommandModule::BeforeShut()
     {
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_COMMAND_REQ );
+        __UN_MESSAGE__( KFMsg::MSG_COMMAND_REQ );
     }
 
     /////////////////////////////////////////////////////////////////

@@ -12,7 +12,7 @@ namespace KFrame
 
     void KFEnterPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFEnter );
+        __UN_MODULE__( KFEnter );
     }
 
     void KFEnterPlugin::LoadModule()

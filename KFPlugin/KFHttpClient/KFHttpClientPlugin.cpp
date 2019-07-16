@@ -13,7 +13,7 @@ namespace KFrame
 
     void KFHttpClientPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFHttpClient );
+        __UN_MODULE__( KFHttpClient );
     }
 
     void KFHttpClientPlugin::LoadModule()

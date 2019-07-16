@@ -20,24 +20,24 @@ namespace KFrame
     void KFAuthModule::BeforeRun()
     {
         // zone
-        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( zoneregister ), false, &KFAuthModule::HandleZoneRegister );
-        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( zoneupdate ), false, &KFAuthModule::HandleZoneUpdate );
-        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( zoneremove ), false, &KFAuthModule::HandleZoneRemove );
-        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( zonelist ), false, &KFAuthModule::HandleQueryZoneList );
-        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( zoneip ), false, &KFAuthModule::HandleQueryZoneIp );
-        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( zonebalance ), false, &KFAuthModule::HandleZoneBalance );
-        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( worldregister ), false, &KFAuthModule::HandleWorldRegister );
+        __REGISTER_HTTP__( __KF_STRING__( zoneregister ), false, &KFAuthModule::HandleZoneRegister );
+        __REGISTER_HTTP__( __KF_STRING__( zoneupdate ), false, &KFAuthModule::HandleZoneUpdate );
+        __REGISTER_HTTP__( __KF_STRING__( zoneremove ), false, &KFAuthModule::HandleZoneRemove );
+        __REGISTER_HTTP__( __KF_STRING__( zonelist ), false, &KFAuthModule::HandleQueryZoneList );
+        __REGISTER_HTTP__( __KF_STRING__( zoneip ), false, &KFAuthModule::HandleQueryZoneIp );
+        __REGISTER_HTTP__( __KF_STRING__( zonebalance ), false, &KFAuthModule::HandleZoneBalance );
+        __REGISTER_HTTP__( __KF_STRING__( worldregister ), false, &KFAuthModule::HandleWorldRegister );
 
         // auth
-        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( auth ), false, &KFAuthModule::HandleAuthLogin );
-        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( verify ), false, &KFAuthModule::HandleVerifyToken );
+        __REGISTER_HTTP__( __KF_STRING__( auth ), false, &KFAuthModule::HandleAuthLogin );
+        __REGISTER_HTTP__( __KF_STRING__( verify ), false, &KFAuthModule::HandleVerifyToken );
 
         // pay
-        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( applyorder ), false, &KFAuthModule::HandleApplyOrder );
-        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( removeorder ), false, &KFAuthModule::HandleRemoveOrder );
-        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( querypay ), false, &KFAuthModule::HandleQueryPay );
-        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( finishpay ), false, &KFAuthModule::HandleFinishPay );
-        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( internalpay ), false, &KFAuthModule::HandleInternalPay );
+        __REGISTER_HTTP__( __KF_STRING__( applyorder ), false, &KFAuthModule::HandleApplyOrder );
+        __REGISTER_HTTP__( __KF_STRING__( removeorder ), false, &KFAuthModule::HandleRemoveOrder );
+        __REGISTER_HTTP__( __KF_STRING__( querypay ), false, &KFAuthModule::HandleQueryPay );
+        __REGISTER_HTTP__( __KF_STRING__( finishpay ), false, &KFAuthModule::HandleFinishPay );
+        __REGISTER_HTTP__( __KF_STRING__( internalpay ), false, &KFAuthModule::HandleInternalPay );
 
         /////////////////////////////////////////////////////////////////////////////////////////
     }
@@ -45,24 +45,24 @@ namespace KFrame
     void KFAuthModule::BeforeShut()
     {
         // zone
-        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( zoneregister ) );
-        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( zoneupdate ) );
-        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( zoneremove ) );
-        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( zonelist ) );
-        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( zoneip ) );
-        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( zonebalance ) );
-        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( worldregister ) );
+        __UN_HTTP__( __KF_STRING__( zoneregister ) );
+        __UN_HTTP__( __KF_STRING__( zoneupdate ) );
+        __UN_HTTP__( __KF_STRING__( zoneremove ) );
+        __UN_HTTP__( __KF_STRING__( zonelist ) );
+        __UN_HTTP__( __KF_STRING__( zoneip ) );
+        __UN_HTTP__( __KF_STRING__( zonebalance ) );
+        __UN_HTTP__( __KF_STRING__( worldregister ) );
 
         // auth
-        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( auth ) );
-        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( verify ) );
+        __UN_HTTP__( __KF_STRING__( auth ) );
+        __UN_HTTP__( __KF_STRING__( verify ) );
 
         // pay
-        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( applyorder ) );
-        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( removeorder ) );
-        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( querypay ) );
-        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( finishpay ) );
-        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( internalpay ) );
+        __UN_HTTP__( __KF_STRING__( applyorder ) );
+        __UN_HTTP__( __KF_STRING__( removeorder ) );
+        __UN_HTTP__( __KF_STRING__( querypay ) );
+        __UN_HTTP__( __KF_STRING__( finishpay ) );
+        __UN_HTTP__( __KF_STRING__( internalpay ) );
         ///////////////////////////////////////////////////////////////////////////
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////

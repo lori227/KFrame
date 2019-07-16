@@ -11,7 +11,7 @@ namespace KFrame
 
     void KFPublicShardPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFPublicShard );
+        __UN_MODULE__( KFPublicShard );
     }
 
     void KFPublicShardPlugin::LoadModule()

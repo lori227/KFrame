@@ -4,8 +4,8 @@ namespace KFrame
 {
     void KFWorldModule::BeforeRun()
     {
-        __LOOP_TIMER_NO_PARAM__( 5000, 1000, &KFWorldModule::OnTimerWorldRegister );
-        __REGISTER_SERVER_LOST_FUNCTION__( &KFWorldModule::OnServerLostGame );
+        __LOOP_TIMER_0__( 5000, 1000, &KFWorldModule::OnTimerWorldRegister );
+        __REGISTER_SERVER_LOST__( &KFWorldModule::OnServerLostGame );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_ADD_GATE_TO_WORLD_REQ, &KFWorldModule::HandleAddGateToWorldReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_REMOVE_GATE_TO_WORLD_REQ, &KFWorldModule::HandleRemoveGateToWorldReq );
@@ -19,27 +19,27 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFMsg::S2S_BROADCAST_TO_WORLD_REQ, &KFWorldModule::HandleBroadcastToWorldReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_BROADCAST_TO_WORLD_ACK, &KFWorldModule::HandleBroadcastToWorldAck );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( kickonline ), true, &KFWorldModule::HandleHttpKickOnline );
+        __REGISTER_HTTP__( __KF_STRING__( kickonline ), true, &KFWorldModule::HandleHttpKickOnline );
     }
 
     void KFWorldModule::BeforeShut()
     {
-        __UN_TIMER_NO_PARAM__();
-        __UNREGISTER_SERVER_LOST_FUNCTION__();
+        __UN_TIMER_0__();
+        __UN_SERVER_LOST__();
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_ADD_GATE_TO_WORLD_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_REMOVE_GATE_TO_WORLD_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_LOGIN_TO_WORLD_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_PLAYER_ENTER_TO_WORLD_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_PLAYER_LEAVE_TO_WORLD_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_KICK_PLAYER_TO_WORLD_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_KICK_PLAYER_TO_WORLD_ACK );
+        __UN_MESSAGE__( KFMsg::S2S_ADD_GATE_TO_WORLD_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_REMOVE_GATE_TO_WORLD_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_LOGIN_TO_WORLD_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_PLAYER_ENTER_TO_WORLD_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_PLAYER_LEAVE_TO_WORLD_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_KICK_PLAYER_TO_WORLD_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_KICK_PLAYER_TO_WORLD_ACK );
 
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_BROADCAST_TO_GAME_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_BROADCAST_TO_WORLD_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_BROADCAST_TO_WORLD_ACK );
+        __UN_MESSAGE__( KFMsg::S2S_BROADCAST_TO_GAME_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_BROADCAST_TO_WORLD_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_BROADCAST_TO_WORLD_ACK );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( kickonline ) );
+        __UN_HTTP__( __KF_STRING__( kickonline ) );
     }
 
     void KFWorldModule::OnceRun()
@@ -61,7 +61,7 @@ namespace KFrame
         auto retcode = __JSON_GET_UINT32__( recvjson, __KF_STRING__( retcode ) );
         if ( retcode == KFMsg::Ok )
         {
-            __UN_TIMER_ONE_PARAM__( objectid );
+            __UN_TIMER_1__( objectid );
         }
     }
 

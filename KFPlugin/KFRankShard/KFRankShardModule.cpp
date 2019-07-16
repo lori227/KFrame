@@ -21,18 +21,18 @@ namespace KFrame
 
     void KFRankShardModule::BeforeShut()
     {
-        __UN_TIMER_NO_PARAM__();
-        __UNREGISTER_SCHEDULE__();
+        __UN_TIMER_0__();
+        __UN_SCHEDULE__();
         __KF_REMOVE_CONFIG__( _kf_rank_config );
         _kf_route->UnRegisterConnectionFunction( this );
         //////////////////////////////////////////////////////////////////////////////////////////////////
 
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_NOTICE_RANK_WORKER_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_SYNC_REFRESH_RANK );
+        __UN_MESSAGE__( KFMsg::S2S_NOTICE_RANK_WORKER_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_SYNC_REFRESH_RANK );
 
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_RANK_DATA_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_RANK_LIST_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_FRIEND_RANK_LIST_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_UPDATE_RANK_DATA_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_QUERY_RANK_LIST_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_QUERY_FRIEND_RANK_LIST_REQ );
     }
 
     void KFRankShardModule::OnceRun()
@@ -105,8 +105,8 @@ namespace KFrame
             return;
         }
 
-        __UN_TIMER_NO_PARAM__();
-        __UNREGISTER_SCHEDULE__();
+        __UN_TIMER_0__();
+        __UN_SCHEDULE__();
         _max_rank_worker_id = kfmsg.workerid();
         for ( auto& iter : _kf_rank_config->_kf_rank_setting._objects )
         {
@@ -133,7 +133,7 @@ namespace KFrame
             auto delaytime = ( passtime == 0u ? 0u : kfsetting->_refresh_time - passtime );
 
             // 配置_refresh_time 单位:秒
-            __LOOP_TIMER_ONE_PARAM__( kfsetting->_rank_id, kfsetting->_refresh_time * 1000, delaytime * 1000, &KFRankShardModule::OnTimerRefreshRankData );
+            __LOOP_TIMER_1__( kfsetting->_rank_id, kfsetting->_refresh_time * 1000, delaytime * 1000, &KFRankShardModule::OnTimerRefreshRankData );
         }
         else
         {

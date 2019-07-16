@@ -92,7 +92,7 @@ namespace KFrame
 #define __REGISTER_ROUTE_MESSAGE_FUNCTION__( function )\
     _kf_route->RegisterTranspondFunction( this, function )
 
-#define __UNREGISTER_ROUTE_MESSAGE_FUNCTION__()\
+#define __UN_ROUTE_MESSAGE_FUNCTION__()\
     _kf_route->UnRegisterTranspondFunction( this )
 }
 

@@ -11,7 +11,7 @@ namespace KFrame
 
     void KFTaskPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFTask );
+        __UN_MODULE__( KFTask );
     }
 
     void KFTaskPlugin::LoadModule()

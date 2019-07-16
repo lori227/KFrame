@@ -34,10 +34,10 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
     protected:
         // 重置数据
-        void ResetPlayerData( KFEntity* player );
+        __KF_RESET_PLAYER_FUNCTION__( ResetPlayerData );
 
         // 刷新数据
-        void RunResetPlayerData( KFEntity* player );
+        __KF_RUN_PLAYER_FUNCTION__( RunResetPlayerData );
 
         // 判断刷新时间
         bool CheckResetPlayerDataTime();
@@ -47,10 +47,10 @@ namespace KFrame
 
     private:
         // 是否需要刷新
-        bool _need_to_reset{ false };
+        bool _need_to_reset = false;
 
         // 上次刷新时间
-        uint64 _next_reset_data_time{ 0 };
+        uint64 _next_reset_data_time = 0;
     };
 }
 

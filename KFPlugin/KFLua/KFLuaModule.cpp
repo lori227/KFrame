@@ -10,7 +10,7 @@ namespace KFrame
 
     void KFLuaModule::ShutDown()
     {
-        __UNREGISTER_DEPLOY_FUNCTION__( __KF_STRING__( loadscript ) );
+        __UN_DEPLOY_FUNCTION__( __KF_STRING__( loadscript ) );
     }
 
     __KF_DEPLOY_FUNCTION__( KFLuaModule::LoadScript )

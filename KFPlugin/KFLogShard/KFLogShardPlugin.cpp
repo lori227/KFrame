@@ -12,7 +12,7 @@ namespace KFrame
 
     void KFLogShardPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFLogShard );
+        __UN_MODULE__( KFLogShard );
     }
 
     void KFLogShardPlugin::LoadModule()

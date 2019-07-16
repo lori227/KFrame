@@ -37,7 +37,7 @@ namespace KFrame
         _kf_player->UnRegisterEnterFunction( this );
         _kf_player->UnRegisterLeaveFunction( this );
         //////////////////////////////////////////////////////////////////////////////////////////////////
-        //__UNREGISTER_MESSAGE__( KFMsg::MSG_DRESS_SKIN_REQ );
+        //__UN_MESSAGE__( KFMsg::MSG_DRESS_SKIN_REQ );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -48,7 +48,7 @@ namespace KFrame
 
     void KFSkinModule::OnLeaveStopSkinTimer( KFEntity* player )
     {
-        __UN_TIMER_ONE_PARAM__( player->GetKeyID() );
+        __UN_TIMER_1__( player->GetKeyID() );
     }
 
     void KFSkinModule::CheckStartSkinTimer( KFEntity* player )
@@ -84,7 +84,7 @@ namespace KFrame
 
         // 转换成间隔时间(毫秒) 启动定时器
         auto intervaltime = ( _min_valid_time - KFGlobal::Instance()->_real_time + 1 ) * 1000;
-        __LIMIT_TIMER_ONE_PARAM__( player->GetKeyID(), intervaltime, 1, &KFSkinModule::OnTimerCheckSkinValidTime );
+        __LIMIT_TIMER_1__( player->GetKeyID(), intervaltime, 1, &KFSkinModule::OnTimerCheckSkinValidTime );
     }
 
     void KFSkinModule::RemoveInvalidTimeSkin( KFEntity* player )

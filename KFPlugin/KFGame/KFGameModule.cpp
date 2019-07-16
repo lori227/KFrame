@@ -5,13 +5,13 @@ namespace KFrame
 {
     void KFGameModule::BeforeRun()
     {
-        __REGISTER_SERVER_DISCOVER_FUNCTION__( &KFGameModule::OnServerDiscoverGate );
-        __REGISTER_SERVER_LOST_FUNCTION__( &KFGameModule::OnServerLostGate );
-        __REGISTER_CLIENT_LOST_FUNCTION__( &KFGameModule::OnClientLostWorld );
-        __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFGameModule::OnClientConnectionWorld );
+        __REGISTER_SERVER_DISCOVER__( &KFGameModule::OnServerDiscoverGate );
+        __REGISTER_SERVER_LOST__( &KFGameModule::OnServerLostGate );
+        __REGISTER_CLIENT_LOST__( &KFGameModule::OnClientLostWorld );
+        __REGISTER_CLIENT_CONNECTION__( &KFGameModule::OnClientConnectionWorld );
 
         __REGISTER_ROUTE_MESSAGE_FUNCTION__( &KFGameModule::TranspondToPlayer );
-        __REGISTER_CLIENT_TRANSPOND_FUNCTION__( &KFGameModule::TranspondToPlayer );
+        __REGISTER_CLIENT_TRANSPOND__( &KFGameModule::TranspondToPlayer );
 
         _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
         _kf_component->RegisterEntitySaveFunction( this, &KFGameModule::SavePlayer );
@@ -40,12 +40,12 @@ namespace KFrame
 
     void KFGameModule::BeforeShut()
     {
-        __UNREGISTER_SERVER_DISCOVER_FUNCTION__();
-        __UNREGISTER_SERVER_LOST_FUNCTION__();
-        __UNREGISTER_CLIENT_LOST_FUNCTION__();
-        __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
-        __UNREGISTER_ROUTE_MESSAGE_FUNCTION__();
-        __UNREGISTER_CLIENT_TRANSPOND_FUNCTION__();
+        __UN_SERVER_DISCOVER__();
+        __UN_SERVER_LOST__();
+        __UN_CLIENT_LOST__();
+        __UN_CLIENT_CONNECTION__();
+        __UN_ROUTE_MESSAGE_FUNCTION__();
+        __UN_CLIENT_TRANSPOND__();
 
         _kf_player->UnRegisterEnterFunction( this );
         _kf_player->UnRegisterLeaveFunction( this );
@@ -54,17 +54,17 @@ namespace KFrame
         _kf_data_client->UnBindLoadPlayerFunction( this );
 
         _kf_component->UnRegisterEntitySaveFunction();
-        __UNREGISTER_DEPLOY_FUNCTION__( __KF_STRING__( shutdown ) );
+        __UN_DEPLOY_FUNCTION__( __KF_STRING__( shutdown ) );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_LOGIN_TO_GAME_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_KICK_PLAYER_TO_GAME_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_CONNECT_TO_GAME_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_DISCONNECT_TO_GAME_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_RELOGIN_TO_GAME_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_LEAVE_TO_GAME_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_LOGOUT_TO_GAME_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_BROADCAST_TO_GAME_ACK );
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_QUERY_PLAYER_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_LOGIN_TO_GAME_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_KICK_PLAYER_TO_GAME_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_CONNECT_TO_GAME_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_DISCONNECT_TO_GAME_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_RELOGIN_TO_GAME_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_LEAVE_TO_GAME_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_LOGOUT_TO_GAME_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_BROADCAST_TO_GAME_ACK );
+        __UN_MESSAGE__( KFMsg::MSG_QUERY_PLAYER_REQ );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 

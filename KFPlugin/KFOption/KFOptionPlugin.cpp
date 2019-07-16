@@ -12,7 +12,7 @@ namespace KFrame
 
     void KFOptionPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFOption );
+        __UN_MODULE__( KFOption );
     }
 
     void KFOptionPlugin::LoadModule()

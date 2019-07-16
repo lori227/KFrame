@@ -137,6 +137,10 @@ namespace KFrame
         std::string _str_init_value;
         uint32 _int_init_value = 0u;
 
+        // 最小值
+        std::string _str_min_value;
+        uint32 _int_min_value = 0u;
+
         // 最大值
         std::string _str_max_value;
         uint32 _int_max_value = __MAX_UINT32__;

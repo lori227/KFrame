@@ -319,7 +319,6 @@ namespace KFrame
 
         // 属性删除回调
         _kf_component->RemoveDataCallBack( this, kfparent, key, kfdata );
-
         return kfparent->RemoveData( key );
     }
 
@@ -536,7 +535,8 @@ namespace KFrame
         }
 
         // 如果有注册函数, 执行注册函数
-        auto kffunction = _kf_component->_check_add_element_function.Find( kfelement->_data_name );
+        auto& bindname = _kf_component->GetBindDataName( kfdata->_data_setting );
+        auto kffunction = _kf_component->_check_add_element_function.Find( bindname );
         if ( kffunction != nullptr )
         {
             return kffunction->_function( this, kfdata, const_cast< KFElement* >( kfelement ), function, line, multiple );
@@ -575,7 +575,8 @@ namespace KFrame
         const_cast< KFElement* >( kfelement )->_data_setting = kfdata->_data_setting;
 
         // 如果有注册的特殊处理函数
-        auto kffunction = _kf_component->_add_element_function.Find( kfelement->_data_name );
+        auto& bindname = _kf_component->GetBindDataName( kfdata->_data_setting );
+        auto kffunction = _kf_component->_add_element_function.Find( bindname );
         if ( kffunction != nullptr )
         {
             std::tie( showtype, showdata ) = kffunction->_function( this, kfdata, const_cast< KFElement* >( kfelement ), function, line, multiple );
@@ -774,7 +775,8 @@ namespace KFrame
         }
 
         // 如果有注册函数, 执行注册函数
-        auto kffunction = _kf_component->_check_remove_element_function.Find( kfelement->_data_name );
+        auto& bindname = _kf_component->GetBindDataName( kfdata->_data_setting );
+        auto kffunction = _kf_component->_check_remove_element_function.Find( bindname );
         if ( kffunction != nullptr )
         {
             return kffunction->_function( this, kfdata, const_cast< KFElement* >( kfelement ), function, line, multiple );
@@ -902,7 +904,8 @@ namespace KFrame
         }
 
         // 如果有注册函数, 执行注册函数
-        auto kffunction = _kf_component->_remove_element_function.Find( kfelement->_data_name );
+        auto& bindname = _kf_component->GetBindDataName( kfdata->_data_setting );
+        auto kffunction = _kf_component->_remove_element_function.Find( bindname );
         if ( kffunction != nullptr )
         {
             return kffunction->_function( this, kfdata, const_cast< KFElement* >( kfelement ), function, line, multiple );

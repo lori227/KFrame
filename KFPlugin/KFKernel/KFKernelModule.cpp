@@ -71,6 +71,19 @@ namespace KFrame
                     }
                 }
 
+                // 最小值
+                if ( kfdatasetting->_str_min_value != _invalid_str )
+                {
+                    if ( KFUtility::IsNumber( kfdatasetting->_str_min_value ) )
+                    {
+                        kfdatasetting->_int_min_value = KFUtility::ToValue< uint32 >( kfdatasetting->_str_min_value );
+                    }
+                    else
+                    {
+                        kfdatasetting->_int_min_value = _kf_option->GetUInt32( kfdatasetting->_str_min_value );
+                    }
+                }
+
                 // 最大值
                 if ( kfdatasetting->_str_max_value != _invalid_str )
                 {

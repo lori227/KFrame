@@ -76,13 +76,13 @@ namespace KFrame
 
     protected:
         // 进入游戏查询邮件信息
-        void OnEnterQueryMail( KFEntity* player );
+        __KF_ENTER_PLAYER_FUNCTION__( OnEnterMailModule );
 
         // 离开回调
-        void OnLeaveQueryMail( KFEntity* player );
+        __KF_LEAVE_PLAYER_FUNCTION__( OnLeaveMailModule );
 
         // 新玩家首次登陆处理
-        void OnNewPlayerMail( KFEntity* player );
+        __KF_NEW_PLAYER_FUNCTION__( OnNewPlayerMailModule );
 
         //////////////////////////////////////////////////////////////////////////////////////
         // 发送消息到邮件

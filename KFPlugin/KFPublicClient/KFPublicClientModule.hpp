@@ -27,14 +27,11 @@ namespace KFrame
 
         // 刷新
         virtual void BeforeRun();
-        virtual void OnceRun();
 
         // 关闭
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
-
-
     protected:
         // 连接成功
         void OnRouteConnectCluster( uint64 serverid );
@@ -43,19 +40,18 @@ namespace KFrame
         __KF_UPDATE_DATA_FUNCTION__( OnUpdateDataCallBack );
         __KF_UPDATE_STRING_FUNCTION__( OnUpdateStringCallBack );
 
-        // 更新数据
-        void OnUpdateDataToPublic( KFEntity* player, KFData* kfdata );
-
         // 上线更新公共数据
-        void OnEnterUpdatePublicData( KFEntity* player );
+        __KF_ENTER_PLAYER_FUNCTION__( OnEnterUpdatePublicData );
 
         // 离线更新公共数据
-        void OnLeaveUpdatePublicData( KFEntity* player );
+        __KF_LEAVE_PLAYER_FUNCTION__( OnLeaveUpdatePublicData );
+
+        // 更新数据
+        void OnUpdateDataToPublic( KFEntity* player, KFData* kfdata );
 
         // 更新公共数据
         void UpdatePublicData( uint64 playerid, MapString& values );
         void UpdatePublicData( KFEntity* player, MapString& values );
-
     protected:
         // 查询玩家基本数据
         __KF_MESSAGE_FUNCTION__( HandleQueryBasicReq );

@@ -11,7 +11,7 @@ namespace KFrame
 
     void KFRouteClientPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFRouteClient );
+        __UN_MODULE__( KFRouteClient );
     }
 
     void KFRouteClientPlugin::LoadModule()

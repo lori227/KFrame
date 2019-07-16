@@ -10,7 +10,7 @@ namespace KFrame
 
     void KFZonePlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFZone );
+        __UN_MODULE__( KFZone );
     }
 
     void KFZonePlugin::LoadModule()

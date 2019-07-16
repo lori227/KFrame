@@ -11,7 +11,7 @@ namespace KFrame
 
     void KFDeployAgentPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFDeployAgent );
+        __UN_MODULE__( KFDeployAgent );
     }
 
     void KFDeployAgentPlugin::LoadModule()

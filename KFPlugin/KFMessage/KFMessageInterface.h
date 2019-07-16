@@ -41,7 +41,7 @@ namespace KFrame
 #define __REGISTER_MESSAGE__( msgid, function ) \
     _kf_message->RegisterFunction( msgid, this, function )
 
-#define __UNREGISTER_MESSAGE__( msgid ) \
+#define __UN_MESSAGE__( msgid ) \
     _kf_message->UnRegisterFunction( msgid )
 }
 

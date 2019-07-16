@@ -11,7 +11,7 @@ namespace KFrame
 
     void KFClusterMasterPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFClusterMaster );
+        __UN_MODULE__( KFClusterMaster );
     }
 
     void KFClusterMasterPlugin::LoadModule()

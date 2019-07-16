@@ -88,10 +88,10 @@ namespace KFrame
 #define __REGISTER_SCHEDULE__( kfsetting, function ) \
     _kf_schedule->RegisterSchedule( kfsetting, this, function )
 
-#define  __UNREGISTER_SCHEDULE__() \
+#define  __UN_SCHEDULE__() \
     _kf_schedule->UnRegisterSchedule( this )
 
-#define  __UNREGISTER_SCHEDULE_OBJECT__( objectid ) \
+#define  __UN_SCHEDULE_OBJECT__( objectid ) \
     _kf_schedule->UnRegisterSchedule( this, objectid )
 }
 

@@ -10,7 +10,7 @@ namespace KFrame
 
     void KFGamePlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFGame );
+        __UN_MODULE__( KFGame );
     }
 
     void KFGamePlugin::LoadModule()

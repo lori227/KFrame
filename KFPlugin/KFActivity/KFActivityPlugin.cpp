@@ -12,7 +12,7 @@ namespace KFrame
 
     void KFActivityPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFActivity );
+        __UN_MODULE__( KFActivity );
     }
 
     void KFActivityPlugin::LoadModule()

@@ -44,7 +44,7 @@ namespace KFrame
 
     void KFHeroModule::OnLeaveStopHeroTimer( KFEntity* player )
     {
-        __UN_TIMER_ONE_PARAM__( player->GetKeyID() );
+        __UN_TIMER_1__( player->GetKeyID() );
     }
 
     void KFHeroModule::CheckStartHeroTimer( KFEntity* player )
@@ -80,7 +80,7 @@ namespace KFrame
 
         // 转换成间隔时间(毫秒) 启动定时器
         auto intervaltime = ( _min_valid_time - KFGlobal::Instance()->_real_time + 1 ) * 1000;
-        __LIMIT_TIMER_ONE_PARAM__( player->GetKeyID(), intervaltime, 1, &KFHeroModule::OnTimerCheckHeroValidTime );
+        __LIMIT_TIMER_1__( player->GetKeyID(), intervaltime, 1, &KFHeroModule::OnTimerCheckHeroValidTime );
     }
 
     void KFHeroModule::RemoveInvalidTimeHero( KFEntity* player )

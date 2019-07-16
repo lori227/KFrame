@@ -11,7 +11,7 @@ namespace KFrame
 
     void KFRelationClientPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFRelationClient );
+        __UN_MODULE__( KFRelationClient );
     }
 
     void KFRelationClientPlugin::LoadModule()

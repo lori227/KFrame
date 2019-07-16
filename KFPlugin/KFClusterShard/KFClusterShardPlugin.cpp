@@ -11,7 +11,7 @@ namespace KFrame
 
     void KFClusterShardPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFClusterShard );
+        __UN_MODULE__( KFClusterShard );
     }
 
     void KFClusterShardPlugin::LoadModule()

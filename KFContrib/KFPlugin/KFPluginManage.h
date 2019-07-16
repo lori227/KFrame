@@ -37,7 +37,7 @@
 
 #endif
 
-#define __REGISTER_PLUGIN_FUNCTION__( module, function )\
+#define __REGISTER_PLUGIN__( module, function )\
     {\
         __CHECK_PLUGIN_FUNCTION__( module, function )\
         {   \
@@ -53,7 +53,7 @@
         }\
     }
 
-#define __UNREGISTER_PLUGIN_FUNCTION__( module, function )\
+#define __UN_PLUGIN_FUNCTION__( module, function )\
     {\
         __CHECK_PLUGIN_FUNCTION__( module, function )\
         {   \
@@ -65,13 +65,13 @@
 #define __REGISTER_MODULE__( name ) \
     auto kfmodule = new name##Module();\
     _kf_plugin_manage->RegistModule< name##Plugin, name##Interface >( kfmodule );\
-    __REGISTER_PLUGIN_FUNCTION__( name##Module, Run );\
-    __REGISTER_PLUGIN_FUNCTION__( name##Module, AfterRun );\
+    __REGISTER_PLUGIN__( name##Module, Run );\
+    __REGISTER_PLUGIN__( name##Module, AfterRun );\
 
 // 卸载模块
-#define __UNREGISTER_MODULE__( name ) \
-    __UNREGISTER_PLUGIN_FUNCTION__( name##Module, Run );\
-    __UNREGISTER_PLUGIN_FUNCTION__( name##Module, AfterRun );\
+#define __UN_MODULE__( name ) \
+    __UN_PLUGIN_FUNCTION__( name##Module, Run );\
+    __UN_PLUGIN_FUNCTION__( name##Module, AfterRun );\
     _kf_plugin_manage->UnRegistModule< name##Plugin >( _save_data );\
 
 #define __FIND_MODULE__( module, classname ) \

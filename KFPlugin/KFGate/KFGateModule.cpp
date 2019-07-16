@@ -5,13 +5,13 @@ namespace KFrame
 {
     void KFGateModule::BeforeRun()
     {
-        __LOOP_TIMER_NO_PARAM__( 30000, 5000, &KFGateModule::OnTimerUpdateOnlineToAuth );
+        __LOOP_TIMER_0__( 30000, 5000, &KFGateModule::OnTimerUpdateOnlineToAuth );
 
-        __REGISTER_CLIENT_LOST_FUNCTION__( &KFGateModule::OnClientLostServer );
-        __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFGateModule::OnClientConnectionServer );
-        __REGISTER_SERVER_LOST_FUNCTION__( &KFGateModule::OnPlayerDisconnection );
-        __REGISTER_SERVER_TRANSPOND_FUNCTION__( &KFGateModule::TranspondToGame );
-        __REGISTER_CLIENT_TRANSPOND_FUNCTION__( &KFGateModule::TranspondToClient );
+        __REGISTER_CLIENT_LOST__( &KFGateModule::OnClientLostServer );
+        __REGISTER_CLIENT_CONNECTION__( &KFGateModule::OnClientConnectionServer );
+        __REGISTER_SERVER_LOST__( &KFGateModule::OnPlayerDisconnection );
+        __REGISTER_SERVER_TRANSPOND__( &KFGateModule::TranspondToGame );
+        __REGISTER_CLIENT_TRANSPOND__( &KFGateModule::TranspondToClient );
 
         __REGISTER_DEPLOY_FUNCTION__( __KF_STRING__( shutdown ), &KFGateModule::OnDeployShutDownServer );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -29,24 +29,24 @@ namespace KFrame
 
     void KFGateModule::BeforeShut()
     {
-        __UN_TIMER_NO_PARAM__();
-        __UNREGISTER_CLIENT_LOST_FUNCTION__();
-        __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
-        __UNREGISTER_SERVER_LOST_FUNCTION__();
-        __UNREGISTER_SERVER_TRANSPOND_FUNCTION__();
-        __UNREGISTER_CLIENT_TRANSPOND_FUNCTION__();
+        __UN_TIMER_0__();
+        __UN_CLIENT_LOST__();
+        __UN_CLIENT_CONNECTION__();
+        __UN_SERVER_LOST__();
+        __UN_SERVER_TRANSPOND__();
+        __UN_CLIENT_TRANSPOND__();
 
-        __UNREGISTER_DEPLOY_FUNCTION__( __KF_STRING__( shutdown ) );
+        __UN_DEPLOY_FUNCTION__( __KF_STRING__( shutdown ) );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_LOGIN_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_RELOGIN_TO_GATE_ACK );
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_LOGOUT_REQ );
+        __UN_MESSAGE__( KFMsg::MSG_LOGIN_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_RELOGIN_TO_GATE_ACK );
+        __UN_MESSAGE__( KFMsg::MSG_LOGOUT_REQ );
 
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_LOGIN_TO_GATE_ACK );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_ENTER_TO_GATE_ACK );
+        __UN_MESSAGE__( KFMsg::S2S_LOGIN_TO_GATE_ACK );
+        __UN_MESSAGE__( KFMsg::S2S_ENTER_TO_GATE_ACK );
 
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_BROADCAST_TO_GATE_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_KICK_PLAYER_TO_GATE_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_BROADCAST_TO_GATE_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_KICK_PLAYER_TO_GATE_REQ );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_DEPLOY_FUNCTION__( KFGateModule::OnDeployShutDownServer )
@@ -282,7 +282,7 @@ namespace KFrame
 
             // 设置连接成功
             kfrole->_session_id = sessionid;
-            __UN_TIMER_ONE_PARAM__( kfrole->_id );
+            __UN_TIMER_1__( kfrole->_id );
 
             // 发送重新登录消息
             KFMsg::S2SReLoginToGameReq req;
@@ -382,7 +382,7 @@ namespace KFrame
             }
 
             // 删除掉线定时器
-            __UN_TIMER_ONE_PARAM__( pblogin->playerid() );
+            __UN_TIMER_1__( pblogin->playerid() );
 
             // 创建角色
             kfrole = __KF_NEW__( KFRole );
@@ -423,7 +423,7 @@ namespace KFrame
         // 添加一个定时器
         kfrole->_session_id = _invalid_int;
         static auto _option = _kf_option->FindOption( __KF_STRING__( disconnettime ) );
-        __LIMIT_TIMER_ONE_PARAM__( kfrole->_id, _option->_uint32_value, 1, &KFGateModule::OnTimerPlayerDisconnetion );
+        __LIMIT_TIMER_1__( kfrole->_id, _option->_uint32_value, 1, &KFGateModule::OnTimerPlayerDisconnetion );
     }
 
     __KF_TIMER_FUNCTION__( KFGateModule::OnTimerPlayerDisconnetion )
@@ -489,8 +489,8 @@ namespace KFrame
     //__REGISTER_COMMAND_FUNCTION__( __KF_STRING__( notice ), &KFWorldModule::OnCommandNotice );
     //__REGISTER_COMMAND_FUNCTION__( __KF_STRING__( marquee ), &KFWorldModule::OnCommandMarquee );
 
-    //__UNREGISTER_COMMAND_FUNCTION__( __KF_STRING__( notice ) );
-    //__UNREGISTER_COMMAND_FUNCTION__( __KF_STRING__( marquee ) );
+    //__UN_COMMAND_FUNCTION__( __KF_STRING__( notice ) );
+    //__UN_COMMAND_FUNCTION__( __KF_STRING__( marquee ) );
     //__KF_COMMAND_FUNCTION__( KFWorldModule::OnCommandMarquee )
     //{
     //    KFMsg::MsgTellMarquee tell;

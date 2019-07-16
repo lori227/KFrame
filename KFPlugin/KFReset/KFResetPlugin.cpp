@@ -12,7 +12,7 @@ namespace KFrame
 
     void KFResetPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFReset );
+        __UN_MODULE__( KFReset );
     }
 
     void KFResetPlugin::LoadModule()

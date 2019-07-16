@@ -29,7 +29,6 @@ namespace KFrame
         // 释放数据
         virtual void ReleaseObject( KFData* kfdata ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////
-
         // 反序列化
         virtual bool ParseFromProto( KFData* kfdata, const KFMsg::PBObject* proto ) = 0;
 
@@ -37,6 +36,7 @@ namespace KFrame
         virtual KFMsg::PBObject* SerializeToClient( KFData* kfdata ) = 0;
         virtual KFMsg::PBObject* SerializeToData( KFData* kfdata ) = 0;
         virtual KFMsg::PBObject* SerializeToView( KFData* kfdata ) = 0;
+        /////////////////////////////////////////////////////////////////////////////////////////////
     };
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_INTERFACE__( _kf_kernel, KFKernelInterface );

@@ -10,7 +10,7 @@ namespace KFrame
 
     void KFBusPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFBus );
+        __UN_MODULE__( KFBus );
     }
 
     void KFBusPlugin::LoadModule()

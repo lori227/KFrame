@@ -11,7 +11,7 @@ namespace KFrame
 
     void KFConfigPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFConfig );
+        __UN_MODULE__( KFConfig );
     }
 
     void KFConfigPlugin::LoadModule()

@@ -5,9 +5,9 @@ namespace KFrame
 {
     void KFClusterMasterModule::BeforeRun()
     {
-        __REGISTER_SERVER_LOST_FUNCTION__( &KFClusterMasterModule::OnServerLostClusterProxy );
-        __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFClusterMasterModule::OnClientConnectClusterMaster );
-        __REGISTER_CLIENT_LOST_FUNCTION__( &KFClusterMasterModule::OnClientLostClusterMaster );
+        __REGISTER_SERVER_LOST__( &KFClusterMasterModule::OnServerLostClusterProxy );
+        __REGISTER_CLIENT_CONNECTION__( &KFClusterMasterModule::OnClientConnectClusterMaster );
+        __REGISTER_CLIENT_LOST__( &KFClusterMasterModule::OnClientLostClusterMaster );
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_REGISTER_TO_MASTER_REQ, &KFClusterMasterModule::HandleClusterRegisterToMasterReq );
@@ -21,17 +21,17 @@ namespace KFrame
 
     void KFClusterMasterModule::BeforeShut()
     {
-        __UNREGISTER_SERVER_LOST_FUNCTION__();
-        __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
-        __UNREGISTER_CLIENT_LOST_FUNCTION__();
+        __UN_SERVER_LOST__();
+        __UN_CLIENT_CONNECTION__();
+        __UN_CLIENT_LOST__();
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_REGISTER_TO_MASTER_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_SYNC_PROXY_TO_MASTER_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_AUTH_TO_MASTER_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_LOST_PROXY_TO_MASTER_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_TOKEN_TO_MASTER_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_TOKEN_TO_PROXY_ACK );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_TOKEN_TO_MASTER_ACK );
+        __UN_MESSAGE__( KFMsg::S2S_CLUSTER_REGISTER_TO_MASTER_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_CLUSTER_SYNC_PROXY_TO_MASTER_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_CLUSTER_AUTH_TO_MASTER_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_CLUSTER_LOST_PROXY_TO_MASTER_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_CLUSTER_TOKEN_TO_MASTER_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_CLUSTER_TOKEN_TO_PROXY_ACK );
+        __UN_MESSAGE__( KFMsg::S2S_CLUSTER_TOKEN_TO_MASTER_ACK );
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

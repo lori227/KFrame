@@ -10,7 +10,7 @@ namespace KFrame
 
     void KFRankClientPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFRankClient );
+        __UN_MODULE__( KFRankClient );
     }
 
     void KFRankClientPlugin::LoadModule()

@@ -10,16 +10,16 @@ namespace KFrame
 
     void KFEnterModule::BeforeRun()
     {
-        _kf_player->RegisterEnterFunction( this, &KFEnterModule::EnterGameWorld );
+        __REGISTER_ENTER_PLAYER__( &KFEnterModule::EnterGameWorld );
     }
 
     void KFEnterModule::BeforeShut()
     {
+        __UN_ENTER_PLAYER__();
         __KF_REMOVE_CONFIG__( _kf_enter_config );
-        _kf_player->UnRegisterEnterFunction( this );
     }
 
-    void KFEnterModule::EnterGameWorld( KFEntity* player )
+    __KF_ENTER_PLAYER_FUNCTION__( KFEnterModule::EnterGameWorld )
     {
         // 上线时间
         auto kfobject = player->GetData();

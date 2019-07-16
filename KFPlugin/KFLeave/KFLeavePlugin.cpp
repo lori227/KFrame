@@ -12,7 +12,7 @@ namespace KFrame
 
     void KFLeavePlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFLeave );
+        __UN_MODULE__( KFLeave );
     }
 
     void KFLeavePlugin::LoadModule()

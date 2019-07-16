@@ -12,7 +12,7 @@ namespace KFrame
 
     void KFCommandPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFCommand );
+        __UN_MODULE__( KFCommand );
     }
 
     void KFCommandPlugin::LoadModule()

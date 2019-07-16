@@ -11,7 +11,7 @@ namespace KFrame
 
     void KFRouteProxyPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFRouteProxy );
+        __UN_MODULE__( KFRouteProxy );
     }
 
     void KFRouteProxyPlugin::LoadModule()

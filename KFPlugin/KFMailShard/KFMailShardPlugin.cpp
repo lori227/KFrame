@@ -11,7 +11,7 @@ namespace KFrame
 
     void KFMailShardPlugin::UnInstall ()
     {
-        __UNREGISTER_MODULE__( KFMailShard );
+        __UN_MODULE__( KFMailShard );
     }
 
     void KFMailShardPlugin::LoadModule ()

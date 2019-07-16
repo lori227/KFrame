@@ -34,6 +34,12 @@ namespace KFrame
         // 实体数量
         virtual uint32 GetEntityCount();
 
+        // 遍历列表
+        virtual KFEntity* FirstEntity();
+        virtual KFEntity* NextEntity();
+
+        // 获得属性列表
+        virtual VectorString& GetDataList( const std::string& dataname );
         //////////////////////////////////////////////////////////////////////////////////////
         // 启动保存定时器
         void StartSaveEntityTimer( KFEntity* kfentity, KFData* kfdata );
@@ -41,11 +47,6 @@ namespace KFrame
         // 停止保存定时器
         void DeleteSaveEntity( KFEntity* kfentity );
         //////////////////////////////////////////////////////////////////////////////////////
-
-        // 遍历列表
-        virtual KFEntity* FirstEntity();
-        virtual KFEntity* NextEntity();
-        ///////////////////////////////////////////////////////////////////////////////////////////////
         // 属性更新回调函数
         void UpdateDataCallBack( KFEntity* kfentity, KFData* kfdata, const std::string& value );
         void UpdateDataCallBack( KFEntity* kfentity, uint64 key, KFData* kfdata, uint64 index, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue );
@@ -62,6 +63,10 @@ namespace KFrame
 
         // 添加更新的对象
         void AddSyncEntity( KFEntity* entity );
+
+        // 绑定的属性名
+        const std::string& GetBindDataName( const std::string& dataname );
+        const std::string& GetBindDataName( const KFDataSetting* datasetting );
         ///////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////
         virtual void BindCheckAddElementFunction( const std::string& dataname, KFCheckAddElementFunction& function );
@@ -128,7 +133,6 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////////////////////
         virtual void BindShowElementFunction( KFShowElementFunction& function );
         virtual void UnRegisterShowElementFunction();
-
     protected:
         // 保存数据到数据库
         __KF_TIMER_FUNCTION__( OnTimerSaveEntity );
@@ -144,6 +148,7 @@ namespace KFrame
 
         // 删除
         void DeleteEntity( KFEntity* kfentity );
+
     public:
         // 对象实例列表
         KFHashMap< uint64, uint64, KFEntity > _entitys;

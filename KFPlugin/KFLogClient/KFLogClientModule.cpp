@@ -5,12 +5,12 @@ namespace KFrame
 {
     void KFLogClientModule::BeforeRun()
     {
-        __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFLogClientModule::OnClientConnectLogServer );
+        __REGISTER_CLIENT_CONNECTION__( &KFLogClientModule::OnClientConnectLogServer );
     }
 
     void KFLogClientModule::BeforeShut()
     {
-        __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
+        __UN_CLIENT_CONNECTION__();
         KFLogger::Instance()->UnRegisterLogFunction( this );
     }
 

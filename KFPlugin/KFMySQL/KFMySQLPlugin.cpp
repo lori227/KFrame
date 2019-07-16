@@ -12,7 +12,7 @@ namespace KFrame
 
     void KFMySQLPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFMySQL );
+        __UN_MODULE__( KFMySQL );
     }
 
     void KFMySQLPlugin::LoadModule()

@@ -11,7 +11,7 @@ namespace KFrame
 
     void KFKernelPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFKernel );
+        __UN_MODULE__( KFKernel );
     }
 
     void KFKernelPlugin::LoadModule()

@@ -4,9 +4,9 @@ namespace KFrame
 {
     void KFDeployServerModule::BeforeRun()
     {
-        __REGISTER_SERVER_LOST_FUNCTION__( &KFDeployServerModule::OnServerLostClient );
+        __REGISTER_SERVER_LOST__( &KFDeployServerModule::OnServerLostClient );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_HTTP_FUNCTION__( __KF_STRING__( deploy ), true, &KFDeployServerModule::HandleDeployCommand );
+        __REGISTER_HTTP__( __KF_STRING__( deploy ), true, &KFDeployServerModule::HandleDeployCommand );
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_REGISTER_AGENT_TO_SERVER_REQ, &KFDeployServerModule::HandleRegisterAgentToServerReq );
@@ -21,18 +21,18 @@ namespace KFrame
 
     void KFDeployServerModule::ShutDown()
     {
-        __UNREGISTER_SCHEDULE__();
-        __UNREGISTER_SERVER_LOST_FUNCTION__();
+        __UN_SCHEDULE__();
+        __UN_SERVER_LOST__();
         //////////////////////////////////////////////////////////////////////////////////////////////////////
-        __UNREGISTER_HTTP_FUNCTION__( __KF_STRING__( deploy ) );
+        __UN_HTTP__( __KF_STRING__( deploy ) );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_REGISTER_AGENT_TO_SERVER_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_TOOL_EXECUTE_MYSQL_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_TOOL_QUERY_MYSQL_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_TOOL_DELETE_MYSQL_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_TOOL_COMMAND_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_LOG_TO_SERVER_ACK );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_TOOL_QUERY_TOOL_ID_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_REGISTER_AGENT_TO_SERVER_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_DEPLOY_TOOL_EXECUTE_MYSQL_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_DEPLOY_TOOL_QUERY_MYSQL_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_DEPLOY_TOOL_DELETE_MYSQL_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_DEPLOY_TOOL_COMMAND_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_DEPLOY_LOG_TO_SERVER_ACK );
+        __UN_MESSAGE__( KFMsg::S2S_DEPLOY_TOOL_QUERY_TOOL_ID_REQ );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
@@ -219,7 +219,7 @@ namespace KFrame
         if ( pbcommand->command() == __KF_STRING__( unschedule ) )
         {
             auto id = KFUtility::ToValue< uint64 >( pbcommand->value() );
-            __UNREGISTER_SCHEDULE_OBJECT__( id );
+            __UN_SCHEDULE_OBJECT__( id );
         }
         else
         {
@@ -271,7 +271,7 @@ namespace KFrame
         if ( command == __KF_STRING__( unschedule ) )
         {
             auto id = __JSON_GET_UINT64__( request, __KF_STRING__( value ) );
-            __UNREGISTER_SCHEDULE_OBJECT__( id );
+            __UN_SCHEDULE_OBJECT__( id );
         }
         else
         {

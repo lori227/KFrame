@@ -12,7 +12,7 @@ namespace KFrame
 
     void KFTcpDiscoverPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFTcpDiscover );
+        __UN_MODULE__( KFTcpDiscover );
     }
 
     void KFTcpDiscoverPlugin::LoadModule()

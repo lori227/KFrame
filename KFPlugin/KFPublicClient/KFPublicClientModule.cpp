@@ -6,12 +6,13 @@ namespace KFrame
     void KFPublicClientModule::BeforeRun()
     {
         _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
-        _kf_component->RegisterUpdateDataModule( this, &KFPublicClientModule::OnUpdateDataCallBack );
-        _kf_component->RegisterUpdateStringModule( this, &KFPublicClientModule::OnUpdateStringCallBack );
+        __REGISTER_UPDATE_DATA__( &KFPublicClientModule::OnUpdateDataCallBack );
+        __REGISTER_UPDATE_STRING__( &KFPublicClientModule::OnUpdateStringCallBack );
 
-        _kf_player->RegisterEnterFunction( this, &KFPublicClientModule::OnEnterUpdatePublicData );
-        _kf_player->RegisterLeaveFunction( this, &KFPublicClientModule::OnLeaveUpdatePublicData );
+        __REGISTER_ENTER_PLAYER__( &KFPublicClientModule::OnEnterUpdatePublicData );
+        __REGISTER_LEAVE_PLAYER__( &KFPublicClientModule::OnLeaveUpdatePublicData );
 
+        _kf_basic = _kf_kernel->CreateObject( __KF_STRING__( basic ) );
         _kf_route->RegisterConnectionFunction( this, &KFPublicClientModule::OnRouteConnectCluster );
         ///////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_QUERY_BASIC_REQ, &KFPublicClientModule::HandleQueryBasicReq );
@@ -20,22 +21,16 @@ namespace KFrame
 
     void KFPublicClientModule::BeforeShut()
     {
+        __UN_UPDATE_DATA__();
+        __UN_UPDATE_STRING__();
+        __UN_ENTER_PLAYER__();
+        __UN_LEAVE_PLAYER__();
+
         _kf_kernel->ReleaseObject( _kf_basic );
-        _kf_component->UnRegisterUpdateDataModule( this );
-        _kf_component->UnRegisterUpdateStringModule( this );
-
-        _kf_player->UnRegisterEnterFunction( this );
-        _kf_player->UnRegisterLeaveFunction( this );
-
         _kf_route->UnRegisterConnectionFunction( this );
         ///////////////////////////////////////////////////////////////////////////////////////////////
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_QUERY_BASIC_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_BASIC_TO_GAME_ACK );
-    }
-
-    void KFPublicClientModule::OnceRun()
-    {
-        _kf_basic = _kf_kernel->CreateObject( __KF_STRING__( basic ) );
+        __UN_MESSAGE__( KFMsg::MSG_QUERY_BASIC_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_QUERY_BASIC_TO_GAME_ACK );
     }
 
     void KFPublicClientModule::OnRouteConnectCluster( uint64 serverid )
@@ -92,7 +87,7 @@ namespace KFrame
         OnUpdateDataToPublic( player, kfdata );
     }
 
-    void KFPublicClientModule::OnEnterUpdatePublicData( KFEntity* player )
+    __KF_ENTER_PLAYER_FUNCTION__( KFPublicClientModule::OnEnterUpdatePublicData )
     {
         auto kfglobal = KFGlobal::Instance();
 
@@ -104,7 +99,7 @@ namespace KFrame
         UpdatePublicData( player, values );
     }
 
-    void KFPublicClientModule::OnLeaveUpdatePublicData( KFEntity* player )
+    __KF_LEAVE_PLAYER_FUNCTION__( KFPublicClientModule::OnLeaveUpdatePublicData )
     {
         MapString values;
         values[ __KF_STRING__( serverid ) ] = "0";

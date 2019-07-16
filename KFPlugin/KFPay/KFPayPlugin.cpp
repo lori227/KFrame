@@ -12,7 +12,7 @@ namespace KFrame
 
     void KFPayPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFPay );
+        __UN_MODULE__( KFPay );
     }
 
     void KFPayPlugin::LoadModule()

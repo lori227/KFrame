@@ -11,7 +11,7 @@ namespace KFrame
 
     void KFAttributePlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFAttribute );
+        __UN_MODULE__( KFAttribute );
     }
 
     void KFAttributePlugin::LoadModule()

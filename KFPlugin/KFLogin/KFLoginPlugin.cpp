@@ -10,7 +10,7 @@ namespace KFrame
 
     void KFLoginPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFLogin );
+        __UN_MODULE__( KFLogin );
     }
 
     void KFLoginPlugin::LoadModule()

@@ -12,7 +12,7 @@ namespace KFrame
 
     void KFHeroPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFHero );
+        __UN_MODULE__( KFHero );
     }
 
     void KFHeroPlugin::LoadModule()

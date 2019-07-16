@@ -12,7 +12,7 @@ namespace KFrame
 
     void KFMongoPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFMongo );
+        __UN_MODULE__( KFMongo );
     }
 
     void KFMongoPlugin::LoadModule()

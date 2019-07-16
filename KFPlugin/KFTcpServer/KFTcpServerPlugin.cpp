@@ -10,7 +10,7 @@ namespace KFrame
 
     void KFTcpServerPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFTcpServer );
+        __UN_MODULE__( KFTcpServer );
     }
 
     void KFTcpServerPlugin::LoadModule()

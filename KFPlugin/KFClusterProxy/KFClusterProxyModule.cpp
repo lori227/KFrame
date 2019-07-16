@@ -6,13 +6,13 @@ namespace KFrame
     void KFClusterProxyModule::BeforeRun()
     {
         ///////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_CLIENT_LOST_FUNCTION__( &KFClusterProxyModule::OnClientLostServer );
-        __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFClusterProxyModule::OnClientConnectionServer );
-        __REGISTER_SERVER_DISCOVER_FUNCTION__( &KFClusterProxyModule::OnServerDiscoverClient );
-        __REGISTER_SERVER_LOST_FUNCTION__( &KFClusterProxyModule::OnServerLostClient );
+        __REGISTER_CLIENT_LOST__( &KFClusterProxyModule::OnClientLostServer );
+        __REGISTER_CLIENT_CONNECTION__( &KFClusterProxyModule::OnClientConnectionServer );
+        __REGISTER_SERVER_DISCOVER__( &KFClusterProxyModule::OnServerDiscoverClient );
+        __REGISTER_SERVER_LOST__( &KFClusterProxyModule::OnServerLostClient );
 
-        __REGISTER_CLIENT_TRANSPOND_FUNCTION__( &KFClusterProxyModule::TranspondToClient );
-        __REGISTER_SERVER_TRANSPOND_FUNCTION__( &KFClusterProxyModule::TranspondToShard );
+        __REGISTER_CLIENT_TRANSPOND__( &KFClusterProxyModule::TranspondToClient );
+        __REGISTER_SERVER_TRANSPOND__( &KFClusterProxyModule::TranspondToShard );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_TOKEN_TO_PROXY_REQ, &KFClusterProxyModule::HandleClusterTokenToProxyReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_VERIFY_TO_PROXY_REQ, &KFClusterProxyModule::HandleClusterVerifyToProxyReq );
@@ -20,17 +20,17 @@ namespace KFrame
 
     void KFClusterProxyModule::BeforeShut()
     {
-        __UN_TIMER_NO_PARAM__();
-        __UNREGISTER_CLIENT_LOST_FUNCTION__();
-        __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
-        __UNREGISTER_CLIENT_TRANSPOND_FUNCTION__();
+        __UN_TIMER_0__();
+        __UN_CLIENT_LOST__();
+        __UN_CLIENT_CONNECTION__();
+        __UN_CLIENT_TRANSPOND__();
 
-        __UNREGISTER_SERVER_DISCOVER_FUNCTION__();
-        __UNREGISTER_SERVER_LOST_FUNCTION__();
-        __UNREGISTER_SERVER_TRANSPOND_FUNCTION__();
+        __UN_SERVER_DISCOVER__();
+        __UN_SERVER_LOST__();
+        __UN_SERVER_TRANSPOND__();
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_TOKEN_TO_PROXY_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_VERIFY_TO_PROXY_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_CLUSTER_TOKEN_TO_PROXY_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_CLUSTER_VERIFY_TO_PROXY_REQ );
     }
 
     void KFClusterProxyModule::Run()
@@ -78,7 +78,7 @@ namespace KFrame
     void KFClusterProxyModule::OnClientConnectionClusterMaster( const std::string& servername, uint64 serverid )
     {
         // 注册定时器
-        __LOOP_TIMER_ONE_PARAM__( serverid, 5000, 1, &KFClusterProxyModule::OnTimerSendClusterRegisterMessage );
+        __LOOP_TIMER_1__( serverid, 5000, 1, &KFClusterProxyModule::OnTimerSendClusterRegisterMessage );
     }
 
     __KF_TIMER_FUNCTION__( KFClusterProxyModule::OnTimerSendClusterRegisterMessage )
@@ -102,7 +102,7 @@ namespace KFrame
         if ( ok )
         {
             // 取消定时器
-            __UN_TIMER_ONE_PARAM__( objectid );
+            __UN_TIMER_1__( objectid );
             __LOG_INFO__( "cluster proxy register to master ok!" );
         }
     }
@@ -133,7 +133,7 @@ namespace KFrame
             if ( kftoken->_client_id == netdata->_id )
             {
                 // 启动定时器, 10秒钟内不验证, 关闭连接
-                __LIMIT_TIMER_ONE_PARAM__( netdata->_id, 10000, 1, &KFClusterProxyModule::OnTimerClusterAuthTimeOut );
+                __LIMIT_TIMER_1__( netdata->_id, 10000, 1, &KFClusterProxyModule::OnTimerClusterAuthTimeOut );
                 return;
             }
         }
@@ -175,7 +175,7 @@ namespace KFrame
 
     void KFClusterProxyModule::OnClientLostClusterMaster( const std::string& servername, uint64 serverid )
     {
-        __UN_TIMER_ONE_PARAM__( serverid );
+        __UN_TIMER_1__( serverid );
     }
 
     void KFClusterProxyModule::OnClientLostClusterShard( const std::string& servername, uint64 serverid )
@@ -219,7 +219,7 @@ namespace KFrame
         }
 
         // 删除定时器
-        __UN_TIMER_ONE_PARAM__( serverid );
+        __UN_TIMER_1__( serverid );
 
         // 通知shard
         KFMsg::S2SClusterClientDiscoverToShardReq req;

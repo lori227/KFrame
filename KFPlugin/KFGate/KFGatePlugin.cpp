@@ -10,7 +10,7 @@ namespace KFrame
 
     void KFGatePlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFGate );
+        __UN_MODULE__( KFGate );
     }
 
     void KFGatePlugin::LoadModule()

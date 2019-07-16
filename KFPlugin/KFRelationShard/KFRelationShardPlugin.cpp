@@ -12,7 +12,7 @@ namespace KFrame
 
     void KFRelationShardPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFRelationShard );
+        __UN_MODULE__( KFRelationShard );
     }
 
     void KFRelationShardPlugin::LoadModule()

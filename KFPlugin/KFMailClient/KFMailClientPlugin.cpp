@@ -10,7 +10,7 @@ namespace KFrame
 
     void KFMailClientPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFMailClient );
+        __UN_MODULE__( KFMailClient );
     }
 
     void KFMailClientPlugin::LoadModule()

@@ -11,7 +11,7 @@ namespace KFrame
 
     void KFRankShardPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFRankShard );
+        __UN_MODULE__( KFRankShard );
     }
 
     void KFRankShardPlugin::LoadModule()

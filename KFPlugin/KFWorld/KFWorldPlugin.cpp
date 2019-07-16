@@ -10,7 +10,7 @@ namespace KFrame
 
     void KFWorldPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFWorld );
+        __UN_MODULE__( KFWorld );
     }
 
     void KFWorldPlugin::LoadModule()

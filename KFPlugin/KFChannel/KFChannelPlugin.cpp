@@ -12,7 +12,7 @@ namespace KFrame
 
     void KFChannelPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFChannel );
+        __UN_MODULE__( KFChannel );
     }
 
     void KFChannelPlugin::LoadModule()

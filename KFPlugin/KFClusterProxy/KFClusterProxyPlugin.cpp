@@ -11,7 +11,7 @@ namespace KFrame
 
     void KFClusterProxyPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFClusterProxy );
+        __UN_MODULE__( KFClusterProxy );
     }
 
     void KFClusterProxyPlugin::LoadModule()

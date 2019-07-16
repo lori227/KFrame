@@ -37,7 +37,7 @@ namespace KFrame
     void KFTcpClientModule::ShutDown()
     {
         ////////////////////////////////////////////////////////////////////////////
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_REGISTER_TO_SERVER_ACK );
+        __UN_MESSAGE__( KFMsg::S2S_REGISTER_TO_SERVER_ACK );
         _client_engine->ShutEngine();
     }
 

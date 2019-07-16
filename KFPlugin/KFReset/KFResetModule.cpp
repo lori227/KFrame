@@ -10,17 +10,18 @@ namespace KFrame
 
     void KFResetModule::BeforeRun()
     {
-        CalcNextResetTime();
+        __REGISTER_RESET_PLAYER__( &KFResetModule::ResetPlayerData );
+        __REGISTER_RUN_PLAYER__( &KFResetModule::RunResetPlayerData );
 
-        _kf_player->RegisterResetFunction( this, &KFResetModule::ResetPlayerData );
-        _kf_player->RegisterRunDataFunction( this, &KFResetModule::RunResetPlayerData );
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        CalcNextResetTime();
     }
 
     void KFResetModule::ShutDown()
     {
+        __UN_RESET_PLAYER__();
+        __UN_RUN_PLAYER__();
         __KF_REMOVE_CONFIG__( _kf_reset_config );
-        _kf_player->UnRegisterResetFunction( this );
-        _kf_player->UnRegisterRunDataFunction( this );
     }
 
     void KFResetModule::AfterRun()
@@ -47,7 +48,7 @@ namespace KFrame
         return true;
     }
 
-    void KFResetModule::ResetPlayerData( KFEntity* player )
+    __KF_RESET_PLAYER_FUNCTION__( KFResetModule::ResetPlayerData )
     {
         auto nowtime = KFGlobal::Instance()->_real_time;
 
@@ -93,7 +94,7 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFResetModule::RunResetPlayerData( KFEntity* player )
+    __KF_RUN_PLAYER_FUNCTION__( KFResetModule::RunResetPlayerData )
     {
         if ( !_need_to_reset )
         {

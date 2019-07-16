@@ -11,7 +11,7 @@ namespace KFrame
 
     void KFDataShardPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFDataShard );
+        __UN_MODULE__( KFDataShard );
     }
 
     void KFDataShardPlugin::LoadModule()

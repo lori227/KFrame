@@ -11,7 +11,7 @@ namespace KFrame
 
     void KFTcpClientPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFTcpClient );
+        __UN_MODULE__( KFTcpClient );
     }
 
     void KFTcpClientPlugin::LoadModule()

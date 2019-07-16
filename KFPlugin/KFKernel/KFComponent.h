@@ -31,6 +31,9 @@ namespace KFrame
         virtual ~KFComponent() = default;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 创建实体
         virtual KFEntity* CreateEntity( uint64 key ) = 0;
         virtual KFEntity* CreateEntity( uint64 key, const KFMsg::PBObject* data ) = 0;
@@ -52,7 +55,13 @@ namespace KFrame
         // 遍历列表
         virtual KFEntity* FirstEntity() = 0;
         virtual KFEntity* NextEntity() = 0;
+
+        // 获得属性列表
+        virtual VectorString& GetDataList( const std::string& dataname ) = 0;
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 注册判断属性函数
         template< class T >
@@ -171,6 +180,15 @@ namespace KFrame
         }
 
         template< class T >
+        void RegisterUpdateDataFunction( const std::string& dataname, T* object, void ( T::*handle )( KFEntity* kfentity, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue ) )
+        {
+            KFUpdateDataFunction function = std::bind( handle, object,
+                                            std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4,
+                                            std::placeholders::_5, std::placeholders::_6, std::placeholders::_7 );
+            BindUpdateDataFunction( typeid( T ).name(), _invalid_str, dataname, function );
+        }
+
+        template< class T >
         void RegisterUpdateDataFunction( const std::string& parentname, const std::string& dataname, T* object, void ( T::*handle )( KFEntity* kfentity, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue ) )
         {
             KFUpdateDataFunction function = std::bind( handle, object,
@@ -180,11 +198,16 @@ namespace KFrame
         }
 
         template< class T >
+        void UnRegisterUpdateDataFunction( T* object, const std::string& dataname )
+        {
+            UnBindUpdateDataFunction( typeid( T ).name(), _invalid_str, dataname );
+        }
+
+        template< class T >
         void UnRegisterUpdateDataFunction( T* object, const std::string& parentname, const std::string& dataname )
         {
             UnBindUpdateDataFunction( typeid( T ).name(), parentname, dataname );
         }
-
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 注册更新属性回调函数
         template< class T >
@@ -202,6 +225,14 @@ namespace KFrame
         }
 
         template< class T >
+        void RegisterUpdateStringFunction( const std::string& dataname, T* object, void ( T::*handle )( KFEntity* kfentity, KFData* kfdata, const std::string& value ) )
+        {
+            KFUpdateStringFunction function = std::bind( handle, object,
+                                              std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
+            BindUpdateStringFunction( typeid( T ).name(), _invalid_str, dataname, function );
+        }
+
+        template< class T >
         void RegisterUpdateStringFunction( const std::string& parentname, const std::string& dataname, T* object, void ( T::*handle )( KFEntity* kfentity, KFData* kfdata, const std::string& value ) )
         {
             KFUpdateStringFunction function = std::bind( handle, object,
@@ -210,11 +241,16 @@ namespace KFrame
         }
 
         template< class T >
+        void UnRegisterUpdateStringFunction( T* object, const std::string& dataname )
+        {
+            UnBindUpdateStringFunction( typeid( T ).name(), _invalid_str, dataname );
+        }
+
+        template< class T >
         void UnRegisterUpdateStringFunction( T* object, const std::string& parentname, const std::string& dataname )
         {
             UnBindUpdateStringFunction( typeid( T ).name(), parentname, dataname );
         }
-
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         template< class T >
         void RegisterEntityInitializeFunction( T* object, void ( T::*handle )( KFEntity* kfentity ) )
@@ -333,32 +369,95 @@ namespace KFrame
         virtual void BindShowElementFunction( KFShowElementFunction& function ) = 0;
         virtual void BindEntitySaveFunction( KFSaveEntityFunction& function ) = 0;
     };
-
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 #define  __KF_CHECK_ADD_ELEMENT_FUNCTION__( checkfunction ) \
     bool checkfunction( KFEntity* player, KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple )
 
+#define  __REGISTER_CHECK_ADD_ELEMENT__( dataname, function )\
+    _kf_component->RegisterCheckAddElementFunction( dataname, this, function )
+#define  __UN_CHECK_ADD_ELEMENT__( dataname, function )\
+    _kf_component->UnRegisterCheckAddElementFunction( dataname  )
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
 #define __KF_ADD_ELEMENT_FUNCTION__( addfunction ) \
     std::tuple<uint32, KFData*> addfunction( KFEntity* player, KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple )
 
+#define  __REGISTER_ADD_ELEMENT__( dataname, function ) \
+    _kf_component->RegisterAddElementFunction( dataname, this, function )
+#define  __UN_ADD_ELEMENT__( dataname ) \
+    _kf_component->UnRegisterAddElementFunction( dataname  )
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
 #define  __KF_CHECK_REMOVE_ELEMENT_FUNCTION__( checkfunction ) \
     bool checkfunction( KFEntity* player, KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple )
 
+#define  __REGISTER_CHECK_REMOVE_ELEMENT__( dataname, function )\
+    _kf_component->RegisterCheckRemoveElementFunction( dataname, this, function )
+#define  __UN_CHECK_REMOVE_ELEMENT__( dataname )\
+    _kf_component->UnRegisterCheckRemoveElementFunction( dataname )
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
 #define  __KF_REMOVE_ELEMENT_FUNCTION__( removefunction ) \
     void removefunction( KFEntity* player, KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple)
 
+#define __REGISTER_REMOVE_ELEMENT__( dataname, function ) \
+    _kf_component->RegisterRemoveElementFunction( dataname, this, function )
+#define __UN_REMOVE_ELEMENT__( dataname ) \
+    _kf_component->UnRegisterRemoveElementFunction( dataname )
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
 #define __KF_ADD_DATA_FUNCTION__( addfunction ) \
     void addfunction( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata )
 
+#define __REGISTER_ADD_DATA__( dataname, function )\
+    _kf_component->RegisterAddDataFunction( dataname, this, function )
+#define __UN_ADD_DATA__( dataname )\
+    _kf_component->UnRegisterAddDataFunction( this, dataname  )
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
 #define __KF_REMOVE_DATA_FUNCTION__( removefunction ) \
     void removefunction( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata )
 
+#define __REGISTER_REMOVE_DATA__( dataname, function )\
+    _kf_component->RegisterRemoveDataFunction( dataname, this, function )
+#define __UN_REMOVE_DATA__( dataname )\
+    _kf_component->UnRegisterRemoveDataFunction( this, dataname  )
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
 #define __KF_UPDATE_DATA_FUNCTION__( updatefunction ) \
     void updatefunction( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue )
 
+#define  __REGISTER_UPDATE_DATA__( function )\
+    _kf_component->RegisterUpdateDataModule( this, function )
+#define  __REGISTER_UPDATE_DATA_1__( dataname, updatefunction)\
+    _kf_component->RegisterUpdateDataFunction( dataname, this, updatefunction )
+#define  __REGISTER_UPDATE_DATA_2__( parentname, dataname, updatefunction)\
+    _kf_component->RegisterUpdateDataFunction( parentname, dataname, this, updatefunction )
+
+#define  __UN_UPDATE_DATA__()\
+    _kf_component->UnRegisterUpdateDataModule( this )
+#define  __UN_UPDATE_DATA_1__( dataname )\
+    _kf_component->UnRegisterUpdateDataFunction( this, dataname )
+#define  __UN_UPDATE_DATA_2__( parentname, dataname )\
+    _kf_component->UnRegisterUpdateDataFunction( this, parentname, dataname )
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
 #define  __KF_UPDATE_STRING_FUNCTION__( updatefunction ) \
     void updatefunction( KFEntity* player, KFData* kfdata, const std::string& value )
+
+#define  __REGISTER_UPDATE_STRING__( updatefunction)\
+    _kf_component->RegisterUpdateStringModule( this, updatefunction )
+#define  __REGISTER_UPDATE_STRING_1__( dataname, updatefunction)\
+    _kf_component->RegisterUpdateStringFunction( dataname, this, updatefunction )
+#define  __REGISTER_UPDATE_STRING_2__( parentname, dataname, updatefunction)\
+    _kf_component->RegisterUpdateStringFunction( parentname, dataname, this, updatefunction )
+
+#define  __UN_UPDATE_STRING__()\
+    _kf_component->UnRegisterUpdateStringModule( this )
+#define  __UN_UPDATE_STRING_1__( dataname )\
+    _kf_component->UnRegisterUpdateStringFunction( this, dataname )
+#define  __UN_UPDATE_STRING_2__( parentname, dataname )\
+    _kf_component->UnRegisterUpdateStringFunction( this, parentname, dataname )
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 }

@@ -12,7 +12,7 @@ namespace KFrame
 
     void KFSkinPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFSkin );
+        __UN_MODULE__( KFSkin );
     }
 
     void KFSkinPlugin::LoadModule()

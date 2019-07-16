@@ -6,7 +6,7 @@
 namespace KFrame
 {
 #define __REGISTER_WORKER_MESSAGE__( msgid, function ) _kf_worker->RegisterFunction( msgid, this, function )
-#define __UNREGISTER_WORKER_MESSAGE__( msgid ) _kf_worker->UnRegisterFunction( msgid )
+#define __UN_WORKER_MESSAGE__( msgid ) _kf_worker->UnRegisterFunction( msgid )
 
     class KFRedisDriver;
     class KFWorkerInterface : public KFModule

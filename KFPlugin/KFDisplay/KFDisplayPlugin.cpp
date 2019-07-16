@@ -12,7 +12,7 @@ namespace KFrame
 
     void KFDisplayPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFDisplay );
+        __UN_MODULE__( KFDisplay );
     }
 
     void KFDisplayPlugin::LoadModule()

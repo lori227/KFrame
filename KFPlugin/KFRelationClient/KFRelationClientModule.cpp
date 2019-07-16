@@ -9,13 +9,13 @@ namespace KFrame
 
     void KFRelationClientModule::BeforeRun()
     {
-        _kf_player->RegisterEnterFunction( this, &KFRelationClientModule::OnEnterQueryRelation );
-        _kf_player->RegisterLeaveFunction( this, &KFRelationClientModule::OnLeaveUpdateRelation );
+        __REGISTER_ENTER_PLAYER__( &KFRelationClientModule::OnEnterQueryRelation );
+        __REGISTER_LEAVE_PLAYER__( &KFRelationClientModule::OnLeaveUpdateRelation );
 
         // 注册属性回调
         _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
-        _kf_component->RegisterUpdateDataModule( this, &KFRelationClientModule::OnRelationValueUpdate );
-        _kf_component->RegisterUpdateStringModule( this, &KFRelationClientModule::OnRelationStringUpdate );
+        __REGISTER_UPDATE_DATA__( &KFRelationClientModule::OnRelationValueUpdate );
+        __REGISTER_UPDATE_STRING__( &KFRelationClientModule::OnRelationStringUpdate );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_ADD_RELATION_REQ, &KFRelationClientModule::HandleAddRelationReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_DEL_RELATION_REQ, &KFRelationClientModule::HandleDelRelationReq );
@@ -35,24 +35,24 @@ namespace KFrame
     {
         __KF_REMOVE_CONFIG__( _kf_relation_client_config );
 
-        _kf_player->UnRegisterEnterFunction( this );
-        _kf_player->UnRegisterLeaveFunction( this );
+        __UN_ENTER_PLAYER__();
+        __UN_LEAVE_PLAYER__();
 
-        _kf_component->UnRegisterUpdateDataModule( this );
-        _kf_component->UnRegisterUpdateStringModule( this );
+        __UN_UPDATE_DATA__();
+        __UN_UPDATE_STRING__();
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_ADD_RELATION_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_DEL_RELATION_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_REPLY_RELATION_INVITE_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_SET_REFUSE_RELATION_INVITE_REQ );
+        __UN_MESSAGE__( KFMsg::MSG_ADD_RELATION_REQ );
+        __UN_MESSAGE__( KFMsg::MSG_DEL_RELATION_REQ );
+        __UN_MESSAGE__( KFMsg::MSG_REPLY_RELATION_INVITE_REQ );
+        __UN_MESSAGE__( KFMsg::MSG_SET_REFUSE_RELATION_INVITE_REQ );
 
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_RELATION_TO_GAME_ACK );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_DATA_TO_RELATION_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_ADD_RELATION_TO_GAME_ACK );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_DEL_RELATION_TO_GAME_ACK );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_APPLY_ADD_RELATION_TO_GAME_ACK );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_RELATION_INVITE_TO_GAME_ACK );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_FRIENDLINESS_TO_GAME_ACK );
+        __UN_MESSAGE__( KFMsg::S2S_QUERY_RELATION_TO_GAME_ACK );
+        __UN_MESSAGE__( KFMsg::S2S_UPDATE_DATA_TO_RELATION_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_ADD_RELATION_TO_GAME_ACK );
+        __UN_MESSAGE__( KFMsg::S2S_DEL_RELATION_TO_GAME_ACK );
+        __UN_MESSAGE__( KFMsg::S2S_APPLY_ADD_RELATION_TO_GAME_ACK );
+        __UN_MESSAGE__( KFMsg::S2S_QUERY_RELATION_INVITE_TO_GAME_ACK );
+        __UN_MESSAGE__( KFMsg::S2S_UPDATE_FRIENDLINESS_TO_GAME_ACK );
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -93,7 +93,7 @@ namespace KFrame
         }
     }
 
-    void KFRelationClientModule::OnEnterQueryRelation( KFEntity* player )
+    __KF_ENTER_PLAYER_FUNCTION__( KFRelationClientModule::OnEnterQueryRelation )
     {
         for ( auto& iter : _kf_relation_client_config->_settings._objects )
         {
@@ -107,7 +107,7 @@ namespace KFrame
         }
     }
 
-    void KFRelationClientModule::OnLeaveUpdateRelation( KFEntity* player )
+    __KF_LEAVE_PLAYER_FUNCTION__( KFRelationClientModule::OnLeaveUpdateRelation )
     {
         for ( auto& iter : _kf_relation_client_config->_settings._objects )
         {
@@ -125,7 +125,17 @@ namespace KFrame
         }
     }
 
-    void KFRelationClientModule::OnRelationValueUpdate( KFEntity* player, KFData* kfdata )
+    __KF_UPDATE_DATA_FUNCTION__( KFRelationClientModule::OnRelationValueUpdate )
+    {
+        UpdateValueToRelation( player, kfdata );
+    }
+
+    __KF_UPDATE_STRING_FUNCTION__( KFRelationClientModule::OnRelationStringUpdate )
+    {
+        UpdateValueToRelation( player, kfdata );
+    }
+
+    void KFRelationClientModule::UpdateValueToRelation( KFEntity* player, KFData* kfdata )
     {
         if ( !kfdata->HaveMask( KFDataDefine::Mask_Relation ) || !kfdata->GetParent()->HaveMask( KFDataDefine::Mask_Relation ) )
         {
@@ -145,16 +155,6 @@ namespace KFrame
             values[ kfdata->_data_setting->_name ] = kfdata->ToString();
             SendUpdateToRelation( player, kfsetting->_id, values );
         }
-    }
-
-    __KF_UPDATE_DATA_FUNCTION__( KFRelationClientModule::OnRelationValueUpdate )
-    {
-        OnRelationValueUpdate( player, kfdata );
-    }
-
-    __KF_UPDATE_STRING_FUNCTION__( KFRelationClientModule::OnRelationStringUpdate )
-    {
-        OnRelationValueUpdate( player, kfdata );
     }
 
     void KFRelationClientModule::SendUpdateToRelation( KFEntity* player, const std::string& dataname, MapString& values )

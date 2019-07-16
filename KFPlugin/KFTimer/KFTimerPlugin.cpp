@@ -11,7 +11,7 @@ namespace KFrame
 
     void KFTimerPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFTimer );
+        __UN_MODULE__( KFTimer );
     }
 
     void KFTimerPlugin::LoadModule()

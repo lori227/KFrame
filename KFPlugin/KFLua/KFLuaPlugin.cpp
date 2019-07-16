@@ -11,7 +11,7 @@ namespace KFrame
 
     void KFLuaPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFLua );
+        __UN_MODULE__( KFLua );
     }
 
     void KFLuaPlugin::LoadModule()

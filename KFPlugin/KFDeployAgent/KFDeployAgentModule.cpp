@@ -19,11 +19,11 @@ namespace KFrame
     void KFDeployAgentModule::BeforeRun()
     {
         auto timerid = 0;
-        __LOOP_TIMER_ONE_PARAM__( ++timerid, 20000, 100, &KFDeployAgentModule::OnTimerStartupProcess );
-        __LOOP_TIMER_ONE_PARAM__( ++timerid, 1000, 0, &KFDeployAgentModule::OnTimerCheckTaskFinish );
-        __LOOP_TIMER_ONE_PARAM__( ++timerid, 5000, 1000, &KFDeployAgentModule::OnTimerQueryAgentData );
-        __LOOP_TIMER_ONE_PARAM__( ++timerid, 30000, 100, &KFDeployAgentModule::OnTimerCheckHeartbeat );
-        __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFDeployAgentModule::OnClientConnectServer );
+        __LOOP_TIMER_1__( ++timerid, 20000, 100, &KFDeployAgentModule::OnTimerStartupProcess );
+        __LOOP_TIMER_1__( ++timerid, 1000, 0, &KFDeployAgentModule::OnTimerCheckTaskFinish );
+        __LOOP_TIMER_1__( ++timerid, 5000, 1000, &KFDeployAgentModule::OnTimerQueryAgentData );
+        __LOOP_TIMER_1__( ++timerid, 30000, 100, &KFDeployAgentModule::OnTimerCheckHeartbeat );
+        __REGISTER_CLIENT_CONNECTION__( &KFDeployAgentModule::OnClientConnectServer );
         ////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_COMMAND_TO_AGENT_REQ, &KFDeployAgentModule::HandleDeployCommandReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_HEARTBEAT_TO_AGENT_REQ, &KFDeployAgentModule::HandleClientHeartbeatReq );
@@ -31,11 +31,11 @@ namespace KFrame
 
     void KFDeployAgentModule::ShutDown()
     {
-        __UN_TIMER_NO_PARAM__();
-        __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
+        __UN_TIMER_0__();
+        __UN_CLIENT_CONNECTION__();
         //////////////////////////////////////////////////////////
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_COMMAND_TO_AGENT_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_HEARTBEAT_TO_AGENT_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_DEPLOY_COMMAND_TO_AGENT_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_DEPLOY_HEARTBEAT_TO_AGENT_REQ );
     }
 
     void KFDeployAgentModule::OnceRun()
@@ -82,7 +82,7 @@ namespace KFrame
         _deploy_server_port = KFUtility::ToValue<uint32>( kfquery->_value[ "serverport" ] );
 
         // 关闭定时器
-        __UN_TIMER_ONE_PARAM__( objectid );
+        __UN_TIMER_1__( objectid );
 
         // 启动连接deployserver
         StartConnectDeployServer();

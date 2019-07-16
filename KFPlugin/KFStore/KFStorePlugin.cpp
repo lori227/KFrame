@@ -12,7 +12,7 @@ namespace KFrame
 
     void KFStorePlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFStore );
+        __UN_MODULE__( KFStore );
     }
 
     void KFStorePlugin::LoadModule()

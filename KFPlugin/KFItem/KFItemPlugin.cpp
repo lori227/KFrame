@@ -12,7 +12,7 @@ namespace KFrame
 
     void KFItemPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFItem );
+        __UN_MODULE__( KFItem );
     }
 
     void KFItemPlugin::LoadModule()

@@ -5,10 +5,10 @@ namespace KFrame
 {
     void KFLoginModule::BeforeRun()
     {
-        __LOOP_TIMER_NO_PARAM__( 10000, 5000, &KFLoginModule::OnTimerZoneRegister );
-        __REGISTER_SERVER_LOST_FUNCTION__( &KFLoginModule::OnServerLostGate );
-        __REGISTER_CLIENT_LOST_FUNCTION__( &KFLoginModule::OnClientLostWorld );
-        __REGISTER_CLIENT_CONNECTION_FUNCTION__( &KFLoginModule::OnClientConnectionWorld );
+        __LOOP_TIMER_0__( 10000, 5000, &KFLoginModule::OnTimerZoneRegister );
+        __REGISTER_SERVER_LOST__( &KFLoginModule::OnServerLostGate );
+        __REGISTER_CLIENT_LOST__( &KFLoginModule::OnClientLostWorld );
+        __REGISTER_CLIENT_CONNECTION__( &KFLoginModule::OnClientConnectionWorld );
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_ZONE_TO_LOGIN_REQ, &KFLoginModule::HandleUpdateZoneToLoginReq );
@@ -19,15 +19,15 @@ namespace KFrame
 
     void KFLoginModule::BeforeShut()
     {
-        __UN_TIMER_NO_PARAM__();
-        __UNREGISTER_SERVER_LOST_FUNCTION__();
-        __UNREGISTER_CLIENT_LOST_FUNCTION__();
-        __UNREGISTER_CLIENT_CONNECTION_FUNCTION__();
+        __UN_TIMER_0__();
+        __UN_SERVER_LOST__();
+        __UN_CLIENT_LOST__();
+        __UN_CLIENT_CONNECTION__();
 
         //////////////////////////////////////////////////////////////////////////////////////
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_ZONE_TO_LOGIN_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_LOGIN_TO_LOGIN_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_LOGIN_TO_LOGIN_ACK );
+        __UN_MESSAGE__( KFMsg::S2S_UPDATE_ZONE_TO_LOGIN_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_LOGIN_TO_LOGIN_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_LOGIN_TO_LOGIN_ACK );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFLoginModule::OnceRun()
@@ -92,7 +92,7 @@ namespace KFrame
         auto retcode = _kf_http_client->GetCode( kfresult );
         if ( retcode == KFMsg::Ok )
         {
-            __UN_TIMER_NO_PARAM__();
+            __UN_TIMER_0__();
         }
     }
 

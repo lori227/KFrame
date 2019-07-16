@@ -10,7 +10,7 @@ namespace KFrame
 
     void KFPublicClientPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFPublicClient );
+        __UN_MODULE__( KFPublicClient );
     }
 
     void KFPublicClientPlugin::LoadModule()

@@ -11,7 +11,7 @@ namespace KFrame
 
     void KFSchedulePlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFSchedule );
+        __UN_MODULE__( KFSchedule );
     }
 
     void KFSchedulePlugin::LoadModule()

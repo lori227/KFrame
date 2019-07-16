@@ -12,7 +12,7 @@ namespace KFrame
 
     void KFAuthPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFAuth );
+        __UN_MODULE__( KFAuth );
     }
 
     void KFAuthPlugin::LoadModule()

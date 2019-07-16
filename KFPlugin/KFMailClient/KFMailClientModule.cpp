@@ -10,9 +10,9 @@ namespace KFrame
 
     void KFMailClientModule::BeforeRun()
     {
-        _kf_player->RegisterEnterFunction( this, &KFMailClientModule::OnEnterQueryMail );
-        _kf_player->RegisterLeaveFunction( this, &KFMailClientModule::OnLeaveQueryMail );
-        _kf_player->RegisterNewPlayerFunction( this, &KFMailClientModule::OnNewPlayerMail );
+        __REGISTER_ENTER_PLAYER__( &KFMailClientModule::OnEnterMailModule );
+        __REGISTER_LEAVE_PLAYER__( &KFMailClientModule::OnLeaveMailModule );
+        __REGISTER_NEW_PLAYER__( &KFMailClientModule::OnNewPlayerMailModule );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_QUERY_MAIL_REQ, &KFMailClientModule::HandleQueryMailReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_VIEW_MAIL_REQ, &KFMailClientModule::HandleViewMailReq );
@@ -28,19 +28,18 @@ namespace KFrame
     {
         __KF_REMOVE_CONFIG__( _kf_mail_config );
 
-        _kf_player->UnRegisterEnterFunction( this );
-        _kf_player->UnRegisterLeaveFunction( this );
-        _kf_player->UnRegisterNewPlayerFunction( this );
-
+        __UN_NEW_PLAYER__();
+        __UN_ENTER_PLAYER__();
+        __UN_LEAVE_PLAYER__();
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_QUERY_MAIL_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_VIEW_MAIL_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_DELETE_MAIL_REQ );
-        __UNREGISTER_MESSAGE__( KFMsg::MSG_MAIL_REWARD_REQ );
+        __UN_MESSAGE__( KFMsg::MSG_QUERY_MAIL_REQ );
+        __UN_MESSAGE__( KFMsg::MSG_VIEW_MAIL_REQ );
+        __UN_MESSAGE__( KFMsg::MSG_DELETE_MAIL_REQ );
+        __UN_MESSAGE__( KFMsg::MSG_MAIL_REWARD_REQ );
 
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_QUERY_MAIL_ACK );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_UPDATE_MAIL_STATUS_ACK );
-        __UNREGISTER_MESSAGE__( KFMsg::S2S_NOTICE_NEW_MAIL_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_QUERY_MAIL_ACK );
+        __UN_MESSAGE__( KFMsg::S2S_UPDATE_MAIL_STATUS_ACK );
+        __UN_MESSAGE__( KFMsg::S2S_NOTICE_NEW_MAIL_REQ );
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -49,19 +48,19 @@ namespace KFrame
         return _kf_route->SendToRand( playerid, __KF_STRING__( mail ), msgid, message, true );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFMailClientModule::OnEnterQueryMail( KFEntity* player )
+    __KF_ENTER_PLAYER_FUNCTION__( KFMailClientModule::OnEnterMailModule )
     {
         auto playerid = player->GetKeyID();
-        __LOOP_TIMER_ONE_PARAM__( playerid, KFTimeEnum::OneMinuteMicSecond * 5, 1, &KFMailClientModule::OnTimerQueryMail );
+        __LOOP_TIMER_1__( playerid, KFTimeEnum::OneMinuteMicSecond * 5, 1, &KFMailClientModule::OnTimerQueryMail );
     }
 
-    void KFMailClientModule::OnLeaveQueryMail( KFEntity* player )
+    __KF_LEAVE_PLAYER_FUNCTION__( KFMailClientModule::OnLeaveMailModule )
     {
         auto playerid = player->GetKeyID();
-        __UN_TIMER_ONE_PARAM__( playerid );
+        __UN_TIMER_1__( playerid );
     }
 
-    void KFMailClientModule::OnNewPlayerMail( KFEntity* player )
+    __KF_NEW_PLAYER_FUNCTION__( KFMailClientModule::OnNewPlayerMailModule )
     {
         KFMsg::S2SNewPlayerMailReq req;
         req.set_playerid( player->GetKeyID() );
@@ -74,7 +73,7 @@ namespace KFrame
         auto player = _kf_player->FindPlayer( objectid );
         if ( player == nullptr )
         {
-            return __UN_TIMER_ONE_PARAM__( objectid );
+            return __UN_TIMER_1__( objectid );
         }
 
         SendQueryMailMessage( player );

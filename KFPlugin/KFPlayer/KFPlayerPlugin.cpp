@@ -10,7 +10,7 @@ namespace KFrame
 
     void KFPlayerPlugin::UnInstall()
     {
-        __UNREGISTER_MODULE__( KFPlayer );
+        __UN_MODULE__( KFPlayer );
     }
 
     void KFPlayerPlugin::LoadModule()
