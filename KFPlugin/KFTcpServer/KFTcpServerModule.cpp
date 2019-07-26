@@ -1,5 +1,4 @@
 ﻿#include "KFTcpServerModule.hpp"
-#include "KFTcpServerConfig.hpp"
 #include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
@@ -17,24 +16,24 @@ namespace KFrame
 
     void KFTcpServerModule::InitModule()
     {
+        __KF_ADD_CONFIG__( KFTcpServerConfig );
         _server_engine = new KFNetServerEngine();
-        __KF_ADD_CONFIG__( _kf_server_config, false );
     }
 
     KFTcpSetting* KFTcpServerModule::FindTcpServerSetting()
     {
         auto kfglobal = KFGlobal::Instance();
 
-        auto kftcpsetting = _kf_server_config->FindTcpSetting( kfglobal->_app_name, kfglobal->_app_type );
+        auto kftcpsetting = KFTcpServerConfig::Instance()->FindTcpSetting( kfglobal->_app_name, kfglobal->_app_type );
         if ( kftcpsetting == nullptr )
         {
-            kftcpsetting = _kf_server_config->FindTcpSetting( _globbing_str, kfglobal->_app_type );
+            kftcpsetting = KFTcpServerConfig::Instance()->FindTcpSetting( _globbing_str, kfglobal->_app_type );
             if ( kftcpsetting == nullptr )
             {
-                kftcpsetting = _kf_server_config->FindTcpSetting( kfglobal->_app_name, _globbing_str );
+                kftcpsetting = KFTcpServerConfig::Instance()->FindTcpSetting( kfglobal->_app_name, _globbing_str );
                 if ( kftcpsetting == nullptr )
                 {
-                    kftcpsetting = _kf_server_config->FindTcpSetting( _globbing_str, _globbing_str );
+                    kftcpsetting = KFTcpServerConfig::Instance()->FindTcpSetting( _globbing_str, _globbing_str );
                     if ( kftcpsetting == nullptr )
                     {
                         __LOG_ERROR__( "can't find [{}:{}] setting", kfglobal->_app_name, kfglobal->_app_type );
@@ -97,7 +96,6 @@ namespace KFrame
 
     void KFTcpServerModule::ShutDown()
     {
-        __KF_REMOVE_CONFIG__( _kf_server_config );
         _server_engine->ShutEngine();
     }
 

@@ -9,6 +9,7 @@
 //    @Date             :    2018-2-1
 ************************************************************************/
 
+#include "KFMailConfig.hpp"
 #include "KFProtocol/KFProtocol.h"
 #include "KFMailClientInterface.h"
 #include "KFTimer/KFTimerInterface.h"

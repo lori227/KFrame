@@ -4,10 +4,12 @@
     <ClInclude Include="KFConfigInterface.h" />
     <ClInclude Include="KFConfigModule.hpp" />
     <ClInclude Include="KFConfigPlugin.hpp" />
+    <ClInclude Include="KFConfigConfig.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="KFConfigModule.cpp" />
     <ClCompile Include="KFConfigPlugin.cpp" />
+    <ClCompile Include="KFConfigConfig.cpp" />
   </ItemGroup>
 </Project>

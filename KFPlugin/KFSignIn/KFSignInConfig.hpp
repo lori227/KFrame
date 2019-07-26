@@ -2,6 +2,7 @@
 #define __KF_SIGNIN_CONFIG_H__
 
 #include "KFCore/KFElement.h"
+#include "KFZConfig/KFConfig.h"
 
 namespace KFrame
 {
@@ -31,22 +32,18 @@ namespace KFrame
     };
 
     ////////////////////////////////////////////////////////////////////////////////////
-    class KFSignInConfig : public KFIntConfigT< KFSignInSetting >, public KFSingleton< KFSignInConfig >
+    class KFSignInConfig : public KFIntConfigT< KFSignInSetting >, public KFInstance< KFSignInConfig >
     {
     public:
-        KFSignInConfig( const std::string& file, bool isclear )
-            : KFIntConfigT< KFSignInSetting >( file, isclear )
+        KFSignInConfig()
         {
+            _file_name = "signin";
         }
 
     protected:
         // 赌球配置
-        void ReadSetting( KFNode& xmlnode, KFSignInSetting* kfsetting );
+        virtual void ReadSetting( KFNode& xmlnode, KFSignInSetting* kfsetting );
     };
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_signin_config = KFSignInConfig::Instance( "signin.xml", true );
-    //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 #endif

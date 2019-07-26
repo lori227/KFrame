@@ -4,7 +4,7 @@ namespace KFrame
 {
     void KFRelationClientModule::InitModule()
     {
-        __KF_ADD_CONFIG__( _kf_relation_client_config, true );
+        __KF_ADD_CONFIG__( KFRelationConfig );
     }
 
     void KFRelationClientModule::BeforeRun()
@@ -33,8 +33,6 @@ namespace KFrame
 
     void KFRelationClientModule::BeforeShut()
     {
-        __KF_REMOVE_CONFIG__( _kf_relation_client_config );
-
         __UN_ENTER_PLAYER__();
         __UN_LEAVE_PLAYER__();
 
@@ -95,7 +93,7 @@ namespace KFrame
 
     __KF_ENTER_PLAYER_FUNCTION__( KFRelationClientModule::OnEnterQueryRelation )
     {
-        for ( auto& iter : _kf_relation_client_config->_settings._objects )
+        for ( auto& iter : KFRelationConfig::Instance()->_settings._objects )
         {
             auto kfsetting = iter.second;
             if ( !kfsetting->_online_load )
@@ -109,7 +107,7 @@ namespace KFrame
 
     __KF_LEAVE_PLAYER_FUNCTION__( KFRelationClientModule::OnLeaveUpdateRelation )
     {
-        for ( auto& iter : _kf_relation_client_config->_settings._objects )
+        for ( auto& iter : KFRelationConfig::Instance()->_settings._objects )
         {
             auto kfsetting = iter.second;
             if ( !kfsetting->_need_update )
@@ -143,7 +141,7 @@ namespace KFrame
         }
 
         // 更新给关系, 属性变化了
-        for ( auto& iter : _kf_relation_client_config->_settings._objects )
+        for ( auto& iter : KFRelationConfig::Instance()->_settings._objects )
         {
             auto kfsetting = iter.second;
             if ( !kfsetting->_need_update )
@@ -245,7 +243,7 @@ namespace KFrame
             player->AddData( kfrecord, kfdata );
         }
 
-        auto kfsetting = _kf_relation_client_config->FindSetting( kfmsg.dataname() );
+        auto kfsetting = KFRelationConfig::Instance()->FindSetting( kfmsg.dataname() );
         if ( kfsetting != nullptr && kfsetting->_need_update )
         {
             // 通知关系,我上线了
@@ -285,7 +283,7 @@ namespace KFrame
             return;
         }
 
-        auto kfsetting = _kf_relation_client_config->FindSetting( kfmsg.dataname() );
+        auto kfsetting = KFRelationConfig::Instance()->FindSetting( kfmsg.dataname() );
         if ( kfsetting == nullptr )
         {
             return _kf_display->SendToClient( player, KFMsg::RelationSettingError );
@@ -365,7 +363,7 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgReplyRelationInviteReq );
 
-        auto kfsetting = _kf_relation_client_config->FindRelationSettingByInviteName( kfmsg.dataname() );
+        auto kfsetting = KFRelationConfig::Instance()->FindRelationSettingByInviteName( kfmsg.dataname() );
         if ( kfsetting == nullptr )
         {
             return __LOG_ERROR__( "invitelist=[{}] setting is null!", kfmsg.dataname() );
@@ -501,7 +499,7 @@ namespace KFrame
     {
         __SERVER_PROTO_PARSE__( KFMsg::S2SAddRelationToGameAck );
 
-        auto kfsetting = _kf_relation_client_config->FindSetting( kfmsg.dataname() );
+        auto kfsetting = KFRelationConfig::Instance()->FindSetting( kfmsg.dataname() );
         if ( kfsetting == nullptr )
         {
             return __LOG_ERROR__( "relation=[{}] no setting!", kfmsg.dataname() );
@@ -574,7 +572,7 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgSetRefuseRelationInviteReq );
 
-        auto kfsetting = _kf_relation_client_config->FindSetting( kfmsg.dataname() );
+        auto kfsetting = KFRelationConfig::Instance()->FindSetting( kfmsg.dataname() );
         if ( kfsetting == nullptr )
         {
             return __LOG_ERROR__( "relation=[{}] no setting!", kfmsg.dataname() );

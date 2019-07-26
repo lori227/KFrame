@@ -1,7 +1,7 @@
 ﻿#ifndef __KF_ENTER_CONFIG_H__
 #define __KF_ENTER_CONFIG_H__
 
-#include "KFrame.h"
+#include "KFZConfig/KFConfig.h"
 
 namespace KFrame
 {
@@ -15,12 +15,12 @@ namespace KFrame
         std::string _lua_function;
     };
     ////////////////////////////////////////////////////////////////////////////////////
-    class KFEnterConfig : public KFIntConfigT< KFEnterSetting >, public KFSingleton< KFEnterConfig >
+    class KFEnterConfig : public KFIntConfigT< KFEnterSetting >, public KFInstance< KFEnterConfig >
     {
     public:
-        KFEnterConfig( const std::string& file, bool isclear )
-            : KFIntConfigT< KFEnterSetting >( file, isclear )
+        KFEnterConfig()
         {
+            _file_name = "enter";
         }
 
     protected:
@@ -28,12 +28,8 @@ namespace KFrame
         KFEnterSetting* CreateSetting( KFNode& xmlnode );
 
         // 读取配置
-        void ReadSetting( KFNode& xmlnode, KFEnterSetting* kfsetting );
+        virtual void ReadSetting( KFNode& xmlnode, KFEnterSetting* kfsetting );
     };
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_enter_config = KFEnterConfig::Instance( "enter.xml", true );
-    //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 #endif

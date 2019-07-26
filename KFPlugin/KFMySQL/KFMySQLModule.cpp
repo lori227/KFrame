@@ -5,13 +5,8 @@ namespace KFrame
 {
     void KFMySQLModule::InitModule()
     {
+        __KF_ADD_CONFIG__( KFMySQLConfig );
         MySQL::Connector::registerConnector();
-        __KF_ADD_CONFIG__( _kf_mysql_config, false );
-    }
-
-    void KFMySQLModule::BeforeShut()
-    {
-        __KF_REMOVE_CONFIG__( _kf_mysql_config );
     }
 
     void KFMySQLModule::ShutDown()
@@ -48,7 +43,7 @@ namespace KFrame
 
     KFMySQLDriver* KFMySQLModule::Create( const std::string& module, uint32 logicid /* = 0 */ )
     {
-        auto kfmysqltype = _kf_mysql_config->FindMySQLType( module, logicid );
+        auto kfmysqltype = KFMySQLConfig::Instance()->FindMySQLType( module, logicid );
         if ( kfmysqltype == nullptr )
         {
             __LOG_ERROR__( "[{}:{}] can't find mysql type!", module, logicid );

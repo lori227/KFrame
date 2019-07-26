@@ -144,6 +144,14 @@ namespace KFrame
         return kfuuid->ZoneId( uuid );
     }
 
+    bool KFGlobal::IsServerSameZone( uint64 serverid )
+    {
+        static KFAppId _kf_app_id;
+        _kf_app_id.FromUInt64( serverid );
+
+        return _kf_app_id.GetZoneId() == _app_id->GetZoneId();
+    }
+
     void KFGlobal::InitNetType( std::string& strtype )
     {
         _net_type = KFUtility::ToValue< uint32 >( strtype );

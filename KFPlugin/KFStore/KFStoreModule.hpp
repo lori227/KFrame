@@ -1,5 +1,5 @@
 ﻿#ifndef __KF_STORE_MODULE_H__
-#define __KF_STORE__MODULE_H__
+#define __KF_STORE_MODULE_H__
 
 #include "KFStoreConfig.hpp"
 #include "KFStoreInterface.h"
@@ -33,7 +33,7 @@ namespace KFrame
         // 请求商城信息
         __KF_MESSAGE_FUNCTION__( HandleQueryStoreReq );
 
-    private:
+    protected:
         // 购买商品
         uint32 ProcessBuyStore( KFEntity* player, const std::string& buytype, uint32 pid, uint32 count );
 

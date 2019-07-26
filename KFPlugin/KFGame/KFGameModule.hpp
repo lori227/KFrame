@@ -10,7 +10,6 @@
 ************************************************************************/
 
 #include "KFGameInterface.h"
-#include "KFZone/KFZoneInterface.h"
 #include "KFKernel/KFKernelInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFMessage/KFMessageInterface.h"
@@ -109,10 +108,10 @@ namespace KFrame
 
     protected:
         // 进入游戏世界
-        void OnEnterGame( KFEntity* player );
+        __KF_ENTER_PLAYER_FUNCTION__( OnEnterGame );
 
         // 离开游戏世界
-        void OnLeaveGame( KFEntity* player );
+        __KF_LEAVE_PLAYER_FUNCTION__( OnLeaveGame );
 
         // 加载玩家数据
         void OnAfterLoadPlayerData( uint32 result, const KFMsg::PBLoginData* pblogin, const KFMsg::PBObject* pbplayerdata );

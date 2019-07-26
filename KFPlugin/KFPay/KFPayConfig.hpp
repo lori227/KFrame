@@ -1,8 +1,8 @@
 ﻿#ifndef __KF_PAY_CONFIG_H__
 #define __KF_PAY_CONFIG_H__
 
-#include "KFrame.h"
 #include "KFCore/KFElement.h"
+#include "KFZConfig/KFConfig.h"
 
 namespace KFrame
 {
@@ -25,22 +25,18 @@ namespace KFrame
         KFElements _first_elements;
     };
 
-    class KFPayConfig : public KFStrConfigT< KFPaySetting >, public KFSingleton< KFPayConfig >
+    class KFPayConfig : public KFStrConfigT< KFPaySetting >, public KFInstance< KFPayConfig >
     {
     public:
-        KFPayConfig( const std::string& file, bool isclear )
-            : KFStrConfigT<KFPaySetting >( file, isclear )
+        KFPayConfig()
         {
+            _file_name = "pay";
         }
 
     protected:
         // 读取配置
-        void ReadSetting( KFNode& xmlnode, KFPaySetting* kfsetting );
+        virtual void ReadSetting( KFNode& xmlnode, KFPaySetting* kfsetting );
     };
-
-    //////////////////////////////////////////////////////////////////////////
-    static auto _kf_pay_config = KFPayConfig::Instance( "pay.xml", true );
-    //////////////////////////////////////////////////////////////////////////
 }
 
-#endif//__KF_STORE_CONFIG_H__
+#endif

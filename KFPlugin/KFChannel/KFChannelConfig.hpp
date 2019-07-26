@@ -2,6 +2,7 @@
 #define __KF_CHANNEL_CONFIG_H__
 
 #include "KFrame.h"
+#include "KFZConfig/KFConfig.h"
 
 namespace KFrame
 {
@@ -37,12 +38,12 @@ namespace KFrame
     };
     ////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////
-    class KFChannelConfig : public KFIntConfigT< KFChannelSetting >, public KFSingleton< KFChannelConfig >
+    class KFChannelConfig : public KFIntConfigT< KFChannelSetting >, public KFInstance< KFChannelConfig >
     {
     public:
-        KFChannelConfig( const std::string& file, bool isclear )
-            : KFIntConfigT< KFChannelSetting >( file, isclear )
+        KFChannelConfig()
         {
+            _file_name = "channel";
         }
 
         // 渠道是否开放
@@ -51,12 +52,8 @@ namespace KFrame
         KFChannelSetting* CreateSetting( KFNode& xmlnode );
 
         // 读取配置
-        void ReadSetting( KFNode& xmlnode, KFChannelSetting* kfsetting );
+        virtual void ReadSetting( KFNode& xmlnode, KFChannelSetting* kfsetting );
     };
-
-    ////////////////////////////////////////////////////////////////////////////
-    static auto _kf_channel_config = KFChannelConfig::Instance( "channel.xml", true );
-    ////////////////////////////////////////////////////////////////////////////
 }
 
 

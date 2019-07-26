@@ -18,10 +18,10 @@ namespace KFrame
     typedef std::function< void( KFEntity*, KFData*, KFElement*, const char*, uint32, float ) > KFRemoveElementFunction;
     ////////////////////////////////////////////////////////////////////////////////////////////
 
-    typedef std::function<void( KFEntity*, KFData* kfparent, uint64 key, KFData* kfdata )> KFAddDataFunction;
-    typedef std::function<void( KFEntity*, KFData* kfparent, uint64 key, KFData* kfdata )> KFRemoveDataFunction;
-    typedef std::function<void( KFEntity*, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue )> KFUpdateDataFunction;
-    typedef std::function<void( KFEntity*, KFData* kfdata, const std::string& value )> KFUpdateStringFunction;
+    typedef std::function<void( KFEntity*, KFData*, uint64, KFData* )> KFAddDataFunction;
+    typedef std::function<void( KFEntity*, KFData*, uint64, KFData* )> KFRemoveDataFunction;
+    typedef std::function<void( KFEntity*, uint64, KFData*, uint32, uint64, uint64, uint64 )> KFUpdateDataFunction;
+    typedef std::function<void( KFEntity*, KFData*, const std::string& )> KFUpdateStringFunction;
     ////////////////////////////////////////////////////////////////////////////////////////////
     // 游戏中的组件, 负责属性回调时间
     class KFComponent
@@ -58,8 +58,22 @@ namespace KFrame
 
         // 获得属性列表
         virtual VectorString& GetDataList( const std::string& dataname ) = 0;
+
+        // 获得类配置
+        virtual const KFClassSetting* FindClassSetting() = 0;
+        virtual const KFClassSetting* FindClassSetting( const std::string& dataname ) = 0;
+
+        // 获得属性配置
+        virtual const KFDataSetting* FindDataSetting() = 0;
+        virtual const KFDataSetting* FindDataSetting( const std::string& dataname ) = 0;
+        virtual const KFDataSetting* FindDataSetting( const std::string& parentname, const std::string& dataname ) = 0;
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        virtual void SetLogicValue( const std::string& dataname, uint32 value ) = 0;
+        virtual void SetLogicValue( const std::string& parentname, const std::string& dataname, uint32 value ) = 0;
+
+        virtual void SetMaxValue( const std::string& dataname, uint32 value ) = 0;
+        virtual void SetMaxValue( const std::string& parentname, const std::string& dataname, uint32 value ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////

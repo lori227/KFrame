@@ -2,6 +2,7 @@
 #define __KF_TASK_CONFIG_H__
 
 #include "KFCore/KFElement.h"
+#include "KFZConfig/KFConfig.h"
 
 namespace KFrame
 {
@@ -66,12 +67,12 @@ namespace KFrame
     };
     /////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////
-    class KFTaskConfig : public KFIntConfigT< KFTaskSetting >, public KFSingleton< KFTaskConfig >
+    class KFTaskConfig : public KFIntConfigT< KFTaskSetting >, public KFInstance< KFTaskConfig >
     {
     public:
-        KFTaskConfig( const std::string& file, bool isclear )
-            : KFIntConfigT< KFTaskSetting >( file, isclear )
+        KFTaskConfig()
         {
+            _file_name = "task";
         }
 
         // 查找任务类型列表
@@ -79,10 +80,10 @@ namespace KFrame
 
     protected:
         // 清除配置
-        void ClearSetting();
+        virtual void ClearSetting();
 
         // 读取配置
-        void ReadSetting( KFNode& xmlnode, KFTaskSetting* kfsetting );
+        virtual void ReadSetting( KFNode& xmlnode, KFTaskSetting* kfsetting );
 
         // 添加任务类型
         void AddTaskType( KFTaskSetting* kfsetting );
@@ -91,9 +92,5 @@ namespace KFrame
         // 类型列表
         std::unordered_map< std::string, KFTaskTypes > _task_types;
     };
-
-    ///////////////////////////////////////////////////////////////////////////
-    static auto _kf_task_config = KFTaskConfig::Instance( "task.xml", true );
-    ///////////////////////////////////////////////////////////////////////////
 }
 #endif

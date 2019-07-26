@@ -16,8 +16,8 @@ namespace KFrame
         _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
         _kf_component->RegisterEntitySaveFunction( this, &KFGameModule::SavePlayer );
 
-        _kf_player->RegisterEnterFunction( this, &KFGameModule::OnEnterGame );
-        _kf_player->RegisterLeaveFunction( this, &KFGameModule::OnLeaveGame );
+        __REGISTER_ENTER_PLAYER__( &KFGameModule::OnEnterGame );
+        __REGISTER_LEAVE_PLAYER__( &KFGameModule::OnLeaveGame );
 
         _kf_data_client->BindLoadPlayerFunction( this, &KFGameModule::OnAfterLoadPlayerData );
         _kf_data_client->BindQueryPlayerFunction( this, &KFGameModule::OnAfterQueryPlayerData );
@@ -47,8 +47,8 @@ namespace KFrame
         __UN_ROUTE_MESSAGE_FUNCTION__();
         __UN_CLIENT_TRANSPOND__();
 
-        _kf_player->UnRegisterEnterFunction( this );
-        _kf_player->UnRegisterLeaveFunction( this );
+        __UN_ENTER_PLAYER__();
+        __UN_LEAVE_PLAYER__();
 
         _kf_data_client->UnBindLoadPlayerFunction( this );
         _kf_data_client->UnBindLoadPlayerFunction( this );
@@ -283,7 +283,7 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFGameModule::OnEnterGame( KFEntity* player )
+    __KF_ENTER_PLAYER_FUNCTION__( KFGameModule::OnEnterGame )
     {
         auto playerid = player->GetKeyID();
         {
@@ -294,9 +294,8 @@ namespace KFrame
         }
     }
 
-    void KFGameModule::OnLeaveGame( KFEntity* player )
+    __KF_LEAVE_PLAYER_FUNCTION__( KFGameModule::OnLeaveGame )
     {
-        auto kfobject = player->GetData();
         auto playerid = player->GetKeyID();
         {
             // 发送消息到世界服务器

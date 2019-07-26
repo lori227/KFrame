@@ -1,5 +1,4 @@
 ﻿#include "KFHttpServerModule.hpp"
-#include "KFHttpServerConfig.hpp"
 #include "KFHttp/KFHttpServer.h"
 #include "KFHttp/KFHttpCommon.h"
 
@@ -17,15 +16,14 @@ namespace KFrame
 
     void KFHttpServerModule::InitModule()
     {
-        __KF_ADD_CONFIG__( _kf_http_server_config, false );
-        //////////////////////////////////////////////////////////////////////////////////
+        __KF_ADD_CONFIG__( KFHttpServerConfig );
     }
 
     void KFHttpServerModule::BeforeRun()
     {
         //////////////////////////////////////////////////////////////////////////////////
         auto kfglogal = KFGlobal::Instance();
-        auto kfsetting = _kf_http_server_config->FindHttpSetting( kfglogal->_app_name, kfglogal->_app_type );
+        auto kfsetting = KFHttpServerConfig::Instance()->FindHttpSetting( kfglogal->_app_name, kfglogal->_app_type );
 
         // 计算端口
         kfsetting->_port = _kf_ip_address->CalcListenPort( kfsetting->_port_type, kfsetting->_port, kfglogal->_app_id->GetId() );
@@ -48,7 +46,6 @@ namespace KFrame
     void KFHttpServerModule::ShutDown()
     {
         _http_server->ShutDown();
-        __KF_REMOVE_CONFIG__( _kf_http_server_config );
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////

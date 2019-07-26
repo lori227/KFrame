@@ -15,6 +15,7 @@
 #include "KFMessage/KFMessageInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
+#include "KFTaskConfig.hpp"
 
 namespace KFrame
 {
@@ -57,6 +58,7 @@ namespace KFrame
         // 领取任务奖励
         uint32 ReceiveTaskReward( KFEntity* player, uint32 taskid );
     private:
+        // 玩家组件上下文
         KFComponent* _kf_component = nullptr;
     };
 }

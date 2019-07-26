@@ -204,7 +204,7 @@ namespace KFrame
         // 删除连接关系
         if ( role->_session_id != _invalid_int )
         {
-            _kf_tcp_server->CloseNetHandle( role->_session_id, 1000, __FUNC_LINE__ );
+            _kf_tcp_server->CloseNetHandle( role->_session_id, 2000, __FUNC_LINE__ );
         }
 
         _token_list.erase( role->_token );
@@ -465,19 +465,20 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::MsgLogoutReq );
         auto playerid = __ROUTE_SEND_ID__;
         auto kfrole = FindRole( playerid );
-        if ( kfrole == nullptr )
+        if ( kfrole != nullptr )
         {
-            return;
+            __LOG_DEBUG__( "player[{}] login out!", playerid );
+
+            KFMsg::S2SLogoutToGameReq req;
+            req.set_playerid( playerid );
+            kfrole->SendToGame( KFMsg::S2S_LOGOUT_TO_GAME_REQ, &req );
+
+            // 删除玩家
+            RemoveRole( kfrole );
         }
 
-        __LOG_DEBUG__( "player[{}] login out!", playerid );
-
-        KFMsg::S2SLogoutToGameReq req;
-        req.set_playerid( playerid );
-        kfrole->SendToGame( KFMsg::S2S_LOGOUT_TO_GAME_REQ, &req );
-
-        // 删除玩家
-        RemoveRole( kfrole );
+        KFMsg::MsgLoginAck ack;
+        _kf_tcp_server->SendNetMessage( __ROUTE_SERVER_ID__, KFMsg::MSG_LOGIN_ACK, &ack );
     }
 
     //// 走马灯

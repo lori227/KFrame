@@ -1,6 +1,5 @@
 ﻿#include "KFEntityEx.hpp"
 #include "KFComponentEx.hpp"
-#include "KFKernelConfig.hpp"
 #include "KFKernelModule.hpp"
 #include "KFDataFactory.hpp"
 #include "KFProtocol/KFProtocol.h"
@@ -239,6 +238,18 @@ namespace KFrame
         }
 
         return newvalue;
+    }
+
+
+    uint64 KFEntityEx::UpdateData( const std::string& dataname, uint64 index, uint32 operate, uint64 value )
+    {
+        auto kfdata = _kf_object->FindData( dataname );
+        if ( kfdata == nullptr )
+        {
+            return 0u;
+        }
+
+        return UpdateData( 0u, kfdata, index, operate, value );
     }
 
     uint64 KFEntityEx::UpdateData( KFData* kfdata, uint64 index, uint32 operate, uint64 value )
@@ -1083,7 +1094,7 @@ namespace KFrame
                 savedata = datahierarchy.front();
                 datahierarchy.pop_front();
 
-                ( *pbarray->mutable_pbuint64() )[ key ] = savedata->GetValue<uint64>();
+                ( *pbarray->mutable_pbuint64() )[ key ] = savedata->GetValue<int64>();
             }
             else
             {

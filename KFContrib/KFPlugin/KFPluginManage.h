@@ -236,6 +236,7 @@ namespace KFrame
         void InitModule();
 
         // 加载配置
+        void LoadConfig();
         void AfterLoad();
 
         // 准备执行

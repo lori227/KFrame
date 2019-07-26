@@ -1,12 +1,11 @@
 ﻿#include "KFAchieveModule.hpp"
-#include "KFAchieveConfig.hpp"
 #include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
     void KFAchieveModule::InitModule()
     {
-        __KF_ADD_CONFIG__( _kf_achieve_config, true );
+        __KF_ADD_CONFIG__( KFAchieveConfig );
     }
 
     void KFAchieveModule::BeforeRun()
@@ -23,8 +22,6 @@ namespace KFrame
 
     void KFAchieveModule::BeforeShut()
     {
-        __KF_REMOVE_CONFIG__( _kf_achieve_config );
-
         _kf_component->UnRegisterAddDataModule( this );
         _kf_component->UnRegisterRemoveDataModule( this );
         _kf_component->UnRegisterUpdateDataModule( this );
@@ -45,7 +42,7 @@ namespace KFrame
 
     uint32 KFAchieveModule::ReceiveAchieveReward( KFEntity* player, uint32 achieveid )
     {
-        auto kfsetting = _kf_achieve_config->FindSetting( achieveid );
+        auto kfsetting = KFAchieveConfig::Instance()->FindSetting( achieveid );
         if ( kfsetting == nullptr )
         {
             return KFMsg::AchieveCanNotFind;
@@ -81,7 +78,7 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_UPDATE_DATA_FUNCTION__( KFAchieveModule::OnAchieveValueUpdateCallBack )
     {
-        auto achievesetting = _kf_achieve_config->FindSetting( key );
+        auto achievesetting = KFAchieveConfig::Instance()->FindSetting( key );
         if ( achievesetting == nullptr )
         {
             return;
@@ -135,7 +132,7 @@ namespace KFrame
             return;
         }
 
-        auto kfachievetype = _kf_achieve_config->FindTypeAchieve( kfdata->GetParent()->_data_setting->_name, kfdata->_data_setting->_name );
+        auto kfachievetype = KFAchieveConfig::Instance()->FindTypeAchieve( kfdata->GetParent()->_data_setting->_name, kfdata->_data_setting->_name );
         if ( kfachievetype == nullptr )
         {
             return;

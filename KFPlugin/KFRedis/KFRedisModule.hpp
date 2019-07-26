@@ -9,7 +9,6 @@
 //    @Date             :    2017-1-11
 ************************************************************************/
 
-#include "KFrame.h"
 #include "KFRedisInterface.h"
 #include "KFRedisLogic.hpp"
 #include "KFConfig/KFConfigInterface.h"

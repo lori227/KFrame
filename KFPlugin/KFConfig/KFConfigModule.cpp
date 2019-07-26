@@ -2,46 +2,108 @@
 
 namespace KFrame
 {
-    bool KFConfigModule::AddConfig( KFConfig* config, const std::string& file, bool canreload )
+    static std::string _config_path = "./config/";
+    //////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////
+    KFConfigModule::KFConfigModule()
     {
-        if ( file.empty() && config->_file.empty() )
-        {
-            return false;
-        }
-
-        auto key = reinterpret_cast< uint64 >( config );
-        auto kfdata = _kf_config_data.Create( key );
-
-        kfdata->_config = config;
-        kfdata->_can_reload = canreload;
-
-        if ( !file.empty() )
-        {
-            kfdata->_file = file;
-        }
-        else
-        {
-            kfdata->_file = _confit_path + config->_file;
-        }
-
-        // 加载配置文件
-        LoadConfig( config, kfdata->_file );
-        return true;
+        _kf_config_config = new KFConfigConfig();
     }
 
-    void KFConfigModule::RemoveConfig( KFConfig* config )
+    KFConfigModule::~KFConfigModule()
     {
-        auto key = reinterpret_cast< uint64 >( config );
-        _kf_config_data.Remove( key );
+        delete _kf_config_config;
+        _kf_config_config = nullptr;
     }
 
-    void KFConfigModule::LoadConfig( KFConfig* config, const std::string& file )
+    void KFConfigModule::LoadConfig()
+    {
+        // 先读取
+        auto configfile = _config_path + "config.xml";
+        LoadConfigFile( _kf_config_config, configfile, KFConfigEnum::None );
+
+        for ( auto& iter : _config_list )
+        {
+            auto kfconfig = iter.second;
+            auto kfsetting = _kf_config_config->FindSetting( kfconfig->_file_name );
+            if ( kfsetting == nullptr )
+            {
+                __LOG_ERROR__( "config=[{}:{}] can't find setting!", iter.first, kfconfig->_file_name );
+                continue;
+            }
+
+            for ( auto& file : kfsetting->_file_list )
+            {
+                LoadConfigFile( kfconfig, file, kfsetting->_load_mask );
+            }
+        }
+    }
+
+    void KFConfigModule::ShutDown()
+    {
+        for ( auto& iter : _config_list )
+        {
+            delete iter.second;
+        }
+        _config_list.clear();
+    }
+
+    void KFConfigModule::AddConfig( const std::string& name, KFConfig* kfconfig )
+    {
+        _config_list[ name ] = kfconfig;
+    }
+
+    KFConfig* KFConfigModule::FindConfig( const std::string& name )
+    {
+        auto iter = _config_list.find( name );
+        if ( iter == _config_list.end() )
+        {
+            return nullptr;
+        }
+
+        return iter->second;
+    }
+
+    void KFConfigModule::ReloadConfig( const std::string& file )
+    {
+        __LOG_INFO__( "reload [{}] start!", file );
+
+        for ( auto& iter : _config_list )
+        {
+            auto kfconfig = iter.second;
+            auto kfsetting = _kf_config_config->FindSetting( kfconfig->_file_name );
+            if ( kfsetting == nullptr || !KFUtility::HaveBitMask<uint32>( kfsetting->_load_mask, KFConfigEnum::CanReload ) )
+            {
+                continue;
+            }
+
+            if ( file != _globbing_str )
+            {
+                auto configfile = kfsetting->IsFile( file );
+                if ( !configfile.empty() )
+                {
+                    LoadConfigFile( kfconfig, configfile, kfsetting->_load_mask );
+                }
+            }
+            else
+            {
+                for ( auto& file : kfsetting->_file_list )
+                {
+                    LoadConfigFile( kfconfig, file, kfsetting->_load_mask );
+                }
+            }
+        }
+
+        __LOG_INFO__( "reload [{}] ok!", file );
+    }
+
+    void KFConfigModule::LoadConfigFile( KFConfig* config, const std::string& file, uint32 loadmask )
     {
         __LOG_INFO__( "load [{}] start!", file );
         try
         {
-            config->LoadConfig( file );
-            config->LoadComplete( config->_file );
+            config->LoadConfig( file, loadmask );
+            config->LoadComplete();
             __LOG_INFO__( "load [{}] ok!", file );
         }
         catch ( ... )
@@ -49,28 +111,4 @@ namespace KFrame
             __LOG_ERROR__( "load [{}] failed!", file );
         }
     }
-
-    void KFConfigModule::ReloadConfig( const std::string& file )
-    {
-        for ( auto& iter : _kf_config_data._objects )
-        {
-            auto kfdata = iter.second;
-            if ( !kfdata->_can_reload )
-            {
-                continue;
-            }
-
-            if ( file != _globbing_str )
-            {
-                auto ok = kfdata->_config->IsFile( kfdata->_file, file );
-                if ( !ok )
-                {
-                    continue;
-                }
-            }
-
-            LoadConfig( kfdata->_config, kfdata->_file );
-        }
-    }
-
 }

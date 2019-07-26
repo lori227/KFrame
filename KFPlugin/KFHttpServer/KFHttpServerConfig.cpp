@@ -2,23 +2,8 @@
 
 namespace KFrame
 {
-    KFHttpSetting* KFHttpServerConfig::FindHttpSetting( const std::string& appname, const std::string& apptype )
-    {
-        for ( auto& kfsetting : _http_setting_list )
-        {
-            if ( kfsetting._app_name == appname &&
-                    kfsetting._app_type == apptype )
-            {
-                return &kfsetting;
-            }
-        }
-
-        return nullptr;
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    void KFHttpServerConfig::LoadConfig( const std::string& file )
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    void KFHttpServerConfig::LoadConfig( const std::string& file, uint32 loadmask )
     {
         _http_setting_list.clear();
         //////////////////////////////////////////////////////////////////
@@ -51,5 +36,18 @@ namespace KFrame
             }
         }
     }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    KFHttpSetting* KFHttpServerConfig::FindHttpSetting( const std::string& appname, const std::string& apptype )
+    {
+        for ( auto& kfsetting : _http_setting_list )
+        {
+            if ( kfsetting._app_name == appname &&
+                    kfsetting._app_type == apptype )
+            {
+                return &kfsetting;
+            }
+        }
 
+        return nullptr;
+    }
 }

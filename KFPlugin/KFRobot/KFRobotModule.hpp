@@ -54,7 +54,6 @@ namespace KFrame
         // 关闭连接
         __KF_NET_EVENT_FUNCTION__( OnClientShutdownGate );
 
-
     protected:
         // 处理错误码
         __KF_MESSAGE_FUNCTION__( HandleResultDisplay );

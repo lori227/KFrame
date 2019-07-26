@@ -1,9 +1,8 @@
 ﻿#ifndef __KF_DATA_H__
 #define __KF_DATA_H__
 
-#include "KFrame.h"
-#include "KFDataSetting.h"
 #include "KFMath3D/Math3D.h"
+#include "KFZConfig/KFDataSetting.h"
 
 namespace KFrame
 {

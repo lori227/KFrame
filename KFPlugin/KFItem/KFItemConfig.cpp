@@ -9,35 +9,6 @@ namespace KFrame
         "itemmedicine.xml",	// 药品
     };
 
-    bool KFItemConfig::IsFile( const std::string& configfile, const std::string& file )
-    {
-        if ( _file_list.find( file ) != _file_list.end() )
-        {
-            return true;
-        }
-
-        return KFIntConfigT< KFItemSetting >::IsFile( configfile, file );
-    }
-
-    void KFItemConfig::LoadComplete( const std::string& file )
-    {
-        for ( auto& itemfile : _file_list )
-        {
-            auto filename = _confit_path + itemfile;
-
-            try
-            {
-                __LOG_INFO__( "load [{}] start!", filename );
-                LoadConfig( filename );
-                __LOG_INFO__( "load [{}] ok!", filename );
-            }
-            catch ( ... )
-            {
-                __LOG_ERROR__( "load [{}] failed!", filename );
-            }
-        }
-    }
-
     void KFItemConfig::ReadSetting( KFNode& xmlnode, KFItemSetting* kfsetting )
     {
         switch ( kfsetting->_type )

@@ -5,7 +5,7 @@ namespace KFrame
 {
     void KFRedisModule::InitModule()
     {
-        __KF_ADD_CONFIG__( _kf_redis_config, false );
+        __KF_ADD_CONFIG__( KFRedisConfig );
     }
 
     void KFRedisModule::ShutDown()
@@ -17,15 +17,12 @@ namespace KFrame
                 iter.second->ShutDown();
             }
         }
-
-        __KF_REMOVE_CONFIG__( _kf_redis_config );
     }
-
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     KFRedisDriver* KFRedisModule::Create( const std::string& module, uint32 logicid /* = 0 */ )
     {
-        auto kfredistype = _kf_redis_config->FindRedisType( module, logicid );
+        auto kfredistype = KFRedisConfig::Instance()->FindRedisType( module, logicid );
         if ( kfredistype == nullptr )
         {
             __LOG_ERROR__( "[{}:{}] can't find redis type!", module, logicid );

@@ -1,17 +1,16 @@
 ﻿#include "KFPayModule.hpp"
-#include "KFPayConfig.hpp"
 
 namespace KFrame
 {
     void KFPayModule::InitModule()
     {
-        __KF_ADD_CONFIG__( _kf_pay_config, true );
+        __KF_ADD_CONFIG__( KFPayConfig );
     }
 
     void KFPayModule::BeforeRun()
     {
-        _kf_player->RegisterEnterFunction( this, &KFPayModule::OnEnterQueryPayOrder );
-        _kf_player->RegisterLeaveFunction( this, &KFPayModule::OnLeaveQueryPayOrder );
+        __REGISTER_ENTER_PLAYER__( &KFPayModule::OnEnterPayModule );
+        __REGISTER_LEAVE_PLAYER__( &KFPayModule::OnLeavePayModule );
         ////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_APPLY_PAY_ORDER_REQ, &KFPayModule::HandleApplyPayOrderReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_PAY_RESULT_REQ, &KFPayModule::HandlePayResultReq );
@@ -21,9 +20,8 @@ namespace KFrame
     void KFPayModule::BeforeShut()
     {
         __UN_TIMER_0__();
-        __KF_REMOVE_CONFIG__( _kf_pay_config );
-        _kf_player->UnRegisterEnterFunction( this );
-        _kf_player->UnRegisterLeaveFunction( this );
+        __UN_ENTER_PLAYER__();
+        __UN_LEAVE_PLAYER__();
         //////////////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::MSG_APPLY_PAY_ORDER_REQ );
         __UN_MESSAGE__( KFMsg::MSG_PAY_RESULT_REQ );
@@ -32,7 +30,7 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFPayModule::OnEnterQueryPayOrder( KFEntity* player )
+    __KF_ENTER_PLAYER_FUNCTION__( KFPayModule::OnEnterPayModule )
     {
         auto kfobject = player->GetData();
         auto order = kfobject->GetValue< std::string >( __KF_STRING__( payorder ) );
@@ -44,7 +42,7 @@ namespace KFrame
         QueryPayData( player->GetKeyID() );
     }
 
-    void KFPayModule::OnLeaveQueryPayOrder( KFEntity* player )
+    __KF_LEAVE_PLAYER_FUNCTION__( KFPayModule::OnLeavePayModule )
     {
         __UN_TIMER_1__( player->GetKeyID() );
     }
@@ -56,7 +54,7 @@ namespace KFrame
         __CLIENT_PROTO_PARSE__( KFMsg::MsgApplyPayOrderReq );
 
         // 申请充值订单号
-        auto kfsetting = _kf_pay_config->FindSetting( kfmsg.payid() );
+        auto kfsetting = KFPayConfig::Instance()->FindSetting( kfmsg.payid() );
         if ( kfsetting == nullptr )
         {
             return _kf_display->SendToClient( player, KFMsg::PayIdError );
@@ -199,7 +197,7 @@ namespace KFrame
     {
         __LOG_INFO__( "player=[{}] payid=[{}] order=[{}] add element!", player->GetKeyID(), payid, order );
 
-        auto kfsetting = _kf_pay_config->FindSetting( payid );
+        auto kfsetting = KFPayConfig::Instance()->FindSetting( payid );
         if ( kfsetting == nullptr )
         {
             return __LOG_ERROR__( "payid=[{}] can't find setting!", payid );

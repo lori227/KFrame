@@ -12,13 +12,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFIpAddressConfig.cpp" />
+    <ClCompile Include="KFIpConfig.cpp" />
     <ClCompile Include="KFIpAddressModule.cpp" />
     <ClCompile Include="KFIpAddressPlugin.cpp" />
     <ClCompile Include="KFPort.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFIpAddressConfig.hpp" />
+    <ClInclude Include="KFIpConfig.hpp" />
     <ClInclude Include="KFIpAddressInterface.h" />
     <ClInclude Include="KFIpAddressModule.hpp" />
     <ClInclude Include="KFIpAddressPlugin.hpp" />

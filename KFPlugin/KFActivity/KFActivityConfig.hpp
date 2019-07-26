@@ -1,8 +1,8 @@
 ﻿#ifndef __KF_ACTIVITY_CONFIG_H__
 #define __KF_ACTIVITY_CONFIG_H__
 
-#include "KFrame.h"
 #include "KFCore/KFElement.h"
+#include "KFZConfig/KFConfig.h"
 
 namespace KFrame
 {
@@ -92,13 +92,12 @@ namespace KFrame
 
     ///////////////////////////////////////////////////////////////////////////////
 
-    class KFActivityConfig : public KFConfig, public KFSingleton< KFActivityConfig >
+    class KFActivityConfig : public KFConfig, public KFInstance< KFActivityConfig >
     {
     public:
-        KFActivityConfig( const std::string& file )
-            : KFConfig( file )
+        KFActivityConfig()
         {
-
+            _file_name = "activity";
         }
 
         // 获得活动配置
@@ -108,7 +107,7 @@ namespace KFrame
         // 获得某种类型的所有成就
         const KFActivityType* FindActivityType( const std::string& parentname, const std::string& dataname ) const;
 
-        void LoadConfig( const std::string& file );
+        void LoadConfig( const std::string& file, uint32 loadmask );
 
     protected:
         void AddActivitySetting( KFActivitySetting* setting, KFActivityData* eventdata );
@@ -122,10 +121,6 @@ namespace KFrame
         typedef std::pair< std::string, std::string > ActivityTypeKey;
         std::map< ActivityTypeKey, KFActivityType > _activity_types;
     };
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_activity_config = KFActivityConfig::Instance( "activity.xml" );
-    //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 #endif

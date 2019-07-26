@@ -23,6 +23,7 @@ namespace KFrame
         virtual void InitModule() {}
 
         // 加载配置
+        virtual void LoadConfig() {}
         virtual void AfterLoad() {}
 
         // 执行

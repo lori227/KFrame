@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="KFConfig.h" />
+    <ClInclude Include="KFSetting.h" />
+    <ClInclude Include="KFDataConfig.hpp">
+      <Filter>Kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="KFDataSetting.h">
+      <Filter>Kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="KFOptionSetting.h">
+      <Filter>Option</Filter>
+    </ClInclude>
+    <ClInclude Include="KFOptionConfig.hpp">
+      <Filter>Option</Filter>
+    </ClInclude>
+    <ClInclude Include="KFRelationConfig.hpp">
+      <Filter>Relation</Filter>
+    </ClInclude>
+    <ClInclude Include="KFRankConfig.hpp">
+      <Filter>Rank</Filter>
+    </ClInclude>
+    <ClInclude Include="KFRankSetting.hpp">
+      <Filter>Rank</Filter>
+    </ClInclude>
+    <ClInclude Include="KFRelationSetting.hpp">
+      <Filter>Relation</Filter>
+    </ClInclude>
+    <ClInclude Include="KFZoneConfig.hpp">
+      <Filter>Zone</Filter>
+    </ClInclude>
+    <ClInclude Include="KFZoneSetting.hpp">
+      <Filter>Zone</Filter>
+    </ClInclude>
+    <ClInclude Include="KFItemConfig.hpp">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="KFItemSetting.hpp">
+      <Filter>Item</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Kernel">
+      <UniqueIdentifier>{035b270c-ac51-4ffd-8a66-3a3b1d32faba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Option">
+      <UniqueIdentifier>{b982aa9b-01ad-4ec0-98cb-983098ff0aee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Relation">
+      <UniqueIdentifier>{553c66c5-04e8-48fc-b1e5-2a2ad14611e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Rank">
+      <UniqueIdentifier>{17b0b46a-e27c-45c6-86ae-01e384affd5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Zone">
+      <UniqueIdentifier>{d60a51c8-f55e-4efa-ba09-b014483188db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Item">
+      <UniqueIdentifier>{99374550-72bf-42e5-80a5-64b311494e95}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="KFDataConfig.cpp">
+      <Filter>Kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="KFOptionConfig.cpp">
+      <Filter>Option</Filter>
+    </ClCompile>
+    <ClCompile Include="KFRelationConfig.cpp">
+      <Filter>Relation</Filter>
+    </ClCompile>
+    <ClCompile Include="KFRankConfig.cpp">
+      <Filter>Rank</Filter>
+    </ClCompile>
+    <ClCompile Include="KFZoneConfig.cpp">
+      <Filter>Zone</Filter>
+    </ClCompile>
+    <ClCompile Include="KFItemConfig.cpp">
+      <Filter>Item</Filter>
+    </ClCompile>
+    <ClCompile Include="KFItemSetting.cpp">
+      <Filter>Item</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

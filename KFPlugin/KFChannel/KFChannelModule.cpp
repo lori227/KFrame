@@ -1,5 +1,4 @@
 ﻿#include "KFChannelModule.hpp"
-#include "KFChannelConfig.hpp"
 #include "KFInternal.hpp"
 #include "KFWeiXin.hpp"
 #include "KFSteam.hpp"
@@ -18,7 +17,7 @@ namespace KFrame
 
     void KFChannelModule::InitModule()
     {
-        __KF_ADD_CONFIG__( _kf_channel_config, true );
+        __KF_ADD_CONFIG__( KFChannelConfig );
     }
 
     void KFChannelModule::BeforeRun()
@@ -27,11 +26,6 @@ namespace KFrame
         RegisterChannel( KFMsg::Internal, new KFInternal() );
         RegisterChannel( KFMsg::WeiXin, new KFWeiXin( ) );
         RegisterChannel( KFMsg::Steam, new KFSteam() );
-    }
-
-    void KFChannelModule::BeforeShut()
-    {
-        __KF_REMOVE_CONFIG__( _kf_channel_config );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -43,7 +37,7 @@ namespace KFrame
         if ( channel != KFGlobal::Instance()->_channel )
         {
             // 渠道不同, 判断是否支持
-            auto kfsetting = _kf_channel_config->FindSetting( KFGlobal::Instance()->_channel );
+            auto kfsetting = KFChannelConfig::Instance()->FindSetting( KFGlobal::Instance()->_channel );
             if ( !kfsetting->IsSupport( channel ) )
             {
                 return _kf_http_server->SendCode( KFMsg::ChannelNotSupport );
@@ -51,7 +45,7 @@ namespace KFrame
         }
 
         // 渠道是否开启
-        auto kfsetting = _kf_channel_config->FindSetting( channel );
+        auto kfsetting = KFChannelConfig::Instance()->FindSetting( channel );
         if ( kfsetting == nullptr || !kfsetting->IsOpen() )
         {
             return _kf_http_server->SendCode( KFMsg::ChannelNotOpen );
@@ -73,7 +67,7 @@ namespace KFrame
         if ( channel != KFGlobal::Instance()->_channel )
         {
             // 渠道不同, 判断是否支持
-            auto kfsetting = _kf_channel_config->FindSetting( KFGlobal::Instance()->_channel );
+            auto kfsetting = KFChannelConfig::Instance()->FindSetting( KFGlobal::Instance()->_channel );
             if ( !kfsetting->IsSupport( channel ) )
             {
                 __LOG_ERROR__( "channel=[{}] not support!", channel );
@@ -82,7 +76,7 @@ namespace KFrame
         }
 
         // 渠道是否开启
-        auto kfsetting = _kf_channel_config->FindSetting( channel );
+        auto kfsetting = KFChannelConfig::Instance()->FindSetting( channel );
         if ( kfsetting == nullptr || !kfsetting->IsOpen() )
         {
             __LOG_ERROR__( "channel=[{}] no setting!", channel );

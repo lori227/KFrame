@@ -5,7 +5,7 @@ namespace KFrame
 {
     void KFHeroModule::InitModule()
     {
-        __KF_ADD_CONFIG__( _kf_hero_config, true );
+        __KF_ADD_CONFIG__( KFHeroConfig );
     }
 
     void KFHeroModule::BeforeRun()
@@ -24,8 +24,6 @@ namespace KFrame
 
     void KFHeroModule::BeforeShut()
     {
-        __KF_REMOVE_CONFIG__( _kf_hero_config );
-
         _kf_component->UnRegisterAddDataFunction( this, __KF_STRING__( hero ) );
         _kf_component->UnRegisterRemoveDataFunction( this, __KF_STRING__( hero ) );
         _kf_component->UnRegisterAddElementFunction( __KF_STRING__( hero ) );
@@ -147,7 +145,7 @@ namespace KFrame
             return std::make_tuple( KFDataDefine::Show_None, nullptr );
         }
 
-        auto kfsetting = _kf_hero_config->FindSetting( kfelementobject->_config_id );
+        auto kfsetting = KFHeroConfig::Instance()->FindSetting( kfelementobject->_config_id );
         if ( kfsetting == nullptr )
         {
             __LOG_ERROR_FUNCTION__( function, line, " hero id=[{}] setting = null!", kfelementobject->_config_id );
@@ -205,7 +203,7 @@ namespace KFrame
 
     __KF_REMOVE_DATA_FUNCTION__( KFHeroModule::OnRemoveHeroCallBack )
     {
-        auto kfsetting = _kf_hero_config->FindSetting( static_cast< uint32 >( key ) );
+        auto kfsetting = KFHeroConfig::Instance()->FindSetting( static_cast< uint32 >( key ) );
         if ( kfsetting == nullptr )
         {
             return;

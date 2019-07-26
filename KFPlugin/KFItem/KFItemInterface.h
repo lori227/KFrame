@@ -1,4 +1,4 @@
-#ifndef __KF_ITEM_INTERFACE_H__
+﻿#ifndef __KF_ITEM_INTERFACE_H__
 #define __KF_ITEM_INTERFACE_H__
 
 #include "KFrame.h"
@@ -10,6 +10,10 @@ namespace KFrame
     public:
 
     };
+
+    //////////////////////////////////////////////////////////////////////////
+    __KF_INTERFACE__( _kf_item, KFItemInterface );
+    //////////////////////////////////////////////////////////////////////////
 }
 
 

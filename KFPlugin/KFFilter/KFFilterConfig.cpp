@@ -89,7 +89,7 @@ namespace KFrame
         return FindWord( &_root_word_data, source, length, 0, count );
     }
 
-    void KFFilterConfig::LoadConfig( const std::string& file )
+    void KFFilterConfig::LoadConfig( const std::string& file, uint32 loadmask )
     {
         _root_word_data.Clear();
         //////////////////////////////////////////////////////////////////

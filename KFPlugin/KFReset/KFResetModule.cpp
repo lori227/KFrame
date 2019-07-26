@@ -1,11 +1,10 @@
 ﻿#include "KFResetModule.hpp"
-#include "KFResetConfig.hpp"
 
 namespace KFrame
 {
     void KFResetModule::InitModule()
     {
-        __KF_ADD_CONFIG__( _kf_reset_config, true );
+        __KF_ADD_CONFIG__( KFResetConfig );
     }
 
     void KFResetModule::BeforeRun()
@@ -21,7 +20,6 @@ namespace KFrame
     {
         __UN_RESET_PLAYER__();
         __UN_RUN_PLAYER__();
-        __KF_REMOVE_CONFIG__( _kf_reset_config );
     }
 
     void KFResetModule::AfterRun()
@@ -55,7 +53,7 @@ namespace KFrame
         auto kfobject = player->GetData();
         auto kfnoterecord = kfobject->FindData( __KF_STRING__( note ) );
 
-        for ( auto& iter : _kf_reset_config->_settings._objects )
+        for ( auto& iter : KFResetConfig::Instance()->_settings._objects )
         {
             auto kfsetting = iter.second;
 

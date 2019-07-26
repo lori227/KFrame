@@ -4,7 +4,7 @@ namespace KFrame
 {
     void KFRelationShardModule::InitModule()
     {
-        __KF_ADD_CONFIG__( _kf_relation_shard_config, true );
+        __KF_ADD_CONFIG__( KFRelationConfig );
     }
 
     void KFRelationShardModule::BeforeRun()
@@ -21,7 +21,6 @@ namespace KFrame
 
     void KFRelationShardModule::BeforeShut()
     {
-        __KF_REMOVE_CONFIG__( _kf_relation_shard_config );
         /////////////////////////////////////////////////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::S2S_QUERY_RELATION_TO_RELATION_REQ );
         __UN_MESSAGE__( KFMsg::S2S_QUERY_RELATION_INVITE_TO_RELATION_REQ );
@@ -87,7 +86,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SQueryRelationToRelationReq );
 
-        auto kfsetting = _kf_relation_shard_config->FindSetting( kfmsg.dataname() );
+        auto kfsetting = KFRelationConfig::Instance()->FindSetting( kfmsg.dataname() );
         if ( kfsetting == nullptr )
         {
             return __LOG_ERROR__( "relatiion=[{}] no setting!", kfmsg.dataname() );
@@ -131,7 +130,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SQueryRelationInviteToRelationReq );
 
-        auto kfsetting = _kf_relation_shard_config->FindSetting( kfmsg.dataname() );
+        auto kfsetting = KFRelationConfig::Instance()->FindSetting( kfmsg.dataname() );
         if ( kfsetting == nullptr )
         {
             return __LOG_ERROR__( "relatiion=[{}] no setting!", kfmsg.dataname() );
@@ -186,7 +185,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SApplyAddRelationToRelationReq );
 
-        auto kfsetting = _kf_relation_shard_config->FindSetting( kfmsg.dataname() );
+        auto kfsetting = KFRelationConfig::Instance()->FindSetting( kfmsg.dataname() );
         if ( kfsetting == nullptr )
         {
             return __LOG_ERROR__( "relation=[{}] no setting!", kfmsg.dataname() );
@@ -257,7 +256,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SDelRelationInviteToRelationReq );
 
-        auto kfsetting = _kf_relation_shard_config->FindSetting( kfmsg.dataname() );
+        auto kfsetting = KFRelationConfig::Instance()->FindSetting( kfmsg.dataname() );
         if ( kfsetting == nullptr )
         {
             return __LOG_ERROR__( "relation=[{}] no setting!", kfmsg.dataname() );
@@ -272,7 +271,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SAddRelationToRelationReq );
 
-        auto kfsetting = _kf_relation_shard_config->FindSetting( kfmsg.dataname() );
+        auto kfsetting = KFRelationConfig::Instance()->FindSetting( kfmsg.dataname() );
         if ( kfsetting == nullptr )
         {
             return __LOG_ERROR__( "relation=[{}] no setting!", kfmsg.dataname() );
@@ -350,7 +349,7 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SDelRelationToRelationReq );
 
         auto selfid = __ROUTE_SEND_ID__;
-        auto kfsetting = _kf_relation_shard_config->FindSetting( kfmsg.dataname() );
+        auto kfsetting = KFRelationConfig::Instance()->FindSetting( kfmsg.dataname() );
         if ( kfsetting == nullptr )
         {
             return __LOG_ERROR__( "relation=[{}] no setting!", kfmsg.dataname() );

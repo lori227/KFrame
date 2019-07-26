@@ -1,7 +1,7 @@
 ﻿#ifndef __KF_RESET_CONFIG_H__
 #define __KF_RESET_CONFIG_H__
 
-#include "KFrame.h"
+#include "KFZConfig/KFConfig.h"
 
 namespace KFrame
 {
@@ -34,22 +34,18 @@ namespace KFrame
     };
 
     ////////////////////////////////////////////////////////////////////////////////////
-    class KFResetConfig : public KFIntConfigT< KFResetSetting >, public KFSingleton< KFResetConfig >
+    class KFResetConfig : public KFIntConfigT< KFResetSetting >, public KFInstance< KFResetConfig >
     {
     public:
-        KFResetConfig( const std::string& file, bool isclear )
-            : KFIntConfigT< KFResetSetting >( file, isclear )
+        KFResetConfig()
         {
+            _file_name = "reset";
         }
 
     protected:
         // 读取配置
-        void ReadSetting( KFNode& xmlnode, KFResetSetting* kfsetting );
+        virtual void ReadSetting( KFNode& xmlnode, KFResetSetting* kfsetting );
     };
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_reset_config = KFResetConfig::Instance( "reset.xml", true );
-    //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 #endif

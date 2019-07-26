@@ -11,8 +11,6 @@
 // #define barrier() __asm__ volatile ("lwsync")
 // 保证返回之前是构造完整的对象
 
-#include "KFSingleton.h"
-
 namespace KFrame
 {
     template< typename T >

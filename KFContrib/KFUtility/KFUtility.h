@@ -66,6 +66,9 @@ namespace KFrame
         // 格式化标题
         static std::string FormatTitleText( const std::string& appname, const std::string& apptype, const std::string& appid );
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+        static std::string FormatConfigFile( const std::string& filename, uint32 channel, uint32 service );
+
     };
 }
 

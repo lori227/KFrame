@@ -10,6 +10,7 @@
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFIpAddress/KFIpAddressInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
+#include "KFPayConfig.hpp"
 
 namespace KFrame
 {
@@ -41,8 +42,8 @@ namespace KFrame
 
     protected:
         // 上线查询充值订单
-        void OnEnterQueryPayOrder( KFEntity* player );
-        void OnLeaveQueryPayOrder( KFEntity* player );
+        __KF_ENTER_PLAYER_FUNCTION__( OnEnterPayModule );
+        __KF_LEAVE_PLAYER_FUNCTION__( OnLeavePayModule );
 
         // 开启查询充值定时器
         void StartQueryPayTimer( KFEntity* player );

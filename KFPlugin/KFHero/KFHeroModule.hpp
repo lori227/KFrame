@@ -59,7 +59,8 @@ namespace KFrame
         void RemoveInvalidTimeHero( KFEntity* player );
 
     protected:
-        KFComponent* _kf_component{ nullptr };
+        // 玩家组件上下文
+        KFComponent* _kf_component = nullptr;
     };
 }
 

@@ -8,8 +8,7 @@
 	</Includes>
 
 	<Plugins>
-		<Plugin Name="KFZone" Config="./setting/{}_{}_zone.setting"/>	
-		<Plugin Name="KFOption" Config="./config/option.xml"/>	
+		<Plugin Name="KFOption" Config=""/>	
 		<Plugin Name="KFTimer" Config=""/>	
 		<Plugin Name="KFDisplay" Config=""/>	
 		<Plugin Name="KFGate" Config=""/>	

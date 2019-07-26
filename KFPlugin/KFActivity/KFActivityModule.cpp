@@ -1,5 +1,4 @@
 ﻿#include "KFActivityModule.hpp"
-#include "KFActivityConfig.hpp"
 #include "KFProtocol/KFProtocol.h"
 
 
@@ -7,7 +6,7 @@ namespace KFrame
 {
     void KFActivityModule::InitModule()
     {
-        __KF_ADD_CONFIG__( _kf_activity_config, true );
+        __KF_ADD_CONFIG__( KFActivityConfig );
     }
 
     void KFActivityModule::BeforeRun()
@@ -26,8 +25,6 @@ namespace KFrame
 
     void KFActivityModule::BeforeShut()
     {
-        __KF_REMOVE_CONFIG__( _kf_activity_config );
-
         _kf_componnet->UnRegisterAddDataModule( this );
         _kf_componnet->UnRegisterRemoveDataModule( this );
         _kf_componnet->UnRegisterUpdateDataModule( this );
@@ -48,7 +45,7 @@ namespace KFrame
 
     uint32 KFActivityModule::ReceiveActivityReward( KFEntity* player, uint32 type, uint32 activityid )
     {
-        auto kfsetting = _kf_activity_config->FindActivityData( type, activityid );
+        auto kfsetting = KFActivityConfig::Instance()->FindActivityData( type, activityid );
         if ( kfsetting == nullptr )
         {
             return KFMsg::ActivityCanNotFind;
@@ -85,7 +82,7 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_UPDATE_DATA_FUNCTION__( KFActivityModule::OnActivityValueUpdateCallBack )
     {
-        auto activitysetting = _kf_activity_config->FindActivitySetting( key );
+        auto activitysetting = KFActivityConfig::Instance()->FindActivitySetting( key );
         if ( activitysetting == nullptr )
         {
             return;
@@ -108,7 +105,7 @@ namespace KFrame
         }
 
         auto kfparent = kfdata->GetParent();
-        auto kfactivitytypesetting = _kf_activity_config->FindActivityType( kfparent->_data_setting->_name, kfdata->_data_setting->_name );
+        auto kfactivitytypesetting = KFActivityConfig::Instance()->FindActivityType( kfparent->_data_setting->_name, kfdata->_data_setting->_name );
         if ( kfactivitytypesetting == nullptr )
         {
             return;
@@ -220,7 +217,7 @@ namespace KFrame
             auto type = kfactivity->GetKeyID();
             auto activitytime = kfactivity->GetValue( __KF_STRING__( time ) );
 
-            auto activitysetting = _kf_activity_config->FindActivitySetting( type );
+            auto activitysetting = KFActivityConfig::Instance()->FindActivitySetting( type );
             if ( activitysetting == nullptr ||
                     !activitysetting->CheckInTime( realtime, birthday ) ||
                     activitysetting->CheckResetActivity( realtime, birthday, activitytime ) )

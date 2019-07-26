@@ -4,12 +4,7 @@ namespace KFrame
 {
     void KFMongoModule::InitModule()
     {
-        __KF_ADD_CONFIG__( _kf_mongo_config, false );
-    }
-
-    void KFMongoModule::BeforeShut()
-    {
-        __KF_REMOVE_CONFIG__( _kf_mongo_config );
+        __KF_ADD_CONFIG__( KFMongoConfig );
     }
 
     void KFMongoModule::ShutDown()
@@ -43,7 +38,7 @@ namespace KFrame
 
     KFMongoDriver* KFMongoModule::Create( const std::string& module, uint32 logicid /* = 0 */ )
     {
-        auto kfmongotype = _kf_mongo_config->FindMongoType( module, logicid );
+        auto kfmongotype = KFMongoConfig::Instance()->FindMongoType( module, logicid );
         if ( kfmongotype == nullptr )
         {
             __LOG_ERROR__( "[{}:{}] can't find mysql type!", module, logicid );

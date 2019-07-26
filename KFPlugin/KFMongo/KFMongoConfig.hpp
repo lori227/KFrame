@@ -2,15 +2,13 @@
 #define __KF_MONGO_CONFIG_H__
 
 #include "KFrame.h"
+#include "KFZConfig/KFConfig.h"
 
 namespace KFrame
 {
-    class KFMongoSetting
+    class KFMongoSetting : public KFIntSetting
     {
     public:
-        // 逻辑id
-        uint32 _id = 0;
-
         //ip
         std::string _ip;
 
@@ -72,16 +70,16 @@ namespace KFrame
         KFHashMap< uint32, uint32, KFMongoList > _mongo_list;
     };
 
-    class KFMongoConfig : public KFConfig, public KFSingleton< KFMongoConfig >
+    class KFMongoConfig : public KFConfig, public KFInstance< KFMongoConfig >
     {
     public:
-        KFMongoConfig( const std::string& file )
-            : KFConfig( file )
+        KFMongoConfig()
         {
+            _file_name = "mongo";
         }
 
         // 加载配置文件
-        void LoadConfig( const std::string& file );
+        void LoadConfig( const std::string& file, uint32 loadmask );
 
         // 查找配置
         KFMongoType* FindMongoType( const std::string& module, uint32 logicid );
@@ -91,10 +89,6 @@ namespace KFrame
         typedef std::pair< std::string, uint32 > ModuleKey;
         KFMap< ModuleKey, const ModuleKey&, KFMongoType > _mongo_type;
     };
-
-    ////////////////////////////////////////////////////////////////////////////
-    static auto* _kf_mongo_config = KFMongoConfig::Instance( "mongo.setting" );
-    ////////////////////////////////////////////////////////////////////////////
 }
 
 #endif

@@ -1,7 +1,7 @@
 ﻿#ifndef __KF_SKIN_CONFIG_H__
 #define __KF_SKIN_CONFIG_H__
 
-#include "KFrame.h"
+#include "KFZConfig/KFConfig.h"
 
 namespace KFrame
 {
@@ -15,21 +15,17 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
-    class KFSkinConfig : public KFIntConfigT< KFSkinSetting >, public KFSingleton< KFSkinConfig >
+    class KFSkinConfig : public KFIntConfigT< KFSkinSetting >, public KFInstance< KFSkinConfig >
     {
     public:
-        KFSkinConfig( const std::string& file, bool isclear )
-            : KFIntConfigT< KFSkinSetting >( file, isclear )
+        KFSkinConfig()
         {
+            _file_name = "skin";
         }
     protected:
         // 读取配置
-        void ReadSetting( KFNode& xmlnode, KFSkinSetting* kfsetting );
+        virtual void ReadSetting( KFNode& xmlnode, KFSkinSetting* kfsetting );
     };
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_skin_config = KFSkinConfig::Instance( "skin.xml", true );
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 #endif

@@ -6,7 +6,7 @@ namespace KFrame
 {
     void KFBusModule::InitModule()
     {
-        __KF_ADD_CONFIG__( _kf_bus_config, false );
+        __KF_ADD_CONFIG__( KFBusConfig );
     }
 
     void KFBusModule::BeforeRun()
@@ -17,8 +17,6 @@ namespace KFrame
 
     void KFBusModule::ShutDown()
     {
-        __KF_REMOVE_CONFIG__( _kf_bus_config );
-
         __UN_MESSAGE__( KFMsg::S2S_TELL_REGISTER_TO_SERVER );
         __UN_MESSAGE__( KFMsg::S2S_TELL_UNREGISTER_FROM_SERVER );
     }
@@ -67,7 +65,7 @@ namespace KFrame
         }
 
         auto strconnectid = KFAppId::ToString( connectid );
-        return _kf_bus_config->IsValidConnection( connectname, connecttype, strconnectid );
+        return KFBusConfig::Instance()->IsValidConnection( connectname, connecttype, strconnectid );
     }
 
     void KFBusModule::FindConnection( IpAddressList& outlist )
@@ -76,7 +74,7 @@ namespace KFrame
 
         auto kfglobal = KFGlobal::Instance();
         std::set< KFConnection* > connectionlist;
-        _kf_bus_config->FindConnection( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->ToString(), connectionlist );
+        KFBusConfig::Instance()->FindConnection( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->ToString(), connectionlist );
 
         // 查找连接的ip地址
         for ( auto kfconnection : connectionlist )

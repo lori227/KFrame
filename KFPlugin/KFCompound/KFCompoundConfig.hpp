@@ -1,8 +1,8 @@
 ﻿#ifndef __KF_COMPOUND_CONFIG_H__
 #define __KF_COMPOUND_CONFIG_H__
 
-#include "KFrame.h"
 #include "KFCore/KFElement.h"
+#include "KFZConfig/KFConfig.h"
 
 namespace KFrame
 {
@@ -24,22 +24,18 @@ namespace KFrame
     };
 
     ////////////////////////////////////////////////////////////////////////////////////
-    class KFCompoundConfig : public KFIntConfigT< KFCompoundSetting >, public KFSingleton< KFCompoundConfig >
+    class KFCompoundConfig : public KFIntConfigT< KFCompoundSetting >, public KFInstance< KFCompoundConfig >
     {
     public:
-        KFCompoundConfig( const std::string& file, bool isclear )
-            : KFIntConfigT< KFCompoundSetting >( file, isclear )
+        KFCompoundConfig()
         {
+            _file_name = "compound";
         }
 
     protected:
         // 读取配置
-        void ReadSetting( KFNode& xmlnode, KFCompoundSetting* kfsetting );
+        virtual void ReadSetting( KFNode& xmlnode, KFCompoundSetting* kfsetting );
     };
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_compound_config = KFCompoundConfig::Instance( "compound.xml", true );
-    //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 #endif

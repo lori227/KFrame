@@ -3,6 +3,11 @@
 
 namespace KFrame
 {
+    void KFLoginModule::InitModule()
+    {
+        __KF_ADD_CONFIG__( KFZoneConfig );
+    }
+
     void KFLoginModule::BeforeRun()
     {
         __LOOP_TIMER_0__( 10000, 5000, &KFLoginModule::OnTimerZoneRegister );
@@ -79,13 +84,13 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_TIMER_FUNCTION__( KFLoginModule::OnTimerZoneRegister )
     {
-        auto zone = _kf_zone->GetZone();
+        auto kfsetting = KFZoneConfig::Instance()->ZoneSetting();
         auto _url = _kf_ip_address->GetAuthUrl() + __KF_STRING__( zoneregister );
 
         // 注册小区信息
         __JSON_OBJECT_DOCUMENT__( kfjson );
-        __JSON_SET_VALUE__( kfjson, __KF_STRING__( zoneid ), zone->_id );
-        __JSON_SET_VALUE__( kfjson, __KF_STRING__( name ), zone->_name );
+        __JSON_SET_VALUE__( kfjson, __KF_STRING__( zoneid ), kfsetting->_id );
+        __JSON_SET_VALUE__( kfjson, __KF_STRING__( name ), kfsetting->_name );
 
         auto recvdata = _kf_http_client->STGet( _url, kfjson );
         __JSON_PARSE_STRING__( kfresult, recvdata );
@@ -109,11 +114,11 @@ namespace KFrame
             _zone_data.CopyFrom( pbdata );
 
             // 更新给auth服务器
-            auto kfzone = _kf_zone->GetZone();
+            auto kfsetting = KFZoneConfig::Instance()->ZoneSetting();
             static auto _url = _kf_ip_address->GetAuthUrl() + __KF_STRING__( zoneupdate );
 
             __JSON_OBJECT_DOCUMENT__( kfjson );
-            __JSON_SET_VALUE__( kfjson, __KF_STRING__( zoneid ), kfzone->_id );
+            __JSON_SET_VALUE__( kfjson, __KF_STRING__( zoneid ), kfsetting->_id );
             __JSON_SET_VALUE__( kfjson, __KF_STRING__( ip ), _zone_data.ip() );
             __JSON_SET_VALUE__( kfjson, __KF_STRING__( port ), _zone_data.port() );
             __JSON_SET_VALUE__( kfjson, __KF_STRING__( count ), _zone_data.count() );
@@ -132,11 +137,11 @@ namespace KFrame
         _zone_data.Clear();
 
         // 除小区信息到auth
-        auto kfzone = _kf_zone->GetZone();
+        auto kfsetting = KFZoneConfig::Instance()->ZoneSetting();
         static auto _url = _kf_ip_address->GetAuthUrl() + __KF_STRING__( zoneremove );
 
         __JSON_OBJECT_DOCUMENT__( kfjson );
-        __JSON_SET_VALUE__( kfjson, __KF_STRING__( zoneid ), kfzone->_id );
+        __JSON_SET_VALUE__( kfjson, __KF_STRING__( zoneid ), kfsetting->_id );
         __JSON_SET_VALUE__( kfjson, __KF_STRING__( appid ), netdata->_id );
         _kf_http_client->MTGet< KFLoginModule >( _url, kfjson );
     }
@@ -152,7 +157,7 @@ namespace KFrame
         __LOG_DEBUG__( "accountid[{}] login verify", accountid );
 
         // 本小区的token验证
-        auto kftoken = _auth_redis->QueryMap( "hgetall {}:{}:{}", __KF_STRING__( token ), _kf_zone->GetZone()->_id, accountid );
+        auto kftoken = _auth_redis->QueryMap( "hgetall {}:{}:{}", __KF_STRING__( token ), KFZoneConfig::Instance()->ZoneSetting()->_id, accountid );
         if ( !kftoken->_value.empty() )
         {
             auto querytoken = kftoken->_value[ __KF_STRING__( token ) ];
@@ -210,7 +215,7 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // token 保留30天
         static auto _token_expire_time = 3600 * 24 * 30;
-        auto tokenkey = __FORMAT__( "{}:{}:{}", __KF_STRING__( token ), _kf_zone->GetZone()->_id, accountid );
+        auto tokenkey = __FORMAT__( "{}:{}:{}", __KF_STRING__( token ), KFZoneConfig::Instance()->ZoneSetting()->_id, accountid );
 
         // 保存验证信息
         MapString values;

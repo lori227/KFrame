@@ -1,11 +1,10 @@
 ﻿#include "KFLeaveModule.hpp"
-#include "KFLeaveConfig.hpp"
 
 namespace KFrame
 {
     void KFLeaveModule::InitModule()
     {
-        __KF_ADD_CONFIG__( _kf_leave_config, true );
+        __KF_ADD_CONFIG__( KFLeaveConfig );
     }
 
     void KFLeaveModule::BeforeRun()
@@ -16,7 +15,6 @@ namespace KFrame
     void KFLeaveModule::BeforeShut()
     {
         __UN_LEAVE_PLAYER__();
-        __KF_REMOVE_CONFIG__( _kf_leave_config );
     }
 
     __KF_LEAVE_PLAYER_FUNCTION__( KFLeaveModule::LeaveGameWorld )
@@ -25,7 +23,7 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////
         auto playerid = player->GetKeyID();
         auto kfnoteparent = kfobject->FindData( __KF_STRING__( note ) );
-        for ( auto& iter : _kf_leave_config->_settings._objects )
+        for ( auto& iter : KFLeaveConfig::Instance()->_settings._objects )
         {
             auto kfsetting = iter.second;
             if ( kfsetting->_id != _invalid_int )

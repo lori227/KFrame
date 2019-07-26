@@ -3,7 +3,7 @@
 namespace KFrame
 {
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFDataShardConfig::LoadConfig( const std::string& file )
+    void KFDataShardConfig::LoadConfig( const std::string& file, uint32 loadmask )
     {
         _settings.Clear();
         //////////////////////////////////////////////////////////////////
@@ -17,7 +17,7 @@ namespace KFrame
             auto name = databasenode.GetString( "Name" );
             auto kfsetting = _settings.Create( name );
 
-            kfsetting->_name = name;
+            kfsetting->_id = name;
             kfsetting->_save_flag = databasenode.GetUInt32( "SaveFlag" );
             kfsetting->_sort = databasenode.GetUInt32( "Sort" );
             kfsetting->_is_open = databasenode.GetUInt32( "Open" );

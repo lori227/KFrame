@@ -1,12 +1,11 @@
 ﻿#include "KFCompoundModule.hpp"
-#include "KFCompoundConfig.hpp"
 #include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
     void KFCompoundModule::InitModule()
     {
-        __KF_ADD_CONFIG__( _kf_compound_config, true );
+        __KF_ADD_CONFIG__( KFCompoundConfig );
         ///////////////////////////////////////////////////////////////////////////////
     }
 
@@ -17,7 +16,6 @@ namespace KFrame
 
     void KFCompoundModule::ShutDown()
     {
-        __KF_REMOVE_CONFIG__( _kf_compound_config );
         ///////////////////////////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::MSG_COMPOUND_REQ );
     }
@@ -27,7 +25,7 @@ namespace KFrame
         __CLIENT_PROTO_PARSE__( KFMsg::MsgCompoundReq );
 
         // 查找合成信息
-        auto kfsetting = _kf_compound_config->FindSetting( kfmsg.id() );
+        auto kfsetting = KFCompoundConfig::Instance()->FindSetting( kfmsg.id() );
         if ( kfsetting == nullptr )
         {
             return _kf_display->SendToClient( player, KFMsg::CompoundNotExist );

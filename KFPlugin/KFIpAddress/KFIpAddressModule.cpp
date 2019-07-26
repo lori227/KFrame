@@ -1,5 +1,4 @@
 ﻿#include "KFIpAddressModule.hpp"
-#include "KFIpAddressConfig.hpp"
 #include "KFPort.hpp"
 
 #if __KF_SYSTEM__ == __KF_WIN__
@@ -19,7 +18,7 @@ namespace KFrame
 {
     void KFIpAddressModule::InitModule()
     {
-        __KF_ADD_CONFIG__( _kf_ip_config, false );
+        __KF_ADD_CONFIG__( KFIpConfig );
 
         // 计算ip地址
         auto kfglobal = KFGlobal::Instance();
@@ -36,10 +35,6 @@ namespace KFrame
         __LOG_INFO__( "localip=[{}], interanetip=[{}]", kfglobal->_local_ip, kfglobal->_interanet_ip );
     }
 
-    void KFIpAddressModule::ShutDown()
-    {
-        __KF_REMOVE_CONFIG__( _kf_ip_config );
-    }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -80,12 +75,12 @@ namespace KFrame
 
     const KFIpAddress* KFIpAddressModule::FindIpAddress( const std::string& appname, const std::string& apptype, const std::string& appid )
     {
-        return _kf_ip_config->FindIpAddress( appname, apptype, appid );
+        return KFIpConfig::Instance()->FindIpAddress( appname, apptype, appid );
     }
 
     void KFIpAddressModule::FindIpAddress( const std::string& appname, const std::string& apptype, const std::string& appid, IpAddressList& outlist )
     {
-        _kf_ip_config->FindIpAddress( appname, apptype, appid, outlist );
+        KFIpConfig::Instance()->FindIpAddress( appname, apptype, appid, outlist );
     }
 
     const std::string& KFIpAddressModule::GetInteranetIp()
@@ -192,11 +187,11 @@ namespace KFrame
 
     const std::string& KFIpAddressModule::GetAuthUrl()
     {
-        return _kf_ip_config->_auth_url;
+        return KFIpConfig::Instance()->_auth_url;
     }
 
     const std::string& KFIpAddressModule::GetLogUrl()
     {
-        return _kf_ip_config->_log_url;
+        return KFIpConfig::Instance()->_log_url;
     }
 }

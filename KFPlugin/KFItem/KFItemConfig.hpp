@@ -2,27 +2,23 @@
 #define __KF_ITEM_CONFIG_H__
 
 #include "KFItemSetting.hpp"
+#include "KFZConfig/KFConfig.h"
 
 namespace KFrame
 {
     ////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
-    class KFItemConfig : public KFIntConfigT< KFItemSetting >, public KFSingleton< KFItemConfig >
+    class KFItemConfig : public KFIntConfigT< KFItemSetting >, public KFInstance< KFItemConfig >
     {
     public:
-        KFItemConfig( const std::string& file, bool isclear )
-            : KFIntConfigT< KFItemSetting >( file, isclear )
+        KFItemConfig()
         {
+            _file_name = "item";
         }
 
-        // 是否是配置文件
-        virtual bool IsFile( const std::string& configfile, const std::string& file );
-
-        // 加载完成
-        virtual void LoadComplete( const std::string& file );
     protected:
         // 读取配置
-        void ReadSetting( KFNode& xmlnode, KFItemSetting* kfsetting );
+        virtual void ReadSetting( KFNode& xmlnode, KFItemSetting* kfsetting );
 
         // 读取通用道具
         void ReadCommonSetting( KFNode& xmlnode, KFItemSetting* kfsetting );
@@ -36,10 +32,6 @@ namespace KFrame
         // 读取装备配置
         void ReadEquipSetting( KFNode& xmlnode, KFItemSetting* kfsetting );
     };
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_item_config = KFItemConfig::Instance( "item.xml", true );
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 #endif

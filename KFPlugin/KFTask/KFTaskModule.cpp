@@ -1,12 +1,11 @@
 ﻿#include "KFTaskModule.hpp"
-#include "KFTaskConfig.hpp"
 #include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
     void KFTaskModule::InitModule()
     {
-        __KF_ADD_CONFIG__( _kf_task_config, true );
+        __KF_ADD_CONFIG__( KFTaskConfig );
     }
 
     void KFTaskModule::BeforeRun()
@@ -24,7 +23,6 @@ namespace KFrame
 
     void KFTaskModule::BeforeShut()
     {
-        __KF_REMOVE_CONFIG__( _kf_task_config );
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         _kf_component->UnRegisterAddDataModule( this );
         _kf_component->UnRegisterRemoveDataModule( this );
@@ -48,7 +46,7 @@ namespace KFrame
 
     uint32 KFTaskModule::ReceiveTaskReward( KFEntity* player, uint32 taskid )
     {
-        auto kfsetting = _kf_task_config->FindSetting( taskid );
+        auto kfsetting = KFTaskConfig::Instance()->FindSetting( taskid );
         if ( kfsetting == nullptr )
         {
             return KFMsg::TaskCanNotFind;
@@ -116,7 +114,7 @@ namespace KFrame
 
     void KFTaskModule::UpdateDataTaskValue( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 nowvalue )
     {
-        auto kftasktypelist = _kf_task_config->FindTypeTaskList( kfdata->GetParent()->_data_setting->_name, kfdata->_data_setting->_name );
+        auto kftasktypelist = KFTaskConfig::Instance()->FindTypeTaskList( kfdata->GetParent()->_data_setting->_name, kfdata->_data_setting->_name );
         if ( kftasktypelist == nullptr )
         {
             return;
@@ -174,7 +172,7 @@ namespace KFrame
     __KF_UPDATE_DATA_FUNCTION__( KFTaskModule::OnUpdateTaskValueCallBack )
     {
         // 判断是否满足完成条件
-        auto kfsetting = _kf_task_config->FindSetting( static_cast< uint32 >( key ) );
+        auto kfsetting = KFTaskConfig::Instance()->FindSetting( static_cast< uint32 >( key ) );
         if ( kfsetting == nullptr || newvalue < kfsetting->_done_value )
         {
             return;
@@ -205,7 +203,7 @@ namespace KFrame
 
     __KF_UPDATE_DATA_FUNCTION__( KFTaskModule::OnUpdateTaskStatusCallBack )
     {
-        auto kfsetting = _kf_task_config->FindSetting( static_cast< uint32 >( key ) );
+        auto kfsetting = KFTaskConfig::Instance()->FindSetting( static_cast< uint32 >( key ) );
         if ( kfsetting == nullptr )
         {
             return;

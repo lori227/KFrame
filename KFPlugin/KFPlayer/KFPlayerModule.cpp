@@ -21,7 +21,7 @@ namespace KFrame
         // 注册command函数
         __REGISTER_COMMAND_FUNCTION__( __KF_STRING__( adddata ), &KFPlayerModule::OnCommandAddData );
         __REGISTER_COMMAND_FUNCTION__( __KF_STRING__( setdata ), &KFPlayerModule::OnCommandSetData );
-        __REGISTER_COMMAND_FUNCTION__( __KF_STRING__( decdata ), &KFPlayerModule::OnCommandDecData );
+        __REGISTER_COMMAND_FUNCTION__( __KF_STRING__( deldata ), &KFPlayerModule::OnCommandDelData );
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_REMOVE_DATA_REQ, &KFPlayerModule::HandleRemoveDataReq );
@@ -47,7 +47,7 @@ namespace KFrame
         // 取消注册command函数
         __UN_COMMAND_FUNCTION__( __KF_STRING__( adddata ) );
         __UN_COMMAND_FUNCTION__( __KF_STRING__( setdata ) );
-        __UN_COMMAND_FUNCTION__( __KF_STRING__( decdata ) );
+        __UN_COMMAND_FUNCTION__( __KF_STRING__( deldata ) );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::MSG_REMOVE_DATA_REQ );
         __UN_MESSAGE__( KFMsg::MSG_REQUEST_SYNC_REQ );
@@ -355,7 +355,7 @@ namespace KFrame
         }
     }
 
-    __KF_COMMAND_FUNCTION__( KFPlayerModule::OnCommandDecData )
+    __KF_COMMAND_FUNCTION__( KFPlayerModule::OnCommandDelData )
     {
         if ( params.size() < 1 )
         {

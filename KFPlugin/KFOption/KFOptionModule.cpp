@@ -1,36 +1,89 @@
 ﻿#include "KFOptionModule.hpp"
-#include "KFOptionConfig.hpp"
 
 namespace KFrame
 {
     void KFOptionModule::InitModule()
     {
-        __KF_ADD_CONFIG__( _kf_option_config, true );
-    }
-
-    void KFOptionModule::BeforeShut()
-    {
-        __KF_REMOVE_CONFIG__( _kf_option_config );
+        __KF_ADD_CONFIG__( KFOptionConfig );
     }
 
     ////////////////////////////////////////////////////////////////
-    const KFOption* KFOptionModule::FindOption( const std::string& name )
+    const KFOptionSetting* KFOptionModule::FindOption( const std::string& name )
     {
-        return _kf_option_config->FindOption( name, _invalid_str );
+        return KFOptionConfig::Instance()->FindOption( name, _invalid_str );
     }
 
-    const KFOption* KFOptionModule::FindOption( const std::string& name, uint32 key )
+    const KFOptionSetting* KFOptionModule::FindOption( const std::string& name, uint32 key )
     {
         auto strkey = __TO_STRING__( key );
-        return _kf_option_config->FindOption( name, strkey );
+        return KFOptionConfig::Instance()->FindOption( name, strkey );
     }
 
-    const KFOption* KFOptionModule::FindOption( const std::string& name, const std::string& key )
+    const KFOptionSetting* KFOptionModule::FindOption( const std::string& name, const std::string& key )
     {
-        return _kf_option_config->FindOption( name, key );
+        return KFOptionConfig::Instance()->FindOption( name, key );
     }
 
     ///////////////////////////////////////////////////////////////////////////////
+    void KFOptionModule::AddOption( const std::string& name, uint32 value )
+    {
+        AddOption( name, _invalid_str, value );
+    }
+
+    void KFOptionModule::AddOption( const std::string& name, uint32 key, uint32 value )
+    {
+        auto strkey = __TO_STRING__( key );
+        AddOption( name, strkey, value );
+    }
+
+    void KFOptionModule::AddOption( const std::string& name, const std::string& key, uint32 value )
+    {
+        auto kfsetting = KFOptionConfig::Instance()->_option_list.Create( KFOptionConfig::OptionKey( name, key ) );
+        kfsetting->_uint32_value = value;
+        kfsetting->_double_value = value;
+        kfsetting->_str_value = __TO_STRING__( value );
+    }
+
+    void KFOptionModule::AddOption( const std::string& name, double value )
+    {
+        AddOption( name, _invalid_str, value );
+    }
+
+    void KFOptionModule::AddOption( const std::string& name, uint32 key, double value )
+    {
+        auto strkey = __TO_STRING__( key );
+        AddOption( name, strkey, value );
+    }
+
+    void KFOptionModule::AddOption( const std::string& name, const std::string& key, double value )
+    {
+        auto kfsetting = KFOptionConfig::Instance()->_option_list.Create( KFOptionConfig::OptionKey( name, key ) );
+        kfsetting->_uint32_value = value;
+        kfsetting->_double_value = value;
+        kfsetting->_str_value = __TO_STRING__( value );
+    }
+
+    void KFOptionModule::AddOption( const std::string& name, const std::string& value )
+    {
+        AddOption( name, _invalid_str, value );
+    }
+
+    void KFOptionModule::AddOption( const std::string& name, uint32 key, const std::string& value )
+    {
+        auto strkey = __TO_STRING__( key );
+        AddOption( name, strkey, value );
+    }
+
+    void KFOptionModule::AddOption( const std::string& name, const std::string& key, const std::string& value )
+    {
+        auto kfsetting = KFOptionConfig::Instance()->_option_list.Create( KFOptionConfig::OptionKey( name, key ) );
+        kfsetting->_uint32_value = KFUtility::ToValue<uint32>( value );
+        kfsetting->_double_value = KFUtility::ToValue<double>( value );
+        kfsetting->_str_value = value;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////
+
     uint32 KFOptionModule::GetUInt32( const std::string& name )
     {
         auto kfoption = FindOption( name );

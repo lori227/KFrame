@@ -90,7 +90,7 @@ namespace KFrame
         __KF_COMMAND_FUNCTION__( OnCommandAddData );
 
         // 减少属性
-        __KF_COMMAND_FUNCTION__( OnCommandDecData );
+        __KF_COMMAND_FUNCTION__( OnCommandDelData );
 
         // 设置属性
         __KF_COMMAND_FUNCTION__( OnCommandSetData );

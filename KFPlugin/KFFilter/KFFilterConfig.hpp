@@ -2,6 +2,7 @@
 #define __KF_FILTER_CONFIG_H__
 
 #include "KFrame.h"
+#include "KFZConfig/KFConfig.h"
 
 namespace KFrame
 {
@@ -24,19 +25,18 @@ namespace KFrame
         std::map< int8, KFWordData > _child;
     };
 
-
     ////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
-    class KFFilterConfig : public KFConfig, public KFSingleton< KFFilterConfig >
+    class KFFilterConfig : public KFConfig, public KFInstance< KFFilterConfig >
     {
     public:
-        KFFilterConfig( const std::string& file )
-            : KFConfig( file )
+        KFFilterConfig()
         {
+            _file_name = "filter";
         }
 
         // 读取配置
-        void LoadConfig( const std::string& file );
+        void LoadConfig( const std::string& file, uint32 loadmask );
 
         // 检查是否有屏蔽字符
         bool CheckFilter( const char* source, uint32 length );
@@ -55,10 +55,6 @@ namespace KFrame
         // 屏蔽字字典
         KFWordData _root_word_data;
     };
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_filter_config = KFFilterConfig::Instance( "filter.xml" );
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 #endif

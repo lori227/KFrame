@@ -18,7 +18,7 @@ namespace KFrame
         __JSON_SET_VALUE__( kfjson, __KF_STRING__( channel ), 1 );
         __JSON_SET_VALUE__( kfjson, __KF_STRING__( account ), robot->_account );
 
-        auto strresult = _kf_http_client->STGet( _kf_robot_config->_auth_address, kfjson );
+        auto strresult = _kf_http_client->STGet( KFRobotConfig::Instance()->_auth_address, kfjson );
 
         __JSON_PARSE_STRING__( kfresult, strresult );
         auto retcode = __JSON_GET_UINT32__( kfresult, __KF_STRING__( retcode ) );

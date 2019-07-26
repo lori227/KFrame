@@ -16,7 +16,8 @@ enum FrameClientProtocol
 	MSG_LOGIN_REQ 						= 100;	// 客户端登录验证请求
 	MSG_LOGIN_ACK 						= 101;	// 客户端登录验证结果
 	MSG_LOGOUT_REQ 						= 102;	// 客户端请求登出游戏
-	MSG_TELL_BE_KICK 					= 103;	// 被踢下线了
+	MSG_LOGOUT_ACK 						= 103;	// 客户端请求登出游戏
+	MSG_TELL_BE_KICK 					= 104;	// 被踢下线了
 
 	// data
  	MSG_SYNC_UPDATE_DATA 				= 201;	// 同步更新属性
@@ -117,6 +118,13 @@ message MsgLoginAck
 // 登出游戏
 // MSG_LOGOUT_REQ
 message MsgLogoutReq
+{
+
+}
+
+// 登出游戏
+// MSG_LOGOUT_ACK
+message MsgLogoutAck
 {
 
 }

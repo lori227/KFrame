@@ -9,8 +9,8 @@
 		<Plugin Name="KFHttpClient" Config=""/>	
 		<Plugin Name="KFTcpClient" Config=""/>	
 		<Plugin Name="KFMessage" Config=""/>	
-		<Plugin Name="KFIpAddress" Config="./setting/{}_{}_ip.setting"/>	
-		<Plugin Name="KFRobot" Config="./setting/robot.setting"/>	
-		<Plugin Name="KFKernel" Config="./config/class.xml"/>	
+		<Plugin Name="KFIpAddress" Config=""/>	
+		<Plugin Name="KFRobot" Config=""/>	
+		<Plugin Name="KFKernel" Config=""/>	
 	</Plugins>
 </Setting>

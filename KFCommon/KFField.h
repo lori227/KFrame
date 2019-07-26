@@ -159,7 +159,7 @@ namespace KFrame
         __STRING_DEFINE__( playerid );
         __STRING_DEFINE__( adddata );
         __STRING_DEFINE__( setdata );
-        __STRING_DEFINE__( decdata );
+        __STRING_DEFINE__( deldata );
         __STRING_DEFINE__( playernamelength );
         __STRING_DEFINE__( sex );
         __STRING_DEFINE__( achieve );
@@ -234,6 +234,7 @@ namespace KFrame
         __STRING_DEFINE__( item );
         __STRING_DEFINE__( storage );
         __STRING_DEFINE__( usecount );
+        __STRING_DEFINE__( var );
 
     }
 }

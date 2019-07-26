@@ -4,7 +4,7 @@ namespace KFrame
 {
     void KFRankShardModule::InitModule()
     {
-        __KF_ADD_CONFIG__( _kf_rank_config, true );
+        __KF_ADD_CONFIG__( KFRankConfig );
     }
 
     void KFRankShardModule::BeforeRun()
@@ -23,7 +23,6 @@ namespace KFrame
     {
         __UN_TIMER_0__();
         __UN_SCHEDULE__();
-        __KF_REMOVE_CONFIG__( _kf_rank_config );
         _kf_route->UnRegisterConnectionFunction( this );
         //////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -108,10 +107,10 @@ namespace KFrame
         __UN_TIMER_0__();
         __UN_SCHEDULE__();
         _max_rank_worker_id = kfmsg.workerid();
-        for ( auto& iter : _kf_rank_config->_kf_rank_setting._objects )
+        for ( auto& iter : KFRankConfig::Instance()->_kf_rank_setting._objects )
         {
             auto kfsetting = iter.second;
-            auto value = kfsetting->_rank_id % _max_rank_worker_id;
+            auto value = kfsetting->_id % _max_rank_worker_id;
             if ( value == 0u )
             {
                 value = _max_rank_worker_id;
@@ -133,12 +132,12 @@ namespace KFrame
             auto delaytime = ( passtime == 0u ? 0u : kfsetting->_refresh_time - passtime );
 
             // 配置_refresh_time 单位:秒
-            __LOOP_TIMER_1__( kfsetting->_rank_id, kfsetting->_refresh_time * 1000, delaytime * 1000, &KFRankShardModule::OnTimerRefreshRankData );
+            __LOOP_TIMER_1__( kfsetting->_id, kfsetting->_refresh_time * 1000, delaytime * 1000, &KFRankShardModule::OnTimerRefreshRankData );
         }
         else
         {
             auto kfschedulesetting = _kf_schedule->CreateScheduleSetting();
-            kfschedulesetting->SetData( kfsetting->_rank_id, nullptr, 0 );
+            kfschedulesetting->SetData( kfsetting->_id, nullptr, 0 );
             switch ( kfsetting->_refresh_type )
             {
             case KFTimeEnum::Week:
@@ -181,7 +180,7 @@ namespace KFrame
 
     bool KFRankShardModule::RefreshRankData( uint32 rankid )
     {
-        auto kfsetting = _kf_rank_config->FindRankSetting( rankid );
+        auto kfsetting = KFRankConfig::Instance()->FindSetting( rankid );
         if ( kfsetting == nullptr )
         {
             return false;
@@ -330,7 +329,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SQueryFriendRankListReq );
 
-        auto kfsetting = _kf_rank_config->FindRankSetting( kfmsg.rankid() );
+        auto kfsetting = KFRankConfig::Instance()->FindSetting( kfmsg.rankid() );
         if ( kfsetting == nullptr )
         {
             return;

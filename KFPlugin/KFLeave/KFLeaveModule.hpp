@@ -13,6 +13,7 @@
 #include "KFLua/KFLuaInterface.h"
 #include "KFConfig/KFConfigInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
+#include "KFLeaveConfig.hpp"
 
 namespace KFrame
 {

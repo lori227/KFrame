@@ -1,11 +1,10 @@
 ﻿#include "KFMailClientModule.hpp"
-#include "KFMailConfig.hpp"
 
 namespace KFrame
 {
     void KFMailClientModule::InitModule()
     {
-        __KF_ADD_CONFIG__( _kf_mail_config, true );
+        __KF_ADD_CONFIG__( KFMailConfig );
     }
 
     void KFMailClientModule::BeforeRun()
@@ -26,8 +25,6 @@ namespace KFrame
 
     void KFMailClientModule::BeforeShut()
     {
-        __KF_REMOVE_CONFIG__( _kf_mail_config );
-
         __UN_NEW_PLAYER__();
         __UN_ENTER_PLAYER__();
         __UN_LEAVE_PLAYER__();
@@ -398,7 +395,7 @@ namespace KFrame
 
     bool KFMailClientModule::SendMail( uint32 configid, const KFElements* kfelements )
     {
-        auto kfsetting = _kf_mail_config->FindSetting( configid );
+        auto kfsetting = KFMailConfig::Instance()->FindSetting( configid );
         if ( kfsetting == nullptr )
         {
             return false;
@@ -413,7 +410,7 @@ namespace KFrame
 
     bool KFMailClientModule::SendMail( uint64 recvid, uint32 configid, const KFElements* kfelements )
     {
-        auto kfsetting = _kf_mail_config->FindSetting( configid );
+        auto kfsetting = KFMailConfig::Instance()->FindSetting( configid );
         if ( kfsetting == nullptr )
         {
             return false;
@@ -425,7 +422,7 @@ namespace KFrame
 
     bool KFMailClientModule::SendMail( KFEntity* player, uint64 recvid, uint32 configid, const KFElements* kfelements )
     {
-        auto kfsetting = _kf_mail_config->FindSetting( configid );
+        auto kfsetting = KFMailConfig::Instance()->FindSetting( configid );
         if ( kfsetting == nullptr )
         {
             return false;

@@ -1,11 +1,10 @@
 ﻿#include "KFEnterModule.hpp"
-#include "KFEnterConfig.hpp"
 
 namespace KFrame
 {
     void KFEnterModule::InitModule()
     {
-        __KF_ADD_CONFIG__( _kf_enter_config, true );
+        __KF_ADD_CONFIG__( KFEnterConfig );
     }
 
     void KFEnterModule::BeforeRun()
@@ -16,7 +15,6 @@ namespace KFrame
     void KFEnterModule::BeforeShut()
     {
         __UN_ENTER_PLAYER__();
-        __KF_REMOVE_CONFIG__( _kf_enter_config );
     }
 
     __KF_ENTER_PLAYER_FUNCTION__( KFEnterModule::EnterGameWorld )
@@ -26,7 +24,7 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         auto playerid = player->GetKeyID();
         auto kfnoterecord = kfobject->FindData( __KF_STRING__( note ) );
-        for ( auto& iter : _kf_enter_config->_settings._objects )
+        for ( auto& iter : KFEnterConfig::Instance()->_settings._objects )
         {
             auto kfsetting = iter.second;
             if ( kfsetting->_id != _invalid_int )

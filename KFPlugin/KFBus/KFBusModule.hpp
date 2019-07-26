@@ -10,6 +10,7 @@
 ************************************************************************/
 
 #include "KFBusInterface.h"
+#include "KFBusConfig.hpp"
 #include "KFConfig/KFConfigInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFIpAddress/KFIpAddressInterface.h"
@@ -46,7 +47,6 @@ namespace KFrame
 
         // 判断是否需要连接
         bool IsConnection( const std::string& connectname, const std::string& connecttype, uint64 connectid );
-
     };
 }
 

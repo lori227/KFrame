@@ -12,12 +12,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFOptionConfig.cpp" />
     <ClCompile Include="KFOptionModule.cpp" />
     <ClCompile Include="KFOptionPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFOptionConfig.hpp" />
     <ClInclude Include="KFOptionInterface.h" />
     <ClInclude Include="KFOptionModule.hpp" />
     <ClInclude Include="KFOptionPlugin.hpp" />

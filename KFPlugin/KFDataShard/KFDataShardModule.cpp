@@ -5,7 +5,7 @@ namespace KFrame
 {
     void KFDataShardModule::InitModule()
     {
-        __KF_ADD_CONFIG__( _kf_data_shard_config, false );
+        __KF_ADD_CONFIG__( KFDataShardConfig );
     }
 
     void KFDataShardModule::BeforeRun()
@@ -20,7 +20,6 @@ namespace KFrame
 
     void KFDataShardModule::BeforeShut()
     {
-        __KF_REMOVE_CONFIG__( _kf_data_shard_config );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::S2S_LOAD_PLAYER_TO_DATA_REQ );
         __UN_MESSAGE__( KFMsg::S2S_SAVE_PLAYER_TO_DATA_REQ );
@@ -29,7 +28,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFDataShardModule::OnceRun()
     {
-        for ( auto& iter : _kf_data_shard_config->_settings._objects )
+        for ( auto& iter : KFDataShardConfig::Instance()->_settings._objects )
         {
             auto kfsetting = iter.second;
             if ( !kfsetting->_is_open )
@@ -43,18 +42,18 @@ namespace KFrame
             if ( kfexecute != nullptr )
             {
                 sort = _data_execute._objects.rbegin()->first + 1;
-                __LOG_WARN__( "dataexecute=[{}] sort=[{}] already exist!", kfsetting->_name, kfsetting->_sort );
+                __LOG_WARN__( "dataexecute=[{}] sort=[{}] already exist!", kfsetting->_id, kfsetting->_sort );
             }
 
-            if ( kfsetting->_name == "redis" )
+            if ( kfsetting->_id == "redis" )
             {
                 kfexecute = __KF_NEW__( KFRedisDataExecute );
             }
-            else if ( kfsetting->_name == "mongo" )
+            else if ( kfsetting->_id == "mongo" )
             {
                 kfexecute = __KF_NEW__( KFMongoDataExecute );
             }
-            else if ( kfsetting->_name == "mysql" )
+            else if ( kfsetting->_id == "mysql" )
             {
                 kfexecute = __KF_NEW__( KFMySQLDataExecute );
             }

@@ -1,8 +1,8 @@
 ﻿#ifndef __KF_MAIL_CONFIG_H__
 #define __KF_MAIL_CONFIG_H__
 
-#include "KFrame.h"
 #include "KFCore/KFElement.h"
+#include "KFZConfig/KFConfig.h"
 
 namespace KFrame
 {
@@ -37,22 +37,18 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////
 
-    class KFMailConfig : public KFIntConfigT< KFMailSetting >, public KFSingleton< KFMailConfig >
+    class KFMailConfig : public KFIntConfigT< KFMailSetting >, public KFInstance< KFMailConfig >
     {
     public:
-        KFMailConfig( const std::string& file, bool isclear )
-            : KFIntConfigT< KFMailSetting >( file, isclear )
+        KFMailConfig()
         {
+            _file_name = "mail";
         }
 
     protected:
         // 读取配置
-        void ReadSetting( KFNode& xmlnode, KFMailSetting* kfsetting );
+        virtual void ReadSetting( KFNode& xmlnode, KFMailSetting* kfsetting );
     };
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_mail_config = KFMailConfig::Instance( "mail.xml", true );
-    //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 #endif

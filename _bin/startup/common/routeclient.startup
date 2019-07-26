@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Setting>
 	<Plugins>
-		<Plugin Name="KFBus" Config="./setting/bus.setting"/>
-		<Plugin Name="KFIpAddress" Config="./setting/{}_{}_ip.setting"/>
-		<Plugin Name="KFConfig" Config=""/>
+		<Plugin Name="KFBus" Config=""/>
+		<Plugin Name="KFIpAddress" Config=""/>
+		<Plugin Name="KFConfig" Config="./config/config.xml"/>	
 		<Plugin Name="KFTimer" Config=""/>
 		<Plugin Name="KFHttpClient" Config=""/>
 		<Plugin Name="KFTcpClient" Config=""/>

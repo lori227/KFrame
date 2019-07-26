@@ -2,12 +2,13 @@
 #define __KF_REDIS_CONFIG_H__
 
 #include "KFrame.h"
+#include "KFZConfig/KFConfig.h"
 
 namespace KFrame
 {
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
-    class KFRedisSetting
+    class KFRedisSetting : public KFIntSetting
     {
     public:
         // 名字
@@ -57,15 +58,15 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
-    class KFRedisConfig : public KFConfig, public KFSingleton< KFRedisConfig >
+    class KFRedisConfig : public KFConfig, public KFInstance< KFRedisConfig >
     {
     public:
-        KFRedisConfig( const std::string& file )
-            : KFConfig( file )
+        KFRedisConfig()
         {
+            _file_name = "redis";
         }
 
-        void LoadConfig( const std::string& file );
+        void LoadConfig( const std::string& file, uint32 loadmask );
 
         // 查找redis配置
         KFRedisType* FindRedisType( const std::string& module, uint32 logicid );
@@ -75,10 +76,6 @@ namespace KFrame
         typedef std::pair< std::string, uint32 > ModuleKey;
         KFMap< ModuleKey, const ModuleKey&, KFRedisType > _redis_type;
     };
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_redis_config = KFRedisConfig::Instance( "redis.setting" );
-    //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 #endif

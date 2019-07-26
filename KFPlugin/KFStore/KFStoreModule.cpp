@@ -5,7 +5,7 @@ namespace KFrame
 {
     void KFStoreModule::InitModule()
     {
-        __KF_ADD_CONFIG__( _kf_store_config, true );
+        __KF_ADD_CONFIG__( KFStoreConfig );
     }
 
     void KFStoreModule::BeforeRun()
@@ -16,7 +16,6 @@ namespace KFrame
 
     void KFStoreModule::BeforeShut()
     {
-        __KF_REMOVE_CONFIG__( _kf_store_config );
         //////////////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::MSG_BUY_STORE_REQ );
         __UN_MESSAGE__( KFMsg::MSG_QUERY_STORE_REQ );
@@ -29,13 +28,13 @@ namespace KFrame
         __CLIENT_PROTO_PARSE__( KFMsg::MsgQueryStoreReq );
 
         // 版本号一直就不更新了
-        if ( kfmsg.version() == _kf_store_config->_version )
+        if ( kfmsg.version() == KFStoreConfig::Instance()->_version )
         {
             return;
         }
 
         KFMsg::MsgQueryStoreAck ack;
-        ack.set_version( _kf_store_config->_version );
+        ack.set_version( KFStoreConfig::Instance()->_version );
         //ack.set_data( _kf_store_config->_store_xml->Data(), _kf_store_config->_store_xml->Size() );
         _kf_player->SendToClient( player, KFMsg::MSG_QUERY_STORE_ACK, &ack );
     }
@@ -50,7 +49,7 @@ namespace KFrame
 
     uint32 KFStoreModule::ProcessBuyStore( KFEntity* player, const std::string& buytype, uint32 id, uint32 count )
     {
-        auto kfsetting = _kf_store_config->FindSetting( id );
+        auto kfsetting = KFStoreConfig::Instance()->FindSetting( id );
         if ( kfsetting == nullptr )
         {
             return KFMsg::StoreNotFind;

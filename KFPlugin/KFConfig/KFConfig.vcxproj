@@ -11,12 +11,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="KFConfigConfig.hpp" />
     <ClInclude Include="KFConfigInterface.h" />
     <ClInclude Include="KFConfigModule.hpp" />
     <ClInclude Include="KFConfigPlugin.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="KFConfigConfig.cpp" />
     <ClCompile Include="KFConfigModule.cpp" />
     <ClCompile Include="KFConfigPlugin.cpp" />
   </ItemGroup>
@@ -70,7 +72,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN;_DEBUG;_WINDOWS;_USRDLL</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\KFPlugin\;..\..\KFContrib\;..\..\KFCommon\;..\..\KFLibrary\;..\..\KFInclude\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\KFPlugin\;..\..\KFContrib\;..\..\KFCommon\;..\..\KFLibrary\;..\..\KFInclude\;..\..\KFLibrary\poco\Foundation\include\</AdditionalIncludeDirectories>
       <BrowseInformation>false</BrowseInformation>
     </ClCompile>
     <Link>
@@ -101,7 +103,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN;_WINDOWS;_USRDLL;ELPP_NO_DEFAULT_LOG_FILE</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\KFPlugin\;..\..\KFContrib\;..\..\KFCommon\;..\..\KFLibrary\;..\..\KFInclude\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\KFPlugin\;..\..\KFContrib\;..\..\KFCommon\;..\..\KFLibrary\;..\..\KFInclude\;..\..\KFLibrary\poco\Foundation\include\</AdditionalIncludeDirectories>
       <BrowseInformation>false</BrowseInformation>
     </ClCompile>
     <Link>

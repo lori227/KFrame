@@ -2,15 +2,13 @@
 #define __KF_DATA_SHARD_CONFIG_H__
 
 #include "KFrame.h"
+#include "KFZConfig/KFConfig.h"
 
 namespace KFrame
 {
-    class KFDatabaseSetting
+    class KFDatabaseSetting : public KFStrSetting
     {
     public:
-        // 名字
-        std::string _name;
-
         // 类型
         uint32 _save_flag = 0;
 
@@ -26,24 +24,20 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
-    class KFDataShardConfig : public KFConfig, public KFSingleton< KFDataShardConfig >
+    class KFDataShardConfig : public KFConfig, public KFInstance< KFDataShardConfig >
     {
     public:
-        KFDataShardConfig( const std::string& file )
-            : KFConfig( file )
+        KFDataShardConfig()
         {
+            _file_name = "datashard";
         }
 
-        void LoadConfig( const std::string& file );
+        void LoadConfig( const std::string& file, uint32 loadmask );
 
     public:
         // 数据库信息
         KFHashMap< std::string, const std::string&, KFDatabaseSetting > _settings;
     };
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_data_shard_config = KFDataShardConfig::Instance( "datashard.setting" );
-    //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 #endif

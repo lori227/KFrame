@@ -1,5 +1,6 @@
 ﻿#include "KFUtility.h"
 #include "KFMacros.h"
+#include "Poco/File.h"
 
 #if __KF_SYSTEM__ == __KF_WIN__
     #include <winsock2.h>
@@ -143,5 +144,29 @@ namespace KFrame
         //}
 
         //return hash;
+    }
+
+    std::string KFUtility::FormatConfigFile( const std::string& filename, uint32 channel, uint32 service )
+    {
+        if ( filename.empty() )
+        {
+            return _invalid_str;
+        }
+
+        auto configfile = __FORMAT__( filename, channel, service );
+
+        // 判断文件是否存在
+        Poco::File file( configfile );
+        if ( !file.exists() )
+        {
+            configfile = __FORMAT__( filename, channel, _invalid_int );
+            Poco::File file( configfile );
+            if ( !file.exists() )
+            {
+                configfile = __FORMAT__( filename, _invalid_int, _invalid_int );
+            }
+        }
+
+        return configfile;
     }
 }

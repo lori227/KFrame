@@ -1,6 +1,5 @@
 ﻿#include "KFKernelModule.hpp"
 #include "KFEntityEx.hpp"
-#include "KFKernelConfig.hpp"
 #include "KFDataFactory.hpp"
 #include "KFProtocol/KFProtocol.h"
 
@@ -24,7 +23,7 @@ namespace KFrame
 
     void KFKernelModule::InitModule()
     {
-        __KF_ADD_CONFIG__( _kf_kernel_config, true );
+        __KF_ADD_CONFIG__( KFDataConfig );
     }
 
     void KFKernelModule::Run()
@@ -43,14 +42,9 @@ namespace KFrame
         }
     }
 
-    void KFKernelModule::ShutDown()
+    void KFKernelModule::BeforeRun()
     {
-        __KF_REMOVE_CONFIG__( _kf_kernel_config );
-    }
-
-    void KFKernelModule::AfterLoad()
-    {
-        for ( auto& iter : _kf_kernel_config->_settings._objects )
+        for ( auto& iter : KFDataConfig::Instance()->_settings._objects )
         {
             auto kfclasssetting = iter.second;
 
@@ -122,7 +116,7 @@ namespace KFrame
         {
             kfcomponent = _kf_component.Create( dataname );
             kfcomponent->_component_name = dataname;
-            kfcomponent->_data_setting = _kf_kernel_config->FindDataSetting( _global_class, dataname );
+            kfcomponent->_data_setting = KFDataConfig::Instance()->FindDataSetting( _global_class, dataname );
         }
 
         return kfcomponent;
@@ -250,7 +244,7 @@ namespace KFrame
                 auto kfchild = kfarray->FindData( citer->first );
                 if ( kfchild != nullptr )
                 {
-                    kfchild->SetValue<uint64>( citer->second );
+                    kfchild->SetValue<int64>( citer->second );
                 }
             }
         }
@@ -333,7 +327,7 @@ case datatype:\
                     auto kfuint64 = kfchild->FindData( i );
                     if ( kfuint64 != nullptr && kfuint64->IsValid() )
                     {
-                        ( *pbarray.mutable_pbuint64() )[ i ] = kfuint64->GetValue<uint64>();
+                        ( *pbarray.mutable_pbuint64() )[ i ] = kfuint64->GetValue<int64>();
                     }
                 }
                 break;

@@ -11,7 +11,6 @@
 
 #include "KFRole.hpp"
 #include "KFGateInterface.h"
-#include "KFZone/KFZoneInterface.h"
 #include "KFTimer/KFTimerInterface.h"
 #include "KFOption/KFOptionInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"

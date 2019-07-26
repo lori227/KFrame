@@ -105,6 +105,7 @@ enum FrameCodeEnum
 	ItemMoveCountError			= 12608;	// 移动道具的数量错误
 	ItemBagFull					= 12609;	// %s道具背包已经满了
 	ItemMoveFailed				= 12610;	// 移动道具失败
+	ItemCanNotStore				= 12611;	// 不能将道具移动到该背包
 
 	// signin
 	SignInNotDay				= 12700;	// 没有签到数据

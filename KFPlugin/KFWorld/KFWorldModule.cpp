@@ -2,6 +2,11 @@
 
 namespace KFrame
 {
+    void KFWorldModule::InitModule()
+    {
+        __KF_ADD_CONFIG__( KFZoneConfig );
+    }
+
     void KFWorldModule::BeforeRun()
     {
         __LOOP_TIMER_0__( 5000, 1000, &KFWorldModule::OnTimerWorldRegister );
@@ -148,7 +153,7 @@ namespace KFrame
             auto ok = KickOnline( KFMsg::KickByLogin, pblogin->playerid(), __FUNC_LINE__ );
             if ( ok )
             {
-                return SendLoginAckToLogin( KFMsg::LoginAlreadyOnline, loginid, pblogin->gateid(), pblogin->accountid(), pblogin->sessionid() );
+                //return SendLoginAckToLogin( KFMsg::LoginAlreadyOnline, loginid, pblogin->gateid(), pblogin->accountid(), pblogin->sessionid() );
             }
         }
 
@@ -186,10 +191,10 @@ namespace KFrame
 
     uint64 KFWorldModule::QueryCreatePlayerId( uint64 accountid )
     {
-        auto kfzone = _kf_zone->GetZone();
+        auto kfsetting = KFZoneConfig::Instance()->ZoneSetting();
 
         // 查询是否存在
-        auto queryplayerid = _auth_redis->QueryUInt64( "hget {}:{} {}", __KF_STRING__( user ), accountid, kfzone->_logic_id );
+        auto queryplayerid = _auth_redis->QueryUInt64( "hget {}:{} {}", __KF_STRING__( user ), accountid, kfsetting->_logic_id );
         if ( !queryplayerid->IsOk() )
         {
             return _invalid_int;
@@ -205,7 +210,7 @@ namespace KFrame
         auto playerid = KFGlobal::Instance()->MakeUUID( KFMsg::UUidPlayer );
 
         _auth_redis->Execute( "hset {}:{} {} {}", __KF_STRING__( online ), playerid, __KF_STRING__( accountid ), accountid );
-        auto voidresult = _auth_redis->Execute( "hset {}:{} {} {}", __KF_STRING__( user ), accountid, kfzone->_logic_id, playerid );
+        auto voidresult = _auth_redis->Execute( "hset {}:{} {} {}", __KF_STRING__( user ), accountid, kfsetting->_logic_id, playerid );
         if ( !voidresult->IsOk() )
         {
             return _invalid_int;
@@ -216,7 +221,7 @@ namespace KFrame
             static auto _update_url = _kf_ip_address->GetAuthUrl() + __KF_STRING__( zonebalance );
             __JSON_OBJECT_DOCUMENT__( sendjson );
             __JSON_SET_VALUE__( sendjson, __KF_STRING__( count ), 1 );
-            __JSON_SET_VALUE__( sendjson, __KF_STRING__( zoneid ), kfzone->_id );
+            __JSON_SET_VALUE__( sendjson, __KF_STRING__( zoneid ), kfsetting->_id );
             _kf_http_client->MTGet< KFWorldModule >( _update_url, sendjson );
         }
 

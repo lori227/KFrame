@@ -18,6 +18,11 @@ namespace KFrame
         _kf_module->InitModule();
     }
 
+    void KFPlugin::LoadConfig()
+    {
+        _kf_module->LoadConfig();
+    }
+
     void KFPlugin::AfterLoad()
     {
         _kf_module->AfterLoad();
@@ -83,11 +88,11 @@ namespace KFrame
         if ( savedata )
         {
             _kf_module->SaveData();
-        }
 
-        _kf_module->BeforeShut();
-        _kf_module->ShutDown();
-        _kf_module->AfterShut();
+            _kf_module->BeforeShut();
+            _kf_module->ShutDown();
+            _kf_module->AfterShut();
+        }
 
         __DELETE_OBJECT__( _kf_module );
     }

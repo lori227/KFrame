@@ -1,12 +1,11 @@
 ﻿#include "KFSkinModule.hpp"
-#include "KFSkinConfig.hpp"
 #include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
     void KFSkinModule::InitModule()
     {
-        __KF_ADD_CONFIG__( _kf_skin_config, true );
+        __KF_ADD_CONFIG__( KFSkinConfig );
     }
 
     void KFSkinModule::BeforeRun()
@@ -27,8 +26,6 @@ namespace KFrame
 
     void KFSkinModule::BeforeShut()
     {
-        __KF_REMOVE_CONFIG__( _kf_skin_config );
-
         _kf_component->UnRegisterAddDataFunction( this, __KF_STRING__( skin ) );
         _kf_component->UnRegisterRemoveDataFunction( this, __KF_STRING__( skin ) );
         _kf_component->UnRegisterAddElementFunction( __KF_STRING__( skin ) );
@@ -37,7 +34,6 @@ namespace KFrame
         _kf_player->UnRegisterEnterFunction( this );
         _kf_player->UnRegisterLeaveFunction( this );
         //////////////////////////////////////////////////////////////////////////////////////////////////
-        //__UN_MESSAGE__( KFMsg::MSG_DRESS_SKIN_REQ );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -151,7 +147,7 @@ namespace KFrame
             return std::make_tuple( KFDataDefine::Show_None, nullptr );
         }
 
-        auto kfsetting = _kf_skin_config->FindSetting( kfelementobject->_config_id );
+        auto kfsetting = KFSkinConfig::Instance()->FindSetting( kfelementobject->_config_id );
         if ( kfsetting == nullptr )
         {
             __LOG_ERROR_FUNCTION__( function, line, "skin id=[{}] skinsetting = null!", kfelementobject->_config_id );

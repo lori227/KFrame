@@ -5,12 +5,7 @@ namespace KFrame
 {
     void KFFilterModule::InitModule()
     {
-        __KF_ADD_CONFIG__( _kf_filter_config, true );
-    }
-
-    void KFFilterModule::ShutDown()
-    {
-        __KF_REMOVE_CONFIG__( _kf_filter_config );
+        __KF_ADD_CONFIG__( KFFilterConfig );
     }
 
     bool KFFilterModule::CheckFilter( const std::string& source )
@@ -27,7 +22,7 @@ namespace KFrame
 
         for ( auto i = 0u; i < length; ++i )
         {
-            auto filter = _kf_filter_config->CheckFilter( data + i, length - i );
+            auto filter = KFFilterConfig::Instance()->CheckFilter( data + i, length - i );
             if ( filter )
             {
                 return true;
@@ -45,7 +40,7 @@ namespace KFrame
         for ( auto i = 0u; i < length; ++i )
         {
             auto data = source.data();
-            auto count = _kf_filter_config->CensorFilter( data + i, length - i );
+            auto count = KFFilterConfig::Instance()->CensorFilter( data + i, length - i );
             if ( count > 0 )
             {
                 filter = true;

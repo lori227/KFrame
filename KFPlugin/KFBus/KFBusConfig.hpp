@@ -1,7 +1,7 @@
 ﻿#ifndef __KF_BUS_CONFIG_H__
 #define __KF_BUS_CONFIG_H__
 
-#include "KFrame.h"
+#include "KFZConfig/KFConfig.h"
 
 namespace KFrame
 {
@@ -30,15 +30,15 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
-    class KFBusConfig : public KFConfig, public KFSingleton< KFBusConfig >
+    class KFBusConfig : public KFConfig, public KFInstance< KFBusConfig >
     {
     public:
-        KFBusConfig( const std::string& file )
-            : KFConfig( file )
+        KFBusConfig()
         {
+            _file_name = "bus";
         }
 
-        void LoadConfig( const std::string& file );
+        void LoadConfig( const std::string& file, uint32 loadmask );
 
         // 查找连接
         void FindConnection( const std::string& appname, const std::string& apptype, const std::string& appid, std::set< KFConnection* >& outlist );
@@ -49,10 +49,6 @@ namespace KFrame
         // 连接信息
         std::vector< KFConnection > _bus_connection;
     };
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_bus_config = KFBusConfig::Instance( "bus.setting" );
-    //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 #endif

@@ -175,10 +175,11 @@ def parse_args():
     parser.add_argument('-b', '--branch', type=str, default='develop', help="develop/online/steam")
     parser.add_argument('-o', '--onlyzone', help="only zone servers", action="store_false")
     parser.add_argument('-r', '--plugin', type=str, default='none', help="plugin name")
+    parser.add_argument('-s', '--svn', type=str, help="svn version")
+    parser.add_argument('-v', '--version', type=str, help="build version")
+    parser.add_argument('-fn', '--filename', type=str, help="filename")
+    parser.add_argument('-md5', '--md5', type=str, help="file md5")
 
-    if is_linux():
-        parser.add_argument('-s', '--svn', type=str, help="svn version")
-        parser.add_argument('-v', '--version', type=str, help="build version")
     return vars(parser.parse_args())
 
 def make_version_file(version_name):
@@ -204,7 +205,7 @@ if args['type'] == 1:
     gen_shell()
     print 'generate shell finished'
 
-    if is_linux() and (args['svn'] is not None) and (args['version'] is not None):
+    if (args['svn'] is not None) and (args['version'] is not None):
         print 'start pack RELEASE VERSION'
         release_version_name = '%s_%s_%s.tar.gz' % ( args['project'], branch_name, args['version'])
 
@@ -253,30 +254,33 @@ elif args['type'] == 2:
     print 'update file finished'
 elif args['type'] == 3:
     # resource
-    print '\nstart to generate shell'
-    if os.path.exists(output_folder):
-        shutil.rmtree(output_folder)
-    if not os.path.exists(output_folder):
-        os.mkdir(output_folder)
-
-    copy_version( False )
-    print 'generate shell finished'
-
-    if is_linux() and (args['svn'] is not None) and (args['version'] is not None):
-        print 'start pack RELEASE VERSION'
-        release_version_name = '%s_%s_%s.tar.gz' % ( args['project'], 'resource', args['version'])
-
-        tar_cmd = ('tar -zcvf %s %s/*') % (release_version_name, output_folder)
-        print tar_cmd
-        commands.getoutput(tar_cmd)
-        print 'pack RELEASE_VERSION finished'
+    if (args['svn'] is not None) and (args['version'] is not None):
+        have_file_name = args['filename'] is not None
+        if have_file_name == True:
+            release_version_name = args['filename']
+        else:
+            print '\nstart to generate shell'
+            if os.path.exists(output_folder):
+                shutil.rmtree(output_folder)
+            if not os.path.exists(output_folder):
+                os.mkdir(output_folder)
+            copy_version( False )
+            print 'generate shell finished'
+            print 'start pack RELEASE VERSION'
+            release_version_name = '%s_%s_%s.tar.gz' % ( args['project'], 'resource', args['version'])
+            tar_cmd = ('tar -zcvf %s %s/*') % (release_version_name, output_folder)
+            print tar_cmd
+            commands.getoutput(tar_cmd)
+            print 'pack RELEASE_VERSION finished'
 
         # Post to web server
         gcm_http.do_post(global_conf['web_api'], release_version_name)
 
         # get md5
-        (status, output) = commands.getstatusoutput('md5sum %s' % release_version_name)
-        md5output = output[0: output.find(' ')]
+        md5output = args['md5']
+        if len(md5output) == 0:
+            (status, output) = commands.getstatusoutput('md5sum %s' % release_version_name)
+            md5output = output[0: output.find(' ')]
 
         # insert into db
         db_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -285,13 +289,13 @@ elif args['type'] == 3:
         gcm_db.insert_mysql_db(mysql_db_info, sql)
 
         # rm version_name
-        rm_cmd = ('rm -rf %s') % (release_version_name)
-        commands.getoutput(rm_cmd)   
+        if have_file_name == False:
+            rm_cmd = ('rm -rf %s') % (release_version_name)
+            commands.getoutput(rm_cmd)   
 
 elif args['type'] == 4:
     # plugin
     print '\nstart to update plugin'
-
 
     # Post to web server
     update_file = args['file']

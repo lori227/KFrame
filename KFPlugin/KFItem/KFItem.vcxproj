@@ -12,17 +12,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFItemConfig.cpp" />
     <ClCompile Include="KFItemModule.cpp" />
     <ClCompile Include="KFItemPlugin.cpp" />
-    <ClCompile Include="KFItemSetting.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFItemConfig.hpp" />
     <ClInclude Include="KFItemInterface.h" />
     <ClInclude Include="KFItemModule.hpp" />
     <ClInclude Include="KFItemPlugin.hpp" />
-    <ClInclude Include="KFItemSetting.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{27798987-9582-48D2-A38C-250ED24378EC}</ProjectGuid>

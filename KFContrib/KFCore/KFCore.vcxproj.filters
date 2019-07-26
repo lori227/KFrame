@@ -17,7 +17,6 @@
   <ItemGroup>
     <ClInclude Include="KFArray.h" />
     <ClInclude Include="KFData.h" />
-    <ClInclude Include="KFDataSetting.h" />
     <ClInclude Include="KFDouble.h" />
     <ClInclude Include="KFInt32.h" />
     <ClInclude Include="KFInt64.h" />

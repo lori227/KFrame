@@ -11,7 +11,7 @@ namespace KFrame
         return &_files[ name ];
     }
 
-    bool KFParse::LoadFromExcel( const char* file, bool utf8 )
+    bool KFParse::LoadFromExcel( const char* file, bool utf8, uint32 saveflag )
     {
         _utf8 = utf8;
 
@@ -24,12 +24,12 @@ namespace KFrame
 
         for ( auto sheet : excelfile._sheets )
         {
-            LoadFromExcel( sheet );
+            LoadFromExcel( sheet, saveflag );
         }
         return true;
     }
 
-    bool KFParse::LoadFromExcel( KFExcelSheet* sheet )
+    bool KFParse::LoadFromExcel( KFExcelSheet* sheet, uint32 saveflag )
     {
         // 第1行 第2列为文件名
         auto kfname = sheet->FindCell( 1, 2 );
@@ -62,9 +62,7 @@ namespace KFrame
                 continue;
             }
 
-
             KFUtility::ReplaceString( kfname->_value, " ", "" );
-
             auto strname = kfname->_value;
 
             KFAttribute attribute;
@@ -72,10 +70,16 @@ namespace KFrame
             attribute._type = KFUtility::SplitString( strname, ")" );
             std::transform( attribute._type.begin(), attribute._type.end(), attribute._type.begin(), ::tolower );
 
+            // saveflag
             auto kfsave = sheet->FindCell( _begin_row - 1, i );
             if ( kfsave != nullptr && !kfsave->_value.empty() )
             {
                 attribute._flag = KFUtility::ToValue< uint32 >( kfsave->_value );
+            }
+            else
+            {
+                std::cout << "file=[" << name << "] field=[" << kfname->_value << "] savefile empty!" << std::endl;
+                system( "pause" );
             }
 
             kffile->_class.AddAttribute( i, attribute );
@@ -89,7 +93,7 @@ namespace KFrame
             for ( auto j = _begin_col; j <= sheet->_dimension._last_col; ++j )
             {
                 auto attribute = kffile->_class.GetAttribute( j );
-                if ( attribute == nullptr )
+                if ( attribute == nullptr || !KFUtility::HaveBitMask( attribute->_flag, saveflag ) )
                 {
                     continue;
                 }
@@ -110,7 +114,10 @@ namespace KFrame
                 data.AddData( j, value );
             }
 
-            kffile->AddData( data );
+            if ( data.IsValid() )
+            {
+                kffile->AddData( data );
+            }
         }
 
         return true;
@@ -412,11 +419,11 @@ namespace KFrame
         return true;
     }
 
-    bool KFParse::SaveToXml( const char* path, uint32 saveflag )
+    bool KFParse::SaveToXml( const char* path )
     {
         for ( auto iter : _files )
         {
-            if ( !SaveToXml( path, &iter.second, saveflag ) )
+            if ( !SaveToXml( path, &iter.second ) )
             {
                 return false;
             }
@@ -425,8 +432,13 @@ namespace KFrame
         return true;
     }
 
-    bool KFParse::SaveToXml( const std::string& path, KFFile* kffile, uint32 saveflag )
+    bool KFParse::SaveToXml( const std::string& path, KFFile* kffile )
     {
+        if ( kffile->_datas.empty() )
+        {
+            return true;
+        }
+
         std::string filename = kffile->_class._class_name;
         std::transform( filename.begin(), filename.end(), filename.begin(), ::tolower );
         auto file = path + "/" + filename + ".xml";
@@ -445,11 +457,6 @@ namespace KFrame
         for ( auto& iter : kffile->_datas )
         {
             auto kfdata = &iter;
-            if ( !kfdata->IsValid() )
-            {
-                continue;
-            }
-
             xmlfile << "\t<item";
 
             for ( auto& miter : kfdata->_datas )
@@ -458,10 +465,7 @@ namespace KFrame
                 if ( !strvalue.empty() && strvalue != "0" )
                 {
                     auto attribute = kffile->_class.GetAttribute( miter.first );
-                    if ( KFUtility::HaveBitMask( attribute->_flag, saveflag ) )
-                    {
-                        xmlfile << __FORMAT__( " {}=\"{}\"", attribute->_name, strvalue );
-                    }
+                    xmlfile << __FORMAT__( " {}=\"{}\"", attribute->_name, strvalue );
                 }
             }
 

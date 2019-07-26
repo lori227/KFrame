@@ -9,7 +9,6 @@
 //    @Date             :    2018-5-16
 ************************************************************************/
 
-#include "KFRankShardConfig.hpp"
 #include "KFRankShardInterface.h"
 #include "KFProtocol/KFProtocol.h"
 #include "KFRedis/KFRedisInterface.h"
@@ -18,6 +17,7 @@
 #include "KFMessage/KFMessageInterface.h"
 #include "KFSchedule/KFScheduleInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"
+#include "KFZConfig/KFRankConfig.hpp"
 
 namespace KFrame
 {

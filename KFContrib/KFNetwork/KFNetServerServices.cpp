@@ -45,7 +45,6 @@ namespace KFrame
     void KFNetServerServices::ShutServices()
     {
         uv_close( reinterpret_cast< uv_handle_t* >( _uv_server ), nullptr );
-
         KFNetServices::ShutServices();
     }
 

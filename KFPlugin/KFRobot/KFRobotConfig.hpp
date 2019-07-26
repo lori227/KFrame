@@ -1,20 +1,20 @@
 ﻿#ifndef __KF_ROBOT_CONFIG_H__
 #define __KF_ROBOT_CONFIG_H__
 
-#include "KFrame.h"
+#include "KFZConfig/KFConfig.h"
 
 namespace KFrame
 {
-    class KFRobotConfig : public KFConfig, public KFSingleton< KFRobotConfig >
+    class KFRobotConfig : public KFConfig, public KFInstance< KFRobotConfig >
     {
     public:
-        KFRobotConfig( const std::string& file )
-            : KFConfig( file )
+        KFRobotConfig()
         {
+            _file_name = "robot";
         }
 
         // 读取配置
-        void LoadConfig( const std::string& file );
+        void LoadConfig( const std::string& file, uint32 loadmask );
 
     public:
         // 认证服务器地址
@@ -35,10 +35,6 @@ namespace KFrame
         // 开启属性更新log
         bool _open_data_log = false;
     };
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_robot_config = KFRobotConfig::Instance( "robot.setting" );
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 #endif

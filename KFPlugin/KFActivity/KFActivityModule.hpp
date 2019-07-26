@@ -15,6 +15,7 @@
 #include "KFMessage/KFMessageInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
+#include "KFActivityConfig.hpp"
 
 namespace KFrame
 {
@@ -61,7 +62,8 @@ namespace KFrame
         void CheckResetDailyActivity( KFEntity* player );
 
     private:
-        KFComponent* _kf_componnet{ nullptr };
+        // 玩家组件上下文
+        KFComponent* _kf_componnet = nullptr;
     };
 }
 

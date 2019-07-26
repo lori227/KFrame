@@ -58,6 +58,24 @@ namespace KFrame
         return KFUtility::ToValue<uint32>( attribute->value() ) == 1;
     }
 
+    int32 KFNode::GetInt32( const char* key, bool optional /* = false */, int32 defaultvalue /* = 0 */ )
+    {
+        auto xmlnode = reinterpret_cast< rapidxml::xml_node<>* >( _node );
+
+        auto attribute = xmlnode->first_attribute( key );
+        if ( attribute == nullptr )
+        {
+            if ( !optional )
+            {
+                __LOG_ERROR__( "[{}] can't find node = [{}]!", _kf_xml->GetFileName(), key );
+            }
+            return defaultvalue;
+        }
+
+        return KFUtility::ToValue<int32>( attribute->value() );
+    }
+
+
     uint32 KFNode::GetUInt32( const char* key, bool optional /* = false */, uint32 defaultvalue /* = 0 */ )
     {
         auto xmlnode = reinterpret_cast<rapidxml::xml_node<>*>( _node );

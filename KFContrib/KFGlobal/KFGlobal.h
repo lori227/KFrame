@@ -48,6 +48,9 @@ namespace KFrame
 
         // 获得zoneid
         uint32 UUIDZoneId( uint32 type, uint64 uuid );
+
+        // 判断游戏分区id
+        bool IsServerSameZone( uint64 serverid );
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // 初始化网络

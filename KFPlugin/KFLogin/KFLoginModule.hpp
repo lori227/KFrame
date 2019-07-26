@@ -11,14 +11,15 @@
 
 #include "KFLoginInterface.h"
 #include "KFProtocol/KFProtocol.h"
-#include "KFZone/KFZoneInterface.h"
 #include "KFTimer/KFTimerInterface.h"
 #include "KFRedis/KFRedisInterface.h"
+#include "KFConfig/KFConfigInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFIpAddress/KFIpAddressInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
+#include "KFZConfig/KFZoneConfig.hpp"
 
 namespace KFrame
 {
@@ -27,6 +28,9 @@ namespace KFrame
     public:
         KFLoginModule() = default;
         ~KFLoginModule() = default;
+
+        // 初始化
+        virtual void InitModule();
 
         // 刷新
         virtual void BeforeRun();

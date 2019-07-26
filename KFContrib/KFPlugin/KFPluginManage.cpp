@@ -93,14 +93,23 @@ namespace KFrame
     {
         for ( auto kfplugin : _plugins )
         {
-            __LOG_DEBUG__( "module=[{}] start!", kfplugin->_plugin_name );
+            //__LOG_DEBUG__( "module=[{}] start!", kfplugin->_plugin_name );
             kfplugin->InitModule();
-            __LOG_DEBUG__( "module=[{}] ok!", kfplugin->_plugin_name );
+            //__LOG_DEBUG__( "module=[{}] ok!", kfplugin->_plugin_name );
+        }
+    }
+
+    void KFPluginManage::LoadConfig()
+    {
+        for ( auto kfplugin : _plugins )
+        {
+            kfplugin->LoadConfig();
         }
     }
 
     void KFPluginManage::AfterLoad()
     {
+
         for ( auto kfplugin : _plugins )
         {
             kfplugin->AfterLoad();
@@ -111,9 +120,9 @@ namespace KFrame
     {
         for ( auto kfplugin : _plugins )
         {
-            __LOG_DEBUG__( "module=[{}] start!", kfplugin->_plugin_name );
+            //__LOG_DEBUG__( "module=[{}] start!", kfplugin->_plugin_name );
             kfplugin->BeforeRun();
-            __LOG_DEBUG__( "module=[{}] ok!", kfplugin->_plugin_name );
+            //__LOG_DEBUG__( "module=[{}] ok!", kfplugin->_plugin_name );
         }
     }
 
@@ -121,9 +130,9 @@ namespace KFrame
     {
         for ( auto kfplugin : _plugins )
         {
-            __LOG_DEBUG__( "module=[{}] start!", kfplugin->_plugin_name );
+            //__LOG_DEBUG__( "module=[{}] start!", kfplugin->_plugin_name );
             kfplugin->OnceRun();
-            __LOG_DEBUG__( "module=[{}] ok!", kfplugin->_plugin_name );
+            //__LOG_DEBUG__( "module=[{}] ok!", kfplugin->_plugin_name );
         }
     }
 
@@ -141,6 +150,7 @@ namespace KFrame
             InitModule();
 
             // 加载配置
+            LoadConfig();
             AfterLoad();
 
             // 准备运行

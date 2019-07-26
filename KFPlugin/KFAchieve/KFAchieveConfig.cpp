@@ -4,8 +4,8 @@ namespace KFrame
 {
     void KFAchieveConfig::ClearSetting()
     {
-        _settings.Clear();
         _achieve_types.clear();
+        KFIntConfigT< KFAchieveSetting >::ClearSetting();
     }
 
     void KFAchieveConfig::ReadSetting( KFNode& xmlnode, KFAchieveSetting* kfsetting )

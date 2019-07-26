@@ -5,7 +5,7 @@ namespace KFrame
 {
     void KFRankClientModule::InitModule()
     {
-        __KF_ADD_CONFIG__( _kf_rank_config, true );
+        __KF_ADD_CONFIG__( KFRankConfig );
     }
 
     void KFRankClientModule::BeforeRun()
@@ -19,7 +19,6 @@ namespace KFrame
 
     void KFRankClientModule::BeforeShut()
     {
-        __KF_REMOVE_CONFIG__( _kf_rank_config );
         _kf_component->UnRegisterUpdateDataModule( this );
         ///////////////////////////////////////////////////////////////////////////////////////////
 
@@ -42,7 +41,7 @@ namespace KFrame
             return;
         }
 
-        auto& ranksettinglist = _kf_rank_config->FindRankSetting( kfparent->_data_setting->_name, kfdata->_data_setting->_name );
+        auto& ranksettinglist = KFRankConfig::Instance()->FindSetting( kfparent->_data_setting->_name, kfdata->_data_setting->_name );
         for ( auto kfsetting : ranksettinglist )
         {
             // 属性更新顺序无法保证, 所以先保存到一个列表中, 在AfterRun中更新排行榜数据
@@ -99,7 +98,7 @@ namespace KFrame
         KFMsg::S2SUpdateRankDataReq req;
         req.set_zoneid( zoneid );
         req.set_playerid( playerid );
-        req.set_rankid( kfsetting->_rank_id );
+        req.set_rankid( kfsetting->_id );
 
         auto pbrankdata = req.mutable_pbrankdata();
         pbrankdata->set_rankindex( 0 );
@@ -123,7 +122,7 @@ namespace KFrame
         }
 
         // 玩家的基本数据
-        for ( auto& calcdata  : _kf_rank_config->_player_data )
+        for ( auto& calcdata  : KFRankConfig::Instance()->_player_data )
         {
             auto kfdata = kfobject->FindData( calcdata._parent_name, calcdata._data_name );
             if ( kfdata != nullptr )
@@ -168,7 +167,7 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgQueryRankListReq );
 
-        auto kfsetting = _kf_rank_config->FindRankSetting( kfmsg.rankid() );
+        auto kfsetting = KFRankConfig::Instance()->FindSetting( kfmsg.rankid() );
         if ( kfsetting == nullptr )
         {
             return _kf_display->SendToClient( player, KFMsg::RankNotExist );
@@ -188,7 +187,7 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgQueryFriendRankListReq );
 
-        auto kfsetting = _kf_rank_config->FindRankSetting( kfmsg.rankid() );
+        auto kfsetting = KFRankConfig::Instance()->FindSetting( kfmsg.rankid() );
         if ( kfsetting == nullptr )
         {
             return _kf_display->SendToClient( player, KFMsg::RankNotExist );

@@ -1,11 +1,11 @@
 ﻿#ifndef __KF_HTTP_SERVER_CONFIG_H__
 #define __KF_HTTP_SERVER_CONFIG_H__
 
-#include "KFrame.h"
+#include "KFZConfig/KFConfig.h"
 
 namespace KFrame
 {
-    class KFHttpSetting
+    class KFHttpSetting : public KFIntSetting
     {
     public:
         KFHttpSetting()
@@ -48,16 +48,18 @@ namespace KFrame
         uint32 _idle_time;
     };
 
-    class KFHttpServerConfig : public KFConfig, public KFSingleton< KFHttpServerConfig >
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
+    class KFHttpServerConfig : public KFConfig, public KFInstance< KFHttpServerConfig >
     {
     public:
-        KFHttpServerConfig( const std::string& file )
-            : KFConfig( file )
+        KFHttpServerConfig()
         {
+            _file_name = "http";
         }
 
         // 加载配置文件
-        void LoadConfig( const std::string& file );
+        void LoadConfig( const std::string& file, uint32 loadmask );
 
         // 查找配置
         KFHttpSetting* FindHttpSetting( const std::string& appname, const std::string& apptype );
@@ -66,10 +68,6 @@ namespace KFrame
         // 配置列表
         std::vector < KFHttpSetting > _http_setting_list;
     };
-
-    ////////////////////////////////////////////////////////////////////////////
-    static auto _kf_http_server_config = KFHttpServerConfig::Instance( "httpserver.setting" );
-    ////////////////////////////////////////////////////////////////////////////
 }
 
 #endif

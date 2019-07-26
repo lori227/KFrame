@@ -3,11 +3,11 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////
 #if __KF_SYSTEM__ == __KF_WIN__
+    #pragma comment(lib,"iphlpapi.lib")
     //////////////////////////////////////////////////////////////////////////////////////////////////
     #ifdef __KF_DEBUG__
         #pragma comment( lib, "KFExceld.lib" )
         #pragma comment( lib, "KFUtilityd.lib" )
-
     #endif
     //////////////////////////////////////////////////////////////////////////////////////////////////
     #ifdef __KF_RELEASE__
@@ -32,7 +32,7 @@ void Parse( int argc, char* argv[] )
     uint32 saveflag = atoi( argv[ 2 ] );
     std::cout << "Start Parse Excel File = " << excelfile << "!" << std::endl;
 
-    bool load = _kf_parse->LoadFromExcel( excelfile.c_str(), true );
+    bool load = _kf_parse->LoadFromExcel( excelfile.c_str(), true, saveflag );
     if ( !load )
     {
         std::cout << "Load File = " << excelfile << " Failed!" << std::endl;
@@ -49,7 +49,7 @@ void Parse( int argc, char* argv[] )
 
         if ( prefix == "--xml" )
         {
-            _kf_parse->SaveToXml( path.c_str(), saveflag );
+            _kf_parse->SaveToXml( path.c_str() );
         }
         else if ( prefix == "--csv" )
         {

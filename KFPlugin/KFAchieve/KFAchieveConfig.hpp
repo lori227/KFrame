@@ -2,6 +2,7 @@
 #define __KF_ACHIEVE_CONFIG_H__
 
 #include "KFCore/KFElement.h"
+#include "KFZConfig/KFConfig.h"
 
 namespace KFrame
 {
@@ -59,22 +60,22 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////
-    class KFAchieveConfig : public KFIntConfigT< KFAchieveSetting >, public KFSingleton< KFAchieveConfig >
+    class KFAchieveConfig : public KFIntConfigT< KFAchieveSetting >, public KFInstance< KFAchieveConfig >
     {
     public:
-        KFAchieveConfig( const std::string& file, bool isclear )
-            : KFIntConfigT< KFAchieveSetting >( file, isclear )
+        KFAchieveConfig()
         {
+            _file_name = "achieve";
         }
 
         // 获得某种类型的所有成就
         const KFAchieveType* FindTypeAchieve( const std::string& parentname, const std::string& dataname ) const;
     protected:
         // 清除配置
-        void ClearSetting();
+        virtual void ClearSetting();
 
         // 读取配置
-        void ReadSetting( KFNode& xmlnode, KFAchieveSetting* kfsetting );
+        virtual void ReadSetting( KFNode& xmlnode, KFAchieveSetting* kfsetting );
 
         // 添加成就类型
         void AddAchieveType( KFAchieveSetting* kfsetting );
@@ -83,10 +84,6 @@ namespace KFrame
         // 类型列表
         std::unordered_map< std::string, KFAchieveTypes > _achieve_types;
     };
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_achieve_config = KFAchieveConfig::Instance( "achieve.xml", true );
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 #endif

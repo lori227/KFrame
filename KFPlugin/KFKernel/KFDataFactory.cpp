@@ -1,5 +1,4 @@
 ﻿#include "KFDataFactory.hpp"
-#include "KFKernelConfig.hpp"
 #include "KFCore/KFInt32.h"
 #include "KFCore/KFUInt32.h"
 #include "KFCore/KFInt64.h"
@@ -10,6 +9,7 @@
 #include "KFCore/KFRecord.h"
 #include "KFCore/KFArray.h"
 #include "KFCore/KFVector3D.h"
+#include "KFKernelModule.hpp"
 
 namespace KFrame
 {
@@ -67,7 +67,7 @@ namespace KFrame
 
     KFData* KFDataFactory::CreateData( const std::string& classname, const std::string& dataname )
     {
-        auto datasetting = _kf_kernel_config->FindDataSetting( classname, dataname );
+        auto datasetting = KFDataConfig::Instance()->FindDataSetting( classname, dataname );
         if ( datasetting == nullptr )
         {
             __LOG_ERROR__( "[{}:{}] datasetting can't find!", classname, dataname );

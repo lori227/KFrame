@@ -8,8 +8,7 @@
 	</Includes>
 
 	<Plugins>
-		<Plugin Name="KFRedis" Config="./setting/{}_{}_redis.setting"/>
-		<Plugin Name="KFZone" Config="./setting/{}_{}_zone.setting"/>	
+		<Plugin Name="KFRedis" Config=""/>
 		<Plugin Name="KFTimer" Config=""/>	
 		<Plugin Name="KFLogin" Config=""/>	
 	</Plugins>

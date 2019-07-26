@@ -39,8 +39,8 @@ namespace KFrame
             kfclient->CloseClient();
         }
 
+        _wait_clients.clear();
         _net_client_services->ShutServices();
-        _net_client_services->_net_event->ShutEvent();
     }
 
     void KFNetClientEngine::RunEngine( uint64 nowtime )
@@ -108,21 +108,19 @@ namespace KFrame
     void KFNetClientEngine::OnClientShutDown( const KFEventData* eventdata )
     {
         auto kfclient = _kf_clients.Find( eventdata->_id );
-        if ( kfclient == nullptr )
+        if ( kfclient != nullptr )
         {
-            return;
+            auto netdata = &kfclient->_net_data;
+            __LOG_INFO__( "[{}:{}:{}|{}:{}] client shutdown!",
+                          netdata->_name, netdata->_type, netdata->_str_id, netdata->_ip, netdata->_port );
+
+            if ( _client_shutdown_function != nullptr )
+            {
+                _client_shutdown_function( netdata );
+            }
+
+            _kf_clients.Remove( eventdata->_id );
         }
-
-        auto netdata = &kfclient->_net_data;
-        __LOG_INFO__( "[{}:{}:{}|{}:{}] client shutdown!",
-                      netdata->_name, netdata->_type, netdata->_str_id, netdata->_ip, netdata->_port );
-
-        if ( _client_shutdown_function != nullptr )
-        {
-            _client_shutdown_function( netdata );
-        }
-
-        _kf_clients.Remove( eventdata->_id );
     }
 
     void KFNetClientEngine::OnClientFailed( const KFEventData* eventdata )
@@ -156,7 +154,7 @@ namespace KFrame
 
     void KFNetClientEngine::RunWaitClient()
     {
-        if ( _net_client_services->_is_shutdown || _wait_clients.empty() )
+        if ( _wait_clients.empty() )
         {
             return;
         }

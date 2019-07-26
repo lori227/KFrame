@@ -9,7 +9,7 @@
 //    @Date             :    2018-7-4
 ************************************************************************/
 
-#include "KFrame.h"
+#include "KFIpConfig.hpp"
 #include "KFIpAddressInterface.h"
 #include "KFConfig/KFConfigInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
@@ -24,9 +24,6 @@ namespace KFrame
 
         // 初始化
         virtual void InitModule();
-
-        // 关闭
-        virtual void ShutDown();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
 

@@ -44,7 +44,7 @@ namespace KFrame
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFMongoConfig::LoadConfig( const std::string& file )
+    void KFMongoConfig::LoadConfig( const std::string& file, uint32 loadmask )
     {
         auto _mongo_id = 0u;
         _mongo_type.Clear();

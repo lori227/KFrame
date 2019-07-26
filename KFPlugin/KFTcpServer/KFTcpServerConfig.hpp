@@ -2,6 +2,7 @@
 #define __KF_NET_CONFIG_H__
 
 #include "KFrame.h"
+#include "KFZConfig/KFConfig.h"
 
 namespace KFrame
 {
@@ -21,16 +22,16 @@ namespace KFrame
         uint32 _message_type = KFMessageEnum::Server;
     };
 
-    class KFTcpServerConfig : public KFConfig, public KFSingleton< KFTcpServerConfig >
+    class KFTcpServerConfig : public KFConfig, public KFInstance< KFTcpServerConfig >
     {
     public:
-        KFTcpServerConfig( const std::string& file )
-            : KFConfig( file )
+        KFTcpServerConfig()
         {
+            _file_name = "tcp";
         }
 
         // 加载配置文件
-        void LoadConfig( const std::string& file );
+        void LoadConfig( const std::string& file, uint32 loadmask );
 
         // 查找TcpData
         KFTcpSetting* FindTcpSetting( const std::string& appname, const std::string& apptype );
@@ -39,10 +40,6 @@ namespace KFrame
         // 服务器列表
         std::vector < KFTcpSetting > _tcp_setting_list;
     };
-
-    ////////////////////////////////////////////////////////////////////////////
-    static auto _kf_server_config = KFTcpServerConfig::Instance( "tcpserver.setting" );
-    ////////////////////////////////////////////////////////////////////////////
 }
 
 #endif

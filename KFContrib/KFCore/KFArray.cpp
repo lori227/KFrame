@@ -6,7 +6,7 @@ namespace KFrame
     {
         KFData::Initialize( classsetting, datasetting );
 
-        auto size = datasetting->_int_max_value + KFDataDefine::Array_Index;
+        auto size = datasetting->_int_logic_value + KFDataDefine::Array_Index;
         _data.Resize( size );
     }
 

@@ -4,11 +4,9 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="KFRankShardModule.cpp" />
     <ClCompile Include="KFRankShardPlugin.cpp" />
-    <ClCompile Include="KFRankShardConfig.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFRankShardInterface.h" />
-    <ClInclude Include="KFRankShardConfig.hpp" />
     <ClInclude Include="KFRankShardModule.hpp" />
     <ClInclude Include="KFRankShardPlugin.hpp" />
   </ItemGroup>

@@ -2,16 +2,12 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFItemConfig.cpp" />
     <ClCompile Include="KFItemPlugin.cpp" />
-    <ClCompile Include="KFItemSetting.cpp" />
     <ClCompile Include="KFItemModule.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFItemInterface.h" />
-    <ClInclude Include="KFItemConfig.hpp" />
     <ClInclude Include="KFItemModule.hpp" />
     <ClInclude Include="KFItemPlugin.hpp" />
-    <ClInclude Include="KFItemSetting.hpp" />
   </ItemGroup>
 </Project>

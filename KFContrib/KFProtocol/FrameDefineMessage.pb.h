@@ -577,15 +577,15 @@ class LIBPROTOC_EXPORT PBObject : public ::google::protobuf::Message /* @@protoc
 // -------------------------------------------------------------------
 
 class PBArray_Pbuint64Entry_DoNotUse : public ::google::protobuf::internal::MapEntry<PBArray_Pbuint64Entry_DoNotUse, 
-    ::google::protobuf::uint32, ::google::protobuf::uint64,
+    ::google::protobuf::uint32, ::google::protobuf::int64,
     ::google::protobuf::internal::WireFormatLite::TYPE_UINT32,
-    ::google::protobuf::internal::WireFormatLite::TYPE_UINT64,
+    ::google::protobuf::internal::WireFormatLite::TYPE_INT64,
     0 > {
 public:
   typedef ::google::protobuf::internal::MapEntry<PBArray_Pbuint64Entry_DoNotUse, 
-    ::google::protobuf::uint32, ::google::protobuf::uint64,
+    ::google::protobuf::uint32, ::google::protobuf::int64,
     ::google::protobuf::internal::WireFormatLite::TYPE_UINT32,
-    ::google::protobuf::internal::WireFormatLite::TYPE_UINT64,
+    ::google::protobuf::internal::WireFormatLite::TYPE_INT64,
     0 > SuperType;
   PBArray_Pbuint64Entry_DoNotUse();
   PBArray_Pbuint64Entry_DoNotUse(::google::protobuf::Arena* arena);
@@ -685,13 +685,13 @@ class LIBPROTOC_EXPORT PBArray : public ::google::protobuf::Message /* @@protoc_
 
   // accessors -------------------------------------------------------
 
-  // map<uint32, uint64> pbuint64 = 1;
+  // map<uint32, int64> pbuint64 = 1;
   int pbuint64_size() const;
   void clear_pbuint64();
   static const int kPbuint64FieldNumber = 1;
-  const ::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::uint64 >&
+  const ::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::int64 >&
       pbuint64() const;
-  ::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::uint64 >*
+  ::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::int64 >*
       mutable_pbuint64();
 
   // @@protoc_insertion_point(class_scope:KFMsg.PBArray)
@@ -700,9 +700,9 @@ class LIBPROTOC_EXPORT PBArray : public ::google::protobuf::Message /* @@protoc_
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::MapField<
       PBArray_Pbuint64Entry_DoNotUse,
-      ::google::protobuf::uint32, ::google::protobuf::uint64,
+      ::google::protobuf::uint32, ::google::protobuf::int64,
       ::google::protobuf::internal::WireFormatLite::TYPE_UINT32,
-      ::google::protobuf::internal::WireFormatLite::TYPE_UINT64,
+      ::google::protobuf::internal::WireFormatLite::TYPE_INT64,
       0 > pbuint64_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameDefineMessage_2eproto::TableStruct;
@@ -1893,19 +1893,19 @@ PBObject::mutable_pbrecord() {
 
 // PBArray
 
-// map<uint32, uint64> pbuint64 = 1;
+// map<uint32, int64> pbuint64 = 1;
 inline int PBArray::pbuint64_size() const {
   return pbuint64_.size();
 }
 inline void PBArray::clear_pbuint64() {
   pbuint64_.Clear();
 }
-inline const ::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::uint64 >&
+inline const ::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::int64 >&
 PBArray::pbuint64() const {
   // @@protoc_insertion_point(field_map:KFMsg.PBArray.pbuint64)
   return pbuint64_.GetMap();
 }
-inline ::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::uint64 >*
+inline ::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::int64 >*
 PBArray::mutable_pbuint64() {
   // @@protoc_insertion_point(field_mutable_map:KFMsg.PBArray.pbuint64)
   return pbuint64_.MutableMap();

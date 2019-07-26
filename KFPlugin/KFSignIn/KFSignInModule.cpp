@@ -1,12 +1,11 @@
 ﻿#include "KFSignInModule.hpp"
-#include "KFSignInConfig.hpp"
 #include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
     void KFSignInModule::InitModule()
     {
-        __KF_ADD_CONFIG__( _kf_signin_config, true );
+        __KF_ADD_CONFIG__( KFSignInConfig );
     }
 
     void KFSignInModule::BeforeRun()
@@ -16,8 +15,6 @@ namespace KFrame
 
     void KFSignInModule::ShutDown()
     {
-        __KF_REMOVE_CONFIG__( _kf_signin_config );
-
         __UN_MESSAGE__( KFMsg::MSG_SEVEN_SIGNIN_REWARD_REQ );
     }
 
@@ -34,7 +31,7 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::SignInNotDay );
         }
 
-        auto kfsetting = _kf_signin_config->FindSetting( kfmsg.day() );
+        auto kfsetting = KFSignInConfig::Instance()->FindSetting( kfmsg.day() );
         if ( kfsetting == nullptr )
         {
             return _kf_display->SendToClient( player, KFMsg::SignInCanNotFind );

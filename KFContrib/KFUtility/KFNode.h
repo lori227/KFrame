@@ -28,6 +28,9 @@ namespace KFrame
         // 读取bool
         bool GetBoolen( const char* key, bool optional = false, bool defaultvale = false );
 
+        // 读取int32
+        int32 GetInt32( const char* key, bool optional = false, int32 defaultvalue = 0 );
+
         // 读取uint32
         uint32 GetUInt32( const char* key, bool optional = false, uint32 defaultvalue = 0 );
 

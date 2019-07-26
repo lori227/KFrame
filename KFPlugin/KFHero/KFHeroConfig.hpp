@@ -1,7 +1,7 @@
 ﻿#ifndef __KF_HERO_CONFIG_H__
 #define __KF_HERO_CONFIG_H__
 
-#include "KFrame.h"
+#include "KFZConfig/KFConfig.h"
 
 namespace KFrame
 {
@@ -22,22 +22,18 @@ namespace KFrame
     };
     ////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
-    class KFHeroConfig : public KFIntConfigT< KFHeroSetting >, public KFSingleton< KFHeroConfig >
+    class KFHeroConfig : public KFIntConfigT< KFHeroSetting >, public KFInstance< KFHeroConfig >
     {
     public:
-        KFHeroConfig( const std::string& file, bool isclear )
-            : KFIntConfigT< KFHeroSetting >( file, isclear )
+        KFHeroConfig()
         {
+            _file_name = "hero";
         }
 
     protected:
         // 读取配置
-        void ReadSetting( KFNode& xmlnode, KFHeroSetting* kfsetting );
+        virtual void ReadSetting( KFNode& xmlnode, KFHeroSetting* kfsetting );
     };
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_hero_config = KFHeroConfig::Instance( "hero.xml", true );
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 #endif

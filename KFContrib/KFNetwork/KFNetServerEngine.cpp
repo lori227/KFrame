@@ -55,7 +55,6 @@ namespace KFrame
         }
 
         _net_server_services->ShutServices();
-        _net_server_services->_net_event->ShutEvent();
     }
 
     void KFNetServerEngine::RunEngine( uint64 nowtime )
@@ -139,7 +138,6 @@ namespace KFrame
                 __LOG_ERROR__( "handle[{}:{}] shutdown failed!", eventdata->_id, KFAppId::ToString( eventdata->_id ) );
             }
         }
-
         __LOG_DEBUG__( "handle[{}:{}|{}] shutdown ok!", eventdata->_id, KFAppId::ToString( eventdata->_id ), reinterpret_cast< uint64 >( eventdata->_data ) );
     }
 

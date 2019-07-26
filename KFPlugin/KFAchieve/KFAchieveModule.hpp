@@ -14,6 +14,7 @@
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
+#include "KFAchieveConfig.hpp"
 
 namespace KFrame
 {
@@ -57,7 +58,8 @@ namespace KFrame
         void UpdateObjectAchieveValue( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate );
 
     private:
-        KFComponent* _kf_component{ nullptr };
+        // 玩家组件上下文
+        KFComponent* _kf_component = nullptr;
     };
 }
 

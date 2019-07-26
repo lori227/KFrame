@@ -1,7 +1,6 @@
 ﻿#ifndef __KF_KERNEL_INTERFACE_H__
 #define __KF_KERNEL_INTERFACE_H__
 
-#include "KFrame.h"
 #include "KFEntity.h"
 #include "KFComponent.h"
 

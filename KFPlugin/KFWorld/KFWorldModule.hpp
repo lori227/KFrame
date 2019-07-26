@@ -11,15 +11,16 @@
 
 #include "KFWorldInterface.h"
 #include "KFProtocol/KFProtocol.h"
-#include "KFZone/KFZoneInterface.h"
 #include "KFRedis/KFRedisInterface.h"
 #include "KFTimer/KFTimerInterface.h"
+#include "KFConfig/KFConfigInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"
 #include "KFHttpServer/KFHttpServerInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
 #include "KFIpAddress/KFIpAddressInterface.h"
+#include "KFZConfig/KFZoneConfig.hpp"
 
 namespace KFrame
 {
@@ -28,6 +29,9 @@ namespace KFrame
     public:
         KFWorldModule() = default;
         ~KFWorldModule() = default;
+
+        // 初始化
+        virtual void InitModule();
 
         // 刷新
         virtual void BeforeRun();

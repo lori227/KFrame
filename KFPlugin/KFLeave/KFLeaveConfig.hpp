@@ -1,7 +1,7 @@
 ﻿#ifndef __KF_LEAVE_CONFIG_H__
 #define __KF_LEAVE_CONFIG_H__
 
-#include "KFrame.h"
+#include "KFZConfig/KFConfig.h"
 
 namespace KFrame
 {
@@ -15,12 +15,12 @@ namespace KFrame
         std::string _lua_function;
     };
     ////////////////////////////////////////////////////////////////////////////////////
-    class KFLeaveConfig : public KFIntConfigT< KFLeaveSetting >, public KFSingleton< KFLeaveConfig >
+    class KFLeaveConfig : public KFIntConfigT< KFLeaveSetting >, public KFInstance< KFLeaveConfig >
     {
     public:
-        KFLeaveConfig( const std::string& file, bool isclear )
-            : KFIntConfigT< KFLeaveSetting >( file, isclear )
+        KFLeaveConfig()
         {
+            _file_name = "leave";
         }
 
     protected:
@@ -28,12 +28,8 @@ namespace KFrame
         KFLeaveSetting* CreateSetting( KFNode& xmlnode );
 
         // 读取配置
-        void ReadSetting( KFNode& xmlnode, KFLeaveSetting* kfsetting );
+        virtual void ReadSetting( KFNode& xmlnode, KFLeaveSetting* kfsetting );
     };
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    static auto _kf_leave_config = KFLeaveConfig::Instance( "leave.xml", true );
-    //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 #endif

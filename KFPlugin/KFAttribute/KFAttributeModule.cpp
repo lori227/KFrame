@@ -44,15 +44,15 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::NameEmpty );
         }
 
-        auto name = player->GetData()->GetValue<std::string>( __KF_STRING__( basic ), __KF_STRING__( name ) );
+        auto kfname = player->GetData()->FindData( __KF_STRING__( basic ), __KF_STRING__( name ) );
+        auto name = kfname->GetValue<std::string>();
         if ( !name.empty() )
         {
             return _kf_display->SendToClient( player, KFMsg::NameAlreadySet );
         }
 
         // 检查名字的有效性
-        static auto _name_option = _kf_option->FindOption( "playernamelength" );
-        auto result = CheckNameValid( kfmsg.name(), _name_option->_uint32_value );
+        auto result = CheckNameValid( kfmsg.name(), kfname->_data_setting->_int_max_value );
         if ( result != KFMsg::Ok )
         {
             return _kf_display->SendToClient( player, result );

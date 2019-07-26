@@ -9,8 +9,8 @@
 //    @Date             :    2017-1-7
 ************************************************************************/
 
-#include "KFrame.h"
 #include "KFTcpServerInterface.h"
+#include "KFTcpServerConfig.hpp"
 #include "KFNetwork/KFNetServerEngine.h"
 #include "KFConfig/KFConfigInterface.h"
 #include "KFMessage/KFMessageInterface.h"

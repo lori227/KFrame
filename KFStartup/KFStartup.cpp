@@ -87,6 +87,7 @@ namespace KFrame
     void KFStartup::ShutDown()
     {
         KFPluginManage::Instance()->UnRegisterCommandFunction( __KF_STRING__( loadplugin ) );
+        KFPluginManage::Instance()->ShutDown();
 
         for ( auto& iter : _kf_library._objects )
         {
@@ -94,7 +95,6 @@ namespace KFrame
             PluginLeaveFunction function = ( PluginLeaveFunction )library->GetFunction( "DllPluginLeave" );
             function( KFPluginManage::Instance(), false );
         }
-
         _kf_library.Clear();
     }
 

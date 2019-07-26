@@ -2,13 +2,13 @@
 #define __KF_MYSQL_CONFIG_H__
 
 #include "KFrame.h"
+#include "KFZConfig/KFConfig.h"
 
 namespace KFrame
 {
-    class KFMySQLSetting
+    class KFMySQLSetting : public KFIntSetting
     {
     public:
-        uint32 _id = 0;
         std::string _ip;
         uint32 _port = 0;
         std::string _user;
@@ -49,16 +49,16 @@ namespace KFrame
         KFHashMap< uint32, uint32, KFMySQLList > _mysql_list;
     };
 
-    class KFMySQLConfig : public KFConfig, public KFSingleton< KFMySQLConfig >
+    class KFMySQLConfig : public KFConfig, public KFInstance< KFMySQLConfig >
     {
     public:
-        KFMySQLConfig( const std::string& file )
-            : KFConfig( file )
+        KFMySQLConfig()
         {
+            _file_name = "mysql";
         }
 
         // 加载配置文件
-        void LoadConfig( const std::string& file );
+        void LoadConfig( const std::string& file, uint32 loadmask );
 
         // 查找配置
         KFMySQLType* FindMySQLType( const std::string& module, uint32 logicid );
@@ -68,10 +68,6 @@ namespace KFrame
         typedef std::pair< std::string, uint32 > ModuleKey;
         KFMap< ModuleKey, const ModuleKey&, KFMySQLType > _mysql_type;
     };
-
-    ////////////////////////////////////////////////////////////////////////////
-    static auto* _kf_mysql_config = KFMySQLConfig::Instance( "mysql.setting" );
-    ////////////////////////////////////////////////////////////////////////////
 }
 
 #endif

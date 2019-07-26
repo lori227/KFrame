@@ -38,3 +38,4 @@ _bin/bin/win64/release/libtcmalloc_minimal.dll
 KFTools/Element/bin/
 KFTools/Element/obj/
 KFLibrary/google/protobuf/cmake/vsbuild/CMakeFiles/
+_bin/_gcm/builder/build/

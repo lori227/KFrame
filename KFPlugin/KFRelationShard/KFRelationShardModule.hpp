@@ -10,13 +10,13 @@
 ************************************************************************/
 
 #include "KFProtocol/KFProtocol.h"
-#include "KFRelationShardConfig.hpp"
 #include "KFRelationShardInterface.h"
 #include "KFRedis/KFRedisInterface.h"
 #include "KFConfig/KFConfigInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"
+#include "KFZConfig/KFRelationConfig.hpp"
 
 namespace KFrame
 {

@@ -7,6 +7,38 @@
 
 namespace KFrame
 {
+    typedef std::pair< std::string, std::string > DataKeyType;
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    template< class T >
+    class KFDataFunction
+    {
+    public:
+        void AddFunction( const std::string& name, T& function )
+        {
+            auto kffunction = _functions.Create( name );
+            kffunction->_function = function;
+        }
+
+        void RemoveFunction( const std::string& name )
+        {
+            _functions.Remove( name );
+        }
+
+        template< class ... Arg >
+        void CallFunction( Arg&& ...params )
+        {
+            for ( auto& iter : _functions._objects )
+            {
+                auto kffunction = iter.second;
+                kffunction->_function( std::forward<Arg>( params )... );
+            }
+        }
+
+    public:
+        // 函数列表
+        KFBind< std::string, const std::string&, T > _functions;
+    };
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
     class KFComponentEx : public KFComponent
     {
     public:
@@ -40,7 +72,23 @@ namespace KFrame
 
         // 获得属性列表
         virtual VectorString& GetDataList( const std::string& dataname );
+
+        // 获得类配置
+        virtual const KFClassSetting* FindClassSetting();
+        virtual const KFClassSetting* FindClassSetting( const std::string& dataname );
+
+        // 获得属性配置
+        virtual const KFDataSetting* FindDataSetting();
+        virtual const KFDataSetting* FindDataSetting( const std::string& dataname );
+        virtual const KFDataSetting* FindDataSetting( const std::string& parentname, const std::string& dataname );
         //////////////////////////////////////////////////////////////////////////////////////
+        virtual void SetLogicValue( const std::string& dataname, uint32 value );
+        virtual void SetLogicValue( const std::string& parentname, const std::string& dataname, uint32 value );
+
+        virtual void SetMaxValue( const std::string& dataname, uint32 value );
+        virtual void SetMaxValue( const std::string& parentname, const std::string& dataname, uint32 value );
+        //////////////////////////////////////////////////////////////////////////////////////
+
         // 启动保存定时器
         void StartSaveEntityTimer( KFEntity* kfentity, KFData* kfdata );
 
@@ -166,21 +214,22 @@ namespace KFrame
         KFBind< std::string, const std::string&, KFRemoveElementFunction > _remove_element_function;
         /////////////////////////////////////////////////////////////////////////////////////////////
         // 属性更新回调列表
-        typedef std::pair< std::string, std::string > DataKeyType;
         KFBind< std::string, const std::string&, KFAddDataFunction > _add_data_module;
-        KFBind< std::string, const std::string&, KFAddDataFunction > _add_data_function;
+        KFBind< std::string, const std::string&, KFRemoveDataFunction > _remove_data_module;
+        KFBind< std::string, const std::string&, KFUpdateDataFunction > _update_data_module;
+        KFBind< std::string, const std::string&, KFUpdateStringFunction > _update_string_module;
+
+        // 添加属性回调
+        KFMap< std::string, const std::string&, KFDataFunction< KFAddDataFunction > > _add_data_function;
 
         // 删除数据的回调函数
-        KFBind< std::string, const std::string&, KFRemoveDataFunction > _remove_data_module;
-        KFBind< std::string, const std::string&, KFRemoveDataFunction > _remove_data_function;
+        KFMap< std::string, const std::string&, KFDataFunction< KFRemoveDataFunction > > _remove_data_function;
 
         // 更新数据的回调函数
-        KFBind< std::string, const std::string&, KFUpdateDataFunction > _update_data_module;
-        KFBind< DataKeyType, const DataKeyType&, KFUpdateDataFunction > _update_data_function;
+        KFMap< DataKeyType, const DataKeyType&, KFDataFunction< KFUpdateDataFunction > > _update_data_function;
 
         // 更新数据的回调函数
-        KFBind< std::string, const std::string&, KFUpdateStringFunction > _update_string_module;
-        KFBind< DataKeyType, const DataKeyType&, KFUpdateStringFunction > _update_string_function;
+        KFMap< DataKeyType, const DataKeyType&, KFDataFunction< KFUpdateStringFunction > > _update_string_function;
         /////////////////////////////////////////////////////////////////////////////////////////////
         KFEntityFunction _entity_initialize_function;
         KFEntityFunction _entity_uninitialize_function;

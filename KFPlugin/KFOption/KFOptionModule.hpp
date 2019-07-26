@@ -9,8 +9,8 @@
 //    @Date             :    2017-4-24
 ************************************************************************/
 
-#include "KFrame.h"
 #include "KFOptionInterface.h"
+#include "KFZConfig/KFOptionConfig.hpp"
 #include "KFConfig/KFConfigInterface.h"
 
 namespace KFrame
@@ -23,16 +23,24 @@ namespace KFrame
 
         // 初始化
         virtual void InitModule();
-
-        // 关闭
-        virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 获得配置属性
-        virtual const KFOption* FindOption( const std::string& name );
-        virtual const KFOption* FindOption( const std::string& name, uint32 key );
-        virtual const KFOption* FindOption( const std::string& name, const std::string& key );
+        virtual const KFOptionSetting* FindOption( const std::string& name );
+        virtual const KFOptionSetting* FindOption( const std::string& name, uint32 key );
+        virtual const KFOptionSetting* FindOption( const std::string& name, const std::string& key );
         ////////////////////////////////////////////////////////////////////////////////
+        virtual void AddOption( const std::string& name, uint32 value );
+        virtual void AddOption( const std::string& name, uint32 key, uint32 value );
+        virtual void AddOption( const std::string& name, const std::string& key, uint32 value );
+
+        virtual void AddOption( const std::string& name, double value );
+        virtual void AddOption( const std::string& name, uint32 key, double value );
+        virtual void AddOption( const std::string& name, const std::string& key, double value );
+
+        virtual void AddOption( const std::string& name, const std::string& value );
+        virtual void AddOption( const std::string& name, uint32 key, const std::string& value );
+        virtual void AddOption( const std::string& name, const std::string& key, const std::string& value );
         ////////////////////////////////////////////////////////////////////////////////
 
         // uint32配置
@@ -49,7 +57,6 @@ namespace KFrame
         virtual const std::string& GetString( const std::string& name );
         virtual const std::string& GetString( const std::string& name, uint32 key );
         virtual const std::string& GetString( const std::string& name, const std::string& key );
-
     };
 }
 

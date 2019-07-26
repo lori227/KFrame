@@ -28,7 +28,7 @@ namespace KFrame
 
     const std::string& KFDataExecute::GetName() const
     {
-        return _kf_setting->_name;
+        return _kf_setting->_id;
     }
 
     void KFDataExecute::RunDataKeeper()

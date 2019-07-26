@@ -10,6 +10,7 @@
 ************************************************************************/
 
 #include "KFChannelInterface.h"
+#include "KFChannelConfig.hpp"
 #include "KFRedis/KFRedisInterface.h"
 #include "KFConfig/KFConfigInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
@@ -33,9 +34,6 @@ namespace KFrame
 
         // 初始化
         virtual void BeforeRun();
-
-        // 关闭
-        virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         template< class T >

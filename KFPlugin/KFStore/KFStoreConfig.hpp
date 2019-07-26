@@ -1,8 +1,8 @@
 ﻿#ifndef __KF_STORE_CONFIG_H__
 #define __KF_STORE_CONFIG_H__
 
-#include "KFrame.h"
 #include "KFCore/KFElement.h"
+#include "KFZConfig/KFConfig.h"
 
 namespace KFrame
 {
@@ -54,22 +54,18 @@ namespace KFrame
         bool CheckInDiscount( uint64 nowtime ) const;
     };
 
-    class KFStoreConfig : public KFIntConfigT< KFStoreSetting >, public KFSingleton< KFStoreConfig >
+    class KFStoreConfig : public KFIntConfigT< KFStoreSetting >, public KFInstance< KFStoreConfig >
     {
     public:
-        KFStoreConfig( const std::string& file, bool isclear )
-            : KFIntConfigT< KFStoreSetting >( file, isclear )
+        KFStoreConfig()
         {
+            _file_name = "store";
         }
 
     protected:
         // 读取配置
-        void ReadSetting( KFNode& xmlnode, KFStoreSetting* kfsetting );
+        virtual void ReadSetting( KFNode& xmlnode, KFStoreSetting* kfsetting );
     };
-
-    //////////////////////////////////////////////////////////////////////////
-    static auto _kf_store_config = KFStoreConfig::Instance( "store.xml", true );
-    //////////////////////////////////////////////////////////////////////////
 }
 
 #endif//__KF_STORE_CONFIG_H__
