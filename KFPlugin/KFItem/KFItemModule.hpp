@@ -22,6 +22,49 @@
 
 namespace KFrame
 {
+#define __USE_ITEM_INDEX__ 1u
+#define __BEGIN_ITEM_INDEX__ 1u
+
+    class KFItemIndex
+    {
+    public:
+        // 初始化
+        void InitMaxIndex( uint32 maxvalue )
+        {
+            for ( auto i = __BEGIN_ITEM_INDEX__; i <= maxvalue; ++i )
+            {
+                _indexs.insert( i );
+            }
+        }
+
+        uint32 FindEmpty()
+        {
+            auto iter = _indexs.begin();
+            if ( iter == _indexs.end() )
+            {
+                return 0u;
+            }
+
+            auto index = *iter;
+            _indexs.erase( iter );
+            return index;
+        }
+
+        void AddEmpty( uint32 index )
+        {
+            _indexs.insert( index );
+        }
+
+        void RemoveEmpty( uint32 index )
+        {
+            _indexs.erase( index );
+        }
+
+    public:
+        // 空索引列表
+        std::set< uint32 > _indexs;
+    };
+
     class KFItemModule : public KFItemInterface
     {
     public:
@@ -102,12 +145,32 @@ namespace KFrame
 
         // 启动检查时间道具
         void StartItemCheckTimer( KFEntity* player, KFData* kfitem );
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 初始化道具格子信息
+        void InitItemEmptyIndexData( KFEntity* player, KFData* kfitemrecord );
+
+        // 删除格子信息
+        void UnInitItemEmptyIndexData( KFEntity* player, const std::string& name );
+
+        // 查找空的格子存放道具
+        uint32 FindItemEmptyIndex( KFEntity* player, KFData* kfitemrecord );
+
+        // 设置道具格子信息
+        void RemoveItemEmptyIndex( KFEntity* player, KFData* kfitem );
+
+        // 清空格子信息
+        void AddItemEmptyIndex( KFEntity* player, KFData* kfitem );
+
     protected:
         // 玩家组件上下文
         KFComponent* _kf_component = nullptr;
 
         // 物品属性列表
         std::vector< std::string > _item_data_list;
+
+        // 保存玩家的背包格子信息
+        typedef std::pair<uint64, std::string> ItemIndexKey;
+        KFMap< ItemIndexKey, const ItemIndexKey&, KFItemIndex > _player_item_index;
     };
 }
 

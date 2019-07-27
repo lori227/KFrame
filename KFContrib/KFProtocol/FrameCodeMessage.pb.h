@@ -136,6 +136,7 @@ enum FrameCodeEnum {
   ItemBagFull = 12609,
   ItemMoveFailed = 12610,
   ItemCanNotStore = 12611,
+  ItemIndexError = 12612,
   SignInNotDay = 12700,
   SignInCanNotFind = 12701,
   SignInRewardAlready = 12702,

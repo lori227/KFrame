@@ -668,7 +668,6 @@ namespace KFrame
     {
         // 开启保存数据库定时器
         StartSaveEntityTimer( kfentity, kfparent );
-
         kfentity->SyncRemoveData( kfdata, key );
     }
 
@@ -676,7 +675,6 @@ namespace KFrame
     {
         // 开启保存数据库定时器
         StartSaveEntityTimer( kfentity, kfparent );
-
         kfentity->SyncAddData( kfdata, key );
     }
 

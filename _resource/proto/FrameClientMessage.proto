@@ -285,6 +285,7 @@ message MsgSplitItemReq
 	uint64 sourceuuid = 2;	// 道具uuid
 	uint32 sourcecount = 3;	// 移动数量
 	bytes targetname = 4;	// 目标背包名字
+	uint32 targetindex = 5;	// 目标背包位置( 0 表示服务器自己找空位置 )
 }
 
 // MSG_MERGE_ITEM_REQ
@@ -303,7 +304,8 @@ message MsgMoveItemReq
 {
 	bytes sourcename = 1;	// 源背包名字
 	uint64 sourceuuid = 2;	// 道具uuid
-	bytes targetname = 4;	// 目标背包名字
+	bytes targetname = 3;	// 目标背包名字
+	uint32 targetindex = 4;	// 目标背包位置( 0 表示服务器自己找空位置 )
 }
 ////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////

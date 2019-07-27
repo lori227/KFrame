@@ -3322,6 +3322,12 @@ class LIBPROTOC_EXPORT MsgSplitItemReq : public ::google::protobuf::Message /* @
   ::google::protobuf::uint32 sourcecount() const;
   void set_sourcecount(::google::protobuf::uint32 value);
 
+  // uint32 targetindex = 5;
+  void clear_targetindex();
+  static const int kTargetindexFieldNumber = 5;
+  ::google::protobuf::uint32 targetindex() const;
+  void set_targetindex(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:KFMsg.MsgSplitItemReq)
  private:
 
@@ -3330,6 +3336,7 @@ class LIBPROTOC_EXPORT MsgSplitItemReq : public ::google::protobuf::Message /* @
   ::google::protobuf::internal::ArenaStringPtr targetname_;
   ::google::protobuf::uint64 sourceuuid_;
   ::google::protobuf::uint32 sourcecount_;
+  ::google::protobuf::uint32 targetindex_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameClientMessage_2eproto::TableStruct;
 };
@@ -3576,9 +3583,9 @@ class LIBPROTOC_EXPORT MsgMoveItemReq : public ::google::protobuf::Message /* @@
   ::std::string* release_sourcename();
   void set_allocated_sourcename(::std::string* sourcename);
 
-  // bytes targetname = 4;
+  // bytes targetname = 3;
   void clear_targetname();
-  static const int kTargetnameFieldNumber = 4;
+  static const int kTargetnameFieldNumber = 3;
   const ::std::string& targetname() const;
   void set_targetname(const ::std::string& value);
   #if LANG_CXX11
@@ -3596,6 +3603,12 @@ class LIBPROTOC_EXPORT MsgMoveItemReq : public ::google::protobuf::Message /* @@
   ::google::protobuf::uint64 sourceuuid() const;
   void set_sourceuuid(::google::protobuf::uint64 value);
 
+  // uint32 targetindex = 4;
+  void clear_targetindex();
+  static const int kTargetindexFieldNumber = 4;
+  ::google::protobuf::uint32 targetindex() const;
+  void set_targetindex(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:KFMsg.MsgMoveItemReq)
  private:
 
@@ -3603,6 +3616,7 @@ class LIBPROTOC_EXPORT MsgMoveItemReq : public ::google::protobuf::Message /* @@
   ::google::protobuf::internal::ArenaStringPtr sourcename_;
   ::google::protobuf::internal::ArenaStringPtr targetname_;
   ::google::protobuf::uint64 sourceuuid_;
+  ::google::protobuf::uint32 targetindex_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameClientMessage_2eproto::TableStruct;
 };
@@ -7211,6 +7225,20 @@ inline void MsgSplitItemReq::set_allocated_targetname(::std::string* targetname)
   // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgSplitItemReq.targetname)
 }
 
+// uint32 targetindex = 5;
+inline void MsgSplitItemReq::clear_targetindex() {
+  targetindex_ = 0u;
+}
+inline ::google::protobuf::uint32 MsgSplitItemReq::targetindex() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgSplitItemReq.targetindex)
+  return targetindex_;
+}
+inline void MsgSplitItemReq::set_targetindex(::google::protobuf::uint32 value) {
+  
+  targetindex_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.MsgSplitItemReq.targetindex)
+}
+
 // -------------------------------------------------------------------
 
 // MsgMergeItemReq
@@ -7420,7 +7448,7 @@ inline void MsgMoveItemReq::set_sourceuuid(::google::protobuf::uint64 value) {
   // @@protoc_insertion_point(field_set:KFMsg.MsgMoveItemReq.sourceuuid)
 }
 
-// bytes targetname = 4;
+// bytes targetname = 3;
 inline void MsgMoveItemReq::clear_targetname() {
   targetname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -7471,6 +7499,20 @@ inline void MsgMoveItemReq::set_allocated_targetname(::std::string* targetname) 
   }
   targetname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), targetname);
   // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgMoveItemReq.targetname)
+}
+
+// uint32 targetindex = 4;
+inline void MsgMoveItemReq::clear_targetindex() {
+  targetindex_ = 0u;
+}
+inline ::google::protobuf::uint32 MsgMoveItemReq::targetindex() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgMoveItemReq.targetindex)
+  return targetindex_;
+}
+inline void MsgMoveItemReq::set_targetindex(::google::protobuf::uint32 value) {
+  
+  targetindex_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.MsgMoveItemReq.targetindex)
 }
 
 // -------------------------------------------------------------------

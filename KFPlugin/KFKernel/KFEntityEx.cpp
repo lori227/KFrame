@@ -381,27 +381,25 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFEntityEx::MoveData( const std::string& sourcename, uint64 key, const std::string& targetname )
+    KFData* KFEntityEx::MoveData( const std::string& sourcename, uint64 key, const std::string& targetname )
     {
         auto sourcedata = _kf_object->FindData( sourcename );
         auto targetdata = _kf_object->FindData( targetname );
         if ( sourcedata == nullptr )
         {
-            return false;
+            return nullptr;
         }
 
         return MoveData( sourcedata, key, targetdata );
     }
 
-    bool KFEntityEx::MoveData( KFData* sourcedata, uint64 key, KFData* targetdata )
+    KFData* KFEntityEx::MoveData( KFData* sourcedata, uint64 key, KFData* targetdata )
     {
-        auto kfdata = sourcedata->FindData( key );
+        auto kfdata = sourcedata->MoveData( key );
         if ( kfdata == nullptr )
         {
-            return false;
+            return nullptr;
         }
-
-        sourcedata->MoveData( key );
         _kf_component->MoveRemoveDataCallBack( this, sourcedata, key, kfdata );
 
         if ( targetdata != nullptr )
@@ -410,7 +408,7 @@ namespace KFrame
             _kf_component->MoveAddDataCallBack( this, targetdata, key, kfdata );
         }
 
-        return true;
+        return kfdata;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////

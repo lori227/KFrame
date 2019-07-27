@@ -192,6 +192,13 @@ namespace KFrame
             kfitem->SetValue( __KF_STRING__( time ), KFGlobal::Instance()->_real_time + time );
         }
 
+        // 位置
+        auto index = FindItemEmptyIndex( player, kfparent );
+        if ( index != 0u )
+        {
+            kfitem->SetValue( __KF_STRING__( index ), index );
+        }
+
         // uuid
         auto uuid = KFGlobal::Instance()->MakeUUID( KFMsg::UUidItem );
 
@@ -316,6 +323,9 @@ namespace KFrame
 
     __KF_ADD_DATA_FUNCTION__( KFItemModule::OnAddItemCallBack )
     {
+        // 保存格子信息
+        RemoveItemEmptyIndex( player, kfdata );
+
         auto itemtime = kfdata->GetValue< uint64 >();
         if ( itemtime != 0u )
         {
@@ -350,12 +360,18 @@ namespace KFrame
                     StartItemCheckTimer( player, kfitem );
                 }
             }
+
+            InitItemEmptyIndexData( player, kfitemrecord );
         }
     }
 
     __KF_LEAVE_PLAYER_FUNCTION__( KFItemModule::OnLeaveItemModule )
     {
         __UN_TIMER_1__( player->GetKeyID() );
+        for ( auto& dataname : _item_data_list )
+        {
+            UnInitItemEmptyIndexData( player, dataname );
+        }
     }
 
     void KFItemModule::StartItemCheckTimer( KFEntity* player, KFData* kfitem )
@@ -391,6 +407,9 @@ namespace KFrame
 
     __KF_REMOVE_DATA_FUNCTION__( KFItemModule::OnRemoveItemCallBack )
     {
+        // 清空索引
+        AddItemEmptyIndex( player, kfdata );
+
         auto itemid = kfdata->GetValue( kfdata->_data_setting->_config_key_name );
         auto kfsetting = KFItemConfig::Instance()->FindSetting( itemid );
         if ( kfsetting == nullptr )
@@ -444,11 +463,39 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::ItemCanNotStore );
         }
 
+        // 索引判断
+        auto index = kfmsg.targetindex();
+        if ( kftargetrecord->_data_setting->_int_logic_value == __USE_ITEM_INDEX__ )
+        {
+            // 同背包不能相同的索引
+            if ( kfmsg.sourcename() == kfmsg.targetname() )
+            {
+                auto sourceindex = kfsourceitem->GetValue<uint32>( __KF_STRING__( index ) );
+                if ( sourceindex == index )
+                {
+                    return;
+                }
+            }
+
+            if ( index != 0u )
+            {
+                if ( index > kftargetrecord->_data_setting->_int_max_value )
+                {
+                    return _kf_display->SendToClient( player, KFMsg::ItemIndexError );
+                }
+            }
+            else
+            {
+                index = FindItemEmptyIndex( player, kftargetrecord );
+            }
+        }
+
         // 扣除数量
         player->UpdateData( kfsourceitem, __KF_STRING__( count ), KFEnum::Dec, kfmsg.sourcecount() );
 
         auto kftargetitem = _kf_kernel->CreateObject( kfsourceitem->_data_setting );
         kftargetitem->CopyFrom( kfsourceitem );
+        kftargetitem->SetValue( __KF_STRING__( index ), index );
         kftargetitem->SetValue( __KF_STRING__( count ), kfmsg.sourcecount() );
 
         // 添加新的道具
@@ -519,14 +566,14 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::ItemBagFull );
         }
 
-        auto kfitem = kfsourcerecord->FindData( kfmsg.sourceuuid() );
-        if ( kfitem == nullptr )
+        auto kfsourceitem = kfsourcerecord->FindData( kfmsg.sourceuuid() );
+        if ( kfsourceitem == nullptr )
         {
             return _kf_display->SendToClient( player, KFMsg::ItemDataNotExist );
         }
 
         // 判断是否限制
-        auto itemid = kfitem->GetValue<uint32>( kfitem->_data_setting->_config_key_name );
+        auto itemid = kfsourceitem->GetValue<uint32>( kfsourceitem->_data_setting->_config_key_name );
         auto kfsetting = KFItemConfig::Instance()->FindSetting( itemid );
         if ( kfsetting == nullptr )
         {
@@ -538,13 +585,143 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::ItemCanNotStore );
         }
 
-        auto ok = player->MoveData( kfsourcerecord, kfmsg.sourceuuid(), kftargetrecord );
-        if ( !ok )
+        // 索引判断
+        if ( kftargetrecord->_data_setting->_int_logic_value == __USE_ITEM_INDEX__ )
         {
-            return _kf_display->SendToClient( player, KFMsg::ItemMoveFailed );
+            // 同背包不能相同的索引
+            auto index = kfmsg.targetindex();
+            if ( kfmsg.sourcename() == kfmsg.targetname() )
+            {
+                auto sourceindex = kfsourceitem->GetValue<uint32>( __KF_STRING__( index ) );
+                if ( sourceindex == index )
+                {
+                    return;
+                }
+            }
+
+            if ( index != 0u )
+            {
+                if ( index > kftargetrecord->_data_setting->_int_max_value )
+                {
+                    return _kf_display->SendToClient( player, KFMsg::ItemIndexError );
+                }
+            }
+            else
+            {
+                index = FindItemEmptyIndex( player, kftargetrecord );
+            }
+
+            // 原背包索引
+            AddItemEmptyIndex( player, kfsourceitem );
+
+            // 设置新的索引
+            kfsourceitem->SetValue( __KF_STRING__( index ), index );
+        }
+
+        auto kfitem = player->MoveData( kfsourcerecord, kfmsg.sourceuuid(), kftargetrecord );
+        if ( kfitem != nullptr )
+        {
+            RemoveItemEmptyIndex( player, kfitem );
+        }
+        else
+        {
+            _kf_display->SendToClient( player, KFMsg::ItemMoveFailed );
         }
     }
 
+    void KFItemModule::InitItemEmptyIndexData( KFEntity* player, KFData* kfitemrecord )
+    {
+        if ( kfitemrecord->_data_setting->_int_logic_value != __USE_ITEM_INDEX__ )
+        {
+            return;
+        }
+
+        ItemIndexKey key( player->GetKeyID(), kfitemrecord->_data_setting->_name );
+        auto kfindex = _player_item_index.Create( key );
+        kfindex->InitMaxIndex( kfitemrecord->_data_setting->_int_max_value );
+
+        std::list< KFData* > invalid;
+        for ( auto kfitem = kfitemrecord->FirstData(); kfitem != nullptr; kfitem = kfitemrecord->NextData() )
+        {
+            auto index = kfitem->GetValue<uint32>( __KF_STRING__( index ) );
+            if ( index == 0u )
+            {
+                invalid.push_back( kfitem );
+            }
+            else
+            {
+                kfindex->RemoveEmpty( index );
+            }
+        }
+
+        // 如果存在没有索引的情况, 纠正数据
+        if ( !invalid.empty() )
+        {
+            for ( auto kfitem : invalid )
+            {
+                auto index = kfindex->FindEmpty();
+                if ( index == 0u )
+                {
+                    break;
+                }
+
+                kfitem->SetValue( __KF_STRING__( index ), index );
+            }
+        }
+    }
+
+
+    void KFItemModule::UnInitItemEmptyIndexData( KFEntity* player, const std::string& name )
+    {
+        ItemIndexKey key( player->GetKeyID(), name );
+        _player_item_index.Remove( key );
+    }
+
+    uint32 KFItemModule::FindItemEmptyIndex( KFEntity* player, KFData* kfitemrecord )
+    {
+        if ( kfitemrecord->_data_setting->_int_logic_value != __USE_ITEM_INDEX__ ||
+                kfitemrecord->IsFull() )
+        {
+            return 0u;
+        }
+
+        ItemIndexKey key( player->GetKeyID(), kfitemrecord->_data_setting->_name );
+        auto kfindex = _player_item_index.Find( key );
+        return kfindex->FindEmpty();
+    }
+
+    void KFItemModule::RemoveItemEmptyIndex( KFEntity* player, KFData* kfitem )
+    {
+        auto kfitemrecord = kfitem->GetParent();
+        if ( kfitemrecord->_data_setting->_int_logic_value != __USE_ITEM_INDEX__ )
+        {
+            return;
+        }
+
+        ItemIndexKey key( player->GetKeyID(), kfitemrecord->_data_setting->_name );
+        auto kfindex = _player_item_index.Find( key );
+
+        auto index = kfitem->GetValue<uint32>( __KF_STRING__( index ) );
+        kfindex->RemoveEmpty( index );
+    }
+
+    void KFItemModule::AddItemEmptyIndex( KFEntity* player, KFData* kfitem )
+    {
+        auto kfitemrecord = kfitem->GetParent();
+        if ( kfitemrecord->_data_setting->_int_logic_value != __USE_ITEM_INDEX__ )
+        {
+            return;
+        }
+
+        ItemIndexKey key( player->GetKeyID(), kfitemrecord->_data_setting->_name );
+        auto kfindex = _player_item_index.Find( key );
+
+        auto index = kfitem->GetValue<uint32>( __KF_STRING__( index ) );
+        kfindex->AddEmpty( index );
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFItemModule::HandleUseItemReq )
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgUseItemReq );
