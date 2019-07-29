@@ -94,6 +94,9 @@ namespace KFrame
 
         // 移动道具(从背包到仓库 或者从仓库到背包)
         __KF_MESSAGE_FUNCTION__( HandleMoveItemReq );
+
+        // 交换道具(从背包到仓库 或者从仓库到背包)
+        __KF_MESSAGE_FUNCTION__( HandleExchangeItemReq );
     protected:
         // 添加物品
         __KF_ADD_ELEMENT_FUNCTION__( AddItemElement );

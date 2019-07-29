@@ -27,6 +27,7 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFMsg::MSG_MERGE_ITEM_REQ, &KFItemModule::HandleMergeItemReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_MOVE_ITEM_REQ, &KFItemModule::HandleMoveItemReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_USE_ITEM_REQ, &KFItemModule::HandleUseItemReq );
+        __REGISTER_MESSAGE__( KFMsg::MSG_EXCHANGE_ITEM_REQ, &KFItemModule::HandleExchangeItemReq );
     }
 
     void KFItemModule::BeforeShut()
@@ -49,6 +50,7 @@ namespace KFrame
         __UN_MESSAGE__( KFMsg::MSG_MERGE_ITEM_REQ );
         __UN_MESSAGE__( KFMsg::MSG_MOVE_ITEM_REQ );
         __UN_MESSAGE__( KFMsg::MSG_USE_ITEM_REQ );
+        __UN_MESSAGE__( KFMsg::MSG_EXCHANGE_ITEM_REQ );
     }
 
     void KFItemModule::OnceRun()
@@ -626,6 +628,79 @@ namespace KFrame
         else
         {
             _kf_display->SendToClient( player, KFMsg::ItemMoveFailed );
+        }
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFItemModule::HandleExchangeItemReq )
+    {
+        __CLIENT_PROTO_PARSE__( KFMsg::MsgExchangeItemReq );
+
+        auto kfobject = player->GetData();
+        auto kfsourcerecord = kfobject->FindData( kfmsg.sourcename() );
+        auto kftargetrecord = kfobject->FindData( kfmsg.targetname() );
+        if ( kfsourcerecord == nullptr || kftargetrecord == nullptr )
+        {
+            return _kf_display->SendToClient( player, KFMsg::ItemBagNameError );
+        }
+
+        auto kfsourceitem = kfsourcerecord->FindData( kfmsg.sourceuuid() );
+        auto kftargetitem = kftargetrecord->FindData( kfmsg.targetuuid() );
+        if ( kfsourceitem == nullptr || kftargetitem == nullptr )
+        {
+            return _kf_display->SendToClient( player, KFMsg::ItemDataNotExist );
+        }
+
+        auto sourceindex = kfsourceitem->GetValue<uint32>( __KF_STRING__( index ) );
+        auto targetindex = kftargetitem->GetValue<uint32>( __KF_STRING__( index ) );
+
+        if ( kfmsg.sourcename() == kfmsg.targetname() )
+        {
+            // 交换索引
+            player->UpdateData( kfsourceitem, __KF_STRING__( index ), KFEnum::Set, targetindex );
+            player->UpdateData( kftargetitem, __KF_STRING__( index ), KFEnum::Set, sourceindex );
+        }
+        else
+        {
+            // 判断存放是否限制
+            {
+                auto itemid = kfsourceitem->GetValue<uint32>( kfsourceitem->_data_setting->_config_key_name );
+                auto kfsetting = KFItemConfig::Instance()->FindSetting( itemid );
+                if ( kfsetting == nullptr )
+                {
+                    return _kf_display->SendToClient( player, KFMsg::ItemSettingNotExist );
+                }
+
+                if ( !kfsetting->IsCanStore( kfmsg.targetname() ) )
+                {
+                    return _kf_display->SendToClient( player, KFMsg::ItemCanNotStore );
+                }
+            }
+
+            // 判断存放是否限制
+            {
+                auto itemid = kftargetitem->GetValue<uint32>( kftargetitem->_data_setting->_config_key_name );
+                auto kfsetting = KFItemConfig::Instance()->FindSetting( itemid );
+                if ( kfsetting == nullptr )
+                {
+                    return _kf_display->SendToClient( player, KFMsg::ItemSettingNotExist );
+                }
+
+                if ( !kfsetting->IsCanStore( kfmsg.sourcename() ) )
+                {
+                    return _kf_display->SendToClient( player, KFMsg::ItemCanNotStore );
+                }
+            }
+
+            AddItemEmptyIndex( player, kfsourceitem );
+            AddItemEmptyIndex( player, kftargetitem );
+
+            kfsourceitem->SetValue( __KF_STRING__( index ), targetindex );
+            kfsourceitem = player->MoveData( kfsourcerecord, kfmsg.sourceuuid(), kftargetrecord );
+            RemoveItemEmptyIndex( player, kfsourceitem );
+
+            kftargetitem->SetValue( __KF_STRING__( index ), sourceindex );
+            kftargetitem = player->MoveData( kftargetrecord, kfmsg.targetuuid(), kfsourcerecord );
+            RemoveItemEmptyIndex( player, kftargetitem );
         }
     }
 

@@ -46,6 +46,7 @@ enum FrameClientProtocol
 	MSG_MERGE_ITEM_REQ					= 402;	// 合并道具( 把2个堆叠物品合并成一个 )
 	MSG_USE_ITEM_REQ					= 403;	// 使用道具
 	MSG_MOVE_ITEM_REQ					= 404;	// 移动物品(从背包到仓库 或者从仓库到背包)
+	MSG_EXCHANGE_ITEM_REQ				= 405;	// 交换物品(从背包到仓库 或者从仓库到背包)
 	
 
 	// mail
@@ -306,6 +307,16 @@ message MsgMoveItemReq
 	uint64 sourceuuid = 2;	// 道具uuid
 	bytes targetname = 3;	// 目标背包名字
 	uint32 targetindex = 4;	// 目标背包位置( 0 表示服务器自己找空位置 )
+}
+
+// MSG_EXCHANGE_ITEM_REQ
+// 交换物品(从背包到仓库 或者从仓库到背包)
+message MsgExchangeItemReq
+{
+	bytes sourcename = 1;	// 源背包名字
+	uint64 sourceuuid = 2;	// 道具uuid
+	bytes targetname = 3;	// 目标背包名字
+	uint64 targetuuid = 4;	// 目标uuid
 }
 ////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////

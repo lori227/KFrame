@@ -60,7 +60,6 @@ if not exist %localpath%\%subpath% ( mkdir %localpath%\%subpath% )
 xcopy /y /S %framepath%\%subpath%\* %localpath%\%subpath%\
 
 copy /y %framepath%\.gitignore  %localpath%\
-copy /y %framepath%\_update_frame.bat  %localpath%\
 copy /y %framepath%\CMakeLists.txt  %localpath%\
 copy /y %framepath%\Frame.sln  %localpath%\
 copy /y %framepath%\LICENSE  %localpath%\
