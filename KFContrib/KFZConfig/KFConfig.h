@@ -36,11 +36,11 @@ namespace KFrame
         // 加载配置
         void LoadConfig( const std::string& file, uint32 loadmask )
         {
-            CheckClearSetting( loadmask );
-
             KFXml kfxml( file );
             auto config = kfxml.RootNode();
             _version = config.GetString( "version" );
+
+            CheckClearSetting( loadmask );
 
             auto xmlnode = config.FindNode( "item" );
             while ( xmlnode.IsValid() )
@@ -99,11 +99,11 @@ namespace KFrame
         // 加载配置
         void LoadConfig( const std::string& file, uint32 loadmask )
         {
-            CheckClearSetting( loadmask );
-
             KFXml kfxml( file );
             auto config = kfxml.RootNode();
             _version = config.GetString( "version" );
+
+            CheckClearSetting( loadmask );
 
             auto xmlnode = config.FindNode( "item" );
             while ( xmlnode.IsValid() )

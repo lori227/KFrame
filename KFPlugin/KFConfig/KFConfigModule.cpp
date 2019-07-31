@@ -77,20 +77,19 @@ namespace KFrame
                 continue;
             }
 
+            // 判断是否指定文件
             if ( file != _globbing_str )
             {
                 auto configfile = kfsetting->IsFile( file );
-                if ( !configfile.empty() )
+                if ( configfile.empty() )
                 {
-                    LoadConfigFile( kfconfig, configfile, kfsetting->_load_mask );
+                    continue;
                 }
             }
-            else
+
+            for ( auto& file : kfsetting->_file_list )
             {
-                for ( auto& file : kfsetting->_file_list )
-                {
-                    LoadConfigFile( kfconfig, file, kfsetting->_load_mask );
-                }
+                LoadConfigFile( kfconfig, file, kfsetting->_load_mask );
             }
         }
 

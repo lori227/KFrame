@@ -80,6 +80,11 @@ namespace KFrame
         return _kf_version->CheckCompatibility( version );
     }
 
+    uint32 KFGlobal::Rand()
+    {
+        return _kf_rand->Rand32();
+    }
+
     uint32 KFGlobal::RandRatio( uint32 ratio )
     {
         auto value = _kf_rand->Rand32();

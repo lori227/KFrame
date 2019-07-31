@@ -38,11 +38,11 @@ namespace KFrame
         _public_redis->Update( values, "hmset {}:{}", __KF_STRING__( public ), playerid );
 
         auto status = KFUtility::ToValue< uint32 >( values[ __KF_STRING__( status ) ] );
-        if ( status == KFMsg::OnlineState )
+        if ( status == KFMsg::FrameOnlineStatus )
         {
             _public_redis->Execute( "sadd {}:{} {}", __KF_STRING__( onlinelist ), __ROUTE_SERVER_ID__, playerid );
         }
-        else if ( status == KFMsg::OfflineState )
+        else if ( status == KFMsg::FrameOfflineStatus )
         {
             _public_redis->Execute( "srem {}:{} {}", __KF_STRING__( onlinelist ), __ROUTE_SERVER_ID__, playerid );
         }
@@ -65,7 +65,7 @@ namespace KFrame
             {
                 _public_redis->Execute( "hmset {}:{} {} {} {} {}", __KF_STRING__( public ), id,
                                         __KF_STRING__( serverid ), 0,
-                                        __KF_STRING__( status ), KFMsg::OfflineState );
+                                        __KF_STRING__( status ), KFMsg::FrameOnlineStatus );
             }
 
         }

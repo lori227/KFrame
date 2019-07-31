@@ -277,11 +277,12 @@ elif args['type'] == 3:
         gcm_http.do_post(global_conf['web_api'], release_version_name)
 
         # get md5
-        md5output = args['md5']
-        if len(md5output) == 0:
+        if (args['md5'] is not None):
+            md5output = args['md5']
+        else:
             (status, output) = commands.getstatusoutput('md5sum %s' % release_version_name)
             md5output = output[0: output.find(' ')]
-
+            
         # insert into db
         db_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         sql = "INSERT INTO resource (resource_time, resource_name, resource_url, resource_md5) VALUES ('%s', '%s', '%s', '%s') on duplicate key update resource_time='%s', resource_md5='%s';" % (db_time, release_version_name,  global_conf['web_url'] + release_version_name, md5output, db_time, md5output)

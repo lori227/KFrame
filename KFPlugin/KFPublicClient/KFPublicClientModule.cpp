@@ -93,7 +93,7 @@ namespace KFrame
 
         MapString values;
         values[ __KF_STRING__( id ) ] = __TO_STRING__( player->GetKeyID() );
-        values[ __KF_STRING__( status ) ] = __TO_STRING__( KFMsg::OnlineState );
+        values[ __KF_STRING__( status ) ] = __TO_STRING__( KFMsg::FrameOnlineStatus );
         values[ __KF_STRING__( statustime ) ] = __TO_STRING__( kfglobal->_real_time );
         values[ __KF_STRING__( serverid ) ] = __TO_STRING__( kfglobal->_app_id->GetId() );
         UpdatePublicData( player, values );
@@ -103,7 +103,7 @@ namespace KFrame
     {
         MapString values;
         values[ __KF_STRING__( serverid ) ] = "0";
-        values[ __KF_STRING__( status ) ] = __TO_STRING__( KFMsg::OfflineState );
+        values[ __KF_STRING__( status ) ] = __TO_STRING__( KFMsg::FrameOfflineStatus );
         values[ __KF_STRING__( statustime ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time );
         UpdatePublicData( player, values );
     }

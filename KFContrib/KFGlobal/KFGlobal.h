@@ -33,6 +33,7 @@ namespace KFrame
         const std::string& GetVersion();
 
         // 随机数
+        uint32 Rand();
         uint32 RandRatio( uint32 ratio );
 
         // 范围内随机

@@ -390,7 +390,7 @@ namespace KFrame
 
 #define  __REGISTER_CHECK_ADD_ELEMENT__( dataname, function )\
     _kf_component->RegisterCheckAddElementFunction( dataname, this, function )
-#define  __UN_CHECK_ADD_ELEMENT__( dataname, function )\
+#define  __UN_CHECK_ADD_ELEMENT__( dataname )\
     _kf_component->UnRegisterCheckAddElementFunction( dataname  )
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////

@@ -215,30 +215,27 @@ inline bool RankEnum_Parse(
   return ::google::protobuf::internal::ParseNamedEnum<RankEnum>(
     RankEnum_descriptor(), name, value);
 }
-enum StateEnum {
-  UnknowState = 0,
-  OnlineState = 1,
-  GroupState = 2,
-  MatchState = 3,
-  PlayingState = 4,
-  OfflineState = 5,
-  StateEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
-  StateEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+enum PlayerStatusEnum {
+  UnknowFrameStatus = 0,
+  FrameOnlineStatus = 1,
+  FrameOfflineStatus = 2,
+  PlayerStatusEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  PlayerStatusEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
-LIBPROTOC_EXPORT bool StateEnum_IsValid(int value);
-const StateEnum StateEnum_MIN = UnknowState;
-const StateEnum StateEnum_MAX = OfflineState;
-const int StateEnum_ARRAYSIZE = StateEnum_MAX + 1;
+LIBPROTOC_EXPORT bool PlayerStatusEnum_IsValid(int value);
+const PlayerStatusEnum PlayerStatusEnum_MIN = UnknowFrameStatus;
+const PlayerStatusEnum PlayerStatusEnum_MAX = FrameOfflineStatus;
+const int PlayerStatusEnum_ARRAYSIZE = PlayerStatusEnum_MAX + 1;
 
-LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* StateEnum_descriptor();
-inline const ::std::string& StateEnum_Name(StateEnum value) {
+LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* PlayerStatusEnum_descriptor();
+inline const ::std::string& PlayerStatusEnum_Name(PlayerStatusEnum value) {
   return ::google::protobuf::internal::NameOfEnum(
-    StateEnum_descriptor(), value);
+    PlayerStatusEnum_descriptor(), value);
 }
-inline bool StateEnum_Parse(
-    const ::std::string& name, StateEnum* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<StateEnum>(
-    StateEnum_descriptor(), name, value);
+inline bool PlayerStatusEnum_Parse(
+    const ::std::string& name, PlayerStatusEnum* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<PlayerStatusEnum>(
+    PlayerStatusEnum_descriptor(), name, value);
 }
 enum InviteEnum {
   UnknowInvite = 0,
@@ -322,10 +319,10 @@ template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::RankEnum>() {
   return ::KFMsg::RankEnum_descriptor();
 }
-template <> struct is_proto_enum< ::KFMsg::StateEnum> : ::std::true_type {};
+template <> struct is_proto_enum< ::KFMsg::PlayerStatusEnum> : ::std::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::StateEnum>() {
-  return ::KFMsg::StateEnum_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::PlayerStatusEnum>() {
+  return ::KFMsg::PlayerStatusEnum_descriptor();
 }
 template <> struct is_proto_enum< ::KFMsg::InviteEnum> : ::std::true_type {};
 template <>

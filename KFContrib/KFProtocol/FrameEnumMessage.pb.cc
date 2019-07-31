@@ -72,15 +72,14 @@ void AddDescriptorsImpl() {
       "ttle\020\007*:\n\010MailEnum\022\016\n\nUnknowMail\020\000\022\016\n\nGl"
       "obalMail\020\001\022\016\n\nPersonMail\020\002*7\n\010RankEnum\022\016"
       "\n\nUnknowRank\020\000\022\r\n\tTotalRank\020\001\022\014\n\010ZoneRan"
-      "k\020\002*q\n\tStateEnum\022\017\n\013UnknowState\020\000\022\017\n\013Onl"
-      "ineState\020\001\022\016\n\nGroupState\020\002\022\016\n\nMatchState"
-      "\020\003\022\020\n\014PlayingState\020\004\022\020\n\014OfflineState\020\005*U"
-      "\n\nInviteEnum\022\020\n\014UnknowInvite\020\000\022\013\n\007Consen"
-      "t\020\001\022\n\n\006Refuse\020\002\022\n\n\006Delete\020\003\022\020\n\014RefuseMin"
-      "ute\020\004b\006proto3"
+      "k\020\002*X\n\020PlayerStatusEnum\022\025\n\021UnknowFrameSt"
+      "atus\020\000\022\025\n\021FrameOnlineStatus\020\001\022\026\n\022FrameOf"
+      "flineStatus\020\002*U\n\nInviteEnum\022\020\n\014UnknowInv"
+      "ite\020\000\022\013\n\007Consent\020\001\022\n\n\006Refuse\020\002\022\n\n\006Delete"
+      "\020\003\022\020\n\014RefuseMinute\020\004b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 773);
+      descriptor, 748);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "FrameEnumMessage.proto", &protobuf_RegisterTypes);
 }
@@ -210,18 +209,15 @@ bool RankEnum_IsValid(int value) {
   }
 }
 
-const ::google::protobuf::EnumDescriptor* StateEnum_descriptor() {
+const ::google::protobuf::EnumDescriptor* PlayerStatusEnum_descriptor() {
   protobuf_FrameEnumMessage_2eproto::protobuf_AssignDescriptorsOnce();
   return protobuf_FrameEnumMessage_2eproto::file_level_enum_descriptors[7];
 }
-bool StateEnum_IsValid(int value) {
+bool PlayerStatusEnum_IsValid(int value) {
   switch (value) {
     case 0:
     case 1:
     case 2:
-    case 3:
-    case 4:
-    case 5:
       return true;
     default:
       return false;

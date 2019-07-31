@@ -117,7 +117,7 @@ namespace KFrame
 
             // 通知对方,我下线了
             MapString values;
-            values[ __KF_STRING__( status ) ] = __TO_STRING__( KFMsg::OfflineState );
+            values[ __KF_STRING__( status ) ] = __TO_STRING__( KFMsg::FrameOfflineStatus );
             values[ __KF_STRING__( statustime ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time );
             SendUpdateToRelation( player, kfsetting->_id, values );
         }
@@ -249,7 +249,7 @@ namespace KFrame
             // 通知关系,我上线了
 
             MapString values;
-            values[ __KF_STRING__( status ) ] = __TO_STRING__( KFMsg::OnlineState );
+            values[ __KF_STRING__( status ) ] = __TO_STRING__( KFMsg::FrameOnlineStatus );
             values[ __KF_STRING__( statustime ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time );
             values[ __KF_STRING__( serverid ) ] = __TO_STRING__( KFGlobal::Instance()->_app_id->GetId() );
             SendUpdateToRelation( player, kfmsg.dataname(), values );
