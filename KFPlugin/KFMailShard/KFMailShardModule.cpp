@@ -28,7 +28,7 @@ namespace KFrame
         __UN_MESSAGE__( KFMsg::S2S_NEW_PLAYER_MAIL_REQ );
     }
 
-    void KFMailShardModule::OnceRun()
+    void KFMailShardModule::PrepareRun()
     {
         // 初始化redis
         _mail_driver = _kf_redis->Create( __KF_STRING__( mail ) );

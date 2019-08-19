@@ -85,6 +85,7 @@ namespace KFrame
             }
 
             __KF_DELETE__( KFTimerData, iter->second );
+            _timer_list.erase( iter );
             return true;
         }
 

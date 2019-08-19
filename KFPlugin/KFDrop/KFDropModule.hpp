@@ -13,7 +13,6 @@
 #include "KFConfig/KFConfigInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFKernel/KFKernelInterface.h"
-#include "KFDropConfig.hpp"
 
 namespace KFrame
 {
@@ -27,24 +26,24 @@ namespace KFrame
         virtual void InitModule();
 
         ////////////////////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////////////
         // 掉落( 直接添加属性 )
-        virtual DropDataList& Drop( KFEntity* player, uint32 dropid, uint32 count, bool showclient, const char* function, uint32 line );
+        virtual DropDataList& DropElement( KFEntity* player, uint32 dropid, uint32 count, bool showclient, const char* function, uint32 line );
+
+        // 掉落逻辑
+        virtual DropDataList& DropLogic( KFEntity* player, uint32 dropid, uint32 count, const char* function, uint32 line );
     protected:
         // 掉落
-        void Drop( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist, const char* function, uint32 line );
+        void Drop( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist );
+        void Drop( KFEntity* player, uint32 dropid, uint32 count, DropDataList& outlist, const char* function, uint32 line );
 
-        // 随机掉落
-        void DropDataByRand( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist, const char* function, uint32 line );
+        // 更新掉落次数
+        void AddDropVarCount( KFEntity* player, const KFDropSetting* kfsetting );
 
-        // 权重掉落
-        void DropDataByWeight( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist, const char* function, uint32 line );
-
-        // 判断掉落次数
-        bool CheckDropVarCount( KFEntity* player, const KFDropSetting* kfsetting );
-
-        // 更新掉落词素
+        // 更新掉落次数
         void ResetDropVarCount( KFEntity* player, const KFDropSetting* kfsetting );
+
+        // 添加掉落返回数据
+        void AddDropData( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist, const KFDropWeight* kfdropweight, const char* function, uint32 line );
     };
 }
 

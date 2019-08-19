@@ -20,6 +20,8 @@ namespace KFrame
         // 加载完配置
         virtual void LoadComplete() {}
 
+        // 所有配置加载完
+        virtual void LoadAllComplete() {}
     public:
         // 默认配置文件名
         std::string _file_name;

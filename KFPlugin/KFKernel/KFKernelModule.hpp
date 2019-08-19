@@ -12,10 +12,9 @@
 #include "KFrame.h"
 #include "KFKernelInterface.h"
 #include "KFComponentEx.hpp"
-#include "KFZConfig/KFDataConfig.hpp"
 #include "KFTimer/KFTimerInterface.h"
-#include "KFOption/KFOptionInterface.h"
 #include "KFConfig/KFConfigInterface.h"
+#include "KFZConfig/KFDataConfig.hpp"
 
 namespace KFrame
 {
@@ -26,7 +25,6 @@ namespace KFrame
         ~KFKernelModule();
 
         virtual void InitModule();
-        virtual void BeforeRun();
         virtual void Run();
         virtual void AfterRun();
         /////////////////////////////////////////////////////////////////////////////////////////////
@@ -55,12 +53,24 @@ namespace KFrame
         virtual KFMsg::PBObject* SerializeToClient( KFData* kfdata );
         virtual KFMsg::PBObject* SerializeToData( KFData* kfdata );
         virtual KFMsg::PBObject* SerializeToView( KFData* kfdata );
+        /////////////////////////////////////////////////////////////////////////////////////////////
+        // 判断属性条件
+        virtual bool CheckCondition( KFEntity* kfentity, const KFConditions* kfconditions );
     public:
         // 初始化
         void CopyFromObject( KFData* kfdata, const KFMsg::PBObject* proto );
 
         // 保存
         void SaveToObject( KFData* kfdata, KFMsg::PBObject* proto, uint32 datamask );
+
+        // 判断属性条件
+        bool CheckCondition( KFData* kfdata, const KFCondition* kfcondition );
+
+        // 计算条件表达式
+        uint32 CalcExpression( KFData* kfdata, const KFExpression* kfexpression );
+
+        // 计算属性值
+        uint32 CalcConditionData( KFData* kfdata, const KFConditionData* kfconditiondata );
 
     private:
         // kernel

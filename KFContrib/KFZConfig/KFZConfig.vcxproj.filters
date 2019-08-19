@@ -39,6 +39,15 @@
     <ClInclude Include="KFItemSetting.hpp">
       <Filter>Item</Filter>
     </ClInclude>
+    <ClInclude Include="KFElementConfig.hpp">
+      <Filter>Kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="KFElementSetting.h">
+      <Filter>Kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="KFDropSetting.h">
+      <Filter>Drop</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Kernel">
@@ -58,6 +67,9 @@
     </Filter>
     <Filter Include="Item">
       <UniqueIdentifier>{99374550-72bf-42e5-80a5-64b311494e95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Drop">
+      <UniqueIdentifier>{14a0a98f-2c03-47b0-bc05-b5bf95597b33}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -81,6 +93,9 @@
     </ClCompile>
     <ClCompile Include="KFItemSetting.cpp">
       <Filter>Item</Filter>
+    </ClCompile>
+    <ClCompile Include="KFElementConfig.cpp">
+      <Filter>Kernel</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

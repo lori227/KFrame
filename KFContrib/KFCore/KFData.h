@@ -44,10 +44,13 @@ namespace KFrame
         virtual void Reset();
 
         // 是否有效
-        virtual bool IsValid() = 0;
+        virtual bool IsValid();
 
         // 数量
         virtual uint32 Size();
+
+        // 最大数量
+        virtual uint32 MaxSize();
 
         // 是否达到了最大值
         virtual bool IsFull();

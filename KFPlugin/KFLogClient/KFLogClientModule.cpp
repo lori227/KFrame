@@ -14,7 +14,7 @@ namespace KFrame
         KFLogger::Instance()->UnRegisterLogFunction( this );
     }
 
-    void KFLogClientModule::OnceRun()
+    void KFLogClientModule::PrepareRun()
     {
         auto url = _kf_ip_address->GetLogUrl() + __KF_STRING__( address );
 

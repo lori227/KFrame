@@ -21,7 +21,7 @@ namespace KFrame
         __UN_MESSAGE__( KFMsg::S2S_TELL_UNREGISTER_FROM_SERVER );
     }
 
-    void KFBusModule::OnceRun()
+    void KFBusModule::PrepareRun()
     {
         // 如果是master, 不执行
         auto kfglogal = KFGlobal::Instance();

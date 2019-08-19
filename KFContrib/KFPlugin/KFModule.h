@@ -24,11 +24,10 @@ namespace KFrame
 
         // 加载配置
         virtual void LoadConfig() {}
-        virtual void AfterLoad() {}
 
         // 执行
         virtual void BeforeRun() {}
-        virtual void OnceRun() {}
+        virtual void PrepareRun() {}
         virtual void Run() {}
         virtual void AfterRun() {}
 

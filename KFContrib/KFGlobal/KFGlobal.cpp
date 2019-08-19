@@ -95,7 +95,7 @@ namespace KFrame
     {
         if ( max <= min )
         {
-            return base;
+            return min;
         }
 
         uint32 index = _kf_rand->Rand32() % ( max - min + base );

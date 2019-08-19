@@ -19,7 +19,7 @@ namespace KFrame
         __UN_MESSAGE__( KFMsg::S2S_ROUTE_MESSAGE_TO_CLIENT_ACK );
     }
 
-    void KFRouteClientModule::OnceRun()
+    void KFRouteClientModule::PrepareRun()
     {
         // 注册服务
         RegisterService();

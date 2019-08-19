@@ -47,7 +47,7 @@ namespace KFrame
         __UN_HTTP__( __KF_STRING__( kickonline ) );
     }
 
-    void KFWorldModule::OnceRun()
+    void KFWorldModule::PrepareRun()
     {
         _auth_redis = _kf_redis->Create( __KF_STRING__( auth ) );
     }

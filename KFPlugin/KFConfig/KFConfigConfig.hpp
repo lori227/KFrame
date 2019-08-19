@@ -5,18 +5,25 @@
 
 namespace KFrame
 {
+    class KFConfigData
+    {
+    public:
+        // 配置文件名
+        std::string _file_name;
+
+        // 加载标记
+        uint32 _load_mask = 0u;
+    };
+
     class KFConfigSetting : public KFStrSetting
     {
     public:
         // 是否是配置文件
-        const std::string& IsFile( const std::string& file ) const;
+        const KFConfigData* IsFile( const std::string& file ) const;
 
     public:
-        // 加载标记
-        uint32 _load_mask = 0u;
-
         // 配置文件列表
-        std::vector< std::string > _file_list;
+        std::vector< KFConfigData > _config_data_list;
     };
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////

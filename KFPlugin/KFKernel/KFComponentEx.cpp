@@ -240,12 +240,20 @@ namespace KFrame
         }
 
         auto datasetting = _data_setting->_class_setting->FindSetting( dataname );
-        if ( datasetting == nullptr || datasetting->_class_setting == nullptr )
+        if ( datasetting != nullptr && datasetting->_class_setting != nullptr )
         {
-            return dataname;
+            return datasetting->_class_setting->_id;
         }
 
-        return datasetting->_class_setting->_id;
+        // 遍历属性列表
+        datasetting = _data_setting->_class_setting->TraversalSetting( dataname );
+        if ( datasetting != nullptr && datasetting->_class_setting != nullptr )
+        {
+            return datasetting->_class_setting->_id;
+        }
+
+        __LOG_ERROR__( "can't find datasetting=[{}]!", dataname );
+        return dataname;
     }
 
     const std::string& KFComponentEx::GetBindDataName( const KFDataSetting* datasetting )
@@ -261,25 +269,25 @@ namespace KFrame
     void KFComponentEx::SetLogicValue( const std::string& dataname, uint32 value )
     {
         auto kfsetting = FindDataSetting( dataname );
-        _kf_option->AddOption( kfsetting->_str_logic_value, value );
+        const_cast< KFDataSetting* >( kfsetting )->_int_logic_value = value;
     }
 
     void KFComponentEx::SetLogicValue( const std::string& parentname, const std::string& dataname, uint32 value )
     {
         auto kfsetting = FindDataSetting( parentname, dataname );
-        _kf_option->AddOption( kfsetting->_str_logic_value, value );
+        const_cast< KFDataSetting* >( kfsetting )->_int_logic_value = value;
     }
 
     void KFComponentEx::SetMaxValue( const std::string& dataname, uint32 value )
     {
         auto kfsetting = FindDataSetting( dataname );
-        _kf_option->AddOption( kfsetting->_str_max_value, value );
+        const_cast< KFDataSetting* >( kfsetting )->_int_max_value = value;
     }
 
     void KFComponentEx::SetMaxValue( const std::string& parentname, const std::string& dataname, uint32 value )
     {
         auto kfsetting = FindDataSetting( parentname, dataname );
-        _kf_option->AddOption( kfsetting->_str_max_value, value );
+        const_cast<KFDataSetting*>( kfsetting )->_int_max_value = value;
     }
     ////////////////////////////////////////////////////////////////////////////////////////
     void KFComponentEx::BindCheckAddElementFunction( const std::string& dataname, KFCheckAddElementFunction& function )
@@ -571,6 +579,16 @@ namespace KFrame
         {
             // 注册的函数
             auto bindname = GetBindDataName( kfdata->GetParent()->_data_setting );
+
+            if ( kfdata->GetParent()->_data_setting->_type == KFDataDefine::Type_Array )
+            {
+                auto kfparent = kfdata->GetParent()->GetParent();
+                if ( kfparent != nullptr )
+                {
+                    bindname = GetBindDataName( kfparent->_data_setting );
+                }
+            }
+
             auto findkey = DataKeyType( bindname, kfdata->_data_setting->_name );
             auto kfdatafunction = _update_data_function.Find( findkey );
             if ( kfdatafunction != nullptr )

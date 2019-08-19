@@ -27,7 +27,6 @@ namespace KFrame
 
         // 加载配置
         virtual void LoadConfig();
-        virtual void AfterLoad();
 
         // 关闭
         virtual void BeforeShut();
@@ -36,7 +35,7 @@ namespace KFrame
 
         // 执行
         virtual void BeforeRun();
-        virtual void OnceRun();
+        virtual void PrepareRun();
 
         //////////////////////////////////////////////////////////////
         // 重新加载

@@ -19,7 +19,7 @@ namespace KFrame
         __UN_MESSAGE__( KFMsg::S2S_SET_PLAYERNAME_TO_DATA_REQ );
     }
 
-    void KFPublicShardModule::OnceRun()
+    void KFPublicShardModule::PrepareRun()
     {
         // 初始化redis
         _public_redis = _kf_redis->Create( __KF_STRING__( public ) );

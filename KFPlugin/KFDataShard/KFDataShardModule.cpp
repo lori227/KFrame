@@ -26,7 +26,7 @@ namespace KFrame
         __UN_MESSAGE__( KFMsg::S2S_QUERY_PLAYER_TO_DATA_REQ );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFDataShardModule::OnceRun()
+    void KFDataShardModule::PrepareRun()
     {
         for ( auto& iter : KFDataShardConfig::Instance()->_settings._objects )
         {

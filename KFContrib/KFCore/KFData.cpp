@@ -13,10 +13,20 @@ namespace KFrame
         return _parent;
     }
 
+    bool KFData::IsValid()
+    {
+        return true;
+    }
+
     // 数量
     uint32 KFData::Size()
     {
         return 1;
+    }
+
+    uint32 KFData::MaxSize()
+    {
+        return _data_setting->_int_max_value;
     }
 
     uint64 KFData::GetKeyID()

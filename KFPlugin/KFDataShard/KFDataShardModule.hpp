@@ -30,7 +30,7 @@ namespace KFrame
         // 初始化
         virtual void InitModule();
         virtual void BeforeRun();
-        virtual void OnceRun();
+        virtual void PrepareRun();
 
         // 逻辑
         virtual void Run();

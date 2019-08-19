@@ -237,13 +237,12 @@ namespace KFrame
 
         // 加载配置
         void LoadConfig();
-        void AfterLoad();
 
         // 准备执行
         void BeforeRun();
 
         // 执行一次
-        void OnceRun();
+        void PrepareRun();
 
         ////////////////////////////////////////////////////////////////////
         // 执行命令

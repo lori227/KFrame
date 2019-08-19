@@ -1,4 +1,5 @@
 ﻿#include "KFDataConfig.hpp"
+#include "KFOptionConfig.hpp"
 
 namespace KFrame
 {
@@ -96,6 +97,76 @@ namespace KFrame
                 if ( !kfdatasetting->_contain_class.empty() )
                 {
                     kfdatasetting->_class_setting = FindSetting( kfdatasetting->_contain_class );
+                }
+            }
+        }
+    }
+
+
+    void KFDataConfig::LoadAllComplete()
+    {
+        for ( auto& iter : KFDataConfig::Instance()->_settings._objects )
+        {
+            auto kfclasssetting = iter.second;
+
+            for ( auto& siter : kfclasssetting->_static_data._objects )
+            {
+                auto kfdatasetting = siter.second;
+
+                // 初始值
+                if ( kfdatasetting->_str_init_value != _invalid_str )
+                {
+                    if ( KFUtility::IsNumber( kfdatasetting->_str_init_value ) )
+                    {
+                        kfdatasetting->_int_init_value = KFUtility::ToValue< uint32 >( kfdatasetting->_str_init_value );
+                    }
+                    else
+                    {
+                        auto kfoption = KFOptionConfig::Instance()->FindOption( kfdatasetting->_str_init_value, _invalid_str );
+                        kfdatasetting->_int_init_value = kfoption->_uint32_value;
+                    }
+                }
+
+                // 最小值
+                if ( kfdatasetting->_str_min_value != _invalid_str )
+                {
+                    if ( KFUtility::IsNumber( kfdatasetting->_str_min_value ) )
+                    {
+                        kfdatasetting->_int_min_value = KFUtility::ToValue< uint32 >( kfdatasetting->_str_min_value );
+                    }
+                    else
+                    {
+                        auto kfoption = KFOptionConfig::Instance()->FindOption( kfdatasetting->_str_min_value, _invalid_str );
+                        kfdatasetting->_int_min_value = kfoption->_uint32_value;
+                    }
+                }
+
+                // 最大值
+                if ( kfdatasetting->_str_max_value != _invalid_str )
+                {
+                    if ( KFUtility::IsNumber( kfdatasetting->_str_max_value ) )
+                    {
+                        kfdatasetting->_int_max_value = KFUtility::ToValue< uint32 >( kfdatasetting->_str_max_value );
+                    }
+                    else
+                    {
+                        auto kfoption = KFOptionConfig::Instance()->FindOption( kfdatasetting->_str_max_value, _invalid_str );
+                        kfdatasetting->_int_max_value = kfoption->_uint32_value;
+                    }
+                }
+
+                // 逻辑值
+                if ( kfdatasetting->_str_logic_value != _invalid_str )
+                {
+                    if ( KFUtility::IsNumber( kfdatasetting->_str_logic_value ) )
+                    {
+                        kfdatasetting->_int_logic_value = KFUtility::ToValue< uint32 >( kfdatasetting->_str_logic_value );
+                    }
+                    else
+                    {
+                        auto kfoption = KFOptionConfig::Instance()->FindOption( kfdatasetting->_str_logic_value, _invalid_str );
+                        kfdatasetting->_int_logic_value = kfoption->_uint32_value;
+                    }
                 }
             }
         }

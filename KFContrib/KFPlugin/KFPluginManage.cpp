@@ -107,15 +107,6 @@ namespace KFrame
         }
     }
 
-    void KFPluginManage::AfterLoad()
-    {
-
-        for ( auto kfplugin : _plugins )
-        {
-            kfplugin->AfterLoad();
-        }
-    }
-
     void KFPluginManage::BeforeRun()
     {
         for ( auto kfplugin : _plugins )
@@ -126,12 +117,12 @@ namespace KFrame
         }
     }
 
-    void KFPluginManage::OnceRun()
+    void KFPluginManage::PrepareRun()
     {
         for ( auto kfplugin : _plugins )
         {
             //__LOG_DEBUG__( "module=[{}] start!", kfplugin->_plugin_name );
-            kfplugin->OnceRun();
+            kfplugin->PrepareRun();
             //__LOG_DEBUG__( "module=[{}] ok!", kfplugin->_plugin_name );
         }
     }
@@ -151,13 +142,12 @@ namespace KFrame
 
             // 加载配置
             LoadConfig();
-            AfterLoad();
 
             // 准备运行
             BeforeRun();
 
             // 执行一次
-            OnceRun();
+            PrepareRun();
 
             return true;
         }

@@ -38,7 +38,7 @@ namespace KFrame
         __UN_MESSAGE__( KFMsg::S2S_DEPLOY_HEARTBEAT_TO_AGENT_REQ );
     }
 
-    void KFDeployAgentModule::OnceRun()
+    void KFDeployAgentModule::PrepareRun()
     {
         __MKDIR__( _pid_path );
         _deploy_driver = _kf_mysql->Create( __KF_STRING__( deploy ) );

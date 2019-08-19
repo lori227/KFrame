@@ -31,7 +31,7 @@ namespace KFrame
         __UN_MESSAGE__( KFMsg::S2S_UPDATE_FRIENDLINESS_TO_RELATION_REQ );
     }
 
-    void KFRelationShardModule::OnceRun()
+    void KFRelationShardModule::PrepareRun()
     {
         _public_redis = _kf_redis->Create( __KF_STRING__( public ) );
         _relation_redis_driver = _kf_redis->Create( __KF_STRING__( logic ) );

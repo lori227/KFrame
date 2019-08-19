@@ -34,7 +34,7 @@ namespace KFrame
         __UN_MESSAGE__( KFMsg::S2S_QUERY_FRIEND_RANK_LIST_REQ );
     }
 
-    void KFRankShardModule::OnceRun()
+    void KFRankShardModule::PrepareRun()
     {
         _rank_redis_driver = _kf_redis->Create( __KF_STRING__( logic ) );
     }

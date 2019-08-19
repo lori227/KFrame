@@ -44,7 +44,7 @@ namespace KFrame
         _kf_plugin_manage->UnRegisterCommandFunction( __KF_STRING__( robot ) );
     }
 
-    void KFRobotModule::OnceRun()
+    void KFRobotModule::PrepareRun()
     {
         _kf_state_manage->Initialize();
         __LOOP_TIMER_0__( KFRobotConfig::Instance()->_login_interval_time, 1000, &KFRobotModule::OnTimerCreateRobot );

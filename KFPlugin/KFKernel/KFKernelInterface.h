@@ -36,6 +36,8 @@ namespace KFrame
         virtual KFMsg::PBObject* SerializeToData( KFData* kfdata ) = 0;
         virtual KFMsg::PBObject* SerializeToView( KFData* kfdata ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////
+        // 判断属性条件
+        virtual bool CheckCondition( KFEntity* kfentity, const KFConditions* kfconditions ) = 0;
     };
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_INTERFACE__( _kf_kernel, KFKernelInterface );

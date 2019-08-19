@@ -32,10 +32,16 @@ namespace KFrame
                 continue;
             }
 
-            for ( auto& file : kfsetting->_file_list )
+            for ( auto& kfdata : kfsetting->_config_data_list )
             {
-                LoadConfigFile( kfconfig, file, kfsetting->_load_mask );
+                LoadConfigFile( kfconfig, kfdata._file_name, kfdata._load_mask );
             }
+        }
+
+        for ( auto& iter : _config_list )
+        {
+            auto kfconfig = iter.second;
+            kfconfig->LoadAllComplete();
         }
     }
 
@@ -72,7 +78,7 @@ namespace KFrame
         {
             auto kfconfig = iter.second;
             auto kfsetting = _kf_config_config->FindSetting( kfconfig->_file_name );
-            if ( kfsetting == nullptr || !KFUtility::HaveBitMask<uint32>( kfsetting->_load_mask, KFConfigEnum::CanReload ) )
+            if ( kfsetting == nullptr )
             {
                 continue;
             }
@@ -80,17 +86,26 @@ namespace KFrame
             // 判断是否指定文件
             if ( file != _globbing_str )
             {
-                auto configfile = kfsetting->IsFile( file );
-                if ( configfile.empty() )
+                auto configdata = kfsetting->IsFile( file );
+                if ( configdata == nullptr )
                 {
                     continue;
                 }
             }
 
-            for ( auto& file : kfsetting->_file_list )
+            for ( auto& kfdata : kfsetting->_config_data_list )
             {
-                LoadConfigFile( kfconfig, file, kfsetting->_load_mask );
+                if ( KFUtility::HaveBitMask<uint32>( kfdata._load_mask, KFConfigEnum::CanReload ) )
+                {
+                    LoadConfigFile( kfconfig, kfdata._file_name, kfdata._load_mask );
+                }
             }
+        }
+
+        for ( auto& iter : _config_list )
+        {
+            auto kfconfig = iter.second;
+            kfconfig->LoadAllComplete();
         }
 
         __LOG_INFO__( "reload [{}] ok!", file );

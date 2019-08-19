@@ -36,7 +36,7 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
-    void KFDeployServerModule::OnceRun()
+    void KFDeployServerModule::PrepareRun()
     {
         _mysql_driver = _kf_mysql->Create( __KF_STRING__( deploy ) );
     }

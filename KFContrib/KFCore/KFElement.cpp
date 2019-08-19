@@ -18,8 +18,8 @@ namespace KFrame
 
     void KFIntValue::SetValue( std::string value )
     {
-        _min_value = KFUtility::SplitValue<uint32>( value, FUNCTION_RANGE_STRING );
-        _max_value = KFUtility::SplitValue<uint32>( value, FUNCTION_RANGE_STRING );
+        _min_value = KFUtility::SplitValue<uint64>( value, FUNCTION_RANGE_STRING );
+        _max_value = KFUtility::SplitValue<uint64>( value, FUNCTION_RANGE_STRING );
         if ( _min_value >= _max_value )
         {
             _max_value = _min_value;
@@ -27,7 +27,7 @@ namespace KFrame
         }
     }
 
-    uint32 KFIntValue::CalcUseValue( const KFDataSetting* kfsetting, float multiple )
+    uint64 KFIntValue::CalcUseValue( const KFDataSetting* kfsetting, float multiple )
     {
         _data_setting = kfsetting;
         if ( _min_value >= _max_value )
@@ -36,18 +36,18 @@ namespace KFrame
         }
         else
         {
-            _use_value = KFGlobal::Instance()->RandRange( _min_value, _max_value, 1 );
+            _use_value = KFGlobal::Instance()->RandRange( ( uint32 )_min_value, ( uint32 )_max_value, 1 );
         }
 
         if ( multiple != 1.0f && _data_setting != nullptr && _data_setting->HaveMask( KFDataDefine::Mask_Multiple ) )
         {
-            _use_value = static_cast<uint32>( _use_value * multiple );
+            _use_value = static_cast< uint64 >( _use_value * multiple );
         }
 
         return _use_value;
     }
 
-    uint32 KFIntValue::CalcUseValue( const KFClassSetting* kfsetting, const std::string& dataname, float multiple )
+    uint64 KFIntValue::CalcUseValue( const KFClassSetting* kfsetting, const std::string& dataname, float multiple )
     {
         if ( _data_setting == nullptr )
         {
@@ -57,7 +57,7 @@ namespace KFrame
         return CalcUseValue( _data_setting, multiple );
     }
 
-    uint32 KFIntValue::GetUseValue()
+    uint64 KFIntValue::GetUseValue()
     {
         return _use_value;
     }
@@ -162,7 +162,7 @@ namespace KFrame
         _values.Insert( dataname, kfvalue );
     }
 
-    uint32 KFElementObject::GetValue( const KFClassSetting* kfsetting, const std::string& dataname, float multiple )
+    uint64 KFElementObject::GetValue( const KFClassSetting* kfsetting, const std::string& dataname, float multiple )
     {
         auto kfvalue = _values.Find( dataname );
         if ( kfvalue == nullptr || !kfvalue->IsType( KFDataDefine::Type_UInt32 ) )
@@ -363,7 +363,7 @@ namespace KFrame
             auto kfelementvalue = static_cast< KFElementValue* >( kfelement );
             if ( kfelementvalue->_value->IsType( KFDataDefine::Type_UInt32 ) )
             {
-                auto value = static_cast< uint32 >( kfelementvalue->_value->GetUseValue() * multiple );
+                auto value = static_cast< uint64 >( kfelementvalue->_value->GetUseValue() * multiple );
 
                 __JSON_OBJECT__( kfobject );
                 __JSON_SET_VALUE__( kfobject, kfelement->_data_name, __TO_STRING__( value ) );

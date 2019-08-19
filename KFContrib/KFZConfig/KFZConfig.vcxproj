@@ -14,6 +14,9 @@
     <ClInclude Include="KFConfig.h" />
     <ClInclude Include="KFDataConfig.hpp" />
     <ClInclude Include="KFDataSetting.h" />
+    <ClInclude Include="KFDropSetting.h" />
+    <ClInclude Include="KFElementConfig.hpp" />
+    <ClInclude Include="KFElementSetting.h" />
     <ClInclude Include="KFItemConfig.hpp" />
     <ClInclude Include="KFItemSetting.hpp" />
     <ClInclude Include="KFOptionConfig.hpp" />
@@ -28,6 +31,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KFDataConfig.cpp" />
+    <ClCompile Include="KFElementConfig.cpp" />
     <ClCompile Include="KFItemConfig.cpp" />
     <ClCompile Include="KFItemSetting.cpp" />
     <ClCompile Include="KFOptionConfig.cpp" />

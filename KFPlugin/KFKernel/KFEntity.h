@@ -2,6 +2,7 @@
 #define __KF_ENTITY_H__
 
 #include "KFCore/KFElement.h"
+#include "KFCore/KFCondition.h"
 
 namespace KFrame
 {
@@ -78,6 +79,7 @@ namespace KFrame
 
         // 更新某集合下key的某对象的kfdata属性值 如: 英雄id=1的level值
         virtual uint64 UpdateData( uint64 key, KFData* kfdata, uint32 operate, uint64 value ) = 0;
+        virtual uint64 UpdateData( uint64 key, KFData* kfdata, const std::string& dataname, uint32 operate, uint64 value ) = 0;
 
         // 更新kfdata 下的dataname属性值
         virtual void UpdateData( KFData* kfdata, const std::string& dataname, const std::string& value ) = 0;

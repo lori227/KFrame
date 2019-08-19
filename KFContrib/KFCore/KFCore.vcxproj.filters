@@ -1,34 +1,107 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="KFArray.cpp" />
-    <ClCompile Include="KFData.cpp" />
-    <ClCompile Include="KFDouble.cpp" />
-    <ClCompile Include="KFInt32.cpp" />
-    <ClCompile Include="KFInt64.cpp" />
-    <ClCompile Include="KFObject.cpp" />
-    <ClCompile Include="KFRecord.cpp" />
-    <ClCompile Include="KFString.cpp" />
-    <ClCompile Include="KFUInt32.cpp" />
-    <ClCompile Include="KFUInt64.cpp" />
-    <ClCompile Include="KFVector3D.cpp" />
-    <ClCompile Include="KFElement.cpp" />
+    <ClCompile Include="KFAnalysis.cpp">
+      <Filter>Condition</Filter>
+    </ClCompile>
+    <ClCompile Include="KFCondition.cpp">
+      <Filter>Condition</Filter>
+    </ClCompile>
+    <ClCompile Include="KFArray.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="KFData.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="KFDouble.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="KFInt32.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="KFInt64.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="KFObject.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="KFRecord.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="KFString.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="KFUInt32.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="KFUInt64.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="KFVector3D.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="KFElement.cpp">
+      <Filter>Element</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFArray.h" />
-    <ClInclude Include="KFData.h" />
-    <ClInclude Include="KFDouble.h" />
-    <ClInclude Include="KFInt32.h" />
-    <ClInclude Include="KFInt64.h" />
-    <ClInclude Include="KFObject.h" />
-    <ClInclude Include="KFRecord.h" />
-    <ClInclude Include="KFString.h" />
-    <ClInclude Include="KFUInt32.h" />
-    <ClInclude Include="KFUInt64.h" />
-    <ClInclude Include="KFVector3D.h" />
-    <ClInclude Include="KFElement.h" />
+    <ClInclude Include="KFAnalysis.hpp">
+      <Filter>Condition</Filter>
+    </ClInclude>
+    <ClInclude Include="KFCondition.h">
+      <Filter>Condition</Filter>
+    </ClInclude>
+    <ClInclude Include="KFArray.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="KFData.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="KFDouble.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="KFInt32.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="KFInt64.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="KFObject.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="KFRecord.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="KFString.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="KFUInt32.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="KFUInt64.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="KFVector3D.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="KFElement.h">
+      <Filter>Element</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="KFData.inl" />
+    <Filter Include="Condition">
+      <UniqueIdentifier>{b927eb4f-f1a4-47d1-8182-9043a9b06d66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data">
+      <UniqueIdentifier>{dad44332-201d-403b-b51e-35e45dd65121}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Element">
+      <UniqueIdentifier>{1ad53a1a-357d-4245-b7d8-a3d8de4c2139}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="KFData.inl">
+      <Filter>Data</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -79,6 +79,7 @@ namespace KFrame
 
         virtual uint64 UpdateData( KFData* kfdata, uint32 operate, uint64 value );
         virtual uint64 UpdateData( uint64 key, KFData* kfdata, uint32 operate, uint64 value );
+        virtual uint64 UpdateData( uint64 key, KFData* kfdata, const std::string& dataname, uint32 operate, uint64 value );
         virtual uint64 UpdateData( KFData* kfdata, uint64 index, uint32 operate, uint64 value );
         virtual uint64 UpdateData( uint64 key, KFData* kfdata, uint64 index, uint32 operate, uint64 value );
         virtual uint64 UpdateData( KFData* kfparent, const std::string& dataname, uint32 operate, uint64 value );

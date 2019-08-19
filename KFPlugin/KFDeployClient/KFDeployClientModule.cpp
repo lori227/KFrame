@@ -20,7 +20,7 @@ namespace KFrame
         __UN_MESSAGE__( KFMsg::S2S_DEPLOY_COMMAND_TO_CLIENT_REQ );
     }
 
-    void KFDeployClientModule::OnceRun()
+    void KFDeployClientModule::PrepareRun()
     {
         auto agentdata = KFGlobal::Instance()->_startup_params[ __KF_STRING__( agent ) ];
         if ( agentdata.empty() )

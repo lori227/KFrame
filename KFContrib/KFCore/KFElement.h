@@ -21,18 +21,18 @@ namespace KFrame
         }
 
         // 计算数值
-        virtual uint32 CalcUseValue( const KFDataSetting* kfsetting, float multiple )
+        virtual uint64 CalcUseValue( const KFDataSetting* kfsetting, float multiple )
         {
             return _invalid_int;
         }
 
-        virtual uint32 CalcUseValue( const KFClassSetting* kfsetting, const std::string& dataname, float multiple )
+        virtual uint64 CalcUseValue( const KFClassSetting* kfsetting, const std::string& dataname, float multiple )
         {
             return _invalid_int;
         }
 
         // 获得使用数值
-        virtual uint32 GetUseValue()
+        virtual uint64 GetUseValue()
         {
             return _invalid_int;
         }
@@ -64,16 +64,16 @@ namespace KFrame
         virtual void SetValue( std::string value );
 
         // 计算数值
-        virtual uint32 CalcUseValue( const KFDataSetting* kfsetting, float multiple );
-        virtual uint32 CalcUseValue( const KFClassSetting* kfsetting, const std::string& dataname, float multiple );
+        virtual uint64 CalcUseValue( const KFDataSetting* kfsetting, float multiple );
+        virtual uint64 CalcUseValue( const KFClassSetting* kfsetting, const std::string& dataname, float multiple );
 
         // 获得使用数值
-        virtual uint32 GetUseValue();
+        virtual uint64 GetUseValue();
 
     private:
-        uint32 _min_value = _invalid_int;
-        uint32 _max_value = _invalid_int;
-        uint32 _use_value = _invalid_int;
+        uint64 _min_value = _invalid_int;
+        uint64 _max_value = _invalid_int;
+        uint64 _use_value = _invalid_int;
     };
     //////////////////////////////////////////////////////////////////
     class KFStrValue : public KFValue
@@ -178,7 +178,7 @@ namespace KFrame
         void SetValue( const std::string& dataname, std::string value );
 
         // 获得数值
-        uint32 GetValue( const KFClassSetting* kfsetting, const std::string& dataname, float multiple );
+        uint64 GetValue( const KFClassSetting* kfsetting, const std::string& dataname, float multiple );
 
         // 格式化
         virtual const std::string& ToString() const;

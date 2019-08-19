@@ -2,6 +2,8 @@
 #include "KFEntityEx.hpp"
 #include "KFDataFactory.hpp"
 #include "KFProtocol/KFProtocol.h"
+#include "KFZConfig/KFElementConfig.hpp"
+#include "KFZConfig/KFOptionConfig.hpp"
 
 namespace KFrame
 {
@@ -24,6 +26,8 @@ namespace KFrame
     void KFKernelModule::InitModule()
     {
         __KF_ADD_CONFIG__( KFDataConfig );
+        __KF_ADD_CONFIG__( KFOptionConfig );
+        __KF_ADD_CONFIG__( KFElementConfig );
     }
 
     void KFKernelModule::Run()
@@ -42,70 +46,6 @@ namespace KFrame
         }
     }
 
-    void KFKernelModule::BeforeRun()
-    {
-        for ( auto& iter : KFDataConfig::Instance()->_settings._objects )
-        {
-            auto kfclasssetting = iter.second;
-
-            for ( auto& siter : kfclasssetting->_static_data._objects )
-            {
-                auto kfdatasetting = siter.second;
-
-                // 初始值
-                if ( kfdatasetting->_str_init_value != _invalid_str )
-                {
-                    if ( KFUtility::IsNumber( kfdatasetting->_str_init_value ) )
-                    {
-                        kfdatasetting->_int_init_value = KFUtility::ToValue< uint32 >( kfdatasetting->_str_init_value );
-                    }
-                    else
-                    {
-                        kfdatasetting->_int_init_value = _kf_option->GetUInt32( kfdatasetting->_str_init_value );
-                    }
-                }
-
-                // 最小值
-                if ( kfdatasetting->_str_min_value != _invalid_str )
-                {
-                    if ( KFUtility::IsNumber( kfdatasetting->_str_min_value ) )
-                    {
-                        kfdatasetting->_int_min_value = KFUtility::ToValue< uint32 >( kfdatasetting->_str_min_value );
-                    }
-                    else
-                    {
-                        kfdatasetting->_int_min_value = _kf_option->GetUInt32( kfdatasetting->_str_min_value );
-                    }
-                }
-
-                // 最大值
-                if ( kfdatasetting->_str_max_value != _invalid_str )
-                {
-                    if ( KFUtility::IsNumber( kfdatasetting->_str_max_value ) )
-                    {
-                        kfdatasetting->_int_max_value = KFUtility::ToValue< uint32 >( kfdatasetting->_str_max_value );
-                    }
-                    else
-                    {
-                        kfdatasetting->_int_max_value = _kf_option->GetUInt32( kfdatasetting->_str_max_value );
-                    }
-                }
-
-                // 逻辑值
-                if ( kfdatasetting->_str_logic_value != _invalid_str )
-                {
-                    if ( KFUtility::IsNumber( kfdatasetting->_str_logic_value ) )
-                    {
-                        kfdatasetting->_int_logic_value = KFUtility::ToValue< uint32 >( kfdatasetting->_str_logic_value );
-                    }
-                    else
-                    {
-                        kfdatasetting->_int_logic_value = _kf_option->GetUInt32( kfdatasetting->_str_logic_value );
-                    }
-                }
-            }
-        }
-    }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     static std::string _global_class = "Global";
@@ -350,5 +290,114 @@ case datatype:\
             }
             }
         }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    bool KFKernelModule::CheckCondition( KFEntity* kfentity, const KFConditions* kfconditions )
+    {
+        if ( !kfconditions->IsValid() )
+        {
+            return false;
+        }
+
+        if ( kfconditions->IsEmpty() )
+        {
+            return true;
+        }
+
+        auto kfobject = kfentity->GetData();
+        auto linkcount = kfconditions->_link_type.size();
+        auto conditioncount = kfconditions->_condition_list.size();
+
+        // 取出第一个
+        auto conditionindex = 0u;
+        auto result = CheckCondition( kfobject, kfconditions->_condition_list[ conditionindex++ ] );
+        for ( auto i = 0u; i < conditioncount && i < linkcount; ++i )
+        {
+            auto linktype = kfconditions->_link_type[ i ];
+            auto ok = CheckCondition( kfobject, kfconditions->_condition_list[ conditionindex + i ] );
+            switch ( linktype )
+            {
+            case KFEnum::And:
+                result &= ok;
+                break;
+            case KFEnum::ABit:
+                result |= ok;
+                break;
+            }
+        }
+
+        return result;
+    }
+
+    bool KFKernelModule::CheckCondition( KFData* kfdata, const KFCondition* kfcondition )
+    {
+        // 计算左值
+        auto leftvalue = CalcExpression( kfdata, kfcondition->_left );
+
+        // 计算右值
+        auto rightvalue = CalcExpression( kfdata, kfcondition->_right );
+
+        // 判断左有值
+        return KFUtility::CheckOperate( leftvalue, kfcondition->_check_type, rightvalue );
+    }
+
+    uint32 KFKernelModule::CalcExpression( KFData* kfdata, const KFExpression* kfexpression )
+    {
+        if ( kfexpression->_data_list.empty() )
+        {
+            return 0u;
+        }
+
+        auto datacount = kfexpression->_data_list.size();
+        auto operatorcount = kfexpression->_operator_list.size();
+
+        // 取出第一个
+        auto dataindex = 0u;
+        auto result = CalcConditionData( kfdata, kfexpression->_data_list[ dataindex++ ] );
+        for ( auto i = 0u; i < datacount && i < operatorcount; ++i )
+        {
+            auto operatortype = kfexpression->_operator_list[ i ];
+            auto value = CalcConditionData( kfdata, kfexpression->_data_list[ dataindex + i ] );
+            result = KFUtility::Operate( operatortype, result, value );
+        }
+
+        return result;
+    }
+
+    uint32 KFKernelModule::CalcConditionData( KFData* kfdata, const KFConditionData* kfconditiondata )
+    {
+        auto result = 0u;
+        if ( kfconditiondata->IsConstant() )
+        {
+            auto kfconstant = ( const KFConditionConstant* )kfconditiondata;
+            result = kfconstant->_value;
+        }
+        else if ( kfconditiondata->IsVariable() )
+        {
+            auto kfvariable = ( const KFConditionVariable* )kfconditiondata;
+            if ( !kfvariable->_parent_name.empty() )
+            {
+                result = kfdata->GetValue<uint32>( kfvariable->_parent_name, kfvariable->_data_name );
+            }
+            else if ( kfvariable->_data_id == 0u )
+            {
+                result = kfdata->GetValue<uint32>( kfvariable->_data_name );
+            }
+            else
+            {
+                if ( kfvariable->_data_name == __KF_STRING__( var ) )
+                {
+                    result = kfdata->GetValue<uint32>( kfvariable->_data_name, kfvariable->_data_id, __KF_STRING__( value ) );
+                }
+                else if ( kfvariable->_data_name == __KF_STRING__( item ) )
+                {
+
+                }
+            }
+        }
+
+        return result;
     }
 }

@@ -27,7 +27,7 @@ namespace KFrame
         __UN_MESSAGE__( KFMsg::S2S_TELL_SERVER_LIST_TO_MASTER );
     }
 
-    void KFTcpDiscoverModule::OnceRun()
+    void KFTcpDiscoverModule::PrepareRun()
     {
         auto kfglobal = KFGlobal::Instance();
 

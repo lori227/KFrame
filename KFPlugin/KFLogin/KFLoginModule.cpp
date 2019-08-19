@@ -35,7 +35,7 @@ namespace KFrame
         __UN_MESSAGE__( KFMsg::S2S_LOGIN_TO_LOGIN_ACK );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFLoginModule::OnceRun()
+    void KFLoginModule::PrepareRun()
     {
         _auth_redis = _kf_redis->Create( __KF_STRING__( auth ) );
     }

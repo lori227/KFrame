@@ -11,6 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="KFAnalysis.cpp" />
+    <ClCompile Include="KFCondition.cpp" />
     <ClCompile Include="KFElement.cpp" />
     <ClCompile Include="KFArray.cpp" />
     <ClCompile Include="KFData.cpp" />
@@ -25,6 +27,8 @@
     <ClCompile Include="KFVector3D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="KFAnalysis.hpp" />
+    <ClInclude Include="KFCondition.h" />
     <ClInclude Include="KFElement.h" />
     <ClInclude Include="KFArray.h" />
     <ClInclude Include="KFData.h" />

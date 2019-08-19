@@ -227,6 +227,17 @@ namespace KFrame
         return UpdateData( _invalid_int, kfdata, operate, value );
     }
 
+    uint64 KFEntityEx::UpdateData( uint64 key, KFData* kfdata, const std::string& dataname, uint32 operate, uint64 value )
+    {
+        auto kfchild = kfdata->FindData( dataname );
+        if ( kfchild == nullptr )
+        {
+            return 0u;
+        }
+
+        return UpdateData( key, kfchild, operate, value );
+    }
+
     uint64 KFEntityEx::UpdateData( uint64 key, KFData* kfdata, uint32 operate, uint64 value )
     {
         auto oldvalue = kfdata->GetValue< uint64 >();
@@ -249,12 +260,12 @@ namespace KFrame
             return 0u;
         }
 
-        return UpdateData( 0u, kfdata, index, operate, value );
+        return UpdateData( index, kfdata, index, operate, value );
     }
 
     uint64 KFEntityEx::UpdateData( KFData* kfdata, uint64 index, uint32 operate, uint64 value )
     {
-        return UpdateData( 0u, kfdata, index, operate, value );
+        return UpdateData( index, kfdata, index, operate, value );
     }
 
     uint64 KFEntityEx::UpdateData( uint64 key, KFData* kfdata, uint64 index, uint32 operate, uint64 value )

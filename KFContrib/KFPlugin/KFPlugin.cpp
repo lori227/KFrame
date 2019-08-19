@@ -23,11 +23,6 @@ namespace KFrame
         _kf_module->LoadConfig();
     }
 
-    void KFPlugin::AfterLoad()
-    {
-        _kf_module->AfterLoad();
-    }
-
     void KFPlugin::BeforeRun()
     {
         _kf_module->BeforeRun();
@@ -48,17 +43,16 @@ namespace KFrame
         _kf_module->AfterShut();
     }
 
-    void KFPlugin::OnceRun()
+    void KFPlugin::PrepareRun()
     {
-        _kf_module->OnceRun();
+        _kf_module->PrepareRun();
     }
 
     void KFPlugin::Reload()
     {
         _kf_module->InitModule();
-        _kf_module->AfterLoad();
         _kf_module->BeforeRun();
-        _kf_module->OnceRun();
+        _kf_module->PrepareRun();
         _kf_module->LoadData();
     }
 

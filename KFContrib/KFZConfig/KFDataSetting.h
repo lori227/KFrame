@@ -190,6 +190,31 @@ namespace KFrame
         {
             return _static_data.Find( name ) != nullptr;
         }
+
+        // 查找属性
+        inline const KFDataSetting* TraversalSetting( const std::string& name ) const
+        {
+            for ( auto& iter : _static_data._objects )
+            {
+                auto kfdatassetting = iter.second;
+                if ( kfdatassetting->_name == name )
+                {
+                    return kfdatassetting;
+                }
+
+                if ( kfdatassetting->_class_setting != nullptr )
+                {
+                    auto kfchildsetting = kfdatassetting->_class_setting->TraversalSetting( name );
+                    if ( kfchildsetting != nullptr )
+                    {
+                        return kfchildsetting;
+                    }
+                }
+            }
+
+            return nullptr;
+        }
+
     public:
         // 属性列表
         KFHashMap< std::string, const std::string&, KFDataSetting > _static_data;

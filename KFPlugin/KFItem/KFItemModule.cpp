@@ -53,7 +53,7 @@ namespace KFrame
         __UN_MESSAGE__( KFMsg::MSG_EXCHANGE_ITEM_REQ );
     }
 
-    void KFItemModule::OnceRun()
+    void KFItemModule::PrepareRun()
     {
         _item_data_list.clear();
         _item_data_list = _kf_component->GetDataList( __KF_STRING__( item ) );
@@ -867,7 +867,7 @@ namespace KFrame
 
         if ( kfsetting->_drop_id != 0u )
         {
-            _kf_drop->Drop( player, kfsetting->_drop_id, 1u, true, __FUNC_LINE__ );
+            _kf_drop->DropElement( player, kfsetting->_drop_id, 1u, true, __FUNC_LINE__ );
         }
 
         return true;

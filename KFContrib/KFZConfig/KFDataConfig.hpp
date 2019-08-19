@@ -17,6 +17,9 @@ namespace KFrame
         // 加载完成
         virtual void LoadComplete();
 
+        // 所有加载完成
+        virtual void LoadAllComplete();
+
         // 获得属性配置
         const KFDataSetting* FindDataSetting( const std::string& classname, const std::string& dataname );
     protected:

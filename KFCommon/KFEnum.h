@@ -12,6 +12,7 @@ namespace KFrame
 
             //////////////////////////////////////
             // 操作类型
+            Null = 0,
             Add = 1,		// +
             Dec = 2,		// -
             Set = 3,		// =
@@ -22,9 +23,11 @@ namespace KFrame
             Div = 8,		// /
 
 
-            Greater = 11,	// >=
-            Less = 12,		// =<
-            Equal = 13,		// ==
+            Greater = 11,		// >
+            Less = 12,			// <
+            Equal = 13,			// ==
+            GreaterEqual = 14,	// >=
+            LessEqual = 15,		// <=
             //////////////////////////////////////
             // 任务 成就系统
             UseOperate = 1,

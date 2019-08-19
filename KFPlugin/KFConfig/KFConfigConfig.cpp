@@ -6,36 +6,39 @@ namespace KFrame
     static std::map< std::string, uint32 > _mask_list =
     {
         {"Reload", KFConfigEnum::CanReload},
-        {"ClearData", KFConfigEnum::CanReload},
+        {"ClearData", KFConfigEnum::NeedClearData},
     };
 
     void KFConfigConfig::ReadSetting( KFNode& xmlnode, KFConfigSetting* kfsetting )
     {
         auto filename = xmlnode.GetString( "FileName" );
         auto configfile = KFUtility::FormatConfigFile( filename, KFGlobal::Instance()->_channel, KFGlobal::Instance()->_service );
-        kfsetting->_file_list.push_back( configfile );
 
+        KFConfigData data;
+        data._file_name = configfile;
         for ( auto& iter : _mask_list )
         {
             if ( xmlnode.GetString( iter.first.c_str(), true ) == "1" )
             {
-                KFUtility::AddBitMask< uint32 >( kfsetting->_load_mask, iter.second );
+                KFUtility::AddBitMask< uint32 >( data._load_mask, iter.second );
             }
         }
+
+        kfsetting->_config_data_list.push_back( data );
     }
 
-    const std::string& KFConfigSetting::IsFile( const std::string& file ) const
+    const KFConfigData* KFConfigSetting::IsFile( const std::string& file ) const
     {
-        for ( auto& filename : _file_list )
+        for ( auto& kfdata : _config_data_list )
         {
-            auto pos = filename.find( file );
+            auto pos = kfdata._file_name.find( file );
             if ( pos != std::string::npos )
             {
-                return filename;
+                return &kfdata;
             }
         }
 
-        return _invalid_str;
+        return nullptr;
     }
 
 }

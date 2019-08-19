@@ -66,23 +66,15 @@ namespace KFrame
         switch ( operate )
         {
         case KFEnum::Less:
-            if ( basevalue <= operatevalue )
-            {
-                return true;
-            }
-            break;
+            return ( basevalue < operatevalue );
         case KFEnum::Greater:
-            if ( basevalue >= operatevalue )
-            {
-                return true;
-            }
-            break;
+            return ( basevalue > operatevalue );
         case KFEnum::Equal:
-            if ( basevalue == operatevalue )
-            {
-                return true;
-            }
-            break;
+            return ( basevalue == operatevalue );
+        case KFEnum::LessEqual:
+            return ( basevalue <= operatevalue );
+        case KFEnum::GreaterEqual:
+            return ( basevalue >= operatevalue );
         default:
             break;
         }
