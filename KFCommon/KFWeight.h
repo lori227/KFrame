@@ -178,6 +178,20 @@ namespace KFrame
             return _rand_list;
         }
 
+        // 是否含有某项目
+        bool Have( uint32 id ) const
+        {
+            for ( auto data : _weight_data )
+            {
+                if ( data->_id == id )
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
     public:
         // 总权重
         uint32 _total_weight = 0u;
