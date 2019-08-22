@@ -9,8 +9,6 @@ namespace KFrame
     void function( const Route& route, const char* data, uint32 length )
 
     class KFFsm;
-    class KFData;
-    class KFEntity;
     class KFComponent;
     class KFNetClientEngine;
     class KFRobot

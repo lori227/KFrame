@@ -50,7 +50,8 @@ enum FrameClientProtocol
 	MSG_CLEAN_ITEM_REQ					= 406;	// 移动某个包裹
 	MSG_SORT_ITEM_REQ					= 407;	// 整理背包
 	MSG_REMOVE_ITEM_REQ					= 408;	// 删除道具
-
+	MSG_MOVE_ALL_ITEM_REQ				= 409;	// 移动所有道具
+	
 	// mail
 	MSG_VIEW_MAIL_REQ 					= 501;	// 查看邮件
 	MSG_DELETE_MAIL_REQ 				= 502;	// 删除邮件
@@ -326,6 +327,14 @@ message MsgExchangeItemReq
 message MsgCleanItemReq
 {
 	bytes sourcename = 1;	// 源背包名字
+}
+
+// 移动所有道具到包裹
+// MSG_MOVE_ALL_ITEM_REQ
+message MsgMoveAllItemReq
+{
+	bytes sourcename = 1;	// 源背包名字
+	bytes targetname = 2;	// 目标背包名字
 }
 
 // 整理背包

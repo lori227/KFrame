@@ -17,7 +17,6 @@
 
 namespace KFrame
 {
-    class KFEntity;
     class KFEnterModule : public KFEnterInterface
     {
     public:

@@ -1,16 +1,14 @@
-#ifndef __KF_DISPLAY_INTERFACE_H__
+ï»¿#ifndef __KF_DISPLAY_INTERFACE_H__
 #define __KF_DISPLAY_INTERFACE_H__
 
 #include "KFrame.h"
 
 namespace KFrame
 {
-    class KFData;
-    class KFEntity;
     class KFDisplayInterface : public KFModule
     {
     public:
-        // ·¢ËÍ½á¹ûÌáÊ¾µ½¿Í»§¶Ë
+        // å‘é€ç»“æœæç¤ºåˆ°å®¢æˆ·ç«¯
         // Gate/Proxy ==> Client
         template< class...Args >
         inline void SendToClient( uint64 playerid, uint32 result, Args&& ... args )
@@ -20,7 +18,7 @@ namespace KFrame
             SendToClient( playerid, result, params );
         }
 
-        // ·¢ËÍ½á¹ûÌáÊ¾µ½¿Í»§¶Ë
+        // å‘é€ç»“æœæç¤ºåˆ°å®¢æˆ·ç«¯
         // Game ==> Client
         template< class...Args >
         inline void SendToClient( KFEntity* player, uint32 result, Args&& ... args )
@@ -30,7 +28,7 @@ namespace KFrame
             SendToClient( player, result, params );
         }
 
-        // ·¢ËÍ½á¹ûÌáÊ¾µ½¿Í»§¶Ë
+        // å‘é€ç»“æœæç¤ºåˆ°å®¢æˆ·ç«¯
         // Route ==> Player
         template< class...Args >
         inline void SendToPlayer( uint64 serverid, uint64 playerid, uint32 result, Args&& ... args )
@@ -40,7 +38,7 @@ namespace KFrame
             SendToPlayer( serverid, playerid, result, params );
         }
 
-        // ·¢ËÍ½á¹ûÌáÊ¾µ½¿Í»§¶Ë
+        // å‘é€ç»“æœæç¤ºåˆ°å®¢æˆ·ç«¯
         // Route ==> Player
         template< class...Args >
         inline void SendToPlayer( const Route& route, uint32 result, Args&& ... args )
@@ -50,7 +48,7 @@ namespace KFrame
             SendToPlayer( route, result, params );
         }
 
-        // ·¢ËÍ½á¹ûÌáÊ¾µ½¿Í»§¶Ë
+        // å‘é€ç»“æœæç¤ºåˆ°å®¢æˆ·ç«¯
         // Game ==> Player
         template< class...Args >
         inline void SendToPlayer( KFData* kfbasic, uint32 result, Args&& ... args )
@@ -60,7 +58,7 @@ namespace KFrame
             SendToPlayer( kfbasic, result, params );
         }
 
-        // ·¢ËÍ½á¹ûÌáÊ¾µ½¿Í»§¶Ë
+        // å‘é€ç»“æœæç¤ºåˆ°å®¢æˆ·ç«¯
         // Game ==> Client
         template< class...Args >
         inline void SendToGroup( KFEntity* player, uint32 result, Args&& ... args )
@@ -71,7 +69,7 @@ namespace KFrame
         }
 
     protected:
-        // ¸ñÊ½»¯²ÎÊı
+        // æ ¼å¼åŒ–å‚æ•°
         inline void FormatParam( ListString& params ) {}
 
         template< class T, class...Args >

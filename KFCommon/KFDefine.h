@@ -22,6 +22,8 @@ namespace KFMsg
 
 namespace KFrame
 {
+    class KFData;
+    class KFEntity;
     ////////////////////////////////////////////////////////////////
     static const uint64 _invalid_int = 0u;
     static const std::string _invalid_str = "";

@@ -6,7 +6,6 @@
 
 namespace KFrame
 {
-    typedef std::function< void( uint32, KFEntity*, const std::string&, uint64 ) > KFAfterSetNameFunction;
     class KFPlayerInterface : public KFModule
     {
     public:

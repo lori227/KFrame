@@ -640,7 +640,6 @@ namespace KFrame
                 auto kffunction = iter.second;
                 kffunction->_function( kfentity, kfparent, key, kfdata );
             }
-
         }
 
         {

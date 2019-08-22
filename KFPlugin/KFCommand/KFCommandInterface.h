@@ -5,7 +5,6 @@
 
 namespace KFrame
 {
-    class KFEntity;
     typedef std::function< void( KFEntity*, const VectorString& ) > KFCommandFunction;
 
     class KFCommandInterface : public KFModule

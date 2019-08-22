@@ -56,7 +56,7 @@ namespace KFrame
     }
     int32 KFData::SetInt32( int32 value )
     {
-        return value;
+        return 0;
     }
 
     uint32 KFData::GetUInt32()
@@ -65,7 +65,7 @@ namespace KFrame
     }
     uint32 KFData::SetUInt32( uint32 value )
     {
-        return value;
+        return 0;
     }
 
     int64 KFData::GetInt64()
@@ -74,7 +74,7 @@ namespace KFrame
     }
     int64 KFData::SetInt64( int64 value )
     {
-        return value;
+        return 0;
     }
 
     uint64 KFData::GetUInt64()
@@ -83,7 +83,7 @@ namespace KFrame
     }
     uint64 KFData::SetUInt64( uint64 value )
     {
-        return value;
+        return 0;
     }
 
     double KFData::GetDouble()
@@ -92,7 +92,7 @@ namespace KFrame
     }
     double KFData::SetDouble( double value )
     {
-        return value;
+        return 0.0f;
     }
 
     const std::string& KFData::GetString()
@@ -101,7 +101,7 @@ namespace KFrame
     }
     const std::string& KFData::SetString( const std::string& value )
     {
-        return value;
+        return _invalid_str;
     }
 
     const Math3D::Vector3D& KFData::GetVector3D()
@@ -111,7 +111,7 @@ namespace KFrame
 
     const Math3D::Vector3D& KFData::SetVector3D( const Math3D::Vector3D& value )
     {
-        return value;
+        return Math3D::Vector3D::xAxis;
     }
 
     void KFData::ToMap( MapString& values )

@@ -111,9 +111,9 @@ namespace KFrame
     {
         data->SetKeyID( key );
         data->SetParent( this );
+        data->_data_setting = _data_setting;
 
         _data.Insert( key, data );
-
         return true;
     }
 

@@ -45,6 +45,13 @@ namespace KFrame
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    class KFTimeData
+    {
+    public:
+        uint32 _type = 0u;		// 重置时间类型
+        uint32 _value = 0u;		// 重置的时间点( 根据类型来判断 )
+        uint32 _hour = 0u;		// 时间点( 小时 )
+    };
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // 系统时间
     class KFDate
@@ -87,26 +94,36 @@ namespace KFrame
         // 获得剩余时间
         static uint64 GetLeftTime( uint64 nowtime, uint64 starttime, uint32 keeptime );
 
+        // 获得上一次时间
+        static uint64 GetLastTime( const KFTimeData* timedata, uint64 nowtime );
+
         // 判断是否过了一年
         static bool CheckPassYear( uint64 lasttime, uint64 nowtime );
+        static bool CheckPassYear( KFDate& lastdate, KFDate& nowdate );
 
         // 判断是否过了某一天
         static bool CheckPassMonth( uint64 lasttime, uint64 nowtime, uint32 day, uint32 hour );
+        static bool CheckPassMonth( KFDate& lastdate, KFDate& nowdate, uint32 day, uint32 hour );
 
         // 判断是否过了一小时
         static bool CheckPassHour( uint64 lasttime, uint64 nowtime );
+        static bool CheckPassHour( KFDate& lastdate, KFDate& nowdate );
 
         // 判断同一天
         static bool CheckSameDay( uint64 lasttime, uint64 nowtime );
+        static bool CheckSameDay( KFDate& lastdate, KFDate& nowdate );
 
         // 判断是否过了某一天
         static bool CheckPassDay( uint64 lasttime, uint64 nowtime, uint32 hour );
+        static bool CheckPassDay( KFDate& lastdate, KFDate& nowdate, uint32 hour );
 
         // 判断是否过了一周
         static bool CheckPassWeek( uint64 lasttime, uint64 nowtime, uint32 dayofweek, uint32 hour );
+        static bool CheckPassWeek( KFDate& lastdate, KFDate& nowdate, uint32 dayofweek, uint32 hour );
 
         // 判断时间
-        static bool CheckTime( uint32 type, uint32 value, uint32 hour, uint64 lasttime, uint64 nowtime );
+        static bool CheckTime( const KFTimeData* timedata, uint64 lasttime, uint64 nowtime );
+        static bool CheckTime( const KFTimeData* timedata, KFDate& lastdate, KFDate& nowdate );
 
         // 判断是否过了时间
         static bool CheckPassTime( uint32 year, uint32 month, uint32 day, uint32 hour, uint32 minute );
@@ -122,6 +139,8 @@ namespace KFrame
         time_t _time;
         _tm _tm_date;
     };
+
+
 }
 
 

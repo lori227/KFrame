@@ -570,10 +570,10 @@ namespace KFrame
     {
         if ( kfelements->_element_list.empty() )
         {
-            return __LOG_ERROR_FUNCTION__( function, line, "entity=[{}] element=[{}] is empty!", GetKeyID(), kfelements->_str_element );
+            return __LOG_ERROR_FUNCTION__( function, line, "{}=[{}] element=[{}] is empty!", _kf_component->_component_name, GetKeyID(), kfelements->_str_element );
         }
 
-        __LOG_INFO_FUNCTION__( function, line, "entity=[{}] multiple=[{:0.2f}] elements={}!", GetKeyID(), multiple, kfelements->_str_element );
+        __LOG_INFO_FUNCTION__( function, line, "{}=[{}] multiple=[{:0.2f}] elements={}!", _kf_component->_component_name, GetKeyID(), multiple, kfelements->_str_element );
 
         for ( auto kfelement : kfelements->_element_list )
         {
@@ -905,7 +905,7 @@ namespace KFrame
     {
         if ( !kfelements->IsEmpty() )
         {
-            __LOG_INFO_FUNCTION__( function, line, "entity={} remove elements=[{}]!", GetKeyID(), kfelements->_str_element );
+            __LOG_INFO_FUNCTION__( function, line, "{}={} remove elements=[{}]!", _kf_component->_component_name, GetKeyID(), kfelements->_str_element );
         }
 
         for ( auto kfelement : kfelements->_element_list )

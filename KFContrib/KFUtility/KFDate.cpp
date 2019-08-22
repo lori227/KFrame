@@ -1,6 +1,7 @@
 ﻿#include "KFDate.h"
 #include <stdio.h>
 #include <time.h>
+#include "KFMacros.h"
 
 namespace KFrame
 {
@@ -176,7 +177,11 @@ namespace KFrame
     {
         KFDate nowdate( nowtime );
         KFDate lastdate( lasttime );
+        return CheckPassHour( lastdate, nowdate );
+    }
 
+    bool KFDate::CheckPassHour( KFDate& lastdate, KFDate& nowdate )
+    {
         if ( nowdate.GetMonth() != lastdate.GetMonth() )
         {
             return true;
@@ -195,17 +200,26 @@ namespace KFrame
         return !CheckPassDay( lasttime, nowtime, 0 );
     }
 
+    bool KFDate::CheckSameDay( KFDate& lastdate, KFDate& nowdate )
+    {
+        return !CheckPassDay( lastdate, nowdate, 0 );
+    }
+
     bool KFDate::CheckPassDay( uint64 lasttime, uint64 nowtime, uint32 hour )
     {
+        KFDate nowdate( nowtime );
+        KFDate lastdate( lasttime );
+        return CheckPassDay( lastdate, nowdate, hour );
+    }
+
+    bool KFDate::CheckPassDay( KFDate& lastdate, KFDate& nowdate, uint32 hour )
+    {
         // 大于一天
-        auto timedistance = nowtime - lasttime;
+        auto timedistance = nowdate.GetTime() - lastdate.GetTime();
         if ( timedistance >= KFTimeEnum::OneDaySecond )
         {
             return true;
         }
-
-        KFDate nowdate( nowtime );
-        KFDate lastdate( lasttime );
 
         auto nowhour = nowdate.GetHour();
         auto nowday = nowdate.GetDay();
@@ -224,15 +238,19 @@ namespace KFrame
 
     bool KFDate::CheckPassWeek( uint64 lasttime, uint64 nowtime, uint32 dayofweek, uint32 hour )
     {
+        KFDate nowdate( nowtime );
+        KFDate lastdate( lasttime );
+        return CheckPassWeek( lastdate, nowdate, dayofweek, hour );
+    }
+
+    bool KFDate::CheckPassWeek( KFDate& lastdate, KFDate& nowdate, uint32 dayofweek, uint32 hour )
+    {
         // 跨度超过1周
-        auto timedistance = nowtime - lasttime ;
+        auto timedistance = lastdate.GetTime() - nowdate.GetTime();
         if ( timedistance >= KFTimeEnum::OneWeekSecond )
         {
             return true;
         }
-
-        KFDate nowdate( nowtime );
-        KFDate lastdate( lasttime );
 
         auto nowdayofweek = nowdate.GetDayOfWeek();
         auto lastdayofweek = lastdate.GetDayOfWeek();
@@ -240,8 +258,8 @@ namespace KFrame
         auto nowhour = nowdate.GetHour();
         auto lasthour = lastdate.GetHour();
 
-        auto nowweek = nowtime / KFTimeEnum::OneWeekSecond;
-        auto lastweek = lasttime / KFTimeEnum::OneWeekSecond;
+        auto nowweek = nowdate.GetTime() / KFTimeEnum::OneWeekSecond;
+        auto lastweek = lastdate.GetTime() / KFTimeEnum::OneWeekSecond;
 
         // 同一周
         if ( nowweek == lastweek )
@@ -289,12 +307,15 @@ namespace KFrame
         return false;
     }
 
-
     bool KFDate::CheckPassMonth( uint64 lasttime, uint64 nowtime, uint32 day, uint32 hour )
     {
         KFDate nowdate( nowtime );
         KFDate lastdate( lasttime );
+        return CheckPassMonth( lastdate, nowdate, day, hour );
+    }
 
+    bool KFDate::CheckPassMonth( KFDate& lastdate, KFDate& nowdate, uint32 day, uint32 hour )
+    {
         // 间隔超过一个月
         auto monthdistance = ( nowdate.GetYear() - lastdate.GetYear() ) * 12 + nowdate.GetMonth() - lastdate.GetMonth();
         if ( monthdistance >= 2 )
@@ -358,25 +379,37 @@ namespace KFrame
     {
         KFDate nowdate( nowtime );
         KFDate lastdate( lasttime );
+        return CheckPassYear( lastdate, nowdate );
+    }
 
+    bool KFDate::CheckPassYear( KFDate& lastdate, KFDate& nowdate )
+    {
         return nowdate.GetYear() != lastdate.GetYear();
     }
 
-    bool KFDate::CheckTime( uint32 type, uint32 value, uint32 hour, uint64 lasttime, uint64 nowtime )
+    bool KFDate::CheckTime( const KFTimeData* timedata, uint64 lasttime, uint64 nowtime )
     {
-        switch ( type )
+        KFDate nowdate( nowtime );
+        KFDate lastdate( lasttime );
+
+        return CheckTime( timedata, lastdate, nowdate );
+    }
+
+    bool KFDate::CheckTime( const KFTimeData* timedata, KFDate& lastdate, KFDate& nowdate )
+    {
+        switch ( timedata->_type )
         {
         case KFTimeEnum::Hour:
-            return KFDate::CheckPassHour( lasttime, nowtime );
+            return KFDate::CheckPassHour( lastdate, nowdate );
             break;
         case KFTimeEnum::Day:		// 判断时间
-            return KFDate::CheckPassDay( lasttime, nowtime, hour );
+            return KFDate::CheckPassDay( lastdate, nowdate, timedata->_hour );
             break;
         case KFTimeEnum::Week:	// 判断时间
-            return KFDate::CheckPassWeek( lasttime, nowtime, value, hour );
+            return KFDate::CheckPassWeek( lastdate, nowdate, timedata->_value, timedata->_hour );
             break;
         case KFTimeEnum::Month:	// 月份
-            return KFDate::CheckPassMonth( lasttime, nowtime, value, hour );
+            return KFDate::CheckPassMonth( lastdate, nowdate, timedata->_value, timedata->_hour );
             break;
         default:
             break;
@@ -444,6 +477,29 @@ namespace KFrame
         }
 
         return nowminute >= minute;
+    }
+
+    uint64 KFDate::GetLastTime( const KFTimeData* timedata, uint64 nowtime )
+    {
+        switch ( timedata->_type )
+        {
+        case KFTimeEnum::Hour:
+            return nowtime - __MIN__( nowtime, KFTimeEnum::OneHourSecond );
+            break;
+        case KFTimeEnum::Day:		// 判断时间
+            return nowtime - __MIN__( nowtime, KFTimeEnum::OneDaySecond );
+            break;
+        case KFTimeEnum::Week:	// 判断时间
+            return nowtime - __MIN__( nowtime, KFTimeEnum::OneWeekSecond );
+            break;
+        case KFTimeEnum::Month:	// 月份
+            return nowtime - __MIN__( nowtime, KFTimeEnum::OneDaySecond * 30 );
+            break;
+        default:
+            break;
+        }
+
+        return 0u;
     }
 
     uint64 KFDate::FromString( const std::string& ymd )

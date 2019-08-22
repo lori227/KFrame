@@ -5,8 +5,6 @@
 
 namespace KFrame
 {
-    class KFData;
-    class KFEntity;
     /////////////////////////////////////////////////////////////////////////////////////////////
     class KFGameInterface : public KFModule
     {

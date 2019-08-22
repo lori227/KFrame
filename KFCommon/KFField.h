@@ -236,6 +236,7 @@ namespace KFrame
         __STRING_DEFINE__( usecount );
         __STRING_DEFINE__( var );
         __STRING_DEFINE__( index );
+        __STRING_DEFINE__( resettime );
     }
 }
 

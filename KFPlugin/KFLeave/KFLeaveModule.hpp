@@ -17,7 +17,6 @@
 
 namespace KFrame
 {
-    class KFEntity;
     class KFLeaveModule : public KFLeaveInterface
     {
     public:

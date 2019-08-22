@@ -6,9 +6,7 @@
 
 namespace KFrame
 {
-    class KFEntity;
     typedef std::list< const KFDropData* > DropDataList;
-
     class KFDropInterface : public KFModule
     {
     public:
