@@ -43,6 +43,21 @@ namespace KFrame
 
     //m_now = chrono::system_clock::now();
     //m_milli = chrono::time_point_cast< chrono::milliseconds >( m_now ).time_since_epoch().count();
+
+    uint64 KFDate::FromString( const std::string& ymd )
+    {
+        if ( ymd.empty() )
+        {
+            return 0;
+        }
+
+        // 必须按照格式来填写时间
+        int32 year = 0, month = 0, day = 0, hour = 0, minute = 0, second = 0;
+        sscanf( ymd.c_str(), "%d-%d-%d %d:%d:%d", &year, &month, &day, &hour, &minute, &second );
+
+        KFDate kfdate( year, month, day, hour, minute, second );
+        return kfdate.GetTime();
+    }
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     KFDate KFDate::GetDate()
@@ -502,18 +517,10 @@ namespace KFrame
         return 0u;
     }
 
-    uint64 KFDate::FromString( const std::string& ymd )
+    uint64 KFDate::CalcZeroTime( uint64 time, int32 daycount /* = 0 */ )
     {
-        if ( ymd.empty() )
-        {
-            return 0;
-        }
-
-        // 必须按照格式来填写时间
-        int32 year = 0, month = 0, day = 0, hour = 0, minute = 0, second = 0;
-        sscanf( ymd.c_str(), "%d-%d-%d %d:%d:%d", &year, &month, &day, &hour, &minute, &second );
-
-        KFDate kfdate( year, month, day, hour, minute, second );
-        return kfdate.GetTime();
+        int64 day = time / KFTimeEnum::OneDaySecond;
+        day += daycount;
+        return ( uint64 )day * KFTimeEnum::OneDaySecond;
     }
 }

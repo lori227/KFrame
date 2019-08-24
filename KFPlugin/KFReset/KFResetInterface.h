@@ -35,7 +35,7 @@ namespace KFrame
     __KF_INTERFACE__( _kf_reset, KFResetInterface );
     //////////////////////////////////////////////////////////////////////////////////////
 
-#define __KF_RESET_FUNCTION__( function ) void function( KFEntity* player, uint64 lastime, uint64 nowtime )
+#define __KF_RESET_FUNCTION__( function ) void function( KFEntity* player, uint64 lasttime, uint64 nowtime )
 #define __REGISTER_RESET_ONCE__( timedata, function ) _kf_reset->RegisterResetFunction( timedata, KFResetEnum::Once, 1u, this, function )
 #define __REGISTER_RESET_DAILY__( timedata, count, function ) _kf_reset->RegisterResetFunction( timedata, KFResetEnum::Daily, count, this, function )
 #define __UN_RESET__() _kf_reset->UnRegisterResetFunction( this )

@@ -40,7 +40,13 @@ namespace KFrame
     KFMongoType* KFMongoConfig::FindMongoType( const std::string& module, uint32 logicid )
     {
         auto key = ModuleKey( module, logicid );
-        return _mongo_type.Find( key );
+        auto mongotype = _mongo_type.Find( key );
+        if ( mongotype == nullptr )
+        {
+            mongotype = _mongo_type.First();
+        }
+
+        return mongotype;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////

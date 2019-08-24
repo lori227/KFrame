@@ -46,7 +46,7 @@ namespace protobuf_FrameDefineMessage_2eproto {
 struct LIBPROTOC_EXPORT TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[23];
+  static const ::google::protobuf::internal::ParseTable schema[24];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -66,6 +66,9 @@ LIBPROTOC_EXPORT extern PBLoginDataDefaultTypeInternal _PBLoginData_default_inst
 class PBLoginData_ChanneldataEntry_DoNotUse;
 class PBLoginData_ChanneldataEntry_DoNotUseDefaultTypeInternal;
 LIBPROTOC_EXPORT extern PBLoginData_ChanneldataEntry_DoNotUseDefaultTypeInternal _PBLoginData_ChanneldataEntry_DoNotUse_default_instance_;
+class PBNotice;
+class PBNoticeDefaultTypeInternal;
+LIBPROTOC_EXPORT extern PBNoticeDefaultTypeInternal _PBNotice_default_instance_;
 class PBObject;
 class PBObjectDefaultTypeInternal;
 LIBPROTOC_EXPORT extern PBObjectDefaultTypeInternal _PBObject_default_instance_;
@@ -130,6 +133,7 @@ template<> LIBPROTOC_EXPORT ::KFMsg::PBArray* Arena::CreateMaybeMessage<::KFMsg:
 template<> LIBPROTOC_EXPORT ::KFMsg::PBArray_Pbuint64Entry_DoNotUse* Arena::CreateMaybeMessage<::KFMsg::PBArray_Pbuint64Entry_DoNotUse>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::PBLoginData* Arena::CreateMaybeMessage<::KFMsg::PBLoginData>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::PBLoginData_ChanneldataEntry_DoNotUse* Arena::CreateMaybeMessage<::KFMsg::PBLoginData_ChanneldataEntry_DoNotUse>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::PBNotice* Arena::CreateMaybeMessage<::KFMsg::PBNotice>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::PBObject* Arena::CreateMaybeMessage<::KFMsg::PBObject>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::PBObject_PbarrayEntry_DoNotUse* Arena::CreateMaybeMessage<::KFMsg::PBObject_PbarrayEntry_DoNotUse>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::PBObject_PbdoubleEntry_DoNotUse* Arena::CreateMaybeMessage<::KFMsg::PBObject_PbdoubleEntry_DoNotUse>(Arena*);
@@ -1435,6 +1439,116 @@ class LIBPROTOC_EXPORT PBShowElement : public ::google::protobuf::Message /* @@p
 };
 // -------------------------------------------------------------------
 
+class LIBPROTOC_EXPORT PBNotice : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.PBNotice) */ {
+ public:
+  PBNotice();
+  virtual ~PBNotice();
+
+  PBNotice(const PBNotice& from);
+
+  inline PBNotice& operator=(const PBNotice& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  PBNotice(PBNotice&& from) noexcept
+    : PBNotice() {
+    *this = ::std::move(from);
+  }
+
+  inline PBNotice& operator=(PBNotice&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PBNotice& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const PBNotice* internal_default_instance() {
+    return reinterpret_cast<const PBNotice*>(
+               &_PBNotice_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    20;
+
+  void Swap(PBNotice* other);
+  friend void swap(PBNotice& a, PBNotice& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline PBNotice* New() const final {
+    return CreateMaybeMessage<PBNotice>(NULL);
+  }
+
+  PBNotice* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<PBNotice>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const PBNotice& from);
+  void MergeFrom(const PBNotice& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(PBNotice* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // uint32 type = 1;
+  void clear_type();
+  static const int kTypeFieldNumber = 1;
+  ::google::protobuf::uint32 type() const;
+  void set_type(::google::protobuf::uint32 value);
+
+  // uint32 count = 2;
+  void clear_count();
+  static const int kCountFieldNumber = 2;
+  ::google::protobuf::uint32 count() const;
+  void set_count(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.PBNotice)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 type_;
+  ::google::protobuf::uint32 count_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_FrameDefineMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
 class PBRankData_PbdataEntry_DoNotUse : public ::google::protobuf::internal::MapEntry<PBRankData_PbdataEntry_DoNotUse, 
     ::std::string, ::std::string,
     ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
@@ -1491,7 +1605,7 @@ class LIBPROTOC_EXPORT PBRankData : public ::google::protobuf::Message /* @@prot
                &_PBRankData_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    21;
+    22;
 
   void Swap(PBRankData* other);
   friend void swap(PBRankData& a, PBRankData& b) {
@@ -1624,7 +1738,7 @@ class LIBPROTOC_EXPORT PBRankDatas : public ::google::protobuf::Message /* @@pro
                &_PBRankDatas_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    22;
+    23;
 
   void Swap(PBRankDatas* other);
   friend void swap(PBRankDatas& a, PBRankDatas& b) {
@@ -2363,6 +2477,38 @@ PBShowElement::pbobject() const {
 
 // -------------------------------------------------------------------
 
+// PBNotice
+
+// uint32 type = 1;
+inline void PBNotice::clear_type() {
+  type_ = 0u;
+}
+inline ::google::protobuf::uint32 PBNotice::type() const {
+  // @@protoc_insertion_point(field_get:KFMsg.PBNotice.type)
+  return type_;
+}
+inline void PBNotice::set_type(::google::protobuf::uint32 value) {
+  
+  type_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.PBNotice.type)
+}
+
+// uint32 count = 2;
+inline void PBNotice::clear_count() {
+  count_ = 0u;
+}
+inline ::google::protobuf::uint32 PBNotice::count() const {
+  // @@protoc_insertion_point(field_get:KFMsg.PBNotice.count)
+  return count_;
+}
+inline void PBNotice::set_count(::google::protobuf::uint32 value) {
+  
+  count_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.PBNotice.count)
+}
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // PBRankData
@@ -2464,6 +2610,8 @@ PBRankDatas::rankdata() const {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

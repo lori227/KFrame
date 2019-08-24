@@ -107,7 +107,7 @@ namespace KFrame
 
         // 返回map列表
         template< typename... P >
-        KFResult< std::list< MapString > >::UniqueType PipelineListMap()
+        KFResult< ListMapString >::UniqueType PipelineListMap()
         {
             return ListMapPipelineExecute();
         }
@@ -127,7 +127,7 @@ namespace KFrame
         // 添加执行命令
         virtual void AppendCommand( const std::string& strsql ) = 0;
         virtual KFResult< ListString >::UniqueType ListPipelineExecute() = 0;
-        virtual KFResult< std::list< MapString > >::UniqueType ListMapPipelineExecute() = 0;
+        virtual KFResult< ListMapString >::UniqueType ListMapPipelineExecute() = 0;
     };
 
     ///////////////////////////////////////////////////////////////////////////////

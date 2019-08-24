@@ -84,6 +84,9 @@ namespace KFrame
         static KFDate GetDate();
         static uint64 GetTimeEx();
 
+        // 转换时间戳
+        static uint64 FromString( const std::string& ymd );
+
         // 判断在时间内
         static bool CheckInTime( uint64 start, uint64 end, uint64 now );
 
@@ -128,9 +131,8 @@ namespace KFrame
         // 判断是否过了时间
         static bool CheckPassTime( uint32 year, uint32 month, uint32 day, uint32 hour, uint32 minute );
 
-        // 转换时间戳
-        static uint64 FromString( const std::string& ymd );
-
+        // 获得0点0分的时间
+        static uint64 CalcZeroTime( uint64 time, int32 daycount = 0 );
     protected:
         // 转换时间
         void ConvertTimeDate();

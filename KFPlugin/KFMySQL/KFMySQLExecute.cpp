@@ -236,7 +236,7 @@ namespace KFrame
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    KFResult< std::list< MapString > >::UniqueType KFReadExecute::Select( const std::string& table )
+    KFResult< ListMapString >::UniqueType KFReadExecute::Select( const std::string& table )
     {
         static MapString _empty_key;
         static ListString _empty_field;
@@ -244,13 +244,13 @@ namespace KFrame
         return Select( table, _empty_key, _empty_field );
     }
 
-    KFResult< std::list< MapString > >::UniqueType KFReadExecute::Select( const std::string& table, const ListString& fields )
+    KFResult< ListMapString >::UniqueType KFReadExecute::Select( const std::string& table, const ListString& fields )
     {
         static MapString _empty_key;
         return Select( table, _empty_key, fields );
     }
 
-    KFResult< std::list< MapString > >::UniqueType KFReadExecute::Select( const std::string& table, const std::string& key )
+    KFResult< ListMapString >::UniqueType KFReadExecute::Select( const std::string& table, const std::string& key )
     {
         static ListString _empty_field;
 
@@ -259,22 +259,22 @@ namespace KFrame
         return Select( table, keyvalue, _empty_field );
     }
 
-    KFResult< std::list< MapString > >::UniqueType KFReadExecute::Select( const std::string& table, const std::string& key, const ListString& fields )
+    KFResult< ListMapString >::UniqueType KFReadExecute::Select( const std::string& table, const std::string& key, const ListString& fields )
     {
         MapString keyvalue;
         keyvalue[ __KF_STRING__( id ) ] = key;
         return Select( table, keyvalue, fields );
     }
 
-    KFResult< std::list< MapString > >::UniqueType KFReadExecute::Select( const std::string& table, const MapString& keyvalue )
+    KFResult< ListMapString >::UniqueType KFReadExecute::Select( const std::string& table, const MapString& keyvalue )
     {
         static ListString _empty_field;
         return Select( table, keyvalue, _empty_field );
     }
 
-    KFResult< std::list< MapString > >::UniqueType KFReadExecute::Select( const std::string& table, const MapString& keyvalue, const ListString& fields )
+    KFResult< ListMapString >::UniqueType KFReadExecute::Select( const std::string& table, const MapString& keyvalue, const ListString& fields )
     {
-        __NEW_RESULT__( std::list< MapString > );
+        __NEW_RESULT__( ListMapString );
 
         std::string sql = "";
         auto strfield = FormatFieldString( fields );
@@ -455,9 +455,9 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< std::list< MapString > >::UniqueType KFReadExecute::ListMapExecute( std::string& strsql )
+    KFResult< ListMapString >::UniqueType KFReadExecute::ListMapExecute( std::string& strsql )
     {
-        __NEW_RESULT__( std::list< MapString > );
+        __NEW_RESULT__( ListMapString );
 
         Statement statement( *_session );
         auto ok = ExecuteSql( statement, strsql );

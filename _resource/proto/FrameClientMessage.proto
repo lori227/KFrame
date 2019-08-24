@@ -9,8 +9,9 @@ enum FrameClientProtocol
 	MSG_FRAME_CLIENT_BEGIN 				= 0;	// pb3 需要0
 
 	// display
-	MSG_RESULT_DISPLAY 					= 1;	// 提示显示
+	MSG_RESULT_DISPLAY 					= 1;	// 错误码显示
 	MSG_COMMAND_REQ 					= 2;	// 客户端发送GM指令请求
+	MSG_TELL_NOTICE						= 3;	// 小红点提示
 
 	// login
 	MSG_LOGIN_REQ 						= 100;	// 客户端登录验证请求
@@ -51,7 +52,7 @@ enum FrameClientProtocol
 	MSG_SORT_ITEM_REQ					= 407;	// 整理背包
 	MSG_REMOVE_ITEM_REQ					= 408;	// 删除道具
 	MSG_MOVE_ALL_ITEM_REQ				= 409;	// 移动所有道具
-	
+
 	// mail
 	MSG_VIEW_MAIL_REQ 					= 501;	// 查看邮件
 	MSG_DELETE_MAIL_REQ 				= 502;	// 删除邮件
@@ -85,12 +86,19 @@ enum FrameClientProtocol
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// 结果提示
+// 错误码提示
 // MSG_RESULT_DISPLAY
 message MsgResultDisplay
 {
 	uint32 result = 1;
 	repeated bytes param = 2;
+}
+
+// 小红点提示
+// MSG_TELL_NOTICE
+message MsgTellNotice
+{
+	repeated PBNotice notice = 1;
 }
 
 // 客户端发送GM指令请求

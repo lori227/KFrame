@@ -160,16 +160,16 @@ namespace KFrame
     {
         // 计算上一次的时间
         uint64 nowtime = nowdate.GetTime();
-        for ( auto i = 0; i < kfresetdata->_count; ++i )
+        for ( auto i = 0u; i < kfresetdata->_count; ++i )
         {
             auto lasttime = KFDate::GetLastTime( &kfresetdata->_time_data, nowtime );
-            if ( lasttime == 0u || lasttime < lastdate.GetTime() )
+            kfresetdata->_function( player, lasttime, nowtime );
+            nowtime = lasttime;
+
+            if ( lasttime == 0u || !KFDate::CheckTime( &kfresetdata->_time_data, lastdate.GetTime(), lasttime ) )
             {
                 break;
             }
-
-            kfresetdata->_function( player, lasttime, nowtime );
-            nowtime = lasttime;
         }
     }
 }

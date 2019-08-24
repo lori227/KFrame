@@ -45,7 +45,7 @@ namespace KFrame
         // 刷新在线逻辑
         KFMsg::S2SClearOnlineToPublicReq req;
         req.set_serverid( KFGlobal::Instance()->_app_id->GetId() );
-        _kf_route->SendToRand( __KF_STRING__( public ), KFMsg::S2S_CLEAR_ONLINE_TO_PUBLIC_REQ, &req, true );
+        _kf_route->SendToRand( __KF_STRING__( logic ), KFMsg::S2S_CLEAR_ONLINE_TO_PUBLIC_REQ, &req, true );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFPublicClientModule::UpdatePublicData( KFEntity* player, MapString& values )
@@ -57,7 +57,7 @@ namespace KFrame
     {
         KFMsg::S2SUpdateDataToPublicReq req;
         req.mutable_pbdata()->insert( values.begin(), values.end() );
-        _kf_route->SendToRand( __KF_STRING__( public ), KFMsg::S2S_UPDATE_DATA_TO_PUBLIC_REQ, &req, true );
+        _kf_route->SendToRand( __KF_STRING__( logic ), KFMsg::S2S_UPDATE_DATA_TO_PUBLIC_REQ, &req, true );
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -122,7 +122,7 @@ namespace KFrame
         // 发送到public
         KFMsg::S2SQueryBasicToPublicReq req;
         req.set_name( kfmsg.name() );
-        _kf_route->SendToRand( playerid, __KF_STRING__( public ), KFMsg::S2S_QUERY_BASIC_TO_PUBLIC_REQ, &req, false );
+        _kf_route->SendToRand( playerid, __KF_STRING__( logic ), KFMsg::S2S_QUERY_BASIC_TO_PUBLIC_REQ, &req, false );
     }
 
     __KF_MESSAGE_FUNCTION__( KFPublicClientModule::HandleQueryBasicToGameAck )

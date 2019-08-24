@@ -36,12 +36,12 @@ namespace KFrame
         virtual bool Update( const std::string& table, const MapString& keyvalue, const MapString& invalue );
 
         // 查询所有
-        virtual KFResult< std::list< MapString > >::UniqueType Select( const std::string& table );
-        virtual KFResult< std::list< MapString > >::UniqueType Select( const std::string& table, const ListString& fields );
-        virtual KFResult< std::list< MapString > >::UniqueType Select( const std::string& table, const std::string& key );
-        virtual KFResult< std::list< MapString > >::UniqueType Select( const std::string& table, const std::string& key, const ListString& fields );
-        virtual KFResult< std::list< MapString > >::UniqueType Select( const std::string& table, const MapString& key );
-        virtual KFResult< std::list< MapString > >::UniqueType Select( const std::string& table, const MapString& key, const ListString& fields );
+        virtual KFResult< ListMapString >::UniqueType Select( const std::string& table );
+        virtual KFResult< ListMapString >::UniqueType Select( const std::string& table, const ListString& fields );
+        virtual KFResult< ListMapString >::UniqueType Select( const std::string& table, const std::string& key );
+        virtual KFResult< ListMapString >::UniqueType Select( const std::string& table, const std::string& key, const ListString& fields );
+        virtual KFResult< ListMapString >::UniqueType Select( const std::string& table, const MapString& key );
+        virtual KFResult< ListMapString >::UniqueType Select( const std::string& table, const MapString& key, const ListString& fields );
 
         // 事务( 目前没有加mysql事务功能 )
         virtual void Pipeline( ListString& commands );
@@ -55,7 +55,7 @@ namespace KFrame
         virtual KFResult< std::string >::UniqueType StringExecute( std::string& strsql );
         virtual KFResult< MapString >::UniqueType MapExecute( std::string& strsql );
         virtual KFResult< ListString >::UniqueType ListExecute( std::string& strsql );
-        virtual KFResult< std::list< MapString > >::UniqueType ListMapExecute( std::string& strsql );
+        virtual KFResult< ListMapString >::UniqueType ListMapExecute( std::string& strsql );
 
     private:
         // 读执行器

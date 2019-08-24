@@ -9,6 +9,6 @@
 
 	<Plugins>
 		<Plugin Name="KFPublicShard" Config=""/>	
-		<Plugin Name="KFRedis" Config="./setting/{}_{}_redis.setting"/>	
+		<Plugin Name="KFRedis" Config=""/>	
 	</Plugins>
 </Setting>

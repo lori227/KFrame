@@ -45,7 +45,7 @@ namespace protobuf_FrameClientMessage_2eproto {
 struct LIBPROTOC_EXPORT TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[52];
+  static const ::google::protobuf::internal::ParseTable schema[54];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -110,6 +110,9 @@ LIBPROTOC_EXPORT extern MsgMailRewardReqDefaultTypeInternal _MsgMailRewardReq_de
 class MsgMergeItemReq;
 class MsgMergeItemReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgMergeItemReqDefaultTypeInternal _MsgMergeItemReq_default_instance_;
+class MsgMoveAllItemReq;
+class MsgMoveAllItemReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern MsgMoveAllItemReqDefaultTypeInternal _MsgMoveAllItemReq_default_instance_;
 class MsgMoveItemReq;
 class MsgMoveItemReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgMoveItemReqDefaultTypeInternal _MsgMoveItemReq_default_instance_;
@@ -203,6 +206,9 @@ LIBPROTOC_EXPORT extern MsgTaskRewardReqDefaultTypeInternal _MsgTaskRewardReq_de
 class MsgTellBeKick;
 class MsgTellBeKickDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgTellBeKickDefaultTypeInternal _MsgTellBeKick_default_instance_;
+class MsgTellNotice;
+class MsgTellNoticeDefaultTypeInternal;
+LIBPROTOC_EXPORT extern MsgTellNoticeDefaultTypeInternal _MsgTellNotice_default_instance_;
 class MsgUseItemReq;
 class MsgUseItemReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgUseItemReqDefaultTypeInternal _MsgUseItemReq_default_instance_;
@@ -231,6 +237,7 @@ template<> LIBPROTOC_EXPORT ::KFMsg::MsgLogoutAck* Arena::CreateMaybeMessage<::K
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgLogoutReq* Arena::CreateMaybeMessage<::KFMsg::MsgLogoutReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgMailRewardReq* Arena::CreateMaybeMessage<::KFMsg::MsgMailRewardReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgMergeItemReq* Arena::CreateMaybeMessage<::KFMsg::MsgMergeItemReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::MsgMoveAllItemReq* Arena::CreateMaybeMessage<::KFMsg::MsgMoveAllItemReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgMoveItemReq* Arena::CreateMaybeMessage<::KFMsg::MsgMoveItemReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgPayResultReq* Arena::CreateMaybeMessage<::KFMsg::MsgPayResultReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgQueryBasicAck* Arena::CreateMaybeMessage<::KFMsg::MsgQueryBasicAck>(Arena*);
@@ -262,6 +269,7 @@ template<> LIBPROTOC_EXPORT ::KFMsg::MsgSyncRemoveData* Arena::CreateMaybeMessag
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgSyncUpdateData* Arena::CreateMaybeMessage<::KFMsg::MsgSyncUpdateData>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgTaskRewardReq* Arena::CreateMaybeMessage<::KFMsg::MsgTaskRewardReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgTellBeKick* Arena::CreateMaybeMessage<::KFMsg::MsgTellBeKick>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::MsgTellNotice* Arena::CreateMaybeMessage<::KFMsg::MsgTellNotice>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgUseItemReq* Arena::CreateMaybeMessage<::KFMsg::MsgUseItemReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgViewMailReq* Arena::CreateMaybeMessage<::KFMsg::MsgViewMailReq>(Arena*);
 }  // namespace protobuf
@@ -272,6 +280,7 @@ enum FrameClientProtocol {
   MSG_FRAME_CLIENT_BEGIN = 0,
   MSG_RESULT_DISPLAY = 1,
   MSG_COMMAND_REQ = 2,
+  MSG_TELL_NOTICE = 3,
   MSG_LOGIN_REQ = 100,
   MSG_LOGIN_ACK = 101,
   MSG_LOGOUT_REQ = 102,
@@ -303,6 +312,7 @@ enum FrameClientProtocol {
   MSG_CLEAN_ITEM_REQ = 406,
   MSG_SORT_ITEM_REQ = 407,
   MSG_REMOVE_ITEM_REQ = 408,
+  MSG_MOVE_ALL_ITEM_REQ = 409,
   MSG_VIEW_MAIL_REQ = 501,
   MSG_DELETE_MAIL_REQ = 502,
   MSG_QUERY_MAIL_REQ = 503,
@@ -468,6 +478,115 @@ class LIBPROTOC_EXPORT MsgResultDisplay : public ::google::protobuf::Message /* 
 };
 // -------------------------------------------------------------------
 
+class LIBPROTOC_EXPORT MsgTellNotice : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgTellNotice) */ {
+ public:
+  MsgTellNotice();
+  virtual ~MsgTellNotice();
+
+  MsgTellNotice(const MsgTellNotice& from);
+
+  inline MsgTellNotice& operator=(const MsgTellNotice& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  MsgTellNotice(MsgTellNotice&& from) noexcept
+    : MsgTellNotice() {
+    *this = ::std::move(from);
+  }
+
+  inline MsgTellNotice& operator=(MsgTellNotice&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgTellNotice& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MsgTellNotice* internal_default_instance() {
+    return reinterpret_cast<const MsgTellNotice*>(
+               &_MsgTellNotice_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    1;
+
+  void Swap(MsgTellNotice* other);
+  friend void swap(MsgTellNotice& a, MsgTellNotice& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MsgTellNotice* New() const final {
+    return CreateMaybeMessage<MsgTellNotice>(NULL);
+  }
+
+  MsgTellNotice* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MsgTellNotice>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const MsgTellNotice& from);
+  void MergeFrom(const MsgTellNotice& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MsgTellNotice* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated .KFMsg.PBNotice notice = 1;
+  int notice_size() const;
+  void clear_notice();
+  static const int kNoticeFieldNumber = 1;
+  ::KFMsg::PBNotice* mutable_notice(int index);
+  ::google::protobuf::RepeatedPtrField< ::KFMsg::PBNotice >*
+      mutable_notice();
+  const ::KFMsg::PBNotice& notice(int index) const;
+  ::KFMsg::PBNotice* add_notice();
+  const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBNotice >&
+      notice() const;
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgTellNotice)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::RepeatedPtrField< ::KFMsg::PBNotice > notice_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_FrameClientMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
 class LIBPROTOC_EXPORT MsgCommandReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgCommandReq) */ {
  public:
   MsgCommandReq();
@@ -503,7 +622,7 @@ class LIBPROTOC_EXPORT MsgCommandReq : public ::google::protobuf::Message /* @@p
                &_MsgCommandReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    1;
+    2;
 
   void Swap(MsgCommandReq* other);
   friend void swap(MsgCommandReq& a, MsgCommandReq& b) {
@@ -637,7 +756,7 @@ class LIBPROTOC_EXPORT MsgLoginReq : public ::google::protobuf::Message /* @@pro
                &_MsgLoginReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    2;
+    3;
 
   void Swap(MsgLoginReq* other);
   friend void swap(MsgLoginReq& a, MsgLoginReq& b) {
@@ -770,7 +889,7 @@ class LIBPROTOC_EXPORT MsgLoginAck : public ::google::protobuf::Message /* @@pro
                &_MsgLoginAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    3;
+    4;
 
   void Swap(MsgLoginAck* other);
   friend void swap(MsgLoginAck& a, MsgLoginAck& b) {
@@ -893,7 +1012,7 @@ class LIBPROTOC_EXPORT MsgLogoutReq : public ::google::protobuf::Message /* @@pr
                &_MsgLogoutReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    4;
+    5;
 
   void Swap(MsgLogoutReq* other);
   friend void swap(MsgLogoutReq& a, MsgLogoutReq& b) {
@@ -989,7 +1108,7 @@ class LIBPROTOC_EXPORT MsgLogoutAck : public ::google::protobuf::Message /* @@pr
                &_MsgLogoutAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    5;
+    6;
 
   void Swap(MsgLogoutAck* other);
   friend void swap(MsgLogoutAck& a, MsgLogoutAck& b) {
@@ -1085,7 +1204,7 @@ class LIBPROTOC_EXPORT MsgTellBeKick : public ::google::protobuf::Message /* @@p
                &_MsgTellBeKick_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    6;
+    7;
 
   void Swap(MsgTellBeKick* other);
   friend void swap(MsgTellBeKick& a, MsgTellBeKick& b) {
@@ -1188,7 +1307,7 @@ class LIBPROTOC_EXPORT MsgSyncUpdateData : public ::google::protobuf::Message /*
                &_MsgSyncUpdateData_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    7;
+    8;
 
   void Swap(MsgSyncUpdateData* other);
   friend void swap(MsgSyncUpdateData& a, MsgSyncUpdateData& b) {
@@ -1297,7 +1416,7 @@ class LIBPROTOC_EXPORT MsgSyncAddData : public ::google::protobuf::Message /* @@
                &_MsgSyncAddData_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    8;
+    9;
 
   void Swap(MsgSyncAddData* other);
   friend void swap(MsgSyncAddData& a, MsgSyncAddData& b) {
@@ -1406,7 +1525,7 @@ class LIBPROTOC_EXPORT MsgSyncRemoveData : public ::google::protobuf::Message /*
                &_MsgSyncRemoveData_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    9;
+    10;
 
   void Swap(MsgSyncRemoveData* other);
   friend void swap(MsgSyncRemoveData& a, MsgSyncRemoveData& b) {
@@ -1515,7 +1634,7 @@ class LIBPROTOC_EXPORT MsgShowElement : public ::google::protobuf::Message /* @@
                &_MsgShowElement_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    10;
+    11;
 
   void Swap(MsgShowElement* other);
   friend void swap(MsgShowElement& a, MsgShowElement& b) {
@@ -1624,7 +1743,7 @@ class LIBPROTOC_EXPORT MsgRemoveDataReq : public ::google::protobuf::Message /* 
                &_MsgRemoveDataReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    11;
+    12;
 
   void Swap(MsgRemoveDataReq* other);
   friend void swap(MsgRemoveDataReq& a, MsgRemoveDataReq& b) {
@@ -1742,7 +1861,7 @@ class LIBPROTOC_EXPORT MsgRequestSyncReq : public ::google::protobuf::Message /*
                &_MsgRequestSyncReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    12;
+    13;
 
   void Swap(MsgRequestSyncReq* other);
   friend void swap(MsgRequestSyncReq& a, MsgRequestSyncReq& b) {
@@ -1853,7 +1972,7 @@ class LIBPROTOC_EXPORT MsgCancelSyncReq : public ::google::protobuf::Message /* 
                &_MsgCancelSyncReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    13;
+    14;
 
   void Swap(MsgCancelSyncReq* other);
   friend void swap(MsgCancelSyncReq& a, MsgCancelSyncReq& b) {
@@ -1964,7 +2083,7 @@ class LIBPROTOC_EXPORT MsgQueryBasicReq : public ::google::protobuf::Message /* 
                &_MsgQueryBasicReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    14;
+    15;
 
   void Swap(MsgQueryBasicReq* other);
   friend void swap(MsgQueryBasicReq& a, MsgQueryBasicReq& b) {
@@ -2075,7 +2194,7 @@ class LIBPROTOC_EXPORT MsgQueryBasicAck : public ::google::protobuf::Message /* 
                &_MsgQueryBasicAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    15;
+    16;
 
   void Swap(MsgQueryBasicAck* other);
   friend void swap(MsgQueryBasicAck& a, MsgQueryBasicAck& b) {
@@ -2184,7 +2303,7 @@ class LIBPROTOC_EXPORT MsgQueryPlayerReq : public ::google::protobuf::Message /*
                &_MsgQueryPlayerReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    16;
+    17;
 
   void Swap(MsgQueryPlayerReq* other);
   friend void swap(MsgQueryPlayerReq& a, MsgQueryPlayerReq& b) {
@@ -2287,7 +2406,7 @@ class LIBPROTOC_EXPORT MsgQueryPlayerAck : public ::google::protobuf::Message /*
                &_MsgQueryPlayerAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    17;
+    18;
 
   void Swap(MsgQueryPlayerAck* other);
   friend void swap(MsgQueryPlayerAck& a, MsgQueryPlayerAck& b) {
@@ -2396,7 +2515,7 @@ class LIBPROTOC_EXPORT MsgSetNameReq : public ::google::protobuf::Message /* @@p
                &_MsgSetNameReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    18;
+    19;
 
   void Swap(MsgSetNameReq* other);
   friend void swap(MsgSetNameReq& a, MsgSetNameReq& b) {
@@ -2507,7 +2626,7 @@ class LIBPROTOC_EXPORT MsgSetSexReq : public ::google::protobuf::Message /* @@pr
                &_MsgSetSexReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    19;
+    20;
 
   void Swap(MsgSetSexReq* other);
   friend void swap(MsgSetSexReq& a, MsgSetSexReq& b) {
@@ -2610,7 +2729,7 @@ class LIBPROTOC_EXPORT MsgCompoundReq : public ::google::protobuf::Message /* @@
                &_MsgCompoundReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    20;
+    21;
 
   void Swap(MsgCompoundReq* other);
   friend void swap(MsgCompoundReq& a, MsgCompoundReq& b) {
@@ -2713,7 +2832,7 @@ class LIBPROTOC_EXPORT MsgAchieveRewardReq : public ::google::protobuf::Message 
                &_MsgAchieveRewardReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    21;
+    22;
 
   void Swap(MsgAchieveRewardReq* other);
   friend void swap(MsgAchieveRewardReq& a, MsgAchieveRewardReq& b) {
@@ -2816,7 +2935,7 @@ class LIBPROTOC_EXPORT MsgTaskRewardReq : public ::google::protobuf::Message /* 
                &_MsgTaskRewardReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    22;
+    23;
 
   void Swap(MsgTaskRewardReq* other);
   friend void swap(MsgTaskRewardReq& a, MsgTaskRewardReq& b) {
@@ -2919,7 +3038,7 @@ class LIBPROTOC_EXPORT MsgActivityRewardReq : public ::google::protobuf::Message
                &_MsgActivityRewardReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    23;
+    24;
 
   void Swap(MsgActivityRewardReq* other);
   friend void swap(MsgActivityRewardReq& a, MsgActivityRewardReq& b) {
@@ -3029,7 +3148,7 @@ class LIBPROTOC_EXPORT MsgSevenSignInRewardReq : public ::google::protobuf::Mess
                &_MsgSevenSignInRewardReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    24;
+    25;
 
   void Swap(MsgSevenSignInRewardReq* other);
   friend void swap(MsgSevenSignInRewardReq& a, MsgSevenSignInRewardReq& b) {
@@ -3132,7 +3251,7 @@ class LIBPROTOC_EXPORT MsgUseItemReq : public ::google::protobuf::Message /* @@p
                &_MsgUseItemReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    25;
+    26;
 
   void Swap(MsgUseItemReq* other);
   friend void swap(MsgUseItemReq& a, MsgUseItemReq& b) {
@@ -3250,7 +3369,7 @@ class LIBPROTOC_EXPORT MsgSplitItemReq : public ::google::protobuf::Message /* @
                &_MsgSplitItemReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    26;
+    27;
 
   void Swap(MsgSplitItemReq* other);
   friend void swap(MsgSplitItemReq& a, MsgSplitItemReq& b) {
@@ -3397,7 +3516,7 @@ class LIBPROTOC_EXPORT MsgMergeItemReq : public ::google::protobuf::Message /* @
                &_MsgMergeItemReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    27;
+    28;
 
   void Swap(MsgMergeItemReq* other);
   friend void swap(MsgMergeItemReq& a, MsgMergeItemReq& b) {
@@ -3537,7 +3656,7 @@ class LIBPROTOC_EXPORT MsgMoveItemReq : public ::google::protobuf::Message /* @@
                &_MsgMoveItemReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    28;
+    29;
 
   void Swap(MsgMoveItemReq* other);
   friend void swap(MsgMoveItemReq& a, MsgMoveItemReq& b) {
@@ -3677,7 +3796,7 @@ class LIBPROTOC_EXPORT MsgExchangeItemReq : public ::google::protobuf::Message /
                &_MsgExchangeItemReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    29;
+    30;
 
   void Swap(MsgExchangeItemReq* other);
   friend void swap(MsgExchangeItemReq& a, MsgExchangeItemReq& b) {
@@ -3817,7 +3936,7 @@ class LIBPROTOC_EXPORT MsgCleanItemReq : public ::google::protobuf::Message /* @
                &_MsgCleanItemReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    30;
+    31;
 
   void Swap(MsgCleanItemReq* other);
   friend void swap(MsgCleanItemReq& a, MsgCleanItemReq& b) {
@@ -3893,6 +4012,132 @@ class LIBPROTOC_EXPORT MsgCleanItemReq : public ::google::protobuf::Message /* @
 };
 // -------------------------------------------------------------------
 
+class LIBPROTOC_EXPORT MsgMoveAllItemReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgMoveAllItemReq) */ {
+ public:
+  MsgMoveAllItemReq();
+  virtual ~MsgMoveAllItemReq();
+
+  MsgMoveAllItemReq(const MsgMoveAllItemReq& from);
+
+  inline MsgMoveAllItemReq& operator=(const MsgMoveAllItemReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  MsgMoveAllItemReq(MsgMoveAllItemReq&& from) noexcept
+    : MsgMoveAllItemReq() {
+    *this = ::std::move(from);
+  }
+
+  inline MsgMoveAllItemReq& operator=(MsgMoveAllItemReq&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgMoveAllItemReq& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MsgMoveAllItemReq* internal_default_instance() {
+    return reinterpret_cast<const MsgMoveAllItemReq*>(
+               &_MsgMoveAllItemReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    32;
+
+  void Swap(MsgMoveAllItemReq* other);
+  friend void swap(MsgMoveAllItemReq& a, MsgMoveAllItemReq& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MsgMoveAllItemReq* New() const final {
+    return CreateMaybeMessage<MsgMoveAllItemReq>(NULL);
+  }
+
+  MsgMoveAllItemReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MsgMoveAllItemReq>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const MsgMoveAllItemReq& from);
+  void MergeFrom(const MsgMoveAllItemReq& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MsgMoveAllItemReq* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // bytes sourcename = 1;
+  void clear_sourcename();
+  static const int kSourcenameFieldNumber = 1;
+  const ::std::string& sourcename() const;
+  void set_sourcename(const ::std::string& value);
+  #if LANG_CXX11
+  void set_sourcename(::std::string&& value);
+  #endif
+  void set_sourcename(const char* value);
+  void set_sourcename(const void* value, size_t size);
+  ::std::string* mutable_sourcename();
+  ::std::string* release_sourcename();
+  void set_allocated_sourcename(::std::string* sourcename);
+
+  // bytes targetname = 2;
+  void clear_targetname();
+  static const int kTargetnameFieldNumber = 2;
+  const ::std::string& targetname() const;
+  void set_targetname(const ::std::string& value);
+  #if LANG_CXX11
+  void set_targetname(::std::string&& value);
+  #endif
+  void set_targetname(const char* value);
+  void set_targetname(const void* value, size_t size);
+  ::std::string* mutable_targetname();
+  ::std::string* release_targetname();
+  void set_allocated_targetname(::std::string* targetname);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgMoveAllItemReq)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr sourcename_;
+  ::google::protobuf::internal::ArenaStringPtr targetname_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_FrameClientMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
 class LIBPROTOC_EXPORT MsgSortItemReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgSortItemReq) */ {
  public:
   MsgSortItemReq();
@@ -3928,7 +4173,7 @@ class LIBPROTOC_EXPORT MsgSortItemReq : public ::google::protobuf::Message /* @@
                &_MsgSortItemReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    31;
+    33;
 
   void Swap(MsgSortItemReq* other);
   friend void swap(MsgSortItemReq& a, MsgSortItemReq& b) {
@@ -4039,7 +4284,7 @@ class LIBPROTOC_EXPORT MsgRemoveItemReq : public ::google::protobuf::Message /* 
                &_MsgRemoveItemReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    32;
+    34;
 
   void Swap(MsgRemoveItemReq* other);
   friend void swap(MsgRemoveItemReq& a, MsgRemoveItemReq& b) {
@@ -4157,7 +4402,7 @@ class LIBPROTOC_EXPORT MsgViewMailReq : public ::google::protobuf::Message /* @@
                &_MsgViewMailReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    33;
+    35;
 
   void Swap(MsgViewMailReq* other);
   friend void swap(MsgViewMailReq& a, MsgViewMailReq& b) {
@@ -4260,7 +4505,7 @@ class LIBPROTOC_EXPORT MsgDeleteMailReq : public ::google::protobuf::Message /* 
                &_MsgDeleteMailReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    34;
+    36;
 
   void Swap(MsgDeleteMailReq* other);
   friend void swap(MsgDeleteMailReq& a, MsgDeleteMailReq& b) {
@@ -4363,7 +4608,7 @@ class LIBPROTOC_EXPORT MsgQueryMailReq : public ::google::protobuf::Message /* @
                &_MsgQueryMailReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    35;
+    37;
 
   void Swap(MsgQueryMailReq* other);
   friend void swap(MsgQueryMailReq& a, MsgQueryMailReq& b) {
@@ -4459,7 +4704,7 @@ class LIBPROTOC_EXPORT MsgMailRewardReq : public ::google::protobuf::Message /* 
                &_MsgMailRewardReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    36;
+    38;
 
   void Swap(MsgMailRewardReq* other);
   friend void swap(MsgMailRewardReq& a, MsgMailRewardReq& b) {
@@ -4562,7 +4807,7 @@ class LIBPROTOC_EXPORT MsgBuyStoreReq : public ::google::protobuf::Message /* @@
                &_MsgBuyStoreReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    37;
+    39;
 
   void Swap(MsgBuyStoreReq* other);
   friend void swap(MsgBuyStoreReq& a, MsgBuyStoreReq& b) {
@@ -4702,7 +4947,7 @@ class LIBPROTOC_EXPORT MsgQueryStoreReq : public ::google::protobuf::Message /* 
                &_MsgQueryStoreReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    38;
+    40;
 
   void Swap(MsgQueryStoreReq* other);
   friend void swap(MsgQueryStoreReq& a, MsgQueryStoreReq& b) {
@@ -4813,7 +5058,7 @@ class LIBPROTOC_EXPORT MsgQueryStoreAck : public ::google::protobuf::Message /* 
                &_MsgQueryStoreAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    39;
+    41;
 
   void Swap(MsgQueryStoreAck* other);
   friend void swap(MsgQueryStoreAck& a, MsgQueryStoreAck& b) {
@@ -4939,7 +5184,7 @@ class LIBPROTOC_EXPORT MsgApplyPayOrderReq : public ::google::protobuf::Message 
                &_MsgApplyPayOrderReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    40;
+    42;
 
   void Swap(MsgApplyPayOrderReq* other);
   friend void swap(MsgApplyPayOrderReq& a, MsgApplyPayOrderReq& b) {
@@ -5050,7 +5295,7 @@ class LIBPROTOC_EXPORT MsgApplyPayOrderAck : public ::google::protobuf::Message 
                &_MsgApplyPayOrderAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    41;
+    43;
 
   void Swap(MsgApplyPayOrderAck* other);
   friend void swap(MsgApplyPayOrderAck& a, MsgApplyPayOrderAck& b) {
@@ -5176,7 +5421,7 @@ class LIBPROTOC_EXPORT MsgPayResultReq : public ::google::protobuf::Message /* @
                &_MsgPayResultReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    42;
+    44;
 
   void Swap(MsgPayResultReq* other);
   friend void swap(MsgPayResultReq& a, MsgPayResultReq& b) {
@@ -5309,7 +5554,7 @@ class LIBPROTOC_EXPORT MsgQueryPayReq : public ::google::protobuf::Message /* @@
                &_MsgQueryPayReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    43;
+    45;
 
   void Swap(MsgQueryPayReq* other);
   friend void swap(MsgQueryPayReq& a, MsgQueryPayReq& b) {
@@ -5405,7 +5650,7 @@ class LIBPROTOC_EXPORT MsgQueryRankListReq : public ::google::protobuf::Message 
                &_MsgQueryRankListReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    44;
+    46;
 
   void Swap(MsgQueryRankListReq* other);
   friend void swap(MsgQueryRankListReq& a, MsgQueryRankListReq& b) {
@@ -5508,7 +5753,7 @@ class LIBPROTOC_EXPORT MsgQueryRankListAck : public ::google::protobuf::Message 
                &_MsgQueryRankListAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    45;
+    47;
 
   void Swap(MsgQueryRankListAck* other);
   friend void swap(MsgQueryRankListAck& a, MsgQueryRankListAck& b) {
@@ -5624,7 +5869,7 @@ class LIBPROTOC_EXPORT MsgQueryFriendRankListReq : public ::google::protobuf::Me
                &_MsgQueryFriendRankListReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    46;
+    48;
 
   void Swap(MsgQueryFriendRankListReq* other);
   friend void swap(MsgQueryFriendRankListReq& a, MsgQueryFriendRankListReq& b) {
@@ -5727,7 +5972,7 @@ class LIBPROTOC_EXPORT MsgQueryFriendRankListAck : public ::google::protobuf::Me
                &_MsgQueryFriendRankListAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    47;
+    49;
 
   void Swap(MsgQueryFriendRankListAck* other);
   friend void swap(MsgQueryFriendRankListAck& a, MsgQueryFriendRankListAck& b) {
@@ -5843,7 +6088,7 @@ class LIBPROTOC_EXPORT MsgAddRelationReq : public ::google::protobuf::Message /*
                &_MsgAddRelationReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    48;
+    50;
 
   void Swap(MsgAddRelationReq* other);
   friend void swap(MsgAddRelationReq& a, MsgAddRelationReq& b) {
@@ -5991,7 +6236,7 @@ class LIBPROTOC_EXPORT MsgDelRelationReq : public ::google::protobuf::Message /*
                &_MsgDelRelationReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    49;
+    51;
 
   void Swap(MsgDelRelationReq* other);
   friend void swap(MsgDelRelationReq& a, MsgDelRelationReq& b) {
@@ -6109,7 +6354,7 @@ class LIBPROTOC_EXPORT MsgReplyRelationInviteReq : public ::google::protobuf::Me
                &_MsgReplyRelationInviteReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    50;
+    52;
 
   void Swap(MsgReplyRelationInviteReq* other);
   friend void swap(MsgReplyRelationInviteReq& a, MsgReplyRelationInviteReq& b) {
@@ -6234,7 +6479,7 @@ class LIBPROTOC_EXPORT MsgSetRefuseRelationInviteReq : public ::google::protobuf
                &_MsgSetRefuseRelationInviteReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    51;
+    53;
 
   void Swap(MsgSetRefuseRelationInviteReq* other);
   friend void swap(MsgSetRefuseRelationInviteReq& a, MsgSetRefuseRelationInviteReq& b) {
@@ -6407,6 +6652,37 @@ inline ::google::protobuf::RepeatedPtrField< ::std::string>*
 MsgResultDisplay::mutable_param() {
   // @@protoc_insertion_point(field_mutable_list:KFMsg.MsgResultDisplay.param)
   return &param_;
+}
+
+// -------------------------------------------------------------------
+
+// MsgTellNotice
+
+// repeated .KFMsg.PBNotice notice = 1;
+inline int MsgTellNotice::notice_size() const {
+  return notice_.size();
+}
+inline ::KFMsg::PBNotice* MsgTellNotice::mutable_notice(int index) {
+  // @@protoc_insertion_point(field_mutable:KFMsg.MsgTellNotice.notice)
+  return notice_.Mutable(index);
+}
+inline ::google::protobuf::RepeatedPtrField< ::KFMsg::PBNotice >*
+MsgTellNotice::mutable_notice() {
+  // @@protoc_insertion_point(field_mutable_list:KFMsg.MsgTellNotice.notice)
+  return &notice_;
+}
+inline const ::KFMsg::PBNotice& MsgTellNotice::notice(int index) const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgTellNotice.notice)
+  return notice_.Get(index);
+}
+inline ::KFMsg::PBNotice* MsgTellNotice::add_notice() {
+  // @@protoc_insertion_point(field_add:KFMsg.MsgTellNotice.notice)
+  return notice_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBNotice >&
+MsgTellNotice::notice() const {
+  // @@protoc_insertion_point(field_list:KFMsg.MsgTellNotice.notice)
+  return notice_;
 }
 
 // -------------------------------------------------------------------
@@ -8212,6 +8488,116 @@ inline void MsgCleanItemReq::set_allocated_sourcename(::std::string* sourcename)
 
 // -------------------------------------------------------------------
 
+// MsgMoveAllItemReq
+
+// bytes sourcename = 1;
+inline void MsgMoveAllItemReq::clear_sourcename() {
+  sourcename_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& MsgMoveAllItemReq::sourcename() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgMoveAllItemReq.sourcename)
+  return sourcename_.GetNoArena();
+}
+inline void MsgMoveAllItemReq::set_sourcename(const ::std::string& value) {
+  
+  sourcename_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.MsgMoveAllItemReq.sourcename)
+}
+#if LANG_CXX11
+inline void MsgMoveAllItemReq::set_sourcename(::std::string&& value) {
+  
+  sourcename_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgMoveAllItemReq.sourcename)
+}
+#endif
+inline void MsgMoveAllItemReq::set_sourcename(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  sourcename_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.MsgMoveAllItemReq.sourcename)
+}
+inline void MsgMoveAllItemReq::set_sourcename(const void* value, size_t size) {
+  
+  sourcename_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgMoveAllItemReq.sourcename)
+}
+inline ::std::string* MsgMoveAllItemReq::mutable_sourcename() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.MsgMoveAllItemReq.sourcename)
+  return sourcename_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* MsgMoveAllItemReq::release_sourcename() {
+  // @@protoc_insertion_point(field_release:KFMsg.MsgMoveAllItemReq.sourcename)
+  
+  return sourcename_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgMoveAllItemReq::set_allocated_sourcename(::std::string* sourcename) {
+  if (sourcename != NULL) {
+    
+  } else {
+    
+  }
+  sourcename_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), sourcename);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgMoveAllItemReq.sourcename)
+}
+
+// bytes targetname = 2;
+inline void MsgMoveAllItemReq::clear_targetname() {
+  targetname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& MsgMoveAllItemReq::targetname() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgMoveAllItemReq.targetname)
+  return targetname_.GetNoArena();
+}
+inline void MsgMoveAllItemReq::set_targetname(const ::std::string& value) {
+  
+  targetname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.MsgMoveAllItemReq.targetname)
+}
+#if LANG_CXX11
+inline void MsgMoveAllItemReq::set_targetname(::std::string&& value) {
+  
+  targetname_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgMoveAllItemReq.targetname)
+}
+#endif
+inline void MsgMoveAllItemReq::set_targetname(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  targetname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.MsgMoveAllItemReq.targetname)
+}
+inline void MsgMoveAllItemReq::set_targetname(const void* value, size_t size) {
+  
+  targetname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgMoveAllItemReq.targetname)
+}
+inline ::std::string* MsgMoveAllItemReq::mutable_targetname() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.MsgMoveAllItemReq.targetname)
+  return targetname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* MsgMoveAllItemReq::release_targetname() {
+  // @@protoc_insertion_point(field_release:KFMsg.MsgMoveAllItemReq.targetname)
+  
+  return targetname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgMoveAllItemReq::set_allocated_targetname(::std::string* targetname) {
+  if (targetname != NULL) {
+    
+  } else {
+    
+  }
+  targetname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), targetname);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgMoveAllItemReq.targetname)
+}
+
+// -------------------------------------------------------------------
+
 // MsgSortItemReq
 
 // bytes sourcename = 1;
@@ -9571,6 +9957,10 @@ inline void MsgSetRefuseRelationInviteReq::set_refuse(::google::protobuf::uint32
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

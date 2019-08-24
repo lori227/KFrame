@@ -40,7 +40,13 @@ namespace KFrame
     KFMySQLType* KFMySQLConfig::FindMySQLType( const std::string& module, uint32 logicid )
     {
         auto key = ModuleKey( module, logicid );
-        return _mysql_type.Find( key );
+        auto mysqltype = _mysql_type.Find( key );
+        if ( mysqltype == nullptr )
+        {
+            mysqltype = _mysql_type.First();
+        }
+
+        return mysqltype;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////

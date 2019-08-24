@@ -38,7 +38,13 @@ namespace KFrame
     KFRedisType* KFRedisConfig::FindRedisType( const std::string& module, uint32 logicid )
     {
         auto key = ModuleKey( module, logicid );
-        return _redis_type.Find( key );
+        auto redistype = _redis_type.Find( key );
+        if ( redistype == nullptr )
+        {
+            redistype = _redis_type.First();
+        }
+
+        return redistype;
     }
     /////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////

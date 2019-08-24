@@ -18,6 +18,18 @@ namespace KFrame
         void ShutDown();
         void Initialize( KFMongoType* kfmongotype );
         /////////////////////////////////////////////////////////////////////////////////////////////
+        // 创建索引
+        virtual bool CreateIndex( const std::string& table, const std::string& indexname, bool unique = false, uint32 ttl = 0u );
+        virtual bool CreateIndex( const std::string& table, const std::string& indexname, const MapString& values, bool unique = false, uint32 ttl = 0u );
+
+        // 设置过期时间
+        virtual bool Expire( const std::string& table, uint64 key, uint64 validtime );
+        virtual bool Expire( const std::string& table, const std::string& key, uint64 validtime );
+
+        // 具体时间点
+        virtual bool ExpireAt( const std::string& table, uint64 key, uint64 expiretime );
+        virtual bool ExpireAt( const std::string& table, const std::string& key, uint64 expiretime );
+        /////////////////////////////////////////////////////////////////////////////////////////////
         // 插入数据( 存在更新, 不存在插入 )
         virtual bool Insert( const std::string& table, const MapString& values );
         virtual bool Insert( const std::string& table, uint64 key, const MapString& values );
@@ -59,7 +71,7 @@ namespace KFrame
         virtual bool Delete( const std::string& table, const std::string& key );
         virtual bool Delete( const std::string& table, const std::string& keyname, uint64 key );
         virtual bool Delete( const std::string& table, const std::string& keyname, const std::string& key );
-        virtual bool Delete( const std::string& table, const MapString& keys );
+        virtual bool Delete( const std::string& table, const KFMongoSelector& kfseletor );
         /////////////////////////////////////////////////////////////////////////////////////////////
         virtual KFResult< uint64 >::UniqueType QueryUInt64( const std::string& table, uint64 key, const std::string& field );
         virtual KFResult< uint64 >::UniqueType QueryUInt64( const std::string& table, const std::string& key, const std::string& field );
@@ -73,6 +85,8 @@ namespace KFrame
         virtual KFResult< MapString >::UniqueType QueryMap( const std::string& table, const std::string& key );
         virtual KFResult< MapString >::UniqueType QueryMap( const std::string& table, uint64 key, const ListString& fields );
         virtual KFResult< MapString >::UniqueType QueryMap( const std::string& table, const std::string& key, const ListString& fields );
+        /////////////////////////////////////////////////////////////////////////////////////////////
+        virtual KFResult< ListMapString >::UniqueType QueryListMapString( const std::string& table, const KFMongoSelector& kfseletor );
     private:
         // 读执行器
         KFReadExecute* _read_execute = nullptr;

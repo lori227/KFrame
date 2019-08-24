@@ -41,7 +41,7 @@ namespace KFrame
             if ( keeper->_next_save_time <= nowtime )
             {
                 keeper->SetSaveTime( nowtime );
-                auto ok = SaveData( keeper->_zone_id, keeper->_player_id, keeper->_player_data );
+                auto ok = SaveData( keeper->_zone_id, keeper->_player_id, keeper->_player_data, keeper->_save_flag );
                 if ( ok )
                 {
                     removes.insert( keeper->_player_id );
@@ -68,7 +68,7 @@ namespace KFrame
         auto keeper = _data_keeper.Find( playerid );
         if ( keeper == nullptr )
         {
-            auto ok = SaveData( zoneid, playerid, playerdata );
+            auto ok = SaveData( zoneid, playerid, playerdata, saveflag );
             if ( ok )
             {
                 return;
@@ -79,6 +79,7 @@ namespace KFrame
         keeper = _data_keeper.Create( playerid );
         keeper->_zone_id = zoneid;
         keeper->_player_id = playerid;
+        keeper->_save_flag = saveflag;
         keeper->_player_data = playerdata;
         if ( keeper->_next_save_time == 0 )
         {
@@ -100,7 +101,7 @@ namespace KFrame
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFRedisDataExecute::SaveData( uint32 zoneid, uint64 playerid, const std::string& playerdata )
+    bool KFRedisDataExecute::SaveData( uint32 zoneid, uint64 playerid, const std::string& playerdata, uint32 saveflag )
     {
         auto redisdriver = __REDIS_DATA_DRIVER__( zoneid );
         if ( redisdriver == nullptr )
@@ -116,7 +117,7 @@ namespace KFrame
             return false;
         }
 
-        if ( _kf_setting->_cache_time != 0u )
+        if ( _kf_setting->_cache_time != 0u && saveflag == KFSaveEnum::OfflineSave )
         {
             // 设置缓存时间
             redisdriver->Execute( "expire {}:{} {}", __KF_STRING__( player ), playerid, _kf_setting->_cache_time );
@@ -138,7 +139,27 @@ namespace KFrame
         return redisdriver->QueryString( "hget {}:{} {}", __KF_STRING__( player ), playerid, __KF_STRING__( data ) );
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFMongoDataExecute::SaveData( uint32 zoneid, uint64 playerid, const std::string& playerdata )
+    void KFMongoDataExecute::CreateZoneIndex( KFMongoDriver* mongodriver, uint32 zoneid )
+    {
+        if ( _kf_setting->_cache_time == 0u )
+        {
+            return;
+        }
+
+        auto create = _zone_index_map[ zoneid ];
+        if ( create == 1u )
+        {
+            return;
+        }
+
+        auto ok = mongodriver->CreateIndex( __KF_STRING__( player ), MongoKeyword::_expire );
+        if ( ok )
+        {
+            _zone_index_map[ zoneid ] = 1u;
+        }
+    }
+
+    bool KFMongoDataExecute::SaveData( uint32 zoneid, uint64 playerid, const std::string& playerdata, uint32 saveflag )
     {
         auto mongodriver = __MONGO_DATA_DRIVER__( zoneid );
         if ( mongodriver == nullptr )
@@ -147,12 +168,13 @@ namespace KFrame
             return false;
         }
 
+        CreateZoneIndex( mongodriver, zoneid );
         auto ok = mongodriver->Insert( __KF_STRING__( player ), playerid, __KF_STRING__( data ), playerdata );
         if ( ok )
         {
-            if ( _kf_setting->_cache_time != 0u )
+            if ( _kf_setting->_cache_time != 0u && saveflag == KFSaveEnum::OfflineSave )
             {
-
+                mongodriver->Expire( __KF_STRING__( player ), playerid, _kf_setting->_cache_time );
             }
         }
 
@@ -171,7 +193,7 @@ namespace KFrame
         return mongodriver->QueryString( __KF_STRING__( player ), playerid, __KF_STRING__( data ) );
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFMySQLDataExecute::SaveData( uint32 zoneid, uint64 playerid, const std::string& playerdata )
+    bool KFMySQLDataExecute::SaveData( uint32 zoneid, uint64 playerid, const std::string& playerdata, uint32 saveflag )
     {
         auto mysqldriver = __MYSQL_DATA_DRIVER__( zoneid );
         if ( mysqldriver == nullptr )

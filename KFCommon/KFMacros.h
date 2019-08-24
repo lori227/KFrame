@@ -57,7 +57,13 @@
     }
 #endif
 
-
+#ifndef __MAP_TO_PROTO__
+#define __MAP_TO_PROTO__( values, pbdata )\
+    for ( auto iter = values.begin(); iter != values.end(); ++iter )\
+    {\
+        pbdata[ iter->first ] = iter->second;\
+    }
+#endif
 ///////////////////////////////////////////////////////////////////////////////////////////////
 #ifndef __TOP_ONE__
     #define __TOP_ONE__ 1

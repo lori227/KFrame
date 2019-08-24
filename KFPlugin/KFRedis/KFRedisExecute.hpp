@@ -83,7 +83,7 @@ namespace KFrame
 
         // 添加执行命令
         KFResult< ListString >::UniqueType ListPipelineExecute( const ListString& commands );
-        KFResult< std::list< MapString > >::UniqueType ListMapPipelineExecute( const ListString& commands );
+        KFResult< ListMapString >::UniqueType ListMapPipelineExecute( const ListString& commands );
         ///////////////////////////////////////////////////////
     };
 }

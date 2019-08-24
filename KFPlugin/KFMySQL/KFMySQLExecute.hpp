@@ -68,12 +68,12 @@ namespace KFrame
         virtual ~KFReadExecute() = default;
 
         // 查询所有
-        KFResult< std::list< MapString > >::UniqueType Select( const std::string& table );
-        KFResult< std::list< MapString > >::UniqueType Select( const std::string& table, const ListString& fields );
-        KFResult< std::list< MapString > >::UniqueType Select( const std::string& table, const std::string& key );
-        KFResult< std::list< MapString > >::UniqueType Select( const std::string& table, const std::string& key, const ListString& fields );
-        KFResult< std::list< MapString > >::UniqueType Select( const std::string& table, const MapString& key );
-        KFResult< std::list< MapString > >::UniqueType Select( const std::string& table, const MapString& key, const ListString& fields );
+        KFResult< ListMapString >::UniqueType Select( const std::string& table );
+        KFResult< ListMapString >::UniqueType Select( const std::string& table, const ListString& fields );
+        KFResult< ListMapString >::UniqueType Select( const std::string& table, const std::string& key );
+        KFResult< ListMapString >::UniqueType Select( const std::string& table, const std::string& key, const ListString& fields );
+        KFResult< ListMapString >::UniqueType Select( const std::string& table, const MapString& key );
+        KFResult< ListMapString >::UniqueType Select( const std::string& table, const MapString& key, const ListString& fields );
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -82,7 +82,7 @@ namespace KFrame
         KFResult< std::string >::UniqueType StringExecute( std::string& strsql );
         KFResult< MapString >::UniqueType MapExecute( std::string& strsql );
         KFResult< ListString >::UniqueType ListExecute( std::string& strsql );
-        KFResult< std::list< MapString > >::UniqueType ListMapExecute( std::string& strsql );
+        KFResult< ListMapString >::UniqueType ListMapExecute( std::string& strsql );
     };
 }
 

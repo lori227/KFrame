@@ -98,32 +98,32 @@ namespace KFrame
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
-    KFResult< std::list< MapString > >::UniqueType KFMySQLLogic::Select( const std::string& table )
+    KFResult< ListMapString >::UniqueType KFMySQLLogic::Select( const std::string& table )
     {
         return _read_execute->Select( table );
     }
 
-    KFResult< std::list< MapString > >::UniqueType KFMySQLLogic::Select( const std::string& table, const ListString& fields )
+    KFResult< ListMapString >::UniqueType KFMySQLLogic::Select( const std::string& table, const ListString& fields )
     {
         return _read_execute->Select( table, fields );
     }
 
-    KFResult< std::list< MapString > >::UniqueType KFMySQLLogic::Select( const std::string& table, const std::string& key )
+    KFResult< ListMapString >::UniqueType KFMySQLLogic::Select( const std::string& table, const std::string& key )
     {
         return _read_execute->Select( table, key );
     }
 
-    KFResult< std::list< MapString > >::UniqueType KFMySQLLogic::Select( const std::string& table, const std::string& key, const ListString& fields )
+    KFResult< ListMapString >::UniqueType KFMySQLLogic::Select( const std::string& table, const std::string& key, const ListString& fields )
     {
         return _read_execute->Select( table, key, fields );
     }
 
-    KFResult< std::list< MapString > >::UniqueType KFMySQLLogic::Select( const std::string& table, const MapString& key )
+    KFResult< ListMapString >::UniqueType KFMySQLLogic::Select( const std::string& table, const MapString& key )
     {
         return _read_execute->Select( table, key );
     }
 
-    KFResult< std::list< MapString > >::UniqueType KFMySQLLogic::Select( const std::string& table, const MapString& key, const ListString& fields )
+    KFResult< ListMapString >::UniqueType KFMySQLLogic::Select( const std::string& table, const MapString& key, const ListString& fields )
     {
         return _read_execute->Select( table, key, fields );
     }
@@ -153,7 +153,7 @@ namespace KFrame
         return _read_execute->ListExecute( strsql );
     }
 
-    KFResult< std::list< MapString > >::UniqueType KFMySQLLogic::ListMapExecute( std::string& strsql )
+    KFResult< ListMapString >::UniqueType KFMySQLLogic::ListMapExecute( std::string& strsql )
     {
         return _read_execute->ListMapExecute( strsql );
     }

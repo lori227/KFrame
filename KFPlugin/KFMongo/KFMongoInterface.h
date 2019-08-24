@@ -2,14 +2,31 @@
 #define __KF_MONGO_INTERFACE_H__
 
 #include "KFrame.h"
+#include "KFMongoSelector.h"
 
 namespace KFrame
 {
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     class KFMongoDriver
     {
     public:
         virtual ~KFMongoDriver() = default;
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // database
+        // 创建索引
+        virtual bool CreateIndex( const std::string& table, const std::string& indexname, bool unique = false, uint32 ttl = 0u ) = 0;
+        virtual bool CreateIndex( const std::string& table, const std::string& indexname, const MapString& values, bool unique = false, uint32 ttl = 0u ) = 0;
+
+        // 设置过期时间
+        // 设置有效时间
+        virtual bool Expire( const std::string& table, uint64 key, uint64 validtime ) = 0;
+        virtual bool Expire( const std::string& table, const std::string& key, uint64 validtime ) = 0;
+
+        // 具体时间点
+        virtual bool ExpireAt( const std::string& table, uint64 key, uint64 expiretime ) = 0;
+        virtual bool ExpireAt( const std::string& table, const std::string& key, uint64 expiretime ) = 0;
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 插入数值( 存在更新, 不存在插入 )
@@ -109,7 +126,7 @@ namespace KFrame
         virtual bool Delete( const std::string& table, const std::string& key ) = 0;
         virtual bool Delete( const std::string& table, const std::string& keyname, uint64 key ) = 0;
         virtual bool Delete( const std::string& table, const std::string& keyname, const std::string& key ) = 0;
-        virtual bool Delete( const std::string& table, const MapString& keys ) = 0;
+        virtual bool Delete( const std::string& table, const KFMongoSelector& kfseletor ) = 0;
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -132,8 +149,9 @@ namespace KFrame
         virtual KFResult< MapString >::UniqueType QueryMap( const std::string& table, const std::string& key ) = 0;
         virtual KFResult< MapString >::UniqueType QueryMap( const std::string& table, uint64 key, const ListString& fields ) = 0;
         virtual KFResult< MapString >::UniqueType QueryMap( const std::string& table, const std::string& key, const ListString& fields ) = 0;
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        // 查询列表集合
+        virtual KFResult< ListMapString >::UniqueType QueryListMapString( const std::string& table, const KFMongoSelector& kfseletor ) = 0;
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     };
 

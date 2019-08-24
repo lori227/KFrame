@@ -24,6 +24,7 @@ enum FrameCodeEnum
 	MatchServerBusy				= 10011;	// 匹配服务器繁忙
 	LoginDatabaseBusy			= 10012;	// 登录数据库繁忙
 	PublicServerBusy			= 10013;	// 公共数据服务器繁忙
+	LogicServerBusy				= 10014;	// 逻辑服务器繁忙
 
 	// auth
 	AccountIsEmpty 				= 11001;	// 账号不能为空

@@ -3,6 +3,14 @@
 
 namespace KFrame
 {
+#define __DISPLAY_MESSAGE__()\
+    KFMsg::MsgResultDisplay display;\
+    display.set_result( result );\
+    for ( auto& param : params )\
+    {\
+        display.add_param( param );\
+    }\
+
     //////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////
     void KFDisplayModule::SendToClient( uint64 playerid, uint32 result, ListString& params )
@@ -12,13 +20,7 @@ namespace KFrame
             return;
         }
 
-        KFMsg::MsgResultDisplay display;
-        display.set_result( result );
-        for ( auto& param : params )
-        {
-            display.add_param( param );
-        }
-
+        __DISPLAY_MESSAGE__();
         _kf_tcp_server->SendNetMessage( playerid, KFMsg::MSG_RESULT_DISPLAY, &display );
     }
 
@@ -29,13 +31,7 @@ namespace KFrame
             return;
         }
 
-        KFMsg::MsgResultDisplay display;
-        display.set_result( result );
-        for ( auto& param : params )
-        {
-            display.add_param( param );
-        }
-
+        __DISPLAY_MESSAGE__();
         _kf_game->SendToClient( player, KFMsg::MSG_RESULT_DISPLAY, &display );
     }
 
@@ -46,12 +42,7 @@ namespace KFrame
             return;
         }
 
-        KFMsg::MsgResultDisplay display;
-        display.set_result( result );
-        for ( auto& param : params )
-        {
-            display.add_param( param );
-        }
+        __DISPLAY_MESSAGE__();
         _kf_route->SendToPlayer( 0u, serverid, playerid, KFMsg::MSG_RESULT_DISPLAY, &display, true );
     }
 
@@ -62,12 +53,7 @@ namespace KFrame
             return;
         }
 
-        KFMsg::MsgResultDisplay display;
-        display.set_result( result );
-        for ( auto& param : params )
-        {
-            display.add_param( param );
-        }
+        __DISPLAY_MESSAGE__();
         _kf_game->SendToPlayer( 0u, kfbasic, KFMsg::MSG_RESULT_DISPLAY, &display );
     }
 
@@ -78,12 +64,7 @@ namespace KFrame
             return;
         }
 
-        KFMsg::MsgResultDisplay display;
-        display.set_result( result );
-        for ( auto& param : params )
-        {
-            display.add_param( param );
-        }
+        __DISPLAY_MESSAGE__();
         _kf_route->SendToRoute( route, KFMsg::MSG_RESULT_DISPLAY, &display );
     }
 

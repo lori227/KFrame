@@ -114,7 +114,7 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< std::list< MapString > >::UniqueType KFRedisLogic::ListMapPipelineExecute()
+    KFResult< ListMapString >::UniqueType KFRedisLogic::ListMapPipelineExecute()
     {
         auto kfresult = _read_execute->ListMapPipelineExecute( _commands );
         _commands.clear();

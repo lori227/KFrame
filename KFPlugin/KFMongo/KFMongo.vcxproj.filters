@@ -17,5 +17,6 @@
     <ClInclude Include="KFMongoLogic.hpp" />
     <ClInclude Include="KFMongoModule.hpp" />
     <ClInclude Include="KFMongoPlugin.hpp" />
+    <ClInclude Include="KFMongoSelector.h" />
   </ItemGroup>
 </Project>

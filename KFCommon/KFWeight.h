@@ -183,7 +183,7 @@ namespace KFrame
         {
             for ( auto data : _weight_data )
             {
-                if ( data->_id == id )
+                if ( data->_id == id && data->_weight != 0u )
                 {
                     return true;
                 }
