@@ -50,11 +50,11 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////
-    class KFWriteExecute : public KFRedisExecute
+    class KFRedisWriteExecute : public KFRedisExecute
     {
     public:
-        KFWriteExecute() = default;
-        virtual ~KFWriteExecute() = default;
+        KFRedisWriteExecute() = default;
+        virtual ~KFRedisWriteExecute() = default;
 
         // 写操作
         KFResult< voidptr >::UniqueType VoidExecute( const std::string& strsql );
@@ -67,11 +67,11 @@ namespace KFrame
     };
     /////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////
-    class KFReadExecute : public KFRedisExecute
+    class KFRedisReadExecute : public KFRedisExecute
     {
     public:
-        KFReadExecute() = default;
-        virtual ~KFReadExecute() = default;
+        KFRedisReadExecute() = default;
+        virtual ~KFRedisReadExecute() = default;
 
         ///////////////////////////////////////////////////////
         // 读操作

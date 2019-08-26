@@ -121,55 +121,21 @@ namespace KFrame
                 continue;
             }
 
-            switch ( kfresetdata->_type )
-            {
-            case KFResetEnum::Once:
-                ResetOncePlayerLogic( player, kfresetdata, lastdate, nowdate );
-                break;
-            case KFResetEnum::Daily:
-                ResetDailyPlayerLogic( player, kfresetdata, lastdate, nowdate );
-                break;
-            default:
-                break;
-            }
+            // 直接回调函数
+            kfresetdata->_function( player, lastdate.GetTime(), nowdate.GetTime() );
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFResetModule::AddResetFunction( const KFTimeData& timedata, uint32 type, uint32 count, const std::string& module, KFResetFunction& function )
+    void KFResetModule::AddResetFunction( const KFTimeData& timedata, const std::string& module, KFResetFunction& function )
     {
         auto kfresetdata = _reset_data_list.Create( module );
         kfresetdata->_time_data = timedata;
-        kfresetdata->_type = type;
-        kfresetdata->_count = count;
         kfresetdata->_function = function;
     }
 
     void KFResetModule::RemoveResetFunction( const std::string& module )
     {
         _reset_data_list.Remove( module );
-    }
-
-    void KFResetModule::ResetOncePlayerLogic( KFEntity* player, const KFResetData* kfresetdata, KFDate& lastdate, KFDate& nowdate )
-    {
-        // 直接回调函数
-        kfresetdata->_function( player, lastdate.GetTime(), nowdate.GetTime() );
-    }
-
-    void KFResetModule::ResetDailyPlayerLogic( KFEntity* player, const KFResetData* kfresetdata, KFDate& lastdate, KFDate& nowdate )
-    {
-        // 计算上一次的时间
-        uint64 nowtime = nowdate.GetTime();
-        for ( auto i = 0u; i < kfresetdata->_count; ++i )
-        {
-            auto lasttime = KFDate::GetLastTime( &kfresetdata->_time_data, nowtime );
-            kfresetdata->_function( player, lasttime, nowtime );
-            nowtime = lasttime;
-
-            if ( lasttime == 0u || !KFDate::CheckTime( &kfresetdata->_time_data, lastdate.GetTime(), lasttime ) )
-            {
-                break;
-            }
-        }
     }
 }

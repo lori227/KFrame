@@ -20,7 +20,6 @@
 
 namespace KFrame
 {
-    class KFComponent;
     class KFSkinModule : public KFSkinInterface
     {
     public:

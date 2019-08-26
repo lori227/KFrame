@@ -5,14 +5,14 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////
     KFMySQLLogic::KFMySQLLogic()
     {
-        _read_execute = __KF_NEW__( KFReadExecute );
-        _write_execute = __KF_NEW__( KFWriteExecute );
+        _read_execute = __KF_NEW__( KFMySQLReadExecute );
+        _write_execute = __KF_NEW__( KFMySQLWriteExecute );
     }
 
     KFMySQLLogic::~KFMySQLLogic()
     {
-        __KF_DELETE__( KFReadExecute, _read_execute );
-        __KF_DELETE__( KFWriteExecute, _write_execute );
+        __KF_DELETE__( KFMySQLReadExecute, _read_execute );
+        __KF_DELETE__( KFMySQLWriteExecute, _write_execute );
     }
 
     void KFMySQLLogic::ShutDown()

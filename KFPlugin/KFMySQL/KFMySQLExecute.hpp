@@ -35,11 +35,11 @@ namespace KFrame
     };
 
 
-    class KFWriteExecute : public KFMySQLExecute
+    class KFMySQLWriteExecute : public KFMySQLExecute
     {
     public:
-        KFWriteExecute() = default;
-        virtual ~KFWriteExecute() = default;
+        KFMySQLWriteExecute() = default;
+        virtual ~KFMySQLWriteExecute() = default;
 
         // 插入记录
         bool Insert( const std::string& table, const MapString& invalue );
@@ -61,11 +61,11 @@ namespace KFrame
         KFResult< voidptr >::UniqueType VoidExecute( std::string& strsql );
     };
 
-    class KFReadExecute : public KFMySQLExecute
+    class KFMySQLReadExecute : public KFMySQLExecute
     {
     public:
-        KFReadExecute() = default;
-        virtual ~KFReadExecute() = default;
+        KFMySQLReadExecute() = default;
+        virtual ~KFMySQLReadExecute() = default;
 
         // 查询所有
         KFResult< ListMapString >::UniqueType Select( const std::string& table );

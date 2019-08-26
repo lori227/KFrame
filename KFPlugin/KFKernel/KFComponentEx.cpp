@@ -173,6 +173,8 @@ namespace KFrame
         }
         else
         {
+            RemoveEntity( kfentity );
+            kfentity = nullptr;
             __LOG_ERROR__( "[{}:{}] create error!", _component_name, key );
         }
 
@@ -220,8 +222,11 @@ namespace KFrame
     bool KFComponentEx::RemoveEntity( KFEntity* kfentity )
     {
         // 释放资源, 保存
-        UnInitEntity( kfentity );
-        DeleteSaveEntity( kfentity );
+        if ( kfentity->IsInited() )
+        {
+            UnInitEntity( kfentity );
+            DeleteSaveEntity( kfentity );
+        }
 
         _sync_entitys.erase( kfentity );
         return _entitys.Remove( kfentity->GetKeyID() );

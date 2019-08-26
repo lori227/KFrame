@@ -52,10 +52,10 @@ namespace KFrame
         ListString _commands;
 
         // 读执行器
-        KFReadExecute* _read_execute{ nullptr };
+        KFRedisReadExecute* _read_execute{ nullptr };
 
         // 写执行器
-        KFWriteExecute* _write_execute{ nullptr };
+        KFRedisWriteExecute* _write_execute{ nullptr };
     };
 }
 #endif

@@ -59,10 +59,10 @@ namespace KFrame
 
     private:
         // 读执行器
-        KFReadExecute* _read_execute = nullptr;
+        KFMySQLReadExecute* _read_execute = nullptr;
 
         // 写执行器
-        KFWriteExecute* _write_execute = nullptr;
+        KFMySQLWriteExecute* _write_execute = nullptr;
     };
 }
 #endif

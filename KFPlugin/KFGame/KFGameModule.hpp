@@ -121,6 +121,9 @@ namespace KFrame
 
         // 查询玩家数据
         void OnAfterQueryPlayerData( uint32 result, uint64 playerid, const KFMsg::PBObject* playerdata );
+
+        // 发送登陆失败消息
+        void SendLoginToGateAck( uint32 result, const KFMsg::PBLoginData* pblogin );
     private:
         // 世界服务器id
         KFConHash _world_hash;

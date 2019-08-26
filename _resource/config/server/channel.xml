@@ -1,5 +1,5 @@
 <root version="00000">
 	<item Id="1" Debug="1" Release="1"/>
-	<item LoginUrl="https://api.weixin.qq.com" Id="2" Debug="1" Release="1" AppId="wxb40dae200ff6ad9b" AppKey="7db4acedf06deaaa7e0775035462fad6"/>
-	<item LoginUrl="https://api.steampowered.com/ISteamUserAuth/AuthenticateUserTicket/v1/" Id="3" Debug="1" Release="1" AppId="982550" AppKey="A9A9AD18A647444DB16CB8CB1F497216"/>
+	<item Id="2" Debug="1" Release="1" AppId="wxb40dae200ff6ad9b" AppKey="7db4acedf06deaaa7e0775035462fad6" LoginUrl="https://api.weixin.qq.com"/>
+	<item Id="3" Debug="1" Release="1" AppId="982550" AppKey="A9A9AD18A647444DB16CB8CB1F497216" LoginUrl="https://api.steampowered.com/ISteamUserAuth/AuthenticateUserTicket/v1/"/>
 </root>

@@ -89,10 +89,10 @@ namespace KFrame
         virtual KFResult< ListMapString >::UniqueType QueryListMapString( const std::string& table, const KFMongoSelector& kfseletor );
     private:
         // 读执行器
-        KFReadExecute* _read_execute = nullptr;
+        KFMongoReadExecute* _read_execute = nullptr;
 
         // 写执行器
-        KFWriteExecute* _write_execute = nullptr;
+        KFMongoWriteExecute* _write_execute = nullptr;
     };
 }
 #endif

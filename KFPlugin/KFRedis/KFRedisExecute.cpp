@@ -142,7 +142,7 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////
-    KFResult< voidptr >::UniqueType KFWriteExecute::VoidExecute( const std::string& strsql )
+    KFResult< voidptr >::UniqueType KFRedisWriteExecute::VoidExecute( const std::string& strsql )
     {
         __NEW_RESULT__( voidptr );
         auto redisreply = TryExecute( kfresult.get(), strsql );
@@ -150,7 +150,7 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< uint64 >::UniqueType KFWriteExecute::UpdateExecute( const std::string& strsql )
+    KFResult< uint64 >::UniqueType KFRedisWriteExecute::UpdateExecute( const std::string& strsql )
     {
         __NEW_RESULT__( uint64 );
         auto redisreply = TryExecute( kfresult.get(), strsql );
@@ -163,7 +163,7 @@ namespace KFrame
     }
 
     // todo: 发生错误是否需要回滚
-    KFResult< voidptr >::UniqueType KFWriteExecute::Pipeline( const ListString& commands )
+    KFResult< voidptr >::UniqueType KFRedisWriteExecute::Pipeline( const ListString& commands )
     {
         __NEW_RESULT__( voidptr );
         if ( _redis_context == nullptr )
@@ -209,7 +209,7 @@ namespace KFrame
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    KFResult< std::string >::UniqueType KFReadExecute::StringExecute( const std::string& strsql )
+    KFResult< std::string >::UniqueType KFRedisReadExecute::StringExecute( const std::string& strsql )
     {
         __NEW_RESULT__( std::string );
         auto redisreply = TryExecute( kfresult.get(), strsql );
@@ -222,7 +222,7 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< uint64 >::UniqueType KFReadExecute::UInt64Execute( const std::string& strsql )
+    KFResult< uint64 >::UniqueType KFRedisReadExecute::UInt64Execute( const std::string& strsql )
     {
         __NEW_RESULT__( uint64 );
         auto redisreply = TryExecute( kfresult.get(), strsql );
@@ -242,7 +242,7 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< MapString >::UniqueType KFReadExecute::MapExecute( const std::string& strsql )
+    KFResult< MapString >::UniqueType KFRedisReadExecute::MapExecute( const std::string& strsql )
     {
         __NEW_RESULT__( MapString );
         auto redisreply = TryExecute( kfresult.get(), strsql );
@@ -265,7 +265,7 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< VectorString >::UniqueType KFReadExecute::VectorExecute( const std::string& strsql )
+    KFResult< VectorString >::UniqueType KFRedisReadExecute::VectorExecute( const std::string& strsql )
     {
         __NEW_RESULT__( VectorString );
         auto redisreply = TryExecute( kfresult.get(), strsql );
@@ -282,7 +282,7 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< ListString >::UniqueType KFReadExecute::ListExecute( const std::string& strsql )
+    KFResult< ListString >::UniqueType KFRedisReadExecute::ListExecute( const std::string& strsql )
     {
         __NEW_RESULT__( ListString );
         auto redisreply = TryExecute( kfresult.get(), strsql );
@@ -299,7 +299,7 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< ListString >::UniqueType KFReadExecute::ListPipelineExecute( const ListString& commands )
+    KFResult< ListString >::UniqueType KFRedisReadExecute::ListPipelineExecute( const ListString& commands )
     {
         __NEW_RESULT__( ListString );
         if ( _redis_context == nullptr )
@@ -344,7 +344,7 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< ListMapString >::UniqueType KFReadExecute::ListMapPipelineExecute( const ListString& commands )
+    KFResult< ListMapString >::UniqueType KFRedisReadExecute::ListMapPipelineExecute( const ListString& commands )
     {
         __NEW_RESULT__( ListMapString );
         if ( _redis_context == nullptr )

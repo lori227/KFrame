@@ -34,16 +34,13 @@ namespace KFrame
         // 添加数值
         void AddDocumentValue( Document& pocodocument, const std::string& key, const std::string& value );
         void AddDocumentValue( Document& pocodocument, const std::string& key, const std::string& value, const MapString& values );
-    protected:
-        // 数据库名
-        std::string _database;
     };
 
-    class KFWriteExecute : public KFMongoExecute
+    class KFMongoWriteExecute : public KFMongoExecute
     {
     public:
-        KFWriteExecute() = default;
-        virtual ~KFWriteExecute() = default;
+        KFMongoWriteExecute() = default;
+        virtual ~KFMongoWriteExecute() = default;
 
         // 设置过期时间
         bool ExpireAt( const std::string& table, const std::string& key, uint64 expiretime );
@@ -66,11 +63,11 @@ namespace KFrame
         bool Pull( const std::string& table, const std::string& key, const std::string& field, ListString& inlist );
     };
 
-    class KFReadExecute : public KFMongoExecute
+    class KFMongoReadExecute : public KFMongoExecute
     {
     public:
-        KFReadExecute() = default;
-        virtual ~KFReadExecute() = default;
+        KFMongoReadExecute() = default;
+        virtual ~KFMongoReadExecute() = default;
 
         // 查询
         KFResult< uint64 >::UniqueType QueryUInt64( const std::string& table, const std::string& key, const std::string& field );

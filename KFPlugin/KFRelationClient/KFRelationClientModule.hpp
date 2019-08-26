@@ -24,7 +24,6 @@
 
 namespace KFrame
 {
-    class KFComponent;
     class KFRelationClientModule : public KFRelationClientInterface
     {
     public:

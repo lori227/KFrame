@@ -22,12 +22,6 @@ namespace KFrame
         // 时间数据
         KFTimeData _time_data;
 
-        // 重置类型
-        uint32 _type = 0u;
-
-        // 次数
-        uint32 _count = 1u;
-
         // 回调函数
         KFResetFunction _function = nullptr;
     };
@@ -51,7 +45,7 @@ namespace KFrame
 
     protected:
         // 添加重置函数
-        virtual void AddResetFunction( const KFTimeData& timedata, uint32 type, uint32 count, const std::string& module, KFResetFunction& function );
+        virtual void AddResetFunction( const KFTimeData& timedata, const std::string& module, KFResetFunction& function );
 
         // 删除重置函数
         virtual void RemoveResetFunction( const std::string& module );
@@ -73,8 +67,6 @@ namespace KFrame
 
         // 重置逻辑
         void ResetPlayerLogic( KFEntity* player, KFDate& lastdate, KFDate& nowdate );
-        void ResetOncePlayerLogic( KFEntity* player, const KFResetData* kfresetdata, KFDate& lastdate, KFDate& nowdate );
-        void ResetDailyPlayerLogic( KFEntity* player, const KFResetData* kfresetdata, KFDate& lastdate, KFDate& nowdate );
     private:
         // 是否需要刷新
         bool _need_to_reset = false;

@@ -18,7 +18,6 @@
 
 namespace KFrame
 {
-    class KFComponent;
     class KFHeroModule : public KFHeroInterface
     {
     public:

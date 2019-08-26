@@ -10,8 +10,8 @@ namespace KFrame
     class KFMongo
     {
     public:
-        KFMongo() = default;
-        virtual ~KFMongo() = default;
+        KFMongo();
+        virtual ~KFMongo();
 
         // 初始化
         virtual void InitMongo( const KFMongoSetting* kfsetting );
@@ -35,17 +35,20 @@ namespace KFrame
         bool CheckDisconnected( int32 code );
 
     protected:
-        // 连接字串
-        std::string _connect_data;
-
         // 是否已经连接上
         bool _is_connected = false;
 
+        // 连接字串
+        std::string _connect_data;
+
+        // 数据库名
+        std::string _database;
+
         // 连接
-        Connection _connection;
+        Connection* _connection = nullptr;
 
         // 连接工厂
-        Connection::SocketFactory _factory;
+        Connection::SocketFactory* _factory = nullptr;
     };
 }
 

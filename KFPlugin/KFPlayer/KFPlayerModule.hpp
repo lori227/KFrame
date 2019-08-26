@@ -18,7 +18,6 @@
 
 namespace KFrame
 {
-    class KFComponent;
     class KFPlayerModule : public KFPlayerInterface
     {
     public:

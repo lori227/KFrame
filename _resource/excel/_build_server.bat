@@ -5,5 +5,5 @@ if not exist ..\config\server ( mkdir ..\config\server )
 
 for /f "delims=\" %%x in ('dir /b /a-d /o-d "*.xlsx"') do (
 echo %%x
-_parse.exe %%~nx.xlsx 1 --xml=..\config\server
+_zparse.exe %%~nx.xlsx 1 --xml=..\config\server
 )

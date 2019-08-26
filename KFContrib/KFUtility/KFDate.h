@@ -97,9 +97,6 @@ namespace KFrame
         // 获得剩余时间
         static uint64 GetLeftTime( uint64 nowtime, uint64 starttime, uint32 keeptime );
 
-        // 获得上一次时间
-        static uint64 GetLastTime( const KFTimeData* timedata, uint64 nowtime );
-
         // 判断是否过了一年
         static bool CheckPassYear( uint64 lasttime, uint64 nowtime );
         static bool CheckPassYear( KFDate& lastdate, KFDate& nowdate );
@@ -133,6 +130,10 @@ namespace KFrame
 
         // 获得0点0分的时间
         static uint64 CalcZeroTime( uint64 time, int32 daycount = 0 );
+
+        // 获得上次重置时间
+        static uint64 CalcTimeData( const KFTimeData* timedata, uint64 time, int32 count = 0 );
+
     protected:
         // 转换时间
         void ConvertTimeDate();

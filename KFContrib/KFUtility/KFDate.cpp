@@ -494,33 +494,45 @@ namespace KFrame
         return nowminute >= minute;
     }
 
-    uint64 KFDate::GetLastTime( const KFTimeData* timedata, uint64 nowtime )
-    {
-        switch ( timedata->_type )
-        {
-        case KFTimeEnum::Hour:
-            return nowtime - __MIN__( nowtime, KFTimeEnum::OneHourSecond );
-            break;
-        case KFTimeEnum::Day:		// 判断时间
-            return nowtime - __MIN__( nowtime, KFTimeEnum::OneDaySecond );
-            break;
-        case KFTimeEnum::Week:	// 判断时间
-            return nowtime - __MIN__( nowtime, KFTimeEnum::OneWeekSecond );
-            break;
-        case KFTimeEnum::Month:	// 月份
-            return nowtime - __MIN__( nowtime, KFTimeEnum::OneDaySecond * 30 );
-            break;
-        default:
-            break;
-        }
-
-        return 0u;
-    }
-
     uint64 KFDate::CalcZeroTime( uint64 time, int32 daycount /* = 0 */ )
     {
         int64 day = time / KFTimeEnum::OneDaySecond;
         day += daycount;
         return ( uint64 )day * KFTimeEnum::OneDaySecond;
+    }
+
+    uint64 KFDate::CalcTimeData( const KFTimeData* timedata, uint64 time, int32 count /* = 0 */ )
+    {
+        uint64 result = time;
+        if ( timedata->_type == KFTimeEnum::Hour )
+        {
+            int64 hour = time / KFTimeEnum::OneHourSecond;
+            hour += count;
+            result = ( uint64 )hour * KFTimeEnum::OneHourSecond;
+        }
+        else if ( timedata->_type == KFTimeEnum::Day )
+        {
+            int64 day = time / KFTimeEnum::OneDaySecond;
+            day += count;
+            result = ( uint64 )day * KFTimeEnum::OneDaySecond + timedata->_hour * KFTimeEnum::OneHourSecond;
+        }
+        else if ( timedata->_type == KFTimeEnum::Week )
+        {
+            int64 week = time / KFTimeEnum::OneWeekSecond;
+            week += count;
+            result = ( uint64 )week * KFTimeEnum::OneWeekSecond + timedata->_value * KFTimeEnum::OneDayHour + timedata->_hour * KFTimeEnum::OneHourSecond;
+        }
+        else if ( timedata->_type == KFTimeEnum::Month )
+        {
+            KFDate date( time );
+            auto totalmonth = date.GetYear() * 12 + date.GetMonth() + count;
+            auto year = totalmonth / 12;
+            auto month = totalmonth % 12;
+
+            KFDate newdate( year, month, timedata->_value, timedata->_hour, 0, 0 );
+            result = newdate.GetTime();
+        }
+
+        return result;
     }
 }

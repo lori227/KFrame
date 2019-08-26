@@ -19,7 +19,6 @@
 
 namespace KFrame
 {
-    class KFComponent;
     class KFTaskModule : public KFTaskInterface
     {
     public:

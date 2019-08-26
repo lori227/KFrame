@@ -8,6 +8,7 @@ mkdir -p $deploypath/lib
 mkdir -p $deploypath/bin
 mkdir -p $deploypath/setting
 mkdir -p $deploypath/startup
+mkdir -p $deploypath/config
 
 #shell
 cp -a -f ./run.deploy.agent.sh $deploypath/
@@ -20,6 +21,8 @@ cp -a -rf  $respath/setting/* $deploypath/setting/
 #startup
 cp -a -rf  $respath/startup/* $deploypath/startup/
 
+#config
+cp -a -rf  $respath/config/config.xml $deploypath/config/
 
 #lib
 cp -f $respath/lib/* $deploypath/lib/

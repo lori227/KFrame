@@ -53,6 +53,8 @@ enum FrameClientProtocol
 	MSG_REMOVE_ITEM_REQ					= 408;	// 删除道具
 	MSG_MOVE_ALL_ITEM_REQ				= 409;	// 移动所有道具
 
+	MSG_USE_ITEM_TO_HERO_REQ			= 451;	// 对英雄使用道具
+
 	// mail
 	MSG_VIEW_MAIL_REQ 					= 501;	// 查看邮件
 	MSG_DELETE_MAIL_REQ 				= 502;	// 删除邮件
@@ -281,14 +283,6 @@ message MsgSevenSignInRewardReq
 }
 
 ////////////////////////////////////////////////////////////////////
-// 使用道具
-// MSG_USE_ITEM_REQ
-message MsgUseItemReq
-{
-	bytes name = 1;	// 背包名字
-	uint64 uuid = 2;
-}
-
 // 拆分道具( 把一堆堆叠物品拆分成2个 )
 // MSG_SPLIT_ITEM_REQ
 message MsgSplitItemReq
@@ -360,6 +354,22 @@ message MsgRemoveItemReq
 	uint64 uuid = 2;		// 道具uuid( 为0时候, 删除背包所有道具 )
 }
 
+// 使用道具
+// MSG_USE_ITEM_REQ
+message MsgUseItemReq
+{
+	bytes name = 1;	// 背包名字
+	uint64 uuid = 2;
+}
+
+// 对英雄使用道具
+// MSG_USE_ITEM_TO_HERO_REQ
+message MsgUseItemToHeroReq
+{
+	bytes name = 1;		// 背包名字
+	uint64 itemuuid = 2; 	// 道具uuid
+	uint64 herouuid = 3;	// 英雄uuid
+}
 ////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
 // 查看邮件

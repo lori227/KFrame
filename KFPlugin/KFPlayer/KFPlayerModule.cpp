@@ -187,10 +187,8 @@ namespace KFrame
     {
         auto kfglobal = KFGlobal::Instance();
 
-        auto kfobject = player->GetData();
-        kfobject->SetValue( __KF_STRING__( offlinetime ), kfglobal->_real_time );
-
         // 更新总时间
+        auto kfobject = player->GetData();
         auto onlinetime = kfobject->GetValue( __KF_STRING__( onlinetime ) );
         player->UpdateData( __KF_STRING__( totaltime ), KFEnum::Add, kfglobal->_real_time - onlinetime );
 
@@ -243,6 +241,11 @@ namespace KFrame
     KFEntity* KFPlayerModule::CreatePlayer( const KFMsg::PBLoginData* pblogin, const KFMsg::PBObject* pbplayerdata )
     {
         auto player = _kf_component->CreateEntity( pblogin->playerid(), pbplayerdata );
+        if ( player == nullptr )
+        {
+            return nullptr;
+        }
+
         OnEnterCreatePlayer( player, pblogin->playerid() );
 
         auto kfobject = player->GetData();

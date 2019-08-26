@@ -5,14 +5,14 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////
     KFMongoLogic::KFMongoLogic()
     {
-        _read_execute = __KF_NEW__( KFReadExecute );
-        _write_execute = __KF_NEW__( KFWriteExecute );
+        _read_execute = __KF_NEW__( KFMongoReadExecute );
+        _write_execute = __KF_NEW__( KFMongoWriteExecute );
     }
 
     KFMongoLogic::~KFMongoLogic()
     {
-        __KF_DELETE__( KFReadExecute, _read_execute );
-        __KF_DELETE__( KFWriteExecute, _write_execute );
+        __KF_DELETE__( KFMongoReadExecute, _read_execute );
+        __KF_DELETE__( KFMongoWriteExecute, _write_execute );
     }
 
     void KFMongoLogic::ShutDown()
@@ -52,7 +52,7 @@ namespace KFrame
     bool KFMongoLogic::CreateIndex( const std::string& table, const std::string& indexname, bool unique, uint32 ttl )
     {
         MapString values;
-        values[ indexname ] = "1";
+        values[ indexname ] = MongoKeyword::_asc;
         return CreateIndex( table, indexname, values, unique, ttl );
     }
 

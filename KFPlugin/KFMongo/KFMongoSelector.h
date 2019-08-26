@@ -7,27 +7,29 @@ namespace KFrame
 {
     namespace MongoKeyword
     {
-        static std::string _id = "_id";
-        static std::string _set = "$set";
-        static std::string _push = "$addToSet";
-        static std::string _each = "$each";
-        static std::string _pull = "$pull";
-        static std::string _in = "$in";
-        static std::string _gt = "$gt";
-        static std::string _gte = "$gte";
-        static std::string _lt = "$lt";
-        static std::string _lte = "$lte";
-        static std::string _ne = "$ne";
-        static std::string _eq = "";
-        static std::string _or = "$or";
-        static std::string _and = "$and";
-        static std::string _inc = "$inc";
-        static std::string _mod = "$mod";
-        static std::string _not = "$not";
+        static std::string _id = "_id";				// mongo 默认的主键字段( 自带索引 )
+        static std::string _set = "$set";			// 更新
+        static std::string _push = "$addToSet";		// 添加到集合
+        static std::string _each = "$each";			// 数组
+        static std::string _pull = "$pull";			// 数组
+        static std::string _in = "$in";				// 在[x,y]范围内
+        static std::string _gt = "$gt";				// 大于
+        static std::string _gte = "$gte";			// 大于等于
+        static std::string _lt = "$lt";				// 小于
+        static std::string _lte = "$lte";			// 小于等于
+        static std::string _ne = "$ne";				// 不等于
+        static std::string _eq = "";				// 等于
+        static std::string _or = "$or";				// 条件或
+        static std::string _and = "$and";			// 条件与
+        static std::string _inc = "$inc";			// +-操作
+        static std::string _mod = "$mod";			// 取模
+        static std::string _not = "$not";			// 取反
 
+        static std::string _asc = "1";				// 升序
+        static std::string _desc = "-1";			// 降序
 
         // 有效时间字段
-        static std::string _expire = "expire";
+        static std::string _expire = "expire";		// 默认的过期字段
     }
     //////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////
@@ -41,8 +43,8 @@ namespace KFrame
         std::string _type;
 
         // 数值
-        std::string _min_value;
-        std::string _max_value;
+        std::string _value1;
+        std::string _value2;
     };
 
     class KFMongoDocument
@@ -51,6 +53,10 @@ namespace KFrame
         KFMongoDocument()
         {
             _condition = MongoKeyword::_and;
+        }
+        KFMongoDocument( const std::string& condition )
+        {
+            _condition = condition;
         }
         ~KFMongoDocument()
         {
@@ -68,50 +74,29 @@ namespace KFrame
         }
 
         template< class T >
-        void AddExpression( const std::string& name, const std::string& type, T value )
+        inline void AddExpression( const std::string& name, const std::string& type, T value )
         {
             auto expression = __KF_NEW__( KFMongoExpression );
             expression->_name = name;
             expression->_type = type;
-            expression->_min_value = __TO_STRING__( value );
+            expression->_value1 = KFUtility::ToString( value );
             _expressions.push_back( expression );
         }
 
         template< class T >
-        void AddExpression( const std::string& name, const std::string& type, T value1, T value2 )
+        inline void AddExpression( const std::string& name, const std::string& type, T value1, T value2 )
         {
             auto expression = __KF_NEW__( KFMongoExpression );
             expression->_name = name;
             expression->_type = type;
-            expression->_min_value = __TO_STRING__( value1 );
-            expression->_max_value = __TO_STRING__( value2 );
+            expression->_value1 = KFUtility::ToString( value1 );
+            expression->_value2 = KFUtility::ToString( value2 );
             _expressions.push_back( expression );
         }
 
-        template<>
-        void AddExpression( const std::string& name, const std::string& type, const std::string& value )
+        KFMongoDocument* AddDocument( const std::string& condition = MongoKeyword::_and )
         {
-            auto expression = __KF_NEW__( KFMongoExpression );
-            expression->_name = name;
-            expression->_type = type;
-            expression->_min_value = value;
-            _expressions.push_back( expression );
-        }
-
-        template<>
-        void AddExpression( const std::string& name, const std::string& type, const std::string& value1, const std::string& value2 )
-        {
-            auto expression = __KF_NEW__( KFMongoExpression );
-            expression->_name = name;
-            expression->_type = type;
-            expression->_min_value = value1;
-            expression->_max_value = value2;
-            _expressions.push_back( expression );
-        }
-
-        KFMongoDocument* AddDocument()
-        {
-            auto document = __KF_NEW__( KFMongoDocument );
+            auto document = __KF_NEW__( KFMongoDocument, condition );
             _documents.push_back( document );
             return document;
         }

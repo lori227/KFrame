@@ -19,7 +19,6 @@
 
 namespace KFrame
 {
-    class KFComponent;
     class KFActivityModule : public KFActivityInterface
     {
     public:

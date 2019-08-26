@@ -1,0 +1,12 @@
+<root version="00000">
+	<item Id="1" DropName="money" DropValue="100" Weight="10000"/>
+	<item Id="1" DropName="money" DropValue="200" Weight="500"/>
+	<item Id="2" DropName="money" DropValue="100" Weight="100"/>
+	<item Id="2" DropName="money" DropValue="200" Weight="100"/>
+	<item Id="3" DropName="money" DropValue="100-200" Weight="1"/>
+	<item Id="3" DropName="money" DropValue="200-300" Weight="1000000"/>
+	<item Id="3" DropName="money" DropValue="300-400" IsDrop="1"/>
+	<item Id="3" DropName="money" DropValue="400-500" IsDrop="1"/>
+	<item Id="4" DropName="drop" DropValue="1" Weight="1000000" Condition="level>=10"/>
+	<item Id="4" DropName="drop" DropValue="2" Weight="1000000" Condition="level<10"/>
+</root>

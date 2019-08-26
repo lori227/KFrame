@@ -8,6 +8,9 @@ namespace google
     namespace protobuf
     {
         class Message;
+
+        template <typename Key, typename T>
+        class Map;
     }
 }
 

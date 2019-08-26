@@ -6,7 +6,6 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////
     void KFMongoExecute::InitMongo( const KFMongoSetting* kfsetting )
     {
-        _database = kfsetting->_database;
         return KFMongo::InitMongo( kfsetting );
     }
 
@@ -55,7 +54,8 @@ namespace KFrame
             }
 
             Poco::MongoDB::Database db( _database );
-            auto doc = db.ensureIndex( _connection, table, indexname, temp, unique, false, 0, ttl );
+            auto newindexname = __FORMAT__( "idx_{}", indexname );
+            auto doc = db.ensureIndex( *_connection, table, newindexname, temp, unique, false, 0, ttl );
             bool err = doc->get( "err" ).isNull();
             if ( !err )
             {
@@ -93,13 +93,13 @@ namespace KFrame
             Poco::MongoDB::Document::Ptr temp = new Poco::MongoDB::Document();
             if ( expression->_type == MongoKeyword::_eq )
             {
-                AddDocumentValue( ( *temp ), expression->_name, expression->_min_value );
+                AddDocumentValue( ( *temp ), expression->_name, expression->_value1 );
             }
             else if ( expression->_type == MongoKeyword::_in )
             {
                 Poco::MongoDB::Array::Ptr valuearray = new Poco::MongoDB::Array();
-                AddDocumentValue( ( *valuearray ), "0", expression->_min_value );
-                AddDocumentValue( ( *valuearray ), "1", expression->_max_value );
+                AddDocumentValue( ( *valuearray ), "0", expression->_value1 );
+                AddDocumentValue( ( *valuearray ), "1", expression->_value2 );
 
                 Poco::MongoDB::Document::Ptr child = new Poco::MongoDB::Document();
                 child->add( MongoKeyword::_in, valuearray );
@@ -108,7 +108,7 @@ namespace KFrame
             else
             {
                 Poco::MongoDB::Document::Ptr child = new Poco::MongoDB::Document();
-                AddDocumentValue( ( *child ), expression->_type, expression->_min_value );
+                AddDocumentValue( ( *child ), expression->_type, expression->_value1 );
                 temp->add( expression->_name, child );
             }
 
@@ -123,7 +123,7 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////
-    bool KFWriteExecute::ExpireAt( const std::string& table, const std::string& key, uint64 expiretime )
+    bool KFMongoWriteExecute::ExpireAt( const std::string& table, const std::string& key, uint64 expiretime )
     {
         auto fullname = __FORMAT__( "{}.{}", _database, table );
         UpdateRequest request( fullname, UpdateRequest::UPDATE_UPSERT );
@@ -139,7 +139,7 @@ namespace KFrame
         return SendRequest( request );
     }
 
-    bool KFWriteExecute::Insert( const std::string& table, const MapString& values, uint32 inserttype )
+    bool KFMongoWriteExecute::Insert( const std::string& table, const MapString& values, uint32 inserttype )
     {
         auto fullname = __FORMAT__( "{}.{}", _database, table );
         InsertRequest request( fullname, ( InsertRequest::Flags )inserttype );
@@ -154,7 +154,7 @@ namespace KFrame
         return SendRequest( request );
     }
 
-    bool KFWriteExecute::Update( const std::string& table, const MapString& keys, const MapString& values, uint32 updatetype )
+    bool KFMongoWriteExecute::Update( const std::string& table, const MapString& keys, const MapString& values, uint32 updatetype )
     {
         auto fullname = __FORMAT__( "{}.{}", _database, table );
         UpdateRequest request( fullname, ( UpdateRequest::Flags )updatetype );
@@ -180,14 +180,14 @@ namespace KFrame
         return SendRequest( request );
     }
 
-    bool KFWriteExecute::Delete( const std::string& table, uint32 deletetype )
+    bool KFMongoWriteExecute::Delete( const std::string& table, uint32 deletetype )
     {
         auto fullname = __FORMAT__( "{}.{}", _database, table );
         DeleteRequest request( fullname, ( UpdateRequest::Flags )deletetype );
         return SendRequest( request );
     }
 
-    bool KFWriteExecute::Delete( const std::string& table, const std::string& keyname, const std::string& keyvalue, uint32 deletetype )
+    bool KFMongoWriteExecute::Delete( const std::string& table, const std::string& keyname, const std::string& keyvalue, uint32 deletetype )
     {
         auto fullname = __FORMAT__( "{}.{}", _database, table );
         DeleteRequest request( fullname, ( UpdateRequest::Flags )deletetype );
@@ -197,7 +197,7 @@ namespace KFrame
         return SendRequest( request );
     }
 
-    bool KFWriteExecute::Delete( const std::string& table, const KFMongoSelector& kfselector, uint32 deletetype )
+    bool KFMongoWriteExecute::Delete( const std::string& table, const KFMongoSelector& kfselector, uint32 deletetype )
     {
         auto fullname = __FORMAT__( "{}.{}", _database, table );
         DeleteRequest request( fullname, ( UpdateRequest::Flags )deletetype );
@@ -207,7 +207,7 @@ namespace KFrame
         return SendRequest( request );
     }
 
-    bool KFWriteExecute::Push( const std::string& table, const std::string& key, const std::string& field, ListString& inlist )
+    bool KFMongoWriteExecute::Push( const std::string& table, const std::string& key, const std::string& field, ListString& inlist )
     {
         auto fullname = __FORMAT__( "{}.{}", _database, table );
         UpdateRequest request( fullname, UpdateRequest::UPDATE_UPSERT );
@@ -232,7 +232,7 @@ namespace KFrame
         return SendRequest( request );
     }
 
-    bool KFWriteExecute::Pull( const std::string& table, const std::string& key, const std::string& field, ListString& inlist )
+    bool KFMongoWriteExecute::Pull( const std::string& table, const std::string& key, const std::string& field, ListString& inlist )
     {
         auto fullname = __FORMAT__( "{}.{}", _database, table );
         UpdateRequest request( fullname, UpdateRequest::UPDATE_DEFAULT );
@@ -260,7 +260,7 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////
-    KFResult< std::string >::UniqueType KFReadExecute::QueryString( const std::string& table, const std::string& key, const std::string& field )
+    KFResult< std::string >::UniqueType KFMongoReadExecute::QueryString( const std::string& table, const std::string& key, const std::string& field )
     {
         auto fullname = __FORMAT__( "{}.{}", _database, table );
         QueryRequest request( fullname, QueryRequest::QUERY_DEFAULT );
@@ -297,7 +297,7 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< uint64 >::UniqueType KFReadExecute::QueryUInt64( const std::string& table, const std::string& key, const std::string& field )
+    KFResult< uint64 >::UniqueType KFMongoReadExecute::QueryUInt64( const std::string& table, const std::string& key, const std::string& field )
     {
         auto fullname = __FORMAT__( "{}.{}", _database, table );
         QueryRequest request( fullname, QueryRequest::QUERY_DEFAULT );
@@ -334,7 +334,7 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< std::list< uint64 > >::UniqueType KFReadExecute::QueryListUInt64( const std::string& table, const std::string& key, const std::string& field )
+    KFResult< std::list< uint64 > >::UniqueType KFMongoReadExecute::QueryListUInt64( const std::string& table, const std::string& key, const std::string& field )
     {
         auto fullname = __FORMAT__( "{}.{}", _database, table );
         QueryRequest request( fullname, QueryRequest::QUERY_DEFAULT );
@@ -376,7 +376,7 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< ListString >::UniqueType KFReadExecute::QueryListString( const std::string& table, const std::string& key, const std::string& field )
+    KFResult< ListString >::UniqueType KFMongoReadExecute::QueryListString( const std::string& table, const std::string& key, const std::string& field )
     {
         auto fullname = __FORMAT__( "{}.{}", _database, table );
         QueryRequest request( fullname, QueryRequest::QUERY_DEFAULT );
@@ -426,7 +426,7 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< MapString >::UniqueType KFReadExecute::QueryMap( const std::string& table, const std::string& key, const ListString& fields )
+    KFResult< MapString >::UniqueType KFMongoReadExecute::QueryMap( const std::string& table, const std::string& key, const ListString& fields )
     {
         auto fullname = __FORMAT__( "{}.{}", _database, table );
         QueryRequest request( fullname, QueryRequest::QUERY_DEFAULT );
@@ -487,7 +487,7 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< ListMapString >::UniqueType KFReadExecute::QueryListMapString( const std::string& table, const KFMongoSelector& kfselector )
+    KFResult< ListMapString >::UniqueType KFMongoReadExecute::QueryListMapString( const std::string& table, const KFMongoSelector& kfselector )
     {
         auto fullname = __FORMAT__( "{}.{}", _database, table );
         QueryRequest request( fullname, QueryRequest::QUERY_DEFAULT );
@@ -500,7 +500,7 @@ namespace KFrame
         auto ok = SendRequest( request, response );
         if ( ok )
         {
-            for ( auto i = 0; i < response.documents().size(); ++i )
+            for ( auto i = 0u; i < response.documents().size(); ++i )
             {
                 MapString values;
                 Poco::MongoDB::Document::Ptr doc = response.documents()[ i ];
