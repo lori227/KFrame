@@ -11,7 +11,6 @@
 
 #include "KFRedisInterface.h"
 #include "KFRedisLogic.hpp"
-#include "KFConfig/KFConfigInterface.h"
 
 namespace KFrame
 {
@@ -20,9 +19,6 @@ namespace KFrame
     public:
         KFRedisModule() = default;
         ~KFRedisModule() = default;
-
-        // 加载配置
-        virtual void InitModule();
 
         // 关闭
         virtual void ShutDown();

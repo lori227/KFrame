@@ -12,7 +12,6 @@
 #include "KFProtocol/KFProtocol.h"
 #include "KFRelationShardInterface.h"
 #include "KFRedis/KFRedisInterface.h"
-#include "KFConfig/KFConfigInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"
@@ -27,7 +26,6 @@ namespace KFrame
         ~KFRelationShardModule() = default;
 
         // 初始化
-        virtual void InitModule();
         virtual void BeforeRun();
         virtual void PrepareRun();
 

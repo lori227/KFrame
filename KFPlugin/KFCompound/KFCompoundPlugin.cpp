@@ -1,6 +1,6 @@
 ﻿#include "KFCompoundPlugin.hpp"
 #include "KFCompoundModule.hpp"
-
+#include "KFConfig/KFConfigInterface.h"
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame
@@ -22,4 +22,11 @@ namespace KFrame
         __FIND_MODULE__( _kf_display, KFDisplayInterface );
         __FIND_MODULE__( _kf_message, KFMessageInterface );
     }
+
+    void KFCompoundPlugin::AddConfig()
+    {
+        __KF_ADD_CONFIG__( KFCompoundConfig );
+        ///////////////////////////////////////////////////////////////////////////////
+    }
+
 }

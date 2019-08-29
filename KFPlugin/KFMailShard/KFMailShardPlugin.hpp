@@ -14,7 +14,7 @@ namespace KFrame
         virtual void UnInstall ();
 
         // 加载
-        virtual void LoadModule ();
+        virtual void LoadModule();
     };
 }
 

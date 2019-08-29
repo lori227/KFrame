@@ -2,11 +2,6 @@
 
 namespace KFrame
 {
-    void KFEnterModule::InitModule()
-    {
-        __KF_ADD_CONFIG__( KFEnterConfig );
-    }
-
     void KFEnterModule::BeforeRun()
     {
         __REGISTER_ENTER_PLAYER__( &KFEnterModule::EnterGameWorld );

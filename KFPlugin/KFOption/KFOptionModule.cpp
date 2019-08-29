@@ -2,11 +2,6 @@
 
 namespace KFrame
 {
-    void KFOptionModule::InitModule()
-    {
-        __KF_ADD_CONFIG__( KFOptionConfig );
-    }
-
     ////////////////////////////////////////////////////////////////
     const KFOptionSetting* KFOptionModule::FindOption( const std::string& name )
     {

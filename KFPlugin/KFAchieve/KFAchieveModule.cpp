@@ -3,10 +3,7 @@
 
 namespace KFrame
 {
-    void KFAchieveModule::InitModule()
-    {
-        __KF_ADD_CONFIG__( KFAchieveConfig );
-    }
+
 
     void KFAchieveModule::BeforeRun()
     {

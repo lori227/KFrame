@@ -1,0 +1,5 @@
+<root version="00000">
+	<item Id="default" Type="2" Template="[{{&quot;{}&quot;:&quot;{}&quot;}}]"/>
+	<item Id="hero" Type="1" Template="[{{&quot;{}&quot;:{{&quot;generateid&quot;:&quot;{}&quot;}}}}]"/>
+	<item Id="item" Type="2" Template="[{{&quot;{}&quot;:{{&quot;count&quot;:&quot;{}&quot;,&quot;id&quot;:&quot;{}&quot;}}}}]"/>
+</root>

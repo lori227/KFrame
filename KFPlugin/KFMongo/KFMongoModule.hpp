@@ -11,7 +11,6 @@
 
 #include "KFMongoInterface.h"
 #include "KFMongoLogic.hpp"
-#include "KFConfig/KFConfigInterface.h"
 
 namespace KFrame
 {
@@ -21,8 +20,7 @@ namespace KFrame
         KFMongoModule() = default;
         ~KFMongoModule() = default;
 
-        // 加载配置
-        virtual void InitModule();
+
 
         // 关闭
         virtual void ShutDown();

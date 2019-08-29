@@ -2,11 +2,6 @@
 
 namespace KFrame
 {
-    void KFMongoModule::InitModule()
-    {
-        __KF_ADD_CONFIG__( KFMongoConfig );
-    }
-
     void KFMongoModule::ShutDown()
     {
         KFLocker lock( _kf_mutex );

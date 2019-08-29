@@ -2,11 +2,6 @@
 
 namespace KFrame
 {
-    void KFRelationClientModule::InitModule()
-    {
-        __KF_ADD_CONFIG__( KFRelationConfig );
-    }
-
     void KFRelationClientModule::BeforeRun()
     {
         __REGISTER_ENTER_PLAYER__( &KFRelationClientModule::OnEnterQueryRelation );

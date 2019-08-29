@@ -1,6 +1,6 @@
 ﻿#include "KFMySQLPlugin.hpp"
 #include "KFMySQLModule.hpp"
-
+#include "KFConfig/KFConfigInterface.h"
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame
@@ -18,5 +18,10 @@ namespace KFrame
     void KFMySQLPlugin::LoadModule()
     {
         __FIND_MODULE__( _kf_config, KFConfigInterface );
+    }
+
+    void KFMySQLPlugin::AddConfig()
+    {
+        __KF_ADD_CONFIG__( KFMySQLConfig );
     }
 }

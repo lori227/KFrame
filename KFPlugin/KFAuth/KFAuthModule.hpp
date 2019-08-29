@@ -12,7 +12,6 @@
 #include "KFAuthInterface.h"
 #include "KFRedis/KFRedisInterface.h"
 #include "KFOption/KFOptionInterface.h"
-#include "KFConfig/KFConfigInterface.h"
 #include "KFChannel/KFChannelInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
 #include "KFHttpServer/KFHttpServerInterface.h"

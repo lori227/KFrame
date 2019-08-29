@@ -18,8 +18,6 @@ namespace KFrame
 {
     void KFIpAddressModule::InitModule()
     {
-        __KF_ADD_CONFIG__( KFIpConfig );
-
         // 计算ip地址
         auto kfglobal = KFGlobal::Instance();
         kfglobal->_local_ip = GetLocalIp();

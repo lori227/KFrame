@@ -10,7 +10,6 @@
 ************************************************************************/
 #include "KFHeroInterface.h"
 #include "KFTimer/KFTimerInterface.h"
-#include "KFConfig/KFConfigInterface.h"
 #include "KFKernel/KFKernelInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFMessage/KFMessageInterface.h"
@@ -23,9 +22,6 @@ namespace KFrame
     public:
         KFHeroModule() = default;
         ~KFHeroModule() = default;
-
-        // 初始化
-        virtual void InitModule();
 
         // 逻辑
         virtual void BeforeRun();

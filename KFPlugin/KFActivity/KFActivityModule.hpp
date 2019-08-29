@@ -10,7 +10,6 @@
 ************************************************************************/
 
 #include "KFActivityInterface.h"
-#include "KFConfig/KFConfigInterface.h"
 #include "KFKernel/KFKernelInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
@@ -24,9 +23,6 @@ namespace KFrame
     public:
         KFActivityModule() = default;
         ~KFActivityModule() = default;
-
-        // 初始化
-        virtual void InitModule();
 
         // 运行
         virtual void BeforeRun();

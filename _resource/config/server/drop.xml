@@ -1,4 +1,4 @@
-<root version="00000">
+<root version="0000">
 	<item Id="1" DropName="money" DropValue="100" Weight="10000"/>
 	<item Id="1" DropName="money" DropValue="200" Weight="500"/>
 	<item Id="2" DropName="money" DropValue="100" Weight="100"/>

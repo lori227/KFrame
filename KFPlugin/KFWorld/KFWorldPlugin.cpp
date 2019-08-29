@@ -1,5 +1,6 @@
 ﻿#include "KFWorldPlugin.hpp"
 #include "KFWorldModule.hpp"
+#include "KFConfig/KFConfigInterface.h"
 
 namespace KFrame
 {
@@ -24,6 +25,11 @@ namespace KFrame
         __FIND_MODULE__( _kf_tcp_client, KFTcpClientInterface );
         __FIND_MODULE__( _kf_http_server, KFHttpServerInterface );
         __FIND_MODULE__( _kf_http_client, KFHttpClientInterface );
+    }
+
+    void KFWorldPlugin::AddConfig()
+    {
+        __KF_ADD_CONFIG__( KFZoneConfig );
     }
 
 }

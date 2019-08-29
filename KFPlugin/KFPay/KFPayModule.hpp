@@ -4,7 +4,6 @@
 #include "KFPayInterface.h"
 #include "KFProtocol/KFProtocol.h"
 #include "KFTimer/KFTimerInterface.h"
-#include "KFConfig/KFConfigInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
@@ -19,9 +18,6 @@ namespace KFrame
     public:
         KFPayModule() = default;
         ~KFPayModule() = default;
-
-        // 初始化
-        virtual void InitModule();
 
         // 初始化
         virtual void BeforeRun();

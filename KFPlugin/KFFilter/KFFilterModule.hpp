@@ -12,7 +12,6 @@
 
 #include "KFFilterInterface.h"
 #include "KFFilterConfig.hpp"
-#include "KFConfig/KFConfigInterface.h"
 
 namespace KFrame
 {
@@ -24,8 +23,6 @@ namespace KFrame
         KFFilterModule() = default;
         ~KFFilterModule() = default;
 
-        // 初始化
-        virtual void InitModule();
         /////////////////////////////////////////////////////////////
         // 检查是否有屏蔽字符
         virtual bool CheckFilter( const std::string& source );

@@ -4,18 +4,21 @@
 
 namespace KFrame
 {
-	class KFHeroPlugin : public KFPlugin
-	{
-	public:
-		// 注册
-		virtual void Install();
+    class KFHeroPlugin : public KFPlugin
+    {
+    public:
+        // 注册
+        virtual void Install();
 
-		// 卸载
-		virtual void UnInstall();
-		
-		// 加载
-		virtual void LoadModule();
-	};
+        // 卸载
+        virtual void UnInstall();
+
+        // 加载
+        virtual void LoadModule();
+
+        // 配置
+        virtual void AddConfig();
+    };
 }
 
 

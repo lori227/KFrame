@@ -13,7 +13,6 @@
 #include "KFProtocol/KFProtocol.h"
 #include "KFMailClientInterface.h"
 #include "KFTimer/KFTimerInterface.h"
-#include "KFConfig/KFConfigInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFKernel/KFKernelInterface.h"
 #include "KFMessage/KFMessageInterface.h"
@@ -29,8 +28,7 @@ namespace KFrame
         KFMailClientModule() = default;
         ~KFMailClientModule() = default;
 
-        // 初始化
-        virtual void InitModule();
+
 
         // 刷新
         virtual void BeforeRun();

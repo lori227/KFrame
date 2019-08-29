@@ -12,7 +12,6 @@
 #include "KFMySQLInterface.h"
 #include "KFMySQLLogic.hpp"
 #include "KFMySQLConfig.hpp"
-#include "KFConfig/KFConfigInterface.h"
 
 namespace KFrame
 {
@@ -22,8 +21,8 @@ namespace KFrame
         KFMySQLModule() = default;
         ~KFMySQLModule() = default;
 
-        // 加载配置
-        virtual void InitModule();
+        // 运行
+        virtual void BeforeRun();
 
         // 关闭
         virtual void ShutDown();

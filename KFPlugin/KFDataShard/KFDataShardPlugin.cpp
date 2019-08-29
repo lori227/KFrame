@@ -1,5 +1,6 @@
 ﻿#include "KFDataShardPlugin.hpp"
 #include "KFDataShardModule.hpp"
+#include "KFConfig/KFConfigInterface.h"
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame
@@ -22,5 +23,10 @@ namespace KFrame
         __FIND_MODULE__( _kf_config, KFConfigInterface );
         __FIND_MODULE__( _kf_message, KFMessageInterface );
         __FIND_MODULE__( _kf_route, KFRouteClientInterface );
+    }
+
+    void KFDataShardPlugin::AddConfig()
+    {
+        __KF_ADD_CONFIG__( KFDataShardConfig );
     }
 }

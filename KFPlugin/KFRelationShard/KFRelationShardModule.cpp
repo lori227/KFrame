@@ -2,11 +2,6 @@
 
 namespace KFrame
 {
-    void KFRelationShardModule::InitModule()
-    {
-        __KF_ADD_CONFIG__( KFRelationConfig );
-    }
-
     void KFRelationShardModule::BeforeRun()
     {
         /////////////////////////////////////////////////////////////////////////////////////////////////////

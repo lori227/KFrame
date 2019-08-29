@@ -14,6 +14,7 @@ namespace KFrame
     bool KFParse::LoadFromExcel( const char* file, bool utf8, uint32 saveflag )
     {
         _utf8 = utf8;
+        _files.clear();
 
         KFExcelFile excelfile;
         if ( !excelfile.Open( file ) )

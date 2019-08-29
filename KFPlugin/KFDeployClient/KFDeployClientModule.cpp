@@ -1,5 +1,6 @@
 ﻿#include "KFDeployClientModule.hpp"
 #include "KFProtocol/KFProtocol.h"
+#include "KFConfig/KFConfigInterface.h"
 
 namespace KFrame
 {

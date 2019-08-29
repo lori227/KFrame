@@ -10,9 +10,10 @@
 ************************************************************************/
 
 #include "KFDropInterface.h"
-#include "KFConfig/KFConfigInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFKernel/KFKernelInterface.h"
+#include "KFDropConfig.hpp"
+#include "KFZConfig/KFElementConfig.hpp"
 
 namespace KFrame
 {
@@ -22,8 +23,6 @@ namespace KFrame
         KFDropModule() = default;
         ~KFDropModule() = default;
 
-        // 初始化
-        virtual void InitModule();
 
         ////////////////////////////////////////////////////////////////////////////////
         // 掉落( 直接添加属性 )

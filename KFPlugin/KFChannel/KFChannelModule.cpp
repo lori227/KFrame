@@ -15,10 +15,6 @@ namespace KFrame
         _kf_channel_list.clear();
     }
 
-    void KFChannelModule::InitModule()
-    {
-        __KF_ADD_CONFIG__( KFChannelConfig );
-    }
 
     void KFChannelModule::BeforeRun()
     {

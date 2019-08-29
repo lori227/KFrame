@@ -3,11 +3,6 @@
 
 namespace KFrame
 {
-    void KFDataShardModule::InitModule()
-    {
-        __KF_ADD_CONFIG__( KFDataShardConfig );
-    }
-
     void KFDataShardModule::BeforeRun()
     {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

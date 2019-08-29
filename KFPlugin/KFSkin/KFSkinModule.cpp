@@ -3,10 +3,6 @@
 
 namespace KFrame
 {
-    void KFSkinModule::InitModule()
-    {
-        __KF_ADD_CONFIG__( KFSkinConfig );
-    }
 
     void KFSkinModule::BeforeRun()
     {

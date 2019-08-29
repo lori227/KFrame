@@ -1,0 +1,7 @@
+<root version="00000">
+	<item DataName="sevenday" Id="10000" TimeType="3" TimeValue="1" TimeHour="6" ParentName="signin" Operate="3"/>
+	<item DataName="sevenreward" Id="10000" TimeType="3" TimeValue="1" TimeHour="6" ParentName="signin" Operate="3"/>
+	<item Id="10000" TimeType="3" TimeValue="1" TimeHour="6" ParentName="weeklystore"/>
+	<item DataName="sevenday" Id="10001" TimeType="2" TimeHour="6" ParentName="signin" Operate="1" Value="1"/>
+	<item Id="10001" TimeType="2" TimeHour="6" ParentName="dailystore"/>
+</root>

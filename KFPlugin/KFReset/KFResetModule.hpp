@@ -10,7 +10,6 @@
 ************************************************************************/
 
 #include "KFResetInterface.h"
-#include "KFConfig/KFConfigInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFResetConfig.hpp"
 
@@ -22,6 +21,9 @@ namespace KFrame
         // 时间数据
         KFTimeData _time_data;
 
+        // 次数
+        uint32 _count = 0u;
+
         // 回调函数
         KFResetFunction _function = nullptr;
     };
@@ -31,9 +33,6 @@ namespace KFrame
     public:
         KFResetModule() = default;
         ~KFResetModule() = default;
-
-        // 加载配置
-        virtual void InitModule();
 
         virtual void BeforeRun();
         virtual void AfterRun();
@@ -45,7 +44,7 @@ namespace KFrame
 
     protected:
         // 添加重置函数
-        virtual void AddResetFunction( const KFTimeData& timedata, const std::string& module, KFResetFunction& function );
+        virtual void AddResetFunction( const KFTimeData& timedata, uint32 count, const std::string& module, KFResetFunction& function );
 
         // 删除重置函数
         virtual void RemoveResetFunction( const std::string& module );
@@ -67,6 +66,7 @@ namespace KFrame
 
         // 重置逻辑
         void ResetPlayerLogic( KFEntity* player, KFDate& lastdate, KFDate& nowdate );
+        void ResetPlayerLogicCount( KFEntity* player, KFResetData* kfresetdata, KFDate& lastdate, KFDate& nowdate );
     private:
         // 是否需要刷新
         bool _need_to_reset = false;

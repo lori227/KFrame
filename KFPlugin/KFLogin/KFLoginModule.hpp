@@ -13,7 +13,6 @@
 #include "KFProtocol/KFProtocol.h"
 #include "KFTimer/KFTimerInterface.h"
 #include "KFRedis/KFRedisInterface.h"
-#include "KFConfig/KFConfigInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFIpAddress/KFIpAddressInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
@@ -28,9 +27,6 @@ namespace KFrame
     public:
         KFLoginModule() = default;
         ~KFLoginModule() = default;
-
-        // 初始化
-        virtual void InitModule();
 
         // 刷新
         virtual void BeforeRun();

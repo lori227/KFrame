@@ -13,8 +13,10 @@ namespace KFrame
         // 卸载
         virtual void UnInstall();
 
-        // 加载
+        // 加载模块
         virtual void LoadModule();
+
+        // 添加配置文件
     };
 }
 

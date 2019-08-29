@@ -2,11 +2,6 @@
 
 namespace KFrame
 {
-    void KFResetModule::InitModule()
-    {
-        __KF_ADD_CONFIG__( KFResetConfig );
-    }
-
     void KFResetModule::BeforeRun()
     {
         __REGISTER_RESET_PLAYER__( &KFResetModule::ResetPlayerData );
@@ -122,14 +117,22 @@ namespace KFrame
             }
 
             // 直接回调函数
-            kfresetdata->_function( player, lastdate.GetTime(), nowdate.GetTime() );
+            if ( kfresetdata->_count <= 1u || player->IsInited() )
+            {
+                kfresetdata->_function( player, kfresetdata->_time_data, lastdate.GetTime(), nowdate.GetTime() );
+            }
+            else
+            {
+                ResetPlayerLogicCount( player, kfresetdata, lastdate, nowdate );
+            }
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFResetModule::AddResetFunction( const KFTimeData& timedata, const std::string& module, KFResetFunction& function )
+    void KFResetModule::AddResetFunction( const KFTimeData& timedata, uint32 count, const std::string& module, KFResetFunction& function )
     {
         auto kfresetdata = _reset_data_list.Create( module );
+        kfresetdata->_count = count;
         kfresetdata->_time_data = timedata;
         kfresetdata->_function = function;
     }
@@ -137,5 +140,29 @@ namespace KFrame
     void KFResetModule::RemoveResetFunction( const std::string& module )
     {
         _reset_data_list.Remove( module );
+    }
+
+    void KFResetModule::ResetPlayerLogicCount( KFEntity* player, KFResetData* kfresetdata, KFDate& lastdate, KFDate& nowdate )
+    {
+        // 计算出n周期前的时间
+        auto nowtime = KFDate::CalcTimeData( &kfresetdata->_time_data, nowdate.GetTime() );
+        auto calctime = KFDate::CalcTimeData( &kfresetdata->_time_data, nowtime, 0 - ( int32 )kfresetdata->_count );
+
+        // 上次重置时间
+        auto lasttime = KFDate::CalcTimeData( &kfresetdata->_time_data, lastdate.GetTime() );
+        lasttime = __MAX__( lasttime, calctime );
+
+        for ( auto i = 0u; i < kfresetdata->_count; ++i )
+        {
+            auto resettime = KFDate::CalcTimeData( &kfresetdata->_time_data, lasttime, 1 );
+            if ( resettime > nowtime )
+            {
+                break;
+            }
+
+            // 重置函数
+            kfresetdata->_function( player, kfresetdata->_time_data, lasttime, resettime );
+            lasttime = resettime;
+        }
     }
 }

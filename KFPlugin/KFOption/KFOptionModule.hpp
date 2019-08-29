@@ -11,7 +11,6 @@
 
 #include "KFOptionInterface.h"
 #include "KFZConfig/KFOptionConfig.hpp"
-#include "KFConfig/KFConfigInterface.h"
 
 namespace KFrame
 {
@@ -21,8 +20,7 @@ namespace KFrame
         KFOptionModule() = default;
         ~KFOptionModule() = default;
 
-        // 初始化
-        virtual void InitModule();
+
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 获得配置属性

@@ -14,7 +14,6 @@
 #include "KFRobotInterface.h"
 #include "KFProtocol/KFProtocol.h"
 #include "KFTimer/KFTimerInterface.h"
-#include "KFConfig/KFConfigInterface.h"
 #include "KFKernel/KFKernelInterface.h"
 #include "KFNetwork/KFNetClientEngine.h"
 #include "KFTcpClient/KFTcpClientInterface.h"
@@ -28,9 +27,6 @@ namespace KFrame
     public:
         KFRobotModule() = default;
         ~KFRobotModule() = default;
-
-        // 初始化
-        virtual void InitModule();
 
         // 刷新
         virtual void BeforeRun();

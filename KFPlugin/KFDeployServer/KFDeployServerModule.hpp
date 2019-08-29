@@ -13,7 +13,6 @@
 #include "KFProtocol/KFProtocol.h"
 #include "KFDeployServerInterface.h"
 #include "KFMySQL/KFMySQLInterface.h"
-#include "KFConfig/KFConfigInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFSchedule/KFScheduleInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"

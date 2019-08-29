@@ -1,6 +1,6 @@
 ﻿#include "KFMongoPlugin.hpp"
 #include "KFMongoModule.hpp"
-
+#include "KFConfig/KFConfigInterface.h"
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame
@@ -18,5 +18,10 @@ namespace KFrame
     void KFMongoPlugin::LoadModule()
     {
         __FIND_MODULE__( _kf_config, KFConfigInterface );
+    }
+
+    void KFMongoPlugin::AddConfig()
+    {
+        __KF_ADD_CONFIG__( KFMongoConfig );
     }
 }

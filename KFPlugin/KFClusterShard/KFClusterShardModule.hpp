@@ -11,7 +11,6 @@
 
 #include "KFrame.h"
 #include "KFClusterShardInterface.h"
-#include "KFConfig/KFConfigInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"

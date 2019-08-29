@@ -3,9 +3,8 @@
 
 namespace KFrame
 {
-    void KFMySQLModule::InitModule()
+    void KFMySQLModule::BeforeRun()
     {
-        __KF_ADD_CONFIG__( KFMySQLConfig );
         MySQL::Connector::registerConnector();
     }
 

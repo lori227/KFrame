@@ -2,11 +2,6 @@
 
 namespace KFrame
 {
-    void KFPayModule::InitModule()
-    {
-        __KF_ADD_CONFIG__( KFPayConfig );
-    }
-
     void KFPayModule::BeforeRun()
     {
         __REGISTER_ENTER_PLAYER__( &KFPayModule::OnEnterPayModule );

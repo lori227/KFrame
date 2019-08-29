@@ -10,7 +10,6 @@
 ************************************************************************/
 
 #include "KFSkinInterface.h"
-#include "KFConfig/KFConfigInterface.h"
 #include "KFTimer/KFTimerInterface.h"
 #include "KFKernel/KFKernelInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
@@ -26,8 +25,6 @@ namespace KFrame
         KFSkinModule() = default;
         ~KFSkinModule() = default;
 
-        // 初始化
-        virtual void InitModule();
 
         // 逻辑
         virtual void BeforeRun();

@@ -1,14 +1,8 @@
 ﻿#include "KFDropModule.hpp"
-#include "KFDropConfig.hpp"
-#include "KFZConfig/KFElementConfig.hpp"
 
 namespace KFrame
 {
-    void KFDropModule::InitModule()
-    {
-        __KF_ADD_CONFIG__( KFDropConfig );
-        __KF_ADD_CONFIG__( KFElementConfig );
-    }
+
 
     DropDataList& KFDropModule::DropElement( KFEntity* player, uint32 dropid, uint32 count, bool showclient, const char* function, uint32 line )
     {

@@ -1,0 +1,34 @@
+<?xml version = '1.0' encoding = 'utf-8' ?>
+<Config>
+	<Project Name="chess" Time="1554048000" Store="svn"/>
+	<Servers>
+		<Server Id="0" Name="请选择" Ip="" Url=""/>
+		<Server Id="1" Name="研发服" Ip="192.168.2.31" Url="http://192.168.2.31:9999/deploy"/>
+		<Server Id="2" Name="测试服" Ip="192.168.2.30" Url="http://192.168.2.30:9999/deploy"/>
+	</Servers>
+	<Files>
+		<File Name="1000-框架-屏蔽字符.xlsx" Type="3" TimeClient="0" TimeServer="0"/>
+		<File Name="1000-框架-渠道配置.xlsx" Type="3" TimeClient="0" TimeServer="0"/>
+		<File Name="1001-框架-掉落配置.xlsx" Type="3" TimeClient="0" TimeServer="0"/>
+		<File Name="1107-商城配置.xlsx" Type="3" TimeClient="0" TimeServer="1560608161"/>
+		<File Name="1000-框架-配置列表.xlsx" Type="3" TimeClient="0" TimeServer="1566721532"/>
+		<File Name="1001-框架-元素转换.xlsx" Type="3" TimeClient="0" TimeServer="1565260817"/>
+		<File Name="1001-玩家-属性定义.xlsx" Type="3" TimeClient="0" TimeServer="1564133739"/>
+		<File Name="1001-玩家-属性重置.xlsx" Type="3" TimeClient="0" TimeServer="1566456474"/>
+		<File Name="1001-玩家-离开游戏.xlsx" Type="3" TimeClient="0" TimeServer="1562135100"/>
+		<File Name="1001-玩家-进入游戏.xlsx" Type="3" TimeClient="0" TimeServer="1562135074"/>
+		<File Name="1113-关系配置.xlsx" Type="3" TimeClient="0" TimeServer="0"/>
+		<File Name="1002-常量-全局常量.xlsx" Type="3" TimeClient="0" TimeServer="1564046506"/>
+		<File Name="1002-常量-道具常量.xlsx" Type="3" TimeClient="0" TimeServer="1564133741"/>
+		<File Name="1104-合成配置.xlsx" Type="3" TimeClient="0" TimeServer="1560596093"/>
+		<File Name="1105-任务配置.xlsx" Type="3" TimeClient="0" TimeServer="0"/>
+		<File Name="1106-成就系统.xlsx" Type="3" TimeClient="0" TimeServer="1560607702"/>
+		<File Name="4010-道具-公共配置.xlsx" Type="3" TimeClient="0" TimeServer="0"/>
+		<File Name="1108-物品配置.xlsx" Type="3" TimeClient="0" TimeServer="0"/>
+		<File Name="1109-皮肤配置.xlsx" Type="3" TimeClient="0" TimeServer="1560609714"/>
+		<File Name="1110-英雄配置.xlsx" Type="3" TimeClient="0" TimeServer="1560610018"/>
+		<File Name="1111-签到配置.xlsx" Type="3" TimeClient="0" TimeServer="0"/>
+		<File Name="1112-邮件配置.xlsx" Type="3" TimeClient="0" TimeServer="0"/>
+		<File Name="1114-充值配置.xlsx" Type="3" TimeClient="0" TimeServer="0"/>
+	</Files>
+</Config>

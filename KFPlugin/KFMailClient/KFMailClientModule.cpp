@@ -2,10 +2,7 @@
 
 namespace KFrame
 {
-    void KFMailClientModule::InitModule()
-    {
-        __KF_ADD_CONFIG__( KFMailConfig );
-    }
+
 
     void KFMailClientModule::BeforeRun()
     {

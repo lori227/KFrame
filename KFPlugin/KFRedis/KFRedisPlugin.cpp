@@ -1,5 +1,6 @@
 ﻿#include "KFRedisPlugin.hpp"
 #include "KFRedisModule.hpp"
+#include "KFConfig/KFConfigInterface.h"
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame
@@ -17,5 +18,10 @@ namespace KFrame
     void KFRedisPlugin::LoadModule()
     {
         __FIND_MODULE__( _kf_config, KFConfigInterface );
+    }
+
+    void KFRedisPlugin::AddConfig()
+    {
+        __KF_ADD_CONFIG__( KFRedisConfig );
     }
 }

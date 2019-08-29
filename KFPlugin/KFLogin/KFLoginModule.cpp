@@ -3,11 +3,6 @@
 
 namespace KFrame
 {
-    void KFLoginModule::InitModule()
-    {
-        __KF_ADD_CONFIG__( KFZoneConfig );
-    }
-
     void KFLoginModule::BeforeRun()
     {
         __LOOP_TIMER_0__( 10000, 5000, &KFLoginModule::OnTimerZoneRegister );

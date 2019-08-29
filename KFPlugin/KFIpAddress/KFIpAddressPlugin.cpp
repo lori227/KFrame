@@ -1,5 +1,6 @@
 ﻿#include "KFIpAddressPlugin.hpp"
 #include "KFIpAddressModule.hpp"
+#include "KFConfig/KFConfigInterface.h"
 
 namespace KFrame
 {
@@ -17,6 +18,11 @@ namespace KFrame
     {
         __FIND_MODULE__( _kf_config, KFConfigInterface );
         __FIND_MODULE__( _kf_http_client, KFHttpClientInterface );
+    }
+
+    void KFIpAddressPlugin::AddConfig()
+    {
+        __KF_ADD_CONFIG__( KFIpConfig );
     }
 
 }

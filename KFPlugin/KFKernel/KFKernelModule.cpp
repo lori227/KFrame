@@ -2,8 +2,7 @@
 #include "KFEntityEx.hpp"
 #include "KFDataFactory.hpp"
 #include "KFProtocol/KFProtocol.h"
-#include "KFZConfig/KFElementConfig.hpp"
-#include "KFZConfig/KFOptionConfig.hpp"
+
 
 namespace KFrame
 {
@@ -21,13 +20,6 @@ namespace KFrame
     KFKernelModule* KFKernelModule::Instance()
     {
         return _kernel_module;
-    }
-
-    void KFKernelModule::InitModule()
-    {
-        __KF_ADD_CONFIG__( KFDataConfig );
-        __KF_ADD_CONFIG__( KFOptionConfig );
-        __KF_ADD_CONFIG__( KFElementConfig );
     }
 
     void KFKernelModule::Run()

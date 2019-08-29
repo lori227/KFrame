@@ -4,10 +4,6 @@
 
 namespace KFrame
 {
-    void KFActivityModule::InitModule()
-    {
-        __KF_ADD_CONFIG__( KFActivityConfig );
-    }
 
     void KFActivityModule::BeforeRun()
     {

@@ -3,11 +3,6 @@
 
 namespace KFrame
 {
-    void KFSignInModule::InitModule()
-    {
-        __KF_ADD_CONFIG__( KFSignInConfig );
-    }
-
     void KFSignInModule::BeforeRun()
     {
         __REGISTER_MESSAGE__( KFMsg::MSG_SEVEN_SIGNIN_REWARD_REQ, &KFSignInModule::HandleReceiveSevenRewardReq );

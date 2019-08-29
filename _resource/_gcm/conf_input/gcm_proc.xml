@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<gcm>
+  <!-- NOTE: if Seq not given, then it will be set 0 -->
+  <!-- NOTE: if the Seq value of ProcA is smaller than ProcB, then A will start before B, and after B when stoping -->
+  <!-- NOTE: more info please see TCM docs for more info -->
+
+    <!-- CLUSTER -->    
+    <cluster>
+		<!-- cluster log -->
+		<!-- 
+		<Proc ID="20" Name="log" Type="shard" seq="0"/>
+		
+		-->
+    <!-- cluster auth -->
+		<Proc ID="21" Name="auth" Type="auth" seq="0"/>
+
+		<!-- cluster route -->
+		<Proc ID="22" Name="route" Type="master" seq="0"/>
+		<Proc ID="23" Name="route" Type="proxy" seq="0"/>
+		<Proc ID="24" Name="route" Type="shard" seq="0"/>
+
+		<!-- cluster data -->
+		<Proc ID="31" Name="data" Type="shard" seq="0"/>
+
+		<!-- cluster public -->
+		<Proc ID="32" Name="public" Type="shard" seq="0"/>
+
+		<!-- cluster match -->
+		<Proc ID="38" Name="match" Type="shard" seq="0"/>
+		<Proc ID="39" Name="room" Type="shard" seq="0"/>
+
+
+		<!--
+		<Proc ID="33" Name="relation" Type="shard" seq="0"/>
+		<Proc ID="34" Name="mail" Type="shard" seq="0"/>
+		<Proc ID="35" Name="rank" Type="shard" seq="0"/>
+		<Proc ID="36" Name="group" Type="shard" seq="0"/>
+		<Proc ID="37" Name="guild" Type="shard" seq="0"/>
+		<Proc ID="39" Name="battle" Type="shard" seq="0"/>
+		-->	
+
+		<!-- zone -->
+		<zone>
+			<Proc ID="91" Name="zone" Type="master" seq="0"/>
+			<Proc ID="92" Name="zone" Type="world" seq="0"/>
+			<Proc ID="93" Name="zone" Type="gate" seq="0"/>
+			<Proc ID="94" Name="zone" Type="login" seq="0"/>
+			<Proc ID="95" Name="zone" Type="game" seq="0"/>
+		</zone>
+    </cluster>
+</gcm>

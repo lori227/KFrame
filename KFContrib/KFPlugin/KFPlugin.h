@@ -22,6 +22,9 @@ namespace KFrame
         // 加载模块
         virtual void LoadModule() = 0;
 
+        // 添加配置
+        virtual void AddConfig() {};
+
         // 初始化
         virtual void InitModule();
 
@@ -45,7 +48,7 @@ namespace KFrame
         void BindModule( const std::string& name, KFModule* module );
 
         // 卸载模块
-        void UnBindModule( bool savedata );
+        void UnBindModule( const std::string& name, bool savedata );
 
         // 查找模块
         KFModule* FindModule( const std::string& name );
@@ -58,11 +61,13 @@ namespace KFrame
         std::string _config;
 
         // 绑定模块
-        KFModule* _kf_module;
+        std::map< std::string, KFModule* > _modules;
 
         // 是否需要保存数据
         bool _save_data = false;
     };
+
+    //////////////////////////////////////////////////////////////////////
 }
 
 #endif

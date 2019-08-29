@@ -14,11 +14,6 @@ namespace KFrame
         delete _http_server;
     }
 
-    void KFHttpServerModule::InitModule()
-    {
-        __KF_ADD_CONFIG__( KFHttpServerConfig );
-    }
-
     void KFHttpServerModule::BeforeRun()
     {
         //////////////////////////////////////////////////////////////////////////////////

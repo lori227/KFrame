@@ -13,7 +13,6 @@
 #include "KFProtocol/KFProtocol.h"
 #include "KFRedis/KFRedisInterface.h"
 #include "KFTimer/KFTimerInterface.h"
-#include "KFConfig/KFConfigInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFSchedule/KFScheduleInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"
@@ -53,9 +52,6 @@ namespace KFrame
     public:
         KFRankShardModule() = default;
         ~KFRankShardModule() = default;
-
-        // 加载配置
-        virtual void InitModule();
 
         // 初始化
         virtual void BeforeRun();

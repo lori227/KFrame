@@ -1,0 +1,10 @@
+<root version="00000">
+	<item OverlayValue="10" Id="1" Type="101" Name="铜钱卡" CanDirectUse="1" Quality="1" UseCount="1" OverlayType="1" RewardType="1" RewardValue="[{&quot;money&quot;:{&quot;money&quot;:&quot;1000&quot;}}]"/>
+	<item OverlayValue="1" Id="2" Type="101" Name="任务道具" OverlayType="1"/>
+	<item OverlayValue="10" Id="3" Type="101" Name="张小贱礼盒" CanDirectUse="1" Quality="2" UseCount="1" OverlayType="1" RewardType="1" RewardValue="[{&quot;clothes&quot;:{&quot;id&quot;:&quot;20001&quot;|&quot;count&quot;:&quot;1&quot;}}|{&quot;money&quot;:{&quot;money&quot;:&quot;9999&quot;}}]"/>
+	<item OverlayValue="1" Id="4" Type="101" Name="杨四龙的刀" Quality="1" OverlayType="1"/>
+	<item OverlayValue="1" Id="5" Type="101" Name="龙少的剑" Quality="1" OverlayType="1"/>
+	<item OverlayValue="1" Id="6" Type="101" Name="龙哥的长枪" Quality="1" OverlayType="1"/>
+	<item OverlayValue="10" Id="7" Type="101" Name="礼包放大版" CanDirectUse="1" Quality="2" UseCount="1" OverlayType="1" RewardType="1" RewardValue="[{&quot;item&quot;:{&quot;id&quot;:&quot;1&quot;|&quot;count&quot;:&quot;1&quot;}}|{&quot;clothes&quot;:{&quot;id&quot;:&quot;20003&quot;|&quot;count&quot;:&quot;1&quot;}}|{&quot;diamond&quot;:{&quot;diamond&quot;:&quot;999&quot;}}]"/>
+	<item OverlayValue="10" Id="8" Type="101" Name="礼包缩小版" CanDirectUse="1" Quality="2" UseCount="1" OverlayType="1" RewardType="1" RewardValue="[{&quot;item&quot;:{&quot;id&quot;:&quot;4&quot;|&quot;count&quot;:&quot;1&quot;}}|{&quot;item&quot;:{&quot;id&quot;:&quot;5&quot;|&quot;count&quot;:&quot;1&quot;}}|{&quot;money&quot;:{&quot;money&quot;:&quot;10001&quot;}}]"/>
+</root>

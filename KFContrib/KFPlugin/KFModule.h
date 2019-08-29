@@ -19,6 +19,9 @@ namespace KFrame
         // 卸载
         virtual void UnInstall() {}
 
+        // 添加配置
+        virtual void AddConfig() {};
+
         // 初始化
         virtual void InitModule() {}
 

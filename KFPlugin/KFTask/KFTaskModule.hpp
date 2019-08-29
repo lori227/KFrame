@@ -10,7 +10,6 @@
 ************************************************************************/
 
 #include "KFTaskInterface.h"
-#include "KFConfig/KFConfigInterface.h"
 #include "KFKernel/KFKernelInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
@@ -24,9 +23,6 @@ namespace KFrame
     public:
         KFTaskModule() = default;
         ~KFTaskModule() = default;
-
-        // 加载配置
-        virtual void InitModule();
 
         // 逻辑
         virtual void BeforeRun();

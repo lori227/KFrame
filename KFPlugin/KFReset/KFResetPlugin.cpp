@@ -1,6 +1,6 @@
 ﻿#include "KFResetPlugin.hpp"
 #include "KFResetModule.hpp"
-
+#include "KFConfig/KFConfigInterface.h"
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame
@@ -20,4 +20,10 @@ namespace KFrame
         __FIND_MODULE__( _kf_config, KFConfigInterface );
         __FIND_MODULE__( _kf_player, KFPlayerInterface );
     }
+
+    void KFResetPlugin::AddConfig()
+    {
+        __KF_ADD_CONFIG__( KFResetConfig );
+    }
+
 }

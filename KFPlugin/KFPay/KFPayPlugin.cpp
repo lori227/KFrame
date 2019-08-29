@@ -1,6 +1,6 @@
 ﻿#include "KFPayPlugin.hpp"
 #include "KFPayModule.hpp"
-
+#include "KFConfig/KFConfigInterface.h"
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame
@@ -24,5 +24,10 @@ namespace KFrame
         __FIND_MODULE__( _kf_display, KFDisplayInterface );
         __FIND_MODULE__( _kf_ip_address, KFIpAddressInterface );
         __FIND_MODULE__( _kf_http_client, KFHttpClientInterface );
+    }
+
+    void KFPayPlugin::AddConfig()
+    {
+        __KF_ADD_CONFIG__( KFPayConfig );
     }
 }

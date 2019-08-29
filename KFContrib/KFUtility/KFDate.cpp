@@ -18,7 +18,7 @@ namespace KFrame
 
     KFDate::KFDate( uint32 year, uint32 month, uint32 day, uint32 hour, uint32 min, uint32 second /* = 0 */ )
     {
-        _tm_date.tm_year = static_cast< int32 >( year - KFTimeEnum::SinceYear );     // tm_year is 1900 based
+        _tm_date.tm_year = static_cast< int32 >( year - KFTimeEnum::SinceYear );     // tm_year is 1970 based
         _tm_date.tm_mon = static_cast< int32 >( month - 1 );        // tm_mon is 0 based
         _tm_date.tm_mday = static_cast< int32 >( day );
         _tm_date.tm_hour = static_cast< int32 >( hour );
@@ -496,9 +496,9 @@ namespace KFrame
 
     uint64 KFDate::CalcZeroTime( uint64 time, int32 daycount /* = 0 */ )
     {
-        int64 day = time / KFTimeEnum::OneDaySecond;
-        day += daycount;
-        return ( uint64 )day * KFTimeEnum::OneDaySecond;
+        KFDate date( ( int64 )time + daycount * KFTimeEnum::OneDaySecond );
+        KFDate newdate( date.GetYear(), date.GetMonth(), date.GetDay(), 0, 0 );
+        return newdate.GetTime();
     }
 
     uint64 KFDate::CalcTimeData( const KFTimeData* timedata, uint64 time, int32 count /* = 0 */ )
@@ -512,23 +512,39 @@ namespace KFrame
         }
         else if ( timedata->_type == KFTimeEnum::Day )
         {
-            int64 day = time / KFTimeEnum::OneDaySecond;
-            day += count;
-            result = ( uint64 )day * KFTimeEnum::OneDaySecond + timedata->_hour * KFTimeEnum::OneHourSecond;
+            KFDate date( time );
+            if ( date.GetHour() < timedata->_value )
+            {
+                count -= 1;
+            }
+
+            result = CalcZeroTime( time, count ) + timedata->_hour * KFTimeEnum::OneHourSecond;
         }
         else if ( timedata->_type == KFTimeEnum::Week )
         {
             int64 week = time / KFTimeEnum::OneWeekSecond;
+            auto daysecond = ( timedata->_value - __MIN__( timedata->_value, 1 ) ) * KFTimeEnum::OneDayHour + timedata->_hour * KFTimeEnum::OneHourSecond;
+            if ( time - ( uint64 )week * KFTimeEnum::OneWeekSecond < daysecond )
+            {
+                week -= 1;
+            }
+
             week += count;
-            result = ( uint64 )week * KFTimeEnum::OneWeekSecond + timedata->_value * KFTimeEnum::OneDayHour + timedata->_hour * KFTimeEnum::OneHourSecond;
+            // 1970/1/1是周4, 所以我们加上4天时间, 把时间从周1作为周期开始
+            result = CalcZeroTime( ( uint64 )week * KFTimeEnum::OneWeekSecond + 4 * KFTimeEnum::OneDaySecond ) + daysecond;
         }
         else if ( timedata->_type == KFTimeEnum::Month )
         {
             KFDate date( time );
             auto totalmonth = date.GetYear() * 12 + date.GetMonth() + count;
+            if ( date.GetDay() < timedata->_value ||
+                    ( date.GetDay() == timedata->_value && date.GetHour() < timedata->_hour ) )
+            {
+                totalmonth -= 1;
+            }
+
             auto year = totalmonth / 12;
             auto month = totalmonth % 12;
-
             KFDate newdate( year, month, timedata->_value, timedata->_hour, 0, 0 );
             result = newdate.GetTime();
         }

@@ -17,7 +17,6 @@ namespace KFrame
     void KFDeployClientPlugin::LoadModule()
     {
         __FIND_MODULE__( _kf_timer, KFTimerInterface );
-        __FIND_MODULE__( _kf_config, KFConfigInterface );
         __FIND_MODULE__( _kf_message, KFMessageInterface );
         __FIND_MODULE__( _kf_tcp_client, KFTcpClientInterface );
     }

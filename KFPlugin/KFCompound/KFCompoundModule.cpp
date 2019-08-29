@@ -3,12 +3,6 @@
 
 namespace KFrame
 {
-    void KFCompoundModule::InitModule()
-    {
-        __KF_ADD_CONFIG__( KFCompoundConfig );
-        ///////////////////////////////////////////////////////////////////////////////
-    }
-
     void KFCompoundModule::BeforeRun()
     {
         __REGISTER_MESSAGE__( KFMsg::MSG_COMPOUND_REQ, &KFCompoundModule::HandleCompoundReq );

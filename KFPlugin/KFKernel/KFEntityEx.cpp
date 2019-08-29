@@ -106,9 +106,23 @@ namespace KFrame
     void KFEntityEx::UpdateData( KFData* kfdata, const std::string& value )
     {
         kfdata->SetValue<std::string>( value );
-
-        // 属性更新回调
-        _kf_component->UpdateDataCallBack( this, kfdata, value );
+        if ( kfdata->_data_setting->_type == KFDataDefine::Type_Array )
+        {
+            for ( uint32 i = KFDataDefine::Array_Index; i < kfdata->Size(); ++i )
+            {
+                auto kfchild = kfdata->FindData( i );
+                if ( kfchild != nullptr )
+                {
+                    auto newvalue = kfchild->GetValue<uint64>();
+                    _kf_component->UpdateDataCallBack( this, i, kfchild, i, KFEnum::Set, newvalue, 0u, newvalue );
+                }
+            }
+        }
+        else if ( kfdata->_data_setting->_type == KFDataDefine::Type_String )
+        {
+            // 属性更新回调
+            _kf_component->UpdateDataCallBack( this, kfdata, value );
+        }
     }
 
     void KFEntityEx::UpdateData( KFData* kfparent, const std::string& dataname, const std::string& value )

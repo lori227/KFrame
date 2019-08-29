@@ -12,7 +12,6 @@
 #include "KFrame.h"
 #include "KFHttpServerInterface.h"
 #include "KFHttpServerConfig.hpp"
-#include "KFConfig/KFConfigInterface.h"
 #include "KFIpAddress/KFIpAddressInterface.h"
 
 namespace KFrame
@@ -23,9 +22,6 @@ namespace KFrame
     public:
         KFHttpServerModule();
         ~KFHttpServerModule();
-
-        // 初始化
-        virtual void InitModule();
 
         // 运行
         virtual void BeforeRun();

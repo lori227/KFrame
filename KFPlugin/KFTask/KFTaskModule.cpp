@@ -3,11 +3,6 @@
 
 namespace KFrame
 {
-    void KFTaskModule::InitModule()
-    {
-        __KF_ADD_CONFIG__( KFTaskConfig );
-    }
-
     void KFTaskModule::BeforeRun()
     {
         _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );

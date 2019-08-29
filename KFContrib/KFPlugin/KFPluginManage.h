@@ -30,7 +30,6 @@
     KFModule kfbase;\
     void ( KFModule::*basemfp )() = &KFModule::function; \
     auto bassaddress = ( void* )( kfbase.*basemfp ); \
-    auto kfmodule = static_cast < module* >( _kf_module );\
     void ( module::*childmfp )() = &module::function; \
     auto childaddress = (void*)( kfmodule->*childmfp );\
     if ( bassaddress != childaddress )\
@@ -62,17 +61,22 @@
     }
 
 // 注册模块
-#define __REGISTER_MODULE__( name ) \
-    auto kfmodule = new name##Module();\
-    _kf_plugin_manage->RegistModule< name##Plugin, name##Interface >( kfmodule );\
-    __REGISTER_PLUGIN__( name##Module, Run );\
-    __REGISTER_PLUGIN__( name##Module, AfterRun );\
+#define __REGISTER_MODULE__( modulename ) \
+    {\
+        auto kfmodule = new modulename##Module(); \
+        _kf_plugin_manage->RegistModule< modulename##Interface >( typeid( *this ).name(), kfmodule );\
+        __REGISTER_PLUGIN__( modulename##Module, Run );\
+        __REGISTER_PLUGIN__( modulename##Module, AfterRun );\
+    }\
 
 // 卸载模块
-#define __UN_MODULE__( name ) \
-    __UN_PLUGIN_FUNCTION__( name##Module, Run );\
-    __UN_PLUGIN_FUNCTION__( name##Module, AfterRun );\
-    _kf_plugin_manage->UnRegistModule< name##Plugin >( _save_data );\
+#define __UN_MODULE__( modulename ) \
+    {\
+        auto kfmodule = (modulename##Module*)FindModule( typeid( modulename##Interface ).name());\
+        __UN_PLUGIN_FUNCTION__( modulename##Module, Run ); \
+        __UN_PLUGIN_FUNCTION__( modulename##Module, AfterRun );\
+        _kf_plugin_manage->UnRegistModule< modulename##Module >( typeid( *this ).name(), _save_data );\
+    }\
 
 #define __FIND_MODULE__( module, classname ) \
     module = _kf_plugin_manage->FindModule< classname >( __FILE__, __LINE__ )
@@ -133,30 +137,22 @@ namespace KFrame
             UnRegistPlugin( name, savedata );
         }
 
-        // 查找插件
-        template< class T >
-        T* FindPlugin()
-        {
-            std::string name = typeid( T ).name();
-            return dynamic_cast<T*>( FindPlugin( name ) );
-        }
-
         /////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////
         // 注册模块
-        template< class PluginType, class InterfaceType >
-        void RegistModule( InterfaceType* module )
+        template< class InterfaceType >
+        void RegistModule( const std::string& pluginname, InterfaceType* module )
         {
-            auto plugin = FindPlugin< PluginType >();
+            auto plugin = FindPlugin( pluginname );
             plugin->BindModule( typeid( InterfaceType ).name(), module );
         }
 
         // 卸载模块
-        template< class PluginType >
-        void UnRegistModule( bool savedata )
+        template< class InterfaceType >
+        void UnRegistModule( const std::string& pluginname, bool savedata )
         {
-            auto plugin = FindPlugin< PluginType >();
-            plugin->UnBindModule( savedata );
+            auto plugin = FindPlugin( pluginname );
+            plugin->UnBindModule( typeid( InterfaceType ).name(), savedata );
         }
 
         // 查找模块

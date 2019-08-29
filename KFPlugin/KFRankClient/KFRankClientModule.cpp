@@ -3,11 +3,6 @@
 
 namespace KFrame
 {
-    void KFRankClientModule::InitModule()
-    {
-        __KF_ADD_CONFIG__( KFRankConfig );
-    }
-
     void KFRankClientModule::BeforeRun()
     {
         _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );

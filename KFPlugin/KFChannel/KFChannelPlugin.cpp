@@ -1,6 +1,6 @@
 ﻿#include "KFChannelPlugin.hpp"
 #include "KFChannelModule.hpp"
-
+#include "KFConfig/KFConfigInterface.h"
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame
@@ -22,4 +22,10 @@ namespace KFrame
         __FIND_MODULE__( _kf_http_client, KFHttpClientInterface );
         __FIND_MODULE__( _kf_http_server, KFHttpServerInterface );
     }
+
+    void KFChannelPlugin::AddConfig()
+    {
+        __KF_ADD_CONFIG__( KFChannelConfig );
+    }
+
 }

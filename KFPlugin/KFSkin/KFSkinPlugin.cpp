@@ -1,6 +1,6 @@
 ﻿#include "KFSkinPlugin.hpp"
 #include "KFSkinModule.hpp"
-
+#include "KFConfig/KFConfigInterface.h"
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame
@@ -24,4 +24,10 @@ namespace KFrame
         __FIND_MODULE__( _kf_message, KFMessageInterface );
         __FIND_MODULE__( _kf_display, KFDisplayInterface );
     }
+
+    void KFSkinPlugin::AddConfig()
+    {
+        __KF_ADD_CONFIG__( KFSkinConfig );
+    }
+
 }

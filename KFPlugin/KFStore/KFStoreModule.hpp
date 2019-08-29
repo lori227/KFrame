@@ -3,7 +3,6 @@
 
 #include "KFStoreConfig.hpp"
 #include "KFStoreInterface.h"
-#include "KFConfig/KFConfigInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
@@ -15,9 +14,6 @@ namespace KFrame
     public:
         KFStoreModule() = default;
         ~KFStoreModule() = default;
-
-        // 初始化
-        virtual void InitModule();
 
         // 初始化
         virtual void BeforeRun();

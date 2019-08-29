@@ -2,11 +2,6 @@
 
 namespace KFrame
 {
-    void KFRankShardModule::InitModule()
-    {
-        __KF_ADD_CONFIG__( KFRankConfig );
-    }
-
     void KFRankShardModule::BeforeRun()
     {
         _kf_route->RegisterConnectionFunction( this, &KFRankShardModule::OnRouteConnectCluster );

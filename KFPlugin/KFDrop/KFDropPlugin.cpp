@@ -1,6 +1,6 @@
 ﻿#include "KFDropPlugin.hpp"
 #include "KFDropModule.hpp"
-
+#include "KFConfig/KFConfigInterface.h"
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame
@@ -20,5 +20,11 @@ namespace KFrame
         __FIND_MODULE__( _kf_config, KFConfigInterface );
         __FIND_MODULE__( _kf_kernel, KFKernelInterface );
         __FIND_MODULE__( _kf_player, KFPlayerInterface );
+    }
+
+    void KFDropPlugin::AddConfig()
+    {
+        __KF_ADD_CONFIG__( KFDropConfig );
+        __KF_ADD_CONFIG__( KFElementConfig );
     }
 }

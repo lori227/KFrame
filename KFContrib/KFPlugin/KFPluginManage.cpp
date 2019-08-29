@@ -103,6 +103,11 @@ namespace KFrame
     {
         for ( auto kfplugin : _plugins )
         {
+            kfplugin->AddConfig();
+        }
+
+        for ( auto kfplugin : _plugins )
+        {
             kfplugin->LoadConfig();
         }
     }

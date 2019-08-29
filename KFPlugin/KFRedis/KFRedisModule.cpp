@@ -3,11 +3,6 @@
 
 namespace KFrame
 {
-    void KFRedisModule::InitModule()
-    {
-        __KF_ADD_CONFIG__( KFRedisConfig );
-    }
-
     void KFRedisModule::ShutDown()
     {
         {

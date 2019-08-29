@@ -16,7 +16,6 @@ namespace KFrame
 
     void KFTcpServerModule::InitModule()
     {
-        __KF_ADD_CONFIG__( KFTcpServerConfig );
         _server_engine = new KFNetServerEngine();
     }
 

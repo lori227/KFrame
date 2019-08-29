@@ -1,5 +1,6 @@
 ﻿#include "KFFilterPlugin.hpp"
 #include "KFFilterModule.hpp"
+#include "KFConfig/KFConfigInterface.h"
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame
@@ -17,5 +18,10 @@ namespace KFrame
     void KFFilterPlugin::LoadModule()
     {
         __FIND_MODULE__( _kf_config, KFConfigInterface );
+    }
+
+    void KFFilterPlugin::AddConfig()
+    {
+        __KF_ADD_CONFIG__( KFFilterConfig );
     }
 }

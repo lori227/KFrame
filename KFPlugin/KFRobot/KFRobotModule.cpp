@@ -3,11 +3,6 @@
 
 namespace KFrame
 {
-    void KFRobotModule::InitModule()
-    {
-        __KF_ADD_CONFIG__( KFRobotConfig );
-    }
-
 #define __REGISTER_ROBOT_MESSAGE__( msgid, handle ) \
     {\
         KFMessageFunction function = std::bind( handle, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );\

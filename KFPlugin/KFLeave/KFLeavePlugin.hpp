@@ -15,6 +15,10 @@ namespace KFrame
 
         // 加载
         virtual void LoadModule();
+
+        // 配置
+        virtual void AddConfig();
+
     };
 }
 

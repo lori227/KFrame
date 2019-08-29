@@ -11,7 +11,6 @@
 
 #include "KFBusInterface.h"
 #include "KFBusConfig.hpp"
-#include "KFConfig/KFConfigInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFIpAddress/KFIpAddressInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"
@@ -23,9 +22,6 @@ namespace KFrame
     public:
         KFBusModule() = default;
         ~KFBusModule() = default;
-
-        // 初始化
-        virtual void InitModule();
 
         virtual void BeforeRun();
         virtual void PrepareRun();

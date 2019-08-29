@@ -2,11 +2,6 @@
 
 namespace KFrame
 {
-    void KFLeaveModule::InitModule()
-    {
-        __KF_ADD_CONFIG__( KFLeaveConfig );
-    }
-
     void KFLeaveModule::BeforeRun()
     {
         __REGISTER_LEAVE_PLAYER__( &KFLeaveModule::LeaveGameWorld );

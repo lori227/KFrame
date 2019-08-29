@@ -1,4 +1,4 @@
-#ifndef __KF_ACTIVITY_PLUGIN_H__
+﻿#ifndef __KF_ACTIVITY_PLUGIN_H__
 #define __KF_ACTIVITY_PLUGIN_H__
 #include "KFrame.h"
 
@@ -15,6 +15,9 @@ namespace KFrame
 
         // 加载
         virtual void LoadModule();
+
+        // 配置
+        virtual void AddConfig();
     };
 }
 

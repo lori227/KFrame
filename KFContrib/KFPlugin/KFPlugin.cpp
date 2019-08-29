@@ -5,89 +5,127 @@ namespace KFrame
     KFPlugin::KFPlugin()
     {
         _sort = 0;
-        _kf_module = nullptr;
+        _modules.clear();
     }
 
     KFPlugin::~KFPlugin()
     {
-        __DELETE_OBJECT__( _kf_module );
+        for ( auto& iter : _modules )
+        {
+            __DELETE_OBJECT__( iter.second );
+        }
+        _modules.clear();
     }
 
     void KFPlugin::InitModule()
     {
-        _kf_module->InitModule();
+        for ( auto& iter : _modules )
+        {
+            iter.second->InitModule();
+        }
     }
 
     void KFPlugin::LoadConfig()
     {
-        _kf_module->LoadConfig();
+        for ( auto& iter : _modules )
+        {
+            iter.second->LoadConfig();
+        }
     }
 
     void KFPlugin::BeforeRun()
     {
-        _kf_module->BeforeRun();
+        for ( auto& iter : _modules )
+        {
+            iter.second->BeforeRun();
+        }
     }
 
     void KFPlugin::BeforeShut()
     {
-        _kf_module->BeforeShut();
+        for ( auto& iter : _modules )
+        {
+            iter.second->BeforeShut();
+        }
     }
 
     void KFPlugin::ShutDown()
     {
-        _kf_module->ShutDown();
+        for ( auto& iter : _modules )
+        {
+            iter.second->ShutDown();
+        }
     }
 
     void KFPlugin::AfterShut()
     {
-        _kf_module->AfterShut();
+        for ( auto& iter : _modules )
+        {
+            iter.second->AfterShut();
+        }
     }
 
     void KFPlugin::PrepareRun()
     {
-        _kf_module->PrepareRun();
+        for ( auto& iter : _modules )
+        {
+            iter.second->PrepareRun();
+        }
     }
 
     void KFPlugin::Reload()
     {
-        _kf_module->InitModule();
-        _kf_module->BeforeRun();
-        _kf_module->PrepareRun();
-        _kf_module->LoadData();
+        InitModule();
+        BeforeRun();
+        PrepareRun();
+
+        for ( auto& iter : _modules )
+        {
+            iter.second->LoadData();
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////
     KFModule* KFPlugin::FindModule( const std::string& name )
     {
-        if ( name == _kf_module->_class_name )
+        auto iter = _modules.find( name );
+        if ( iter == _modules.end() )
         {
-            return _kf_module;
+            return nullptr;
         }
 
-        return nullptr;
+        return iter->second;
     }
 
     void KFPlugin::BindModule( const std::string& name, KFModule* module )
     {
-        _kf_module = module;
-        _kf_module->_kf_plugin = this;
-        _kf_module->_class_name = name;
-        _kf_module->_plugin_name = _plugin_name;
-        _kf_module->_kf_plugin_manage = _kf_plugin_manage;
+        module->_kf_plugin = this;
+        module->_class_name = name;
+        module->_plugin_name = _plugin_name;
+        module->_kf_plugin_manage = _kf_plugin_manage;
+        _modules[ name ] = module;
     }
 
-    void KFPlugin::UnBindModule( bool savedata )
+    void KFPlugin::UnBindModule( const std::string& name, bool savedata )
     {
-        if ( savedata )
+        auto iter = _modules.find( name );
+        if ( iter == _modules.end() )
         {
-            _kf_module->SaveData();
-
-            _kf_module->BeforeShut();
-            _kf_module->ShutDown();
-            _kf_module->AfterShut();
+            return ;
         }
 
-        __DELETE_OBJECT__( _kf_module );
+        auto kfmodule = iter->second;
+        if ( savedata )
+        {
+            kfmodule->SaveData();
+
+            kfmodule->BeforeShut();
+            kfmodule->ShutDown();
+            kfmodule->AfterShut();
+        }
+
+        __DELETE_OBJECT__( kfmodule );
+        _modules.erase( iter );
     }
 }

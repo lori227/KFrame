@@ -1,6 +1,6 @@
 ﻿#include "KFOptionPlugin.hpp"
 #include "KFOptionModule.hpp"
-
+#include "KFConfig/KFConfigInterface.h"
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame
@@ -19,4 +19,10 @@ namespace KFrame
     {
         __FIND_MODULE__( _kf_config, KFConfigInterface );
     }
+
+    void KFOptionPlugin::AddConfig()
+    {
+        __KF_ADD_CONFIG__( KFOptionConfig );
+    }
+
 }

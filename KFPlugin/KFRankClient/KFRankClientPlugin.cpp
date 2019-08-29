@@ -1,5 +1,6 @@
 ﻿#include "KFRankClientPlugin.hpp"
 #include "KFRankClientModule.hpp"
+#include "KFConfig/KFConfigInterface.h"
 
 namespace KFrame
 {
@@ -23,4 +24,8 @@ namespace KFrame
         __FIND_MODULE__( _kf_route, KFRouteClientInterface );
     }
 
+    void KFRankClientPlugin::AddConfig()
+    {
+        __KF_ADD_CONFIG__( KFRankConfig );
+    }
 }

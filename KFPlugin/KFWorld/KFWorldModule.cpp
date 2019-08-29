@@ -2,11 +2,6 @@
 
 namespace KFrame
 {
-    void KFWorldModule::InitModule()
-    {
-        __KF_ADD_CONFIG__( KFZoneConfig );
-    }
-
     void KFWorldModule::BeforeRun()
     {
         __LOOP_TIMER_0__( 5000, 1000, &KFWorldModule::OnTimerWorldRegister );

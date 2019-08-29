@@ -12,7 +12,6 @@
 #include "KFItemInterface.h"
 #include "KFLua/KFLuaInterface.h"
 #include "KFTimer/KFTimerInterface.h"
-#include "KFConfig/KFConfigInterface.h"
 #include "KFKernel/KFKernelInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFMessage/KFMessageInterface.h"
@@ -70,9 +69,6 @@ namespace KFrame
     public:
         KFItemModule() = default;
         ~KFItemModule() = default;
-
-        // 初始化
-        virtual void InitModule();
 
         // 逻辑
         virtual void BeforeRun();

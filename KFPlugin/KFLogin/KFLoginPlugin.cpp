@@ -1,5 +1,6 @@
 ﻿#include "KFLoginPlugin.hpp"
 #include "KFLoginModule.hpp"
+#include "KFConfig/KFConfigInterface.h"
 
 namespace KFrame
 {
@@ -25,5 +26,9 @@ namespace KFrame
         __FIND_MODULE__( _kf_http_client, KFHttpClientInterface );
     }
 
+    void KFLoginPlugin::AddConfig()
+    {
+        __KF_ADD_CONFIG__( KFZoneConfig );
+    }
 }
 

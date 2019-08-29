@@ -1,13 +1,7 @@
 ﻿#include "KFFilterModule.hpp"
-#include "KFFilterConfig.hpp"
 
 namespace KFrame
 {
-    void KFFilterModule::InitModule()
-    {
-        __KF_ADD_CONFIG__( KFFilterConfig );
-    }
-
     bool KFFilterModule::CheckFilter( const std::string& source )
     {
         // 不能有 空格 %

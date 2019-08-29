@@ -1,0 +1,6 @@
+<?xml version = '1.0' encoding = 'utf-8' ?>
+<Config>
+	<Path Server="D:\Work\Frame\trunk\_bin\config" Client="D:\Work\Project\Chess\trunk\Client\Content\Xml"/>
+	<File Type="1"/>
+	<Server Id="1"/>
+</Config>

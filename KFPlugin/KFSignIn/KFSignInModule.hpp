@@ -11,7 +11,6 @@
 
 #include "KFSignInInterface.h"
 #include "KFGame/KFGameInterface.h"
-#include "KFConfig/KFConfigInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFMessage/KFMessageInterface.h"
@@ -24,9 +23,6 @@ namespace KFrame
     public:
         KFSignInModule() = default;
         ~KFSignInModule() = default;
-
-        // 加载配置
-        virtual void InitModule();
 
         virtual void BeforeRun();
 

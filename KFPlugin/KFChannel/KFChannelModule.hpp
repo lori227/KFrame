@@ -12,7 +12,6 @@
 #include "KFChannelInterface.h"
 #include "KFChannelConfig.hpp"
 #include "KFRedis/KFRedisInterface.h"
-#include "KFConfig/KFConfigInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
 #include "KFHttpServer/KFHttpServerInterface.h"
 
@@ -28,9 +27,6 @@ namespace KFrame
     public:
         KFChannelModule() = default;
         ~KFChannelModule();
-
-        // 初始化
-        virtual void InitModule();
 
         // 初始化
         virtual void BeforeRun();

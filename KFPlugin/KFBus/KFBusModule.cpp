@@ -4,11 +4,6 @@
 
 namespace KFrame
 {
-    void KFBusModule::InitModule()
-    {
-        __KF_ADD_CONFIG__( KFBusConfig );
-    }
-
     void KFBusModule::BeforeRun()
     {
         __REGISTER_MESSAGE__( KFMsg::S2S_TELL_REGISTER_TO_SERVER, &KFBusModule::HanldeTellRegisterToServer );

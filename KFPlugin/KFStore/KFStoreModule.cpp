@@ -3,11 +3,6 @@
 
 namespace KFrame
 {
-    void KFStoreModule::InitModule()
-    {
-        __KF_ADD_CONFIG__( KFStoreConfig );
-    }
-
     void KFStoreModule::BeforeRun()
     {
         __REGISTER_MESSAGE__( KFMsg::MSG_BUY_STORE_REQ, &KFStoreModule::HandleBuyStoreReq );

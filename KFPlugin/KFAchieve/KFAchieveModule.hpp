@@ -9,7 +9,6 @@
 //    @Date             :    2017-1-20
 ************************************************************************/
 #include "KFAchieveInterface.h"
-#include "KFConfig/KFConfigInterface.h"
 #include "KFKernel/KFKernelInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFMessage/KFMessageInterface.h"
@@ -24,8 +23,6 @@ namespace KFrame
         KFAchieveModule() = default;
         ~KFAchieveModule() = default;
 
-        // 初始化
-        virtual void InitModule();
 
         // 初始化
         virtual void BeforeRun();

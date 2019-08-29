@@ -12,14 +12,12 @@
 #include "KFProtocol/KFProtocol.h"
 #include "KFGame/KFGameInterface.h"
 #include "KFRelationClientInterface.h"
-#include "KFConfig/KFConfigInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFKernel/KFKernelInterface.h"
 #include "KFFilter/KFFilterInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"
-#include "KFPublicClient/KFPublicClientInterface.h"
 #include "KFZConfig/KFRelationConfig.hpp"
 
 namespace KFrame
@@ -29,9 +27,6 @@ namespace KFrame
     public:
         KFRelationClientModule() = default;
         ~KFRelationClientModule() = default;
-
-        // 初始化
-        virtual void InitModule();
 
         // 初始化
         virtual void BeforeRun();

@@ -1,5 +1,6 @@
 ﻿#ifndef __KF_OPTION_PLUGIN_H__
 #define __KF_OPTION_PLUGIN_H__
+
 #include "KFrame.h"
 
 namespace KFrame
@@ -15,6 +16,9 @@ namespace KFrame
 
         // 加载
         virtual void LoadModule();
+
+        // 添加配置
+        virtual void AddConfig();
     };
 }
 
