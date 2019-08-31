@@ -8,8 +8,8 @@ namespace KFrame
 {
     typedef std::function< void( KFEntity* ) > KFEntityFunction;
     typedef std::function< void( KFEntity*, uint32 ) > KFSaveEntityFunction;
-    typedef std::function< void( KFEntity*, const KFMsg::PBObject& ) > KFSyncFunction;
-    typedef std::function< void( KFEntity*, const KFMsg::PBShowElement& ) > KFShowElementFunction;
+    typedef std::function< void( KFEntity*, KFMsg::PBObject& ) > KFSyncFunction;
+    typedef std::function< void( KFEntity*, KFMsg::PBShowElement& ) > KFShowElementFunction;
     ////////////////////////////////////////////////////////////////////////////////////////////
 
     typedef std::function< bool( KFEntity*, KFData*, KFElement*, const char*, uint32, float ) > KFCheckAddElementFunction;
@@ -315,7 +315,7 @@ namespace KFrame
         virtual void UnRegisterEntityDeleteFunction() = 0;
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         template< class T >
-        void RegisterSyncUpdateFunction( T* object, void ( T::*handle )( KFEntity* kfentity, const KFMsg::PBObject& pbobject ) )
+        void RegisterSyncUpdateFunction( T* object, void ( T::*handle )( KFEntity* kfentity, KFMsg::PBObject& pbobject ) )
         {
             KFSyncFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2 );
             BindSyncUpdateFunction( function );
@@ -323,7 +323,7 @@ namespace KFrame
         virtual void UnRegisterSyncUpdateFunction() = 0;
 
         template< class T >
-        void RegisterSyncAddFunction( T* object, void ( T::*handle )( KFEntity* kfentity, const KFMsg::PBObject& pbobject ) )
+        void RegisterSyncAddFunction( T* object, void ( T::*handle )( KFEntity* kfentity, KFMsg::PBObject& pbobject ) )
         {
             KFSyncFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2 );
             BindSyncAddFunction( function );
@@ -331,7 +331,7 @@ namespace KFrame
         virtual void UnRegisterSyncAddFunction() = 0;
 
         template< class T >
-        void RegisterSyncRemoveFunction( T* object, void ( T::*handle )( KFEntity* kfentity, const KFMsg::PBObject& pbobject ) )
+        void RegisterSyncRemoveFunction( T* object, void ( T::*handle )( KFEntity* kfentity, KFMsg::PBObject& pbobject ) )
         {
             KFSyncFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2 );
             BindSyncRemoveFunction( function );
@@ -339,7 +339,7 @@ namespace KFrame
         virtual void UnRegisterSyncRemoveFunction() = 0;
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         template< class T >
-        void RegisterShowElementFunction( T* object, void ( T::*handle )( KFEntity*, const KFMsg::PBShowElement& ) )
+        void RegisterShowElementFunction( T* object, void ( T::*handle )( KFEntity*, KFMsg::PBShowElement& ) )
         {
             KFShowElementFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2 );
             BindShowElementFunction( function );

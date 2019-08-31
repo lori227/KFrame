@@ -28,10 +28,6 @@ namespace KFrame
         // 是否初始化完成
         virtual bool IsInited() = 0;
         virtual void SetInited() = 0;
-
-        // 是否需要保存数据库
-        virtual bool IsNeedToSave() = 0;
-        virtual void SetNeetToSave( bool needtosave ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 创建属性
         virtual KFData* CreateData( const std::string& dataname ) = 0;
@@ -102,6 +98,9 @@ namespace KFrame
 
         // 删除元数据
         virtual void RemoveElement( const KFElements* kfelements, const char* function, uint32 line, float multiple = 1.0f ) = 0;
+
+        virtual void AddDataToShow( KFData* kfdata ) = 0;
+        virtual void AddElementToShow( const KFElement* kfelement ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 设置element到kfdata对象

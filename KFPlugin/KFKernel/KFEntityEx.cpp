@@ -12,7 +12,6 @@ namespace KFrame
         _is_inited = false;
         _kf_object = nullptr;
         _kf_component = nullptr;
-        _is_need_to_save = false;
         _have_add_pb_object = false;
         _have_remove_pb_object = false;
         _have_update_pb_object = false;
@@ -57,16 +56,6 @@ namespace KFrame
     void KFEntityEx::SetInited()
     {
         _is_inited = true;
-    }
-
-    bool KFEntityEx::IsNeedToSave()
-    {
-        return _is_need_to_save;
-    }
-
-    void KFEntityEx::SetNeetToSave( bool needtosave )
-    {
-        _is_need_to_save = needtosave;
     }
 
     void KFEntityEx::InitData( KFComponentEx* kfcomponent )
@@ -478,7 +467,7 @@ namespace KFrame
             auto kfelementobject = reinterpret_cast< const KFElementObject* >( kfelement );
             if ( kfelementobject->IsNeedShow() )
             {
-                auto pbobject = _pb_show_element.add_pbobject();
+                auto pbobject = _pb_show_element.add_pbdata();
                 pbobject->set_name( kfelementobject->_data_name );
                 pbobject->set_key( kfelementobject->_config_id );
 
@@ -504,6 +493,9 @@ namespace KFrame
             return;
         }
 
+        auto pbdata = _pb_show_element.add_pbdata();
+        pbdata->set_name( kfdata->_data_setting->_name );
+
         switch ( kfdata->_data_setting->_type )
         {
         case KFDataDefine::Type_Int32:
@@ -511,20 +503,17 @@ namespace KFrame
         case KFDataDefine::Type_Int64:
         case KFDataDefine::Type_UInt64:
         {
-            auto pbdata = _pb_show_element.add_pbdata();
             pbdata->set_value( kfdata->GetValue() );
-            pbdata->set_name( kfdata->_data_setting->_name );
-
-            _have_show_client = true;
-            _kf_component->AddSyncEntity( this );
             break;
         }
         case KFDataDefine::Type_Object:
         case KFDataDefine::Type_Record:
         {
-            auto pbobject = _pb_show_element.add_pbobject();
-            pbobject->set_key( kfdata->GetKeyID() );
-            pbobject->set_name( kfdata->_data_setting->_name );
+            pbdata->set_value( kfdata->GetKeyID() );
+            if ( !kfdata->_data_setting->_config_key_name.empty() )
+            {
+                pbdata->set_key( kfdata->GetValue( kfdata->_data_setting->_config_key_name ) );
+            }
 
             for ( auto kfchild = kfdata->FirstData(); kfchild != nullptr; kfchild = kfdata->NextData() )
             {
@@ -534,14 +523,15 @@ namespace KFrame
                     continue;
                 }
 
-                ( *pbobject->mutable_pbuint64() )[ kfchild->_data_setting->_name ] = kfchild->GetValue();
+                ( *pbdata->mutable_pbuint64() )[ kfchild->_data_setting->_name ] = kfchild->GetValue();
             }
-
-            _have_show_client = true;
-            _kf_component->AddSyncEntity( this );
             break;
         }
         }
+
+
+        _have_show_client = true;
+        _kf_component->AddSyncEntity( this );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -2,12 +2,35 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFDisplayModule.cpp" />
     <ClCompile Include="KFDisplayPlugin.cpp" />
+    <ClCompile Include="KFDisplayModule.cpp">
+      <Filter>Display</Filter>
+    </ClCompile>
+    <ClCompile Include="KFNoticeModule.cpp">
+      <Filter>Notice</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFDisplayInterface.h" />
-    <ClInclude Include="KFDisplayModule.hpp" />
     <ClInclude Include="KFDisplayPlugin.hpp" />
+    <ClInclude Include="KFDisplayModule.hpp">
+      <Filter>Display</Filter>
+    </ClInclude>
+    <ClInclude Include="KFDisplayInterface.h">
+      <Filter>Display</Filter>
+    </ClInclude>
+    <ClInclude Include="KFNoticeInterface.h">
+      <Filter>Notice</Filter>
+    </ClInclude>
+    <ClInclude Include="KFNoticeModule.hpp">
+      <Filter>Notice</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Notice">
+      <UniqueIdentifier>{3681f927-ae79-46fe-89c8-f8110a145845}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Display">
+      <UniqueIdentifier>{9a93ecfd-bb7b-406f-b855-40ca7f9fa8f6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

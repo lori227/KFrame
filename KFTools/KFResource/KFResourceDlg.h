@@ -124,4 +124,5 @@ public:
     afx_msg void OnLbnDblclkListRemoveParse();
     afx_msg void OnBnClickedButtonParseAndUpdate();
     CListBox _list_log;
+    afx_msg void OnBnClickedButtonRefreshFile();
 };

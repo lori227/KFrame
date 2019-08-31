@@ -80,19 +80,13 @@ message PBShowData
 {
 	bytes name = 1;		// 属性名
 	uint64 value = 2;	// 属性值
-}
-
-message PBShowObject
-{
-	bytes name = 1;		// 属性名
-	uint64 key = 2;		// 键值
-	map< string, uint64 > pbuint64 = 3;		// 属性列表
+	uint64 key = 3;		// 配置表id
+	map< string, uint64 > pbuint64 = 4;		// 属性值列表
 }
 
 message PBShowElement
 {
-	repeated PBShowData pbdata = 1;		// uint64属性列表
-	repeated PBShowObject pbobject = 2;	// 对象属性列表
+	repeated PBShowData pbdata = 1;		// 显示列表
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

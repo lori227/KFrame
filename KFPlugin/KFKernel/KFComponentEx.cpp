@@ -711,11 +711,7 @@ namespace KFrame
         }
 
         // 启动定时器
-        if ( !kfentity->IsNeedToSave() )
-        {
-            kfentity->SetNeetToSave( true );
-            __DELAY_TIMER_1__( kfentity->GetKeyID(), kfobject->_data_setting->_delay_save_time, &KFComponentEx::OnTimerSaveEntity );
-        }
+        __DELAY_TIMER_1__( kfentity->GetKeyID(), kfobject->_data_setting->_delay_save_time, &KFComponentEx::OnTimerSaveEntity );
     }
 
     __KF_TIMER_FUNCTION__( KFComponentEx::OnTimerSaveEntity )

@@ -96,16 +96,16 @@ namespace KFrame
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 同步更新属性到客户端
-        void SendUpdateDataToClient( KFEntity* player, const KFMsg::PBObject& pbobect );
+        void SendUpdateDataToClient( KFEntity* player, KFMsg::PBObject& pbobect );
 
         // 同步添加属性到客户端
-        void SendAddDataToClient( KFEntity* player, const KFMsg::PBObject& pbobect );
+        void SendAddDataToClient( KFEntity* player, KFMsg::PBObject& pbobect );
 
         // 同步删除属性到客户端
-        void SendRemoveDataToClient( KFEntity* player, const KFMsg::PBObject& pbobect );
+        void SendRemoveDataToClient( KFEntity* player, KFMsg::PBObject& pbobect );
 
         // 显示添加奖励消息
-        void SendElementToClient( KFEntity* player, const KFMsg::PBShowElement& pbelement );
+        void SendElementToClient( KFEntity* player, KFMsg::PBShowElement& pbelement );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     protected:
         // 删除属性请求

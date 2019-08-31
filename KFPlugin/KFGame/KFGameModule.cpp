@@ -85,13 +85,6 @@ namespace KFrame
 
     void KFGameModule::SavePlayer( KFEntity* player, uint32 saveflag )
     {
-        if ( !player->IsNeedToSave() )
-        {
-            return;
-        }
-
-        player->SetNeetToSave( false );
-
         // 保存数据库
         auto pbplayerdata = _kf_kernel->SerializeToData( player->GetData() );
         _kf_data_client->SavePlayerData( player->GetKeyID(), pbplayerdata, saveflag );

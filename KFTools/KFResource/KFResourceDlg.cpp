@@ -99,6 +99,7 @@ BEGIN_MESSAGE_MAP( CKFResourceDlg, CDialogEx )
     ON_COMMAND( ID_32773, &CKFResourceDlg::OnChangeCommonType )
     ON_LBN_DBLCLK( IDC_LIST2, &CKFResourceDlg::OnLbnDblclkListRemoveParse )
     ON_BN_CLICKED( IDC_BUTTON6, &CKFResourceDlg::OnBnClickedButtonParseAndUpdate )
+    ON_BN_CLICKED( IDC_BUTTON7, &CKFResourceDlg::OnBnClickedButtonRefreshFile )
 END_MESSAGE_MAP()
 
 
@@ -579,6 +580,17 @@ void CKFResourceDlg::OnBnClickedButtonAddAllParse()
     }
 }
 
+
+
+void CKFResourceDlg::OnBnClickedButtonRefreshFile()
+{
+    // TODO: Add your control notification handler code here
+    _resource_config->LoadFile( KFResource::_resource_file );
+    RemoveFileList();
+    UpdateFileList();
+}
+
+
 void CKFResourceDlg::OnBnClickedButtonRemoveAllParse()
 {
     // TODO: Add your control notification handler code here
@@ -979,6 +991,7 @@ void CKFResourceDlg::CopyConfigFiles( const std::string& path, const std::string
 void CKFResourceDlg::OnBnClickedButtonParseAndUpdate()
 {
     // TODO: Add your control notification handler code here
+    _list_log.ResetContent();
     ParseTotalExcelFiles();
 
     {

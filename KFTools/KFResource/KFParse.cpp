@@ -40,7 +40,7 @@ namespace KFrame
         auto kfname = sheet->FindCell( 1, 2 );
         if ( kfname == nullptr )
         {
-            _error = __FORMAT__( "{} format error!", sheet->_name );
+            _error = __FORMAT__( "{} format error!", KFConvert::ToAscii( sheet->_name ) );
             return false;
         }
 
@@ -48,7 +48,7 @@ namespace KFrame
         KFUtility::SplitString( name, "#" );
         if ( name.empty() )
         {
-            _error = __FORMAT__( "{} no config name!", sheet->_name );
+            _error = __FORMAT__( "{} no config name!", KFConvert::ToAscii( sheet->_name ) );
             return false;
         }
 
@@ -157,7 +157,7 @@ namespace KFrame
         std::ofstream xmlfile( file );
         if ( !xmlfile )
         {
-            _error = __FORMAT__( "Can't Open Xml=[{}]!", filename );
+            _error = __FORMAT__( "can't open xml=[{}]!", filename );
             return false;
         }
 

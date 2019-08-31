@@ -377,58 +377,58 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFPlayerModule::SendUpdateDataToClient( KFEntity* player, const KFMsg::PBObject& pbobect )
+    void KFPlayerModule::SendUpdateDataToClient( KFEntity* player, KFMsg::PBObject& pbobject )
     {
 #ifdef __KF_DEBUG__
         static uint32 _print = 0;
         if ( _print == 1 )
         {
-            auto temp = pbobect.DebugString();
+            auto temp = pbobject.DebugString();
             __LOG_DEBUG__( "player=[{}], data={}", player->GetKeyID(), temp );
         }
 #endif
 
         KFMsg::MsgSyncUpdateData sync;
-        sync.mutable_pbdata()->CopyFrom( pbobect );
+        sync.mutable_pbdata()->Swap( &pbobject );
         SendToClient( player, KFMsg::MSG_SYNC_UPDATE_DATA, &sync );
     }
 
-    void KFPlayerModule::SendAddDataToClient( KFEntity* player, const KFMsg::PBObject& pbobect )
+    void KFPlayerModule::SendAddDataToClient( KFEntity* player, KFMsg::PBObject& pbobject )
     {
 #ifdef __KF_DEBUG__
         static uint32 _print = 0;
         if ( _print == 1 )
         {
-            auto temp = pbobect.DebugString();
+            auto temp = pbobject.DebugString();
             __LOG_DEBUG__( "player=[{}], data={}", player->GetKeyID(), temp );
         }
 #endif
 
         KFMsg::MsgSyncAddData sync;
-        sync.mutable_pbdata()->CopyFrom( pbobect );
+        sync.mutable_pbdata()->Swap( &pbobject );
         SendToClient( player, KFMsg::MSG_SYNC_ADD_DATA, &sync );
     }
 
-    void KFPlayerModule::SendRemoveDataToClient( KFEntity* player, const KFMsg::PBObject& pbobect )
+    void KFPlayerModule::SendRemoveDataToClient( KFEntity* player, KFMsg::PBObject& pbobject )
     {
 #ifdef __KF_DEBUG__
         static uint32 _print = 0;
         if ( _print == 1 )
         {
-            auto temp = pbobect.DebugString();
+            auto temp = pbobject.DebugString();
             __LOG_DEBUG__( "player=[{}], data={}", player->GetKeyID(), temp );
         }
 #endif
 
         KFMsg::MsgSyncRemoveData sync;
-        sync.mutable_pbdata()->CopyFrom( pbobect );
+        sync.mutable_pbdata()->Swap( &pbobject );
         SendToClient( player, KFMsg::MSG_SYNC_REMOVE_DATA, &sync );
     }
 
-    void KFPlayerModule::SendElementToClient( KFEntity* player, const KFMsg::PBShowElement& pbelement )
+    void KFPlayerModule::SendElementToClient( KFEntity* player, KFMsg::PBShowElement& pbelement )
     {
         KFMsg::MsgShowElement show;
-        show.mutable_element()->CopyFrom( pbelement );
+        show.mutable_element()->Swap( &pbelement );
         SendToClient( player, KFMsg::MSG_SHOW_ELEMENT, &show );
     }
 

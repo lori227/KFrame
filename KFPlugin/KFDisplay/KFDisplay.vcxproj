@@ -14,11 +14,14 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="KFDisplayModule.cpp" />
     <ClCompile Include="KFDisplayPlugin.cpp" />
+    <ClCompile Include="KFNoticeModule.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFDisplayInterface.h" />
     <ClInclude Include="KFDisplayModule.hpp" />
     <ClInclude Include="KFDisplayPlugin.hpp" />
+    <ClInclude Include="KFNoticeInterface.h" />
+    <ClInclude Include="KFNoticeModule.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{70C2747E-200A-4612-BD17-E6628E4A14B0}</ProjectGuid>

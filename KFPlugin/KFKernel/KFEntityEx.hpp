@@ -33,10 +33,6 @@ namespace KFrame
         // 是否初始化完成
         virtual bool IsInited();
         virtual void SetInited();
-
-        // 是否需要保存数据库
-        virtual bool IsNeedToSave();
-        virtual void SetNeetToSave( bool needtosave );
         //////////////////////////////////////////////////////////////////////////////////////////
         // 创建子属性
         virtual KFData* CreateData( const std::string& dataname );
@@ -103,6 +99,10 @@ namespace KFrame
         // 设置element到kfdata对象
         virtual void UpdateElementToData( KFElementObject* kfelement, KFData* kfdata, float multiple = 1.0f );
         virtual void SetElementToData( KFElementObject* kfelement, KFData* kfdata, float multiple = 1.0f );
+
+        // 添加显示数据
+        virtual void AddDataToShow( KFData* kfdata );
+        virtual void AddElementToShow( const KFElement* kfelement );
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
@@ -144,8 +144,6 @@ namespace KFrame
 
         // 添加显示的元数据
         void AddShowElement( uint32 showtype, const KFElement* kfelement, KFData* kfdata, bool showclient, const char* function, uint32 line );
-        void AddElementToShow( const KFElement* kfelement );
-        void AddDataToShow( KFData* kfdata );
 
     protected:
 
@@ -176,9 +174,6 @@ namespace KFrame
 
         // 是否初始化
         bool _is_inited = false;
-
-        // 是否需要保存数据库
-        bool _is_need_to_save = false;
 
         // 添加的数据
         bool _have_add_pb_object = false;
