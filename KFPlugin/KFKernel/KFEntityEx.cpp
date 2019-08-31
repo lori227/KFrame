@@ -447,6 +447,29 @@ namespace KFrame
         }
     }
 
+    KFMsg::PBShowData* KFEntityEx::CreateShowData( const std::string& name, uint64 key, bool find )
+    {
+        if ( find )
+        {
+            for ( auto i = 0; i < _pb_show_element.pbdata_size(); ++i )
+            {
+                auto pbdata = _pb_show_element.mutable_pbdata( i );
+                if ( pbdata->name() == name && pbdata->key() == key )
+                {
+                    return pbdata;
+                }
+            }
+        }
+
+        _have_show_client = true;
+        _kf_component->AddSyncEntity( this );
+
+        auto pbdata = _pb_show_element.add_pbdata();
+        pbdata->set_name( name );
+        pbdata->set_key( key );
+        return pbdata;
+    }
+
     void KFEntityEx::AddElementToShow( const KFElement* kfelement )
     {
         if ( kfelement->IsValue() )
@@ -454,12 +477,8 @@ namespace KFrame
             auto kfelementvalue = reinterpret_cast< const KFElementValue* >( kfelement );
             if ( kfelementvalue->_value->IsNeedShow() )
             {
-                auto pbdata = _pb_show_element.add_pbdata();
-                pbdata->set_name( kfelementvalue->_data_name );
-                pbdata->set_value( kfelementvalue->_value->GetUseValue() );
-
-                _have_show_client = true;
-                _kf_component->AddSyncEntity( this );
+                auto pbshowdata = CreateShowData( kfelementvalue->_data_name, 0u, false );
+                pbshowdata->set_value( kfelementvalue->_value->GetUseValue() );
             }
         }
         else if ( kfelement->IsObject() )
@@ -467,23 +486,29 @@ namespace KFrame
             auto kfelementobject = reinterpret_cast< const KFElementObject* >( kfelement );
             if ( kfelementobject->IsNeedShow() )
             {
-                auto pbobject = _pb_show_element.add_pbdata();
-                pbobject->set_name( kfelementobject->_data_name );
-                pbobject->set_key( kfelementobject->_config_id );
-
+                auto pbshowdata = CreateShowData( kfelementobject->_data_name, kfelementobject->_config_id, false );
                 for ( auto& iter : kfelementobject->_values._objects )
                 {
                     auto kfvalue = iter.second;
                     if ( kfvalue->IsNeedShow() )
                     {
-                        ( *pbobject->mutable_pbuint64() )[ iter.first ] = kfvalue->GetUseValue();
+                        ( *pbshowdata->mutable_pbuint64() )[ iter.first ] = kfvalue->GetUseValue();
                     }
                 }
-
-                _have_show_client = true;
-                _kf_component->AddSyncEntity( this );
             }
         }
+    }
+
+    void KFEntityEx::AddDataToShow( const std::string& name, uint64 value )
+    {
+        auto pbshowdata = CreateShowData( name, 0u, true );
+        pbshowdata->set_value( value );
+    }
+
+    void KFEntityEx::AddDataToShow( const std::string& name, uint64 key, const std::string& dataname, uint64 datavalue )
+    {
+        auto pbshowdata = CreateShowData( name, key, true );
+        ( *pbshowdata->mutable_pbuint64() )[ dataname ] += datavalue;
     }
 
     void KFEntityEx::AddDataToShow( KFData* kfdata )
@@ -493,9 +518,6 @@ namespace KFrame
             return;
         }
 
-        auto pbdata = _pb_show_element.add_pbdata();
-        pbdata->set_name( kfdata->_data_setting->_name );
-
         switch ( kfdata->_data_setting->_type )
         {
         case KFDataDefine::Type_Int32:
@@ -503,18 +525,16 @@ namespace KFrame
         case KFDataDefine::Type_Int64:
         case KFDataDefine::Type_UInt64:
         {
-            pbdata->set_value( kfdata->GetValue() );
+            auto pbshowdata = CreateShowData( kfdata->_data_setting->_name, 0u, false );
+            pbshowdata->set_value( kfdata->GetValue() );
             break;
         }
         case KFDataDefine::Type_Object:
         case KFDataDefine::Type_Record:
         {
-            pbdata->set_value( kfdata->GetKeyID() );
-            if ( !kfdata->_data_setting->_config_key_name.empty() )
-            {
-                pbdata->set_key( kfdata->GetValue( kfdata->_data_setting->_config_key_name ) );
-            }
-
+            auto configid = kfdata->GetValue( kfdata->_data_setting->_config_key_name );
+            auto pbshowdata = CreateShowData( kfdata->_data_setting->_name, configid, false );
+            pbshowdata->set_value( kfdata->GetKeyID() );
             for ( auto kfchild = kfdata->FirstData(); kfchild != nullptr; kfchild = kfdata->NextData() )
             {
                 if ( !kfchild->_data_setting->HaveMask( KFDataDefine::Mask_Show ) ||
@@ -523,15 +543,11 @@ namespace KFrame
                     continue;
                 }
 
-                ( *pbdata->mutable_pbuint64() )[ kfchild->_data_setting->_name ] = kfchild->GetValue();
+                ( *pbshowdata->mutable_pbuint64() )[ kfchild->_data_setting->_name ] = kfchild->GetValue();
             }
             break;
         }
         }
-
-
-        _have_show_client = true;
-        _kf_component->AddSyncEntity( this );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -102,6 +102,8 @@ namespace KFrame
 
         // 添加显示数据
         virtual void AddDataToShow( KFData* kfdata );
+        virtual void AddDataToShow( const std::string& name, uint64 value );
+        virtual void AddDataToShow( const std::string& name, uint64 key, const std::string& dataname, uint64 datavalue );
         virtual void AddElementToShow( const KFElement* kfelement );
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
@@ -144,6 +146,9 @@ namespace KFrame
 
         // 添加显示的元数据
         void AddShowElement( uint32 showtype, const KFElement* kfelement, KFData* kfdata, bool showclient, const char* function, uint32 line );
+
+        // 创建显示元素
+        KFMsg::PBShowData* CreateShowData( const std::string& name, uint64 key, bool find );
 
     protected:
 

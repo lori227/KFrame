@@ -100,6 +100,8 @@ namespace KFrame
         virtual void RemoveElement( const KFElements* kfelements, const char* function, uint32 line, float multiple = 1.0f ) = 0;
 
         virtual void AddDataToShow( KFData* kfdata ) = 0;
+        virtual void AddDataToShow( const std::string& name, uint64 value ) = 0;
+        virtual void AddDataToShow( const std::string& name, uint64 key, const std::string& dataname, uint64 datavalue ) = 0;
         virtual void AddElementToShow( const KFElement* kfelement ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
