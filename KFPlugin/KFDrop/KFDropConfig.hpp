@@ -21,6 +21,9 @@ namespace KFrame
     protected:
         // 读取配置
         virtual void ReadSetting( KFNode& xmlnode, KFDropSetting* kfsetting );
+
+        // 格式化掉落配置
+        void FormatDropElement( KFDropWeight* dropweight );
     };
 }
 

@@ -15,19 +15,29 @@ namespace KFrame
 
         ////////////////////////////////////////////////////////////////////////////
         // 加载配置
-        virtual void LoadConfig( const std::string& file, uint32 loadmask ) {};
+        virtual void LoadConfig( const std::string& file, uint32 loadmask ) {}
+
+        // 更新版本
+        void UpdateVersion()
+        {
+            _read_version = _version;
+        }
 
         // 加载完配置
         virtual void LoadComplete() {}
 
         // 所有配置加载完
         virtual void LoadAllComplete() {}
+
     public:
         // 默认配置文件名
         std::string _file_name;
 
         // 版本号
         std::string _version;
+
+    protected:
+        std::string _read_version;
     };
     ///////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////
@@ -40,19 +50,21 @@ namespace KFrame
         {
             KFXml kfxml( file );
             auto config = kfxml.RootNode();
-            _version = config.GetString( "version" );
-
-            CheckClearSetting( loadmask );
-
-            auto xmlnode = config.FindNode( "item" );
-            while ( xmlnode.IsValid() )
+            auto _read_version = config.GetString( "version" );
+            //if ( _read_version.empty() || _read_version != _version )
             {
-                auto kfsetting = CreateSetting( xmlnode );
-                if ( kfsetting != nullptr )
+                CheckClearSetting( loadmask );
+
+                auto xmlnode = config.FindNode( "item" );
+                while ( xmlnode.IsValid() )
                 {
-                    ReadSetting( xmlnode, kfsetting );
+                    auto kfsetting = CreateSetting( xmlnode );
+                    if ( kfsetting != nullptr )
+                    {
+                        ReadSetting( xmlnode, kfsetting );
+                    }
+                    xmlnode.NextNode();
                 }
-                xmlnode.NextNode();
             }
         }
 
@@ -103,19 +115,21 @@ namespace KFrame
         {
             KFXml kfxml( file );
             auto config = kfxml.RootNode();
-            _version = config.GetString( "version" );
-
-            CheckClearSetting( loadmask );
-
-            auto xmlnode = config.FindNode( "item" );
-            while ( xmlnode.IsValid() )
+            auto _read_version = config.GetString( "version" );
+            //if ( _read_version.empty() || _read_version != _version )
             {
-                auto kfsetting = CreateSetting( xmlnode );
-                if ( kfsetting != nullptr )
+                CheckClearSetting( loadmask );
+
+                auto xmlnode = config.FindNode( "item" );
+                while ( xmlnode.IsValid() )
                 {
-                    ReadSetting( xmlnode, kfsetting );
+                    auto kfsetting = CreateSetting( xmlnode );
+                    if ( kfsetting != nullptr )
+                    {
+                        ReadSetting( xmlnode, kfsetting );
+                    }
+                    xmlnode.NextNode();
                 }
-                xmlnode.NextNode();
             }
         }
 

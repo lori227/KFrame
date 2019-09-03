@@ -118,6 +118,8 @@ namespace KFrame
 
         // 同步删除数据
         virtual void SyncRemoveData( KFData* kfdata, uint64 key ) = 0;
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        virtual uint64 GetConfigValue( const std::string& name, uint64 id ) = 0;
     };
 }
 

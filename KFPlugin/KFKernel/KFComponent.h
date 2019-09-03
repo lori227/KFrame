@@ -17,12 +17,14 @@ namespace KFrame
     typedef std::function< bool( KFEntity*, KFData*, KFElement*, const char*, uint32, float ) > KFCheckRemoveElementFunction;
     typedef std::function< void( KFEntity*, KFData*, KFElement*, const char*, uint32, float ) > KFRemoveElementFunction;
     ////////////////////////////////////////////////////////////////////////////////////////////
-
     typedef std::function<void( KFEntity*, KFData*, uint64, KFData* )> KFAddDataFunction;
     typedef std::function<void( KFEntity*, KFData*, uint64, KFData* )> KFRemoveDataFunction;
     typedef std::function<void( KFEntity*, uint64, KFData*, uint32, uint64, uint64, uint64 )> KFUpdateDataFunction;
     typedef std::function<void( KFEntity*, KFData*, const std::string& )> KFUpdateStringFunction;
     ////////////////////////////////////////////////////////////////////////////////////////////
+    typedef std::function<uint64( KFEntity*, uint64 )> KFGetConfigValueFunction;
+    ////////////////////////////////////////////////////////////////////////////////////////////
+
     // 游戏中的组件, 负责属性回调时间
     class KFComponent
     {
@@ -345,7 +347,19 @@ namespace KFrame
             BindShowElementFunction( function );
         }
         virtual void UnRegisterShowElementFunction() = 0;
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        template< class T >
+        void RegisterGetConfigValueFunction( const std::string& name, T* object, uint64 ( T::*handle )( KFEntity*, uint64 ) )
+        {
+            KFGetConfigValueFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2 );
+            BindGetConfigValueFunction( name, function );
+        }
 
+        void UnRegisterGetConfigValueFunction( const std::string& name )
+        {
+            UnBindGetConfigValueFunction( name );
+        }
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     protected:
         virtual void BindCheckAddElementFunction( const std::string& dataname, KFCheckAddElementFunction& function ) = 0;
         virtual void BindAddElementFunction( const std::string& dataname, KFAddElementFunction& function ) = 0;
@@ -382,6 +396,9 @@ namespace KFrame
         virtual void BindSyncRemoveFunction( KFSyncFunction& function ) = 0;
         virtual void BindShowElementFunction( KFShowElementFunction& function ) = 0;
         virtual void BindEntitySaveFunction( KFSaveEntityFunction& function ) = 0;
+
+        virtual void BindGetConfigValueFunction( const std::string& name, KFGetConfigValueFunction& function ) = 0;
+        virtual void UnBindGetConfigValueFunction( const std::string& name ) = 0;
     };
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -472,6 +489,15 @@ namespace KFrame
     _kf_component->UnRegisterUpdateStringFunction( this, dataname )
 #define  __UN_UPDATE_STRING_2__( parentname, dataname )\
     _kf_component->UnRegisterUpdateStringFunction( this, parentname, dataname )
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+#define  __KF_GET_CONFIG_VALUE_FUNCTION__( function ) \
+    uint64 function( KFEntity* player, uint64 id )
+
+#define __REGISTER_GET_CONFIG_VALUE__( dataname, function ) \
+    _kf_component->RegisterGetConfigValueFunction( dataname, this, function )
+#define __UN_GET_CONFIG_VALUE__( dataname ) \
+    _kf_component->UnRegisterGetConfigValueFunction( dataname )
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 }

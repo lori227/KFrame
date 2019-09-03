@@ -298,17 +298,16 @@ case datatype:\
             return true;
         }
 
-        auto kfobject = kfentity->GetData();
         auto linkcount = kfconditions->_link_type.size();
         auto conditioncount = kfconditions->_condition_list.size();
 
         // 取出第一个
         auto conditionindex = 0u;
-        auto result = CheckCondition( kfobject, kfconditions->_condition_list[ conditionindex++ ] );
+        auto result = CheckCondition( kfentity, kfconditions->_condition_list[ conditionindex++ ] );
         for ( auto i = 0u; i < conditioncount && i < linkcount; ++i )
         {
             auto linktype = kfconditions->_link_type[ i ];
-            auto ok = CheckCondition( kfobject, kfconditions->_condition_list[ conditionindex + i ] );
+            auto ok = CheckCondition( kfentity, kfconditions->_condition_list[ conditionindex + i ] );
             switch ( linktype )
             {
             case KFEnum::And:
@@ -323,19 +322,19 @@ case datatype:\
         return result;
     }
 
-    bool KFKernelModule::CheckCondition( KFData* kfdata, const KFCondition* kfcondition )
+    bool KFKernelModule::CheckCondition( KFEntity* kfentity, const KFCondition* kfcondition )
     {
         // 计算左值
-        auto leftvalue = CalcExpression( kfdata, kfcondition->_left );
+        auto leftvalue = CalcExpression( kfentity, kfcondition->_left );
 
         // 计算右值
-        auto rightvalue = CalcExpression( kfdata, kfcondition->_right );
+        auto rightvalue = CalcExpression( kfentity, kfcondition->_right );
 
         // 判断左有值
         return KFUtility::CheckOperate( leftvalue, kfcondition->_check_type, rightvalue );
     }
 
-    uint32 KFKernelModule::CalcExpression( KFData* kfdata, const KFExpression* kfexpression )
+    uint32 KFKernelModule::CalcExpression( KFEntity* kfentity, const KFExpression* kfexpression )
     {
         if ( kfexpression->_data_list.empty() )
         {
@@ -347,18 +346,18 @@ case datatype:\
 
         // 取出第一个
         auto dataindex = 0u;
-        auto result = CalcConditionData( kfdata, kfexpression->_data_list[ dataindex++ ] );
+        auto result = CalcConditionData( kfentity, kfexpression->_data_list[ dataindex++ ] );
         for ( auto i = 0u; i < datacount && i < operatorcount; ++i )
         {
             auto operatortype = kfexpression->_operator_list[ i ];
-            auto value = CalcConditionData( kfdata, kfexpression->_data_list[ dataindex + i ] );
+            auto value = CalcConditionData( kfentity, kfexpression->_data_list[ dataindex + i ] );
             result = KFUtility::Operate( operatortype, result, value );
         }
 
         return result;
     }
 
-    uint32 KFKernelModule::CalcConditionData( KFData* kfdata, const KFConditionData* kfconditiondata )
+    uint32 KFKernelModule::CalcConditionData( KFEntity* kfentity, const KFConditionData* kfconditiondata )
     {
         auto result = 0u;
         if ( kfconditiondata->IsConstant() )
@@ -371,22 +370,15 @@ case datatype:\
             auto kfvariable = ( const KFConditionVariable* )kfconditiondata;
             if ( !kfvariable->_parent_name.empty() )
             {
-                result = kfdata->GetValue<uint32>( kfvariable->_parent_name, kfvariable->_data_name );
+                result = kfentity->GetData()->GetValue<uint32>( kfvariable->_parent_name, kfvariable->_data_name );
             }
             else if ( kfvariable->_data_id == 0u )
             {
-                result = kfdata->GetValue<uint32>( kfvariable->_data_name );
+                result = kfentity->GetData()->GetValue<uint32>( kfvariable->_data_name );
             }
             else
             {
-                if ( kfvariable->_data_name == __KF_STRING__( var ) )
-                {
-                    result = kfdata->GetValue<uint32>( kfvariable->_data_name, kfvariable->_data_id, __KF_STRING__( value ) );
-                }
-                else if ( kfvariable->_data_name == __KF_STRING__( item ) )
-                {
-
-                }
+                result = kfentity->GetConfigValue( kfvariable->_data_name, kfvariable->_data_id );
             }
         }
 

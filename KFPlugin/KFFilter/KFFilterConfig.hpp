@@ -6,6 +6,12 @@
 
 namespace KFrame
 {
+    class KFFilterSetting : public KFIntSetting
+    {
+
+    };
+
+    ////////////////////////////////////////////////////////////////////////////////
     class KFWordData
     {
     public:
@@ -27,16 +33,13 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
-    class KFFilterConfig : public KFConfig, public KFInstance< KFFilterConfig >
+    class KFFilterConfig : public KFIntConfigT< KFFilterSetting >, public KFInstance< KFFilterConfig >
     {
     public:
         KFFilterConfig()
         {
             _file_name = "filter";
         }
-
-        // 读取配置
-        void LoadConfig( const std::string& file, uint32 loadmask );
 
         // 检查是否有屏蔽字符
         bool CheckFilter( const char* source, uint32 length );
@@ -45,6 +48,15 @@ namespace KFrame
         uint32 CensorFilter( const char* source, uint32 length );
 
     protected:
+        // 清空配置
+        virtual void ClearSetting();
+
+        // 创建配置
+        virtual KFFilterSetting* CreateSetting( KFNode& xmlnode );
+
+        // 读取配置
+        virtual void ReadSetting( KFNode& xmlnode, KFFilterSetting* kfsetting );
+
         // 插入单词
         void InsertWord( KFWordData* kfworddata, const char* source, uint32 length, uint32 index );
 

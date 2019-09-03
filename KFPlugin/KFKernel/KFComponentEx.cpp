@@ -563,6 +563,17 @@ namespace KFrame
     {
         _show_element_function = nullptr;
     }
+
+    void KFComponentEx::BindGetConfigValueFunction( const std::string& name, KFGetConfigValueFunction& function )
+    {
+        auto kffunction = _get_config_value_function.Create( name );
+        kffunction->_function = function;
+    }
+
+    void KFComponentEx::UnBindGetConfigValueFunction( const std::string& name )
+    {
+        _get_config_value_function.Remove( name );
+    }
     ////////////////////////////////////////////////////////////////////////////////////////
     void KFComponentEx::UpdateDataCallBack( KFEntity* kfentity, uint64 key, KFData* kfdata, uint64 index, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue )
     {

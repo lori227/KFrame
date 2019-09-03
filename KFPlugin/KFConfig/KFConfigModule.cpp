@@ -36,6 +36,8 @@ namespace KFrame
             {
                 LoadConfigFile( kfconfig, kfdata._file_name, kfdata._load_mask );
             }
+
+            kfconfig->UpdateVersion();
         }
 
         for ( auto& iter : _config_list )
@@ -100,6 +102,8 @@ namespace KFrame
                     LoadConfigFile( kfconfig, kfdata._file_name, kfdata._load_mask );
                 }
             }
+
+            kfconfig->UpdateVersion();
         }
 
         for ( auto& iter : _config_list )
@@ -122,7 +126,7 @@ namespace KFrame
         }
         catch ( ... )
         {
-            __LOG_ERROR__( "load [{}] failed!", file );
+            throw std::logic_error( __FORMAT__( "load [{}] failed!", file ) );
         }
     }
 }

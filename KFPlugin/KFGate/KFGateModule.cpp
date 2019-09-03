@@ -281,8 +281,8 @@ namespace KFrame
             }
 
             // 设置连接成功
-            kfrole->_session_id = sessionid;
             __UN_TIMER_1__( kfrole->_id );
+            kfrole->_session_id = sessionid;
 
             // 发送重新登录消息
             KFMsg::S2SReLoginToGameReq req;

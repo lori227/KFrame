@@ -65,13 +65,13 @@ namespace KFrame
         void SaveToObject( KFData* kfdata, KFMsg::PBObject* proto, uint32 datamask );
 
         // 判断属性条件
-        bool CheckCondition( KFData* kfdata, const KFCondition* kfcondition );
+        bool CheckCondition( KFEntity* kfentity, const KFCondition* kfcondition );
 
         // 计算条件表达式
-        uint32 CalcExpression( KFData* kfdata, const KFExpression* kfexpression );
+        uint32 CalcExpression( KFEntity* kfentity, const KFExpression* kfexpression );
 
         // 计算属性值
-        uint32 CalcConditionData( KFData* kfdata, const KFConditionData* kfconditiondata );
+        uint32 CalcConditionData( KFEntity* kfentity, const KFConditionData* kfconditiondata );
 
     private:
         // kernel

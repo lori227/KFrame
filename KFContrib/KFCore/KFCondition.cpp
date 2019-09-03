@@ -4,6 +4,7 @@
 
 namespace KFrame
 {
+    //////////////////////////////////////////////////////////////////////////////////
     KFExpression::~KFExpression()
     {
         for ( auto kfdata : _data_list )

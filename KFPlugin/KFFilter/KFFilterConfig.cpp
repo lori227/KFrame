@@ -89,20 +89,21 @@ namespace KFrame
         return FindWord( &_root_word_data, source, length, 0, count );
     }
 
-    void KFFilterConfig::LoadConfig( const std::string& file, uint32 loadmask )
+    /////////////////////////////////////////////////////////////////////////////////
+    void KFFilterConfig::ClearSetting()
     {
         _root_word_data.Clear();
-        //////////////////////////////////////////////////////////////////
-        KFXml kfxml( file );
-        auto config = kfxml.RootNode();
-        auto wordnode = config.FindNode( "item" );
-        while ( wordnode.IsValid() )
-        {
-            auto word = wordnode.GetString( "Word" );
-            InsertWord( &_root_word_data, word.data(), static_cast< uint32 >( word.length() ), 0 );
+        KFIntConfigT< KFFilterSetting >::ClearSetting();
+    }
 
-            wordnode.NextNode();
-        }
-        //////////////////////////////////////////////////////////////////
+    KFFilterSetting* KFFilterConfig::CreateSetting( KFNode& xmlnode )
+    {
+        return _settings.Create( 0u );
+    }
+
+    void KFFilterConfig::ReadSetting( KFNode& xmlnode, KFFilterSetting* kfsetting )
+    {
+        auto word = xmlnode.GetString( "Word" );
+        InsertWord( &_root_word_data, word.data(), static_cast< uint32 >( word.length() ), 0 );
     }
 }

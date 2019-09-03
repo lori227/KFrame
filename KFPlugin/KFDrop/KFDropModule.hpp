@@ -23,7 +23,6 @@ namespace KFrame
         KFDropModule() = default;
         ~KFDropModule() = default;
 
-
         ////////////////////////////////////////////////////////////////////////////////
         // 掉落( 直接添加属性 )
         virtual DropDataList& DropElement( KFEntity* player, uint32 dropid, uint32 count, bool showclient, const char* function, uint32 line );

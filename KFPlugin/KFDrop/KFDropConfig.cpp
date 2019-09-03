@@ -46,19 +46,24 @@ namespace KFrame
             auto kfsetting = iter.second;
             for ( auto kfdropweight : kfsetting->_necessary_list._objects )
             {
-                auto dropdata = &kfdropweight->_drop_data;
-                auto kfelementsetting = KFElementConfig::Instance()->FindElementSetting( dropdata->_data_name );
-                auto strelement = __FORMAT__( kfelementsetting->_element_template, dropdata->_data_name, dropdata->_data_value, dropdata->_data_key );
-                dropdata->_elements.Parse( strelement, __FUNC_LINE__ );
+                FormatDropElement( kfdropweight );
             }
 
             for ( auto kfdropweight : kfsetting->_rand_list._weight_data )
             {
-                auto dropdata = &kfdropweight->_drop_data;
-                auto kfelementsetting = KFElementConfig::Instance()->FindElementSetting( dropdata->_data_name );
-                auto strelement = __FORMAT__( kfelementsetting->_element_template, dropdata->_data_name, dropdata->_data_value, dropdata->_data_key );
-                dropdata->_elements.Parse( strelement, __FUNC_LINE__ );
+                FormatDropElement( kfdropweight );
             }
+        }
+    }
+
+    void KFDropConfig::FormatDropElement( KFDropWeight* dropweight )
+    {
+        // 掉落
+        {
+            auto dropdata = &dropweight->_drop_data;
+            auto kfelementsetting = KFElementConfig::Instance()->FindElementSetting( dropdata->_data_name );
+            auto strelement = __FORMAT__( kfelementsetting->_element_template, dropdata->_data_name, dropdata->_data_value, dropdata->_data_key );
+            dropdata->_elements.Parse( strelement, __FUNC_LINE__ );
         }
     }
 }

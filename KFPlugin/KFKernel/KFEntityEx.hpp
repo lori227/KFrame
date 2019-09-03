@@ -121,6 +121,7 @@ namespace KFrame
         void SyncEntityToClient();
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
+        virtual uint64 GetConfigValue( const std::string& name, uint64 id );
 
     protected:
         // 判断添加
@@ -167,10 +168,10 @@ namespace KFrame
         // 发送显示奖励
         void SendShowElementToClient();
 
-    protected:
+    public:
         // 组件
         KFComponentEx* _kf_component = nullptr;
-
+    public:
         // 数据
         KFData* _kf_object = nullptr;
 

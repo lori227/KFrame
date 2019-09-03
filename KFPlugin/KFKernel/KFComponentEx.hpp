@@ -181,6 +181,10 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////////////////////
         virtual void BindShowElementFunction( KFShowElementFunction& function );
         virtual void UnRegisterShowElementFunction();
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
+        virtual void BindGetConfigValueFunction( const std::string& name, KFGetConfigValueFunction& function );
+        virtual void UnBindGetConfigValueFunction( const std::string& name );
     protected:
         // 保存数据到数据库
         __KF_TIMER_FUNCTION__( OnTimerSaveEntity );
@@ -250,6 +254,9 @@ namespace KFrame
 
         // 显示奖励函数
         KFShowElementFunction _show_element_function;
+        /////////////////////////////////////////////////////////////////////////////////////////////
+        // 获得属性逻辑
+        KFBind< std::string, const std::string&, KFGetConfigValueFunction > _get_config_value_function;
 
     protected:
         // 需要发送消息的对象

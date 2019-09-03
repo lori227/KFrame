@@ -40,6 +40,7 @@ namespace KFrame
         {
             return true;
         }
+
     public:
         // 父属性
         std::string _parent_name;
@@ -63,7 +64,6 @@ namespace KFrame
         // 计算符号列表
         std::vector< uint32 > _operator_list;
     };
-
 
     // 数据判断条件
     class KFCondition

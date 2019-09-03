@@ -1231,4 +1231,32 @@ namespace KFrame
         _kf_component->_show_element_function( this, _pb_show_element );
         _pb_show_element.Clear();
     }
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    uint64 KFEntityEx::GetConfigValue( const std::string& name, uint64 id )
+    {
+        auto kffunction = _kf_component->_get_config_value_function.Find( name );
+        if ( kffunction != nullptr )
+        {
+            return kffunction->_function( this, id );
+        }
+
+        auto kfobject = _kf_object->FindData( name, id );
+        if ( kfobject == nullptr )
+        {
+            return 0u;
+        }
+
+        auto kfdata = kfobject->FindData( __KF_STRING__( value ) );
+        if ( kfdata == nullptr )
+        {
+            kfdata = kfobject->FindData( __KF_STRING__( count ) );
+            if ( kfdata == nullptr )
+            {
+                return 0u;
+            }
+        }
+
+        return kfdata->GetValue();
+    }
 }
