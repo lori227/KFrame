@@ -3495,6 +3495,12 @@ class LIBPROTOC_EXPORT MsgMergeItemReq : public ::google::protobuf::Message /* @
   ::google::protobuf::uint64 targetuuid() const;
   void set_targetuuid(::google::protobuf::uint64 value);
 
+  // bool showclient = 5;
+  void clear_showclient();
+  static const int kShowclientFieldNumber = 5;
+  bool showclient() const;
+  void set_showclient(bool value);
+
   // @@protoc_insertion_point(class_scope:KFMsg.MsgMergeItemReq)
  private:
 
@@ -3503,6 +3509,7 @@ class LIBPROTOC_EXPORT MsgMergeItemReq : public ::google::protobuf::Message /* @
   ::google::protobuf::internal::ArenaStringPtr targetname_;
   ::google::protobuf::uint64 sourceuuid_;
   ::google::protobuf::uint64 targetuuid_;
+  bool showclient_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameClientMessage_2eproto::TableStruct;
 };
@@ -8224,6 +8231,20 @@ inline void MsgMergeItemReq::set_targetuuid(::google::protobuf::uint64 value) {
   
   targetuuid_ = value;
   // @@protoc_insertion_point(field_set:KFMsg.MsgMergeItemReq.targetuuid)
+}
+
+// bool showclient = 5;
+inline void MsgMergeItemReq::clear_showclient() {
+  showclient_ = false;
+}
+inline bool MsgMergeItemReq::showclient() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgMergeItemReq.showclient)
+  return showclient_;
+}
+inline void MsgMergeItemReq::set_showclient(bool value) {
+  
+  showclient_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.MsgMergeItemReq.showclient)
 }
 
 // -------------------------------------------------------------------

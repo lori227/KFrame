@@ -24,8 +24,7 @@ namespace KFrame
     class KFUUID
     {
     public:
-        KFUUID() = default;
-        KFUUID( uint32 timebits, uint32 zonebits, uint32 workerbits, uint32 seqbits );
+        KFUUID( uint32 timebits = 29, uint32 zonebits = 10, uint32 workerbits = 10, uint32 seqbits = 14 );
 
         // 生产guid
         uint64 Make( uint32 zoneid, uint32 workerid, uint64 nowtime );

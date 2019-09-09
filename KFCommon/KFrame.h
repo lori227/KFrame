@@ -14,6 +14,8 @@
 #include "KFWeight.h"
 #include "KFField.h"
 #include "KFResult.h"
+#include "KFNetData.h"
+#include "KFDBValue.h"
 #include "KFInstance.h"
 #include "KFSingleton.h"
 #include "KFInterfaces.h"

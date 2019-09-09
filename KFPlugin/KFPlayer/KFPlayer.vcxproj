@@ -12,10 +12,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="KFPlayerConfig.cpp" />
     <ClCompile Include="KFPlayerModule.cpp" />
     <ClCompile Include="KFPlayerPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="KFPlayerConfig.hpp" />
     <ClInclude Include="KFPlayerInterface.h" />
     <ClInclude Include="KFPlayerModule.hpp" />
     <ClInclude Include="KFPlayerPlugin.hpp" />

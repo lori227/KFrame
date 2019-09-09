@@ -140,6 +140,7 @@ enum FrameCodeEnum {
   ItemCanNotStore = 12611,
   ItemIndexError = 12612,
   ItemCanNotUseStatus = 12613,
+  ItemUseOk = 12614,
   SignInNotDay = 12700,
   SignInCanNotFind = 12701,
   SignInRewardAlready = 12702,

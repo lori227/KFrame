@@ -351,13 +351,14 @@ void CKFResourceDlg::UpdateFileList()
             kfsetting->_name = path;
         }
 
+        kfsetting->_md5_now = KFCrypto::Md5File( path );
         kfsetting->_now_time = file.getLastModified().epochTime();
-        if ( kfsetting->IsClientFile() && kfsetting->_last_time_client != kfsetting->_now_time )
+        if ( kfsetting->IsClientFile() && kfsetting->_last_md5_client != kfsetting->_md5_now )
         {
             _client_update_list.insert( kfsetting->_name );
         }
 
-        if ( kfsetting->IsServerFile() && kfsetting->_last_time_server != kfsetting->_now_time )
+        if ( kfsetting->IsServerFile() && kfsetting->_last_md5_server != kfsetting->_md5_now )
         {
             _server_update_list.insert( kfsetting->_name );
         }
@@ -527,9 +528,9 @@ void CKFResourceDlg::UpdateFileListCtrl( std::set<std::string>& filelist )
             index = _list_file.GetItemCount();
             _list_file.InsertItem( index, filename.c_str() );
         }
-        if ( newadd || kfsetting->_show_time != kfsetting->_now_time )
+        if ( newadd || kfsetting->_md5_show != kfsetting->_md5_now )
         {
-            kfsetting->_show_time = kfsetting->_now_time;
+            kfsetting->_md5_show = kfsetting->_md5_now;
             _list_file.SetItemText( index, 1, KFDate::GetTimeString( kfsetting->_now_time ).c_str() );
         }
         if ( newadd || kfsetting->_show_type != kfsetting->_type )
@@ -894,7 +895,7 @@ bool CKFResourceDlg::ParseExcelFiles( const std::string& version )
                 ok = _kf_parse->SaveToXml( "..\\config\\server", version );
                 if ( ok )
                 {
-                    kfsetting->_last_time_server = kfsetting->_now_time;
+                    kfsetting->_last_md5_server = kfsetting->_md5_now;
                 }
                 else
                 {
@@ -925,7 +926,7 @@ bool CKFResourceDlg::ParseExcelFiles( const std::string& version )
                 ok = _kf_parse->SaveToXml( "..\\config\\client", version );
                 if ( ok )
                 {
-                    kfsetting->_last_time_client = kfsetting->_now_time;
+                    kfsetting->_last_md5_client = kfsetting->_md5_now;
                 }
                 else
                 {
@@ -1046,7 +1047,4 @@ void CKFResourceDlg::OnBnClickedButtonParseAndUpdate()
                                    _resource_config->_project_name, _store_version, version, resourcefile, kfserversetting->_url );
         system( batfile.c_str() );
     }
-
-    // 发送更新
-
 }

@@ -24,29 +24,32 @@ namespace KFrame
         static std::string _inc = "$inc";			// +-操作
         static std::string _mod = "$mod";			// 取模
         static std::string _not = "$not";			// 取反
+        static std::string _count = "count";		// 查询纪录数量
 
-        static std::string _asc = "1";				// 升序
-        static std::string _desc = "-1";			// 降序
 
-        // 有效时间字段
         static std::string _expire = "expire";		// 默认的过期字段
+
+        static int32 _asc = 1;						// 升序
+        static int32 _desc = -1;					// 降序
     }
     //////////////////////////////////////////////////////////////////////////////////////////////
+    typedef std::map<std::string, int32> MongoIndexType;
     //////////////////////////////////////////////////////////////////////////////////////////////
+    template< class T >
     class KFMongoExpression
     {
     public:
         // 字段名
         std::string _name;
 
-        // 判断符号
-        std::string _type;
+        // 字段关键字
+        std::string _keyword;
 
         // 数值
-        std::string _value1;
-        std::string _value2;
+        T _value1;
+        T _value2;
     };
-
+    //////////////////////////////////////////////////////////////////////////////////////////////
     class KFMongoDocument
     {
     public:
@@ -54,17 +57,25 @@ namespace KFrame
         {
             _condition = MongoKeyword::_and;
         }
+
         KFMongoDocument( const std::string& condition )
         {
             _condition = condition;
         }
+
         ~KFMongoDocument()
         {
-            for ( auto expression : _expressions )
+            for ( auto expression : _int_expressions )
             {
-                __KF_DELETE__( KFMongoExpression, expression );
+                __KF_DELETE__( KFMongoExpression<uint64>, expression );
             }
-            _expressions.clear();
+            _int_expressions.clear();
+
+            for ( auto expression : _str_expressions )
+            {
+                __KF_DELETE__( KFMongoExpression<std::string>, expression );
+            }
+            _str_expressions.clear();
 
             for ( auto document : _documents )
             {
@@ -73,25 +84,42 @@ namespace KFrame
             _documents.clear();
         }
 
-        template< class T >
-        inline void AddExpression( const std::string& name, const std::string& type, T value )
+        inline void AddExpression( const std::string& name, const std::string& keyword, uint64 value )
         {
-            auto expression = __KF_NEW__( KFMongoExpression );
+            auto expression = __KF_NEW__( KFMongoExpression<uint64> );
             expression->_name = name;
-            expression->_type = type;
-            expression->_value1 = KFUtility::ToString( value );
-            _expressions.push_back( expression );
+            expression->_keyword = keyword;
+            expression->_value1 = value;
+            _int_expressions.push_back( expression );
         }
 
-        template< class T >
-        inline void AddExpression( const std::string& name, const std::string& type, T value1, T value2 )
+        inline void AddExpression( const std::string& name, const std::string& keyword, uint64 value1, uint64 value2 )
         {
-            auto expression = __KF_NEW__( KFMongoExpression );
+            auto expression = __KF_NEW__( KFMongoExpression<uint64> );
             expression->_name = name;
-            expression->_type = type;
-            expression->_value1 = KFUtility::ToString( value1 );
-            expression->_value2 = KFUtility::ToString( value2 );
-            _expressions.push_back( expression );
+            expression->_keyword = keyword;
+            expression->_value1 = value1;
+            expression->_value2 = value2;
+            _int_expressions.push_back( expression );
+        }
+
+        inline void AddExpression( const std::string& name, const std::string& keyword, const std::string& value )
+        {
+            auto expression = __KF_NEW__( KFMongoExpression<std::string> );
+            expression->_name = name;
+            expression->_keyword = keyword;
+            expression->_value1 = value;
+            _str_expressions.push_back( expression );
+        }
+
+        inline void AddExpression( const std::string& name, const std::string& keyword, const std::string& value1, const std::string& value2 )
+        {
+            auto expression = __KF_NEW__( KFMongoExpression<std::string> );
+            expression->_name = name;
+            expression->_keyword = keyword;
+            expression->_value1 = value1;
+            expression->_value2 = value2;
+            _str_expressions.push_back( expression );
         }
 
         KFMongoDocument* AddDocument( const std::string& condition = MongoKeyword::_and )
@@ -106,21 +134,33 @@ namespace KFrame
         std::string _condition;
 
         // 表达式列表
-        std::vector< KFMongoExpression* > _expressions;
+        std::list< KFMongoExpression< uint64 >* > _int_expressions;
+        std::list< KFMongoExpression< std::string >* > _str_expressions;
 
         // 包含的条件列表
-        std::vector< KFMongoDocument* > _documents;
+        std::list< KFMongoDocument* > _documents;
     };
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // 选择器
     class KFMongoSelector
     {
     public:
+        void AddReturn( const std::string& value, int32 ordertype = MongoKeyword::_asc )
+        {
+            _returns[ value] = ordertype;
+        }
+    public:
         // key
         uint64 _key = 0u;
 
+        // 返回数量限制
+        uint32 _limit_count = 0u;
+
         // 条件列表
         KFMongoDocument _document;
+
+        // 返回的字段
+        std::map< std::string, int32 > _returns;
     };
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

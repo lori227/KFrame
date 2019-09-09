@@ -426,12 +426,12 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFEntityEx::AddShowElement( uint32 showtype, const KFElement* kfelement, KFData* kfdata, bool showclient, const char* function, uint32 line )
+    void KFEntityEx::AddShowElement( uint32 showtype, const KFElement* kfelement, KFData* kfdata, const char* function, uint32 line )
     {
         // 打印日志
         if ( showtype == KFDataDefine::Show_Element )
         {
-            if ( showclient )
+            if ( _add_show_element )
             {
                 AddElementToShow( kfelement );
             }
@@ -439,7 +439,7 @@ namespace KFrame
         }
         else if ( showtype == KFDataDefine::Show_Data )
         {
-            if ( showclient )
+            if ( _add_show_element )
             {
                 AddDataToShow( kfdata );
             }
@@ -501,14 +501,20 @@ namespace KFrame
 
     void KFEntityEx::AddDataToShow( const std::string& name, uint64 value )
     {
-        auto pbshowdata = CreateShowData( name, 0u, true );
-        pbshowdata->set_value( value );
+        if ( _add_show_element && value != 0u )
+        {
+            auto pbshowdata = CreateShowData( name, 0u, true );
+            pbshowdata->set_value( value );
+        }
     }
 
     void KFEntityEx::AddDataToShow( const std::string& name, uint64 key, const std::string& dataname, uint64 datavalue )
     {
-        auto pbshowdata = CreateShowData( name, key, true );
-        ( *pbshowdata->mutable_pbuint64() )[ dataname ] += datavalue;
+        if ( _add_show_element && datavalue != 0u )
+        {
+            auto pbshowdata = CreateShowData( name, key, true );
+            ( *pbshowdata->mutable_pbuint64() )[ dataname ] += datavalue;
+        }
     }
 
     void KFEntityEx::AddDataToShow( KFData* kfdata )
@@ -594,15 +600,15 @@ namespace KFrame
         }
 
         __LOG_INFO_FUNCTION__( function, line, "{}=[{}] multiple=[{:0.2f}] elements={}!", _kf_component->_component_name, GetKeyID(), multiple, kfelements->_str_element );
-
+        _add_show_element = showclient;
         for ( auto kfelement : kfelements->_element_list )
         {
-            AddElement( kfelement, showclient, function, line, multiple );
+            AddElement( kfelement, function, line, multiple );
         }
     }
 
     // 添加元数据
-    void KFEntityEx::AddElement( const KFElement* kfelement, bool showclient, const char* function, uint32 line, float multiple )
+    void KFEntityEx::AddElement( const KFElement* kfelement, const char* function, uint32 line, float multiple )
     {
         auto kfdata = _kf_object->FindData( kfelement->_data_name );
         if ( kfdata == nullptr )
@@ -640,7 +646,7 @@ namespace KFrame
 
         if ( showtype != KFDataDefine::Show_None )
         {
-            AddShowElement( showtype, kfelement, showdata, showclient, __FUNC_LINE__ );
+            AddShowElement( showtype, kfelement, showdata, __FUNC_LINE__ );
         }
     }
 
@@ -678,7 +684,9 @@ namespace KFrame
         for ( auto& iter : kfelement->_values._objects )
         {
             auto kfchild = kfdata->FindData( iter.first );
-            if ( kfchild == nullptr )
+            if ( kfchild == nullptr ||
+                    kfchild->_data_setting->_name == kfdata->_data_setting->_key_name ||
+                    kfchild->_data_setting->_name == kfdata->_data_setting->_config_key_name )
             {
                 continue;
             }
@@ -1227,6 +1235,7 @@ namespace KFrame
             return;
         }
 
+        _add_show_element = true;
         _have_show_client = false;
         _kf_component->_show_element_function( this, _pb_show_element );
         _pb_show_element.Clear();

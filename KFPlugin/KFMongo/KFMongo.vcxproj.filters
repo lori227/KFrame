@@ -8,6 +8,8 @@
     <ClCompile Include="KFMongoLogic.cpp" />
     <ClCompile Include="KFMongoModule.cpp" />
     <ClCompile Include="KFMongoPlugin.cpp" />
+    <ClCompile Include="KFMongoReadExecute.cpp" />
+    <ClCompile Include="KFMongoWriteExecute.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFMongo.hpp" />
@@ -18,5 +20,8 @@
     <ClInclude Include="KFMongoModule.hpp" />
     <ClInclude Include="KFMongoPlugin.hpp" />
     <ClInclude Include="KFMongoSelector.h" />
+    <ClInclude Include="KFMongoDriver.h" />
+    <ClInclude Include="KFMongoReadExecute.hpp" />
+    <ClInclude Include="KFMongoWriteExecute.hpp" />
   </ItemGroup>
 </Project>

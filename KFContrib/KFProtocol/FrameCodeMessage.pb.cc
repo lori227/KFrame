@@ -58,7 +58,7 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\026FrameCodeMessage.proto\022\005KFMsg*\354\025\n\rFram"
+      "\n\026FrameCodeMessage.proto\022\005KFMsg*\374\025\n\rFram"
       "eCodeEnum\022\t\n\005Error\020\000\022\006\n\002Ok\020\001\022\022\n\rHttpData"
       "Error\020\220N\022\025\n\020AuthDatabaseBusy\020\221N\022\023\n\016AuthS"
       "erverBusy\020\222N\022\023\n\016ZoneServerBusy\020\223N\022\025\n\020Zon"
@@ -107,31 +107,32 @@ void AddDescriptorsImpl() {
       "r\020\277b\022\027\n\022ItemMoveCountError\020\300b\022\020\n\013ItemBag"
       "Full\020\301b\022\023\n\016ItemMoveFailed\020\302b\022\024\n\017ItemCanN"
       "otStore\020\303b\022\023\n\016ItemIndexError\020\304b\022\030\n\023ItemC"
-      "anNotUseStatus\020\305b\022\021\n\014SignInNotDay\020\234c\022\025\n\020"
-      "SignInCanNotFind\020\235c\022\030\n\023SignInRewardAlrea"
-      "dy\020\236c\022\023\n\016SignInRewardOk\020\237c\022\021\n\014MailNotExi"
-      "st\020\200d\022\020\n\013MailTimeOut\020\201d\022\025\n\020MailDeleteFai"
-      "led\020\202d\022\030\n\023MailAlreadyReceived\020\203d\022\026\n\021Mail"
-      "NotHaveReward\020\204d\022\021\n\014StoreNotFind\020\344d\022\027\n\022S"
-      "toreBuyCountError\020\345d\022\027\n\022StoreOutOfLimitO"
-      "wm\020\346d\022\025\n\020StoreOutOfLimits\020\347d\022\022\n\rStoreLac"
-      "kCost\020\350d\022\026\n\021StoreBuyTypeError\020\351d\022\017\n\nStor"
-      "eBuyOK\020\352d\022\017\n\nPayIdError\020\310e\022\021\n\014PayDataErr"
-      "or\020\311e\022\021\n\014RankNotExist\020\254f\022\027\n\022QueryBasicNo"
-      "tExist\020\220g\022\027\n\022MessageFilterError\020\364g\022\024\n\017Re"
-      "lationAlready\020\365g\022\026\n\021RelationSelfLimit\020\366g"
-      "\022\026\n\021RelationInviteReq\020\367g\022\035\n\030RelationRefu"
-      "seYourInvite\020\370g\022\022\n\rRelationAddOk\020\371g\022\025\n\020R"
-      "elationNotExist\020\372g\022\022\n\rRelationDelOk\020\373g\022\031"
-      "\n\024RelationRefuseInvite\020\374g\022\030\n\023RelationTar"
-      "getLimit\020\375g\022\032\n\025RelationInviteAlready\020\376g\022"
-      "\030\n\023RelationInviteLimit\020\377g\022\025\n\020RelationInv"
-      "iteOk\020\200h\022\033\n\026RelationInviteNotExist\020\201h\022\031\n"
-      "\024RelationSettingError\020\202h\022\026\n\021RelationData"
-      "Error\020\203h\022\024\n\017FriendLinessAdd\020\204hb\006proto3"
+      "anNotUseStatus\020\305b\022\016\n\tItemUseOk\020\306b\022\021\n\014Sig"
+      "nInNotDay\020\234c\022\025\n\020SignInCanNotFind\020\235c\022\030\n\023S"
+      "ignInRewardAlready\020\236c\022\023\n\016SignInRewardOk\020"
+      "\237c\022\021\n\014MailNotExist\020\200d\022\020\n\013MailTimeOut\020\201d\022"
+      "\025\n\020MailDeleteFailed\020\202d\022\030\n\023MailAlreadyRec"
+      "eived\020\203d\022\026\n\021MailNotHaveReward\020\204d\022\021\n\014Stor"
+      "eNotFind\020\344d\022\027\n\022StoreBuyCountError\020\345d\022\027\n\022"
+      "StoreOutOfLimitOwm\020\346d\022\025\n\020StoreOutOfLimit"
+      "s\020\347d\022\022\n\rStoreLackCost\020\350d\022\026\n\021StoreBuyType"
+      "Error\020\351d\022\017\n\nStoreBuyOK\020\352d\022\017\n\nPayIdError\020"
+      "\310e\022\021\n\014PayDataError\020\311e\022\021\n\014RankNotExist\020\254f"
+      "\022\027\n\022QueryBasicNotExist\020\220g\022\027\n\022MessageFilt"
+      "erError\020\364g\022\024\n\017RelationAlready\020\365g\022\026\n\021Rela"
+      "tionSelfLimit\020\366g\022\026\n\021RelationInviteReq\020\367g"
+      "\022\035\n\030RelationRefuseYourInvite\020\370g\022\022\n\rRelat"
+      "ionAddOk\020\371g\022\025\n\020RelationNotExist\020\372g\022\022\n\rRe"
+      "lationDelOk\020\373g\022\031\n\024RelationRefuseInvite\020\374"
+      "g\022\030\n\023RelationTargetLimit\020\375g\022\032\n\025RelationI"
+      "nviteAlready\020\376g\022\030\n\023RelationInviteLimit\020\377"
+      "g\022\025\n\020RelationInviteOk\020\200h\022\033\n\026RelationInvi"
+      "teNotExist\020\201h\022\031\n\024RelationSettingError\020\202h"
+      "\022\026\n\021RelationDataError\020\203h\022\024\n\017FriendLiness"
+      "Add\020\204hb\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 2838);
+      descriptor, 2854);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "FrameCodeMessage.proto", &protobuf_RegisterTypes);
 }
@@ -240,6 +241,7 @@ bool FrameCodeEnum_IsValid(int value) {
     case 12611:
     case 12612:
     case 12613:
+    case 12614:
     case 12700:
     case 12701:
     case 12702:

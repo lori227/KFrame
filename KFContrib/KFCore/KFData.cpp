@@ -187,6 +187,50 @@ namespace KFrame
     }
 
 
+    std::string KFData::ToString( const std::string& dataname )
+    {
+        auto kfdata = FindData( dataname );
+        if ( kfdata == nullptr )
+        {
+            return _invalid_str;
+        }
+
+        return kfdata->ToString();
+    }
+
+    std::string KFData::ToString( const std::string& parentname, const std::string& dataname )
+    {
+        auto kfdata = FindData( parentname, dataname );
+        if ( kfdata == nullptr )
+        {
+            return _invalid_str;
+        }
+
+        return kfdata->ToString();
+    }
+
+    std::string KFData::ToString( uint64 key, const std::string& dataname )
+    {
+        auto kfdata = FindData( key, dataname );
+        if ( kfdata == nullptr )
+        {
+            return _invalid_str;
+        }
+
+        return kfdata->ToString();
+    }
+
+    std::string KFData::ToString( const std::string& parentname, uint64 key, const std::string& dataname )
+    {
+        auto kfdata = FindData( parentname, key, dataname );
+        if ( kfdata == nullptr )
+        {
+            return _invalid_str;
+        }
+
+        return kfdata->ToString();
+    }
+
     // record
     bool KFData::IsFull()
     {

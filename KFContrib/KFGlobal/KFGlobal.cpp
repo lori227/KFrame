@@ -18,6 +18,8 @@ namespace KFrame
         _kf_rand = new KFRand();
         _app_id = new KFAppId();
         _kf_version = new KFVersion();
+        _kf_uuid = new KFUUID();
+        _kf_mutex = new KFMutex();
     }
 
     KFGlobal::~KFGlobal()
@@ -117,36 +119,55 @@ namespace KFrame
         return min + rand * range;
     }
 
-    KFUUID* KFGlobal::CreateUUID( uint32 type )
+    KFUUID* KFGlobal::CreateUUID( const std::string& name )
     {
-        auto iter = _kf_uuids.find( type );
+        auto iter = _kf_uuids.find( name );
         if ( iter == _kf_uuids.end() )
         {
-            auto uuid = new KFUUID( 29, 10, 10, 14 );
-            iter = _kf_uuids.insert( std::make_pair( type, uuid ) ).first;
+            iter = _kf_uuids.insert( std::make_pair( name, new KFUUID() ) ).first;
         }
 
         return iter->second;
     }
 
-    uint64 KFGlobal::MakeUUID()
+    uint64 KFGlobal::STMakeUUID()
     {
-        return MakeUUID( 0 );
+        auto zoneid = _app_id->GetZoneId();
+        auto workerid = _app_id->GetWorkId();
+        return _kf_uuid->Make( zoneid, workerid, _real_time );
     }
 
-    uint64 KFGlobal::MakeUUID( uint32 type )
+    uint64 KFGlobal::MTMakeUUID()
+    {
+        KFLocker locker( *_kf_mutex );
+        return STMakeUUID();
+    }
+
+    uint64 KFGlobal::STMakeUUID( const std::string& name )
     {
         auto zoneid = _app_id->GetZoneId();
         auto workerid = _app_id->GetWorkId();
 
-        auto kfuuid = CreateUUID( type );
+        auto kfuuid = CreateUUID( name );
         return kfuuid->Make( zoneid, workerid, _real_time );
     }
 
-    uint32 KFGlobal::UUIDZoneId( uint32 type, uint64 uuid )
+    uint64 KFGlobal::MTMakeUUID( const std::string& name )
     {
-        auto kfuuid = CreateUUID( type );
+        KFLocker locker( *_kf_mutex );
+        return STMakeUUID( name );
+    }
+
+    uint32 KFGlobal::STUUIDZoneId( const std::string& name, uint64 uuid )
+    {
+        auto kfuuid = CreateUUID( name );
         return kfuuid->ZoneId( uuid );
+    }
+
+    uint32 KFGlobal::MTUUIDZoneId( const std::string& name, uint64 uuid )
+    {
+        KFLocker locker( *_kf_mutex );
+        return STUUIDZoneId( name, uuid );
     }
 
     bool KFGlobal::IsServerSameZone( uint64 serverid )

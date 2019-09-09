@@ -313,12 +313,18 @@ namespace KFrame
 
         kfobject->InitData();
         kfbasic->SetValue( __KF_STRING__( id ), playerid );
-        kfbasic->SetValue( __KF_STRING__( birthday ), kfglobal->_real_time );
+        kfobject->SetValue( __KF_STRING__( birthday ), kfglobal->_real_time );
 
         for ( auto iter : _new_player_function._objects )
         {
             auto kffunction = iter.second;
             kffunction->_function( player );
+        }
+
+        // 新玩家添加道具
+        for ( auto elements : KFPlayerConfig::Instance()->_new_player_elements )
+        {
+            player->AddElement( elements, false, __FUNC_LINE__ );
         }
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////

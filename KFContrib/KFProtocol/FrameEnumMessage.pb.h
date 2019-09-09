@@ -144,33 +144,6 @@ inline bool StatusEnum_Parse(
   return ::google::protobuf::internal::ParseNamedEnum<StatusEnum>(
     StatusEnum_descriptor(), name, value);
 }
-enum UUIDEnum {
-  UUidLogic = 0,
-  UUidAccount = 1,
-  UUidPlayer = 2,
-  UUidItem = 3,
-  UUidHero = 4,
-  UUidGroup = 5,
-  UUidGuild = 6,
-  UUidBattle = 7,
-  UUIDEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
-  UUIDEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
-};
-LIBPROTOC_EXPORT bool UUIDEnum_IsValid(int value);
-const UUIDEnum UUIDEnum_MIN = UUidLogic;
-const UUIDEnum UUIDEnum_MAX = UUidBattle;
-const int UUIDEnum_ARRAYSIZE = UUIDEnum_MAX + 1;
-
-LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* UUIDEnum_descriptor();
-inline const ::std::string& UUIDEnum_Name(UUIDEnum value) {
-  return ::google::protobuf::internal::NameOfEnum(
-    UUIDEnum_descriptor(), value);
-}
-inline bool UUIDEnum_Parse(
-    const ::std::string& name, UUIDEnum* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<UUIDEnum>(
-    UUIDEnum_descriptor(), name, value);
-}
 enum MailEnum {
   UnknowMail = 0,
   GlobalMail = 1,
@@ -303,11 +276,6 @@ template <> struct is_proto_enum< ::KFMsg::StatusEnum> : ::std::true_type {};
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::StatusEnum>() {
   return ::KFMsg::StatusEnum_descriptor();
-}
-template <> struct is_proto_enum< ::KFMsg::UUIDEnum> : ::std::true_type {};
-template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::UUIDEnum>() {
-  return ::KFMsg::UUIDEnum_descriptor();
 }
 template <> struct is_proto_enum< ::KFMsg::MailEnum> : ::std::true_type {};
 template <>

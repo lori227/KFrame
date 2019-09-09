@@ -55,7 +55,7 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::PayIdError );
         }
 
-        auto source = __FORMAT__( "{}-{}-{}", playerid, kfmsg.payid(), KFGlobal::Instance()->MakeUUID() );
+        auto source = __FORMAT__( "{}-{}-{}", playerid, kfmsg.payid(), KFGlobal::Instance()->STMakeUUID() );
         auto order = KFCrypto::Md5Encode( source );
 
         // 发送给auth服务器

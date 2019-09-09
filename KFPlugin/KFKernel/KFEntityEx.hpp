@@ -128,7 +128,7 @@ namespace KFrame
         bool CheckAddElement( const KFElement* kfelement, const char* function, uint32 line, float multiple );
 
         // 添加元数据
-        void AddElement( const KFElement* kfelement, bool showclient, const char* function, uint32 line, float multiple );
+        void AddElement( const KFElement* kfelement, const char* function, uint32 line, float multiple );
         std::tuple<uint32, KFData*> AddNormalElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line, float multiple );
         std::tuple<uint32, KFData*> AddObjectElement( KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple );
         std::tuple<uint32, KFData*> AddRecordElement( KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple );
@@ -146,7 +146,7 @@ namespace KFrame
         void RemoveRecordElement( KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple );
 
         // 添加显示的元数据
-        void AddShowElement( uint32 showtype, const KFElement* kfelement, KFData* kfdata, bool showclient, const char* function, uint32 line );
+        void AddShowElement( uint32 showtype, const KFElement* kfelement, KFData* kfdata, const char* function, uint32 line );
 
         // 创建显示元素
         KFMsg::PBShowData* CreateShowData( const std::string& name, uint64 key, bool find );
@@ -194,9 +194,10 @@ namespace KFrame
         KFMsg::PBObject _update_pb_object;
 
         // 是否通知客户端
-        bool _have_show_client = false;
 
         // 需要显示的element
+        bool _add_show_element = true;
+        bool _have_show_client = false;
         KFMsg::PBShowElement _pb_show_element;
     };
 }

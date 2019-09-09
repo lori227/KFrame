@@ -20,6 +20,26 @@ namespace KFrame
 
         return DigestEngine::digestToHex( engine.digest() );
     }
+
+    std::string KFCrypto::Md5File( const std::string& file )
+    {
+        std::ifstream ifile( file );
+        if ( !ifile )
+        {
+            return "";
+        }
+
+        std::string data = "";
+        DigestEngine engine( "MD5" );
+        while ( std::getline( ifile, data ) )
+        {
+            engine.update( data );
+        }
+
+        ifile.close();
+        return DigestEngine::digestToHex( engine.digest() );
+    }
+
     ///////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////
     std::string KFCrypto::Sha1Encode( const std::string& source )

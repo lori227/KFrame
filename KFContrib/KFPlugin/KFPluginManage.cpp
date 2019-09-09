@@ -75,7 +75,7 @@ namespace KFrame
         auto kfmodule = FindModule( name );
         if ( kfmodule == nullptr )
         {
-            __LOG_ERROR_FUNCTION__( file, line, "can't find [{}] module!", name );
+            throw std::logic_error( __FORMAT__( "[{}:{}] can't find [{}] module!", file, line, name ) );
         }
 
         return kfmodule;

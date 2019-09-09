@@ -15,6 +15,7 @@
 #include "KFMessage/KFMessageInterface.h"
 #include "KFCommand/KFCommandInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
+#include "KFPlayerConfig.hpp"
 
 namespace KFrame
 {

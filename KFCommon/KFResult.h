@@ -66,12 +66,6 @@ namespace KFrame
         T _value;
     };
 
-    template< class T >
-    struct KFUniqueResult
-    {
-        typedef std::unique_ptr< KFResult< T > > Type;
-    };
-
 #define __NEW_RESULT__( type ) \
     KFResult< type >::UniqueType  kfresult( new KFResult< type >() );
     ///////////////////////////////////////////////////////////////////////////////////////

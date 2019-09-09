@@ -477,8 +477,8 @@ namespace KFrame
             RemoveRole( kfrole );
         }
 
-        KFMsg::MsgLoginAck ack;
-        _kf_tcp_server->SendNetMessage( __ROUTE_SERVER_ID__, KFMsg::MSG_LOGIN_ACK, &ack );
+        KFMsg::MsgLogoutAck ack;
+        _kf_tcp_server->SendNetMessage( __ROUTE_SERVER_ID__, KFMsg::MSG_LOGOUT_ACK, &ack );
     }
 
     //// 走马灯

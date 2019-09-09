@@ -25,16 +25,19 @@ namespace KFrame
         // 文件类型
         uint32 _type = KFResource::FileType::All;
 
-        // 上次的时间
-        uint64 _last_time_client;
-        uint64 _last_time_server;
+        // 上次的md5值
+        std::string _last_md5_client;
+        std::string _last_md5_server;
 
-        // 现在的时间
-        uint64 _now_time = 0u;
+        // 当前的md5值
+        std::string _md5_now;
 
         // 显示相关
         uint64 _show_type = 0u;
-        uint64 _show_time = 0u;
+        std::string _md5_show;
+
+        // 时间
+        uint64 _now_time = 0u;
 
     public:
         // 服务器文件

@@ -170,7 +170,7 @@ namespace KFrame
 
     std::string KFClusterMasterModule::CreateToken( uint64 clientid )
     {
-        auto id = KFGlobal::Instance()->MakeUUID();
+        auto id = KFGlobal::Instance()->STMakeUUID();
         std::string md5source = __FORMAT__( "{}:{}", id, clientid );
 
         auto token = KFCrypto::Md5Encode( md5source );

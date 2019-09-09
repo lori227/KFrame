@@ -22,8 +22,8 @@ namespace KFrame
     class KFAuthModule : public KFAuthInterface
     {
     public:
-        KFAuthModule();
-        ~KFAuthModule();
+        KFAuthModule() = default;
+        ~KFAuthModule() = default;
 
         // 初始化
         virtual void BeforeRun();
@@ -93,13 +93,6 @@ namespace KFrame
 
         // 分配一个新小区
         uint32 BalanceAllocZoneId();
-
-    private:
-        // account锁
-        KFMutex* _kf_mutex = nullptr;
-
-        // accountid 生成器
-        KFUUID* _account_make = nullptr;
     };
 }
 

@@ -197,7 +197,7 @@ namespace KFrame
         }
 
         // uuid
-        auto uuid = KFGlobal::Instance()->MakeUUID( KFMsg::UUidItem );
+        auto uuid = KFGlobal::Instance()->STMakeUUID( __KF_STRING__( item ) );
 
         // 添加新的物品
         player->AddData( kfparent, uuid, kfitem );
@@ -496,7 +496,7 @@ namespace KFrame
         kftargetitem->SetValue( __KF_STRING__( count ), kfmsg.sourcecount() );
 
         // 添加新的道具
-        auto uuid = KFGlobal::Instance()->MakeUUID( KFMsg::UUidItem );
+        auto uuid = KFGlobal::Instance()->STMakeUUID( __KF_STRING__( item ) );
         player->AddData( kftargetrecord, uuid, kftargetitem );
     }
 

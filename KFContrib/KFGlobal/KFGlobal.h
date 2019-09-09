@@ -9,6 +9,7 @@ namespace KFrame
     class KFRand;
     class KFAppId;
     class KFVersion;
+    class KFMutex;
 
     class KFGlobal
     {
@@ -44,11 +45,14 @@ namespace KFrame
         double RandDouble( double first, double second );
 
         // 创建uuid
-        uint64 MakeUUID();
-        uint64 MakeUUID( uint32 type );
+        uint64 STMakeUUID();
+        uint64 MTMakeUUID();
+        uint64 STMakeUUID( const std::string& name );
+        uint64 MTMakeUUID( const std::string& name );
 
         // 获得zoneid
-        uint32 UUIDZoneId( uint32 type, uint64 uuid );
+        uint32 STUUIDZoneId( const std::string& name, uint64 uuid );
+        uint32 MTUUIDZoneId( const std::string& name, uint64 uuid );
 
         // 判断游戏分区id
         bool IsServerSameZone( uint64 serverid );
@@ -70,7 +74,7 @@ namespace KFrame
         static KFGlobal* _kf_global;
 
         // 创建uuid
-        KFUUID* CreateUUID( uint32 type );
+        KFUUID* CreateUUID( const std::string& name );
 
     public:
         // 程序运行
@@ -123,7 +127,9 @@ namespace KFrame
         KFRand* _kf_rand;
 
         // uuid
-        std::unordered_map< uint32, KFUUID*> _kf_uuids;
+        KFMutex* _kf_mutex = nullptr;
+        KFUUID* _kf_uuid = nullptr;
+        std::unordered_map< std::string, KFUUID*> _kf_uuids;
     };
     //////////////////////////////////////////////////////////////////////////////////////////
 

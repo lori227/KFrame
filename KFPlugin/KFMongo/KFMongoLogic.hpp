@@ -2,7 +2,8 @@
 #define __KF_MONGO_LOGIC_H__
 
 #include "KFMongoInterface.h"
-#include "KFMongoExecute.hpp"
+#include "KFMongoReadExecute.hpp"
+#include "KFMongoWriteExecute.hpp"
 
 namespace KFrame
 {
@@ -20,7 +21,7 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////////////
         // 创建索引
         virtual bool CreateIndex( const std::string& table, const std::string& indexname, bool unique = false, uint32 ttl = 0u );
-        virtual bool CreateIndex( const std::string& table, const std::string& indexname, const MapString& values, bool unique = false, uint32 ttl = 0u );
+        virtual bool CreateIndex( const std::string& table, const std::string& indexname, const MongoIndexType& values, bool unique = false, uint32 ttl = 0u );
 
         // 设置过期时间
         virtual bool Expire( const std::string& table, uint64 key, uint64 validtime );
@@ -29,64 +30,75 @@ namespace KFrame
         // 具体时间点
         virtual bool ExpireAt( const std::string& table, uint64 key, uint64 expiretime );
         virtual bool ExpireAt( const std::string& table, const std::string& key, uint64 expiretime );
+
+        // 查询数量
+        virtual KFResult< uint64 >::UniqueType Count( const std::string& table );
+        virtual KFResult< uint64 >::UniqueType Count( const std::string& table, const std::string& field, uint64 key );
         /////////////////////////////////////////////////////////////////////////////////////////////
-        // 插入数据( 存在更新, 不存在插入 )
-        virtual bool Insert( const std::string& table, const MapString& values );
-        virtual bool Insert( const std::string& table, uint64 key, const MapString& values );
-        virtual bool Insert( const std::string& table, const std::string& key, const MapString& values );
+        // 插入数值( 存在更新, 不存在插入 )
+        virtual bool Insert( const std::string& table, const KFDBValue& dbvalue );
+
+        virtual bool Insert( const std::string& table, uint64 key, const KFDBValue& dbvalue );
+        virtual bool Insert( const std::string& table, const std::string& key, const KFDBValue& dbvalue );
+
+        virtual bool Insert( const std::string& table, const KFDBValue& dbvalue, const KFMongoSelector& kfseletor );
+        virtual bool Insert( const std::string& table, const std::string& field, uint64 value, const KFMongoSelector& kfseletor );
+        virtual bool Insert( const std::string& table, const std::string& field, const std::string& value, const KFMongoSelector& kfseletor );
+
+        virtual bool Insert( const std::string& table, uint64 key, const std::string& field, uint64 value );
         virtual bool Insert( const std::string& table, uint64 key, const std::string& field, const std::string& value );
+        virtual bool Insert( const std::string& table, const std::string& key, const std::string& field, uint64 value );
         virtual bool Insert( const std::string& table, const std::string& key, const std::string& field, const std::string& value );
-        /////////////////////////////////////////////////////////////////////////////////////////////
-
-        // 更新数据( 存在才更新 )
-        virtual bool Update( const std::string& table, const MapString& values );
-        virtual bool Update( const std::string& table, const std::string& field, const std::string& value );
-        virtual bool Update( const std::string& table, const std::string& keyname, const std::string& key, const std::string& field, const std::string& value );
-        virtual bool Update( const std::string& table, const std::string& keyname, const std::string& key, const MapString& values );
-
-        // 更新数据( 存在才更新 )
-        virtual bool Update( const std::string& table, uint64 key, const MapString& values );
-        virtual bool Update( const std::string& table, const std::string& key, const MapString& values );
-        virtual bool Update( const std::string& table, uint64 key, const std::string& field, const std::string& value );
-        virtual bool Update( const std::string& table, const std::string& key, const std::string& field, const std::string& value );
-        /////////////////////////////////////////////////////////////////////////////////////////////
-        // 添加数组元素
-        virtual bool Push( const std::string& table, uint64 key, const std::string& field, const std::string& value );
-        virtual bool Push( const std::string& table, const std::string& key, const std::string& field, const std::string& value );
-        virtual bool Push( const std::string& table, uint64 key, const std::string& field, std::list< uint32 >& inlist );
-        virtual bool Push( const std::string& table, const std::string& key, const std::string& field, std::list< uint32 >& inlist );
-        virtual bool Push( const std::string& table, uint64 key, const std::string& field, ListString& inlist );
-        virtual bool Push( const std::string& table, const std::string& key, const std::string& field, ListString& inlist );
-        /////////////////////////////////////////////////////////////////////////////////////////////
-        // 删除数组元素
-        virtual bool Pull( const std::string& table, uint64 key, const std::string& field, const std::string& value );
-        virtual bool Pull( const std::string& table, const std::string& key, const std::string& field, const std::string& value );
-        virtual bool Pull( const std::string& table, uint64 key, const std::string& field, std::list< uint32 >& inlist );
-        virtual bool Pull( const std::string& table, const std::string& key, const std::string& field, std::list< uint32 >& inlist );
-        virtual bool Pull( const std::string& table, uint64 key, const std::string& field, ListString& inlist );
-        virtual bool Pull( const std::string& table, const std::string& key, const std::string& field, ListString& inlist );
-        /////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 删除数据
         virtual bool Delete( const std::string& table );
         virtual bool Delete( const std::string& table, uint64 key );
         virtual bool Delete( const std::string& table, const std::string& key );
         virtual bool Delete( const std::string& table, const std::string& keyname, uint64 key );
         virtual bool Delete( const std::string& table, const std::string& keyname, const std::string& key );
         virtual bool Delete( const std::string& table, const KFMongoSelector& kfseletor );
-        /////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 添加数组元素
+        virtual bool Push( const std::string& table, uint64 key, const std::string& field, uint64 value );
+        virtual bool Push( const std::string& table, uint64 key, const std::string& field, const std::string& value );
+        virtual bool Push( const std::string& table, const std::string& key, const std::string& field, uint64 value );
+        virtual bool Push( const std::string& table, const std::string& key, const std::string& field, const std::string& value );
+        virtual bool Push( const std::string& table, uint64 key, const std::string& field, const std::list<uint64>& values );
+        virtual bool Push( const std::string& table, const std::string& key, const std::string& field, const std::list<uint64>& values );
+        virtual bool Push( const std::string& table, uint64 key, const std::string& field, const ListString& values );
+        virtual bool Push( const std::string& table, const std::string& key, const std::string& field, const ListString& values );
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 删除数组元素
+        virtual bool Pull( const std::string& table, uint64 key, const std::string& field, uint64 value );
+        virtual bool Pull( const std::string& table, uint64 key, const std::string& field, const std::string& value );
+        virtual bool Pull( const std::string& table, const std::string& key, const std::string& field, uint64 value );
+        virtual bool Pull( const std::string& table, const std::string& key, const std::string& field, const std::string& value );
+        virtual bool Pull( const std::string& table, uint64 key, const std::string& field, std::list<uint64>& values );
+        virtual bool Pull( const std::string& table, const std::string& key, const std::string& field, std::list<uint64>& values );
+        virtual bool Pull( const std::string& table, uint64 key, const std::string& field, ListString& values );
+        virtual bool Pull( const std::string& table, const std::string& key, const std::string& field, ListString& values );
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 查询数值
         virtual KFResult< uint64 >::UniqueType QueryUInt64( const std::string& table, uint64 key, const std::string& field );
         virtual KFResult< uint64 >::UniqueType QueryUInt64( const std::string& table, const std::string& key, const std::string& field );
         virtual KFResult< std::string >::UniqueType QueryString( const std::string& table, uint64 key, const std::string& field );
         virtual KFResult< std::string >::UniqueType QueryString( const std::string& table, const std::string& key, const std::string& field );
         virtual KFResult< std::list< uint64 > >::UniqueType QueryListUInt64( const std::string& table, uint64 key, const std::string& field );
         virtual KFResult< std::list< uint64 > >::UniqueType QueryListUInt64( const std::string& table, const std::string& key, const std::string& field );
-        virtual KFResult< ListString >::UniqueType QueryListString( const std::string& table, uint64 key, const std::string& field );
-        virtual KFResult< ListString >::UniqueType QueryListString( const std::string& table, const std::string& key, const std::string& field );
-        virtual KFResult< MapString >::UniqueType QueryMap( const std::string& table, uint64 key );
-        virtual KFResult< MapString >::UniqueType QueryMap( const std::string& table, const std::string& key );
-        virtual KFResult< MapString >::UniqueType QueryMap( const std::string& table, uint64 key, const ListString& fields );
-        virtual KFResult< MapString >::UniqueType QueryMap( const std::string& table, const std::string& key, const ListString& fields );
-        /////////////////////////////////////////////////////////////////////////////////////////////
-        virtual KFResult< ListMapString >::UniqueType QueryListMapString( const std::string& table, const KFMongoSelector& kfseletor );
+        virtual KFResult< std::list< std::string > >::UniqueType QueryListString( const std::string& table, uint64 key, const std::string& field );
+        virtual KFResult< std::list< std::string > >::UniqueType QueryListString( const std::string& table, const std::string& key, const std::string& field );
+
+        // 查询集合
+        virtual KFResult< KFDBValue >::UniqueType QueryRecord( const std::string& table, uint64 key );
+        virtual KFResult< KFDBValue >::UniqueType QueryRecord( const std::string& table, const std::string& key );
+        virtual KFResult< KFDBValue >::UniqueType QueryRecord( const std::string& table, uint64 key, const ListString& fields );
+        virtual KFResult< KFDBValue >::UniqueType QueryRecord( const std::string& table, const std::string& key, const ListString& fields );
+        virtual KFResult< std::list< KFDBValue > >::UniqueType QueryListRecord( const std::string& table, const KFMongoSelector& kfseletor );
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private:
         // 读执行器
         KFMongoReadExecute* _read_execute = nullptr;

@@ -145,11 +145,6 @@ namespace KFrame
 
     bool KFParse::SaveToXml( const std::string& path, KFFile* kffile, const std::string& version )
     {
-        if ( kffile->_datas.empty() )
-        {
-            return true;
-        }
-
         std::string filename = kffile->_class._class_name;
         std::transform( filename.begin(), filename.end(), filename.begin(), ::tolower );
         auto file = path + "/" + filename + ".xml";

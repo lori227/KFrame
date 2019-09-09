@@ -39,6 +39,10 @@ namespace KFrame
         template< class T = uint64 > T OperateValue( const std::string& dataname, uint64 key, uint32 operate, T value );
         template< class T = uint64 > T OperateValue( const std::string& parentname, uint64 key, const std::string& dataname, uint32 operate, T value );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        std::string ToString( const std::string& dataname );
+        std::string ToString( const std::string& parentname, const std::string& dataname );
+        std::string ToString( uint64 key, const std::string& dataname );
+        std::string ToString( const std::string& parentname, uint64 key, const std::string& dataname );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 重置
         virtual void Reset();

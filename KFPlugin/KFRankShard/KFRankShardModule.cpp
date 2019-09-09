@@ -360,7 +360,7 @@ namespace KFrame
         auto zoneid = _invalid_int;
         if ( kfsetting->_zone_type == KFMsg::ZoneRank )
         {
-            zoneid = KFGlobal::Instance()->UUIDZoneId( KFMsg::UUidPlayer, playerid );
+            zoneid = KFGlobal::Instance()->STUUIDZoneId( __KF_STRING__( player ), playerid );
         }
 
         return zoneid;

@@ -33,7 +33,7 @@ namespace protobuf_FrameEnumMessage_2eproto {
 void InitDefaults() {
 }
 
-const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[9];
+const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[8];
 const ::google::protobuf::uint32 TableStruct::offsets[1] = {};
 static const ::google::protobuf::internal::MigrationSchema* schemas = NULL;
 static const ::google::protobuf::Message* const* file_default_instances = NULL;
@@ -65,21 +65,18 @@ void AddDescriptorsImpl() {
       "um\022\016\n\nUnknowKick\020\000\022\017\n\013KickByLogin\020\001\022\022\n\016K"
       "ickByPlatform\020\002*^\n\nStatusEnum\022\016\n\nInitSta"
       "tus\020\000\022\016\n\nDoneStatus\020\001\022\021\n\rReceiveStatus\020\002"
-      "\022\n\n\006Remove\020\003\022\021\n\rReceiveRemove\020\004*\204\001\n\010UUID"
-      "Enum\022\r\n\tUUidLogic\020\000\022\017\n\013UUidAccount\020\001\022\016\n\n"
-      "UUidPlayer\020\002\022\014\n\010UUidItem\020\003\022\014\n\010UUidHero\020\004"
-      "\022\r\n\tUUidGroup\020\005\022\r\n\tUUidGuild\020\006\022\016\n\nUUidBa"
-      "ttle\020\007*:\n\010MailEnum\022\016\n\nUnknowMail\020\000\022\016\n\nGl"
-      "obalMail\020\001\022\016\n\nPersonMail\020\002*7\n\010RankEnum\022\016"
-      "\n\nUnknowRank\020\000\022\r\n\tTotalRank\020\001\022\014\n\010ZoneRan"
-      "k\020\002*X\n\020PlayerStatusEnum\022\025\n\021UnknowFrameSt"
-      "atus\020\000\022\025\n\021FrameOnlineStatus\020\001\022\026\n\022FrameOf"
-      "flineStatus\020\002*U\n\nInviteEnum\022\020\n\014UnknowInv"
-      "ite\020\000\022\013\n\007Consent\020\001\022\n\n\006Refuse\020\002\022\n\n\006Delete"
-      "\020\003\022\020\n\014RefuseMinute\020\004b\006proto3"
+      "\022\n\n\006Remove\020\003\022\021\n\rReceiveRemove\020\004*:\n\010MailE"
+      "num\022\016\n\nUnknowMail\020\000\022\016\n\nGlobalMail\020\001\022\016\n\nP"
+      "ersonMail\020\002*7\n\010RankEnum\022\016\n\nUnknowRank\020\000\022"
+      "\r\n\tTotalRank\020\001\022\014\n\010ZoneRank\020\002*X\n\020PlayerSt"
+      "atusEnum\022\025\n\021UnknowFrameStatus\020\000\022\025\n\021Frame"
+      "OnlineStatus\020\001\022\026\n\022FrameOfflineStatus\020\002*U"
+      "\n\nInviteEnum\022\020\n\014UnknowInvite\020\000\022\013\n\007Consen"
+      "t\020\001\022\n\n\006Refuse\020\002\022\n\n\006Delete\020\003\022\020\n\014RefuseMin"
+      "ute\020\004b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 748);
+      descriptor, 613);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "FrameEnumMessage.proto", &protobuf_RegisterTypes);
 }
@@ -159,29 +156,9 @@ bool StatusEnum_IsValid(int value) {
   }
 }
 
-const ::google::protobuf::EnumDescriptor* UUIDEnum_descriptor() {
-  protobuf_FrameEnumMessage_2eproto::protobuf_AssignDescriptorsOnce();
-  return protobuf_FrameEnumMessage_2eproto::file_level_enum_descriptors[4];
-}
-bool UUIDEnum_IsValid(int value) {
-  switch (value) {
-    case 0:
-    case 1:
-    case 2:
-    case 3:
-    case 4:
-    case 5:
-    case 6:
-    case 7:
-      return true;
-    default:
-      return false;
-  }
-}
-
 const ::google::protobuf::EnumDescriptor* MailEnum_descriptor() {
   protobuf_FrameEnumMessage_2eproto::protobuf_AssignDescriptorsOnce();
-  return protobuf_FrameEnumMessage_2eproto::file_level_enum_descriptors[5];
+  return protobuf_FrameEnumMessage_2eproto::file_level_enum_descriptors[4];
 }
 bool MailEnum_IsValid(int value) {
   switch (value) {
@@ -196,7 +173,7 @@ bool MailEnum_IsValid(int value) {
 
 const ::google::protobuf::EnumDescriptor* RankEnum_descriptor() {
   protobuf_FrameEnumMessage_2eproto::protobuf_AssignDescriptorsOnce();
-  return protobuf_FrameEnumMessage_2eproto::file_level_enum_descriptors[6];
+  return protobuf_FrameEnumMessage_2eproto::file_level_enum_descriptors[5];
 }
 bool RankEnum_IsValid(int value) {
   switch (value) {
@@ -211,7 +188,7 @@ bool RankEnum_IsValid(int value) {
 
 const ::google::protobuf::EnumDescriptor* PlayerStatusEnum_descriptor() {
   protobuf_FrameEnumMessage_2eproto::protobuf_AssignDescriptorsOnce();
-  return protobuf_FrameEnumMessage_2eproto::file_level_enum_descriptors[7];
+  return protobuf_FrameEnumMessage_2eproto::file_level_enum_descriptors[6];
 }
 bool PlayerStatusEnum_IsValid(int value) {
   switch (value) {
@@ -226,7 +203,7 @@ bool PlayerStatusEnum_IsValid(int value) {
 
 const ::google::protobuf::EnumDescriptor* InviteEnum_descriptor() {
   protobuf_FrameEnumMessage_2eproto::protobuf_AssignDescriptorsOnce();
-  return protobuf_FrameEnumMessage_2eproto::file_level_enum_descriptors[8];
+  return protobuf_FrameEnumMessage_2eproto::file_level_enum_descriptors[7];
 }
 bool InviteEnum_IsValid(int value) {
   switch (value) {

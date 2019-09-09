@@ -202,7 +202,7 @@ namespace KFrame
         }
 
         // 创建playerid
-        auto playerid = KFGlobal::Instance()->MakeUUID( KFMsg::UUidPlayer );
+        auto playerid = KFGlobal::Instance()->STMakeUUID( __KF_STRING__( player ) );
 
         _auth_redis->Execute( "hset {}:{} {} {}", __KF_STRING__( online ), playerid, __KF_STRING__( accountid ), accountid );
         auto voidresult = _auth_redis->Execute( "hset {}:{} {} {}", __KF_STRING__( user ), accountid, kfsetting->_logic_id, playerid );

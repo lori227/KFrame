@@ -4,19 +4,6 @@
 namespace KFrame
 {
 #define __AUTH_REDIS_DRIVER__ _kf_redis->Create( __KF_STRING__( auth ) )
-
-    KFAuthModule::KFAuthModule()
-    {
-        _kf_mutex = new KFMutex();
-        _account_make = new KFUUID( 31, 2, 10, 20 );
-    }
-
-    KFAuthModule::~KFAuthModule()
-    {
-        __DELETE_OBJECT__( _kf_mutex );
-        __DELETE_OBJECT__( _account_make );
-    }
-
     void KFAuthModule::BeforeRun()
     {
         // zone
@@ -287,8 +274,7 @@ namespace KFrame
         }
         else
         {
-            KFLocker locker( *_kf_mutex );
-            accountid = _account_make->Make( 0, KFGlobal::Instance()->_app_id->GetWorkId(), KFGlobal::Instance()->_real_time );
+            accountid = KFGlobal::Instance()->MTMakeUUID( __KF_STRING__( account ) );
         }
 
         // 创建账号id
