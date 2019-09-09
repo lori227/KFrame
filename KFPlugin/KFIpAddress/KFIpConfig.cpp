@@ -3,7 +3,7 @@
 namespace KFrame
 {
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFIpConfig::LoadConfig( const std::string& file, uint32 loadmask )
+    bool KFIpConfig::LoadConfig( const std::string& file, uint32 loadmask )
     {
         _ip_address_list.clear();
         //////////////////////////////////////////////////////////////////
@@ -57,6 +57,8 @@ namespace KFrame
 
             servernode.NextNode();
         }
+
+        return true;
     }
 
     const KFIpAddress* KFIpConfig::FindIpAddress( const std::string& appname, const std::string& apptype, const std::string& appid )

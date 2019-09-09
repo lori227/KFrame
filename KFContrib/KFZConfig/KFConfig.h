@@ -15,7 +15,10 @@ namespace KFrame
 
         ////////////////////////////////////////////////////////////////////////////
         // 加载配置
-        virtual void LoadConfig( const std::string& file, uint32 loadmask ) {}
+        virtual bool LoadConfig( const std::string& file, uint32 loadmask )
+        {
+            return false;
+        }
 
         // 加载完配置
         virtual void LoadComplete() {}
@@ -72,28 +75,31 @@ namespace KFrame
         typedef typename T::Type KeyType;
     public:
         // 加载配置
-        void LoadConfig( const std::string& file, uint32 loadmask )
+        bool LoadConfig( const std::string& file, uint32 loadmask )
         {
             KFXml kfxml( file );
             auto config = kfxml.RootNode();
             auto version = config.GetString( "version" );
-            if ( !CheckVersion( file, version ) )
+            if ( CheckVersion( file, version ) )
             {
-                CheckClearSetting( loadmask );
-
-                auto xmlnode = config.FindNode( "item" );
-                while ( xmlnode.IsValid() )
-                {
-                    auto kfsetting = CreateSetting( xmlnode );
-                    if ( kfsetting != nullptr )
-                    {
-                        ReadSetting( xmlnode, kfsetting );
-                    }
-                    xmlnode.NextNode();
-                }
-
-                UpdateVersion( file, version );
+                return false;
             }
+
+            CheckClearSetting( loadmask );
+
+            auto xmlnode = config.FindNode( "item" );
+            while ( xmlnode.IsValid() )
+            {
+                auto kfsetting = CreateSetting( xmlnode );
+                if ( kfsetting != nullptr )
+                {
+                    ReadSetting( xmlnode, kfsetting );
+                }
+                xmlnode.NextNode();
+            }
+
+            UpdateVersion( file, version );
+            return true;
         }
 
         // 获取配置

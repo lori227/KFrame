@@ -32,7 +32,7 @@ namespace KFrame
             _file_name = "datashard";
         }
 
-        void LoadConfig( const std::string& file, uint32 loadmask );
+        bool LoadConfig( const std::string& file, uint32 loadmask );
 
     public:
         // 数据库信息

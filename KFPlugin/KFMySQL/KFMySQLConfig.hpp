@@ -58,7 +58,7 @@ namespace KFrame
         }
 
         // 加载配置文件
-        void LoadConfig( const std::string& file, uint32 loadmask );
+        bool LoadConfig( const std::string& file, uint32 loadmask );
 
         // 查找配置
         KFMySQLType* FindMySQLType( const std::string& module, uint32 logicid );

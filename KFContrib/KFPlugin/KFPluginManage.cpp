@@ -75,7 +75,7 @@ namespace KFrame
         auto kfmodule = FindModule( name );
         if ( kfmodule == nullptr )
         {
-            throw std::logic_error( __FORMAT__( "[{}:{}] can't find [{}] module!", file, line, name ) );
+            throw std::runtime_error( __FORMAT__( "[{}:{}] can't find [{}] module!", file, line, name ) );
         }
 
         return kfmodule;
@@ -85,6 +85,7 @@ namespace KFrame
     {
         for ( auto kfplugin : _plugins )
         {
+            _init_plugin = kfplugin;
             kfplugin->LoadModule();
         }
     }
@@ -93,9 +94,8 @@ namespace KFrame
     {
         for ( auto kfplugin : _plugins )
         {
-            //__LOG_DEBUG__( "module=[{}] start!", kfplugin->_plugin_name );
+            _init_plugin = kfplugin;
             kfplugin->InitModule();
-            //__LOG_DEBUG__( "module=[{}] ok!", kfplugin->_plugin_name );
         }
     }
 
@@ -103,11 +103,13 @@ namespace KFrame
     {
         for ( auto kfplugin : _plugins )
         {
+            _init_plugin = kfplugin;
             kfplugin->AddConfig();
         }
 
         for ( auto kfplugin : _plugins )
         {
+            _init_plugin = kfplugin;
             kfplugin->LoadConfig();
         }
     }
@@ -116,9 +118,8 @@ namespace KFrame
     {
         for ( auto kfplugin : _plugins )
         {
-            //__LOG_DEBUG__( "module=[{}] start!", kfplugin->_plugin_name );
+            _init_plugin = kfplugin;
             kfplugin->BeforeRun();
-            //__LOG_DEBUG__( "module=[{}] ok!", kfplugin->_plugin_name );
         }
     }
 
@@ -126,9 +127,8 @@ namespace KFrame
     {
         for ( auto kfplugin : _plugins )
         {
-            //__LOG_DEBUG__( "module=[{}] start!", kfplugin->_plugin_name );
+            _init_plugin = kfplugin;
             kfplugin->PrepareRun();
-            //__LOG_DEBUG__( "module=[{}] ok!", kfplugin->_plugin_name );
         }
     }
 
@@ -158,11 +158,16 @@ namespace KFrame
         }
         catch ( std::exception& ex )
         {
-            __LOG_ERROR__( "init exception=[{}]!", ex.what() );
+            __LOG_ERROR__( "plugin[{}:{}] module=[{}:{}] init exception=[{}]!",
+                           _init_plugin->_class_name, _init_plugin->_plugin_name,
+                           _init_plugin->_init_module->_class_name, _init_plugin->_init_module->_plugin_name,
+                           ex.what() );
         }
         catch ( ... )
         {
-            __LOG_ERROR__( "init exception unknown!" );
+            __LOG_ERROR__( "plugin[{}:{}] module=[{}:{}] init exception unknown!",
+                           _init_plugin->_class_name, _init_plugin->_plugin_name,
+                           _init_plugin->_init_module->_class_name, _init_plugin->_init_module->_plugin_name );
         }
 
         return false;
@@ -217,6 +222,7 @@ namespace KFrame
     {
         for ( auto kfplugin : _plugins )
         {
+            _init_plugin = kfplugin;
             kfplugin->Install();
         }
 

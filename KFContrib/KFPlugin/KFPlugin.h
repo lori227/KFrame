@@ -61,6 +61,7 @@ namespace KFrame
         std::string _config;
 
         // 绑定模块
+        KFModule* _init_module = nullptr;
         std::map< std::string, KFModule* > _modules;
 
         // 是否需要保存数据

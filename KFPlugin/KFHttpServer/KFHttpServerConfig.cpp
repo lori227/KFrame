@@ -3,7 +3,7 @@
 namespace KFrame
 {
     /////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFHttpServerConfig::LoadConfig( const std::string& file, uint32 loadmask )
+    bool KFHttpServerConfig::LoadConfig( const std::string& file, uint32 loadmask )
     {
         _http_setting_list.clear();
         //////////////////////////////////////////////////////////////////
@@ -35,6 +35,8 @@ namespace KFrame
                 servernode.NextNode();
             }
         }
+
+        return true;
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     KFHttpSetting* KFHttpServerConfig::FindHttpSetting( const std::string& appname, const std::string& apptype )

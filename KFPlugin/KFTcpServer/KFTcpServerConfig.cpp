@@ -18,7 +18,7 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    void KFTcpServerConfig::LoadConfig( const std::string& file, uint32 loadmask )
+    bool KFTcpServerConfig::LoadConfig( const std::string& file, uint32 loadmask )
     {
         _tcp_setting_list.clear();
         //////////////////////////////////////////////////////////////////
@@ -45,5 +45,6 @@ namespace KFrame
             }
         }
         //////////////////////////////////////////////////////////////////
+        return true;
     }
 }

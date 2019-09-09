@@ -113,16 +113,18 @@ namespace KFrame
 
     void KFConfigModule::LoadConfigFile( KFConfig* config, const std::string& file, uint32 loadmask )
     {
-        __LOG_INFO__( "load [{}] start!", file );
         try
         {
-            config->LoadConfig( file, loadmask );
-            config->LoadComplete();
-            __LOG_INFO__( "load [{}] ok!", file );
+            auto ok = config->LoadConfig( file, loadmask );
+            if ( ok )
+            {
+                config->LoadComplete();
+                __LOG_INFO__( "load [{}] ok!", file );
+            }
         }
         catch ( ... )
         {
-            throw std::logic_error( __FORMAT__( "load [{}] failed!", file ) );
+            throw std::runtime_error( __FORMAT__( "load [{}] failed!", file ) );
         }
     }
 }

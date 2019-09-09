@@ -3,7 +3,7 @@
 namespace KFrame
 {
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFDataShardConfig::LoadConfig( const std::string& file, uint32 loadmask )
+    bool KFDataShardConfig::LoadConfig( const std::string& file, uint32 loadmask )
     {
         _settings.Clear();
         //////////////////////////////////////////////////////////////////
@@ -25,5 +25,7 @@ namespace KFrame
 
             databasenode.NextNode();
         }
+
+        return true;
     }
 }

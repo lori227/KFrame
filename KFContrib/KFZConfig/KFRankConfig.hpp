@@ -15,7 +15,7 @@ namespace KFrame
         }
 
         // 加载配置
-        void LoadConfig( const std::string& file, uint32 loadmask );
+        bool LoadConfig( const std::string& file, uint32 loadmask );
 
         // 查找排行榜设定
         const KFRankSetting* FindSetting( uint32 rankid ) const;

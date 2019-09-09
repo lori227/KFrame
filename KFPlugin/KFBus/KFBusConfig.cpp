@@ -84,7 +84,7 @@ namespace KFrame
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFBusConfig::LoadConfig( const std::string& file, uint32 loadmask )
+    bool KFBusConfig::LoadConfig( const std::string& file, uint32 loadmask )
     {
         _bus_connection.clear();
         //////////////////////////////////////////////////////////////////
@@ -115,5 +115,6 @@ namespace KFrame
             }
         }
         //////////////////////////////////////////////////////////////////
+        return true;
     }
 }

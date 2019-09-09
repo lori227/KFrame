@@ -258,6 +258,7 @@ namespace KFrame
         KFModule* FindModule( const std::string& name );
 
     protected:
+        KFPlugin* _init_plugin = nullptr;
         std::vector< KFPlugin* > _plugins;
 
         // 命令列表

@@ -15,7 +15,7 @@ namespace KFrame
             _file_name = "ip";
         }
 
-        void LoadConfig( const std::string& file, uint32 loadmask );
+        bool LoadConfig( const std::string& file, uint32 loadmask );
 
         // 查找连接
         const KFIpAddress* FindIpAddress( const std::string& appname, const std::string& apptype, const std::string& appid );

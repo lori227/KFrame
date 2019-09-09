@@ -3,7 +3,7 @@
 namespace KFrame
 {
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFRankConfig::LoadConfig( const std::string& file, uint32 loadmask )
+    bool KFRankConfig::LoadConfig( const std::string& file, uint32 loadmask )
     {
         _player_data.clear();
         _kf_rank_data_list.clear();
@@ -68,7 +68,8 @@ namespace KFrame
 
             ranknode.NextNode();
         }
-        //////////////////////////////////////////////////////////////////]
+        //////////////////////////////////////////////////////////////////
+        return true;
     }
 
     const KFRankSetting* KFRankConfig::FindSetting( uint32 rankid ) const

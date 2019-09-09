@@ -21,7 +21,8 @@ namespace KFrame
     {
         for ( auto& iter : _modules )
         {
-            iter.second->InitModule();
+            _init_module = iter.second;
+            _init_module->InitModule();
         }
     }
 
@@ -29,6 +30,7 @@ namespace KFrame
     {
         for ( auto& iter : _modules )
         {
+            _init_module = iter.second;
             iter.second->LoadConfig();
         }
     }
@@ -37,7 +39,8 @@ namespace KFrame
     {
         for ( auto& iter : _modules )
         {
-            iter.second->BeforeRun();
+            _init_module = iter.second;
+            _init_module->BeforeRun();
         }
     }
 
@@ -45,7 +48,8 @@ namespace KFrame
     {
         for ( auto& iter : _modules )
         {
-            iter.second->BeforeShut();
+            _init_module = iter.second;
+            _init_module->BeforeShut();
         }
     }
 
@@ -53,7 +57,8 @@ namespace KFrame
     {
         for ( auto& iter : _modules )
         {
-            iter.second->ShutDown();
+            _init_module = iter.second;
+            _init_module->ShutDown();
         }
     }
 
@@ -61,7 +66,8 @@ namespace KFrame
     {
         for ( auto& iter : _modules )
         {
-            iter.second->AfterShut();
+            _init_module = iter.second;
+            _init_module->AfterShut();
         }
     }
 
@@ -69,7 +75,8 @@ namespace KFrame
     {
         for ( auto& iter : _modules )
         {
-            iter.second->PrepareRun();
+            _init_module = iter.second;
+            _init_module->PrepareRun();
         }
     }
 
@@ -81,7 +88,8 @@ namespace KFrame
 
         for ( auto& iter : _modules )
         {
-            iter.second->LoadData();
+            _init_module = iter.second;
+            _init_module->LoadData();
         }
     }
 
