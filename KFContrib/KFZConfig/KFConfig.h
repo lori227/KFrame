@@ -17,27 +17,53 @@ namespace KFrame
         // 加载配置
         virtual void LoadConfig( const std::string& file, uint32 loadmask ) {}
 
-        // 更新版本
-        void UpdateVersion()
-        {
-            _read_version = _version;
-        }
-
         // 加载完配置
         virtual void LoadComplete() {}
 
         // 所有配置加载完
         virtual void LoadAllComplete() {}
 
+        // 获得版本
+        const std::string& GetVersion()
+        {
+            if ( _versions.empty() )
+            {
+                return _invalid_str;
+            }
+
+            return _versions.begin()->second;
+        }
+
     public:
         // 默认配置文件名
         std::string _file_name;
 
-        // 版本号
-        std::string _version;
-
     protected:
-        std::string _read_version;
+        // 版本列表
+        std::unordered_map< std::string, std::string > _versions;
+
+        // 判断版本
+        bool CheckVersion( const std::string& file, const std::string& version )
+        {
+            if ( version.empty() )
+            {
+                return false;
+            }
+
+            auto iter = _versions.find( file );
+            if ( iter == _versions.end() )
+            {
+                return false;
+            }
+
+            return iter->second == version;
+        }
+
+        // 更新版本
+        void UpdateVersion( const std::string& file, const std::string& version )
+        {
+            _versions[ file ] = version;
+        }
     };
     ///////////////////////////////////////////////////////////////
     template< class T >
@@ -50,8 +76,8 @@ namespace KFrame
         {
             KFXml kfxml( file );
             auto config = kfxml.RootNode();
-            auto _read_version = config.GetString( "version" );
-            //if ( _read_version.empty() || _read_version != _version )
+            auto version = config.GetString( "version" );
+            if ( !CheckVersion( file, version ) )
             {
                 CheckClearSetting( loadmask );
 
@@ -65,6 +91,8 @@ namespace KFrame
                     }
                     xmlnode.NextNode();
                 }
+
+                UpdateVersion( file, version );
             }
         }
 
@@ -80,6 +108,7 @@ namespace KFrame
             if ( KFUtility::HaveBitMask<uint32>( loadmask, KFConfigEnum::NeedClearData ) )
             {
                 ClearSetting();
+                _versions.clear();
             }
         }
 

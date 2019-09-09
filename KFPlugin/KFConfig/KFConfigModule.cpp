@@ -36,8 +36,6 @@ namespace KFrame
             {
                 LoadConfigFile( kfconfig, kfdata._file_name, kfdata._load_mask );
             }
-
-            kfconfig->UpdateVersion();
         }
 
         for ( auto& iter : _config_list )
@@ -102,8 +100,6 @@ namespace KFrame
                     LoadConfigFile( kfconfig, kfdata._file_name, kfdata._load_mask );
                 }
             }
-
-            kfconfig->UpdateVersion();
         }
 
         for ( auto& iter : _config_list )

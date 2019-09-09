@@ -871,10 +871,20 @@ bool CKFResourceDlg::ParseExcelFiles( const std::string& version )
     else
     {
         count = _list_file.GetItemCount();
-        for ( auto i = 0; i < count; ++i )
+        if ( count != 0 )
         {
-            CString strtext = _list_file.GetItemText( i, 0 );
-            files.insert( strtext.GetBuffer() );
+            for ( auto i = 0; i < count; ++i )
+            {
+                CString strtext = _list_file.GetItemText( i, 0 );
+                files.insert( strtext.GetBuffer() );
+            }
+        }
+        else
+        {
+            for ( auto& iter : _resource_config->_files._objects )
+            {
+                files.insert( iter.first );
+            }
         }
     }
 

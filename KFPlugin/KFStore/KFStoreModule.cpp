@@ -23,13 +23,14 @@ namespace KFrame
         __CLIENT_PROTO_PARSE__( KFMsg::MsgQueryStoreReq );
 
         // 版本号一直就不更新了
-        if ( kfmsg.version() == KFStoreConfig::Instance()->_version )
+        auto version = KFStoreConfig::Instance()->GetVersion();
+        if ( kfmsg.version() == version )
         {
             return;
         }
 
         KFMsg::MsgQueryStoreAck ack;
-        ack.set_version( KFStoreConfig::Instance()->_version );
+        ack.set_version( version );
         //ack.set_data( _kf_store_config->_store_xml->Data(), _kf_store_config->_store_xml->Size() );
         _kf_player->SendToClient( player, KFMsg::MSG_QUERY_STORE_ACK, &ack );
     }
