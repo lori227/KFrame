@@ -54,7 +54,7 @@ namespace KFrame
         bool CheckInDiscount( uint64 nowtime ) const;
     };
 
-    class KFStoreConfig : public KFIntConfigT< KFStoreSetting >, public KFInstance< KFStoreConfig >
+    class KFStoreConfig : public KFConfigT< KFStoreSetting >, public KFInstance< KFStoreConfig >
     {
     public:
         KFStoreConfig()

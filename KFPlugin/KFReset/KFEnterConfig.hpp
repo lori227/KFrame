@@ -15,7 +15,7 @@ namespace KFrame
         std::string _lua_function;
     };
     ////////////////////////////////////////////////////////////////////////////////////
-    class KFEnterConfig : public KFIntConfigT< KFEnterSetting >, public KFInstance< KFEnterConfig >
+    class KFEnterConfig : public KFConfigT< KFEnterSetting >, public KFInstance< KFEnterConfig >
     {
     public:
         KFEnterConfig()

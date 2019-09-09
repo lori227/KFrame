@@ -8,7 +8,7 @@ namespace KFrame
 {
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
-    class KFOptionConfig : public KFIntConfigT< KFOptionSetting >, public KFInstance< KFOptionConfig >
+    class KFOptionConfig : public KFConfigT< KFOptionSetting >, public KFInstance< KFOptionConfig >
     {
     public:
         KFOptionConfig()

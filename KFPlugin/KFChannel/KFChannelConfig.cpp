@@ -31,7 +31,7 @@ namespace KFrame
             return nullptr;
         }
 
-        return KFIntConfigT< KFChannelSetting >::CreateSetting( xmlnode );
+        return KFConfigT< KFChannelSetting >::CreateSetting( xmlnode );
     }
 
     void KFChannelConfig::ReadSetting( KFNode& xmlnode, KFChannelSetting* kfsetting )

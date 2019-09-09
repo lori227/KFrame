@@ -25,7 +25,7 @@ namespace KFrame
         KFElements _first_elements;
     };
 
-    class KFPayConfig : public KFStrConfigT< KFPaySetting >, public KFInstance< KFPayConfig >
+    class KFPayConfig : public KFConfigT< KFPaySetting >, public KFInstance< KFPayConfig >
     {
     public:
         KFPayConfig()

@@ -12,7 +12,7 @@ namespace KFrame
             return nullptr;
         }
 
-        return KFIntConfigT< KFEnterSetting >::CreateSetting( xmlnode );
+        return KFConfigT< KFEnterSetting >::CreateSetting( xmlnode );
     }
 
     void KFEnterConfig::ReadSetting( KFNode& xmlnode, KFEnterSetting* kfsetting )

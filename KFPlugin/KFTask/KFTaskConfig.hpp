@@ -67,7 +67,7 @@ namespace KFrame
     };
     /////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////
-    class KFTaskConfig : public KFIntConfigT< KFTaskSetting >, public KFInstance< KFTaskConfig >
+    class KFTaskConfig : public KFConfigT< KFTaskSetting >, public KFInstance< KFTaskConfig >
     {
     public:
         KFTaskConfig()

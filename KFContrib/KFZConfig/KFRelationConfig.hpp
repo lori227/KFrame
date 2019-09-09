@@ -8,7 +8,7 @@ namespace KFrame
 {
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
-    class KFRelationConfig : public KFStrConfigT< KFRelationSetting >, public KFInstance< KFRelationConfig >
+    class KFRelationConfig : public KFConfigT< KFRelationSetting >, public KFInstance< KFRelationConfig >
     {
     public:
         KFRelationConfig()

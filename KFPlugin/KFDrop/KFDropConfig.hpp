@@ -7,7 +7,7 @@
 namespace KFrame
 {
     ////////////////////////////////////////////////////////////////////////////////
-    class KFDropConfig : public KFIntConfigT< KFDropSetting >, public KFInstance< KFDropConfig >
+    class KFDropConfig : public KFConfigT< KFDropSetting >, public KFInstance< KFDropConfig >
     {
     public:
         KFDropConfig()

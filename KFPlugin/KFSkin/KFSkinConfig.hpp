@@ -15,7 +15,7 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
-    class KFSkinConfig : public KFIntConfigT< KFSkinSetting >, public KFInstance< KFSkinConfig >
+    class KFSkinConfig : public KFConfigT< KFSkinSetting >, public KFInstance< KFSkinConfig >
     {
     public:
         KFSkinConfig()

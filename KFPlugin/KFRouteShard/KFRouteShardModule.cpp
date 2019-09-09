@@ -176,7 +176,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SRouteClientLostToShardReq );
 
-        __LOG_ERROR__( "route client[{}:{}] lost!", kfmsg.name(), KFAppId::ToString( kfmsg.clientid() ) );
+        __LOG_WARN__( "route client[{}:{}] lost!", kfmsg.name(), KFAppId::ToString( kfmsg.clientid() ) );
 
         auto routeservice = _route_service_list.Find( kfmsg.name() );
         if ( routeservice == nullptr )

@@ -22,7 +22,7 @@ namespace KFrame
     };
     ////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
-    class KFHeroConfig : public KFIntConfigT< KFHeroSetting >, public KFInstance< KFHeroConfig >
+    class KFHeroConfig : public KFConfigT< KFHeroSetting >, public KFInstance< KFHeroConfig >
     {
     public:
         KFHeroConfig()

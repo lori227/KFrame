@@ -5,7 +5,7 @@ namespace KFrame
     void KFTaskConfig::ClearSetting()
     {
         _task_types.clear();
-        KFIntConfigT< KFTaskSetting >::ClearSetting();
+        KFConfigT< KFTaskSetting >::ClearSetting();
     }
 
     void KFTaskConfig::ReadSetting( KFNode& xmlnode, KFTaskSetting* kfsetting )

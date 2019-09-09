@@ -38,7 +38,7 @@ namespace KFrame
     };
     ////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////
-    class KFChannelConfig : public KFIntConfigT< KFChannelSetting >, public KFInstance< KFChannelConfig >
+    class KFChannelConfig : public KFConfigT< KFChannelSetting >, public KFInstance< KFChannelConfig >
     {
     public:
         KFChannelConfig()

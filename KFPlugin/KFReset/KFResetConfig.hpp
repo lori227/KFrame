@@ -19,7 +19,7 @@ namespace KFrame
     };
 
     ////////////////////////////////////////////////////////////////////////////////////
-    class KFResetConfig : public KFIntConfigT< KFResetSetting >, public KFInstance< KFResetConfig >
+    class KFResetConfig : public KFConfigT< KFResetSetting >, public KFInstance< KFResetConfig >
     {
     public:
         KFResetConfig()

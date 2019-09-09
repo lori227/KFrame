@@ -6,7 +6,7 @@
 
 namespace KFrame
 {
-    class KFElementConfig : public KFStrConfigT< KFElementSetting >, public KFInstance< KFElementConfig >
+    class KFElementConfig : public KFConfigT< KFElementSetting >, public KFInstance< KFElementConfig >
     {
     public:
         KFElementConfig()

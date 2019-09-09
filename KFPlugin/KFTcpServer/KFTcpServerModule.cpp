@@ -108,7 +108,7 @@ namespace KFrame
     {
         if ( !netdata->_name.empty() )
         {
-            __LOG_ERROR__( "[{}:{}:{}] lost connect!", netdata->_name, netdata->_type, netdata->_str_id );
+            __LOG_WARN__( "[{}:{}:{}] lost connect!", netdata->_name, netdata->_type, netdata->_str_id );
         }
         else
         {

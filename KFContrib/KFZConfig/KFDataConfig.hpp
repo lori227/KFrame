@@ -6,7 +6,7 @@
 
 namespace KFrame
 {
-    class KFDataConfig : public KFStrConfigT< KFClassSetting >, public KFInstance< KFDataConfig >
+    class KFDataConfig : public KFConfigT< KFClassSetting >, public KFInstance< KFDataConfig >
     {
     public:
         KFDataConfig()

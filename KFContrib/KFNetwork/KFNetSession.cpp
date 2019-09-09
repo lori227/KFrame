@@ -292,7 +292,7 @@ namespace KFrame
         _is_connected = false;
         if ( IsServerSession() )
         {
-            __LOG_ERROR_FUNCTION__( function, line, "session[{}:{}] disconnect[{}:{}]!", _session_id, KFAppId::ToString( _session_id ), code, uv_err_name( code ) );
+            __LOG_INFO_FUNCTION__( function, line, "session[{}:{}] disconnect[{}:{}]!", _session_id, KFAppId::ToString( _session_id ), code, uv_err_name( code ) );
         }
         else
         {

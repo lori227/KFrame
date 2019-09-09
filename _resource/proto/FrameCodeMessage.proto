@@ -111,6 +111,7 @@ enum FrameCodeEnum
 	ItemIndexError				= 12612;	// 背包的索引错误
 	ItemCanNotUseStatus			= 12613;	// 当前状态下不能使用该道具
 	ItemUseOk					= 12614;	// 使用道具成功
+	ItemUseToHeroOk				= 12615;	// 对英雄使用道具成功
 
 	// signin
 	SignInNotDay				= 12700;	// 没有签到数据

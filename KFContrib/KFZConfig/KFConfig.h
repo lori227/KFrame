@@ -40,10 +40,10 @@ namespace KFrame
         std::string _read_version;
     };
     ///////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////
     template< class T >
-    class KFIntConfigT : public KFConfig
+    class KFConfigT : public KFConfig
     {
+        typedef typename T::Type KeyType;
     public:
         // 加载配置
         void LoadConfig( const std::string& file, uint32 loadmask )
@@ -69,7 +69,7 @@ namespace KFrame
         }
 
         // 获取配置
-        const T* FindSetting( uint64 id )
+        const T* FindSetting( const KeyType& id )
         {
             return _settings.Find( id );
         }
@@ -90,7 +90,7 @@ namespace KFrame
 
         virtual T* CreateSetting( KFNode& xmlnode )
         {
-            auto id = xmlnode.GetUInt64( "Id" );
+            auto id = xmlnode.ReadT< KeyType >( "Id" );
             auto kfsetting = _settings.Create( id );
             kfsetting->_id = id;
 
@@ -101,73 +101,10 @@ namespace KFrame
         virtual void ReadSetting( KFNode& xmlnode, T* kfsetting ) = 0;
     public:
         // 列表
-        KFHashMap< uint64, uint64, T > _settings;
+        KFHashMap< KeyType, const KeyType&, T > _settings;
     };
 
     ///////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////
-    template< class T >
-    class KFStrConfigT : public KFConfig
-    {
-    public:
-        // 加载配置
-        void LoadConfig( const std::string& file, uint32 loadmask )
-        {
-            KFXml kfxml( file );
-            auto config = kfxml.RootNode();
-            auto _read_version = config.GetString( "version" );
-            //if ( _read_version.empty() || _read_version != _version )
-            {
-                CheckClearSetting( loadmask );
-
-                auto xmlnode = config.FindNode( "item" );
-                while ( xmlnode.IsValid() )
-                {
-                    auto kfsetting = CreateSetting( xmlnode );
-                    if ( kfsetting != nullptr )
-                    {
-                        ReadSetting( xmlnode, kfsetting );
-                    }
-                    xmlnode.NextNode();
-                }
-            }
-        }
-
-        // 获取配置
-        const T* FindSetting( const std::string& id )
-        {
-            return _settings.Find( id );
-        }
-
-    protected:
-        void CheckClearSetting( uint32 loadmask )
-        {
-            if ( KFUtility::HaveBitMask<uint32>( loadmask, KFConfigEnum::NeedClearData ) )
-            {
-                ClearSetting();
-            }
-        }
-
-        virtual void ClearSetting()
-        {
-            _settings.Clear();
-        }
-
-        virtual T* CreateSetting( KFNode& xmlnode )
-        {
-            auto id = xmlnode.GetString( "Id" );
-            auto kfsetting = _settings.Create( id );
-            kfsetting->_id = id;
-
-            return kfsetting;
-        }
-
-        // 读取配置
-        virtual void ReadSetting( KFNode& xmlnode, T* kfsetting ) = 0;
-    public:
-        // 列表
-        KFHashMap< std::string, const std::string&, T > _settings;
-    };
 }
 
 #endif

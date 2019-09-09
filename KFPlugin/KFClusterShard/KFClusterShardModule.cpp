@@ -38,7 +38,7 @@ namespace KFrame
 
         _proxy_client_list.erase( kfmsg.clientid() );
 
-        __LOG_ERROR__( "route lost client=[{}]!", KFAppId::ToString( kfmsg.clientid() ) );
+        __LOG_WARN__( "route lost client=[{}]!", KFAppId::ToString( kfmsg.clientid() ) );
     }
 
     __KF_NET_EVENT_FUNCTION__( KFClusterShardModule::OnServerLostHandle )

@@ -21,7 +21,7 @@ namespace KFrame
         std::vector< KFElements* > _new_player_elements;
     };
     ////////////////////////////////////////////////////////////////////////////////////
-    class KFPlayerConfig : public KFIntConfigT< KFIntSetting >, public KFInstance< KFPlayerConfig >
+    class KFPlayerConfig : public KFConfigT< KFIntSetting >, public KFInstance< KFPlayerConfig >
     {
     public:
         KFPlayerConfig()

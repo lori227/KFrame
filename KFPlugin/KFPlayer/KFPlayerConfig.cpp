@@ -14,7 +14,7 @@ namespace KFrame
     void KFPlayerConfig::ClearSetting()
     {
         ClearElements();
-        KFIntConfigT< KFIntSetting >::ClearSetting();
+        KFConfigT< KFIntSetting >::ClearSetting();
     }
 
     KFIntSetting* KFPlayerConfig::CreateSetting( KFNode& xmlnode )

@@ -32,7 +32,7 @@ namespace KFrame
     };
 
     ////////////////////////////////////////////////////////////////////////////////////
-    class KFSignInConfig : public KFIntConfigT< KFSignInSetting >, public KFInstance< KFSignInConfig >
+    class KFSignInConfig : public KFConfigT< KFSignInSetting >, public KFInstance< KFSignInConfig >
     {
     public:
         KFSignInConfig()

@@ -24,6 +24,11 @@ namespace KFrame
         KFNode FindNode( const char* key );
         /////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////
+        template< class T >
+        T ReadT( const char* key, bool optional = false )
+        {
+            return GetUInt32( key, optional );
+        }
 
         // 读取bool
         bool GetBoolen( const char* key, bool optional = false, bool defaultvale = false );
@@ -53,6 +58,42 @@ namespace KFrame
         // 节点
         void* _node;
     };
+
+    template<>
+    inline bool KFNode::ReadT( const char* key, bool optional /* = false */ )
+    {
+        return GetBoolen( key, optional );
+    }
+
+    template<>
+    inline int32 KFNode::ReadT( const char* key, bool optional /* = false */ )
+    {
+        return GetInt32( key, optional );
+    }
+
+    template<>
+    inline uint32 KFNode::ReadT( const char* key, bool optional /* = false */ )
+    {
+        return GetUInt32( key, optional );
+    }
+
+    template<>
+    inline uint64 KFNode::ReadT( const char* key, bool optional /* = false */ )
+    {
+        return GetUInt64( key, optional );
+    }
+
+    template<>
+    inline std::string KFNode::ReadT( const char* key, bool optional /* = false */ )
+    {
+        return GetString( key, optional );
+    }
+
+    template<>
+    inline double KFNode::ReadT( const char* key, bool optional /* = false */ )
+    {
+        return GetDouble( key, optional );
+    }
 }
 
 #endif

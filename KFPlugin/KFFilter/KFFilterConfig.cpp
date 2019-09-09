@@ -93,7 +93,7 @@ namespace KFrame
     void KFFilterConfig::ClearSetting()
     {
         _root_word_data.Clear();
-        KFIntConfigT< KFFilterSetting >::ClearSetting();
+        KFConfigT< KFFilterSetting >::ClearSetting();
     }
 
     KFFilterSetting* KFFilterConfig::CreateSetting( KFNode& xmlnode )

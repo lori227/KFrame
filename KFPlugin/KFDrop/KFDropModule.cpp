@@ -2,8 +2,6 @@
 
 namespace KFrame
 {
-
-
     DropDataList& KFDropModule::DropElement( KFEntity* player, uint32 dropid, uint32 count, bool showclient, const char* function, uint32 line )
     {
         auto& _drops = DropLogic( player, dropid, count, function, line );
@@ -28,6 +26,11 @@ namespace KFrame
 
     void KFDropModule::Drop( KFEntity* player, uint32 dropid, uint32 count, DropDataList& outlist, const char* function, uint32 line )
     {
+        if ( dropid == 0u )
+        {
+            return;
+        }
+
         __LOG_INFO_FUNCTION__( function, line, "player=[{}] drop=[{}] count=[{}]", player->GetKeyID(), dropid, count );
         auto kfsetting = KFDropConfig::Instance()->FindSetting( dropid );
         if ( kfsetting == nullptr )

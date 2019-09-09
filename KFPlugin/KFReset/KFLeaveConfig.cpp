@@ -13,7 +13,7 @@ namespace KFrame
             return nullptr;
         }
 
-        return KFIntConfigT< KFLeaveSetting >::CreateSetting( xmlnode );
+        return KFConfigT< KFLeaveSetting >::CreateSetting( xmlnode );
     }
 
     void KFLeaveConfig::ReadSetting( KFNode& xmlnode, KFLeaveSetting* kfsetting )
