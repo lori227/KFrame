@@ -249,6 +249,32 @@ namespace Poco {
             return &_elements;
         }
 
+        template<>
+        inline UInt64 Document::get( const std::string& name ) const
+        /// Returns the element with the given name and tries to convert
+        /// it to the template type. When the element is not found, a
+        /// NotFoundException will be thrown. When the element can't be
+        /// converted a BadCastException will be thrown.
+        {
+            Element::Ptr element = get( name );
+            if ( element.isNull() )
+            {
+                throw NotFoundException( name );
+            }
+            else
+            {
+                if ( ElementTraits<UInt64>::TypeId == element->type() )
+                {
+                    ConcreteElement<Int64>* concrete = dynamic_cast< ConcreteElement<Int64>* >( element.get() );
+                    if ( concrete != 0 )
+                    {
+                        return concrete->value();
+                    }
+                }
+                throw BadCastException( "Invalid type mismatch!" );
+            }
+        }
+
 
         // BSON Embedded Document
         // spec: document
