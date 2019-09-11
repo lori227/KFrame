@@ -46,9 +46,16 @@ namespace KFrame
 #else
         _plugin_path = "./bin/";
 #endif
+        try
+        {
+            ReadStartupConfig( file );
+            return true;
+        }
+        catch ( ... )
+        {
+        }
 
-        ReadStartupConfig( file );
-        return true;
+        return false;
     }
 
     void KFAppConfig::ReadStartupConfig( const std::string& file )

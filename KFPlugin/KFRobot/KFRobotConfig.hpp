@@ -14,7 +14,7 @@ namespace KFrame
         }
 
         // 读取配置
-        void LoadConfig( const std::string& file, uint32 loadmask );
+        bool LoadConfig( const std::string& file, uint32 loadmask );
 
     public:
         // 认证服务器地址

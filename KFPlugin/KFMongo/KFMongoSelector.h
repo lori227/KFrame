@@ -149,6 +149,12 @@ namespace KFrame
         {
             _returns[ value] = ordertype;
         }
+
+        void AddLimitReturn( const std::string& value )
+        {
+            _limit_returns.insert( value );
+        }
+
     public:
         // key
         uint64 _key = 0u;
@@ -161,6 +167,9 @@ namespace KFrame
 
         // 返回的字段
         std::map< std::string, int32 > _returns;
+
+        // 不返回的字段
+        std::set<std::string> _limit_returns;
     };
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

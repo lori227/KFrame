@@ -75,6 +75,8 @@ namespace KFrame
             return ( basevalue <= operatevalue );
         case KFEnum::GreaterEqual:
             return ( basevalue >= operatevalue );
+        case KFEnum::UnEqual:
+            return ( basevalue != operatevalue );
         default:
             break;
         }

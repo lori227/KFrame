@@ -109,6 +109,11 @@ namespace KFrame
                             continue;
                         }
 
+                        if ( kfselector._limit_returns.find( name ) != kfselector._limit_returns.end() )
+                        {
+                            continue;
+                        }
+
                         auto type = ( *iter )->type();
                         if ( type == ElementTraits<Poco::Int64>::TypeId )
                         {

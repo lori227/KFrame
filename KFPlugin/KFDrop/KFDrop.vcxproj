@@ -12,12 +12,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFDropConfig.cpp" />
+    <ClCompile Include="KFDropGroupConfig.cpp" />
+    <ClCompile Include="KFDropDataConfig.cpp" />
     <ClCompile Include="KFDropModule.cpp" />
     <ClCompile Include="KFDropPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFDropConfig.hpp" />
+    <ClInclude Include="KFDropGroupConfig.hpp" />
+    <ClInclude Include="KFDropDataConfig.hpp" />
     <ClInclude Include="KFDropInterface.h" />
     <ClInclude Include="KFDropModule.hpp" />
     <ClInclude Include="KFDropPlugin.hpp" />

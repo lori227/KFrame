@@ -2,12 +2,34 @@
 
 namespace KFrame
 {
-    DropDataList& KFDropModule::DropElement( KFEntity* player, uint32 dropid, uint32 count, bool showclient, const char* function, uint32 line )
+    void KFDropModule::BindDropLogicFunction( const std::string& dataname, KFDropLogicFunction& function )
+    {
+        auto kffucntion = _drop_logic_function.Create( dataname );
+        kffucntion->_function = function;
+    }
+
+    void KFDropModule::UnRegisterDropLogicFunction( const std::string& dataname )
+    {
+        _drop_logic_function.Remove( dataname );
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    DropDataList& KFDropModule::Drop( KFEntity* player, uint32 dropid, uint32 count, bool showclient, const char* function, uint32 line )
     {
         auto& _drops = DropLogic( player, dropid, count, function, line );
-        for ( auto kfdropdata : _drops )
+        for ( auto iter = _drops.begin(); iter != _drops.end(); )
         {
-            player->AddElement( &kfdropdata->_elements, showclient, function, line );
+            auto dropdata = *iter;
+            auto kffunction = _drop_logic_function.Find( dropdata->_data_name );
+            if ( kffunction != nullptr )
+            {
+                iter = _drops.erase( iter );
+                kffunction->_function( player, dropdata );
+            }
+            else
+            {
+                ++iter;
+                player->AddElement( &dropdata->_elements, showclient, function, line );
+            }
         }
 
         return _drops;
@@ -19,20 +41,19 @@ namespace KFrame
         _drops.clear();
 
         // 掉落逻辑
-        Drop( player, dropid, count, _drops, function, line );
-
+        DropLogic( player, dropid, count, _drops, function, line );
         return _drops;
     }
 
-    void KFDropModule::Drop( KFEntity* player, uint32 dropid, uint32 count, DropDataList& outlist, const char* function, uint32 line )
+    void KFDropModule::DropLogic( KFEntity* player, uint32 dropid, uint32 count, DropDataList& outlist, const char* function, uint32 line )
     {
-        if ( dropid == 0u )
+        if ( dropid != 0u )
         {
             return;
         }
 
         __LOG_INFO_FUNCTION__( function, line, "player=[{}] drop=[{}] count=[{}]", player->GetKeyID(), dropid, count );
-        auto kfsetting = KFDropConfig::Instance()->FindSetting( dropid );
+        auto kfsetting = KFDropGroupConfig::Instance()->FindSetting( dropid );
         if ( kfsetting == nullptr )
         {
             return __LOG_ERROR_FUNCTION__( function, line, "dropid=[{}] can't find setting!", dropid );
@@ -40,28 +61,81 @@ namespace KFrame
 
         for ( auto i = 0u; i < count; ++i )
         {
-            Drop( player, kfsetting, outlist );
+            DropLogic( player, kfsetting, outlist );
         }
     }
 
-    void KFDropModule::Drop( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist )
+    void KFDropModule::DropLogic( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist )
     {
-        AddDropVarCount( player, kfsetting );
+        if ( kfsetting->_is_drop_count )
+        {
+            player->UpdateData( __KF_STRING__( drop ), kfsetting->_id, __KF_STRING__( value ), KFEnum::Add, 1u );
+        }
 
         // 必掉的列表
         for ( auto kfdropweight : kfsetting->_necessary_list._objects )
         {
             // 判断条件
             auto ok = _kf_kernel->CheckCondition( player, &kfdropweight->_conditions );
-            if ( !ok )
+            if ( ok )
             {
-                continue;
+                RandDropData( player, kfsetting, outlist, kfdropweight, __FUNC_LINE__ );
             }
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 随机的列表
+        switch ( kfsetting->_condition_type )
+        {
+        case KFDropSetting::MutexCondition:
+            DropMutexCondition( player, kfsetting, outlist );
+            break;
+        case KFDropSetting::OverlayCondition:
+            DropOverlayCondition( player, kfsetting, outlist );
+            break;
+        default:
+            __LOG_ERROR__( "drop=[{}] conditiontype=[{}] error!", kfsetting->_id, kfsetting->_condition_type );
+            break;
+        }
+    }
 
-            AddDropData( player, kfsetting, outlist, kfdropweight, __FUNC_LINE__ );
+    void KFDropModule::DropMutexCondition( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist )
+    {
+        bool ishaveconditiondrop = false;
+        std::set<uint32> excludelist;
+        for ( auto kfdropweight : kfsetting->_rand_list._weight_data )
+        {
+            auto ok = _kf_kernel->CheckCondition( player, &kfdropweight->_conditions );
+            if ( ok )
+            {
+                if ( !kfdropweight->_conditions.IsEmpty() )
+                {
+                    // 设置已经有了条件掉落
+                    ishaveconditiondrop = true;
+                }
+                else
+                {
+                    // 如果是无条件掉落, 并且已经有了条件掉落, 排除这个无条件掉落
+                    if ( ishaveconditiondrop )
+                    {
+                        excludelist.insert( kfdropweight->_id );
+                    }
+                }
+            }
+            else
+            {
+                excludelist.insert( kfdropweight->_id );
+            }
         }
 
-        // 随机的列表
+        auto kfdropweight = kfsetting->_rand_list.Rand( excludelist );
+        if ( kfdropweight != nullptr )
+        {
+            RandDropData( player, kfsetting, outlist, kfdropweight, __FUNC_LINE__ );
+        }
+    }
+
+    void KFDropModule::DropOverlayCondition( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist )
+    {
         std::set<uint32> excludelist;
         for ( auto kfdropweight : kfsetting->_rand_list._weight_data )
         {
@@ -75,50 +149,38 @@ namespace KFrame
         auto kfdropweight = kfsetting->_rand_list.Rand( excludelist );
         if ( kfdropweight != nullptr )
         {
-            AddDropData( player, kfsetting, outlist, kfdropweight, __FUNC_LINE__ );
+            RandDropData( player, kfsetting, outlist, kfdropweight, __FUNC_LINE__ );
         }
     }
 
-    void KFDropModule::AddDropData( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist, const KFDropWeight* kfdropweight, const char* function, uint32 line )
+    void KFDropModule::RandDropData( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist, const KFDropGroupWeight* kfdropweight, const char* function, uint32 line )
     {
-        static const std::string _drop_logic_name = "drop";
-
-        // 如果需要重置
-        if ( kfdropweight->_is_clear_var )
+        if ( kfdropweight->_drop_data_setting == nullptr )
         {
-            ResetDropVarCount( player, kfsetting );
+            return;
         }
 
-        auto dropdata = &kfdropweight->_drop_data;
-        if ( dropdata->_data_name == _drop_logic_name )
+        // 如果需要重置
+        if ( kfdropweight->_is_clear_var && kfsetting->_is_drop_count )
+        {
+            player->UpdateData( __KF_STRING__( drop ), kfsetting->_id, __KF_STRING__( value ), KFEnum::Set, 0u );
+        }
+
+        auto kfdropdataweight = kfdropweight->_drop_data_setting->_drop_data_list.Rand();
+        if ( kfdropdataweight == nullptr )
+        {
+            return;
+        }
+
+        auto dropdata = &kfdropdataweight->_drop_data;
+        if ( dropdata->_data_name == __KF_STRING__( drop ) )
         {
             // 如果是掉落的话, 继续执行掉落逻辑
-            Drop( player, dropdata->GetValue(), 1u, outlist, function, line );
+            DropLogic( player, dropdata->GetValue(), 1u, outlist, function, line );
         }
         else
         {
-            outlist.push_back( &kfdropweight->_drop_data );
+            outlist.push_back( dropdata );
         }
     }
-
-    void KFDropModule::AddDropVarCount( KFEntity* player, const KFDropSetting* kfsetting )
-    {
-        if ( kfsetting->_var_id == 0u )
-        {
-            return;
-        }
-
-        player->UpdateData( __KF_STRING__( var ), kfsetting->_var_id, __KF_STRING__( value ), KFEnum::Add, 1u );
-    }
-
-    void KFDropModule::ResetDropVarCount( KFEntity* player, const KFDropSetting* kfsetting )
-    {
-        if ( kfsetting->_var_id == 0u )
-        {
-            return;
-        }
-
-        player->UpdateData( __KF_STRING__( var ), kfsetting->_var_id, __KF_STRING__( value ), KFEnum::Set, 0u );
-    }
-
 }

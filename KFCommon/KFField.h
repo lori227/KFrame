@@ -238,6 +238,7 @@ namespace KFrame
         __STRING_DEFINE__( index );
         __STRING_DEFINE__( resettime );
         __STRING_DEFINE__( expire );
+        __STRING_DEFINE__( drop );
 
     }
 }

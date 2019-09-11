@@ -24,7 +24,8 @@ namespace KFrame
 
     void KFDropPlugin::AddConfig()
     {
-        __KF_ADD_CONFIG__( KFDropConfig );
         __KF_ADD_CONFIG__( KFElementConfig );
+        __KF_ADD_CONFIG__( KFDropDataConfig );
+        __KF_ADD_CONFIG__( KFDropGroupConfig );
     }
 }

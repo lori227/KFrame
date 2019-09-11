@@ -158,16 +158,14 @@ namespace KFrame
         }
         catch ( std::exception& ex )
         {
-            __LOG_ERROR__( "plugin[{}:{}] module=[{}:{}] init exception=[{}]!",
-                           _init_plugin->_class_name, _init_plugin->_plugin_name,
-                           _init_plugin->_init_module->_class_name, _init_plugin->_init_module->_plugin_name,
+            __LOG_ERROR__( "plugin=[{}] module=[{}] init exception=[{}]!",
+                           _init_plugin->_plugin_name, _init_plugin->_init_module->_class_name,
                            ex.what() );
         }
         catch ( ... )
         {
-            __LOG_ERROR__( "plugin[{}:{}] module=[{}:{}] init exception unknown!",
-                           _init_plugin->_class_name, _init_plugin->_plugin_name,
-                           _init_plugin->_init_module->_class_name, _init_plugin->_init_module->_plugin_name );
+            __LOG_ERROR__( "plugin=[{}] module=[{}] init exception unknown!",
+                           _init_plugin->_plugin_name, _init_plugin->_init_module->_class_name );
         }
 
         return false;

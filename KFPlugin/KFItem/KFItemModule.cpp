@@ -862,7 +862,7 @@ namespace KFrame
 
         if ( kfsetting->_drop_id != 0u )
         {
-            _kf_drop->DropElement( player, kfsetting->_drop_id, 1u, true, __FUNC_LINE__ );
+            _kf_drop->Drop( player, kfsetting->_drop_id, 1u, true, __FUNC_LINE__ );
         }
 
         return true;

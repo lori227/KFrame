@@ -28,6 +28,7 @@ namespace KFrame
             Equal = 13,			// ==
             GreaterEqual = 14,	// >=
             LessEqual = 15,		// <=
+            UnEqual = 16,		// !=
             //////////////////////////////////////
             // 任务 成就系统
             UseOperate = 1,

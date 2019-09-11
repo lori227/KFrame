@@ -19,6 +19,7 @@ namespace KFrame
         {">", KFEnum::Greater},
         {"<", KFEnum::Less},
         {"==", KFEnum::Equal},
+        {"!=", KFEnum::UnEqual},
         {">=", KFEnum::GreaterEqual},
         {"<=", KFEnum::LessEqual},
     };

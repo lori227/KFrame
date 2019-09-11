@@ -38,7 +38,7 @@ namespace KFrame
         return true;
     }
 
-    typedef KFPlugin* ( *PluginEntryFunction )( KFPluginManage* manage, KFGlobal* kfglobal, KFMalloc* kfmalloc, KFLogger* kflogger );
+    typedef KFPlugin* ( *PluginEntryFunction )( KFPluginManage*, KFGlobal*, KFMalloc*, KFLogger* );
     KFPlugin* KFStartup::LoadPluginLibrary( const KFAppSetting* kfsetting )
     {
         auto library = _kf_library.Create( kfsetting->_name );
@@ -67,7 +67,7 @@ namespace KFrame
         return kfplugin;
     }
 
-    typedef void( *PluginLeaveFunction )( KFPluginManage* manage, bool savedata );
+    typedef void( *PluginLeaveFunction )( KFPluginManage*, bool );
 
     bool KFStartup::UnLoadPluginLibrary( const std::string& pluginname )
     {
