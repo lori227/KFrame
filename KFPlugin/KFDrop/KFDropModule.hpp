@@ -24,7 +24,9 @@ namespace KFrame
 
         virtual void UnRegisterDropLogicFunction( const std::string& dataname );
         ////////////////////////////////////////////////////////////////////////////////
-        // 掉落( 直接添加属性 )
+        // 掉落
+        virtual DropDataList& Drop( KFEntity* player, uint32 dropid, const char* function, uint32 line );
+        virtual DropDataList& Drop( KFEntity* player, uint32 dropid, uint32 count, const char* function, uint32 line );
         virtual DropDataList& Drop( KFEntity* player, uint32 dropid, uint32 count, bool showclient, const char* function, uint32 line );
 
     protected:

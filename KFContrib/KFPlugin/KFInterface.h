@@ -27,6 +27,7 @@ namespace KFrame
 
         // 加载配置
         virtual void LoadConfig() = 0;
+        virtual void AfterLoad() = 0;
 
         // 开始初始化
         virtual void BeforeRun() = 0;

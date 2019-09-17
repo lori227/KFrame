@@ -114,6 +114,15 @@ namespace KFrame
         }
     }
 
+    void KFPluginManage::AfterLoad()
+    {
+        for ( auto kfplugin : _plugins )
+        {
+            _init_plugin = kfplugin;
+            kfplugin->AfterLoad();
+        }
+    }
+
     void KFPluginManage::BeforeRun()
     {
         for ( auto kfplugin : _plugins )
@@ -147,6 +156,9 @@ namespace KFrame
 
             // 加载配置
             LoadConfig();
+
+            // 加载完成
+            AfterLoad();
 
             // 准备运行
             BeforeRun();

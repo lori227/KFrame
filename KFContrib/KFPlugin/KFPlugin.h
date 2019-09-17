@@ -31,6 +31,9 @@ namespace KFrame
         // 加载配置
         virtual void LoadConfig();
 
+        // 加载完成
+        virtual void AfterLoad();
+
         // 关闭
         virtual void BeforeShut();
         virtual void ShutDown();

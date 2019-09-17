@@ -35,6 +35,15 @@ namespace KFrame
         }
     }
 
+    void KFPlugin::AfterLoad()
+    {
+        for ( auto& iter : _modules )
+        {
+            _init_module = iter.second;
+            iter.second->AfterLoad();
+        }
+    }
+
     void KFPlugin::BeforeRun()
     {
         for ( auto& iter : _modules )

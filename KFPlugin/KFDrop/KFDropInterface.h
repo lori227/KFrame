@@ -13,11 +13,13 @@ namespace KFrame
     public:
         // 掉落逻辑
         // 返回的DropDataList只包含掉落属性数据
+        virtual DropDataList& Drop( KFEntity* player, uint32 dropid, const char* function, uint32 line ) = 0;
+        virtual DropDataList& Drop( KFEntity* player, uint32 dropid, uint32 count, const char* function, uint32 line ) = 0;
         virtual DropDataList& Drop( KFEntity* player, uint32 dropid, uint32 count, bool showclient, const char* function, uint32 line ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 注册掉落逻辑
         template< class T >
-        void RegisterDropLogicFunction( const std::string& dataname, T* object, bool ( T::*handle )( KFEntity*, const KFDropData* ) )
+        void RegisterDropLogicFunction( const std::string& dataname, T* object, void ( T::*handle )( KFEntity*, const KFDropData* ) )
         {
             KFDropLogicFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2 );
             BindDropLogicFunction( dataname, function );

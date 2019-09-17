@@ -2,7 +2,6 @@
 
 namespace KFrame
 {
-
     void KFSignInConfig::ReadSetting( KFNode& xmlnode, KFSignInSetting* kfsetting )
     {
         kfsetting->_type = xmlnode.GetUInt32( "Type" );

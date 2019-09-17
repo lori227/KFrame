@@ -78,7 +78,7 @@ namespace KFrame
         }
 
         // 计算物品数量
-        auto itemcount = kfelementobject->GetValue( kfparent->_class_setting, __KF_STRING__( count ), multiple );
+        auto itemcount = kfelementobject->CalcValue( kfparent->_class_setting, __KF_STRING__( count ), multiple );
         if ( itemcount == _invalid_int )
         {
             __LOG_ERROR_FUNCTION__( function, line, "item id=[{}] count = 0!", kfelementobject->_config_id );
@@ -90,7 +90,7 @@ namespace KFrame
         {
         case KFItemEnum::OverlayByTime:		// 时间叠加道具
         {
-            auto itemtime = kfelementobject->GetValue( kfparent->_class_setting, __KF_STRING__( time ), multiple );
+            auto itemtime = kfelementobject->CalcValue( kfparent->_class_setting, __KF_STRING__( time ), multiple );
             if ( itemtime == 0 )
             {
                 __LOG_ERROR_FUNCTION__( function, line, "time item id=[{}] count = 0!", kfelementobject->_config_id );
@@ -249,7 +249,7 @@ namespace KFrame
         }
 
         // 判断数量
-        auto itemcount = kfelementobject->GetValue( kfparent->_class_setting, __KF_STRING__( count ), multiple );
+        auto itemcount = kfelementobject->CalcValue( kfparent->_class_setting, __KF_STRING__( count ), multiple );
         if ( itemcount == _invalid_int )
         {
             __LOG_ERROR_FUNCTION__( function, line, "item id=[{}] count = 0!", kfelementobject->_config_id );
@@ -291,7 +291,7 @@ namespace KFrame
             return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id!", kfelement->_data_name );
         }
 
-        auto itemcount = kfelementobject->GetValue( kfparent->_class_setting, __KF_STRING__( count ), multiple );
+        auto itemcount = kfelementobject->CalcValue( kfparent->_class_setting, __KF_STRING__( count ), multiple );
         if ( itemcount == _invalid_int )
         {
             return __LOG_ERROR_FUNCTION__( function, line, "item id=[{}] count = 0!", kfelementobject->_config_id );

@@ -18,9 +18,7 @@ namespace KFrame
         __CLIENT_PROTO_PARSE__( KFMsg::MsgSevenSignInRewardReq );
 
         auto kfobject = player->GetData();
-        auto kfsignin = kfobject->FindData( __KF_STRING__( signin ) );
-
-        auto day = kfsignin->GetValue< uint32 >( __KF_STRING__( sevenday ) );
+        auto day = kfobject->GetValue< uint32 >( __KF_STRING__( sevenday ) );
         if ( day < kfmsg.day() )
         {
             return _kf_display->SendToClient( player, KFMsg::SignInNotDay );
@@ -32,7 +30,7 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::SignInCanNotFind );
         }
 
-        auto sevenflag = kfsignin->GetValue< uint32 >( __KF_STRING__( sevenreward ) );
+        auto sevenflag = kfobject->GetValue< uint32 >( __KF_STRING__( sevenreward ) );
         auto flag = 1u << kfmsg.day();
         if ( KFUtility::HaveBitMask< uint32 >( sevenflag, flag ) )
         {
@@ -40,10 +38,20 @@ namespace KFrame
         }
 
         // 设置标记
-        player->UpdateData( kfsignin, __KF_STRING__( sevenreward ), KFEnum::ABit, kfmsg.day() );
+        player->UpdateData( __KF_STRING__( sevenreward ), KFEnum::ABit, kfmsg.day() );
 
         // 添加奖励
         player->AddElement( &kfsetting->_reward, true, __FUNC_LINE__ );
+
+        // 额外的奖励
+        if ( kfsetting->_probability > 0u )
+        {
+            auto rand = KFGlobal::Instance()->RandRatio( KFRandEnum::TenThousand );
+            if ( rand < kfsetting->_probability )
+            {
+                player->AddElement( &kfsetting->_extend, true, __FUNC_LINE__ );
+            }
+        }
 
         _kf_display->SendToClient( player, KFMsg::SignInRewardOk );
     }

@@ -13,6 +13,16 @@ namespace KFrame
         _drop_logic_function.Remove( dataname );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
+    DropDataList& KFDropModule::Drop( KFEntity* player, uint32 dropid, const char* function, uint32 line )
+    {
+        return Drop( player, dropid, 1u, false, function, line );
+    }
+
+    DropDataList& KFDropModule::Drop( KFEntity* player, uint32 dropid, uint32 count, const char* function, uint32 line )
+    {
+        return Drop( player, dropid, count, false, function, line );
+    }
+
     DropDataList& KFDropModule::Drop( KFEntity* player, uint32 dropid, uint32 count, bool showclient, const char* function, uint32 line )
     {
         auto& _drops = DropLogic( player, dropid, count, function, line );
@@ -47,7 +57,7 @@ namespace KFrame
 
     void KFDropModule::DropLogic( KFEntity* player, uint32 dropid, uint32 count, DropDataList& outlist, const char* function, uint32 line )
     {
-        if ( dropid != 0u )
+        if ( dropid == 0u )
         {
             return;
         }
@@ -155,15 +165,15 @@ namespace KFrame
 
     void KFDropModule::RandDropData( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist, const KFDropGroupWeight* kfdropweight, const char* function, uint32 line )
     {
-        if ( kfdropweight->_drop_data_setting == nullptr )
-        {
-            return;
-        }
-
         // 如果需要重置
         if ( kfdropweight->_is_clear_var && kfsetting->_is_drop_count )
         {
             player->UpdateData( __KF_STRING__( drop ), kfsetting->_id, __KF_STRING__( value ), KFEnum::Set, 0u );
+        }
+
+        if ( kfdropweight->_drop_data_setting == nullptr )
+        {
+            return;
         }
 
         auto kfdropdataweight = kfdropweight->_drop_data_setting->_drop_data_list.Rand();

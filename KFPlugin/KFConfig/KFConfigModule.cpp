@@ -108,6 +108,8 @@ namespace KFrame
             kfconfig->LoadAllComplete();
         }
 
+        _kf_plugin_manage->AfterLoad();
+
         __LOG_INFO__( "reload [{}] ok!", file );
     }
 

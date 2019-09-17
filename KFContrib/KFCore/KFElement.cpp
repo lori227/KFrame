@@ -57,7 +57,7 @@ namespace KFrame
         return CalcUseValue( _data_setting, multiple );
     }
 
-    uint64 KFIntValue::GetUseValue()
+    uint64 KFIntValue::GetUseValue() const
     {
         return _use_value;
     }
@@ -162,7 +162,7 @@ namespace KFrame
         _values.Insert( dataname, kfvalue );
     }
 
-    uint64 KFElementObject::GetValue( const KFClassSetting* kfsetting, const std::string& dataname, float multiple )
+    uint64 KFElementObject::CalcValue( const KFClassSetting* kfsetting, const std::string& dataname, float multiple )
     {
         auto kfvalue = _values.Find( dataname );
         if ( kfvalue == nullptr || !kfvalue->IsType( KFDataDefine::Type_UInt32 ) )
@@ -171,6 +171,17 @@ namespace KFrame
         }
 
         return kfvalue->CalcUseValue( kfsetting, dataname, multiple );
+    }
+
+    uint64 KFElementObject::GetValue( const std::string& dataname ) const
+    {
+        auto kfvalue = _values.Find( dataname );
+        if ( kfvalue == nullptr || !kfvalue->IsType( KFDataDefine::Type_UInt32 ) )
+        {
+            return _invalid_int;
+        }
+
+        return kfvalue->GetUseValue();
     }
 
     KFObjValue* KFElementObject::CreateObjectValue( const std::string& dataname )

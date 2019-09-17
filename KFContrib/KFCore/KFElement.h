@@ -32,7 +32,7 @@ namespace KFrame
         }
 
         // 获得使用数值
-        virtual uint64 GetUseValue()
+        virtual uint64 GetUseValue() const
         {
             return _invalid_int;
         }
@@ -68,7 +68,7 @@ namespace KFrame
         virtual uint64 CalcUseValue( const KFClassSetting* kfsetting, const std::string& dataname, float multiple );
 
         // 获得使用数值
-        virtual uint64 GetUseValue();
+        virtual uint64 GetUseValue() const;
 
     private:
         uint64 _min_value = _invalid_int;
@@ -178,7 +178,8 @@ namespace KFrame
         void SetValue( const std::string& dataname, std::string value );
 
         // 获得数值
-        uint64 GetValue( const KFClassSetting* kfsetting, const std::string& dataname, float multiple );
+        uint64 CalcValue( const KFClassSetting* kfsetting, const std::string& dataname, float multiple );
+        uint64 GetValue( const std::string& dataname ) const;
 
         // 格式化
         virtual const std::string& ToString() const;

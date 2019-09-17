@@ -234,6 +234,11 @@ namespace KFrame
         // 加载配置
         void LoadConfig();
 
+    public:
+        // 加载完成
+        void AfterLoad();
+
+    protected:
         // 准备执行
         void BeforeRun();
 

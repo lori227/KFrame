@@ -82,7 +82,7 @@ namespace KFrame
             auto version = config.GetString( "version" );
             if ( CheckVersion( file, version ) )
             {
-                return false;
+                //return false;
             }
 
             CheckClearSetting( loadmask );
