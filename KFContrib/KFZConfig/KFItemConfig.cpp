@@ -63,7 +63,7 @@ namespace KFrame
 
     void KFItemConfig::ReadGiftSetting( KFNode& xmlnode, KFItemSetting* kfsetting )
     {
-        kfsetting->_drop_id = xmlnode.GetUInt32( "DropId" );
+        kfsetting->_drop_id = xmlnode.GetUInt32( "DropId", true );
 
         auto strreward = xmlnode.GetString( "Reward", true );
         if ( !strreward.empty() )
