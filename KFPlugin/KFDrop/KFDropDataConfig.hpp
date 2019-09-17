@@ -31,12 +31,11 @@ namespace KFrame
             _file_name = "dropdata";
         }
 
+        virtual void LoadAllComplete();
+
     protected:
         // 读取配置
         virtual void ReadSetting( KFNode& xmlnode, KFDropDataSetting* kfsetting );
-
-        // 格式化掉落配置
-        void FormatDropElement( KFDropData* dropdata );
     };
 }
 
