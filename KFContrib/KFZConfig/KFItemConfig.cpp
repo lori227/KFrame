@@ -6,14 +6,22 @@ namespace KFrame
     {
         switch ( kfsetting->_type )
         {
-        case KFItemEnum::GiftBag:
+        case KFItemEnum::Normal:
+            break;
+        case KFItemEnum::Gift:
             ReadGiftSetting( xmlnode, kfsetting );
             break;
-        case KFItemEnum::Medicine:
-            ReadMedicineSetting( xmlnode, kfsetting );
+        case KFItemEnum::Drug:
+            ReadDrugSetting( xmlnode, kfsetting );
             break;
         case KFItemEnum::Equip:
             ReadEquipSetting( xmlnode, kfsetting );
+            break;
+        case KFItemEnum::Material:
+            ReadMaterialSetting( xmlnode, kfsetting );
+            break;
+        case KFItemEnum::Other:
+            ReadOtherSetting( xmlnode, kfsetting );
             break;
         default:
             ReadCommonSetting( xmlnode, kfsetting );
@@ -26,16 +34,9 @@ namespace KFrame
         kfsetting->_type = xmlnode.GetUInt32( "Type" );
         kfsetting->_quality = xmlnode.GetUInt32( "Quality" );
         kfsetting->_use_count = xmlnode.GetUInt32( "UseCount", true );
+        kfsetting->_use_limit = xmlnode.GetUInt32( "UseLimit", true, KFItemEnum::UseInAll );
         kfsetting->_overlay_type = xmlnode.GetUInt32( "OverlayType" );
         kfsetting->_overlay_count = xmlnode.GetUInt32( "OverlayCount" );
-
-        kfsetting->_use_limit = KFItemEnum::UseInAll;
-        auto struselimit = xmlnode.GetString( "UseLimit", true );
-        while ( !struselimit.empty() )
-        {
-            auto usemask = KFUtility::SplitValue< uint32 >( struselimit, DEFAULT_SPLIT_STRING );
-            KFUtility::AddBitMask( kfsetting->_use_limit, usemask );
-        }
 
         auto strsell = xmlnode.GetString( "Sell", true );
         kfsetting->_sell_elements.Parse( strsell, __FUNC_LINE__ );
@@ -62,25 +63,52 @@ namespace KFrame
 
     void KFItemConfig::ReadGiftSetting( KFNode& xmlnode, KFItemSetting* kfsetting )
     {
-        auto rewardvalue = xmlnode.GetString( "Reward" );
-        kfsetting->_rewards.Parse( rewardvalue, __FUNC_LINE__ );
-
         kfsetting->_drop_id = xmlnode.GetUInt32( "DropId" );
+
+        auto strreward = xmlnode.GetString( "Reward", true );
+        if ( !strreward.empty() )
+        {
+            kfsetting->_reward.Parse( strreward, __FUNC_LINE__ );
+        }
     }
 
-    void KFItemConfig::ReadMedicineSetting( KFNode& xmlnode, KFItemSetting* kfsetting )
+    void KFItemConfig::ReadDrugSetting( KFNode& xmlnode, KFItemSetting* kfsetting )
     {
-        kfsetting->_medicine_type = xmlnode.GetUInt32( "MedicineType" );
-        kfsetting->_buff_id = xmlnode.GetUInt32( "BuffId", true );
+        kfsetting->_drug_type = xmlnode.GetUInt32( "DrugType" );
+
+        auto strrestore = xmlnode.GetString( "Restore" );
+        __JSON_PARSE_STRING__( kfjson, strrestore );
+        for ( auto iter = kfjson.MemberBegin(); iter != kfjson.MemberEnd(); ++iter )
+        {
+            if ( iter->value.IsNumber() )
+            {
+                kfsetting->_drug_values[ iter->name.GetString() ] = iter->value.GetInt();
+            }
+            else
+            {
+                __LOG_ERROR__( "drug=[{}] values=[{}] not int!", kfsetting->_id, iter->name.GetString() );
+            }
+        }
     }
 
     void KFItemConfig::ReadEquipSetting( KFNode& xmlnode, KFItemSetting* kfsetting )
     {
         kfsetting->_equip_type = xmlnode.GetUInt32( "EquipType" );
+        kfsetting->_weapon_type = xmlnode.GetUInt32( "WeaponType" );
         kfsetting->_level_limit = xmlnode.GetUInt32( "LevelLimit", true );
         kfsetting->_durability = xmlnode.GetUInt32( "Durability", true );
 
         auto strskill = xmlnode.GetString( "Skill", true );
         kfsetting->_skills = KFUtility::SplitSet< std::set<uint32> >( strskill, DEFAULT_SPLIT_STRING );
+    }
+
+    void KFItemConfig::ReadMaterialSetting( KFNode& xmlnode, KFItemSetting* kfsetting )
+    {
+
+    }
+
+    void KFItemConfig::ReadOtherSetting( KFNode& xmlnode, KFItemSetting* kfsetting )
+    {
+
     }
 }

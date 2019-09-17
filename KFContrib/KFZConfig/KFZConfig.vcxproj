@@ -19,6 +19,7 @@
     <ClInclude Include="KFElementSetting.h" />
     <ClInclude Include="KFItemConfig.hpp" />
     <ClInclude Include="KFItemSetting.hpp" />
+    <ClInclude Include="KFItemTypeConfig.hpp" />
     <ClInclude Include="KFOptionConfig.hpp" />
     <ClInclude Include="KFOptionSetting.h" />
     <ClInclude Include="KFRankConfig.hpp" />
@@ -34,6 +35,7 @@
     <ClCompile Include="KFElementConfig.cpp" />
     <ClCompile Include="KFItemConfig.cpp" />
     <ClCompile Include="KFItemSetting.cpp" />
+    <ClCompile Include="KFItemTypeConfig.cpp" />
     <ClCompile Include="KFOptionConfig.cpp" />
     <ClCompile Include="KFRankConfig.cpp" />
     <ClCompile Include="KFRelationConfig.cpp" />

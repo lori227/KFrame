@@ -4,10 +4,12 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="KFItemPlugin.cpp" />
     <ClCompile Include="KFItemModule.cpp" />
+    <ClCompile Include="KFItemUseModule.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFItemInterface.h" />
     <ClInclude Include="KFItemModule.hpp" />
     <ClInclude Include="KFItemPlugin.hpp" />
+    <ClInclude Include="KFItemUseModule.hpp" />
   </ItemGroup>
 </Project>

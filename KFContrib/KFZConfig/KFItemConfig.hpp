@@ -26,10 +26,16 @@ namespace KFrame
         void ReadGiftSetting( KFNode& xmlnode, KFItemSetting* kfsetting );
 
         // 读取药品配置
-        void ReadMedicineSetting( KFNode& xmlnode, KFItemSetting* kfsetting );
+        void ReadDrugSetting( KFNode& xmlnode, KFItemSetting* kfsetting );
 
         // 读取装备配置
         void ReadEquipSetting( KFNode& xmlnode, KFItemSetting* kfsetting );
+
+        // 读取材料配置
+        void ReadMaterialSetting( KFNode& xmlnode, KFItemSetting* kfsetting );
+
+        // 读取其他配置
+        void ReadOtherSetting( KFNode& xmlnode, KFItemSetting* kfsetting );
     };
 }
 

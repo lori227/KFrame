@@ -48,6 +48,9 @@
     <ClInclude Include="KFDropSetting.h">
       <Filter>Drop</Filter>
     </ClInclude>
+    <ClInclude Include="KFItemTypeConfig.hpp">
+      <Filter>Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Kernel">
@@ -96,6 +99,9 @@
     </ClCompile>
     <ClCompile Include="KFElementConfig.cpp">
       <Filter>Kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="KFItemTypeConfig.cpp">
+      <Filter>Item</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

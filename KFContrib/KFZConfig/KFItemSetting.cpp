@@ -1,4 +1,5 @@
 ﻿#include "KFItemSetting.hpp"
+#include "KFItemTypeConfig.hpp"
 
 namespace KFrame
 {
@@ -31,17 +32,8 @@ namespace KFrame
         return _function[ type ];
     }
 
-    bool KFItemSetting::IsCanStore( const std::string& name ) const
+    bool KFItemSetting::IsOverlay() const
     {
-        if ( !_store_list.empty() )
-        {
-            auto iter = _store_list.find( name );
-            if ( iter == _store_list.end() )
-            {
-                return false;
-            }
-        }
-
-        return true;
+        return _overlay_count > 1u;
     }
 }

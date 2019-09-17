@@ -6,11 +6,13 @@ namespace KFrame
     void KFItemModule::BeforeRun()
     {
         _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
+        __REGISTER_GET_CONFIG_VALUE__( __KF_STRING__( item ), &KFItemModule::GetItemTotalCount );
         __REGISTER_ADD_DATA__( __KF_STRING__( item ), &KFItemModule::OnAddItemCallBack );
         __REGISTER_REMOVE_DATA__( __KF_STRING__( item ), &KFItemModule::OnRemoveItemCallBack );
         __REGISTER_UPDATE_DATA_2__( __KF_STRING__( item ), __KF_STRING__( count ), &KFItemModule::OnItemCountUpdateCallBack );
         __REGISTER_UPDATE_DATA_2__( __KF_STRING__( item ), __KF_STRING__( time ), &KFItemModule::OnItemTimeUpdateCallBack );
         //////////////////////////////////////////////////////////////////////////////////////////////////
+        __REGISTER_CHECK_ADD_ELEMENT__( __KF_STRING__( item ), &KFItemModule::CheckAddItemElement );
         __REGISTER_ADD_ELEMENT__( __KF_STRING__( item ), &KFItemModule::AddItemElement );
         __REGISTER_CHECK_REMOVE_ELEMENT__( __KF_STRING__( item ), &KFItemModule::CheckRemoveItemElement );
         __REGISTER_REMOVE_ELEMENT__( __KF_STRING__( item ), &KFItemModule::RemoveItemElement );
@@ -21,19 +23,24 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFMsg::MSG_SPLIT_ITEM_REQ, &KFItemModule::HandleSplitItemReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_MERGE_ITEM_REQ, &KFItemModule::HandleMergeItemReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_MOVE_ITEM_REQ, &KFItemModule::HandleMoveItemReq );
-        __REGISTER_MESSAGE__( KFMsg::MSG_USE_ITEM_REQ, &KFItemModule::HandleUseItemReq );
+        __REGISTER_MESSAGE__( KFMsg::MSG_MOVE_ALL_ITEM_REQ, &KFItemModule::HandleMoveAllItemReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_EXCHANGE_ITEM_REQ, &KFItemModule::HandleExchangeItemReq );
+        __REGISTER_MESSAGE__( KFMsg::MSG_CLEAN_ITEM_REQ, &KFItemModule::HandleCleanItemReq );
+        __REGISTER_MESSAGE__( KFMsg::MSG_SORT_ITEM_REQ, &KFItemModule::HandleSortItemReq );
+        __REGISTER_MESSAGE__( KFMsg::MSG_REMOVE_ITEM_REQ, &KFItemModule::HandleRemoveItemReq );
     }
 
     void KFItemModule::BeforeShut()
     {
         __UN_TIMER_0__();
         //////////////////////////////////////////////////////////////////////////////////////////////////
+        __UN_GET_CONFIG_VALUE__( __KF_STRING__( item ) );
         __UN_ADD_DATA__( __KF_STRING__( item ) );
         __UN_REMOVE_DATA__( __KF_STRING__( item ) );
         __UN_UPDATE_DATA_2__( __KF_STRING__( item ), __KF_STRING__( count ) );
         __UN_UPDATE_DATA_2__( __KF_STRING__( item ), __KF_STRING__( time ) );
 
+        __UN_CHECK_ADD_ELEMENT__( __KF_STRING__( item ) );
         __UN_ADD_ELEMENT__( __KF_STRING__( item ) );
         __UN_CHECK_REMOVE_ELEMENT__( __KF_STRING__( item ) );
         __UN_REMOVE_ELEMENT__( __KF_STRING__( item ) );
@@ -44,8 +51,11 @@ namespace KFrame
         __UN_MESSAGE__( KFMsg::MSG_SPLIT_ITEM_REQ );
         __UN_MESSAGE__( KFMsg::MSG_MERGE_ITEM_REQ );
         __UN_MESSAGE__( KFMsg::MSG_MOVE_ITEM_REQ );
-        __UN_MESSAGE__( KFMsg::MSG_USE_ITEM_REQ );
+        __UN_MESSAGE__( KFMsg::MSG_MOVE_ALL_ITEM_REQ );
         __UN_MESSAGE__( KFMsg::MSG_EXCHANGE_ITEM_REQ );
+        __UN_MESSAGE__( KFMsg::MSG_CLEAN_ITEM_REQ );
+        __UN_MESSAGE__( KFMsg::MSG_SORT_ITEM_REQ );
+        __UN_MESSAGE__( KFMsg::MSG_REMOVE_ITEM_REQ );
     }
 
     void KFItemModule::PrepareRun()
@@ -55,6 +65,101 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    __KF_GET_CONFIG_VALUE_FUNCTION__( KFItemModule::GetItemTotalCount )
+    {
+        auto kfsetting = KFItemConfig::Instance()->FindSetting( id );
+        if ( kfsetting == nullptr )
+        {
+            return 0u;
+        }
+
+        auto kfitemrecord = FindItemRecord( player, kfsetting, 0u );
+        if ( kfitemrecord == nullptr )
+        {
+            return 0u;
+        }
+
+        // 获取item列表
+        std::list< KFData* > finditem;
+        kfitemrecord->FindData( kfitemrecord->_data_setting->_config_key_name, id, finditem, true );
+
+        auto totalcount = 0u;
+        for ( auto kfitem : finditem )
+        {
+            totalcount += kfitem->GetValue<uint32>( __KF_STRING__( count ) );
+        }
+
+        return totalcount;
+    }
+
+    __KF_CHECK_ADD_ELEMENT_FUNCTION__( KFItemModule::CheckAddItemElement )
+    {
+        if ( !kfelement->IsObject() )
+        {
+            return false;
+        }
+
+        // 计算物品数量
+        auto kfelementobject = reinterpret_cast< KFElementObject* >( kfelement );
+        auto itemcount = kfelementobject->CalcValue( kfparent->_class_setting, __KF_STRING__( count ), multiple );
+        if ( itemcount == _invalid_int || kfelementobject->_config_id == _invalid_int )
+        {
+            return false;
+        }
+
+        auto kfsetting = KFItemConfig::Instance()->FindSetting( kfelementobject->_config_id );
+        if ( kfsetting == nullptr )
+        {
+            return false;
+        }
+
+        kfparent = FindItemRecord( player, kfsetting, 0u );
+        if ( kfparent == nullptr )
+        {
+            return false;
+        }
+
+        return !CheckItemRecordFull( kfparent, kfsetting, itemcount );
+    }
+
+    bool KFItemModule::CheckItemRecordFull( KFData* kfitemrecrod, const KFItemSetting* kfsetting, uint32 itemcount )
+    {
+        // 计算占用格子数
+        uint32 usesize = ( itemcount + kfsetting->_overlay_count - 1 ) / kfsetting->_overlay_count;
+        auto leftsize = kfitemrecrod->MaxSize() - kfitemrecrod->Size();
+        if ( leftsize >= usesize )
+        {
+            return false;
+        }
+
+        // 不能叠加
+        if ( !kfsetting->IsOverlay() )
+        {
+            return true;
+        }
+
+        // 可叠加物品
+        auto canaddcount = 0u;
+        std::list< KFData* > finditem;
+        kfitemrecrod->FindData( kfitemrecrod->_data_setting->_config_key_name, kfsetting->_id, finditem, true );
+        for ( auto kfitem : finditem )
+        {
+            auto oldcount = kfitem->GetValue( __KF_STRING__( count ) );
+            canaddcount += kfsetting->_overlay_count - __MIN__( oldcount, kfsetting->_overlay_count );
+            if ( canaddcount >= itemcount )
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    void KFItemModule::AddItemDataToShow( KFEntity* player, uint64 id, uint64 count )
+    {
+        player->AddDataToShow( __KF_STRING__( item ), id, __KF_STRING__( count ), count );
+    }
+
     __KF_ADD_ELEMENT_FUNCTION__( KFItemModule::AddItemElement )
     {
         if ( !kfelement->IsObject() )
@@ -77,6 +182,13 @@ namespace KFrame
             return std::make_tuple( KFDataDefine::Show_None, nullptr );
         }
 
+        // 查找背包数据
+        kfparent = FindItemRecord( player, kfsetting, 0u );
+        if ( kfparent == nullptr )
+        {
+            return std::make_tuple( KFDataDefine::Show_None, nullptr );
+        }
+
         // 计算物品数量
         auto itemcount = kfelementobject->CalcValue( kfparent->_class_setting, __KF_STRING__( count ), multiple );
         if ( itemcount == _invalid_int )
@@ -85,40 +197,45 @@ namespace KFrame
             return std::make_tuple( KFDataDefine::Show_None, nullptr );
         }
 
-        // 添加道具
-        switch ( kfsetting->_overlay_type )
+        auto addcount = 0u;
+        auto leftcount = itemcount;
+        uint32 showdata = KFDataDefine::Show_None;
+        if ( kfsetting->_overlay_type == KFItemEnum::OverlayByTime )
         {
-        case KFItemEnum::OverlayByTime:		// 时间叠加道具
-        {
+            // 计算时间
             auto itemtime = kfelementobject->CalcValue( kfparent->_class_setting, __KF_STRING__( time ), multiple );
-            if ( itemtime == 0 )
+            if ( itemtime == 0u )
             {
                 __LOG_ERROR_FUNCTION__( function, line, "time item id=[{}] count = 0!", kfelementobject->_config_id );
                 return std::make_tuple( KFDataDefine::Show_None, nullptr );
             }
 
-            itemtime *= itemcount;
-            AddOverlayTimeItem( player, kfparent, kfelementobject, kfsetting, itemtime );
+            std::tie( addcount, leftcount, showdata ) = AddOverlayTimeItem( player, kfparent, kfelementobject, kfsetting, itemcount, itemtime );
+            if ( showdata == KFDataDefine::Show_Data )
+            {
+                AddItemDataToShow( player, kfsetting->_id, addcount );
+            }
         }
-        break;
-        case KFItemEnum::OverlayByCount:	// 数量叠加道具
+        else if ( kfsetting->_overlay_type == KFItemEnum::OverlayByCount )
         {
+            // 数量叠加道具
             do
             {
-                itemcount = AddOverlayCountItem( player, kfparent, kfelementobject, kfsetting, itemcount );
-            } while ( itemcount > _invalid_int );
+                std::tie( addcount, leftcount, showdata ) = AddOverlayCountItem( player, kfparent, kfelementobject, kfsetting, leftcount );
+                if ( showdata == KFDataDefine::Show_Data )
+                {
+                    AddItemDataToShow( player, kfsetting->_id, addcount );
+                }
+            } while ( leftcount > 0u );
         }
-        break;
-        default:
-            break;
-        }
+
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         CallItemLuaFunction( player, KFItemEnum::AddFunction, kfsetting, itemcount );
-        return std::make_tuple( KFDataDefine::Show_Element, kfparent );
+        return std::make_tuple( KFDataDefine::Show_None, nullptr );
     }
 
-    void KFItemModule::AddOverlayTimeItem( KFEntity* player, KFData* kfparent, KFElementObject* kfelementobject, const KFItemSetting* kfsetting, uint32 time )
+    std::tuple<uint32, uint32, uint32> KFItemModule::AddOverlayTimeItem( KFEntity* player, KFData* kfparent, KFElementObject* kfelementobject, const KFItemSetting* kfsetting, uint32 count, uint32 time )
     {
         std::list< KFData* > finditem;
         kfparent->FindData( kfparent->_data_setting->_config_key_name, kfsetting->_id, finditem, false );
@@ -126,32 +243,28 @@ namespace KFrame
         if ( !finditem.empty() )
         {
             auto kfitem = finditem.front();
-            player->UpdateData( kfitem, __KF_STRING__( time ), KFEnum::Add, time );
+            player->UpdateData( kfitem, __KF_STRING__( time ), KFEnum::Add, count * time );
+            return std::make_tuple( count, 0, KFDataDefine::Show_Data );
         }
-        else
-        {
-            AddNewItemData( player, kfparent, kfelementobject, kfsetting, 1u, time );
-        }
+
+        return AddNewItemData( player, kfparent, kfelementobject, kfsetting, count, time );
     }
 
-    uint32 KFItemModule::AddOverlayCountItem( KFEntity* player, KFData* kfparent, KFElementObject* kfelementobject, const KFItemSetting* kfsetting, uint32 count )
+    std::tuple<uint32, uint32, uint32> KFItemModule::AddOverlayCountItem( KFEntity* player, KFData* kfparent, KFElementObject* kfelementobject, const KFItemSetting* kfsetting, uint32 count )
     {
-        auto datasetting = kfparent->_data_setting;
-
         // 叠加数量 > 1
-        if ( kfsetting->_overlay_count > 1u )
+        if ( kfsetting->IsOverlay() )
         {
             std::list< KFData* > finditem;
-            kfparent->FindData( datasetting->_config_key_name, kfsetting->_id, finditem, true );
+            kfparent->FindData( kfparent->_data_setting->_config_key_name, kfsetting->_id, finditem, true );
 
             // 判断是否可以叠加完
+            auto totaladdcount = 0u;
             for ( auto kfitem : finditem )
             {
                 auto oldcount = kfitem->GetValue( __KF_STRING__( count ) );
-                oldcount = __MIN__( oldcount, kfsetting->_overlay_count );
-                auto canadd = kfsetting->_overlay_count - oldcount;
-                auto addcount = __MIN__( canadd, count );
-                if ( addcount == _invalid_int )
+                auto addcount = CalcItemAddCount( count, oldcount, kfsetting->_overlay_count );
+                if ( addcount == 0u )
                 {
                     continue;
                 }
@@ -160,10 +273,18 @@ namespace KFrame
                 player->UpdateData( kfitem, __KF_STRING__( count ), KFEnum::Add, addcount );
 
                 count -= addcount;
-                if ( count == _invalid_int )
+                totaladdcount += addcount;
+                if ( count == 0u )
                 {
-                    return _invalid_int;
+                    break;
                 }
+            }
+
+            // 添加显示
+            AddItemDataToShow( player, kfsetting->_id, totaladdcount );
+            if ( count == 0u )
+            {
+                return std::make_tuple( totaladdcount, 0, KFDataDefine::Show_None );
             }
         }
 
@@ -171,13 +292,22 @@ namespace KFrame
         return AddNewItemData( player, kfparent, kfelementobject, kfsetting, count, 0u );
     }
 
-    uint32 KFItemModule::AddNewItemData( KFEntity* player, KFData* kfparent, KFElementObject* kfelementobject, const KFItemSetting* kfsetting, uint32 count, uint32 time )
+    std::tuple<uint32, uint32, uint32> KFItemModule::AddNewItemData( KFEntity* player, KFData* kfparent, KFElementObject* kfelementobject, const KFItemSetting* kfsetting, uint32 count, uint32 time )
     {
+        uint32 showelement = KFDataDefine::Show_Data;
+        // 判断满包情况, 需要添加另外的背包, 加入满包不显示( 测试特殊要求 )
+        auto addcount = __MIN__( count, kfsetting->_overlay_count );
+        auto kfnewparent = FindItemRecord( player, kfsetting, addcount );
+        if ( kfnewparent != nullptr && kfnewparent != kfparent )
+        {
+            kfparent = kfnewparent;
+            showelement = KFDataDefine::Show_None;
+        }
+
         auto datasetting = kfparent->_data_setting;
         auto kfitem = _kf_kernel->CreateObject( datasetting );
 
         // count
-        auto addcount = __MIN__( count, kfsetting->_overlay_count );
         kfitem->SetValue( __KF_STRING__( count ), addcount );
 
         // id
@@ -186,7 +316,7 @@ namespace KFrame
         // time
         if ( time != 0u )
         {
-            kfitem->SetValue( __KF_STRING__( time ), KFGlobal::Instance()->_real_time + time );
+            kfitem->SetValue( __KF_STRING__( time ), KFGlobal::Instance()->_real_time + time * count );
         }
 
         // 位置
@@ -201,7 +331,27 @@ namespace KFrame
 
         // 添加新的物品
         player->AddData( kfparent, uuid, kfitem );
-        return count - addcount;
+        return std::make_tuple( addcount, count - addcount, showelement );
+    }
+
+    KFData* KFItemModule::FindItemRecord( KFEntity* player, const KFItemSetting* kfsetting, uint32 itemcount )
+    {
+        auto kftypesetting = KFItemTypeConfig::Instance()->FindSetting( kfsetting->_type );
+        if ( kftypesetting == nullptr )
+        {
+            __LOG_ERROR__( "item=[{}] type=[{}] no type setting!", kfsetting->_id, kfsetting->_type );
+            return nullptr;
+        }
+
+        auto kfobject = player->GetData();
+        KFData* kfitemrecord = kfobject->FindData( kftypesetting->_store_name );
+        if ( kfitemrecord == nullptr )
+        {
+            __LOG_ERROR__( "item=[{}] store=[{}] bag=[{}] extend=[{}] error!",
+                           kfsetting->_id, kftypesetting->_store_name, kftypesetting->_bag_name, kftypesetting->_extend_name );
+        }
+
+        return kfitemrecord;
     }
 
     __KF_UPDATE_DATA_FUNCTION__( KFItemModule::OnItemCountUpdateCallBack )
@@ -256,18 +406,29 @@ namespace KFrame
             return false;
         }
 
-        // 获取item列表
-        std::list< KFData* > finditem;
-        kfparent->FindData( kfparent->_data_setting->_config_key_name, kfelementobject->_config_id, finditem, true );
-        if ( finditem.empty() )
+        auto kfsetting = KFItemConfig::Instance()->FindSetting( kfelementobject->_config_id );
+        if ( kfsetting == nullptr )
+        {
+            __LOG_ERROR_FUNCTION__( function, line, "item id=[{}] setting = nullptr!", kfelementobject->_config_id );
+            return false;
+        }
+
+        kfparent = FindItemRecord( player, kfsetting, 0u );
+        if ( kfparent == nullptr )
         {
             return false;
         }
 
+        // 累计数量
         auto totalcount = 0u;
-        for ( auto kfitem : finditem )
+        for ( auto kfitem = kfparent->FirstData(); kfitem != nullptr; kfitem = kfparent->NextData() )
         {
-            // 累计数量
+            auto itemid = kfitem->GetValue( kfparent->_data_setting->_config_key_name );
+            if ( itemid != kfsetting->_id )
+            {
+                continue;
+            }
+
             totalcount += kfitem->GetValue<uint32>( __KF_STRING__( count ) );
             if ( totalcount >= itemcount )
             {
@@ -297,15 +458,20 @@ namespace KFrame
             return __LOG_ERROR_FUNCTION__( function, line, "item id=[{}] count = 0!", kfelementobject->_config_id );
         }
 
-        // 获取item列表
-        std::list< KFData* > finditem;
-        kfparent->FindData( kfparent->_data_setting->_config_key_name, kfelementobject->_config_id, finditem, true );
-        if ( finditem.empty() )
+        auto kfsetting = KFItemConfig::Instance()->FindSetting( kfelementobject->_config_id );
+        if ( kfsetting == nullptr )
         {
             return;
         }
 
-        auto totalcount = 0u;
+        kfparent = FindItemRecord( player, kfsetting, 0u );
+        if ( kfparent == nullptr )
+        {
+            return;
+        }
+
+        std::list< KFData* > finditem;
+        kfparent->FindData( kfparent->_data_setting->_config_key_name, kfelementobject->_config_id, finditem, true );
         for ( auto kfitem : finditem )
         {
             auto removecount = __MIN__( itemcount, kfitem->GetValue<uint32>( __KF_STRING__( count ) ) );
@@ -402,6 +568,22 @@ namespace KFrame
         }
     }
 
+    __KF_MESSAGE_FUNCTION__( KFItemModule::HandleRemoveItemReq )
+    {
+        __CLIENT_PROTO_PARSE__( KFMsg::MsgRemoveItemReq );
+
+        __LOG_INFO__( "player=[{}] remove item=[{}:{}]", playerid, kfmsg.sourcename(), kfmsg.uuid() );
+
+        if ( kfmsg.uuid() == 0u )
+        {
+            player->RemoveData( kfmsg.sourcename() );
+        }
+        else
+        {
+            player->RemoveData( kfmsg.sourcename(), kfmsg.uuid() );
+        }
+    }
+
     __KF_REMOVE_DATA_FUNCTION__( KFItemModule::OnRemoveItemCallBack )
     {
         // 清空索引
@@ -455,7 +637,7 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::ItemSettingNotExist );
         }
 
-        if ( !kfsetting->IsCanStore( kfmsg.targetname() ) )
+        if ( !CheckItemCanMove( kfsetting, kfmsg.sourcename(), kfmsg.targetname() ) )
         {
             return _kf_display->SendToClient( player, KFMsg::ItemCanNotStore );
         }
@@ -514,7 +696,7 @@ namespace KFrame
 
         auto kfsourceitem = kfsourcerecord->FindData( kfmsg.sourceuuid() );
         auto kftargetitem = kftargetrecord->FindData( kfmsg.targetuuid() );
-        if ( kfsourceitem == nullptr || kftargetitem == nullptr )
+        if ( kfsourceitem == nullptr || kftargetitem == nullptr || kfsourceitem == kftargetitem )
         {
             return _kf_display->SendToClient( player, KFMsg::ItemDataNotExist );
         }
@@ -538,12 +720,16 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::ItemOverlayCountMax );
         }
 
-        auto canaddcount = kfsetting->_overlay_count - targetcount;
         auto sourcecount = kfsourceitem->GetValue<uint32>( __KF_STRING__( count ) );
-        canaddcount = __MIN__( sourcecount, canaddcount );
+        auto canaddcount = CalcItemAddCount( sourcecount, targetcount, kfsetting->_overlay_count );
 
         player->UpdateData( kfsourceitem, __KF_STRING__( count ), KFEnum::Dec, canaddcount );
         player->UpdateData( kftargetitem, __KF_STRING__( count ), KFEnum::Add, canaddcount );
+
+        if ( kfmsg.showclient() )
+        {
+            AddItemDataToShow( player, kfsetting->_id, canaddcount );
+        }
     }
 
     __KF_MESSAGE_FUNCTION__( KFItemModule::HandleMoveItemReq )
@@ -556,11 +742,6 @@ namespace KFrame
         if ( kfsourcerecord == nullptr || kftargetrecord == nullptr )
         {
             return _kf_display->SendToClient( player, KFMsg::ItemBagNameError );
-        }
-
-        if ( kftargetrecord->IsFull() )
-        {
-            return _kf_display->SendToClient( player, KFMsg::ItemBagFull );
         }
 
         auto kfsourceitem = kfsourcerecord->FindData( kfmsg.sourceuuid() );
@@ -577,53 +758,176 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::ItemSettingNotExist );
         }
 
-        if ( !kfsetting->IsCanStore( kfmsg.targetname() ) )
+        if ( !CheckItemCanMove( kfsetting, kfmsg.sourcename(), kfmsg.targetname() ) )
         {
             return _kf_display->SendToClient( player, KFMsg::ItemCanNotStore );
+        }
+
+        auto itemcount = kfsourceitem->GetValue<uint32>( __KF_STRING__( count ) );
+        auto result = MoveItem( player, kfsourcerecord, kfsourceitem, kfmsg.sourceuuid(), kftargetrecord, kfmsg.targetindex() );
+        if ( result == KFMsg::Ok )
+        {
+            if ( kfmsg.showclient() )
+            {
+                AddItemDataToShow( player, kfsetting->_id, itemcount );
+            }
+        }
+        else
+        {
+            _kf_display->SendToClient( player, result );
+        }
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFItemModule::HandleMoveAllItemReq )
+    {
+        __CLIENT_PROTO_PARSE__( KFMsg::MsgMoveAllItemReq );
+
+        auto kfobject = player->GetData();
+        auto kfsourcerecord = kfobject->FindData( kfmsg.sourcename() );
+        auto kftargetrecord = kfobject->FindData( kfmsg.targetname() );
+        if ( kfsourcerecord == nullptr || kftargetrecord == nullptr )
+        {
+            return _kf_display->SendToClient( player, KFMsg::ItemBagNameError );
+        }
+
+        // 遍历出可以移动的道具
+        std::list< std::tuple< KFData*, const KFItemSetting* > > movelist;
+        for ( auto kfitem = kfsourcerecord->FirstData(); kfitem != nullptr; kfitem = kfsourcerecord->NextData() )
+        {
+            auto itemid = kfitem->GetValue<uint32>( kfitem->_data_setting->_config_key_name );
+            auto kfsetting = KFItemConfig::Instance()->FindSetting( itemid );
+            if ( kfsetting == nullptr )
+            {
+                continue;
+            }
+
+            auto ok = CheckItemCanMove( kfsetting, kfmsg.sourcename(), kfmsg.targetname() );
+            if ( !ok )
+            {
+                continue;
+            }
+
+            movelist.push_back( std::make_tuple( kfitem, kfsetting ) );
+        }
+
+        for ( auto& tupledata : movelist )
+        {
+            KFData* kfsourceitem = nullptr;
+            const KFItemSetting* kfsetting = nullptr;
+            std::tie( kfsourceitem, kfsetting ) = tupledata;
+            auto itemcount = MoveItemData( player, kfsourcerecord, kfsourceitem, kftargetrecord, kfsetting );
+            if ( itemcount != 0u && kfmsg.showclient() )
+            {
+                AddItemDataToShow( player, kfsetting->_id, itemcount );
+            }
+        }
+    }
+
+    uint32 KFItemModule::MoveItem( KFEntity* player, KFData* kfsourcerecord, KFData* kfsourceitem, uint64 sourceuuid, KFData* kftargetrecord, uint32 targetindex )
+    {
+        if ( kftargetrecord->IsFull() )
+        {
+            return KFMsg::ItemBagFull;
         }
 
         // 索引判断
         if ( kftargetrecord->_data_setting->_int_logic_value == __USE_ITEM_INDEX__ )
         {
             // 同背包不能相同的索引
-            auto index = kfmsg.targetindex();
-            if ( kfmsg.sourcename() == kfmsg.targetname() )
+            if ( targetindex != 0u )
             {
-                auto sourceindex = kfsourceitem->GetValue<uint32>( __KF_STRING__( index ) );
-                if ( sourceindex == index )
+                if ( targetindex > kftargetrecord->_data_setting->_int_max_value )
                 {
-                    return;
+                    return KFMsg::ItemIndexError;
                 }
-            }
 
-            if ( index != 0u )
-            {
-                if ( index > kftargetrecord->_data_setting->_int_max_value )
+                // 判断该索引是否有道具
+                std::list< KFData* > itemlist;
+                kftargetrecord->FindData( __KF_STRING__( index ), targetindex, itemlist, false );
+                if ( !itemlist.empty() )
                 {
-                    return _kf_display->SendToClient( player, KFMsg::ItemIndexError );
+                    return KFMsg::ItemMoveFailed;
                 }
             }
             else
             {
-                index = FindItemEmptyIndex( player, kftargetrecord );
+                targetindex = FindItemEmptyIndex( player, kftargetrecord );
             }
 
             // 原背包索引
             AddItemEmptyIndex( player, kfsourceitem );
+            if ( kfsourcerecord == kftargetrecord )
+            {
+                player->UpdateData( kfsourceitem, __KF_STRING__( index ), KFEnum::Set, targetindex );
+                RemoveItemEmptyIndex( player, kfsourceitem );
+                return KFMsg::Ok;
+            }
 
             // 设置新的索引
-            kfsourceitem->SetValue( __KF_STRING__( index ), index );
+            kfsourceitem->SetValue( __KF_STRING__( index ), targetindex );
         }
 
-        auto kfitem = player->MoveData( kfsourcerecord, kfmsg.sourceuuid(), kftargetrecord );
+        // 移动
+        auto kfitem = player->MoveData( kfsourcerecord, sourceuuid, kftargetrecord );
         if ( kfitem != nullptr )
         {
             RemoveItemEmptyIndex( player, kfitem );
         }
+
+        return KFMsg::Ok;
+    }
+
+
+    uint32 KFItemModule::MoveItemData( KFEntity* player, KFData* kfsourcerecord, KFData* kfsourceitem, KFData* kftargetrecord, const KFItemSetting* kfsetting )
+    {
+        auto totalmovecount = 0u;
+        auto sourcecount = kfsourceitem->GetValue<uint32>( __KF_STRING__( count ) );
+
+        // 判断是否能堆叠
+        if ( !kfsetting->IsOverlay() )
+        {
+            // 不能堆叠, 直接移动
+            auto result = MoveItem( player, kfsourcerecord, kfsourceitem, kfsourceitem->GetKeyID(), kftargetrecord, 0u );
+            if ( result == KFMsg::Ok )
+            {
+                totalmovecount = sourcecount;
+            }
+        }
         else
         {
-            _kf_display->SendToClient( player, KFMsg::ItemMoveFailed );
+            // 找到可以堆叠的道具
+            std::list< KFData* > outlist;
+            kftargetrecord->FindData( kfsourceitem->_data_setting->_config_key_name, kfsetting->_id, outlist, true );
+
+            // 堆叠起来
+            for ( auto kftargetitem : outlist )
+            {
+                auto targetcount = kftargetitem->GetValue<uint32>( __KF_STRING__( count ) );
+                auto movecount = CalcItemAddCount( sourcecount, targetcount, kfsetting->_overlay_count );
+
+                player->UpdateData( kfsourceitem, __KF_STRING__( count ), KFEnum::Dec, movecount );
+                player->UpdateData( kftargetitem, __KF_STRING__( count ), KFEnum::Add, movecount );
+
+                sourcecount -= movecount;
+                totalmovecount += movecount;
+                if ( sourcecount == 0u )
+                {
+                    break;
+                }
+            }
+
+            if ( sourcecount > 0u )
+            {
+                // 剩下的没有合并完, 直接移动
+                auto result = MoveItem( player, kfsourcerecord, kfsourceitem, kfsourceitem->GetKeyID(), kftargetrecord, 0u );
+                if ( result == KFMsg::Ok )
+                {
+                    totalmovecount += sourcecount;
+                }
+            }
         }
+
+        return totalmovecount;
     }
 
     __KF_MESSAGE_FUNCTION__( KFItemModule::HandleExchangeItemReq )
@@ -665,7 +969,7 @@ namespace KFrame
                     return _kf_display->SendToClient( player, KFMsg::ItemSettingNotExist );
                 }
 
-                if ( !kfsetting->IsCanStore( kfmsg.targetname() ) )
+                if ( !CheckItemCanMove( kfsetting, kfmsg.sourcename(), kfmsg.targetname() ) )
                 {
                     return _kf_display->SendToClient( player, KFMsg::ItemCanNotStore );
                 }
@@ -680,15 +984,17 @@ namespace KFrame
                     return _kf_display->SendToClient( player, KFMsg::ItemSettingNotExist );
                 }
 
-                if ( !kfsetting->IsCanStore( kfmsg.sourcename() ) )
+                if ( !CheckItemCanMove( kfsetting, kfmsg.targetname(), kfmsg.sourcename() ) )
                 {
                     return _kf_display->SendToClient( player, KFMsg::ItemCanNotStore );
                 }
             }
 
+            // 先空出索引
             AddItemEmptyIndex( player, kfsourceitem );
             AddItemEmptyIndex( player, kftargetitem );
 
+            // 交换
             kfsourceitem->SetValue( __KF_STRING__( index ), targetindex );
             kfsourceitem = player->MoveData( kfsourcerecord, kfmsg.sourceuuid(), kftargetrecord );
             RemoveItemEmptyIndex( player, kfsourceitem );
@@ -697,6 +1003,117 @@ namespace KFrame
             kftargetitem = player->MoveData( kftargetrecord, kfmsg.targetuuid(), kfsourcerecord );
             RemoveItemEmptyIndex( player, kftargetitem );
         }
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFItemModule::HandleCleanItemReq )
+    {
+        __CLIENT_PROTO_PARSE__( KFMsg::MsgCleanItemReq );
+
+        auto kfobject = player->GetData();
+        auto kfsourcerecord = kfobject->FindData( kfmsg.sourcename() );
+        if ( kfsourcerecord == nullptr )
+        {
+            return _kf_display->SendToClient( player, KFMsg::ItemBagNameError );
+        }
+
+        // 遍历出需要自动清空的道具
+        std::list< std::tuple< KFData*, const KFItemSetting*, const KFItemTypeSeting* > > cleanlist;
+        for ( auto kfitem = kfsourcerecord->FirstData(); kfitem != nullptr; kfitem = kfsourcerecord->NextData() )
+        {
+            auto itemid = kfitem->GetValue<uint32>( kfitem->_data_setting->_config_key_name );
+            auto kfitemsetting = KFItemConfig::Instance()->FindSetting( itemid );
+            if ( kfitemsetting == nullptr )
+            {
+                continue;
+            }
+
+            auto kftypesetting = KFItemTypeConfig::Instance()->FindSetting( kfitemsetting->_type );
+            if ( kftypesetting == nullptr || !kftypesetting->_is_auto_store )
+            {
+                continue;
+            }
+
+            cleanlist.push_back( std::make_tuple( kfitem, kfitemsetting, kftypesetting ) );
+        }
+
+        for ( auto& tupledata : cleanlist )
+        {
+            KFData* kfsourceitem = nullptr;
+            const KFItemSetting* kfitemsetting = nullptr;
+            const KFItemTypeSeting* kftypesetting = nullptr;
+            std::tie( kfsourceitem, kfitemsetting, kftypesetting ) = tupledata;
+            auto kftargetrecord = kfobject->FindData( kftypesetting->_store_name );
+            if ( kftargetrecord != nullptr )
+            {
+                MoveItemData( player, kfsourcerecord, kfsourceitem, kftargetrecord, kfitemsetting );
+            }
+        }
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFItemModule::HandleSortItemReq )
+    {
+        __CLIENT_PROTO_PARSE__( KFMsg::MsgSortItemReq );
+
+        auto kfobject = player->GetData();
+        auto kfitemrecord = kfobject->FindData( kfmsg.sourcename() );
+        if ( kfitemrecord == nullptr || kfitemrecord->_data_setting->_int_logic_value != __USE_ITEM_INDEX__ )
+        {
+            return _kf_display->SendToClient( player, KFMsg::ItemBagNameError );
+        }
+
+        // 重置格子数量
+        ItemIndexKey key( player->GetKeyID(), kfitemrecord->_data_setting->_name );
+        auto kfindex = _player_item_index.Create( key );
+        kfindex->InitMaxIndex( kfitemrecord->_data_setting->_int_max_value );
+
+        std::map<uint32, std::list<KFData*>> sortlist;
+        for ( auto kfitem = kfitemrecord->FirstData(); kfitem != nullptr; kfitem = kfitemrecord->NextData() )
+        {
+            auto id = kfitem->GetValue<uint32>( kfitemrecord->_data_setting->_config_key_name );
+            sortlist[ id ].push_back( kfitem );
+        }
+
+        for ( auto& miter : sortlist )
+        {
+            for ( auto kfitem : miter.second )
+            {
+                auto index = kfindex->FindEmpty();
+                player->UpdateData( kfitem, __KF_STRING__( index ), KFEnum::Set, index );
+            }
+        }
+    }
+
+    uint32 KFItemModule::CalcItemAddCount( uint32 sourcecount, uint32 targetcount, uint32 maxcount )
+    {
+        if ( targetcount >= maxcount )
+        {
+            return 0u;
+        }
+
+        auto canaddcount = maxcount - targetcount;
+        return sourcecount <= canaddcount ? sourcecount : canaddcount;
+    }
+
+    bool KFItemModule::CheckItemCanMove( const KFItemSetting* kfsetting, const std::string& sourcename, const std::string& targetname )
+    {
+        if ( sourcename == targetname )
+        {
+            return true;
+        }
+
+        auto kftypesetting = KFItemTypeConfig::Instance()->FindSetting( kfsetting->_type );
+        if ( kftypesetting == nullptr )
+        {
+            return false;
+        }
+
+        // 额外的背包, 并且是探索背包
+        if ( sourcename == kftypesetting->_extend_name && targetname == kftypesetting->_bag_name )
+        {
+            return true;
+        }
+
+        return kftypesetting->_move_name_list.find( targetname ) != kftypesetting->_move_name_list.end();
     }
 
     void KFItemModule::InitItemEmptyIndexData( KFEntity* player, KFData* kfitemrecord )
@@ -739,7 +1156,6 @@ namespace KFrame
             }
         }
     }
-
 
     void KFItemModule::UnInitItemEmptyIndexData( KFEntity* player, const std::string& name )
     {
@@ -792,85 +1208,4 @@ namespace KFrame
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_MESSAGE_FUNCTION__( KFItemModule::HandleUseItemReq )
-    {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgUseItemReq );
-
-        // 判断是否有这个道具
-        auto kfitemrecord = player->GetData()->FindData( kfmsg.name() );
-        auto kfitem = kfitemrecord->FindData( kfmsg.uuid() );
-        if ( kfitem == nullptr )
-        {
-            return _kf_display->SendToClient( player, KFMsg::ItemDataNotExist );
-        }
-
-        auto itemid = kfitem->GetValue<uint32>( kfitemrecord->_data_setting->_config_key_name  );
-        auto kfsetting = KFItemConfig::Instance()->FindSetting( itemid );
-        if ( kfsetting == nullptr )
-        {
-            return _kf_display->SendToClient( player, KFMsg::ItemSettingNotExist, itemid );
-        }
-
-        if ( !kfsetting->CheckCanUse() )
-        {
-            return _kf_display->SendToClient( player, KFMsg::ItemCanNotUse );
-        }
-
-        auto ok = UseItem( player, kfitem, kfsetting );
-        if ( !ok )
-        {
-            return _kf_display->SendToClient( player, KFMsg::ItemUseFailed );
-        }
-
-        // 扣除数量
-        auto usecount = kfitem->GetValue<uint32>( __KF_STRING__( usecount ) );
-        if ( usecount + 1u >= kfsetting->_use_count )
-        {
-            player->UpdateData( kfitem, __KF_STRING__( count ), KFEnum::Dec, 1u );
-        }
-        else
-        {
-            player->UpdateData( kfitem, __KF_STRING__( usecount ), KFEnum::Add, 1u );
-        }
-    }
-
-    bool KFItemModule::UseItem( KFEntity* player, KFData* kfitem, const KFItemSetting* kfsetting )
-    {
-        switch ( kfsetting->_type )
-        {
-        case KFItemEnum::GiftBag:	// 礼包
-            return UseGiftBagItem( player, kfitem, kfsetting );
-            break;
-        case KFItemEnum::Script:	// 脚本
-            return UseScriptItem( player, kfitem, kfsetting );
-            break;
-        default:
-            break;
-        }
-
-        return false;
-    }
-
-    bool KFItemModule::UseGiftBagItem( KFEntity* player, KFData* kfitem, const KFItemSetting* kfsetting )
-    {
-        // 判断各类资源是否满了
-
-        if ( !kfsetting->_rewards.IsEmpty() )
-        {
-            player->AddElement( &kfsetting->_rewards, true, __FUNC_LINE__ );
-        }
-
-        if ( kfsetting->_drop_id != 0u )
-        {
-            _kf_drop->Drop( player, kfsetting->_drop_id, 1u, true, __FUNC_LINE__ );
-        }
-
-        return true;
-    }
-
-    bool KFItemModule::UseScriptItem( KFEntity* player, KFData* kfitem, const KFItemSetting* kfsetting )
-    {
-        auto ok = CallItemLuaFunction( player, KFItemEnum::UseFunction, kfsetting, 1u );
-        return ok;
-    }
 }

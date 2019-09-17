@@ -14,9 +14,11 @@ namespace KFrame
             // 物品类型
             None = 0,		// 无类型
             Normal = 1,		// 普通道具
-            GiftBag = 2,	// 礼包, 抽奖道具
-            Medicine = 3,	// 药品道具
+            Gift = 2,		// 礼包, 抽奖道具
+            Drug = 3,		// 药品道具
             Equip = 4,		// 装备道具
+            Material = 5,	// 材料道具
+            Other = 6,		// 其他道具( 探索内道具)
             Script = 101,	// 脚本道具(不是真正的道具)
             //////////////////////////////////////////////////////////////////////////////////////////////////////
             //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -54,8 +56,8 @@ namespace KFrame
         // 判断是否真正的物品
         bool IsRealItem() const;
 
-        // 判断是否能存放
-        bool IsCanStore( const std::string& name ) const;
+        // 是否可以叠加
+        bool IsOverlay() const;
     public:
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -72,17 +74,14 @@ namespace KFrame
         // 可叠加数量
         uint32 _overlay_count = 0u;
 
-        // 使用限制(如:战斗中, 探索中 )
-        uint32 _use_limit = 0u;
-
         // 可使用次数( 0 = 不能使用 )
         uint32 _use_count = 0u;
 
+        // 使用限制
+        uint32 _use_limit = KFItemEnum::UseInAll;
+
         // 出售价格
         KFElements _sell_elements;
-
-        // 存放限制
-        std::set< std::string > _store_list;
 
         // lua文件
         std::string _lua_file;
@@ -91,15 +90,18 @@ namespace KFrame
         std::string _function[ KFItemEnum::MaxFunction ];
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////// 礼包, 随机礼品等道具
-        // 奖励列表
-        KFElements _rewards;
-
         // 掉落id
         uint32 _drop_id = 0u;
+
+        // 奖励
+        KFElements _reward;
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////// 装备等道具
         // 装备类型
         uint32 _equip_type = 0u;
+
+        // 武器类型
+        uint32 _weapon_type = 0u;
 
         // 使用等级限制
         uint32 _level_limit = 0u;
@@ -111,14 +113,14 @@ namespace KFrame
         std::set< uint32 > _skills;
 
         // 装备属性
-        std::multimap< std::string, uint32 > _attributes;
+        std::unordered_map< std::string, uint32 > _attributes;
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////// 药品等道具
         // 药品类型
-        uint32 _medicine_type = 0u;
+        uint32 _drug_type = 0u;
 
-        // buff
-        uint32 _buff_id = 0u;
+        // 添加的药品数值
+        std::unordered_map< std::string, int32 > _drug_values;
     };
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
