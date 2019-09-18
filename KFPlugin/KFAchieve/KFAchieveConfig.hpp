@@ -21,12 +21,12 @@ namespace KFrame
         uint32 _data_key = 0;			// 键值
 
         uint32 _trigger_type = 0;		// 触发条件
+        uint32 _trigger_check = 0;		// 触发判断
         uint32 _trigger_value = 0;		// 触发值
 
         uint32 _use_type = 0;			// 使用的类型
         uint32 _use_value = 0;			// 使用的实际数值
-
-        uint32 _operate = 0;			// 操作类型
+        uint32 _use_operate = 0;		// 操作类型
 
         uint32 _done_value = 0;			// 完成数值
         uint32 _done_type = 0;			// 完成条件

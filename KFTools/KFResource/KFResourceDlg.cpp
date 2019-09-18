@@ -840,6 +840,7 @@ std::string CKFResourceDlg::ReadVersion()
         file.remove();
     }
 
+    KFUtility::ReplaceString( strversion, " ", "" );
     auto version = KFUtility::SplitString( strversion, "." );
     return version;
 }
@@ -1023,7 +1024,7 @@ void CKFResourceDlg::OnBnClickedButtonParseAndUpdate()
     try
     {
         // 拷贝文件
-        static auto _output_path = "..\\_gcm\\conf_output";
+        static std::string _output_path = "..\\_gcm\\conf_output";
         {
             Poco::File outputfile( _output_path );
             if ( outputfile.exists() )
@@ -1034,15 +1035,31 @@ void CKFResourceDlg::OnBnClickedButtonParseAndUpdate()
             outputfile.createDirectory();
         }
 
+        // server
+        {
+            Poco::File pocofile( "..\\config\\server" );
+            pocofile.copyTo( _output_path );
+            Poco::File configfile( _output_path + "\\server" );
+            configfile.renameTo( _output_path + "\\config" );
+        }
+
         // config
         {
-            Poco::File pocofile( _resource_config->_server_path );
-            pocofile.copyTo( _output_path );
+            Poco::File pocofile( "..\\config" );
+            std::vector< Poco::File > files;
+            pocofile.list( files );
+            for ( auto& file : files )
+            {
+                if ( file.isFile() )
+                {
+                    file.copyTo( _output_path + "\\config" );
+                }
+            }
         }
 
         // script
         {
-            Poco::File pocofile( _resource_config->_server_path + "\\..\\script" );
+            Poco::File pocofile( "..\\script" );
             pocofile.copyTo( _output_path );
         }
     }

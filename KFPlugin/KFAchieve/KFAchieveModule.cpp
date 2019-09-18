@@ -9,20 +9,20 @@ namespace KFrame
     {
         _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
 
-        _kf_component->RegisterAddDataModule( this, &KFAchieveModule::OnAddDataCallBack );
-        _kf_component->RegisterRemoveDataModule( this, &KFAchieveModule::OnRemoveDataCallBack );
-        _kf_component->RegisterUpdateDataModule( this, &KFAchieveModule::OnUpdateDataCallBack );
-        _kf_component->RegisterUpdateDataFunction( __KF_STRING__( achieve ), __KF_STRING__( value ), this, &KFAchieveModule::OnAchieveValueUpdateCallBack );
+        __REGISTER_ADD_DATA__( &KFAchieveModule::OnAddDataCallBack );
+        __REGISTER_REMOVE_DATA__( &KFAchieveModule::OnRemoveDataCallBack );
+        __REGISTER_UPDATE_DATA__( &KFAchieveModule::OnUpdateDataCallBack );
+        __REGISTER_UPDATE_DATA_2__( __KF_STRING__( achieve ), __KF_STRING__( value ), &KFAchieveModule::OnAchieveValueUpdateCallBack );
         //////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_ACHIEVE_REWARD_REQ, &KFAchieveModule::HandleAchieveRewardReq );
     }
 
     void KFAchieveModule::BeforeShut()
     {
-        _kf_component->UnRegisterAddDataModule( this );
-        _kf_component->UnRegisterRemoveDataModule( this );
-        _kf_component->UnRegisterUpdateDataModule( this );
-        _kf_component->UnRegisterUpdateDataFunction( this, __KF_STRING__( achieve ), __KF_STRING__( value ) );
+        __UN_ADD_DATA__();
+        __UN_REMOVE_DATA__();
+        __UN_UPDATE_DATA__();
+        __UN_UPDATE_DATA_2__( __KF_STRING__( achieve ), __KF_STRING__( value ) );
         //////////////////////////////////////////////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::MSG_ACHIEVE_REWARD_REQ );
     }
@@ -170,7 +170,7 @@ namespace KFrame
                 continue;
             }
 
-            player->UpdateData( kfachieves, kfsetting->_id, __KF_STRING__( value ), kfsetting->_operate, operatevalue );
+            player->UpdateData( kfachieves, kfsetting->_id, __KF_STRING__( value ), kfsetting->_use_operate, operatevalue );
         }
     }
 }

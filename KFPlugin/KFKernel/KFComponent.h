@@ -441,18 +441,28 @@ namespace KFrame
 #define __KF_ADD_DATA_FUNCTION__( addfunction ) \
     void addfunction( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata )
 
-#define __REGISTER_ADD_DATA__( dataname, function )\
+#define __REGISTER_ADD_DATA__( function )\
+    _kf_component->RegisterAddDataModule( this, function )
+#define __UN_ADD_DATA__()\
+    _kf_component->UnRegisterAddDataModule( this )
+
+#define __REGISTER_ADD_DATA_1__( dataname, function )\
     _kf_component->RegisterAddDataFunction( dataname, this, function )
-#define __UN_ADD_DATA__( dataname )\
+#define __UN_ADD_DATA_1__( dataname )\
     _kf_component->UnRegisterAddDataFunction( this, dataname  )
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 #define __KF_REMOVE_DATA_FUNCTION__( removefunction ) \
     void removefunction( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata )
 
-#define __REGISTER_REMOVE_DATA__( dataname, function )\
+#define __REGISTER_REMOVE_DATA__( function )\
+    _kf_component->RegisterRemoveDataModule( this, function )
+#define __UN_REMOVE_DATA__()\
+    _kf_component->UnRegisterRemoveDataModule( this  )
+
+#define __REGISTER_REMOVE_DATA_1__( dataname, function )\
     _kf_component->RegisterRemoveDataFunction( dataname, this, function )
-#define __UN_REMOVE_DATA__( dataname )\
+#define __UN_REMOVE_DATA_1__( dataname )\
     _kf_component->UnRegisterRemoveDataFunction( this, dataname  )
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////

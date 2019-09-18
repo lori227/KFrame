@@ -7,8 +7,8 @@ namespace KFrame
     {
         _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
         __REGISTER_GET_CONFIG_VALUE__( __KF_STRING__( item ), &KFItemModule::GetItemTotalCount );
-        __REGISTER_ADD_DATA__( __KF_STRING__( item ), &KFItemModule::OnAddItemCallBack );
-        __REGISTER_REMOVE_DATA__( __KF_STRING__( item ), &KFItemModule::OnRemoveItemCallBack );
+        __REGISTER_ADD_DATA_1__( __KF_STRING__( item ), &KFItemModule::OnAddItemCallBack );
+        __REGISTER_REMOVE_DATA_1__( __KF_STRING__( item ), &KFItemModule::OnRemoveItemCallBack );
         __REGISTER_UPDATE_DATA_2__( __KF_STRING__( item ), __KF_STRING__( count ), &KFItemModule::OnItemCountUpdateCallBack );
         __REGISTER_UPDATE_DATA_2__( __KF_STRING__( item ), __KF_STRING__( time ), &KFItemModule::OnItemTimeUpdateCallBack );
         //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -35,8 +35,8 @@ namespace KFrame
         __UN_TIMER_0__();
         //////////////////////////////////////////////////////////////////////////////////////////////////
         __UN_GET_CONFIG_VALUE__( __KF_STRING__( item ) );
-        __UN_ADD_DATA__( __KF_STRING__( item ) );
-        __UN_REMOVE_DATA__( __KF_STRING__( item ) );
+        __UN_ADD_DATA_1__( __KF_STRING__( item ) );
+        __UN_REMOVE_DATA_1__( __KF_STRING__( item ) );
         __UN_UPDATE_DATA_2__( __KF_STRING__( item ), __KF_STRING__( count ) );
         __UN_UPDATE_DATA_2__( __KF_STRING__( item ), __KF_STRING__( time ) );
 
