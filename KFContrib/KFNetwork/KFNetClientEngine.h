@@ -112,7 +112,7 @@ namespace KFrame
 
     protected:
         // 消息函数
-        KFNetFunction _net_function;
+        KFMessageFunction _net_function;
 
         // 客户端连接
         KFNetEventFunction _client_connect_function;

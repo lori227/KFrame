@@ -259,7 +259,7 @@ namespace KFrame
         return ok;
     }
 
-    void KFNetConnector::RunUpdate( KFNetFunction& netfunction, uint32 maxcount )
+    void KFNetConnector::RunUpdate( KFMessageFunction& netfunction, uint32 maxcount )
     {
         // 已经关闭了, 不处理消息
         if ( _is_shutdown )
@@ -286,7 +286,7 @@ namespace KFrame
         SendNetMessage( 0, nullptr, 0 );
     }
 
-    void KFNetConnector::RunMessage( KFNetFunction& netfunction, uint32 maxcount )
+    void KFNetConnector::RunMessage( KFMessageFunction& netfunction, uint32 maxcount )
     {
         auto messagecount = _invalid_int;
         auto message = PopNetMessage();

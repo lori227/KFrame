@@ -55,7 +55,7 @@ namespace KFrame
             return false;
         }
 
-        kffunction->_function( route, data, length );
+        kffunction->_function( route, msgid, data, length );
         return true;
     }
 

@@ -3,8 +3,6 @@
 
 namespace KFrame
 {
-
-
     void KFAchieveModule::BeforeRun()
     {
         _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );

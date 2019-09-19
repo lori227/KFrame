@@ -200,7 +200,7 @@ namespace KFrame
         auto msglength = static_cast< uint32 >( kfmsg.msgdata().length() );
 
         Route temproute( pbroute->serverid(), pbroute->sendid(), pbroute->recvid() );
-        bool ok = _kf_message->CallFunction( temproute, kfmsg.msgid(), msgdata, msglength );
+        bool ok = __CALL_MESSAGE__( temproute, kfmsg.msgid(), msgdata, msglength );
         if ( ok )
         {
             return;

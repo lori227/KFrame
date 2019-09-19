@@ -170,13 +170,11 @@ namespace KFrame
             iter->second = kfmsg.serial();
         }
 
-        auto msgid = kfmsg.msgid();
         auto& msgdata = kfmsg.msgdata();
-
         for ( auto& iter : _kf_role_list._objects )
         {
             auto kfrole = iter.second;
-            kfrole->SendToClient( msgid, msgdata.data(), static_cast< uint32 >( msgdata.length() ) );
+            kfrole->SendToClient( kfmsg.msgid(), msgdata.data(), static_cast< uint32 >( msgdata.length() ) );
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////

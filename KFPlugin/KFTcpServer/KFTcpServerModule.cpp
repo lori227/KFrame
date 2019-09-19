@@ -221,7 +221,7 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFTcpServerModule::HandleNetMessage( const Route& route, uint32 msgid, const char* data, uint32 length )
     {
-        bool result = _kf_message->CallFunction( route, msgid, data, length );
+        bool result = __CALL_MESSAGE__( route, msgid, data, length );
         if ( result )
         {
             return;

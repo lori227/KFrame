@@ -2,6 +2,30 @@
 
 namespace KFrame
 {
+    void KFMessageData::AddNetMessage( uint32 msgid, const char* data, uint32 length )
+    {
+        auto netmessge = KFNetMessage::Create( length );
+        netmessge->_head._msgid = msgid;
+        netmessge->CopyData( data, length );
+        _messages.push_back( netmessge );
+    }
+
+    void KFMessageData::SendNetMessage()
+    {
+        if ( _messages.empty() )
+        {
+            return;
+        }
+
+        for ( auto netmessage : _messages )
+        {
+            __CALL_MESSAGE__( netmessage->_head._route, netmessage->_head._msgid, netmessage->_data, netmessage->_head._length );
+            netmessage->Release();
+        }
+        _messages.clear();
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFRouteShardModule::BeforeRun()
     {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -38,6 +62,7 @@ namespace KFrame
     auto routeservice = _route_service_list.Find( name );\
     if ( routeservice == nullptr )\
     {\
+        AddRouteFailedMessage( name, msgid, data, length );\
         return __LOG_ERROR__( "can't find service[{}]", name );\
     }\
 
@@ -115,6 +140,23 @@ namespace KFrame
         SendRouteMessage( kfmsg.targetid(), pbroute, kfmsg.msgid(), kfmsg.msgdata() );
     }
 
+    void KFRouteShardModule::AddRouteFailedMessage( const std::string& name, uint32 msgid, const char* data, uint32 length )
+    {
+        auto messagedata = _route_message_list.Create( name );
+        messagedata->AddNetMessage( msgid, data, length );
+    }
+
+    void KFRouteShardModule::SendRouteFailedMessage( const std::string& name )
+    {
+        auto messagedata = _route_message_list.Find( name );
+        if ( messagedata == nullptr )
+        {
+            return;
+        }
+
+        messagedata->SendNetMessage();
+    }
+
     void KFRouteShardModule::SendRouteMessage( uint64 clientid, KFMsg::PBRoute* pbroute, uint32 msgid, const std::string& msgdata )
     {
         KFMsg::S2SRouteMessageToClientAck ack;
@@ -143,6 +185,7 @@ namespace KFrame
             routeservice->AddObject( kfmsg.clientid(), kfmsg.objectid( i ), kfmsg.objectid_size() );
         }
 
+        SendRouteFailedMessage( kfmsg.name() );
         __LOG_INFO__( "service[{}:{}] register ok!", kfmsg.name(), KFAppId::ToString( kfmsg.clientid() ) );
     }
 
@@ -155,7 +198,6 @@ namespace KFrame
         {
             return __LOG_ERROR__( "service[{}:{}] not find!", kfmsg.name(), KFAppId::ToString( kfmsg.clientid() ) );
         }
-
         routeservice->AddObject( kfmsg.clientid(), kfmsg.objectid(), kfmsg.objectcount() );
     }
 

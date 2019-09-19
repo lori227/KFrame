@@ -10,9 +10,9 @@ namespace KFrame
     public:
         // 添加消息函数
         template<typename T>
-        void RegisterFunction( uint32 msgid, T* object, void ( T::*handle )( const Route& route, const char* data, uint32 length ) )
+        void RegisterFunction( uint32 msgid, T* object, void ( T::*handle )( const Route&, uint32, const char*, uint32 ) )
         {
-            KFMessageFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
+            KFMessageFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
             AddFunction( msgid, function );
         }
 
@@ -31,12 +31,8 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////////////////////////
     __KF_INTERFACE__( _kf_message, KFMessageInterface );
     ///////////////////////////////////////////////////////////////////////////////////////////
-
-#define __KF_MESSAGE_FUNCTION__( function ) \
-    void function( const Route& route, const char* data, uint32 length )
-
-#define __KF_TRANSPOND_MESSAGE_FUNCTION__( function ) \
-    bool function( const Route& route, uint32 msgid, const char* data, uint32 length )
+#define __CALL_MESSAGE__( route, msgid, data, length )\
+    _kf_message->CallFunction( route, msgid, data, length )
 
 #define __REGISTER_MESSAGE__( msgid, function ) \
     _kf_message->RegisterFunction( msgid, this, function )

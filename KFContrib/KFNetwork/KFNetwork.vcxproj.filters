@@ -13,7 +13,6 @@
     <ClCompile Include="KFNetClientServices.cpp">
       <Filter>NetClient</Filter>
     </ClCompile>
-    <ClCompile Include="KFNetMessage.cpp" />
     <ClCompile Include="KFNetClient.cpp">
       <Filter>NetClient</Filter>
     </ClCompile>

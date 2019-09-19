@@ -113,7 +113,7 @@ namespace KFrame
     private:
 
         // 消息函数
-        KFNetFunction _net_function;
+        KFMessageFunction _net_function;
 
         // 断开连接事件
         KFNetEventFunction _server_lost_function;

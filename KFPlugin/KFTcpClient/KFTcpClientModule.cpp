@@ -154,7 +154,7 @@ namespace KFrame
 
     void KFTcpClientModule::HandleNetMessage( const Route& route, uint32 msgid, const char* data, uint32 length )
     {
-        bool handleresult = _kf_message->CallFunction( route, msgid, data, length );
+        bool handleresult = __CALL_MESSAGE__( route, msgid, data, length );
         if ( handleresult )
         {
             return;

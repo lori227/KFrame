@@ -24,7 +24,7 @@ namespace KFrame
         bool SendNetMessage( uint64 recvid, uint32 msgid, const char* data, uint32 length );
 
         // 执行消息处理
-        void RunUpdate( KFNetFunction& netfunction, uint32 maxcount );
+        void RunUpdate( KFMessageFunction& netfunction, uint32 maxcount );
 
     protected:
         // 发送单一消息
@@ -41,7 +41,7 @@ namespace KFrame
         void RunSendPingMessage();
 
         // 处理消息
-        void RunMessage( KFNetFunction& netfunction, uint32 maxcount );
+        void RunMessage( KFMessageFunction& netfunction, uint32 maxcount );
 
     protected:
         // 网络服务

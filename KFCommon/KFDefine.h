@@ -39,11 +39,14 @@ namespace KFrame
     typedef std::unordered_map< std::string, std::string > MapString;
     typedef std::list< MapString > ListMapString;
     /////////////////////////////////////////////////////////////////////////
-    // tcp网络函数
-    typedef std::function<void( const Route& route, const char* data, uint32 length )> KFMessageFunction;
-    typedef std::function<void( const Route& route, uint32 msgid, const char* data, uint32 length )> KFNetFunction;
-    typedef std::function<bool( const Route& route, uint32 msgid, const char* data, uint32 length )> KFTranspondFunction;
+    // 消息函数
+    typedef std::function<void( const Route& route, uint32 msgid, const char* data, uint32 length )> KFMessageFunction;
+#define __KF_MESSAGE_FUNCTION__( function ) \
+    void function( const Route& route, uint32 msgid, const char* data, uint32 length )
 
+    typedef std::function<bool( const Route& route, uint32 msgid, const char* data, uint32 length )> KFTranspondFunction;
+#define __KF_TRANSPOND_MESSAGE_FUNCTION__( function ) \
+    bool function( const Route& route, uint32 msgid, const char* data, uint32 length )
 
     // http client 回调函数
     typedef std::function<void( std::string& data, std::string& result, std::string& callback )> KFHttpClientFunction;

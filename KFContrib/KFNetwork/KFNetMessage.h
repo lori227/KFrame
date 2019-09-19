@@ -2,6 +2,7 @@
 #define __NET_MESSAGE_H__
 
 #include "KFRouter.h"
+#include "KFMemory/KFMalloc.h"
 
 #pragma pack( 1 )
 
@@ -39,20 +40,69 @@ namespace KFrame
     class KFNetMessage
     {
     public:
-        KFNetMessage( uint32 length );
-        ~KFNetMessage();
+        KFNetMessage( uint32 length )
+        {
+            _head._length = length;
+            if ( _head._length > 0 )
+            {
+                _data = __KF_MALLOC__( int8, length );
+            }
+        }
 
-        static KFNetMessage* Create( uint32 length );
-        void Release();
+        ~KFNetMessage()
+        {
+            if ( _data != nullptr )
+            {
+                __KF_FREE__( int8, _data );
+            }
 
-        static uint32 HeadLength();
+            _data = nullptr;
+            _head._length = 0;
+        }
+
+        static KFNetMessage* Create( uint32 length )
+        {
+            return __KF_NEW__( KFNetMessage, length );
+        }
+
+        void Release()
+        {
+            __KF_DELETE__( KFNetMessage, this );
+        }
+
+        static uint32 HeadLength()
+        {
+            return sizeof( _head );
+        }
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
-        void CopyData( const int8* data, uint32 length );
+        void CopyData( const int8* data, uint32 length )
+        {
+            _head._length = length;
+            if ( length == 0 || data == nullptr )
+            {
+                return;
+            }
+
+            memcpy( _data, data, length );
+        }
 
         // 复制消息
-        void CopyFrom( KFNetMessage* message );
-        void CopyFrom( const Route& route, uint32 msgid, const int8* data, uint32 length );
+        void CopyFrom( KFNetMessage* message )
+        {
+            _head = message->_head;
+            if ( message->_head._length > 0 )
+            {
+                CopyData( message->_data, message->_head._length );
+            }
+        }
+
+        void CopyFrom( const Route& route, uint32 msgid, const int8* data, uint32 length )
+        {
+            _head._route = route;
+            _head._msgid = msgid;
+            CopyData( data, length );
+        }
         ///////////////////////////////////////////////////////////////////////////////
     public:
         // 消息头

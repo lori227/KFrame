@@ -13,11 +13,25 @@
 #include "KFRouteService.hpp"
 #include "KFProtocol/KFProtocol.h"
 #include "KFRouteShardInterface.h"
+#include "KFNetwork/KFNetMessage.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFClusterShard/KFClusterShardInterface.h"
 
 namespace KFrame
 {
+    class KFMessageData
+    {
+    public:
+        // 添加消息
+        void AddNetMessage( uint32 msgid, const char* data, uint32 length );
+
+        // 发送消息
+        void SendNetMessage();
+    public:
+        // 消息列表
+        std::list< KFNetMessage* > _messages;
+    };
+
     class KFRouteShardModule : public KFRouteShardInterface
     {
     public:
@@ -66,9 +80,17 @@ namespace KFrame
         // 转发消息
         void SendRouteMessage( uint64 clientid, KFMsg::PBRoute* pbroute, uint32 msgid, const std::string& msgdata );
 
+        // 添加转发失败的消息
+        void AddRouteFailedMessage( const std::string& name, uint32 msgid, const char* data, uint32 length );
+
+        // 发送转发失败的消息
+        void SendRouteFailedMessage( const std::string& name );
     private:
         // 注册的转发服务
         KFHashMap< std::string, const std::string&, KFRouteService > _route_service_list;
+
+        // 转发失败的消息
+        KFHashMap< std::string, const std::string&, KFMessageData > _route_message_list;
     };
 }
 
