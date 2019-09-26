@@ -346,7 +346,7 @@ message MsgCleanItemReq
 // MSG_SORT_ITEM_REQ
 message MsgSortItemReq
 {
-	bytes sourcename = 1;	// 源背包名字
+	repeated bytes sourcename = 1;	// 源背包名字
 }
 
 // 删除道具

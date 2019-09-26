@@ -15,6 +15,7 @@
 #include "KFIpAddress/KFIpAddressInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"
 #include "KFClusterClient/KFClusterClientInterface.h"
+#include "KFRouteConfig.hpp"
 
 namespace KFrame
 {
@@ -81,6 +82,9 @@ namespace KFrame
 
         // 注册服务
         void RegisterService();
+
+        // 转发规则
+        const std::string& FindRouteProcess( const std::string& module );
 
     protected:
         // 连接成功

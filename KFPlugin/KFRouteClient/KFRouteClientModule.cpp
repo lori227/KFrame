@@ -65,6 +65,17 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    const std::string& KFRouteClientModule::FindRouteProcess( const std::string& module )
+    {
+        auto kfsetting = KFRouteConfig::Instance()->FindSetting( module );
+        if ( kfsetting == nullptr )
+        {
+            return module;
+        }
+
+        return kfsetting->_process;
+    }
+
     bool KFRouteClientModule::SendToAll( const std::string& name, uint32 msgid, ::google::protobuf::Message* message, bool resend )
     {
         return SendToAll( 0u, name, msgid, message, resend );
@@ -72,13 +83,14 @@ namespace KFrame
 
     bool KFRouteClientModule::SendToAll( uint64 sendid, const std::string& name, uint32 msgid, ::google::protobuf::Message* message, bool resend )
     {
-        KFMsg::S2SRouteMessageToNameAllReq req;
+        auto& process = FindRouteProcess( name );
 
+        KFMsg::S2SRouteMessageToNameAllReq req;
         auto pbroute = req.mutable_pbroute();
         pbroute->set_sendid( sendid );
         pbroute->set_serverid( KFGlobal::Instance()->_app_id->GetId() );
 
-        req.set_name( name );
+        req.set_name( process );
         req.set_msgid( msgid );
         req.set_msgdata( message->SerializeAsString() );
         return _kf_cluster_client->SendToProxy( KFMsg::S2S_ROUTE_MESSAGE_TO_NAME_ALL_REQ, &req, resend );
@@ -91,13 +103,14 @@ namespace KFrame
 
     bool KFRouteClientModule::SendToRand( uint64 sendid, const std::string& name, uint32 msgid, ::google::protobuf::Message* message, bool resend )
     {
-        KFMsg::S2SRouteMessageToNameRandReq req;
+        auto& process = FindRouteProcess( name );
 
+        KFMsg::S2SRouteMessageToNameRandReq req;
         auto pbroute = req.mutable_pbroute();
         pbroute->set_sendid( sendid );
         pbroute->set_serverid( KFGlobal::Instance()->_app_id->GetId() );
 
-        req.set_name( name );
+        req.set_name( process );
         req.set_msgid( msgid );
         req.set_msgdata( message->SerializeAsString() );
         return _kf_cluster_client->SendToProxy( KFMsg::S2S_ROUTE_MESSAGE_TO_NAME_RAND_REQ, &req, resend );
@@ -110,13 +123,14 @@ namespace KFrame
 
     bool KFRouteClientModule::SendToBalance( uint64 sendid, const std::string& name, uint32 msgid, ::google::protobuf::Message* message, bool resend )
     {
-        KFMsg::S2SRouteMessageToNameBalanceReq req;
+        auto& process = FindRouteProcess( name );
 
+        KFMsg::S2SRouteMessageToNameBalanceReq req;
         auto pbroute = req.mutable_pbroute();
         pbroute->set_sendid( sendid );
         pbroute->set_serverid( KFGlobal::Instance()->_app_id->GetId() );
 
-        req.set_name( name );
+        req.set_name( process );
         req.set_msgid( msgid );
         req.set_msgdata( message->SerializeAsString() );
         return _kf_cluster_client->SendToProxy( KFMsg::S2S_ROUTE_MESSAGE_TO_NAME_BALANCE_REQ, &req, resend );
@@ -129,14 +143,15 @@ namespace KFrame
 
     bool KFRouteClientModule::SendToObject( uint64 sendid, const std::string& name, uint64 objectid, uint32 msgid, ::google::protobuf::Message* message, bool resend )
     {
-        KFMsg::S2SRouteMessageToNameObjectReq req;
+        auto& process = FindRouteProcess( name );
 
+        KFMsg::S2SRouteMessageToNameObjectReq req;
         auto pbroute = req.mutable_pbroute();
         pbroute->set_sendid( sendid );
         pbroute->set_recvid( objectid );
         pbroute->set_serverid( KFGlobal::Instance()->_app_id->GetId() );
 
-        req.set_name( name );
+        req.set_name( process );
         req.set_msgid( msgid );
         req.set_msgdata( message->SerializeAsString() );
         return _kf_cluster_client->SendToProxy( KFMsg::S2S_ROUTE_MESSAGE_TO_NAME_OBJECT_REQ, &req, resend );
@@ -150,7 +165,6 @@ namespace KFrame
     bool KFRouteClientModule::SendToServer( uint64 sendid, uint64 serverid, uint32 msgid, ::google::protobuf::Message* message, bool resend )
     {
         KFMsg::S2SRouteMessageToServerReq req;
-
         auto pbroute = req.mutable_pbroute();
         pbroute->set_sendid( sendid );
         pbroute->set_recvid( serverid );
@@ -170,7 +184,6 @@ namespace KFrame
     bool KFRouteClientModule::SendToPlayer( uint64 sendid, uint64 serverid, uint64 playerid, uint32 msgid, ::google::protobuf::Message* message, bool resend )
     {
         KFMsg::S2SRouteMessageToPlayerReq req;
-
         auto pbroute = req.mutable_pbroute();
         pbroute->set_sendid( sendid );
         pbroute->set_recvid( playerid );
