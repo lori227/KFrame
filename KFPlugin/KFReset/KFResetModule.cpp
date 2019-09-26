@@ -72,7 +72,7 @@ namespace KFrame
 
     void KFResetModule::ResetConfigData( KFEntity* player, KFDate& lastdate, KFDate& nowdate )
     {
-        for ( auto& iter : KFResetConfig::Instance()->_settings._objects )
+        for ( auto& iter : KFResetConfig::Instance()->_reset_settings._objects )
         {
             auto kfsetting = iter.second;
             if ( kfsetting->_time_setting == nullptr )
@@ -86,21 +86,24 @@ namespace KFrame
             }
 
             // 重置属性
-            if ( kfsetting->_parent_name.empty() )
+            for ( auto& resetdata : kfsetting->_reset_data_list )
             {
-                player->UpdateData( kfsetting->_data_name, kfsetting->_operate, kfsetting->_value );
-            }
-            else if ( kfsetting->_data_name.empty() )
-            {
-                player->RemoveData( kfsetting->_parent_name );
-            }
-            else if ( kfsetting->_key == 0u )
-            {
-                player->UpdateData( kfsetting->_parent_name, kfsetting->_data_name, kfsetting->_operate, kfsetting->_value );
-            }
-            else
-            {
-                player->UpdateData( kfsetting->_parent_name, kfsetting->_key, kfsetting->_data_name, kfsetting->_operate, kfsetting->_value );
+                if ( resetdata._parent_name.empty() )
+                {
+                    player->UpdateData( resetdata._data_name, resetdata._operate, resetdata._value );
+                }
+                else if ( resetdata._data_name.empty() )
+                {
+                    player->RemoveData( resetdata._parent_name );
+                }
+                else if ( resetdata._key == 0u )
+                {
+                    player->UpdateData( resetdata._parent_name, resetdata._data_name, resetdata._operate, resetdata._value );
+                }
+                else
+                {
+                    player->UpdateData( resetdata._parent_name, resetdata._key, resetdata._data_name, resetdata._operate, resetdata._value );
+                }
             }
         }
     }
@@ -141,7 +144,7 @@ namespace KFrame
         _reset_data_list.Remove( module );
     }
 
-    void KFResetModule::ResetPlayerLogicCount( KFEntity* player, KFResetData* kfresetdata, KFDate& lastdate, KFDate& nowdate )
+    void KFResetModule::ResetPlayerLogicCount( KFEntity* player, KFResetLogicData* kfresetdata, KFDate& lastdate, KFDate& nowdate )
     {
         // 计算出n周期前的时间
         auto nowtime = KFDate::CalcTimeData( &kfresetdata->_time_data, nowdate.GetTime() );

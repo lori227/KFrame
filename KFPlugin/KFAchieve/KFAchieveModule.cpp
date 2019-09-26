@@ -146,7 +146,7 @@ namespace KFrame
             }
 
             // 判断是否满足条件
-            if ( kfsetting->_limits.IsEmpty() )
+            if ( !kfsetting->_limits.IsEmpty() )
             {
                 auto& dataname = player->CheckRemoveElement( &kfsetting->_limits, __FUNC_LINE__ );
                 if ( !dataname.empty() )

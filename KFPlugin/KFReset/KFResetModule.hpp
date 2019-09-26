@@ -15,7 +15,7 @@
 
 namespace KFrame
 {
-    class KFResetData
+    class KFResetLogicData
     {
     public:
         // 时间数据
@@ -66,7 +66,7 @@ namespace KFrame
 
         // 重置逻辑
         void ResetPlayerLogic( KFEntity* player, KFDate& lastdate, KFDate& nowdate );
-        void ResetPlayerLogicCount( KFEntity* player, KFResetData* kfresetdata, KFDate& lastdate, KFDate& nowdate );
+        void ResetPlayerLogicCount( KFEntity* player, KFResetLogicData* kfresetdata, KFDate& lastdate, KFDate& nowdate );
     private:
         // 是否需要刷新
         bool _need_to_reset = false;
@@ -75,7 +75,7 @@ namespace KFrame
         uint64 _next_reset_data_time = 0;
 
         // 注册的重置逻辑
-        KFHashMap< std::string, const std::string&, KFResetData > _reset_data_list;
+        KFHashMap< std::string, const std::string&, KFResetLogicData > _reset_data_list;
     };
 }
 
