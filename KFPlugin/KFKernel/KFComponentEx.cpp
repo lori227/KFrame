@@ -619,6 +619,7 @@ namespace KFrame
         // 开启保存数据库定时器
         StartSaveEntityTimer( kfentity, kfdata );
 
+        // 更新同步
         kfentity->SyncUpdateData( kfdata, kfentity->GetKeyID() );
 
         {
@@ -644,11 +645,6 @@ namespace KFrame
 
     void KFComponentEx::AddDataCallBack( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata )
     {
-        // 开启保存数据库定时器
-        StartSaveEntityTimer( kfentity, kfdata );
-
-        kfentity->SyncAddData( kfdata, key );
-
         {
             // 模块回调
             for ( auto& iter : _add_data_module._objects )
@@ -667,6 +663,10 @@ namespace KFrame
                 kfdatafunction->CallFunction( kfentity, kfparent, key, kfdata );
             }
         }
+
+        // 开启保存数据库定时器
+        StartSaveEntityTimer( kfentity, kfdata );
+        kfentity->SyncAddData( kfdata, key );
     }
 
     void KFComponentEx::RemoveDataCallBack( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata )

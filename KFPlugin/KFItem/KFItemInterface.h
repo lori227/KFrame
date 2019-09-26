@@ -8,7 +8,8 @@ namespace KFrame
     class KFItemInterface : public KFModule
     {
     public:
-
+        // 清空包裹
+        virtual void CleanItem( KFEntity* player, const std::string& name ) = 0;
     };
     __KF_INTERFACE__( _kf_item, KFItemInterface );
     //////////////////////////////////////////////////////////////////////////

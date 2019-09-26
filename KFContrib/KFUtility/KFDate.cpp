@@ -197,6 +197,11 @@ namespace KFrame
 
     bool KFDate::CheckPassHour( KFDate& lastdate, KFDate& nowdate )
     {
+        if ( nowdate.GetHour() != lastdate.GetHour() )
+        {
+            return true;
+        }
+
         if ( nowdate.GetMonth() != lastdate.GetMonth() )
         {
             return true;
@@ -207,7 +212,7 @@ namespace KFrame
             return true;
         }
 
-        return nowdate.GetHour() != lastdate.GetHour();
+        return false;
     }
 
     bool KFDate::CheckSameDay( uint64 lasttime, uint64 nowtime )

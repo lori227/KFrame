@@ -56,12 +56,6 @@ namespace KFrame
         auto kfobject = player->GetData();
         auto kflastdata = kfobject->FindData( __KF_STRING__( resettime ) );
         auto lasttime = kflastdata->GetValue();
-        if ( lasttime == 0u )
-        {
-            // 新号不执行重置逻辑
-            kflastdata->SetValue( KFGlobal::Instance()->_real_time );
-            return;
-        }
 
         KFDate lastdate( lasttime );
         KFDate nowdate( KFGlobal::Instance()->_real_time );
@@ -81,7 +75,12 @@ namespace KFrame
         for ( auto& iter : KFResetConfig::Instance()->_settings._objects )
         {
             auto kfsetting = iter.second;
-            if ( !KFDate::CheckTime( &kfsetting->_time_data, lastdate, nowdate ) )
+            if ( kfsetting->_time_setting == nullptr )
+            {
+                continue;
+            }
+
+            if ( !KFDate::CheckTime( &kfsetting->_time_setting->_time_data, lastdate, nowdate ) )
             {
                 continue;
             }

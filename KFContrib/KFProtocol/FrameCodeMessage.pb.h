@@ -142,6 +142,7 @@ enum FrameCodeEnum {
   ItemCanNotUseStatus = 12613,
   ItemUseOk = 12614,
   ItemUseToHeroOk = 12615,
+  ItemSortOk = 12616,
   SignInNotDay = 12700,
   SignInCanNotFind = 12701,
   SignInRewardAlready = 12702,

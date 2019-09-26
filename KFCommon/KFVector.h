@@ -24,7 +24,10 @@ namespace KFrame
         {
             for ( auto object : _objects )
             {
-                __KF_DELETE__( T, object );
+                if ( object != nullptr )
+                {
+                    __KF_DELETE__( T, object );
+                }
             }
 
             _objects.clear();
@@ -60,13 +63,13 @@ namespace KFrame
         }
 
         // 最大数量
-        uint32 MaxSize()
+        uint32 MaxSize() const
         {
             return static_cast< uint32 >( _objects.size() );
         }
 
         // 是否为空
-        bool IsValid( uint32 index )
+        bool IsValid( uint32 index ) const
         {
             return index < MaxSize();
         }
@@ -95,7 +98,7 @@ namespace KFrame
         }
 
         // 查找
-        T* Find( uint32 index )
+        T* Find( uint32 index ) const
         {
             if ( !IsValid( index ) )
             {

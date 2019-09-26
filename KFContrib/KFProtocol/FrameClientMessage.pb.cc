@@ -1707,7 +1707,7 @@ void AddDescriptorsImpl() {
       "(\014\022\022\n\nsourceuuid\030\002 \001(\004\022\022\n\ntargetname\030\003 \001"
       "(\014\022\022\n\ntargetuuid\030\004 \001(\004\"%\n\017MsgCleanItemRe"
       "q\022\022\n\nsourcename\030\001 \001(\014\"$\n\016MsgSortItemReq\022"
-      "\022\n\nsourcename\030\001 \001(\014\"4\n\020MsgRemoveItemReq\022"
+      "\022\n\nsourcename\030\001 \003(\014\"4\n\020MsgRemoveItemReq\022"
       "\022\n\nsourcename\030\001 \001(\014\022\014\n\004uuid\030\002 \001(\004\"+\n\rMsg"
       "UseItemReq\022\014\n\004name\030\001 \001(\014\022\014\n\004uuid\030\002 \001(\004\"G"
       "\n\023MsgUseItemToHeroReq\022\014\n\004name\030\001 \001(\014\022\020\n\010i"
@@ -10163,17 +10163,13 @@ MsgSortItemReq::MsgSortItemReq()
 }
 MsgSortItemReq::MsgSortItemReq(const MsgSortItemReq& from)
   : ::google::protobuf::Message(),
-      _internal_metadata_(NULL) {
+      _internal_metadata_(NULL),
+      sourcename_(from.sourcename_) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
-  sourcename_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  if (from.sourcename().size() > 0) {
-    sourcename_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.sourcename_);
-  }
   // @@protoc_insertion_point(copy_constructor:KFMsg.MsgSortItemReq)
 }
 
 void MsgSortItemReq::SharedCtor() {
-  sourcename_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 MsgSortItemReq::~MsgSortItemReq() {
@@ -10182,7 +10178,6 @@ MsgSortItemReq::~MsgSortItemReq() {
 }
 
 void MsgSortItemReq::SharedDtor() {
-  sourcename_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 void MsgSortItemReq::SetCachedSize(int size) const {
@@ -10205,7 +10200,7 @@ void MsgSortItemReq::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  sourcename_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  sourcename_.Clear();
   _internal_metadata_.Clear();
 }
 
@@ -10219,12 +10214,12 @@ bool MsgSortItemReq::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // bytes sourcename = 1;
+      // repeated bytes sourcename = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
-                input, this->mutable_sourcename()));
+                input, this->add_sourcename()));
         } else {
           goto handle_unusual;
         }
@@ -10257,10 +10252,10 @@ void MsgSortItemReq::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // bytes sourcename = 1;
-  if (this->sourcename().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
-      1, this->sourcename(), output);
+  // repeated bytes sourcename = 1;
+  for (int i = 0, n = this->sourcename_size(); i < n; i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteBytes(
+      1, this->sourcename(i), output);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -10277,11 +10272,10 @@ void MsgSortItemReq::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // bytes sourcename = 1;
-  if (this->sourcename().size() > 0) {
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
-        1, this->sourcename(), target);
+  // repeated bytes sourcename = 1;
+  for (int i = 0, n = this->sourcename_size(); i < n; i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteBytesToArray(1, this->sourcename(i), target);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -10301,11 +10295,12 @@ size_t MsgSortItemReq::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
   }
-  // bytes sourcename = 1;
-  if (this->sourcename().size() > 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::BytesSize(
-        this->sourcename());
+  // repeated bytes sourcename = 1;
+  total_size += 1 *
+      ::google::protobuf::internal::FromIntSize(this->sourcename_size());
+  for (int i = 0, n = this->sourcename_size(); i < n; i++) {
+    total_size += ::google::protobuf::internal::WireFormatLite::BytesSize(
+      this->sourcename(i));
   }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
@@ -10335,10 +10330,7 @@ void MsgSortItemReq::MergeFrom(const MsgSortItemReq& from) {
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from.sourcename().size() > 0) {
-
-    sourcename_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.sourcename_);
-  }
+  sourcename_.MergeFrom(from.sourcename_);
 }
 
 void MsgSortItemReq::CopyFrom(const ::google::protobuf::Message& from) {
@@ -10365,8 +10357,7 @@ void MsgSortItemReq::Swap(MsgSortItemReq* other) {
 }
 void MsgSortItemReq::InternalSwap(MsgSortItemReq* other) {
   using std::swap;
-  sourcename_.Swap(&other->sourcename_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-    GetArenaNoVirtual());
+  sourcename_.InternalSwap(CastToBase(&other->sourcename_));
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
 

@@ -51,6 +51,9 @@
     <ClInclude Include="KFItemTypeConfig.hpp">
       <Filter>Item</Filter>
     </ClInclude>
+    <ClInclude Include="KFTimeConfig.hpp">
+      <Filter>Time</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Kernel">
@@ -73,6 +76,9 @@
     </Filter>
     <Filter Include="Drop">
       <UniqueIdentifier>{14a0a98f-2c03-47b0-bc05-b5bf95597b33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Time">
+      <UniqueIdentifier>{42f709ab-6644-4c31-8936-cce33ed71b6a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -102,6 +108,9 @@
     </ClCompile>
     <ClCompile Include="KFItemTypeConfig.cpp">
       <Filter>Item</Filter>
+    </ClCompile>
+    <ClCompile Include="KFTimeConfig.cpp">
+      <Filter>Time</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

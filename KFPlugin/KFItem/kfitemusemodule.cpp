@@ -20,14 +20,27 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFItemUseModule::CheckCanUseItem( KFEntity* player, const KFItemSetting* kfsetting )
     {
-        return true;
-        //if ( kfsetting->_use_limit == KFItemEnum::UseInAll )
-        //{
-        //    return true;
-        //}
+        if ( kfsetting->_use_limit == KFItemEnum::UseInAll )
+        {
+            return true;
+        }
 
-        //auto ok = false;
-        //return ok;
+        auto ok = false;
+        auto status = player->GetData()->GetValue<uint32>( __KF_STRING__( basic ), __KF_STRING__( status ) );
+        switch ( status )
+        {
+        case KFMsg::ExploreStatus:
+            ok = KFUtility::HaveBitMask<uint32>( kfsetting->_use_limit, KFItemEnum::UseInExplore );
+            break;
+        case KFMsg::PVEStatus:
+            ok = KFUtility::HaveBitMask<uint32>( kfsetting->_use_limit, KFItemEnum::UseInFight );
+            break;
+        default:
+            ok = KFUtility::HaveBitMask<uint32>( kfsetting->_use_limit, KFItemEnum::UseInCity );
+            break;
+        }
+
+        return ok;
     }
 
     __KF_MESSAGE_FUNCTION__( KFItemUseModule::HandleUseItemReq )
@@ -144,7 +157,7 @@ namespace KFrame
         auto kfhero = player->GetData()->FindData( __KF_STRING__( hero ), kfmsg.herouuid() );
         if ( kfhero == nullptr )
         {
-            //return _kf_display->SendToClient( player, KFMsg::HeroNotExist );
+            return _kf_display->SendToClient( player, KFMsg::HeroNotExist );
         }
 
         auto itemid = kfitem->GetValue<uint32>( kfitem->_data_setting->_config_key_name );
@@ -168,7 +181,7 @@ namespace KFrame
         // 对英雄使用
         for ( auto& iter : kfsetting->_drug_values )
         {
-            //_kf_hero->AddHeroData( player, kfhero, iter.first, iter.second );
+            _kf_hero->AddHeroData( player, kfhero, iter.first, iter.second );
         }
 
         // 扣除数量

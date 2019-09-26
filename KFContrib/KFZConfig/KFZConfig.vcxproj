@@ -27,6 +27,7 @@
     <ClInclude Include="KFRelationConfig.hpp" />
     <ClInclude Include="KFRelationSetting.hpp" />
     <ClInclude Include="KFSetting.h" />
+    <ClInclude Include="KFTimeConfig.hpp" />
     <ClInclude Include="KFZoneConfig.hpp" />
     <ClInclude Include="KFZoneSetting.hpp" />
   </ItemGroup>
@@ -39,6 +40,7 @@
     <ClCompile Include="KFOptionConfig.cpp" />
     <ClCompile Include="KFRankConfig.cpp" />
     <ClCompile Include="KFRelationConfig.cpp" />
+    <ClCompile Include="KFTimeConfig.cpp" />
     <ClCompile Include="KFZoneConfig.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

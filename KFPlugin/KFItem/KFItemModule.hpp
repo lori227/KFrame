@@ -79,6 +79,8 @@ namespace KFrame
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
+        // 清空包裹
+        virtual void CleanItem( KFEntity* player, const std::string& name );
     protected:
         // 拆分道具
         __KF_MESSAGE_FUNCTION__( HandleSplitItemReq );
@@ -187,6 +189,9 @@ namespace KFrame
 
         // 添加物品显示
         void AddItemDataToShow( KFEntity* player, uint64 id, uint64 count );
+
+        // 整理道具
+        void SortItem( KFEntity* player, const std::string& name );
 
     protected:
         // 玩家组件上下文

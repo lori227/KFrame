@@ -290,6 +290,12 @@ namespace KFrame
             return false;
         }
 
+        if ( !kfjson.IsArray() )
+        {
+            __LOG_ERROR_FUNCTION__( function, line, "data=[{}] is not array!", data );
+            return false;
+        }
+
         _str_element = data;
         auto size = __JSON_ARRAY_SIZE__( kfjson );
         for ( auto i = 0u; i < size; ++i )
