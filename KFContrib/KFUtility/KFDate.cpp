@@ -266,7 +266,7 @@ namespace KFrame
     bool KFDate::CheckPassWeek( KFDate& lastdate, KFDate& nowdate, uint32 dayofweek, uint32 hour )
     {
         // 跨度超过1周
-        auto timedistance = lastdate.GetTime() - nowdate.GetTime();
+        auto timedistance = nowdate.GetTime() - lastdate.GetTime();
         if ( timedistance >= KFTimeEnum::OneWeekSecond )
         {
             return true;
