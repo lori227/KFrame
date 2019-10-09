@@ -46,7 +46,7 @@ namespace KFrame
         virtual void RemovePlayer( uint64 playerid );
         virtual void RemovePlayer( KFEntity* player );
         ////////////////////////////////////////////////////////////////////////////////
-        virtual bool SendToClient( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToClient( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message, uint32 delay = 0 );
         ////////////////////////////////////////////////////////////////////////////////
     protected:
         virtual void AddInitDataFunction( const std::string& moudle, KFEntityFunction& function );

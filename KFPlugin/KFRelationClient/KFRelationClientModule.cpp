@@ -169,7 +169,6 @@ namespace KFrame
     {
         __ROUTE_PROTO_PARSE__( KFMsg::S2SUpdateDataToRelationReq );
 
-        auto kfobject = player->GetData();
         auto kfrelation = kfobject->FindData( kfmsg.dataname(), kfmsg.playerid() );
         if ( kfrelation == nullptr )
         {
@@ -226,9 +225,7 @@ namespace KFrame
     {
         __SERVER_PROTO_PARSE__( KFMsg::S2SQueryRelationToGameAck );
 
-        auto kfobject = player->GetData();
         auto kfrecord = kfobject->FindData( kfmsg.dataname() );
-
         for ( auto i = 0; i < kfmsg.pbrelation_size(); ++i )
         {
             auto pbrelation = &kfmsg.pbrelation( i );
@@ -254,8 +251,6 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleQueryRelationInviteToGameAck )
     {
         __SERVER_PROTO_PARSE__( KFMsg::S2SQueryRelationInviteToGameAck );
-
-        auto kfobject = player->GetData();
         auto kfinviterecord = kfobject->FindData( kfmsg.dataname() );
 
         for ( auto i = 0; i < kfmsg.pbinvite_size(); ++i )
@@ -284,7 +279,6 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::RelationSettingError );
         }
 
-        auto kfobject = player->GetData();
         auto kffriendrecord = kfobject->FindData( kfmsg.dataname() );
         if ( kffriendrecord == nullptr )
         {
@@ -338,7 +332,6 @@ namespace KFrame
     {
         __SERVER_PROTO_PARSE__( KFMsg::S2SApplyAddRelationToGameAck );
 
-        auto kfobject = player->GetData();
         auto kfinviterecord = kfobject->FindData( kfmsg.dataname() );
         if ( kfinviterecord == nullptr )
         {
@@ -500,7 +493,6 @@ namespace KFrame
             return __LOG_ERROR__( "relation=[{}] no setting!", kfmsg.dataname() );
         }
 
-        auto kfobject = player->GetData();
         auto kfrecord = kfobject->FindData( kfmsg.dataname() );
         if ( kfrecord == nullptr )
         {
@@ -526,7 +518,6 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgDelRelationReq );
 
-        auto kfobject = player->GetData();
         auto kfrelation = kfobject->FindData( kfmsg.dataname(), kfmsg.playerid() );
         if ( kfrelation == nullptr )
         {
@@ -548,7 +539,6 @@ namespace KFrame
     {
         __SERVER_PROTO_PARSE__( KFMsg::S2SDelRelationToGameAck );
 
-        auto kfobject = player->GetData();
         auto kfrecord = kfobject->FindData( kfmsg.dataname() );
         auto kfrelation = kfrecord->FindData( kfmsg.relationid() );
         if ( kfrelation == nullptr )
@@ -616,7 +606,6 @@ namespace KFrame
     {
         __SERVER_PROTO_PARSE__( KFMsg::S2SUpdateFriendLinessToGameAck );
 
-        auto kfobject = player->GetData();
         auto kffriend = kfobject->FindData( __KF_STRING__( friend ), kfmsg.targetplayerid() );
         if ( kffriend == nullptr )
         {

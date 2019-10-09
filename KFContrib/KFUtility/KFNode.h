@@ -43,7 +43,7 @@ namespace KFrame
         uint64 GetUInt64( const char* key, bool optional = false, uint64 defaultvalue = 0 );
 
         // 读取string
-        std::string GetString( const char* key, bool optional = false );
+        std::string GetString( const char* key, bool optional = false, std::string defaultvalue = "" );
 
         // 读取double
         double GetDouble( const char* key, bool optional = false, double defaultvalue = 0.0f );

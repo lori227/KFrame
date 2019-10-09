@@ -10,6 +10,7 @@ namespace KFrame
 #define FUNCTION_EMPTY_STRING ""
 #define FUNCTION_RANGE_STRING "-"
 #define FUNCTION_LINK_STRING ":"
+#define FUNCTION_AND_STRING "&"
 
     class KFUtility
     {

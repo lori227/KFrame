@@ -191,7 +191,6 @@ namespace KFrame
         KFMsg::S2SQueryFriendRankListReq req;
         req.set_rankid( kfmsg.rankid() );
 
-        auto kfobject = player->GetData();
         auto kffriendrecord = kfobject->FindData( __KF_STRING__( friend ) );
         auto kffriend = kffriendrecord->FirstData();
         while ( kffriend != nullptr )

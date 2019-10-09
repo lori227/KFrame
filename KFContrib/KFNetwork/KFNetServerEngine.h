@@ -49,8 +49,8 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // 发送消息
         void SendNetMessage( uint32 msgid, const char* data, uint32 length, uint64 excludeid = 0 );
-        bool SendNetMessage( uint64 handleid, uint32 msgid, const char* data, uint32 length );
-        bool SendNetMessage( uint64 handleid, uint64 recvid, uint32 msgid, const char* data, uint32 length );
+        bool SendNetMessage( uint64 handleid, uint32 msgid, const char* data, uint32 length, uint32 delay = 0u );
+        bool SendNetMessage( uint64 handleid, uint64 recvid, uint32 msgid, const char* data, uint32 length, uint32 delay = 0u );
 
         void SendMessageToName( const std::string& name, uint32 msgid, const char* data, uint32 length );
         void SendMessageToType( const std::string& type, uint32 msgid, const char* data, uint32 length );
@@ -72,13 +72,13 @@ namespace KFrame
 
     protected:
         // 连接时间回调
-        void OnServerConnected( const KFEventData* eventdata );
+        void OnServerConnected( const KFNetEventData* eventdata );
 
         // 连接关闭回调
-        void OnServerShutDown( const KFEventData* eventdata );
+        void OnServerShutDown( const KFNetEventData* eventdata );
 
         // 连接断开时间
-        void OnServerDisconnect( const KFEventData* eventdata );
+        void OnServerDisconnect( const KFNetEventData* eventdata );
 
     protected:
         // 删除托管连接

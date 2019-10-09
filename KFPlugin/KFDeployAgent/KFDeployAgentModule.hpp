@@ -177,6 +177,7 @@ namespace KFrame
         void StartDownFileTask();
         void StartWgetResourceTask();
         void StartDownPluginTask();
+        void StartDevelopUpdateTask();
 
         // 检查任务完成
         bool CheckTaskFinish();

@@ -38,10 +38,10 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////
     // 网络事件
-    class KFEventData
+    class KFNetEventData
     {
     public:
-        KFEventData()
+        KFNetEventData()
         {
             _id = 0;
             _type = 0;

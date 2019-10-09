@@ -1,4 +1,4 @@
-<root version="00000">
+<root version="1006">
 	<item Id="1" Type="1" ParentName="player" DataName="onlinetime" TriggerType="3" Operate="3" UseType="1" UseValue="1" DoneType="11" DoneValue="1" Rewards="[{&quot;money&quot;:&quot;50&quot;}]"/>
 	<item Id="2" Type="1" ParentName="player" DataName="onlinetime" StartTime="12:00" EndTime="13:00" TriggerType="3" Operate="3" UseType="1" UseValue="1" DoneType="11" DoneValue="1" Rewards="[{&quot;money&quot;:&quot;50&quot;}]"/>
 	<item Id="3" Type="1" ParentName="player" DataName="money" TriggerType="2" Operate="1" UseType="1" DoneType="11" DoneValue="100" Rewards="[{&quot;money&quot;:&quot;50&quot;}]"/>

@@ -28,6 +28,16 @@ namespace KFrame
             SendToClient( player, result, params );
         }
 
+        // 发送结果提示到客户端( 延迟发送 )
+        // Game ==> Client
+        template< class...Args >
+        inline void DelayToClient( KFEntity* player, uint32 result, Args&& ... args )
+        {
+            ListString params;
+            FormatParam( params, std::forward< Args >( args )... );
+            DelayToClient( player, result, params );
+        }
+
         // 发送结果提示到客户端
         // Route ==> Player
         template< class...Args >
@@ -85,6 +95,7 @@ namespace KFrame
 
         // Game ==> Client
         virtual void SendToClient( KFEntity* player, uint32 result, ListString& params ) = 0;
+        virtual void DelayToClient( KFEntity* player, uint32 result, ListString& params ) = 0;
 
         // Game ==> Client
         virtual void SendToGroup( KFEntity* player, uint32 result, ListString& params ) = 0;

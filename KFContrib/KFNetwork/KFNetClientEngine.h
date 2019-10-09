@@ -34,9 +34,9 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////////////
 
         // 发送消息
-        void SendNetMessage( uint32 msgid, const char* data, uint32 length );
-        bool SendNetMessage( uint64 serverid, uint32 msgid, const char* data, uint32 length );
-        bool SendNetMessage( uint64 serverid, uint64 recvid, uint32 msgid, const char* data, uint32 length );
+        void SendNetMessage( uint32 msgid, const char* data, uint32 length, uint32 delay = 0 );
+        bool SendNetMessage( uint64 serverid, uint32 msgid, const char* data, uint32 length, uint32 delay = 0 );
+        bool SendNetMessage( uint64 serverid, uint64 recvid, uint32 msgid, const char* data, uint32 length, uint32 delay = 0 );
 
         // 指定发送消息
         void SendMessageToName( const std::string& servername, uint32 msgid, const char* data, uint32 length );
@@ -87,16 +87,16 @@ namespace KFrame
         void HandleClientMessage();
 
         // 客户端连接成功
-        void OnClientConnected( const KFEventData* eventdata );
+        void OnClientConnected( const KFNetEventData* eventdata );
 
         // 客户端断开连接
-        void OnClientDisconnect( const KFEventData* eventdata );
+        void OnClientDisconnect( const KFNetEventData* eventdata );
 
         // 客户端关闭
-        void OnClientShutDown( const KFEventData* eventdata );
+        void OnClientShutDown( const KFNetEventData* eventdata );
 
         // 连接失败
-        void OnClientFailed( const KFEventData* eventdata );
+        void OnClientFailed( const KFNetEventData* eventdata );
 
     public:
 

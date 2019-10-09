@@ -15,7 +15,8 @@ namespace KFrame
         auto configfile = KFUtility::FormatConfigFile( filename, KFGlobal::Instance()->_channel, KFGlobal::Instance()->_service );
 
         KFConfigData data;
-        data._file_name = configfile;
+        data._file_path = configfile;
+        data._file_name = xmlnode.GetString( "Name" );
         for ( auto& iter : _mask_list )
         {
             if ( xmlnode.GetString( iter.first.c_str(), true ) == "1" )
@@ -31,7 +32,7 @@ namespace KFrame
     {
         for ( auto& kfdata : _config_data_list )
         {
-            auto pos = kfdata._file_name.find( file );
+            auto pos = kfdata._file_path.find( file );
             if ( pos != std::string::npos )
             {
                 return &kfdata;

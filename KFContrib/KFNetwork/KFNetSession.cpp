@@ -302,7 +302,7 @@ namespace KFrame
 
     bool KFNetSession::AddSendMessage( KFNetMessage* message )
     {
-        bool ok = _send_queue.PushObject( message );
+        auto ok = _send_queue.PushObject( message );
         if ( !ok )
         {
             if ( !_is_send_queue_full )

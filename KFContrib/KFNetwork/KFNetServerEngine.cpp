@@ -59,6 +59,7 @@ namespace KFrame
 
     void KFNetServerEngine::RunEngine( uint64 nowtime )
     {
+        ++_net_server_services->_frame;
         _net_server_services->_now_time = nowtime;
         _net_server_services->_net_event->RunEvent();
 
@@ -109,7 +110,7 @@ namespace KFrame
         return kfhandle->_remote_ip;
     }
 
-    void KFNetServerEngine::OnServerConnected( const KFEventData* eventdata )
+    void KFNetServerEngine::OnServerConnected( const KFNetEventData* eventdata )
     {
         // 加入托管列表
         auto kfhandle = reinterpret_cast< KFNetHandle* >( eventdata->_data );
@@ -119,7 +120,7 @@ namespace KFrame
         kfhandle->SetTrusteeTimeout( _net_server_services->_now_time + 30000 );
     }
 
-    void KFNetServerEngine::OnServerShutDown( const KFEventData* eventdata )
+    void KFNetServerEngine::OnServerShutDown( const KFNetEventData* eventdata )
     {
         auto istrustee = reinterpret_cast< uint64 >( eventdata->_data ) == 1 ? true : false;
         if ( istrustee )
@@ -141,7 +142,7 @@ namespace KFrame
         __LOG_DEBUG__( "handle[{}:{}|{}] shutdown ok!", eventdata->_id, KFAppId::ToString( eventdata->_id ), reinterpret_cast< uint64 >( eventdata->_data ) );
     }
 
-    void KFNetServerEngine::OnServerDisconnect( const KFEventData* eventdata )
+    void KFNetServerEngine::OnServerDisconnect( const KFNetEventData* eventdata )
     {
         // 断开连接
         auto kfhandle = _kf_handles.Find( eventdata->_id );
@@ -331,7 +332,7 @@ namespace KFrame
         }
     }
 
-    bool KFNetServerEngine::SendNetMessage( uint64 handleid, uint32 msgid, const char* data, uint32 length )
+    bool KFNetServerEngine::SendNetMessage( uint64 handleid, uint32 msgid, const char* data, uint32 length, uint32 delay )
     {
         KFNetHandle* handle = FindNetHandle( handleid );
         if ( handle == nullptr )
@@ -340,10 +341,10 @@ namespace KFrame
             return false;
         }
 
-        return handle->SendNetMessage( handleid, msgid, data, length );
+        return handle->SendNetMessage( handleid, msgid, data, length, delay );
     }
 
-    bool KFNetServerEngine::SendNetMessage( uint64 handleid, uint64 recvid, uint32 msgid, const char* data, uint32 length )
+    bool KFNetServerEngine::SendNetMessage( uint64 handleid, uint64 recvid, uint32 msgid, const char* data, uint32 length, uint32 delay )
     {
         KFNetHandle* handle = FindNetHandle( handleid );
         if ( handle == nullptr )
@@ -352,6 +353,6 @@ namespace KFrame
             return false;
         }
 
-        return handle->SendNetMessage( recvid, msgid, data, length );
+        return handle->SendNetMessage( recvid, msgid, data, length, delay );
     }
 }

@@ -20,6 +20,7 @@ public:
 protected:
     virtual void DoDataExchange( CDataExchange* pDX );	// DDX/DDV 支持
 
+    void InitConsoleWindow();
     // 加载资源配置
     void LoadPathFile();
 

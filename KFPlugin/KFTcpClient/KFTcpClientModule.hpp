@@ -42,9 +42,9 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////
 
         // 发送消息
-        virtual void SendNetMessage( uint32 msgid, google::protobuf::Message* message );
-        virtual bool SendNetMessage( uint64 serverid, uint32 msgid, google::protobuf::Message* message );
-        virtual bool SendNetMessage( uint64 serverid, uint64 recvid, uint32 msgid, google::protobuf::Message* message );
+        virtual void SendNetMessage( uint32 msgid, google::protobuf::Message* message, uint32 delay = 0 );
+        virtual bool SendNetMessage( uint64 serverid, uint32 msgid, google::protobuf::Message* message, uint32 delay = 0 );
+        virtual bool SendNetMessage( uint64 serverid, uint64 recvid, uint32 msgid, google::protobuf::Message* message, uint32 delay = 0 );
 
         virtual void SendNetMessage( uint32 msgid, const char* data, uint32 length );
         virtual bool SendNetMessage( uint64 serverid, uint32 msgid, const char* data, uint32 length );

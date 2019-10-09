@@ -15,12 +15,14 @@
     <ClInclude Include="KFConfigInterface.h" />
     <ClInclude Include="KFConfigModule.hpp" />
     <ClInclude Include="KFConfigPlugin.hpp" />
+    <ClInclude Include="KFVersionConfig.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="KFConfigConfig.cpp" />
     <ClCompile Include="KFConfigModule.cpp" />
     <ClCompile Include="KFConfigPlugin.cpp" />
+    <ClCompile Include="KFVersionConfig.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{E3C1D2CB-E8FD-44B5-8AFE-5403E86E0035}</ProjectGuid>

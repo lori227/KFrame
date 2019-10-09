@@ -122,7 +122,8 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
         virtual uint64 GetConfigValue( const std::string& name, uint64 id );
-
+        virtual uint32 GetStatus();
+        virtual void SetStatus( uint32 status );
     protected:
         // 判断添加
         bool CheckAddElement( const KFElement* kfelement, const char* function, uint32 line, float multiple );
@@ -167,7 +168,6 @@ namespace KFrame
 
         // 发送显示奖励
         void SendShowElementToClient();
-
     public:
         // 组件
         KFComponentEx* _kf_component = nullptr;
@@ -192,8 +192,6 @@ namespace KFrame
         // 更新的数据
         bool _have_update_pb_object = false;
         KFMsg::PBObject _update_pb_object;
-
-        // 是否通知客户端
 
         // 需要显示的element
         bool _add_show_element = true;

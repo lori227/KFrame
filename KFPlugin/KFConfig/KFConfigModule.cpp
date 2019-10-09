@@ -8,19 +8,41 @@ namespace KFrame
     KFConfigModule::KFConfigModule()
     {
         _kf_config_config = new KFConfigConfig();
+        _kf_version_config = new KFVersionConfig();
     }
 
     KFConfigModule::~KFConfigModule()
     {
-        delete _kf_config_config;
-        _kf_config_config = nullptr;
+        __DELETE_OBJECT__( _kf_config_config );
+        __DELETE_OBJECT__( _kf_version_config );
+    }
+
+    void KFConfigModule::BeforeRun()
+    {
+        _kf_plugin_manage->RegisterCommandFunction( __KF_STRING__( reloadconfig ), this, &KFConfigModule::ProcessReloadCommand );
+    }
+
+    void KFConfigModule::ShutDown()
+    {
+        _kf_plugin_manage->UnRegisterCommandFunction( __KF_STRING__( reloadconfig ) );
+
+        for ( auto& iter : _config_list )
+        {
+            delete iter.second;
+        }
+        _config_list.clear();
+    }
+
+    void KFConfigModule::LoadConfigList()
+    {
+        auto configfile = _config_path + "config.xml";
+        LoadConfigFile( _kf_config_config, configfile, KFConfigEnum::CanReload | KFConfigEnum::NeedClearData );
     }
 
     void KFConfigModule::LoadConfig()
     {
-        // 先读取
-        auto configfile = _config_path + "config.xml";
-        LoadConfigFile( _kf_config_config, configfile, KFConfigEnum::None );
+        // 读取配置文件列表
+        LoadConfigList();
 
         for ( auto& iter : _config_list )
         {
@@ -34,7 +56,7 @@ namespace KFrame
 
             for ( auto& kfdata : kfsetting->_config_data_list )
             {
-                LoadConfigFile( kfconfig, kfdata._file_name, kfdata._load_mask );
+                LoadConfigFile( kfconfig, kfdata._file_path, kfdata._load_mask );
             }
         }
 
@@ -45,14 +67,6 @@ namespace KFrame
         }
     }
 
-    void KFConfigModule::ShutDown()
-    {
-        for ( auto& iter : _config_list )
-        {
-            delete iter.second;
-        }
-        _config_list.clear();
-    }
 
     void KFConfigModule::AddConfig( const std::string& name, KFConfig* kfconfig )
     {
@@ -70,45 +84,59 @@ namespace KFrame
         return iter->second;
     }
 
+    void KFConfigModule::ProcessReloadCommand( const VectorString& params )
+    {
+        ReloadConfig( _globbing_str );
+    }
+
     void KFConfigModule::ReloadConfig( const std::string& file )
     {
         __LOG_INFO__( "reload [{}] start!", file );
 
+        // 重新加载配置列表
+        LoadConfigList();
+
+        auto configfile = _config_path + "_xmlversion.xml";
+        LoadConfigFile( _kf_version_config, configfile, KFConfigEnum::NeedClearData | KFConfigEnum::CanReload );
+
+        bool loadok = false;
         for ( auto& iter : _config_list )
         {
             auto kfconfig = iter.second;
-            auto kfsetting = _kf_config_config->FindSetting( kfconfig->_file_name );
-            if ( kfsetting == nullptr )
+            auto kfconfigsetting = _kf_config_config->FindSetting( kfconfig->_file_name );
+            if ( kfconfigsetting == nullptr )
             {
                 continue;
             }
 
-            // 判断是否指定文件
-            if ( file != _globbing_str )
-            {
-                auto configdata = kfsetting->IsFile( file );
-                if ( configdata == nullptr )
-                {
-                    continue;
-                }
-            }
-
-            for ( auto& kfdata : kfsetting->_config_data_list )
+            // 判断版本号是否相同
+            for ( auto& kfdata : kfconfigsetting->_config_data_list )
             {
                 if ( KFUtility::HaveBitMask<uint32>( kfdata._load_mask, KFConfigEnum::CanReload ) )
                 {
-                    LoadConfigFile( kfconfig, kfdata._file_name, kfdata._load_mask );
+                    auto kfversionsetting = _kf_version_config->FindSetting( kfdata._file_name );
+                    if ( kfversionsetting == nullptr || kfconfig->CheckVersion( kfdata._file_path, kfversionsetting->_version ) )
+                    {
+                        continue;
+                    }
+
+                    loadok = true;
+                    kfconfig->ResetVersion();
+                    LoadConfigFile( kfconfig, kfdata._file_path, kfdata._load_mask );
                 }
             }
         }
 
-        for ( auto& iter : _config_list )
+        if ( loadok )
         {
-            auto kfconfig = iter.second;
-            kfconfig->LoadAllComplete();
-        }
+            for ( auto& iter : _config_list )
+            {
+                auto kfconfig = iter.second;
+                kfconfig->LoadAllComplete();
+            }
 
-        _kf_plugin_manage->AfterLoad();
+            _kf_plugin_manage->AfterLoad();
+        }
 
         __LOG_INFO__( "reload [{}] ok!", file );
     }
@@ -126,7 +154,8 @@ namespace KFrame
         }
         catch ( ... )
         {
-            throw std::runtime_error( __FORMAT__( "load [{}] failed!", file ) );
+            static std::string error = __FORMAT__( "load [{}] failed!", file );
+            throw std::runtime_error( error );
         }
     }
 }

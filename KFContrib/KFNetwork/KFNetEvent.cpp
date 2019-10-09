@@ -21,7 +21,7 @@ namespace KFrame
 
     void KFNetEvent::AddEvent( uint32 type, uint64 id, void* data, const char* describe /* = "" */, int32 code /* = 0 */ )
     {
-        auto eventdata = __KF_NEW__( KFEventData );
+        auto eventdata = __KF_NEW__( KFNetEventData );
 
         eventdata->_id = id;
         eventdata->_type = type;
@@ -37,7 +37,7 @@ namespace KFrame
         while ( eventdata != nullptr )
         {
             HandleBindEventFunction( eventdata );
-            __KF_DELETE__( KFEventData, eventdata );
+            __KF_DELETE__( KFNetEventData, eventdata );
 
             eventdata = _net_event_data.PopObject();
         }
@@ -53,7 +53,7 @@ namespace KFrame
         _net_event_data.ClearObject();
     }
 
-    void KFNetEvent::HandleBindEventFunction( const KFEventData* eventdata )
+    void KFNetEvent::HandleBindEventFunction( const KFNetEventData* eventdata )
     {
         switch ( eventdata->_type )
         {

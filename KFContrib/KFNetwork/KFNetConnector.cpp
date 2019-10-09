@@ -14,6 +14,15 @@ namespace KFrame
     KFNetConnector::~KFNetConnector()
     {
         _net_services = nullptr;
+
+        for ( auto& iter : _delay_queue )
+        {
+            for ( auto message : iter.second )
+            {
+                message->Release();
+            }
+        }
+        _delay_queue.clear();
     }
 
     void KFNetConnector::InitConnector( uint64 id, KFNetServices* netservices )
@@ -175,16 +184,16 @@ namespace KFrame
     }
 
     // 添加一个发送消息
-    bool KFNetConnector::SendSingleMessage( uint64 recvid, uint32 msgid, const char* data, uint32 length )
+    bool KFNetConnector::SendSingleMessage( uint64 recvid, uint32 msgid, const char* data, uint32 length, uint32 delay )
     {
         auto netmessage = KFNetMessage::Create( length );
 
         Route route( 0, 0, recvid );
         netmessage->CopyFrom( route, msgid, data, length );
-        return AddSendMessage( netmessage );
+        return PushSendMessage( netmessage, delay );
     }
 
-    bool KFNetConnector::SendMultiMessage( uint64 recvid, uint32 msgid, const char* data, uint32 length )
+    bool KFNetConnector::SendMultiMessage( uint64 recvid, uint32 msgid, const char* data, uint32 length, uint32 delay )
     {
         // 子消息个数
         uint32 datalength = length;
@@ -200,7 +209,7 @@ namespace KFrame
         auto headmessage = KFNetMessage::Create( KFNetMessage::HeadLength() );
         headmessage->_head._child = messagecount;
         headmessage->CopyFrom( head._route, KFNetDefine::CUT_MSGCHILDBEGIN, reinterpret_cast< int8*>( &head ), KFNetMessage::HeadLength() );
-        if ( !AddSendMessage( headmessage ) )
+        if ( !PushSendMessage( headmessage, delay ) )
         {
             return false;
         }
@@ -216,7 +225,7 @@ namespace KFrame
             auto childmessage = KFNetMessage::Create( sendlength );
             childmessage->_head._child = i + 1;
             childmessage->CopyFrom( head._route, KFNetDefine::CUT_MSGCHILD, data + copydatalength, sendlength );
-            if ( !AddSendMessage( childmessage ) )
+            if ( !PushSendMessage( childmessage, delay ) )
             {
                 return false;
             }
@@ -229,12 +238,12 @@ namespace KFrame
         return true;
     }
 
-    bool KFNetConnector::SendNetMessage( uint32 msgid, const char* data, uint32 length )
+    bool KFNetConnector::SendNetMessage( uint32 msgid, const char* data, uint32 length, uint32 delay /* = 0u */ )
     {
-        return SendNetMessage( 0, msgid, data, length );
+        return SendNetMessage( 0, msgid, data, length, delay );
     }
 
-    bool KFNetConnector::SendNetMessage( uint64 recvid, uint32 msgid, const char* data, uint32 length )
+    bool KFNetConnector::SendNetMessage( uint64 recvid, uint32 msgid, const char* data, uint32 length, uint32 delay /* = 0u */ )
     {
         // 消息加密
         data = _net_services->Encode( data, length );
@@ -242,11 +251,11 @@ namespace KFrame
         bool ok = false;
         if ( length <= KFNetDefine::MaxMessageLength )
         {
-            ok = SendSingleMessage( recvid, msgid, data, length );
+            ok = SendSingleMessage( recvid, msgid, data, length, delay );
         }
         else
         {
-            ok = SendMultiMessage( recvid, msgid, data, length );
+            ok = SendMultiMessage( recvid, msgid, data, length, delay );
         }
 
         // 发送消息
@@ -266,6 +275,9 @@ namespace KFrame
         {
             return;
         }
+
+        // 发送延迟消息
+        RunSendDelayMessage();
 
         // 处理消息
         RunMessage( netfunction, maxcount );
@@ -307,5 +319,45 @@ namespace KFrame
             }
             message = PopNetMessage();
         }
+    }
+
+    void KFNetConnector::RunSendDelayMessage()
+    {
+        if ( _delay_queue.empty() )
+        {
+            return;
+        }
+
+        auto iter = _delay_queue.find( _net_services->_frame );
+        if ( iter == _delay_queue.end() )
+        {
+            return;
+        }
+
+        for ( auto message : iter->second )
+        {
+            AddSendMessage( message );
+        }
+        _delay_queue.erase( iter );
+
+        if ( IsNeedSend() )
+        {
+            _net_services->SendEventToServices( this, KFNetDefine::SendEvent );
+        }
+    }
+
+    bool KFNetConnector::PushSendMessage( KFNetMessage* message, uint32 delay )
+    {
+        auto ok = true;
+        if ( delay == 0u )
+        {
+            ok = AddSendMessage( message );
+        }
+        else
+        {
+            _delay_queue[ _net_services->_frame + delay ].push_back( message );
+        }
+
+        return ok;
     }
 }

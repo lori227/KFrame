@@ -165,13 +165,12 @@ namespace KFrame
         _kf_component->RemoveEntity( player );
     }
 
-    bool KFPlayerModule::SendToClient( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFPlayerModule::SendToClient( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message, uint32 delay /* = 0 */ )
     {
         auto kfobject = player->GetData();
         auto gateid = kfobject->GetValue( __KF_STRING__( gateid ) );
-        return _kf_tcp_server->SendNetMessage( gateid, player->GetKeyID(), msgid, message );
+        return _kf_tcp_server->SendNetMessage( gateid, player->GetKeyID(), msgid, message, delay );
     }
-
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFPlayerModule::InitPlayer( KFEntity* player )
     {
@@ -452,7 +451,6 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgRequestSyncReq );
 
-        auto kfobject = player->GetData();
         auto kfdata = kfobject->FindData( kfmsg.dataname() );
         if ( kfdata == nullptr )
         {
@@ -480,7 +478,6 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgCancelSyncReq );
 
-        auto kfobject = player->GetData();
         auto kfdata = kfobject->FindData( kfmsg.dataname() );
         if ( kfdata == nullptr )
         {

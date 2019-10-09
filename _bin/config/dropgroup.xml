@@ -1,0 +1,5 @@
+<root version="1006">
+	<item Id="1" DropDataId="1" Weight="100" DropCount="1"/>
+	<item Id="1" DropDataId="2" Weight="100" DropCount="1"/>
+	<item Id="1" DropDataId="3" DropCount="1"/>
+</root>

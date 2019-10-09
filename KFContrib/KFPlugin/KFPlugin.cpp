@@ -31,7 +31,7 @@ namespace KFrame
         for ( auto& iter : _modules )
         {
             _init_module = iter.second;
-            iter.second->LoadConfig();
+            _init_module->LoadConfig();
         }
     }
 
@@ -40,7 +40,7 @@ namespace KFrame
         for ( auto& iter : _modules )
         {
             _init_module = iter.second;
-            iter.second->AfterLoad();
+            _init_module->AfterLoad();
         }
     }
 

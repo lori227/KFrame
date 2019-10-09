@@ -120,6 +120,8 @@ namespace KFrame
         virtual void SyncRemoveData( KFData* kfdata, uint64 key ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         virtual uint64 GetConfigValue( const std::string& name, uint64 id ) = 0;
+        virtual uint32 GetStatus() = 0;
+        virtual void SetStatus( uint32 status ) = 0;
     };
 }
 

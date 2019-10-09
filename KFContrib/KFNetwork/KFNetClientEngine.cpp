@@ -46,6 +46,7 @@ namespace KFrame
     void KFNetClientEngine::RunEngine( uint64 nowtime )
     {
         // 网络事件
+        ++_net_client_services->_frame;
         _net_client_services->_now_time = nowtime;
         _net_client_services->_net_event->RunEvent();
 
@@ -68,7 +69,7 @@ namespace KFrame
         }
     }
 
-    void KFNetClientEngine::OnClientConnected( const KFEventData* eventdata )
+    void KFNetClientEngine::OnClientConnected( const KFNetEventData* eventdata )
     {
         auto kfclient = _kf_clients.Find( eventdata->_id );
         if ( kfclient == nullptr )
@@ -87,7 +88,7 @@ namespace KFrame
         }
     }
 
-    void KFNetClientEngine::OnClientDisconnect( const KFEventData* eventdata )
+    void KFNetClientEngine::OnClientDisconnect( const KFNetEventData* eventdata )
     {
         auto kfclient = _kf_clients.Find( eventdata->_id );
         if ( kfclient == nullptr )
@@ -105,7 +106,7 @@ namespace KFrame
         }
     }
 
-    void KFNetClientEngine::OnClientShutDown( const KFEventData* eventdata )
+    void KFNetClientEngine::OnClientShutDown( const KFNetEventData* eventdata )
     {
         auto kfclient = _kf_clients.Find( eventdata->_id );
         if ( kfclient != nullptr )
@@ -123,7 +124,7 @@ namespace KFrame
         }
     }
 
-    void KFNetClientEngine::OnClientFailed( const KFEventData* eventdata )
+    void KFNetClientEngine::OnClientFailed( const KFNetEventData* eventdata )
     {
         auto kfclient = _kf_clients.Find( eventdata->_id );
         if ( kfclient == nullptr )
@@ -185,16 +186,16 @@ namespace KFrame
         kfclient->CloseClient();
     }
 
-    void KFNetClientEngine::SendNetMessage( uint32 msgid, const char* data, uint32 length )
+    void KFNetClientEngine::SendNetMessage( uint32 msgid, const char* data, uint32 length, uint32 delay )
     {
         for ( auto& iter : _kf_clients._objects )
         {
             auto netclient = iter.second;
-            netclient->SendNetMessage( iter.first, msgid, data, length );
+            netclient->SendNetMessage( iter.first, msgid, data, length, delay );
         }
     }
 
-    bool KFNetClientEngine::SendNetMessage( uint64 serverid, uint32 msgid, const char* data, uint32 length )
+    bool KFNetClientEngine::SendNetMessage( uint64 serverid, uint32 msgid, const char* data, uint32 length, uint32 delay )
     {
         auto netclient = _kf_clients.Find( serverid );
         if ( netclient == nullptr )
@@ -203,10 +204,10 @@ namespace KFrame
             return false;
         }
 
-        return netclient->SendNetMessage( msgid, data, length );
+        return netclient->SendNetMessage( msgid, data, length, delay );
     }
 
-    bool KFNetClientEngine::SendNetMessage( uint64 serverid, uint64 recvid, uint32 msgid, const char* data, uint32 length )
+    bool KFNetClientEngine::SendNetMessage( uint64 serverid, uint64 recvid, uint32 msgid, const char* data, uint32 length, uint32 delay )
     {
         auto netclient = _kf_clients.Find( serverid );
         if ( netclient == nullptr )
@@ -215,7 +216,7 @@ namespace KFrame
             return false;
         }
 
-        return netclient->SendNetMessage( recvid, msgid, data, length );
+        return netclient->SendNetMessage( recvid, msgid, data, length, delay );
     }
 
     void KFNetClientEngine::SendMessageToType( const std::string& servertype, uint32 msgid, const char* data, uint32 length )

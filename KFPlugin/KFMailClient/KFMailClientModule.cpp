@@ -105,12 +105,10 @@ namespace KFrame
     {
         __SERVER_PROTO_PARSE__( KFMsg::S2SQueryMailAck );
 
-        auto kfobject = player->GetData();
-        auto kfmailrecord = kfobject->FindData( __KF_STRING__( mail ) );
+        // 将邮件保存到玩家属性中
 
         uint64 maxmailid = 0u;
-
-        // 将邮件保存到玩家属性中
+        auto kfmailrecord = kfobject->FindData( __KF_STRING__( mail ) );
         for ( auto i = 0; i < kfmsg.mail_size(); ++i )
         {
             auto pbmail = &kfmsg.mail( i );
@@ -165,7 +163,6 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgViewMailReq );
 
-        auto kfobject = player->GetData();
         auto kfmail = kfobject->FindData( __KF_STRING__( mail ), kfmsg.id() );
         if ( kfmail == nullptr )
         {
@@ -191,7 +188,6 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgDeleteMailReq );
 
-        auto kfobject = player->GetData();
         auto kfmail = kfobject->FindData( __KF_STRING__( mail ), kfmsg.id() );
         if ( kfmail == nullptr )
         {
@@ -214,7 +210,6 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgMailRewardReq );
 
-        auto kfobject = player->GetData();
         auto kfmail = kfobject->FindData( __KF_STRING__( mail ), kfmsg.id() );
         if ( kfmail == nullptr )
         {

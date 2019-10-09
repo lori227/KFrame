@@ -26,6 +26,12 @@ namespace KFrame
         // 所有配置加载完
         virtual void LoadAllComplete() {}
 
+        // 重置版本
+        void ResetVersion()
+        {
+            _versions.clear();
+        }
+
         // 获得版本
         const std::string& GetVersion()
         {
@@ -36,14 +42,6 @@ namespace KFrame
 
             return _versions.begin()->second;
         }
-
-    public:
-        // 默认配置文件名
-        std::string _file_name;
-
-    protected:
-        // 版本列表
-        std::unordered_map< std::string, std::string > _versions;
 
         // 判断版本
         bool CheckVersion( const std::string& file, const std::string& version )
@@ -61,6 +59,14 @@ namespace KFrame
 
             return iter->second == version;
         }
+
+    public:
+        // 默认配置文件名
+        std::string _file_name;
+
+    protected:
+        // 版本列表
+        std::unordered_map< std::string, std::string > _versions;
 
         // 更新版本
         void UpdateVersion( const std::string& file, const std::string& version )
@@ -80,10 +86,6 @@ namespace KFrame
             KFXml kfxml( file );
             auto config = kfxml.RootNode();
             auto version = config.GetString( "version" );
-            if ( CheckVersion( file, version ) )
-            {
-                //return false;
-            }
 
             CheckClearSetting( loadmask );
 

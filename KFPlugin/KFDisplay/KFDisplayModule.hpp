@@ -23,13 +23,13 @@ namespace KFrame
         ~KFDisplayModule() = default;
 
         ////////////////////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////////////
     private:
         // Gate/Proxy ==> Client
         virtual void SendToClient( uint64 playerid, uint32 result, ListString& params );
 
         // Game ==> Client
         virtual void SendToClient( KFEntity* player, uint32 result, ListString& params );
+        virtual void DelayToClient( KFEntity* player, uint32 result, ListString& params );
 
         // Route ==> Player
         virtual void SendToPlayer( KFData* kfbasic, uint32 result, ListString& params );

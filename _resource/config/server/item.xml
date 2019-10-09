@@ -1,4 +1,4 @@
-<root version="0000">
+<root version="1006">
 	<item OverlayValue="10" Id="1" Type="101" Name="铜钱卡" CanDirectUse="1" Quality="1" UseCount="1" OverlayType="1" RewardType="1" RewardValue="[{&quot;money&quot;:{&quot;money&quot;:&quot;1000&quot;}}]"/>
 	<item OverlayValue="1" Id="2" Type="101" Name="任务道具" OverlayType="1"/>
 	<item OverlayValue="10" Id="3" Type="101" Name="张小贱礼盒" CanDirectUse="1" Quality="2" UseCount="1" OverlayType="1" RewardType="1" RewardValue="[{&quot;clothes&quot;:{&quot;id&quot;:&quot;20001&quot;|&quot;count&quot;:&quot;1&quot;}}|{&quot;money&quot;:{&quot;money&quot;:&quot;9999&quot;}}]"/>

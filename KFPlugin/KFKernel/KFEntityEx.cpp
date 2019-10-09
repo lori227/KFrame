@@ -555,6 +555,7 @@ namespace KFrame
         }
         }
     }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     const std::string& KFEntityEx::CheckAddElement( const KFElements* kfelements, const char* function, uint32 line, float multiple /* = 1.0f */ )
@@ -1267,5 +1268,15 @@ namespace KFrame
         }
 
         return kfdata->GetValue();
+    }
+
+    uint32 KFEntityEx::GetStatus()
+    {
+        return _kf_object->GetValue<uint32>( __KF_STRING__( basic ), __KF_STRING__( status ) );
+    }
+
+    void KFEntityEx::SetStatus( uint32 status )
+    {
+        UpdateData( __KF_STRING__( basic ), __KF_STRING__( status ), KFEnum::Set, status );
     }
 }

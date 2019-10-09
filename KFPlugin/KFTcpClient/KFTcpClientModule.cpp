@@ -85,22 +85,22 @@ namespace KFrame
         CallClientFailedFunction( netdata );
     }
 
-    void KFTcpClientModule::SendNetMessage( uint32 msgid, google::protobuf::Message* message )
+    void KFTcpClientModule::SendNetMessage( uint32 msgid, google::protobuf::Message* message, uint32 delay )
     {
         auto strdata = message->SerializeAsString();
-        _client_engine->SendNetMessage( msgid, strdata.data(), strdata.size() );
+        _client_engine->SendNetMessage( msgid, strdata.data(), strdata.size(), delay );
     }
 
-    bool KFTcpClientModule::SendNetMessage( uint64 serverid, uint32 msgid, google::protobuf::Message* message )
+    bool KFTcpClientModule::SendNetMessage( uint64 serverid, uint32 msgid, google::protobuf::Message* message, uint32 delay )
     {
         auto strdata = message->SerializeAsString();
-        return _client_engine->SendNetMessage( serverid, msgid, strdata.data(), strdata.size() );
+        return _client_engine->SendNetMessage( serverid, msgid, strdata.data(), strdata.size(), delay );
     }
 
-    bool KFTcpClientModule::SendNetMessage( uint64 serverid, uint64 recvid, uint32 msgid, google::protobuf::Message* message )
+    bool KFTcpClientModule::SendNetMessage( uint64 serverid, uint64 recvid, uint32 msgid, google::protobuf::Message* message, uint32 delay )
     {
         auto strdata = message->SerializeAsString();
-        return _client_engine->SendNetMessage( serverid, recvid, msgid, strdata.data(), strdata.size() );
+        return _client_engine->SendNetMessage( serverid, recvid, msgid, strdata.data(), strdata.size(), delay );
     }
 
     void KFTcpClientModule::SendNetMessage( uint32 msgid, const char* data, uint32 length )

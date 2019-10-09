@@ -1,3 +1,10 @@
-<root version="890">
-	<item Id="1" Limits="[&quot;level&quot;:&quot;10&quot;]" ParentName="totalscore" DataName="count" TriggerType="1" Operate="1" DoneType="11" DoneValue="30" Rewards="[{&quot;money&quot;:&quot;50&quot;}]"/>
+<root version="1006">
+	<item UseType="1" Id="1" ParentName="player" DataName="money" TriggerType="2" UseOperate="1" DoneType="11" DoneValue="30" Rewards="[{&quot;hero&quot;:{&quot;id&quot;:&quot;1&quot;}}]"/>
+	<item UseType="1" Id="2" ParentName="player" DataName="diamond" TriggerType="2" UseOperate="1" DoneType="11" DoneValue="30" Rewards="[{&quot;hero&quot;:{&quot;id&quot;:&quot;2&quot;}}]"/>
+	<item UseType="2" Id="3" ParentName="basic" DataName="grade" TriggerType="1" UseOperate="1" DoneType="11" DoneValue="1000" Rewards="[{&quot;hero&quot;:{&quot;id&quot;:&quot;3&quot;}}]"/>
+	<item UseType="1" Id="4" ParentName="player" DataName="signintime" TriggerType="3" UseValue="1" UseOperate="1" DoneType="11" DoneValue="10" Rewards="[{&quot;hero&quot;:{&quot;id&quot;:&quot;4&quot;}}]"/>
+	<item UseType="2" Id="5" ParentName="player" DataName="continuoussignin" TriggerType="1" UseOperate="3" DoneType="11" DoneValue="10" Rewards="[{&quot;hero&quot;:{&quot;id&quot;:&quot;5&quot;}}]"/>
+	<item UseType="1" Id="6" ParentName="player" DataName="ranking" TriggerType="3" TriggerCheck="13" TriggerValue="1" UseValue="1" UseOperate="1" DoneType="11" DoneValue="20" Rewards="[{&quot;hero&quot;:{&quot;id&quot;:&quot;6&quot;}}]"/>
+	<item UseType="1" Id="7" ParentName="player" DataName="kill" TriggerType="1" UseOperate="1" DoneType="11" DoneValue="20" Rewards="[{&quot;hero&quot;:{&quot;id&quot;:&quot;7&quot;}}]"/>
+	<item UseType="2" Id="8" ParentName="player" DataName="herocount" TriggerType="3" UseOperate="1" DoneType="11" DoneValue="20" Rewards="[{&quot;hero&quot;:{&quot;id&quot;:&quot;8&quot;}}]"/>
 </root>

@@ -257,7 +257,6 @@ namespace KFrame
             return datasetting->_class_setting->_id;
         }
 
-        __LOG_ERROR__( "can't find datasetting=[{}]!", dataname );
         return dataname;
     }
 

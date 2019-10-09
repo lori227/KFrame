@@ -33,7 +33,7 @@ namespace KFrame
             if ( kffunction != nullptr )
             {
                 iter = _drops.erase( iter );
-                kffunction->_function( player, dropdata );
+                kffunction->_function( player, dropdata, function, line );
             }
             else
             {

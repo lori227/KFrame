@@ -75,7 +75,8 @@ namespace KFrame
         auto kfmodule = FindModule( name );
         if ( kfmodule == nullptr )
         {
-            throw std::runtime_error( __FORMAT__( "[{}:{}] can't find [{}] module!", file, line, name ) );
+            static std::string error = __FORMAT__( "[{}:{}] can't find [{}] module!", file, line, name );
+            throw std::runtime_error( error );
         }
 
         return kfmodule;
@@ -170,14 +171,26 @@ namespace KFrame
         }
         catch ( std::exception& ex )
         {
-            __LOG_ERROR__( "plugin=[{}] module=[{}] init exception=[{}]!",
-                           _init_plugin->_plugin_name, _init_plugin->_init_module->_class_name,
-                           ex.what() );
+            if ( _init_plugin->_init_module == nullptr )
+            {
+                __LOG_ERROR__( "plugin=[{}] init exception=[{}]!", _init_plugin->_plugin_name, ex.what() );
+            }
+            else
+            {
+                __LOG_ERROR__( "plugin=[{}] module=[{}] init exception=[{}]!", _init_plugin->_plugin_name, _init_plugin->_init_module->_class_name, ex.what() );
+            }
+
         }
         catch ( ... )
         {
-            __LOG_ERROR__( "plugin=[{}] module=[{}] init exception unknown!",
-                           _init_plugin->_plugin_name, _init_plugin->_init_module->_class_name );
+            if ( _init_plugin->_init_module == nullptr )
+            {
+                __LOG_ERROR__( "plugin=[{}] init exception unknown!", _init_plugin->_plugin_name );
+            }
+            else
+            {
+                __LOG_ERROR__( "plugin=[{}] module=[{}] init exception unknown!", _init_plugin->_plugin_name, _init_plugin->_init_module->_class_name );
+            }
         }
 
         return false;

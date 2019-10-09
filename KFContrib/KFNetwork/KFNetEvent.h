@@ -8,8 +8,8 @@
 namespace KFrame
 {
     // 网络时间函数
-    typedef std::function<void( const KFEventData* eventdata )> KFEventFunction;
-    typedef std::function<void( const KFEventData* eventdata )> KFNetServerFunction;
+    typedef std::function<void( const KFNetEventData* eventdata )> KFEventFunction;
+    typedef std::function<void( const KFNetEventData* eventdata )> KFNetServerFunction;
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -33,35 +33,35 @@ namespace KFrame
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 绑定连接事件
         template< class T >
-        void BindConnectFunction( T* object, void ( T::*handle )( const KFEventData* eventdata ) )
+        void BindConnectFunction( T* object, void ( T::*handle )( const KFNetEventData* eventdata ) )
         {
             _kf_connect_function = std::bind( handle, object, std::placeholders::_1 );
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // 绑定关闭事件
         template< class T >
-        void BindDisconnectFunction( T* object, void ( T::*handle )( const KFEventData* eventdata ) )
+        void BindDisconnectFunction( T* object, void ( T::*handle )( const KFNetEventData* eventdata ) )
         {
             _kf_disconnect_function = std::bind( handle, object, std::placeholders::_1 );
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // 绑定失败事件
         template< class T >
-        void BindFailedFunction( T* object, void ( T::*handle )( const KFEventData* eventdata ) )
+        void BindFailedFunction( T* object, void ( T::*handle )( const KFNetEventData* eventdata ) )
         {
             _kf_failed_function = std::bind( handle, object, std::placeholders::_1 );
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // 绑定关闭事件
         template< class T >
-        void BindShutFunction( T* object, void ( T::*handle )( const KFEventData* eventdata ) )
+        void BindShutFunction( T* object, void ( T::*handle )( const KFNetEventData* eventdata ) )
         {
             _kf_shut_function = std::bind( handle, object, std::placeholders::_1 );
         }
 
     protected:
         // 处理绑定时间
-        void HandleBindEventFunction( const KFEventData* eventdata );
+        void HandleBindEventFunction( const KFNetEventData* eventdata );
 
     protected:
         // 回调函数
@@ -71,7 +71,7 @@ namespace KFrame
         KFEventFunction _kf_shut_function;
 
         // 事件列表
-        KFQueue< KFEventData > _net_event_data;
+        KFQueue< KFNetEventData > _net_event_data;
     };
 
 }

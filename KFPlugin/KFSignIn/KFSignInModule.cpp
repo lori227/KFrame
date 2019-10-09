@@ -17,7 +17,6 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgSevenSignInRewardReq );
 
-        auto kfobject = player->GetData();
         auto day = kfobject->GetValue< uint32 >( __KF_STRING__( sevenday ) );
         if ( day < kfmsg.day() )
         {

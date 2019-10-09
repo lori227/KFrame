@@ -685,6 +685,11 @@ namespace KFrame
             AddDeployTask( __KF_STRING__( loadconfig ), pbdeploy );
             AddDeployTask( __KF_STRING__( loadscript ), pbdeploy );
         }
+        else if ( pbdeploy->command() == __KF_STRING__( developreload ) )
+        {
+            AddDeployTask( __KF_STRING__( developupdate ), pbdeploy );
+            AddDeployTask( __KF_STRING__( loadconfig ), pbdeploy );
+        }
         else if ( pbdeploy->command() == __KF_STRING__( reloadplugin ) )
         {
             AddDeployTask( __KF_STRING__( downplugin ), pbdeploy );
@@ -818,6 +823,7 @@ namespace KFrame
         {
             ok = CheckDownPluginTaskFinish();
         }
+
         return ok;
     }
 
@@ -877,6 +883,10 @@ namespace KFrame
             else if ( _kf_task->_command == __KF_STRING__( downplugin ) )
             {
                 StartDownPluginTask();
+            }
+            else if ( _kf_task->_command == __KF_STRING__( developupdate ) )
+            {
+                StartDevelopUpdateTask();
             }
             else
             {
@@ -1248,5 +1258,14 @@ namespace KFrame
 #endif
 
         return true;
+    }
+
+    void KFDeployAgentModule::StartDevelopUpdateTask()
+    {
+#if __KF_SYSTEM__ == __KF_WIN__
+        // todo win64暂时没有实现
+#else
+        ExecuteShell( "sh {}", _kf_task->_value );
+#endif
     }
 }

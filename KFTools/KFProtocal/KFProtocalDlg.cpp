@@ -13,6 +13,11 @@
 #include "google/protobuf/compiler/command_line_interface.h"
 #include "google/protobuf/compiler/cpp/cpp_generator.h"
 #include "KFProtocalConfig.h"
+#include <io.h>
+#include <fcntl.h>
+#include <stdio.h>
+#include <iostream>
+#include <fstream>
 
 #ifdef _DEBUG
     #define new DEBUG_NEW
@@ -21,7 +26,7 @@
 #define __OPERATOR_TIMER__ 500
 // CKFProtocalDlg 对话框
 
-
+using namespace std;
 
 CKFProtocalDlg::CKFProtocalDlg( CWnd* pParent /*=nullptr*/ )
     : CDialogEx( IDD_KFPROTOCAL_DIALOG, pParent )
@@ -111,6 +116,15 @@ BOOL CKFProtocalDlg::OnInitDialog()
     return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
 
+void CKFProtocalDlg::InitConsoleWindow()
+{
+    AllocConsole();
+    freopen( "CONOUT$", "w", stdout );
+    freopen( "CONOUT$", "w", stderr );
+
+    cout << "start work, please wait......" << endl;
+}
+
 // 如果向对话框添加最小化按钮，则需要下面的代码
 //  来绘制该图标。  对于使用文档/视图模型的 MFC 应用程序，
 //  这将由框架自动完成。
@@ -198,13 +212,14 @@ void CKFProtocalDlg::OnBnClickedButton4()
 
 void CKFProtocalDlg::OnBnClickedButton5()
 {
+    InitConsoleWindow();
     _operate_btn.EnableWindow( false );
 
     ProtocConfigFiles();	// 在当前文件夹内生成所有的proto相关文件
     CopyConfigFiles();		// 拷贝到所有对应的目录并删除所有生成文件
     BuildProtocolProj();	// 编译Protocol项目
 
-    SetTimer( __OPERATOR_TIMER__, 4000, nullptr );
+    SetTimer( __OPERATOR_TIMER__, 3000, nullptr );
 }
 
 void CKFProtocalDlg::OnTimer( UINT_PTR nIDEvent )
@@ -213,8 +228,13 @@ void CKFProtocalDlg::OnTimer( UINT_PTR nIDEvent )
     switch ( nIDEvent )
     {
     case __OPERATOR_TIMER__:
+    {
+        fclose( stdout );
+        fclose( stderr );
+        FreeConsole();		// 关闭控制台
         _operate_btn.EnableWindow( true );
-        break;
+    }
+    break;
     default:
         break;
     }

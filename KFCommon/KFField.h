@@ -99,6 +99,8 @@ namespace KFrame
         __STRING_DEFINE__( file );
         __STRING_DEFINE__( unschedule );
         __STRING_DEFINE__( plugin );
+        __STRING_DEFINE__( developreload );
+        __STRING_DEFINE__( developupdate );
 
 
         __STRING_DEFINE__( zoneregister );

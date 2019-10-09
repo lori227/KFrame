@@ -110,61 +110,106 @@ namespace KFrame
 
     void KFResetModule::ResetPlayerLogic( KFEntity* player, KFDate& lastdate, KFDate& nowdate )
     {
+        static KFTimeData _time_data;
         for ( auto& iter : _reset_data_list._objects )
         {
-            auto kfresetdata = iter.second;
-            if ( !KFDate::CheckTime( &kfresetdata->_time_data, lastdate, nowdate ) )
+            auto kfresetsetting = iter.second;
+            const KFTimeData* timedata = &_time_data;
+            if ( kfresetsetting->_time_setting != nullptr )
             {
-                continue;
+                if ( !KFDate::CheckTime( &kfresetsetting->_time_setting->_time_data, lastdate, nowdate ) )
+                {
+                    continue;
+                }
+
+                timedata = &kfresetsetting->_time_setting->_time_data;
             }
 
             // 直接回调函数
-            if ( kfresetdata->_count <= 1u || player->IsInited() )
+            for ( auto resetdata : kfresetsetting->_reset_logic_data._objects )
             {
-                kfresetdata->_function( player, kfresetdata->_time_data, lastdate.GetTime(), nowdate.GetTime() );
-            }
-            else
-            {
-                ResetPlayerLogicCount( player, kfresetdata, lastdate, nowdate );
+                if ( resetdata == nullptr )
+                {
+                    continue;
+                }
+
+                if ( resetdata->_count <= 1u || player->IsInited() )
+                {
+                    resetdata->_function( player, timedata, lastdate.GetTime(), nowdate.GetTime() );
+                }
+                else
+                {
+                    ResetPlayerLogicCount( player, timedata, resetdata, lastdate, nowdate );
+                }
             }
         }
     }
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFResetModule::AddResetFunction( const KFTimeData& timedata, uint32 count, const std::string& module, KFResetFunction& function )
-    {
-        auto kfresetdata = _reset_data_list.Create( module );
-        kfresetdata->_count = count;
-        kfresetdata->_time_data = timedata;
-        kfresetdata->_function = function;
-    }
 
-    void KFResetModule::RemoveResetFunction( const std::string& module )
+    void KFResetModule::ResetPlayerLogicCount( KFEntity* player, const KFTimeData* timedata, const KFResetLogicData* kfresetdata, KFDate& lastdate, KFDate& nowdate )
     {
-        _reset_data_list.Remove( module );
-    }
+        if ( lastdate.GetTime() == 0u )
+        {
+            return;
+        }
 
-    void KFResetModule::ResetPlayerLogicCount( KFEntity* player, KFResetLogicData* kfresetdata, KFDate& lastdate, KFDate& nowdate )
-    {
         // 计算出n周期前的时间
-        auto nowtime = KFDate::CalcTimeData( &kfresetdata->_time_data, nowdate.GetTime() );
-        auto calctime = KFDate::CalcTimeData( &kfresetdata->_time_data, nowtime, 0 - ( int32 )kfresetdata->_count );
+        auto nowtime = KFDate::CalcTimeData( timedata, nowdate.GetTime() );
+        auto calctime = KFDate::CalcTimeData( timedata, nowtime, 0 - ( int32 )kfresetdata->_count );
 
         // 上次重置时间
-        auto lasttime = KFDate::CalcTimeData( &kfresetdata->_time_data, lastdate.GetTime() );
+        auto lasttime = KFDate::CalcTimeData( timedata, lastdate.GetTime() );
         lasttime = __MAX__( lasttime, calctime );
 
         for ( auto i = 0u; i < kfresetdata->_count; ++i )
         {
-            auto resettime = KFDate::CalcTimeData( &kfresetdata->_time_data, lasttime, 1 );
+            auto resettime = KFDate::CalcTimeData( timedata, lasttime, 1 );
             if ( resettime > nowtime )
             {
                 break;
             }
 
             // 重置函数
-            kfresetdata->_function( player, kfresetdata->_time_data, lasttime, resettime );
+            kfresetdata->_function( player, timedata, lasttime, resettime );
             lasttime = resettime;
+        }
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    void KFResetModule::AddResetFunction( uint32 timeid, uint32 count, const std::string& module, KFResetFunction& function )
+    {
+        auto kfresetsetting = _reset_data_list.Create( timeid );
+        auto kfsetting = KFTimeConfig::Instance()->FindSetting( timeid );
+        if ( kfsetting == nullptr )
+        {
+            if ( timeid != 0u )
+            {
+                __LOG_ERROR__( "module=[{}] timeid=[{}] can't find setting!", module, timeid );
+            }
+        }
+        kfresetsetting->_time_setting = kfsetting;
+
+        auto kfresetdata = __KF_NEW__( KFResetLogicData );
+        kfresetdata->_count = count;
+        kfresetdata->_module = module;
+        kfresetdata->_function = function;
+        kfresetsetting->_reset_logic_data.Insert( kfresetdata );
+    }
+
+    void KFResetModule::RemoveResetFunction( const std::string& module )
+    {
+        for ( auto& iter : _reset_data_list._objects )
+        {
+            auto kfresettting = iter.second;
+            for ( auto& kfresetdata : kfresettting->_reset_logic_data._objects )
+            {
+                if ( kfresetdata == nullptr || kfresetdata->_module != module )
+                {
+                    continue;
+                }
+
+                __KF_DELETE__( KFResetLogicData, kfresetdata );
+                kfresetdata = nullptr;
+            }
         }
     }
 }

@@ -18,14 +18,23 @@ namespace KFrame
     class KFResetLogicData
     {
     public:
-        // 时间数据
-        KFTimeData _time_data;
+        std::string _module;
 
         // 次数
         uint32 _count = 0u;
 
         // 回调函数
         KFResetFunction _function = nullptr;
+    };
+
+    class KFResetLogicSetting
+    {
+    public:
+        // 时间设定
+        const KFTimeSetting* _time_setting = nullptr;
+
+        // 重置逻辑
+        KFVector< KFResetLogicData > _reset_logic_data;
     };
 
     class KFResetModule : public KFResetInterface
@@ -44,7 +53,7 @@ namespace KFrame
 
     protected:
         // 添加重置函数
-        virtual void AddResetFunction( const KFTimeData& timedata, uint32 count, const std::string& module, KFResetFunction& function );
+        virtual void AddResetFunction( uint32 timeid, uint32 count, const std::string& module, KFResetFunction& function );
 
         // 删除重置函数
         virtual void RemoveResetFunction( const std::string& module );
@@ -66,7 +75,7 @@ namespace KFrame
 
         // 重置逻辑
         void ResetPlayerLogic( KFEntity* player, KFDate& lastdate, KFDate& nowdate );
-        void ResetPlayerLogicCount( KFEntity* player, KFResetLogicData* kfresetdata, KFDate& lastdate, KFDate& nowdate );
+        void ResetPlayerLogicCount( KFEntity* player, const KFTimeData* timedata, const KFResetLogicData* resetdata,  KFDate& lastdate, KFDate& nowdate );
     private:
         // 是否需要刷新
         bool _need_to_reset = false;
@@ -75,7 +84,7 @@ namespace KFrame
         uint64 _next_reset_data_time = 0;
 
         // 注册的重置逻辑
-        KFHashMap< std::string, const std::string&, KFResetLogicData > _reset_data_list;
+        KFHashMap< uint32, uint32, KFResetLogicSetting > _reset_data_list;
     };
 }
 

@@ -9,6 +9,8 @@ namespace KFrame
     {
     public:
     };
+    __KF_INTERFACE__( _kf_auth, KFAuthInterface );
+
 }
 
 

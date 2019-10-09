@@ -178,17 +178,17 @@ namespace KFrame
     }
 
     // 发送消息到客户端
-    bool KFGameModule::SendToClient( uint64 gateid, uint64 playerid, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFGameModule::SendToClient( uint64 gateid, uint64 playerid, uint32 msgid, ::google::protobuf::Message* message, uint32 delay )
     {
-        return _kf_tcp_server->SendNetMessage( gateid, playerid, msgid, message );
+        return _kf_tcp_server->SendNetMessage( gateid, playerid, msgid, message, delay );
     }
 
     // 发送消息到客户端
-    bool KFGameModule::SendToClient( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFGameModule::SendToClient( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message, uint32 delay )
     {
         auto kfobject = player->GetData();
         auto gateid = kfobject->GetValue( __KF_STRING__( gateid ) );
-        return _kf_tcp_server->SendNetMessage( gateid, player->GetKeyID(), msgid, message );
+        return _kf_tcp_server->SendNetMessage( gateid, player->GetKeyID(), msgid, message, delay );
     }
 
     // 发送到玩家
