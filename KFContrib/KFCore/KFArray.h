@@ -26,20 +26,19 @@ namespace KFrame
         // common
         virtual uint32 Size();
         //////////////////////////////////////////////////////////////////////////////////////////////////////
-        virtual KFData* FirstData();
-        virtual KFData* NextData();
+        virtual KFData* First();
+        virtual KFData* Next();
 
         virtual void CopyFrom( KFData* kfother );
         virtual void SaveTo( KFData* kfother );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
-        virtual KFData* FindData( uint64 key );
-        virtual KFData* FindData( uint64 key, const std::string& dataname );
+        virtual KFData* Find( uint64 key );
+        virtual KFData* Find( uint64 key, const std::string& dataname );
 
-        virtual bool AddData( uint64 key, KFData* data );
-        virtual bool AddData( uint64 key, const std::string& dataname, KFData* data );
+        virtual bool Add( uint64 key, KFData* data );
+        virtual bool Add( uint64 key, const std::string& dataname, KFData* data );
 
-        virtual bool RemoveData( uint64 key );
-        virtual bool RemoveData( uint64 key, const std::string& dataname );
+        virtual bool Remove( uint64 key );
 
         // 格式化成字串
         virtual std::string ToString();

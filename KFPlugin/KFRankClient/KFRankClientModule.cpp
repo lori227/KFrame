@@ -82,7 +82,6 @@ namespace KFrame
     void KFRankClientModule::UpdateRankDataToShard( KFEntity* player, const KFRankSetting* kfsetting )
     {
         // 计算分区id
-        auto kfobject = player->GetData();
         auto playerid = player->GetKeyID();
         auto zoneid = CalcRankZoneId( playerid, kfsetting );
 
@@ -109,7 +108,7 @@ namespace KFrame
                 continue;
             }
 
-            auto kfdata = kfobject->FindData( calcdata._parent_name, calcdata._data_name );
+            auto kfdata = player->Find( calcdata._parent_name, calcdata._data_name );
             if ( kfdata != nullptr )
             {
                 ( *pbdatas )[ calcdata._data_name ] = kfdata->ToString();
@@ -119,7 +118,7 @@ namespace KFrame
         // 玩家的基本数据
         for ( auto& calcdata  : KFRankConfig::Instance()->_player_data )
         {
-            auto kfdata = kfobject->FindData( calcdata._parent_name, calcdata._data_name );
+            auto kfdata = player->Find( calcdata._parent_name, calcdata._data_name );
             if ( kfdata != nullptr )
             {
                 ( *pbdatas )[ calcdata._data_name ] = kfdata->ToString();
@@ -137,7 +136,6 @@ namespace KFrame
         // 倍率系数
         uint64 coefficient = 1u;
 
-        auto kfobject = player->GetData();
         for ( auto iter = kfsetting->_calc_data.rbegin(); iter != kfsetting->_calc_data.rend(); ++iter )
         {
             auto& calcdata = *iter;
@@ -146,10 +144,10 @@ namespace KFrame
                 continue;
             }
 
-            auto kfdata = kfobject->FindData( calcdata._parent_name, calcdata._data_name );
+            auto kfdata = player->Find( calcdata._parent_name, calcdata._data_name );
             if ( kfdata != nullptr )
             {
-                rankscore += static_cast< uint64 >( kfdata->GetValue< double >() * coefficient );
+                rankscore += static_cast< uint64 >( kfdata->Get< double >() * coefficient );
             }
 
             coefficient = coefficient * calcdata._max_value;
@@ -191,13 +189,13 @@ namespace KFrame
         KFMsg::S2SQueryFriendRankListReq req;
         req.set_rankid( kfmsg.rankid() );
 
-        auto kffriendrecord = kfobject->FindData( __KF_STRING__( friend ) );
-        auto kffriend = kffriendrecord->FirstData();
+        auto kffriendrecord = player->Find( __KF_STRING__( friend ) );
+        auto kffriend = kffriendrecord->First();
         while ( kffriend != nullptr )
         {
             req.add_friendid( kffriend->GetKeyID() );
 
-            kffriend = kffriendrecord->NextData();
+            kffriend = kffriendrecord->Next();
         }
 
         auto ok = SendMessageToRank( playerid, KFMsg::S2S_QUERY_FRIEND_RANK_LIST_REQ, &req );

@@ -113,15 +113,14 @@ namespace KFrame
             return false;
         }
 
-        auto kfobject = player->GetData();
-        auto kfstore = kfobject->FindData( kfsetting->_buy_limit_type, kfsetting->_id );
+        auto kfstore = player->Find( kfsetting->_buy_limit_type, kfsetting->_id );
         if ( kfstore == nullptr )
         {
             return false;
         }
 
         // 比较购买次数
-        auto datacount = kfstore->GetValue( __KF_STRING__( count ) );
+        auto datacount = kfstore->Get( __KF_STRING__( count ) );
         if ( ( datacount + count ) <= kfsetting->_buy_limit_count )
         {
             return false;

@@ -27,8 +27,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_ENTER_PLAYER_FUNCTION__( KFPayModule::OnEnterPayModule )
     {
-        auto kfobject = player->GetData();
-        auto order = kfobject->GetValue< std::string >( __KF_STRING__( payorder ) );
+        auto order = player->Get< std::string >( __KF_STRING__( payorder ) );
         if ( order.empty() )
         {
             return;
@@ -131,7 +130,7 @@ namespace KFrame
 
     void KFPayModule::StartQueryPayTimer( KFEntity* player )
     {
-        auto kfpayorder = player->GetData()->FindData( __KF_STRING__( payorder ) );
+        auto kfpayorder = player->Find( __KF_STRING__( payorder ) );
         auto querytime = kfpayorder->_data_setting->_int_logic_value;
         auto querycount = kfpayorder->_data_setting->_int_max_value;
         __LIMIT_TIMER_1__( player->GetKeyID(), querytime, querycount, &KFPayModule::OnTimerQueryPayData );
@@ -202,8 +201,7 @@ namespace KFrame
         player->AddElement( &kfsetting->_buy_elements, false, __FUNC_LINE__ );
 
         // 判断是否首冲
-        auto kfobject = player->GetData();
-        auto firstvalue = kfobject->GetValue< uint64 >( __KF_STRING__( variable ), kfsetting->_first_variable_id, __KF_STRING__( value ) );
+        auto firstvalue = player->Get< uint64 >( __KF_STRING__( variable ), kfsetting->_first_variable_id, __KF_STRING__( value ) );
         if ( firstvalue == _invalid_int )
         {
             // 更新变量
@@ -214,7 +212,7 @@ namespace KFrame
         }
 
         // 清空order
-        auto playerorder = kfobject->GetValue< std::string>( __KF_STRING__( payorder ) );
+        auto playerorder = player->Get< std::string>( __KF_STRING__( payorder ) );
         if ( playerorder == order )
         {
             player->UpdateData( __KF_STRING__( payorder ), _invalid_str );

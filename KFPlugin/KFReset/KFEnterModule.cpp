@@ -15,16 +15,15 @@ namespace KFrame
     __KF_ENTER_PLAYER_FUNCTION__( KFEnterModule::EnterGameWorld )
     {
         // 上线时间
-        auto kfobject = player->GetData();
         ////////////////////////////////////////////////////////////////////////////////
         auto playerid = player->GetKeyID();
-        auto kfnoterecord = kfobject->FindData( __KF_STRING__( note ) );
+        auto kfnoterecord = player->Find( __KF_STRING__( note ) );
         for ( auto& iter : KFEnterConfig::Instance()->_settings._objects )
         {
             auto kfsetting = iter.second;
             if ( kfsetting->_id != _invalid_int )
             {
-                auto notevalue = kfnoterecord->GetValue( kfsetting->_id, __KF_STRING__( value ) );
+                auto notevalue = kfnoterecord->Get( kfsetting->_id, __KF_STRING__( value ) );
                 if ( notevalue != _invalid_int )
                 {
                     continue;

@@ -27,12 +27,12 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFVector3D::CopyFrom( KFData* kfother )
     {
-        _data = kfother->GetValue<Math3D::Vector3D>();
+        _data = kfother->Get<Math3D::Vector3D>();
     }
 
     void KFVector3D::SaveTo( KFData* kfother )
     {
-        kfother->SetValue( _data );
+        kfother->Set( _data );
     }
 
     std::string KFVector3D::ToString()

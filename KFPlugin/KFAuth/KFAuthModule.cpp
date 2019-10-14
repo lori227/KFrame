@@ -3,7 +3,9 @@
 
 namespace KFrame
 {
+#define __DIR_REDIS_DRIVER__ _kf_redis->Create( __KF_STRING__( dir ) )
 #define __AUTH_REDIS_DRIVER__ _kf_redis->Create( __KF_STRING__( auth ) )
+
     void KFAuthModule::BeforeRun()
     {
         // zone
@@ -60,7 +62,7 @@ namespace KFrame
         auto count = __JSON_GET_UINT64__( request, __KF_STRING__( count ) );
         auto accountid = __JSON_GET_UINT64__( request, __KF_STRING__( accountid ) );
 
-        auto redisdriver = __AUTH_REDIS_DRIVER__;
+        auto redisdriver = __DIR_REDIS_DRIVER__;
         redisdriver->Execute( "zincrby {} {} {}", __KF_STRING__( zonelist ), count, zoneid );
         return _kf_http_server->SendCode( KFMsg::Ok );
     }
@@ -74,7 +76,7 @@ namespace KFrame
         __JSON_TO_MAP__( request, values );
 
         // 先保存小区基本信息
-        auto redisdriver = __AUTH_REDIS_DRIVER__;
+        auto redisdriver = __DIR_REDIS_DRIVER__;
         redisdriver->Append( "zincrby {} 0 {}", __KF_STRING__( zonelist ), zoneid );
         redisdriver->Append( values, "hmset {}:{}", __KF_STRING__( zone ), zoneid );
         auto kfresult = redisdriver->Pipeline();
@@ -91,7 +93,7 @@ namespace KFrame
         __JSON_PARSE_STRING__( request, data );
 
         // 判断最小负载
-        auto redisdriver = __AUTH_REDIS_DRIVER__;
+        auto redisdriver = __DIR_REDIS_DRIVER__;
         auto zoneid = __JSON_GET_UINT32__( request, __KF_STRING__( zoneid ) );
         auto count = __JSON_GET_UINT32__( request, __KF_STRING__( count ) );
 
@@ -112,7 +114,7 @@ namespace KFrame
     {
         __JSON_PARSE_STRING__( request, data );
 
-        auto redisdriver = __AUTH_REDIS_DRIVER__;
+        auto redisdriver = __DIR_REDIS_DRIVER__;
         auto zoneid = __JSON_GET_UINT32__( request, __KF_STRING__( zoneid ) );
         auto appid = __JSON_GET_STRING__( request, __KF_STRING__( appid ) );
 
@@ -128,7 +130,7 @@ namespace KFrame
 
     __KF_HTTP_FUNCTION__( KFAuthModule::HandleQueryZoneList )
     {
-        auto redisdriver = __AUTH_REDIS_DRIVER__;
+        auto redisdriver = __DIR_REDIS_DRIVER__;
         auto kflist = redisdriver->QueryList( "zrange {} 0 -1", __KF_STRING__( zonelist ) );
         if ( !kflist->IsOk() )
         {
@@ -157,7 +159,7 @@ namespace KFrame
     {
         __JSON_PARSE_STRING__( request, data );
 
-        auto redisdriver = __AUTH_REDIS_DRIVER__;
+        auto redisdriver = __DIR_REDIS_DRIVER__;
         auto zoneid = __JSON_GET_UINT32__( request, __KF_STRING__( zoneid ) );
 
         // 查询登录信息
@@ -184,7 +186,7 @@ namespace KFrame
         auto appid = __JSON_GET_STRING__( request, __KF_STRING__( world ) );
         auto url = __JSON_GET_STRING__( request, __KF_STRING__( url ) );
 
-        auto redisdriver = __AUTH_REDIS_DRIVER__;
+        auto redisdriver = __DIR_REDIS_DRIVER__;
         auto kfresult = redisdriver->Execute( "sadd {} {}", __KF_STRING__( worldurl ), url );
         if ( !kfresult->IsOk() )
         {
@@ -326,7 +328,7 @@ namespace KFrame
 
     bool KFAuthModule::KickAccountOffline( uint64 playerid )
     {
-        auto redisdriver = __AUTH_REDIS_DRIVER__;
+        auto redisdriver = __DIR_REDIS_DRIVER__;
 
         __JSON_OBJECT_DOCUMENT__( sendjson );
         __JSON_SET_VALUE__( sendjson, __KF_STRING__( playerid ), playerid );
@@ -360,7 +362,7 @@ namespace KFrame
     {
         // todo:如果有推荐的服务器, 直接返回
         // 选择一个最小人数的分区
-        auto redisdriver = __AUTH_REDIS_DRIVER__;
+        auto redisdriver = __DIR_REDIS_DRIVER__;
         auto zonelist = redisdriver->QueryList( "zrange {} 0 -1", __KF_STRING__( zonelist ) );
         if ( zonelist->_value.empty() )
         {
@@ -395,7 +397,7 @@ namespace KFrame
         }
 
         // 小区信息
-        auto redisdriver = __AUTH_REDIS_DRIVER__;
+        auto redisdriver = __DIR_REDIS_DRIVER__;
         auto kfzonemap = redisdriver->QueryMap( "hgetall {}:{}", __KF_STRING__( zone ), zoneid );
 
         __JSON_OBJECT_DOCUMENT__( response );

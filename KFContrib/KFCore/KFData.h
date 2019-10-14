@@ -14,30 +14,30 @@ namespace KFrame
 
         template< class T > T InvalidValue();
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        template< class T = uint64 > T GetValue();
-        template< class T = uint64 > T GetValue( uint64 key );
-        template< class T = uint64 > T GetValue( const std::string& dataname );
-        template< class T = uint64 > T GetValue( const std::string& parentname, const std::string& dataname );
-        template< class T = uint64 > T GetValue( uint64 key, const std::string& dataname );
-        template< class T = uint64 > T GetValue( const std::string& dataname, uint64 key );
-        template< class T = uint64 > T GetValue( const std::string& parentname, uint64 key, const std::string& dataname );
+        template< class T = uint64 > T Get();
+        template< class T = uint64 > T Get( uint64 key );
+        template< class T = uint64 > T Get( const std::string& dataname );
+        template< class T = uint64 > T Get( const std::string& parentname, const std::string& dataname );
+        template< class T = uint64 > T Get( uint64 key, const std::string& dataname );
+        template< class T = uint64 > T Get( const std::string& dataname, uint64 key );
+        template< class T = uint64 > T Get( const std::string& parentname, uint64 key, const std::string& dataname );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        template< class T = uint64 > T SetValue( T value );
-        template< class T = uint64 > T SetValue( uint64 key, T value );
-        template< class T = uint64 > T SetValue( const std::string& dataname, T value );
-        template< class T = uint64 > T SetValue( const std::string& parentname, const std::string& dataname, T value );
-        template< class T = uint64 > T SetValue( uint64 key, const std::string& dataname, T value );
-        template< class T = uint64 > T SetValue( const std::string& dataname, uint64 key, T value );
-        template< class T = uint64 > T SetValue( const std::string& parentname, uint64 key, const std::string& dataname, T value );
+        template< class T = uint64 > T Set( T value );
+        template< class T = uint64 > T Set( uint64 key, T value );
+        template< class T = uint64 > T Set( const std::string& dataname, T value );
+        template< class T = uint64 > T Set( const std::string& parentname, const std::string& dataname, T value );
+        template< class T = uint64 > T Set( uint64 key, const std::string& dataname, T value );
+        template< class T = uint64 > T Set( const std::string& dataname, uint64 key, T value );
+        template< class T = uint64 > T Set( const std::string& parentname, uint64 key, const std::string& dataname, T value );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        template< class T = uint64 > T OperateValue( uint32 operate, T value );
-        template< class T = uint64 > T OperateValue( const std::string& dataname, uint32 operate, T value );
-        template< class T = uint64 > T OperateValue( const std::string& parentname, const std::string& dataname, uint32 operate, T value );
-        template< class T = uint64 > T OperateValue( uint64 key, const std::string& dataname, uint32 operate, T value );
-        template< class T = uint64 > T OperateValue( const std::string& dataname, uint64 key, uint32 operate, T value );
-        template< class T = uint64 > T OperateValue( const std::string& parentname, uint64 key, const std::string& dataname, uint32 operate, T value );
+        template< class T = uint64 > T Operate( uint32 operate, T value );
+        template< class T = uint64 > T Operate( const std::string& dataname, uint32 operate, T value );
+        template< class T = uint64 > T Operate( const std::string& parentname, const std::string& dataname, uint32 operate, T value );
+        template< class T = uint64 > T Operate( uint64 key, const std::string& dataname, uint32 operate, T value );
+        template< class T = uint64 > T Operate( const std::string& dataname, uint64 key, uint32 operate, T value );
+        template< class T = uint64 > T Operate( const std::string& parentname, uint64 key, const std::string& dataname, uint32 operate, T value );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         std::string ToString( const std::string& dataname );
         std::string ToString( const std::string& parentname, const std::string& dataname );
@@ -86,8 +86,8 @@ namespace KFrame
         void SetParent( KFData* data );
 
         // 遍历节点
-        virtual KFData* FirstData();
-        virtual KFData* NextData();
+        virtual KFData* First();
+        virtual KFData* Next();
 
         // 赋值/保存
         virtual void CopyFrom( KFData* kfother ) = 0;
@@ -104,50 +104,47 @@ namespace KFrame
         // object
 
         // 如:money
-        virtual KFData* FindData( const std::string& dataname );
+        virtual KFData* Find( const std::string& dataname );
 
         // 如:hero->1
-        virtual KFData* FindData( const std::string& dataname, uint64 key );
+        virtual KFData* Find( const std::string& dataname, uint64 key );
 
         // 如: basic->id
-        virtual KFData* FindData( const std::string& parentname, const std::string& childname );
+        virtual KFData* Find( const std::string& parentname, const std::string& childname );
 
         // 如: hero->1->level
-        virtual KFData* FindData( const std::string& parentname, uint64 key, const std::string& childname );
+        virtual KFData* Find( const std::string& parentname, uint64 key, const std::string& childname );
 
         // 如: sign->day->1
-        virtual KFData* FindData( const std::string& parentname, const std::string& childname, uint64 key );
+        virtual KFData* Find( const std::string& parentname, const std::string& childname, uint64 key );
 
         // 如: sign->day->value
-        virtual KFData* FindData( const std::string& parentname, const std::string& childname, const std::string& dataname );
+        virtual KFData* Find( const std::string& parentname, const std::string& childname, const std::string& dataname );
 
-        virtual bool AddData( const std::string& dataname, KFData* data );
-        virtual bool AddData( const std::string& dataname, uint64 key, KFData* data );
-        virtual bool AddData( const std::string& parentname, const std::string& childname, KFData* data );
+        virtual bool Add( const std::string& dataname, KFData* data );
+        virtual bool Add( const std::string& dataname, uint64 key, KFData* data );
+        virtual bool Add( const std::string& parentname, const std::string& childname, KFData* data );
 
-        virtual KFData* MoveData( const std::string& dataname );
-        virtual bool RemoveData( const std::string& dataname );
-        virtual bool RemoveData( const std::string& dataname, uint64 key );
-        virtual bool RemoveData( const std::string& parentname, const std::string& childname );
+        virtual KFData* Move( const std::string& dataname );
+        virtual bool Remove( const std::string& dataname, uint64 key );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         // record
-        virtual KFData* FindData( uint64 key );
-        virtual KFData* FindData( uint64 key, const std::string& dataname );
-        virtual KFData* FindData( uint64 parentkey, uint64 childkey );
-        virtual KFData* FindData( uint64 parentkey, uint64 childkey, const std::string& dataname );
-        virtual KFData* FindData( uint64 parentkey, const std::string& dataname, uint64 childkey );
+        virtual KFData* Find( uint64 key );
+        virtual KFData* Find( uint64 key, const std::string& dataname );
+        virtual KFData* Find( uint64 parentkey, uint64 childkey );
+        virtual KFData* Find( uint64 parentkey, uint64 childkey, const std::string& dataname );
+        virtual KFData* Find( uint64 parentkey, const std::string& dataname, uint64 childkey );
 
-        virtual bool AddData( uint64 key, KFData* data );
-        virtual bool AddData( uint64 parentkey, uint64 childkey, KFData* data );
-        virtual bool AddData( uint64 key, const std::string& dataname, KFData* data );
+        virtual bool Add( uint64 key, KFData* data );
+        virtual bool Add( uint64 parentkey, uint64 childkey, KFData* data );
+        virtual bool Add( uint64 key, const std::string& dataname, KFData* data );
 
-        virtual KFData* MoveData( uint64 key );
-        virtual bool RemoveData( uint64 key );
-        virtual bool RemoveData( uint64 key, const std::string& dataname );
+        virtual KFData* Move( uint64 key );
+        virtual bool Remove( uint64 key );
 
-        virtual void FindData( const std::string& dataname, uint64 value, std::list< KFData* >& findlist, bool findall );
-        virtual bool CheckData( const std::string& dataname, uint64 value, const std::string& checkname, uint64 checkvalue );
+        virtual void Find( const std::string& dataname, uint64 value, std::list< KFData* >& findlist, bool findall );
+        virtual bool Check( const std::string& dataname, uint64 value, const std::string& checkname, uint64 checkvalue );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////
     protected:

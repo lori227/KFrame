@@ -131,10 +131,10 @@ namespace KFrame
         auto pbdata = &(proto->pbdata());\
         for ( auto iter = pbdata->begin(); iter != pbdata->end(); ++iter )\
         {\
-            auto kfchild = kfdata->FindData( iter->first );\
+            auto kfchild = kfdata->Find( iter->first );\
             if ( kfchild != nullptr )\
             {\
-                kfchild->SetValue( iter->second );\
+                kfchild->Set( iter->second );\
             }\
         }\
     }\
@@ -163,7 +163,7 @@ namespace KFrame
         auto pbarray = &proto->pbarray();
         for ( auto iter = pbarray->begin(); iter != pbarray->end(); ++iter )
         {
-            auto kfarray = kfdata->FindData( iter->first );
+            auto kfarray = kfdata->Find( iter->first );
             if ( kfarray == nullptr )
             {
                 continue;
@@ -173,10 +173,10 @@ namespace KFrame
             auto pbuint64 = &iter->second.pbuint64();
             for ( auto citer = pbuint64->begin(); citer != pbuint64->end(); ++citer )
             {
-                auto kfchild = kfarray->FindData( citer->first );
+                auto kfchild = kfarray->Find( citer->first );
                 if ( kfchild != nullptr )
                 {
-                    kfchild->SetValue<int64>( citer->second );
+                    kfchild->Set<int64>( citer->second );
                 }
             }
         }
@@ -185,7 +185,7 @@ namespace KFrame
         auto pbobject = &proto->pbobject();
         for ( auto iter = pbobject->begin(); iter != pbobject->end(); ++iter )
         {
-            auto kfobject = kfdata->FindData( iter->first );
+            auto kfobject = kfdata->Find( iter->first );
             if ( kfobject == nullptr )
             {
                 continue;
@@ -198,7 +198,7 @@ namespace KFrame
         auto pbrecord = &proto->pbrecord();
         for ( auto iter = pbrecord->begin(); iter != pbrecord->end(); ++iter )
         {
-            auto kfrecord = kfdata->FindData( iter->first );
+            auto kfrecord = kfdata->Find( iter->first );
             if ( kfrecord == nullptr )
             {
                 continue;
@@ -211,7 +211,7 @@ namespace KFrame
                 auto kfobject = KFDataFactory::CreateData( kfrecord->_data_setting );
 
                 CopyFromObject( kfobject, &citer->second );
-                kfrecord->AddData( citer->first, kfobject );
+                kfrecord->Add( citer->first, kfobject );
             }
         }
     }
@@ -220,7 +220,7 @@ namespace KFrame
 case datatype:\
     {\
         auto& pbdata = *(proto->mutable_##pbdata()); \
-        pbdata[ datasetting->_name ] = kfchild->GetValue<type>();\
+        pbdata[ datasetting->_name ] = kfchild->Get<type>();\
         break; \
     }\
 
@@ -232,7 +232,7 @@ case datatype:\
             return;
         }
 
-        for ( auto kfchild = kfdata->FirstData(); kfchild != nullptr; kfchild = kfdata->NextData() )
+        for ( auto kfchild = kfdata->First(); kfchild != nullptr; kfchild = kfdata->Next() )
         {
             auto datasetting = kfchild->_data_setting;
             if ( !datasetting->HaveMask( datamask ) || !kfchild->IsValid() )
@@ -256,10 +256,10 @@ case datatype:\
                 auto size = kfchild->Size();
                 for ( uint32 i = KFDataDefine::Array_Index; i < size; ++i )
                 {
-                    auto kfuint64 = kfchild->FindData( i );
+                    auto kfuint64 = kfchild->Find( i );
                     if ( kfuint64 != nullptr && kfuint64->IsValid() )
                     {
-                        ( *pbarray.mutable_pbuint64() )[ i ] = kfuint64->GetValue<int64>();
+                        ( *pbarray.mutable_pbuint64() )[ i ] = kfuint64->Get<int64>();
                     }
                 }
                 break;
@@ -273,7 +273,7 @@ case datatype:\
             case KFDataDefine::Type_Record:
             {
                 auto& pbrecord = ( *proto->mutable_pbrecord() )[ datasetting->_name ];
-                for ( auto kfobject = kfchild->FirstData(); kfobject != nullptr; kfobject = kfchild->NextData() )
+                for ( auto kfobject = kfchild->First(); kfobject != nullptr; kfobject = kfchild->Next() )
                 {
                     auto& pbobject = ( *pbrecord.mutable_pbobject() )[ kfobject->GetKeyID() ];
                     SaveToObject( kfobject, &pbobject, datamask );
@@ -370,11 +370,11 @@ case datatype:\
             auto kfvariable = ( const KFConditionVariable* )kfconditiondata;
             if ( !kfvariable->_parent_name.empty() )
             {
-                result = kfentity->GetData()->GetValue<uint32>( kfvariable->_parent_name, kfvariable->_data_name );
+                result = kfentity->Get<uint32>( kfvariable->_parent_name, kfvariable->_data_name );
             }
             else if ( kfvariable->_data_id == 0u )
             {
-                result = kfentity->GetData()->GetValue<uint32>( kfvariable->_data_name );
+                result = kfentity->Get<uint32>( kfvariable->_data_name );
             }
             else
             {

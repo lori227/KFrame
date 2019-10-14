@@ -53,9 +53,8 @@ namespace KFrame
 
     __KF_RESET_PLAYER_FUNCTION__( KFResetModule::ResetPlayerData )
     {
-        auto kfobject = player->GetData();
-        auto kflastdata = kfobject->FindData( __KF_STRING__( resettime ) );
-        auto lasttime = kflastdata->GetValue();
+        auto kflastdata = player->Find( __KF_STRING__( resettime ) );
+        auto lasttime = kflastdata->Get();
 
         KFDate lastdate( lasttime );
         KFDate nowdate( KFGlobal::Instance()->_real_time );

@@ -184,7 +184,6 @@ namespace KFrame
     {\
         return;\
     }\
-    auto kfobject = player->GetData();\
 
 #define __SERVER_PROTO_PARSE__( msgtype ) \
     __PROTO_PARSE__( msgtype ); \
@@ -193,7 +192,6 @@ namespace KFrame
     {\
         return;\
     }\
-    auto kfobject = player->GetData();\
 
 #define __ROUTE_PROTO_PARSE__( msgtype ) \
     __PROTO_PARSE__( msgtype ); \
@@ -203,7 +201,6 @@ namespace KFrame
     {\
         return;\
     }\
-    auto kfobject = player->GetData();\
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

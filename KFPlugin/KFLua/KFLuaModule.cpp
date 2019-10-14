@@ -217,8 +217,7 @@ namespace KFrame
             return _invalid_int;
         }
 
-        auto kfobject = kfentity->GetData();
-        return kfobject->GetValue( dataname );
+        return kfentity->Get( dataname );
     }
 
     uint64 KFLuaModule::LuaOperateValue( uint64 objectid, const char* dataname, uint32 operate, uint64 value )
@@ -240,8 +239,7 @@ namespace KFrame
             return _invalid_int;
         }
 
-        auto kfobject = kfentity->GetData();
-        return kfobject->GetValue( parentname, dataname );
+        return kfentity->Get( parentname, dataname );
     }
 
     uint64 KFLuaModule::LuaOperateObjectValue( uint64 objectid, const char* parentname, const char* dataname, uint32 operate, uint64 value )
@@ -263,8 +261,7 @@ namespace KFrame
             return _invalid_int;
         }
 
-        auto kfobject = kfentity->GetData();
-        return kfobject->GetValue( parentname, key, dataname );
+        return kfentity->Get( parentname, key, dataname );
     }
 
     uint64 KFLuaModule::LuaOperateRecordValue( uint64 objectid, const char* parentname, uint64 key, const char* dataname, uint32 operate, uint64 value )

@@ -19,17 +19,6 @@ namespace KFrame
         // 初始化
         void InitData( KFComponentEx* kfcomponent );
 
-        // 数据
-        virtual KFData* GetData();
-
-        // selfid
-        virtual void SetKeyID( uint64 id );
-        virtual uint64 GetKeyID();
-
-        virtual const char* GetName();
-        virtual void SetName( const std::string& name );
-
-
         // 是否初始化完成
         virtual bool IsInited();
         virtual void SetInited();
@@ -39,14 +28,12 @@ namespace KFrame
         virtual KFData* CreateData( const std::string& dataname, uint64 key );
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
-
         // 添加属性
         virtual bool AddData( KFData* kfparent, KFData* kfdata );
         virtual bool AddData( KFData* kfparent, uint64 key, KFData* kfdata );
         virtual bool AddData( const std::string& parentname, uint64 key, KFData* kfdata );
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
-
         // 删除属性
         virtual bool RemoveData( const std::string& parentname, uint64 key );
         virtual bool RemoveData( KFData* kfparent, uint64 key );
@@ -54,13 +41,11 @@ namespace KFrame
         virtual bool RemoveData( const std::string& parentname, const std::string& dataname );
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
-
         // 移动属性
         virtual KFData* MoveData( const std::string& sourcename, uint64 key, const std::string& targetname );
         virtual KFData* MoveData( KFData* sourcedata, uint64 key, KFData* targetdata );
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
-
         // 更新属性
         virtual void UpdateData( const std::string& dataname, const std::string& value );
         virtual void UpdateData( const std::string& parentname, const std::string& dataname, const std::string& value );
@@ -172,12 +157,6 @@ namespace KFrame
         // 组件
         KFComponentEx* _kf_component = nullptr;
     public:
-        // 数据
-        KFData* _kf_object = nullptr;
-
-        // 名字
-        std::string _name;
-
         // 是否初始化
         bool _is_inited = false;
 

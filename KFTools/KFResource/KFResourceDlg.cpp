@@ -323,7 +323,7 @@ bool CKFResourceDlg::IsResourceFile( const std::string& path )
 
     Poco::Path pocopath( path );
     auto& extension = pocopath.getExtension();
-    return extension == "xlsx";
+    return extension == "xlsx" || extension == "xls";
 }
 
 void CKFResourceDlg::UpdateFileList()
@@ -798,7 +798,8 @@ void CKFResourceDlg::OnBnClickedButtonParse()
 void CKFResourceDlg::ParseTotalExcelFiles()
 {
     // 调用更新脚本
-    _store_version = ReadVersion();
+    //_store_version = ReadVersion();
+    _store_version = "00000";
 
     // 解析文件
     auto ok = ParseExcelFiles( _store_version );

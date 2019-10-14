@@ -10,7 +10,6 @@ namespace KFrame
     KFEntityEx::KFEntityEx()
     {
         _is_inited = false;
-        _kf_object = nullptr;
         _kf_component = nullptr;
         _have_add_pb_object = false;
         _have_remove_pb_object = false;
@@ -19,32 +18,6 @@ namespace KFrame
 
     KFEntityEx::~KFEntityEx()
     {
-        KFDataFactory::Release( _kf_object );
-    }
-
-    KFData* KFEntityEx::GetData()
-    {
-        return _kf_object;
-    }
-
-    void KFEntityEx::SetKeyID( uint64 id )
-    {
-        _kf_object->SetKeyID( id );
-    }
-
-    uint64 KFEntityEx::GetKeyID()
-    {
-        return _kf_object->GetKeyID();
-    }
-
-    void KFEntityEx::SetName( const std::string& name )
-    {
-        _name = name;
-    }
-
-    const char* KFEntityEx::GetName()
-    {
-        return _name.c_str();
     }
 
     // 是否初始化完成
@@ -61,12 +34,12 @@ namespace KFrame
     void KFEntityEx::InitData( KFComponentEx* kfcomponent )
     {
         _kf_component = kfcomponent;
-        _kf_object = KFDataFactory::CreateData( _kf_component->_data_setting );
+        KFDataFactory::InitData( this, _kf_component->_data_setting->_class_setting, _kf_component->_data_setting );
     }
 
     KFData* KFEntityEx::CreateData( const std::string& dataname )
     {
-        auto kfdata = _kf_object->FindData( dataname );
+        auto kfdata = Find( dataname );
         if ( kfdata == nullptr )
         {
             return nullptr;
@@ -91,18 +64,17 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////
-
     void KFEntityEx::UpdateData( KFData* kfdata, const std::string& value )
     {
-        kfdata->SetValue<std::string>( value );
+        kfdata->Set<std::string>( value );
         if ( kfdata->_data_setting->_type == KFDataDefine::Type_Array )
         {
             for ( uint32 i = KFDataDefine::Array_Index; i < kfdata->Size(); ++i )
             {
-                auto kfchild = kfdata->FindData( i );
+                auto kfchild = kfdata->Find( i );
                 if ( kfchild != nullptr )
                 {
-                    auto newvalue = kfchild->GetValue<uint64>();
+                    auto newvalue = kfchild->Get<uint64>();
                     _kf_component->UpdateDataCallBack( this, i, kfchild, i, KFEnum::Set, newvalue, 0u, newvalue );
                 }
             }
@@ -116,7 +88,7 @@ namespace KFrame
 
     void KFEntityEx::UpdateData( KFData* kfparent, const std::string& dataname, const std::string& value )
     {
-        auto kfdata = kfparent->FindData( dataname );
+        auto kfdata = kfparent->Find( dataname );
         if ( kfdata == nullptr )
         {
             return;
@@ -127,7 +99,7 @@ namespace KFrame
 
     void KFEntityEx::UpdateData( const std::string& dataname, const std::string& value )
     {
-        auto kfdata = _kf_object->FindData( dataname );
+        auto kfdata = Find( dataname );
         if ( kfdata == nullptr )
         {
             return;
@@ -139,7 +111,7 @@ namespace KFrame
 
     void KFEntityEx::UpdateData( const std::string& parentname, const std::string& dataname, const std::string& value )
     {
-        auto kfdata = _kf_object->FindData( parentname, dataname );
+        auto kfdata = Find( parentname, dataname );
         if ( kfdata == nullptr )
         {
             return;
@@ -150,7 +122,7 @@ namespace KFrame
 
     void KFEntityEx::UpdateData( const std::string& parentname, uint64 key, const std::string& dataname, const std::string& value )
     {
-        auto kfdata = _kf_object->FindData( parentname, key );
+        auto kfdata = Find( parentname, key );
         if ( kfdata == nullptr )
         {
             return;
@@ -161,7 +133,7 @@ namespace KFrame
 
     uint64 KFEntityEx::UpdateData( const std::string& dataname, uint32 operate, uint64 value )
     {
-        auto kfdata = _kf_object->FindData( dataname );
+        auto kfdata = Find( dataname );
         if ( kfdata == nullptr )
         {
             return _invalid_int;
@@ -172,7 +144,7 @@ namespace KFrame
 
     uint64 KFEntityEx::UpdateData( const std::string& parentname, const std::string& dataname, uint32 operate, uint64 value )
     {
-        auto kfdata = _kf_object->FindData( parentname, dataname );
+        auto kfdata = Find( parentname, dataname );
         if ( kfdata == nullptr )
         {
             return _invalid_int;
@@ -183,7 +155,7 @@ namespace KFrame
 
     uint64 KFEntityEx::UpdateData( const std::string& parentname, uint64 key, const std::string& dataname, uint32 operate, uint64 value )
     {
-        auto kfparent = _kf_object->FindData( parentname );
+        auto kfparent = Find( parentname );
         if ( kfparent == nullptr )
         {
             return false;
@@ -194,7 +166,7 @@ namespace KFrame
 
     uint64 KFEntityEx::UpdateData( KFData* kfparent, const std::string& dataname, uint32 operate, uint64 value )
     {
-        auto kfdata = kfparent->FindData( dataname );
+        auto kfdata = kfparent->Find( dataname );
         if ( kfdata == nullptr )
         {
             return _invalid_int;
@@ -206,17 +178,17 @@ namespace KFrame
     uint64 KFEntityEx::UpdateData( KFData* kfparent, uint64 key, const std::string& dataname, uint32 operate, uint64 value )
     {
         // 不存在, 创建
-        auto kfobject = kfparent->FindData( key );
+        auto kfobject = kfparent->Find( key );
         if ( kfobject == nullptr )
         {
             kfobject = KFDataFactory::CreateData( kfparent->_data_setting );
-            kfobject->OperateValue( dataname, operate, value );
+            kfobject->Operate( dataname, operate, value );
             AddData( kfparent, key, kfobject );
             return value;
         }
 
         // 存在就更新
-        auto kfdata = kfobject->FindData( dataname );
+        auto kfdata = kfobject->Find( dataname );
         if ( kfdata == nullptr )
         {
             return _invalid_int;
@@ -232,7 +204,7 @@ namespace KFrame
 
     uint64 KFEntityEx::UpdateData( uint64 key, KFData* kfdata, const std::string& dataname, uint32 operate, uint64 value )
     {
-        auto kfchild = kfdata->FindData( dataname );
+        auto kfchild = kfdata->Find( dataname );
         if ( kfchild == nullptr )
         {
             return 0u;
@@ -243,8 +215,8 @@ namespace KFrame
 
     uint64 KFEntityEx::UpdateData( uint64 key, KFData* kfdata, uint32 operate, uint64 value )
     {
-        auto oldvalue = kfdata->GetValue< uint64 >();
-        auto newvalue = kfdata->OperateValue( operate, value );
+        auto oldvalue = kfdata->Get< uint64 >();
+        auto newvalue = kfdata->Operate( operate, value );
         if ( oldvalue != newvalue )
         {
             // 属性更新回调
@@ -257,7 +229,7 @@ namespace KFrame
 
     uint64 KFEntityEx::UpdateData( const std::string& dataname, uint64 index, uint32 operate, uint64 value )
     {
-        auto kfdata = _kf_object->FindData( dataname );
+        auto kfdata = Find( dataname );
         if ( kfdata == nullptr )
         {
             return 0u;
@@ -273,14 +245,14 @@ namespace KFrame
 
     uint64 KFEntityEx::UpdateData( uint64 key, KFData* kfdata, uint64 index, uint32 operate, uint64 value )
     {
-        auto kfchild = kfdata->FindData( index );
+        auto kfchild = kfdata->Find( index );
         if ( kfchild == nullptr )
         {
             return _invalid_int;
         }
 
-        auto oldvalue = kfchild->GetValue< uint64 >();
-        auto newvalue = kfchild->OperateValue( operate, value );
+        auto oldvalue = kfchild->Get< uint64 >();
+        auto newvalue = kfchild->Operate( operate, value );
         if ( oldvalue != newvalue )
         {
             // 属性更新回调
@@ -293,7 +265,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFEntityEx::AddData( const std::string& parentname, uint64 key, KFData* kfdata )
     {
-        auto kfparent = _kf_object->FindData( parentname );
+        auto kfparent = Find( parentname );
         if ( kfparent == nullptr )
         {
             return false;
@@ -305,7 +277,7 @@ namespace KFrame
 
     bool KFEntityEx::AddData( KFData* kfparent, uint64 key, KFData* kfdata )
     {
-        bool result = kfparent->AddData( key, kfdata );
+        bool result = kfparent->Add( key, kfdata );
         if ( result )
         {
             // 添加属性回调
@@ -325,7 +297,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFEntityEx::RemoveData( const std::string& parentname, uint64 key )
     {
-        auto kfparent = _kf_object->FindData( parentname );
+        auto kfparent = Find( parentname );
         if ( kfparent == nullptr )
         {
             return false;
@@ -336,7 +308,7 @@ namespace KFrame
 
     bool KFEntityEx::RemoveData( KFData* kfparent, uint64 key )
     {
-        auto kfdata = kfparent->FindData( key );
+        auto kfdata = kfparent->Find( key );
         if ( kfdata == nullptr )
         {
             return false;
@@ -344,19 +316,19 @@ namespace KFrame
 
         // 属性删除回调
         _kf_component->RemoveDataCallBack( this, kfparent, key, kfdata );
-        return kfparent->RemoveData( key );
+        return kfparent->Remove( key );
     }
 
     bool KFEntityEx::RemoveData( const std::string& parentname )
     {
-        auto kfparent = _kf_object->FindData( parentname );
+        auto kfparent = Find( parentname );
         if ( kfparent == nullptr )
         {
             return false;
         }
 
         std::list<uint64> keyvector;
-        for ( auto kfdata = kfparent->FirstData(); kfdata != nullptr; kfdata = kfparent->NextData() )
+        for ( auto kfdata = kfparent->First(); kfdata != nullptr; kfdata = kfparent->Next() )
         {
             keyvector.push_back( kfdata->GetKeyID() );
         }
@@ -371,18 +343,18 @@ namespace KFrame
 
     bool KFEntityEx::RemoveData( const std::string& parentname, const std::string& dataname )
     {
-        auto kfparent = _kf_object->FindData( parentname, dataname );
+        auto kfparent = Find( parentname, dataname );
         if ( kfparent == nullptr )
         {
             return false;
         }
 
         std::list<uint64> keyvector;
-        auto kfdata = kfparent->FirstData();
+        auto kfdata = kfparent->First();
         while ( kfdata != nullptr )
         {
             keyvector.push_back( kfdata->GetKeyID() );
-            kfdata = kfparent->NextData();
+            kfdata = kfparent->Next();
         }
 
         for ( auto key : keyvector )
@@ -397,8 +369,8 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     KFData* KFEntityEx::MoveData( const std::string& sourcename, uint64 key, const std::string& targetname )
     {
-        auto sourcedata = _kf_object->FindData( sourcename );
-        auto targetdata = _kf_object->FindData( targetname );
+        auto sourcedata = Find( sourcename );
+        auto targetdata = Find( targetname );
         if ( sourcedata == nullptr )
         {
             return nullptr;
@@ -409,7 +381,7 @@ namespace KFrame
 
     KFData* KFEntityEx::MoveData( KFData* sourcedata, uint64 key, KFData* targetdata )
     {
-        auto kfdata = sourcedata->MoveData( key );
+        auto kfdata = sourcedata->Move( key );
         if ( kfdata == nullptr )
         {
             return nullptr;
@@ -418,7 +390,7 @@ namespace KFrame
 
         if ( targetdata != nullptr )
         {
-            targetdata->AddData( key, kfdata );
+            targetdata->Add( key, kfdata );
             _kf_component->MoveAddDataCallBack( this, targetdata, key, kfdata );
         }
 
@@ -532,16 +504,16 @@ namespace KFrame
         case KFDataDefine::Type_UInt64:
         {
             auto pbshowdata = CreateShowData( kfdata->_data_setting->_name, 0u, false );
-            pbshowdata->set_value( kfdata->GetValue() );
+            pbshowdata->set_value( kfdata->Get() );
             break;
         }
         case KFDataDefine::Type_Object:
         case KFDataDefine::Type_Record:
         {
-            auto configid = kfdata->GetValue( kfdata->_data_setting->_config_key_name );
+            auto configid = kfdata->Get( kfdata->_data_setting->_config_key_name );
             auto pbshowdata = CreateShowData( kfdata->_data_setting->_name, configid, false );
             pbshowdata->set_value( kfdata->GetKeyID() );
-            for ( auto kfchild = kfdata->FirstData(); kfchild != nullptr; kfchild = kfdata->NextData() )
+            for ( auto kfchild = kfdata->First(); kfchild != nullptr; kfchild = kfdata->Next() )
             {
                 if ( !kfchild->_data_setting->HaveMask( KFDataDefine::Mask_Show ) ||
                         !kfchild->IsValid() )
@@ -549,7 +521,7 @@ namespace KFrame
                     continue;
                 }
 
-                ( *pbshowdata->mutable_pbuint64() )[ kfchild->_data_setting->_name ] = kfchild->GetValue();
+                ( *pbshowdata->mutable_pbuint64() )[ kfchild->_data_setting->_name ] = kfchild->Get();
             }
             break;
         }
@@ -574,7 +546,7 @@ namespace KFrame
 
     bool KFEntityEx::CheckAddElement( const KFElement* kfelement, const char* function, uint32 line, float multiple )
     {
-        auto kfdata = _kf_object->FindData( kfelement->_data_name );
+        auto kfdata = Find( kfelement->_data_name );
         if ( kfdata == nullptr )
         {
             __LOG_ERROR_FUNCTION__( function, line, "can't find data=[{}]! ", kfelement->_data_name );
@@ -611,7 +583,7 @@ namespace KFrame
     // 添加元数据
     void KFEntityEx::AddElement( const KFElement* kfelement, const char* function, uint32 line, float multiple )
     {
-        auto kfdata = _kf_object->FindData( kfelement->_data_name );
+        auto kfdata = Find( kfelement->_data_name );
         if ( kfdata == nullptr )
         {
             return __LOG_ERROR_FUNCTION__( function, line, "can't find data=[{}]! ", kfelement->_data_name );
@@ -684,7 +656,7 @@ namespace KFrame
     {
         for ( auto& iter : kfelement->_values._objects )
         {
-            auto kfchild = kfdata->FindData( iter.first );
+            auto kfchild = kfdata->Find( iter.first );
             if ( kfchild == nullptr ||
                     kfchild->_data_setting->_name == kfdata->_data_setting->_key_name ||
                     kfchild->_data_setting->_name == kfdata->_data_setting->_config_key_name )
@@ -722,7 +694,7 @@ namespace KFrame
     {
         for ( auto& iter : kfelement->_values._objects )
         {
-            auto kfchild = kfdata->FindData( iter.first );
+            auto kfchild = kfdata->Find( iter.first );
             if ( kfchild == nullptr )
             {
                 continue;
@@ -734,12 +706,12 @@ namespace KFrame
             case KFDataDefine::Type_UInt32:
             {
                 auto value = kfvalue->CalcUseValue( kfchild->_data_setting, multiple );
-                kfchild->SetValue( value );
+                kfchild->Set( value );
             }
             break;
             case KFDataDefine::Type_String:
             {
-                kfchild->SetValue( kfvalue->GetValue() );
+                kfchild->Set( kfvalue->GetValue() );
             }
             break;
             case KFDataDefine::Type_Object:
@@ -781,7 +753,7 @@ namespace KFrame
             return std::make_tuple( KFDataDefine::Show_None, nullptr );
         }
 
-        auto kfchild = kfparent->FindData( kfelementobject->_config_id );
+        auto kfchild = kfparent->Find( kfelementobject->_config_id );
         if ( kfchild == nullptr )
         {
             // 不存在, 创建一个, 并更新属性
@@ -816,7 +788,7 @@ namespace KFrame
 
     bool KFEntityEx::CheckRemoveElement( const KFElement* kfelement, const char* function, uint32 line, float multiple )
     {
-        auto kfdata = _kf_object->FindData( kfelement->_data_name );
+        auto kfdata = Find( kfelement->_data_name );
         if ( kfdata == nullptr )
         {
             __LOG_ERROR_FUNCTION__( function, line, "can't find data=[{}]! ", kfelement->_data_name );
@@ -863,7 +835,7 @@ namespace KFrame
             return false;
         }
 
-        auto datavalue = kfdata->GetValue();
+        auto datavalue = kfdata->Get();
         auto elementvalue = kfelementvalue->_value->CalcUseValue( kfdata->_data_setting, multiple );
         return datavalue >= elementvalue;
     }
@@ -887,13 +859,13 @@ namespace KFrame
                 return false;
             }
 
-            auto kfchild = kfparent->FindData( name );
+            auto kfchild = kfparent->Find( name );
             if ( kfchild == nullptr )
             {
                 return false;
             }
 
-            auto datavalue = kfchild->GetValue() ;
+            auto datavalue = kfchild->Get() ;
             auto elementvalue = kfvalue->CalcUseValue( kfchild->_data_setting, multiple );
             if ( datavalue < elementvalue )
             {
@@ -919,7 +891,7 @@ namespace KFrame
             return false;
         }
 
-        auto kfdata = kfparent->FindData( kfelementobject->_config_id );
+        auto kfdata = kfparent->Find( kfelementobject->_config_id );
         if ( kfdata == nullptr )
         {
             return false;
@@ -946,7 +918,7 @@ namespace KFrame
     // 删除元数据
     void KFEntityEx::RemoveElement( const KFElement* kfelement, const char* function, uint32 line, float multiple )
     {
-        auto kfdata = _kf_object->FindData( kfelement->_data_name );
+        auto kfdata = Find( kfelement->_data_name );
         if ( kfdata == nullptr )
         {
             return __LOG_ERROR_FUNCTION__( function, line, "can't find data=[{}]! ", kfelement->_data_name );
@@ -1027,7 +999,7 @@ namespace KFrame
             return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id!", kfelement->_data_name );
         }
 
-        auto kfdata = kfparent->FindData( kfelementobject->_config_id );
+        auto kfdata = kfparent->Find( kfelementobject->_config_id );
         if ( kfdata == nullptr )
         {
             return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] can't find id=[{}]!", kfelementobject->_data_name, kfelementobject->_config_id );
@@ -1132,7 +1104,7 @@ namespace KFrame
                 savedata = datahierarchy.front();
                 datahierarchy.pop_front();
 
-                ( *pbarray->mutable_pbuint64() )[ key ] = savedata->GetValue<int64>();
+                ( *pbarray->mutable_pbuint64() )[ key ] = savedata->Get<int64>();
             }
             else
             {
@@ -1154,22 +1126,22 @@ namespace KFrame
         switch ( datasetting->_type )
         {
         case KFDataDefine::Type_Int32:
-            ( *pbobject->mutable_pbint32() )[ datasetting->_name ] = kfdata->GetValue< int32 >();
+            ( *pbobject->mutable_pbint32() )[ datasetting->_name ] = kfdata->Get< int32 >();
             break;
         case KFDataDefine::Type_UInt32:
-            ( *pbobject->mutable_pbuint32() )[ datasetting->_name ] = kfdata->GetValue< uint32 >();
+            ( *pbobject->mutable_pbuint32() )[ datasetting->_name ] = kfdata->Get< uint32 >();
             break;
         case KFDataDefine::Type_Int64:
-            ( *pbobject->mutable_pbint64() )[ datasetting->_name ] = kfdata->GetValue< int64 >();
+            ( *pbobject->mutable_pbint64() )[ datasetting->_name ] = kfdata->Get< int64 >();
             break;
         case KFDataDefine::Type_UInt64:
-            ( *pbobject->mutable_pbuint64() )[ datasetting->_name ] = kfdata->GetValue< uint64 >();
+            ( *pbobject->mutable_pbuint64() )[ datasetting->_name ] = kfdata->Get< uint64 >();
             break;
         case KFDataDefine::Type_Double:
-            ( *pbobject->mutable_pbdouble() )[ datasetting->_name ] = kfdata->GetValue< double >();
+            ( *pbobject->mutable_pbdouble() )[ datasetting->_name ] = kfdata->Get< double >();
             break;
         case KFDataDefine::Type_String:
-            ( *pbobject->mutable_pbstring() )[ datasetting->_name ] = kfdata->GetValue< std::string >();
+            ( *pbobject->mutable_pbstring() )[ datasetting->_name ] = kfdata->Get< std::string >();
             break;
         case KFDataDefine::Type_Object:
             KFKernelModule::Instance()->SaveToObject( kfdata, pbobject, KFDataDefine::Mask_Client );
@@ -1231,12 +1203,12 @@ namespace KFrame
 
     void KFEntityEx::SendShowElementToClient()
     {
+        _add_show_element = true;
         if ( !_have_show_client )
         {
             return;
         }
 
-        _add_show_element = true;
         _have_show_client = false;
         _kf_component->_show_element_function( this, _pb_show_element );
         _pb_show_element.Clear();
@@ -1251,28 +1223,28 @@ namespace KFrame
             return kffunction->_function( this, id );
         }
 
-        auto kfobject = _kf_object->FindData( name, id );
+        auto kfobject = Find( name, id );
         if ( kfobject == nullptr )
         {
             return 0u;
         }
 
-        auto kfdata = kfobject->FindData( __KF_STRING__( value ) );
+        auto kfdata = kfobject->Find( __KF_STRING__( value ) );
         if ( kfdata == nullptr )
         {
-            kfdata = kfobject->FindData( __KF_STRING__( count ) );
+            kfdata = kfobject->Find( __KF_STRING__( count ) );
             if ( kfdata == nullptr )
             {
                 return 0u;
             }
         }
 
-        return kfdata->GetValue();
+        return kfdata->Get();
     }
 
     uint32 KFEntityEx::GetStatus()
     {
-        return _kf_object->GetValue<uint32>( __KF_STRING__( basic ), __KF_STRING__( status ) );
+        return Get<uint32>( __KF_STRING__( basic ), __KF_STRING__( status ) );
     }
 
     void KFEntityEx::SetStatus( uint32 status )

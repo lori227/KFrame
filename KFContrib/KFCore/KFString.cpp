@@ -26,12 +26,12 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFString::CopyFrom( KFData* kfother )
     {
-        _data = kfother->GetValue<std::string>();
+        _data = kfother->Get<std::string>();
     }
 
     void KFString::SaveTo( KFData* kfother )
     {
-        kfother->SetValue( _data );
+        kfother->Set( _data );
     }
 
     std::string KFString::ToString()

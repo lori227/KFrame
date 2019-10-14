@@ -137,10 +137,10 @@ namespace KFrame
         _kf_basic->Reset();
         for ( auto iter = kfmsg.pbdata().begin(); iter != kfmsg.pbdata().end(); ++iter )
         {
-            auto kfdata = _kf_basic->FindData( iter->first );
+            auto kfdata = _kf_basic->Find( iter->first );
             if ( kfdata != nullptr )
             {
-                kfdata->SetValue< std::string >( iter->second );
+                kfdata->Set< std::string >( iter->second );
             }
         }
 

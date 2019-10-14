@@ -28,27 +28,25 @@ namespace KFrame
         virtual uint64 GetKeyID();
         virtual void SetKeyID( uint64 id );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
-        virtual KFData* FirstData();
-        virtual KFData* NextData();
+        virtual KFData* First();
+        virtual KFData* Next();
 
         virtual void CopyFrom( KFData* kfother );
         virtual void SaveTo( KFData* kfother );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
-        virtual KFData* FindData( const std::string& dataname );
-        virtual KFData* FindData( const std::string& dataname, uint64 key );
-        virtual KFData* FindData( const std::string& parentname, const std::string& childname );
-        virtual KFData* FindData( const std::string& parentname, uint64 key, const std::string& childname );
-        virtual KFData* FindData( const std::string& parentname, const std::string& childname, uint64 key );
-        virtual KFData* FindData( const std::string& parentname, const std::string& childname, const std::string& dataname );
+        virtual KFData* Find( const std::string& dataname );
+        virtual KFData* Find( const std::string& dataname, uint64 key );
+        virtual KFData* Find( const std::string& parentname, const std::string& childname );
+        virtual KFData* Find( const std::string& parentname, uint64 key, const std::string& childname );
+        virtual KFData* Find( const std::string& parentname, const std::string& childname, uint64 key );
+        virtual KFData* Find( const std::string& parentname, const std::string& childname, const std::string& dataname );
 
-        virtual bool AddData( const std::string& dataname, KFData* data );
-        virtual bool AddData( const std::string& dataname, uint64 key, KFData* data );
-        virtual bool AddData( const std::string& parentname, const std::string& childname, KFData* data );
+        virtual bool Add( const std::string& dataname, KFData* data );
+        virtual bool Add( const std::string& dataname, uint64 key, KFData* data );
+        virtual bool Add( const std::string& parentname, const std::string& childname, KFData* data );
 
-        virtual KFData* MoveData( const std::string& dataname );
-        virtual bool RemoveData( const std::string& dataname );
-        virtual bool RemoveData( const std::string& dataname, uint64 key );
-        virtual bool RemoveData( const std::string& parentname, const std::string& childname );
+        virtual KFData* Move( const std::string& dataname );
+        virtual bool Remove( const std::string& dataname, uint64 key );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         // 格式化成字串

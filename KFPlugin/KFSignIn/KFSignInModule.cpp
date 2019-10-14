@@ -17,7 +17,7 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgSevenSignInRewardReq );
 
-        auto day = kfobject->GetValue< uint32 >( __KF_STRING__( sevenday ) );
+        auto day = player->Get< uint32 >( __KF_STRING__( sevenday ) );
         if ( day < kfmsg.day() )
         {
             return _kf_display->SendToClient( player, KFMsg::SignInNotDay );
@@ -29,7 +29,7 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::SignInCanNotFind );
         }
 
-        auto sevenflag = kfobject->GetValue< uint32 >( __KF_STRING__( sevenreward ) );
+        auto sevenflag = player->Get< uint32 >( __KF_STRING__( sevenreward ) );
         auto flag = 1u << kfmsg.day();
         if ( KFUtility::HaveBitMask< uint32 >( sevenflag, flag ) )
         {

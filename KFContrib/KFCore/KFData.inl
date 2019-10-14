@@ -12,222 +12,222 @@ namespace KFrame
     }
 
     template< class T >
-    T KFData::GetValue( uint64 key )
+    T KFData::Get( uint64 key )
     {
-        auto kfdata = FindData( key );
+        auto kfdata = Find( key );
         if ( kfdata == nullptr )
         {
             return InvalidValue< T >();
         }
 
-        return kfdata->GetValue< T >();
+        return kfdata->Get< T >();
     }
 
     template< class T >
-    T KFData::GetValue( const std::string& dataname )
+    T KFData::Get( const std::string& dataname )
     {
-        auto kfdata = FindData( dataname );
+        auto kfdata = Find( dataname );
         if ( kfdata == nullptr )
         {
             return InvalidValue< T >();
         }
 
-        return kfdata->GetValue< T >();
+        return kfdata->Get< T >();
     }
 
     template< class T >
-    T KFData::GetValue( const std::string& parentname, const std::string& dataname )
+    T KFData::Get( const std::string& parentname, const std::string& dataname )
     {
-        auto kfdata = FindData( parentname, dataname );
+        auto kfdata = Find( parentname, dataname );
         if ( kfdata == nullptr )
         {
             return InvalidValue< T >();
         }
 
-        return kfdata->GetValue< T >();
+        return kfdata->Get< T >();
     }
 
     template< class T >
-    T KFData::GetValue( uint64 key, const std::string& dataname )
+    T KFData::Get( uint64 key, const std::string& dataname )
     {
-        auto kfdata = FindData( key, dataname );
+        auto kfdata = Find( key, dataname );
         if ( kfdata == nullptr )
         {
             return InvalidValue< T >();
         }
 
-        return kfdata->GetValue< T >();
+        return kfdata->Get< T >();
     }
 
     template< class T >
-    T KFData::GetValue( const std::string& dataname, uint64 key )
+    T KFData::Get( const std::string& dataname, uint64 key )
     {
-        auto kfdata = FindData( dataname, key );
+        auto kfdata = Find( dataname, key );
         if ( kfdata == nullptr )
         {
             return InvalidValue< T >();
         }
 
-        return kfdata->GetValue< T >();
+        return kfdata->Get< T >();
     }
 
     template< class T >
-    T KFData::GetValue( const std::string& parentname, uint64 key, const std::string& dataname )
+    T KFData::Get( const std::string& parentname, uint64 key, const std::string& dataname )
     {
-        auto kfdata = FindData( parentname, key );
+        auto kfdata = Find( parentname, key );
         if ( kfdata == nullptr )
         {
             return InvalidValue< T >();
         }
 
-        return kfdata->GetValue< T >( dataname );
+        return kfdata->Get< T >( dataname );
     }
 
     template< class T >
-    T KFData::SetValue( uint64 key, T value )
+    T KFData::Set( uint64 key, T value )
     {
-        auto kfdata = FindData( key );
+        auto kfdata = Find( key );
         if ( kfdata == nullptr )
         {
             return value;
         }
 
-        return kfdata->SetValue< T >( value );
+        return kfdata->Set< T >( value );
     }
 
     template< class T >
-    T KFData::SetValue( const std::string& dataname, T value )
+    T KFData::Set( const std::string& dataname, T value )
     {
-        auto kfdata = FindData( dataname );
+        auto kfdata = Find( dataname );
         if ( kfdata == nullptr )
         {
             return value;
         }
 
-        return kfdata->SetValue< T >( value );
+        return kfdata->Set< T >( value );
     }
 
     template< class T >
-    T KFData::SetValue( const std::string& parentname, const std::string& dataname, T value )
+    T KFData::Set( const std::string& parentname, const std::string& dataname, T value )
     {
-        auto kfdata = FindData( parentname, dataname );
+        auto kfdata = Find( parentname, dataname );
         if ( kfdata == nullptr )
         {
             return value;
         }
 
-        return kfdata->SetValue< T >( value );
+        return kfdata->Set< T >( value );
     }
 
     template< class T >
-    T KFData::SetValue( uint64 key, const std::string& dataname, T value )
+    T KFData::Set( uint64 key, const std::string& dataname, T value )
     {
-        auto kfdata = FindData( key, dataname );
+        auto kfdata = Find( key, dataname );
         if ( kfdata == nullptr )
         {
             return value;
         }
 
-        return kfdata->SetValue< T >( value );
+        return kfdata->Set< T >( value );
     }
 
     template< class T >
-    T KFData::SetValue( const std::string& dataname, uint64 key, T value )
+    T KFData::Set( const std::string& dataname, uint64 key, T value )
     {
-        auto kfdata = FindData( dataname, key );
+        auto kfdata = Find( dataname, key );
         if ( kfdata == nullptr )
         {
             return value;
         }
 
-        return kfdata->SetValue< T >( value );
+        return kfdata->Set< T >( value );
     }
 
     template< class T >
-    T KFData::SetValue( const std::string& parentname, uint64 key, const std::string& dataname, T value )
+    T KFData::Set( const std::string& parentname, uint64 key, const std::string& dataname, T value )
     {
-        auto kfdata = FindData( parentname, key );
+        auto kfdata = Find( parentname, key );
         if ( kfdata == nullptr )
         {
             return value;
         }
 
-        return kfdata->SetValue< T >( dataname, value );
+        return kfdata->Set< T >( dataname, value );
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template< class T >
-    T KFData::OperateValue( uint32 operate, T value )
+    T KFData::Operate( uint32 operate, T value )
     {
-        auto base = GetValue< T >();
+        auto base = Get< T >();
         auto final = KFUtility::Operate< T >( operate, base, value );
-        final = SetValue< T >( final );
+        final = Set< T >( final );
         return final;
     }
 
     template< class T >
-    T KFData::OperateValue( const std::string& dataname, uint32 operate, T value )
+    T KFData::Operate( const std::string& dataname, uint32 operate, T value )
     {
-        auto kfdata = FindData( dataname );
+        auto kfdata = Find( dataname );
         if ( kfdata == nullptr )
         {
             return _invalid_int;
         }
 
-        return kfdata->OperateValue< T >( operate, value );
+        return kfdata->Operate< T >( operate, value );
     }
 
     template< class T >
-    T KFData::OperateValue( const std::string& parentname, const std::string& dataname, uint32 operate, T value )
+    T KFData::Operate( const std::string& parentname, const std::string& dataname, uint32 operate, T value )
     {
-        auto kfdata = FindData( parentname, dataname );
+        auto kfdata = Find( parentname, dataname );
         if ( kfdata == nullptr )
         {
             return _invalid_int;
         }
 
-        return kfdata->OperateValue< T >( operate, value );
+        return kfdata->Operate< T >( operate, value );
     }
 
     template< class T >
-    T KFData::OperateValue( uint64 key, const std::string& dataname, uint32 operate, T value )
+    T KFData::Operate( uint64 key, const std::string& dataname, uint32 operate, T value )
     {
-        auto kfdata = FindData( key, dataname );
+        auto kfdata = Find( key, dataname );
         if ( kfdata == nullptr )
         {
             return _invalid_int;
         }
 
-        return kfdata->OperateValue< T >( operate, value );
+        return kfdata->Operate< T >( operate, value );
     }
 
     template< class T >
-    T KFData::OperateValue( const std::string& dataname, uint64 key, uint32 operate, T value )
+    T KFData::Operate( const std::string& dataname, uint64 key, uint32 operate, T value )
     {
-        auto kfdata = FindData( dataname, key );
+        auto kfdata = Find( dataname, key );
         if ( kfdata == nullptr )
         {
             return _invalid_int;
         }
 
-        return kfdata->OperateValue< T >( operate, value );
+        return kfdata->Operate< T >( operate, value );
     }
 
     template< class T >
-    T KFData::OperateValue( const std::string& parentname, uint64 key, const std::string& dataname, uint32 operate, T value )
+    T KFData::Operate( const std::string& parentname, uint64 key, const std::string& dataname, uint32 operate, T value )
     {
-        auto kfdata = FindData( parentname, key, dataname );
+        auto kfdata = Find( parentname, key, dataname );
         if ( kfdata == nullptr )
         {
             return _invalid_int;
         }
 
-        return kfdata->OperateValue< T >( operate, value );
+        return kfdata->Operate< T >( operate, value );
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template< class T >
-    T KFData::GetValue()
+    T KFData::Get()
     {
         switch ( _data_setting->_logic_type )
         {
@@ -254,7 +254,7 @@ namespace KFrame
     }
 
     template< class T >
-    T KFData::SetValue( T value )
+    T KFData::Set( T value )
     {
         switch ( _data_setting->_logic_type )
         {
@@ -289,26 +289,26 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////////
 
     template<>
-    inline std::string KFData::GetValue()
+    inline std::string KFData::Get()
     {
         return GetString();
     }
 
     template<>
-    inline std::string KFData::SetValue( std::string value )
+    inline std::string KFData::Set( std::string value )
     {
         FromString( value );
         return value;
     }
     ///////////////////////////////////////////////////////////////////////////
     template<>
-    inline Math3D::Vector3D KFData::GetValue()
+    inline Math3D::Vector3D KFData::Get()
     {
         return GetVector3D();
     }
 
     template<>
-    inline Math3D::Vector3D  KFData::SetValue( Math3D::Vector3D value )
+    inline Math3D::Vector3D  KFData::Set( Math3D::Vector3D value )
     {
         SetVector3D( value );
         return value;

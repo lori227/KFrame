@@ -167,8 +167,7 @@ namespace KFrame
 
     bool KFPlayerModule::SendToClient( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message, uint32 delay /* = 0 */ )
     {
-        auto kfobject = player->GetData();
-        auto gateid = kfobject->GetValue( __KF_STRING__( gateid ) );
+        auto gateid = player->Get( __KF_STRING__( gateid ) );
         return _kf_tcp_server->SendNetMessage( gateid, player->GetKeyID(), msgid, message, delay );
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -187,8 +186,7 @@ namespace KFrame
         auto kfglobal = KFGlobal::Instance();
 
         // 更新总时间
-        auto kfobject = player->GetData();
-        auto onlinetime = kfobject->GetValue( __KF_STRING__( onlinetime ) );
+        auto onlinetime = player->Get( __KF_STRING__( onlinetime ) );
         player->UpdateData( __KF_STRING__( totaltime ), KFEnum::Add, kfglobal->_real_time - onlinetime );
 
         // 调用函数, 处理离开游戏的一些事务逻辑
@@ -247,12 +245,11 @@ namespace KFrame
 
         OnEnterCreatePlayer( player, pblogin->playerid() );
 
-        auto kfobject = player->GetData();
-        kfobject->SetValue( __KF_STRING__( gateid ), pblogin->gateid() );
-        kfobject->SetValue( __KF_STRING__( channel ), pblogin->channel() );
-        kfobject->SetValue( __KF_STRING__( account ), pblogin->account() );
-        kfobject->SetValue( __KF_STRING__( accountid ), pblogin->accountid() );
-        kfobject->SetValue( __KF_STRING__( onlinetime ), KFGlobal::Instance()->_real_time );
+        player->Set( __KF_STRING__( gateid ), pblogin->gateid() );
+        player->Set( __KF_STRING__( channel ), pblogin->channel() );
+        player->Set( __KF_STRING__( account ), pblogin->account() );
+        player->Set( __KF_STRING__( accountid ), pblogin->accountid() );
+        player->Set( __KF_STRING__( onlinetime ), KFGlobal::Instance()->_real_time );
 
         // 渠道数据
         auto pbchanneldata = &pblogin->channeldata();
@@ -261,17 +258,17 @@ namespace KFrame
             auto& name = iter->first;
             auto& value = iter->second;
 
-            auto kfdata = kfobject->FindData( __KF_STRING__( basic ), name );
+            auto kfdata = player->Find( __KF_STRING__( basic ), name );
             if ( kfdata == nullptr )
             {
-                kfdata = kfobject->FindData( name );
+                kfdata = player->Find( name );
                 if ( kfdata == nullptr )
                 {
                     continue;
                 }
             }
 
-            kfdata->SetValue( value );
+            kfdata->Set( value );
         }
 
         // 调用重置函数
@@ -294,25 +291,20 @@ namespace KFrame
 
     void KFPlayerModule::OnEnterCreatePlayer( KFEntity* player, uint64 playerid )
     {
-        auto kfobject = player->GetData();
         auto kfglobal = KFGlobal::Instance();
-
-        auto kfbasic = kfobject->FindData( __KF_STRING__( basic ) );
-        kfbasic->SetValue( __KF_STRING__( serverid ), kfglobal->_app_id->GetId() );
-
-        // 设置名字
-        player->SetName( kfbasic->GetValue< std::string >( __KF_STRING__( name ) ) );
+        auto kfbasic = player->Find( __KF_STRING__( basic ) );
+        kfbasic->Set( __KF_STRING__( serverid ), kfglobal->_app_id->GetId() );
 
         // 判断新玩家
-        auto basicid = kfbasic->GetValue( __KF_STRING__( id ) );
+        auto basicid = kfbasic->Get( __KF_STRING__( id ) );
         if ( basicid == playerid )
         {
             return;
         }
 
-        kfobject->InitData();
-        kfbasic->SetValue( __KF_STRING__( id ), playerid );
-        kfobject->SetValue( __KF_STRING__( birthday ), kfglobal->_real_time );
+        player->InitData();
+        kfbasic->Set( __KF_STRING__( id ), playerid );
+        player->Set( __KF_STRING__( birthday ), kfglobal->_real_time );
 
         for ( auto iter : _new_player_function._objects )
         {
@@ -451,7 +443,7 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgRequestSyncReq );
 
-        auto kfdata = kfobject->FindData( kfmsg.dataname() );
+        auto kfdata = player->Find( kfmsg.dataname() );
         if ( kfdata == nullptr )
         {
             return;
@@ -464,7 +456,7 @@ namespace KFrame
             player->SyncUpdateData( kfdata, kfdata->GetKeyID() );
             break;
         case KFDataDefine::Type_Record:
-            for ( auto kfchild = kfdata->FirstData(); kfchild != nullptr; kfchild = kfdata->NextData() )
+            for ( auto kfchild = kfdata->First(); kfchild != nullptr; kfchild = kfdata->Next() )
             {
                 player->SyncAddData( kfchild, kfchild->GetKeyID() );
             }
@@ -478,7 +470,7 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgCancelSyncReq );
 
-        auto kfdata = kfobject->FindData( kfmsg.dataname() );
+        auto kfdata = player->Find( kfmsg.dataname() );
         if ( kfdata == nullptr )
         {
             return;

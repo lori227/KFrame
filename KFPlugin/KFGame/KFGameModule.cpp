@@ -86,7 +86,7 @@ namespace KFrame
     void KFGameModule::SavePlayer( KFEntity* player, uint32 saveflag )
     {
         // 保存数据库
-        auto pbplayerdata = _kf_kernel->SerializeToData( player->GetData() );
+        auto pbplayerdata = _kf_kernel->SerializeToData( player );
         _kf_data_client->SavePlayerData( player->GetKeyID(), pbplayerdata, saveflag );
     }
 
@@ -186,16 +186,15 @@ namespace KFrame
     // 发送消息到客户端
     bool KFGameModule::SendToClient( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message, uint32 delay )
     {
-        auto kfobject = player->GetData();
-        auto gateid = kfobject->GetValue( __KF_STRING__( gateid ) );
+        auto gateid = player->Get( __KF_STRING__( gateid ) );
         return _kf_tcp_server->SendNetMessage( gateid, player->GetKeyID(), msgid, message, delay );
     }
 
     // 发送到玩家
     bool KFGameModule::SendToPlayer( uint64 sendid, KFData* kfbasic, uint32 msgid, ::google::protobuf::Message* message )
     {
-        auto serverid = kfbasic->GetValue( __KF_STRING__( serverid ) );
-        auto playerid = kfbasic->GetValue( __KF_STRING__( id ) );
+        auto playerid = kfbasic->Get( __KF_STRING__( id ) );
+        auto serverid = kfbasic->Get( __KF_STRING__( serverid ) );
         if ( serverid == _invalid_int || playerid == _invalid_int )
         {
             return false;
@@ -233,7 +232,7 @@ namespace KFrame
             return true;
         }
 
-        auto gateid = player->GetData()->GetValue( __KF_STRING__( gateid ) );
+        auto gateid = player->Get( __KF_STRING__( gateid ) );
         return _kf_tcp_server->SendNetMessage( gateid, playerid, msgid, data, length );
     }
 
@@ -330,7 +329,7 @@ namespace KFrame
             if ( player != nullptr )
             {
                 // 序列化玩家数据
-                auto pbnewdata = _kf_kernel->SerializeToClient( player->GetData() );
+                auto pbnewdata = _kf_kernel->SerializeToClient( player );
 
                 KFMsg::S2SEnterToGateAck ack;
                 ack.mutable_pblogin()->CopyFrom( *pblogin );
@@ -373,8 +372,7 @@ namespace KFrame
         auto player = _kf_player->FindPlayer( kfmsg.playerid() );
         if ( player != nullptr )
         {
-            auto kfobject = player->GetData();
-            kfobject->SetValue( __KF_STRING__( gateid ), __ROUTE_RECV_ID__ );
+            player->Set( __KF_STRING__( gateid ), __ROUTE_RECV_ID__ );
 
             KFMsg::S2SEnterToGateAck ack;
             ack.set_servertime( KFGlobal::Instance()->_real_time );
@@ -385,7 +383,7 @@ namespace KFrame
             pblogin->set_sessionid( kfmsg.sessionid() );
             pblogin->set_accountid( kfmsg.accountid() );
 
-            auto playerdata = _kf_kernel->SerializeToClient( kfobject );
+            auto playerdata = _kf_kernel->SerializeToClient( player );
             ack.mutable_playerdata()->CopyFrom( *playerdata );
             auto ok = SendToGate( __ROUTE_SERVER_ID__, KFMsg::S2S_ENTER_TO_GATE_ACK, &ack );
             if ( !ok )

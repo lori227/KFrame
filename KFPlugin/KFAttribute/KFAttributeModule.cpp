@@ -44,8 +44,8 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::NameEmpty );
         }
 
-        auto kfname = player->GetData()->FindData( __KF_STRING__( basic ), __KF_STRING__( name ) );
-        auto name = kfname->GetValue<std::string>();
+        auto kfname = player->Find( __KF_STRING__( basic ), __KF_STRING__( name ) );
+        auto name = kfname->Get<std::string>();
         if ( !name.empty() )
         {
             return _kf_display->SendToClient( player, KFMsg::NameAlreadySet );

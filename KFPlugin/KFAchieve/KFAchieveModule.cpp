@@ -43,14 +43,13 @@ namespace KFrame
             return KFMsg::AchieveCanNotFind;
         }
 
-        auto kfobject = player->GetData();
-        auto kfachieve = kfobject->FindData( __KF_STRING__( achieve ), kfsetting->_id );
+        auto kfachieve = player->Find( __KF_STRING__( achieve ), kfsetting->_id );
         if ( kfachieve == nullptr )
         {
             return KFMsg::AchieveCanNotFindData;
         }
 
-        auto status = kfachieve->GetValue( __KF_STRING__( status ) );
+        auto status = kfachieve->Get( __KF_STRING__( status ) );
         if ( status == KFMsg::InitStatus )
         {
             return KFMsg::AchieveNotDone;
@@ -88,7 +87,7 @@ namespace KFrame
         player->UpdateData( __KF_STRING__( achieve ), key, __KF_STRING__( status ), KFEnum::Set, KFMsg::DoneStatus );
         if ( newvalue > achievesetting->_done_value )
         {
-            kfdata->OperateValue< uint64 >( KFEnum::Set, achievesetting->_done_value );
+            kfdata->Operate< uint64 >( KFEnum::Set, achievesetting->_done_value );
         }
     }
 
@@ -110,9 +109,9 @@ namespace KFrame
     void KFAchieveModule::UpdateObjectAchieveValue( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate )
     {
 
-        for ( auto kfchild = kfdata->FirstData(); kfchild != nullptr; kfchild = kfdata->NextData() )
+        for ( auto kfchild = kfdata->First(); kfchild != nullptr; kfchild = kfdata->Next() )
         {
-            auto value = kfchild->GetValue();
+            auto value = kfchild->Get();
             if ( value != 0u )
             {
                 UpdateDataAchieveValue( player, key, kfchild, operate, value, value );
@@ -133,13 +132,12 @@ namespace KFrame
             return;
         }
 
-        auto kfobject = player->GetData();
-        auto kfachieves = kfobject->FindData( __KF_STRING__( achieve ) );
+        auto kfachieves = player->Find( __KF_STRING__( achieve ) );
 
         for ( auto kfsetting : kfachievetype->_achieve_list )
         {
             // 是否已经完成
-            auto flag = kfachieves->GetValue< uint32 >( kfsetting->_id, __KF_STRING__( status ) );
+            auto flag = kfachieves->Get< uint32 >( kfsetting->_id, __KF_STRING__( status ) );
             if ( flag != KFMsg::InitStatus )
             {
                 continue;

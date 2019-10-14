@@ -10,7 +10,7 @@ namespace KFrame
     void KFObject::SetKeyID( uint64 id )
     {
         _key = id;
-        SetValue<uint64>( _data_setting->_key_name, id );
+        Set<uint64>( _data_setting->_key_name, id );
     }
 
     void KFObject::Reset()
@@ -40,12 +40,12 @@ namespace KFrame
         return _data.Size();
     }
 
-    KFData* KFObject::FirstData()
+    KFData* KFObject::First()
     {
         return _data.First();
     }
 
-    KFData* KFObject::NextData()
+    KFData* KFObject::Next()
     {
         return _data.Next();
     }
@@ -61,7 +61,7 @@ namespace KFrame
             auto& key = iter.first;
             auto kfdata = iter.second;
 
-            auto finddata = kfother->FindData( key );
+            auto finddata = kfother->Find( key );
             if ( finddata != nullptr )
             {
                 kfdata->CopyFrom( finddata );
@@ -75,105 +75,105 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    KFData* KFObject::FindData( const std::string& dataname )
+    KFData* KFObject::Find( const std::string& dataname )
     {
         return _data.Find( dataname );
     }
 
-    KFData* KFObject::FindData( const std::string& dataname, uint64 key )
+    KFData* KFObject::Find( const std::string& dataname, uint64 key )
     {
-        auto kfdata = FindData( dataname );
+        auto kfdata = Find( dataname );
         if ( kfdata == nullptr )
         {
             return nullptr;
         }
 
-        return kfdata->FindData( key );
+        return kfdata->Find( key );
     }
 
-    KFData* KFObject::FindData( const std::string& parentname, const std::string& childname )
+    KFData* KFObject::Find( const std::string& parentname, const std::string& childname )
     {
         if ( parentname.empty() )
         {
-            return FindData( childname );
+            return Find( childname );
         }
 
-        auto kfdata = FindData( parentname );
+        auto kfdata = Find( parentname );
         if ( kfdata == nullptr )
         {
             return nullptr;
         }
 
-        return kfdata->FindData( childname );
+        return kfdata->Find( childname );
     }
 
-    KFData* KFObject::FindData( const std::string& parentname, uint64 key, const std::string& childname )
+    KFData* KFObject::Find( const std::string& parentname, uint64 key, const std::string& childname )
     {
-        auto kfdata = FindData( parentname );
+        auto kfdata = Find( parentname );
         if ( kfdata == nullptr )
         {
             return nullptr;
         }
 
-        return kfdata->FindData( key, childname );
+        return kfdata->Find( key, childname );
     }
 
-    KFData* KFObject::FindData( const std::string& parentname, const std::string& childname, uint64 key )
+    KFData* KFObject::Find( const std::string& parentname, const std::string& childname, uint64 key )
     {
-        auto kfdata = FindData( parentname );
+        auto kfdata = Find( parentname );
         if ( kfdata == nullptr )
         {
             return nullptr;
         }
 
-        return kfdata->FindData( childname, key );
+        return kfdata->Find( childname, key );
     }
 
-    KFData* KFObject::FindData( const std::string& parentname, const std::string& childname, const std::string& dataname )
+    KFData* KFObject::Find( const std::string& parentname, const std::string& childname, const std::string& dataname )
     {
-        auto kfdata = FindData( parentname );
+        auto kfdata = Find( parentname );
         if ( kfdata == nullptr )
         {
             return nullptr;
         }
 
-        return kfdata->FindData( childname, dataname );
+        return kfdata->Find( childname, dataname );
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFObject::AddData( const std::string& dataname, KFData* data )
+    bool KFObject::Add( const std::string& dataname, KFData* data )
     {
         data->SetParent( this );
         _data.Insert( dataname, data );
         return true;
     }
 
-    bool KFObject::AddData( const std::string& dataname, uint64 key, KFData* data )
+    bool KFObject::Add( const std::string& dataname, uint64 key, KFData* data )
     {
-        auto kfdata = FindData( dataname );
+        auto kfdata = Find( dataname );
         if ( kfdata == nullptr )
         {
             return false;
         }
 
-        return kfdata->AddData( key, data );
+        return kfdata->Add( key, data );
     }
 
 
-    bool KFObject::AddData( const std::string& parentname, const std::string& childname, KFData* data )
+    bool KFObject::Add( const std::string& parentname, const std::string& childname, KFData* data )
     {
-        auto kfdata = FindData( parentname );
+        auto kfdata = Find( parentname );
         if ( kfdata == nullptr )
         {
             return false;
         }
 
-        return kfdata->AddData( childname, data );
+        return kfdata->Add( childname, data );
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    KFData* KFObject::MoveData( const std::string& dataname )
+    KFData* KFObject::Move( const std::string& dataname )
     {
         auto kfdata = _data.Find( dataname );
         if ( kfdata != nullptr )
@@ -184,31 +184,15 @@ namespace KFrame
         return kfdata;
     }
 
-    bool KFObject::RemoveData( const std::string& dataname )
+    bool KFObject::Remove( const std::string& dataname, uint64 key )
     {
-        return _data.Remove( dataname );
-    }
-
-    bool KFObject::RemoveData( const std::string& dataname, uint64 key )
-    {
-        auto kfdata = FindData( dataname );
+        auto kfdata = Find( dataname );
         if ( kfdata == nullptr )
         {
             return false;
         }
 
-        return kfdata->RemoveData( key );
-    }
-
-    bool KFObject::RemoveData( const std::string& parentname, const std::string& childname )
-    {
-        auto kfdata = FindData( parentname );
-        if ( kfdata == nullptr )
-        {
-            return false;
-        }
-
-        return kfdata->RemoveData( childname );
+        return kfdata->Remove( key );
     }
 
     std::string KFObject::ToString()
@@ -248,7 +232,7 @@ namespace KFrame
     {
         for ( auto& iter : values )
         {
-            auto kfdata = FindData( iter.first );
+            auto kfdata = Find( iter.first );
             if ( kfdata == nullptr )
             {
                 continue;

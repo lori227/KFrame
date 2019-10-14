@@ -42,22 +42,21 @@ namespace KFrame
 
     void KFHeroModule::CheckStartHeroTimer( KFEntity* player )
     {
-        auto kfobject = player->GetData();
-        auto kfherorecord = kfobject->FindData( __KF_STRING__( hero ) );
+        auto kfherorecord = player->Find( __KF_STRING__( hero ) );
 
         // 检查所有英雄, 找到时间最少的一个
         auto _min_valid_time = __MAX_UINT64__;
 
-        auto kfhero = kfherorecord->FirstData();
+        auto kfhero = kfherorecord->First();
         while ( kfhero != nullptr )
         {
-            auto validtime = kfhero->GetValue( __KF_STRING__( time ) );
+            auto validtime = kfhero->Get( __KF_STRING__( time ) );
             if ( validtime != _invalid_int && validtime < _min_valid_time )
             {
                 _min_valid_time = validtime;
             }
 
-            kfhero = kfherorecord->NextData();
+            kfhero = kfherorecord->Next();
         }
 
         if ( _min_valid_time == __MAX_UINT64__ )
@@ -78,21 +77,20 @@ namespace KFrame
 
     void KFHeroModule::RemoveInvalidTimeHero( KFEntity* player )
     {
-        auto kfobject = player->GetData();
-        auto kfherorecord = kfobject->FindData( __KF_STRING__( hero ) );
+        auto kfherorecord = player->Find( __KF_STRING__( hero ) );
 
         // 查找时间英雄
         std::unordered_map< KFData*, uint64 > timehero;
-        auto kfhero = kfherorecord->FirstData();
+        auto kfhero = kfherorecord->First();
         while ( kfhero != nullptr )
         {
-            auto validtime = kfhero->GetValue( __KF_STRING__( time ) );
+            auto validtime = kfhero->Get( __KF_STRING__( time ) );
             if ( validtime != 0 )
             {
                 timehero.insert( std::make_pair( kfhero, validtime ) );
             }
 
-            kfhero = kfherorecord->NextData();
+            kfhero = kfherorecord->Next();
         }
 
         // 删除时间英雄
@@ -148,7 +146,7 @@ namespace KFrame
         }
 
         // 判断是否存在该英雄
-        auto kfhero = kfparent->FindData( kfelementobject->_config_id );
+        auto kfhero = kfparent->Find( kfelementobject->_config_id );
         if ( kfhero == nullptr )
         {
             // 不存在, 创建
@@ -160,7 +158,7 @@ namespace KFrame
         else
         {
             // 存在, 判断有效时间
-            auto datatime = kfhero->GetValue( __KF_STRING__( time ) );
+            auto datatime = kfhero->Get( __KF_STRING__( time ) );
             auto elementtime = kfelementobject->CalcValue( kfhero->_class_setting, __KF_STRING__( time ), multiple );
             if ( datatime != _invalid_int )
             {
@@ -186,7 +184,7 @@ namespace KFrame
 
     __KF_ADD_DATA_FUNCTION__( KFHeroModule::OnAddHeroCallBack )
     {
-        auto validtime = kfdata->GetValue< uint64 >( __KF_STRING__( time ) );
+        auto validtime = kfdata->Get< uint64 >( __KF_STRING__( time ) );
         if ( validtime == _invalid_int )
         {
             return;

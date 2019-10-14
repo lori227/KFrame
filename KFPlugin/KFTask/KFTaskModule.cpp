@@ -48,15 +48,14 @@ namespace KFrame
         }
 
         // 获得任务属性
-        auto kfobject = player->GetData();
-        auto kftask = kfobject->FindData( __KF_STRING__( task ), kfsetting->_id );
+        auto kftask = player->Find( __KF_STRING__( task ), kfsetting->_id );
         if ( kftask == nullptr )
         {
             return KFMsg::TaskCanNotFindData;
         }
 
         // 不是完成状态
-        auto taskstatus = kftask->GetValue( __KF_STRING__( status ) );
+        auto taskstatus = kftask->Get( __KF_STRING__( status ) );
         if ( taskstatus == KFMsg::InitStatus )
         {
             return KFMsg::TaskNotDone;
@@ -97,9 +96,9 @@ namespace KFrame
     void KFTaskModule::UpdateObjectTaskValue( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate )
     {
         // 遍历对象所有的值
-        for ( auto kfchild = kfdata->FirstData(); kfchild != nullptr; kfchild = kfdata->NextData() )
+        for ( auto kfchild = kfdata->First(); kfchild != nullptr; kfchild = kfdata->Next() )
         {
-            auto value = kfchild->GetValue();
+            auto value = kfchild->Get();
             if ( value != _invalid_int )
             {
                 UpdateDataTaskValue( player, key, kfchild, operate, value, value );
@@ -115,13 +114,11 @@ namespace KFrame
             return;
         }
 
-        auto kfobject = player->GetData();
-        auto kftaskrecord = kfobject->FindData( __KF_STRING__( task ) );
-
+        auto kftaskrecord = player->Find( __KF_STRING__( task ) );
         for ( auto kfsetting : kftasktypelist->_task_list )
         {
             // 已经完成
-            auto taskstatus = kftaskrecord->GetValue( kfsetting->_id, __KF_STRING__( status ) );
+            auto taskstatus = kftaskrecord->Get( kfsetting->_id, __KF_STRING__( status ) );
             if ( taskstatus != KFMsg::InitStatus )
             {
                 continue;
@@ -130,7 +127,7 @@ namespace KFrame
             // 如果需要领取任务
             if ( kfsetting->_need_receive )
             {
-                auto kftask = kftaskrecord->FindData( kfsetting->_id );
+                auto kftask = kftaskrecord->Find( kfsetting->_id );
                 if ( kftask == nullptr )
                 {
                     continue;
@@ -174,7 +171,7 @@ namespace KFrame
         }
 
         auto kfparent = kfdata->GetParent();
-        auto taskstatus = kfparent->GetValue( __KF_STRING__( status ) );
+        auto taskstatus = kfparent->Get( __KF_STRING__( status ) );
         if ( taskstatus != KFMsg::InitStatus )
         {
             return;

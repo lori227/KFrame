@@ -23,28 +23,27 @@ namespace KFrame
         // 是否达到了最大值
         virtual bool IsFull();
         //////////////////////////////////////////////////////////////////////////////////////////////////////
-        virtual KFData* FirstData();
-        virtual KFData* NextData();
+        virtual KFData* First();
+        virtual KFData* Next();
 
         virtual void CopyFrom( KFData* kfother );
         virtual void SaveTo( KFData* kfother );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
-        virtual KFData* FindData( uint64 key );
-        virtual KFData* FindData( uint64 key, const std::string& dataname );
-        virtual KFData* FindData( uint64 parentkey, uint64 childkey );
-        virtual KFData* FindData( uint64 parentkey, uint64 childkey, const std::string& dataname );
-        virtual KFData* FindData( uint64 parentkey, const std::string& dataname, uint64 childkey );
+        virtual KFData* Find( uint64 key );
+        virtual KFData* Find( uint64 key, const std::string& dataname );
+        virtual KFData* Find( uint64 parentkey, uint64 childkey );
+        virtual KFData* Find( uint64 parentkey, uint64 childkey, const std::string& dataname );
+        virtual KFData* Find( uint64 parentkey, const std::string& dataname, uint64 childkey );
 
-        virtual bool AddData( uint64 key, KFData* data );
-        virtual bool AddData( uint64 parentkey, uint64 childkey, KFData* data );
-        virtual bool AddData( uint64 key, const std::string& dataname, KFData* data );
+        virtual bool Add( uint64 key, KFData* data );
+        virtual bool Add( uint64 parentkey, uint64 childkey, KFData* data );
+        virtual bool Add( uint64 key, const std::string& dataname, KFData* data );
 
-        virtual KFData* MoveData( uint64 key );
-        virtual bool RemoveData( uint64 key );
-        virtual bool RemoveData( uint64 key, const std::string& dataname );
+        virtual KFData* Move( uint64 key );
+        virtual bool Remove( uint64 key );
 
-        virtual void FindData( const std::string& dataname, uint64 value, std::list< KFData* >& findlist, bool findall );
-        virtual bool CheckData( const std::string& dataname, uint64 value, const std::string& checkname, uint64 checkvalue );
+        virtual void Find( const std::string& dataname, uint64 value, std::list< KFData* >& findlist, bool findall );
+        virtual bool Check( const std::string& dataname, uint64 value, const std::string& checkname, uint64 checkvalue );
 
         // 格式化成字串
         virtual std::string ToString();

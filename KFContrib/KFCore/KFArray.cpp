@@ -45,7 +45,7 @@ namespace KFrame
             {
                 if ( kfdata != nullptr )
                 {
-                    kfdata->SetValue( _data_setting->_int_init_value );
+                    kfdata->Set( _data_setting->_int_init_value );
                 }
             }
         }
@@ -57,7 +57,7 @@ namespace KFrame
         return _data.MaxSize();
     }
 
-    KFData* KFArray::FirstData()
+    KFData* KFArray::First()
     {
         uint32 index = KFDataDefine::Array_Index;
         if ( index == 0u )
@@ -69,7 +69,7 @@ namespace KFrame
         return _data.Next();
     }
 
-    KFData* KFArray::NextData()
+    KFData* KFArray::Next()
     {
         return _data.Next();
     }
@@ -84,7 +84,7 @@ namespace KFrame
         uint32 key = KFDataDefine::Array_Index;
         for ( auto kfdata : _data._objects )
         {
-            auto finddata = kfother->FindData( key++ );
+            auto finddata = kfother->Find( key++ );
             if ( finddata != nullptr )
             {
                 kfdata->SaveTo( finddata );
@@ -93,45 +93,45 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    KFData* KFArray::FindData( uint64 key )
+    KFData* KFArray::Find( uint64 key )
     {
         return _data.Find( static_cast<uint32>( key ) );
     }
 
-    KFData* KFArray::FindData( uint64 key, const std::string& dataname )
+    KFData* KFArray::Find( uint64 key, const std::string& dataname )
     {
-        auto kfdata = FindData( key );
+        auto kfdata = Find( key );
         if ( kfdata == nullptr )
         {
             return nullptr;
         }
 
-        return kfdata->FindData( dataname );
+        return kfdata->Find( dataname );
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFArray::AddData( uint64 key, KFData* data )
+    bool KFArray::Add( uint64 key, KFData* data )
     {
         data->SetParent( this );
         _data.Insert( static_cast<uint32>( key ), data );
         return true;
     }
 
-    bool KFArray::AddData( uint64 key, const std::string& dataname, KFData* data )
+    bool KFArray::Add( uint64 key, const std::string& dataname, KFData* data )
     {
-        auto kfdata = FindData( key );
+        auto kfdata = Find( key );
         if ( kfdata == nullptr )
         {
             return false;
         }
 
-        return kfdata->AddData( dataname, data );
+        return kfdata->Add( dataname, data );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFArray::RemoveData( uint64 key )
+    bool KFArray::Remove( uint64 key )
     {
-        auto kfdata = FindData( key );
+        auto kfdata = Find( key );
         if ( kfdata == nullptr )
         {
             return false;
@@ -140,18 +140,6 @@ namespace KFrame
         kfdata->Reset();
         return true;
     }
-
-    bool KFArray::RemoveData( uint64 key, const std::string& dataname )
-    {
-        auto kfdata = FindData( key );
-        if ( kfdata == nullptr )
-        {
-            return false;
-        }
-
-        return kfdata->RemoveData( dataname );
-    }
-
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -162,7 +150,7 @@ namespace KFrame
         {
             if ( kfdata != nullptr )
             {
-                __JSON_ADD_VALUE__( kfjson, kfdata->GetValue< int64 >() );
+                __JSON_ADD_VALUE__( kfjson, kfdata->Get< int64 >() );
             }
         }
 
@@ -176,11 +164,11 @@ namespace KFrame
         auto size = __JSON_ARRAY_SIZE__( kfjson );
         for ( uint32 i = 0u; i < size; ++i )
         {
-            auto kfdata = FindData( i + KFDataDefine::Array_Index );
+            auto kfdata = Find( i + KFDataDefine::Array_Index );
             if ( kfdata != nullptr )
             {
                 auto& object = __JSON_ARRAY_INDEX__( kfjson, i );
-                kfdata->SetValue( object.GetInt64() );
+                kfdata->Set( object.GetInt64() );
             }
         }
     }

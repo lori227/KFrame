@@ -47,20 +47,19 @@ namespace KFrame
             return KFMsg::ActivityCanNotFind;
         }
 
-        auto kfobject = player->GetData();
-        auto kfactivity = kfobject->FindData( __KF_STRING__( activity ), type );
+        auto kfactivity = player->Find( __KF_STRING__( activity ), type );
         if ( kfactivity == nullptr )
         {
             return KFMsg::ActivityCanNotFindData;
         }
 
-        auto received = kfactivity->GetValue( __KF_STRING__( received ) );
+        auto received = kfactivity->Get( __KF_STRING__( received ) );
         if ( KFUtility::HaveBitMask<uint64>( received, activityid ) )
         {
             return KFMsg::ActivityAlreadyReceived;
         }
 
-        auto value = kfactivity->GetValue( __KF_STRING__( value ) );
+        auto value = kfactivity->Get( __KF_STRING__( value ) );
         if ( value < kfsetting->_done_value )
         {
             return KFMsg::ActivityNotDone;
@@ -84,13 +83,13 @@ namespace KFrame
             return;
         }
 
-        auto nowvalue = kfdata->GetValue();
+        auto nowvalue = kfdata->Get();
         if ( nowvalue <= activitysetting->_max_value )
         {
             return;
         }
 
-        kfdata->OperateValue<uint64>( KFEnum::Set, activitysetting->_max_value );
+        kfdata->Operate<uint64>( KFEnum::Set, activitysetting->_max_value );
     }
 
     void KFActivityModule::UpdateDataActivityValue( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 newvalue )
@@ -107,15 +106,14 @@ namespace KFrame
             return;
         }
 
-        auto kfobject = player->GetData();
-        auto kfactivityrecord = kfobject->FindData( __KF_STRING__( activity ) );
+        auto kfactivityrecord = player->Find( __KF_STRING__( activity ) );
         if ( kfactivityrecord == nullptr )
         {
             return;
         }
 
-        auto level = kfobject->GetValue( __KF_STRING__( level ) );
-        auto birthday = kfobject->GetValue( __KF_STRING__( birthday ) );
+        auto level = player->Get( __KF_STRING__( level ) );
+        auto birthday = player->Get( __KF_STRING__( birthday ) );
         auto realtime = KFGlobal::Instance()->_real_time;
 
         for ( auto activitysetting : kfactivitytypesetting->_activity_type )
@@ -140,10 +138,10 @@ namespace KFrame
             }
 
             // 检查是否需要重置
-            auto kfactivity = kfactivityrecord->FindData( activitysetting->_type );
+            auto kfactivity = kfactivityrecord->Find( activitysetting->_type );
             if ( kfactivity != nullptr )
             {
-                auto activitytime = kfactivity->GetValue( __KF_STRING__( time ) );
+                auto activitytime = kfactivity->Get( __KF_STRING__( time ) );
                 if ( activitysetting->CheckResetActivity( realtime, birthday, activitytime ) )
                 {
                     player->UpdateData( kfactivityrecord, activitysetting->_type, __KF_STRING__( value ), KFEnum::Set, _invalid_int );
@@ -151,7 +149,7 @@ namespace KFrame
                     player->UpdateData( kfactivityrecord, activitysetting->_type, __KF_STRING__( time ), KFEnum::Set, realtime );
                 }
 
-                auto donevalue = kfactivity->GetValue( __KF_STRING__( value ) );
+                auto donevalue = kfactivity->Get( __KF_STRING__( value ) );
                 if ( donevalue >= activitysetting->_max_value )
                 {
                     continue;
@@ -170,16 +168,16 @@ namespace KFrame
 
     void KFActivityModule::UpdateObjectActivityValue( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate )
     {
-        auto child = kfdata->FirstData();
+        auto child = kfdata->First();
         while ( child != nullptr )
         {
-            auto value = child->GetValue();
+            auto value = child->Get();
             if ( value != _invalid_int )
             {
                 UpdateDataActivityValue( player, key, child, operate, value, value );
             }
 
-            child = kfdata->NextData();
+            child = kfdata->Next();
         }
     }
 
@@ -195,8 +193,7 @@ namespace KFrame
 
     void KFActivityModule::CheckResetDailyActivity( KFEntity* player )
     {
-        auto kfobject = player->GetData();
-        auto kfactivityrecord = kfobject->FindData( __KF_STRING__( activity ) );
+        auto kfactivityrecord = player->Find( __KF_STRING__( activity ) );
         if ( kfactivityrecord == nullptr )
         {
             return;
@@ -204,14 +201,14 @@ namespace KFrame
 
         std::list< uint64 > removes;
 
-        auto birthday = kfobject->GetValue( __KF_STRING__( birthday ) );
+        auto birthday = player->Get( __KF_STRING__( birthday ) );
         auto realtime = KFGlobal::Instance()->_real_time;
 
-        auto kfactivity = kfactivityrecord->FirstData();
+        auto kfactivity = kfactivityrecord->First();
         while ( kfactivity != nullptr )
         {
             auto type = kfactivity->GetKeyID();
-            auto activitytime = kfactivity->GetValue( __KF_STRING__( time ) );
+            auto activitytime = kfactivity->Get( __KF_STRING__( time ) );
 
             auto activitysetting = KFActivityConfig::Instance()->FindActivitySetting( type );
             if ( activitysetting == nullptr ||
@@ -221,7 +218,7 @@ namespace KFrame
                 removes.push_back( type );
             }
 
-            kfactivity = kfactivityrecord->NextData();
+            kfactivity = kfactivityrecord->Next();
         }
 
         for ( auto type : removes )

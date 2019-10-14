@@ -33,12 +33,12 @@ namespace KFrame
 
     void KFDouble::CopyFrom( KFData* kfother )
     {
-        SetValue( kfother->GetValue<double>() );
+        Set( kfother->Get<double>() );
     }
 
     void KFDouble::SaveTo( KFData* kfother )
     {
-        kfother->SetValue( GetValue<double>() );
+        kfother->Set( Get<double>() );
     }
 
     std::string KFDouble::ToString()

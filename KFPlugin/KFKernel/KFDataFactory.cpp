@@ -126,11 +126,11 @@ namespace KFrame
                 {
                     auto kfarraydata = KFDataFactory::Create( childdatasetting->_contain_class );
                     kfarraydata->Initialize( initclasssetting, childdatasetting );
-                    kfchilddata->AddData( i, kfarraydata );
+                    kfchilddata->Add( i, kfarraydata );
                 }
             }
 
-            kfdata->AddData( childdatasetting->_name, kfchilddata );
+            kfdata->Add( childdatasetting->_name, kfchilddata );
         }
     }
 }

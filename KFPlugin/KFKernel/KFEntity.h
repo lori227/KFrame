@@ -1,6 +1,7 @@
 ﻿#ifndef __KF_ENTITY_H__
 #define __KF_ENTITY_H__
 
+#include "KFCore/KFObject.h"
 #include "KFCore/KFElement.h"
 #include "KFCore/KFCondition.h"
 
@@ -8,23 +9,12 @@ namespace KFrame
 {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // 游戏中的对象实体
-    class KFEntity
+    class KFEntity : public KFObject
     {
     public:
         KFEntity() = default;
         virtual ~KFEntity() = default;
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // id
-        virtual void SetKeyID( uint64 id ) = 0;
-        virtual uint64 GetKeyID() = 0;
-
-        // name
-        virtual const char* GetName() = 0;
-        virtual void SetName( const std::string& name ) = 0;
-
-        // 数据
-        virtual KFData* GetData() = 0;
-
         // 是否初始化完成
         virtual bool IsInited() = 0;
         virtual void SetInited() = 0;
@@ -40,7 +30,6 @@ namespace KFrame
         virtual bool AddData( const std::string& parentname, uint64 key, KFData* kfdata ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
         // 删除属性
         virtual bool RemoveData( const std::string& dataname, uint64 key ) = 0;
         virtual bool RemoveData( KFData* kfparent, uint64 key ) = 0;
@@ -48,7 +37,6 @@ namespace KFrame
         virtual bool RemoveData( const std::string& parentname, const std::string& dataname ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
         // 移动属性
         virtual KFData* MoveData( const std::string& sourcename, uint64 key, const std::string& targetname ) = 0;
         virtual KFData* MoveData( KFData* sourcedata, uint64 key, KFData* targetdata ) = 0;
@@ -120,6 +108,8 @@ namespace KFrame
         virtual void SyncRemoveData( KFData* kfdata, uint64 key ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         virtual uint64 GetConfigValue( const std::string& name, uint64 id ) = 0;
+
+        // status
         virtual uint32 GetStatus() = 0;
         virtual void SetStatus( uint32 status ) = 0;
     };

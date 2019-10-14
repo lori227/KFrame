@@ -165,7 +165,7 @@ namespace KFrame
     KFEntity* KFComponentEx::CreateEntity( uint64 key, const KFMsg::PBObject* proto )
     {
         auto kfentity = CreateEntity( key );
-        auto ok = KFKernelModule::Instance()->ParseFromProto( kfentity->GetData(), proto );
+        auto ok = KFKernelModule::Instance()->ParseFromProto( kfentity, proto );
         if ( ok )
         {
             kfentity->SetKeyID( key );
@@ -713,15 +713,14 @@ namespace KFrame
     void KFComponentEx::StartSaveEntityTimer( KFEntity* kfentity, KFData* kfdata )
     {
         // 不需要保存
-        auto kfobject = kfentity->GetData();
         if ( !kfdata->HaveMask( KFDataDefine::Mask_Save ) ||
-                !kfobject->HaveMask( KFDataDefine::Mask_Save ) )
+                !kfentity->HaveMask( KFDataDefine::Mask_Save ) )
         {
             return;
         }
 
         // 启动定时器
-        __DELAY_TIMER_1__( kfentity->GetKeyID(), kfobject->_data_setting->_delay_save_time, &KFComponentEx::OnTimerSaveEntity );
+        __DELAY_TIMER_1__( kfentity->GetKeyID(), kfentity->_data_setting->_delay_save_time, &KFComponentEx::OnTimerSaveEntity );
     }
 
     __KF_TIMER_FUNCTION__( KFComponentEx::OnTimerSaveEntity )
@@ -737,8 +736,7 @@ namespace KFrame
 
     void KFComponentEx::DeleteSaveEntity( KFEntity* kfentity )
     {
-        auto kfobject = kfentity->GetData();
-        switch ( kfobject->_data_setting->_delete_type )
+        switch ( kfentity->_data_setting->_delete_type )
         {
         case KFDataDefine::Data_Delete_Save:
             SaveEntity( kfentity, KFSaveEnum::OfflineSave, __FUNC_LINE__ );
