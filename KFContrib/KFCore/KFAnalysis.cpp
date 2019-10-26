@@ -87,7 +87,6 @@ namespace KFrame
         auto iter = _check_type.find( value );
         if ( iter == _check_type.end() )
         {
-            __LOG_ERROR__( "check value=[{}] error!", value );
             return KFEnum::Null;
         }
 

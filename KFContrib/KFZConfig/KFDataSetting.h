@@ -165,6 +165,9 @@ namespace KFrame
         // 配置索引值
         std::string _config_key_name;
 
+        // 数值属性字段
+        std::string _value_key_name;
+
         // 脚本文件
         std::string _lua_file;
 

@@ -358,17 +358,19 @@ namespace KFrame
         _add_data_module.Remove( module );
     }
 
-    void KFComponentEx::BindAddDataFunction( const std::string& module, const std::string& dataname, KFAddDataFunction& function )
+    void KFComponentEx::BindAddDataFunction( const std::string& module, const std::string& dataname, uint64 key, KFAddDataFunction& function )
     {
         auto& bindname = GetBindDataName( dataname );
-        auto kfdatafunction = _add_data_function.Create( bindname );
+        auto datakey = RecordKeyType( bindname, key );
+        auto kfdatafunction = _add_data_function.Create( datakey );
         kfdatafunction->AddFunction( module, function );
     }
 
-    void KFComponentEx::UnBindAddDataFunction( const std::string& module, const std::string& dataname )
+    void KFComponentEx::UnBindAddDataFunction( const std::string& module, const std::string& dataname, uint64 key )
     {
         auto& bindname = GetBindDataName( dataname );
-        auto kfdatafunction = _add_data_function.Find( bindname );
+        auto datakey = RecordKeyType( bindname, key );
+        auto kfdatafunction = _add_data_function.Find( datakey );
         if ( kfdatafunction != nullptr )
         {
             kfdatafunction->RemoveFunction( module );
@@ -386,17 +388,19 @@ namespace KFrame
         _remove_data_module.Remove( module );
     }
 
-    void KFComponentEx::BindRemoveDataFunction( const std::string& module, const std::string& dataname, KFRemoveDataFunction& function )
+    void KFComponentEx::BindRemoveDataFunction( const std::string& module, const std::string& dataname, uint64 key, KFRemoveDataFunction& function )
     {
         auto& bindname = GetBindDataName( dataname );
-        auto kfdatafunction = _remove_data_function.Create( bindname );
+        auto datakey = RecordKeyType( bindname, key );
+        auto kfdatafunction = _remove_data_function.Create( datakey );
         kfdatafunction->AddFunction( module, function );
     }
 
-    void KFComponentEx::UnBindRemoveDataFunction( const std::string& module, const std::string& dataname )
+    void KFComponentEx::UnBindRemoveDataFunction( const std::string& module, const std::string& dataname, uint64 key )
     {
         auto bindname = GetBindDataName( dataname );
-        auto kfdatafunction = _remove_data_function.Find( bindname );
+        auto datakey = RecordKeyType( bindname, key );
+        auto kfdatafunction = _remove_data_function.Find( datakey );
         if ( kfdatafunction != nullptr )
         {
             kfdatafunction->RemoveFunction( module );
@@ -656,10 +660,21 @@ namespace KFrame
         {
             // 注册的函数
             auto bindname = GetBindDataName( kfdata->_data_setting );
-            auto kfdatafunction = _add_data_function.Find( bindname );
-            if ( kfdatafunction != nullptr )
             {
-                kfdatafunction->CallFunction( kfentity, kfparent, key, kfdata );
+                auto findkey = RecordKeyType( bindname, key );
+                auto kfdatafunction = _add_data_function.Find( findkey );
+                if ( kfdatafunction != nullptr )
+                {
+                    kfdatafunction->CallFunction( kfentity, kfparent, key, kfdata );
+                }
+            }
+            {
+                auto findkey = RecordKeyType( bindname, 0u );
+                auto kfdatafunction = _add_data_function.Find( findkey );
+                if ( kfdatafunction != nullptr )
+                {
+                    kfdatafunction->CallFunction( kfentity, kfparent, key, kfdata );
+                }
             }
         }
 
@@ -688,10 +703,21 @@ namespace KFrame
         {
             // 注册的函数
             auto bindname = GetBindDataName( kfdata->_data_setting );
-            auto kfdatafunction = _remove_data_function.Find( bindname );
-            if ( kfdatafunction != nullptr )
             {
-                kfdatafunction->CallFunction( kfentity, kfparent, key, kfdata );
+                auto findkey = RecordKeyType( bindname, key );
+                auto kfdatafunction = _remove_data_function.Find( findkey );
+                if ( kfdatafunction != nullptr )
+                {
+                    kfdatafunction->CallFunction( kfentity, kfparent, key, kfdata );
+                }
+            }
+            {
+                auto findkey = RecordKeyType( bindname, 0u );
+                auto kfdatafunction = _remove_data_function.Find( findkey );
+                if ( kfdatafunction != nullptr )
+                {
+                    kfdatafunction->CallFunction( kfentity, kfparent, key, kfdata );
+                }
             }
         }
     }
@@ -708,6 +734,12 @@ namespace KFrame
         // 开启保存数据库定时器
         StartSaveEntityTimer( kfentity, kfparent );
         kfentity->SyncAddData( kfdata, key );
+    }
+
+    void KFComponentEx::MoveUpdateDataCallBack( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata )
+    {
+        StartSaveEntityTimer( kfentity, kfparent );
+        kfentity->SyncUpdateData( kfdata, key );
     }
 
     void KFComponentEx::StartSaveEntityTimer( KFEntity* kfentity, KFData* kfdata )

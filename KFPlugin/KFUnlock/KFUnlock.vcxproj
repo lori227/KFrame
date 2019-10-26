@@ -12,19 +12,21 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFAttributeModule.cpp" />
-    <ClCompile Include="KFAttributePlugin.cpp" />
+    <ClCompile Include="KFUnlockConfig.cpp" />
+    <ClCompile Include="KFUnlockModule.cpp" />
+    <ClCompile Include="KFUnlockPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFAttributeInterface.h" />
-    <ClInclude Include="KFAttributeModule.hpp" />
-    <ClInclude Include="KFAttributePlugin.hpp" />
+    <ClInclude Include="KFUnlockConfig.hpp" />
+    <ClInclude Include="KFUnlockInterface.h" />
+    <ClInclude Include="KFUnlockModule.hpp" />
+    <ClInclude Include="KFUnlockPlugin.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{2CC0C2FE-0094-4C5E-BAE0-456BB95D8C34}</ProjectGuid>
+    <ProjectGuid>{E1B06ABE-EFA9-4EF4-8E45-8BA9790F7E00}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>NFProxyPlugin</RootNamespace>
-    <ProjectName>KFAttribute</ProjectName>
+    <ProjectName>KFUnlock</ProjectName>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -69,8 +71,8 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN;_DEBUG;_WINDOWS;_USRDLL</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\KFPlugin\;..\..\KFContrib\;..\..\KFCommon\;..\..\KFLibrary\;..\..\KFInterface\;..\..\KFLibrary\google\protobuf\src\</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_DEBUG;_WINDOWS;_USRDLL</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\KFPlugin\;..\..\KFLibrary\;..\..\KFContrib\;..\..\KFCommon\;..\..\KFInterface\;..\..\KFLibrary\google\protobuf\src\</AdditionalIncludeDirectories>
       <BrowseInformation>false</BrowseInformation>
       <DisableSpecificWarnings>4244;4267;4996</DisableSpecificWarnings>
       <ForcedIncludeFiles>google\protobuf\descriptor.h;google\protobuf\unknown_field_set.h</ForcedIncludeFiles>
@@ -99,8 +101,8 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN;_WINDOWS;_USRDLL;ELPP_NO_DEFAULT_LOG_FILE</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\KFPlugin\;..\..\KFContrib\;..\..\KFCommon\;..\..\KFLibrary\;..\..\KFInterface\;..\..\KFLibrary\google\protobuf\src\</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_WINDOWS;_USRDLL;ELPP_NO_DEFAULT_LOG_FILE</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\KFPlugin\;..\..\KFLibrary\;..\..\KFContrib\;..\..\KFCommon\;..\..\KFInterface\;..\..\KFLibrary\google\protobuf\src\</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4244;4267;4996</DisableSpecificWarnings>
       <ForcedIncludeFiles>google\protobuf\descriptor.h;google\protobuf\unknown_field_set.h</ForcedIncludeFiles>
       <BrowseInformation>false</BrowseInformation>

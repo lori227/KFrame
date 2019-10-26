@@ -34,12 +34,16 @@ namespace KFrame
         virtual bool RemoveData( const std::string& dataname, uint64 key ) = 0;
         virtual bool RemoveData( KFData* kfparent, uint64 key ) = 0;
         virtual bool RemoveData( const std::string& dataname ) = 0;
-        virtual bool RemoveData( const std::string& parentname, const std::string& dataname ) = 0;
+        virtual bool RemoveData( KFData* kfparent, const std::string& dataname ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 移动属性
         virtual KFData* MoveData( const std::string& sourcename, uint64 key, const std::string& targetname ) = 0;
         virtual KFData* MoveData( KFData* sourcedata, uint64 key, KFData* targetdata ) = 0;
+
+        virtual KFData* MoveData( KFData* sourcedata, const std::string& dataname, const std::string& targetname ) = 0;
+        virtual KFData* MoveData( KFData* sourcedata, const std::string& dataname, KFData* targetdata ) = 0;
+        virtual KFData* MoveData( KFData* sourcedata, uint64 key, KFData* targetdata, const std::string& dataname ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

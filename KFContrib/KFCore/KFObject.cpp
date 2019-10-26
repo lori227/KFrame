@@ -4,6 +4,11 @@ namespace KFrame
 {
     uint64 KFObject::GetKeyID()
     {
+        if ( _key == 0u )
+        {
+            _key = Get( _data_setting->_key_name );
+        }
+
         return _key;
     }
 
@@ -173,15 +178,30 @@ namespace KFrame
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    KFData* KFObject::Move( const std::string& dataname )
+    KFData* KFObject::Move( const std::string& dataname, bool usekey )
     {
         auto kfdata = _data.Find( dataname );
-        if ( kfdata != nullptr )
+        if ( kfdata == nullptr )
         {
-            _data.Remove( dataname, false );
+            return nullptr;
         }
 
+        if ( usekey )
+        {
+            auto key = kfdata->GetKeyID();
+            if ( key == 0u )
+            {
+                return nullptr;
+            }
+        }
+
+        _data.Remove( dataname, false );
         return kfdata;
+    }
+
+    bool KFObject::Remove( const std::string& dataname )
+    {
+        return _data.Remove( dataname );
     }
 
     bool KFObject::Remove( const std::string& dataname, uint64 key )

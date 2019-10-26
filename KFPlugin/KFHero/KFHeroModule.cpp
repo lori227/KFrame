@@ -6,26 +6,23 @@ namespace KFrame
     void KFHeroModule::BeforeRun()
     {
         _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
-        _kf_component->RegisterAddDataFunction( __KF_STRING__( hero ), this, &KFHeroModule::OnAddHeroCallBack );
-        _kf_component->RegisterRemoveDataFunction( __KF_STRING__( hero ), this, &KFHeroModule::OnRemoveHeroCallBack );
-        _kf_component->RegisterAddElementFunction( __KF_STRING__( hero ), this, &KFHeroModule::AddHeroElement );
+        __REGISTER_ADD_DATA_1__( __KF_STRING__( hero ), &KFHeroModule::OnAddHeroCallBack );
+        __REGISTER_REMOVE_DATA_1__( __KF_STRING__( hero ), &KFHeroModule::OnRemoveHeroCallBack );
+        __REGISTER_ADD_ELEMENT__( __KF_STRING__( hero ), &KFHeroModule::AddHeroElement );
         //////////////////////////////////////////////////////////////////////////////////////////////////
-
-        _kf_player->RegisterEnterFunction( this, &KFHeroModule::OnEnterStartHeroTimer );
-        _kf_player->RegisterLeaveFunction( this, &KFHeroModule::OnLeaveStopHeroTimer );
-
+        __REGISTER_ENTER_PLAYER__( &KFHeroModule::OnEnterStartHeroTimer );
+        __REGISTER_LEAVE_PLAYER__( &KFHeroModule::OnLeaveStopHeroTimer );
         //////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
     void KFHeroModule::BeforeShut()
     {
-        _kf_component->UnRegisterAddDataFunction( this, __KF_STRING__( hero ) );
-        _kf_component->UnRegisterRemoveDataFunction( this, __KF_STRING__( hero ) );
-        _kf_component->UnRegisterAddElementFunction( __KF_STRING__( hero ) );
+        __UN_ADD_DATA_1__( __KF_STRING__( hero ) );
+        __UN_REMOVE_DATA_1__( __KF_STRING__( hero ) );
+        __UN_ADD_ELEMENT__( __KF_STRING__( hero ) );
         //////////////////////////////////////////////////////////////////////////////////////////////////
-
-        _kf_player->UnRegisterEnterFunction( this );
-        _kf_player->UnRegisterLeaveFunction( this );
+        __UN_ENTER_PLAYER__();
+        __UN_LEAVE_PLAYER__();
         //////////////////////////////////////////////////////////////////////////////////////////////////
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////

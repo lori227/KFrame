@@ -22,6 +22,12 @@ namespace KFrame
         // 初始化对象
         static void InitData( KFData* kfdata, const KFClassSetting* classsetting, const KFDataSetting* datasetting );
 
+        // 初始化数组
+        static void InitArray( KFData* kfarray, uint32 size );
+
+        // 添加数组元素
+        static KFData* AddArray( KFData* kfarray );
+
     };
 }
 

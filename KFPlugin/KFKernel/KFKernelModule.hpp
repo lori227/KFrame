@@ -41,11 +41,16 @@ namespace KFrame
         virtual KFData* CreateObject( const std::string& dataname );
         virtual KFData* CreateObject( const KFDataSetting* datasetting );
         virtual KFData* CreateObject( const std::string& classname, const std::string& dataname );
-
         virtual KFData* CreateObject( const KFDataSetting* datasetting, const KFMsg::PBObject* proto );
 
         // 释放数据
         virtual void ReleaseObject( KFData* kfdata );
+
+        // 初始化数组( kfarray )
+        virtual void InitArray( KFData* kfarray, uint32 size );
+
+        // 添加数组元素( kfarray )
+        virtual KFData* AddArray( KFData* kfarray );
         /////////////////////////////////////////////////////////////////////////////////////////////
         // 反序列化
         virtual bool ParseFromProto( KFData* kfdata, const KFMsg::PBObject* proto );

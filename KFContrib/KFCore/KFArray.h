@@ -17,14 +17,14 @@ namespace KFrame
         // 是否有效
         virtual bool IsValid();
 
-        // 初始化
-        virtual void Initialize( const KFClassSetting* classsetting, const KFDataSetting* datasetting );
-
         // 初始化数值
         virtual void InitData();
 
         // common
         virtual uint32 Size();
+
+        // 重置数量
+        virtual void Resize( uint32 size );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         virtual KFData* First();
         virtual KFData* Next();

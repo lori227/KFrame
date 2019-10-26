@@ -24,6 +24,12 @@ namespace KFrame
         return 1;
     }
 
+    // 重置数量
+    void KFData::Resize( uint32 size )
+    {
+
+    }
+
     uint32 KFData::MaxSize()
     {
         return _data_setting->_int_max_value;
@@ -168,9 +174,14 @@ namespace KFrame
         return nullptr;
     }
 
-    KFData* KFData::Move( const std::string& dataname )
+    KFData* KFData::Move( const std::string& dataname, bool usekey )
     {
         return nullptr;
+    }
+
+    bool KFData::Remove( const std::string& dataname )
+    {
+        return false;
     }
 
     bool KFData::Remove( const std::string& dataname, uint64 key )

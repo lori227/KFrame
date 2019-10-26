@@ -1,10 +1,10 @@
-﻿#ifndef __KF_ATTRIBUTE_PLUGIN_H__
-#define __KF_ATTRIBUTE_PLUGIN_H__
+﻿#ifndef __KF_UNLOCK_PLUGIN_H__
+#define __KF_UNLOCK_PLUGIN_H__
 #include "KFrame.h"
 
 namespace KFrame
 {
-    class KFAttributePlugin : public KFPlugin
+    class KFUnlockPlugin : public KFPlugin
     {
     public:
         // 注册
@@ -15,6 +15,9 @@ namespace KFrame
 
         // 加载
         virtual void LoadModule();
+
+        // 配置
+        virtual void AddConfig();
     };
 }
 

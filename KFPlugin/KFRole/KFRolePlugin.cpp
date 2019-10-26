@@ -1,25 +1,24 @@
-﻿#include "KFAttributePlugin.hpp"
-#include "KFAttributeModule.hpp"
+﻿#include "KFRolePlugin.hpp"
+#include "KFRoleModule.hpp"
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame
 {
-    void KFAttributePlugin::Install()
+    void KFRolePlugin::Install()
     {
-        __REGISTER_MODULE__( KFAttribute );
+        __REGISTER_MODULE__( KFRole );
     }
 
-    void KFAttributePlugin::UnInstall()
+    void KFRolePlugin::UnInstall()
     {
-        __UN_MODULE__( KFAttribute );
+        __UN_MODULE__( KFRole );
     }
 
-    void KFAttributePlugin::LoadModule()
+    void KFRolePlugin::LoadModule()
     {
         __FIND_MODULE__( _kf_kernel, KFKernelInterface );
         __FIND_MODULE__( _kf_player, KFPlayerInterface );
         __FIND_MODULE__( _kf_filter, KFFilterInterface );
-        __FIND_MODULE__( _kf_option, KFOptionInterface );
         __FIND_MODULE__( _kf_message, KFMessageInterface );
         __FIND_MODULE__( _kf_display, KFDisplayInterface );
         __FIND_MODULE__( _kf_route, KFRouteClientInterface );

@@ -17,7 +17,7 @@ namespace KFrame
 
             SerializeBuffLength = 1024 * 1024 * 20 + 100,	// 序列化消息的buff长度
             ConncectTime = 5000,							// 重连定时器
-            PingTime = 1000,								// 20秒发送一个ping
+            PingTime = 20000,								// 20秒发送一个ping
             PingTimeout = 60000,							// 断线超时时间
 
             CUT_MSGCHILDBEGIN = 65535,		// 分割的头消息

@@ -122,15 +122,30 @@ namespace KFrame
             kfchilddata->Initialize( initclasssetting, childdatasetting );
             if ( childdatasetting->_type == KFDataDefine::Type_Array )
             {
-                for ( uint32 i = KFDataDefine::Array_Index; i < kfchilddata->Size(); ++i )
-                {
-                    auto kfarraydata = KFDataFactory::Create( childdatasetting->_contain_class );
-                    kfarraydata->Initialize( initclasssetting, childdatasetting );
-                    kfchilddata->Add( i, kfarraydata );
-                }
+                InitArray( kfchilddata, childdatasetting->_int_logic_value );
             }
 
             kfdata->Add( childdatasetting->_name, kfchilddata );
         }
+    }
+
+    void KFDataFactory::InitArray( KFData* kfarray, uint32 size )
+    {
+        size += KFDataDefine::Array_Index;
+        kfarray->Resize( size );
+        for ( uint32 i = KFDataDefine::Array_Index; i < size; ++i )
+        {
+            auto kfarraydata = KFDataFactory::Create( kfarray->_data_setting->_contain_class );
+            kfarraydata->Initialize( kfarray->_class_setting, kfarray->_data_setting );
+            kfarray->Add( i, kfarraydata );
+        }
+    }
+
+    KFData* KFDataFactory::AddArray( KFData* kfarray )
+    {
+        auto kfarraydata = KFDataFactory::Create( kfarray->_data_setting->_contain_class );
+        kfarraydata->Initialize( kfarray->_class_setting, kfarray->_data_setting );
+        kfarray->Add( kfarray->Size(), kfarraydata );
+        return kfarraydata;
     }
 }

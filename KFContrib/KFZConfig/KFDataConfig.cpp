@@ -71,6 +71,7 @@ namespace KFrame
         kfdatasetting->_str_logic_value = xmlnode.GetString( "LogicValue", true );
         kfdatasetting->_key_name = xmlnode.GetString( "KeyName", true );
         kfdatasetting->_config_key_name = xmlnode.GetString( "ConfigKeyName", true );
+        kfdatasetting->_value_key_name = xmlnode.GetString( "ValueKeyName", true );
         kfdatasetting->_lua_file = xmlnode.GetString( "LuaFile", true );
         kfdatasetting->_add_function = xmlnode.GetString( "AddFunction", true );
         kfdatasetting->_update_function = xmlnode.GetString( "UpdateFunction", true );

@@ -58,7 +58,7 @@ enum FrameCodeEnum
 	LoginAlreadyOnline			= 12010;	// 已经在线
 	LoginCreatePlayerError		= 12011;	// 创建玩家失败
 
-	// attribute
+	// role
 	QueryPlayerFailed			= 12101;	// 查询角色数据出错了
 	NameAlreadyExist			= 12102;	// 名字已经存在
 	NameSetOk					= 12103;	// 名字设置成功
@@ -69,6 +69,7 @@ enum FrameCodeEnum
 	SexSetOK					= 12108;	// 性别设置成功
 	DataNotEnough				= 12109;	// 没有足够的<Text>%s</Text>资源
 	DataIsFull					= 12110;	// 你的<Text>%s</Text>资源已经达到了最大值
+	ElementParseError			= 12111;	// 元素格式化错误
 
 	// achieve
 	AchieveCanNotFind			= 12200;	// 找不到该成就配置

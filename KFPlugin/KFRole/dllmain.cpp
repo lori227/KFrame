@@ -1,7 +1,7 @@
-﻿#include "KFAttributePlugin.hpp"
+﻿#include "KFRolePlugin.hpp"
 #include "KFLibrary.h"
 
-__KF_EXPORT__ __KF_PLUGIN_ENRTY__( KFrame::KFAttributePlugin );
-__KF_EXPORT__ __KF_PLUGIN_LEAVE__( KFrame::KFAttributePlugin );
+__KF_EXPORT__ __KF_PLUGIN_ENRTY__( KFrame::KFRolePlugin );
+__KF_EXPORT__ __KF_PLUGIN_LEAVE__( KFrame::KFRolePlugin );
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////

@@ -243,6 +243,7 @@ namespace KFrame
         __STRING_DEFINE__( expire );
         __STRING_DEFINE__( drop );
         __STRING_DEFINE__( order );
+        __STRING_DEFINE__( unlock );
 
     }
 }

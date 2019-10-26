@@ -59,6 +59,9 @@ namespace KFrame
         // 是否达到了最大值
         virtual bool IsFull();
 
+        // 重置数量
+        virtual void Resize( uint32 size );
+
         // keyid
         virtual uint64 GetKeyID();
         virtual void SetKeyID( uint64 id );
@@ -125,7 +128,8 @@ namespace KFrame
         virtual bool Add( const std::string& dataname, uint64 key, KFData* data );
         virtual bool Add( const std::string& parentname, const std::string& childname, KFData* data );
 
-        virtual KFData* Move( const std::string& dataname );
+        virtual KFData* Move( const std::string& dataname, bool usekey );
+        virtual bool Remove( const std::string& dataname );
         virtual bool Remove( const std::string& dataname, uint64 key );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -182,7 +182,7 @@ namespace KFrame
         if ( kfobject == nullptr )
         {
             kfobject = KFDataFactory::CreateData( kfparent->_data_setting );
-            kfobject->Operate( dataname, operate, value );
+            value = kfobject->Operate( dataname, operate, value );
             AddData( kfparent, key, kfobject );
             return value;
         }
@@ -341,30 +341,17 @@ namespace KFrame
         return true;
     }
 
-    bool KFEntityEx::RemoveData( const std::string& parentname, const std::string& dataname )
+    bool KFEntityEx::RemoveData( KFData* kfparent, const std::string& dataname )
     {
-        auto kfparent = Find( parentname, dataname );
-        if ( kfparent == nullptr )
+        auto kfdata = kfparent->Find( dataname );
+        if ( kfdata == nullptr )
         {
             return false;
         }
 
-        std::list<uint64> keyvector;
-        auto kfdata = kfparent->First();
-        while ( kfdata != nullptr )
-        {
-            keyvector.push_back( kfdata->GetKeyID() );
-            kfdata = kfparent->Next();
-        }
-
-        for ( auto key : keyvector )
-        {
-            RemoveData( kfparent, key );
-        }
-
-        return true;
+        _kf_component->RemoveDataCallBack( this, kfparent, kfdata->GetKeyID(), kfdata );
+        return kfparent->Remove( dataname );
     }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     KFData* KFEntityEx::MoveData( const std::string& sourcename, uint64 key, const std::string& targetname )
@@ -393,6 +380,52 @@ namespace KFrame
             targetdata->Add( key, kfdata );
             _kf_component->MoveAddDataCallBack( this, targetdata, key, kfdata );
         }
+
+        return kfdata;
+    }
+
+    KFData* KFEntityEx::MoveData( KFData* sourcedata, const std::string& dataname, const std::string& targetname )
+    {
+        auto targetdata = Find( targetname );
+        if ( targetdata == nullptr )
+        {
+            return nullptr;
+        }
+
+        return MoveData( sourcedata, dataname, targetdata );
+    }
+
+    KFData* KFEntityEx::MoveData( KFData* sourcedata, const std::string& dataname, KFData* targetdata )
+    {
+        // 移除属性
+        auto kfdata = sourcedata->Move( dataname, true );
+        if ( kfdata == nullptr )
+        {
+            return nullptr;
+        }
+        _kf_component->MoveRemoveDataCallBack( this, sourcedata, 0u, kfdata );
+
+        // 添加属性
+        auto uuid = kfdata->GetKeyID();
+        targetdata->Add( uuid, kfdata );
+        _kf_component->MoveAddDataCallBack( this, targetdata, uuid, kfdata );
+
+        return kfdata;
+    }
+
+    KFData* KFEntityEx::MoveData( KFData* sourcedata, uint64 key, KFData* targetdata, const std::string& dataname )
+    {
+        // 移除属性
+        auto kfdata = sourcedata->Move( key );
+        if ( kfdata == nullptr )
+        {
+            return nullptr;
+        }
+        _kf_component->MoveRemoveDataCallBack( this, sourcedata, key, kfdata );
+
+        // 添加属性
+        targetdata->Add( dataname, kfdata );
+        _kf_component->MoveUpdateDataCallBack( this, targetdata, key, kfdata );
 
         return kfdata;
     }
@@ -1229,17 +1262,7 @@ namespace KFrame
             return 0u;
         }
 
-        auto kfdata = kfobject->Find( __KF_STRING__( value ) );
-        if ( kfdata == nullptr )
-        {
-            kfdata = kfobject->Find( __KF_STRING__( count ) );
-            if ( kfdata == nullptr )
-            {
-                return 0u;
-            }
-        }
-
-        return kfdata->Get();
+        return kfobject->Get<uint64>( kfobject->_data_setting->_value_key_name );
     }
 
     uint32 KFEntityEx::GetStatus()

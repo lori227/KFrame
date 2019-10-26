@@ -94,6 +94,15 @@ namespace KFrame
         KFDataFactory::Release( kfdata );
     }
 
+    void KFKernelModule::InitArray( KFData* kfarray, uint32 size )
+    {
+        KFDataFactory::InitArray( kfarray, size );
+    }
+
+    KFData* KFKernelModule::AddArray( KFData* kfarray )
+    {
+        return KFDataFactory::AddArray( kfarray );
+    }
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFKernelModule::ParseFromProto( KFData* kfdata, const KFMsg::PBObject* proto )

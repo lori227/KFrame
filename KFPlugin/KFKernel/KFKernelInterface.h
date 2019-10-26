@@ -27,6 +27,12 @@ namespace KFrame
 
         // 释放数据
         virtual void ReleaseObject( KFData* kfdata ) = 0;
+
+        // 初始化数组( kfarray )
+        virtual void InitArray( KFData* kfarray, uint32 size ) = 0;
+
+        // 添加数组元素( kfarray )
+        virtual KFData* AddArray( KFData* kfarray ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////
         // 反序列化
         virtual bool ParseFromProto( KFData* kfdata, const KFMsg::PBObject* proto ) = 0;

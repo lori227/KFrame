@@ -7,28 +7,23 @@ namespace KFrame
     void KFSkinModule::BeforeRun()
     {
         _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
-        _kf_component->RegisterAddDataFunction( __KF_STRING__( skin ), this, &KFSkinModule::OnAddSkinCallBack );
-        _kf_component->RegisterRemoveDataFunction( __KF_STRING__( skin ), this, &KFSkinModule::OnRemoveSkinCallBack );
+        __REGISTER_ADD_DATA_1__( __KF_STRING__( skin ), &KFSkinModule::OnAddSkinCallBack );
+        __REGISTER_REMOVE_DATA_1__( __KF_STRING__( skin ), &KFSkinModule::OnRemoveSkinCallBack );
+        __REGISTER_ADD_ELEMENT__( __KF_STRING__( skin ), &KFSkinModule::AddSkinElement );
         //////////////////////////////////////////////////////////////////////////////////////////////////
-
-        _kf_component->RegisterAddElementFunction( __KF_STRING__( skin ), this, &KFSkinModule::AddSkinElement );
-        //////////////////////////////////////////////////////////////////////////////////////////////////
-
-        _kf_player->RegisterEnterFunction( this, &KFSkinModule::OnEnterStartSkinTimer );
-        _kf_player->RegisterLeaveFunction( this, &KFSkinModule::OnLeaveStopSkinTimer );
-
+        __REGISTER_ENTER_PLAYER__( &KFSkinModule::OnEnterStartSkinTimer );
+        __REGISTER_LEAVE_PLAYER__( &KFSkinModule::OnLeaveStopSkinTimer );
         //////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
     void KFSkinModule::BeforeShut()
     {
-        _kf_component->UnRegisterAddDataFunction( this, __KF_STRING__( skin ) );
-        _kf_component->UnRegisterRemoveDataFunction( this, __KF_STRING__( skin ) );
-        _kf_component->UnRegisterAddElementFunction( __KF_STRING__( skin ) );
+        __UN_ADD_DATA_1__( __KF_STRING__( skin ) );
+        __UN_REMOVE_DATA_1__( __KF_STRING__( skin ) );
+        __UN_ADD_ELEMENT__( __KF_STRING__( skin ) );
         //////////////////////////////////////////////////////////////////////////////////////////////////
-
-        _kf_player->UnRegisterEnterFunction( this );
-        _kf_player->UnRegisterLeaveFunction( this );
+        __UN_ENTER_PLAYER__();
+        __UN_LEAVE_PLAYER__();
         //////////////////////////////////////////////////////////////////////////////////////////////////
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////

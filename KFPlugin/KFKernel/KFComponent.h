@@ -139,16 +139,16 @@ namespace KFrame
         }
 
         template< class T >
-        void RegisterAddDataFunction( const std::string& dataname, T* object, void ( T::*handle )( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata ) )
+        void RegisterAddDataFunction( const std::string& dataname, uint64 key, T* object, void ( T::*handle )( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata ) )
         {
             KFAddDataFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
-            BindAddDataFunction( typeid( T ).name(), dataname, function );
+            BindAddDataFunction( typeid( T ).name(), dataname, key, function );
         }
 
         template< class T >
-        void UnRegisterAddDataFunction( T* object, const std::string& dataname )
+        void UnRegisterAddDataFunction( T* object, const std::string& dataname, uint64 key )
         {
-            UnBindAddDataFunction( typeid( T ).name(), dataname );
+            UnBindAddDataFunction( typeid( T ).name(), dataname, key );
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -167,16 +167,16 @@ namespace KFrame
         }
 
         template< class T >
-        void RegisterRemoveDataFunction( const std::string& dataname, T* object, void ( T::*handle )( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata ) )
+        void RegisterRemoveDataFunction( const std::string& dataname, uint64 key, T* object, void ( T::*handle )( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata ) )
         {
             KFRemoveDataFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
-            BindRemoveDataFunction( typeid( T ).name(), dataname, function );
+            BindRemoveDataFunction( typeid( T ).name(), dataname, key, function );
         }
 
         template< class T >
-        void UnRegisterRemoveDataFunction( T* object, const std::string& dataname )
+        void UnRegisterRemoveDataFunction( T* object, const std::string& dataname, uint64 key )
         {
-            UnBindRemoveDataFunction( typeid( T ).name(), dataname );
+            UnBindRemoveDataFunction( typeid( T ).name(), dataname, key );
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 注册更新属性回调函数
@@ -368,13 +368,13 @@ namespace KFrame
 
         virtual void BindAddDataModule( const std::string& module, KFAddDataFunction& function ) = 0;
         virtual void UnBindAddDataModule( const std::string& module ) = 0;
-        virtual void BindAddDataFunction( const std::string& module, const std::string& dataname, KFAddDataFunction& function ) = 0;
-        virtual void UnBindAddDataFunction( const std::string& module, const std::string& dataname ) = 0;
+        virtual void BindAddDataFunction( const std::string& module, const std::string& dataname, uint64 key, KFAddDataFunction& function ) = 0;
+        virtual void UnBindAddDataFunction( const std::string& module, const std::string& dataname, uint64 key ) = 0;
 
         virtual void BindRemoveDataModule( const std::string& module, KFRemoveDataFunction& function ) = 0;
         virtual void UnBindRemoveDataModule( const std::string& module ) = 0;
-        virtual void BindRemoveDataFunction( const std::string& module, const std::string& dataname, KFRemoveDataFunction& function ) = 0;
-        virtual void UnBindRemoveDataFunction( const std::string& module, const std::string& dataname ) = 0;
+        virtual void BindRemoveDataFunction( const std::string& module, const std::string& dataname, uint64 key, KFRemoveDataFunction& function ) = 0;
+        virtual void UnBindRemoveDataFunction( const std::string& module, const std::string& dataname, uint64 key ) = 0;
 
         virtual void BindUpdateDataModule( const std::string& module, KFUpdateDataFunction& function ) = 0;
         virtual void UnBindUpdateDataModule( const std::string& module ) = 0;
@@ -447,9 +447,14 @@ namespace KFrame
     _kf_component->UnRegisterAddDataModule( this )
 
 #define __REGISTER_ADD_DATA_1__( dataname, function )\
-    _kf_component->RegisterAddDataFunction( dataname, this, function )
+    _kf_component->RegisterAddDataFunction( dataname, 0u, this, function )
+#define __REGISTER_ADD_DATA_2__( dataname, key, function )\
+    _kf_component->RegisterAddDataFunction( dataname, key, this, function )
+
 #define __UN_ADD_DATA_1__( dataname )\
-    _kf_component->UnRegisterAddDataFunction( this, dataname  )
+    _kf_component->UnRegisterAddDataFunction( this, dataname, 0u )
+#define __UN_ADD_DATA_2__( dataname, key )\
+    _kf_component->UnRegisterAddDataFunction( this, dataname, key  )
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 #define __KF_REMOVE_DATA_FUNCTION__( removefunction ) \
@@ -461,9 +466,13 @@ namespace KFrame
     _kf_component->UnRegisterRemoveDataModule( this  )
 
 #define __REGISTER_REMOVE_DATA_1__( dataname, function )\
-    _kf_component->RegisterRemoveDataFunction( dataname, this, function )
+    _kf_component->RegisterRemoveDataFunction( dataname, 0u, this, function )
+#define __REGISTER_REMOVE_DATA_2__( dataname, key, function )\
+    _kf_component->RegisterRemoveDataFunction( dataname, key, this, function )
 #define __UN_REMOVE_DATA_1__( dataname )\
-    _kf_component->UnRegisterRemoveDataFunction( this, dataname  )
+    _kf_component->UnRegisterRemoveDataFunction( this, dataname, 0u )
+#define __UN_REMOVE_DATA_2__( dataname, key )\
+    _kf_component->UnRegisterRemoveDataFunction( this, dataname, key )
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 #define __KF_UPDATE_DATA_FUNCTION__( updatefunction ) \

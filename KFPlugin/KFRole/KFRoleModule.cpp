@@ -1,16 +1,16 @@
-﻿#include "KFAttributeModule.hpp"
+﻿#include "KFRoleModule.hpp"
 
 namespace KFrame
 {
-    void KFAttributeModule::BeforeRun()
+    void KFRoleModule::BeforeRun()
     {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::MSG_SET_NAME_REQ, &KFAttributeModule::HandleSetNameReq );
-        __REGISTER_MESSAGE__( KFMsg::MSG_SET_SEX_REQ, &KFAttributeModule::HandleSetSexReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_SET_PLAYERNAME_TO_GAME_ACK, &KFAttributeModule::HandleSetPlayerNameToGameAck );
+        __REGISTER_MESSAGE__( KFMsg::MSG_SET_SEX_REQ, &KFRoleModule::HandleSetSexReq );
+        __REGISTER_MESSAGE__( KFMsg::MSG_SET_NAME_REQ, &KFRoleModule::HandleSetNameReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_SET_PLAYERNAME_TO_GAME_ACK, &KFRoleModule::HandleSetPlayerNameToGameAck );
     }
 
-    void KFAttributeModule::BeforeShut()
+    void KFRoleModule::BeforeShut()
     {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::MSG_SET_NAME_REQ );
@@ -19,7 +19,7 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    uint32 KFAttributeModule::CheckNameValid( const std::string& name, uint32 maxlength )
+    uint32 KFRoleModule::CheckNameValid( const std::string& name, uint32 maxlength )
     {
         if ( name.size() > maxlength )
         {
@@ -35,7 +35,7 @@ namespace KFrame
         return KFMsg::Ok;
     }
 
-    __KF_MESSAGE_FUNCTION__( KFAttributeModule::HandleSetNameReq )
+    __KF_MESSAGE_FUNCTION__( KFRoleModule::HandleSetNameReq )
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgSetNameReq );
 
@@ -71,7 +71,7 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFAttributeModule::HandleSetPlayerNameToGameAck )
+    __KF_MESSAGE_FUNCTION__( KFRoleModule::HandleSetPlayerNameToGameAck )
     {
         __PROTO_PARSE__( KFMsg::S2SSetPlayerNameToGameAck );
 
@@ -100,7 +100,7 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_MESSAGE_FUNCTION__( KFAttributeModule::HandleSetSexReq )
+    __KF_MESSAGE_FUNCTION__( KFRoleModule::HandleSetSexReq )
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgSetSexReq );
 

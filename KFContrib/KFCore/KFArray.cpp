@@ -2,11 +2,9 @@
 
 namespace KFrame
 {
-    void KFArray::Initialize( const KFClassSetting* classsetting, const KFDataSetting* datasetting )
+    void KFArray::Resize( uint32 size )
     {
-        KFData::Initialize( classsetting, datasetting );
-
-        auto size = datasetting->_int_logic_value + KFDataDefine::Array_Index;
+        _data.Clear();
         _data.Resize( size );
     }
 

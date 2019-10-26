@@ -8,6 +8,7 @@
 namespace KFrame
 {
     typedef std::pair< std::string, std::string > DataKeyType;
+    typedef std::pair< std::string, uint64 > RecordKeyType;
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
     template< class T >
     class KFDataFunction
@@ -108,6 +109,7 @@ namespace KFrame
         // 移动属性回调函数
         void MoveRemoveDataCallBack( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata );
         void MoveAddDataCallBack( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata );
+        void MoveUpdateDataCallBack( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata );
 
         // 添加更新的对象
         void AddSyncEntity( KFEntity* entity );
@@ -131,13 +133,13 @@ namespace KFrame
         ///////////////////////////////////////////////////////////////////////////////////////////////
         virtual void BindAddDataModule( const std::string& module, KFAddDataFunction& function );
         virtual void UnBindAddDataModule( const std::string& module );
-        virtual void BindAddDataFunction( const std::string& module, const std::string& dataname, KFAddDataFunction& function );
-        virtual void UnBindAddDataFunction( const std::string& module, const std::string& dataname );
+        virtual void BindAddDataFunction( const std::string& module, const std::string& dataname, uint64 key, KFAddDataFunction& function );
+        virtual void UnBindAddDataFunction( const std::string& module, const std::string& dataname, uint64 key );
 
         virtual void BindRemoveDataModule( const std::string& module, KFRemoveDataFunction& function );
         virtual void UnBindRemoveDataModule( const std::string& module );
-        virtual void BindRemoveDataFunction( const std::string& module, const std::string& dataname, KFRemoveDataFunction& function );
-        virtual void UnBindRemoveDataFunction( const std::string& module, const std::string& dataname );
+        virtual void BindRemoveDataFunction( const std::string& module, const std::string& dataname, uint64 key, KFRemoveDataFunction& function );
+        virtual void UnBindRemoveDataFunction( const std::string& module, const std::string& dataname, uint64 key );
 
         virtual void BindUpdateDataModule( const std::string& module, KFUpdateDataFunction& function );
         virtual void UnBindUpdateDataModule( const std::string& module );
@@ -224,10 +226,10 @@ namespace KFrame
         KFBind< std::string, const std::string&, KFUpdateStringFunction > _update_string_module;
 
         // 添加属性回调
-        KFMap< std::string, const std::string&, KFDataFunction< KFAddDataFunction > > _add_data_function;
+        KFMap< RecordKeyType, const RecordKeyType&, KFDataFunction< KFAddDataFunction > > _add_data_function;
 
         // 删除数据的回调函数
-        KFMap< std::string, const std::string&, KFDataFunction< KFRemoveDataFunction > > _remove_data_function;
+        KFMap< RecordKeyType, const RecordKeyType&, KFDataFunction< KFRemoveDataFunction > > _remove_data_function;
 
         // 更新数据的回调函数
         KFMap< DataKeyType, const DataKeyType&, KFDataFunction< KFUpdateDataFunction > > _update_data_function;

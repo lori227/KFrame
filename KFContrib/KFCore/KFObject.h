@@ -45,8 +45,10 @@ namespace KFrame
         virtual bool Add( const std::string& dataname, uint64 key, KFData* data );
         virtual bool Add( const std::string& parentname, const std::string& childname, KFData* data );
 
-        virtual KFData* Move( const std::string& dataname );
+        virtual bool Remove( const std::string& dataname );
         virtual bool Remove( const std::string& dataname, uint64 key );
+
+        virtual KFData* Move( const std::string& dataname, bool usekey );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         // 格式化成字串

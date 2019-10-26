@@ -65,6 +65,9 @@ namespace KFrame
         std::string _file_name;
 
     protected:
+        // 文件路径
+        std::string _file_path;
+
         // 版本列表
         std::unordered_map< std::string, std::string > _versions;
 
@@ -87,6 +90,7 @@ namespace KFrame
             auto config = kfxml.RootNode();
             auto version = config.GetString( "version" );
 
+            _file_path = file;
             CheckClearSetting( loadmask );
 
             auto xmlnode = config.FindNode( "item" );
