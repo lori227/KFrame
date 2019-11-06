@@ -63,6 +63,7 @@ namespace KFrame
         // 读取变量
         static std::string ReadLetter( const int8* data, uint32& size, uint32& startpos );
 
+
     };
 }
 

@@ -13,12 +13,16 @@ enum FrameClientProtocol
 	MSG_COMMAND_REQ 					= 2;	// 客户端发送GM指令请求
 	MSG_TELL_NOTICE						= 3;	// 小红点提示
 
+	// debug
+	MSG_DEBUG_SHOW_DROP					= 99;	// 显示掉落数据
+
 	// login
 	MSG_LOGIN_REQ 						= 100;	// 客户端登录验证请求
 	MSG_LOGIN_ACK 						= 101;	// 客户端登录验证结果
 	MSG_LOGOUT_REQ 						= 102;	// 客户端请求登出游戏
 	MSG_LOGOUT_ACK 						= 103;	// 客户端请求登出游戏
 	MSG_TELL_BE_KICK 					= 104;	// 被踢下线了
+	MSG_TELL_SHUTDOWN 					= 105;	// 通知服务器关闭
 
 	// data
  	MSG_SYNC_UPDATE_DATA 				= 201;	// 同步更新属性
@@ -37,7 +41,6 @@ enum FrameClientProtocol
 	MSG_SET_NAME_REQ 					= 300;	// 设置名字
 	MSG_SET_SEX_REQ 					= 301;	// 设置性别
 	MSG_ACHIEVE_REWARD_REQ				= 302;	// 领取成就奖励
-	MSG_TASK_REWARD_REQ 				= 303;	// 领取任务奖励
 	MSG_ACTIVITY_REWARD_REQ 			= 304;	// 领取活动奖励
 	MSG_COMPOUND_REQ					= 305;	// 属性合成请求
 	MSG_SEVEN_SIGNIN_REWARD_REQ			= 307;	// 领取7天签到奖励
@@ -77,13 +80,18 @@ enum FrameClientProtocol
 	MSG_DEL_RELATION_REQ				= 552;	// 申请删除关系
 	MSG_REPLY_RELATION_INVITE_REQ 		= 553;	// 回复关系申请
 	MSG_SET_REFUSE_RELATION_INVITE_REQ 	= 554;	// 设置拒绝添加好友
-
 	
 	// rank
 	MSG_QUERY_RANK_LIST_REQ 			= 571;	// 查询全服排行榜
 	MSG_QUERY_RANK_LIST_ACK	 			= 572;	// 查询排行榜反馈
 	MSG_QUERY_FRIEND_RANK_LIST_REQ 		= 573;	// 查询好友排行榜
 	MSG_QUERY_FRIEND_RANK_LIST_ACK		= 574;	// 查询好友排行榜
+
+
+	// task
+	MSG_TASK_RECEIVE_REQ 				= 600;	// 接取任务
+	MSG_TASK_REWARD_REQ 				= 601;	// 领取任务奖励
+	MSG_TASK_REMOVE_REQ					= 602;	// 放弃任务
  }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -150,7 +158,29 @@ message MsgTellBeKick
 	uint32 type = 1;
 }
 
+// 通知服务器关闭
+// MSG_TELL_SHUTDOWN
+message MsgTellShutDown
+{
+
+}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+message PBDebugDrop
+{
+	uint32 dataid = 1;		// 掉落数据id
+	uint32 dataindex = 2;	// 索引( 第几个, 从1开始 )
+	bytes dataname = 3;		// 掉落数据名
+}
+
+// 显示掉落数据
+// MSG_DEBUG_SHOW_DROP
+message MsgDebugShowDrop
+{
+	uint32 dropid = 1;	// 掉落id
+	uint32 count = 2;	// 掉落次数
+	repeated PBDebugDrop dropdata = 3;  // 掉落数据
+}
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // 所有的游戏属性同通过这3个消息来完成同步
@@ -256,13 +286,6 @@ message MsgCompoundReq
 // 领取成就奖励
 // MSG_ACHIEVE_REWARD_REQ
 message MsgAchieveRewardReq
-{
-	uint32 id = 1;
-}
-
-// 领取任务奖励
-// MSG_TASK_REWARD_REQ
-message MsgTaskRewardReq
 {
 	uint32 id = 1;
 }
@@ -529,3 +552,23 @@ message MsgSetRefuseRelationInviteReq
 }
 ////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
+// 接取任务
+// MSG_TASK_RECEIVE_REQ
+message MsgTaskReceiveReq
+{
+	uint32 id = 1;
+}
+
+// 领取任务奖励
+// MSG_TASK_REWARD_REQ
+message MsgTaskRewardReq
+{
+	uint32 id = 1;
+}
+
+// 放弃任务
+// MSG_TASK_REMOVE_REQ
+message MsgTaskRemoveReq
+{
+	uint32 id = 1;
+}

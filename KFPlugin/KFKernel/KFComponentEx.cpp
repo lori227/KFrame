@@ -578,7 +578,7 @@ namespace KFrame
         _get_config_value_function.Remove( name );
     }
     ////////////////////////////////////////////////////////////////////////////////////////
-    void KFComponentEx::UpdateDataCallBack( KFEntity* kfentity, uint64 key, KFData* kfdata, uint64 index, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue )
+    void KFComponentEx::UpdateDataCallBack( KFEntity* kfentity, uint64 key, KFData* kfdata, uint64 index, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue, bool callback )
     {
         // 开启保存数据库定时器
         StartSaveEntityTimer( kfentity, kfdata );
@@ -586,6 +586,9 @@ namespace KFrame
         // 更新同步
         kfentity->SyncUpdateData( kfdata, index );
 
+        if ( callback &&
+                kfdata->HaveMask( KFDataDefine::Mask_UpdataCall ) &&
+                kfdata->GetParent()->HaveMask( KFDataDefine::Mask_UpdataCall ) )
         {
             // 模块回调
             for ( auto& iter : _update_data_module._objects )
@@ -593,9 +596,7 @@ namespace KFrame
                 auto kffunction = iter.second;
                 kffunction->_function( kfentity, key, kfdata, operate, value, oldvalue, newvalue );
             }
-        }
 
-        {
             // 注册的函数
             auto bindname = GetBindDataName( kfdata->GetParent()->_data_setting );
 
@@ -617,7 +618,7 @@ namespace KFrame
         }
     }
 
-    void KFComponentEx::UpdateDataCallBack( KFEntity* kfentity, KFData* kfdata, const std::string& value )
+    void KFComponentEx::UpdateDataCallBack( KFEntity* kfentity, KFData* kfdata, const std::string& value, bool callback )
     {
         // 开启保存数据库定时器
         StartSaveEntityTimer( kfentity, kfdata );
@@ -625,6 +626,10 @@ namespace KFrame
         // 更新同步
         kfentity->SyncUpdateData( kfdata, kfentity->GetKeyID() );
 
+
+        if ( callback &&
+                kfdata->HaveMask( KFDataDefine::Mask_UpdataCall ) &&
+                kfdata->GetParent()->HaveMask( KFDataDefine::Mask_UpdataCall ) )
         {
             // 模块回调
             for ( auto& iter : _update_string_module._objects )
@@ -632,9 +637,7 @@ namespace KFrame
                 auto kffunction = iter.second;
                 kffunction->_function( kfentity, kfdata, value );
             }
-        }
 
-        {
             // 注册的函数
             auto bindname = GetBindDataName( kfdata->GetParent()->_data_setting );
             auto findkey = DataKeyType( bindname, kfdata->_data_setting->_name );
@@ -646,8 +649,9 @@ namespace KFrame
         }
     }
 
-    void KFComponentEx::AddDataCallBack( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata )
+    void KFComponentEx::AddDataCallBack( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata, bool callback )
     {
+        if ( callback && kfdata->HaveMask( KFDataDefine::Mask_AddCall ) )
         {
             // 模块回调
             for ( auto& iter : _add_data_module._objects )
@@ -655,9 +659,7 @@ namespace KFrame
                 auto kffunction = iter.second;
                 kffunction->_function( kfentity, kfparent, key, kfdata );
             }
-        }
 
-        {
             // 注册的函数
             auto bindname = GetBindDataName( kfdata->_data_setting );
             {
@@ -683,7 +685,7 @@ namespace KFrame
         kfentity->SyncAddData( kfdata, key );
     }
 
-    void KFComponentEx::RemoveDataCallBack( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata )
+    void KFComponentEx::RemoveDataCallBack( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata, bool callback )
     {
         // 开启保存数据库定时器
         StartSaveEntityTimer( kfentity, kfdata );
@@ -691,6 +693,7 @@ namespace KFrame
         // 同步客户端
         kfentity->SyncRemoveData( kfdata, key );
 
+        if ( callback && kfdata->HaveMask( KFDataDefine::Mask_RemoveCall ) )
         {
             // 模块回调
             for ( auto& iter : _remove_data_module._objects )
@@ -698,9 +701,7 @@ namespace KFrame
                 auto kffunction = iter.second;
                 kffunction->_function( kfentity, kfparent, key, kfdata );
             }
-        }
 
-        {
             // 注册的函数
             auto bindname = GetBindDataName( kfdata->_data_setting );
             {
@@ -720,26 +721,6 @@ namespace KFrame
                 }
             }
         }
-    }
-
-    void KFComponentEx::MoveRemoveDataCallBack( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata )
-    {
-        // 开启保存数据库定时器
-        StartSaveEntityTimer( kfentity, kfparent );
-        kfentity->SyncRemoveData( kfdata, key );
-    }
-
-    void KFComponentEx::MoveAddDataCallBack( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata )
-    {
-        // 开启保存数据库定时器
-        StartSaveEntityTimer( kfentity, kfparent );
-        kfentity->SyncAddData( kfdata, key );
-    }
-
-    void KFComponentEx::MoveUpdateDataCallBack( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata )
-    {
-        StartSaveEntityTimer( kfentity, kfparent );
-        kfentity->SyncUpdateData( kfdata, key );
     }
 
     void KFComponentEx::StartSaveEntityTimer( KFEntity* kfentity, KFData* kfdata )
@@ -751,7 +732,14 @@ namespace KFrame
             return;
         }
 
+        // 正在保存中
+        if ( static_cast< KFEntityEx* >( kfentity )->_is_in_save )
+        {
+            return;
+        }
+
         // 启动定时器
+        static_cast< KFEntityEx* >( kfentity )->_is_in_save = true;
         __DELAY_TIMER_1__( kfentity->GetKeyID(), kfentity->_data_setting->_delay_save_time, &KFComponentEx::OnTimerSaveEntity );
     }
 
@@ -763,6 +751,7 @@ namespace KFrame
             return;
         }
 
+        static_cast< KFEntityEx* >( kfentity )->_is_in_save = false;
         SaveEntity( kfentity, KFSaveEnum::UpdateSave, __FUNC_LINE__ );
     }
 

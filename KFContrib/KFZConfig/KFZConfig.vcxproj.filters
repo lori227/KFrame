@@ -39,21 +39,15 @@
     <ClInclude Include="KFItemSetting.hpp">
       <Filter>Item</Filter>
     </ClInclude>
-    <ClInclude Include="KFElementConfig.hpp">
-      <Filter>Kernel</Filter>
-    </ClInclude>
-    <ClInclude Include="KFElementSetting.h">
-      <Filter>Kernel</Filter>
-    </ClInclude>
-    <ClInclude Include="KFDropSetting.h">
-      <Filter>Drop</Filter>
-    </ClInclude>
     <ClInclude Include="KFItemTypeConfig.hpp">
       <Filter>Item</Filter>
     </ClInclude>
-    <ClInclude Include="KFTimeConfig.hpp">
-      <Filter>Time</Filter>
-    </ClInclude>
+    <ClInclude Include="KFDropSetting.h" />
+    <ClInclude Include="KFReadSetting.h" />
+    <ClInclude Include="KFElementConfig.h" />
+    <ClInclude Include="KFTimeConfig.h" />
+    <ClInclude Include="KFExecuteData.h" />
+    <ClInclude Include="KFRewardConfig.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Kernel">
@@ -73,12 +67,6 @@
     </Filter>
     <Filter Include="Item">
       <UniqueIdentifier>{99374550-72bf-42e5-80a5-64b311494e95}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Drop">
-      <UniqueIdentifier>{14a0a98f-2c03-47b0-bc05-b5bf95597b33}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Time">
-      <UniqueIdentifier>{42f709ab-6644-4c31-8936-cce33ed71b6a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -103,14 +91,8 @@
     <ClCompile Include="KFItemSetting.cpp">
       <Filter>Item</Filter>
     </ClCompile>
-    <ClCompile Include="KFElementConfig.cpp">
-      <Filter>Kernel</Filter>
-    </ClCompile>
     <ClCompile Include="KFItemTypeConfig.cpp">
       <Filter>Item</Filter>
-    </ClCompile>
-    <ClCompile Include="KFTimeConfig.cpp">
-      <Filter>Time</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -201,6 +201,9 @@ namespace KFrame
         KFElements() = default;
         ~KFElements();
 
+        // 重置
+        void Clear();
+
         // 是否为空
         bool IsEmpty() const;
 
@@ -218,8 +221,6 @@ namespace KFrame
         KFElements( const KFElements& other ) = delete;
         KFElements& operator=( const KFElements& other ) = delete;
 
-        // 重置
-        void Clear();
     public:
         // 原始数据
         std::string _str_element;

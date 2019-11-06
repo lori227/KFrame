@@ -14,7 +14,7 @@
 #include "KFKernelInterface.h"
 #include "KFTimer/KFTimerInterface.h"
 #include "KFZConfig/KFDataConfig.hpp"
-#include "KFZConfig/KFElementConfig.hpp"
+#include "KFZConfig/KFElementConfig.h"
 #include "KFZConfig/KFOptionConfig.hpp"
 
 
@@ -50,7 +50,7 @@ namespace KFrame
         virtual void InitArray( KFData* kfarray, uint32 size );
 
         // 添加数组元素( kfarray )
-        virtual KFData* AddArray( KFData* kfarray );
+        virtual KFData* AddArray( KFData* kfarray, int64 value );
         /////////////////////////////////////////////////////////////////////////////////////////////
         // 反序列化
         virtual bool ParseFromProto( KFData* kfdata, const KFMsg::PBObject* proto );
@@ -60,23 +60,12 @@ namespace KFrame
         virtual KFMsg::PBObject* SerializeToData( KFData* kfdata );
         virtual KFMsg::PBObject* SerializeToView( KFData* kfdata );
         /////////////////////////////////////////////////////////////////////////////////////////////
-        // 判断属性条件
-        virtual bool CheckCondition( KFEntity* kfentity, const KFConditions* kfconditions );
     public:
         // 初始化
         void CopyFromObject( KFData* kfdata, const KFMsg::PBObject* proto );
 
         // 保存
         void SaveToObject( KFData* kfdata, KFMsg::PBObject* proto, uint32 datamask );
-
-        // 判断属性条件
-        bool CheckCondition( KFEntity* kfentity, const KFCondition* kfcondition );
-
-        // 计算条件表达式
-        uint32 CalcExpression( KFEntity* kfentity, const KFExpression* kfexpression );
-
-        // 计算属性值
-        uint32 CalcConditionData( KFEntity* kfentity, const KFConditionData* kfconditiondata );
 
     private:
         // kernel

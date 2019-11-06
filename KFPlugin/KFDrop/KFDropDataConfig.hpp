@@ -4,7 +4,7 @@
 #include "KFZConfig/KFSetting.h"
 #include "KFZConfig/KFConfig.h"
 #include "KFZConfig/KFDropData.h"
-#include "KFZConfig/KFElementConfig.hpp"
+#include "KFZConfig/KFElementConfig.h"
 
 namespace KFrame
 {

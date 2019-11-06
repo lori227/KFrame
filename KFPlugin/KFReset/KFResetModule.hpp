@@ -80,6 +80,9 @@ namespace KFrame
         // 是否需要刷新
         bool _need_to_reset = false;
 
+        // 最小执行间隔时间
+        uint32 _reset_loop_time = 0u;
+
         // 上次刷新时间
         uint64 _next_reset_data_time = 0;
 

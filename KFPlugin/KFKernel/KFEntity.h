@@ -25,16 +25,18 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 添加属性
-        virtual bool AddData( KFData* kfparent, KFData* kfdata ) = 0;
-        virtual bool AddData( KFData* kfparent, uint64 key, KFData* kfdata ) = 0;
-        virtual bool AddData( const std::string& parentname, uint64 key, KFData* kfdata ) = 0;
+        virtual bool AddData( KFData* kfparent, KFData* kfdata, bool callback = true ) = 0;
+        virtual bool AddData( KFData* kfparent, uint64 key, KFData* kfdata, bool callback = true ) = 0;
+        virtual bool AddData( const std::string& parentname, uint64 key, KFData* kfdata, bool callback = true ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 删除所有属性
+        virtual bool CleanData( const std::string& dataname, bool callback = true ) = 0;
+
         // 删除属性
-        virtual bool RemoveData( const std::string& dataname, uint64 key ) = 0;
-        virtual bool RemoveData( KFData* kfparent, uint64 key ) = 0;
-        virtual bool RemoveData( const std::string& dataname ) = 0;
-        virtual bool RemoveData( KFData* kfparent, const std::string& dataname ) = 0;
+        virtual bool RemoveData( const std::string& dataname, uint64 key, bool callback = true ) = 0;
+        virtual bool RemoveData( KFData* kfparent, uint64 key, bool callback = true ) = 0;
+        virtual bool RemoveData( KFData* kfparent, const std::string& dataname, bool callback = true ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 移动属性
@@ -44,6 +46,10 @@ namespace KFrame
         virtual KFData* MoveData( KFData* sourcedata, const std::string& dataname, const std::string& targetname ) = 0;
         virtual KFData* MoveData( KFData* sourcedata, const std::string& dataname, KFData* targetdata ) = 0;
         virtual KFData* MoveData( KFData* sourcedata, uint64 key, KFData* targetdata, const std::string& dataname ) = 0;
+
+        // 更新属性( 只更新到客户端, 不回调逻辑 )
+        virtual uint64 MoveData( uint64 key, KFData* kfdata, uint32 operate, uint64 value ) = 0;
+        virtual uint64 MoveData( KFData* kfparent, const std::string& dataname, uint32 operate, uint64 value ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -111,7 +117,7 @@ namespace KFrame
         // 同步删除数据
         virtual void SyncRemoveData( KFData* kfdata, uint64 key ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        virtual uint64 GetConfigValue( const std::string& name, uint64 id ) = 0;
+        virtual uint64 GetConfigValue( const std::string& name, uint64 id, uint64 maxvalue = __MAX_UINT64__ ) = 0;
 
         // status
         virtual uint32 GetStatus() = 0;

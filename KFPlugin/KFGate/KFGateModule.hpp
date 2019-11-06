@@ -95,8 +95,8 @@ namespace KFrame
         KFRole* FindRole( const std::string& token );
 
     private:
-        // 关闭登录
-        bool _is_login_close = false;
+        // 服务器关闭
+        bool _is_server_shutdown = false;
 
         // 玩家列表
         KFHashMap< uint64, uint64, KFRole > _kf_role_list;

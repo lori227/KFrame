@@ -6,7 +6,10 @@ namespace KFrame
     void KFDropGroupConfig::ReadSetting( KFNode& xmlnode, KFDropSetting* kfsetting )
     {
         kfsetting->_is_drop_count = xmlnode.GetBoolen( "DropCount", true );
-        kfsetting->_condition_type = xmlnode.GetBoolen( "ConditionType" );
+        if ( kfsetting->_condition_type == 0u )
+        {
+            kfsetting->_condition_type = xmlnode.GetBoolen( "ConditionType" );
+        }
 
         KFDropGroupWeight* kfdropweight = nullptr;
 

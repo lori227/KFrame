@@ -29,16 +29,19 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
         // 添加属性
-        virtual bool AddData( KFData* kfparent, KFData* kfdata );
-        virtual bool AddData( KFData* kfparent, uint64 key, KFData* kfdata );
-        virtual bool AddData( const std::string& parentname, uint64 key, KFData* kfdata );
+        virtual bool AddData( KFData* kfparent, KFData* kfdata, bool callback = true );
+        virtual bool AddData( KFData* kfparent, uint64 key, KFData* kfdata, bool callback = true );
+        virtual bool AddData( const std::string& parentname, uint64 key, KFData* kfdata, bool callback = true );
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
+        // 清空属性
+        virtual bool CleanData( const std::string& parentname, bool callback = true );
+
+
         // 删除属性
-        virtual bool RemoveData( const std::string& parentname, uint64 key );
-        virtual bool RemoveData( KFData* kfparent, uint64 key );
-        virtual bool RemoveData( const std::string& parentname );
-        virtual bool RemoveData( KFData* kfparent, const std::string& dataname );
+        virtual bool RemoveData( const std::string& parentname, uint64 key, bool callback = true );
+        virtual bool RemoveData( KFData* kfparent, uint64 key, bool callback = true );
+        virtual bool RemoveData( KFData* kfparent, const std::string& dataname, bool callback = true );
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
         // 移动属性
@@ -48,6 +51,10 @@ namespace KFrame
         virtual KFData* MoveData( KFData* sourcedata, const std::string& dataname, const std::string& targetname );
         virtual KFData* MoveData( KFData* sourcedata, const std::string& dataname, KFData* targetdata );
         virtual KFData* MoveData( KFData* sourcedata, uint64 key, KFData* targetdata, const std::string& dataname );
+
+        virtual uint64 MoveData( uint64 key, KFData* kfdata, uint32 operate, uint64 value );
+        virtual uint64 MoveData( KFData* kfparent, const std::string& dataname, uint32 operate, uint64 value );
+
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
         // 更新属性
@@ -110,7 +117,7 @@ namespace KFrame
         void SyncEntityToClient();
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
-        virtual uint64 GetConfigValue( const std::string& name, uint64 id );
+        virtual uint64 GetConfigValue( const std::string& name, uint64 id, uint64 maxvalue = __MAX_UINT64__ );
         virtual uint32 GetStatus();
         virtual void SetStatus( uint32 status );
     protected:
@@ -164,6 +171,9 @@ namespace KFrame
         // 是否初始化
         bool _is_inited = false;
 
+        // 是否正在保存中
+        bool _is_in_save = false;
+
         // 添加的数据
         bool _have_add_pb_object = false;
         KFMsg::PBObject _add_pb_object;
@@ -181,6 +191,7 @@ namespace KFrame
         bool _have_show_client = false;
         KFMsg::PBShowElement _pb_show_element;
     };
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 #endif

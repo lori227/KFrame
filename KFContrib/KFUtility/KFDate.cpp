@@ -188,31 +188,75 @@ namespace KFrame
         return keeptime - passtime;
     }
 
-    bool KFDate::CheckPassHour( uint64 lasttime, uint64 nowtime )
+    bool KFDate::CheckPassHour( uint64 lasttime, uint64 nowtime, uint32 hour )
     {
         KFDate nowdate( nowtime );
         KFDate lastdate( lasttime );
-        return CheckPassHour( lastdate, nowdate );
+        return CheckPassHour( lastdate, nowdate, hour );
     }
 
-    bool KFDate::CheckPassHour( KFDate& lastdate, KFDate& nowdate )
+    bool KFDate::CheckPassHour( KFDate& lastdate, KFDate& nowdate, uint32 hour )
     {
-        if ( nowdate.GetHour() != lastdate.GetHour() )
+        if ( hour == 0u )
+        {
+            hour = 1u;
+        }
+
+        auto timedistance = nowdate.GetTime() - lastdate.GetTime();
+        if ( timedistance >= KFTimeEnum::OneHourSecond * hour )
         {
             return true;
         }
 
-        if ( nowdate.GetMonth() != lastdate.GetMonth() )
+        if ( timedistance < KFTimeEnum::OneMinuteSecond )
         {
-            return true;
+            return false;
         }
 
-        if ( nowdate.GetDay() != lastdate.GetDay() )
+        if ( nowdate.GetMinute() != 0u )
+        {
+            return false;
+        }
+
+        if ( nowdate.GetHour() % hour == 0u )
         {
             return true;
         }
 
         return false;
+    }
+
+    bool KFDate::CheckPassMinute( uint64 lasttime, uint64 nowtime, uint32 minute )
+    {
+        KFDate nowdate( nowtime );
+        KFDate lastdate( lasttime );
+        return CheckPassMinute( lastdate, nowdate, minute );
+    }
+
+    bool KFDate::CheckPassMinute( KFDate& lastdate, KFDate& nowdate, uint32 minute )
+    {
+        if ( minute == 0u )
+        {
+            minute = 1u;
+        }
+
+        auto timedistance = nowdate.GetTime() - lastdate.GetTime();
+        if ( timedistance >= KFTimeEnum::OneMinuteSecond * minute )
+        {
+            return true;
+        }
+
+        if ( timedistance < KFTimeEnum::OneMinuteSecond )
+        {
+            return false;
+        }
+
+        if ( nowdate.GetMinute() % minute == 0u )
+        {
+            return true;
+        }
+
+        return true;
     }
 
     bool KFDate::CheckSameDay( uint64 lasttime, uint64 nowtime )
@@ -420,7 +464,7 @@ namespace KFrame
         switch ( timedata->_type )
         {
         case KFTimeEnum::Hour:
-            return KFDate::CheckPassHour( lastdate, nowdate );
+            return KFDate::CheckPassHour( lastdate, nowdate, timedata->_value );
             break;
         case KFTimeEnum::Day:		// 判断时间
             return KFDate::CheckPassDay( lastdate, nowdate, timedata->_hour );
@@ -430,6 +474,9 @@ namespace KFrame
             break;
         case KFTimeEnum::Month:	// 月份
             return KFDate::CheckPassMonth( lastdate, nowdate, timedata->_value, timedata->_hour );
+            break;
+        case KFTimeEnum::Minute:	// 分钟
+            return KFDate::CheckPassMinute( lastdate, nowdate, timedata->_value );
             break;
         default:
             break;

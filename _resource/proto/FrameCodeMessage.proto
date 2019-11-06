@@ -82,8 +82,13 @@ enum FrameCodeEnum
 	TaskCanNotFind				= 12300;	// 找不到任务配置
 	TaskCanNotFindData			= 12301;	// 没有任务数据
 	TaskNotDone					= 12302;	// 任务还没有完成
-	TaskAlreadyReceived			= 12303;	// 已经领取任务奖励
+	TaskAlreadyReward			= 12303;	// 已经领取任务奖励
 	TaskRewardOk				= 12304;	// 领取任务奖励成功
+	TaskNotActive				= 12305;	// 任务未激活不能领取
+	TaskAlreadyReceive			= 12306;	// 任务不能重复接取
+	TaskNotPreCondition			= 12307;	// 任务不满足接取条件
+	TaskReceiveFailed			= 12308;	// 任务接取失败
+
 
 	//activity
 	ActivityCanNotFind			= 12400;	// 找不到活动配置
@@ -114,6 +119,7 @@ enum FrameCodeEnum
 	ItemUseOk					= 12614;	// 使用道具成功
 	ItemUseToHeroOk				= 12615;	// 对英雄使用道具成功
 	ItemSortOk					= 12616;	// 整理背包成功
+	ItemBagIsFull				= 12617;	// 背包物品已满
 
 	// signin
 	SignInNotDay				= 12700;	// 没有签到数据

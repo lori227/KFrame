@@ -49,7 +49,7 @@ namespace KFrame
         void LoadConfigList();
 
         // 加载配置
-        void LoadConfigFile( KFConfig* config, const std::string& file, uint32 loadmask );
+        void LoadConfigFile( KFConfig* config, const std::string& filename, const std::string& filepath, uint32 loadmask );
     private:
         // 配置列表
         KFConfigConfig* _kf_config_config = nullptr;

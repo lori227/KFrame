@@ -2,6 +2,7 @@
 #define __KF_LOGGER_H__
 
 #include "KFInclude.h"
+#include "KFMacros.h"
 
 namespace KFrame
 {
@@ -99,10 +100,15 @@ namespace KFrame
         };
     };
 
+#ifdef __KF_DEBUG__
 #define __LOG_DEBUG__( myfmt, ...) \
     KFLogger::Instance()->Log( KFLogEnum::Debug, __FUNC_LINE__, myfmt, ##__VA_ARGS__ )
 #define __LOG_DEBUG_FUNCTION__( function, line, myfmt, ...) \
     KFLogger::Instance()->Log( KFLogEnum::Debug, function, line, myfmt, ##__VA_ARGS__ )
+#else
+#define __LOG_DEBUG__( myfmt, ...)
+#define __LOG_DEBUG_FUNCTION__( function, line, myfmt, ...)
+#endif // __KF_DEBUG__
 
 #define __LOG_INFO__( myfmt, ...) \
     KFLogger::Instance()->Log( KFLogEnum::Info, __FUNC_LINE__, myfmt, ##__VA_ARGS__ )

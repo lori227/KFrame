@@ -99,9 +99,11 @@ namespace KFrame
         KFDataFactory::InitArray( kfarray, size );
     }
 
-    KFData* KFKernelModule::AddArray( KFData* kfarray )
+    KFData* KFKernelModule::AddArray( KFData* kfarray, int64 value )
     {
-        return KFDataFactory::AddArray( kfarray );
+        auto kfdata = KFDataFactory::AddArray( kfarray );
+        kfdata->Set( value );
+        return kfdata;
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -186,6 +188,10 @@ namespace KFrame
                 if ( kfchild != nullptr )
                 {
                     kfchild->Set<int64>( citer->second );
+                }
+                else
+                {
+                    AddArray( kfarray, citer->second );
                 }
             }
         }
@@ -295,102 +301,5 @@ case datatype:\
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFKernelModule::CheckCondition( KFEntity* kfentity, const KFConditions* kfconditions )
-    {
-        if ( !kfconditions->IsValid() )
-        {
-            return false;
-        }
 
-        if ( kfconditions->IsEmpty() )
-        {
-            return true;
-        }
-
-        auto linkcount = kfconditions->_link_type.size();
-        auto conditioncount = kfconditions->_condition_list.size();
-
-        // 取出第一个
-        auto conditionindex = 0u;
-        auto result = CheckCondition( kfentity, kfconditions->_condition_list[ conditionindex++ ] );
-        for ( auto i = 0u; i < conditioncount && i < linkcount; ++i )
-        {
-            auto linktype = kfconditions->_link_type[ i ];
-            auto ok = CheckCondition( kfentity, kfconditions->_condition_list[ conditionindex + i ] );
-            switch ( linktype )
-            {
-            case KFEnum::And:
-                result &= ok;
-                break;
-            case KFEnum::ABit:
-                result |= ok;
-                break;
-            }
-        }
-
-        return result;
-    }
-
-    bool KFKernelModule::CheckCondition( KFEntity* kfentity, const KFCondition* kfcondition )
-    {
-        // 计算左值
-        auto leftvalue = CalcExpression( kfentity, kfcondition->_left );
-
-        // 计算右值
-        auto rightvalue = CalcExpression( kfentity, kfcondition->_right );
-
-        // 判断左有值
-        return KFUtility::CheckOperate( leftvalue, kfcondition->_check_type, rightvalue );
-    }
-
-    uint32 KFKernelModule::CalcExpression( KFEntity* kfentity, const KFExpression* kfexpression )
-    {
-        if ( kfexpression->_data_list.empty() )
-        {
-            return 0u;
-        }
-
-        auto datacount = kfexpression->_data_list.size();
-        auto operatorcount = kfexpression->_operator_list.size();
-
-        // 取出第一个
-        auto dataindex = 0u;
-        auto result = CalcConditionData( kfentity, kfexpression->_data_list[ dataindex++ ] );
-        for ( auto i = 0u; i < datacount && i < operatorcount; ++i )
-        {
-            auto operatortype = kfexpression->_operator_list[ i ];
-            auto value = CalcConditionData( kfentity, kfexpression->_data_list[ dataindex + i ] );
-            result = KFUtility::Operate( operatortype, result, value );
-        }
-
-        return result;
-    }
-
-    uint32 KFKernelModule::CalcConditionData( KFEntity* kfentity, const KFConditionData* kfconditiondata )
-    {
-        auto result = 0u;
-        if ( kfconditiondata->IsConstant() )
-        {
-            auto kfconstant = ( const KFConditionConstant* )kfconditiondata;
-            result = kfconstant->_value;
-        }
-        else if ( kfconditiondata->IsVariable() )
-        {
-            auto kfvariable = ( const KFConditionVariable* )kfconditiondata;
-            if ( !kfvariable->_parent_name.empty() )
-            {
-                result = kfentity->Get<uint32>( kfvariable->_parent_name, kfvariable->_data_name );
-            }
-            else if ( kfvariable->_data_id == 0u )
-            {
-                result = kfentity->Get<uint32>( kfvariable->_data_name );
-            }
-            else
-            {
-                result = kfentity->GetConfigValue( kfvariable->_data_name, kfvariable->_data_id );
-            }
-        }
-
-        return result;
-    }
 }

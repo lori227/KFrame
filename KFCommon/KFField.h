@@ -244,6 +244,8 @@ namespace KFrame
         __STRING_DEFINE__( drop );
         __STRING_DEFINE__( order );
         __STRING_DEFINE__( unlock );
+        __STRING_DEFINE__( condition );
+        __STRING_DEFINE__( execute );
 
     }
 }

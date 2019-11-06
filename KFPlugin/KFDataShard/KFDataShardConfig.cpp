@@ -3,11 +3,11 @@
 namespace KFrame
 {
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFDataShardConfig::LoadConfig( const std::string& file, uint32 loadmask )
+    bool KFDataShardConfig::LoadConfig( const std::string& filename, const std::string& filepath, uint32 loadmask )
     {
         _settings.Clear();
         //////////////////////////////////////////////////////////////////
-        KFXml kfxml( file );
+        KFXml kfxml( filepath );
         auto config = kfxml.RootNode();
         auto savenode = config.FindNode( "Save" );
 

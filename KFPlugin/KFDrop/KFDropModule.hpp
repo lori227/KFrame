@@ -13,6 +13,7 @@
 #include "KFDropGroupConfig.hpp"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFKernel/KFKernelInterface.h"
+#include "KFCondition/KFConditionInterface.h"
 
 namespace KFrame
 {
@@ -47,6 +48,10 @@ namespace KFrame
         // 添加掉落返回数据
         void RandDropData( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist, const KFDropGroupWeight* kfdropweight, const char* function, uint32 line );
 
+        // 发送掉落数据到客户端
+#ifdef __KF_DEBUG__
+        void SendDropDataToClient( KFEntity* player, uint32 dropid, uint32 count, DropDataList& droplist );
+#endif
     private:
         // 掉落逻辑函数
         KFBind < std::string, const std::string&, KFDropLogicFunction > _drop_logic_function;

@@ -2,7 +2,7 @@
 #define __KF_RESET_CONFIG_H__
 
 #include "KFZConfig/KFConfig.h"
-#include "KFZConfig/KFTimeConfig.hpp"
+#include "KFZConfig/KFTimeConfig.h"
 
 namespace KFrame
 {

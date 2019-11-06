@@ -39,6 +39,28 @@ typedef uint32_t uint32;
 typedef uint64_t uint64;
 
 /////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+static const uint64 _invalid_int = 0u;
+static const std::string _invalid_str = "";
+static const std::string _globbing_str = "*";
+/////////////////////////////////////////////////////////////////////////
+typedef std::list< std::string > ListString;
+typedef std::vector< std::string > VectorString;
+typedef std::unordered_map< std::string, std::string > MapString;
+typedef std::list< MapString > ListMapString;
+
+typedef std::set< uint32 > SetUInt32;
+typedef std::list< uint32 > ListUInt32;
+typedef std::vector< uint32 > VectorUInt32;
+
+typedef std::set< uint64 > SetUInt64;
+typedef std::list< uint64 > ListUInt64;
+typedef std::vector< uint64 > VectorUInt64;
+
+typedef std::map< uint32, uint32 > MapUInt32;
+typedef std::map< uint64, uint64 > MapUInt64;
+
+/////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
 #endif
 

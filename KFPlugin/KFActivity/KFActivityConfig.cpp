@@ -164,7 +164,7 @@ namespace KFrame
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFActivityConfig::LoadConfig( const std::string& file, uint32 loadmask )
+    bool KFActivityConfig::LoadConfig( const std::string& filename, const std::string& filepath, uint32 loadmask )
     {
         _activity_setting.Clear();
         return true;

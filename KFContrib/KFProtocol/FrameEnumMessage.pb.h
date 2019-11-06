@@ -122,10 +122,12 @@ inline bool KickEnum_Parse(
 }
 enum StatusEnum {
   InitStatus = 0,
-  DoneStatus = 1,
-  ReceiveStatus = 2,
-  Remove = 3,
-  ReceiveRemove = 4,
+  ActiveStatus = 1,
+  ExecuteStatus = 2,
+  DoneStatus = 3,
+  ReceiveStatus = 4,
+  Remove = 11,
+  ReceiveRemove = 12,
   StatusEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   StatusEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
@@ -234,6 +236,112 @@ inline bool InviteEnum_Parse(
   return ::google::protobuf::internal::ParseNamedEnum<InviteEnum>(
     InviteEnum_descriptor(), name, value);
 }
+enum StoreEnum {
+  CommonStore = 0,
+  RandomStore = 1,
+  StoreEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  StoreEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+LIBPROTOC_EXPORT bool StoreEnum_IsValid(int value);
+const StoreEnum StoreEnum_MIN = CommonStore;
+const StoreEnum StoreEnum_MAX = RandomStore;
+const int StoreEnum_ARRAYSIZE = StoreEnum_MAX + 1;
+
+LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* StoreEnum_descriptor();
+inline const ::std::string& StoreEnum_Name(StoreEnum value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    StoreEnum_descriptor(), value);
+}
+inline bool StoreEnum_Parse(
+    const ::std::string& name, StoreEnum* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<StoreEnum>(
+    StoreEnum_descriptor(), name, value);
+}
+enum StorePosEnum {
+  MainStore = 0,
+  ExploreStore = 1,
+  StorePosEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  StorePosEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+LIBPROTOC_EXPORT bool StorePosEnum_IsValid(int value);
+const StorePosEnum StorePosEnum_MIN = MainStore;
+const StorePosEnum StorePosEnum_MAX = ExploreStore;
+const int StorePosEnum_ARRAYSIZE = StorePosEnum_MAX + 1;
+
+LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* StorePosEnum_descriptor();
+inline const ::std::string& StorePosEnum_Name(StorePosEnum value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    StorePosEnum_descriptor(), value);
+}
+inline bool StorePosEnum_Parse(
+    const ::std::string& name, StorePosEnum* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<StorePosEnum>(
+    StorePosEnum_descriptor(), name, value);
+}
+enum StoreRefreshEnum {
+  TimeRefresh = 0,
+  CostRefresh = 1,
+  StoreRefreshEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  StoreRefreshEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+LIBPROTOC_EXPORT bool StoreRefreshEnum_IsValid(int value);
+const StoreRefreshEnum StoreRefreshEnum_MIN = TimeRefresh;
+const StoreRefreshEnum StoreRefreshEnum_MAX = CostRefresh;
+const int StoreRefreshEnum_ARRAYSIZE = StoreRefreshEnum_MAX + 1;
+
+LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* StoreRefreshEnum_descriptor();
+inline const ::std::string& StoreRefreshEnum_Name(StoreRefreshEnum value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    StoreRefreshEnum_descriptor(), value);
+}
+inline bool StoreRefreshEnum_Parse(
+    const ::std::string& name, StoreRefreshEnum* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<StoreRefreshEnum>(
+    StoreRefreshEnum_descriptor(), name, value);
+}
+enum RandomEnum {
+  IncludeRandom = 0,
+  ExcludeRandom = 1,
+  RandomEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  RandomEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+LIBPROTOC_EXPORT bool RandomEnum_IsValid(int value);
+const RandomEnum RandomEnum_MIN = IncludeRandom;
+const RandomEnum RandomEnum_MAX = ExcludeRandom;
+const int RandomEnum_ARRAYSIZE = RandomEnum_MAX + 1;
+
+LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* RandomEnum_descriptor();
+inline const ::std::string& RandomEnum_Name(RandomEnum value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    RandomEnum_descriptor(), value);
+}
+inline bool RandomEnum_Parse(
+    const ::std::string& name, RandomEnum* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<RandomEnum>(
+    RandomEnum_descriptor(), name, value);
+}
+enum RewardTypeEnum {
+  InvalidType = 0,
+  CurrenyType = 1,
+  ItemType = 2,
+  RewardTypeEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  RewardTypeEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+LIBPROTOC_EXPORT bool RewardTypeEnum_IsValid(int value);
+const RewardTypeEnum RewardTypeEnum_MIN = InvalidType;
+const RewardTypeEnum RewardTypeEnum_MAX = ItemType;
+const int RewardTypeEnum_ARRAYSIZE = RewardTypeEnum_MAX + 1;
+
+LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* RewardTypeEnum_descriptor();
+inline const ::std::string& RewardTypeEnum_Name(RewardTypeEnum value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    RewardTypeEnum_descriptor(), value);
+}
+inline bool RewardTypeEnum_Parse(
+    const ::std::string& name, RewardTypeEnum* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<RewardTypeEnum>(
+    RewardTypeEnum_descriptor(), name, value);
+}
 // ===================================================================
 
 
@@ -296,6 +404,31 @@ template <> struct is_proto_enum< ::KFMsg::InviteEnum> : ::std::true_type {};
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::InviteEnum>() {
   return ::KFMsg::InviteEnum_descriptor();
+}
+template <> struct is_proto_enum< ::KFMsg::StoreEnum> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::StoreEnum>() {
+  return ::KFMsg::StoreEnum_descriptor();
+}
+template <> struct is_proto_enum< ::KFMsg::StorePosEnum> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::StorePosEnum>() {
+  return ::KFMsg::StorePosEnum_descriptor();
+}
+template <> struct is_proto_enum< ::KFMsg::StoreRefreshEnum> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::StoreRefreshEnum>() {
+  return ::KFMsg::StoreRefreshEnum_descriptor();
+}
+template <> struct is_proto_enum< ::KFMsg::RandomEnum> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::RandomEnum>() {
+  return ::KFMsg::RandomEnum_descriptor();
+}
+template <> struct is_proto_enum< ::KFMsg::RewardTypeEnum> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::RewardTypeEnum>() {
+  return ::KFMsg::RewardTypeEnum_descriptor();
 }
 
 }  // namespace protobuf

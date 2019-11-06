@@ -13,6 +13,7 @@
 #include "KFUnlockInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFKernel/KFKernelInterface.h"
+#include "KFCondition/KFConditionInterface.h"
 #include "KFUnlockConfig.hpp"
 
 namespace KFrame
@@ -34,10 +35,16 @@ namespace KFrame
         __KF_ADD_DATA_FUNCTION__( OnAddDataUnlockModule );
         __KF_UPDATE_DATA_FUNCTION__( OnUpdateDataUnlockModule );
 
+        // 进入游戏
+        __KF_ENTER_PLAYER_FUNCTION__( OnEnterUnlockModule );
+
     protected:
         //////////////////////////////////////////////////////////////////////////////////////
         // 解锁玩家数据
-        void UnlockPlayerData( KFEntity* player );
+        void UnlockPlayerData( KFEntity* player, const KFUnlockSetting* kfsetting );
+        void UnlockPlayerData( KFEntity* player, const KFUnlockSetting* kfsetting, KFData* kfdatarecord );
+
+        // 开启玩家数据
 
     protected:
         // 玩家上下文组件

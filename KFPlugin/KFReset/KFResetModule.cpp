@@ -24,10 +24,15 @@ namespace KFrame
 
     void KFResetModule::CalcNextResetTime()
     {
-        auto nowtime = KFGlobal::Instance()->_real_time;
+#ifdef __KF_DEBUG__
+        _reset_loop_time = KFTimeEnum::OneMinuteSecond;
+#else
+        _reset_loop_time = KFTimeEnum::OneHourSecond;
+#endif // __KF_DEBUG__
 
         // 在整点的时候刷新一次
-        _next_reset_data_time = ( ( nowtime + KFTimeEnum::OneHourSecond - 1 ) / KFTimeEnum::OneHourSecond ) * KFTimeEnum::OneHourSecond;
+        auto nowtime = KFGlobal::Instance()->_real_time;
+        _next_reset_data_time = ( ( nowtime + _reset_loop_time - 1 ) / _reset_loop_time ) * _reset_loop_time;
     }
 
     bool KFResetModule::CheckResetPlayerDataTime()
@@ -37,7 +42,7 @@ namespace KFrame
             return false;
         }
 
-        _next_reset_data_time += KFTimeEnum::OneHourSecond;
+        _next_reset_data_time += _reset_loop_time;
         return true;
     }
 
@@ -93,7 +98,7 @@ namespace KFrame
                 }
                 else if ( resetdata._data_name.empty() )
                 {
-                    player->RemoveData( resetdata._parent_name );
+                    player->CleanData( resetdata._parent_name );
                 }
                 else if ( resetdata._key == 0u )
                 {

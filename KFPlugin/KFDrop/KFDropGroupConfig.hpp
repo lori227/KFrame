@@ -4,7 +4,6 @@
 #include "KFCore/KFCondition.h"
 #include "KFZConfig/KFSetting.h"
 #include "KFZConfig/KFConfig.h"
-#include "KFZConfig/KFDropData.h"
 #include "KFDropDataConfig.hpp"
 
 namespace KFrame

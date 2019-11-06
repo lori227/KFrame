@@ -8,6 +8,12 @@ namespace KFrame
     class KFDropData
     {
     public:
+        // 掉落数据id
+        uint32 _drop_data_id = 0u;
+
+        // 掉落索引
+        uint32 _data_index = 0u;
+
         // 掉落属性名
         std::string _data_name;
 

@@ -1,4 +1,8 @@
 ﻿#include "KFDropModule.hpp"
+#ifdef __KF_DEBUG__
+    #include "KFProtocol/KFProtocol.h"
+#endif // __KF_DEBUG__
+
 
 namespace KFrame
 {
@@ -13,26 +17,50 @@ namespace KFrame
         _drop_logic_function.Remove( dataname );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
+#ifdef __KF_DEBUG__
+    void KFDropModule::SendDropDataToClient( KFEntity* player, uint32 dropid, uint32 count, DropDataList& droplist )
+    {
+        KFMsg::MsgDebugShowDrop show;
+        show.set_dropid( dropid );
+        show.set_count( count );
+
+        for ( auto dropdata : droplist )
+        {
+            auto pbdata = show.add_dropdata();
+            pbdata->set_dataid( dropdata->_drop_data_id );
+            pbdata->set_dataindex( dropdata->_data_index );
+            pbdata->set_dataname( dropdata->_data_name );
+        }
+
+        _kf_player->SendToClient( player, KFMsg::MSG_DEBUG_SHOW_DROP, &show );
+    }
+#endif // __KF_DEBUG__
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+
     DropDataList& KFDropModule::Drop( KFEntity* player, uint32 dropid, const char* function, uint32 line )
     {
-        return Drop( player, dropid, 1u, false, function, line );
+        return Drop( player, dropid, 1u, true, function, line );
     }
 
     DropDataList& KFDropModule::Drop( KFEntity* player, uint32 dropid, uint32 count, const char* function, uint32 line )
     {
-        return Drop( player, dropid, count, false, function, line );
+        return Drop( player, dropid, count, true, function, line );
     }
 
     DropDataList& KFDropModule::Drop( KFEntity* player, uint32 dropid, uint32 count, bool showclient, const char* function, uint32 line )
     {
-        auto& _drops = DropLogic( player, dropid, count, function, line );
-        for ( auto iter = _drops.begin(); iter != _drops.end(); )
+        auto& drops = DropLogic( player, dropid, count, function, line );
+#ifdef __KF_DEBUG__
+        SendDropDataToClient( player, dropid, count, drops );
+#endif // __KF_DEBUG__
+
+        for ( auto iter = drops.begin(); iter != drops.end(); )
         {
             auto dropdata = *iter;
             auto kffunction = _drop_logic_function.Find( dropdata->_data_name );
             if ( kffunction != nullptr )
             {
-                iter = _drops.erase( iter );
+                iter = drops.erase( iter );
                 kffunction->_function( player, dropdata, function, line );
             }
             else
@@ -42,7 +70,7 @@ namespace KFrame
             }
         }
 
-        return _drops;
+        return drops;
     }
 
     DropDataList& KFDropModule::DropLogic( KFEntity* player, uint32 dropid, uint32 count, const char* function, uint32 line )
@@ -86,7 +114,7 @@ namespace KFrame
         for ( auto kfdropweight : kfsetting->_necessary_list._objects )
         {
             // 判断条件
-            auto ok = _kf_kernel->CheckCondition( player, &kfdropweight->_conditions );
+            auto ok = _kf_condition->CheckCondition( player, &kfdropweight->_conditions );
             if ( ok )
             {
                 RandDropData( player, kfsetting, outlist, kfdropweight, __FUNC_LINE__ );
@@ -114,7 +142,7 @@ namespace KFrame
         std::set<uint32> excludelist;
         for ( auto kfdropweight : kfsetting->_rand_list._weight_data )
         {
-            auto ok = _kf_kernel->CheckCondition( player, &kfdropweight->_conditions );
+            auto ok = _kf_condition->CheckCondition( player, &kfdropweight->_conditions );
             if ( ok )
             {
                 if ( !kfdropweight->_conditions.IsEmpty() )
@@ -149,7 +177,7 @@ namespace KFrame
         std::set<uint32> excludelist;
         for ( auto kfdropweight : kfsetting->_rand_list._weight_data )
         {
-            auto ok = _kf_kernel->CheckCondition( player, &kfdropweight->_conditions );
+            auto ok = _kf_condition->CheckCondition( player, &kfdropweight->_conditions );
             if ( !ok )
             {
                 excludelist.insert( kfdropweight->_id );

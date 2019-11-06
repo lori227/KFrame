@@ -4,10 +4,10 @@ namespace KFrame
 {
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
-    bool KFRobotConfig::LoadConfig( const std::string& file, uint32 loadmask )
+    bool KFRobotConfig::LoadConfig( const std::string& filename, const std::string& filepath, uint32 loadmask )
     {
         //////////////////////////////////////////////////////////////////
-        KFXml kfxml( file );
+        KFXml kfxml( filepath );
         auto config = kfxml.RootNode();
 
         {

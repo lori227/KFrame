@@ -29,6 +29,9 @@ namespace KFrame
         {"Team", KFDataDefine::Mask_Team},
         {"Guild", KFDataDefine::Mask_Guild},
         {"Rank", KFDataDefine::Mask_Rank},
+        {"AddCall", KFDataDefine::Mask_AddCall},
+        {"RemoveCall", KFDataDefine::Mask_RemoveCall},
+        {"UpdateCall", KFDataDefine::Mask_UpdataCall},
     };
 
     void KFDataConfig::ReadSetting( KFNode& xmlnode, KFClassSetting* kfsetting )

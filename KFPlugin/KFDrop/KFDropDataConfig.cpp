@@ -9,6 +9,8 @@ namespace KFrame
         auto weight = xmlnode.GetUInt32( "Weight", true );
         auto kfdropdataweight = kfsetting->_drop_data_list.Create( ++id, weight );
 
+        kfdropdataweight->_drop_data._data_index = id;
+        kfdropdataweight->_drop_data._drop_data_id = kfsetting->_id;
         kfdropdataweight->_drop_data._data_name = xmlnode.GetString( "DropName" );
         kfdropdataweight->_drop_data._data_key = xmlnode.GetUInt32( "DropKey", true );
 

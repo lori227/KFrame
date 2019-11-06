@@ -40,6 +40,7 @@ namespace KFrame
             Week = 3,
             Month = 4,
             Year = 5,
+            Minute = 6,
             Max,
         };
     }
@@ -111,8 +112,12 @@ namespace KFrame
         static bool CheckPassMonth( KFDate& lastdate, KFDate& nowdate, uint32 day, uint32 hour );
 
         // 判断是否过了一小时
-        static bool CheckPassHour( uint64 lasttime, uint64 nowtime );
-        static bool CheckPassHour( KFDate& lastdate, KFDate& nowdate );
+        static bool CheckPassHour( uint64 lasttime, uint64 nowtime, uint32 hour );
+        static bool CheckPassHour( KFDate& lastdate, KFDate& nowdate, uint32 hour );
+
+        // 判断是否过了一分钟
+        static bool CheckPassMinute( uint64 lasttime, uint64 nowtime, uint32 minute );
+        static bool CheckPassMinute( KFDate& lastdate, KFDate& nowdate, uint32 minute );
 
         // 判断同一天
         static bool CheckSameDay( uint64 lasttime, uint64 nowtime );

@@ -32,7 +32,7 @@ namespace KFrame
         virtual void InitArray( KFData* kfarray, uint32 size ) = 0;
 
         // 添加数组元素( kfarray )
-        virtual KFData* AddArray( KFData* kfarray ) = 0;
+        virtual KFData* AddArray( KFData* kfarray, int64 value ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////
         // 反序列化
         virtual bool ParseFromProto( KFData* kfdata, const KFMsg::PBObject* proto ) = 0;
@@ -42,8 +42,6 @@ namespace KFrame
         virtual KFMsg::PBObject* SerializeToData( KFData* kfdata ) = 0;
         virtual KFMsg::PBObject* SerializeToView( KFData* kfdata ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////
-        // 判断属性条件
-        virtual bool CheckCondition( KFEntity* kfentity, const KFConditions* kfconditions ) = 0;
     };
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_INTERFACE__( _kf_kernel, KFKernelInterface );

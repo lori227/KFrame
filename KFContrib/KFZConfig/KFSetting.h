@@ -11,6 +11,9 @@ namespace KFrame
     public:
         KFSetting() = default;
         virtual ~KFSetting() = default;
+    public:
+        // 文件名
+        std::string _file_name;
     };
     ///////////////////////////////////////////////////////////////
     class KFIntSetting : public KFSetting

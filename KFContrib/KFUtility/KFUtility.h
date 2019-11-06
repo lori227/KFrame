@@ -38,6 +38,10 @@ namespace KFrame
 
         template< class T > static T SplitList( std::string& srcstring, std::string split );
         template< class T > static T SplitSet( std::string& srcstring, std::string split );
+
+        static bool ParseArrayList( const std::string& str, std::list< uint32 >& arraylist );
+        static bool ParseArraySet( const std::string& str, std::set< uint32 >& arrayset );
+
         ////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////
         // 判断float double 是否为0
@@ -69,6 +73,9 @@ namespace KFrame
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
         static std::string FormatConfigFile( const std::string& filename, uint32 channel, uint32 service );
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+        // 获得map中最大的值
+        static uint32 GetMaxMapValue( MapUInt32& mapvalues, uint32 value );
 
     };
 }

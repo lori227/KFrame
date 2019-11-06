@@ -50,7 +50,10 @@ namespace KFrame
 
         /////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////
-        void GetKeyList( std::list< std::string >& outlist );
+        void GetKeyList( ListString& outlist );
+
+        // 是否有子属性
+        bool HaveChild( const char* key );
 
     private:
         friend class KFXml;

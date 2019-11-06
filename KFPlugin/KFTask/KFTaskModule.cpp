@@ -64,7 +64,7 @@ namespace KFrame
         // 已经领取
         if ( taskstatus == KFMsg::ReceiveStatus )
         {
-            return KFMsg::TaskAlreadyReceived;
+            return KFMsg::TaskAlreadyReward;
         }
 
         // 更新标记

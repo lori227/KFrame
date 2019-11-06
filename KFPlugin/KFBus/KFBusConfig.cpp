@@ -84,11 +84,11 @@ namespace KFrame
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFBusConfig::LoadConfig( const std::string& file, uint32 loadmask )
+    bool KFBusConfig::LoadConfig( const std::string& filename, const std::string& filepath, uint32 loadmask )
     {
         _bus_connection.clear();
         //////////////////////////////////////////////////////////////////
-        KFXml kfxml( file );
+        KFXml kfxml( filepath );
         auto config = kfxml.RootNode();
         auto busnode = config.FindNode( "Bus" );
         if ( busnode.IsValid() )

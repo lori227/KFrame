@@ -3,6 +3,8 @@
 
 #include "KFEnum.h"
 #include "KFUtility.h"
+#include "KFJson.h"
+#include "KFLogger/KFLogger.h"
 
 namespace KFrame
 {
@@ -159,6 +161,52 @@ namespace KFrame
         }
         return result;
     }
+
+    inline bool KFUtility::ParseArrayList( const std::string& str, std::list< uint32 >& arraylist )
+    {
+        if ( str.empty() )
+        {
+            return true;
+        }
+
+        __JSON_PARSE_STRING__( kfjson, str );
+        if ( !kfjson.IsArray() )
+        {
+            return false;
+        }
+
+        auto size = __JSON_ARRAY_SIZE__( kfjson );
+        for ( auto i = 0u; i < size; ++i )
+        {
+            arraylist.push_back( kfjson[i].GetUint() );
+        }
+
+        return true;
+    }
+
+    inline bool KFUtility::ParseArraySet( const std::string& str, std::set< uint32 >& arrayset )
+    {
+        if ( str.empty() )
+        {
+            return true;
+        }
+
+        __JSON_PARSE_STRING__( kfjson, str );
+        if ( !kfjson.IsArray() )
+        {
+            return false;
+        }
+
+        auto size = __JSON_ARRAY_SIZE__( kfjson );
+        for ( auto i = 0u; i < size; ++i )
+        {
+            arrayset.insert( kfjson[i].GetUint() );
+        }
+
+        return true;
+    }
+
+
     ///////////////////////////////////////////////////////////////////////
     template<>
     inline double KFUtility::ToValue( const char* srcstring )

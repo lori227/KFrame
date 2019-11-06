@@ -22,7 +22,12 @@ namespace KFrame
 
     protected:
         // 读取配置
-        virtual void ReadSetting( KFNode& xmlnode, KFTimeSetting* kfsetting );
+        virtual void ReadSetting( KFNode& xmlnode, KFTimeSetting* kfsetting )
+        {
+            kfsetting->_time_data._type = xmlnode.GetUInt32( "Type" );
+            kfsetting->_time_data._value = xmlnode.GetUInt32( "Value", true );
+            kfsetting->_time_data._hour = xmlnode.GetUInt32( "Hour", true );
+        }
     };
 }
 

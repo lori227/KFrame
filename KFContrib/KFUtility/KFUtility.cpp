@@ -169,4 +169,20 @@ namespace KFrame
 
         return configfile;
     }
+
+    uint32 KFUtility::GetMaxMapValue( MapUInt32& mapvalues, uint32 value )
+    {
+        auto findvalue = 0u;
+        for ( auto& iter : mapvalues )
+        {
+            if ( value < iter.first )
+            {
+                break;
+            }
+
+            findvalue = iter.second;
+        }
+
+        return findvalue;
+    }
 }

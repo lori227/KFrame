@@ -15,7 +15,7 @@ namespace KFrame
 
         ////////////////////////////////////////////////////////////////////////////
         // 加载配置
-        virtual bool LoadConfig( const std::string& file, uint32 loadmask )
+        virtual bool LoadConfig( const std::string& filename, const std::string& filepath, uint32 loadmask )
         {
             return false;
         }
@@ -25,12 +25,6 @@ namespace KFrame
 
         // 所有配置加载完
         virtual void LoadAllComplete() {}
-
-        // 重置版本
-        void ResetVersion()
-        {
-            _versions.clear();
-        }
 
         // 获得版本
         const std::string& GetVersion()
@@ -65,8 +59,8 @@ namespace KFrame
         std::string _file_name;
 
     protected:
-        // 文件路径
-        std::string _file_path;
+        // 配置文件名
+        std::string _setting_file_anme;
 
         // 版本列表
         std::unordered_map< std::string, std::string > _versions;
@@ -84,13 +78,13 @@ namespace KFrame
         typedef typename T::Type KeyType;
     public:
         // 加载配置
-        bool LoadConfig( const std::string& file, uint32 loadmask )
+        bool LoadConfig( const std::string& filename, const std::string& filepath, uint32 loadmask )
         {
-            KFXml kfxml( file );
+            KFXml kfxml( filepath );
             auto config = kfxml.RootNode();
             auto version = config.GetString( "version" );
 
-            _file_path = file;
+            _setting_file_anme = filename;
             CheckClearSetting( loadmask );
 
             auto xmlnode = config.FindNode( "item" );
@@ -99,12 +93,13 @@ namespace KFrame
                 auto kfsetting = CreateSetting( xmlnode );
                 if ( kfsetting != nullptr )
                 {
+                    kfsetting->_file_name = _setting_file_anme;
                     ReadSetting( xmlnode, kfsetting );
                 }
                 xmlnode.NextNode();
             }
 
-            UpdateVersion( file, version );
+            UpdateVersion( filename, version );
             return true;
         }
 
@@ -117,7 +112,16 @@ namespace KFrame
     protected:
         void CheckClearSetting( uint32 loadmask )
         {
-            if ( KFUtility::HaveBitMask<uint32>( loadmask, KFConfigEnum::NeedClearData ) )
+            if ( !KFUtility::HaveBitMask<uint32>( loadmask, KFConfigEnum::NeedClearData ) )
+            {
+                return;
+            }
+
+            if ( KFUtility::HaveBitMask<uint32>( loadmask, KFConfigEnum::ClearFileData ) )
+            {
+                ClearFileSetting();
+            }
+            else
             {
                 ClearSetting();
                 _versions.clear();
@@ -127,6 +131,24 @@ namespace KFrame
         virtual void ClearSetting()
         {
             _settings.Clear();
+        }
+
+        virtual void ClearFileSetting()
+        {
+            std::list< KeyType > removes;
+            for ( auto& iter : _settings._objects )
+            {
+                auto kfsetting = iter.second;
+                if ( kfsetting->_file_name == _setting_file_anme )
+                {
+                    removes.push_back( kfsetting->_id );
+                }
+            }
+
+            for ( auto id : removes )
+            {
+                _settings.Remove( id );
+            }
         }
 
         virtual T* CreateSetting( KFNode& xmlnode )

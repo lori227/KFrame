@@ -18,11 +18,11 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    bool KFTcpServerConfig::LoadConfig( const std::string& file, uint32 loadmask )
+    bool KFTcpServerConfig::LoadConfig( const std::string& filename, const std::string& filepath, uint32 loadmask )
     {
         _tcp_setting_list.clear();
         //////////////////////////////////////////////////////////////////
-        KFXml kfxml( file );
+        KFXml kfxml( filepath );
         auto config = kfxml.RootNode();
         auto tcpnode = config.FindNode( "TcpServer" );
         if ( tcpnode.IsValid() )

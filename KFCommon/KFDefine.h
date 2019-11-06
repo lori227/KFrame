@@ -28,16 +28,8 @@ namespace KFrame
     class KFData;
     class KFEntity;
     ////////////////////////////////////////////////////////////////
-    static const uint64 _invalid_int = 0u;
-    static const std::string _invalid_str = "";
-    static const std::string _globbing_str = "*";
     static const std::string _route_cluster_name = "route";
     static const std::string _route_cluster_key = "route@kframe,./";
-    /////////////////////////////////////////////////////////////////////////
-    typedef std::list< std::string > ListString;
-    typedef std::vector< std::string > VectorString;
-    typedef std::unordered_map< std::string, std::string > MapString;
-    typedef std::list< MapString > ListMapString;
     /////////////////////////////////////////////////////////////////////////
     // 消息函数
     typedef std::function<void( const Route& route, uint32 msgid, const char* data, uint32 length )> KFMessageFunction;

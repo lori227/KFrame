@@ -145,7 +145,7 @@ namespace KFrame
         return atof( attribute->value() );
     }
 
-    void KFNode::GetKeyList( std::list<std::string>& outlist )
+    void KFNode::GetKeyList( ListString& outlist )
     {
         outlist.clear();
 
@@ -156,5 +156,12 @@ namespace KFrame
             outlist.push_back( attribute->name() );
             attribute = attribute->next_attribute();
         }
+    }
+
+    bool KFNode::HaveChild( const char* key )
+    {
+        auto xmlnode = reinterpret_cast< rapidxml::xml_node<>* >( _node );
+        auto attribute = xmlnode->first_attribute( key );
+        return attribute != nullptr;
     }
 }

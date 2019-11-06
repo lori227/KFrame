@@ -17,7 +17,7 @@ namespace KFrame
         }
 
         // 加载配置
-        bool LoadConfig( const std::string& file, uint32 loadmask );
+        bool LoadConfig( const std::string& filename, const std::string& filepath, uint32 loadmask );
 
         // 查找小区信息
         const KFZoneSetting* ZoneSetting();

@@ -51,8 +51,13 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_DEPLOY_FUNCTION__( KFGateModule::OnDeployShutDownServer )
     {
-        _is_login_close = true;
+        _is_server_shutdown = true;
+
+        // 通知客户端服务器关系
+        KFMsg::MsgTellShutDown tell;
+        _kf_tcp_server->SendNetMessage( KFMsg::MSG_TELL_SHUTDOWN, &tell );
     }
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -140,6 +145,11 @@ namespace KFrame
         if ( playerid == _invalid_int || msgid >= __KF_MAX_CLIENT_MSG_ID__ )
         {
             return false;
+        }
+
+        if ( _is_server_shutdown )
+        {
+            return true;
         }
 
         auto kfrole = FindRole( playerid );
@@ -264,7 +274,7 @@ namespace KFrame
         }
 
         // 服务器正在关闭中
-        if ( _is_login_close )
+        if ( _is_server_shutdown )
         {
             return SendLoginAckMessage( sessionid, KFMsg::LoginIsClose, 0 );
         }

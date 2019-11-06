@@ -32,11 +32,13 @@ enum KickEnum
 enum StatusEnum
 {
 	InitStatus		= 0;		// 初始状态
-	DoneStatus 		= 1;		// 已经完成
-	ReceiveStatus	= 2;		// 已经领取奖励
+	ActiveStatus 	= 1;		// 激活状态
+	ExecuteStatus 	= 2;		// 执行状态( 接取状态 )
+	DoneStatus 		= 3;		// 完成状态
+	ReceiveStatus	= 4;		// 已经领取奖励
 
-	Remove			= 3;		// 删除	
-	ReceiveRemove 	= 4;		// 领取并删除
+	Remove			= 11;		// 删除	
+	ReceiveRemove 	= 12;		// 领取并删除
 }
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
@@ -77,3 +79,41 @@ enum InviteEnum
 	Delete = 3;			// 直接删除
 	RefuseMinute = 4;	// 5分内拒绝
 }
+
+// 商城类型
+enum StoreEnum
+{
+	CommonStore = 0;	// 固定商城
+	RandomStore = 1;	// 随机商城
+}
+
+// 商城位置类型
+enum StorePosEnum
+{
+	MainStore = 0;		// 主城商城
+	ExploreStore = 1;	// 探索商城
+}
+
+// 商城刷新类型
+enum StoreRefreshEnum
+{
+	TimeRefresh = 0;	// 时间刷新
+	CostRefresh = 1;	// 花费刷新
+}
+
+// 随机类型
+enum RandomEnum
+{
+	IncludeRandom = 0;	// 放回随机
+	ExcludeRandom = 1;	// 不放回随机
+}
+
+// 奖励类型
+enum RewardTypeEnum
+{
+	InvalidType = 0;
+	CurrenyType = 1;	// 货币类型
+	ItemType = 2;		// 道具类型
+}
+
+

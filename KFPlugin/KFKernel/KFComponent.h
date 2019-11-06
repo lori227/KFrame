@@ -22,7 +22,7 @@ namespace KFrame
     typedef std::function<void( KFEntity*, uint64, KFData*, uint32, uint64, uint64, uint64 )> KFUpdateDataFunction;
     typedef std::function<void( KFEntity*, KFData*, const std::string& )> KFUpdateStringFunction;
     ////////////////////////////////////////////////////////////////////////////////////////////
-    typedef std::function<uint64( KFEntity*, uint64 )> KFGetConfigValueFunction;
+    typedef std::function<uint64( KFEntity*, uint64, uint64 )> KFGetConfigValueFunction;
     ////////////////////////////////////////////////////////////////////////////////////////////
 
     // 游戏中的组件, 负责属性回调时间
@@ -349,9 +349,9 @@ namespace KFrame
         virtual void UnRegisterShowElementFunction() = 0;
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         template< class T >
-        void RegisterGetConfigValueFunction( const std::string& name, T* object, uint64 ( T::*handle )( KFEntity*, uint64 ) )
+        void RegisterGetConfigValueFunction( const std::string& name, T* object, uint64 ( T::*handle )( KFEntity*, uint64, uint64 ) )
         {
-            KFGetConfigValueFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2 );
+            KFGetConfigValueFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
             BindGetConfigValueFunction( name, function );
         }
 
@@ -511,7 +511,7 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 #define  __KF_GET_CONFIG_VALUE_FUNCTION__( function ) \
-    uint64 function( KFEntity* player, uint64 id )
+    uint64 function( KFEntity* player, uint64 id, uint64 maxvalue )
 
 #define __REGISTER_GET_CONFIG_VALUE__( dataname, function ) \
     _kf_component->RegisterGetConfigValueFunction( dataname, this, function )

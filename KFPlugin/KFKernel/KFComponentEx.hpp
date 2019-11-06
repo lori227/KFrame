@@ -97,19 +97,14 @@ namespace KFrame
         void DeleteSaveEntity( KFEntity* kfentity );
         //////////////////////////////////////////////////////////////////////////////////////
         // 属性更新回调函数
-        void UpdateDataCallBack( KFEntity* kfentity, KFData* kfdata, const std::string& value );
-        void UpdateDataCallBack( KFEntity* kfentity, uint64 key, KFData* kfdata, uint64 index, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue );
+        void UpdateDataCallBack( KFEntity* kfentity, KFData* kfdata, const std::string& value, bool callback );
+        void UpdateDataCallBack( KFEntity* kfentity, uint64 key, KFData* kfdata, uint64 index, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue, bool callback );
 
         // 属性添加回调函数
-        void AddDataCallBack( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata );
+        void AddDataCallBack( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata, bool callback );
 
         // 属性删除回调函数
-        void RemoveDataCallBack( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata );
-
-        // 移动属性回调函数
-        void MoveRemoveDataCallBack( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata );
-        void MoveAddDataCallBack( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata );
-        void MoveUpdateDataCallBack( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata );
+        void RemoveDataCallBack( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata, bool callback );
 
         // 添加更新的对象
         void AddSyncEntity( KFEntity* entity );

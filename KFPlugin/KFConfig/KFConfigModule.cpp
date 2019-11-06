@@ -36,7 +36,7 @@ namespace KFrame
     void KFConfigModule::LoadConfigList()
     {
         auto configfile = _config_path + "config.xml";
-        LoadConfigFile( _kf_config_config, configfile, KFConfigEnum::CanReload | KFConfigEnum::NeedClearData );
+        LoadConfigFile( _kf_config_config, "config", configfile, KFConfigEnum::CanReload | KFConfigEnum::NeedClearData );
     }
 
     void KFConfigModule::LoadConfig()
@@ -56,7 +56,7 @@ namespace KFrame
 
             for ( auto& kfdata : kfsetting->_config_data_list )
             {
-                LoadConfigFile( kfconfig, kfdata._file_path, kfdata._load_mask );
+                LoadConfigFile( kfconfig, kfdata._file_name, kfdata._file_path, kfdata._load_mask );
             }
         }
 
@@ -97,7 +97,7 @@ namespace KFrame
         LoadConfigList();
 
         auto configfile = _config_path + "_xmlversion.xml";
-        LoadConfigFile( _kf_version_config, configfile, KFConfigEnum::NeedClearData | KFConfigEnum::CanReload );
+        LoadConfigFile( _kf_version_config, "version", configfile, KFConfigEnum::NeedClearData | KFConfigEnum::CanReload );
 
         bool loadok = false;
         for ( auto& iter : _config_list )
@@ -115,14 +115,13 @@ namespace KFrame
                 if ( KFUtility::HaveBitMask<uint32>( kfdata._load_mask, KFConfigEnum::CanReload ) )
                 {
                     auto kfversionsetting = _kf_version_config->FindSetting( kfdata._file_name );
-                    if ( kfversionsetting == nullptr || kfconfig->CheckVersion( kfdata._file_path, kfversionsetting->_version ) )
+                    if ( kfversionsetting == nullptr || kfconfig->CheckVersion( kfdata._file_name, kfversionsetting->_version ) )
                     {
                         continue;
                     }
 
                     loadok = true;
-                    kfconfig->ResetVersion();
-                    LoadConfigFile( kfconfig, kfdata._file_path, kfdata._load_mask );
+                    LoadConfigFile( kfconfig, kfdata._file_name, kfdata._file_path, kfdata._load_mask );
                 }
             }
         }
@@ -141,20 +140,20 @@ namespace KFrame
         __LOG_INFO__( "reload [{}] ok!", file );
     }
 
-    void KFConfigModule::LoadConfigFile( KFConfig* config, const std::string& file, uint32 loadmask )
+    void KFConfigModule::LoadConfigFile( KFConfig* config, const std::string& filename, const std::string& filepath, uint32 loadmask )
     {
         try
         {
-            auto ok = config->LoadConfig( file, loadmask );
+            auto ok = config->LoadConfig( filename, filepath, loadmask );
             if ( ok )
             {
                 config->LoadComplete();
-                __LOG_INFO__( "load [{}] ok!", file );
+                __LOG_INFO__( "load [{}] ok!", filepath );
             }
         }
         catch ( ... )
         {
-            static std::string error = __FORMAT__( "load [{}] failed!", file );
+            static std::string error = __FORMAT__( "load [{}] failed!", filepath );
             throw std::runtime_error( error );
         }
     }

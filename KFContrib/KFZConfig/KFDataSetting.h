@@ -38,6 +38,9 @@ namespace KFrame
             Mask_Multiple = 1 << 6,		// 是否支持倍数
             Mask_Show = 1 << 7,			// 是否显示给客户端
             Mask_Delay = 1 << 8,		// 延迟同步到客户端
+            Mask_AddCall = 1 << 9,		// 是否添加回调
+            Mask_RemoveCall = 1 << 10,	// 是否删除回调
+            Mask_UpdataCall = 1 << 11,	// 是否更新回调
 
             Mask_Public = 1 << 20,		// 公共属性
             Mask_Relation = 1 << 21,	// 关系属性
