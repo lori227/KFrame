@@ -109,9 +109,10 @@ namespace KFrame
 
                 if ( i == 0u )
                 {
-                    elementstr += ( "[" + rewardstr + "," );
+                    elementstr += "[";
                 }
-                else if ( i == size - 1u )
+
+                if ( i == size - 1u )
                 {
                     elementstr += ( rewardstr + "]" );
                 }

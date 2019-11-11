@@ -36,8 +36,14 @@ namespace KFrame
     {
         kfsetting->_limits.clear();
         kfsetting->_str_condition = xmlnode.GetString( "Condition" );
-        kfsetting->_done_type = xmlnode.GetUInt32( "DoneType" );
         kfsetting->_done_value = xmlnode.GetUInt32( "DoneValue" );
+
+        auto strdonetype = xmlnode.GetString( "DoneType" );
+        kfsetting->_done_type = KFAnalysis::GetCheckType( strdonetype );
+        if ( kfsetting->_done_type == KFEnum::Null )
+        {
+            kfsetting->_done_type = KFUtility::ToValue<uint32>( strdonetype );
+        }
 
         for ( auto& iter : _conditon_mask_list )
         {
@@ -74,36 +80,50 @@ namespace KFrame
         auto data = strlimit.data();
         auto size = ( uint32 )strlimit.length();
 
-        // 读取属性
-        auto dataname = KFAnalysis::ReadLetter( data, size, startpos );
-        if ( dataname.empty() )
+        // 默认限制为id=1111, 如果第一个是数字, 则使用默认字段
+        auto datavalue = 0u;
+        uint32 checktype = KFEnum::Equal;
+        auto dataname = __KF_STRING__( id );
+        if ( KFAnalysis::IsInteger( data[ 0 ] ) )
         {
-            return false;
+            datavalue = KFAnalysis::ReadInteger( data, size, startpos );
+            if ( datavalue == 0u )
+            {
+                return false;
+            }
         }
-
-        // 读取判断符号
-        auto checktype = 0u;
-        auto checkendpos = 0u;
-        auto checksize = 0u;
-        std::tie( checktype, checkendpos, checksize ) = KFAnalysis::ReadCheckType( data, size, startpos );
-        if ( checktype == KFEnum::Null )
+        else
         {
-            return false;
-        }
+            // 读取属性
+            dataname = KFAnalysis::ReadLetter( data, size, startpos );
+            if ( dataname.empty() )
+            {
+                return false;
+            }
 
-        // 读取数值
-        startpos = checkendpos + checksize + 1;
-        size = ( uint32 )strlimit.length() - startpos + 1;
-        auto datavalue = KFAnalysis::ReadInteger( data, size, startpos );
-        if ( datavalue == 0u )
-        {
-            return false;
+            // 读取判断符号
+            auto checkendpos = 0u;
+            auto checksize = 0u;
+            std::tie( checktype, checkendpos, checksize ) = KFAnalysis::ReadCheckType( data, size, startpos );
+            if ( checktype == KFEnum::Null )
+            {
+                return false;
+            }
+
+            // 读取数值
+            startpos = checkendpos + checksize + 1;
+            size = ( uint32 )strlimit.length() - startpos + 1;
+            datavalue = KFAnalysis::ReadInteger( data, size, startpos );
+            if ( datavalue == 0u )
+            {
+                return false;
+            }
         }
 
         KFConditionLimit limit;
         limit._data_name = dataname;
-        limit._data_value = datavalue;
         limit._operate = checktype;
+        limit._data_value = datavalue;
         kfsetting->_limits.push_back( limit );
         return true;
     }
