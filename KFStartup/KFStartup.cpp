@@ -7,7 +7,7 @@ namespace KFrame
 {
     bool KFStartup::InitStartup( const std::string& file )
     {
-        KFPluginManage::Instance()->RegisterCommandFunction( __KF_STRING__( loadplugin ), this, &KFStartup::ReloadPlugin );
+        KFPluginManage::Instance()->RegisterCommandFunction( __STRING__( loadplugin ), this, &KFStartup::ReloadPlugin );
 
         // 加载配置
         if ( !_app_config->LoadStartupConfig( file ) )
@@ -86,7 +86,7 @@ namespace KFrame
 
     void KFStartup::ShutDown()
     {
-        KFPluginManage::Instance()->UnRegisterCommandFunction( __KF_STRING__( loadplugin ) );
+        KFPluginManage::Instance()->UnRegisterCommandFunction( __STRING__( loadplugin ) );
         KFPluginManage::Instance()->ShutDown();
 
         for ( auto& iter : _kf_library._objects )

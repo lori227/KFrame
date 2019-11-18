@@ -129,6 +129,9 @@ namespace KFrame
         // 属性名字
         std::string _name;
 
+        // 逻辑名字
+        std::string _logic_name;
+
         // 属性类型
         uint32 _type = 0u;
         uint32 _logic_type = 0u;

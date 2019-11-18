@@ -2,6 +2,11 @@
 
 namespace KFrame
 {
+    KFInt32::KFInt32()
+    {
+        _data_type = KFDataDefine::Type_Int32;
+    }
+
     int32 KFInt32::GetInt32()
     {
         return _data;

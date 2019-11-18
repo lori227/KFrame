@@ -65,11 +65,11 @@ namespace KFrame
             return;
         }
 
-        if ( netdata->_type == __KF_STRING__( master ) )
+        if ( netdata->_type == __STRING__( master ) )
         {
             OnClientConnectionClusterMaster( netdata->_name, netdata->_id );
         }
-        else if ( netdata->_type == __KF_STRING__( shard ) )
+        else if ( netdata->_type == __STRING__( shard ) )
         {
             OnClientConnectionClusterShard( netdata->_name, netdata->_id );
         }
@@ -152,7 +152,7 @@ namespace KFrame
     {
         KFMsg::S2SClusterClientLostToShardReq req;
         req.set_clientid( netdata->_id );
-        _kf_tcp_client->SendMessageToType( __KF_STRING__( shard ), KFMsg::S2S_CLUSTER_CLIENT_LOST_TO_SHARD_REQ, &req );
+        _kf_tcp_client->SendMessageToType( __STRING__( shard ), KFMsg::S2S_CLUSTER_CLIENT_LOST_TO_SHARD_REQ, &req );
     }
 
     __KF_NET_EVENT_FUNCTION__( KFClusterProxyModule::OnClientLostServer )
@@ -163,11 +163,11 @@ namespace KFrame
             return;
         }
 
-        if ( netdata->_type == __KF_STRING__( master ) )
+        if ( netdata->_type == __STRING__( master ) )
         {
             OnClientLostClusterMaster( netdata->_name, netdata->_id );
         }
-        else if ( netdata->_type == __KF_STRING__( shard ) )
+        else if ( netdata->_type == __STRING__( shard ) )
         {
             OnClientLostClusterShard( netdata->_name, netdata->_id );
         }
@@ -224,7 +224,7 @@ namespace KFrame
         // 通知shard
         KFMsg::S2SClusterClientDiscoverToShardReq req;
         req.add_clientid( serverid );
-        _kf_tcp_client->SendMessageToType( __KF_STRING__( shard ), KFMsg::S2S_CLUSTER_CLIENT_DISCOVER_TO_SHARD_REQ, &req );
+        _kf_tcp_client->SendMessageToType( __STRING__( shard ), KFMsg::S2S_CLUSTER_CLIENT_DISCOVER_TO_SHARD_REQ, &req );
         __LOG_DEBUG__( "cluster client [{}] verify ok!", KFAppId::ToString( kfmsg.serverid() ) );
     }
 

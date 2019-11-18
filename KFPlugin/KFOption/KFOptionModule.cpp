@@ -5,7 +5,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////
     const KFOptionSetting* KFOptionModule::FindOption( const std::string& name )
     {
-        return KFOptionConfig::Instance()->FindOption( name, _invalid_str );
+        return KFOptionConfig::Instance()->FindOption( name, _invalid_string );
     }
 
     const KFOptionSetting* KFOptionModule::FindOption( const std::string& name, uint32 key )
@@ -22,7 +22,7 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////////////
     void KFOptionModule::AddOption( const std::string& name, uint32 value )
     {
-        AddOption( name, _invalid_str, value );
+        AddOption( name, _invalid_string, value );
     }
 
     void KFOptionModule::AddOption( const std::string& name, uint32 key, uint32 value )
@@ -41,7 +41,7 @@ namespace KFrame
 
     void KFOptionModule::AddOption( const std::string& name, double value )
     {
-        AddOption( name, _invalid_str, value );
+        AddOption( name, _invalid_string, value );
     }
 
     void KFOptionModule::AddOption( const std::string& name, uint32 key, double value )
@@ -60,7 +60,7 @@ namespace KFrame
 
     void KFOptionModule::AddOption( const std::string& name, const std::string& value )
     {
-        AddOption( name, _invalid_str, value );
+        AddOption( name, _invalid_string, value );
     }
 
     void KFOptionModule::AddOption( const std::string& name, uint32 key, const std::string& value )

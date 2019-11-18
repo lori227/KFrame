@@ -44,7 +44,7 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::NameEmpty );
         }
 
-        auto kfname = player->Find( __KF_STRING__( basic ), __KF_STRING__( name ) );
+        auto kfname = player->Find( __STRING__( basic ), __STRING__( name ) );
         auto name = kfname->Get<std::string>();
         if ( !name.empty() )
         {
@@ -63,8 +63,8 @@ namespace KFrame
         req.set_playerid( playerid );
         req.set_oldname( name );
         req.set_newname( kfmsg.name() );
-        req.set_costdata( _invalid_str );
-        auto ok = _kf_route->SendToRand( playerid, __KF_STRING__( logic ), KFMsg::S2S_SET_PLAYERNAME_TO_DATA_REQ, &req, false );
+        req.set_costdata( _invalid_string );
+        auto ok = _kf_route->SendToRand( playerid, __STRING__( logic ), KFMsg::S2S_SET_PLAYERNAME_TO_DATA_REQ, &req, false );
         if ( !ok )
         {
             _kf_display->SendToClient( player, KFMsg::PublicServerBusy );
@@ -87,8 +87,8 @@ namespace KFrame
             return;
         }
 
-        player->UpdateData( __KF_STRING__( basic ), __KF_STRING__( name ), kfmsg.name() );
-        if ( kfmsg.costdata() != _invalid_str )
+        player->UpdateData( __STRING__( basic ), __STRING__( name ), kfmsg.name() );
+        if ( kfmsg.costdata() != _invalid_string )
         {
             KFElements kfelements;
             auto ok = kfelements.Parse( kfmsg.costdata(), __FUNC_LINE__ );
@@ -105,7 +105,7 @@ namespace KFrame
         __CLIENT_PROTO_PARSE__( KFMsg::MsgSetSexReq );
 
         _kf_display->SendToClient( player, KFMsg::SexSetOK );
-        player->UpdateData( __KF_STRING__( basic ), __KF_STRING__( sex ), KFEnum::Set, kfmsg.sex() );
+        player->UpdateData( __STRING__( basic ), __STRING__( sex ), KFEnum::Set, kfmsg.sex() );
     }
 
 

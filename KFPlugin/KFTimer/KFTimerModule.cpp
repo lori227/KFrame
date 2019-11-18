@@ -140,9 +140,12 @@ namespace KFrame
         // 最少需要1个刻度
         ticks = __MAX__( 1u, ticks );
 
+        // 设置圈数
         kfdata->_rotation = ticks / TimerEnum::MaxSlot;
+
+        // _slot和_now_slot相同时, 会多跑一圈 slot+1 保证下次可以执行
         auto slot = ticks % TimerEnum::MaxSlot;
-        kfdata->_slot = ( slot + _now_slot ) % TimerEnum::MaxSlot;
+        kfdata->_slot = ( slot + _now_slot + 1u ) % TimerEnum::MaxSlot;
 
         auto wheeldata = _slot_timer_data[ kfdata->_slot ];
         if ( wheeldata != nullptr )

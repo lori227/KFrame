@@ -109,9 +109,6 @@ namespace KFrame
         // 添加更新的对象
         void AddSyncEntity( KFEntity* entity );
 
-        // 绑定的属性名
-        const std::string& GetBindDataName( const std::string& dataname );
-        const std::string& GetBindDataName( const KFDataSetting* datasetting );
         ///////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////
         virtual void BindCheckAddElementFunction( const std::string& dataname, KFCheckAddElementFunction& function );

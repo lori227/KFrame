@@ -64,10 +64,10 @@ namespace KFrame
         kfglobal->_game_time = KFClock::GetTime();
         kfglobal->_real_time = KFDate::GetTimeEx();
 
-        auto strapp = params[ __KF_STRING__( app ) ];
+        auto strapp = params[ __STRING__( app ) ];
         kfglobal->_app_name = KFUtility::SplitString( strapp, "." );
         kfglobal->_app_type = KFUtility::SplitString( strapp, "." );
-        kfglobal->_app_id->FromString( params[ __KF_STRING__( id ) ] );
+        kfglobal->_app_id->FromString( params[ __STRING__( id ) ] );
 
         // 设置标题
         kfglobal->_title_text = KFUtility::FormatTitleText( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->ToString() );
@@ -78,16 +78,16 @@ namespace KFrame
 #endif
 
         // 网络类型
-        kfglobal->InitNetType( params[ __KF_STRING__( net ) ] );
+        kfglobal->InitNetType( params[ __STRING__( net ) ] );
 
         // 初始化服务类型
-        kfglobal->InitChannelService( params[ __KF_STRING__( service ) ] );
+        kfglobal->InitChannelService( params[ __STRING__( service ) ] );
 
         // 版本号
         kfglobal->LoadVersion( "version" );
 
         // 初始化logger
-        auto strlog = params[ __KF_STRING__( log ) ];
+        auto strlog = params[ __STRING__( log ) ];
         auto loglevel = KFUtility::SplitValue< uint32 >( strlog, "." );
         KFLogger::Instance()->InitLogger( loglevel, true );
 

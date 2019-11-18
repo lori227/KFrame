@@ -22,6 +22,9 @@ namespace KFrame
         // 是否初始化完成
         virtual bool IsInited();
         virtual void SetInited();
+
+        virtual bool IsNew();
+        virtual void SetNew( bool isnew );
         //////////////////////////////////////////////////////////////////////////////////////////
         // 创建子属性
         virtual KFData* CreateData( const std::string& dataname );
@@ -37,7 +40,6 @@ namespace KFrame
         // 清空属性
         virtual bool CleanData( const std::string& parentname, bool callback = true );
 
-
         // 删除属性
         virtual bool RemoveData( const std::string& parentname, uint64 key, bool callback = true );
         virtual bool RemoveData( KFData* kfparent, uint64 key, bool callback = true );
@@ -51,6 +53,7 @@ namespace KFrame
         virtual KFData* MoveData( KFData* sourcedata, const std::string& dataname, const std::string& targetname );
         virtual KFData* MoveData( KFData* sourcedata, const std::string& dataname, KFData* targetdata );
         virtual KFData* MoveData( KFData* sourcedata, uint64 key, KFData* targetdata, const std::string& dataname );
+        virtual KFData* MoveData( KFData* sourcedata, const std::string& sourcename, KFData* targetdata, const std::string& targetname );
 
         virtual uint64 MoveData( uint64 key, KFData* kfdata, uint32 operate, uint64 value );
         virtual uint64 MoveData( KFData* kfparent, const std::string& dataname, uint32 operate, uint64 value );
@@ -84,7 +87,8 @@ namespace KFrame
         virtual const std::string& CheckAddElement( const KFElements* kfelements, const char* function, uint32 line, float multiple = 1.0f );
 
         // 添加元数据
-        virtual void AddElement( const KFElements* kfelements, bool showclient, const char* function, uint32 line, float multiple = 1.0f );
+        virtual void AddElement( const KFElements* kfelements, const char* function, uint32 line, float multiple = 1.0f );
+        virtual void AddElement( const KFElements* kfelements, const std::string& modulename, const char* function, uint32 line, float multiple = 1.0f );
 
         // 判断元数据是否满足条件
         virtual const std::string& CheckRemoveElement( const KFElements* kfelements, const char* function, uint32 line, float multiple = 1.0f );
@@ -97,10 +101,15 @@ namespace KFrame
         virtual void SetElementToData( KFElementObject* kfelement, KFData* kfdata, float multiple = 1.0f );
 
         // 添加显示数据
-        virtual void AddDataToShow( KFData* kfdata );
-        virtual void AddDataToShow( const std::string& name, uint64 value );
-        virtual void AddDataToShow( const std::string& name, uint64 key, const std::string& dataname, uint64 datavalue );
-        virtual void AddElementToShow( const KFElement* kfelement );
+        virtual void AddDataToShow( KFData* kfdata, bool find );
+        virtual void AddDataToShow( const std::string& modulename, KFData* kfdata, bool find );
+
+        virtual void AddDataToShow( const std::string& name, uint64 value, bool find );
+        virtual void AddDataToShow( const std::string& modulename, const std::string& name, uint64 value, bool find );
+
+        virtual void AddDataToShow( const std::string& name, uint64 value, KeyValue& values, bool find );
+        virtual void AddDataToShow( const std::string& modulename, const std::string& name, uint64 value, KeyValue& values, bool find );
+        virtual void AddElementToShow( const KFElement* kfelement, bool find );
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
@@ -146,7 +155,7 @@ namespace KFrame
         void AddShowElement( uint32 showtype, const KFElement* kfelement, KFData* kfdata, const char* function, uint32 line );
 
         // 创建显示元素
-        KFMsg::PBShowData* CreateShowData( const std::string& name, uint64 key, bool find );
+        KFMsg::PBShowData* CreateShowData( const std::string& name, uint64 value, bool find );
 
     protected:
 
@@ -171,6 +180,9 @@ namespace KFrame
         // 是否初始化
         bool _is_inited = false;
 
+        // 是否新建玩家
+        bool _is_new = false;
+
         // 是否正在保存中
         bool _is_in_save = false;
 
@@ -187,7 +199,6 @@ namespace KFrame
         KFMsg::PBObject _update_pb_object;
 
         // 需要显示的element
-        bool _add_show_element = true;
         bool _have_show_client = false;
         KFMsg::PBShowElement _pb_show_element;
     };

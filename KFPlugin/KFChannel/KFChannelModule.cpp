@@ -29,7 +29,7 @@ namespace KFrame
     {
         __JSON_PARSE_STRING__( request, data );
 
-        auto channel = __JSON_GET_UINT32__( request, __KF_STRING__( channel ) );
+        auto channel = __JSON_GET_UINT32__( request, __STRING__( channel ) );
         if ( channel != KFGlobal::Instance()->_channel )
         {
             // 渠道不同, 判断是否支持
@@ -67,7 +67,7 @@ namespace KFrame
             if ( !kfsetting->IsSupport( channel ) )
             {
                 __LOG_ERROR__( "channel=[{}] not support!", channel );
-                return _invalid_str;
+                return _invalid_string;
             }
         }
 
@@ -76,14 +76,14 @@ namespace KFrame
         if ( kfsetting == nullptr || !kfsetting->IsOpen() )
         {
             __LOG_ERROR__( "channel=[{}] no setting!", channel );
-            return _invalid_str;
+            return _invalid_string;
         }
 
         auto kffunction = _kf_pay_function.Find( channel );
         if ( kffunction == nullptr )
         {
             __LOG_ERROR__( "channel=[{}] no function!", channel );
-            return _invalid_str;
+            return _invalid_string;
         }
 
         return kffunction->_function( data, kfsetting );

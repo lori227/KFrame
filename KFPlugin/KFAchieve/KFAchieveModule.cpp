@@ -5,12 +5,12 @@ namespace KFrame
 {
     void KFAchieveModule::BeforeRun()
     {
-        _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
+        _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
 
         __REGISTER_ADD_DATA__( &KFAchieveModule::OnAddDataCallBack );
         __REGISTER_REMOVE_DATA__( &KFAchieveModule::OnRemoveDataCallBack );
         __REGISTER_UPDATE_DATA__( &KFAchieveModule::OnUpdateDataCallBack );
-        __REGISTER_UPDATE_DATA_2__( __KF_STRING__( achieve ), __KF_STRING__( value ), &KFAchieveModule::OnAchieveValueUpdateCallBack );
+        __REGISTER_UPDATE_DATA_2__( __STRING__( achieve ), __STRING__( value ), &KFAchieveModule::OnAchieveValueUpdateCallBack );
         //////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_ACHIEVE_REWARD_REQ, &KFAchieveModule::HandleAchieveRewardReq );
     }
@@ -20,7 +20,7 @@ namespace KFrame
         __UN_ADD_DATA__();
         __UN_REMOVE_DATA__();
         __UN_UPDATE_DATA__();
-        __UN_UPDATE_DATA_2__( __KF_STRING__( achieve ), __KF_STRING__( value ) );
+        __UN_UPDATE_DATA_2__( __STRING__( achieve ), __STRING__( value ) );
         //////////////////////////////////////////////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::MSG_ACHIEVE_REWARD_REQ );
     }
@@ -43,13 +43,13 @@ namespace KFrame
             return KFMsg::AchieveCanNotFind;
         }
 
-        auto kfachieve = player->Find( __KF_STRING__( achieve ), kfsetting->_id );
+        auto kfachieve = player->Find( __STRING__( achieve ), kfsetting->_id );
         if ( kfachieve == nullptr )
         {
             return KFMsg::AchieveCanNotFindData;
         }
 
-        auto status = kfachieve->Get( __KF_STRING__( status ) );
+        auto status = kfachieve->Get( __STRING__( status ) );
         if ( status == KFMsg::InitStatus )
         {
             return KFMsg::AchieveNotDone;
@@ -61,10 +61,10 @@ namespace KFrame
         }
 
         // 设置已经领取
-        player->UpdateData( kfachieve, __KF_STRING__( status ), KFEnum::Set, KFMsg::ReceiveStatus );
+        player->UpdateData( kfachieve, __STRING__( status ), KFEnum::Set, KFMsg::ReceiveStatus );
 
         // 添加奖励
-        player->AddElement( &kfsetting->_rewards, true, __FUNC_LINE__ );
+        player->AddElement( &kfsetting->_rewards, __STRING__( achieve ), __FUNC_LINE__ );
         return KFMsg::AchieveReceiveOk;
     }
 
@@ -84,7 +84,7 @@ namespace KFrame
             return;
         }
 
-        player->UpdateData( __KF_STRING__( achieve ), key, __KF_STRING__( status ), KFEnum::Set, KFMsg::DoneStatus );
+        player->UpdateData( __STRING__( achieve ), key, __STRING__( status ), KFEnum::Set, KFMsg::DoneStatus );
         if ( newvalue > achievesetting->_done_value )
         {
             kfdata->Operate< uint64 >( KFEnum::Set, achievesetting->_done_value );
@@ -132,12 +132,12 @@ namespace KFrame
             return;
         }
 
-        auto kfachieves = player->Find( __KF_STRING__( achieve ) );
+        auto kfachieves = player->Find( __STRING__( achieve ) );
 
         for ( auto kfsetting : kfachievetype->_achieve_list )
         {
             // 是否已经完成
-            auto flag = kfachieves->Get< uint32 >( kfsetting->_id, __KF_STRING__( status ) );
+            auto flag = kfachieves->Get< uint32 >( kfsetting->_id, __STRING__( status ) );
             if ( flag != KFMsg::InitStatus )
             {
                 continue;
@@ -166,7 +166,7 @@ namespace KFrame
                 continue;
             }
 
-            player->UpdateData( kfachieves, kfsetting->_id, __KF_STRING__( value ), kfsetting->_use_operate, operatevalue );
+            player->UpdateData( kfachieves, kfsetting->_id, __STRING__( value ), kfsetting->_use_operate, operatevalue );
         }
     }
 }

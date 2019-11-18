@@ -44,6 +44,6 @@ namespace KFrame
         kfsetting->_release_open = xmlnode.GetBoolen( "Release", true );
 
         auto stropen = xmlnode.GetString( "Support", true );
-        kfsetting->_support_list = KFUtility::SplitSet< std::set< uint32 > >( stropen, DEFAULT_SPLIT_STRING );
+        kfsetting->_support_list = KFUtility::SplitSet< std::set< uint32 > >( stropen, __SPLIT_STRING__ );
     }
 }

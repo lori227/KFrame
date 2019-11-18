@@ -13,7 +13,6 @@ namespace KFrame
         _is_sending = false;
 
         _uv_write = new uv_write_t();
-        memset( _recv_buff, 0, sizeof( _recv_buff ) );
     }
 
     KFNetSession::~KFNetSession()
@@ -148,27 +147,7 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFNetSession::OnRecvData( const char* buffer, uint32 length )
     {
-        if ( length == 0 )
-        {
-            return __LOG_DEBUG__( "session[{}:{}:{}] recv length=0!", _session_id, _object_id, KFAppId::ToString( _session_id ) );
-        }
-
-        // 消息长度增加
-        if ( _recv_length + length > KFNetDefine::MaxRecvBuffLength )
-        {
-            if ( IsServerSession() )
-            {
-                __LOG_ERROR__( "session[{}:{}] length[{}:{}] error", _session_id, KFAppId::ToString( _session_id ), _recv_length, length );
-            }
-            else
-            {
-                __LOG_ERROR__( "session[{}:{}] length[{}:{}] error", _session_id, _object_id, _recv_length, length );
-            }
-
-            _recv_length = 0;
-        }
-
-        memcpy( _recv_buff + _recv_length, buffer, length );
+        // 接受总长度
         _recv_length += length;
 
         // 处理消息
@@ -193,7 +172,7 @@ namespace KFrame
             nowposition += _message_head_length;
             if ( nethead->_length > 0 )
             {
-                recvmessage->CopyData( _recv_buff + nowposition, nethead->_length );
+                recvmessage->CopyData( _req_recv_buffer + nowposition, nethead->_length );
                 nowposition += nethead->_length;
             }
 
@@ -209,11 +188,9 @@ namespace KFrame
 
         // 设置长度
         _recv_length -= __MIN__( _recv_length, nowposition );
-
-        // 移动消息buff
         if ( _recv_length > 0 && nowposition > 0 )
         {
-            memmove( _recv_buff, _recv_buff + nowposition, _recv_length );
+            memmove( _req_recv_buffer, _req_recv_buffer + nowposition, _recv_length );
         }
     }
 
@@ -224,7 +201,7 @@ namespace KFrame
             return nullptr;
         }
 
-        auto nethead = reinterpret_cast< KFNetHead* >( _recv_buff + position );
+        auto nethead = reinterpret_cast< KFNetHead* >( _req_recv_buffer + position );
 
         // 收到的消息长度有错误
         if ( nethead->_length > KFNetDefine::MaxMessageLength )
@@ -270,8 +247,8 @@ namespace KFrame
     {
         auto netsession = reinterpret_cast< KFNetSession* >( handle->data );
 
-        pbuffer->base = netsession->_req_recv_buffer;
-        pbuffer->len = sizeof( netsession->_req_recv_buffer );
+        pbuffer->base = netsession->_req_recv_buffer + netsession->_recv_length;
+        pbuffer->len = KFNetDefine::MaxRecvBuffLength - netsession->_recv_length;
     }
 
     void KFNetSession::OnRecvCallBack( uv_stream_t* uvstream, int64 length, const uv_buf_t* pbuffer )

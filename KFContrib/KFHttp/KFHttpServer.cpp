@@ -71,12 +71,12 @@ namespace KFrame
         auto kffunction = _functions.Find( url );
         if ( kffunction == nullptr )
         {
-            return _invalid_str;
+            return _invalid_string;
         }
 
         if ( !kffunction->_sync )
         {
-            auto strdata = _invalid_str;
+            auto strdata = _invalid_string;
             try
             {
                 strdata = kffunction->_function( ip, data );

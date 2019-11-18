@@ -451,7 +451,7 @@ void CKFDeployDlg::OnLbnSelchangeListDeploy()
     _list_deploy.GetText( index, strtitle );
 
     std::string title = strtitle.GetBuffer();
-    auto id = KFUtility::SplitString( title, DEFAULT_SPLIT_STRING );
+    auto id = KFUtility::SplitString( title, __SPLIT_STRING__ );
 
     auto deploydata = _deploy_manage->_deploy_data.Find( id );
     if ( deploydata == nullptr )
@@ -531,7 +531,7 @@ void CKFDeployDlg::OnBnClickedButtonConnectDeploy()
     _deploy_manage->_channel = deploydata->_channel;
     _deploy_manage->_connect_deploy_strid = strid;
     _deploy_manage->_connect_deploy_id = deploydata->_id;
-    _kf_tcp_client->StartClient( __KF_STRING__( deploy ), __KF_STRING__( server ), deploydata->_id, deploydata->_ip, deploydata->_port );
+    _kf_tcp_client->StartClient( __STRING__( deploy ), __STRING__( server ), deploydata->_id, deploydata->_ip, deploydata->_port );
 
     ClearDeployLog();
     AddDeployLog( 0, __FORMAT__( "{}:{} connect start!", deploydata->_ip, deploydata->_port ) );
@@ -542,7 +542,7 @@ std::string CKFDeployDlg::GetLocalIp()
     WSADATA wsadata = { 0 };
     if ( WSAStartup( MAKEWORD( 2, 1 ), &wsadata ) != 0 )
     {
-        return _invalid_str;
+        return _invalid_string;
     }
 
     std::string ip = "";
@@ -610,8 +610,8 @@ __KF_MESSAGE_FUNCTION__( CKFDeployDlg::HandleDeployLogToToolAck )
 void CKFDeployDlg::QueryAgentData()
 {
     MapString keys;
-    keys[ __KF_STRING__( serverid ) ] = _deploy_manage->_connect_deploy_strid;
-    QueryTableValues( __KF_STRING__( agent ), keys );
+    keys[ __STRING__( serverid ) ] = _deploy_manage->_connect_deploy_strid;
+    QueryTableValues( __STRING__( agent ), keys );
 }
 
 void CKFDeployDlg::QueryTableValues( const std::string& table, MapString& keys )
@@ -667,30 +667,30 @@ __KF_MESSAGE_FUNCTION__( CKFDeployDlg::HandleDeployQueryMySQLAck )
         return AddDeployLog( 0, "查询数据库失败!" );
     }
 
-    if ( kfmsg.table() == __KF_STRING__( agent ) )
+    if ( kfmsg.table() == __STRING__( agent ) )
     {
         RefreshAgentData( &kfmsg.datas() );
 
         // 查询服务器列表
         QueryServerList();
     }
-    else if ( kfmsg.table().find( __KF_STRING__( deploy ) ) != std::string::npos )
+    else if ( kfmsg.table().find( __STRING__( deploy ) ) != std::string::npos )
     {
         RefreshServerList( &kfmsg.datas() );
     }
-    else if ( kfmsg.table() == __KF_STRING__( version ) )
+    else if ( kfmsg.table() == __STRING__( version ) )
     {
         _version_dlg->RefreshVersionList( &kfmsg.datas() );
     }
-    else if ( kfmsg.table() == __KF_STRING__( file ) )
+    else if ( kfmsg.table() == __STRING__( file ) )
     {
         _file_dlg->RefreshFileList( &kfmsg.datas() );
     }
-    else if ( kfmsg.table() == __KF_STRING__( resource ) )
+    else if ( kfmsg.table() == __STRING__( resource ) )
     {
         _resource_dlg->RefreshResourceList( &kfmsg.datas() );
     }
-    else if ( kfmsg.table() == __KF_STRING__( plugin ) )
+    else if ( kfmsg.table() == __STRING__( plugin ) )
     {
         _plugin_dlg->RefreshPluginList( &kfmsg.datas() );
     }
@@ -705,11 +705,11 @@ __KF_MESSAGE_FUNCTION__( CKFDeployDlg::HandleDeployDeleteMySQLAck )
         return AddDeployLog( 0, "删除数据库失败!" );
     }
 
-    if ( kfmsg.table() == __KF_STRING__( agent ) )
+    if ( kfmsg.table() == __STRING__( agent ) )
     {
         QueryAgentData();
     }
-    else if ( kfmsg.table().find( __KF_STRING__( deploy ) ) != std::string::npos )
+    else if ( kfmsg.table().find( __STRING__( deploy ) ) != std::string::npos )
     {
         QueryServerList();
     }
@@ -724,12 +724,12 @@ __KF_MESSAGE_FUNCTION__( CKFDeployDlg::HandleDeployExecuteMySQLAck )
         return AddDeployLog( 0, "执行数据库失败!" );
     }
 
-    if ( kfmsg.table() == __KF_STRING__( agent ) )
+    if ( kfmsg.table() == __STRING__( agent ) )
     {
         QueryAgentData();
         _add_agent_dlg->ShowWindow( SW_HIDE );
     }
-    else if ( kfmsg.table().find( __KF_STRING__( deploy ) ) != std::string::npos )
+    else if ( kfmsg.table().find( __STRING__( deploy ) ) != std::string::npos )
     {
         QueryServerList();
     }
@@ -745,25 +745,25 @@ void CKFDeployDlg::RefreshAgentData( const KFMsg::PBMySQLDatas* pbdatas )
         auto pbdata = &pbdatas->data( i );
         auto pbvalues = pbdata->values();
 
-        auto service = pbvalues[ __KF_STRING__( service ) ];
-        _deploy_manage->AddAgentData( pbvalues[ __KF_STRING__( strappid ) ], pbvalues[ __KF_STRING__( localip ) ], service );
+        auto service = pbvalues[ __STRING__( service ) ];
+        _deploy_manage->AddAgentData( pbvalues[ __STRING__( strappid ) ], pbvalues[ __STRING__( localip ) ], service );
 
         // agengid
         auto column = 0;
-        _list_agent.InsertItem( i, pbvalues[ __KF_STRING__( strappid ) ].c_str() );
+        _list_agent.InsertItem( i, pbvalues[ __STRING__( strappid ) ].c_str() );
 
         // ip
-        _list_agent.SetItemText( i, ++column, pbvalues[ __KF_STRING__( localip ) ].c_str() );
+        _list_agent.SetItemText( i, ++column, pbvalues[ __STRING__( localip ) ].c_str() );
 
         // port
-        _list_agent.SetItemText( i, ++column, pbvalues[ __KF_STRING__( port ) ].c_str() );
+        _list_agent.SetItemText( i, ++column, pbvalues[ __STRING__( port ) ].c_str() );
 
         // 状态
-        auto status = KFUtility::ToValue< uint32 >( pbvalues[ __KF_STRING__( status ) ] );
+        auto status = KFUtility::ToValue< uint32 >( pbvalues[ __STRING__( status ) ] );
         _list_agent.SetItemText( i, ++column, KFDeploy::_status_name[ status ] );
 
         // 执行命令
-        _list_agent.SetItemText( i, ++column, pbvalues[ __KF_STRING__( command ) ].c_str() );
+        _list_agent.SetItemText( i, ++column, pbvalues[ __STRING__( command ) ].c_str() );
 
         // service
         {
@@ -775,13 +775,13 @@ void CKFDeployDlg::RefreshAgentData( const KFMsg::PBMySQLDatas* pbdatas )
         }
 
         // 中控id
-        _list_agent.SetItemText( i, ++column, pbvalues[ __KF_STRING__( serverid ) ].c_str() );
+        _list_agent.SetItemText( i, ++column, pbvalues[ __STRING__( serverid ) ].c_str() );
 
         // 中控ip
-        _list_agent.SetItemText( i, ++column, pbvalues[ __KF_STRING__( serverip ) ].c_str() );
+        _list_agent.SetItemText( i, ++column, pbvalues[ __STRING__( serverip ) ].c_str() );
 
         // 中控端口
-        _list_agent.SetItemText( i, ++column, pbvalues[ __KF_STRING__( serverport ) ].c_str() );
+        _list_agent.SetItemText( i, ++column, pbvalues[ __STRING__( serverport ) ].c_str() );
     }
 }
 
@@ -824,8 +824,8 @@ void CKFDeployDlg::OnMenuDeleteAgent()
     }
 
     MapString keys;
-    keys[ __KF_STRING__( strappid ) ] = strtext.GetBuffer();
-    DeleteTableValues( __KF_STRING__( agent ), keys );
+    keys[ __STRING__( strappid ) ] = strtext.GetBuffer();
+    DeleteTableValues( __STRING__( agent ), keys );
 }
 
 void CKFDeployDlg::OnMenuAddAgent()
@@ -861,7 +861,7 @@ void CKFDeployDlg::QueryServerList()
     for ( auto& table : tables )
     {
         MapString keys;
-        keys[ __KF_STRING__( deployid ) ] = _deploy_manage->_connect_deploy_strid;
+        keys[ __STRING__( deployid ) ] = _deploy_manage->_connect_deploy_strid;
         QueryTableValues( table, keys );
     }
 }
@@ -875,9 +875,9 @@ void CKFDeployDlg::RefreshServerList( const KFMsg::PBMySQLDatas* pbdatas )
 
         // 判断是否在列表中
         {
-            auto name = pbvalues[ __KF_STRING__( appname ) ];
-            auto type = pbvalues[ __KF_STRING__( apptype ) ];
-            auto id = pbvalues[ __KF_STRING__( appid ) ];
+            auto name = pbvalues[ __STRING__( appname ) ];
+            auto type = pbvalues[ __STRING__( apptype ) ];
+            auto id = pbvalues[ __STRING__( appid ) ];
             auto ok = _deploy_manage->AddServerData( name, type, id );
             if ( !ok )
             {
@@ -887,15 +887,15 @@ void CKFDeployDlg::RefreshServerList( const KFMsg::PBMySQLDatas* pbdatas )
 
         // agengid
         auto column = 0;
-        _list_server.InsertItem( i, pbvalues[ __KF_STRING__( appid ) ].c_str() );
+        _list_server.InsertItem( i, pbvalues[ __STRING__( appid ) ].c_str() );
 
         // app
-        auto strapp = __FORMAT__( "{}.{}", pbvalues[ __KF_STRING__( appname ) ], pbvalues[ __KF_STRING__( apptype ) ] );
+        auto strapp = __FORMAT__( "{}.{}", pbvalues[ __STRING__( appname ) ], pbvalues[ __STRING__( apptype ) ] );
         _list_server.SetItemText( i, ++column, strapp.c_str() );
 
         // service
         {
-            auto strservice = pbvalues[ __KF_STRING__( service ) ];
+            auto strservice = pbvalues[ __STRING__( service ) ];
             auto channel = KFUtility::SplitValue< uint32 >( strservice, "." );
             auto service = KFUtility::SplitValue< uint32 >( strservice, "." );
             strservice = __FORMAT__( "{}{}|{}.{}",
@@ -907,13 +907,13 @@ void CKFDeployDlg::RefreshServerList( const KFMsg::PBMySQLDatas* pbdatas )
 
         // net
         {
-            auto nettype = KFUtility::ToValue<uint32 >( pbvalues[ __KF_STRING__( net ) ] );
+            auto nettype = KFUtility::ToValue<uint32 >( pbvalues[ __STRING__( net ) ] );
             _list_server.SetItemText( i, ++column, KFDeploy::_net_name[ nettype ] );
         }
 
         // log
         {
-            auto strlog = pbvalues[ __KF_STRING__( logtype ) ];
+            auto strlog = pbvalues[ __STRING__( logtype ) ];
             auto level = KFUtility::SplitValue< uint32 >( strlog, "." );
 
             auto log = __FORMAT__( "{}|{}.{}", KFDeploy::_log_name[ level ], level, strlog );
@@ -921,37 +921,37 @@ void CKFDeployDlg::RefreshServerList( const KFMsg::PBMySQLDatas* pbdatas )
         }
 
         // agentid
-        _list_server.SetItemText( i, ++column, pbvalues[ __KF_STRING__( agentid ) ].c_str() );
+        _list_server.SetItemText( i, ++column, pbvalues[ __STRING__( agentid ) ].c_str() );
 
         // startup
-        _list_server.SetItemText( i, ++column, pbvalues[ __KF_STRING__( startup ) ].c_str() );
+        _list_server.SetItemText( i, ++column, pbvalues[ __STRING__( startup ) ].c_str() );
 
         // debug
-        auto debug = KFUtility::ToValue< uint32 >( pbvalues[ __KF_STRING__( debug ) ] );
+        auto debug = KFUtility::ToValue< uint32 >( pbvalues[ __STRING__( debug ) ] );
         _list_server.SetItemText( i, ++column,  KFDeploy::_mode_name[ debug ] );
 
         // shutdown
-        auto shutdown = KFUtility::ToValue< uint32 >( pbvalues[ __KF_STRING__( shutdown ) ] ) == 1 ? 0 : 1;
+        auto shutdown = KFUtility::ToValue< uint32 >( pbvalues[ __STRING__( shutdown ) ] ) == 1 ? 0 : 1;
         _list_server.SetItemText( i, ++column,  KFDeploy::_status_name[shutdown] );
 
         // 版本
-        _list_server.SetItemText( i, ++column, pbvalues[ __KF_STRING__( version ) ].c_str() );
+        _list_server.SetItemText( i, ++column, pbvalues[ __STRING__( version ) ].c_str() );
 
         // 启动时间
         {
-            auto time = KFUtility::ToValue( pbvalues[ __KF_STRING__( time ) ] );
+            auto time = KFUtility::ToValue( pbvalues[ __STRING__( time ) ] );
             auto strtime = KFDate::GetTimeString( time );
             _list_server.SetItemText( i, ++column, strtime.c_str() );
         }
 
         // 进程
-        _list_server.SetItemText( i, ++column, pbvalues[ __KF_STRING__( process ) ].c_str() );
+        _list_server.SetItemText( i, ++column, pbvalues[ __STRING__( process ) ].c_str() );
 
         // 路径
-        _list_server.SetItemText( i, ++column, pbvalues[ __KF_STRING__( deploypath ) ].c_str() );
+        _list_server.SetItemText( i, ++column, pbvalues[ __STRING__( deploypath ) ].c_str() );
 
         // param
-        _list_server.SetItemText( i, ++column, pbvalues[ __KF_STRING__( param ) ].c_str() );
+        _list_server.SetItemText( i, ++column, pbvalues[ __STRING__( param ) ].c_str() );
     }
 }
 
@@ -1013,7 +1013,7 @@ void CKFDeployDlg::OnMenuDeleteServerList()
     auto table = _deploy_manage->GetTableName( stragentid );
 
     MapString keys;
-    keys[ __KF_STRING__( appid ) ] = appid;
+    keys[ __STRING__( appid ) ] = appid;
     DeleteTableValues( table, keys );
 }
 
@@ -1062,32 +1062,32 @@ void CKFDeployDlg::OnCbnSelchangeComboCommand()
     _button_resource.ShowWindow( FALSE );
     _combo_log.ShowWindow( FALSE );
     _button_plugin.ShowWindow( FALSE );
-    if ( commanddata->_command == __KF_STRING__( version ) )
+    if ( commanddata->_command == __STRING__( version ) )
     {
         _button_version.ShowWindow( TRUE );
     }
-    else if ( commanddata->_command == __KF_STRING__( reloadconfig ) ||
-              commanddata->_command == __KF_STRING__( reloadscript ) )
+    else if ( commanddata->_command == __STRING__( reloadconfig ) ||
+              commanddata->_command == __STRING__( reloadscript ) )
     {
         _button_file.ShowWindow( TRUE );
     }
-    else if ( commanddata->_command == __KF_STRING__( loglevel ) )
+    else if ( commanddata->_command == __STRING__( loglevel ) )
     {
         _combo_log.ShowWindow( TRUE );
     }
-    else if ( commanddata->_command == __KF_STRING__( logmemory ) )
+    else if ( commanddata->_command == __STRING__( logmemory ) )
     {
         _edit_param.SetWindowTextA( "1" );
     }
-    else if ( commanddata->_command == __KF_STRING__( unschedule ) )
+    else if ( commanddata->_command == __STRING__( unschedule ) )
     {
         _edit_param.SetWindowTextA( "0" );
     }
-    else if ( commanddata->_command == __KF_STRING__( resource ) )
+    else if ( commanddata->_command == __STRING__( resource ) )
     {
         _button_resource.ShowWindow( TRUE );
     }
-    else if ( commanddata->_command == __KF_STRING__( reloadplugin ) )
+    else if ( commanddata->_command == __STRING__( reloadplugin ) )
     {
         _button_plugin.ShowWindow( TRUE );
     }
@@ -1157,7 +1157,7 @@ void CKFDeployDlg::OnCbnSelchangeComboName()
 
     for ( auto data : _deploy_manage->_server_data )
     {
-        if ( data->_name == name || name == _globbing_str )
+        if ( data->_name == name || name == _globbing_string )
         {
             typelist.insert( data->_type );
             zonelist.insert( data->_zone_id );
@@ -1181,7 +1181,7 @@ void CKFDeployDlg::OnCbnSelchangeComboName()
     }
     _combo_zone.SetCurSel( 0 );
 
-    if ( name == __KF_STRING__( zone ) )
+    if ( name == __STRING__( zone ) )
     {
         _combo_zone.EnableWindow( TRUE );
     }
@@ -1214,8 +1214,8 @@ void CKFDeployDlg::OnCbnSelchangeComboType()
     std::set< std::string > idlist;
     for ( auto data : _deploy_manage->_server_data )
     {
-        if ( ( data->_name == name || name == _globbing_str ) &&
-                ( data->_type == type || type == _globbing_str ) )
+        if ( ( data->_name == name || name == _globbing_string ) &&
+                ( data->_type == type || type == _globbing_string ) )
         {
             idlist.insert( data->_id );
         }
@@ -1247,8 +1247,8 @@ void CKFDeployDlg::OnCbnSelchangeComboZone()
     std::set< std::string > idlist;
     for ( auto data : _deploy_manage->_server_data )
     {
-        if ( ( data->_name == name || name == _globbing_str ) &&
-                ( data->_type == type || type == _globbing_str ) &&
+        if ( ( data->_name == name || name == _globbing_string ) &&
+                ( data->_type == type || type == _globbing_string ) &&
                 ( zoneid == data->_zone_id || zoneid == _invalid_int ) )
         {
             idlist.insert( data->_id );
@@ -1279,7 +1279,7 @@ void CKFDeployDlg::OnBnClickedButtonQueryVersion()
 
     // 查询
     MapString keys;
-    QueryTableValues( __KF_STRING__( version ), keys );
+    QueryTableValues( __STRING__( version ), keys );
 }
 
 
@@ -1297,7 +1297,7 @@ void CKFDeployDlg::OnBnClickedButtonQueryFile()
 
     // 查询
     MapString keys;
-    QueryTableValues( __KF_STRING__( file ), keys );
+    QueryTableValues( __STRING__( file ), keys );
 }
 
 
@@ -1393,7 +1393,7 @@ void CKFDeployDlg::OnBnClickedButtonQueryResource()
 
     // 查询
     MapString keys;
-    QueryTableValues( __KF_STRING__( resource ), keys );
+    QueryTableValues( __STRING__( resource ), keys );
 }
 
 
@@ -1411,5 +1411,5 @@ void CKFDeployDlg::OnBnClickedButtonQueryPlugin()
 
     // 查询
     MapString keys;
-    QueryTableValues( __KF_STRING__( plugin ), keys );
+    QueryTableValues( __STRING__( plugin ), keys );
 }

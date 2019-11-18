@@ -109,10 +109,10 @@ namespace KFrame
         uint64 LuaGetRealTime();
 
         // 添加数据
-        void LuaAddData( uint64 objectid, const char* strelement, bool showclient );
+        void LuaAddData( uint64 objectid, const char* strelement, const char* modulename );
 
         // 设置数据
-        void LuaSetData( uint64 objectid, const char* strelement, bool showclient );
+        void LuaSetData( uint64 objectid, const char* strelement, const char* modulename );
 
         // 减少数据
         void LuaDecData( uint64 objectid, const char* strelement );

@@ -16,6 +16,7 @@ namespace KFrame
         trigger._call_type = xmlnode.GetUInt32( "CallType" );
         trigger._trigger_type = xmlnode.GetUInt32( "TriggerType" );
         trigger._trigger_check = xmlnode.GetUInt32( "TriggerCheck" );
+        trigger._trigger_use = xmlnode.GetUInt32( "TriggerUse" );
         trigger._trigger_value = xmlnode.GetUInt32( "TriggerValue" );
 
         trigger._use_type = xmlnode.GetUInt32( "UseType" );
@@ -23,20 +24,19 @@ namespace KFrame
         trigger._use_operate = xmlnode.GetUInt32( "UseOperate" );
         kfsetting->_trigger_list.push_back( trigger );
     }
-
     //////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////
     static std::map< std::string, uint32 > _conditon_mask_list =
     {
         {"Calculate", KFConditionEnum::LimitStatus},
         {"PlaceLimit", KFConditionEnum::LimitPlace},
-
     };
     void KFConditionConfig::ReadSetting( KFNode& xmlnode, KFConditionSetting* kfsetting )
     {
         kfsetting->_limits.clear();
         kfsetting->_str_condition = xmlnode.GetString( "Condition" );
         kfsetting->_done_value = xmlnode.GetUInt32( "DoneValue" );
+        kfsetting->_str_clean = xmlnode.GetString( "Clean", true );
 
         auto strdonetype = xmlnode.GetString( "DoneType" );
         kfsetting->_done_type = KFAnalysis::GetCheckType( strdonetype );
@@ -76,55 +76,79 @@ namespace KFrame
             return true;
         }
 
+        KFConditionLimits limits;
+
         auto startpos = 0u;
         auto data = strlimit.data();
         auto size = ( uint32 )strlimit.length();
 
-        // 默认限制为id=1111, 如果第一个是数字, 则使用默认字段
-        auto datavalue = 0u;
-        uint32 checktype = KFEnum::Equal;
-        auto dataname = __KF_STRING__( id );
-        if ( KFAnalysis::IsInteger( data[ 0 ] ) )
+        do
         {
-            datavalue = KFAnalysis::ReadInteger( data, size, startpos );
-            if ( datavalue == 0u )
+            // 默认限制为id=1111, 如果第一个是数字, 则使用默认字段
+            auto datavalue = 0u;
+            uint32 checktype = KFEnum::Equal;
+            auto dataname = __STRING__( id );
+
+            if ( KFAnalysis::IsInteger( data[ startpos ] ) )
             {
-                return false;
+                datavalue = KFAnalysis::ReadInteger( data, size, startpos );
+                if ( datavalue == 0u )
+                {
+                    return false;
+                }
             }
-        }
-        else
-        {
-            // 读取属性
-            dataname = KFAnalysis::ReadLetter( data, size, startpos );
-            if ( dataname.empty() )
+            else
             {
-                return false;
+                // 读取属性
+                dataname = KFAnalysis::ReadLetter( data, size, startpos );
+                if ( dataname.empty() )
+                {
+                    return false;
+                }
+
+                // 读取判断符号
+                auto checkendpos = 0u;
+                auto checksize = 0u;
+                std::tie( checktype, checkendpos, checksize ) = KFAnalysis::ReadCheckType( data, size, startpos );
+                if ( checktype == KFEnum::Null )
+                {
+                    return false;
+                }
+
+                // 读取数值
+                startpos = checkendpos + checksize + 1;
+                size -= checksize;
+                datavalue = KFAnalysis::ReadInteger( data, size, startpos );
+                if ( datavalue == 0u )
+                {
+                    return false;
+                }
             }
 
-            // 读取判断符号
-            auto checkendpos = 0u;
-            auto checksize = 0u;
-            std::tie( checktype, checkendpos, checksize ) = KFAnalysis::ReadCheckType( data, size, startpos );
-            if ( checktype == KFEnum::Null )
-            {
-                return false;
-            }
+            // 加入列表
+            KFConditionLimit limit;
+            limit._data_name = dataname;
+            limit._operate = checktype;
+            limit._data_value = datavalue;
+            limits._limit.push_back( limit );
 
-            // 读取数值
-            startpos = checkendpos + checksize + 1;
-            size = ( uint32 )strlimit.length() - startpos + 1;
-            datavalue = KFAnalysis::ReadInteger( data, size, startpos );
-            if ( datavalue == 0u )
+            // 读取连接符号
+            if ( size != 0u )
             {
-                return false;
-            }
-        }
+                auto value = data[ startpos ];
+                auto linktype = KFAnalysis::GetLinkType( value );
+                if ( linktype == KFEnum::Null )
+                {
+                    return false;
+                }
 
-        KFConditionLimit limit;
-        limit._data_name = dataname;
-        limit._operate = checktype;
-        limit._data_value = datavalue;
-        kfsetting->_limits.push_back( limit );
+                limits._link_type = linktype;
+                startpos += 1;
+                size -= 1;
+            }
+        } while ( size > 0 );
+
+        kfsetting->_limits.push_back( limits );
         return true;
     }
 
@@ -138,50 +162,55 @@ namespace KFrame
             {
                 __LOG_ERROR__( "condition=[{}] can't find define=[{}]!", kfsetting->_id, kfsetting->_str_condition );
             }
-        }
-    }
 
-    uint64 KFConditionSetting::GetLimitValue( const std::string& name ) const
-    {
-        for ( auto& limitdata : _limits )
-        {
-            if ( limitdata._data_name == name )
+            kfsetting->_clean_define = nullptr;
+            if ( !kfsetting->_str_clean.empty() )
             {
-                return limitdata._data_value;
+                kfsetting->_clean_define = KFConditionDefineConfig::Instance()->FindSetting( kfsetting->_str_clean );
+                if ( kfsetting->_clean_define == nullptr )
+                {
+                    __LOG_ERROR__( "condition=[{}] can't find define=[{}]!", kfsetting->_id, kfsetting->_str_clean );
+                }
             }
         }
-
-        return 0u;
     }
 
-    uint64 KFConditionTrigger::CalcUpdateValue( uint64 operate, uint64 operatevalue, uint64 nowvalue ) const
+    bool KFConditionTrigger::CalcUpdateValue( uint64 operate, uint64& operatevalue, uint64 nowvalue ) const
     {
         if ( _trigger_type != 0u && _trigger_type != operate )
         {
-            return 0u;
+            return false;
         }
 
         // 触发值
-        if ( _use_type == KFConditionEnum::UseFinal )
-        {
-            operatevalue = nowvalue;
-        }
-
         if ( _trigger_check != 0u )
         {
-            auto ok = KFUtility::CheckOperate<uint64>( operatevalue, _trigger_check, _trigger_value );
+            auto triggervalue = operatevalue;
+            if ( _trigger_use == KFConditionEnum::UseFinal )
+            {
+                triggervalue = nowvalue;
+            }
+
+            auto ok = KFUtility::CheckOperate<uint64>( triggervalue, _trigger_check, _trigger_value );
             if ( !ok )
             {
-                return 0u;
+                return false;
             }
         }
 
         // 最终使用值
-        if ( _use_value != 0u )
+        switch ( _use_type )
         {
+        case KFConditionEnum::UseSetting:
             operatevalue = _use_value;
+            break;
+        case KFConditionEnum::UseFinal:
+            operatevalue = nowvalue;
+            break;
+        default:
+            break;
         }
 
-        return operatevalue;
+        return true;
     }
 }

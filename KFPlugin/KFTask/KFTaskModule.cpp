@@ -5,12 +5,12 @@ namespace KFrame
 {
     void KFTaskModule::BeforeRun()
     {
-        _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
+        _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
         _kf_component->RegisterAddDataModule( this, &KFTaskModule::OnAddDataCallBack );
         _kf_component->RegisterRemoveDataModule( this, &KFTaskModule::OnRemoveDataCallBack );
         _kf_component->RegisterUpdateDataModule( this, &KFTaskModule::OnUpdateDataCallBack );
-        _kf_component->RegisterUpdateDataFunction( __KF_STRING__( task ), __KF_STRING__( value ), this, &KFTaskModule::OnUpdateTaskValueCallBack );
-        _kf_component->RegisterUpdateDataFunction( __KF_STRING__( task ), __KF_STRING__( status ), this, &KFTaskModule::OnUpdateTaskStatusCallBack );
+        _kf_component->RegisterUpdateDataFunction( __STRING__( task ), __STRING__( value ), this, &KFTaskModule::OnUpdateTaskValueCallBack );
+        _kf_component->RegisterUpdateDataFunction( __STRING__( task ), __STRING__( status ), this, &KFTaskModule::OnUpdateTaskStatusCallBack );
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_TASK_REWARD_REQ, &KFTaskModule::HandleTaskRewardReq );
@@ -22,8 +22,8 @@ namespace KFrame
         _kf_component->UnRegisterAddDataModule( this );
         _kf_component->UnRegisterRemoveDataModule( this );
         _kf_component->UnRegisterUpdateDataModule( this );
-        _kf_component->UnRegisterUpdateDataFunction( this, __KF_STRING__( task ), __KF_STRING__( value ) );
-        _kf_component->UnRegisterUpdateDataFunction( this, __KF_STRING__( task ), __KF_STRING__( status ) );
+        _kf_component->UnRegisterUpdateDataFunction( this, __STRING__( task ), __STRING__( value ) );
+        _kf_component->UnRegisterUpdateDataFunction( this, __STRING__( task ), __STRING__( status ) );
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::MSG_TASK_REWARD_REQ );
@@ -48,14 +48,14 @@ namespace KFrame
         }
 
         // 获得任务属性
-        auto kftask = player->Find( __KF_STRING__( task ), kfsetting->_id );
+        auto kftask = player->Find( __STRING__( task ), kfsetting->_id );
         if ( kftask == nullptr )
         {
             return KFMsg::TaskCanNotFindData;
         }
 
         // 不是完成状态
-        auto taskstatus = kftask->Get( __KF_STRING__( status ) );
+        auto taskstatus = kftask->Get( __STRING__( status ) );
         if ( taskstatus == KFMsg::InitStatus )
         {
             return KFMsg::TaskNotDone;
@@ -68,7 +68,7 @@ namespace KFrame
         }
 
         // 更新标记
-        player->UpdateData( kftask, __KF_STRING__( status ), KFEnum::Set, KFMsg::ReceiveStatus );
+        player->UpdateData( kftask, __STRING__( status ), KFEnum::Set, KFMsg::ReceiveStatus );
 
         // 添加奖励
         player->AddElement( &kfsetting->_rewards, true, __FUNC_LINE__ );
@@ -114,11 +114,11 @@ namespace KFrame
             return;
         }
 
-        auto kftaskrecord = player->Find( __KF_STRING__( task ) );
+        auto kftaskrecord = player->Find( __STRING__( task ) );
         for ( auto kfsetting : kftasktypelist->_task_list )
         {
             // 已经完成
-            auto taskstatus = kftaskrecord->Get( kfsetting->_id, __KF_STRING__( status ) );
+            auto taskstatus = kftaskrecord->Get( kfsetting->_id, __STRING__( status ) );
             if ( taskstatus != KFMsg::InitStatus )
             {
                 continue;
@@ -157,7 +157,7 @@ namespace KFrame
                 continue;
             }
 
-            player->UpdateData( kftaskrecord, kfsetting->_id, __KF_STRING__( value ), kfsetting->_operate, operatevalue );
+            player->UpdateData( kftaskrecord, kfsetting->_id, __STRING__( value ), kfsetting->_operate, operatevalue );
         }
     }
 
@@ -171,14 +171,14 @@ namespace KFrame
         }
 
         auto kfparent = kfdata->GetParent();
-        auto taskstatus = kfparent->Get( __KF_STRING__( status ) );
+        auto taskstatus = kfparent->Get( __STRING__( status ) );
         if ( taskstatus != KFMsg::InitStatus )
         {
             return;
         }
 
         // 设置任务完成
-        player->UpdateData( kfparent, __KF_STRING__( status ), KFEnum::Set, KFMsg::DoneStatus );
+        player->UpdateData( kfparent, __STRING__( status ), KFEnum::Set, KFMsg::DoneStatus );
 
         // 更新下一个任务
         if ( kfsetting->_next_id != 0u )
@@ -189,7 +189,7 @@ namespace KFrame
                 taskvalue = newvalue;
             }
 
-            player->UpdateData( __KF_STRING__( task ), kfsetting->_next_id, __KF_STRING__( value ), KFEnum::Set, taskvalue );
+            player->UpdateData( __STRING__( task ), kfsetting->_next_id, __STRING__( value ), KFEnum::Set, taskvalue );
         }
     }
 
@@ -204,7 +204,7 @@ namespace KFrame
         if ( newvalue == KFMsg::InitStatus )
         {
             // 更新数值
-            player->UpdateData( __KF_STRING__( task ), key, __KF_STRING__( value ), KFEnum::Set, 0 );
+            player->UpdateData( __STRING__( task ), key, __STRING__( value ), KFEnum::Set, 0 );
         }
     }
 

@@ -77,7 +77,7 @@ namespace KFrame
     __GET_VALUE_DEFINE__( double, Double, 0.0f );
 
     __SET_VALUE_DEFINE__( const std::string&, String );
-    __GET_VALUE_DEFINE__( std::string, String, _invalid_str );
+    __GET_VALUE_DEFINE__( std::string, String, _invalid_string );
 
     const google::protobuf::Message* KFProtoFactory::GetMessage( google::protobuf::Message* message, const std::string& name )
     {
@@ -210,7 +210,7 @@ namespace KFrame
     __GET_REPEATED_DEFINE__( double, Double, 0.0f );
 
     __ADD_REPEATED_DEFINE__( const std::string&, String );
-    __GET_REPEATED_DEFINE__( std::string, String, _invalid_str );
+    __GET_REPEATED_DEFINE__( std::string, String, _invalid_string );
 
     void KFProtoFactory::AddRepeatedMessage( google::protobuf::Message* message, const std::string& name, google::protobuf::Message* value )
     {

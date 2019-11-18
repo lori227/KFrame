@@ -110,7 +110,7 @@ namespace KFrame
         return KFUtility::ToValue<uint64>( attribute->value() );
     }
 
-    std::string KFNode::GetString( const char* key, bool optional /* = false */, std::string defaultvalue/* = _invalid_str */ )
+    std::string KFNode::GetString( const char* key, bool optional /* = false */, std::string defaultvalue/* = _invalid_string */ )
     {
         auto xmlnode = reinterpret_cast<rapidxml::xml_node<>*>( _node );
 

@@ -31,6 +31,16 @@ namespace KFrame
         _is_inited = true;
     }
 
+    bool KFEntityEx::IsNew()
+    {
+        return _is_new;
+    }
+
+    void KFEntityEx::SetNew( bool isnew )
+    {
+        _is_new = isnew;
+    }
+
     void KFEntityEx::InitData( KFComponentEx* kfcomponent )
     {
         _kf_component = kfcomponent;
@@ -67,7 +77,7 @@ namespace KFrame
     void KFEntityEx::UpdateData( KFData* kfdata, const std::string& value )
     {
         kfdata->Set<std::string>( value );
-        if ( kfdata->_data_setting->_type == KFDataDefine::Type_Array )
+        if ( kfdata->_data_type == KFDataDefine::Type_Array )
         {
             for ( uint32 i = KFDataDefine::Array_Index; i < kfdata->Size(); ++i )
             {
@@ -79,7 +89,7 @@ namespace KFrame
                 }
             }
         }
-        else if ( kfdata->_data_setting->_type == KFDataDefine::Type_String )
+        else if ( kfdata->_data_type == KFDataDefine::Type_String )
         {
             // 属性更新回调
             _kf_component->UpdateDataCallBack( this, kfdata, value, true );
@@ -325,13 +335,13 @@ namespace KFrame
             return false;
         }
 
-        std::list<uint64> keyvector;
+        ListUInt64 keys;
         for ( auto kfdata = kfparent->First(); kfdata != nullptr; kfdata = kfparent->Next() )
         {
-            keyvector.push_back( kfdata->GetKeyID() );
+            keys.push_back( kfdata->GetKeyID() );
         }
 
-        for ( auto key : keyvector )
+        for ( auto key : keys )
         {
             RemoveData( kfparent, key, callback );
         }
@@ -428,6 +438,22 @@ namespace KFrame
         return kfdata;
     }
 
+    KFData* KFEntityEx::MoveData( KFData* sourcedata, const std::string& sourcename, KFData* targetdata, const std::string& targetname )
+    {
+        // 移除属性
+        auto kfdata = sourcedata->Move( sourcename, true );
+        if ( kfdata == nullptr )
+        {
+            return nullptr;
+        }
+        _kf_component->RemoveDataCallBack( this, sourcedata, 0u, kfdata, false );
+
+        // 添加属性
+        targetdata->Add( targetname, kfdata );
+        SyncUpdateData( kfdata, 0u );
+        return kfdata;
+    }
+
     uint64 KFEntityEx::MoveData( KFData* kfparent, const std::string& dataname, uint32 operate, uint64 value )
     {
         auto kfdata = kfparent->Find( dataname );
@@ -458,33 +484,48 @@ namespace KFrame
         // 打印日志
         if ( showtype == KFDataDefine::Show_Element )
         {
-            if ( _add_show_element )
-            {
-                AddElementToShow( kfelement );
-            }
+            AddElementToShow( kfelement, false );
             __LOG_INFO_FUNCTION__( function, line, "add={}", kfelement->ToString() );
         }
         else if ( showtype == KFDataDefine::Show_Data )
         {
-            if ( _add_show_element )
-            {
-                AddDataToShow( kfdata );
-            }
+            AddDataToShow( kfdata, false );
             __LOG_INFO_FUNCTION__( function, line, "add={{\"{}\":{}}}", kfelement->_data_name, kfdata->ToString() );
         }
     }
 
-    KFMsg::PBShowData* KFEntityEx::CreateShowData( const std::string& name, uint64 key, bool find )
+    KFMsg::PBShowData* KFEntityEx::CreateShowData( const std::string& name, uint64 value, bool find )
     {
         if ( find )
         {
             for ( auto i = 0; i < _pb_show_element.pbdata_size(); ++i )
             {
                 auto pbdata = _pb_show_element.mutable_pbdata( i );
-                if ( pbdata->name() == name && pbdata->key() == key )
+                if ( pbdata->name() != name )
                 {
-                    return pbdata;
+                    continue;
                 }
+
+                auto kfdatasetting = _kf_component->_data_setting->_class_setting->FindSetting( name );
+                if ( kfdatasetting == nullptr )
+                {
+                    continue;
+                }
+
+                // 如果是record/object 判断value是否相同
+                if ( kfdatasetting->_type == KFDataDefine::Type_Record || kfdatasetting->_type == KFDataDefine::Type_Object )
+                {
+                    if ( pbdata->value() != value )
+                    {
+                        continue;
+                    }
+                }
+                else
+                {
+                    pbdata->set_value( pbdata->value() + value );
+                }
+
+                return pbdata;
             }
         }
 
@@ -493,19 +534,23 @@ namespace KFrame
 
         auto pbdata = _pb_show_element.add_pbdata();
         pbdata->set_name( name );
-        pbdata->set_key( key );
+        pbdata->set_value( value );
         return pbdata;
     }
 
-    void KFEntityEx::AddElementToShow( const KFElement* kfelement )
+    void KFEntityEx::AddElementToShow( const KFElement* kfelement, bool find )
     {
+        if ( _pb_show_element.modulename().empty() )
+        {
+            return;
+        }
+
         if ( kfelement->IsValue() )
         {
             auto kfelementvalue = reinterpret_cast< const KFElementValue* >( kfelement );
             if ( kfelementvalue->_value->IsNeedShow() )
             {
-                auto pbshowdata = CreateShowData( kfelementvalue->_data_name, 0u, false );
-                pbshowdata->set_value( kfelementvalue->_value->GetUseValue() );
+                CreateShowData( kfelementvalue->_data_name, kfelementvalue->_value->GetUseValue(), find );
             }
         }
         else if ( kfelement->IsObject() )
@@ -513,7 +558,8 @@ namespace KFrame
             auto kfelementobject = reinterpret_cast< const KFElementObject* >( kfelement );
             if ( kfelementobject->IsNeedShow() )
             {
-                auto pbshowdata = CreateShowData( kfelementobject->_data_name, kfelementobject->_config_id, false );
+                auto pbshowdata = CreateShowData( kfelementobject->_data_name, kfelementobject->_config_id, find );
+                ( *pbshowdata->mutable_pbuint64() )[ __STRING__( id ) ] = kfelementobject->_config_id;
                 for ( auto& iter : kfelementobject->_values._objects )
                 {
                     auto kfvalue = iter.second;
@@ -526,48 +572,70 @@ namespace KFrame
         }
     }
 
-    void KFEntityEx::AddDataToShow( const std::string& name, uint64 value )
+    void KFEntityEx::AddDataToShow( const std::string& name, uint64 value, bool find )
     {
-        if ( _add_show_element && value != 0u )
-        {
-            auto pbshowdata = CreateShowData( name, 0u, true );
-            pbshowdata->set_value( value );
-        }
-    }
-
-    void KFEntityEx::AddDataToShow( const std::string& name, uint64 key, const std::string& dataname, uint64 datavalue )
-    {
-        if ( _add_show_element && datavalue != 0u )
-        {
-            auto pbshowdata = CreateShowData( name, key, true );
-            ( *pbshowdata->mutable_pbuint64() )[ dataname ] += datavalue;
-        }
-    }
-
-    void KFEntityEx::AddDataToShow( KFData* kfdata )
-    {
-        if ( !kfdata->_data_setting->HaveMask( KFDataDefine::Mask_Show ) )
+        if ( _pb_show_element.modulename().empty() )
         {
             return;
         }
 
-        switch ( kfdata->_data_setting->_type )
+        CreateShowData( name, value, find );
+    }
+
+    void KFEntityEx::AddDataToShow( const std::string& modulename, const std::string& name, uint64 value, bool find )
+    {
+        if ( value == 0u )
+        {
+            return;
+        }
+
+        _pb_show_element.set_modulename( modulename );
+        AddDataToShow( name, value, find );
+    }
+
+    void KFEntityEx::AddDataToShow( const std::string& name, uint64 value, KeyValue& values, bool find )
+    {
+        if ( _pb_show_element.modulename().empty() )
+        {
+            return;
+        }
+
+        auto pbshowdata = CreateShowData( name, value, find );
+        for ( auto& iter : values )
+        {
+            ( *pbshowdata->mutable_pbuint64() )[ iter.first ] += iter.second;
+        }
+    }
+
+    void KFEntityEx::AddDataToShow( const std::string& modulename, const std::string& name, uint64 value, KeyValue& values, bool find )
+    {
+        _pb_show_element.set_modulename( modulename );
+        AddDataToShow( name, value, values, find );
+    }
+
+    void KFEntityEx::AddDataToShow( KFData* kfdata, bool find )
+    {
+        if ( _pb_show_element.modulename().empty() ||
+                !kfdata->_data_setting->HaveMask( KFDataDefine::Mask_Show ) )
+        {
+            return;
+        }
+
+        switch ( kfdata->_data_type )
         {
         case KFDataDefine::Type_Int32:
         case KFDataDefine::Type_UInt32:
         case KFDataDefine::Type_Int64:
         case KFDataDefine::Type_UInt64:
         {
-            auto pbshowdata = CreateShowData( kfdata->_data_setting->_name, 0u, false );
-            pbshowdata->set_value( kfdata->Get() );
+            CreateShowData( kfdata->_data_setting->_name, kfdata->Get(), find );
             break;
         }
         case KFDataDefine::Type_Object:
         case KFDataDefine::Type_Record:
         {
             auto configid = kfdata->Get( kfdata->_data_setting->_config_key_name );
-            auto pbshowdata = CreateShowData( kfdata->_data_setting->_name, configid, false );
-            pbshowdata->set_value( kfdata->GetKeyID() );
+            auto pbshowdata = CreateShowData( kfdata->_data_setting->_name, configid, find );
             for ( auto kfchild = kfdata->First(); kfchild != nullptr; kfchild = kfdata->Next() )
             {
                 if ( !kfchild->_data_setting->HaveMask( KFDataDefine::Mask_Show ) ||
@@ -583,6 +651,11 @@ namespace KFrame
         }
     }
 
+    void KFEntityEx::AddDataToShow( const std::string& modulename, KFData* kfdata, bool find )
+    {
+        _pb_show_element.set_modulename( modulename );
+        AddDataToShow( kfdata, find );
+    }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     const std::string& KFEntityEx::CheckAddElement( const KFElements* kfelements, const char* function, uint32 line, float multiple /* = 1.0f */ )
@@ -596,7 +669,7 @@ namespace KFrame
             }
         }
 
-        return _invalid_str;
+        return _invalid_string;
     }
 
     bool KFEntityEx::CheckAddElement( const KFElement* kfelement, const char* function, uint32 line, float multiple )
@@ -609,8 +682,7 @@ namespace KFrame
         }
 
         // 如果有注册函数, 执行注册函数
-        auto& bindname = _kf_component->GetBindDataName( kfdata->_data_setting );
-        auto kffunction = _kf_component->_check_add_element_function.Find( bindname );
+        auto kffunction = _kf_component->_check_add_element_function.Find( kfdata->_data_setting->_logic_name );
         if ( kffunction != nullptr )
         {
             return kffunction->_function( this, kfdata, const_cast< KFElement* >( kfelement ), function, line, multiple );
@@ -620,7 +692,18 @@ namespace KFrame
         return !kfdata->IsFull();
     }
 
-    void KFEntityEx::AddElement( const KFElements* kfelements, bool showclient, const char* function, uint32 line, float multiple )
+    void KFEntityEx::AddElement( const KFElements* kfelements, const std::string& modulename, const char* function, uint32 line, float multiple )
+    {
+        if ( !kfelements->_element_list.empty() )
+        {
+            _pb_show_element.set_modulename( modulename );
+        }
+
+        AddElement( kfelements, function, line, multiple );
+    }
+
+
+    void KFEntityEx::AddElement( const KFElements* kfelements, const char* function, uint32 line, float multiple )
     {
         if ( kfelements->_element_list.empty() )
         {
@@ -628,12 +711,12 @@ namespace KFrame
         }
 
         __LOG_INFO_FUNCTION__( function, line, "{}=[{}] multiple=[{:0.2f}] elements={}!", _kf_component->_component_name, GetKeyID(), multiple, kfelements->_str_element );
-        _add_show_element = showclient;
         for ( auto kfelement : kfelements->_element_list )
         {
             AddElement( kfelement, function, line, multiple );
         }
     }
+
 
     // 添加元数据
     void KFEntityEx::AddElement( const KFElement* kfelement, const char* function, uint32 line, float multiple )
@@ -649,8 +732,7 @@ namespace KFrame
         const_cast< KFElement* >( kfelement )->_data_setting = kfdata->_data_setting;
 
         // 如果有注册的特殊处理函数
-        auto& bindname = _kf_component->GetBindDataName( kfdata->_data_setting );
-        auto kffunction = _kf_component->_add_element_function.Find( bindname );
+        auto kffunction = _kf_component->_add_element_function.Find( kfdata->_data_setting->_logic_name );
         if ( kffunction != nullptr )
         {
             std::tie( showtype, showdata ) = kffunction->_function( this, kfdata, const_cast< KFElement* >( kfelement ), function, line, multiple );
@@ -658,7 +740,7 @@ namespace KFrame
         else
         {
             // 没有注册的函数
-            switch ( kfdata->_data_setting->_type )
+            switch ( kfdata->_data_type )
             {
             case KFDataDefine::Type_Object:
                 std::tie( showtype, showdata ) = AddObjectElement( kfdata, const_cast< KFElement* >( kfelement ), function, line, multiple );
@@ -838,7 +920,7 @@ namespace KFrame
             }
         }
 
-        return _invalid_str;
+        return _invalid_string;
     }
 
     bool KFEntityEx::CheckRemoveElement( const KFElement* kfelement, const char* function, uint32 line, float multiple )
@@ -851,15 +933,14 @@ namespace KFrame
         }
 
         // 如果有注册函数, 执行注册函数
-        auto& bindname = _kf_component->GetBindDataName( kfdata->_data_setting );
-        auto kffunction = _kf_component->_check_remove_element_function.Find( bindname );
+        auto kffunction = _kf_component->_check_remove_element_function.Find( kfdata->_data_setting->_logic_name );
         if ( kffunction != nullptr )
         {
             return kffunction->_function( this, kfdata, const_cast< KFElement* >( kfelement ), function, line, multiple );
         }
 
         // 找不到处理函数, 用基础函数来处理
-        switch ( kfdata->_data_setting->_type )
+        switch ( kfdata->_data_type )
         {
         case KFDataDefine::Type_Record:
             return CheckRecordElement( kfdata, const_cast< KFElement* >( kfelement ), function, line, multiple );
@@ -980,15 +1061,14 @@ namespace KFrame
         }
 
         // 如果有注册函数, 执行注册函数
-        auto& bindname = _kf_component->GetBindDataName( kfdata->_data_setting );
-        auto kffunction = _kf_component->_remove_element_function.Find( bindname );
+        auto kffunction = _kf_component->_remove_element_function.Find( kfdata->_data_setting->_logic_name );
         if ( kffunction != nullptr )
         {
             return kffunction->_function( this, kfdata, const_cast< KFElement* >( kfelement ), function, line, multiple );
         }
 
         // 找不到处理函数, 用基础函数来处理
-        switch ( kfdata->_data_setting->_type )
+        switch ( kfdata->_data_type )
         {
         case KFDataDefine::Type_Record:
             RemoveRecordElement( kfdata, const_cast< KFElement* >( kfelement ), function, line, multiple );
@@ -1103,11 +1183,11 @@ namespace KFrame
 #define __FIND_PROTO_OBJECT__\
     auto savedata = datahierarchy.front();\
     datahierarchy.pop_front();\
-    if ( savedata->_data_setting->_type == KFDataDefine::Type_Object )\
+    if ( savedata->_data_type == KFDataDefine::Type_Object )\
     {\
         pbobject = &( ( *pbobject->mutable_pbobject() )[ savedata->_data_setting->_name ] );\
     }\
-    else if ( savedata->_data_setting->_type == KFDataDefine::Type_Record )\
+    else if ( savedata->_data_type == KFDataDefine::Type_Record )\
     {\
         auto pbrecord = &( ( *pbobject->mutable_pbrecord() )[ savedata->_data_setting->_name ] );\
         savedata = datahierarchy.front();\
@@ -1153,7 +1233,7 @@ namespace KFrame
         do
         {
             __FIND_PROTO_OBJECT__;
-            if ( savedata->_data_setting->_type == KFDataDefine::Type_Array )
+            if ( savedata->_data_type == KFDataDefine::Type_Array )
             {
                 auto pbarray = &( ( *pbobject->mutable_pbarray() )[ savedata->_data_setting->_name ] );
                 savedata = datahierarchy.front();
@@ -1178,7 +1258,7 @@ namespace KFrame
     void KFEntityEx::AddSyncUpdateDataToPBObject( KFData* kfdata, KFMsg::PBObject* pbobject )
     {
         auto datasetting = kfdata->_data_setting;
-        switch ( datasetting->_type )
+        switch ( kfdata->_data_type )
         {
         case KFDataDefine::Type_Int32:
             ( *pbobject->mutable_pbint32() )[ datasetting->_name ] = kfdata->Get< int32 >();
@@ -1258,7 +1338,6 @@ namespace KFrame
 
     void KFEntityEx::SendShowElementToClient()
     {
-        _add_show_element = true;
         if ( !_have_show_client )
         {
             return;
@@ -1289,11 +1368,11 @@ namespace KFrame
 
     uint32 KFEntityEx::GetStatus()
     {
-        return Get<uint32>( __KF_STRING__( basic ), __KF_STRING__( status ) );
+        return Get<uint32>( __STRING__( basic ), __STRING__( status ) );
     }
 
     void KFEntityEx::SetStatus( uint32 status )
     {
-        UpdateData( __KF_STRING__( basic ), __KF_STRING__( status ), KFEnum::Set, status );
+        UpdateData( __STRING__( basic ), __STRING__( status ), KFEnum::Set, status );
     }
 }

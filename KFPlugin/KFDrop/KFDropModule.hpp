@@ -27,8 +27,9 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         // 掉落
         virtual DropDataList& Drop( KFEntity* player, uint32 dropid, const char* function, uint32 line );
-        virtual DropDataList& Drop( KFEntity* player, uint32 dropid, uint32 count, const char* function, uint32 line );
-        virtual DropDataList& Drop( KFEntity* player, uint32 dropid, uint32 count, bool showclient, const char* function, uint32 line );
+        virtual DropDataList& Drop( KFEntity* player, uint32 dropid, const std::string& modulename, const char* function, uint32 line );
+        virtual DropDataList& Drop( KFEntity* player, const VectorUInt32& droplist, const std::string& modulename, const char* function, uint32 line );
+        virtual DropDataList& Drop( KFEntity* player, uint32 dropid, uint32 count, const std::string& modulename, const char* function, uint32 line );
 
     protected:
         // 绑定掉落逻辑函数

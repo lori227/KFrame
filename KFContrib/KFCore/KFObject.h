@@ -9,7 +9,7 @@ namespace KFrame
     class KFObject : public KFData
     {
     public:
-        KFObject() = default;
+        KFObject();
         virtual ~KFObject() = default;
 
         // 重置

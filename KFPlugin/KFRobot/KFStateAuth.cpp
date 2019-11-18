@@ -15,24 +15,24 @@ namespace KFrame
     void KFStateAuth::RunState( KFFsm* fsm, KFRobot* robot )
     {
         __JSON_OBJECT_DOCUMENT__( kfjson );
-        __JSON_SET_VALUE__( kfjson, __KF_STRING__( channel ), 1 );
-        __JSON_SET_VALUE__( kfjson, __KF_STRING__( account ), robot->_account );
+        __JSON_SET_VALUE__( kfjson, __STRING__( channel ), 1 );
+        __JSON_SET_VALUE__( kfjson, __STRING__( account ), robot->_account );
 
         auto strresult = _kf_http_client->STGet( KFRobotConfig::Instance()->_auth_address, kfjson );
 
         __JSON_PARSE_STRING__( kfresult, strresult );
-        auto retcode = __JSON_GET_UINT32__( kfresult, __KF_STRING__( retcode ) );
+        auto retcode = __JSON_GET_UINT32__( kfresult, __STRING__( retcode ) );
         if ( retcode != KFMsg::Ok )
         {
             return __LOG_ERROR__( "robot=[{}] auth failed=[{}]", robot->_account, retcode );
         }
 
-        robot->_login_token = __JSON_GET_STRING__( kfresult, __KF_STRING__( token ) );
-        robot->_account_id = __JSON_GET_UINT64__( kfresult, __KF_STRING__( accountid ) );
+        robot->_login_token = __JSON_GET_STRING__( kfresult, __STRING__( token ) );
+        robot->_account_id = __JSON_GET_UINT64__( kfresult, __STRING__( accountid ) );
 
-        auto& zonedata = __JSON_GET_OBJECT__( kfresult, __KF_STRING__( zone ) );
-        auto ip = __JSON_GET_STRING__( zonedata, __KF_STRING__( ip ) );
-        auto port = __JSON_GET_UINT32__( zonedata, __KF_STRING__( port ) );
+        auto& zonedata = __JSON_GET_OBJECT__( kfresult, __STRING__( zone ) );
+        auto ip = __JSON_GET_STRING__( zonedata, __STRING__( ip ) );
+        auto port = __JSON_GET_UINT32__( zonedata, __STRING__( port ) );
         if ( ip.empty() || port == 0u )
         {
             return __LOG_ERROR__( "robot=[{}] ipport empty!", robot->_account );

@@ -2,6 +2,11 @@
 
 namespace KFrame
 {
+    KFArray::KFArray()
+    {
+        _data_type = KFDataDefine::Type_Array;
+    }
+
     void KFArray::Resize( uint32 size )
     {
         _data.Clear();

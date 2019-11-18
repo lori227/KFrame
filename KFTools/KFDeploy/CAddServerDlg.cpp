@@ -141,7 +141,7 @@ void CAddServerDlg::OnBnClickedButtonAddServer()
     }
 
     auto zoneid = KFUtility::ToValue< uint32 >( GetEditText( _edit_zone ) );
-    if ( name == __KF_STRING__( zone ) )
+    if ( name == __STRING__( zone ) )
     {
         if ( zoneid == 0 )
         {
@@ -182,16 +182,16 @@ void CAddServerDlg::OnBnClickedButtonAddServer()
     appid.SetZoneId( zoneid );
     appid.SetWorkId( workid );
 
-    values[ __KF_STRING__( appname ) ] = name;
-    values[ __KF_STRING__( apptype ) ] = type;
-    values[ __KF_STRING__( appid ) ] = appid.ToString();
+    values[ __STRING__( appname ) ] = name;
+    values[ __STRING__( apptype ) ] = type;
+    values[ __STRING__( appid ) ] = appid.ToString();
 
     auto net = _combo_net.GetCurSel();
     if ( net == 0 )
     {
         net = KFServerEnum::Local;
     }
-    values[ __KF_STRING__( net ) ] = __TO_STRING__( net );
+    values[ __STRING__( net ) ] = __TO_STRING__( net );
 
     uint32 service = KFServerEnum::Debug;
     _combo_service.GetWindowTextA( strtext );
@@ -203,12 +203,12 @@ void CAddServerDlg::OnBnClickedButtonAddServer()
             service = iter.first;
         }
     }
-    values[ __KF_STRING__( service ) ] = __FORMAT__( "{}.{}", _deploy_manage->_channel, service );
+    values[ __STRING__( service ) ] = __FORMAT__( "{}.{}", _deploy_manage->_channel, service );
 
     auto startup = _combo_startup.GetCurSel();
-    values[ __KF_STRING__( startup ) ] = __TO_STRING__( startup );
+    values[ __STRING__( startup ) ] = __TO_STRING__( startup );
 
-    values[ __KF_STRING__( param ) ] = GetEditText( _edit_param );
+    values[ __STRING__( param ) ] = GetEditText( _edit_param );
 
     auto path = GetEditText( _edit_path );
     if ( path.empty() )
@@ -216,13 +216,13 @@ void CAddServerDlg::OnBnClickedButtonAddServer()
         AfxMessageBox( "请输入服务器路径!" );
         return;
     }
-    values[ __KF_STRING__( deploypath ) ] = path;
+    values[ __STRING__( deploypath ) ] = path;
 
     auto log = _combo_log.GetCurSel();
-    values[ __KF_STRING__( logtype ) ] = __FORMAT__( "{}.{}", log, 0 );
+    values[ __STRING__( logtype ) ] = __FORMAT__( "{}.{}", log, 0 );
 
     auto mode = _combo_mode.GetCurSel();
-    values[ __KF_STRING__( debug ) ] = __TO_STRING__( mode );
+    values[ __STRING__( debug ) ] = __TO_STRING__( mode );
 
     _combo_agent.GetWindowTextA( strtext );
     std::string stragent = strtext.GetBuffer();
@@ -231,9 +231,9 @@ void CAddServerDlg::OnBnClickedButtonAddServer()
         AfxMessageBox( "请选择agent!" );
         return;
     }
-    values[ __KF_STRING__( agentid ) ] = stragent;
+    values[ __STRING__( agentid ) ] = stragent;
 
-    values[ __KF_STRING__( deployid ) ] = _deploy_manage->_connect_deploy_strid;
+    values[ __STRING__( deployid ) ] = _deploy_manage->_connect_deploy_strid;
 
     auto table = _deploy_manage->GetTableName( stragent );
     _deploy_manage->_dlg_deploy->ExecuteTableValues( table, values );
@@ -262,7 +262,7 @@ void CAddServerDlg::OnCbnSelchangeComboName()
 
     OnCbnSelchangeComboType();
 
-    if ( name != __KF_STRING__( zone ) )
+    if ( name != __STRING__( zone ) )
     {
         _edit_zone.SetWindowTextA( "0" );
     }

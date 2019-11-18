@@ -18,6 +18,10 @@ namespace KFrame
         // 是否初始化完成
         virtual bool IsInited() = 0;
         virtual void SetInited() = 0;
+
+        // 是否是新建角色
+        virtual bool IsNew() = 0;
+        virtual void SetNew( bool isnew ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 创建属性
         virtual KFData* CreateData( const std::string& dataname ) = 0;
@@ -46,6 +50,7 @@ namespace KFrame
         virtual KFData* MoveData( KFData* sourcedata, const std::string& dataname, const std::string& targetname ) = 0;
         virtual KFData* MoveData( KFData* sourcedata, const std::string& dataname, KFData* targetdata ) = 0;
         virtual KFData* MoveData( KFData* sourcedata, uint64 key, KFData* targetdata, const std::string& dataname ) = 0;
+        virtual KFData* MoveData( KFData* sourcedata, const std::string& sourcename, KFData* targetdata, const std::string& targetname ) = 0;
 
         // 更新属性( 只更新到客户端, 不回调逻辑 )
         virtual uint64 MoveData( uint64 key, KFData* kfdata, uint32 operate, uint64 value ) = 0;
@@ -89,7 +94,8 @@ namespace KFrame
         virtual const std::string& CheckAddElement( const KFElements* kfelements, const char* function, uint32 line, float multiple = 1.0f ) = 0;
 
         // 添加元数据
-        virtual void AddElement( const KFElements* kfelements, bool showclient, const char* function, uint32 line, float multiple = 1.0f ) = 0;
+        virtual void AddElement( const KFElements* kfelements, const char* function, uint32 line, float multiple = 1.0f ) = 0;
+        virtual void AddElement( const KFElements* kfelements, const std::string& modulename, const char* function, uint32 line, float multiple = 1.0f ) = 0;
 
         // 判断元数据是否满足条件
         virtual const std::string& CheckRemoveElement( const KFElements* kfelements, const char* function, uint32 line, float multiple = 1.0f ) = 0;
@@ -97,10 +103,17 @@ namespace KFrame
         // 删除元数据
         virtual void RemoveElement( const KFElements* kfelements, const char* function, uint32 line, float multiple = 1.0f ) = 0;
 
-        virtual void AddDataToShow( KFData* kfdata ) = 0;
-        virtual void AddDataToShow( const std::string& name, uint64 value ) = 0;
-        virtual void AddDataToShow( const std::string& name, uint64 key, const std::string& dataname, uint64 datavalue ) = 0;
-        virtual void AddElementToShow( const KFElement* kfelement ) = 0;
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        virtual void AddDataToShow( KFData* kfdata, bool find ) = 0;
+        virtual void AddDataToShow( const std::string& modulename, KFData* kfdata, bool find ) = 0;
+
+        virtual void AddDataToShow( const std::string& name, uint64 value, bool find ) = 0;
+        virtual void AddDataToShow( const std::string& modulename, const std::string& name, uint64 value, bool find ) = 0;
+
+        virtual void AddDataToShow( const std::string& name, uint64 value, KeyValue& values, bool find ) = 0;
+        virtual void AddDataToShow( const std::string& modulename, const std::string& name, uint64 value, KeyValue& values, bool find ) = 0;
+
+        virtual void AddElementToShow( const KFElement* kfelement, bool find ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 设置element到kfdata对象

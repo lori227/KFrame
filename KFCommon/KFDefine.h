@@ -28,9 +28,6 @@ namespace KFrame
     class KFData;
     class KFEntity;
     ////////////////////////////////////////////////////////////////
-    static const std::string _route_cluster_name = "route";
-    static const std::string _route_cluster_key = "route@kframe,./";
-    /////////////////////////////////////////////////////////////////////////
     // 消息函数
     typedef std::function<void( const Route& route, uint32 msgid, const char* data, uint32 length )> KFMessageFunction;
 #define __KF_MESSAGE_FUNCTION__( function ) \

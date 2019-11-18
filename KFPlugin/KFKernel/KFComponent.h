@@ -201,7 +201,7 @@ namespace KFrame
             KFUpdateDataFunction function = std::bind( handle, object,
                                             std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4,
                                             std::placeholders::_5, std::placeholders::_6, std::placeholders::_7 );
-            BindUpdateDataFunction( typeid( T ).name(), _invalid_str, dataname, function );
+            BindUpdateDataFunction( typeid( T ).name(), _invalid_string, dataname, function );
         }
 
         template< class T >
@@ -216,7 +216,7 @@ namespace KFrame
         template< class T >
         void UnRegisterUpdateDataFunction( T* object, const std::string& dataname )
         {
-            UnBindUpdateDataFunction( typeid( T ).name(), _invalid_str, dataname );
+            UnBindUpdateDataFunction( typeid( T ).name(), _invalid_string, dataname );
         }
 
         template< class T >
@@ -245,7 +245,7 @@ namespace KFrame
         {
             KFUpdateStringFunction function = std::bind( handle, object,
                                               std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
-            BindUpdateStringFunction( typeid( T ).name(), _invalid_str, dataname, function );
+            BindUpdateStringFunction( typeid( T ).name(), _invalid_string, dataname, function );
         }
 
         template< class T >
@@ -259,7 +259,7 @@ namespace KFrame
         template< class T >
         void UnRegisterUpdateStringFunction( T* object, const std::string& dataname )
         {
-            UnBindUpdateStringFunction( typeid( T ).name(), _invalid_str, dataname );
+            UnBindUpdateStringFunction( typeid( T ).name(), _invalid_string, dataname );
         }
 
         template< class T >

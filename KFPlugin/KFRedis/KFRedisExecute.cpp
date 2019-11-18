@@ -215,7 +215,7 @@ namespace KFrame
         auto redisreply = TryExecute( kfresult.get(), strsql );
         if ( redisreply != nullptr )
         {
-            kfresult->_value = ( KFRedisFormat::IsEmptyString( redisreply->str ) ? _invalid_str : redisreply->str );
+            kfresult->_value = ( KFRedisFormat::IsEmptyString( redisreply->str ) ? _invalid_string : redisreply->str );
         }
 
         __FREE_REPLY__( redisreply );
@@ -274,7 +274,7 @@ namespace KFrame
             for ( size_t i = 0; i < redisreply->elements; ++i )
             {
                 auto element = redisreply->element[ i ];
-                kfresult->_value.push_back( KFRedisFormat::IsEmptyString( element->str ) ? _invalid_str : element->str );
+                kfresult->_value.push_back( KFRedisFormat::IsEmptyString( element->str ) ? _invalid_string : element->str );
             }
         }
 
@@ -291,7 +291,7 @@ namespace KFrame
             for ( size_t i = 0; i < redisreply->elements; ++i )
             {
                 auto element = redisreply->element[ i ];
-                kfresult->_value.push_back( KFRedisFormat::IsEmptyString( element->str ) ? _invalid_str : element->str );
+                kfresult->_value.push_back( KFRedisFormat::IsEmptyString( element->str ) ? _invalid_string : element->str );
             }
         }
 
@@ -332,7 +332,7 @@ namespace KFrame
 
             if ( reply != nullptr )
             {
-                kfresult->_value.push_back( KFRedisFormat::IsEmptyString( reply->str ) ? _invalid_str : reply->str );
+                kfresult->_value.push_back( KFRedisFormat::IsEmptyString( reply->str ) ? _invalid_string : reply->str );
                 freeReplyObject( reply );
             }
             else

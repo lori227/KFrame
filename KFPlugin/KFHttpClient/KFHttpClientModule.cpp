@@ -168,13 +168,13 @@ namespace KFrame
 
     void KFHttpClientModule::MTGetRequest( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& args )
     {
-        MTRequest( KFHttp::Get, function, url, data, _invalid_str );
+        MTRequest( KFHttp::Get, function, url, data, _invalid_string );
     }
 
     void KFHttpClientModule::MTGetRequest( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& args )
     {
         auto data = __JSON_SERIALIZE__( json );
-        MTRequest( KFHttp::Get, function, url, data, _invalid_str );
+        MTRequest( KFHttp::Get, function, url, data, _invalid_string );
     }
 
     void KFHttpClientModule::MTPostRequest( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& args )

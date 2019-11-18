@@ -1330,18 +1330,18 @@ class LIBPROTOC_EXPORT PBShowData : public ::google::protobuf::Message /* @@prot
 
   // accessors -------------------------------------------------------
 
-  // map<string, uint64> pbuint64 = 5;
+  // map<string, uint64> pbuint64 = 3;
   int pbuint64_size() const;
   void clear_pbuint64();
-  static const int kPbuint64FieldNumber = 5;
+  static const int kPbuint64FieldNumber = 3;
   const ::google::protobuf::Map< ::std::string, ::google::protobuf::uint64 >&
       pbuint64() const;
   ::google::protobuf::Map< ::std::string, ::google::protobuf::uint64 >*
       mutable_pbuint64();
 
-  // bytes name = 2;
+  // bytes name = 1;
   void clear_name();
-  static const int kNameFieldNumber = 2;
+  static const int kNameFieldNumber = 1;
   const ::std::string& name() const;
   void set_name(const ::std::string& value);
   #if LANG_CXX11
@@ -1353,23 +1353,11 @@ class LIBPROTOC_EXPORT PBShowData : public ::google::protobuf::Message /* @@prot
   ::std::string* release_name();
   void set_allocated_name(::std::string* name);
 
-  // uint64 value = 3;
+  // uint64 value = 2;
   void clear_value();
-  static const int kValueFieldNumber = 3;
+  static const int kValueFieldNumber = 2;
   ::google::protobuf::uint64 value() const;
   void set_value(::google::protobuf::uint64 value);
-
-  // uint64 key = 4;
-  void clear_key();
-  static const int kKeyFieldNumber = 4;
-  ::google::protobuf::uint64 key() const;
-  void set_key(::google::protobuf::uint64 value);
-
-  // uint32 type = 1;
-  void clear_type();
-  static const int kTypeFieldNumber = 1;
-  ::google::protobuf::uint32 type() const;
-  void set_type(::google::protobuf::uint32 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.PBShowData)
  private:
@@ -1383,8 +1371,6 @@ class LIBPROTOC_EXPORT PBShowData : public ::google::protobuf::Message /* @@prot
       0 > pbuint64_;
   ::google::protobuf::internal::ArenaStringPtr name_;
   ::google::protobuf::uint64 value_;
-  ::google::protobuf::uint64 key_;
-  ::google::protobuf::uint32 type_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameDefineMessage_2eproto::TableStruct;
 };
@@ -1477,10 +1463,10 @@ class LIBPROTOC_EXPORT PBShowElement : public ::google::protobuf::Message /* @@p
 
   // accessors -------------------------------------------------------
 
-  // repeated .KFMsg.PBShowData pbdata = 1;
+  // repeated .KFMsg.PBShowData pbdata = 2;
   int pbdata_size() const;
   void clear_pbdata();
-  static const int kPbdataFieldNumber = 1;
+  static const int kPbdataFieldNumber = 2;
   ::KFMsg::PBShowData* mutable_pbdata(int index);
   ::google::protobuf::RepeatedPtrField< ::KFMsg::PBShowData >*
       mutable_pbdata();
@@ -1489,11 +1475,26 @@ class LIBPROTOC_EXPORT PBShowElement : public ::google::protobuf::Message /* @@p
   const ::google::protobuf::RepeatedPtrField< ::KFMsg::PBShowData >&
       pbdata() const;
 
+  // bytes modulename = 1;
+  void clear_modulename();
+  static const int kModulenameFieldNumber = 1;
+  const ::std::string& modulename() const;
+  void set_modulename(const ::std::string& value);
+  #if LANG_CXX11
+  void set_modulename(::std::string&& value);
+  #endif
+  void set_modulename(const char* value);
+  void set_modulename(const void* value, size_t size);
+  ::std::string* mutable_modulename();
+  ::std::string* release_modulename();
+  void set_allocated_modulename(::std::string* modulename);
+
   // @@protoc_insertion_point(class_scope:KFMsg.PBShowElement)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::RepeatedPtrField< ::KFMsg::PBShowData > pbdata_;
+  ::google::protobuf::internal::ArenaStringPtr modulename_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameDefineMessage_2eproto::TableStruct;
 };
@@ -2359,21 +2360,7 @@ PBValues::mutable_pbstring() {
 
 // PBShowData
 
-// uint32 type = 1;
-inline void PBShowData::clear_type() {
-  type_ = 0u;
-}
-inline ::google::protobuf::uint32 PBShowData::type() const {
-  // @@protoc_insertion_point(field_get:KFMsg.PBShowData.type)
-  return type_;
-}
-inline void PBShowData::set_type(::google::protobuf::uint32 value) {
-  
-  type_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.PBShowData.type)
-}
-
-// bytes name = 2;
+// bytes name = 1;
 inline void PBShowData::clear_name() {
   name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -2426,7 +2413,7 @@ inline void PBShowData::set_allocated_name(::std::string* name) {
   // @@protoc_insertion_point(field_set_allocated:KFMsg.PBShowData.name)
 }
 
-// uint64 value = 3;
+// uint64 value = 2;
 inline void PBShowData::clear_value() {
   value_ = GOOGLE_ULONGLONG(0);
 }
@@ -2440,21 +2427,7 @@ inline void PBShowData::set_value(::google::protobuf::uint64 value) {
   // @@protoc_insertion_point(field_set:KFMsg.PBShowData.value)
 }
 
-// uint64 key = 4;
-inline void PBShowData::clear_key() {
-  key_ = GOOGLE_ULONGLONG(0);
-}
-inline ::google::protobuf::uint64 PBShowData::key() const {
-  // @@protoc_insertion_point(field_get:KFMsg.PBShowData.key)
-  return key_;
-}
-inline void PBShowData::set_key(::google::protobuf::uint64 value) {
-  
-  key_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.PBShowData.key)
-}
-
-// map<string, uint64> pbuint64 = 5;
+// map<string, uint64> pbuint64 = 3;
 inline int PBShowData::pbuint64_size() const {
   return pbuint64_.size();
 }
@@ -2476,7 +2449,60 @@ PBShowData::mutable_pbuint64() {
 
 // PBShowElement
 
-// repeated .KFMsg.PBShowData pbdata = 1;
+// bytes modulename = 1;
+inline void PBShowElement::clear_modulename() {
+  modulename_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& PBShowElement::modulename() const {
+  // @@protoc_insertion_point(field_get:KFMsg.PBShowElement.modulename)
+  return modulename_.GetNoArena();
+}
+inline void PBShowElement::set_modulename(const ::std::string& value) {
+  
+  modulename_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.PBShowElement.modulename)
+}
+#if LANG_CXX11
+inline void PBShowElement::set_modulename(::std::string&& value) {
+  
+  modulename_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.PBShowElement.modulename)
+}
+#endif
+inline void PBShowElement::set_modulename(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  modulename_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.PBShowElement.modulename)
+}
+inline void PBShowElement::set_modulename(const void* value, size_t size) {
+  
+  modulename_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.PBShowElement.modulename)
+}
+inline ::std::string* PBShowElement::mutable_modulename() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.PBShowElement.modulename)
+  return modulename_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* PBShowElement::release_modulename() {
+  // @@protoc_insertion_point(field_release:KFMsg.PBShowElement.modulename)
+  
+  return modulename_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void PBShowElement::set_allocated_modulename(::std::string* modulename) {
+  if (modulename != NULL) {
+    
+  } else {
+    
+  }
+  modulename_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), modulename);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.PBShowElement.modulename)
+}
+
+// repeated .KFMsg.PBShowData pbdata = 2;
 inline int PBShowElement::pbdata_size() const {
   return pbdata_.size();
 }

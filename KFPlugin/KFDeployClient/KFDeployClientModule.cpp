@@ -23,7 +23,7 @@ namespace KFrame
 
     void KFDeployClientModule::PrepareRun()
     {
-        auto agentdata = KFGlobal::Instance()->_startup_params[ __KF_STRING__( agent ) ];
+        auto agentdata = KFGlobal::Instance()->_startup_params[ __STRING__( agent ) ];
         if ( agentdata.empty() )
         {
             return;
@@ -34,7 +34,7 @@ namespace KFrame
         auto port = KFUtility::SplitValue< uint32 >( agentdata, "|" );
 
         _agent_id = KFAppId::ToUInt64( agentid );
-        _kf_tcp_client->StartClient( __KF_STRING__( deploy ), __KF_STRING__( agent ), _agent_id, ip, port );
+        _kf_tcp_client->StartClient( __STRING__( deploy ), __STRING__( agent ), _agent_id, ip, port );
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_NET_EVENT_FUNCTION__( KFDeployClientModule::OnClientConnectAgent )
@@ -95,26 +95,26 @@ namespace KFrame
             return;
         }
 
-        if ( command == __KF_STRING__( shutdown ) )
+        if ( command == __STRING__( shutdown ) )
         {
             auto delaytime = KFUtility::ToValue< uint32 >( value );
             return ShutDownServer( appname, apptype, appid, zoneid, delaytime );
         }
-        else if ( command == __KF_STRING__( loglevel ) )
+        else if ( command == __STRING__( loglevel ) )
         {
             auto level = KFUtility::ToValue< uint32 >( value );
             return KFLogger::Instance()->SetLogLevel( level );
         }
-        else if ( command == __KF_STRING__( logmemory ) )
+        else if ( command == __STRING__( logmemory ) )
         {
             auto memory = KFUtility::ToValue< uint32 >( value );
             return KFMalloc::Instance()->SetLogOpen( memory == 1 ? true : false );
         }
-        else if ( command == __KF_STRING__( loadconfig ) )
+        else if ( command == __STRING__( loadconfig ) )
         {
             return _kf_config->ReloadConfig( value );
         }
-        else if ( command == __KF_STRING__( loadplugin ) )
+        else if ( command == __STRING__( loadplugin ) )
         {
             auto strcommand = __FORMAT__( "{}={}", command, value );
             return _kf_plugin_manage->AddCommand( strcommand );
@@ -140,13 +140,13 @@ namespace KFrame
         auto kfglobal = KFGlobal::Instance();
 
         // 指定appid
-        if ( appid != _globbing_str )
+        if ( appid != _globbing_string )
         {
             return ( appid == kfglobal->_app_id->ToString() );
         }
 
         // appname
-        if ( appname != _globbing_str )
+        if ( appname != _globbing_string )
         {
             if ( appname != kfglobal->_app_name )
             {
@@ -155,7 +155,7 @@ namespace KFrame
         }
 
         // apptype
-        if ( apptype != _globbing_str )
+        if ( apptype != _globbing_string )
         {
             if ( apptype != kfglobal->_app_type )
             {
@@ -181,13 +181,13 @@ namespace KFrame
         __LOG_INFO__( "[{}:{}:{}:{}] shutdown start!", kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->ToString(), delaytime );
 
         // 如果是服务
-        if ( appname != __KF_STRING__( zone ) )
+        if ( appname != __STRING__( zone ) )
         {
             delaytime += 30000;
         }
         else
         {
-            if ( apptype == __KF_STRING__( world ) )
+            if ( apptype == __STRING__( world ) )
             {
                 delaytime += 20000;
             }
@@ -204,13 +204,13 @@ namespace KFrame
         auto kfglobal = KFGlobal::Instance();
         __LOG_INFO__( "[{}:{}:{}] shutdown prepare!", kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->ToString() );
 
-        auto kfcommand = _command_data.Find( __KF_STRING__( shutdown ) );
+        auto kfcommand = _command_data.Find( __STRING__( shutdown ) );
         if ( kfcommand != nullptr )
         {
             for ( auto& iter : kfcommand->_functions._objects )
             {
                 auto kffunction = iter.second;
-                kffunction->_function( _invalid_str );
+                kffunction->_function( _invalid_string );
             }
         }
     }

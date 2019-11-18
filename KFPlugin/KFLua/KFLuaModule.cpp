@@ -4,18 +4,18 @@ namespace KFrame
 {
     void KFLuaModule::BeforeRun()
     {
-        _kf_player = _kf_kernel->FindComponent( __KF_STRING__( player ) );
-        __REGISTER_DEPLOY_FUNCTION__( __KF_STRING__( loadscript ), &KFLuaModule::LoadScript );
+        _kf_player = _kf_kernel->FindComponent( __STRING__( player ) );
+        __REGISTER_DEPLOY_FUNCTION__( __STRING__( loadscript ), &KFLuaModule::LoadScript );
     }
 
     void KFLuaModule::ShutDown()
     {
-        __UN_DEPLOY_FUNCTION__( __KF_STRING__( loadscript ) );
+        __UN_DEPLOY_FUNCTION__( __STRING__( loadscript ) );
     }
 
     __KF_DEPLOY_FUNCTION__( KFLuaModule::LoadScript )
     {
-        if ( param == _globbing_str )
+        if ( param == _globbing_string )
         {
             _lua_script.Clear();
         }
@@ -300,7 +300,7 @@ namespace KFrame
         return KFGlobal::Instance()->_real_time;
     }
 
-    void KFLuaModule::LuaAddData( uint64 objectid, const char* strelement, bool showclient )
+    void KFLuaModule::LuaAddData( uint64 objectid, const char* strelement, const char* modulename )
     {
         auto kfentity = _kf_player->FindEntity( objectid, __FUNC_LINE__ );
         if ( kfentity == nullptr )
@@ -312,11 +312,11 @@ namespace KFrame
         auto ok = kfelements.Parse( strelement, __FUNC_LINE__ );
         if ( ok )
         {
-            kfentity->AddElement( &kfelements, showclient, __FUNC_LINE__ );
+            kfentity->AddElement( &kfelements, modulename, __FUNC_LINE__ );
         }
     }
 
-    void KFLuaModule::LuaSetData( uint64 objectid, const char* strelement, bool showclient )
+    void KFLuaModule::LuaSetData( uint64 objectid, const char* strelement, const char* modulename )
     {
         auto kfentity = _kf_player->FindEntity( objectid, __FUNC_LINE__ );
         if ( kfentity == nullptr )
@@ -329,7 +329,7 @@ namespace KFrame
         if ( ok )
         {
             kfelements.SetOperate( KFEnum::Set );
-            kfentity->AddElement( &kfelements, showclient, __FUNC_LINE__ );
+            kfentity->AddElement( &kfelements, modulename, __FUNC_LINE__ );
         }
     }
 
@@ -382,14 +382,14 @@ namespace KFrame
 
         __JSON_PARSE_STRING__( kfjson, args );
 
-        auto luafile = __JSON_GET_STRING__( kfjson, __KF_STRING__( luafile ) );
-        auto luafunction = __JSON_GET_STRING__( kfjson, __KF_STRING__( luafunction ) );
+        auto luafile = __JSON_GET_STRING__( kfjson, __STRING__( luafile ) );
+        auto luafunction = __JSON_GET_STRING__( kfjson, __STRING__( luafunction ) );
         if ( luafile.empty() || luafunction.empty() )
         {
             return;
         }
 
-        auto objectid = __JSON_GET_UINT64__( kfjson, __KF_STRING__( playerid ) );
+        auto objectid = __JSON_GET_UINT64__( kfjson, __STRING__( playerid ) );
         Call( luafile, luafunction, objectid, senddata, recvdata );
     }
 

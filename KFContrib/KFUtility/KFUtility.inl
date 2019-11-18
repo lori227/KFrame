@@ -27,10 +27,10 @@ namespace KFrame
         case KFEnum::And:
             basevalue = ( basevalue & value );
             break;
-        case KFEnum::ABit:
+        case KFEnum::Or:
             basevalue |= ( element << value );
             break;
-        case KFEnum::XBit:
+        case KFEnum::Xor:
             basevalue &= ~( element << value );
             break;
         case KFEnum::Mul:
@@ -125,14 +125,14 @@ namespace KFrame
     }
 
     template< class T >
-    inline T KFUtility::SplitValue( std::string& srcstring, std::string split )
+    inline T KFUtility::SplitValue( std::string& srcstring, const std::string& split )
     {
         auto data = SplitString( srcstring, split );
         return ToValue< T >( data );
     }
 
     template< class T >
-    inline T KFUtility::SplitList( std::string& srcstring, std::string split )
+    inline T KFUtility::SplitList( std::string& srcstring, const std::string& split )
     {
         T result;
         while ( !srcstring.empty() )
@@ -148,7 +148,7 @@ namespace KFrame
     }
 
     template< class T >
-    inline T KFUtility::SplitSet( std::string& srcstring, std::string split )
+    inline T KFUtility::SplitSet( std::string& srcstring, const std::string& split )
     {
         T result;
         while ( !srcstring.empty() )

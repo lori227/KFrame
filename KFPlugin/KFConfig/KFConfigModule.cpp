@@ -19,12 +19,12 @@ namespace KFrame
 
     void KFConfigModule::BeforeRun()
     {
-        _kf_plugin_manage->RegisterCommandFunction( __KF_STRING__( reloadconfig ), this, &KFConfigModule::ProcessReloadCommand );
+        _kf_plugin_manage->RegisterCommandFunction( __STRING__( reloadconfig ), this, &KFConfigModule::ProcessReloadCommand );
     }
 
     void KFConfigModule::ShutDown()
     {
-        _kf_plugin_manage->UnRegisterCommandFunction( __KF_STRING__( reloadconfig ) );
+        _kf_plugin_manage->UnRegisterCommandFunction( __STRING__( reloadconfig ) );
 
         for ( auto& iter : _config_list )
         {
@@ -86,7 +86,7 @@ namespace KFrame
 
     void KFConfigModule::ProcessReloadCommand( const VectorString& params )
     {
-        ReloadConfig( _globbing_str );
+        ReloadConfig( _globbing_string );
     }
 
     void KFConfigModule::ReloadConfig( const std::string& file )

@@ -82,6 +82,20 @@ namespace KFrame
             return true;
         }
 
+        // 移动
+        ObjectType* Move( ParamType key )
+        {
+            auto iter = _objects.find( key );
+            if ( iter == _objects.end() )
+            {
+                return nullptr;
+            }
+
+            auto object = iter->second;
+            _objects.erase( iter );
+            return object;
+        }
+
         // 清除
         void Clear( bool isdelete = true )
         {

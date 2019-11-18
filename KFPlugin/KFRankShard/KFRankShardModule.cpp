@@ -31,7 +31,7 @@ namespace KFrame
 
     void KFRankShardModule::PrepareRun()
     {
-        _rank_redis_driver = _kf_redis->Create( __KF_STRING__( logic ) );
+        _rank_redis_driver = _kf_redis->Create( __STRING__( logic ) );
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -40,20 +40,20 @@ namespace KFrame
         // 把worker id广播给所有的rank shard
         KFMsg::S2SNoticeRankWorkerReq req;
         req.set_workerid( KFGlobal::Instance()->_app_id->GetWorkId() );
-        _kf_route->SendToAll( __KF_STRING__( rank ), KFMsg::S2S_NOTICE_RANK_WORKER_REQ, &req, true );
+        _kf_route->SendToAll( __STRING__( rank ), KFMsg::S2S_NOTICE_RANK_WORKER_REQ, &req, true );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     std::string& KFRankShardModule::FormatRankDataKey( uint32 rankid, uint32 zoneid )
     {
         static std::string rankdatakey = "";
-        rankdatakey = __FORMAT__( "{}:{}:{}", __KF_STRING__( rankdata ), rankid, zoneid );
+        rankdatakey = __FORMAT__( "{}:{}:{}", __STRING__( rankdata ), rankid, zoneid );
         return rankdatakey;
     }
 
     std::string& KFRankShardModule::FormatRankSortKey( uint32 rankid, uint32 zoneid )
     {
         static std::string ranksortkey = "";
-        ranksortkey = __FORMAT__( "{}:{}:{}", __KF_STRING__( ranksort ), rankid, zoneid );
+        ranksortkey = __FORMAT__( "{}:{}:{}", __STRING__( ranksort ), rankid, zoneid );
         return ranksortkey;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -63,13 +63,13 @@ namespace KFrame
         kfrankdata->_rank_id = rankid;
         kfrankdata->_zone_id = zoneid;
 
-        auto querydata = _rank_redis_driver->QueryMap( "hgetall {}:{}:{}", __KF_STRING__( rank ), rankid, zoneid );
+        auto querydata = _rank_redis_driver->QueryMap( "hgetall {}:{}:{}", __STRING__( rank ), rankid, zoneid );
         if ( !querydata->_value.empty() )
         {
-            auto strrankata = querydata->_value[ __KF_STRING__( rankdata ) ];
+            auto strrankata = querydata->_value[ __STRING__( rankdata ) ];
             KFProto::Parse( &kfrankdata->_rank_datas, strrankata, KFCompressEnum::Compress );
 
-            kfrankdata->_min_rank_score = KFUtility::ToValue< uint64 >( querydata->_value[ __KF_STRING__( minrankscore ) ] );
+            kfrankdata->_min_rank_score = KFUtility::ToValue< uint64 >( querydata->_value[ __STRING__( minrankscore ) ] );
         }
 
         return kfrankdata;
@@ -80,11 +80,11 @@ namespace KFrame
         auto strrankdata = KFProto::Serialize( &kfrankdata->_rank_datas, KFCompressEnum::Compress );
 
         MapString rankdata;
-        rankdata[ __KF_STRING__( id ) ] = __TO_STRING__( kfrankdata->_rank_id );
-        rankdata[ __KF_STRING__( zoneid ) ] = __TO_STRING__( kfrankdata->_zone_id );
-        rankdata[ __KF_STRING__( minrankscore ) ] = __TO_STRING__( kfrankdata->_min_rank_score );
-        rankdata[ __KF_STRING__( rankdata ) ] = strrankdata;
-        auto kfresult = _rank_redis_driver->Update( rankdata, "hmset {}:{}:{}", __KF_STRING__( rank ), kfrankdata->_rank_id, kfrankdata->_zone_id );
+        rankdata[ __STRING__( id ) ] = __TO_STRING__( kfrankdata->_rank_id );
+        rankdata[ __STRING__( zoneid ) ] = __TO_STRING__( kfrankdata->_zone_id );
+        rankdata[ __STRING__( minrankscore ) ] = __TO_STRING__( kfrankdata->_min_rank_score );
+        rankdata[ __STRING__( rankdata ) ] = strrankdata;
+        auto kfresult = _rank_redis_driver->Update( rankdata, "hmset {}:{}:{}", __STRING__( rank ), kfrankdata->_rank_id, kfrankdata->_zone_id );
         if ( !kfresult->IsOk() )
         {
             __LOG_ERROR__( "rank=[{}:{}] save failed!", kfrankdata->_rank_id, kfrankdata->_zone_id );
@@ -165,7 +165,7 @@ namespace KFrame
             // 返回结果
             KFMsg::S2SSyncRefreshRank sync;
             sync.set_rankid( rankid );
-            auto ok = _kf_route->SendToAll( __KF_STRING__( rank ), KFMsg::S2S_SYNC_REFRESH_RANK, &sync, true );
+            auto ok = _kf_route->SendToAll( __STRING__( rank ), KFMsg::S2S_SYNC_REFRESH_RANK, &sync, true );
             if ( !ok )
             {
                 __LOG_ERROR__( "rank=[{}] refresh failed!", rankid );
@@ -182,7 +182,7 @@ namespace KFrame
         }
 
         // 获得排行榜列表
-        auto queryzonelist = _rank_redis_driver->QueryList( "smembers {}:{}", __KF_STRING__( ranksortlist ), rankid );
+        auto queryzonelist = _rank_redis_driver->QueryList( "smembers {}:{}", __STRING__( ranksortlist ), rankid );
         for ( auto& strzoneid : queryzonelist->_value )
         {
             auto zoneid = KFUtility::ToValue< uint32 >( strzoneid );
@@ -230,7 +230,7 @@ namespace KFrame
                 // 最小积分
                 //auto playerid = idlist.back();
                 //std::string minscore = "";
-                //_rank_driver->StringExecute( minscore, "zscore {}:{}:{} {}", __KF_STRING__( ranksort ), rankid, zoneid, playerid );
+                //_rank_driver->StringExecute( minscore, "zscore {}:{}:{} {}", __STRING__( ranksort ), rankid, zoneid, playerid );
                 //kfrankdata->_min_rank_score = KFUtility::ToValue< uint64 >( minscore );
 
                 // 删除指定数量以后的排序
@@ -284,7 +284,7 @@ namespace KFrame
         // if ( IsNeedUpdateRankData( kfmsg.rankid(), kfmsg.zoneid(), kfmsg.rankscore() ) )
         {
             // 添加到排行榜的zone列表
-            _rank_redis_driver->Append( "sadd {}:{} {}", __KF_STRING__( ranksortlist ), kfmsg.rankid(), kfmsg.zoneid() );
+            _rank_redis_driver->Append( "sadd {}:{} {}", __STRING__( ranksortlist ), kfmsg.rankid(), kfmsg.zoneid() );
 
             // 积分排行列表
             _rank_redis_driver->Append( "zadd {} {} {}", ranksortkey, pbrankdata->rankscore(), kfmsg.playerid() );
@@ -360,7 +360,7 @@ namespace KFrame
         auto zoneid = _invalid_int;
         if ( kfsetting->_zone_type == KFMsg::ZoneRank )
         {
-            zoneid = KFGlobal::Instance()->STUUIDZoneId( __KF_STRING__( player ), playerid );
+            zoneid = KFGlobal::Instance()->STUUIDZoneId( __STRING__( player ), playerid );
         }
 
         return zoneid;

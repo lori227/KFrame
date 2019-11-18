@@ -12,7 +12,7 @@ namespace KFrame
         auto strmove = xmlnode.GetString( "Move", true );
         while ( !strmove.empty() )
         {
-            auto movename = KFUtility::SplitString( strmove, DEFAULT_SPLIT_STRING );
+            auto movename = KFUtility::SplitString( strmove, __SPLIT_STRING__ );
             if ( !movename.empty() )
             {
                 kfsetting->_move_name_list.insert( movename );
@@ -22,7 +22,7 @@ namespace KFrame
         auto struselimit = xmlnode.GetString( "UseLimit", true );
         while ( !struselimit.empty() )
         {
-            auto usemask = KFUtility::SplitValue< uint32 >( struselimit, DEFAULT_SPLIT_STRING );
+            auto usemask = KFUtility::SplitValue< uint32 >( struselimit, __SPLIT_STRING__ );
             KFUtility::AddBitMask( kfsetting->_use_limit, usemask );
         }
     }

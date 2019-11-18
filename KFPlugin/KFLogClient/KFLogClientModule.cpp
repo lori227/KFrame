@@ -16,15 +16,15 @@ namespace KFrame
 
     void KFLogClientModule::PrepareRun()
     {
-        auto url = _kf_ip_address->GetLogUrl() + __KF_STRING__( address );
+        auto url = _kf_ip_address->GetLogUrl() + __STRING__( address );
 
         __JSON_OBJECT_DOCUMENT__( request );
-        __JSON_SET_VALUE__( request, __KF_STRING__( appname ), KFGlobal::Instance()->_app_name );
-        __JSON_SET_VALUE__( request, __KF_STRING__( apptype ), KFGlobal::Instance()->_app_type );
-        __JSON_SET_VALUE__( request, __KF_STRING__( appid ), KFGlobal::Instance()->_app_id->ToString() );
+        __JSON_SET_VALUE__( request, __STRING__( appname ), KFGlobal::Instance()->_app_name );
+        __JSON_SET_VALUE__( request, __STRING__( apptype ), KFGlobal::Instance()->_app_type );
+        __JSON_SET_VALUE__( request, __STRING__( appid ), KFGlobal::Instance()->_app_id->ToString() );
 
         auto data = __JSON_SERIALIZE__( request );
-        auto recvdata = _kf_http_client->STGet( url, _invalid_str );
+        auto recvdata = _kf_http_client->STGet( url, _invalid_string );
 
         __JSON_PARSE_STRING__( response, recvdata );
         auto retcode = _kf_http_client->GetCode( response );
@@ -33,11 +33,11 @@ namespace KFrame
             return __LOG_ERROR__( "request log address error={}!", retcode );
         }
 
-        auto ip = __JSON_GET_STRING__( response, __KF_STRING__( ip ) );
-        auto port = __JSON_GET_UINT32__( response, __KF_STRING__( port ) );
-        auto appname = __JSON_GET_STRING__( response, __KF_STRING__( appname ) );
-        auto apptype = __JSON_GET_STRING__( response, __KF_STRING__( apptype ) );
-        auto appid = __JSON_GET_UINT64__( response, __KF_STRING__( appid ) );
+        auto ip = __JSON_GET_STRING__( response, __STRING__( ip ) );
+        auto port = __JSON_GET_UINT32__( response, __STRING__( port ) );
+        auto appname = __JSON_GET_STRING__( response, __STRING__( appname ) );
+        auto apptype = __JSON_GET_STRING__( response, __STRING__( apptype ) );
+        auto appid = __JSON_GET_UINT64__( response, __STRING__( appid ) );
         _kf_tcp_client->StartClient( appname, apptype, appid, ip, port );
     }
 
@@ -45,7 +45,7 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////
     __KF_NET_EVENT_FUNCTION__( KFLogClientModule::OnClientConnectLogServer )
     {
-        if ( netdata->_name == __KF_STRING__( log ) )
+        if ( netdata->_name == __STRING__( log ) )
         {
             __LOG_INFO__( "remote log[{}] ok!", netdata->_str_id );
 

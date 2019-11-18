@@ -8,7 +8,7 @@ namespace KFrame
     class KFInt32 : public KFData
     {
     public:
-        KFInt32() = default;
+        KFInt32();
         virtual ~KFInt32() = default;
 
         virtual void Reset();

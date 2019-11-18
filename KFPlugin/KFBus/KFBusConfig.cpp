@@ -9,33 +9,33 @@ namespace KFrame
 
         for ( auto& kfconnection : _bus_connection )
         {
-            if ( kfconnection._app_name != _globbing_str && kfconnection._app_name != kfglobal->_app_name )
+            if ( kfconnection._app_name != _globbing_string && kfconnection._app_name != kfglobal->_app_name )
             {
                 continue;
             }
 
-            if ( kfconnection._app_type != _globbing_str && kfconnection._app_type != kfglobal->_app_type )
+            if ( kfconnection._app_type != _globbing_string && kfconnection._app_type != kfglobal->_app_type )
             {
                 continue;
             }
 
-            if ( kfconnection._app_id != _globbing_str && kfconnection._app_id != kfglobal->_app_id->ToString() )
+            if ( kfconnection._app_id != _globbing_string && kfconnection._app_id != kfglobal->_app_id->ToString() )
             {
                 continue;
             }
 
             // 判断连接目标信息
-            if ( kfconnection._connect_name != _globbing_str && kfconnection._connect_name != connectname )
+            if ( kfconnection._connect_name != _globbing_string && kfconnection._connect_name != connectname )
             {
                 continue;
             }
 
-            if ( kfconnection._connect_type != _globbing_str && kfconnection._connect_type != connecttype )
+            if ( kfconnection._connect_type != _globbing_string && kfconnection._connect_type != connecttype )
             {
                 continue;
             }
 
-            if ( kfconnection._connect_id != _globbing_str && kfconnection._connect_id != connectid )
+            if ( kfconnection._connect_id != _globbing_string && kfconnection._connect_id != connectid )
             {
                 continue;
             }
@@ -64,17 +64,17 @@ namespace KFrame
 
         for ( auto& kfconnection : _bus_connection )
         {
-            if ( kfconnection._app_name != _globbing_str && kfconnection._app_name != appname )
+            if ( kfconnection._app_name != _globbing_string && kfconnection._app_name != appname )
             {
                 continue;
             }
 
-            if ( kfconnection._app_type != _globbing_str && kfconnection._app_type != apptype )
+            if ( kfconnection._app_type != _globbing_string && kfconnection._app_type != apptype )
             {
                 continue;
             }
 
-            if ( kfconnection._app_id != _globbing_str && kfconnection._app_id != appid )
+            if ( kfconnection._app_id != _globbing_string && kfconnection._app_id != appid )
             {
                 continue;
             }

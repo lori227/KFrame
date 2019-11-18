@@ -2,6 +2,11 @@
 
 namespace KFrame
 {
+    KFRecord::KFRecord()
+    {
+        _data_type = KFDataDefine::Type_Record;
+    }
+
     void KFRecord::Reset()
     {
         _data.Clear();

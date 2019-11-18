@@ -18,8 +18,8 @@ namespace KFrame
 
     void KFIntValue::SetValue( std::string value )
     {
-        _min_value = KFUtility::SplitValue<uint64>( value, FUNCTION_RANGE_STRING );
-        _max_value = KFUtility::SplitValue<uint64>( value, FUNCTION_RANGE_STRING );
+        _min_value = KFUtility::SplitValue<uint64>( value, __RANGE_STRING__ );
+        _max_value = KFUtility::SplitValue<uint64>( value, __RANGE_STRING__ );
         if ( _min_value >= _max_value )
         {
             _max_value = _min_value;
@@ -205,7 +205,7 @@ namespace KFrame
         __JSON_OBJECT__( kfobject );
         if ( _config_id != _invalid_int )
         {
-            __JSON_SET_VALUE__( kfobject, __KF_STRING__( id ), _config_id );
+            __JSON_SET_VALUE__( kfobject, __STRING__( id ), _config_id );
         }
 
         for ( auto& iter : _values._objects )
@@ -332,14 +332,14 @@ namespace KFrame
                     }
 
                     std::string strname = childname;
-                    if ( strname == __KF_STRING__( id ) )
+                    if ( strname == __STRING__( id ) )
                     {
                         kfelement->_config_id = KFUtility::ToValue< uint32 >( jsonchild.GetString() );
                     }
                     else
                     {
-                        auto parentname = KFUtility::SplitString( strname, FUNCTION_RANGE_STRING );
-                        auto dataname = KFUtility::SplitString( strname, FUNCTION_RANGE_STRING );
+                        auto parentname = KFUtility::SplitString( strname, __RANGE_STRING__ );
+                        auto dataname = KFUtility::SplitString( strname, __RANGE_STRING__ );
                         if ( dataname.empty() )
                         {
                             kfelement->SetValue( parentname, jsonchild.GetString() );

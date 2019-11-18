@@ -34,7 +34,7 @@ namespace KFrame
             updatevalue[ field ] = KFUtility::ToString< T >( invalue );
 
             MapString keyvalue;
-            keyvalue[ __KF_STRING__( id ) ] = key;
+            keyvalue[ __STRING__( id ) ] = key;
 
             return Update( table, keyvalue, updatevalue );
         }

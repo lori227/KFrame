@@ -17,11 +17,10 @@ namespace KFrame
             Dec = 2,		// -
             Set = 3,		// =
             And = 4,		// &
-            ABit = 5,		// |
-            XBit = 6,		// &~
+            Or  = 5,		// |
+            Xor = 6,		// &~
             Mul = 7,		// *
             Div = 8,		// /
-
 
             Greater = 11,		// >
             Less = 12,			// <
@@ -29,9 +28,6 @@ namespace KFrame
             GreaterEqual = 14,	// >=
             LessEqual = 15,		// <=
             UnEqual = 16,		// !=
-            //////////////////////////////////////
-            Lobby = 1,		// 大厅类型
-            Battle = 2,		// 战服类型
             //////////////////////////////////////
         };
     }
@@ -202,6 +198,7 @@ namespace KFrame
         InitCalcCount = 1,	// 统计数量
         InitGetValue = 2,	// 获得属性值
         InitCheckExist = 3,	// 是否存在
+        InitCalcValue = 4,	// 统计数值
 
         //////////////////////////////////////////////////////////////////
         AddCall = 1,		// 添加时回调

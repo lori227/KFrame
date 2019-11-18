@@ -126,20 +126,19 @@ namespace KFrame
         uv_stream_t* _uv_stream = nullptr;
 
     private:
+        // 是否正在发送
+        std::atomic<bool> _is_sending;
+
         // 消息头长度
         uint32 _message_head_length = 0u;
 
-        // 接收消息buffer
-        uint32 _recv_length = 0u;
-        char _recv_buff[ KFNetDefine::MaxRecvBuffLength ];
-
         // 请求发送的buffer
         uint32 _send_length = 0u;
-        std::atomic<bool> _is_sending;
         char _req_send_buffer[ KFNetDefine::MaxReqBuffLength ];
 
         // 请求接受的buffer
-        char _req_recv_buffer[ KFNetDefine::MaxReqBuffLength ];
+        uint32 _recv_length = 0u;
+        char _req_recv_buffer[ KFNetDefine::MaxRecvBuffLength ];
     };
 
 }

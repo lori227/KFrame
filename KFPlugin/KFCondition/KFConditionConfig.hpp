@@ -19,6 +19,9 @@ namespace KFrame
         // 触发判断
         uint32 _trigger_check = 0;
 
+        // 触发使用值类型
+        uint32 _trigger_use = 0;
+
         // 触发值
         uint32 _trigger_value = 0;
 
@@ -33,7 +36,7 @@ namespace KFrame
 
     public:
         // 计算更新数值
-        uint64 CalcUpdateValue( uint64 operate, uint64 operatevalue, uint64 nowvalue ) const;
+        bool CalcUpdateValue( uint64 operate, uint64& operatevalue, uint64 nowvalue ) const;
     };
 
     class KFConditionDefine: public KFStrSetting
@@ -59,11 +62,11 @@ namespace KFrame
         {
             _file_name = "conditiondefine";
         }
-
     protected:
         // 读取配置
         virtual void ReadSetting( KFNode& xmlnode, KFConditionDefine* kfsetting );
     };
+    /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
     class KFConditionLimit
     {
@@ -73,18 +76,31 @@ namespace KFrame
         uint32 _operate;
     };
 
+    class KFConditionLimits
+    {
+    public:
+        // 判断类型
+        uint32 _link_type = KFEnum::Or;
+
+        // 限制条件
+        std::vector< KFConditionLimit > _limit;
+    };
+    /////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////
+
     class KFConditionSetting : public KFIntSetting
     {
     public:
-        // 文件名
-        std::string _file_name;
-
         // 条件定义
         std::string _str_condition;
         const KFConditionDefine* _condition_define = nullptr;
 
+        // 清空条件定义
+        std::string _str_clean;
+        const KFConditionDefine* _clean_define = nullptr;
+
         // 限制条件
-        std::vector< KFConditionLimit > _limits;
+        std::vector< KFConditionLimits > _limits;
 
         // 完成条件
         uint32 _done_type = 0;
@@ -94,11 +110,6 @@ namespace KFrame
 
         // 限制类型
         uint32 _limit_mask = 0u;
-
-    public:
-
-        // 获得id属性
-        uint64 GetLimitValue( const std::string& name ) const;
     };
 
     class KFConditionConfig : public KFConfigT< KFConditionSetting >, public KFInstance< KFConditionConfig >

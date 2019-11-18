@@ -17,7 +17,7 @@ namespace KFrame
         // 获得使用的数值
         virtual const std::string& GetValue()
         {
-            return _invalid_str;
+            return _invalid_string;
         }
 
         // 计算数值
@@ -131,7 +131,7 @@ namespace KFrame
         // 格式化
         virtual const std::string& ToString() const
         {
-            return _invalid_str;
+            return _invalid_string;
         }
 
         // 是否需要显示

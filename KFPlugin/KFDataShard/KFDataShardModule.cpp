@@ -77,7 +77,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SSavePlayerToDataReq );
 
-        auto zoneid = KFGlobal::Instance()->STUUIDZoneId( __KF_STRING__( player ), kfmsg.id() );
+        auto zoneid = KFGlobal::Instance()->STUUIDZoneId( __STRING__( player ), kfmsg.id() );
         auto ok = SavePlayerData( zoneid, kfmsg.id(), &kfmsg.data(), kfmsg.flag() );
         if ( ok )
         {
@@ -92,7 +92,7 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SLoadPlayerToDataReq );
 
         auto pblogin = &kfmsg.pblogin();
-        auto zoneid = KFGlobal::Instance()->STUUIDZoneId( __KF_STRING__( player ), pblogin->playerid() );
+        auto zoneid = KFGlobal::Instance()->STUUIDZoneId( __STRING__( player ), pblogin->playerid() );
         __LOG_INFO__( "player[{}:{}:{}:{}] load req!", pblogin->account(), pblogin->accountid(), pblogin->playerid(), zoneid );
 
         KFMsg::S2SLoadPlayerToGameAck ack;
@@ -114,7 +114,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SQueryPlayerToDataReq );
 
-        auto zoneid = KFGlobal::Instance()->STUUIDZoneId( __KF_STRING__( player ), kfmsg.playerid() );
+        auto zoneid = KFGlobal::Instance()->STUUIDZoneId( __STRING__( player ), kfmsg.playerid() );
 
         KFMsg::S2SQueryPlayerToGameAck ack;
         auto ok = LoadPlayerData( zoneid, kfmsg.playerid(), ack.mutable_playerdata() );
@@ -173,7 +173,7 @@ namespace KFrame
     {
         // 序列化数据
         auto strdata = KFProto::Serialize( pbobject, KFCompressEnum::Compress );
-        if ( strdata == _invalid_str )
+        if ( strdata == _invalid_string )
         {
             __LOG_ERROR__( "player[{}:{}] serialize failed!", zoneid, playerid );
             return false;

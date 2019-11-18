@@ -2,6 +2,11 @@
 
 namespace KFrame
 {
+    KFString::KFString()
+    {
+        _data_type = KFDataDefine::Type_String;
+    }
+
     const std::string& KFString::GetString()
     {
         return _data;

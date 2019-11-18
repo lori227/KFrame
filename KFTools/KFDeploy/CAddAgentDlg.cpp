@@ -86,12 +86,12 @@ void CAddAgentDlg::OnBnClickedButtonAddAgent()
     appid.SetWorkId( KFUtility::ToValue< uint32>( agentid ) );
 
     MapString values;
-    values[ __KF_STRING__( strappid ) ] = appid.ToString();
-    values[ __KF_STRING__( localip ) ] = agentip;
-    values[ __KF_STRING__( interanetip ) ] = agentip;
-    values[ __KF_STRING__( serverid ) ] = deploydata->_str_id;
-    values[ __KF_STRING__( serverip ) ] = deploydata->_ip;
-    values[ __KF_STRING__( serverport ) ] = __TO_STRING__( deploydata->_port );
-    _deploy_manage->_dlg_deploy->ExecuteTableValues( __KF_STRING__( agent ), values );
+    values[ __STRING__( strappid ) ] = appid.ToString();
+    values[ __STRING__( localip ) ] = agentip;
+    values[ __STRING__( interanetip ) ] = agentip;
+    values[ __STRING__( serverid ) ] = deploydata->_str_id;
+    values[ __STRING__( serverip ) ] = deploydata->_ip;
+    values[ __STRING__( serverport ) ] = __TO_STRING__( deploydata->_port );
+    _deploy_manage->_dlg_deploy->ExecuteTableValues( __STRING__( agent ), values );
 }
 

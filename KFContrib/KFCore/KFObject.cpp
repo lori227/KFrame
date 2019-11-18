@@ -2,6 +2,11 @@
 
 namespace KFrame
 {
+    KFObject::KFObject()
+    {
+        _data_type = KFDataDefine::Type_Object;
+    }
+
     uint64 KFObject::GetKeyID()
     {
         if ( _key == 0u )
@@ -151,6 +156,13 @@ namespace KFrame
     {
         data->SetParent( this );
         _data.Insert( dataname, data );
+
+        auto datasetting = _class_setting->FindSetting( dataname );
+        if ( datasetting != nullptr )
+        {
+            data->_data_setting = datasetting;
+        }
+
         return true;
     }
 

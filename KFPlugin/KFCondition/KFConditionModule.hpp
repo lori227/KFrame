@@ -45,7 +45,6 @@ namespace KFrame
         // 更新属性更新条件, 返回true, 条件全部完成
         virtual bool UpdateUpdateCondition( KFEntity* kfentity, KFData* kfconditiondata, uint32 conditiontype, uint32 limitmask, KFData* kfdata, uint32 operate, uint64 value, uint64 nowvalue );
 
-
     protected:
         // 判断属性条件
         bool CheckCondition( KFEntity* kfentity, const KFCondition* kfcondition );
@@ -67,6 +66,10 @@ namespace KFrame
         uint32 InitCalcRecordExist( KFEntity* kfentity, const KFConditionSetting* kfsetting );
         // 计算获得数值
         uint32 InitCalcGetValue( KFEntity* kfentity, const KFConditionSetting* kfsetting );
+        // 初始化计算数值
+        uint32 InitCalcRecordValue( KFEntity* kfentity, const KFConditionSetting* kfsetting );
+        // 获得集合列表
+        std::list< KFData* >& FindRecordList( KFEntity* kfentity, const std::string& name );
 
         // 直接更新数值
         uint32 UpdateCondition( KFEntity* kfentity, KFData* kfcondition, uint32 conditionid, uint32 operate, uint32 conditionvalue );
@@ -82,13 +85,16 @@ namespace KFrame
 
 
         // 计算添加数值
-        std::tuple<uint32, uint32> CalcAddConditionValue( KFEntity* kfentity, const KFConditionSetting* kfsetting, KFData* kfdata );
+        std::tuple<uint32, uint32> CalcAddConditionValue( KFEntity* kfentity, const KFConditionDefine* kfdefine, KFData* kfdata );
+        std::tuple<uint32, uint32> CalcAddConditionDefineValue( KFEntity* kfentity, const KFConditionDefine* kfdefine, KFData* kfdata );
 
         // 计算删除数值
-        std::tuple<uint32, uint32> CalcRemoveConditionValue( KFEntity* kfentity, const KFConditionSetting* kfsetting, KFData* kfdata );
+        std::tuple<uint32, uint32> CalcRemoveConditionValue( KFEntity* kfentity, const KFConditionDefine* kfsetting, KFData* kfdata );
+        std::tuple<uint32, uint32> CalcRemoveConditionDefineValue( KFEntity* kfentity, const KFConditionDefine* kfdefine, KFData* kfdata );
 
         // 计算更新数值
-        std::tuple<uint32, uint32> CalcUpdateConditionValue( KFEntity* kfentity, const KFConditionSetting* kfsetting, KFData* kfdata, uint32 operate, uint64 value, uint64 nowvalue );
+        std::tuple<uint32, uint32> CalcUpdateConditionValue( KFEntity* kfentity, const KFConditionDefine* kfsetting, KFData* kfdata, uint32 operate, uint64 value, uint64 nowvalue );
+        std::tuple<uint32, uint32> CalcUpdateConditionDefineValue( KFEntity* kfentity, const KFConditionDefine* kfdefine, KFData* kfdata, uint32 operate, uint64 value, uint64 nowvalue );
     };
 }
 

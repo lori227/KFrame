@@ -37,7 +37,7 @@ namespace KFrame
     static std::map<int8, uint32> _link_type =
     {
         {'&', KFEnum::And},
-        {'|', KFEnum::ABit},
+        {'|', KFEnum::Or},
     };
 
     static int8 _key_type = ':';

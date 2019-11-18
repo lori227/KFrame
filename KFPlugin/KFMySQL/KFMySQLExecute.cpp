@@ -184,7 +184,7 @@ namespace KFrame
     bool KFMySQLWriteExecute::Delete( const std::string& table, const std::string& key )
     {
         MapString keyvalue;
-        keyvalue[ __KF_STRING__( id ) ] = key;
+        keyvalue[ __STRING__( id ) ] = key;
         return Delete( table, keyvalue );
     }
 
@@ -205,7 +205,7 @@ namespace KFrame
     bool KFMySQLWriteExecute::Update( const std::string& table, const std::string& key, const MapString& invalue )
     {
         MapString keyvalue;
-        keyvalue[ __KF_STRING__( id ) ] = key;
+        keyvalue[ __STRING__( id ) ] = key;
         return Update( table, keyvalue, invalue );
     }
 
@@ -255,14 +255,14 @@ namespace KFrame
         static ListString _empty_field;
 
         MapString keyvalue;
-        keyvalue[ __KF_STRING__( id ) ] = key;
+        keyvalue[ __STRING__( id ) ] = key;
         return Select( table, keyvalue, _empty_field );
     }
 
     KFResult< ListMapString >::UniqueType KFMySQLReadExecute::Select( const std::string& table, const std::string& key, const ListString& fields )
     {
         MapString keyvalue;
-        keyvalue[ __KF_STRING__( id ) ] = key;
+        keyvalue[ __STRING__( id ) ] = key;
         return Select( table, keyvalue, fields );
     }
 

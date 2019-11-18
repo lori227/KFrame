@@ -229,7 +229,7 @@ namespace KFrame
     template< class T >
     T KFData::Get()
     {
-        switch ( _data_setting->_logic_type )
+        switch ( _data_type )
         {
         case KFDataDefine::Type_Int32:
             return static_cast<T>( GetInt32() );
@@ -256,7 +256,7 @@ namespace KFrame
     template< class T >
     T KFData::Set( T value )
     {
-        switch ( _data_setting->_logic_type )
+        switch ( _data_type )
         {
         case KFDataDefine::Type_Int32:
             return static_cast< T >( SetInt32( static_cast<int32>( value ) ) );
@@ -284,7 +284,7 @@ namespace KFrame
     template<>
     inline std::string KFData::InvalidValue()
     {
-        return _invalid_str;
+        return _invalid_string;
     }
     ///////////////////////////////////////////////////////////////////////////
 

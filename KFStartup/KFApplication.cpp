@@ -45,7 +45,7 @@ namespace KFrame
             params[ key ] = arg;
         }
 
-        auto daemon = params[ __KF_STRING__( daemon ) ];
+        auto daemon = params[ __STRING__( daemon ) ];
         if ( daemon == "" || daemon == "1" )
         {
             SetAppDaemon();

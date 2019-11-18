@@ -36,7 +36,7 @@ namespace KFrame
         player->RemoveElement( &kfsetting->_cost_data, __FUNC_LINE__ );
 
         // 添加合成的属性
-        player->AddElement( &kfsetting->_compound_data, true, __FUNC_LINE__ );
+        player->AddElement( &kfsetting->_compound_data, __STRING__( compound ), __FUNC_LINE__ );
         _kf_display->SendToClient( player, KFMsg::CompoundOk );
     }
 }

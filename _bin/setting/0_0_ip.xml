@@ -6,6 +6,9 @@
 	<!-- 认证服务器地址 -->
 	<AuthServer Url="http://127.0.0.1:7001/"/>
 
+	<!-- 集群认证数据 -->
+	<Cluster Name="route" Key="route@kframe,./"/>
+
 	<!--Port 端口-->
 	<!-- Type 端口计算类型 0=固定端口 1=由id计算 2=共享内存计算--> 
 	<!-- tcp服务器配置 -->

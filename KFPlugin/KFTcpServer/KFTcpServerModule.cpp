@@ -26,13 +26,13 @@ namespace KFrame
         auto kftcpsetting = KFTcpServerConfig::Instance()->FindTcpSetting( kfglobal->_app_name, kfglobal->_app_type );
         if ( kftcpsetting == nullptr )
         {
-            kftcpsetting = KFTcpServerConfig::Instance()->FindTcpSetting( _globbing_str, kfglobal->_app_type );
+            kftcpsetting = KFTcpServerConfig::Instance()->FindTcpSetting( _globbing_string, kfglobal->_app_type );
             if ( kftcpsetting == nullptr )
             {
-                kftcpsetting = KFTcpServerConfig::Instance()->FindTcpSetting( kfglobal->_app_name, _globbing_str );
+                kftcpsetting = KFTcpServerConfig::Instance()->FindTcpSetting( kfglobal->_app_name, _globbing_string );
                 if ( kftcpsetting == nullptr )
                 {
-                    kftcpsetting = KFTcpServerConfig::Instance()->FindTcpSetting( _globbing_str, _globbing_str );
+                    kftcpsetting = KFTcpServerConfig::Instance()->FindTcpSetting( _globbing_string, _globbing_string );
                     if ( kftcpsetting == nullptr )
                     {
                         __LOG_ERROR__( "can't find [{}:{}] setting", kfglobal->_app_name, kfglobal->_app_type );

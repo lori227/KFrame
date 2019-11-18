@@ -120,7 +120,7 @@ namespace KFrame
         }
 
         // 比较购买次数
-        auto datacount = kfstore->Get( __KF_STRING__( count ) );
+        auto datacount = kfstore->Get( __STRING__( count ) );
         if ( ( datacount + count ) <= kfsetting->_buy_limit_count )
         {
             return false;
@@ -138,6 +138,6 @@ namespace KFrame
         }
 
         // 更新数量
-        player->UpdateData( kfsetting->_buy_limit_type, kfsetting->_id, __KF_STRING__( count ), KFEnum::Add, count );
+        player->UpdateData( kfsetting->_buy_limit_type, kfsetting->_id, __STRING__( count ), KFEnum::Add, count );
     }
 }

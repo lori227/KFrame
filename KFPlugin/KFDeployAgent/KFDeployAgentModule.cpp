@@ -41,20 +41,20 @@ namespace KFrame
     void KFDeployAgentModule::PrepareRun()
     {
         __MKDIR__( _pid_path );
-        _deploy_driver = _kf_mysql->Create( __KF_STRING__( deploy ) );
+        _deploy_driver = _kf_mysql->Create( __STRING__( deploy ) );
     }
 
     __KF_TIMER_FUNCTION__( KFDeployAgentModule::OnTimerQueryAgentData )
     {
         // 获得本机ip, 查询appid
         auto localip = _kf_ip_address->GetLocalIp();
-        auto kfquery = _deploy_driver->QueryMap( "select * from `agent` where `{}`='{}'", __KF_STRING__( localip ), localip );
+        auto kfquery = _deploy_driver->QueryMap( "select * from `agent` where `{}`='{}'", __STRING__( localip ), localip );
         if ( kfquery->_value.empty() )
         {
             return __LOG_ERROR__( "query agent=[{}] data failed!", localip );
         }
 
-        auto strappid = kfquery->_value[ __KF_STRING__( strappid ) ];
+        auto strappid = kfquery->_value[ __STRING__( strappid ) ];
         if ( strappid.empty() )
         {
             return __LOG_ERROR__( "agent=[{}] appid is empty!", localip );
@@ -63,7 +63,7 @@ namespace KFrame
         auto kfglobal = KFGlobal::Instance();
         kfglobal->_app_id->FromString( strappid );
 
-        auto strservice = kfquery->_value[ __KF_STRING__( service ) ];
+        auto strservice = kfquery->_value[ __STRING__( service ) ];
         if ( strservice.empty() )
         {
             return __LOG_ERROR__( "agent=[{}] service is empty!", localip );
@@ -99,7 +99,7 @@ namespace KFrame
         }
 
         auto appid = KFAppId::ToUInt64( _deploy_server_strid );
-        _kf_tcp_client->StartClient( __KF_STRING__( deploy ), __KF_STRING__( server ), appid, _deploy_server_ip, _deploy_server_port );
+        _kf_tcp_client->StartClient( __STRING__( deploy ), __STRING__( server ), appid, _deploy_server_ip, _deploy_server_port );
     }
 
     void KFDeployAgentModule::LoadTotalLaunchData()
@@ -112,7 +112,7 @@ namespace KFrame
         try
         {
             MapString keyvalue;
-            keyvalue[ __KF_STRING__( agentid ) ] = KFGlobal::Instance()->_app_id->ToString();
+            keyvalue[ __STRING__( agentid ) ] = KFGlobal::Instance()->_app_id->ToString();
             auto querydeploydata = _deploy_driver->Select( _deploy_table_name, keyvalue );
             if ( !querydeploydata->_value.empty() )
             {
@@ -137,7 +137,7 @@ namespace KFrame
     __KF_NET_EVENT_FUNCTION__( KFDeployAgentModule::OnClientConnectServer )
     {
         // 连接成功
-        if ( netdata->_name == __KF_STRING__( deploy ) && netdata->_type == __KF_STRING__( server ) )
+        if ( netdata->_name == __STRING__( deploy ) && netdata->_type == __STRING__( server ) )
         {
             _deploy_server_id = netdata->_id;
             auto kfglobal = KFGlobal::Instance();
@@ -338,12 +338,12 @@ namespace KFrame
         auto apppath = deploydata->GetAppPath();
         auto startupfile = deploydata->GetStartupFile( deploydata->_is_debug );
         auto param = __FORMAT__( " {}={}.{} {}={} {}={} {}={} {}={}|{}|{}",
-                                 __KF_STRING__( app ), deploydata->_app_name, deploydata->_app_type,
-                                 __KF_STRING__( id ), deploydata->_app_id,
-                                 __KF_STRING__( service ), deploydata->_service_type,
-                                 __KF_STRING__( net ), deploydata->_net_type,
-                                 __KF_STRING__( log ), deploydata->_log_type,
-                                 __KF_STRING__( agent ), kfglobal->_app_id->ToString(), kfglobal->_local_ip, kfglobal->_listen_port );
+                                 __STRING__( app ), deploydata->_app_name, deploydata->_app_type,
+                                 __STRING__( id ), deploydata->_app_id,
+                                 __STRING__( service ), deploydata->_service_type,
+                                 __STRING__( net ), deploydata->_net_type,
+                                 __STRING__( log ), deploydata->_log_type,
+                                 __STRING__( agent ), kfglobal->_app_id->ToString(), kfglobal->_local_ip, kfglobal->_listen_port );
 
         // 启动进程
         PROCESS_INFORMATION processinfo;
@@ -414,22 +414,22 @@ namespace KFrame
         auto startupfile = deploydata->GetStartupFile( deploydata->_is_debug );
         __ADD_ARGS__( startupfile );
 
-        auto strappname = __FORMAT__( "{}={}.{}", __KF_STRING__( app ), deploydata->_app_name, deploydata->_app_type );
+        auto strappname = __FORMAT__( "{}={}.{}", __STRING__( app ), deploydata->_app_name, deploydata->_app_type );
         __ADD_ARGS__( strappname );
 
-        auto strappid = __FORMAT__( "{}={}", __KF_STRING__( id ), deploydata->_app_id );
+        auto strappid = __FORMAT__( "{}={}", __STRING__( id ), deploydata->_app_id );
         __ADD_ARGS__( strappid );
 
-        auto strservice = __FORMAT__( "{}={}", __KF_STRING__( service ), deploydata->_service_type );
+        auto strservice = __FORMAT__( "{}={}", __STRING__( service ), deploydata->_service_type );
         __ADD_ARGS__( strservice );
 
-        auto strnet = __FORMAT__( "{}={}", __KF_STRING__( net ), deploydata->_net_type );
+        auto strnet = __FORMAT__( "{}={}", __STRING__( net ), deploydata->_net_type );
         __ADD_ARGS__( strnet );
 
-        auto strlogtype = __FORMAT__( "{}={}", __KF_STRING__( log ), deploydata->_log_type );
+        auto strlogtype = __FORMAT__( "{}={}", __STRING__( log ), deploydata->_log_type );
         __ADD_ARGS__( strlogtype );
 
-        auto stragent = __FORMAT__( "{}={}|{}|{}", __KF_STRING__( agent ), kfglobal->_app_id->ToString(), kfglobal->_local_ip, kfglobal->_listen_port );
+        auto stragent = __FORMAT__( "{}={}|{}|{}", __STRING__( agent ), kfglobal->_app_id->ToString(), kfglobal->_local_ip, kfglobal->_listen_port );
         __ADD_ARGS__( stragent );
 
         auto params = deploydata->_params;
@@ -486,7 +486,7 @@ namespace KFrame
 
     uint32 KFDeployAgentModule::FindProcessIdByName( KFDeployData* deploydata )
     {
-        auto strprocessid = ExecuteShell( "ps -ef|grep '{}={}'|grep -v 'grep'|awk '{{print $2}}'", __KF_STRING__( id ), deploydata->_app_id );
+        auto strprocessid = ExecuteShell( "ps -ef|grep '{}={}'|grep -v 'grep'|awk '{{print $2}}'", __STRING__( id ), deploydata->_app_id );
         return KFUtility::ToValue< uint32 >( strprocessid );
     }
 
@@ -509,7 +509,7 @@ namespace KFrame
         if ( fp == nullptr )
         {
             __LOG_ERROR__( "[{}] open failed!", command );
-            return _invalid_str;
+            return _invalid_string;
         }
 
         char buffer[ 1024 ] = { 0 };
@@ -530,12 +530,12 @@ namespace KFrame
     void KFDeployAgentModule::UpdateDeployToDatabase( KFDeployData* deploydata )
     {
         MapString updatevalues;
-        updatevalues[ __KF_STRING__( shutdown ) ] = __TO_STRING__( deploydata->_is_shutdown ? 1 : 0 );
-        updatevalues[ __KF_STRING__( process ) ] = __TO_STRING__( deploydata->_process_id );
-        updatevalues[ __KF_STRING__( time ) ] = __TO_STRING__( deploydata->_startup_time );
+        updatevalues[ __STRING__( shutdown ) ] = __TO_STRING__( deploydata->_is_shutdown ? 1 : 0 );
+        updatevalues[ __STRING__( process ) ] = __TO_STRING__( deploydata->_process_id );
+        updatevalues[ __STRING__( time ) ] = __TO_STRING__( deploydata->_startup_time );
 
         MapString keyvalues;
-        keyvalues[ __KF_STRING__( appid ) ] = deploydata->_app_id;
+        keyvalues[ __STRING__( appid ) ] = deploydata->_app_id;
         _deploy_driver->Update( _deploy_table_name, keyvalues, updatevalues );
     }
 
@@ -559,7 +559,7 @@ namespace KFrame
         }
 
         offile << deploydata->_process_id;
-        offile << DEFAULT_SPLIT_STRING;
+        offile << __SPLIT_STRING__;
         offile << deploydata->_startup_time;
 
         offile.flush();
@@ -581,8 +581,8 @@ namespace KFrame
         infile.close();
 
         std::string strdata = os.str();
-        deploydata->_process_id = KFUtility::SplitValue< uint32 >( strdata, DEFAULT_SPLIT_STRING );
-        deploydata->_startup_time = KFUtility::SplitValue< uint64 >( strdata, DEFAULT_SPLIT_STRING );
+        deploydata->_process_id = KFUtility::SplitValue< uint32 >( strdata, __SPLIT_STRING__ );
+        deploydata->_startup_time = KFUtility::SplitValue< uint64 >( strdata, __SPLIT_STRING__ );
     }
 
     bool KFDeployAgentModule::IsAgentDeploy( const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid )
@@ -609,7 +609,7 @@ namespace KFrame
         {
             auto deploydata = iter.second;
 
-            if ( appname != _globbing_str )
+            if ( appname != _globbing_string )
             {
                 if ( appname == deploydata->_app_name )
                 {
@@ -653,49 +653,49 @@ namespace KFrame
             return;
         }
 
-        if ( pbdeploy->command() == __KF_STRING__( restart ) )
+        if ( pbdeploy->command() == __STRING__( restart ) )
         {
-            AddDeployTask( __KF_STRING__( shutdown ), pbdeploy );
-            AddDeployTask( __KF_STRING__( startup ), pbdeploy );
+            AddDeployTask( __STRING__( shutdown ), pbdeploy );
+            AddDeployTask( __STRING__( startup ), pbdeploy );
         }
-        else if ( pbdeploy->command() == __KF_STRING__( version ) )
+        else if ( pbdeploy->command() == __STRING__( version ) )
         {
-            if ( pbdeploy->value() != _invalid_str )
+            if ( pbdeploy->value() != _invalid_string )
             {
-                AddDeployTask( __KF_STRING__( shutdown ), pbdeploy );
-                AddDeployTask( __KF_STRING__( wget ), pbdeploy );
-                AddDeployTask( __KF_STRING__( startup ), pbdeploy );
+                AddDeployTask( __STRING__( shutdown ), pbdeploy );
+                AddDeployTask( __STRING__( wget ), pbdeploy );
+                AddDeployTask( __STRING__( startup ), pbdeploy );
             }
         }
-        else if ( pbdeploy->command() == __KF_STRING__( reloadconfig ) )
+        else if ( pbdeploy->command() == __STRING__( reloadconfig ) )
         {
-            AddDeployTask( __KF_STRING__( downfile ), pbdeploy );
-            AddDeployTask( __KF_STRING__( loadconfig ), pbdeploy );
+            AddDeployTask( __STRING__( downfile ), pbdeploy );
+            AddDeployTask( __STRING__( loadconfig ), pbdeploy );
         }
-        else if ( pbdeploy->command() == __KF_STRING__( reloadscript ) )
+        else if ( pbdeploy->command() == __STRING__( reloadscript ) )
         {
-            AddDeployTask( __KF_STRING__( downfile ), pbdeploy );
-            AddDeployTask( __KF_STRING__( loadscript ), pbdeploy );
+            AddDeployTask( __STRING__( downfile ), pbdeploy );
+            AddDeployTask( __STRING__( loadscript ), pbdeploy );
         }
-        else if ( pbdeploy->command() == __KF_STRING__( resource ) )
+        else if ( pbdeploy->command() == __STRING__( resource ) )
         {
-            AddDeployTask( __KF_STRING__( downresource ), pbdeploy );
+            AddDeployTask( __STRING__( downresource ), pbdeploy );
 
-            pbdeploy->set_value( _globbing_str );
-            AddDeployTask( __KF_STRING__( loadconfig ), pbdeploy );
-            AddDeployTask( __KF_STRING__( loadscript ), pbdeploy );
+            pbdeploy->set_value( _globbing_string );
+            AddDeployTask( __STRING__( loadconfig ), pbdeploy );
+            AddDeployTask( __STRING__( loadscript ), pbdeploy );
         }
-        else if ( pbdeploy->command() == __KF_STRING__( developreload ) )
+        else if ( pbdeploy->command() == __STRING__( developreload ) )
         {
-            AddDeployTask( __KF_STRING__( developupdate ), pbdeploy );
-            AddDeployTask( __KF_STRING__( loadconfig ), pbdeploy );
+            AddDeployTask( __STRING__( developupdate ), pbdeploy );
+            AddDeployTask( __STRING__( loadconfig ), pbdeploy );
         }
-        else if ( pbdeploy->command() == __KF_STRING__( reloadplugin ) )
+        else if ( pbdeploy->command() == __STRING__( reloadplugin ) )
         {
-            AddDeployTask( __KF_STRING__( downplugin ), pbdeploy );
-            AddDeployTask( __KF_STRING__( loadplugin ), pbdeploy );
+            AddDeployTask( __STRING__( downplugin ), pbdeploy );
+            AddDeployTask( __STRING__( loadplugin ), pbdeploy );
         }
-        else if ( pbdeploy->command() == __KF_STRING__( cleantask ) )
+        else if ( pbdeploy->command() == __STRING__( cleantask ) )
         {
             for ( auto kftask : _deploy_task )
             {
@@ -790,7 +790,7 @@ namespace KFrame
         }
 
         auto ok = true;
-        if ( _kf_task->_command == __KF_STRING__( kill ) || _kf_task->_command == __KF_STRING__( shutdown ) )
+        if ( _kf_task->_command == __STRING__( kill ) || _kf_task->_command == __STRING__( shutdown ) )
         {
             ok = CheckShutDownServerTaskFinish();
             if ( !ok )
@@ -798,28 +798,28 @@ namespace KFrame
                 // 判断当前时间, 如果任务不能完成, 直接杀死进程
                 if ( KFGlobal::Instance()->_game_time > _kf_task->_start_time + 60000 )
                 {
-                    _kf_task->_command = __KF_STRING__( kill );
+                    _kf_task->_command = __STRING__( kill );
                     StartDeployTask();
                 }
             }
         }
-        else if ( _kf_task->_command == __KF_STRING__( startup ) )
+        else if ( _kf_task->_command == __STRING__( startup ) )
         {
             ok = CheckStartupServerTaskFinish();
         }
-        else if ( _kf_task->_command == __KF_STRING__( wget ) )
+        else if ( _kf_task->_command == __STRING__( wget ) )
         {
             ok = CheckWgetVersionTaskFinish();
         }
-        else if ( _kf_task->_command == __KF_STRING__( downfile ) )
+        else if ( _kf_task->_command == __STRING__( downfile ) )
         {
             ok = CheckDownFileTaskFinish();
         }
-        else if ( _kf_task->_command == __KF_STRING__( downresource ) )
+        else if ( _kf_task->_command == __STRING__( downresource ) )
         {
             ok = CheckDownResourceTaskFinish();
         }
-        else if ( _kf_task->_command == __KF_STRING__( downplugin ) )
+        else if ( _kf_task->_command == __STRING__( downplugin ) )
         {
             ok = CheckDownPluginTaskFinish();
         }
@@ -838,7 +838,7 @@ namespace KFrame
         }
 
         auto localip = _kf_ip_address->GetLocalIp();
-        _deploy_driver->Execute( "update `agent` set `command`='{}' where `{}`='{}'", command, __KF_STRING__( localip ), localip );
+        _deploy_driver->Execute( "update `agent` set `command`='{}' where `{}`='{}'", command, __STRING__( localip ), localip );
     }
 
     void KFDeployAgentModule::StartDeployTask()
@@ -852,39 +852,39 @@ namespace KFrame
                        _kf_task->_command, _kf_task->_value,
                        _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
 
-            if ( _kf_task->_command == __KF_STRING__( startup ) )
+            if ( _kf_task->_command == __STRING__( startup ) )
             {
                 StartStartupServerTask();
             }
-            else if ( _kf_task->_command == __KF_STRING__( kill ) )
+            else if ( _kf_task->_command == __STRING__( kill ) )
             {
                 StartKillServerTask();
             }
-            else if ( _kf_task->_command == __KF_STRING__( shutdown ) )
+            else if ( _kf_task->_command == __STRING__( shutdown ) )
             {
                 StartShutDownServerTask();
             }
-            else if ( _kf_task->_command == __KF_STRING__( launch ) )
+            else if ( _kf_task->_command == __STRING__( launch ) )
             {
                 LoadTotalLaunchData();
             }
-            else if ( _kf_task->_command == __KF_STRING__( wget ) )
+            else if ( _kf_task->_command == __STRING__( wget ) )
             {
                 StartWgetVersionTask();
             }
-            else if ( _kf_task->_command == __KF_STRING__( downfile ) )
+            else if ( _kf_task->_command == __STRING__( downfile ) )
             {
                 StartDownFileTask();
             }
-            else if ( _kf_task->_command == __KF_STRING__( downresource ) )
+            else if ( _kf_task->_command == __STRING__( downresource ) )
             {
                 StartWgetResourceTask();
             }
-            else if ( _kf_task->_command == __KF_STRING__( downplugin ) )
+            else if ( _kf_task->_command == __STRING__( downplugin ) )
             {
                 StartDownPluginTask();
             }
-            else if ( _kf_task->_command == __KF_STRING__( developupdate ) )
+            else if ( _kf_task->_command == __STRING__( developupdate ) )
             {
                 StartDevelopUpdateTask();
             }
@@ -1062,11 +1062,11 @@ namespace KFrame
             if ( isserver )
             {
                 MapString updatevalues;
-                updatevalues[ __KF_STRING__( version ) ] = _kf_task->_value;
+                updatevalues[ __STRING__( version ) ] = _kf_task->_value;
 
                 MapString keyvalues;
-                keyvalues[ __KF_STRING__( appid ) ] = deploydata->_app_id;
-                keyvalues[ __KF_STRING__( service ) ] = deploydata->_service_type;
+                keyvalues[ __STRING__( appid ) ] = deploydata->_app_id;
+                keyvalues[ __STRING__( service ) ] = deploydata->_service_type;
                 _deploy_driver->Update( _deploy_table_name, keyvalues, updatevalues );
             }
         }

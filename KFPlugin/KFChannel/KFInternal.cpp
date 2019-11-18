@@ -5,12 +5,12 @@ namespace KFrame
 {
     std::string KFInternal::RequestLogin( KFJson& json, const KFChannelSetting* kfsetting )
     {
-        auto account = __JSON_GET_STRING__( json, __KF_STRING__( account ) );
+        auto account = __JSON_GET_STRING__( json, __STRING__( account ) );
 
         // 测试服直接登录
         __JSON_OBJECT_DOCUMENT__( response );
-        __JSON_SET_VALUE__( response, __KF_STRING__( account ), account );
-        __JSON_SET_VALUE__( response, __KF_STRING__( channel ), kfsetting->_id );
+        __JSON_SET_VALUE__( response, __STRING__( account ), account );
+        __JSON_SET_VALUE__( response, __STRING__( channel ), kfsetting->_id );
         return _kf_http_server->SendResponse( response );
     }
 
@@ -18,7 +18,7 @@ namespace KFrame
     {
         __JSON_PARSE_STRING__( request, data );
 
-        auto order = __JSON_GET_STRING__( request, __KF_STRING__( payorder ) );
+        auto order = __JSON_GET_STRING__( request, __STRING__( payorder ) );
 
         MapString values;
         __JSON_TO_MAP__( request, values );

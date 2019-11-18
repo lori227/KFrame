@@ -3,6 +3,7 @@
 
 //Define all macros in this file
 
+#include "KFInclude.h"
 #include "KFSystem.h"
 #include "fmt/fmt.h"
 
@@ -109,6 +110,40 @@
     #define __MAX_UINT64__ std::numeric_limits<uint64>::max()
 #endif
 //////////////////////////////////////////////////////////////////////////////////////////////////
+// 空字串
+#ifndef __EMPTY_STRING__
+    #define __EMPTY_STRING__ _invalid_string
+#endif // !__EMPTY_STRING__
 
+// 通配字串
+#ifndef __GLOBBING_STRING__
+    #define __GLOBBING_STRING__ _globbing_string
+#endif // !__EMPTY_STRING__
+
+// 连接符号
+#ifndef __SPLIT_STRING__
+    #define __SPLIT_STRING__ _split_string
+#endif // !__SPLIT_STRING__
+
+// 范围符号
+#ifndef __RANGE_STRING__
+    #define __RANGE_STRING__ _range_string
+#endif
+
+// 域符号
+#ifndef __DOMAIN_STRING__
+    #define __DOMAIN_STRING__ _domain_string
+#endif
+
+// 与符号
+#ifndef __AND_STRING__
+    #define __AND_STRING__ _and_string
+#endif
+
+// 或符号
+#ifndef __OR_STRING__
+    #define __OR_STRING__ _or_string
+#endif
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 #endif //!__KF_MACROS_H__

@@ -30,6 +30,12 @@ namespace KFrame
 
         // log地址
         std::string _log_url;
+
+        // 集群认证数据
+        std::string _cluster_name;
+
+        // 集群认证Key
+        std::string _cluster_key;
     };
 }
 

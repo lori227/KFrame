@@ -5,7 +5,7 @@ namespace KFrame
 {
     void KFRankClientModule::BeforeRun()
     {
-        _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
+        _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
         _kf_component->RegisterUpdateDataModule( this, &KFRankClientModule::OnDataUpdateCallBack );
         ///////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_QUERY_RANK_LIST_REQ, &KFRankClientModule::HandleQueryRankListReq );
@@ -24,7 +24,7 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFRankClientModule::SendMessageToRank( uint64 playerid, uint32 msgid, ::google::protobuf::Message* message )
     {
-        return _kf_route->SendToRand( playerid, __KF_STRING__( rank ), msgid, message, true );
+        return _kf_route->SendToRand( playerid, __STRING__( rank ), msgid, message, true );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -73,7 +73,7 @@ namespace KFrame
         auto zoneid = _invalid_int;
         if ( kfsetting->_zone_type == KFMsg::ZoneRank )
         {
-            zoneid = KFGlobal::Instance()->STUUIDZoneId( __KF_STRING__( player ), playerid );
+            zoneid = KFGlobal::Instance()->STUUIDZoneId( __STRING__( player ), playerid );
         }
 
         return zoneid;
@@ -189,7 +189,7 @@ namespace KFrame
         KFMsg::S2SQueryFriendRankListReq req;
         req.set_rankid( kfmsg.rankid() );
 
-        auto kffriendrecord = player->Find( __KF_STRING__( friend ) );
+        auto kffriendrecord = player->Find( __STRING__( friend ) );
         auto kffriend = kffriendrecord->First();
         while ( kffriend != nullptr )
         {

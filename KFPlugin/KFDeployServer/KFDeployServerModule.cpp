@@ -6,7 +6,7 @@ namespace KFrame
     {
         __REGISTER_SERVER_LOST__( &KFDeployServerModule::OnServerLostClient );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_HTTP__( __KF_STRING__( deploy ), true, &KFDeployServerModule::HandleDeployCommand );
+        __REGISTER_HTTP__( __STRING__( deploy ), true, &KFDeployServerModule::HandleDeployCommand );
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_REGISTER_AGENT_TO_SERVER_REQ, &KFDeployServerModule::HandleRegisterAgentToServerReq );
@@ -24,7 +24,7 @@ namespace KFrame
         __UN_SCHEDULE__();
         __UN_SERVER_LOST__();
         //////////////////////////////////////////////////////////////////////////////////////////////////////
-        __UN_HTTP__( __KF_STRING__( deploy ) );
+        __UN_HTTP__( __STRING__( deploy ) );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::S2S_REGISTER_AGENT_TO_SERVER_REQ );
         __UN_MESSAGE__( KFMsg::S2S_DEPLOY_TOOL_EXECUTE_MYSQL_REQ );
@@ -38,16 +38,16 @@ namespace KFrame
 
     void KFDeployServerModule::PrepareRun()
     {
-        _mysql_driver = _kf_mysql->Create( __KF_STRING__( deploy ) );
+        _mysql_driver = _kf_mysql->Create( __STRING__( deploy ) );
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////
     __KF_NET_EVENT_FUNCTION__( KFDeployServerModule::OnServerLostClient )
     {
-        if ( netdata->_name == __KF_STRING__( deploy ) )
+        if ( netdata->_name == __STRING__( deploy ) )
         {
-            if ( netdata->_type == __KF_STRING__( agent ) )
+            if ( netdata->_type == __STRING__( agent ) )
             {
                 auto kfagent = _agent_list.Find( netdata->_str_id );
                 if ( kfagent != nullptr )
@@ -77,13 +77,13 @@ namespace KFrame
     void KFDeployServerModule::UpdateAgentToDatabase( KFAgentData* kfagent, uint32 status )
     {
         MapString keyvalue;
-        keyvalue[ __KF_STRING__( localip ) ] = kfagent->_local_ip;
+        keyvalue[ __STRING__( localip ) ] = kfagent->_local_ip;
 
         MapString updatevalue;
-        updatevalue[ __KF_STRING__( status ) ] = __TO_STRING__( status );
-        updatevalue[ __KF_STRING__( port ) ] = __TO_STRING__( kfagent->_port );
-        updatevalue[ __KF_STRING__( service ) ] = kfagent->_service;
-        _mysql_driver->Update( __KF_STRING__( agent ), keyvalue, updatevalue );
+        updatevalue[ __STRING__( status ) ] = __TO_STRING__( status );
+        updatevalue[ __STRING__( port ) ] = __TO_STRING__( kfagent->_port );
+        updatevalue[ __STRING__( service ) ] = kfagent->_service;
+        _mysql_driver->Update( __STRING__( agent ), keyvalue, updatevalue );
     }
 
     __KF_MESSAGE_FUNCTION__( KFDeployServerModule::HandleDeleteMySQLReq )
@@ -216,7 +216,7 @@ namespace KFrame
                    pbcommand->command(), pbcommand->value(),
                    pbcommand->appname(), pbcommand->apptype(), pbcommand->zoneid(), pbcommand->appid() );
 
-        if ( pbcommand->command() == __KF_STRING__( unschedule ) )
+        if ( pbcommand->command() == __STRING__( unschedule ) )
         {
             auto id = KFUtility::ToValue< uint64 >( pbcommand->value() );
             __UN_SCHEDULE_OBJECT__( id );
@@ -258,7 +258,7 @@ namespace KFrame
         __JSON_PARSE_STRING__( request, data );
 
         _web_deploy_url.clear();
-        auto logurl = __JSON_GET_STRING__( request, __KF_STRING__( logurl ) );
+        auto logurl = __JSON_GET_STRING__( request, __STRING__( logurl ) );
         if ( !logurl.empty() )
         {
             _web_deploy_url = logurl;
@@ -267,15 +267,15 @@ namespace KFrame
         LogDeploy( 0, "web deploy=[{}] command req!", ip );
         LogDeploy( 0, "recv=[{}]", data );
 
-        auto command = __JSON_GET_STRING__( request, __KF_STRING__( command ) );
-        if ( command == __KF_STRING__( unschedule ) )
+        auto command = __JSON_GET_STRING__( request, __STRING__( command ) );
+        if ( command == __STRING__( unschedule ) )
         {
-            auto id = __JSON_GET_UINT64__( request, __KF_STRING__( value ) );
+            auto id = __JSON_GET_UINT64__( request, __STRING__( value ) );
             __UN_SCHEDULE_OBJECT__( id );
         }
         else
         {
-            auto scheduletime = __JSON_GET_UINT32__( request, __KF_STRING__( scheduletime ) );
+            auto scheduletime = __JSON_GET_UINT32__( request, __STRING__( scheduletime ) );
             if ( scheduletime <= KFGlobal::Instance()->_real_time )
             {
                 OnHttpDeployCommandToAgent( _invalid_int, data.c_str(), data.size() );
@@ -291,7 +291,7 @@ namespace KFrame
             }
         }
 
-        return _invalid_str;
+        return _invalid_string;
     }
 
     __KF_SCHEDULE_FUNCTION__( KFDeployServerModule::OnHttpDeployCommandToAgent )
@@ -300,12 +300,12 @@ namespace KFrame
 
         KFMsg::S2SDeployCommandToAgentReq req;
         auto pbdeploy = req.mutable_deploycommand();
-        pbdeploy->set_command( __JSON_GET_STRING__( request, __KF_STRING__( command ) ) );
-        pbdeploy->set_value( __JSON_GET_STRING__( request, __KF_STRING__( value ) ) );
-        pbdeploy->set_appname( __JSON_GET_STRING__( request, __KF_STRING__( appname ) ) );
-        pbdeploy->set_apptype( __JSON_GET_STRING__( request, __KF_STRING__( apptype ) ) );
-        pbdeploy->set_appid( __JSON_GET_STRING__( request, __KF_STRING__( appid ) ) );
-        pbdeploy->set_zoneid( __JSON_GET_UINT32__( request, __KF_STRING__( zoneid ) ) );
+        pbdeploy->set_command( __JSON_GET_STRING__( request, __STRING__( command ) ) );
+        pbdeploy->set_value( __JSON_GET_STRING__( request, __STRING__( value ) ) );
+        pbdeploy->set_appname( __JSON_GET_STRING__( request, __STRING__( appname ) ) );
+        pbdeploy->set_apptype( __JSON_GET_STRING__( request, __STRING__( apptype ) ) );
+        pbdeploy->set_appid( __JSON_GET_STRING__( request, __STRING__( appid ) ) );
+        pbdeploy->set_zoneid( __JSON_GET_UINT32__( request, __STRING__( zoneid ) ) );
         _kf_tcp_server->SendNetMessage( KFMsg::S2S_DEPLOY_COMMAND_TO_AGENT_REQ, &req );
 
         LogDeploy( 0, "distribute=[{}]", data );
@@ -319,14 +319,14 @@ namespace KFrame
         KFMsg::S2SDeployLogToToolAck ack;
         ack.set_agentid( agentid );
         ack.set_content( msg );
-        _kf_tcp_server->SendMessageToType( __KF_STRING__( tool ), KFMsg::S2S_DEPLOY_LOG_TO_TOOL_ACK, &ack );
+        _kf_tcp_server->SendMessageToType( __STRING__( tool ), KFMsg::S2S_DEPLOY_LOG_TO_TOOL_ACK, &ack );
 
         // 广播给所有web工具
         if ( !_web_deploy_url.empty() )
         {
             __JSON_OBJECT_DOCUMENT__( response );
-            __JSON_SET_VALUE__( response, __KF_STRING__( msg ), msg );
-            __JSON_SET_VALUE__( response, __KF_STRING__( agent ), agentid );
+            __JSON_SET_VALUE__( response, __STRING__( msg ), msg );
+            __JSON_SET_VALUE__( response, __STRING__( agent ), agentid );
             _kf_http_client->MTGet< KFDeployServerModule >( _web_deploy_url, response );
         }
     }

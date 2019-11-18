@@ -39,15 +39,29 @@ namespace KFrame
 
     DropDataList& KFDropModule::Drop( KFEntity* player, uint32 dropid, const char* function, uint32 line )
     {
-        return Drop( player, dropid, 1u, true, function, line );
+        return Drop( player, dropid, 1u, _invalid_string, function, line );
     }
 
-    DropDataList& KFDropModule::Drop( KFEntity* player, uint32 dropid, uint32 count, const char* function, uint32 line )
+    DropDataList& KFDropModule::Drop( KFEntity* player, uint32 dropid, const std::string& modulename, const char* function, uint32 line )
     {
-        return Drop( player, dropid, count, true, function, line );
+        return Drop( player, dropid, 1u, modulename, function, line );
     }
 
-    DropDataList& KFDropModule::Drop( KFEntity* player, uint32 dropid, uint32 count, bool showclient, const char* function, uint32 line )
+    DropDataList& KFDropModule::Drop( KFEntity* player, const VectorUInt32& droplist, const std::string& modulename, const char* function, uint32 line )
+    {
+        static DropDataList _dropdatalist;
+        _dropdatalist.clear();
+
+        for ( auto iter : droplist )
+        {
+            auto& data = Drop( player, iter, 1u, modulename, function, line );
+            _dropdatalist.splice( _dropdatalist.end(), data );
+        }
+
+        return _dropdatalist;
+    }
+
+    DropDataList& KFDropModule::Drop( KFEntity* player, uint32 dropid, uint32 count, const std::string& modulename, const char* function, uint32 line )
     {
         auto& drops = DropLogic( player, dropid, count, function, line );
 #ifdef __KF_DEBUG__
@@ -66,7 +80,7 @@ namespace KFrame
             else
             {
                 ++iter;
-                player->AddElement( &dropdata->_elements, showclient, function, line );
+                player->AddElement( &dropdata->_elements, modulename, function, line );
             }
         }
 
@@ -107,7 +121,7 @@ namespace KFrame
     {
         if ( kfsetting->_is_drop_count )
         {
-            player->UpdateData( __KF_STRING__( drop ), kfsetting->_id, __KF_STRING__( value ), KFEnum::Add, 1u );
+            player->UpdateData( __STRING__( drop ), kfsetting->_id, __STRING__( value ), KFEnum::Add, 1u );
         }
 
         // 必掉的列表
@@ -196,7 +210,7 @@ namespace KFrame
         // 如果需要重置
         if ( kfdropweight->_is_clear_var && kfsetting->_is_drop_count )
         {
-            player->UpdateData( __KF_STRING__( drop ), kfsetting->_id, __KF_STRING__( value ), KFEnum::Set, 0u );
+            player->UpdateData( __STRING__( drop ), kfsetting->_id, __STRING__( value ), KFEnum::Set, 0u );
         }
 
         if ( kfdropweight->_drop_data_setting == nullptr )
@@ -211,7 +225,7 @@ namespace KFrame
         }
 
         auto dropdata = &kfdropdataweight->_drop_data;
-        if ( dropdata->_data_name == __KF_STRING__( drop ) )
+        if ( dropdata->_data_name == __STRING__( drop ) )
         {
             // 如果是掉落的话, 继续执行掉落逻辑
             DropLogic( player, dropdata->GetValue(), 1u, outlist, function, line );

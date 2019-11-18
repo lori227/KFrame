@@ -8,7 +8,7 @@ namespace KFrame
     class KFString : public KFData
     {
     public:
-        KFString() = default;
+        KFString();
         virtual ~KFString() = default;
 
         virtual void Reset();

@@ -103,11 +103,11 @@ namespace KFrame
 
     const std::string& KFData::GetString()
     {
-        return _invalid_str;
+        return _invalid_string;
     }
     const std::string& KFData::SetString( const std::string& value )
     {
-        return _invalid_str;
+        return _invalid_string;
     }
 
     const Math3D::Vector3D& KFData::GetVector3D()
@@ -194,7 +194,7 @@ namespace KFrame
         auto kfdata = Find( dataname );
         if ( kfdata == nullptr )
         {
-            return _invalid_str;
+            return _invalid_string;
         }
 
         return kfdata->ToString();
@@ -205,7 +205,7 @@ namespace KFrame
         auto kfdata = Find( parentname, dataname );
         if ( kfdata == nullptr )
         {
-            return _invalid_str;
+            return _invalid_string;
         }
 
         return kfdata->ToString();
@@ -216,7 +216,7 @@ namespace KFrame
         auto kfdata = Find( key, dataname );
         if ( kfdata == nullptr )
         {
-            return _invalid_str;
+            return _invalid_string;
         }
 
         return kfdata->ToString();
@@ -227,7 +227,7 @@ namespace KFrame
         auto kfdata = Find( parentname, key, dataname );
         if ( kfdata == nullptr )
         {
-            return _invalid_str;
+            return _invalid_string;
         }
 
         return kfdata->ToString();

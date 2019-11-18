@@ -104,7 +104,7 @@ namespace KFrame
         auto kfhandle = FindNetHandle( handleid );
         if ( kfhandle == nullptr )
         {
-            return _invalid_str;
+            return _invalid_string;
         }
 
         return kfhandle->_remote_ip;

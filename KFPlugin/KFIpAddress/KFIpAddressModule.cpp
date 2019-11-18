@@ -50,7 +50,7 @@ namespace KFrame
         case __SH_PORT__:
         {
             // 共享内存结算
-            auto address = __KF_SHARE_MEMORY__( __KF_STRING__( port ), 10240 );
+            auto address = __KF_SHARE_MEMORY__( __STRING__( port ), 10240 );
 
             auto kframeport = reinterpret_cast< KFramePort* >( address );
             if ( kframeport->_is_inited == 0 )
@@ -88,7 +88,7 @@ namespace KFrame
         if ( _interane_ip.empty() )
         {
             // 获得外网地址
-            auto interanetip = _kf_http_client->STGet( _dns_url, _invalid_str );
+            auto interanetip = _kf_http_client->STGet( _dns_url, _invalid_string );
             if ( interanetip.empty() )
             {
                 // 获得内网地址
@@ -128,7 +128,7 @@ namespace KFrame
         WSADATA wsadata = { 0 };
         if ( WSAStartup( MAKEWORD( 2, 1 ), &wsadata ) != 0 )
         {
-            return _invalid_str;
+            return _invalid_string;
         }
 
         std::string ip = "";
@@ -149,7 +149,7 @@ namespace KFrame
         auto sd = socket( AF_INET, SOCK_DGRAM, 0 );
         if ( sd < 0 )
         {
-            return _invalid_str;
+            return _invalid_string;
         }
 
         uint8 buff[ 1024 ] = { 0 };
@@ -191,5 +191,15 @@ namespace KFrame
     const std::string& KFIpAddressModule::GetLogUrl()
     {
         return KFIpConfig::Instance()->_log_url;
+    }
+
+    const std::string& KFIpAddressModule::GetClusterName()
+    {
+        return KFIpConfig::Instance()->_cluster_name;
+    }
+
+    const std::string& KFIpAddressModule::GetClusterKey()
+    {
+        return KFIpConfig::Instance()->_cluster_key;
     }
 }

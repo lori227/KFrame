@@ -325,7 +325,6 @@ message MsgMergeItemReq
 	uint64 sourceuuid = 2;	// 道具uuid
 	bytes targetname = 3;	// 目标背包名字
 	uint64 targetuuid = 4;	// 合并的目标道具
-	bool showclient = 5;	// 客户端需要显示
 }
 
 // 移动物品(从背包到仓库 或者从仓库到背包)
@@ -336,7 +335,6 @@ message MsgMoveItemReq
 	uint64 sourceuuid = 2;	// 道具uuid
 	bytes targetname = 3;	// 目标背包名字
 	uint32 targetindex = 4;	// 目标背包位置( 0 表示服务器自己找空位置 )
-	bool showclient = 5;	// 客户端需要显示
 }
 
 // 移动所有道具到包裹
@@ -345,7 +343,6 @@ message MsgMoveAllItemReq
 {
 	bytes sourcename = 1;	// 源背包名字
 	bytes targetname = 2;	// 目标背包名字
-	bool showclient = 3;	// 客户端需要显示
 }
 
 // 交换物品(从背包到仓库 或者从仓库到背包)

@@ -9,7 +9,7 @@ namespace KFrame
     class KFVector3D : public KFData
     {
     public:
-        KFVector3D() = default;
+        KFVector3D();
         virtual ~KFVector3D() = default;
 
         virtual void Reset();

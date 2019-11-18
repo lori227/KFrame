@@ -48,7 +48,7 @@ namespace KFrame
         return length <= distance;
     }
 
-    std::string KFUtility::SplitString( std::string& srcstring, std::string split/* = DEFAULT_SPLIT_STRING*/ )
+    std::string KFUtility::SplitString( std::string& srcstring, const std::string& split )
     {
         if ( srcstring.empty() )
         {
@@ -150,7 +150,7 @@ namespace KFrame
     {
         if ( filename.empty() )
         {
-            return _invalid_str;
+            return _invalid_string;
         }
 
         auto configfile = __FORMAT__( filename, channel, service );

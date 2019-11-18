@@ -38,7 +38,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_NET_EVENT_FUNCTION__( KFClusterMasterModule::OnClientConnectClusterMaster )
     {
-        if ( netdata->_type != __KF_STRING__( master ) )
+        if ( netdata->_type != __STRING__( master ) )
         {
             return;
         }
@@ -64,7 +64,7 @@ namespace KFrame
 
     __KF_NET_EVENT_FUNCTION__( KFClusterMasterModule::OnClientLostClusterMaster )
     {
-        if ( netdata->_type != __KF_STRING__( master ) )
+        if ( netdata->_type != __STRING__( master ) )
         {
             return;
         }
@@ -88,7 +88,7 @@ namespace KFrame
 
     __KF_NET_EVENT_FUNCTION__( KFClusterMasterModule::OnServerLostClusterProxy )
     {
-        if ( netdata->_type != __KF_STRING__( proxy ) )
+        if ( netdata->_type != __STRING__( proxy ) )
         {
             return;
         }
@@ -184,7 +184,7 @@ namespace KFrame
         auto iter = _token_list.find( clientid );
         if ( iter == _token_list.end() )
         {
-            return _invalid_str;
+            return _invalid_string;
         }
 
         auto token = iter->second;
@@ -199,9 +199,9 @@ namespace KFrame
         auto strclientid = KFAppId::ToString( kfmsg.clientid() );
         __LOG_DEBUG__( "cluster client[{}] auth req!", strclientid );
 
-        if ( kfmsg.clusterkey() != _route_cluster_key )
+        if ( kfmsg.clusterkey() != _kf_ip_address->GetClusterKey() )
         {
-            return __LOG_ERROR__( "cluster client[{}] key[{}!={}] error!", strclientid, kfmsg.clusterkey(), _route_cluster_key );
+            return __LOG_ERROR__( "cluster client[{}] key[{}!={}] error!", strclientid, kfmsg.clusterkey(), _kf_ip_address->GetClusterKey() );
         }
 
         auto kfproxy = SelectProxyServer( kfmsg.clientid() ) ;

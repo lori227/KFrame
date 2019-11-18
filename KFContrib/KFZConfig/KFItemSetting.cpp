@@ -26,7 +26,7 @@ namespace KFrame
     {
         if ( type >= KFItemEnum::MaxFunction )
         {
-            return _invalid_str;
+            return _invalid_string;
         }
 
         return _function[ type ];

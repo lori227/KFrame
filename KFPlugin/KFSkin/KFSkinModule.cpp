@@ -6,10 +6,10 @@ namespace KFrame
 
     void KFSkinModule::BeforeRun()
     {
-        _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
-        __REGISTER_ADD_DATA_1__( __KF_STRING__( skin ), &KFSkinModule::OnAddSkinCallBack );
-        __REGISTER_REMOVE_DATA_1__( __KF_STRING__( skin ), &KFSkinModule::OnRemoveSkinCallBack );
-        __REGISTER_ADD_ELEMENT__( __KF_STRING__( skin ), &KFSkinModule::AddSkinElement );
+        _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
+        __REGISTER_ADD_DATA_1__( __STRING__( skin ), &KFSkinModule::OnAddSkinCallBack );
+        __REGISTER_REMOVE_DATA_1__( __STRING__( skin ), &KFSkinModule::OnRemoveSkinCallBack );
+        __REGISTER_ADD_ELEMENT__( __STRING__( skin ), &KFSkinModule::AddSkinElement );
         //////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_ENTER_PLAYER__( &KFSkinModule::OnEnterStartSkinTimer );
         __REGISTER_LEAVE_PLAYER__( &KFSkinModule::OnLeaveStopSkinTimer );
@@ -18,9 +18,9 @@ namespace KFrame
 
     void KFSkinModule::BeforeShut()
     {
-        __UN_ADD_DATA_1__( __KF_STRING__( skin ) );
-        __UN_REMOVE_DATA_1__( __KF_STRING__( skin ) );
-        __UN_ADD_ELEMENT__( __KF_STRING__( skin ) );
+        __UN_ADD_DATA_1__( __STRING__( skin ) );
+        __UN_REMOVE_DATA_1__( __STRING__( skin ) );
+        __UN_ADD_ELEMENT__( __STRING__( skin ) );
         //////////////////////////////////////////////////////////////////////////////////////////////////
         __UN_ENTER_PLAYER__();
         __UN_LEAVE_PLAYER__();
@@ -40,7 +40,7 @@ namespace KFrame
 
     void KFSkinModule::CheckStartSkinTimer( KFEntity* player )
     {
-        auto kfskinrecord = player->Find( __KF_STRING__( skin ) );
+        auto kfskinrecord = player->Find( __STRING__( skin ) );
 
         // 检查所有皮肤, 找到时间最少的一个
         auto _min_valid_time = __MAX_UINT64__;
@@ -48,7 +48,7 @@ namespace KFrame
         auto kfskin = kfskinrecord->First();
         while ( kfskin != nullptr )
         {
-            auto validtime = kfskin->Get( __KF_STRING__( time ) );
+            auto validtime = kfskin->Get( __STRING__( time ) );
             if ( validtime != 0 && validtime < _min_valid_time )
             {
                 _min_valid_time = validtime;
@@ -75,14 +75,14 @@ namespace KFrame
 
     void KFSkinModule::RemoveInvalidTimeSkin( KFEntity* player )
     {
-        auto kfskinrecord = player->Find( __KF_STRING__( skin ) );
+        auto kfskinrecord = player->Find( __STRING__( skin ) );
 
         // 查找时间皮肤
         std::unordered_map< KFData*, uint64 > timeskins;
         auto kfskin = kfskinrecord->First();
         while ( kfskin != nullptr )
         {
-            auto validtime = kfskin->Get( __KF_STRING__( time ) );
+            auto validtime = kfskin->Get( __STRING__( time ) );
             if ( validtime != 0 )
             {
                 timeskins.insert( std::make_pair( kfskin, validtime ) );
@@ -143,7 +143,7 @@ namespace KFrame
             return std::make_tuple( KFDataDefine::Show_None, nullptr );
         }
 
-        auto elementtime = kfelementobject->CalcValue( kfparent->_class_setting, __KF_STRING__( time ), multiple );
+        auto elementtime = kfelementobject->CalcValue( kfparent->_class_setting, __STRING__( time ), multiple );
 
         // 判断是否存在该皮肤
         auto kfskin = kfparent->Find( kfelementobject->_config_id );
@@ -155,7 +155,7 @@ namespace KFrame
             // 设置时间
             if ( elementtime != _invalid_int )
             {
-                kfskin->Operate( __KF_STRING__( time ), kfelementobject->_operate, KFGlobal::Instance()->_real_time + elementtime );
+                kfskin->Operate( __STRING__( time ), kfelementobject->_operate, KFGlobal::Instance()->_real_time + elementtime );
             }
 
             // 添加皮肤
@@ -164,19 +164,19 @@ namespace KFrame
         else
         {
             // 存在, 判断有效时间
-            auto datatime = kfskin->Get( __KF_STRING__( time ) );
+            auto datatime = kfskin->Get( __STRING__( time ) );
             if ( datatime != _invalid_int )
             {
                 // 时限皮肤
                 if ( elementtime == _invalid_int )
                 {
                     // 永久皮肤, 直接把时间更新成永久
-                    player->UpdateData( kfskin, __KF_STRING__( time ), KFEnum::Set, _invalid_int );
+                    player->UpdateData( kfskin, __STRING__( time ), KFEnum::Set, _invalid_int );
                 }
                 else
                 {
                     // 添加皮肤时间
-                    player->UpdateData( kfskin, __KF_STRING__( time ), KFEnum::Add, elementtime );
+                    player->UpdateData( kfskin, __STRING__( time ), KFEnum::Add, elementtime );
                 }
             }
             else
@@ -191,7 +191,7 @@ namespace KFrame
 
     __KF_ADD_DATA_FUNCTION__( KFSkinModule::OnAddSkinCallBack )
     {
-        auto validtime = kfdata->Get( __KF_STRING__( time ) );
+        auto validtime = kfdata->Get( __STRING__( time ) );
         if ( validtime == _invalid_int )
         {
             return;

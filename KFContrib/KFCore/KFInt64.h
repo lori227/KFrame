@@ -8,7 +8,7 @@ namespace KFrame
     class KFInt64 : public KFData
     {
     public:
-        KFInt64() = default;
+        KFInt64();
         virtual ~KFInt64() = default;
 
         virtual void Reset();

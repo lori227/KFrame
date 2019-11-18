@@ -20,7 +20,7 @@ namespace KFrame
     {
         // 如果是master, 不执行
         auto kfglogal = KFGlobal::Instance();
-        if ( kfglogal->_app_type == __KF_STRING__( master ) )
+        if ( kfglogal->_app_type == __STRING__( master ) )
         {
             return;
         }
@@ -53,7 +53,7 @@ namespace KFrame
         // 如果是master, 返回false, 因为master会主动连, 不需要再这里再次连接
         // 自己不能连接自己
         if ( connectname != kfglobal->_app_name ||
-                connecttype == __KF_STRING__( master ) ||
+                connecttype == __STRING__( master ) ||
                 connectid == kfglobal->_app_id->GetId() )
         {
             return false;

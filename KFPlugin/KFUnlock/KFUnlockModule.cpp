@@ -4,7 +4,7 @@ namespace KFrame
 {
     void KFUnlockModule::BeforeRun()
     {
-        _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
+        _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
         __REGISTER_ADD_DATA__( &KFUnlockModule::OnAddDataUnlockModule );
         __REGISTER_UPDATE_DATA__( &KFUnlockModule::OnUpdateDataUnlockModule );
 
@@ -25,7 +25,7 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_ENTER_PLAYER_FUNCTION__( KFUnlockModule::OnEnterUnlockModule )
     {
-        auto kfunlockrecord = player->Find( __KF_STRING__( unlock ) );
+        auto kfunlockrecord = player->Find( __STRING__( unlock ) );
         for ( auto& iter : KFUnlockConfig::Instance()->_settings._objects )
         {
             auto kfsetting = iter.second;
@@ -88,7 +88,7 @@ namespace KFrame
     void KFUnlockModule::UnlockPlayerData( KFEntity* player, const KFUnlockSetting* kfsetting, KFData* kfdatarecord )
     {
         auto kfdata = _kf_kernel->CreateObject( kfdatarecord->_data_setting );
-        kfdata->Set( __KF_STRING__( unlock ), KFGlobal::Instance()->_real_time );
+        kfdata->Set( __STRING__( unlock ), KFGlobal::Instance()->_real_time );
         kfdata->Set( kfdatarecord->_data_setting->_value_key_name, kfsetting->_data_value );
         player->AddData( kfdatarecord, kfsetting->_data_id, kfdata );
     }
@@ -96,10 +96,10 @@ namespace KFrame
 #define __GET_UNLOCK_LIST__()\
     ListUInt32 removes;\
     std::map< KFData*, const KFUnlockSetting* > _update_lock;\
-    auto kfunlockrecord = player->Find( __KF_STRING__( unlock ) );\
+    auto kfunlockrecord = player->Find( __STRING__( unlock ) );\
     for ( auto kfunlock = kfunlockrecord->First(); kfunlock != nullptr; kfunlock = kfunlockrecord->Next() )\
     {\
-        auto unlockid = kfunlock->Get<uint32>( __KF_STRING__( id ) );\
+        auto unlockid = kfunlock->Get<uint32>( __STRING__( id ) );\
         auto kfsetting = KFUnlockConfig::Instance()->FindSetting( unlockid );\
         if ( kfsetting == nullptr )\
         {\

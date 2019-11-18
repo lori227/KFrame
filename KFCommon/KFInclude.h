@@ -41,8 +41,13 @@ typedef uint64_t uint64;
 /////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////
 static const uint64 _invalid_int = 0u;
-static const std::string _invalid_str = "";
-static const std::string _globbing_str = "*";
+static const std::string _invalid_string = "";
+static const std::string _globbing_string = "*";
+static const std::string _split_string = "|";
+static const std::string _range_string = "-";
+static const std::string _domain_string = ":";
+static const std::string _and_string = "&";
+static const std::string _or_string = "|";
 /////////////////////////////////////////////////////////////////////////
 typedef std::list< std::string > ListString;
 typedef std::vector< std::string > VectorString;
@@ -60,8 +65,9 @@ typedef std::vector< uint64 > VectorUInt64;
 typedef std::map< uint32, uint32 > MapUInt32;
 typedef std::map< uint64, uint64 > MapUInt64;
 
+typedef std::map< std::string, uint64 > KeyValue;
 /////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 #endif
 
 

@@ -16,20 +16,20 @@ namespace KFrame
     {
         //////////////////////////////////////////////////////////////////////////
         auto playerid = player->GetKeyID();
-        auto kfnoteparent = player->Find( __KF_STRING__( note ) );
+        auto kfnoteparent = player->Find( __STRING__( note ) );
         for ( auto& iter : KFLeaveConfig::Instance()->_settings._objects )
         {
             auto kfsetting = iter.second;
             if ( kfsetting->_id != _invalid_int )
             {
-                auto notevalue = kfnoteparent->Get( kfsetting->_id, __KF_STRING__( value ) );
+                auto notevalue = kfnoteparent->Get( kfsetting->_id, __STRING__( value ) );
                 if ( notevalue != _invalid_int )
                 {
                     continue;
                 }
 
                 // 设置属性
-                player->UpdateData( kfnoteparent, kfsetting->_id, __KF_STRING__( value ), KFEnum::Set, 1 );
+                player->UpdateData( kfnoteparent, kfsetting->_id, __STRING__( value ), KFEnum::Set, 1 );
             }
 
             // 调用脚本

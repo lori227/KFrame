@@ -19,7 +19,7 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFMsg::S2S_BROADCAST_TO_WORLD_REQ, &KFWorldModule::HandleBroadcastToWorldReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_BROADCAST_TO_WORLD_ACK, &KFWorldModule::HandleBroadcastToWorldAck );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_HTTP__( __KF_STRING__( kickonline ), true, &KFWorldModule::HandleHttpKickOnline );
+        __REGISTER_HTTP__( __STRING__( kickonline ), true, &KFWorldModule::HandleHttpKickOnline );
     }
 
     void KFWorldModule::BeforeShut()
@@ -39,26 +39,26 @@ namespace KFrame
         __UN_MESSAGE__( KFMsg::S2S_BROADCAST_TO_WORLD_REQ );
         __UN_MESSAGE__( KFMsg::S2S_BROADCAST_TO_WORLD_ACK );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __UN_HTTP__( __KF_STRING__( kickonline ) );
+        __UN_HTTP__( __STRING__( kickonline ) );
     }
 
     void KFWorldModule::PrepareRun()
     {
-        _auth_redis = _kf_redis->Create( __KF_STRING__( auth ) );
+        _auth_redis = _kf_redis->Create( __STRING__( auth ) );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_TIMER_FUNCTION__( KFWorldModule::OnTimerWorldRegister )
     {
         // 更新给auth
-        static auto _url = _kf_ip_address->GetAuthUrl() + __KF_STRING__( worldregister );
+        static auto _url = _kf_ip_address->GetAuthUrl() + __STRING__( worldregister );
 
         __JSON_OBJECT_DOCUMENT__( sendjson );
-        __JSON_SET_VALUE__( sendjson, __KF_STRING__( world ), KFGlobal::Instance()->_app_id->ToString() );
-        __JSON_SET_VALUE__( sendjson, __KF_STRING__( url ), _kf_http_server->GetHttpUrl() );
+        __JSON_SET_VALUE__( sendjson, __STRING__( world ), KFGlobal::Instance()->_app_id->ToString() );
+        __JSON_SET_VALUE__( sendjson, __STRING__( url ), _kf_http_server->GetHttpUrl() );
         auto resultdata = _kf_http_client->STGet( _url, sendjson );
 
         __JSON_PARSE_STRING__( recvjson, resultdata );
-        auto retcode = __JSON_GET_UINT32__( recvjson, __KF_STRING__( retcode ) );
+        auto retcode = __JSON_GET_UINT32__( recvjson, __STRING__( retcode ) );
         if ( retcode == KFMsg::Ok )
         {
             __UN_TIMER_1__( objectid );
@@ -74,7 +74,7 @@ namespace KFrame
         {
             auto gateid = kfmsg.gateid( i );
             auto kfconhash = _gate_conhash.Create( gateid );
-            kfconhash->AddHashNode( __KF_STRING__( game ), kfmsg.gameid(), 50 );
+            kfconhash->AddHashNode( __STRING__( game ), kfmsg.gameid(), 50 );
 
             __LOG_INFO__( "add gate=[{}] game=[{}]!", KFAppId::ToString( gateid ), KFAppId::ToString( kfmsg.gameid() ) );
         }
@@ -97,7 +97,7 @@ namespace KFrame
 
     __KF_NET_EVENT_FUNCTION__( KFWorldModule::OnServerLostGame )
     {
-        if ( netdata->_type != __KF_STRING__( game ) )
+        if ( netdata->_type != __STRING__( game ) )
         {
             return;
         }
@@ -189,7 +189,7 @@ namespace KFrame
         auto kfsetting = KFZoneConfig::Instance()->ZoneSetting();
 
         // 查询是否存在
-        auto queryplayerid = _auth_redis->QueryUInt64( "hget {}:{} {}", __KF_STRING__( user ), accountid, kfsetting->_logic_id );
+        auto queryplayerid = _auth_redis->QueryUInt64( "hget {}:{} {}", __STRING__( user ), accountid, kfsetting->_logic_id );
         if ( !queryplayerid->IsOk() )
         {
             return _invalid_int;
@@ -202,10 +202,10 @@ namespace KFrame
         }
 
         // 创建playerid
-        auto playerid = KFGlobal::Instance()->STMakeUUID( __KF_STRING__( player ) );
+        auto playerid = KFGlobal::Instance()->STMakeUUID( __STRING__( player ) );
 
-        _auth_redis->Execute( "hset {}:{} {} {}", __KF_STRING__( online ), playerid, __KF_STRING__( accountid ), accountid );
-        auto voidresult = _auth_redis->Execute( "hset {}:{} {} {}", __KF_STRING__( user ), accountid, kfsetting->_logic_id, playerid );
+        _auth_redis->Execute( "hset {}:{} {} {}", __STRING__( online ), playerid, __STRING__( accountid ), accountid );
+        auto voidresult = _auth_redis->Execute( "hset {}:{} {} {}", __STRING__( user ), accountid, kfsetting->_logic_id, playerid );
         if ( !voidresult->IsOk() )
         {
             return _invalid_int;
@@ -213,10 +213,10 @@ namespace KFrame
 
         {
             // 更新给auth
-            static auto _update_url = _kf_ip_address->GetAuthUrl() + __KF_STRING__( zonebalance );
+            static auto _update_url = _kf_ip_address->GetAuthUrl() + __STRING__( zonebalance );
             __JSON_OBJECT_DOCUMENT__( sendjson );
-            __JSON_SET_VALUE__( sendjson, __KF_STRING__( count ), 1 );
-            __JSON_SET_VALUE__( sendjson, __KF_STRING__( zoneid ), kfsetting->_id );
+            __JSON_SET_VALUE__( sendjson, __STRING__( count ), 1 );
+            __JSON_SET_VALUE__( sendjson, __STRING__( zoneid ), kfsetting->_id );
             _kf_http_client->MTGet< KFWorldModule >( _update_url, sendjson );
         }
 
@@ -242,20 +242,20 @@ namespace KFrame
     void KFWorldModule::UpdateOnlineData( uint64 playerid, uint64 gameid )
     {
         MapString values;
-        values[ __KF_STRING__( game ) ] = __TO_STRING__( gameid );
-        values[ __KF_STRING__( world ) ] = __TO_STRING__( KFGlobal::Instance()->_app_id->GetId() );
-        _auth_redis->Update( values, "hmset {}:{}", __KF_STRING__( online ), playerid );
+        values[ __STRING__( game ) ] = __TO_STRING__( gameid );
+        values[ __STRING__( world ) ] = __TO_STRING__( KFGlobal::Instance()->_app_id->GetId() );
+        _auth_redis->Update( values, "hmset {}:{}", __STRING__( online ), playerid );
     }
 
     bool KFWorldModule::KickOnline( uint32 type, uint64 playerid, const char* function, uint32 line )
     {
-        auto kfresult = _auth_redis->QueryMap( "hgetall {}:{}", __KF_STRING__( online ), playerid );
+        auto kfresult = _auth_redis->QueryMap( "hgetall {}:{}", __STRING__( online ), playerid );
         if ( kfresult->_value.empty() )
         {
             return false;
         }
 
-        auto gameid = KFUtility::ToValue( kfresult->_value[ __KF_STRING__( game ) ] );
+        auto gameid = KFUtility::ToValue( kfresult->_value[ __STRING__( game ) ] );
         if ( gameid == _invalid_int )
         {
             return false;
@@ -269,7 +269,7 @@ namespace KFrame
         }
         else
         {
-            auto worldid = KFUtility::ToValue( kfresult->_value[ __KF_STRING__( world ) ] );
+            auto worldid = KFUtility::ToValue( kfresult->_value[ __STRING__( world ) ] );
 
             KFMsg::S2SKickPlayerToWorldReq req;
             req.set_type( type );
@@ -315,10 +315,10 @@ namespace KFrame
     {
         __JSON_PARSE_STRING__( request, data );
 
-        auto playerid = __JSON_GET_UINT64__( request, __KF_STRING__( playerid ) );
+        auto playerid = __JSON_GET_UINT64__( request, __STRING__( playerid ) );
         KickOnline( KFMsg::KickByPlatform, playerid, __FUNC_LINE__ );
 
-        return _invalid_str;
+        return _invalid_string;
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////
@@ -330,7 +330,7 @@ namespace KFrame
         ack.set_msgdata( msgdata );
         ack.set_serial( serial );
         ack.set_worldid( worldid );
-        _kf_tcp_server->SendMessageToType( __KF_STRING__( game ), KFMsg::S2S_BROADCAST_TO_GAME_ACK, &ack );
+        _kf_tcp_server->SendMessageToType( __STRING__( game ), KFMsg::S2S_BROADCAST_TO_GAME_ACK, &ack );
     }
 
     __KF_MESSAGE_FUNCTION__( KFWorldModule::HandleBroadcastToGameReq )
@@ -352,7 +352,7 @@ namespace KFrame
         ack.set_msgdata( kfmsg.msgdata() );
         ack.set_serial( _broadcast_serial );
         ack.set_worldid( KFGlobal::Instance()->_app_id->GetId() );
-        _kf_tcp_client->SendMessageToType( __KF_STRING__( world ), KFMsg::S2S_BROADCAST_TO_WORLD_ACK, &ack );
+        _kf_tcp_client->SendMessageToType( __STRING__( world ), KFMsg::S2S_BROADCAST_TO_WORLD_ACK, &ack );
     }
 
     __KF_MESSAGE_FUNCTION__( KFWorldModule::HandleBroadcastToWorldAck )

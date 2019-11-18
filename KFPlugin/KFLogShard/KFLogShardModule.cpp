@@ -14,14 +14,14 @@ namespace KFrame
 
     void KFLogShardModule::BeforeRun()
     {
-        __REGISTER_HTTP__( __KF_STRING__( address ), false, &KFLogShardModule::HandleRequestLogAddressReq );
+        __REGISTER_HTTP__( __STRING__( address ), false, &KFLogShardModule::HandleRequestLogAddressReq );
         //////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_REMOTE_LOG_TO_SERVER_REQ, &KFLogShardModule::HandleRemoteLogToServerReq );
     }
 
     void KFLogShardModule::BeforeShut()
     {
-        __UN_HTTP__( __KF_STRING__( address ) );
+        __UN_HTTP__( __STRING__( address ) );
         //////////////////////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::S2S_REMOTE_LOG_TO_SERVER_REQ );
     }
@@ -31,20 +31,20 @@ namespace KFrame
     {
         __JSON_PARSE_STRING__( request, data );
 
-        auto appname = __JSON_GET_STRING__( request, __KF_STRING__( appname ) );
-        auto apptype = __JSON_GET_STRING__( request, __KF_STRING__( apptype ) );
-        auto appid = __JSON_GET_STRING__( request, __KF_STRING__( appid ) );
+        auto appname = __JSON_GET_STRING__( request, __STRING__( appname ) );
+        auto apptype = __JSON_GET_STRING__( request, __STRING__( apptype ) );
+        auto appid = __JSON_GET_STRING__( request, __STRING__( appid ) );
 
         __LOG_INFO__( "[{}:{}:{}] request address req!", appname, apptype, appid );
 
         auto kfglobal = KFGlobal::Instance();
 
         __JSON_OBJECT_DOCUMENT__( response );
-        __JSON_SET_VALUE__( response, __KF_STRING__( appname ), kfglobal->_app_name );
-        __JSON_SET_VALUE__( response, __KF_STRING__( apptype ), kfglobal->_app_type );
-        __JSON_SET_VALUE__( response, __KF_STRING__( appid ), kfglobal->_app_id->GetId() );
-        __JSON_SET_VALUE__( response, __KF_STRING__( ip ), kfglobal->_interanet_ip );
-        __JSON_SET_VALUE__( response, __KF_STRING__( port ), kfglobal->_listen_port );
+        __JSON_SET_VALUE__( response, __STRING__( appname ), kfglobal->_app_name );
+        __JSON_SET_VALUE__( response, __STRING__( apptype ), kfglobal->_app_type );
+        __JSON_SET_VALUE__( response, __STRING__( appid ), kfglobal->_app_id->GetId() );
+        __JSON_SET_VALUE__( response, __STRING__( ip ), kfglobal->_interanet_ip );
+        __JSON_SET_VALUE__( response, __STRING__( port ), kfglobal->_listen_port );
         return _kf_http_server->SendResponse( response );
     }
 

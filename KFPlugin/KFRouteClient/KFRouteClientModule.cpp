@@ -25,10 +25,10 @@ namespace KFrame
         RegisterService();
 
         // 找到route 地址自动连接, 不需要bus对每个节点都配置一条连接信息
-        auto* kfaddress = _kf_ip_address->FindIpAddress( __KF_STRING__( route ), __KF_STRING__( master ), _globbing_str );
+        auto* kfaddress = _kf_ip_address->FindIpAddress( __STRING__( route ), __STRING__( master ), _globbing_string );
         if ( kfaddress == nullptr )
         {
-            return __LOG_ERROR__( "can't find [{}:{}] ip setting!", __KF_STRING__( route ), __KF_STRING__( master ) );
+            return __LOG_ERROR__( "can't find [{}:{}] ip setting!", __STRING__( route ), __STRING__( master ) );
         }
 
         auto port = _kf_ip_address->CalcListenPort( kfaddress->_port_type, kfaddress->_port, kfaddress->_id );

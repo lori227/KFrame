@@ -113,7 +113,7 @@ public:
                 KFUtility::ReplaceString( service, ".", "_" );
 
                 KFAppId appid( data->_id );
-                _result = __FORMAT__( "{}_{}", service, __KF_STRING__( deploy )  );
+                _result = __FORMAT__( "{}_{}", service, __STRING__( deploy )  );
                 break;
             }
         }

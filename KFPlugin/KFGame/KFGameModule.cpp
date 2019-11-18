@@ -13,7 +13,7 @@ namespace KFrame
         __REGISTER_ROUTE_MESSAGE_FUNCTION__( &KFGameModule::TranspondToPlayer );
         __REGISTER_CLIENT_TRANSPOND__( &KFGameModule::TranspondToPlayer );
 
-        _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
+        _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
         _kf_component->RegisterEntitySaveFunction( this, &KFGameModule::SavePlayer );
 
         __REGISTER_ENTER_PLAYER__( &KFGameModule::OnEnterGame );
@@ -22,7 +22,7 @@ namespace KFrame
         _kf_data_client->BindLoadPlayerFunction( this, &KFGameModule::OnAfterLoadPlayerData );
         _kf_data_client->BindQueryPlayerFunction( this, &KFGameModule::OnAfterQueryPlayerData );
 
-        __REGISTER_DEPLOY_FUNCTION__( __KF_STRING__( shutdown ), &KFGameModule::OnDeployShutDownServer );
+        __REGISTER_DEPLOY_FUNCTION__( __STRING__( shutdown ), &KFGameModule::OnDeployShutDownServer );
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_LOGIN_TO_GAME_REQ, &KFGameModule::HandleLoginToGameReq );
@@ -54,7 +54,7 @@ namespace KFrame
         _kf_data_client->UnBindLoadPlayerFunction( this );
 
         _kf_component->UnRegisterEntitySaveFunction();
-        __UN_DEPLOY_FUNCTION__( __KF_STRING__( shutdown ) );
+        __UN_DEPLOY_FUNCTION__( __STRING__( shutdown ) );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::S2S_LOGIN_TO_GAME_REQ );
         __UN_MESSAGE__( KFMsg::S2S_KICK_PLAYER_TO_GAME_REQ );
@@ -93,7 +93,7 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_NET_EVENT_FUNCTION__( KFGameModule::OnServerDiscoverGate )
     {
-        if ( netdata->_type != __KF_STRING__( gate ) )
+        if ( netdata->_type != __STRING__( gate ) )
         {
             return;
         }
@@ -101,12 +101,12 @@ namespace KFrame
         KFMsg::S2SAddGateToWorldReq req;
         req.add_gateid( netdata->_id );
         req.set_gameid( KFGlobal::Instance()->_app_id->GetId() );
-        _kf_tcp_client->SendMessageToType( __KF_STRING__( world ), KFMsg::S2S_ADD_GATE_TO_WORLD_REQ, &req );
+        _kf_tcp_client->SendMessageToType( __STRING__( world ), KFMsg::S2S_ADD_GATE_TO_WORLD_REQ, &req );
     }
 
     __KF_NET_EVENT_FUNCTION__( KFGameModule::OnServerLostGate )
     {
-        if ( netdata->_type != __KF_STRING__( gate ) )
+        if ( netdata->_type != __STRING__( gate ) )
         {
             return;
         }
@@ -114,12 +114,12 @@ namespace KFrame
         KFMsg::S2SRemoveGateToWorldReq req;
         req.set_gateid( netdata->_id );
         req.set_gameid( KFGlobal::Instance()->_app_id->GetId() );
-        _kf_tcp_client->SendMessageToType( __KF_STRING__( world ), KFMsg::S2S_REMOVE_GATE_TO_WORLD_REQ, &req );
+        _kf_tcp_client->SendMessageToType( __STRING__( world ), KFMsg::S2S_REMOVE_GATE_TO_WORLD_REQ, &req );
     }
 
     __KF_NET_EVENT_FUNCTION__( KFGameModule::OnClientConnectionWorld )
     {
-        if ( netdata->_type == __KF_STRING__( world ) )
+        if ( netdata->_type == __STRING__( world ) )
         {
             _world_hash.AddHashNode( netdata->_type, netdata->_id, 100 );
             _world_server_id = _world_hash.FindHashNode( KFGlobal::Instance()->_app_id->GetId() );
@@ -133,7 +133,7 @@ namespace KFrame
                 req.set_gameid( KFGlobal::Instance()->_app_id->GetId() );
                 for ( auto ipaddress : outlist )
                 {
-                    if ( ipaddress->_type == __KF_STRING__( gate ) )
+                    if ( ipaddress->_type == __STRING__( gate ) )
                     {
                         req.add_gateid( ipaddress->_id );
                     }
@@ -145,7 +145,7 @@ namespace KFrame
 
     __KF_NET_EVENT_FUNCTION__( KFGameModule::OnClientLostWorld )
     {
-        if ( netdata->_type == __KF_STRING__( world ) )
+        if ( netdata->_type == __STRING__( world ) )
         {
             _world_hash.RemoveHashNode( netdata->_id );
             if ( _world_server_id == netdata->_id )
@@ -186,15 +186,15 @@ namespace KFrame
     // 发送消息到客户端
     bool KFGameModule::SendToClient( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message, uint32 delay )
     {
-        auto gateid = player->Get( __KF_STRING__( gateid ) );
+        auto gateid = player->Get( __STRING__( gateid ) );
         return _kf_tcp_server->SendNetMessage( gateid, player->GetKeyID(), msgid, message, delay );
     }
 
     // 发送到玩家
     bool KFGameModule::SendToPlayer( uint64 sendid, KFData* kfbasic, uint32 msgid, ::google::protobuf::Message* message )
     {
-        auto playerid = kfbasic->Get( __KF_STRING__( id ) );
-        auto serverid = kfbasic->Get( __KF_STRING__( serverid ) );
+        auto playerid = kfbasic->Get( __STRING__( id ) );
+        auto serverid = kfbasic->Get( __STRING__( serverid ) );
         if ( serverid == _invalid_int || playerid == _invalid_int )
         {
             return false;
@@ -232,7 +232,7 @@ namespace KFrame
             return true;
         }
 
-        auto gateid = player->Get( __KF_STRING__( gateid ) );
+        auto gateid = player->Get( __STRING__( gateid ) );
         return _kf_tcp_server->SendNetMessage( gateid, playerid, msgid, data, length );
     }
 
@@ -372,7 +372,7 @@ namespace KFrame
         auto player = _kf_player->FindPlayer( kfmsg.playerid() );
         if ( player != nullptr )
         {
-            player->Set( __KF_STRING__( gateid ), __ROUTE_RECV_ID__ );
+            player->Set( __STRING__( gateid ), __ROUTE_RECV_ID__ );
 
             KFMsg::S2SEnterToGateAck ack;
             ack.set_servertime( KFGlobal::Instance()->_real_time );

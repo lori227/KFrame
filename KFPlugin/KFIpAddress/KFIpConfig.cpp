@@ -16,6 +16,10 @@ namespace KFrame
         auto lognode = config.FindNode( "LogServer" );
         _log_url = lognode.GetString( "Url" );
         //////////////////////////////////////////////////////////////////
+        auto clusternode = config.FindNode( "Cluster" );
+        _cluster_name = clusternode.GetString( "Name" );
+        _cluster_key = clusternode.GetString( "Key" );
+        //////////////////////////////////////////////////////////////////
 
         auto kfglobal = KFGlobal::Instance();
 
@@ -84,17 +88,17 @@ namespace KFrame
         for ( auto& iter : _ip_address_list )
         {
             auto& kfaddress = iter.second;
-            if ( appname != _globbing_str && appname != kfaddress._name  )
+            if ( appname != _globbing_string && appname != kfaddress._name  )
             {
                 continue;
             }
 
-            if ( apptype != _globbing_str && apptype != kfaddress._type )
+            if ( apptype != _globbing_string && apptype != kfaddress._type )
             {
                 continue;
             }
 
-            if ( appid != _globbing_str && appid != kfaddress._str_id )
+            if ( appid != _globbing_string && appid != kfaddress._str_id )
             {
                 continue;
             }

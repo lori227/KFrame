@@ -3,8 +3,8 @@
 
 namespace KFrame
 {
+#define __STRING__( name )  KFField::_##name
 #define __STRING_DEFINE__( name )  static std::string _##name = #name;
-#define __KF_STRING__( name )  KFField::_##name
 
     namespace KFField
     {
@@ -246,6 +246,7 @@ namespace KFrame
         __STRING_DEFINE__( unlock );
         __STRING_DEFINE__( condition );
         __STRING_DEFINE__( execute );
+        __STRING_DEFINE__( compound );
 
     }
 }

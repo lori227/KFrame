@@ -20,7 +20,7 @@ namespace KFrame
 
     void KFRobotModule::BeforeRun()
     {
-        _kf_plugin_manage->RegisterCommandFunction( __KF_STRING__( robot ), this, &KFRobotModule::ProcessRobotCommand );
+        _kf_plugin_manage->RegisterCommandFunction( __STRING__( robot ), this, &KFRobotModule::ProcessRobotCommand );
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_ROBOT_COMMAND__( "setname", &KFRobotModule::CommandSetName );
@@ -36,7 +36,7 @@ namespace KFrame
     void KFRobotModule::BeforeShut()
     {
         __UN_TIMER_0__();
-        _kf_plugin_manage->UnRegisterCommandFunction( __KF_STRING__( robot ) );
+        _kf_plugin_manage->UnRegisterCommandFunction( __STRING__( robot ) );
     }
 
     void KFRobotModule::PrepareRun()

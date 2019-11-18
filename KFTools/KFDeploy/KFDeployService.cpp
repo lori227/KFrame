@@ -39,8 +39,8 @@ namespace KFrame
         kfglobal->_game_time = KFClock::GetTime();
         kfglobal->_real_time = KFDate::GetTimeEx();
 
-        kfglobal->_app_name = __KF_STRING__( deploy );
-        kfglobal->_app_type = __KF_STRING__( tool );
+        kfglobal->_app_name = __STRING__( deploy );
+        kfglobal->_app_type = __STRING__( tool );
         kfglobal->_app_id->FromString( "10.0.0" );
 
         KFDeployDump kfdump( kfglobal->_app_name.c_str(), kfglobal->_app_type.c_str(), "10.0.0" );

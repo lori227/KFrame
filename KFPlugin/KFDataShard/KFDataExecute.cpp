@@ -7,9 +7,9 @@ namespace KFrame
 {
     // 每次间隔的时间
 #define __PER_SAVE_TIME__ 10000
-#define __REDIS_DATA_DRIVER__( zoneid ) _kf_redis->Create( __KF_STRING__( data ), zoneid )
-#define __MYSQL_DATA_DRIVER__( zoneid ) _kf_mysql->Create( __KF_STRING__( data ), zoneid )
-#define __MONGO_DATA_DRIVER__( zoneid ) _kf_mongo->Create( __KF_STRING__( data ), zoneid )
+#define __REDIS_DATA_DRIVER__( zoneid ) _kf_redis->Create( __STRING__( data ), zoneid )
+#define __MYSQL_DATA_DRIVER__( zoneid ) _kf_mysql->Create( __STRING__( data ), zoneid )
+#define __MONGO_DATA_DRIVER__( zoneid ) _kf_mongo->Create( __STRING__( data ), zoneid )
     /////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -110,7 +110,7 @@ namespace KFrame
             return false;
         }
 
-        auto kfresult = redisdriver->Execute( "hset {}:{} {} {}", __KF_STRING__( player ), playerid, __KF_STRING__( data ), playerdata );
+        auto kfresult = redisdriver->Execute( "hset {}:{} {} {}", __STRING__( player ), playerid, __STRING__( data ), playerdata );
         if ( !kfresult->IsOk() )
         {
             __LOG_ERROR__( "redis player[{}:{}] save failed!", zoneid, playerid );
@@ -120,7 +120,7 @@ namespace KFrame
         if ( _kf_setting->_cache_time != 0u && saveflag == KFSaveEnum::OfflineSave )
         {
             // 设置缓存时间
-            redisdriver->Execute( "expire {}:{} {}", __KF_STRING__( player ), playerid, _kf_setting->_cache_time );
+            redisdriver->Execute( "expire {}:{} {}", __STRING__( player ), playerid, _kf_setting->_cache_time );
         }
 
         __LOG_INFO__( "redis player [{}:{}] size=[{}] save ok!", zoneid, playerid, playerdata.size() );
@@ -136,7 +136,7 @@ namespace KFrame
             return nullptr;
         }
 
-        return redisdriver->QueryString( "hget {}:{} {}", __KF_STRING__( player ), playerid, __KF_STRING__( data ) );
+        return redisdriver->QueryString( "hget {}:{} {}", __STRING__( player ), playerid, __STRING__( data ) );
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFMongoDataExecute::CreateZoneIndex( KFMongoDriver* mongodriver, uint32 zoneid )
@@ -152,7 +152,7 @@ namespace KFrame
             return;
         }
 
-        auto ok = mongodriver->CreateIndex( __KF_STRING__( player ), MongoKeyword::_expire );
+        auto ok = mongodriver->CreateIndex( __STRING__( player ), MongoKeyword::_expire );
         if ( ok )
         {
             _zone_index_map[ zoneid ] = 1u;
@@ -169,12 +169,12 @@ namespace KFrame
         }
 
         CreateZoneIndex( mongodriver, zoneid );
-        auto ok = mongodriver->Insert( __KF_STRING__( player ), playerid, __KF_STRING__( data ), playerdata );
+        auto ok = mongodriver->Insert( __STRING__( player ), playerid, __STRING__( data ), playerdata );
         if ( ok )
         {
             if ( _kf_setting->_cache_time != 0u && saveflag == KFSaveEnum::OfflineSave )
             {
-                mongodriver->Expire( __KF_STRING__( player ), playerid, _kf_setting->_cache_time );
+                mongodriver->Expire( __STRING__( player ), playerid, _kf_setting->_cache_time );
             }
         }
 
@@ -190,7 +190,7 @@ namespace KFrame
             return nullptr;
         }
 
-        return mongodriver->QueryString( __KF_STRING__( player ), playerid, __KF_STRING__( data ) );
+        return mongodriver->QueryString( __STRING__( player ), playerid, __STRING__( data ) );
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFMySQLDataExecute::SaveData( uint32 zoneid, uint64 playerid, const std::string& playerdata, uint32 saveflag )
@@ -203,10 +203,10 @@ namespace KFrame
         }
 
         MapString values;
-        values[ __KF_STRING__( data ) ] = playerdata;
-        values[ __KF_STRING__( id ) ] = __TO_STRING__( playerid );
+        values[ __STRING__( data ) ] = playerdata;
+        values[ __STRING__( id ) ] = __TO_STRING__( playerid );
 
-        auto ok = mysqldriver->Insert( __KF_STRING__( player ), values );
+        auto ok = mysqldriver->Insert( __STRING__( player ), values );
         if ( !ok )
         {
             __LOG_ERROR__( "mysql player[{}:{}] save failed!", zoneid, playerid );
@@ -226,6 +226,6 @@ namespace KFrame
             return nullptr;
         }
 
-        return mysqldriver->QueryString( "select `{}` from `{}` where `{}`={};", __KF_STRING__( data ), __KF_STRING__( player ), __KF_STRING__( id ), playerid );
+        return mysqldriver->QueryString( "select `{}` from `{}` where `{}`={};", __STRING__( data ), __STRING__( player ), __STRING__( id ), playerid );
     }
 }

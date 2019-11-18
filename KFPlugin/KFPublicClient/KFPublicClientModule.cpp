@@ -5,14 +5,14 @@ namespace KFrame
 {
     void KFPublicClientModule::BeforeRun()
     {
-        _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
+        _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
         __REGISTER_UPDATE_DATA__( &KFPublicClientModule::OnUpdateDataCallBack );
         __REGISTER_UPDATE_STRING__( &KFPublicClientModule::OnUpdateStringCallBack );
 
         __REGISTER_ENTER_PLAYER__( &KFPublicClientModule::OnEnterUpdatePublicData );
         __REGISTER_LEAVE_PLAYER__( &KFPublicClientModule::OnLeaveUpdatePublicData );
 
-        _kf_basic = _kf_kernel->CreateObject( __KF_STRING__( basic ) );
+        _kf_basic = _kf_kernel->CreateObject( __STRING__( basic ) );
         _kf_route->RegisterConnectionFunction( this, &KFPublicClientModule::OnRouteConnectCluster );
         ///////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_QUERY_BASIC_REQ, &KFPublicClientModule::HandleQueryBasicReq );
@@ -45,7 +45,7 @@ namespace KFrame
         // 刷新在线逻辑
         KFMsg::S2SClearOnlineToPublicReq req;
         req.set_serverid( KFGlobal::Instance()->_app_id->GetId() );
-        _kf_route->SendToRand( __KF_STRING__( logic ), KFMsg::S2S_CLEAR_ONLINE_TO_PUBLIC_REQ, &req, true );
+        _kf_route->SendToRand( __STRING__( logic ), KFMsg::S2S_CLEAR_ONLINE_TO_PUBLIC_REQ, &req, true );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFPublicClientModule::UpdatePublicData( KFEntity* player, MapString& values )
@@ -57,7 +57,7 @@ namespace KFrame
     {
         KFMsg::S2SUpdateDataToPublicReq req;
         req.mutable_pbdata()->insert( values.begin(), values.end() );
-        _kf_route->SendToRand( __KF_STRING__( logic ), KFMsg::S2S_UPDATE_DATA_TO_PUBLIC_REQ, &req, true );
+        _kf_route->SendToRand( __STRING__( logic ), KFMsg::S2S_UPDATE_DATA_TO_PUBLIC_REQ, &req, true );
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -92,19 +92,19 @@ namespace KFrame
         auto kfglobal = KFGlobal::Instance();
 
         MapString values;
-        values[ __KF_STRING__( id ) ] = __TO_STRING__( player->GetKeyID() );
-        values[ __KF_STRING__( status ) ] = __TO_STRING__( KFMsg::FrameOnlineStatus );
-        values[ __KF_STRING__( statustime ) ] = __TO_STRING__( kfglobal->_real_time );
-        values[ __KF_STRING__( serverid ) ] = __TO_STRING__( kfglobal->_app_id->GetId() );
+        values[ __STRING__( id ) ] = __TO_STRING__( player->GetKeyID() );
+        values[ __STRING__( status ) ] = __TO_STRING__( KFMsg::FrameOnlineStatus );
+        values[ __STRING__( statustime ) ] = __TO_STRING__( kfglobal->_real_time );
+        values[ __STRING__( serverid ) ] = __TO_STRING__( kfglobal->_app_id->GetId() );
         UpdatePublicData( player, values );
     }
 
     __KF_LEAVE_PLAYER_FUNCTION__( KFPublicClientModule::OnLeaveUpdatePublicData )
     {
         MapString values;
-        values[ __KF_STRING__( serverid ) ] = "0";
-        values[ __KF_STRING__( status ) ] = __TO_STRING__( KFMsg::FrameOfflineStatus );
-        values[ __KF_STRING__( statustime ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time );
+        values[ __STRING__( serverid ) ] = "0";
+        values[ __STRING__( status ) ] = __TO_STRING__( KFMsg::FrameOfflineStatus );
+        values[ __STRING__( statustime ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time );
         UpdatePublicData( player, values );
     }
 
@@ -122,7 +122,7 @@ namespace KFrame
         // 发送到public
         KFMsg::S2SQueryBasicToPublicReq req;
         req.set_name( kfmsg.name() );
-        _kf_route->SendToRand( playerid, __KF_STRING__( logic ), KFMsg::S2S_QUERY_BASIC_TO_PUBLIC_REQ, &req, false );
+        _kf_route->SendToRand( playerid, __STRING__( logic ), KFMsg::S2S_QUERY_BASIC_TO_PUBLIC_REQ, &req, false );
     }
 
     __KF_MESSAGE_FUNCTION__( KFPublicClientModule::HandleQueryBasicToGameAck )

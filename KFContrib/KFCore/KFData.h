@@ -174,6 +174,9 @@ namespace KFrame
         virtual const Math3D::Vector3D& SetVector3D( const Math3D::Vector3D& );
 
     public:
+        // 类型
+        uint32 _data_type = 0u;
+
         // 属性配置
         const KFDataSetting* _data_setting = nullptr;
 

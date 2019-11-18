@@ -13,7 +13,7 @@ namespace KFrame
         __REGISTER_SERVER_TRANSPOND__( &KFGateModule::TranspondToGame );
         __REGISTER_CLIENT_TRANSPOND__( &KFGateModule::TranspondToClient );
 
-        __REGISTER_DEPLOY_FUNCTION__( __KF_STRING__( shutdown ), &KFGateModule::OnDeployShutDownServer );
+        __REGISTER_DEPLOY_FUNCTION__( __STRING__( shutdown ), &KFGateModule::OnDeployShutDownServer );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_LOGIN_REQ, &KFGateModule::HandleLoginReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_LOGOUT_REQ, &KFGateModule::HandleLogoutReq );
@@ -36,7 +36,7 @@ namespace KFrame
         __UN_SERVER_TRANSPOND__();
         __UN_CLIENT_TRANSPOND__();
 
-        __UN_DEPLOY_FUNCTION__( __KF_STRING__( shutdown ) );
+        __UN_DEPLOY_FUNCTION__( __STRING__( shutdown ) );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::MSG_LOGIN_REQ );
         __UN_MESSAGE__( KFMsg::S2S_RELOGIN_TO_GATE_ACK );
@@ -82,12 +82,12 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_NET_EVENT_FUNCTION__( KFGateModule::OnClientConnectionServer )
     {
-        if ( netdata->_type == __KF_STRING__( login ) )
+        if ( netdata->_type == __STRING__( login ) )
         {
             _login_conhash.AddHashNode( netdata->_type, netdata->_id, 100 );
             _login_server_id = _login_conhash.FindHashNode( KFGlobal::Instance()->_app_id->GetId() );
         }
-        else if ( netdata->_type == __KF_STRING__( game ) )
+        else if ( netdata->_type == __STRING__( game ) )
         {
             KFMsg::S2SConnectToGameReq req;
             for ( auto iter : _kf_role_list._objects )
@@ -109,7 +109,7 @@ namespace KFrame
 
     __KF_NET_EVENT_FUNCTION__( KFGateModule::OnClientLostServer )
     {
-        if ( netdata->_type == __KF_STRING__( login ) )
+        if ( netdata->_type == __STRING__( login ) )
         {
             _login_conhash.RemoveHashNode( netdata->_id );
             if ( _login_server_id == netdata->_id )
@@ -430,7 +430,7 @@ namespace KFrame
 
         // 添加一个定时器
         kfrole->_session_id = _invalid_int;
-        static auto _option = _kf_option->FindOption( __KF_STRING__( disconnettime ) );
+        static auto _option = _kf_option->FindOption( __STRING__( disconnettime ) );
         __LIMIT_TIMER_1__( kfrole->_id, _option->_uint32_value, 1, &KFGateModule::OnTimerPlayerDisconnetion );
     }
 
@@ -495,11 +495,11 @@ namespace KFrame
     //// 系统公告
     //__KF_COMMAND_FUNCTION__( OnCommandNotice );
 
-    //__REGISTER_COMMAND_FUNCTION__( __KF_STRING__( notice ), &KFWorldModule::OnCommandNotice );
-    //__REGISTER_COMMAND_FUNCTION__( __KF_STRING__( marquee ), &KFWorldModule::OnCommandMarquee );
+    //__REGISTER_COMMAND_FUNCTION__( __STRING__( notice ), &KFWorldModule::OnCommandNotice );
+    //__REGISTER_COMMAND_FUNCTION__( __STRING__( marquee ), &KFWorldModule::OnCommandMarquee );
 
-    //__UN_COMMAND_FUNCTION__( __KF_STRING__( notice ) );
-    //__UN_COMMAND_FUNCTION__( __KF_STRING__( marquee ) );
+    //__UN_COMMAND_FUNCTION__( __STRING__( notice ) );
+    //__UN_COMMAND_FUNCTION__( __STRING__( marquee ) );
     //__KF_COMMAND_FUNCTION__( KFWorldModule::OnCommandMarquee )
     //{
     //    KFMsg::MsgTellMarquee tell;

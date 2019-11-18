@@ -36,12 +36,12 @@ namespace KFrame
         KFMsg::S2SRouteClientLostToShardReq req;
         req.set_name( netdata->_name );
         req.set_clientid( netdata->_id );
-        _kf_tcp_client->SendMessageToType( __KF_STRING__( shard ), KFMsg::S2S_ROUTE_CLIENT_LOST_TO_SHARD_REQ, &req );
+        _kf_tcp_client->SendMessageToType( __STRING__( shard ), KFMsg::S2S_ROUTE_CLIENT_LOST_TO_SHARD_REQ, &req );
     }
 
     __KF_NET_EVENT_FUNCTION__( KFRouteProxyModule::OnClientConnectServer )
     {
-        if ( netdata->_type == __KF_STRING__( shard ) )
+        if ( netdata->_type == __STRING__( shard ) )
         {
             // 通知所有客户端, 请求同步信息
             KFMsg::S2SRouteDiscoverToClientReq req;
@@ -66,7 +66,7 @@ namespace KFrame
         }
         else
         {
-            _kf_tcp_client->SendMessageToType( __KF_STRING__( shard ), KFMsg::S2S_ROUTE_SYNC_OBJECT_TO_SHARD_REQ, &req );
+            _kf_tcp_client->SendMessageToType( __STRING__( shard ), KFMsg::S2S_ROUTE_SYNC_OBJECT_TO_SHARD_REQ, &req );
         }
     }
 
@@ -79,7 +79,7 @@ namespace KFrame
         req.set_clientid( kfmsg.clientid() );
         req.set_objectid( kfmsg.objectid() );
         req.set_objectcount( kfmsg.objectcount() );
-        _kf_tcp_client->SendMessageToType( __KF_STRING__( shard ), KFMsg::S2S_ROUTE_ADD_OBJECT_TO_SHARD_REQ, &req );
+        _kf_tcp_client->SendMessageToType( __STRING__( shard ), KFMsg::S2S_ROUTE_ADD_OBJECT_TO_SHARD_REQ, &req );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRouteProxyModule::HandleRouteRemoveObjectToProxyReq )
@@ -91,7 +91,7 @@ namespace KFrame
         req.set_clientid( kfmsg.clientid() );
         req.set_objectid( kfmsg.objectid() );
         req.set_objectcount( kfmsg.objectcount() );
-        _kf_tcp_client->SendMessageToType( __KF_STRING__( shard ), KFMsg::S2S_ROUTE_REMOVE_OBJECT_TO_SHARD_REQ, &req );
+        _kf_tcp_client->SendMessageToType( __STRING__( shard ), KFMsg::S2S_ROUTE_REMOVE_OBJECT_TO_SHARD_REQ, &req );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRouteProxyModule::HandleRouteMessageToServerReq )

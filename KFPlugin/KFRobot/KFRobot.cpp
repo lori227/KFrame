@@ -27,7 +27,7 @@ namespace KFrame
         _net_client = netclient;
         _fsm = new KFFsm( this );
 
-        _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
+        _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
         ////////////////////////////////////////////////////////////////////////////////
     }
 
@@ -46,8 +46,8 @@ namespace KFrame
         _client_id = 0u;
 
         KFIpAddress ipaddress;
-        ipaddress._name = __KF_STRING__( zone );
-        ipaddress._type = __KF_STRING__( gate );
+        ipaddress._name = __STRING__( zone );
+        ipaddress._type = __STRING__( gate );
         ipaddress._id = _id;
         ipaddress._ip = _login_gate_ip;
         ipaddress._port = _login_gate_port;

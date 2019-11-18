@@ -33,7 +33,7 @@ namespace KFrame
 
         // 为了防止单点, 自动连接相同类型的服务器, 不在bus表里配置
         IpAddressList iplist;
-        _kf_ip_address->FindIpAddress( kfglobal->_app_name, kfglobal->_app_type, _globbing_str, iplist );
+        _kf_ip_address->FindIpAddress( kfglobal->_app_name, kfglobal->_app_type, _globbing_string, iplist );
 
         for ( auto netdata : iplist )
         {
@@ -100,7 +100,7 @@ namespace KFrame
             KFMsg::S2STellDiscoverServerToMaster tell;
             tell.set_serverid( kfglobal->_app_id->GetId() );
             tell.mutable_listen()->CopyFrom( listendata );
-            _kf_tcp_client->SendMessageToType( __KF_STRING__( master ), KFMsg::S2S_TELL_DISCOVER_SERVER_TO_MASTER, &tell );
+            _kf_tcp_client->SendMessageToType( __STRING__( master ), KFMsg::S2S_TELL_DISCOVER_SERVER_TO_MASTER, &tell );
         }
     }
 
@@ -176,7 +176,7 @@ namespace KFrame
                 tell.set_appname( netdata->_name );
                 tell.set_apptype( netdata->_type );
                 tell.set_appid( netdata->_id );
-                _kf_tcp_client->SendMessageToType( __KF_STRING__( master ), KFMsg::S2S_TELL_LOST_SERVER_TO_MASTER, &tell );
+                _kf_tcp_client->SendMessageToType( __STRING__( master ), KFMsg::S2S_TELL_LOST_SERVER_TO_MASTER, &tell );
             }
         }
     }

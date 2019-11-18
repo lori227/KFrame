@@ -80,14 +80,14 @@ namespace KFrame
     __KF_NET_EVENT_FUNCTION__( KFClusterClientModule::OnClientConnectionServer )
     {
         // cluster 只会连接和自己不同类型的服务
-        if ( netdata->_name != _route_cluster_name )
+        if ( netdata->_name != _kf_ip_address->GetClusterName() )
         {
             return;
         }
 
         __LOG_DEBUG__( "connect route cluster server[{}:{}:{}]", netdata->_name, netdata->_type, netdata->_str_id );
 
-        if ( netdata->_type == __KF_STRING__( master ) )
+        if ( netdata->_type == __STRING__( master ) )
         {
             // 保存信息
             _str_master_id = netdata->_str_id;
@@ -97,7 +97,7 @@ namespace KFrame
             // 开启认证定时器
             __LOOP_TIMER_1__( netdata->_id, 10000, 1000, &KFClusterClientModule::OnTimerSendClusterAuthMessage );
         }
-        else if ( netdata->_type == __KF_STRING__( proxy ) )
+        else if ( netdata->_type == __STRING__( proxy ) )
         {
             // 发送登录消息定时器
             __LOOP_TIMER_1__( netdata->_id, 3000, 1, &KFClusterClientModule::OnTimerSendClusterTokenMessage );
@@ -108,7 +108,7 @@ namespace KFrame
     {
         // 请求认证
         KFMsg::S2SClusterAuthToMasterReq req;
-        req.set_clusterkey( _route_cluster_key );
+        req.set_clusterkey( _kf_ip_address->GetClusterKey() );
         req.set_clientid( KFGlobal::Instance()->_app_id->GetId() );
         auto ok = _kf_tcp_client->SendNetMessage( _cluster_master_id, KFMsg::S2S_CLUSTER_AUTH_TO_MASTER_REQ, &req );
         if ( !ok )
@@ -137,7 +137,7 @@ namespace KFrame
     __KF_NET_EVENT_FUNCTION__( KFClusterClientModule::OnClientLostServer )
     {
         // 不是转发集群
-        if ( _cluster_name != netdata->_name || netdata->_type != __KF_STRING__( proxy ) )
+        if ( _cluster_name != netdata->_name || netdata->_type != __STRING__( proxy ) )
         {
             return;
         }
@@ -198,10 +198,10 @@ namespace KFrame
         _cluster_proxy_id = 0;
         _cluster_in_services = false;
 
-        auto* kfaddress = _kf_ip_address->FindIpAddress( _cluster_name, __KF_STRING__( master ), _str_master_id );
+        auto* kfaddress = _kf_ip_address->FindIpAddress( _cluster_name, __STRING__( master ), _str_master_id );
         if ( kfaddress == nullptr )
         {
-            return __LOG_ERROR__( "can't [{}:{}:{}] address!", _cluster_name, __KF_STRING__( master ), _str_master_id );
+            return __LOG_ERROR__( "can't [{}:{}:{}] address!", _cluster_name, __STRING__( master ), _str_master_id );
         }
 
         KFIpAddress ipaddress = *kfaddress;

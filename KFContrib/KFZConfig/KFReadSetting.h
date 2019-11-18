@@ -11,22 +11,22 @@ namespace KFrame
         // 解析条件列表
         static uint32 ParseConditionList( std::string strcondition, VectorUInt32& conditionlist )
         {
-            auto conditiontype = KFEnum::ABit;
+            auto conditiontype = KFEnum::Or;
             if ( !strcondition.empty() )
             {
-                if ( strcondition.find( DEFAULT_SPLIT_STRING ) != std::string::npos )
+                if ( strcondition.find( __OR_STRING__ ) != std::string::npos )
                 {
-                    conditiontype = KFEnum::ABit;
-                    conditionlist = KFUtility::SplitList< VectorUInt32 >( strcondition, DEFAULT_SPLIT_STRING );
+                    conditiontype = KFEnum::Or;
+                    conditionlist = KFUtility::SplitList< VectorUInt32 >( strcondition, __OR_STRING__ );
                 }
-                else if ( strcondition.find( FUNCTION_AND_STRING ) != std::string::npos )
+                else if ( strcondition.find( __AND_STRING__ ) != std::string::npos )
                 {
                     conditiontype = KFEnum::And;
-                    conditionlist = KFUtility::SplitList< VectorUInt32 >( strcondition, FUNCTION_AND_STRING );
+                    conditionlist = KFUtility::SplitList< VectorUInt32 >( strcondition, __AND_STRING__ );
                 }
                 else
                 {
-                    conditiontype = KFEnum::ABit;
+                    conditiontype = KFEnum::Or;
                     auto conditionid = KFUtility::ToValue<uint32>( strcondition );
                     if ( conditionid != 0u )
                     {
@@ -44,11 +44,11 @@ namespace KFrame
             values.clear();
             while ( !strvalue.empty() )
             {
-                auto strchild = KFUtility::SplitString( strvalue, DEFAULT_SPLIT_STRING );
+                auto strchild = KFUtility::SplitString( strvalue, __SPLIT_STRING__ );
                 if ( !strchild.empty() )
                 {
-                    auto key = KFUtility::SplitValue<uint32>( strchild, FUNCTION_LINK_STRING );
-                    auto value = KFUtility::SplitValue<uint32>( strchild, FUNCTION_LINK_STRING );
+                    auto key = KFUtility::SplitValue<uint32>( strchild, __DOMAIN_STRING__ );
+                    auto value = KFUtility::SplitValue<uint32>( strchild, __DOMAIN_STRING__ );
                     if ( key != 0u && value != 0u )
                     {
                         values[ key ] = value;

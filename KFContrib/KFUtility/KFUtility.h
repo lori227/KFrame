@@ -6,12 +6,6 @@
 
 namespace KFrame
 {
-#define DEFAULT_SPLIT_STRING "|"
-#define FUNCTION_EMPTY_STRING ""
-#define FUNCTION_RANGE_STRING "-"
-#define FUNCTION_LINK_STRING ":"
-#define FUNCTION_AND_STRING "&"
-
     class KFUtility
     {
     public:
@@ -29,15 +23,15 @@ namespace KFrame
         template< class T = uint64 > static T ToValue( const std::string& srcstring );
 
         // 切割字符串
-        template< class T = uint64 > static T SplitValue( std::string& srcstring, std::string split );
+        template< class T = uint64 > static T SplitValue( std::string& srcstring, const std::string& split );
 
         // 标记
         template< class T = uint32 > static bool HaveBitMask( T value, T bitmask );
         template< class T = uint32 > static void ClearBitMask( T& value, T bitmask );
         template< class T = uint32 > static void AddBitMask( T& value, T bitmask );
 
-        template< class T > static T SplitList( std::string& srcstring, std::string split );
-        template< class T > static T SplitSet( std::string& srcstring, std::string split );
+        template< class T > static T SplitList( std::string& srcstring, const std::string& split );
+        template< class T > static T SplitSet( std::string& srcstring, const std::string& split );
 
         static bool ParseArrayList( const std::string& str, std::list< uint32 >& arraylist );
         static bool ParseArraySet( const std::string& str, std::set< uint32 >& arrayset );
@@ -59,7 +53,7 @@ namespace KFrame
         static uint32 GetHashValue( const std::string& data );
 
         // 切割字符串
-        static std::string SplitString( std::string& srcstring, std::string split );
+        static std::string SplitString( std::string& srcstring, const std::string& split );
 
         // 替换字串
         static void ReplaceString( std::string& srcstring, const std::string& strold, const std::string& strnew );

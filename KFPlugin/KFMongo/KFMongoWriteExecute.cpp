@@ -4,7 +4,7 @@ namespace KFrame
 {
     void KFMongoWriteExecute::AddExpireTime( Document& pocodocument, uint64 value, const KFDBValue& dbvalue )
     {
-        auto nowtime = dbvalue.FindValue( __KF_STRING__( time ) );
+        auto nowtime = dbvalue.FindValue( __STRING__( time ) );
         if ( nowtime == 0u )
         {
             nowtime = KFGlobal::Instance()->_real_time;

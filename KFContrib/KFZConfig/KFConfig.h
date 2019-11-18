@@ -31,7 +31,7 @@ namespace KFrame
         {
             if ( _versions.empty() )
             {
-                return _invalid_str;
+                return _invalid_string;
             }
 
             return _versions.begin()->second;

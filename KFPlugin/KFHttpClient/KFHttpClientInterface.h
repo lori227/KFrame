@@ -23,7 +23,7 @@ namespace KFrame
         template< class T >
         void MTGet( const std::string& url, const std::string& data,
                     T* object = nullptr, void ( T::*handle )( std::string&, std::string&, std::string& ) = nullptr,
-                    const std::string& args = _invalid_str )
+                    const std::string& args = _invalid_string )
         {
             KFHttpClientFunction function = nullptr;
             if ( object != nullptr )
@@ -37,7 +37,7 @@ namespace KFrame
         template< class T >
         void MTPost( const std::string& url, const std::string& data,
                      T* object = nullptr, void ( T::*handle )( std::string&, std::string&, std::string& ) = nullptr,
-                     const std::string& args = _invalid_str )
+                     const std::string& args = _invalid_string )
         {
             KFHttpClientFunction function = nullptr;
             if ( object != nullptr )
@@ -53,7 +53,7 @@ namespace KFrame
         template< class T >
         void MTGet( const std::string& url, KFJson& json,
                     T* object = nullptr, void ( T::*handle )( std::string&, std::string&, std::string& ) = nullptr,
-                    const std::string& args = _invalid_str )
+                    const std::string& args = _invalid_string )
         {
             KFHttpClientFunction function = nullptr;
             if ( object != nullptr )
@@ -67,7 +67,7 @@ namespace KFrame
         template< class T >
         void MTPost( const std::string& url, KFJson& json,
                      T* object = nullptr, void ( T::*handle )( std::string&, std::string&, std::string& ) = nullptr,
-                     const std::string& args = _invalid_str )
+                     const std::string& args = _invalid_string )
         {
             KFHttpClientFunction function = nullptr;
             if ( object != nullptr )

@@ -6,7 +6,7 @@ namespace KFrame
     void KFPlayerModule::BeforeRun()
     {
         // 注册逻辑函数
-        _kf_component = _kf_kernel->FindComponent( __KF_STRING__( player ) );
+        _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
         _kf_component->RegisterEntityInitializeFunction( this, &KFPlayerModule::InitPlayer );
         _kf_component->RegisterEntityUninitializeFunction( this, &KFPlayerModule::UnInitPlayer );
         _kf_component->RegisterEntityRunFunction( this, &KFPlayerModule::RunPlayer );
@@ -19,9 +19,9 @@ namespace KFrame
         _kf_component->RegisterShowElementFunction( this, &KFPlayerModule::SendElementToClient );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 注册command函数
-        __REGISTER_COMMAND_FUNCTION__( __KF_STRING__( adddata ), &KFPlayerModule::OnCommandAddData );
-        __REGISTER_COMMAND_FUNCTION__( __KF_STRING__( setdata ), &KFPlayerModule::OnCommandSetData );
-        __REGISTER_COMMAND_FUNCTION__( __KF_STRING__( deldata ), &KFPlayerModule::OnCommandDelData );
+        __REGISTER_COMMAND_FUNCTION__( __STRING__( adddata ), &KFPlayerModule::OnCommandAddData );
+        __REGISTER_COMMAND_FUNCTION__( __STRING__( setdata ), &KFPlayerModule::OnCommandSetData );
+        __REGISTER_COMMAND_FUNCTION__( __STRING__( deldata ), &KFPlayerModule::OnCommandDelData );
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_REMOVE_DATA_REQ, &KFPlayerModule::HandleRemoveDataReq );
@@ -45,9 +45,9 @@ namespace KFrame
         _kf_component->UnRegisterShowElementFunction();
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 取消注册command函数
-        __UN_COMMAND_FUNCTION__( __KF_STRING__( adddata ) );
-        __UN_COMMAND_FUNCTION__( __KF_STRING__( setdata ) );
-        __UN_COMMAND_FUNCTION__( __KF_STRING__( deldata ) );
+        __UN_COMMAND_FUNCTION__( __STRING__( adddata ) );
+        __UN_COMMAND_FUNCTION__( __STRING__( setdata ) );
+        __UN_COMMAND_FUNCTION__( __STRING__( deldata ) );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::MSG_REMOVE_DATA_REQ );
         __UN_MESSAGE__( KFMsg::MSG_REQUEST_SYNC_REQ );
@@ -167,7 +167,7 @@ namespace KFrame
 
     bool KFPlayerModule::SendToClient( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message, uint32 delay /* = 0 */ )
     {
-        auto gateid = player->Get( __KF_STRING__( gateid ) );
+        auto gateid = player->Get( __STRING__( gateid ) );
         return _kf_tcp_server->SendNetMessage( gateid, player->GetKeyID(), msgid, message, delay );
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -186,8 +186,8 @@ namespace KFrame
         auto kfglobal = KFGlobal::Instance();
 
         // 更新总时间
-        auto onlinetime = player->Get( __KF_STRING__( onlinetime ) );
-        player->UpdateData( __KF_STRING__( totaltime ), KFEnum::Add, kfglobal->_real_time - onlinetime );
+        auto onlinetime = player->Get( __STRING__( onlinetime ) );
+        player->UpdateData( __STRING__( totaltime ), KFEnum::Add, kfglobal->_real_time - onlinetime );
 
         // 调用函数, 处理离开游戏的一些事务逻辑
         for ( auto& iter : _player_leave_function._objects )
@@ -245,11 +245,11 @@ namespace KFrame
 
         OnEnterCreatePlayer( player, pblogin->playerid() );
 
-        player->Set( __KF_STRING__( gateid ), pblogin->gateid() );
-        player->Set( __KF_STRING__( channel ), pblogin->channel() );
-        player->Set( __KF_STRING__( account ), pblogin->account() );
-        player->Set( __KF_STRING__( accountid ), pblogin->accountid() );
-        player->Set( __KF_STRING__( onlinetime ), KFGlobal::Instance()->_real_time );
+        player->Set( __STRING__( gateid ), pblogin->gateid() );
+        player->Set( __STRING__( channel ), pblogin->channel() );
+        player->Set( __STRING__( account ), pblogin->account() );
+        player->Set( __STRING__( accountid ), pblogin->accountid() );
+        player->Set( __STRING__( onlinetime ), KFGlobal::Instance()->_real_time );
 
         // 渠道数据
         auto pbchanneldata = &pblogin->channeldata();
@@ -258,7 +258,7 @@ namespace KFrame
             auto& name = iter->first;
             auto& value = iter->second;
 
-            auto kfdata = player->Find( __KF_STRING__( basic ), name );
+            auto kfdata = player->Find( __STRING__( basic ), name );
             if ( kfdata == nullptr )
             {
                 kfdata = player->Find( name );
@@ -286,25 +286,27 @@ namespace KFrame
         }
 
         player->SetInited();
+        player->SetNew( false );
         return player;
     }
 
     void KFPlayerModule::OnEnterCreatePlayer( KFEntity* player, uint64 playerid )
     {
         auto kfglobal = KFGlobal::Instance();
-        auto kfbasic = player->Find( __KF_STRING__( basic ) );
-        kfbasic->Set( __KF_STRING__( serverid ), kfglobal->_app_id->GetId() );
+        auto kfbasic = player->Find( __STRING__( basic ) );
+        kfbasic->Set( __STRING__( serverid ), kfglobal->_app_id->GetId() );
 
         // 判断新玩家
-        auto basicid = kfbasic->Get( __KF_STRING__( id ) );
+        auto basicid = kfbasic->Get( __STRING__( id ) );
         if ( basicid == playerid )
         {
             return;
         }
 
         player->InitData();
-        kfbasic->Set( __KF_STRING__( id ), playerid );
-        player->Set( __KF_STRING__( birthday ), kfglobal->_real_time );
+        player->SetNew( true );
+        kfbasic->Set( __STRING__( id ), playerid );
+        player->Set( __STRING__( birthday ), kfglobal->_real_time );
 
         for ( auto iter : _new_player_function._objects )
         {
@@ -315,7 +317,7 @@ namespace KFrame
         // 新玩家添加道具
         for ( auto elements : KFPlayerConfig::Instance()->_new_player_elements )
         {
-            player->AddElement( elements, false, __FUNC_LINE__ );
+            player->AddElement( elements, __FUNC_LINE__ );
         }
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -333,7 +335,7 @@ namespace KFrame
         auto ok = kfelements.Parse( strdata, __FUNC_LINE__ );
         if ( ok )
         {
-            player->AddElement( &kfelements, true, __FUNC_LINE__ );
+            player->AddElement( &kfelements, __STRING__( command ), __FUNC_LINE__ );
         }
     }
 
@@ -351,7 +353,7 @@ namespace KFrame
         if ( ok )
         {
             kfelements.SetOperate( KFEnum::Set );
-            player->AddElement( &kfelements, true, __FUNC_LINE__ );
+            player->AddElement( &kfelements, __FUNC_LINE__ );
         }
     }
 

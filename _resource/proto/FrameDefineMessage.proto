@@ -90,16 +90,15 @@ message PBValues
 // 奖励显示信息
 message PBShowData
 {
-	uint32 type = 1;	// 类型
-	bytes name = 2;		// 属性名
-	uint64 value = 3;	// 属性值
-	uint64 key = 4;		// 配置表id
-	map< string, uint64 > pbuint64 = 5;		// 属性值列表
+	bytes name = 1;		// 属性名
+	uint64 value = 2;	// 属性值
+	map< string, uint64 > pbuint64 = 3;		// 属性值列表
 }
 
 message PBShowElement
 {
-	repeated PBShowData pbdata = 1;		// 显示列表
+	bytes modulename = 1;				// 模块名称
+	repeated PBShowData pbdata = 2;		// 显示列表
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
