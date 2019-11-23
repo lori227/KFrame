@@ -33,6 +33,7 @@ namespace KFrame
     protected:
         // 属性添加回调
         __KF_ADD_DATA_FUNCTION__( OnAddDataUnlockModule );
+        __KF_REMOVE_DATA_FUNCTION__( OnRemoveDataUnlockModule );
         __KF_UPDATE_DATA_FUNCTION__( OnUpdateDataUnlockModule );
 
         // 进入游戏

@@ -6,6 +6,7 @@ namespace KFrame
     {
         _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
         __REGISTER_ADD_DATA__( &KFUnlockModule::OnAddDataUnlockModule );
+        __REGISTER_REMOVE_DATA__( &KFUnlockModule::OnRemoveDataUnlockModule );
         __REGISTER_UPDATE_DATA__( &KFUnlockModule::OnUpdateDataUnlockModule );
 
         __REGISTER_ENTER_PLAYER__( &KFUnlockModule::OnEnterUnlockModule );
@@ -15,6 +16,7 @@ namespace KFrame
     void KFUnlockModule::BeforeShut()
     {
         __UN_ADD_DATA__();
+        __UN_REMOVE_DATA__();
         __UN_UPDATE_DATA__();
 
         __UN_ENTER_PLAYER__();
@@ -55,15 +57,16 @@ namespace KFrame
             }
 
             kfunlock = _kf_kernel->CreateObject( kfunlockrecord->_data_setting );
-            _kf_condition->AddCondition( kfunlock, kfsetting->_unlock_condition );
+            auto kfconditionobject = kfunlock->Find( __STRING__( conditions ) );
+            _kf_condition->AddCondition( kfconditionobject, kfsetting->_unlock_condition, kfsetting->_condition_type );
             kfunlockrecord->Add( kfsetting->_id, kfunlock );
 
             // 判断条件
-            auto complete = _kf_condition->InitCondition( player, kfunlock, kfsetting->_condition_type, KFConditionEnum::LimitNull, false );
+            auto complete = _kf_condition->InitCondition( player, kfconditionobject, KFConditionEnum::LimitNull, false );
             if ( complete )
             {
-                UnlockPlayerData( player, kfsetting, kfdatarecord );
                 kfunlockrecord->Remove( kfsetting->_id );
+                UnlockPlayerData( player, kfsetting, kfdatarecord );
             }
         }
     }
@@ -76,7 +79,7 @@ namespace KFrame
             return;
         }
 
-        auto kfdata = kfdatarecord->Find( kfsetting->_id );
+        auto kfdata = kfdatarecord->Find( kfsetting->_data_id );
         if ( kfdata != nullptr )
         {
             return;
@@ -93,7 +96,7 @@ namespace KFrame
         player->AddData( kfdatarecord, kfsetting->_data_id, kfdata );
     }
 
-#define __GET_UNLOCK_LIST__()\
+#define __UPDATE_UNLOCK_LIST__( updatefunction )\
     ListUInt32 removes;\
     std::map< KFData*, const KFUnlockSetting* > _update_lock;\
     auto kfunlockrecord = player->Find( __STRING__( unlock ) );\
@@ -106,53 +109,38 @@ namespace KFrame
             removes.push_back( unlockid );\
             continue;\
         }\
-        _update_lock[ kfunlock ] = kfsetting;\
+        auto kfconditionobject = kfunlock->Find( __STRING__( conditions ) );\
+        _update_lock[ kfconditionobject ] = kfsetting;\
+    }\
+    for ( auto unlockid : removes )\
+    {\
+        kfunlockrecord->Remove( unlockid );\
+    }\
+    for ( auto& iter : _update_lock )\
+    {\
+        auto kfconditionobject = iter.first;\
+        auto kfsetting = iter.second;\
+        auto complete = updatefunction;\
+        if ( complete )\
+        {\
+            kfunlockrecord->Remove( kfsetting->_id );\
+            UnlockPlayerData( player, kfsetting );\
+        }\
     }\
 
     __KF_ADD_DATA_FUNCTION__( KFUnlockModule::OnAddDataUnlockModule )
     {
-        __GET_UNLOCK_LIST__();
-        for ( auto& iter : _update_lock )
-        {
-            auto kfunlock = iter.first;
-            auto kfsetting = iter.second;
+        __UPDATE_UNLOCK_LIST__( _kf_condition->UpdateAddCondition( player, kfconditionobject, KFConditionEnum::LimitNull, kfdata ) );
+    }
 
-            // 判断触发
-            auto complete = _kf_condition->UpdateAddCondition( player, kfunlock, kfsetting->_condition_type, KFConditionEnum::LimitNull, kfdata );
-            if ( complete )
-            {
-                removes.push_back( kfsetting->_id );
-                UnlockPlayerData( player, kfsetting );
-            }
-        }
-
-        for ( auto unlockid : removes )
-        {
-            kfunlockrecord->Remove( unlockid );
-        }
+    __KF_REMOVE_DATA_FUNCTION__( KFUnlockModule::OnRemoveDataUnlockModule )
+    {
+        __UPDATE_UNLOCK_LIST__( _kf_condition->UpdateRemoveCondition( player, kfconditionobject, KFConditionEnum::LimitNull, kfdata ) );
     }
 
     __KF_UPDATE_DATA_FUNCTION__( KFUnlockModule::OnUpdateDataUnlockModule )
     {
-        __GET_UNLOCK_LIST__();
-        for ( auto& iter : _update_lock )
-        {
-            auto kfunlock = iter.first;
-            auto kfsetting = iter.second;
-
-            // 判断触发
-            auto complete = _kf_condition->UpdateUpdateCondition( player, kfunlock, kfsetting->_condition_type, KFConditionEnum::LimitNull, kfdata, operate, value, newvalue );
-            if ( complete )
-            {
-                removes.push_back( kfsetting->_id );
-                UnlockPlayerData( player, kfsetting );
-            }
-        }
-
-        for ( auto unlockid : removes )
-        {
-            kfunlockrecord->Remove( unlockid );
-        }
+        __UPDATE_UNLOCK_LIST__( _kf_condition->UpdateUpdateCondition( player, kfconditionobject, KFConditionEnum::LimitNull, kfdata, operate, value, newvalue ) );
     }
 }
 

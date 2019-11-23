@@ -102,9 +102,15 @@ namespace KFrame
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFConditionModule::AddCondition( KFData* kfconditiondata, const VectorUInt32& conditionlist )
+    void KFConditionModule::AddCondition( KFData* kfconditionobject, const VectorUInt32& conditionlist, uint32 conditiontype )
     {
-        auto kfconditionrecord = kfconditiondata->Find( __STRING__( condition ) );
+        if ( conditionlist.empty() )
+        {
+            return;
+        }
+
+        kfconditionobject->Set( __STRING__( type ), conditiontype );
+        auto kfconditionrecord = kfconditionobject->Find( __STRING__( condition ) );
         for ( auto conditionid : conditionlist )
         {
             auto kfsetting = KFConditionConfig::Instance()->FindSetting( conditionid );
@@ -182,26 +188,31 @@ namespace KFrame
 
         return true;
     }
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #define __CHECK_CONDITION__( checkfunciton )\
-    bool complete = false;\
-    auto kfconditionrecord = kfconditiondata->Find( __STRING__( condition ) );\
-    std::list< KFData* > conditionlist;\
-    for ( auto kfcondition = kfconditionrecord->First(); kfcondition != nullptr; kfcondition = kfconditionrecord->Next() )\
+    if ( kfconditionobject == nullptr )\
     {\
-        conditionlist.push_back( kfcondition );\
+        return false;\
     }\
-    if ( conditionlist.empty() )\
+    auto conditiontype = kfconditionobject->Get<uint32>( __STRING__( type ) );\
+    if ( conditiontype == 0u )\
     {\
         return true;\
     }\
+    auto kfconditionrecord = kfconditionobject->Find( __STRING__( condition ) );\
+    if ( kfconditionrecord->Size() == 0u )\
+    {\
+        return true;\
+    }\
+    bool complete = false;\
     switch ( conditiontype )\
     {\
     case KFEnum::Or:	\
     {\
         complete = false;\
-        for ( auto kfcondition : conditionlist )\
+        for ( auto kfcondition = kfconditionrecord->First(); kfcondition != nullptr; kfcondition = kfconditionrecord->Next() )\
         {\
             auto result = checkfunciton;\
             if ( result == KFConditionEnum::UpdateDone )\
@@ -215,7 +226,7 @@ namespace KFrame
     case KFEnum::And:	\
     {\
         complete = true;\
-        for ( auto kfcondition : conditionlist )\
+        for ( auto kfcondition = kfconditionrecord->First(); kfcondition != nullptr; kfcondition = kfconditionrecord->Next() )\
         {\
             auto result = checkfunciton;\
             if ( result != KFConditionEnum::UpdateDone )\
@@ -230,12 +241,12 @@ namespace KFrame
     }\
     return complete;\
 
-    bool KFConditionModule::InitCondition( KFEntity* kfentity, KFData* kfconditiondata, uint32 conditiontype, uint32 limitmask, bool update )
+    bool KFConditionModule::InitCondition( KFEntity* kfentity, KFData* kfconditionobject, uint32 limitmask, bool update )
     {
-        __CHECK_CONDITION__( InitCondition( kfentity, kfcondition, limitmask, update ) );
+        __CHECK_CONDITION__( InitConditionData( kfentity, kfcondition, limitmask, update ) );
     }
 
-    uint32 KFConditionModule::InitCondition( KFEntity* kfentity, KFData* kfcondition, uint32 limitmask, bool update )
+    uint32 KFConditionModule::InitConditionData( KFEntity* kfentity, KFData* kfcondition, uint32 limitmask, bool update )
     {
         auto conditionid = kfcondition->Get( kfcondition->_data_setting->_config_key_name );
         auto kfsetting = KFConditionConfig::Instance()->FindSetting( conditionid );
@@ -416,24 +427,48 @@ namespace KFrame
         return recordvalue;
     }
 
-    bool KFConditionModule::UpdateCondition( KFEntity* kfentity, KFData* kfconditiondata, uint32 conditiontype, uint32 conditionid, uint32 operate, uint32 conditionvalue )
+    uint32 KFConditionModule::CheckConditionData( KFEntity* kfentity, KFData* kfcondition )
     {
-        __CHECK_CONDITION__( UpdateCondition( kfentity, kfcondition, conditionid, operate, conditionvalue ) );
+        auto conditionid = kfcondition->Get( kfcondition->_data_setting->_config_key_name );
+        auto kfsetting = KFConditionConfig::Instance()->FindSetting( conditionid );
+        if ( kfsetting == nullptr || kfsetting->_condition_define == nullptr )
+        {
+            return KFConditionEnum::UpdateFailed;
+        }
+
+        auto conditionvalue = kfcondition->Get<uint32>( kfcondition->_data_setting->_value_key_name );
+        auto ok = KFUtility::CheckOperate<uint32>( conditionvalue, kfsetting->_done_type, kfsetting->_done_value );
+        if ( ok )
+        {
+            return KFConditionEnum::UpdateDone;
+        }
+
+        return KFConditionEnum::UpdateOk;
     }
 
-    bool KFConditionModule::UpdateAddCondition( KFEntity* kfentity, KFData* kfconditiondata, uint32 conditiontype, uint32 limitmask, KFData* kfdata )
+    bool KFConditionModule::CheckCondition( KFEntity* kfentity, KFData* kfconditionobject )
     {
-        __CHECK_CONDITION__( UpdateAddCondition( kfentity, kfcondition, limitmask, kfdata ) );
+        __CHECK_CONDITION__( CheckConditionData( kfentity, kfcondition ) );
     }
 
-    bool KFConditionModule::UpdateRemoveCondition( KFEntity* kfentity, KFData* kfconditiondata, uint32 conditiontype, uint32 limitmask, KFData* kfdata )
+    bool KFConditionModule::UpdateCondition( KFEntity* kfentity, KFData* kfconditionobject, uint32 conditionid, uint32 operate, uint32 conditionvalue )
     {
-        __CHECK_CONDITION__( UpdateRemoveCondition( kfentity, kfcondition, limitmask, kfdata ) );
+        __CHECK_CONDITION__( UpdateConditionData( kfentity, kfcondition, conditionid, operate, conditionvalue ) );
     }
 
-    bool KFConditionModule::UpdateUpdateCondition( KFEntity* kfentity, KFData* kfconditiondata, uint32 conditiontype, uint32 limitmask, KFData* kfdata, uint32 operate, uint64 value, uint64 nowvalue )
+    bool KFConditionModule::UpdateAddCondition( KFEntity* kfentity, KFData* kfconditionobject, uint32 limitmask, KFData* kfdata )
     {
-        __CHECK_CONDITION__( UpdateUpdateCondition( kfentity, kfcondition, limitmask, kfdata, operate, value, nowvalue ) );
+        __CHECK_CONDITION__( UpdateAddConditionData( kfentity, kfcondition, limitmask, kfdata ) );
+    }
+
+    bool KFConditionModule::UpdateRemoveCondition( KFEntity* kfentity, KFData* kfconditionobject, uint32 limitmask, KFData* kfdata )
+    {
+        __CHECK_CONDITION__( UpdateRemoveConditionData( kfentity, kfcondition, limitmask, kfdata ) );
+    }
+
+    bool KFConditionModule::UpdateUpdateCondition( KFEntity* kfentity, KFData* kfconditionobject, uint32 limitmask, KFData* kfdata, uint32 operate, uint64 value, uint64 nowvalue )
+    {
+        __CHECK_CONDITION__( UpdateUpdateConditionData( kfentity, kfcondition, limitmask, kfdata, operate, value, nowvalue ) );
     }
 
 #define __CLEAN_CONDITION__( cleanfunction )\
@@ -442,7 +477,7 @@ namespace KFrame
     if ( kfsetting == nullptr )\
     {\
         __LOG_ERROR__( "condition=[{}] can't find setting!", conditionid );\
-        return KFConditionEnum::UpdateFailed;\
+        return KFConditionEnum::UpdateOk;\
     }\
     if ( kfsetting->_clean_define != nullptr )\
     {\
@@ -499,19 +534,19 @@ namespace KFrame
     }\
     return KFConditionEnum::UpdateOk; \
 
-    uint32 KFConditionModule::UpdateAddCondition( KFEntity* kfentity, KFData* kfcondition, uint32 limitmask, KFData* kfdata )
+    uint32 KFConditionModule::UpdateAddConditionData( KFEntity* kfentity, KFData* kfcondition, uint32 limitmask, KFData* kfdata )
     {
         __CLEAN_CONDITION__( CalcAddConditionValue( kfentity, kfsetting->_clean_define, kfdata ) );
         __UPDATE_CONDITION__( CalcAddConditionValue( kfentity, kfsetting->_condition_define, kfdata ), kfdata );
     }
 
-    uint32 KFConditionModule::UpdateRemoveCondition( KFEntity* kfentity, KFData* kfcondition, uint32 limitmask, KFData* kfdata )
+    uint32 KFConditionModule::UpdateRemoveConditionData( KFEntity* kfentity, KFData* kfcondition, uint32 limitmask, KFData* kfdata )
     {
         __CLEAN_CONDITION__( CalcRemoveConditionValue( kfentity, kfsetting->_clean_define, kfdata ) );
         __UPDATE_CONDITION__( CalcRemoveConditionValue( kfentity, kfsetting->_condition_define, kfdata ), kfdata );
     }
 
-    uint32 KFConditionModule::UpdateUpdateCondition( KFEntity* kfentity, KFData* kfcondition, uint32 limitmask, KFData* kfdata, uint32 operate, uint64 value, uint64 nowvalue )
+    uint32 KFConditionModule::UpdateUpdateConditionData( KFEntity* kfentity, KFData* kfcondition, uint32 limitmask, KFData* kfdata, uint32 operate, uint64 value, uint64 nowvalue )
     {
         __CLEAN_CONDITION__( CalcUpdateConditionValue( kfentity, kfsetting->_clean_define, kfdata, operate, value, nowvalue ) );
         __UPDATE_CONDITION__( CalcUpdateConditionValue( kfentity, kfsetting->_condition_define, kfdata, operate, value, nowvalue ), kfdata->GetParent() );
@@ -602,7 +637,7 @@ namespace KFrame
         return std::make_tuple( 0u, 0u );
     }
 
-    uint32 KFConditionModule::UpdateCondition( KFEntity* kfentity, KFData* kfcondition, uint32 conditionid, uint32 operate, uint32 conditionvalue )
+    uint32 KFConditionModule::UpdateConditionData( KFEntity* kfentity, KFData* kfcondition, uint32 conditionid, uint32 operate, uint32 conditionvalue )
     {
         auto updateconditionid = kfcondition->GetKeyID();
         auto kfsetting = KFConditionConfig::Instance()->FindSetting( updateconditionid );

@@ -46,6 +46,11 @@ namespace KFrame
         void DropMutexCondition( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist );
         void DropOverlayCondition( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist );
 
+        // 掉落
+        void RandDropDataList( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist, const SetUInt32& excludelist );
+        void RandDropDataByWeight( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist, const SetUInt32& excludelist );
+        void RandDropDataByProbability( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist, const SetUInt32& excludelist );
+
         // 添加掉落返回数据
         void RandDropData( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist, const KFDropGroupWeight* kfdropweight, const char* function, uint32 line );
 

@@ -11,7 +11,9 @@ namespace KFrame
     public:
         std::string _str_value;
         uint32 _int_value = 0u;
+        double _double_value = 0.0f;
         MapUInt32 _map_value;
+        SetUInt32 _set_value;
     };
 
     class KFParamList

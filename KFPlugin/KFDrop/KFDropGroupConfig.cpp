@@ -8,14 +8,19 @@ namespace KFrame
         kfsetting->_is_drop_count = xmlnode.GetBoolen( "DropCount", true );
         if ( kfsetting->_condition_type == 0u )
         {
-            kfsetting->_condition_type = xmlnode.GetBoolen( "ConditionType" );
+            kfsetting->_condition_type = xmlnode.GetUInt32( "ConditionType" );
+        }
+        if ( kfsetting->_rand_type == 0u )
+        {
+            kfsetting->_rand_type = xmlnode.GetUInt32( "RandType" );
         }
 
         KFDropGroupWeight* kfdropweight = nullptr;
-
         auto dropdataid = xmlnode.GetUInt32( "DropDataId", true );
         auto weight = xmlnode.GetUInt32( "Weight", true );
-        if ( weight == 0u )
+
+        if ( ( weight == 0u && kfsetting->_rand_type == KFRandEnum::Weight ) ||
+                ( weight == KFRandEnum::TenThousand && kfsetting->_rand_type == KFRandEnum::Probability ) )
         {
             kfdropweight = __KF_NEW__( KFDropGroupWeight );
             kfdropweight->_id = dropdataid;
@@ -40,24 +45,24 @@ namespace KFrame
             auto kfsetting = iter.second;
             for ( auto kfdropgroupweight : kfsetting->_necessary_list._objects )
             {
-                InitDropDataSetting( kfdropgroupweight );
+                InitDropDataSetting( kfsetting, kfdropgroupweight );
             }
 
             for ( auto kfdropgroupweight : kfsetting->_rand_list._weight_data )
             {
-                InitDropDataSetting( kfdropgroupweight );
+                InitDropDataSetting( kfsetting, kfdropgroupweight );
             }
         }
     }
 
-    void KFDropGroupConfig::InitDropDataSetting( KFDropGroupWeight* dropgroupweight )
+    void KFDropGroupConfig::InitDropDataSetting( KFDropSetting* kfsetting, KFDropGroupWeight* dropgroupweight )
     {
         dropgroupweight->_drop_data_setting = KFDropDataConfig::Instance()->FindSetting( dropgroupweight->_id );
         if ( dropgroupweight->_drop_data_setting == nullptr )
         {
-            if ( dropgroupweight->_id != 0 )
+            if ( dropgroupweight->_id != 0u )
             {
-                __LOG_ERROR__( "dropdata=[{}] can't find setting!", dropgroupweight->_id );
+                __LOG_ERROR__( "dropid=[{}] dropdata=[{}] can't find setting!", kfsetting->_id, dropgroupweight->_id );
             }
         }
     }

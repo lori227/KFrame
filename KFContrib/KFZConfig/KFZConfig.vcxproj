@@ -17,6 +17,7 @@
     <ClInclude Include="KFDropSetting.h" />
     <ClInclude Include="KFElementConfig.h" />
     <ClInclude Include="KFExecuteData.h" />
+    <ClInclude Include="KFFormulaConfig.h" />
     <ClInclude Include="KFItemConfig.hpp" />
     <ClInclude Include="KFItemSetting.hpp" />
     <ClInclude Include="KFItemTypeConfig.hpp" />

@@ -335,6 +335,11 @@ namespace KFrame
             return false;
         }
 
+        return CleanData( kfparent, callback );
+    }
+
+    bool KFEntityEx::CleanData( KFData* kfparent, bool callback )
+    {
         ListUInt64 keys;
         for ( auto kfdata = kfparent->First(); kfdata != nullptr; kfdata = kfparent->Next() )
         {

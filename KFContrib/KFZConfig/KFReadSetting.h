@@ -73,11 +73,15 @@ namespace KFrame
                     break;
                 }
 
-                auto strvalue = xmlnode.GetString( strkey.c_str() );
                 auto param = kfsetting->_param_list.AddParam();
-                param->_str_value = strvalue;
-                param->_int_value = KFUtility::ToValue<uint32>( strvalue );
-                ParseMapUInt32( strvalue, param->_map_value );
+                auto strvalue = xmlnode.GetString( strkey.c_str() );
+                if ( !strvalue.empty() )
+                {
+                    param->_str_value = strvalue;
+                    param->_int_value = KFUtility::ToValue<uint32>( strvalue );
+                    ParseMapUInt32( strvalue, param->_map_value );
+                    param->_set_value = KFUtility::SplitSet<SetUInt32>( strvalue, __SPLIT_STRING__ );
+                }
             }
         }
     };

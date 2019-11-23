@@ -48,6 +48,7 @@
     <ClInclude Include="KFTimeConfig.h" />
     <ClInclude Include="KFExecuteData.h" />
     <ClInclude Include="KFRewardConfig.h" />
+    <ClInclude Include="KFFormulaConfig.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Kernel">

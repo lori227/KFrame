@@ -40,7 +40,7 @@ namespace KFrame
         auto kfdatasetting = kfsetting->_static_data.Create( dataname );
         kfdatasetting->_name = dataname;
 
-        kfdatasetting->_logic_name = xmlnode.GetString( "LogicName" );
+        kfdatasetting->_logic_name = xmlnode.GetString( "LogicName", true );
         if ( kfdatasetting->_logic_name.empty() )
         {
             kfdatasetting->_logic_name = kfdatasetting->_name;

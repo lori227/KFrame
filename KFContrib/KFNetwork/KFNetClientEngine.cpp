@@ -46,7 +46,6 @@ namespace KFrame
     void KFNetClientEngine::RunEngine( uint64 nowtime )
     {
         // 网络事件
-        ++_net_client_services->_frame;
         _net_client_services->_now_time = nowtime;
         _net_client_services->_net_event->RunEvent();
 

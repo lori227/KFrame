@@ -77,9 +77,6 @@ namespace KFrame
 
         // 服务器消息类型
         uint32 _message_type = 0u;
-
-        // 当前帧数
-        uint64 _frame = 0u;
     protected:
         // 线程逻辑标识
         std::atomic<bool> _thread_run;

@@ -26,13 +26,16 @@ namespace KFrame
     public:
         enum MyEnum
         {
-            MutexCondition = 1,	// 互斥条件
-            OverlayCondition = 2, // 叠加条件
+            MutexCondition = 1,		// 互斥条件
+            OverlayCondition = 2,	// 叠加条件
         };
 
     public:
         // 是否纪录掉落次数
         bool _is_drop_count = false;
+
+        // 随机类型
+        uint32 _rand_type = 0u;
 
         // 条件类型
         uint32 _condition_type = 0u;
@@ -61,7 +64,7 @@ namespace KFrame
         virtual void ReadSetting( KFNode& xmlnode, KFDropSetting* kfsetting );
 
         // 初始化掉落
-        void InitDropDataSetting( KFDropGroupWeight* dropgroupweight );
+        void InitDropDataSetting( KFDropSetting* kfsetting, KFDropGroupWeight* dropgroupweight );
     };
 }
 

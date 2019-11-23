@@ -15,14 +15,16 @@ cp -a -f ./run.deploy.agent.sh $deploypath/
 cp -a -f ./run.deploy.server.sh $deploypath/
 cp -a -f ./kill.deploy.sh $deploypath/
 cp -a -f ./svn_reload.sh $deploypath/
+cp -a -f ./svn_config.sh $deploypath/
 cp -a -f ./git_reload.sh $deploypath/
 
 #setting
 cp -a -rf  $respath/setting/* $deploypath/setting/
 
 #startup
-cp -a -rf  $respath/startup/run.deploy.agent.sh $deploypath/startup/
-cp -a -rf  $respath/startup/run.deploy.server.sh $deploypath/startup/
+cp -a -rf  $respath/startup/common $deploypath/startup/
+cp -a -rf  $respath/startup/deploy.agent.startup $deploypath/startup/
+cp -a -rf  $respath/startup/deploy.server.startup $deploypath/startup/
 
 #config
 cp -a -rf  $respath/config/config.xml $deploypath/config/

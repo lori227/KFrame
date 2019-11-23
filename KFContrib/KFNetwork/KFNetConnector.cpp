@@ -14,13 +14,9 @@ namespace KFrame
     KFNetConnector::~KFNetConnector()
     {
         _net_services = nullptr;
-
         for ( auto& iter : _delay_queue )
         {
-            for ( auto message : iter.second )
-            {
-                message->Release();
-            }
+            iter.first->Release();
         }
         _delay_queue.clear();
     }
@@ -328,19 +324,22 @@ namespace KFrame
             return;
         }
 
-        auto iter = _delay_queue.find( _net_services->_frame );
-        if ( iter == _delay_queue.end() )
+        bool havemessage = false;
+        for ( auto iter = _delay_queue.begin(); iter != _delay_queue.end(); )
         {
-            return;
+            if ( _net_services->_now_time >= iter->second )
+            {
+                havemessage = true;
+                AddSendMessage( iter->first );
+                iter = _delay_queue.erase( iter );
+            }
+            else
+            {
+                ++iter;
+            }
         }
 
-        for ( auto message : iter->second )
-        {
-            AddSendMessage( message );
-        }
-        _delay_queue.erase( iter );
-
-        if ( IsNeedSend() )
+        if ( havemessage && IsNeedSend() )
         {
             _net_services->SendEventToServices( this, KFNetDefine::SendEvent );
         }
@@ -355,7 +354,7 @@ namespace KFrame
         }
         else
         {
-            _delay_queue[ _net_services->_frame + delay ].push_back( message );
+            _delay_queue[ message ] = _net_services->_now_time + delay;
         }
 
         return ok;

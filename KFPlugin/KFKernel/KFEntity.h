@@ -36,6 +36,7 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 删除所有属性
         virtual bool CleanData( const std::string& dataname, bool callback = true ) = 0;
+        virtual bool CleanData( KFData* kfparent, bool callback = true ) = 0;
 
         // 删除属性
         virtual bool RemoveData( const std::string& dataname, uint64 key, bool callback = true ) = 0;

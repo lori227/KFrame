@@ -153,7 +153,7 @@ namespace KFrame
     void KFDropModule::DropMutexCondition( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist )
     {
         bool ishaveconditiondrop = false;
-        std::set<uint32> excludelist;
+        SetUInt32 excludelist;
         for ( auto kfdropweight : kfsetting->_rand_list._weight_data )
         {
             auto ok = _kf_condition->CheckCondition( player, &kfdropweight->_conditions );
@@ -179,16 +179,12 @@ namespace KFrame
             }
         }
 
-        auto kfdropweight = kfsetting->_rand_list.Rand( excludelist );
-        if ( kfdropweight != nullptr )
-        {
-            RandDropData( player, kfsetting, outlist, kfdropweight, __FUNC_LINE__ );
-        }
+        RandDropDataList( player, kfsetting, outlist, excludelist );
     }
 
     void KFDropModule::DropOverlayCondition( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist )
     {
-        std::set<uint32> excludelist;
+        SetUInt32 excludelist;
         for ( auto kfdropweight : kfsetting->_rand_list._weight_data )
         {
             auto ok = _kf_condition->CheckCondition( player, &kfdropweight->_conditions );
@@ -198,9 +194,56 @@ namespace KFrame
             }
         }
 
+        RandDropDataList( player, kfsetting, outlist, excludelist );
+    }
+
+    void KFDropModule::RandDropDataList( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist, const SetUInt32& excludelist )
+    {
+        switch ( kfsetting->_rand_type )
+        {
+        case KFRandEnum::Weight:
+            RandDropDataByWeight( player, kfsetting, outlist, excludelist );
+            break;
+        case KFRandEnum::Probability:
+            RandDropDataByProbability( player, kfsetting, outlist, excludelist );
+            break;
+        default:
+            __LOG_ERROR__( "drop=[{}] randtype=[{}] error", kfsetting->_id, kfsetting->_rand_type );
+            break;
+        }
+    }
+
+    void KFDropModule::RandDropDataByWeight( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist, const SetUInt32& excludelist )
+    {
         auto kfdropweight = kfsetting->_rand_list.Rand( excludelist );
         if ( kfdropweight != nullptr )
         {
+            RandDropData( player, kfsetting, outlist, kfdropweight, __FUNC_LINE__ );
+        }
+    }
+
+    void KFDropModule::RandDropDataByProbability( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist, const SetUInt32& excludelist )
+    {
+        for ( auto kfdropweight : kfsetting->_rand_list._weight_data )
+        {
+            if ( kfdropweight->_weight == 0u )
+            {
+                continue;
+            }
+
+            // 判断不在列表中
+            if ( excludelist.find( kfdropweight->_id ) != excludelist.end() )
+            {
+                continue;
+            }
+
+            // 判断概率
+            auto rand = KFGlobal::Instance()->RandRatio( KFRandEnum::TenThousand );
+            if ( rand >= kfdropweight->_weight )
+            {
+                continue;
+            }
+
             RandDropData( player, kfsetting, outlist, kfdropweight, __FUNC_LINE__ );
         }
     }

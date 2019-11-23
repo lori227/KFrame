@@ -56,7 +56,7 @@ namespace KFrame
         uint64 _last_recv_time;
 
         // 延迟发送的消息队列
-        std::map<uint64, std::list< KFNetMessage* >> _delay_queue;
+        std::map< KFNetMessage*, uint64 > _delay_queue;
     };
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
