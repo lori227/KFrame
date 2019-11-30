@@ -67,6 +67,9 @@ namespace KFrame
         virtual void AddEnterFunction( const std::string& moudle, KFEntityFunction& function );
         virtual void RemoveEnterFunction( const std::string& moudle );
 
+        virtual void AddAfterEnterFunction( const std::string& moudle, KFEntityFunction& function );
+        virtual void RemoveAfterEnterFunction( const std::string& moudle );
+
         virtual void AddLeaveFunction( const std::string& moudle, KFEntityFunction& function );
         virtual void RemoveLeaveFunction( const std::string& moudle );
 
@@ -137,6 +140,7 @@ namespace KFrame
 
         // 登录函数
         KFBind< std::string, const std::string&, KFEntityFunction > _player_enter_function;
+        KFBind< std::string, const std::string&, KFEntityFunction > _player_after_enter_function;
 
         // 离开函数
         KFBind< std::string, const std::string&, KFEntityFunction > _player_leave_function;

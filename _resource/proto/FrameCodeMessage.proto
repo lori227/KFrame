@@ -88,6 +88,7 @@ enum FrameCodeEnum
 	TaskAlreadyReceive			= 12306;	// 任务不能重复接取
 	TaskNotPreCondition			= 12307;	// 任务不满足接取条件
 	TaskReceiveFailed			= 12308;	// 任务接取失败
+	TaskReceiveOk				= 12309;	// 任务接取成功
 
 
 	//activity

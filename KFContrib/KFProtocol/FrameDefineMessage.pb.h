@@ -1353,6 +1353,20 @@ class LIBPROTOC_EXPORT PBShowData : public ::google::protobuf::Message /* @@prot
   ::std::string* release_name();
   void set_allocated_name(::std::string* name);
 
+  // bytes extendname = 4;
+  void clear_extendname();
+  static const int kExtendnameFieldNumber = 4;
+  const ::std::string& extendname() const;
+  void set_extendname(const ::std::string& value);
+  #if LANG_CXX11
+  void set_extendname(::std::string&& value);
+  #endif
+  void set_extendname(const char* value);
+  void set_extendname(const void* value, size_t size);
+  ::std::string* mutable_extendname();
+  ::std::string* release_extendname();
+  void set_allocated_extendname(::std::string* extendname);
+
   // uint64 value = 2;
   void clear_value();
   static const int kValueFieldNumber = 2;
@@ -1370,6 +1384,7 @@ class LIBPROTOC_EXPORT PBShowData : public ::google::protobuf::Message /* @@prot
       ::google::protobuf::internal::WireFormatLite::TYPE_UINT64,
       0 > pbuint64_;
   ::google::protobuf::internal::ArenaStringPtr name_;
+  ::google::protobuf::internal::ArenaStringPtr extendname_;
   ::google::protobuf::uint64 value_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameDefineMessage_2eproto::TableStruct;
@@ -2443,6 +2458,59 @@ inline ::google::protobuf::Map< ::std::string, ::google::protobuf::uint64 >*
 PBShowData::mutable_pbuint64() {
   // @@protoc_insertion_point(field_mutable_map:KFMsg.PBShowData.pbuint64)
   return pbuint64_.MutableMap();
+}
+
+// bytes extendname = 4;
+inline void PBShowData::clear_extendname() {
+  extendname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& PBShowData::extendname() const {
+  // @@protoc_insertion_point(field_get:KFMsg.PBShowData.extendname)
+  return extendname_.GetNoArena();
+}
+inline void PBShowData::set_extendname(const ::std::string& value) {
+  
+  extendname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.PBShowData.extendname)
+}
+#if LANG_CXX11
+inline void PBShowData::set_extendname(::std::string&& value) {
+  
+  extendname_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.PBShowData.extendname)
+}
+#endif
+inline void PBShowData::set_extendname(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  extendname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.PBShowData.extendname)
+}
+inline void PBShowData::set_extendname(const void* value, size_t size) {
+  
+  extendname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.PBShowData.extendname)
+}
+inline ::std::string* PBShowData::mutable_extendname() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.PBShowData.extendname)
+  return extendname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* PBShowData::release_extendname() {
+  // @@protoc_insertion_point(field_release:KFMsg.PBShowData.extendname)
+  
+  return extendname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void PBShowData::set_allocated_extendname(::std::string* extendname) {
+  if (extendname != NULL) {
+    
+  } else {
+    
+  }
+  extendname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), extendname);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.PBShowData.extendname)
 }
 
 // -------------------------------------------------------------------

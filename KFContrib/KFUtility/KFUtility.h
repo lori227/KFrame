@@ -30,11 +30,11 @@ namespace KFrame
         template< class T = uint32 > static void ClearBitMask( T& value, T bitmask );
         template< class T = uint32 > static void AddBitMask( T& value, T bitmask );
 
-        template< class T > static T SplitList( std::string& srcstring, const std::string& split );
-        template< class T > static T SplitSet( std::string& srcstring, const std::string& split );
+        template< class T > static void SplitList( T& outlist, std::string& srcstring, const std::string& split );
+        template< class T > static void SplitSet( T& outlist, std::string& srcstring, const std::string& split );
 
-        static bool ParseArrayList( const std::string& str, std::list< uint32 >& arraylist );
-        static bool ParseArraySet( const std::string& str, std::set< uint32 >& arrayset );
+        template< class T > static bool ParseArrayList( T& arraylist, const std::string& srcstring );
+        template< class T > static bool ParseArraySet( T& arrayset, const std::string& srcstring );
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -70,6 +70,9 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////////////////////
         // 获得map中最大的值
         static uint32 GetMaxMapValue( MapUInt32& mapvalues, uint32 value );
+
+        // 按权重随机map
+        static uint32 RandMapValue( MapUInt32& mapvalues, uint32 totalweight, uint32 rand );
 
     };
 }

@@ -7,14 +7,28 @@
 
 namespace KFrame
 {
+#define __SYNC_COUNT__ 3u
+    static uint32 _default_sync_sequence[ __SYNC_COUNT__ ] = { KFEnum::Set, KFEnum::Dec, KFEnum::Add };
+
+    // 默认的同步顺序
+    class KFSyncData
+    {
+    public:
+        uint32 _type = 0u;
+        bool _have_data = false;
+        KFMsg::PBObject _pbobject;
+    };
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     class KFComponentEx;
     class KFEntityEx : public KFEntity
     {
     public:
-        KFEntityEx();
-        ~KFEntityEx();
+        KFEntityEx() = default;
+        ~KFEntityEx() = default;
 
         // 初始化
         void InitData( KFComponentEx* kfcomponent );
@@ -102,14 +116,18 @@ namespace KFrame
         virtual void SetElementToData( KFElementObject* kfelement, KFData* kfdata, float multiple = 1.0f );
 
         // 添加显示数据
-        virtual void AddDataToShow( KFData* kfdata, bool find );
-        virtual void AddDataToShow( const std::string& modulename, KFData* kfdata, bool find );
+        virtual void AddDataToShow( const std::string& modulename );
 
-        virtual void AddDataToShow( const std::string& name, uint64 value, bool find );
-        virtual void AddDataToShow( const std::string& modulename, const std::string& name, uint64 value, bool find );
+        virtual void AddDataToShow( const std::string& name, uint64 value, bool find, const std::string& extendname = _invalid_string );
+        virtual void AddDataToShow( const std::string& modulename, const std::string& name, uint64 value, bool find, const std::string& extendname = _invalid_string );
 
-        virtual void AddDataToShow( const std::string& name, uint64 value, KeyValue& values, bool find );
-        virtual void AddDataToShow( const std::string& modulename, const std::string& name, uint64 value, KeyValue& values, bool find );
+        virtual void AddDataToShow( KFData* kfdata, bool find, const std::string& extendname = _invalid_string );
+        virtual void AddDataToShow( const std::string& modulename, KFData* kfdata, bool find, const std::string& extendname = _invalid_string );
+
+
+        virtual void AddDataToShow( const std::string& name, uint64 value, KeyValue& values, bool find, const std::string& extendname = _invalid_string );
+        virtual void AddDataToShow( const std::string& modulename, const std::string& name, uint64 value, KeyValue& values, bool find, const std::string& extendname = _invalid_string );
+
         virtual void AddElementToShow( const KFElement* kfelement, bool find );
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
@@ -122,6 +140,9 @@ namespace KFrame
 
         // 同步删除数据
         virtual void SyncRemoveData( KFData* kfdata, uint64 key );
+
+        // 同步数据的顺序
+        virtual void SyncdataSequence( uint32 first, uint32 second, uint32 third );
 
         // 同步数据到客户端
         void SyncEntityToClient();
@@ -156,24 +177,21 @@ namespace KFrame
         void AddShowElement( uint32 showtype, const KFElement* kfelement, KFData* kfdata, const char* function, uint32 line );
 
         // 创建显示元素
-        KFMsg::PBShowData* CreateShowData( const std::string& name, uint64 value, bool find );
+        KFMsg::PBShowData* CreateShowData( const std::string& name, uint64 value, bool find, const std::string& extendname = _invalid_string );
 
     protected:
 
         // 添加属性到pb中
         void AddSyncUpdateDataToPBObject( KFData* kfdata, KFMsg::PBObject* pbobject );
 
-        // 同步添加数据
-        void SyncAddDataToClient();
-
-        // 同步删除
-        void SyncRemoveDataToClient();
-
-        // 同步更新数据
-        void SyncUpdateDataToClient();
-
         // 发送显示奖励
         void SendShowElementToClient();
+
+        // 创建更新序号
+        KFMsg::PBObject* CreateSyncPBObject( uint32 type );
+
+        // 同步更新给客户端
+        void SyncDataToClient( const uint32* syncsort );
     public:
         // 组件
         KFComponentEx* _kf_component = nullptr;
@@ -187,21 +205,13 @@ namespace KFrame
         // 是否正在保存中
         bool _is_in_save = false;
 
-        // 添加的数据
-        bool _have_add_pb_object = false;
-        KFMsg::PBObject _add_pb_object;
-
-        // 删除的数据
-        bool _have_remove_pb_object = false;
-        KFMsg::PBObject _remove_pb_object;
-
-        // 更新的数据
-        bool _have_update_pb_object = false;
-        KFMsg::PBObject _update_pb_object;
-
         // 需要显示的element
         bool _have_show_client = false;
         KFMsg::PBShowElement _pb_show_element;
+
+        // 更新, 添加, 删除的数据
+        bool _have_sync_data = false;
+        KFSyncData _sync_list[ __SYNC_COUNT__ ];
     };
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }

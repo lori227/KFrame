@@ -256,7 +256,7 @@ namespace KFrame
             return true;
         }
 
-        return true;
+        return false;
     }
 
     bool KFDate::CheckSameDay( uint64 lasttime, uint64 nowtime )

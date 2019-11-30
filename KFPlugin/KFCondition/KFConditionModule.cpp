@@ -253,7 +253,7 @@ namespace KFrame
         if ( kfsetting == nullptr )
         {
             __LOG_ERROR__( "condition=[{}] can't find setting!", conditionid );
-            return KFConditionEnum::UpdateFailed;
+            return KFConditionEnum::UpdateDone;
         }
 
         if ( kfsetting->_condition_define == nullptr ||
@@ -477,21 +477,22 @@ namespace KFrame
     if ( kfsetting == nullptr )\
     {\
         __LOG_ERROR__( "condition=[{}] can't find setting!", conditionid );\
-        return KFConditionEnum::UpdateOk;\
+        return KFConditionEnum::UpdateDone;\
     }\
+    auto conditionvalue = kfcondition->Get<uint32>( kfcondition->_data_setting->_value_key_name ); \
+    if ( KFUtility::CheckOperate( conditionvalue, kfsetting->_done_type, kfsetting->_done_value ) )\
+    {\
+        return KFConditionEnum::UpdateDone;\
+    }\
+    auto operatetype = 0u;\
+    auto operatevalue = 0u;\
     if ( kfsetting->_clean_define != nullptr )\
     {\
-        auto conditionvalue = kfcondition->Get<uint32>( kfcondition->_data_setting->_value_key_name );\
-        if ( !KFUtility::CheckOperate( conditionvalue, kfsetting->_done_type, kfsetting->_done_value ) )\
+        std::tie( operatetype, operatevalue ) = cleanfunction;\
+        if ( operatetype != 0u )\
         {\
-            auto operatetype = 0u;\
-            auto operatevalue = 0u;\
-            std::tie( operatetype, operatevalue ) = cleanfunction;\
-            if ( operatetype != 0u )\
-            {\
-                kfentity->UpdateData( kfcondition, kfcondition->_data_setting->_value_key_name, operatetype, operatevalue );\
-                return KFConditionEnum::UpdateOk;\
-            }\
+            kfentity->UpdateData( kfcondition, kfcondition->_data_setting->_value_key_name, operatetype, operatevalue );\
+            return KFConditionEnum::UpdateOk;\
         }\
     }\
 
@@ -500,8 +501,6 @@ namespace KFrame
     {\
         return KFConditionEnum::UpdateFailed;\
     }\
-    auto operatetype = 0u;\
-    auto operatevalue = 0u;\
     std::tie( operatetype, operatevalue ) = updatefunction; \
     if ( operatetype == 0u )\
     {   \
@@ -509,7 +508,6 @@ namespace KFrame
     }\
     if ( !KFUtility::HaveBitMask<uint32>( kfsetting->_limit_mask, KFConditionEnum::LimitStatus ) )\
     {   \
-        auto conditionvalue = kfcondition->Get<uint32>( kfcondition->_data_setting->_value_key_name ); \
         if ( KFUtility::CheckOperate( conditionvalue, kfsetting->_done_type, kfsetting->_done_value ) )\
         {   \
             return KFConditionEnum::UpdateDone; \
@@ -526,7 +524,7 @@ namespace KFrame
     {   \
         return KFConditionEnum::UpdateFailed; \
     }\
-    auto conditionvalue = kfentity->UpdateData( kfcondition, kfcondition->_data_setting->_value_key_name, operatetype, operatevalue ); \
+    conditionvalue = kfentity->UpdateData( kfcondition, kfcondition->_data_setting->_value_key_name, operatetype, operatevalue ); \
     auto ok = KFUtility::CheckOperate<uint32>( conditionvalue, kfsetting->_done_type, kfsetting->_done_value ); \
     if ( ok )\
     {   \

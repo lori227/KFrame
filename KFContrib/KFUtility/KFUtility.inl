@@ -132,44 +132,43 @@ namespace KFrame
     }
 
     template< class T >
-    inline T KFUtility::SplitList( std::string& srcstring, const std::string& split )
+    inline void KFUtility::SplitList( T& outlist, std::string& srcstring, const std::string& split )
     {
-        T result;
+        outlist.clear();
         while ( !srcstring.empty() )
         {
             auto value = SplitValue< uint32 >( srcstring, split );
             if ( value != 0u )
             {
-                result.push_back( value );
+                outlist.push_back( value );
             }
         }
-
-        return result;
     }
 
     template< class T >
-    inline T KFUtility::SplitSet( std::string& srcstring, const std::string& split )
+    inline void KFUtility::SplitSet( T& outlist, std::string& srcstring, const std::string& split )
     {
-        T result;
+        outlist.clear();
         while ( !srcstring.empty() )
         {
             auto value = SplitValue< uint32 >( srcstring, split );
             if ( value != 0u )
             {
-                result.insert( value );
+                outlist.insert( value );
             }
         }
-        return result;
     }
 
-    inline bool KFUtility::ParseArrayList( const std::string& str, std::list< uint32 >& arraylist )
+    template< class T >
+    inline bool KFUtility::ParseArrayList( T& arraylist, const std::string& srcstring )
     {
-        if ( str.empty() )
+        arraylist.clear();
+        if ( srcstring.empty() )
         {
             return true;
         }
 
-        __JSON_PARSE_STRING__( kfjson, str );
+        __JSON_PARSE_STRING__( kfjson, srcstring );
         if ( !kfjson.IsArray() )
         {
             return false;
@@ -184,14 +183,16 @@ namespace KFrame
         return true;
     }
 
-    inline bool KFUtility::ParseArraySet( const std::string& str, std::set< uint32 >& arrayset )
+    template< class T >
+    inline bool KFUtility::ParseArraySet( T& arrayset, const std::string& srcstring )
     {
-        if ( str.empty() )
+        arrayset.clear();
+        if ( srcstring.empty() )
         {
             return true;
         }
 
-        __JSON_PARSE_STRING__( kfjson, str );
+        __JSON_PARSE_STRING__( kfjson, srcstring );
         if ( !kfjson.IsArray() )
         {
             return false;

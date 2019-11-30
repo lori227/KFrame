@@ -99,7 +99,7 @@ namespace KFrame
         kfsetting->_durability = xmlnode.GetUInt32( "Durability", true );
 
         auto strskill = xmlnode.GetString( "Skill", true );
-        kfsetting->_skills = KFUtility::SplitSet< std::set<uint32> >( strskill, __SPLIT_STRING__ );
+        KFUtility::SplitSet( kfsetting->_skills, strskill, __SPLIT_STRING__ );
     }
 
     void KFItemConfig::ReadMaterialSetting( KFNode& xmlnode, KFItemSetting* kfsetting )

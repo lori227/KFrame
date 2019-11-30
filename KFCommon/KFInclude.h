@@ -10,6 +10,7 @@
 #include <map>
 #include <queue>
 #include <set>
+#include <array>
 #include <algorithm>
 #include <math.h>
 #include <fstream>

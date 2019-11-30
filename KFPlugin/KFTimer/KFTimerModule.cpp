@@ -137,9 +137,6 @@ namespace KFrame
             ticks = kfdata->_interval / TimerEnum::SlotTime;
         }
 
-        // 最少需要1个刻度
-        ticks = __MAX__( 1u, ticks );
-
         // 设置圈数
         kfdata->_rotation = ticks / TimerEnum::MaxSlot;
 

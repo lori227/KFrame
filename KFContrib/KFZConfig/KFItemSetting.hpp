@@ -110,7 +110,7 @@ namespace KFrame
         uint32 _durability = 0u;
 
         // 装备技能
-        std::set< uint32 > _skills;
+        SetUInt32 _skills;
 
         // 装备属性
         std::unordered_map< std::string, uint32 > _attributes;

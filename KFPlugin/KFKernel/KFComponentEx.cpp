@@ -367,16 +367,31 @@ namespace KFrame
         _update_data_module.Remove( module );
     }
 
+    const DataKeyType& KFComponentEx::FormatDataKey( const std::string& parentname, const std::string& dataname )
+    {
+        static DataKeyType _data_key;
+        if ( parentname.empty() )
+        {
+            _data_key = DataKeyType( _component_name, dataname );
+        }
+        else
+        {
+            _data_key = DataKeyType( parentname, dataname );
+        }
+
+        return _data_key;
+    }
+
     void KFComponentEx::BindUpdateDataFunction( const std::string& module, const std::string& parentname, const std::string& dataname, KFUpdateDataFunction& function )
     {
-        auto datakey = DataKeyType( parentname, dataname );
+        auto& datakey = FormatDataKey( parentname, dataname );
         auto kfdatafunction = _update_data_function.Create( datakey );
         kfdatafunction->AddFunction( module, function );
     }
 
     void KFComponentEx::UnBindUpdateDataFunction( const std::string& module, const std::string& parentname, const std::string& dataname )
     {
-        auto datakey = DataKeyType( parentname, dataname );
+        auto& datakey = FormatDataKey( parentname, dataname );
         auto kfdatafunction = _update_data_function.Find( datakey );
         if ( kfdatafunction != nullptr )
         {
@@ -397,14 +412,14 @@ namespace KFrame
 
     void KFComponentEx::BindUpdateStringFunction( const std::string& module, const std::string& parentname, const std::string& dataname, KFUpdateStringFunction& function )
     {
-        auto datakey = DataKeyType( parentname, dataname );
+        auto& datakey = FormatDataKey( parentname, dataname );
         auto kfdatafunction = _update_string_function.Create( datakey );
         kfdatafunction->AddFunction( module, function );
     }
 
     void KFComponentEx::UnBindUpdateStringFunction( const std::string& module, const std::string& parentname, const std::string& dataname )
     {
-        auto datakey = DataKeyType( parentname, dataname );
+        auto& datakey = FormatDataKey( parentname, dataname );
         auto kfdatafunction = _update_string_function.Find( datakey );
         if ( kfdatafunction != nullptr )
         {
@@ -543,7 +558,7 @@ namespace KFrame
             }
 
             // 注册的函数
-            auto findkey = DataKeyType( kfdata->GetParent()->_data_setting->_logic_name, kfdata->_data_setting->_logic_name );
+            auto& findkey = FormatDataKey( kfdata->GetParent()->_data_setting->_logic_name, kfdata->_data_setting->_logic_name );
             auto kfdatafunction = _update_data_function.Find( findkey );
             if ( kfdatafunction != nullptr )
             {
@@ -572,7 +587,7 @@ namespace KFrame
             }
 
             // 注册的函数
-            auto findkey = DataKeyType( kfdata->GetParent()->_data_setting->_logic_name, kfdata->_data_setting->_logic_name );
+            auto& findkey = FormatDataKey( kfdata->GetParent()->_data_setting->_logic_name, kfdata->_data_setting->_logic_name );
             auto kfdatafunction = _update_string_function.Find( findkey );
             if ( kfdatafunction != nullptr )
             {

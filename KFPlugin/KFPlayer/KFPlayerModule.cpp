@@ -122,6 +122,17 @@ namespace KFrame
         _player_enter_function.Remove( moudle );
     }
 
+    void KFPlayerModule::AddAfterEnterFunction( const std::string& moudle, KFEntityFunction& function )
+    {
+        auto kffunction = _player_after_enter_function.Create( moudle );
+        kffunction->_function = function;
+    }
+
+    void KFPlayerModule::RemoveAfterEnterFunction( const std::string& moudle )
+    {
+        _player_after_enter_function.Remove( moudle );
+    }
+
     void KFPlayerModule::AddLeaveFunction( const std::string& moudle, KFEntityFunction& function )
     {
         auto kffunction = _player_leave_function.Create( moudle );
@@ -174,7 +185,7 @@ namespace KFrame
     void KFPlayerModule::InitPlayer( KFEntity* player )
     {
         // 初始化个模块数据
-        for ( auto iter : _player_init_function._objects )
+        for ( auto& iter : _player_init_function._objects )
         {
             auto kffunction = iter.second;
             kffunction->_function( player );
@@ -183,11 +194,9 @@ namespace KFrame
 
     void KFPlayerModule::UnInitPlayer( KFEntity* player )
     {
-        auto kfglobal = KFGlobal::Instance();
-
         // 更新总时间
         auto onlinetime = player->Get( __STRING__( onlinetime ) );
-        player->UpdateData( __STRING__( totaltime ), KFEnum::Add, kfglobal->_real_time - onlinetime );
+        player->Operate( __STRING__( totaltime ), KFEnum::Add, KFGlobal::Instance()->_real_time - onlinetime );
 
         // 调用函数, 处理离开游戏的一些事务逻辑
         for ( auto& iter : _player_leave_function._objects )
@@ -207,7 +216,7 @@ namespace KFrame
     void KFPlayerModule::RunPlayer( KFEntity* player )
     {
         // 逻辑更新
-        for ( auto iter : _player_run_function._objects )
+        for ( auto& iter : _player_run_function._objects )
         {
             auto kffunction = iter.second;
             kffunction->_function( player );
@@ -216,7 +225,7 @@ namespace KFrame
 
     void KFPlayerModule::AfterRunPlayer( KFEntity* player )
     {
-        for ( auto iter : _player_after_run_function._objects )
+        for ( auto& iter : _player_after_run_function._objects )
         {
             auto kffunction = iter.second;
             kffunction->_function( player );
@@ -272,14 +281,19 @@ namespace KFrame
         }
 
         // 调用重置函数
-        for ( auto iter : _player_reset_function._objects )
+        for ( auto& iter : _player_reset_function._objects )
         {
             auto kffunction = iter.second;
             kffunction->_function( player );
         }
 
         // 调用函数, 处理进入游戏的一些事务逻辑
-        for ( auto iter : _player_enter_function._objects )
+        for ( auto& iter : _player_enter_function._objects )
+        {
+            auto kffunction = iter.second;
+            kffunction->_function( player );
+        }
+        for ( auto& iter : _player_after_enter_function._objects )
         {
             auto kffunction = iter.second;
             kffunction->_function( player );
@@ -308,7 +322,7 @@ namespace KFrame
         kfbasic->Set( __STRING__( id ), playerid );
         player->Set( __STRING__( birthday ), kfglobal->_real_time );
 
-        for ( auto iter : _new_player_function._objects )
+        for ( auto& iter : _new_player_function._objects )
         {
             auto kffunction = iter.second;
             kffunction->_function( player );

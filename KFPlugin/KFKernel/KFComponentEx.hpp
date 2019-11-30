@@ -195,6 +195,8 @@ namespace KFrame
         // 删除
         void DeleteEntity( KFEntity* kfentity );
 
+        // 格式化数据Key
+        const DataKeyType& FormatDataKey( const std::string& parentname, const std::string& dataname );
     public:
         // 对象实例列表
         KFHashMap< uint64, uint64, KFEntity > _entitys;

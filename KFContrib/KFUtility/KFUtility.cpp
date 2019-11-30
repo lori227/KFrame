@@ -185,4 +185,23 @@ namespace KFrame
 
         return findvalue;
     }
+
+    uint32 KFUtility::RandMapValue( MapUInt32& mapvalues, uint32 totalweight, uint32 rand )
+    {
+        if ( totalweight > 0u )
+        {
+            auto value = 0u;
+            rand = rand % totalweight;
+            for ( auto& iter : mapvalues )
+            {
+                value += iter.second;
+                if ( rand < value )
+                {
+                    return iter.first;
+                }
+            }
+        }
+
+        return 0u;
+    }
 }

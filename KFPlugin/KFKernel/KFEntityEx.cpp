@@ -7,19 +7,6 @@
 
 namespace KFrame
 {
-    KFEntityEx::KFEntityEx()
-    {
-        _is_inited = false;
-        _kf_component = nullptr;
-        _have_add_pb_object = false;
-        _have_remove_pb_object = false;
-        _have_update_pb_object = false;
-    }
-
-    KFEntityEx::~KFEntityEx()
-    {
-    }
-
     // 是否初始化完成
     bool KFEntityEx::IsInited()
     {
@@ -45,6 +32,11 @@ namespace KFrame
     {
         _kf_component = kfcomponent;
         KFDataFactory::InitData( this, _kf_component->_data_setting->_class_setting, _kf_component->_data_setting );
+
+        for ( auto i = 0u; i < __SYNC_COUNT__; ++i )
+        {
+            _sync_list[ i ]._type = _default_sync_sequence[ i ];
+        }
     }
 
     KFData* KFEntityEx::CreateData( const std::string& dataname )
@@ -69,7 +61,6 @@ namespace KFrame
         kfdata->SetKeyID( key );
         return kfdata;
     }
-
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -487,26 +478,30 @@ namespace KFrame
     void KFEntityEx::AddShowElement( uint32 showtype, const KFElement* kfelement, KFData* kfdata, const char* function, uint32 line )
     {
         // 打印日志
-        if ( showtype == KFDataDefine::Show_Element )
+        switch ( showtype )
         {
+        case KFDataDefine::Show_Element:
             AddElementToShow( kfelement, false );
-            __LOG_INFO_FUNCTION__( function, line, "add={}", kfelement->ToString() );
-        }
-        else if ( showtype == KFDataDefine::Show_Data )
-        {
+            __LOG_INFO_FUNCTION__( function, line, "{}=[{}] add=[{}]", _kf_component->_component_name, GetKeyID(), kfelement->ToString() );
+            break;
+        case KFDataDefine::Show_Data:
             AddDataToShow( kfdata, false );
-            __LOG_INFO_FUNCTION__( function, line, "add={{\"{}\":{}}}", kfelement->_data_name, kfdata->ToString() );
+            __LOG_INFO_FUNCTION__( function, line, "{}=[{}] add=[{{\"{}\":{}}}]", _kf_component->_component_name, GetKeyID(), kfelement->_data_name, kfdata->ToString() );
+            break;
+        default:
+            __LOG_INFO_FUNCTION__( function, line, "{}=[{}] add=[{}]", _kf_component->_component_name, GetKeyID(), kfelement->ToString() );
+            break;
         }
     }
 
-    KFMsg::PBShowData* KFEntityEx::CreateShowData( const std::string& name, uint64 value, bool find )
+    KFMsg::PBShowData* KFEntityEx::CreateShowData( const std::string& name, uint64 value, bool find, const std::string& extendname )
     {
         if ( find )
         {
             for ( auto i = 0; i < _pb_show_element.pbdata_size(); ++i )
             {
                 auto pbdata = _pb_show_element.mutable_pbdata( i );
-                if ( pbdata->name() != name )
+                if ( pbdata->name() != name || pbdata->extendname() != extendname )
                 {
                     continue;
                 }
@@ -540,6 +535,7 @@ namespace KFrame
         auto pbdata = _pb_show_element.add_pbdata();
         pbdata->set_name( name );
         pbdata->set_value( value );
+        pbdata->set_extendname( extendname );
         return pbdata;
     }
 
@@ -577,17 +573,25 @@ namespace KFrame
         }
     }
 
-    void KFEntityEx::AddDataToShow( const std::string& name, uint64 value, bool find )
+    void KFEntityEx::AddDataToShow( const std::string& modulename )
+    {
+        _pb_show_element.set_modulename( modulename );
+
+        _have_show_client = true;
+        _kf_component->AddSyncEntity( this );
+    }
+
+    void KFEntityEx::AddDataToShow( const std::string& name, uint64 value, bool find, const std::string& extendname )
     {
         if ( _pb_show_element.modulename().empty() )
         {
             return;
         }
 
-        CreateShowData( name, value, find );
+        CreateShowData( name, value, find, extendname );
     }
 
-    void KFEntityEx::AddDataToShow( const std::string& modulename, const std::string& name, uint64 value, bool find )
+    void KFEntityEx::AddDataToShow( const std::string& modulename, const std::string& name, uint64 value, bool find, const std::string& extendname )
     {
         if ( value == 0u )
         {
@@ -595,30 +599,37 @@ namespace KFrame
         }
 
         _pb_show_element.set_modulename( modulename );
-        AddDataToShow( name, value, find );
+        AddDataToShow( name, value, find, extendname );
     }
 
-    void KFEntityEx::AddDataToShow( const std::string& name, uint64 value, KeyValue& values, bool find )
+    void KFEntityEx::AddDataToShow( const std::string& name, uint64 value, KeyValue& values, bool find, const std::string& extendname )
     {
         if ( _pb_show_element.modulename().empty() )
         {
             return;
         }
 
-        auto pbshowdata = CreateShowData( name, value, find );
+        auto pbshowdata = CreateShowData( name, value, find, extendname );
         for ( auto& iter : values )
         {
-            ( *pbshowdata->mutable_pbuint64() )[ iter.first ] += iter.second;
+            if ( iter.first == __STRING__( count ) )
+            {
+                ( *pbshowdata->mutable_pbuint64() )[ iter.first ] += iter.second;
+            }
+            else
+            {
+                ( *pbshowdata->mutable_pbuint64() )[ iter.first ] = iter.second;
+            }
         }
     }
 
-    void KFEntityEx::AddDataToShow( const std::string& modulename, const std::string& name, uint64 value, KeyValue& values, bool find )
+    void KFEntityEx::AddDataToShow( const std::string& modulename, const std::string& name, uint64 value, KeyValue& values, bool find, const std::string& extendname )
     {
         _pb_show_element.set_modulename( modulename );
-        AddDataToShow( name, value, values, find );
+        AddDataToShow( name, value, values, find, extendname );
     }
 
-    void KFEntityEx::AddDataToShow( KFData* kfdata, bool find )
+    void KFEntityEx::AddDataToShow( KFData* kfdata, bool find, const std::string& extendname )
     {
         if ( _pb_show_element.modulename().empty() ||
                 !kfdata->_data_setting->HaveMask( KFDataDefine::Mask_Show ) )
@@ -633,14 +644,14 @@ namespace KFrame
         case KFDataDefine::Type_Int64:
         case KFDataDefine::Type_UInt64:
         {
-            CreateShowData( kfdata->_data_setting->_name, kfdata->Get(), find );
+            CreateShowData( kfdata->_data_setting->_name, kfdata->Get(), find, extendname );
             break;
         }
         case KFDataDefine::Type_Object:
         case KFDataDefine::Type_Record:
         {
             auto configid = kfdata->Get( kfdata->_data_setting->_config_key_name );
-            auto pbshowdata = CreateShowData( kfdata->_data_setting->_name, configid, find );
+            auto pbshowdata = CreateShowData( kfdata->_data_setting->_name, configid, find, extendname );
             for ( auto kfchild = kfdata->First(); kfchild != nullptr; kfchild = kfdata->Next() )
             {
                 if ( !kfchild->_data_setting->HaveMask( KFDataDefine::Mask_Show ) ||
@@ -656,10 +667,10 @@ namespace KFrame
         }
     }
 
-    void KFEntityEx::AddDataToShow( const std::string& modulename, KFData* kfdata, bool find )
+    void KFEntityEx::AddDataToShow( const std::string& modulename, KFData* kfdata, bool find, const std::string& extendname )
     {
         _pb_show_element.set_modulename( modulename );
-        AddDataToShow( kfdata, find );
+        AddDataToShow( kfdata, find, extendname );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -759,10 +770,8 @@ namespace KFrame
             }
         }
 
-        if ( showtype != KFDataDefine::Show_None )
-        {
-            AddShowElement( showtype, kfelement, showdata, __FUNC_LINE__ );
-        }
+        // 显示log
+        AddShowElement( showtype, kfelement, showdata, function, line );
     }
 
     std::tuple<uint32, KFData*> KFEntityEx::AddNormalElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line, float multiple )
@@ -1047,7 +1056,7 @@ namespace KFrame
     {
         if ( !kfelements->IsEmpty() )
         {
-            __LOG_INFO_FUNCTION__( function, line, "{}={} remove elements=[{}]!", _kf_component->_component_name, GetKeyID(), kfelements->_str_element );
+            __LOG_INFO_FUNCTION__( function, line, "{}=[{}] remove elements=[{}]!", _kf_component->_component_name, GetKeyID(), kfelements->_str_element );
         }
 
         for ( auto kfelement : kfelements->_element_list )
@@ -1203,7 +1212,7 @@ namespace KFrame
     void KFEntityEx::SyncAddData( KFData* kfdata, uint64 key )
     {
         __PREPARE_SYNC__( _kf_component->_entity_sync_add_function );
-        auto pbobject = &_add_pb_object;
+        auto pbobject = CreateSyncPBObject( KFEnum::Add );
         do
         {
             __FIND_PROTO_OBJECT__;
@@ -1212,29 +1221,22 @@ namespace KFrame
                 KFKernelModule::Instance()->SaveToObject( savedata, pbobject, KFDataDefine::Mask_Client );
             }
         } while ( !datahierarchy.empty() );
-
-        // 设置有添加属性
-        _have_add_pb_object = true;
-        _kf_component->AddSyncEntity( this );
     }
 
     void KFEntityEx::SyncRemoveData( KFData* kfdata, uint64 key )
     {
         __PREPARE_SYNC__( _kf_component->_entity_sync_remove_function );
-        auto pbobject = &_remove_pb_object;
+        auto pbobject = CreateSyncPBObject( KFEnum::Dec );
         do
         {
             __FIND_PROTO_OBJECT__;
         } while ( !datahierarchy.empty() );
-
-        _have_remove_pb_object = true;
-        _kf_component->AddSyncEntity( this );
     }
 
     void KFEntityEx::SyncUpdateData( KFData* kfdata, uint64 key )
     {
         __PREPARE_SYNC__( _kf_component->_entity_sync_update_function );
-        auto pbobject = &_update_pb_object;
+        auto pbobject = CreateSyncPBObject( KFEnum::Set );
         do
         {
             __FIND_PROTO_OBJECT__;
@@ -1254,10 +1256,6 @@ namespace KFrame
                 }
             }
         } while ( !datahierarchy.empty() );
-
-        // 设置有添加属性
-        _have_update_pb_object = true;
-        _kf_component->AddSyncEntity( this );
     }
 
     void KFEntityEx::AddSyncUpdateDataToPBObject( KFData* kfdata, KFMsg::PBObject* pbobject )
@@ -1292,53 +1290,11 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////
     void KFEntityEx::SyncEntityToClient()
     {
-        // 同步删除
-        SyncRemoveDataToClient();
-
-        // 同步添加
-        SyncAddDataToClient();
-
         // 同步更新
-        SyncUpdateDataToClient();
+        SyncDataToClient( _default_sync_sequence );
 
         // 同步显示奖励
         SendShowElementToClient();
-    }
-
-    void KFEntityEx::SyncAddDataToClient()
-    {
-        if ( !_have_add_pb_object )
-        {
-            return;
-        }
-
-        _have_add_pb_object = false;
-        _kf_component->_entity_sync_add_function( this, _add_pb_object );
-        _add_pb_object.Clear();
-    }
-
-    void KFEntityEx::SyncUpdateDataToClient()
-    {
-        if ( !_have_update_pb_object )
-        {
-            return;
-        }
-
-        _have_update_pb_object = false;
-        _kf_component->_entity_sync_update_function( this, _update_pb_object );
-        _update_pb_object.Clear();
-    }
-
-    void KFEntityEx::SyncRemoveDataToClient()
-    {
-        if ( !_have_remove_pb_object )
-        {
-            return;
-        }
-
-        _have_remove_pb_object = false;
-        _kf_component->_entity_sync_remove_function( this, _remove_pb_object );
-        _remove_pb_object.Clear();
     }
 
     void KFEntityEx::SendShowElementToClient()
@@ -1351,6 +1307,70 @@ namespace KFrame
         _have_show_client = false;
         _kf_component->_show_element_function( this, _pb_show_element );
         _pb_show_element.Clear();
+    }
+
+    // 默认的更新顺序
+    KFMsg::PBObject* KFEntityEx::CreateSyncPBObject( uint32 type )
+    {
+        _have_sync_data = true;
+        _kf_component->AddSyncEntity( this );
+
+        for ( auto i = 0u; i < __SYNC_COUNT__; ++i )
+        {
+            auto kfsyncdata = &_sync_list[ i ];
+            if ( kfsyncdata->_type == type )
+            {
+                kfsyncdata->_have_data = true;
+                return &kfsyncdata->_pbobject;
+            }
+        }
+
+        auto kfsyncdata = &_sync_list[ 0u ];
+        kfsyncdata->_have_data = true;
+        return &kfsyncdata->_pbobject;
+    }
+
+    void KFEntityEx::SyncdataSequence( uint32 first, uint32 second, uint32 third )
+    {
+        _have_sync_data = true;
+        uint32 syncsequence[ __SYNC_COUNT__ ] = { first, second, third };
+
+        // 设置排序后, 把数据先同步客户端
+        SyncDataToClient( syncsequence );
+    }
+
+    void KFEntityEx::SyncDataToClient( const uint32* syncsequence )
+    {
+        if ( !_have_sync_data )
+        {
+            return;
+        }
+        _have_sync_data = false;
+
+        for ( auto i = 0u; i < __SYNC_COUNT__; ++i )
+        {
+            auto kfsyncdata = &_sync_list[ i ];
+            if ( kfsyncdata->_have_data )
+            {
+                switch ( kfsyncdata->_type )
+                {
+                case KFEnum::Add:
+                    _kf_component->_entity_sync_add_function( this, kfsyncdata->_pbobject );
+                    break;
+                case KFEnum::Dec:
+                    _kf_component->_entity_sync_remove_function( this, kfsyncdata->_pbobject );
+                    break;
+                case KFEnum::Set:
+                    _kf_component->_entity_sync_update_function( this, kfsyncdata->_pbobject );
+                    break;
+                }
+
+                kfsyncdata->_have_data = false;
+                kfsyncdata->_pbobject.Clear();
+            }
+
+            kfsyncdata->_type = syncsequence[ i ];
+        }
     }
     /////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////

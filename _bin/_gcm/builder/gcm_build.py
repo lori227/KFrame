@@ -113,6 +113,13 @@ def copy_setting():
                 new_file = '%s_%s_%s' % ( '0', '0', file_name )
                 shutil.copy( local_path + new_file, os.path.join(output_folder, setting_path) )
 
+def _ignore_config_files(path, content):
+        to_ignore = []
+        for file_ in content:
+            if file_ in ('.git', ".svn",'CNT','EN'):
+                to_ignore.append(file_)
+        return to_ignore
+
 def copy_version( copybin ):
     if copybin == True:
         if is_linux():
@@ -128,7 +135,7 @@ def copy_version( copybin ):
             shutil.copytree(base_path + lib_path, os.path.join(output_folder, lib_path))
     
     if os.path.exists(base_path + config_path):
-        shutil.copytree(base_path + config_path, os.path.join(output_folder, config_path))
+        shutil.copytree(base_path + config_path, os.path.join(output_folder, config_path),ignore=_ignore_config_files)
 
     if os.path.exists(base_path + script_path):
         shutil.copytree(base_path + script_path, os.path.join(output_folder, script_path))
@@ -207,7 +214,9 @@ if args['type'] == 1:
 
     if (args['svn'] is not None) and (args['version'] is not None):
         print 'start pack RELEASE VERSION'
-        release_version_name = '%s_%s_%s.tar.gz' % ( args['project'], branch_name, args['version'])
+        service = args['service']
+        (channel_id, service_type ) = service.split('.')
+        release_version_name = '%s_%s_%s_%s_%s.tar.gz' % ( args['project'], branch_name,channel_id,service_type,args['version'])
 
         make_version_file(args['version'])
 

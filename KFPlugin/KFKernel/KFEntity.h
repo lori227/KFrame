@@ -105,14 +105,16 @@ namespace KFrame
         virtual void RemoveElement( const KFElements* kfelements, const char* function, uint32 line, float multiple = 1.0f ) = 0;
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        virtual void AddDataToShow( KFData* kfdata, bool find ) = 0;
-        virtual void AddDataToShow( const std::string& modulename, KFData* kfdata, bool find ) = 0;
+        virtual void AddDataToShow( const std::string& modulename ) = 0;
 
-        virtual void AddDataToShow( const std::string& name, uint64 value, bool find ) = 0;
-        virtual void AddDataToShow( const std::string& modulename, const std::string& name, uint64 value, bool find ) = 0;
+        virtual void AddDataToShow( const std::string& name, uint64 value, bool find, const std::string& extendname = _invalid_string ) = 0;
+        virtual void AddDataToShow( const std::string& modulename, const std::string& name, uint64 value, bool find, const std::string& extendname = _invalid_string ) = 0;
 
-        virtual void AddDataToShow( const std::string& name, uint64 value, KeyValue& values, bool find ) = 0;
-        virtual void AddDataToShow( const std::string& modulename, const std::string& name, uint64 value, KeyValue& values, bool find ) = 0;
+        virtual void AddDataToShow( KFData* kfdata, bool find, const std::string& extendname = _invalid_string ) = 0;
+        virtual void AddDataToShow( const std::string& modulename, KFData* kfdata, bool find, const std::string& extendname = _invalid_string ) = 0;
+
+        virtual void AddDataToShow( const std::string& name, uint64 value, KeyValue& values, bool find, const std::string& extendname = _invalid_string ) = 0;
+        virtual void AddDataToShow( const std::string& modulename, const std::string& name, uint64 value, KeyValue& values, bool find, const std::string& extendname = _invalid_string ) = 0;
 
         virtual void AddElementToShow( const KFElement* kfelement, bool find ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -130,6 +132,9 @@ namespace KFrame
 
         // 同步删除数据
         virtual void SyncRemoveData( KFData* kfdata, uint64 key ) = 0;
+
+        // 同步数据的顺序
+        virtual void SyncdataSequence( uint32 first, uint32 second, uint32 third ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         virtual uint64 GetConfigValue( const std::string& name, uint64 id, uint64 maxvalue = __MAX_UINT64__ ) = 0;
 

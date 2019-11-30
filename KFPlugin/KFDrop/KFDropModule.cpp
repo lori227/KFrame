@@ -68,6 +68,11 @@ namespace KFrame
         SendDropDataToClient( player, dropid, count, drops );
 #endif // __KF_DEBUG__
 
+        if ( !modulename.empty() )
+        {
+            player->AddDataToShow( modulename );
+        }
+
         for ( auto iter = drops.begin(); iter != drops.end(); )
         {
             auto dropdata = *iter;
@@ -80,7 +85,7 @@ namespace KFrame
             else
             {
                 ++iter;
-                player->AddElement( &dropdata->_elements, modulename, function, line );
+                player->AddElement( &dropdata->_elements, function, line );
             }
         }
 
@@ -215,7 +220,7 @@ namespace KFrame
 
     void KFDropModule::RandDropDataByWeight( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist, const SetUInt32& excludelist )
     {
-        auto kfdropweight = kfsetting->_rand_list.Rand( excludelist );
+        auto kfdropweight = kfsetting->_rand_list.Rand( excludelist, true );
         if ( kfdropweight != nullptr )
         {
             RandDropData( player, kfsetting, outlist, kfdropweight, __FUNC_LINE__ );
