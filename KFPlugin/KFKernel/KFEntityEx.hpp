@@ -142,7 +142,7 @@ namespace KFrame
         virtual void SyncRemoveData( KFData* kfdata, uint64 key );
 
         // 同步数据的顺序
-        virtual void SyncdataSequence( uint32 first, uint32 second, uint32 third );
+        virtual void SyncDataSequence( uint32 first, uint32 second, uint32 third );
 
         // 同步数据到客户端
         void SyncEntityToClient();

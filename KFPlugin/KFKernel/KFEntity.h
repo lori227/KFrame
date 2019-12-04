@@ -134,7 +134,7 @@ namespace KFrame
         virtual void SyncRemoveData( KFData* kfdata, uint64 key ) = 0;
 
         // 同步数据的顺序
-        virtual void SyncdataSequence( uint32 first, uint32 second, uint32 third ) = 0;
+        virtual void SyncDataSequence( uint32 first, uint32 second, uint32 third ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         virtual uint64 GetConfigValue( const std::string& name, uint64 id, uint64 maxvalue = __MAX_UINT64__ ) = 0;
 

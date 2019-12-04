@@ -172,8 +172,10 @@ namespace KFrame
         void StartDeployTask();
         void StartKillServerTask();
         void StartShutDownServerTask();
+        void StartWaitTask();
         void StartStartupServerTask();
         void StartWgetVersionTask();
+        void StartCopyVersionTask();
         void StartDownFileTask();
         void StartWgetResourceTask();
         void StartDownPluginTask();
@@ -182,6 +184,7 @@ namespace KFrame
         // 检查任务完成
         bool CheckTaskFinish();
         bool CheckShutDownServerTaskFinish();
+        bool CheckWaitTaskFinish();
         bool CheckStartupServerTaskFinish();
         bool CheckWgetVersionTaskFinish();
         bool CheckDownFileTaskFinish();

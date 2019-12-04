@@ -832,6 +832,7 @@ namespace KFrame
             case KFDataDefine::Type_Object:
             {
                 auto kfobjvalue = static_cast< KFObjValue* >( kfvalue );
+                kfobjvalue->_element->SetOperate( kfelement->_operate );
                 UpdateElementToData( kfobjvalue->_element, kfchild, multiple );
             }
             break;
@@ -1309,7 +1310,6 @@ namespace KFrame
         _pb_show_element.Clear();
     }
 
-    // 默认的更新顺序
     KFMsg::PBObject* KFEntityEx::CreateSyncPBObject( uint32 type )
     {
         _have_sync_data = true;
@@ -1330,7 +1330,7 @@ namespace KFrame
         return &kfsyncdata->_pbobject;
     }
 
-    void KFEntityEx::SyncdataSequence( uint32 first, uint32 second, uint32 third )
+    void KFEntityEx::SyncDataSequence( uint32 first, uint32 second, uint32 third )
     {
         _have_sync_data = true;
         uint32 syncsequence[ __SYNC_COUNT__ ] = { first, second, third };

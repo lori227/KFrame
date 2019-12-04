@@ -19,6 +19,7 @@
     <ClCompile Include="KFResetConfig.cpp" />
     <ClCompile Include="KFResetModule.cpp" />
     <ClCompile Include="KFResetPlugin.cpp" />
+    <ClCompile Include="KFTimeConfig.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFEnterConfig.hpp" />
@@ -31,6 +32,7 @@
     <ClInclude Include="KFResetInterface.h" />
     <ClInclude Include="KFResetModule.hpp" />
     <ClInclude Include="KFResetPlugin.hpp" />
+    <ClInclude Include="KFTimeConfig.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{FB1E7479-DA5D-4E9B-9EFB-56C66949B495}</ProjectGuid>

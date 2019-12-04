@@ -71,16 +71,9 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_DEPLOY_FUNCTION__( KFGameModule::OnDeployShutDownServer )
     {
-        std::list< KFEntity* > playerlist;
-        for ( auto player = _kf_player->FirstPlayer(); player != nullptr; player = _kf_player->NextPlayer() )
-        {
-            playerlist.push_back( player );
-        }
-
-        for ( auto player : playerlist )
-        {
-            _kf_player->RemovePlayer( player );
-        }
+        __LOG_INFO__( "shutdown save player data start=[{}]!", param );
+        _kf_player->RemovePlayer();
+        __LOG_INFO__( "shutdown save player data finish=[{}]!", param );
     }
 
     void KFGameModule::SavePlayer( KFEntity* player, uint32 saveflag )

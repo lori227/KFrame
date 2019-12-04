@@ -21,6 +21,9 @@
     <ClCompile Include="KFLeaveConfig.cpp">
       <Filter>Leave</Filter>
     </ClCompile>
+    <ClCompile Include="KFTimeConfig.cpp">
+      <Filter>Reset</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFResetPlugin.hpp" />
@@ -50,6 +53,9 @@
     </ClInclude>
     <ClInclude Include="KFEnterInterface.h">
       <Filter>Enter</Filter>
+    </ClInclude>
+    <ClInclude Include="KFTimeConfig.hpp">
+      <Filter>Reset</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

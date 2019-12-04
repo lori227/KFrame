@@ -104,6 +104,7 @@ namespace KFrame
         _service_type = values[ __STRING__( service ) ];
         _net_type = values[ __STRING__( net ) ];
         _params = values[ __STRING__( param ) ];
+        _heartbeat = KFUtility::ToValue< uint32 >( values[ __STRING__( heartbeat ) ] );
     }
 
     void KFDeployData::SaveTo( MapString& values )
@@ -126,6 +127,7 @@ namespace KFrame
         values[ __STRING__( service ) ] = _service_type;
         values[ __STRING__( net ) ] = _net_type;
         values[ __STRING__( param ) ] = _params;
+        values[ __STRING__( heartbeat ) ] = __TO_STRING__( _heartbeat );
     }
 
 }

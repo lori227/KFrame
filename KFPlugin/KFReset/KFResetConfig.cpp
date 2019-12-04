@@ -27,18 +27,4 @@ namespace KFrame
         resetdata._value = xmlnode.GetUInt32( "Value", true );
         resetsetting->_reset_data_list.push_back( resetdata );
     }
-
-    void KFResetConfig::LoadAllComplete()
-    {
-        for ( auto& iter : _reset_settings._objects )
-        {
-            auto kfsetting = iter.second;
-            kfsetting->_time_setting = KFTimeConfig::Instance()->FindSetting( iter.first );
-            if ( kfsetting->_time_setting == nullptr )
-            {
-                __LOG_ERROR__( "timeid=[{}] can't find setting!", iter.first );
-            }
-        }
-    }
-
 }

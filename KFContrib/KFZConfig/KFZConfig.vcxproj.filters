@@ -45,7 +45,6 @@
     <ClInclude Include="KFDropSetting.h" />
     <ClInclude Include="KFReadSetting.h" />
     <ClInclude Include="KFElementConfig.h" />
-    <ClInclude Include="KFTimeConfig.h" />
     <ClInclude Include="KFExecuteData.h" />
     <ClInclude Include="KFRewardConfig.h" />
     <ClInclude Include="KFFormulaConfig.h" />

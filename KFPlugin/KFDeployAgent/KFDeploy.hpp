@@ -53,6 +53,9 @@ namespace KFrame
 
         // 启动参数
         std::string _params;
+
+        // 心跳超时时间
+        uint32 _heartbeat = 0;
         ///////////////////////////////////////////////////////////////////////
         // 运行时数据
         // 部署agentid
@@ -76,11 +79,11 @@ namespace KFrame
         // 是否关闭
         bool _is_shutdown;
 
-        // 心跳超时时间
-        uint64 _heartbeat_timeout = 0;
-
         // 是否连接
         bool _is_conencted = false;
+
+        // 超时时间
+        uint64 _heartbeat_timeout = 0u;
     };
 }
 

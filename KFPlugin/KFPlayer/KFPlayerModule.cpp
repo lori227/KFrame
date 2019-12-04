@@ -156,14 +156,18 @@ namespace KFrame
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////3
-    KFEntity* KFPlayerModule::FirstPlayer()
+    void KFPlayerModule::RemovePlayer()
     {
-        return _kf_component->FirstEntity();
-    }
+        std::list< KFEntity* > playerlist;
+        for ( auto player = _kf_component->FirstEntity(); player != nullptr; player = _kf_component->NextEntity() )
+        {
+            playerlist.push_back( player );
+        }
 
-    KFEntity* KFPlayerModule::NextPlayer()
-    {
-        return _kf_component->NextEntity();
+        for ( auto player : playerlist )
+        {
+            _kf_component->RemoveEntity( player );
+        }
     }
 
     void KFPlayerModule::RemovePlayer( uint64 playerid )
@@ -279,14 +283,6 @@ namespace KFrame
 
             kfdata->Set( value );
         }
-
-        // 调用重置函数
-        for ( auto& iter : _player_reset_function._objects )
-        {
-            auto kffunction = iter.second;
-            kffunction->_function( player );
-        }
-
         // 调用函数, 处理进入游戏的一些事务逻辑
         for ( auto& iter : _player_enter_function._objects )
         {
@@ -294,6 +290,12 @@ namespace KFrame
             kffunction->_function( player );
         }
         for ( auto& iter : _player_after_enter_function._objects )
+        {
+            auto kffunction = iter.second;
+            kffunction->_function( player );
+        }
+        // 调用重置函数
+        for ( auto& iter : _player_reset_function._objects )
         {
             auto kffunction = iter.second;
             kffunction->_function( player );
@@ -349,6 +351,7 @@ namespace KFrame
         auto ok = kfelements.Parse( strdata, __FUNC_LINE__ );
         if ( ok )
         {
+            kfelements.SetOperate( KFEnum::Add );
             player->AddElement( &kfelements, __STRING__( command ), __FUNC_LINE__ );
         }
     }
@@ -384,17 +387,18 @@ namespace KFrame
         auto ok = kfelements.Parse( stragent, __FUNC_LINE__ );
         if ( ok )
         {
+            kfelements.SetOperate( KFEnum::Dec );
             player->RemoveElement( &kfelements, __FUNC_LINE__ );
         }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
+    static uint32 _print = 0u;
     void KFPlayerModule::SendUpdateDataToClient( KFEntity* player, KFMsg::PBObject& pbobject )
     {
 #ifdef __KF_DEBUG__
-        static uint32 _print = 0;
-        if ( _print == 1 )
+        if ( _print == 1u )
         {
             auto temp = pbobject.DebugString();
             __LOG_DEBUG__( "player=[{}], data={}", player->GetKeyID(), temp );
@@ -409,7 +413,6 @@ namespace KFrame
     void KFPlayerModule::SendAddDataToClient( KFEntity* player, KFMsg::PBObject& pbobject )
     {
 #ifdef __KF_DEBUG__
-        static uint32 _print = 0;
         if ( _print == 1 )
         {
             auto temp = pbobject.DebugString();
@@ -425,7 +428,6 @@ namespace KFrame
     void KFPlayerModule::SendRemoveDataToClient( KFEntity* player, KFMsg::PBObject& pbobject )
     {
 #ifdef __KF_DEBUG__
-        static uint32 _print = 0;
         if ( _print == 1 )
         {
             auto temp = pbobject.DebugString();

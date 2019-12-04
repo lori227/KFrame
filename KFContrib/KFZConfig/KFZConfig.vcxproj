@@ -30,7 +30,6 @@
     <ClInclude Include="KFRelationSetting.hpp" />
     <ClInclude Include="KFRewardConfig.h" />
     <ClInclude Include="KFSetting.h" />
-    <ClInclude Include="KFTimeConfig.h" />
     <ClInclude Include="KFZoneConfig.hpp" />
     <ClInclude Include="KFZoneSetting.hpp" />
   </ItemGroup>

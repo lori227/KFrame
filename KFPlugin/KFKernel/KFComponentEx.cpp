@@ -60,8 +60,7 @@ namespace KFrame
         {
             for ( auto& iter : _entitys._objects )
             {
-                auto kfentity = static_cast< KFEntityEx* >( iter.second );
-                _entity_after_run_function( kfentity );
+                _entity_after_run_function( iter.second );
             }
         }
 
@@ -69,9 +68,7 @@ namespace KFrame
         {
             for ( auto entity : _sync_entitys )
             {
-                // 同步到客户端
-                auto kfentity = static_cast< KFEntityEx* >( entity );
-                kfentity->SyncEntityToClient();
+                static_cast< KFEntityEx* >( entity )->SyncEntityToClient();
             }
             _sync_entitys.clear();
         }

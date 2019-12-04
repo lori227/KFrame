@@ -41,18 +41,17 @@ namespace KFrame
         virtual void AddFunction( const std::string& command, const std::string& module, KFDeployFunction& function );
         virtual void RemoveFunction( const std::string& command, const std::string& module );
 
+        // 部署命令
+        void DeployCommand( const std::string& command, const std::string& value, const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid );
+
         // 判断是不是自己
         bool IsSelfServer( const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid );
 
         // 关闭服务器
-        void ShutDownServer( const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid, uint32 delaytime );
+        void ShutDownServer( uint32 delaytime );
+        void OnShutDownServerCommand( const std::string& param );
 
-        // 部署命令
-        void DeployCommand( const std::string& command, const std::string& value, const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid );
     protected:
-        // 准备关闭服务器
-        __KF_TIMER_FUNCTION__( OnTimerShutDownPrepare );
-
         // 关闭服务器
         __KF_TIMER_FUNCTION__( OnTimerShutDownServer );
 

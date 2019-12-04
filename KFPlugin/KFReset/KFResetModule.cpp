@@ -6,85 +6,124 @@ namespace KFrame
     {
         __REGISTER_RESET_PLAYER__( &KFResetModule::ResetPlayerData );
         __REGISTER_RUN_PLAYER__( &KFResetModule::RunResetPlayerData );
-
+        __REGISTER_ENTER_PLAYER__( &KFResetModule::OnEnterResetModule );
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
-        CalcNextResetTime();
     }
 
     void KFResetModule::ShutDown()
     {
-        __UN_RESET_PLAYER__();
         __UN_RUN_PLAYER__();
+        __UN_RESET_PLAYER__();
+        __UN_ENTER_PLAYER__();
     }
 
-    void KFResetModule::AfterRun()
+    __KF_ENTER_PLAYER_FUNCTION__( KFResetModule::OnEnterResetModule )
     {
-        _need_to_reset = CheckResetPlayerDataTime();
-    }
-
-    void KFResetModule::CalcNextResetTime()
-    {
-#ifdef __KF_DEBUG__
-        _reset_loop_time = KFTimeEnum::OneMinuteSecond;
-#else
-        _reset_loop_time = KFTimeEnum::OneHourSecond;
-#endif // __KF_DEBUG__
-
-        // 在整点的时候刷新一次
-        auto nowtime = KFGlobal::Instance()->_real_time;
-        _next_reset_data_time = ( ( nowtime + _reset_loop_time - 1 ) / _reset_loop_time ) * _reset_loop_time;
-    }
-
-    bool KFResetModule::CheckResetPlayerDataTime()
-    {
-        if ( KFGlobal::Instance()->_real_time < _next_reset_data_time )
+        // 把列表中不存在的时间数据删除掉
+        ListUInt32 removes;
+        auto kftimerecord = player->Find( __STRING__( time ) );
+        for ( auto kftime = kftimerecord->First(); kftime != nullptr; kftime = kftimerecord->Next() )
         {
-            return false;
+            auto id = kftime->GetKeyID();
+            auto kfsetting = KFTimeConfig::Instance()->FindSetting( id );
+            if ( kfsetting == nullptr )
+            {
+                removes.push_back( id );
+            }
         }
 
-        _next_reset_data_time += _reset_loop_time;
-        return true;
+        for ( auto id : removes )
+        {
+            kftimerecord->Remove( id );
+        }
+    }
+
+    bool KFResetModule::UpdateAllResetTime( KFEntity* player, KFData* kftimerecord )
+    {
+        bool reset = false;
+        for ( auto& iter : KFTimeConfig::Instance()->_settings._objects )
+        {
+            auto kfsetting = iter.second;
+            reset |= UpdateResetTime( kftimerecord, kfsetting );
+        }
+
+        return reset;
+    }
+
+    bool KFResetModule::UpdateResetTime( KFData* kftimerecord, const KFTimeSetting* kfsetting )
+    {
+        auto kftime = kftimerecord->Find( kfsetting->_id );
+        if ( kftime == nullptr )
+        {
+            kftime = _kf_kernel->CreateObject( kftimerecord->_data_setting );
+            kftimerecord->Add( kfsetting->_id, kftime );
+        }
+
+        auto lasttime = kftime->Get<uint64>( __STRING__( value ) );
+        auto ok = KFDate::CheckTime( &kfsetting->_time_data, lasttime, KFGlobal::Instance()->_real_time );
+        if ( ok )
+        {
+            kftime->Set( __STRING__( status ), 1u );
+            kftime->Set( __STRING__( lasttime ), lasttime );
+            kftime->Set( __STRING__( value ), KFGlobal::Instance()->_real_time );
+        }
+        else
+        {
+            kftime->Set( __STRING__( status ), 0u );
+        }
+
+        return ok;
+    }
+
+    bool KFResetModule::CheckResetTime( KFEntity* player, uint32 timeid )
+    {
+        auto kftimerecord = player->Find( __STRING__( time ) );
+        return CheckResetTimeData( kftimerecord, timeid );
+    }
+
+    bool KFResetModule::CheckResetTimeData( KFData* kftimerecord, uint32 timeid )
+    {
+        auto status = kftimerecord->Get<uint32>( timeid, __STRING__( status ) );
+        return status == 1u;
     }
 
     __KF_RUN_PLAYER_FUNCTION__( KFResetModule::RunResetPlayerData )
     {
-        if ( !_need_to_reset )
+        auto kfresetdata = player->Find( __STRING__( resettime ) );
+        auto resettime = kfresetdata->Get();
+        if ( resettime > KFGlobal::Instance()->_game_time )
         {
             return;
         }
+        kfresetdata->Set( KFGlobal::Instance()->_game_time + KFTimeEnum::OneSecondMicSecond );
 
+        // 玩家重置逻辑
         ResetPlayerData( player );
     }
 
     __KF_RESET_PLAYER_FUNCTION__( KFResetModule::ResetPlayerData )
     {
-        auto kflastdata = player->Find( __STRING__( resettime ) );
-        auto lasttime = kflastdata->Get();
-
-        KFDate lastdate( lasttime );
-        KFDate nowdate( KFGlobal::Instance()->_real_time );
+        // 判断所有时间id, 是否有需要更新
+        auto kftimerecord = player->Find( __STRING__( time ) );
+        auto ok = UpdateAllResetTime( player, kftimerecord );
+        if ( !ok )
+        {
+            return;
+        }
 
         // 需要重置的属性
-        ResetConfigData( player, lastdate, nowdate );
+        ResetConfigData( player, kftimerecord );
 
         // 需要重置的逻辑
-        ResetPlayerLogic( player, lastdate, nowdate );
-
-        // 纪录时间
-        player->UpdateData( kflastdata, KFEnum::Set, KFGlobal::Instance()->_real_time );
+        ResetPlayerLogic( player, kftimerecord );
     }
 
-    void KFResetModule::ResetConfigData( KFEntity* player, KFDate& lastdate, KFDate& nowdate )
+    void KFResetModule::ResetConfigData( KFEntity* player, KFData* kftimerecord )
     {
         for ( auto& iter : KFResetConfig::Instance()->_reset_settings._objects )
         {
             auto kfsetting = iter.second;
-            if ( kfsetting->_time_setting == nullptr )
-            {
-                continue;
-            }
-
-            if ( !KFDate::CheckTime( &kfsetting->_time_setting->_time_data, lastdate, nowdate ) )
+            if ( !CheckResetTimeData( kftimerecord, kfsetting->_id ) )
             {
                 continue;
             }
@@ -112,21 +151,24 @@ namespace KFrame
         }
     }
 
-    void KFResetModule::ResetPlayerLogic( KFEntity* player, KFDate& lastdate, KFDate& nowdate )
+    void KFResetModule::ResetPlayerLogic( KFEntity* player, KFData* kftimerecord )
     {
         static KFTimeData _time_data;
         for ( auto& iter : _reset_data_list._objects )
         {
             auto kfresetsetting = iter.second;
+
+            uint64 lasttime = 0u;
             const KFTimeData* timedata = &_time_data;
             if ( kfresetsetting->_time_setting != nullptr )
             {
-                if ( !KFDate::CheckTime( &kfresetsetting->_time_setting->_time_data, lastdate, nowdate ) )
+                if ( !CheckResetTimeData( kftimerecord, kfresetsetting->_time_setting->_id ) )
                 {
                     continue;
                 }
 
                 timedata = &kfresetsetting->_time_setting->_time_data;
+                lasttime = kftimerecord->Get<uint64>( kfresetsetting->_time_setting->_id, __STRING__( lasttime ) );
             }
 
             // 直接回调函数
@@ -139,42 +181,42 @@ namespace KFrame
 
                 if ( resetdata->_count <= 1u || player->IsInited() )
                 {
-                    resetdata->_function( player, timedata, lastdate.GetTime(), nowdate.GetTime() );
+                    resetdata->_function( player, timedata, lasttime, KFGlobal::Instance()->_real_time );
                 }
                 else
                 {
-                    ResetPlayerLogicCount( player, timedata, resetdata, lastdate, nowdate );
+                    ResetPlayerLogicCount( player, timedata, resetdata, lasttime, KFGlobal::Instance()->_real_time );
                 }
             }
         }
     }
 
-    void KFResetModule::ResetPlayerLogicCount( KFEntity* player, const KFTimeData* timedata, const KFResetLogicData* kfresetdata, KFDate& lastdate, KFDate& nowdate )
+    void KFResetModule::ResetPlayerLogicCount( KFEntity* player, const KFTimeData* timedata, const KFResetLogicData* resetdata, uint64 lasttime, uint64 nowtime )
     {
-        if ( lastdate.GetTime() == 0u )
+        if ( lasttime == 0u )
         {
             return;
         }
 
         // 计算出n周期前的时间
-        auto nowtime = KFDate::CalcTimeData( timedata, nowdate.GetTime() );
-        auto calctime = KFDate::CalcTimeData( timedata, nowtime, 0 - ( int32 )kfresetdata->_count );
+        auto nowresettime = KFDate::CalcTimeData( timedata, nowtime );
+        auto calcresettime = KFDate::CalcTimeData( timedata, nowresettime, 0 - ( int32 )resetdata->_count );
 
         // 上次重置时间
-        auto lasttime = KFDate::CalcTimeData( timedata, lastdate.GetTime() );
-        lasttime = __MAX__( lasttime, calctime );
+        auto lastresettime = KFDate::CalcTimeData( timedata, lasttime );
+        lastresettime = __MAX__( lastresettime, calcresettime );
 
-        for ( auto i = 0u; i < kfresetdata->_count; ++i )
+        for ( auto i = 0u; i < resetdata->_count; ++i )
         {
-            auto resettime = KFDate::CalcTimeData( timedata, lasttime, 1 );
-            if ( resettime > nowtime )
+            auto resettime = KFDate::CalcTimeData( timedata, lastresettime, 1 );
+            if ( resettime > nowresettime )
             {
                 break;
             }
 
             // 重置函数
-            kfresetdata->_function( player, timedata, lasttime, resettime );
-            lasttime = resettime;
+            resetdata->_function( player, timedata, lastresettime, resettime );
+            lastresettime = resettime;
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -182,15 +224,14 @@ namespace KFrame
     void KFResetModule::AddResetFunction( uint32 timeid, uint32 count, const std::string& module, KFResetFunction& function )
     {
         auto kfresetsetting = _reset_data_list.Create( timeid );
-        auto kfsetting = KFTimeConfig::Instance()->FindSetting( timeid );
-        if ( kfsetting == nullptr )
+        kfresetsetting->_time_setting = KFTimeConfig::Instance()->FindSetting( timeid );
+        if ( kfresetsetting->_time_setting == nullptr )
         {
             if ( timeid != 0u )
             {
                 __LOG_ERROR__( "module=[{}] timeid=[{}] can't find setting!", module, timeid );
             }
         }
-        kfresetsetting->_time_setting = kfsetting;
 
         auto kfresetdata = __KF_NEW__( KFResetLogicData );
         kfresetdata->_count = count;

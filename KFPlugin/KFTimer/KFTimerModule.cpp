@@ -262,8 +262,6 @@ namespace KFrame
             uint64 objectid = 0u;
             uint64 subid = 0u;
             std::tie( module, objectid, subid ) = data;
-
-            RemoveRegisterData( module, objectid, subid );
             RemoveTimerData( module, objectid, subid );
         }
 

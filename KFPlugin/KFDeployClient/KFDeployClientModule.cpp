@@ -95,10 +95,12 @@ namespace KFrame
             return;
         }
 
+        __LOG_INFO__( "[{}:{} | {}:{}:{}:{}] deploy command req!", command, value, appname, apptype, appid, zoneid );
+
         if ( command == __STRING__( shutdown ) )
         {
             auto delaytime = KFUtility::ToValue< uint32 >( value );
-            return ShutDownServer( appname, apptype, appid, zoneid, delaytime );
+            return ShutDownServer( delaytime );
         }
         else if ( command == __STRING__( loglevel ) )
         {
@@ -121,17 +123,13 @@ namespace KFrame
         }
 
         auto kfcommand = _command_data.Find( command );
-        if ( kfcommand == nullptr )
+        if ( kfcommand != nullptr )
         {
-            return;
-        }
-
-        __LOG_INFO__( "[{}:{} | {}:{}:{}:{}] deploy command process!", command, value, appname, apptype, appid, zoneid );
-
-        for ( auto& iter : kfcommand->_functions._objects )
-        {
-            auto kffunction = iter.second;
-            kffunction->_function( value );
+            for ( auto& iter : kfcommand->_functions._objects )
+            {
+                auto kffunction = iter.second;
+                kffunction->_function( value );
+            }
         }
     }
 
@@ -175,54 +173,52 @@ namespace KFrame
         return true;
     }
 
-    void KFDeployClientModule::ShutDownServer( const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid, uint32 delaytime )
+    void KFDeployClientModule::ShutDownServer( uint32 delaytime )
     {
         auto kfglobal = KFGlobal::Instance();
         __LOG_INFO__( "[{}:{}:{}:{}] shutdown start!", kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->ToString(), delaytime );
-
-        // 如果是服务
-        if ( appname != __STRING__( zone ) )
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+        OnShutDownServerCommand( "0" );
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+        delaytime = __MAX__( delaytime, 10000u );
+        if ( kfglobal->_app_name != __STRING__( zone ) )
         {
             delaytime += 30000;
         }
         else
         {
-            if ( apptype == __STRING__( world ) )
+            if ( kfglobal->_app_type == __STRING__( world ) )
             {
                 delaytime += 20000;
             }
         }
-
-        // 启动一个定时器
-        __DELAY_TIMER_1__( kfglobal->_app_id->GetId(), delaytime, &KFDeployClientModule::OnTimerShutDownPrepare );
+        __LIMIT_TIMER_1__( kfglobal->_app_id->GetId(), delaytime, 1u, &KFDeployClientModule::OnTimerShutDownServer );
     }
 
-    __KF_TIMER_FUNCTION__( KFDeployClientModule::OnTimerShutDownPrepare )
+    __KF_TIMER_FUNCTION__( KFDeployClientModule::OnTimerShutDownServer )
     {
-        __LIMIT_TIMER_1__( objectid, 10000, 1, &KFDeployClientModule::OnTimerShutDownServer );
-
         auto kfglobal = KFGlobal::Instance();
-        __LOG_INFO__( "[{}:{}:{}] shutdown prepare!", kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->ToString() );
+        __LOG_INFO__( "[{}:{}:{}] shutdown ok!", kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->ToString() );
 
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+        OnShutDownServerCommand( "1" );
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        // linux程序正常退出时会core, 应该是每个so文件中的同名全局变量造成的
+        // 这里不让程序退出, 由agent等待超时kill
+        // kfglobal->_app_run = false;
+    }
+
+    void KFDeployClientModule::OnShutDownServerCommand( const std::string& param )
+    {
         auto kfcommand = _command_data.Find( __STRING__( shutdown ) );
         if ( kfcommand != nullptr )
         {
             for ( auto& iter : kfcommand->_functions._objects )
             {
                 auto kffunction = iter.second;
-                kffunction->_function( _invalid_string );
+                kffunction->_function( param );
             }
         }
-    }
-
-    __KF_TIMER_FUNCTION__( KFDeployClientModule::OnTimerShutDownServer )
-    {
-        auto kfglobal = KFGlobal::Instance();
-
-        __LOG_INFO__( "[{}:{}:{}] shutdown ok!", kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->ToString() );
-
-        // linux程序正常退出时会core, 应该是每个so文件中的同名全局变量造成的
-        // 这里不让程序退出, 由agent等待超时kill
-        // kfglobal->_app_run = false;
     }
 }

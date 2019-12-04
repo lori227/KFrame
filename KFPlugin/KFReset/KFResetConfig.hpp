@@ -2,7 +2,6 @@
 #define __KF_RESET_CONFIG_H__
 
 #include "KFZConfig/KFConfig.h"
-#include "KFZConfig/KFTimeConfig.h"
 
 namespace KFrame
 {
@@ -20,8 +19,7 @@ namespace KFrame
     class KFResetSetting : public KFIntSetting
     {
     public:
-        const KFTimeSetting* _time_setting = nullptr;
-
+        // 重置的数据列表
         std::vector< KFResetData > _reset_data_list;
     };
 
@@ -33,8 +31,6 @@ namespace KFrame
         {
             _file_name = "reset";
         }
-
-        virtual void LoadAllComplete();
 
     protected:
         // 创建配置

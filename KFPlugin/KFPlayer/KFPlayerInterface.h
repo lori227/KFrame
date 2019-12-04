@@ -146,15 +146,12 @@ namespace KFrame
         // 创建玩家
         virtual KFEntity* CreatePlayer( const KFMsg::PBLoginData* pblogin, const KFMsg::PBObject* pbplayerdata ) = 0;
 
-        // 遍历玩家
-        virtual KFEntity* FirstPlayer() = 0;
-        virtual KFEntity* NextPlayer() = 0;
-
         // 查找玩家
         virtual KFEntity* FindPlayer( uint64 playerid ) = 0;
         virtual KFEntity* FindPlayer( uint64 playerid, const char* function, uint32 line ) = 0;
 
         // 删除玩家
+        virtual void RemovePlayer() = 0;
         virtual void RemovePlayer( uint64 playerid ) = 0;
         virtual void RemovePlayer( KFEntity* player ) = 0;
 

@@ -11,7 +11,9 @@
 
 #include "KFResetInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
+#include "KFKernel/KFKernelInterface.h"
 #include "KFResetConfig.hpp"
+#include "KFTimeConfig.hpp"
 
 namespace KFrame
 {
@@ -30,7 +32,7 @@ namespace KFrame
     class KFResetLogicSetting
     {
     public:
-        // 时间设定
+        // 时间逻辑
         const KFTimeSetting* _time_setting = nullptr;
 
         // 重置逻辑
@@ -44,12 +46,12 @@ namespace KFrame
         ~KFResetModule() = default;
 
         virtual void BeforeRun();
-        virtual void AfterRun();
 
         virtual void ShutDown();
-
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
+        // 判断是否重置时间是否ok
+        virtual bool CheckResetTime( KFEntity* player, uint32 timeid );
 
     protected:
         // 添加重置函数
@@ -58,34 +60,29 @@ namespace KFrame
         // 删除重置函数
         virtual void RemoveResetFunction( const std::string& module );
     protected:
+        // 进入游戏
+        __KF_ENTER_PLAYER_FUNCTION__( OnEnterResetModule );
+
         // 重置数据
         __KF_RESET_PLAYER_FUNCTION__( ResetPlayerData );
 
         // 刷新数据
         __KF_RUN_PLAYER_FUNCTION__( RunResetPlayerData );
 
-        // 判断刷新时间
-        bool CheckResetPlayerDataTime();
+        // 判断所有
+        bool UpdateAllResetTime( KFEntity* player, KFData* kftimerecord );
+        bool UpdateResetTime( KFData* kftimerecord, const KFTimeSetting* kfsetting );
 
-        // 计算刷新时间
-        void CalcNextResetTime();
+        // 判断是否重置时间是否ok
+        bool CheckResetTimeData( KFData* kftimerecord, uint32 timeid );
 
         // 重置配置属性
-        void ResetConfigData( KFEntity* player, KFDate& lastdate, KFDate& nowdate );
+        void ResetConfigData( KFEntity* player, KFData* kftimerecord );
 
         // 重置逻辑
-        void ResetPlayerLogic( KFEntity* player, KFDate& lastdate, KFDate& nowdate );
-        void ResetPlayerLogicCount( KFEntity* player, const KFTimeData* timedata, const KFResetLogicData* resetdata,  KFDate& lastdate, KFDate& nowdate );
+        void ResetPlayerLogic( KFEntity* player, KFData* kftimerecord );
+        void ResetPlayerLogicCount( KFEntity* player, const KFTimeData* timedata, const KFResetLogicData* resetdata, uint64 lasttime, uint64 nowtime );
     private:
-        // 是否需要刷新
-        bool _need_to_reset = false;
-
-        // 最小执行间隔时间
-        uint32 _reset_loop_time = 0u;
-
-        // 上次刷新时间
-        uint64 _next_reset_data_time = 0;
-
         // 注册的重置逻辑
         KFHashMap< uint32, uint32, KFResetLogicSetting > _reset_data_list;
     };

@@ -190,35 +190,13 @@ namespace KFrame
 
     bool KFDate::CheckPassHour( uint64 lasttime, uint64 nowtime, uint32 hour )
     {
-        KFDate nowdate( nowtime );
-        KFDate lastdate( lasttime );
-        return CheckPassHour( lastdate, nowdate, hour );
-    }
-
-    bool KFDate::CheckPassHour( KFDate& lastdate, KFDate& nowdate, uint32 hour )
-    {
         if ( hour == 0u )
         {
             hour = 1u;
         }
 
-        auto timedistance = nowdate.GetTime() - lastdate.GetTime();
+        auto timedistance = nowtime - lasttime ;
         if ( timedistance >= KFTimeEnum::OneHourSecond * hour )
-        {
-            return true;
-        }
-
-        if ( timedistance < KFTimeEnum::OneMinuteSecond )
-        {
-            return false;
-        }
-
-        if ( nowdate.GetMinute() != 0u )
-        {
-            return false;
-        }
-
-        if ( nowdate.GetHour() % hour == 0u )
         {
             return true;
         }
@@ -226,37 +204,30 @@ namespace KFrame
         return false;
     }
 
-    bool KFDate::CheckPassMinute( uint64 lasttime, uint64 nowtime, uint32 minute )
+    bool KFDate::CheckPassHour( KFDate& lastdate, KFDate& nowdate, uint32 hour )
     {
-        KFDate nowdate( nowtime );
-        KFDate lastdate( lasttime );
-        return CheckPassMinute( lastdate, nowdate, minute );
+        return CheckPassHour( lastdate.GetTime(), nowdate.GetTime(), hour );
     }
 
-    bool KFDate::CheckPassMinute( KFDate& lastdate, KFDate& nowdate, uint32 minute )
+    bool KFDate::CheckPassMinute( uint64 lasttime, uint64 nowtime, uint32 minute )
     {
         if ( minute == 0u )
         {
             minute = 1u;
         }
 
-        auto timedistance = nowdate.GetTime() - lastdate.GetTime();
+        auto timedistance = nowtime - lasttime;
         if ( timedistance >= KFTimeEnum::OneMinuteSecond * minute )
         {
             return true;
         }
 
-        if ( timedistance < KFTimeEnum::OneMinuteSecond )
-        {
-            return false;
-        }
-
-        if ( nowdate.GetMinute() % minute == 0u )
-        {
-            return true;
-        }
-
         return false;
+    }
+
+    bool KFDate::CheckPassMinute( KFDate& lastdate, KFDate& nowdate, uint32 minute )
+    {
+        return CheckPassMinute( lastdate.GetTime(), nowdate.GetTime(), minute );
     }
 
     bool KFDate::CheckSameDay( uint64 lasttime, uint64 nowtime )
@@ -453,9 +424,18 @@ namespace KFrame
 
     bool KFDate::CheckTime( const KFTimeData* timedata, uint64 lasttime, uint64 nowtime )
     {
+        switch ( timedata->_type )
+        {
+        case KFTimeEnum::Hour:
+            return KFDate::CheckPassHour( lasttime, nowtime, timedata->_value );
+            break;
+        case KFTimeEnum::Minute:	// 分钟
+            return KFDate::CheckPassMinute( lasttime, nowtime, timedata->_value );
+            break;
+        }
+
         KFDate nowdate( nowtime );
         KFDate lastdate( lasttime );
-
         return CheckTime( timedata, lastdate, nowdate );
     }
 

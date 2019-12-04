@@ -23,6 +23,8 @@ namespace KFrame
         __LOOP_TIMER_1__( ++timerid, 1000, 0, &KFDeployAgentModule::OnTimerCheckTaskFinish );
         __LOOP_TIMER_1__( ++timerid, 5000, 1000, &KFDeployAgentModule::OnTimerQueryAgentData );
         __LOOP_TIMER_1__( ++timerid, 30000, 100, &KFDeployAgentModule::OnTimerCheckHeartbeat );
+
+        __REGISTER_SERVER_DISCOVER__( &KFDeployAgentModule::OnServerDiscoverClient );
         __REGISTER_CLIENT_CONNECTION__( &KFDeployAgentModule::OnClientConnectServer );
         ////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_COMMAND_TO_AGENT_REQ, &KFDeployAgentModule::HandleDeployCommandReq );
@@ -32,6 +34,8 @@ namespace KFrame
     void KFDeployAgentModule::ShutDown()
     {
         __UN_TIMER_0__();
+
+        __UN_SERVER_DISCOVER__();
         __UN_CLIENT_CONNECTION__();
         //////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::S2S_DEPLOY_COMMAND_TO_AGENT_REQ );
@@ -160,13 +164,13 @@ namespace KFrame
         auto strid = KFAppId::ToString( kfmsg.id() );
 
         auto kfdeploydata = _deploy_list.Find( strid );
-        if ( kfdeploydata == nullptr )
+        if ( kfdeploydata == nullptr || kfdeploydata->_heartbeat == 0u )
         {
             return;
         }
 
         // 5分钟判断超时
-        kfdeploydata->_heartbeat_timeout = KFGlobal::Instance()->_game_time + 5 * KFTimeEnum::OneMinuteMicSecond;
+        kfdeploydata->_heartbeat_timeout = KFGlobal::Instance()->_game_time + kfdeploydata->_heartbeat * KFTimeEnum::OneSecondMicSecond;
     }
 
     __KF_NET_EVENT_FUNCTION__( KFDeployAgentModule::OnServerDiscoverClient )
@@ -196,11 +200,12 @@ namespace KFrame
         for ( auto& iter : _deploy_list._objects )
         {
             auto deploydata = iter.second;
-            if ( deploydata->_heartbeat_timeout == 0 ||
+            if ( deploydata->_heartbeat == 0 ||
                     deploydata->_process_id == 0 ||
                     deploydata->_is_shutdown ||
                     !deploydata->_is_startup ||
                     !deploydata->_is_conencted ||
+                    deploydata->_heartbeat == 0u ||
                     deploydata->_heartbeat_timeout > KFGlobal::Instance()->_game_time )
             {
                 continue;
@@ -626,7 +631,7 @@ namespace KFrame
 
     void KFDeployAgentModule::SendLogMessage( const std::string& msg )
     {
-        __LOG_DEBUG__( "{}", msg );
+        __LOG_INFO__( "{}", msg );
 
         if ( _deploy_server_id != 0u )
         {
@@ -656,6 +661,8 @@ namespace KFrame
         if ( pbdeploy->command() == __STRING__( restart ) )
         {
             AddDeployTask( __STRING__( shutdown ), pbdeploy );
+            AddDeployTask( __STRING__( wait ), pbdeploy );
+            AddDeployTask( __STRING__( kill ), pbdeploy );
             AddDeployTask( __STRING__( startup ), pbdeploy );
         }
         else if ( pbdeploy->command() == __STRING__( version ) )
@@ -664,6 +671,8 @@ namespace KFrame
             {
                 AddDeployTask( __STRING__( shutdown ), pbdeploy );
                 AddDeployTask( __STRING__( wget ), pbdeploy );
+                AddDeployTask( __STRING__( kill ), pbdeploy );
+                AddDeployTask( __STRING__( copy ), pbdeploy );
                 AddDeployTask( __STRING__( startup ), pbdeploy );
             }
         }
@@ -790,18 +799,14 @@ namespace KFrame
         }
 
         auto ok = true;
-        if ( _kf_task->_command == __STRING__( kill ) || _kf_task->_command == __STRING__( shutdown ) )
+        if ( _kf_task->_command == __STRING__( kill ) )
         {
             ok = CheckShutDownServerTaskFinish();
-            if ( !ok )
-            {
-                // 判断当前时间, 如果任务不能完成, 直接杀死进程
-                if ( KFGlobal::Instance()->_game_time > _kf_task->_start_time + 60000 )
-                {
-                    _kf_task->_command = __STRING__( kill );
-                    StartDeployTask();
-                }
-            }
+
+        }
+        else if ( _kf_task->_command == __STRING__( wait ) )
+        {
+            ok = CheckWaitTaskFinish();
         }
         else if ( _kf_task->_command == __STRING__( startup ) )
         {
@@ -864,6 +869,10 @@ namespace KFrame
             {
                 StartShutDownServerTask();
             }
+            else if ( _kf_task->_command == __STRING__( wait ) )
+            {
+                StartWaitTask();
+            }
             else if ( _kf_task->_command == __STRING__( launch ) )
             {
                 LoadTotalLaunchData();
@@ -871,6 +880,10 @@ namespace KFrame
             else if ( _kf_task->_command == __STRING__( wget ) )
             {
                 StartWgetVersionTask();
+            }
+            else if ( _kf_task->_command == __STRING__( copy ) )
+            {
+                StartCopyVersionTask();
             }
             else if ( _kf_task->_command == __STRING__( downfile ) )
             {
@@ -941,6 +954,17 @@ namespace KFrame
         SendTaskToMaster();
     }
 
+    void KFDeployAgentModule::StartWaitTask()
+    {
+        auto waittime = KFUtility::ToValue< uint32 >( _kf_task->_value );
+        if ( waittime < 20000u )
+        {
+            waittime = 20000u;
+        }
+
+        _kf_task->_start_time = KFGlobal::Instance()->_game_time + waittime;
+    }
+
     bool KFDeployAgentModule::CheckShutDownServerTaskFinish()
     {
         // 指定的server都关闭了
@@ -959,6 +983,11 @@ namespace KFrame
         }
 
         return true;
+    }
+
+    bool KFDeployAgentModule::CheckWaitTaskFinish()
+    {
+        return KFGlobal::Instance()->_game_time > _kf_task->_start_time;
     }
 
     void KFDeployAgentModule::StartStartupServerTask()
@@ -1012,26 +1041,11 @@ namespace KFrame
 #endif
     }
 
-    bool KFDeployAgentModule::CheckWgetVersionTaskFinish()
+    void KFDeployAgentModule::StartCopyVersionTask()
     {
-        auto querymd5 = _deploy_driver->QueryString( "select `version_md5` from `version` where `version_name`='{}';", _kf_task->_value );
-        if ( !querymd5->IsOk() || querymd5->_value.empty() )
-        {
-            return true;
-        }
-
 #if __KF_SYSTEM__ == __KF_WIN__
         // todo win64暂时没有实现
-
 #else
-        // 执行下载命令
-        auto md5 = ExecuteShell( "md5sum ./version/{} | awk '{{print $1}}'", _kf_task->_value  );
-        if ( md5 != querymd5->_value )
-        {
-            StartDeployTask();
-            return false;
-        }
-
         // 解压
         ExecuteShell( "rm -rf ./version/conf_output/" );
         ExecuteShell( "tar -zxf ./version/{} -C ./version/", _kf_task->_value );
@@ -1070,7 +1084,28 @@ namespace KFrame
                 _deploy_driver->Update( _deploy_table_name, keyvalues, updatevalues );
             }
         }
+    }
 
+    bool KFDeployAgentModule::CheckWgetVersionTaskFinish()
+    {
+        auto querymd5 = _deploy_driver->QueryString( "select `version_md5` from `version` where `version_name`='{}';", _kf_task->_value );
+        if ( !querymd5->IsOk() || querymd5->_value.empty() )
+        {
+            return true;
+        }
+
+#if __KF_SYSTEM__ == __KF_WIN__
+        // todo win64暂时没有实现
+
+#else
+        // 执行下载命令
+        auto md5 = ExecuteShell( "md5sum ./version/{} | awk '{{print $1}}'", _kf_task->_value  );
+        if ( md5 != querymd5->_value )
+        {
+            StartDeployTask();
+            return false;
+        }
+#endif
         return true;
     }
 

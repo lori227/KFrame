@@ -23,6 +23,9 @@ namespace KFrame
             RemoveResetFunction( typeid( T ).name() );
         }
 
+        // 判断是否重置时间是否ok
+        virtual bool CheckResetTime( KFEntity* player, uint32 timeid ) = 0;
+
     protected:
         // 添加重置函数
         virtual void AddResetFunction( uint32 timeid, uint32 count, const std::string& module, KFResetFunction& function ) = 0;

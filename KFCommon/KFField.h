@@ -248,6 +248,10 @@ namespace KFrame
         __STRING_DEFINE__( conditions );
         __STRING_DEFINE__( execute );
         __STRING_DEFINE__( compound );
+        __STRING_DEFINE__( lasttime );
+        __STRING_DEFINE__( heartbeat );
+        __STRING_DEFINE__( wait );
+        __STRING_DEFINE__( copy );
 
     }
 }

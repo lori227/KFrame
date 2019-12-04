@@ -16,7 +16,10 @@ namespace KFrame
         _net_services = nullptr;
         for ( auto& iter : _delay_queue )
         {
-            iter.first->Release();
+            for ( auto message : iter.second )
+            {
+                message->Release();
+            }
         }
         _delay_queue.clear();
     }
@@ -327,10 +330,13 @@ namespace KFrame
         bool havemessage = false;
         for ( auto iter = _delay_queue.begin(); iter != _delay_queue.end(); )
         {
-            if ( _net_services->_now_time >= iter->second )
+            if ( _net_services->_now_time >= iter->first )
             {
                 havemessage = true;
-                AddSendMessage( iter->first );
+                for ( auto message : iter->second )
+                {
+                    AddSendMessage( message );
+                }
                 iter = _delay_queue.erase( iter );
             }
             else
@@ -354,7 +360,7 @@ namespace KFrame
         }
         else
         {
-            _delay_queue[ message ] = _net_services->_now_time + delay;
+            _delay_queue[ _net_services->_now_time + delay ].push_back( message );
         }
 
         return ok;
