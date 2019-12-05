@@ -18,6 +18,10 @@ namespace KFrame
         kfdropdataweight->_drop_data._data_value = strdropvalue;
         kfdropdataweight->_drop_data._min_value = KFUtility::SplitValue<uint32>( strdropvalue, __RANGE_STRING__ );
         kfdropdataweight->_drop_data._max_value = KFUtility::SplitValue<uint32>( strdropvalue, __RANGE_STRING__ );
+        if ( kfdropdataweight->_drop_data._max_value == 0u )
+        {
+            kfdropdataweight->_drop_data._max_value = kfdropdataweight->_drop_data._min_value;
+        }
     }
 
     void KFDropDataConfig::LoadAllComplete()

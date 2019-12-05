@@ -218,11 +218,7 @@ namespace KFrame
     {
         auto oldvalue = kfdata->Get< uint64 >();
         auto newvalue = kfdata->Operate( operate, value );
-        if ( oldvalue != newvalue )
-        {
-            // 属性更新回调
-            _kf_component->UpdateDataCallBack( this, key, kfdata, _invalid_int, operate, value, oldvalue, newvalue, true );
-        }
+        _kf_component->UpdateDataCallBack( this, key, kfdata, _invalid_int, operate, value, oldvalue, newvalue, true );
 
         return newvalue;
     }
@@ -253,11 +249,7 @@ namespace KFrame
 
         auto oldvalue = kfchild->Get< uint64 >();
         auto newvalue = kfchild->Operate( operate, value );
-        if ( oldvalue != newvalue )
-        {
-            // 属性更新回调
-            _kf_component->UpdateDataCallBack( this, key, kfchild, index, operate, value, oldvalue, newvalue, true );
-        }
+        _kf_component->UpdateDataCallBack( this, key, kfchild, index, operate, value, oldvalue, newvalue, true );
 
         return newvalue;
     }
@@ -465,11 +457,7 @@ namespace KFrame
     {
         auto oldvalue = kfdata->Get< uint64 >();
         auto newvalue = kfdata->Operate( operate, value );
-        if ( oldvalue != newvalue )
-        {
-            // 属性更新回调
-            _kf_component->UpdateDataCallBack( this, key, kfdata, _invalid_int, operate, value, oldvalue, newvalue, false );
-        }
+        _kf_component->UpdateDataCallBack( this, key, kfdata, _invalid_int, operate, value, oldvalue, newvalue, false );
 
         return newvalue;
     }
