@@ -14,10 +14,10 @@ namespace KFrame
         kfdropdataweight->_drop_data._data_name = xmlnode.GetString( "DropName" );
         kfdropdataweight->_drop_data._data_key = xmlnode.GetUInt32( "DropKey", true );
 
-        auto strvalue = xmlnode.GetString( "DropValue" );
-        kfdropdataweight->_drop_data._data_value = strvalue;
-        kfdropdataweight->_drop_data._min_value = KFUtility::SplitValue<uint32>( strvalue, __RANGE_STRING__ );
-        kfdropdataweight->_drop_data._max_value = KFUtility::SplitValue<uint32>( strvalue, __RANGE_STRING__ );
+        auto strdropvalue = xmlnode.GetString( "DropValue" );
+        kfdropdataweight->_drop_data._data_value = strdropvalue;
+        kfdropdataweight->_drop_data._min_value = KFUtility::SplitValue<uint32>( strdropvalue, __RANGE_STRING__ );
+        kfdropdataweight->_drop_data._max_value = KFUtility::SplitValue<uint32>( strdropvalue, __RANGE_STRING__ );
     }
 
     void KFDropDataConfig::LoadAllComplete()

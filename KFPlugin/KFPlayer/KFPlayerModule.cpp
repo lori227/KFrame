@@ -256,13 +256,13 @@ namespace KFrame
             return nullptr;
         }
 
-        OnEnterCreatePlayer( player, pblogin->playerid() );
-
         player->Set( __STRING__( gateid ), pblogin->gateid() );
         player->Set( __STRING__( channel ), pblogin->channel() );
         player->Set( __STRING__( account ), pblogin->account() );
         player->Set( __STRING__( accountid ), pblogin->accountid() );
         player->Set( __STRING__( onlinetime ), KFGlobal::Instance()->_real_time );
+
+        OnEnterCreatePlayer( player, pblogin->playerid() );
 
         // 渠道数据
         auto pbchanneldata = &pblogin->channeldata();

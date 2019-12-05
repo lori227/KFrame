@@ -19,8 +19,7 @@ namespace KFrame
         auto dropdataid = xmlnode.GetUInt32( "DropDataId", true );
         auto weight = xmlnode.GetUInt32( "Weight", true );
 
-        if ( ( weight == 0u && kfsetting->_rand_type == KFRandEnum::Weight ) ||
-                ( weight == KFRandEnum::TenThousand && kfsetting->_rand_type == KFRandEnum::Probability ) )
+        if ( weight == KFRandEnum::TenThousand && kfsetting->_rand_type == KFRandEnum::Probability )
         {
             kfdropweight = __KF_NEW__( KFDropGroupWeight );
             kfdropweight->_id = dropdataid;

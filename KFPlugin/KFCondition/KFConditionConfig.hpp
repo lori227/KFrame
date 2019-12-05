@@ -2,6 +2,7 @@
 #define __KF_CONDITION_CONFIG_H__
 
 #include "KFZConfig/KFConfig.h"
+#include "KFZConfig/KFReadSetting.h"
 
 namespace KFrame
 {
@@ -110,6 +111,10 @@ namespace KFrame
 
         // 限制类型
         uint32 _limit_mask = 0u;
+
+        // 限制的完成条件
+        uint32 _limit_condition_type = 0;
+        VectorUInt32 _limit_condition_list;
     };
 
     class KFConditionConfig : public KFConfigT< KFConditionSetting >, public KFInstance< KFConditionConfig >

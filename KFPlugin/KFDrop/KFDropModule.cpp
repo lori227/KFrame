@@ -273,6 +273,11 @@ namespace KFrame
         }
 
         auto dropdata = &kfdropdataweight->_drop_data;
+        if ( dropdata->_max_value == 0u )
+        {
+            return;
+        }
+
         if ( dropdata->_data_name == __STRING__( drop ) )
         {
             // 如果是掉落的话, 继续执行掉落逻辑
