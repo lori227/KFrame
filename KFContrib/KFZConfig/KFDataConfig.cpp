@@ -45,6 +45,10 @@ namespace KFrame
         {
             kfdatasetting->_logic_name = kfdatasetting->_name;
         }
+        else
+        {
+            kfsetting->_logic_name_list[ kfdatasetting->_logic_name ] = kfdatasetting->_name;
+        }
 
         kfdatasetting->_type = KFDataDefine::ConvertDataType( xmlnode.GetString( "Type" ) );
         kfdatasetting->_logic_type = kfdatasetting->_type;

@@ -35,23 +35,12 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFClusterClientModule::Run()
     {
-        if ( _cluster_in_services )
+        if ( !_cluster_in_services )
         {
-            while ( !_send_keeper.empty() )
-            {
-                // 把消息发送出去
-                auto keeper = _send_keeper.front();
-                auto ok = _kf_tcp_client->SendNetMessage( keeper->_shard_id, keeper->_msg_id, keeper->_data, keeper->_length );
-                if ( !ok )
-                {
-                    // 发送失败, 有可能是消息队列满了, 下一帧继续发送
-                    break;
-                }
-
-                _send_keeper.pop_front();
-                __KF_DELETE__( SendKeeper, keeper );
-            }
+            return;
         }
+
+        RunSendKeeper();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -215,54 +204,100 @@ namespace KFrame
         return _cluster_in_services;
     }
 
-    bool KFClusterClientModule::SendToProxy( uint32 msgid, google::protobuf::Message* message, bool resend )
+    bool KFClusterClientModule::SendToProxy( uint32 msgid, const char* data, uint32 length )
     {
-        return SendToProxy( _invalid_int, msgid, message, resend );
+        return SendToProxy( _invalid_int, msgid, data, length );
     }
 
-    bool KFClusterClientModule::SendToProxy( uint64 shardid, uint32 msgid, google::protobuf::Message* message, bool resend )
+    bool KFClusterClientModule::SendToProxy( uint32 msgid, google::protobuf::Message* message )
     {
-        // 不在服务中
+        return SendToProxy( _invalid_int, msgid, message );
+    }
+
+    bool KFClusterClientModule::SendToProxy( uint64 shardid, uint32 msgid, google::protobuf::Message* message )
+    {
+        auto strdata = message->SerializeAsString();
+        return SendToProxy( shardid, msgid, strdata.data(), strdata.size() );
+    }
+
+    bool KFClusterClientModule::SendToProxy( uint64 shardid, uint32 msgid, const char* data, uint32 length )
+    {
         if ( !_cluster_in_services )
         {
-            if ( !resend )
-            {
-                __LOG_ERROR__( "cluster not in service, send msgid[{}] failed!", msgid );
-            }
-            else
-            {
-                AddSendKeeper( shardid, msgid, message );
-            }
-
+            __LOG_ERROR__( "cluster not in service, send msgid=[{}] shardid=[{}] failed!", msgid );
             return false;
         }
 
-        // 发送消息
-        auto ok = true;
-        if ( _send_keeper.empty() )
+        return _kf_tcp_client->SendNetMessage( _cluster_proxy_id, shardid, msgid, data, length );
+    }
+
+    bool KFClusterClientModule::RepeatToProxy( uint32 msgid, const char* data, uint32 length )
+    {
+        return RepeatToProxy( _invalid_int, msgid, data, length );
+    }
+
+    bool KFClusterClientModule::RepeatToProxy( uint32 msgid, google::protobuf::Message* message )
+    {
+        return RepeatToProxy( _invalid_int, msgid, message );
+    }
+
+    bool KFClusterClientModule::RepeatToProxy( uint64 shardid, uint32 msgid, google::protobuf::Message* message )
+    {
+        auto strdata = message->SerializeAsString();
+        return RepeatToProxy( shardid, msgid, strdata.data(), strdata.length() );
+    }
+
+    bool KFClusterClientModule::RepeatToProxy( uint64 shardid, uint32 msgid, const char* data, uint32 length )
+    {
+        if ( !_cluster_in_services )
         {
-            ok = _kf_tcp_client->SendNetMessage( _cluster_proxy_id, shardid, msgid, message );
-            if ( !ok && resend )
-            {
-                ok = true;
-                AddSendKeeper( shardid, msgid, message );
-            }
+            // 不在服务中
+            AddSendKeeper( shardid, msgid, data, length );
         }
         else
         {
-            AddSendKeeper( shardid, msgid, message );
+            if ( _send_keeper.empty() )
+            {
+                // 发送队列为空
+                auto ok = _kf_tcp_client->SendNetMessage( _cluster_proxy_id, shardid, msgid, data, length );
+                if ( !ok )
+                {
+                    AddSendKeeper( shardid, msgid, data, length );
+                }
+            }
+            else
+            {
+                AddSendKeeper( shardid, msgid, data, length );
+            }
         }
 
-        return ok;
+        return true;
     }
 
-    void KFClusterClientModule::AddSendKeeper( uint64 shardid, uint32 msgid, google::protobuf::Message* message )
+    void KFClusterClientModule::AddSendKeeper( uint64 shardid, uint32 msgid, const char* data, uint32 length )
     {
-        auto strdata = message->SerializeAsString();
-        auto keeper = __KF_NEW__( SendKeeper, strdata.size() );
+        auto keeper = __KF_NEW__( SendKeeper, length );
         keeper->_shard_id = shardid;
         keeper->_msg_id = msgid;
-        memcpy( keeper->_data, strdata.data(), keeper->_length );
+        memcpy( keeper->_data, data, length );
         _send_keeper.push_back( keeper );
+    }
+
+    void KFClusterClientModule::RunSendKeeper()
+    {
+        while ( !_send_keeper.empty() )
+        {
+            // 把消息发送出去
+            auto keeper = _send_keeper.front();
+            auto ok = _kf_tcp_client->SendNetMessage( keeper->_shard_id, keeper->_msg_id, keeper->_data, keeper->_length );
+            if ( !ok )
+            {
+                // 发送失败, 有可能是消息队列满了, 下一帧继续发送
+                break;
+            }
+
+            _send_keeper.pop_front();
+            __KF_DELETE__( SendKeeper, keeper );
+        }
     }
 }

@@ -100,6 +100,7 @@ namespace KFrame
                     pblogin->set_playerid( kfrole->_id );
                     pblogin->set_accountid( kfrole->_account_id );
                     pblogin->set_sessionid( kfrole->_session_id );
+                    pblogin->set_loginbycrash( true );
                     pblogin->set_gateid( KFGlobal::Instance()->_app_id->GetId() );
                 }
             }

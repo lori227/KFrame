@@ -1,3 +1,0 @@
-set(EXTEND_LIB_DEBUG hiredis)
-set(EXTEND_LIB_RELEASE hiredis)
-BUILD_PLUGIN_NO_PROTO("KFRedis")

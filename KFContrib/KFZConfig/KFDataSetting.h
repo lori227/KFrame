@@ -224,9 +224,24 @@ namespace KFrame
             return nullptr;
         }
 
+        // 查找属性名
+        inline const KFDataSetting* FindSettingByLogicName( const std::string& name ) const
+        {
+            auto iter = _logic_name_list.find( name );
+            if ( iter == _logic_name_list.end() )
+            {
+                return nullptr;
+            }
+
+            return FindSetting( iter->second );
+        }
+
     public:
         // 属性列表
         KFHashMap< std::string, const std::string&, KFDataSetting > _static_data;
+
+        // 逻辑名字对应的属性名
+        MapString _logic_name_list;
     };
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////

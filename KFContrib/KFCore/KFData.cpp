@@ -135,7 +135,6 @@ namespace KFrame
     {
         return nullptr;
     }
-
     KFData* KFData::Find( const std::string& dataname, uint64 key )
     {
         return nullptr;

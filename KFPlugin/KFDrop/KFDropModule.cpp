@@ -6,6 +6,39 @@
 
 namespace KFrame
 {
+    void KFDropModule::BeforeRun()
+    {
+        _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
+        __REGISTER_ADD_ELEMENT__( __STRING__( drop ), &KFDropModule::AddDropElement );
+    }
+
+    void KFDropModule::BeforeShut()
+    {
+        __UN_ADD_ELEMENT__( __STRING__( drop ) );
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    __KF_ADD_ELEMENT_FUNCTION__( KFDropModule::AddDropElement )
+    {
+        if ( !kfelement->IsObject() )
+        {
+            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_data_name );
+            return std::make_tuple( KFDataDefine::Show_None, nullptr );
+        }
+
+        auto kfelementobject = reinterpret_cast< KFElementObject* >( kfelement );
+        if ( kfelementobject->_config_id == _invalid_int )
+        {
+            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id!", kfelement->_data_name );
+            return std::make_tuple( KFDataDefine::Show_None, nullptr );
+        }
+
+        auto count = kfelementobject->CalcValue( kfparent->_class_setting, kfparent->_data_setting->_value_key_name, 1.0f );
+        Drop( player, kfelementobject->_config_id, __MAX__( count, 1u ), __STRING__( command ), __FUNC_LINE__ );
+        return std::make_tuple( KFDataDefine::Show_None, nullptr );
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFDropModule::BindDropLogicFunction( const std::string& dataname, KFDropLogicFunction& function )
     {
         auto kffucntion = _drop_logic_function.Create( dataname );

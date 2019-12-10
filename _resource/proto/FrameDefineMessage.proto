@@ -72,6 +72,9 @@ message PBLoginData
 	
 	// 渠道数据	
 	map<string, bytes> channeldata = 8;	
+
+	// 是否宕机登录
+	bool loginbycrash = 9;
 }
 
 ///////////////////////////////////////////////////////////////////////////

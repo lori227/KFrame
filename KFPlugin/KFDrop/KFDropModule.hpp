@@ -23,6 +23,12 @@ namespace KFrame
         KFDropModule() = default;
         ~KFDropModule() = default;
 
+        // 逻辑
+        virtual void BeforeRun();
+
+        // 关闭
+        virtual void BeforeShut();
+
         virtual void UnRegisterDropLogicFunction( const std::string& dataname );
         ////////////////////////////////////////////////////////////////////////////////
         // 掉落
@@ -35,6 +41,9 @@ namespace KFrame
         // 绑定掉落逻辑函数
         virtual void BindDropLogicFunction( const std::string& dataname, KFDropLogicFunction& function );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 掉落
+        __KF_ADD_ELEMENT_FUNCTION__( AddDropElement );
+
         // 掉落逻辑
         DropDataList& DropLogic( KFEntity* player, uint32 dropid, uint32 count, const char* function, uint32 line );
 
@@ -59,6 +68,9 @@ namespace KFrame
         void SendDropDataToClient( KFEntity* player, uint32 dropid, uint32 count, DropDataList& droplist );
 #endif
     private:
+        // 玩家组件上下文
+        KFComponent* _kf_component = nullptr;
+
         // 掉落逻辑函数
         KFBind < std::string, const std::string&, KFDropLogicFunction > _drop_logic_function;
     };

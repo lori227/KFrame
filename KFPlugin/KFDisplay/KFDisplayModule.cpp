@@ -54,7 +54,7 @@ namespace KFrame
         }
 
         __DISPLAY_MESSAGE__();
-        _kf_route->SendToPlayer( 0u, serverid, playerid, KFMsg::MSG_RESULT_DISPLAY, &display, true );
+        _kf_route->RepeatToPlayer( 0u, serverid, playerid, KFMsg::MSG_RESULT_DISPLAY, &display );
     }
 
     void KFDisplayModule::SendToPlayer( KFData* kfbasic, uint32 result, ListString& params )

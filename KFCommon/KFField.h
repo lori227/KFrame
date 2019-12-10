@@ -102,6 +102,7 @@ namespace KFrame
         __STRING_DEFINE__( developreload );
         __STRING_DEFINE__( developupdate );
         __STRING_DEFINE__( dir );
+        __STRING_DEFINE__( icon );
 
 
         __STRING_DEFINE__( zoneregister );

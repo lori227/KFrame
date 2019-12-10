@@ -1,1 +1,0 @@
-BUILD_PLUGIN_NO_PROTO("KFSchedule")

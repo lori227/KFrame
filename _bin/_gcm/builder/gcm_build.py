@@ -215,8 +215,7 @@ if args['type'] == 1:
     if (args['svn'] is not None) and (args['version'] is not None):
         print 'start pack RELEASE VERSION'
         service = args['service']
-        (channel_id, service_type ) = service.split('.')
-        release_version_name = '%s_%s_%s_%s_%s.tar.gz' % ( args['project'], branch_name,channel_id,service_type,args['version'])
+        release_version_name = '%s_%s_%s.tar.gz' % ( args['project'], branch_name, args['version'])
 
         make_version_file(args['version'])
 
@@ -225,12 +224,22 @@ if args['type'] == 1:
         commands.getoutput(tar_cmd)
         print 'pack RELEASE_VERSION finished'
 
-        # Post to web server
-        gcm_http.do_post(global_conf['web_api'], release_version_name)
-
         # get md5
         (status, output) = commands.getstatusoutput('md5sum %s' % release_version_name)
         md5output = output[0: output.find(' ')]
+
+        local_path = global_conf['local_path']
+        if (local_path is None ) or len(local_path) == 0:
+           # Post to web server
+            gcm_http.do_post(global_conf['web_api'], release_version_name)
+
+            # rm version_name
+            rm_cmd = ('rm -rf %s') % (release_version_name)
+            commands.getoutput(rm_cmd)   
+        else:
+            # move version_name
+            mv_cmd = ('mv -f %s %s') % (release_version_name, local_path)
+            commands.getoutput(mv_cmd)   
 
         # insert into db
         db_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -238,9 +247,6 @@ if args['type'] == 1:
         mysql_db_info = gcm_db.db_info(global_conf['mysql_host'], global_conf['mysql_port'], global_conf['mysql_user'], global_conf['mysql_pwd'], global_conf['mysql_db'])
         gcm_db.insert_mysql_db(mysql_db_info, sql)
 
-        # rm version_name
-        rm_cmd = ('rm -rf %s') % (release_version_name)
-        commands.getoutput(rm_cmd)    
 elif args['type'] == 2:
     # reload
     print '\nstart to update file'
@@ -259,8 +265,8 @@ elif args['type'] == 2:
     sql = "INSERT INTO file (file_name, file_path, file_url, file_time, file_md5) VALUES ('%s', '%s', '%s', '%s', '%s') on duplicate key update file_time='%s', file_md5='%s';" % (update_name, update_path,  global_conf['web_url'] + update_name, db_time, md5output, db_time, md5output)
     mysql_db_info = gcm_db.db_info(global_conf['mysql_host'], global_conf['mysql_port'], global_conf['mysql_user'], global_conf['mysql_pwd'], global_conf['mysql_db'])
     gcm_db.insert_mysql_db(mysql_db_info, sql)
-
     print 'update file finished'
+
 elif args['type'] == 3:
     # resource
     if (args['svn'] is not None) and (args['version'] is not None):
@@ -323,8 +329,8 @@ elif args['type'] == 4:
     sql = "INSERT INTO plugin (file_name, file_path, plugin_name, file_url, file_time, file_md5) VALUES ('%s', '%s', '%s', '%s', '%s', '%s') on duplicate key update file_time='%s', file_md5='%s';" % (update_name, file_path, plugin_name, global_conf['web_url'] + update_name, db_time, md5output, db_time, md5output)
     mysql_db_info = gcm_db.db_info(global_conf['mysql_host'], global_conf['mysql_port'], global_conf['mysql_user'], global_conf['mysql_pwd'], global_conf['mysql_db'])
     gcm_db.insert_mysql_db(mysql_db_info, sql)
-
     print 'update plugin finished'
+
 else:
     print 'error type!'
 

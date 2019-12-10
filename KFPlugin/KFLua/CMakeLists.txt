@@ -1,4 +1,0 @@
-set(EXTEND_LIB_DEBUG luaplus53d )
-set(EXTEND_LIB_RELEASE luaplus53 )
-
-BUILD_PLUGIN_WITH_LOGIC("KFLua")

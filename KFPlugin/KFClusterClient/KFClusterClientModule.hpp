@@ -40,8 +40,8 @@ namespace KFrame
     public:
         uint64 _shard_id = 0u;
         uint32 _msg_id = 0u;
-        char* _data = nullptr;
         uint32 _length = 0u;
+        char* _data = nullptr;
     };
 
     /////////////////////////////////////////////////////////////////////////////////////////
@@ -64,13 +64,19 @@ namespace KFrame
         // 是否在服务中
         virtual bool IsInService();
 
-        // 发送消息
-        virtual bool SendToProxy( uint32 msgid, google::protobuf::Message* message, bool resend );
-        virtual bool SendToProxy( uint64 shardid, uint32 msgid, google::protobuf::Message* message, bool resend );
+        // 发送消息( 只发送一次, 不管成功还是失败 )
+        virtual bool SendToProxy( uint32 msgid, const char* data, uint32 length );
+        virtual bool SendToProxy( uint32 msgid, google::protobuf::Message* message );
 
-        // 注册回调函数
-        virtual void AddConnectionFunction( const std::string& name, KFClusterConnectionFunction& function );
-        virtual void RemoveConnectionFunction( const std::string& name );
+        virtual bool SendToProxy( uint64 shardid, uint32 msgid, const char* data, uint32 length );
+        virtual bool SendToProxy( uint64 shardid, uint32 msgid, google::protobuf::Message* message );
+
+        // 发送消息( 失败重复发送, 一直到发送成功 )
+        virtual bool RepeatToProxy( uint32 msgid, const char* data, uint32 length );
+        virtual bool RepeatToProxy( uint32 msgid, google::protobuf::Message* message );
+
+        virtual bool RepeatToProxy( uint64 shardid, uint32 msgid, const char* data, uint32 length );
+        virtual bool RepeatToProxy( uint64 shardid, uint32 msgid, google::protobuf::Message* message );
 
     protected:
         // 认证回馈
@@ -91,7 +97,11 @@ namespace KFrame
 
         // 发送Token消息
         __KF_TIMER_FUNCTION__( OnTimerSendClusterTokenMessage );
-    private:
+    protected:
+        // 注册回调函数
+        virtual void AddConnectionFunction( const std::string& name, KFClusterConnectionFunction& function );
+        virtual void RemoveConnectionFunction( const std::string& name );
+
         // 调用注册函数
         void CallClusterConnectionFunction( uint64 serverid );
 
@@ -99,7 +109,10 @@ namespace KFrame
         void ReconnectClusterMaster();
 
         // 添加重发消息
-        void AddSendKeeper( uint64 shardid, uint32 msgid, google::protobuf::Message* message );
+        void AddSendKeeper( uint64 shardid, uint32 msgid, const char* data, uint32 length );
+
+        // 发送重发消息
+        void RunSendKeeper();
 
     private:
         // cluster name

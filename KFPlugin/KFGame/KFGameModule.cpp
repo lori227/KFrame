@@ -212,7 +212,7 @@ namespace KFrame
         }
 
         // 转发消息
-        return _kf_route->SendToPlayer( sendid, serverid, playerid, msgid, message, true );
+        return _kf_route->SendToPlayer( sendid, serverid, playerid, msgid, message );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -321,17 +321,20 @@ namespace KFrame
             auto player = _kf_player->CreatePlayer( pblogin, pbplayerdata );
             if ( player != nullptr )
             {
-                // 序列化玩家数据
-                auto pbnewdata = _kf_kernel->SerializeToClient( player );
-
-                KFMsg::S2SEnterToGateAck ack;
-                ack.mutable_pblogin()->CopyFrom( *pblogin );
-                ack.mutable_playerdata()->CopyFrom( *pbnewdata );
-                ack.set_servertime( KFGlobal::Instance()->_real_time );
-                auto ok = SendToGate( pblogin->gateid(), KFMsg::S2S_ENTER_TO_GATE_ACK, &ack );
-                if ( !ok )
+                if ( !pblogin->loginbycrash() )
                 {
-                    __LOG_ERROR__( "player[{}:{}] send failed!", pblogin->accountid(), pblogin->playerid() );
+                    // 序列化玩家数据
+                    auto pbnewdata = _kf_kernel->SerializeToClient( player );
+
+                    KFMsg::S2SEnterToGateAck ack;
+                    ack.mutable_pblogin()->CopyFrom( *pblogin );
+                    ack.mutable_playerdata()->CopyFrom( *pbnewdata );
+                    ack.set_servertime( KFGlobal::Instance()->_real_time );
+                    auto ok = SendToGate( pblogin->gateid(), KFMsg::S2S_ENTER_TO_GATE_ACK, &ack );
+                    if ( !ok )
+                    {
+                        __LOG_ERROR__( "player[{}:{}] send failed!", pblogin->accountid(), pblogin->playerid() );
+                    }
                 }
             }
             else

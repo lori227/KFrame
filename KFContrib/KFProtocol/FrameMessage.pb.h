@@ -47,7 +47,7 @@ namespace protobuf_FrameMessage_2eproto {
 struct LIBPROTOC_EXPORT TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[64];
+  static const ::google::protobuf::internal::ParseTable schema[65];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -196,6 +196,9 @@ LIBPROTOC_EXPORT extern S2SRouteClientLostToShardReqDefaultTypeInternal _S2SRout
 class S2SRouteDiscoverToClientReq;
 class S2SRouteDiscoverToClientReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2SRouteDiscoverToClientReqDefaultTypeInternal _S2SRouteDiscoverToClientReq_default_instance_;
+class S2SRouteMessageOk;
+class S2SRouteMessageOkDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2SRouteMessageOkDefaultTypeInternal _S2SRouteMessageOk_default_instance_;
 class S2SRouteMessageToClientAck;
 class S2SRouteMessageToClientAckDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2SRouteMessageToClientAckDefaultTypeInternal _S2SRouteMessageToClientAck_default_instance_;
@@ -297,6 +300,7 @@ template<> LIBPROTOC_EXPORT ::KFMsg::S2SRouteAddObjectToProxyReq* Arena::CreateM
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SRouteAddObjectToShardReq* Arena::CreateMaybeMessage<::KFMsg::S2SRouteAddObjectToShardReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SRouteClientLostToShardReq* Arena::CreateMaybeMessage<::KFMsg::S2SRouteClientLostToShardReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SRouteDiscoverToClientReq* Arena::CreateMaybeMessage<::KFMsg::S2SRouteDiscoverToClientReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2SRouteMessageOk* Arena::CreateMaybeMessage<::KFMsg::S2SRouteMessageOk>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SRouteMessageToClientAck* Arena::CreateMaybeMessage<::KFMsg::S2SRouteMessageToClientAck>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SRouteMessageToNameAllReq* Arena::CreateMaybeMessage<::KFMsg::S2SRouteMessageToNameAllReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SRouteMessageToNameBalanceReq* Arena::CreateMaybeMessage<::KFMsg::S2SRouteMessageToNameBalanceReq>(Arena*);
@@ -357,6 +361,7 @@ enum FrameProtocol {
   S2S_CLUSTER_TOKEN_TO_MASTER_REQ = 10111,
   S2S_CLUSTER_TOKEN_TO_PROXY_ACK = 10112,
   S2S_CLUSTER_TOKEN_TO_MASTER_ACK = 10113,
+  S2S_ROUTE_MESSAGE_OK = 10200,
   S2S_ROUTE_MESSAGE_TO_CLIENT_ACK = 10201,
   S2S_ROUTE_MESSAGE_TO_NAME_ALL_REQ = 10202,
   S2S_ROUTE_MESSAGE_TO_NAME_RAND_REQ = 10203,
@@ -3128,6 +3133,12 @@ class LIBPROTOC_EXPORT PBRoute : public ::google::protobuf::Message /* @@protoc_
   ::google::protobuf::uint64 recvid() const;
   void set_recvid(::google::protobuf::uint64 value);
 
+  // uint64 serial = 4;
+  void clear_serial();
+  static const int kSerialFieldNumber = 4;
+  ::google::protobuf::uint64 serial() const;
+  void set_serial(::google::protobuf::uint64 value);
+
   // @@protoc_insertion_point(class_scope:KFMsg.PBRoute)
  private:
 
@@ -3135,6 +3146,123 @@ class LIBPROTOC_EXPORT PBRoute : public ::google::protobuf::Message /* @@protoc_
   ::google::protobuf::uint64 serverid_;
   ::google::protobuf::uint64 sendid_;
   ::google::protobuf::uint64 recvid_;
+  ::google::protobuf::uint64 serial_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_FrameMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2SRouteMessageOk : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2SRouteMessageOk) */ {
+ public:
+  S2SRouteMessageOk();
+  virtual ~S2SRouteMessageOk();
+
+  S2SRouteMessageOk(const S2SRouteMessageOk& from);
+
+  inline S2SRouteMessageOk& operator=(const S2SRouteMessageOk& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  S2SRouteMessageOk(S2SRouteMessageOk&& from) noexcept
+    : S2SRouteMessageOk() {
+    *this = ::std::move(from);
+  }
+
+  inline S2SRouteMessageOk& operator=(S2SRouteMessageOk&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2SRouteMessageOk& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const S2SRouteMessageOk* internal_default_instance() {
+    return reinterpret_cast<const S2SRouteMessageOk*>(
+               &_S2SRouteMessageOk_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    23;
+
+  void Swap(S2SRouteMessageOk* other);
+  friend void swap(S2SRouteMessageOk& a, S2SRouteMessageOk& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline S2SRouteMessageOk* New() const final {
+    return CreateMaybeMessage<S2SRouteMessageOk>(NULL);
+  }
+
+  S2SRouteMessageOk* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2SRouteMessageOk>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const S2SRouteMessageOk& from);
+  void MergeFrom(const S2SRouteMessageOk& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(S2SRouteMessageOk* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // .KFMsg.PBRoute pbroute = 1;
+  bool has_pbroute() const;
+  void clear_pbroute();
+  static const int kPbrouteFieldNumber = 1;
+  private:
+  const ::KFMsg::PBRoute& _internal_pbroute() const;
+  public:
+  const ::KFMsg::PBRoute& pbroute() const;
+  ::KFMsg::PBRoute* release_pbroute();
+  ::KFMsg::PBRoute* mutable_pbroute();
+  void set_allocated_pbroute(::KFMsg::PBRoute* pbroute);
+
+  // uint64 serial = 2;
+  void clear_serial();
+  static const int kSerialFieldNumber = 2;
+  ::google::protobuf::uint64 serial() const;
+  void set_serial(::google::protobuf::uint64 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2SRouteMessageOk)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::KFMsg::PBRoute* pbroute_;
+  ::google::protobuf::uint64 serial_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameMessage_2eproto::TableStruct;
 };
@@ -3175,7 +3303,7 @@ class LIBPROTOC_EXPORT S2SRouteMessageToClientAck : public ::google::protobuf::M
                &_S2SRouteMessageToClientAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    23;
+    24;
 
   void Swap(S2SRouteMessageToClientAck* other);
   friend void swap(S2SRouteMessageToClientAck& a, S2SRouteMessageToClientAck& b) {
@@ -3306,7 +3434,7 @@ class LIBPROTOC_EXPORT S2SRouteMessageToNameAllReq : public ::google::protobuf::
                &_S2SRouteMessageToNameAllReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    24;
+    25;
 
   void Swap(S2SRouteMessageToNameAllReq* other);
   friend void swap(S2SRouteMessageToNameAllReq& a, S2SRouteMessageToNameAllReq& b) {
@@ -3452,7 +3580,7 @@ class LIBPROTOC_EXPORT S2SRouteMessageToNameRandReq : public ::google::protobuf:
                &_S2SRouteMessageToNameRandReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    25;
+    26;
 
   void Swap(S2SRouteMessageToNameRandReq* other);
   friend void swap(S2SRouteMessageToNameRandReq& a, S2SRouteMessageToNameRandReq& b) {
@@ -3598,7 +3726,7 @@ class LIBPROTOC_EXPORT S2SRouteMessageToNameBalanceReq : public ::google::protob
                &_S2SRouteMessageToNameBalanceReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    26;
+    27;
 
   void Swap(S2SRouteMessageToNameBalanceReq* other);
   friend void swap(S2SRouteMessageToNameBalanceReq& a, S2SRouteMessageToNameBalanceReq& b) {
@@ -3744,7 +3872,7 @@ class LIBPROTOC_EXPORT S2SRouteMessageToNameObjectReq : public ::google::protobu
                &_S2SRouteMessageToNameObjectReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    27;
+    28;
 
   void Swap(S2SRouteMessageToNameObjectReq* other);
   friend void swap(S2SRouteMessageToNameObjectReq& a, S2SRouteMessageToNameObjectReq& b) {
@@ -3890,7 +4018,7 @@ class LIBPROTOC_EXPORT S2SRouteMessageToServerReq : public ::google::protobuf::M
                &_S2SRouteMessageToServerReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    28;
+    29;
 
   void Swap(S2SRouteMessageToServerReq* other);
   friend void swap(S2SRouteMessageToServerReq& a, S2SRouteMessageToServerReq& b) {
@@ -4028,7 +4156,7 @@ class LIBPROTOC_EXPORT S2SRouteMessageToPlayerReq : public ::google::protobuf::M
                &_S2SRouteMessageToPlayerReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    29;
+    30;
 
   void Swap(S2SRouteMessageToPlayerReq* other);
   friend void swap(S2SRouteMessageToPlayerReq& a, S2SRouteMessageToPlayerReq& b) {
@@ -4166,7 +4294,7 @@ class LIBPROTOC_EXPORT S2SRouteClientLostToShardReq : public ::google::protobuf:
                &_S2SRouteClientLostToShardReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    30;
+    31;
 
   void Swap(S2SRouteClientLostToShardReq* other);
   friend void swap(S2SRouteClientLostToShardReq& a, S2SRouteClientLostToShardReq& b) {
@@ -4284,7 +4412,7 @@ class LIBPROTOC_EXPORT S2SRouteDiscoverToClientReq : public ::google::protobuf::
                &_S2SRouteDiscoverToClientReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    31;
+    32;
 
   void Swap(S2SRouteDiscoverToClientReq* other);
   friend void swap(S2SRouteDiscoverToClientReq& a, S2SRouteDiscoverToClientReq& b) {
@@ -4387,7 +4515,7 @@ class LIBPROTOC_EXPORT S2SRouteSyncObjectToProxyReq : public ::google::protobuf:
                &_S2SRouteSyncObjectToProxyReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    32;
+    33;
 
   void Swap(S2SRouteSyncObjectToProxyReq* other);
   friend void swap(S2SRouteSyncObjectToProxyReq& a, S2SRouteSyncObjectToProxyReq& b) {
@@ -4526,7 +4654,7 @@ class LIBPROTOC_EXPORT S2SRouteSyncObjectToShardReq : public ::google::protobuf:
                &_S2SRouteSyncObjectToShardReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    33;
+    34;
 
   void Swap(S2SRouteSyncObjectToShardReq* other);
   friend void swap(S2SRouteSyncObjectToShardReq& a, S2SRouteSyncObjectToShardReq& b) {
@@ -4658,7 +4786,7 @@ class LIBPROTOC_EXPORT S2SRouteAddObjectToProxyReq : public ::google::protobuf::
                &_S2SRouteAddObjectToProxyReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    34;
+    35;
 
   void Swap(S2SRouteAddObjectToProxyReq* other);
   friend void swap(S2SRouteAddObjectToProxyReq& a, S2SRouteAddObjectToProxyReq& b) {
@@ -4790,7 +4918,7 @@ class LIBPROTOC_EXPORT S2SRouteAddObjectToShardReq : public ::google::protobuf::
                &_S2SRouteAddObjectToShardReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    35;
+    36;
 
   void Swap(S2SRouteAddObjectToShardReq* other);
   friend void swap(S2SRouteAddObjectToShardReq& a, S2SRouteAddObjectToShardReq& b) {
@@ -4922,7 +5050,7 @@ class LIBPROTOC_EXPORT S2SRouteRemoveObjectToProxyReq : public ::google::protobu
                &_S2SRouteRemoveObjectToProxyReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    36;
+    37;
 
   void Swap(S2SRouteRemoveObjectToProxyReq* other);
   friend void swap(S2SRouteRemoveObjectToProxyReq& a, S2SRouteRemoveObjectToProxyReq& b) {
@@ -5054,7 +5182,7 @@ class LIBPROTOC_EXPORT S2SRouteRemoveObjectToShardReq : public ::google::protobu
                &_S2SRouteRemoveObjectToShardReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    37;
+    38;
 
   void Swap(S2SRouteRemoveObjectToShardReq* other);
   friend void swap(S2SRouteRemoveObjectToShardReq& a, S2SRouteRemoveObjectToShardReq& b) {
@@ -5186,7 +5314,7 @@ class LIBPROTOC_EXPORT S2SRegisterAgentToServerReq : public ::google::protobuf::
                &_S2SRegisterAgentToServerReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    38;
+    39;
 
   void Swap(S2SRegisterAgentToServerReq* other);
   friend void swap(S2SRegisterAgentToServerReq& a, S2SRegisterAgentToServerReq& b) {
@@ -5364,7 +5492,7 @@ class LIBPROTOC_EXPORT PBDeployCommand : public ::google::protobuf::Message /* @
                &_PBDeployCommand_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    39;
+    40;
 
   void Swap(PBDeployCommand* other);
   friend void swap(PBDeployCommand& a, PBDeployCommand& b) {
@@ -5542,7 +5670,7 @@ class LIBPROTOC_EXPORT S2SDeployCommandToAgentReq : public ::google::protobuf::M
                &_S2SDeployCommandToAgentReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    40;
+    41;
 
   void Swap(S2SDeployCommandToAgentReq* other);
   friend void swap(S2SDeployCommandToAgentReq& a, S2SDeployCommandToAgentReq& b) {
@@ -5651,7 +5779,7 @@ class LIBPROTOC_EXPORT S2SDeployCommandToClientReq : public ::google::protobuf::
                &_S2SDeployCommandToClientReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    41;
+    42;
 
   void Swap(S2SDeployCommandToClientReq* other);
   friend void swap(S2SDeployCommandToClientReq& a, S2SDeployCommandToClientReq& b) {
@@ -5760,7 +5888,7 @@ class LIBPROTOC_EXPORT S2SDeployToolCommandReq : public ::google::protobuf::Mess
                &_S2SDeployToolCommandReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    42;
+    43;
 
   void Swap(S2SDeployToolCommandReq* other);
   friend void swap(S2SDeployToolCommandReq& a, S2SDeployToolCommandReq& b) {
@@ -5906,7 +6034,7 @@ class LIBPROTOC_EXPORT S2SDeployLogToToolAck : public ::google::protobuf::Messag
                &_S2SDeployLogToToolAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    43;
+    44;
 
   void Swap(S2SDeployLogToToolAck* other);
   friend void swap(S2SDeployLogToToolAck& a, S2SDeployLogToToolAck& b) {
@@ -6024,7 +6152,7 @@ class LIBPROTOC_EXPORT S2SDeployLogToServerAck : public ::google::protobuf::Mess
                &_S2SDeployLogToServerAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    44;
+    45;
 
   void Swap(S2SDeployLogToServerAck* other);
   friend void swap(S2SDeployLogToServerAck& a, S2SDeployLogToServerAck& b) {
@@ -6163,7 +6291,7 @@ class LIBPROTOC_EXPORT S2SDeployToolDeleteMySQLReq : public ::google::protobuf::
                &_S2SDeployToolDeleteMySQLReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    46;
+    47;
 
   void Swap(S2SDeployToolDeleteMySQLReq* other);
   friend void swap(S2SDeployToolDeleteMySQLReq& a, S2SDeployToolDeleteMySQLReq& b) {
@@ -6311,7 +6439,7 @@ class LIBPROTOC_EXPORT S2SDeployToolDeleteMySQLAck : public ::google::protobuf::
                &_S2SDeployToolDeleteMySQLAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    48;
+    49;
 
   void Swap(S2SDeployToolDeleteMySQLAck* other);
   friend void swap(S2SDeployToolDeleteMySQLAck& a, S2SDeployToolDeleteMySQLAck& b) {
@@ -6466,7 +6594,7 @@ class LIBPROTOC_EXPORT S2SDeployToolExecuteMySQLReq : public ::google::protobuf:
                &_S2SDeployToolExecuteMySQLReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    50;
+    51;
 
   void Swap(S2SDeployToolExecuteMySQLReq* other);
   friend void swap(S2SDeployToolExecuteMySQLReq& a, S2SDeployToolExecuteMySQLReq& b) {
@@ -6614,7 +6742,7 @@ class LIBPROTOC_EXPORT S2SDeployToolExecuteMySQLAck : public ::google::protobuf:
                &_S2SDeployToolExecuteMySQLAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    52;
+    53;
 
   void Swap(S2SDeployToolExecuteMySQLAck* other);
   friend void swap(S2SDeployToolExecuteMySQLAck& a, S2SDeployToolExecuteMySQLAck& b) {
@@ -6769,7 +6897,7 @@ class LIBPROTOC_EXPORT S2SDeployToolQueryMySQLReq : public ::google::protobuf::M
                &_S2SDeployToolQueryMySQLReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    54;
+    55;
 
   void Swap(S2SDeployToolQueryMySQLReq* other);
   friend void swap(S2SDeployToolQueryMySQLReq& a, S2SDeployToolQueryMySQLReq& b) {
@@ -6917,7 +7045,7 @@ class LIBPROTOC_EXPORT PBMySQLData : public ::google::protobuf::Message /* @@pro
                &_PBMySQLData_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    56;
+    57;
 
   void Swap(PBMySQLData* other);
   friend void swap(PBMySQLData& a, PBMySQLData& b) {
@@ -7029,7 +7157,7 @@ class LIBPROTOC_EXPORT PBMySQLDatas : public ::google::protobuf::Message /* @@pr
                &_PBMySQLDatas_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    57;
+    58;
 
   void Swap(PBMySQLDatas* other);
   friend void swap(PBMySQLDatas& a, PBMySQLDatas& b) {
@@ -7138,7 +7266,7 @@ class LIBPROTOC_EXPORT S2SDeployToolQueryMySQLAck : public ::google::protobuf::M
                &_S2SDeployToolQueryMySQLAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    58;
+    59;
 
   void Swap(S2SDeployToolQueryMySQLAck* other);
   friend void swap(S2SDeployToolQueryMySQLAck& a, S2SDeployToolQueryMySQLAck& b) {
@@ -7269,7 +7397,7 @@ class LIBPROTOC_EXPORT S2SDeployToolQueryToolIdReq : public ::google::protobuf::
                &_S2SDeployToolQueryToolIdReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    59;
+    60;
 
   void Swap(S2SDeployToolQueryToolIdReq* other);
   friend void swap(S2SDeployToolQueryToolIdReq& a, S2SDeployToolQueryToolIdReq& b) {
@@ -7380,7 +7508,7 @@ class LIBPROTOC_EXPORT S2SDeployToolQueryToolIdAck : public ::google::protobuf::
                &_S2SDeployToolQueryToolIdAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    60;
+    61;
 
   void Swap(S2SDeployToolQueryToolIdAck* other);
   friend void swap(S2SDeployToolQueryToolIdAck& a, S2SDeployToolQueryToolIdAck& b) {
@@ -7483,7 +7611,7 @@ class LIBPROTOC_EXPORT S2SDeployHeartbeatToAgentReq : public ::google::protobuf:
                &_S2SDeployHeartbeatToAgentReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    61;
+    62;
 
   void Swap(S2SDeployHeartbeatToAgentReq* other);
   friend void swap(S2SDeployHeartbeatToAgentReq& a, S2SDeployHeartbeatToAgentReq& b) {
@@ -7586,7 +7714,7 @@ class LIBPROTOC_EXPORT PBRemoteLog : public ::google::protobuf::Message /* @@pro
                &_PBRemoteLog_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    62;
+    63;
 
   void Swap(PBRemoteLog* other);
   friend void swap(PBRemoteLog& a, PBRemoteLog& b) {
@@ -7704,7 +7832,7 @@ class LIBPROTOC_EXPORT S2SRemoteLogToServerReq : public ::google::protobuf::Mess
                &_S2SRemoteLogToServerReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    63;
+    64;
 
   void Swap(S2SRemoteLogToServerReq* other);
   friend void swap(S2SRemoteLogToServerReq& a, S2SRemoteLogToServerReq& b) {
@@ -9558,6 +9686,92 @@ inline void PBRoute::set_recvid(::google::protobuf::uint64 value) {
   
   recvid_ = value;
   // @@protoc_insertion_point(field_set:KFMsg.PBRoute.recvid)
+}
+
+// uint64 serial = 4;
+inline void PBRoute::clear_serial() {
+  serial_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 PBRoute::serial() const {
+  // @@protoc_insertion_point(field_get:KFMsg.PBRoute.serial)
+  return serial_;
+}
+inline void PBRoute::set_serial(::google::protobuf::uint64 value) {
+  
+  serial_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.PBRoute.serial)
+}
+
+// -------------------------------------------------------------------
+
+// S2SRouteMessageOk
+
+// .KFMsg.PBRoute pbroute = 1;
+inline bool S2SRouteMessageOk::has_pbroute() const {
+  return this != internal_default_instance() && pbroute_ != NULL;
+}
+inline void S2SRouteMessageOk::clear_pbroute() {
+  if (GetArenaNoVirtual() == NULL && pbroute_ != NULL) {
+    delete pbroute_;
+  }
+  pbroute_ = NULL;
+}
+inline const ::KFMsg::PBRoute& S2SRouteMessageOk::_internal_pbroute() const {
+  return *pbroute_;
+}
+inline const ::KFMsg::PBRoute& S2SRouteMessageOk::pbroute() const {
+  const ::KFMsg::PBRoute* p = pbroute_;
+  // @@protoc_insertion_point(field_get:KFMsg.S2SRouteMessageOk.pbroute)
+  return p != NULL ? *p : *reinterpret_cast<const ::KFMsg::PBRoute*>(
+      &::KFMsg::_PBRoute_default_instance_);
+}
+inline ::KFMsg::PBRoute* S2SRouteMessageOk::release_pbroute() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2SRouteMessageOk.pbroute)
+  
+  ::KFMsg::PBRoute* temp = pbroute_;
+  pbroute_ = NULL;
+  return temp;
+}
+inline ::KFMsg::PBRoute* S2SRouteMessageOk::mutable_pbroute() {
+  
+  if (pbroute_ == NULL) {
+    auto* p = CreateMaybeMessage<::KFMsg::PBRoute>(GetArenaNoVirtual());
+    pbroute_ = p;
+  }
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2SRouteMessageOk.pbroute)
+  return pbroute_;
+}
+inline void S2SRouteMessageOk::set_allocated_pbroute(::KFMsg::PBRoute* pbroute) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete pbroute_;
+  }
+  if (pbroute) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      pbroute = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, pbroute, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  pbroute_ = pbroute;
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SRouteMessageOk.pbroute)
+}
+
+// uint64 serial = 2;
+inline void S2SRouteMessageOk::clear_serial() {
+  serial_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 S2SRouteMessageOk::serial() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SRouteMessageOk.serial)
+  return serial_;
+}
+inline void S2SRouteMessageOk::set_serial(::google::protobuf::uint64 value) {
+  
+  serial_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SRouteMessageOk.serial)
 }
 
 // -------------------------------------------------------------------
@@ -13362,6 +13576,8 @@ S2SRemoteLogToServerReq::logdata() const {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

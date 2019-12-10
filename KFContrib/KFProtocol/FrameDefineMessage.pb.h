@@ -1018,17 +1018,23 @@ class LIBPROTOC_EXPORT PBLoginData : public ::google::protobuf::Message /* @@pro
   ::google::protobuf::uint64 accountid() const;
   void set_accountid(::google::protobuf::uint64 value);
 
-  // uint64 playerid = 7;
-  void clear_playerid();
-  static const int kPlayeridFieldNumber = 7;
-  ::google::protobuf::uint64 playerid() const;
-  void set_playerid(::google::protobuf::uint64 value);
-
   // uint32 channel = 4;
   void clear_channel();
   static const int kChannelFieldNumber = 4;
   ::google::protobuf::uint32 channel() const;
   void set_channel(::google::protobuf::uint32 value);
+
+  // bool loginbycrash = 9;
+  void clear_loginbycrash();
+  static const int kLoginbycrashFieldNumber = 9;
+  bool loginbycrash() const;
+  void set_loginbycrash(bool value);
+
+  // uint64 playerid = 7;
+  void clear_playerid();
+  static const int kPlayeridFieldNumber = 7;
+  ::google::protobuf::uint64 playerid() const;
+  void set_playerid(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.PBLoginData)
  private:
@@ -1045,8 +1051,9 @@ class LIBPROTOC_EXPORT PBLoginData : public ::google::protobuf::Message /* @@pro
   ::google::protobuf::uint64 gateid_;
   ::google::protobuf::uint64 sessionid_;
   ::google::protobuf::uint64 accountid_;
-  ::google::protobuf::uint64 playerid_;
   ::google::protobuf::uint32 channel_;
+  bool loginbycrash_;
+  ::google::protobuf::uint64 playerid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameDefineMessage_2eproto::TableStruct;
 };
@@ -2323,6 +2330,20 @@ inline ::google::protobuf::Map< ::std::string, ::std::string >*
 PBLoginData::mutable_channeldata() {
   // @@protoc_insertion_point(field_mutable_map:KFMsg.PBLoginData.channeldata)
   return channeldata_.MutableMap();
+}
+
+// bool loginbycrash = 9;
+inline void PBLoginData::clear_loginbycrash() {
+  loginbycrash_ = false;
+}
+inline bool PBLoginData::loginbycrash() const {
+  // @@protoc_insertion_point(field_get:KFMsg.PBLoginData.loginbycrash)
+  return loginbycrash_;
+}
+inline void PBLoginData::set_loginbycrash(bool value) {
+  
+  loginbycrash_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.PBLoginData.loginbycrash)
 }
 
 // -------------------------------------------------------------------

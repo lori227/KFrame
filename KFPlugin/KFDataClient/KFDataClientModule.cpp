@@ -80,7 +80,7 @@ namespace KFrame
         // 加载玩家数据
         KFMsg::S2SLoadPlayerToDataReq req;
         req.mutable_pblogin()->CopyFrom( *pblogin );
-        auto ok = _kf_route->SendToRand( pblogin->playerid(), __STRING__( data ), KFMsg::S2S_LOAD_PLAYER_TO_DATA_REQ, &req, false );
+        auto ok = _kf_route->SendToRand( pblogin->playerid(), __STRING__( data ), KFMsg::S2S_LOAD_PLAYER_TO_DATA_REQ, &req );
         if ( !ok )
         {
             __LOG_ERROR__( "load palyer=[{}] failed!", pblogin->playerid() );
@@ -131,7 +131,7 @@ namespace KFrame
         req.set_id( playerid );
         req.set_flag( saveflag );
         req.mutable_data()->CopyFrom( *pbplayerdata );
-        auto ok = _kf_route->SendToRand( playerid, __STRING__( data ), KFMsg::S2S_SAVE_PLAYER_TO_DATA_REQ, &req, false );
+        auto ok = _kf_route->SendToRand( playerid, __STRING__( data ), KFMsg::S2S_SAVE_PLAYER_TO_DATA_REQ, &req );
         if ( !ok )
         {
             __LOG_ERROR__( "save palyer=[{}] failed!", playerid );
@@ -160,7 +160,7 @@ namespace KFrame
 
         KFMsg::S2SQueryPlayerToDataReq req;
         req.set_playerid( playerid );
-        return _kf_route->SendToRand( sendid, __STRING__( data ), KFMsg::S2S_QUERY_PLAYER_TO_DATA_REQ, &req, false );
+        return _kf_route->SendToRand( sendid, __STRING__( data ), KFMsg::S2S_QUERY_PLAYER_TO_DATA_REQ, &req );
     }
 
     __KF_MESSAGE_FUNCTION__( KFDataClientModule::HandleQueryPlayerToGameAck )

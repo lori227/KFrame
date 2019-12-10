@@ -42,7 +42,7 @@ namespace KFrame
         }
 
         __NOTICE_MESSAGE__();
-        _kf_route->SendToPlayer( 0u, serverid, playerid, KFMsg::MSG_TELL_NOTICE, &tell, true );
+        _kf_route->RepeatToPlayer( 0u, serverid, playerid, KFMsg::MSG_TELL_NOTICE, &tell );
     }
 
     void KFNoticeModule::SendToPlayer( const Route& route, uint32 type, uint32 count )

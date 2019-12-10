@@ -46,6 +46,7 @@ enum FrameProtocol
 	S2S_CLUSTER_TOKEN_TO_PROXY_ACK = 10112;				// 更新token
 	S2S_CLUSTER_TOKEN_TO_MASTER_ACK = 10113;			// 更新token
 
+	S2S_ROUTE_MESSAGE_OK = 10200;						// 转发消息成功
 	S2S_ROUTE_MESSAGE_TO_CLIENT_ACK = 10201;			// 转发消息
 	S2S_ROUTE_MESSAGE_TO_NAME_ALL_REQ = 10202;			// 转发消息到某类型所有服务器
 	S2S_ROUTE_MESSAGE_TO_NAME_RAND_REQ = 10203;			// 转发消息到随机服务器
@@ -245,6 +246,15 @@ message PBRoute
 	uint64 serverid = 1;	// 发送服务器id
 	uint64 sendid = 2;		// 发送者id
 	uint64 recvid = 3;		// 接受者id
+	uint64 serial = 4;		// 转发序列号
+}
+
+// 转发消息成功
+// S2S_ROUTE_MESSAGE_OK
+message S2SRouteMessageOk
+{
+	PBRoute pbroute = 1;	// 路由信息
+	uint64 serial = 2;		// 转发序列号
 }
 
 // 转发消息回馈
