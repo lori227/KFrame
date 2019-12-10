@@ -1,0 +1,11 @@
+﻿#include "KFSkinConfig.hpp"
+
+namespace KFrame
+{
+    void KFSkinConfig::ReadSetting( KFNode& xmlnode, KFSkinSetting* kfsetting )
+    {
+        kfsetting->_quality = xmlnode.GetUInt32( "Quality" );
+    }
+    /////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////
+}

@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="KFMongo.cpp" />
+    <ClCompile Include="KFMongoConfig.cpp" />
+    <ClCompile Include="KFMongoExecute.cpp" />
+    <ClCompile Include="KFMongoLogic.cpp" />
+    <ClCompile Include="KFMongoModule.cpp" />
+    <ClCompile Include="KFMongoPlugin.cpp" />
+    <ClCompile Include="KFMongoReadExecute.cpp" />
+    <ClCompile Include="KFMongoWriteExecute.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="KFMongo.hpp" />
+    <ClInclude Include="KFMongoConfig.hpp" />
+    <ClInclude Include="KFMongoExecute.hpp" />
+    <ClInclude Include="KFMongoInterface.h" />
+    <ClInclude Include="KFMongoLogic.hpp" />
+    <ClInclude Include="KFMongoModule.hpp" />
+    <ClInclude Include="KFMongoPlugin.hpp" />
+    <ClInclude Include="KFMongoSelector.h" />
+    <ClInclude Include="KFMongoDriver.h" />
+    <ClInclude Include="KFMongoReadExecute.hpp" />
+    <ClInclude Include="KFMongoWriteExecute.hpp" />
+  </ItemGroup>
+</Project>

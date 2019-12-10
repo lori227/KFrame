@@ -1,0 +1,1 @@
+﻿BUILD_PLUGIN_WITH_PROTO("KFLogShard")

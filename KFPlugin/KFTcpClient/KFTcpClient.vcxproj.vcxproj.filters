@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="KFTcpClientInterface.h" />
+    <ClInclude Include="KFTcpClientModule.hpp" />
+    <ClInclude Include="KFTcpClientPlugin.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="KFTcpClientModule.cpp" />
+    <ClCompile Include="KFTcpClientPlugin.cpp" />
+  </ItemGroup>
+</Project>

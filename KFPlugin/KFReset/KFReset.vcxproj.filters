@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="KFResetPlugin.cpp" />
+    <ClCompile Include="KFResetModule.cpp">
+      <Filter>Reset</Filter>
+    </ClCompile>
+    <ClCompile Include="KFResetConfig.cpp">
+      <Filter>Reset</Filter>
+    </ClCompile>
+    <ClCompile Include="KFEnterConfig.cpp">
+      <Filter>Enter</Filter>
+    </ClCompile>
+    <ClCompile Include="KFEnterModule.cpp">
+      <Filter>Enter</Filter>
+    </ClCompile>
+    <ClCompile Include="KFLeaveModule.cpp">
+      <Filter>Leave</Filter>
+    </ClCompile>
+    <ClCompile Include="KFLeaveConfig.cpp">
+      <Filter>Leave</Filter>
+    </ClCompile>
+    <ClCompile Include="KFTimeConfig.cpp">
+      <Filter>Reset</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="KFResetPlugin.hpp" />
+    <ClInclude Include="KFResetModule.hpp">
+      <Filter>Reset</Filter>
+    </ClInclude>
+    <ClInclude Include="KFResetInterface.h">
+      <Filter>Reset</Filter>
+    </ClInclude>
+    <ClInclude Include="KFResetConfig.hpp">
+      <Filter>Reset</Filter>
+    </ClInclude>
+    <ClInclude Include="KFEnterConfig.hpp">
+      <Filter>Enter</Filter>
+    </ClInclude>
+    <ClInclude Include="KFEnterModule.hpp">
+      <Filter>Enter</Filter>
+    </ClInclude>
+    <ClInclude Include="KFLeaveConfig.hpp">
+      <Filter>Leave</Filter>
+    </ClInclude>
+    <ClInclude Include="KFLeaveInterface.h">
+      <Filter>Leave</Filter>
+    </ClInclude>
+    <ClInclude Include="KFLeaveModule.hpp">
+      <Filter>Leave</Filter>
+    </ClInclude>
+    <ClInclude Include="KFEnterInterface.h">
+      <Filter>Enter</Filter>
+    </ClInclude>
+    <ClInclude Include="KFTimeConfig.hpp">
+      <Filter>Reset</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Reset">
+      <UniqueIdentifier>{552df2fa-48df-43cc-93b3-7cf57b3264e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enter">
+      <UniqueIdentifier>{2d55f8e2-cf1d-4883-93de-63b0d4f9117e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Leave">
+      <UniqueIdentifier>{2fbfd837-1e20-4bf4-934c-8657c2a4d845}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
