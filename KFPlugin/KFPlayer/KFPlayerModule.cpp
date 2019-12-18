@@ -198,10 +198,6 @@ namespace KFrame
 
     void KFPlayerModule::UnInitPlayer( KFEntity* player )
     {
-        // 更新总时间
-        auto onlinetime = player->Get( __STRING__( onlinetime ) );
-        player->Operate( __STRING__( totaltime ), KFEnum::Add, KFGlobal::Instance()->_real_time - onlinetime );
-
         // 调用函数, 处理离开游戏的一些事务逻辑
         for ( auto& iter : _player_leave_function._objects )
         {
@@ -256,13 +252,17 @@ namespace KFrame
             return nullptr;
         }
 
+        // 创建玩家
+        OnEnterCreatePlayer( player, pblogin->playerid() );
+
+        // 玩家账号信息
+        player->Set( __STRING__( ip ), pblogin->ip() );
         player->Set( __STRING__( gateid ), pblogin->gateid() );
         player->Set( __STRING__( channel ), pblogin->channel() );
         player->Set( __STRING__( account ), pblogin->account() );
         player->Set( __STRING__( accountid ), pblogin->accountid() );
         player->Set( __STRING__( onlinetime ), KFGlobal::Instance()->_real_time );
-
-        OnEnterCreatePlayer( player, pblogin->playerid() );
+        player->Set( __STRING__( basic ), __STRING__( serverid ), KFGlobal::Instance()->_app_id->GetId() );
 
         // 渠道数据
         auto pbchanneldata = &pblogin->channeldata();
@@ -283,6 +283,7 @@ namespace KFrame
 
             kfdata->Set( value );
         }
+
         // 调用函数, 处理进入游戏的一些事务逻辑
         for ( auto& iter : _player_enter_function._objects )
         {
@@ -308,12 +309,9 @@ namespace KFrame
 
     void KFPlayerModule::OnEnterCreatePlayer( KFEntity* player, uint64 playerid )
     {
-        auto kfglobal = KFGlobal::Instance();
-        auto kfbasic = player->Find( __STRING__( basic ) );
-        kfbasic->Set( __STRING__( serverid ), kfglobal->_app_id->GetId() );
-
         // 判断新玩家
-        auto basicid = kfbasic->Get( __STRING__( id ) );
+        auto kfglobal = KFGlobal::Instance();
+        auto basicid = player->Get( __STRING__( basic ), __STRING__( id ) );
         if ( basicid == playerid )
         {
             return;
@@ -321,8 +319,8 @@ namespace KFrame
 
         player->InitData();
         player->SetNew( true );
-        kfbasic->Set( __STRING__( id ), playerid );
         player->Set( __STRING__( birthday ), kfglobal->_real_time );
+        player->Set( __STRING__( basic ), __STRING__( id ), playerid );
 
         for ( auto& iter : _new_player_function._objects )
         {
@@ -388,7 +386,7 @@ namespace KFrame
         if ( ok )
         {
             kfelements.SetOperate( KFEnum::Dec );
-            player->RemoveElement( &kfelements, __FUNC_LINE__ );
+            player->RemoveElement( &kfelements, __STRING__( command ), __FUNC_LINE__ );
         }
     }
 

@@ -33,7 +33,7 @@ namespace KFrame
         }
 
         // 扣除材料
-        player->RemoveElement( &kfsetting->_cost_data, __FUNC_LINE__ );
+        player->RemoveElement( &kfsetting->_cost_data, __STRING__( compound ), __FUNC_LINE__ );
 
         // 添加合成的属性
         player->AddElement( &kfsetting->_compound_data, __STRING__( compound ), __FUNC_LINE__ );

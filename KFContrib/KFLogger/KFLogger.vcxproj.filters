@@ -3,9 +3,11 @@
   <ItemGroup>
     <ClInclude Include="KFSpdLog.h" />
     <ClInclude Include="KFLogger.h" />
+    <ClInclude Include="KFLoggerConfig.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KFSpdLog.cpp" />
     <ClCompile Include="KFLogger.cpp" />
+    <ClCompile Include="KFLoggerConfig.cpp" />
   </ItemGroup>
 </Project>

@@ -19,7 +19,7 @@ namespace KFrame
 
         // 压缩数据
         auto zibbuffer = __KF_UINT8__( _zib_length );
-        auto ziblength = LZ4_compress_fast( value.data(), ( int8* )zibbuffer, value.size(), _zib_length, _compress_level );
+        auto ziblength = LZ4_compress_fast( value.data(), ( int8* )zibbuffer, ( int32 )value.size(), ( int32 )_zib_length, ( int32 )_compress_level );
         if ( ziblength > 0 )
         {
             result.assign( ( int8* )zibbuffer, ziblength );
@@ -42,7 +42,7 @@ namespace KFrame
 
         // 解压缩
         auto zibbuffer = __KF_UINT8__( _zib_length );
-        auto ziblength = LZ4_decompress_safe( value.data(), ( int8* )zibbuffer, value.size(), _zib_length );
+        auto ziblength = LZ4_decompress_safe( value.data(), ( int8* )zibbuffer, ( int32 )value.size(), ( int32 )_zib_length );
         if ( ziblength > 0 )
         {
             result.assign( ( int8* )zibbuffer, ziblength );
@@ -66,7 +66,7 @@ namespace KFrame
 
         // 压缩数据
         auto zibbuffer = __KF_UINT8__( _zib_length );
-        auto length = LZ4_compress_fast( value.data(), ( int8* )zibbuffer, value.size(), _zib_length, _compress_level );
+        auto length = LZ4_compress_fast( value.data(), ( int8* )zibbuffer, ( int32 )value.size(), ( int32 )_zib_length, ( int32 )_compress_level );
         if ( length > 0 )
         {
             auto databuffer = __KF_INT8__( _data_length );

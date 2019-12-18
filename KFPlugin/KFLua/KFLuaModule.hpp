@@ -115,7 +115,7 @@ namespace KFrame
         void LuaSetData( uint64 objectid, const char* strelement, const char* modulename );
 
         // 减少数据
-        void LuaDecData( uint64 objectid, const char* strelement );
+        void LuaDecData( uint64 objectid, const char* strelement, const char* modulename );
 
         // http访问
         const char* LuaSTGet( const char* url, const char* data );

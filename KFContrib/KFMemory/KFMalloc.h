@@ -122,7 +122,7 @@ namespace KFrame
 
     private:
         // 日志是否打开
-        bool _log_open;
+        bool _log_open = false;
         // 打印日志时间
         uint64 _next_log_time = 0u;
 

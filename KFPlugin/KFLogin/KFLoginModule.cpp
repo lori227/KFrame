@@ -161,6 +161,7 @@ namespace KFrame
                 // 发送到world服务器
                 KFMsg::PBLoginData pblogin;
                 pblogin.set_token( token );
+                pblogin.set_ip( kfmsg.ip() );
                 pblogin.set_gateid( gateid );
                 pblogin.set_accountid( accountid );
                 pblogin.set_sessionid( sessionid );
@@ -188,6 +189,7 @@ namespace KFrame
         __JSON_PARSE_STRING__( sendjson, senddata );
         __JSON_PARSE_STRING__( recvjson, recvdata );
 
+        auto ip = __JSON_GET_STRING__( sendjson, __STRING__( ip ) );
         auto gateid = __JSON_GET_UINT64__( sendjson, __STRING__( gateid ) );
         auto accountid = __JSON_GET_UINT64__( sendjson, __STRING__( accountid ) );
         auto sessionid = __JSON_GET_UINT64__( sendjson, __STRING__( sessionid ) );
@@ -224,6 +226,7 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // 发送到world服务器
         KFMsg::PBLoginData pblogin;
+        pblogin.set_ip( ip );
         pblogin.set_token( token );
         pblogin.set_gateid( gateid );
         pblogin.set_channel( channel );

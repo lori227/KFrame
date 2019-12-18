@@ -1000,6 +1000,20 @@ class LIBPROTOC_EXPORT PBLoginData : public ::google::protobuf::Message /* @@pro
   ::std::string* release_account();
   void set_allocated_account(::std::string* account);
 
+  // bytes ip = 10;
+  void clear_ip();
+  static const int kIpFieldNumber = 10;
+  const ::std::string& ip() const;
+  void set_ip(const ::std::string& value);
+  #if LANG_CXX11
+  void set_ip(::std::string&& value);
+  #endif
+  void set_ip(const char* value);
+  void set_ip(const void* value, size_t size);
+  ::std::string* mutable_ip();
+  ::std::string* release_ip();
+  void set_allocated_ip(::std::string* ip);
+
   // uint64 gateid = 2;
   void clear_gateid();
   static const int kGateidFieldNumber = 2;
@@ -1048,6 +1062,7 @@ class LIBPROTOC_EXPORT PBLoginData : public ::google::protobuf::Message /* @@pro
       0 > channeldata_;
   ::google::protobuf::internal::ArenaStringPtr token_;
   ::google::protobuf::internal::ArenaStringPtr account_;
+  ::google::protobuf::internal::ArenaStringPtr ip_;
   ::google::protobuf::uint64 gateid_;
   ::google::protobuf::uint64 sessionid_;
   ::google::protobuf::uint64 accountid_;
@@ -2344,6 +2359,59 @@ inline void PBLoginData::set_loginbycrash(bool value) {
   
   loginbycrash_ = value;
   // @@protoc_insertion_point(field_set:KFMsg.PBLoginData.loginbycrash)
+}
+
+// bytes ip = 10;
+inline void PBLoginData::clear_ip() {
+  ip_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& PBLoginData::ip() const {
+  // @@protoc_insertion_point(field_get:KFMsg.PBLoginData.ip)
+  return ip_.GetNoArena();
+}
+inline void PBLoginData::set_ip(const ::std::string& value) {
+  
+  ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.PBLoginData.ip)
+}
+#if LANG_CXX11
+inline void PBLoginData::set_ip(::std::string&& value) {
+  
+  ip_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.PBLoginData.ip)
+}
+#endif
+inline void PBLoginData::set_ip(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.PBLoginData.ip)
+}
+inline void PBLoginData::set_ip(const void* value, size_t size) {
+  
+  ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.PBLoginData.ip)
+}
+inline ::std::string* PBLoginData::mutable_ip() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.PBLoginData.ip)
+  return ip_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* PBLoginData::release_ip() {
+  // @@protoc_insertion_point(field_release:KFMsg.PBLoginData.ip)
+  
+  return ip_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void PBLoginData::set_allocated_ip(::std::string* ip) {
+  if (ip != NULL) {
+    
+  } else {
+    
+  }
+  ip_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ip);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.PBLoginData.ip)
 }
 
 // -------------------------------------------------------------------

@@ -1,9 +1,9 @@
 ﻿#ifndef __KF_REWARD_CONFIG_H__
 #define __KF_REWARD_CONFIG_H__
 
+#include "KFCore/KFElement.h"
 #include "KFZConfig/KFConfig.h"
 #include "KFZConfig/KFSetting.h"
-#include "KFCore/KFElement.h"
 #include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
@@ -11,6 +11,9 @@ namespace KFrame
     class KFRewardSetting : public KFIntSetting
     {
     public:
+        // 属性名
+        std::string _name;
+
         // 类型
         uint32 _type;
 
@@ -32,56 +35,61 @@ namespace KFrame
         // 获取奖励对应id
         uint32 GetRewardId( uint32 type, uint32 code )
         {
-            if ( type == KFMsg::CurrenyType )
+            switch ( type )
             {
+            case KFMsg::CurrenyType:
                 return type * 1000u + code;
-            }
-            else if ( type == KFMsg::ItemType )
-            {
+            case KFMsg::ItemType:
                 return type * 1000u;
+            default:
+                break;
             }
 
             return _invalid_int;
         }
 
         // 获取奖励字符串
-        bool GetRewardStr( uint32 type, uint32 code, uint32 num, std::string& rewardstr )
+        const std::string& GetRewardString( uint32 type, uint32 code, uint32 num )
         {
+            static std::string _str_reward;
+            _str_reward.clear();
+
             auto id = GetRewardId( type, code );
             auto kfsetting = FindSetting( id );
-            if ( kfsetting == nullptr )
+            if ( kfsetting != nullptr )
             {
-                return false;
+                switch ( type )
+                {
+                case KFMsg::CurrenyType:
+                    _str_reward = __FORMAT__( kfsetting->_element_template, num );
+                    break;
+                case KFMsg::ItemType:
+                    _str_reward = __FORMAT__( kfsetting->_element_template, code, num );
+                    break;
+                default:
+                    break;
+                }
             }
 
-            if ( type == KFMsg::CurrenyType )
-            {
-                rewardstr = __FORMAT__( kfsetting->_element_template, num );
-            }
-            else if ( type == KFMsg::ItemType )
-            {
-                rewardstr = __FORMAT__( kfsetting->_element_template, code, num );
-            }
-
-            return true;
+            return _str_reward;
         }
 
         // 解析奖励字符串
-        bool ParseRewards( const std::string& name, KFElements& kfelement )
+        bool ParseRewards( const std::string& strdata, KFElements& kfelement )
         {
-            if ( name.empty() )
+            if ( strdata.empty() )
             {
                 return true;
             }
 
             // 将字符串解析成数组
-            __JSON_PARSE_STRING__( kfjson, name );
+            __JSON_PARSE_STRING__( kfjson, strdata );
             if ( !kfjson.IsArray() )
             {
                 return false;
             }
 
-            std::string elementstr;
+            std::string strelement = "[";
             auto size = __JSON_ARRAY_SIZE__( kfjson );
             for ( uint32 i = 0u; i < size; ++i )
             {
@@ -97,47 +105,52 @@ namespace KFrame
                     return false;
                 }
 
-                auto type = jsonarray[0].GetUint();
-                auto code = jsonarray[1].GetUint();
-                auto num = jsonarray[2].GetUint();
+                auto type = jsonarray[ 0 ].GetUint();
+                auto code = jsonarray[ 1 ].GetUint();
+                auto num = jsonarray[ 2 ].GetUint();
 
-                std::string rewardstr;
-                if ( !GetRewardStr( type, code, num, rewardstr ) )
+                auto& strreward = GetRewardString( type, code, num );
+                if ( strreward.empty() )
                 {
                     return false;
                 }
 
-                if ( i == 0u )
+                if ( i > 0u )
                 {
-                    elementstr += "[";
+                    strelement += ",";
                 }
 
-                if ( i == size - 1u )
-                {
-                    elementstr += ( rewardstr + "]" );
-                }
-                else
-                {
-                    elementstr += ( rewardstr + "," );
-                }
-
+                strelement += strreward;
             }
 
-            if ( !kfelement.Parse( elementstr, __FUNC_LINE__ ) )
-            {
-                return false;
-            }
-
-            return true;
+            strelement += "]";
+            return kfelement.Parse( strelement, __FUNC_LINE__ );
         }
 
+        const KFRewardSetting* FindSettingByName( const std::string& name )
+        {
+            auto iter = _name_id_list.find( name );
+            if ( iter == _name_id_list.end() )
+            {
+                return nullptr;
+            }
+
+            return FindSetting( iter->second );
+        }
 
     protected:
+        virtual void ClearSetting()
+        {
+            _name_id_list.clear();
+            KFConfigT< KFRewardSetting >::ClearSetting();
+        }
+
         // 读取配置
         virtual void ReadSetting( KFNode& xmlnode, KFRewardSetting* kfsetting )
         {
             kfsetting->_type = xmlnode.GetUInt32( "Type" );
             kfsetting->_code = xmlnode.GetUInt32( "Code" );
+            kfsetting->_name = xmlnode.GetString( "Name" );
 
             auto id = GetRewardId( kfsetting->_type, kfsetting->_code );
             if ( id != kfsetting->_id )
@@ -146,7 +159,11 @@ namespace KFrame
             }
 
             kfsetting->_element_template = xmlnode.GetString( "Template" );
+            _name_id_list[ kfsetting->_name ] = id;
         }
+
+    private:
+        KeyValue _name_id_list;
     };
 }
 

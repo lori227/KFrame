@@ -534,6 +534,17 @@ namespace KFrame
     {
         _get_config_value_function.Remove( name );
     }
+
+    void KFComponentEx::BindLogElementFunction( const std::string& name, KFLogElementFunction& function )
+    {
+        auto kffunction = _log_element_function.Create( name );
+        kffunction->_function = function;
+    }
+
+    void KFComponentEx::UnBindLogElementFunction( const std::string& name )
+    {
+        _log_element_function.Remove( name );
+    }
     ////////////////////////////////////////////////////////////////////////////////////////
     void KFComponentEx::UpdateDataCallBack( KFEntity* kfentity, uint64 key, KFData* kfdata, uint64 index, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue, bool callback )
     {
@@ -731,5 +742,16 @@ namespace KFrame
         {
             _entity_delete_function( kfentity );
         }
+    }
+
+    void KFComponentEx::CallLogElementFunction( KFEntity* kfentity, const std::string& modulename, uint32 operate, KFElement* kfelement )
+    {
+        auto kffunction = _log_element_function.Find( kfelement->_data_name );
+        if ( kffunction == nullptr )
+        {
+            return;
+        }
+
+        kffunction->_function( kfentity, modulename, operate, kfelement );
     }
 }

@@ -333,7 +333,7 @@ namespace KFrame
         }
     }
 
-    void KFLuaModule::LuaDecData( uint64 objectid, const char* strelement )
+    void KFLuaModule::LuaDecData( uint64 objectid, const char* strelement, const char* modulename )
     {
         auto kfentity = _kf_player->FindEntity( objectid, __FUNC_LINE__ );
         if ( kfentity == nullptr )
@@ -345,7 +345,7 @@ namespace KFrame
         auto ok = kfelements.Parse( strelement, __FUNC_LINE__ );
         if ( ok )
         {
-            kfentity->RemoveElement( &kfelements, __FUNC_LINE__ );
+            kfentity->RemoveElement( &kfelements, modulename, __FUNC_LINE__ );
         }
     }
 

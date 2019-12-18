@@ -13,25 +13,17 @@ namespace KFrame
     {
     public:
         KFLogShardModule() = default;
-        virtual ~KFLogShardModule();
+        virtual ~KFLogShardModule() = default;
 
         void BeforeRun();
         void BeforeShut();
 
     protected:
-
-        KFSpdLog* FindRemoteLog( uint64 appid, const std::string& appname, const std::string& apptype, const std::string& strappid );
-
-    protected:
-
         // 请求连接地址
         __KF_HTTP_FUNCTION__( HandleRequestLogAddressReq );
 
         // 远程日志
         __KF_MESSAGE_FUNCTION__( HandleRemoteLogToServerReq );
-    private:
-        // 远程日志
-        std::unordered_map< uint64, KFSpdLog* > _log_list;
     };
 
 }

@@ -11,6 +11,7 @@
 
 #include "KFDisplayInterface.h"
 #include "KFGame/KFGameInterface.h"
+#include "KFKernel/KFKernelInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"
 

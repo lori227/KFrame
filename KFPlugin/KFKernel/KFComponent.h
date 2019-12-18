@@ -24,6 +24,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////
     typedef std::function<uint64( KFEntity*, uint64, uint64 )> KFGetConfigValueFunction;
     ////////////////////////////////////////////////////////////////////////////////////////////
+    typedef std::function< void( KFEntity*, const std::string&, uint32, KFElement* ) > KFLogElementFunction;
 
     // 游戏中的组件, 负责属性回调时间
     class KFComponent
@@ -360,6 +361,18 @@ namespace KFrame
             UnBindGetConfigValueFunction( name );
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        template< class T >
+        void RegisterLogElementFunction( const std::string& name, T* object, void( T::*handle )( KFEntity*, const std::string&, uint32, KFElement* ) )
+        {
+            KFLogElementFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
+            BindLogElementFunction( name, function );
+        }
+
+        void UnRegisterLogElementFunction( const std::string& name )
+        {
+            UnBindLogElementFunction( name );
+        }
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     protected:
         virtual void BindCheckAddElementFunction( const std::string& dataname, KFCheckAddElementFunction& function ) = 0;
         virtual void BindAddElementFunction( const std::string& dataname, KFAddElementFunction& function ) = 0;
@@ -399,6 +412,9 @@ namespace KFrame
 
         virtual void BindGetConfigValueFunction( const std::string& name, KFGetConfigValueFunction& function ) = 0;
         virtual void UnBindGetConfigValueFunction( const std::string& name ) = 0;
+
+        virtual void BindLogElementFunction( const std::string& name, KFLogElementFunction& function ) = 0;
+        virtual void UnBindLogElementFunction( const std::string& name ) = 0;
     };
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -517,6 +533,15 @@ namespace KFrame
     _kf_component->RegisterGetConfigValueFunction( dataname, this, function )
 #define __UN_GET_CONFIG_VALUE__( dataname ) \
     _kf_component->UnRegisterGetConfigValueFunction( dataname )
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+#define  __KF_LOG_ELEMENT_FUNCTION__( function ) \
+    void function( KFEntity* player, const std::string& modulename, uint32 operate, KFElement* kfelement )
+
+#define __REGISTER_LOG_ELEMENT__( dataname, function ) \
+    _kf_component->RegisterLogElementFunction( dataname, this, function )
+#define __UN_LOG_ELEMENT__( dataname ) \
+    _kf_component->UnRegisterLogElementFunction( dataname )
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 }

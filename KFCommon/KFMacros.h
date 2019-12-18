@@ -35,7 +35,7 @@
 #endif
 
 #ifndef __NEW_OBJECT__
-    #define __NEW_OBJECT__( name ) new name()
+    #define __NEW_OBJECT__( name, ... ) new name( __VA_ARGS__ )
 #endif // !__NEW_OBJECT__
 
 #ifndef __DELETE_OBJECT__

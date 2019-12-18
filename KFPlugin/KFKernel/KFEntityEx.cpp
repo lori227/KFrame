@@ -733,6 +733,7 @@ namespace KFrame
         for ( auto kfelement : kfelements->_element_list )
         {
             AddElement( kfelement, function, line, multiple );
+            _kf_component->CallLogElementFunction( this, _pb_show_element.modulename(), KFEnum::Add, kfelement );
         }
     }
 
@@ -1063,7 +1064,7 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////
-    void KFEntityEx::RemoveElement( const KFElements* kfelements, const char* function, uint32 line, float multiple /* = 1.0f */ )
+    void KFEntityEx::RemoveElement( const KFElements* kfelements, const std::string& modulename, const char* function, uint32 line, float multiple /* = 1.0f */ )
     {
         if ( !kfelements->IsEmpty() )
         {
@@ -1073,6 +1074,7 @@ namespace KFrame
         for ( auto kfelement : kfelements->_element_list )
         {
             RemoveElement( kfelement, function, line, multiple );
+            _kf_component->CallLogElementFunction( this, modulename, KFEnum::Dec, kfelement );
         }
     }
 
@@ -1330,6 +1332,22 @@ namespace KFrame
         _have_show_client = false;
         _kf_component->_show_element_function( this, _pb_show_element );
         _pb_show_element.Clear();
+    }
+
+    void KFEntityEx::ShowElementToClient()
+    {
+        // 同步属性到客户端
+        SyncEntityToClient();
+    }
+
+    bool KFEntityEx::GetShowElement( KFMsg::PBShowElement* pbelement )
+    {
+        if ( _have_show_client )
+        {
+            _pb_show_element.Swap( pbelement );
+        }
+
+        return _have_show_client;
     }
 
     KFMsg::PBObject* KFEntityEx::CreateSyncPBObject( uint32 type )

@@ -26,7 +26,7 @@ namespace KFrame
 
     void KFDisplayModule::SendToClient( KFEntity* player, uint32 result, ListString& params )
     {
-        if ( _kf_game == nullptr )
+        if ( _kf_game == nullptr || !player->IsInited() )
         {
             return;
         }
@@ -37,7 +37,7 @@ namespace KFrame
 
     void KFDisplayModule::DelayToClient( KFEntity* player, uint32 result, ListString& params )
     {
-        if ( _kf_game == nullptr )
+        if ( _kf_game == nullptr || !player->IsInited() )
         {
             return;
         }

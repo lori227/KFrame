@@ -7,6 +7,7 @@
 			<file Name="mongo.xml" Type="1"/>
 			<file Name="zone.xml" Type="1"/>
 
+			<file Name="logger.xml" Type="0"/>
 			<file Name="bus.xml" Type="0"/>
 			<file Name="httpserver.xml" Type="0"/>
 			<file Name="robot.xml" Type="0"/>

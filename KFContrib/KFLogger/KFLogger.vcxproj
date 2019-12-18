@@ -12,10 +12,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KFLogger.cpp" />
+    <ClCompile Include="KFLoggerConfig.cpp" />
     <ClCompile Include="KFSpdLog.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFLogger.h" />
+    <ClInclude Include="KFLoggerConfig.hpp" />
     <ClInclude Include="KFSpdLog.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

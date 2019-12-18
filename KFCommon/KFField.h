@@ -253,6 +253,7 @@ namespace KFrame
         __STRING_DEFINE__( heartbeat );
         __STRING_DEFINE__( wait );
         __STRING_DEFINE__( copy );
+        __STRING_DEFINE__( remote );
 
     }
 }

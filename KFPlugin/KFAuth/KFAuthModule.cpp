@@ -440,15 +440,17 @@ namespace KFrame
         }
 
         // 保存玩家登陆ip
+        auto loginip = __JSON_GET_STRING__( request, __STRING__( ip ) );
         {
             MapString values;
-            values[ __STRING__( ip ) ] = __JSON_GET_STRING__( request, __STRING__( ip ) );
+            values[ __STRING__( ip ) ] = loginip;
             values[ __STRING__( zoneid ) ] = __JSON_GET_STRING__( request, __STRING__( zoneid ) );
             redisdriver->Update( values, "hmset {}:{}", __STRING__( accountid ), accountid );
         }
 
         // 返回结果
         __JSON_OBJECT_DOCUMENT__( response );
+        __JSON_SET_VALUE__( response, __STRING__( ip ), loginip );
         __JSON_SET_VALUE__( response, __STRING__( token ), token );
         __JSON_SET_VALUE__( response, __STRING__( channel ), channel );
         __JSON_SET_VALUE__( response, __STRING__( account ), account );

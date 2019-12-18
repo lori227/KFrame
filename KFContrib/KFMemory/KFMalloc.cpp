@@ -9,7 +9,6 @@ namespace KFrame
     KFMalloc* KFMalloc::_kf_malloc = nullptr;
     KFMalloc::KFMalloc()
     {
-        _log_open = false;
         _memory_list_mutex = new KFMutex();
         _thread_buffer_mutex = new KFMutex();
         _share_memory_mutex = new KFMutex();

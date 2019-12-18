@@ -109,12 +109,13 @@ namespace KFrame
         virtual const std::string& CheckRemoveElement( const KFElements* kfelements, const char* function, uint32 line, float multiple = 1.0f );
 
         // 删除元数据
-        virtual void RemoveElement( const KFElements* kfelements, const char* function, uint32 line, float multiple = 1.0f );
-
+        virtual void RemoveElement( const KFElements* kfelements, const std::string& modulename, const char* function, uint32 line, float multiple = 1.0f );
+        //////////////////////////////////////////////////////////////////////////////////////////
         // 设置element到kfdata对象
         virtual void UpdateElementToData( KFElementObject* kfelement, KFData* kfdata, float multiple = 1.0f );
         virtual void SetElementToData( KFElementObject* kfelement, KFData* kfdata, float multiple = 1.0f );
-
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////
         // 添加显示数据
         virtual void AddDataToShow( const std::string& modulename );
 
@@ -129,6 +130,12 @@ namespace KFrame
         virtual void AddDataToShow( const std::string& modulename, const std::string& name, uint64 value, KeyValue& values, bool find, const std::string& extendname = _invalid_string );
 
         virtual void AddElementToShow( const KFElement* kfelement, bool find );
+
+        // 主动同步显示数据
+        virtual void ShowElementToClient();
+
+        // 获取显示奖励
+        virtual bool GetShowElement( KFMsg::PBShowElement* pbelement );
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////

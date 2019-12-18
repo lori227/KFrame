@@ -111,6 +111,9 @@ namespace KFrame
 
         ///////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////
+        void CallLogElementFunction( KFEntity* kfentity, const std::string& modulename, uint32 operate, KFElement* kfelement );
+        ///////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////
         virtual void BindCheckAddElementFunction( const std::string& dataname, KFCheckAddElementFunction& function );
         virtual void UnRegisterCheckAddElementFunction( const std::string& dataname );
 
@@ -179,6 +182,10 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////////////////////
         virtual void BindGetConfigValueFunction( const std::string& name, KFGetConfigValueFunction& function );
         virtual void UnBindGetConfigValueFunction( const std::string& name );
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
+        virtual void BindLogElementFunction( const std::string& name, KFLogElementFunction& function );
+        virtual void UnBindLogElementFunction( const std::string& name );
     protected:
         // 保存数据到数据库
         __KF_TIMER_FUNCTION__( OnTimerSaveEntity );
@@ -254,6 +261,8 @@ namespace KFrame
         // 获得属性逻辑
         KFBind< std::string, const std::string&, KFGetConfigValueFunction > _get_config_value_function;
 
+        // 日志函数
+        KFBind< std::string, const std::string&, KFLogElementFunction > _log_element_function;
     protected:
         // 需要发送消息的对象
         std::set< KFEntity* > _sync_entitys;

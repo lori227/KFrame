@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<Config>
+	<!--Name log名字-->
+	<!--WinPath win64输出路径-->
+	<!--LinuxPath linux输出路径-->
+	<!--Level 打印等级 1=debug 2=info 3=warn 4=error-->
+	<!--Console 是否显示在Console中-->
+	<!--QueueCount 队列的数量( >0 多线程打印 ) -->
+	<!--SinkType 文件分割类型 1按每小时 2 按大小时间-->
+	<!--StepSeconds 时间间隔 -->
+	<!--MaxLogSize 日志文件最大值-->
+
+	<Loggers>
+		<!-- 正常日志 -->
+		<Logger Name="normal" WinPath="./_output/" LinuxPath="./_output/" Level="1" Console="1" QueueCount="1024" SinkType="1" StepSeconds="3600" MaxLogSize="1073741824‬"/>
+
+		<!-- 远程日志 -->
+		<Logger Name="remote" WinPath="./_output/" LinuxPath="/data/binlog/" Level="1" Console="0" QueueCount="1024" SinkType="1" StepSeconds="3600" MaxLogSize="1073741824‬"/>
+
+		<!-- 运营日志 -->
+		<Logger Name="tlog" WinPath="./_tlog/" LinuxPath="./_tlog/" Level="1" Console="0" QueueCount="1024" SinkType="2" StepSeconds="3600" MaxLogSize="1073741824‬"/>
+
+		<!-- 部署工具日志 -->
+		<Logger Name="deploy" WinPath="./_output/" LinuxPath="./_output/" Level="1" Console="0" QueueCount="1024" SinkType="1" StepSeconds="3600" MaxLogSize="1073741824‬"/>
+	</Loggers>	
+</Config>
+

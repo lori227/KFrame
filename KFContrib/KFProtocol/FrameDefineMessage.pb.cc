@@ -687,6 +687,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBLoginData, playerid_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBLoginData, channeldata_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBLoginData, loginbycrash_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBLoginData, ip_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBValues_Pbuint64Entry_DoNotUse, _has_bits_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBValues_Pbuint64Entry_DoNotUse, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -786,16 +787,16 @@ static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROT
   { 119, -1, sizeof(::KFMsg::PBRecord)},
   { 125, 132, sizeof(::KFMsg::PBLoginData_ChanneldataEntry_DoNotUse)},
   { 134, -1, sizeof(::KFMsg::PBLoginData)},
-  { 148, 155, sizeof(::KFMsg::PBValues_Pbuint64Entry_DoNotUse)},
-  { 157, 164, sizeof(::KFMsg::PBValues_PbstringEntry_DoNotUse)},
-  { 166, -1, sizeof(::KFMsg::PBValues)},
-  { 173, 180, sizeof(::KFMsg::PBShowData_Pbuint64Entry_DoNotUse)},
-  { 182, -1, sizeof(::KFMsg::PBShowData)},
-  { 191, -1, sizeof(::KFMsg::PBShowElement)},
-  { 198, -1, sizeof(::KFMsg::PBNotice)},
-  { 205, 212, sizeof(::KFMsg::PBRankData_PbdataEntry_DoNotUse)},
-  { 214, -1, sizeof(::KFMsg::PBRankData)},
-  { 223, -1, sizeof(::KFMsg::PBRankDatas)},
+  { 149, 156, sizeof(::KFMsg::PBValues_Pbuint64Entry_DoNotUse)},
+  { 158, 165, sizeof(::KFMsg::PBValues_PbstringEntry_DoNotUse)},
+  { 167, -1, sizeof(::KFMsg::PBValues)},
+  { 174, 181, sizeof(::KFMsg::PBShowData_Pbuint64Entry_DoNotUse)},
+  { 183, -1, sizeof(::KFMsg::PBShowData)},
+  { 192, -1, sizeof(::KFMsg::PBShowElement)},
+  { 199, -1, sizeof(::KFMsg::PBNotice)},
+  { 206, 213, sizeof(::KFMsg::PBRankData_PbdataEntry_DoNotUse)},
+  { 215, -1, sizeof(::KFMsg::PBRankData)},
+  { 224, -1, sizeof(::KFMsg::PBRankDatas)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -878,34 +879,34 @@ void AddDescriptorsImpl() {
       "\010PBRecord\022/\n\010pbobject\030\001 \003(\0132\035.KFMsg.PBRe"
       "cord.PbobjectEntry\032@\n\rPbobjectEntry\022\013\n\003k"
       "ey\030\001 \001(\004\022\036\n\005value\030\002 \001(\0132\017.KFMsg.PBObject"
-      ":\0028\001\"\212\002\n\013PBLoginData\022\r\n\005token\030\001 \001(\014\022\016\n\006g"
+      ":\0028\001\"\226\002\n\013PBLoginData\022\r\n\005token\030\001 \001(\014\022\016\n\006g"
       "ateid\030\002 \001(\004\022\021\n\tsessionid\030\003 \001(\004\022\017\n\007channe"
       "l\030\004 \001(\r\022\017\n\007account\030\005 \001(\014\022\021\n\taccountid\030\006 "
       "\001(\004\022\020\n\010playerid\030\007 \001(\004\0228\n\013channeldata\030\010 \003"
       "(\0132#.KFMsg.PBLoginData.ChanneldataEntry\022"
-      "\024\n\014loginbycrash\030\t \001(\010\0322\n\020ChanneldataEntr"
-      "y\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:\0028\001\"\316\001\n\010PB"
-      "Values\022/\n\010pbuint64\030\001 \003(\0132\035.KFMsg.PBValue"
-      "s.Pbuint64Entry\022/\n\010pbstring\030\002 \003(\0132\035.KFMs"
-      "g.PBValues.PbstringEntry\032/\n\rPbuint64Entr"
-      "y\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\004:\0028\001\032/\n\rPbs"
-      "tringEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:\002"
-      "8\001\"\241\001\n\nPBShowData\022\014\n\004name\030\001 \001(\014\022\r\n\005value"
-      "\030\002 \001(\004\0221\n\010pbuint64\030\003 \003(\0132\037.KFMsg.PBShowD"
-      "ata.Pbuint64Entry\022\022\n\nextendname\030\004 \001(\014\032/\n"
-      "\rPbuint64Entry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001"
-      "(\004:\0028\001\"F\n\rPBShowElement\022\022\n\nmodulename\030\001 "
-      "\001(\014\022!\n\006pbdata\030\002 \003(\0132\021.KFMsg.PBShowData\"\'"
-      "\n\010PBNotice\022\014\n\004type\030\001 \001(\r\022\r\n\005count\030\002 \001(\r\""
-      "\242\001\n\nPBRankData\022\021\n\trankindex\030\001 \001(\r\022\020\n\010pla"
-      "yerid\030\002 \001(\004\022\021\n\trankscore\030\003 \001(\004\022-\n\006pbdata"
-      "\030\004 \003(\0132\035.KFMsg.PBRankData.PbdataEntry\032-\n"
-      "\013PbdataEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\014"
-      ":\0028\001\"2\n\013PBRankDatas\022#\n\010rankdata\030\001 \003(\0132\021."
-      "KFMsg.PBRankDatab\006proto3"
+      "\024\n\014loginbycrash\030\t \001(\010\022\n\n\002ip\030\n \001(\014\0322\n\020Cha"
+      "nneldataEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001("
+      "\014:\0028\001\"\316\001\n\010PBValues\022/\n\010pbuint64\030\001 \003(\0132\035.K"
+      "FMsg.PBValues.Pbuint64Entry\022/\n\010pbstring\030"
+      "\002 \003(\0132\035.KFMsg.PBValues.PbstringEntry\032/\n\r"
+      "Pbuint64Entry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001("
+      "\004:\0028\001\032/\n\rPbstringEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005v"
+      "alue\030\002 \001(\014:\0028\001\"\241\001\n\nPBShowData\022\014\n\004name\030\001 "
+      "\001(\014\022\r\n\005value\030\002 \001(\004\0221\n\010pbuint64\030\003 \003(\0132\037.K"
+      "FMsg.PBShowData.Pbuint64Entry\022\022\n\nextendn"
+      "ame\030\004 \001(\014\032/\n\rPbuint64Entry\022\013\n\003key\030\001 \001(\t\022"
+      "\r\n\005value\030\002 \001(\004:\0028\001\"F\n\rPBShowElement\022\022\n\nm"
+      "odulename\030\001 \001(\014\022!\n\006pbdata\030\002 \003(\0132\021.KFMsg."
+      "PBShowData\"\'\n\010PBNotice\022\014\n\004type\030\001 \001(\r\022\r\n\005"
+      "count\030\002 \001(\r\"\242\001\n\nPBRankData\022\021\n\trankindex\030"
+      "\001 \001(\r\022\020\n\010playerid\030\002 \001(\004\022\021\n\trankscore\030\003 \001"
+      "(\004\022-\n\006pbdata\030\004 \003(\0132\035.KFMsg.PBRankData.Pb"
+      "dataEntry\032-\n\013PbdataEntry\022\013\n\003key\030\001 \001(\t\022\r\n"
+      "\005value\030\002 \001(\014:\0028\001\"2\n\013PBRankDatas\022#\n\010rankd"
+      "ata\030\001 \003(\0132\021.KFMsg.PBRankDatab\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 2184);
+      descriptor, 2196);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "FrameDefineMessage.proto", &protobuf_RegisterTypes);
 }
@@ -3229,6 +3230,7 @@ const int PBLoginData::kAccountidFieldNumber;
 const int PBLoginData::kPlayeridFieldNumber;
 const int PBLoginData::kChanneldataFieldNumber;
 const int PBLoginData::kLoginbycrashFieldNumber;
+const int PBLoginData::kIpFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 PBLoginData::PBLoginData()
@@ -3251,6 +3253,10 @@ PBLoginData::PBLoginData(const PBLoginData& from)
   if (from.account().size() > 0) {
     account_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.account_);
   }
+  ip_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.ip().size() > 0) {
+    ip_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.ip_);
+  }
   ::memcpy(&gateid_, &from.gateid_,
     static_cast<size_t>(reinterpret_cast<char*>(&playerid_) -
     reinterpret_cast<char*>(&gateid_)) + sizeof(playerid_));
@@ -3260,6 +3266,7 @@ PBLoginData::PBLoginData(const PBLoginData& from)
 void PBLoginData::SharedCtor() {
   token_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   account_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ip_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&gateid_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&playerid_) -
       reinterpret_cast<char*>(&gateid_)) + sizeof(playerid_));
@@ -3273,6 +3280,7 @@ PBLoginData::~PBLoginData() {
 void PBLoginData::SharedDtor() {
   token_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   account_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ip_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 void PBLoginData::SetCachedSize(int size) const {
@@ -3298,6 +3306,7 @@ void PBLoginData::Clear() {
   channeldata_.Clear();
   token_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   account_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ip_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&gateid_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&playerid_) -
       reinterpret_cast<char*>(&gateid_)) + sizeof(playerid_));
@@ -3445,6 +3454,18 @@ bool PBLoginData::MergePartialFromCodedStream(
         break;
       }
 
+      // bytes ip = 10;
+      case 10: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(82u /* 82 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
+                input, this->mutable_ip()));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
       default: {
       handle_unusual:
         if (tag == 0) {
@@ -3562,6 +3583,12 @@ void PBLoginData::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteBool(9, this->loginbycrash(), output);
   }
 
+  // bytes ip = 10;
+  if (this->ip().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
+      10, this->ip(), output);
+  }
+
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
@@ -3673,6 +3700,13 @@ void PBLoginData::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(9, this->loginbycrash(), target);
   }
 
+  // bytes ip = 10;
+  if (this->ip().size() > 0) {
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
+        10, this->ip(), target);
+  }
+
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
@@ -3716,6 +3750,13 @@ size_t PBLoginData::ByteSizeLong() const {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::BytesSize(
         this->account());
+  }
+
+  // bytes ip = 10;
+  if (this->ip().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::BytesSize(
+        this->ip());
   }
 
   // uint64 gateid = 2;
@@ -3794,6 +3835,10 @@ void PBLoginData::MergeFrom(const PBLoginData& from) {
 
     account_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.account_);
   }
+  if (from.ip().size() > 0) {
+
+    ip_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.ip_);
+  }
   if (from.gateid() != 0) {
     set_gateid(from.gateid());
   }
@@ -3842,6 +3887,8 @@ void PBLoginData::InternalSwap(PBLoginData* other) {
   token_.Swap(&other->token_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
   account_.Swap(&other->account_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  ip_.Swap(&other->ip_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
   swap(gateid_, other->gateid_);
   swap(sessionid_, other->sessionid_);
