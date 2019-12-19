@@ -72,20 +72,16 @@ namespace KFrame
 #if __KF_SYSTEM__ == __KF_WIN__
         KFDump kfdump( kfglobal->_app_name.c_str(), kfglobal->_app_type.c_str(), kfglobal->_app_id->ToString().c_str() );
 #endif
+        // 日志初始化
+        if ( !KFLogger::Instance()->InitLogger() )
+        {
+            return false;
+        }
+        KFMalloc::Instance()->SetLogOpen( false );
 
         // 设置标题
         kfglobal->_title_text = KFUtility::FormatTitleText( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->ToString() );
         _application->SetTitleText( kfglobal->_title_text.c_str() );
-
-        // 初始化logger
-        auto strlog = params[ __STRING__( log ) ];
-        if ( !KFLogger::Instance()->InitLogger( strlog ) )
-        {
-            return false;
-        }
-
-        // 内存日志
-        KFMalloc::Instance()->SetLogOpen( false );
 
         // 网络类型
         kfglobal->InitNetType( params[ __STRING__( net ) ] );

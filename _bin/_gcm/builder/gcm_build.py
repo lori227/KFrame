@@ -71,7 +71,6 @@ def write_file(run_file, kill_file, node):
     func_type = node.get('Type')
 
     zone_id = args['zone']
-    log_type = args['log']
     net_type = args['net']
     service_type = args['service']
     if func_name != 'zone':
@@ -80,14 +79,14 @@ def write_file(run_file, kill_file, node):
     execute_file = default_startup + default_mode_suffix + platform_exe
     run_file.write('echo Starting [%s.%s] server\n' % (func_name, func_type) )
     if is_linux():
-        run_file.write('./bin/%s app=%s.%s id=%d.%d.%d service=%s net=%s log=%s \n\n' %
-                       (execute_file, func_name, func_type, int(func_id), zone_id, 1, service_type, net_type, log_type ))
+        run_file.write('./bin/%s app=%s.%s id=%d.%d.%d service=%s net=%s \n\n' %
+                       (execute_file, func_name, func_type, int(func_id), zone_id, 1, service_type, net_type ))
 
         kill_file.write('ps -ef|grep "%s app=%s.%s" | grep -v grep | cut -c 9-15 | xargs kill -9\n\n' %
                         (execute_file, func_name, func_type))
     else:
-        run_file.write('start "%s" bin\\%s app=%s.%s id=%d.%d.%d service=%s net=%s log=%s\n\n' %
-                       (func_name, execute_file, func_name, func_type, int(func_id), zone_id, 1, service_type, net_type, log_type ))
+        run_file.write('start "%s" bin\\%s app=%s.%s id=%d.%d.%d service=%s net=%s \n\n' %
+                       (func_name, execute_file, func_name, func_type, int(func_id), zone_id, 1, service_type, net_type ))
 
         kill_file.write('TASKKILL /F /FI "WINDOWTITLE eq %s.%s*"\n\n' % (func_name, func_type))
 
@@ -175,7 +174,6 @@ def parse_args():
     parser.add_argument('-m', '--mode', type=str, default='release', help="runtime mode, debug/release")
     parser.add_argument('-c', '--service', type=str, default='1.1', help="service type")
     parser.add_argument('-z', '--zone', type=int, default=1, help="zone id")
-    parser.add_argument('-l', '--log', type=str, default='1.0', help="log type")
     parser.add_argument('-n', '--net', type=str, default='1', help="net type")
     parser.add_argument('-t', '--type', type=int, default='1', help="update type 1=version 2=file 3=resource 4=plugin")
     parser.add_argument('-f', '--file', type=str, default='none', help="update file name")

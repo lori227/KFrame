@@ -42,9 +42,6 @@ namespace KFrame
         // 小区id
         uint32 _zone_id;
 
-        // 日志类型
-        std::string _log_type;
-
         // 网络类型
         std::string _net_type;
 

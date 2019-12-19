@@ -342,12 +342,11 @@ namespace KFrame
         uint32 createflag = CREATE_NO_WINDOW;
         auto apppath = deploydata->GetAppPath();
         auto startupfile = deploydata->GetStartupFile( deploydata->_is_debug );
-        auto param = __FORMAT__( " {}={}.{} {}={} {}={} {}={} {}={}|{}|{}",
+        auto param = __FORMAT__( " {}={}.{} {}={} {}={} {}={}|{}|{}",
                                  __STRING__( app ), deploydata->_app_name, deploydata->_app_type,
                                  __STRING__( id ), deploydata->_app_id,
                                  __STRING__( service ), deploydata->_service_type,
                                  __STRING__( net ), deploydata->_net_type,
-                                 __STRING__( log ), deploydata->_log_type,
                                  __STRING__( agent ), kfglobal->_app_id->ToString(), kfglobal->_local_ip, kfglobal->_listen_port );
 
         // 启动进程
@@ -430,9 +429,6 @@ namespace KFrame
 
         auto strnet = __FORMAT__( "{}={}", __STRING__( net ), deploydata->_net_type );
         __ADD_ARGS__( strnet );
-
-        auto strlogtype = __FORMAT__( "{}={}", __STRING__( log ), deploydata->_log_type );
-        __ADD_ARGS__( strlogtype );
 
         auto stragent = __FORMAT__( "{}={}|{}|{}", __STRING__( agent ), kfglobal->_app_id->ToString(), kfglobal->_local_ip, kfglobal->_listen_port );
         __ADD_ARGS__( stragent );

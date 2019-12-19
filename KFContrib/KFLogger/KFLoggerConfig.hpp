@@ -19,7 +19,7 @@ namespace KFrame
     {
     public:
         // output path
-        std::string _output_path = "./_output";
+        std::string _output_path;
 
         // sink type
         uint32 _sink_type = KFSinkEnum::DateAndHour;
@@ -54,6 +54,9 @@ namespace KFrame
     public:
         // 配置列表
         KFHashMap< std::string, const std::string&, KFLoggerSetting > _settings;
+
+        // 默认的日志
+        std::string _default_log_name;
     };
 }
 

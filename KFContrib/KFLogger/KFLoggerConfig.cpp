@@ -13,6 +13,8 @@ namespace KFrame
         auto root = kfxml.FindNode( "Config" );
         //////////////////////////////////////////////////////////////////////////
         auto loggersnode = root.FindNode( "Loggers" );
+        _default_log_name = loggersnode.GetString( "Default", true );
+
         auto node = loggersnode.FindNode( "Logger" );
         while ( node.IsValid() )
         {

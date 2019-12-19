@@ -500,11 +500,6 @@ namespace KFrame
         __LOG_ERROR__( "condition=[{}] can't find setting!", conditionid );\
         return KFConditionEnum::UpdateDone;\
     }\
-    auto conditionvalue = kfcondition->Get<uint32>( kfcondition->_data_setting->_value_key_name ); \
-    if ( KFUtility::CheckOperate( conditionvalue, kfsetting->_done_type, kfsetting->_done_value ) )\
-    {\
-        return KFConditionEnum::UpdateDone;\
-    }\
     auto operatetype = 0u;\
     auto operatevalue = 0u;\
     if ( kfsetting->_clean_define != nullptr )\
@@ -522,16 +517,12 @@ namespace KFrame
     {\
         return KFConditionEnum::UpdateFailed;\
     }\
-    std::tie( operatetype, operatevalue ) = updatefunction; \
-    if ( operatetype == 0u )\
-    {   \
-        return KFConditionEnum::UpdateFailed;\
-    }\
     if ( !KFUtility::HaveBitMask<uint32>( kfsetting->_limit_mask, KFConditionEnum::LimitStatus ) )\
     {   \
+        auto conditionvalue = kfcondition->Get<uint32>( kfcondition->_data_setting->_value_key_name ); \
         if ( KFUtility::CheckOperate( conditionvalue, kfsetting->_done_type, kfsetting->_done_value ) )\
-        {   \
-            return KFConditionEnum::UpdateDone; \
+        {\
+            return KFConditionEnum::UpdateDone;\
         }\
     }\
     if ( KFUtility::HaveBitMask<uint32>( kfsetting->_limit_mask, KFConditionEnum::LimitPlace ) )\
@@ -541,11 +532,16 @@ namespace KFrame
             return KFConditionEnum::UpdateFailed; \
         }\
     }\
+    std::tie( operatetype, operatevalue ) = updatefunction; \
+    if ( operatetype == 0u )\
+    {   \
+        return KFConditionEnum::UpdateFailed;\
+    }\
     if ( !CheckConditionLimit( kfentity, limitdata, kfsetting ) )\
     {   \
         return KFConditionEnum::UpdateFailed; \
     }\
-    conditionvalue = kfentity->UpdateData( kfcondition, kfcondition->_data_setting->_value_key_name, operatetype, operatevalue ); \
+    auto conditionvalue = kfentity->UpdateData( kfcondition, kfcondition->_data_setting->_value_key_name, operatetype, operatevalue ); \
     auto ok = KFUtility::CheckOperate<uint32>( conditionvalue, kfsetting->_done_type, kfsetting->_done_value ); \
     if ( ok )\
     {   \

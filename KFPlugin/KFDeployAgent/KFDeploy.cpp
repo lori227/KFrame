@@ -100,7 +100,6 @@ namespace KFrame
         _startup_time = KFUtility::ToValue< uint64 >( values[ __STRING__( time ) ] );
         _agent_id = values[ __STRING__( agentid ) ];
         _local_ip = values[ __STRING__( localip ) ];
-        _log_type = values[ __STRING__( logtype ) ];
         _service_type = values[ __STRING__( service ) ];
         _net_type = values[ __STRING__( net ) ];
         _params = values[ __STRING__( param ) ];
@@ -123,7 +122,6 @@ namespace KFrame
         values[ __STRING__( time ) ] = __TO_STRING__( _startup_time );
         values[ __STRING__( agentid ) ] = _agent_id;
         values[ __STRING__( localip ) ] = _local_ip;
-        values[ __STRING__( logtype ) ] = _log_type;
         values[ __STRING__( service ) ] = _service_type;
         values[ __STRING__( net ) ] = _net_type;
         values[ __STRING__( param ) ] = _params;

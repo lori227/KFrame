@@ -553,25 +553,28 @@ namespace KFrame
 
         // 更新同步
         kfentity->SyncUpdateData( kfdata, index );
+        if ( !callback )
+        {
+            return;
+        }
 
-        if ( callback &&
-                kfdata->HaveMask( KFDataDefine::Mask_UpdataCall ) &&
+        // 模块回调
+        if ( kfdata->HaveMask( KFDataDefine::Mask_UpdataCall ) &&
                 kfdata->GetParent()->HaveMask( KFDataDefine::Mask_UpdataCall ) )
         {
-            // 模块回调
             for ( auto& iter : _update_data_module._objects )
             {
                 auto kffunction = iter.second;
                 kffunction->_function( kfentity, key, kfdata, operate, value, oldvalue, newvalue );
             }
+        }
 
-            // 注册的函数
-            auto& findkey = FormatDataKey( kfdata->GetParent()->_data_setting->_logic_name, kfdata->_data_setting->_logic_name );
-            auto kfdatafunction = _update_data_function.Find( findkey );
-            if ( kfdatafunction != nullptr )
-            {
-                kfdatafunction->CallFunction( kfentity, key, kfdata, operate, value, oldvalue, newvalue );
-            }
+        // 注册的函数
+        auto& findkey = FormatDataKey( kfdata->GetParent()->_data_setting->_logic_name, kfdata->_data_setting->_logic_name );
+        auto kfdatafunction = _update_data_function.Find( findkey );
+        if ( kfdatafunction != nullptr )
+        {
+            kfdatafunction->CallFunction( kfentity, key, kfdata, operate, value, oldvalue, newvalue );
         }
     }
 
@@ -582,38 +585,43 @@ namespace KFrame
 
         // 更新同步
         kfentity->SyncUpdateData( kfdata, kfentity->GetKeyID() );
+        if ( !callback )
+        {
+            return;
+        }
 
-        if ( callback &&
-                kfdata->HaveMask( KFDataDefine::Mask_UpdataCall ) &&
+        // 模块回调
+        if ( kfdata->HaveMask( KFDataDefine::Mask_UpdataCall ) &&
                 kfdata->GetParent()->HaveMask( KFDataDefine::Mask_UpdataCall ) )
         {
-            // 模块回调
             for ( auto& iter : _update_string_module._objects )
             {
                 auto kffunction = iter.second;
                 kffunction->_function( kfentity, kfdata, value );
             }
+        }
 
-            // 注册的函数
-            auto& findkey = FormatDataKey( kfdata->GetParent()->_data_setting->_logic_name, kfdata->_data_setting->_logic_name );
-            auto kfdatafunction = _update_string_function.Find( findkey );
-            if ( kfdatafunction != nullptr )
-            {
-                kfdatafunction->CallFunction( kfentity, kfdata, value );
-            }
+        // 注册的函数
+        auto& findkey = FormatDataKey( kfdata->GetParent()->_data_setting->_logic_name, kfdata->_data_setting->_logic_name );
+        auto kfdatafunction = _update_string_function.Find( findkey );
+        if ( kfdatafunction != nullptr )
+        {
+            kfdatafunction->CallFunction( kfentity, kfdata, value );
         }
     }
 
     void KFComponentEx::AddDataCallBack( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata, bool callback )
     {
-        if ( callback &&
-                kfdata->HaveMask( KFDataDefine::Mask_AddCall ) )
+        if ( callback )
         {
             // 模块回调
-            for ( auto& iter : _add_data_module._objects )
+            if ( kfdata->HaveMask( KFDataDefine::Mask_AddCall ) )
             {
-                auto kffunction = iter.second;
-                kffunction->_function( kfentity, kfparent, key, kfdata );
+                for ( auto& iter : _add_data_module._objects )
+                {
+                    auto kffunction = iter.second;
+                    kffunction->_function( kfentity, kfparent, key, kfdata );
+                }
             }
 
             // 注册的函数
@@ -647,33 +655,36 @@ namespace KFrame
 
         // 同步客户端
         kfentity->SyncRemoveData( kfdata, key );
-
-        if ( callback &&
-                kfdata->HaveMask( KFDataDefine::Mask_RemoveCall ) )
+        if ( !callback )
         {
-            // 模块回调
+            return;
+        }
+
+        // 模块回调
+        if ( kfdata->HaveMask( KFDataDefine::Mask_RemoveCall ) )
+        {
             for ( auto& iter : _remove_data_module._objects )
             {
                 auto kffunction = iter.second;
                 kffunction->_function( kfentity, kfparent, key, kfdata );
             }
+        }
 
-            // 注册的函数
+        // 注册的函数
+        {
+            auto findkey = RecordKeyType( kfdata->_data_setting->_logic_name, key );
+            auto kfdatafunction = _remove_data_function.Find( findkey );
+            if ( kfdatafunction != nullptr )
             {
-                auto findkey = RecordKeyType( kfdata->_data_setting->_logic_name, key );
-                auto kfdatafunction = _remove_data_function.Find( findkey );
-                if ( kfdatafunction != nullptr )
-                {
-                    kfdatafunction->CallFunction( kfentity, kfparent, key, kfdata );
-                }
+                kfdatafunction->CallFunction( kfentity, kfparent, key, kfdata );
             }
+        }
+        {
+            auto findkey = RecordKeyType( kfdata->_data_setting->_logic_name, 0u );
+            auto kfdatafunction = _remove_data_function.Find( findkey );
+            if ( kfdatafunction != nullptr )
             {
-                auto findkey = RecordKeyType( kfdata->_data_setting->_logic_name, 0u );
-                auto kfdatafunction = _remove_data_function.Find( findkey );
-                if ( kfdatafunction != nullptr )
-                {
-                    kfdatafunction->CallFunction( kfentity, kfparent, key, kfdata );
-                }
+                kfdatafunction->CallFunction( kfentity, kfparent, key, kfdata );
             }
         }
     }

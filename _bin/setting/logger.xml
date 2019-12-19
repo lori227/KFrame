@@ -10,7 +10,7 @@
 	<!--StepSeconds 时间间隔 -->
 	<!--MaxLogSize 日志文件最大值-->
 
-	<Loggers>
+	<Loggers Default="normal">
 		<!-- 正常日志 -->
 		<Logger Name="normal" WinPath="./_output/" LinuxPath="./_output/" Level="1" Console="1" QueueCount="1024" SinkType="1" StepSeconds="3600" MaxLogSize="1073741824‬"/>
 

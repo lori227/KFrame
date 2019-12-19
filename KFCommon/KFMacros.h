@@ -47,7 +47,7 @@
 #endif
 
 #ifndef __FORMAT__
-    #define __FORMAT__( myfmt, ... ) fmt::format( fmt(myfmt), ##__VA_ARGS__ )
+    #define __FORMAT__( myfmt, ... ) fmt::format( myfmt, __VA_ARGS__ )
 #endif
 
 #ifndef __PROTO_TO_MAP__

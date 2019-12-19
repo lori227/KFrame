@@ -289,7 +289,7 @@ namespace KFrame
         {
             // 把消息发送出去
             auto keeper = _send_keeper.front();
-            auto ok = _kf_tcp_client->SendNetMessage( keeper->_shard_id, keeper->_msg_id, keeper->_data, keeper->_length );
+            auto ok = _kf_tcp_client->SendNetMessage( _cluster_proxy_id, keeper->_shard_id, keeper->_msg_id, keeper->_data, keeper->_length );
             if ( !ok )
             {
                 // 发送失败, 有可能是消息队列满了, 下一帧继续发送

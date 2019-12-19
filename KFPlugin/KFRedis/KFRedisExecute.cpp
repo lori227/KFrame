@@ -30,7 +30,6 @@ namespace KFrame
     int32 KFRedisExecute::TryConnect()
     {
         ShutDown();
-
         __LOG_INFO__( "redis connect[module={} ip={}:{}] start!", _name, _ip, _port );
 
         _redis_context = redisConnect( _ip.c_str(), _port );
@@ -38,13 +37,11 @@ namespace KFrame
         {
             return KFEnum::Error;
         }
-
         redisEnableKeepAlive( _redis_context );
 
         if ( !_password.empty() )
         {
-            auto strsql = __FORMAT__( "auth {}", _password );
-            auto reply = Execute( strsql );
+            auto reply = ( redisReply* )redisCommand( _redis_context, "auth %s", _password.c_str() );
             if ( reply == nullptr )
             {
                 return KFEnum::Error;
@@ -60,8 +57,8 @@ namespace KFrame
     bool KFRedisExecute::IsDisconnected()
     {
         if ( _redis_context == nullptr ||
-                _redis_context->err == REDIS_ERR_EOF ||
-                _redis_context->err == REDIS_ERR_IO )
+                _redis_context->err == REDIS_ERR_IO ||
+                _redis_context->err == REDIS_ERR_EOF )
         {
             return true;
         }

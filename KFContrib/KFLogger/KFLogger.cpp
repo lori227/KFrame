@@ -26,7 +26,7 @@ namespace KFrame
         return KFLogger::_kf_logger;
     }
 
-    bool KFLogger::InitLogger( const std::string& name )
+    bool KFLogger::InitLogger()
     {
         try
         {
@@ -37,14 +37,10 @@ namespace KFrame
         {
         }
 
-        auto kfsetting = _logger_config->FindSetting( name );
+        auto kfsetting = _logger_config->FindSetting( _logger_config->_default_log_name );
         if ( kfsetting == nullptr )
         {
-            kfsetting = _logger_config->FindSetting( "normal" );
-            if ( kfsetting == nullptr )
-            {
-                return false;
-            }
+            return false;
         }
 
         SetLogLevel( kfsetting->_level );
