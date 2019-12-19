@@ -56,7 +56,7 @@ namespace KFrame
         auto strlimitcondition = xmlnode.GetString( "LimitCondition", true );
         kfsetting->_limit_condition_type = KFReadSetting::ParseConditionList( strlimitcondition, kfsetting->_limit_condition_list );
 
-        ListString keylist;
+        StringList keylist;
         xmlnode.GetKeyList( keylist );
         for ( auto& strkey : keylist )
         {

@@ -50,7 +50,7 @@ namespace KFrame
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFMySQLLogic::Insert( const std::string& table, const MapString& invalue )
+    bool KFMySQLLogic::Insert( const std::string& table, const StringMap& invalue )
     {
         return _write_execute->Insert( table, invalue );
     }
@@ -65,28 +65,28 @@ namespace KFrame
         return _write_execute->Delete( table, key );
     }
 
-    bool KFMySQLLogic::Delete( const std::string& table, const MapString& keyvalues )
+    bool KFMySQLLogic::Delete( const std::string& table, const StringMap& keyvalues )
     {
         return _write_execute->Delete( table, keyvalues );
     }
 
     // 更新多个字段
-    bool KFMySQLLogic::Update( const std::string& table, const MapString& invalue )
+    bool KFMySQLLogic::Update( const std::string& table, const StringMap& invalue )
     {
         return _write_execute->Update( table, invalue );
     }
 
-    bool KFMySQLLogic::Update( const std::string& table, const std::string& key, const MapString& invalue )
+    bool KFMySQLLogic::Update( const std::string& table, const std::string& key, const StringMap& invalue )
     {
         return _write_execute->Update( table, key, invalue );
     }
 
-    bool KFMySQLLogic::Update( const std::string& table, const MapString& keyvalue, const MapString& invalue )
+    bool KFMySQLLogic::Update( const std::string& table, const StringMap& keyvalue, const StringMap& invalue )
     {
         return _write_execute->Update( table, keyvalue, invalue );
     }
 
-    void KFMySQLLogic::Pipeline( ListString& commands )
+    void KFMySQLLogic::Pipeline( StringList& commands )
     {
         _write_execute->Pipeline( commands );
     }
@@ -98,32 +98,32 @@ namespace KFrame
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
-    KFResult< ListMapString >::UniqueType KFMySQLLogic::Select( const std::string& table )
+    KFResult< StringListMap >::UniqueType KFMySQLLogic::Select( const std::string& table )
     {
         return _read_execute->Select( table );
     }
 
-    KFResult< ListMapString >::UniqueType KFMySQLLogic::Select( const std::string& table, const ListString& fields )
+    KFResult< StringListMap >::UniqueType KFMySQLLogic::Select( const std::string& table, const StringList& fields )
     {
         return _read_execute->Select( table, fields );
     }
 
-    KFResult< ListMapString >::UniqueType KFMySQLLogic::Select( const std::string& table, const std::string& key )
+    KFResult< StringListMap >::UniqueType KFMySQLLogic::Select( const std::string& table, const std::string& key )
     {
         return _read_execute->Select( table, key );
     }
 
-    KFResult< ListMapString >::UniqueType KFMySQLLogic::Select( const std::string& table, const std::string& key, const ListString& fields )
+    KFResult< StringListMap >::UniqueType KFMySQLLogic::Select( const std::string& table, const std::string& key, const StringList& fields )
     {
         return _read_execute->Select( table, key, fields );
     }
 
-    KFResult< ListMapString >::UniqueType KFMySQLLogic::Select( const std::string& table, const MapString& key )
+    KFResult< StringListMap >::UniqueType KFMySQLLogic::Select( const std::string& table, const StringMap& key )
     {
         return _read_execute->Select( table, key );
     }
 
-    KFResult< ListMapString >::UniqueType KFMySQLLogic::Select( const std::string& table, const MapString& key, const ListString& fields )
+    KFResult< StringListMap >::UniqueType KFMySQLLogic::Select( const std::string& table, const StringMap& key, const StringList& fields )
     {
         return _read_execute->Select( table, key, fields );
     }
@@ -143,17 +143,17 @@ namespace KFrame
         return _read_execute->StringExecute( strsql );
     }
 
-    KFResult< MapString >::UniqueType KFMySQLLogic::MapExecute( std::string& strsql )
+    KFResult< StringMap >::UniqueType KFMySQLLogic::MapExecute( std::string& strsql )
     {
         return _read_execute->MapExecute( strsql );
     }
 
-    KFResult< ListString >::UniqueType KFMySQLLogic::ListExecute( std::string& strsql )
+    KFResult< StringList >::UniqueType KFMySQLLogic::ListExecute( std::string& strsql )
     {
         return _read_execute->ListExecute( strsql );
     }
 
-    KFResult< ListMapString >::UniqueType KFMySQLLogic::ListMapExecute( std::string& strsql )
+    KFResult< StringListMap >::UniqueType KFMySQLLogic::ListMapExecute( std::string& strsql )
     {
         return _read_execute->ListMapExecute( strsql );
     }

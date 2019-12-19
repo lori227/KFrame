@@ -101,8 +101,8 @@ namespace KFrame
         virtual void FromString( const std::string& value ) = 0;
 
         // Map的特殊操作
-        virtual void ToMap( MapString& values );
-        virtual void FromMap( const MapString& values );
+        virtual void ToMap( StringMap& values );
+        virtual void FromMap( const StringMap& values );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         // object
 
@@ -150,7 +150,17 @@ namespace KFrame
         virtual void Find( const std::string& dataname, uint64 value, std::list< KFData* >& findlist, bool findall );
         virtual bool Check( const std::string& dataname, uint64 value, const std::string& checkname, uint64 checkvalue );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // array
+        template< class T > void GetLists( T& outlist );
+        template< class T > void GetLists( const std::string& dataname, T& outlist );
+        template< class T > void GetHashs( T& outlist );
+        template< class T > void GetHashs( const std::string& dataname, T& outlist );
+
+        virtual bool Insert( uint64 value );
+        virtual uint32 GetEmpty();
+        virtual uint32 GetIndex( uint64 value );
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////
     protected:
         virtual int32 GetInt32();
         virtual int32 SetInt32( int32 );

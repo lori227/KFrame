@@ -32,13 +32,13 @@ public:
 public:
     //////////////////////////////////////////////////////////////////////////////////////////////
     // 查询数据库
-    void QueryTableValues( const std::string& table, MapString& keys );
+    void QueryTableValues( const std::string& table, StringMap& keys );
 
     // 删除数据库
-    void DeleteTableValues( const std::string& table, MapString& keys );
+    void DeleteTableValues( const std::string& table, StringMap& keys );
 
     // 执行数据库
-    void ExecuteTableValues( const std::string& table, MapString& values );
+    void ExecuteTableValues( const std::string& table, StringMap& values );
     //////////////////////////////////////////////////////////////////////////////////////////////
 protected:
     virtual void DoDataExchange( CDataExchange* pDX );	// DDX/DDV 支持

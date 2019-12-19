@@ -109,12 +109,14 @@ namespace KFrame
         for ( auto i = 0; i < kfmsg.mail_size(); ++i )
         {
             auto pbmail = &kfmsg.mail( i );
-            auto kfmail = ParsePBMailToData( pbmail, kfmailrecord->_data_setting );
-            if ( kfmail == nullptr )
-            {
-                continue;
-            }
+            auto pbdata = &pbmail->data();
 
+            // 初始化邮件内容
+            auto kfmail = player->CreateData( kfmailrecord );
+            for ( auto iter = pbdata->begin(); iter != pbdata->end(); ++iter )
+            {
+                kfmail->Set( iter->first, iter->second );
+            }
             player->AddData( kfmailrecord, kfmail );
 
             // 最大邮件id
@@ -129,23 +131,6 @@ namespace KFrame
         player->Set( __STRING__( maxmailid ), maxmailid );
     }
 
-    KFData* KFMailClientModule::ParsePBMailToData( const KFMsg::PBMail* pbmail, const KFDataSetting* kfsetting )
-    {
-        auto kfmail = _kf_kernel->CreateObject( kfsetting );
-        if ( kfmail == nullptr )
-        {
-            return nullptr;
-        }
-
-        // 设置邮件属性
-        auto pbdata = &pbmail->data();
-        for ( auto iter = pbdata->begin(); iter != pbdata->end(); ++iter )
-        {
-            kfmail->Set( iter->first, iter->second );
-        }
-
-        return kfmail;
-    }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     bool KFMailClientModule::CheckMailTimeOut( KFData* kfmail )
@@ -307,11 +292,11 @@ namespace KFrame
         player->AddElement( &kfelements, __STRING__( mail ), __FUNC_LINE__ );
     }
 
-    MapString& KFMailClientModule::FormatMailData( KFEntity* sender, const KFMailSetting* kfsetting, const KFElements* kfelements )
+    StringMap& KFMailClientModule::FormatMailData( KFEntity* sender, const KFMailSetting* kfsetting, const KFElements* kfelements )
     {
         // 有优化的空间, 服务器只发configid到客户端, 客户端根据邮件配置表来获得邮件的基础数据
         // 暂时先发给客户端, 省去客户端读取邮件配置表
-        static MapString _mail_data;
+        static StringMap _mail_data;
         _mail_data.clear();
 
         // 配置id
@@ -357,7 +342,7 @@ namespace KFrame
         return _mail_data;
     }
 
-    bool KFMailClientModule::SendAddMailToShard( uint64 sendid, uint32 flag, uint64 recvid, const MapString& maildata )
+    bool KFMailClientModule::SendAddMailToShard( uint64 sendid, uint32 flag, uint64 recvid, const StringMap& maildata )
     {
         KFMsg::S2SAddMailReq req;
         req.set_flag( flag );

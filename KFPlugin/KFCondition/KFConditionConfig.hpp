@@ -114,7 +114,7 @@ namespace KFrame
 
         // 限制的完成条件
         uint32 _limit_condition_type = 0;
-        VectorUInt32 _limit_condition_list;
+        UInt32Vector _limit_condition_list;
     };
 
     class KFConditionConfig : public KFConfigT< KFConditionSetting >, public KFInstance< KFConditionConfig >

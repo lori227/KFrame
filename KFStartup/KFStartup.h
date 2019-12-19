@@ -31,7 +31,7 @@ namespace KFrame
         bool UnLoadPluginLibrary( const std::string& pluginname );
 
         // 重新加载插件
-        void ReloadPlugin( const VectorString& params );
+        void ReloadPlugin( const StringVector& params );
     private:
         // 插件列表
         KFHashMap< std::string, const std::string&, KFLibrary > _kf_library;

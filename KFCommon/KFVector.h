@@ -49,7 +49,7 @@ namespace KFrame
         uint32 FindEmpty()
         {
             uint32 index = 0;
-            for ( auto* object : _objects )
+            for ( auto object : _objects )
             {
                 if ( object == nullptr )
                 {

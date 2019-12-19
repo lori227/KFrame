@@ -17,7 +17,7 @@ namespace KFrame
         void Run();
 
         // 初始化服务
-        bool InitService( KFApplication* application, MapString& params );
+        bool InitService( KFApplication* application, StringMap& params );
 
         // 自动更新
         void RunUpdate();

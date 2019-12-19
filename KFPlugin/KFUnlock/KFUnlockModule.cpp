@@ -56,7 +56,7 @@ namespace KFrame
                 continue;
             }
 
-            kfunlock = _kf_kernel->CreateObject( kfunlockrecord->_data_setting );
+            kfunlock = player->CreateData( kfunlockrecord );
             auto kfconditionobject = kfunlock->Find( __STRING__( conditions ) );
             _kf_condition->AddCondition( kfconditionobject, kfsetting->_unlock_condition, kfsetting->_condition_type );
             kfunlockrecord->Add( kfsetting->_id, kfunlock );
@@ -90,14 +90,14 @@ namespace KFrame
 
     void KFUnlockModule::UnlockPlayerData( KFEntity* player, const KFUnlockSetting* kfsetting, KFData* kfdatarecord )
     {
-        auto kfdata = _kf_kernel->CreateObject( kfdatarecord->_data_setting );
+        auto kfdata = player->CreateData( kfdatarecord );
         kfdata->Set( __STRING__( unlock ), KFGlobal::Instance()->_real_time );
         kfdata->Set( kfdatarecord->_data_setting->_value_key_name, kfsetting->_data_value );
         player->AddData( kfdatarecord, kfsetting->_data_id, kfdata );
     }
 
 #define __UPDATE_UNLOCK_LIST__( updatefunction )\
-    ListUInt32 removes;\
+    UInt32List removes;\
     std::map< KFData*, const KFUnlockSetting* > _update_lock;\
     auto kfunlockrecord = player->Find( __STRING__( unlock ) );\
     for ( auto kfunlock = kfunlockrecord->First(); kfunlock != nullptr; kfunlock = kfunlockrecord->Next() )\

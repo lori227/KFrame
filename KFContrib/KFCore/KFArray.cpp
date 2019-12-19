@@ -53,11 +53,35 @@ namespace KFrame
             }
         }
     }
+
+    bool KFArray::IsFull()
+    {
+        for ( auto kfchild = First(); kfchild != nullptr; kfchild = Next() )
+        {
+            auto value = kfchild->Get();
+            if ( value == 0u )
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     uint32 KFArray::Size()
     {
-        return _data.MaxSize();
+        auto count = 0u;
+        for ( auto kfchild = First(); kfchild != nullptr; kfchild = Next() )
+        {
+            auto value = kfchild->Get();
+            if ( value != 0u )
+            {
+                ++count;
+            }
+        }
+
+        return count;
     }
 
     KFData* KFArray::First()
@@ -95,6 +119,26 @@ namespace KFrame
         }
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    uint32 KFArray::GetEmpty()
+    {
+        return _data.FindEmpty();
+    }
+
+    uint32 KFArray::GetIndex( uint64 value )
+    {
+        auto maxsize = MaxSize();
+        for ( uint32 i = KFDataDefine::Array_Index; i < maxsize; ++i )
+        {
+            auto kfdata = Find( i );
+            if ( kfdata != nullptr && kfdata->Get() == value )
+            {
+                return i;
+            }
+        }
+
+        return 0u;
+    }
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     KFData* KFArray::Find( uint64 key )
     {
@@ -113,6 +157,18 @@ namespace KFrame
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    bool KFArray::Insert( uint64 value )
+    {
+        auto kfdata = Find( _data.FindEmpty() );
+        if ( kfdata == nullptr )
+        {
+            return false;
+        }
+
+        kfdata->Set( value );
+        return true;
+    }
+
     bool KFArray::Add( uint64 key, KFData* data )
     {
         data->SetParent( this );

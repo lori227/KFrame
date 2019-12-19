@@ -17,8 +17,8 @@ namespace KFrame
         std::string GetStartupFile( bool isdebug );
 
         bool IsAppServer( const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid );
-        void CopyFrom( MapString& values );
-        void SaveTo( MapString& values );
+        void CopyFrom( StringMap& values );
+        void SaveTo( StringMap& values );
 
     public:
         // 部署路径

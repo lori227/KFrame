@@ -48,12 +48,12 @@ namespace KFrame
         _kf_route->RepeatToRand( __STRING__( logic ), KFMsg::S2S_CLEAR_ONLINE_TO_PUBLIC_REQ, &req );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFPublicClientModule::UpdatePublicData( KFEntity* player, MapString& values )
+    void KFPublicClientModule::UpdatePublicData( KFEntity* player, StringMap& values )
     {
         UpdatePublicData( player->GetKeyID(), values );
     }
 
-    void KFPublicClientModule::UpdatePublicData( uint64 playerid, MapString& values )
+    void KFPublicClientModule::UpdatePublicData( uint64 playerid, StringMap& values )
     {
         KFMsg::S2SUpdateDataToPublicReq req;
         req.mutable_pbdata()->insert( values.begin(), values.end() );
@@ -72,7 +72,7 @@ namespace KFrame
         }
 
         // 更新到公共属性集群
-        MapString values;
+        StringMap values;
         values[ kfdata->_data_setting->_name ] = kfdata->ToString();
         UpdatePublicData( player, values );
     }
@@ -91,7 +91,7 @@ namespace KFrame
     {
         auto kfglobal = KFGlobal::Instance();
 
-        MapString values;
+        StringMap values;
         values[ __STRING__( id ) ] = __TO_STRING__( player->GetKeyID() );
         values[ __STRING__( status ) ] = __TO_STRING__( KFMsg::FrameOnlineStatus );
         values[ __STRING__( statustime ) ] = __TO_STRING__( kfglobal->_real_time );
@@ -101,7 +101,7 @@ namespace KFrame
 
     __KF_LEAVE_PLAYER_FUNCTION__( KFPublicClientModule::OnLeaveUpdatePublicData )
     {
-        MapString values;
+        StringMap values;
         values[ __STRING__( serverid ) ] = "0";
         values[ __STRING__( status ) ] = __TO_STRING__( KFMsg::FrameOfflineStatus );
         values[ __STRING__( statustime ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time );

@@ -215,7 +215,7 @@ namespace KFrame
         auto tokenkey = __FORMAT__( "{}:{}:{}", __STRING__( token ), KFZoneConfig::Instance()->ZoneSetting()->_id, accountid );
 
         // 保存验证信息
-        MapString values;
+        StringMap values;
         values[ __STRING__( token ) ] = token;
         values[ __STRING__( account ) ] = account;
         values[ __STRING__( channel ) ] = __TO_STRING__( channel );

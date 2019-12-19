@@ -5,7 +5,7 @@ namespace KFrame
 {
 #define __AUTH_REDIS_DRIVER__ _kf_redis->Create( __STRING__( auth ) )
 
-    bool KFChannel::SavePayData( const std::string& order, MapString& values )
+    bool KFChannel::SavePayData( const std::string& order, StringMap& values )
     {
         auto redisdriver = __AUTH_REDIS_DRIVER__;
 
@@ -33,7 +33,7 @@ namespace KFrame
         }
 
         // 纪录充值信息
-        MapString payvalues = kforderdata->_value;
+        StringMap payvalues = kforderdata->_value;
         payvalues[ __STRING__( flag ) ] = "0";
 
         redisdriver->Append( payvalues, "hmset {}:{}", __STRING__( pay ), order );

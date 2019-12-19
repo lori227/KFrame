@@ -150,7 +150,7 @@ namespace KFrame
         if ( kfskin == nullptr )
         {
             // 不存在, 创建新的皮肤
-            kfskin = _kf_kernel->CreateObject( kfparent->_data_setting );
+            kfskin = player->CreateData( kfparent );
 
             // 设置时间
             if ( elementtime != _invalid_int )

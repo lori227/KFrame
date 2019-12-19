@@ -227,12 +227,12 @@ namespace KFrame
         return _write_execute->Push( table, MongoKeyword::_id, key, field, values );
     }
 
-    bool KFMongoLogic::Push( const std::string& table, uint64 key, const std::string& field, const ListString& values )
+    bool KFMongoLogic::Push( const std::string& table, uint64 key, const std::string& field, const StringList& values )
     {
         return _write_execute->Push( table, MongoKeyword::_id, key, field, values );
     }
 
-    bool KFMongoLogic::Push( const std::string& table, const std::string& key, const std::string& field, const ListString& values )
+    bool KFMongoLogic::Push( const std::string& table, const std::string& key, const std::string& field, const StringList& values )
     {
         return _write_execute->Push( table, MongoKeyword::_id, key, field, values );
     }
@@ -275,12 +275,12 @@ namespace KFrame
         return _write_execute->Pull( table, MongoKeyword::_id, key, field, values );
     }
 
-    bool KFMongoLogic::Pull( const std::string& table, uint64 key, const std::string& field, ListString& values )
+    bool KFMongoLogic::Pull( const std::string& table, uint64 key, const std::string& field, StringList& values )
     {
         return _write_execute->Pull( table, MongoKeyword::_id, key, field, values );
     }
 
-    bool KFMongoLogic::Pull( const std::string& table, const std::string& key, const std::string& field, ListString& values )
+    bool KFMongoLogic::Pull( const std::string& table, const std::string& key, const std::string& field, StringList& values )
     {
         return _write_execute->Pull( table, MongoKeyword::_id, key, field, values );
     }
@@ -328,22 +328,22 @@ namespace KFrame
 
     KFResult< KFDBValue >::UniqueType KFMongoLogic::QueryRecord( const std::string& table, uint64 key )
     {
-        static ListString _fields;
+        static StringList _fields;
         return _read_execute->QueryRecord( table, key, _fields );
     }
 
     KFResult< KFDBValue >::UniqueType KFMongoLogic::QueryRecord( const std::string& table, const std::string& key )
     {
-        static ListString _fields;
+        static StringList _fields;
         return _read_execute->QueryRecord( table, key, _fields );
     }
 
-    KFResult< KFDBValue >::UniqueType KFMongoLogic::QueryRecord( const std::string& table, uint64 key, const ListString& fields )
+    KFResult< KFDBValue >::UniqueType KFMongoLogic::QueryRecord( const std::string& table, uint64 key, const StringList& fields )
     {
         return _read_execute->QueryRecord( table, key, fields );
     }
 
-    KFResult< KFDBValue >::UniqueType KFMongoLogic::QueryRecord( const std::string& table, const std::string& key, const ListString& fields )
+    KFResult< KFDBValue >::UniqueType KFMongoLogic::QueryRecord( const std::string& table, const std::string& key, const StringList& fields )
     {
         return _read_execute->QueryRecord( table, key, fields );
     }

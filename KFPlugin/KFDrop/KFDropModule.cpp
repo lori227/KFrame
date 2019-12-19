@@ -80,7 +80,7 @@ namespace KFrame
         return Drop( player, dropid, 1u, modulename, function, line );
     }
 
-    DropDataList& KFDropModule::Drop( KFEntity* player, const VectorUInt32& droplist, const std::string& modulename, const char* function, uint32 line )
+    DropDataList& KFDropModule::Drop( KFEntity* player, const UInt32Vector& droplist, const std::string& modulename, const char* function, uint32 line )
     {
         static DropDataList _dropdatalist;
         _dropdatalist.clear();
@@ -191,7 +191,7 @@ namespace KFrame
     void KFDropModule::DropMutexCondition( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist )
     {
         bool ishaveconditiondrop = false;
-        SetUInt32 excludelist;
+        UInt32Set excludelist;
         for ( auto kfdropweight : kfsetting->_rand_list._weight_data )
         {
             auto ok = _kf_condition->CheckCondition( player, &kfdropweight->_conditions );
@@ -222,7 +222,7 @@ namespace KFrame
 
     void KFDropModule::DropOverlayCondition( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist )
     {
-        SetUInt32 excludelist;
+        UInt32Set excludelist;
         for ( auto kfdropweight : kfsetting->_rand_list._weight_data )
         {
             auto ok = _kf_condition->CheckCondition( player, &kfdropweight->_conditions );
@@ -235,7 +235,7 @@ namespace KFrame
         RandDropDataList( player, kfsetting, outlist, excludelist );
     }
 
-    void KFDropModule::RandDropDataList( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist, const SetUInt32& excludelist )
+    void KFDropModule::RandDropDataList( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist, const UInt32Set& excludelist )
     {
         switch ( kfsetting->_rand_type )
         {
@@ -251,7 +251,7 @@ namespace KFrame
         }
     }
 
-    void KFDropModule::RandDropDataByWeight( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist, const SetUInt32& excludelist )
+    void KFDropModule::RandDropDataByWeight( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist, const UInt32Set& excludelist )
     {
         auto kfdropweight = kfsetting->_rand_list.Rand( excludelist, true );
         if ( kfdropweight != nullptr )
@@ -260,7 +260,7 @@ namespace KFrame
         }
     }
 
-    void KFDropModule::RandDropDataByProbability( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist, const SetUInt32& excludelist )
+    void KFDropModule::RandDropDataByProbability( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist, const UInt32Set& excludelist )
     {
         for ( auto kfdropweight : kfsetting->_rand_list._weight_data )
         {

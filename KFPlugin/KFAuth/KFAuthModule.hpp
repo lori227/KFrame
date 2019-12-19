@@ -77,19 +77,19 @@ namespace KFrame
 
     protected:
         // 查询创建账号
-        MapString QueryCreateAccount( const std::string& account, uint32 channel );
+        StringMap QueryCreateAccount( const std::string& account, uint32 channel );
 
         // 保存渠道数据
         void UpdateChannelData( uint64 accountid, uint32 channel, KFJson& kfjson );
 
         // 创建登录Token
-        std::string SaveLoginToken( uint64 accountid, MapString& accountdata );
+        std::string SaveLoginToken( uint64 accountid, StringMap& accountdata );
 
         // 踢人下线
         bool KickAccountOffline( uint64 playerid );
 
         // 获得小区信息
-        std::string QueryZoneData( uint64 accountid, const std::string& token, MapString& accountdata );
+        std::string QueryZoneData( uint64 accountid, const std::string& token, StringMap& accountdata );
 
         // 分配一个新小区
         uint32 BalanceAllocZoneId();

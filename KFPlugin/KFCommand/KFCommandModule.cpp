@@ -42,7 +42,7 @@ namespace KFrame
         auto kffunction = _kf_command_function.Find( command );
         if ( kffunction != nullptr )
         {
-            VectorString params;
+            StringVector params;
             for ( auto i = 0; i < kfmsg.params_size(); ++i )
             {
                 params.push_back( kfmsg.params( i ) );

@@ -37,7 +37,7 @@ namespace KFrame
         virtual void ReloadConfig( const std::string& file );
         ////////////////////////////////////////////////////////////////////////////////
     protected:
-        void ProcessReloadCommand( const VectorString& params );
+        void ProcessReloadCommand( const StringVector& params );
 
         // 创建config
         virtual void AddConfig( const std::string& name, KFConfig* kfconfig );

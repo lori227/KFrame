@@ -126,7 +126,7 @@ namespace KFrame
         robot->Init( robotid, _net_client );
     }
 
-    void KFRobotModule::ProcessRobotCommand( const VectorString& params )
+    void KFRobotModule::ProcessRobotCommand( const StringVector& params )
     {
         if ( params.size() < 1 )
         {
@@ -135,7 +135,7 @@ namespace KFrame
 
         auto robotid = KFUtility::ToValue<uint64 >( params[ 0 ] );
 
-        VectorString paramlist;
+        StringVector paramlist;
         paramlist.assign( params.begin() + 1, params.end() );
 
         if ( robotid == 0u )
@@ -156,7 +156,7 @@ namespace KFrame
         }
     }
 
-    void KFRobotModule::ProcessRobotCommand( KFRobot* robot, const VectorString& params )
+    void KFRobotModule::ProcessRobotCommand( KFRobot* robot, const StringVector& params )
     {
         if ( params.size() < 1 )
         {
@@ -167,7 +167,7 @@ namespace KFrame
         auto kffunction = _cmd_function.Find( command );
         if ( kffunction != nullptr )
         {
-            VectorString paramlist;
+            StringVector paramlist;
             paramlist.assign( params.begin() + 1, params.end() );
             kffunction->_function( robot, paramlist );
         }
@@ -187,7 +187,7 @@ namespace KFrame
         }
     }
 
-    void KFRobotModule::CommandSetName( KFRobot* robot, const VectorString& params )
+    void KFRobotModule::CommandSetName( KFRobot* robot, const StringVector& params )
     {
         if ( params.size() < 1 )
         {

@@ -72,7 +72,7 @@ namespace KFrame
         __JSON_PARSE_STRING__( request, data );
         auto zoneid = __JSON_GET_UINT32__( request, __STRING__( zoneid ) );
 
-        MapString values;
+        StringMap values;
         __JSON_TO_MAP__( request, values );
 
         // 先保存小区基本信息
@@ -97,7 +97,7 @@ namespace KFrame
         auto zoneid = __JSON_GET_UINT32__( request, __STRING__( zoneid ) );
         auto count = __JSON_GET_UINT32__( request, __STRING__( count ) );
 
-        MapString values;
+        StringMap values;
         values[ __STRING__( time ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time );
 
         auto kfresult = redisdriver->QueryUInt64( "hget {}:{} {}", __STRING__( zone ), zoneid, __STRING__( count ) );
@@ -245,16 +245,16 @@ namespace KFrame
 
         auto& kfextend = kfjson[ __STRING__( extend ) ];
 
-        MapString values;
+        StringMap values;
         __JSON_TO_MAP__( kfextend, values );
 
         auto redisdriver = __AUTH_REDIS_DRIVER__;
         redisdriver->Update( values, "hmset {}:{}", __STRING__( extend ), accountid );
     }
 
-    MapString KFAuthModule::QueryCreateAccount( const std::string& account, uint32 channel )
+    StringMap KFAuthModule::QueryCreateAccount( const std::string& account, uint32 channel )
     {
-        MapString accountdata;
+        StringMap accountdata;
         auto redisdriver = __AUTH_REDIS_DRIVER__;
 
         // 先查询redis
@@ -302,7 +302,7 @@ namespace KFrame
         return accountdata;
     }
 
-    std::string KFAuthModule::SaveLoginToken( uint64 accountid, MapString& accountdata )
+    std::string KFAuthModule::SaveLoginToken( uint64 accountid, StringMap& accountdata )
     {
         // token 保留1个小时
         static auto _token_expire_time = 3600;
@@ -382,7 +382,7 @@ namespace KFrame
         return 1u;
     }
 
-    std::string KFAuthModule::QueryZoneData( uint64 accountid, const std::string& token, MapString& accountdata )
+    std::string KFAuthModule::QueryZoneData( uint64 accountid, const std::string& token, StringMap& accountdata )
     {
         // 上次登录的小区id
         auto zoneid = KFUtility::ToValue< uint32 >( accountdata[ __STRING__( zoneid ) ] );
@@ -442,7 +442,7 @@ namespace KFrame
         // 保存玩家登陆ip
         auto loginip = __JSON_GET_STRING__( request, __STRING__( ip ) );
         {
-            MapString values;
+            StringMap values;
             values[ __STRING__( ip ) ] = loginip;
             values[ __STRING__( zoneid ) ] = __JSON_GET_STRING__( request, __STRING__( zoneid ) );
             redisdriver->Update( values, "hmset {}:{}", __STRING__( accountid ), accountid );
@@ -493,7 +493,7 @@ namespace KFrame
         __JSON_SET_VALUE__( response, __STRING__( playerid ), playerid );
 
         // 保存订单信息
-        MapString values;
+        StringMap values;
         __JSON_TO_MAP__( request, values );
         redisdriver->Append( values, "hmset {}", orderkey );
         redisdriver->Append( "expire {} {}", orderkey, _order_expire_time );

@@ -79,7 +79,7 @@ namespace KFrame
     {
         auto strrankdata = KFProto::Serialize( &kfrankdata->_rank_datas, KFCompressEnum::Compress );
 
-        MapString rankdata;
+        StringMap rankdata;
         rankdata[ __STRING__( id ) ] = __TO_STRING__( kfrankdata->_rank_id );
         rankdata[ __STRING__( zoneid ) ] = __TO_STRING__( kfrankdata->_zone_id );
         rankdata[ __STRING__( minrankscore ) ] = __TO_STRING__( kfrankdata->_min_rank_score );

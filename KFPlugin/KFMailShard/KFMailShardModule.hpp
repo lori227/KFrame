@@ -64,7 +64,7 @@ namespace KFrame
         bool UpdateMailStatus( uint32 flag, uint64 playerid, uint64 mailid, uint32 status );
 
         // 添加邮件
-        uint64 AddMail( uint32 flag, uint64 objectid, MapString& maildata );
+        uint64 AddMail( uint32 flag, uint64 objectid, StringMap& maildata );
 
     private:
         // 邮件数据库

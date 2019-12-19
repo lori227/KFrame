@@ -80,7 +80,7 @@ namespace KFrame
         return true;
     }
 
-    void KFDeployData::CopyFrom( MapString& values )
+    void KFDeployData::CopyFrom( StringMap& values )
     {
         _deploy_path = values[ __STRING__( deploypath ) ];
         _app_path = values[ __STRING__( apppath ) ];
@@ -106,7 +106,7 @@ namespace KFrame
         _heartbeat = KFUtility::ToValue< uint32 >( values[ __STRING__( heartbeat ) ] );
     }
 
-    void KFDeployData::SaveTo( MapString& values )
+    void KFDeployData::SaveTo( StringMap& values )
     {
         values[ __STRING__( deploypath ) ] = _deploy_path;
         values[ __STRING__( apppath ) ] = _app_path;

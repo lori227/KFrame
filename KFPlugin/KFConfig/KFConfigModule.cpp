@@ -84,7 +84,7 @@ namespace KFrame
         return iter->second;
     }
 
-    void KFConfigModule::ProcessReloadCommand( const VectorString& params )
+    void KFConfigModule::ProcessReloadCommand( const StringVector& params )
     {
         ReloadConfig( _globbing_string );
     }

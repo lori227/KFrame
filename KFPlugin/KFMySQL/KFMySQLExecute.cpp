@@ -63,7 +63,7 @@ namespace KFrame
         KFUtility::ReplaceString( sql, "\\", "\\\\" );
     }
 
-    std::string KFMySQLExecute::FormatKeyString( const MapString& keyvalue )
+    std::string KFMySQLExecute::FormatKeyString( const StringMap& keyvalue )
     {
         std::ostringstream osskeys;
         bool isbegin = true;
@@ -84,7 +84,7 @@ namespace KFrame
         return osskeys.str();
     }
 
-    std::string KFMySQLExecute::FormatFieldString( const ListString& fields )
+    std::string KFMySQLExecute::FormatFieldString( const StringList& fields )
     {
         if ( fields.empty() )
         {
@@ -111,7 +111,7 @@ namespace KFrame
         return ossfields.str();
     }
 
-    std::string KFMySQLExecute::FormatUpdateString( const MapString& updatevalue )
+    std::string KFMySQLExecute::FormatUpdateString( const StringMap& updatevalue )
     {
         std::ostringstream oss;
 
@@ -135,7 +135,7 @@ namespace KFrame
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFMySQLWriteExecute::Pipeline( ListString& commands )
+    void KFMySQLWriteExecute::Pipeline( StringList& commands )
     {
         for ( auto& command : commands )
         {
@@ -143,7 +143,7 @@ namespace KFrame
         }
     }
 
-    bool KFMySQLWriteExecute::Insert( const std::string& table, const MapString& invalue )
+    bool KFMySQLWriteExecute::Insert( const std::string& table, const StringMap& invalue )
     {
         std::ostringstream ossfields;
         std::ostringstream ossvalues;
@@ -183,33 +183,33 @@ namespace KFrame
 
     bool KFMySQLWriteExecute::Delete( const std::string& table, const std::string& key )
     {
-        MapString keyvalue;
+        StringMap keyvalue;
         keyvalue[ __STRING__( id ) ] = key;
         return Delete( table, keyvalue );
     }
 
-    bool KFMySQLWriteExecute::Delete( const std::string& table, const MapString& keyvalues )
+    bool KFMySQLWriteExecute::Delete( const std::string& table, const StringMap& keyvalues )
     {
         auto strkey = FormatKeyString( keyvalues );
         auto sql = __FORMAT__( "delete from {} where {};", table, strkey );
         return ExecuteSql( sql );
     }
 
-    bool KFMySQLWriteExecute::Update( const std::string& table, const MapString& invalue )
+    bool KFMySQLWriteExecute::Update( const std::string& table, const StringMap& invalue )
     {
         auto strupdate = FormatUpdateString( invalue );
         auto sql = __FORMAT__( "update {} set {};", table, strupdate );
         return ExecuteSql( sql );
     }
 
-    bool KFMySQLWriteExecute::Update( const std::string& table, const std::string& key, const MapString& invalue )
+    bool KFMySQLWriteExecute::Update( const std::string& table, const std::string& key, const StringMap& invalue )
     {
-        MapString keyvalue;
+        StringMap keyvalue;
         keyvalue[ __STRING__( id ) ] = key;
         return Update( table, keyvalue, invalue );
     }
 
-    bool KFMySQLWriteExecute::Update( const std::string& table, const MapString& keyvalue, const MapString& invalue )
+    bool KFMySQLWriteExecute::Update( const std::string& table, const StringMap& keyvalue, const StringMap& invalue )
     {
         auto strupdate = FormatUpdateString( invalue );
         auto strkey = FormatKeyString( keyvalue );
@@ -236,45 +236,45 @@ namespace KFrame
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    KFResult< ListMapString >::UniqueType KFMySQLReadExecute::Select( const std::string& table )
+    KFResult< StringListMap >::UniqueType KFMySQLReadExecute::Select( const std::string& table )
     {
-        static MapString _empty_key;
-        static ListString _empty_field;
+        static StringMap _empty_key;
+        static StringList _empty_field;
 
         return Select( table, _empty_key, _empty_field );
     }
 
-    KFResult< ListMapString >::UniqueType KFMySQLReadExecute::Select( const std::string& table, const ListString& fields )
+    KFResult< StringListMap >::UniqueType KFMySQLReadExecute::Select( const std::string& table, const StringList& fields )
     {
-        static MapString _empty_key;
+        static StringMap _empty_key;
         return Select( table, _empty_key, fields );
     }
 
-    KFResult< ListMapString >::UniqueType KFMySQLReadExecute::Select( const std::string& table, const std::string& key )
+    KFResult< StringListMap >::UniqueType KFMySQLReadExecute::Select( const std::string& table, const std::string& key )
     {
-        static ListString _empty_field;
+        static StringList _empty_field;
 
-        MapString keyvalue;
+        StringMap keyvalue;
         keyvalue[ __STRING__( id ) ] = key;
         return Select( table, keyvalue, _empty_field );
     }
 
-    KFResult< ListMapString >::UniqueType KFMySQLReadExecute::Select( const std::string& table, const std::string& key, const ListString& fields )
+    KFResult< StringListMap >::UniqueType KFMySQLReadExecute::Select( const std::string& table, const std::string& key, const StringList& fields )
     {
-        MapString keyvalue;
+        StringMap keyvalue;
         keyvalue[ __STRING__( id ) ] = key;
         return Select( table, keyvalue, fields );
     }
 
-    KFResult< ListMapString >::UniqueType KFMySQLReadExecute::Select( const std::string& table, const MapString& keyvalue )
+    KFResult< StringListMap >::UniqueType KFMySQLReadExecute::Select( const std::string& table, const StringMap& keyvalue )
     {
-        static ListString _empty_field;
+        static StringList _empty_field;
         return Select( table, keyvalue, _empty_field );
     }
 
-    KFResult< ListMapString >::UniqueType KFMySQLReadExecute::Select( const std::string& table, const MapString& keyvalue, const ListString& fields )
+    KFResult< StringListMap >::UniqueType KFMySQLReadExecute::Select( const std::string& table, const StringMap& keyvalue, const StringList& fields )
     {
-        __NEW_RESULT__( ListMapString );
+        __NEW_RESULT__( StringListMap );
 
         std::string sql = "";
         auto strfield = FormatFieldString( fields );
@@ -297,7 +297,7 @@ namespace KFrame
             auto rowcount = recordset.rowCount();
             for ( auto i = 0u; i < rowcount; ++i )
             {
-                MapString mapvalues;
+                StringMap mapvalues;
                 if ( fields.empty() )
                 {
                     const auto& row = recordset.row( i );
@@ -399,9 +399,9 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< MapString >::UniqueType KFMySQLReadExecute::MapExecute( std::string& strsql )
+    KFResult< StringMap >::UniqueType KFMySQLReadExecute::MapExecute( std::string& strsql )
     {
-        __NEW_RESULT__( MapString );
+        __NEW_RESULT__( StringMap );
 
         Statement statement( *_session );
         auto ok = ExecuteSql( statement, strsql );
@@ -430,9 +430,9 @@ namespace KFrame
     }
 
 
-    KFResult< ListString >::UniqueType KFMySQLReadExecute::ListExecute( std::string& strsql )
+    KFResult< StringList >::UniqueType KFMySQLReadExecute::ListExecute( std::string& strsql )
     {
-        __NEW_RESULT__( ListString );
+        __NEW_RESULT__( StringList );
 
         Statement statement( *_session );
         auto ok = ExecuteSql( statement, strsql );
@@ -455,9 +455,9 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< ListMapString >::UniqueType KFMySQLReadExecute::ListMapExecute( std::string& strsql )
+    KFResult< StringListMap >::UniqueType KFMySQLReadExecute::ListMapExecute( std::string& strsql )
     {
-        __NEW_RESULT__( ListMapString );
+        __NEW_RESULT__( StringListMap );
 
         Statement statement( *_session );
         auto ok = ExecuteSql( statement, strsql );
@@ -470,7 +470,7 @@ namespace KFrame
                 auto names = row.names();
                 auto& values = row.values();
 
-                MapString mapvalues;
+                StringMap mapvalues;
                 auto size = names->size();
                 for ( auto j = 0u; j < size; ++j )
                 {

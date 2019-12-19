@@ -85,7 +85,7 @@ void CAddAgentDlg::OnBnClickedButtonAddAgent()
     appid.SetType( KFServerEnum::DeployAgent );
     appid.SetWorkId( KFUtility::ToValue< uint32>( agentid ) );
 
-    MapString values;
+    StringMap values;
     values[ __STRING__( strappid ) ] = appid.ToString();
     values[ __STRING__( localip ) ] = agentip;
     values[ __STRING__( interanetip ) ] = agentip;

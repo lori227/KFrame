@@ -67,8 +67,8 @@ namespace KFrame
         virtual bool Push( const std::string& table, const std::string& key, const std::string& field, const std::string& value );
         virtual bool Push( const std::string& table, uint64 key, const std::string& field, const std::list<uint64>& values );
         virtual bool Push( const std::string& table, const std::string& key, const std::string& field, const std::list<uint64>& values );
-        virtual bool Push( const std::string& table, uint64 key, const std::string& field, const ListString& values );
-        virtual bool Push( const std::string& table, const std::string& key, const std::string& field, const ListString& values );
+        virtual bool Push( const std::string& table, uint64 key, const std::string& field, const StringList& values );
+        virtual bool Push( const std::string& table, const std::string& key, const std::string& field, const StringList& values );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 删除数组元素
@@ -78,8 +78,8 @@ namespace KFrame
         virtual bool Pull( const std::string& table, const std::string& key, const std::string& field, const std::string& value );
         virtual bool Pull( const std::string& table, uint64 key, const std::string& field, std::list<uint64>& values );
         virtual bool Pull( const std::string& table, const std::string& key, const std::string& field, std::list<uint64>& values );
-        virtual bool Pull( const std::string& table, uint64 key, const std::string& field, ListString& values );
-        virtual bool Pull( const std::string& table, const std::string& key, const std::string& field, ListString& values );
+        virtual bool Pull( const std::string& table, uint64 key, const std::string& field, StringList& values );
+        virtual bool Pull( const std::string& table, const std::string& key, const std::string& field, StringList& values );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 查询数值
@@ -95,8 +95,8 @@ namespace KFrame
         // 查询集合
         virtual KFResult< KFDBValue >::UniqueType QueryRecord( const std::string& table, uint64 key );
         virtual KFResult< KFDBValue >::UniqueType QueryRecord( const std::string& table, const std::string& key );
-        virtual KFResult< KFDBValue >::UniqueType QueryRecord( const std::string& table, uint64 key, const ListString& fields );
-        virtual KFResult< KFDBValue >::UniqueType QueryRecord( const std::string& table, const std::string& key, const ListString& fields );
+        virtual KFResult< KFDBValue >::UniqueType QueryRecord( const std::string& table, uint64 key, const StringList& fields );
+        virtual KFResult< KFDBValue >::UniqueType QueryRecord( const std::string& table, const std::string& key, const StringList& fields );
         virtual KFResult< std::list< KFDBValue > >::UniqueType QueryListRecord( const std::string& table, const KFMongoSelector& kfseletor );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private:

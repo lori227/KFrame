@@ -120,12 +120,12 @@ namespace KFrame
         return Math3D::Vector3D::xAxis;
     }
 
-    void KFData::ToMap( MapString& values )
+    void KFData::ToMap( StringMap& values )
     {
 
     }
 
-    void KFData::FromMap( const MapString& values )
+    void KFData::FromMap( const StringMap& values )
     {
 
     };
@@ -283,6 +283,21 @@ namespace KFrame
     bool KFData::Check( const std::string& dataname, uint64 value, const std::string& checkname, uint64 checkvalue )
     {
         return false;
+    }
+
+    bool KFData::Insert( uint64 value )
+    {
+        return false;
+    }
+
+    uint32 KFData::GetIndex( uint64 value )
+    {
+        return 0u;
+    }
+
+    uint32 KFData::GetEmpty()
+    {
+        return 0u;
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////

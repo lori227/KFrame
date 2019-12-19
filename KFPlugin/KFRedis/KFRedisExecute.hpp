@@ -61,7 +61,7 @@ namespace KFrame
         KFResult< uint64 >::UniqueType UpdateExecute( const std::string& strsql );
 
         // 批量写
-        KFResult< voidptr >::UniqueType Pipeline( const ListString& commands );
+        KFResult< voidptr >::UniqueType Pipeline( const StringList& commands );
 
         /////////////////////////////////////////////////////////////////////////////////////////////
     };
@@ -77,13 +77,13 @@ namespace KFrame
         // 读操作
         KFResult< uint64 >::UniqueType UInt64Execute( const std::string& strsql );
         KFResult< std::string >::UniqueType StringExecute( const std::string& strsql );
-        KFResult< MapString >::UniqueType MapExecute( const std::string& strsql );
-        KFResult< ListString >::UniqueType ListExecute( const std::string& strsql );
-        KFResult< VectorString >::UniqueType VectorExecute( const std::string& strsql );
+        KFResult< StringMap >::UniqueType MapExecute( const std::string& strsql );
+        KFResult< StringList >::UniqueType ListExecute( const std::string& strsql );
+        KFResult< StringVector >::UniqueType VectorExecute( const std::string& strsql );
 
         // 添加执行命令
-        KFResult< ListString >::UniqueType ListPipelineExecute( const ListString& commands );
-        KFResult< ListMapString >::UniqueType ListMapPipelineExecute( const ListString& commands );
+        KFResult< StringList >::UniqueType ListPipelineExecute( const StringList& commands );
+        KFResult< StringListMap >::UniqueType ListMapPipelineExecute( const StringList& commands );
         ///////////////////////////////////////////////////////
     };
 }

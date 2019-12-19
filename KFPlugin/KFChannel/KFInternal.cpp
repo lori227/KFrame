@@ -20,7 +20,7 @@ namespace KFrame
 
         auto order = __JSON_GET_STRING__( request, __STRING__( payorder ) );
 
-        MapString values;
+        StringMap values;
         __JSON_TO_MAP__( request, values );
 
         auto ok = SavePayData( order, values );

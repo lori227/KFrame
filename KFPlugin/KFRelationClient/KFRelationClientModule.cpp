@@ -110,7 +110,7 @@ namespace KFrame
             }
 
             // 通知对方,我下线了
-            MapString values;
+            StringMap values;
             values[ __STRING__( status ) ] = __TO_STRING__( KFMsg::FrameOfflineStatus );
             values[ __STRING__( statustime ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time );
             SendUpdateToRelation( player, kfsetting->_id, values );
@@ -143,13 +143,13 @@ namespace KFrame
                 continue;
             }
 
-            MapString values;
+            StringMap values;
             values[ kfdata->_data_setting->_name ] = kfdata->ToString();
             SendUpdateToRelation( player, kfsetting->_id, values );
         }
     }
 
-    void KFRelationClientModule::SendUpdateToRelation( KFEntity* player, const std::string& dataname, MapString& values )
+    void KFRelationClientModule::SendUpdateToRelation( KFEntity* player, const std::string& dataname, StringMap& values )
     {
         KFMsg::S2SUpdateDataToRelationReq req;
         req.set_dataname( dataname );
@@ -228,7 +228,7 @@ namespace KFrame
         for ( auto i = 0; i < kfmsg.pbrelation_size(); ++i )
         {
             auto pbrelation = &kfmsg.pbrelation( i );
-            auto kfdata = _kf_kernel->CreateObject( kfrecord->_data_setting );
+            auto kfdata = player->CreateData( kfrecord );
 
             PBRelationToKFData( pbrelation, kfdata );
             player->AddData( kfrecord, kfdata );
@@ -239,7 +239,7 @@ namespace KFrame
         {
             // 通知关系,我上线了
 
-            MapString values;
+            StringMap values;
             values[ __STRING__( status ) ] = __TO_STRING__( KFMsg::FrameOnlineStatus );
             values[ __STRING__( statustime ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time );
             values[ __STRING__( serverid ) ] = __TO_STRING__( KFGlobal::Instance()->_app_id->GetId() );
@@ -255,7 +255,7 @@ namespace KFrame
         for ( auto i = 0; i < kfmsg.pbinvite_size(); ++i )
         {
             auto pbinvite = &kfmsg.pbinvite( i );
-            auto kfinvite = _kf_kernel->CreateObject( kfinviterecord->_data_setting );
+            auto kfinvite = player->CreateData( kfinviterecord );
 
             PBRelationToKFData( pbinvite, kfinvite );
             player->AddData( kfinviterecord, kfinvite );
@@ -337,7 +337,7 @@ namespace KFrame
             return __LOG_ERROR__( "invitelist=[{}] is null!", kfmsg.dataname() );
         }
 
-        auto kfinvite = _kf_kernel->CreateObject( kfinviterecord->_data_setting );
+        auto kfinvite = player->CreateData( kfinviterecord );
 
         PBRelationToKFData( &kfmsg.pbinvite(), kfinvite );
         player->AddData( kfinviterecord, kfinvite );
@@ -495,7 +495,7 @@ namespace KFrame
         }
 
         // 添加关系
-        auto kfrelation = _kf_kernel->CreateObject( kfrecord->_data_setting );
+        auto kfrelation = player->CreateData( kfrecord );
         PBRelationToKFData( &kfmsg.pbrelation(), kfrelation );
         player->AddData( kfrecord, kfrelation );
 

@@ -13,7 +13,7 @@ namespace KFrame
         template< class...Args >
         inline void SendToClient( uint64 playerid, uint32 result, Args&& ... args )
         {
-            ListString params;
+            StringList params;
             FormatParam( params, std::forward< Args >( args )... );
             SendToClient( playerid, result, params );
         }
@@ -23,7 +23,7 @@ namespace KFrame
         template< class...Args >
         inline void SendToClient( KFEntity* player, uint32 result, Args&& ... args )
         {
-            ListString params;
+            StringList params;
             FormatParam( params, std::forward< Args >( args )... );
             SendToClient( player, result, params );
         }
@@ -33,7 +33,7 @@ namespace KFrame
         template< class...Args >
         inline void DelayToClient( KFEntity* player, uint32 result, Args&& ... args )
         {
-            ListString params;
+            StringList params;
             FormatParam( params, std::forward< Args >( args )... );
             DelayToClient( player, result, params );
         }
@@ -43,7 +43,7 @@ namespace KFrame
         template< class...Args >
         inline void SendToPlayer( uint64 serverid, uint64 playerid, uint32 result, Args&& ... args )
         {
-            ListString params;
+            StringList params;
             FormatParam( params, std::forward< Args >( args )... );
             SendToPlayer( serverid, playerid, result, params );
         }
@@ -53,7 +53,7 @@ namespace KFrame
         template< class...Args >
         inline void SendToPlayer( const Route& route, uint32 result, Args&& ... args )
         {
-            ListString params;
+            StringList params;
             FormatParam( params, std::forward< Args >( args )... );
             SendToPlayer( route, result, params );
         }
@@ -63,7 +63,7 @@ namespace KFrame
         template< class...Args >
         inline void SendToPlayer( KFData* kfbasic, uint32 result, Args&& ... args )
         {
-            ListString params;
+            StringList params;
             FormatParam( params, std::forward< Args >( args )... );
             SendToPlayer( kfbasic, result, params );
         }
@@ -73,17 +73,17 @@ namespace KFrame
         template< class...Args >
         inline void SendToGroup( KFEntity* player, uint32 result, Args&& ... args )
         {
-            ListString params;
+            StringList params;
             FormatParam( params, std::forward< Args >( args )... );
             SendToGroup( player, result, params );
         }
 
     protected:
         // 格式化参数
-        inline void FormatParam( ListString& params ) {}
+        inline void FormatParam( StringList& params ) {}
 
         template< class T, class...Args >
-        inline void FormatParam( ListString& params, T head, Args&& ... args )
+        inline void FormatParam( StringList& params, T head, Args&& ... args )
         {
             params.push_back( KFUtility::ToString< T >( head ) );
             FormatParam( params, args... );
@@ -91,19 +91,19 @@ namespace KFrame
 
     private:
         // Gate/Proxy ==> Client
-        virtual void SendToClient( uint64 playerid, uint32 result, ListString& params ) = 0;
+        virtual void SendToClient( uint64 playerid, uint32 result, StringList& params ) = 0;
 
         // Game ==> Client
-        virtual void SendToClient( KFEntity* player, uint32 result, ListString& params ) = 0;
-        virtual void DelayToClient( KFEntity* player, uint32 result, ListString& params ) = 0;
+        virtual void SendToClient( KFEntity* player, uint32 result, StringList& params ) = 0;
+        virtual void DelayToClient( KFEntity* player, uint32 result, StringList& params ) = 0;
 
         // Game ==> Client
-        virtual void SendToGroup( KFEntity* player, uint32 result, ListString& params ) = 0;
+        virtual void SendToGroup( KFEntity* player, uint32 result, StringList& params ) = 0;
 
         // Game ==> Route ==> Game
-        virtual void SendToPlayer( KFData* kfbasic, uint32 result, ListString& params ) = 0;
-        virtual void SendToPlayer( uint64 serverid, uint64 playerid, uint32 result, ListString& params ) = 0;
-        virtual void SendToPlayer( const Route& route, uint32 result, ListString& params ) = 0;
+        virtual void SendToPlayer( KFData* kfbasic, uint32 result, StringList& params ) = 0;
+        virtual void SendToPlayer( uint64 serverid, uint64 playerid, uint32 result, StringList& params ) = 0;
+        virtual void SendToPlayer( const Route& route, uint32 result, StringList& params ) = 0;
 
     };
 

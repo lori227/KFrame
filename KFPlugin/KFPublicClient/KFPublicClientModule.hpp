@@ -50,8 +50,8 @@ namespace KFrame
         void OnUpdateDataToPublic( KFEntity* player, KFData* kfdata );
 
         // 更新公共数据
-        void UpdatePublicData( uint64 playerid, MapString& values );
-        void UpdatePublicData( KFEntity* player, MapString& values );
+        void UpdatePublicData( uint64 playerid, StringMap& values );
+        void UpdatePublicData( KFEntity* player, StringMap& values );
     protected:
         // 查询玩家基本数据
         __KF_MESSAGE_FUNCTION__( HandleQueryBasicReq );

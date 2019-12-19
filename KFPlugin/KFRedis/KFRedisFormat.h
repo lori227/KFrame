@@ -36,7 +36,7 @@ namespace KFrame
     };
 
     template<>
-    inline std::string KFRedisFormat::ToString( const MapString& value )
+    inline std::string KFRedisFormat::ToString( const StringMap& value )
     {
         std::stringstream ss;
         for ( auto& iter : value )
@@ -55,7 +55,7 @@ namespace KFrame
     }
 
     template<>
-    inline std::string KFRedisFormat::ToString( const VectorString& value )
+    inline std::string KFRedisFormat::ToString( const StringVector& value )
     {
         std::stringstream ss;
         for ( auto& iter : value )
@@ -67,7 +67,7 @@ namespace KFrame
     }
 
     template<>
-    inline std::string KFRedisFormat::ToString( const ListString& value )
+    inline std::string KFRedisFormat::ToString( const StringList& value )
     {
         std::stringstream ss;
         for ( auto& iter : value )

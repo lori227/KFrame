@@ -25,6 +25,18 @@ namespace KFrame
 
         // 重置数量
         virtual void Resize( uint32 size );
+
+        // 是否达到了最大值
+        virtual bool IsFull();
+
+        // 获得空位置
+        virtual uint32 GetEmpty();
+
+        // 获得索引位置
+        virtual uint32 GetIndex( uint64 value );
+
+        // 添加数值
+        virtual bool Insert( uint64 value );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         virtual KFData* First();
         virtual KFData* Next();
@@ -39,6 +51,7 @@ namespace KFrame
         virtual bool Add( uint64 key, const std::string& dataname, KFData* data );
 
         virtual bool Remove( uint64 key );
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // 格式化成字串
         virtual std::string ToString();

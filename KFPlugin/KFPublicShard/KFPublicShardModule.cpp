@@ -33,7 +33,7 @@ namespace KFrame
         auto playerid = __ROUTE_SEND_ID__;
         auto pbdata = &kfmsg.pbdata();
 
-        MapString values;
+        StringMap values;
         __PROTO_TO_MAP__( pbdata, values );
         _public_redis->Update( values, "hmset {}:{}", __STRING__( public ), playerid );
 

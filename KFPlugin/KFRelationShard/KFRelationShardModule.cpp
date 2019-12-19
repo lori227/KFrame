@@ -34,7 +34,7 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFRelationShardModule::MapStringToPBPlayer( MapString& values, uint64 relationid, KFMsg::PBRelation* pbrelation )
+    void KFRelationShardModule::MapStringToPBPlayer( StringMap& values, uint64 relationid, KFMsg::PBRelation* pbrelation )
     {
         pbrelation->set_playerid( relationid );
 
@@ -45,7 +45,7 @@ namespace KFrame
         }
     }
 
-    void KFRelationShardModule::MapStringToPBRelation( MapString& values, KFMsg::PBRelation* pbrelation, bool newadd )
+    void KFRelationShardModule::MapStringToPBRelation( StringMap& values, KFMsg::PBRelation* pbrelation, bool newadd )
     {
         auto pbdata = pbrelation->mutable_relationdata();
         for ( auto& iter : values )
@@ -137,7 +137,7 @@ namespace KFrame
             return;
         }
 
-        ListString removes;
+        StringList removes;
 
         KFMsg::S2SQueryRelationInviteToGameAck ack;
         ack.set_playerid( kfmsg.playerid() );
@@ -239,7 +239,7 @@ namespace KFrame
                 auto pbinvite = ack.mutable_pbinvite();
                 MapStringToPBPlayer( queryselfdata->_value, selfid, pbinvite );
 
-                MapString friendvaluse;
+                StringMap friendvaluse;
                 friendvaluse[ __STRING__( message ) ] = kfmsg.message();
                 MapStringToPBRelation( friendvaluse, pbinvite, true );
                 _kf_route->SendToPlayer( selfid, serverid, kfmsg.playerid(), KFMsg::S2S_APPLY_ADD_RELATION_TO_GAME_ACK, &ack, true );
@@ -332,7 +332,7 @@ namespace KFrame
                 auto pbrelation = ack.mutable_pbrelation();
                 MapStringToPBPlayer( querydata->_value, relationid, pbrelation );
 
-                MapString friendvalues;
+                StringMap friendvalues;
                 MapStringToPBRelation( friendvalues, pbrelation, true );
                 _kf_route->SendToPlayer( playerid, queryserverid->_value, playerid, KFMsg::S2S_ADD_RELATION_TO_GAME_ACK, &ack, true );
             }

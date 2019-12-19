@@ -57,7 +57,7 @@ namespace KFrame
 
         // 替换字串
         static void ReplaceString( std::string& srcstring, const std::string& strold, const std::string& strnew );
-        static void ReplaceString( std::string& srcstring, const std::string& strold, const VectorString& params );
+        static void ReplaceString( std::string& srcstring, const std::string& strold, const StringVector& params );
 
         // 删除一个字符串中的指定字符串
         static bool DelString( std::string& srcstring, const std::string& delstr, std::string& strnew );
@@ -69,10 +69,10 @@ namespace KFrame
         static std::string FormatConfigFile( const std::string& filename, uint32 channel, uint32 service );
         ////////////////////////////////////////////////////////////////////////////////////////////////
         // 获得map中最大的值
-        static uint32 GetMaxMapValue( MapUInt32& mapvalues, uint32 value );
+        static uint32 GetMaxMapValue( UInt32Map& mapvalues, uint32 value );
 
         // 按权重随机map
-        static uint32 RandMapValue( MapUInt32& mapvalues, uint32 totalweight, uint32 rand );
+        static uint32 RandMapValue( UInt32Map& mapvalues, uint32 totalweight, uint32 rand );
 
     };
 }

@@ -76,10 +76,10 @@ namespace KFrame
 
     void KFDeployServerModule::UpdateAgentToDatabase( KFAgentData* kfagent, uint32 status )
     {
-        MapString keyvalue;
+        StringMap keyvalue;
         keyvalue[ __STRING__( localip ) ] = kfagent->_local_ip;
 
-        MapString updatevalue;
+        StringMap updatevalue;
         updatevalue[ __STRING__( status ) ] = __TO_STRING__( status );
         updatevalue[ __STRING__( port ) ] = __TO_STRING__( kfagent->_port );
         updatevalue[ __STRING__( service ) ] = kfagent->_service;
@@ -90,7 +90,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SDeployToolDeleteMySQLReq );
 
-        MapString values;
+        StringMap values;
         auto pbkeys = kfmsg.keys();
         for ( auto iter = pbkeys.begin(); iter != pbkeys.end(); ++iter )
         {
@@ -109,7 +109,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SDeployToolExecuteMySQLReq );
 
-        MapString values;
+        StringMap values;
         auto pbvalues = kfmsg.values();
         for ( auto iter = pbvalues.begin(); iter != pbvalues.end(); ++iter )
         {
@@ -129,7 +129,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SDeployToolQueryMySQLReq );
 
-        MapString keys;
+        StringMap keys;
         auto pbkeys = kfmsg.keys();
         for ( auto iter = pbkeys.begin(); iter != pbkeys.end(); ++iter )
         {
@@ -172,7 +172,7 @@ namespace KFrame
             auto toolid = 0u;
             if ( kfqueryid->_value == 0u )
             {
-                MapString values;
+                StringMap values;
                 values[ "toolip" ] = kfmsg.ip();
                 _mysql_driver->Insert( "tool", values );
 

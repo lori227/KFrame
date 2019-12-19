@@ -99,14 +99,11 @@ namespace KFrame
         // 领取邮件奖励
         void ReceiveMailReward( KFEntity* player, uint64 id );
 
-        // 序列化邮件
-        KFData* ParsePBMailToData( const KFMsg::PBMail* pbmail, const KFDataSetting* kfsetting );
-
         // 格式化邮件内容
-        MapString& FormatMailData( KFEntity* sender, const KFMailSetting* kfsetting, const KFElements* kfelements );
+        StringMap& FormatMailData( KFEntity* sender, const KFMailSetting* kfsetting, const KFElements* kfelements );
 
         // 发送添加邮件
-        bool SendAddMailToShard( uint64 sendid, uint32 flag, uint64 recvid, const MapString& maildata );
+        bool SendAddMailToShard( uint64 sendid, uint32 flag, uint64 recvid, const StringMap& maildata );
     };
 }
 

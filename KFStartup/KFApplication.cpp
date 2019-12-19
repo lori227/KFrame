@@ -38,7 +38,7 @@ namespace KFrame
 
     int KFApplication::main( const std::vector< std::string >& args )
     {
-        MapString params;
+        StringMap params;
         for ( auto arg : args )
         {
             auto key = KFUtility::SplitString( arg, "=" );

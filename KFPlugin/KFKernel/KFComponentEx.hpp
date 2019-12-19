@@ -72,7 +72,7 @@ namespace KFrame
         virtual KFEntity* NextEntity();
 
         // 获得属性列表
-        virtual VectorString& GetDataList( const std::string& dataname );
+        virtual StringVector& GetDataList( const std::string& dataname );
 
         // 获得类配置
         virtual const KFClassSetting* FindClassSetting();
@@ -203,6 +203,7 @@ namespace KFrame
         void DeleteEntity( KFEntity* kfentity );
 
         // 格式化数据Key
+        const DataKeyType& FormatDataKey( KFData* kfdata );
         const DataKeyType& FormatDataKey( const std::string& parentname, const std::string& dataname );
     public:
         // 对象实例列表

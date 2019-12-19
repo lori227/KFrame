@@ -126,7 +126,7 @@ void CAddServerDlg::InitDialog()
 void CAddServerDlg::OnBnClickedButtonAddServer()
 {
     // TODO: 在此添加控件通知处理程序代码
-    MapString values;
+    StringMap values;
 
     CString strtext;
     _combo_name.GetWindowTextA( strtext );

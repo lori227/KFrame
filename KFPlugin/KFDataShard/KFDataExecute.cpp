@@ -202,7 +202,7 @@ namespace KFrame
             return false;
         }
 
-        MapString values;
+        StringMap values;
         values[ __STRING__( data ) ] = playerdata;
         values[ __STRING__( id ) ] = __TO_STRING__( playerid );
 

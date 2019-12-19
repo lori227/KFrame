@@ -82,7 +82,7 @@ namespace KFrame
         }
     }
 
-    void KFUtility::ReplaceString( std::string& srcstring, const std::string& strold, const VectorString& params )
+    void KFUtility::ReplaceString( std::string& srcstring, const std::string& strold, const StringVector& params )
     {
         size_t pos = 0;
         auto oldlength = strold.size();
@@ -170,7 +170,7 @@ namespace KFrame
         return configfile;
     }
 
-    uint32 KFUtility::GetMaxMapValue( MapUInt32& mapvalues, uint32 value )
+    uint32 KFUtility::GetMaxMapValue( UInt32Map& mapvalues, uint32 value )
     {
         auto findvalue = 0u;
         for ( auto& iter : mapvalues )
@@ -186,7 +186,7 @@ namespace KFrame
         return findvalue;
     }
 
-    uint32 KFUtility::RandMapValue( MapUInt32& mapvalues, uint32 totalweight, uint32 rand )
+    uint32 KFUtility::RandMapValue( UInt32Map& mapvalues, uint32 totalweight, uint32 rand )
     {
         if ( totalweight > 0u )
         {

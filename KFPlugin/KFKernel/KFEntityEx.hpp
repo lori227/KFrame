@@ -43,12 +43,26 @@ namespace KFrame
         // 创建子属性
         virtual KFData* CreateData( const std::string& dataname );
         virtual KFData* CreateData( const std::string& dataname, uint64 key );
+
+        virtual KFData* CreateData( KFData* kfdata );
+        virtual KFData* CreateData( const KFDataSetting* datasetting );
+
+        // 销毁属性
+        virtual void DestroyData( KFData* kfdata );
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
-        // 添加属性
+        // record 添加属性
         virtual bool AddData( KFData* kfparent, KFData* kfdata, bool callback = true );
         virtual bool AddData( KFData* kfparent, uint64 key, KFData* kfdata, bool callback = true );
         virtual bool AddData( const std::string& parentname, uint64 key, KFData* kfdata, bool callback = true );
+
+        // array 添加数组
+        virtual void AddData( KFData* kfdata, const UInt32List& inlist );
+        virtual void AddData( KFData* kfdata, const std::string& dataname, const UInt32List& inlist );
+        virtual void AddData( KFData* kfdata, const UInt32Vector& inlist );
+        virtual void AddData( KFData* kfdata, const std::string& dataname, const UInt32Vector& inlist );
+        virtual void AddData( KFData* kfdata, const UInt32Set& inlist );
+        virtual void AddData( KFData* kfdata, const std::string& dataname, const UInt32Set& inlist );
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
         // 清空属性

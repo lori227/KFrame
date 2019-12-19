@@ -169,7 +169,7 @@ namespace KFrame
         return true;
     }
 
-    void KFConditionModule::AddCondition( KFData* kfconditionobject, const VectorUInt32& conditionlist, uint32 conditiontype )
+    void KFConditionModule::AddCondition( KFData* kfconditionobject, const UInt32Vector& conditionlist, uint32 conditiontype )
     {
         if ( conditionlist.empty() )
         {

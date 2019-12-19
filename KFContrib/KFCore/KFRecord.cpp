@@ -207,7 +207,7 @@ namespace KFrame
 
     std::string KFRecord::ToString()
     {
-        MapString values;
+        StringMap values;
         ToMap( values );
 
         __JSON_OBJECT_DOCUMENT__( kfjson );
@@ -219,12 +219,12 @@ namespace KFrame
     {
         __JSON_PARSE_STRING__( kfjson, value );
 
-        MapString values;
+        StringMap values;
         __JSON_TO_MAP__( kfjson, values );
         FromMap( values );
     }
 
-    void KFRecord::ToMap( MapString& values )
+    void KFRecord::ToMap( StringMap& values )
     {
         for ( auto& iter : _data._objects )
         {
@@ -235,7 +235,7 @@ namespace KFrame
         }
     }
 
-    void KFRecord::FromMap( const MapString& values )
+    void KFRecord::FromMap( const StringMap& values )
     {
         __LOG_ERROR__( "record can't copy from map!" );
 

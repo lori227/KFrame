@@ -91,11 +91,11 @@ namespace KFrame
     {
     public:
         std::string _command;
-        VectorString  _params;
+        StringVector  _params;
     };
 
     typedef std::function<void()> KFRunFunction;
-    typedef std::function<void( const VectorString& )> KFCmdFunction;
+    typedef std::function<void( const StringVector& )> KFCmdFunction;
     //////////////////////////////////////////////////////////////////////
     class KFAppSetting;
     class KFPluginManage : public KFSingleton< KFPluginManage >
@@ -171,7 +171,7 @@ namespace KFrame
         }
         /////////////////////////////////////////////////////////////////
         template< class T >
-        void RegisterCommandFunction( const std::string& command, T* object, void ( T::*handle )( const VectorString& ) )
+        void RegisterCommandFunction( const std::string& command, T* object, void ( T::*handle )( const StringVector& ) )
         {
             auto kffunction = _command_functions.Create( command );
             kffunction->_function = std::bind( handle, object, std::placeholders::_1 );

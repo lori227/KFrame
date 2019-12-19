@@ -21,7 +21,7 @@
 
 namespace KFrame
 {
-    typedef std::function<void( KFRobot*, const VectorString& )> KFRobotCmdFunction;
+    typedef std::function<void( KFRobot*, const StringVector& )> KFRobotCmdFunction;
     class KFRobotModule : public KFRobotInterface
     {
     public:
@@ -74,11 +74,11 @@ namespace KFrame
         void HandleNetMessage( const Route& route, uint32 msgid, const char* data, uint32 length );
 
         // 处理机器人命令
-        void ProcessRobotCommand( const VectorString& params );
-        void ProcessRobotCommand( KFRobot* robot, const VectorString& params );
+        void ProcessRobotCommand( const StringVector& params );
+        void ProcessRobotCommand( KFRobot* robot, const StringVector& params );
 
         // 设置名字
-        void CommandSetName( KFRobot* robot, const VectorString& params );
+        void CommandSetName( KFRobot* robot, const StringVector& params );
 
     private:
         // 机器人序列号

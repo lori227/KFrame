@@ -83,7 +83,7 @@ namespace KFrame
         }
 
         // 邮件内容
-        MapString values;
+        StringMap values;
         __JSON_TO_MAP__( request, values );
 
         if ( playerlist.empty() )
@@ -140,7 +140,7 @@ namespace KFrame
                 continue;
             }
 
-            ListString overduelist;
+            StringList overduelist;
             for ( auto& strmailid : kfresult->_value )
             {
                 auto stringresult = _mail_driver->QueryString( "hget {}:{} {}", __STRING__( mail ), strmailid, __STRING__( id ) );
@@ -211,7 +211,7 @@ namespace KFrame
         KFMsg::S2SQueryMailAck ack;
         ack.set_playerid( kfmsg.playerid() );
 
-        ListString overduelist;
+        StringList overduelist;
         for ( auto& mailiter : mailkeylist->_value )
         {
             auto& strmailid = mailiter.first;
@@ -264,7 +264,7 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SAddMailReq );
 
         // 邮件数据
-        MapString maildata;
+        StringMap maildata;
         auto pbmail = &kfmsg.pbmail().data();
         for ( auto iter = pbmail->begin(); iter != pbmail->end(); ++iter )
         {
@@ -281,7 +281,7 @@ namespace KFrame
         }
     }
 
-    uint64 KFMailShardModule::AddMail( uint32 flag, uint64 objectid, MapString& maildata )
+    uint64 KFMailShardModule::AddMail( uint32 flag, uint64 objectid, StringMap& maildata )
     {
         // 创建一个邮件id
         auto uint64result = _mail_driver->Execute( "incr {}", __STRING__( mailidcreater ) );

@@ -73,7 +73,7 @@ namespace KFrame
         }
 
         // 随机( 排除列表中的项目 )
-        const T* Rand( const SetUInt32& list, bool exclude ) const
+        const T* Rand( const UInt32Set& list, bool exclude ) const
         {
             // 新的权重列表
             uint32 totalweight = 0u;
@@ -118,7 +118,7 @@ namespace KFrame
         }
 
         // 随机( 添加列表中的项目 )
-        const T* Rand( MapUInt32& includelist ) const
+        const T* Rand( UInt32Map& includelist ) const
         {
             // 新的权重列表
             uint32 totalweight = _total_weight;
@@ -147,7 +147,7 @@ namespace KFrame
         // 随机( 添加列表中的项目 )
         const T* Rand( uint32 id, uint32 weight ) const
         {
-            MapUInt32 includelist;
+            UInt32Map includelist;
             includelist[ id ] = weight;
             return Rand( includelist );
         }

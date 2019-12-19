@@ -9,7 +9,7 @@ namespace KFrame
     {
     public:
         // 解析条件列表
-        static uint32 ParseConditionList( std::string strcondition, VectorUInt32& conditionlist )
+        static uint32 ParseConditionList( std::string strcondition, UInt32Vector& conditionlist )
         {
             conditionlist.clear();
 
@@ -40,8 +40,8 @@ namespace KFrame
             return conditiontype;
         }
 
-        // 读取MapUInt32
-        static void ParseMapUInt32( std::string strvalue, MapUInt32& values )
+        // 读取UInt32Map
+        static void ParseMapUInt32( std::string strvalue, UInt32Map& values )
         {
             values.clear();
             while ( !strvalue.empty() )

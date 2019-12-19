@@ -47,19 +47,35 @@ namespace KFrame
             return nullptr;
         }
 
-        return KFDataFactory::CreateData( kfdata->_data_setting );
+        return CreateData( kfdata->_data_setting );
     }
 
     KFData* KFEntityEx::CreateData( const std::string& dataname, uint64 key )
     {
         auto kfdata = CreateData( dataname );
-        if ( kfdata == nullptr )
+        if ( kfdata != nullptr )
         {
-            return nullptr;
+            kfdata->SetKeyID( key );
         }
 
-        kfdata->SetKeyID( key );
         return kfdata;
+    }
+
+    KFData* KFEntityEx::CreateData( KFData* kfdata )
+    {
+        return CreateData( kfdata->_data_setting );
+    }
+
+    KFData* KFEntityEx::CreateData( const KFDataSetting* datasetting )
+    {
+        auto kfdata = KFDataFactory::CreateData( datasetting );
+        kfdata->InitData();
+        return kfdata;
+    }
+
+    void KFEntityEx::DestroyData( KFData* kfdata )
+    {
+        KFDataFactory::Release( kfdata );
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -182,7 +198,7 @@ namespace KFrame
         auto kfobject = kfparent->Find( key );
         if ( kfobject == nullptr )
         {
-            kfobject = KFDataFactory::CreateData( kfparent->_data_setting );
+            kfobject = CreateData( kfparent->_data_setting );
             value = kfobject->Operate( dataname, operate, value );
             AddData( kfparent, key, kfobject );
             return value;
@@ -286,6 +302,64 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
+    void KFEntityEx::AddData( KFData* kfdata, const UInt32List& inlist )
+    {
+        for ( auto value : inlist )
+        {
+            KFKernelModule::Instance()->AddArray( kfdata, value );
+        }
+    }
+
+    void KFEntityEx::AddData( KFData* kfdata, const std::string& dataname, const UInt32List& inlist )
+    {
+        auto kfarray = kfdata->Find( dataname );
+        if ( kfarray == nullptr )
+        {
+            return;
+        }
+
+        AddData( kfarray, inlist );
+    }
+
+    void KFEntityEx::AddData( KFData* kfdata, const UInt32Vector& inlist )
+    {
+        for ( auto value : inlist )
+        {
+            KFKernelModule::Instance()->AddArray( kfdata, value );
+        }
+    }
+
+    void KFEntityEx::AddData( KFData* kfdata, const std::string& dataname, const UInt32Vector& inlist )
+    {
+        auto kfarray = kfdata->Find( dataname );
+        if ( kfarray == nullptr )
+        {
+            return;
+        }
+
+        AddData( kfarray, inlist );
+    }
+
+    void KFEntityEx::AddData( KFData* kfdata, const UInt32Set& inlist )
+    {
+        for ( auto value : inlist )
+        {
+            KFKernelModule::Instance()->AddArray( kfdata, value );
+        }
+    }
+
+    void KFEntityEx::AddData( KFData* kfdata, const std::string& dataname, const UInt32Set& inlist )
+    {
+        auto kfarray = kfdata->Find( dataname );
+        if ( kfarray == nullptr )
+        {
+            return;
+        }
+
+        AddData( kfarray, inlist );
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFEntityEx::RemoveData( const std::string& parentname, uint64 key, bool callback )
     {
         auto kfparent = Find( parentname );
@@ -323,7 +397,7 @@ namespace KFrame
 
     bool KFEntityEx::CleanData( KFData* kfparent, bool callback )
     {
-        ListUInt64 keys;
+        UInt64List keys;
         for ( auto kfdata = kfparent->First(); kfdata != nullptr; kfdata = kfparent->Next() )
         {
             keys.push_back( kfdata->GetKeyID() );

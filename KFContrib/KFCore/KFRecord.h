@@ -50,8 +50,8 @@ namespace KFrame
         virtual void FromString( const std::string& value );
 
         // Map的特殊操作
-        virtual void ToMap( MapString& values );
-        virtual void FromMap( const MapString& values );
+        virtual void ToMap( StringMap& values );
+        virtual void FromMap( const StringMap& values );
 
     protected:
         // 列表

@@ -60,7 +60,7 @@ namespace KFrame
         virtual KFEntity* NextEntity() = 0;
 
         // 获得属性列表
-        virtual VectorString& GetDataList( const std::string& dataname ) = 0;
+        virtual StringVector& GetDataList( const std::string& dataname ) = 0;
 
         // 获得类配置
         virtual const KFClassSetting* FindClassSetting() = 0;

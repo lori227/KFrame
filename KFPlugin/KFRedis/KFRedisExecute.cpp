@@ -160,7 +160,7 @@ namespace KFrame
     }
 
     // todo: 发生错误是否需要回滚
-    KFResult< voidptr >::UniqueType KFRedisWriteExecute::Pipeline( const ListString& commands )
+    KFResult< voidptr >::UniqueType KFRedisWriteExecute::Pipeline( const StringList& commands )
     {
         __NEW_RESULT__( voidptr );
         if ( _redis_context == nullptr )
@@ -239,9 +239,9 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< MapString >::UniqueType KFRedisReadExecute::MapExecute( const std::string& strsql )
+    KFResult< StringMap >::UniqueType KFRedisReadExecute::MapExecute( const std::string& strsql )
     {
-        __NEW_RESULT__( MapString );
+        __NEW_RESULT__( StringMap );
         auto redisreply = TryExecute( kfresult.get(), strsql );
         if ( redisreply != nullptr )
         {
@@ -262,9 +262,9 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< VectorString >::UniqueType KFRedisReadExecute::VectorExecute( const std::string& strsql )
+    KFResult< StringVector >::UniqueType KFRedisReadExecute::VectorExecute( const std::string& strsql )
     {
-        __NEW_RESULT__( VectorString );
+        __NEW_RESULT__( StringVector );
         auto redisreply = TryExecute( kfresult.get(), strsql );
         if ( redisreply != nullptr )
         {
@@ -279,9 +279,9 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< ListString >::UniqueType KFRedisReadExecute::ListExecute( const std::string& strsql )
+    KFResult< StringList >::UniqueType KFRedisReadExecute::ListExecute( const std::string& strsql )
     {
-        __NEW_RESULT__( ListString );
+        __NEW_RESULT__( StringList );
         auto redisreply = TryExecute( kfresult.get(), strsql );
         if ( redisreply != nullptr )
         {
@@ -296,9 +296,9 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< ListString >::UniqueType KFRedisReadExecute::ListPipelineExecute( const ListString& commands )
+    KFResult< StringList >::UniqueType KFRedisReadExecute::ListPipelineExecute( const StringList& commands )
     {
-        __NEW_RESULT__( ListString );
+        __NEW_RESULT__( StringList );
         if ( _redis_context == nullptr )
         {
             kfresult->SetResult( KFEnum::Error );
@@ -341,9 +341,9 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< ListMapString >::UniqueType KFRedisReadExecute::ListMapPipelineExecute( const ListString& commands )
+    KFResult< StringListMap >::UniqueType KFRedisReadExecute::ListMapPipelineExecute( const StringList& commands )
     {
-        __NEW_RESULT__( ListMapString );
+        __NEW_RESULT__( StringListMap );
         if ( _redis_context == nullptr )
         {
             kfresult->SetResult( KFEnum::Error );
@@ -374,7 +374,7 @@ namespace KFrame
 
             if ( reply != nullptr )
             {
-                MapString values;
+                StringMap values;
                 for ( size_t i = 0; i < reply->elements; i += 2 )
                 {
                     auto keyelement = reply->element[ i ];

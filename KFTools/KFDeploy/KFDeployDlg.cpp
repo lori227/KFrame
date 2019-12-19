@@ -609,12 +609,12 @@ __KF_MESSAGE_FUNCTION__( CKFDeployDlg::HandleDeployLogToToolAck )
 
 void CKFDeployDlg::QueryAgentData()
 {
-    MapString keys;
+    StringMap keys;
     keys[ __STRING__( serverid ) ] = _deploy_manage->_connect_deploy_strid;
     QueryTableValues( __STRING__( agent ), keys );
 }
 
-void CKFDeployDlg::QueryTableValues( const std::string& table, MapString& keys )
+void CKFDeployDlg::QueryTableValues( const std::string& table, StringMap& keys )
 {
     if ( _deploy_manage->_connect_deploy_id == _invalid_int )
     {
@@ -632,7 +632,7 @@ void CKFDeployDlg::QueryTableValues( const std::string& table, MapString& keys )
     SendDeployMessage( KFMsg::S2S_DEPLOY_TOOL_QUERY_MYSQL_REQ, &req );
 }
 
-void CKFDeployDlg::DeleteTableValues( const std::string& table, MapString& keys )
+void CKFDeployDlg::DeleteTableValues( const std::string& table, StringMap& keys )
 {
     KFMsg::S2SDeployToolDeleteMySQLReq req;
     req.set_table( table );
@@ -645,7 +645,7 @@ void CKFDeployDlg::DeleteTableValues( const std::string& table, MapString& keys 
     SendDeployMessage( KFMsg::S2S_DEPLOY_TOOL_DELETE_MYSQL_REQ, &req );
 }
 
-void CKFDeployDlg::ExecuteTableValues( const std::string& table, MapString& values )
+void CKFDeployDlg::ExecuteTableValues( const std::string& table, StringMap& values )
 {
     KFMsg::S2SDeployToolExecuteMySQLReq req;
     req.set_table( table );
@@ -823,7 +823,7 @@ void CKFDeployDlg::OnMenuDeleteAgent()
         return;
     }
 
-    MapString keys;
+    StringMap keys;
     keys[ __STRING__( strappid ) ] = strtext.GetBuffer();
     DeleteTableValues( __STRING__( agent ), keys );
 }
@@ -860,7 +860,7 @@ void CKFDeployDlg::QueryServerList()
 
     for ( auto& table : tables )
     {
-        MapString keys;
+        StringMap keys;
         keys[ __STRING__( deployid ) ] = _deploy_manage->_connect_deploy_strid;
         QueryTableValues( table, keys );
     }
@@ -1012,7 +1012,7 @@ void CKFDeployDlg::OnMenuDeleteServerList()
     auto stragentid = strtext.GetBuffer();
     auto table = _deploy_manage->GetTableName( stragentid );
 
-    MapString keys;
+    StringMap keys;
     keys[ __STRING__( appid ) ] = appid;
     DeleteTableValues( table, keys );
 }
@@ -1278,7 +1278,7 @@ void CKFDeployDlg::OnBnClickedButtonQueryVersion()
     _version_dlg->ShowWindow( SW_SHOW );
 
     // 查询
-    MapString keys;
+    StringMap keys;
     QueryTableValues( __STRING__( version ), keys );
 }
 
@@ -1296,7 +1296,7 @@ void CKFDeployDlg::OnBnClickedButtonQueryFile()
     _file_dlg->ShowWindow( SW_SHOW );
 
     // 查询
-    MapString keys;
+    StringMap keys;
     QueryTableValues( __STRING__( file ), keys );
 }
 
@@ -1392,7 +1392,7 @@ void CKFDeployDlg::OnBnClickedButtonQueryResource()
     _resource_dlg->ShowWindow( SW_SHOW );
 
     // 查询
-    MapString keys;
+    StringMap keys;
     QueryTableValues( __STRING__( resource ), keys );
 }
 
@@ -1410,6 +1410,6 @@ void CKFDeployDlg::OnBnClickedButtonQueryPlugin()
     _plugin_dlg->ShowWindow( SW_SHOW );
 
     // 查询
-    MapString keys;
+    StringMap keys;
     QueryTableValues( __STRING__( plugin ), keys );
 }

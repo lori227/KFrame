@@ -20,7 +20,7 @@ namespace KFrame
     __KF_ENTER_PLAYER_FUNCTION__( KFResetModule::OnEnterResetModule )
     {
         // 把列表中不存在的时间数据删除掉
-        ListUInt32 removes;
+        UInt32List removes;
         auto kftimerecord = player->Find( __STRING__( time ) );
         for ( auto kftime = kftimerecord->First(); kftime != nullptr; kftime = kftimerecord->Next() )
         {

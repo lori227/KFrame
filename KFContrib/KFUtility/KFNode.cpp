@@ -145,7 +145,7 @@ namespace KFrame
         return atof( attribute->value() );
     }
 
-    void KFNode::GetKeyList( ListString& outlist )
+    void KFNode::GetKeyList( StringList& outlist )
     {
         outlist.clear();
 

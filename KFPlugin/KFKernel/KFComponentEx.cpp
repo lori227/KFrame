@@ -74,9 +74,9 @@ namespace KFrame
         }
     }
 
-    VectorString& KFComponentEx::GetDataList( const std::string& dataname )
+    StringVector& KFComponentEx::GetDataList( const std::string& dataname )
     {
-        static VectorString _result;
+        static StringVector _result;
         _result.clear();
 
         auto classsetting = _data_setting->_class_setting;
@@ -379,6 +379,20 @@ namespace KFrame
         return _data_key;
     }
 
+    const DataKeyType& KFComponentEx::FormatDataKey( KFData* kfdata )
+    {
+        auto kfparent = kfdata->GetParent();
+        if ( kfparent->_data_setting->_type == KFDataDefine::Type_Array )
+        {
+            if ( kfparent->GetParent() != nullptr )
+            {
+                return FormatDataKey( kfparent->GetParent()->_data_setting->_logic_name, kfparent->_data_setting->_logic_name );
+            }
+        }
+
+        return FormatDataKey( kfparent->_data_setting->_logic_name, kfdata->_data_setting->_logic_name );
+    }
+
     void KFComponentEx::BindUpdateDataFunction( const std::string& module, const std::string& parentname, const std::string& dataname, KFUpdateDataFunction& function )
     {
         auto& datakey = FormatDataKey( parentname, dataname );
@@ -570,7 +584,7 @@ namespace KFrame
         }
 
         // 注册的函数
-        auto& findkey = FormatDataKey( kfdata->GetParent()->_data_setting->_logic_name, kfdata->_data_setting->_logic_name );
+        auto& findkey = FormatDataKey( kfdata );
         auto kfdatafunction = _update_data_function.Find( findkey );
         if ( kfdatafunction != nullptr )
         {
@@ -602,7 +616,7 @@ namespace KFrame
         }
 
         // 注册的函数
-        auto& findkey = FormatDataKey( kfdata->GetParent()->_data_setting->_logic_name, kfdata->_data_setting->_logic_name );
+        auto& findkey = FormatDataKey( kfdata );
         auto kfdatafunction = _update_string_function.Find( findkey );
         if ( kfdatafunction != nullptr )
         {

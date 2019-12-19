@@ -91,22 +91,22 @@ namespace KFrame
         return _read_execute->UInt64Execute( strsql );
     }
 
-    KFResult< MapString >::UniqueType KFRedisLogic::MapExecute( const std::string& strsql )
+    KFResult< StringMap >::UniqueType KFRedisLogic::MapExecute( const std::string& strsql )
     {
         return _read_execute->MapExecute( strsql );
     }
 
-    KFResult< VectorString >::UniqueType KFRedisLogic::VectorExecute( const std::string& strsql )
+    KFResult< StringVector >::UniqueType KFRedisLogic::VectorExecute( const std::string& strsql )
     {
         return _read_execute->VectorExecute( strsql );
     }
 
-    KFResult< ListString >::UniqueType KFRedisLogic::ListExecute( const std::string& strsql )
+    KFResult< StringList >::UniqueType KFRedisLogic::ListExecute( const std::string& strsql )
     {
         return _read_execute->ListExecute( strsql );
     }
 
-    KFResult< ListString >::UniqueType KFRedisLogic::ListPipelineExecute()
+    KFResult< StringList >::UniqueType KFRedisLogic::ListPipelineExecute()
     {
         auto kfresult = _read_execute->ListPipelineExecute( _commands );
         _commands.clear();
@@ -114,7 +114,7 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< ListMapString >::UniqueType KFRedisLogic::ListMapPipelineExecute()
+    KFResult< StringListMap >::UniqueType KFRedisLogic::ListMapPipelineExecute()
     {
         auto kfresult = _read_execute->ListMapPipelineExecute( _commands );
         _commands.clear();

@@ -106,7 +106,7 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 查询集合
         template< class KeyType >
-        typename KFResult< KFDBValue >::UniqueType QueryRecord( const std::string& table, const KeyType& key, const ListString& fields )
+        typename KFResult< KFDBValue >::UniqueType QueryRecord( const std::string& table, const KeyType& key, const StringList& fields )
         {
             auto fullname = __FORMAT__( "{}.{}", _database, table );
             QueryRequest request( fullname, QueryRequest::QUERY_DEFAULT );

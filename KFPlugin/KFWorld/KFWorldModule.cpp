@@ -241,7 +241,7 @@ namespace KFrame
 
     void KFWorldModule::UpdateOnlineData( uint64 playerid, uint64 gameid )
     {
-        MapString values;
+        StringMap values;
         values[ __STRING__( game ) ] = __TO_STRING__( gameid );
         values[ __STRING__( world ) ] = __TO_STRING__( KFGlobal::Instance()->_app_id->GetId() );
         _auth_redis->Update( values, "hmset {}:{}", __STRING__( online ), playerid );

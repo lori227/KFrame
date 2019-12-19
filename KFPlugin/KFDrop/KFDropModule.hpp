@@ -34,7 +34,7 @@ namespace KFrame
         // 掉落
         virtual DropDataList& Drop( KFEntity* player, uint32 dropid, const char* function, uint32 line );
         virtual DropDataList& Drop( KFEntity* player, uint32 dropid, const std::string& modulename, const char* function, uint32 line );
-        virtual DropDataList& Drop( KFEntity* player, const VectorUInt32& droplist, const std::string& modulename, const char* function, uint32 line );
+        virtual DropDataList& Drop( KFEntity* player, const UInt32Vector& droplist, const std::string& modulename, const char* function, uint32 line );
         virtual DropDataList& Drop( KFEntity* player, uint32 dropid, uint32 count, const std::string& modulename, const char* function, uint32 line );
 
     protected:
@@ -56,9 +56,9 @@ namespace KFrame
         void DropOverlayCondition( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist );
 
         // 掉落
-        void RandDropDataList( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist, const SetUInt32& excludelist );
-        void RandDropDataByWeight( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist, const SetUInt32& excludelist );
-        void RandDropDataByProbability( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist, const SetUInt32& excludelist );
+        void RandDropDataList( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist, const UInt32Set& excludelist );
+        void RandDropDataByWeight( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist, const UInt32Set& excludelist );
+        void RandDropDataByProbability( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist, const UInt32Set& excludelist );
 
         // 添加掉落返回数据
         void RandDropData( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist, const KFDropGroupWeight* kfdropweight, const char* function, uint32 line );

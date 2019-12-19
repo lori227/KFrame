@@ -20,7 +20,7 @@ namespace KFrame
 
     protected:
         // 保存订单信息
-        bool SavePayData( const std::string& order, MapString& values );
+        bool SavePayData( const std::string& order, StringMap& values );
     };
 }
 

@@ -51,7 +51,7 @@ namespace KFrame
         // mapstring
         // redis 返回的键值对, 如hash表
         template< typename... P >
-        KFResult< MapString >::UniqueType QueryMap( const char* myfmt, P&& ... args )
+        KFResult< StringMap >::UniqueType QueryMap( const char* myfmt, P&& ... args )
         {
             auto strsql = __FORMAT__( myfmt, std::forward<P>( args )... );
             return MapExecute( strsql );
@@ -60,7 +60,7 @@ namespace KFrame
         // liststring
         // 返回的数组
         template< typename... P >
-        KFResult< ListString >::UniqueType QueryList( const char* myfmt, P&& ... args )
+        KFResult< StringList >::UniqueType QueryList( const char* myfmt, P&& ... args )
         {
             auto strsql = __FORMAT__( myfmt, std::forward<P>( args )... );
             return ListExecute( strsql );
@@ -69,7 +69,7 @@ namespace KFrame
         // vectorstring
         // 返回的数组
         template< typename... P >
-        KFResult< VectorString >::UniqueType QueryVector( const char* myfmt, P&& ... args )
+        KFResult< StringVector >::UniqueType QueryVector( const char* myfmt, P&& ... args )
         {
             auto strsql = __FORMAT__( myfmt, std::forward<P>( args )... );
             return VectorExecute( strsql );
@@ -100,14 +100,14 @@ namespace KFrame
         // 指令集
         // 返回string列表
         template< typename... P >
-        KFResult< ListString >::UniqueType PipelineList()
+        KFResult< StringList >::UniqueType PipelineList()
         {
             return ListPipelineExecute();
         }
 
         // 返回map列表
         template< typename... P >
-        KFResult< ListMapString >::UniqueType PipelineListMap()
+        KFResult< StringListMap >::UniqueType PipelineListMap()
         {
             return ListMapPipelineExecute();
         }
@@ -120,14 +120,14 @@ namespace KFrame
         // 查询数据库
         virtual KFResult< uint64 >::UniqueType UInt64Execute( const std::string& strsql ) = 0;
         virtual KFResult< std::string >::UniqueType StringExecute( const std::string& strsql ) = 0;
-        virtual KFResult< MapString >::UniqueType MapExecute( const std::string& strsql ) = 0;
-        virtual KFResult< ListString >::UniqueType ListExecute( const std::string& strsql ) = 0;
-        virtual KFResult< VectorString >::UniqueType VectorExecute( const std::string& strsql ) = 0;
+        virtual KFResult< StringMap >::UniqueType MapExecute( const std::string& strsql ) = 0;
+        virtual KFResult< StringList >::UniqueType ListExecute( const std::string& strsql ) = 0;
+        virtual KFResult< StringVector >::UniqueType VectorExecute( const std::string& strsql ) = 0;
 
         // 添加执行命令
         virtual void AppendCommand( const std::string& strsql ) = 0;
-        virtual KFResult< ListString >::UniqueType ListPipelineExecute() = 0;
-        virtual KFResult< ListMapString >::UniqueType ListMapPipelineExecute() = 0;
+        virtual KFResult< StringList >::UniqueType ListPipelineExecute() = 0;
+        virtual KFResult< StringListMap >::UniqueType ListMapPipelineExecute() = 0;
     };
 
     ///////////////////////////////////////////////////////////////////////////////

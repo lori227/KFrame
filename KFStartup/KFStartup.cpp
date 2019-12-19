@@ -98,7 +98,7 @@ namespace KFrame
         _kf_library.Clear();
     }
 
-    void KFStartup::ReloadPlugin( const VectorString& params )
+    void KFStartup::ReloadPlugin( const StringVector& params )
     {
         if ( params.size() < 3u )
         {

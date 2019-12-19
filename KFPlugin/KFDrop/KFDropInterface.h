@@ -15,7 +15,7 @@ namespace KFrame
         // 返回的DropDataList只包含掉落属性数据
         virtual DropDataList& Drop( KFEntity* player, uint32 dropid, const char* function, uint32 line ) = 0;
         virtual DropDataList& Drop( KFEntity* player, uint32 dropid, const std::string& modulename, const char* function, uint32 line ) = 0;
-        virtual DropDataList& Drop( KFEntity* player, const VectorUInt32& droplist, const std::string& modulename, const char* function, uint32 line ) = 0;
+        virtual DropDataList& Drop( KFEntity* player, const UInt32Vector& droplist, const std::string& modulename, const char* function, uint32 line ) = 0;
         virtual DropDataList& Drop( KFEntity* player, uint32 dropid, uint32 count, const std::string& modulename, const char* function, uint32 line ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 注册掉落逻辑

@@ -20,7 +20,7 @@ namespace KFrame
 
         // 完成条件
         uint32 _condition_type = 0u;
-        VectorUInt32 _unlock_condition;
+        UInt32Vector _unlock_condition;
     };
 
     class KFUnlockConfig : public KFConfigT< KFUnlockSetting >, public KFInstance< KFUnlockConfig >

@@ -56,8 +56,8 @@ namespace KFrame
 
     protected:
         // 信息转换成好友信息
-        void MapStringToPBPlayer( MapString& values, uint64 friendid, KFMsg::PBRelation* pbrelation );
-        void MapStringToPBRelation( MapString& values, KFMsg::PBRelation* pbrelation, bool newadd );
+        void MapStringToPBPlayer( StringMap& values, uint64 friendid, KFMsg::PBRelation* pbrelation );
+        void MapStringToPBRelation( StringMap& values, KFMsg::PBRelation* pbrelation, bool newadd );
 
         // 格式化好友key
         std::string FormatRelationKey( uint64 firstid, uint64 secondid, const KFRelationSetting* kfsetting );

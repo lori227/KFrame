@@ -117,7 +117,7 @@ namespace KFrame
         std::string _title_text;
 
         // 启动参数
-        MapString _startup_params;
+        StringMap _startup_params;
         /////////////////////////////////////////////////////////////////////////////////
     private:
         // 版本

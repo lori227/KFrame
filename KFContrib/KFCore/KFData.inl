@@ -279,7 +279,52 @@ namespace KFrame
 
         return value;
     }
+    ///////////////////////////////////////////////////////////////////////////
+    template< class T >
+    void KFData::GetLists( T& outlist )
+    {
+        for ( auto kfchild = First(); kfchild != nullptr; kfchild = Next() )
+        {
+            auto value = kfchild->Get();
+            if ( value != 0u )
+            {
+                outlist.push_back( value );
+            }
+        }
+    }
 
+    template< class T >
+    void KFData::GetLists( const std::string& dataname, T& outlist )
+    {
+        auto kfdata = Find( dataname );
+        if ( kfdata != nullptr )
+        {
+            kfdata->GetLists( outlist );
+        }
+    }
+
+    template< class T >
+    void KFData::GetHashs( T& outlist )
+    {
+        for ( auto kfchild = First(); kfchild != nullptr; kfchild = Next() )
+        {
+            auto value = kfchild->Get();
+            if ( value != 0u )
+            {
+                outlist.insert( value );
+            }
+        }
+    }
+
+    template< class T >
+    void KFData::GetHashs( const std::string& dataname, T& outlist )
+    {
+        auto kfdata = Find( dataname );
+        if ( kfdata != nullptr )
+        {
+            kfdata->GetHashs( outlist );
+        }
+    }
     ///////////////////////////////////////////////////////////////////////////
     template<>
     inline std::string KFData::InvalidValue()

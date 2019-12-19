@@ -115,7 +115,7 @@ namespace KFrame
 
         try
         {
-            MapString keyvalue;
+            StringMap keyvalue;
             keyvalue[ __STRING__( agentid ) ] = KFGlobal::Instance()->_app_id->ToString();
             auto querydeploydata = _deploy_driver->Select( _deploy_table_name, keyvalue );
             if ( !querydeploydata->_value.empty() )
@@ -530,12 +530,12 @@ namespace KFrame
 
     void KFDeployAgentModule::UpdateDeployToDatabase( KFDeployData* deploydata )
     {
-        MapString updatevalues;
+        StringMap updatevalues;
         updatevalues[ __STRING__( shutdown ) ] = __TO_STRING__( deploydata->_is_shutdown ? 1 : 0 );
         updatevalues[ __STRING__( process ) ] = __TO_STRING__( deploydata->_process_id );
         updatevalues[ __STRING__( time ) ] = __TO_STRING__( deploydata->_startup_time );
 
-        MapString keyvalues;
+        StringMap keyvalues;
         keyvalues[ __STRING__( appid ) ] = deploydata->_app_id;
         _deploy_driver->Update( _deploy_table_name, keyvalues, updatevalues );
     }
@@ -1071,10 +1071,10 @@ namespace KFrame
             auto isserver = deploydata->IsAppServer( _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
             if ( isserver )
             {
-                MapString updatevalues;
+                StringMap updatevalues;
                 updatevalues[ __STRING__( version ) ] = _kf_task->_value;
 
-                MapString keyvalues;
+                StringMap keyvalues;
                 keyvalues[ __STRING__( appid ) ] = deploydata->_app_id;
                 keyvalues[ __STRING__( service ) ] = deploydata->_service_type;
                 _deploy_driver->Update( _deploy_table_name, keyvalues, updatevalues );

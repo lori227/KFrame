@@ -13,7 +13,7 @@ namespace KFrame
 
     //////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////
-    void KFDisplayModule::SendToClient( uint64 playerid, uint32 result, ListString& params )
+    void KFDisplayModule::SendToClient( uint64 playerid, uint32 result, StringList& params )
     {
         if ( _kf_tcp_server == nullptr )
         {
@@ -24,7 +24,7 @@ namespace KFrame
         _kf_tcp_server->SendNetMessage( playerid, KFMsg::MSG_RESULT_DISPLAY, &display );
     }
 
-    void KFDisplayModule::SendToClient( KFEntity* player, uint32 result, ListString& params )
+    void KFDisplayModule::SendToClient( KFEntity* player, uint32 result, StringList& params )
     {
         if ( _kf_game == nullptr || !player->IsInited() )
         {
@@ -35,7 +35,7 @@ namespace KFrame
         _kf_game->SendToClient( player, KFMsg::MSG_RESULT_DISPLAY, &display );
     }
 
-    void KFDisplayModule::DelayToClient( KFEntity* player, uint32 result, ListString& params )
+    void KFDisplayModule::DelayToClient( KFEntity* player, uint32 result, StringList& params )
     {
         if ( _kf_game == nullptr || !player->IsInited() )
         {
@@ -46,7 +46,7 @@ namespace KFrame
         _kf_game->SendToClient( player, KFMsg::MSG_RESULT_DISPLAY, &display, 1u );
     }
 
-    void KFDisplayModule::SendToPlayer( uint64 serverid, uint64 playerid, uint32 result, ListString& params )
+    void KFDisplayModule::SendToPlayer( uint64 serverid, uint64 playerid, uint32 result, StringList& params )
     {
         if ( _kf_route == nullptr )
         {
@@ -57,7 +57,7 @@ namespace KFrame
         _kf_route->RepeatToPlayer( 0u, serverid, playerid, KFMsg::MSG_RESULT_DISPLAY, &display );
     }
 
-    void KFDisplayModule::SendToPlayer( KFData* kfbasic, uint32 result, ListString& params )
+    void KFDisplayModule::SendToPlayer( KFData* kfbasic, uint32 result, StringList& params )
     {
         if ( _kf_game == nullptr )
         {
@@ -68,7 +68,7 @@ namespace KFrame
         _kf_game->SendToPlayer( 0u, kfbasic, KFMsg::MSG_RESULT_DISPLAY, &display );
     }
 
-    void KFDisplayModule::SendToPlayer( const Route& route, uint32 result, ListString& params )
+    void KFDisplayModule::SendToPlayer( const Route& route, uint32 result, StringList& params )
     {
         if ( _kf_route == nullptr )
         {
@@ -80,7 +80,7 @@ namespace KFrame
     }
 
 
-    void KFDisplayModule::SendToGroup( KFEntity* player, uint32 result, ListString& params )
+    void KFDisplayModule::SendToGroup( KFEntity* player, uint32 result, StringList& params )
     {
         //KFMsg::MsgResultDisplay display;
         //display.set_result( result );

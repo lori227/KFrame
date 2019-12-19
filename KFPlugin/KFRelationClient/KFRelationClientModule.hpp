@@ -95,7 +95,7 @@ namespace KFrame
         void SendMessageToRelation( KFEntity* player, const std::string& dataname, uint32 msgid, google::protobuf::Message* message );
 
         // 发送好友更新消息
-        void SendUpdateToRelation( KFEntity* player, const std::string& dataname, MapString& values );
+        void SendUpdateToRelation( KFEntity* player, const std::string& dataname, StringMap& values );
 
         // 解析好友信息
         void PBRelationToKFData( const KFMsg::PBRelation* pbfriend, KFData* kffriend );
