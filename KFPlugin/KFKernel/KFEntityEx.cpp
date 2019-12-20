@@ -302,62 +302,33 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFEntityEx::AddData( KFData* kfdata, const UInt32List& inlist )
-    {
-        for ( auto value : inlist )
-        {
-            KFKernelModule::Instance()->AddArray( kfdata, value );
-        }
-    }
+#define __ADD_ARRAY_DATA__( type )\
+    void KFEntityEx::AddData( KFData* kfdata, const type& inlist )\
+    {\
+        for ( auto value : inlist )\
+        {\
+            KFKernelModule::Instance()->AddArray( kfdata, value );\
+        }\
+    }\
 
-    void KFEntityEx::AddData( KFData* kfdata, const std::string& dataname, const UInt32List& inlist )
-    {
-        auto kfarray = kfdata->Find( dataname );
-        if ( kfarray == nullptr )
-        {
-            return;
-        }
+#define __ADD_ARRAY_DATA_1__( type )\
+    void KFEntityEx::AddData( KFData* kfdata, const std::string& dataname, const type& inlist )\
+    {\
+        auto kfarray = kfdata->Find( dataname );\
+        if ( kfarray == nullptr )\
+        {\
+            return;\
+        }\
+        AddData( kfarray, inlist );\
+    }\
 
-        AddData( kfarray, inlist );
-    }
+    __ADD_ARRAY_DATA__( UInt32Set );
+    __ADD_ARRAY_DATA__( UInt32List );
+    __ADD_ARRAY_DATA__( UInt32Vector );
 
-    void KFEntityEx::AddData( KFData* kfdata, const UInt32Vector& inlist )
-    {
-        for ( auto value : inlist )
-        {
-            KFKernelModule::Instance()->AddArray( kfdata, value );
-        }
-    }
-
-    void KFEntityEx::AddData( KFData* kfdata, const std::string& dataname, const UInt32Vector& inlist )
-    {
-        auto kfarray = kfdata->Find( dataname );
-        if ( kfarray == nullptr )
-        {
-            return;
-        }
-
-        AddData( kfarray, inlist );
-    }
-
-    void KFEntityEx::AddData( KFData* kfdata, const UInt32Set& inlist )
-    {
-        for ( auto value : inlist )
-        {
-            KFKernelModule::Instance()->AddArray( kfdata, value );
-        }
-    }
-
-    void KFEntityEx::AddData( KFData* kfdata, const std::string& dataname, const UInt32Set& inlist )
-    {
-        auto kfarray = kfdata->Find( dataname );
-        if ( kfarray == nullptr )
-        {
-            return;
-        }
-
-        AddData( kfarray, inlist );
-    }
+    __ADD_ARRAY_DATA_1__( UInt32Set );
+    __ADD_ARRAY_DATA_1__( UInt32List );
+    __ADD_ARRAY_DATA_1__( UInt32Vector );
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFEntityEx::RemoveData( const std::string& parentname, uint64 key, bool callback )
