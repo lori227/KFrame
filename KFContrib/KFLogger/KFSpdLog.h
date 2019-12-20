@@ -3,19 +3,23 @@
 
 #include "KFInclude.h"
 #include "KFMacros.h"
-#include "spdlog/spdlog.h"
-#include "spdlog/async_logger.h"
-#include "spdlog/details/thread_pool.h"
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
+namespace spdlog
+{
+    class logger;
+    namespace details
+    {
+        class thread_pool;
+    }
+}
+
 namespace KFrame
 {
     class KFLoggerSetting;
     class KFSpdLog
     {
     public:
-        using spdlogger = std::shared_ptr<spdlog::logger>;
-
         KFSpdLog( const KFLoggerSetting* kfsetting );
         ~KFSpdLog();
 
@@ -38,7 +42,7 @@ namespace KFrame
         std::string _log_name;
 
         // 日志对象
-        spdlogger _logger;
+        std::shared_ptr< spdlog::logger > _logger;
 
         // 线程池
         std::shared_ptr< spdlog::details::thread_pool > _thread_pool;

@@ -22,6 +22,7 @@ namespace KFrame
 
         // common
         virtual uint32 Size();
+        virtual uint32 MaxSize();
 
         // 重置数量
         virtual void Resize( uint32 size );

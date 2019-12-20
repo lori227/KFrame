@@ -1,11 +1,10 @@
 ﻿#include "KFSpdLog.h"
-#include "KFLoggerConfig.hpp"
+#include "spdlog/spdlog.h"
+#include "spdlog/async_logger.h"
+#include "spdlog/details/thread_pool.h"
 #include "spdlog/sinks/step_file_sink.h"
 #include "spdlog/sinks/date_and_hour_file_sink.h"
-
-#if __KF_SYSTEM__ == __KF_WIN__
-    #include <windows.h>
-#endif // _WIN32
+#include "KFLoggerConfig.hpp"
 
 namespace KFrame
 {
@@ -66,13 +65,14 @@ namespace KFrame
             _logger = std::make_shared<spdlog::async_logger>( _log_name, std::begin( sinksvec ), std::end( sinksvec ), _thread_pool );
         }
 
-#if defined(__KF_DEBUG__)
-        _logger->set_pattern( "%^[%Y%m%d %H:%M:%S.%e][%l]%v%$" );
-#else
-        _logger->set_pattern( "[%Y%m%d %H:%M:%S.%e][%l]%v" );
-#endif
+        //#if defined(__KF_DEBUG__)
+        //        _logger->set_pattern( "%^[%Y%m%d %H:%M:%S.%e][%l]%v%$" );
+        //#else
+        //        _logger->set_pattern( "[%Y%m%d %H:%M:%S.%e][%l]%v" );
+        //#endif
+        _logger->set_pattern( _kf_setting->_pattern );
         _logger->set_level( spdlog::level::level_enum::trace );
-        _logger->flush_on( spdlog::level::trace );
+        _logger->flush_on( spdlog::level::level_enum::trace );
 
         spdlog::register_logger( _logger );
     }

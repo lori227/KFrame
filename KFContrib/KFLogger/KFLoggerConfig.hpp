@@ -38,6 +38,9 @@ namespace KFrame
 
         // sink max size( default 1g )
         uint32 _max_log_size = 1024u * 1024u * 1024u;
+
+        // log pattern
+        std::string _pattern;
     };
     //////////////////////////////////////////////////////////////////////////////
     class KFLoggerConfig

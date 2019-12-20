@@ -69,6 +69,11 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    uint32 KFArray::MaxSize()
+    {
+        return _data.MaxSize();
+    }
+
     uint32 KFArray::Size()
     {
         auto count = 0u;
@@ -106,6 +111,7 @@ namespace KFrame
         kfother->SaveTo( this );
     }
 
+
     void KFArray::SaveTo( KFData* kfother )
     {
         uint32 key = KFDataDefine::Array_Index;
@@ -126,7 +132,7 @@ namespace KFrame
 
     uint32 KFArray::GetIndex( uint64 value )
     {
-        auto maxsize = MaxSize();
+        auto maxsize = _data.MaxSize();
         for ( uint32 i = KFDataDefine::Array_Index; i < maxsize; ++i )
         {
             auto kfdata = Find( i );
@@ -159,14 +165,16 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFArray::Insert( uint64 value )
     {
-        auto kfdata = Find( _data.FindEmpty() );
-        if ( kfdata == nullptr )
+        for ( auto kfchild = First(); kfchild != nullptr; kfchild = Next() )
         {
-            return false;
+            if ( kfchild->Get() == 0u )
+            {
+                kfchild->Set( value );
+                return true;
+            }
         }
 
-        kfdata->Set( value );
-        return true;
+        return false;
     }
 
     bool KFArray::Add( uint64 key, KFData* data )

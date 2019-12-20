@@ -29,6 +29,14 @@ namespace KFrame
 #else
                 kfsetting->_output_path = node.GetString( "LinuxPath", true );
 #endif
+
+
+#ifdef __KF_DEBUG__
+                kfsetting->_pattern = node.GetString( "DebugPattern", true );
+#else
+                kfsetting->_pattern = node.GetString( "ReleasePattern", true );
+#endif
+
                 kfsetting->_level = node.GetBoolen( "Level", true );
                 kfsetting->_console = node.GetBoolen( "Console", true );
                 kfsetting->_queue_count = node.GetUInt32( "QueueCount", true );

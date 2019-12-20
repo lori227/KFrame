@@ -9,7 +9,7 @@
 #include "KFCore/KFRecord.h"
 #include "KFCore/KFArray.h"
 #include "KFCore/KFVector3D.h"
-#include "KFKernelModule.hpp"
+#include "KFZConfig/KFDataConfig.hpp"
 
 namespace KFrame
 {
