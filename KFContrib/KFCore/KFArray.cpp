@@ -127,7 +127,17 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     uint32 KFArray::GetEmpty()
     {
-        return _data.FindEmpty();
+        auto maxsize = _data.MaxSize();
+        for ( uint32 i = KFDataDefine::Array_Index; i < maxsize; ++i )
+        {
+            auto kfdata = Find( i );
+            if ( kfdata != nullptr && kfdata->Get() == 0u )
+            {
+                return i;
+            }
+        }
+
+        return maxsize;
     }
 
     uint32 KFArray::GetIndex( uint64 value )
