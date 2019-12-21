@@ -145,7 +145,7 @@ namespace KFrame
     {
         auto kfarraydata = KFDataFactory::Create( kfarray->_data_setting->_contain_class );
         kfarraydata->Initialize( kfarray->_class_setting, kfarray->_data_setting );
-        kfarray->Add( kfarray->Size(), kfarraydata );
+        kfarray->Add( kfarray->MaxSize(), kfarraydata );
         return kfarraydata;
     }
 }

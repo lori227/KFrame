@@ -30,7 +30,6 @@ namespace KFrame
 
         // Game ==> Client
         virtual void SendToClient( KFEntity* player, uint32 result, StringList& params );
-        virtual void DelayToClient( KFEntity* player, uint32 result, StringList& params );
 
         // Route ==> Player
         virtual void SendToPlayer( KFData* kfbasic, uint32 result, StringList& params );

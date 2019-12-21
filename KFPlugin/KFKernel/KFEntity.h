@@ -124,13 +124,11 @@ namespace KFrame
         virtual void AddDataToShow( const std::string& name, uint64 value, bool find, const std::string& extendname = _invalid_string ) = 0;
         virtual void AddDataToShow( const std::string& modulename, const std::string& name, uint64 value, bool find, const std::string& extendname = _invalid_string ) = 0;
 
-        virtual void AddDataToShow( KFData* kfdata, bool find, const std::string& extendname = _invalid_string ) = 0;
-        virtual void AddDataToShow( const std::string& modulename, KFData* kfdata, bool find, const std::string& extendname = _invalid_string ) = 0;
+        virtual void AddDataToShow( KFData* kfdata, const std::string& extendname = _invalid_string ) = 0;
+        virtual void AddDataToShow( const std::string& modulename, KFData* kfdata, const std::string& extendname = _invalid_string ) = 0;
 
         virtual void AddDataToShow( const std::string& name, uint64 value, KeyValue& values, bool find, const std::string& extendname = _invalid_string ) = 0;
         virtual void AddDataToShow( const std::string& modulename, const std::string& name, uint64 value, KeyValue& values, bool find, const std::string& extendname = _invalid_string ) = 0;
-
-        virtual void AddElementToShow( const KFElement* kfelement, bool find ) = 0;
 
         // 主动同步显示数据
         virtual void ShowElementToClient() = 0;

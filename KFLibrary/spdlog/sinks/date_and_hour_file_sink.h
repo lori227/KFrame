@@ -80,7 +80,6 @@ namespace spdlog
                 std::tm tm = spdlog::details::os::localtime();
                 filename_t pre_dir, basename, ext;
                 std::tie( pre_dir, basename, ext ) = split_by_dir_and_extenstion( filename );
-                std::conditional<std::is_same<filename_t::value_type, char>::value, fmt::memory_buffer, fmt::wmemory_buffer>::type w;
                 auto dir_path = fmt::format( SPDLOG_FILENAME_T( "{}{}{:04d}{:02d}{:02d}{}" ), pre_dir, spdlog::details::os::folder_sep, tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, spdlog::details::os::folder_sep );
 
                 //CHECK if directory is already existed
@@ -97,8 +96,8 @@ namespace spdlog
                     }
                 }
 
-                fmt::format_to( w, SPDLOG_FILENAME_T( "{}{}_{:02d}{}" ), dir_path, basename, tm.tm_hour, ext );
-                return fmt::to_string( w );
+                filename_t newfile = fmt::format( SPDLOG_FILENAME_T( "{}{}-{:02d}{}" ), dir_path, basename, tm.tm_hour, ext );
+                return newfile;
             }
         };
 

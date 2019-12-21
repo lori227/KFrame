@@ -136,14 +136,11 @@ namespace KFrame
         virtual void AddDataToShow( const std::string& name, uint64 value, bool find, const std::string& extendname = _invalid_string );
         virtual void AddDataToShow( const std::string& modulename, const std::string& name, uint64 value, bool find, const std::string& extendname = _invalid_string );
 
-        virtual void AddDataToShow( KFData* kfdata, bool find, const std::string& extendname = _invalid_string );
-        virtual void AddDataToShow( const std::string& modulename, KFData* kfdata, bool find, const std::string& extendname = _invalid_string );
-
+        virtual void AddDataToShow( KFData* kfdata, const std::string& extendname = _invalid_string );
+        virtual void AddDataToShow( const std::string& modulename, KFData* kfdata, const std::string& extendname = _invalid_string );
 
         virtual void AddDataToShow( const std::string& name, uint64 value, KeyValue& values, bool find, const std::string& extendname = _invalid_string );
         virtual void AddDataToShow( const std::string& modulename, const std::string& name, uint64 value, KeyValue& values, bool find, const std::string& extendname = _invalid_string );
-
-        virtual void AddElementToShow( const KFElement* kfelement, bool find );
 
         // 主动同步显示数据
         virtual void ShowElementToClient();
@@ -202,6 +199,9 @@ namespace KFrame
 
         // 添加显示的元数据
         void AddShowElement( uint32 showtype, const KFElement* kfelement, KFData* kfdata, const char* function, uint32 line );
+
+        // 添加显示的元素
+        void AddElementToShow( const KFElement* kfelement );
 
         // 创建显示元素
         KFMsg::PBShowData* CreateShowData( const std::string& name, uint64 value, bool find, const std::string& extendname = _invalid_string );

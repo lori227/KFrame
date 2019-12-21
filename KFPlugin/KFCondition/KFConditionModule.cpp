@@ -609,7 +609,7 @@ namespace KFrame
                 continue;
             }
 
-            uint64 value = 1u;
+            uint64 value = 0u;
             if ( !kfsetting->_data_name.empty() )
             {
                 value = kfdata->Get( kfsetting->_data_name );
@@ -634,13 +634,13 @@ namespace KFrame
                 continue;
             }
 
-            uint64 value = 1u;
+            uint64 value = 0u;
             if ( !kfsetting->_data_name.empty() )
             {
                 value = kfdata->Get( kfsetting->_data_name );
             }
 
-            auto ok = trigger.CalcUpdateValue( KFEnum::Dec, value, 0u );
+            auto ok = trigger.CalcUpdateValue( KFEnum::Dec, value, value );
             if ( ok )
             {
                 return std::make_tuple( trigger._use_operate, value );

@@ -514,11 +514,11 @@ namespace KFrame
         switch ( showtype )
         {
         case KFDataDefine::Show_Element:
-            AddElementToShow( kfelement, false );
+            AddElementToShow( kfelement );
             __LOG_INFO_FUNCTION__( function, line, "{}=[{}] add=[{}]", _kf_component->_component_name, GetKeyID(), kfelement->ToString() );
             break;
         case KFDataDefine::Show_Data:
-            AddDataToShow( kfdata, false );
+            AddDataToShow( kfdata );
             __LOG_INFO_FUNCTION__( function, line, "{}=[{}] add=[{{\"{}\":{}}}]", _kf_component->_component_name, GetKeyID(), kfelement->_data_name, kfdata->ToString() );
             break;
         default:
@@ -572,7 +572,7 @@ namespace KFrame
         return pbdata;
     }
 
-    void KFEntityEx::AddElementToShow( const KFElement* kfelement, bool find )
+    void KFEntityEx::AddElementToShow( const KFElement* kfelement )
     {
         if ( _pb_show_element.modulename().empty() )
         {
@@ -584,7 +584,7 @@ namespace KFrame
             auto kfelementvalue = reinterpret_cast< const KFElementValue* >( kfelement );
             if ( kfelementvalue->_value->IsNeedShow() )
             {
-                CreateShowData( kfelementvalue->_data_name, kfelementvalue->_value->GetUseValue(), find );
+                CreateShowData( kfelementvalue->_data_name, kfelementvalue->_value->GetUseValue(), false );
             }
         }
         else if ( kfelement->IsObject() )
@@ -592,7 +592,7 @@ namespace KFrame
             auto kfelementobject = reinterpret_cast< const KFElementObject* >( kfelement );
             if ( kfelementobject->IsNeedShow() )
             {
-                auto pbshowdata = CreateShowData( kfelementobject->_data_name, kfelementobject->_config_id, find );
+                auto pbshowdata = CreateShowData( kfelementobject->_data_name, kfelementobject->_config_id, false );
                 ( *pbshowdata->mutable_pbuint64() )[ __STRING__( id ) ] = kfelementobject->_config_id;
                 for ( auto& iter : kfelementobject->_values._objects )
                 {
@@ -662,7 +662,7 @@ namespace KFrame
         AddDataToShow( name, value, values, find, extendname );
     }
 
-    void KFEntityEx::AddDataToShow( KFData* kfdata, bool find, const std::string& extendname )
+    void KFEntityEx::AddDataToShow( KFData* kfdata, const std::string& extendname )
     {
         if ( _pb_show_element.modulename().empty() ||
                 !kfdata->_data_setting->HaveMask( KFDataDefine::Mask_Show ) )
@@ -677,14 +677,14 @@ namespace KFrame
         case KFDataDefine::Type_Int64:
         case KFDataDefine::Type_UInt64:
         {
-            CreateShowData( kfdata->_data_setting->_logic_name, kfdata->Get(), find, extendname );
+            CreateShowData( kfdata->_data_setting->_logic_name, kfdata->Get(), true, extendname );
             break;
         }
         case KFDataDefine::Type_Object:
         case KFDataDefine::Type_Record:
         {
             auto configid = kfdata->Get( kfdata->_data_setting->_config_key_name );
-            auto pbshowdata = CreateShowData( kfdata->_data_setting->_logic_name, configid, find, extendname );
+            auto pbshowdata = CreateShowData( kfdata->_data_setting->_logic_name, configid, false, extendname );
             for ( auto kfchild = kfdata->First(); kfchild != nullptr; kfchild = kfdata->Next() )
             {
                 if ( !kfchild->_data_setting->HaveMask( KFDataDefine::Mask_Show ) ||
@@ -700,10 +700,10 @@ namespace KFrame
         }
     }
 
-    void KFEntityEx::AddDataToShow( const std::string& modulename, KFData* kfdata, bool find, const std::string& extendname )
+    void KFEntityEx::AddDataToShow( const std::string& modulename, KFData* kfdata, const std::string& extendname )
     {
         _pb_show_element.set_modulename( modulename );
-        AddDataToShow( kfdata, find, extendname );
+        AddDataToShow( kfdata, extendname );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -758,14 +758,18 @@ namespace KFrame
 
     void KFEntityEx::AddElement( const KFElements* kfelements, const std::string& modulename, const char* function, uint32 line, float multiple )
     {
-        if ( !kfelements->_element_list.empty() )
+        if ( kfelements->_element_list.empty() )
+        {
+            return __LOG_ERROR_FUNCTION__( function, line, "{}=[{}] element=[{}] is empty!", _kf_component->_component_name, GetKeyID(), kfelements->_str_element );
+        }
+
+        if ( IsInited() )
         {
             _pb_show_element.set_modulename( modulename );
         }
 
         AddElement( kfelements, function, line, multiple );
     }
-
 
     void KFEntityEx::AddElement( const KFElements* kfelements, const char* function, uint32 line, float multiple )
     {
