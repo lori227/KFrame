@@ -842,16 +842,11 @@ namespace KFrame
         switch ( kfelementvalue->_value->_type )
         {
         case KFDataDefine::Type_UInt32:
-        {
-            auto value = kfelementvalue->_value->CalcUseValue( kfdata->_data_setting, multiple );
-            UpdateData( kfdata, kfelementvalue->_operate, value );
-        }
-        break;
+            UpdateData( kfdata, kfelementvalue->_operate, kfelementvalue->_value->CalcUseValue( kfdata->_data_setting, multiple ) );
+            break;
         case KFDataDefine::Type_String:
-        {
             UpdateData( kfdata, kfelementvalue->_value->GetValue() );
-        }
-        break;
+            break;
         default:
             break;
         }
@@ -875,16 +870,11 @@ namespace KFrame
             switch ( kfvalue->_type )
             {
             case KFDataDefine::Type_UInt32:
-            {
-                auto value = kfvalue->CalcUseValue( kfchild->_data_setting, multiple );
-                UpdateData( 0, kfchild, kfelement->_operate, value );
-            }
-            break;
+                UpdateData( 0, kfchild, kfelement->_operate, kfvalue->CalcUseValue( kfchild->_data_setting, multiple ) );
+                break;
             case KFDataDefine::Type_String:
-            {
                 UpdateData( kfchild, kfvalue->GetValue() );
-            }
-            break;
+                break;
             case KFDataDefine::Type_Object:
             {
                 auto kfobjvalue = static_cast< KFObjValue* >( kfvalue );
@@ -912,22 +902,14 @@ namespace KFrame
             switch ( kfvalue->_type )
             {
             case KFDataDefine::Type_UInt32:
-            {
-                auto value = kfvalue->CalcUseValue( kfchild->_data_setting, multiple );
-                kfchild->Set( value );
-            }
-            break;
+                kfchild->Set( kfvalue->CalcUseValue( kfchild->_data_setting, multiple ) );
+                break;
             case KFDataDefine::Type_String:
-            {
                 kfchild->Set( kfvalue->GetValue() );
-            }
-            break;
+                break;
             case KFDataDefine::Type_Object:
-            {
-                auto kfobjvalue = static_cast< KFObjValue* >( kfvalue );
-                SetElementToData( kfobjvalue->_element, kfchild, multiple );
-            }
-            break;
+                SetElementToData( static_cast< KFObjValue* >( kfvalue )->_element, kfchild, multiple );
+                break;
             default:
                 break;
             }
