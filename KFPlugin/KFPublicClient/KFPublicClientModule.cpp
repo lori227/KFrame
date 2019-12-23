@@ -12,7 +12,6 @@ namespace KFrame
         __REGISTER_ENTER_PLAYER__( &KFPublicClientModule::OnEnterUpdatePublicData );
         __REGISTER_LEAVE_PLAYER__( &KFPublicClientModule::OnLeaveUpdatePublicData );
 
-        _kf_basic = _kf_kernel->CreateObject( __STRING__( basic ) );
         _kf_route->RegisterConnectionFunction( this, &KFPublicClientModule::OnRouteConnectCluster );
         ///////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_QUERY_BASIC_REQ, &KFPublicClientModule::HandleQueryBasicReq );
@@ -26,7 +25,6 @@ namespace KFrame
         __UN_ENTER_PLAYER__();
         __UN_LEAVE_PLAYER__();
 
-        _kf_kernel->ReleaseObject( _kf_basic );
         _kf_route->UnRegisterConnectionFunction( this );
         ///////////////////////////////////////////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::MSG_QUERY_BASIC_REQ );
@@ -134,17 +132,16 @@ namespace KFrame
             _kf_display->SendToClient( player, kfmsg.result(), kfmsg.name() );
         }
 
-        _kf_basic->Reset();
+        auto kfbasic = player->CreateData( __STRING__( basic ) );
         for ( auto iter = kfmsg.pbdata().begin(); iter != kfmsg.pbdata().end(); ++iter )
         {
-            auto kfdata = _kf_basic->Find( iter->first );
+            auto kfdata = kfbasic->Find( iter->first );
             if ( kfdata != nullptr )
             {
                 kfdata->Set< std::string >( iter->second );
             }
         }
-
-        auto pbplayerdata = _kf_kernel->SerializeToView( _kf_basic );
+        auto pbplayerdata = _kf_kernel->SerializeToView( kfbasic );
 
         // 发送给客户端
         KFMsg::MsgQueryBasicAck ack;

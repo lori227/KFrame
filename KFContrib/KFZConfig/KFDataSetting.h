@@ -122,6 +122,11 @@ namespace KFrame
         // 属性标记
         inline bool HaveMask( uint32 mask ) const
         {
+            if ( mask == 0u )
+            {
+                return true;
+            }
+
             return KFUtility::HaveBitMask( _data_mask, mask );
         }
 

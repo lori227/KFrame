@@ -17,7 +17,6 @@
 #include "KFZConfig/KFElementConfig.h"
 #include "KFZConfig/KFOptionConfig.hpp"
 
-
 namespace KFrame
 {
     class KFKernelModule : public KFKernelInterface
@@ -40,22 +39,15 @@ namespace KFrame
         // 创建数据
         virtual KFData* CreateObject( const std::string& dataname );
         virtual KFData* CreateObject( const KFDataSetting* datasetting );
-        virtual KFData* CreateObject( const std::string& classname, const std::string& dataname );
-        virtual KFData* CreateObject( const KFDataSetting* datasetting, const KFMsg::PBObject* proto );
 
         // 释放数据
         virtual void ReleaseObject( KFData* kfdata );
-
-        // 初始化数组( kfarray )
-        virtual void InitArray( KFData* kfarray, uint32 size );
-
-        // 添加数组元素( kfarray )
-        virtual KFData* AddArray( KFData* kfarray, int64 value );
         /////////////////////////////////////////////////////////////////////////////////////////////
         // 反序列化
         virtual bool ParseFromProto( KFData* kfdata, const KFMsg::PBObject* proto );
 
         // 序列化
+        virtual KFMsg::PBObject* Serialize( KFData* kfdata );
         virtual KFMsg::PBObject* SerializeToClient( KFData* kfdata );
         virtual KFMsg::PBObject* SerializeToData( KFData* kfdata );
         virtual KFMsg::PBObject* SerializeToView( KFData* kfdata );
@@ -67,12 +59,29 @@ namespace KFrame
         // 保存
         void SaveToObject( KFData* kfdata, KFMsg::PBObject* proto, uint32 datamask );
 
+        KFMsg::PBObject* SerializeObject( KFData* kfdata, uint32 datamask );
+    protected:
+        // 创建对象初始化
+        KFData* InitCreateData( KFData* kfdata );
+
+        // 添加自动回收数据
+        void AddDestroyData( KFData* kfdata );
+        void RemoveDestroyData( KFData* kfdata );
+
+        // 自动回收数据
+        void RunAutoDestroyData();
+
+        // 释放数据
+        void DestroyObject( KFData* kfdata );
     private:
         // kernel
         static KFKernelModule* _kernel_module;
 
         // 组件列表
         KFHashMap< std::string, const std::string, KFComponentEx > _kf_component;
+
+        // 自动gc的列表
+        std::unordered_set< KFData* > _auto_destroy_list;
     };
 }
 

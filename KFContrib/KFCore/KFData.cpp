@@ -285,9 +285,9 @@ namespace KFrame
         return false;
     }
 
-    bool KFData::Insert( uint64 value )
+    KFData* KFData::Insert( uint64 value )
     {
-        return false;
+        return nullptr;
     }
 
     uint32 KFData::GetIndex( uint64 value )

@@ -24,6 +24,9 @@ namespace KFrame
 
     void KFKernelModule::Run()
     {
+        // 自动回收数据
+        RunAutoDestroyData();
+
         for ( auto& iter : _kf_component._objects )
         {
             iter.second->Run();
@@ -64,46 +67,60 @@ namespace KFrame
     KFData* KFKernelModule::CreateObject( const std::string& dataname )
     {
         auto kfdata = KFDataFactory::CreateData( _global_class, dataname );
-        kfdata->InitData();
-        return kfdata;
+        return InitCreateData( kfdata );
     }
 
     KFData* KFKernelModule::CreateObject( const KFDataSetting* datasetting )
     {
         auto kfdata = KFDataFactory::CreateData( datasetting );
-        kfdata->InitData();
-        return kfdata;
-    }
-
-    KFData* KFKernelModule::CreateObject( const std::string& classname, const std::string& dataname )
-    {
-        auto kfdata = KFDataFactory::CreateData( classname, dataname );
-        kfdata->InitData();
-        return kfdata;
-    }
-
-    KFData* KFKernelModule::CreateObject( const KFDataSetting* datasetting, const KFMsg::PBObject* proto )
-    {
-        auto kfdata = KFDataFactory::CreateData( datasetting );
-        ParseFromProto( kfdata, proto );
-        return kfdata;
+        return InitCreateData( kfdata );
     }
 
     void KFKernelModule::ReleaseObject( KFData* kfdata )
     {
-        KFDataFactory::Release( kfdata );
+        RemoveDestroyData( kfdata );
+        DestroyObject( kfdata );
     }
 
-    void KFKernelModule::InitArray( KFData* kfarray, uint32 size )
+    KFData* KFKernelModule::InitCreateData( KFData* kfdata )
     {
-        KFDataFactory::InitArray( kfarray, size );
-    }
+        kfdata->InitData();
+        AddDestroyData( kfdata );
 
-    KFData* KFKernelModule::AddArray( KFData* kfarray, int64 value )
-    {
-        auto kfdata = KFDataFactory::AddArray( kfarray );
-        kfdata->Set( value );
         return kfdata;
+    }
+
+    void KFKernelModule::AddDestroyData( KFData* kfdata )
+    {
+        _auto_destroy_list.insert( kfdata );
+    }
+
+    void KFKernelModule::RemoveDestroyData( KFData* kfdata )
+    {
+        _auto_destroy_list.erase( kfdata );
+    }
+
+    void KFKernelModule::RunAutoDestroyData()
+    {
+        if ( _auto_destroy_list.empty() )
+        {
+            return;
+        }
+
+        for ( auto kfdata : _auto_destroy_list )
+        {
+            // 如果数据没有被引用, 则释放掉
+            if ( kfdata->GetParent() == nullptr )
+            {
+                DestroyObject( kfdata );
+            }
+        }
+        _auto_destroy_list.clear();
+    }
+
+    void KFKernelModule::DestroyObject( KFData* kfdata )
+    {
+        KFDataFactory::Release( kfdata );
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -113,27 +130,31 @@ namespace KFrame
         return true;
     }
 
+    KFMsg::PBObject* KFKernelModule::Serialize( KFData* kfdata )
+    {
+        return SerializeObject( kfdata, KFDataDefine::Mask_Null );
+    }
+
     KFMsg::PBObject* KFKernelModule::SerializeToClient( KFData* kfdata )
     {
-        static KFMsg::PBObject pbobject;
-        pbobject.Clear();
-        SaveToObject( kfdata, &pbobject, KFDataDefine::Mask_Client );
-        return &pbobject;
+        return SerializeObject( kfdata, KFDataDefine::Mask_Client );
     }
 
     KFMsg::PBObject* KFKernelModule::SerializeToData( KFData* kfdata )
     {
-        static KFMsg::PBObject pbobject;
-        pbobject.Clear();
-        SaveToObject( kfdata, &pbobject, KFDataDefine::Mask_Save );
-        return &pbobject;
+        return SerializeObject( kfdata, KFDataDefine::Mask_Save );
     }
 
     KFMsg::PBObject* KFKernelModule::SerializeToView( KFData* kfdata )
     {
+        return SerializeObject( kfdata, KFDataDefine::Mask_View );
+    }
+
+    KFMsg::PBObject* KFKernelModule::SerializeObject( KFData* kfdata, uint32 datamask )
+    {
         static KFMsg::PBObject pbobject;
         pbobject.Clear();
-        SaveToObject( kfdata, &pbobject, KFDataDefine::Mask_View );
+        SaveToObject( kfdata, &pbobject, datamask );
         return &pbobject;
     }
 
@@ -185,14 +206,11 @@ namespace KFrame
             for ( auto citer = pbuint64->begin(); citer != pbuint64->end(); ++citer )
             {
                 auto kfchild = kfarray->Find( citer->first );
-                if ( kfchild != nullptr )
+                if ( kfchild == nullptr )
                 {
-                    kfchild->Set<int64>( citer->second );
+                    kfchild = KFDataFactory::AddArray( kfarray );
                 }
-                else
-                {
-                    AddArray( kfarray, citer->second );
-                }
+                kfchild->Set<int64>( citer->second );
             }
         }
 
@@ -301,5 +319,4 @@ case datatype:\
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 }

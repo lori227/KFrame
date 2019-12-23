@@ -169,7 +169,7 @@ namespace KFrame
         return true;
     }
 
-    void KFConditionModule::AddCondition( KFData* kfconditionobject, const UInt32Vector& conditionlist, uint32 conditiontype )
+    void KFConditionModule::AddCondition( KFEntity* kfentity, KFData* kfconditionobject, const UInt32Vector& conditionlist, uint32 conditiontype )
     {
         if ( conditionlist.empty() )
         {
@@ -191,9 +191,10 @@ namespace KFrame
                 continue;
             }
 
-            auto kfcondition = _kf_kernel->CreateObject( kfconditionrecord->_data_setting );
+            auto kfcondition = kfentity->CreateData( kfconditionrecord );
+
             // 前置条件
-            AddCondition( kfcondition, kfsetting->_limit_condition_list, kfsetting->_limit_condition_type );
+            AddCondition( kfentity, kfcondition, kfsetting->_limit_condition_list, kfsetting->_limit_condition_type );
 
             kfcondition->Set( __STRING__( id ), conditionid );
             kfconditionrecord->Add( conditionid, kfcondition );

@@ -44,18 +44,18 @@ namespace KFrame
         for ( auto& iter : KFTimeConfig::Instance()->_settings._objects )
         {
             auto kfsetting = iter.second;
-            reset |= UpdateResetTime( kftimerecord, kfsetting );
+            reset |= UpdateResetTime( player, kftimerecord, kfsetting );
         }
 
         return reset;
     }
 
-    bool KFResetModule::UpdateResetTime( KFData* kftimerecord, const KFTimeSetting* kfsetting )
+    bool KFResetModule::UpdateResetTime( KFEntity* player, KFData* kftimerecord, const KFTimeSetting* kfsetting )
     {
         auto kftime = kftimerecord->Find( kfsetting->_id );
         if ( kftime == nullptr )
         {
-            kftime = _kf_kernel->CreateObject( kftimerecord->_data_setting );
+            kftime = player->CreateData( kftimerecord );
             kftimerecord->Add( kfsetting->_id, kftime );
         }
 

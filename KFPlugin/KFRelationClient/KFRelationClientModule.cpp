@@ -684,7 +684,7 @@ namespace KFrame
     //        {
     //            auto pbrelation = &kfmsg.pbrelation( i );
     //
-    //            auto kfrelation = _kf_kernel->CreateObject( kfrecentplayer->_data_setting );
+    //            auto kfrelation = player->CreateData( kfrecentplayer);
     //            PBRelationToKFData( pbrelation, kfrelation );
     //            player->AddData( kfrecentplayer, kfrelation );
     //        }

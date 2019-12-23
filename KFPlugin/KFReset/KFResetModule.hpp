@@ -71,7 +71,7 @@ namespace KFrame
 
         // 判断所有
         bool UpdateAllResetTime( KFEntity* player, KFData* kftimerecord );
-        bool UpdateResetTime( KFData* kftimerecord, const KFTimeSetting* kfsetting );
+        bool UpdateResetTime( KFEntity* player, KFData* kftimerecord, const KFTimeSetting* kfsetting );
 
         // 判断是否重置时间是否ok
         bool CheckResetTimeData( KFData* kftimerecord, uint32 timeid );

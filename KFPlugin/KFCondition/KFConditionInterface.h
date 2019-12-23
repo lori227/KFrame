@@ -13,7 +13,7 @@ namespace KFrame
         virtual bool CheckCondition( KFEntity* kfentity, const KFConditions* kfconditions ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////
         // 初始化条件
-        virtual void AddCondition( KFData* kfconditionobject, const UInt32Vector& conditionlist, uint32 conditiontype ) = 0;
+        virtual void AddCondition( KFEntity* kfentity, KFData* kfconditionobject, const UInt32Vector& conditionlist, uint32 conditiontype ) = 0;
 
         // 初始化条件
         virtual bool InitCondition( KFEntity* kfentity, KFData* kfconditionobject, uint32 limitmask, bool update ) = 0;

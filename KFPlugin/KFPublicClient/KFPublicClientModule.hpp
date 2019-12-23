@@ -62,9 +62,6 @@ namespace KFrame
         // 组件
         KFComponent* _kf_component = nullptr;
 
-        // 基础模块
-        KFData* _kf_basic = nullptr;
-
         // 是否需要重置在线数据
         bool _need_refresh_online = true;
     };

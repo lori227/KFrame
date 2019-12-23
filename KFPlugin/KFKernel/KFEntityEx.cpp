@@ -39,6 +39,11 @@ namespace KFrame
         }
     }
 
+    KFData* KFEntityEx::CreateData( KFData* kfdata )
+    {
+        return KFKernelModule::Instance()->CreateObject( kfdata->_data_setting );
+    }
+
     KFData* KFEntityEx::CreateData( const std::string& dataname )
     {
         auto kfdata = Find( dataname );
@@ -47,38 +52,8 @@ namespace KFrame
             return nullptr;
         }
 
-        return CreateData( kfdata->_data_setting );
+        return KFKernelModule::Instance()->CreateObject( kfdata->_data_setting );
     }
-
-    KFData* KFEntityEx::CreateData( const std::string& dataname, uint64 key )
-    {
-        auto kfdata = CreateData( dataname );
-        if ( kfdata != nullptr )
-        {
-            kfdata->SetKeyID( key );
-        }
-
-        return kfdata;
-    }
-
-    KFData* KFEntityEx::CreateData( KFData* kfdata )
-    {
-        return CreateData( kfdata->_data_setting );
-    }
-
-    KFData* KFEntityEx::CreateData( const KFDataSetting* datasetting )
-    {
-        auto kfdata = KFDataFactory::CreateData( datasetting );
-        kfdata->InitData();
-        return kfdata;
-    }
-
-    void KFEntityEx::DestroyData( KFData* kfdata )
-    {
-        KFDataFactory::Release( kfdata );
-    }
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFEntityEx::UpdateData( KFData* kfdata, const std::string& value )
@@ -198,7 +173,7 @@ namespace KFrame
         auto kfobject = kfparent->Find( key );
         if ( kfobject == nullptr )
         {
-            kfobject = CreateData( kfparent->_data_setting );
+            kfobject = CreateData( kfparent );
             value = kfobject->Operate( dataname, operate, value );
             AddData( kfparent, key, kfobject );
             return value;
@@ -302,12 +277,29 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
+    void KFEntityEx::InitArray( KFData* kfarray, uint32 size )
+    {
+        KFDataFactory::InitArray( kfarray, size );
+    }
+
+    KFData* KFEntityEx::AddArray( KFData* kfarray, int64 value )
+    {
+        auto kfdata = kfarray->Insert( value );
+        if ( kfdata == nullptr )
+        {
+            kfdata = KFDataFactory::AddArray( kfarray );
+            kfdata->Set( value );
+        }
+
+        return kfdata;
+    }
+
 #define __ADD_ARRAY_DATA__( type )\
     void KFEntityEx::AddData( KFData* kfdata, const type& inlist )\
     {\
         for ( auto value : inlist )\
         {\
-            KFKernelModule::Instance()->AddArray( kfdata, value );\
+            AddArray( kfdata, value );\
         }\
     }\
 

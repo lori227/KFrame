@@ -157,7 +157,7 @@ namespace KFrame
         template< class T > void GetHashs( T& outlist );
         template< class T > void GetHashs( const std::string& dataname, T& outlist );
 
-        virtual bool Insert( uint64 value );
+        virtual KFData* Insert( uint64 value );
         virtual uint32 GetEmpty();
         virtual uint32 GetIndex( uint64 value );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////

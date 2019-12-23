@@ -24,14 +24,14 @@ namespace KFrame
         virtual void SetNew( bool isnew ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 创建属性
-        virtual KFData* CreateData( const std::string& dataname ) = 0;
-        virtual KFData* CreateData( const std::string& dataname, uint64 key ) = 0;
         virtual KFData* CreateData( KFData* kfdata ) = 0;
-        virtual KFData* CreateData( const KFDataSetting* datasetting ) = 0;
-
-        // 销毁属性
-        virtual void DestroyData( KFData* kfdata ) = 0;
+        virtual KFData* CreateData( const std::string& dataname ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 初始化数组( kfarray )
+        virtual void InitArray( KFData* kfarray, uint32 size ) = 0;
+
+        // 添加数组元素( kfarray )
+        virtual KFData* AddArray( KFData* kfarray, int64 value ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // record 添加属性
         virtual bool AddData( KFData* kfparent, KFData* kfdata, bool callback = true ) = 0;

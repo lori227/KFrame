@@ -37,7 +37,7 @@ namespace KFrame
         virtual uint32 GetIndex( uint64 value );
 
         // 添加数值
-        virtual bool Insert( uint64 value );
+        virtual KFData* Insert( uint64 value );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         virtual KFData* First();
         virtual KFData* Next();

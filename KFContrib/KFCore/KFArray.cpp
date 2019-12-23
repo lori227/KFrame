@@ -173,18 +173,18 @@ namespace KFrame
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFArray::Insert( uint64 value )
+    KFData* KFArray::Insert( uint64 value )
     {
         for ( auto kfchild = First(); kfchild != nullptr; kfchild = Next() )
         {
             if ( kfchild->Get() == 0u )
             {
                 kfchild->Set( value );
-                return true;
+                return kfchild;
             }
         }
 
-        return false;
+        return nullptr;
     }
 
     bool KFArray::Add( uint64 key, KFData* data )

@@ -28,7 +28,7 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 初始化条件
-        virtual void AddCondition( KFData* kfconditionobject, const UInt32Vector& conditionlist, uint32 conditiontype );
+        virtual void AddCondition( KFEntity* kfentity, KFData* kfconditionobject, const UInt32Vector& conditionlist, uint32 conditiontype );
 
         // 初始化条件
         virtual bool InitCondition( KFEntity* kfentity, KFData* kfconditionobject, uint32 limitmask, bool update );
