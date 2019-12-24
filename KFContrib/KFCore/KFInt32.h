@@ -11,7 +11,7 @@ namespace KFrame
         KFInt32();
         virtual ~KFInt32() = default;
 
-        virtual void Reset();
+        virtual void Reset( bool isdelete = true );
 
         // 是否达到了最大值
         virtual bool IsFull();

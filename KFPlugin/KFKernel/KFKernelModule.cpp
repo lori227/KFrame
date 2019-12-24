@@ -25,8 +25,9 @@ namespace KFrame
     void KFKernelModule::Run()
     {
         // 自动回收数据
-        RunAutoDestroyData();
+        KFDataFactory::Instance()->RunAutoDestroyData();
 
+        // 组件上下文逻辑
         for ( auto& iter : _kf_component._objects )
         {
             iter.second->Run();
@@ -64,64 +65,17 @@ namespace KFrame
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    KFData* KFKernelModule::CreateObject( const std::string& dataname )
+    KFData* KFKernelModule::CreateData( const KFDataSetting* datasetting )
     {
-        auto kfdata = KFDataFactory::CreateData( _global_class, dataname );
-        return InitCreateData( kfdata );
+        return KFDataFactory::Instance()->CreateData( datasetting, true );
     }
 
-    KFData* KFKernelModule::CreateObject( const KFDataSetting* datasetting )
+    void KFKernelModule::DestroyData( KFData* kfdata )
     {
-        auto kfdata = KFDataFactory::CreateData( datasetting );
-        return InitCreateData( kfdata );
+        KFDataFactory::Instance()->DestroyData( kfdata );
     }
-
-    void KFKernelModule::ReleaseObject( KFData* kfdata )
-    {
-        RemoveDestroyData( kfdata );
-        DestroyObject( kfdata );
-    }
-
-    KFData* KFKernelModule::InitCreateData( KFData* kfdata )
-    {
-        kfdata->InitData();
-        AddDestroyData( kfdata );
-
-        return kfdata;
-    }
-
-    void KFKernelModule::AddDestroyData( KFData* kfdata )
-    {
-        _auto_destroy_list.insert( kfdata );
-    }
-
-    void KFKernelModule::RemoveDestroyData( KFData* kfdata )
-    {
-        _auto_destroy_list.erase( kfdata );
-    }
-
-    void KFKernelModule::RunAutoDestroyData()
-    {
-        if ( _auto_destroy_list.empty() )
-        {
-            return;
-        }
-
-        for ( auto kfdata : _auto_destroy_list )
-        {
-            // 如果数据没有被引用, 则释放掉
-            if ( kfdata->GetParent() == nullptr )
-            {
-                DestroyObject( kfdata );
-            }
-        }
-        _auto_destroy_list.clear();
-    }
-
-    void KFKernelModule::DestroyObject( KFData* kfdata )
-    {
-        KFDataFactory::Release( kfdata );
-    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFKernelModule::ParseFromProto( KFData* kfdata, const KFMsg::PBObject* proto )
@@ -208,7 +162,7 @@ namespace KFrame
                 auto kfchild = kfarray->Find( citer->first );
                 if ( kfchild == nullptr )
                 {
-                    kfchild = KFDataFactory::AddArray( kfarray );
+                    kfchild = KFDataFactory::Instance()->AddArray( kfarray );
                 }
                 kfchild->Set<int64>( citer->second );
             }
@@ -241,8 +195,7 @@ namespace KFrame
             auto pbobject = &( iter->second.pbobject() );
             for ( auto citer = pbobject->begin(); citer != pbobject->end(); ++citer )
             {
-                auto kfobject = KFDataFactory::CreateData( kfrecord->_data_setting );
-
+                auto kfobject = KFDataFactory::Instance()->CreateData( kfrecord->_data_setting, false );
                 CopyFromObject( kfobject, &citer->second );
                 kfrecord->Add( citer->first, kfobject );
             }

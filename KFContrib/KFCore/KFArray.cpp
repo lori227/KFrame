@@ -13,15 +13,17 @@ namespace KFrame
         _data.Resize( size );
     }
 
-    void KFArray::Reset()
+    void KFArray::Reset( bool isdelete /* = true */ )
     {
         for ( auto kfdata : _data._objects )
         {
             if ( kfdata != nullptr )
             {
-                kfdata->Reset();
+                kfdata->Reset( isdelete );
             }
         }
+
+        KFData::Reset( isdelete );
     }
 
     bool KFArray::IsValid()

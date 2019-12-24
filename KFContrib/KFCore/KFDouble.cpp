@@ -18,9 +18,10 @@ namespace KFrame
         return _data;
     }
 
-    void KFDouble::Reset()
+    void KFDouble::Reset( bool isdelete /* = true */ )
     {
         _data = 0.0f;
+        KFData::Reset( isdelete );
     }
 
     bool KFDouble::IsValid()

@@ -12,7 +12,7 @@ namespace KFrame
         KFVector3D();
         virtual ~KFVector3D() = default;
 
-        virtual void Reset();
+        virtual void Reset( bool isdelete = true );
 
         // 是否有效
         virtual bool IsValid();

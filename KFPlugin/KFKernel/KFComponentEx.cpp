@@ -143,13 +143,20 @@ namespace KFrame
     KFEntity* KFComponentEx::CreateEntity( uint64 key )
     {
         auto kfentity = _entitys.Find( key );
+        if ( kfentity != nullptr )
+        {
+            return kfentity;
+        }
+
+        kfentity = ( KFEntityEx* )KFDataFactory::Instance()->CreateFromDataPool( _data_setting );
         if ( kfentity == nullptr )
         {
             kfentity = __KF_NEW__( KFEntityEx );
-            static_cast< KFEntityEx* >( kfentity )->InitData( this );
-            AddEntity( key, kfentity );
+            KFDataFactory::Instance()->InitData( kfentity, _data_setting );
         }
 
+        static_cast< KFEntityEx* >( kfentity )->InitData( this );
+        AddEntity( key, kfentity );
         return kfentity;
     }
 
@@ -220,7 +227,9 @@ namespace KFrame
         }
 
         _sync_entitys.erase( kfentity );
-        return _entitys.Remove( kfentity->GetKeyID() );
+
+        KFDataFactory::Instance()->DestroyData( kfentity );
+        return _entitys.Remove( kfentity->GetKeyID(), false );
     }
 
     void KFComponentEx::AddSyncEntity( KFEntity* entity )

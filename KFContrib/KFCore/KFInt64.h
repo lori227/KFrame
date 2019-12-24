@@ -11,7 +11,7 @@ namespace KFrame
         KFInt64();
         virtual ~KFInt64() = default;
 
-        virtual void Reset();
+        virtual void Reset( bool isdelete = true );
 
         // 是否有效
         virtual bool IsValid();

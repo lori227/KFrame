@@ -45,7 +45,7 @@ namespace KFrame
         std::string ToString( const std::string& parentname, uint64 key, const std::string& dataname );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 重置
-        virtual void Reset();
+        virtual void Reset( bool isdelete = true );
 
         // 是否有效
         virtual bool IsValid();
@@ -67,7 +67,7 @@ namespace KFrame
         virtual void SetKeyID( uint64 id );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         // 初始化
-        virtual void Initialize( const KFClassSetting* classsetting, const KFDataSetting* datasetting );
+        virtual void Initialize( const KFDataSetting* datasetting );
 
         // 初始化数值
         virtual void InitData();
@@ -189,10 +189,6 @@ namespace KFrame
 
         // 属性配置
         const KFDataSetting* _data_setting = nullptr;
-
-        // 类配置
-        const KFClassSetting* _class_setting = nullptr;
-
     protected:
         // 运行时标记
         uint32 _run_mask = 0u;

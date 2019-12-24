@@ -7,9 +7,10 @@ namespace KFrame
         _data_type = KFDataDefine::Type_Record;
     }
 
-    void KFRecord::Reset()
+    void KFRecord::Reset( bool isdelete /* = true */ )
     {
-        _data.Clear();
+        _data.Clear( isdelete );
+        KFData::Reset( isdelete );
     }
 
     bool KFRecord::IsValid()

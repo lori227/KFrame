@@ -23,13 +23,14 @@ namespace KFrame
         Set<uint64>( _data_setting->_key_name, id );
     }
 
-    void KFObject::Reset()
+    void KFObject::Reset( bool isdelete /* = true */ )
     {
         _key = _invalid_int;
         for ( auto& iter : _data._objects )
         {
-            iter.second->Reset();
+            iter.second->Reset( isdelete );
         }
+        KFData::Reset( isdelete );
     }
 
     void KFObject::InitData()
@@ -156,7 +157,7 @@ namespace KFrame
         data->SetParent( this );
         _data.Insert( dataname, data );
 
-        auto datasetting = _class_setting->FindSetting( dataname );
+        auto datasetting = _data_setting->_class_setting->FindSetting( dataname );
         if ( datasetting != nullptr )
         {
             data->_data_setting = datasetting;

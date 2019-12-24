@@ -26,7 +26,7 @@ namespace KFrame
             return _invalid_int;
         }
 
-        virtual uint64 CalcUseValue( const KFClassSetting* kfsetting, const std::string& dataname, float multiple )
+        virtual uint64 CalcUseValue( const KFDataSetting* kfsetting, const std::string& dataname, float multiple )
         {
             return _invalid_int;
         }
@@ -65,7 +65,7 @@ namespace KFrame
 
         // 计算数值
         virtual uint64 CalcUseValue( const KFDataSetting* kfsetting, float multiple );
-        virtual uint64 CalcUseValue( const KFClassSetting* kfsetting, const std::string& dataname, float multiple );
+        virtual uint64 CalcUseValue( const KFDataSetting* kfsetting, const std::string& dataname, float multiple );
 
         // 获得使用数值
         virtual uint64 GetUseValue() const;
@@ -178,7 +178,7 @@ namespace KFrame
         void SetValue( const std::string& dataname, std::string value );
 
         // 获得数值
-        uint64 CalcValue( const KFClassSetting* kfsetting, const std::string& dataname, float multiple );
+        uint64 CalcValue( const KFDataSetting* kfsetting, const std::string& dataname, float multiple );
         uint64 GetValue( const std::string& dataname ) const;
 
         // 格式化

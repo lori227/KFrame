@@ -267,7 +267,6 @@ namespace KFrame
     protected:
         // 需要发送消息的对象
         std::set< KFEntity* > _sync_entitys;
-
     public:
         // 组件名称
         std::string _component_name;

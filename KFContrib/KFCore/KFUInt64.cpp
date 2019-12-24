@@ -18,9 +18,10 @@ namespace KFrame
         return _data;
     }
 
-    void KFUInt64::Reset()
+    void KFUInt64::Reset( bool isdelete /* = true */ )
     {
         _data = _invalid_int;
+        KFData::Reset( isdelete );
     }
 
     bool KFUInt64::IsValid()

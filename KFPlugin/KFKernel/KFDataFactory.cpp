@@ -10,9 +10,20 @@
 #include "KFCore/KFArray.h"
 #include "KFCore/KFVector3D.h"
 #include "KFZConfig/KFDataConfig.hpp"
+#include "KFKernelModule.hpp"
 
 namespace KFrame
 {
+    KFDataFactory::KFDataFactory()
+    {
+
+    }
+
+    KFDataFactory::~KFDataFactory()
+    {
+        ClearDataPool();
+    }
+
     KFData* KFDataFactory::Create( const std::string& type )
     {
         auto inttype = KFDataDefine::ConvertDataType( type );
@@ -60,41 +71,61 @@ namespace KFrame
         return nullptr;
     }
 
-    void KFDataFactory::Release( KFData* kfdata )
+    void KFDataFactory::DestroyData( KFData* kfdata )
     {
-        __KF_DELETE__( KFData, kfdata );
+        RemoveDestroyData( kfdata );
+        DestroyToDataPool( kfdata );
     }
 
-    KFData* KFDataFactory::CreateData( const std::string& classname, const std::string& dataname )
+    KFData* KFDataFactory::CreateData( const KFDataSetting* datasetting, bool addautolist )
     {
-        auto datasetting = KFDataConfig::Instance()->FindDataSetting( classname, dataname );
-        if ( datasetting == nullptr )
+        auto kfdata = CreateFromDataPool( datasetting );
+        if ( kfdata == nullptr )
         {
-            __LOG_ERROR__( "[{}:{}] datasetting can't find!", classname, dataname );
-            return nullptr;
+            kfdata = Create( datasetting->_logic_type );
+            InitData( kfdata, datasetting );
         }
 
-        return CreateData( datasetting );
-    }
-
-    KFData* KFDataFactory::CreateData( const KFDataSetting* datasetting )
-    {
-        if ( datasetting->_class_setting == nullptr )
+        if ( addautolist )
         {
-            __LOG_ERROR__( "[{}:{}] dataclass can't find!", datasetting->_name, datasetting->_contain_class );
-            return nullptr;
+            AddDestroyData( kfdata );
         }
 
-        auto kfdata = KFDataFactory::Create( datasetting->_logic_type );
-        InitData( kfdata, datasetting->_class_setting, datasetting );
         return kfdata;
     }
 
-    void KFDataFactory::InitData( KFData* kfdata, const KFClassSetting* classsetting, const KFDataSetting* datasetting )
+    KFData* KFDataFactory::CreateFromDataPool( const KFDataSetting* datasetting )
     {
-        kfdata->Initialize( classsetting, datasetting );
+#ifdef __USE_DATA_POOL__
+        auto iter = _data_pool.find( datasetting->_contain_class );
+        if ( iter == _data_pool.end() )
+        {
+            return nullptr;
+        }
 
-        for ( auto& iter : classsetting->_static_data._objects )
+        auto& datalist = iter->second;
+        if ( datalist.empty() )
+        {
+            return nullptr;
+        }
+
+        auto kfdata = datalist.back();
+        datalist.pop_back();
+
+        // 初始化数据
+        InitPoolData( kfdata );
+        return kfdata;
+#else
+        return nullptr;
+#endif
+    }
+
+    void KFDataFactory::InitPoolData( KFData* kfdata )
+    {
+        kfdata->SetParent( nullptr );
+        kfdata->SetKeyID( _invalid_int );
+
+        for ( auto& iter : kfdata->_data_setting->_class_setting->_static_data._objects )
         {
             auto childdatasetting = iter.second;
             if ( !childdatasetting->HaveMask( KFDataDefine::Mask_Create ) )
@@ -102,30 +133,106 @@ namespace KFrame
                 continue;
             }
 
-            KFData* kfchilddata = nullptr;
-            if ( childdatasetting->_type == KFDataDefine::Type_Object )
+            // 判断是否存在
+            auto kfchild = kfdata->Find( childdatasetting->_name );
+            if ( kfchild != nullptr )
             {
-                kfchilddata = CreateData( childdatasetting );
+                kfchild->Reset();
             }
             else
             {
-                kfchilddata = KFDataFactory::Create( childdatasetting->_type );
+                // 没有就创建出来
+                kfchild = CreateData( childdatasetting, false );
+                kfdata->Add( childdatasetting->_name, kfchild );
+            }
+        }
+    }
+
+    void KFDataFactory::DestroyToDataPool( KFData* kfdata )
+    {
+#ifdef __USE_DATA_POOL__
+        DestroyObjectToDataPool( kfdata );
+
+        // 保存在对象池
+        _data_pool[ kfdata->_data_setting->_contain_class ].push_back( kfdata );
+
+#else
+        __KF_DELETE__( KFData, kfdata );
+#endif
+    }
+
+    void KFDataFactory::DestroyObjectToDataPool( KFData* kfdata )
+    {
+        // 把record分离出来
+        for ( auto kfchild = kfdata->First(); kfchild != nullptr; kfchild = kfdata->Next() )
+        {
+            switch ( kfchild->_data_type )
+            {
+            case KFDataDefine::Type_Object:
+                DestroyObjectToDataPool( kfchild );
+                break;
+            case KFDataDefine::Type_Record:
+                DestroyRecordToDataPool( kfchild );
+                break;
+            }
+        }
+    }
+
+    void KFDataFactory::DestroyRecordToDataPool( KFData* kfdata )
+    {
+        for ( auto kfchild = kfdata->First(); kfchild != nullptr; kfchild = kfdata->Next() )
+        {
+            DestroyToDataPool( kfchild );
+        }
+
+        // 清空列表
+        kfdata->Reset( false );
+    }
+
+    void KFDataFactory::ClearDataPool()
+    {
+        for ( auto& iter : _data_pool )
+        {
+            for ( auto kfdata : iter.second )
+            {
+                __KF_DELETE__( KFData, kfdata );
+            }
+        }
+    }
+
+    void KFDataFactory::InitData( KFData* kfdata, const KFDataSetting* datasetting )
+    {
+        kfdata->Initialize( datasetting );
+        for ( auto& iter : datasetting->_class_setting->_static_data._objects )
+        {
+            auto childdatasetting = iter.second;
+            if ( !childdatasetting->HaveMask( KFDataDefine::Mask_Create ) )
+            {
+                continue;
             }
 
+            auto kfchilddata = Create( childdatasetting->_type );
             if ( kfchilddata == nullptr )
             {
                 __LOG_ERROR__( "create data type error[{}:{}]!", childdatasetting->_name, childdatasetting->_type );
                 continue;
             }
 
-            auto initclasssetting = childdatasetting->_class_setting != nullptr ? childdatasetting->_class_setting : classsetting;
-            kfchilddata->Initialize( initclasssetting, childdatasetting );
-            if ( childdatasetting->_type == KFDataDefine::Type_Array )
-            {
-                InitArray( kfchilddata, childdatasetting->_int_logic_value );
-            }
-
+            kfchilddata->Initialize( childdatasetting );
             kfdata->Add( childdatasetting->_name, kfchilddata );
+
+            // 初始化
+            switch ( childdatasetting->_type )
+            {
+            case KFDataDefine::Type_Object:
+                InitData( kfchilddata, childdatasetting );
+                break;
+            case KFDataDefine::Type_Array:
+                InitArray( kfchilddata, childdatasetting->_int_logic_value );
+                break;
+            default:
+                break;
+            }
         }
     }
 
@@ -135,17 +242,45 @@ namespace KFrame
         kfarray->Resize( size );
         for ( uint32 i = KFDataDefine::Array_Index; i < size; ++i )
         {
-            auto kfarraydata = KFDataFactory::Create( kfarray->_data_setting->_contain_class );
-            kfarraydata->Initialize( kfarray->_class_setting, kfarray->_data_setting );
+            auto kfarraydata = Create( kfarray->_data_setting->_contain_class );
+            kfarraydata->Initialize( kfarray->_data_setting );
             kfarray->Add( i, kfarraydata );
         }
     }
 
     KFData* KFDataFactory::AddArray( KFData* kfarray )
     {
-        auto kfarraydata = KFDataFactory::Create( kfarray->_data_setting->_contain_class );
-        kfarraydata->Initialize( kfarray->_class_setting, kfarray->_data_setting );
+        auto kfarraydata = Create( kfarray->_data_setting->_contain_class );
+        kfarraydata->Initialize( kfarray->_data_setting );
         kfarray->Add( kfarray->MaxSize(), kfarraydata );
         return kfarraydata;
+    }
+
+    void KFDataFactory::AddDestroyData( KFData* kfdata )
+    {
+        _auto_destroy_list.insert( kfdata );
+    }
+
+    void KFDataFactory::RemoveDestroyData( KFData* kfdata )
+    {
+        _auto_destroy_list.erase( kfdata );
+    }
+
+    void KFDataFactory::RunAutoDestroyData()
+    {
+        if ( _auto_destroy_list.empty() )
+        {
+            return;
+        }
+
+        for ( auto kfdata : _auto_destroy_list )
+        {
+            // 如果数据没有被引用, 则释放掉
+            if ( kfdata->GetParent() == nullptr )
+            {
+                DestroyToDataPool( kfdata );
+            }
+        }
+        _auto_destroy_list.clear();
     }
 }

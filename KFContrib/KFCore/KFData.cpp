@@ -301,11 +301,9 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFData::Initialize( const KFClassSetting* classsetting, const KFDataSetting* datasetting )
+    void KFData::Initialize( const KFDataSetting* datasetting )
     {
         _data_setting = datasetting;
-        _class_setting = classsetting;
-        KFData::Reset();
     }
 
     void KFData::InitData()
@@ -313,9 +311,8 @@ namespace KFrame
 
     }
 
-    void KFData::Reset()
+    void KFData::Reset( bool isdelete /* = true */ )
     {
-
     }
 
     bool KFData::HaveMask( uint32 mask ) const

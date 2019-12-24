@@ -1,7 +1,6 @@
 ﻿#include "KFEntityEx.hpp"
 #include "KFComponentEx.hpp"
 #include "KFKernelModule.hpp"
-#include "KFDataFactory.hpp"
 #include "KFProtocol/KFProtocol.h"
 //////////////////////////////////////////////////////////////////////////
 
@@ -30,18 +29,18 @@ namespace KFrame
 
     void KFEntityEx::InitData( KFComponentEx* kfcomponent )
     {
+        _is_new = false;
+        _is_inited = false;
+        _is_in_save = false;
+        _have_sync_data = false;
+        _have_show_client = false;
         _kf_component = kfcomponent;
-        KFDataFactory::InitData( this, _kf_component->_data_setting->_class_setting, _kf_component->_data_setting );
-
         for ( auto i = 0u; i < __SYNC_COUNT__; ++i )
         {
             _sync_list[ i ]._type = _default_sync_sequence[ i ];
         }
-    }
 
-    KFData* KFEntityEx::CreateData( KFData* kfdata )
-    {
-        return KFKernelModule::Instance()->CreateObject( kfdata->_data_setting );
+        _pb_show_element.Clear();
     }
 
     KFData* KFEntityEx::CreateData( const std::string& dataname )
@@ -52,7 +51,14 @@ namespace KFrame
             return nullptr;
         }
 
-        return KFKernelModule::Instance()->CreateObject( kfdata->_data_setting );
+        return CreateData( kfdata );
+    }
+
+    KFData* KFEntityEx::CreateData( KFData* kfdata )
+    {
+        auto child = KFDataFactory::Instance()->CreateData( kfdata->_data_setting, true );
+        child->InitData();
+        return child;
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -99,7 +105,6 @@ namespace KFrame
 
         UpdateData( kfdata, value );
     }
-
 
     void KFEntityEx::UpdateData( const std::string& parentname, const std::string& dataname, const std::string& value )
     {
@@ -279,7 +284,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFEntityEx::InitArray( KFData* kfarray, uint32 size )
     {
-        KFDataFactory::InitArray( kfarray, size );
+        KFDataFactory::Instance()->InitArray( kfarray, size );
     }
 
     KFData* KFEntityEx::AddArray( KFData* kfarray, int64 value )
@@ -287,7 +292,7 @@ namespace KFrame
         auto kfdata = kfarray->Insert( value );
         if ( kfdata == nullptr )
         {
-            kfdata = KFDataFactory::AddArray( kfarray );
+            kfdata = KFDataFactory::Instance()->AddArray( kfarray );
             kfdata->Set( value );
         }
 
@@ -344,7 +349,9 @@ namespace KFrame
 
         // 属性删除回调
         _kf_component->RemoveDataCallBack( this, kfparent, key, kfdata, callback );
-        return kfparent->Remove( key );
+
+        KFDataFactory::Instance()->DestroyData( kfdata );
+        return kfparent->Move( key );
     }
 
     bool KFEntityEx::CleanData( const std::string& parentname, bool callback )
@@ -383,7 +390,9 @@ namespace KFrame
         }
 
         _kf_component->RemoveDataCallBack( this, kfparent, kfdata->GetKeyID(), kfdata, callback );
-        return kfparent->Remove( dataname );
+
+        KFDataFactory::Instance()->DestroyData( kfdata );
+        return kfparent->Move( dataname, false ) != nullptr;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -476,6 +485,7 @@ namespace KFrame
         // 添加属性
         targetdata->Add( targetname, kfdata );
         SyncUpdateData( kfdata, 0u );
+
         return kfdata;
     }
 
@@ -739,7 +749,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     KFData* KFEntityEx::FindByLogicName( const std::string& name )
     {
-        auto kfdatasetting = _class_setting->FindSettingByLogicName( name );
+        auto kfdatasetting = _data_setting->_class_setting->FindSettingByLogicName( name );
         if ( kfdatasetting == nullptr )
         {
             return nullptr;
@@ -973,7 +983,7 @@ namespace KFrame
         if ( kfchild == nullptr )
         {
             // 不存在, 创建一个, 并更新属性
-            kfchild = KFDataFactory::CreateData( kfparent->_data_setting );
+            kfchild = CreateData( kfparent );
             SetElementToData( kfelementobject, kfchild, multiple );
             AddData( kfparent, kfelementobject->_config_id, kfchild );
         }

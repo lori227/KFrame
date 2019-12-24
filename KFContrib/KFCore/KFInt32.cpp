@@ -32,9 +32,10 @@ namespace KFrame
         return _data >= ( int32 )_data_setting->_int_max_value;
     }
 
-    void KFInt32::Reset()
+    void KFInt32::Reset( bool isdelete /* = true */ )
     {
         _data = _invalid_int;
+        KFData::Reset( isdelete );
     }
 
     bool KFInt32::IsValid()

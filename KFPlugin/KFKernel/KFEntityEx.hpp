@@ -3,6 +3,7 @@
 
 #include "KFEntity.h"
 #include "KFCore/KFData.h"
+#include "KFDataFactory.hpp"
 #include "KFProtocol/KFProtocol.h"
 
 namespace KFrame

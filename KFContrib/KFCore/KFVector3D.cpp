@@ -18,9 +18,10 @@ namespace KFrame
         return _data;
     }
 
-    void KFVector3D::Reset()
+    void KFVector3D::Reset( bool isdelete /* = true */ )
     {
         _data.Set( 0.0f, 0.0f, 0.0f );
+        KFData::Reset( isdelete );
     }
 
     bool KFVector3D::IsValid()

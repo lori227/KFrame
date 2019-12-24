@@ -18,9 +18,10 @@ namespace KFrame
         return _data;
     }
 
-    void KFString::Reset()
+    void KFString::Reset( bool isdelete /* = true */ )
     {
         _data.clear();
+        KFData::Reset( isdelete );
     }
 
     bool KFString::IsValid()

@@ -628,6 +628,12 @@ namespace KFrame
 
     std::tuple<uint32, uint32> KFConditionModule::CalcRemoveConditionValue( KFEntity* kfentity, const KFConditionDefine* kfsetting, KFData* kfdata )
     {
+        if ( kfdata->_data_setting->_name != kfsetting->_parent_name &&
+                kfdata->_data_setting->_logic_name != kfsetting->_parent_name )
+        {
+            return std::make_tuple( 0u, 0u );
+        }
+
         for ( auto& trigger : kfsetting->_trigger_list )
         {
             if ( trigger._call_type != KFConditionEnum::RemoveCall )

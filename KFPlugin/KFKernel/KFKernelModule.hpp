@@ -37,11 +37,10 @@ namespace KFrame
         virtual KFEntity* FindEntity( const std::string& dataname, uint64 key, const char* function, uint32 line );
         /////////////////////////////////////////////////////////////////////////////////////////////
         // 创建数据
-        virtual KFData* CreateObject( const std::string& dataname );
-        virtual KFData* CreateObject( const KFDataSetting* datasetting );
+        virtual KFData* CreateData( const KFDataSetting* datasetting );
 
         // 释放数据
-        virtual void ReleaseObject( KFData* kfdata );
+        virtual void DestroyData( KFData* kfdata );
         /////////////////////////////////////////////////////////////////////////////////////////////
         // 反序列化
         virtual bool ParseFromProto( KFData* kfdata, const KFMsg::PBObject* proto );
@@ -59,20 +58,11 @@ namespace KFrame
         // 保存
         void SaveToObject( KFData* kfdata, KFMsg::PBObject* proto, uint32 datamask );
 
+        // 序列号
         KFMsg::PBObject* SerializeObject( KFData* kfdata, uint32 datamask );
+
     protected:
-        // 创建对象初始化
-        KFData* InitCreateData( KFData* kfdata );
 
-        // 添加自动回收数据
-        void AddDestroyData( KFData* kfdata );
-        void RemoveDestroyData( KFData* kfdata );
-
-        // 自动回收数据
-        void RunAutoDestroyData();
-
-        // 释放数据
-        void DestroyObject( KFData* kfdata );
     private:
         // kernel
         static KFKernelModule* _kernel_module;
@@ -80,8 +70,6 @@ namespace KFrame
         // 组件列表
         KFHashMap< std::string, const std::string, KFComponentEx > _kf_component;
 
-        // 自动gc的列表
-        std::unordered_set< KFData* > _auto_destroy_list;
     };
 }
 

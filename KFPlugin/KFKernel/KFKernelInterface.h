@@ -20,11 +20,10 @@ namespace KFrame
         virtual KFEntity* FindEntity( const std::string& dataname, uint64 key, const char* function, uint32 line ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////
         // 创建数据
-        virtual KFData* CreateObject( const std::string& dataname ) = 0;
-        virtual KFData* CreateObject( const KFDataSetting* datasetting ) = 0;
+        virtual KFData* CreateData( const KFDataSetting* datasetting ) = 0;
 
         // 释放数据
-        virtual void ReleaseObject( KFData* kfdata ) = 0;
+        virtual void DestroyData( KFData* kfdata ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////
         // 反序列化

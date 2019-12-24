@@ -13,7 +13,7 @@ namespace KFrame
         virtual ~KFObject() = default;
 
         // 重置
-        virtual void Reset();
+        virtual void Reset( bool isdelete = true );
 
         // 是否有效
         virtual bool IsValid();
