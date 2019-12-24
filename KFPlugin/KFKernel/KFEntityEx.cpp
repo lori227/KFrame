@@ -609,7 +609,7 @@ namespace KFrame
                 KeyValue values;
                 values[ __STRING__( id ) ] = kfresult->_config_id;
                 values[ kfresult->_data_name ] = iter.second;
-                AddDataToShow( kfresult->_element->_data_name, kfresult->_config_id, values, true, iter.first );
+                AddDataToShow( kfresult->_element->_data_name, kfresult->_config_id, values, false, iter.first );
             }
 
             // log
