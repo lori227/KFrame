@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="KFComponent.h" />
     <ClInclude Include="KFDataFactory.hpp" />
+    <ClInclude Include="KFElementResult.h" />
     <ClInclude Include="KFEntity.h" />
     <ClInclude Include="KFEntityEx.hpp" />
     <ClInclude Include="KFComponentEx.hpp" />

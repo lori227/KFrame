@@ -24,6 +24,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     class KFComponentEx;
+    class KFElementResult;
     class KFEntityEx : public KFEntity
     {
     public:
@@ -132,11 +133,11 @@ namespace KFrame
         // 添加显示数据
         virtual void AddDataToShow( const std::string& modulename );
 
-        virtual void AddDataToShow( const std::string& name, uint64 value, bool find, const std::string& extendname = _invalid_string );
-        virtual void AddDataToShow( const std::string& modulename, const std::string& name, uint64 value, bool find, const std::string& extendname = _invalid_string );
+        virtual void AddDataToShow( const std::string& name, uint64 value, bool find );
+        virtual void AddDataToShow( const std::string& modulename, const std::string& name, uint64 value, bool find );
 
-        virtual void AddDataToShow( KFData* kfdata, const std::string& extendname = _invalid_string );
-        virtual void AddDataToShow( const std::string& modulename, KFData* kfdata, const std::string& extendname = _invalid_string );
+        virtual void AddDataToShow( KFData* kfdata );
+        virtual void AddDataToShow( const std::string& modulename, KFData* kfdata );
 
         virtual void AddDataToShow( const std::string& name, uint64 value, KeyValue& values, bool find, const std::string& extendname = _invalid_string );
         virtual void AddDataToShow( const std::string& modulename, const std::string& name, uint64 value, KeyValue& values, bool find, const std::string& extendname = _invalid_string );
@@ -180,9 +181,9 @@ namespace KFrame
 
         // 添加元数据
         void AddElement( const KFElement* kfelement, const char* function, uint32 line, float multiple );
-        std::tuple<uint32, KFData*> AddNormalElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line, float multiple );
-        std::tuple<uint32, KFData*> AddObjectElement( KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple );
-        std::tuple<uint32, KFData*> AddRecordElement( KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple );
+        void AddNormalElement( KFData* kfdata, KFElementResult* kfresult, const char* function, uint32 line, float multiple );
+        void AddObjectElement( KFData* kfparent, KFElementResult* kfresult, const char* function, uint32 line, float multiple );
+        void AddRecordElement( KFData* kfparent, KFElementResult* kfresult, const char* function, uint32 line, float multiple );
 
         // 判断元数据
         bool CheckRemoveElement( const KFElement* kfelement, const char* function, uint32 line, float multiple );
@@ -196,14 +197,20 @@ namespace KFrame
         void RemoveObjectElement( KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple );
         void RemoveRecordElement( KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple );
 
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 添加显示的元数据
-        void AddShowElement( uint32 showtype, const KFElement* kfelement, KFData* kfdata, const char* function, uint32 line );
+        void ShowElementResult( const KFElementResult* kfresult, const char* function, uint32 line );
 
         // 添加显示的元素
-        void AddElementToShow( const KFElement* kfelement );
+        void ElementResultShowElement( const KFElementResult* kfresult, const char* function, uint32 line );
+        void ElementResultShowOverlay( const KFElementResult* kfresult, const char* function, uint32 line );
+        void ElementResultShowData( const KFElementResult* kfresult, const char* function, uint32 line );
 
         // 创建显示元素
-        KFMsg::PBShowData* CreateShowData( const std::string& name, uint64 value, bool find, const std::string& extendname = _invalid_string );
+        KFMsg::PBShowData* CreateShowData( const std::string& name, uint64 value, bool find, const std::string& extendname );
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     protected:
 

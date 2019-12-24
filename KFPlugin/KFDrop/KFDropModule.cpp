@@ -20,22 +20,20 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_ADD_ELEMENT_FUNCTION__( KFDropModule::AddDropElement )
     {
+        auto kfelement = kfresult->_element;
         if ( !kfelement->IsObject() )
         {
-            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_data_name );
-            return std::make_tuple( KFDataDefine::Show_None, nullptr );
+            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_data_name );
         }
 
         auto kfelementobject = reinterpret_cast< KFElementObject* >( kfelement );
         if ( kfelementobject->_config_id == _invalid_int )
         {
-            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id!", kfelement->_data_name );
-            return std::make_tuple( KFDataDefine::Show_None, nullptr );
+            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id!", kfelement->_data_name );
         }
 
         auto count = kfelementobject->CalcValue( kfparent->_class_setting, kfparent->_data_setting->_value_key_name, 1.0f );
         Drop( player, kfelementobject->_config_id, __MAX__( count, 1u ), __STRING__( command ), __FUNC_LINE__ );
-        return std::make_tuple( KFDataDefine::Show_None, nullptr );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
