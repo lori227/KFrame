@@ -80,7 +80,12 @@ namespace KFrame
     KFData* KFDataFactory::CreateData( const KFDataSetting* datasetting, bool addautolist )
     {
         auto kfdata = CreateFromDataPool( datasetting );
-        if ( kfdata == nullptr )
+        if ( kfdata != nullptr )
+        {
+            // 初始化数据
+            InitPoolData( kfdata );
+        }
+        else
         {
             kfdata = Create( datasetting->_logic_type );
             InitData( kfdata, datasetting );
@@ -111,9 +116,6 @@ namespace KFrame
 
         auto kfdata = datalist.back();
         datalist.pop_back();
-
-        // 初始化数据
-        InitPoolData( kfdata );
         return kfdata;
 #else
         return nullptr;

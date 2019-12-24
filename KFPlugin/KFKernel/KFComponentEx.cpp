@@ -149,7 +149,11 @@ namespace KFrame
         }
 
         kfentity = ( KFEntityEx* )KFDataFactory::Instance()->CreateFromDataPool( _data_setting );
-        if ( kfentity == nullptr )
+        if ( kfentity != nullptr )
+        {
+            kfentity->SetKeyID( _invalid_int );
+        }
+        else
         {
             kfentity = __KF_NEW__( KFEntityEx );
             KFDataFactory::Instance()->InitData( kfentity, _data_setting );
