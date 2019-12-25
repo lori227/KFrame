@@ -28,12 +28,6 @@ namespace KFrame
 
         // 打印日志
         void Log( uint32 loglevel, const std::string& content );
-
-    protected:
-
-        // 创建log
-        void CreateLogger();
-
     private:
         // 日志配置
         const KFLoggerSetting* _kf_setting = nullptr;

@@ -26,12 +26,12 @@ namespace KFrame
         return KFLogger::_kf_logger;
     }
 
-    bool KFLogger::InitLogger()
+    bool KFLogger::InitLogger( const std::string& file )
     {
         try
         {
             _logger_config = __NEW_OBJECT__( KFLoggerConfig );
-            _logger_config->LoadConfig( "./setting/logger.xml" );
+            _logger_config->LoadConfig( file );
         }
         catch ( const std::exception& )
         {

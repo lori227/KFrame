@@ -778,14 +778,14 @@ namespace KFrame
         }
     }
 
-    void KFComponentEx::CallLogElementFunction( KFEntity* kfentity, const std::string& modulename, uint32 operate, KFElement* kfelement )
+    void KFComponentEx::CallLogElementFunction( KFEntity* kfentity, const std::string& modulename, const KFElementResult* kfresult )
     {
-        auto kffunction = _log_element_function.Find( kfelement->_data_name );
+        auto kffunction = _log_element_function.Find( kfresult->_element->_data_name );
         if ( kffunction == nullptr )
         {
             return;
         }
 
-        kffunction->_function( kfentity, modulename, operate, kfelement );
+        kffunction->_function( kfentity, modulename, kfresult );
     }
 }

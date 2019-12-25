@@ -12,6 +12,7 @@ namespace KFrame
             //log split type
             DateAndHour = 1,
             StepFile = 2,
+            GLogFile = 3,
         };
     }
 
@@ -21,14 +22,14 @@ namespace KFrame
         // output path
         std::string _output_path;
 
+        // file name
+        std::string _file_name;
+
+        // split
+        std::string _split;
+
         // sink type
         uint32 _sink_type = KFSinkEnum::DateAndHour;
-
-        // show in console
-        bool _console = true;
-
-        // 打印等级
-        uint32 _level = 1u;
 
         // log message queue size( >0 use thread pool )
         uint32 _queue_count = 1024u;
@@ -41,6 +42,12 @@ namespace KFrame
 
         // log pattern
         std::string _pattern;
+
+        // show in console
+        bool _console = true;
+
+        // 打印等级
+        uint32 _level = 1u;
     };
     //////////////////////////////////////////////////////////////////////////////
     class KFLoggerConfig

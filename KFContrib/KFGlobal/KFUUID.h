@@ -34,6 +34,7 @@ namespace KFrame
 
         // 打印guid
         void Print( uint64 uuid );
+
     private:
         // 上一次时间
         uint64 _last_time{ 0 };

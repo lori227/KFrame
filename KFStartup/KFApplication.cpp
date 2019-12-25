@@ -45,6 +45,8 @@ namespace KFrame
             params[ key ] = arg;
         }
 
+        InitDefaultParams( params );
+
         auto daemon = params[ __STRING__( daemon ) ];
         if ( daemon == "" || daemon == "1" )
         {
@@ -72,6 +74,21 @@ namespace KFrame
         // 进程结束
         ServerApplication::terminate();
         return Poco::Util::Application::EXIT_OK;
+    }
+
+    void KFApplication::InitDefaultParams( StringMap& params )
+    {
+        // log
+        if ( params[ __STRING__( log ) ] == "" )
+        {
+            params[ __STRING__( log ) ] = "./setting/logger.xml";
+        }
+
+        // project
+        if ( params[ __STRING__( project ) ] == "" )
+        {
+            params[ __STRING__( project ) ] = "./setting/project.xml";
+        }
     }
 
     void KFApplication::ProcessKeyEvent()

@@ -9,21 +9,33 @@
 	<!--SinkType 文件分割类型 1按每小时 2 按大小时间-->
 	<!--StepSeconds 时间间隔 -->
 	<!--MaxLogSize 日志文件最大值-->
-	<!--DebugPattern debug模式打印格式-->
-	<!--ReleasePattern release模式打印类型-->
+	<!--Pattern 模式打印格式-->
+	<!--FileInfo 文件名标识-->
 
 	<Loggers Default="normal">
 		<!-- 正常日志 -->
-		<Logger Name="normal" WinPath="./_output/" LinuxPath="./_output/" DebugPattern="%^[%Y%m%d %H:%M:%S.%e][%l]%v%$" ReleasePattern="[%Y%m%d %H:%M:%S.%e][%l]%v" Level="1" Console="1" QueueCount="1024" SinkType="1" StepSeconds="3600" MaxLogSize="1073741824‬"/>
+		<Logger Name="normal" FileInfo="" Split="-" QueueCount="1024" SinkType="1" StepSeconds="3600" MaxLogSize="1073741824‬" WinPath="./_output/" LinuxPath="./_output/">
+			<Debug Console="1" Level="1" Pattern="%^[%Y%m%d %H:%M:%S.%e][%l]%v%$"/>
+			<Release Console="1" Level="2" Pattern="[%Y%m%d %H:%M:%S.%e][%l]%v"/>
+		</Logger>
 
 		<!-- 远程日志 -->
-		<Logger Name="remote" WinPath="./_output/" LinuxPath="/data/binlog/" DebugPattern="%^[%Y%m%d %H:%M:%S.%e][%l]%v%$" ReleasePattern="[%Y%m%d %H:%M:%S.%e][%l]%v" Level="1" Console="0" QueueCount="1024" SinkType="1" StepSeconds="3600" MaxLogSize="1073741824‬"/>
+		<Logger Name="remote" FileInfo="" Split="-" QueueCount="1024" SinkType="1" StepSeconds="3600" MaxLogSize="1073741824‬" WinPath="./_output/" LinuxPath="/data/_binlog/">
+			<Debug Console="0" Level="1" Pattern="%^[%Y%m%d %H:%M:%S.%e][%l]%v%$"/>
+			<Release Console="0" Level="2" Pattern="[%Y%m%d %H:%M:%S.%e][%l]%v"/>
+		</Logger>
 
 		<!-- 运营日志 -->
-		<Logger Name="tlog" WinPath="./_tlog/" LinuxPath="./_tlog/" DebugPattern="%v" ReleasePattern="%v" Level="1" Console="0" QueueCount="1024" SinkType="2" StepSeconds="3600" MaxLogSize="1073741824‬"/>
+		<Logger Name="tlog" FileInfo="" Split="_" QueueCount="1024" SinkType="2" StepSeconds="3600" MaxLogSize="1073741824‬" WinPath="./_tlog/" LinuxPath="./_tlog/">
+			<Debug Console="0" Level="2" Pattern="%v"/>
+			<Release Console="0" Level="2" Pattern="%v"/>
+		</Logger>
 
 		<!-- 部署工具日志 -->
-		<Logger Name="deploy" WinPath="./_output/" LinuxPath="./_output/" DebugPattern="%^[%Y%m%d %H:%M:%S.%e][%l]%v%$" ReleasePattern="[%Y%m%d %H:%M:%S.%e][%l]%v" Level="1" Console="0" QueueCount="1024" SinkType="1" StepSeconds="3600" MaxLogSize="1073741824‬"/>
+		<Logger Name="deploy" FileInfo="" Split="-" QueueCount="1024" SinkType="1" StepSeconds="3600" MaxLogSize="1073741824‬" WinPath="./_output/" LinuxPath="./_output/" >
+			<Debug Console="0" Level="1" Pattern="%^[%Y%m%d %H:%M:%S.%e][%l]%v%$"/>
+			<Release Console="0" Level="2" Pattern="[%Y%m%d %H:%M:%S.%e][%l]%v"/>
+		</Logger>
 	</Loggers>	
 </Config>
 

@@ -23,7 +23,7 @@ namespace KFrame
         static KFLogger* Instance();
 
         // 初始化日志
-        bool InitLogger();
+        bool InitLogger( const std::string& file );
 
         // 设置日志登录
         void SetLogLevel( uint32 level );

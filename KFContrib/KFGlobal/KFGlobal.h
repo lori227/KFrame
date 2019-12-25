@@ -118,6 +118,10 @@ namespace KFrame
 
         // 启动参数
         StringMap _startup_params;
+
+        // 项目开始时间
+        uint64 _project_start_time{ 0 };
+
         /////////////////////////////////////////////////////////////////////////////////
     private:
         // 版本

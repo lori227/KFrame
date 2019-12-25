@@ -5,7 +5,6 @@
 #include "Poco/Util/Application.h"
 #include "Poco/Util/ServerApplication.h"
 
-
 namespace KFrame
 {
     class KFServices;
@@ -45,7 +44,8 @@ namespace KFrame
         // 处理输入
         void ProcessInputKeyEvent( uint32 keycode );
 
-
+        // 初始化默认参数
+        void InitDefaultParams( StringMap& params );
     protected:
 
         // 服务

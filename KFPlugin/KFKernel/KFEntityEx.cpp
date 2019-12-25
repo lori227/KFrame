@@ -822,7 +822,6 @@ namespace KFrame
         for ( auto kfelement : kfelements->_element_list )
         {
             AddElement( kfelement, function, line, multiple );
-            _kf_component->CallLogElementFunction( this, _pb_show_element.modulename(), KFEnum::Add, kfelement );
         }
     }
 
@@ -842,6 +841,7 @@ namespace KFrame
         const_cast< KFElement* >( kfelement )->_data_setting = kfdata->_data_setting;
 
         KFElementResult _element_result;
+        _element_result._operate = KFEnum::Add;
         _element_result._element = const_cast< KFElement* >( kfelement );
 
         // 如果有注册的特殊处理函数
@@ -871,6 +871,9 @@ namespace KFrame
 
         // 显示属性
         ShowElementResult( &_element_result, function, line );
+
+        // 纪录日志
+        _kf_component->CallLogElementFunction( this, _pb_show_element.modulename(), &_element_result );
     }
 
     void KFEntityEx::AddNormalElement( KFData* kfdata, KFElementResult* kfresult, const char* function, uint32 line, float multiple )
@@ -1138,13 +1141,12 @@ namespace KFrame
 
         for ( auto kfelement : kfelements->_element_list )
         {
-            RemoveElement( kfelement, function, line, multiple );
-            _kf_component->CallLogElementFunction( this, modulename, KFEnum::Dec, kfelement );
+            RemoveElement( kfelement, modulename, function, line, multiple );
         }
     }
 
     // 删除元数据
-    void KFEntityEx::RemoveElement( const KFElement* kfelement, const char* function, uint32 line, float multiple )
+    void KFEntityEx::RemoveElement( const KFElement* kfelement, const std::string& modulename, const char* function, uint32 line, float multiple )
     {
         auto kfdata = Find( kfelement->_data_name );
         if ( kfdata == nullptr )
@@ -1156,26 +1158,36 @@ namespace KFrame
             }
         }
 
+        KFElementResult _element_result;
+        _element_result._operate = KFEnum::Dec;
+        _element_result._show_type = KFDataShowEnum::Show_Element;
+        _element_result._element = const_cast< KFElement* >( kfelement );
+
         // 如果有注册函数, 执行注册函数
         auto kffunction = _kf_component->_remove_element_function.Find( kfdata->_data_setting->_logic_name );
         if ( kffunction != nullptr )
         {
-            return kffunction->_function( this, kfdata, const_cast< KFElement* >( kfelement ), function, line, multiple );
+            kffunction->_function( this, kfdata, const_cast< KFElement* >( kfelement ), function, line, multiple );
+        }
+        else
+        {
+            // 找不到处理函数, 用基础函数来处理
+            switch ( kfdata->_data_type )
+            {
+            case KFDataDefine::Type_Record:
+                RemoveRecordElement( kfdata, const_cast< KFElement* >( kfelement ), function, line, multiple );
+                break;
+            case KFDataDefine::Type_Object:
+                RemoveObjectElement( kfdata, const_cast< KFElement* >( kfelement ), function, line, multiple );
+                break;
+            default:
+                RemoveNormalElement( kfdata, const_cast< KFElement* >( kfelement ), function, line, multiple );
+                break;
+            }
         }
 
-        // 找不到处理函数, 用基础函数来处理
-        switch ( kfdata->_data_type )
-        {
-        case KFDataDefine::Type_Record:
-            RemoveRecordElement( kfdata, const_cast< KFElement* >( kfelement ), function, line, multiple );
-            break;
-        case KFDataDefine::Type_Object:
-            RemoveObjectElement( kfdata, const_cast< KFElement* >( kfelement ), function, line, multiple );
-            break;
-        default:
-            RemoveNormalElement( kfdata, const_cast< KFElement* >( kfelement ), function, line, multiple );
-            break;
-        }
+        // 纪录日志
+        _kf_component->CallLogElementFunction( this, modulename, &_element_result );
     }
 
     void KFEntityEx::RemoveNormalElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line, float multiple )

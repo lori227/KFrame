@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Setting>
 	<Includes>
+		<Include File="./startup/common/project.startup"/>
 	</Includes>
 
 	<Plugins>
-		<Plugin Name="KFTimer" Config=""/>	
-		<Plugin Name="KFConfig" Config=""/>	
+		<Plugin Name="KFTimer" Config=""/>		
 		<Plugin Name="KFHttpClient" Config=""/>	
 		<Plugin Name="KFTcpClient" Config=""/>	
 		<Plugin Name="KFMessage" Config=""/>	

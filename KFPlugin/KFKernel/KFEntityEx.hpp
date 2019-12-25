@@ -193,7 +193,7 @@ namespace KFrame
         bool CheckRecordElement( KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple );
 
         // 删除元数据
-        void RemoveElement( const KFElement* kfelement, const char* function, uint32 line, float multiple );
+        void RemoveElement( const KFElement* kfelement, const std::string& modulename, const char* function, uint32 line, float multiple );
         void RemoveNormalElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line, float multiple );
         void RemoveObjectElement( KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple );
         void RemoveRecordElement( KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple );

@@ -9,6 +9,7 @@
 	<item Id="tcp" Name="tcpserver" FileName="./setting/tcpserver.xml"/>
 	<item Id="datashard" Name="datashard" FileName="./setting/datashard.xml"/>
 	<item Id="robot" Name="robot" FileName="./setting/robot.xml"/>
+	<item Id="project" Name="project" FileName="./setting/project.xml"/>
 	<item Id="route" Name="route" FileName="./config/route.xml" Reload="1" ClearData="1"/>
 	<item Id="channel" Name="channel" FileName="./config/channel.xml" Reload="1" ClearData="1"/>
 	<item Id="filter" Name="filter" FileName="./config/filter.xml" Reload="1" ClearData="1"/>

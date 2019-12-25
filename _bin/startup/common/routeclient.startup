@@ -3,8 +3,6 @@
 	<Plugins>
 		<Plugin Name="KFBus" Config=""/>
 		<Plugin Name="KFIpAddress" Config=""/>
-		<Plugin Name="KFConfig" Config="./config/config.xml"/>	
-		<Plugin Name="KFTimer" Config=""/>
 		<Plugin Name="KFHttpClient" Config=""/>
 		<Plugin Name="KFTcpClient" Config=""/>
 		<Plugin Name="KFMessage" Config=""/>

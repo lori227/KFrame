@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Setting>
+	<Plugins>
+		<Plugin Name="KFProject" Config=""/>	
+		<Plugin Name="KFTimer" Config=""/>
+		<Plugin Name="KFConfig" Config="./config/config.xml"/>	
+	</Plugins>
+</Setting>

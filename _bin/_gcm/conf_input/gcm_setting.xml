@@ -13,5 +13,6 @@
 			<file Name="robot.xml" Type="0"/>
 			<file Name="tcpserver.xml" Type="0"/>
 			<file Name="datashard.xml" Type="0"/>
+			<file Name="project.xml" Type="0"/>
     </setting>
 </gcm>

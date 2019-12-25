@@ -3,8 +3,6 @@
 
 namespace KFrame
 {
-#define __START_TIME__ 1559318400	// 项目开始时间 2019-06-1 0:0:0
-
     KFUUID::KFUUID( uint32 timebits, uint32 zonebits, uint32 workerbits, uint32 seqbits )
     {
         _seq_bits = seqbits;
@@ -26,7 +24,7 @@ namespace KFrame
     uint64 KFUUID::Make( uint32 zoneid, uint32 workerid, uint64 nowtime )
     {
         // time
-        auto time = nowtime - __START_TIME__;
+        auto time = nowtime - KFGlobal::Instance()->_project_start_time;
         time &= _max_time;
 
         if ( time != _last_time )
@@ -56,7 +54,7 @@ namespace KFrame
         auto sequence = ( uuid & _max_seq );
         auto workerid = ( ( uuid >> _worker_shift ) & _max_worker );
         auto zoneid = ( ( uuid >> _zone_shift ) & _max_zone );
-        auto time = ( ( uuid >> _time_shift ) & _max_time ) + __START_TIME__;
+        auto time = ( ( uuid >> _time_shift ) & _max_time ) + KFGlobal::Instance()->_project_start_time;
         auto strtime = KFDate::GetTimeString( time );
 
         __LOG_INFO__( "guid[{}] time[{}] zoneid[{}] workerid[{}] sequence[{}]", uuid, strtime, zoneid, workerid, sequence );

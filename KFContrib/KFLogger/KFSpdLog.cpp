@@ -3,6 +3,7 @@
 #include "spdlog/async_logger.h"
 #include "spdlog/details/thread_pool.h"
 #include "spdlog/sinks/step_file_sink.h"
+#include "spdlog/sinks/glog_file_sink.h"
 #include "spdlog/sinks/date_and_hour_file_sink.h"
 #include "KFLoggerConfig.hpp"
 
@@ -20,18 +21,20 @@ namespace KFrame
 
     void KFSpdLog::Initialize( const std::string& appname, const std::string& apptype, const std::string& strappid )
     {
-        _log_name = __FORMAT__( "{}{}-{}-{}.log", _kf_setting->_output_path, appname, apptype, strappid );
-
-        CreateLogger();
-    }
-
-    void KFSpdLog::Log( uint32 loglevel, const std::string& content )
-    {
-        _logger->log( ( spdlog::level::level_enum )loglevel, content );
-    }
-
-    void KFSpdLog::CreateLogger()
-    {
+        if ( _kf_setting->_file_name.empty() )
+        {
+            _log_name = __FORMAT__( "{}{}{}{}{}{}.log",
+                                    _kf_setting->_output_path,
+                                    appname, _kf_setting->_split, apptype, _kf_setting->_split, strappid );
+        }
+        else
+        {
+            _log_name = __FORMAT__( "{}{}{}{}{}{}{}{}.log",
+                                    _kf_setting->_output_path, _kf_setting->_file_name, _kf_setting->_split,
+                                    appname, _kf_setting->_split, apptype, _kf_setting->_split, strappid );
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////
         std::vector<spdlog::sink_ptr> sinksvec;
         if ( _kf_setting->_console )
         {
@@ -51,6 +54,9 @@ namespace KFrame
         case KFSinkEnum::StepFile:
             sinksvec.push_back( std::make_shared<spdlog::sinks::step_file_sink_mt>( _log_name, _kf_setting->_step_seconds, _kf_setting->_max_log_size ) );
             break;
+        case KFSinkEnum::GLogFile:
+            sinksvec.push_back( std::make_shared<spdlog::sinks::glog_file_sink_mt>( _log_name, _kf_setting->_split, _kf_setting->_step_seconds, _kf_setting->_max_log_size ) );
+            break;
         default:
             break;
         }
@@ -65,15 +71,14 @@ namespace KFrame
             _logger = std::make_shared<spdlog::async_logger>( _log_name, std::begin( sinksvec ), std::end( sinksvec ), _thread_pool );
         }
 
-        //#if defined(__KF_DEBUG__)
-        //        _logger->set_pattern( "%^[%Y%m%d %H:%M:%S.%e][%l]%v%$" );
-        //#else
-        //        _logger->set_pattern( "[%Y%m%d %H:%M:%S.%e][%l]%v" );
-        //#endif
         _logger->set_pattern( _kf_setting->_pattern );
         _logger->set_level( spdlog::level::level_enum::trace );
         _logger->flush_on( spdlog::level::level_enum::trace );
-
         spdlog::register_logger( _logger );
+    }
+
+    void KFSpdLog::Log( uint32 loglevel, const std::string& content )
+    {
+        _logger->log( ( spdlog::level::level_enum )loglevel, content );
     }
 }

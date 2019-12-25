@@ -23,6 +23,13 @@ namespace KFrame
             {
                 auto kfsetting = _settings.Create( name );
 
+                kfsetting->_queue_count = node.GetUInt32( "QueueCount", true );
+                kfsetting->_sink_type = node.GetUInt32( "SinkType", true );
+                kfsetting->_step_seconds = node.GetUInt32( "StepSeconds", true );
+                kfsetting->_max_log_size = node.GetUInt32( "MaxLogSize", true );
+                kfsetting->_file_name = node.GetString( "FileInfo", true );
+                kfsetting->_split = node.GetString( "Split", true );
+
 #if __KF_SYSTEM__ == __KF_WIN__
                 kfsetting->_output_path = node.GetString( "WinPath", true );
                 KFUtility::ReplaceString( kfsetting->_output_path, "/", "\\" );
@@ -30,19 +37,14 @@ namespace KFrame
                 kfsetting->_output_path = node.GetString( "LinuxPath", true );
 #endif
 
-
 #ifdef __KF_DEBUG__
-                kfsetting->_pattern = node.GetString( "DebugPattern", true );
+                auto modenode = node.FindNode( "Debug" );
 #else
-                kfsetting->_pattern = node.GetString( "ReleasePattern", true );
+                auto modenode = node.FindNode( "Release" );
 #endif
-
-                kfsetting->_level = node.GetBoolen( "Level", true );
-                kfsetting->_console = node.GetBoolen( "Console", true );
-                kfsetting->_queue_count = node.GetUInt32( "QueueCount", true );
-                kfsetting->_sink_type = node.GetUInt32( "SinkType", true );
-                kfsetting->_step_seconds = node.GetUInt32( "StepSeconds", true );
-                kfsetting->_max_log_size = node.GetUInt32( "MaxLogSize", true );
+                kfsetting->_level = modenode.GetBoolen( "Level", true );
+                kfsetting->_console = modenode.GetBoolen( "Console", true );
+                kfsetting->_pattern = modenode.GetString( "Pattern", true );
             }
 
             node.NextNode();

@@ -5,6 +5,5 @@
 		<Plugin Name="KFMessage" Config=""/>
 		<Plugin Name="KFTcpClient" Config=""/>
 		<Plugin Name="KFDeployClient" Config=""/>
-		<Plugin Name="KFConfig" Config="./config/config.xml"/>	
 	</Plugins>
 </Setting>

@@ -2,7 +2,6 @@
 <Setting>
 	<Plugins>
 		<Plugin Name="KFHttpClient" Config=""/>
-		<Plugin Name="KFConfig" Config="./config/config.xml"/>	
 		<Plugin Name="KFIpAddress" Config=""/>
 		<Plugin Name="KFHttpServer" Config=""/>
 	</Plugins>

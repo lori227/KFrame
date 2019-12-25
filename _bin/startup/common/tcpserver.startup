@@ -3,7 +3,6 @@
 	<Plugins>
 		<Plugin Name="KFHttpClient" Config=""/>
 		<Plugin Name="KFMessage" Config=""/>
-		<Plugin Name="KFConfig" Config="./config/config.xml"/>	
 		<Plugin Name="KFIpAddress" Config=""/>
 		<Plugin Name="KFTcpServer" Config=""/>
 	</Plugins>

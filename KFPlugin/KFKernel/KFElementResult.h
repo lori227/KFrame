@@ -50,6 +50,9 @@ namespace KFrame
         }
 
     public:
+        // 操作逻辑
+        uint32 _operate = KFEnum::Add;
+
         // 添加的元素
         KFElement* _element = nullptr;
 

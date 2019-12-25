@@ -73,7 +73,8 @@ namespace KFrame
         KFDump kfdump( kfglobal->_app_name.c_str(), kfglobal->_app_type.c_str(), kfglobal->_app_id->ToString().c_str() );
 #endif
         // 日志初始化
-        if ( !KFLogger::Instance()->InitLogger() )
+        auto logfile = params[ __STRING__( log ) ];
+        if ( !KFLogger::Instance()->InitLogger( logfile ) )
         {
             return false;
         }
