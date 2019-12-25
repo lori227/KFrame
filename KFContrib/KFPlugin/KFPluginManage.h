@@ -64,7 +64,7 @@
 #define __REGISTER_MODULE__( modulename ) \
     {\
         auto kfmodule = new modulename##Module(); \
-        _kf_plugin_manage->RegistModule< modulename##Interface >( typeid( *this ).name(), kfmodule );\
+        _kf_plugin_manage->RegistModule< modulename##Interface >( this, kfmodule );\
         __REGISTER_PLUGIN__( modulename##Module, Run );\
         __REGISTER_PLUGIN__( modulename##Module, AfterRun );\
     }\
@@ -75,7 +75,7 @@
         auto kfmodule = (modulename##Module*)FindModule( typeid( modulename##Interface ).name());\
         __UN_PLUGIN_FUNCTION__( modulename##Module, Run ); \
         __UN_PLUGIN_FUNCTION__( modulename##Module, AfterRun );\
-        _kf_plugin_manage->UnRegistModule< modulename##Module >( typeid( *this ).name(), _save_data );\
+        _kf_plugin_manage->UnRegistModule< modulename##Module >( this, _save_data );\
     }\
 
 #define __FIND_MODULE__( module, classname ) \
@@ -141,17 +141,15 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////
         // 注册模块
         template< class InterfaceType >
-        void RegistModule( const std::string& pluginname, InterfaceType* module )
+        void RegistModule( KFPlugin* plugin, InterfaceType* module )
         {
-            auto plugin = FindPlugin( pluginname );
             plugin->BindModule( typeid( InterfaceType ).name(), module );
         }
 
         // 卸载模块
         template< class InterfaceType >
-        void UnRegistModule( const std::string& pluginname, bool savedata )
+        void UnRegistModule( KFPlugin* plugin, bool savedata )
         {
-            auto plugin = FindPlugin( pluginname );
             plugin->UnBindModule( typeid( InterfaceType ).name(), savedata );
         }
 

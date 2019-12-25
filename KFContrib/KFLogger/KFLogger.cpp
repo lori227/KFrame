@@ -2,6 +2,10 @@
 #include "KFSpdLog.h"
 #include "KFLoggerConfig.hpp"
 
+#if __KF_SYSTEM__ == __KF_LINUX__
+    #include <execinfo.h>
+#endif
+
 namespace KFrame
 {
     KFLogger* KFLogger::_kf_logger = nullptr;
@@ -106,5 +110,28 @@ namespace KFrame
 
         __KF_DELETE__( KFSpdLog, iter->second );
         _create_loggers.erase( iter );
+    }
+
+    void KFLogger::LogStack( const std::string& error )
+    {
+#if __KF_SYSTEM__ == __KF_WIN__
+
+
+#else
+        Log( KFLogEnum::Error, error );
+        Log( KFLogEnum::Error, "========================================" );
+
+        static const int32 size = 1024;
+        void* array[ size ];
+        auto stacknum = backtrace( array, size );
+        auto stacktrace = backtrace_symbols( array, stacknum );
+        for ( auto i = 0; i < stacknum; ++i )
+        {
+            Log( KFLogEnum::Error, stacktrace[ i ] );
+        }
+        free( stacktrace );
+
+        Log( KFLogEnum::Error, "========================================" );
+#endif
     }
 }
