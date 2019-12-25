@@ -83,12 +83,6 @@ namespace KFrame
         {
             params[ __STRING__( log ) ] = "./setting/logger.xml";
         }
-
-        // project
-        if ( params[ __STRING__( project ) ] == "" )
-        {
-            params[ __STRING__( project ) ] = "./setting/project.xml";
-        }
     }
 
     void KFApplication::ProcessKeyEvent()
