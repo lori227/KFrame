@@ -1,6 +1,8 @@
 ﻿#ifndef __KF_SINGLETION_H__
 #define __KF_SINGLETION_H__
 
+#include <utility>
+#include "KFMacros.h"
 /************************************************************************
 
 					单例模式
@@ -25,7 +27,7 @@ namespace KFrame
             if ( _instance == nullptr )
             {
                 _instance = new T( std::forward<P>( params )... );
-                std::atexit( &KFSingleton::UnInstance );
+                atexit( &KFSingleton::UnInstance );
             }
 
             return _instance;
