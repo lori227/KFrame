@@ -50,7 +50,7 @@ namespace KFrame
         kfglobal->InitChannelService( strnetservice );
 
         // 初始化logger
-        KFLogger::Instance()->InitLogger( 1, false );
+        KFLogger::Instance()->InitLogger( "./setting/logger.xml" );
 
         // 内存日志
         KFMalloc::Instance()->SetLogOpen( false );

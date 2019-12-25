@@ -31,7 +31,6 @@ void CAddServerDlg::DoDataExchange( CDataExchange* pDX )
     DDX_Control( pDX, IDC_COMBO5, _combo_mode );
     DDX_Control( pDX, IDC_COMBO7, _combo_agent );
     DDX_Control( pDX, IDC_COMBO9, _combo_startup );
-    DDX_Control( pDX, IDC_COMBO6, _combo_log );
     DDX_Control( pDX, IDC_COMBO8, _combo_service );
     DDX_Control( pDX, IDC_EDIT1, _edit_zone );
     DDX_Control( pDX, IDC_EDIT2, _edit_id );
@@ -107,13 +106,6 @@ void CAddServerDlg::InitDialog()
         _combo_startup.AddString( KFDeploy::_status_name[i] );
     }
     _combo_startup.SetCurSel( 1 );
-
-    _combo_log.ResetContent();
-    for ( auto i = 0u; i < KFDeploy::_log_count; ++i )
-    {
-        _combo_log.AddString( KFDeploy::_log_name[ i ] );
-    }
-    _combo_log.SetCurSel( 0 );
 
     _combo_mode.ResetContent();
     for ( auto i = 0u; i < KFDeploy::_mode_count; ++i )
@@ -217,9 +209,6 @@ void CAddServerDlg::OnBnClickedButtonAddServer()
         return;
     }
     values[ __STRING__( deploypath ) ] = path;
-
-    auto log = _combo_log.GetCurSel();
-    values[ __STRING__( logtype ) ] = __FORMAT__( "{}.{}", log, 0 );
 
     auto mode = _combo_mode.GetCurSel();
     values[ __STRING__( debug ) ] = __TO_STRING__( mode );

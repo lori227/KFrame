@@ -230,17 +230,16 @@ void CKFDeployDlg::InitDialogData()
         _list_server.InsertColumn( index++, "", LVCFMT_CENTER, width * 2 );
         _list_server.InsertColumn( index++, "Id", LVCFMT_CENTER, width * 1.5 );
         _list_server.InsertColumn( index++, "App", LVCFMT_CENTER, width * 2 );
-        _list_server.InsertColumn( index++, "类型", LVCFMT_CENTER, width * 1.8 );
+        _list_server.InsertColumn( index++, "类型", LVCFMT_CENTER, width * 2 );
         _list_server.InsertColumn( index++, "网络", LVCFMT_CENTER, width * 1 );
-        _list_server.InsertColumn( index++, "日志", LVCFMT_CENTER, width * 1.8 );
         _list_server.InsertColumn( index++, "Agent", LVCFMT_CENTER, width * 1.5 );
         _list_server.InsertColumn( index++, "启动", LVCFMT_CENTER, width * 1.1 );
         _list_server.InsertColumn( index++, "模式", LVCFMT_CENTER, width * 1.1 );
         _list_server.InsertColumn( index++, "状态", LVCFMT_CENTER, width * 1.1 );
-        _list_server.InsertColumn( index++, "版本号", LVCFMT_CENTER, width * 4 );
-        _list_server.InsertColumn( index++, "启动时间", LVCFMT_CENTER, width * 2.5 );
+        _list_server.InsertColumn( index++, "版本号", LVCFMT_CENTER, width * 4.5 );
+        _list_server.InsertColumn( index++, "启动时间", LVCFMT_CENTER, width * 2.8 );
         _list_server.InsertColumn( index++, "进程", LVCFMT_CENTER, width * 1.1 );
-        _list_server.InsertColumn( index++, "路径", LVCFMT_CENTER, width * 2 );
+        _list_server.InsertColumn( index++, "路径", LVCFMT_CENTER, width * 3 );
         _list_server.InsertColumn( index++, "参数", LVCFMT_CENTER, width * 5 );
         _list_server.DeleteColumn( 0 );
     }
@@ -909,15 +908,6 @@ void CKFDeployDlg::RefreshServerList( const KFMsg::PBMySQLDatas* pbdatas )
         {
             auto nettype = KFUtility::ToValue<uint32 >( pbvalues[ __STRING__( net ) ] );
             _list_server.SetItemText( i, ++column, KFDeploy::_net_name[ nettype ] );
-        }
-
-        // log
-        {
-            auto strlog = pbvalues[ __STRING__( logtype ) ];
-            auto level = KFUtility::SplitValue< uint32 >( strlog, "." );
-
-            auto log = __FORMAT__( "{}|{}.{}", KFDeploy::_log_name[ level ], level, strlog );
-            _list_server.SetItemText( i, ++column, log.c_str() );
         }
 
         // agentid

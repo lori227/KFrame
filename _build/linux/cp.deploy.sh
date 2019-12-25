@@ -54,6 +54,7 @@ cp -f $binpath/KFDeployAgent$filename.so $deploypath/bin/
 cp -f $binpath/KFDeployServer$filename.so $deploypath/bin/
 cp -f $binpath/KFMySQL$filename.so $deploypath/bin/
 cp -f $binpath/KFSchedule$filename.so $deploypath/bin/
+cp -f $binpath/KFProject$filename.so $deploypath/bin/
 
 
 cd /tmp

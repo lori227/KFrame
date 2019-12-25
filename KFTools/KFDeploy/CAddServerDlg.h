@@ -31,7 +31,6 @@ public:
     CComboBox _combo_mode;
     CComboBox _combo_agent;
     CComboBox _combo_startup;
-    CComboBox _combo_log;
     CComboBox _combo_service;
     CEdit _edit_zone;
     CEdit _edit_id;
