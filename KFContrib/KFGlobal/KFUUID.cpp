@@ -3,29 +3,33 @@
 
 namespace KFrame
 {
-    KFUUID::KFUUID( uint32 timebits, uint32 zonebits, uint32 workerbits, uint32 seqbits )
+    KFUUIDSetting KFUUID::_setting;
+
+    void KFUUID::InitSetting( uint32 timebits, uint32 zonebits, uint32 workerbits, uint32 seqbits, uint64 starttime )
     {
-        _seq_bits = seqbits;
-        _max_seq = ~( -1L << _seq_bits );
+        _setting._seq_bits = seqbits;
+        _setting._max_seq = ~( -1L << _setting._seq_bits );
 
-        _worker_bits = workerbits;
-        _max_worker = ~( -1L << _worker_bits );
-        _worker_shift = _seq_bits;
+        _setting._worker_bits = workerbits;
+        _setting._max_worker = ~( -1L << _setting._worker_bits );
+        _setting._worker_shift = _setting._seq_bits;
 
-        _zone_bits = zonebits;
-        _max_zone = ~( -1L << _zone_bits );
-        _zone_shift = _worker_shift + _worker_bits;
+        _setting._zone_bits = zonebits;
+        _setting._max_zone = ~( -1L << _setting._zone_bits );
+        _setting._zone_shift = _setting._worker_shift + _setting._worker_bits;
 
-        _time_bits = timebits;
-        _max_time = ~( -1L << _time_bits );
-        _time_shift = _zone_shift + _zone_bits;
+        _setting._time_bits = timebits;
+        _setting._max_time = ~( -1L << _setting._time_bits );
+        _setting._time_shift = _setting._zone_shift + _setting._zone_bits;
+
+        _setting._starttime = starttime;
     }
 
     uint64 KFUUID::Make( uint32 zoneid, uint32 workerid, uint64 nowtime )
     {
         // time
-        auto time = nowtime - KFGlobal::Instance()->_project_start_time;
-        time &= _max_time;
+        auto time = nowtime - _setting._starttime;
+        time &= _setting._max_time;
 
         if ( time != _last_time )
         {
@@ -35,26 +39,26 @@ namespace KFrame
         }
 
         // 序列号
-        _sequence = ( _sequence + 1 ) & _max_seq;
+        _sequence = ( _sequence + 1 ) & _setting._max_seq;
 
         // appid
-        zoneid &= _max_zone;
-        workerid &= _max_seq;
-        return ( time << _time_shift ) | ( zoneid << _zone_shift ) | ( workerid << _worker_shift ) | _sequence;
+        zoneid &= _setting._max_zone;
+        workerid &= _setting._max_seq;
+        return ( time << _setting._time_shift ) | ( zoneid << _setting._zone_shift ) | ( workerid << _setting._worker_shift ) | _sequence;
     }
 
     uint32 KFUUID::ZoneId( uint64 uuid )
     {
-        auto zoneid = ( ( uuid >> _zone_shift ) & _max_zone );
+        auto zoneid = ( ( uuid >> _setting._zone_shift ) & _setting._max_zone );
         return ( uint32 )zoneid;
     }
 
     void KFUUID::Print( uint64 uuid )
     {
-        auto sequence = ( uuid & _max_seq );
-        auto workerid = ( ( uuid >> _worker_shift ) & _max_worker );
-        auto zoneid = ( ( uuid >> _zone_shift ) & _max_zone );
-        auto time = ( ( uuid >> _time_shift ) & _max_time ) + KFGlobal::Instance()->_project_start_time;
+        auto sequence = ( uuid & _setting._max_seq );
+        auto workerid = ( ( uuid >> _setting._worker_shift ) & _setting._max_worker );
+        auto zoneid = ( ( uuid >> _setting._zone_shift ) & _setting._max_zone );
+        auto time = ( ( uuid >> _setting._time_shift ) & _setting._max_time ) + _setting._starttime;
         auto strtime = KFDate::GetTimeString( time );
 
         __LOG_INFO__( "guid[{}] time[{}] zoneid[{}] workerid[{}] sequence[{}]", uuid, strtime, zoneid, workerid, sequence );

@@ -192,14 +192,4 @@ namespace KFrame
     {
         return KFIpConfig::Instance()->_log_url;
     }
-
-    const std::string& KFIpAddressModule::GetClusterName()
-    {
-        return KFIpConfig::Instance()->_cluster_name;
-    }
-
-    const std::string& KFIpAddressModule::GetClusterKey()
-    {
-        return KFIpConfig::Instance()->_cluster_key;
-    }
 }

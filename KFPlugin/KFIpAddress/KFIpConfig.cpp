@@ -16,10 +16,6 @@ namespace KFrame
         auto lognode = config.FindNode( "LogServer" );
         _log_url = lognode.GetString( "Url" );
         //////////////////////////////////////////////////////////////////
-        auto clusternode = config.FindNode( "Cluster" );
-        _cluster_name = clusternode.GetString( "Name" );
-        _cluster_key = clusternode.GetString( "Key" );
-        //////////////////////////////////////////////////////////////////
 
         auto kfglobal = KFGlobal::Instance();
 

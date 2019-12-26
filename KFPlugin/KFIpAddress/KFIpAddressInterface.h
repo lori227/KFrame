@@ -30,10 +30,6 @@ namespace KFrame
 
         // 获得log地址
         virtual const std::string& GetLogUrl() = 0;
-
-        // 集群认证数据
-        virtual const std::string& GetClusterName() = 0;
-        virtual const std::string& GetClusterKey() = 0;
     };
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

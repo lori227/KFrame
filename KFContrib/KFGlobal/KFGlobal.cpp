@@ -217,4 +217,10 @@ namespace KFrame
 
         return true;
     }
+
+    void KFGlobal::UUIDSetting( uint32 timebits, uint32 zonebits, uint32 workerbits, uint32 seqbits, uint64 starttime )
+    {
+        KFUUID::InitSetting( timebits, zonebits, workerbits, seqbits, starttime );
+    }
+
 }

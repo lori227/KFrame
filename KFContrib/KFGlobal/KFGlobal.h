@@ -68,6 +68,9 @@ namespace KFrame
         bool CheckChannelService( uint32 channel, uint32 service );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+        // 设置uuid
+        void UUIDSetting( uint32 timebits, uint32 zonebits, uint32 workerbits, uint32 seqbits, uint64 starttime );
+
     protected:
         KFGlobal();
         // 接口
@@ -118,9 +121,6 @@ namespace KFrame
 
         // 启动参数
         StringMap _startup_params;
-
-        // 项目开始时间
-        uint64 _project_start_time{ 0 };
 
         /////////////////////////////////////////////////////////////////////////////////
     private:

@@ -1,6 +1,7 @@
 ﻿#include "KFIpAddressPlugin.hpp"
 #include "KFIpAddressModule.hpp"
 #include "KFConfig/KFConfigInterface.h"
+#include "KFProject/KFProjectInterface.h"
 
 namespace KFrame
 {

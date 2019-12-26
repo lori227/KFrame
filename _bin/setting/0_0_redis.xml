@@ -26,7 +26,7 @@
 
 	<!--保存小区玩家数据信息-->
 	<Module Name="data">
-		<Redis MinLogicId="1" MaxLogicId="10">
+		<Redis MinLogicId="1" MaxLogicId="100">
 			<Write IP="127.0.0.1" Port="6379" Password="redis@lori227-="/>
 			<Read IP="127.0.0.1" Port="6379" Password="redis@lori227-="/>
 		</Redis>			 

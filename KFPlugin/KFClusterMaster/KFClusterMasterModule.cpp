@@ -199,9 +199,10 @@ namespace KFrame
         auto strclientid = KFAppId::ToString( kfmsg.clientid() );
         __LOG_DEBUG__( "cluster client[{}] auth req!", strclientid );
 
-        if ( kfmsg.clusterkey() != _kf_ip_address->GetClusterKey() )
+        static auto& _cluster_key = _kf_project->GetString( __STRING__( clusterkey ) );
+        if ( kfmsg.clusterkey() != _cluster_key )
         {
-            return __LOG_ERROR__( "cluster client[{}] key[{}!={}] error!", strclientid, kfmsg.clusterkey(), _kf_ip_address->GetClusterKey() );
+            return __LOG_ERROR__( "cluster client[{}] key[{}!={}] error!", strclientid, kfmsg.clusterkey(), _cluster_key );
         }
 
         auto kfproxy = SelectProxyServer( kfmsg.clientid() ) ;

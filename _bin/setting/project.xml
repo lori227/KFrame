@@ -1,3 +1,13 @@
 <root version="1">
+	<!-- uuid -->
 	<item Id="projectstarttime" Value="1559318400"/>
+	<item Id="uuidtimerbits" Value="32"/>
+	<item Id="uuidzonebits" Value="4"/>
+	<item Id="uuidworkerbits" Value="10"/>
+	<item Id="uuidseqbits" Value="17"/>
+
+	<!-- ip集群认证数据 -->
+	<item Id="clustername" Value="route"/>
+	<item Id="clusterkey" Value="route@kframe,./"/>
+
 </root>

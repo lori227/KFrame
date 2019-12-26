@@ -44,10 +44,6 @@ namespace KFrame
 
         // 获得log地址
         virtual const std::string& GetLogUrl();
-
-        // 集群认证数据
-        virtual const std::string& GetClusterName();
-        virtual const std::string& GetClusterKey();
     protected:
 #if __KF_SYSTEM__ == __KF_WIN__
         std::string GetWinLocalIp();
