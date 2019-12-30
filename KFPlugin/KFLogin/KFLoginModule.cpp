@@ -178,6 +178,7 @@ namespace KFrame
         __JSON_SET_VALUE__( sendjson, __STRING__( token ), kfmsg.token() );
         __JSON_SET_VALUE__( sendjson, __STRING__( sessionid ), sessionid );
         __JSON_SET_VALUE__( sendjson, __STRING__( accountid ), kfmsg.accountid() );
+        __JSON_SET_VALUE__( sendjson, __STRING__( zoneid ), KFGlobal::Instance()->_app_id->GetZoneId() );
 
         static auto _url = _kf_ip_address->GetAuthUrl() + __STRING__( verify );
         _kf_http_client->MTGet( _url, sendjson, this, &KFLoginModule::OnHttpAuthLoginVerifyCallBack );
