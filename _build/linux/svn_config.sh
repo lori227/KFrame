@@ -1,7 +1,7 @@
 #!/bin/bash
 
 configpath=/home/server/project/chess/trunk/Resource/config
-serverpath=/data/chess/config
+serverpath=/data/chess/config/config
 
 svn up $configpath
 cp -a -f $configpath/*.xml $serverpath/

@@ -23,15 +23,13 @@ namespace KFrame
     {
         if ( _kf_setting->_file_name.empty() )
         {
-            _log_name = __FORMAT__( "{}{}{}{}{}{}.log",
-                                    _kf_setting->_output_path,
-                                    appname, _kf_setting->_split, apptype, _kf_setting->_split, strappid );
+            _log_name = __FORMAT__( "{}{}-{}-{}.log", _kf_setting->_output_path, appname, apptype, strappid );
         }
         else
         {
-            _log_name = __FORMAT__( "{}{}{}{}{}{}{}{}.log",
+            _log_name = __FORMAT__( "{}{}{}{}-{}-{}.log",
                                     _kf_setting->_output_path, _kf_setting->_file_name, _kf_setting->_split,
-                                    appname, _kf_setting->_split, apptype, _kf_setting->_split, strappid );
+                                    appname, apptype, strappid );
         }
         /////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////
