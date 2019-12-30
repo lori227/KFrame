@@ -602,20 +602,21 @@ namespace KFrame
         return false;
     }
 
-    void KFDeployAgentModule::FindAppDeployPath( const std::string& appname, std::set<std::string>& deploypathlist )
+    void KFDeployAgentModule::FindAppDeployPath( const std::string& appname, uint32 zoneid, std::set<std::string>& deploypathlist )
     {
         deploypathlist.clear();
 
         for ( auto& iter : _deploy_list._objects )
         {
             auto deploydata = iter.second;
-
             if ( appname != _globbing_string )
             {
                 if ( appname == deploydata->_app_name )
                 {
-                    deploypathlist.insert( deploydata->_deploy_path );
-                    break;
+                    if ( appname != __STRING__( zone ) || zoneid == _invalid_int || deploydata->_zone_id == zoneid )
+                    {
+                        deploypathlist.insert( deploydata->_deploy_path );
+                    }
                 }
             }
             else
@@ -1048,7 +1049,7 @@ namespace KFrame
 
         // 把文件拷贝过去
         std::set< std::string > deploypathlist;
-        FindAppDeployPath( _kf_task->_app_name, deploypathlist );
+        FindAppDeployPath( _kf_task->_app_name, _kf_task->_zone_id, deploypathlist );
         for ( auto& deploypath : deploypathlist )
         {
             ExecuteShell( "mkdir -p {}", deploypath );
@@ -1151,7 +1152,7 @@ namespace KFrame
 
         // 把文件拷贝过去
         std::set< std::string > deploypathlist;
-        FindAppDeployPath( _kf_task->_app_name, deploypathlist );
+        FindAppDeployPath( _kf_task->_app_name, _kf_task->_zone_id, deploypathlist );
         for ( auto& deploypath : deploypathlist )
         {
             ExecuteShell( "mkdir -p {}", deploypath );
@@ -1207,7 +1208,7 @@ namespace KFrame
 
         // 把文件拷贝过去
         std::set< std::string > deploypathlist;
-        FindAppDeployPath( _kf_task->_app_name, deploypathlist );
+        FindAppDeployPath( _kf_task->_app_name, _kf_task->_zone_id, deploypathlist );
         for ( auto& deploypath : deploypathlist )
         {
             ExecuteShell( "mkdir -p {}", deploypath );
@@ -1278,7 +1279,7 @@ namespace KFrame
 
         // 把文件拷贝过去
         std::set< std::string > deploypathlist;
-        FindAppDeployPath( _kf_task->_app_name, deploypathlist );
+        FindAppDeployPath( _kf_task->_app_name, _kf_task->_zone_id, deploypathlist );
         for ( auto& deploypath : deploypathlist )
         {
             ExecuteShell( "mkdir -p {}", deploypath );

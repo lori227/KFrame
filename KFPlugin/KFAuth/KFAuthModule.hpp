@@ -11,11 +11,11 @@
 
 #include "KFAuthInterface.h"
 #include "KFRedis/KFRedisInterface.h"
-#include "KFOption/KFOptionInterface.h"
 #include "KFChannel/KFChannelInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
 #include "KFHttpServer/KFHttpServerInterface.h"
 #include "KFIpAddress/KFIpAddressInterface.h"
+#include "KFZConfig/KFZoneConfig.hpp"
 
 namespace KFrame
 {

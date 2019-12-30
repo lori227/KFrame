@@ -69,11 +69,14 @@ namespace KFrame
         }
 
         // zoneid
-        if ( zoneid != _invalid_int )
+        if ( appname == __STRING__( zone ) )
         {
-            if ( zoneid != _zone_id )
+            if ( zoneid != _invalid_int )
             {
-                return false;
+                if ( zoneid != _zone_id )
+                {
+                    return false;
+                }
             }
         }
 

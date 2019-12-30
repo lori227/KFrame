@@ -162,11 +162,14 @@ namespace KFrame
         }
 
         // zoneid
-        if ( zoneid != _invalid_int )
+        if ( kfglobal->_app_name == __STRING__( zone ) )
         {
-            if ( zoneid != kfglobal->_app_id->GetZoneId() )
+            if ( zoneid != _invalid_int )
             {
-                return false;
+                if ( zoneid != kfglobal->_app_id->GetZoneId() )
+                {
+                    return false;
+                }
             }
         }
 

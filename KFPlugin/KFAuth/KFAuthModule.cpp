@@ -142,11 +142,13 @@ namespace KFrame
         for ( auto& strid : kflist->_value )
         {
             auto kfmap = redisdriver->QueryMap( "hgetall {}:{}", __STRING__( zone ), strid );
-            if ( kfmap->_value.empty() )
+            if ( !kfmap->_value.empty() )
             {
                 __JSON_OBJECT__( kfzone );
                 __JSON_SET_VALUE__( kfzone, __STRING__( zoneid ), KFUtility::ToValue<uint32>( kfmap->_value[ __STRING__( zoneid ) ] ) );
                 __JSON_SET_VALUE__( kfzone, __STRING__( name ), kfmap->_value[ __STRING__( name ) ] );
+                __JSON_SET_VALUE__( kfzone, __STRING__( ip ), kfmap->_value[ __STRING__( ip ) ] );
+                __JSON_SET_VALUE__( kfzone, __STRING__( port ), KFUtility::ToValue( kfmap->_value[ __STRING__( port ) ] ) );
                 __JSON_ADD_VALUE__( kfarray, kfzone );
             }
         }
@@ -361,6 +363,12 @@ namespace KFrame
     uint32 KFAuthModule::BalanceAllocZoneId()
     {
         // todo:如果有推荐的服务器, 直接返回
+        auto recommendzoneid = KFZoneConfig::Instance()->RecommendZoneId();
+        if ( recommendzoneid != 0u )
+        {
+            return recommendzoneid;
+        }
+
         // 选择一个最小人数的分区
         auto redisdriver = __DIR_REDIS_DRIVER__;
         auto zonelist = redisdriver->QueryList( "zrange {} 0 -1", __STRING__( zonelist ) );

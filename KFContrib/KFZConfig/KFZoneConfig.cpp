@@ -18,6 +18,8 @@ namespace KFrame
         _zone = _zone_template;
         /////////////////////////////////////////////////////////////////////////////////////
         auto zones = config.FindNode( "Zones" );
+        _recommend_zone_id = zones.GetUInt32( "Recommend", true );
+
         auto xmlnode = zones.FindNode( "Zone" );
         while ( xmlnode.IsValid() )
         {

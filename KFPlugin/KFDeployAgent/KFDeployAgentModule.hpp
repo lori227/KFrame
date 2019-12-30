@@ -128,7 +128,7 @@ namespace KFrame
         void ReadProcessFromFile( KFDeployData* deploydata );
 
         // 获得部署路径
-        void FindAppDeployPath( const std::string& appname, std::set< std::string >& deploypathlist );
+        void FindAppDeployPath( const std::string& appname, uint32 zoneid, std::set< std::string >& deploypathlist );
 
 #if __KF_SYSTEM__ == __KF_WIN__
         // 启动进程

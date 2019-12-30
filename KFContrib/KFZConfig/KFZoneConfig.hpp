@@ -23,6 +23,12 @@ namespace KFrame
         const KFZoneSetting* ZoneSetting();
         const KFZoneSetting* FindSetting( uint32 zoneid );
 
+        // 推荐的小区
+        uint32 RecommendZoneId()
+        {
+            return _recommend_zone_id;
+        }
+
     protected:
         // 设置小区信息
         void SetZoneData( KFZoneSetting* kfsetting, uint32 zoneid );
@@ -33,6 +39,9 @@ namespace KFrame
 
         // 小区模板
         KFZoneSetting _zone_template;
+
+        // 推荐的小区
+        uint32 _recommend_zone_id = 0u;
 
         // 小区列表
         KFHashMap< uint32, uint32, KFZoneSetting > _zone_list;

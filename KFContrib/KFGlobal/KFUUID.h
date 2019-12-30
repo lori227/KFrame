@@ -46,7 +46,7 @@ namespace KFrame
         uint64 _max_seq{ 0x1FFF };
 
         // 时间戳缩减值
-        uint64 _starttime{ 0u };
+        uint64 _starttime{ 1559318400 };
     };
 
     class KFUUID

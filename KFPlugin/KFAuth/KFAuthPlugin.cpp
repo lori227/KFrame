@@ -1,5 +1,6 @@
 ﻿#include "KFAuthPlugin.hpp"
 #include "KFAuthModule.hpp"
+#include "KFConfig/KFConfigInterface.h"
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -22,5 +23,10 @@ namespace KFrame
         __FIND_MODULE__( _kf_ip_address, KFIpAddressInterface );
         __FIND_MODULE__( _kf_http_client, KFHttpClientInterface );
         __FIND_MODULE__( _kf_http_server, KFHttpServerInterface );
+    }
+
+    void KFAuthPlugin::AddConfig()
+    {
+        __KF_ADD_CONFIG__( KFZoneConfig );
     }
 }
