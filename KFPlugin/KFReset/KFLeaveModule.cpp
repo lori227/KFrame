@@ -15,8 +15,8 @@ namespace KFrame
     __KF_LEAVE_PLAYER_FUNCTION__( KFLeaveModule::LeaveGameWorld )
     {
         // 更新总时间
-        auto onlinetime = player->Get( __STRING__( onlinetime ) );
-        player->Operate( __STRING__( totaltime ), KFEnum::Add, KFGlobal::Instance()->_real_time - onlinetime );
+        auto logintime = player->Get( __STRING__( logintime ) );
+        player->Operate( __STRING__( totaltime ), KFEnum::Add, KFGlobal::Instance()->_real_time - logintime );
         ///////////////////////////////////////////////////////////////////////////////////////////
         auto playerid = player->GetKeyID();
         auto kfnoteparent = player->Find( __STRING__( note ) );

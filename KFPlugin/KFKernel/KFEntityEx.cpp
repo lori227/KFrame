@@ -64,6 +64,7 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFEntityEx::UpdateData( KFData* kfdata, const std::string& value )
     {
+        auto oldvalue = kfdata->Get<std::string>();
         kfdata->Set<std::string>( value );
         if ( kfdata->_data_type == KFDataDefine::Type_Array )
         {
@@ -80,7 +81,7 @@ namespace KFrame
         else if ( kfdata->_data_type == KFDataDefine::Type_String )
         {
             // 属性更新回调
-            _kf_component->UpdateDataCallBack( this, kfdata, value, true );
+            _kf_component->UpdateDataCallBack( this, kfdata, oldvalue, value, true );
         }
     }
 

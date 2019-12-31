@@ -144,10 +144,8 @@ namespace KFrame
         auto minute = ptm->tm_min;
         auto second = ptm->tm_sec;
 
-        char buff[ 128 ] = "";
-        sprintf( buff, "%04d-%02d-%02d %02d:%02d:%02d",
-                 year, month, day, hour, minute, second );
-        return buff;
+        return __FORMAT__( "{:04d}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}",
+                           year, month, day, hour, minute, second );
     }
 
     std::string KFDate::GetTimeString()

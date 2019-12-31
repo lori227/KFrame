@@ -82,8 +82,7 @@ namespace KFrame
         __STRING_DEFINE__( serverid );
         __STRING_DEFINE__( name );
         __STRING_DEFINE__( online );
-        __STRING_DEFINE__( onlinetime );
-        __STRING_DEFINE__( offlinetime );
+        __STRING_DEFINE__( logintime );
         __STRING_DEFINE__( totaltime );
         __STRING_DEFINE__( birthday );
         __STRING_DEFINE__( clusterkey );

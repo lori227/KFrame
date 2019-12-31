@@ -601,7 +601,7 @@ namespace KFrame
         }
     }
 
-    void KFComponentEx::UpdateDataCallBack( KFEntity* kfentity, KFData* kfdata, const std::string& value, bool callback )
+    void KFComponentEx::UpdateDataCallBack( KFEntity* kfentity, KFData* kfdata, const std::string& oldvalue, const std::string& newvalue, bool callback )
     {
         // 开启保存数据库定时器
         StartSaveEntityTimer( kfentity, kfdata );
@@ -620,7 +620,7 @@ namespace KFrame
             for ( auto& iter : _update_string_module._objects )
             {
                 auto kffunction = iter.second;
-                kffunction->_function( kfentity, kfdata, value );
+                kffunction->_function( kfentity, kfdata, oldvalue, newvalue );
             }
         }
 
@@ -629,7 +629,7 @@ namespace KFrame
         auto kfdatafunction = _update_string_function.Find( findkey );
         if ( kfdatafunction != nullptr )
         {
-            kfdatafunction->CallFunction( kfentity, kfdata, value );
+            kfdatafunction->CallFunction( kfentity, kfdata, oldvalue, newvalue );
         }
     }
 

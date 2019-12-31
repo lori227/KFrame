@@ -15,6 +15,7 @@ namespace KFrame
     __KF_ENTER_PLAYER_FUNCTION__( KFEnterModule::EnterGameWorld )
     {
         // 上线时间
+        player->Set( __STRING__( logintime ), KFGlobal::Instance()->_real_time );
         ////////////////////////////////////////////////////////////////////////////////
         auto playerid = player->GetKeyID();
         auto kfnoterecord = player->Find( __STRING__( note ) );

@@ -261,7 +261,6 @@ namespace KFrame
         player->Set( __STRING__( channel ), pblogin->channel() );
         player->Set( __STRING__( account ), pblogin->account() );
         player->Set( __STRING__( accountid ), pblogin->accountid() );
-        player->Set( __STRING__( onlinetime ), KFGlobal::Instance()->_real_time );
         player->Set( __STRING__( basic ), __STRING__( serverid ), KFGlobal::Instance()->_app_id->GetId() );
 
         // 渠道数据

@@ -97,7 +97,7 @@ namespace KFrame
         void DeleteSaveEntity( KFEntity* kfentity );
         //////////////////////////////////////////////////////////////////////////////////////
         // 属性更新回调函数
-        void UpdateDataCallBack( KFEntity* kfentity, KFData* kfdata, const std::string& value, bool callback );
+        void UpdateDataCallBack( KFEntity* kfentity, KFData* kfdata, const std::string& oldvalue, const std::string& newvalue, bool callback );
         void UpdateDataCallBack( KFEntity* kfentity, uint64 key, KFData* kfdata, uint64 index, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue, bool callback );
 
         // 属性添加回调函数
