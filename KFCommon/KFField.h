@@ -254,6 +254,7 @@ namespace KFrame
         __STRING_DEFINE__( copy );
         __STRING_DEFINE__( remote );
         __STRING_DEFINE__( project );
+        __STRING_DEFINE__( element );
 
     }
 }

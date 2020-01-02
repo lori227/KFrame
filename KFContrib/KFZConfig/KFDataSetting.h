@@ -30,17 +30,15 @@ namespace KFrame
             ////////////////////////////////////////////////////////////////////////////
 
             Mask_Null = 0,				// 无效值
-            Mask_Create = 1 << 1,		// 是否需要创建
-            Mask_Client = 1 << 2,		// 更新同步玩家
-            Mask_View = 1 << 3,			// 同步给附近玩家
-            Mask_Save = 1 << 4,			// 同步给附近玩家
-            Mask_Log = 1 << 5,			// 打印日志
-            Mask_Multiple = 1 << 6,		// 是否支持倍数
-            Mask_Show = 1 << 7,			// 是否显示给客户端
-            Mask_Delay = 1 << 8,		// 延迟同步到客户端
-            Mask_AddCall = 1 << 9,		// 是否添加回调
-            Mask_RemoveCall = 1 << 10,	// 是否删除回调
-            Mask_UpdataCall = 1 << 11,	// 是否更新回调
+            Mask_Client = 1 << 1,		// 更新同步玩家
+            Mask_View = 1 << 2,			// 同步给附近玩家
+            Mask_Save = 1 << 3,			// 是否保存数据
+            Mask_Multiple = 1 << 4,		// 是否支持倍数
+            Mask_Show = 1 << 5,			// 是否显示给客户端
+            Mask_Delay = 1 << 6,		// 延迟同步到客户端
+            Mask_AddCall = 1 << 7,		// 是否添加回调
+            Mask_RemoveCall = 1 << 8,	// 是否删除回调
+            Mask_UpdataCall = 1 << 9,	// 是否更新回调
 
             Mask_Public = 1 << 20,		// 公共属性
             Mask_Relation = 1 << 21,	// 关系属性
@@ -53,9 +51,6 @@ namespace KFrame
             Data_Delete_Remove = 2,		// 删除数据库
             ////////////////////////////////////////////////////////////////////////////
             ////////////////////////////////////////////////////////////////////////////
-            Show_None = 1,					// 不显示
-            Show_Element = 2,				// 使用Element显示
-            Show_Data = 3,					// 使用Data显示
         };
 
         static uint32 ConvertDataType( const std::string& stringtype )

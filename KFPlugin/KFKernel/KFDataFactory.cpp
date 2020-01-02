@@ -128,10 +128,6 @@ namespace KFrame
         for ( auto& iter : kfdata->_data_setting->_class_setting->_static_data._objects )
         {
             auto childdatasetting = iter.second;
-            if ( !childdatasetting->HaveMask( KFDataDefine::Mask_Create ) )
-            {
-                continue;
-            }
 
             // 判断是否存在
             auto kfchild = kfdata->Find( childdatasetting->_name );
@@ -206,10 +202,6 @@ namespace KFrame
         for ( auto& iter : datasetting->_class_setting->_static_data._objects )
         {
             auto childdatasetting = iter.second;
-            if ( !childdatasetting->HaveMask( KFDataDefine::Mask_Create ) )
-            {
-                continue;
-            }
 
             auto kfchilddata = Create( childdatasetting->_type );
             if ( kfchilddata == nullptr )

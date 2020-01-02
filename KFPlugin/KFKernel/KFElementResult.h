@@ -25,6 +25,7 @@ namespace KFrame
         // 清空结果
         void Clear()
         {
+            _sequence = 0u;
             _element = nullptr;
             _show_type = KFDataShowEnum::Show_None;
             _config_id = 0u;
@@ -50,6 +51,9 @@ namespace KFrame
         }
 
     public:
+        // 序列号
+        uint64 _sequence = 0u;
+
         // 操作逻辑
         uint32 _operate = KFEnum::Add;
 

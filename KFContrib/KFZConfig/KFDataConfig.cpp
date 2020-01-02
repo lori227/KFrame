@@ -16,14 +16,12 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static std::map< std::string, uint32 > _data_mask_list =
     {
-        {"Create", KFDataDefine::Mask_Create},
         {"Show", KFDataDefine::Mask_Show},
         {"Multiple", KFDataDefine::Mask_Multiple},
         {"Save", KFDataDefine::Mask_Save},
         {"Sync", KFDataDefine::Mask_Client},
         {"Delay", KFDataDefine::Mask_Delay},
         {"View", KFDataDefine::Mask_View},
-        {"Log", KFDataDefine::Mask_Log},
         {"Public", KFDataDefine::Mask_Public},
         {"Relation", KFDataDefine::Mask_Relation},
         {"Team", KFDataDefine::Mask_Team},

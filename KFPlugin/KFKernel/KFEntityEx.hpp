@@ -240,6 +240,7 @@ namespace KFrame
         bool _is_in_save = false;
 
         // 需要显示的element
+        uint64 _element_sequence = 0u;
         bool _have_show_client = false;
         KFMsg::PBShowElement _pb_show_element;
 

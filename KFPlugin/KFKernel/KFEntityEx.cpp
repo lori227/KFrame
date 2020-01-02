@@ -809,6 +809,7 @@ namespace KFrame
             _pb_show_element.set_modulename( modulename );
         }
 
+        _element_sequence = KFGlobal::Instance()->STMakeUUID( __STRING__( element ) );
         AddElement( kfelements, function, line, multiple );
     }
 
@@ -843,6 +844,7 @@ namespace KFrame
 
         KFElementResult _element_result;
         _element_result._operate = KFEnum::Add;
+        _element_result._sequence = _element_sequence;
         _element_result._element = const_cast< KFElement* >( kfelement );
 
         // 如果有注册的特殊处理函数
@@ -1140,6 +1142,7 @@ namespace KFrame
             __LOG_INFO_FUNCTION__( function, line, "{}=[{}] remove elements=[{}]!", _kf_component->_component_name, GetKeyID(), kfelements->_str_element );
         }
 
+        _element_sequence = KFGlobal::Instance()->STMakeUUID( __STRING__( element ) );
         for ( auto kfelement : kfelements->_element_list )
         {
             RemoveElement( kfelement, modulename, function, line, multiple );
@@ -1161,6 +1164,7 @@ namespace KFrame
 
         KFElementResult _element_result;
         _element_result._operate = KFEnum::Dec;
+        _element_result._sequence = _element_sequence;
         _element_result._show_type = KFDataShowEnum::Show_Element;
         _element_result._element = const_cast< KFElement* >( kfelement );
 
