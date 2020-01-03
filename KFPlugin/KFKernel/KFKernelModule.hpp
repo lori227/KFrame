@@ -61,15 +61,12 @@ namespace KFrame
         // 序列号
         KFMsg::PBObject* SerializeObject( KFData* kfdata, uint32 datamask );
 
-    protected:
-
     private:
         // kernel
         static KFKernelModule* _kernel_module;
 
         // 组件列表
         KFHashMap< std::string, const std::string, KFComponentEx > _kf_component;
-
     };
 }
 

@@ -16,7 +16,6 @@ namespace KFrame
 {
     KFDataFactory::KFDataFactory()
     {
-
     }
 
     KFDataFactory::~KFDataFactory()

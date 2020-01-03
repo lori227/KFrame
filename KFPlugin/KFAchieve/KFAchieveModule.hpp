@@ -13,6 +13,7 @@
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
+#include "KFCondition/KFConditionInterface.h"
 #include "KFAchieveConfig.hpp"
 
 namespace KFrame
@@ -40,18 +41,12 @@ namespace KFrame
         // 领取成就奖励
         uint32 ReceiveAchieveReward( KFEntity* player, uint32 achieveid );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // 成就数值更新回调
-        __KF_UPDATE_DATA_FUNCTION__( OnAchieveValueUpdateCallBack );
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 属性更新回调
-        __KF_UPDATE_DATA_FUNCTION__( OnUpdateDataCallBack );
-        __KF_ADD_DATA_FUNCTION__( OnAddDataCallBack );
-        __KF_REMOVE_DATA_FUNCTION__( OnRemoveDataCallBack );
-
-        // 更新成就
-        void UpdateDataAchieveValue( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 nowvalue );
-        void UpdateObjectAchieveValue( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate );
+        __KF_UPDATE_DATA_FUNCTION__( OnUpdateDataAchieveModule );
+        __KF_ADD_DATA_FUNCTION__( OnAddDataAchieveModule );
+        __KF_REMOVE_DATA_FUNCTION__( OnRemoveDataAchieveModule );
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        __KF_ENTER_PLAYER_FUNCTION__( OnEnterAchieveModule );
 
     private:
         // 玩家组件上下文

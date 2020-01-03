@@ -842,41 +842,41 @@ namespace KFrame
 
         const_cast< KFElement* >( kfelement )->_data_setting = kfdata->_data_setting;
 
-        KFElementResult _element_result;
-        _element_result._operate = KFEnum::Add;
-        _element_result._sequence = _element_sequence;
-        _element_result._element = const_cast< KFElement* >( kfelement );
+        KFElementResult elementresult;
+        elementresult._operate = KFEnum::Add;
+        elementresult._sequence = _element_sequence;
+        elementresult._element = const_cast< KFElement* >( kfelement );
 
         // 如果有注册的特殊处理函数
         auto kffunction = _kf_component->_add_element_function.Find( kfdata->_data_setting->_logic_name );
         if ( kffunction != nullptr )
         {
-            kffunction->_function( this, kfdata, &_element_result, function, line, multiple );
+            kffunction->_function( this, kfdata, &elementresult, function, line, multiple );
         }
         else
         {
-            _element_result._show_type = KFDataShowEnum::Show_Element;
+            elementresult._show_type = KFDataShowEnum::Show_Element;
 
             // 没有注册的函数
             switch ( kfdata->_data_type )
             {
             case KFDataDefine::Type_Object:
-                AddObjectElement( kfdata, &_element_result, function, line, multiple );
+                AddObjectElement( kfdata, &elementresult, function, line, multiple );
                 break;
             case KFDataDefine::Type_Record:
-                AddRecordElement( kfdata, &_element_result, function, line, multiple );
+                AddRecordElement( kfdata, &elementresult, function, line, multiple );
                 break;
             default:
-                AddNormalElement( kfdata, &_element_result, function, line, multiple );
+                AddNormalElement( kfdata, &elementresult, function, line, multiple );
                 break;
             }
         }
 
         // 显示属性
-        ShowElementResult( &_element_result, function, line );
+        ShowElementResult( &elementresult, function, line );
 
         // 纪录日志
-        _kf_component->CallLogElementFunction( this, _pb_show_element.modulename(), &_element_result );
+        _kf_component->CallLogElementFunction( this, _pb_show_element.modulename(), &elementresult );
     }
 
     void KFEntityEx::AddNormalElement( KFData* kfdata, KFElementResult* kfresult, const char* function, uint32 line, float multiple )
@@ -1162,11 +1162,11 @@ namespace KFrame
             }
         }
 
-        KFElementResult _element_result;
-        _element_result._operate = KFEnum::Dec;
-        _element_result._sequence = _element_sequence;
-        _element_result._show_type = KFDataShowEnum::Show_Element;
-        _element_result._element = const_cast< KFElement* >( kfelement );
+        KFElementResult elementresult;
+        elementresult._operate = KFEnum::Dec;
+        elementresult._sequence = _element_sequence;
+        elementresult._show_type = KFDataShowEnum::Show_Element;
+        elementresult._element = const_cast< KFElement* >( kfelement );
 
         // 如果有注册函数, 执行注册函数
         auto kffunction = _kf_component->_remove_element_function.Find( kfdata->_data_setting->_logic_name );
@@ -1192,7 +1192,7 @@ namespace KFrame
         }
 
         // 纪录日志
-        _kf_component->CallLogElementFunction( this, modulename, &_element_result );
+        _kf_component->CallLogElementFunction( this, modulename, &elementresult );
     }
 
     void KFEntityEx::RemoveNormalElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line, float multiple )
