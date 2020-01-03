@@ -187,7 +187,7 @@ namespace KFrame
         auto kfresult = _mail_driver->Pipeline();
         if ( !kfresult->IsOk() )
         {
-            __LOG_ERROR__( "reload gm mail[{}] failed!", playerid );
+            __LOG_ERROR__( "reload gm mail[{}] failed", playerid );
         }
     }
 
@@ -277,7 +277,7 @@ namespace KFrame
         {
             std::string strdata;
             google::protobuf::util::MessageToJsonString( kfmsg, &strdata );
-            __LOG_ERROR__( "objectid[{}] add mail[{}] failed!", kfmsg.objectid(), strdata );
+            __LOG_ERROR__( "objectid[{}] add mail[{}] failed", kfmsg.objectid(), strdata );
         }
     }
 

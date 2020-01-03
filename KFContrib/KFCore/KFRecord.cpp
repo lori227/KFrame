@@ -41,7 +41,7 @@ namespace KFrame
 
     void KFRecord::CopyFrom( KFData* kfother )
     {
-        __LOG_ERROR__( "record can't copy anohter!" );
+        __LOG_ERROR__( "record can't copy anohter" );
         //auto kfchild = kfother->First();
         //while ( kfchild != nullptr )
         //{
@@ -238,7 +238,7 @@ namespace KFrame
 
     void KFRecord::FromMap( const StringMap& values )
     {
-        __LOG_ERROR__( "record can't copy from map!" );
+        __LOG_ERROR__( "record can't copy from map" );
 
         //for ( auto iter : values )
         //{

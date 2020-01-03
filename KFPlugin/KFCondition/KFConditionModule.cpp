@@ -188,6 +188,7 @@ namespace KFrame
             auto kfsetting = KFConditionConfig::Instance()->FindSetting( conditionid );
             if ( kfsetting == nullptr )
             {
+                __LOG_ERROR__( "condition=[{}] can't find setting", conditionid );
                 continue;
             }
 
@@ -273,7 +274,7 @@ namespace KFrame
         auto kfsetting = KFConditionConfig::Instance()->FindSetting( conditionid );
         if ( kfsetting == nullptr )
         {
-            __LOG_ERROR__( "condition=[{}] can't find setting!", conditionid );
+            __LOG_ERROR__( "condition=[{}] can't find setting", conditionid );
             return KFConditionEnum::UpdateDone;
         }
 
@@ -498,7 +499,7 @@ namespace KFrame
     auto kfsetting = KFConditionConfig::Instance()->FindSetting( conditionid );\
     if ( kfsetting == nullptr )\
     {\
-        __LOG_ERROR__( "condition=[{}] can't find setting!", conditionid );\
+        __LOG_ERROR__( "condition=[{}] can't find setting", conditionid );\
         return KFConditionEnum::UpdateDone;\
     }\
     auto operatetype = 0u;\

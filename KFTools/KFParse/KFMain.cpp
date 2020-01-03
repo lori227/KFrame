@@ -24,18 +24,18 @@ void Parse( int argc, char* argv[] )
 {
     if ( argc < 3 )
     {
-        std::cout << "Param Error!" << std::endl;
+        std::cout << "Param Error" << std::endl;
         return;
     }
 
     std::string excelfile = argv[ 1 ];
     uint32 saveflag = atoi( argv[ 2 ] );
-    std::cout << "Start Parse Excel File = " << excelfile << "!" << std::endl;
+    std::cout << "Start Parse Excel File = " << excelfile << "" << std::endl;
 
     bool load = _kf_parse->LoadFromExcel( excelfile.c_str(), true, saveflag );
     if ( !load )
     {
-        std::cout << "Load File = " << excelfile << " Failed!" << std::endl;
+        std::cout << "Load File = " << excelfile << " Failed" << std::endl;
         return;
     }
 
@@ -67,7 +67,7 @@ void Parse( int argc, char* argv[] )
         }
     }
 
-    std::cout << "Parse Excel File = " << excelfile << " OK!" << std::endl;
+    std::cout << "Parse Excel File = " << excelfile << " OK" << std::endl;
 
     ////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////

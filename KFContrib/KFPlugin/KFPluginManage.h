@@ -43,11 +43,11 @@
             auto ok = _kf_plugin_manage->Register##function##Function< module >( _sort, kfmodule, &module::function );\
             if ( ok )\
             {\
-                __LOG_INFO__( "module=[{}] sort=[{}] function=[{}] register ok!", #module, _sort, #function );\
+                __LOG_INFO__( "module=[{}] sort=[{}] function=[{}] register ok", #module, _sort, #function );\
             }\
             else\
             {\
-                __LOG_ERROR__( "module=[{}] sort=[{}] function=[{}] register failed!", #module, _sort, #function );\
+                __LOG_ERROR__( "module=[{}] sort=[{}] function=[{}] register failed", #module, _sort, #function );\
             }\
         }\
     }

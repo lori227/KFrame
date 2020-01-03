@@ -21,7 +21,7 @@ namespace KFrame
             }
             catch ( Poco::Exception& )
             {
-                __LOG_DEBUG__( "table=[{}] count failed!", table );
+                __LOG_DEBUG__( "table=[{}] count failed", table );
             }
         }
         else

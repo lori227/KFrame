@@ -79,7 +79,7 @@ namespace KFrame
             }
             else
             {
-                std::cout << "file=[" << name << "] field=[" << kfname->_value << "] savefile empty!" << std::endl;
+                std::cout << "file=[" << name << "] field=[" << kfname->_value << "] savefile empty" << std::endl;
                 system( "pause" );
             }
 

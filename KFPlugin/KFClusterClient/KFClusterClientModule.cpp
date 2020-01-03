@@ -105,7 +105,7 @@ namespace KFrame
         auto ok = _kf_tcp_client->SendNetMessage( _cluster_master_id, KFMsg::S2S_CLUSTER_AUTH_TO_MASTER_REQ, &req );
         if ( !ok )
         {
-            __LOG_ERROR__( "send cluster[{}:{}] auth failed!", _cluster_name, _str_master_id );
+            __LOG_ERROR__( "send cluster[{}:{}] auth failed", _cluster_name, _str_master_id );
         }
     }
 
@@ -176,13 +176,13 @@ namespace KFrame
             // 回调函数
             CallClusterConnectionFunction( _cluster_proxy_id );
 
-            __LOG_INFO__( "[{}][{}] cluster services ok!", _cluster_name, KFAppId::ToString( _cluster_proxy_id ) );
+            __LOG_INFO__( "[{}][{}] cluster services ok", _cluster_name, KFAppId::ToString( _cluster_proxy_id ) );
         }
     }
 
     void KFClusterClientModule::ReconnectClusterMaster()
     {
-        __LOG_ERROR__( "cluster=[{}] service reset!", _cluster_name );
+        __LOG_ERROR__( "cluster=[{}] service reset", _cluster_name );
 
         // 断开proxy服务器
         _kf_tcp_client->CloseClient( _cluster_proxy_id, __FUNC_LINE__ );
@@ -193,7 +193,7 @@ namespace KFrame
         auto* kfaddress = _kf_ip_address->FindIpAddress( _cluster_name, __STRING__( master ), _str_master_id );
         if ( kfaddress == nullptr )
         {
-            return __LOG_ERROR__( "can't [{}:{}:{}] address!", _cluster_name, __STRING__( master ), _str_master_id );
+            return __LOG_ERROR__( "can't [{}:{}:{}] address", _cluster_name, __STRING__( master ), _str_master_id );
         }
 
         KFIpAddress ipaddress = *kfaddress;
@@ -227,7 +227,7 @@ namespace KFrame
     {
         if ( !_cluster_in_services )
         {
-            __LOG_ERROR__( "cluster not in service, send msgid=[{}] shardid=[{}] failed!", msgid );
+            __LOG_ERROR__( "cluster not in service, send msgid=[{}] shardid=[{}] failed", msgid );
             return false;
         }
 

@@ -272,20 +272,20 @@ namespace KFrame
         auto kfmail = player->Find( __STRING__( mail ), id );
         if ( kfmail == nullptr )
         {
-            return __LOG_ERROR__( "player={} can't find mail={}!", player->GetKeyID(), id );
+            return __LOG_ERROR__( "player={} can't find mail={}", player->GetKeyID(), id );
         }
 
         auto reward = kfmail->Get< std::string >( __STRING__( reward ) );
         if ( reward.empty() )
         {
-            return __LOG_ERROR__( "player={} mail={} no reward!", player->GetKeyID(), id );
+            return __LOG_ERROR__( "player={} mail={} no reward", player->GetKeyID(), id );
         }
 
         KFElements kfelements;
         auto ok = kfelements.Parse( reward, __FUNC_LINE__ );
         if ( !ok )
         {
-            return __LOG_ERROR__( "player={} mail={} reward={} error!", player->GetKeyID(), id, reward );
+            return __LOG_ERROR__( "player={} mail={} reward={} error", player->GetKeyID(), id, reward );
         }
 
         player->UpdateData( kfmail, __STRING__( status ), KFEnum::Set, KFMsg::ReceiveStatus );
@@ -359,7 +359,7 @@ namespace KFrame
         {
             std::string strdata;
             google::protobuf::util::MessageToJsonString( req, &strdata );
-            __LOG_ERROR__( "sendid={} mail={} failed!", sendid, strdata );
+            __LOG_ERROR__( "sendid={} mail={} failed", sendid, strdata );
         }
 
         return ok;

@@ -23,17 +23,20 @@ namespace KFrame
         auto kfelement = kfresult->_element;
         if ( !kfelement->IsObject() )
         {
-            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object!", kfelement->_data_name );
+            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object", kfelement->_data_name );
+            return false;
         }
 
         auto kfelementobject = reinterpret_cast< KFElementObject* >( kfelement );
         if ( kfelementobject->_config_id == _invalid_int )
         {
-            return __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id!", kfelement->_data_name );
+            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id", kfelement->_data_name );
+            return false;
         }
 
         auto count = kfelementobject->CalcValue( kfparent->_data_setting, kfparent->_data_setting->_value_key_name, 1.0f );
         Drop( player, kfelementobject->_config_id, __MAX__( count, 1u ), __STRING__( command ), __FUNC_LINE__ );
+        return true;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -144,7 +147,7 @@ namespace KFrame
         auto kfsetting = KFDropGroupConfig::Instance()->FindSetting( dropid );
         if ( kfsetting == nullptr )
         {
-            return __LOG_ERROR_FUNCTION__( function, line, "dropid=[{}] can't find setting!", dropid );
+            return __LOG_ERROR_FUNCTION__( function, line, "dropid=[{}] can't find setting", dropid );
         }
 
         for ( auto i = 0u; i < count; ++i )
@@ -181,7 +184,7 @@ namespace KFrame
             DropOverlayCondition( player, kfsetting, outlist );
             break;
         default:
-            __LOG_ERROR__( "drop=[{}] conditiontype=[{}] error!", kfsetting->_id, kfsetting->_condition_type );
+            __LOG_ERROR__( "drop=[{}] conditiontype=[{}] error", kfsetting->_id, kfsetting->_condition_type );
             break;
         }
     }

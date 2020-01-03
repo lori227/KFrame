@@ -334,7 +334,7 @@ namespace KFrame
         auto kfinviterecord = player->Find( kfmsg.dataname() );
         if ( kfinviterecord == nullptr )
         {
-            return __LOG_ERROR__( "invitelist=[{}] is null!", kfmsg.dataname() );
+            return __LOG_ERROR__( "invitelist=[{}] is null", kfmsg.dataname() );
         }
 
         auto kfinvite = player->CreateData( kfinviterecord );
@@ -353,7 +353,7 @@ namespace KFrame
         auto kfsetting = KFRelationConfig::Instance()->FindRelationSettingByInviteName( kfmsg.dataname() );
         if ( kfsetting == nullptr )
         {
-            return __LOG_ERROR__( "invitelist=[{}] setting is null!", kfmsg.dataname() );
+            return __LOG_ERROR__( "invitelist=[{}] setting is null", kfmsg.dataname() );
         }
 
         // playerid 为0, 代表全部操作
@@ -372,7 +372,7 @@ namespace KFrame
         auto kfrecord = player->Find( kfsetting->_invite_data_name );
         if ( kfrecord == nullptr )
         {
-            return __LOG_ERROR__( "invitelist=[{}] recored is null!", kfsetting->_invite_data_name );
+            return __LOG_ERROR__( "invitelist=[{}] recored is null", kfsetting->_invite_data_name );
         }
 
         std::list< uint64 > removelist;
@@ -397,7 +397,7 @@ namespace KFrame
         auto kfrecord = player->Find( kfsetting->_invite_data_name );
         if ( kfrecord == nullptr )
         {
-            return __LOG_ERROR__( "invitelist=[{}] recored is null!", kfsetting->_invite_data_name );
+            return __LOG_ERROR__( "invitelist=[{}] recored is null", kfsetting->_invite_data_name );
         }
 
         auto kfinvite = kfrecord->Find( playerid );
@@ -457,7 +457,7 @@ namespace KFrame
         auto kfrecord = player->Find( kfsetting->_id );
         if ( kfrecord == nullptr )
         {
-            return __LOG_ERROR__( "relation=[{}] record is null!", kfsetting->_id );
+            return __LOG_ERROR__( "relation=[{}] record is null", kfsetting->_id );
         }
 
         // 判断数量
@@ -485,13 +485,13 @@ namespace KFrame
         auto kfsetting = KFRelationConfig::Instance()->FindSetting( kfmsg.dataname() );
         if ( kfsetting == nullptr )
         {
-            return __LOG_ERROR__( "relation=[{}] no setting!", kfmsg.dataname() );
+            return __LOG_ERROR__( "relation=[{}] no setting", kfmsg.dataname() );
         }
 
         auto kfrecord = player->Find( kfmsg.dataname() );
         if ( kfrecord == nullptr )
         {
-            return __LOG_ERROR__( "relation=[{}] no record!", kfmsg.dataname() );
+            return __LOG_ERROR__( "relation=[{}] no record", kfmsg.dataname() );
         }
 
         // 添加关系
@@ -555,7 +555,7 @@ namespace KFrame
         auto kfsetting = KFRelationConfig::Instance()->FindSetting( kfmsg.dataname() );
         if ( kfsetting == nullptr )
         {
-            return __LOG_ERROR__( "relation=[{}] no setting!", kfmsg.dataname() );
+            return __LOG_ERROR__( "relation=[{}] no setting", kfmsg.dataname() );
         }
 
         player->UpdateData( kfsetting->_refuse_name, KFEnum::Set, kfmsg.refuse() );

@@ -14,7 +14,7 @@ namespace KFrame
         }
         else
         {
-            __LOG_ERROR__( "msgid[{}] already register!", msgid );
+            __LOG_ERROR__( "msgid[{}] already register", msgid );
         }
     }
 
@@ -35,7 +35,7 @@ namespace KFrame
         auto ok = _kf_message_function.Remove( msgid );
         if ( !ok )
         {
-            __LOG_ERROR__( "msgid[{}] unregister failed!", msgid );
+            __LOG_ERROR__( "msgid[{}] unregister failed", msgid );
         }
     }
 

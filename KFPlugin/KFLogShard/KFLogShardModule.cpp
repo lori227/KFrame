@@ -26,7 +26,7 @@ namespace KFrame
         auto apptype = __JSON_GET_STRING__( request, __STRING__( apptype ) );
         auto appid = __JSON_GET_STRING__( request, __STRING__( appid ) );
 
-        __LOG_INFO__( "[{}:{}:{}] request address req!", appname, apptype, appid );
+        __LOG_INFO__( "[{}:{}:{}] request address req", appname, apptype, appid );
 
         auto kfglobal = KFGlobal::Instance();
 

@@ -46,7 +46,7 @@ namespace KFrame
                     }
                     catch ( Poco::Exception& )
                     {
-                        __LOG_DEBUG__( "table=[{}] key=[{}] field=[{}] not exist!", table, key, field );
+                        __LOG_DEBUG__( "table=[{}] key=[{}] field=[{}] not exist", table, key, field );
                     }
                 }
             }
@@ -91,7 +91,7 @@ namespace KFrame
                     }
                     catch ( Poco::Exception& )
                     {
-                        __LOG_DEBUG__( "table=[{}] key=[{}] field=[{}] not exist!", table, key, field );
+                        __LOG_DEBUG__( "table=[{}] key=[{}] field=[{}] not exist", table, key, field );
                     }
                 }
             }

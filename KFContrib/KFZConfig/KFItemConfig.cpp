@@ -86,7 +86,7 @@ namespace KFrame
             }
             else
             {
-                __LOG_ERROR__( "drug=[{}] values=[{}] not int!", kfsetting->_id, iter->name.GetString() );
+                __LOG_ERROR__( "drug=[{}] values=[{}] not int", kfsetting->_id, iter->name.GetString() );
             }
         }
     }

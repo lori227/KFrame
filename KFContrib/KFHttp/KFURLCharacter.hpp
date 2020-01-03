@@ -163,7 +163,7 @@ static KFURLCharacter::encodeURIDefineNode URIEncodeMap[256] = {
     {3, "%1E"},
     {3, "%1F"},
     {3, "%20"},
-    {1, "!"},
+    {1, ""},
     {3, "%22"},
     {3, "%23"},
     {3, "%24"},

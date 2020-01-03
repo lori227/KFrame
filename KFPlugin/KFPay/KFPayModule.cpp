@@ -108,7 +108,7 @@ namespace KFrame
             StartQueryPayTimer( player );
             player->UpdateData( __STRING__( payorder ), kfmsg.order() );
 
-            __LOG_INFO__( "player=[{}] payid=[{}] order=[{}] pay ok!", playerid, kfmsg.payid(), kfmsg.order() );
+            __LOG_INFO__( "player=[{}] payid=[{}] order=[{}] pay ok", playerid, kfmsg.payid(), kfmsg.order() );
         }
         else
         {
@@ -163,7 +163,7 @@ namespace KFrame
         if ( player == nullptr )
         {
             // 应该重置订单状态
-            return __LOG_WARN__( "player=[{}] not online!", playerid );
+            return __LOG_WARN__( "player=[{}] not online", playerid );
         }
 
         const auto& paydata = __JSON_GET_ARRRY__( kfjson, __STRING__( paydata ) );
@@ -176,7 +176,7 @@ namespace KFrame
             auto order = __JSON_GET_STRING__( kfpay, __STRING__( payorder ) );
             if ( payid.empty() || order.empty() )
             {
-                __LOG_ERROR__( "player=[{}] payid=[{}] order=[{}] empty!", playerid, payid, order );
+                __LOG_ERROR__( "player=[{}] payid=[{}] order=[{}] empty", playerid, payid, order );
                 continue;
             }
 
@@ -189,12 +189,12 @@ namespace KFrame
 
     void KFPayModule::ProcessPay( KFEntity* player, const std::string& payid, const std::string& order )
     {
-        __LOG_INFO__( "player=[{}] payid=[{}] order=[{}] add element!", player->GetKeyID(), payid, order );
+        __LOG_INFO__( "player=[{}] payid=[{}] order=[{}] add element", player->GetKeyID(), payid, order );
 
         auto kfsetting = KFPayConfig::Instance()->FindSetting( payid );
         if ( kfsetting == nullptr )
         {
-            return __LOG_ERROR__( "payid=[{}] can't find setting!", payid );
+            return __LOG_ERROR__( "payid=[{}] can't find setting", payid );
         }
 
         // 添加元素

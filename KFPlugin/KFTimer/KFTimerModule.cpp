@@ -182,7 +182,7 @@ namespace KFrame
         if ( intervaltime == 0u )
         {
             intervaltime = __MAX_UINT32__;
-            __LOG_ERROR__( "module=[{}] id=[{}] intervaltime error!", module, objectid );
+            __LOG_ERROR__( "module=[{}] id=[{}] intervaltime error", module, objectid );
         }
 
         auto kfdata = __KF_NEW__( KFTimerData );
@@ -201,7 +201,7 @@ namespace KFrame
         if ( intervaltime == 0u )
         {
             intervaltime = 1u;
-            __LOG_ERROR__( "module=[{}] id=[{}] intervaltime error!", module, objectid );
+            __LOG_ERROR__( "module=[{}] id=[{}] intervaltime error", module, objectid );
         }
 
         auto kfdata = __KF_NEW__( KFTimerData );
@@ -221,7 +221,7 @@ namespace KFrame
         if ( intervaltime == 0u )
         {
             intervaltime = 1u;
-            __LOG_ERROR__( "module=[{}] id=[{}] intervaltime error!", module, objectid );
+            __LOG_ERROR__( "module=[{}] id=[{}] intervaltime error", module, objectid );
         }
 
         // 已经存在就不继续注册

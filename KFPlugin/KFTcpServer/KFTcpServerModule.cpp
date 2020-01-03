@@ -77,12 +77,12 @@ namespace KFrame
         auto result = _server_engine->StartEngine( kftcpsetting->_local_ip, kftcpsetting->_port );
         if ( result == 0 )
         {
-            __LOG_INFO__( "[{}:{}|{}:{}] tcp services ok!",
+            __LOG_INFO__( "[{}:{}|{}:{}] tcp services ok",
                           kfglobal->_app_name, kfglobal->_app_type, kfglobal->_interanet_ip, kfglobal->_listen_port );
         }
         else
         {
-            __LOG_ERROR__( "[{}:{}|{}:{}] tcp services failed[{}]!",
+            __LOG_ERROR__( "[{}:{}|{}:{}] tcp services failed[{}]",
                            kfglobal->_app_name, kfglobal->_app_type, kfglobal->_interanet_ip, kfglobal->_listen_port, result );
         }
     }
@@ -108,11 +108,11 @@ namespace KFrame
     {
         if ( !netdata->_name.empty() )
         {
-            __LOG_WARN__( "[{}:{}:{}] lost connect!", netdata->_name, netdata->_type, netdata->_str_id );
+            __LOG_WARN__( "[{}:{}:{}] lost connect", netdata->_name, netdata->_type, netdata->_str_id );
         }
         else
         {
-            __LOG_DEBUG__( "[{}:{}] lost connect!", netdata->_session, netdata->_id );
+            __LOG_DEBUG__( "[{}:{}] lost connect", netdata->_session, netdata->_id );
         }
 
         auto kfhandle = _server_engine->FindNetHandle( netdata->_session );
@@ -232,12 +232,12 @@ namespace KFrame
             auto ok = _kf_transpond_function( route, msgid, data, length );
             if ( !ok )
             {
-                __LOG_ERROR__( "tcp server transpond msgid[{}] failed!", msgid );
+                __LOG_ERROR__( "tcp server transpond msgid[{}] failed", msgid );
             }
         }
         else
         {
-            __LOG_ERROR__( "msgid[{}] can't find function!", msgid );
+            __LOG_ERROR__( "msgid[{}] can't find function", msgid );
         }
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -277,7 +277,7 @@ namespace KFrame
         // 注册新客户端回调
         CallDiscoverFunction( kfhandle );
 
-        __LOG_INFO__( "[{}:{}:{}|{}:{}] register ok!", netdata->_name, netdata->_type, netdata->_str_id, netdata->_ip, netdata->_port );
+        __LOG_INFO__( "[{}:{}:{}|{}:{}] register ok", netdata->_name, netdata->_type, netdata->_str_id, netdata->_ip, netdata->_port );
     }
 
     void KFTcpServerModule::SendNetMessage( uint32 msgid, google::protobuf::Message* message, uint64 excludeid /* = 0 */ )

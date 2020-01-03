@@ -36,7 +36,7 @@ namespace KFrame
             }
             catch ( ... )
             {
-                __LOG_ERROR__( "call [{}] [{}] failed unknown!", _lua_file, function );
+                __LOG_ERROR__( "call [{}] [{}] failed unknown", _lua_file, function );
             }
 
             return 0u;

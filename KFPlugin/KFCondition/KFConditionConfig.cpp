@@ -66,7 +66,7 @@ namespace KFrame
                 auto ok = AnalysisLimit( kfsetting, strlimit );
                 if ( !ok )
                 {
-                    __LOG_ERROR__( "limit=[{}] analysis failed!", strlimit );
+                    __LOG_ERROR__( "limit=[{}] analysis failed", strlimit );
                 }
             }
         }
@@ -163,7 +163,7 @@ namespace KFrame
             kfsetting->_condition_define = KFConditionDefineConfig::Instance()->FindSetting( kfsetting->_str_condition );
             if ( kfsetting->_condition_define == nullptr )
             {
-                __LOG_ERROR__( "condition=[{}] can't find define=[{}]!", kfsetting->_id, kfsetting->_str_condition );
+                __LOG_ERROR__( "condition=[{}] can't find define=[{}]", kfsetting->_id, kfsetting->_str_condition );
             }
 
             kfsetting->_clean_define = nullptr;
@@ -172,7 +172,7 @@ namespace KFrame
                 kfsetting->_clean_define = KFConditionDefineConfig::Instance()->FindSetting( kfsetting->_str_clean );
                 if ( kfsetting->_clean_define == nullptr )
                 {
-                    __LOG_ERROR__( "condition=[{}] can't find define=[{}]!", kfsetting->_id, kfsetting->_str_clean );
+                    __LOG_ERROR__( "condition=[{}] can't find define=[{}]", kfsetting->_id, kfsetting->_str_clean );
                 }
             }
         }

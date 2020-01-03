@@ -30,7 +30,7 @@ namespace KFrame
         auto retcode = _kf_http_client->GetCode( response );
         if ( retcode != KFEnum::Ok )
         {
-            return __LOG_ERROR__( "request log address error={}!", retcode );
+            return __LOG_ERROR__( "request log address error={}", retcode );
         }
 
         auto ip = __JSON_GET_STRING__( response, __STRING__( ip ) );
@@ -47,7 +47,7 @@ namespace KFrame
     {
         if ( netdata->_name == __STRING__( log ) )
         {
-            __LOG_INFO__( "remote log[{}] ok!", netdata->_str_id );
+            __LOG_INFO__( "remote log[{}] ok", netdata->_str_id );
 
             _log_server_id = netdata->_id;
             KFLogger::Instance()->RegisterLogFunction( this, &KFLogClientModule::LogRemote );
@@ -99,7 +99,7 @@ namespace KFrame
         if ( !ok )
         {
             KFLogger::Instance()->UnRegisterLogFunction( this );
-            __LOG_INFO__( "remote log[{}] failed!", KFAppId::ToString( _log_server_id ) );
+            __LOG_INFO__( "remote log[{}] failed", KFAppId::ToString( _log_server_id ) );
         }
     }
 }

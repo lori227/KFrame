@@ -20,7 +20,7 @@ namespace KFrame
         auto kfredistype = KFRedisConfig::Instance()->FindRedisType( module, logicid );
         if ( kfredistype == nullptr )
         {
-            __LOG_ERROR__( "[{}:{}] can't find redis type!", module, logicid );
+            __LOG_ERROR__( "[{}:{}] can't find redis type", module, logicid );
             return nullptr;
         }
 

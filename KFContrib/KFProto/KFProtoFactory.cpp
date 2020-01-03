@@ -10,14 +10,14 @@ namespace KFrame
         auto descriptor = google::protobuf::DescriptorPool::generated_pool()->FindMessageTypeByName( name );
         if ( descriptor == nullptr )
         {
-            __LOG_ERROR__( "can't find [{}] descriptor!", name );
+            __LOG_ERROR__( "can't find [{}] descriptor", name );
             return nullptr;
         }
 
         auto proto = google::protobuf::MessageFactory::generated_factory()->GetPrototype( descriptor );
         if ( proto == nullptr )
         {
-            __LOG_ERROR__( "can't find [{}] proto type!", name );
+            __LOG_ERROR__( "can't find [{}] proto type", name );
             return nullptr;
         }
 
@@ -38,7 +38,7 @@ namespace KFrame
         auto field = message->GetDescriptor()->FindFieldByName( name );\
         if ( field == nullptr )\
         {   \
-            __LOG_ERROR__( "message[{}] can't find [{}] descriptor!", message->GetTypeName(), name );\
+            __LOG_ERROR__( "message[{}] can't find [{}] descriptor", message->GetTypeName(), name );\
             return;\
         }\
         auto reflection = message->GetReflection();\
@@ -51,7 +51,7 @@ namespace KFrame
         auto field = message->GetDescriptor()->FindFieldByName( name );\
         if ( field == nullptr )\
         {   \
-            __LOG_ERROR__( "message[{}] can't find [{}] descriptor!", message->GetTypeName(), name );\
+            __LOG_ERROR__( "message[{}] can't find [{}] descriptor", message->GetTypeName(), name );\
             return defalutvalue; \
         }\
         auto reflection = message->GetReflection();\
@@ -84,7 +84,7 @@ namespace KFrame
         auto field = message->GetDescriptor()->FindFieldByName( name );
         if ( field == nullptr )
         {
-            __LOG_ERROR__( "message[{}] can't find [{}] descriptor!", message->GetTypeName(), name );
+            __LOG_ERROR__( "message[{}] can't find [{}] descriptor", message->GetTypeName(), name );
             return nullptr;
         }
 
@@ -97,7 +97,7 @@ namespace KFrame
         auto field = message->GetDescriptor()->FindFieldByName( name );
         if ( field == nullptr )
         {
-            __LOG_ERROR__( "message[{}] can't find [{}] descriptor!", message->GetTypeName(), name );
+            __LOG_ERROR__( "message[{}] can't find [{}] descriptor", message->GetTypeName(), name );
             return;
         }
 
@@ -161,12 +161,12 @@ namespace KFrame
         auto field = message->GetDescriptor()->FindFieldByName( name );  \
         if ( field == nullptr )\
         {   \
-            __LOG_ERROR__( "message[{}] can't find [{}] descriptor!", message->GetTypeName(), name );  \
+            __LOG_ERROR__( "message[{}] can't find [{}] descriptor", message->GetTypeName(), name );  \
             return; \
         }\
         if ( !field->is_repeated() )\
         {\
-            __LOG_ERROR__( "message[{}] descriptor[{}] is not repeated!", message->GetTypeName(), name );  \
+            __LOG_ERROR__( "message[{}] descriptor[{}] is not repeated", message->GetTypeName(), name );  \
             return; \
         }\
         auto reflection = message->GetReflection(); \
@@ -179,12 +179,12 @@ namespace KFrame
         auto field = message->GetDescriptor()->FindFieldByName( name );\
         if ( field == nullptr )\
         {   \
-            __LOG_ERROR__( "message[{}] can't find [{}] descriptor!", message->GetTypeName(), name );  \
+            __LOG_ERROR__( "message[{}] can't find [{}] descriptor", message->GetTypeName(), name );  \
             return defalutvalue; \
         }\
         if ( !field->is_repeated() )\
         {\
-            __LOG_ERROR__( "message[{}] descriptor[{}] is not repeated!", message->GetTypeName(), name );  \
+            __LOG_ERROR__( "message[{}] descriptor[{}] is not repeated", message->GetTypeName(), name );  \
             return defalutvalue; \
         }\
         auto reflection = message->GetReflection();\
@@ -217,14 +217,14 @@ namespace KFrame
         auto field = message->GetDescriptor()->FindFieldByName( name );
         if ( field == nullptr )
         {
-            __LOG_ERROR__( "message[{}] can't find [{}] descriptor!", message->GetTypeName(), name );
+            __LOG_ERROR__( "message[{}] can't find [{}] descriptor", message->GetTypeName(), name );
 
             return;
 
         }
         if ( !field->is_repeated() )
         {
-            __LOG_ERROR__( "message[{}] descriptor[{}] is not repeated!", message->GetTypeName(), name );
+            __LOG_ERROR__( "message[{}] descriptor[{}] is not repeated", message->GetTypeName(), name );
 
             return;
 
@@ -239,12 +239,12 @@ namespace KFrame
         auto field = message->GetDescriptor()->FindFieldByName( name );
         if ( field == nullptr )
         {
-            __LOG_ERROR__( "message[{}] can't find [{}] descriptor!", message->GetTypeName(), name );
+            __LOG_ERROR__( "message[{}] can't find [{}] descriptor", message->GetTypeName(), name );
             return nullptr;
         }
         if ( !field->is_repeated() )
         {
-            __LOG_ERROR__( "message[{}] descriptor[{}] is not repeated!", message->GetTypeName(), name );
+            __LOG_ERROR__( "message[{}] descriptor[{}] is not repeated", message->GetTypeName(), name );
             return nullptr;
         }
         auto reflection = message->GetReflection();

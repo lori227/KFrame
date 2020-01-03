@@ -30,7 +30,7 @@ namespace KFrame
     int32 KFRedisExecute::TryConnect()
     {
         ShutDown();
-        __LOG_INFO__( "redis connect[module={} ip={}:{}] start!", _name, _ip, _port );
+        __LOG_INFO__( "redis connect[module={} ip={}:{}] start", _name, _ip, _port );
 
         _redis_context = redisConnect( _ip.c_str(), _port );
         if ( _redis_context == nullptr || _redis_context->err != REDIS_OK )
@@ -50,7 +50,7 @@ namespace KFrame
             __FREE_REPLY__( reply );
         }
 
-        __LOG_INFO__( "redis connect[module={} ip={}:{}] ok!", _name, _ip, _port );
+        __LOG_INFO__( "redis connect[module={} ip={}:{}] ok", _name, _ip, _port );
         return KFEnum::Ok;
     }
 
@@ -79,7 +79,7 @@ namespace KFrame
     {
         if ( _redis_context == nullptr )
         {
-            __LOG_ERROR__( "_redis_context = nullptr, sql=[{}]!", strsql );
+            __LOG_ERROR__( "_redis_context = nullptr, sql=[{}]", strsql );
             return nullptr;
         }
 
@@ -88,14 +88,14 @@ namespace KFrame
         {
             if ( !IsDisconnected() )
             {
-                __LOG_ERROR__( "redisreply = nullptr, [{}:{}] sql=[{}]!", _redis_context->err, _redis_context->errstr, strsql );
+                __LOG_ERROR__( "redisreply = nullptr, [{}:{}] sql=[{}]", _redis_context->err, _redis_context->errstr, strsql );
             }
             return nullptr;
         }
 
         if ( reply->type == REDIS_REPLY_ERROR )
         {
-            __LOG_ERROR__( "reply error [{}:{}] sql=[{}]!", reply->type, reply->str, strsql );
+            __LOG_ERROR__( "reply error [{}:{}] sql=[{}]", reply->type, reply->str, strsql );
             __FREE_REPLY__( reply );
             return nullptr;
         }
@@ -117,7 +117,7 @@ namespace KFrame
                 }
                 else
                 {
-                    __LOG_ERROR__( "redis connect [{}:{}] failed!", _ip, _port );
+                    __LOG_ERROR__( "redis connect [{}:{}] failed", _ip, _port );
                 }
             }
         }
@@ -129,7 +129,7 @@ namespace KFrame
         else
         {
             kfresult->SetResult( KFEnum::Error );
-            __LOG_ERROR__( "redis[{}] execute error=[{}:{}]!", strsql, _redis_context->err, _redis_context->errstr );
+            __LOG_ERROR__( "redis[{}] execute error=[{}:{}]", strsql, _redis_context->err, _redis_context->errstr );
         }
 
         return redisreply;

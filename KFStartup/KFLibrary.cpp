@@ -51,15 +51,15 @@ namespace KFrame
         auto result = FreeLibrary( ( HMODULE )_instance );
         if ( result == TRUE )
         {
-            __LOG_INFO__( "close [{}] ok!", _path );
+            __LOG_INFO__( "close [{}] ok", _path );
         }
         else
         {
-            __LOG_ERROR__( "close [{}] failed=[{}]!", _path, GetLastError() );
+            __LOG_ERROR__( "close [{}] failed=[{}]", _path, GetLastError() );
         }
 #else
         auto result = dlclose( _instance );
-        __LOG_INFO__( "close [{}] result=[{}:{}]!", _path, result, dlerror() );
+        __LOG_INFO__( "close [{}] result=[{}:{}]", _path, result, dlerror() );
 #endif
 
         _instance = nullptr;

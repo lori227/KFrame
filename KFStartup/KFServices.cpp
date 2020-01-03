@@ -30,11 +30,11 @@ namespace KFrame
             }
             catch ( std::exception& ex )
             {
-                __LOG_ERROR__( "run exception=[{}]!", ex.what() );
+                __LOG_ERROR__( "run exception=[{}]", ex.what() );
             }
             catch ( ... )                                                                                                                            \
             {
-                __LOG_ERROR__( "run exception unknown!" );
+                __LOG_ERROR__( "run exception unknown" );
             }
 #endif
             KFThread::Sleep( 1 );
@@ -111,7 +111,7 @@ namespace KFrame
 
         // 开启主逻辑线程
         KFThread::CreateThread( this, &KFServices::Run, __FUNC_LINE__ );
-        __LOG_INFO__( "[{}:{}:{}] version[{}] startup ok!", kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->ToString(), kfglobal->GetVersion() );
+        __LOG_INFO__( "[{}:{}:{}] version[{}] startup ok", kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->ToString(), kfglobal->GetVersion() );
         return true;
     }
 

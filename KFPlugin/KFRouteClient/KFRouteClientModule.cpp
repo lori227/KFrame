@@ -32,7 +32,7 @@ namespace KFrame
         auto* kfaddress = _kf_ip_address->FindIpAddress( __STRING__( route ), __STRING__( master ), _globbing_string );
         if ( kfaddress == nullptr )
         {
-            return __LOG_ERROR__( "can't find [{}:{}] ip setting!", __STRING__( route ), __STRING__( master ) );
+            return __LOG_ERROR__( "can't find [{}:{}] ip setting", __STRING__( route ), __STRING__( master ) );
         }
 
         auto port = _kf_ip_address->CalcListenPort( kfaddress->_port_type, kfaddress->_port, kfaddress->_id );
@@ -444,7 +444,7 @@ namespace KFrame
             auto ok = _kf_transpond_function( temproute, kfmsg.msgid(), msgdata, msglength );
             if ( !ok )
             {
-                __LOG_ERROR__( "route msgid[{}] failed!", kfmsg.msgid() );
+                __LOG_ERROR__( "route msgid[{}] failed", kfmsg.msgid() );
             }
         }
         else
@@ -487,7 +487,7 @@ namespace KFrame
         }
         else
         {
-            __LOG_ERROR__( "route message=[{}] list size=[{}] too many!", msgid, _route_message_list.Size() );
+            __LOG_ERROR__( "route message=[{}] list size=[{}] too many", msgid, _route_message_list.Size() );
         }
 
         // 发送消息

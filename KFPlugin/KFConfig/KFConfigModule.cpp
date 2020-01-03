@@ -50,7 +50,7 @@ namespace KFrame
             auto kfsetting = _kf_config_config->FindSetting( kfconfig->_file_name );
             if ( kfsetting == nullptr )
             {
-                __LOG_ERROR__( "config=[{}:{}] can't find setting!", iter.first, kfconfig->_file_name );
+                __LOG_ERROR__( "config=[{}:{}] can't find setting", iter.first, kfconfig->_file_name );
                 continue;
             }
 
@@ -91,7 +91,7 @@ namespace KFrame
 
     void KFConfigModule::ReloadConfig( const std::string& file )
     {
-        __LOG_INFO__( "reload [{}] start!", file );
+        __LOG_INFO__( "reload [{}] start", file );
 
         // 重新加载配置列表
         LoadConfigList();
@@ -137,7 +137,7 @@ namespace KFrame
             _kf_plugin_manage->AfterLoad();
         }
 
-        __LOG_INFO__( "reload [{}] ok!", file );
+        __LOG_INFO__( "reload [{}] ok", file );
     }
 
     void KFConfigModule::LoadConfigFile( KFConfig* config, const std::string& filename, const std::string& filepath, uint32 loadmask )
@@ -148,12 +148,12 @@ namespace KFrame
             if ( ok )
             {
                 config->LoadComplete();
-                __LOG_INFO__( "load [{}] ok!", filepath );
+                __LOG_INFO__( "load [{}] ok", filepath );
             }
         }
         catch ( ... )
         {
-            static std::string error = __FORMAT__( "load [{}] failed!", filepath );
+            static std::string error = __FORMAT__( "load [{}] failed", filepath );
             throw std::runtime_error( error );
         }
     }

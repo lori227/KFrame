@@ -165,12 +165,12 @@ namespace KFrame
             auto ok = _kf_transpond_function( route, msgid, data, length );
             if ( !ok )
             {
-                __LOG_ERROR__( "tcp client transpond msgid[{}] failed!", msgid );
+                __LOG_ERROR__( "tcp client transpond msgid[{}] failed", msgid );
             }
         }
         else
         {
-            __LOG_ERROR__( "msgid[{}] can't find function!", msgid );
+            __LOG_ERROR__( "msgid[{}] can't find function", msgid );
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -188,7 +188,7 @@ namespace KFrame
         auto ok = _client_engine->StartClient( &kfnetdata );
         if ( ok )
         {
-            __LOG_DEBUG__( "[{}:{}:{}|{}:{}] start connect!",
+            __LOG_DEBUG__( "[{}:{}:{}|{}:{}] start connect",
                            kfnetdata._name, kfnetdata._type, kfnetdata._str_id, kfnetdata._ip, kfnetdata._port );
         }
     }
@@ -219,7 +219,7 @@ namespace KFrame
     {
         _client_engine->CloseClient( serverid, function, line );
 
-        __LOG_DEBUG_FUNCTION__( function, line, "[{}] connect close!", KFAppId::ToString( serverid ) );
+        __LOG_DEBUG_FUNCTION__( function, line, "[{}] connect close", KFAppId::ToString( serverid ) );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -323,14 +323,14 @@ namespace KFrame
         if ( kfclient != nullptr )
         {
             auto netdata = &kfclient->_net_data;
-            __LOG_INFO__( "[{}:{}:{}|{}:{}] service ok!", netdata->_name, netdata->_type, netdata->_str_id, netdata->_ip, netdata->_port );
+            __LOG_INFO__( "[{}:{}:{}|{}:{}] service ok", netdata->_name, netdata->_type, netdata->_str_id, netdata->_ip, netdata->_port );
 
             // 处理回调函数
             CallClientConnectionFunction( netdata );
         }
         else
         {
-            __LOG_ERROR__( "can't find client[{}|{}]!", KFAppId::ToString( __ROUTE_SERVER_ID__ ), KFAppId::ToString( kfmsg.appid() ) );
+            __LOG_ERROR__( "can't find client[{}|{}]", KFAppId::ToString( __ROUTE_SERVER_ID__ ), KFAppId::ToString( kfmsg.appid() ) );
         }
     }
 }

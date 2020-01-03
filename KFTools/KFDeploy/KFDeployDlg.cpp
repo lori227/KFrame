@@ -298,7 +298,7 @@ void CKFDeployDlg::SendDeployMessage( uint32 msgid, google::protobuf::Message* m
     auto ok = _kf_tcp_client->SendNetMessage( _deploy_manage->_connect_deploy_id, msgid, message );
     if ( !ok )
     {
-        AddDeployLog( 0, "发送消息失败, 请检查网络!" );
+        AddDeployLog( 0, "发送消息失败, 请检查网络" );
     }
 }
 
@@ -533,7 +533,7 @@ void CKFDeployDlg::OnBnClickedButtonConnectDeploy()
     _kf_tcp_client->StartClient( __STRING__( deploy ), __STRING__( server ), deploydata->_id, deploydata->_ip, deploydata->_port );
 
     ClearDeployLog();
-    AddDeployLog( 0, __FORMAT__( "{}:{} connect start!", deploydata->_ip, deploydata->_port ) );
+    AddDeployLog( 0, __FORMAT__( "{}:{} connect start", deploydata->_ip, deploydata->_port ) );
 }
 
 std::string CKFDeployDlg::GetLocalIp()
@@ -570,7 +570,7 @@ __KF_NET_EVENT_FUNCTION__( CKFDeployDlg::OnClientConnectServer )
     }
     else
     {
-        AddDeployLog( 0, __FORMAT__( "{}:{} connect ok!", netdata->_ip, netdata->_port ) );
+        AddDeployLog( 0, __FORMAT__( "{}:{} connect ok", netdata->_ip, netdata->_port ) );
 
         // 查询agent列表
         QueryAgentData();
@@ -582,17 +582,17 @@ __KF_MESSAGE_FUNCTION__( CKFDeployDlg::HandleDeployQueryToolIdAck )
     __PROTO_PARSE__( KFMsg::S2SDeployToolQueryToolIdAck );
 
     KFGlobal::Instance()->_app_id->SetWorkId( kfmsg.id() );
-    AddDeployLog( 0, __FORMAT__( "query id=[{}] ok!", kfmsg.id() ) );
+    AddDeployLog( 0, __FORMAT__( "query id=[{}] ok", kfmsg.id() ) );
 }
 
 __KF_NET_EVENT_FUNCTION__( CKFDeployDlg::OnClientConnectFailed )
 {
-    AddDeployLog( 0, __FORMAT__( "{}:{} connect failed!", netdata->_ip, netdata->_port ) );
+    AddDeployLog( 0, __FORMAT__( "{}:{} connect failed", netdata->_ip, netdata->_port ) );
 }
 
 __KF_NET_EVENT_FUNCTION__( CKFDeployDlg::OnClientLostServer )
 {
-    AddDeployLog( 0, __FORMAT__( "{}:{} disconnect!", netdata->_ip, netdata->_port ) );
+    AddDeployLog( 0, __FORMAT__( "{}:{} disconnect", netdata->_ip, netdata->_port ) );
 }
 
 __KF_MESSAGE_FUNCTION__( CKFDeployDlg::HandleDeployLogToToolAck )
@@ -617,7 +617,7 @@ void CKFDeployDlg::QueryTableValues( const std::string& table, StringMap& keys )
 {
     if ( _deploy_manage->_connect_deploy_id == _invalid_int )
     {
-        return AddDeployLog( 0, "请连接中控服务器,再请求查询!" );
+        return AddDeployLog( 0, "请连接中控服务器,再请求查询" );
     }
 
     KFMsg::S2SDeployToolQueryMySQLReq req;
@@ -663,7 +663,7 @@ __KF_MESSAGE_FUNCTION__( CKFDeployDlg::HandleDeployQueryMySQLAck )
 
     if ( !kfmsg.result() )
     {
-        return AddDeployLog( 0, "查询数据库失败!" );
+        return AddDeployLog( 0, "查询数据库失败" );
     }
 
     if ( kfmsg.table() == __STRING__( agent ) )
@@ -701,7 +701,7 @@ __KF_MESSAGE_FUNCTION__( CKFDeployDlg::HandleDeployDeleteMySQLAck )
 
     if ( !kfmsg.result() )
     {
-        return AddDeployLog( 0, "删除数据库失败!" );
+        return AddDeployLog( 0, "删除数据库失败" );
     }
 
     if ( kfmsg.table() == __STRING__( agent ) )
@@ -720,7 +720,7 @@ __KF_MESSAGE_FUNCTION__( CKFDeployDlg::HandleDeployExecuteMySQLAck )
 
     if ( !kfmsg.result() )
     {
-        return AddDeployLog( 0, "执行数据库失败!" );
+        return AddDeployLog( 0, "执行数据库失败" );
     }
 
     if ( kfmsg.table() == __STRING__( agent ) )
@@ -1299,7 +1299,7 @@ void CKFDeployDlg::OnBnClickedButtonAddCommand()
     auto commanddata = _deploy_manage->FindCommandData( strtext.GetBuffer() );
     if ( commanddata == nullptr )
     {
-        AfxMessageBox( "请选择正确的命令!" );
+        AfxMessageBox( "请选择正确的命令" );
         return;
     }
 

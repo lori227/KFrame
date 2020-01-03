@@ -12,7 +12,7 @@ namespace KFrame
         // 加载配置
         if ( !_app_config->LoadStartupConfig( file ) )
         {
-            __LOG_ERROR__( "load [{}] failed!", file );
+            __LOG_ERROR__( "load [{}] failed", file );
             return false;
         }
 
@@ -46,14 +46,14 @@ namespace KFrame
         auto file = kfsetting->GetName();
         if ( !library->Load( _app_config->_plugin_path, file ) )
         {
-            __LOG_ERROR__( "load [{}] failed!", library->_path );
+            __LOG_ERROR__( "load [{}] failed", library->_path );
             return nullptr;
         }
 
         PluginEntryFunction function = ( PluginEntryFunction )library->GetFunction( "DllPluginEntry" );
         if ( function == nullptr )
         {
-            __LOG_ERROR__( "entry [{}] failed!", library->_path );
+            __LOG_ERROR__( "entry [{}] failed", library->_path );
             return nullptr;
         }
 
@@ -63,7 +63,7 @@ namespace KFrame
         kfplugin->_plugin_name = kfsetting->_name;
         kfplugin->_config = kfsetting->_config_file;
 
-        __LOG_INFO__( "load [{}] ok!", library->_path );
+        __LOG_INFO__( "load [{}] ok", library->_path );
         return kfplugin;
     }
 
@@ -102,7 +102,7 @@ namespace KFrame
     {
         if ( params.size() < 3u )
         {
-            return __LOG_ERROR__( "reload param error!" );
+            return __LOG_ERROR__( "reload param error" );
         }
 
         auto pluginname = params[ 0 ];
@@ -123,24 +123,24 @@ namespace KFrame
             Poco::File newfile( newfilename );
             if ( !newfile.exists() )
             {
-                return __LOG_ERROR__( "plugin=[{}] not exist!", filename );
+                return __LOG_ERROR__( "plugin=[{}] not exist", filename );
             }
         }
         catch ( ... )
         {
-            __LOG_ERROR__( "plugin=[{}] init failed!", filename );
+            __LOG_ERROR__( "plugin=[{}] init failed", filename );
         }
 
-        __LOG_INFO__( "plugin=[{}] uninstall start!", pluginname );
+        __LOG_INFO__( "plugin=[{}] uninstall start", pluginname );
         // 卸载
         auto ok = UnLoadPluginLibrary( pluginname );
         if ( ok )
         {
-            __LOG_INFO__( "plugin=[{}] uninstall ok!", pluginname );
+            __LOG_INFO__( "plugin=[{}] uninstall ok", pluginname );
         }
         else
         {
-            __LOG_INFO__( "plugin=[{}] uninstall failed!", pluginname );
+            __LOG_INFO__( "plugin=[{}] uninstall failed", pluginname );
         }
 
         try
@@ -156,21 +156,21 @@ namespace KFrame
         }
         catch ( ... )
         {
-            __LOG_ERROR__( "plugin=[{}] rename failed!", filename );
+            __LOG_ERROR__( "plugin=[{}] rename failed", filename );
         }
 
         // 加载
-        __LOG_INFO__( "plugin=[{}] install start!", pluginname );
+        __LOG_INFO__( "plugin=[{}] install start", pluginname );
         auto kfplugin = LoadPluginLibrary( kfsetting );
         if ( kfplugin == nullptr )
         {
-            return __LOG_INFO__( "plugin=[{}] install failed!", pluginname );
+            return __LOG_INFO__( "plugin=[{}] install failed", pluginname );
         }
 
         // 重新load
         kfplugin->Install();
         KFPluginManage::Instance()->LoadModule();
         kfplugin->Reload();
-        __LOG_INFO__( "plugin=[{}] install ok!", pluginname );
+        __LOG_INFO__( "plugin=[{}] install ok", pluginname );
     }
 }

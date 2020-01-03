@@ -257,7 +257,7 @@ namespace KFrame
         auto ok = SendToWorld( KFMsg::S2S_LOGIN_TO_WORLD_REQ, &req );
         if ( !ok )
         {
-            __LOG_ERROR__( "player[{}:{}] send world failed!", pblogin->account(), pblogin->accountid() );
+            __LOG_ERROR__( "player[{}:{}] send world failed", pblogin->account(), pblogin->accountid() );
             SendLoginAckToGate( KFMsg::LoginWorldSystemBusy, pblogin->gateid(), pblogin->sessionid(), pblogin->accountid(), _invalid_int );
         }
     }
@@ -267,7 +267,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SLoginToLoginAck );
 
-        __LOG_DEBUG__( "player[{}] login result[{}] ack!", kfmsg.accountid(), kfmsg.result() );
+        __LOG_DEBUG__( "player[{}] login result[{}] ack", kfmsg.accountid(), kfmsg.result() );
 
         // 通知客户端
         SendLoginAckToGate( kfmsg.result(), kfmsg.gateid(), kfmsg.sessionid(), kfmsg.accountid(), _invalid_int );
@@ -283,7 +283,7 @@ namespace KFrame
         auto ok = _kf_tcp_server->SendNetMessage( gateid, KFMsg::S2S_LOGIN_TO_GATE_ACK, &ack );
         if ( !ok )
         {
-            __LOG_ERROR__( "player[{}] login verify result[{}] failed!", accountid, result );
+            __LOG_ERROR__( "player[{}] login verify result[{}] failed", accountid, result );
         }
     }
 }

@@ -36,7 +36,7 @@ namespace KFrame
         auto kfmongotype = KFMongoConfig::Instance()->FindMongoType( module, logicid );
         if ( kfmongotype == nullptr )
         {
-            __LOG_ERROR__( "[{}:{}] can't find mysql type!", module, logicid );
+            __LOG_ERROR__( "[{}:{}] can't find mysql type", module, logicid );
             return nullptr;
         }
 

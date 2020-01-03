@@ -71,7 +71,7 @@ namespace KFrame
         if ( !_is_valid )
         {
             Reset();
-            __LOG_ERROR_FUNCTION__( function, line, "id=[{}] condition=[{}] parse failed!", id, strcondition );
+            __LOG_ERROR_FUNCTION__( function, line, "id=[{}] condition=[{}] parse failed", id, strcondition );
         }
 
         return _is_valid;

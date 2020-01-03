@@ -229,7 +229,7 @@ namespace KFrame
         {
             if ( timeid != 0u )
             {
-                __LOG_ERROR__( "module=[{}] timeid=[{}] can't find setting!", module, timeid );
+                __LOG_ERROR__( "module=[{}] timeid=[{}] can't find setting", module, timeid );
             }
         }
 

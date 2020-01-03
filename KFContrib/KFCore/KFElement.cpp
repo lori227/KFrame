@@ -286,13 +286,13 @@ namespace KFrame
         kfjson.Parse( data.c_str() );
         if ( kfjson.HasParseError() )
         {
-            __LOG_ERROR_FUNCTION__( function, line, "data=[{}] parse error!", data );
+            __LOG_ERROR_FUNCTION__( function, line, "data=[{}] parse error", data );
             return false;
         }
 
         if ( !kfjson.IsArray() )
         {
-            __LOG_ERROR_FUNCTION__( function, line, "data=[{}] is not array!", data );
+            __LOG_ERROR_FUNCTION__( function, line, "data=[{}] is not array", data );
             return false;
         }
 
@@ -327,7 +327,7 @@ namespace KFrame
                     auto& jsonchild = iter->value;
                     if ( !jsonchild.IsString() )
                     {
-                        __LOG_ERROR_FUNCTION__( function, line, "data=[{}] child[{}] not string!", data, childname );
+                        __LOG_ERROR_FUNCTION__( function, line, "data=[{}] child[{}] not string", data, childname );
                         continue;
                     }
 
@@ -356,7 +356,7 @@ namespace KFrame
             }
             else
             {
-                __LOG_ERROR_FUNCTION__( function, line, "data=[{}] child[{}] error!", data, name );
+                __LOG_ERROR_FUNCTION__( function, line, "data=[{}] child[{}] error", data, name );
             }
         }
 

@@ -84,7 +84,7 @@ namespace KFrame
         //}
         //else
         //{
-        //    __LOG_ERROR__( "_kf_player is nullptr!" );
+        //    __LOG_ERROR__( "_kf_player is nullptr" );
         //}
     }
 }

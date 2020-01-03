@@ -173,7 +173,7 @@ namespace KFrame
         {
             RemoveEntity( kfentity );
             kfentity = nullptr;
-            __LOG_ERROR__( "[{}:{}] create error!", _component_name, key );
+            __LOG_ERROR__( "[{}:{}] create error", _component_name, key );
         }
 
         return kfentity;
@@ -195,7 +195,7 @@ namespace KFrame
         auto kfentity = _entitys.Find( key );
         if ( kfentity == nullptr )
         {
-            __LOG_ERROR_FUNCTION__( function, line, "can't find entity[{}:{}]!", _component_name, key );
+            __LOG_ERROR_FUNCTION__( function, line, "can't find entity[{}:{}]", _component_name, key );
         }
 
         return kfentity;

@@ -128,7 +128,7 @@ void CAddServerDlg::OnBnClickedButtonAddServer()
     std::string type = strtext.GetBuffer();
     if ( name.empty() || type.empty() )
     {
-        AfxMessageBox( "请选择名字和类型!" );
+        AfxMessageBox( "请选择名字和类型" );
         return;
     }
 
@@ -137,7 +137,7 @@ void CAddServerDlg::OnBnClickedButtonAddServer()
     {
         if ( zoneid == 0 )
         {
-            AfxMessageBox( "请输入正确的小区id!" );
+            AfxMessageBox( "请输入正确的小区id" );
             return;
         }
     }
@@ -145,7 +145,7 @@ void CAddServerDlg::OnBnClickedButtonAddServer()
     auto workid = KFUtility::ToValue< uint32 >( GetEditText( _edit_id ) );
     if ( workid == 0 )
     {
-        AfxMessageBox( "请输入服务器id!" );
+        AfxMessageBox( "请输入服务器id" );
         return;
     }
 
@@ -205,7 +205,7 @@ void CAddServerDlg::OnBnClickedButtonAddServer()
     auto path = GetEditText( _edit_path );
     if ( path.empty() )
     {
-        AfxMessageBox( "请输入服务器路径!" );
+        AfxMessageBox( "请输入服务器路径" );
         return;
     }
     values[ __STRING__( deploypath ) ] = path;
@@ -217,7 +217,7 @@ void CAddServerDlg::OnBnClickedButtonAddServer()
     std::string stragent = strtext.GetBuffer();
     if ( stragent.empty() )
     {
-        AfxMessageBox( "请选择agent!" );
+        AfxMessageBox( "请选择agent" );
         return;
     }
     values[ __STRING__( agentid ) ] = stragent;

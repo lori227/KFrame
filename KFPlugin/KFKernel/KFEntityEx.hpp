@@ -182,9 +182,9 @@ namespace KFrame
 
         // 添加元数据
         void AddElement( const KFElement* kfelement, const char* function, uint32 line, float multiple );
-        void AddNormalElement( KFData* kfdata, KFElementResult* kfresult, const char* function, uint32 line, float multiple );
-        void AddObjectElement( KFData* kfparent, KFElementResult* kfresult, const char* function, uint32 line, float multiple );
-        void AddRecordElement( KFData* kfparent, KFElementResult* kfresult, const char* function, uint32 line, float multiple );
+        bool AddNormalElement( KFData* kfdata, KFElementResult* kfresult, const char* function, uint32 line, float multiple );
+        bool AddObjectElement( KFData* kfparent, KFElementResult* kfresult, const char* function, uint32 line, float multiple );
+        bool AddRecordElement( KFData* kfparent, KFElementResult* kfresult, const char* function, uint32 line, float multiple );
 
         // 判断元数据
         bool CheckRemoveElement( const KFElement* kfelement, const char* function, uint32 line, float multiple );
@@ -194,9 +194,9 @@ namespace KFrame
 
         // 删除元数据
         void RemoveElement( const KFElement* kfelement, const std::string& modulename, const char* function, uint32 line, float multiple );
-        void RemoveNormalElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line, float multiple );
-        void RemoveObjectElement( KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple );
-        void RemoveRecordElement( KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple );
+        bool RemoveNormalElement( KFData* kfdata, KFElementResult* kfresult, const char* function, uint32 line, float multiple );
+        bool RemoveObjectElement( KFData* kfparent, KFElementResult* kfresult, const char* function, uint32 line, float multiple );
+        bool RemoveRecordElement( KFData* kfparent, KFElementResult* kfresult, const char* function, uint32 line, float multiple );
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -204,9 +204,12 @@ namespace KFrame
         void ShowElementResult( const KFElementResult* kfresult, const char* function, uint32 line );
 
         // 添加显示的元素
+        bool IsElementResultShow( const KFElementResult* kfresult );
         void ElementResultShowElement( const KFElementResult* kfresult, const char* function, uint32 line );
+        void ElementResultShowCurrency( const KFElementResult* kfresult, const char* function, uint32 line );
+        void ElementResultShowObject( const KFElementResult* kfresult, const char* function, uint32 line );
         void ElementResultShowOverlay( const KFElementResult* kfresult, const char* function, uint32 line );
-        void ElementResultShowData( const KFElementResult* kfresult, const char* function, uint32 line );
+        void ElementResultShowNotOverlay( const KFElementResult* kfresult, const char* function, uint32 line );
 
         // 创建显示元素
         KFMsg::PBShowData* CreateShowData( const std::string& name, uint64 value, bool find, const std::string& extendname );

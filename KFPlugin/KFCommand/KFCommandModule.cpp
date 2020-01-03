@@ -37,7 +37,7 @@ namespace KFrame
         std::string command = kfmsg.command();
         std::transform( command.begin(), command.end(), command.begin(), ::tolower );
 
-        __LOG_DEBUG__( "player[{}] debug command[{}]!", playerid, command );
+        __LOG_DEBUG__( "player[{}] debug command[{}]", playerid, command );
 
         auto kffunction = _kf_command_function.Find( command );
         if ( kffunction != nullptr )

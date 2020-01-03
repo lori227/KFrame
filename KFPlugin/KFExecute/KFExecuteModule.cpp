@@ -39,7 +39,7 @@ namespace KFrame
         {
             if ( executedata->_param_list._params.size() < 1u )
             {
-                __LOG_ERROR_FUNCTION__( function, line, "execute drop param size<1!" );
+                __LOG_ERROR_FUNCTION__( function, line, "execute drop param size<1" );
                 return false;
             }
 

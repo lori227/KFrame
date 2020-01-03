@@ -18,7 +18,7 @@ namespace KFrame
         KFExcelFile excelfile;
         if ( !excelfile.Open( file ) )
         {
-            _error = __FORMAT__( "can't open {}!", file );
+            _error = __FORMAT__( "can't open {}", file );
             return false;
         }
 
@@ -40,7 +40,7 @@ namespace KFrame
         auto kfname = sheet->FindCell( 1, 2 );
         if ( kfname == nullptr )
         {
-            _error = __FORMAT__( "{} format error!", KFConvert::ToAscii( sheet->_name ) );
+            _error = __FORMAT__( "{} format error", KFConvert::ToAscii( sheet->_name ) );
             return false;
         }
 
@@ -48,7 +48,7 @@ namespace KFrame
         KFUtility::SplitString( name, "#" );
         if ( name.empty() )
         {
-            _error = __FORMAT__( "{} no config name!", KFConvert::ToAscii( sheet->_name ) );
+            _error = __FORMAT__( "{} no config name", KFConvert::ToAscii( sheet->_name ) );
             return false;
         }
 
@@ -85,7 +85,7 @@ namespace KFrame
             }
             else
             {
-                _error = __FORMAT__( "{} field=[{}] savefile empty!", sheet->_name, kfname->_value );
+                _error = __FORMAT__( "{} field=[{}] savefile empty", sheet->_name, kfname->_value );
                 return false;
             }
 
@@ -152,7 +152,7 @@ namespace KFrame
         std::ofstream xmlfile( file );
         if ( !xmlfile )
         {
-            _error = __FORMAT__( "can't open xml=[{}]!", filename );
+            _error = __FORMAT__( "can't open xml=[{}]", filename );
             return false;
         }
 

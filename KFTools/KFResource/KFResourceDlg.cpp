@@ -903,7 +903,7 @@ bool CKFResourceDlg::ParseExcelFiles( const std::string& version )
             bool ok = _kf_parse->LoadFromExcel( file.c_str(), true, KFResource::FileType::Server );
             if ( ok )
             {
-                AddLog( "parse file=[{}] ok!", file );
+                AddLog( "parse file=[{}] ok", file );
                 ok = _kf_parse->SaveToXml( "..\\config\\server", version );
                 if ( ok )
                 {
@@ -934,7 +934,7 @@ bool CKFResourceDlg::ParseExcelFiles( const std::string& version )
             bool ok = _kf_parse->LoadFromExcel( file.c_str(), true, KFResource::FileType::Client );
             if ( ok )
             {
-                AddLog( "parse file=[{}] ok!", file );
+                AddLog( "parse file=[{}] ok", file );
                 ok = _kf_parse->SaveToXml( "..\\config\\client", version );
                 if ( ok )
                 {

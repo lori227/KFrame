@@ -28,7 +28,7 @@ namespace KFrame
         {
             auto clientid = kfmsg.clientid( i );
             _proxy_client_list[ clientid ] = proxyid;
-            __LOG_INFO__( "route discover client=[{}] proxy=[{}] !", KFAppId::ToString( clientid ), KFAppId::ToString( proxyid ) );
+            __LOG_INFO__( "route discover client=[{}] proxy=[{}] ", KFAppId::ToString( clientid ), KFAppId::ToString( proxyid ) );
         }
     }
 
@@ -38,14 +38,14 @@ namespace KFrame
 
         _proxy_client_list.erase( kfmsg.clientid() );
 
-        __LOG_WARN__( "route lost client=[{}]!", KFAppId::ToString( kfmsg.clientid() ) );
+        __LOG_WARN__( "route lost client=[{}]", KFAppId::ToString( kfmsg.clientid() ) );
     }
 
     __KF_NET_EVENT_FUNCTION__( KFClusterShardModule::OnServerLostHandle )
     {
         std::set< uint64 > removelist;
 
-        __LOG_ERROR__( "route lost proxy=[{}]!", netdata->_str_id );
+        __LOG_ERROR__( "route lost proxy=[{}]", netdata->_str_id );
 
         for ( auto iter : _proxy_client_list )
         {
@@ -58,7 +58,7 @@ namespace KFrame
         for ( auto clientid : removelist )
         {
             _proxy_client_list.erase( clientid );
-            __LOG_ERROR__( "route lost client=[{}]!", KFAppId::ToString( clientid ) );
+            __LOG_ERROR__( "route lost client=[{}]", KFAppId::ToString( clientid ) );
         }
     }
 

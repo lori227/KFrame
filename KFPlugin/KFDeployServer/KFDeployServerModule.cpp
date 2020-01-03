@@ -211,7 +211,7 @@ namespace KFrame
 
         auto pbcommand = &kfmsg.deploycommand();
 
-        LogDeploy( 0, "deploy tool=[{}|{}] req!", kfmsg.toolid(), kfmsg.ip() );
+        LogDeploy( 0, "deploy tool=[{}|{}] req", kfmsg.toolid(), kfmsg.ip() );
         LogDeploy( 0, "recv=[{}:{} | {}:{}:{}:{}]",
                    pbcommand->command(), pbcommand->value(),
                    pbcommand->appname(), pbcommand->apptype(), pbcommand->zoneid(), pbcommand->appid() );
@@ -264,7 +264,7 @@ namespace KFrame
             _web_deploy_url = logurl;
         }
 
-        LogDeploy( 0, "web deploy=[{}] command req!", ip );
+        LogDeploy( 0, "web deploy=[{}] command req", ip );
         LogDeploy( 0, "recv=[{}]", data );
 
         auto command = __JSON_GET_STRING__( request, __STRING__( command ) );

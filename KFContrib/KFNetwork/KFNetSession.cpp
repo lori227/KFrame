@@ -269,11 +269,11 @@ namespace KFrame
         _is_connected = false;
         if ( IsServerSession() )
         {
-            __LOG_INFO_FUNCTION__( function, line, "session[{}:{}] disconnect[{}:{}]!", _session_id, KFAppId::ToString( _session_id ), code, uv_err_name( code ) );
+            __LOG_INFO_FUNCTION__( function, line, "session[{}:{}] disconnect[{}:{}]", _session_id, KFAppId::ToString( _session_id ), code, uv_err_name( code ) );
         }
         else
         {
-            __LOG_DEBUG_FUNCTION__( function, line, "session[{}:{}] disconnect[{}:{}]!", _session_id, _object_id, code, uv_err_name( code ) );
+            __LOG_DEBUG_FUNCTION__( function, line, "session[{}:{}] disconnect[{}:{}]", _session_id, _object_id, code, uv_err_name( code ) );
         }
     }
 
@@ -288,11 +288,11 @@ namespace KFrame
 
                 if ( IsServerSession() )
                 {
-                    __LOG_ERROR__( "session[{}:{}] send msgid[{}] failed!", _session_id, KFAppId::ToString( _session_id ), message->_head._msgid );
+                    __LOG_ERROR__( "session[{}:{}] send msgid[{}] failed", _session_id, KFAppId::ToString( _session_id ), message->_head._msgid );
                 }
                 else
                 {
-                    __LOG_ERROR__( "session[{}:{}] send msgid[{}] failed!", _session_id, _object_id, message->_head._msgid );
+                    __LOG_ERROR__( "session[{}:{}] send msgid[{}] failed", _session_id, _object_id, message->_head._msgid );
                 }
             }
         }
@@ -317,11 +317,11 @@ namespace KFrame
 
                 if ( IsServerSession() )
                 {
-                    __LOG_ERROR__( "session[{}:{}] recv msgid[{}] failed!", _session_id, KFAppId::ToString( _session_id ), message->_head._msgid );
+                    __LOG_ERROR__( "session[{}:{}] recv msgid[{}] failed", _session_id, KFAppId::ToString( _session_id ), message->_head._msgid );
                 }
                 else
                 {
-                    __LOG_ERROR__( "session[{}:{}] recv msgid[{}] failed!", _session_id, _object_id, message->_head._msgid );
+                    __LOG_ERROR__( "session[{}:{}] recv msgid[{}] failed", _session_id, _object_id, message->_head._msgid );
                 }
             }
         }

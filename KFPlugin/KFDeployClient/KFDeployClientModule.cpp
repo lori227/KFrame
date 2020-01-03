@@ -95,7 +95,7 @@ namespace KFrame
             return;
         }
 
-        __LOG_INFO__( "[{}:{} | {}:{}:{}:{}] deploy command req!", command, value, appname, apptype, appid, zoneid );
+        __LOG_INFO__( "[{}:{} | {}:{}:{}:{}] deploy command req", command, value, appname, apptype, appid, zoneid );
 
         if ( command == __STRING__( shutdown ) )
         {
@@ -179,7 +179,7 @@ namespace KFrame
     void KFDeployClientModule::ShutDownServer( uint32 delaytime )
     {
         auto kfglobal = KFGlobal::Instance();
-        __LOG_INFO__( "[{}:{}:{}:{}] shutdown start!", kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->ToString(), delaytime );
+        __LOG_INFO__( "[{}:{}:{}:{}] shutdown start", kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->ToString(), delaytime );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
         OnShutDownServerCommand( "0" );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -201,7 +201,7 @@ namespace KFrame
     __KF_TIMER_FUNCTION__( KFDeployClientModule::OnTimerShutDownServer )
     {
         auto kfglobal = KFGlobal::Instance();
-        __LOG_INFO__( "[{}:{}:{}] shutdown ok!", kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->ToString() );
+        __LOG_INFO__( "[{}:{}:{}] shutdown ok", kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->ToString() );
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
         OnShutDownServerCommand( "1" );

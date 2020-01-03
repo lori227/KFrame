@@ -49,7 +49,7 @@ namespace KFrame
         }
         catch ( Poco::Exception& exc )
         {
-            __LOG_ERROR__( "init http server[{}:{}] failed[{}:{}]!",
+            __LOG_ERROR__( "init http server[{}:{}] failed[{}:{}]",
                            ip, port, exc.code(), exc.message() );
         }
     }

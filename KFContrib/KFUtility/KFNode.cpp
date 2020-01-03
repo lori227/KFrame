@@ -50,7 +50,7 @@ namespace KFrame
         {
             if ( !optional )
             {
-                __LOG_ERROR__( "[{}] can't find node = [{}]!", _kf_xml->GetFileName(), key );
+                __LOG_ERROR__( "[{}] can't find node = [{}]", _kf_xml->GetFileName(), key );
             }
             return defaultvale;
         }
@@ -67,7 +67,7 @@ namespace KFrame
         {
             if ( !optional )
             {
-                __LOG_ERROR__( "[{}] can't find node = [{}]!", _kf_xml->GetFileName(), key );
+                __LOG_ERROR__( "[{}] can't find node = [{}]", _kf_xml->GetFileName(), key );
             }
             return defaultvalue;
         }
@@ -85,7 +85,7 @@ namespace KFrame
         {
             if ( !optional )
             {
-                __LOG_ERROR__( "[{}] can't find node = [{}]!", _kf_xml->GetFileName(), key );
+                __LOG_ERROR__( "[{}] can't find node = [{}]", _kf_xml->GetFileName(), key );
             }
             return defaultvalue;
         }
@@ -102,7 +102,7 @@ namespace KFrame
         {
             if ( !optional )
             {
-                __LOG_ERROR__( "[{}] can't find node = [{}]!", _kf_xml->GetFileName(), key );
+                __LOG_ERROR__( "[{}] can't find node = [{}]", _kf_xml->GetFileName(), key );
             }
             return defaultvalue;
         }
@@ -119,7 +119,7 @@ namespace KFrame
         {
             if ( !optional )
             {
-                __LOG_ERROR__( "[{}] can't find node = [{}]!", _kf_xml->GetFileName(), key );
+                __LOG_ERROR__( "[{}] can't find node = [{}]", _kf_xml->GetFileName(), key );
             }
 
             return defaultvalue;
@@ -137,7 +137,7 @@ namespace KFrame
         {
             if ( !optional )
             {
-                __LOG_ERROR__( "[{}] can't find node = [{}]!", _kf_xml->GetFileName(), key );
+                __LOG_ERROR__( "[{}] can't find node = [{}]", _kf_xml->GetFileName(), key );
             }
             return defaultvalue;
         }

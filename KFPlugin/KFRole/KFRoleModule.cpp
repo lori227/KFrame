@@ -78,7 +78,7 @@ namespace KFrame
         auto player = _kf_player->FindPlayer( kfmsg.playerid() );
         if ( player == nullptr )
         {
-            return __LOG_ERROR__( "player[{}] set name[{}] item[{}] failed!", kfmsg.playerid(), kfmsg.name(), kfmsg.costdata() );
+            return __LOG_ERROR__( "player[{}] set name[{}] item[{}] failed", kfmsg.playerid(), kfmsg.name(), kfmsg.costdata() );
         }
 
         _kf_display->SendToClient( player, kfmsg.result(), kfmsg.name() );

@@ -80,7 +80,7 @@ namespace KFrame
         auto iter = _memory_list.find( memory );
         if ( iter == _memory_list.end() )
         {
-            __LOG_ERROR_FUNCTION__( function, line, "name[{}] memory[{}] can't find!", name, memory );
+            __LOG_ERROR_FUNCTION__( function, line, "name[{}] memory[{}] can't find", name, memory );
             return nullptr;
         }
 
@@ -227,7 +227,7 @@ namespace KFrame
         auto sharememory = &iter->second;
         if ( sharememory->_size != length )
         {
-            __LOG_ERROR__( "share memory[{}] length[{} != {}] error!", name, length );
+            __LOG_ERROR__( "share memory[{}] length[{} != {}] error", name, length );
         }
 
         auto memory = reinterpret_cast< Poco::SharedMemory* >( sharememory->_memory );

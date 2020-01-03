@@ -218,7 +218,7 @@ namespace KFrame
             return _kf_http_server->SendCode( KFMsg::AccountIsEmpty );
         }
 
-        __LOG_DEBUG__( "account[{}] channel[{}] auth login!", account, channel );
+        __LOG_DEBUG__( "account[{}] channel[{}] auth login", account, channel );
 
         // 查询创建账号
         auto accountdata = QueryCreateAccount( account, channel );
@@ -263,7 +263,7 @@ namespace KFrame
         auto kfquery = redisdriver->QueryUInt64( "hget {}:{}:{} {}", __STRING__( account ), account, channel, __STRING__( accountid ) );
         if ( !kfquery->IsOk() )
         {
-            __LOG_DEBUG__( "account[{}] channel[{}] query accountid failed!", account, channel );
+            __LOG_DEBUG__( "account[{}] channel[{}] query accountid failed", account, channel );
             return accountdata;
         }
 
@@ -298,7 +298,7 @@ namespace KFrame
         {
             // 失败清空数据
             accountdata.clear();
-            __LOG_DEBUG__( "account[{}] channel[{}] save account failed!", account, channel );
+            __LOG_DEBUG__( "account[{}] channel[{}] save account failed", account, channel );
         }
 
         return accountdata;
@@ -565,7 +565,7 @@ namespace KFrame
                         auto updataresult = redisdriver->Execute( "hset {}:{} {} {}", __STRING__( pay ), order, __STRING__( flag ), 1 );
                         if ( !updataresult->IsOk() )
                         {
-                            __LOG_ERROR__( "update player=[{}] pay=[{}] flag failed!", playerid, order );
+                            __LOG_ERROR__( "update player=[{}] pay=[{}] flag failed", playerid, order );
                         }
                     }
                 }
@@ -595,7 +595,7 @@ namespace KFrame
         auto kfresult = redisdriver->Pipeline();
         if ( !kfresult->IsOk() )
         {
-            __LOG_WARN__( "player=[{}] finish pay=[{}] failed!", playerid, order );
+            __LOG_WARN__( "player=[{}] finish pay=[{}] failed", playerid, order );
         }
 
         return _kf_http_server->SendCode( KFMsg::Ok );

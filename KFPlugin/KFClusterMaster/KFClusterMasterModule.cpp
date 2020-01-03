@@ -101,7 +101,7 @@ namespace KFrame
         req.set_proxyid( netdata->_id );
         _kf_tcp_client->SendMessageToType( KFGlobal::Instance()->_app_type, KFMsg::S2S_CLUSTER_LOST_PROXY_TO_MASTER_REQ, &req );
 
-        __LOG_ERROR__( "[{}|{}:{}] lost!", netdata->_name, netdata->_type, netdata->_str_id );
+        __LOG_ERROR__( "[{}|{}:{}] lost", netdata->_name, netdata->_type, netdata->_str_id );
     }
 
     __KF_MESSAGE_FUNCTION__( KFClusterMasterModule::HandleClusterLostProxyToMasterReq )
@@ -197,21 +197,21 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SClusterAuthToMasterReq );
 
         auto strclientid = KFAppId::ToString( kfmsg.clientid() );
-        __LOG_DEBUG__( "cluster client[{}] auth req!", strclientid );
+        __LOG_DEBUG__( "cluster client[{}] auth req", strclientid );
 
         static auto& _cluster_key = _kf_project->GetString( __STRING__( clusterkey ) );
         if ( kfmsg.clusterkey() != _cluster_key )
         {
-            return __LOG_ERROR__( "cluster client[{}] key[{}!={}] error!", strclientid, kfmsg.clusterkey(), _cluster_key );
+            return __LOG_ERROR__( "cluster client[{}] key[{}!={}] error", strclientid, kfmsg.clusterkey(), _cluster_key );
         }
 
         auto kfproxy = SelectProxyServer( kfmsg.clientid() ) ;
         if ( kfproxy == nullptr )
         {
-            return __LOG_ERROR__( "cluster client[{}] no proxy error!", strclientid );
+            return __LOG_ERROR__( "cluster client[{}] no proxy error", strclientid );
         }
 
-        __LOG_DEBUG__( "cluster client[{}] auth proxy[{}] ok!", strclientid, KFAppId::ToString( kfproxy->_id ) );
+        __LOG_DEBUG__( "cluster client[{}] auth proxy[{}] ok", strclientid, KFAppId::ToString( kfproxy->_id ) );
 
         // 创建token
         auto token = CreateToken( kfmsg.clientid() );
@@ -259,13 +259,13 @@ namespace KFrame
             auto token = FindToken( kfmsg.clientid() );
             if ( token != kfmsg.token() )
             {
-                return __LOG_ERROR__( "client[{}] token error!", KFAppId::ToString( kfmsg.clientid() ) );
+                return __LOG_ERROR__( "client[{}] token error", KFAppId::ToString( kfmsg.clientid() ) );
             }
 
             auto kfproxy = _kf_proxy_list.Find( kfmsg.proxyid() );
             if ( kfproxy == nullptr )
             {
-                return __LOG_ERROR__( "client[{}] can't find proxy[{}]!!", KFAppId::ToString( kfmsg.clientid() ), KFAppId::ToString( kfmsg.proxyid() ) );
+                return __LOG_ERROR__( "client[{}] can't find proxy[{}]!", KFAppId::ToString( kfmsg.clientid() ), KFAppId::ToString( kfmsg.proxyid() ) );
             }
 
             // 发送给client
@@ -298,13 +298,13 @@ namespace KFrame
         auto token = FindToken( kfmsg.clientid() );
         if ( token != kfmsg.token() )
         {
-            return __LOG_ERROR__( "client[{}] token error!", KFAppId::ToString( kfmsg.clientid() ) );
+            return __LOG_ERROR__( "client[{}] token error", KFAppId::ToString( kfmsg.clientid() ) );
         }
 
         auto kfproxy = _kf_proxy_list.Find( kfmsg.proxyid() );
         if ( kfproxy == nullptr )
         {
-            return __LOG_ERROR__( "client[{}] can't find proxy[{}]!!", KFAppId::ToString( kfmsg.clientid() ), KFAppId::ToString( kfmsg.proxyid() ) );
+            return __LOG_ERROR__( "client[{}] can't find proxy[{}]!", KFAppId::ToString( kfmsg.clientid() ), KFAppId::ToString( kfmsg.proxyid() ) );
         }
 
         // 发送给client

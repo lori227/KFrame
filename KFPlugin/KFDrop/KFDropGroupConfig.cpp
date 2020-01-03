@@ -61,7 +61,7 @@ namespace KFrame
         {
             if ( dropgroupweight->_id != 0u )
             {
-                __LOG_ERROR__( "dropid=[{}] dropdata=[{}] can't find setting!", kfsetting->_id, dropgroupweight->_id );
+                __LOG_ERROR__( "dropid=[{}] dropdata=[{}] can't find setting", kfsetting->_id, dropgroupweight->_id );
             }
         }
     }

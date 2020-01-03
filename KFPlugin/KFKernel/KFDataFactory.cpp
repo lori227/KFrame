@@ -205,7 +205,7 @@ namespace KFrame
             auto kfchilddata = Create( childdatasetting->_type );
             if ( kfchilddata == nullptr )
             {
-                __LOG_ERROR__( "create data type error[{}:{}]!", childdatasetting->_name, childdatasetting->_type );
+                __LOG_ERROR__( "create data type error[{}:{}]", childdatasetting->_name, childdatasetting->_type );
                 continue;
             }
 

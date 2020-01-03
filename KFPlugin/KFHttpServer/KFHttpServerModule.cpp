@@ -30,7 +30,7 @@ namespace KFrame
         auto localip = _kf_ip_address->GetLocalIp();
         _full_url = __FORMAT__( "http://{}:{}/", localip, kfsetting->_port );
 
-        __LOG_INFO__( "http server[{}] startup ok!", _full_url );
+        __LOG_INFO__( "http server[{}] startup ok", _full_url );
     }
 
     void KFHttpServerModule::Run()

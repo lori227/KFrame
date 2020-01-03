@@ -44,12 +44,12 @@ namespace KFrame
         {
             _is_connected = true;
             _connection->connect( _connect_data, *_factory );
-            __LOG_INFO__( "mongo[{}] connect ok!", _connect_data );
+            __LOG_INFO__( "mongo[{}] connect ok", _connect_data );
         }
         catch ( Poco::Exception& ex )
         {
             _is_connected = false;
-            __LOG_ERROR__( "mongo[{}] connect failed = [{}]!", _connect_data, ex.displayText() );
+            __LOG_ERROR__( "mongo[{}] connect failed = [{}]", _connect_data, ex.displayText() );
         }
 
         return _is_connected;
@@ -83,7 +83,7 @@ namespace KFrame
             {
                 if ( !CheckDisconnected( ex.code() ) )
                 {
-                    __LOG_ERROR__( "mongo failed code=[{}] message=[{}]!", ex.code(), ex.displayText() );
+                    __LOG_ERROR__( "mongo failed code=[{}] message=[{}]", ex.code(), ex.displayText() );
                     return false;
                 }
 
@@ -91,7 +91,7 @@ namespace KFrame
             }
         } while ( ++repeatcount < 3 );
 
-        __LOG_ERROR__( "mongo disconnected!" );
+        __LOG_ERROR__( "mongo disconnected" );
         return false;
     }
 
@@ -109,7 +109,7 @@ namespace KFrame
             {
                 if ( !CheckDisconnected( ex.code() ) )
                 {
-                    __LOG_ERROR__( "mongo failed code=[{}] message=[{}]!", ex.code(), ex.displayText() );
+                    __LOG_ERROR__( "mongo failed code=[{}] message=[{}]", ex.code(), ex.displayText() );
                     return false;
                 }
 
@@ -117,7 +117,7 @@ namespace KFrame
             }
         } while ( ++repeatcount < 3 );
 
-        __LOG_ERROR__( "mongo disconnected!" );
+        __LOG_ERROR__( "mongo disconnected" );
         return false;
     }
 }

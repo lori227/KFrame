@@ -451,7 +451,7 @@ namespace KFrame
         __CLIENT_PROTO_PARSE__( KFMsg::MsgRemoveDataReq );
 
         player->RemoveData( kfmsg.dataname(), kfmsg.key() );
-        __LOG_INFO__( "remove data[{}:{}] ok!", kfmsg.dataname(), kfmsg.key() );
+        __LOG_INFO__( "remove data[{}:{}] ok", kfmsg.dataname(), kfmsg.key() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleRequestSyncReq )

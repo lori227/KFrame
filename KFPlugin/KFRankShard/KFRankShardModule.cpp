@@ -87,7 +87,7 @@ namespace KFrame
         auto kfresult = _rank_redis_driver->Update( rankdata, "hmset {}:{}:{}", __STRING__( rank ), kfrankdata->_rank_id, kfrankdata->_zone_id );
         if ( !kfresult->IsOk() )
         {
-            __LOG_ERROR__( "rank=[{}:{}] save failed!", kfrankdata->_rank_id, kfrankdata->_zone_id );
+            __LOG_ERROR__( "rank=[{}:{}] save failed", kfrankdata->_rank_id, kfrankdata->_zone_id );
         }
     }
 
@@ -168,7 +168,7 @@ namespace KFrame
             auto ok = _kf_route->RepeatToAll( __STRING__( rank ), KFMsg::S2S_SYNC_REFRESH_RANK, &sync );
             if ( !ok )
             {
-                __LOG_ERROR__( "rank=[{}] refresh failed!", rankid );
+                __LOG_ERROR__( "rank=[{}] refresh failed", rankid );
             }
         }
     }

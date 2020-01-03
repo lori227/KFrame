@@ -59,7 +59,7 @@ namespace KFrame
         auto keeper = _data_keeper.Find( pblogin->playerid() );
         if ( keeper != nullptr )
         {
-            __LOG_INFO__( "player=[{}] keeper load!", pblogin->playerid() );
+            __LOG_INFO__( "player=[{}] keeper load", pblogin->playerid() );
             _load_player_function( KFMsg::Ok, pblogin, &keeper->_pb_object );
             return true;
         }
@@ -75,7 +75,7 @@ namespace KFrame
 
     void KFDataClientModule::LoadKeeperData( const KFMsg::PBLoginData* pblogin )
     {
-        __LOG_INFO__( "load palyer=[{}] req!", pblogin->playerid() );
+        __LOG_INFO__( "load palyer=[{}] req", pblogin->playerid() );
 
         // 加载玩家数据
         KFMsg::S2SLoadPlayerToDataReq req;
@@ -83,7 +83,7 @@ namespace KFrame
         auto ok = _kf_route->SendToRand( pblogin->playerid(), __STRING__( data ), KFMsg::S2S_LOAD_PLAYER_TO_DATA_REQ, &req );
         if ( !ok )
         {
-            __LOG_ERROR__( "load palyer=[{}] failed!", pblogin->playerid() );
+            __LOG_ERROR__( "load palyer=[{}] failed", pblogin->playerid() );
         }
     }
 
@@ -95,11 +95,11 @@ namespace KFrame
         auto keeper = _load_keeper.Find( pblogin->playerid() );
         if ( keeper == nullptr || keeper->_pb_login.sessionid() != pblogin->sessionid() )
         {
-            return __LOG_ERROR__( "player=[{}] load session error!", pblogin->playerid() );
+            return __LOG_ERROR__( "player=[{}] load session error", pblogin->playerid() );
         }
 
         _load_keeper.Remove( pblogin->playerid() );
-        __LOG_INFO__( "load palyer=[{}] ok!", pblogin->playerid() );
+        __LOG_INFO__( "load palyer=[{}] ok", pblogin->playerid() );
 
         // 回调函数
         _load_player_function( kfmsg.result(), &kfmsg.pblogin(), &kfmsg.playerdata() );
@@ -125,7 +125,7 @@ namespace KFrame
 
     void KFDataClientModule::SaveKeeperData( uint64 playerid, const KFMsg::PBObject* pbplayerdata, uint32 saveflag )
     {
-        __LOG_INFO__( "save palyer=[{}] req!", playerid );
+        __LOG_INFO__( "save palyer=[{}] req", playerid );
 
         KFMsg::S2SSavePlayerToDataReq req;
         req.set_id( playerid );
@@ -134,7 +134,7 @@ namespace KFrame
         auto ok = _kf_route->SendToRand( playerid, __STRING__( data ), KFMsg::S2S_SAVE_PLAYER_TO_DATA_REQ, &req );
         if ( !ok )
         {
-            __LOG_ERROR__( "save palyer=[{}] failed!", playerid );
+            __LOG_ERROR__( "save palyer=[{}] failed", playerid );
         }
     }
 
@@ -144,7 +144,7 @@ namespace KFrame
 
         _data_keeper.Remove( kfmsg.id() );
 
-        __LOG_INFO__( "save palyer=[{}] ok!", kfmsg.id() );
+        __LOG_INFO__( "save palyer=[{}] ok", kfmsg.id() );
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////

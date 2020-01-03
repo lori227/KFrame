@@ -55,13 +55,13 @@ namespace KFrame
         auto kfquery = _deploy_driver->QueryMap( "select * from `agent` where `{}`='{}'", __STRING__( localip ), localip );
         if ( kfquery->_value.empty() )
         {
-            return __LOG_ERROR__( "query agent=[{}] data failed!", localip );
+            return __LOG_ERROR__( "query agent=[{}] data failed", localip );
         }
 
         auto strappid = kfquery->_value[ __STRING__( strappid ) ];
         if ( strappid.empty() )
         {
-            return __LOG_ERROR__( "agent=[{}] appid is empty!", localip );
+            return __LOG_ERROR__( "agent=[{}] appid is empty", localip );
         }
 
         auto kfglobal = KFGlobal::Instance();
@@ -70,7 +70,7 @@ namespace KFrame
         auto strservice = kfquery->_value[ __STRING__( service ) ];
         if ( strservice.empty() )
         {
-            return __LOG_ERROR__( "agent=[{}] service is empty!", localip );
+            return __LOG_ERROR__( "agent=[{}] service is empty", localip );
         }
 
         kfglobal->_channel = KFUtility::SplitValue< uint32 >( strservice, "." );
@@ -110,7 +110,7 @@ namespace KFrame
     {
         if ( _deploy_table_name.empty() )
         {
-            return __LOG_ERROR__( "depoly table name is empty!" );
+            return __LOG_ERROR__( "depoly table name is empty" );
         }
 
         try
@@ -126,7 +126,7 @@ namespace KFrame
                     auto deploydata = __KF_NEW__( KFDeployData );
                     deploydata->CopyFrom( values );
                     _deploy_list.Insert( deploydata->_app_id, deploydata );
-                    __LOG_INFO__( "add server[{}:{}:{}] deploy!", deploydata->_app_name, deploydata->_app_type, deploydata->_app_id );
+                    __LOG_INFO__( "add server[{}:{}:{}] deploy", deploydata->_app_name, deploydata->_app_type, deploydata->_app_id );
                 }
 
                 BindServerProcess();
@@ -134,7 +134,7 @@ namespace KFrame
         }
         catch ( ... )
         {
-            __LOG_ERROR__( "load launch exception!" );
+            __LOG_ERROR__( "load launch exception" );
         }
     }
 
@@ -213,7 +213,7 @@ namespace KFrame
 
             // 超时了, 认为client卡死了
             KillServerProcess( deploydata->_process_id );
-            __LOG_INFO__( "app=[{}.{}] id=[{}] heartbeat timeout!", deploydata->_app_name, deploydata->_app_type, deploydata->_app_id );
+            __LOG_INFO__( "app=[{}.{}] id=[{}] heartbeat timeout", deploydata->_app_name, deploydata->_app_type, deploydata->_app_id );
         }
     }
 
@@ -229,11 +229,11 @@ namespace KFrame
         }
         catch ( std::exception& exception )
         {
-            __LOG_ERROR__( "startup exception={}!", exception.what() );
+            __LOG_ERROR__( "startup exception={}", exception.what() );
         }
         catch ( ... )
         {
-            __LOG_ERROR__( "startup exception unknown!" );
+            __LOG_ERROR__( "startup exception unknown" );
         }
     }
 
@@ -258,7 +258,7 @@ namespace KFrame
             // 保存到文件中
             SaveProcessToFile( deploydata );
 
-            LogDeploy( "[{}:{}:{}] startup ok!", deploydata->_app_name, deploydata->_app_type, deploydata->_app_id );
+            LogDeploy( "[{}:{}:{}] startup ok", deploydata->_app_name, deploydata->_app_type, deploydata->_app_id );
         }
     }
 
@@ -319,11 +319,11 @@ namespace KFrame
         }
         catch ( std::exception& exception )
         {
-            __LOG_ERROR__( "kill exception={}!", exception.what() );
+            __LOG_ERROR__( "kill exception={}", exception.what() );
         }
         catch ( ... )
         {
-            __LOG_ERROR__( "kill exception unknown!" );
+            __LOG_ERROR__( "kill exception unknown" );
         }
     }
 
@@ -362,7 +362,7 @@ namespace KFrame
         }
         else
         {
-            __LOG_ERROR__( "startup [ {}:{}:{} ] failed!",
+            __LOG_ERROR__( "startup [ {}:{}:{} ] failed",
                            deploydata->_app_name, deploydata->_app_type, deploydata->_app_id );
         }
 
@@ -509,7 +509,7 @@ namespace KFrame
         FILE* fp = popen( command.c_str(), "r" );
         if ( fp == nullptr )
         {
-            __LOG_ERROR__( "[{}] open failed!", command );
+            __LOG_ERROR__( "[{}] open failed", command );
             return _invalid_string;
         }
 
@@ -645,7 +645,7 @@ namespace KFrame
 
         auto pbdeploy = kfmsg.mutable_deploycommand();
 
-        LogDeploy( "command=[{}:{}|{}:{}:{}:{}]!",
+        LogDeploy( "command=[{}:{}|{}:{}:{}:{}]",
                    pbdeploy->command(), pbdeploy->value(), pbdeploy->appname(), pbdeploy->apptype(), pbdeploy->appid(), pbdeploy->zoneid() );
 
         // 判断是否agent的进程
@@ -716,7 +716,7 @@ namespace KFrame
             }
 
             UpdateCommandToDatabase();
-            LogDeploy( "task cleanup ok!" );
+            LogDeploy( "task cleanup ok" );
         }
         else
         {
@@ -743,7 +743,7 @@ namespace KFrame
         {
             _deploy_task.push_back( kftask );
 
-            LogDeploy( "add [{}:{} | {}:{}:{}:{}] count[{}]!",
+            LogDeploy( "add [{}:{} | {}:{}:{}:{}] count[{}]",
                        kftask->_command, kftask->_value,
                        kftask->_app_name, kftask->_app_type,
                        kftask->_app_id, kftask->_zone_id, _deploy_task.size() );
@@ -757,7 +757,7 @@ namespace KFrame
             auto ok = CheckTaskFinish();
             if ( ok )
             {
-                LogDeploy( "[{}:{} | {}:{}:{}:{}] task finish!",
+                LogDeploy( "[{}:{} | {}:{}:{}:{}] task finish",
                            _kf_task->_command, _kf_task->_value,
                            _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
 
@@ -774,17 +774,17 @@ namespace KFrame
                 else
                 {
                     UpdateCommandToDatabase();
-                    LogDeploy( "all task finish!" );
+                    LogDeploy( "all task finish" );
                 }
             }
         }
         catch ( std::exception& exception )
         {
-            __LOG_ERROR__( "check finish exception={}!", exception.what() );
+            __LOG_ERROR__( "check finish exception={}", exception.what() );
         }
         catch ( ... )
         {
-            __LOG_ERROR__( "check finish exception unknown!" );
+            __LOG_ERROR__( "check finish exception unknown" );
         }
     }
 
@@ -850,7 +850,7 @@ namespace KFrame
         try
         {
             UpdateCommandToDatabase();
-            LogDeploy( "[{}:{} | {}:{}:{}:{}] task start!",
+            LogDeploy( "[{}:{} | {}:{}:{}:{}] task start",
                        _kf_task->_command, _kf_task->_value,
                        _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
 
@@ -905,11 +905,11 @@ namespace KFrame
         }
         catch ( std::exception& exception )
         {
-            LogDeploy( "start task exception={}!", exception.what() );
+            LogDeploy( "start task exception={}", exception.what() );
         }
         catch ( ... )
         {
-            LogDeploy( "start task exception unknown!" );
+            LogDeploy( "start task exception unknown" );
         }
     }
 
@@ -927,7 +927,7 @@ namespace KFrame
 
                 UpdateDeployToDatabase( deploydata );
 
-                LogDeploy( "[{}:{}:{}] kill ok!", deploydata->_app_name, deploydata->_app_type, deploydata->_app_id );
+                LogDeploy( "[{}:{}:{}] kill ok", deploydata->_app_name, deploydata->_app_type, deploydata->_app_id );
             }
         }
     }
@@ -1027,7 +1027,7 @@ namespace KFrame
         auto queryurl = _deploy_driver->QueryString( "select `version_url` from `version` where `version_name`='{}';", _kf_task->_value );
         if ( !queryurl->IsOk() || queryurl->_value.empty() )
         {
-            return LogDeploy( "can't find [{}] url!", _kf_task->_value );
+            return LogDeploy( "can't find [{}] url", _kf_task->_value );
         }
 
 #if __KF_SYSTEM__ == __KF_WIN__
@@ -1061,7 +1061,7 @@ namespace KFrame
 
         ExecuteShell( "rm wget-log*" );
         ExecuteShell( "rm -rf ./version/*" );
-        LogDeploy( "[{}] update version ok!", _kf_task->_app_name );
+        LogDeploy( "[{}] update version ok", _kf_task->_app_name );
 #endif
 
         // 更新版本号
@@ -1159,7 +1159,7 @@ namespace KFrame
             ExecuteShell( "cp -rf ./version/{} {}/{}/", _kf_task->_value, deploypath, querypath );
         }
 
-        LogDeploy( "update file [{}] ok!", _kf_task->_value );
+        LogDeploy( "update file [{}] ok", _kf_task->_value );
 #endif
 
         return true;
@@ -1171,7 +1171,7 @@ namespace KFrame
         auto queryurl = _deploy_driver->QueryString( "select `resource_url` from `resource` where `resource_name`='{}';", _kf_task->_value );
         if ( !queryurl->IsOk() || queryurl->_value.empty() )
         {
-            return LogDeploy( "can't find [{}] url!", _kf_task->_value );
+            return LogDeploy( "can't find [{}] url", _kf_task->_value );
         }
 
 #if __KF_SYSTEM__ == __KF_WIN__
@@ -1218,7 +1218,7 @@ namespace KFrame
 
         ExecuteShell( "rm wget-log*" );
         ExecuteShell( "rm -rf ./version/*" );
-        LogDeploy( "[{}] update resource ok!", _kf_task->_app_name );
+        LogDeploy( "[{}] update resource ok", _kf_task->_app_name );
 #endif
 
         return true;
@@ -1254,7 +1254,7 @@ namespace KFrame
         auto querymap = _deploy_driver->QueryMap( "select * from `plugin` where `file_name`='{}';", filename );
         if ( !querymap->IsOk() || querymap->_value.empty() )
         {
-            LogDeploy( "plugin data [{}] empty!", filename );
+            LogDeploy( "plugin data [{}] empty", filename );
             return true;
         }
 
@@ -1286,7 +1286,7 @@ namespace KFrame
             ExecuteShell( "mv -f ./version/{} {}/bin/{}.new", filename, deploypath, filename );
         }
 
-        LogDeploy( "down plugin [{}] ok!", filename );
+        LogDeploy( "down plugin [{}] ok", filename );
 #endif
 
         return true;

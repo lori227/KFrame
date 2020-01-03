@@ -76,7 +76,7 @@ namespace KFrame
         auto iter = _operator_type.find( value );
         if ( iter == _operator_type.end() )
         {
-            __LOG_ERROR__( "operator value=[{}] error!", value );
+            __LOG_ERROR__( "operator value=[{}] error", value );
             return KFEnum::Null;
         }
 

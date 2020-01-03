@@ -103,7 +103,7 @@ namespace KFrame
         {
             // 取消定时器
             __UN_TIMER_1__( objectid );
-            __LOG_INFO__( "cluster proxy register to master ok!" );
+            __LOG_INFO__( "cluster proxy register to master ok" );
         }
     }
 
@@ -199,7 +199,7 @@ namespace KFrame
         ack.set_masterid( kfmsg.masterid() );
         _kf_tcp_client->SendNetMessage( __ROUTE_SERVER_ID__, KFMsg::S2S_CLUSTER_TOKEN_TO_PROXY_ACK, &ack );
 
-        __LOG_DEBUG__( "update client[{}] token[{}]!", KFAppId::ToString( kftoken->_client_id ), kftoken->_token );
+        __LOG_DEBUG__( "update client[{}] token[{}]", KFAppId::ToString( kftoken->_client_id ), kftoken->_token );
     }
 
     __KF_MESSAGE_FUNCTION__( KFClusterProxyModule::HandleClusterVerifyToProxyReq )
@@ -215,7 +215,7 @@ namespace KFrame
 
         if ( serverid == _invalid_int )
         {
-            return __LOG_ERROR__( "cluster client[{}] verify failed!", KFAppId::ToString( kfmsg.serverid() ) );
+            return __LOG_ERROR__( "cluster client[{}] verify failed", KFAppId::ToString( kfmsg.serverid() ) );
         }
 
         // 删除定时器
@@ -225,7 +225,7 @@ namespace KFrame
         KFMsg::S2SClusterClientDiscoverToShardReq req;
         req.add_clientid( serverid );
         _kf_tcp_client->SendMessageToType( __STRING__( shard ), KFMsg::S2S_CLUSTER_CLIENT_DISCOVER_TO_SHARD_REQ, &req );
-        __LOG_DEBUG__( "cluster client [{}] verify ok!", KFAppId::ToString( kfmsg.serverid() ) );
+        __LOG_DEBUG__( "cluster client [{}] verify ok", KFAppId::ToString( kfmsg.serverid() ) );
     }
 
     uint64 KFClusterProxyModule::ClusterVerifyLogin( const std::string& token, uint64 serverid )
@@ -257,7 +257,7 @@ namespace KFrame
             shardid = _kf_hash.FindHashNode( clientid, true );
             if ( shardid == _invalid_int )
             {
-                __LOG_ERROR__( "msgid[{}] transpond failed!", msgid );
+                __LOG_ERROR__( "msgid[{}] transpond failed", msgid );
                 return false;
             }
         }

@@ -76,7 +76,7 @@ namespace KFrame
             auto kfconhash = _gate_conhash.Create( gateid );
             kfconhash->AddHashNode( __STRING__( game ), kfmsg.gameid(), 50 );
 
-            __LOG_INFO__( "add gate=[{}] game=[{}]!", KFAppId::ToString( gateid ), KFAppId::ToString( kfmsg.gameid() ) );
+            __LOG_INFO__( "add gate=[{}] game=[{}]", KFAppId::ToString( gateid ), KFAppId::ToString( kfmsg.gameid() ) );
         }
     }
 
@@ -92,7 +92,7 @@ namespace KFrame
 
         kfconhash->RemoveHashNode( kfmsg.gameid() );
 
-        __LOG_ERROR__( "remove gate=[{}] game=[{}]!", KFAppId::ToString( kfmsg.gateid() ), KFAppId::ToString( kfmsg.gameid() ) );
+        __LOG_ERROR__( "remove gate=[{}] game=[{}]", KFAppId::ToString( kfmsg.gateid() ), KFAppId::ToString( kfmsg.gameid() ) );
     }
 
     __KF_NET_EVENT_FUNCTION__( KFWorldModule::OnServerLostGame )
@@ -109,7 +109,7 @@ namespace KFrame
             auto ok = kfconhash->RemoveHashNode( netdata->_id );
             if ( ok )
             {
-                __LOG_ERROR__( "remove gate=[{}] game=[{}]!", KFAppId::ToString( iter.first ), KFAppId::ToString( netdata->_id ) );
+                __LOG_ERROR__( "remove gate=[{}] game=[{}]", KFAppId::ToString( iter.first ), KFAppId::ToString( netdata->_id ) );
             }
         }
     }
@@ -132,7 +132,7 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SLoginToWorldReq );
 
         auto pblogin = kfmsg.mutable_pblogin();
-        __LOG_DEBUG__( "player[{}:{}] login world req!", pblogin->account(), pblogin->accountid() );
+        __LOG_DEBUG__( "player[{}:{}] login world req", pblogin->account(), pblogin->accountid() );
 
         // 查询玩家id
         auto playerid = QueryCreatePlayerId( pblogin->accountid() );
@@ -165,7 +165,7 @@ namespace KFrame
         auto ok = _kf_tcp_server->SendNetMessage( gameid, KFMsg::S2S_LOGIN_TO_GAME_REQ, &req );
         if ( !ok )
         {
-            __LOG_ERROR__( "player[{}:{}] login game failed!", pblogin->accountid(), pblogin->playerid() );
+            __LOG_ERROR__( "player[{}:{}] login game failed", pblogin->accountid(), pblogin->playerid() );
             SendLoginAckToLogin( KFMsg::LoginGameServerBusy, loginid, pblogin->gateid(), pblogin->accountid(), pblogin->sessionid() );
         }
     }
@@ -180,7 +180,7 @@ namespace KFrame
         auto ok = _kf_tcp_server->SendNetMessage( loginid, KFMsg::S2S_LOGIN_TO_LOGIN_ACK, &ack );
         if ( !ok )
         {
-            __LOG_ERROR__( "player[{}] world verify result[{}] failed!", accountid, result );
+            __LOG_ERROR__( "player[{}] world verify result[{}] failed", accountid, result );
         }
     }
 
@@ -261,7 +261,7 @@ namespace KFrame
             return false;
         }
 
-        __LOG_INFO_FUNCTION__( function, line, "kick[{}] player[{}]!", type, playerid );
+        __LOG_INFO_FUNCTION__( function, line, "kick[{}] player[{}]", type, playerid );
         if ( _kf_tcp_server->HaveHandle( gameid ) )
         {
             // 发送踢出消息
@@ -285,7 +285,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SKickPlayerToWorldReq );
 
-        __LOG_INFO__( "kick[{}] player[{}]!", kfmsg.type(), kfmsg.playerid() );
+        __LOG_INFO__( "kick[{}] player[{}]", kfmsg.type(), kfmsg.playerid() );
 
         // 发送踢出消息
         SendKickMessage( kfmsg.type(), kfmsg.playerid(), kfmsg.gameid() );
@@ -306,7 +306,7 @@ namespace KFrame
         auto ok = _kf_tcp_server->SendNetMessage( gameid, KFMsg::S2S_KICK_PLAYER_TO_GAME_REQ, &req );
         if ( !ok )
         {
-            __LOG_ERROR__( "kick player=[{}] game=[{}]failed!", playerid, KFAppId::ToString( gameid ) );
+            __LOG_ERROR__( "kick player=[{}] game=[{}]failed", playerid, KFAppId::ToString( gameid ) );
             UpdateOnlineData( playerid, _invalid_int );
         }
     }

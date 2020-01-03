@@ -84,7 +84,7 @@ namespace KFrame
         auto kfsetting = KFRelationConfig::Instance()->FindSetting( kfmsg.dataname() );
         if ( kfsetting == nullptr )
         {
-            return __LOG_ERROR__( "relatiion=[{}] no setting!", kfmsg.dataname() );
+            return __LOG_ERROR__( "relatiion=[{}] no setting", kfmsg.dataname() );
         }
 
         // 查询好友列表
@@ -128,7 +128,7 @@ namespace KFrame
         auto kfsetting = KFRelationConfig::Instance()->FindSetting( kfmsg.dataname() );
         if ( kfsetting == nullptr )
         {
-            return __LOG_ERROR__( "relatiion=[{}] no setting!", kfmsg.dataname() );
+            return __LOG_ERROR__( "relatiion=[{}] no setting", kfmsg.dataname() );
         }
 
         auto queryidlist = _relation_redis_driver->QueryList( "smembers {}:{}", kfsetting->_invite_list_name, kfmsg.playerid() );
@@ -183,7 +183,7 @@ namespace KFrame
         auto kfsetting = KFRelationConfig::Instance()->FindSetting( kfmsg.dataname() );
         if ( kfsetting == nullptr )
         {
-            return __LOG_ERROR__( "relation=[{}] no setting!", kfmsg.dataname() );
+            return __LOG_ERROR__( "relation=[{}] no setting", kfmsg.dataname() );
         }
 
         auto selfid = __ROUTE_SEND_ID__;
@@ -254,7 +254,7 @@ namespace KFrame
         auto kfsetting = KFRelationConfig::Instance()->FindSetting( kfmsg.dataname() );
         if ( kfsetting == nullptr )
         {
-            return __LOG_ERROR__( "relation=[{}] no setting!", kfmsg.dataname() );
+            return __LOG_ERROR__( "relation=[{}] no setting", kfmsg.dataname() );
         }
 
         _relation_redis_driver->Append( "srem {}:{} {}", kfsetting->_invite_list_name, kfmsg.selfplayerid(), kfmsg.targetplayerid() );
@@ -269,7 +269,7 @@ namespace KFrame
         auto kfsetting = KFRelationConfig::Instance()->FindSetting( kfmsg.dataname() );
         if ( kfsetting == nullptr )
         {
-            return __LOG_ERROR__( "relation=[{}] no setting!", kfmsg.dataname() );
+            return __LOG_ERROR__( "relation=[{}] no setting", kfmsg.dataname() );
         }
 
         auto selfid = __ROUTE_SEND_ID__;
@@ -347,7 +347,7 @@ namespace KFrame
         auto kfsetting = KFRelationConfig::Instance()->FindSetting( kfmsg.dataname() );
         if ( kfsetting == nullptr )
         {
-            return __LOG_ERROR__( "relation=[{}] no setting!", kfmsg.dataname() );
+            return __LOG_ERROR__( "relation=[{}] no setting", kfmsg.dataname() );
         }
 
         // 删除关系

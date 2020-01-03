@@ -37,7 +37,7 @@ namespace KFrame
             if ( kfexecute != nullptr )
             {
                 sort = _data_execute._objects.rbegin()->first + 1;
-                __LOG_WARN__( "dataexecute=[{}] sort=[{}] already exist!", kfsetting->_id, kfsetting->_sort );
+                __LOG_WARN__( "dataexecute=[{}] sort=[{}] already exist", kfsetting->_id, kfsetting->_sort );
             }
 
             if ( kfsetting->_id == "redis" )
@@ -54,7 +54,7 @@ namespace KFrame
             }
             else
             {
-                __LOG_ERROR__( "dataexecute=[{}] not support!" );
+                __LOG_ERROR__( "dataexecute=[{}] not support" );
                 continue;
             }
 
@@ -93,7 +93,7 @@ namespace KFrame
 
         auto pblogin = &kfmsg.pblogin();
         auto zoneid = KFGlobal::Instance()->STUUIDZoneId( __STRING__( player ), pblogin->playerid() );
-        __LOG_INFO__( "player[{}:{}:{}:{}] load req!", pblogin->account(), pblogin->accountid(), pblogin->playerid(), zoneid );
+        __LOG_INFO__( "player[{}:{}:{}:{}] load req", pblogin->account(), pblogin->accountid(), pblogin->playerid(), zoneid );
 
         KFMsg::S2SLoadPlayerToGameAck ack;
         ack.mutable_pblogin()->CopyFrom( *pblogin );
@@ -156,12 +156,12 @@ namespace KFrame
             auto ok = KFProto::Parse( pbobject, kfresult->_value, KFCompressEnum::Compress );
             if ( !ok )
             {
-                __LOG_ERROR__( "database=[{}] player[{}:{}] parse failed!", dataexecute->GetName(), zoneid, playerid );
+                __LOG_ERROR__( "database=[{}] player[{}:{}] parse failed", dataexecute->GetName(), zoneid, playerid );
                 continue;
             }
             else
             {
-                __LOG_INFO__( "database=[{}] player[{}:{}] load ok!", dataexecute->GetName(), zoneid, playerid );
+                __LOG_INFO__( "database=[{}] player[{}:{}] load ok", dataexecute->GetName(), zoneid, playerid );
                 return true;
             }
         }
@@ -175,7 +175,7 @@ namespace KFrame
         auto strdata = KFProto::Serialize( pbobject, KFCompressEnum::Compress );
         if ( strdata == _invalid_string )
         {
-            __LOG_ERROR__( "player[{}:{}] serialize failed!", zoneid, playerid );
+            __LOG_ERROR__( "player[{}:{}] serialize failed", zoneid, playerid );
             return false;
         }
 

@@ -78,7 +78,7 @@ namespace KFrame
 
         auto netdata = &kfclient->_net_data;
 
-        __LOG_DEBUG__( "[{}:{}:{}|{}:{}] connect ok!", netdata->_name, netdata->_type, netdata->_str_id, netdata->_ip, netdata->_port );
+        __LOG_DEBUG__( "[{}:{}:{}|{}:{}] connect ok", netdata->_name, netdata->_type, netdata->_str_id, netdata->_ip, netdata->_port );
 
         // 上层回调
         if ( _client_connect_function != nullptr )
@@ -96,7 +96,7 @@ namespace KFrame
         }
 
         auto netdata = &kfclient->_net_data;
-        __LOG_INFO__( "[{}:{}:{}|{}:{}] disconnect!", netdata->_name, netdata->_type, netdata->_str_id, netdata->_ip, netdata->_port );
+        __LOG_INFO__( "[{}:{}:{}|{}:{}] disconnect", netdata->_name, netdata->_type, netdata->_str_id, netdata->_ip, netdata->_port );
 
         // 上层回调
         if ( _client_disconnect_function != nullptr )
@@ -111,7 +111,7 @@ namespace KFrame
         if ( kfclient != nullptr )
         {
             auto netdata = &kfclient->_net_data;
-            __LOG_INFO__( "[{}:{}:{}|{}:{}] client shutdown!",
+            __LOG_INFO__( "[{}:{}:{}|{}:{}] client shutdown",
                           netdata->_name, netdata->_type, netdata->_str_id, netdata->_ip, netdata->_port );
 
             if ( _client_shutdown_function != nullptr )
@@ -132,7 +132,7 @@ namespace KFrame
         }
 
         auto netdata = &kfclient->_net_data;
-        __LOG_ERROR__( "[{}:{}:{}|{}:{}] connect failed!", netdata->_name, netdata->_type, netdata->_str_id, netdata->_ip, netdata->_port );
+        __LOG_ERROR__( "[{}:{}:{}|{}:{}] connect failed", netdata->_name, netdata->_type, netdata->_str_id, netdata->_ip, netdata->_port );
 
         if ( _client_failed_function != nullptr )
         {
@@ -199,7 +199,7 @@ namespace KFrame
         auto netclient = _kf_clients.Find( serverid );
         if ( netclient == nullptr )
         {
-            __LOG_ERROR__( "msgid[{}] can't find server[{}]!", msgid, KFAppId::ToString( serverid ) );
+            __LOG_ERROR__( "msgid[{}] can't find server[{}]", msgid, KFAppId::ToString( serverid ) );
             return false;
         }
 
@@ -211,7 +211,7 @@ namespace KFrame
         auto netclient = _kf_clients.Find( serverid );
         if ( netclient == nullptr )
         {
-            __LOG_ERROR__( "msgid[{}] can't find server[{}]!", msgid, KFAppId::ToString( serverid ) );
+            __LOG_ERROR__( "msgid[{}] can't find server[{}]", msgid, KFAppId::ToString( serverid ) );
             return false;
         }
 

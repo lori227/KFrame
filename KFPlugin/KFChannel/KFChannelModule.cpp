@@ -66,7 +66,7 @@ namespace KFrame
             auto kfsetting = KFChannelConfig::Instance()->FindSetting( KFGlobal::Instance()->_channel );
             if ( !kfsetting->IsSupport( channel ) )
             {
-                __LOG_ERROR__( "channel=[{}] not support!", channel );
+                __LOG_ERROR__( "channel=[{}] not support", channel );
                 return _invalid_string;
             }
         }
@@ -75,14 +75,14 @@ namespace KFrame
         auto kfsetting = KFChannelConfig::Instance()->FindSetting( channel );
         if ( kfsetting == nullptr || !kfsetting->IsOpen() )
         {
-            __LOG_ERROR__( "channel=[{}] no setting!", channel );
+            __LOG_ERROR__( "channel=[{}] no setting", channel );
             return _invalid_string;
         }
 
         auto kffunction = _kf_pay_function.Find( channel );
         if ( kffunction == nullptr )
         {
-            __LOG_ERROR__( "channel=[{}] no function!", channel );
+            __LOG_ERROR__( "channel=[{}] no function", channel );
             return _invalid_string;
         }
 

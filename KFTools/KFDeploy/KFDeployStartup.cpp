@@ -40,14 +40,14 @@ namespace KFrame
         auto library = _kf_library.Create( kfsetting->_name );
         if ( !library->Load( _deploy_config->_plugin_path, file ) )
         {
-            __LOG_ERROR__( "load [{}] failed!", library->_path );
+            __LOG_ERROR__( "load [{}] failed", library->_path );
             return false;
         }
 
         PluginEntryFunction function = ( PluginEntryFunction )library->GetFunction( "DllPluginEntry" );
         if ( function == nullptr )
         {
-            __LOG_ERROR__( "entry [{}] failed!", library->_path );
+            __LOG_ERROR__( "entry [{}] failed", library->_path );
             return false;
         }
 
@@ -57,7 +57,7 @@ namespace KFrame
         plugin->_plugin_name = kfsetting->_name;
         plugin->_config = kfsetting->_config_file;
 
-        __LOG_INFO__( "load [{}] ok!", library->_path );
+        __LOG_INFO__( "load [{}] ok", library->_path );
         return true;
     }
 

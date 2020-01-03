@@ -12,7 +12,7 @@ namespace KFrame
         auto kforderdata = redisdriver->QueryMap( "hgetall {}:{}", __STRING__( payorder ), order );
         if ( kforderdata->_value.empty() )
         {
-            __LOG_ERROR__( "order=[{}] no record!", order );
+            __LOG_ERROR__( "order=[{}] no record", order );
             return false;
         }
 
@@ -21,7 +21,7 @@ namespace KFrame
         auto queryorder = kforderdata->_value[ __STRING__( payorder ) ];
         if ( payid.empty() || playerid.empty() || queryorder != order )
         {
-            __LOG_ERROR__( "order=[{}] payid=[{}] playerid=[{}] error!", order, payid, playerid );
+            __LOG_ERROR__( "order=[{}] payid=[{}] playerid=[{}] error", order, payid, playerid );
             return false;
         }
 

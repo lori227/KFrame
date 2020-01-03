@@ -106,14 +106,14 @@ namespace KFrame
         auto redisdriver = __REDIS_DATA_DRIVER__( zoneid );
         if ( redisdriver == nullptr )
         {
-            __LOG_ERROR__( "player[{}:{}] can't find redis!", zoneid, playerid );
+            __LOG_ERROR__( "player[{}:{}] can't find redis", zoneid, playerid );
             return false;
         }
 
         auto kfresult = redisdriver->Execute( "hset {}:{} {} {}", __STRING__( player ), playerid, __STRING__( data ), playerdata );
         if ( !kfresult->IsOk() )
         {
-            __LOG_ERROR__( "redis player[{}:{}] save failed!", zoneid, playerid );
+            __LOG_ERROR__( "redis player[{}:{}] save failed", zoneid, playerid );
             return false;
         }
 
@@ -123,7 +123,7 @@ namespace KFrame
             redisdriver->Execute( "expire {}:{} {}", __STRING__( player ), playerid, _kf_setting->_cache_time );
         }
 
-        __LOG_INFO__( "redis player [{}:{}] size=[{}] save ok!", zoneid, playerid, playerdata.size() );
+        __LOG_INFO__( "redis player [{}:{}] size=[{}] save ok", zoneid, playerid, playerdata.size() );
         return true;
     }
 
@@ -132,7 +132,7 @@ namespace KFrame
         auto redisdriver = __REDIS_DATA_DRIVER__( zoneid );
         if ( redisdriver == nullptr )
         {
-            __LOG_ERROR__( "player[{}:{}] can't find redis!", zoneid, playerid );
+            __LOG_ERROR__( "player[{}:{}] can't find redis", zoneid, playerid );
             return nullptr;
         }
 
@@ -164,7 +164,7 @@ namespace KFrame
         auto mongodriver = __MONGO_DATA_DRIVER__( zoneid );
         if ( mongodriver == nullptr )
         {
-            __LOG_ERROR__( "player[{}:{}] can't find mongo!", zoneid, playerid );
+            __LOG_ERROR__( "player[{}:{}] can't find mongo", zoneid, playerid );
             return false;
         }
 
@@ -186,7 +186,7 @@ namespace KFrame
         auto mongodriver = __MONGO_DATA_DRIVER__( zoneid );
         if ( mongodriver == nullptr )
         {
-            __LOG_ERROR__( "player[{}:{}] can't find mongo!", zoneid, playerid );
+            __LOG_ERROR__( "player[{}:{}] can't find mongo", zoneid, playerid );
             return nullptr;
         }
 
@@ -198,7 +198,7 @@ namespace KFrame
         auto mysqldriver = __MYSQL_DATA_DRIVER__( zoneid );
         if ( mysqldriver == nullptr )
         {
-            __LOG_ERROR__( "player[{}:{}] can't find mysql!", zoneid, playerid );
+            __LOG_ERROR__( "player[{}:{}] can't find mysql", zoneid, playerid );
             return false;
         }
 
@@ -209,11 +209,11 @@ namespace KFrame
         auto ok = mysqldriver->Insert( __STRING__( player ), values );
         if ( !ok )
         {
-            __LOG_ERROR__( "mysql player[{}:{}] save failed!", zoneid, playerid );
+            __LOG_ERROR__( "mysql player[{}:{}] save failed", zoneid, playerid );
             return false;
         }
 
-        __LOG_INFO__( "mysql player [{}:{}] size=[{}] save ok!", zoneid, playerid, playerdata.size() );
+        __LOG_INFO__( "mysql player [{}:{}] size=[{}] save ok", zoneid, playerid, playerdata.size() );
         return true;
     }
 
@@ -222,7 +222,7 @@ namespace KFrame
         auto mysqldriver = __MYSQL_DATA_DRIVER__( zoneid );
         if ( mysqldriver == nullptr )
         {
-            __LOG_ERROR__( "player[{}:{}] can't find mysql!", zoneid, playerid );
+            __LOG_ERROR__( "player[{}:{}] can't find mysql", zoneid, playerid );
             return nullptr;
         }
 
