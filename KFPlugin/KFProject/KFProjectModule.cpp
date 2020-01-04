@@ -17,24 +17,38 @@ namespace KFrame
     }
 
     ///////////////////////////////////////////////////////////////////////////////
-
     uint64 KFProjectModule::GetUInt64( const std::string& name )
     {
-        auto setting = KFProjectConfig::Instance()->FindSetting( name );
-        return setting->_uint64_value;
+        auto kfsetting = KFProjectConfig::Instance()->FindSetting( name );
+        if ( kfsetting == nullptr )
+        {
+            return _invalid_int;
+        }
+
+        return kfsetting->_uint64_value;
     }
 
     ///////////////////////////////////////////////////////////////////////////////
     double KFProjectModule::GetDouble( const std::string& name )
     {
-        auto setting = KFProjectConfig::Instance()->FindSetting( name );
-        return setting->_double_value;
+        auto kfsetting = KFProjectConfig::Instance()->FindSetting( name );
+        if ( kfsetting == nullptr )
+        {
+            return _invalid_double;
+        }
+
+        return kfsetting->_double_value;
     }
 
     ///////////////////////////////////////////////////////////////////////////////
     const std::string& KFProjectModule::GetString( const std::string& name )
     {
-        auto setting = KFProjectConfig::Instance()->FindSetting( name );
-        return setting->_str_value;
+        auto kfsetting = KFProjectConfig::Instance()->FindSetting( name );
+        if ( kfsetting == nullptr )
+        {
+            return _invalid_string;
+        }
+
+        return kfsetting->_str_value;
     }
 }

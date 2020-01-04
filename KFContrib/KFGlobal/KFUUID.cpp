@@ -28,9 +28,7 @@ namespace KFrame
     uint64 KFUUID::Make( uint32 zoneid, uint32 workerid, uint64 nowtime )
     {
         // time
-        auto time = nowtime - _setting._starttime;
-        time &= _setting._max_time;
-
+        auto time = ( nowtime - _setting._starttime ) & _setting._max_time;
         if ( time != _last_time )
         {
             // 确保同1秒内序列号是递增的
