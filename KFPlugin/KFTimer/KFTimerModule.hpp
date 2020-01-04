@@ -63,13 +63,16 @@ namespace KFrame
         bool RemoveTimerData( const std::string& module, uint64 objectid, uint64 subid );
 
         // 从槽里删除定时器
-        void RemoveSlotTimer( KFTimerData* kfdata );
+        void RemoveSlotTimer( KFTimerData* timerdata );
 
         // 添加槽定时器
-        void AddSlotTimer( KFTimerData* kfdata );
+        void AddSlotTimer( KFTimerData* timerdata );
 
         // 刷新定时器
         void RunSlotTimer();
+
+        // 执行定时器
+        void ExecuteDoneTimer( KFTimerData* timerdata );
 
     private:
         // 当前槽索引

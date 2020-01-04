@@ -124,57 +124,57 @@ namespace KFrame
         return true;
     }
 
-    void KFTimerModule::AddSlotTimer( KFTimerData* kfdata )
+    void KFTimerModule::AddSlotTimer( KFTimerData* timerdata )
     {
         auto ticks = 0u;
-        if ( kfdata->_delay != 0u )
+        if ( timerdata->_delay != 0u )
         {
-            ticks = kfdata->_delay / TimerEnum::SlotTime;
-            kfdata->_delay = 0u;
+            ticks = timerdata->_delay / TimerEnum::SlotTime;
+            timerdata->_delay = 0u;
         }
         else
         {
-            ticks = kfdata->_interval / TimerEnum::SlotTime;
+            ticks = timerdata->_interval / TimerEnum::SlotTime;
         }
 
         // 设置圈数
-        kfdata->_rotation = ticks / TimerEnum::MaxSlot;
+        timerdata->_rotation = ticks / TimerEnum::MaxSlot;
 
         // _slot和_now_slot相同时, 会多跑一圈 slot+1 保证下次可以执行
         auto slot = ticks % TimerEnum::MaxSlot;
-        kfdata->_slot = ( slot + _now_slot + 1u ) % TimerEnum::MaxSlot;
+        timerdata->_slot = ( slot + _now_slot + 1u ) % TimerEnum::MaxSlot;
 
-        auto wheeldata = _slot_timer_data[ kfdata->_slot ];
+        auto wheeldata = _slot_timer_data[ timerdata->_slot ];
         if ( wheeldata != nullptr )
         {
-            kfdata->_next = wheeldata;
-            wheeldata->_prev = kfdata;
+            timerdata->_next = wheeldata;
+            wheeldata->_prev = timerdata;
         }
 
-        _slot_timer_data[ kfdata->_slot ] = kfdata;
+        _slot_timer_data[ timerdata->_slot ] = timerdata;
     }
 
-    void KFTimerModule::RemoveSlotTimer( KFTimerData* kfdata )
+    void KFTimerModule::RemoveSlotTimer( KFTimerData* timerdata )
     {
-        auto prevdata = kfdata->_prev;
+        auto prevdata = timerdata->_prev;
         if ( prevdata != nullptr )
         {
-            prevdata->_next = kfdata->_next;
+            prevdata->_next = timerdata->_next;
         }
 
-        auto nextdata = kfdata->_next;
+        auto nextdata = timerdata->_next;
         if ( nextdata != nullptr )
         {
-            nextdata->_prev = kfdata->_prev;
+            nextdata->_prev = timerdata->_prev;
         }
 
-        if ( kfdata == _slot_timer_data[ kfdata->_slot ] )
+        if ( timerdata == _slot_timer_data[ timerdata->_slot ] )
         {
-            _slot_timer_data[ kfdata->_slot ] = nextdata;
+            _slot_timer_data[ timerdata->_slot ] = nextdata;
         }
 
-        kfdata->_prev = nullptr;
-        kfdata->_next = nullptr;
+        timerdata->_prev = nullptr;
+        timerdata->_next = nullptr;
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFTimerModule::AddLoopTimer( const std::string& module, uint64 objectid, uint64 subid, uint32 intervaltime, uint32 delaytime, KFTimerFunction& function )
@@ -247,6 +247,45 @@ namespace KFrame
     {
         auto remove = std::make_tuple( module, objectid, subid );
         _remove_timer_data.push_back( remove );
+        //////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////
+        auto iter = _kf_timer_data.find( module );
+        if ( iter == _kf_timer_data.end() )
+        {
+            return;
+        }
+
+        auto moduledata = iter->second;
+        if ( objectid == 0u )
+        {
+            for ( auto& siter : moduledata->_object_list )
+            {
+                auto objectdata = siter.second;
+                for ( auto& miter : objectdata->_timer_list )
+                {
+                    miter.second->_is_prepare_remove = true;
+                }
+            }
+        }
+        else if ( subid == 0 )
+        {
+            auto objectdata = moduledata->FindObjectData( objectid );
+            if ( objectdata != nullptr )
+            {
+                for ( auto& miter : objectdata->_timer_list )
+                {
+                    miter.second->_is_prepare_remove = true;
+                }
+            }
+        }
+        else
+        {
+            auto timerdata = moduledata->FindTimerData( objectid, subid );
+            if ( timerdata != nullptr )
+            {
+                timerdata->_is_prepare_remove = true;
+            }
+        }
     }
 
     void KFTimerModule::RunTimerRemove()
@@ -330,7 +369,7 @@ namespace KFrame
 
     void KFTimerModule::RunSlotTimer()
     {
-        std::list< KFTimerData* > _done_data;
+        std::list< KFTimerData* > donetimerlist;
 
         auto timerdata = _slot_timer_data[ _now_slot ];
         while ( timerdata != nullptr )
@@ -341,39 +380,47 @@ namespace KFrame
             }
             else
             {
-                _done_data.push_front( timerdata );
+                donetimerlist.push_front( timerdata );
             }
 
             timerdata = timerdata->_next;
         }
 
-        for ( auto timerdata : _done_data )
+        for ( auto timerdata : donetimerlist )
         {
-            // 先从列表中删除
-            RemoveSlotTimer( timerdata );
+            if ( !timerdata->_is_prepare_remove )
+            {
+                ExecuteDoneTimer( timerdata );
+            }
+        }
+    }
 
-            // 执行回调函数
-            timerdata->_function( timerdata->_module, timerdata->_object_id, timerdata->_sub_id );
-            if ( timerdata->_type == TimerEnum::Loop )
-            {
-                AddSlotTimer( timerdata );
-            }
-            else if ( timerdata->_type == TimerEnum::Limit )
-            {
-                --timerdata->_count;
-                if ( timerdata->_count == 0u )
-                {
-                    RemoveTimerData( timerdata->_module, timerdata->_object_id, timerdata->_sub_id );
-                }
-                else
-                {
-                    AddSlotTimer( timerdata );
-                }
-            }
-            else
+    void KFTimerModule::ExecuteDoneTimer( KFTimerData* timerdata )
+    {
+        // 先从列表中删除
+        RemoveSlotTimer( timerdata );
+
+        // 执行回调函数
+        timerdata->_function( timerdata->_module, timerdata->_object_id, timerdata->_sub_id );
+        if ( timerdata->_type == TimerEnum::Loop )
+        {
+            AddSlotTimer( timerdata );
+        }
+        else if ( timerdata->_type == TimerEnum::Limit )
+        {
+            --timerdata->_count;
+            if ( timerdata->_count == 0u )
             {
                 RemoveTimerData( timerdata->_module, timerdata->_object_id, timerdata->_sub_id );
             }
+            else
+            {
+                AddSlotTimer( timerdata );
+            }
+        }
+        else
+        {
+            RemoveTimerData( timerdata->_module, timerdata->_object_id, timerdata->_sub_id );
         }
     }
 }

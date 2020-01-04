@@ -43,6 +43,9 @@ namespace KFrame
         // 链表
         KFTimerData* _prev = nullptr;
         KFTimerData* _next = nullptr;
+
+        // 是否准备删除
+        bool _is_prepare_remove = false;
     };
 
     //////////////////////////////////////////////////////////////////////////////

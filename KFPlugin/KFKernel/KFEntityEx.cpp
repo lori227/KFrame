@@ -401,7 +401,7 @@ namespace KFrame
     {
         auto sourcedata = Find( sourcename );
         auto targetdata = Find( targetname );
-        if ( sourcedata == nullptr )
+        if ( sourcedata == nullptr || targetdata == nullptr )
         {
             return nullptr;
         }
@@ -418,11 +418,8 @@ namespace KFrame
         }
         _kf_component->RemoveDataCallBack( this, sourcedata, key, kfdata, false );
 
-        if ( targetdata != nullptr )
-        {
-            targetdata->Add( key, kfdata );
-            _kf_component->AddDataCallBack( this, targetdata, key, kfdata, false );
-        }
+        targetdata->Add( key, kfdata );
+        _kf_component->AddDataCallBack( this, targetdata, key, kfdata, false );
 
         return kfdata;
     }
