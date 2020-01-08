@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Setting>
 	<Includes>
-		<Include File="./startup/common/project.startup"/>
+		<Include File="./startup/common/common.startup"/>
 		<Include File="./startup/common/tcpclient.startup"/>
 		<Include File="./startup/common/routeclient.startup"/>
 		<Include File="./startup/common/remotelog.startup"/>

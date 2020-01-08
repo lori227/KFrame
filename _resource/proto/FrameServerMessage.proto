@@ -247,8 +247,9 @@ message S2SLoadPlayerToGameAck
 message S2SSavePlayerToDataReq
 {
 	uint64 id = 1;
-	uint32 flag = 2;
-	PBObject data = 3;
+	uint32 zoneid = 2;
+	uint32 flag = 3;
+	PBObject data = 4;
 }
 
 // 保存玩家数据
@@ -263,6 +264,7 @@ message S2SSavePlayerToGameAck
 message S2SQueryPlayerToDataReq
 {
 	uint64 playerid = 1;
+	uint32 zoneid = 2;
 }
 
 // 查询属性
@@ -276,10 +278,11 @@ message S2SQueryPlayerToGameAck
 // S2S_SET_PLAYERNAME_TO_DATA_REQ
 message S2SSetPlayerNameToDataReq
 {
-	uint64 playerid = 1;
-	bytes oldname = 2;
-	bytes newname = 3;
-	bytes costdata = 4;
+	uint32 zoneid = 1;
+	uint64 playerid = 2;
+	bytes oldname = 3;
+	bytes newname = 4;
+	bytes costdata = 5;
 }
 
 // S2S_SET_PLAYERNAME_TO_GAME_ACK
@@ -520,6 +523,7 @@ message S2SClearOnlineToPublicReq
 message S2SQueryBasicToPublicReq
 {
 	bytes name = 1;
+	uint32 zoneid = 2;
 }
 
 // 查询基础数据

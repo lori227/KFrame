@@ -2,10 +2,20 @@
 #define __KF_ZONE_CONFIG_H__
 
 #include "KFZConfig/KFConfig.h"
-#include "KFZConfig/KFZoneSetting.hpp"
 
 namespace KFrame
 {
+    // 分区设置
+    class KFZoneSetting : public KFIntSetting
+    {
+    public:
+        // 游戏服名字
+        std::string _name;
+
+        // 逻辑id
+        uint32 _logic_id = 0u;
+    };
+
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
     class KFZoneConfig : public KFConfig, public KFInstance< KFZoneConfig >

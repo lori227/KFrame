@@ -47,6 +47,11 @@ namespace KFrame
         for ( auto& iter : _config_list )
         {
             auto kfconfig = iter.second;
+            if ( kfconfig->_file_name.empty() )
+            {
+                continue;
+            }
+
             auto kfsetting = _kf_config_config->FindSetting( kfconfig->_file_name );
             if ( kfsetting == nullptr )
             {

@@ -80,7 +80,8 @@ namespace KFrame
         KFMsg::S2SQueryBasicToGameAck ack;
         ack.set_name( kfmsg.name() );
 
-        auto queryid = _public_redis->QueryUInt64( "get {}:{}:{}", __STRING__( player ), __STRING__( name ), kfmsg.name() );
+        auto& namekey = FormatNameKey( kfmsg.zoneid(), kfmsg.name() );
+        auto queryid = _public_redis->QueryUInt64( "get {}", namekey );
         if ( !queryid->IsOk() )
         {
             ack.set_result( KFMsg::NameDatabaseBusy );
@@ -118,7 +119,7 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SSetPlayerNameToDataReq );
 
         // 先查询名字
-        uint32 result = SetPlayerName( kfmsg.playerid(), kfmsg.oldname(), kfmsg.newname() );
+        uint32 result = SetPlayerName( kfmsg.zoneid(), kfmsg.playerid(), kfmsg.oldname(), kfmsg.newname() );
 
         KFMsg::S2SSetPlayerNameToGameAck ack;
         ack.set_result( result );
@@ -128,9 +129,17 @@ namespace KFrame
         _kf_route->SendToRoute( route, KFMsg::S2S_SET_PLAYERNAME_TO_GAME_ACK, &ack );
     }
 
-    uint32 KFPublicShardModule::SetPlayerName( uint64 playerid, const std::string& oldname, const std::string& newname )
+    const std::string& KFPublicShardModule::FormatNameKey( uint32 zoneid, const std::string& name )
     {
-        auto kfplayerid = _public_redis->QueryUInt64( "get {}:{}:{}", __STRING__( player ), __STRING__( name ), newname );
+        static std::string _name = "";
+        _name = __FORMAT__( "{}:{}:{}:{}", __STRING__( player ), __STRING__( name ), zoneid, name );
+        return _name;
+    }
+
+    uint32 KFPublicShardModule::SetPlayerName( uint32 zoneid, uint64 playerid, const std::string& oldname, const std::string& newname )
+    {
+        auto newnamekey = FormatNameKey( zoneid, newname );
+        auto kfplayerid = _public_redis->QueryUInt64( "get {}", newnamekey );
         if ( !kfplayerid->IsOk() )
         {
             return KFMsg::NameDatabaseBusy;
@@ -140,7 +149,7 @@ namespace KFrame
         if ( kfplayerid->_value == _invalid_int )
         {
             // 保存名字
-            auto kfresult = _public_redis->Execute( "set {}:{}:{} {}", __STRING__( player ), __STRING__( name ), newname, playerid );
+            auto kfresult = _public_redis->Execute( "set {} {}", newnamekey, playerid );
             if ( !kfresult->IsOk() )
             {
                 return KFMsg::NameDatabaseBusy;
@@ -149,7 +158,8 @@ namespace KFrame
             // 删除旧的名字关联
             if ( !oldname.empty() )
             {
-                _public_redis->Execute( "del {}:{}:{}", __STRING__( player ), __STRING__( name ), oldname );
+                auto oldnamekey = FormatNameKey( zoneid, oldname );
+                _public_redis->Execute( "del {}", oldnamekey );
             }
         }
         else if ( kfplayerid->_value != playerid )

@@ -2,14 +2,29 @@
 
 namespace KFrame
 {
+    void KFMongoModule::BeforeRun()
+    {
+        /////////////////////////////////////////////////////////////////////////////////////////
+        // 设置uuid生成配置
+        _kf_uuid.InitSetting( 32, 0, 10, 21 );
+        /////////////////////////////////////////////////////////////////////////////////////////
+    }
+
     void KFMongoModule::ShutDown()
     {
-        KFLocker lock( _kf_mutex );
+        KFLocker lock( _kf_mongo_mutex );
         for ( auto& iter : _mongo_logic_map._objects )
         {
             auto kflogic = iter.second;
             kflogic->ShutDown();
         }
+    }
+
+    uint64 KFMongoModule::MakeUUID()
+    {
+        auto kfglobal = KFGlobal::Instance();
+        KFLocker lock( _kf_uuid_mutex );
+        return _kf_uuid.Make( 0, kfglobal->_app_id->GetWorkId(), kfglobal->_real_time );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -18,7 +33,7 @@ namespace KFrame
         auto threadid = KFThread::GetThreadID();
         auto key = MongoKey( threadid, id );
 
-        KFLocker lock( _kf_mutex );
+        KFLocker lock( _kf_mongo_mutex );
         return _mongo_logic_map.Find( key );
     }
 
@@ -27,7 +42,7 @@ namespace KFrame
         auto threadid = KFThread::GetThreadID();
         auto key = MongoKey( threadid, id );
 
-        KFLocker lock( _kf_mutex );
+        KFLocker lock( _kf_mongo_mutex );
         _mongo_logic_map.Insert( key, kflogic );
     }
 

@@ -28,10 +28,9 @@
     <ClInclude Include="KFReadSetting.h" />
     <ClInclude Include="KFRelationConfig.hpp" />
     <ClInclude Include="KFRelationSetting.hpp" />
-    <ClInclude Include="KFRewardConfig.h" />
+    <ClInclude Include="KFRouteConfig.hpp" />
     <ClInclude Include="KFSetting.h" />
     <ClInclude Include="KFZoneConfig.hpp" />
-    <ClInclude Include="KFZoneSetting.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KFDataConfig.cpp" />
@@ -41,6 +40,7 @@
     <ClCompile Include="KFOptionConfig.cpp" />
     <ClCompile Include="KFRankConfig.cpp" />
     <ClCompile Include="KFRelationConfig.cpp" />
+    <ClCompile Include="KFRouteConfig.cpp" />
     <ClCompile Include="KFZoneConfig.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

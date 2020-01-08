@@ -84,6 +84,8 @@ endmacro(BUILD_PLUGIN_WITH_LOGIC project_name)
 ############################################################################################
 ############################################################################################
 ############################################################################################
+
+add_subdirectory(KFProject)
 add_subdirectory(KFBus)
 add_subdirectory(KFConfig)
 add_subdirectory(KFHttpClient)
@@ -108,7 +110,6 @@ add_subdirectory(KFSchedule)
 add_subdirectory(KFTimer)
 add_subdirectory(KFKernel)
 add_subdirectory(KFOption)
-add_subdirectory(KFProject)
 add_subdirectory(KFFilter)
 add_subdirectory(KFPlayer)
 add_subdirectory(KFDeployAgent)

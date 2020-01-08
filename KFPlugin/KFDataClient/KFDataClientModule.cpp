@@ -27,7 +27,7 @@ namespace KFrame
             if ( keeper->_save_time <= nowtime )
             {
                 keeper->_save_time = nowtime + __KEEPER_SAVE_TIMER__;
-                SaveKeeperData( keeper->_player_id, &keeper->_pb_object, keeper->_save_flag );
+                SaveKeeperData( keeper->_zone_id, keeper->_player_id, &keeper->_pb_object, keeper->_save_flag );
             }
         }
 
@@ -53,23 +53,31 @@ namespace KFrame
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    uint32 KFDataClientModule::CalcZoneId( uint64 playerid )
+    {
+        return KFGlobal::Instance()->STUUIDZoneId( __STRING__( player ), playerid );
+    }
+
     bool KFDataClientModule::LoadPlayerData( const KFMsg::PBLoginData* pblogin )
     {
         // 判断是否在缓存中
-        auto keeper = _data_keeper.Find( pblogin->playerid() );
-        if ( keeper != nullptr )
         {
-            __LOG_INFO__( "player=[{}] keeper load", pblogin->playerid() );
-            _load_player_function( KFMsg::Ok, pblogin, &keeper->_pb_object );
-            return true;
+            auto keeper = _data_keeper.Find( pblogin->playerid() );
+            if ( keeper != nullptr )
+            {
+                __LOG_INFO__( "player=[{}] keeper load", pblogin->playerid() );
+                _load_player_function( KFMsg::Ok, pblogin, &keeper->_pb_object );
+                return true;
+            }
         }
 
-        LoadKeeperData( pblogin );
-        {
-            auto keeper = _load_keeper.Create( pblogin->playerid() );
-            keeper->_pb_login.CopyFrom( *pblogin );
-            keeper->_load_time = KFGlobal::Instance()->_game_time + __KEEPER_SAVE_TIMER__;
-        }
+        // 创建load keeper
+        auto keeper = _load_keeper.Create( pblogin->playerid() );
+        keeper->_pb_login.CopyFrom( *pblogin );
+        keeper->_pb_login.set_zoneid( CalcZoneId( pblogin->playerid() ) );
+        keeper->_load_time = KFGlobal::Instance()->_game_time + __KEEPER_SAVE_TIMER__;
+
+        LoadKeeperData( &keeper->_pb_login );
         return true;
     }
 
@@ -113,22 +121,25 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFDataClientModule::SavePlayerData( uint64 playerid, const KFMsg::PBObject* pbplayerdata, uint32 saveflag )
     {
-        SaveKeeperData( playerid, pbplayerdata, saveflag );
-
+        auto zoneid = CalcZoneId( playerid );
         auto keeper = _data_keeper.Create( playerid );
+        keeper->_zone_id = zoneid;
         keeper->_player_id = playerid;
         keeper->_save_flag = saveflag;
         keeper->_pb_object.CopyFrom( *pbplayerdata );
         keeper->_save_time = KFGlobal::Instance()->_game_time + __KEEPER_SAVE_TIMER__;
+
+        SaveKeeperData( zoneid, playerid, pbplayerdata, saveflag );
         return true;
     }
 
-    void KFDataClientModule::SaveKeeperData( uint64 playerid, const KFMsg::PBObject* pbplayerdata, uint32 saveflag )
+    void KFDataClientModule::SaveKeeperData( uint32 zoneid, uint64 playerid, const KFMsg::PBObject* pbplayerdata, uint32 saveflag )
     {
         __LOG_INFO__( "save palyer=[{}] req", playerid );
 
         KFMsg::S2SSavePlayerToDataReq req;
         req.set_id( playerid );
+        req.set_zoneid( zoneid );
         req.set_flag( saveflag );
         req.mutable_data()->CopyFrom( *pbplayerdata );
         auto ok = _kf_route->SendToRand( playerid, __STRING__( data ), KFMsg::S2S_SAVE_PLAYER_TO_DATA_REQ, &req );
@@ -160,6 +171,7 @@ namespace KFrame
 
         KFMsg::S2SQueryPlayerToDataReq req;
         req.set_playerid( playerid );
+        req.set_zoneid( CalcZoneId( playerid ) );
         return _kf_route->SendToRand( sendid, __STRING__( data ), KFMsg::S2S_QUERY_PLAYER_TO_DATA_REQ, &req );
     }
 

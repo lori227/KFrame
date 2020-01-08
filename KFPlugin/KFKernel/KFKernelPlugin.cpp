@@ -25,6 +25,5 @@ namespace KFrame
     {
         __KF_ADD_CONFIG__( KFDataConfig );
         __KF_ADD_CONFIG__( KFOptionConfig );
-        __KF_ADD_CONFIG__( KFElementConfig );
     }
 }

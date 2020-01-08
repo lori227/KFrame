@@ -77,8 +77,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SSavePlayerToDataReq );
 
-        auto zoneid = KFGlobal::Instance()->STUUIDZoneId( __STRING__( player ), kfmsg.id() );
-        auto ok = SavePlayerData( zoneid, kfmsg.id(), &kfmsg.data(), kfmsg.flag() );
+        auto ok = SavePlayerData( kfmsg.zoneid(), kfmsg.id(), &kfmsg.data(), kfmsg.flag() );
         if ( ok )
         {
             KFMsg::S2SSavePlayerToGameAck ack;
@@ -90,14 +89,11 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFDataShardModule::HandleLoadPlayerToDataReq )
     {
         __PROTO_PARSE__( KFMsg::S2SLoadPlayerToDataReq );
-
         auto pblogin = &kfmsg.pblogin();
-        auto zoneid = KFGlobal::Instance()->STUUIDZoneId( __STRING__( player ), pblogin->playerid() );
-        __LOG_INFO__( "player[{}:{}:{}:{}] load req", pblogin->account(), pblogin->accountid(), pblogin->playerid(), zoneid );
 
         KFMsg::S2SLoadPlayerToGameAck ack;
         ack.mutable_pblogin()->CopyFrom( *pblogin );
-        bool ok = LoadPlayerData( zoneid, pblogin->playerid(), ack.mutable_playerdata() );
+        bool ok = LoadPlayerData( pblogin->zoneid(), pblogin->playerid(), ack.mutable_playerdata() );
         if ( ok )
         {
             ack.set_result( KFMsg::Ok );
@@ -114,10 +110,8 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SQueryPlayerToDataReq );
 
-        auto zoneid = KFGlobal::Instance()->STUUIDZoneId( __STRING__( player ), kfmsg.playerid() );
-
         KFMsg::S2SQueryPlayerToGameAck ack;
-        auto ok = LoadPlayerData( zoneid, kfmsg.playerid(), ack.mutable_playerdata() );
+        auto ok = LoadPlayerData( kfmsg.zoneid(), kfmsg.playerid(), ack.mutable_playerdata() );
         if ( ok )
         {
             ack.set_result( KFMsg::Ok );

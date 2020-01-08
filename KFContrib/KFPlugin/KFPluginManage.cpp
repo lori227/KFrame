@@ -100,14 +100,17 @@ namespace KFrame
         }
     }
 
-    void KFPluginManage::LoadConfig()
+    void KFPluginManage::AddConfig()
     {
         for ( auto kfplugin : _plugins )
         {
             _init_plugin = kfplugin;
             kfplugin->AddConfig();
         }
+    }
 
+    void KFPluginManage::LoadConfig()
+    {
         for ( auto kfplugin : _plugins )
         {
             _init_plugin = kfplugin;
@@ -151,6 +154,9 @@ namespace KFrame
 
             // 加载模块
             LoadModule();
+
+            // 添加配置
+            AddConfig();
 
             // 初始化
             InitModule();

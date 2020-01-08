@@ -5,14 +5,15 @@ namespace KFrame
     void KFProjectModule::BeforeRun()
     {
         ////////////////////////////////////////////////////////////////////
+        auto projectstarttime = GetUInt64( "projectstarttime" );
+        KFGlobal::Instance()->UUIDStartTime( projectstarttime );
+
         // 修改uuid 系数
         auto timerbits = GetUInt64( "uuidtimerbits" );
         auto zonebits = GetUInt64( "uuidzonebits" );
         auto workerbits = GetUInt64( "uuidworkerbits" );
         auto seqbits = GetUInt64( "uuidseqbits" );
-        auto projectstarttime = GetUInt64( "projectstarttime" );
-
-        KFGlobal::Instance()->UUIDSetting( timerbits, zonebits, workerbits, seqbits, projectstarttime );
+        KFGlobal::Instance()->UUIDSetting( timerbits, zonebits, workerbits, seqbits );
         ////////////////////////////////////////////////////////////////////
     }
 

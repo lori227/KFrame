@@ -19,6 +19,9 @@ namespace KFrame
     class KFDataKeeper
     {
     public:
+        // 小区id
+        uint32 _zone_id = 0u;
+
         // 玩家id
         uint64 _player_id = 0u;
 
@@ -71,11 +74,13 @@ namespace KFrame
         virtual void SetQueryPlayerFunction( KFQueryPlayerFunction& function );
 
         // 保存数据
-        void SaveKeeperData( uint64 playerid, const KFMsg::PBObject* pbplayerdata, uint32 saveflag );
+        void SaveKeeperData( uint32 zoneid, uint64 playerid, const KFMsg::PBObject* pbplayerdata, uint32 saveflag );
 
         // 加载数据
         void LoadKeeperData( const KFMsg::PBLoginData* pblogin );
 
+        // 计算小区id
+        uint32 CalcZoneId( uint64 playerid );
     protected:
         // 保存玩家
         __KF_MESSAGE_FUNCTION__( HandleSavePlayerToGameAck );

@@ -5,9 +5,4 @@
 	<item Id="uuidzonebits" Value="8"/>
 	<item Id="uuidworkerbits" Value="10"/>
 	<item Id="uuidseqbits" Value="16"/>
-
-	<!-- 集群认证数据 -->
-	<item Id="clustername" Value="route"/>
-	<item Id="clusterkey" Value="route@kframe,./"/>
-
 </root>

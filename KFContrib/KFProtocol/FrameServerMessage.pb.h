@@ -2651,10 +2651,10 @@ class LIBPROTOC_EXPORT S2SSavePlayerToDataReq : public ::google::protobuf::Messa
 
   // accessors -------------------------------------------------------
 
-  // .KFMsg.PBObject data = 3;
+  // .KFMsg.PBObject data = 4;
   bool has_data() const;
   void clear_data();
-  static const int kDataFieldNumber = 3;
+  static const int kDataFieldNumber = 4;
   private:
   const ::KFMsg::PBObject& _internal_data() const;
   public:
@@ -2669,9 +2669,15 @@ class LIBPROTOC_EXPORT S2SSavePlayerToDataReq : public ::google::protobuf::Messa
   ::google::protobuf::uint64 id() const;
   void set_id(::google::protobuf::uint64 value);
 
-  // uint32 flag = 2;
+  // uint32 zoneid = 2;
+  void clear_zoneid();
+  static const int kZoneidFieldNumber = 2;
+  ::google::protobuf::uint32 zoneid() const;
+  void set_zoneid(::google::protobuf::uint32 value);
+
+  // uint32 flag = 3;
   void clear_flag();
-  static const int kFlagFieldNumber = 2;
+  static const int kFlagFieldNumber = 3;
   ::google::protobuf::uint32 flag() const;
   void set_flag(::google::protobuf::uint32 value);
 
@@ -2681,6 +2687,7 @@ class LIBPROTOC_EXPORT S2SSavePlayerToDataReq : public ::google::protobuf::Messa
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::KFMsg::PBObject* data_;
   ::google::protobuf::uint64 id_;
+  ::google::protobuf::uint32 zoneid_;
   ::google::protobuf::uint32 flag_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameServerMessage_2eproto::TableStruct;
@@ -2883,11 +2890,18 @@ class LIBPROTOC_EXPORT S2SQueryPlayerToDataReq : public ::google::protobuf::Mess
   ::google::protobuf::uint64 playerid() const;
   void set_playerid(::google::protobuf::uint64 value);
 
+  // uint32 zoneid = 2;
+  void clear_zoneid();
+  static const int kZoneidFieldNumber = 2;
+  ::google::protobuf::uint32 zoneid() const;
+  void set_zoneid(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:KFMsg.S2SQueryPlayerToDataReq)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::uint64 playerid_;
+  ::google::protobuf::uint32 zoneid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameServerMessage_2eproto::TableStruct;
 };
@@ -3096,9 +3110,9 @@ class LIBPROTOC_EXPORT S2SSetPlayerNameToDataReq : public ::google::protobuf::Me
 
   // accessors -------------------------------------------------------
 
-  // bytes oldname = 2;
+  // bytes oldname = 3;
   void clear_oldname();
-  static const int kOldnameFieldNumber = 2;
+  static const int kOldnameFieldNumber = 3;
   const ::std::string& oldname() const;
   void set_oldname(const ::std::string& value);
   #if LANG_CXX11
@@ -3110,9 +3124,9 @@ class LIBPROTOC_EXPORT S2SSetPlayerNameToDataReq : public ::google::protobuf::Me
   ::std::string* release_oldname();
   void set_allocated_oldname(::std::string* oldname);
 
-  // bytes newname = 3;
+  // bytes newname = 4;
   void clear_newname();
-  static const int kNewnameFieldNumber = 3;
+  static const int kNewnameFieldNumber = 4;
   const ::std::string& newname() const;
   void set_newname(const ::std::string& value);
   #if LANG_CXX11
@@ -3124,9 +3138,9 @@ class LIBPROTOC_EXPORT S2SSetPlayerNameToDataReq : public ::google::protobuf::Me
   ::std::string* release_newname();
   void set_allocated_newname(::std::string* newname);
 
-  // bytes costdata = 4;
+  // bytes costdata = 5;
   void clear_costdata();
-  static const int kCostdataFieldNumber = 4;
+  static const int kCostdataFieldNumber = 5;
   const ::std::string& costdata() const;
   void set_costdata(const ::std::string& value);
   #if LANG_CXX11
@@ -3138,11 +3152,17 @@ class LIBPROTOC_EXPORT S2SSetPlayerNameToDataReq : public ::google::protobuf::Me
   ::std::string* release_costdata();
   void set_allocated_costdata(::std::string* costdata);
 
-  // uint64 playerid = 1;
+  // uint64 playerid = 2;
   void clear_playerid();
-  static const int kPlayeridFieldNumber = 1;
+  static const int kPlayeridFieldNumber = 2;
   ::google::protobuf::uint64 playerid() const;
   void set_playerid(::google::protobuf::uint64 value);
+
+  // uint32 zoneid = 1;
+  void clear_zoneid();
+  static const int kZoneidFieldNumber = 1;
+  ::google::protobuf::uint32 zoneid() const;
+  void set_zoneid(::google::protobuf::uint32 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.S2SSetPlayerNameToDataReq)
  private:
@@ -3152,6 +3172,7 @@ class LIBPROTOC_EXPORT S2SSetPlayerNameToDataReq : public ::google::protobuf::Me
   ::google::protobuf::internal::ArenaStringPtr newname_;
   ::google::protobuf::internal::ArenaStringPtr costdata_;
   ::google::protobuf::uint64 playerid_;
+  ::google::protobuf::uint32 zoneid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameServerMessage_2eproto::TableStruct;
 };
@@ -6418,11 +6439,18 @@ class LIBPROTOC_EXPORT S2SQueryBasicToPublicReq : public ::google::protobuf::Mes
   ::std::string* release_name();
   void set_allocated_name(::std::string* name);
 
+  // uint32 zoneid = 2;
+  void clear_zoneid();
+  static const int kZoneidFieldNumber = 2;
+  ::google::protobuf::uint32 zoneid() const;
+  void set_zoneid(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:KFMsg.S2SQueryBasicToPublicReq)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::ArenaStringPtr name_;
+  ::google::protobuf::uint32 zoneid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameServerMessage_2eproto::TableStruct;
 };
@@ -9764,7 +9792,21 @@ inline void S2SSavePlayerToDataReq::set_id(::google::protobuf::uint64 value) {
   // @@protoc_insertion_point(field_set:KFMsg.S2SSavePlayerToDataReq.id)
 }
 
-// uint32 flag = 2;
+// uint32 zoneid = 2;
+inline void S2SSavePlayerToDataReq::clear_zoneid() {
+  zoneid_ = 0u;
+}
+inline ::google::protobuf::uint32 S2SSavePlayerToDataReq::zoneid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SSavePlayerToDataReq.zoneid)
+  return zoneid_;
+}
+inline void S2SSavePlayerToDataReq::set_zoneid(::google::protobuf::uint32 value) {
+  
+  zoneid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SSavePlayerToDataReq.zoneid)
+}
+
+// uint32 flag = 3;
 inline void S2SSavePlayerToDataReq::clear_flag() {
   flag_ = 0u;
 }
@@ -9778,7 +9820,7 @@ inline void S2SSavePlayerToDataReq::set_flag(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:KFMsg.S2SSavePlayerToDataReq.flag)
 }
 
-// .KFMsg.PBObject data = 3;
+// .KFMsg.PBObject data = 4;
 inline bool S2SSavePlayerToDataReq::has_data() const {
   return this != internal_default_instance() && data_ != NULL;
 }
@@ -9862,6 +9904,20 @@ inline void S2SQueryPlayerToDataReq::set_playerid(::google::protobuf::uint64 val
   // @@protoc_insertion_point(field_set:KFMsg.S2SQueryPlayerToDataReq.playerid)
 }
 
+// uint32 zoneid = 2;
+inline void S2SQueryPlayerToDataReq::clear_zoneid() {
+  zoneid_ = 0u;
+}
+inline ::google::protobuf::uint32 S2SQueryPlayerToDataReq::zoneid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SQueryPlayerToDataReq.zoneid)
+  return zoneid_;
+}
+inline void S2SQueryPlayerToDataReq::set_zoneid(::google::protobuf::uint32 value) {
+  
+  zoneid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SQueryPlayerToDataReq.zoneid)
+}
+
 // -------------------------------------------------------------------
 
 // S2SQueryPlayerToGameAck
@@ -9932,7 +9988,21 @@ inline void S2SQueryPlayerToGameAck::set_allocated_playerdata(::KFMsg::PBObject*
 
 // S2SSetPlayerNameToDataReq
 
-// uint64 playerid = 1;
+// uint32 zoneid = 1;
+inline void S2SSetPlayerNameToDataReq::clear_zoneid() {
+  zoneid_ = 0u;
+}
+inline ::google::protobuf::uint32 S2SSetPlayerNameToDataReq::zoneid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SSetPlayerNameToDataReq.zoneid)
+  return zoneid_;
+}
+inline void S2SSetPlayerNameToDataReq::set_zoneid(::google::protobuf::uint32 value) {
+  
+  zoneid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SSetPlayerNameToDataReq.zoneid)
+}
+
+// uint64 playerid = 2;
 inline void S2SSetPlayerNameToDataReq::clear_playerid() {
   playerid_ = GOOGLE_ULONGLONG(0);
 }
@@ -9946,7 +10016,7 @@ inline void S2SSetPlayerNameToDataReq::set_playerid(::google::protobuf::uint64 v
   // @@protoc_insertion_point(field_set:KFMsg.S2SSetPlayerNameToDataReq.playerid)
 }
 
-// bytes oldname = 2;
+// bytes oldname = 3;
 inline void S2SSetPlayerNameToDataReq::clear_oldname() {
   oldname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -9999,7 +10069,7 @@ inline void S2SSetPlayerNameToDataReq::set_allocated_oldname(::std::string* oldn
   // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SSetPlayerNameToDataReq.oldname)
 }
 
-// bytes newname = 3;
+// bytes newname = 4;
 inline void S2SSetPlayerNameToDataReq::clear_newname() {
   newname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -10052,7 +10122,7 @@ inline void S2SSetPlayerNameToDataReq::set_allocated_newname(::std::string* newn
   // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SSetPlayerNameToDataReq.newname)
 }
 
-// bytes costdata = 4;
+// bytes costdata = 5;
 inline void S2SSetPlayerNameToDataReq::clear_costdata() {
   costdata_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -11513,6 +11583,20 @@ inline void S2SQueryBasicToPublicReq::set_allocated_name(::std::string* name) {
   }
   name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
   // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SQueryBasicToPublicReq.name)
+}
+
+// uint32 zoneid = 2;
+inline void S2SQueryBasicToPublicReq::clear_zoneid() {
+  zoneid_ = 0u;
+}
+inline ::google::protobuf::uint32 S2SQueryBasicToPublicReq::zoneid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SQueryBasicToPublicReq.zoneid)
+  return zoneid_;
+}
+inline void S2SQueryBasicToPublicReq::set_zoneid(::google::protobuf::uint32 value) {
+  
+  zoneid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SQueryBasicToPublicReq.zoneid)
 }
 
 // -------------------------------------------------------------------

@@ -229,6 +229,9 @@ namespace KFrame
         // 初始化模块
         void InitModule();
 
+        // 添加配置
+        void AddConfig();
+
         // 加载配置
         void LoadConfig();
 

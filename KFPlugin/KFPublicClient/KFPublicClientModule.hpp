@@ -16,6 +16,7 @@
 #include "KFFilter/KFFilterInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"
+#include "KFZConfig/KFZoneConfig.hpp"
 
 namespace KFrame
 {
@@ -52,7 +53,19 @@ namespace KFrame
         // 更新公共数据
         void UpdatePublicData( uint64 playerid, StringMap& values );
         void UpdatePublicData( KFEntity* player, StringMap& values );
+
+        // 检查名字的有效性
+        uint32 CheckNameValid( const std::string& name, uint32 maxlength );
     protected:
+        // 处理设置性别请求
+        __KF_MESSAGE_FUNCTION__( HandleSetSexReq );
+
+        // 处理设置名字请求
+        __KF_MESSAGE_FUNCTION__( HandleSetNameReq );
+
+        // 处理设置名字回馈
+        __KF_MESSAGE_FUNCTION__( HandleSetPlayerNameToGameAck );
+
         // 查询玩家基本数据
         __KF_MESSAGE_FUNCTION__( HandleQueryBasicReq );
 

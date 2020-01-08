@@ -141,13 +141,13 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     const std::string& KFRouteClientModule::FindRouteProcess( const std::string& module )
     {
-        auto kfsetting = KFRouteConfig::Instance()->FindSetting( module );
-        if ( kfsetting == nullptr )
+        auto iter = KFRouteConfig::Instance()->_route_list.find( module );
+        if ( iter == KFRouteConfig::Instance()->_route_list.end() )
         {
             return module;
         }
 
-        return kfsetting->_process;
+        return iter->second;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////

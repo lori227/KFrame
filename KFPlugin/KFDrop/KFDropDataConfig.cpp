@@ -32,9 +32,7 @@ namespace KFrame
             for ( auto kfdropweight : kfsetting->_drop_data_list._weight_data )
             {
                 auto dropdata = &kfdropweight->_drop_data;
-                auto kfelementsetting = KFElementConfig::Instance()->FindElementSetting( dropdata->_data_name );
-                auto strelement = __FORMAT__( kfelementsetting->_element_template, dropdata->_data_name, dropdata->_data_value, dropdata->_data_key );
-                dropdata->_elements.Parse( strelement, __FUNC_LINE__ );
+                KFElementConfig::Instance()->FormatElemnt( dropdata->_elements, dropdata->_data_name, dropdata->_data_value, dropdata->_data_key );
             }
         }
     }

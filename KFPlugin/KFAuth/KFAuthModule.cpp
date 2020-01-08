@@ -8,6 +8,10 @@ namespace KFrame
 
     void KFAuthModule::BeforeRun()
     {
+        /////////////////////////////////////////////////////////////////////////////////////////
+        // 设置uuid生成配置
+        KFGlobal::Instance()->UUIDSetting( 32, 0, 10, 21 );
+        /////////////////////////////////////////////////////////////////////////////////////////
         // zone
         __REGISTER_HTTP__( __STRING__( zoneregister ), false, &KFAuthModule::HandleZoneRegister );
         __REGISTER_HTTP__( __STRING__( zoneupdate ), false, &KFAuthModule::HandleZoneUpdate );

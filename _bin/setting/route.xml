@@ -1,0 +1,13 @@
+﻿<?xml version='1.0' encoding='utf-8' ?>
+<Config>
+	<!-- 集群认证 -->
+	<Cluster Name="route" Key="route@kframe,./"/>
+
+	<!-- 转发规则 -->
+	<Routes>
+		<Route Source="public" Target="logic"/>
+		<Route Source="record" Target="logic"/>
+		<Route Source="relation" Target="logic"/>
+	</Routes>
+</Config>
+

@@ -45,8 +45,11 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleQueryBasicToPublicReq );
 
     protected:
+        // 名字字段
+        const std::string& FormatNameKey( uint32 zoneid, const std::string& name );
+
         // 设置名字
-        uint32 SetPlayerName( uint64 playerid, const std::string& oldname, const std::string& newname );
+        uint32 SetPlayerName( uint32 zoneid, uint64 playerid, const std::string& oldname, const std::string& newname );
     private:
         // 公共属性
         KFRedisDriver* _public_redis = nullptr;

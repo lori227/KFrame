@@ -13,10 +13,10 @@
   <ItemGroup>
     <ClCompile Include="KFAnalysis.cpp" />
     <ClCompile Include="KFCondition.cpp" />
-    <ClCompile Include="KFElement.cpp" />
     <ClCompile Include="KFArray.cpp" />
     <ClCompile Include="KFData.cpp" />
     <ClCompile Include="KFDouble.cpp" />
+    <ClCompile Include="KFElement.cpp" />
     <ClCompile Include="KFInt32.cpp" />
     <ClCompile Include="KFInt64.cpp" />
     <ClCompile Include="KFObject.cpp" />
@@ -29,10 +29,10 @@
   <ItemGroup>
     <ClInclude Include="KFAnalysis.hpp" />
     <ClInclude Include="KFCondition.h" />
-    <ClInclude Include="KFElement.h" />
     <ClInclude Include="KFArray.h" />
     <ClInclude Include="KFData.h" />
     <ClInclude Include="KFDouble.h" />
+    <ClInclude Include="KFElement.h" />
     <ClInclude Include="KFInt32.h" />
     <ClInclude Include="KFInt64.h" />
     <ClInclude Include="KFObject.h" />

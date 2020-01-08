@@ -20,9 +20,18 @@ namespace KFrame
     // 10	workerid 1023个工作者进程不会重复
     // 14	序列号 同一进程1秒钟内超过‭16383‬个就会重复 -- 应该不可能, 除非你要疯
     // 可以保证同一模块生成的guid不相同, 不同模块可能会一样
-
-    struct KFUUIDSetting
+    class KFUUIDSetting
     {
+    public:
+        // 初始化时间
+        void InitStartTime( uint64 starttime );
+
+        // 设置数据排列格式
+        void InitSetting( uint32 timebits, uint32 zonebits, uint32 workerbits, uint32 seqbits );
+    public:
+        // 时间戳缩减值
+        uint64 _start_time{ 1577808000 };
+
         // 符号位
         uint32 _sign_bits{ 1 };
 
@@ -44,9 +53,6 @@ namespace KFrame
         // 序列位
         uint32 _seq_bits{ 13 };
         uint64 _max_seq{ 0x1FFF };
-
-        // 时间戳缩减值
-        uint64 _starttime{ 1559318400 };
     };
 
     class KFUUID
@@ -55,9 +61,13 @@ namespace KFrame
         KFUUID() = default;
         ~KFUUID() = default;
 
-        // 设置数据排列格式
-        static void InitSetting( uint32 timebits, uint32 zonebits, uint32 workerbits, uint32 seqbits, uint64 starttime );
+        // 初始化时间
+        void InitStartTime( uint64 starttime );
 
+        // 设置数据排列格式
+        void InitSetting( uint32 timebits, uint32 zonebits, uint32 workerbits, uint32 seqbits );
+        ///////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////
         // 生产guid
         uint64 Make( uint32 zoneid, uint32 workerid, uint64 nowtime );
 
@@ -67,11 +77,10 @@ namespace KFrame
         // 打印guid
         void Print( uint64 uuid );
 
-    public:
-        // 数据排列格式
-        static KFUUIDSetting _setting;
-
     private:
+        // uuid 配置
+        KFUUIDSetting _setting;
+
         // 上一次时间
         uint64 _last_time{ 0 };
 

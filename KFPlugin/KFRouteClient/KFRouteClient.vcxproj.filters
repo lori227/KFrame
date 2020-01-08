@@ -4,12 +4,10 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="KFRouteClientModule.cpp" />
     <ClCompile Include="KFRouteClientPlugin.cpp" />
-    <ClCompile Include="KFRouteConfig.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFRouteClientInterface.h" />
     <ClInclude Include="KFRouteClientModule.hpp" />
     <ClInclude Include="KFRouteClientPlugin.hpp" />
-    <ClInclude Include="KFRouteConfig.hpp" />
   </ItemGroup>
 </Project>

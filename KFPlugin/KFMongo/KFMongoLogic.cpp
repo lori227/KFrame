@@ -1,4 +1,5 @@
 ﻿#include "KFMongoLogic.hpp"
+#include "KFMongoModule.hpp"
 
 namespace KFrame
 {
@@ -106,7 +107,8 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFMongoLogic::Insert( const std::string& table, const KFDBValue& dbvalue )
     {
-        const_cast< KFDBValue& >( dbvalue ).AddValue( MongoKeyword::_id, KFGlobal::Instance()->MTMakeUUID( table ) );
+        auto uuid = static_cast< KFMongoModule* >( _kf_mongo )->MakeUUID();
+        const_cast< KFDBValue& >( dbvalue ).AddValue( MongoKeyword::_id, uuid );
         return _write_execute->Insert( table, dbvalue );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////

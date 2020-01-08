@@ -44,16 +44,6 @@ namespace KFrame
         double RandDouble();
         double RandDouble( double first, double second );
 
-        // 创建uuid
-        uint64 STMakeUUID();
-        uint64 MTMakeUUID();
-        uint64 STMakeUUID( const std::string& name );
-        uint64 MTMakeUUID( const std::string& name );
-
-        // 获得zoneid
-        uint32 STUUIDZoneId( const std::string& name, uint64 uuid );
-        uint32 MTUUIDZoneId( const std::string& name, uint64 uuid );
-
         // 判断游戏分区id
         bool IsServerSameZone( uint64 serverid );
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -67,9 +57,23 @@ namespace KFrame
         // 判断渠道和服务类型
         bool CheckChannelService( uint32 channel, uint32 service );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 设置uuid
-        void UUIDSetting( uint32 timebits, uint32 zonebits, uint32 workerbits, uint32 seqbits, uint64 starttime );
+        void UUIDStartTime( uint64 starttime );
+        void UUIDSetting( uint32 timebits, uint32 zonebits, uint32 workerbits, uint32 seqbits );
+
+        // 创建uuid
+        uint64 STMakeUUID();
+        uint64 MTMakeUUID();
+
+        uint64 STMakeUUID( const std::string& name );
+        uint64 MTMakeUUID( const std::string& name );
+
+        // 获得zoneid
+        uint32 STUUIDZoneId( const std::string& name, uint64 uuid );
+        uint32 MTUUIDZoneId( const std::string& name, uint64 uuid );
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     protected:
         KFGlobal();
@@ -131,8 +135,9 @@ namespace KFrame
         KFRand* _kf_rand;
 
         // uuid
-        KFMutex* _kf_mutex = nullptr;
+        KFUUIDSetting _uuid_setting;
         KFUUID* _kf_uuid = nullptr;
+        KFMutex* _kf_uuid_mutex = nullptr;
         std::unordered_map< std::string, KFUUID*> _kf_uuids;
     };
     //////////////////////////////////////////////////////////////////////////////////////////

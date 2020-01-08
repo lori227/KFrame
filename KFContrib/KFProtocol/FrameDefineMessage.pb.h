@@ -1050,6 +1050,12 @@ class LIBPROTOC_EXPORT PBLoginData : public ::google::protobuf::Message /* @@pro
   ::google::protobuf::uint64 playerid() const;
   void set_playerid(::google::protobuf::uint64 value);
 
+  // uint32 zoneid = 11;
+  void clear_zoneid();
+  static const int kZoneidFieldNumber = 11;
+  ::google::protobuf::uint32 zoneid() const;
+  void set_zoneid(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:KFMsg.PBLoginData)
  private:
 
@@ -1069,6 +1075,7 @@ class LIBPROTOC_EXPORT PBLoginData : public ::google::protobuf::Message /* @@pro
   ::google::protobuf::uint32 channel_;
   bool loginbycrash_;
   ::google::protobuf::uint64 playerid_;
+  ::google::protobuf::uint32 zoneid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameDefineMessage_2eproto::TableStruct;
 };
@@ -2412,6 +2419,20 @@ inline void PBLoginData::set_allocated_ip(::std::string* ip) {
   }
   ip_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ip);
   // @@protoc_insertion_point(field_set_allocated:KFMsg.PBLoginData.ip)
+}
+
+// uint32 zoneid = 11;
+inline void PBLoginData::clear_zoneid() {
+  zoneid_ = 0u;
+}
+inline ::google::protobuf::uint32 PBLoginData::zoneid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.PBLoginData.zoneid)
+  return zoneid_;
+}
+inline void PBLoginData::set_zoneid(::google::protobuf::uint32 value) {
+  
+  zoneid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.PBLoginData.zoneid)
 }
 
 // -------------------------------------------------------------------
