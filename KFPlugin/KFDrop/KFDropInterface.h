@@ -11,12 +11,11 @@ namespace KFrame
     class KFDropInterface : public KFModule
     {
     public:
-        // 掉落逻辑
         // 返回的DropDataList只包含掉落属性数据
         virtual DropDataList& Drop( KFEntity* player, uint32 dropid, const char* function, uint32 line ) = 0;
         virtual DropDataList& Drop( KFEntity* player, uint32 dropid, const std::string& modulename, const char* function, uint32 line ) = 0;
-        virtual DropDataList& Drop( KFEntity* player, const UInt32Vector& droplist, const std::string& modulename, const char* function, uint32 line ) = 0;
         virtual DropDataList& Drop( KFEntity* player, uint32 dropid, uint32 count, const std::string& modulename, const char* function, uint32 line ) = 0;
+        virtual DropDataList& Drop( KFEntity* player, const UInt32Vector& droplist, const std::string& modulename, const char* function, uint32 line ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 注册掉落逻辑
         template< class T >
@@ -26,15 +25,15 @@ namespace KFrame
             BindDropLogicFunction( dataname, function );
         }
         virtual void UnRegisterDropLogicFunction( const std::string& dataname ) = 0;
-
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
     protected:
         // 绑定掉落逻辑函数
         virtual void BindDropLogicFunction( const std::string& dataname, KFDropLogicFunction& function ) = 0;
     };
 
-    //////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_INTERFACE__( _kf_drop, KFDropInterface );
-    //////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #define __KF_DROP_LOGIC_FUNCTION__( _function )\
     void _function( KFEntity* player, const KFDropData* dropdata, const char* function, uint32 line )
 #define __REGISTER_DROP_LOGIC__( dataname, function )\

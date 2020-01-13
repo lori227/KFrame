@@ -30,16 +30,6 @@
     <ClInclude Include="KFZoneConfig.hpp">
       <Filter>Zone</Filter>
     </ClInclude>
-    <ClInclude Include="KFItemConfig.hpp">
-      <Filter>Item</Filter>
-    </ClInclude>
-    <ClInclude Include="KFItemSetting.hpp">
-      <Filter>Item</Filter>
-    </ClInclude>
-    <ClInclude Include="KFItemTypeConfig.hpp">
-      <Filter>Item</Filter>
-    </ClInclude>
-    <ClInclude Include="KFDropSetting.h" />
     <ClInclude Include="KFReadSetting.h" />
     <ClInclude Include="KFElementConfig.h" />
     <ClInclude Include="KFExecuteData.h" />
@@ -64,9 +54,6 @@
     <Filter Include="Zone">
       <UniqueIdentifier>{d60a51c8-f55e-4efa-ba09-b014483188db}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Item">
-      <UniqueIdentifier>{99374550-72bf-42e5-80a5-64b311494e95}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Route">
       <UniqueIdentifier>{b350ddb8-511f-4858-9038-c0f1b9b0a6af}</UniqueIdentifier>
     </Filter>
@@ -86,15 +73,6 @@
     </ClCompile>
     <ClCompile Include="KFZoneConfig.cpp">
       <Filter>Zone</Filter>
-    </ClCompile>
-    <ClCompile Include="KFItemConfig.cpp">
-      <Filter>Item</Filter>
-    </ClCompile>
-    <ClCompile Include="KFItemSetting.cpp">
-      <Filter>Item</Filter>
-    </ClCompile>
-    <ClCompile Include="KFItemTypeConfig.cpp">
-      <Filter>Item</Filter>
     </ClCompile>
     <ClCompile Include="KFRouteConfig.cpp">
       <Filter>Route</Filter>

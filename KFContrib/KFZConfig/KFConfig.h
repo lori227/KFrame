@@ -77,17 +77,24 @@ namespace KFrame
     {
         typedef typename T::Type KeyType;
     public:
+        KFConfigT()
+        {
+            _key_name = "Id";
+            _row_name = "item";
+            _version_name = "version";
+        }
+
         // 加载配置
         bool LoadConfig( const std::string& filename, const std::string& filepath, uint32 loadmask )
         {
             KFXml kfxml( filepath );
             auto config = kfxml.RootNode();
-            auto version = config.GetString( "version" );
+            auto version = config.GetString( _version_name.c_str() );
 
             _setting_file_anme = filename;
             CheckClearSetting( loadmask );
 
-            auto xmlnode = config.FindNode( "item" );
+            auto xmlnode = config.FindNode( _row_name.c_str() );
             while ( xmlnode.IsValid() )
             {
                 auto kfsetting = CreateSetting( xmlnode );
@@ -153,7 +160,7 @@ namespace KFrame
 
         virtual T* CreateSetting( KFNode& xmlnode )
         {
-            auto id = xmlnode.ReadT< KeyType >( "Id" );
+            auto id = xmlnode.ReadT< KeyType >( _key_name.c_str() );
             auto kfsetting = _settings.Create( id );
             kfsetting->_id = id;
 
@@ -162,6 +169,16 @@ namespace KFrame
 
         // 读取配置
         virtual void ReadSetting( KFNode& xmlnode, T* kfsetting ) = 0;
+
+    protected:
+        // 配置表主键字段名
+        std::string _key_name;
+
+        // 每一行字段名
+        std::string _row_name;
+
+        // 版本号字段名
+        std::string _version_name;
     public:
         // 列表
         KFHashMap< KeyType, const KeyType&, T > _settings;

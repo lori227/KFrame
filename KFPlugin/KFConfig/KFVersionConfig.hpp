@@ -15,13 +15,15 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////
     class KFVersionConfig : public KFConfigT< KFVersionSetting >
     {
+    public:
+        KFVersionConfig()
+        {
+            _key_name = "name";
+        }
+
     protected:
         // 读取配置
         virtual void ReadSetting( KFNode& xmlnode, KFVersionSetting* kfsetting );
-
-        // 创建
-        virtual KFVersionSetting* CreateSetting( KFNode& xmlnode );
-
     };
 }
 
