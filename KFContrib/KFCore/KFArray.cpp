@@ -15,12 +15,9 @@ namespace KFrame
 
     void KFArray::Reset( bool isdelete /* = true */ )
     {
-        for ( auto kfdata : _data._objects )
+        for ( auto kfchild = First(); kfchild != nullptr; kfchild = Next() )
         {
-            if ( kfdata != nullptr )
-            {
-                kfdata->Reset( isdelete );
-            }
+            kfchild->Reset( isdelete );
         }
 
         KFData::Reset( isdelete );
@@ -28,14 +25,11 @@ namespace KFrame
 
     bool KFArray::IsValid()
     {
-        for ( auto kfdata : _data._objects )
+        for ( auto kfchild = First(); kfchild != nullptr; kfchild = Next() )
         {
-            if ( kfdata != nullptr )
+            if ( kfchild->IsValid() )
             {
-                if ( kfdata->IsValid() )
-                {
-                    return true;
-                }
+                return true;
             }
         }
 
@@ -46,12 +40,9 @@ namespace KFrame
     {
         if ( _data_setting->_int_init_value != _invalid_int )
         {
-            for ( auto kfdata : _data._objects )
+            for ( auto kfchild = First(); kfchild != nullptr; kfchild = Next() )
             {
-                if ( kfdata != nullptr )
-                {
-                    kfdata->Set( _data_setting->_int_init_value );
-                }
+                kfchild->Set( _data_setting->_int_init_value );
             }
         }
     }
@@ -224,11 +215,11 @@ namespace KFrame
     std::string KFArray::ToString()
     {
         __JSON_ARRAY_DOCUMENT__( kfjson );
-        for ( auto kfdata : _data._objects )
+        for ( auto kfchild = First(); kfchild != nullptr; kfchild = Next() )
         {
-            if ( kfdata != nullptr )
+            if ( kfchild != nullptr )
             {
-                __JSON_ADD_VALUE__( kfjson, kfdata->Get< int64 >() );
+                __JSON_ADD_VALUE__( kfjson, kfchild->Get< int64 >() );
             }
         }
 
