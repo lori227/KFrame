@@ -113,16 +113,15 @@ namespace KFrame
         kfother->SaveTo( this );
     }
 
-
     void KFArray::SaveTo( KFData* kfother )
     {
         uint32 key = KFDataDefine::Array_Index;
-        for ( auto kfdata : _data._objects )
+        for ( auto kfchild = First(); kfchild != nullptr; kfchild = Next() )
         {
             auto finddata = kfother->Find( key++ );
             if ( finddata != nullptr )
             {
-                kfdata->SaveTo( finddata );
+                kfchild->SaveTo( finddata );
             }
         }
     }
