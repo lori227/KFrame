@@ -74,8 +74,10 @@ namespace KFrame
     __KF_HTTP_FUNCTION__( KFAuthModule::HandleZoneRegister )
     {
         __JSON_PARSE_STRING__( request, data );
-        auto zoneid = __JSON_GET_UINT32__( request, __STRING__( zoneid ) );
+        auto recommendzoneid = __JSON_GET_UINT32__( request, __STRING__( recommendzoneid ) );
+        __JSON_REMOVE__( request, __STRING__( recommendzoneid ) );
 
+        auto zoneid = __JSON_GET_UINT32__( request, __STRING__( zoneid ) );
         StringMap values;
         __JSON_TO_MAP__( request, values );
 
@@ -83,6 +85,7 @@ namespace KFrame
         auto redisdriver = __DIR_REDIS_DRIVER__;
         redisdriver->Append( "zincrby {} 0 {}", __STRING__( zonelist ), zoneid );
         redisdriver->Append( values, "hmset {}:{}", __STRING__( zone ), zoneid );
+        redisdriver->Append( values, "set {} {}", __STRING__( recommendzoneid ), recommendzoneid );
         auto kfresult = redisdriver->Pipeline();
         if ( !kfresult->IsOk() )
         {
@@ -367,14 +370,14 @@ namespace KFrame
     uint32 KFAuthModule::BalanceAllocZoneId()
     {
         // todo:如果有推荐的服务器, 直接返回
-        auto recommendzoneid = KFZoneConfig::Instance()->RecommendZoneId();
+        auto redisdriver = __DIR_REDIS_DRIVER__;
+        auto recommendzoneid = redisdriver->QueryUInt64( "get {}", __STRING__( recommendzoneid ) );
         if ( recommendzoneid != 0u )
         {
-            return recommendzoneid;
+            return recommendzoneid->_value;
         }
 
         // 选择一个最小人数的分区
-        auto redisdriver = __DIR_REDIS_DRIVER__;
         auto zonelist = redisdriver->QueryList( "zrange {} 0 -1", __STRING__( zonelist ) );
         if ( zonelist->_value.empty() )
         {

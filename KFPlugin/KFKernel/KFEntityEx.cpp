@@ -1434,7 +1434,7 @@ namespace KFrame
             __FIND_PROTO_OBJECT__;
             if ( savedata == kfdata )
             {
-                KFKernelModule::Instance()->SaveToObject( savedata, pbobject, KFDataDefine::Mask_Client );
+                static_cast<KFKernelModule*>( _kf_kernel )->SaveToObject( savedata, pbobject, KFDataDefine::Mask_Client );
             }
         } while ( !datahierarchy.empty() );
     }
@@ -1506,7 +1506,7 @@ namespace KFrame
             ( *pbobject->mutable_pbstring() )[ datasetting->_name ] = kfdata->Get< std::string >();
             break;
         case KFDataDefine::Type_Object:
-            KFKernelModule::Instance()->SaveToObject( kfdata, pbobject, KFDataDefine::Mask_Client );
+            static_cast< KFKernelModule* >( _kf_kernel )->SaveToObject( kfdata, pbobject, KFDataDefine::Mask_Client );
             break;
         }
     }

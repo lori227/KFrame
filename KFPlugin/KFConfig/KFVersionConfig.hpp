@@ -8,8 +8,17 @@ namespace KFrame
     class KFVersionSetting : public KFStrSetting
     {
     public:
-        // 版本号
-        std::string _version;
+        bool IsNeedReload() const
+        {
+            return _old_version != _new_version;
+        }
+
+    public:
+        // 老版本号
+        std::string _old_version;
+
+        // 新版本号
+        std::string _new_version;
     };
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////

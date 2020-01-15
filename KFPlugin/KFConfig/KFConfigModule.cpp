@@ -33,16 +33,45 @@ namespace KFrame
         _config_list.clear();
     }
 
-    void KFConfigModule::LoadConfigList()
+    void KFConfigModule::ProcessReloadCommand( const StringVector& params )
     {
-        auto configfile = _config_path + "config.xml";
-        LoadConfigFile( _kf_config_config, "config", configfile, KFConfigEnum::CanReload | KFConfigEnum::NeedClearData );
+        ReloadConfig( _globbing_string );
+    }
+
+    void KFConfigModule::AddConfig( const std::string& name, KFConfig* kfconfig )
+    {
+        _config_list[ name ] = kfconfig;
+    }
+
+    KFConfig* KFConfigModule::FindConfig( const std::string& name )
+    {
+        auto iter = _config_list.find( name );
+        if ( iter == _config_list.end() )
+        {
+            return nullptr;
+        }
+
+        return iter->second;
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    void KFConfigModule::LoadConfigListAndVersion()
+    {
+        {
+            auto configfile = _config_path + "config.xml";
+            LoadConfigFile( _kf_config_config, "config", configfile, KFConfigEnum::CanReload | KFConfigEnum::NeedClearData );
+        }
+
+        {
+            auto configfile = _config_path + "_xmlversion.xml";
+            LoadConfigFile( _kf_version_config, "version", configfile, KFConfigEnum::CanReload );
+        }
     }
 
     void KFConfigModule::LoadConfig()
     {
         // 读取配置文件列表
-        LoadConfigList();
+        LoadConfigListAndVersion();
 
         for ( auto& iter : _config_list )
         {
@@ -61,7 +90,15 @@ namespace KFrame
 
             for ( auto& kfdata : kfsetting->_config_data_list )
             {
+                // 加载配置
                 LoadConfigFile( kfconfig, kfdata._file_name, kfdata._file_path, kfdata._load_mask );
+
+                // 设置版本号
+                auto kfversionsetting = _kf_version_config->FindSetting( kfdata._file_name );
+                if ( kfversionsetting != nullptr )
+                {
+                    kfconfig->SetVersion( kfdata._file_name, kfversionsetting->_new_version );
+                }
             }
         }
 
@@ -73,36 +110,12 @@ namespace KFrame
     }
 
 
-    void KFConfigModule::AddConfig( const std::string& name, KFConfig* kfconfig )
-    {
-        _config_list[ name ] = kfconfig;
-    }
-
-    KFConfig* KFConfigModule::FindConfig( const std::string& name )
-    {
-        auto iter = _config_list.find( name );
-        if ( iter == _config_list.end() )
-        {
-            return nullptr;
-        }
-
-        return iter->second;
-    }
-
-    void KFConfigModule::ProcessReloadCommand( const StringVector& params )
-    {
-        ReloadConfig( _globbing_string );
-    }
-
     void KFConfigModule::ReloadConfig( const std::string& file )
     {
         __LOG_INFO__( "reload [{}] start", file );
 
         // 重新加载配置列表
-        LoadConfigList();
-
-        auto configfile = _config_path + "_xmlversion.xml";
-        LoadConfigFile( _kf_version_config, "version", configfile, KFConfigEnum::NeedClearData | KFConfigEnum::CanReload );
+        LoadConfigListAndVersion();
 
         bool loadok = false;
         for ( auto& iter : _config_list )
@@ -120,13 +133,14 @@ namespace KFrame
                 if ( KFUtility::HaveBitMask<uint32>( kfdata._load_mask, KFConfigEnum::CanReload ) )
                 {
                     auto kfversionsetting = _kf_version_config->FindSetting( kfdata._file_name );
-                    if ( kfversionsetting == nullptr || kfconfig->CheckVersion( kfdata._file_name, kfversionsetting->_version ) )
+                    if ( kfversionsetting == nullptr || !kfversionsetting->IsNeedReload() )
                     {
                         continue;
                     }
 
                     loadok = true;
                     LoadConfigFile( kfconfig, kfdata._file_name, kfdata._file_path, kfdata._load_mask );
+                    kfconfig->SetVersion( kfdata._file_name, kfversionsetting->_new_version );
                 }
             }
         }

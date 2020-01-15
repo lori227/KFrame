@@ -26,6 +26,12 @@ namespace KFrame
         // 所有配置加载完
         virtual void LoadAllComplete() {}
 
+        // 设置版本号
+        void SetVersion( const std::string& file, const std::string& version )
+        {
+            _versions[ file ] = version;
+        }
+
         // 获得版本
         const std::string& GetVersion()
         {
@@ -37,39 +43,16 @@ namespace KFrame
             return _versions.begin()->second;
         }
 
-        // 判断版本
-        bool CheckVersion( const std::string& file, const std::string& version )
-        {
-            if ( version.empty() )
-            {
-                return false;
-            }
-
-            auto iter = _versions.find( file );
-            if ( iter == _versions.end() )
-            {
-                return false;
-            }
-
-            return iter->second == version;
-        }
-
     public:
         // 默认配置文件名
         std::string _file_name;
 
     protected:
+        // 版本列表
+        StringMap _versions;
+
         // 配置文件名
         std::string _setting_file_anme;
-
-        // 版本列表
-        std::unordered_map< std::string, std::string > _versions;
-
-        // 更新版本
-        void UpdateVersion( const std::string& file, const std::string& version )
-        {
-            _versions[ file ] = version;
-        }
     };
     ///////////////////////////////////////////////////////////////
     template< class T >
@@ -81,7 +64,6 @@ namespace KFrame
         {
             _key_name = "Id";
             _row_name = "item";
-            _version_name = "version";
         }
 
         // 加载配置
@@ -89,7 +71,6 @@ namespace KFrame
         {
             KFXml kfxml( filepath );
             auto config = kfxml.RootNode();
-            auto version = config.GetString( _version_name.c_str() );
 
             _setting_file_anme = filename;
             CheckClearSetting( loadmask );
@@ -106,7 +87,6 @@ namespace KFrame
                 xmlnode.NextNode();
             }
 
-            UpdateVersion( filename, version );
             return true;
         }
 

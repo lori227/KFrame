@@ -5,6 +5,7 @@ namespace KFrame
 {
     void KFVersionConfig::ReadSetting( KFNode& xmlnode, KFVersionSetting* kfsetting )
     {
-        kfsetting->_version = xmlnode.GetString( "version" );
+        kfsetting->_old_version = kfsetting->_new_version;
+        kfsetting->_new_version = xmlnode.GetString( "version" );
     }
 }

@@ -6,21 +6,6 @@
 
 namespace KFrame
 {
-    KFKernelModule* KFKernelModule::_kernel_module = nullptr;
-    KFKernelModule::KFKernelModule()
-    {
-        _kernel_module = this;
-    }
-
-    KFKernelModule::~KFKernelModule()
-    {
-        _kernel_module = nullptr;
-    }
-
-    KFKernelModule* KFKernelModule::Instance()
-    {
-        return _kernel_module;
-    }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFKernelModule::Run()

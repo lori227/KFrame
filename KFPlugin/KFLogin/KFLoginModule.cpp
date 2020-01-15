@@ -86,6 +86,7 @@ namespace KFrame
         __JSON_OBJECT_DOCUMENT__( kfjson );
         __JSON_SET_VALUE__( kfjson, __STRING__( zoneid ), kfsetting->_id );
         __JSON_SET_VALUE__( kfjson, __STRING__( name ), kfsetting->_name );
+        __JSON_SET_VALUE__( kfjson, __STRING__( recommendzoneid ), KFZoneConfig::Instance()->RecommendZoneId() );
 
         auto recvdata = _kf_http_client->STGet( _url, kfjson );
         __JSON_PARSE_STRING__( kfresult, recvdata );

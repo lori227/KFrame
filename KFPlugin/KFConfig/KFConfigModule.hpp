@@ -46,7 +46,7 @@ namespace KFrame
         virtual KFConfig* FindConfig( const std::string& name );
 
         // 加载配置列表
-        void LoadConfigList();
+        void LoadConfigListAndVersion();
 
         // 加载配置
         void LoadConfigFile( KFConfig* config, const std::string& filename, const std::string& filepath, uint32 loadmask );

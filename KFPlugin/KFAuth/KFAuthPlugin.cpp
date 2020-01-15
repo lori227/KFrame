@@ -1,7 +1,6 @@
 ﻿#include "KFAuthPlugin.hpp"
 #include "KFAuthModule.hpp"
 #include "KFConfig/KFConfigInterface.h"
-
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame
@@ -27,6 +26,5 @@ namespace KFrame
 
     void KFAuthPlugin::AddConfig()
     {
-        __KF_ADD_CONFIG__( KFZoneConfig );
     }
 }

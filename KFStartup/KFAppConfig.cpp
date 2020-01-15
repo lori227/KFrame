@@ -51,8 +51,9 @@ namespace KFrame
             ReadStartupConfig( file );
             return true;
         }
-        catch ( ... )
+        catch ( std::exception& ex )
         {
+            __LOG_INFO__( "load [{}] failed=[{}]", file, ex.what() );
         }
 
         return false;

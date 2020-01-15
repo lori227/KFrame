@@ -21,13 +21,11 @@ namespace KFrame
     class KFKernelModule : public KFKernelInterface
     {
     public:
-        KFKernelModule();
-        ~KFKernelModule();
+        KFKernelModule() = default;
+        ~KFKernelModule() = default;
 
         virtual void Run();
         virtual void AfterRun();
-        /////////////////////////////////////////////////////////////////////////////////////////////
-        static KFKernelModule* Instance();
         /////////////////////////////////////////////////////////////////////////////////////////////
         // 查找组件
         virtual KFComponent* FindComponent( const std::string& dataname );
@@ -61,9 +59,6 @@ namespace KFrame
         KFMsg::PBObject* SerializeObject( KFData* kfdata, uint32 datamask );
 
     private:
-        // kernel
-        static KFKernelModule* _kernel_module;
-
         // 组件列表
         KFHashMap< std::string, const std::string, KFComponentEx > _kf_component;
     };

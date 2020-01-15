@@ -163,7 +163,7 @@ namespace KFrame
     KFEntity* KFComponentEx::CreateEntity( uint64 key, const KFMsg::PBObject* proto )
     {
         auto kfentity = CreateEntity( key );
-        auto ok = KFKernelModule::Instance()->ParseFromProto( kfentity, proto );
+        auto ok = _kf_kernel->ParseFromProto( kfentity, proto );
         if ( ok )
         {
             kfentity->SetKeyID( key );
