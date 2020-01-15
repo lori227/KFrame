@@ -1,0 +1,11 @@
+<root version="2647">
+	<item Id="1000101" StoryId="10001" Array="1" TriggerType="1" Type="9" Parameter1="200001" Parameter2="0" />
+	<item Id="1000102" StoryId="10001" Array="2" TriggerType="1" Type="7" Parameter1="9000001" Parameter2="0" />
+	<item Id="1000103" StoryId="10001" Array="3" TriggerType="1" Type="8" Parameter1="9000002" Parameter2="0" />
+	<item Id="1000201" StoryId="10002" Array="1" TriggerType="1" Type="7" Parameter1="9000003" Parameter2="0" />
+	<item Id="1000301" StoryId="10003" Array="1" TriggerType="1" Type="8" Parameter1="9000004" Parameter2="0" />
+	<item Id="1000401" StoryId="10004" Array="1" TriggerType="1" Type="9" Parameter1="200001" Parameter2="0" />
+	<item Id="300001" StoryId="3000" Array="1" TriggerType="0" Type="8" Parameter1="8200001" Parameter2="0" />
+	<item Id="300101" StoryId="3001" Array="1" TriggerType="0" Type="8" Parameter1="8200002" Parameter2="0" />
+	<item Id="300201" StoryId="3002" Array="1" TriggerType="0" Type="8" Parameter1="8200003" Parameter2="0" />
+</root>

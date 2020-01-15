@@ -1,0 +1,11 @@
+<root version="58">
+	<item Id="100001" RaceLimit="1601" SexLimit="1" />
+	<item Id="100002" RaceLimit="1601|1602" SexLimit="1|2" />
+	<item Id="100003" RaceLimit="1601|1602|1603" SexLimit="0" />
+	<item Id="100004" RaceLimit="1601" SexLimit="1|2" />
+	<item Id="100005" RaceLimit="1601|1602" SexLimit="1|2" />
+	<item Id="100006" RaceLimit="1601|1602|1603" SexLimit="1|2" />
+	<item Id="100007" RaceLimit="1601" SexLimit="1|2" />
+	<item Id="100008" RaceLimit="1601|1602" SexLimit="1|2" />
+	<item Id="100009" RaceLimit="1601|1602|1603" SexLimit="1|2" />
+</root>

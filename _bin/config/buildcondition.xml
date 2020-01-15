@@ -1,0 +1,9 @@
+<root version="2500">
+	<item Id="59000000" Condition="totalsignin" DoneType=">=" DoneValue="1" Limits="" Limits1="" />
+	<item Id="59000001" Condition="buildlevel" DoneType=">=" DoneValue="1" Limits="202" Limits1="" />
+	<item Id="59000203" Condition="unlockbuild" DoneType=">=" DoneValue="1" Limits="203" Limits1="" />
+	<item Id="59000205" Condition="unlockbuild" DoneType=">=" DoneValue="1" Limits="205" Limits1="" />
+	<item Id="59000212" Condition="unlockbuild" DoneType=">=" DoneValue="1" Limits="212" Limits1="" />
+	<item Id="59000213" Condition="unlockbuild" DoneType=">=" DoneValue="1" Limits="213" Limits1="" />
+	<item Id="59000300" Condition="interaction" DoneType=">=" DoneValue="2" Limits="1010102" Limits1="field=1" />
+</root>

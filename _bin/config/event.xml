@@ -1,0 +1,21 @@
+<root version="456">
+	<item Id="1" DropId="0" Type="pve" Param="400001|500001" />
+	<item Id="2" DropId="0" Type="pve" Param="400001|500001" />
+	<item Id="3" DropId="0" Type="pve" Param="400002|500002" />
+	<item Id="4" DropId="0" Type="pve" Param="400002|500002" />
+	<item Id="5" DropId="0" Type="pve" Param="400003|500003" />
+	<item Id="6" DropId="0" Type="pve" Param="400003|500003" />
+	<item Id="7" DropId="0" Type="pve" Param="400004|500004" />
+	<item Id="8" DropId="0" Type="pve" Param="400004|500004" />
+	<item Id="9" DropId="0" Type="pve" Param="400005|500005" />
+	<item Id="10" DropId="0" Type="pve" Param="400005|500005" />
+	<item Id="11" DropId="0" Type="explore" Param="10101" />
+	<item Id="12" DropId="0" Type="explore" Param="10101" />
+	<item Id="21" DropId="0" Type="pve" Param="21|500008" />
+	<item Id="22" DropId="0" Type="pve" Param="22|500008" />
+	<item Id="23" DropId="0" Type="pve" Param="23|500008" />
+	<item Id="24" DropId="0" Type="pve" Param="24|500008" />
+	<item Id="25" DropId="0" Type="pve" Param="25|500009" />
+	<item Id="999998" DropId="0" Type="" Param="" />
+	<item Id="999999" DropId="0" Type="" Param="" />
+</root>

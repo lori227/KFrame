@@ -1,0 +1,7 @@
+<root version="2592">
+	<item Id="money" Type="1" Code="1" Template="{{&quot;money&quot;:&quot;{}&quot;}}" />
+	<item Id="diamond" Type="1" Code="2" Template="{{&quot;diamond&quot;:&quot;{}&quot;}}" />
+	<item Id="supplies" Type="1" Code="3" Template="{{&quot;supplies&quot;:&quot;{}&quot;}}" />
+	<item Id="item" Type="2" Code="0" Template="{{&quot;item&quot;:{{&quot;count&quot;:&quot;{}&quot;,&quot;id&quot;:&quot;{}&quot;}}}}" />
+	<item Id="hero" Type="3" Code="0" Template="{{&quot;hero&quot;:{{&quot;id&quot;:&quot;{}&quot;}}}}" />
+</root>

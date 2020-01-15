@@ -1,0 +1,16 @@
+<root version="221">
+	<item Id="1" Npc="9|3|3" DropVictory="1" DropFail="0" />
+	<item Id="2" Npc="9|6|9" DropVictory="1" DropFail="0" />
+	<item Id="3" Npc="9|5|3" DropVictory="1" DropFail="0" />
+	<item Id="4" Npc="1|2|2" DropVictory="1" DropFail="0" />
+	<item Id="5" Npc="1|8|1" DropVictory="1" DropFail="0" />
+	<item Id="6" Npc="2|8|9" DropVictory="1" DropFail="0" />
+	<item Id="7" Npc="3|3|3|3" DropVictory="1" DropFail="0" />
+	<item Id="8" Npc="9|9|3|5" DropVictory="1" DropFail="0" />
+	<item Id="9" Npc="9|9|6|5" DropVictory="1" DropFail="0" />
+	<item Id="10" Npc="9|3|8|5" DropVictory="1" DropFail="0" />
+	<item Id="11" Npc="9|6|8|5" DropVictory="1" DropFail="0" />
+	<item Id="12" Npc="2|1|3|8" DropVictory="1" DropFail="0" />
+	<item Id="13" Npc="2|1|5|8" DropVictory="1" DropFail="0" />
+	<item Id="14" Npc="2|3|5|8" DropVictory="1" DropFail="0" />
+</root>

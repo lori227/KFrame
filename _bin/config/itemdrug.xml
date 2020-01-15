@@ -1,0 +1,11 @@
+<root version="1718">
+	<item Id="1000301" DrugType="2" BuffId="0" Restore="{&quot;hp&quot;:10}" />
+	<item Id="1000302" DrugType="2" BuffId="0" Restore="{&quot;hp&quot;:15}" />
+	<item Id="1000303" DrugType="2" BuffId="0" Restore="{&quot;hp&quot;:20}" />
+	<item Id="1000311" DrugType="2" BuffId="0" Restore="{&quot;dip&quot;:-1}" />
+	<item Id="1000312" DrugType="2" BuffId="0" Restore="{&quot;dip&quot;:-2}" />
+	<item Id="1000313" DrugType="2" BuffId="0" Restore="{&quot;dip&quot;:-3}" />
+	<item Id="1000321" DrugType="2" BuffId="0" Restore="{&quot;hp&quot;:10,&quot;dip&quot;:-1}" />
+	<item Id="1000322" DrugType="2" BuffId="0" Restore="{&quot;hp&quot;:15,&quot;dip&quot;:-2}" />
+	<item Id="1000323" DrugType="2" BuffId="0" Restore="{&quot;hp&quot;:20,&quot;dip&quot;:-3}" />
+</root>

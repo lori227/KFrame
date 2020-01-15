@@ -1,0 +1,6 @@
+<root version="2357">
+	<item Id="1" Type="money" Param1="1000" Param2="100" Param3="100" Param4="500" Param5="1" />
+	<item Id="2" Type="diamond" Param1="2" Param2="110" Param3="1" Param4="1" Param5="10" />
+	<item Id="3" Type="money" Param1="10" Param2="100" Param3="" Param4="" Param5="" />
+	<item Id="4" Type="killexp" Param1="50" Param2="20" Param3="" Param4="" Param5="" />
+</root>

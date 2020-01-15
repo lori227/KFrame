@@ -1,0 +1,5 @@
+<root version="7">
+	<item Id="1" typeInt="1001" typeLong="2001333010" typeFloat="5.0E-4" typeString="啊啊啊啊" typeString2="繁体4" typeString3="razial" typeArray="[40,50,60]" typeArray2="['哈哈哈嗯嗯','急急急']" typeMap="" typeListMap="" typeMap3="" typebool="FALSE" />
+	<item Id="2" typeInt="1002" typeLong="1002006" typeFloat="1.0001" typeString="顶顶顶顶" typeString2="繁体4" typeString3="razial" typeArray="[40,50,60]" typeArray2="[40,50,60]" typeMap="" typeListMap="" typeMap3="" typebool="FALSE" />
+	<item Id="3" typeInt="1002" typeLong="1002006" typeFloat="1.0001" typeString="啊啊啊啊" typeString2="繁体" typeString3="razial" typeArray="[40,50,60]" typeArray2="[40,50,60]" typeMap="[{'48':'1,1'}]" typeListMap="{}" typeMap3="" typebool="FALSE" />
+</root>

@@ -1,0 +1,8 @@
+<root version="917">
+	<item Id="1801" DamType="1" WeaponDefault="3180100" />
+	<item Id="1802" DamType="1" WeaponDefault="3180200" />
+	<item Id="1803" DamType="1" WeaponDefault="3180300" />
+	<item Id="1804" DamType="1" WeaponDefault="3180400" />
+	<item Id="1805" DamType="2" WeaponDefault="3180500" />
+	<item Id="1806" DamType="2" WeaponDefault="3180600" />
+</root>

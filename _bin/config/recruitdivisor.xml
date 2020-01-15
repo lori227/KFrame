@@ -1,0 +1,14 @@
+<root version="1536">
+	<item Id="1" Type="1" Value="1601" Probability="80" MaxCount="3" />
+	<item Id="2" Type="1" Value="1602" Probability="80" MaxCount="3" />
+	<item Id="3" Type="1" Value="1603" Probability="80" MaxCount="3" />
+	<item Id="4" Type="2" Value="1701" Probability="70" MaxCount="4" />
+	<item Id="5" Type="2" Value="1702" Probability="70" MaxCount="4" />
+	<item Id="6" Type="2" Value="1703" Probability="70" MaxCount="4" />
+	<item Id="7" Type="2" Value="1704" Probability="70" MaxCount="4" />
+	<item Id="8" Type="3" Value="1801" Probability="70" MaxCount="5" />
+	<item Id="9" Type="3" Value="1802" Probability="70" MaxCount="5" />
+	<item Id="10" Type="3" Value="1803" Probability="70" MaxCount="5" />
+	<item Id="11" Type="3" Value="1804" Probability="70" MaxCount="5" />
+	<item Id="12" Type="3" Value="1805" Probability="70" MaxCount="5" />
+</root>

@@ -1,3 +1,12 @@
-<root version="1006">
-	<item Id="1" Type="2"/>
+<root version="1675">
+	<item Id="1" Type="2" Value="0" Hour="0" />
+	<item Id="2" Type="2" Value="0" Hour="5" />
+	<item Id="3" Type="3" Value="1" Hour="0" />
+	<item Id="101" Type="1" Value="2" Hour="0" />
+	<item Id="102" Type="6" Value="30" Hour="0" />
+	<item Id="103" Type="6" Value="3" Hour="0" />
+	<item Id="104" Type="1" Value="1" Hour="0" />
+	<item Id="105" Type="6" Value="1" Hour="0" />
+	<item Id="106" Type="6" Value="5" Hour="0" />
+	<item Id="107" Type="6" Value="10" Hour="0" />
 </root>

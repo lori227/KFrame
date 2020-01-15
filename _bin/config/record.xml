@@ -1,0 +1,6 @@
+<root version="335">
+	<item Id="1" Record="camprecord" NewRecord="newcamprecord" OnlineTime="onlinecamptime" Notice="100" LoginUpdate="1" ExpireType="1" ExpireNum="3" />
+	<item Id="2" Record="dailyrecord" NewRecord="newdailyrecord" OnlineTime="onlinedailytime" Notice="101" LoginUpdate="1" ExpireType="1" ExpireNum="4" />
+	<item Id="3" Record="deadrecord" NewRecord="newdeadrecord" OnlineTime="onlinedeadtime" Notice="102" LoginUpdate="1" ExpireType="2" ExpireNum="200" />
+	<item Id="4" Record="liferecord" NewRecord="newliferecord" OnlineTime="onlineliferecord" Notice="0" LoginUpdate="0" ExpireType="0" ExpireNum="0" />
+</root>

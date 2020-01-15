@@ -1,0 +1,7 @@
+<root version="2609">
+	<item Id="10000" Condition="" Cost="" ExecuteName="" ExecuteParam1="" />
+	<item Id="10001" Condition="401" Cost="" ExecuteName="story" ExecuteParam1="1000201" />
+	<item Id="10002" Condition="" Cost="[1,1,500]" ExecuteName="story" ExecuteParam1="1000301" />
+	<item Id="10003" Condition="" Cost="" ExecuteName="drop" ExecuteParam1="5110201" />
+	<item Id="10004" Condition="" Cost="" ExecuteName="drop" ExecuteParam1="5120001" />
+</root>

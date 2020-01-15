@@ -1,5 +1,9 @@
-<root version="1006">
-	<item Id="default" Type="2" Template="[{{&quot;{}&quot;:&quot;{}&quot;}}]"/>
-	<item Id="hero" Type="1" Template="[{{&quot;{}&quot;:{{&quot;generateid&quot;:&quot;{}&quot;}}}}]"/>
-	<item Id="item" Type="2" Template="[{{&quot;{}&quot;:{{&quot;count&quot;:&quot;{}&quot;,&quot;id&quot;:&quot;{}&quot;}}}}]"/>
+<root version="1754">
+	<item Id="default" Type="1" Template="[{{&quot;{}&quot;:&quot;{}&quot;}}]" />
+	<item Id="var" Type="2" Template="[{{&quot;{}&quot;:{{&quot;value&quot;:&quot;{}&quot;,&quot;id&quot;:&quot;{}&quot;}}}}]" />
+	<item Id="hero" Type="2" Template="[{{&quot;{}&quot;:{{&quot;id&quot;:&quot;{}&quot;}}}}]" />
+	<item Id="item" Type="2" Template="[{{&quot;{}&quot;:{{&quot;count&quot;:&quot;{}&quot;,&quot;id&quot;:&quot;{}&quot;}}}}]" />
+	<item Id="taskchain" Type="2" Template="[{{&quot;{}&quot;:{{&quot;order&quot;:&quot;{}&quot;,&quot;id&quot;:&quot;{}&quot;}}}}]" />
+	<item Id="task" Type="2" Template="[{{&quot;{}&quot;:{{&quot;status&quot;:&quot;{}&quot;,&quot;id&quot;:&quot;{}&quot;}}}}]" />
+	<item Id="eventgroup" Type="2" Template="[{{&quot;{}&quot;:{{&quot;order&quot;:&quot;{}&quot;,&quot;id&quot;:&quot;{}&quot;}}}}]" />
 </root>

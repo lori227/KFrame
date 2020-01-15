@@ -1,0 +1,10 @@
+<root version="2559">
+	<item Id="1" StepCount="5" FoodNum="10" HpNum="1" />
+	<item Id="2" StepCount="5" FoodNum="10" HpNum="1" />
+	<item Id="3" StepCount="5" FoodNum="10" HpNum="1" />
+	<item Id="4" StepCount="5" FoodNum="10" HpNum="1" />
+	<item Id="5" StepCount="5" FoodNum="10" HpNum="1" />
+	<item Id="6" StepCount="5" FoodNum="10" HpNum="1" />
+	<item Id="7" StepCount="5" FoodNum="10" HpNum="1" />
+	<item Id="8" StepCount="5" FoodNum="10" HpNum="1" />
+</root>

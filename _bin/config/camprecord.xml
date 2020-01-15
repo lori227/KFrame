@@ -1,0 +1,6 @@
+<root version="335">
+	<item Id="5001" BuildId="201" TittleTextKey="RecordTittle_LevelUp" RecordTextKey="RecordInfo_LevelUp" />
+	<item Id="5002" BuildId="201" TittleTextKey="RecordTittle_TrainingEnd" RecordTextKey="RecordInfo_TrainingEnd" />
+	<item Id="5003" BuildId="202" TittleTextKey="RecordTittle_Music" RecordTextKey="RecordInfo_Music" />
+	<item Id="5004" BuildId="203" TittleTextKey="RecordTittle_Inherit" RecordTextKey="RecordInfo_Inherit" />
+</root>
