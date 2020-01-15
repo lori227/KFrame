@@ -1,0 +1,4 @@
+<root version="1006">
+	<item Id="10001" StoreType="1" DataName="skin" BuyElement="[{&quot;skin&quot;:{&quot;id&quot;:&quot;20005&quot;}}]" BuyMaxCount="1" CostElement="money=[{&quot;money&quot;:&quot;90&quot;}]"/>
+	<item DiscountElement="money=[{&quot;money&quot;:&quot;68&quot;}]|diamon=[{&quot;diamon&quot;:&quot;10&quot;}]" Id="10002" StoreType="1" DataName="skin" BuyElement="[{&quot;skin&quot;:{&quot;id&quot;:&quot;20005&quot;}}]" BuyMaxCount="1" CostElement="money=[{&quot;money&quot;:&quot;90&quot;}]|diamon=[{&quot;diamon&quot;:&quot;10&quot;}]" StartDiscountTime="2019-1-20 12:00:00" EndDiscountTime="2019-2-20 12:00:00" BuyLimit="dailystore,10" MaxOwnCount="1"/>
+</root>

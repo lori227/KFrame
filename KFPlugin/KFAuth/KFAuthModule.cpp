@@ -85,7 +85,7 @@ namespace KFrame
         auto redisdriver = __DIR_REDIS_DRIVER__;
         redisdriver->Append( "zincrby {} 0 {}", __STRING__( zonelist ), zoneid );
         redisdriver->Append( values, "hmset {}:{}", __STRING__( zone ), zoneid );
-        redisdriver->Append( values, "set {} {}", __STRING__( recommendzoneid ), recommendzoneid );
+        redisdriver->Append( "set {} {}", __STRING__( recommendzoneid ), recommendzoneid );
         auto kfresult = redisdriver->Pipeline();
         if ( !kfresult->IsOk() )
         {
