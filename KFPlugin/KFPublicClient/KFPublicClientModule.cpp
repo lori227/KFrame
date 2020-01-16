@@ -242,7 +242,7 @@ namespace KFrame
             auto ok = kfelements.Parse( kfmsg.costdata(), __FUNC_LINE__ );
             if ( ok )
             {
-                player->RemoveElement( &kfelements, __STRING__( name ), __FUNC_LINE__ );
+                player->RemoveElement( &kfelements, _default_multiple, __STRING__( name ), 0u, __FUNC_LINE__ );
             }
         }
     }

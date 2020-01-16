@@ -43,6 +43,7 @@ typedef uint64_t uint64;
 ////////////////////////////////////////////////////////////////
 static const uint64 _invalid_int = 0u;
 static const double _invalid_double = 0;
+static const double _default_multiple = 1.0;
 static const std::string _invalid_string = "";
 static const std::string _globbing_string = "*";
 static const std::string _split_string = "|";

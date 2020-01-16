@@ -169,10 +169,14 @@ namespace KFrame
                 config->LoadComplete();
                 __LOG_INFO__( "load [{}] ok", filepath );
             }
+            else
+            {
+                __LOG_ERROR__( "load [{}] failed", filepath );
+            }
         }
         catch ( ... )
         {
-            static std::string error = __FORMAT__( "load [{}] failed", filepath );
+            static std::string error = __FORMAT__( "load [{}] error", filepath );
             throw std::runtime_error( error );
         }
     }

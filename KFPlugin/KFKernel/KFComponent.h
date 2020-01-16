@@ -14,8 +14,8 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////
     typedef std::function< bool( KFEntity*, KFData*, KFElement*, const char*, uint32, float ) > KFCheckAddElementFunction;
     typedef std::function< bool( KFEntity*, KFData*, KFElementResult*, const char*, uint32, float ) > KFAddElementFunction;
-    typedef std::function< bool( KFEntity*, KFData*, KFElement*, const char*, uint32, float ) > KFCheckRemoveElementFunction;
-    typedef std::function< bool( KFEntity*, KFData*, KFElementResult*, const char*, uint32, float ) > KFRemoveElementFunction;
+    typedef std::function< bool( KFEntity*, KFData*, KFElement*, double, const char*, uint32 ) > KFCheckRemoveElementFunction;
+    typedef std::function< bool( KFEntity*, KFData*, KFElementResult*, const char*, uint32 ) > KFRemoveElementFunction;
     ////////////////////////////////////////////////////////////////////////////////////////////
     typedef std::function<void( KFEntity*, KFData*, uint64, KFData* )> KFAddDataFunction;
     typedef std::function<void( KFEntity*, KFData*, uint64, KFData* )> KFRemoveDataFunction;
@@ -24,7 +24,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////
     typedef std::function<uint64( KFEntity*, uint64, uint64 )> KFGetConfigValueFunction;
     ////////////////////////////////////////////////////////////////////////////////////////////
-    typedef std::function< void( KFEntity*, const std::string&, const KFElementResult* ) > KFLogElementFunction;
+    typedef std::function< void( KFEntity*, const std::string&, uint32, const KFElementResult* ) > KFLogElementFunction;
 
     // 游戏中的组件, 负责属性回调时间
     class KFComponent
@@ -104,7 +104,7 @@ namespace KFrame
 
         // 注册判断属性函数
         template< class T >
-        void RegisterCheckRemoveElementFunction( const std::string& dataname, T* object, bool ( T::*handle )( KFEntity*, KFData*, KFElement*, const char*, uint32, float ) )
+        void RegisterCheckRemoveElementFunction( const std::string& dataname, T* object, bool ( T::*handle )( KFEntity*, KFData*, KFElement*, double, const char*, uint32 ) )
         {
             KFCheckRemoveElementFunction function = std::bind( handle, object,
                                                     std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
@@ -115,11 +115,11 @@ namespace KFrame
 
         // 注册删除属性函数
         template< class T >
-        void RegisterRemoveElementFunction( const std::string& dataname, T* object, bool ( T::*handle )( KFEntity*, KFData*, KFElementResult*, const char*, uint32, float ) )
+        void RegisterRemoveElementFunction( const std::string& dataname, T* object, bool ( T::*handle )( KFEntity*, KFData*, KFElementResult*, const char*, uint32 ) )
         {
             KFRemoveElementFunction function = std::bind( handle, object,
                                                std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
-                                               std::placeholders::_4, std::placeholders::_5, std::placeholders::_6 );
+                                               std::placeholders::_4, std::placeholders::_5 );
             BindRemoveElementFunction( dataname, function );
         }
         virtual void UnRegisterRemoveElementFunction( const std::string& dataname ) = 0;
@@ -362,9 +362,9 @@ namespace KFrame
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         template< class T >
-        void RegisterLogElementFunction( const std::string& name, T* object, void( T::*handle )( KFEntity*, const std::string&, const KFElementResult* ) )
+        void RegisterLogElementFunction( const std::string& name, T* object, void( T::*handle )( KFEntity*, const std::string&, uint32, const KFElementResult* ) )
         {
-            KFLogElementFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
+            KFLogElementFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
             BindLogElementFunction( name, function );
         }
 
@@ -437,7 +437,7 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 #define  __KF_CHECK_REMOVE_ELEMENT_FUNCTION__( checkfunction ) \
-    bool checkfunction( KFEntity* player, KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple )
+    bool checkfunction( KFEntity* player, KFData* kfparent, KFElement* kfelement, double multiple, const char* function, uint32 line )
 
 #define  __REGISTER_CHECK_REMOVE_ELEMENT__( dataname, function )\
     _kf_component->RegisterCheckRemoveElementFunction( dataname, this, function )
@@ -446,7 +446,7 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 #define  __KF_REMOVE_ELEMENT_FUNCTION__( removefunction ) \
-    bool removefunction( KFEntity* player, KFData* kfparent, KFElementResult* kfresult, const char* function, uint32 line, float multiple)
+    bool removefunction( KFEntity* player, KFData* kfparent, KFElementResult* kfresult, const char* function, uint32 line )
 
 #define __REGISTER_REMOVE_ELEMENT__( dataname, function ) \
     _kf_component->RegisterRemoveElementFunction( dataname, this, function )
@@ -536,7 +536,7 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 #define  __KF_LOG_ELEMENT_FUNCTION__( function ) \
-    void function( KFEntity* player, const std::string& modulename, const KFElementResult* kfresult )
+    void function( KFEntity* player, const std::string& modulename, uint32 moduleid, const KFElementResult* kfresult )
 
 #define __REGISTER_LOG_ELEMENT__( dataname, function ) \
     _kf_component->RegisterLogElementFunction( dataname, this, function )

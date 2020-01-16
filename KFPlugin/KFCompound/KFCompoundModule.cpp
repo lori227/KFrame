@@ -25,15 +25,12 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::CompoundNotExist );
         }
 
-        // 判断是否足够
-        auto& dataname = player->CheckRemoveElement( &kfsetting->_cost_data, __FUNC_LINE__ );
+        // 扣除材料
+        auto& dataname = player->RemoveElement( &kfsetting->_cost_data, _default_multiple, __STRING__( compound ), kfsetting->_id, __FUNC_LINE__ );
         if ( !dataname.empty() )
         {
             return _kf_display->SendToClient( player, KFMsg::DataNotEnough, dataname );
         }
-
-        // 扣除材料
-        player->RemoveElement( &kfsetting->_cost_data, __STRING__( compound ), __FUNC_LINE__ );
 
         // 添加合成的属性
         player->AddElement( &kfsetting->_compound_data, __STRING__( compound ), __FUNC_LINE__ );

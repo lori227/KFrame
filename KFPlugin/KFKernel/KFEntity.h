@@ -111,12 +111,12 @@ namespace KFrame
         virtual void AddElement( const KFElements* kfelements, const char* function, uint32 line, float multiple = 1.0f ) = 0;
         virtual void AddElement( const KFElements* kfelements, const std::string& modulename, const char* function, uint32 line, float multiple = 1.0f ) = 0;
 
-        // 判断元数据是否满足条件
-        virtual const std::string& CheckRemoveElement( const KFElements* kfelements, const char* function, uint32 line, float multiple = 1.0f ) = 0;
-
         // 删除元数据
-        virtual void RemoveElement( const KFElements* kfelements, const std::string& modulename, const char* function, uint32 line, float multiple = 1.0f ) = 0;
+        virtual const std::string& RemoveElement( const KFElements* kfelements, double multiple, const std::string& modulename, uint32 moduleid, const char* function, uint32 line ) = 0;
 
+        // 设置element到kfdata对象
+        virtual void UpdateElementToData( KFData* kfdata, KFElementObject* kfelement, double multiple ) = 0;
+        virtual void SetElementToData( KFData* kfdata, KFElementObject* kfelement, double multiple ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 显示奖励接口相关
         virtual void AddDataToShow( const std::string& modulename ) = 0;
@@ -137,11 +137,7 @@ namespace KFrame
         virtual bool GetShowElement( KFMsg::PBShowElement* pbelement ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // 设置element到kfdata对象
-        virtual void UpdateElementToData( KFElementObject* kfelement, KFData* kfdata, float multiple = 1.0f ) = 0;
-        virtual void SetElementToData( KFElementObject* kfelement, KFData* kfdata, float multiple = 1.0f ) = 0;
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         // 同步更新数据
         virtual void SyncUpdateData( KFData* kfdata, uint64 key ) = 0;
 

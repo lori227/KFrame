@@ -21,12 +21,12 @@ namespace KFrame
         }
 
         // 计算数值
-        virtual uint64 CalcUseValue( const KFDataSetting* kfsetting, float multiple )
+        virtual uint64 CalcUseValue( const KFDataSetting* kfsetting, double multiple )
         {
             return _invalid_int;
         }
 
-        virtual uint64 CalcUseValue( const KFDataSetting* kfsetting, const std::string& dataname, float multiple )
+        virtual uint64 CalcUseValue( const KFDataSetting* kfsetting, const std::string& dataname, double multiple )
         {
             return _invalid_int;
         }
@@ -64,8 +64,8 @@ namespace KFrame
         virtual void SetValue( std::string value );
 
         // 计算数值
-        virtual uint64 CalcUseValue( const KFDataSetting* kfsetting, float multiple );
-        virtual uint64 CalcUseValue( const KFDataSetting* kfsetting, const std::string& dataname, float multiple );
+        virtual uint64 CalcUseValue( const KFDataSetting* kfsetting, double multiple );
+        virtual uint64 CalcUseValue( const KFDataSetting* kfsetting, const std::string& dataname, double multiple );
 
         // 获得使用数值
         virtual uint64 GetUseValue() const;
@@ -178,7 +178,7 @@ namespace KFrame
         void SetValue( const std::string& dataname, std::string value );
 
         // 获得数值
-        uint64 CalcValue( const KFDataSetting* kfsetting, const std::string& dataname, float multiple );
+        uint64 CalcValue( const KFDataSetting* kfsetting, const std::string& dataname, double multiple );
         uint64 GetValue( const std::string& dataname ) const;
 
         // 格式化
@@ -214,7 +214,7 @@ namespace KFrame
         bool Parse( const std::string& strdata, const char* function, uint32 line );
 
         // 计算返回元素
-        const std::string& CalcElement( float multiple ) const;
+        const std::string& CalcElement( double multiple ) const;
 
         // non-copy
     private:

@@ -73,7 +73,7 @@ namespace KFrame
         KFElement* _element = nullptr;
 
         // 倍数
-        float _multiple = 0.0f;
+        double _multiple = _default_multiple;
 
         // 是否需要显示
         bool _is_need_show = false;

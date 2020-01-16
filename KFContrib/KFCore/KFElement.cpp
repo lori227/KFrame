@@ -27,7 +27,7 @@ namespace KFrame
         }
     }
 
-    uint64 KFIntValue::CalcUseValue( const KFDataSetting* kfsetting, float multiple )
+    uint64 KFIntValue::CalcUseValue( const KFDataSetting* kfsetting, double multiple )
     {
         _data_setting = kfsetting;
         if ( _min_value >= _max_value )
@@ -47,7 +47,7 @@ namespace KFrame
         return _use_value;
     }
 
-    uint64 KFIntValue::CalcUseValue( const KFDataSetting* kfsetting, const std::string& dataname, float multiple )
+    uint64 KFIntValue::CalcUseValue( const KFDataSetting* kfsetting, const std::string& dataname, double multiple )
     {
         if ( _data_setting == nullptr )
         {
@@ -72,7 +72,6 @@ namespace KFrame
     {
         _str_value = value;
     }
-
 
     const std::string& KFStrValue::GetValue()
     {
@@ -162,7 +161,7 @@ namespace KFrame
         _values.Insert( dataname, kfvalue );
     }
 
-    uint64 KFElementObject::CalcValue( const KFDataSetting* kfsetting, const std::string& dataname, float multiple )
+    uint64 KFElementObject::CalcValue( const KFDataSetting* kfsetting, const std::string& dataname, double multiple )
     {
         auto kfvalue = _values.Find( dataname );
         if ( kfvalue == nullptr || !kfvalue->IsType( KFDataDefine::Type_UInt32 ) )
@@ -363,7 +362,7 @@ namespace KFrame
         return true;
     }
 
-    const std::string& KFElements::CalcElement( float multiple ) const
+    const std::string& KFElements::CalcElement( double multiple ) const
     {
         static std::string _result;
         _result.clear();

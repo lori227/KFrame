@@ -36,6 +36,9 @@ namespace KFrame
         // 小区信息注册
         __KF_HTTP_FUNCTION__( HandleZoneRegister );
 
+        // 推荐小区
+        __KF_HTTP_FUNCTION__( HandleRecommendZone );
+
         // world注册
         __KF_HTTP_FUNCTION__( HandleWorldRegister );
 

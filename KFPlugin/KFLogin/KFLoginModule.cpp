@@ -79,21 +79,31 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_TIMER_FUNCTION__( KFLoginModule::OnTimerZoneRegister )
     {
-        auto kfsetting = KFZoneConfig::Instance()->ZoneSetting();
-        auto _url = _kf_ip_address->GetAuthUrl() + __STRING__( zoneregister );
+        // 推荐小区
+        {
+            auto _url = _kf_ip_address->GetAuthUrl() + __STRING__( recommendzone );
+            __JSON_OBJECT_DOCUMENT__( kfjson );
+            __JSON_SET_VALUE__( kfjson, __STRING__( zoneid ), KFZoneConfig::Instance()->RecommendZoneId() );
+            _kf_http_client->MTGet<KFLoginModule>( _url, kfjson );
+        }
 
         // 注册小区信息
-        __JSON_OBJECT_DOCUMENT__( kfjson );
-        __JSON_SET_VALUE__( kfjson, __STRING__( zoneid ), kfsetting->_id );
-        __JSON_SET_VALUE__( kfjson, __STRING__( name ), kfsetting->_name );
-        __JSON_SET_VALUE__( kfjson, __STRING__( recommendzoneid ), KFZoneConfig::Instance()->RecommendZoneId() );
-
-        auto recvdata = _kf_http_client->STGet( _url, kfjson );
-        __JSON_PARSE_STRING__( kfresult, recvdata );
-        auto retcode = _kf_http_client->GetCode( kfresult );
-        if ( retcode == KFMsg::Ok )
         {
-            __UN_TIMER_0__();
+            auto kfsetting = KFZoneConfig::Instance()->ZoneSetting();
+            auto _url = _kf_ip_address->GetAuthUrl() + __STRING__( zoneregister );
+
+            // 注册小区信息
+            __JSON_OBJECT_DOCUMENT__( kfjson );
+            __JSON_SET_VALUE__( kfjson, __STRING__( zoneid ), kfsetting->_id );
+            __JSON_SET_VALUE__( kfjson, __STRING__( name ), kfsetting->_name );
+
+            auto recvdata = _kf_http_client->STGet( _url, kfjson );
+            __JSON_PARSE_STRING__( kfresult, recvdata );
+            auto retcode = _kf_http_client->GetCode( kfresult );
+            if ( retcode == KFMsg::Ok )
+            {
+                __UN_TIMER_0__();
+            }
         }
     }
 

@@ -120,15 +120,12 @@ namespace KFrame
         virtual void AddElement( const KFElements* kfelements, const char* function, uint32 line, float multiple = 1.0f );
         virtual void AddElement( const KFElements* kfelements, const std::string& modulename, const char* function, uint32 line, float multiple = 1.0f );
 
-        // 判断元数据是否满足条件
-        virtual const std::string& CheckRemoveElement( const KFElements* kfelements, const char* function, uint32 line, float multiple = 1.0f );
-
-        // 删除元数据
-        virtual void RemoveElement( const KFElements* kfelements, const std::string& modulename, const char* function, uint32 line, float multiple = 1.0f );
+        // 删除元数据( 删除前会判断是否满足 )
+        virtual const std::string& RemoveElement( const KFElements* kfelements, double multiple, const std::string& modulename, uint32 moduleid, const char* function, uint32 line );
         //////////////////////////////////////////////////////////////////////////////////////////
         // 设置element到kfdata对象
-        virtual void UpdateElementToData( KFElementObject* kfelement, KFData* kfdata, float multiple = 1.0f );
-        virtual void SetElementToData( KFElementObject* kfelement, KFData* kfdata, float multiple = 1.0f );
+        virtual void UpdateElementToData( KFData* kfdata, KFElementObject* kfelement, double multiple );
+        virtual void SetElementToData( KFData* kfdata, KFElementObject* kfelement, double multiple );
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
         // 添加显示数据
@@ -186,17 +183,18 @@ namespace KFrame
         bool AddObjectElement( KFData* kfparent, KFElementResult* kfresult, const char* function, uint32 line, float multiple );
         bool AddRecordElement( KFData* kfparent, KFElementResult* kfresult, const char* function, uint32 line, float multiple );
 
-        // 判断元数据
-        bool CheckRemoveElement( const KFElement* kfelement, const char* function, uint32 line, float multiple );
-        bool CheckNormalElement( KFData* kfdata, KFElement* kfelement, const char* function, uint32 line, float multiple );
-        bool CheckObjectElement( KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple );
-        bool CheckRecordElement( KFData* kfparent, KFElement* kfelement, const char* function, uint32 line, float multiple );
+        // 判断元数据是否满足条件
+        const std::string& CheckRemoveElement( const KFElements* kfelements, double multiple, const char* function, uint32 line );
+        bool CheckRemoveElement( const KFElement* kfelement, double multiple, const char* function, uint32 line );
+        bool CheckNormalElement( KFData* kfdata, KFElement* kfelement, double multiple, const char* function, uint32 line );
+        bool CheckObjectElement( KFData* kfparent, KFElement* kfelement, double multiple, const char* function, uint32 line );
+        bool CheckRecordElement( KFData* kfparent, KFElement* kfelement, double multiple, const char* function, uint32 line );
 
         // 删除元数据
-        void RemoveElement( const KFElement* kfelement, const std::string& modulename, const char* function, uint32 line, float multiple );
-        bool RemoveNormalElement( KFData* kfdata, KFElementResult* kfresult, const char* function, uint32 line, float multiple );
-        bool RemoveObjectElement( KFData* kfparent, KFElementResult* kfresult, const char* function, uint32 line, float multiple );
-        bool RemoveRecordElement( KFData* kfparent, KFElementResult* kfresult, const char* function, uint32 line, float multiple );
+        void RemoveElement( const KFElement* kfelement, double multiple, const std::string& modulename, uint32 moduleid, const char* function, uint32 line );
+        bool RemoveNormalElement( KFData* kfdata, KFElementResult* kfresult, const char* function, uint32 line );
+        bool RemoveObjectElement( KFData* kfparent, KFElementResult* kfresult, const char* function, uint32 line );
+        bool RemoveRecordElement( KFData* kfparent, KFElementResult* kfresult, const char* function, uint32 line );
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////

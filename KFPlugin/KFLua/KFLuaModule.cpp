@@ -345,7 +345,7 @@ namespace KFrame
         auto ok = kfelements.Parse( strelement, __FUNC_LINE__ );
         if ( ok )
         {
-            kfentity->RemoveElement( &kfelements, modulename, __FUNC_LINE__ );
+            kfentity->RemoveElement( &kfelements, _default_multiple, modulename, 0u, __FUNC_LINE__ );
         }
     }
 

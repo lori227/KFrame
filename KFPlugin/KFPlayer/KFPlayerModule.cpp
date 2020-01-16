@@ -385,7 +385,7 @@ namespace KFrame
         if ( ok )
         {
             kfelements.SetOperate( KFEnum::Dec );
-            player->RemoveElement( &kfelements, __STRING__( command ), __FUNC_LINE__ );
+            player->RemoveElement( &kfelements, 1.0f, __STRING__( command ), 0u, __FUNC_LINE__ );
         }
     }
 
