@@ -567,6 +567,11 @@ namespace KFrame
 
     void KFEntityEx::ShowElementResult( const KFElementResult* kfresult, const char* function, uint32 line )
     {
+        if ( !kfresult->_module_name.empty() )
+        {
+            _pb_show_element.set_modulename( kfresult->_module_name );
+        }
+
         // 打印日志
         switch ( kfresult->_show_type )
         {
@@ -839,11 +844,11 @@ namespace KFrame
         return Find( kfdatasetting->_name );
     }
 
-    const std::string& KFEntityEx::CheckAddElement( const KFElements* kfelements, const char* function, uint32 line, float multiple /* = 1.0f */ )
+    const std::string& KFEntityEx::CheckAddElement( const KFElements* kfelements, double multiple, const char* function, uint32 line )
     {
         for ( auto kfelement : kfelements->_element_list )
         {
-            auto ok = CheckAddElement( kfelement, function, line, multiple );
+            auto ok = CheckAddElement( kfelement, multiple, function, line );
             if ( !ok )
             {
                 return kfelement->_data_name;
@@ -853,7 +858,7 @@ namespace KFrame
         return _invalid_string;
     }
 
-    bool KFEntityEx::CheckAddElement( const KFElement* kfelement, const char* function, uint32 line, float multiple )
+    bool KFEntityEx::CheckAddElement( const KFElement* kfelement, double multiple, const char* function, uint32 line )
     {
         auto kfdata = Find( kfelement->_data_name );
         if ( kfdata == nullptr )
@@ -870,45 +875,31 @@ namespace KFrame
         auto kffunction = _kf_component->_check_add_element_function.Find( kfdata->_data_setting->_logic_name );
         if ( kffunction != nullptr )
         {
-            return kffunction->_function( this, kfdata, const_cast< KFElement* >( kfelement ), function, line, multiple );
+            return kffunction->_function( this, kfdata, const_cast< KFElement* >( kfelement ), multiple, function, line );
         }
 
         // 找不到处理函数, 用基础函数来处理
         return !kfdata->IsFull();
     }
 
-    void KFEntityEx::AddElement( const KFElements* kfelements, const std::string& modulename, const char* function, uint32 line, float multiple )
+    void KFEntityEx::AddElement( const KFElements* kfelements, double multiple, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
     {
         if ( kfelements->_element_list.empty() )
         {
             return __LOG_ERROR_FUNCTION__( function, line, "{}=[{}] element=[{}] is empty", _kf_component->_component_name, GetKeyID(), kfelements->_str_element );
         }
 
-        if ( IsInited() )
-        {
-            _pb_show_element.set_modulename( modulename );
-        }
-
+        __LOG_INFO_FUNCTION__( function, line, "{}=[{}] multiple=[{:0.2f}] start add elements={}", _kf_component->_component_name, GetKeyID(), multiple, kfelements->_str_element );
         _element_sequence = KFGlobal::Instance()->STMakeUUID( __STRING__( element ) );
-        AddElement( kfelements, function, line, multiple );
-    }
-
-    void KFEntityEx::AddElement( const KFElements* kfelements, const char* function, uint32 line, float multiple )
-    {
-        if ( kfelements->_element_list.empty() )
-        {
-            return __LOG_ERROR_FUNCTION__( function, line, "{}=[{}] element=[{}] is empty", _kf_component->_component_name, GetKeyID(), kfelements->_str_element );
-        }
-
-        __LOG_INFO_FUNCTION__( function, line, "{}=[{}] multiple=[{:0.2f}] elements={}", _kf_component->_component_name, GetKeyID(), multiple, kfelements->_str_element );
         for ( auto kfelement : kfelements->_element_list )
         {
-            AddElement( kfelement, function, line, multiple );
+            AddElement( kfelement, multiple, modulename, moduleid, function, line );
         }
+        __LOG_INFO_FUNCTION__( function, line, "{}=[{}] finish add elements", _kf_component->_component_name, GetKeyID() );
     }
 
     // 添加元数据
-    void KFEntityEx::AddElement( const KFElement* kfelement, const char* function, uint32 line, float multiple )
+    void KFEntityEx::AddElement( const KFElement* kfelement, double multiple, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
     {
         auto kfdata = Find( kfelement->_data_name );
         if ( kfdata == nullptr )
@@ -928,12 +919,14 @@ namespace KFrame
         elementresult._sequence = _element_sequence;
         elementresult._element = const_cast< KFElement* >( kfelement );
         elementresult._is_need_show = kfdata->_data_setting->HaveMask( KFDataDefine::Mask_Show );
+        elementresult._module_name = modulename;
+        elementresult._module_id = moduleid;
 
         auto ok = false;
         auto kffunction = _kf_component->_add_element_function.Find( kfdata->_data_setting->_logic_name );
         if ( kffunction != nullptr )
         {
-            ok = kffunction->_function( this, kfdata, &elementresult, function, line, multiple );
+            ok = kffunction->_function( this, kfdata, &elementresult, function, line );
         }
         else
         {
@@ -941,13 +934,13 @@ namespace KFrame
             switch ( kfdata->_data_type )
             {
             case KFDataDefine::Type_Object:
-                ok = AddObjectElement( kfdata, &elementresult, function, line, multiple );
+                ok = AddObjectElement( kfdata, &elementresult, function, line );
                 break;
             case KFDataDefine::Type_Record:
-                ok = AddRecordElement( kfdata, &elementresult, function, line, multiple );
+                ok = AddRecordElement( kfdata, &elementresult, function, line );
                 break;
             default:
-                ok = AddNormalElement( kfdata, &elementresult, function, line, multiple );
+                ok = AddNormalElement( kfdata, &elementresult, function, line );
                 break;
             }
         }
@@ -958,11 +951,11 @@ namespace KFrame
             ShowElementResult( &elementresult, function, line );
 
             // 纪录日志
-            _kf_component->CallLogElementFunction( this, _pb_show_element.modulename(), 0u, &elementresult );
+            _kf_component->CallLogElementFunction( this, &elementresult );
         }
     }
 
-    bool KFEntityEx::AddNormalElement( KFData* kfdata, KFElementResult* kfresult, const char* function, uint32 line, float multiple )
+    bool KFEntityEx::AddNormalElement( KFData* kfdata, KFElementResult* kfresult, const char* function, uint32 line )
     {
         if ( !kfresult->_element->IsValue() )
         {
@@ -975,7 +968,7 @@ namespace KFrame
         {
         case KFDataDefine::Type_UInt32:
         {
-            auto usevalue = kfelementvalue->_value->CalcUseValue( kfdata->_data_setting, multiple );
+            auto usevalue = kfelementvalue->_value->CalcUseValue( kfdata->_data_setting, kfresult->_multiple );
             UpdateData( kfdata, kfelementvalue->_operate, usevalue );
 
             kfresult->AddResult( usevalue );
@@ -1053,7 +1046,7 @@ namespace KFrame
         }
     }
 
-    bool KFEntityEx::AddObjectElement( KFData* kfparent, KFElementResult* kfresult, const char* function, uint32 line, float multiple )
+    bool KFEntityEx::AddObjectElement( KFData* kfparent, KFElementResult* kfresult, const char* function, uint32 line )
     {
         if ( !kfresult->_element->IsObject() )
         {
@@ -1061,11 +1054,11 @@ namespace KFrame
             return false;
         }
 
-        UpdateElementToData( kfparent, reinterpret_cast< KFElementObject* >( kfresult->_element ), multiple );
+        UpdateElementToData( kfparent, reinterpret_cast< KFElementObject* >( kfresult->_element ), kfresult->_multiple );
         return true;
     }
 
-    bool KFEntityEx::AddRecordElement( KFData* kfparent, KFElementResult* kfresult, const char* function, uint32 line, float multiple )
+    bool KFEntityEx::AddRecordElement( KFData* kfparent, KFElementResult* kfresult, const char* function, uint32 line )
     {
         if ( !kfresult->_element->IsObject() )
         {
@@ -1085,13 +1078,13 @@ namespace KFrame
         {
             // 不存在, 创建一个, 并更新属性
             kfchild = CreateData( kfparent );
-            SetElementToData( kfchild, kfelementobject, multiple );
+            SetElementToData( kfchild, kfelementobject, kfresult->_multiple );
             AddData( kfparent, kfelementobject->_config_id, kfchild );
         }
         else
         {
             // 存在直接更新属性
-            UpdateElementToData( kfchild, kfelementobject, multiple );
+            UpdateElementToData( kfchild, kfelementobject, kfresult->_multiple );
         }
 
         return true;
@@ -1232,7 +1225,7 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////
-    const std::string& KFEntityEx::RemoveElement( const KFElements* kfelements, double multiple, const std::string& modulename, uint32 moduleid, const char* function, uint32 line )
+    const std::string& KFEntityEx::RemoveElement( const KFElements* kfelements, double multiple, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
     {
         if ( kfelements->IsEmpty() )
         {
@@ -1242,18 +1235,20 @@ namespace KFrame
         auto& dataname = CheckRemoveElement( kfelements, multiple, function, line );
         if ( dataname.empty() )
         {
+            __LOG_INFO_FUNCTION__( function, line, "{}=[{}] multiple=[{:0.2f}] start remove elements={}", _kf_component->_component_name, GetKeyID(), multiple, kfelements->_str_element );
             _element_sequence = KFGlobal::Instance()->STMakeUUID( __STRING__( element ) );
             for ( auto kfelement : kfelements->_element_list )
             {
                 RemoveElement( kfelement, multiple, modulename, moduleid, function, line );
             }
+            __LOG_INFO_FUNCTION__( function, line, "{}=[{}] finish remove elements", _kf_component->_component_name, GetKeyID() );
         }
 
         return dataname;
     }
 
     // 删除元数据
-    void KFEntityEx::RemoveElement( const KFElement* kfelement, double multiple, const std::string& modulename, uint32 moduleid, const char* function, uint32 line )
+    void KFEntityEx::RemoveElement( const KFElement* kfelement, double multiple, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
     {
         auto kfdata = Find( kfelement->_data_name );
         if ( kfdata == nullptr )
@@ -1270,6 +1265,8 @@ namespace KFrame
         elementresult._operate = KFEnum::Dec;
         elementresult._sequence = _element_sequence;
         elementresult._element = const_cast< KFElement* >( kfelement );
+        elementresult._module_name = modulename;
+        elementresult._module_id = moduleid;
 
         auto ok = false;
         auto kffunction = _kf_component->_remove_element_function.Find( kfdata->_data_setting->_logic_name );
@@ -1300,7 +1297,7 @@ namespace KFrame
             ShowElementResult( &elementresult, function, line );
 
             // 纪录日志
-            _kf_component->CallLogElementFunction( this, modulename, moduleid, &elementresult );
+            _kf_component->CallLogElementFunction( this, &elementresult );
         }
     }
 

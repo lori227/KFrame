@@ -33,7 +33,7 @@ namespace KFrame
         }
 
         // 添加合成的属性
-        player->AddElement( &kfsetting->_compound_data, __STRING__( compound ), __FUNC_LINE__ );
+        player->AddElement( &kfsetting->_compound_data, _default_multiple, __STRING__( compound ), kfsetting->_id, __FUNC_LINE__ );
         _kf_display->SendToClient( player, KFMsg::CompoundOk );
     }
 }

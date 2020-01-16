@@ -35,7 +35,7 @@ namespace KFrame
         }
 
         auto count = kfelementobject->CalcValue( kfparent->_data_setting, kfparent->_data_setting->_value_key_name, 1.0f );
-        Drop( player, kfelementobject->_config_id, __MAX__( count, 1u ), __STRING__( command ), __FUNC_LINE__ );
+        Drop( player, kfelementobject->_config_id, __MAX__( count, 1u ), __STRING__( command ), 0u, __FUNC_LINE__ );
         return true;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -70,32 +70,26 @@ namespace KFrame
     }
 #endif // __KF_DEBUG__
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    DropDataList& KFDropModule::Drop( KFEntity* player, uint32 dropid, const char* function, uint32 line )
+    DropDataList& KFDropModule::Drop( KFEntity* player, uint32 dropid, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
     {
-        return Drop( player, dropid, 1u, _invalid_string, function, line );
+        return Drop( player, dropid, 1u, modulename, moduleid, function, line );
     }
 
-    DropDataList& KFDropModule::Drop( KFEntity* player, uint32 dropid, const std::string& modulename, const char* function, uint32 line )
-    {
-        return Drop( player, dropid, 1u, modulename, function, line );
-    }
-
-    DropDataList& KFDropModule::Drop( KFEntity* player, const UInt32Vector& droplist, const std::string& modulename, const char* function, uint32 line )
+    DropDataList& KFDropModule::Drop( KFEntity* player, const UInt32Vector& droplist, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
     {
         static DropDataList _dropdatalist;
         _dropdatalist.clear();
 
         for ( auto iter : droplist )
         {
-            auto& data = Drop( player, iter, 1u, modulename, function, line );
+            auto& data = Drop( player, iter, 1u, modulename, moduleid, function, line );
             _dropdatalist.splice( _dropdatalist.end(), data );
         }
 
         return _dropdatalist;
     }
 
-    DropDataList& KFDropModule::Drop( KFEntity* player, uint32 dropid, uint32 count, const std::string& modulename, const char* function, uint32 line )
+    DropDataList& KFDropModule::Drop( KFEntity* player, uint32 dropid, uint32 count, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
     {
         auto& drops = DropLogic( player, dropid, count, function, line );
 #ifdef __KF_DEBUG__
@@ -114,12 +108,12 @@ namespace KFrame
             if ( kffunction != nullptr )
             {
                 iter = drops.erase( iter );
-                kffunction->_function( player, dropdata, function, line );
+                kffunction->_function( player, dropdata, modulename, moduleid, function, line );
             }
             else
             {
                 ++iter;
-                player->AddElement( &dropdata->_elements, function, line );
+                player->AddElement( &dropdata->_elements, _default_multiple, modulename, moduleid, function, line );
             }
         }
 

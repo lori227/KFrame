@@ -32,10 +32,9 @@ namespace KFrame
         virtual void UnRegisterDropLogicFunction( const std::string& dataname );
         ////////////////////////////////////////////////////////////////////////////////
         // 掉落
-        virtual DropDataList& Drop( KFEntity* player, uint32 dropid, const char* function, uint32 line );
-        virtual DropDataList& Drop( KFEntity* player, uint32 dropid, const std::string& modulename, const char* function, uint32 line );
-        virtual DropDataList& Drop( KFEntity* player, const UInt32Vector& droplist, const std::string& modulename, const char* function, uint32 line );
-        virtual DropDataList& Drop( KFEntity* player, uint32 dropid, uint32 count, const std::string& modulename, const char* function, uint32 line );
+        virtual DropDataList& Drop( KFEntity* player, uint32 dropid, const std::string& modulename, uint64 moduleid, const char* function, uint32 line );
+        virtual DropDataList& Drop( KFEntity* player, const UInt32Vector& droplist, const std::string& modulename, uint64 moduleid, const char* function, uint32 line );
+        virtual DropDataList& Drop( KFEntity* player, uint32 dropid, uint32 count, const std::string& modulename, uint64 moduleid, const char* function, uint32 line );
 
     protected:
         // 绑定掉落逻辑函数

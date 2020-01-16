@@ -256,6 +256,8 @@ namespace KFrame
         __STRING_DEFINE__( project );
         __STRING_DEFINE__( element );
         __STRING_DEFINE__( recommendzone );
+        __STRING_DEFINE__( newplayer );
+
     }
 }
 

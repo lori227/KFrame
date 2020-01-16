@@ -312,7 +312,7 @@ namespace KFrame
         auto ok = kfelements.Parse( strelement, __FUNC_LINE__ );
         if ( ok )
         {
-            kfentity->AddElement( &kfelements, modulename, __FUNC_LINE__ );
+            kfentity->AddElement( &kfelements, _default_multiple, modulename, 0u, __FUNC_LINE__ );
         }
     }
 
@@ -329,7 +329,7 @@ namespace KFrame
         if ( ok )
         {
             kfelements.SetOperate( KFEnum::Set );
-            kfentity->AddElement( &kfelements, modulename, __FUNC_LINE__ );
+            kfentity->AddElement( &kfelements, _default_multiple, modulename, 0u, __FUNC_LINE__ );
         }
     }
 

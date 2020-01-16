@@ -114,15 +114,14 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
         // 判断是否能够添加元数据
-        virtual const std::string& CheckAddElement( const KFElements* kfelements, const char* function, uint32 line, float multiple = 1.0f );
+        virtual const std::string& CheckAddElement( const KFElements* kfelements, double multiple, const char* function, uint32 line );
 
         // 添加元数据
-        virtual void AddElement( const KFElements* kfelements, const char* function, uint32 line, float multiple = 1.0f );
-        virtual void AddElement( const KFElements* kfelements, const std::string& modulename, const char* function, uint32 line, float multiple = 1.0f );
+        virtual void AddElement( const KFElements* kfelements, double multiple, const std::string& modulename, uint64 moduleid, const char* function, uint32 line );
 
         // 删除元数据( 删除前会判断是否满足 )
-        virtual const std::string& RemoveElement( const KFElements* kfelements, double multiple, const std::string& modulename, uint32 moduleid, const char* function, uint32 line );
-        //////////////////////////////////////////////////////////////////////////////////////////
+        virtual const std::string& RemoveElement( const KFElements* kfelements, double multiple, const std::string& modulename, uint64 moduleid, const char* function, uint32 line );
+
         // 设置element到kfdata对象
         virtual void UpdateElementToData( KFData* kfdata, KFElementObject* kfelement, double multiple );
         virtual void SetElementToData( KFData* kfdata, KFElementObject* kfelement, double multiple );
@@ -175,13 +174,13 @@ namespace KFrame
         KFData* FindByLogicName( const std::string& name );
 
         // 判断添加
-        bool CheckAddElement( const KFElement* kfelement, const char* function, uint32 line, float multiple );
+        bool CheckAddElement( const KFElement* kfelement, double multiple, const char* function, uint32 line );
 
         // 添加元数据
-        void AddElement( const KFElement* kfelement, const char* function, uint32 line, float multiple );
-        bool AddNormalElement( KFData* kfdata, KFElementResult* kfresult, const char* function, uint32 line, float multiple );
-        bool AddObjectElement( KFData* kfparent, KFElementResult* kfresult, const char* function, uint32 line, float multiple );
-        bool AddRecordElement( KFData* kfparent, KFElementResult* kfresult, const char* function, uint32 line, float multiple );
+        void AddElement( const KFElement* kfelement, double multiple, const std::string& modulename, uint64 moduleid, const char* function, uint32 line );
+        bool AddNormalElement( KFData* kfdata, KFElementResult* kfresult, const char* function, uint32 line );
+        bool AddObjectElement( KFData* kfparent, KFElementResult* kfresult, const char* function, uint32 line );
+        bool AddRecordElement( KFData* kfparent, KFElementResult* kfresult, const char* function, uint32 line );
 
         // 判断元数据是否满足条件
         const std::string& CheckRemoveElement( const KFElements* kfelements, double multiple, const char* function, uint32 line );
@@ -191,7 +190,7 @@ namespace KFrame
         bool CheckRecordElement( KFData* kfparent, KFElement* kfelement, double multiple, const char* function, uint32 line );
 
         // 删除元数据
-        void RemoveElement( const KFElement* kfelement, double multiple, const std::string& modulename, uint32 moduleid, const char* function, uint32 line );
+        void RemoveElement( const KFElement* kfelement, double multiple, const std::string& modulename, uint64 moduleid, const char* function, uint32 line );
         bool RemoveNormalElement( KFData* kfdata, KFElementResult* kfresult, const char* function, uint32 line );
         bool RemoveObjectElement( KFData* kfparent, KFElementResult* kfresult, const char* function, uint32 line );
         bool RemoveRecordElement( KFData* kfparent, KFElementResult* kfresult, const char* function, uint32 line );

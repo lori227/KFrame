@@ -30,7 +30,7 @@ namespace KFrame
                 return false;
             }
 
-            player->AddElement( &executedata->_param_list._elements, modulename, __FUNC_LINE__ );
+            player->AddElement( &executedata->_param_list._elements, _default_multiple, modulename, moduleid, __FUNC_LINE__ );
             return true;
         }
 
@@ -46,7 +46,7 @@ namespace KFrame
             auto& droplist = executedata->_param_list._params[ 0 ]->_vector_value;
             if ( !droplist.empty() )
             {
-                _kf_drop->Drop( player, droplist, modulename, function, line );
+                _kf_drop->Drop( player, droplist, modulename, moduleid, function, line );
             }
 
             if ( executedata->_param_list._params.size() >= 3u )
@@ -56,7 +56,7 @@ namespace KFrame
                     auto exetenddropid = KFUtility::GetMaxMapValue( executedata->_param_list._params[ 2 ]->_map_value, executedata->_calc_value );
                     if ( exetenddropid != 0u )
                     {
-                        _kf_drop->Drop( player, exetenddropid, modulename, function, line );
+                        _kf_drop->Drop( player, exetenddropid, modulename, moduleid, function, line );
                     }
                 }
             }

@@ -81,6 +81,9 @@ namespace KFrame
         // 显示类型
         uint32 _show_type = KFDataShowEnum::Show_Element;
         ////////////////////////////////////////////////////////////////////
+        // 模块名和模块id
+        std::string _module_name;
+        uint64 _module_id = 0u;
         ////////////////////////////////////////////////////////////////////
         // 配置id
         uint32 _config_id = 0u;

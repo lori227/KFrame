@@ -330,7 +330,7 @@ namespace KFrame
         // 新玩家添加道具
         for ( auto elements : KFPlayerConfig::Instance()->_new_player_elements )
         {
-            player->AddElement( elements, __FUNC_LINE__ );
+            player->AddElement( elements, _default_multiple, __STRING__( newplayer ), 0u, __FUNC_LINE__ );
         }
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -349,7 +349,7 @@ namespace KFrame
         if ( ok )
         {
             kfelements.SetOperate( KFEnum::Add );
-            player->AddElement( &kfelements, __STRING__( command ), __FUNC_LINE__ );
+            player->AddElement( &kfelements, _default_multiple, __STRING__( command ), 0u, __FUNC_LINE__ );
         }
     }
 
@@ -367,7 +367,7 @@ namespace KFrame
         if ( ok )
         {
             kfelements.SetOperate( KFEnum::Set );
-            player->AddElement( &kfelements, __FUNC_LINE__ );
+            player->AddElement( &kfelements, _default_multiple, __STRING__( command ), 0u, __FUNC_LINE__ );
         }
     }
 
@@ -385,7 +385,7 @@ namespace KFrame
         if ( ok )
         {
             kfelements.SetOperate( KFEnum::Dec );
-            player->RemoveElement( &kfelements, 1.0f, __STRING__( command ), 0u, __FUNC_LINE__ );
+            player->RemoveElement( &kfelements, _default_multiple, __STRING__( command ), 0u, __FUNC_LINE__ );
         }
     }
 
