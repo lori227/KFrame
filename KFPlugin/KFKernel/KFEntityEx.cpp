@@ -930,7 +930,7 @@ namespace KFrame
             return __LOG_ERROR_FUNCTION__( function, line, "{}=[{}] element=[{}] is empty", _kf_component->_component_name, GetKeyID(), kfelements->_str_element );
         }
 
-        __LOG_INFO_FUNCTION__( function, line, "{}=[{}] multiple=[{:0.2f}] start add elements={}", _kf_component->_component_name, GetKeyID(), multiple, kfelements->_str_element );
+        __LOG_INFO_FUNCTION__( function, line, "{}=[{}] start add elements={} multiple=[{:0.2f}]", _kf_component->_component_name, GetKeyID(), kfelements->_str_element, multiple );
         _element_sequence = KFGlobal::Instance()->STMakeUUID( __STRING__( element ) );
         for ( auto kfelement : kfelements->_element_list )
         {
@@ -1279,7 +1279,7 @@ namespace KFrame
         auto& dataname = CheckRemoveElement( kfelements, multiple, function, line );
         if ( dataname.empty() )
         {
-            __LOG_INFO_FUNCTION__( function, line, "{}=[{}] multiple=[{:0.2f}] start remove elements={}", _kf_component->_component_name, GetKeyID(), multiple, kfelements->_str_element );
+            __LOG_INFO_FUNCTION__( function, line, "{}=[{}] start remove elements={} multiple=[{:0.2f}]", _kf_component->_component_name, GetKeyID(), kfelements->_str_element, multiple );
             _element_sequence = KFGlobal::Instance()->STMakeUUID( __STRING__( element ) );
             for ( auto kfelement : kfelements->_element_list )
             {
