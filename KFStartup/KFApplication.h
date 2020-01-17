@@ -22,7 +22,7 @@ namespace KFrame
         void SetAppStop();
 
     protected:
-        int main( const std::vector<std::string>& args );
+        int main( const StringVector& args );
         void initialize( Poco::Util::Application& self );
         void uninitialize();
 

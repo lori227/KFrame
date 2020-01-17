@@ -19,20 +19,11 @@ namespace KFrame
         spdlog::drop( _log_name );
     }
 
-    void KFSpdLog::Initialize( const std::string& appname, const std::string& apptype, const std::string& strappid )
+    void KFSpdLog::Initialize( const std::string& filename )
     {
-        if ( _kf_setting->_file_name.empty() )
-        {
-            _log_name = __FORMAT__( "{}{}-{}-{}.log", _kf_setting->_output_path, appname, apptype, strappid );
-        }
-        else
-        {
-            _log_name = __FORMAT__( "{}{}{}{}-{}-{}.log",
-                                    _kf_setting->_output_path, _kf_setting->_file_name, _kf_setting->_split,
-                                    appname, apptype, strappid );
-        }
-        /////////////////////////////////////////////////////////////////////////////////////////////
-        /////////////////////////////////////////////////////////////////////////////////////////////
+        _log_name = __FORMAT__( "{}{}", _kf_setting->_output_path, filename );
+        ///////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////
         std::vector<spdlog::sink_ptr> sinksvec;
         if ( _kf_setting->_console )
         {

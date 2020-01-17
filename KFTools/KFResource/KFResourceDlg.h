@@ -43,7 +43,7 @@ protected:
     void RemoveFileList();
 
     void UpdateFileListCtrl();
-    void UpdateFileListCtrl( std::set< std::string >& filelist );
+    void UpdateFileListCtrl( StringSet& filelist );
     int32 FindListCtrlFile( const std::string& filename );
 
     // 更新文件类型
@@ -77,8 +77,8 @@ protected:
     }
 protected:
     // 有变更的文件
-    std::set< std::string > _client_update_list;
-    std::set< std::string > _server_update_list;
+    StringSet _client_update_list;
+    StringSet _server_update_list;
 
     // 仓库版本号
     std::string _store_version;

@@ -29,7 +29,7 @@ namespace KFrame
     public:
         KFExcelZip* _zip;
 
-        std::vector<std::string> _shared_string;
+        StringVector _shared_string;
         std::vector<KFExcelSheet*> _sheets;
     };
 }

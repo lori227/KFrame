@@ -850,7 +850,7 @@ void CKFDeployDlg::QueryServerList()
     _list_server.DeleteAllItems();
     _deploy_manage->ClearServerData();
 
-    std::set< std::string > tables;
+    StringSet tables;
     for ( auto& data : _deploy_manage->_agent_data )
     {
         auto table = _deploy_manage->GetTableName( data->_id );
@@ -1090,7 +1090,7 @@ void CKFDeployDlg::OnCbnSelchangeComboCommand()
         _combo_id.EnableWindow( TRUE );
 
         // 初始化所有服务器类型
-        std::set< std::string > namelist;
+        StringSet namelist;
         for ( auto data : _deploy_manage->_server_data )
         {
             namelist.insert( data->_name );
@@ -1140,10 +1140,10 @@ void CKFDeployDlg::OnCbnSelchangeComboName()
     _combo_name.GetWindowTextA( strtext );
     std::string name = strtext.GetBuffer();
 
-    std::set< std::string > typelist;
+    StringSet typelist;
     std::set< uint32 > zonelist;
     zonelist.insert( 0 );
-    std::set< std::string > idlist;
+    StringSet idlist;
 
     for ( auto data : _deploy_manage->_server_data )
     {
@@ -1201,7 +1201,7 @@ void CKFDeployDlg::OnCbnSelchangeComboType()
     _combo_type.GetWindowTextA( strtext );
     std::string type = strtext.GetBuffer();
 
-    std::set< std::string > idlist;
+    StringSet idlist;
     for ( auto data : _deploy_manage->_server_data )
     {
         if ( ( data->_name == name || name == _globbing_string ) &&
@@ -1234,7 +1234,7 @@ void CKFDeployDlg::OnCbnSelchangeComboZone()
     _combo_zone.GetWindowTextA( strtext );
     auto zoneid = KFUtility::ToValue< uint32 >( strtext.GetBuffer() );
 
-    std::set< std::string > idlist;
+    StringSet idlist;
     for ( auto data : _deploy_manage->_server_data )
     {
         if ( ( data->_name == name || name == _globbing_string ) &&

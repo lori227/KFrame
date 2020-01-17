@@ -43,7 +43,7 @@ namespace KFrame
 
     __KF_NET_EVENT_FUNCTION__( KFClusterShardModule::OnServerLostHandle )
     {
-        std::set< uint64 > removelist;
+        UInt64Set removelist;
 
         __LOG_ERROR__( "route lost proxy=[{}]", netdata->_str_id );
 

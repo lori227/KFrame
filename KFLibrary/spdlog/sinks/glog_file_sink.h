@@ -64,12 +64,12 @@ namespace spdlog {
          */
         struct default_glog_file_name_calculator
         {
-            // Create filename for the form filename_YYYY-MM-DD_hh-mm-ss.ext
+            // Create filename for the form filename_YYYYMMDD_hh.ext
             static std::tuple<filename_t, filename_t> calc_filename( const filename_t& filename, const filename_t& split, unsigned filecount )
             {
                 std::tm tm = spdlog::details::os::localtime();
                 filename_t basename, ext;
-                std::tie( basename, ext ) = spdlog::details::file_helper::split_by_extension( filename );      
+                std::tie( basename, ext ) = spdlog::details::file_helper::split_by_extension( filename );
                 char tmp_dir_path[MAX_PATH] = { 0 };
                 for ( size_t i = 0; i < filename.length(); ++i )
                 {
@@ -83,16 +83,17 @@ namespace spdlog {
                     }
                 }
 
+                auto time = fmt::format( "{:04d}{:02d}{:02d}{}{:02d}", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, split, tm.tm_hour );
+                auto timefile = fmt::format( basename, time );
+
                 filename_t newfile;
-                if( filecount <= 1)
+                if ( filecount <= 1 )
                 {
-                    newfile = fmt::format( "{}{}{:04d}{:02d}{:02d}{}{:02d}{}",
-                        basename, split, tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, split, tm.tm_hour, ext );
+                    newfile = fmt::format( "{}{}", timefile, ext );
                 }
                 else
                 {
-                    newfile = fmt::format( "{}{}{:04d}{:02d}{:02d}{}{:02d}.{}{}", 
-                        basename, split, tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, split, filecount, ext );
+                    newfile = fmt::format( "{}.{}{}", timefile, filecount, ext );
                 }
                 return std::make_tuple( newfile, ext );
             }

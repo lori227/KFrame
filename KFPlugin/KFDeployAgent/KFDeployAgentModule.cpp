@@ -602,7 +602,7 @@ namespace KFrame
         return false;
     }
 
-    void KFDeployAgentModule::FindAppDeployPath( const std::string& appname, uint32 zoneid, std::set<std::string>& deploypathlist )
+    void KFDeployAgentModule::FindAppDeployPath( const std::string& appname, uint32 zoneid, StringSet& deploypathlist )
     {
         deploypathlist.clear();
 
@@ -1048,7 +1048,7 @@ namespace KFrame
         ExecuteShell( "tar -zxf ./version/{} -C ./version/", _kf_task->_value );
 
         // 把文件拷贝过去
-        std::set< std::string > deploypathlist;
+        StringSet deploypathlist;
         FindAppDeployPath( _kf_task->_app_name, _kf_task->_zone_id, deploypathlist );
         for ( auto& deploypath : deploypathlist )
         {
@@ -1151,7 +1151,7 @@ namespace KFrame
         }
 
         // 把文件拷贝过去
-        std::set< std::string > deploypathlist;
+        StringSet deploypathlist;
         FindAppDeployPath( _kf_task->_app_name, _kf_task->_zone_id, deploypathlist );
         for ( auto& deploypath : deploypathlist )
         {
@@ -1207,7 +1207,7 @@ namespace KFrame
         ExecuteShell( "tar -zxf ./version/{} -C ./version/", _kf_task->_value );
 
         // 把文件拷贝过去
-        std::set< std::string > deploypathlist;
+        StringSet deploypathlist;
         FindAppDeployPath( _kf_task->_app_name, _kf_task->_zone_id, deploypathlist );
         for ( auto& deploypath : deploypathlist )
         {
@@ -1278,7 +1278,7 @@ namespace KFrame
         }
 
         // 把文件拷贝过去
-        std::set< std::string > deploypathlist;
+        StringSet deploypathlist;
         FindAppDeployPath( _kf_task->_app_name, _kf_task->_zone_id, deploypathlist );
         for ( auto& deploypath : deploypathlist )
         {

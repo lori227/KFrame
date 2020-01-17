@@ -44,7 +44,7 @@ namespace KFrame
         KFConHash _server_hash;
 
         // 对象列表( 对象所在的服务器 )
-        std::unordered_map< uint64, std::set< uint64 > > _object_list;
+        std::unordered_map< uint64, UInt64Set > _object_list;
 
         // 服务器的对象总数
         std::unordered_map< uint64, uint32 > _server_object_count_list;

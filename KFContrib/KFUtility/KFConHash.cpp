@@ -40,7 +40,7 @@ namespace KFrame
         return _hash_logic->FindHashNode( data, objectid, cache );
     }
 
-    void KFConHash::GetAllHashNode( std::list<uint64>& nodes )
+    void KFConHash::GetAllHashNode( UInt64List& nodes )
     {
         _hash_logic->GetAllHashNode( nodes );
     }

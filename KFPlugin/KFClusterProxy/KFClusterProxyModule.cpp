@@ -36,7 +36,7 @@ namespace KFrame
     void KFClusterProxyModule::Run()
     {
         // 删除过期的token信息
-        std::set< std::string > removelist;
+        StringSet removelist;
         auto nowtime = KFGlobal::Instance()->_game_time;
         for ( auto& iter : _kf_token_list._objects )
         {

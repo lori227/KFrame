@@ -555,9 +555,7 @@ namespace KFrame
 
     bool KFEntityEx::IsElementResultShow( const KFElementResult* kfresult )
     {
-        if ( !IsInited() ||
-                !kfresult->_is_need_show ||
-                kfresult->_operate != KFEnum::Add )
+        if ( !IsInited() || !kfresult->_is_need_show )
         {
             return false;
         }
@@ -565,55 +563,80 @@ namespace KFrame
         return true;
     }
 
-    void KFEntityEx::ShowElementResult( const KFElementResult* kfresult, const char* function, uint32 line )
+    void KFEntityEx::LogElementResult( const KFElementResult* kfresult, const char* function, uint32 line )
     {
-        if ( !kfresult->_module_name.empty() )
-        {
-            _pb_show_element.set_modulename( kfresult->_module_name );
-        }
-
         // 打印日志
         switch ( kfresult->_show_type )
         {
         case KFDataShowEnum::Show_Element:
-            ElementResultShowElement( kfresult, function, line );
+            LogElementResultElement( kfresult, function, line );
             break;
         case KFDataShowEnum::Show_Currency:
-            ElementResultShowCurrency( kfresult, function, line );
+            LogElementResultCurrency( kfresult, function, line );
             break;
         case KFDataShowEnum::Show_Object:
-            ElementResultShowObject( kfresult, function, line );
+            LogElementResultObject( kfresult, function, line );
             break;
         case KFDataShowEnum::Show_Overlay:
-            ElementResultShowOverlay( kfresult, function, line );
+            LogElementResultOverlay( kfresult, function, line );
             break;
         case KFDataShowEnum::Show_NotOverlay:
-            ElementResultShowNotOverlay( kfresult, function, line );
+            LogElementResultNotOverlay( kfresult, function, line );
             break;
         default:
             break;
         }
     }
 
-    void KFEntityEx::ElementResultShowElement( const KFElementResult* kfresult, const char* function, uint32 line )
+    void KFEntityEx::ShowElementResult( const KFElementResult* kfresult )
     {
-        auto kfelement = kfresult->_element;
-        switch ( kfresult->_operate )
+        if ( !kfresult->_module_name.empty() )
         {
-        case KFEnum::Add:
-            __LOG_INFO_FUNCTION__( function, line, "{}=[{}] add=[{}]", _kf_component->_component_name, GetKeyID(), kfelement->ToString() );
+            _pb_show_element.set_modulename( kfresult->_module_name );
+        }
+
+        switch ( kfresult->_show_type )
+        {
+        case KFDataShowEnum::Show_Element:
+            ShowElementResultElement( kfresult );
             break;
-        case KFEnum::Dec:
-            __LOG_INFO_FUNCTION__( function, line, "{}=[{}] remove=[{}]", _kf_component->_component_name, GetKeyID(), kfelement->ToString() );
+        case KFDataShowEnum::Show_Currency:
+            ShowElementResultCurrency( kfresult );
+            break;
+        case KFDataShowEnum::Show_Object:
+            ShowElementResultObject( kfresult );
+            break;
+        case KFDataShowEnum::Show_Overlay:
+            ShowElementResultOverlay( kfresult );
+            break;
+        case KFDataShowEnum::Show_NotOverlay:
+            ShowElementResultNotOverlay( kfresult );
+            break;
+        default:
             break;
         }
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+    }
+
+    void KFEntityEx::LogElementResultElement( const KFElementResult* kfresult, const char* function, uint32 line )
+    {
+        if ( kfresult->_operate == KFEnum::Add )
+        {
+            __LOG_INFO_FUNCTION__( function, line, "{}=[{}] add=[{}]", _kf_component->_component_name, GetKeyID(), kfresult->_element->ToString() );
+        }
+        else
+        {
+            __LOG_INFO_FUNCTION__( function, line, "{}=[{}] remove=[{}]", _kf_component->_component_name, GetKeyID(), kfresult->_element->ToString() );
+        }
+    }
+
+    void KFEntityEx::ShowElementResultElement( const KFElementResult* kfresult )
+    {
         if ( !IsElementResultShow( kfresult ) || _pb_show_element.modulename().empty() )
         {
             return;
         }
 
+        auto kfelement = kfresult->_element;
         if ( kfelement->IsValue() )
         {
             auto kfelementvalue = reinterpret_cast< const KFElementValue* >( kfelement );
@@ -641,13 +664,8 @@ namespace KFrame
         }
     }
 
-    void KFEntityEx::ElementResultShowCurrency( const KFElementResult* kfresult, const char* function, uint32 line )
+    void KFEntityEx::LogElementResultCurrency( const KFElementResult* kfresult, const char* function, uint32 line )
     {
-        if ( IsElementResultShow( kfresult ) )
-        {
-            AddDataToShow( kfresult->_element->_data_name, kfresult->_total_value, false );
-        }
-
         if ( kfresult->_operate == KFEnum::Add )
         {
             __LOG_INFO_FUNCTION__( function, line, "{}=[{}] add=[{{\"{}\":{}}}]",
@@ -660,13 +678,17 @@ namespace KFrame
         }
     }
 
-    void KFEntityEx::ElementResultShowObject( const KFElementResult* kfresult, const char* function, uint32 line )
+
+    void KFEntityEx::ShowElementResultCurrency( const KFElementResult* kfresult )
     {
         if ( IsElementResultShow( kfresult ) )
         {
             AddDataToShow( kfresult->_element->_data_name, kfresult->_total_value, false );
         }
+    }
 
+    void KFEntityEx::LogElementResultObject( const KFElementResult* kfresult, const char* function, uint32 line )
+    {
         if ( kfresult->_operate == KFEnum::Add )
         {
             __LOG_INFO_FUNCTION__( function, line, "{}=[{}] add=[{{\"{}\":{{\"{}\":{}}}}}]",
@@ -679,7 +701,34 @@ namespace KFrame
         }
     }
 
-    void KFEntityEx::ElementResultShowOverlay( const KFElementResult* kfresult, const char* function, uint32 line )
+    void KFEntityEx::ShowElementResultObject( const KFElementResult* kfresult )
+    {
+        if ( IsElementResultShow( kfresult ) )
+        {
+            AddDataToShow( kfresult->_element->_data_name, kfresult->_total_value, false );
+        }
+    }
+
+    void KFEntityEx::LogElementResultOverlay( const KFElementResult* kfresult, const char* function, uint32 line )
+    {
+        for ( auto& iter : kfresult->_overlay_list )
+        {
+            if ( kfresult->_operate == KFEnum::Add )
+            {
+                __LOG_INFO_FUNCTION__( function, line, "{}=[{}] extend=[{}] add=[{{\"{}\":{{\"{}\":{},\"{}\":{}}}}}]",
+                                       _kf_component->_component_name, GetKeyID(), iter.first,
+                                       kfresult->_element->_data_name, __STRING__( id ), kfresult->_config_id, kfresult->_data_name, iter.second );
+            }
+            else
+            {
+                __LOG_INFO_FUNCTION__( function, line, "{}=[{}] extend=[{}] remove=[{{\"{}\":{{\"{}\":{},\"{}\":{}}}}}]",
+                                       _kf_component->_component_name, GetKeyID(), iter.first,
+                                       kfresult->_element->_data_name, __STRING__( id ), kfresult->_config_id, kfresult->_data_name, iter.second );
+            }
+        }
+    }
+
+    void KFEntityEx::ShowElementResultOverlay( const KFElementResult* kfresult )
     {
         for ( auto& iter : kfresult->_overlay_list )
         {
@@ -690,33 +739,13 @@ namespace KFrame
                 values[ kfresult->_data_name ] = iter.second;
                 AddDataToShow( kfresult->_element->_data_name, kfresult->_config_id, values, false, iter.first );
             }
-
-            if ( kfresult->_operate == KFEnum::Add )
-            {
-                // log
-                __LOG_INFO_FUNCTION__( function, line, "{}=[{}] extend=[{}] add=[{{\"{}\":{{\"{}\":{},\"{}\":{}}}}}]",
-                                       _kf_component->_component_name, GetKeyID(), iter.first,
-                                       kfresult->_element->_data_name, __STRING__( id ), kfresult->_config_id, kfresult->_data_name, iter.second );
-            }
-            else
-            {
-                // log
-                __LOG_INFO_FUNCTION__( function, line, "{}=[{}] extend=[{}] remove=[{{\"{}\":{{\"{}\":{},\"{}\":{}}}}}]",
-                                       _kf_component->_component_name, GetKeyID(), iter.first,
-                                       kfresult->_element->_data_name, __STRING__( id ), kfresult->_config_id, kfresult->_data_name, iter.second );
-            }
         }
     }
 
-    void KFEntityEx::ElementResultShowNotOverlay( const KFElementResult* kfresult, const char* function, uint32 line )
+    void KFEntityEx::LogElementResultNotOverlay( const KFElementResult* kfresult, const char* function, uint32 line )
     {
         for ( auto kfdata : kfresult->_not_overlay_list )
         {
-            if ( IsElementResultShow( kfresult ) )
-            {
-                AddDataToShow( kfdata );
-            }
-
             if ( kfresult->_operate == KFEnum::Add )
             {
                 __LOG_INFO_FUNCTION__( function, line, "{}=[{}] extend=[{}] add=[{{\"{}\":{}}}]",
@@ -728,6 +757,18 @@ namespace KFrame
                 __LOG_INFO_FUNCTION__( function, line, "{}=[{}] extend=[{}] remove=[{{\"{}\":{}}}]",
                                        _kf_component->_component_name, GetKeyID(), kfdata->_data_setting->_name,
                                        kfresult->_element->_data_name, kfdata->ToString() );
+            }
+        }
+    }
+
+
+    void KFEntityEx::ShowElementResultNotOverlay( const KFElementResult* kfresult )
+    {
+        for ( auto kfdata : kfresult->_not_overlay_list )
+        {
+            if ( IsElementResultShow( kfresult ) )
+            {
+                AddDataToShow( kfdata );
             }
         }
     }
@@ -948,9 +989,12 @@ namespace KFrame
         if ( ok )
         {
             // 显示属性
-            ShowElementResult( &elementresult, function, line );
+            ShowElementResult( &elementresult );
 
-            // 纪录日志
+            // 打印日志
+            LogElementResult( &elementresult, function, line );
+
+            // 运行日志
             _kf_component->CallLogElementFunction( this, &elementresult );
         }
     }
@@ -1294,9 +1338,9 @@ namespace KFrame
         if ( ok )
         {
             // 打印日志
-            ShowElementResult( &elementresult, function, line );
+            LogElementResult( &elementresult, function, line );
 
-            // 纪录日志
+            // 运营日志
             _kf_component->CallLogElementFunction( this, &elementresult );
         }
     }

@@ -99,7 +99,7 @@ namespace KFrame
         return FindHashNode( strdata, cache );
     }
 
-    void KFHashLogic::GetAllHashNode( std::list<uint64>& nodes )
+    void KFHashLogic::GetAllHashNode( UInt64List& nodes )
     {
         nodes.clear();
 

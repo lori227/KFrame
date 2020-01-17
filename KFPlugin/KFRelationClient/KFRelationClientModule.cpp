@@ -375,7 +375,7 @@ namespace KFrame
             return __LOG_ERROR__( "invitelist=[{}] recored is null", kfsetting->_invite_data_name );
         }
 
-        std::list< uint64 > removelist;
+        UInt64Set removelist;
         for ( auto kfinvite = kfrecord->First(); kfinvite != nullptr; kfinvite = kfrecord->Next() )
         {
             auto removeid = ReplyRelationInvite( player, kfinvite, operate, kfsetting );

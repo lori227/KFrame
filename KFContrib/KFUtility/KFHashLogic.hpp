@@ -25,7 +25,7 @@ namespace KFrame
         uint64 FindHashNode( const std::string& data, uint64 objectid, bool cache );
 
         // 获得所有节点
-        void GetAllHashNode( std::list< uint64 >& nodes );
+        void GetAllHashNode( UInt64List& nodes );
 
         // 是否存在节点
         bool HaveHashNode( uint64 id );

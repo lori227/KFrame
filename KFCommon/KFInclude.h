@@ -52,8 +52,10 @@ static const std::string _domain_string = ":";
 static const std::string _and_string = "&";
 static const std::string _or_string = "|";
 /////////////////////////////////////////////////////////////////////////
+typedef std::set< std::string > StringSet;
 typedef std::list< std::string > StringList;
 typedef std::vector< std::string > StringVector;
+
 typedef std::unordered_map< std::string, std::string > StringMap;
 typedef std::list< StringMap > StringListMap;
 

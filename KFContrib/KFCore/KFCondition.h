@@ -62,7 +62,7 @@ namespace KFrame
         std::vector< KFConditionData* > _data_list;
 
         // 计算符号列表
-        std::vector< uint32 > _operator_list;
+        UInt32Vector _operator_list;
     };
 
     // 数据判断条件
@@ -110,7 +110,7 @@ namespace KFrame
         std::vector< KFCondition* > _condition_list;
 
         // 连接列表
-        std::vector<uint32> _link_type;
+        UInt32Vector _link_type;
     };
 }
 

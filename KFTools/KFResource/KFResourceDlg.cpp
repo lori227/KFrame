@@ -374,7 +374,7 @@ void CKFResourceDlg::RemoveFileList()
     file.list( filelist );
 
     // 删除无效的文件
-    std::list< std::string > removes;
+    StringList removes;
     for ( auto& iter : _resource_config->_files._objects )
     {
         auto isexist = HaveFile( filelist, iter.first );
@@ -457,7 +457,7 @@ void CKFResourceDlg::UpdateFileListCtrl()
     }
     else if ( _resource_config->_file_type == KFResource::FileType::All )
     {
-        std::set< std::string > totalfilelsit = _client_update_list;
+        StringSet totalfilelsit = _client_update_list;
         for ( auto& filename : _server_update_list )
         {
             totalfilelsit.insert( filename );
@@ -857,7 +857,7 @@ std::string CKFResourceDlg::MakeVersion( const std::string& svnversion )
 
 bool CKFResourceDlg::ParseExcelFiles( const std::string& version )
 {
-    std::set< std::string > files;
+    StringSet files;
 
     auto count = _list_parse.GetCount();
     if ( count != 0 )

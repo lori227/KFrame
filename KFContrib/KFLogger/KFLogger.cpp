@@ -51,7 +51,8 @@ namespace KFrame
 
         auto kfglobal = KFGlobal::Instance();
         _local_log = __NEW_OBJECT__( KFSpdLog, kfsetting );
-        _local_log->Initialize( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->ToString() );
+        auto filename = __FORMAT__( "{}-{}-{}.log", kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->ToString() );
+        _local_log->Initialize( filename );
 
         // 注册函数
         RegisterLogFunction( this, &KFLogger::Log );
@@ -80,7 +81,7 @@ namespace KFrame
         _local_log->Log( level, content );
     }
 
-    KFSpdLog* KFLogger::NewLogger( uint64 id, const std::string& name, const std::string& appname, const std::string& apptype, const std::string& appid )
+    KFSpdLog* KFLogger::NewLogger( uint64 id, const std::string& name, const std::string& filename )
     {
         auto iter = _create_loggers.find( id );
         if ( iter != _create_loggers.end() )
@@ -95,7 +96,8 @@ namespace KFrame
         }
 
         auto kflogger = __KF_NEW__( KFSpdLog, kfsetting );
-        kflogger->Initialize( appname, apptype, appid );
+
+        kflogger->Initialize( filename );
         _create_loggers[ id ] = kflogger;
         return kflogger;
     }

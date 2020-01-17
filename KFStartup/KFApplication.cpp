@@ -36,7 +36,7 @@ namespace KFrame
         ServerApplication::uninitialize();
     }
 
-    int KFApplication::main( const std::vector< std::string >& args )
+    int KFApplication::main( const StringVector& args )
     {
         StringMap params;
         for ( auto arg : args )
@@ -159,7 +159,7 @@ namespace KFrame
 #if __KF_SYSTEM__ == __KF_WIN__
         static const uint32 _console_buff_size = 32;
         INPUT_RECORD record[ _console_buff_size ];
-        DWORD eventcount = 0;
+        DWORD eventcount = 0u;
 
         GetNumberOfConsoleInputEvents( _in_handle, &eventcount );
         if ( eventcount == 0 )
@@ -169,8 +169,8 @@ namespace KFrame
 
         ReadConsoleInput( _in_handle, record, _console_buff_size, &eventcount );
 
-        std::list< uint32 > listkeycode;
-        for ( DWORD i = 0; i < eventcount; ++i )
+        UInt32List listkeycode;
+        for ( auto i = 0; i < eventcount; ++i )
         {
             auto event = &record[ i ];
             if ( event->EventType == KEY_EVENT && event->Event.KeyEvent.bKeyDown )

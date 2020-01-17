@@ -69,7 +69,7 @@ namespace KFrame
             return;
         }
 
-        std::set< uint64 > removes;
+        UInt64Set removes;
         for ( auto& iter : _kf_proxy_list._objects )
         {
             auto kfproxy = iter.second;

@@ -33,7 +33,7 @@ namespace KFrame
 
     void KFDataExecute::RunDataKeeper()
     {
-        std::set< uint64 > removes;
+        UInt64Set removes;
         auto nowtime = KFGlobal::Instance()->_real_time;
         for ( auto& iter : _data_keeper._objects )
         {

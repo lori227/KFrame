@@ -197,16 +197,24 @@ namespace KFrame
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 打印添加日志
+        void LogElementResult( const KFElementResult* kfresult, const char* function, uint32 line );
+        void LogElementResultElement( const KFElementResult* kfresult, const char* function, uint32 line );
+        void LogElementResultCurrency( const KFElementResult* kfresult, const char* function, uint32 line );
+        void LogElementResultObject( const KFElementResult* kfresult, const char* function, uint32 line );
+        void LogElementResultOverlay( const KFElementResult* kfresult, const char* function, uint32 line );
+        void LogElementResultNotOverlay( const KFElementResult* kfresult, const char* function, uint32 line );
+
         // 添加显示的元数据
-        void ShowElementResult( const KFElementResult* kfresult, const char* function, uint32 line );
+        void ShowElementResult( const KFElementResult* kfresult );
 
         // 添加显示的元素
         bool IsElementResultShow( const KFElementResult* kfresult );
-        void ElementResultShowElement( const KFElementResult* kfresult, const char* function, uint32 line );
-        void ElementResultShowCurrency( const KFElementResult* kfresult, const char* function, uint32 line );
-        void ElementResultShowObject( const KFElementResult* kfresult, const char* function, uint32 line );
-        void ElementResultShowOverlay( const KFElementResult* kfresult, const char* function, uint32 line );
-        void ElementResultShowNotOverlay( const KFElementResult* kfresult, const char* function, uint32 line );
+        void ShowElementResultElement( const KFElementResult* kfresult );
+        void ShowElementResultCurrency( const KFElementResult* kfresult );
+        void ShowElementResultObject( const KFElementResult* kfresult );
+        void ShowElementResultOverlay( const KFElementResult* kfresult );
+        void ShowElementResultNotOverlay( const KFElementResult* kfresult );
 
         // 创建显示元素
         KFMsg::PBShowData* CreateShowData( const std::string& name, uint64 value, bool find, const std::string& extendname );

@@ -30,7 +30,7 @@ namespace KFrame
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 创建日志
-        KFSpdLog* NewLogger( uint64 id, const std::string& name, const std::string& appname, const std::string& apptype, const std::string& appid );
+        KFSpdLog* NewLogger( uint64 id, const std::string& name, const std::string& filename );
 
         // 销毁日志
         void DeleteLogger( uint64 id );

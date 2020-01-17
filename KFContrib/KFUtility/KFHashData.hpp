@@ -16,7 +16,7 @@ namespace KFrame
         std::string _name;
 
         // 虚拟节点列表
-        std::vector< uint64 > _virtual_list;
+        UInt64Vector _virtual_list;
     };
 
     class VirtualHashNode

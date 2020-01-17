@@ -65,8 +65,8 @@ namespace KFrame
         virtual bool Push( const std::string& table, uint64 key, const std::string& field, const std::string& value );
         virtual bool Push( const std::string& table, const std::string& key, const std::string& field, uint64 value );
         virtual bool Push( const std::string& table, const std::string& key, const std::string& field, const std::string& value );
-        virtual bool Push( const std::string& table, uint64 key, const std::string& field, const std::list<uint64>& values );
-        virtual bool Push( const std::string& table, const std::string& key, const std::string& field, const std::list<uint64>& values );
+        virtual bool Push( const std::string& table, uint64 key, const std::string& field, const UInt64List& values );
+        virtual bool Push( const std::string& table, const std::string& key, const std::string& field, const UInt64List& values );
         virtual bool Push( const std::string& table, uint64 key, const std::string& field, const StringList& values );
         virtual bool Push( const std::string& table, const std::string& key, const std::string& field, const StringList& values );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -76,8 +76,8 @@ namespace KFrame
         virtual bool Pull( const std::string& table, uint64 key, const std::string& field, const std::string& value );
         virtual bool Pull( const std::string& table, const std::string& key, const std::string& field, uint64 value );
         virtual bool Pull( const std::string& table, const std::string& key, const std::string& field, const std::string& value );
-        virtual bool Pull( const std::string& table, uint64 key, const std::string& field, std::list<uint64>& values );
-        virtual bool Pull( const std::string& table, const std::string& key, const std::string& field, std::list<uint64>& values );
+        virtual bool Pull( const std::string& table, uint64 key, const std::string& field, UInt64List& values );
+        virtual bool Pull( const std::string& table, const std::string& key, const std::string& field, UInt64List& values );
         virtual bool Pull( const std::string& table, uint64 key, const std::string& field, StringList& values );
         virtual bool Pull( const std::string& table, const std::string& key, const std::string& field, StringList& values );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -87,10 +87,10 @@ namespace KFrame
         virtual KFResult< uint64 >::UniqueType QueryUInt64( const std::string& table, const std::string& key, const std::string& field );
         virtual KFResult< std::string >::UniqueType QueryString( const std::string& table, uint64 key, const std::string& field );
         virtual KFResult< std::string >::UniqueType QueryString( const std::string& table, const std::string& key, const std::string& field );
-        virtual KFResult< std::list< uint64 > >::UniqueType QueryListUInt64( const std::string& table, uint64 key, const std::string& field );
-        virtual KFResult< std::list< uint64 > >::UniqueType QueryListUInt64( const std::string& table, const std::string& key, const std::string& field );
-        virtual KFResult< std::list< std::string > >::UniqueType QueryListString( const std::string& table, uint64 key, const std::string& field );
-        virtual KFResult< std::list< std::string > >::UniqueType QueryListString( const std::string& table, const std::string& key, const std::string& field );
+        virtual KFResult< UInt64List >::UniqueType QueryListUInt64( const std::string& table, uint64 key, const std::string& field );
+        virtual KFResult< UInt64List >::UniqueType QueryListUInt64( const std::string& table, const std::string& key, const std::string& field );
+        virtual KFResult< StringList >::UniqueType QueryListString( const std::string& table, uint64 key, const std::string& field );
+        virtual KFResult< StringList >::UniqueType QueryListString( const std::string& table, const std::string& key, const std::string& field );
 
         // 查询集合
         virtual KFResult< KFDBValue >::UniqueType QueryRecord( const std::string& table, uint64 key );

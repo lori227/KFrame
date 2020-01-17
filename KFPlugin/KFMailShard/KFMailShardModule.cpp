@@ -51,7 +51,7 @@ namespace KFrame
         __JSON_PARSE_STRING__( request, strdata );
 
         // 邮件玩家列表
-        std::set< uint64 > playerlist;
+        UInt64Set playerlist;
         if ( __JSON_HAS_MEMBER__( request, __STRING__( playerid ) ) )
         {
             auto strplayerid = __JSON_GET_STRING__( request, __STRING__( playerid ) );
@@ -67,7 +67,7 @@ namespace KFrame
         }
 
         // 小区列表
-        std::set< uint64 > zonelist;
+        UInt64Set zonelist;
         if ( __JSON_HAS_MEMBER__( request, __STRING__( zoneid ) ) )
         {
             auto strzoneid = __JSON_GET_STRING__( request, __STRING__( zoneid ) );
