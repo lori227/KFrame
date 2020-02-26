@@ -43,6 +43,9 @@ namespace KFrame
         // 掉落
         __KF_ADD_ELEMENT_FUNCTION__( AddDropElement );
 
+        // 掉落属性逻辑
+        __KF_DROP_LOGIC_FUNCTION__( OnDropDataElement );
+
         // 掉落逻辑
         DropDataList& DropLogic( KFEntity* player, uint32 dropid, uint32 count, const char* function, uint32 line );
 

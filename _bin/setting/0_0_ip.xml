@@ -21,5 +21,9 @@
 			<App Id="91.0.1" Ip="127.0.0.1" Type="1" Port="11000"/>
 		</Server>
 	</TcpServer>
+
+  <!-- vpn 地址-->
+  <Vpns>
+  </Vpns>
 </Config>
 

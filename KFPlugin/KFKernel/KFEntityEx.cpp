@@ -1686,4 +1686,41 @@ namespace KFrame
     {
         UpdateData( __STRING__( basic ), __STRING__( status ), KFEnum::Set, status );
     }
+
+    void KFEntityEx::ElementToShow( const KFElements* kfelements, KFMsg::PBShowData* pbshowdata )
+    {
+        if ( kfelements->_element_list.empty() )
+        {
+            return;
+        }
+
+        auto kfelement = kfelements->_element_list.front();
+        if ( kfelement->IsValue() )
+        {
+            auto kfelementvalue = reinterpret_cast< const KFElementValue* >( kfelement );
+            if ( kfelementvalue->_value->IsNeedShow() )
+            {
+                pbshowdata->set_name( kfelementvalue->_data_name );
+                pbshowdata->set_value( kfelementvalue->_value->GetUseValue() );
+            }
+        }
+        else if ( kfelement->IsObject() )
+        {
+            auto kfelementobject = reinterpret_cast< const KFElementObject* >( kfelement );
+            if ( kfelementobject->IsNeedShow() )
+            {
+                pbshowdata->set_name( kfelementobject->_data_name );
+                pbshowdata->set_value( kfelementobject->_config_id );
+                ( *pbshowdata->mutable_pbuint64() )[ __STRING__( id ) ] = kfelementobject->_config_id;
+                for ( auto& iter : kfelementobject->_values._objects )
+                {
+                    auto kfvalue = iter.second;
+                    if ( kfvalue->IsNeedShow() )
+                    {
+                        ( *pbshowdata->mutable_pbuint64() )[ iter.first ] = kfvalue->GetUseValue();
+                    }
+                }
+            }
+        }
+    }
 }

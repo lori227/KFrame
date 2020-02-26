@@ -16,6 +16,20 @@ namespace KFrame
         auto lognode = config.FindNode( "LogServer" );
         _log_url = lognode.GetString( "Url" );
         //////////////////////////////////////////////////////////////////
+        auto vpnnodes = config.FindNode( "Vpns" );
+        if ( vpnnodes.IsValid() )
+        {
+            auto vpnnode = vpnnodes.FindNode( "Vpn" );
+            while ( vpnnode.IsValid() )
+            {
+                auto zoneid = vpnnode.GetUInt32( "Zone" );
+                auto ip = vpnnode.GetString( "Ip" );
+                _vpn_list[ zoneid ] = ip;
+
+                vpnnode.NextNode();
+            }
+        }
+        //////////////////////////////////////////////////////////////////
 
         auto kfglobal = KFGlobal::Instance();
 
@@ -101,5 +115,21 @@ namespace KFrame
 
             outlist.push_back( &kfaddress );
         }
+    }
+
+    const std::string& KFIpConfig::FindVPNIpAddress( const std::string& appname, const std::string& apptype, uint32 zoneid )
+    {
+        if ( appname != __STRING__( zone ) || apptype != __STRING__( gate ) )
+        {
+            return _invalid_string;
+        }
+
+        auto iter = _vpn_list.find( zoneid );
+        if ( iter == _vpn_list.end() )
+        {
+            return _invalid_string;
+        }
+
+        return iter->second;
     }
 }

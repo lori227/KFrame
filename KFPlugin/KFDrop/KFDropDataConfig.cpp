@@ -11,7 +11,8 @@ namespace KFrame
 
         kfdropdataweight->_drop_data._data_index = id;
         kfdropdataweight->_drop_data._drop_data_id = kfsetting->_id;
-        kfdropdataweight->_drop_data._data_name = xmlnode.GetString( "DropName" );
+        kfdropdataweight->_drop_data._logic_name = xmlnode.GetString( "LogicName" );
+        kfdropdataweight->_drop_data._data_name = xmlnode.GetString( "DataName" );
         kfdropdataweight->_drop_data._data_key = xmlnode.GetUInt32( "DropKey", true );
 
         auto strdropvalue = xmlnode.GetString( "DropValue" );
@@ -32,7 +33,10 @@ namespace KFrame
             for ( auto kfdropweight : kfsetting->_drop_data_list._weight_data )
             {
                 auto dropdata = &kfdropweight->_drop_data;
-                KFElementConfig::Instance()->FormatElemnt( dropdata->_elements, dropdata->_data_name, dropdata->_data_value, dropdata->_data_key );
+                if ( !dropdata->_data_name.empty() )
+                {
+                    KFElementConfig::Instance()->FormatElemnt( dropdata->_elements, dropdata->_data_name, dropdata->_data_value, dropdata->_data_key );
+                }
             }
         }
     }

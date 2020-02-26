@@ -10,11 +10,13 @@ namespace KFrame
     {
         _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
         __REGISTER_ADD_ELEMENT__( __STRING__( drop ), &KFDropModule::AddDropElement );
+        __REGISTER_DROP_LOGIC__( __STRING__( data ), &KFDropModule::OnDropDataElement );
     }
 
     void KFDropModule::BeforeShut()
     {
         __UN_ADD_ELEMENT__( __STRING__( drop ) );
+        __UN_DROP_LOGIC__( __STRING__( data ) );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -39,6 +41,10 @@ namespace KFrame
         return true;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
+    __KF_DROP_LOGIC_FUNCTION__( KFDropModule::OnDropDataElement )
+    {
+        player->AddElement( &dropdata->_elements, _default_multiple, modulename, moduleid, function, line );
+    }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFDropModule::BindDropLogicFunction( const std::string& dataname, KFDropLogicFunction& function )
     {
@@ -101,19 +107,17 @@ namespace KFrame
             player->AddDataToShow( modulename );
         }
 
-        for ( auto iter = drops.begin(); iter != drops.end(); )
+        for ( auto iter = drops.begin(); iter != drops.end(); ++iter )
         {
             auto dropdata = *iter;
-            auto kffunction = _drop_logic_function.Find( dropdata->_data_name );
+            auto kffunction = _drop_logic_function.Find( dropdata->_logic_name );
             if ( kffunction != nullptr )
             {
-                iter = drops.erase( iter );
                 kffunction->_function( player, dropdata, modulename, moduleid, function, line );
             }
             else
             {
-                ++iter;
-                player->AddElement( &dropdata->_elements, _default_multiple, modulename, moduleid, function, line );
+                __LOG_ERROR_FUNCTION__( function, line, "drop=[{}] logicname=[{}] no function!", dropid, dropdata->_logic_name );
             }
         }
 
@@ -306,7 +310,7 @@ namespace KFrame
             return;
         }
 
-        if ( dropdata->_data_name == __STRING__( drop ) )
+        if ( dropdata->_logic_name == __STRING__( drop ) )
         {
             // 如果是掉落的话, 继续执行掉落逻辑
             DropLogic( player, dropdata->GetValue(), 1u, outlist, function, line );

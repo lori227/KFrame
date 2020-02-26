@@ -8,6 +8,7 @@ namespace KFrame
         {"Reload", KFConfigEnum::CanReload},
         {"ClearData", KFConfigEnum::NeedClearData},
         {"ClearFile", KFConfigEnum::ClearFileData},
+        {"ChildFile", KFConfigEnum::ChildFile},
     };
 
     void KFConfigConfig::ReadSetting( KFNode& xmlnode, KFConfigSetting* kfsetting )

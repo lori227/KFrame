@@ -257,6 +257,8 @@ namespace KFrame
         __STRING_DEFINE__( element );
         __STRING_DEFINE__( recommendzone );
         __STRING_DEFINE__( newplayer );
+        __STRING_DEFINE__( newrole );
+        __STRING_DEFINE__( build );
 
     }
 }

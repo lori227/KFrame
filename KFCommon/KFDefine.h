@@ -20,6 +20,7 @@ namespace KFMsg
     class PBRecord;
     class PBLoginData;
     class PBShowElement;
+    class PBShowData;
     class ListenData;
 }
 

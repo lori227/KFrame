@@ -14,6 +14,9 @@ namespace KFrame
         // 掉落索引
         uint32 _data_index = 0u;
 
+        // 逻辑名字
+        std::string _logic_name;
+
         // 掉落属性名
         std::string _data_name;
 

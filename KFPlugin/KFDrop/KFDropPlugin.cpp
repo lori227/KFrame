@@ -17,6 +17,7 @@ namespace KFrame
 
     void KFDropPlugin::LoadModule()
     {
+        __FIND_MODULE__( _kf_drop, KFDropInterface );
         __FIND_MODULE__( _kf_config, KFConfigInterface );
         __FIND_MODULE__( _kf_kernel, KFKernelInterface );
         __FIND_MODULE__( _kf_player, KFPlayerInterface );

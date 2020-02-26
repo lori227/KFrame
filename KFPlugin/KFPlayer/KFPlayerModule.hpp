@@ -86,6 +86,9 @@ namespace KFrame
         void OnEnterCreatePlayer( KFEntity* player, uint64 playerid );
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 名字更新
+        __KF_UPDATE_STRING_FUNCTION__( OnUpdateNameCallBack );
+
         // 添加属性
         __KF_COMMAND_FUNCTION__( OnCommandAddData );
 

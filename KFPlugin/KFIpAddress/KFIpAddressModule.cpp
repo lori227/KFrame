@@ -33,6 +33,16 @@ namespace KFrame
         __LOG_INFO__( "localip=[{}], interanetip=[{}]", kfglobal->_local_ip, kfglobal->_interanet_ip );
     }
 
+    void KFIpAddressModule::AfterLoad()
+    {
+        auto kfglobal = KFGlobal::Instance();
+        auto& vpnip = KFIpConfig::Instance()->FindVPNIpAddress( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->GetZoneId() );
+        if ( !vpnip.empty() )
+        {
+            kfglobal->_interanet_ip = vpnip;
+            __LOG_INFO__( "use vpnip=[{}]", kfglobal->_interanet_ip );
+        }
+    }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////

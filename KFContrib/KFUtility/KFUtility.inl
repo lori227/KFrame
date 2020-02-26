@@ -138,10 +138,7 @@ namespace KFrame
         while ( !srcstring.empty() )
         {
             auto value = SplitValue< uint32 >( srcstring, split );
-            if ( value != 0u )
-            {
-                outlist.push_back( value );
-            }
+            outlist.push_back( value );
         }
     }
 
@@ -152,10 +149,7 @@ namespace KFrame
         while ( !srcstring.empty() )
         {
             auto value = SplitValue< uint32 >( srcstring, split );
-            if ( value != 0u )
-            {
-                outlist.insert( value );
-            }
+            outlist.insert( value );
         }
     }
 

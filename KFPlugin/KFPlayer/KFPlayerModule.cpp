@@ -18,6 +18,7 @@ namespace KFrame
         _kf_component->RegisterSyncUpdateFunction( this, &KFPlayerModule::SendUpdateDataToClient );
         _kf_component->RegisterShowElementFunction( this, &KFPlayerModule::SendElementToClient );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
+        __REGISTER_UPDATE_STRING_2__( __STRING__( basic ), __STRING__( name ), &KFPlayerModule::OnUpdateNameCallBack );
         // 注册command函数
         __REGISTER_COMMAND_FUNCTION__( __STRING__( adddata ), &KFPlayerModule::OnCommandAddData );
         __REGISTER_COMMAND_FUNCTION__( __STRING__( setdata ), &KFPlayerModule::OnCommandSetData );
@@ -44,6 +45,8 @@ namespace KFrame
         _kf_component->UnRegisterSyncUpdateFunction();
         _kf_component->UnRegisterShowElementFunction();
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
+        __UN_UPDATE_STRING_2__( __STRING__( basic ), __STRING__( name ) );
+
         // 取消注册command函数
         __UN_COMMAND_FUNCTION__( __STRING__( adddata ) );
         __UN_COMMAND_FUNCTION__( __STRING__( setdata ) );
@@ -335,6 +338,17 @@ namespace KFrame
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    __KF_UPDATE_STRING_FUNCTION__( KFPlayerModule::OnUpdateNameCallBack )
+    {
+        if ( oldvalue == _invalid_string )
+        {
+            for ( auto elements : KFPlayerConfig::Instance()->_new_role_elements )
+            {
+                player->AddElement( elements, _default_multiple, __STRING__( newrole ), 0u, __FUNC_LINE__ );
+            }
+        }
+    }
+
     __KF_COMMAND_FUNCTION__( KFPlayerModule::OnCommandAddData )
     {
         if ( params.size() < 1 )

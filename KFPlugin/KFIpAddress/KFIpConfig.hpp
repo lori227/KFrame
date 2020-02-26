@@ -21,6 +21,8 @@ namespace KFrame
         const KFIpAddress* FindIpAddress( const std::string& appname, const std::string& apptype, const std::string& appid );
         void FindIpAddress( const std::string& appname, const std::string& apptype, const std::string& appid, IpAddressList& outlist );
 
+        // 查找vpn ip
+        const std::string& FindVPNIpAddress( const std::string& appname, const std::string& apptype, uint32 zoneid );
     public:
         // 配置的连接地址
         std::unordered_map< uint64, KFIpAddress > _ip_address_list;
@@ -30,6 +32,9 @@ namespace KFrame
 
         // log地址
         std::string _log_url;
+
+        // vpn 地址
+        std::unordered_map< uint32, std::string > _vpn_list;
     };
 }
 

@@ -30,11 +30,11 @@ namespace KFrame
             }
             catch ( std::exception& ex )
             {
-                __LOG_ERROR__( "run exception=[{}]", ex.what() );
+                KFLogger::Instance()->LogStack( ex.what() );
             }
             catch ( ... )                                                                                                                            \
             {
-                __LOG_ERROR__( "run exception unknown" );
+                KFLogger::Instance()->LogStack( "run exception unknown" );
             }
 #endif
             KFThread::Sleep( 1 );

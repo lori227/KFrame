@@ -91,8 +91,13 @@ namespace KFrame
     void KFUnlockModule::UnlockPlayerData( KFEntity* player, const KFUnlockSetting* kfsetting, KFData* kfdatarecord )
     {
         auto kfdata = player->CreateData( kfdatarecord );
-        kfdata->Set( __STRING__( unlock ), KFGlobal::Instance()->_real_time );
-        kfdata->Set( kfdatarecord->_data_setting->_value_key_name, kfsetting->_data_value );
+
+        if ( kfsetting->_data_name == __STRING__( build ) )
+        {
+            kfdata->Set( __STRING__( unlock ), KFGlobal::Instance()->_real_time );
+            kfdata->Set( kfdatarecord->_data_setting->_value_key_name, kfsetting->_data_value );
+        }
+
         player->AddData( kfdatarecord, kfsetting->_data_id, kfdata );
     }
 

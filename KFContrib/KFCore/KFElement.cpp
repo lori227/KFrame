@@ -41,7 +41,7 @@ namespace KFrame
 
         if ( multiple != 1.0f && _data_setting != nullptr && _data_setting->HaveMask( KFDataDefine::Mask_Multiple ) )
         {
-            _use_value = static_cast< uint64 >( _use_value * multiple );
+            _use_value = static_cast< uint64 >( _use_value * multiple + 0.5 );
         }
 
         return _use_value;

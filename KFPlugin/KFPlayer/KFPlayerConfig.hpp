@@ -8,17 +8,17 @@ namespace KFrame
 {
     class KFPlayerSetting : public KFIntSetting
     {
-    public:
-        ~KFPlayerSetting()
-        {
-            for ( auto kflements : _new_player_elements )
-            {
-                __KF_DELETE__( KFElements, kflements );
-            }
-            _new_player_elements.clear();
-        }
-    public:
-        std::vector< KFElements* > _new_player_elements;
+        /*public:
+        	~KFPlayerSetting()
+        	{
+        		for ( auto kflements : _new_player_elements )
+        		{
+        			__KF_DELETE__( KFElements, kflements );
+        		}
+        		_new_player_elements.clear();
+        	}
+        public:
+        	std::vector< KFElements* > _new_player_elements;*/
     };
     ////////////////////////////////////////////////////////////////////////////////////
     class KFPlayerConfig : public KFConfigT< KFIntSetting >, public KFInstance< KFPlayerConfig >
@@ -50,6 +50,9 @@ namespace KFrame
     public:
         // 新角色添加的数据
         std::vector< KFElements* > _new_player_elements;
+
+        // 创建团长添加的数据
+        std::vector< KFElements* > _new_role_elements;
     };
 }
 

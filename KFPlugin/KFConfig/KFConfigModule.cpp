@@ -117,7 +117,7 @@ namespace KFrame
         // 重新加载配置列表
         LoadConfigListAndVersion();
 
-        bool loadok = false;
+        auto loadok = false;
         for ( auto& iter : _config_list )
         {
             auto kfconfig = iter.second;
@@ -128,20 +128,38 @@ namespace KFrame
             }
 
             // 判断版本号是否相同
+            auto havechild = false;
             for ( auto& kfdata : kfconfigsetting->_config_data_list )
             {
-                if ( KFUtility::HaveBitMask<uint32>( kfdata._load_mask, KFConfigEnum::CanReload ) )
+                if ( !KFUtility::HaveBitMask<uint32>( kfdata._load_mask, KFConfigEnum::CanReload ) )
                 {
-                    auto kfversionsetting = _kf_version_config->FindSetting( kfdata._file_name );
-                    if ( kfversionsetting == nullptr || !kfversionsetting->IsNeedReload() )
+                    continue;
+                }
+
+                // 没找到版本配置
+                auto kfversionsetting = _kf_version_config->FindSetting( kfdata._file_name );
+                if ( kfversionsetting == nullptr )
+                {
+                    continue;
+                }
+
+                if ( !havechild )
+                {
+                    // 不需要更新
+                    if ( !kfversionsetting->IsNeedReload() )
                     {
                         continue;
                     }
 
-                    loadok = true;
-                    LoadConfigFile( kfconfig, kfdata._file_name, kfdata._file_path, kfdata._load_mask );
-                    kfconfig->SetVersion( kfdata._file_name, kfversionsetting->_new_version );
+                    if ( KFUtility::HaveBitMask<uint32>( kfdata._load_mask, KFConfigEnum::ChildFile ) )
+                    {
+                        havechild = true;
+                    }
                 }
+
+                loadok = true;
+                kfconfig->SetVersion( kfdata._file_name, kfversionsetting->_new_version );
+                LoadConfigFile( kfconfig, kfdata._file_name, kfdata._file_path, kfdata._load_mask );
             }
         }
 
