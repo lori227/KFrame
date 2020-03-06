@@ -126,11 +126,15 @@ namespace KFrame
         virtual void BindRemoveElementFunction( const std::string& dataname, KFRemoveElementFunction& function );
         virtual void UnRegisterRemoveElementFunction( const std::string& dataname );
         ///////////////////////////////////////////////////////////////////////////////////////////////
+        virtual void BindAddDataLogic( const std::string& dataname, const std::string& module, KFAddDataFunction& function );
+        virtual void UnBindAddDataLogic( const std::string& dataname, const std::string& module );
         virtual void BindAddDataModule( const std::string& module, KFAddDataFunction& function );
         virtual void UnBindAddDataModule( const std::string& module );
         virtual void BindAddDataFunction( const std::string& module, const std::string& dataname, uint64 key, KFAddDataFunction& function );
         virtual void UnBindAddDataFunction( const std::string& module, const std::string& dataname, uint64 key );
 
+        virtual void BindRemoveDataLogic( const std::string& dataname, const std::string& module, KFRemoveDataFunction& function );
+        virtual void UnBindRemoveDataLogic( const std::string& dataname, const std::string& module );
         virtual void BindRemoveDataModule( const std::string& module, KFRemoveDataFunction& function );
         virtual void UnBindRemoveDataModule( const std::string& module );
         virtual void BindRemoveDataFunction( const std::string& module, const std::string& dataname, uint64 key, KFRemoveDataFunction& function );
@@ -227,8 +231,14 @@ namespace KFrame
         KFBind< std::string, const std::string&, KFUpdateDataFunction > _update_data_module;
         KFBind< std::string, const std::string&, KFUpdateStringFunction > _update_string_module;
 
+        // 添加属性逻辑
+        KFMap< std::string, const std::string&, KFDataFunction< KFAddDataFunction > > _add_logic_function;
+
         // 添加属性回调
         KFMap< RecordKeyType, const RecordKeyType&, KFDataFunction< KFAddDataFunction > > _add_data_function;
+
+        // 删除属性逻辑
+        KFMap< std::string, const std::string&, KFDataFunction< KFRemoveDataFunction > > _remove_logic_function;
 
         // 删除数据的回调函数
         KFMap< RecordKeyType, const RecordKeyType&, KFDataFunction< KFRemoveDataFunction > > _remove_data_function;

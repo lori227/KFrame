@@ -390,7 +390,7 @@ namespace KFrame
             return false;
         }
 
-        _kf_component->RemoveDataCallBack( this, kfparent, kfdata->GetKeyID(), kfdata, callback );
+        _kf_component->RemoveDataCallBack( this, kfparent, 0, kfdata, callback );
 
         KFDataFactory::Instance()->DestroyData( kfdata );
         return kfparent->Move( dataname, false ) != nullptr;
@@ -435,6 +435,17 @@ namespace KFrame
         return MoveData( sourcedata, dataname, targetdata );
     }
 
+    KFData* KFEntityEx::MoveData( KFData* kfparent, uint64 key )
+    {
+        // 移除属性
+        auto kfdata = kfparent->Move( key );
+        if ( kfdata != nullptr )
+        {
+            _kf_component->RemoveDataCallBack( this, kfparent, key, kfdata, false );
+        }
+        return kfdata;
+    }
+
     KFData* KFEntityEx::MoveData( KFData* sourcedata, const std::string& dataname, KFData* targetdata )
     {
         // 移除属性
@@ -443,7 +454,7 @@ namespace KFrame
         {
             return nullptr;
         }
-        _kf_component->RemoveDataCallBack( this, sourcedata, 0u, kfdata, false );
+        _kf_component->RemoveDataCallBack( this, sourcedata, 0, kfdata, false );
 
         // 添加属性
         auto uuid = kfdata->GetKeyID();
@@ -478,7 +489,7 @@ namespace KFrame
         {
             return nullptr;
         }
-        _kf_component->RemoveDataCallBack( this, sourcedata, 0u, kfdata, false );
+        _kf_component->RemoveDataCallBack( this, sourcedata, 0, kfdata, false );
 
         // 添加属性
         targetdata->Add( targetname, kfdata );

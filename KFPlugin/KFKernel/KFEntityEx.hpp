@@ -77,6 +77,7 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
         // 移动属性
+        virtual KFData* MoveData( KFData* kfparent, uint64 key );
         virtual KFData* MoveData( const std::string& sourcename, uint64 key, const std::string& targetname );
         virtual KFData* MoveData( KFData* sourcedata, uint64 key, KFData* targetdata );
 

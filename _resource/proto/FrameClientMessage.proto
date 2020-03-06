@@ -55,6 +55,7 @@ enum FrameClientProtocol
 	MSG_SORT_ITEM_REQ					= 407;	// 整理背包
 	MSG_REMOVE_ITEM_REQ					= 408;	// 删除道具
 	MSG_MOVE_ALL_ITEM_REQ				= 409;	// 移动所有道具
+	MSG_REMOVE_ITEM_COUNT_REQ			= 410;	// 删除道具数量
 
 	MSG_USE_ITEM_TO_HERO_REQ			= 451;	// 对英雄使用道具
 
@@ -375,6 +376,15 @@ message MsgRemoveItemReq
 {
 	bytes sourcename = 1;	// 源背包名字
 	uint64 uuid = 2;		// 道具uuid( 为0时候, 删除背包所有道具 )
+}
+
+
+// 删除道具数量
+// MSG_REMOVE_ITEM_COUNT_REQ
+message MsgRemoveItemCountReq
+{
+	uint32 itemid = 1;
+	uint32 count = 2;
 }
 
 // 使用道具

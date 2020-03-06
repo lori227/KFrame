@@ -114,6 +114,17 @@ namespace KFrame
         _player_reset_function.Remove( moudle );
     }
 
+    void KFPlayerModule::AddBeforeEnterFunction( const std::string& moudle, KFEntityFunction& function )
+    {
+        auto kffunction = _player_before_enter_function.Create( moudle );
+        kffunction->_function = function;
+    }
+
+    void KFPlayerModule::RemoveBeforeEnterFunction( const std::string& moudle )
+    {
+        _player_before_enter_function.Remove( moudle );
+    }
+
     void KFPlayerModule::AddEnterFunction( const std::string& moudle, KFEntityFunction& function )
     {
         auto kffunction = _player_enter_function.Create( moudle );
@@ -185,7 +196,17 @@ namespace KFrame
 
     bool KFPlayerModule::SendToClient( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message, uint32 delay /* = 0 */ )
     {
+        if ( !player->IsInited() )
+        {
+            return false;
+        }
+
         auto gateid = player->Get( __STRING__( gateid ) );
+        if ( gateid == _invalid_int )
+        {
+            return false;
+        }
+
         return _kf_tcp_server->SendNetMessage( gateid, player->GetKeyID(), msgid, message, delay );
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -287,6 +308,11 @@ namespace KFrame
         }
 
         // 调用函数, 处理进入游戏的一些事务逻辑
+        for ( auto& iter : _player_before_enter_function._objects )
+        {
+            auto kffunction = iter.second;
+            kffunction->_function( player );
+        }
         for ( auto& iter : _player_enter_function._objects )
         {
             auto kffunction = iter.second;

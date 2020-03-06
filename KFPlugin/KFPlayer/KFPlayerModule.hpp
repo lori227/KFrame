@@ -61,6 +61,9 @@ namespace KFrame
         virtual void AddResetFunction( const std::string& moudle, KFEntityFunction& function );
         virtual void RemoveResetFunction( const std::string& moudle );
 
+        virtual void AddBeforeEnterFunction( const std::string& moudle, KFEntityFunction& function );
+        virtual void RemoveBeforeEnterFunction( const std::string& moudle );
+
         virtual void AddEnterFunction( const std::string& moudle, KFEntityFunction& function );
         virtual void RemoveEnterFunction( const std::string& moudle );
 
@@ -139,6 +142,7 @@ namespace KFrame
         KFBind< std::string, const std::string&, KFEntityFunction > _player_reset_function;
 
         // 登录函数
+        KFBind< std::string, const std::string&, KFEntityFunction > _player_before_enter_function;
         KFBind< std::string, const std::string&, KFEntityFunction > _player_enter_function;
         KFBind< std::string, const std::string&, KFEntityFunction > _player_after_enter_function;
 

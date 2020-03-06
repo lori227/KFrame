@@ -125,6 +125,20 @@ namespace KFrame
         virtual void UnRegisterRemoveElementFunction( const std::string& dataname ) = 0;
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 注册添加属性逻辑
+        template< class T >
+        void RegisterAddDataLogic( const std::string& dataname, T* object, void ( T::*handle )( KFEntity*, KFData*, uint64, KFData* ) )
+        {
+            KFAddDataFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
+            BindAddDataLogic( dataname, typeid( T ).name(), function );
+        }
+
+        template< class T >
+        void UnRegisterAddDataLogic( const std::string& dataname, T* object )
+        {
+            UnBindAddDataLogic( dataname, typeid( T ).name() );
+        }
+
         // 注册添加属性回调函数
         template< class T >
         void RegisterAddDataModule( T* object, void ( T::*handle )( KFEntity*, KFData*, uint64, KFData* ) )
@@ -152,6 +166,19 @@ namespace KFrame
             UnBindAddDataFunction( typeid( T ).name(), dataname, key );
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 注册删除属性逻辑
+        template< class T >
+        void RegisterRemoveDataLogic( const std::string& dataname, T* object, void ( T::*handle )( KFEntity*, KFData*, uint64, KFData* ) )
+        {
+            KFRemoveDataFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
+            BindRemoveDataLogic( dataname, typeid( T ).name(), function );
+        }
+
+        template< class T >
+        void UnRegisterRemoveDataLogic( const std::string& dataname, T* object )
+        {
+            UnBindRemoveDataLogic( dataname, typeid( T ).name() );
+        }
 
         // 注册删除属性回调函数
         template< class T >
@@ -379,11 +406,15 @@ namespace KFrame
         virtual void BindCheckRemoveElementFunction( const std::string& dataname, KFCheckRemoveElementFunction& function ) = 0;
         virtual void BindRemoveElementFunction( const std::string& dataname, KFRemoveElementFunction& function ) = 0;
 
+        virtual void BindAddDataLogic( const std::string& dataname, const std::string& module, KFAddDataFunction& function ) = 0;
+        virtual void UnBindAddDataLogic( const std::string& dataname, const std::string& module ) = 0;
         virtual void BindAddDataModule( const std::string& module, KFAddDataFunction& function ) = 0;
         virtual void UnBindAddDataModule( const std::string& module ) = 0;
         virtual void BindAddDataFunction( const std::string& module, const std::string& dataname, uint64 key, KFAddDataFunction& function ) = 0;
         virtual void UnBindAddDataFunction( const std::string& module, const std::string& dataname, uint64 key ) = 0;
 
+        virtual void BindRemoveDataLogic( const std::string& dataname, const std::string& module, KFRemoveDataFunction& function ) = 0;
+        virtual void UnBindRemoveDataLogic( const std::string& dataname, const std::string& module ) = 0;
         virtual void BindRemoveDataModule( const std::string& module, KFRemoveDataFunction& function ) = 0;
         virtual void UnBindRemoveDataModule( const std::string& module ) = 0;
         virtual void BindRemoveDataFunction( const std::string& module, const std::string& dataname, uint64 key, KFRemoveDataFunction& function ) = 0;
@@ -457,6 +488,11 @@ namespace KFrame
 #define __KF_ADD_DATA_FUNCTION__( addfunction ) \
     void addfunction( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata )
 
+#define __REGISTER_ADD_LOGIC__( dataname, function )\
+    _kf_component->RegisterAddDataLogic( dataname, this, function )
+#define __UN_ADD_LOGIC__( dataname )\
+    _kf_component->UnRegisterAddDataLogic( dataname, this )
+
 #define __REGISTER_ADD_DATA__( function )\
     _kf_component->RegisterAddDataModule( this, function )
 #define __UN_ADD_DATA__()\
@@ -475,6 +511,11 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 #define __KF_REMOVE_DATA_FUNCTION__( removefunction ) \
     void removefunction( KFEntity* player, KFData* kfparent, uint64 key, KFData* kfdata )
+
+#define __REGISTER_REMOVE_LOGIC__( dataname, function )\
+    _kf_component->RegisterRemoveDataLogic( dataname, this, function )
+#define __UN_REMOVE_LOGIC__( dataname )\
+    _kf_component->UnRegisterRemoveDataLogic( dataname, this )
 
 #define __REGISTER_REMOVE_DATA__( function )\
     _kf_component->RegisterRemoveDataModule( this, function )

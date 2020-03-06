@@ -81,6 +81,19 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////////////
         // 登录函数
         template< class T >
+        void RegisterBeforeEnterFunction( T* object, void ( T::*handle )( KFEntity* player ) )
+        {
+            KFEntityFunction function = std::bind( handle, object, std::placeholders::_1 );
+            AddBeforeEnterFunction( typeid( T ).name(), function );
+        }
+
+        template< class T >
+        void UnRegisterBeforeEnterFunction( T* object )
+        {
+            RemoveBeforeEnterFunction( typeid( T ).name() );
+        }
+        // 登录函数
+        template< class T >
         void RegisterEnterFunction( T* object, void ( T::*handle )( KFEntity* player ) )
         {
             KFEntityFunction function = std::bind( handle, object, std::placeholders::_1 );
@@ -174,6 +187,9 @@ namespace KFrame
         virtual void AddResetFunction( const std::string& moudle, KFEntityFunction& function ) = 0;
         virtual void RemoveResetFunction( const std::string& moudle ) = 0;
 
+        virtual void AddBeforeEnterFunction( const std::string& moudle, KFEntityFunction& function ) = 0;
+        virtual void RemoveBeforeEnterFunction( const std::string& moudle ) = 0;
+
         virtual void AddEnterFunction( const std::string& moudle, KFEntityFunction& function ) = 0;
         virtual void RemoveEnterFunction( const std::string& moudle ) = 0;
 
@@ -219,6 +235,10 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#define __KF_BEFORE_ENTER_PLAYER_FUNCTION__( function ) void function( KFEntity* player )
+#define __REGISTER_BEFORE_ENTER_PLAYER__( function ) _kf_player->RegisterBeforeEnterFunction( this, function )
+#define __UN_BEFORE_ENTER_PLAYER__() _kf_player->UnRegisterBeforeEnterFunction( this )
+
 #define __KF_ENTER_PLAYER_FUNCTION__( function ) void function( KFEntity* player )
 #define __REGISTER_ENTER_PLAYER__( function ) _kf_player->RegisterEnterFunction( this, function )
 #define __UN_ENTER_PLAYER__() _kf_player->UnRegisterEnterFunction( this )
@@ -243,9 +263,9 @@ namespace KFrame
 #define __REGISTER_RUN_PLAYER__( function ) _kf_player->RegisterRunDataFunction( this, function )
 #define __UN_RUN_PLAYER__() _kf_player->UnRegisterRunDataFunction( this )
 
-#define __KF_AFTERRUN_PLAYER_FUNCTION__( function ) void function( KFEntity* player )
-#define __REGISTER_AFTERRUN_PLAYER__( function ) _kf_player->RegisterAfterRunDataFunction( this, function )
-#define __UN_AFTERRUN_PLAYER__() _kf_player->UnRegisterAfterRunDataFunction( this )
+#define __KF_AFTER_RUN_PLAYER_FUNCTION__( function ) void function( KFEntity* player )
+#define __REGISTER_AFTER_RUN_PLAYER__( function ) _kf_player->RegisterAfterRunDataFunction( this, function )
+#define __UN_AFTER_RUN_PLAYER__() _kf_player->UnRegisterAfterRunDataFunction( this )
 
 #define __KF_INIT_PLAYER_FUNCTION__( function ) void function( KFEntity* player )
 #define __REGISTER_INIT_PLAYER__( function ) _kf_player->RegisterInitDataFunction( this, function )

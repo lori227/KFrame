@@ -463,11 +463,9 @@ namespace KFrame
             for ( auto& miter : kfdata->_datas )
             {
                 auto& strvalue = miter.second;
-                if ( !strvalue.empty() && strvalue != "0" )
-                {
-                    auto attribute = kffile->_class.GetAttribute( miter.first );
-                    xmlfile << __FORMAT__( " {}=\"{}\"", attribute->_name, strvalue );
-                }
+
+                auto attribute = kffile->_class.GetAttribute( miter.first );
+                xmlfile << __FORMAT__( " {}=\"{}\"", attribute->_name, strvalue );
             }
 
             xmlfile << "/>\n";

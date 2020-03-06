@@ -306,6 +306,21 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
+    void KFComponentEx::BindAddDataLogic( const std::string& dataname, const std::string& module, KFAddDataFunction& function )
+    {
+        auto kffunction = _add_logic_function.Create( dataname );
+        kffunction->AddFunction( module, function );
+    }
+
+    void KFComponentEx::UnBindAddDataLogic( const std::string& dataname, const std::string& module )
+    {
+        auto kfdatafunction = _add_logic_function.Find( dataname );
+        if ( kfdatafunction != nullptr )
+        {
+            kfdatafunction->RemoveFunction( module );
+        }
+    }
+
     void KFComponentEx::BindAddDataModule( const std::string& module, KFAddDataFunction& function )
     {
         auto kffunction = _add_data_module.Create( module );
@@ -328,6 +343,21 @@ namespace KFrame
     {
         auto datakey = RecordKeyType( dataname, key );
         auto kfdatafunction = _add_data_function.Find( datakey );
+        if ( kfdatafunction != nullptr )
+        {
+            kfdatafunction->RemoveFunction( module );
+        }
+    }
+
+    void KFComponentEx::BindRemoveDataLogic( const std::string& dataname, const std::string& module, KFRemoveDataFunction& function )
+    {
+        auto kffunction = _remove_logic_function.Create( dataname );
+        kffunction->AddFunction( module, function );
+    }
+
+    void KFComponentEx::UnBindRemoveDataLogic( const std::string& dataname, const std::string& module )
+    {
+        auto kfdatafunction = _remove_logic_function.Find( dataname );
         if ( kfdatafunction != nullptr )
         {
             kfdatafunction->RemoveFunction( module );
@@ -635,6 +665,15 @@ namespace KFrame
 
     void KFComponentEx::AddDataCallBack( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata, bool callback )
     {
+        {
+            // 逻辑回调
+            auto kfdatafunction = _add_logic_function.Find( kfparent->_data_setting->_logic_name );
+            if ( kfdatafunction != nullptr )
+            {
+                kfdatafunction->CallFunction( kfentity, kfparent, key, kfdata );
+            }
+        }
+
         if ( callback )
         {
             // 模块回调
@@ -673,6 +712,15 @@ namespace KFrame
 
     void KFComponentEx::RemoveDataCallBack( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata, bool callback )
     {
+        // 逻辑回调
+        {
+            auto kfdatafunction = _remove_logic_function.Find( kfparent->_data_setting->_logic_name );
+            if ( kfdatafunction != nullptr )
+            {
+                kfdatafunction->CallFunction( kfentity, kfparent, key, kfdata );
+            }
+        }
+
         // 开启保存数据库定时器
         StartSaveEntityTimer( kfentity, kfdata );
 
@@ -695,7 +743,7 @@ namespace KFrame
 
         // 注册的函数
         {
-            auto findkey = RecordKeyType( kfdata->_data_setting->_logic_name, key );
+            auto findkey = RecordKeyType( kfparent->_data_setting->_logic_name, key );
             auto kfdatafunction = _remove_data_function.Find( findkey );
             if ( kfdatafunction != nullptr )
             {
@@ -703,7 +751,7 @@ namespace KFrame
             }
         }
         {
-            auto findkey = RecordKeyType( kfdata->_data_setting->_logic_name, 0u );
+            auto findkey = RecordKeyType( kfparent->_data_setting->_logic_name, 0u );
             auto kfdatafunction = _remove_data_function.Find( findkey );
             if ( kfdatafunction != nullptr )
             {

@@ -179,7 +179,17 @@ namespace KFrame
     // 发送消息到客户端
     bool KFGameModule::SendToClient( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message, uint32 delay )
     {
+        if ( !player->IsInited() )
+        {
+            return false;
+        }
+
         auto gateid = player->Get( __STRING__( gateid ) );
+        if ( gateid == _invalid_int )
+        {
+            return false;
+        }
+
         return _kf_tcp_server->SendNetMessage( gateid, player->GetKeyID(), msgid, message, delay );
     }
 
@@ -226,6 +236,11 @@ namespace KFrame
         }
 
         auto gateid = player->Get( __STRING__( gateid ) );
+        if ( gateid == _invalid_int )
+        {
+            return true;
+        }
+
         return _kf_tcp_server->SendNetMessage( gateid, playerid, msgid, data, length );
     }
 
@@ -446,6 +461,9 @@ namespace KFrame
 
         __LOG_DEBUG__( "player[{}] logout", kfmsg.playerid() );
 
+        // 设置不在线, 后续不发送消息
+        player->Set( __STRING__( gateid ), _invalid_int );
+
         // 删除玩家
         _kf_player->RemovePlayer( kfmsg.playerid() );
     }
@@ -480,6 +498,7 @@ namespace KFrame
         SendToClient( player, KFMsg::S2S_KICK_PLAYER_TO_GATE_REQ, &req );
 
         // 删除玩家
+        player->Set( __STRING__( gateid ), _invalid_int );
         _kf_player->RemovePlayer( playerid );
         return true;
     }
