@@ -84,9 +84,17 @@ namespace KFrame
         else if ( kfconditiondata->IsVariable() )
         {
             auto kfvariable = ( const KFConditionVariable* )kfconditiondata;
+
             if ( !kfvariable->_parent_name.empty() )
             {
-                result = kfentity->Get<uint32>( kfvariable->_parent_name, kfvariable->_data_name );
+                if ( kfvariable->_data_id == 0u )
+                {
+                    result = kfentity->Get<uint32>( kfvariable->_parent_name, kfvariable->_data_name );
+                }
+                else
+                {
+                    result = kfentity->Get<uint32>( kfvariable->_parent_name, kfvariable->_data_id, kfvariable->_data_name );
+                }
             }
             else if ( kfvariable->_data_id == 0u )
             {

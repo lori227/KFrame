@@ -14,6 +14,9 @@ namespace KFrame
         // 是否要清除变量
         bool _is_clear_var = false;
 
+        // 掉落数据id
+        uint32 _drop_data_id = 0u;
+
         // 条件
         KFConditions _conditions;
 
@@ -65,6 +68,9 @@ namespace KFrame
 
         // 初始化掉落
         void InitDropDataSetting( KFDropSetting* kfsetting, KFDropGroupWeight* dropgroupweight );
+
+        // 初始化掉落条件
+        void InitDropConditonSetting( KFDropSetting* kfsetting, KFExpression* kfexpression );
     };
 }
 

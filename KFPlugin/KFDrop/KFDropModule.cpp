@@ -70,6 +70,7 @@ namespace KFrame
             pbdata->set_dataid( dropdata->_drop_data_id );
             pbdata->set_dataindex( dropdata->_data_index );
             pbdata->set_dataname( dropdata->_data_name );
+            pbdata->set_logicname( dropdata->_logic_name );
         }
 
         _kf_player->SendToClient( player, KFMsg::MSG_DEBUG_SHOW_DROP, &show );

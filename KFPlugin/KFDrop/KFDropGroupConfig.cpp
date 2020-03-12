@@ -5,7 +5,10 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////
     void KFDropGroupConfig::ReadSetting( KFNode& xmlnode, KFDropSetting* kfsetting )
     {
-        kfsetting->_is_drop_count = xmlnode.GetBoolen( "DropCount", true );
+        if ( !kfsetting->_is_drop_count )
+        {
+            kfsetting->_is_drop_count = xmlnode.GetBoolen( "DropCount", true );
+        }
         if ( kfsetting->_condition_type == 0u )
         {
             kfsetting->_condition_type = xmlnode.GetUInt32( "ConditionType" );
@@ -16,21 +19,22 @@ namespace KFrame
         }
 
         KFDropGroupWeight* kfdropweight = nullptr;
-        auto dropdataid = xmlnode.GetUInt32( "DropDataId", true );
         auto weight = xmlnode.GetUInt32( "Weight", true );
 
         if ( weight == KFRandEnum::TenThousand && kfsetting->_rand_type == KFRandEnum::Probability )
         {
             kfdropweight = __KF_NEW__( KFDropGroupWeight );
-            kfdropweight->_id = dropdataid;
             kfsetting->_necessary_list.Add( kfdropweight );
+            kfdropweight->_id = kfsetting->_necessary_list._objects.size();
         }
         else
         {
-            kfdropweight = kfsetting->_rand_list.Create( dropdataid, weight );
+            auto id = kfsetting->_rand_list._weight_data.size();
+            kfdropweight = kfsetting->_rand_list.Create( ++id, weight );
         }
 
         kfdropweight->_is_clear_var = xmlnode.GetBoolen( "Reset", true );
+        kfdropweight->_drop_data_id = xmlnode.GetUInt32( "DropDataId", true );
 
         // 条件
         auto strcondition = xmlnode.GetString( "Condition", true );
@@ -51,17 +55,45 @@ namespace KFrame
             {
                 InitDropDataSetting( kfsetting, kfdropgroupweight );
             }
+
+
         }
     }
 
     void KFDropGroupConfig::InitDropDataSetting( KFDropSetting* kfsetting, KFDropGroupWeight* dropgroupweight )
     {
-        dropgroupweight->_drop_data_setting = KFDropDataConfig::Instance()->FindSetting( dropgroupweight->_id );
+        dropgroupweight->_drop_data_setting = KFDropDataConfig::Instance()->FindSetting( dropgroupweight->_drop_data_id );
         if ( dropgroupweight->_drop_data_setting == nullptr )
         {
             if ( dropgroupweight->_id != 0u )
             {
-                __LOG_ERROR__( "dropid=[{}] dropdata=[{}] can't find setting", kfsetting->_id, dropgroupweight->_id );
+                __LOG_ERROR__( "dropid=[{}] dropdata=[{}] can't find setting", kfsetting->_id, dropgroupweight->_drop_data_id );
+            }
+        }
+
+        // 判断掉落条件
+        for ( auto kfcondition : dropgroupweight->_conditions._condition_list )
+        {
+            InitDropConditonSetting( kfsetting, kfcondition->_left );
+            InitDropConditonSetting( kfsetting, kfcondition->_right );
+        }
+    }
+
+    void KFDropGroupConfig::InitDropConditonSetting( KFDropSetting* kfsetting, KFExpression* kfexpression )
+    {
+        for ( auto kfdata : kfexpression->_data_list )
+        {
+            if ( !kfdata->IsVariable() )
+            {
+                continue;
+            }
+
+            auto kfvariable = ( KFConditionVariable* )kfdata;
+            if ( kfvariable->_data_name == __STRING__( drop ) )
+            {
+                kfvariable->_parent_name = __STRING__( drop );
+                kfvariable->_data_name = __STRING__( value );
+                kfvariable->_data_id = kfsetting->_id;
             }
         }
     }

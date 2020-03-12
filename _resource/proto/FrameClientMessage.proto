@@ -171,6 +171,7 @@ message PBDebugDrop
 	uint32 dataid = 1;		// 掉落数据id
 	uint32 dataindex = 2;	// 索引( 第几个, 从1开始 )
 	bytes dataname = 3;		// 掉落数据名
+	bytes logicname = 4;	// 逻辑名
 }
 
 // 显示掉落数据

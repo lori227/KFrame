@@ -1503,6 +1503,20 @@ class LIBPROTOC_EXPORT PBDebugDrop : public ::google::protobuf::Message /* @@pro
   ::std::string* release_dataname();
   void set_allocated_dataname(::std::string* dataname);
 
+  // bytes logicname = 4;
+  void clear_logicname();
+  static const int kLogicnameFieldNumber = 4;
+  const ::std::string& logicname() const;
+  void set_logicname(const ::std::string& value);
+  #if LANG_CXX11
+  void set_logicname(::std::string&& value);
+  #endif
+  void set_logicname(const char* value);
+  void set_logicname(const void* value, size_t size);
+  ::std::string* mutable_logicname();
+  ::std::string* release_logicname();
+  void set_allocated_logicname(::std::string* logicname);
+
   // uint32 dataid = 1;
   void clear_dataid();
   static const int kDataidFieldNumber = 1;
@@ -1520,6 +1534,7 @@ class LIBPROTOC_EXPORT PBDebugDrop : public ::google::protobuf::Message /* @@pro
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::ArenaStringPtr dataname_;
+  ::google::protobuf::internal::ArenaStringPtr logicname_;
   ::google::protobuf::uint32 dataid_;
   ::google::protobuf::uint32 dataindex_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
@@ -7955,6 +7970,59 @@ inline void PBDebugDrop::set_allocated_dataname(::std::string* dataname) {
   }
   dataname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), dataname);
   // @@protoc_insertion_point(field_set_allocated:KFMsg.PBDebugDrop.dataname)
+}
+
+// bytes logicname = 4;
+inline void PBDebugDrop::clear_logicname() {
+  logicname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& PBDebugDrop::logicname() const {
+  // @@protoc_insertion_point(field_get:KFMsg.PBDebugDrop.logicname)
+  return logicname_.GetNoArena();
+}
+inline void PBDebugDrop::set_logicname(const ::std::string& value) {
+  
+  logicname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.PBDebugDrop.logicname)
+}
+#if LANG_CXX11
+inline void PBDebugDrop::set_logicname(::std::string&& value) {
+  
+  logicname_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.PBDebugDrop.logicname)
+}
+#endif
+inline void PBDebugDrop::set_logicname(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  logicname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.PBDebugDrop.logicname)
+}
+inline void PBDebugDrop::set_logicname(const void* value, size_t size) {
+  
+  logicname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.PBDebugDrop.logicname)
+}
+inline ::std::string* PBDebugDrop::mutable_logicname() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.PBDebugDrop.logicname)
+  return logicname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* PBDebugDrop::release_logicname() {
+  // @@protoc_insertion_point(field_release:KFMsg.PBDebugDrop.logicname)
+  
+  return logicname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void PBDebugDrop::set_allocated_logicname(::std::string* logicname) {
+  if (logicname != NULL) {
+    
+  } else {
+    
+  }
+  logicname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), logicname);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.PBDebugDrop.logicname)
 }
 
 // -------------------------------------------------------------------

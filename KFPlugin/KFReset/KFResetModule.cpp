@@ -123,7 +123,7 @@ namespace KFrame
         for ( auto& iter : KFResetConfig::Instance()->_reset_settings._objects )
         {
             auto kfsetting = iter.second;
-            if ( !CheckResetTimeData( kftimerecord, kfsetting->_id ) )
+            if ( !CheckResetTimeData( kftimerecord, iter.first ) )
             {
                 continue;
             }
