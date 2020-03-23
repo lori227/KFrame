@@ -12,6 +12,7 @@ namespace KFrame
         __STRING_DEFINE__( sign );
         __STRING_DEFINE__( app );
         __STRING_DEFINE__( id );
+        __STRING_DEFINE__( uuid );
         __STRING_DEFINE__( master );
         __STRING_DEFINE__( proxy );
         __STRING_DEFINE__( shard );

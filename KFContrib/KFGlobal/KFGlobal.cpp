@@ -89,6 +89,11 @@ namespace KFrame
 
     uint32 KFGlobal::RandRatio( uint32 ratio )
     {
+        if ( ratio == 0u )
+        {
+            return 0u;
+        }
+
         auto value = _kf_rand->Rand32();
         return value % ratio;
     }

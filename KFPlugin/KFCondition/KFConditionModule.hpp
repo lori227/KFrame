@@ -65,13 +65,13 @@ namespace KFrame
         // 初始化条件
         uint32 InitConditionData( KFEntity* kfentity, KFData* kfcondition, uint32 limitmask, bool update );
         // 初始化计算数量
-        uint32 InitCalcRecordCount( KFEntity* kfentity, const KFConditionSetting* kfsetting );
+        uint32 InitCalcRecordCount( KFEntity* kfentity, KFData* kfcondition, const KFConditionSetting* kfsetting );
         // 计算是否存在
-        uint32 InitCalcRecordExist( KFEntity* kfentity, const KFConditionSetting* kfsetting );
+        uint32 InitCalcRecordExist( KFEntity* kfentity, KFData* kfcondition, const KFConditionSetting* kfsetting );
         // 计算获得数值
-        uint32 InitCalcGetValue( KFEntity* kfentity, const KFConditionSetting* kfsetting );
+        uint32 InitCalcGetValue( KFEntity* kfentity, KFData* kfcondition, const KFConditionSetting* kfsetting );
         // 初始化计算数值
-        uint32 InitCalcRecordValue( KFEntity* kfentity, const KFConditionSetting* kfsetting );
+        uint32 InitCalcRecordValue( KFEntity* kfentity, KFData* kfcondition, const KFConditionSetting* kfsetting );
         // 获得集合列表
         std::list< KFData* >& FindRecordList( KFEntity* kfentity, const std::string& name );
 
@@ -98,6 +98,12 @@ namespace KFrame
 
         // 计算更新数值
         std::tuple<uint32, uint32> CalcUpdateConditionValue( KFEntity* kfentity, const KFConditionDefine* kfsetting, KFData* kfdata, uint32 operate, uint64 value, uint64 nowvalue );
+
+        // 保存纪录的keyid
+        void SaveConditionDataUUid( KFEntity* kfentity, KFData* kfcondition, KFData* kfdata, const KFConditionDefine* kfsetting );
+
+        // 判断是否存在key
+        bool CheckUUidInConditionData( KFEntity* kfentity, KFData* kfcondition, KFData* kfdata, const KFConditionDefine* kfsetting );
     };
 }
 

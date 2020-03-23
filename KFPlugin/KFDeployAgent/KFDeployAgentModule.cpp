@@ -560,7 +560,7 @@ namespace KFrame
         }
 
         offile << deploydata->_process_id;
-        offile << __SPLIT_STRING__;
+        offile << __OR_STRING__;
         offile << deploydata->_startup_time;
 
         offile.flush();
@@ -582,8 +582,8 @@ namespace KFrame
         infile.close();
 
         std::string strdata = os.str();
-        deploydata->_process_id = KFUtility::SplitValue< uint32 >( strdata, __SPLIT_STRING__ );
-        deploydata->_startup_time = KFUtility::SplitValue< uint64 >( strdata, __SPLIT_STRING__ );
+        deploydata->_process_id = KFUtility::SplitValue< uint32 >( strdata, __OR_STRING__ );
+        deploydata->_startup_time = KFUtility::SplitValue< uint64 >( strdata, __OR_STRING__ );
     }
 
     bool KFDeployAgentModule::IsAgentDeploy( const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid )

@@ -450,7 +450,7 @@ void CKFDeployDlg::OnLbnSelchangeListDeploy()
     _list_deploy.GetText( index, strtitle );
 
     std::string title = strtitle.GetBuffer();
-    auto id = KFUtility::SplitString( title, __SPLIT_STRING__ );
+    auto id = KFUtility::SplitString( title, __OR_STRING__ );
 
     auto deploydata = _deploy_manage->_deploy_data.Find( id );
     if ( deploydata == nullptr )

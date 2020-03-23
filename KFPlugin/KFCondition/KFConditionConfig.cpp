@@ -12,6 +12,11 @@ namespace KFrame
             kfsetting->_init_calc_type = xmlnode.GetUInt32( "InitCalc" );
         }
 
+        if ( !kfsetting->_is_save_uuid )
+        {
+            kfsetting->_is_save_uuid = xmlnode.GetBoolen( "SaveUUid" );
+        }
+
         KFConditionTrigger trigger;
         trigger._call_type = xmlnode.GetUInt32( "CallType" );
         trigger._trigger_type = xmlnode.GetUInt32( "TriggerType" );

@@ -18,6 +18,9 @@ namespace KFrame
         // 数值
         uint32 _data_value;
 
+        // 子属性
+        std::string _child_name;
+
         // 完成条件
         uint32 _condition_type = 0u;
         UInt32Vector _unlock_condition;

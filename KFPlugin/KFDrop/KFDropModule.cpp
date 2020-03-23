@@ -308,7 +308,7 @@ namespace KFrame
         auto dropdata = &kfdropdataweight->_drop_data;
         if ( dropdata->_max_value == 0u )
         {
-            return;
+            return __LOG_ERROR_FUNCTION__( function, line, "dropgroup=[{}] dropdata=[{}] value=0", kfsetting->_id, dropdata->_drop_data_id );
         }
 
         if ( dropdata->_logic_name == __STRING__( drop ) )

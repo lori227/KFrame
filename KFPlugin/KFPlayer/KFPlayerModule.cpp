@@ -307,6 +307,12 @@ namespace KFrame
             kfdata->Set( value );
         }
 
+        // 调用重置函数
+        for ( auto& iter : _player_reset_function._objects )
+        {
+            auto kffunction = iter.second;
+            kffunction->_function( player );
+        }
         // 调用函数, 处理进入游戏的一些事务逻辑
         for ( auto& iter : _player_before_enter_function._objects )
         {
@@ -319,12 +325,6 @@ namespace KFrame
             kffunction->_function( player );
         }
         for ( auto& iter : _player_after_enter_function._objects )
-        {
-            auto kffunction = iter.second;
-            kffunction->_function( player );
-        }
-        // 调用重置函数
-        for ( auto& iter : _player_reset_function._objects )
         {
             auto kffunction = iter.second;
             kffunction->_function( player );

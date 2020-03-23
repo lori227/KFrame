@@ -32,13 +32,7 @@ namespace KFrame
         {
             auto kfsetting = iter.second;
             auto kfdatarecord = player->Find( kfsetting->_data_name );
-            if ( kfdatarecord == nullptr )
-            {
-                continue;
-            }
-
-            auto kfdata = kfdatarecord->Find( kfsetting->_data_id );
-            if ( kfdata != nullptr )
+            if ( kfdatarecord == nullptr || !CheckNeedUnlock( player, kfsetting, kfdatarecord ) )
             {
                 continue;
             }
@@ -74,13 +68,7 @@ namespace KFrame
     void KFUnlockModule::UnlockPlayerData( KFEntity* player, const KFUnlockSetting* kfsetting )
     {
         auto kfdatarecord = player->Find( kfsetting->_data_name );
-        if ( kfdatarecord == nullptr )
-        {
-            return;
-        }
-
-        auto kfdata = kfdatarecord->Find( kfsetting->_data_id );
-        if ( kfdata != nullptr )
+        if ( kfdatarecord == nullptr || !CheckNeedUnlock( player, kfsetting, kfdatarecord ) )
         {
             return;
         }
@@ -88,22 +76,56 @@ namespace KFrame
         UnlockPlayerData( player, kfsetting, kfdatarecord );
     }
 
-    void KFUnlockModule::UnlockPlayerData( KFEntity* player, const KFUnlockSetting* kfsetting, KFData* kfdatarecord )
+    bool KFUnlockModule::CheckNeedUnlock( KFEntity* player, const KFUnlockSetting* kfsetting, KFData* kfdatarecord )
     {
-        auto kfdata = player->CreateData( kfdatarecord );
-
-        if ( kfsetting->_data_name == __STRING__( build ) )
+        auto kfdata = kfdatarecord->Find( kfsetting->_data_id );
+        if ( kfsetting->_child_name.empty() )
         {
-            kfdata->Set( __STRING__( unlock ), KFGlobal::Instance()->_real_time );
-            kfdata->Set( kfdatarecord->_data_setting->_value_key_name, kfsetting->_data_value );
+            if ( kfdata != nullptr )
+            {
+                return false;
+            }
+        }
+        else
+        {
+            if ( kfdata != nullptr && kfdata->Get<uint32>( kfsetting->_child_name ) != 0u )
+            {
+                return false;
+            }
         }
 
-        player->AddData( kfdatarecord, kfsetting->_data_id, kfdata );
+        return true;
+    }
+
+    void KFUnlockModule::UnlockPlayerData( KFEntity* player, const KFUnlockSetting* kfsetting, KFData* kfdatarecord )
+    {
+        auto kfdata = kfdatarecord->Find( kfsetting->_data_id );
+        if ( kfsetting->_child_name.empty() )
+        {
+            if ( kfdata == nullptr )
+            {
+                kfdata = player->CreateData( kfdatarecord );
+                kfdata->Set( __STRING__( unlock ), KFGlobal::Instance()->_real_time );
+                kfdata->Set( kfdatarecord->_data_setting->_value_key_name, kfsetting->_data_value );
+                player->AddData( kfdatarecord, kfsetting->_data_id, kfdata );
+            }
+        }
+        else
+        {
+            if ( kfdata != nullptr )
+            {
+                auto value = kfdata->Get<uint32>( kfsetting->_child_name );
+                if ( value == 0u )
+                {
+                    player->UpdateData( kfdata, kfsetting->_child_name, KFEnum::Set, kfsetting->_data_value );
+                }
+            }
+        }
     }
 
 #define __UPDATE_UNLOCK_LIST__( updatefunction )\
     UInt32List removes;\
-    std::map< KFData*, const KFUnlockSetting* > _update_lock;\
+    std::set< const KFUnlockSetting* > _update_lock;\
     auto kfunlockrecord = player->Find( __STRING__( unlock ) );\
     for ( auto kfunlock = kfunlockrecord->First(); kfunlock != nullptr; kfunlock = kfunlockrecord->Next() )\
     {\
@@ -112,19 +134,24 @@ namespace KFrame
         if ( kfsetting == nullptr )\
         {\
             removes.push_back( unlockid );\
-            continue;\
         }\
-        auto kfconditionobject = kfunlock->Find( __STRING__( conditions ) );\
-        _update_lock[ kfconditionobject ] = kfsetting;\
+        else\
+        {\
+            _update_lock.insert( kfsetting ); \
+        }\
     }\
     for ( auto unlockid : removes )\
     {\
         kfunlockrecord->Remove( unlockid );\
     }\
-    for ( auto& iter : _update_lock )\
+    for ( auto kfsetting : _update_lock )\
     {\
-        auto kfconditionobject = iter.first;\
-        auto kfsetting = iter.second;\
+        auto kfunlock = kfunlockrecord->Find( kfsetting->_id );\
+        if ( kfunlock == nullptr )\
+        {\
+            continue;\
+        }\
+        auto kfconditionobject = kfunlock->Find( __STRING__( conditions ) );\
         auto complete = updatefunction;\
         if ( complete )\
         {\

@@ -69,10 +69,13 @@ namespace KFrame
         static std::string FormatConfigFile( const std::string& filename, uint32 channel, uint32 service );
         ////////////////////////////////////////////////////////////////////////////////////////////////
         // 获得map中最大的值
-        static uint32 GetMaxMapValue( UInt32Map& mapvalues, uint32 value );
+        static uint32 GetMaxMapValue( const UInt32Map& mapvalues, uint32 value );
 
         // 按权重随机map
-        static uint32 RandMapValue( UInt32Map& mapvalues, uint32 totalweight, uint32 rand );
+        static uint32 RandMapValue( const UInt32Map& mapvalues, uint32 totalweight, uint32 rand );
+
+        // 随机一个值
+        static uint32 RandVectorValue( const UInt32Vector& vectorvalues, const UInt32Set& excludes );
 
     };
 }

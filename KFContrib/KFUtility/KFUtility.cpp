@@ -1,6 +1,7 @@
 ﻿#include "KFUtility.h"
 #include "KFMacros.h"
 #include "Poco/File.h"
+#include "KFGlobal/KFGlobal.h"
 
 #if __KF_SYSTEM__ == __KF_WIN__
     #include <winsock2.h>
@@ -170,7 +171,7 @@ namespace KFrame
         return configfile;
     }
 
-    uint32 KFUtility::GetMaxMapValue( UInt32Map& mapvalues, uint32 value )
+    uint32 KFUtility::GetMaxMapValue( const UInt32Map& mapvalues, uint32 value )
     {
         auto findvalue = 0u;
         for ( auto& iter : mapvalues )
@@ -186,7 +187,7 @@ namespace KFrame
         return findvalue;
     }
 
-    uint32 KFUtility::RandMapValue( UInt32Map& mapvalues, uint32 totalweight, uint32 rand )
+    uint32 KFUtility::RandMapValue( const UInt32Map& mapvalues, uint32 totalweight, uint32 rand )
     {
         if ( totalweight > 0u )
         {
@@ -203,5 +204,33 @@ namespace KFrame
         }
 
         return 0u;
+    }
+
+    uint32 KFUtility::RandVectorValue( const UInt32Vector& vectorvalues, const UInt32Set& excludes )
+    {
+        UInt32Vector tempvalues;
+        if ( excludes.empty() || excludes.size() >= vectorvalues.size() )
+        {
+            tempvalues = vectorvalues;
+        }
+        else
+        {
+            for ( auto value : vectorvalues )
+            {
+                if ( excludes.find( value ) == excludes.end() )
+                {
+                    tempvalues.push_back( value );
+                }
+            }
+        }
+
+        auto size = ( uint32 )tempvalues.size();
+        if ( size == 0u )
+        {
+            return 0u;
+        }
+
+        auto index = KFGlobal::Instance()->RandRatio( size );
+        return tempvalues.at( index );
     }
 }

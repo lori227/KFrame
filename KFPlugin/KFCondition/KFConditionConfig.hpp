@@ -52,6 +52,9 @@ namespace KFrame
         // 初始值
         uint32 _init_calc_type;
 
+        // 是否保存uuid
+        bool _is_save_uuid = false;
+
         // 触发列表
         std::vector< KFConditionTrigger > _trigger_list;
     };
