@@ -256,10 +256,16 @@ namespace KFrame
         __STRING_DEFINE__( remote );
         __STRING_DEFINE__( project );
         __STRING_DEFINE__( element );
-        __STRING_DEFINE__( recommendzone );
+        __STRING_DEFINE__( recommend );
+        __STRING_DEFINE__( zonerecommend );
         __STRING_DEFINE__( newplayer );
         __STRING_DEFINE__( newrole );
         __STRING_DEFINE__( build );
+        __STRING_DEFINE__( normal );
+        __STRING_DEFINE__( disconnecttime );
+        __STRING_DEFINE__( authdatabase );
+        __STRING_DEFINE__( dirdatabase );
+        __STRING_DEFINE__( paydatabase );
 
     }
 }

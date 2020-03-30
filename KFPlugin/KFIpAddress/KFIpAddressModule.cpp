@@ -193,13 +193,24 @@ namespace KFrame
     }
 #endif
 
+    const std::string& KFIpAddressModule::GetLogUrl()
+    {
+        return KFIpConfig::Instance()->_log_url;
+    }
+
     const std::string& KFIpAddressModule::GetAuthUrl()
     {
         return KFIpConfig::Instance()->_auth_url;
     }
 
-    const std::string& KFIpAddressModule::GetLogUrl()
+    const std::string& KFIpAddressModule::GetDirUrl()
     {
-        return KFIpConfig::Instance()->_log_url;
+        return KFIpConfig::Instance()->_dir_url;
     }
+
+    const std::string& KFIpAddressModule::GetPayUrl()
+    {
+        return KFIpConfig::Instance()->_pay_url;
+    }
+
 }

@@ -100,7 +100,7 @@ namespace KFrame
 
         for ( auto& strid : queryidlist->_value )
         {
-            auto relationid = KFUtility::ToValue< uint64 >( strid );
+            auto relationid = __TO_UINT64__( strid );
 
             // 好友的基本信息
             auto publicdata = _public_redis->QueryMap( "hgetall {}:{}", __STRING__( public ), relationid );
@@ -145,7 +145,7 @@ namespace KFrame
 
         for ( auto& strid : queryidlist->_value )
         {
-            auto friendid = KFUtility::ToValue< uint64 >( strid );
+            auto friendid = __TO_UINT64__( strid );
 
             // 获得邀请的数据
             auto queryinvitedata = _relation_redis_driver->QueryMap( "hgetall {}:{}:{}", kfsetting->_invite_data_name, kfmsg.playerid(), friendid );
@@ -196,7 +196,7 @@ namespace KFrame
         }
 
         // 是否已经设置拒绝
-        auto refuseinvite = KFUtility::ToValue< uint64 >( querytargetdata->_value[ kfsetting->_refuse_name ] );
+        auto refuseinvite = __TO_UINT64__( querytargetdata->_value[ kfsetting->_refuse_name ] );
         if ( refuseinvite != _invalid_int )
         {
             return _kf_display->SendToPlayer( route, KFMsg::RelationRefuseInvite, kfmsg.playername() );
@@ -225,7 +225,7 @@ namespace KFrame
         _kf_display->SendToPlayer( route, KFMsg::RelationInviteOk, kfmsg.playername() );
 
         // 判断对方是否在线, 如果在线直接发送消息
-        auto serverid = KFUtility::ToValue< uint64 >( querytargetdata->_value[ __STRING__( serverid ) ] );
+        auto serverid = __TO_UINT64__( querytargetdata->_value[ __STRING__( serverid ) ] );
         if ( serverid != _invalid_int )
         {
             // 查找自己的数据
@@ -482,8 +482,8 @@ namespace KFrame
     //    for ( auto& iter : queryrecentlist->_value )
     //    {
     //        // 查询记录
-    //        auto playerid = KFUtility::ToValue< uint64 >( iter.first );
-    //        auto roomid = KFUtility::ToValue< uint64 >( iter.second );
+    //        auto playerid = __TO_UINT64__( iter.first );
+    //        auto roomid = __TO_UINT64__( iter.second );
 
     //        auto querydata = _relation_redis_driver->QueryString( "get {}:{}:{}", __STRING__( battlerecored ), playerid, roomid );
     //        if ( !querydata->IsOk() )

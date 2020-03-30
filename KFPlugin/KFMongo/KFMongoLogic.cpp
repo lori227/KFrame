@@ -107,7 +107,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFMongoLogic::Insert( const std::string& table, const KFDBValue& dbvalue )
     {
-        auto uuid = static_cast< KFMongoModule* >( _kf_mongo )->MakeUUID();
+        auto uuid = KFGlobal::Instance()->MTMakeUuid( table );
         const_cast< KFDBValue& >( dbvalue ).AddValue( MongoKeyword::_id, uuid );
         return _write_execute->Insert( table, dbvalue );
     }

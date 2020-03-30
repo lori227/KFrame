@@ -54,6 +54,6 @@ namespace KFrame
 
     void KFDouble::FromString( const std::string& value )
     {
-        _data = KFUtility::ToValue<double>( value );
+        _data = __TO_DOUBLE__( value );
     }
 }

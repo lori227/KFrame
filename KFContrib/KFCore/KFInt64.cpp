@@ -61,6 +61,6 @@ namespace KFrame
 
     void KFInt64::FromString( const std::string& value )
     {
-        SetInt64( KFUtility::ToValue<int64>( value ) );
+        SetInt64( __TO_INT64__( value ) );
     }
 }

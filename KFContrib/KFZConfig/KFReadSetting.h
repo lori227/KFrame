@@ -29,7 +29,7 @@ namespace KFrame
                 else
                 {
                     conditiontype = KFEnum::Or;
-                    auto conditionid = KFUtility::ToValue<uint32>( strcondition );
+                    auto conditionid = __TO_UINT32__( strcondition );
                     if ( conditionid != 0u )
                     {
                         conditionlist.push_back( conditionid );
@@ -80,7 +80,7 @@ namespace KFrame
                 if ( !strvalue.empty() )
                 {
                     param->_str_value = strvalue;
-                    param->_int_value = KFUtility::ToValue<uint32>( strvalue );
+                    param->_int_value = __TO_UINT32__( strvalue );
                     ParseMapUInt32( strvalue, param->_map_value );
                     KFUtility::SplitList( param->_vector_value, strvalue, __SPLIT_STRING__ );
                 }

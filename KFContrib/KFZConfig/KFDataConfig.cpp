@@ -1,5 +1,4 @@
 ﻿#include "KFDataConfig.hpp"
-#include "KFOptionConfig.hpp"
 
 namespace KFrame
 {
@@ -117,6 +116,7 @@ namespace KFrame
 
     void KFDataConfig::LoadAllComplete()
     {
+        auto kfglobal = KFGlobal::Instance();
         for ( auto& iter : KFDataConfig::Instance()->_settings._objects )
         {
             auto kfclasssetting = iter.second;
@@ -130,12 +130,11 @@ namespace KFrame
                 {
                     if ( KFUtility::IsNumber( kfdatasetting->_str_init_value ) )
                     {
-                        kfdatasetting->_int_init_value = KFUtility::ToValue< uint32 >( kfdatasetting->_str_init_value );
+                        kfdatasetting->_int_init_value = __TO_UINT32__( kfdatasetting->_str_init_value );
                     }
                     else
                     {
-                        auto kfoption = KFOptionConfig::Instance()->FindOption( kfdatasetting->_str_init_value, _invalid_string );
-                        kfdatasetting->_int_init_value = kfoption->_uint32_value;
+                        kfdatasetting->_int_init_value = kfglobal->GetUInt32( kfdatasetting->_str_init_value );
                     }
                 }
 
@@ -144,12 +143,11 @@ namespace KFrame
                 {
                     if ( KFUtility::IsNumber( kfdatasetting->_str_min_value ) )
                     {
-                        kfdatasetting->_int_min_value = KFUtility::ToValue< uint32 >( kfdatasetting->_str_min_value );
+                        kfdatasetting->_int_min_value = __TO_UINT32__( kfdatasetting->_str_min_value );
                     }
                     else
                     {
-                        auto kfoption = KFOptionConfig::Instance()->FindOption( kfdatasetting->_str_min_value, _invalid_string );
-                        kfdatasetting->_int_min_value = kfoption->_uint32_value;
+                        kfdatasetting->_int_min_value = kfglobal->GetUInt32( kfdatasetting->_str_min_value );
                     }
                 }
 
@@ -158,12 +156,11 @@ namespace KFrame
                 {
                     if ( KFUtility::IsNumber( kfdatasetting->_str_max_value ) )
                     {
-                        kfdatasetting->_int_max_value = KFUtility::ToValue< uint32 >( kfdatasetting->_str_max_value );
+                        kfdatasetting->_int_max_value = __TO_UINT32__( kfdatasetting->_str_max_value );
                     }
                     else
                     {
-                        auto kfoption = KFOptionConfig::Instance()->FindOption( kfdatasetting->_str_max_value, _invalid_string );
-                        kfdatasetting->_int_max_value = kfoption->_uint32_value;
+                        kfdatasetting->_int_max_value = kfglobal->GetUInt32( kfdatasetting->_str_max_value );
                     }
                 }
 
@@ -172,12 +169,11 @@ namespace KFrame
                 {
                     if ( KFUtility::IsNumber( kfdatasetting->_str_logic_value ) )
                     {
-                        kfdatasetting->_int_logic_value = KFUtility::ToValue< uint32 >( kfdatasetting->_str_logic_value );
+                        kfdatasetting->_int_logic_value = __TO_UINT32__( kfdatasetting->_str_logic_value );
                     }
                     else
                     {
-                        auto kfoption = KFOptionConfig::Instance()->FindOption( kfdatasetting->_str_logic_value, _invalid_string );
-                        kfdatasetting->_int_logic_value = kfoption->_uint32_value;
+                        kfdatasetting->_int_logic_value = kfglobal->GetUInt32( kfdatasetting->_str_logic_value );
                     }
                 }
             }

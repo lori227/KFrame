@@ -33,7 +33,7 @@ namespace protobuf_FrameEnumMessage_2eproto {
 void InitDefaults() {
 }
 
-const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[13];
+const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[14];
 const ::google::protobuf::uint32 TableStruct::offsets[1] = {};
 static const ::google::protobuf::internal::MigrationSchema* schemas = NULL;
 static const ::google::protobuf::Message* const* file_default_instances = NULL;
@@ -80,10 +80,12 @@ void AddDescriptorsImpl() {
       "\017\n\013TimeRefresh\020\000\022\017\n\013CostRefresh\020\001*2\n\nRan"
       "domEnum\022\021\n\rIncludeRandom\020\000\022\021\n\rExcludeRan"
       "dom\020\001*@\n\016RewardTypeEnum\022\017\n\013InvalidType\020\000"
-      "\022\017\n\013CurrenyType\020\001\022\014\n\010ItemType\020\002b\006proto3"
+      "\022\017\n\013CurrenyType\020\001\022\014\n\010ItemType\020\002*D\n\014Datab"
+      "aseEnum\022\023\n\017InvalidDatabase\020\000\022\t\n\005Redis\020\001\022"
+      "\t\n\005Mongo\020\002\022\t\n\005MySQL\020\003b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 919);
+      descriptor, 989);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "FrameEnumMessage.proto", &protobuf_RegisterTypes);
 }
@@ -292,6 +294,22 @@ bool RewardTypeEnum_IsValid(int value) {
     case 0:
     case 1:
     case 2:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::google::protobuf::EnumDescriptor* DatabaseEnum_descriptor() {
+  protobuf_FrameEnumMessage_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_FrameEnumMessage_2eproto::file_level_enum_descriptors[13];
+}
+bool DatabaseEnum_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
       return true;
     default:
       return false;

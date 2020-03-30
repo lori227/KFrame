@@ -47,7 +47,7 @@ namespace KFrame
         kfsetting->_done_type = KFAnalysis::GetCheckType( strdonetype );
         if ( kfsetting->_done_type == KFEnum::Null )
         {
-            kfsetting->_done_type = KFUtility::ToValue<uint32>( strdonetype );
+            kfsetting->_done_type = __TO_UINT32__( strdonetype );
         }
 
         for ( auto& iter : _conditon_mask_list )

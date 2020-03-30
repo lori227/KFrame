@@ -169,7 +169,8 @@ namespace KFrame
             auto ok = _kf_condition->CheckCondition( player, &kfdropweight->_conditions );
             if ( ok )
             {
-                RandDropData( player, kfsetting, outlist, kfdropweight, __FUNC_LINE__ );
+                UInt32Set excludedropdata;
+                RandDropData( player, kfsetting, outlist, kfdropweight, excludedropdata, __FUNC_LINE__ );
             }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -256,12 +257,14 @@ namespace KFrame
         auto kfdropweight = kfsetting->_rand_list.Rand( excludelist, true );
         if ( kfdropweight != nullptr )
         {
-            RandDropData( player, kfsetting, outlist, kfdropweight, __FUNC_LINE__ );
+            UInt32Set excludedropdata;
+            RandDropData( player, kfsetting, outlist, kfdropweight, excludedropdata, __FUNC_LINE__ );
         }
     }
 
     void KFDropModule::RandDropDataByProbability( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist, const UInt32Set& excludelist )
     {
+        UInt32Set excludedropdata;
         for ( auto kfdropweight : kfsetting->_rand_list._weight_data )
         {
             if ( kfdropweight->_weight == 0u )
@@ -282,11 +285,11 @@ namespace KFrame
                 continue;
             }
 
-            RandDropData( player, kfsetting, outlist, kfdropweight, __FUNC_LINE__ );
+            RandDropData( player, kfsetting, outlist, kfdropweight, excludedropdata, __FUNC_LINE__ );
         }
     }
 
-    void KFDropModule::RandDropData( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist, const KFDropGroupWeight* kfdropweight, const char* function, uint32 line )
+    void KFDropModule::RandDropData( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist, const KFDropGroupWeight* kfdropweight, UInt32Set& excludedatalist, const char* function, uint32 line )
     {
         // 如果需要重置
         if ( kfdropweight->_is_clear_var && kfsetting->_is_drop_count )
@@ -299,7 +302,7 @@ namespace KFrame
             return;
         }
 
-        auto kfdropdataweight = kfdropweight->_drop_data_setting->_drop_data_list.Rand();
+        auto kfdropdataweight = kfdropweight->_drop_data_setting->_drop_data_list.Rand( excludedatalist, true );
         if ( kfdropdataweight == nullptr )
         {
             return;
@@ -319,6 +322,12 @@ namespace KFrame
         else
         {
             outlist.push_back( dropdata );
+        }
+
+        // 添加排除项
+        if ( kfsetting->_is_exclude )
+        {
+            excludedatalist.insert( kfdropdataweight->_id );
         }
     }
 }

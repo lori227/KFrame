@@ -217,7 +217,7 @@ namespace KFrame
             auto& strmailid = mailiter.first;
 
             // 判断是否已经下发的邮件
-            auto mailid = KFUtility::ToValue<uint64>( strmailid );
+            auto mailid = __TO_UINT64__( strmailid );
             if ( mailid <= kfmsg.maxid() )
             {
                 continue;

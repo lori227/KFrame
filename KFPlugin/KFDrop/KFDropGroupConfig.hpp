@@ -37,6 +37,9 @@ namespace KFrame
         // 是否纪录掉落次数
         bool _is_drop_count = false;
 
+        // 是否排除相同的
+        bool _is_exclude = false;
+
         // 随机类型
         uint32 _rand_type = 0u;
 

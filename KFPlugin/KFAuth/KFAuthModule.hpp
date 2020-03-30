@@ -10,12 +10,11 @@
 ************************************************************************/
 
 #include "KFAuthInterface.h"
-#include "KFRedis/KFRedisInterface.h"
 #include "KFChannel/KFChannelInterface.h"
+#include "KFAccount/KFAccountInterface.h"
+#include "KFDirShard/KFDirShardInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
 #include "KFHttpServer/KFHttpServerInterface.h"
-#include "KFIpAddress/KFIpAddressInterface.h"
-#include "KFZConfig/KFZoneConfig.hpp"
 
 namespace KFrame
 {
@@ -33,69 +32,18 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
     protected:
-        // 小区信息注册
-        __KF_HTTP_FUNCTION__( HandleZoneRegister );
-
-        // 推荐小区
-        __KF_HTTP_FUNCTION__( HandleRecommendZone );
-
-        // world注册
-        __KF_HTTP_FUNCTION__( HandleWorldRegister );
-
-        // 小区信息更新
-        __KF_HTTP_FUNCTION__( HandleZoneUpdate );
-
-        // 小区信息删除
-        __KF_HTTP_FUNCTION__( HandleZoneRemove );
-
-        // 查询小区列表
-        __KF_HTTP_FUNCTION__( HandleQueryZoneList );
-
-        // 查询小区ip
-        __KF_HTTP_FUNCTION__( HandleQueryZoneIp );
-
-        // 更新小区玩家注册数量
-        __KF_HTTP_FUNCTION__( HandleZoneBalance );
-
         // 处理登录请求
         __KF_HTTP_FUNCTION__( HandleAuthLogin );
 
         // 验证token
         __KF_HTTP_FUNCTION__( HandleVerifyToken );
 
-        // 申请订单
-        __KF_HTTP_FUNCTION__( HandleApplyOrder );
+        // 更新在线信息
+        __KF_HTTP_FUNCTION__( HandleAccountOnline );
 
-        // 删除订单
-        __KF_HTTP_FUNCTION__( HandleRemoveOrder );
-
-        // 查询充值
-        __KF_HTTP_FUNCTION__( HandleQueryPay );
-
-        // 完成充值
-        __KF_HTTP_FUNCTION__( HandleFinishPay );
-
-        // 内部测试充值回调
-        __KF_HTTP_FUNCTION__( HandleInternalPay );
-
-    protected:
-        // 查询创建账号
-        StringMap QueryCreateAccount( const std::string& account, uint32 channel );
-
-        // 保存渠道数据
-        void UpdateChannelData( uint64 accountid, uint32 channel, KFJson& kfjson );
-
-        // 创建登录Token
-        std::string SaveLoginToken( uint64 accountid, StringMap& accountdata );
-
-        // 踢人下线
-        bool KickAccountOffline( uint64 playerid );
-
-        // 获得小区信息
-        std::string QueryZoneData( uint64 accountid, const std::string& token, StringMap& accountdata );
-
-        // 分配一个新小区
-        uint32 BalanceAllocZoneId();
+    private:
+        // 踢掉在线玩家
+        void KickAccount( uint32 type, uint64 accountid, StringMap& accountdata );
     };
 }
 

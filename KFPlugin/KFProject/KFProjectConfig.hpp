@@ -6,20 +6,7 @@
 
 namespace KFrame
 {
-    class KFProjectSetting : public KFStrSetting
-    {
-    public:
-        // 整型数值
-        uint64 _uint64_value = 0;
-
-        // 浮点数值
-        double _double_value = 0.0f;
-
-        // 字符串数值
-        std::string _str_value;
-    };
-
-    class KFProjectConfig : public KFConfigT< KFProjectSetting >, public KFInstance< KFProjectConfig >
+    class KFProjectConfig : public KFConfig, public KFInstance< KFProjectConfig >
     {
     public:
         KFProjectConfig()
@@ -27,10 +14,31 @@ namespace KFrame
             _file_name = "project";
         }
 
-    protected:
-        // 读取配置
-        virtual void ReadSetting( KFNode& xmlnode, KFProjectSetting* kfsetting );
+        bool LoadConfig( const std::string& filename, const std::string& filepath, uint32 loadmask );
+
+    public:
     };
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+    class KFConstantConfig : public KFConfigT< KFIntSetting >, public KFInstance< KFConstantConfig >
+    {
+    public:
+        KFConstantConfig()
+        {
+            _file_name = "constant";
+        }
+
+    protected:
+        // 创建配置
+        KFIntSetting* CreateSetting( KFNode& xmlnode );
+
+        // 读取配置
+        virtual void ReadSetting( KFNode& xmlnode, KFIntSetting* kfsetting );
+    };
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 }
 
 #endif

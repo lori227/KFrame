@@ -11,12 +11,10 @@
 
 #include "KFLoginInterface.h"
 #include "KFProtocol/KFProtocol.h"
-#include "KFTimer/KFTimerInterface.h"
-#include "KFRedis/KFRedisInterface.h"
 #include "KFMessage/KFMessageInterface.h"
-#include "KFIpAddress/KFIpAddressInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"
+#include "KFIpAddress/KFIpAddressInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
 #include "KFZConfig/KFZoneConfig.hpp"
 
@@ -30,7 +28,6 @@ namespace KFrame
 
         // 刷新
         virtual void BeforeRun();
-        virtual void PrepareRun();
 
         // 关闭
         virtual void BeforeShut();
@@ -50,14 +47,8 @@ namespace KFrame
         // 断开连接
         __KF_NET_EVENT_FUNCTION__( OnClientLostWorld );
 
-        // gate断开
-        __KF_NET_EVENT_FUNCTION__( OnServerLostGate );
-
         // 平台验证回调
         __KF_HTTP_CALL_BACK_FUNCTION__( OnHttpAuthLoginVerifyCallBack );
-
-        // 注册小区信息
-        __KF_TIMER_FUNCTION__( OnTimerZoneRegister );
 
     protected:
         // 更新小区登录信息
@@ -72,20 +63,10 @@ namespace KFrame
     protected:
         // 发送登录验证结果消息
         void SendLoginAckToGate( uint32 result, uint64 gateid, uint64 sessionid, uint64 accountid, uint64 bantime );
-
-        // 发送到world服务器
-        void LoginToWorld( const KFMsg::PBLoginData* pblogin );
-
     private:
         // 世界服务器id
         KFConHash _world_hash;
         uint64 _world_server_id = _invalid_int;
-
-        // 保存gate负载信息
-        KFMsg::PBZoneData _zone_data;
-
-        // redis
-        KFRedisDriver* _auth_redis = nullptr;
     };
 }
 

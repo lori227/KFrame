@@ -218,7 +218,7 @@ namespace KFrame
 
         if ( pbcommand->command() == __STRING__( unschedule ) )
         {
-            auto id = KFUtility::ToValue< uint64 >( pbcommand->value() );
+            auto id = __TO_UINT64__( pbcommand->value() );
             __UN_SCHEDULE_OBJECT__( id );
         }
         else

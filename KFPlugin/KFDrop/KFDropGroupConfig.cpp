@@ -9,6 +9,10 @@ namespace KFrame
         {
             kfsetting->_is_drop_count = xmlnode.GetBoolen( "DropCount", true );
         }
+        if ( !kfsetting->_is_exclude )
+        {
+            kfsetting->_is_exclude = xmlnode.GetBoolen( "Exclude", true );
+        }
         if ( kfsetting->_condition_type == 0u )
         {
             kfsetting->_condition_type = xmlnode.GetUInt32( "ConditionType" );

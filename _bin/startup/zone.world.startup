@@ -10,8 +10,7 @@
 	</Includes>
 
 	<Plugins>
-		<Plugin Name="KFRedis" Config=""/>
-		<Plugin Name="KFTimer" Config=""/>	
 		<Plugin Name="KFWorld" Config=""/>	
+		<Plugin Name="KFDirClient" Config=""/>	
 	</Plugins>
 </Setting>

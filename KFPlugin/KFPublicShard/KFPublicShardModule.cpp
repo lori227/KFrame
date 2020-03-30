@@ -37,7 +37,7 @@ namespace KFrame
         __PROTO_TO_MAP__( pbdata, values );
         _public_redis->Update( values, "hmset {}:{}", __STRING__( public ), playerid );
 
-        auto status = KFUtility::ToValue< uint32 >( values[ __STRING__( status ) ] );
+        auto status = __TO_UINT32__( values[ __STRING__( status ) ] );
         if ( status == KFMsg::FrameOnlineStatus )
         {
             _public_redis->Execute( "sadd {}:{} {}", __STRING__( onlinelist ), __ROUTE_SERVER_ID__, playerid );

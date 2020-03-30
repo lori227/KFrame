@@ -12,14 +12,12 @@
 #include "KFRole.hpp"
 #include "KFGateInterface.h"
 #include "KFTimer/KFTimerInterface.h"
-#include "KFOption/KFOptionInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFMessage/KFMessageInterface.h"
-#include "KFIpAddress/KFIpAddressInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"
-#include "KFHttpClient/KFHttpClientInterface.h"
 #include "KFDeployClient/KFDeployClientInterface.h"
+#include "KFDirClient/KFDirClientInterface.h"
 
 namespace KFrame
 {
@@ -52,7 +50,7 @@ namespace KFrame
         __KF_TRANSPOND_MESSAGE_FUNCTION__( TranspondToGame );
 
         // 更新在线玩家数量
-        __KF_TIMER_FUNCTION__( OnTimerUpdateOnlineToAuth );
+        __KF_TIMER_FUNCTION__( OnTimerUpdateOnlineToDir );
 
         // 服务器关闭命令
         __KF_DEPLOY_FUNCTION__( OnDeployShutDownServer );

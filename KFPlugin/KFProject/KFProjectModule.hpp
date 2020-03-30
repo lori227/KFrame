@@ -2,12 +2,13 @@
 #define __KF_PROJECT_MOUDLE_H__
 
 /************************************************************************
-//    @Module			:    项目配置模块
-//    @Author           :    zux
-//    @QQ				:    415906519
-//    @Mail			    :    415906519@qq.com
-//    @Date             :    2019-12-24
+//    @Module			:    项目配置
+//    @Author           :    __凌_痕__
+//    @QQ				:    7969936
+//    @Mail			    :    lori227@qq.com
+//    @Date             :    2018-7-4
 ************************************************************************/
+
 
 #include "KFProjectInterface.h"
 #include "KFProjectConfig.hpp"
@@ -25,14 +26,6 @@ namespace KFrame
 
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
-        // uint64配置
-        virtual uint64 GetUInt64( const std::string& name )override;
-
-        // double配置
-        virtual double GetDouble( const std::string& name );
-
-        // string配置
-        virtual const std::string& GetString( const std::string& name );
     };
 }
 

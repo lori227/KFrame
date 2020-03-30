@@ -333,7 +333,7 @@ namespace KFrame
                     std::string strname = childname;
                     if ( strname == __STRING__( id ) )
                     {
-                        kfelement->_config_id = KFUtility::ToValue< uint32 >( jsonchild.GetString() );
+                        kfelement->_config_id = __TO_UINT32__( jsonchild.GetString() );
                     }
                     else
                     {

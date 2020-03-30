@@ -96,17 +96,17 @@ namespace KFrame
         _app_name = values[ __STRING__( appname ) ];
         _app_type = values[ __STRING__( apptype ) ];
 
-        _is_startup = KFUtility::ToValue< uint32 >( values[ __STRING__( startup ) ] );
-        _is_debug = KFUtility::ToValue< uint32 >( values[ __STRING__( debug ) ] );
-        _is_shutdown = KFUtility::ToValue< uint32 >( values[ __STRING__( shutdown ) ] );
-        _process_id = KFUtility::ToValue< uint32 >( values[ __STRING__( process ) ] );
-        _startup_time = KFUtility::ToValue< uint64 >( values[ __STRING__( time ) ] );
+        _is_startup = __TO_UINT32__( values[ __STRING__( startup ) ] );
+        _is_debug = __TO_UINT32__( values[ __STRING__( debug ) ] );
+        _is_shutdown = __TO_UINT32__( values[ __STRING__( shutdown ) ] );
+        _process_id = __TO_UINT32__( values[ __STRING__( process ) ] );
+        _startup_time = __TO_UINT64__( values[ __STRING__( time ) ] );
         _agent_id = values[ __STRING__( agentid ) ];
         _local_ip = values[ __STRING__( localip ) ];
         _service_type = values[ __STRING__( service ) ];
         _net_type = values[ __STRING__( net ) ];
         _params = values[ __STRING__( param ) ];
-        _heartbeat = KFUtility::ToValue< uint32 >( values[ __STRING__( heartbeat ) ] );
+        _heartbeat = __TO_UINT32__( values[ __STRING__( heartbeat ) ] );
     }
 
     void KFDeployData::SaveTo( StringMap& values )

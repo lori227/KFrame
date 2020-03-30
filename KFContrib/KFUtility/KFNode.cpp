@@ -55,7 +55,7 @@ namespace KFrame
             return defaultvale;
         }
 
-        return KFUtility::ToValue<uint32>( attribute->value() ) == 1;
+        return __TO_UINT32__( attribute->value() ) == 1;
     }
 
     int32 KFNode::GetInt32( const char* key, bool optional /* = false */, int32 defaultvalue /* = 0 */ )
@@ -72,7 +72,7 @@ namespace KFrame
             return defaultvalue;
         }
 
-        return KFUtility::ToValue<int32>( attribute->value() );
+        return __TO_INT32__( attribute->value() );
     }
 
 
@@ -90,7 +90,7 @@ namespace KFrame
             return defaultvalue;
         }
 
-        return KFUtility::ToValue<uint32>( attribute->value() );
+        return __TO_UINT32__( attribute->value() );
     }
 
     uint64 KFNode::GetUInt64( const char* key, bool optional /* = false */, uint64 defaultvalue /* = 0 */ )
@@ -107,7 +107,7 @@ namespace KFrame
             return defaultvalue;
         }
 
-        return KFUtility::ToValue<uint64>( attribute->value() );
+        return __TO_UINT64__( attribute->value() );
     }
 
     std::string KFNode::GetString( const char* key, bool optional /* = false */, std::string defaultvalue/* = _invalid_string */ )

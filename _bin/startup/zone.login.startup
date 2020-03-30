@@ -10,6 +10,8 @@
 
 	<Plugins>
 		<Plugin Name="KFRedis" Config=""/>
+		<Plugin Name="KFMongo" Config=""/>
 		<Plugin Name="KFLogin" Config=""/>	
+		<Plugin Name="KFAccount" Config=""/>	
 	</Plugins>
 </Setting>

@@ -132,7 +132,7 @@ void CAddServerDlg::OnBnClickedButtonAddServer()
         return;
     }
 
-    auto zoneid = KFUtility::ToValue< uint32 >( GetEditText( _edit_zone ) );
+    auto zoneid = __TO_UINT32__( GetEditText( _edit_zone ) );
     if ( name == __STRING__( zone ) )
     {
         if ( zoneid == 0 )
@@ -142,7 +142,7 @@ void CAddServerDlg::OnBnClickedButtonAddServer()
         }
     }
 
-    auto workid = KFUtility::ToValue< uint32 >( GetEditText( _edit_id ) );
+    auto workid = __TO_UINT32__( GetEditText( _edit_id ) );
     if ( workid == 0 )
     {
         AfxMessageBox( "请输入服务器id" );

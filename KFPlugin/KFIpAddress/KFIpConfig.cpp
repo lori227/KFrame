@@ -10,11 +10,18 @@ namespace KFrame
         KFXml kfxml( filepath );
         auto config = kfxml.RootNode();
 
-        auto authnode = config.FindNode( "AuthServer" );
-        _auth_url = authnode.GetString( "Url" );
         //////////////////////////////////////////////////////////////////
         auto lognode = config.FindNode( "LogServer" );
         _log_url = lognode.GetString( "Url" );
+        //////////////////////////////////////////////////////////////////
+        auto authnode = config.FindNode( "AuthServer" );
+        _auth_url = authnode.GetString( "Url" );
+        //////////////////////////////////////////////////////////////////
+        auto dirnode = config.FindNode( "DirServer" );
+        _dir_url = authnode.GetString( "Url" );
+        //////////////////////////////////////////////////////////////////
+        auto paynode = config.FindNode( "PayServer" );
+        _pay_url = authnode.GetString( "Url" );
         //////////////////////////////////////////////////////////////////
         auto vpnnodes = config.FindNode( "Vpns" );
         if ( vpnnodes.IsValid() )

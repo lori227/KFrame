@@ -12,7 +12,6 @@
 #include "KFLuaScript.hpp"
 #include "KFLuaInterface.h"
 #include "KFKernel/KFKernelInterface.h"
-#include "KFOption/KFOptionInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
 #include "KFDeployClient/KFDeployClientInterface.h"
 
@@ -125,8 +124,8 @@ namespace KFrame
         void LuaMTPost( const char* url, const char* data, const char* args );
 
         // 获得配置变量
-        const char* LuaGetOptionString( const char* name, const char* logicid );
-        uint32 LuaGetOptionUInt32( const char* name, const char* logicid );
+        const char* LuaGetConstantString( const char* name, uint32 logicid );
+        uint32 LuaGetConstantUInt32( const char* name, uint32 logicid );
 
     protected:
         // 重新加载脚本文件

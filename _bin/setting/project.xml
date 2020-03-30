@@ -1,8 +1,22 @@
-<root version="1">
+<?xml version='1.0' encoding='utf-8' ?>
+<Config>
+	<!-- 项目开始时间 -->
+	<Project Time="1559318400"/>
+
+	<!-- 断线保留时间 -->
+	<Disconnet Time="10"/>
+
+	<!-- 数据库类型 1:redis 2:mongo 3:mysql(暂不支持)-->
+	<!-- Auth 认证服务器 -->
+	<!-- Dir 目录服务器 -->
+	<!-- Pay 充值服务器 -->
+	<Database Auth="1" Dir="1" Pay="1"/>
+
 	<!-- uuid -->
-	<item Id="projectstarttime" Value="1559318400"/>
-	<item Id="uuidtimerbits" Value="29"/>
-	<item Id="uuidzonebits" Value="8"/>
-	<item Id="uuidworkerbits" Value="10"/>
-	<item Id="uuidseqbits" Value="16"/>
-</root>
+	<Uuids>
+		<Uuid Name="normal" Time="32" Zone="0" Worker="10" Seq="21"/>
+		<Uuid Name="account" Time="32" Zone="0" Worker="10" Seq="21"/>
+		<Uuid Name="player" Time="29" Zone="8" Worker="10" Seq="16"/>
+	</Uuids>
+
+</Config>

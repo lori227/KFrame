@@ -83,7 +83,7 @@ namespace KFrame
         // deploy server
         _deploy_server_strid = kfquery->_value[ "serverid" ];
         _deploy_server_ip = kfquery->_value[ "serverip" ];
-        _deploy_server_port = KFUtility::ToValue<uint32>( kfquery->_value[ "serverport" ] );
+        _deploy_server_port = __TO_UINT32__( kfquery->_value[ "serverport" ] );
 
         // 关闭定时器
         __UN_TIMER_1__( objectid );
@@ -488,7 +488,7 @@ namespace KFrame
     uint32 KFDeployAgentModule::FindProcessIdByName( KFDeployData* deploydata )
     {
         auto strprocessid = ExecuteShell( "ps -ef|grep '{}={}'|grep -v 'grep'|awk '{{print $2}}'", __STRING__( id ), deploydata->_app_id );
-        return KFUtility::ToValue< uint32 >( strprocessid );
+        return __TO_UINT32__( strprocessid );
     }
 
     void KFDeployAgentModule::CheckLinuxProcess( KFDeployData* deploydata )
@@ -934,7 +934,7 @@ namespace KFrame
 
     void KFDeployAgentModule::StartShutDownServerTask()
     {
-        _kf_task->_start_time += KFUtility::ToValue< uint32 >( _kf_task->_value );
+        _kf_task->_start_time += __TO_UINT32__( _kf_task->_value );
 
         for ( auto& iter : _deploy_list._objects )
         {
@@ -953,7 +953,7 @@ namespace KFrame
 
     void KFDeployAgentModule::StartWaitTask()
     {
-        auto waittime = KFUtility::ToValue< uint32 >( _kf_task->_value );
+        auto waittime = __TO_UINT32__( _kf_task->_value );
         if ( waittime < 20000u )
         {
             waittime = 20000u;

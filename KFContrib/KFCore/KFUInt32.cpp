@@ -70,6 +70,6 @@ namespace KFrame
 
     void KFUInt32::FromString( const std::string& value )
     {
-        SetUInt32( KFUtility::ToValue<uint32>( value ) );
+        SetUInt32( __TO_UINT32__( value ) );
     }
 }

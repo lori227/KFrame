@@ -1,7 +1,8 @@
 ﻿#include "KFrame.h"
-#include "KFRand.h"
-#include "KFUUID.h"
+#include "KFRand.hpp"
+#include "KFUuid.hpp"
 #include "KFVersion.h"
+#include "KFConstantData.hpp"
 
 namespace KFrame
 {
@@ -15,11 +16,11 @@ namespace KFrame
         _real_time = 0;
         _listen_port = 0;
         _net_type = 0;
-        _kf_rand = new KFRand();
-        _app_id = new KFAppId();
-        _kf_version = new KFVersion();
-        _kf_uuid = new KFUUID();
-        _kf_uuid_mutex = new KFMutex();
+        _kf_rand = __NEW_OBJECT__( KFRand );
+        _app_id = __NEW_OBJECT__( KFAppId );
+        _kf_version = __NEW_OBJECT__( KFVersion );
+        _kf_uuid = __NEW_OBJECT__( KFUuid );
+        _kf_constant_data = __NEW_OBJECT__( KFConstantData );
     }
 
     KFGlobal::~KFGlobal()
@@ -27,12 +28,8 @@ namespace KFrame
         __DELETE_OBJECT__( _app_id );
         __DELETE_OBJECT__( _kf_rand );
         __DELETE_OBJECT__( _kf_version );
-
-        for ( auto& iter : _kf_uuids )
-        {
-            delete iter.second;
-        }
-        _kf_uuids.clear();
+        __DELETE_OBJECT__( _kf_uuid );
+        __DELETE_OBJECT__( _kf_constant_data );
     }
 
     void KFGlobal::Initialize( KFGlobal* kfglobal )
@@ -134,7 +131,7 @@ namespace KFrame
 
     void KFGlobal::InitNetType( std::string& strtype )
     {
-        _net_type = KFUtility::ToValue< uint32 >( strtype );
+        _net_type = __TO_UINT32__( strtype );
         if ( _net_type == 0u )
         {
             _net_type = KFServerEnum::Local;
@@ -174,71 +171,102 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFGlobal::UUIDStartTime( uint64 starttime )
+    // 初始化配置
+    void KFGlobal::AddUuidSetting( const std::string& name, uint32 timebits, uint32 zonebits, uint32 workerbits, uint32 seqbits )
     {
-        _uuid_setting.InitStartTime( starttime );
-        _kf_uuid->InitStartTime( starttime );
+        _kf_uuid->AddSetting( name, _project_time, timebits, zonebits, workerbits, seqbits );
     }
 
-    void KFGlobal::UUIDSetting( uint32 timebits, uint32 zonebits, uint32 workerbits, uint32 seqbits )
+    uint64 KFGlobal::STMakeUuid()
     {
-        _uuid_setting.InitSetting( timebits, zonebits, workerbits, seqbits );
-        _kf_uuid->InitSetting( timebits, zonebits, workerbits, seqbits );
+        return _kf_uuid->STMake( __STRING__( normal ), _app_id->GetZoneId(), _app_id->GetWorkId(), _real_time );
     }
 
-    KFUUID* KFGlobal::CreateUUID( const std::string& name )
+    uint64 KFGlobal::MTMakeUuid()
     {
-        auto iter = _kf_uuids.find( name );
-        if ( iter == _kf_uuids.end() )
-        {
-            auto kfuuid = new KFUUID();
-            kfuuid->InitStartTime( _uuid_setting._start_time );
-            kfuuid->InitSetting( _uuid_setting._time_bits, _uuid_setting._zone_bits, _uuid_setting._worker_bits, _uuid_setting._seq_bits );
-            iter = _kf_uuids.emplace( name, kfuuid ).first;
-        }
-
-        return iter->second;
+        return _kf_uuid->MTMake( __STRING__( normal ), _app_id->GetZoneId(), _app_id->GetWorkId(), _real_time );
     }
 
-    uint64 KFGlobal::STMakeUUID()
+    uint64 KFGlobal::STMakeUuid( const std::string& name )
     {
-        auto zoneid = _app_id->GetZoneId();
-        auto workerid = _app_id->GetWorkId();
-        return _kf_uuid->Make( zoneid, workerid, _real_time );
+        return _kf_uuid->STMake( name, _app_id->GetZoneId(), _app_id->GetWorkId(), _real_time );
     }
 
-    uint64 KFGlobal::MTMakeUUID()
+    uint64 KFGlobal::MTMakeUuid( const std::string& name )
     {
-        KFLocker locker( *_kf_uuid_mutex );
-        return STMakeUUID();
+        return _kf_uuid->MTMake( name, _app_id->GetZoneId(), _app_id->GetWorkId(), _real_time );
     }
 
-    uint64 KFGlobal::STMakeUUID( const std::string& name )
+    uint64 KFGlobal::STMakeUuid( const std::string& name, uint32 zoneid )
     {
-        auto zoneid = _app_id->GetZoneId();
-        auto workerid = _app_id->GetWorkId();
-
-        auto kfuuid = CreateUUID( name );
-        return kfuuid->Make( zoneid, workerid, _real_time );
+        return _kf_uuid->STMake( name, zoneid, _app_id->GetWorkId(), _real_time );
     }
 
-    uint64 KFGlobal::MTMakeUUID( const std::string& name )
+    uint64 KFGlobal::MTMakeUuid( const std::string& name, uint32 zoneid )
     {
-        KFLocker locker( *_kf_uuid_mutex );
-        return STMakeUUID( name );
+        return _kf_uuid->MTMake( name, zoneid, _app_id->GetWorkId(), _real_time );
     }
 
-    uint32 KFGlobal::STUUIDZoneId( const std::string& name, uint64 uuid )
+    uint32 KFGlobal::STUuidZoneId( const std::string& name, uint64 uuid )
     {
-        auto kfuuid = CreateUUID( name );
-        return kfuuid->ZoneId( uuid );
+        return _kf_uuid->STZoneId( name, uuid );
     }
 
-    uint32 KFGlobal::MTUUIDZoneId( const std::string& name, uint64 uuid )
+    uint32 KFGlobal::MTUuidZoneId( const std::string& name, uint64 uuid )
     {
-        KFLocker locker( *_kf_uuid_mutex );
-        return STUUIDZoneId( name, uuid );
+        return _kf_uuid->MTZoneId( name, uuid );
     }
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    std::tuple<uint64, uint32, uint32, uint32> KFGlobal::STUuidParse( const std::string& name, uint64 uuid )
+    {
+        return _kf_uuid->STParse( name, uuid );
+    }
+
+    std::tuple<uint64, uint32, uint32, uint32> KFGlobal::MTUuidParse( const std::string& name, uint64 uuid )
+    {
+        return _kf_uuid->MTParse( name, uuid );
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // 添加常量
+    void KFGlobal::AddConstant( const std::string& name, uint32 key, uint32 value )
+    {
+        _kf_constant_data->AddConstant( name, key, value );
+    }
+
+    void KFGlobal::AddConstant( const std::string& name, uint32 key, double value )
+    {
+        _kf_constant_data->AddConstant( name, key, value );
+    }
+
+    void KFGlobal::AddConstant( const std::string& name, uint32 key, const std::string& value )
+    {
+        _kf_constant_data->AddConstant( name, key, value );
+    }
+
+    // 获得常量
+    const KFConstant* KFGlobal::FindConstant( const std::string& name, uint32 key )
+    {
+        return _kf_constant_data->FindConstant( name, key );
+    }
+
+    // uint32配置
+    uint32 KFGlobal::GetUInt32( const std::string& name, uint32 key )
+    {
+        return _kf_constant_data->GetUInt32( name, key );
+    }
+
+    // double配置
+    double KFGlobal::GetDouble( const std::string& name, uint32 key )
+    {
+        return _kf_constant_data->GetDouble( name, key );
+    }
+
+    // string配置
+    const std::string& KFGlobal::GetString( const std::string& name, uint32 key )
+    {
+        return _kf_constant_data->GetString( name, key );
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }

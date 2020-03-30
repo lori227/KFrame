@@ -173,8 +173,8 @@ namespace KFrame
         __LUA_FUNCTION__( "STHttpPost", &KFLuaModule::LuaSTPost );
         __LUA_FUNCTION__( "MTHttpGet", &KFLuaModule::LuaMTGet );
         __LUA_FUNCTION__( "MTHttpPost", &KFLuaModule::LuaMTPost );
-        __LUA_FUNCTION__( "GetOptionString", &KFLuaModule::LuaGetOptionString );
-        __LUA_FUNCTION__( "GetOptionUInt32", &KFLuaModule::LuaGetOptionUInt32 );
+        __LUA_FUNCTION__( "GetConstantString", &KFLuaModule::LuaGetConstantString );
+        __LUA_FUNCTION__( "GetConstantUInt32", &KFLuaModule::LuaGetConstantUInt32 );
 
         LuaPlus::LuaObject kframeobject = kfscript->_lua_state->BoxPointer( this );
         kframeobject.SetMetatable( metatableobject );
@@ -393,14 +393,14 @@ namespace KFrame
         Call( luafile, luafunction, objectid, senddata, recvdata );
     }
 
-    const char* KFLuaModule::LuaGetOptionString( const char* name, const char* logicid )
+    const char* KFLuaModule::LuaGetConstantString( const char* name, uint32 logicid )
     {
-        auto& strvalue = _kf_option->GetString( name, logicid );
+        auto& strvalue = KFGlobal::Instance()->GetString( name, logicid );
         return strvalue.c_str();
     }
 
-    uint32 KFLuaModule::LuaGetOptionUInt32( const char* name, const char* logicid )
+    uint32 KFLuaModule::LuaGetConstantUInt32( const char* name, uint32 logicid )
     {
-        return _kf_option->GetUInt32( name, logicid );
+        return KFGlobal::Instance()->GetUInt32( name, logicid );
     }
 }

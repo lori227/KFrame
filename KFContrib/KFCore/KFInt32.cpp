@@ -71,6 +71,6 @@ namespace KFrame
 
     void KFInt32::FromString( const std::string& value )
     {
-        SetInt32( KFUtility::ToValue<int32>( value ) );
+        SetInt32( __TO_INT32__( value ) );
     }
 }

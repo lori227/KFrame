@@ -758,7 +758,7 @@ void CKFDeployDlg::RefreshAgentData( const KFMsg::PBMySQLDatas* pbdatas )
         _list_agent.SetItemText( i, ++column, pbvalues[ __STRING__( port ) ].c_str() );
 
         // 状态
-        auto status = KFUtility::ToValue< uint32 >( pbvalues[ __STRING__( status ) ] );
+        auto status = __TO_UINT32__( pbvalues[ __STRING__( status ) ] );
         _list_agent.SetItemText( i, ++column, KFDeploy::_status_name[ status ] );
 
         // 执行命令
@@ -906,7 +906,7 @@ void CKFDeployDlg::RefreshServerList( const KFMsg::PBMySQLDatas* pbdatas )
 
         // net
         {
-            auto nettype = KFUtility::ToValue<uint32 >( pbvalues[ __STRING__( net ) ] );
+            auto nettype = __TO_UINT32__( pbvalues[ __STRING__( net ) ] );
             _list_server.SetItemText( i, ++column, KFDeploy::_net_name[ nettype ] );
         }
 
@@ -917,11 +917,11 @@ void CKFDeployDlg::RefreshServerList( const KFMsg::PBMySQLDatas* pbdatas )
         _list_server.SetItemText( i, ++column, pbvalues[ __STRING__( startup ) ].c_str() );
 
         // debug
-        auto debug = KFUtility::ToValue< uint32 >( pbvalues[ __STRING__( debug ) ] );
+        auto debug = __TO_UINT32__( pbvalues[ __STRING__( debug ) ] );
         _list_server.SetItemText( i, ++column,  KFDeploy::_mode_name[ debug ] );
 
         // shutdown
-        auto shutdown = KFUtility::ToValue< uint32 >( pbvalues[ __STRING__( shutdown ) ] ) == 1 ? 0 : 1;
+        auto shutdown = __TO_UINT32__( pbvalues[ __STRING__( shutdown ) ] ) == 1 ? 0 : 1;
         _list_server.SetItemText( i, ++column,  KFDeploy::_status_name[shutdown] );
 
         // 版本
@@ -929,7 +929,7 @@ void CKFDeployDlg::RefreshServerList( const KFMsg::PBMySQLDatas* pbdatas )
 
         // 启动时间
         {
-            auto time = KFUtility::ToValue( pbvalues[ __STRING__( time ) ] );
+            auto time = __TO_UINT64__( pbvalues[ __STRING__( time ) ] );
             auto strtime = KFDate::GetTimeString( time );
             _list_server.SetItemText( i, ++column, strtime.c_str() );
         }
@@ -1232,7 +1232,7 @@ void CKFDeployDlg::OnCbnSelchangeComboZone()
     std::string type = strtext.GetBuffer();
 
     _combo_zone.GetWindowTextA( strtext );
-    auto zoneid = KFUtility::ToValue< uint32 >( strtext.GetBuffer() );
+    auto zoneid = __TO_UINT32__( strtext.GetBuffer() );
 
     StringSet idlist;
     for ( auto data : _deploy_manage->_server_data )
@@ -1317,7 +1317,7 @@ void CKFDeployDlg::OnBnClickedButtonAddCommand()
     std::string type = strtext.GetBuffer();
 
     _combo_zone.GetWindowTextA( strtext );
-    auto zoneid = KFUtility::ToValue< uint32 >( strtext.GetBuffer() );
+    auto zoneid = __TO_UINT32__( strtext.GetBuffer() );
 
     _combo_id.GetWindowTextA( strtext );
     std::string appid = strtext.GetBuffer();

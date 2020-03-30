@@ -2,14 +2,15 @@
 #define __KF_GOLBAL_H__
 
 #include "KFDefine.h"
-#include "KFUUID.h"
+#include "KFConstant.h"
 
 namespace KFrame
 {
     class KFRand;
     class KFAppId;
     class KFVersion;
-    class KFMutex;
+    class KFUuid;
+    class KFConstantData;
 
     class KFGlobal
     {
@@ -58,30 +59,50 @@ namespace KFrame
         bool CheckChannelService( uint32 channel, uint32 service );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // 设置uuid
-        void UUIDStartTime( uint64 starttime );
-        void UUIDSetting( uint32 timebits, uint32 zonebits, uint32 workerbits, uint32 seqbits );
+        // 初始化配置
+        void AddUuidSetting( const std::string& name, uint32 timebits, uint32 zonebits, uint32 workerbits, uint32 seqbits );
 
-        // 创建uuid
-        uint64 STMakeUUID();
-        uint64 MTMakeUUID();
+        // 生成uuid
+        uint64 STMakeUuid();
+        uint64 MTMakeUuid();
 
-        uint64 STMakeUUID( const std::string& name );
-        uint64 MTMakeUUID( const std::string& name );
+        uint64 STMakeUuid( const std::string& name );
+        uint64 MTMakeUuid( const std::string& name );
+
+        uint64 STMakeUuid( const std::string& name, uint32 zoneid );
+        uint64 MTMakeUuid( const std::string& name, uint32 zoneid );
 
         // 获得zoneid
-        uint32 STUUIDZoneId( const std::string& name, uint64 uuid );
-        uint32 MTUUIDZoneId( const std::string& name, uint64 uuid );
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        uint32 STUuidZoneId( const std::string& name, uint64 uuid );
+        uint32 MTUuidZoneId( const std::string& name, uint64 uuid );
 
+        // 解析guid( time, zone, worker, seq )
+        std::tuple<uint64, uint32, uint32, uint32> STUuidParse( const std::string& name, uint64 uuid );
+        std::tuple<uint64, uint32, uint32, uint32> MTUuidParse( const std::string& name, uint64 uuid );
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 添加常量
+        void AddConstant( const std::string& name, uint32 key, uint32 value );
+        void AddConstant( const std::string& name, uint32 key, double value );
+        void AddConstant( const std::string& name, uint32 key, const std::string& value );
+
+        // 获得常量
+        const KFConstant* FindConstant( const std::string& name, uint32 key = 0u );
+
+        // uint32配置
+        uint32 GetUInt32( const std::string& name, uint32 key = 0u );
+
+        // double配置
+        double GetDouble( const std::string& name, uint32 key = 0u );
+
+        // string配置
+        const std::string& GetString( const std::string& name, uint32 key = 0u );
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     protected:
         KFGlobal();
         // 接口
         static KFGlobal* _kf_global;
-
-        // 创建uuid
-        KFUUID* CreateUUID( const std::string& name );
 
     public:
         // 程序运行
@@ -125,20 +146,24 @@ namespace KFrame
 
         // 启动参数
         StringMap _startup_params;
-
-        /////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+        // 项目开始时间
+        uint64 _project_time = 0u;
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////
     private:
         // 版本
-        KFVersion* _kf_version;
+        KFVersion* _kf_version = nullptr;
 
         // 单线程随机类
-        KFRand* _kf_rand;
+        KFRand* _kf_rand = nullptr;
 
         // uuid
-        KFUUIDSetting _uuid_setting;
-        KFUUID* _kf_uuid = nullptr;
-        KFMutex* _kf_uuid_mutex = nullptr;
-        std::unordered_map< std::string, KFUUID*> _kf_uuids;
+        KFUuid* _kf_uuid = nullptr;
+
+        // 常量配置
+        KFConstantData* _kf_constant_data = nullptr;
     };
     //////////////////////////////////////////////////////////////////////////////////////////
 

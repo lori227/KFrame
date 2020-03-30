@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="KFDirShardModule.cpp" />
+    <ClCompile Include="KFDirShardPlugin.cpp" />
+    <ClCompile Include="KFDirShardLogic.cpp" />
+    <ClCompile Include="KFDirShardMongo.cpp" />
+    <ClCompile Include="KFDirShardRedis.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="KFDirShardInterface.h" />
+    <ClInclude Include="KFDirShardModule.hpp" />
+    <ClInclude Include="KFDirShardPlugin.hpp" />
+    <ClInclude Include="KFDirShardLogic.hpp" />
+    <ClInclude Include="KFDirShardMongo.hpp" />
+    <ClInclude Include="KFDirShardRedis.hpp" />
+  </ItemGroup>
+</Project>

@@ -231,7 +231,7 @@ namespace KFrame
             }
             else if ( !KFRedisFormat::IsEmptyString( redisreply->str ) )
             {
-                kfresult->_value = KFUtility::ToValue< uint64 >( redisreply->str );
+                kfresult->_value = __TO_UINT64__( redisreply->str );
             }
         }
 

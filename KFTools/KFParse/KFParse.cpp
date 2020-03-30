@@ -75,7 +75,7 @@ namespace KFrame
             auto kfsave = sheet->FindCell( _begin_row - 1, i );
             if ( kfsave != nullptr && !kfsave->_value.empty() )
             {
-                attribute._flag = KFUtility::ToValue< uint32 >( kfsave->_value );
+                attribute._flag = __TO_UINT32__( kfsave->_value );
             }
             else
             {

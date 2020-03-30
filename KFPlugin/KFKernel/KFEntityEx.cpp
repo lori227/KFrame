@@ -290,13 +290,8 @@ namespace KFrame
 
     KFData* KFEntityEx::AddArray( KFData* kfarray, int64 value )
     {
-        auto kfdata = kfarray->Insert( value );
-        if ( kfdata == nullptr )
-        {
-            kfdata = KFDataFactory::Instance()->AddArray( kfarray );
-            kfdata->Set( value );
-        }
-
+        auto kfdata = KFDataFactory::Instance()->AddArray( kfarray );
+        kfdata->Set( value );
         return kfdata;
     }
 
@@ -942,7 +937,7 @@ namespace KFrame
         }
 
         __LOG_INFO_FUNCTION__( function, line, "{}=[{}] start add elements={} multiple=[{:0.2f}]", _kf_component->_component_name, GetKeyID(), kfelements->_str_element, multiple );
-        _element_sequence = KFGlobal::Instance()->STMakeUUID( __STRING__( element ) );
+        _element_sequence = KFGlobal::Instance()->STMakeUuid();
         for ( auto kfelement : kfelements->_element_list )
         {
             AddElement( kfelement, multiple, modulename, moduleid, function, line );
@@ -1291,7 +1286,7 @@ namespace KFrame
         if ( dataname.empty() )
         {
             __LOG_INFO_FUNCTION__( function, line, "{}=[{}] start remove elements={} multiple=[{:0.2f}]", _kf_component->_component_name, GetKeyID(), kfelements->_str_element, multiple );
-            _element_sequence = KFGlobal::Instance()->STMakeUUID( __STRING__( element ) );
+            _element_sequence = KFGlobal::Instance()->STMakeUuid();
             for ( auto kfelement : kfelements->_element_list )
             {
                 RemoveElement( kfelement, multiple, modulename, moduleid, function, line );

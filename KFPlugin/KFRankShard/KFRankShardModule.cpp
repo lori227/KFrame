@@ -69,7 +69,7 @@ namespace KFrame
             auto strrankata = querydata->_value[ __STRING__( rankdata ) ];
             KFProto::Parse( &kfrankdata->_rank_datas, strrankata, KFCompressEnum::Compress );
 
-            kfrankdata->_min_rank_score = KFUtility::ToValue< uint64 >( querydata->_value[ __STRING__( minrankscore ) ] );
+            kfrankdata->_min_rank_score = __TO_UINT64__( querydata->_value[ __STRING__( minrankscore ) ] );
         }
 
         return kfrankdata;
@@ -185,7 +185,7 @@ namespace KFrame
         auto queryzonelist = _rank_redis_driver->QueryList( "smembers {}:{}", __STRING__( ranksortlist ), rankid );
         for ( auto& strzoneid : queryzonelist->_value )
         {
-            auto zoneid = KFUtility::ToValue< uint32 >( strzoneid );
+            auto zoneid = __TO_UINT32__( strzoneid );
 
             auto kfrankdata = _kf_rank_data.Create( RankKey( rankid, zoneid ) );
             kfrankdata->_rank_id = rankid;
@@ -205,7 +205,7 @@ namespace KFrame
             auto rankindex = 0u;
             for ( auto& strplayerid : queryidlist->_value )
             {
-                auto playerid = KFUtility::ToValue< uint64 >( strplayerid );
+                auto playerid = __TO_UINT64__( strplayerid );
 
                 // 读取排行榜信息
                 auto queryrankdata = _rank_redis_driver->QueryString( "hget {} {}", rankdatakey, playerid );
@@ -231,7 +231,7 @@ namespace KFrame
                 //auto playerid = idlist.back();
                 //std::string minscore = "";
                 //_rank_driver->StringExecute( minscore, "zscore {}:{}:{} {}", __STRING__( ranksort ), rankid, zoneid, playerid );
-                //kfrankdata->_min_rank_score = KFUtility::ToValue< uint64 >( minscore );
+                //kfrankdata->_min_rank_score = __TO_UINT64__( minscore );
 
                 // 删除指定数量以后的排序
                 auto rankcount = _rank_redis_driver->QueryUInt64( "zcard {}", ranksortkey );
@@ -360,7 +360,7 @@ namespace KFrame
         auto zoneid = _invalid_int;
         if ( kfsetting->_zone_type == KFMsg::ZoneRank )
         {
-            zoneid = KFGlobal::Instance()->STUUIDZoneId( __STRING__( player ), playerid );
+            zoneid = KFGlobal::Instance()->STUuidZoneId( __STRING__( player ), playerid );
         }
 
         return zoneid;

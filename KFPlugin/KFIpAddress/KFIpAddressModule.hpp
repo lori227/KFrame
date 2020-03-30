@@ -42,11 +42,17 @@ namespace KFrame
         virtual const KFIpAddress* FindIpAddress( const std::string& appname, const std::string& apptype, const std::string& appid );
         virtual void FindIpAddress( const std::string& appname, const std::string& apptype, const std::string& appid, IpAddressList& outlist );
 
+        // 获得log地址
+        virtual const std::string& GetLogUrl();
+
         // 获得auth地址
         virtual const std::string& GetAuthUrl();
 
-        // 获得log地址
-        virtual const std::string& GetLogUrl();
+        // 获得dir地址
+        virtual const std::string& GetDirUrl();
+
+        // 获得pay地址
+        virtual const std::string& GetPayUrl();
     protected:
 #if __KF_SYSTEM__ == __KF_WIN__
         std::string GetWinLocalIp();

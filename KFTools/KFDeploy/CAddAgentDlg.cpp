@@ -83,7 +83,7 @@ void CAddAgentDlg::OnBnClickedButtonAddAgent()
 
     KFAppId appid( _deploy_manage->_connect_deploy_id );
     appid.SetType( KFServerEnum::DeployAgent );
-    appid.SetWorkId( KFUtility::ToValue< uint32>( agentid ) );
+    appid.SetWorkId( __TO_UINT32__( agentid ) );
 
     StringMap values;
     values[ __STRING__( strappid ) ] = appid.ToString();

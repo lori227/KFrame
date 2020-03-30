@@ -327,7 +327,7 @@ namespace KFrame
 
         size -= count;
         startpos += count;
-        return KFUtility::ToValue<uint32>( value );
+        return __TO_UINT32__( value );
     }
 
     std::string KFAnalysis::ReadLetter( const int8* data, uint32& size, uint32& startpos )

@@ -2,12 +2,52 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="KFGlobal.h" />
-    <ClInclude Include="KFRand.h" />
-    <ClInclude Include="KFUUID.h" />
+    <ClInclude Include="KFRand.hpp">
+      <Filter>Rand</Filter>
+    </ClInclude>
+    <ClInclude Include="KFUuid.hpp">
+      <Filter>Uuid</Filter>
+    </ClInclude>
+    <ClInclude Include="KFUuidData.hpp">
+      <Filter>Uuid</Filter>
+    </ClInclude>
+    <ClInclude Include="KFUuidSetting.hpp">
+      <Filter>Uuid</Filter>
+    </ClInclude>
+    <ClInclude Include="KFConstant.h">
+      <Filter>Constant</Filter>
+    </ClInclude>
+    <ClInclude Include="KFConstantData.hpp">
+      <Filter>Constant</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KFGlobal.cpp" />
-    <ClCompile Include="KFRand.cpp" />
-    <ClCompile Include="KFUUID.cpp" />
+    <ClCompile Include="KFRand.cpp">
+      <Filter>Rand</Filter>
+    </ClCompile>
+    <ClCompile Include="KFUuid.cpp">
+      <Filter>Uuid</Filter>
+    </ClCompile>
+    <ClCompile Include="KFUuidData.cpp">
+      <Filter>Uuid</Filter>
+    </ClCompile>
+    <ClCompile Include="KFUuidSetting.cpp">
+      <Filter>Uuid</Filter>
+    </ClCompile>
+    <ClCompile Include="KFConstantData.cpp">
+      <Filter>Constant</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Rand">
+      <UniqueIdentifier>{f301c59f-e90a-4812-b629-898a673c4d60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Uuid">
+      <UniqueIdentifier>{2f848420-d61b-41b9-bba9-b36c7dbe6fc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Constant">
+      <UniqueIdentifier>{31825480-b919-4951-b84b-9aa9b6d55f97}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

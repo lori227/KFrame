@@ -285,24 +285,20 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_ENTER_PLAYER_FUNCTION__( KFGameModule::OnEnterGame )
     {
-        auto playerid = player->GetKeyID();
-        {
-            // 发送消息到世界服务器
-            KFMsg::S2SPlayerEnterToWorldReq req;
-            req.set_playerid( playerid );
-            SendToWorld( KFMsg::S2S_PLAYER_ENTER_TO_WORLD_REQ, &req );
-        }
+        // 发送消息到世界服务器
+        KFMsg::S2SPlayerEnterToWorldReq req;
+        req.set_playerid( player->GetKeyID() );
+        req.set_accountid( player->Get<uint64>( __STRING__( accountid ) ) );
+        SendToWorld( KFMsg::S2S_PLAYER_ENTER_TO_WORLD_REQ, &req );
     }
 
     __KF_LEAVE_PLAYER_FUNCTION__( KFGameModule::OnLeaveGame )
     {
-        auto playerid = player->GetKeyID();
-        {
-            // 发送消息到世界服务器
-            KFMsg::S2SPlayerLeaveToWorldReq req;
-            req.set_playerid( playerid );
-            SendToWorld( KFMsg::S2S_PLAYER_LEAVE_TO_WORLD_REQ, &req );
-        }
+        // 发送消息到世界服务器
+        KFMsg::S2SPlayerLeaveToWorldReq req;
+        req.set_playerid( player->GetKeyID() );
+        req.set_accountid( player->Get<uint64>( __STRING__( accountid ) ) );
+        SendToWorld( KFMsg::S2S_PLAYER_LEAVE_TO_WORLD_REQ, &req );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGameModule::HandleLoginToGameReq )
@@ -472,13 +468,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SKickPlayerToGameReq );
 
-        auto ok = KickPlayer( kfmsg.playerid(), kfmsg.type(), __FUNC_LINE__ );
-        if ( !ok )
-        {
-            KFMsg::S2SKickPlayerToWorldAck ack;
-            ack.set_playerid( kfmsg.playerid() );
-            SendToWorld( KFMsg::S2S_KICK_PLAYER_TO_WORLD_ACK, &ack );
-        }
+        KickPlayer( kfmsg.playerid(), kfmsg.type(), __FUNC_LINE__ );
     }
 
     bool KFGameModule::KickPlayer( uint64 playerid, uint32 type, const char* function, uint32 line )

@@ -14,7 +14,6 @@
 #include "KFKernelInterface.h"
 #include "KFTimer/KFTimerInterface.h"
 #include "KFZConfig/KFDataConfig.hpp"
-#include "KFZConfig/KFOptionConfig.hpp"
 
 namespace KFrame
 {

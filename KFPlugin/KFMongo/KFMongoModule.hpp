@@ -20,18 +20,12 @@ namespace KFrame
         KFMongoModule() = default;
         ~KFMongoModule() = default;
 
-        // 初始化
-        virtual void BeforeRun();
-
         // 关闭
         virtual void ShutDown();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 创建Execute
         virtual KFMongoDriver* Create( const std::string& module, uint32 logicid = 0 );
-
-        // 生成uuid
-        uint64 MakeUUID();
 
     protected:
         // 查询
@@ -47,10 +41,6 @@ namespace KFrame
         // 数据库列表
         typedef std::pair< uint32, uint32 > MongoKey;
         KFMap< MongoKey, const MongoKey&, KFMongoLogic > _mongo_logic_map;
-
-        // uuid 生成器
-        KFUUID _kf_uuid;
-        KFMutex _kf_uuid_mutex;
     };
 }
 

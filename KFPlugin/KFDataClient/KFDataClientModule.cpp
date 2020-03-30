@@ -55,7 +55,7 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     uint32 KFDataClientModule::CalcZoneId( uint64 playerid )
     {
-        return KFGlobal::Instance()->STUUIDZoneId( __STRING__( player ), playerid );
+        return KFGlobal::Instance()->STUuidZoneId( __STRING__( player ), playerid );
     }
 
     bool KFDataClientModule::LoadPlayerData( const KFMsg::PBLoginData* pblogin )

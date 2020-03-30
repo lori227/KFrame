@@ -27,11 +27,17 @@ namespace KFrame
         // 配置的连接地址
         std::unordered_map< uint64, KFIpAddress > _ip_address_list;
 
+        // log地址
+        std::string _log_url;
+
         // 认证地址
         std::string _auth_url;
 
-        // log地址
-        std::string _log_url;
+        // dir地址
+        std::string _dir_url;
+
+        // dir地址
+        std::string _pay_url;
 
         // vpn 地址
         std::unordered_map< uint32, std::string > _vpn_list;

@@ -17,8 +17,6 @@
     <ClInclude Include="KFElementConfig.h" />
     <ClInclude Include="KFExecuteData.h" />
     <ClInclude Include="KFFormulaConfig.h" />
-    <ClInclude Include="KFOptionConfig.hpp" />
-    <ClInclude Include="KFOptionSetting.h" />
     <ClInclude Include="KFRankConfig.hpp" />
     <ClInclude Include="KFRankSetting.hpp" />
     <ClInclude Include="KFReadSetting.h" />
@@ -30,7 +28,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KFDataConfig.cpp" />
-    <ClCompile Include="KFOptionConfig.cpp" />
     <ClCompile Include="KFRankConfig.cpp" />
     <ClCompile Include="KFRelationConfig.cpp" />
     <ClCompile Include="KFRouteConfig.cpp" />

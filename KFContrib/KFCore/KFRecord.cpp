@@ -248,7 +248,7 @@ namespace KFrame
         //        continue;
         //    }
 
-        //    auto key = KFUtility::ToValue< uint64 >( iter.first );
+        //    auto key = __TO_UINT64__( iter.first );
         //    kfdata->SetKeyID( key );
         //    kfdata->FromString( iter.second );
         //    Add( key, kfdata );

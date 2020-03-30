@@ -25,6 +25,5 @@ namespace KFrame
     void KFKernelPlugin::AddConfig()
     {
         __KF_ADD_CONFIG__( KFDataConfig );
-        __KF_ADD_CONFIG__( KFOptionConfig );
     }
 }

@@ -99,17 +99,17 @@ namespace KFrame
 
         if ( command == __STRING__( shutdown ) )
         {
-            auto delaytime = KFUtility::ToValue< uint32 >( value );
+            auto delaytime = __TO_UINT32__( value );
             return ShutDownServer( delaytime );
         }
         else if ( command == __STRING__( loglevel ) )
         {
-            auto level = KFUtility::ToValue< uint32 >( value );
+            auto level = __TO_UINT32__( value );
             return KFLogger::Instance()->SetLogLevel( level );
         }
         else if ( command == __STRING__( logmemory ) )
         {
-            auto memory = KFUtility::ToValue< uint32 >( value );
+            auto memory = __TO_UINT32__( value );
             return KFMalloc::Instance()->SetLogOpen( memory == 1 ? true : false );
         }
         else if ( command == __STRING__( loadconfig ) )

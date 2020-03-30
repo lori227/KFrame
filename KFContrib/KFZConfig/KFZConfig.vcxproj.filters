@@ -9,12 +9,6 @@
     <ClInclude Include="KFDataSetting.h">
       <Filter>Kernel</Filter>
     </ClInclude>
-    <ClInclude Include="KFOptionSetting.h">
-      <Filter>Option</Filter>
-    </ClInclude>
-    <ClInclude Include="KFOptionConfig.hpp">
-      <Filter>Option</Filter>
-    </ClInclude>
     <ClInclude Include="KFRelationConfig.hpp">
       <Filter>Relation</Filter>
     </ClInclude>
@@ -42,9 +36,6 @@
     <Filter Include="Kernel">
       <UniqueIdentifier>{035b270c-ac51-4ffd-8a66-3a3b1d32faba}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Option">
-      <UniqueIdentifier>{b982aa9b-01ad-4ec0-98cb-983098ff0aee}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Relation">
       <UniqueIdentifier>{553c66c5-04e8-48fc-b1e5-2a2ad14611e8}</UniqueIdentifier>
     </Filter>
@@ -61,9 +52,6 @@
   <ItemGroup>
     <ClCompile Include="KFDataConfig.cpp">
       <Filter>Kernel</Filter>
-    </ClCompile>
-    <ClCompile Include="KFOptionConfig.cpp">
-      <Filter>Option</Filter>
     </ClCompile>
     <ClCompile Include="KFRelationConfig.cpp">
       <Filter>Relation</Filter>

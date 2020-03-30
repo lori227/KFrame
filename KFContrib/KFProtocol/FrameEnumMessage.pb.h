@@ -342,6 +342,29 @@ inline bool RewardTypeEnum_Parse(
   return ::google::protobuf::internal::ParseNamedEnum<RewardTypeEnum>(
     RewardTypeEnum_descriptor(), name, value);
 }
+enum DatabaseEnum {
+  InvalidDatabase = 0,
+  Redis = 1,
+  Mongo = 2,
+  MySQL = 3,
+  DatabaseEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  DatabaseEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+LIBPROTOC_EXPORT bool DatabaseEnum_IsValid(int value);
+const DatabaseEnum DatabaseEnum_MIN = InvalidDatabase;
+const DatabaseEnum DatabaseEnum_MAX = MySQL;
+const int DatabaseEnum_ARRAYSIZE = DatabaseEnum_MAX + 1;
+
+LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* DatabaseEnum_descriptor();
+inline const ::std::string& DatabaseEnum_Name(DatabaseEnum value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    DatabaseEnum_descriptor(), value);
+}
+inline bool DatabaseEnum_Parse(
+    const ::std::string& name, DatabaseEnum* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<DatabaseEnum>(
+    DatabaseEnum_descriptor(), name, value);
+}
 // ===================================================================
 
 
@@ -429,6 +452,11 @@ template <> struct is_proto_enum< ::KFMsg::RewardTypeEnum> : ::std::true_type {}
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::RewardTypeEnum>() {
   return ::KFMsg::RewardTypeEnum_descriptor();
+}
+template <> struct is_proto_enum< ::KFMsg::DatabaseEnum> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::DatabaseEnum>() {
+  return ::KFMsg::DatabaseEnum_descriptor();
 }
 
 }  // namespace protobuf

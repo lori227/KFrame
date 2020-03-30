@@ -63,7 +63,7 @@ namespace KFrame
         void RandDropDataByProbability( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist, const UInt32Set& excludelist );
 
         // 添加掉落返回数据
-        void RandDropData( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist, const KFDropGroupWeight* kfdropweight, const char* function, uint32 line );
+        void RandDropData( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist, const KFDropGroupWeight* kfdropweight, UInt32Set& excludedatalist, const char* function, uint32 line );
 
         // 发送掉落数据到客户端
 #ifdef __KF_DEBUG__

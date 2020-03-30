@@ -5,7 +5,8 @@ namespace KFrame
 {
     void KFGateModule::BeforeRun()
     {
-        __LOOP_TIMER_0__( 30000, 5000, &KFGateModule::OnTimerUpdateOnlineToAuth );
+        auto looptime = KFGlobal::Instance()->RandRange( 30000u, 40000u, 0u );
+        __LOOP_TIMER_0__( looptime, 5000u, &KFGateModule::OnTimerUpdateOnlineToDir );
 
         __REGISTER_CLIENT_LOST__( &KFGateModule::OnClientLostServer );
         __REGISTER_CLIENT_CONNECTION__( &KFGateModule::OnClientConnectionServer );
@@ -60,25 +61,12 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    __KF_TIMER_FUNCTION__( KFGateModule::OnTimerUpdateOnlineToAuth )
+    __KF_TIMER_FUNCTION__( KFGateModule::OnTimerUpdateOnlineToDir )
     {
-        if ( _login_server_id == _invalid_int )
-        {
-            return;
-        }
-
+        // 更新给dir服务器
         auto kfglobal = KFGlobal::Instance();
-
-        KFMsg::S2SUpdateZoneToLoginReq req;
-        auto pbzone = req.mutable_zonedata();
-        pbzone->set_ip( kfglobal->_interanet_ip );
-        pbzone->set_port( kfglobal->_listen_port );
-        pbzone->set_count( _kf_role_list.Size() );
-        pbzone->set_appid( kfglobal->_app_id->GetId() );
-        _kf_tcp_client->SendNetMessage( _login_server_id, KFMsg::S2S_UPDATE_ZONE_TO_LOGIN_REQ, &req );
+        _kf_dir_client->UpdateGateToDir( kfglobal->_app_id->GetId(), kfglobal->_interanet_ip, kfglobal->_listen_port, _kf_role_list.Size(), 60u );
     }
-
     //////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_NET_EVENT_FUNCTION__( KFGateModule::OnClientConnectionServer )
     {
@@ -431,8 +419,9 @@ namespace KFrame
 
         // 添加一个定时器
         kfrole->_session_id = _invalid_int;
-        static auto _option = _kf_option->FindOption( __STRING__( disconnettime ) );
-        __LIMIT_TIMER_1__( kfrole->_id, _option->_uint32_value, 1, &KFGateModule::OnTimerPlayerDisconnetion );
+
+        static auto _disconnect_time_constant = KFGlobal::Instance()->FindConstant( __STRING__( disconnecttime ) );
+        __LIMIT_TIMER_1__( kfrole->_id, _disconnect_time_constant->_uint32_value, 1, &KFGateModule::OnTimerPlayerDisconnetion );
     }
 
     __KF_TIMER_FUNCTION__( KFGateModule::OnTimerPlayerDisconnetion )

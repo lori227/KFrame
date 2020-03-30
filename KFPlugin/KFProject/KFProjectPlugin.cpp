@@ -23,6 +23,7 @@ namespace KFrame
     void KFProjectPlugin::AddConfig()
     {
         __KF_ADD_CONFIG__( KFProjectConfig );
+        __KF_ADD_CONFIG__( KFConstantConfig );
     }
 
 }

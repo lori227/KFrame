@@ -64,8 +64,8 @@ namespace KFrame
                 auto strvalue = xmlnode.GetString( strkey.c_str() );
                 auto param = kfsetting->AddParam();
                 param->_str_value = strvalue;
-                param->_int_value = KFUtility::ToValue<uint32>( strvalue );
-                param->_double_value = KFUtility::ToValue<double>( strvalue );
+                param->_int_value = __TO_UINT32__( strvalue );
+                param->_double_value = __TO_DOUBLE__( strvalue );
             }
         }
     };

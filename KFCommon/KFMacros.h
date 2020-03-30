@@ -43,6 +43,26 @@
     #define __TO_STRING__( value ) std::to_string( value )
 #endif
 
+#ifndef __TO_INT32__
+    #define __TO_INT32__( value ) KFUtility::ToValue<int32>( value )
+#endif
+
+#ifndef __TO_UINT32__
+    #define __TO_UINT32__( value ) KFUtility::ToValue<uint32>( value )
+#endif
+
+#ifndef __TO_INT64__
+    #define __TO_INT64__( value ) KFUtility::ToValue<int64>( value )
+#endif
+
+#ifndef __TO_UINT64__
+    #define __TO_UINT64__( value ) KFUtility::ToValue<uint64>( value )
+#endif
+
+#ifndef __TO_DOUBLE__
+    #define __TO_DOUBLE__( value ) KFUtility::ToValue<double>( value )
+#endif
+
 #ifndef __FORMAT__
     #define __FORMAT__( myfmt, ... ) fmt::format( myfmt, __VA_ARGS__ )
 #endif
