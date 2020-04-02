@@ -9,7 +9,7 @@
 namespace KFrame
 {
 #define __SYNC_COUNT__ 3u
-    static uint32 _default_sync_sequence[ __SYNC_COUNT__ ] = { KFEnum::Set, KFEnum::Dec, KFEnum::Add };
+    static uint32 _default_sync_sequence[ __SYNC_COUNT__ ] = { KFEnum::Dec, KFEnum::Add, KFEnum::Set };
 
     // 默认的同步顺序
     class KFSyncData
@@ -77,7 +77,7 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
         // 移动属性
-        virtual KFData* MoveData( KFData* kfparent, uint64 key );
+        virtual KFData* MoveData( KFData* kfparent, uint64 key, bool callback = false );
         virtual KFData* MoveData( const std::string& sourcename, uint64 key, const std::string& targetname );
         virtual KFData* MoveData( KFData* sourcedata, uint64 key, KFData* targetdata );
 

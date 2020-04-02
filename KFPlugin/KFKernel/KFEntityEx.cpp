@@ -430,13 +430,13 @@ namespace KFrame
         return MoveData( sourcedata, dataname, targetdata );
     }
 
-    KFData* KFEntityEx::MoveData( KFData* kfparent, uint64 key )
+    KFData* KFEntityEx::MoveData( KFData* kfparent, uint64 key, bool callback )
     {
         // 移除属性
         auto kfdata = kfparent->Move( key );
         if ( kfdata != nullptr )
         {
-            _kf_component->RemoveDataCallBack( this, kfparent, key, kfdata, false );
+            _kf_component->RemoveDataCallBack( this, kfparent, key, kfdata, callback );
         }
         return kfdata;
     }
