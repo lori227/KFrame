@@ -25,7 +25,7 @@ namespace KFrame
         KFDropGroupWeight* kfdropweight = nullptr;
         auto weight = xmlnode.GetUInt32( "Weight", true );
 
-        if ( weight == KFRandEnum::TenThousand && kfsetting->_rand_type == KFRandEnum::Probability )
+        if ( weight == KFRandEnum::TenThousand )
         {
             kfdropweight = __KF_NEW__( KFDropGroupWeight );
             kfsetting->_necessary_list.Add( kfdropweight );

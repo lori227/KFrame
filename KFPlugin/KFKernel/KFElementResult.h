@@ -24,7 +24,7 @@ namespace KFrame
     class KFElementResult
     {
     public:
-        // 添加可叠加的数据
+        // 添加货币数据
         bool AddResult( uint32 value )
         {
             _total_value += value;
@@ -32,7 +32,7 @@ namespace KFrame
             return true;
         }
 
-        // 添加可叠加的数据
+        // 添加对象数据
         bool AddResult( const std::string& dataname, uint32 value )
         {
             _data_name = dataname;

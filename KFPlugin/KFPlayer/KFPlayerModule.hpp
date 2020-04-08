@@ -112,7 +112,7 @@ namespace KFrame
         void SendRemoveDataToClient( KFEntity* player, KFMsg::PBObject& pbobect );
 
         // 显示添加奖励消息
-        void SendElementToClient( KFEntity* player, KFMsg::PBShowElement& pbelement );
+        void SendElementToClient( KFEntity* player, KFMsg::PBShowElements& pbelements );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     protected:
         // 删除属性请求

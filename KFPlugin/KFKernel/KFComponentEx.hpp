@@ -112,6 +112,7 @@ namespace KFrame
         ///////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////
         void CallLogElementFunction( KFEntity* kfentity, const KFElementResult* kfresult );
+        bool CallElementResultFunction( KFEntity* kfentity, const KFElementResult* kfresult );
         ///////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////
         virtual void BindCheckAddElementFunction( const std::string& dataname, KFCheckAddElementFunction& function );
@@ -190,6 +191,9 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////////////////////
         virtual void BindLogElementFunction( const std::string& name, KFLogElementFunction& function );
         virtual void UnBindLogElementFunction( const std::string& name );
+
+        virtual void BindElementResultFunction( const std::string& name, KFElementResultFunction& function );
+        virtual void UnBindElementResultFunction( const std::string& name );
     protected:
         // 保存数据到数据库
         __KF_TIMER_FUNCTION__( OnTimerSaveEntity );
@@ -274,6 +278,9 @@ namespace KFrame
 
         // 日志函数
         KFBind< std::string, const std::string&, KFLogElementFunction > _log_element_function;
+
+        // 操作结果
+        KFBind< std::string, const std::string&, KFElementResultFunction > _element_result_function;
     protected:
         // 需要发送消息的对象
         std::set< KFEntity* > _sync_entitys;

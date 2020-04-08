@@ -24,7 +24,7 @@ namespace KFrame
         KFParamList _param_list;
         ///////////////////////////////////////////
         // 动态数值
-        uint32 _calc_value = 0u;
+        uint64 _calc_value = 0u;
     };
 
 

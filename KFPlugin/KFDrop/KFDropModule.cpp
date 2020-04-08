@@ -103,11 +103,7 @@ namespace KFrame
         SendDropDataToClient( player, dropid, count, drops );
 #endif // __KF_DEBUG__
 
-        if ( !modulename.empty() )
-        {
-            player->AddDataToShow( modulename );
-        }
-
+        player->AddDataToShow( modulename, moduleid );
         for ( auto iter = drops.begin(); iter != drops.end(); ++iter )
         {
             auto dropdata = *iter;
@@ -163,13 +159,13 @@ namespace KFrame
         }
 
         // 必掉的列表
+        UInt32Set excludedropdata;
         for ( auto kfdropweight : kfsetting->_necessary_list._objects )
         {
             // 判断条件
             auto ok = _kf_condition->CheckCondition( player, &kfdropweight->_conditions );
             if ( ok )
             {
-                UInt32Set excludedropdata;
                 RandDropData( player, kfsetting, outlist, kfdropweight, excludedropdata, __FUNC_LINE__ );
             }
         }

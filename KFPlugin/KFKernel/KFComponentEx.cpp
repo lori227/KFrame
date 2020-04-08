@@ -68,7 +68,7 @@ namespace KFrame
         {
             for ( auto entity : _sync_entitys )
             {
-                static_cast< KFEntityEx* >( entity )->SyncEntityToClient();
+                entity->SyncDataToClient();
             }
             _sync_entitys.clear();
         }
@@ -598,6 +598,17 @@ namespace KFrame
     {
         _log_element_function.Remove( name );
     }
+
+    void KFComponentEx::BindElementResultFunction( const std::string& name, KFElementResultFunction& function )
+    {
+        auto kffunction = _element_result_function.Create( name );
+        kffunction->_function = function;
+    }
+
+    void KFComponentEx::UnBindElementResultFunction( const std::string& name )
+    {
+        _element_result_function.Remove( name );
+    }
     ////////////////////////////////////////////////////////////////////////////////////////
     void KFComponentEx::UpdateDataCallBack( KFEntity* kfentity, uint64 key, KFData* kfdata, uint64 index, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue, bool callback )
     {
@@ -835,5 +846,16 @@ namespace KFrame
         }
 
         kffunction->_function( kfentity, kfresult );
+    }
+
+    bool KFComponentEx::CallElementResultFunction( KFEntity* kfentity, const KFElementResult* kfresult )
+    {
+        auto kffunction = _element_result_function.Find( kfresult->_module_name );
+        if ( kffunction == nullptr )
+        {
+            return true;
+        }
+
+        return kffunction->_function( kfentity, kfresult );
     }
 }

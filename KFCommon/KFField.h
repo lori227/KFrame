@@ -266,6 +266,7 @@ namespace KFrame
         __STRING_DEFINE__( authdatabase );
         __STRING_DEFINE__( dirdatabase );
         __STRING_DEFINE__( paydatabase );
+        __STRING_DEFINE__( zonetoken );
 
     }
 }

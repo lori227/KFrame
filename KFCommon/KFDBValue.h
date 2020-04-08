@@ -30,6 +30,17 @@ namespace KFrame
             return iter->second;
         }
 
+        inline const std::string& FindStrValue( const std::string& key ) const
+        {
+            auto iter = _str_list.find( key );
+            if ( iter == _str_list.end() )
+            {
+                return _invalid_string;
+            }
+
+            return iter->second;
+        }
+
     public:
         // int 属性列表
         std::unordered_map < std::string, uint64 > _int_list;
@@ -62,6 +73,19 @@ namespace KFrame
         for ( auto iter = dbvalue._int_list.begin(); iter != dbvalue._int_list.end(); ++iter )\
         {\
             values[ iter->first ] = __TO_STRING__(iter->second);\
+        }\
+    }
+
+#define __JSON_TO_DBVALUE__( kfjson, dbvalue )\
+    for ( auto iter = kfjson.MemberBegin(); iter != kfjson.MemberEnd(); ++iter )\
+    {\
+        if ( iter->value.IsString() )\
+        {\
+            dbvalue.AddValue(iter->name.GetString(), iter->value.GetString());\
+        }\
+        else if ( iter->value.IsNumber() )\
+        {\
+            dbvalue.AddValue(iter->name.GetString(), iter->value.GetUint64());\
         }\
     }
 }

@@ -477,10 +477,10 @@ namespace KFrame
         SendToClient( player, KFMsg::MSG_SYNC_REMOVE_DATA, &sync );
     }
 
-    void KFPlayerModule::SendElementToClient( KFEntity* player, KFMsg::PBShowElement& pbelement )
+    void KFPlayerModule::SendElementToClient( KFEntity* player, KFMsg::PBShowElements& pbelements )
     {
         KFMsg::MsgShowElement show;
-        show.mutable_element()->Swap( &pbelement );
+        show.mutable_elements()->Swap( &pbelements );
         SendToClient( player, KFMsg::MSG_SHOW_ELEMENT, &show );
     }
 

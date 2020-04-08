@@ -2079,23 +2079,23 @@ class LIBPROTOC_EXPORT MsgShowElement : public ::google::protobuf::Message /* @@
 
   // accessors -------------------------------------------------------
 
-  // .KFMsg.PBShowElement element = 1;
-  bool has_element() const;
-  void clear_element();
-  static const int kElementFieldNumber = 1;
+  // .KFMsg.PBShowElements elements = 1;
+  bool has_elements() const;
+  void clear_elements();
+  static const int kElementsFieldNumber = 1;
   private:
-  const ::KFMsg::PBShowElement& _internal_element() const;
+  const ::KFMsg::PBShowElements& _internal_elements() const;
   public:
-  const ::KFMsg::PBShowElement& element() const;
-  ::KFMsg::PBShowElement* release_element();
-  ::KFMsg::PBShowElement* mutable_element();
-  void set_allocated_element(::KFMsg::PBShowElement* element);
+  const ::KFMsg::PBShowElements& elements() const;
+  ::KFMsg::PBShowElements* release_elements();
+  ::KFMsg::PBShowElements* mutable_elements();
+  void set_allocated_elements(::KFMsg::PBShowElements* elements);
 
   // @@protoc_insertion_point(class_scope:KFMsg.MsgShowElement)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::KFMsg::PBShowElement* element_;
+  ::KFMsg::PBShowElements* elements_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameClientMessage_2eproto::TableStruct;
 };
@@ -8247,52 +8247,52 @@ inline void MsgSyncRemoveData::set_allocated_pbdata(::KFMsg::PBObject* pbdata) {
 
 // MsgShowElement
 
-// .KFMsg.PBShowElement element = 1;
-inline bool MsgShowElement::has_element() const {
-  return this != internal_default_instance() && element_ != NULL;
+// .KFMsg.PBShowElements elements = 1;
+inline bool MsgShowElement::has_elements() const {
+  return this != internal_default_instance() && elements_ != NULL;
 }
-inline const ::KFMsg::PBShowElement& MsgShowElement::_internal_element() const {
-  return *element_;
+inline const ::KFMsg::PBShowElements& MsgShowElement::_internal_elements() const {
+  return *elements_;
 }
-inline const ::KFMsg::PBShowElement& MsgShowElement::element() const {
-  const ::KFMsg::PBShowElement* p = element_;
-  // @@protoc_insertion_point(field_get:KFMsg.MsgShowElement.element)
-  return p != NULL ? *p : *reinterpret_cast<const ::KFMsg::PBShowElement*>(
-      &::KFMsg::_PBShowElement_default_instance_);
+inline const ::KFMsg::PBShowElements& MsgShowElement::elements() const {
+  const ::KFMsg::PBShowElements* p = elements_;
+  // @@protoc_insertion_point(field_get:KFMsg.MsgShowElement.elements)
+  return p != NULL ? *p : *reinterpret_cast<const ::KFMsg::PBShowElements*>(
+      &::KFMsg::_PBShowElements_default_instance_);
 }
-inline ::KFMsg::PBShowElement* MsgShowElement::release_element() {
-  // @@protoc_insertion_point(field_release:KFMsg.MsgShowElement.element)
+inline ::KFMsg::PBShowElements* MsgShowElement::release_elements() {
+  // @@protoc_insertion_point(field_release:KFMsg.MsgShowElement.elements)
   
-  ::KFMsg::PBShowElement* temp = element_;
-  element_ = NULL;
+  ::KFMsg::PBShowElements* temp = elements_;
+  elements_ = NULL;
   return temp;
 }
-inline ::KFMsg::PBShowElement* MsgShowElement::mutable_element() {
+inline ::KFMsg::PBShowElements* MsgShowElement::mutable_elements() {
   
-  if (element_ == NULL) {
-    auto* p = CreateMaybeMessage<::KFMsg::PBShowElement>(GetArenaNoVirtual());
-    element_ = p;
+  if (elements_ == NULL) {
+    auto* p = CreateMaybeMessage<::KFMsg::PBShowElements>(GetArenaNoVirtual());
+    elements_ = p;
   }
-  // @@protoc_insertion_point(field_mutable:KFMsg.MsgShowElement.element)
-  return element_;
+  // @@protoc_insertion_point(field_mutable:KFMsg.MsgShowElement.elements)
+  return elements_;
 }
-inline void MsgShowElement::set_allocated_element(::KFMsg::PBShowElement* element) {
+inline void MsgShowElement::set_allocated_elements(::KFMsg::PBShowElements* elements) {
   ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
   if (message_arena == NULL) {
-    delete reinterpret_cast< ::google::protobuf::MessageLite*>(element_);
+    delete reinterpret_cast< ::google::protobuf::MessageLite*>(elements_);
   }
-  if (element) {
+  if (elements) {
     ::google::protobuf::Arena* submessage_arena = NULL;
     if (message_arena != submessage_arena) {
-      element = ::google::protobuf::internal::GetOwnedMessage(
-          message_arena, element, submessage_arena);
+      elements = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, elements, submessage_arena);
     }
     
   } else {
     
   }
-  element_ = element;
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgShowElement.element)
+  elements_ = elements;
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgShowElement.elements)
 }
 
 // -------------------------------------------------------------------

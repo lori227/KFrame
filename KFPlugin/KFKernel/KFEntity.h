@@ -119,23 +119,15 @@ namespace KFrame
         virtual void SetElementToData( KFData* kfdata, KFElementObject* kfelement, double multiple ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 显示奖励接口相关
-        virtual void AddDataToShow( const std::string& modulename ) = 0;
+        virtual void AddDataToShow( const std::string& modulename, uint64 moduleid ) = 0;
 
         virtual void AddDataToShow( const std::string& name, uint64 value, bool find ) = 0;
-        virtual void AddDataToShow( const std::string& modulename, const std::string& name, uint64 value, bool find ) = 0;
+        virtual void AddDataToShow( const std::string& modulename, uint64 moduleid, const std::string& name, uint64 value, bool find ) = 0;
 
-        virtual void AddDataToShow( KFData* kfdata ) = 0;
-        virtual void AddDataToShow( const std::string& modulename, KFData* kfdata ) = 0;
+        virtual void AddDataToShow( const std::string& modulename, uint64 moduleid, KFData* kfdata ) = 0;
 
         virtual void AddDataToShow( const std::string& name, uint64 value, KeyValue& values, bool find, const std::string& extendname = _invalid_string ) = 0;
-        virtual void AddDataToShow( const std::string& modulename, const std::string& name, uint64 value, KeyValue& values, bool find, const std::string& extendname = _invalid_string ) = 0;
-
-        // 主动同步显示数据
-        virtual void ShowElementToClient() = 0;
-
-        // 获取显示奖励
-        virtual bool GetShowElement( KFMsg::PBShowElement* pbelement ) = 0;
-        virtual void ElementToShow( const KFElements* kfelements, KFMsg::PBShowData* pbshowdata ) = 0;
+        virtual void AddDataToShow( const std::string& modulename, uint64 moduleid, const std::string& name, uint64 value, KeyValue& values, bool find, const std::string& extendname = _invalid_string ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -152,7 +144,8 @@ namespace KFrame
         virtual void SynAddRecordData( KFData* kfdata ) = 0;
 
         // 同步数据的顺序
-        virtual void SyncDataSequence( uint32 first, uint32 second, uint32 third ) = 0;
+        virtual void SyncDataToClient() = 0;
+        virtual void SyncDataToClient( uint32 first, uint32 second, uint32 third ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         virtual uint64 GetConfigValue( const std::string& name, uint64 id, uint64 maxvalue = __MAX_UINT64__ ) = 0;
 

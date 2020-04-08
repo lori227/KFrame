@@ -6,67 +6,191 @@ namespace KFrame
 
     bool KFDirShardMongo::ZoneRegister( uint32 zoneid, KFJson& zonedata )
     {
+        StringMap values;
+        __JSON_TO_MAP__( zonedata, values );
+
+        // 先保存小区基本信息
+        auto mongodriver = __DIR_MONGO_DRIVER__;
+
+        KFDBValue dbvalue;
+        for ( auto& iter : values )
+        {
+            dbvalue.AddValue( iter.first, iter.second );
+        }
+
+        if ( !mongodriver->Insert( __STRING__( zone ), zoneid, dbvalue ) )
+        {
+            return false;
+        }
+
+        if ( !mongodriver->Insert( __STRING__( zonelist ), zoneid, __STRING__( id ), zoneid ) )
+        {
+            return false;
+        }
+
         return true;
     }
 
     bool KFDirShardMongo::ZoneUpdate( uint64 appid, uint32 zoneid, uint32 count, const std::string& ip, uint32 port, uint32 expiretime )
     {
-        return true;
+        auto mongodriver = __DIR_MONGO_DRIVER__;
+
+        if ( !mongodriver->Insert( __STRING__( zonelist ), zoneid, __STRING__( count ), count ) )
+        {
+            return false;
+        }
+
+        KFDBValue dbvalue;
+        dbvalue.AddValue( __STRING__( appid ), appid );
+        dbvalue.AddValue( __STRING__( ip ), ip );
+        dbvalue.AddValue( __STRING__( port ), port );
+        dbvalue.AddValue( __STRING__( appid ), appid );
+        dbvalue.AddValue( MongoKeyword::_expire, expiretime );
+
+        return mongodriver->Insert( __STRING__( gate ), zoneid, dbvalue );
     }
 
     StringListMap KFDirShardMongo::QueryZoneList()
     {
         StringListMap zonedatalist;
+        auto mongodriver = __DIR_MONGO_DRIVER__;
+
+        KFMongoSelector kfselector;
+        auto kfresult = mongodriver->QueryListRecord( __STRING__( zonelist ), kfselector );
+        for ( auto& dbvalue : kfresult->_value )
+        {
+            auto zoneid = dbvalue.FindValue( __STRING__( id ) );
+            auto zonedata = QueryZoneData( zoneid );
+            if ( !zonedata.empty() )
+            {
+                zonedatalist.emplace_back( zonedata );
+            }
+        }
 
         return zonedatalist;
     }
 
     StringMap KFDirShardMongo::QueryZoneIp( uint32 zoneid )
     {
-        StringMap zonedata;
-        return zonedata;
+        StringMap values;
+
+        auto mongodriver = __DIR_MONGO_DRIVER__;
+        auto kfresult = mongodriver->QueryRecord( __STRING__( gate ), zoneid );
+        if ( !kfresult->IsOk() )
+        {
+            return values;
+        }
+
+        __DBVALUE_TO_MAP__( kfresult->_value, values );
+
+        return values;
     }
 
     StringMap KFDirShardMongo::QueryZoneData( uint32 zoneid )
     {
         StringMap zonedata;
+        auto mongodriver = __DIR_MONGO_DRIVER__;
+
+        auto kfgatedata = mongodriver->QueryRecord( __STRING__( gate ), zoneid );
+        if ( !kfgatedata->IsOk() )
+        {
+            return zonedata;
+        }
+
+        auto kfzonedata = mongodriver->QueryRecord( __STRING__( zone ), zoneid );
+        if ( !kfzonedata->IsOk() )
+        {
+            return zonedata;
+        }
+
+        __DBVALUE_TO_MAP__( kfgatedata->_value, zonedata );
+        __DBVALUE_TO_MAP__( kfzonedata->_value, zonedata );
+
         return zonedata;
     }
 
     bool KFDirShardMongo::ZoneBalance( uint32 zoneid, uint32 count )
     {
-        return true;
+        auto mongodriver = __DIR_MONGO_DRIVER__;
+
+        auto kfresult = mongodriver->QueryRecord( __STRING__( zonelist ), zoneid );
+        if ( !kfresult->IsOk() )
+        {
+            return false;
+        }
+
+        auto zonecount = kfresult->_value.FindValue( __STRING__( count ) );
+        zonecount += count;
+
+        return mongodriver->Insert( __STRING__( zonelist ), zoneid, __STRING__( count ), zonecount );
     }
 
     bool KFDirShardMongo::SetZoneRecommend( uint32 zoneid )
     {
-        return true;
+        auto mongodriver = __DIR_MONGO_DRIVER__;
+        return mongodriver->Insert( __STRING__( zonerecommend ), 0u, __STRING__( zoneid ), zoneid );
     }
 
     uint32 KFDirShardMongo::GetZoneRecommend()
     {
-        return 0;
+        auto mongodriver = __DIR_MONGO_DRIVER__;
+        auto kfresult = mongodriver->QueryUInt64( __STRING__( zonerecommend ), 0u, __STRING__( zoneid ) );
+        return kfresult->_value;
     }
 
     uint32 KFDirShardMongo::BalanceAllocZone()
     {
-        // 找不到 直接返回1
+        auto zoneid = GetZoneRecommend();
+        if ( zoneid != _invalid_int )
+        {
+            return zoneid;
+        }
+
+        // 找一个人数最少的区
+        auto mongodriver = __DIR_MONGO_DRIVER__;
+
+        // 数量升序显示
+        KFMongoSelector kfselector;
+        kfselector.AddReturn( __STRING__( count ) );
+        auto kfresult = mongodriver->QueryListRecord( __STRING__( zonelist ), kfselector );
+        for ( auto& dbvalue : kfresult->_value )
+        {
+            auto zoneid = dbvalue.FindValue( __STRING__( id ) );
+            auto kfrecord = mongodriver->QueryRecord( __STRING__( gate ), zoneid );
+            if ( kfrecord->IsOk() )
+            {
+                return zoneid;
+            }
+        }
+
         return 1u;
     }
 
     StringMap KFDirShardMongo::AllocPlayerZone( uint32 zoneid )
     {
         StringMap zonedata;
-        return zonedata;
+        if ( zoneid == _invalid_int )
+        {
+            zoneid = BalanceAllocZone();
+            if ( zoneid == _invalid_int )
+            {
+                return zonedata;
+            }
+        }
+
+        return QueryZoneData( zoneid );
     }
 
     bool KFDirShardMongo::SetWorldUrl( uint64 worldid, const std::string& url )
     {
-        return true;
+        auto mongodriver = __DIR_MONGO_DRIVER__;
+        return mongodriver->Insert( __STRING__( worldurl ), worldid, __STRING__( url ), url );
     }
 
     std::string KFDirShardMongo::GetWorldUrl( uint64 worldid )
     {
-        return _invalid_string;
+        auto mongodriver = __DIR_MONGO_DRIVER__;
+        auto kfresult = mongodriver->QueryString( __STRING__( worldurl ), worldid, __STRING__( url ) );
+        return kfresult->_value;
     }
 }

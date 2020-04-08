@@ -10,7 +10,7 @@ namespace KFrame
     typedef std::function< void( KFEntity* ) > KFEntityFunction;
     typedef std::function< void( KFEntity*, uint32 ) > KFSaveEntityFunction;
     typedef std::function< void( KFEntity*, KFMsg::PBObject& ) > KFSyncFunction;
-    typedef std::function< void( KFEntity*, KFMsg::PBShowElement& ) > KFShowElementFunction;
+    typedef std::function< void( KFEntity*, KFMsg::PBShowElements& ) > KFShowElementFunction;
     ////////////////////////////////////////////////////////////////////////////////////////////
     typedef std::function< bool( KFEntity*, KFData*, KFElement*, double, const char*, uint32 ) > KFCheckAddElementFunction;
     typedef std::function< bool( KFEntity*, KFData*, KFElementResult*, const char*, uint32 ) > KFAddElementFunction;
@@ -25,6 +25,7 @@ namespace KFrame
     typedef std::function<uint64( KFEntity*, uint64, uint64 )> KFGetConfigValueFunction;
     ////////////////////////////////////////////////////////////////////////////////////////////
     typedef std::function< void( KFEntity*, const KFElementResult* ) > KFLogElementFunction;
+    typedef std::function< bool( KFEntity*, const KFElementResult* ) > KFElementResultFunction;
 
     // 游戏中的组件, 负责属性回调时间
     class KFComponent
@@ -369,7 +370,7 @@ namespace KFrame
         virtual void UnRegisterSyncRemoveFunction() = 0;
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         template< class T >
-        void RegisterShowElementFunction( T* object, void ( T::*handle )( KFEntity*, KFMsg::PBShowElement& ) )
+        void RegisterShowElementFunction( T* object, void ( T::*handle )( KFEntity*, KFMsg::PBShowElements& ) )
         {
             KFShowElementFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2 );
             BindShowElementFunction( function );
@@ -398,6 +399,18 @@ namespace KFrame
         void UnRegisterLogElementFunction( const std::string& name )
         {
             UnBindLogElementFunction( name );
+        }
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        template< class T >
+        void RegisterElementResultFunction( const std::string& name, T* object, bool( T::*handle )( KFEntity*, const KFElementResult* ) )
+        {
+            KFElementResultFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2 );
+            BindElementResultFunction( name, function );
+        }
+
+        void UnRegisterElementResultFunction( const std::string& name )
+        {
+            UnBindElementResultFunction( name );
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     protected:
@@ -446,6 +459,9 @@ namespace KFrame
 
         virtual void BindLogElementFunction( const std::string& name, KFLogElementFunction& function ) = 0;
         virtual void UnBindLogElementFunction( const std::string& name ) = 0;
+
+        virtual void BindElementResultFunction( const std::string& name, KFElementResultFunction& function ) = 0;
+        virtual void UnBindElementResultFunction( const std::string& name ) = 0;
     };
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -583,6 +599,15 @@ namespace KFrame
     _kf_component->RegisterLogElementFunction( dataname, this, function )
 #define __UN_LOG_ELEMENT__( dataname ) \
     _kf_component->UnRegisterLogElementFunction( dataname )
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+#define  __KF_ELEMENT_RESULT_FUNCTION__( function ) \
+    bool function( KFEntity* player, const KFElementResult* kfresult )
+
+#define __REGISTER_ELEMENT_RESULT__( modulename, function ) \
+    _kf_component->RegisterElementResultFunction( modulename, this, function )
+#define __UN_ELEMENT_RESULT__( modulename ) \
+    _kf_component->UnRegisterElementResultFunction( modulename )
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 }

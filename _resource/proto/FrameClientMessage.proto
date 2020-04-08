@@ -208,7 +208,7 @@ message MsgSyncRemoveData
 // MSG_SHOW_ELEMENT
 message MsgShowElement
 {
-	PBShowElement element = 1;	// 奖励数据
+	PBShowElements elements = 1;	// 奖励数据
 }
 
 // 删除属性
