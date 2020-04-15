@@ -1,7 +1,5 @@
 ﻿#include "KFDropModule.hpp"
-#ifdef __KF_DEBUG__
-    #include "KFProtocol/KFProtocol.h"
-#endif // __KF_DEBUG__
+#include "KFProtocol/KFProtocol.h"
 
 
 namespace KFrame
@@ -57,8 +55,65 @@ namespace KFrame
         _drop_logic_function.Remove( dataname );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    const DropDataList& KFDropModule::Drop( KFEntity* player, uint32 dropid, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
+    {
+        return Drop( player, dropid, 1u, modulename, moduleid, function, line );
+    }
+
+    const DropDataList& KFDropModule::Drop( KFEntity* player, const UInt32Vector& droplist, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
+    {
+        static DropDataList _drop_data_list;
+        _drop_data_list.clear();
+
+        for ( auto dropid : droplist )
+        {
+            RandDropLogic( player, dropid, 1u, _drop_data_list, function, line );
+        }
+
+        // 执行掉落
+        ExecuteDropLogic( player, _drop_data_list, modulename, moduleid, function, line );
+        return _drop_data_list;
+    }
+
+    const DropDataList& KFDropModule::Drop( KFEntity* player, uint32 dropid, uint32 count, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
+    {
+        static DropDataList _drop_data_list;
+        _drop_data_list.clear();
+
+        // 随机掉落数据
+        RandDropLogic( player, dropid, count, _drop_data_list, function, line );
+
+        // 执行掉落
+        ExecuteDropLogic( player, _drop_data_list, modulename, moduleid, function, line );
+        return _drop_data_list;
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    void KFDropModule::ExecuteDropLogic( KFEntity* player, const DropDataList& dropdatalist, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
+    {
+        player->AddDataToShow( modulename, moduleid );
+
+        // 执行掉落逻辑
+        for ( auto iter = dropdatalist.begin(); iter != dropdatalist.end(); ++iter )
+        {
+            auto dropdata = *iter;
+            auto kffunction = _drop_logic_function.Find( dropdata->_logic_name );
+            if ( kffunction != nullptr )
+            {
+                kffunction->_function( player, dropdata, modulename, moduleid, function, line );
+            }
+            else
+            {
+                __LOG_ERROR_FUNCTION__( function, line, "drop logicname=[{}] no function!", dropdata->_logic_name );
+            }
+        }
+
+        // 直接同步掉落属性
+        player->SyncDataToClient();
+    }
+
 #ifdef __KF_DEBUG__
-    void KFDropModule::SendDropDataToClient( KFEntity* player, uint32 dropid, uint32 count, DropDataList& droplist )
+    void KFDropModule::SendDropDataToClient( KFEntity* player, uint32 dropid, uint32 count, const DropDataList& droplist )
     {
         KFMsg::MsgDebugShowDrop show;
         show.set_dropid( dropid );
@@ -76,82 +131,31 @@ namespace KFrame
         _kf_player->SendToClient( player, KFMsg::MSG_DEBUG_SHOW_DROP, &show );
     }
 #endif // __KF_DEBUG__
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    DropDataList& KFDropModule::Drop( KFEntity* player, uint32 dropid, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    void KFDropModule::RandDropLogic( KFEntity* player, uint32 dropid, uint32 count, DropDataList& outlist, const char* function, uint32 line )
     {
-        return Drop( player, dropid, 1u, modulename, moduleid, function, line );
-    }
-
-    DropDataList& KFDropModule::Drop( KFEntity* player, const UInt32Vector& droplist, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
-    {
-        static DropDataList _dropdatalist;
-        _dropdatalist.clear();
-
-        for ( auto iter : droplist )
-        {
-            auto& data = Drop( player, iter, 1u, modulename, moduleid, function, line );
-            _dropdatalist.splice( _dropdatalist.end(), data );
-        }
-
-        return _dropdatalist;
-    }
-
-    DropDataList& KFDropModule::Drop( KFEntity* player, uint32 dropid, uint32 count, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
-    {
-        auto& drops = DropLogic( player, dropid, count, function, line );
-#ifdef __KF_DEBUG__
-        SendDropDataToClient( player, dropid, count, drops );
-#endif // __KF_DEBUG__
-
-        player->AddDataToShow( modulename, moduleid );
-        for ( auto iter = drops.begin(); iter != drops.end(); ++iter )
-        {
-            auto dropdata = *iter;
-            auto kffunction = _drop_logic_function.Find( dropdata->_logic_name );
-            if ( kffunction != nullptr )
-            {
-                kffunction->_function( player, dropdata, modulename, moduleid, function, line );
-            }
-            else
-            {
-                __LOG_ERROR_FUNCTION__( function, line, "drop=[{}] logicname=[{}] no function!", dropid, dropdata->_logic_name );
-            }
-        }
-
-        return drops;
-    }
-
-    DropDataList& KFDropModule::DropLogic( KFEntity* player, uint32 dropid, uint32 count, const char* function, uint32 line )
-    {
-        static DropDataList _drops;
-        _drops.clear();
-
-        // 掉落逻辑
-        DropLogic( player, dropid, count, _drops, function, line );
-        return _drops;
-    }
-
-    void KFDropModule::DropLogic( KFEntity* player, uint32 dropid, uint32 count, DropDataList& outlist, const char* function, uint32 line )
-    {
-        if ( dropid == 0u )
-        {
-            return;
-        }
-
         __LOG_INFO_FUNCTION__( function, line, "player=[{}] drop=[{}] count=[{}]", player->GetKeyID(), dropid, count );
         auto kfsetting = KFDropGroupConfig::Instance()->FindSetting( dropid );
         if ( kfsetting == nullptr )
         {
+            _kf_display->SendToClient( player, KFMsg::DropSettingError, dropid );
             return __LOG_ERROR_FUNCTION__( function, line, "dropid=[{}] can't find setting", dropid );
         }
 
+        DropDataList dropdatalist;
         for ( auto i = 0u; i < count; ++i )
         {
-            DropLogic( player, kfsetting, outlist );
+            RandDropLogic( player, kfsetting, dropdatalist );
         }
+
+#ifdef __KF_DEBUG__
+        SendDropDataToClient( player, dropid, count, dropdatalist );
+#endif
+
+        outlist.splice( outlist.end(), dropdatalist );
     }
 
-    void KFDropModule::DropLogic( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist )
+    void KFDropModule::RandDropLogic( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist )
     {
         if ( kfsetting->_is_drop_count )
         {
@@ -307,13 +311,14 @@ namespace KFrame
         auto dropdata = &kfdropdataweight->_drop_data;
         if ( dropdata->_max_value == 0u )
         {
+            _kf_display->SendToClient( player, KFMsg::DropValueError, dropdata->_drop_data_id );
             return __LOG_ERROR_FUNCTION__( function, line, "dropgroup=[{}] dropdata=[{}] value=0", kfsetting->_id, dropdata->_drop_data_id );
         }
 
         if ( dropdata->_logic_name == __STRING__( drop ) )
         {
             // 如果是掉落的话, 继续执行掉落逻辑
-            DropLogic( player, dropdata->GetValue(), 1u, outlist, function, line );
+            RandDropLogic( player, dropdata->GetValue(), 1u, outlist, function, line );
         }
         else
         {

@@ -1,4 +1,5 @@
 ﻿#include "KFConditionModule.hpp"
+#include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
@@ -197,6 +198,7 @@ namespace KFrame
             if ( kfsetting == nullptr )
             {
                 __LOG_ERROR__( "condition=[{}] can't find setting", conditionid );
+                _kf_display->SendToClient( kfentity, KFMsg::ConditionSettingError, conditionid );
                 continue;
             }
 
@@ -283,6 +285,7 @@ namespace KFrame
         if ( kfsetting == nullptr )
         {
             __LOG_ERROR__( "condition=[{}] can't find setting", conditionid );
+            _kf_display->SendToClient( kfentity, KFMsg::ConditionSettingError, conditionid );
             return KFConditionEnum::UpdateDone;
         }
 
@@ -459,6 +462,7 @@ namespace KFrame
         auto kfsetting = KFConditionConfig::Instance()->FindSetting( conditionid );
         if ( kfsetting == nullptr || kfsetting->_condition_define == nullptr )
         {
+            _kf_display->SendToClient( kfentity, KFMsg::ConditionSettingError, conditionid );
             return KFConditionEnum::UpdateFailed;
         }
 
@@ -503,6 +507,7 @@ namespace KFrame
     if ( kfsetting == nullptr )\
     {\
         __LOG_ERROR__( "condition=[{}] can't find setting", conditionid );\
+        _kf_display->SendToClient( kfentity, KFMsg::ConditionSettingError, conditionid );\
         return KFConditionEnum::UpdateDone;\
     }\
     auto operatetype = 0u;\
@@ -702,6 +707,7 @@ namespace KFrame
         auto kfsetting = KFConditionConfig::Instance()->FindSetting( updateconditionid );
         if ( kfsetting == nullptr || kfsetting->_condition_define == nullptr )
         {
+            _kf_display->SendToClient( kfentity, KFMsg::ConditionSettingError, updateconditionid );
             return KFConditionEnum::UpdateFailed;
         }
 

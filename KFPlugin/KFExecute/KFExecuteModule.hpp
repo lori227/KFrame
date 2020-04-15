@@ -12,6 +12,8 @@
 #include "KFExecuteInterface.h"
 #include "KFDrop/KFDropInterface.h"
 #include "KFKernel/KFKernelInterface.h"
+#include "KFPlayer/KFPlayerInterface.h"
+#include "KFExecuteConfig.hpp"
 
 namespace KFrame
 {
@@ -20,6 +22,9 @@ namespace KFrame
     public:
         KFExecuteModule() = default;
         ~KFExecuteModule() = default;
+
+        virtual void BeforeRun();
+        virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         virtual bool Execute( KFEntity* player, const KFExecuteData* executedata, const char* function, uint32 line );
         virtual bool Execute( KFEntity* player, const KFExecuteData* executedata, const std::string& modulename, uint64 moduleid, const char* function, uint32 line );
@@ -29,9 +34,18 @@ namespace KFrame
         virtual void UnBindExecuteFunction( const std::string& name );
 
     protected:
+        // 执行添加道具
+        __KF_EXECUTE_FUNCTION__( OnExecuteAddData );
+
+        // 执行掉落逻辑
+        __KF_EXECUTE_FUNCTION__( OnExecuteDropLogic );
+
+        // 执行逻辑
+        __KF_EXECUTE_FUNCTION__( OnExecuteQueueLogic );
+
+    protected:
         // 执行列表
         KFBind < std::string, const std::string&, KFExecuteFunction > _execute_function;
-
     };
 }
 

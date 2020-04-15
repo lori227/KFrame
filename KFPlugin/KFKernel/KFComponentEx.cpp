@@ -793,7 +793,7 @@ namespace KFrame
 
     __KF_TIMER_FUNCTION__( KFComponentEx::OnTimerSaveEntity )
     {
-        auto kfentity = FindEntity( objectid, __FUNC_LINE__ );
+        auto kfentity = FindEntity( objectid );
         if ( kfentity == nullptr )
         {
             return;

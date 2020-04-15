@@ -45,7 +45,7 @@ namespace protobuf_FrameClientMessage_2eproto {
 struct LIBPROTOC_EXPORT TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[61];
+  static const ::google::protobuf::internal::ParseTable schema[62];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -206,6 +206,9 @@ LIBPROTOC_EXPORT extern MsgSyncRemoveDataDefaultTypeInternal _MsgSyncRemoveData_
 class MsgSyncUpdateData;
 class MsgSyncUpdateDataDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgSyncUpdateDataDefaultTypeInternal _MsgSyncUpdateData_default_instance_;
+class MsgTaskAddReq;
+class MsgTaskAddReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern MsgTaskAddReqDefaultTypeInternal _MsgTaskAddReq_default_instance_;
 class MsgTaskReceiveReq;
 class MsgTaskReceiveReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgTaskReceiveReqDefaultTypeInternal _MsgTaskReceiveReq_default_instance_;
@@ -290,6 +293,7 @@ template<> LIBPROTOC_EXPORT ::KFMsg::MsgSplitItemReq* Arena::CreateMaybeMessage<
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgSyncAddData* Arena::CreateMaybeMessage<::KFMsg::MsgSyncAddData>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgSyncRemoveData* Arena::CreateMaybeMessage<::KFMsg::MsgSyncRemoveData>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgSyncUpdateData* Arena::CreateMaybeMessage<::KFMsg::MsgSyncUpdateData>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::MsgTaskAddReq* Arena::CreateMaybeMessage<::KFMsg::MsgTaskAddReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgTaskReceiveReq* Arena::CreateMaybeMessage<::KFMsg::MsgTaskReceiveReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgTaskRemoveReq* Arena::CreateMaybeMessage<::KFMsg::MsgTaskRemoveReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgTaskRewardReq* Arena::CreateMaybeMessage<::KFMsg::MsgTaskRewardReq>(Arena*);
@@ -366,12 +370,13 @@ enum FrameClientProtocol {
   MSG_TASK_RECEIVE_REQ = 600,
   MSG_TASK_REWARD_REQ = 601,
   MSG_TASK_REMOVE_REQ = 602,
+  MSG_TASK_ADD_REQ = 603,
   FrameClientProtocol_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   FrameClientProtocol_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 LIBPROTOC_EXPORT bool FrameClientProtocol_IsValid(int value);
 const FrameClientProtocol FrameClientProtocol_MIN = MSG_FRAME_CLIENT_BEGIN;
-const FrameClientProtocol FrameClientProtocol_MAX = MSG_TASK_REMOVE_REQ;
+const FrameClientProtocol FrameClientProtocol_MAX = MSG_TASK_ADD_REQ;
 const int FrameClientProtocol_ARRAYSIZE = FrameClientProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* FrameClientProtocol_descriptor();
@@ -3908,6 +3913,20 @@ class LIBPROTOC_EXPORT MsgMoveItemReq : public ::google::protobuf::Message /* @@
   ::std::string* release_targetname();
   void set_allocated_targetname(::std::string* targetname);
 
+  // bytes tabname = 5;
+  void clear_tabname();
+  static const int kTabnameFieldNumber = 5;
+  const ::std::string& tabname() const;
+  void set_tabname(const ::std::string& value);
+  #if LANG_CXX11
+  void set_tabname(::std::string&& value);
+  #endif
+  void set_tabname(const char* value);
+  void set_tabname(const void* value, size_t size);
+  ::std::string* mutable_tabname();
+  ::std::string* release_tabname();
+  void set_allocated_tabname(::std::string* tabname);
+
   // uint64 sourceuuid = 2;
   void clear_sourceuuid();
   static const int kSourceuuidFieldNumber = 2;
@@ -3926,6 +3945,7 @@ class LIBPROTOC_EXPORT MsgMoveItemReq : public ::google::protobuf::Message /* @@
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::ArenaStringPtr sourcename_;
   ::google::protobuf::internal::ArenaStringPtr targetname_;
+  ::google::protobuf::internal::ArenaStringPtr tabname_;
   ::google::protobuf::uint64 sourceuuid_;
   ::google::protobuf::uint32 targetindex_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
@@ -4397,33 +4417,40 @@ class LIBPROTOC_EXPORT MsgSortItemReq : public ::google::protobuf::Message /* @@
 
   // accessors -------------------------------------------------------
 
-  // repeated bytes sourcename = 1;
-  int sourcename_size() const;
-  void clear_sourcename();
-  static const int kSourcenameFieldNumber = 1;
-  const ::std::string& sourcename(int index) const;
-  ::std::string* mutable_sourcename(int index);
-  void set_sourcename(int index, const ::std::string& value);
+  // bytes bagname = 1;
+  void clear_bagname();
+  static const int kBagnameFieldNumber = 1;
+  const ::std::string& bagname() const;
+  void set_bagname(const ::std::string& value);
   #if LANG_CXX11
-  void set_sourcename(int index, ::std::string&& value);
+  void set_bagname(::std::string&& value);
   #endif
-  void set_sourcename(int index, const char* value);
-  void set_sourcename(int index, const void* value, size_t size);
-  ::std::string* add_sourcename();
-  void add_sourcename(const ::std::string& value);
+  void set_bagname(const char* value);
+  void set_bagname(const void* value, size_t size);
+  ::std::string* mutable_bagname();
+  ::std::string* release_bagname();
+  void set_allocated_bagname(::std::string* bagname);
+
+  // bytes tabname = 2;
+  void clear_tabname();
+  static const int kTabnameFieldNumber = 2;
+  const ::std::string& tabname() const;
+  void set_tabname(const ::std::string& value);
   #if LANG_CXX11
-  void add_sourcename(::std::string&& value);
+  void set_tabname(::std::string&& value);
   #endif
-  void add_sourcename(const char* value);
-  void add_sourcename(const void* value, size_t size);
-  const ::google::protobuf::RepeatedPtrField< ::std::string>& sourcename() const;
-  ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_sourcename();
+  void set_tabname(const char* value);
+  void set_tabname(const void* value, size_t size);
+  ::std::string* mutable_tabname();
+  ::std::string* release_tabname();
+  void set_allocated_tabname(::std::string* tabname);
 
   // @@protoc_insertion_point(class_scope:KFMsg.MsgSortItemReq)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::RepeatedPtrField< ::std::string> sourcename_;
+  ::google::protobuf::internal::ArenaStringPtr bagname_;
+  ::google::protobuf::internal::ArenaStringPtr tabname_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameClientMessage_2eproto::TableStruct;
 };
@@ -7402,6 +7429,109 @@ class LIBPROTOC_EXPORT MsgTaskRemoveReq : public ::google::protobuf::Message /* 
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameClientMessage_2eproto::TableStruct;
 };
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgTaskAddReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgTaskAddReq) */ {
+ public:
+  MsgTaskAddReq();
+  virtual ~MsgTaskAddReq();
+
+  MsgTaskAddReq(const MsgTaskAddReq& from);
+
+  inline MsgTaskAddReq& operator=(const MsgTaskAddReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  MsgTaskAddReq(MsgTaskAddReq&& from) noexcept
+    : MsgTaskAddReq() {
+    *this = ::std::move(from);
+  }
+
+  inline MsgTaskAddReq& operator=(MsgTaskAddReq&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgTaskAddReq& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MsgTaskAddReq* internal_default_instance() {
+    return reinterpret_cast<const MsgTaskAddReq*>(
+               &_MsgTaskAddReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    61;
+
+  void Swap(MsgTaskAddReq* other);
+  friend void swap(MsgTaskAddReq& a, MsgTaskAddReq& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MsgTaskAddReq* New() const final {
+    return CreateMaybeMessage<MsgTaskAddReq>(NULL);
+  }
+
+  MsgTaskAddReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MsgTaskAddReq>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const MsgTaskAddReq& from);
+  void MergeFrom(const MsgTaskAddReq& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MsgTaskAddReq* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // uint32 id = 1;
+  void clear_id();
+  static const int kIdFieldNumber = 1;
+  ::google::protobuf::uint32 id() const;
+  void set_id(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgTaskAddReq)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 id_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_FrameClientMessage_2eproto::TableStruct;
+};
 // ===================================================================
 
 
@@ -9248,6 +9378,59 @@ inline void MsgMoveItemReq::set_targetindex(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:KFMsg.MsgMoveItemReq.targetindex)
 }
 
+// bytes tabname = 5;
+inline void MsgMoveItemReq::clear_tabname() {
+  tabname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& MsgMoveItemReq::tabname() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgMoveItemReq.tabname)
+  return tabname_.GetNoArena();
+}
+inline void MsgMoveItemReq::set_tabname(const ::std::string& value) {
+  
+  tabname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.MsgMoveItemReq.tabname)
+}
+#if LANG_CXX11
+inline void MsgMoveItemReq::set_tabname(::std::string&& value) {
+  
+  tabname_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgMoveItemReq.tabname)
+}
+#endif
+inline void MsgMoveItemReq::set_tabname(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  tabname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.MsgMoveItemReq.tabname)
+}
+inline void MsgMoveItemReq::set_tabname(const void* value, size_t size) {
+  
+  tabname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgMoveItemReq.tabname)
+}
+inline ::std::string* MsgMoveItemReq::mutable_tabname() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.MsgMoveItemReq.tabname)
+  return tabname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* MsgMoveItemReq::release_tabname() {
+  // @@protoc_insertion_point(field_release:KFMsg.MsgMoveItemReq.tabname)
+  
+  return tabname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgMoveItemReq::set_allocated_tabname(::std::string* tabname) {
+  if (tabname != NULL) {
+    
+  } else {
+    
+  }
+  tabname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), tabname);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgMoveItemReq.tabname)
+}
+
 // -------------------------------------------------------------------
 
 // MsgMoveAllItemReq
@@ -9557,73 +9740,110 @@ inline void MsgCleanItemReq::set_allocated_sourcename(::std::string* sourcename)
 
 // MsgSortItemReq
 
-// repeated bytes sourcename = 1;
-inline int MsgSortItemReq::sourcename_size() const {
-  return sourcename_.size();
+// bytes bagname = 1;
+inline void MsgSortItemReq::clear_bagname() {
+  bagname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void MsgSortItemReq::clear_sourcename() {
-  sourcename_.Clear();
+inline const ::std::string& MsgSortItemReq::bagname() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgSortItemReq.bagname)
+  return bagname_.GetNoArena();
 }
-inline const ::std::string& MsgSortItemReq::sourcename(int index) const {
-  // @@protoc_insertion_point(field_get:KFMsg.MsgSortItemReq.sourcename)
-  return sourcename_.Get(index);
-}
-inline ::std::string* MsgSortItemReq::mutable_sourcename(int index) {
-  // @@protoc_insertion_point(field_mutable:KFMsg.MsgSortItemReq.sourcename)
-  return sourcename_.Mutable(index);
-}
-inline void MsgSortItemReq::set_sourcename(int index, const ::std::string& value) {
-  // @@protoc_insertion_point(field_set:KFMsg.MsgSortItemReq.sourcename)
-  sourcename_.Mutable(index)->assign(value);
+inline void MsgSortItemReq::set_bagname(const ::std::string& value) {
+  
+  bagname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.MsgSortItemReq.bagname)
 }
 #if LANG_CXX11
-inline void MsgSortItemReq::set_sourcename(int index, ::std::string&& value) {
-  // @@protoc_insertion_point(field_set:KFMsg.MsgSortItemReq.sourcename)
-  sourcename_.Mutable(index)->assign(std::move(value));
+inline void MsgSortItemReq::set_bagname(::std::string&& value) {
+  
+  bagname_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgSortItemReq.bagname)
 }
 #endif
-inline void MsgSortItemReq::set_sourcename(int index, const char* value) {
+inline void MsgSortItemReq::set_bagname(const char* value) {
   GOOGLE_DCHECK(value != NULL);
-  sourcename_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set_char:KFMsg.MsgSortItemReq.sourcename)
+  
+  bagname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.MsgSortItemReq.bagname)
 }
-inline void MsgSortItemReq::set_sourcename(int index, const void* value, size_t size) {
-  sourcename_.Mutable(index)->assign(
-    reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgSortItemReq.sourcename)
+inline void MsgSortItemReq::set_bagname(const void* value, size_t size) {
+  
+  bagname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgSortItemReq.bagname)
 }
-inline ::std::string* MsgSortItemReq::add_sourcename() {
-  // @@protoc_insertion_point(field_add_mutable:KFMsg.MsgSortItemReq.sourcename)
-  return sourcename_.Add();
+inline ::std::string* MsgSortItemReq::mutable_bagname() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.MsgSortItemReq.bagname)
+  return bagname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void MsgSortItemReq::add_sourcename(const ::std::string& value) {
-  sourcename_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add:KFMsg.MsgSortItemReq.sourcename)
+inline ::std::string* MsgSortItemReq::release_bagname() {
+  // @@protoc_insertion_point(field_release:KFMsg.MsgSortItemReq.bagname)
+  
+  return bagname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgSortItemReq::set_allocated_bagname(::std::string* bagname) {
+  if (bagname != NULL) {
+    
+  } else {
+    
+  }
+  bagname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), bagname);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgSortItemReq.bagname)
+}
+
+// bytes tabname = 2;
+inline void MsgSortItemReq::clear_tabname() {
+  tabname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& MsgSortItemReq::tabname() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgSortItemReq.tabname)
+  return tabname_.GetNoArena();
+}
+inline void MsgSortItemReq::set_tabname(const ::std::string& value) {
+  
+  tabname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.MsgSortItemReq.tabname)
 }
 #if LANG_CXX11
-inline void MsgSortItemReq::add_sourcename(::std::string&& value) {
-  sourcename_.Add(std::move(value));
-  // @@protoc_insertion_point(field_add:KFMsg.MsgSortItemReq.sourcename)
+inline void MsgSortItemReq::set_tabname(::std::string&& value) {
+  
+  tabname_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgSortItemReq.tabname)
 }
 #endif
-inline void MsgSortItemReq::add_sourcename(const char* value) {
+inline void MsgSortItemReq::set_tabname(const char* value) {
   GOOGLE_DCHECK(value != NULL);
-  sourcename_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add_char:KFMsg.MsgSortItemReq.sourcename)
+  
+  tabname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.MsgSortItemReq.tabname)
 }
-inline void MsgSortItemReq::add_sourcename(const void* value, size_t size) {
-  sourcename_.Add()->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_add_pointer:KFMsg.MsgSortItemReq.sourcename)
+inline void MsgSortItemReq::set_tabname(const void* value, size_t size) {
+  
+  tabname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgSortItemReq.tabname)
 }
-inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
-MsgSortItemReq::sourcename() const {
-  // @@protoc_insertion_point(field_list:KFMsg.MsgSortItemReq.sourcename)
-  return sourcename_;
+inline ::std::string* MsgSortItemReq::mutable_tabname() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.MsgSortItemReq.tabname)
+  return tabname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::google::protobuf::RepeatedPtrField< ::std::string>*
-MsgSortItemReq::mutable_sourcename() {
-  // @@protoc_insertion_point(field_mutable_list:KFMsg.MsgSortItemReq.sourcename)
-  return &sourcename_;
+inline ::std::string* MsgSortItemReq::release_tabname() {
+  // @@protoc_insertion_point(field_release:KFMsg.MsgSortItemReq.tabname)
+  
+  return tabname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgSortItemReq::set_allocated_tabname(::std::string* tabname) {
+  if (tabname != NULL) {
+    
+  } else {
+    
+  }
+  tabname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), tabname);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgSortItemReq.tabname)
 }
 
 // -------------------------------------------------------------------
@@ -11169,9 +11389,29 @@ inline void MsgTaskRemoveReq::set_id(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:KFMsg.MsgTaskRemoveReq.id)
 }
 
+// -------------------------------------------------------------------
+
+// MsgTaskAddReq
+
+// uint32 id = 1;
+inline void MsgTaskAddReq::clear_id() {
+  id_ = 0u;
+}
+inline ::google::protobuf::uint32 MsgTaskAddReq::id() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgTaskAddReq.id)
+  return id_;
+}
+inline void MsgTaskAddReq::set_id(::google::protobuf::uint32 value) {
+  
+  id_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.MsgTaskAddReq.id)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

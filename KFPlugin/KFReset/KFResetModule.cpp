@@ -87,6 +87,17 @@ namespace KFrame
         return status == 1u;
     }
 
+    uint64 KFResetModule::CalcNextResetTime( uint64 time, uint32 timeid )
+    {
+        auto kfsetting = KFTimeConfig::Instance()->FindSetting( timeid );
+        if ( kfsetting == nullptr )
+        {
+            return 0u;
+        }
+
+        return KFDate::CalcTimeData( &kfsetting->_time_data, time, 1 );
+    }
+
     __KF_RUN_PLAYER_FUNCTION__( KFResetModule::RunResetPlayerData )
     {
         auto kfresetdata = player->Find( __STRING__( resettime ) );

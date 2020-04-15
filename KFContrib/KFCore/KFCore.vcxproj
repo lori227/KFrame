@@ -29,18 +29,18 @@
   <ItemGroup>
     <ClInclude Include="KFAnalysis.hpp" />
     <ClInclude Include="KFCondition.h" />
-    <ClInclude Include="KFArray.h" />
+    <ClInclude Include="KFArray.hpp" />
     <ClInclude Include="KFData.h" />
-    <ClInclude Include="KFDouble.h" />
+    <ClInclude Include="KFDouble.hpp" />
     <ClInclude Include="KFElement.h" />
-    <ClInclude Include="KFInt32.h" />
-    <ClInclude Include="KFInt64.h" />
+    <ClInclude Include="KFInt32.hpp" />
+    <ClInclude Include="KFInt64.hpp" />
     <ClInclude Include="KFObject.h" />
-    <ClInclude Include="KFRecord.h" />
-    <ClInclude Include="KFString.h" />
-    <ClInclude Include="KFUInt32.h" />
-    <ClInclude Include="KFUInt64.h" />
-    <ClInclude Include="KFVector3D.h" />
+    <ClInclude Include="KFRecord.hpp" />
+    <ClInclude Include="KFString.hpp" />
+    <ClInclude Include="KFUInt32.hpp" />
+    <ClInclude Include="KFUInt64.hpp" />
+    <ClInclude Include="KFVector3D.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="KFData.inl" />

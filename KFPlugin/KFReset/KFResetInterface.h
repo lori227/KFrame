@@ -26,6 +26,8 @@ namespace KFrame
         // 判断是否重置时间是否ok
         virtual bool CheckResetTime( KFEntity* player, uint32 timeid ) = 0;
 
+        // 获得下一次重置时间
+        virtual uint64 CalcNextResetTime( uint64 time, uint32 timeid ) = 0;
     protected:
         // 添加重置函数
         virtual void AddResetFunction( uint32 timeid, uint32 count, const std::string& module, KFResetFunction& function ) = 0;

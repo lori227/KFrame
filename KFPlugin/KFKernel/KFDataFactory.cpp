@@ -1,14 +1,14 @@
 ﻿#include "KFDataFactory.hpp"
-#include "KFCore/KFInt32.h"
-#include "KFCore/KFUInt32.h"
-#include "KFCore/KFInt64.h"
-#include "KFCore/KFUInt64.h"
-#include "KFCore/KFDouble.h"
-#include "KFCore/KFString.h"
 #include "KFCore/KFObject.h"
-#include "KFCore/KFRecord.h"
-#include "KFCore/KFArray.h"
-#include "KFCore/KFVector3D.h"
+#include "KFCore/KFInt32.hpp"
+#include "KFCore/KFUInt32.hpp"
+#include "KFCore/KFInt64.hpp"
+#include "KFCore/KFUInt64.hpp"
+#include "KFCore/KFDouble.hpp"
+#include "KFCore/KFString.hpp"
+#include "KFCore/KFRecord.hpp"
+#include "KFCore/KFArray.hpp"
+#include "KFCore/KFVector3D.hpp"
 #include "KFZConfig/KFDataConfig.hpp"
 #include "KFKernelModule.hpp"
 
@@ -198,6 +198,12 @@ namespace KFrame
     void KFDataFactory::InitData( KFData* kfdata, const KFDataSetting* datasetting )
     {
         kfdata->Initialize( datasetting );
+        if ( datasetting->_class_setting == nullptr )
+        {
+            return;
+        }
+
+        // 如果是对象, 需要初始化子属性
         for ( auto& iter : datasetting->_class_setting->_static_data._objects )
         {
             auto childdatasetting = iter.second;

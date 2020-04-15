@@ -11,6 +11,7 @@
 
 #include "KFConditionInterface.h"
 #include "KFKernel/KFKernelInterface.h"
+#include "KFDisplay/KFDisplayInterface.h"
 #include "KFConditionConfig.hpp"
 
 namespace KFrame

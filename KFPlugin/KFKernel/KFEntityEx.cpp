@@ -818,8 +818,6 @@ namespace KFrame
             return;
         }
 
-        _have_show_client = true;
-        _kf_component->AddSyncEntity( this );
         CreateShowElement( modulename, moduleid );
     }
 

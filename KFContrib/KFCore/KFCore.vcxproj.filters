@@ -51,41 +51,41 @@
     <ClInclude Include="KFCondition.h">
       <Filter>Condition</Filter>
     </ClInclude>
-    <ClInclude Include="KFArray.h">
-      <Filter>Data</Filter>
-    </ClInclude>
     <ClInclude Include="KFData.h">
-      <Filter>Data</Filter>
-    </ClInclude>
-    <ClInclude Include="KFDouble.h">
-      <Filter>Data</Filter>
-    </ClInclude>
-    <ClInclude Include="KFInt32.h">
-      <Filter>Data</Filter>
-    </ClInclude>
-    <ClInclude Include="KFInt64.h">
-      <Filter>Data</Filter>
-    </ClInclude>
-    <ClInclude Include="KFObject.h">
-      <Filter>Data</Filter>
-    </ClInclude>
-    <ClInclude Include="KFRecord.h">
-      <Filter>Data</Filter>
-    </ClInclude>
-    <ClInclude Include="KFString.h">
-      <Filter>Data</Filter>
-    </ClInclude>
-    <ClInclude Include="KFUInt32.h">
-      <Filter>Data</Filter>
-    </ClInclude>
-    <ClInclude Include="KFUInt64.h">
-      <Filter>Data</Filter>
-    </ClInclude>
-    <ClInclude Include="KFVector3D.h">
       <Filter>Data</Filter>
     </ClInclude>
     <ClInclude Include="KFElement.h">
       <Filter>Element</Filter>
+    </ClInclude>
+    <ClInclude Include="KFArray.hpp">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="KFDouble.hpp">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="KFInt32.hpp">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="KFInt64.hpp">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="KFRecord.hpp">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="KFString.hpp">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="KFUInt32.hpp">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="KFUInt64.hpp">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="KFVector3D.hpp">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="KFObject.h">
+      <Filter>Data</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

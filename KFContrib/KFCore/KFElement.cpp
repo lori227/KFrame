@@ -36,12 +36,13 @@ namespace KFrame
         }
         else
         {
-            _use_value = KFGlobal::Instance()->RandRange( ( uint32 )_min_value, ( uint32 )_max_value, 1 );
+            _use_value = KFGlobal::Instance()->RandRange( ( uint32 )_min_value, ( uint32 )_max_value, 1u );
         }
 
         if ( multiple != 1.0f && _data_setting != nullptr && _data_setting->HaveMask( KFDataDefine::Mask_Multiple ) )
         {
-            _use_value = static_cast< uint64 >( _use_value * multiple + 0.5 );
+            _use_value = static_cast< uint64 >( std::round( _use_value * multiple ) );
+            _use_value = __MAX__( 1u, _use_value );
         }
 
         return _use_value;

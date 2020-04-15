@@ -4,10 +4,12 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="KFExecuteModule.cpp" />
     <ClCompile Include="KFExecutePlugin.cpp" />
+    <ClCompile Include="KFExecuteConfig.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFExecuteInterface.h" />
     <ClInclude Include="KFExecuteModule.hpp" />
     <ClInclude Include="KFExecutePlugin.hpp" />
+    <ClInclude Include="KFExecuteConfig.hpp" />
   </ItemGroup>
 </Project>

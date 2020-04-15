@@ -41,6 +41,7 @@ namespace KFrame
             Month = 4,
             Year = 5,
             Minute = 6,
+            Ever = 7,
             Max,
         };
     }
@@ -130,6 +131,10 @@ namespace KFrame
         // 判断是否过了一周
         static bool CheckPassWeek( uint64 lasttime, uint64 nowtime, uint32 dayofweek, uint32 hour );
         static bool CheckPassWeek( KFDate& lastdate, KFDate& nowdate, uint32 dayofweek, uint32 hour );
+
+        // 判断是否过了永久
+        static bool CheckPassEver( uint64 lasttime );
+        static bool CheckPassEver( KFDate& lastdate );
 
         // 判断时间
         static bool CheckTime( const KFTimeData* timedata, uint64 lasttime, uint64 nowtime );

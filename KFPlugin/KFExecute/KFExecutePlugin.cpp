@@ -1,5 +1,6 @@
 ﻿#include "KFExecutePlugin.hpp"
 #include "KFExecuteModule.hpp"
+#include "KFConfig/KFConfigInterface.h"
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame
@@ -17,11 +18,15 @@ namespace KFrame
     void KFExecutePlugin::LoadModule()
     {
         __FIND_MODULE__( _kf_drop, KFDropInterface );
+        __FIND_MODULE__( _kf_config, KFConfigInterface );
         __FIND_MODULE__( _kf_kernel, KFKernelInterface );
+        __FIND_MODULE__( _kf_player, KFPlayerInterface );
+        __FIND_MODULE__( _kf_execute, KFExecuteInterface );
     }
 
     void KFExecutePlugin::AddConfig()
     {
-
+        __KF_ADD_CONFIG__( KFExecuteConfig );
+        __KF_ADD_CONFIG__( KFExecuteSortConfig );
     }
 }

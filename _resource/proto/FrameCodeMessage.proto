@@ -78,6 +78,11 @@ enum FrameCodeEnum
 	AchieveAlreadyReceived		= 12203;	// 已经领取成就
 	AchieveReceiveOk  			= 12204;	// 领取成就奖励成功
 
+	// frame
+	ConditionSettingError		= 12250;	// 条件配置%s不存在
+	DropSettingError			= 12251;	// 掉落配置(%s)不存在
+	DropValueError				= 12252;	// 掉落数据(%s)数值为0
+
 	// task
 	TaskCanNotFind				= 12300;	// 找不到任务配置
 	TaskCanNotFindData			= 12301;	// 没有任务数据
@@ -124,6 +129,7 @@ enum FrameCodeEnum
 	ItemBagIsFull				= 12617;	// 背包物品已满
 	ItemBagCanNotMove			= 12618;	// 背包不支持移动
 	ItemBagCanNotClean			= 12619;	// 背包不支持清空
+	ItemTabNotExist				= 12620;	// 仓库页签不存在
 
 	// signin
 	SignInNotDay				= 12700;	// 没有签到数据
@@ -175,4 +181,5 @@ enum FrameCodeEnum
 	RelationSettingError		= 13314;	// 找不到关系配置
 	RelationDataError			= 13315;	// 找不到关系数据
 	FriendLinessAdd				= 13316;	// 与<Text>%s</Text>情义小涨<Text>%s</Text>
+
 }
