@@ -7,6 +7,11 @@ namespace KFrame
         _data_type = KFDataDefine::Type_Object;
     }
 
+    uint32 KFObject::GetConfigID()
+    {
+        return Get<uint32>( _data_setting->_config_key_name );
+    }
+
     uint64 KFObject::GetKeyID()
     {
         if ( _key == 0u )

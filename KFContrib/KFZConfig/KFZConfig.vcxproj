@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFConfig.h" />
+    <ClInclude Include="KFCountCostConfig.h" />
     <ClInclude Include="KFDataConfig.hpp" />
     <ClInclude Include="KFDataSetting.h" />
     <ClInclude Include="KFElementConfig.h" />

@@ -35,6 +35,11 @@ namespace KFrame
         return _data_setting->_int_max_value;
     }
 
+    uint32 KFData::GetConfigID()
+    {
+        return 0;
+    }
+
     uint64 KFData::GetKeyID()
     {
         return 0;

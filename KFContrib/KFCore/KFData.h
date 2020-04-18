@@ -62,6 +62,9 @@ namespace KFrame
         // 重置数量
         virtual void Resize( uint32 size );
 
+        // configid
+        virtual uint32 GetConfigID();
+
         // keyid
         virtual uint64 GetKeyID();
         virtual void SetKeyID( uint64 id );

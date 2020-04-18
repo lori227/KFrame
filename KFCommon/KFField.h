@@ -267,7 +267,13 @@ namespace KFrame
         __STRING_DEFINE__( dirdatabase );
         __STRING_DEFINE__( paydatabase );
         __STRING_DEFINE__( zonetoken );
-
+        __STRING_DEFINE__( store );
+        __STRING_DEFINE__( storeid );
+        __STRING_DEFINE__( storeunlock );
+        __STRING_DEFINE__( storeindex );
+        __STRING_DEFINE__( sort );
+        __STRING_DEFINE__( goods );
+        __STRING_DEFINE__( refresh );
     }
 }
 

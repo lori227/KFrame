@@ -145,13 +145,21 @@ enum FrameCodeEnum
 	MailNotHaveReward			= 12804;	// 邮件没有附件
 
 	// store
-	StoreNotFind				= 12900;	// 找不到商品配置
+	StoreGoodsSettingError		= 12900;	// 找不到商品配置
 	StoreBuyCountError			= 12901;	// 购买数量错误
-	StoreOutOfLimitOwm			= 12902;	// 商品拥有购买限制
-	StoreOutOfLimits			= 12903;	// 购买次数限制
+	StoreGoodsBuyTimeError		= 12902;	// 商品还未上架不能购买
+	StoreOutOfLimits			= 12903;	// 超过购买限制数量
 	StoreLackCost				= 12904;	// 没有足够的资源购买
-	StoreBuyTypeError			= 12905;	// 购买类型错误
+	StoreSettingError			= 12905;	// 商店(%s)配置不存在
 	StoreBuyOK					= 12906;	// 购买成功
+	StoreNotHaveGoods			= 12907;	// 商店没有商品(%s)
+	StoreNotRefresh				= 12908;	// 商店(%s)没有刷新商品
+	StoreStockLack				= 12909;	// 商品库存不足
+	StoreNotRefreshManual		= 12910;	// 商店不能手动刷新
+	StoreRefreshTimeError		= 12911;	// 商店刷新时间未到
+	StoreRefreshOk				= 12912;	// 商店刷新成功
+	StoreRefreshTypeError		= 12913;	// 错误的刷新类型
+	StoreRefreshCostEmpty		= 12914;	// 没有配置刷新花费
 
 	// pay
 	PayIdError					= 13000;	// 充值信息错误

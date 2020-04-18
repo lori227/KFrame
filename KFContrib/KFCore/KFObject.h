@@ -24,6 +24,9 @@ namespace KFrame
         // 初始化数值
         virtual void InitData();
 
+        // configid
+        virtual uint32 GetConfigID();
+
         // 获得key
         virtual uint64 GetKeyID();
         virtual void SetKeyID( uint64 id );
