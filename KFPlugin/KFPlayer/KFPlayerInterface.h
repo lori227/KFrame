@@ -235,15 +235,14 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#define __KF_BEFORE_ENTER_PLAYER_FUNCTION__( function ) void function( KFEntity* player )
-#define __REGISTER_BEFORE_ENTER_PLAYER__( function ) _kf_player->RegisterBeforeEnterFunction( this, function )
-#define __UN_BEFORE_ENTER_PLAYER__() _kf_player->UnRegisterBeforeEnterFunction( this )
-
 #define __KF_ENTER_PLAYER_FUNCTION__( function ) void function( KFEntity* player )
+
 #define __REGISTER_ENTER_PLAYER__( function ) _kf_player->RegisterEnterFunction( this, function )
 #define __UN_ENTER_PLAYER__() _kf_player->UnRegisterEnterFunction( this )
 
-#define __KF_AFTER_ENTER_PLAYER_FUNCTION__( function ) void function( KFEntity* player )
+#define __REGISTER_BEFORE_ENTER_PLAYER__( function ) _kf_player->RegisterBeforeEnterFunction( this, function )
+#define __UN_BEFORE_ENTER_PLAYER__() _kf_player->UnRegisterBeforeEnterFunction( this )
+
 #define __REGISTER_AFTER_ENTER_PLAYER__( function ) _kf_player->RegisterAfterEnterFunction( this, function )
 #define __UN_AFTER_ENTER_PLAYER__() _kf_player->UnRegisterAfterEnterFunction( this )
 

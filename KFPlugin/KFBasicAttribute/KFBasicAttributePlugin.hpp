@@ -1,10 +1,10 @@
-﻿#ifndef __KF_PUBLIC_SHARD_PLUGIN_H__
-#define __KF_PUBLIC_SHARD_PLUGIN_H__
+﻿#ifndef __KF_BASIC_ATTRIBUTE_PLUGIN_H__
+#define __KF_BASIC_ATTRIBUTE_PLUGIN_H__
 #include "KFrame.h"
 
 namespace KFrame
 {
-    class KFPublicShardPlugin : public KFPlugin
+    class KFBasicAttributePlugin : public KFPlugin
     {
     public:
         // 注册

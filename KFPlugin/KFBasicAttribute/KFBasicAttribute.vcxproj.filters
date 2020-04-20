@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="KFBasicAttributeModule.cpp" />
+    <ClCompile Include="KFBasicAttributePlugin.cpp" />
+    <ClCompile Include="KFBasicAttributeMongo.cpp" />
+    <ClCompile Include="KFBasicAttributeRedis.cpp" />
+    <ClCompile Include="KFBasicAttributeLogic.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="KFBasicAttributeInterface.h" />
+    <ClInclude Include="KFBasicAttributeModule.hpp" />
+    <ClInclude Include="KFBasicAttributePlugin.hpp" />
+    <ClInclude Include="KFBasicAttributeMongo.hpp" />
+    <ClInclude Include="KFBasicAttributeRedis.hpp" />
+    <ClInclude Include="KFBasicAttributeLogic.hpp" />
+  </ItemGroup>
+</Project>

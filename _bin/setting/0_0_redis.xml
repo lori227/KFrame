@@ -41,7 +41,7 @@
 	</Module>
 
 	<!--公共数据, 玩家名字信息-->
-	<Module Name="public">
+	<Module Name="basic">
 		<Redis MinLogicId="0" MaxLogicId="0">
 			<Write IP="127.0.0.1" Port="6379" Password="redis@lori227-="/>
 			<Read IP="127.0.0.1" Port="6379" Password="redis@lori227-="/>

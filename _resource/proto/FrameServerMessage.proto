@@ -46,8 +46,6 @@ enum FrameServerProtocol
 	S2S_SAVE_PLAYER_TO_GAME_ACK					= 20404;	// 保存玩家
 	S2S_QUERY_PLAYER_TO_DATA_REQ				= 20405;	// 查询玩家
 	S2S_QUERY_PLAYER_TO_GAME_ACK				= 20406;	// 查询玩家
-	S2S_SET_PLAYERNAME_TO_DATA_REQ 				= 20407;	// 设置玩家名字
-	S2S_SET_PLAYERNAME_TO_GAME_ACK				= 20408;	// 设置玩家名字
 
 	// mail
 	S2S_NEW_PLAYER_MAIL_REQ 					= 20501;	// 新玩家登陆邮件服务
@@ -65,11 +63,14 @@ enum FrameServerProtocol
 	S2S_QUERY_RANK_LIST_REQ 					= 20604;	// 查询全服排行榜
 	S2S_QUERY_FRIEND_RANK_LIST_REQ 				= 20605;	// 查询好友排行榜
 
-	// public
-	S2S_UPDATE_DATA_TO_PUBLIC_REQ 				= 20701;	// 更新公共数据
-	S2S_QUERY_BASIC_TO_PUBLIC_REQ 				= 20702;	// 查询玩家基础数据
-	S2S_QUERY_BASIC_TO_GAME_ACK 				= 20703;	// 查询玩家基础数据
-	S2S_CLEAR_ONLINE_TO_PUBLIC_REQ				= 20704;	// 清除在线信息
+	// basic
+	S2S_UPDATE_INT_VALUE_TO_BASIC_REQ 			= 20701;	// 更新公共数据
+	S2S_UPDATE_STR_VALUE_TO_BASIC_REQ 			= 20702;	// 更新公共数据
+	S2S_QUERY_ATTRIBUTE_TO_BASIC_REQ 			= 20703;	// 查询玩家基础数据
+	S2S_QUERY_ATTRIBUTE_TO_GAME_ACK 			= 20704;	// 查询玩家基础数据
+	S2S_CLEAR_ONLINE_TO_BASIC_REQ				= 20705;	// 清除在线信息
+	S2S_SET_PLAYER_NAME_TO_BASIC_REQ 			= 20706;	// 设置玩家名字
+	S2S_SET_PLAYER_NAME_TO_GAME_ACK				= 20707;	// 设置玩家名字
 
 	// relation
 	S2S_UPDATE_DATA_TO_RELATION_REQ 			= 20801;	// 更新关系属性
@@ -255,25 +256,6 @@ message S2SQueryPlayerToGameAck
 {
 	uint32 result = 1;
 	PBObject playerdata = 2;
-}
-
-// S2S_SET_PLAYERNAME_TO_DATA_REQ
-message S2SSetPlayerNameToDataReq
-{
-	uint32 zoneid = 1;
-	uint64 playerid = 2;
-	bytes oldname = 3;
-	bytes newname = 4;
-	bytes costdata = 5;
-}
-
-// S2S_SET_PLAYERNAME_TO_GAME_ACK
-message S2SSetPlayerNameToGameAck
-{
-	uint32 result = 1;
-	uint64 playerid = 2;
-	bytes name = 3;
-	bytes costdata = 4;
 }
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
@@ -474,34 +456,60 @@ message S2SQueryFriendRankListReq
 //////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////
 // 更新公共数据
-// S2S_UPDATE_DATA_TO_PUBLIC_REQ
-message S2SUpdateDataToPublicReq
+// S2S_UPDATE_INT_VALUE_TO_BASIC_REQ
+message S2SUpdateIntValueToBasicReq
+{
+	map<string, uint64> pbdata = 1;	// 属性
+}
+
+// 更新公共数据
+// S2S_UPDATE_STR_VALUE_TO_BASIC_REQ
+message S2SUpdateStrValueToBasicReq
 {
 	map<string, bytes> pbdata = 1;	// 属性
 }
 
 // 清除在线逻辑
-// S2S_CLEAR_ONLINE_TO_PUBLIC_REQ
-message S2SClearOnlineToPublicReq
+// S2S_CLEAR_ONLINE_TO_BASIC_REQ
+message S2SClearOnlineToBasicReq
 {
 	uint64 serverid = 1;
 }
 
 // 查询基础数据
-// S2S_QUERY_BASIC_TO_PUBLIC_REQ
-message S2SQueryBasicToPublicReq
+// S2S_QUERY_ATTRIBUTE_TO_BASIC_REQ
+message S2SQueryAttributeToBasicReq
 {
 	bytes name = 1;
 	uint32 zoneid = 2;
 }
 
 // 查询基础数据
-// S2S_QUERY_BASIC_TO_GAME_ACK
-message S2SQueryBasicToGameAck
+// S2S_QUERY_ATTRIBUTE_TO_GAME_ACK
+message S2SQueryAttributeToGameAck
 {
 	bytes name = 1;
 	uint32 result = 2;
 	map<string, bytes> pbdata = 3;	// 属性
+}
+
+// S2S_SET_PLAYER_NAME_TO_BASIC_REQ
+message S2SSetPlayerNameToBasicReq
+{
+	uint32 zoneid = 1;
+	uint64 playerid = 2;
+	bytes oldname = 3;
+	bytes newname = 4;
+	bytes costdata = 5;
+}
+
+// S2S_SET_PLAYER_NAME_TO_GAME_ACK
+message S2SSetPlayerNameToGameAck
+{
+	uint32 result = 1;
+	uint64 playerid = 2;
+	bytes name = 3;
+	bytes costdata = 4;
 }
 ///////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////

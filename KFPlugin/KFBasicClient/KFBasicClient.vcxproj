@@ -12,19 +12,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFPublicClientModule.cpp" />
-    <ClCompile Include="KFPublicClientPlugin.cpp" />
+    <ClCompile Include="KFBasicClientModule.cpp" />
+    <ClCompile Include="KFBasicClientPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFPublicClientInterface.h" />
-    <ClInclude Include="KFPublicClientModule.hpp" />
-    <ClInclude Include="KFPublicClientPlugin.hpp" />
+    <ClInclude Include="KFBasicClientInterface.h" />
+    <ClInclude Include="KFBasicClientModule.hpp" />
+    <ClInclude Include="KFBasicClientPlugin.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B91C62C9-7AFF-4026-8E72-FB652878340C}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>NFProxyPlugin</RootNamespace>
-    <ProjectName>KFPublicClient</ProjectName>
+    <ProjectName>KFBasicClient</ProjectName>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

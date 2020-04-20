@@ -1,7 +1,7 @@
-﻿#include "KFPublicShardPlugin.hpp"
+﻿#include "KFBasicShardPlugin.hpp"
 #include "KFLibrary.h"
 
-__KF_EXPORT__ __KF_PLUGIN_ENRTY__( KFrame::KFPublicShardPlugin );
-__KF_EXPORT__ __KF_PLUGIN_LEAVE__( KFrame::KFPublicShardPlugin );
+__KF_EXPORT__ __KF_PLUGIN_ENRTY__( KFrame::KFBasicShardPlugin );
+__KF_EXPORT__ __KF_PLUGIN_LEAVE__( KFrame::KFBasicShardPlugin );
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////

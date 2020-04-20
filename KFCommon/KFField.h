@@ -266,6 +266,7 @@ namespace KFrame
         __STRING_DEFINE__( authdatabase );
         __STRING_DEFINE__( dirdatabase );
         __STRING_DEFINE__( paydatabase );
+        __STRING_DEFINE__( basicdatabase );
         __STRING_DEFINE__( zonetoken );
         __STRING_DEFINE__( store );
         __STRING_DEFINE__( storeid );
@@ -274,6 +275,7 @@ namespace KFrame
         __STRING_DEFINE__( sort );
         __STRING_DEFINE__( goods );
         __STRING_DEFINE__( refresh );
+        __STRING_DEFINE__( playername );
     }
 }
 

@@ -12,19 +12,25 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFPublicShardModule.cpp" />
-    <ClCompile Include="KFPublicShardPlugin.cpp" />
+    <ClCompile Include="KFBasicAttributeLogic.cpp" />
+    <ClCompile Include="KFBasicAttributeModule.cpp" />
+    <ClCompile Include="KFBasicAttributeMongo.cpp" />
+    <ClCompile Include="KFBasicAttributePlugin.cpp" />
+    <ClCompile Include="KFBasicAttributeRedis.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFPublicShardInterface.h" />
-    <ClInclude Include="KFPublicShardModule.hpp" />
-    <ClInclude Include="KFPublicShardPlugin.hpp" />
+    <ClInclude Include="KFBasicAttributeInterface.h" />
+    <ClInclude Include="KFBasicAttributeLogic.hpp" />
+    <ClInclude Include="KFBasicAttributeModule.hpp" />
+    <ClInclude Include="KFBasicAttributeMongo.hpp" />
+    <ClInclude Include="KFBasicAttributePlugin.hpp" />
+    <ClInclude Include="KFBasicAttributeRedis.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{4182DAD8-0536-41A4-A00B-AFE7FBA8101F}</ProjectGuid>
+    <ProjectGuid>{2EC77F3F-BAA6-485A-99D3-CCD140225DAB}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>NFProxyPlugin</RootNamespace>
-    <ProjectName>KFPublicShard</ProjectName>
+    <ProjectName>KFBasicAttribute</ProjectName>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

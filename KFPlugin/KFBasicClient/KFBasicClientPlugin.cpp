@@ -1,20 +1,20 @@
-﻿#include "KFPublicClientPlugin.hpp"
-#include "KFPublicClientModule.hpp"
+﻿#include "KFBasicClientPlugin.hpp"
+#include "KFBasicClientModule.hpp"
 #include "KFConfig/KFConfigInterface.h"
 
 namespace KFrame
 {
-    void KFPublicClientPlugin::Install()
+    void KFBasicClientPlugin::Install()
     {
-        __REGISTER_MODULE__( KFPublicClient );
+        __REGISTER_MODULE__( KFBasicClient );
     }
 
-    void KFPublicClientPlugin::UnInstall()
+    void KFBasicClientPlugin::UnInstall()
     {
-        __UN_MODULE__( KFPublicClient );
+        __UN_MODULE__( KFBasicClient );
     }
 
-    void KFPublicClientPlugin::LoadModule()
+    void KFBasicClientPlugin::LoadModule()
     {
         __FIND_MODULE__( _kf_config, KFConfigInterface );
         __FIND_MODULE__( _kf_player, KFPlayerInterface );
@@ -25,7 +25,7 @@ namespace KFrame
         __FIND_MODULE__( _kf_route, KFRouteClientInterface );
     }
 
-    void KFPublicClientPlugin::AddConfig()
+    void KFBasicClientPlugin::AddConfig()
     {
         __KF_ADD_CONFIG__( KFZoneConfig );
     }

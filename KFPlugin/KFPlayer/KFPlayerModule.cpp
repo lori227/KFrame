@@ -222,6 +222,11 @@ namespace KFrame
 
     void KFPlayerModule::UnInitPlayer( KFEntity* player )
     {
+        auto kfbasic = player->Find( __STRING__( basic ) );
+        kfbasic->Set( __STRING__( serverid ), 0 );
+        kfbasic->Set( __STRING__( status ), ( uint32 )KFMsg::FrameOfflineStatus );
+        kfbasic->Set( __STRING__( statustime ), KFGlobal::Instance()->_real_time );
+
         // 调用函数, 处理离开游戏的一些事务逻辑
         for ( auto& iter : _player_leave_function._objects )
         {
@@ -285,7 +290,11 @@ namespace KFrame
         player->Set( __STRING__( channel ), pblogin->channel() );
         player->Set( __STRING__( account ), pblogin->account() );
         player->Set( __STRING__( accountid ), pblogin->accountid() );
-        player->Set( __STRING__( basic ), __STRING__( serverid ), KFGlobal::Instance()->_app_id->GetId() );
+
+        auto kfbasic = player->Find( __STRING__( basic ) );
+        kfbasic->Set( __STRING__( serverid ), KFGlobal::Instance()->_app_id->GetId() );
+        kfbasic->Set( __STRING__( status ), ( uint32 )KFMsg::FrameOnlineStatus );
+        kfbasic->Set( __STRING__( statustime ), KFGlobal::Instance()->_real_time );
 
         // 渠道数据
         auto pbchanneldata = &pblogin->channeldata();

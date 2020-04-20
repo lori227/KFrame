@@ -28,6 +28,9 @@ namespace KFrame
 
         auto paydatabse = databasenode.GetUInt32( "Pay" );
         kfglobal->AddConstant( __STRING__( paydatabase ), 0u, paydatabse );
+
+        auto basicdatabse = databasenode.GetUInt32( "Basic" );
+        kfglobal->AddConstant( __STRING__( basicdatabase ), 0u, basicdatabse );
         //////////////////////////////////////////////////////////////////
         auto uuidnodes = config.FindNode( "Uuids" );
         if ( uuidnodes.IsValid() )

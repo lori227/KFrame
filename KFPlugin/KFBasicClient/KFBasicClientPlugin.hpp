@@ -1,10 +1,10 @@
-﻿#ifndef __KF_PUBLIC_CLIENT_PLUGIN_H__
-#define __KF_PUBLIC_CLIENT_PLUGIN_H__
+﻿#ifndef __KF_BASIC_CLIENT_PLUGIN_H__
+#define __KF_BASIC_CLIENT_PLUGIN_H__
 #include "KFrame.h"
 
 namespace KFrame
 {
-    class KFPublicClientPlugin : public KFPlugin
+    class KFBasicClientPlugin : public KFPlugin
     {
     public:
         // 注册

@@ -40,7 +40,7 @@ namespace KFrame
             Mask_RemoveCall = 1 << 8,	// 是否删除回调
             Mask_UpdataCall = 1 << 9,	// 是否更新回调
 
-            Mask_Public = 1 << 20,		// 公共属性
+            Mask_Basic = 1 << 20,		// 基础属性
             Mask_Relation = 1 << 21,	// 关系属性
             Mask_Team = 1 << 22,		// 队伍属性
             Mask_Guild = 1 << 23,		// 帮派属性

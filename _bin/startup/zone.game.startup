@@ -15,7 +15,8 @@
 		<Plugin Name="KFGame" Config=""/>	
 		<Plugin Name="KFDisplay" Config=""/>	
 		<Plugin Name="KFPlayer" Config=""/>	
-		<Plugin Name="KFDataClient" Config=""/>	
 		<Plugin Name="KFCommand" Config=""/>	
+		<Plugin Name="KFDataClient" Config=""/>	
+		<Plugin Name="KFBasicClient" Config=""/>	
 	</Plugins>
 </Setting>
