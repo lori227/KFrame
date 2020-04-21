@@ -41,6 +41,11 @@ namespace KFrame
             return iter->second;
         }
 
+        bool IsEmpty() const
+        {
+            return _int_list.empty() && _str_list.empty();
+        }
+
     public:
         // int 属性列表
         std::unordered_map< std::string, uint64 > _int_list;

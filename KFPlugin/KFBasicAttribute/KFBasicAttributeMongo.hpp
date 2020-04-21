@@ -31,6 +31,9 @@ namespace KFrame
         // 设置玩家名字
         virtual uint32 SetPlayerName( uint32 zoneid, uint64 playerid, const std::string& oldname, const std::string& newname );
 
+        // 查询属性
+        virtual uint64 QueryBasicIntValue( uint64 playerid, const std::string& dataname );
+        virtual std::string QueryBasicStrValue( uint64 playerid, const std::string& dataname );
     protected:
         // 格式化名字字段
         std::string FormatNameKey( const std::string& name, uint32 zoneid );

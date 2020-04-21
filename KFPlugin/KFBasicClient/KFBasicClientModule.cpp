@@ -3,6 +3,8 @@
 
 namespace KFrame
 {
+#define __ROUTE_NAME__ __STRING__( basic )
+
     void KFBasicClientModule::BeforeRun()
     {
         _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
@@ -46,17 +48,17 @@ namespace KFrame
 
         _need_refresh_online = false;
 
-        // 刷新在线逻辑
+        // 清空该服务器上的玩家基础属性(serverid)
         KFMsg::S2SClearOnlineToBasicReq req;
         req.set_serverid( KFGlobal::Instance()->_app_id->GetId() );
-        _kf_route->RepeatToRand( __STRING__( logic ), KFMsg::S2S_CLEAR_ONLINE_TO_BASIC_REQ, &req );
+        _kf_route->RepeatToRand( __ROUTE_NAME__, KFMsg::S2S_CLEAR_ONLINE_TO_BASIC_REQ, &req );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFBasicClientModule::UpdateBasicIntValueToBasic( uint64 playerid, KeyValue& values )
     {
         KFMsg::S2SUpdateIntValueToBasicReq req;
         req.mutable_pbdata()->insert( values.begin(), values.end() );
-        _kf_route->RepeatToRand( playerid, __STRING__( logic ), KFMsg::S2S_UPDATE_INT_VALUE_TO_BASIC_REQ, &req );
+        _kf_route->RepeatToRand( playerid, __ROUTE_NAME__, KFMsg::S2S_UPDATE_INT_VALUE_TO_BASIC_REQ, &req );
     }
 
     void KFBasicClientModule::UpdateBasicIntValueToBasic( uint64 playerid, const std::string& dataname, uint64 datavalue )
@@ -70,7 +72,7 @@ namespace KFrame
     {
         KFMsg::S2SUpdateStrValueToBasicReq req;
         ( *req.mutable_pbdata() )[ dataname ] = datavalue;
-        _kf_route->RepeatToRand( playerid, __STRING__( logic ), KFMsg::S2S_UPDATE_STR_VALUE_TO_BASIC_REQ, &req );
+        _kf_route->RepeatToRand( playerid, __ROUTE_NAME__, KFMsg::S2S_UPDATE_STR_VALUE_TO_BASIC_REQ, &req );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_ENTER_PLAYER_FUNCTION__( KFBasicClientModule::OnEnterUpdateBasicAttribute )
@@ -136,7 +138,7 @@ namespace KFrame
         KFMsg::S2SQueryAttributeToBasicReq req;
         req.set_name( kfmsg.name() );
         req.set_zoneid( KFZoneConfig::Instance()->ZoneSetting()->_logic_id );
-        _kf_route->SendToRand( playerid, __STRING__( logic ), KFMsg::S2S_QUERY_ATTRIBUTE_TO_BASIC_REQ, &req );
+        _kf_route->SendToRand( playerid, __ROUTE_NAME__, KFMsg::S2S_QUERY_ATTRIBUTE_TO_BASIC_REQ, &req );
     }
 
     __KF_MESSAGE_FUNCTION__( KFBasicClientModule::HandleQueryAttributeToGameAck )
@@ -220,7 +222,7 @@ namespace KFrame
         req.set_newname( kfmsg.name() );
         req.set_costdata( _invalid_string );
         req.set_zoneid( KFZoneConfig::Instance()->ZoneSetting()->_logic_id );
-        auto ok = _kf_route->SendToRand( playerid, __STRING__( logic ), KFMsg::S2S_SET_PLAYER_NAME_TO_BASIC_REQ, &req );
+        auto ok = _kf_route->SendToRand( playerid, __ROUTE_NAME__, KFMsg::S2S_SET_PLAYER_NAME_TO_BASIC_REQ, &req );
         if ( !ok )
         {
             _kf_display->SendToClient( player, KFMsg::PublicServerBusy );

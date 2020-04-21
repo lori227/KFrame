@@ -66,7 +66,7 @@ namespace KFrame
                 auto kfsetting = iter.second;
                 for ( auto countcostdata : kfsetting->_count_cost_list._objects )
                 {
-                    KFElementConfig::Instance()->ParseElement( countcostdata->_cost_elements, countcostdata->_cost_elements._str_element, __FILE__, kfsetting->_id );
+                    KFElementConfig::Instance()->ParseElement( countcostdata->_cost_elements, __FILE__, kfsetting->_id );
                 }
             }
         }
@@ -93,7 +93,7 @@ namespace KFrame
             auto countcostdata = __KF_NEW__( KFCountCostData );
             countcostdata->_min_count = xmlnode.GetUInt32( "MinCount" );
             countcostdata->_max_count = xmlnode.GetUInt32( "MaxCount" );
-            countcostdata->_cost_elements._str_element = xmlnode.GetString( "Cost" );
+            countcostdata->_cost_elements._str_parse = xmlnode.GetString( "Cost" );
             kfsetting->_count_cost_list.Add( countcostdata );
         }
     };

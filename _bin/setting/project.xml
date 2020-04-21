@@ -16,6 +16,12 @@
 		<Database Name="paydatabase" Type="1"/>
 		<!-- Basic 玩家基础数据 -->
 		<Database Name="basicdatabase" Type="1"/>
+		<!-- Relation 关系数据 -->
+		<Database Name="relationdatabase" Type="1"/>
+		<!-- Mail 邮件数据 -->
+		<Database Name="maildatabase" Type="1"/>
+		<!-- Guild 工会/军团/帮派数据 -->
+		<Database Name="guilddatabase" Type="1"/>
 	</Databases>
 
 	<!-- uuid -->

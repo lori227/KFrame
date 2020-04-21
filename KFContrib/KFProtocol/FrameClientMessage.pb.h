@@ -6545,19 +6545,19 @@ class LIBPROTOC_EXPORT MsgAddRelationReq : public ::google::protobuf::Message /*
 
   // accessors -------------------------------------------------------
 
-  // bytes dataname = 1;
-  void clear_dataname();
-  static const int kDatanameFieldNumber = 1;
-  const ::std::string& dataname() const;
-  void set_dataname(const ::std::string& value);
+  // bytes relationname = 1;
+  void clear_relationname();
+  static const int kRelationnameFieldNumber = 1;
+  const ::std::string& relationname() const;
+  void set_relationname(const ::std::string& value);
   #if LANG_CXX11
-  void set_dataname(::std::string&& value);
+  void set_relationname(::std::string&& value);
   #endif
-  void set_dataname(const char* value);
-  void set_dataname(const void* value, size_t size);
-  ::std::string* mutable_dataname();
-  ::std::string* release_dataname();
-  void set_allocated_dataname(::std::string* dataname);
+  void set_relationname(const char* value);
+  void set_relationname(const void* value, size_t size);
+  ::std::string* mutable_relationname();
+  ::std::string* release_relationname();
+  void set_allocated_relationname(::std::string* relationname);
 
   // bytes playername = 2;
   void clear_playername();
@@ -6597,7 +6597,7 @@ class LIBPROTOC_EXPORT MsgAddRelationReq : public ::google::protobuf::Message /*
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::internal::ArenaStringPtr dataname_;
+  ::google::protobuf::internal::ArenaStringPtr relationname_;
   ::google::protobuf::internal::ArenaStringPtr playername_;
   ::google::protobuf::internal::ArenaStringPtr message_;
   ::google::protobuf::uint64 playerid_;
@@ -6693,19 +6693,19 @@ class LIBPROTOC_EXPORT MsgDelRelationReq : public ::google::protobuf::Message /*
 
   // accessors -------------------------------------------------------
 
-  // bytes dataname = 1;
-  void clear_dataname();
-  static const int kDatanameFieldNumber = 1;
-  const ::std::string& dataname() const;
-  void set_dataname(const ::std::string& value);
+  // bytes relationname = 1;
+  void clear_relationname();
+  static const int kRelationnameFieldNumber = 1;
+  const ::std::string& relationname() const;
+  void set_relationname(const ::std::string& value);
   #if LANG_CXX11
-  void set_dataname(::std::string&& value);
+  void set_relationname(::std::string&& value);
   #endif
-  void set_dataname(const char* value);
-  void set_dataname(const void* value, size_t size);
-  ::std::string* mutable_dataname();
-  ::std::string* release_dataname();
-  void set_allocated_dataname(::std::string* dataname);
+  void set_relationname(const char* value);
+  void set_relationname(const void* value, size_t size);
+  ::std::string* mutable_relationname();
+  ::std::string* release_relationname();
+  void set_allocated_relationname(::std::string* relationname);
 
   // uint64 playerid = 2;
   void clear_playerid();
@@ -6717,7 +6717,7 @@ class LIBPROTOC_EXPORT MsgDelRelationReq : public ::google::protobuf::Message /*
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::internal::ArenaStringPtr dataname_;
+  ::google::protobuf::internal::ArenaStringPtr relationname_;
   ::google::protobuf::uint64 playerid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameClientMessage_2eproto::TableStruct;
@@ -6811,19 +6811,19 @@ class LIBPROTOC_EXPORT MsgReplyRelationInviteReq : public ::google::protobuf::Me
 
   // accessors -------------------------------------------------------
 
-  // bytes dataname = 1;
-  void clear_dataname();
-  static const int kDatanameFieldNumber = 1;
-  const ::std::string& dataname() const;
-  void set_dataname(const ::std::string& value);
+  // bytes relationname = 1;
+  void clear_relationname();
+  static const int kRelationnameFieldNumber = 1;
+  const ::std::string& relationname() const;
+  void set_relationname(const ::std::string& value);
   #if LANG_CXX11
-  void set_dataname(::std::string&& value);
+  void set_relationname(::std::string&& value);
   #endif
-  void set_dataname(const char* value);
-  void set_dataname(const void* value, size_t size);
-  ::std::string* mutable_dataname();
-  ::std::string* release_dataname();
-  void set_allocated_dataname(::std::string* dataname);
+  void set_relationname(const char* value);
+  void set_relationname(const void* value, size_t size);
+  ::std::string* mutable_relationname();
+  ::std::string* release_relationname();
+  void set_allocated_relationname(::std::string* relationname);
 
   // uint64 playerid = 2;
   void clear_playerid();
@@ -6841,7 +6841,7 @@ class LIBPROTOC_EXPORT MsgReplyRelationInviteReq : public ::google::protobuf::Me
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::internal::ArenaStringPtr dataname_;
+  ::google::protobuf::internal::ArenaStringPtr relationname_;
   ::google::protobuf::uint64 playerid_;
   ::google::protobuf::uint32 operate_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
@@ -6936,19 +6936,19 @@ class LIBPROTOC_EXPORT MsgSetRefuseRelationInviteReq : public ::google::protobuf
 
   // accessors -------------------------------------------------------
 
-  // bytes dataname = 1;
-  void clear_dataname();
-  static const int kDatanameFieldNumber = 1;
-  const ::std::string& dataname() const;
-  void set_dataname(const ::std::string& value);
+  // bytes relationname = 1;
+  void clear_relationname();
+  static const int kRelationnameFieldNumber = 1;
+  const ::std::string& relationname() const;
+  void set_relationname(const ::std::string& value);
   #if LANG_CXX11
-  void set_dataname(::std::string&& value);
+  void set_relationname(::std::string&& value);
   #endif
-  void set_dataname(const char* value);
-  void set_dataname(const void* value, size_t size);
-  ::std::string* mutable_dataname();
-  ::std::string* release_dataname();
-  void set_allocated_dataname(::std::string* dataname);
+  void set_relationname(const char* value);
+  void set_relationname(const void* value, size_t size);
+  ::std::string* mutable_relationname();
+  ::std::string* release_relationname();
+  void set_allocated_relationname(::std::string* relationname);
 
   // uint32 refuse = 2;
   void clear_refuse();
@@ -6960,7 +6960,7 @@ class LIBPROTOC_EXPORT MsgSetRefuseRelationInviteReq : public ::google::protobuf
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::internal::ArenaStringPtr dataname_;
+  ::google::protobuf::internal::ArenaStringPtr relationname_;
   ::google::protobuf::uint32 refuse_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameClientMessage_2eproto::TableStruct;
@@ -10553,57 +10553,57 @@ inline void MsgQueryFriendRankListAck::set_allocated_rankdatas(::KFMsg::PBRankDa
 
 // MsgAddRelationReq
 
-// bytes dataname = 1;
-inline void MsgAddRelationReq::clear_dataname() {
-  dataname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+// bytes relationname = 1;
+inline void MsgAddRelationReq::clear_relationname() {
+  relationname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& MsgAddRelationReq::dataname() const {
-  // @@protoc_insertion_point(field_get:KFMsg.MsgAddRelationReq.dataname)
-  return dataname_.GetNoArena();
+inline const ::std::string& MsgAddRelationReq::relationname() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgAddRelationReq.relationname)
+  return relationname_.GetNoArena();
 }
-inline void MsgAddRelationReq::set_dataname(const ::std::string& value) {
+inline void MsgAddRelationReq::set_relationname(const ::std::string& value) {
   
-  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.MsgAddRelationReq.dataname)
+  relationname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.MsgAddRelationReq.relationname)
 }
 #if LANG_CXX11
-inline void MsgAddRelationReq::set_dataname(::std::string&& value) {
+inline void MsgAddRelationReq::set_relationname(::std::string&& value) {
   
-  dataname_.SetNoArena(
+  relationname_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgAddRelationReq.dataname)
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgAddRelationReq.relationname)
 }
 #endif
-inline void MsgAddRelationReq::set_dataname(const char* value) {
+inline void MsgAddRelationReq::set_relationname(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
-  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.MsgAddRelationReq.dataname)
+  relationname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.MsgAddRelationReq.relationname)
 }
-inline void MsgAddRelationReq::set_dataname(const void* value, size_t size) {
+inline void MsgAddRelationReq::set_relationname(const void* value, size_t size) {
   
-  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+  relationname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgAddRelationReq.dataname)
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgAddRelationReq.relationname)
 }
-inline ::std::string* MsgAddRelationReq::mutable_dataname() {
+inline ::std::string* MsgAddRelationReq::mutable_relationname() {
   
-  // @@protoc_insertion_point(field_mutable:KFMsg.MsgAddRelationReq.dataname)
-  return dataname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  // @@protoc_insertion_point(field_mutable:KFMsg.MsgAddRelationReq.relationname)
+  return relationname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* MsgAddRelationReq::release_dataname() {
-  // @@protoc_insertion_point(field_release:KFMsg.MsgAddRelationReq.dataname)
+inline ::std::string* MsgAddRelationReq::release_relationname() {
+  // @@protoc_insertion_point(field_release:KFMsg.MsgAddRelationReq.relationname)
   
-  return dataname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  return relationname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void MsgAddRelationReq::set_allocated_dataname(::std::string* dataname) {
-  if (dataname != NULL) {
+inline void MsgAddRelationReq::set_allocated_relationname(::std::string* relationname) {
+  if (relationname != NULL) {
     
   } else {
     
   }
-  dataname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), dataname);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgAddRelationReq.dataname)
+  relationname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), relationname);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgAddRelationReq.relationname)
 }
 
 // bytes playername = 2;
@@ -10730,57 +10730,57 @@ inline void MsgAddRelationReq::set_allocated_message(::std::string* message) {
 
 // MsgDelRelationReq
 
-// bytes dataname = 1;
-inline void MsgDelRelationReq::clear_dataname() {
-  dataname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+// bytes relationname = 1;
+inline void MsgDelRelationReq::clear_relationname() {
+  relationname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& MsgDelRelationReq::dataname() const {
-  // @@protoc_insertion_point(field_get:KFMsg.MsgDelRelationReq.dataname)
-  return dataname_.GetNoArena();
+inline const ::std::string& MsgDelRelationReq::relationname() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgDelRelationReq.relationname)
+  return relationname_.GetNoArena();
 }
-inline void MsgDelRelationReq::set_dataname(const ::std::string& value) {
+inline void MsgDelRelationReq::set_relationname(const ::std::string& value) {
   
-  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.MsgDelRelationReq.dataname)
+  relationname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.MsgDelRelationReq.relationname)
 }
 #if LANG_CXX11
-inline void MsgDelRelationReq::set_dataname(::std::string&& value) {
+inline void MsgDelRelationReq::set_relationname(::std::string&& value) {
   
-  dataname_.SetNoArena(
+  relationname_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgDelRelationReq.dataname)
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgDelRelationReq.relationname)
 }
 #endif
-inline void MsgDelRelationReq::set_dataname(const char* value) {
+inline void MsgDelRelationReq::set_relationname(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
-  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.MsgDelRelationReq.dataname)
+  relationname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.MsgDelRelationReq.relationname)
 }
-inline void MsgDelRelationReq::set_dataname(const void* value, size_t size) {
+inline void MsgDelRelationReq::set_relationname(const void* value, size_t size) {
   
-  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+  relationname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgDelRelationReq.dataname)
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgDelRelationReq.relationname)
 }
-inline ::std::string* MsgDelRelationReq::mutable_dataname() {
+inline ::std::string* MsgDelRelationReq::mutable_relationname() {
   
-  // @@protoc_insertion_point(field_mutable:KFMsg.MsgDelRelationReq.dataname)
-  return dataname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  // @@protoc_insertion_point(field_mutable:KFMsg.MsgDelRelationReq.relationname)
+  return relationname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* MsgDelRelationReq::release_dataname() {
-  // @@protoc_insertion_point(field_release:KFMsg.MsgDelRelationReq.dataname)
+inline ::std::string* MsgDelRelationReq::release_relationname() {
+  // @@protoc_insertion_point(field_release:KFMsg.MsgDelRelationReq.relationname)
   
-  return dataname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  return relationname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void MsgDelRelationReq::set_allocated_dataname(::std::string* dataname) {
-  if (dataname != NULL) {
+inline void MsgDelRelationReq::set_allocated_relationname(::std::string* relationname) {
+  if (relationname != NULL) {
     
   } else {
     
   }
-  dataname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), dataname);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgDelRelationReq.dataname)
+  relationname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), relationname);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgDelRelationReq.relationname)
 }
 
 // uint64 playerid = 2;
@@ -10801,57 +10801,57 @@ inline void MsgDelRelationReq::set_playerid(::google::protobuf::uint64 value) {
 
 // MsgReplyRelationInviteReq
 
-// bytes dataname = 1;
-inline void MsgReplyRelationInviteReq::clear_dataname() {
-  dataname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+// bytes relationname = 1;
+inline void MsgReplyRelationInviteReq::clear_relationname() {
+  relationname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& MsgReplyRelationInviteReq::dataname() const {
-  // @@protoc_insertion_point(field_get:KFMsg.MsgReplyRelationInviteReq.dataname)
-  return dataname_.GetNoArena();
+inline const ::std::string& MsgReplyRelationInviteReq::relationname() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgReplyRelationInviteReq.relationname)
+  return relationname_.GetNoArena();
 }
-inline void MsgReplyRelationInviteReq::set_dataname(const ::std::string& value) {
+inline void MsgReplyRelationInviteReq::set_relationname(const ::std::string& value) {
   
-  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.MsgReplyRelationInviteReq.dataname)
+  relationname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.MsgReplyRelationInviteReq.relationname)
 }
 #if LANG_CXX11
-inline void MsgReplyRelationInviteReq::set_dataname(::std::string&& value) {
+inline void MsgReplyRelationInviteReq::set_relationname(::std::string&& value) {
   
-  dataname_.SetNoArena(
+  relationname_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgReplyRelationInviteReq.dataname)
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgReplyRelationInviteReq.relationname)
 }
 #endif
-inline void MsgReplyRelationInviteReq::set_dataname(const char* value) {
+inline void MsgReplyRelationInviteReq::set_relationname(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
-  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.MsgReplyRelationInviteReq.dataname)
+  relationname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.MsgReplyRelationInviteReq.relationname)
 }
-inline void MsgReplyRelationInviteReq::set_dataname(const void* value, size_t size) {
+inline void MsgReplyRelationInviteReq::set_relationname(const void* value, size_t size) {
   
-  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+  relationname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgReplyRelationInviteReq.dataname)
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgReplyRelationInviteReq.relationname)
 }
-inline ::std::string* MsgReplyRelationInviteReq::mutable_dataname() {
+inline ::std::string* MsgReplyRelationInviteReq::mutable_relationname() {
   
-  // @@protoc_insertion_point(field_mutable:KFMsg.MsgReplyRelationInviteReq.dataname)
-  return dataname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  // @@protoc_insertion_point(field_mutable:KFMsg.MsgReplyRelationInviteReq.relationname)
+  return relationname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* MsgReplyRelationInviteReq::release_dataname() {
-  // @@protoc_insertion_point(field_release:KFMsg.MsgReplyRelationInviteReq.dataname)
+inline ::std::string* MsgReplyRelationInviteReq::release_relationname() {
+  // @@protoc_insertion_point(field_release:KFMsg.MsgReplyRelationInviteReq.relationname)
   
-  return dataname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  return relationname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void MsgReplyRelationInviteReq::set_allocated_dataname(::std::string* dataname) {
-  if (dataname != NULL) {
+inline void MsgReplyRelationInviteReq::set_allocated_relationname(::std::string* relationname) {
+  if (relationname != NULL) {
     
   } else {
     
   }
-  dataname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), dataname);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgReplyRelationInviteReq.dataname)
+  relationname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), relationname);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgReplyRelationInviteReq.relationname)
 }
 
 // uint64 playerid = 2;
@@ -10886,57 +10886,57 @@ inline void MsgReplyRelationInviteReq::set_operate(::google::protobuf::uint32 va
 
 // MsgSetRefuseRelationInviteReq
 
-// bytes dataname = 1;
-inline void MsgSetRefuseRelationInviteReq::clear_dataname() {
-  dataname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+// bytes relationname = 1;
+inline void MsgSetRefuseRelationInviteReq::clear_relationname() {
+  relationname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& MsgSetRefuseRelationInviteReq::dataname() const {
-  // @@protoc_insertion_point(field_get:KFMsg.MsgSetRefuseRelationInviteReq.dataname)
-  return dataname_.GetNoArena();
+inline const ::std::string& MsgSetRefuseRelationInviteReq::relationname() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgSetRefuseRelationInviteReq.relationname)
+  return relationname_.GetNoArena();
 }
-inline void MsgSetRefuseRelationInviteReq::set_dataname(const ::std::string& value) {
+inline void MsgSetRefuseRelationInviteReq::set_relationname(const ::std::string& value) {
   
-  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.MsgSetRefuseRelationInviteReq.dataname)
+  relationname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.MsgSetRefuseRelationInviteReq.relationname)
 }
 #if LANG_CXX11
-inline void MsgSetRefuseRelationInviteReq::set_dataname(::std::string&& value) {
+inline void MsgSetRefuseRelationInviteReq::set_relationname(::std::string&& value) {
   
-  dataname_.SetNoArena(
+  relationname_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgSetRefuseRelationInviteReq.dataname)
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgSetRefuseRelationInviteReq.relationname)
 }
 #endif
-inline void MsgSetRefuseRelationInviteReq::set_dataname(const char* value) {
+inline void MsgSetRefuseRelationInviteReq::set_relationname(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
-  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.MsgSetRefuseRelationInviteReq.dataname)
+  relationname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.MsgSetRefuseRelationInviteReq.relationname)
 }
-inline void MsgSetRefuseRelationInviteReq::set_dataname(const void* value, size_t size) {
+inline void MsgSetRefuseRelationInviteReq::set_relationname(const void* value, size_t size) {
   
-  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+  relationname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgSetRefuseRelationInviteReq.dataname)
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgSetRefuseRelationInviteReq.relationname)
 }
-inline ::std::string* MsgSetRefuseRelationInviteReq::mutable_dataname() {
+inline ::std::string* MsgSetRefuseRelationInviteReq::mutable_relationname() {
   
-  // @@protoc_insertion_point(field_mutable:KFMsg.MsgSetRefuseRelationInviteReq.dataname)
-  return dataname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  // @@protoc_insertion_point(field_mutable:KFMsg.MsgSetRefuseRelationInviteReq.relationname)
+  return relationname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* MsgSetRefuseRelationInviteReq::release_dataname() {
-  // @@protoc_insertion_point(field_release:KFMsg.MsgSetRefuseRelationInviteReq.dataname)
+inline ::std::string* MsgSetRefuseRelationInviteReq::release_relationname() {
+  // @@protoc_insertion_point(field_release:KFMsg.MsgSetRefuseRelationInviteReq.relationname)
   
-  return dataname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  return relationname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void MsgSetRefuseRelationInviteReq::set_allocated_dataname(::std::string* dataname) {
-  if (dataname != NULL) {
+inline void MsgSetRefuseRelationInviteReq::set_allocated_relationname(::std::string* relationname) {
+  if (relationname != NULL) {
     
   } else {
     
   }
-  dataname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), dataname);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgSetRefuseRelationInviteReq.dataname)
+  relationname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), relationname);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgSetRefuseRelationInviteReq.relationname)
 }
 
 // uint32 refuse = 2;

@@ -11,7 +11,7 @@ namespace KFrame
         kfsetting->_invite_data_name = xmlnode.GetString( "InviteDataName" );
         kfsetting->_invite_data_count = xmlnode.GetUInt32( "InviteListCount" );
         kfsetting->_invite_list_name = xmlnode.GetString( "InviteListName" );
-        kfsetting->_data_list_name = xmlnode.GetString( "DataListName" );
+        kfsetting->_relation_list_name = xmlnode.GetString( "DataListName" );
         kfsetting->_invite_keep_time = xmlnode.GetUInt32( "InviteKeepTime" );
         kfsetting->_refuse_name = xmlnode.GetString( "RefuseName" );
     }

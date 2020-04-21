@@ -267,6 +267,8 @@ namespace KFrame
         __STRING_DEFINE__( dirdatabase );
         __STRING_DEFINE__( paydatabase );
         __STRING_DEFINE__( basicdatabase );
+        __STRING_DEFINE__( relationdatabase );
+        __STRING_DEFINE__( maildatabase );
         __STRING_DEFINE__( zonetoken );
         __STRING_DEFINE__( store );
         __STRING_DEFINE__( storeid );

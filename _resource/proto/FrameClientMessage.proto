@@ -522,35 +522,35 @@ message MsgQueryFriendRankListAck
 // MSG_ADD_RELATION_REQ
 message MsgAddRelationReq
 {
-	bytes dataname = 1;		// 属性名
-	bytes playername = 2;	// 玩家名字
-	uint64 playerid = 3;	// 玩家id
-	bytes message = 4;		// 留言
+	bytes relationname = 1;		// 关系名称
+	bytes playername = 2;		// 玩家名字
+	uint64 playerid = 3;		// 玩家id
+	bytes message = 4;			// 留言
 }
 
 // 删除关系
 // MSG_DEL_RELATION_REQ
 message MsgDelRelationReq
 {
-	bytes dataname = 1;		// 属性名
-	uint64 playerid = 2;	// 玩家id
+	bytes relationname = 1;		// 关系名称
+	uint64 playerid = 2;		// 玩家id
 }
 
 // 回复添加好友请求
 // MSG_REPLY_RELATION_INVITE_REQ
 message MsgReplyRelationInviteReq
 {
-	bytes dataname = 1;		// 申请列表属性名
-	uint64 playerid = 2;	// 玩家id 0 表示所有
-	uint32 operate = 3;		// 1=同意 2=拒绝 3=直接删除请求 
+	bytes relationname = 1;		// 关系名称
+	uint64 playerid = 2;		// 玩家id 0 表示所有
+	uint32 operate = 3;			// 1=同意 2=拒绝 3=直接删除请求 
 }
 
 // 设置拒绝添加好友
 // MSG_SET_REFUSE_RELATION_INVITE_REQ
 message MsgSetRefuseRelationInviteReq
 {
-	bytes dataname = 1;		// 申请列表属性名
-	uint32 refuse = 2;	 // 1=拒绝申请 0=同意接受
+	bytes relationname = 1;		// 关系名称
+	uint32 refuse = 2;	 		// 1=拒绝申请 0=同意接受
 }
 ////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////

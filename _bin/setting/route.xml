@@ -5,9 +5,16 @@
 
 	<!-- 转发规则 -->
 	<Routes>
-		<Route Source="public" Target="logic"/>
+		<!-- 基础属性 -->
+		<Route Source="basic" Target="logic"/>
+		<!-- 英雄纪录 -->
 		<Route Source="record" Target="logic"/>
+		<!-- 关系系统 -->		
 		<Route Source="relation" Target="logic"/>
+		<!-- 邮件系统 -->		
+		<Route Source="mail" Target="logic"/>
+		<!-- 帮派/军团/工会系统 -->		
+		<Route Source="guild" Target="logic"/>
 	</Routes>
 </Config>
 

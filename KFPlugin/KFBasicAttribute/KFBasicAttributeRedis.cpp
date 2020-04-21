@@ -72,9 +72,7 @@ namespace KFrame
 
     uint64 KFBasicAttributeRedis::QueryBasicServerId( uint64 playerid )
     {
-        auto redisdriver = __BASIC_REDIS_DRIVER__;
-        auto kfserverid = redisdriver->QueryUInt64( "hget {}:{} {}", __STRING__( basic ), playerid, __STRING__( serverid ) );
-        return kfserverid->_value;
+        return QueryBasicIntValue( playerid, __STRING__( serverid ) );
     }
 
     uint32 KFBasicAttributeRedis::QueryBasicAttribute( uint64 playerid, StringMap& values )
@@ -139,5 +137,19 @@ namespace KFrame
         auto namekey = FormatNameKey( playername, zoneid );
         auto kfplayerid = redisdriver->QueryUInt64( "get {}", namekey );
         return kfplayerid->_value;
+    }
+
+    uint64 KFBasicAttributeRedis::QueryBasicIntValue( uint64 playerid, const std::string& dataname )
+    {
+        auto redisdriver = __BASIC_REDIS_DRIVER__;
+        auto kfserverid = redisdriver->QueryUInt64( "hget {}:{} {}", __STRING__( basic ), playerid, dataname );
+        return kfserverid->_value;
+    }
+
+    std::string KFBasicAttributeRedis::QueryBasicStrValue( uint64 playerid, const std::string& dataname )
+    {
+        auto redisdriver = __BASIC_REDIS_DRIVER__;
+        auto kfserverid = redisdriver->QueryString( "hget {}:{} {}", __STRING__( basic ), playerid, dataname );
+        return kfserverid->_value;
     }
 }

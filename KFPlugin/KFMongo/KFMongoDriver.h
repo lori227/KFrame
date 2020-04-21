@@ -27,7 +27,7 @@ namespace KFrame
         virtual bool ExpireAt( const std::string& table, uint64 key, uint64 expiretime ) = 0;
         virtual bool ExpireAt( const std::string& table, const std::string& key, uint64 expiretime ) = 0;
 
-        // 查村纪录数量
+        // 查询纪录数量
         virtual KFResult< uint64 >::UniqueType Count( const std::string& table ) = 0;
         virtual KFResult< uint64 >::UniqueType Count( const std::string& table, const std::string& field, uint64 key ) = 0;
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////

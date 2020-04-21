@@ -11,45 +11,37 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFConfig.h" />
-    <ClInclude Include="KFCountCostConfig.h" />
-    <ClInclude Include="KFDataConfig.hpp" />
-    <ClInclude Include="KFDataSetting.h" />
-    <ClInclude Include="KFElementConfig.h" />
-    <ClInclude Include="KFExecuteData.h" />
-    <ClInclude Include="KFFormulaConfig.h" />
-    <ClInclude Include="KFRankConfig.hpp" />
-    <ClInclude Include="KFRankSetting.hpp" />
-    <ClInclude Include="KFReadSetting.h" />
-    <ClInclude Include="KFRelationConfig.hpp" />
-    <ClInclude Include="KFRouteConfig.hpp" />
-    <ClInclude Include="KFSetting.h" />
-    <ClInclude Include="KFZoneConfig.hpp" />
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="KFRelationAttributeLogic.cpp" />
+    <ClCompile Include="KFRelationAttributeModule.cpp" />
+    <ClCompile Include="KFRelationAttributeMongo.cpp" />
+    <ClCompile Include="KFRelationAttributePlugin.cpp" />
+    <ClCompile Include="KFRelationAttributeRedis.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="KFDataConfig.cpp" />
-    <ClCompile Include="KFRankConfig.cpp" />
-    <ClCompile Include="KFRelationConfig.cpp" />
-    <ClCompile Include="KFRouteConfig.cpp" />
-    <ClCompile Include="KFZoneConfig.cpp" />
+    <ClInclude Include="KFRelationAttributeInterface.h" />
+    <ClInclude Include="KFRelationAttributeLogic.hpp" />
+    <ClInclude Include="KFRelationAttributeModule.hpp" />
+    <ClInclude Include="KFRelationAttributeMongo.hpp" />
+    <ClInclude Include="KFRelationAttributePlugin.hpp" />
+    <ClInclude Include="KFRelationAttributeRedis.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{F45E974D-4858-4C72-AACD-E2FDEACC01C5}</ProjectGuid>
+    <ProjectGuid>{08B230ED-9561-4702-B366-2C7F4C28799B}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Net</RootNamespace>
+    <RootNamespace>NFProxyPlugin</RootNamespace>
+    <ProjectName>KFRelationAttribute</ProjectName>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
-    <ProjectName>KFZConfig</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v141</PlatformToolset>
-    <UseOfMfc>false</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
@@ -66,18 +58,16 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
     <OutDir>..\..\_out\$(ProjectName)\$(Configuration)\</OutDir>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <TargetName>$(ProjectName)d</TargetName>
+    <EmbedManifest>false</EmbedManifest>
     <IntDir>..\..\_out\$(ProjectName)\$(Configuration)\</IntDir>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <TargetName>$(ProjectName)d</TargetName>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
     <OutDir>..\..\_out\$(ProjectName)\$(Configuration)\</OutDir>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <EmbedManifest>false</EmbedManifest>
     <IntDir>..\..\_out\$(ProjectName)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -85,22 +75,27 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_WIN32_WINDOWS;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;POCO_EXTERNAL_OPENSSL;POCO_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\;..\..\KFLibrary\;..\..\KFInclude\;..\..\KFCommon\;..\..\KFLibrary\poco\Foundation\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
+      <PreprocessorDefinitions>WIN;_DEBUG;_WINDOWS;_USRDLL</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\KFPlugin\;..\..\KFContrib\;..\..\KFCommon\;..\..\KFLibrary\;..\..\KFInterface\;..\..\KFLibrary\google\protobuf\src\</AdditionalIncludeDirectories>
       <BrowseInformation>false</BrowseInformation>
+      <DisableSpecificWarnings>4244;4267;4996</DisableSpecificWarnings>
+      <ForcedIncludeFiles>google\protobuf\descriptor.h;google\protobuf\unknown_field_set.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-    </Link>
-    <Lib>
       <AdditionalLibraryDirectories>..\..\_lib\win64\debug;..\..\_lib\win64\debug\3rd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
-      <IgnoreSpecificDefaultLibraries>LIBCD.lib LIBCMTD.lib MSVCRT.lib</IgnoreSpecificDefaultLibraries>
-    </Lib>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
+    </Link>
     <PostBuildEvent>
-      <Command> copy /Y "$(TargetPath)" "..\..\_lib\win64\debug\"</Command>
+    </PostBuildEvent>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
+    <PostBuildEvent>
+      <Command>copy /Y "$(TargetPath)" "..\..\_bin\bin\win64\debug\"</Command>
     </PostBuildEvent>
     <BuildLog>
       <Path>..\..\_out\$(ProjectName)\$(Configuration)\$(ProjectName).log</Path>
@@ -113,25 +108,26 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;_WIN32_WINDOWS;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;POCO_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\;..\..\KFLibrary\;..\..\KFInclude\;..\..\KFCommon\;..\..\KFLibrary\poco\Foundation\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
+      <PreprocessorDefinitions>WIN;_WINDOWS;_USRDLL;ELPP_NO_DEFAULT_LOG_FILE</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\KFPlugin\;..\..\KFContrib\;..\..\KFCommon\;..\..\KFLibrary\;..\..\KFInterface\;..\..\KFLibrary\google\protobuf\src\</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4244;4267;4996</DisableSpecificWarnings>
+      <ForcedIncludeFiles>google\protobuf\descriptor.h;google\protobuf\unknown_field_set.h</ForcedIncludeFiles>
       <BrowseInformation>false</BrowseInformation>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-    </Link>
-    <Lib>
       <AdditionalLibraryDirectories>..\..\_lib\win64\release;..\..\_lib\win64\release\3rd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
-      <IgnoreSpecificDefaultLibraries>LIBCD.lib LIBCMTD.lib MSVCRT.lib</IgnoreSpecificDefaultLibraries>
-    </Lib>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
+    </Link>
     <PostBuildEvent>
-      <Command> copy /Y "$(TargetPath)" "..\..\_lib\win64\release\"</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Command>copy /Y "$(TargetPath)" "..\..\_bin\bin\win64\release\"</Command>
     </PostBuildEvent>
     <BuildLog>
       <Path>..\..\_out\$(ProjectName)\$(Configuration)\$(ProjectName).log</Path>

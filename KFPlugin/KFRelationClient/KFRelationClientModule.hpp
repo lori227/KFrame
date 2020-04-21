@@ -76,7 +76,8 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleAddRelationToGameAck );
 
         // 更新好友
-        __KF_MESSAGE_FUNCTION__( HandleUpdateDataToRelationReq );
+        __KF_MESSAGE_FUNCTION__( HandleUpdateIntValueToRelationReq );
+        __KF_MESSAGE_FUNCTION__( HandleUpdateStrValueToRelationReq );
 
         // 关系申请回复
         __KF_MESSAGE_FUNCTION__( HandleReplyRelationInviteReq );
@@ -88,29 +89,27 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleUpdateFriendLinessToGameAck );
 
     private:
-        // 发送消息到关系集群
-        bool SendToRelation( uint64 playerid, uint32 msgid, ::google::protobuf::Message* message );
+        // 上下限更新关系属性
+        void EnterLeaveUpdateToRelation( KFEntity* player, const std::string& relationname );
+
+        // 解析关系信息
+        void PBRelationToKFData( const KFMsg::PBRelation* pbrelation, KFData* kfrelation );
 
         // 发送消息到好友
-        void SendMessageToRelation( KFEntity* player, const std::string& dataname, uint32 msgid, google::protobuf::Message* message );
+        void SendMessageToRelation( KFEntity* player, const std::string& relationname, uint32 msgid, google::protobuf::Message* message );
 
         // 发送好友更新消息
-        void SendUpdateToRelation( KFEntity* player, const std::string& dataname, StringMap& values );
-
-        // 解析好友信息
-        void PBRelationToKFData( const KFMsg::PBRelation* pbfriend, KFData* kffriend );
+        void UpdateIntValueToRelation( KFEntity* player, const std::string& relationname, const KeyValue& values );
+        void UpdateIntValueToRelation( KFEntity* player, const std::string& relationname, const std::string& dataname, uint64 datavalue );
+        void UpdateStrValueToRelation( KFEntity* player, const std::string& relationname, const std::string& dataname, const std::string& datavalue );
 
         // 好友申请操作
-        void ReplyRelationInvite( KFEntity* player, uint32 operate, const KFRelationSetting* kfsetting );
-        void ReplyRelationInvite( KFEntity* player, uint64 playerid, uint32 operate, const KFRelationSetting* kfsetting );
-        uint64 ReplyRelationInvite( KFEntity* player, KFData* kfinvite, uint32 operate, const KFRelationSetting* kfsetting );
+        void ReplyRelationAllInvite( KFEntity* player, KFData* kfinviterecord, const KFRelationSetting* kfsetting, uint32 operate );
+        void ReplyRelationInvite( KFEntity* player, KFData* kfinviterecord, const KFRelationSetting* kfsetting, uint32 operate, uint64 playerid );
+        uint64 ReplyInvite( KFEntity* player, const KFRelationSetting* kfsetting, uint32 operate, KFData* kfinvite );
 
         // 添加关系
-        void AddRelationToRelation( KFEntity* player, uint64 playerid, const std::string& playername, const KFRelationSetting* kfsetting );
-
-        // 查询关系列表
-        void SendQueryToRelation( uint64 playerid, const KFRelationSetting* kfsetting );
-
+        void AddRelationToRelation( KFEntity* player, uint64 playerid, const std::string& playername, KFData* kfrelationrecord, const KFRelationSetting* kfsetting );
     private:
         // 玩家组件
         KFComponent* _kf_component = nullptr;

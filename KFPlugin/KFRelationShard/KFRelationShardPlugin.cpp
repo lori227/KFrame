@@ -17,11 +17,12 @@ namespace KFrame
 
     void KFRelationShardPlugin::LoadModule()
     {
-        __FIND_MODULE__( _kf_redis, KFRedisInterface );
         __FIND_MODULE__( _kf_config, KFConfigInterface );
         __FIND_MODULE__( _kf_message, KFMessageInterface );
         __FIND_MODULE__( _kf_display, KFDisplayInterface );
         __FIND_MODULE__( _kf_route, KFRouteClientInterface );
+        __FIND_MODULE__( _kf_basic_attribute, KFBasicAttributeInterface );
+        __FIND_MODULE__( _kf_relation_attribute, KFRelationAttributeInterface );
     }
 
     void KFRelationShardPlugin::AddConfig()

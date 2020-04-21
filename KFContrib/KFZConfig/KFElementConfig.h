@@ -6,7 +6,7 @@
 
 namespace KFrame
 {
-    typedef std::function< bool( KFElements&, const std::string& ) > KFElementParseFunction;
+    typedef std::function< bool( KFElements& ) > KFElementParseFunction;
     typedef std::function< bool( KFElements&, const std::string&, const std::string&, uint32 ) > KFElementFormatFunction;
     typedef std::function< const std::string&( const std::string&, uint32, uint32 ) > KFElementStringFunction;
     ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -14,9 +14,9 @@ namespace KFrame
     {
     public:
         template< class T >
-        void SetParseFunction( T* object, bool ( T::*handle )( KFElements&, const std::string& ) )
+        void SetParseFunction( T* object, bool ( T::*handle )( KFElements& ) )
         {
-            _parse_function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2 );
+            _parse_function = std::bind( handle, object, std::placeholders::_1 );
         }
 
         template< class T >
@@ -32,20 +32,29 @@ namespace KFrame
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////
-        bool ParseElement( KFElements& kfelements, const std::string& strelement, const char* file, uint64 id )
+        bool ParseElement( KFElements& kfelements, const char* file, uint64 id )
         {
+            if ( kfelements._str_parse.empty() )
+            {
+                return true;
+            }
+
             auto ok = false;
             try
             {
-                ok = _parse_function( kfelements, strelement );
-                if ( !ok )
+                ok = _parse_function( kfelements );
+                if ( ok )
                 {
-                    __LOG_ERROR__( "file=[{}] id=[{}] element=[{}] parse failed", file, id, strelement );
+                    kfelements._str_parse.clear();
+                }
+                else
+                {
+                    __LOG_ERROR__( "file=[{}] id=[{}] element=[{}] parse failed", file, id, kfelements._str_parse );
                 }
             }
             catch ( ... )
             {
-                __LOG_ERROR__( "file=[{}] id=[{}] element=[{}] exception", file, id, strelement );
+                __LOG_ERROR__( "file=[{}] id=[{}] element=[{}] exception", file, id, kfelements._str_parse );
             }
 
             return ok;

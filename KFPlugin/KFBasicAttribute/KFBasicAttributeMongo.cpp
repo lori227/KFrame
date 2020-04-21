@@ -41,9 +41,7 @@ namespace KFrame
 
     uint64 KFBasicAttributeMongo::QueryBasicServerId( uint64 playerid )
     {
-        auto mongodriver = __BASIC_MONGO_DRIVER__;
-        auto kfresult = mongodriver->QueryUInt64( __BASIC_TABLE_NAME__, playerid, __STRING__( serverid ) );
-        return kfresult->_value;
+        return QueryBasicIntValue( playerid, __STRING__( serverid ) );
     }
 
     uint32 KFBasicAttributeMongo::QueryBasicAttribute( uint64 playerid, StringMap& values )
@@ -108,5 +106,19 @@ namespace KFrame
         auto namekey = FormatNameKey( playername, zoneid );
         auto kfplayerid = mongodriver->QueryUInt64( __STRING__( playername ), namekey, __STRING__( playerid ) );
         return kfplayerid->_value;
+    }
+
+    uint64 KFBasicAttributeMongo::QueryBasicIntValue( uint64 playerid, const std::string& dataname )
+    {
+        auto mongodriver = __BASIC_MONGO_DRIVER__;
+        auto kfresult = mongodriver->QueryUInt64( __BASIC_TABLE_NAME__, playerid, dataname );
+        return kfresult->_value;
+    }
+
+    std::string KFBasicAttributeMongo::QueryBasicStrValue( uint64 playerid, const std::string& dataname )
+    {
+        auto mongodriver = __BASIC_MONGO_DRIVER__;
+        auto kfresult = mongodriver->QueryString( __BASIC_TABLE_NAME__, playerid, dataname );
+        return kfresult->_value;
     }
 }

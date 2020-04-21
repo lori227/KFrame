@@ -73,21 +73,22 @@ enum FrameServerProtocol
 	S2S_SET_PLAYER_NAME_TO_GAME_ACK				= 20707;	// 设置玩家名字
 
 	// relation
-	S2S_UPDATE_DATA_TO_RELATION_REQ 			= 20801;	// 更新关系属性
-	S2S_QUERY_RELATION_TO_RELATION_REQ 			= 20802;	// 查询关系信息
-	S2S_QUERY_RELATION_TO_GAME_ACK 				= 20803;	// 查询关系信息
-	S2S_QUERY_RELATION_INVITE_TO_RELATION_REQ 	= 20804;	// 查询关系申请信息
-	S2S_QUERY_RELATION_INVITE_TO_GAME_ACK 		= 20805;	// 查询关系申请信息
+	S2S_QUERY_RELATION_TO_RELATION_REQ 			= 20801;	// 查询关系信息
+	S2S_QUERY_RELATION_TO_GAME_ACK 				= 20802;	// 查询关系信息
+	S2S_QUERY_RELATION_INVITE_TO_RELATION_REQ 	= 20803;	// 查询关系申请信息
+	S2S_QUERY_RELATION_INVITE_TO_GAME_ACK 		= 20804;	// 查询关系申请信息
+	S2S_UPDATE_INT_VALUE_TO_RELATION_REQ 		= 20805;	// 更新关系属性
+	S2S_UPDATE_STR_VALUE_TO_RELATION_REQ 		= 20806;	// 更新关系属性
 
-	S2S_APPLY_ADD_RELATION_TO_RELATION_REQ 		= 20806;	// 申请添加关系请求
-	S2S_APPLY_ADD_RELATION_TO_GAME_ACK 			= 20807;	// 申请添加关系请求
-	S2S_DEL_RELATION_INVITE_TO_RELATION_REQ		= 20808;	// 删除关系邀请
-	S2S_ADD_RELATION_TO_RELATION_REQ 			= 20809;	// 添加关系请求
-	S2S_ADD_RELATION_TO_GAME_ACK 				= 20810;	// 添加关系回应
-	S2S_DEL_RELATION_TO_RELATION_REQ 			= 20811;	// 删除关系请求
-	S2S_DEL_RELATION_TO_GAME_ACK 				= 20812;	// 删除关系回应
-	S2S_UPDATE_FRIENDLINESS_TO_RELATION_REQ	 	= 20813;	// 更新好友度
-	S2S_UPDATE_FRIENDLINESS_TO_GAME_ACK 		= 20814;	// 更新好友度反馈
+	S2S_APPLY_ADD_RELATION_TO_RELATION_REQ 		= 20807;	// 申请添加关系请求
+	S2S_APPLY_ADD_RELATION_TO_GAME_ACK 			= 20808;	// 申请添加关系请求
+	S2S_DEL_RELATION_INVITE_TO_RELATION_REQ		= 20809;	// 删除关系邀请
+	S2S_ADD_RELATION_TO_RELATION_REQ 			= 20810;	// 添加关系请求
+	S2S_ADD_RELATION_TO_GAME_ACK 				= 20811;	// 添加关系回应
+	S2S_DEL_RELATION_TO_RELATION_REQ 			= 20812;	// 删除关系请求
+	S2S_DEL_RELATION_TO_GAME_ACK 				= 20813;	// 删除关系回应
+	S2S_UPDATE_FRIENDLINESS_TO_RELATION_REQ	 	= 20814;	// 更新好友度
+	S2S_UPDATE_FRIENDLINESS_TO_GAME_ACK 		= 20815;	// 更新好友度反馈
 	
 	
 }
@@ -519,15 +520,14 @@ message S2SSetPlayerNameToGameAck
 message PBRelation
 {
 	uint64 playerid = 1;
-	map<string, bytes> playerdata = 2;
-	map<string, bytes> relationdata = 3;
+	map<string, bytes> relationdata = 2;
 }
 
 // 查询好友信息
 // S2S_QUERY_RELATION_TO_RELATION_REQ
 message S2SQueryRelationToRelationReq
 {
-	bytes dataname = 1;
+	bytes relationname = 1;	// 关系名称
 	uint64 playerid = 2;	// 玩家id
 }
 
@@ -535,7 +535,7 @@ message S2SQueryRelationToRelationReq
 // S2S_QUERY_RELATION_TO_GAME_ACK
 message S2SQueryRelationToGameAck
 {
-	bytes dataname = 1;
+	bytes relationname = 1;
 	uint64 playerid = 2;				// 玩家id
 	repeated PBRelation pbrelation = 3;	// 关系数据	
 }
@@ -544,24 +544,33 @@ message S2SQueryRelationToGameAck
 // S2S_QUERY_RELATION_INVITE_TO_RELATION_REQ
 message S2SQueryRelationInviteToRelationReq
 {
-	bytes dataname = 1;
-	uint64 playerid = 3;	// 玩家id
+	bytes relationname = 1;	// 关系名称
+	uint64 playerid = 2;	// 玩家id
 }
 
 // 查询好友信息
 // S2S_QUERY_RELATION_INVITE_TO_GAME_ACK
 message S2SQueryRelationInviteToGameAck
 {
-	bytes dataname = 1;
+	bytes relationname = 1;
 	uint64 playerid = 2;				// 玩家id
 	repeated PBRelation pbinvite = 3;	// 邀请数据	
 }
 
 // 更新好友属性
-// S2S_UPDATE_DATA_TO_RELATION_REQ
-message S2SUpdateDataToRelationReq
+// S2S_UPDATE_INT_VALUE_TO_RELATION_REQ
+message S2SUpdateIntValueToRelationReq
 {
-	bytes dataname = 1;
+	bytes relationname = 1;
+	uint64 playerid = 2;
+	map<string, uint64> pbdata = 3;
+}
+
+// 更新好友属性
+// S2S_UPDATE_STR_VALUE_TO_RELATION_REQ
+message S2SUpdateStrValueToRelationReq
+{
+	bytes relationname = 1;
 	uint64 playerid = 2;
 	map<string, bytes> pbdata = 3;
 }
@@ -570,7 +579,7 @@ message S2SUpdateDataToRelationReq
 // S2S_APPLY_ADD_RELATION_TO_RELATION_REQ
 message S2SApplyAddRelationToRelationReq
 {
-	bytes dataname = 1;		// 属性名
+	bytes relationname = 1;		// 属性名
 	bytes playername = 2;	// 对方名字
 	uint64 playerid = 3;	// 对方id
 	bytes message = 4;		// 留言	
@@ -580,7 +589,7 @@ message S2SApplyAddRelationToRelationReq
 // S2S_APPLY_ADD_RELATION_TO_GAME_ACK
 message S2SApplyAddRelationToGameAck
 {
-	bytes dataname = 1;			// 属性名
+	bytes relationname = 1;			// 属性名
 	uint64 playerid = 2;		// 玩家id
 	PBRelation pbinvite = 3;	// 好友数据	
 }
@@ -589,7 +598,7 @@ message S2SApplyAddRelationToGameAck
 // S2S_DEL_RELATION_INVITE_TO_RELATION_REQ
 message S2SDelRelationInviteToRelationReq
 {
-	bytes dataname = 1;			// 属性名
+	bytes relationname = 1;		// 属性名
 	bytes listname = 2;			// 列表名
 	uint64 selfplayerid = 3;	// 申请id
 	uint64 targetplayerid = 4;	// 对方id
@@ -599,7 +608,7 @@ message S2SDelRelationInviteToRelationReq
 // S2S_ADD_RELATION_TO_RELATION_REQ
 message S2SAddRelationToRelationReq
 {
-	bytes dataname = 1;		// 属性名
+	bytes relationname = 1;	// 属性名
 	uint64 playerid = 2;	// 对方id
 	bytes playername = 3;	// 对方名字
 }
@@ -608,7 +617,7 @@ message S2SAddRelationToRelationReq
 // S2S_ADD_RELATION_TO_GAME_ACK
 message S2SAddRelationToGameAck
 {
-	bytes dataname = 1;			// 属性名
+	bytes relationname = 1;		// 属性名
 	uint64 playerid = 2;		// 玩家id
 	PBRelation pbrelation = 4;	// 关系信息
 }
@@ -617,7 +626,7 @@ message S2SAddRelationToGameAck
 // S2S_DEL_RELATION_TO_RELATION_REQ
 message S2SDelRelationToRelationReq
 {
-	bytes dataname = 1;
+	bytes relationname = 1;
 	uint64 playerid = 2;	// 关系id
 }
 
@@ -625,7 +634,7 @@ message S2SDelRelationToRelationReq
 // S2S_DEL_RELATION_TO_GAME_ACK
 message S2SDelRelationToGameAck
 {
-	bytes dataname = 1;
+	bytes relationname = 1;
 	uint64 playerid = 2;	// 申请id
 	uint64 relationid = 3;	// 对方id
 }

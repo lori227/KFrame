@@ -11,10 +11,11 @@
 
 #include "KFProtocol/KFProtocol.h"
 #include "KFRelationShardInterface.h"
-#include "KFRedis/KFRedisInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"
+#include "KFBasicAttribute/KFBasicAttributeInterface.h"
+#include "KFRelationAttribute/KFRelationAttributeInterface.h"
 #include "KFZConfig/KFRelationConfig.hpp"
 
 namespace KFrame
@@ -27,7 +28,6 @@ namespace KFrame
 
         // 初始化
         virtual void BeforeRun();
-        virtual void PrepareRun();
 
         // 关闭
         virtual void BeforeShut();
@@ -55,31 +55,23 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleUpdateFriendLinessToRelationReq );
 
     protected:
-        // 信息转换成好友信息
-        void MapStringToPBPlayer( StringMap& values, uint64 friendid, KFMsg::PBRelation* pbrelation );
-        void MapStringToPBRelation( StringMap& values, KFMsg::PBRelation* pbrelation, bool newadd );
+        // 信息转换成关系信息
+        void MapStringToPBRelation( uint64 playerid, StringMap& values, KFMsg::PBRelation* pbrelation );
 
         // 格式化好友key
         std::string FormatRelationKey( uint64 firstid, uint64 secondid, const KFRelationSetting* kfsetting );
 
         // 添加关系
-        void AddRelation( uint64 playerid, uint64 relationid, const KFRelationSetting* kfsetting );
+        void AddRelation( uint64 playerid, uint64 targetid, const KFRelationSetting* kfsetting );
 
         // 删除关系
-        void DelRelation( uint64 playerid, uint64 relationid, const KFRelationSetting* kfsetting );
+        void DelRelation( uint64 playerid, uint64 targetid, const KFRelationSetting* kfsetting );
 
         // 发送更新好友度
         void SendAddFriendLinessToPlayer( uint64 selfid, uint64 targetid, uint32 friendliness );
 
         // 更新好友度
         void UpdateFriendLiness( uint64 selfplayerid, uint64 targetplayerid, uint32 type, uint32 addvalue );
-
-    private:
-        // 关系数据库
-        KFRedisDriver* _relation_redis_driver = nullptr;
-
-        // 公共数据数据库
-        KFRedisDriver* _public_redis = nullptr;
     };
 }
 

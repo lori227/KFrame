@@ -18,9 +18,6 @@
     <ClInclude Include="KFRankSetting.hpp">
       <Filter>Rank</Filter>
     </ClInclude>
-    <ClInclude Include="KFRelationSetting.hpp">
-      <Filter>Relation</Filter>
-    </ClInclude>
     <ClInclude Include="KFZoneConfig.hpp">
       <Filter>Zone</Filter>
     </ClInclude>

@@ -5,8 +5,8 @@ namespace KFrame
 {
     void KFBasicAttributeModule::BeforeRun()
     {
-        auto authdatabasetype = KFGlobal::Instance()->GetUInt32( __STRING__( basicdatabase ) );
-        switch ( authdatabasetype )
+        auto databasetype = KFGlobal::Instance()->GetUInt32( __STRING__( basicdatabase ) );
+        switch ( databasetype )
         {
         case KFMsg::Mongo:
             _basic_attribute_logic = __NEW_OBJECT__( KFBasicAttributeMongo );
@@ -67,5 +67,15 @@ namespace KFrame
     uint32 KFBasicAttributeModule::SetPlayerName( uint32 zoneid, uint64 playerid, const std::string& oldname, const std::string& newname )
     {
         return _basic_attribute_logic->SetPlayerName( zoneid, playerid, oldname, newname );
+    }
+
+    uint64 KFBasicAttributeModule::QueryBasicIntValue( uint64 playerid, const std::string& dataname )
+    {
+        return _basic_attribute_logic->QueryBasicIntValue( playerid, dataname );
+    }
+
+    std::string KFBasicAttributeModule::QueryBasicStrValue( uint64 playerid, const std::string& dataname )
+    {
+        return _basic_attribute_logic->QueryBasicStrValue( playerid, dataname );
     }
 }

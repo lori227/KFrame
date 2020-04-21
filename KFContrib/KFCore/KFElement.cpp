@@ -363,8 +363,18 @@ namespace KFrame
         return true;
     }
 
+    const std::string& KFElements::GetElement() const
+    {
+        return _str_element;
+    }
+
     const std::string& KFElements::CalcElement( double multiple ) const
     {
+        if ( multiple == _default_multiple )
+        {
+            return _str_element;
+        }
+
         static std::string _result;
         _result.clear();
 
