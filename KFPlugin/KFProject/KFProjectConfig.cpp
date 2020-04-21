@@ -18,19 +18,19 @@ namespace KFrame
         auto disconnecttime = disconnetnode.GetUInt32( "Time" );
         kfglobal->AddConstant( __STRING__( disconnecttime ), 0u, disconnecttime );
         //////////////////////////////////////////////////////////////////
-        auto databasenode = config.FindNode( "Database" );
+        auto databasenodes = config.FindNode( "Databases" );
+        if ( databasenodes.IsValid() )
+        {
+            auto databasenode = databasenodes.FindNode( "Database" );
+            while ( databasenode.IsValid() )
+            {
+                auto name = databasenode.GetString( "Name" );
+                auto type = databasenode.GetUInt32( "Type" );
+                kfglobal->AddConstant( name, 0u, type );
 
-        auto authdatabase = databasenode.GetUInt32( "Auth" );
-        kfglobal->AddConstant( __STRING__( authdatabase ), 0u, authdatabase );
-
-        auto dirdatabase = databasenode.GetUInt32( "Dir" );
-        kfglobal->AddConstant( __STRING__( dirdatabase ), 0u, dirdatabase );
-
-        auto paydatabse = databasenode.GetUInt32( "Pay" );
-        kfglobal->AddConstant( __STRING__( paydatabase ), 0u, paydatabse );
-
-        auto basicdatabse = databasenode.GetUInt32( "Basic" );
-        kfglobal->AddConstant( __STRING__( basicdatabase ), 0u, basicdatabse );
+                databasenode.NextNode();
+            }
+        }
         //////////////////////////////////////////////////////////////////
         auto uuidnodes = config.FindNode( "Uuids" );
         if ( uuidnodes.IsValid() )

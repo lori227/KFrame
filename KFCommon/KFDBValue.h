@@ -43,10 +43,10 @@ namespace KFrame
 
     public:
         // int 属性列表
-        std::unordered_map < std::string, uint64 > _int_list;
+        std::unordered_map< std::string, uint64 > _int_list;
 
         // string 属性列表
-        std::unordered_map < std::string, std::string > _str_list;
+        std::unordered_map< std::string, std::string > _str_list;
     };
 
     ////////////////////////////////////////////////////////////////////

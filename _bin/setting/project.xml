@@ -7,11 +7,16 @@
 	<Disconnet Time="10"/>
 
 	<!-- 数据库类型 1:redis 2:mongo 3:mysql(暂不支持)-->
-	<!-- Auth 认证数据 -->
-	<!-- Dir 目录数据 -->
-	<!-- Pay 充值数据 -->
-	<!-- Basic 玩家基础数据 -->
-	<Database Auth="1" Dir="1" Pay="1" Basic="1"/>
+	<Databases>
+		<!-- Auth 认证数据 -->
+		<Database Name="authdatabase" Type="1"/>
+		<!-- Dir 目录数据 -->
+		<Database Name="dirdatabase" Type="1"/>
+		<!-- Pay 充值数据 -->
+		<Database Name="paydatabase" Type="1"/>
+		<!-- Basic 玩家基础数据 -->
+		<Database Name="basicdatabase" Type="1"/>
+	</Databases>
 
 	<!-- uuid -->
 	<Uuids>
