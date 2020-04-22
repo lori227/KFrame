@@ -89,6 +89,7 @@ enum FrameServerProtocol
 	S2S_DEL_RELATION_TO_GAME_ACK 				= 20813;	// 删除关系回应
 	S2S_UPDATE_FRIENDLINESS_TO_RELATION_REQ	 	= 20814;	// 更新好友度
 	S2S_UPDATE_FRIENDLINESS_TO_GAME_ACK 		= 20815;	// 更新好友度反馈
+	S2S_REFUSE_RELATION_TO_RELATION_REQ			= 20816;	// 设置拒绝关系
 	
 	
 }
@@ -520,7 +521,8 @@ message S2SSetPlayerNameToGameAck
 message PBRelation
 {
 	uint64 playerid = 1;
-	map<string, bytes> relationdata = 2;
+	map<string, bytes> basicdata = 2;
+	map<string, bytes> relationdata = 3;
 }
 
 // 查询好友信息
@@ -656,4 +658,13 @@ message S2SUpdateFriendLinessToGameAck
 	uint64 playerid = 1;		// 申请id
 	uint64 targetplayerid = 2;	// 对方id
 	uint32 friendliness = 3;	// 好友度
+}
+
+// 设置拒绝好友关系
+// S2S_REFUSE_RELATION_TO_RELATION_REQ
+message S2SRefuseRelationToRelationReq
+{
+	bytes refusename = 1;
+	uint64 playerid = 2;		// 玩家id
+	uint64 refusevalue = 3;	// 拒绝数值
 }

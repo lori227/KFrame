@@ -6,32 +6,110 @@
 
 namespace KFrame
 {
-    typedef std::function< bool( KFElements& ) > KFElementParseFunction;
-    typedef std::function< bool( KFElements&, const std::string&, const std::string&, uint32 ) > KFElementFormatFunction;
-    typedef std::function< const std::string&( const std::string&, uint32, uint32 ) > KFElementStringFunction;
+    class KFElementSetting
+    {
+    public:
+        void AddData( const std::string& dataname, const std::string& datavalue, uint32 dataid = 0u )
+        {
+            _data_list.emplace_back( std::make_tuple( dataname, datavalue, dataid ) );
+        }
+
+        void AddData( const std::string& dataname, uint32 datavalue, uint32 dataid = 0u )
+        {
+            _data_list.emplace_back( std::make_tuple( dataname, __TO_STRING__( datavalue ), dataid ) );
+        }
+    public:
+        std::list<std::tuple<std::string, std::string, uint32>> _data_list;
+    };
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    typedef std::function< const std::string&( const std::string& ) > KFElementParseStringFunction;
+    typedef std::function< const std::string&( const std::string&, const std::string&, uint32 ) > KFElementStrStringFunction;
+    typedef std::function< const std::string&( const std::string&, uint32, uint32 ) > KFElementIntStringFunction;
+    typedef std::function< const std::string&( const KFElementSetting& ) > KFElementSettingStringFunction;
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     class KFElementConfig : public KFConfig, public KFInstance< KFElementConfig >
     {
     public:
         template< class T >
-        void SetParseFunction( T* object, bool ( T::*handle )( KFElements& ) )
+        void SetParseStringFunction( T* object, const std::string & ( T::*handle )( const std::string& ) )
         {
-            _parse_function = std::bind( handle, object, std::placeholders::_1 );
+            _parse_string_function = std::bind( handle, object, std::placeholders::_1 );
         }
 
         template< class T >
-        void SetFormatFunction( T* object, bool ( T::*handle )( KFElements&, const std::string&, const std::string&, uint32 ) )
+        void SetIntStringFunction( T* object, const std::string & ( T::*handle )( const std::string&, uint32, uint32 ) )
         {
-            _format_function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
+            _int_string_function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
         }
 
         template< class T >
-        void SetStringFunction( T* object, const std::string & ( T::*handle )( const std::string&, uint32, uint32 ) )
+        void SetStrStringFunction( T* object, const std::string & ( T::*handle )( const std::string&, const std::string&, uint32 ) )
         {
-            _string_function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
+            _str_string_function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
+        }
+
+        template< class T >
+        void SetSettingStringFunction( T* object, const std::string & ( T::*handle )( const KFElementSetting& ) )
+        {
+            _setting_string_function = std::bind( handle, object, std::placeholders::_1 );
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////
+        const std::string& ParseString( const std::string& strparse )
+        {
+            return _parse_string_function( strparse );
+        }
+
+        const std::string& FormatString( const std::string& dataname, uint32 datavalue, uint32 dataid = 0u )
+        {
+            return _int_string_function( dataname, datavalue, dataid );
+        }
+
+        const std::string& FormatString( const std::string& dataname, const std::string& datavalue, uint32 dataid = 0u )
+        {
+            return _str_string_function( dataname, datavalue, dataid );
+        }
+
+        const std::string& FormatString( const KFElementSetting& kfsetting )
+        {
+            return _setting_string_function( kfsetting );
+        }
+
+        bool FormatElement( KFElements& kfelements, const std::string& dataname, uint32 datavalue, uint32 dataid = 0u )
+        {
+            auto& strelement = _int_string_function( dataname, datavalue, dataid );
+            if ( strelement.empty() )
+            {
+                return false;
+            }
+
+            return kfelements.Parse( strelement, __FUNC_LINE__ );
+        }
+
+        bool FormatElement( KFElements& kfelements, const std::string& dataname, const std::string& datavalue, uint32 dataid = 0u )
+        {
+            auto& strelement = _str_string_function( dataname, datavalue, dataid );
+            if ( strelement.empty() )
+            {
+                return false;
+            }
+
+            return kfelements.Parse( strelement, __FUNC_LINE__ );
+        }
+
+        bool FormatElement( KFElements& kfelements, const KFElementSetting& kfsetting )
+        {
+            auto& strelement = _setting_string_function( kfsetting );
+            if ( strelement.empty() )
+            {
+                return false;
+            }
+
+            return kfelements.Parse( strelement, __FUNC_LINE__ );
+        }
+
         bool ParseElement( KFElements& kfelements, const char* file, uint64 id )
         {
             if ( kfelements._str_parse.empty() )
@@ -42,15 +120,20 @@ namespace KFrame
             auto ok = false;
             try
             {
-                ok = _parse_function( kfelements );
-                if ( ok )
+                auto& strelement = _parse_string_function( kfelements._str_parse );
+                if ( !strelement.empty() )
                 {
-                    kfelements._str_parse.clear();
+                    ok = kfelements.Parse( strelement, file, ( uint32 )id );
+                    if ( ok )
+                    {
+                        kfelements._str_parse.clear();
+                    }
                 }
                 else
                 {
                     __LOG_ERROR__( "file=[{}] id=[{}] element=[{}] parse failed", file, id, kfelements._str_parse );
                 }
+
             }
             catch ( ... )
             {
@@ -59,24 +142,12 @@ namespace KFrame
 
             return ok;
         }
-
-        bool FormatElemnt( KFElements& kfelements, const std::string& dataname, const std::string& datavalue, uint32 dataid )
-        {
-            return _format_function( kfelements, dataname, datavalue, dataid );
-        }
-
-        const std::string& StringElemnt( const std::string& dataname, uint32 datavalue, uint32 dataid )
-        {
-            return _string_function( dataname, datavalue, dataid );
-        }
-
     private:
         // 解析函数
-        KFElementParseFunction _parse_function = nullptr;
-
-        // 格式化函数
-        KFElementFormatFunction _format_function = nullptr;
-        KFElementStringFunction _string_function = nullptr;
+        KFElementParseStringFunction _parse_string_function = nullptr;
+        KFElementIntStringFunction _int_string_function = nullptr;
+        KFElementStrStringFunction _str_string_function = nullptr;
+        KFElementSettingStringFunction _setting_string_function = nullptr;
     };
 }
 

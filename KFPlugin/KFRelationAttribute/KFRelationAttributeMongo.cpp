@@ -1,9 +1,10 @@
 ﻿#include "KFRelationAttributeMongo.hpp"
-#include "KFBasicAttribute/KFBasicAttributeInterface.h"
 
 namespace KFrame
 {
 #define __RELATION_MONGO_DRIVER__ _kf_mongo->Create( __STRING__( relation ) )
+
+#define __RELATION_TABLE_NAME__ __STRING__( relation )
 
     std::string KFRelationAttributeMongo::FormatRelationKey( uint64 firstid, uint64 secondid, bool bothway )
     {
@@ -21,21 +22,15 @@ namespace KFrame
     void KFRelationAttributeMongo::QueryRelationList( const std::string& listname, const std::string& relationname, uint64 playerid, RelationListType& relationlist )
     {
         auto mongodriver = __RELATION_MONGO_DRIVER__;
-        auto kfresult = mongodriver->QueryListUInt64( listname, playerid, __STRING__( player ) );
+        auto kfresult = mongodriver->QueryListUInt64( __RELATION_TABLE_NAME__, playerid, listname );
 
         for ( auto relationid : kfresult->_value )
         {
-            // 好友的基本信息
-            StringMap relationdata;
-            _kf_basic_attribute->QueryBasicAttribute( relationid, relationdata );
-            if ( relationdata.empty() )
-            {
-                continue;
-            }
-
             // 好友的关系属性
             auto relationkey = FormatRelationKey( playerid, relationid, true );
             auto kfquery = mongodriver->QueryRecord( relationname, relationkey );
+
+            StringMap relationdata;
             __DBVALUE_TO_MAP__( kfquery->_value, relationdata );
             relationlist.emplace( relationid, relationdata );
         }
@@ -44,7 +39,7 @@ namespace KFrame
     void KFRelationAttributeMongo::QueryInviteList( const std::string& listname, const std::string& relationname, uint64 playerid, RelationListType& relationlist )
     {
         auto mongodriver = __RELATION_MONGO_DRIVER__;
-        auto kfresult = mongodriver->QueryListUInt64( listname, playerid, __STRING__( player ) );
+        auto kfresult = mongodriver->QueryListUInt64( __RELATION_TABLE_NAME__, playerid, listname );
 
         UInt64List removelist;
         for ( auto relationid : kfresult->_value )
@@ -61,12 +56,6 @@ namespace KFrame
             }
 
             StringMap relationdata;
-            _kf_basic_attribute->QueryBasicAttribute( relationid, relationdata );
-            if ( relationdata.empty() )
-            {
-                continue;
-            }
-
             __DBVALUE_TO_MAP__( kfinvitedata->_value, relationdata );
             relationlist.emplace( relationid, relationdata );
         }
@@ -74,14 +63,14 @@ namespace KFrame
         if ( !removelist.empty() )
         {
             // 删除已经过期的邀请信息
-            mongodriver->Pull( listname, playerid, __STRING__( player ), removelist );
+            mongodriver->Pull( __RELATION_TABLE_NAME__, playerid, listname, removelist );
         }
     }
 
     bool KFRelationAttributeMongo::RelationExist( const std::string& listname, uint64 playerid, uint64 targetid )
     {
         auto mongodriver = __RELATION_MONGO_DRIVER__;
-        auto kfresult = mongodriver->QueryListUInt64( listname, playerid, __STRING__( player ) );
+        auto kfresult = mongodriver->QueryListUInt64( __RELATION_TABLE_NAME__, playerid, listname );
         auto iter = std::find( kfresult->_value.begin(), kfresult->_value.end(), targetid );
         return iter != kfresult->_value.end();
     }
@@ -89,14 +78,14 @@ namespace KFrame
     uint32 KFRelationAttributeMongo::RelationCount( const std::string& listname, uint64 playerid )
     {
         auto mongodriver = __RELATION_MONGO_DRIVER__;
-        auto kfresult = mongodriver->QueryListUInt64( listname, playerid, __STRING__( player ) );
+        auto kfresult = mongodriver->QueryListUInt64( __RELATION_TABLE_NAME__, playerid, listname );
         return ( uint32 )kfresult->_value.size();
     }
 
     void KFRelationAttributeMongo::AddRelation( const std::string& listname, const std::string& relationname, uint64 playerid, uint64 targetid, bool bothway )
     {
         auto mongodriver = __RELATION_MONGO_DRIVER__;
-        mongodriver->Push( listname, playerid, __STRING__( player ), targetid );
+        mongodriver->Push( __RELATION_TABLE_NAME__, playerid, listname, targetid );
 
         auto relationkey = FormatRelationKey( playerid, targetid, bothway );
         mongodriver->Insert( relationname, relationkey, __STRING__( time ), KFGlobal::Instance()->_real_time );
@@ -105,7 +94,7 @@ namespace KFrame
     void KFRelationAttributeMongo::RemoveRelation( const std::string& listname, const std::string& relationname, uint64 playerid, uint64 targetid, bool bothway )
     {
         auto mongodriver = __RELATION_MONGO_DRIVER__;
-        mongodriver->Pull( listname, playerid, __STRING__( player ), targetid );
+        mongodriver->Pull( __RELATION_TABLE_NAME__, playerid, listname, targetid );
 
         auto relationkey = FormatRelationKey( playerid, targetid, bothway );
         mongodriver->Delete( relationname, relationkey );
@@ -114,7 +103,7 @@ namespace KFrame
     void KFRelationAttributeMongo::AddInvite( const std::string& listname, const std::string& relationname, uint64 playerid, uint64 targetid, const std::string& message, uint64 keeptime )
     {
         auto mongodriver = __RELATION_MONGO_DRIVER__;
-        mongodriver->Push( listname, playerid, __STRING__( player ), targetid );
+        mongodriver->Push( __RELATION_TABLE_NAME__, playerid, listname, targetid );
 
         KFDBValue dbvalue;
         dbvalue.AddValue( __STRING__( message ), message );
@@ -142,5 +131,18 @@ namespace KFrame
         {
             _relation_index_create[ relationname ] = 1u;
         }
+    }
+
+    bool KFRelationAttributeMongo::IsRefuse( const std::string& refusename, uint64 playerid )
+    {
+        auto mongodriver = __RELATION_MONGO_DRIVER__;
+        auto kfresult = mongodriver->QueryUInt64( __RELATION_TABLE_NAME__, playerid, refusename );
+        return kfresult->_value == _invalid_int;
+    }
+
+    void KFRelationAttributeMongo::SetRefuse( const std::string& refusename, uint64 playerid, uint32 refusevalue )
+    {
+        auto mongodriver = __RELATION_MONGO_DRIVER__;
+        mongodriver->Insert( __RELATION_TABLE_NAME__, playerid, refusename, refusevalue );
     }
 }

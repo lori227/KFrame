@@ -11,6 +11,7 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFMsg::S2S_DEL_RELATION_INVITE_TO_RELATION_REQ, &KFRelationShardModule::HandleDelRelationInviteToRelationReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_ADD_RELATION_TO_RELATION_REQ, &KFRelationShardModule::HandleAddRelationToRelationReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_DEL_RELATION_TO_RELATION_REQ, &KFRelationShardModule::HandleDelRelationToRelationReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_REFUSE_RELATION_TO_RELATION_REQ, &KFRelationShardModule::HandleRefuseRelationToRelationReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_FRIENDLINESS_TO_RELATION_REQ, &KFRelationShardModule::HandleUpdateFriendLinessToRelationReq );
     }
 
@@ -23,16 +24,20 @@ namespace KFrame
         __UN_MESSAGE__( KFMsg::S2S_DEL_RELATION_INVITE_TO_RELATION_REQ );
         __UN_MESSAGE__( KFMsg::S2S_ADD_RELATION_TO_RELATION_REQ );
         __UN_MESSAGE__( KFMsg::S2S_DEL_RELATION_TO_RELATION_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_REFUSE_RELATION_TO_RELATION_REQ );
         __UN_MESSAGE__( KFMsg::S2S_UPDATE_FRIENDLINESS_TO_RELATION_REQ );
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFRelationShardModule::MapStringToPBRelation( uint64 playerid, StringMap& values, KFMsg::PBRelation* pbrelation )
+    void KFRelationShardModule::MapStringToPBRelation( uint64 playerid, KFMsg::PBRelation* pbrelation, StringMap& basicdata, StringMap& relationdata )
     {
         pbrelation->set_playerid( playerid );
+        auto& pbbasicdata = *pbrelation->mutable_basicdata();
+        __MAP_TO_PROTO__( basicdata, pbbasicdata );
+
         auto& pbrelationdata = *pbrelation->mutable_relationdata();
-        __MAP_TO_PROTO__( values, pbrelationdata );
+        __MAP_TO_PROTO__( relationdata, pbrelationdata );
     }
 
     std::string KFRelationShardModule::FormatRelationKey( uint64 firstid, uint64 secondid, const KFRelationSetting* kfsetting )
@@ -72,8 +77,18 @@ namespace KFrame
         ack.set_relationname( kfmsg.relationname() );
         for ( auto& iter : relationlist )
         {
-            MapStringToPBRelation( iter.first, iter.second, ack.add_pbrelation() );
+            auto playerid = iter.first;
+
+            StringMap basicdata;
+            _kf_basic_attribute->QueryBasicAttribute( playerid, basicdata );
+            if ( basicdata.empty() )
+            {
+                continue;
+            }
+
+            MapStringToPBRelation( playerid, ack.add_pbrelation(), basicdata, iter.second );
         }
+
         _kf_route->SendToRoute( route, KFMsg::S2S_QUERY_RELATION_TO_GAME_ACK, &ack );
     }
 
@@ -99,7 +114,16 @@ namespace KFrame
         ack.set_relationname( kfsetting->_invite_data_name );
         for ( auto& iter : invitelist )
         {
-            MapStringToPBRelation( iter.first, iter.second, ack.add_pbinvite() );
+            auto playerid = iter.first;
+
+            StringMap basicdata;
+            _kf_basic_attribute->QueryBasicAttribute( playerid, basicdata );
+            if ( basicdata.empty() )
+            {
+                continue;
+            }
+
+            MapStringToPBRelation( playerid, ack.add_pbinvite(), basicdata, iter.second );
         }
         _kf_route->SendToRoute( route, KFMsg::S2S_QUERY_RELATION_INVITE_TO_GAME_ACK, &ack );
     }
@@ -116,8 +140,8 @@ namespace KFrame
         }
 
         // 是否已经设置拒绝
-        auto refuseinvite = _kf_basic_attribute->QueryBasicIntValue( kfmsg.playerid(), kfsetting->_refuse_name );
-        if ( refuseinvite != _invalid_int )
+        auto refuseinvite = _kf_relation_attribute->IsRefuse( kfsetting->_refuse_name, kfmsg.playerid() );
+        if ( refuseinvite )
         {
             return _kf_display->SendToPlayer( route, KFMsg::RelationRefuseInvite, kfmsg.playername() );
         }
@@ -153,12 +177,14 @@ namespace KFrame
             return;
         }
 
-        selfbasicdata[ __STRING__( message ) ] = kfmsg.message();
+        StringMap invitedata;
+        invitedata[ __STRING__( message ) ] = kfmsg.message();
+        invitedata[ __STRING__( time ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time );
 
         KFMsg::S2SApplyAddRelationToGameAck ack;
         ack.set_playerid( kfmsg.playerid() );
         ack.set_relationname( kfsetting->_invite_data_name );
-        MapStringToPBRelation( selfid, selfbasicdata, ack.mutable_pbinvite() );
+        MapStringToPBRelation( selfid, ack.mutable_pbinvite(), selfbasicdata, invitedata );
         _kf_route->RepeatToPlayer( selfid, serverid, kfmsg.playerid(), KFMsg::S2S_APPLY_ADD_RELATION_TO_GAME_ACK, &ack );
     }
 
@@ -234,10 +260,13 @@ namespace KFrame
             return;
         }
 
+        StringMap relationdata;
+        relationdata[ __STRING__( time ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time );
+
         KFMsg::S2SAddRelationToGameAck ack;
         ack.set_playerid( playerid );
         ack.set_relationname( kfsetting->_id );
-        MapStringToPBRelation( targetid, querytargtedata, ack.mutable_pbrelation() );
+        MapStringToPBRelation( targetid, ack.mutable_pbrelation(), querytargtedata, relationdata );
         _kf_route->RepeatToPlayer( playerid, serverid, playerid, KFMsg::S2S_ADD_RELATION_TO_GAME_ACK, &ack );
     }
 
@@ -275,6 +304,13 @@ namespace KFrame
         ack.set_relationid( targetid );
         ack.set_relationname( kfsetting->_id );
         _kf_route->SendToPlayer( playerid, serverid, playerid, KFMsg::S2S_DEL_RELATION_TO_GAME_ACK, &ack );
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFRelationShardModule::HandleRefuseRelationToRelationReq )
+    {
+        __PROTO_PARSE__( KFMsg::S2SRefuseRelationToRelationReq );
+
+        _kf_relation_attribute->SetRefuse( kfmsg.refusename(), kfmsg.playerid(), kfmsg.refusevalue() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRelationShardModule::HandleUpdateFriendLinessToRelationReq )

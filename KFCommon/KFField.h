@@ -278,6 +278,7 @@ namespace KFrame
         __STRING_DEFINE__( goods );
         __STRING_DEFINE__( refresh );
         __STRING_DEFINE__( playername );
+        __STRING_DEFINE__( refuse );
     }
 }
 

@@ -29,6 +29,12 @@ namespace KFrame
 
         // 添加邀请数据
         virtual void AddInvite( const std::string& listname, const std::string& relationname, uint64 playerid, uint64 targetid, const std::string& message, uint64 keeptime ) = 0;
+
+        // 是否拒绝
+        virtual bool IsRefuse( const std::string& refusename, uint64 playerid ) = 0;
+
+        // 设置拒绝
+        virtual void SetRefuse( const std::string& refusename, uint64 playerid, uint32 refusevalue ) = 0;
     };
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////

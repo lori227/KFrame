@@ -549,7 +549,7 @@ message MsgReplyRelationInviteReq
 // MSG_SET_REFUSE_RELATION_INVITE_REQ
 message MsgSetRefuseRelationInviteReq
 {
-	bytes relationname = 1;		// 关系名称
+	bytes refusename = 1;		// 拒绝属性名
 	uint32 refuse = 2;	 		// 1=拒绝申请 0=同意接受
 }
 ////////////////////////////////////////////////////////////////////

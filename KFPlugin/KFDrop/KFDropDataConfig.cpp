@@ -35,7 +35,7 @@ namespace KFrame
                 auto dropdata = &kfdropweight->_drop_data;
                 if ( !dropdata->_data_name.empty() )
                 {
-                    KFElementConfig::Instance()->FormatElemnt( dropdata->_elements, dropdata->_data_name, dropdata->_data_value, dropdata->_data_key );
+                    KFElementConfig::Instance()->FormatElement( dropdata->_elements, dropdata->_data_name, dropdata->_data_value, dropdata->_data_key );
                 }
             }
         }

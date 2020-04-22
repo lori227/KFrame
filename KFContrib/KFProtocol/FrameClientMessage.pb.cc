@@ -1661,7 +1661,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::MsgSetRefuseRelationInviteReq, relationname_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::MsgSetRefuseRelationInviteReq, refusename_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::MsgSetRefuseRelationInviteReq, refuse_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::MsgTaskReceiveReq, _internal_metadata_),
@@ -1914,56 +1914,56 @@ void AddDescriptorsImpl() {
       "elationReq\022\024\n\014relationname\030\001 \001(\014\022\020\n\010play"
       "erid\030\002 \001(\004\"T\n\031MsgReplyRelationInviteReq\022"
       "\024\n\014relationname\030\001 \001(\014\022\020\n\010playerid\030\002 \001(\004\022"
-      "\017\n\007operate\030\003 \001(\r\"E\n\035MsgSetRefuseRelation"
-      "InviteReq\022\024\n\014relationname\030\001 \001(\014\022\016\n\006refus"
-      "e\030\002 \001(\r\"\037\n\021MsgTaskReceiveReq\022\n\n\002id\030\001 \001(\r"
-      "\"\036\n\020MsgTaskRewardReq\022\n\n\002id\030\001 \001(\r\"\036\n\020MsgT"
-      "askRemoveReq\022\n\n\002id\030\001 \001(\r\"\033\n\rMsgTaskAddRe"
-      "q\022\n\n\002id\030\001 \001(\r*\344\014\n\023FrameClientProtocol\022\032\n"
-      "\026MSG_FRAME_CLIENT_BEGIN\020\000\022\026\n\022MSG_RESULT_"
-      "DISPLAY\020\001\022\023\n\017MSG_COMMAND_REQ\020\002\022\023\n\017MSG_TE"
-      "LL_NOTICE\020\003\022\027\n\023MSG_DEBUG_SHOW_DROP\020c\022\021\n\r"
-      "MSG_LOGIN_REQ\020d\022\021\n\rMSG_LOGIN_ACK\020e\022\022\n\016MS"
-      "G_LOGOUT_REQ\020f\022\022\n\016MSG_LOGOUT_ACK\020g\022\024\n\020MS"
-      "G_TELL_BE_KICK\020h\022\025\n\021MSG_TELL_SHUTDOWN\020i\022"
-      "\031\n\024MSG_SYNC_UPDATE_DATA\020\311\001\022\026\n\021MSG_SYNC_A"
-      "DD_DATA\020\312\001\022\031\n\024MSG_SYNC_REMOVE_DATA\020\313\001\022\030\n"
-      "\023MSG_REMOVE_DATA_REQ\020\314\001\022\031\n\024MSG_QUERY_PLA"
-      "YER_REQ\020\315\001\022\031\n\024MSG_QUERY_PLAYER_ACK\020\316\001\022\030\n"
-      "\023MSG_QUERY_BASIC_REQ\020\317\001\022\030\n\023MSG_QUERY_BAS"
-      "IC_ACK\020\320\001\022\025\n\020MSG_SHOW_ELEMENT\020\321\001\022\031\n\024MSG_"
-      "REQUEST_SYNC_REQ\020\322\001\022\030\n\023MSG_CANCEL_SYNC_R"
-      "EQ\020\323\001\022\025\n\020MSG_SET_NAME_REQ\020\254\002\022\024\n\017MSG_SET_"
-      "SEX_REQ\020\255\002\022\033\n\026MSG_ACHIEVE_REWARD_REQ\020\256\002\022"
-      "\034\n\027MSG_ACTIVITY_REWARD_REQ\020\260\002\022\025\n\020MSG_COM"
-      "POUND_REQ\020\261\002\022 \n\033MSG_SEVEN_SIGNIN_REWARD_"
-      "REQ\020\263\002\022\027\n\022MSG_SPLIT_ITEM_REQ\020\221\003\022\027\n\022MSG_M"
-      "ERGE_ITEM_REQ\020\222\003\022\025\n\020MSG_USE_ITEM_REQ\020\223\003\022"
-      "\026\n\021MSG_MOVE_ITEM_REQ\020\224\003\022\032\n\025MSG_EXCHANGE_"
-      "ITEM_REQ\020\225\003\022\027\n\022MSG_CLEAN_ITEM_REQ\020\226\003\022\026\n\021"
-      "MSG_SORT_ITEM_REQ\020\227\003\022\030\n\023MSG_REMOVE_ITEM_"
-      "REQ\020\230\003\022\032\n\025MSG_MOVE_ALL_ITEM_REQ\020\231\003\022\036\n\031MS"
-      "G_REMOVE_ITEM_COUNT_REQ\020\232\003\022\035\n\030MSG_USE_IT"
-      "EM_TO_HERO_REQ\020\303\003\022\026\n\021MSG_VIEW_MAIL_REQ\020\365"
-      "\003\022\030\n\023MSG_DELETE_MAIL_REQ\020\366\003\022\027\n\022MSG_QUERY"
-      "_MAIL_REQ\020\367\003\022\030\n\023MSG_MAIL_REWARD_REQ\020\370\003\022\034"
-      "\n\027MSG_STORE_BUY_GOODS_REQ\020\377\003\022\032\n\025MSG_STOR"
-      "E_REFRESH_REQ\020\200\004\022\034\n\027MSG_APPLY_PAY_ORDER_"
-      "REQ\020\223\004\022\034\n\027MSG_APPLY_PAY_ORDER_ACK\020\224\004\022\027\n\022"
-      "MSG_PAY_RESULT_REQ\020\225\004\022\026\n\021MSG_QUERY_PAY_R"
-      "EQ\020\226\004\022\031\n\024MSG_ADD_RELATION_REQ\020\247\004\022\031\n\024MSG_"
-      "DEL_RELATION_REQ\020\250\004\022\"\n\035MSG_REPLY_RELATIO"
-      "N_INVITE_REQ\020\251\004\022\'\n\"MSG_SET_REFUSE_RELATI"
-      "ON_INVITE_REQ\020\252\004\022\034\n\027MSG_QUERY_RANK_LIST_"
-      "REQ\020\273\004\022\034\n\027MSG_QUERY_RANK_LIST_ACK\020\274\004\022#\n\036"
-      "MSG_QUERY_FRIEND_RANK_LIST_REQ\020\275\004\022#\n\036MSG"
-      "_QUERY_FRIEND_RANK_LIST_ACK\020\276\004\022\031\n\024MSG_TA"
-      "SK_RECEIVE_REQ\020\330\004\022\030\n\023MSG_TASK_REWARD_REQ"
-      "\020\331\004\022\030\n\023MSG_TASK_REMOVE_REQ\020\332\004\022\025\n\020MSG_TAS"
-      "K_ADD_REQ\020\333\004b\006proto3"
+      "\017\n\007operate\030\003 \001(\r\"C\n\035MsgSetRefuseRelation"
+      "InviteReq\022\022\n\nrefusename\030\001 \001(\014\022\016\n\006refuse\030"
+      "\002 \001(\r\"\037\n\021MsgTaskReceiveReq\022\n\n\002id\030\001 \001(\r\"\036"
+      "\n\020MsgTaskRewardReq\022\n\n\002id\030\001 \001(\r\"\036\n\020MsgTas"
+      "kRemoveReq\022\n\n\002id\030\001 \001(\r\"\033\n\rMsgTaskAddReq\022"
+      "\n\n\002id\030\001 \001(\r*\344\014\n\023FrameClientProtocol\022\032\n\026M"
+      "SG_FRAME_CLIENT_BEGIN\020\000\022\026\n\022MSG_RESULT_DI"
+      "SPLAY\020\001\022\023\n\017MSG_COMMAND_REQ\020\002\022\023\n\017MSG_TELL"
+      "_NOTICE\020\003\022\027\n\023MSG_DEBUG_SHOW_DROP\020c\022\021\n\rMS"
+      "G_LOGIN_REQ\020d\022\021\n\rMSG_LOGIN_ACK\020e\022\022\n\016MSG_"
+      "LOGOUT_REQ\020f\022\022\n\016MSG_LOGOUT_ACK\020g\022\024\n\020MSG_"
+      "TELL_BE_KICK\020h\022\025\n\021MSG_TELL_SHUTDOWN\020i\022\031\n"
+      "\024MSG_SYNC_UPDATE_DATA\020\311\001\022\026\n\021MSG_SYNC_ADD"
+      "_DATA\020\312\001\022\031\n\024MSG_SYNC_REMOVE_DATA\020\313\001\022\030\n\023M"
+      "SG_REMOVE_DATA_REQ\020\314\001\022\031\n\024MSG_QUERY_PLAYE"
+      "R_REQ\020\315\001\022\031\n\024MSG_QUERY_PLAYER_ACK\020\316\001\022\030\n\023M"
+      "SG_QUERY_BASIC_REQ\020\317\001\022\030\n\023MSG_QUERY_BASIC"
+      "_ACK\020\320\001\022\025\n\020MSG_SHOW_ELEMENT\020\321\001\022\031\n\024MSG_RE"
+      "QUEST_SYNC_REQ\020\322\001\022\030\n\023MSG_CANCEL_SYNC_REQ"
+      "\020\323\001\022\025\n\020MSG_SET_NAME_REQ\020\254\002\022\024\n\017MSG_SET_SE"
+      "X_REQ\020\255\002\022\033\n\026MSG_ACHIEVE_REWARD_REQ\020\256\002\022\034\n"
+      "\027MSG_ACTIVITY_REWARD_REQ\020\260\002\022\025\n\020MSG_COMPO"
+      "UND_REQ\020\261\002\022 \n\033MSG_SEVEN_SIGNIN_REWARD_RE"
+      "Q\020\263\002\022\027\n\022MSG_SPLIT_ITEM_REQ\020\221\003\022\027\n\022MSG_MER"
+      "GE_ITEM_REQ\020\222\003\022\025\n\020MSG_USE_ITEM_REQ\020\223\003\022\026\n"
+      "\021MSG_MOVE_ITEM_REQ\020\224\003\022\032\n\025MSG_EXCHANGE_IT"
+      "EM_REQ\020\225\003\022\027\n\022MSG_CLEAN_ITEM_REQ\020\226\003\022\026\n\021MS"
+      "G_SORT_ITEM_REQ\020\227\003\022\030\n\023MSG_REMOVE_ITEM_RE"
+      "Q\020\230\003\022\032\n\025MSG_MOVE_ALL_ITEM_REQ\020\231\003\022\036\n\031MSG_"
+      "REMOVE_ITEM_COUNT_REQ\020\232\003\022\035\n\030MSG_USE_ITEM"
+      "_TO_HERO_REQ\020\303\003\022\026\n\021MSG_VIEW_MAIL_REQ\020\365\003\022"
+      "\030\n\023MSG_DELETE_MAIL_REQ\020\366\003\022\027\n\022MSG_QUERY_M"
+      "AIL_REQ\020\367\003\022\030\n\023MSG_MAIL_REWARD_REQ\020\370\003\022\034\n\027"
+      "MSG_STORE_BUY_GOODS_REQ\020\377\003\022\032\n\025MSG_STORE_"
+      "REFRESH_REQ\020\200\004\022\034\n\027MSG_APPLY_PAY_ORDER_RE"
+      "Q\020\223\004\022\034\n\027MSG_APPLY_PAY_ORDER_ACK\020\224\004\022\027\n\022MS"
+      "G_PAY_RESULT_REQ\020\225\004\022\026\n\021MSG_QUERY_PAY_REQ"
+      "\020\226\004\022\031\n\024MSG_ADD_RELATION_REQ\020\247\004\022\031\n\024MSG_DE"
+      "L_RELATION_REQ\020\250\004\022\"\n\035MSG_REPLY_RELATION_"
+      "INVITE_REQ\020\251\004\022\'\n\"MSG_SET_REFUSE_RELATION"
+      "_INVITE_REQ\020\252\004\022\034\n\027MSG_QUERY_RANK_LIST_RE"
+      "Q\020\273\004\022\034\n\027MSG_QUERY_RANK_LIST_ACK\020\274\004\022#\n\036MS"
+      "G_QUERY_FRIEND_RANK_LIST_REQ\020\275\004\022#\n\036MSG_Q"
+      "UERY_FRIEND_RANK_LIST_ACK\020\276\004\022\031\n\024MSG_TASK"
+      "_RECEIVE_REQ\020\330\004\022\030\n\023MSG_TASK_REWARD_REQ\020\331"
+      "\004\022\030\n\023MSG_TASK_REMOVE_REQ\020\332\004\022\025\n\020MSG_TASK_"
+      "ADD_REQ\020\333\004b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 4940);
+      descriptor, 4938);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "FrameClientMessage.proto", &protobuf_RegisterTypes);
   ::protobuf_FrameDefineMessage_2eproto::AddDescriptors();
@@ -16715,7 +16715,7 @@ void MsgReplyRelationInviteReq::InternalSwap(MsgReplyRelationInviteReq* other) {
 void MsgSetRefuseRelationInviteReq::InitAsDefaultInstance() {
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int MsgSetRefuseRelationInviteReq::kRelationnameFieldNumber;
+const int MsgSetRefuseRelationInviteReq::kRefusenameFieldNumber;
 const int MsgSetRefuseRelationInviteReq::kRefuseFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -16730,16 +16730,16 @@ MsgSetRefuseRelationInviteReq::MsgSetRefuseRelationInviteReq(const MsgSetRefuseR
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
-  relationname_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  if (from.relationname().size() > 0) {
-    relationname_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.relationname_);
+  refusename_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.refusename().size() > 0) {
+    refusename_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.refusename_);
   }
   refuse_ = from.refuse_;
   // @@protoc_insertion_point(copy_constructor:KFMsg.MsgSetRefuseRelationInviteReq)
 }
 
 void MsgSetRefuseRelationInviteReq::SharedCtor() {
-  relationname_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  refusename_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   refuse_ = 0u;
 }
 
@@ -16749,7 +16749,7 @@ MsgSetRefuseRelationInviteReq::~MsgSetRefuseRelationInviteReq() {
 }
 
 void MsgSetRefuseRelationInviteReq::SharedDtor() {
-  relationname_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  refusename_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 void MsgSetRefuseRelationInviteReq::SetCachedSize(int size) const {
@@ -16772,7 +16772,7 @@ void MsgSetRefuseRelationInviteReq::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  relationname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  refusename_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   refuse_ = 0u;
   _internal_metadata_.Clear();
 }
@@ -16787,12 +16787,12 @@ bool MsgSetRefuseRelationInviteReq::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // bytes relationname = 1;
+      // bytes refusename = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
-                input, this->mutable_relationname()));
+                input, this->mutable_refusename()));
         } else {
           goto handle_unusual;
         }
@@ -16839,10 +16839,10 @@ void MsgSetRefuseRelationInviteReq::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // bytes relationname = 1;
-  if (this->relationname().size() > 0) {
+  // bytes refusename = 1;
+  if (this->refusename().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
-      1, this->relationname(), output);
+      1, this->refusename(), output);
   }
 
   // uint32 refuse = 2;
@@ -16864,11 +16864,11 @@ void MsgSetRefuseRelationInviteReq::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // bytes relationname = 1;
-  if (this->relationname().size() > 0) {
+  // bytes refusename = 1;
+  if (this->refusename().size() > 0) {
     target =
       ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
-        1, this->relationname(), target);
+        1, this->refusename(), target);
   }
 
   // uint32 refuse = 2;
@@ -16893,11 +16893,11 @@ size_t MsgSetRefuseRelationInviteReq::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
   }
-  // bytes relationname = 1;
-  if (this->relationname().size() > 0) {
+  // bytes refusename = 1;
+  if (this->refusename().size() > 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::BytesSize(
-        this->relationname());
+        this->refusename());
   }
 
   // uint32 refuse = 2;
@@ -16934,9 +16934,9 @@ void MsgSetRefuseRelationInviteReq::MergeFrom(const MsgSetRefuseRelationInviteRe
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from.relationname().size() > 0) {
+  if (from.refusename().size() > 0) {
 
-    relationname_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.relationname_);
+    refusename_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.refusename_);
   }
   if (from.refuse() != 0) {
     set_refuse(from.refuse());
@@ -16967,7 +16967,7 @@ void MsgSetRefuseRelationInviteReq::Swap(MsgSetRefuseRelationInviteReq* other) {
 }
 void MsgSetRefuseRelationInviteReq::InternalSwap(MsgSetRefuseRelationInviteReq* other) {
   using std::swap;
-  relationname_.Swap(&other->relationname_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+  refusename_.Swap(&other->refusename_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
   swap(refuse_, other->refuse_);
   _internal_metadata_.Swap(&other->_internal_metadata_);

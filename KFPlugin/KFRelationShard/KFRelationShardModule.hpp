@@ -51,12 +51,15 @@ namespace KFrame
         // 删除关系
         __KF_MESSAGE_FUNCTION__( HandleDelRelationToRelationReq );
 
+        // 设置拒绝
+        __KF_MESSAGE_FUNCTION__( HandleRefuseRelationToRelationReq );
+
         // 更新好友度
         __KF_MESSAGE_FUNCTION__( HandleUpdateFriendLinessToRelationReq );
 
     protected:
         // 信息转换成关系信息
-        void MapStringToPBRelation( uint64 playerid, StringMap& values, KFMsg::PBRelation* pbrelation );
+        void MapStringToPBRelation( uint64 playerid, KFMsg::PBRelation* pbrelation, StringMap& basicdata, StringMap& relationdata );
 
         // 格式化好友key
         std::string FormatRelationKey( uint64 firstid, uint64 secondid, const KFRelationSetting* kfsetting );

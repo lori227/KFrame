@@ -71,18 +71,26 @@ namespace KFrame
 
     void KFRelationClientModule::PBRelationToKFData( const KFMsg::PBRelation* pbrelation, KFData* kfrelation )
     {
-        auto pbrelationdata = &pbrelation->relationdata();
+        auto pbbasicdata = &pbrelation->basicdata();
         auto kfbasic = kfrelation->Find( __STRING__( basic ) );
-        for ( auto iter = pbrelationdata->begin(); iter != pbrelationdata->end(); ++iter )
+        for ( auto iter = pbbasicdata->begin(); iter != pbbasicdata->end(); ++iter )
         {
             auto kfdata = kfbasic->Find( iter->first );
             if ( kfdata == nullptr )
             {
-                kfdata = kfrelation->Find( iter->first );
-                if ( kfdata == nullptr )
-                {
-                    continue;
-                }
+                continue;
+            }
+
+            kfdata->Set< std::string >( iter->second );
+        }
+
+        auto pbrelationdata = &pbrelation->relationdata();
+        for ( auto iter = pbrelationdata->begin(); iter != pbrelationdata->end(); ++iter )
+        {
+            auto kfdata = kfrelation->Find( iter->first );
+            if ( kfdata == nullptr )
+            {
+                continue;
             }
 
             kfdata->Set< std::string >( iter->second );
@@ -607,13 +615,19 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgSetRefuseRelationInviteReq );
 
-        auto kfsetting = KFRelationConfig::Instance()->FindSetting( kfmsg.relationname() );
-        if ( kfsetting == nullptr )
+        auto kfdata = player->Find( kfmsg.refusename() );
+        if ( kfdata == nullptr )
         {
-            return __LOG_ERROR__( "relation=[{}] no setting", kfmsg.relationname() );
+            return;
         }
 
-        player->UpdateData( kfsetting->_refuse_name, KFEnum::Set, kfmsg.refuse() );
+        player->UpdateData( kfdata, KFEnum::Set, kfmsg.refuse() );
+
+        KFMsg::S2SRefuseRelationToRelationReq req;
+        req.set_playerid( player->GetKeyID() );
+        req.set_refusename( kfmsg.refusename() );
+        req.set_refusevalue( kfmsg.refuse() );
+        _kf_route->RepeatToRand( player->GetKeyID(), __RELATION_ROUTE_NAME__, KFMsg::S2S_REFUSE_RELATION_TO_RELATION_REQ, &req );
     }
 
     void KFRelationClientModule::AddFriendLiness( KFEntity* player, uint64 friendid, uint32 type, uint32 value )

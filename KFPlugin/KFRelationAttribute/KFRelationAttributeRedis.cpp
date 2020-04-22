@@ -146,4 +146,17 @@ namespace KFrame
 
         redisdriver->Pipeline();
     }
+
+    bool KFRelationAttributeRedis::IsRefuse( const std::string& refusename, uint64 playerid )
+    {
+        auto redisdriver = __RELATION_REDIS_DRIVER__;
+        auto kfresult = redisdriver->QueryUInt64( "hget {}:{} {}", __STRING__( refuse ), playerid, refusename );
+        return kfresult->_value != _invalid_int;
+    }
+
+    void KFRelationAttributeRedis::SetRefuse( const std::string& refusename, uint64 playerid, uint32 refusevalue )
+    {
+        auto redisdriver = __RELATION_REDIS_DRIVER__;
+        redisdriver->Execute( "hset {}:{} {} {}", __STRING__( refuse ), playerid, refusename, refusevalue );
+    }
 }

@@ -18,7 +18,6 @@ namespace KFrame
     {
         __FIND_MODULE__( _kf_redis, KFRedisInterface );
         __FIND_MODULE__( _kf_mongo, KFMongoInterface );
-        __FIND_MODULE__( _kf_basic_attribute, KFBasicAttributeInterface );
     }
 
     void KFRelationAttributePlugin::AddConfig()
