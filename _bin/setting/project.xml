@@ -3,6 +3,10 @@
 	<!-- 项目开始时间 -->
 	<Project Time="1559318400"/>
 
+	<!-- core array起始索引 -->
+	<!-- 客户端为lua设置为1, 其他设置为0 -->
+	<ArrayIndex Value="1"/>
+
 	<!-- 断线保留时间 -->
 	<Disconnet Time="10"/>
 

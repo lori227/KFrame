@@ -26,8 +26,6 @@ namespace KFrame
             Type_Record = 9,
             Type_Array = 10,
             ////////////////////////////////////////////////////////////////////////////
-            Array_Index = 1,		// kfarray的起始索引
-            ////////////////////////////////////////////////////////////////////////////
 
             Mask_Null = 0,				// 无效值
             Mask_Client = 1 << 1,		// 更新同步玩家
@@ -53,59 +51,29 @@ namespace KFrame
             ////////////////////////////////////////////////////////////////////////////
         };
 
-        static uint32 ConvertDataType( const std::string& stringtype )
+        static const std::unordered_map<std::string, uint32> _data_type_list =
         {
-            if ( stringtype == "int32" )
+            {"int32", Type_Int32},
+            {"uint32", Type_UInt32},
+            {"int64", Type_Int64},
+            {"uint64", Type_UInt64},
+            {"double", Type_Double},
+            {"string", Type_String},
+            {"vector3d", Type_Vector3D},
+            {"object", Type_Object},
+            {"record", Type_Record},
+            {"array", Type_Array},
+        };
+
+        static uint32 ConvertDataType( const std::string& strtype )
+        {
+            auto iter = _data_type_list.find( strtype );
+            if ( iter == _data_type_list.end() )
             {
-                return Type_Int32;
+                return Type_Unknow;
             }
 
-            if ( stringtype == "uint32" )
-            {
-                return Type_UInt32;
-            }
-
-            if ( stringtype == "int64" )
-            {
-                return Type_Int64;
-            }
-
-            if ( stringtype == "uint64" )
-            {
-                return Type_UInt64;
-            }
-
-            if ( stringtype == "double" )
-            {
-                return Type_Double;
-            }
-
-            if ( stringtype == "string" )
-            {
-                return Type_String;
-            }
-
-            if ( stringtype == "vector3d" )
-            {
-                return Type_Vector3D;
-            }
-
-            if ( stringtype == "object" )
-            {
-                return Type_Object;
-            }
-
-            if ( stringtype == "record" )
-            {
-                return Type_Record;
-            }
-
-            if ( stringtype == "array" )
-            {
-                return Type_Array;
-            }
-
-            return Type_Unknow;
+            return iter->second;
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////

@@ -14,6 +14,9 @@ namespace KFrame
         auto projectnode = config.FindNode( "Project" );
         kfglobal->_project_time = projectnode.GetUInt64( "Time" );
         //////////////////////////////////////////////////////////////////
+        auto arraynode = config.FindNode( "ArrayIndex" );
+        kfglobal->_array_index = arraynode.GetUInt32( "Value" );
+        //////////////////////////////////////////////////////////////////
         auto disconnetnode = config.FindNode( "Disconnet" );
         auto disconnecttime = disconnetnode.GetUInt32( "Time" );
         kfglobal->AddConstant( __STRING__( disconnecttime ), 0u, disconnecttime );

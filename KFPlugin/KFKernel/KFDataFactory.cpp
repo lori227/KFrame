@@ -235,9 +235,9 @@ namespace KFrame
 
     void KFDataFactory::InitArray( KFData* kfarray, uint32 size )
     {
-        size += KFDataDefine::Array_Index;
+        size += KFGlobal::Instance()->_array_index;
         kfarray->Resize( size );
-        for ( uint32 i = KFDataDefine::Array_Index; i < size; ++i )
+        for ( uint32 i = KFGlobal::Instance()->_array_index; i < size; ++i )
         {
             auto kfarraydata = Create( kfarray->_data_setting->_contain_class );
             kfarraydata->Initialize( kfarray->_data_setting );

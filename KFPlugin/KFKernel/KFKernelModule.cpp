@@ -226,7 +226,7 @@ case datatype:\
                 auto& pbarray = ( *proto->mutable_pbarray() )[ datasetting->_name ];
 
                 auto maxsize = kfchild->MaxSize();
-                for ( uint32 i = KFDataDefine::Array_Index; i < maxsize; ++i )
+                for ( uint32 i = KFGlobal::Instance()->_array_index; i < maxsize; ++i )
                 {
                     auto kfuint64 = kfchild->Find( i );
                     if ( kfuint64 != nullptr && kfuint64->IsValid() )

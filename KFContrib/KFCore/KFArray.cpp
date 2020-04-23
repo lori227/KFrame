@@ -84,8 +84,7 @@ namespace KFrame
 
     KFData* KFArray::First()
     {
-        uint32 index = KFDataDefine::Array_Index;
-        if ( index == 0u )
+        if ( KFGlobal::Instance()->_array_index == 0u )
         {
             return _data.First();
         }
@@ -106,7 +105,7 @@ namespace KFrame
 
     void KFArray::SaveTo( KFData* kfother )
     {
-        uint32 key = KFDataDefine::Array_Index;
+        uint32 key = KFGlobal::Instance()->_array_index;
         for ( auto kfchild = First(); kfchild != nullptr; kfchild = Next() )
         {
             auto finddata = kfother->Find( key++ );
@@ -120,7 +119,7 @@ namespace KFrame
     uint32 KFArray::GetEmpty()
     {
         auto maxsize = _data.MaxSize();
-        for ( uint32 i = KFDataDefine::Array_Index; i < maxsize; ++i )
+        for ( uint32 i = KFGlobal::Instance()->_array_index; i < maxsize; ++i )
         {
             auto kfdata = Find( i );
             if ( kfdata != nullptr && kfdata->Get() == 0u )
@@ -135,7 +134,7 @@ namespace KFrame
     uint32 KFArray::GetIndex( uint64 value )
     {
         auto maxsize = _data.MaxSize();
-        for ( uint32 i = KFDataDefine::Array_Index; i < maxsize; ++i )
+        for ( uint32 i = KFGlobal::Instance()->_array_index; i < maxsize; ++i )
         {
             auto kfdata = Find( i );
             if ( kfdata != nullptr && kfdata->Get() == value )
@@ -233,7 +232,7 @@ namespace KFrame
         auto size = __JSON_ARRAY_SIZE__( kfjson );
         for ( uint32 i = 0u; i < size; ++i )
         {
-            auto kfdata = Find( i + KFDataDefine::Array_Index );
+            auto kfdata = Find( i + KFGlobal::Instance()->_array_index );
             if ( kfdata != nullptr )
             {
                 auto& object = __JSON_ARRAY_INDEX__( kfjson, i );
