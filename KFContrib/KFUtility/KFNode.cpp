@@ -145,6 +145,109 @@ namespace KFrame
         return atof( attribute->value() );
     }
 
+    // 读取uint32 vector
+    UInt32Vector& KFNode::GetUInt32Vector( const char* key, bool optional )
+    {
+        static UInt32Vector _result;
+        _result.clear();
+
+        auto strdata = GetString( key, optional );
+        KFUtility::SplitList( _result, strdata, __SPLIT_STRING__ );
+        return _result;
+    }
+
+    // 读取uint32 map
+    UInt32Map& KFNode::GetUInt32Map( const char* key, bool optional )
+    {
+        static UInt32Map _result;
+        _result.clear();
+
+        auto strline = GetString( key, optional );
+        while ( !strline.empty() )
+        {
+            auto strdata = KFUtility::SplitString( strline, __SPLIT_STRING__ );
+            if ( !strdata.empty() )
+            {
+                auto key = KFUtility::SplitValue<uint32>( strdata, __DOMAIN_STRING__ );
+                auto value = KFUtility::SplitValue<uint32>( strdata, __DOMAIN_STRING__ );
+                _result[ key ] = value;
+            }
+        }
+
+        return _result;
+    }
+
+    // 读取uint32 set
+    UInt32Set& KFNode::GetUInt32Set( const char* key, bool optional )
+    {
+        static UInt32Set _result;
+        _result.clear();
+
+        auto strdata = GetString( key, optional );
+        KFUtility::SplitSet( _result, strdata, __SPLIT_STRING__ );
+        return _result;
+    }
+
+    // 读取string set
+    StringSet& KFNode::GetStringSet( const char* key, bool optional )
+    {
+        static StringSet _result;
+        _result.clear();
+
+        auto strdata = GetString( key, optional );
+        while ( !strdata.empty() )
+        {
+            auto value = KFUtility::SplitString( strdata, __SPLIT_STRING__ );
+            if ( !value.empty() )
+            {
+                _result.emplace( value );
+            }
+        }
+        return _result;
+    }
+
+    // 读取<string,uint64>
+    StringUInt64& KFNode::GetStringUInt64( const char* key, bool optional )
+    {
+        static StringUInt64 _result;
+        _result.clear();
+
+        auto strline = GetString( key, optional );
+        while ( !strline.empty() )
+        {
+            auto strdata = KFUtility::SplitString( strline, __SPLIT_STRING__ );
+            if ( !strdata.empty() )
+            {
+                auto key = KFUtility::SplitString( strdata, __DOMAIN_STRING__ );
+                auto value = KFUtility::SplitValue<uint32>( strdata, __DOMAIN_STRING__ );
+                _result[ key ] = value;
+            }
+        }
+
+        return _result;
+    }
+
+    // 读取<uint64,string>
+    UInt64String& KFNode::GetUInt64String( const char* key, bool optional )
+    {
+        static UInt64String _result;
+        _result.clear();
+
+        auto strline = GetString( key, optional );
+        while ( !strline.empty() )
+        {
+            auto strdata = KFUtility::SplitString( strline, __SPLIT_STRING__ );
+            if ( !strdata.empty() )
+            {
+                auto key = KFUtility::SplitValue<uint32>( strdata, __DOMAIN_STRING__ );
+                auto value = KFUtility::SplitString( strdata, __DOMAIN_STRING__ );
+                _result[ key ] = value;
+            }
+        }
+
+        return _result;
+    }
+
     void KFNode::GetKeyList( StringList& outlist )
     {
         outlist.clear();

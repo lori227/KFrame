@@ -27,8 +27,7 @@ namespace KFrame
         std::string _data_value;
 
         // 掉落数值
-        uint32 _min_value = 0u;
-        uint32 _max_value = 0u;
+        KFRange<uint32> _data_range;
 
         // 掉落的属性数据( 方便使用entity接口 )
         KFElements _elements;
@@ -37,7 +36,13 @@ namespace KFrame
         // 获得数值
         uint32 GetValue() const
         {
-            return KFGlobal::Instance()->RandRange( _min_value, _max_value, 1 );
+            return _data_range.CalcValue();
+        }
+
+        // 是否有效
+        bool IsValid() const
+        {
+            return _data_range.IsValid();
         }
     };
 

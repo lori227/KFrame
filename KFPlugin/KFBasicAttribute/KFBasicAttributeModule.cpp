@@ -23,7 +23,7 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFBasicAttributeModule::UpdateBasicIntValue( uint64 playerid, uint64 serverid, const KeyValue& values )
+    void KFBasicAttributeModule::UpdateBasicIntValue( uint64 playerid, uint64 serverid, const StringUInt64& values )
     {
         _basic_attribute_logic->UpdateBasicIntValue( playerid, serverid, values );
     }

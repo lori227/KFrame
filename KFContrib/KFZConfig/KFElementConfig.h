@@ -18,6 +18,11 @@ namespace KFrame
         {
             _data_list.emplace_back( std::make_tuple( dataname, __TO_STRING__( datavalue ), dataid ) );
         }
+
+        bool IsEmpty() const
+        {
+            return _data_list.empty();
+        }
     public:
         std::list<std::tuple<std::string, std::string, uint32>> _data_list;
     };

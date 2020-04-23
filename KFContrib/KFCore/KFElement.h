@@ -71,8 +71,7 @@ namespace KFrame
         virtual uint64 GetUseValue() const;
 
     private:
-        uint64 _min_value = _invalid_int;
-        uint64 _max_value = _invalid_int;
+        KFRange<uint64> _range;
         uint64 _use_value = _invalid_int;
     };
     //////////////////////////////////////////////////////////////////

@@ -198,7 +198,7 @@ namespace KFrame
     {
         auto kfbasic = player->Find( __STRING__( basic ) );
 
-        KeyValue values;
+        StringUInt64 values;
         values[ __STRING__( serverid ) ] = kfbasic->Get( __STRING__( serverid ) );
         values[ __STRING__( status ) ] = kfbasic->Get( __STRING__( status ) );
         values[ __STRING__( statustime ) ] = kfbasic->Get( __STRING__( statustime ) );
@@ -249,12 +249,12 @@ namespace KFrame
 
     void KFRelationClientModule::UpdateIntValueToRelation( KFEntity* player, const std::string& relationname, const std::string& dataname, uint64 datavalue )
     {
-        KeyValue values;
+        StringUInt64 values;
         values[ dataname ] = datavalue;
         UpdateIntValueToRelation( player, relationname, values );
     }
 
-    void KFRelationClientModule::UpdateIntValueToRelation( KFEntity* player, const std::string& relationname, const KeyValue& values )
+    void KFRelationClientModule::UpdateIntValueToRelation( KFEntity* player, const std::string& relationname, const StringUInt64& values )
     {
         KFMsg::S2SUpdateIntValueToRelationReq req;
         req.set_relationname( relationname );

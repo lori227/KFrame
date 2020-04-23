@@ -126,8 +126,8 @@ namespace KFrame
 
         virtual void AddDataToShow( const std::string& modulename, uint64 moduleid, KFData* kfdata ) = 0;
 
-        virtual void AddDataToShow( const std::string& name, uint64 value, KeyValue& values, bool find, const std::string& extendname = _invalid_string ) = 0;
-        virtual void AddDataToShow( const std::string& modulename, uint64 moduleid, const std::string& name, uint64 value, KeyValue& values, bool find, const std::string& extendname = _invalid_string ) = 0;
+        virtual void AddDataToShow( const std::string& name, uint64 value, StringUInt64& values, bool find, const std::string& extendname = _invalid_string ) = 0;
+        virtual void AddDataToShow( const std::string& modulename, uint64 moduleid, const std::string& name, uint64 value, StringUInt64& values, bool find, const std::string& extendname = _invalid_string ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -42,8 +42,6 @@ namespace KFrame
         kfsetting->_app_key = xmlnode.GetString( "AppKey", true );
         kfsetting->_debug_open = xmlnode.GetBoolen( "Debug", true );
         kfsetting->_release_open = xmlnode.GetBoolen( "Release", true );
-
-        auto stropen = xmlnode.GetString( "Support", true );
-        KFUtility::SplitSet( kfsetting->_support_list, stropen, __SPLIT_STRING__ );
+        kfsetting->_support_list = xmlnode.GetUInt32Set( "Support", true );
     }
 }

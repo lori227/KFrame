@@ -5,7 +5,7 @@ namespace KFrame
 {
 #define __BASIC_REDIS_DRIVER__ _kf_redis->Create( __STRING__( basic ) )
 
-    void KFBasicAttributeRedis::UpdateBasicIntValue( uint64 playerid, uint64 serverid, const KeyValue& values )
+    void KFBasicAttributeRedis::UpdateBasicIntValue( uint64 playerid, uint64 serverid, const StringUInt64& values )
     {
         StringMap invalues;
         for ( auto& iter : values )

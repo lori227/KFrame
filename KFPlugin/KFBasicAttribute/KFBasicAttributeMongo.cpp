@@ -6,7 +6,7 @@ namespace KFrame
 #define __BASIC_TABLE_NAME__ __STRING__( basic )
 #define __BASIC_MONGO_DRIVER__ _kf_mongo->Create( __STRING__( basic ) )
 
-    void KFBasicAttributeMongo::UpdateBasicIntValue( uint64 playerid, uint64 serverid, const KeyValue& values )
+    void KFBasicAttributeMongo::UpdateBasicIntValue( uint64 playerid, uint64 serverid, const StringUInt64& values )
     {
         auto mongodriver = __BASIC_MONGO_DRIVER__;
 

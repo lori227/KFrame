@@ -18,26 +18,13 @@ namespace KFrame
 
     void KFIntValue::SetValue( std::string value )
     {
-        _min_value = KFUtility::SplitValue<uint64>( value, __RANGE_STRING__ );
-        _max_value = KFUtility::SplitValue<uint64>( value, __RANGE_STRING__ );
-        if ( _min_value >= _max_value )
-        {
-            _max_value = _min_value;
-            _use_value = _min_value;
-        }
+        _range.SetValue( value );
     }
 
     uint64 KFIntValue::CalcUseValue( const KFDataSetting* kfsetting, double multiple )
     {
         _data_setting = kfsetting;
-        if ( _min_value >= _max_value )
-        {
-            _use_value = _min_value;
-        }
-        else
-        {
-            _use_value = KFGlobal::Instance()->RandRange( ( uint32 )_min_value, ( uint32 )_max_value, 1u );
-        }
+        _use_value = _range.CalcValue();
 
         if ( multiple != 1.0f && _data_setting != nullptr && _data_setting->HaveMask( KFDataDefine::Mask_Multiple ) )
         {

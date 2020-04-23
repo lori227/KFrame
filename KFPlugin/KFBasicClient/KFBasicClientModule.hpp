@@ -52,7 +52,7 @@ namespace KFrame
 
 
         // 更新公共数据
-        void UpdateBasicIntValueToBasic( uint64 playerid, KeyValue& values );
+        void UpdateBasicIntValueToBasic( uint64 playerid, StringUInt64& values );
         void UpdateBasicIntValueToBasic( uint64 playerid, const std::string& dataname, uint64 datavalue );
         void UpdateBasicStrValueToBasic( uint64 playerid, const std::string& dataname, const std::string& datavalue );
 

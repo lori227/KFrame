@@ -13,6 +13,7 @@
 #include "KFVector.h"
 #include "KFWeight.h"
 #include "KFField.h"
+#include "KFRange.h"
 #include "KFResult.h"
 #include "KFNetData.h"
 #include "KFDBValue.h"

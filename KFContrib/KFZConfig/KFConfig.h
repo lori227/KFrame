@@ -91,7 +91,7 @@ namespace KFrame
         }
 
         // 获取配置
-        const T* FindSetting( const KeyType& id )
+        const T* FindSetting( const KeyType& id ) const
         {
             return _settings.Find( id );
         }

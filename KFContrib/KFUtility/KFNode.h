@@ -48,6 +48,23 @@ namespace KFrame
         // 读取double
         double GetDouble( const char* key, bool optional = false, double defaultvalue = 0.0f );
 
+        // 读取uint32 vector
+        UInt32Vector& GetUInt32Vector( const char* key, bool optional = false );
+
+        // 读取uint32 map
+        UInt32Map& GetUInt32Map( const char* key, bool optional = false );
+
+        // 读取uint32 set
+        UInt32Set& GetUInt32Set( const char* key, bool optional = false );
+
+        // 读取string set
+        StringSet& GetStringSet( const char* key, bool optional = false );
+
+        // 读取<string,uint64>
+        StringUInt64& GetStringUInt64( const char* key, bool optional = false );
+
+        // 读取<uint64,string>
+        UInt64String& GetUInt64String( const char* key, bool optional = false );
         /////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////
         void GetKeyList( StringList& outlist );

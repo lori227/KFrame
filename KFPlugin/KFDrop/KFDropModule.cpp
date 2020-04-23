@@ -309,7 +309,7 @@ namespace KFrame
         }
 
         auto dropdata = &kfdropdataweight->_drop_data;
-        if ( dropdata->_max_value == 0u )
+        if ( !dropdata->IsValid() )
         {
             _kf_display->SendToClient( player, KFMsg::DropValueError, dropdata->_drop_data_id );
             return __LOG_ERROR_FUNCTION__( function, line, "dropgroup=[{}] dropdata=[{}] value=0", kfsetting->_id, dropdata->_drop_data_id );

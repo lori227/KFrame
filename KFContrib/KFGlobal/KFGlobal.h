@@ -39,7 +39,7 @@ namespace KFrame
         uint32 RandRatio( uint32 ratio );
 
         // 范围内随机
-        uint32 RandRange( uint32 min, uint32 max, uint32 base );
+        uint64 RandRange( uint64 min, uint64 max, uint64 base = 1u );
 
         // 浮点随机
         double RandDouble();

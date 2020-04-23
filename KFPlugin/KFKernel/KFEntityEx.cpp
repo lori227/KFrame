@@ -772,7 +772,7 @@ namespace KFrame
         {
             if ( IsElementResultShow( kfresult ) )
             {
-                KeyValue values;
+                StringUInt64 values;
                 values[ __STRING__( id ) ] = kfresult->_config_id;
                 values[ kfresult->_data_name ] = iter.second;
                 AddDataToShow( kfresult->_module_name, kfresult->_module_id, kfresult->_element->_data_name, kfresult->_config_id, values, false, iter.first );
@@ -844,7 +844,7 @@ namespace KFrame
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFEntityEx::AddDataToShow( const std::string& name, uint64 value, KeyValue& values, bool find, const std::string& extendname )
+    void KFEntityEx::AddDataToShow( const std::string& name, uint64 value, StringUInt64& values, bool find, const std::string& extendname )
     {
         auto pbshowelement = CreateShowElement();
         if ( pbshowelement == nullptr )
@@ -855,13 +855,13 @@ namespace KFrame
         AddDataToShow( pbshowelement, name, value, values, find, extendname );
     }
 
-    void KFEntityEx::AddDataToShow( const std::string& modulename, uint64 moduleid, const std::string& name, uint64 value, KeyValue& values, bool find, const std::string& extendname /* = _invalid_string */ )
+    void KFEntityEx::AddDataToShow( const std::string& modulename, uint64 moduleid, const std::string& name, uint64 value, StringUInt64& values, bool find, const std::string& extendname /* = _invalid_string */ )
     {
         auto pbshowelement = CreateShowElement( modulename, moduleid );
         AddDataToShow( pbshowelement, name, value, values, find, extendname );
     }
 
-    void KFEntityEx::AddDataToShow( KFMsg::PBShowElement* pbshowelement, const std::string& name, uint64 value, KeyValue& values, bool find, const std::string& extendname )
+    void KFEntityEx::AddDataToShow( KFMsg::PBShowElement* pbshowelement, const std::string& name, uint64 value, StringUInt64& values, bool find, const std::string& extendname )
     {
         auto pbshowdata = CreateShowData( pbshowelement, name, value, find, extendname );
         for ( auto& iter : values )

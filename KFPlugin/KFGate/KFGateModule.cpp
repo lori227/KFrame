@@ -5,7 +5,7 @@ namespace KFrame
 {
     void KFGateModule::BeforeRun()
     {
-        auto looptime = KFGlobal::Instance()->RandRange( 30000u, 40000u, 0u );
+        auto looptime = KFGlobal::Instance()->RandRange( 30000u, 40000u );
         __LOOP_TIMER_0__( looptime, 5000u, &KFGateModule::OnTimerUpdateOnlineToDir );
 
         __REGISTER_CLIENT_LOST__( &KFGateModule::OnClientLostServer );

@@ -9,7 +9,7 @@ namespace KFrame
     {
     public:
         // 更新属性
-        virtual void UpdateBasicIntValue( uint64 playerid, uint64 serverid, const KeyValue& values ) = 0;
+        virtual void UpdateBasicIntValue( uint64 playerid, uint64 serverid, const StringUInt64& values ) = 0;
         virtual void UpdateBasicStrValue( uint64 playerid, uint64 serverid, const StringMap& values ) = 0;
 
         // 查询玩家id

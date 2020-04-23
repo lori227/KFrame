@@ -26,7 +26,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SUpdateIntValueToBasicReq );
 
-        KeyValue values;
+        StringUInt64 values;
         auto pbdata = &kfmsg.pbdata();
         __PROTO_TO_MAP__( pbdata, values );
         _kf_basic_attribute->UpdateBasicIntValue( __ROUTE_SEND_ID__, __ROUTE_SERVER_ID__, values );

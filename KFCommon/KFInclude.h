@@ -70,7 +70,8 @@ typedef std::vector< uint64 > UInt64Vector;
 typedef std::map< uint32, uint32 > UInt32Map;
 typedef std::map< uint64, uint64 > UInt64Map;
 
-typedef std::map< std::string, uint64 > KeyValue;
+typedef std::map< std::string, uint64 > StringUInt64;
+typedef std::map< uint64, std::string > UInt64String;
 /////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 #endif

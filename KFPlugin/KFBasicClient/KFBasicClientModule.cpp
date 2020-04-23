@@ -54,7 +54,7 @@ namespace KFrame
         _kf_route->RepeatToRand( __ROUTE_NAME__, KFMsg::S2S_CLEAR_ONLINE_TO_BASIC_REQ, &req );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFBasicClientModule::UpdateBasicIntValueToBasic( uint64 playerid, KeyValue& values )
+    void KFBasicClientModule::UpdateBasicIntValueToBasic( uint64 playerid, StringUInt64& values )
     {
         KFMsg::S2SUpdateIntValueToBasicReq req;
         req.mutable_pbdata()->insert( values.begin(), values.end() );
@@ -63,7 +63,7 @@ namespace KFrame
 
     void KFBasicClientModule::UpdateBasicIntValueToBasic( uint64 playerid, const std::string& dataname, uint64 datavalue )
     {
-        KeyValue values;
+        StringUInt64 values;
         values[ dataname ] = datavalue;
         UpdateBasicIntValueToBasic( playerid, values );
     }
@@ -89,7 +89,7 @@ namespace KFrame
     {
         auto kfbasic = player->Find( __STRING__( basic ) );
 
-        KeyValue values;
+        StringUInt64 values;
         values[ __STRING__( serverid ) ] = kfbasic->Get( __STRING__( serverid ) );
         values[ __STRING__( status ) ] = kfbasic->Get( __STRING__( status ) );
         values[ __STRING__( statustime ) ] = kfbasic->Get( __STRING__( statustime ) );

@@ -95,14 +95,14 @@ namespace KFrame
         return value % ratio;
     }
 
-    uint32 KFGlobal::RandRange( uint32 min, uint32 max, uint32 base )
+    uint64 KFGlobal::RandRange( uint64 min, uint64 max, uint64 base )
     {
         if ( max <= min )
         {
             return min;
         }
 
-        uint32 index = _kf_rand->Rand32() % ( max - min + base );
+        auto index = _kf_rand->Rand32() % ( max - min + base );
         return min + index;
     }
 

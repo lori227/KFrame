@@ -136,8 +136,8 @@ namespace KFrame
 
         virtual void AddDataToShow( const std::string& modulename, uint64 moduleid, KFData* kfdata );
 
-        virtual void AddDataToShow( const std::string& name, uint64 value, KeyValue& values, bool find, const std::string& extendname = _invalid_string );
-        virtual void AddDataToShow( const std::string& modulename, uint64 moduleid, const std::string& name, uint64 value, KeyValue& values, bool find, const std::string& extendname = _invalid_string );
+        virtual void AddDataToShow( const std::string& name, uint64 value, StringUInt64& values, bool find, const std::string& extendname = _invalid_string );
+        virtual void AddDataToShow( const std::string& modulename, uint64 moduleid, const std::string& name, uint64 value, StringUInt64& values, bool find, const std::string& extendname = _invalid_string );
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
@@ -210,7 +210,7 @@ namespace KFrame
 
         // 添加显示数据
         void AddDataToShow( KFMsg::PBShowElement* pbshowelement, KFData* kfdata );
-        void AddDataToShow( KFMsg::PBShowElement* pbshowelement, const std::string& name, uint64 value, KeyValue& values, bool find, const std::string& extendname );
+        void AddDataToShow( KFMsg::PBShowElement* pbshowelement, const std::string& name, uint64 value, StringUInt64& values, bool find, const std::string& extendname );
 
         // 创建显示元素
         KFMsg::PBShowElement* CreateShowElement();
