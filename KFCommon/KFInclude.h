@@ -67,11 +67,13 @@ typedef std::set< uint64 > UInt64Set;
 typedef std::list< uint64 > UInt64List;
 typedef std::vector< uint64 > UInt64Vector;
 
-typedef std::map< uint32, uint32 > UInt32Map;
-typedef std::map< uint64, uint64 > UInt64Map;
+typedef std::unordered_map< uint32, uint32 > UInt32Map;
+typedef std::unordered_map< uint64, uint64 > UInt64Map;
 
-typedef std::map< std::string, uint64 > StringUInt64;
-typedef std::map< uint64, std::string > UInt64String;
+typedef std::unordered_map< std::string, uint32 > StringUInt32;
+typedef std::unordered_map< std::string, uint64 > StringUInt64;
+typedef std::unordered_map< uint32, std::string > UInt32String;
+typedef std::unordered_map< uint64, std::string > UInt64String;
 /////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 #endif

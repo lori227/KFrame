@@ -47,7 +47,7 @@ namespace KFrame
         void CreateRelationIndex( KFMongoDriver* mongodriver, const std::string& relationname );
 
     private:
-        std::unordered_map<std::string, uint32> _relation_index_create;
+        StringUInt32 _relation_index_create;
     };
 }
 

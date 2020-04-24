@@ -13,7 +13,7 @@ namespace KFrame
         return classsetting->FindSetting( dataname );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static std::unordered_map< std::string, uint32 > _data_mask_list =
+    static StringUInt32 _data_mask_list =
     {
         {"Show", KFDataDefine::Mask_Show},
         {"Multiple", KFDataDefine::Mask_Multiple},

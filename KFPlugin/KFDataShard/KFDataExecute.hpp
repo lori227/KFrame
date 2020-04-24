@@ -99,7 +99,7 @@ namespace KFrame
         // 创建索引
         void CreateZoneIndex( KFMongoDriver* mongodriver, uint32 zoneid );
     private:
-        std::unordered_map< uint32, uint32 > _zone_index_map;
+        UInt32Map _zone_index_map;
     };
     ///////////////////////////////////////////////////////////////////////////////////
     class KFMySQLDataExecute : public KFDataExecute

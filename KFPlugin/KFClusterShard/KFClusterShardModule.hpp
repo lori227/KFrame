@@ -57,7 +57,7 @@ namespace KFrame
 
     protected:
         // 客户端路由信息
-        std::unordered_map< uint64, uint64 > _proxy_client_list;
+        UInt64Map _proxy_client_list;
     };
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////

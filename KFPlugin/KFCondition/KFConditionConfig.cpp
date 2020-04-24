@@ -31,7 +31,7 @@ namespace KFrame
     }
     //////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////
-    static std::map< std::string, uint32 > _conditon_mask_list =
+    static StringUInt32 _conditon_mask_list =
     {
         {"Calculate", KFConditionEnum::LimitStatus},
         {"PlaceLimit", KFConditionEnum::LimitPlace},

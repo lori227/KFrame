@@ -50,7 +50,7 @@ namespace KFrame
         KFMap< uint64, uint64, VirtualHashNode > _virtual_list;
 
         // 已经选择的节点
-        std::unordered_map< std::string, uint64 > _select_list;
+        StringUInt64 _select_list;
     };
 }
 

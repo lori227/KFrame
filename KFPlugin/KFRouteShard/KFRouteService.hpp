@@ -47,7 +47,7 @@ namespace KFrame
         std::unordered_map< uint64, UInt64Set > _object_list;
 
         // 服务器的对象总数
-        std::unordered_map< uint64, uint32 > _server_object_count_list;
+        UInt64Map _server_object_count_list;
 
         // 最小负载服务器id
         uint32 _min_balance_count = 0u;

@@ -51,7 +51,7 @@ namespace KFrame
             ////////////////////////////////////////////////////////////////////////////
         };
 
-        static const std::unordered_map<std::string, uint32> _data_type_list =
+        static const StringUInt32 _data_type_list =
         {
             {"int32", Type_Int32},
             {"uint32", Type_UInt32},

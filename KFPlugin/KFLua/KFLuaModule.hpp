@@ -145,7 +145,7 @@ namespace KFrame
         KFHashMap< std::string, const std::string&, KFLuaScript > _lua_script;
 
         // 运行时的一些变量
-        std::unordered_map< uint32, uint32 > _run_variable;
+        UInt32Map _run_variable;
 
         // 玩家组件
         KFComponent* _kf_player = nullptr;

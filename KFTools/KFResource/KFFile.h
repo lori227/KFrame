@@ -64,7 +64,7 @@ namespace KFrame
         }
 
     public:
-        std::unordered_map< uint32, std::string > _datas;
+        UInt32String _datas;
     };
     /////////////////////////////////////////////////////////////////////////////////////////////
 

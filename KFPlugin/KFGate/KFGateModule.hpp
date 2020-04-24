@@ -105,7 +105,7 @@ namespace KFrame
         uint64 _login_server_id = _invalid_int;
 
         // 广播的序号
-        std::unordered_map< uint64, uint32 > _broadcast_list;
+        UInt64Map _broadcast_list;
     };
 }
 

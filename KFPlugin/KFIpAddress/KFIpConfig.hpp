@@ -40,7 +40,7 @@ namespace KFrame
         std::string _pay_url;
 
         // vpn 地址
-        std::unordered_map< uint32, std::string > _vpn_list;
+        UInt32String _vpn_list;
     };
 }
 

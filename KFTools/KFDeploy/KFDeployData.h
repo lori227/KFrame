@@ -35,7 +35,7 @@ class AppData
 {
 public:
     std::string _name;
-    std::unordered_map< std::string, uint32 > _types;
+    StringUInt32 _types;
 };
 
 class ServerData
@@ -251,8 +251,8 @@ public:
     std::list< AgentData* > _agent_data;
 
     // service列表
-    std::unordered_map< uint32, std::string > _channel_name;
-    std::unordered_map< uint32, std::string > _service_name;
+    UInt32String _channel_name;
+    UInt32String _service_name;
 
     // appdata
     std::list< AppData* > _app_data;
