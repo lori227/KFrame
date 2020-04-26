@@ -69,7 +69,8 @@ namespace KFrame
             DeployServer = 11,	// 部署server
             DeployAgent = 12,	// 部署Agent
 
-            LogShard = 20,		// 日志服务器
+            Dir = 19,			// 目录服务器
+            Log = 20,			// 日志服务器
             Auth = 21,			// 认证服务器
 
             RouteMaster = 22,	// 转发服务器master

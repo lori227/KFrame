@@ -79,9 +79,11 @@ namespace KFrame
         if ( netdata->_type == __STRING__( master ) )
         {
             // 保存信息
-            _str_master_id = netdata->_str_id;
             _cluster_name = netdata->_name;
+            _cluster_type = netdata->_type;
             _cluster_master_id = netdata->_id;
+            _cluster_master_ip = netdata->_ip;
+            _cluster_master_port = netdata->_port;
 
             // 开启认证定时器
             __LOOP_TIMER_1__( netdata->_id, 10000, 1000, &KFClusterClientModule::OnTimerSendClusterAuthMessage );
@@ -102,7 +104,7 @@ namespace KFrame
         auto ok = _kf_tcp_client->SendNetMessage( _cluster_master_id, KFMsg::S2S_CLUSTER_AUTH_TO_MASTER_REQ, &req );
         if ( !ok )
         {
-            __LOG_ERROR__( "send cluster[{}:{}] auth failed", _cluster_name, _str_master_id );
+            __LOG_ERROR__( "send cluster[{}:{}] auth failed", _cluster_name, KFAppId::ToString( _cluster_master_id ) );
         }
     }
 
@@ -179,23 +181,14 @@ namespace KFrame
 
     void KFClusterClientModule::ReconnectClusterMaster()
     {
-        __LOG_ERROR__( "cluster=[{}] service reset", _cluster_name );
+        __LOG_ERROR__( "cluster=[{}] service reconnect", _cluster_name );
 
         // 断开proxy服务器
         _kf_tcp_client->CloseClient( _cluster_proxy_id, __FUNC_LINE__ );
 
-        _cluster_proxy_id = 0;
+        _cluster_proxy_id = 0u;
         _cluster_in_services = false;
-
-        auto* kfaddress = _kf_ip_address->FindIpAddress( _cluster_name, __STRING__( master ), _str_master_id );
-        if ( kfaddress == nullptr )
-        {
-            return __LOG_ERROR__( "can't [{}:{}:{}] address", _cluster_name, __STRING__( master ), _str_master_id );
-        }
-
-        KFIpAddress ipaddress = *kfaddress;
-        ipaddress._port = _kf_ip_address->CalcListenPort( kfaddress->_port_type, kfaddress->_port, kfaddress->_id );
-        _kf_tcp_client->StartClient( &ipaddress );
+        _kf_tcp_client->StartClient( _cluster_name, _cluster_type, _cluster_master_id, _cluster_master_ip, _cluster_master_port );
     }
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////

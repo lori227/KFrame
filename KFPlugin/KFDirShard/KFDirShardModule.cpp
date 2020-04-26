@@ -5,17 +5,6 @@ namespace KFrame
 {
     void KFDirShardModule::BeforeRun()
     {
-        auto dirdatabasetype = KFGlobal::Instance()->GetUInt32( __STRING__( dirdatabase ) );
-        switch ( dirdatabasetype )
-        {
-        case KFMsg::Mongo:
-            _dir_shard_logic = __NEW_OBJECT__( KFDirShardMongo );
-            break;
-        default:
-            _dir_shard_logic = __NEW_OBJECT__( KFDirShardRedis );
-            break;
-        }
-
         /////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_HTTP__( __STRING__( zoneregister ), false, &KFDirShardModule::HandleZoneRegister );
         __REGISTER_HTTP__( __STRING__( zoneupdate ), false, &KFDirShardModule::HandleZoneUpdate );
@@ -24,13 +13,15 @@ namespace KFrame
         __REGISTER_HTTP__( __STRING__( zonebalance ), false, &KFDirShardModule::HandleZoneBalance );
         __REGISTER_HTTP__( __STRING__( zonerecommend ), false, &KFDirShardModule::HandleZoneRecommend );
         __REGISTER_HTTP__( __STRING__( worldregister ), false, &KFDirShardModule::HandleWorldRegister );
+        __REGISTER_HTTP__( __STRING__( updatemasterip ), false, &KFDirShardModule::HandleUpdateMasterIp );
+        __REGISTER_HTTP__( __STRING__( querymasterip ), false, &KFDirShardModule::HandleQueryMasterIp );
+        __REGISTER_HTTP__( __STRING__( querymasterlist ), false, &KFDirShardModule::HandleQueryMasterList );
 
         /////////////////////////////////////////////////////////////////////////////////////////
     }
 
     void KFDirShardModule::BeforeShut()
     {
-        __DELETE_OBJECT__( _dir_shard_logic );
         /////////////////////////////////////////////////////////////////////////////////////////
         __UN_HTTP__( __STRING__( zoneregister ) );
         __UN_HTTP__( __STRING__( zoneupdate ) );
@@ -39,14 +30,16 @@ namespace KFrame
         __UN_HTTP__( __STRING__( zonebalance ) );
         __UN_HTTP__( __STRING__( zonerecommend ) );
         __UN_HTTP__( __STRING__( worldregister ) );
+        __UN_HTTP__( __STRING__( updatemasterip ) );
+        __UN_HTTP__( __STRING__( querymasterip ) );
+        __UN_HTTP__( __STRING__( querymasterlist ) );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_HTTP_FUNCTION__( KFDirShardModule::HandleZoneRegister )
     {
         __JSON_PARSE_STRING__( request, data );
 
-        auto zoneid = __JSON_GET_UINT32__( request, __STRING__( zoneid ) );
-        auto ok = _dir_shard_logic->ZoneRegister( zoneid, request );
+        auto ok = _kf_dir_attribute->ZoneRegister( request );
         return _kf_http_server->SendCode( ok ? KFMsg::Ok : KFMsg::Error );
     }
 
@@ -54,19 +47,13 @@ namespace KFrame
     {
         __JSON_PARSE_STRING__( request, data );
 
-        auto appid = __JSON_GET_UINT64__( request, __STRING__( appid ) );
-        auto zoneid = __JSON_GET_UINT32__( request, __STRING__( zoneid ) );
-        auto count = __JSON_GET_UINT32__( request, __STRING__( count ) );
-        auto gateip = __JSON_GET_STRING__( request, __STRING__( ip ) );
-        auto port = __JSON_GET_UINT32__( request, __STRING__( port ) );
-        auto time = __JSON_GET_UINT32__( request, __STRING__( time ) );
-        auto ok = _dir_shard_logic->ZoneUpdate( appid, zoneid, count, gateip, port, time );
+        auto ok = _kf_dir_attribute->ZoneUpdate( request );
         return _kf_http_server->SendCode( ok ? KFMsg::Ok : KFMsg::Error );
     }
 
     __KF_HTTP_FUNCTION__( KFDirShardModule::HandleQueryZoneList )
     {
-        auto zonedatalist = _dir_shard_logic->QueryZoneList();
+        auto zonedatalist = _kf_dir_attribute->QueryZoneList();
 
         __JSON_OBJECT_DOCUMENT__( response );
         __JSON_ARRAY__( kfarray );
@@ -87,7 +74,7 @@ namespace KFrame
     {
         __JSON_PARSE_STRING__( request, data );
         auto zoneid = __JSON_GET_UINT32__( request, __STRING__( zoneid ) );
-        auto zonedata = _dir_shard_logic->QueryZoneIp( zoneid );
+        auto zonedata = _kf_dir_attribute->QueryZoneIp( zoneid );
 
         __JSON_OBJECT_DOCUMENT__( response );
         __JSON_SET_VALUE__( response, __STRING__( zoneid ), zoneid );
@@ -102,20 +89,15 @@ namespace KFrame
         auto zoneid = __JSON_GET_UINT32__( request, __STRING__( zoneid ) );
         auto count = __JSON_GET_UINT64__( request, __STRING__( count ) );
 
-        auto ok = _dir_shard_logic->ZoneBalance( zoneid, count );
+        auto ok = _kf_dir_attribute->ZoneBalance( zoneid, count );
         return _kf_http_server->SendCode( ok ? KFMsg::Ok : KFMsg::Error );
-    }
-
-    bool KFDirShardModule::ZoneBalance( uint32 zoneid, uint32 count )
-    {
-        return _dir_shard_logic->ZoneBalance( zoneid, count );
     }
 
     __KF_HTTP_FUNCTION__( KFDirShardModule::HandleZoneRecommend )
     {
         __JSON_PARSE_STRING__( request, data );
         auto zoneid = __JSON_GET_UINT32__( request, __STRING__( zoneid ) );
-        auto ok = _dir_shard_logic->SetZoneRecommend( zoneid );
+        auto ok = _kf_dir_attribute->SetZoneRecommend( zoneid );
         return _kf_http_server->SendCode( ok ? KFMsg::Ok : KFMsg::Error );
     }
 
@@ -126,17 +108,41 @@ namespace KFrame
         auto worldid = __JSON_GET_UINT64__( request, __STRING__( world ) );
         auto url = __JSON_GET_STRING__( request, __STRING__( url ) );
 
-        auto ok = _dir_shard_logic->SetWorldUrl( worldid, url );
+        auto ok = _kf_dir_attribute->SetWorldUrl( worldid, url );
         return _kf_http_server->SendCode( ok ? KFMsg::Ok : KFMsg::Error );
     }
 
-    StringMap KFDirShardModule::AllocPlayerZone( uint32 zoneid )
+    __KF_HTTP_FUNCTION__( KFDirShardModule::HandleUpdateMasterIp )
     {
-        return _dir_shard_logic->AllocPlayerZone( zoneid );
+        __JSON_PARSE_STRING__( request, data );
+        auto ok = _kf_dir_attribute->UpdateMasterIp( request );
+        return _kf_http_server->SendCode( ok ? KFMsg::Ok : KFMsg::Error );
     }
 
-    std::string KFDirShardModule::GetWorldUrl( uint64 worldid )
+    __KF_HTTP_FUNCTION__( KFDirShardModule::HandleQueryMasterIp )
     {
-        return _dir_shard_logic->GetWorldUrl( worldid );
+        __JSON_PARSE_STRING__( request, data );
+        auto masterdata = _kf_dir_attribute->QueryMasterIp( request );
+
+        __JSON_OBJECT_DOCUMENT__( response );
+        __JSON_FROM_MAP__( response, masterdata );
+        return _kf_http_server->SendResponse( response );
+    }
+
+    __KF_HTTP_FUNCTION__( KFDirShardModule::HandleQueryMasterList )
+    {
+        __JSON_PARSE_STRING__( request, data );
+        auto masterdatalist = _kf_dir_attribute->QueryMasterList( request );
+
+        __JSON_OBJECT_DOCUMENT__( response );
+        __JSON_ARRAY__( kfarray );
+        for ( auto& masterdata : masterdatalist )
+        {
+            __JSON_OBJECT__( masterjson );
+            __JSON_FROM_MAP__( masterjson, masterdata );
+            __JSON_ADD_VALUE__( kfarray, masterjson );
+        }
+        __JSON_SET_VALUE__( response, __STRING__( masterlist ), kfarray );
+        return _kf_http_server->SendResponse( response );
     }
 }

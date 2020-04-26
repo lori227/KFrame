@@ -28,21 +28,46 @@ namespace KFrame
         _service_object_list.clear();
         _service_name = KFGlobal::Instance()->_app_name;
 
-        // 找到route 地址自动连接, 不需要bus对每个节点都配置一条连接信息
-        auto* kfaddress = _kf_ip_address->FindIpAddress( __STRING__( route ), __STRING__( master ), _globbing_string );
-        if ( kfaddress == nullptr )
-        {
-            return __LOG_ERROR__( "can't find [{}:{}] ip setting", __STRING__( route ), __STRING__( master ) );
-        }
-
-        auto port = _kf_ip_address->CalcListenPort( kfaddress->_port_type, kfaddress->_port, kfaddress->_id );
-        _kf_tcp_client->StartClient( kfaddress->_name, kfaddress->_type, kfaddress->_id, kfaddress->_ip, port );
+        // 启动连接定时器
+        __LOOP_TIMER_0__( 6000u, 1u, &KFRouteClientModule::OnTimerConnectionRouteMaster );
     }
 
     void KFRouteClientModule::Run()
     {
         // 发送转发消息
         RunSendRouteMessage();
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    __KF_TIMER_FUNCTION__( KFRouteClientModule::OnTimerConnectionRouteMaster )
+    {
+        // 找到route 地址自动连接, 不需要bus对每个节点都配置一条连接信息
+        auto kfaddress = _kf_ip_address->GetMasterIp( __STRING__( route ), 0u );
+        if ( kfaddress == nullptr )
+        {
+            return;
+        }
+
+        __UN_TIMER_0__();
+        _connect_route_master_failed_count = 0u;
+        _kf_tcp_client->StartClient( kfaddress->_name, kfaddress->_type, kfaddress->_id, kfaddress->_ip, kfaddress->_port );
+    }
+
+    __KF_NET_EVENT_FUNCTION__( KFRouteClientModule::OnClientConnectRouteMasterFailed )
+    {
+        auto kfglobal = KFGlobal::Instance();
+        if ( netdata->_name == __STRING__( route ) && netdata->_type == __STRING__( master ) )
+        {
+            ++_connect_route_master_failed_count;
+            if ( _connect_route_master_failed_count > 5u )
+            {
+                // 超过设定次数, 重新连接
+                _kf_tcp_client->CloseClient( netdata->_id, __FUNC_LINE__ );
+
+                // 启动定时器
+                __LOOP_TIMER_0__( 6000u, 1u, &KFRouteClientModule::OnTimerConnectionRouteMaster );
+            }
+        }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////

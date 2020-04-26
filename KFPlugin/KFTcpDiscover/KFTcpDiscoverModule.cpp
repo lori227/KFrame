@@ -17,6 +17,7 @@ namespace KFrame
 
     void KFTcpDiscoverModule::ShutDown()
     {
+        __UN_TIMER_0__();
         __UN_SERVER_DISCOVER__();
         __UN_SERVER_LOST__();
         __UN_CLIENT_CONNECTION__();
@@ -30,16 +31,22 @@ namespace KFrame
     void KFTcpDiscoverModule::PrepareRun()
     {
         auto kfglobal = KFGlobal::Instance();
-
-        // 为了防止单点, 自动连接相同类型的服务器, 不在bus表里配置
-        IpAddressList iplist;
-        _kf_ip_address->FindIpAddress( kfglobal->_app_name, kfglobal->_app_type, _globbing_string, iplist );
-
-        for ( auto netdata : iplist )
+        if ( kfglobal->_app_type != __STRING__( master ) )
         {
-            // 开启连接
-            auto port = _kf_ip_address->CalcListenPort( netdata->_port_type, netdata->_port, netdata->_id );
-            _kf_tcp_client->StartClient( netdata->_name, netdata->_type, netdata->_id, netdata->_ip, port );
+            return;
+        }
+
+        // 为了防止单点, master自动连接相同类型的服务器, 不在bus表里配置
+        __LOOP_TIMER_0__( 60000u, 5000u, &KFTcpDiscoverModule::OnTimerQueryMasterList );
+    }
+
+    __KF_TIMER_FUNCTION__( KFTcpDiscoverModule::OnTimerQueryMasterList )
+    {
+        // 查询master列表
+        auto& iplist = _kf_ip_address->GetMasterList( KFGlobal::Instance()->_app_name, KFGlobal::Instance()->_app_id->GetZoneId() );
+        for ( auto& ipaddress : iplist )
+        {
+            _kf_tcp_client->StartClient( ipaddress._name, ipaddress._type, ipaddress._id, ipaddress._ip, ipaddress._port );
         }
     }
 

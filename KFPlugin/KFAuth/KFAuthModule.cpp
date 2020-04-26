@@ -61,7 +61,7 @@ namespace KFrame
 
         // 查询小区信息, 返回给客户端
         auto zoneid = __TO_UINT32__( accountdata[ __STRING__( zoneid ) ] );
-        auto zonedata = _kf_dir_shard->AllocPlayerZone( zoneid );
+        auto zonedata = _kf_dir_attribute->AllocPlayerZone( zoneid );
 
         __JSON_OBJECT_DOCUMENT__( response );
         __JSON_SET_VALUE__( response, __STRING__( token ), token );
@@ -101,7 +101,7 @@ namespace KFrame
         auto isnew = std::get<1>( playerdata );
         if ( isnew )
         {
-            _kf_dir_shard->ZoneBalance( logiczoneid, 1u );
+            _kf_dir_attribute->ZoneBalance( logiczoneid, 1u );
         }
 
         // 保存登录ip
@@ -157,7 +157,7 @@ namespace KFrame
             return;
         }
 
-        auto worldurl = _kf_dir_shard->GetWorldUrl( worldid );
+        auto worldurl = _kf_dir_attribute->GetWorldUrl( worldid );
         if ( worldurl.empty() )
         {
             return;
@@ -174,36 +174,4 @@ namespace KFrame
 
     ///////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////
-
-    //bool KFAuthModule::KickAccountOffline( uint64 playerid )
-    //{
-    //    auto redisdriver = __DIR_REDIS_DRIVER__;
-
-    //    __JSON_OBJECT_DOCUMENT__( sendjson );
-    //    __JSON_SET_VALUE__( sendjson, __STRING__( playerid ), playerid );
-
-    //    do
-    //    {
-    //        auto kfresult = redisdriver->QueryString( "srandmember {}", __STRING__( worldurl ) );
-    //        if ( kfresult->_value.empty() )
-    //        {
-    //            break;
-    //        }
-
-    //        auto kickurl = kfresult->_value + __STRING__( kickonline );
-    //        auto resultdata = _kf_http_client->STGet( kickurl, sendjson );
-
-    //        __JSON_PARSE_STRING__( recvjson, resultdata );
-    //        auto retcode = __JSON_GET_UINT32__( recvjson, __STRING__( retcode ) );
-    //        if ( retcode == KFMsg::Ok )
-    //        {
-    //            return true;
-    //        }
-
-    //        // 不能访问, 删除这个地址
-    //        redisdriver->Execute( "srem {} {}", __STRING__( worldurl ), kfresult->_value );
-    //    } while ( true );
-
-    //    return false;
-    //}
 }

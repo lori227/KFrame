@@ -11,6 +11,7 @@
 
 #include "KFrame.h"
 #include "KFRouteClientInterface.h"
+#include "KFTimer/KFTimerInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFIpAddress/KFIpAddressInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"
@@ -187,6 +188,11 @@ namespace KFrame
         // 通知有新的shard
         __KF_MESSAGE_FUNCTION__( HandleRouteDiscoverToClientReq );
 
+        // 连接route master
+        __KF_TIMER_FUNCTION__( OnTimerConnectionRouteMaster );
+
+        // 连接route master 失败
+        __KF_NET_EVENT_FUNCTION__( OnClientConnectRouteMasterFailed );
     private:
         // 转发函数
         KFTranspondFunction _kf_transpond_function = nullptr;
@@ -203,6 +209,9 @@ namespace KFrame
         // 转发消息
         uint64 _route_serial = 0u;
         KFMap<uint64, uint64, KFRouteMessage > _route_message_list;
+
+        // 连接route master失败次数
+        uint32 _connect_route_master_failed_count = 0u;
     };
 }
 

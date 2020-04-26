@@ -11,8 +11,11 @@
 		<Proc ID="20" Name="log" Type="shard" seq="0"/>
 		
 		-->
-    <!-- cluster auth -->
-		<Proc ID="21" Name="auth" Type="auth" seq="0"/>
+		<!-- cluster dir -->
+		<Proc ID="19" Name="dir" Type="shard" seq="0"/>
+
+        <!-- cluster auth -->
+		<Proc ID="21" Name="auth" Type="shard" seq="0"/>
 
 		<!-- cluster route -->
 		<Proc ID="22" Name="route" Type="master" seq="0"/>

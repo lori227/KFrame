@@ -16,6 +16,7 @@ namespace KFrame
 
     void KFIpAddressPlugin::LoadModule()
     {
+        __FIND_MODULE__( _kf_timer, KFTimerInterface );
         __FIND_MODULE__( _kf_config, KFConfigInterface );
         __FIND_MODULE__( _kf_http_client, KFHttpClientInterface );
     }

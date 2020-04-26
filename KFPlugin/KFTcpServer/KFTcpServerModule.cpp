@@ -42,20 +42,6 @@ namespace KFrame
             }
         }
 
-        // 计算端口
-        if ( kftcpsetting->_port == _invalid_int )
-        {
-            auto kfaddress = _kf_ip_address->FindIpAddress( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->ToString() );
-            if ( kfaddress == nullptr )
-            {
-                __LOG_ERROR__( "can't find [{}:{}:{}] ipaddress", kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->ToString() );
-                return nullptr;
-            }
-
-            kftcpsetting->_port = kfaddress->_port;
-            kftcpsetting->_port_type = kfaddress->_port_type;
-        }
-
         kftcpsetting->_port = _kf_ip_address->CalcListenPort( kftcpsetting->_port_type, kftcpsetting->_port, kfglobal->_app_id->GetId() );
         return kftcpsetting;
     }

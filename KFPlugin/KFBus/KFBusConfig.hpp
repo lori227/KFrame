@@ -41,7 +41,7 @@ namespace KFrame
         bool LoadConfig( const std::string& filename, const std::string& filepath, uint32 loadmask );
 
         // 查找连接
-        void FindConnection( const std::string& appname, const std::string& apptype, const std::string& appid, std::set< KFConnection* >& outlist );
+        const KFConnection* FindMasterConnection( const std::string& appname, const std::string& apptype, const std::string& appid );
 
         // 判断是否是连接
         bool IsValidConnection( const std::string& connectname, const std::string& connecttype, const std::string& connectid );

@@ -10,9 +10,8 @@
 ************************************************************************/
 
 #include "KFDirShardInterface.h"
-#include "KFDirShardRedis.hpp"
-#include "KFDirShardMongo.hpp"
 #include "KFHttpServer/KFHttpServerInterface.h"
+#include "KFDirAttribute/KFDirAttributeInterface.h"
 
 namespace KFrame
 {
@@ -29,14 +28,6 @@ namespace KFrame
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
-        // 分配玩家小区
-        virtual StringMap AllocPlayerZone( uint32 zoneid );
-
-        // 小区人数负载均衡
-        virtual bool ZoneBalance( uint32 zoneid, uint32 count );
-
-        // 获得world url
-        virtual std::string GetWorldUrl( uint64 worldid );
     protected:
         // 小区信息注册
         __KF_HTTP_FUNCTION__( HandleZoneRegister );
@@ -59,8 +50,14 @@ namespace KFrame
         // world的http地址
         __KF_HTTP_FUNCTION__( HandleWorldRegister );
 
-    protected:
-        KFDirShardLogic* _dir_shard_logic = nullptr;
+        // 更新masterip
+        __KF_HTTP_FUNCTION__( HandleUpdateMasterIp );
+
+        // 查询masterip
+        __KF_HTTP_FUNCTION__( HandleQueryMasterIp );
+
+        // 查询masterlist
+        __KF_HTTP_FUNCTION__( HandleQueryMasterList );
     };
 }
 

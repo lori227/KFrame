@@ -17,10 +17,6 @@ namespace KFrame
 
         bool LoadConfig( const std::string& filename, const std::string& filepath, uint32 loadmask );
 
-        // 查找连接
-        const KFIpAddress* FindIpAddress( const std::string& appname, const std::string& apptype, const std::string& appid );
-        void FindIpAddress( const std::string& appname, const std::string& apptype, const std::string& appid, IpAddressList& outlist );
-
         // 查找vpn ip
         const std::string& FindVPNIpAddress( const std::string& appname, const std::string& apptype, uint32 zoneid );
     public:

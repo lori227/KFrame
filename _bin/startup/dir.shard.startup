@@ -10,9 +10,7 @@
 	<Plugins>
 		<Plugin Name="KFRedis" Config=""/>
 		<Plugin Name="KFMongo" Config=""/>	
-		<Plugin Name="KFChannel" Config=""/>
-		<Plugin Name="KFAuth" Config=""/>	
-		<Plugin Name="KFAccount" Config=""/>	
 		<Plugin Name="KFDirShard" Config=""/>	
+		<Plugin Name="KFDirAttribute" Config=""/>	
 	</Plugins>
 </Setting>

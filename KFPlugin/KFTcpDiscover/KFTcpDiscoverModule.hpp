@@ -10,6 +10,7 @@
 ************************************************************************/
 
 #include "KFTcpDiscoverInterface.h"
+#include "KFTimer/KFTimerInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"
@@ -39,6 +40,9 @@ namespace KFrame
 
         // 连接服务器
         __KF_NET_EVENT_FUNCTION__( OnClientConnectServer );
+
+        // 请求master列表
+        __KF_TIMER_FUNCTION__( OnTimerQueryMasterList );
 
         // 通知发现新的服务器
         __KF_MESSAGE_FUNCTION__( HandleTellDiscoverServerToMaster );

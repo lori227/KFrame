@@ -58,10 +58,8 @@ namespace KFrame
         return false;
     }
 
-    void KFBusConfig::FindConnection( const std::string& appname, const std::string& apptype, const std::string& appid, std::set<KFConnection*>& outlist )
+    const KFConnection* KFBusConfig::FindMasterConnection( const std::string& appname, const std::string& apptype, const std::string& appid )
     {
-        outlist.clear();
-
         for ( auto& kfconnection : _bus_connection )
         {
             if ( kfconnection._app_name != _globbing_string && kfconnection._app_name != appname )
@@ -79,9 +77,20 @@ namespace KFrame
                 continue;
             }
 
+            if ( kfconnection._connect_name != _globbing_string && kfconnection._app_name != appname )
+            {
+                continue;
+            }
 
-            outlist.insert( &kfconnection );
+            if ( kfconnection._connect_type != _globbing_string && kfconnection._connect_type != __STRING__( master ) )
+            {
+                continue;
+            }
+
+            return &kfconnection;
         }
+
+        return nullptr;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFBusConfig::LoadConfig( const std::string& filename, const std::string& filepath, uint32 loadmask )

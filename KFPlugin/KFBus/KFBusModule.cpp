@@ -6,12 +6,18 @@ namespace KFrame
 {
     void KFBusModule::BeforeRun()
     {
+        __REGISTER_CLIENT_FAILED__( &KFBusModule::OnClientConnectMasterFailed );
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_TELL_REGISTER_TO_SERVER, &KFBusModule::HanldeTellRegisterToServer );
         __REGISTER_MESSAGE__( KFMsg::S2S_TELL_UNREGISTER_FROM_SERVER, &KFBusModule::HanldeTellUnRegisterFromServer );
     }
 
     void KFBusModule::ShutDown()
     {
+        __UN_CLIENT_FAILED__();
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::S2S_TELL_REGISTER_TO_SERVER );
         __UN_MESSAGE__( KFMsg::S2S_TELL_UNREGISTER_FROM_SERVER );
     }
@@ -19,30 +25,53 @@ namespace KFrame
     void KFBusModule::PrepareRun()
     {
         // 如果是master, 不执行
-        auto kfglogal = KFGlobal::Instance();
-        if ( kfglogal->_app_type == __STRING__( master ) )
+        auto kfglobal = KFGlobal::Instance();
+        if ( kfglobal->_app_type == __STRING__( master ) )
         {
             return;
         }
 
-        // 查找需要连接的客户端, 自动连接
-        IpAddressList connectionlist;
-        FindConnection( connectionlist );
-
-        for ( auto kfaddress : connectionlist )
+        // 查找需要连接的master服务器, 自动连接
+        auto kfconnection = KFBusConfig::Instance()->FindMasterConnection( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->ToString() );
+        if ( kfconnection == nullptr )
         {
-            // 只连相同小区
-            KFAppId kfappid( kfaddress->_id );
-            if ( kfglogal->_app_id->GetZoneId() != kfappid.GetZoneId() )
-            {
-                continue;
-            }
-
-            auto port = _kf_ip_address->CalcListenPort( kfaddress->_port_type, kfaddress->_port, kfaddress->_id );
-            _kf_tcp_client->StartClient( kfaddress->_name, kfaddress->_type, kfaddress->_id, kfaddress->_ip, port );
+            return;
         }
+
+        // 启动定时器
+        __LOOP_TIMER_0__( 6000u, 1000u, &KFBusModule::OnTimerConnectionMaster );
     }
 
+    __KF_TIMER_FUNCTION__( KFBusModule::OnTimerConnectionMaster )
+    {
+        auto kfglobal = KFGlobal::Instance();
+        auto kfaddress = _kf_ip_address->GetMasterIp( kfglobal->_app_name, kfglobal->_app_id->GetZoneId() );
+        if ( kfaddress == nullptr )
+        {
+            return;
+        }
+
+        __UN_TIMER_0__();
+        _connect_master_failed_count = 0u;
+        _kf_tcp_client->StartClient( kfaddress->_name, kfaddress->_type, kfaddress->_id, kfaddress->_ip, kfaddress->_port );
+    }
+
+    __KF_NET_EVENT_FUNCTION__( KFBusModule::OnClientConnectMasterFailed )
+    {
+        auto kfglobal = KFGlobal::Instance();
+        if ( netdata->_name == kfglobal->_app_name && netdata->_type == __STRING__( master ) )
+        {
+            ++_connect_master_failed_count;
+            if ( _connect_master_failed_count > 5u )
+            {
+                // 超过设定次数, 重新连接
+                _kf_tcp_client->CloseClient( netdata->_id, __FUNC_LINE__ );
+
+                // 启动定时器
+                __LOOP_TIMER_0__( 6000u, 1000u, &KFBusModule::OnTimerConnectionMaster );
+            }
+        }
+    }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFBusModule::IsConnection( const std::string& connectname, const std::string& connecttype, uint64 connectid )
@@ -61,26 +90,6 @@ namespace KFrame
 
         auto strconnectid = KFAppId::ToString( connectid );
         return KFBusConfig::Instance()->IsValidConnection( connectname, connecttype, strconnectid );
-    }
-
-    void KFBusModule::FindConnection( IpAddressList& outlist )
-    {
-        outlist.clear();
-
-        auto kfglobal = KFGlobal::Instance();
-        std::set< KFConnection* > connectionlist;
-        KFBusConfig::Instance()->FindConnection( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->ToString(), connectionlist );
-
-        // 查找连接的ip地址
-        for ( auto kfconnection : connectionlist )
-        {
-            // 查找连接信息
-            auto kfaddress = _kf_ip_address->FindIpAddress( kfconnection->_connect_name, kfconnection->_connect_type, kfconnection->_connect_id );
-            if ( kfaddress != nullptr )
-            {
-                outlist.push_back( kfaddress );
-            }
-        }
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////

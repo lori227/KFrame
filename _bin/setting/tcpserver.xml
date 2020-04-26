@@ -18,9 +18,6 @@
 		<!-- deploy server 服务器-->
 		<Server AppName="deploy" AppType="server" Type="0" Port="10000" MaxQueue="20000"/>
 
-		<!-- master服务器 -->
-		<Server AppName="*" AppType="master" Type="0" Port="0" MaxQueue="20000"/>
-
 		<!-- gate服务器 -->
 		<Server AppName="zone" AppType="gate" Type="2" Port="12000" MaxQueue="200" MessageType="2" Compress="0"/>
 	</TcpServer>

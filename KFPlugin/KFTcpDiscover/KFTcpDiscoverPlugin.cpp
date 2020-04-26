@@ -17,6 +17,7 @@ namespace KFrame
 
     void KFTcpDiscoverPlugin::LoadModule()
     {
+        __FIND_MODULE__( _kf_timer, KFTimerInterface );
         __FIND_MODULE__( _kf_message, KFMessageInterface );
         __FIND_MODULE__( _kf_tcp_server, KFTcpServerInterface );
         __FIND_MODULE__( _kf_tcp_client, KFTcpClientInterface );

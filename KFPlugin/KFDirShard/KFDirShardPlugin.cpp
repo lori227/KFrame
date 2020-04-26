@@ -16,9 +16,8 @@ namespace KFrame
 
     void KFDirShardPlugin::LoadModule()
     {
-        __FIND_MODULE__( _kf_redis, KFRedisInterface );
-        __FIND_MODULE__( _kf_mongo, KFMongoInterface );
         __FIND_MODULE__( _kf_http_server, KFHttpServerInterface );
+        __FIND_MODULE__( _kf_dir_attribute, KFDirAttributeInterface );
     }
 
     void KFDirShardPlugin::AddConfig()

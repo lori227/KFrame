@@ -118,16 +118,18 @@ namespace KFrame
     private:
         // cluster name
         std::string _cluster_name;
+        std::string _cluster_type;
 
         // cluster master id
-        uint64 _cluster_master_id{ 0 };
-        std::string _str_master_id;
+        uint64 _cluster_master_id = 0u;
+        std::string _cluster_master_ip;
+        uint32 _cluster_master_port = 0u;
 
         // token
         std::string _auth_token;
 
         // proxy id
-        uint64 _cluster_proxy_id{ 0 };
+        uint64 _cluster_proxy_id = 0u;
 
         // 是否可以服务
         bool _cluster_in_services = false;

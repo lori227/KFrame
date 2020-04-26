@@ -15,14 +15,9 @@ namespace KFrame
 
         // 获得本机外网ip
         virtual const std::string& GetInteranetIp() = 0;
-        /////////////////////////////////////////////////////////////////////////
-        // 查找ip地址
-        virtual const KFIpAddress* FindIpAddress( const std::string& appname, const std::string& apptype, const std::string& appid ) = 0;
-        virtual void FindIpAddress( const std::string& appname, const std::string& apptype, const std::string& appid, IpAddressList& outlist ) = 0;
-
         // 计算监听端口
         virtual uint32 CalcListenPort( uint32 type, uint32 port, uint64 appid ) = 0;
-
+        /////////////////////////////////////////////////////////////////////////
         // 获得log地址
         virtual const std::string& GetLogUrl() = 0;
 
@@ -34,6 +29,12 @@ namespace KFrame
 
         // 获得pay地址
         virtual const std::string& GetPayUrl() = 0;
+
+        // 获得master ip
+        virtual const KFIpAddress* GetMasterIp( const std::string& appname, uint32 zoneid ) = 0;
+
+        // 查询master列表
+        virtual const std::list< KFIpAddress >& GetMasterList( const std::string& appname, uint32 zoneid ) = 0;
     };
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -217,6 +217,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KFBasicAttribute", "KFPlugi
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KFRelationAttribute", "KFPlugin\KFRelationAttribute\KFRelationAttribute.vcxproj", "{08B230ED-9561-4702-B366-2C7F4C28799B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KFDirAttribute", "KFPlugin\KFDirAttribute\KFDirAttribute.vcxproj", "{24518CD5-3851-4CAD-B7B3-BFE83AB4842B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -716,6 +718,12 @@ Global
 		{08B230ED-9561-4702-B366-2C7F4C28799B}.Release|x64.ActiveCfg = Release|x64
 		{08B230ED-9561-4702-B366-2C7F4C28799B}.Release|x64.Build.0 = Release|x64
 		{08B230ED-9561-4702-B366-2C7F4C28799B}.Release|x86.ActiveCfg = Release|x64
+		{24518CD5-3851-4CAD-B7B3-BFE83AB4842B}.Debug|x64.ActiveCfg = Debug|x64
+		{24518CD5-3851-4CAD-B7B3-BFE83AB4842B}.Debug|x64.Build.0 = Debug|x64
+		{24518CD5-3851-4CAD-B7B3-BFE83AB4842B}.Debug|x86.ActiveCfg = Debug|x64
+		{24518CD5-3851-4CAD-B7B3-BFE83AB4842B}.Release|x64.ActiveCfg = Release|x64
+		{24518CD5-3851-4CAD-B7B3-BFE83AB4842B}.Release|x64.Build.0 = Release|x64
+		{24518CD5-3851-4CAD-B7B3-BFE83AB4842B}.Release|x86.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -824,9 +832,10 @@ Global
 		{4182DAD8-0536-41A4-A00B-AFE7FBA8101F} = {AF91071A-47A2-49D3-8347-D71134A00472}
 		{2EC77F3F-BAA6-485A-99D3-CCD140225DAB} = {AF91071A-47A2-49D3-8347-D71134A00472}
 		{08B230ED-9561-4702-B366-2C7F4C28799B} = {BF933D88-C186-4FEE-ACCE-EC32A7A3A624}
+		{24518CD5-3851-4CAD-B7B3-BFE83AB4842B} = {92764806-EB74-446F-AA1B-A5C8B7538F26}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {0F58A6B8-C040-4A92-9898-1E6968E55CF1}
 		Qt5Version = msvc2015_86
+		SolutionGuid = {0F58A6B8-C040-4A92-9898-1E6968E55CF1}
 	EndGlobalSection
 EndGlobal

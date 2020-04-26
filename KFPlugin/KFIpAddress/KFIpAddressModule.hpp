@@ -11,6 +11,7 @@
 
 #include "KFIpConfig.hpp"
 #include "KFIpAddressInterface.h"
+#include "KFTimer/KFTimerInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
 
 namespace KFrame
@@ -23,12 +24,13 @@ namespace KFrame
 
         // 初始化
         virtual void InitModule();
+        virtual void BeforeRun();
 
         // 加载配置
         virtual void AfterLoad();
+        virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
-
         // 获得本机局域网ip
         virtual const std::string& GetLocalIp();
 
@@ -37,10 +39,6 @@ namespace KFrame
 
         // 计算监听端口
         virtual uint32 CalcListenPort( uint32 type, uint32 port, uint64 appid );
-
-        // 查找ip地址
-        virtual const KFIpAddress* FindIpAddress( const std::string& appname, const std::string& apptype, const std::string& appid );
-        virtual void FindIpAddress( const std::string& appname, const std::string& apptype, const std::string& appid, IpAddressList& outlist );
 
         // 获得log地址
         virtual const std::string& GetLogUrl();
@@ -53,12 +51,22 @@ namespace KFrame
 
         // 获得pay地址
         virtual const std::string& GetPayUrl();
+
+        // 获得master ip
+        virtual const KFIpAddress* GetMasterIp( const std::string& appname, uint32 zoneid );
+
+        // 查询master列表
+        virtual const std::list< KFIpAddress >& GetMasterList( const std::string& appname, uint32 zoneid );
     protected:
 #if __KF_SYSTEM__ == __KF_WIN__
         std::string GetWinLocalIp();
 #else
         std::string GetLinuxLocalIp();
 #endif
+
+        // 更新masterip
+        __KF_TIMER_FUNCTION__( OnTimerUpdateMasterIp );
+
     protected:
         // 内网ip
         std::string _local_ip;

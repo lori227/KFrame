@@ -11,6 +11,7 @@
 
 #include "KFBusInterface.h"
 #include "KFBusConfig.hpp"
+#include "KFTimer/KFTimerInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFIpAddress/KFIpAddressInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"
@@ -37,12 +38,19 @@ namespace KFrame
         // 取消注册
         __KF_MESSAGE_FUNCTION__( HanldeTellUnRegisterFromServer );
 
-    protected:
-        // 查找连接列表
-        void FindConnection( IpAddressList& outlist );
+        // 连接master服务器
+        __KF_TIMER_FUNCTION__( OnTimerConnectionMaster );
 
+        // 连接master失败
+        __KF_NET_EVENT_FUNCTION__( OnClientConnectMasterFailed );
+
+    protected:
         // 判断是否需要连接
         bool IsConnection( const std::string& connectname, const std::string& connecttype, uint64 connectid );
+
+    private:
+        // 连接master失败次数
+        uint32 _connect_master_failed_count = 0u;
     };
 }
 

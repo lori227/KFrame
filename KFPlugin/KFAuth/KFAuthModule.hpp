@@ -12,9 +12,9 @@
 #include "KFAuthInterface.h"
 #include "KFChannel/KFChannelInterface.h"
 #include "KFAccount/KFAccountInterface.h"
-#include "KFDirShard/KFDirShardInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
 #include "KFHttpServer/KFHttpServerInterface.h"
+#include "KFDirAttribute/KFDirAttributeInterface.h"
 
 namespace KFrame
 {

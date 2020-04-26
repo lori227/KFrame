@@ -16,7 +16,10 @@
 		<Server AppName="log" AppType="shard" Type="1" Port="6000"/>
 
 		<!-- 认证服务器 -->
-		<Server AppName="auth" AppType="auth" Type="1" Port="7000" />
+		<Server AppName="auth" AppType="shard" Type="1" Port="7000" />
+
+		<!-- 目录服务器 -->
+		<Server AppName="dir" AppType="shard" Type="1" Port="7500" />
 
 		<!-- 邮件服务器 -->
 		<Server AppName="mail" AppType="shard" Type="1" Port="8000"/>

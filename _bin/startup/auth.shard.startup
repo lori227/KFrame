@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Setting>
+	<Includes>
+		<Include File="./startup/common/common.startup"/>
+		<Include File="./startup/common/httpserver.startup"/>
+		<Include File="./startup/common/remotelog.startup"/>
+		<Include File="./startup/common/deployclient.startup"/>
+	</Includes>
+
+	<Plugins>
+		<Plugin Name="KFRedis" Config=""/>
+		<Plugin Name="KFMongo" Config=""/>	
+		<Plugin Name="KFChannel" Config=""/>
+		<Plugin Name="KFAuth" Config=""/>	
+		<Plugin Name="KFAccount" Config=""/>	
+		<Plugin Name="KFDirAttribute" Config=""/>	
+	</Plugins>
+</Setting>
