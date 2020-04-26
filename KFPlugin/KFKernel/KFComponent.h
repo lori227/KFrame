@@ -27,7 +27,7 @@ namespace KFrame
     typedef std::function< void( KFEntity*, const KFElementResult* ) > KFLogElementFunction;
     typedef std::function< bool( KFEntity*, const KFElementResult* ) > KFElementResultFunction;
 
-    // 游戏中的组件, 负责属性回调时间
+    // 游戏中的组件, 负责属性回调事件
     class KFComponent
     {
     public:

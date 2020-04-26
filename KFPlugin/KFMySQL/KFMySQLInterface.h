@@ -11,7 +11,7 @@ namespace KFrame
         // 插入记录
         virtual bool Insert( const std::string& table, const StringMap& invalue ) = 0;
 
-        // 删除几率
+        // 删除纪录
         virtual bool Delete( const std::string& table ) = 0;
         virtual bool Delete( const std::string& table, const std::string& key ) = 0;
         virtual bool Delete( const std::string& table, const StringMap& keyvalues ) = 0;

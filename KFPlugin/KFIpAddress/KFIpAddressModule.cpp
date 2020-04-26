@@ -185,12 +185,10 @@ namespace KFrame
 
     const std::string& KFIpAddressModule::GetInteranetIp()
     {
-        static std::string _dns_url = "http://members.3322.org/dyndns/getip";
-
         if ( _interane_ip.empty() )
         {
             // 获得外网地址
-            auto interanetip = _kf_http_client->STGet( _dns_url, _invalid_string );
+            auto interanetip = _kf_http_client->STGet( KFIpConfig::Instance()->_dns_get_ip_url, _invalid_string );
             if ( interanetip.empty() )
             {
                 // 获得内网地址

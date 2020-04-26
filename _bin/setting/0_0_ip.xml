@@ -1,5 +1,8 @@
 ﻿<?xml version='1.0' encoding='utf-8' ?>
 <Config>
+	<!-- 查询外网ip的dns服务器 -->
+	<DNSServer Url="http://members.3322.org/dyndns/getip"/>
+
 	<!-- 日志服务器 -->
 	<LogServer Url="Http://127.0.0.1:6001/"/>
 

@@ -5,11 +5,12 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFIpConfig::LoadConfig( const std::string& filename, const std::string& filepath, uint32 loadmask )
     {
-        _ip_address_list.clear();
         //////////////////////////////////////////////////////////////////
         KFXml kfxml( filepath );
         auto config = kfxml.RootNode();
-
+        //////////////////////////////////////////////////////////////////
+        auto dnsnode = config.FindNode( "DNSServer" );
+        _dns_get_ip_url = dnsnode.GetString( "Url" );
         //////////////////////////////////////////////////////////////////
         auto lognode = config.FindNode( "LogServer" );
         _log_url = lognode.GetString( "Url" );
