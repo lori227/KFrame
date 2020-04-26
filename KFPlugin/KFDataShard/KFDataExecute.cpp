@@ -26,7 +26,7 @@ namespace KFrame
         InitExecute();
     }
 
-    const std::string& KFDataExecute::GetName() const
+    uint64 KFDataExecute::GetType() const
     {
         return _kf_setting->_id;
     }

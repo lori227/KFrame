@@ -6,7 +6,7 @@
 
 namespace KFrame
 {
-    class KFDatabaseSetting : public KFStrSetting
+    class KFDatabaseSetting : public KFIntSetting
     {
     public:
         // 类型
@@ -36,7 +36,7 @@ namespace KFrame
 
     public:
         // 数据库信息
-        KFHashMap< std::string, const std::string&, KFDatabaseSetting > _settings;
+        KFHashMap< uint64, uint64, KFDatabaseSetting > _settings;
     };
 }
 

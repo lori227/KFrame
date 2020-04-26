@@ -1,15 +1,20 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <Config>
-	<!-- Name 数据库迷你名字 -->
+	<!-- 数据库类型 1:redis 2:mongo 3:mysql-->
 	<!-- Open 是否打开使用 0 开放 1 关闭 -->
 	<!-- SaveFlag 保存类型 1 在线更新保存 2 离线保存(数据落地) -->
 	<!-- Sort 读取数据的优先级 -->
 	<!-- CacheTime 缓存保存时间 只对缓存数据库有效 -->
 
 	<Save>
-		<Database Name="redis" Open="1" SaveFlag="3" Sort="1" CacheTime="2592000‬"/>
-		<Database Name="mongo" Open="0" SaveFlag="2" Sort="2" CacheTime="0"/>
-		<Database Name="mysql" Open="0" SaveFlag="2" Sort="3" CacheTime="0"/>
+		<!-- redis -->
+		<Database Type="1" Open="1" SaveFlag="3" Sort="1" CacheTime="2592000‬"/>
+
+		<!-- mongo -->
+		<Database Type="2" Open="0" SaveFlag="2" Sort="2" CacheTime="0"/>
+		
+		<!-- mysql -->
+		<Database Type="3" Open="0" SaveFlag="2" Sort="3" CacheTime="0"/>
 	</Save>	
 </Config>
 

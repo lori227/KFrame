@@ -40,26 +40,27 @@ namespace KFrame
                 __LOG_WARN__( "dataexecute=[{}] sort=[{}] already exist", kfsetting->_id, kfsetting->_sort );
             }
 
-            if ( kfsetting->_id == "redis" )
+            switch ( kfsetting->_id )
             {
+            case KFMsg::Redis:
                 kfexecute = __KF_NEW__( KFRedisDataExecute );
-            }
-            else if ( kfsetting->_id == "mongo" )
-            {
+                break;
+            case KFMsg::Mongo:
                 kfexecute = __KF_NEW__( KFMongoDataExecute );
-            }
-            else if ( kfsetting->_id == "mysql" )
-            {
+                break;
+            case KFMsg::MySQL:
                 kfexecute = __KF_NEW__( KFMySQLDataExecute );
-            }
-            else
-            {
-                __LOG_ERROR__( "dataexecute=[{}] not support" );
-                continue;
+                break;
+            default:
+                __LOG_ERROR__( "dataexecute=[{}] not support", kfsetting->_id );
+                break;
             }
 
-            kfexecute->InitExecute( kfsetting );
-            _data_execute.Insert( sort, kfexecute );
+            if ( kfexecute != nullptr )
+            {
+                kfexecute->InitExecute( kfsetting );
+                _data_execute.Insert( sort, kfexecute );
+            }
         }
     }
 
@@ -150,12 +151,12 @@ namespace KFrame
             auto ok = KFProto::Parse( pbobject, kfresult->_value, KFCompressEnum::Compress );
             if ( !ok )
             {
-                __LOG_ERROR__( "database=[{}] player[{}:{}] parse failed", dataexecute->GetName(), zoneid, playerid );
+                __LOG_ERROR__( "database=[{}] player[{}:{}] parse failed", dataexecute->GetType(), zoneid, playerid );
                 continue;
             }
             else
             {
-                __LOG_INFO__( "database=[{}] player[{}:{}] load ok", dataexecute->GetName(), zoneid, playerid );
+                __LOG_INFO__( "database=[{}] player[{}:{}] load ok", dataexecute->GetType(), zoneid, playerid );
                 return true;
             }
         }

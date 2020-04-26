@@ -40,8 +40,8 @@ namespace KFrame
         // 初始化
         void InitExecute( const KFDatabaseSetting* kfsetting );
 
-        // 获得名字
-        const std::string& GetName() const;
+        // 获得类型
+        uint64 GetType() const;
 
         // 逻辑执行
         void RunDataKeeper();

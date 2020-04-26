@@ -14,10 +14,10 @@ namespace KFrame
         auto databasenode = savenode.FindNode( "Database" );
         while ( databasenode.IsValid() )
         {
-            auto name = databasenode.GetString( "Name" );
-            auto kfsetting = _settings.Create( name );
+            auto type = databasenode.GetUInt32( "Type" );
+            auto kfsetting = _settings.Create( type );
 
-            kfsetting->_id = name;
+            kfsetting->_id = type;
             kfsetting->_save_flag = databasenode.GetUInt32( "SaveFlag" );
             kfsetting->_sort = databasenode.GetUInt32( "Sort" );
             kfsetting->_is_open = databasenode.GetUInt32( "Open" );
