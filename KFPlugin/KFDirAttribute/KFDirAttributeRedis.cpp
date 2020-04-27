@@ -87,7 +87,7 @@ namespace KFrame
             return zonedata;
         }
 
-        auto loginzoneid = zonedata[ __STRING__( loginzoneid ) ];
+        auto loginzoneid = kfzonedata->_value[ __STRING__( loginzoneid ) ];
         auto kfgatedata = redisdriver->QueryMap( "hgetall {}:{}", __STRING__( gate ), loginzoneid );
         if ( kfgatedata->_value.empty() )
         {
