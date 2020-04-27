@@ -1,19 +1,21 @@
-<?xml version='1.0' encoding='utf-8' ?>
+﻿<?xml version='1.0' encoding='utf-8' ?>
 <Config>
 
 	<!--Zone-->
 	<!--Id 游戏区id, -->
-	<!--LogicId 逻辑区id, 0 不同区不同账号  1 不同区相同账号-->
+	<!--DataId 数据库的小区id, 0 本小区  不为0则为指定id -->
+	<!--LoginId 登录的小区id, 0 本小区  不为0则为指定id -->
 	<!--Name 游戏服名字-->
+	<!--Recommend 推荐服务器 -->
 
 	<!--默认-->
-	<Default LogicId="1" Name="测试服{}区"/>
+	<Default LoginId="1" DataId="1" Name="测试服{}区"/>
 
 	<Zones Recommend="1">
 		<!-- 内部调试 -->
 		<!--
-			<Zone Id="1" LogicId="1" Name="公共封测服"/>
-			<Zone Id="2" LogicId="1" Name="鹏博封测服"/>
+			<Zone Id="1" LoginId="1" DataId="1" Name="公共封测服"/>
+			<Zone Id="2" LoginId="2" DataId="1" Name="鹏博封测服"/>
 		-->
 	</Zones>
 </Config>

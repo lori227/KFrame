@@ -33,7 +33,7 @@ namespace KFrame
     bool KFDirAttributeModule::ZoneUpdate( KFJson& zonedata )
     {
         auto appid = __JSON_GET_UINT64__( zonedata, __STRING__( appid ) );
-        auto zoneid = __JSON_GET_UINT32__( zonedata, __STRING__( zoneid ) );
+        auto zoneid = __JSON_GET_UINT32__( zonedata, __STRING__( loginzoneid ) );
         auto count = __JSON_GET_UINT32__( zonedata, __STRING__( count ) );
         auto ip = __JSON_GET_STRING__( zonedata, __STRING__( ip ) );
         auto port = __JSON_GET_UINT32__( zonedata, __STRING__( port ) );

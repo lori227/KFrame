@@ -6,39 +6,17 @@ namespace KFrame
 
     bool KFDirAttributeMongo::ZoneRegister( uint32 zoneid, KFJson& zonedata )
     {
-        StringMap values;
-        __JSON_TO_MAP__( zonedata, values );
-
         // 先保存小区基本信息
         auto mongodriver = __DIR_MONGO_DRIVER__;
 
         KFDBValue dbvalue;
-        for ( auto& iter : values )
-        {
-            dbvalue.AddValue( iter.first, iter.second );
-        }
-
-        if ( !mongodriver->Insert( __STRING__( zone ), zoneid, dbvalue ) )
-        {
-            return false;
-        }
-
-        if ( !mongodriver->Insert( __STRING__( zonelist ), zoneid, __STRING__( id ), zoneid ) )
-        {
-            return false;
-        }
-
-        return true;
+        __JSON_TO_DBVALUE__( zonedata, dbvalue );
+        return mongodriver->Insert( __STRING__( zone ), zoneid, dbvalue );
     }
 
     bool KFDirAttributeMongo::ZoneUpdate( uint64 appid, uint32 zoneid, uint32 count, const std::string& ip, uint32 port, uint32 expiretime )
     {
         auto mongodriver = __DIR_MONGO_DRIVER__;
-
-        if ( !mongodriver->Insert( __STRING__( zonelist ), zoneid, __STRING__( count ), count ) )
-        {
-            return false;
-        }
 
         KFDBValue dbvalue;
         dbvalue.AddValue( __STRING__( appid ), appid );
@@ -46,7 +24,6 @@ namespace KFrame
         dbvalue.AddValue( __STRING__( port ), port );
         dbvalue.AddValue( __STRING__( appid ), appid );
         dbvalue.AddValue( MongoKeyword::_expire, expiretime );
-
         return mongodriver->Insert( __STRING__( gate ), zoneid, dbvalue );
     }
 
@@ -56,10 +33,10 @@ namespace KFrame
         auto mongodriver = __DIR_MONGO_DRIVER__;
 
         KFMongoSelector kfselector;
-        auto kfresult = mongodriver->QueryListRecord( __STRING__( zonelist ), kfselector );
+        auto kfresult = mongodriver->QueryListRecord( __STRING__( zone ), kfselector );
         for ( auto& dbvalue : kfresult->_value )
         {
-            auto zoneid = dbvalue.FindValue( __STRING__( id ) );
+            auto zoneid = dbvalue.FindValue( __STRING__( zoneid ) );
             auto zonedata = QueryZoneData( zoneid );
             if ( !zonedata.empty() )
             {
@@ -73,16 +50,16 @@ namespace KFrame
     StringMap KFDirAttributeMongo::QueryZoneIp( uint32 zoneid )
     {
         StringMap values;
-
         auto mongodriver = __DIR_MONGO_DRIVER__;
-        auto kfresult = mongodriver->QueryRecord( __STRING__( gate ), zoneid );
-        if ( !kfresult->IsOk() )
+
+        auto kfloginid = mongodriver->QueryUInt64( __STRING__( zone ), zoneid, __STRING__( loginzoneid ) );
+        if ( kfloginid->_value == 0u )
         {
             return values;
         }
 
-        __DBVALUE_TO_MAP__( kfresult->_value, values );
-
+        auto kfipdata = mongodriver->QueryRecord( __STRING__( gate ), kfloginid->_value );
+        __DBVALUE_TO_MAP__( kfipdata->_value, values );
         return values;
     }
 
@@ -91,21 +68,21 @@ namespace KFrame
         StringMap zonedata;
         auto mongodriver = __DIR_MONGO_DRIVER__;
 
-        auto kfgatedata = mongodriver->QueryRecord( __STRING__( gate ), zoneid );
-        if ( !kfgatedata->IsOk() )
-        {
-            return zonedata;
-        }
-
         auto kfzonedata = mongodriver->QueryRecord( __STRING__( zone ), zoneid );
-        if ( !kfzonedata->IsOk() )
+        if ( kfzonedata->_value.IsEmpty() )
         {
             return zonedata;
         }
 
-        __DBVALUE_TO_MAP__( kfgatedata->_value, zonedata );
-        __DBVALUE_TO_MAP__( kfzonedata->_value, zonedata );
+        auto loginzoneid = kfzonedata->_value.FindValue( __STRING__( loginzoneid ) );
+        auto kfgatedata = mongodriver->QueryRecord( __STRING__( gate ), loginzoneid );
+        if ( kfgatedata->_value.IsEmpty() )
+        {
+            return zonedata;
+        }
 
+        __DBVALUE_TO_MAP__( kfzonedata->_value, zonedata );
+        __DBVALUE_TO_MAP__( kfgatedata->_value, zonedata );
         return zonedata;
     }
 
@@ -113,6 +90,7 @@ namespace KFrame
     {
         auto mongodriver = __DIR_MONGO_DRIVER__;
 
+        // 需要mongo实现+操作
         auto kfresult = mongodriver->QueryRecord( __STRING__( zonelist ), zoneid );
         if ( !kfresult->IsOk() )
         {
@@ -121,7 +99,6 @@ namespace KFrame
 
         auto zonecount = kfresult->_value.FindValue( __STRING__( count ) );
         zonecount += count;
-
         return mongodriver->Insert( __STRING__( zonelist ), zoneid, __STRING__( count ), zonecount );
     }
 
@@ -145,6 +122,8 @@ namespace KFrame
         {
             return zoneid;
         }
+
+        // 实现按字段排序
 
         // 找一个人数最少的区
         auto mongodriver = __DIR_MONGO_DRIVER__;

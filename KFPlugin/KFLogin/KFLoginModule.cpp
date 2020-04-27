@@ -87,7 +87,7 @@ namespace KFrame
         __JSON_SET_VALUE__( sendjson, __STRING__( sessionid ), sessionid );
         __JSON_SET_VALUE__( sendjson, __STRING__( accountid ), kfmsg.accountid() );
         __JSON_SET_VALUE__( sendjson, __STRING__( zoneid ), kfzonesetting->_id );
-        __JSON_SET_VALUE__( sendjson, __STRING__( logiczoneid ), kfzonesetting->_logic_id );
+        __JSON_SET_VALUE__( sendjson, __STRING__( datazoneid ), kfzonesetting->_data_zone_id );
         _kf_http_client->MTGet( _url, sendjson, this, &KFLoginModule::OnHttpAuthLoginVerifyCallBack );
     }
 

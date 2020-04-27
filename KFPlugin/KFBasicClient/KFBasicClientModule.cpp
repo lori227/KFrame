@@ -137,7 +137,7 @@ namespace KFrame
         // 发送到basic
         KFMsg::S2SQueryAttributeToBasicReq req;
         req.set_name( kfmsg.name() );
-        req.set_zoneid( KFZoneConfig::Instance()->ZoneSetting()->_logic_id );
+        req.set_zoneid( KFZoneConfig::Instance()->ZoneSetting()->_data_zone_id );
         _kf_route->SendToRand( playerid, __ROUTE_NAME__, KFMsg::S2S_QUERY_ATTRIBUTE_TO_BASIC_REQ, &req );
     }
 
@@ -221,7 +221,7 @@ namespace KFrame
         req.set_oldname( name );
         req.set_newname( kfmsg.name() );
         req.set_costdata( _invalid_string );
-        req.set_zoneid( KFZoneConfig::Instance()->ZoneSetting()->_logic_id );
+        req.set_zoneid( KFGlobal::Instance()->STUuidZoneId( __STRING__( playerid ), playerid ) );
         auto ok = _kf_route->SendToRand( playerid, __ROUTE_NAME__, KFMsg::S2S_SET_PLAYER_NAME_TO_BASIC_REQ, &req );
         if ( !ok )
         {

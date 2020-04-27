@@ -12,7 +12,8 @@ namespace KFrame
 
         auto defaultnode = config.FindNode( "Default" );
         _zone_template._name = defaultnode.GetString( "Name" );
-        _zone_template._logic_id = defaultnode.GetUInt32( "LogicId" );
+        _zone_template._login_zone_id = defaultnode.GetUInt32( "LoginId" );
+        _zone_template._data_zone_id = defaultnode.GetUInt32( "DataId" );
 
         // 本小区属性
         _zone = _zone_template;
@@ -25,20 +26,23 @@ namespace KFrame
         {
             auto id = xmlnode.GetUInt32( "Id" );
             auto name = xmlnode.GetString( "Name" );
-            auto logicid = xmlnode.GetUInt32( "LogicId" );
+            auto loginid = xmlnode.GetUInt32( "LoginId" );
+            auto dataid = xmlnode.GetUInt32( "DataId" );
 
             // 小区列表
             auto zone = _zone_list.Create( id );
             zone->_id = id;
             zone->_name = name;
-            zone->_logic_id = logicid;
+            zone->_login_zone_id = loginid;
+            zone->_data_zone_id = dataid;
 
             // 本小区
             if ( KFGlobal::Instance()->_app_id->GetZoneId() == id )
             {
                 _zone._id = id;
                 _zone._name = name;
-                _zone._logic_id = logicid;
+                _zone._login_zone_id = loginid;
+                _zone._data_zone_id = dataid;
             }
 
             xmlnode.NextNode();
@@ -60,10 +64,16 @@ namespace KFrame
         // 名字
         zone->_name = __FORMAT__( zone->_name, zone->_id );
 
-        // 逻辑id
-        if ( zone->_logic_id == _invalid_int )
+        // 登录小区id
+        if ( zone->_login_zone_id == _invalid_int )
         {
-            zone->_logic_id = ( uint32 )zone->_id;
+            zone->_login_zone_id = ( uint32 )zone->_id;
+        }
+
+        // 数据小区id
+        if ( zone->_login_zone_id == _invalid_int )
+        {
+            zone->_data_zone_id = ( uint32 )zone->_id;
         }
     }
 

@@ -89,8 +89,8 @@ namespace KFrame
         }
 
         // 查询玩家角色
-        auto logiczoneid = __JSON_GET_UINT32__( request, __STRING__( logiczoneid ) );
-        auto playerdata = _kf_account->QueryCreatePlayer( accountid, logiczoneid );
+        auto datazoneid = __JSON_GET_UINT32__( request, __STRING__( datazoneid ) );
+        auto playerdata = _kf_account->QueryCreatePlayer( accountid, datazoneid );
         auto playerid = std::get<0>( playerdata );
         if ( playerid == _invalid_int )
         {
@@ -98,15 +98,15 @@ namespace KFrame
         }
 
         // 新创建玩家, 增加改小区的注册人数
+        auto zoneid = __JSON_GET_UINT32__( request, __STRING__( zoneid ) );
         auto isnew = std::get<1>( playerdata );
         if ( isnew )
         {
-            _kf_dir_attribute->ZoneBalance( logiczoneid, 1u );
+            _kf_dir_attribute->ZoneBalance( zoneid, 1u );
         }
 
         // 保存登录ip
         auto loginip = __JSON_GET_STRING__( request, __STRING__( ip ) );
-        auto zoneid = __JSON_GET_UINT32__( request, __STRING__( zoneid ) );
         _kf_account->SaveLoginData( accountid, ip, zoneid );
 
         // 获得账号和渠道 小区信息

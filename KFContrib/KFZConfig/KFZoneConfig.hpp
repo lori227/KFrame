@@ -12,8 +12,11 @@ namespace KFrame
         // 游戏服名字
         std::string _name;
 
-        // 逻辑id
-        uint32 _logic_id = 0u;
+        // 登录指定id
+        uint32 _login_zone_id = 0u;
+
+        // 数据指定id
+        uint32 _data_zone_id = 0u;
     };
 
     /////////////////////////////////////////////////////////////////////////////////

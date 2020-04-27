@@ -20,7 +20,7 @@ namespace KFrame
 
         __JSON_OBJECT_DOCUMENT__( kfjson );
         __JSON_SET_VALUE__( kfjson, __STRING__( appid ), appid );
-        __JSON_SET_VALUE__( kfjson, __STRING__( zoneid ), kfsetting->_id );
+        __JSON_SET_VALUE__( kfjson, __STRING__( loginzoneid ), kfsetting->_login_zone_id );
         __JSON_SET_VALUE__( kfjson, __STRING__( ip ), ip );
         __JSON_SET_VALUE__( kfjson, __STRING__( port ), port );
         __JSON_SET_VALUE__( kfjson, __STRING__( count ), count );
@@ -45,8 +45,9 @@ namespace KFrame
 
             // 注册小区信息
             __JSON_OBJECT_DOCUMENT__( kfjson );
-            __JSON_SET_VALUE__( kfjson, __STRING__( zoneid ), kfsetting->_id );
             __JSON_SET_VALUE__( kfjson, __STRING__( name ), kfsetting->_name );
+            __JSON_SET_VALUE__( kfjson, __STRING__( zoneid ), kfsetting->_id );
+            __JSON_SET_VALUE__( kfjson, __STRING__( loginzoneid ), kfsetting->_login_zone_id );
 
             auto recvdata = _kf_http_client->STGet( _register_url, kfjson );
             __JSON_PARSE_STRING__( kfresult, recvdata );

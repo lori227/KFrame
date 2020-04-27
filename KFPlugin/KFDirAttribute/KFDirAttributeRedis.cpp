@@ -63,29 +63,39 @@ namespace KFrame
 
     StringMap KFDirAttributeRedis::QueryZoneIp( uint32 zoneid )
     {
+        StringMap zonedata;
         auto redisdriver = __DIR_REDIS_DRIVER__;
-        auto kfresult = redisdriver->QueryMap( "hgetall {}:{}", __STRING__( gate ), zoneid );
-        return kfresult->_value;
+
+        auto kfqueryloginid = redisdriver->QueryUInt64( "hget {}:{} {}", __STRING__( zone ), zoneid );
+        if ( kfqueryloginid->_value == 0u )
+        {
+            return zonedata;
+        }
+
+        auto kfresult = redisdriver->QueryMap( "hgetall {}:{}", __STRING__( gate ), kfqueryloginid->_value );
+        zonedata.swap( kfresult->_value );
+        return zonedata;
     }
 
     StringMap KFDirAttributeRedis::QueryZoneData( uint32 zoneid )
     {
         StringMap zonedata;
         auto redisdriver = __DIR_REDIS_DRIVER__;
-        auto kfgatedata = redisdriver->QueryMap( "hgetall {}:{}", __STRING__( gate ), zoneid );
-        if ( kfgatedata->_value.empty() )
-        {
-            return zonedata;
-        }
-
         auto kfzonedata = redisdriver->QueryMap( "hgetall {}:{}", __STRING__( zone ), zoneid );
         if ( kfzonedata->_value.empty() )
         {
             return zonedata;
         }
 
-        zonedata = kfzonedata->_value;
-        for ( auto& iter : kfgatedata->_value )
+        auto loginzoneid = zonedata[ __STRING__( loginzoneid ) ];
+        auto kfgatedata = redisdriver->QueryMap( "hgetall {}:{}", __STRING__( gate ), loginzoneid );
+        if ( kfgatedata->_value.empty() )
+        {
+            return zonedata;
+        }
+
+        zonedata = kfgatedata->_value;
+        for ( auto& iter : kfzonedata->_value )
         {
             zonedata[ iter.first ] = iter.second;
         }
@@ -132,7 +142,13 @@ namespace KFrame
 
         for ( auto& strid : zonelist->_value )
         {
-            auto kfqueryip = redisdriver->QueryString( "hget {}:{} {}", __STRING__( gate ), strid, __STRING__( ip ) );
+            auto kfloginzoneid = redisdriver->QueryUInt64( "hget {}:{} {}", __STRING__( zone ), strid, __STRING__( loginzoneid ) );
+            if ( kfloginzoneid->_value == 0u )
+            {
+                continue;
+            }
+
+            auto kfqueryip = redisdriver->QueryString( "hget {}:{} {}", __STRING__( gate ), kfloginzoneid->_value, __STRING__( ip ) );
             if ( !kfqueryip->_value.empty() )
             {
                 return __TO_UINT32__( strid );

@@ -42,7 +42,8 @@ namespace KFrame
         __STRING_DEFINE__( value );
         __STRING_DEFINE__( zone );
         __STRING_DEFINE__( zoneid );
-        __STRING_DEFINE__( logiczoneid );
+        __STRING_DEFINE__( loginzoneid );
+        __STRING_DEFINE__( datazoneid );
         __STRING_DEFINE__( zonebalance );
         __STRING_DEFINE__( logurl );
         __STRING_DEFINE__( scheduletime );
