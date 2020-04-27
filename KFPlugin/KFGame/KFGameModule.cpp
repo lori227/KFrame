@@ -5,13 +5,13 @@ namespace KFrame
 {
     void KFGameModule::BeforeRun()
     {
-        __REGISTER_SERVER_DISCOVER__( &KFGameModule::OnServerDiscoverGate );
-        __REGISTER_SERVER_LOST__( &KFGameModule::OnServerLostGate );
-        __REGISTER_CLIENT_LOST__( &KFGameModule::OnClientLostWorld );
-        __REGISTER_CLIENT_CONNECTION__( &KFGameModule::OnClientConnectionWorld );
+        __REGISTER_TCP_SERVER_DISCOVER__( &KFGameModule::OnServerDiscoverGate );
+        __REGISTER_TCP_SERVER_LOST__( &KFGameModule::OnServerLostGate );
+        __REGISTER_TCP_CLIENT_LOST__( &KFGameModule::OnClientLostWorld );
+        __REGISTER_TCP_CLIENT_CONNECTION__( &KFGameModule::OnClientConnectionWorld );
 
         __REGISTER_ROUTE_MESSAGE_FUNCTION__( &KFGameModule::TranspondToPlayer );
-        __REGISTER_CLIENT_TRANSPOND__( &KFGameModule::TranspondToPlayer );
+        __REGISTER_TCP_CLIENT_TRANSPOND__( &KFGameModule::TranspondToPlayer );
 
         _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
         _kf_component->RegisterEntitySaveFunction( this, &KFGameModule::SavePlayer );
@@ -40,12 +40,12 @@ namespace KFrame
 
     void KFGameModule::BeforeShut()
     {
-        __UN_SERVER_DISCOVER__();
-        __UN_SERVER_LOST__();
-        __UN_CLIENT_LOST__();
+        __UN_TCP_SERVER_DISCOVER__();
+        __UN_TCP_SERVER_LOST__();
+        __UN_TCP_CLIENT_LOST__();
         __UN_CLIENT_CONNECTION__();
         __UN_ROUTE_MESSAGE_FUNCTION__();
-        __UN_CLIENT_TRANSPOND__();
+        __UN_TCP_CLIENT_TRANSPOND__();
 
         __UN_ENTER_PLAYER__();
         __UN_LEAVE_PLAYER__();

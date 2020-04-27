@@ -6,8 +6,8 @@ namespace KFrame
 {
     void KFDeployClientModule::BeforeRun()
     {
-        __REGISTER_CLIENT_CONNECTION__( &KFDeployClientModule::OnClientConnectAgent );
-        __REGISTER_CLIENT_LOST__( &KFDeployClientModule::OnClientLostAgent );
+        __REGISTER_TCP_CLIENT_CONNECTION__( &KFDeployClientModule::OnClientConnectAgent );
+        __REGISTER_TCP_CLIENT_LOST__( &KFDeployClientModule::OnClientLostAgent );
         ////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_COMMAND_TO_CLIENT_REQ, &KFDeployClientModule::HandleDeployCommandToClientReq );
     }
@@ -16,7 +16,7 @@ namespace KFrame
     {
         __UN_TIMER_0__();
         __UN_CLIENT_CONNECTION__();
-        __UN_CLIENT_LOST__();
+        __UN_TCP_CLIENT_LOST__();
         /////////////////////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::S2S_DEPLOY_COMMAND_TO_CLIENT_REQ );
     }

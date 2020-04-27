@@ -138,34 +138,34 @@ namespace KFrame
     __KF_INTERFACE__( _kf_tcp_client, KFTcpClientInterface );
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#define __REGISTER_CLIENT_CONNECTION__( function ) \
+#define __REGISTER_TCP_CLIENT_CONNECTION__( function ) \
     _kf_tcp_client->RegisterConnectionFunction( this, function )
 
 #define __UN_CLIENT_CONNECTION__() \
     _kf_tcp_client->UnRegisterConnectionFunction( this )
 
-#define __REGISTER_CLIENT_LOST__( function ) \
+#define __REGISTER_TCP_CLIENT_LOST__( function ) \
     _kf_tcp_client->RegisterLostFunction( this, function )
 
-#define __UN_CLIENT_LOST__() \
+#define __UN_TCP_CLIENT_LOST__() \
     _kf_tcp_client->UnRegisterLostFunction( this )
 
-#define __REGISTER_CLIENT_SHUTDOWN__( function ) \
+#define __REGISTER_TCP_CLIENT_SHUTDOWN__( function ) \
     _kf_tcp_client->RegisterShutdownFunction( this, function )
 
-#define __UN_CLIENT_SHUTDOWN__() \
+#define __UN_TCP_CLIENT_SHUTDOWN__() \
     _kf_tcp_client->UnRegisterShutdownFunction( this )
 
-#define __REGISTER_CLIENT_FAILED__( function ) \
+#define __REGISTER_TCP_CLIENT_FAILED__( function ) \
     _kf_tcp_client->RegisterFailedFunction( this, function )
 
-#define __UN_CLIENT_FAILED__() \
+#define __UN_TCP_CLIENT_FAILED__() \
     _kf_tcp_client->UnRegisterFailedFunction( this )
 
-#define __REGISTER_CLIENT_TRANSPOND__( function ) \
+#define __REGISTER_TCP_CLIENT_TRANSPOND__( function ) \
     _kf_tcp_client->RegisterTranspondFunction( this, function )
 
-#define __UN_CLIENT_TRANSPOND__() \
+#define __UN_TCP_CLIENT_TRANSPOND__() \
     _kf_tcp_client->UnRegisterTranspondFunction( this )
 }
 

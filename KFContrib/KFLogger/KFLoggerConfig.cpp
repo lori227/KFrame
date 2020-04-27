@@ -42,7 +42,7 @@ namespace KFrame
 #else
                 auto modenode = node.FindNode( "Release" );
 #endif
-                kfsetting->_level = modenode.GetBoolen( "Level", true );
+                kfsetting->_level = modenode.GetUInt32( "Level", true );
                 kfsetting->_console = modenode.GetBoolen( "Console", true );
                 kfsetting->_pattern = modenode.GetString( "Pattern", true );
             }

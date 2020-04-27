@@ -5,7 +5,7 @@ namespace KFrame
 {
     void KFLogClientModule::BeforeRun()
     {
-        __REGISTER_CLIENT_CONNECTION__( &KFLogClientModule::OnClientConnectLogServer );
+        __REGISTER_TCP_CLIENT_CONNECTION__( &KFLogClientModule::OnClientConnectLogServer );
     }
 
     void KFLogClientModule::BeforeShut()

@@ -5,8 +5,8 @@ namespace KFrame
 {
     void KFLoginModule::BeforeRun()
     {
-        __REGISTER_CLIENT_LOST__( &KFLoginModule::OnClientLostWorld );
-        __REGISTER_CLIENT_CONNECTION__( &KFLoginModule::OnClientConnectionWorld );
+        __REGISTER_TCP_CLIENT_LOST__( &KFLoginModule::OnClientLostWorld );
+        __REGISTER_TCP_CLIENT_CONNECTION__( &KFLoginModule::OnClientConnectionWorld );
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_LOGIN_TO_LOGIN_REQ, &KFLoginModule::HandleLoginToLoginReq );
@@ -15,7 +15,7 @@ namespace KFrame
 
     void KFLoginModule::BeforeShut()
     {
-        __UN_CLIENT_LOST__();
+        __UN_TCP_CLIENT_LOST__();
         __UN_CLIENT_CONNECTION__();
 
         //////////////////////////////////////////////////////////////////////////////////////

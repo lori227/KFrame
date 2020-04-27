@@ -5,8 +5,8 @@ namespace KFrame
 {
     void KFRouteProxyModule::BeforeRun()
     {
-        __REGISTER_SERVER_LOST__( &KFRouteProxyModule::OnServerLostClient );
-        __REGISTER_CLIENT_CONNECTION__( &KFRouteProxyModule::OnClientConnectServer );
+        __REGISTER_TCP_SERVER_LOST__( &KFRouteProxyModule::OnServerLostClient );
+        __REGISTER_TCP_CLIENT_CONNECTION__( &KFRouteProxyModule::OnClientConnectServer );
 
         //////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_ROUTE_SYNC_OBJECT_TO_PROXY_REQ, &KFRouteProxyModule::HandleRouteSyncObjectToProxyReq );
@@ -18,7 +18,7 @@ namespace KFrame
 
     void KFRouteProxyModule::BeforeShut()
     {
-        __UN_SERVER_LOST__();
+        __UN_TCP_SERVER_LOST__();
         __UN_CLIENT_CONNECTION__();
 
         //////////////////////////////////////////////////////////////////////////////////////////////////

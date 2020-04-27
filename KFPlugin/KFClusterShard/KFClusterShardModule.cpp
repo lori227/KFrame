@@ -5,7 +5,7 @@ namespace KFrame
 {
     void KFClusterShardModule::BeforeRun()
     {
-        __REGISTER_SERVER_LOST__( &KFClusterShardModule::OnServerLostHandle );
+        __REGISTER_TCP_SERVER_LOST__( &KFClusterShardModule::OnServerLostHandle );
         //////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_CLIENT_DISCOVER_TO_SHARD_REQ, &KFClusterShardModule::HandleClusterClientDiscoverToShardReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_CLIENT_LOST_TO_SHARD_REQ, &KFClusterShardModule::HandleClusterClientLostToShardReq );
@@ -13,7 +13,7 @@ namespace KFrame
 
     void KFClusterShardModule::BeforeShut()
     {
-        __UN_SERVER_LOST__();
+        __UN_TCP_SERVER_LOST__();
         //////////////////////////////////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::S2S_CLUSTER_CLIENT_DISCOVER_TO_SHARD_REQ );
         __UN_MESSAGE__( KFMsg::S2S_CLUSTER_CLIENT_LOST_TO_SHARD_REQ );

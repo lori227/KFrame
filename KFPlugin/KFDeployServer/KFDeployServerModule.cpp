@@ -4,7 +4,7 @@ namespace KFrame
 {
     void KFDeployServerModule::BeforeRun()
     {
-        __REGISTER_SERVER_LOST__( &KFDeployServerModule::OnServerLostClient );
+        __REGISTER_TCP_SERVER_LOST__( &KFDeployServerModule::OnServerLostClient );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_HTTP__( __STRING__( deploy ), true, &KFDeployServerModule::HandleDeployCommand );
 
@@ -22,7 +22,7 @@ namespace KFrame
     void KFDeployServerModule::ShutDown()
     {
         __UN_SCHEDULE__();
-        __UN_SERVER_LOST__();
+        __UN_TCP_SERVER_LOST__();
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         __UN_HTTP__( __STRING__( deploy ) );
         //////////////////////////////////////////////////////////////////////////////////////////////////////

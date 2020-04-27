@@ -5,7 +5,7 @@ namespace KFrame
     void KFWorldModule::BeforeRun()
     {
         __LOOP_TIMER_0__( 10000, 5000, &KFWorldModule::OnTimerZoneRegister );
-        __REGISTER_SERVER_LOST__( &KFWorldModule::OnServerLostGame );
+        __REGISTER_TCP_SERVER_LOST__( &KFWorldModule::OnServerLostGame );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_ADD_GATE_TO_WORLD_REQ, &KFWorldModule::HandleAddGateToWorldReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_REMOVE_GATE_TO_WORLD_REQ, &KFWorldModule::HandleRemoveGateToWorldReq );
@@ -23,7 +23,7 @@ namespace KFrame
     void KFWorldModule::BeforeShut()
     {
         __UN_TIMER_0__();
-        __UN_SERVER_LOST__();
+        __UN_TCP_SERVER_LOST__();
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::S2S_ADD_GATE_TO_WORLD_REQ );
         __UN_MESSAGE__( KFMsg::S2S_REMOVE_GATE_TO_WORLD_REQ );

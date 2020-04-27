@@ -14,8 +14,8 @@ namespace KFrame
 
     void KFClusterClientModule::BeforeRun()
     {
-        __REGISTER_CLIENT_LOST__( &KFClusterClientModule::OnClientLostServer );
-        __REGISTER_CLIENT_CONNECTION__( &KFClusterClientModule::OnClientConnectionServer );
+        __REGISTER_TCP_CLIENT_LOST__( &KFClusterClientModule::OnClientLostServer );
+        __REGISTER_TCP_CLIENT_CONNECTION__( &KFClusterClientModule::OnClientConnectionServer );
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_AUTH_TO_CLIENT_ACK, &KFClusterClientModule::HandleClusterAuthToClientAck );
@@ -25,7 +25,7 @@ namespace KFrame
 
     void KFClusterClientModule::BeforeShut()
     {
-        __UN_CLIENT_LOST__();
+        __UN_TCP_CLIENT_LOST__();
         __UN_CLIENT_CONNECTION__();
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::S2S_CLUSTER_AUTH_TO_CLIENT_ACK );

@@ -24,8 +24,8 @@ namespace KFrame
         __LOOP_TIMER_1__( ++timerid, 5000, 1000, &KFDeployAgentModule::OnTimerQueryAgentData );
         __LOOP_TIMER_1__( ++timerid, 30000, 100, &KFDeployAgentModule::OnTimerCheckHeartbeat );
 
-        __REGISTER_SERVER_DISCOVER__( &KFDeployAgentModule::OnServerDiscoverClient );
-        __REGISTER_CLIENT_CONNECTION__( &KFDeployAgentModule::OnClientConnectServer );
+        __REGISTER_TCP_SERVER_DISCOVER__( &KFDeployAgentModule::OnServerDiscoverClient );
+        __REGISTER_TCP_CLIENT_CONNECTION__( &KFDeployAgentModule::OnClientConnectServer );
         ////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_COMMAND_TO_AGENT_REQ, &KFDeployAgentModule::HandleDeployCommandReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_HEARTBEAT_TO_AGENT_REQ, &KFDeployAgentModule::HandleClientHeartbeatReq );
@@ -35,7 +35,7 @@ namespace KFrame
     {
         __UN_TIMER_0__();
 
-        __UN_SERVER_DISCOVER__();
+        __UN_TCP_SERVER_DISCOVER__();
         __UN_CLIENT_CONNECTION__();
         //////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::S2S_DEPLOY_COMMAND_TO_AGENT_REQ );

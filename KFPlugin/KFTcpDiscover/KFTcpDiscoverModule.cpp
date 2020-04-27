@@ -5,9 +5,9 @@ namespace KFrame
 {
     void KFTcpDiscoverModule::BeforeRun()
     {
-        __REGISTER_SERVER_DISCOVER__( &KFTcpDiscoverModule::OnServerDiscoverClient );
-        __REGISTER_SERVER_LOST__( &KFTcpDiscoverModule::OnServerLostClient );
-        __REGISTER_CLIENT_CONNECTION__( &KFTcpDiscoverModule::OnClientConnectServer );
+        __REGISTER_TCP_SERVER_DISCOVER__( &KFTcpDiscoverModule::OnServerDiscoverClient );
+        __REGISTER_TCP_SERVER_LOST__( &KFTcpDiscoverModule::OnServerLostClient );
+        __REGISTER_TCP_CLIENT_CONNECTION__( &KFTcpDiscoverModule::OnClientConnectServer );
         //////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_TELL_DISCOVER_SERVER_TO_MASTER, &KFTcpDiscoverModule::HandleTellDiscoverServerToMaster );
         __REGISTER_MESSAGE__( KFMsg::S2S_TELL_LOST_SERVER_TO_MASTER, &KFTcpDiscoverModule::HandleTellLostServerToMaster );
@@ -18,8 +18,8 @@ namespace KFrame
     void KFTcpDiscoverModule::ShutDown()
     {
         __UN_TIMER_0__();
-        __UN_SERVER_DISCOVER__();
-        __UN_SERVER_LOST__();
+        __UN_TCP_SERVER_DISCOVER__();
+        __UN_TCP_SERVER_LOST__();
         __UN_CLIENT_CONNECTION__();
         //////////////////////////////////////////////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::S2S_TELL_DISCOVER_SERVER_TO_MASTER );

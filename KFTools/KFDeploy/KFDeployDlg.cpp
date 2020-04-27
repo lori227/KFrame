@@ -479,9 +479,9 @@ void CKFDeployDlg::OnLbnSelchangeListDeploy()
 
 void CKFDeployDlg::RegisterEventMessage()
 {
-    __REGISTER_CLIENT_CONNECTION__( &CKFDeployDlg::OnClientConnectServer );
-    __REGISTER_CLIENT_FAILED__( &CKFDeployDlg::OnClientConnectFailed );
-    __REGISTER_CLIENT_LOST__( &CKFDeployDlg::OnClientLostServer );
+    __REGISTER_TCP_CLIENT_CONNECTION__( &CKFDeployDlg::OnClientConnectServer );
+    __REGISTER_TCP_CLIENT_FAILED__( &CKFDeployDlg::OnClientConnectFailed );
+    __REGISTER_TCP_CLIENT_LOST__( &CKFDeployDlg::OnClientLostServer );
     /////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////
     __REGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_LOG_TO_TOOL_ACK, &CKFDeployDlg::HandleDeployLogToToolAck );

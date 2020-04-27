@@ -6,13 +6,13 @@ namespace KFrame
     void KFClusterProxyModule::BeforeRun()
     {
         ///////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_CLIENT_LOST__( &KFClusterProxyModule::OnClientLostServer );
-        __REGISTER_CLIENT_CONNECTION__( &KFClusterProxyModule::OnClientConnectionServer );
-        __REGISTER_SERVER_DISCOVER__( &KFClusterProxyModule::OnServerDiscoverClient );
-        __REGISTER_SERVER_LOST__( &KFClusterProxyModule::OnServerLostClient );
+        __REGISTER_TCP_CLIENT_LOST__( &KFClusterProxyModule::OnClientLostServer );
+        __REGISTER_TCP_CLIENT_CONNECTION__( &KFClusterProxyModule::OnClientConnectionServer );
+        __REGISTER_TCP_SERVER_DISCOVER__( &KFClusterProxyModule::OnServerDiscoverClient );
+        __REGISTER_TCP_SERVER_LOST__( &KFClusterProxyModule::OnServerLostClient );
 
-        __REGISTER_CLIENT_TRANSPOND__( &KFClusterProxyModule::TranspondToClient );
-        __REGISTER_SERVER_TRANSPOND__( &KFClusterProxyModule::TranspondToShard );
+        __REGISTER_TCP_CLIENT_TRANSPOND__( &KFClusterProxyModule::TranspondToClient );
+        __REGISTER_TCP_SERVER_TRANSPOND__( &KFClusterProxyModule::TranspondToShard );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_TOKEN_TO_PROXY_REQ, &KFClusterProxyModule::HandleClusterTokenToProxyReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_VERIFY_TO_PROXY_REQ, &KFClusterProxyModule::HandleClusterVerifyToProxyReq );
@@ -21,13 +21,13 @@ namespace KFrame
     void KFClusterProxyModule::BeforeShut()
     {
         __UN_TIMER_0__();
-        __UN_CLIENT_LOST__();
+        __UN_TCP_CLIENT_LOST__();
         __UN_CLIENT_CONNECTION__();
-        __UN_CLIENT_TRANSPOND__();
+        __UN_TCP_CLIENT_TRANSPOND__();
 
-        __UN_SERVER_DISCOVER__();
-        __UN_SERVER_LOST__();
-        __UN_SERVER_TRANSPOND__();
+        __UN_TCP_SERVER_DISCOVER__();
+        __UN_TCP_SERVER_LOST__();
+        __UN_TCP_SERVER_TRANSPOND__();
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::S2S_CLUSTER_TOKEN_TO_PROXY_REQ );
         __UN_MESSAGE__( KFMsg::S2S_CLUSTER_VERIFY_TO_PROXY_REQ );
