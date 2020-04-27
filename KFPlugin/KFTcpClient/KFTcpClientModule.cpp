@@ -34,10 +34,14 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFMsg::S2S_REGISTER_TO_SERVER_ACK, &KFTcpClientModule::HandleRegisterAck );
     }
 
+    void KFTcpClientModule::BeforeShut()
+    {
+        __UN_MESSAGE__( KFMsg::S2S_REGISTER_TO_SERVER_ACK );
+        ////////////////////////////////////////////////////////////////////////////
+    }
+
     void KFTcpClientModule::ShutDown()
     {
-        ////////////////////////////////////////////////////////////////////////////
-        __UN_MESSAGE__( KFMsg::S2S_REGISTER_TO_SERVER_ACK );
         _client_engine->ShutEngine();
     }
 
