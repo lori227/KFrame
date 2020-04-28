@@ -135,6 +135,7 @@ namespace KFrame
 
     void KFNetClient::CloseSession()
     {
+        _is_shutdown = true;
         KFNetSession::CloseSession();
 
         _uv_connect_timer->data = this;

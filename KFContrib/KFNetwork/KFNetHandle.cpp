@@ -76,6 +76,7 @@ namespace KFrame
 
     void KFNetHandle::CloseSession()
     {
+        _is_shutdown = true;
         _trustee_timeout = 0;
         KFNetSession::CloseSession();
 

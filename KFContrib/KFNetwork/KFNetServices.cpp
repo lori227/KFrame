@@ -133,9 +133,6 @@ namespace KFrame
             case KFNetDefine::CloseEvent:
                 netsession->CloseSession();
                 break;
-            case KFNetDefine::DisconnectEvent:
-                netsession->OnDisconnect( 0, __FUNC_LINE__ );
-                break;
             default:
                 break;
             }
