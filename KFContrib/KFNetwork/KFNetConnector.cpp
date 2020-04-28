@@ -86,7 +86,8 @@ namespace KFrame
                     _last_recv_time = _net_services->_now_time;
 
                     // 断线处理
-                    // _net_services->SendEventToServices( this, KFNetDefine::DisconnectEvent );
+                    _net_services->SendEventToServices( this, KFNetDefine::DisconnectEvent );
+                    __LOG_DEBUG__( "net connector=[{}:{}] message timeout", _session_id, _object_id );
                 }
             }
         }
