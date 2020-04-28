@@ -211,7 +211,7 @@ namespace KFrame
     StringMap KFAccountRedis::QueryWeiXinAccessToken( const std::string& machinecode )
     {
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
-        auto kfresult = redisdriver->QueryMap( "hgetall {}:{}", __STRING__( accesstoken ), machinecode );
+        auto kfresult = redisdriver->QueryMap( "hgetall {}:{}", __STRING__( access_token ), machinecode );
         return kfresult->_value;
     }
 
