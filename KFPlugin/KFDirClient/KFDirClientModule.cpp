@@ -66,7 +66,7 @@ namespace KFrame
         auto resultdata = _kf_http_client->STGet( _url, sendjson );
 
         __JSON_PARSE_STRING__( recvjson, resultdata );
-        auto retcode = __JSON_GET_UINT32__( recvjson, __STRING__( retcode ) );
+        auto retcode = _kf_http_client->GetCode( recvjson );
         return ( retcode == KFMsg::Ok );
     }
 
