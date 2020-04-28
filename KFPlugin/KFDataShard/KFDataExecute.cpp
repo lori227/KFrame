@@ -139,26 +139,6 @@ namespace KFrame
         return redisdriver->QueryString( "hget {}:{} {}", __STRING__( player ), playerid, __STRING__( data ) );
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFMongoDataExecute::CreateZoneIndex( KFMongoDriver* mongodriver, uint32 zoneid )
-    {
-        if ( _kf_setting->_cache_time == 0u )
-        {
-            return;
-        }
-
-        auto create = _zone_index_map[ zoneid ];
-        if ( create == 1u )
-        {
-            return;
-        }
-
-        auto ok = mongodriver->CreateIndex( __STRING__( player ), MongoKeyword::_expire );
-        if ( ok )
-        {
-            _zone_index_map[ zoneid ] = 1u;
-        }
-    }
-
     bool KFMongoDataExecute::SaveData( uint32 zoneid, uint64 playerid, const std::string& playerdata, uint32 saveflag )
     {
         auto mongodriver = __MONGO_DATA_DRIVER__( zoneid );
@@ -168,7 +148,7 @@ namespace KFrame
             return false;
         }
 
-        CreateZoneIndex( mongodriver, zoneid );
+        mongodriver->CreateIndex( __STRING__( player ), MongoKeyword::_expire );
         auto ok = mongodriver->Insert( __STRING__( player ), playerid, __STRING__( data ), playerdata );
         if ( ok )
         {

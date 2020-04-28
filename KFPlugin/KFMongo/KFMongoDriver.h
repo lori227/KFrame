@@ -43,6 +43,11 @@ namespace KFrame
         virtual bool Insert( const std::string& table, const KFDBValue& dbvalue, const KFMongoSelector& kfseletor ) = 0;
         virtual bool Insert( const std::string& table, const std::string& field, uint64 value, const KFMongoSelector& kfseletor ) = 0;
         virtual bool Insert( const std::string& table, const std::string& field, const std::string& value, const KFMongoSelector& kfseletor ) = 0;
+
+        // 操作数值
+        virtual bool Operate( const std::string& table, const std::string& field, uint32 operate, uint64 value ) = 0;
+        virtual bool Operate( const std::string& table, uint64 key, const std::string& field, uint32 operate, uint64 value ) = 0;
+        virtual bool Operate( const std::string& table, const std::string& key, const std::string& field, uint32 operate, uint64 value ) = 0;
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 删除数据

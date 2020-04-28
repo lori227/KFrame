@@ -68,6 +68,39 @@ namespace KFrame
             return SendRequest( request );
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        template< class KeyType >
+        bool Operate( const std::string& table, const std::string& keyname, const KeyType& keyvalue, const std::string& field, uint32 operate, uint64 value )
+        {
+            auto fullname = __FORMAT__( "{}.{}", _database, table );
+            UpdateRequest request( fullname, UpdateRequest::UPDATE_UPSERT );
+
+            if ( !keyname.empty() )
+            {
+                request.selector().add( keyname, keyvalue );
+            }
+
+            Poco::MongoDB::Document::Ptr update = new Poco::MongoDB::Document();
+            switch ( operate )
+            {
+            case KFEnum::Set:
+                update->add( field, value );
+                request.update().add( MongoKeyword::_set, update );
+                break;
+            case KFEnum::Add:
+                update->add( field, value );
+                request.update().add( MongoKeyword::_inc, update );
+                break;
+            case KFEnum::Dec:
+                update->add( field, ( 0 - value ) );
+                request.update().add( MongoKeyword::_inc, update );
+                break;
+            default:
+                break;
+            }
+
+            return SendRequest( request );
+        }
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 删除数据
         bool Delete( const std::string& table );
         bool Delete( const std::string& table, const KFMongoSelector& kfselector );

@@ -11,30 +11,19 @@ namespace KFrame
         auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
 
         // 先查询是否存在
-        auto strkey = __FORMAT__( "{}:{}", account, channel );
-        auto kfquery = mongodriver->QueryUInt64( __STRING__( account ), strkey, __STRING__( accountid ) );
-        auto accountid = kfquery->_value;
-        if ( accountid != _invalid_int )
+        auto table = __FORMAT__( "{}:{}", __STRING__( account ), channel );
+        auto kfquery = mongodriver->QueryUInt64( table, account, __STRING__( accountid ) );
+        if ( kfquery->_value != _invalid_int )
         {
-            auto kfaccountdata = mongodriver->QueryRecord( __STRING__( accountid ), accountid );
+            auto kfaccountdata = mongodriver->QueryRecord( __STRING__( accountid ), kfquery->_value );
             __DBVALUE_TO_MAP__( kfaccountdata->_value, accountdata );
-
             return accountdata;
         }
-        else
-        {
-            accountid = KFGlobal::Instance()->MTMakeUuid( __STRING__( account ) );
-        }
 
-        if ( !mongodriver->Insert( __STRING__( account ), strkey, __STRING__( accountid ), accountid ) )
+        auto accountid = KFGlobal::Instance()->MTMakeUuid( __STRING__( account ) );
+        if ( !mongodriver->Insert( table, account, __STRING__( accountid ), accountid ) )
         {
             __LOG_DEBUG__( "account[{}] channel[{}] save account failed", account, channel );
-            return accountdata;
-        }
-
-        if ( !mongodriver->Insert( __STRING__( accountlist ), 0u, __STRING__( accountid ), accountid ) )
-        {
-            __LOG_DEBUG__( "account[{}] channel[{}] save accountlist failed", account, channel );
             return accountdata;
         }
 
@@ -43,7 +32,6 @@ namespace KFrame
         dbvalue.AddValue( __STRING__( account ), account );
         dbvalue.AddValue( __STRING__( channel ), channel );
         dbvalue.AddValue( __STRING__( accountid ), accountid );
-
         if ( !mongodriver->Insert( __STRING__( accountid ), accountid, dbvalue ) )
         {
             __LOG_DEBUG__( "account[{}] channel[{}] save accountid failed", account, channel );
@@ -62,12 +50,11 @@ namespace KFrame
             return;
         }
 
-        auto& kfextend = channeldata[ __STRING__( extend ) ];
+        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
 
+        auto& kfextend = channeldata[ __STRING__( extend ) ];
         KFDBValue dbvalue;
         __JSON_TO_DBVALUE__( kfextend, dbvalue );
-
-        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
         mongodriver->Insert( __STRING__( extend ), accountid, dbvalue );
     }
 
@@ -78,12 +65,14 @@ namespace KFrame
 
         StringMap channeldata;
         __DBVALUE_TO_MAP__( kfresult->_value, channeldata );
-
         return channeldata;
     }
 
     std::string KFAccountMongo::MakeAccountToken( const std::string& account, uint32 channel, uint64 accountid, uint32 expiretime )
     {
+        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
+        mongodriver->CreateIndex( __STRING__( token ), MongoKeyword::_expire );
+
         auto token = KFAccountLogic::MakeAccountToken( account, channel, accountid, expiretime );
 
         KFDBValue dbvalue;
@@ -91,10 +80,7 @@ namespace KFrame
         dbvalue.AddValue( __STRING__( account ), account );
         dbvalue.AddValue( __STRING__( channel ), channel );
         dbvalue.AddValue( MongoKeyword::_expire, expiretime );
-
-        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
         mongodriver->Insert( __STRING__( token ), accountid, dbvalue );
-
         return token;
     }
 
@@ -104,7 +90,7 @@ namespace KFrame
 
         auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
         auto kftokenresult = mongodriver->QueryRecord( __STRING__( token ), accountid );
-        if ( kftokenresult->IsOk() )
+        if ( !kftokenresult->_value.IsEmpty() )
         {
             auto querytoken = kftokenresult->_value.FindStrValue( __STRING__( token ) );
             if ( querytoken == token )
@@ -118,25 +104,27 @@ namespace KFrame
 
     void KFAccountMongo::SaveZoneToken( const std::string& account, uint32 channel, uint64 accountid, uint32 zoneid, const std::string& token, uint32 expiretime )
     {
+        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
+
+        auto table = __FORMAT__( "{}:{}", __STRING__( zonetoken ), zoneid );
+        mongodriver->CreateIndex( table, MongoKeyword::_expire );
+
         KFDBValue dbvalue;
         dbvalue.AddValue( __STRING__( token ), token );
         dbvalue.AddValue( __STRING__( account ), account );
         dbvalue.AddValue( __STRING__( channel ), channel );
         dbvalue.AddValue( __STRING__( accountid ), accountid );
         dbvalue.AddValue( MongoKeyword::_expire, expiretime );
-
-        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
-        auto tokenkey = __FORMAT__( "{}:{}", zoneid, accountid );
-        mongodriver->Insert( __STRING__( zonetoken ), tokenkey, dbvalue );
+        mongodriver->Insert( table, accountid, dbvalue );
     }
 
     StringMap KFAccountMongo::VerifyZoneToken( uint64 accountid, uint32 zoneid, const std::string& token )
     {
         StringMap accountdata;
-
         auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
-        auto tokenkey = __FORMAT__( "{}:{}", zoneid, accountid );
-        auto kftokenresult = mongodriver->QueryRecord( __STRING__( zonetoken ), tokenkey );
+
+        auto table = __FORMAT__( "{}:{}", __STRING__( zonetoken ), zoneid );
+        auto kftokenresult = mongodriver->QueryRecord( table, accountid );
         if ( kftokenresult->IsOk() )
         {
             auto querytoken = kftokenresult->_value.FindStrValue( __STRING__( token ) );
@@ -180,7 +168,6 @@ namespace KFrame
         // 创建playerid
         auto playerid = KFGlobal::Instance()->MTMakeUuid( __STRING__( player ), zoneid );
         mongodriver->Insert( __STRING__( player ), playerid, __STRING__( accountid ), accountid );
-
         if ( !mongodriver->Insert( __STRING__( accountid ), accountid, strkey, playerid ) )
         {
             return std::make_tuple( _invalid_int, false );

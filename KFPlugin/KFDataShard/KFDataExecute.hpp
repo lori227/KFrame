@@ -95,11 +95,6 @@ namespace KFrame
 
         // 读取玩家数据
         virtual KFResult< std::string >::UniqueType LoadData( uint32 zoneid, uint64 playerid );
-
-        // 创建索引
-        void CreateZoneIndex( KFMongoDriver* mongodriver, uint32 zoneid );
-    private:
-        UInt32Map _zone_index_map;
     };
     ///////////////////////////////////////////////////////////////////////////////////
     class KFMySQLDataExecute : public KFDataExecute

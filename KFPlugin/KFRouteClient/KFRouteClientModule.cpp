@@ -29,7 +29,7 @@ namespace KFrame
         _service_name = KFGlobal::Instance()->_app_name;
 
         // 启动连接定时器
-        __LOOP_TIMER_0__( 6000u, 1u, &KFRouteClientModule::OnTimerConnectionRouteMaster );
+        __LOOP_TIMER_0__( 6000u, 0u, &KFRouteClientModule::OnTimerConnectionRouteMaster );
     }
 
     void KFRouteClientModule::Run()

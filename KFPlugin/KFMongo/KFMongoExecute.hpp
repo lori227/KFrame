@@ -57,6 +57,12 @@ namespace KFrame
                 pocodocument.add( kfexpression->_name, child );
             }
         }
+
+        bool IsIndexCreate( const std::string& table, const std::string& indexname );
+
+    private:
+        // 创建的索引列表
+        std::unordered_map<std::string, StringSet> _table_index_list;
     };
 }
 

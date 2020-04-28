@@ -42,12 +42,6 @@ namespace KFrame
 
     protected:
         std::string FormatRelationKey( uint64 firstid, uint64 secondid, bool bothway );
-
-        // 创建索引
-        void CreateRelationIndex( KFMongoDriver* mongodriver, const std::string& relationname );
-
-    private:
-        StringUInt32 _relation_index_create;
     };
 }
 

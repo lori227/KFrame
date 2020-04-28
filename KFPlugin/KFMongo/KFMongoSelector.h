@@ -147,7 +147,7 @@ namespace KFrame
     public:
         void AddReturn( const std::string& value, int32 ordertype = MongoKeyword::_asc )
         {
-            _returns[ value] = ordertype;
+            _returns[ value ] = ordertype;
         }
 
         void AddLimitReturn( const std::string& value )

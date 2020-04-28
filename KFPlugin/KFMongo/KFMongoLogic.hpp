@@ -49,6 +49,11 @@ namespace KFrame
         virtual bool Insert( const std::string& table, uint64 key, const std::string& field, const std::string& value );
         virtual bool Insert( const std::string& table, const std::string& key, const std::string& field, uint64 value );
         virtual bool Insert( const std::string& table, const std::string& key, const std::string& field, const std::string& value );
+
+        // 操作数值
+        virtual bool Operate( const std::string& table, const std::string& field, uint32 operate, uint64 value );
+        virtual bool Operate( const std::string& table, uint64 key, const std::string& field, uint32 operate, uint64 value );
+        virtual bool Operate( const std::string& table, const std::string& key, const std::string& field, uint32 operate, uint64 value );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 删除数据

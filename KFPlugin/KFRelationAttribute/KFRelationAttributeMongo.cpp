@@ -110,27 +110,12 @@ namespace KFrame
         dbvalue.AddValue( __STRING__( time ), KFGlobal::Instance()->_real_time );
         if ( keeptime > 0u )
         {
-            CreateRelationIndex( mongodriver, relationname );
+            mongodriver->CreateIndex( relationname, MongoKeyword::_expire );
             dbvalue.AddValue( MongoKeyword::_expire, keeptime );
         }
 
         auto relationkey = FormatRelationKey( playerid, targetid, false );
         mongodriver->Insert( relationname, relationkey, dbvalue );
-    }
-
-    void KFRelationAttributeMongo::CreateRelationIndex( KFMongoDriver* mongodriver, const std::string& relationname )
-    {
-        auto create = _relation_index_create[ relationname ];
-        if ( create == 1u )
-        {
-            return;
-        }
-
-        auto ok = mongodriver->CreateIndex( relationname, MongoKeyword::_expire );
-        if ( ok )
-        {
-            _relation_index_create[ relationname ] = 1u;
-        }
     }
 
     bool KFRelationAttributeMongo::IsRefuse( const std::string& refusename, uint64 playerid )

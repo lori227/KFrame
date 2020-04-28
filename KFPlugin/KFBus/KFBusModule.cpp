@@ -39,7 +39,7 @@ namespace KFrame
         }
 
         // 启动定时器
-        __LOOP_TIMER_0__( 6000u, 1000u, &KFBusModule::OnTimerConnectionMaster );
+        __LOOP_TIMER_0__( 6000u, 0u, &KFBusModule::OnTimerConnectionMaster );
     }
 
     __KF_TIMER_FUNCTION__( KFBusModule::OnTimerConnectionMaster )

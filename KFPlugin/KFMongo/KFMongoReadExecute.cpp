@@ -74,7 +74,7 @@ namespace KFrame
             auto iter = kfselector._returns.find( MongoKeyword::_id );
             if ( iter == kfselector._returns.end() )
             {
-                fields.add( MongoKeyword::_id, MongoKeyword::_asc );
+                fields.add( MongoKeyword::_id, 0 );
             }
 
             for ( auto& iter : kfselector._returns )
@@ -138,7 +138,7 @@ namespace KFrame
                     __LOG_ERROR__( "mongo error=[{}]", ex.displayText() );
                 }
 
-                kfresult->_value.push_back( dbvalue );
+                kfresult->_value.emplace_back( dbvalue );
             }
         }
         else

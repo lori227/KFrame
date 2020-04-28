@@ -125,6 +125,9 @@ namespace KFrame
         std::string _cluster_master_ip;
         uint32 _cluster_master_port = 0u;
 
+        // 发送cluster master认证次数
+        uint32 _cluster_auth_count = 0u;
+
         // token
         std::string _auth_token;
 

@@ -161,6 +161,21 @@ namespace KFrame
         return _write_execute->Update( table, MongoKeyword::_id, key, field, value );
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////
+    bool KFMongoLogic::Operate( const std::string& table, const std::string& field, uint32 operate, uint64 value )
+    {
+        return _write_execute->Operate( table, _invalid_string, 0u, field, operate, value );
+    }
+
+    bool KFMongoLogic::Operate( const std::string& table, uint64 key, const std::string& field, uint32 operate, uint64 value )
+    {
+        return _write_execute->Operate( table, MongoKeyword::_id, key, field, operate, value );
+    }
+
+    bool KFMongoLogic::Operate( const std::string& table, const std::string& key, const std::string& field, uint32 operate, uint64 value )
+    {
+        return _write_execute->Operate( table, MongoKeyword::_id, key, field, operate, value );
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFMongoLogic::Delete( const std::string& table )
     {
         return _write_execute->Delete( table );

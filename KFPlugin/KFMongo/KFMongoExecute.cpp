@@ -9,8 +9,24 @@ namespace KFrame
         return KFMongo::InitMongo( kfsetting );
     }
 
+    bool KFMongoExecute::IsIndexCreate( const std::string& table, const std::string& indexname )
+    {
+        auto iter = _table_index_list.find( table );
+        if ( iter == _table_index_list.end() )
+        {
+            return false;
+        }
+
+        return iter->second.find( indexname ) != iter->second.end();
+    }
+
     bool KFMongoExecute::CreateIndex( const std::string& table, const std::string& indexname, const MongoIndexType& values, bool unique, uint32 ttl )
     {
+        if ( IsIndexCreate( table, indexname ) )
+        {
+            return true;
+        }
+
         try
         {
             Poco::MongoDB::Document::Ptr temp = new Poco::MongoDB::Document();
