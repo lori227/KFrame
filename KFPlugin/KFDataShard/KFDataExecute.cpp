@@ -149,7 +149,7 @@ namespace KFrame
         }
 
         mongodriver->CreateIndex( __STRING__( player ), MongoKeyword::_expire );
-        auto ok = mongodriver->Insert( __STRING__( player ), playerid, __STRING__( data ), playerdata );
+        auto ok = mongodriver->Insert( __STRING__( player ), playerid, __STRING__( data ), playerdata, true );
         if ( ok )
         {
             if ( _kf_setting->_cache_time != 0u && saveflag == KFSaveEnum::OfflineSave )

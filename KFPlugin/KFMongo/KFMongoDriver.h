@@ -37,9 +37,9 @@ namespace KFrame
         virtual bool Insert( const std::string& table, uint64 key, const KFDBValue& dbvalue ) = 0;
         virtual bool Insert( const std::string& table, const std::string& key, const KFDBValue& dbvalue ) = 0;
         virtual bool Insert( const std::string& table, uint64 key, const std::string& field, uint64 value ) = 0;
-        virtual bool Insert( const std::string& table, uint64 key, const std::string& field, const std::string& value ) = 0;
+        virtual bool Insert( const std::string& table, uint64 key, const std::string& field, const std::string& value, bool isbinary = false ) = 0;
         virtual bool Insert( const std::string& table, const std::string& key, const std::string& field, uint64 value ) = 0;
-        virtual bool Insert( const std::string& table, const std::string& key, const std::string& field, const std::string& value ) = 0;
+        virtual bool Insert( const std::string& table, const std::string& key, const std::string& field, const std::string& value, bool isbinary = false ) = 0;
         virtual bool Insert( const std::string& table, const KFDBValue& dbvalue, const KFMongoSelector& kfseletor ) = 0;
         virtual bool Insert( const std::string& table, const std::string& field, uint64 value, const KFMongoSelector& kfseletor ) = 0;
         virtual bool Insert( const std::string& table, const std::string& field, const std::string& value, const KFMongoSelector& kfseletor ) = 0;
@@ -86,6 +86,8 @@ namespace KFrame
         virtual KFResult< uint64 >::UniqueType QueryUInt64( const std::string& table, const std::string& key, const std::string& field ) = 0;
         virtual KFResult< std::string >::UniqueType QueryString( const std::string& table, uint64 key, const std::string& field ) = 0;
         virtual KFResult< std::string >::UniqueType QueryString( const std::string& table, const std::string& key, const std::string& field ) = 0;
+        virtual KFResult< std::string >::UniqueType QueryBinary( const std::string& table, uint64 key, const std::string& field ) = 0;
+        virtual KFResult< std::string >::UniqueType QueryBinary( const std::string& table, const std::string& key, const std::string& field ) = 0;
 
         // 查询数组
         virtual KFResult< UInt64List >::UniqueType QueryListUInt64( const std::string& table, uint64 key, const std::string& field ) = 0;

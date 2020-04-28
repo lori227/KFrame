@@ -9,6 +9,7 @@
 #include "Poco/MongoDB/Array.h"
 #include "Poco/MongoDB/ObjectId.h"
 #include "Poco/MongoDB/Database.h"
+#include "Poco/MongoDB/Binary.h"
 #include "KFMongoSelector.h"
 
 namespace KFrame

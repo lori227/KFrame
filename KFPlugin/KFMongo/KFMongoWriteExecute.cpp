@@ -33,6 +33,12 @@ namespace KFrame
         {
             pocodocument.add( iter.first, iter.second );
         }
+
+        for ( auto& iter : dbvalue._bin_list )
+        {
+            Poco::MongoDB::Binary::Ptr binary = new Poco::MongoDB::Binary( iter.second );
+            pocodocument.add( iter.first, binary );
+        }
     }
 
     bool KFMongoWriteExecute::Insert( const std::string& table, const KFDBValue& dbvalue )

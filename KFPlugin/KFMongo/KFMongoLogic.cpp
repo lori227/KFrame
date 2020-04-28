@@ -146,8 +146,14 @@ namespace KFrame
         return _write_execute->Update( table, MongoKeyword::_id, key, field, value );
     }
 
-    bool KFMongoLogic::Insert( const std::string& table, uint64 key, const std::string& field, const std::string& value )
+    bool KFMongoLogic::Insert( const std::string& table, uint64 key, const std::string& field, const std::string& value, bool isbinary )
     {
+        if ( isbinary )
+        {
+            Poco::MongoDB::Binary::Ptr binary = new Poco::MongoDB::Binary( value );
+            return _write_execute->Update( table, MongoKeyword::_id, key, field, binary );
+        }
+
         return _write_execute->Update( table, MongoKeyword::_id, key, field, value );
     }
 
@@ -156,8 +162,14 @@ namespace KFrame
         return _write_execute->Update( table, MongoKeyword::_id, key, field, value );
     }
 
-    bool KFMongoLogic::Insert( const std::string& table, const std::string& key, const std::string& field, const std::string& value )
+    bool KFMongoLogic::Insert( const std::string& table, const std::string& key, const std::string& field, const std::string& value, bool isbinary )
     {
+        if ( isbinary )
+        {
+            Poco::MongoDB::Binary::Ptr binary = new Poco::MongoDB::Binary( value );
+            return _write_execute->Update( table, MongoKeyword::_id, key, field, binary );
+        }
+
         return _write_execute->Update( table, MongoKeyword::_id, key, field, value );
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -321,6 +333,16 @@ namespace KFrame
     KFResult< std::string >::UniqueType KFMongoLogic::QueryString( const std::string& table, const std::string& key, const std::string& field )
     {
         return _read_execute->QueryValue<std::string, std::string, std::string>( table, key, field );
+    }
+
+    KFResult< std::string >::UniqueType KFMongoLogic::QueryBinary( const std::string& table, uint64 key, const std::string& field )
+    {
+        return _read_execute->QueryBinary<Poco::UInt64>( table, key, field );
+    }
+
+    KFResult< std::string >::UniqueType KFMongoLogic::QueryBinary( const std::string& table, const std::string& key, const std::string& field )
+    {
+        return _read_execute->QueryBinary<std::string>( table, key, field );
     }
 
     KFResult< UInt64List >::UniqueType KFMongoLogic::QueryListUInt64( const std::string& table, uint64 key, const std::string& field )

@@ -128,7 +128,15 @@ namespace KFrame
                             auto concrete = dynamic_cast< const ConcreteElement<std::string>* >( ( *iter ).get() );
                             if ( concrete != nullptr )
                             {
-                                dbvalue.AddValue( name, concrete->value() );
+                                dbvalue.AddValue( name, concrete->value(), false );
+                            }
+                        }
+                        else if ( type == ElementTraits<Poco::MongoDB::Binary::Ptr>::TypeId )
+                        {
+                            auto concrete = dynamic_cast< const ConcreteElement<Poco::MongoDB::Binary::Ptr>* >( ( *iter ).get() );
+                            if ( concrete != nullptr )
+                            {
+                                dbvalue.AddValue( name, concrete->value()->toRawString(), true );
                             }
                         }
                     }

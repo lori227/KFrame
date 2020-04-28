@@ -46,9 +46,9 @@ namespace KFrame
         virtual bool Insert( const std::string& table, const std::string& field, const std::string& value, const KFMongoSelector& kfseletor );
 
         virtual bool Insert( const std::string& table, uint64 key, const std::string& field, uint64 value );
-        virtual bool Insert( const std::string& table, uint64 key, const std::string& field, const std::string& value );
+        virtual bool Insert( const std::string& table, uint64 key, const std::string& field, const std::string& value, bool isbinary = false );
         virtual bool Insert( const std::string& table, const std::string& key, const std::string& field, uint64 value );
-        virtual bool Insert( const std::string& table, const std::string& key, const std::string& field, const std::string& value );
+        virtual bool Insert( const std::string& table, const std::string& key, const std::string& field, const std::string& value, bool isbinary = false );
 
         // 操作数值
         virtual bool Operate( const std::string& table, const std::string& field, uint32 operate, uint64 value );
@@ -92,6 +92,9 @@ namespace KFrame
         virtual KFResult< uint64 >::UniqueType QueryUInt64( const std::string& table, const std::string& key, const std::string& field );
         virtual KFResult< std::string >::UniqueType QueryString( const std::string& table, uint64 key, const std::string& field );
         virtual KFResult< std::string >::UniqueType QueryString( const std::string& table, const std::string& key, const std::string& field );
+        virtual KFResult< std::string >::UniqueType QueryBinary( const std::string& table, uint64 key, const std::string& field );
+        virtual KFResult< std::string >::UniqueType QueryBinary( const std::string& table, const std::string& key, const std::string& field );
+
         virtual KFResult< UInt64List >::UniqueType QueryListUInt64( const std::string& table, uint64 key, const std::string& field );
         virtual KFResult< UInt64List >::UniqueType QueryListUInt64( const std::string& table, const std::string& key, const std::string& field );
         virtual KFResult< StringList >::UniqueType QueryListString( const std::string& table, uint64 key, const std::string& field );

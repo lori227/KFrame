@@ -46,7 +46,6 @@ namespace KFrame
                     }
                     catch ( Poco::Exception& )
                     {
-                        __LOG_DEBUG__( "table=[{}] key=[{}] field=[{}] not exist", table, key, field );
                     }
                 }
             }
@@ -58,6 +57,50 @@ namespace KFrame
             return kfresult;
         }
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 查询数值
+        template< typename KeyType >
+        typename KFResult<std::string>::UniqueType QueryBinary( const std::string& table, const KeyType& key, const std::string& field )
+        {
+            auto fullname = __FORMAT__( "{}.{}", _database, table );
+            QueryRequest request( fullname, QueryRequest::QUERY_DEFAULT );
+
+            // 查询条件
+            request.selector().add( MongoKeyword::_id, key );
+
+            // 查询字段
+            request.returnFieldSelector().add( field, 1 );
+
+            // 数量
+            request.setNumberToReturn( 1 );
+
+            typename __NEW_RESULT__( std::string );
+            ResponseMessage response;
+            auto ok = SendRequest( request, response );
+            if ( ok )
+            {
+                if ( response.documents().size() > 0 )
+                {
+                    Poco::MongoDB::Document::Ptr doc = response.documents()[ 0 ];
+                    try
+                    {
+                        auto value = doc->get<Poco::MongoDB::Binary::Ptr>( field );
+                        if ( !value.isNull() )
+                        {
+                            kfresult->_value = value->toRawString();
+                        }
+                    }
+                    catch ( Poco::Exception& )
+                    {
+                    }
+                }
+            }
+            else
+            {
+                kfresult->SetResult( KFEnum::Error );
+            }
+
+            return kfresult;
+        }
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 查询数值列表
         template< class ReturnType, class KeyType, class ValueType >
@@ -82,11 +125,15 @@ namespace KFrame
                     Poco::MongoDB::Document::Ptr doc = response.documents()[ 0 ];
                     try
                     {
-                        auto elements = doc->get< Array::Ptr >( field )->getSet();
-                        for ( auto iter = elements->begin(); iter != elements->end(); ++iter )
+                        auto arrayptr = doc->get< Array::Ptr >( field );
+                        if ( !arrayptr.isNull() )
                         {
-                            auto concrete = dynamic_cast< const ConcreteElement<ValueType>* >( ( *iter ).get() );
-                            kfresult->_value.push_back( concrete->value() );
+                            auto elements = arrayptr->getSet();
+                            for ( auto iter = elements->begin(); iter != elements->end(); ++iter )
+                            {
+                                auto concrete = dynamic_cast< const ConcreteElement<ValueType>* >( ( *iter ).get() );
+                                kfresult->_value.push_back( concrete->value() );
+                            }
                         }
                     }
                     catch ( Poco::Exception& )
@@ -156,7 +203,15 @@ namespace KFrame
                                 auto concrete = dynamic_cast< const ConcreteElement<std::string>* >( ( *iter ).get() );
                                 if ( concrete != nullptr )
                                 {
-                                    kfresult->_value.AddValue( name, concrete->value() );
+                                    kfresult->_value.AddValue( name, concrete->value(), false );
+                                }
+                            }
+                            else if ( type == ElementTraits<Poco::MongoDB::Binary::Ptr>::TypeId )
+                            {
+                                auto concrete = dynamic_cast< const ConcreteElement<Poco::MongoDB::Binary::Ptr>* >( ( *iter ).get() );
+                                if ( concrete != nullptr )
+                                {
+                                    kfresult->_value.AddValue( name, concrete->value()->toRawString(), true );
                                 }
                             }
                         }
