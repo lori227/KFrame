@@ -195,4 +195,38 @@ namespace KFrame
 
         return kfresult->IsOk();
     }
+
+    void KFAccountRedis::SaveWeiXinAccessToken( const std::string& machinecode, const std::string& openid,
+            const std::string& scope, const std::string& accesstoken, uint32 expirestime )
+    {
+        auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
+        redisdriver->Append( "hmset {}:{} {} {} {} {} {} {}",
+                             __STRING__( access_token ), machinecode, __STRING__( token ), accesstoken,
+                             __STRING__( openid ), openid, __STRING__( scope ), scope );
+
+        redisdriver->Append( "expire {}:{} {}", __STRING__( access_token ), machinecode, expirestime - 200 );
+        redisdriver->Pipeline();
+    }
+
+    StringMap KFAccountRedis::QueryWeiXinAccessToken( const std::string& machinecode )
+    {
+        auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
+        auto kfresult = redisdriver->QueryMap( "hgetall {}:{}", __STRING__( accesstoken ), machinecode );
+        return kfresult->_value;
+    }
+
+    void KFAccountRedis::SaveWeiXinRefreshToken( const std::string& machinecode, const std::string& refreshtoken )
+    {
+        auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
+        redisdriver->Append( "hset {}:{} {} {}", __STRING__( refresh_token ), machinecode, __STRING__( token ), refreshtoken );
+        redisdriver->Append( "expire {}:{} {}", __STRING__( refresh_token ), machinecode, 2590000 );
+        redisdriver->Pipeline();
+    }
+
+    std::string KFAccountRedis::QueryWeiXinRefreshToken( const std::string& machinecode )
+    {
+        auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
+        auto kfresult = redisdriver->QueryString( "hget {}:{} {}", __STRING__( refresh_token ), machinecode, __STRING__( token ) );
+        return kfresult->_value;
+    }
 }

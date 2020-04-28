@@ -46,6 +46,18 @@ namespace KFrame
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 保存微信token
+        virtual void SaveWeiXinAccessToken( const std::string& machinecode, const std::string& openid,
+                                            const std::string& scope, const std::string& accesstoken, uint32 expirestime );
+
+        // 查询微信token
+        virtual StringMap QueryWeiXinAccessToken( const std::string& machinecode );
+
+        // 保存微信刷新token
+        virtual void SaveWeiXinRefreshToken( const std::string& machinecode, const std::string& refreshtoken );
+
+        // 查询微信的刷新token
+        virtual std::string QueryWeiXinRefreshToken( const std::string& machinecode );
     };
 }
 

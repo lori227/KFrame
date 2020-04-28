@@ -186,4 +186,46 @@ namespace KFrame
         auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
         return mongodriver->Insert( __STRING__( accountid ), accountid, dbvalue );
     }
+
+    void KFAccountMongo::SaveWeiXinAccessToken( const std::string& machinecode, const std::string& openid,
+            const std::string& scope, const std::string& accesstoken, uint32 expirestime )
+    {
+        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
+        mongodriver->CreateIndex( __STRING__( access_token ), MongoKeyword::_expire );
+
+        KFDBValue dbvalue;
+        dbvalue.AddValue( __STRING__( token ), accesstoken );
+        dbvalue.AddValue( __STRING__( openid ), openid );
+        dbvalue.AddValue( __STRING__( scope ), scope );
+        dbvalue.AddValue( MongoKeyword::_expire, expirestime - 200 );
+        mongodriver->Insert( __STRING__( access_token ), machinecode, dbvalue );
+    }
+
+    StringMap KFAccountMongo::QueryWeiXinAccessToken( const std::string& machinecode )
+    {
+        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
+        auto kfresult = mongodriver->QueryRecord( __STRING__( access_token ), machinecode );
+
+        StringMap tokendata;
+        __DBVALUE_TO_MAP__( kfresult->_value, tokendata );
+        return tokendata;
+    }
+
+    void KFAccountMongo::SaveWeiXinRefreshToken( const std::string& machinecode, const std::string& refreshtoken )
+    {
+        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
+        mongodriver->CreateIndex( __STRING__( refresh_token ), MongoKeyword::_expire );
+
+        KFDBValue dbvalue;
+        dbvalue.AddValue( __STRING__( token ), refreshtoken );
+        dbvalue.AddValue( MongoKeyword::_expire, 2590000 );
+        mongodriver->Insert( __STRING__( refresh_token ), machinecode, dbvalue );
+    }
+
+    std::string KFAccountMongo::QueryWeiXinRefreshToken( const std::string& machinecode )
+    {
+        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
+        auto kfresult = mongodriver->QueryString( __STRING__( refresh_token ), machinecode, __STRING__( token ) );
+        return kfresult->_value;
+    }
 }

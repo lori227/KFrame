@@ -75,4 +75,26 @@ namespace KFrame
     {
         return _account_logic->UpdateOnline( accountid, playerid, worldid, gameid );
     }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
+    void KFAccountModule::SaveWeiXinAccessToken( const std::string& machinecode, const std::string& openid,
+            const std::string& scope, const std::string& accesstoken, uint32 expirestime )
+    {
+        return _account_logic->SaveWeiXinAccessToken( machinecode, openid, scope, accesstoken, expirestime );
+    }
+
+    StringMap KFAccountModule::QueryWeiXinAccessToken( const std::string& machinecode )
+    {
+        return _account_logic->QueryWeiXinAccessToken( machinecode );
+    }
+
+    void KFAccountModule::SaveWeiXinRefreshToken( const std::string& machinecode, const std::string& refreshtoken )
+    {
+        return _account_logic->SaveWeiXinRefreshToken( machinecode, refreshtoken );
+    }
+
+    std::string KFAccountModule::QueryWeiXinRefreshToken( const std::string& machinecode )
+    {
+        return _account_logic->QueryWeiXinRefreshToken( machinecode );
+    }
 }

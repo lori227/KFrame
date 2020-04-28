@@ -16,6 +16,10 @@ namespace KFrame
 
         // 充值请求
         std::string RequestPay( const std::string& data, const KFChannelSetting* kfsetting );
+
+    protected:
+        // 保存访问token
+        void SaveAccessToken( const std::string& machinecode, const std::string& openid, const std::string& accesstoken, KFJson& kfjson );
     };
 }
 

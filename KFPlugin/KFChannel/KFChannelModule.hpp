@@ -11,7 +11,7 @@
 
 #include "KFChannelInterface.h"
 #include "KFChannelConfig.hpp"
-#include "KFRedis/KFRedisInterface.h"
+#include "KFAccount/KFAccountInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
 #include "KFHttpServer/KFHttpServerInterface.h"
 

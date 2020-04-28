@@ -41,6 +41,19 @@ namespace KFrame
 
         // 更新玩家在线信息
         virtual bool UpdateOnline( uint64 accountid, uint64 playerid, uint64 worldid, uint64 gameid ) = 0;
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 保存微信token
+        virtual void SaveWeiXinAccessToken( const std::string& machinecode, const std::string& openid,
+                                            const std::string& scope, const std::string& accesstoken, uint32 expirestime ) = 0;
+
+        // 查询微信token
+        virtual StringMap QueryWeiXinAccessToken( const std::string& machinecode ) = 0;
+
+        // 保存微信刷新token
+        virtual void SaveWeiXinRefreshToken( const std::string& machinecode, const std::string& refreshtoken ) = 0;
+
+        // 查询微信的刷新token
+        virtual std::string QueryWeiXinRefreshToken( const std::string& machinecode ) = 0;
     private:
         // token序列号
         uint32 _token_serial = 0;
