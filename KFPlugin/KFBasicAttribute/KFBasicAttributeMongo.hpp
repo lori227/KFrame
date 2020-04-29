@@ -36,7 +36,7 @@ namespace KFrame
         virtual std::string QueryBasicStrValue( uint64 playerid, const std::string& dataname );
     protected:
         // 格式化名字字段
-        std::string FormatNameKey( const std::string& name, uint32 zoneid );
+        std::string FormatNameTable( uint32 zoneid );
     };
 }
 

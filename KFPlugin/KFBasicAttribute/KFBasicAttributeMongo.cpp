@@ -57,17 +57,17 @@ namespace KFrame
         return KFMsg::Ok;
     }
 
-    std::string KFBasicAttributeMongo::FormatNameKey( const std::string& name, uint32 zoneid )
+    std::string KFBasicAttributeMongo::FormatNameTable( uint32 zoneid )
     {
-        return __FORMAT__( "{}:{}", zoneid, name );
+        return __FORMAT__( "{}:{}", __STRING__( playername ), zoneid );
     }
 
     uint32 KFBasicAttributeMongo::SetPlayerName( uint32 zoneid, uint64 playerid, const std::string& oldname, const std::string& newname )
     {
         auto mongodriver = __BASIC_MONGO_DRIVER__;
 
-        auto newnamekey = FormatNameKey( newname, zoneid );
-        auto kfplayerid = mongodriver->QueryUInt64( __STRING__( playername ), newnamekey, __STRING__( playerid ) );
+        auto nametable = FormatNameTable( zoneid );
+        auto kfplayerid = mongodriver->QueryUInt64( nametable, newname, __STRING__( playerid ) );
         if ( !kfplayerid->IsOk() )
         {
             return KFMsg::NameDatabaseBusy;
@@ -77,7 +77,7 @@ namespace KFrame
         if ( kfplayerid->_value == _invalid_int )
         {
             // 保存名字
-            auto result = mongodriver->Insert( __STRING__( playername ), newnamekey, __STRING__( playerid ), playerid );
+            auto result = mongodriver->Insert( nametable, newname, __STRING__( playerid ), playerid );
             if ( !result )
             {
                 return KFMsg::NameDatabaseBusy;
@@ -86,8 +86,7 @@ namespace KFrame
             // 删除旧的名字关联
             if ( !oldname.empty() )
             {
-                auto oldnamekey = FormatNameKey( oldname, zoneid );
-                mongodriver->Delete( __STRING__( name ), oldnamekey );
+                mongodriver->Delete( nametable, oldname );
             }
         }
         else if ( kfplayerid->_value != playerid )
@@ -103,8 +102,8 @@ namespace KFrame
     {
         auto mongodriver = __BASIC_MONGO_DRIVER__;
 
-        auto namekey = FormatNameKey( playername, zoneid );
-        auto kfplayerid = mongodriver->QueryUInt64( __STRING__( playername ), namekey, __STRING__( playerid ) );
+        auto nametable = FormatNameTable( zoneid );
+        auto kfplayerid = mongodriver->QueryUInt64( nametable, playername, __STRING__( playerid ) );
         return kfplayerid->_value;
     }
 
