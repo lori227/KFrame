@@ -71,7 +71,7 @@ namespace KFrame
         }
 
         // 数据小区id
-        if ( zone->_login_zone_id == _invalid_int )
+        if ( zone->_data_zone_id == _invalid_int )
         {
             zone->_data_zone_id = ( uint32 )zone->_id;
         }
