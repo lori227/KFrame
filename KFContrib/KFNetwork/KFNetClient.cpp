@@ -92,12 +92,11 @@ namespace KFrame
         _uv_client->data = this;
         if ( !uv_is_closing( reinterpret_cast< uv_handle_t* >( _uv_client ) ) )
         {
-            uv_close( reinterpret_cast< uv_handle_t* >( _uv_client ), OnShutDownCallBack );
+            uv_close( reinterpret_cast< uv_handle_t* >( _uv_client ), nullptr );
         }
 
         // 再次启动一个定时器
         StartConnectTimer( KFNetDefine::ConncectTime );
-
         _net_services->_net_event->AddEvent( KFNetDefine::FailedEvent, _object_id );
     }
 
@@ -118,8 +117,11 @@ namespace KFrame
 
         if ( !_is_shutdown )
         {
-            // 重新连接
-            StartConnectTimer( KFNetDefine::ConncectTime );
+            _uv_client->data = this;
+            if ( !uv_is_closing( reinterpret_cast< uv_handle_t* >( _uv_client ) ) )
+            {
+                uv_close( reinterpret_cast< uv_handle_t* >( _uv_client ), OnShutDownCallBack );
+            }
         }
     }
 

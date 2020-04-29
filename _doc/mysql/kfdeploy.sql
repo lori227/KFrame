@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50722
 File Encoding         : 65001
 
-Date: 2020-04-26 10:07:10
+Date: 2020-04-29 12:14:46
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -46,30 +46,30 @@ CREATE TABLE `1_1_deploy` (
 -- ----------------------------
 -- Records of 1_1_deploy
 -- ----------------------------
-INSERT INTO `1_1_deploy` VALUES ('1', '/data/chess/dir', '', 'bin/KFStartup', 'dir', 'shard', '19.0.1', '1.1', '1', '', '12.0.1', '0', '1', '1', '0', '0', '0', '', '');
-INSERT INTO `1_1_deploy` VALUES ('2', '/data/chess/auth', '', 'bin/KFStartup', 'auth', 'shard', '21.0.1', '1.1', '1', '', '12.0.1', '0', '1', '1', '0', '22255', '1586843203', '11.0.1', 'chess_develop_1.1.365.1716.tar.gz');
-INSERT INTO `1_1_deploy` VALUES ('3', '/data/chess/route', '', 'bin/KFStartup', 'route', 'master', '22.0.1', '1.1', '1', '', '12.0.1', '0', '1', '1', '0', '22226', '1586843203', '11.0.1', 'chess_develop_1.1.365.1712.tar.gz');
-INSERT INTO `1_1_deploy` VALUES ('4', '/data/chess/route', '', 'bin/KFStartup', 'route', 'proxy', '23.0.1', '1.1', '1', '', '12.0.1', '0', '1', '1', '0', '22194', '1586843203', '11.0.1', 'chess_develop_1.1.365.1712.tar.gz');
-INSERT INTO `1_1_deploy` VALUES ('5', '/data/chess/route', '', 'bin/KFStartup', 'route', 'shard', '24.0.1', '1.1', '1', '', '12.0.1', '0', '1', '1', '0', '22176', '1586843203', '11.0.1', 'chess_develop_1.1.365.1712.tar.gz');
-INSERT INTO `1_1_deploy` VALUES ('6', '/data/chess/data', '', 'bin/KFStartup', 'data', 'shard', '31.0.1', '1.1', '1', '', '12.0.1', '0', '1', '1', '0', '22210', '1586843203', '11.0.1', 'chess_develop_1.1.365.1712.tar.gz');
-INSERT INTO `1_1_deploy` VALUES ('7', '/data/chess/logic', '', 'bin/KFStartup', 'logic', 'shard', '32.0.1', '1.1', '1', '', '12.0.1', '0', '1', '1', '0', '27780', '1587388975', '11.0.1', 'chess_develop_1.1.386.1833.tar.gz');
-INSERT INTO `1_1_deploy` VALUES ('8', '/data/chess/match', '', 'bin/KFStartup', 'match', 'shard', '38.0.1', '1.1', '1', '', '12.0.1', '0', '1', '1', '0', '22148', '1586843203', '11.0.1', 'chess_develop_1.1.365.1712.tar.gz');
-INSERT INTO `1_1_deploy` VALUES ('9', '/data/chess/room', '', 'bin/KFStartup', 'room', 'shard', '39.0.1', '1.1', '1', '', '12.0.1', '0', '1', '1', '0', '22163', '1586843203', '11.0.1', 'chess_develop_1.1.365.1712.tar.gz');
-INSERT INTO `1_1_deploy` VALUES ('10', '/data/chess/develop', '', 'bin/KFStartup', 'zone', 'master', '91.1.1', '1.1', '1', '', '12.0.2', '0', '1', '1', '0', '1621', '1587859553', '11.0.1', 'chess_develop_1.1.392.1878.tar.gz');
-INSERT INTO `1_1_deploy` VALUES ('11', '/data/chess/develop', '', 'bin/KFStartup', 'zone', 'world', '92.1.1', '1.1', '1', '', '12.0.2', '0', '1', '1', '0', '1632', '1587859553', '11.0.1', 'chess_develop_1.1.392.1878.tar.gz');
-INSERT INTO `1_1_deploy` VALUES ('12', '/data/chess/develop', '', 'bin/KFStartup', 'zone', 'gate', '93.1.1', '1.1', '1', '', '12.0.2', '0', '1', '1', '0', '1658', '1587859553', '11.0.1', 'chess_develop_1.1.392.1878.tar.gz');
-INSERT INTO `1_1_deploy` VALUES ('13', '/data/chess/develop', '', 'bin/KFStartup', 'zone', 'login', '94.1.1', '1.1', '1', '', '12.0.2', '0', '1', '1', '0', '1646', '1587859553', '11.0.1', 'chess_develop_1.1.392.1878.tar.gz');
-INSERT INTO `1_1_deploy` VALUES ('14', '/data/chess/develop', '', 'bin/KFStartup', 'zone', 'game', '95.1.1', '1.1', '1', '', '12.0.2', '0', '1', '1', '0', '1670', '1587859553', '11.0.1', 'chess_develop_1.1.392.1878.tar.gz');
-INSERT INTO `1_1_deploy` VALUES ('15', '/data/chess/config', '', 'bin/KFStartup', 'zone', 'master', '91.2.1', '1.1', '1', '', '12.0.2', '0', '1', '1', '0', '3218', '1587861381', '11.0.1', 'chess_config_1.1.392.1878.tar.gz');
-INSERT INTO `1_1_deploy` VALUES ('16', '/data/chess/config', '', 'bin/KFStartup', 'zone', 'world', '92.2.1', '1.1', '1', '', '12.0.2', '0', '1', '1', '0', '3229', '1587861381', '11.0.1', 'chess_config_1.1.392.1878.tar.gz');
-INSERT INTO `1_1_deploy` VALUES ('17', '/data/chess/config', '', 'bin/KFStartup', 'zone', 'gate', '93.2.1', '1.1', '1', '', '12.0.2', '0', '1', '1', '0', '3251', '1587861381', '11.0.1', 'chess_config_1.1.392.1878.tar.gz');
-INSERT INTO `1_1_deploy` VALUES ('18', '/data/chess/config', '', 'bin/KFStartup', 'zone', 'login', '94.2.1', '1.1', '1', '', '12.0.2', '0', '1', '1', '0', '3207', '1587861381', '11.0.1', 'chess_config_1.1.392.1878.tar.gz');
-INSERT INTO `1_1_deploy` VALUES ('19', '/data/chess/config', '', 'bin/KFStartup', 'zone', 'game', '95.2.1', '1.1', '1', '', '12.0.2', '0', '1', '1', '0', '3243', '1587861381', '11.0.1', 'chess_config_1.1.392.1878.tar.gz');
-INSERT INTO `1_1_deploy` VALUES ('20', '/data/chess/beta', '', 'bin/KFStartup', 'zone', 'master', '91.3.1', '1.1', '1', '', '12.0.2', '0', '1', '1', '0', '8885', '1579010602', '11.0.1', 'chess_beta_1.1.289.1398.tar.gz');
-INSERT INTO `1_1_deploy` VALUES ('21', '/data/chess/beta', '', 'bin/KFStartup', 'zone', 'world', '92.3.1', '1.1', '1', '', '12.0.2', '0', '1', '1', '0', '8841', '1579010602', '11.0.1', 'chess_beta_1.1.289.1398.tar.gz');
-INSERT INTO `1_1_deploy` VALUES ('22', '/data/chess/beta', '', 'bin/KFStartup', 'zone', 'gate', '93.3.1', '1.1', '1', '', '12.0.2', '0', '1', '1', '0', '8874', '1579010602', '11.0.1', 'chess_beta_1.1.289.1398.tar.gz');
-INSERT INTO `1_1_deploy` VALUES ('23', '/data/chess/beta', '', 'bin/KFStartup', 'zone', 'login', '94.3.1', '1.1', '1', '', '12.0.2', '0', '1', '1', '0', '21115', '1579071428', '11.0.1', 'chess_beta_1.1.289.1398.tar.gz');
-INSERT INTO `1_1_deploy` VALUES ('24', '/data/chess/beta', '', 'bin/KFStartup', 'zone', 'game', '95.3.1', '1.1', '1', '', '12.0.2', '0', '1', '1', '0', '6743', '1582000274', '11.0.1', 'chess_beta_1.1.289.1398.tar.gz');
+INSERT INTO `1_1_deploy` VALUES ('1', '/data/chess/dir', '', 'bin/KFStartup', 'dir', 'shard', '19.0.1', '1.1', '1', '', '12.0.1', '0', '1', '1', '0', '2366', '1587995754', '', 'chess_develop_1.1.393.1892.tar.gz');
+INSERT INTO `1_1_deploy` VALUES ('2', '/data/chess/auth', '', 'bin/KFStartup', 'auth', 'shard', '21.0.1', '1.1', '1', '', '12.0.1', '0', '1', '1', '0', '2329', '1587995507', '11.0.1', 'chess_develop_1.1.393.1892.tar.gz');
+INSERT INTO `1_1_deploy` VALUES ('3', '/data/chess/route', '', 'bin/KFStartup', 'route', 'master', '22.0.1', '1.1', '1', '', '12.0.1', '0', '1', '1', '0', '1146', '1587887925', '11.0.1', 'chess_develop_1.1.392.1881.tar.gz');
+INSERT INTO `1_1_deploy` VALUES ('4', '/data/chess/route', '', 'bin/KFStartup', 'route', 'proxy', '23.0.1', '1.1', '1', '', '12.0.1', '0', '1', '1', '0', '1159', '1587887925', '11.0.1', 'chess_develop_1.1.392.1881.tar.gz');
+INSERT INTO `1_1_deploy` VALUES ('5', '/data/chess/route', '', 'bin/KFStartup', 'route', 'shard', '24.0.1', '1.1', '1', '', '12.0.1', '0', '1', '1', '0', '1136', '1587887925', '11.0.1', 'chess_develop_1.1.392.1881.tar.gz');
+INSERT INTO `1_1_deploy` VALUES ('6', '/data/chess/data', '', 'bin/KFStartup', 'data', 'shard', '31.0.1', '1.1', '1', '', '12.0.1', '0', '1', '1', '0', '953', '1587887925', '11.0.1', 'chess_develop_1.1.392.1881.tar.gz');
+INSERT INTO `1_1_deploy` VALUES ('7', '/data/chess/logic', '', 'bin/KFStartup', 'logic', 'shard', '32.0.1', '1.1', '1', '', '12.0.1', '0', '1', '1', '0', '1044', '1587887925', '11.0.1', 'chess_develop_1.1.392.1881.tar.gz');
+INSERT INTO `1_1_deploy` VALUES ('8', '/data/chess/match', '', 'bin/KFStartup', 'match', 'shard', '38.0.1', '1.1', '1', '', '12.0.1', '0', '1', '1', '0', '1085', '1587887925', '11.0.1', 'chess_develop_1.1.392.1881.tar.gz');
+INSERT INTO `1_1_deploy` VALUES ('9', '/data/chess/room', '', 'bin/KFStartup', 'room', 'shard', '39.0.1', '1.1', '1', '', '12.0.1', '0', '1', '1', '0', '1190', '1587887925', '11.0.1', 'chess_develop_1.1.392.1881.tar.gz');
+INSERT INTO `1_1_deploy` VALUES ('10', '/data/chess/develop', '', 'bin/KFStartup', 'zone', 'master', '91.1.1', '1.1', '1', '', '12.0.2', '0', '1', '1', '0', '11681', '1588118782', '11.0.1', 'chess_develop_1.1.395.1902.tar.gz');
+INSERT INTO `1_1_deploy` VALUES ('11', '/data/chess/develop', '', 'bin/KFStartup', 'zone', 'world', '92.1.1', '1.1', '1', '', '12.0.2', '0', '1', '1', '0', '11667', '1588118782', '11.0.1', 'chess_develop_1.1.395.1902.tar.gz');
+INSERT INTO `1_1_deploy` VALUES ('12', '/data/chess/develop', '', 'bin/KFStartup', 'zone', 'gate', '93.1.1', '1.1', '1', '', '12.0.2', '0', '1', '1', '0', '11656', '1588118782', '11.0.1', 'chess_develop_1.1.395.1902.tar.gz');
+INSERT INTO `1_1_deploy` VALUES ('13', '/data/chess/develop', '', 'bin/KFStartup', 'zone', 'login', '94.1.1', '1.1', '1', '', '12.0.2', '0', '1', '1', '0', '11645', '1588118782', '11.0.1', 'chess_develop_1.1.395.1902.tar.gz');
+INSERT INTO `1_1_deploy` VALUES ('14', '/data/chess/develop', '', 'bin/KFStartup', 'zone', 'game', '95.1.1', '1.1', '1', '', '12.0.2', '0', '1', '1', '0', '11637', '1588118782', '11.0.1', 'chess_develop_1.1.395.1902.tar.gz');
+INSERT INTO `1_1_deploy` VALUES ('15', '/data/chess/config', '', 'bin/KFStartup', 'zone', 'master', '91.2.1', '1.1', '1', '', '12.0.2', '0', '1', '1', '0', '19391', '1588034201', '11.0.1', 'chess_config_1.1.394.1892.tar.gz');
+INSERT INTO `1_1_deploy` VALUES ('16', '/data/chess/config', '', 'bin/KFStartup', 'zone', 'world', '92.2.1', '1.1', '1', '', '12.0.2', '0', '1', '1', '0', '19377', '1588034201', '11.0.1', 'chess_config_1.1.394.1892.tar.gz');
+INSERT INTO `1_1_deploy` VALUES ('17', '/data/chess/config', '', 'bin/KFStartup', 'zone', 'gate', '93.2.1', '1.1', '1', '', '12.0.2', '0', '1', '1', '0', '19358', '1588034201', '11.0.1', 'chess_config_1.1.394.1892.tar.gz');
+INSERT INTO `1_1_deploy` VALUES ('18', '/data/chess/config', '', 'bin/KFStartup', 'zone', 'login', '94.2.1', '1.1', '1', '', '12.0.2', '0', '1', '1', '0', '19403', '1588034201', '11.0.1', 'chess_config_1.1.394.1892.tar.gz');
+INSERT INTO `1_1_deploy` VALUES ('19', '/data/chess/config', '', 'bin/KFStartup', 'zone', 'game', '95.2.1', '1.1', '1', '', '12.0.2', '0', '1', '1', '0', '19369', '1588034201', '11.0.1', 'chess_config_1.1.394.1892.tar.gz');
+INSERT INTO `1_1_deploy` VALUES ('20', '/data/chess/develop', '', 'bin/KFStartup', 'zone', 'master', '91.3.1', '1.1', '1', '', '12.0.3', '0', '1', '1', '1', '0', '1588134505', '11.0.1', 'chess_beta_1.1.289.1398.tar.gz');
+INSERT INTO `1_1_deploy` VALUES ('21', '/data/chess/develop', '', 'bin/KFStartup', 'zone', 'world', '92.3.1', '1.1', '1', '', '12.0.3', '0', '1', '1', '1', '0', '1588134505', '11.0.1', 'chess_beta_1.1.289.1398.tar.gz');
+INSERT INTO `1_1_deploy` VALUES ('22', '/data/chess/develop', '', 'bin/KFStartup', 'zone', 'gate', '93.3.1', '1.1', '1', '', '12.0.3', '0', '1', '1', '1', '0', '1588134505', '11.0.1', 'chess_beta_1.1.289.1398.tar.gz');
+INSERT INTO `1_1_deploy` VALUES ('23', '/data/chess/develop', '', 'bin/KFStartup', 'zone', 'login', '94.3.1', '1.1', '1', '', '12.0.3', '0', '1', '1', '1', '0', '1588134505', '11.0.1', 'chess_beta_1.1.289.1398.tar.gz');
+INSERT INTO `1_1_deploy` VALUES ('24', '/data/chess/develop', '', 'bin/KFStartup', 'zone', 'game', '95.3.1', '1.1', '1', '', '12.0.3', '0', '1', '1', '1', '0', '1588134505', '11.0.1', 'chess_beta_1.1.289.1398.tar.gz');
 
 -- ----------------------------
 -- Table structure for `1_1_deploy_old`
@@ -225,7 +225,7 @@ CREATE TABLE `agent` (
 -- ----------------------------
 INSERT INTO `agent` VALUES ('192.168.2.30', '192.168.2.30', '12.0.1', '1.1', '11.0.1', '192.168.2.30', '10000', '1', '12001', '');
 INSERT INTO `agent` VALUES ('192.168.2.31', '192.168.2.31', '12.0.2', '1.1', '11.0.1', '192.168.2.30', '10000', '1', '12001', '');
-INSERT INTO `agent` VALUES ('192.168.2.32', '192.168.2.32', '12.0.3', '1.1', '11.0.1', '192.168.2.30', '10000', '0', '12001', '');
+INSERT INTO `agent` VALUES ('192.168.2.32', '192.168.2.32', '12.0.3', '1.1', '11.0.1', '192.168.2.30', '10000', '1', '12001', 'wget:chess_develop_1.1.395.1904.tar.gz | zone:*:*:3');
 
 -- ----------------------------
 -- Table structure for `file`
@@ -665,6 +665,9 @@ INSERT INTO `version` VALUES ('2020-04-23 08:34:40', 'chess_config_1.1.389.1864.
 INSERT INTO `version` VALUES ('2020-04-24 13:17:42', 'chess_config_1.1.390.1871.tar.gz', 'http://192.168.2.31/upload/chess_config_1.1.390.1871.tar.gz', '0d004171a85a0b19eade1eee2d6f8993');
 INSERT INTO `version` VALUES ('2020-04-25 08:34:43', 'chess_config_1.1.391.1876.tar.gz', 'http://192.168.2.31/upload/chess_config_1.1.391.1876.tar.gz', '5810201fdd0965ce9b6144b907c5efc9');
 INSERT INTO `version` VALUES ('2020-04-26 08:34:49', 'chess_config_1.1.392.1878.tar.gz', 'http://192.168.2.31/upload/chess_config_1.1.392.1878.tar.gz', '28a6b745c7eca2715e249dcb6dc88ad8');
+INSERT INTO `version` VALUES ('2020-04-26 16:21:36', 'chess_config_1.1.392.1881.tar.gz', 'http://192.168.2.31/upload/chess_config_1.1.392.1881.tar.gz', 'de363fdb3e3d7ad8bdff5182a044407d');
+INSERT INTO `version` VALUES ('2020-04-27 08:34:57', 'chess_config_1.1.393.1886.tar.gz', 'http://192.168.2.31/upload/chess_config_1.1.393.1886.tar.gz', '9ddad398cfff3a546a7138d5c8b8a952');
+INSERT INTO `version` VALUES ('2020-04-28 08:34:42', 'chess_config_1.1.394.1892.tar.gz', 'http://192.168.2.31/upload/chess_config_1.1.394.1892.tar.gz', 'b797f4d69017e9b539c4a57cdf9b0db0');
 INSERT INTO `version` VALUES ('2019-12-30 16:09:40', 'chess_develop_1.1.274.1319.tar.gz', 'http://192.168.2.31/upload/chess_develop_1.1.274.1319.tar.gz', 'a4dfc861df6eebe81f61ba5794b2ed8a');
 INSERT INTO `version` VALUES ('2019-12-30 17:16:53', 'chess_develop_1.1.274.1327.tar.gz', 'http://192.168.2.31/upload/chess_develop_1.1.274.1327.tar.gz', '2871acf73885730df39fa3cb2c11464b');
 INSERT INTO `version` VALUES ('2019-12-30 17:26:15', 'chess_develop_1.1.274.1328.tar.gz', 'http://192.168.2.31/upload/chess_develop_1.1.274.1328.tar.gz', 'b80bbe0cb947266843982bd4d4140afa');
@@ -967,3 +970,17 @@ INSERT INTO `version` VALUES ('2020-04-25 08:04:44', 'chess_develop_1.1.391.1876
 INSERT INTO `version` VALUES ('2020-04-25 17:55:36', 'chess_develop_1.1.391.1877.tar.gz', 'http://192.168.2.31/upload/chess_develop_1.1.391.1877.tar.gz', '57521075e13191445b45ae4ae56441f6');
 INSERT INTO `version` VALUES ('2020-04-25 18:05:22', 'chess_develop_1.1.391.1878.tar.gz', 'http://192.168.2.31/upload/chess_develop_1.1.391.1878.tar.gz', '7f49609401dee9c84902a196ef1d4882');
 INSERT INTO `version` VALUES ('2020-04-26 08:04:40', 'chess_develop_1.1.392.1878.tar.gz', 'http://192.168.2.31/upload/chess_develop_1.1.392.1878.tar.gz', '2dbe397f285fb2b98937a7bb9815fb61');
+INSERT INTO `version` VALUES ('2020-04-26 10:35:55', 'chess_develop_1.1.392.1879.tar.gz', 'http://192.168.2.31/upload/chess_develop_1.1.392.1879.tar.gz', 'a5a934c543736a43f019bf735eccc721');
+INSERT INTO `version` VALUES ('2020-04-26 10:57:18', 'chess_develop_1.1.392.1880.tar.gz', 'http://192.168.2.31/upload/chess_develop_1.1.392.1880.tar.gz', '273f74f5aa0180c7cdd07a788b0f0a4a');
+INSERT INTO `version` VALUES ('2020-04-26 16:07:04', 'chess_develop_1.1.392.1881.tar.gz', 'http://192.168.2.31/upload/chess_develop_1.1.392.1881.tar.gz', '9ae294d2ea1883a8f51045dfa8e3a628');
+INSERT INTO `version` VALUES ('2020-04-26 18:02:12', 'chess_develop_1.1.392.1886.tar.gz', 'http://192.168.2.31/upload/chess_develop_1.1.392.1886.tar.gz', '8a74882adeac1ad1888e85ee8904989c');
+INSERT INTO `version` VALUES ('2020-04-27 08:04:51', 'chess_develop_1.1.393.1886.tar.gz', 'http://192.168.2.31/upload/chess_develop_1.1.393.1886.tar.gz', '7057ee4e637ba4040daac7f9ed1b04fb');
+INSERT INTO `version` VALUES ('2020-04-27 17:16:50', 'chess_develop_1.1.393.1891.tar.gz', 'http://192.168.2.31/upload/chess_develop_1.1.393.1891.tar.gz', '6031746539ea3409ad6fa1561914a5f7');
+INSERT INTO `version` VALUES ('2020-04-27 21:49:01', 'chess_develop_1.1.393.1892.tar.gz', 'http://192.168.2.31/upload/chess_develop_1.1.393.1892.tar.gz', 'b55b5396d5730b240666b61eeb040886');
+INSERT INTO `version` VALUES ('2020-04-28 08:04:47', 'chess_develop_1.1.394.1892.tar.gz', 'http://192.168.2.31/upload/chess_develop_1.1.394.1892.tar.gz', 'ce2ec04445c4f472c3a45ea78c129723');
+INSERT INTO `version` VALUES ('2020-04-28 15:24:04', 'chess_develop_1.1.394.1893.tar.gz', 'http://192.168.2.31/upload/chess_develop_1.1.394.1893.tar.gz', '4402a34bf6510915b0062251a5091f2d');
+INSERT INTO `version` VALUES ('2020-04-28 16:28:27', 'chess_develop_1.1.394.1896.tar.gz', 'http://192.168.2.31/upload/chess_develop_1.1.394.1896.tar.gz', '10f3cf291c193fb03e182dbb49517172');
+INSERT INTO `version` VALUES ('2020-04-28 18:52:37', 'chess_develop_1.1.394.1898.tar.gz', 'http://192.168.2.31/upload/chess_develop_1.1.394.1898.tar.gz', '5cfdaea3c5d2d8867da766382ce1cf74');
+INSERT INTO `version` VALUES ('2020-04-28 21:42:00', 'chess_develop_1.1.394.1902.tar.gz', 'http://192.168.2.31/upload/chess_develop_1.1.394.1902.tar.gz', 'eb030138d6f170e1170cc28514c17084');
+INSERT INTO `version` VALUES ('2020-04-29 08:04:54', 'chess_develop_1.1.395.1902.tar.gz', 'http://192.168.2.31/upload/chess_develop_1.1.395.1902.tar.gz', '4aa0d73cffa32c38d8b7b7b5ab0c733b');
+INSERT INTO `version` VALUES ('2020-04-29 12:13:34', 'chess_develop_1.1.395.1904.tar.gz', 'http://192.168.2.31/upload/chess_develop_1.1.395.1904.tar.gz', '25ef76f4c28e189c0523977f6a49b5b2');
