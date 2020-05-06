@@ -28,9 +28,8 @@ namespace KFrame
 
         // 重新获得外网ip
         auto localip = _kf_ip_address->GetLocalIp();
-        _full_url = __FORMAT__( "http://{}:{}/", localip, kfsetting->_port );
-
-        __LOG_INFO__( "http server[{}] startup ok", _full_url );
+        kfglogal->_http_server_url = __FORMAT__( "http://{}:{}/", localip, kfsetting->_port );
+        __LOG_INFO__( "http server[{}] startup ok", kfglogal->_http_server_url );
     }
 
     void KFHttpServerModule::Run()
@@ -57,7 +56,7 @@ namespace KFrame
 
     const std::string& KFHttpServerModule::GetHttpUrl()
     {
-        return _full_url;
+        return KFGlobal::Instance()->_http_server_url;
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////

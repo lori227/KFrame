@@ -55,9 +55,6 @@ namespace KFrame
     private:
         // http服务器
         KFHttpServer* _http_server;
-
-        // 完整路径
-        std::string _full_url;
     };
 }
 

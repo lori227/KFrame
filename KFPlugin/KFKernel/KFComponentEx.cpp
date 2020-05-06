@@ -676,6 +676,8 @@ namespace KFrame
 
     void KFComponentEx::AddDataCallBack( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata, bool callback )
     {
+        // 开启保存数据库定时器
+        StartSaveEntityTimer( kfentity, kfdata );
         {
             // 逻辑回调
             auto kfdatafunction = _add_logic_function.Find( kfparent->_data_setting->_logic_name );
@@ -687,16 +689,6 @@ namespace KFrame
 
         if ( callback )
         {
-            // 模块回调
-            if ( kfdata->HaveMask( KFDataDefine::Mask_AddCall ) )
-            {
-                for ( auto& iter : _add_data_module._objects )
-                {
-                    auto kffunction = iter.second;
-                    kffunction->_function( kfentity, kfparent, key, kfdata );
-                }
-            }
-
             // 注册的函数
             {
                 auto findkey = RecordKeyType( kfdata->_data_setting->_logic_name, key );
@@ -714,15 +706,32 @@ namespace KFrame
                     kfdatafunction->CallFunction( kfentity, kfparent, key, kfdata );
                 }
             }
-        }
 
-        // 开启保存数据库定时器
-        StartSaveEntityTimer( kfentity, kfdata );
-        kfentity->SyncAddData( kfdata, key );
+            // 同步属性
+            kfentity->SyncAddData( kfdata, key );
+
+            // 模块回调
+            if ( kfdata->HaveMask( KFDataDefine::Mask_AddCall ) )
+            {
+                for ( auto& iter : _add_data_module._objects )
+                {
+                    auto kffunction = iter.second;
+                    kffunction->_function( kfentity, kfparent, key, kfdata );
+                }
+            }
+        }
+        else
+        {
+            // 同步属性
+            kfentity->SyncAddData( kfdata, key );
+        }
     }
 
     void KFComponentEx::RemoveDataCallBack( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata, bool callback )
     {
+        // 开启保存数据库定时器
+        StartSaveEntityTimer( kfentity, kfdata );
+
         // 逻辑回调
         {
             auto kfdatafunction = _remove_logic_function.Find( kfparent->_data_setting->_logic_name );
@@ -731,9 +740,6 @@ namespace KFrame
                 kfdatafunction->CallFunction( kfentity, kfparent, key, kfdata );
             }
         }
-
-        // 开启保存数据库定时器
-        StartSaveEntityTimer( kfentity, kfdata );
 
         // 同步客户端
         kfentity->SyncRemoveData( kfdata, key );
