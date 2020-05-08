@@ -22,10 +22,6 @@ namespace KFrame
         KFUtility::SplitString( url, "/" );
 
         __LOG_DEBUG__( "url=[{}] data=[{}]", url, data );
-        if ( data.empty() )
-        {
-            return;
-        }
 
         auto& address = request.clientAddress();
         auto ip = address.host().toString();
