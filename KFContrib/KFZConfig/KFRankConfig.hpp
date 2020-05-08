@@ -2,11 +2,51 @@
 #define __KF_RANK_CONFIG_H__
 
 #include "KFZConfig/KFConfig.h"
-#include "KFZConfig/KFRankSetting.hpp"
+#include "KFZConfig/KFSetting.h"
 
 namespace KFrame
 {
-    class KFRankConfig : public KFConfig, public KFInstance< KFRankConfig >
+    /////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////
+    class KFRandCalcData
+    {
+    public:
+        std::string _parent_name;
+        std::string _child_name;
+        uint64 _max_value = 0u;
+    };
+    /////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////
+    class KFRankSetting : public KFIntSetting
+    {
+    public:
+        // 分区类型 0 全区全服排行榜  1 分区排行榜
+        uint32 _zone_type = 0u;
+
+        // 最大数量
+        uint32 _max_count = 0u;
+
+        // 刷新类型
+        // 0 间隔时间 1 每小时  2 每天 3 每周 4 每月
+        uint32 _refresh_type = 0u;
+
+        // 刷新时间
+        uint32 _refresh_time = 0u;
+
+        // 刷新小时
+        uint32 _refresh_hour = 0u;
+
+        // 刷新分钟
+        uint32 _refresh_minute = 0u;
+
+        // 是否清除数据
+        bool _is_reset_data = false;
+
+        // 计算属性
+        std::vector< KFRandCalcData > _calc_data;
+    };
+
+    class KFRankConfig : public KFConfigT< KFRankSetting >, public KFInstance< KFRankConfig >
     {
     public:
         KFRankConfig()
@@ -14,22 +54,17 @@ namespace KFrame
             _file_name = "rank";
         }
 
-        // 加载配置
-        bool LoadConfig( const std::string& filename, const std::string& filepath, uint32 loadmask );
-
-        // 查找排行榜设定
-        const KFRankSetting* FindSetting( uint32 rankid ) const;
-
         // 获得排行榜列表
-        std::vector< KFRankSetting* >& FindSetting( const std::string& parentdata, const std::string& rankdata );
+        std::vector< KFRankSetting* >& FindRankSetting( const std::string& parentname, const std::string& childname );
 
-    public:
-        // 玩家属性
-        std::vector< KFCalcData > _player_data;
+    protected:
+        // 清除配置
+        virtual void ClearSetting();
 
-        // 排行榜配置列表
-        KFHashMap< uint32, uint32, KFRankSetting > _kf_rank_setting;
+        // 读取配置
+        virtual void ReadSetting( KFNode& xmlnode, KFRankSetting* kfsetting );
 
+    private:
         typedef std::pair< std::string, std::string > RankDataType;
         std::map< RankDataType, std::vector< KFRankSetting* > > _kf_rank_data_list;
     };

@@ -53,10 +53,6 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleQueryFriendRankListAck );
 
     protected:
-
-        // 发送消息到Rank
-        bool SendMessageToRank( uint64 playerid, uint32 msgid, ::google::protobuf::Message* message );
-
         // 更新排行榜数据
         void UpdateRankDataToShard( KFEntity* player, const KFRankSetting* kfsetting );
 

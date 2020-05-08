@@ -21,6 +21,7 @@ namespace KFrame
         __FIND_MODULE__( _kf_config, KFConfigInterface );
         __FIND_MODULE__( _kf_message, KFMessageInterface );
         __FIND_MODULE__( _kf_route, KFRouteClientInterface );
+        __FIND_MODULE__( _kf_basic_attribute, KFBasicAttributeInterface );
     }
 
     void KFRankShardPlugin::AddConfig()

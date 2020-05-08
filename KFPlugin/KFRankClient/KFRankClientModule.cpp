@@ -22,21 +22,16 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFRankClientModule::SendMessageToRank( uint64 playerid, uint32 msgid, ::google::protobuf::Message* message )
-    {
-        return _kf_route->SendToRand( playerid, __STRING__( rank ), msgid, message, true );
-    }
-    /////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_UPDATE_DATA_FUNCTION__( KFRankClientModule::OnDataUpdateCallBack )
     {
         auto kfparent = kfdata->GetParent();
-        if ( !kfdata->HaveMask( KFDataDefine::Mask_Rank ) || !kfparent->HaveMask( KFDataDefine::Mask_Rank ) )
+        if ( !kfdata->HaveMask( KFDataDefine::Mask_Rank ) ||
+                !kfparent->HaveMask( KFDataDefine::Mask_Rank ) )
         {
             return;
         }
 
-        auto& ranksettinglist = KFRankConfig::Instance()->FindSetting( kfparent->_data_setting->_name, kfdata->_data_setting->_name );
+        auto& ranksettinglist = KFRankConfig::Instance()->FindRankSetting( kfparent->_data_setting->_name, kfdata->_data_setting->_name );
         for ( auto kfsetting : ranksettinglist )
         {
             // 属性更新顺序无法保证, 所以先保存到一个列表中, 在AfterRun中更新排行榜数据
@@ -73,7 +68,7 @@ namespace KFrame
         auto zoneid = _invalid_int;
         if ( kfsetting->_zone_type == KFMsg::ZoneRank )
         {
-            zoneid = KFGlobal::Instance()->STUUIDZoneId( __STRING__( player ), playerid );
+            zoneid = KFGlobal::Instance()->STUuidZoneId( __STRING__( player ), playerid );
         }
 
         return zoneid;
@@ -103,29 +98,14 @@ namespace KFrame
         auto pbdatas = pbrankdata->mutable_pbdata();
         for ( auto& calcdata : kfsetting->_calc_data )
         {
-            if ( !calcdata.IsShowData() )
-            {
-                continue;
-            }
-
-            auto kfdata = player->Find( calcdata._parent_name, calcdata._data_name );
+            auto kfdata = player->Find( calcdata._parent_name, calcdata._child_name );
             if ( kfdata != nullptr )
             {
-                ( *pbdatas )[ calcdata._data_name ] = kfdata->ToString();
+                ( *pbdatas )[ calcdata._child_name ] = kfdata->ToString();
             }
         }
 
-        // 玩家的基本数据
-        for ( auto& calcdata  : KFRankConfig::Instance()->_player_data )
-        {
-            auto kfdata = player->Find( calcdata._parent_name, calcdata._data_name );
-            if ( kfdata != nullptr )
-            {
-                ( *pbdatas )[ calcdata._data_name ] = kfdata->ToString();
-            }
-        }
-
-        SendMessageToRank( player->GetKeyID(), KFMsg::S2S_UPDATE_RANK_DATA_REQ, &req );
+        _kf_route->RepeatToRand( playerid, __STRING__( rank ), KFMsg::S2S_UPDATE_RANK_DATA_REQ, &req );
     }
 
     uint64 KFRankClientModule::CalcRankDataScore( KFEntity* player, const KFRankSetting* kfsetting )
@@ -135,22 +115,20 @@ namespace KFrame
 
         // 倍率系数
         uint64 coefficient = 1u;
-
         for ( auto iter = kfsetting->_calc_data.rbegin(); iter != kfsetting->_calc_data.rend(); ++iter )
         {
             auto& calcdata = *iter;
-            if ( !calcdata.IsCalcData() )
-            {
-                continue;
-            }
 
-            auto kfdata = player->Find( calcdata._parent_name, calcdata._data_name );
+            auto kfdata = player->Find( calcdata._parent_name, calcdata._child_name );
             if ( kfdata != nullptr )
             {
-                rankscore += static_cast< uint64 >( kfdata->Get< double >() * coefficient );
+                rankscore += kfdata->Get() * coefficient;
             }
 
-            coefficient = coefficient * calcdata._max_value;
+            if ( calcdata._max_value > 0u )
+            {
+                coefficient = coefficient * calcdata._max_value;
+            }
         }
 
         return rankscore;
@@ -169,7 +147,7 @@ namespace KFrame
         KFMsg::S2SQueryRankListReq req;
         req.set_rankid( kfmsg.rankid() );
         req.set_zoneid( CalcRankZoneId( playerid, kfsetting ) );
-        auto ok = SendMessageToRank( playerid, KFMsg::S2S_QUERY_RANK_LIST_REQ, &req );
+        auto ok = _kf_route->SendToRand( playerid, __STRING__( rank ), KFMsg::S2S_QUERY_RANK_LIST_REQ, &req );
         if ( !ok )
         {
             _kf_display->SendToClient( player, KFMsg::RankServerBusy );
@@ -198,7 +176,7 @@ namespace KFrame
             kffriend = kffriendrecord->Next();
         }
 
-        auto ok = SendMessageToRank( playerid, KFMsg::S2S_QUERY_FRIEND_RANK_LIST_REQ, &req );
+        auto ok = _kf_route->SendToRand( playerid, __STRING__( rank ), KFMsg::S2S_QUERY_FRIEND_RANK_LIST_REQ, &req );
         if ( !ok )
         {
             _kf_display->SendToClient( player, KFMsg::RankServerBusy );

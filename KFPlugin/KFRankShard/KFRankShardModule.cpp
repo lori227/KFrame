@@ -102,7 +102,7 @@ namespace KFrame
         __UN_TIMER_0__();
         __UN_SCHEDULE__();
         _max_rank_worker_id = kfmsg.workerid();
-        for ( auto& iter : KFRankConfig::Instance()->_kf_rank_setting._objects )
+        for ( auto& iter : KFRankConfig::Instance()->_settings._objects )
         {
             auto kfsetting = iter.second;
             auto value = kfsetting->_id % _max_rank_worker_id;
@@ -209,10 +209,24 @@ namespace KFrame
 
                 // 读取排行榜信息
                 auto queryrankdata = _rank_redis_driver->QueryString( "hget {} {}", rankdatakey, playerid );
+                if ( queryrankdata->_value.empty() )
+                {
+                    continue;
+                }
+
+                StringMap basicdata;
+                _kf_basic_attribute->QueryBasicAttribute( playerid, basicdata );
+                if ( basicdata.empty() )
+                {
+                    continue;
+                }
 
                 auto pbrankdata = kfrankdata->_rank_datas.add_rankdata();
-                pbrankdata->set_rankindex( ++rankindex );
                 KFProto::Parse( pbrankdata, queryrankdata->_value, KFCompressEnum::Convert );
+                pbrankdata->set_rankindex( ++rankindex );
+
+                auto& pbdata = *pbrankdata->mutable_pbdata();
+                __MAP_TO_PROTO__( basicdata, pbdata );
             }
 
             // 保存排行榜信息

@@ -19,7 +19,6 @@
     <ClInclude Include="KFExecuteData.h" />
     <ClInclude Include="KFFormulaConfig.h" />
     <ClInclude Include="KFRankConfig.hpp" />
-    <ClInclude Include="KFRankSetting.hpp" />
     <ClInclude Include="KFReadSetting.h" />
     <ClInclude Include="KFRelationConfig.hpp" />
     <ClInclude Include="KFRouteConfig.hpp" />
