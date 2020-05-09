@@ -18,7 +18,7 @@ namespace KFrame
         bool LoadConfig( const std::string& filename, const std::string& filepath, uint32 loadmask );
 
         // 查找vpn ip
-        const std::string& FindVPNIpAddress( const std::string& appname, const std::string& apptype, uint32 zoneid );
+        std::tuple<std::string, uint32> FindVPNIpAddress( const std::string& appname, const std::string& apptype, uint32 zoneid );
     public:
         // 获得ip的访问地址
         std::string _dns_get_ip_url;
@@ -36,7 +36,7 @@ namespace KFrame
         std::string _pay_url;
 
         // vpn 地址
-        UInt32String _vpn_list;
+        std::unordered_map<uint32, std::tuple<std::string, uint32>> _vpn_list;
     };
 }
 

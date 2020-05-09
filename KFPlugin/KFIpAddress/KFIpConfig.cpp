@@ -32,7 +32,8 @@ namespace KFrame
             {
                 auto zoneid = vpnnode.GetUInt32( "Zone" );
                 auto ip = vpnnode.GetString( "Ip" );
-                _vpn_list[ zoneid ] = ip;
+                auto port = vpnnode.GetUInt32( "Port", true );
+                _vpn_list[ zoneid ] = std::make_tuple( ip, port );
 
                 vpnnode.NextNode();
             }
@@ -41,17 +42,17 @@ namespace KFrame
         return true;
     }
 
-    const std::string& KFIpConfig::FindVPNIpAddress( const std::string& appname, const std::string& apptype, uint32 zoneid )
+    std::tuple<std::string, uint32> KFIpConfig::FindVPNIpAddress( const std::string& appname, const std::string& apptype, uint32 zoneid )
     {
         if ( appname != __STRING__( zone ) || apptype != __STRING__( gate ) )
         {
-            return _invalid_string;
+            return std::make_tuple( _invalid_string, 0u );
         }
 
         auto iter = _vpn_list.find( zoneid );
         if ( iter == _vpn_list.end() )
         {
-            return _invalid_string;
+            return std::make_tuple( _invalid_string, 0u );
         }
 
         return iter->second;

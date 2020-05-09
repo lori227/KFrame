@@ -36,11 +36,18 @@ namespace KFrame
     void KFIpAddressModule::AfterLoad()
     {
         auto kfglobal = KFGlobal::Instance();
-        auto& vpnip = KFIpConfig::Instance()->FindVPNIpAddress( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->GetZoneId() );
+        auto vpndata = KFIpConfig::Instance()->FindVPNIpAddress( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->GetZoneId() );
+        auto vpnip = std::get<0>( vpndata );
+        auto vpnport = std::get<1>( vpndata );
         if ( !vpnip.empty() )
         {
             kfglobal->_interanet_ip = vpnip;
-            __LOG_INFO__( "use vpnip=[{}]", kfglobal->_interanet_ip );
+            if ( vpnport != 0u )
+            {
+                kfglobal->_listen_port = vpnport;
+            }
+
+            __LOG_INFO__( "use vpn ip=[{}] port=[{}]", kfglobal->_interanet_ip, kfglobal->_listen_port );
         }
     }
 
