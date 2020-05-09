@@ -586,8 +586,13 @@ namespace KFrame
         deploydata->_startup_time = KFUtility::SplitValue< uint64 >( strdata, __OR_STRING__ );
     }
 
-    bool KFDeployAgentModule::IsAgentDeploy( const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid )
+    bool KFDeployAgentModule::IsAgentDeploy( const std::string& command, const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid )
     {
+        if ( command == __STRING__( launch ) )
+        {
+            return true;
+        }
+
         for ( auto& iter : _deploy_list._objects )
         {
             auto deploydata = iter.second;
@@ -649,7 +654,7 @@ namespace KFrame
                    pbdeploy->command(), pbdeploy->value(), pbdeploy->appname(), pbdeploy->apptype(), pbdeploy->appid(), pbdeploy->zoneid() );
 
         // 判断是否agent的进程
-        auto ok = IsAgentDeploy( pbdeploy->appname(), pbdeploy->apptype(), pbdeploy->appid(), pbdeploy->zoneid() );
+        auto ok = IsAgentDeploy( pbdeploy->command(), pbdeploy->appname(), pbdeploy->apptype(), pbdeploy->appid(), pbdeploy->zoneid() );
         if ( !ok )
         {
             return;

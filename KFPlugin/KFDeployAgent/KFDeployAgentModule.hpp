@@ -104,7 +104,7 @@ namespace KFrame
         void StartConnectDeployServer();
 
         // 判断是否agent进程
-        bool IsAgentDeploy( const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid );
+        bool IsAgentDeploy( const std::string& command, const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid );
 
         // 更新数据到部署服务
         void UpdateDeployToDatabase( KFDeployData* deploydata );
