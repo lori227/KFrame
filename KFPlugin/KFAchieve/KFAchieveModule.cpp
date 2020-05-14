@@ -42,7 +42,6 @@ namespace KFrame
             kfachieve = player->CreateData( kfachieverecord );
             auto kfconditionobject = kfachieve->Find( __STRING__( conditions ) );
             _kf_condition->AddCondition( player, kfconditionobject, kfsetting->_complete_condition, kfsetting->_complete_condition_type );
-            kfachieverecord->Add( kfsetting->_id, kfachieve );
 
             // 判断条件
             auto complete = _kf_condition->InitCondition( player, kfconditionobject, KFConditionEnum::LimitNull, false );
@@ -50,6 +49,8 @@ namespace KFrame
             {
                 kfachieve->Set<uint32>( __STRING__( status ), KFMsg::DoneStatus );
             }
+
+            kfachieverecord->Add( kfsetting->_id, kfachieve );
         }
     }
 
