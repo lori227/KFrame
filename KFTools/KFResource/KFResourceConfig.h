@@ -39,6 +39,9 @@ namespace KFrame
         // 时间
         uint64 _now_time = 0u;
 
+        // xml 名字
+        std::string _xml_name;
+
     public:
         // 服务器文件
         bool IsServerFile()

@@ -58,6 +58,7 @@ namespace KFrame
 
                     kfsetting->_name = name;
                     kfsetting->_type = filenode.GetUInt32( "Type" );
+                    kfsetting->_xml_name = filenode.GetString( "XmlName", true );
                     kfsetting->_last_md5_client = filenode.GetString( "MD5Client", true );
                     kfsetting->_last_md5_server = filenode.GetString( "MD5Server", true );
                     filenode.NextNode();
@@ -108,6 +109,7 @@ namespace KFrame
             xmlfile << "\t\t<File";
             xmlfile << __FORMAT__( " Name=\"{}\"", KFConvert::ToUTF8( kfstting->_name ) );
             xmlfile << __FORMAT__( " Type=\"{}\"", kfstting->_type );
+            xmlfile << __FORMAT__( " XmlName=\"{}\"", kfstting->_xml_name );
             xmlfile << __FORMAT__( " MD5Client=\"{}\"", kfstting->_last_md5_client );
             xmlfile << __FORMAT__( " MD5Server=\"{}\"", kfstting->_last_md5_server );
             xmlfile << "/>\n";

@@ -904,8 +904,8 @@ bool CKFResourceDlg::ParseExcelFiles( const std::string& version )
             if ( ok )
             {
                 AddLog( "parse file=[{}] ok", file );
-                ok = _kf_parse->SaveToXml( "..\\config\\server", version );
-                if ( ok )
+                kfsetting->_xml_name = _kf_parse->SaveToXml( "..\\config\\server", version );
+                if ( !kfsetting->_xml_name.empty() )
                 {
                     kfsetting->_last_md5_server = kfsetting->_md5_now;
                 }
@@ -919,7 +919,11 @@ bool CKFResourceDlg::ParseExcelFiles( const std::string& version )
                 AddLog( _kf_parse->_error );
             }
         }
+
+        // 保存版本列表
+        SaveXmlVersionList( "..\\config\\server", KFResource::FileType::Server );
     }
+
 
     if ( KFUtility::HaveBitMask( _resource_config->_file_type, ( uint32 )KFResource::FileType::Client ) )
     {
@@ -935,8 +939,8 @@ bool CKFResourceDlg::ParseExcelFiles( const std::string& version )
             if ( ok )
             {
                 AddLog( "parse file=[{}] ok", file );
-                ok = _kf_parse->SaveToXml( "..\\config\\client", version );
-                if ( ok )
+                kfsetting->_xml_name = _kf_parse->SaveToXml( "..\\config\\client", version );
+                if ( !kfsetting->_xml_name.empty() )
                 {
                     kfsetting->_last_md5_client = kfsetting->_md5_now;
                 }
@@ -950,9 +954,48 @@ bool CKFResourceDlg::ParseExcelFiles( const std::string& version )
                 AddLog( _kf_parse->_error );
             }
         }
+
+
+        // 保存版本列表
+        SaveXmlVersionList( "..\\config\\client", KFResource::FileType::Client );
     }
 
     return true;
+}
+
+void CKFResourceDlg::SaveXmlVersionList( const std::string& path, uint32 type )
+{
+    auto file = path + "\\_xmlversion.xml";
+    std::ofstream xmlfile( file );
+    if ( !xmlfile )
+    {
+        return;
+    }
+
+    //xmlfile << "<?xml version = '1.0' encoding = 'utf-8' ?>\n";
+    xmlfile << __FORMAT__( "<root version=\"{}\">\n", "0000" );
+
+    for ( auto& iter : _resource_config->_files._objects )
+    {
+        auto kfsetting = iter.second;
+        if ( kfsetting->_xml_name.empty() )
+        {
+            continue;
+        }
+
+        if ( type == KFResource::FileType::Server )
+        {
+            xmlfile << __FORMAT__( "\t<item name=\"{}\" version=\"{}\" />\n", kfsetting->_xml_name, kfsetting->_last_md5_server );
+        }
+        else
+        {
+            xmlfile << __FORMAT__( "\t<item name=\"{}\" version=\"{}\" />\n", kfsetting->_xml_name, kfsetting->_last_md5_client );
+        }
+    }
+    xmlfile << "</root>\n";
+
+    xmlfile.flush();
+    xmlfile.close();
 }
 
 void CKFResourceDlg::CopyConfigFiles()

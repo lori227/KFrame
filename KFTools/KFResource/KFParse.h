@@ -13,7 +13,7 @@ namespace KFrame
     public:
         bool LoadFromExcel( const char* file, bool utf8, uint32 saveflag );
 
-        bool SaveToXml( const char* path, const std::string& version );
+        std::string SaveToXml( const char* path, const std::string& version );
         bool SaveToCSV( const char* path, const std::string& version );
 
     private:
@@ -21,7 +21,7 @@ namespace KFrame
 
         KFFile* AddFile( std::string& name );
 
-        bool SaveToXml( const std::string& path, KFFile* kffile, const std::string& version );
+        std::string SaveToXml( const std::string& path, KFFile* kffile, const std::string& version );
         bool SaveToCSV( const std::string& path, KFFile* kffile, const std::string& version );
 
     public:

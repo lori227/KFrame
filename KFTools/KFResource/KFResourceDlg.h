@@ -65,6 +65,9 @@ protected:
     void ParseTotalExcelFiles();
     bool ParseExcelFiles( const std::string& version );
 
+    // 保存版本列表
+    void SaveXmlVersionList( const std::string& path, uint32 type );
+
     // 拷贝文件
     void CopyConfigFiles();
     void CopyConfigFiles( const std::string& path, const std::string& configpath );

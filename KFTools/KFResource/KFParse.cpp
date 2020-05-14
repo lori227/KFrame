@@ -130,55 +130,58 @@ namespace KFrame
         return true;
     }
 
-    bool KFParse::SaveToXml( const char* path, const std::string& version )
+    std::string KFParse::SaveToXml( const char* path, const std::string& version )
     {
         for ( auto iter : _files )
         {
-            if ( !SaveToXml( path, &iter.second, version ) )
+            auto filename = SaveToXml( path, &iter.second, version );
+            if ( !filename.empty() )
             {
-                return false;
+                return filename;
             }
         }
 
-        return true;
+        return "";
     }
 
-    bool KFParse::SaveToXml( const std::string& path, KFFile* kffile, const std::string& version )
+    std::string KFParse::SaveToXml( const std::string& path, KFFile* kffile, const std::string& version )
     {
         std::string filename = kffile->_class._class_name;
         std::transform( filename.begin(), filename.end(), filename.begin(), ::tolower );
         auto file = path + "/" + filename + ".xml";
 
         std::ofstream xmlfile( file );
-        if ( !xmlfile )
+        if ( xmlfile )
+        {
+            //xmlfile << "<?xml version = '1.0' encoding = 'utf-8' ?>\n";
+            xmlfile << __FORMAT__( "<root version=\"{}\">\n", version );
+
+            for ( auto& iter : kffile->_datas )
+            {
+                auto kfdata = &iter;
+                xmlfile << "\t<item";
+
+                for ( auto& miter : kfdata->_datas )
+                {
+                    auto& strvalue = miter.second;
+
+                    auto attribute = kffile->_class.GetAttribute( miter.first );
+                    xmlfile << __FORMAT__( " {}=\"{}\"", attribute->_name, strvalue );
+                }
+
+                xmlfile << "/>\n";
+            }
+            xmlfile << "</root>\n";
+
+            xmlfile.flush();
+            xmlfile.close();
+        }
+        else
         {
             _error = __FORMAT__( "can't open xml=[{}]", filename );
-            return false;
         }
 
-        //xmlfile << "<?xml version = '1.0' encoding = 'utf-8' ?>\n";
-        xmlfile << __FORMAT__( "<root version=\"{}\">\n", version );
-
-        for ( auto& iter : kffile->_datas )
-        {
-            auto kfdata = &iter;
-            xmlfile << "\t<item";
-
-            for ( auto& miter : kfdata->_datas )
-            {
-                auto& strvalue = miter.second;
-
-                auto attribute = kffile->_class.GetAttribute( miter.first );
-                xmlfile << __FORMAT__( " {}=\"{}\"", attribute->_name, strvalue );
-            }
-
-            xmlfile << "/>\n";
-        }
-        xmlfile << "</root>\n";
-
-        xmlfile.flush();
-        xmlfile.close();
-        return true;
+        return filename;
     }
 
     bool KFParse::SaveToCSV( const char* path, const std::string& version )
