@@ -71,7 +71,7 @@ namespace KFrame
         std::string _local_ip;
 
         // 外网ip
-        std::string _interane_ip;
+        std::string _interanet_ip;
     };
 }
 

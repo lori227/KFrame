@@ -29,7 +29,6 @@ namespace KFrame
         {
             kfglobal->_interanet_ip = kfglobal->_local_ip;
         }
-        __LOG_INFO__( "localip=[{}], interanetip=[{}]", kfglobal->_local_ip, kfglobal->_interanet_ip );
 
         auto vpndata = KFIpConfig::Instance()->FindVPNIpAddress( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->GetZoneId() );
         auto vpnip = std::get<0>( vpndata );
@@ -187,22 +186,24 @@ namespace KFrame
 
     const std::string& KFIpAddressModule::GetInteranetIp()
     {
-        if ( _interane_ip.empty() )
+        if ( _interanet_ip.empty() )
         {
             // 获得外网地址
             auto interanetip = _kf_http_client->STGet( KFIpConfig::Instance()->_dns_get_ip_url, _invalid_string );
             if ( interanetip.empty() )
             {
                 // 获得内网地址
-                _interane_ip = GetLocalIp();
+                _interanet_ip = GetLocalIp();
             }
             else
             {
-                _interane_ip = KFUtility::SplitString( interanetip, "\n" );
+                _interanet_ip = KFUtility::SplitString( interanetip, "\n" );
             }
+
+            __LOG_INFO__( " interanetip=[{}]", _interanet_ip );
         }
 
-        return _interane_ip;
+        return _interanet_ip;
     }
 
     static std::string _default_ip = "127.0.0.1";
@@ -219,6 +220,8 @@ namespace KFrame
             {
                 _local_ip = _default_ip;
             }
+
+            __LOG_INFO__( "localip=[{}]", _local_ip );
         }
 
         return _local_ip;
