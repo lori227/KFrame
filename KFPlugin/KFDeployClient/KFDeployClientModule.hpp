@@ -70,6 +70,9 @@ namespace KFrame
     private:
         // agentid
         uint64 _agent_id = 0;
+        std::string _agent_ip;
+        uint32 _agent_port = 0u;
+
 
         // 命令回调函数
         KFHashMap< std::string, const std::string&, KFDeployCommand > _command_data;

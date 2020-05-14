@@ -29,12 +29,10 @@ namespace KFrame
             return;
         }
 
-        auto agentid = KFUtility::SplitString( agentdata, "|" );
-        auto ip = KFUtility::SplitString( agentdata, "|" );
-        auto port = KFUtility::SplitValue< uint32 >( agentdata, "|" );
-
-        _agent_id = KFAppId::ToUInt64( agentid );
-        _kf_tcp_client->StartClient( __STRING__( deploy ), __STRING__( agent ), _agent_id, ip, port );
+        _agent_id = KFUtility::SplitValue<uint64>( agentdata, "|" );
+        _agent_ip = KFUtility::SplitString( agentdata, "|" );
+        _agent_port = KFUtility::SplitValue< uint32 >( agentdata, "|" );
+        _kf_tcp_client->StartClient( __STRING__( deploy ), __STRING__( agent ), _agent_id, _agent_ip, _agent_port );
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_NET_EVENT_FUNCTION__( KFDeployClientModule::OnClientConnectAgent )
@@ -51,6 +49,9 @@ namespace KFrame
         if ( netdata->_id == _agent_id )
         {
             __UN_TIMER_1__( _agent_id );
+
+            // 重新开始连接
+            _kf_tcp_client->StartClient( __STRING__( deploy ), __STRING__( agent ), _agent_id, _agent_ip, _agent_port );
         }
     }
 
