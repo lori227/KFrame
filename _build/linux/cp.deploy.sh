@@ -41,7 +41,6 @@ fi
 binpath=$respath/bin/linux/$1
 cp -f $binpath/KFStartup$filename $deploypath/bin/kfdeploy
 
-cp -f $binpath/KFProject$filename.so $deploypath/bin/
 cp -f $binpath/KFBus$filename.so $deploypath/bin/
 cp -f $binpath/KFIpAddress$filename.so $deploypath/bin/
 cp -f $binpath/KFTimer$filename.so $deploypath/bin/
@@ -55,7 +54,6 @@ cp -f $binpath/KFDeployAgent$filename.so $deploypath/bin/
 cp -f $binpath/KFDeployServer$filename.so $deploypath/bin/
 cp -f $binpath/KFMySQL$filename.so $deploypath/bin/
 cp -f $binpath/KFSchedule$filename.so $deploypath/bin/
-cp -f $binpath/KFOption$filename.so $deploypath/bin/
 
 
 cd /tmp
