@@ -16,7 +16,7 @@
 
 namespace KFrame
 {
-    void KFIpAddressModule::InitModule()
+    void KFIpAddressModule::AfterLoad()
     {
         // 计算ip地址
         auto kfglobal = KFGlobal::Instance();
@@ -31,10 +31,7 @@ namespace KFrame
         }
 
         __LOG_INFO__( "localip=[{}], interanetip=[{}]", kfglobal->_local_ip, kfglobal->_interanet_ip );
-    }
 
-    void KFIpAddressModule::AfterLoad()
-    {
         auto kfglobal = KFGlobal::Instance();
         auto vpndata = KFIpConfig::Instance()->FindVPNIpAddress( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->GetZoneId() );
         auto vpnip = std::get<0>( vpndata );

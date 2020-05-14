@@ -23,7 +23,6 @@ namespace KFrame
         ~KFIpAddressModule() = default;
 
         // 初始化
-        virtual void InitModule();
         virtual void BeforeRun();
 
         // 加载配置
