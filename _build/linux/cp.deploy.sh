@@ -28,6 +28,7 @@ cp -a -rf  $respath/startup/deploy.server.startup $deploypath/startup/
 
 #config
 cp -a -rf  $respath/config/config.xml $deploypath/config/
+cp -a -rf  $respath/config/_xmlversion.xml $deploypath/config/
 
 #lib
 cp -f $respath/lib/* $deploypath/lib/
