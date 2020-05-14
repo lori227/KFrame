@@ -20,14 +20,22 @@ namespace KFrame
     {
         // 计算ip地址
         auto kfglobal = KFGlobal::Instance();
-        kfglobal->_local_ip = GetLocalIp();
-        if ( kfglobal->_net_type == KFServerEnum::Internet )
+
+        if ( kfglobal->_local_ip.empty() )
         {
-            kfglobal->_interanet_ip = GetInteranetIp();
+            kfglobal->_local_ip = GetLocalIp();
         }
-        else
+
+        if ( kfglobal->_interanet_ip.empty() )
         {
-            kfglobal->_interanet_ip = kfglobal->_local_ip;
+            if ( kfglobal->_net_type == KFServerEnum::Internet )
+            {
+                kfglobal->_interanet_ip = GetInteranetIp();
+            }
+            else
+            {
+                kfglobal->_interanet_ip = kfglobal->_local_ip;
+            }
         }
 
         __LOG_INFO__( "localip=[{}], interanetip=[{}]", kfglobal->_local_ip, kfglobal->_interanet_ip );
