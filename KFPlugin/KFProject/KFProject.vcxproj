@@ -15,12 +15,14 @@
     <ClCompile Include="KFProjectConfig.cpp" />
     <ClCompile Include="KFProjectModule.cpp" />
     <ClCompile Include="KFProjectPlugin.cpp" />
+    <ClCompile Include="KFRewardConfig.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFProjectConfig.hpp" />
     <ClInclude Include="KFProjectInterface.h" />
     <ClInclude Include="KFProjectModule.hpp" />
     <ClInclude Include="KFProjectPlugin.hpp" />
+    <ClInclude Include="KFRewardConfig.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7C4F7818-1E76-4F5A-936C-1F96C885206A}</ProjectGuid>

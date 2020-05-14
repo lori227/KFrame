@@ -12,6 +12,8 @@
 
 #include "KFProjectInterface.h"
 #include "KFProjectConfig.hpp"
+#include "KFRewardConfig.hpp"
+#include "KFZConfig/KFElementConfig.h"
 
 namespace KFrame
 {
@@ -22,8 +24,8 @@ namespace KFrame
         ~KFProjectModule() = default;
 
         // 初始化
+        virtual void InitModule();
         virtual void BeforeRun();
-
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
     };

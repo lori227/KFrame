@@ -284,6 +284,7 @@ namespace KFrame
         __STRING_DEFINE__( refresh );
         __STRING_DEFINE__( playername );
         __STRING_DEFINE__( refuse );
+        __STRING_DEFINE__( rewardtype );
     }
 }
 

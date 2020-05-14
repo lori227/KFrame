@@ -5,11 +5,13 @@
     <ClCompile Include="KFProjectModule.cpp" />
     <ClCompile Include="KFProjectPlugin.cpp" />
     <ClCompile Include="KFProjectConfig.cpp" />
+    <ClCompile Include="KFRewardConfig.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFProjectInterface.h" />
     <ClInclude Include="KFProjectModule.hpp" />
     <ClInclude Include="KFProjectPlugin.hpp" />
     <ClInclude Include="KFProjectConfig.hpp" />
+    <ClInclude Include="KFRewardConfig.hpp" />
   </ItemGroup>
 </Project>

@@ -21,6 +21,10 @@ namespace KFrame
         auto disconnecttime = disconnetnode.GetUInt32( "Time" );
         kfglobal->AddConstant( __STRING__( disconnecttime ), 0u, disconnecttime );
         //////////////////////////////////////////////////////////////////
+        auto rewardnode = config.FindNode( "RewardType" );
+        auto rewardtype = rewardnode.GetUInt32( "Value" );
+        kfglobal->AddConstant( __STRING__( rewardtype ), 0u, rewardtype );
+        //////////////////////////////////////////////////////////////////
         auto databasenodes = config.FindNode( "Databases" );
         if ( databasenodes.IsValid() )
         {
