@@ -32,7 +32,6 @@ namespace KFrame
 
         __LOG_INFO__( "localip=[{}], interanetip=[{}]", kfglobal->_local_ip, kfglobal->_interanet_ip );
 
-        auto kfglobal = KFGlobal::Instance();
         auto vpndata = KFIpConfig::Instance()->FindVPNIpAddress( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->GetZoneId() );
         auto vpnip = std::get<0>( vpndata );
         auto vpnport = std::get<1>( vpndata );
