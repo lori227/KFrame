@@ -20,24 +20,15 @@ namespace KFrame
     {
         // 计算ip地址
         auto kfglobal = KFGlobal::Instance();
-
-        if ( kfglobal->_local_ip.empty() )
+        kfglobal->_local_ip = GetLocalIp();
+        if ( kfglobal->_net_type == KFServerEnum::Internet )
         {
-            kfglobal->_local_ip = GetLocalIp();
+            kfglobal->_interanet_ip = GetInteranetIp();
         }
-
-        if ( kfglobal->_interanet_ip.empty() )
+        else
         {
-            if ( kfglobal->_net_type == KFServerEnum::Internet )
-            {
-                kfglobal->_interanet_ip = GetInteranetIp();
-            }
-            else
-            {
-                kfglobal->_interanet_ip = kfglobal->_local_ip;
-            }
+            kfglobal->_interanet_ip = kfglobal->_local_ip;
         }
-
         __LOG_INFO__( "localip=[{}], interanetip=[{}]", kfglobal->_local_ip, kfglobal->_interanet_ip );
 
         auto vpndata = KFIpConfig::Instance()->FindVPNIpAddress( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->GetZoneId() );
