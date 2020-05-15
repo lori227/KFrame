@@ -5,8 +5,10 @@
 	<!-- SaveFlag 保存类型 1 在线更新保存 2 离线保存(数据落地) -->
 	<!-- Sort 读取数据的优先级 -->
 	<!-- CacheTime 缓存保存时间 只对缓存数据库有效 -->
+	<!-- CompressType 压缩类型 1:lz4 2:zstd -->
+	<!-- CompressLevel 压缩等级 -->
 
-	<Save>
+	<Save CompressType="1" CompressLevel="5">
 		<!-- redis -->
 		<Database Type="1" Open="1" SaveFlag="3" Sort="1" CacheTime="2592000‬"/>
 

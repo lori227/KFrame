@@ -10,12 +10,12 @@ namespace KFrame
     public:
 
         // 压缩
-        static int32 Zib( const std::string& value, std::string& result );
-        static int32 Compress( const std::string& value, std::string& result );
+        static bool Compress( const std::string& value, std::string& result, uint32 compresstype, uint32 compresslevel, bool convert );
 
         // 解压缩
-        static int32 UnZib( const std::string& value, std::string& result );
-        static int32 UnCompress( const std::string& value, std::string& result );
+        static bool UnCompress( const std::string& value, std::string& result, uint32 compresstype, bool convert );
+
+    protected:
     };
 }
 

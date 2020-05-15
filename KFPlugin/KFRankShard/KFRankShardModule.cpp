@@ -67,7 +67,7 @@ namespace KFrame
         if ( !querydata->_value.empty() )
         {
             auto strrankata = querydata->_value[ __STRING__( rankdata ) ];
-            KFProto::Parse( &kfrankdata->_rank_datas, strrankata, KFCompressEnum::Compress );
+            KFProto::Parse( &kfrankdata->_rank_datas, strrankata, KFCompressEnum::ZSTD, true );
 
             kfrankdata->_min_rank_score = __TO_UINT64__( querydata->_value[ __STRING__( minrankscore ) ] );
         }
@@ -77,7 +77,7 @@ namespace KFrame
 
     void KFRankShardModule::SaveRankData( KFRankData* kfrankdata )
     {
-        auto strrankdata = KFProto::Serialize( &kfrankdata->_rank_datas, KFCompressEnum::Compress );
+        auto strrankdata = KFProto::Serialize( &kfrankdata->_rank_datas, KFCompressEnum::ZSTD, 5u, true );
 
         StringMap rankdata;
         rankdata[ __STRING__( id ) ] = __TO_STRING__( kfrankdata->_rank_id );
@@ -222,7 +222,7 @@ namespace KFrame
                 }
 
                 auto pbrankdata = kfrankdata->_rank_datas.add_rankdata();
-                KFProto::Parse( pbrankdata, queryrankdata->_value, KFCompressEnum::Convert );
+                KFProto::Parse( pbrankdata, queryrankdata->_value, KFCompressEnum::None, true );
                 pbrankdata->set_rankindex( ++rankindex );
 
                 auto& pbdata = *pbrankdata->mutable_pbdata();
@@ -291,7 +291,7 @@ namespace KFrame
         auto pbrankdata = &kfmsg.pbrankdata();
 
         // 排行显示属性
-        auto strrankdata = KFProto::Serialize( pbrankdata, KFCompressEnum::Convert );
+        auto strrankdata = KFProto::Serialize( pbrankdata, KFCompressEnum::None, 0u, true );
         _rank_redis_driver->Append( "hset {} {} {}", rankdatakey, kfmsg.playerid(), strrankdata );
 
         // 判断最低的分数
@@ -362,7 +362,7 @@ namespace KFrame
         {
             if ( !strrankdata.empty() )
             {
-                KFProto::Parse( pbrankdatas->add_rankdata(), strrankdata, KFCompressEnum::Convert );
+                KFProto::Parse( pbrankdatas->add_rankdata(), strrankdata, KFCompressEnum::None, true );
             }
         }
 

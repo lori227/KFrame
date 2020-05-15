@@ -21,51 +21,21 @@ namespace KFrame
         return result;
     }
 
-    std::string& KFProto::Serialize( const ::google::protobuf::Message* proto, uint32 mask )
+    std::string& KFProto::Serialize( const ::google::protobuf::Message* proto, uint32 compresstype, uint32 compresslevel, bool convert )
     {
         static std::string result = "";
         result.clear();
 
         auto data = proto->SerializeAsString();
-        switch ( mask )
-        {
-        case KFCompressEnum::Convert:
-            result = KFDecode::UByteToString( data );
-            break;
-        case KFCompressEnum::Zib:
-            KFCompress::Zib( data, result );
-            break;
-        case KFCompressEnum::Compress:
-            KFCompress::Compress( data, result );
-            break;
-        default:
-            result = data;
-            break;
-        }
+        KFCompress::Compress( data, result, compresstype, compresslevel, convert );
 
         return result;
     }
 
-    bool KFProto::Parse( ::google::protobuf::Message* proto, const std::string& data, uint32 mask )
+    bool KFProto::Parse( ::google::protobuf::Message* proto, const std::string& data, uint32 compresstype, bool convert )
     {
         std::string result = "";
-        switch ( mask )
-        {
-        case KFCompressEnum::Convert:
-            result = KFDecode::StringToUByte( data );
-            break;
-        case KFCompressEnum::Zib:
-            KFCompress::UnZib( data, result );
-            break;
-        case KFCompressEnum::Compress:
-            KFCompress::UnCompress( data, result );
-            break;
-        default:
-            result = data;
-            break;
-        }
-
-        auto ok = false;
+        auto ok = KFCompress::UnCompress( data, result, compresstype, convert );
         if ( !result.empty() )
         {
             ok = proto->ParseFromString( result );
@@ -76,7 +46,10 @@ namespace KFrame
         }
         else
         {
-            __LOG_ERROR__( "message[{}] data empty", proto->GetTypeName() );
+            if ( !ok )
+            {
+                __LOG_ERROR__( "message[{}] data empty", proto->GetTypeName() );
+            }
         }
 
         return ok;

@@ -2,111 +2,104 @@
 #include "KFCompress.h"
 #include "KFDecode.h"
 #include "lz4/lib/lz4.h"
+#include "zstd/lib/zstd.h"
 
 namespace KFrame
 {
-    static uint32 _zib_length = KFBufferEnum::Buff_20M;
+    static uint32 _compress_length = KFBufferEnum::Buff_20M;
     static uint32 _data_length = KFBufferEnum::Buff_40M;
-    static uint32 _compress_level = 1;
 
-    int32 KFCompress::Zib( const std::string& value, std::string& result )
+    bool KFCompress::Compress( const std::string& value, std::string& result, uint32 compresstype, uint32 compresslevel, bool convert )
     {
         result.clear();
         if ( value.empty() )
         {
-            return 0;
+            return true;
         }
 
         // 压缩数据
-        auto zibbuffer = __KF_UINT8__( _zib_length );
-        auto ziblength = LZ4_compress_fast( value.data(), ( int8* )zibbuffer, ( int32 )value.size(), ( int32 )_zib_length, ( int32 )_compress_level );
-        if ( ziblength > 0 )
+        auto length = 0;
+        auto compressbuffer = __KF_UINT8__( _compress_length );
+        switch ( compresstype )
         {
-            result.assign( ( int8* )zibbuffer, ziblength );
-        }
-        else
-        {
-            __LOG_ERROR__( "compress failed=[{}]", ziblength );
-        }
-
-        return ziblength;
-    }
-
-    int32 KFCompress::UnZib( const std::string& value, std::string& result )
-    {
-        result.clear();
-        if ( value.empty() )
-        {
-            return 0;
+        case KFCompressEnum::LZ4:
+            length = LZ4_compress_fast( value.data(), ( int8* )compressbuffer, ( int32 )value.size(), ( int32 )_compress_length, ( int32 )compresslevel );
+            break;
+        case KFCompressEnum::ZSTD:
+            length = ( int32 )ZSTD_compress( compressbuffer, _compress_length, value.data(), value.size(), ( int32 )compresslevel );
+            break;
+        default:
+            result = value;
+            break;
         }
 
-        // 解压缩
-        auto zibbuffer = __KF_UINT8__( _zib_length );
-        auto ziblength = LZ4_decompress_safe( value.data(), ( int8* )zibbuffer, ( int32 )value.size(), ( int32 )_zib_length );
-        if ( ziblength > 0 )
-        {
-            result.assign( ( int8* )zibbuffer, ziblength );
-        }
-        else
-        {
-            __LOG_ERROR__( "uncompress failed=[{}]", ziblength );
-        }
-
-        return ziblength;
-    }
-
-
-    int32 KFCompress::Compress( const std::string& value, std::string& result )
-    {
-        result.clear();
-        if ( value.empty() )
-        {
-            return 0;
-        }
-
-        // 压缩数据
-        auto zibbuffer = __KF_UINT8__( _zib_length );
-        auto length = LZ4_compress_fast( value.data(), ( int8* )zibbuffer, ( int32 )value.size(), ( int32 )_zib_length, ( int32 )_compress_level );
         if ( length > 0 )
         {
-            auto databuffer = __KF_INT8__( _data_length );
+            if ( convert )
+            {
+                auto databuffer = __KF_INT8__( _data_length );
 
-            // 转为可视字符串
-            auto datalength = KFDecode::UByteToString( zibbuffer, length, databuffer, _data_length );
-            result.assign( databuffer, datalength );
+                // 转为可视字符串
+                auto datalength = KFDecode::UByteToString( compressbuffer, length, databuffer, _data_length );
+                result.assign( databuffer, datalength );
+
+                __LOG_DEBUG__( "compress source=[{}], fast=[{}] string=[{}]", value.size(), length, datalength );
+            }
+            else
+            {
+                result.assign( ( int8* )compressbuffer, length );
+            }
         }
-        else
+        else if ( length < 0 )
         {
             __LOG_ERROR__( "compress failed=[{}]", length );
         }
 
-        return length;
+        return length >= 0;
     }
 
-    int32 KFCompress::UnCompress( const std::string& value, std::string& result )
+    bool KFCompress::UnCompress( const std::string& value, std::string& result, uint32 compresstype, bool convert )
     {
         result.clear();
         if ( value.empty() )
         {
-            return 0;
+            return true;
         }
 
         // 转成压缩数据
-        auto zibbuffer = __KF_UINT8__( _zib_length );
-        auto ziblength = KFDecode::StringToUByte( value.data(), ( uint32 )value.size(), zibbuffer, _zib_length );
+        auto buffer = ( uint8* )value.data();
+        auto length = ( int32 )value.size();
+        if ( convert )
+        {
+            buffer = __KF_UINT8__( _compress_length );
+            length = KFDecode::StringToUByte( value.data(), ( uint32 )value.size(), buffer, _compress_length );
+        }
 
         // 解压缩
+        auto datalength = 0;
         auto databuffer = __KF_INT8__( _data_length );
-        auto datalength = LZ4_decompress_safe( ( int8* )zibbuffer, databuffer, ziblength, _data_length );
+        switch ( compresstype )
+        {
+        case KFCompressEnum::LZ4:
+            datalength = LZ4_decompress_safe( ( int8* )buffer, databuffer, length, _data_length );
+            break;
+        case KFCompressEnum::ZSTD:
+            datalength = ( int32 )ZSTD_decompress( databuffer, _data_length, buffer, length );
+            break;
+        default:
+            result = value;
+            break;
+        }
+
         if ( datalength > 0 )
         {
             result.assign( databuffer, datalength );
         }
-        else
+        else if ( datalength < 0 )
         {
             __LOG_ERROR__( "uncompress failed=[{}]", datalength );
         }
 
-        return datalength;
+        return datalength >= 0;
     }
 }

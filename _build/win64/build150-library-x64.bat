@@ -56,6 +56,14 @@ call build150-lz4-x64.bat
 cd ../../../
 :================================================================
 
+:  build zstd
+
+cd zstd/build/VS_scripts
+call build150-zstd-x64.bat
+
+cd ../../../
+:================================================================
+
 :  build libiconv
 
 cd libiconv/win64/MSVC14

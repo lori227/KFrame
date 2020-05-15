@@ -148,7 +148,7 @@ namespace KFrame
             }
 
             // 反序列化数据
-            auto ok = KFProto::Parse( pbobject, kfresult->_value, KFCompressEnum::Compress );
+            auto ok = KFProto::Parse( pbobject, kfresult->_value, KFDataShardConfig::Instance()->_compress_type, true );
             if ( !ok )
             {
                 __LOG_ERROR__( "database=[{}] player[{}:{}] parse failed", dataexecute->GetType(), zoneid, playerid );
@@ -167,7 +167,7 @@ namespace KFrame
     bool KFDataShardModule::SavePlayerData( uint32 zoneid, uint64 playerid, const KFMsg::PBObject* pbobject, uint32 saveflag )
     {
         // 序列化数据
-        auto strdata = KFProto::Serialize( pbobject, KFCompressEnum::Compress );
+        auto strdata = KFProto::Serialize( pbobject, KFDataShardConfig::Instance()->_compress_type, KFDataShardConfig::Instance()->_compress_level, true );
         if ( strdata == _invalid_string )
         {
             __LOG_ERROR__( "player[{}:{}] serialize failed", zoneid, playerid );

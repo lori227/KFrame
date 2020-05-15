@@ -41,7 +41,10 @@ namespace KFrame
         void InitExecute( const KFDatabaseSetting* kfsetting );
 
         // 获得类型
-        uint64 GetType() const;
+        inline uint64 GetType() const
+        {
+            return _kf_setting->_id;
+        }
 
         // 逻辑执行
         void RunDataKeeper();

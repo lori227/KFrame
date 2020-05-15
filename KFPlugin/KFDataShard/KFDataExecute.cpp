@@ -26,11 +26,6 @@ namespace KFrame
         InitExecute();
     }
 
-    uint64 KFDataExecute::GetType() const
-    {
-        return _kf_setting->_id;
-    }
-
     void KFDataExecute::RunDataKeeper()
     {
         UInt64Set removes;
