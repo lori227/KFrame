@@ -1,1 +1,4 @@
+set(EXTEND_LIB_DEBUG lz4 zstd)
+set(EXTEND_LIB_RELEASE lz4 zstd)
+
 BUILD_PLUGIN_WITH_PROTO("KFDataShard")

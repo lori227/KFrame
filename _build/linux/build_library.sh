@@ -63,6 +63,22 @@ cd ../
 blue "end building lz4"
 #pause
 #-----------------------------------------------------
+blue "start building zstd"
+
+cd zstd/build/cmake
+mkdir -p .build
+cd ./build
+cmake ../ -G "Unix Makefiles"
+make clean
+make -j 4
+cp -R -f ./lib/libzstd.a ../../../../../$libpath
+cp -R -f ./lib/libzstd.so* ../../../../../$libpath
+cd ../../../../ 
+
+blue "end building zstd"
+#pause
+#-----------------------------------------------------
+
 blue "start building libunwind"
 
 cd libunwind

@@ -8,7 +8,7 @@
 	<!-- CompressType 压缩类型 1:lz4 2:zstd -->
 	<!-- CompressLevel 压缩等级 -->
 
-	<Save CompressType="1" CompressLevel="5">
+	<Save CompressType="2" CompressLevel="5">
 		<!-- redis -->
 		<Database Type="1" Open="1" SaveFlag="3" Sort="1" CacheTime="2592000‬"/>
 
