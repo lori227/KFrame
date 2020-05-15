@@ -71,7 +71,7 @@ namespace KFrame
         __JSON_SET_VALUE__( kfjson, __STRING__( appname ), kfglobal->_app_name );
         __JSON_SET_VALUE__( kfjson, __STRING__( appid ), kfglobal->_app_id->GetId() );
         __JSON_SET_VALUE__( kfjson, __STRING__( zoneid ), kfglobal->_app_id->GetZoneId() );
-        __JSON_SET_VALUE__( kfjson, __STRING__( ip ), kfglobal->_local_ip );
+        __JSON_SET_VALUE__( kfjson, __STRING__( ip ), kfglobal->_interanet_ip );
         __JSON_SET_VALUE__( kfjson, __STRING__( port ), kfglobal->_listen_port );
         __JSON_SET_VALUE__( kfjson, __STRING__( time ), 70u );	// 失效时间70秒
         _kf_http_client->MTGet<KFIpAddressModule>( _url, kfjson );
