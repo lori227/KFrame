@@ -9,12 +9,11 @@ namespace KFrame
     class KFNetConnector : public KFNetSession
     {
     public:
-
         KFNetConnector();
         ~KFNetConnector();
 
         // 初始化
-        void InitConnector( uint64 id, KFNetServices* netservices );
+        void InitConnector( uint64 id, KFNetServices* netservices, const KFNetCompressEncrypt* compressencrypt );
 
         // 弹出一个收到消息
         KFNetMessage* PopNetMessage();
@@ -28,10 +27,10 @@ namespace KFrame
 
     protected:
         // 发送单一消息
-        bool SendSingleMessage( uint64 recvid, uint32 msgid, const char* data, uint32 length, uint32 delay );
+        bool SendSingleMessage( uint64 recvid, uint32 msgid, const char* data, uint32 length, uint16 flag, uint32 delay );
 
         // 发送拆包消息
-        bool SendMultiMessage( uint64 recvid, uint32 msgid, const char* data, uint32 length, uint32 delay );
+        bool SendMultiMessage( uint64 recvid, uint32 msgid, const char* data, uint32 length, uint16 flag, uint32 delay );
         //////////////////////////////////////////////////////////////////////////////////////////////////
         KFNetMessage* PopMessage();
         KFNetMessage* PopSingleMessage( KFNetMessage* message );
@@ -50,6 +49,9 @@ namespace KFrame
     protected:
         // 网络服务
         KFNetServices* _net_services;
+
+        // 加密压缩类型
+        const KFNetCompressEncrypt* _net_compress_encrypt = nullptr;
 
         // 上一次通讯时间
         uint64 _last_send_time;

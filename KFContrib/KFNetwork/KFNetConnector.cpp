@@ -24,9 +24,10 @@ namespace KFrame
         _delay_queue.clear();
     }
 
-    void KFNetConnector::InitConnector( uint64 id, KFNetServices* netservices )
+    void KFNetConnector::InitConnector( uint64 id, KFNetServices* netservices, const KFNetCompressEncrypt* compressencrypt )
     {
         _net_services = netservices;
+        _net_compress_encrypt = compressencrypt;
         _last_recv_time = _net_services->_now_time;
         _last_send_time = _net_services->_now_time;
 
@@ -46,10 +47,10 @@ namespace KFrame
         KFNetMessage* retmessage = nullptr;
         switch ( message->_head._msgid )
         {
-        case KFNetDefine::CUT_MSGCHILDBEGIN:	// 子消息头
+        case KFNetDefine::MsgChildBegin:	// 子消息头
             retmessage = PopMultiMessage( message );
             break;
-        case KFNetDefine::CUT_MSGCHILD:			// 如果取到的是子消息, 直接丢掉
+        case KFNetDefine::MsgChild:			// 如果取到的是子消息, 直接丢掉
             _recv_queue.PopRemove();
             break;
         default:		// 不是拆包消息, 直接返回
@@ -98,10 +99,10 @@ namespace KFrame
     KFNetMessage* KFNetConnector::PopSingleMessage( KFNetMessage* message )
     {
         KFNetMessage* retmessage = nullptr;
-        if ( message->_head._length + sizeof( KFNetMessage ) <= _net_services->_buff_length )
+        if ( message->_head._length + sizeof( KFNetMessage ) <= _net_services->_max_serialize_buff_length )
         {
-            retmessage = reinterpret_cast< KFNetMessage* >( _net_services->_buff_address );
-            retmessage->_data = _net_services->_buff_address + sizeof( KFNetMessage );
+            retmessage = reinterpret_cast< KFNetMessage* >( _net_services->_serialize_buff );
+            retmessage->_data = _net_services->_serialize_buff + sizeof( KFNetMessage );
             retmessage->CopyFrom( message );
         }
 
@@ -137,7 +138,7 @@ namespace KFrame
         auto nethead = reinterpret_cast< KFNetHead* >( message->_data );
         auto totallength = nethead->_length + static_cast< uint32 >( sizeof( KFNetMessage ) );
         auto buffaddress = _net_services->GetBuffAddress( nethead->_msgid, totallength );
-        if ( _net_services->_buff_length < totallength )
+        if ( _net_services->_max_serialize_buff_length < totallength )
         {
             // 长度异常, 直接丢弃
             _recv_queue.PopRemove();
@@ -153,13 +154,13 @@ namespace KFrame
 
         // 合并子消息
         auto copylength = 0u;
-        auto leftlength = _net_services->_buff_length - sizeof( KFNetMessage );
+        auto leftlength = _net_services->_max_serialize_buff_length - sizeof( KFNetMessage );
         for ( auto i = 0u; i < childcount; ++i )
         {
             auto childmessage = _recv_queue.Front();
 
             // 不是子消息, 直接返回null
-            if ( childmessage == nullptr || childmessage->_head._msgid != KFNetDefine::CUT_MSGCHILD )
+            if ( childmessage == nullptr || childmessage->_head._msgid != KFNetDefine::MsgChild )
             {
                 return nullptr;
             }
@@ -184,16 +185,16 @@ namespace KFrame
     }
 
     // 添加一个发送消息
-    bool KFNetConnector::SendSingleMessage( uint64 recvid, uint32 msgid, const char* data, uint32 length, uint32 delay )
+    bool KFNetConnector::SendSingleMessage( uint64 recvid, uint32 msgid, const char* data, uint32 length, uint16 flag, uint32 delay )
     {
         auto netmessage = KFNetMessage::Create( length );
 
         Route route( 0, 0, recvid );
-        netmessage->CopyFrom( route, msgid, data, length );
+        netmessage->CopyFrom( route, msgid, data, length, flag );
         return PushSendMessage( netmessage, delay );
     }
 
-    bool KFNetConnector::SendMultiMessage( uint64 recvid, uint32 msgid, const char* data, uint32 length, uint32 delay )
+    bool KFNetConnector::SendMultiMessage( uint64 recvid, uint32 msgid, const char* data, uint32 length, uint16 flag, uint32 delay )
     {
         // 子消息个数
         uint32 datalength = length;
@@ -203,12 +204,15 @@ namespace KFrame
         KFServerHead head;
         head._msgid = msgid;
         head._length = length;
+#ifdef __USE_MESSAGE_FLAG__
+        head._flag = flag;
+#endif
         head._route._recv_id = recvid;
 
         // 子消息头
         auto headmessage = KFNetMessage::Create( KFNetMessage::HeadLength() );
         headmessage->_head._child = messagecount;
-        headmessage->CopyFrom( head._route, KFNetDefine::CUT_MSGCHILDBEGIN, reinterpret_cast< int8*>( &head ), KFNetMessage::HeadLength() );
+        headmessage->CopyFrom( head._route, KFNetDefine::MsgChildBegin, reinterpret_cast< int8*>( &head ), KFNetMessage::HeadLength(), 0 );
         if ( !PushSendMessage( headmessage, delay ) )
         {
             return false;
@@ -224,7 +228,7 @@ namespace KFrame
             // 消息拷贝
             auto childmessage = KFNetMessage::Create( sendlength );
             childmessage->_head._child = i + 1;
-            childmessage->CopyFrom( head._route, KFNetDefine::CUT_MSGCHILD, data + copydatalength, sendlength );
+            childmessage->CopyFrom( head._route, KFNetDefine::MsgChild, data + copydatalength, sendlength, 0 );
             if ( !PushSendMessage( childmessage, delay ) )
             {
                 return false;
@@ -245,17 +249,20 @@ namespace KFrame
 
     bool KFNetConnector::SendNetMessage( uint64 recvid, uint32 msgid, const char* data, uint32 length, uint32 delay /* = 0u */ )
     {
-        // 消息加密
-        data = _net_services->Encode( data, length );
+        // 消息压缩, 加密
+        auto rettuple = _net_services->Encode( _net_compress_encrypt, data, length );
+        auto senddata = std::get<0>( rettuple );
+        auto sendlength = std::get<1>( rettuple );
+        auto sendflag = std::get<2>( rettuple );
 
         bool ok = false;
         if ( length <= KFNetDefine::MaxMessageLength )
         {
-            ok = SendSingleMessage( recvid, msgid, data, length, delay );
+            ok = SendSingleMessage( recvid, msgid, senddata, sendlength, sendflag, delay );
         }
         else
         {
-            ok = SendMultiMessage( recvid, msgid, data, length, delay );
+            ok = SendMultiMessage( recvid, msgid, senddata, sendlength, sendflag, delay );
         }
 
         // 发送消息
@@ -304,12 +311,17 @@ namespace KFrame
         auto message = PopNetMessage();
         while ( message != nullptr )
         {
-            // 消息解密
-            auto length = message->_head._length;
-            auto data = _net_services->Decode( message->_data, length );
+            // 消息解压缩,解密
+#ifdef __USE_MESSAGE_FLAG__
+            auto rettuple = _net_services->Decode( _net_compress_encrypt, message->_data, message->_head._length, message->_head._flag );
+#else
+            auto rettuple = _net_services->Decode( _net_compress_encrypt, message->_data, message->_head._length, 0 );
+#endif
+            auto retdata = std::get<0>( rettuple );
+            auto retlength = std::get<1>( rettuple );
 
             // 处理回调函数
-            netfunction( message->_head._route, message->_head._msgid, data, length );
+            netfunction( message->_head._route, message->_head._msgid, retdata, retlength );
 
             // 每次处理200个消息
             ++messagecount;

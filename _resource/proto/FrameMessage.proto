@@ -90,6 +90,15 @@ message RegisterToServerAck
 	uint64 appid = 1;
 	bytes appname = 2;
 	bytes apptype = 3;
+
+	// 服务器的压缩
+	uint32 compresstype = 4;
+	uint32 compresslevel = 5;
+	uint32 compresslength = 6;
+
+	// 服务器加密数据
+	bytes encryptkey = 7;
+	bool openencrypt = 8;
 }
 
 // S2S_TELL_REGISTER_TO_SERVER

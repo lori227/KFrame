@@ -109,6 +109,12 @@ namespace KFrame
         // 网络服务器引擎
         KFNetServerEngine* _server_engine;
 
+        // 压缩长度
+        uint32 _compress_length;
+
+        // 是否加密
+        bool _is_open_encrypt = false;
+
         // 发现客户端回调
         KFBind< std::string, const std::string&, KFNetEventFunction > _kf_discover_function;
 

@@ -22,7 +22,7 @@ namespace KFrame
 
     void KFTcpClientModule::BeforeRun()
     {
-        _client_engine->InitEngine( 10000, KFMessageEnum::Server, 0u );
+        _client_engine->InitEngine( 10000, KFMessageEnum::Server );
 
         _client_engine->BindNetFunction( this, &KFTcpClientModule::HandleNetMessage );
         _client_engine->BindConnectFunction( this, &KFTcpClientModule::OnClientConnected );
@@ -55,20 +55,17 @@ namespace KFrame
     // 连接成功
     __KF_NET_EVENT_FUNCTION__( KFTcpClientModule::OnClientConnected )
     {
+        auto kfglobal = KFGlobal::Instance();
+
         // 把自己注册到服务器
         KFMsg::RegisterToServerReq req;
         auto listendata = req.mutable_listen();
-
-        auto kfglobal = KFGlobal::Instance();
-
         listendata->set_appname( kfglobal->_app_name );
         listendata->set_apptype( kfglobal->_app_type );
         listendata->set_appid( kfglobal->_app_id->GetId() );
         listendata->set_ip( kfglobal->_interanet_ip );
         listendata->set_port( kfglobal->_listen_port );
-
-        auto strdata = req.SerializeAsString();
-        SendNetMessage( netdata->_id, KFMsg::S2S_REGISTER_TO_SERVER_REQ, strdata.data(), strdata.size() );
+        SendNetMessage( netdata->_id, KFMsg::S2S_REGISTER_TO_SERVER_REQ, &req );
     }
 
     // 连接断开
@@ -328,6 +325,8 @@ namespace KFrame
         {
             auto netdata = &kfclient->_net_data;
             __LOG_INFO__( "[{}:{}:{}|{}:{}] service ok", netdata->_name, netdata->_type, netdata->_str_id, netdata->_ip, netdata->_port );
+
+            kfclient->InitCompressEncrypt( kfmsg.compresstype(), kfmsg.compresslevel(), kfmsg.compresslength(), kfmsg.encryptkey(), kfmsg.openencrypt() );
 
             // 处理回调函数
             CallClientConnectionFunction( netdata );

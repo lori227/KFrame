@@ -53,7 +53,16 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////
         auto kftcpsetting = FindTcpServerSetting();
-        _server_engine->InitEngine( kftcpsetting->_max_queue_size, kftcpsetting->_message_type, kftcpsetting->_compress_level );
+        _compress_length = kftcpsetting->_compress_length;
+        _is_open_encrypt = kftcpsetting->_open_encrypt;
+        _server_engine->InitEngine( kftcpsetting->_max_queue_size,
+                                    kftcpsetting->_message_type,
+                                    KFTcpServerConfig::Instance()->_compress_type,
+                                    KFTcpServerConfig::Instance()->_compress_level,
+                                    kftcpsetting->_compress_length,
+                                    KFTcpServerConfig::Instance()->_encrypt_key,
+                                    kftcpsetting->_open_encrypt );
+
         _server_engine->BindNetFunction( this, &KFTcpServerModule::HandleNetMessage );
         _server_engine->BindLostFunction( this, &KFTcpServerModule::OnServerLostHandle );
 
@@ -240,29 +249,35 @@ namespace KFrame
             return;
         }
 
+        // handle 数据
         auto netdata = &kfhandle->_net_data;
+        netdata->_session = handlid;
         netdata->_name = listendata->appname();
         netdata->_type = listendata->apptype();
         netdata->_id = listendata->appid();
         netdata->_ip = listendata->ip();
         netdata->_port = listendata->port();
         netdata->_str_id = KFAppId::ToString( listendata->appid() );
-        netdata->_session = handlid;
-        /////////////////////////////////////////////////////////////////////////////////////////////
-        /////////////////////////////////////////////////////////////////////////////////////////////
-        auto kfglobal = KFGlobal::Instance();
 
         // 注册回馈
+        auto kfglobal = KFGlobal::Instance();
         KFMsg::RegisterToServerAck ack;
         ack.set_apptype( kfglobal->_app_type );
         ack.set_appname( kfglobal->_app_name );
         ack.set_appid( kfglobal->_app_id->GetId() );
-        auto strdata = ack.SerializeAsString();
+        ack.set_compresslength( _compress_length );
+        ack.set_compresstype( KFTcpServerConfig::Instance()->_compress_type );
+        ack.set_compresslevel( KFTcpServerConfig::Instance()->_compress_level );
+        ack.set_openencrypt( _is_open_encrypt );
+        ack.set_encryptkey( KFTcpServerConfig::Instance()->_encrypt_key );
         SendNetMessage( handlid, KFMsg::S2S_REGISTER_TO_SERVER_ACK, &ack );
 
+        // 初始化压缩加密
+        kfhandle->InitCompressEncrypt();
+        /////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////
         // 注册新客户端回调
         CallDiscoverFunction( kfhandle );
-
         __LOG_INFO__( "[{}:{}:{}|{}:{}] register ok", netdata->_name, netdata->_type, netdata->_str_id, netdata->_ip, netdata->_port );
     }
 

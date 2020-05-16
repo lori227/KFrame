@@ -18,8 +18,9 @@ namespace KFrame
         uint32 _time_out = 20;
         uint32 _max_connection = 20000;
         uint32 _max_queue_size = 10000;
-        uint32 _compress_level = 0u;
         uint32 _message_type = KFMessageEnum::Server;
+        uint32 _compress_length = 0u;
+        bool _open_encrypt = false;
     };
 
     class KFTcpServerConfig : public KFConfig, public KFInstance< KFTcpServerConfig >
@@ -39,6 +40,15 @@ namespace KFrame
     public:
         // 服务器列表
         std::vector < KFTcpSetting > _tcp_setting_list;
+
+        // 压缩类型
+        uint32 _compress_type = 0u;
+
+        // 压缩等级
+        uint32 _compress_level = 0u;
+
+        // 加密秘钥
+        std::string _encrypt_key;
     };
 }
 

@@ -15,7 +15,7 @@ namespace KFrame
         ~KFNetClientEngine();
 
         // 初始化引擎
-        void InitEngine( uint32 queuesize, uint32 type, uint32 compress );
+        void InitEngine( uint32 queuesize, uint32 messagetype );
 
         // 关闭引擎
         void ShutEngine();

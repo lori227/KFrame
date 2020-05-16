@@ -19,7 +19,7 @@ namespace KFrame
         virtual ~KFNetServices();
 
         // 初始化
-        virtual void InitServices( uint32 eventcount, uint32 queuecount, uint32 messagetype, uint32 compress );
+        virtual void InitServices( uint32 eventcount, uint32 queuecount, uint32 messagetype );
 
         // 开始服务
         virtual int32 StartServices( const KFNetData* netdata );
@@ -33,11 +33,19 @@ namespace KFrame
         // 发送事件到网络服务
         void SendEventToServices( KFNetSession* netsession, uint32 evnettype );
 
+        //////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////
+        // 初始化压缩设置
+        void InitCompress( uint32 compresstype, uint32 compresslevel, uint32 compresslength );
+
+        // 初始化加密设置
+        void InitEncrypt( const std::string& encryptkey, bool openencrypt );
+
         // 消息加密
-        const char* Encode( const char* data, uint32& length );
+        std::tuple< const char*, uint32, uint16 > Encode( const KFNetCompressEncrypt* compressencrypt, const char* data, uint32 length );
 
         // 消息解密
-        const char* Decode( const char* data, uint32& length );
+        std::tuple< const char*, uint32 > Decode( const KFNetCompressEncrypt* compressencrypt, const char* data, uint32 length, uint16 flag );
 
     protected:
         // 线程逻辑
@@ -49,16 +57,26 @@ namespace KFrame
         // 关闭服务
         static void OnAsyncCloseCallBack( uv_async_t* handle );
 
+        // 压缩数据
+        const char* CompressData( const KFNetCompressEncrypt* compressencrypt, const char* data, uint32& length );
+        const char* DeCompressData( const KFNetCompressEncrypt* compressencrypt, const char* data, uint32& length );
+
         // 计算压缩buff长度
-        void CalcCompressLength( uint32 length );
+        void LZ4CalcCompressLength( const char* data, uint32 length, bool iscompress );
+        void ZSTDCalcCompressLength( const char* data, uint32 length, bool iscompress );
+
+        // 加密数据
+        const char* EncryptData( const KFNetCompressEncrypt* compressencrypt, const char* data, uint32& length );
+        const char* DeEncryptData( const KFNetCompressEncrypt* compressencrypt, const char* data, uint32& length );
+
     public:
         // 消息序列化buff地址
-        char* _buff_address = nullptr;
-        uint32 _buff_length = 0u;
+        char* _serialize_buff = nullptr;
+        uint32 _max_serialize_buff_length = 0u;
 
         // 解压buff
-        char* _compress_address = nullptr;
-        uint32 _compress_length = 0u;
+        char* _compress_buff = nullptr;
+        uint32 _max_compress_buff_length = 0u;
 
         // 网络事件
         KFNetEvent* _net_event = nullptr;
@@ -77,15 +95,15 @@ namespace KFrame
 
         // 服务器消息类型
         uint32 _message_type = 0u;
+
+        // 压缩和加密设置
+        KFNetCompressEncrypt _compress_encrypt;
     protected:
         // 线程逻辑标识
         std::atomic<bool> _thread_run;
 
         // 线程id
         int64 _thread_id = 0u;
-
-        // 压缩等级
-        uint32 _compress = 0u;
 
         // 异步事件
         uv_async_t* _uv_event_async = nullptr;

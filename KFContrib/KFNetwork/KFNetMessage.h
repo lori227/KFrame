@@ -8,6 +8,7 @@
 
 namespace KFrame
 {
+    //#define __USE_MESSAGE_FLAG__
     ///////////////////////////////////////////////////////////////////////////////////////////
     class KFNetHead
     {
@@ -20,6 +21,11 @@ namespace KFrame
 
         // 子消息个数
         uint16 _child = 0u;
+
+#ifdef __USE_MESSAGE_FLAG__
+        // 消息标记 ( 0x1 压缩, 0x2 加密  0x3 压缩+加密 )
+        uint16 _flag = 0u;
+#endif
     };
 
     // 客户端与服务器之间的消息头
@@ -65,7 +71,7 @@ namespace KFrame
             return __KF_NEW__( KFNetMessage, length );
         }
 
-        void Release()
+        inline void Release()
         {
             __KF_DELETE__( KFNetMessage, this );
         }
@@ -76,7 +82,7 @@ namespace KFrame
         }
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
-        void CopyData( const int8* data, uint32 length )
+        inline void CopyData( const int8* data, uint32 length )
         {
             _head._length = length;
             if ( length == 0 || data == nullptr )
@@ -88,7 +94,7 @@ namespace KFrame
         }
 
         // 复制消息
-        void CopyFrom( KFNetMessage* message )
+        inline void CopyFrom( KFNetMessage* message )
         {
             _head = message->_head;
             if ( message->_head._length > 0 )
@@ -97,10 +103,13 @@ namespace KFrame
             }
         }
 
-        void CopyFrom( const Route& route, uint32 msgid, const int8* data, uint32 length )
+        inline void CopyFrom( const Route& route, uint32 msgid, const int8* data, uint32 length, uint16 flag )
         {
             _head._route = route;
             _head._msgid = msgid;
+#ifdef __USE_MESSAGE_FLAG__
+            _head._flag = flag;
+#endif
             CopyData( data, length );
         }
         ///////////////////////////////////////////////////////////////////////////////

@@ -38,7 +38,7 @@ namespace KFrame
 
         _uv_connect->data = this;
         _uv_connect_timer->data = this;
-        InitConnector( _net_data._id, netservices );
+        InitConnector( _net_data._id, netservices, &_net_compress_encrypt );
 
         // 启动连接
         netservices->SendEventToServices( this, KFNetDefine::ConnectEvent );
@@ -123,6 +123,19 @@ namespace KFrame
                 uv_close( reinterpret_cast< uv_handle_t* >( _uv_client ), OnShutDownCallBack );
             }
         }
+    }
+
+    void KFNetClient::InitCompressEncrypt( uint32 compresstype, uint32 compresslevel, uint32 compresslength, const std::string& encryptkey, bool openencrypt )
+    {
+        _net_compress_encrypt._compress_type = compresstype;
+        _net_compress_encrypt._compress_level = compresslevel;
+        if ( compresslength != 0u )
+        {
+            _net_compress_encrypt._compress_length = compresslength;
+        }
+
+        _net_compress_encrypt._encrypt_key = encryptkey;
+        _net_compress_encrypt._open_encrypt = openencrypt;
     }
 
     void KFNetClient::CloseClient()

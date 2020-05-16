@@ -1397,6 +1397,11 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::RegisterToServerAck, appid_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::RegisterToServerAck, appname_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::RegisterToServerAck, apptype_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::RegisterToServerAck, compresstype_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::RegisterToServerAck, compresslevel_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::RegisterToServerAck, compresslength_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::RegisterToServerAck, encryptkey_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::RegisterToServerAck, openencrypt_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::TellRegisterToServer, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -1884,68 +1889,68 @@ static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROT
   { 0, -1, sizeof(::KFMsg::ListenData)},
   { 10, -1, sizeof(::KFMsg::RegisterToServerReq)},
   { 16, -1, sizeof(::KFMsg::RegisterToServerAck)},
-  { 24, -1, sizeof(::KFMsg::TellRegisterToServer)},
-  { 30, -1, sizeof(::KFMsg::TellUnRegisterFromServer)},
-  { 38, -1, sizeof(::KFMsg::S2STellDiscoverServerToMaster)},
-  { 45, -1, sizeof(::KFMsg::S2STellLostServerToMaster)},
-  { 53, -1, sizeof(::KFMsg::S2STellRegisterServerToMaster)},
-  { 60, -1, sizeof(::KFMsg::S2STellServerListToMaster)},
-  { 66, -1, sizeof(::KFMsg::S2SClusterRegisterToMasterReq)},
-  { 72, -1, sizeof(::KFMsg::S2SClusterSyncProxyToMasterReq)},
-  { 78, -1, sizeof(::KFMsg::S2SClusterAuthToMasterReq)},
-  { 85, -1, sizeof(::KFMsg::S2SClusterAuthToClientAck)},
-  { 92, -1, sizeof(::KFMsg::S2SClusterTokenToProxyReq)},
-  { 101, -1, sizeof(::KFMsg::S2SClusterTokenToMasterReq)},
-  { 110, -1, sizeof(::KFMsg::S2SClusterVerifyToProxyReq)},
-  { 117, -1, sizeof(::KFMsg::S2SClusterTokenToProxyAck)},
-  { 126, -1, sizeof(::KFMsg::S2SClusterTokenToMasterAck)},
-  { 134, -1, sizeof(::KFMsg::S2SClusterVerifyToClientAck)},
-  { 140, -1, sizeof(::KFMsg::S2SClusterClientDiscoverToShardReq)},
-  { 146, -1, sizeof(::KFMsg::S2SClusterClientLostToShardReq)},
-  { 152, -1, sizeof(::KFMsg::S2SClusterLostProxyToMasterReq)},
-  { 158, -1, sizeof(::KFMsg::PBRoute)},
-  { 167, -1, sizeof(::KFMsg::S2SRouteMessageOk)},
-  { 174, -1, sizeof(::KFMsg::S2SRouteMessageToClientAck)},
-  { 182, -1, sizeof(::KFMsg::S2SRouteMessageToNameAllReq)},
-  { 191, -1, sizeof(::KFMsg::S2SRouteMessageToNameRandReq)},
-  { 200, -1, sizeof(::KFMsg::S2SRouteMessageToNameBalanceReq)},
-  { 209, -1, sizeof(::KFMsg::S2SRouteMessageToNameObjectReq)},
-  { 218, -1, sizeof(::KFMsg::S2SRouteMessageToServerReq)},
-  { 227, -1, sizeof(::KFMsg::S2SRouteMessageToPlayerReq)},
-  { 236, -1, sizeof(::KFMsg::S2SRouteClientLostToShardReq)},
-  { 243, -1, sizeof(::KFMsg::S2SRouteDiscoverToClientReq)},
-  { 249, -1, sizeof(::KFMsg::S2SRouteSyncObjectToProxyReq)},
-  { 258, -1, sizeof(::KFMsg::S2SRouteSyncObjectToShardReq)},
-  { 266, -1, sizeof(::KFMsg::S2SRouteAddObjectToProxyReq)},
-  { 275, -1, sizeof(::KFMsg::S2SRouteAddObjectToShardReq)},
-  { 284, -1, sizeof(::KFMsg::S2SRouteRemoveObjectToProxyReq)},
-  { 293, -1, sizeof(::KFMsg::S2SRouteRemoveObjectToShardReq)},
-  { 302, -1, sizeof(::KFMsg::S2SRegisterAgentToServerReq)},
-  { 313, -1, sizeof(::KFMsg::PBDeployCommand)},
-  { 324, -1, sizeof(::KFMsg::S2SDeployCommandToAgentReq)},
-  { 330, -1, sizeof(::KFMsg::S2SDeployCommandToClientReq)},
-  { 336, -1, sizeof(::KFMsg::S2SDeployToolCommandReq)},
-  { 345, -1, sizeof(::KFMsg::S2SDeployLogToToolAck)},
-  { 352, -1, sizeof(::KFMsg::S2SDeployLogToServerAck)},
-  { 359, 366, sizeof(::KFMsg::S2SDeployToolDeleteMySQLReq_KeysEntry_DoNotUse)},
-  { 368, -1, sizeof(::KFMsg::S2SDeployToolDeleteMySQLReq)},
-  { 375, 382, sizeof(::KFMsg::S2SDeployToolDeleteMySQLAck_KeysEntry_DoNotUse)},
-  { 384, -1, sizeof(::KFMsg::S2SDeployToolDeleteMySQLAck)},
-  { 392, 399, sizeof(::KFMsg::S2SDeployToolExecuteMySQLReq_ValuesEntry_DoNotUse)},
-  { 401, -1, sizeof(::KFMsg::S2SDeployToolExecuteMySQLReq)},
-  { 408, 415, sizeof(::KFMsg::S2SDeployToolExecuteMySQLAck_ValuesEntry_DoNotUse)},
-  { 417, -1, sizeof(::KFMsg::S2SDeployToolExecuteMySQLAck)},
-  { 425, 432, sizeof(::KFMsg::S2SDeployToolQueryMySQLReq_KeysEntry_DoNotUse)},
-  { 434, -1, sizeof(::KFMsg::S2SDeployToolQueryMySQLReq)},
-  { 441, 448, sizeof(::KFMsg::PBMySQLData_ValuesEntry_DoNotUse)},
-  { 450, -1, sizeof(::KFMsg::PBMySQLData)},
-  { 456, -1, sizeof(::KFMsg::PBMySQLDatas)},
-  { 462, -1, sizeof(::KFMsg::S2SDeployToolQueryMySQLAck)},
-  { 470, -1, sizeof(::KFMsg::S2SDeployToolQueryToolIdReq)},
-  { 476, -1, sizeof(::KFMsg::S2SDeployToolQueryToolIdAck)},
-  { 482, -1, sizeof(::KFMsg::S2SDeployHeartbeatToAgentReq)},
-  { 488, -1, sizeof(::KFMsg::PBRemoteLog)},
-  { 495, -1, sizeof(::KFMsg::S2SRemoteLogToServerReq)},
+  { 29, -1, sizeof(::KFMsg::TellRegisterToServer)},
+  { 35, -1, sizeof(::KFMsg::TellUnRegisterFromServer)},
+  { 43, -1, sizeof(::KFMsg::S2STellDiscoverServerToMaster)},
+  { 50, -1, sizeof(::KFMsg::S2STellLostServerToMaster)},
+  { 58, -1, sizeof(::KFMsg::S2STellRegisterServerToMaster)},
+  { 65, -1, sizeof(::KFMsg::S2STellServerListToMaster)},
+  { 71, -1, sizeof(::KFMsg::S2SClusterRegisterToMasterReq)},
+  { 77, -1, sizeof(::KFMsg::S2SClusterSyncProxyToMasterReq)},
+  { 83, -1, sizeof(::KFMsg::S2SClusterAuthToMasterReq)},
+  { 90, -1, sizeof(::KFMsg::S2SClusterAuthToClientAck)},
+  { 97, -1, sizeof(::KFMsg::S2SClusterTokenToProxyReq)},
+  { 106, -1, sizeof(::KFMsg::S2SClusterTokenToMasterReq)},
+  { 115, -1, sizeof(::KFMsg::S2SClusterVerifyToProxyReq)},
+  { 122, -1, sizeof(::KFMsg::S2SClusterTokenToProxyAck)},
+  { 131, -1, sizeof(::KFMsg::S2SClusterTokenToMasterAck)},
+  { 139, -1, sizeof(::KFMsg::S2SClusterVerifyToClientAck)},
+  { 145, -1, sizeof(::KFMsg::S2SClusterClientDiscoverToShardReq)},
+  { 151, -1, sizeof(::KFMsg::S2SClusterClientLostToShardReq)},
+  { 157, -1, sizeof(::KFMsg::S2SClusterLostProxyToMasterReq)},
+  { 163, -1, sizeof(::KFMsg::PBRoute)},
+  { 172, -1, sizeof(::KFMsg::S2SRouteMessageOk)},
+  { 179, -1, sizeof(::KFMsg::S2SRouteMessageToClientAck)},
+  { 187, -1, sizeof(::KFMsg::S2SRouteMessageToNameAllReq)},
+  { 196, -1, sizeof(::KFMsg::S2SRouteMessageToNameRandReq)},
+  { 205, -1, sizeof(::KFMsg::S2SRouteMessageToNameBalanceReq)},
+  { 214, -1, sizeof(::KFMsg::S2SRouteMessageToNameObjectReq)},
+  { 223, -1, sizeof(::KFMsg::S2SRouteMessageToServerReq)},
+  { 232, -1, sizeof(::KFMsg::S2SRouteMessageToPlayerReq)},
+  { 241, -1, sizeof(::KFMsg::S2SRouteClientLostToShardReq)},
+  { 248, -1, sizeof(::KFMsg::S2SRouteDiscoverToClientReq)},
+  { 254, -1, sizeof(::KFMsg::S2SRouteSyncObjectToProxyReq)},
+  { 263, -1, sizeof(::KFMsg::S2SRouteSyncObjectToShardReq)},
+  { 271, -1, sizeof(::KFMsg::S2SRouteAddObjectToProxyReq)},
+  { 280, -1, sizeof(::KFMsg::S2SRouteAddObjectToShardReq)},
+  { 289, -1, sizeof(::KFMsg::S2SRouteRemoveObjectToProxyReq)},
+  { 298, -1, sizeof(::KFMsg::S2SRouteRemoveObjectToShardReq)},
+  { 307, -1, sizeof(::KFMsg::S2SRegisterAgentToServerReq)},
+  { 318, -1, sizeof(::KFMsg::PBDeployCommand)},
+  { 329, -1, sizeof(::KFMsg::S2SDeployCommandToAgentReq)},
+  { 335, -1, sizeof(::KFMsg::S2SDeployCommandToClientReq)},
+  { 341, -1, sizeof(::KFMsg::S2SDeployToolCommandReq)},
+  { 350, -1, sizeof(::KFMsg::S2SDeployLogToToolAck)},
+  { 357, -1, sizeof(::KFMsg::S2SDeployLogToServerAck)},
+  { 364, 371, sizeof(::KFMsg::S2SDeployToolDeleteMySQLReq_KeysEntry_DoNotUse)},
+  { 373, -1, sizeof(::KFMsg::S2SDeployToolDeleteMySQLReq)},
+  { 380, 387, sizeof(::KFMsg::S2SDeployToolDeleteMySQLAck_KeysEntry_DoNotUse)},
+  { 389, -1, sizeof(::KFMsg::S2SDeployToolDeleteMySQLAck)},
+  { 397, 404, sizeof(::KFMsg::S2SDeployToolExecuteMySQLReq_ValuesEntry_DoNotUse)},
+  { 406, -1, sizeof(::KFMsg::S2SDeployToolExecuteMySQLReq)},
+  { 413, 420, sizeof(::KFMsg::S2SDeployToolExecuteMySQLAck_ValuesEntry_DoNotUse)},
+  { 422, -1, sizeof(::KFMsg::S2SDeployToolExecuteMySQLAck)},
+  { 430, 437, sizeof(::KFMsg::S2SDeployToolQueryMySQLReq_KeysEntry_DoNotUse)},
+  { 439, -1, sizeof(::KFMsg::S2SDeployToolQueryMySQLReq)},
+  { 446, 453, sizeof(::KFMsg::PBMySQLData_ValuesEntry_DoNotUse)},
+  { 455, -1, sizeof(::KFMsg::PBMySQLData)},
+  { 461, -1, sizeof(::KFMsg::PBMySQLDatas)},
+  { 467, -1, sizeof(::KFMsg::S2SDeployToolQueryMySQLAck)},
+  { 475, -1, sizeof(::KFMsg::S2SDeployToolQueryToolIdReq)},
+  { 481, -1, sizeof(::KFMsg::S2SDeployToolQueryToolIdAck)},
+  { 487, -1, sizeof(::KFMsg::S2SDeployHeartbeatToAgentReq)},
+  { 493, -1, sizeof(::KFMsg::PBRemoteLog)},
+  { 500, -1, sizeof(::KFMsg::S2SRemoteLogToServerReq)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -2041,190 +2046,193 @@ void AddDescriptorsImpl() {
       "a\022\017\n\007appname\030\001 \001(\014\022\017\n\007apptype\030\002 \001(\014\022\r\n\005a"
       "ppid\030\003 \001(\004\022\n\n\002ip\030\004 \001(\014\022\014\n\004port\030\005 \001(\r\"8\n\023"
       "RegisterToServerReq\022!\n\006listen\030\001 \001(\0132\021.KF"
-      "Msg.ListenData\"F\n\023RegisterToServerAck\022\r\n"
-      "\005appid\030\001 \001(\004\022\017\n\007appname\030\002 \001(\014\022\017\n\007apptype"
-      "\030\003 \001(\014\"9\n\024TellRegisterToServer\022!\n\006listen"
-      "\030\001 \001(\0132\021.KFMsg.ListenData\"K\n\030TellUnRegis"
-      "terFromServer\022\017\n\007appname\030\001 \001(\014\022\017\n\007apptyp"
-      "e\030\002 \001(\014\022\r\n\005appid\030\003 \001(\004\"T\n\035S2STellDiscove"
-      "rServerToMaster\022\020\n\010serverid\030\001 \001(\004\022!\n\006lis"
-      "ten\030\002 \001(\0132\021.KFMsg.ListenData\"L\n\031S2STellL"
-      "ostServerToMaster\022\017\n\007appname\030\001 \001(\014\022\017\n\007ap"
-      "ptype\030\002 \001(\014\022\r\n\005appid\030\003 \001(\004\"T\n\035S2STellReg"
-      "isterServerToMaster\022\020\n\010serverid\030\001 \001(\004\022!\n"
-      "\006listen\030\002 \001(\0132\021.KFMsg.ListenData\">\n\031S2ST"
-      "ellServerListToMaster\022!\n\006listen\030\001 \003(\0132\021."
-      "KFMsg.ListenData\"B\n\035S2SClusterRegisterTo"
-      "MasterReq\022!\n\006listen\030\001 \001(\0132\021.KFMsg.Listen"
-      "Data\"C\n\036S2SClusterSyncProxyToMasterReq\022!"
-      "\n\006listen\030\001 \003(\0132\021.KFMsg.ListenData\"A\n\031S2S"
-      "ClusterAuthToMasterReq\022\020\n\010clientid\030\001 \001(\004"
-      "\022\022\n\nclusterkey\030\002 \001(\014\"M\n\031S2SClusterAuthTo"
-      "ClientAck\022\r\n\005token\030\001 \001(\014\022!\n\006listen\030\002 \001(\013"
-      "2\021.KFMsg.ListenData\"_\n\031S2SClusterTokenTo"
-      "ProxyReq\022\r\n\005token\030\001 \001(\014\022\020\n\010clientid\030\002 \001("
-      "\004\022\017\n\007proxyid\030\003 \001(\004\022\020\n\010masterid\030\004 \001(\004\"`\n\032"
-      "S2SClusterTokenToMasterReq\022\r\n\005token\030\001 \001("
-      "\014\022\020\n\010clientid\030\002 \001(\004\022\017\n\007proxyid\030\003 \001(\004\022\020\n\010"
-      "masterid\030\004 \001(\004\"=\n\032S2SClusterVerifyToProx"
-      "yReq\022\r\n\005token\030\001 \001(\014\022\020\n\010serverid\030\002 \001(\004\"_\n"
-      "\031S2SClusterTokenToProxyAck\022\r\n\005token\030\001 \001("
-      "\014\022\020\n\010clientid\030\002 \001(\004\022\017\n\007proxyid\030\003 \001(\004\022\020\n\010"
-      "masterid\030\004 \001(\004\"N\n\032S2SClusterTokenToMaste"
-      "rAck\022\r\n\005token\030\001 \001(\014\022\020\n\010clientid\030\002 \001(\004\022\017\n"
-      "\007proxyid\030\003 \001(\004\"/\n\033S2SClusterVerifyToClie"
-      "ntAck\022\020\n\010serverid\030\001 \001(\004\"6\n\"S2SClusterCli"
-      "entDiscoverToShardReq\022\020\n\010clientid\030\001 \003(\004\""
-      "2\n\036S2SClusterClientLostToShardReq\022\020\n\010cli"
-      "entid\030\001 \001(\004\"1\n\036S2SClusterLostProxyToMast"
-      "erReq\022\017\n\007proxyid\030\001 \001(\004\"K\n\007PBRoute\022\020\n\010ser"
-      "verid\030\001 \001(\004\022\016\n\006sendid\030\002 \001(\004\022\016\n\006recvid\030\003 "
-      "\001(\004\022\016\n\006serial\030\004 \001(\004\"D\n\021S2SRouteMessageOk"
-      "\022\037\n\007pbroute\030\001 \001(\0132\016.KFMsg.PBRoute\022\016\n\006ser"
-      "ial\030\002 \001(\004\"]\n\032S2SRouteMessageToClientAck\022"
-      "\037\n\007pbroute\030\001 \001(\0132\016.KFMsg.PBRoute\022\r\n\005msgi"
-      "d\030\002 \001(\r\022\017\n\007msgdata\030\003 \001(\014\"l\n\033S2SRouteMess"
-      "ageToNameAllReq\022\037\n\007pbroute\030\001 \001(\0132\016.KFMsg"
-      ".PBRoute\022\014\n\004name\030\002 \001(\014\022\r\n\005msgid\030\003 \001(\r\022\017\n"
-      "\007msgdata\030\004 \001(\014\"m\n\034S2SRouteMessageToNameR"
-      "andReq\022\037\n\007pbroute\030\001 \001(\0132\016.KFMsg.PBRoute\022"
+      "Msg.ListenData\"\264\001\n\023RegisterToServerAck\022\r"
+      "\n\005appid\030\001 \001(\004\022\017\n\007appname\030\002 \001(\014\022\017\n\007apptyp"
+      "e\030\003 \001(\014\022\024\n\014compresstype\030\004 \001(\r\022\025\n\rcompres"
+      "slevel\030\005 \001(\r\022\026\n\016compresslength\030\006 \001(\r\022\022\n\n"
+      "encryptkey\030\007 \001(\014\022\023\n\013openencrypt\030\010 \001(\010\"9\n"
+      "\024TellRegisterToServer\022!\n\006listen\030\001 \001(\0132\021."
+      "KFMsg.ListenData\"K\n\030TellUnRegisterFromSe"
+      "rver\022\017\n\007appname\030\001 \001(\014\022\017\n\007apptype\030\002 \001(\014\022\r"
+      "\n\005appid\030\003 \001(\004\"T\n\035S2STellDiscoverServerTo"
+      "Master\022\020\n\010serverid\030\001 \001(\004\022!\n\006listen\030\002 \001(\013"
+      "2\021.KFMsg.ListenData\"L\n\031S2STellLostServer"
+      "ToMaster\022\017\n\007appname\030\001 \001(\014\022\017\n\007apptype\030\002 \001"
+      "(\014\022\r\n\005appid\030\003 \001(\004\"T\n\035S2STellRegisterServ"
+      "erToMaster\022\020\n\010serverid\030\001 \001(\004\022!\n\006listen\030\002"
+      " \001(\0132\021.KFMsg.ListenData\">\n\031S2STellServer"
+      "ListToMaster\022!\n\006listen\030\001 \003(\0132\021.KFMsg.Lis"
+      "tenData\"B\n\035S2SClusterRegisterToMasterReq"
+      "\022!\n\006listen\030\001 \001(\0132\021.KFMsg.ListenData\"C\n\036S"
+      "2SClusterSyncProxyToMasterReq\022!\n\006listen\030"
+      "\001 \003(\0132\021.KFMsg.ListenData\"A\n\031S2SClusterAu"
+      "thToMasterReq\022\020\n\010clientid\030\001 \001(\004\022\022\n\nclust"
+      "erkey\030\002 \001(\014\"M\n\031S2SClusterAuthToClientAck"
+      "\022\r\n\005token\030\001 \001(\014\022!\n\006listen\030\002 \001(\0132\021.KFMsg."
+      "ListenData\"_\n\031S2SClusterTokenToProxyReq\022"
+      "\r\n\005token\030\001 \001(\014\022\020\n\010clientid\030\002 \001(\004\022\017\n\007prox"
+      "yid\030\003 \001(\004\022\020\n\010masterid\030\004 \001(\004\"`\n\032S2SCluste"
+      "rTokenToMasterReq\022\r\n\005token\030\001 \001(\014\022\020\n\010clie"
+      "ntid\030\002 \001(\004\022\017\n\007proxyid\030\003 \001(\004\022\020\n\010masterid\030"
+      "\004 \001(\004\"=\n\032S2SClusterVerifyToProxyReq\022\r\n\005t"
+      "oken\030\001 \001(\014\022\020\n\010serverid\030\002 \001(\004\"_\n\031S2SClust"
+      "erTokenToProxyAck\022\r\n\005token\030\001 \001(\014\022\020\n\010clie"
+      "ntid\030\002 \001(\004\022\017\n\007proxyid\030\003 \001(\004\022\020\n\010masterid\030"
+      "\004 \001(\004\"N\n\032S2SClusterTokenToMasterAck\022\r\n\005t"
+      "oken\030\001 \001(\014\022\020\n\010clientid\030\002 \001(\004\022\017\n\007proxyid\030"
+      "\003 \001(\004\"/\n\033S2SClusterVerifyToClientAck\022\020\n\010"
+      "serverid\030\001 \001(\004\"6\n\"S2SClusterClientDiscov"
+      "erToShardReq\022\020\n\010clientid\030\001 \003(\004\"2\n\036S2SClu"
+      "sterClientLostToShardReq\022\020\n\010clientid\030\001 \001"
+      "(\004\"1\n\036S2SClusterLostProxyToMasterReq\022\017\n\007"
+      "proxyid\030\001 \001(\004\"K\n\007PBRoute\022\020\n\010serverid\030\001 \001"
+      "(\004\022\016\n\006sendid\030\002 \001(\004\022\016\n\006recvid\030\003 \001(\004\022\016\n\006se"
+      "rial\030\004 \001(\004\"D\n\021S2SRouteMessageOk\022\037\n\007pbrou"
+      "te\030\001 \001(\0132\016.KFMsg.PBRoute\022\016\n\006serial\030\002 \001(\004"
+      "\"]\n\032S2SRouteMessageToClientAck\022\037\n\007pbrout"
+      "e\030\001 \001(\0132\016.KFMsg.PBRoute\022\r\n\005msgid\030\002 \001(\r\022\017"
+      "\n\007msgdata\030\003 \001(\014\"l\n\033S2SRouteMessageToName"
+      "AllReq\022\037\n\007pbroute\030\001 \001(\0132\016.KFMsg.PBRoute\022"
       "\014\n\004name\030\002 \001(\014\022\r\n\005msgid\030\003 \001(\r\022\017\n\007msgdata\030"
-      "\004 \001(\014\"p\n\037S2SRouteMessageToNameBalanceReq"
-      "\022\037\n\007pbroute\030\001 \001(\0132\016.KFMsg.PBRoute\022\014\n\004nam"
-      "e\030\002 \001(\014\022\r\n\005msgid\030\003 \001(\r\022\017\n\007msgdata\030\004 \001(\014\""
-      "o\n\036S2SRouteMessageToNameObjectReq\022\037\n\007pbr"
-      "oute\030\001 \001(\0132\016.KFMsg.PBRoute\022\014\n\004name\030\002 \001(\014"
-      "\022\r\n\005msgid\030\003 \001(\r\022\017\n\007msgdata\030\004 \001(\014\"o\n\032S2SR"
-      "outeMessageToServerReq\022\037\n\007pbroute\030\001 \001(\0132"
-      "\016.KFMsg.PBRoute\022\020\n\010targetid\030\002 \001(\004\022\r\n\005msg"
-      "id\030\003 \001(\r\022\017\n\007msgdata\030\004 \001(\014\"o\n\032S2SRouteMes"
-      "sageToPlayerReq\022\037\n\007pbroute\030\001 \001(\0132\016.KFMsg"
-      ".PBRoute\022\020\n\010targetid\030\002 \001(\004\022\r\n\005msgid\030\003 \001("
-      "\r\022\017\n\007msgdata\030\004 \001(\014\">\n\034S2SRouteClientLost"
-      "ToShardReq\022\014\n\004name\030\001 \001(\014\022\020\n\010clientid\030\002 \001"
-      "(\004\".\n\033S2SRouteDiscoverToClientReq\022\017\n\007sha"
-      "rdid\030\001 \001(\004\"a\n\034S2SRouteSyncObjectToProxyR"
-      "eq\022\014\n\004name\030\001 \001(\014\022\020\n\010clientid\030\002 \001(\004\022\017\n\007sh"
-      "ardid\030\003 \001(\004\022\020\n\010objectid\030\004 \003(\004\"P\n\034S2SRout"
-      "eSyncObjectToShardReq\022\014\n\004name\030\001 \001(\014\022\020\n\010c"
-      "lientid\030\002 \001(\004\022\020\n\010objectid\030\003 \003(\004\"d\n\033S2SRo"
-      "uteAddObjectToProxyReq\022\014\n\004name\030\001 \001(\014\022\020\n\010"
-      "clientid\030\002 \001(\004\022\020\n\010objectid\030\003 \001(\004\022\023\n\013obje"
-      "ctcount\030\004 \001(\r\"d\n\033S2SRouteAddObjectToShar"
-      "dReq\022\014\n\004name\030\001 \001(\014\022\020\n\010clientid\030\002 \001(\004\022\020\n\010"
-      "objectid\030\003 \001(\004\022\023\n\013objectcount\030\004 \001(\r\"g\n\036S"
-      "2SRouteRemoveObjectToProxyReq\022\014\n\004name\030\001 "
-      "\001(\014\022\020\n\010clientid\030\002 \001(\004\022\020\n\010objectid\030\003 \001(\004\022"
-      "\023\n\013objectcount\030\004 \001(\r\"g\n\036S2SRouteRemoveOb"
-      "jectToShardReq\022\014\n\004name\030\001 \001(\014\022\020\n\010clientid"
-      "\030\002 \001(\004\022\020\n\010objectid\030\003 \001(\004\022\023\n\013objectcount\030"
-      "\004 \001(\r\"z\n\033S2SRegisterAgentToServerReq\022\017\n\007"
-      "agentid\030\001 \001(\014\022\017\n\007localip\030\002 \001(\014\022\014\n\004name\030\003"
-      " \001(\014\022\014\n\004type\030\004 \001(\014\022\014\n\004port\030\005 \001(\r\022\017\n\007serv"
-      "ice\030\006 \001(\014\"r\n\017PBDeployCommand\022\017\n\007command\030"
-      "\001 \001(\014\022\017\n\007appname\030\002 \001(\014\022\017\n\007apptype\030\003 \001(\014\022"
-      "\r\n\005appid\030\004 \001(\014\022\016\n\006zoneid\030\005 \001(\r\022\r\n\005value\030"
-      "\006 \001(\014\"K\n\032S2SDeployCommandToAgentReq\022-\n\rd"
-      "eploycommand\030\001 \001(\0132\026.KFMsg.PBDeployComma"
-      "nd\"L\n\033S2SDeployCommandToClientReq\022-\n\rdep"
-      "loycommand\030\001 \001(\0132\026.KFMsg.PBDeployCommand"
-      "\"r\n\027S2SDeployToolCommandReq\022-\n\rdeploycom"
-      "mand\030\001 \001(\0132\026.KFMsg.PBDeployCommand\022\014\n\004ti"
-      "me\030\002 \001(\004\022\016\n\006toolid\030\003 \001(\014\022\n\n\002ip\030\004 \001(\014\"9\n\025"
-      "S2SDeployLogToToolAck\022\017\n\007agentid\030\001 \001(\004\022\017"
-      "\n\007content\030\002 \001(\014\";\n\027S2SDeployLogToServerA"
-      "ck\022\017\n\007agentid\030\001 \001(\004\022\017\n\007content\030\002 \001(\014\"\225\001\n"
-      "\033S2SDeployToolDeleteMySQLReq\022\r\n\005table\030\001 "
-      "\001(\014\022:\n\004keys\030\002 \003(\0132,.KFMsg.S2SDeployToolD"
-      "eleteMySQLReq.KeysEntry\032+\n\tKeysEntry\022\013\n\003"
-      "key\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:\0028\001\"\245\001\n\033S2SDepl"
-      "oyToolDeleteMySQLAck\022\r\n\005table\030\001 \001(\014\022:\n\004k"
-      "eys\030\002 \003(\0132,.KFMsg.S2SDeployToolDeleteMyS"
-      "QLAck.KeysEntry\022\016\n\006result\030\003 \001(\010\032+\n\tKeysE"
-      "ntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:\0028\001\"\235\001\n"
-      "\034S2SDeployToolExecuteMySQLReq\022\r\n\005table\030\001"
-      " \001(\014\022\?\n\006values\030\002 \003(\0132/.KFMsg.S2SDeployTo"
-      "olExecuteMySQLReq.ValuesEntry\032-\n\013ValuesE"
-      "ntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:\0028\001\"\255\001\n"
-      "\034S2SDeployToolExecuteMySQLAck\022\r\n\005table\030\001"
-      " \001(\014\022\?\n\006values\030\002 \003(\0132/.KFMsg.S2SDeployTo"
-      "olExecuteMySQLAck.ValuesEntry\022\016\n\006result\030"
-      "\003 \001(\010\032-\n\013ValuesEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005val"
-      "ue\030\002 \001(\014:\0028\001\"\223\001\n\032S2SDeployToolQueryMySQL"
-      "Req\022\r\n\005table\030\001 \001(\014\0229\n\004keys\030\002 \003(\0132+.KFMsg"
-      ".S2SDeployToolQueryMySQLReq.KeysEntry\032+\n"
-      "\tKeysEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:\002"
-      "8\001\"l\n\013PBMySQLData\022.\n\006values\030\001 \003(\0132\036.KFMs"
-      "g.PBMySQLData.ValuesEntry\032-\n\013ValuesEntry"
-      "\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:\0028\001\"0\n\014PBMy"
-      "SQLDatas\022 \n\004data\030\002 \003(\0132\022.KFMsg.PBMySQLDa"
-      "ta\"_\n\032S2SDeployToolQueryMySQLAck\022\r\n\005tabl"
-      "e\030\001 \001(\014\022\"\n\005datas\030\002 \001(\0132\023.KFMsg.PBMySQLDa"
-      "tas\022\016\n\006result\030\003 \001(\010\")\n\033S2SDeployToolQuer"
-      "yToolIdReq\022\n\n\002ip\030\001 \001(\014\")\n\033S2SDeployToolQ"
-      "ueryToolIdAck\022\n\n\002id\030\001 \001(\r\"*\n\034S2SDeployHe"
-      "artbeatToAgentReq\022\n\n\002id\030\001 \001(\004\"-\n\013PBRemot"
-      "eLog\022\r\n\005level\030\001 \001(\r\022\017\n\007content\030\002 \001(\014\"\221\001\n"
-      "\027S2SRemoteLogToServerReq\022\017\n\007appname\030\001 \001("
-      "\014\022\017\n\007apptype\030\002 \001(\014\022\020\n\010strappid\030\003 \001(\014\022\r\n\005"
-      "appid\030\004 \001(\004\022\016\n\006zoneid\030\005 \001(\r\022#\n\007logdata\030\006"
-      " \003(\0132\022.KFMsg.PBRemoteLog*\265\020\n\rFrameProtoc"
-      "ol\022\034\n\030S2S_FRAME_PROTOCOL_BEGIN\020\000\022\037\n\032S2S_"
-      "REGISTER_TO_SERVER_REQ\020\221N\022\037\n\032S2S_REGISTE"
-      "R_TO_SERVER_ACK\020\222N\022 \n\033S2S_TELL_REGISTER_"
-      "TO_SERVER\020\223N\022$\n\037S2S_TELL_UNREGISTER_FROM"
-      "_SERVER\020\224N\022\'\n\"S2S_TELL_DISCOVER_SERVER_T"
-      "O_MASTER\020\225N\022#\n\036S2S_TELL_LOST_SERVER_TO_M"
-      "ASTER\020\226N\022\'\n\"S2S_TELL_REGISTER_SERVER_TO_"
-      "MASTER\020\227N\022#\n\036S2S_TELL_SERVER_LIST_TO_MAS"
-      "TER\020\230N\022!\n\034S2S_REMOTE_LOG_TO_SERVER_REQ\020\232"
-      "N\022%\n S2S_REGISTER_AGENT_TO_SERVER_REQ\020\233N"
-      "\022$\n\037S2S_DEPLOY_COMMAND_TO_AGENT_REQ\020\234N\022%"
-      "\n S2S_DEPLOY_COMMAND_TO_CLIENT_REQ\020\235N\022&\n"
-      "!S2S_DEPLOY_TOOL_EXECUTE_MYSQL_REQ\020\236N\022&\n"
-      "!S2S_DEPLOY_TOOL_EXECUTE_MYSQL_ACK\020\237N\022$\n"
-      "\037S2S_DEPLOY_TOOL_QUERY_MYSQL_REQ\020\240N\022$\n\037S"
-      "2S_DEPLOY_TOOL_QUERY_MYSQL_ACK\020\241N\022 \n\033S2S"
-      "_DEPLOY_TOOL_COMMAND_REQ\020\242N\022\037\n\032S2S_DEPLO"
-      "Y_LOG_TO_TOOL_ACK\020\243N\022!\n\034S2S_DEPLOY_LOG_T"
-      "O_SERVER_ACK\020\244N\022%\n S2S_DEPLOY_TOOL_DELET"
-      "E_MYSQL_REQ\020\245N\022%\n S2S_DEPLOY_TOOL_DELETE"
-      "_MYSQL_ACK\020\246N\022&\n!S2S_DEPLOY_TOOL_QUERY_T"
-      "OOL_ID_REQ\020\247N\022&\n!S2S_DEPLOY_TOOL_QUERY_T"
-      "OOL_ID_ACK\020\250N\022&\n!S2S_DEPLOY_HEARTBEAT_TO"
-      "_AGENT_REQ\020\251N\022\'\n\"S2S_CLUSTER_REGISTER_TO"
-      "_MASTER_REQ\020\365N\022)\n$S2S_CLUSTER_SYNC_PROXY"
-      "_TO_MASTER_REQ\020\366N\022#\n\036S2S_CLUSTER_AUTH_TO"
-      "_MASTER_REQ\020\367N\022#\n\036S2S_CLUSTER_AUTH_TO_CL"
-      "IENT_ACK\020\370N\022#\n\036S2S_CLUSTER_TOKEN_TO_PROX"
-      "Y_REQ\020\371N\022$\n\037S2S_CLUSTER_VERIFY_TO_PROXY_"
-      "REQ\020\372N\022%\n S2S_CLUSTER_VERIFY_TO_CLIENT_A"
-      "CK\020\373N\022-\n(S2S_CLUSTER_CLIENT_DISCOVER_TO_"
-      "SHARD_REQ\020\374N\022)\n$S2S_CLUSTER_CLIENT_LOST_"
-      "TO_SHARD_REQ\020\375N\022)\n$S2S_CLUSTER_LOST_PROX"
-      "Y_TO_MASTER_REQ\020\376N\022$\n\037S2S_CLUSTER_TOKEN_"
-      "TO_MASTER_REQ\020\377N\022#\n\036S2S_CLUSTER_TOKEN_TO"
-      "_PROXY_ACK\020\200O\022$\n\037S2S_CLUSTER_TOKEN_TO_MA"
-      "STER_ACK\020\201O\022\031\n\024S2S_ROUTE_MESSAGE_OK\020\330O\022$"
-      "\n\037S2S_ROUTE_MESSAGE_TO_CLIENT_ACK\020\331O\022&\n!"
-      "S2S_ROUTE_MESSAGE_TO_NAME_ALL_REQ\020\332O\022\'\n\""
-      "S2S_ROUTE_MESSAGE_TO_NAME_RAND_REQ\020\333O\022*\n"
-      "%S2S_ROUTE_MESSAGE_TO_NAME_BALANCE_REQ\020\334"
-      "O\022)\n$S2S_ROUTE_MESSAGE_TO_NAME_OBJECT_RE"
-      "Q\020\335O\022$\n\037S2S_ROUTE_MESSAGE_TO_SERVER_REQ\020"
-      "\336O\022$\n\037S2S_ROUTE_MESSAGE_TO_PLAYER_REQ\020\337O"
-      "\022\'\n\"S2S_ROUTE_CLIENT_LOST_TO_SHARD_REQ\020\340"
-      "O\022%\n S2S_ROUTE_DISCOVER_TO_CLIENT_REQ\020\341O"
-      "\022\'\n\"S2S_ROUTE_SYNC_OBJECT_TO_PROXY_REQ\020\342"
-      "O\022&\n!S2S_ROUTE_ADD_OBJECT_TO_PROXY_REQ\020\343"
-      "O\022)\n$S2S_ROUTE_REMOVE_OBJECT_TO_PROXY_RE"
-      "Q\020\344O\022\'\n\"S2S_ROUTE_SYNC_OBJECT_TO_SHARD_R"
-      "EQ\020\345O\022&\n!S2S_ROUTE_ADD_OBJECT_TO_SHARD_R"
-      "EQ\020\346O\022)\n$S2S_ROUTE_REMOVE_OBJECT_TO_SHAR"
-      "D_REQ\020\347Ob\006proto3"
+      "\004 \001(\014\"m\n\034S2SRouteMessageToNameRandReq\022\037\n"
+      "\007pbroute\030\001 \001(\0132\016.KFMsg.PBRoute\022\014\n\004name\030\002"
+      " \001(\014\022\r\n\005msgid\030\003 \001(\r\022\017\n\007msgdata\030\004 \001(\014\"p\n\037"
+      "S2SRouteMessageToNameBalanceReq\022\037\n\007pbrou"
+      "te\030\001 \001(\0132\016.KFMsg.PBRoute\022\014\n\004name\030\002 \001(\014\022\r"
+      "\n\005msgid\030\003 \001(\r\022\017\n\007msgdata\030\004 \001(\014\"o\n\036S2SRou"
+      "teMessageToNameObjectReq\022\037\n\007pbroute\030\001 \001("
+      "\0132\016.KFMsg.PBRoute\022\014\n\004name\030\002 \001(\014\022\r\n\005msgid"
+      "\030\003 \001(\r\022\017\n\007msgdata\030\004 \001(\014\"o\n\032S2SRouteMessa"
+      "geToServerReq\022\037\n\007pbroute\030\001 \001(\0132\016.KFMsg.P"
+      "BRoute\022\020\n\010targetid\030\002 \001(\004\022\r\n\005msgid\030\003 \001(\r\022"
+      "\017\n\007msgdata\030\004 \001(\014\"o\n\032S2SRouteMessageToPla"
+      "yerReq\022\037\n\007pbroute\030\001 \001(\0132\016.KFMsg.PBRoute\022"
+      "\020\n\010targetid\030\002 \001(\004\022\r\n\005msgid\030\003 \001(\r\022\017\n\007msgd"
+      "ata\030\004 \001(\014\">\n\034S2SRouteClientLostToShardRe"
+      "q\022\014\n\004name\030\001 \001(\014\022\020\n\010clientid\030\002 \001(\004\".\n\033S2S"
+      "RouteDiscoverToClientReq\022\017\n\007shardid\030\001 \001("
+      "\004\"a\n\034S2SRouteSyncObjectToProxyReq\022\014\n\004nam"
+      "e\030\001 \001(\014\022\020\n\010clientid\030\002 \001(\004\022\017\n\007shardid\030\003 \001"
+      "(\004\022\020\n\010objectid\030\004 \003(\004\"P\n\034S2SRouteSyncObje"
+      "ctToShardReq\022\014\n\004name\030\001 \001(\014\022\020\n\010clientid\030\002"
+      " \001(\004\022\020\n\010objectid\030\003 \003(\004\"d\n\033S2SRouteAddObj"
+      "ectToProxyReq\022\014\n\004name\030\001 \001(\014\022\020\n\010clientid\030"
+      "\002 \001(\004\022\020\n\010objectid\030\003 \001(\004\022\023\n\013objectcount\030\004"
+      " \001(\r\"d\n\033S2SRouteAddObjectToShardReq\022\014\n\004n"
+      "ame\030\001 \001(\014\022\020\n\010clientid\030\002 \001(\004\022\020\n\010objectid\030"
+      "\003 \001(\004\022\023\n\013objectcount\030\004 \001(\r\"g\n\036S2SRouteRe"
+      "moveObjectToProxyReq\022\014\n\004name\030\001 \001(\014\022\020\n\010cl"
+      "ientid\030\002 \001(\004\022\020\n\010objectid\030\003 \001(\004\022\023\n\013object"
+      "count\030\004 \001(\r\"g\n\036S2SRouteRemoveObjectToSha"
+      "rdReq\022\014\n\004name\030\001 \001(\014\022\020\n\010clientid\030\002 \001(\004\022\020\n"
+      "\010objectid\030\003 \001(\004\022\023\n\013objectcount\030\004 \001(\r\"z\n\033"
+      "S2SRegisterAgentToServerReq\022\017\n\007agentid\030\001"
+      " \001(\014\022\017\n\007localip\030\002 \001(\014\022\014\n\004name\030\003 \001(\014\022\014\n\004t"
+      "ype\030\004 \001(\014\022\014\n\004port\030\005 \001(\r\022\017\n\007service\030\006 \001(\014"
+      "\"r\n\017PBDeployCommand\022\017\n\007command\030\001 \001(\014\022\017\n\007"
+      "appname\030\002 \001(\014\022\017\n\007apptype\030\003 \001(\014\022\r\n\005appid\030"
+      "\004 \001(\014\022\016\n\006zoneid\030\005 \001(\r\022\r\n\005value\030\006 \001(\014\"K\n\032"
+      "S2SDeployCommandToAgentReq\022-\n\rdeploycomm"
+      "and\030\001 \001(\0132\026.KFMsg.PBDeployCommand\"L\n\033S2S"
+      "DeployCommandToClientReq\022-\n\rdeploycomman"
+      "d\030\001 \001(\0132\026.KFMsg.PBDeployCommand\"r\n\027S2SDe"
+      "ployToolCommandReq\022-\n\rdeploycommand\030\001 \001("
+      "\0132\026.KFMsg.PBDeployCommand\022\014\n\004time\030\002 \001(\004\022"
+      "\016\n\006toolid\030\003 \001(\014\022\n\n\002ip\030\004 \001(\014\"9\n\025S2SDeploy"
+      "LogToToolAck\022\017\n\007agentid\030\001 \001(\004\022\017\n\007content"
+      "\030\002 \001(\014\";\n\027S2SDeployLogToServerAck\022\017\n\007age"
+      "ntid\030\001 \001(\004\022\017\n\007content\030\002 \001(\014\"\225\001\n\033S2SDeplo"
+      "yToolDeleteMySQLReq\022\r\n\005table\030\001 \001(\014\022:\n\004ke"
+      "ys\030\002 \003(\0132,.KFMsg.S2SDeployToolDeleteMySQ"
+      "LReq.KeysEntry\032+\n\tKeysEntry\022\013\n\003key\030\001 \001(\t"
+      "\022\r\n\005value\030\002 \001(\014:\0028\001\"\245\001\n\033S2SDeployToolDel"
+      "eteMySQLAck\022\r\n\005table\030\001 \001(\014\022:\n\004keys\030\002 \003(\013"
+      "2,.KFMsg.S2SDeployToolDeleteMySQLAck.Key"
+      "sEntry\022\016\n\006result\030\003 \001(\010\032+\n\tKeysEntry\022\013\n\003k"
+      "ey\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:\0028\001\"\235\001\n\034S2SDeplo"
+      "yToolExecuteMySQLReq\022\r\n\005table\030\001 \001(\014\022\?\n\006v"
+      "alues\030\002 \003(\0132/.KFMsg.S2SDeployToolExecute"
+      "MySQLReq.ValuesEntry\032-\n\013ValuesEntry\022\013\n\003k"
+      "ey\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:\0028\001\"\255\001\n\034S2SDeplo"
+      "yToolExecuteMySQLAck\022\r\n\005table\030\001 \001(\014\022\?\n\006v"
+      "alues\030\002 \003(\0132/.KFMsg.S2SDeployToolExecute"
+      "MySQLAck.ValuesEntry\022\016\n\006result\030\003 \001(\010\032-\n\013"
+      "ValuesEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:"
+      "\0028\001\"\223\001\n\032S2SDeployToolQueryMySQLReq\022\r\n\005ta"
+      "ble\030\001 \001(\014\0229\n\004keys\030\002 \003(\0132+.KFMsg.S2SDeplo"
+      "yToolQueryMySQLReq.KeysEntry\032+\n\tKeysEntr"
+      "y\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:\0028\001\"l\n\013PBM"
+      "ySQLData\022.\n\006values\030\001 \003(\0132\036.KFMsg.PBMySQL"
+      "Data.ValuesEntry\032-\n\013ValuesEntry\022\013\n\003key\030\001"
+      " \001(\t\022\r\n\005value\030\002 \001(\014:\0028\001\"0\n\014PBMySQLDatas\022"
+      " \n\004data\030\002 \003(\0132\022.KFMsg.PBMySQLData\"_\n\032S2S"
+      "DeployToolQueryMySQLAck\022\r\n\005table\030\001 \001(\014\022\""
+      "\n\005datas\030\002 \001(\0132\023.KFMsg.PBMySQLDatas\022\016\n\006re"
+      "sult\030\003 \001(\010\")\n\033S2SDeployToolQueryToolIdRe"
+      "q\022\n\n\002ip\030\001 \001(\014\")\n\033S2SDeployToolQueryToolI"
+      "dAck\022\n\n\002id\030\001 \001(\r\"*\n\034S2SDeployHeartbeatTo"
+      "AgentReq\022\n\n\002id\030\001 \001(\004\"-\n\013PBRemoteLog\022\r\n\005l"
+      "evel\030\001 \001(\r\022\017\n\007content\030\002 \001(\014\"\221\001\n\027S2SRemot"
+      "eLogToServerReq\022\017\n\007appname\030\001 \001(\014\022\017\n\007appt"
+      "ype\030\002 \001(\014\022\020\n\010strappid\030\003 \001(\014\022\r\n\005appid\030\004 \001"
+      "(\004\022\016\n\006zoneid\030\005 \001(\r\022#\n\007logdata\030\006 \003(\0132\022.KF"
+      "Msg.PBRemoteLog*\265\020\n\rFrameProtocol\022\034\n\030S2S"
+      "_FRAME_PROTOCOL_BEGIN\020\000\022\037\n\032S2S_REGISTER_"
+      "TO_SERVER_REQ\020\221N\022\037\n\032S2S_REGISTER_TO_SERV"
+      "ER_ACK\020\222N\022 \n\033S2S_TELL_REGISTER_TO_SERVER"
+      "\020\223N\022$\n\037S2S_TELL_UNREGISTER_FROM_SERVER\020\224"
+      "N\022\'\n\"S2S_TELL_DISCOVER_SERVER_TO_MASTER\020"
+      "\225N\022#\n\036S2S_TELL_LOST_SERVER_TO_MASTER\020\226N\022"
+      "\'\n\"S2S_TELL_REGISTER_SERVER_TO_MASTER\020\227N"
+      "\022#\n\036S2S_TELL_SERVER_LIST_TO_MASTER\020\230N\022!\n"
+      "\034S2S_REMOTE_LOG_TO_SERVER_REQ\020\232N\022%\n S2S_"
+      "REGISTER_AGENT_TO_SERVER_REQ\020\233N\022$\n\037S2S_D"
+      "EPLOY_COMMAND_TO_AGENT_REQ\020\234N\022%\n S2S_DEP"
+      "LOY_COMMAND_TO_CLIENT_REQ\020\235N\022&\n!S2S_DEPL"
+      "OY_TOOL_EXECUTE_MYSQL_REQ\020\236N\022&\n!S2S_DEPL"
+      "OY_TOOL_EXECUTE_MYSQL_ACK\020\237N\022$\n\037S2S_DEPL"
+      "OY_TOOL_QUERY_MYSQL_REQ\020\240N\022$\n\037S2S_DEPLOY"
+      "_TOOL_QUERY_MYSQL_ACK\020\241N\022 \n\033S2S_DEPLOY_T"
+      "OOL_COMMAND_REQ\020\242N\022\037\n\032S2S_DEPLOY_LOG_TO_"
+      "TOOL_ACK\020\243N\022!\n\034S2S_DEPLOY_LOG_TO_SERVER_"
+      "ACK\020\244N\022%\n S2S_DEPLOY_TOOL_DELETE_MYSQL_R"
+      "EQ\020\245N\022%\n S2S_DEPLOY_TOOL_DELETE_MYSQL_AC"
+      "K\020\246N\022&\n!S2S_DEPLOY_TOOL_QUERY_TOOL_ID_RE"
+      "Q\020\247N\022&\n!S2S_DEPLOY_TOOL_QUERY_TOOL_ID_AC"
+      "K\020\250N\022&\n!S2S_DEPLOY_HEARTBEAT_TO_AGENT_RE"
+      "Q\020\251N\022\'\n\"S2S_CLUSTER_REGISTER_TO_MASTER_R"
+      "EQ\020\365N\022)\n$S2S_CLUSTER_SYNC_PROXY_TO_MASTE"
+      "R_REQ\020\366N\022#\n\036S2S_CLUSTER_AUTH_TO_MASTER_R"
+      "EQ\020\367N\022#\n\036S2S_CLUSTER_AUTH_TO_CLIENT_ACK\020"
+      "\370N\022#\n\036S2S_CLUSTER_TOKEN_TO_PROXY_REQ\020\371N\022"
+      "$\n\037S2S_CLUSTER_VERIFY_TO_PROXY_REQ\020\372N\022%\n"
+      " S2S_CLUSTER_VERIFY_TO_CLIENT_ACK\020\373N\022-\n("
+      "S2S_CLUSTER_CLIENT_DISCOVER_TO_SHARD_REQ"
+      "\020\374N\022)\n$S2S_CLUSTER_CLIENT_LOST_TO_SHARD_"
+      "REQ\020\375N\022)\n$S2S_CLUSTER_LOST_PROXY_TO_MAST"
+      "ER_REQ\020\376N\022$\n\037S2S_CLUSTER_TOKEN_TO_MASTER"
+      "_REQ\020\377N\022#\n\036S2S_CLUSTER_TOKEN_TO_PROXY_AC"
+      "K\020\200O\022$\n\037S2S_CLUSTER_TOKEN_TO_MASTER_ACK\020"
+      "\201O\022\031\n\024S2S_ROUTE_MESSAGE_OK\020\330O\022$\n\037S2S_ROU"
+      "TE_MESSAGE_TO_CLIENT_ACK\020\331O\022&\n!S2S_ROUTE"
+      "_MESSAGE_TO_NAME_ALL_REQ\020\332O\022\'\n\"S2S_ROUTE"
+      "_MESSAGE_TO_NAME_RAND_REQ\020\333O\022*\n%S2S_ROUT"
+      "E_MESSAGE_TO_NAME_BALANCE_REQ\020\334O\022)\n$S2S_"
+      "ROUTE_MESSAGE_TO_NAME_OBJECT_REQ\020\335O\022$\n\037S"
+      "2S_ROUTE_MESSAGE_TO_SERVER_REQ\020\336O\022$\n\037S2S"
+      "_ROUTE_MESSAGE_TO_PLAYER_REQ\020\337O\022\'\n\"S2S_R"
+      "OUTE_CLIENT_LOST_TO_SHARD_REQ\020\340O\022%\n S2S_"
+      "ROUTE_DISCOVER_TO_CLIENT_REQ\020\341O\022\'\n\"S2S_R"
+      "OUTE_SYNC_OBJECT_TO_PROXY_REQ\020\342O\022&\n!S2S_"
+      "ROUTE_ADD_OBJECT_TO_PROXY_REQ\020\343O\022)\n$S2S_"
+      "ROUTE_REMOVE_OBJECT_TO_PROXY_REQ\020\344O\022\'\n\"S"
+      "2S_ROUTE_SYNC_OBJECT_TO_SHARD_REQ\020\345O\022&\n!"
+      "S2S_ROUTE_ADD_OBJECT_TO_SHARD_REQ\020\346O\022)\n$"
+      "S2S_ROUTE_REMOVE_OBJECT_TO_SHARD_REQ\020\347Ob"
+      "\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 7376);
+      descriptor, 7487);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "FrameMessage.proto", &protobuf_RegisterTypes);
 }
@@ -2953,6 +2961,11 @@ void RegisterToServerAck::InitAsDefaultInstance() {
 const int RegisterToServerAck::kAppidFieldNumber;
 const int RegisterToServerAck::kAppnameFieldNumber;
 const int RegisterToServerAck::kApptypeFieldNumber;
+const int RegisterToServerAck::kCompresstypeFieldNumber;
+const int RegisterToServerAck::kCompresslevelFieldNumber;
+const int RegisterToServerAck::kCompresslengthFieldNumber;
+const int RegisterToServerAck::kEncryptkeyFieldNumber;
+const int RegisterToServerAck::kOpenencryptFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 RegisterToServerAck::RegisterToServerAck()
@@ -2974,14 +2987,23 @@ RegisterToServerAck::RegisterToServerAck(const RegisterToServerAck& from)
   if (from.apptype().size() > 0) {
     apptype_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.apptype_);
   }
-  appid_ = from.appid_;
+  encryptkey_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.encryptkey().size() > 0) {
+    encryptkey_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.encryptkey_);
+  }
+  ::memcpy(&appid_, &from.appid_,
+    static_cast<size_t>(reinterpret_cast<char*>(&openencrypt_) -
+    reinterpret_cast<char*>(&appid_)) + sizeof(openencrypt_));
   // @@protoc_insertion_point(copy_constructor:KFMsg.RegisterToServerAck)
 }
 
 void RegisterToServerAck::SharedCtor() {
   appname_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   apptype_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  appid_ = GOOGLE_ULONGLONG(0);
+  encryptkey_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ::memset(&appid_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&openencrypt_) -
+      reinterpret_cast<char*>(&appid_)) + sizeof(openencrypt_));
 }
 
 RegisterToServerAck::~RegisterToServerAck() {
@@ -2992,6 +3014,7 @@ RegisterToServerAck::~RegisterToServerAck() {
 void RegisterToServerAck::SharedDtor() {
   appname_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   apptype_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  encryptkey_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 void RegisterToServerAck::SetCachedSize(int size) const {
@@ -3016,7 +3039,10 @@ void RegisterToServerAck::Clear() {
 
   appname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   apptype_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  appid_ = GOOGLE_ULONGLONG(0);
+  encryptkey_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ::memset(&appid_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&openencrypt_) -
+      reinterpret_cast<char*>(&appid_)) + sizeof(openencrypt_));
   _internal_metadata_.Clear();
 }
 
@@ -3068,6 +3094,74 @@ bool RegisterToServerAck::MergePartialFromCodedStream(
         break;
       }
 
+      // uint32 compresstype = 4;
+      case 4: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(32u /* 32 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &compresstype_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint32 compresslevel = 5;
+      case 5: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(40u /* 40 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &compresslevel_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint32 compresslength = 6;
+      case 6: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(48u /* 48 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &compresslength_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // bytes encryptkey = 7;
+      case 7: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(58u /* 58 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
+                input, this->mutable_encryptkey()));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // bool openencrypt = 8;
+      case 8: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(64u /* 64 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &openencrypt_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
       default: {
       handle_unusual:
         if (tag == 0) {
@@ -3111,6 +3205,32 @@ void RegisterToServerAck::SerializeWithCachedSizes(
       3, this->apptype(), output);
   }
 
+  // uint32 compresstype = 4;
+  if (this->compresstype() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->compresstype(), output);
+  }
+
+  // uint32 compresslevel = 5;
+  if (this->compresslevel() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->compresslevel(), output);
+  }
+
+  // uint32 compresslength = 6;
+  if (this->compresslength() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->compresslength(), output);
+  }
+
+  // bytes encryptkey = 7;
+  if (this->encryptkey().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
+      7, this->encryptkey(), output);
+  }
+
+  // bool openencrypt = 8;
+  if (this->openencrypt() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(8, this->openencrypt(), output);
+  }
+
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
@@ -3144,6 +3264,33 @@ void RegisterToServerAck::SerializeWithCachedSizes(
         3, this->apptype(), target);
   }
 
+  // uint32 compresstype = 4;
+  if (this->compresstype() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->compresstype(), target);
+  }
+
+  // uint32 compresslevel = 5;
+  if (this->compresslevel() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(5, this->compresslevel(), target);
+  }
+
+  // uint32 compresslength = 6;
+  if (this->compresslength() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(6, this->compresslength(), target);
+  }
+
+  // bytes encryptkey = 7;
+  if (this->encryptkey().size() > 0) {
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
+        7, this->encryptkey(), target);
+  }
+
+  // bool openencrypt = 8;
+  if (this->openencrypt() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(8, this->openencrypt(), target);
+  }
+
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
@@ -3175,11 +3322,44 @@ size_t RegisterToServerAck::ByteSizeLong() const {
         this->apptype());
   }
 
+  // bytes encryptkey = 7;
+  if (this->encryptkey().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::BytesSize(
+        this->encryptkey());
+  }
+
   // uint64 appid = 1;
   if (this->appid() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt64Size(
         this->appid());
+  }
+
+  // uint32 compresstype = 4;
+  if (this->compresstype() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->compresstype());
+  }
+
+  // uint32 compresslevel = 5;
+  if (this->compresslevel() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->compresslevel());
+  }
+
+  // uint32 compresslength = 6;
+  if (this->compresslength() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->compresslength());
+  }
+
+  // bool openencrypt = 8;
+  if (this->openencrypt() != 0) {
+    total_size += 1 + 1;
   }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
@@ -3217,8 +3397,24 @@ void RegisterToServerAck::MergeFrom(const RegisterToServerAck& from) {
 
     apptype_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.apptype_);
   }
+  if (from.encryptkey().size() > 0) {
+
+    encryptkey_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.encryptkey_);
+  }
   if (from.appid() != 0) {
     set_appid(from.appid());
+  }
+  if (from.compresstype() != 0) {
+    set_compresstype(from.compresstype());
+  }
+  if (from.compresslevel() != 0) {
+    set_compresslevel(from.compresslevel());
+  }
+  if (from.compresslength() != 0) {
+    set_compresslength(from.compresslength());
+  }
+  if (from.openencrypt() != 0) {
+    set_openencrypt(from.openencrypt());
   }
 }
 
@@ -3250,7 +3446,13 @@ void RegisterToServerAck::InternalSwap(RegisterToServerAck* other) {
     GetArenaNoVirtual());
   apptype_.Swap(&other->apptype_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
+  encryptkey_.Swap(&other->encryptkey_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
   swap(appid_, other->appid_);
+  swap(compresstype_, other->compresstype_);
+  swap(compresslevel_, other->compresslevel_);
+  swap(compresslength_, other->compresslength_);
+  swap(openencrypt_, other->openencrypt_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
 

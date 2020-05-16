@@ -20,9 +20,11 @@ namespace KFrame
             PingTime = 20000,								// 20秒发送一个ping
             PingTimeout = 60000,							// 断线超时时间
 
-            CUT_MSGCHILDBEGIN = 65535,		// 分割的头消息
-            CUT_MSGCHILD = 65534,			// 分割的子消息
+            MsgChildBegin = 65535,		// 分割的头消息
+            MsgChild = 65534,			// 分割的子消息
 
+            Compress = 0x1,				// 压缩
+            Encrypt = 0x2,				// 加密
             ///////////////////////////////////////////////////////////////////////////////////
             ///////////////////////////////////////////////////////////////////////////////////
             ConnectEvent = 1,		// 连接事件
@@ -63,6 +65,28 @@ namespace KFrame
 
         // 描述
         std::string _describe;
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
+    // 压缩和加密数据
+    class KFNetCompressEncrypt
+    {
+    public:
+        // 压缩类型
+        uint32 _compress_type = 0u;
+
+        // 压缩等级
+        uint32 _compress_level = 0u;
+
+        // 压缩长度(超过就执行压缩)
+        uint32 _compress_length = 0xFFFFFFFF;
+
+        // 加密秘钥
+        std::string _encrypt_key;
+
+        // 是否开启加密
+        bool _open_encrypt = false;
     };
 }
 

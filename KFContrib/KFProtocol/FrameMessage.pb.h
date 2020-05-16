@@ -776,11 +776,49 @@ class LIBPROTOC_EXPORT RegisterToServerAck : public ::google::protobuf::Message 
   ::std::string* release_apptype();
   void set_allocated_apptype(::std::string* apptype);
 
+  // bytes encryptkey = 7;
+  void clear_encryptkey();
+  static const int kEncryptkeyFieldNumber = 7;
+  const ::std::string& encryptkey() const;
+  void set_encryptkey(const ::std::string& value);
+  #if LANG_CXX11
+  void set_encryptkey(::std::string&& value);
+  #endif
+  void set_encryptkey(const char* value);
+  void set_encryptkey(const void* value, size_t size);
+  ::std::string* mutable_encryptkey();
+  ::std::string* release_encryptkey();
+  void set_allocated_encryptkey(::std::string* encryptkey);
+
   // uint64 appid = 1;
   void clear_appid();
   static const int kAppidFieldNumber = 1;
   ::google::protobuf::uint64 appid() const;
   void set_appid(::google::protobuf::uint64 value);
+
+  // uint32 compresstype = 4;
+  void clear_compresstype();
+  static const int kCompresstypeFieldNumber = 4;
+  ::google::protobuf::uint32 compresstype() const;
+  void set_compresstype(::google::protobuf::uint32 value);
+
+  // uint32 compresslevel = 5;
+  void clear_compresslevel();
+  static const int kCompresslevelFieldNumber = 5;
+  ::google::protobuf::uint32 compresslevel() const;
+  void set_compresslevel(::google::protobuf::uint32 value);
+
+  // uint32 compresslength = 6;
+  void clear_compresslength();
+  static const int kCompresslengthFieldNumber = 6;
+  ::google::protobuf::uint32 compresslength() const;
+  void set_compresslength(::google::protobuf::uint32 value);
+
+  // bool openencrypt = 8;
+  void clear_openencrypt();
+  static const int kOpenencryptFieldNumber = 8;
+  bool openencrypt() const;
+  void set_openencrypt(bool value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.RegisterToServerAck)
  private:
@@ -788,7 +826,12 @@ class LIBPROTOC_EXPORT RegisterToServerAck : public ::google::protobuf::Message 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::ArenaStringPtr appname_;
   ::google::protobuf::internal::ArenaStringPtr apptype_;
+  ::google::protobuf::internal::ArenaStringPtr encryptkey_;
   ::google::protobuf::uint64 appid_;
+  ::google::protobuf::uint32 compresstype_;
+  ::google::protobuf::uint32 compresslevel_;
+  ::google::protobuf::uint32 compresslength_;
+  bool openencrypt_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameMessage_2eproto::TableStruct;
 };
@@ -8341,6 +8384,115 @@ inline void RegisterToServerAck::set_allocated_apptype(::std::string* apptype) {
   }
   apptype_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), apptype);
   // @@protoc_insertion_point(field_set_allocated:KFMsg.RegisterToServerAck.apptype)
+}
+
+// uint32 compresstype = 4;
+inline void RegisterToServerAck::clear_compresstype() {
+  compresstype_ = 0u;
+}
+inline ::google::protobuf::uint32 RegisterToServerAck::compresstype() const {
+  // @@protoc_insertion_point(field_get:KFMsg.RegisterToServerAck.compresstype)
+  return compresstype_;
+}
+inline void RegisterToServerAck::set_compresstype(::google::protobuf::uint32 value) {
+  
+  compresstype_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.RegisterToServerAck.compresstype)
+}
+
+// uint32 compresslevel = 5;
+inline void RegisterToServerAck::clear_compresslevel() {
+  compresslevel_ = 0u;
+}
+inline ::google::protobuf::uint32 RegisterToServerAck::compresslevel() const {
+  // @@protoc_insertion_point(field_get:KFMsg.RegisterToServerAck.compresslevel)
+  return compresslevel_;
+}
+inline void RegisterToServerAck::set_compresslevel(::google::protobuf::uint32 value) {
+  
+  compresslevel_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.RegisterToServerAck.compresslevel)
+}
+
+// uint32 compresslength = 6;
+inline void RegisterToServerAck::clear_compresslength() {
+  compresslength_ = 0u;
+}
+inline ::google::protobuf::uint32 RegisterToServerAck::compresslength() const {
+  // @@protoc_insertion_point(field_get:KFMsg.RegisterToServerAck.compresslength)
+  return compresslength_;
+}
+inline void RegisterToServerAck::set_compresslength(::google::protobuf::uint32 value) {
+  
+  compresslength_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.RegisterToServerAck.compresslength)
+}
+
+// bytes encryptkey = 7;
+inline void RegisterToServerAck::clear_encryptkey() {
+  encryptkey_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& RegisterToServerAck::encryptkey() const {
+  // @@protoc_insertion_point(field_get:KFMsg.RegisterToServerAck.encryptkey)
+  return encryptkey_.GetNoArena();
+}
+inline void RegisterToServerAck::set_encryptkey(const ::std::string& value) {
+  
+  encryptkey_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.RegisterToServerAck.encryptkey)
+}
+#if LANG_CXX11
+inline void RegisterToServerAck::set_encryptkey(::std::string&& value) {
+  
+  encryptkey_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.RegisterToServerAck.encryptkey)
+}
+#endif
+inline void RegisterToServerAck::set_encryptkey(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  encryptkey_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.RegisterToServerAck.encryptkey)
+}
+inline void RegisterToServerAck::set_encryptkey(const void* value, size_t size) {
+  
+  encryptkey_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.RegisterToServerAck.encryptkey)
+}
+inline ::std::string* RegisterToServerAck::mutable_encryptkey() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.RegisterToServerAck.encryptkey)
+  return encryptkey_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* RegisterToServerAck::release_encryptkey() {
+  // @@protoc_insertion_point(field_release:KFMsg.RegisterToServerAck.encryptkey)
+  
+  return encryptkey_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void RegisterToServerAck::set_allocated_encryptkey(::std::string* encryptkey) {
+  if (encryptkey != NULL) {
+    
+  } else {
+    
+  }
+  encryptkey_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), encryptkey);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.RegisterToServerAck.encryptkey)
+}
+
+// bool openencrypt = 8;
+inline void RegisterToServerAck::clear_openencrypt() {
+  openencrypt_ = false;
+}
+inline bool RegisterToServerAck::openencrypt() const {
+  // @@protoc_insertion_point(field_get:KFMsg.RegisterToServerAck.openencrypt)
+  return openencrypt_;
+}
+inline void RegisterToServerAck::set_openencrypt(bool value) {
+  
+  openencrypt_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.RegisterToServerAck.openencrypt)
 }
 
 // -------------------------------------------------------------------

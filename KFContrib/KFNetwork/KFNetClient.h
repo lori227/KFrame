@@ -39,6 +39,9 @@ namespace KFrame
         // 断开事件
         virtual void OnDisconnect( int32 code, const char* function, uint32 line );
 
+        // 设置压缩数据
+        void InitCompressEncrypt( uint32 compresstype, uint32 compresslevel, uint32 compresslength, const std::string& encryptkey, bool openencrypt );
+
     private:
         // 启动连接定时器
         void StartConnectTimer( uint32 time );
@@ -73,6 +76,8 @@ namespace KFrame
         // 连接定时器
         uv_timer_t* _uv_connect_timer;
 
+        // 压缩加密数据
+        KFNetCompressEncrypt _net_compress_encrypt;
     };
 }
 

@@ -3,6 +3,7 @@
 #include "KFNetSession.h"
 #include "KFNetLocker.h"
 #include "lz4/lib/lz4.h"
+#include "zstd/lib/zstd.h"
 
 namespace KFrame
 {
@@ -18,8 +19,8 @@ namespace KFrame
 
     KFNetServices::~KFNetServices()
     {
-        _buff_length = 0;
-        free( _buff_address );
+        _max_serialize_buff_length = 0;
+        free( _serialize_buff );
         delete _net_event;
 
         uv_loop_delete( _uv_loop );
@@ -30,7 +31,7 @@ namespace KFrame
         delete ( uv_mutex_t* )_uv_event_mutex;
     }
 
-    void KFNetServices::InitServices( uint32 eventcount, uint32 queuecount, uint32 messagetype, uint32 compress )
+    void KFNetServices::InitServices( uint32 eventcount, uint32 queuecount, uint32 messagetype )
     {
         if ( queuecount != 0 )
         {
@@ -41,20 +42,29 @@ namespace KFrame
         _net_event->InitEvent( eventcount );
 
         _message_type = messagetype;
-        _buff_length = KFNetDefine::SerializeBuffLength;
-        _buff_address = reinterpret_cast< char* >( malloc( _buff_length ) );
-
-        _compress = compress;
-        if ( _compress > 0 )
-        {
-            _compress_length = KFNetDefine::SerializeBuffLength;
-            _compress_address = reinterpret_cast< char* >( malloc( _buff_length ) );
-        }
+        _max_serialize_buff_length = KFNetDefine::SerializeBuffLength;
+        _serialize_buff = reinterpret_cast< char* >( malloc( _max_serialize_buff_length ) );
 
         _uv_loop = uv_loop_new();
         uv_mutex_init( ( uv_mutex_t* )_uv_event_mutex );
         uv_async_init( _uv_loop, _uv_event_async, OnAsyncEventCallBack );
         uv_async_init( _uv_loop, _uv_close_async, OnAsyncCloseCallBack );
+    }
+
+    void KFNetServices::InitCompress( uint32 compresstype, uint32 compresslevel, uint32 compresslength )
+    {
+        _compress_encrypt._compress_type = compresstype;
+        _compress_encrypt._compress_level = compresslevel;
+        _compress_encrypt._compress_length = compresslength;
+
+        _max_compress_buff_length = KFNetDefine::SerializeBuffLength;
+        _compress_buff = reinterpret_cast< char* >( malloc( _max_compress_buff_length ) );
+    }
+
+    void KFNetServices::InitEncrypt( const std::string& encryptkey, bool openencrypt )
+    {
+        _compress_encrypt._encrypt_key = encryptkey;
+        _compress_encrypt._open_encrypt = openencrypt;
     }
 
     int32 KFNetServices::StartServices( const KFNetData* netdata )
@@ -144,61 +154,179 @@ namespace KFrame
 
     char* KFNetServices::GetBuffAddress( uint32 msgid, uint32 length )
     {
-        if ( length > _buff_length )
+        if ( length > _max_serialize_buff_length )
         {
             if ( length < 2 * KFNetDefine::SerializeBuffLength )
             {
-                auto newaddress = reinterpret_cast< char* >( realloc( _buff_address, length ) );
+                auto newaddress = reinterpret_cast< char* >( realloc( _serialize_buff, length ) );
                 if ( newaddress != nullptr )
                 {
-                    _buff_length = length;
-                    _buff_address = newaddress;
+                    _max_serialize_buff_length = length;
+                    _serialize_buff = newaddress;
                 }
             }
         }
 
-        return _buff_address;
+        return _serialize_buff;
     }
 
-    void KFNetServices::CalcCompressLength( uint32 length )
+    void KFNetServices::LZ4CalcCompressLength( const char* data, uint32 length, bool iscompress )
     {
-        auto compresslength = LZ4_compressBound( length );
-        if ( ( uint32 )compresslength > _compress_length )
+        auto compresslength = 0u;
+        if ( iscompress )
         {
-            auto newaddress = reinterpret_cast< char* >( realloc( _compress_address, compresslength ) );
+            compresslength = LZ4_compressBound( length );
+        }
+
+        if ( compresslength > _max_compress_buff_length )
+        {
+            auto newaddress = reinterpret_cast< char* >( realloc( _compress_buff, compresslength ) );
             if ( newaddress != nullptr )
             {
-                _compress_length = compresslength;
-                _compress_address = newaddress;
+                _compress_buff = newaddress;
+                _max_compress_buff_length = compresslength;
             }
         }
     }
 
-    const char* KFNetServices::Encode( const char* data, uint32& length )
+    void KFNetServices::ZSTDCalcCompressLength( const char* data, uint32 length, bool iscompress )
     {
-        if ( _compress > 0u )
+        auto compresslength = 0u;
+        if ( iscompress )
         {
-            CalcCompressLength( length );
+            compresslength = ( uint32 )ZSTD_compressBound( length );
+        }
+        else
+        {
+            compresslength = ( uint32 )ZSTD_getFrameContentSize( data, length );
+        }
 
-            // 压缩
-            length = LZ4_compress_fast( data, _compress_address, length, _compress_length, _compress );
-            data = _compress_address;
+        if ( compresslength > _max_compress_buff_length )
+        {
+            auto newaddress = reinterpret_cast< char* >( realloc( _compress_buff, compresslength ) );
+            if ( newaddress != nullptr )
+            {
+                _compress_buff = newaddress;
+                _max_compress_buff_length = compresslength;
+            }
+        }
+    }
+
+    const char* KFNetServices::CompressData( const KFNetCompressEncrypt* compressencrypt, const char* data, uint32& length )
+    {
+        switch ( compressencrypt->_compress_type )
+        {
+        case KFCompressEnum::LZ4:
+        {
+            // 重新计算长度
+            LZ4CalcCompressLength( data, length, true );
+            length = LZ4_compress_fast( data, _compress_buff, length, _max_compress_buff_length, compressencrypt->_compress_level );
+            data = _compress_buff;
+        }
+        break;
+        case KFCompressEnum::ZSTD:
+        {
+            // 重新计算长度
+            ZSTDCalcCompressLength( data, length, true );
+            length = ( uint32 )ZSTD_compress( _compress_buff, _max_compress_buff_length, data, length, ( int32 )compressencrypt->_compress_level );
+            data = _compress_buff;
+        }
+        break;
+        default:
+            break;
         }
 
         return data;
     }
 
-    const char* KFNetServices::Decode( const char* data, uint32& length )
+    const char* KFNetServices::DeCompressData( const KFNetCompressEncrypt* compressencrypt, const char* data, uint32& length )
     {
-        if ( _compress > 0u )
+        switch ( compressencrypt->_compress_type )
         {
-            CalcCompressLength( length );
-
-            // 解压
-            length = LZ4_decompress_safe( data, _compress_address, length, _compress_length );
-            data = _compress_address;
+        case KFCompressEnum::LZ4:
+        {
+            // 解压长度 这里要计算一下
+            LZ4CalcCompressLength( data, length, false );
+            length = LZ4_decompress_safe( data, _compress_buff, length, _max_compress_buff_length );
+            data = _compress_buff;
+        }
+        break;
+        case KFCompressEnum::ZSTD:
+        {
+            // 重新计算长度
+            ZSTDCalcCompressLength( data, length, false );
+            length = ( int32 )ZSTD_decompress( _compress_buff, _max_compress_buff_length, data, length );
+            data = _compress_buff;
+        }
+        break;
+        default:
+            break;
         }
 
         return data;
+    }
+
+    const char* KFNetServices::EncryptData( const KFNetCompressEncrypt* compressencrypt, const char* data, uint32& length )
+    {
+        // 加密逻辑
+
+        return data;
+    }
+
+    const char* KFNetServices::DeEncryptData( const KFNetCompressEncrypt* compressencrypt, const char* data, uint32& length )
+    {
+        // 解密逻辑
+
+        return data;
+    }
+
+    std::tuple< const char*, uint32, uint16 > KFNetServices::Encode( const KFNetCompressEncrypt* compressencrypt, const char* data, uint32 length )
+    {
+        uint16 retflag = 0;
+        auto retdata = data;
+        auto retlength = length;
+
+        if ( compressencrypt != nullptr )
+        {
+            // 压缩
+            if ( length >= compressencrypt->_compress_length )
+            {
+                retflag |= KFNetDefine::Compress;
+                retdata = CompressData( compressencrypt, retdata, retlength );
+            }
+
+            // 加密
+            if ( compressencrypt->_open_encrypt )
+            {
+                retflag |= KFNetDefine::Encrypt;
+                retdata = EncryptData( compressencrypt, retdata, retlength );
+            }
+        }
+
+        return std::make_tuple( retdata, retlength, retflag );
+    }
+
+    std::tuple< const char*, uint32 > KFNetServices::Decode( const KFNetCompressEncrypt* compressencrypt, const char* data, uint32 length, uint16 flag )
+    {
+        auto retdata = data;
+        auto retlength = length;
+
+        if ( compressencrypt != nullptr )
+        {
+            // 解密
+            if ( ( flag & KFNetDefine::Encrypt ) != 0 )
+            {
+                retdata = DeEncryptData( compressencrypt, retdata, retlength );
+            }
+
+            // 解压缩
+            if ( ( flag & KFNetDefine::Compress ) != 0 )
+            {
+                retdata = DeCompressData( compressencrypt, retdata, retlength );
+            }
+        }
+
+        return std::make_tuple( retdata, retlength );
     }
 }
+

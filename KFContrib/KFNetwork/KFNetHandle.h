@@ -34,6 +34,9 @@ namespace KFrame
 
         // 判断是否超时
         bool IsTrusteeTimeout( uint64 nowtime );
+
+        // 初始化压缩加密数据
+        void InitCompressEncrypt();
         //////////////////////////////////////////////////////////////////////////////////////////////
     protected:
         // 关闭回调
@@ -51,7 +54,6 @@ namespace KFrame
         // 托管结束时间
         uint64 _trustee_timeout;
     protected:
-
         // 网络服务
         uv_tcp_t* _uv_tcp;
     };

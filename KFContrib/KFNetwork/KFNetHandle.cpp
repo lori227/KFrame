@@ -22,7 +22,7 @@ namespace KFrame
     {
         _is_trustee = true;
         _net_services = netservices;
-        InitConnector( id, netservices );
+        InitConnector( id, netservices, nullptr );
 
         _uv_tcp = reinterpret_cast< uv_tcp_t* >( uvtcp );
         _uv_tcp->data = this;
@@ -40,6 +40,11 @@ namespace KFrame
         }
 
         OnConnect( reinterpret_cast< uv_stream_t* >( _uv_tcp ) );
+    }
+
+    void KFNetHandle::InitCompressEncrypt()
+    {
+        _net_compress_encrypt = &_net_services->_compress_encrypt;
     }
 
     void KFNetHandle::SetTrusteeTimeout( uint64 time )
