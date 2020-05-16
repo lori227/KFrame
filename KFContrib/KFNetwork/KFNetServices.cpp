@@ -286,7 +286,7 @@ namespace KFrame
         auto retdata = data;
         auto retlength = length;
 
-        if ( compressencrypt != nullptr )
+        if ( compressencrypt != nullptr && length > 0u )
         {
             // 压缩
             if ( length >= compressencrypt->_compress_length )
@@ -311,7 +311,7 @@ namespace KFrame
         auto retdata = data;
         auto retlength = length;
 
-        if ( compressencrypt != nullptr )
+        if ( compressencrypt != nullptr && length > 0u )
         {
             // 解密
             if ( ( flag & KFNetDefine::Encrypt ) != 0 )
