@@ -17,12 +17,13 @@ namespace KFrame
         delete _net_client_services;
     }
 
-    void KFNetClientEngine::InitEngine( uint32 queuesize, uint32 messagetype )
+    void KFNetClientEngine::InitEngine( uint64 nowtime, uint32 queuesize, uint32 messagetype )
     {
         // 网络服务
         _net_client_services = new KFNetClientServices();
         _net_client_services->InitServices( 100, queuesize, messagetype );
         _net_client_services->StartServices( nullptr );
+        _net_client_services->_now_time = nowtime;
 
         // 注册网络时间
         _net_client_services->_net_event->BindDisconnectFunction( this, &KFNetClientEngine::OnClientDisconnect );

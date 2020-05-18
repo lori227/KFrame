@@ -14,7 +14,7 @@
 
 	<Loggers Default="normal">
 		<!-- 正常日志 -->
-		<Logger Name="normal" FileInfo="" Split="-" QueueCount="1024" SinkType="1" StepSeconds="3600" MaxLogSize="1073741824‬" WinPath="./_output/" LinuxPath="./_output/">
+		<Logger Name="normal" FileInfo="" Split="-" QueueCount="1024" SinkType="1" StepSeconds="3600" MaxLogSize="1073741824‬" WinPath="./logs/" LinuxPath="./logs/">
 			<Debug Console="1" Level="1" Pattern="%^[%Y%m%d %H:%M:%S.%e][%l]%v%$"/>
 			<Release Console="1" Level="2" Pattern="[%Y%m%d %H:%M:%S.%e][%l]%v"/>
 		</Logger>
@@ -32,7 +32,7 @@
 		</Logger>
 
 		<!-- 部署工具日志 -->
-		<Logger Name="deploy" FileInfo="" Split="-" QueueCount="1024" SinkType="1" StepSeconds="3600" MaxLogSize="1073741824‬" WinPath="./_output/" LinuxPath="./_output/" >
+		<Logger Name="deploy" FileInfo="" Split="-" QueueCount="1024" SinkType="1" StepSeconds="3600" MaxLogSize="1073741824‬" WinPath="./logs/" LinuxPath="./logs/" >
 			<Debug Console="0" Level="1" Pattern="%^[%Y%m%d %H:%M:%S.%e][%l]%v%$"/>
 			<Release Console="0" Level="2" Pattern="[%Y%m%d %H:%M:%S.%e][%l]%v"/>
 		</Logger>

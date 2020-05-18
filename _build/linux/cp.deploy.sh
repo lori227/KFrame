@@ -16,7 +16,7 @@ cp -a -f ./run.deploy.server.sh $deploypath/
 cp -a -f ./kill.deploy.sh $deploypath/
 cp -a -f ./svn_reload.sh $deploypath/
 cp -a -f ./svn_config.sh $deploypath/
-cp -a -f ./git_beta.sh $deploypath/
+cp -a -f ./svn_beta.sh $deploypath/
 
 #setting
 cp -a -rf  $respath/setting/* $deploypath/setting/
