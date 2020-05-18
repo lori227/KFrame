@@ -9,13 +9,13 @@
 	<!--Recommend 推荐服务器 -->
 
 	<!--默认-->
-	<Default LoginId="1" DataId="1" Name="测试服{}区"/>
+	<Default LoginId="1" DataId="1" Name="测试服{}区" Flag="develop" Recommend="1"/>
 
-	<Zones Recommend="1">
+	<Zones OpenRecommend="1">
 		<!-- 内部调试 -->
 		<!--
-			<Zone Id="1" LoginId="1" DataId="1" Name="公共封测服"/>
-			<Zone Id="2" LoginId="2" DataId="1" Name="鹏博封测服"/>
+			<Zone Id="1" LoginId="1" DataId="1" Name="公共封测服" Flag="develop" Recommend="1"/>
+			<Zone Id="2" LoginId="2" DataId="1" Name="小兵封测服" Flag="develop" Recommend="1"/>
 		-->
 	</Zones>
 </Config>

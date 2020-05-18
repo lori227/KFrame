@@ -42,9 +42,9 @@ namespace KFrame
         return _dir_attribute_logic->ZoneUpdate( appid, zoneid, count, ip, port, time );
     }
 
-    StringListMap KFDirAttributeModule::QueryZoneList()
+    StringListMap KFDirAttributeModule::QueryZoneList( const std::string& flag )
     {
-        return _dir_attribute_logic->QueryZoneList();
+        return _dir_attribute_logic->QueryZoneList( flag );
     }
 
     StringMap KFDirAttributeModule::QueryZoneIp( uint32 zoneid )
@@ -57,14 +57,14 @@ namespace KFrame
         return _dir_attribute_logic->ZoneBalance( zoneid, count );
     }
 
-    bool KFDirAttributeModule::SetZoneRecommend( uint32 zoneid )
+    bool KFDirAttributeModule::SetZoneRecommend( const std::string& flag, uint32 zoneid, bool isrecommend )
     {
-        return _dir_attribute_logic->SetZoneRecommend( zoneid );
+        return _dir_attribute_logic->SetZoneRecommend( flag, zoneid, isrecommend );
     }
 
-    StringMap KFDirAttributeModule::AllocPlayerZone( uint32 zoneid )
+    StringMap KFDirAttributeModule::AllocPlayerZone( const std::string& flag, uint32 zoneid )
     {
-        return _dir_attribute_logic->AllocPlayerZone( zoneid );
+        return _dir_attribute_logic->AllocPlayerZone( flag, zoneid );
     }
 
     bool KFDirAttributeModule::SetWorldUrl( uint64 worldid, const std::string& url )

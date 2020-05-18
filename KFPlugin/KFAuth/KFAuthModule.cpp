@@ -25,8 +25,13 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_HTTP_FUNCTION__( KFAuthModule::HandleAuthLogin )
     {
+        // 验证白名单
+
+
+        __JSON_PARSE_STRING__( request, data );
+
         // 渠道验证
-        auto authdata = _kf_channel->AuthLogin( data );
+        auto authdata = _kf_channel->AuthLogin( request );
 
         __JSON_PARSE_STRING__( authjson, authdata );
         auto retcode = _kf_http_server->GetCode( authjson );
@@ -60,8 +65,9 @@ namespace KFrame
         auto token = _kf_account->MakeAccountToken( account, channel, accountid );
 
         // 查询小区信息, 返回给客户端
+        auto zoneflag = __JSON_GET_STRING__( request, __STRING__( flag ) );
         auto zoneid = __TO_UINT32__( accountdata[ __STRING__( zoneid ) ] );
-        auto zonedata = _kf_dir_attribute->AllocPlayerZone( zoneid );
+        auto zonedata = _kf_dir_attribute->AllocPlayerZone( zoneflag, zoneid );
 
         __JSON_OBJECT_DOCUMENT__( response );
         __JSON_SET_VALUE__( response, __STRING__( token ), token );

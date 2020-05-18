@@ -25,10 +25,8 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    std::string KFChannelModule::AuthLogin( const std::string& data )
+    std::string KFChannelModule::AuthLogin( KFJson& request )
     {
-        __JSON_PARSE_STRING__( request, data );
-
         auto channel = __JSON_GET_UINT32__( request, __STRING__( channel ) );
         if ( channel != KFGlobal::Instance()->_channel )
         {

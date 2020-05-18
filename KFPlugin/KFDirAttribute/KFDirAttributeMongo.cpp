@@ -28,7 +28,7 @@ namespace KFrame
         return mongodriver->Insert( __STRING__( gate ), zoneid, dbvalue );
     }
 
-    StringListMap KFDirAttributeMongo::QueryZoneList()
+    StringListMap KFDirAttributeMongo::QueryZoneList( const std::string& flag )
     {
         StringListMap zonedatalist;
         auto mongodriver = __DIR_MONGO_DRIVER__;
@@ -41,7 +41,10 @@ namespace KFrame
             auto zonedata = QueryZoneData( zoneid );
             if ( !zonedata.empty() )
             {
-                zonedatalist.emplace_back( zonedata );
+                if ( flag.empty() || flag == zonedata[ __STRING__( flag ) ] )
+                {
+                    zonedatalist.emplace_back( zonedata );
+                }
             }
         }
 
@@ -93,22 +96,44 @@ namespace KFrame
         return mongodriver->Operate( __STRING__( zone ), zoneid, __STRING__( count ), KFEnum::Add, count );
     }
 
-    bool KFDirAttributeMongo::SetZoneRecommend( uint32 zoneid )
+    bool KFDirAttributeMongo::SetZoneRecommend( const std::string& flag, uint32 zoneid, bool isrecommend )
     {
         auto mongodriver = __DIR_MONGO_DRIVER__;
-        return mongodriver->Insert( __STRING__( zonerecommend ), 0u, __STRING__( zoneid ), zoneid );
+
+        auto ok = false;
+        if ( isrecommend )
+        {
+            ok = mongodriver->Push( __STRING__( zonerecommendlist ), flag, __STRING__( zoneid ), zoneid );
+
+        }
+        else
+        {
+            ok = mongodriver->Pull( __STRING__( zonerecommendlist ), flag, __STRING__( zoneid ), zoneid );
+        }
+
+        return ok;
     }
 
-    uint32 KFDirAttributeMongo::GetZoneRecommend()
+    uint32 KFDirAttributeMongo::GetZoneRecommend( const std::string& flag )
     {
+        auto zoneid = 0u;
         auto mongodriver = __DIR_MONGO_DRIVER__;
-        auto kfresult = mongodriver->QueryUInt64( __STRING__( zonerecommend ), 0u, __STRING__( zoneid ) );
-        return kfresult->_value;
+        auto kfresult = mongodriver->QueryListUInt64( __STRING__( zonerecommendlist ), flag, __STRING__( zoneid ) );
+        if ( kfresult->_value.empty() )
+        {
+            auto size = ( uint32 )kfresult->_value.size();
+            auto index = rand() % size;
+            auto iter = kfresult->_value.begin();
+            std::advance( iter, index );
+            zoneid = *iter;
+        }
+
+        return zoneid;
     }
 
-    uint32 KFDirAttributeMongo::BalanceAllocZone()
+    uint32 KFDirAttributeMongo::BalanceAllocZone( const std::string& flag )
     {
-        auto zoneid = GetZoneRecommend();
+        auto zoneid = GetZoneRecommend( flag );
         if ( zoneid != _invalid_int )
         {
             return zoneid;
@@ -134,12 +159,12 @@ namespace KFrame
         return 1u;
     }
 
-    StringMap KFDirAttributeMongo::AllocPlayerZone( uint32 zoneid )
+    StringMap KFDirAttributeMongo::AllocPlayerZone( const std::string& flag, uint32 zoneid )
     {
         StringMap zonedata;
         if ( zoneid == _invalid_int )
         {
-            zoneid = BalanceAllocZone();
+            zoneid = BalanceAllocZone( flag );
             if ( zoneid == _invalid_int )
             {
                 return zonedata;

@@ -13,10 +13,16 @@ namespace KFrame
         std::string _name;
 
         // 登录指定id
-        uint32 _login_zone_id = 0u;
+        uint32 _login_id = 0u;
 
         // 数据指定id
-        uint32 _data_zone_id = 0u;
+        uint32 _data_id = 0u;
+
+        // 小区标识
+        std::string _flag;
+
+        // 是否推荐
+        uint32 _recommend = 0u;
     };
 
     /////////////////////////////////////////////////////////////////////////////////
@@ -36,10 +42,10 @@ namespace KFrame
         const KFZoneSetting* ZoneSetting();
         const KFZoneSetting* FindSetting( uint32 zoneid );
 
-        // 推荐的小区
-        uint32 RecommendZoneId()
+        // 是否开启推荐
+        bool IsOpenRecommend() const
         {
-            return _recommend_zone_id;
+            return _is_open_recommend;
         }
 
     protected:
@@ -53,11 +59,11 @@ namespace KFrame
         // 小区模板
         KFZoneSetting _zone_template;
 
-        // 推荐的小区
-        uint32 _recommend_zone_id = 0u;
-
         // 小区列表
         KFHashMap< uint32, uint32, KFZoneSetting > _zone_list;
+
+        // 推荐的小区
+        bool _is_open_recommend = false;
     };
 }
 

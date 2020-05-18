@@ -263,6 +263,7 @@ namespace KFrame
         __STRING_DEFINE__( element );
         __STRING_DEFINE__( recommend );
         __STRING_DEFINE__( zonerecommend );
+        __STRING_DEFINE__( zonerecommendlist );
         __STRING_DEFINE__( newplayer );
         __STRING_DEFINE__( newrole );
         __STRING_DEFINE__( build );

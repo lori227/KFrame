@@ -51,7 +51,7 @@ namespace KFrame
         }
 
         // 处理登录请求
-        virtual std::string AuthLogin( const std::string& data );
+        virtual std::string AuthLogin( KFJson& request );
 
         // 充值回调
         virtual std::string AuthPay( uint32 channel, const std::string& data );

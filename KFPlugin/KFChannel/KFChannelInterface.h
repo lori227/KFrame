@@ -9,7 +9,7 @@ namespace KFrame
     {
     public:
         // 登陆验证
-        virtual std::string AuthLogin( const std::string& data ) = 0;
+        virtual std::string AuthLogin( KFJson& request ) = 0;
 
         // 充值回调
         virtual std::string AuthPay( uint32 channel, const std::string& data ) = 0;

@@ -35,7 +35,7 @@ namespace KFrame
         virtual bool ZoneUpdate( KFJson& zonedata );
 
         // 查询小区列表
-        virtual StringListMap QueryZoneList();
+        virtual StringListMap QueryZoneList( const std::string& flag );
 
         // 查询小区ip
         virtual StringMap QueryZoneIp( uint32 zoneid );
@@ -44,10 +44,10 @@ namespace KFrame
         virtual bool ZoneBalance( uint32 zoneid, uint32 count );
 
         // 设置推荐小区
-        virtual bool SetZoneRecommend( uint32 zoneid );
+        virtual bool SetZoneRecommend( const std::string& flag, uint32 zoneid, bool isrecommend );
 
         // 分配玩家小区
-        virtual StringMap AllocPlayerZone( uint32 zoneid );
+        virtual StringMap AllocPlayerZone( const std::string& flag, uint32 zoneid );
 
         // world http地址注册
         virtual bool SetWorldUrl( uint64 worldid, const std::string& url );

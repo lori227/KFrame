@@ -20,7 +20,7 @@ namespace KFrame
 
         __JSON_OBJECT_DOCUMENT__( kfjson );
         __JSON_SET_VALUE__( kfjson, __STRING__( appid ), appid );
-        __JSON_SET_VALUE__( kfjson, __STRING__( loginzoneid ), kfsetting->_login_zone_id );
+        __JSON_SET_VALUE__( kfjson, __STRING__( loginzoneid ), kfsetting->_login_id );
         __JSON_SET_VALUE__( kfjson, __STRING__( ip ), ip );
         __JSON_SET_VALUE__( kfjson, __STRING__( port ), port );
         __JSON_SET_VALUE__( kfjson, __STRING__( count ), count );
@@ -30,24 +30,28 @@ namespace KFrame
 
     bool KFDirClientModule::ZoneRegisterToDir()
     {
-        // 推荐小区
+        auto kfsetting = KFZoneConfig::Instance()->ZoneSetting();
+        if ( KFZoneConfig::Instance()->IsOpenRecommend() )
         {
+            // 推荐小区
             static auto _recommend_url = _kf_ip_address->GetDirUrl() + __STRING__( zonerecommend );
             __JSON_OBJECT_DOCUMENT__( kfjson );
-            __JSON_SET_VALUE__( kfjson, __STRING__( zoneid ), KFZoneConfig::Instance()->RecommendZoneId() );
+            __JSON_SET_VALUE__( kfjson, __STRING__( zoneid ), kfsetting->_id );
+            __JSON_SET_VALUE__( kfjson, __STRING__( flag ), kfsetting->_flag );
+            __JSON_SET_VALUE__( kfjson, __STRING__( recommend ), kfsetting->_recommend );
             _kf_http_client->MTGet<KFDirClientModule>( _recommend_url, kfjson );
         }
 
         // 注册小区信息
         {
-            auto kfsetting = KFZoneConfig::Instance()->ZoneSetting();
             auto _register_url = _kf_ip_address->GetDirUrl() + __STRING__( zoneregister );
 
             // 注册小区信息
             __JSON_OBJECT_DOCUMENT__( kfjson );
             __JSON_SET_VALUE__( kfjson, __STRING__( name ), kfsetting->_name );
             __JSON_SET_VALUE__( kfjson, __STRING__( zoneid ), kfsetting->_id );
-            __JSON_SET_VALUE__( kfjson, __STRING__( loginzoneid ), kfsetting->_login_zone_id );
+            __JSON_SET_VALUE__( kfjson, __STRING__( flag ), kfsetting->_flag );
+            __JSON_SET_VALUE__( kfjson, __STRING__( loginzoneid ), kfsetting->_login_id );
 
             auto recvdata = _kf_http_client->STGet( _register_url, kfjson );
             __JSON_PARSE_STRING__( kfresult, recvdata );

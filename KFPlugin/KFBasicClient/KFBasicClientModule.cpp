@@ -137,7 +137,7 @@ namespace KFrame
         // 发送到basic
         KFMsg::S2SQueryAttributeToBasicReq req;
         req.set_name( kfmsg.name() );
-        req.set_zoneid( KFZoneConfig::Instance()->ZoneSetting()->_data_zone_id );
+        req.set_zoneid( KFZoneConfig::Instance()->ZoneSetting()->_data_id );
         _kf_route->SendToRand( playerid, __ROUTE_NAME__, KFMsg::S2S_QUERY_ATTRIBUTE_TO_BASIC_REQ, &req );
     }
 

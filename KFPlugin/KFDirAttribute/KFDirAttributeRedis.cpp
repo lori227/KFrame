@@ -43,7 +43,7 @@ namespace KFrame
         return kfresult->IsOk();
     }
 
-    StringListMap KFDirAttributeRedis::QueryZoneList()
+    StringListMap KFDirAttributeRedis::QueryZoneList( const std::string& flag )
     {
         StringListMap zonedatalist;
         auto redisdriver = __DIR_REDIS_DRIVER__;
@@ -54,7 +54,10 @@ namespace KFrame
             auto zonedata = QueryZoneData( zoneid );
             if ( !zonedata.empty() )
             {
-                zonedatalist.emplace_back( zonedata );
+                if ( flag.empty() || flag == zonedata[ __STRING__( flag ) ] )
+                {
+                    zonedatalist.emplace_back( zonedata );
+                }
             }
         }
 
@@ -109,24 +112,36 @@ namespace KFrame
         return kfresult->IsOk();
     }
 
-    bool KFDirAttributeRedis::SetZoneRecommend( uint32 zoneid )
+    bool KFDirAttributeRedis::SetZoneRecommend( const std::string& flag, uint32 zoneid, bool isrecommend )
     {
         auto redisdriver = __DIR_REDIS_DRIVER__;
-        auto kfresult = redisdriver->Execute( "set {} {}", __STRING__( zonerecommend ), zoneid );
-        return kfresult->IsOk();
+
+        auto ok = false;
+        if ( isrecommend )
+        {
+            auto kfresult = redisdriver->Execute( "sadd {}:{} {}", __STRING__( zonerecommendlist ), flag, zoneid );
+            ok = kfresult->IsOk();
+        }
+        else
+        {
+            auto kfresult = redisdriver->Execute( "srem {}:{} {}", __STRING__( zonerecommendlist ), flag, zoneid );
+            ok = kfresult->IsOk();
+        }
+
+        return ok;
     }
 
-    uint32 KFDirAttributeRedis::GetZoneRecommend()
+    uint32 KFDirAttributeRedis::GetZoneRecommend( const std::string& flag )
     {
         auto redisdriver = __DIR_REDIS_DRIVER__;
-        auto kfresult = redisdriver->QueryUInt64( "get {}", __STRING__( zonerecommend ) );
+        auto kfresult = redisdriver->QueryUInt64( "srandmember {}:{}", __STRING__( zonerecommendlist ), flag );
         return static_cast< uint32 >( kfresult->_value );
     }
 
-    uint32 KFDirAttributeRedis::BalanceAllocZone()
+    uint32 KFDirAttributeRedis::BalanceAllocZone( const std::string& flag )
     {
         // todo:如果有推荐的服务器, 直接返回
-        auto zoneid = GetZoneRecommend();
+        auto zoneid = GetZoneRecommend( flag );
         if ( zoneid != _invalid_int )
         {
             return zoneid;
@@ -159,12 +174,12 @@ namespace KFrame
         return 1u;
     }
 
-    StringMap KFDirAttributeRedis::AllocPlayerZone( uint32 zoneid )
+    StringMap KFDirAttributeRedis::AllocPlayerZone( const std::string& flag, uint32 zoneid )
     {
         StringMap zonedata;
         if ( zoneid == _invalid_int )
         {
-            zoneid = BalanceAllocZone();
+            zoneid = BalanceAllocZone( flag );
             if ( zoneid == _invalid_int )
             {
                 return zonedata;

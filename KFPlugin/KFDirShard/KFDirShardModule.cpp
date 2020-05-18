@@ -53,7 +53,10 @@ namespace KFrame
 
     __KF_HTTP_FUNCTION__( KFDirShardModule::HandleQueryZoneList )
     {
-        auto zonedatalist = _kf_dir_attribute->QueryZoneList();
+        __JSON_PARSE_STRING__( request, data );
+
+        auto flag = __JSON_GET_STRING__( request, __STRING__( flag ) );
+        auto zonedatalist = _kf_dir_attribute->QueryZoneList( flag );
 
         __JSON_OBJECT_DOCUMENT__( response );
         __JSON_ARRAY__( kfarray );
@@ -96,8 +99,10 @@ namespace KFrame
     __KF_HTTP_FUNCTION__( KFDirShardModule::HandleZoneRecommend )
     {
         __JSON_PARSE_STRING__( request, data );
+        auto flag = __JSON_GET_STRING__( request, __STRING__( flag ) );
         auto zoneid = __JSON_GET_UINT32__( request, __STRING__( zoneid ) );
-        auto ok = _kf_dir_attribute->SetZoneRecommend( zoneid );
+        auto recommend = __JSON_GET_UINT32__( request, __STRING__( recommend ) );
+        auto ok = _kf_dir_attribute->SetZoneRecommend( flag, zoneid, recommend == 1u );
         return _kf_http_server->SendCode( ok ? KFMsg::Ok : KFMsg::Error );
     }
 
