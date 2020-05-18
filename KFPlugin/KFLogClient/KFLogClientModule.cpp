@@ -10,7 +10,7 @@ namespace KFrame
 
     void KFLogClientModule::BeforeShut()
     {
-        __UN_CLIENT_CONNECTION__();
+        __UN_TCP_CLIENT_CONNECTION__();
         KFLogger::Instance()->UnRegisterLogFunction( this );
     }
 

@@ -16,7 +16,7 @@ namespace KFrame
     void KFLoginModule::BeforeShut()
     {
         __UN_TCP_CLIENT_LOST__();
-        __UN_CLIENT_CONNECTION__();
+        __UN_TCP_CLIENT_CONNECTION__();
 
         //////////////////////////////////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::S2S_LOGIN_TO_LOGIN_REQ );

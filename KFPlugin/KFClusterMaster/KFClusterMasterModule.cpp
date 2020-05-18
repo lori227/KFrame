@@ -7,7 +7,7 @@ namespace KFrame
     {
         __REGISTER_TCP_SERVER_LOST__( &KFClusterMasterModule::OnServerLostClusterProxy );
         __REGISTER_TCP_CLIENT_CONNECTION__( &KFClusterMasterModule::OnClientConnectClusterMaster );
-        __REGISTER_TCP_CLIENT_LOST__( &KFClusterMasterModule::OnClientLostClusterMaster );
+        __REGISTER_TCP_CLIENT_SHUTDOWN__( &KFClusterMasterModule::OnClientLostClusterMaster );
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_REGISTER_TO_MASTER_REQ, &KFClusterMasterModule::HandleClusterRegisterToMasterReq );
@@ -22,8 +22,8 @@ namespace KFrame
     void KFClusterMasterModule::BeforeShut()
     {
         __UN_TCP_SERVER_LOST__();
-        __UN_CLIENT_CONNECTION__();
-        __UN_TCP_CLIENT_LOST__();
+        __UN_TCP_CLIENT_CONNECTION__();
+        __UN_TCP_CLIENT_SHUTDOWN__();
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::S2S_CLUSTER_REGISTER_TO_MASTER_REQ );
         __UN_MESSAGE__( KFMsg::S2S_CLUSTER_SYNC_PROXY_TO_MASTER_REQ );

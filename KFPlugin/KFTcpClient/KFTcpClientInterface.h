@@ -141,7 +141,7 @@ namespace KFrame
 #define __REGISTER_TCP_CLIENT_CONNECTION__( function ) \
     _kf_tcp_client->RegisterConnectionFunction( this, function )
 
-#define __UN_CLIENT_CONNECTION__() \
+#define __UN_TCP_CLIENT_CONNECTION__() \
     _kf_tcp_client->UnRegisterConnectionFunction( this )
 
 #define __REGISTER_TCP_CLIENT_LOST__( function ) \

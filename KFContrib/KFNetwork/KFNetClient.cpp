@@ -59,7 +59,10 @@ namespace KFrame
     void KFNetClient::OnTimerConnectCallBack( uv_timer_t* handle )
     {
         auto netclient = reinterpret_cast< KFNetClient* >( handle->data );
-        netclient->TryConnect();
+        if ( !netclient->_is_shutdown )
+        {
+            netclient->TryConnect();
+        }
     }
 
     void KFNetClient::TryConnect()
@@ -115,14 +118,8 @@ namespace KFrame
         KFNetSession::OnDisconnect( code, function, line );
         _net_services->_net_event->AddEvent( KFNetDefine::DisconnectEvent, _object_id );
 
-        if ( !_is_shutdown )
-        {
-            _uv_client->data = this;
-            if ( !uv_is_closing( reinterpret_cast< uv_handle_t* >( _uv_client ) ) )
-            {
-                uv_close( reinterpret_cast< uv_handle_t* >( _uv_client ), OnShutDownCallBack );
-            }
-        }
+        // 关闭连接
+        TryShutDown();
     }
 
     void KFNetClient::InitCompressEncrypt( uint32 compresstype, uint32 compresslevel, uint32 compresslength, const std::string& encryptkey, bool openencrypt )
@@ -143,21 +140,33 @@ namespace KFrame
         // 关闭连接
         if ( !_is_shutdown )
         {
-            _is_shutdown = true;
             _net_services->SendEventToServices( this, KFNetDefine::CloseEvent );
         }
     }
 
     void KFNetClient::CloseSession()
     {
-        _is_shutdown = true;
         KFNetSession::CloseSession();
+        TryShutDown();
+    }
 
+    void KFNetClient::TryShutDown()
+    {
+        if ( _is_shutdown )
+        {
+            return;
+        }
+
+        _is_shutdown = true;
         _uv_connect_timer->data = this;
-        uv_close( reinterpret_cast< uv_handle_t* >( _uv_connect_timer ), nullptr );
+        uv_timer_stop( _uv_connect_timer );
 
         _uv_client->data = this;
-        if ( !uv_is_closing( reinterpret_cast< uv_handle_t* >( _uv_client ) ) )
+        if ( uv_is_closing( reinterpret_cast< uv_handle_t* >( _uv_client ) ) )
+        {
+            _net_services->_net_event->AddEvent( KFNetDefine::ShutEvent, _object_id );
+        }
+        else
         {
             uv_close( reinterpret_cast< uv_handle_t* >( _uv_client ), OnShutDownCallBack );
         }
@@ -166,9 +175,6 @@ namespace KFrame
     void KFNetClient::OnShutDownCallBack( uv_handle_t* handle )
     {
         auto* netclient = reinterpret_cast< KFNetClient* >( handle->data );
-        if ( netclient->_is_shutdown )
-        {
-            netclient->_net_services->_net_event->AddEvent( KFNetDefine::ShutEvent, netclient->_object_id );
-        }
+        netclient->_net_services->_net_event->AddEvent( KFNetDefine::ShutEvent, netclient->_object_id );
     }
 }

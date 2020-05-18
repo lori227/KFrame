@@ -6,7 +6,7 @@ namespace KFrame
     void KFClusterProxyModule::BeforeRun()
     {
         ///////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_TCP_CLIENT_LOST__( &KFClusterProxyModule::OnClientLostServer );
+        __REGISTER_TCP_CLIENT_SHUTDOWN__( &KFClusterProxyModule::OnClientLostServer );
         __REGISTER_TCP_CLIENT_CONNECTION__( &KFClusterProxyModule::OnClientConnectionServer );
         __REGISTER_TCP_SERVER_DISCOVER__( &KFClusterProxyModule::OnServerDiscoverClient );
         __REGISTER_TCP_SERVER_LOST__( &KFClusterProxyModule::OnServerLostClient );
@@ -21,8 +21,8 @@ namespace KFrame
     void KFClusterProxyModule::BeforeShut()
     {
         __UN_TIMER_0__();
-        __UN_TCP_CLIENT_LOST__();
-        __UN_CLIENT_CONNECTION__();
+        __UN_TCP_CLIENT_SHUTDOWN__();
+        __UN_TCP_CLIENT_CONNECTION__();
         __UN_TCP_CLIENT_TRANSPOND__();
 
         __UN_TCP_SERVER_DISCOVER__();

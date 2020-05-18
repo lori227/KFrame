@@ -59,6 +59,9 @@ namespace KFrame
         // 连接成功
         void ConnectSuccess( uv_stream_t* );
 
+        // 关闭
+        void TryShutDown();
+
         // 关闭回调
         static void OnShutDownCallBack( uv_handle_t* handle );
 

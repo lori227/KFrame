@@ -20,7 +20,7 @@ namespace KFrame
         __UN_TIMER_0__();
         __UN_TCP_SERVER_DISCOVER__();
         __UN_TCP_SERVER_LOST__();
-        __UN_CLIENT_CONNECTION__();
+        __UN_TCP_CLIENT_CONNECTION__();
         //////////////////////////////////////////////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::S2S_TELL_DISCOVER_SERVER_TO_MASTER );
         __UN_MESSAGE__( KFMsg::S2S_TELL_LOST_SERVER_TO_MASTER );

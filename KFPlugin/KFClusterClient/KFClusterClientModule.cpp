@@ -14,8 +14,8 @@ namespace KFrame
 
     void KFClusterClientModule::BeforeRun()
     {
-        __REGISTER_TCP_CLIENT_LOST__( &KFClusterClientModule::OnClientLostServer );
-        __REGISTER_TCP_CLIENT_CONNECTION__( &KFClusterClientModule::OnClientConnectionServer );
+        __REGISTER_TCP_CLIENT_CONNECTION__( &KFClusterClientModule::OnClientConnectionClusterServer );
+        __REGISTER_TCP_CLIENT_SHUTDOWN__( &KFClusterClientModule::OnClientLostClusterProxy );
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_AUTH_TO_CLIENT_ACK, &KFClusterClientModule::HandleClusterAuthToClientAck );
@@ -25,8 +25,8 @@ namespace KFrame
 
     void KFClusterClientModule::BeforeShut()
     {
-        __UN_TCP_CLIENT_LOST__();
-        __UN_CLIENT_CONNECTION__();
+        __UN_TCP_CLIENT_CONNECTION__();
+        __UN_TCP_CLIENT_SHUTDOWN__();
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::S2S_CLUSTER_AUTH_TO_CLIENT_ACK );
         __UN_MESSAGE__( KFMsg::S2S_CLUSTER_VERIFY_TO_CLIENT_ACK );
@@ -66,7 +66,7 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_NET_EVENT_FUNCTION__( KFClusterClientModule::OnClientConnectionServer )
+    __KF_NET_EVENT_FUNCTION__( KFClusterClientModule::OnClientConnectionClusterServer )
     {
         // cluster 只会连接和自己不同类型的服务
         if ( netdata->_name != KFRouteConfig::Instance()->_cluster_name )
@@ -125,16 +125,14 @@ namespace KFrame
         }
     }
 
-    __KF_NET_EVENT_FUNCTION__( KFClusterClientModule::OnClientLostServer )
+    __KF_NET_EVENT_FUNCTION__( KFClusterClientModule::OnClientLostClusterProxy )
     {
         // 不是转发集群
-        if ( _cluster_name != netdata->_name || netdata->_type != __STRING__( proxy ) )
+        if ( _cluster_name == netdata->_name && netdata->_type == __STRING__( proxy ) )
         {
-            return;
+            // 重新启动连接
+            ReconnectClusterMaster();
         }
-
-        // 重新启动连接
-        ReconnectClusterMaster();
     }
 
     __KF_MESSAGE_FUNCTION__( KFClusterClientModule::HandleClusterAuthToClientAck )

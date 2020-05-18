@@ -87,11 +87,11 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleClusterVerifyToClientAck );
 
     protected:
-        // 断开服务器连接
-        __KF_NET_EVENT_FUNCTION__( OnClientLostServer );
-
         // 连接事件
-        __KF_NET_EVENT_FUNCTION__( OnClientConnectionServer );
+        __KF_NET_EVENT_FUNCTION__( OnClientConnectionClusterServer );
+
+        // 断开服务器连接
+        __KF_NET_EVENT_FUNCTION__( OnClientLostClusterProxy );
 
         // 发送认证消息
         __KF_TIMER_FUNCTION__( OnTimerSendClusterAuthMessage );

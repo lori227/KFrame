@@ -19,7 +19,7 @@ namespace KFrame
     void KFRouteProxyModule::BeforeShut()
     {
         __UN_TCP_SERVER_LOST__();
-        __UN_CLIENT_CONNECTION__();
+        __UN_TCP_CLIENT_CONNECTION__();
 
         //////////////////////////////////////////////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::S2S_ROUTE_SYNC_OBJECT_TO_PROXY_REQ );

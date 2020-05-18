@@ -44,6 +44,9 @@ namespace KFrame
         // 连接master失败
         __KF_NET_EVENT_FUNCTION__( OnClientConnectMasterFailed );
 
+        // 断开master连接
+        __KF_NET_EVENT_FUNCTION__( OnClientDisconnectMaster );
+
     protected:
         // 判断是否需要连接
         bool IsConnection( const std::string& connectname, const std::string& connecttype, uint64 connectid );

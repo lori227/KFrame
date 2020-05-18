@@ -8,8 +8,8 @@ namespace KFrame
         auto looptime = KFGlobal::Instance()->RandRange( 30000u, 40000u );
         __LOOP_TIMER_0__( looptime, 5000u, &KFGateModule::OnTimerUpdateOnlineToDir );
 
-        __REGISTER_TCP_CLIENT_LOST__( &KFGateModule::OnClientLostServer );
         __REGISTER_TCP_CLIENT_CONNECTION__( &KFGateModule::OnClientConnectionServer );
+        __REGISTER_TCP_CLIENT_SHUTDOWN__( &KFGateModule::OnClientLostServer );
         __REGISTER_TCP_SERVER_LOST__( &KFGateModule::OnPlayerDisconnection );
         __REGISTER_TCP_SERVER_TRANSPOND__( &KFGateModule::TranspondToGame );
         __REGISTER_TCP_CLIENT_TRANSPOND__( &KFGateModule::TranspondToClient );
@@ -31,8 +31,8 @@ namespace KFrame
     void KFGateModule::BeforeShut()
     {
         __UN_TIMER_0__();
-        __UN_TCP_CLIENT_LOST__();
-        __UN_CLIENT_CONNECTION__();
+        __UN_TCP_CLIENT_SHUTDOWN__();
+        __UN_TCP_CLIENT_CONNECTION__();
         __UN_TCP_SERVER_LOST__();
         __UN_TCP_SERVER_TRANSPOND__();
         __UN_TCP_CLIENT_TRANSPOND__();

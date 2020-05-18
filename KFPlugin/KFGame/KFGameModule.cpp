@@ -7,8 +7,8 @@ namespace KFrame
     {
         __REGISTER_TCP_SERVER_DISCOVER__( &KFGameModule::OnServerDiscoverGate );
         __REGISTER_TCP_SERVER_LOST__( &KFGameModule::OnServerLostGate );
-        __REGISTER_TCP_CLIENT_LOST__( &KFGameModule::OnClientLostWorld );
         __REGISTER_TCP_CLIENT_CONNECTION__( &KFGameModule::OnClientConnectionWorld );
+        __REGISTER_TCP_CLIENT_SHUTDOWN__( &KFGameModule::OnClientLostWorld );
 
         __REGISTER_ROUTE_MESSAGE_FUNCTION__( &KFGameModule::TranspondToPlayer );
         __REGISTER_TCP_CLIENT_TRANSPOND__( &KFGameModule::TranspondToPlayer );
@@ -42,8 +42,8 @@ namespace KFrame
     {
         __UN_TCP_SERVER_DISCOVER__();
         __UN_TCP_SERVER_LOST__();
-        __UN_TCP_CLIENT_LOST__();
-        __UN_CLIENT_CONNECTION__();
+        __UN_TCP_CLIENT_CONNECTION__();
+        __UN_TCP_CLIENT_SHUTDOWN__();
         __UN_ROUTE_MESSAGE_FUNCTION__();
         __UN_TCP_CLIENT_TRANSPOND__();
 

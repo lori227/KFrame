@@ -36,7 +36,7 @@ namespace KFrame
         __UN_TIMER_0__();
 
         __UN_TCP_SERVER_DISCOVER__();
-        __UN_CLIENT_CONNECTION__();
+        __UN_TCP_CLIENT_CONNECTION__();
         //////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::S2S_DEPLOY_COMMAND_TO_AGENT_REQ );
         __UN_MESSAGE__( KFMsg::S2S_DEPLOY_HEARTBEAT_TO_AGENT_REQ );
