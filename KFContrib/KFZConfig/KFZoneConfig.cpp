@@ -34,7 +34,7 @@ namespace KFrame
             zone->_login_id = xmlnode.GetUInt32( "LoginId" );
             zone->_data_id = xmlnode.GetUInt32( "DataId" );
             zone->_flag = xmlnode.GetString( "Flag" );
-            zone->_recommend = defaultnode.GetUInt32( "Recommend" );
+            zone->_recommend = xmlnode.GetUInt32( "Recommend" );
 
             // 本小区
             if ( KFGlobal::Instance()->_app_id->GetZoneId() == id )
