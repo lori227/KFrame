@@ -25,7 +25,9 @@ namespace KFrame
         __LOOP_TIMER_1__( ++timerid, 30000, 100, &KFDeployAgentModule::OnTimerCheckHeartbeat );
 
         __REGISTER_TCP_SERVER_DISCOVER__( &KFDeployAgentModule::OnServerDiscoverClient );
+        __REGISTER_TCP_SERVER_LOST__( &KFDeployAgentModule::OnServerLostClient );
         __REGISTER_TCP_CLIENT_CONNECTION__( &KFDeployAgentModule::OnClientConnectServer );
+        __REGISTER_TCP_CLIENT_SHUTDOWN__( &KFDeployAgentModule::OnClientLostServer );
         ////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_COMMAND_TO_AGENT_REQ, &KFDeployAgentModule::HandleDeployCommandReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_HEARTBEAT_TO_AGENT_REQ, &KFDeployAgentModule::HandleClientHeartbeatReq );
@@ -36,7 +38,9 @@ namespace KFrame
         __UN_TIMER_0__();
 
         __UN_TCP_SERVER_DISCOVER__();
+        __UN_TCP_SERVER_LOST__();
         __UN_TCP_CLIENT_CONNECTION__();
+        __UN_TCP_CLIENT_SHUTDOWN__();
         //////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::S2S_DEPLOY_COMMAND_TO_AGENT_REQ );
         __UN_MESSAGE__( KFMsg::S2S_DEPLOY_HEARTBEAT_TO_AGENT_REQ );
@@ -155,6 +159,15 @@ namespace KFrame
             req.set_localip( _kf_ip_address->GetLocalIp() );
             req.set_service( __FORMAT__( "{}.{}", kfglobal->_channel, kfglobal->_service ) );
             _kf_tcp_client->SendNetMessage( netdata->_id, KFMsg::S2S_REGISTER_AGENT_TO_SERVER_REQ, &req );
+        }
+    }
+
+    __KF_NET_EVENT_FUNCTION__( KFDeployAgentModule::OnClientLostServer )
+    {
+        // 断开server
+        if ( netdata->_name == __STRING__( deploy ) && netdata->_type == __STRING__( server ) )
+        {
+            _kf_tcp_client->StartClient( __STRING__( deploy ), __STRING__( server ), _deploy_server_id, _deploy_server_ip, _deploy_server_port );
         }
     }
 

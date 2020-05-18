@@ -111,16 +111,16 @@ namespace KFrame
         auto kfclient = _kf_clients.Find( eventdata->_id );
         if ( kfclient != nullptr )
         {
-            auto netdata = &kfclient->_net_data;
+            auto netdata = kfclient->_net_data;
+            _kf_clients.Remove( eventdata->_id );
+
             __LOG_INFO__( "[{}:{}:{}|{}:{}] client shutdown",
-                          netdata->_name, netdata->_type, netdata->_str_id, netdata->_ip, netdata->_port );
+                          netdata._name, netdata._type, netdata._str_id, netdata._ip, netdata._port );
 
             if ( _client_shutdown_function != nullptr )
             {
-                _client_shutdown_function( netdata );
+                _client_shutdown_function( &netdata );
             }
-
-            _kf_clients.Remove( eventdata->_id );
         }
     }
 

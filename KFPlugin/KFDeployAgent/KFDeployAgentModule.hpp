@@ -74,6 +74,9 @@ namespace KFrame
         // 连接成功
         __KF_NET_EVENT_FUNCTION__( OnClientConnectServer );
 
+        // 断开连接
+        __KF_NET_EVENT_FUNCTION__( OnClientLostServer );
+
         // client连接连接
         __KF_NET_EVENT_FUNCTION__( OnServerDiscoverClient );
 
