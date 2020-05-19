@@ -147,7 +147,7 @@ namespace KFrame
 
         if ( kfmsg.result() != KFMsg::Ok )
         {
-            _kf_display->SendToClient( player, kfmsg.result(), kfmsg.name() );
+            return _kf_display->SendToClient( player, kfmsg.result(), kfmsg.name() );
         }
 
         auto kfbasic = player->CreateData( __STRING__( basic ) );
