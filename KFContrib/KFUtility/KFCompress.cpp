@@ -43,7 +43,7 @@ namespace KFrame
                 auto datalength = KFDecode::UByteToString( compressbuffer, length, databuffer, _data_length );
                 result.assign( databuffer, datalength );
 
-                __LOG_DEBUG__( "compress source=[{}], fast=[{}] string=[{}]", value.size(), length, datalength );
+                __LOG_DEBUG__( "compress source=[{}] fast=[{}] string=[{}]", value.size(), length, datalength );
             }
             else
             {
