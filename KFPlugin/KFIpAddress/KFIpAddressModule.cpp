@@ -186,21 +186,15 @@ namespace KFrame
 
     const std::string& KFIpAddressModule::GetInteranetIp()
     {
-        if ( _interanet_ip.empty() )
+        while ( _interanet_ip.empty() )
         {
             // 获得外网地址
             auto interanetip = _kf_http_client->STGet( KFIpConfig::Instance()->_dns_get_ip_url, _invalid_string );
-            if ( interanetip.empty() )
-            {
-                // 获得内网地址
-                _interanet_ip = GetLocalIp();
-            }
-            else
+            if ( !interanetip.empty() )
             {
                 _interanet_ip = KFUtility::SplitString( interanetip, "\n" );
+                __LOG_INFO__( " interanetip=[{}]", _interanet_ip );
             }
-
-            __LOG_INFO__( " interanetip=[{}]", _interanet_ip );
         }
 
         return _interanet_ip;
