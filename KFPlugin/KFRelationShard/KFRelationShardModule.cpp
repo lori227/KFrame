@@ -139,6 +139,12 @@ namespace KFrame
             return __LOG_ERROR__( "relation=[{}] no setting", kfmsg.relationname() );
         }
 
+        auto name = _kf_basic_attribute->QueryBasicStrValue( kfmsg.playerid(), __STRING__( name ) );
+        if ( name.empty() )
+        {
+            return _kf_display->SendToPlayer( route, KFMsg::RoleNotExist, kfmsg.playername() );
+        }
+
         // 是否已经设置拒绝
         auto refuseinvite = _kf_relation_attribute->IsRefuse( kfsetting->_refuse_name, kfmsg.playerid() );
         if ( refuseinvite )

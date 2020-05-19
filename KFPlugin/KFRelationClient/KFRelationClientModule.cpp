@@ -338,7 +338,7 @@ namespace KFrame
         __CLIENT_PROTO_PARSE__( KFMsg::MsgAddRelationReq );
 
         // 不能添加自己
-        if ( playerid == kfmsg.playerid() )
+        if ( playerid == kfmsg.playerid() || kfmsg.playerid() == 0u )
         {
             return;
         }
