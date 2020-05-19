@@ -27,6 +27,8 @@ namespace KFrame
             _file_name = "achieve";
         }
 
+        virtual void LoadAllComplete();
+
     protected:
         // 读取配置
         virtual void ReadSetting( KFNode& xmlnode, KFAchieveSetting* kfsetting );
