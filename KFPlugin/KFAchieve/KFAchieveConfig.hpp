@@ -2,8 +2,8 @@
 #define __KF_ACHIEVE_CONFIG_H__
 
 #include "KFCore/KFElement.h"
-#include "KFCore/KFCondition.h"
 #include "KFZConfig/KFConfig.h"
+#include "KFZConfig/KFElementConfig.h"
 
 namespace KFrame
 {
