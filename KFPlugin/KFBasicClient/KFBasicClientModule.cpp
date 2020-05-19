@@ -90,6 +90,7 @@ namespace KFrame
         auto kfbasic = player->Find( __STRING__( basic ) );
 
         StringUInt64 values;
+        values[ __STRING__( id ) ] = player->GetKeyID();
         values[ __STRING__( serverid ) ] = kfbasic->Get( __STRING__( serverid ) );
         values[ __STRING__( status ) ] = kfbasic->Get( __STRING__( status ) );
         values[ __STRING__( statustime ) ] = kfbasic->Get( __STRING__( statustime ) );
