@@ -70,6 +70,7 @@ enum FrameCodeEnum
 	DataNotEnough				= 12109;	// 没有足够的<Text>%s</Text>资源
 	DataIsFull					= 12110;	// 你的<Text>%s</Text>资源已经达到了最大值
 	ElementParseError			= 12111;	// 元素格式化错误
+	NameCanNotFind				= 12112;	// 查询不到玩家信息
 
 	// achieve
 	AchieveCanNotFind			= 12200;	// 找不到该成就配置

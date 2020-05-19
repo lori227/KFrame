@@ -84,6 +84,11 @@ namespace KFrame
             return KFMsg::PublicDatabaseBusy;
         }
 
+        if ( kfquery->_value.empty() )
+        {
+            return KFMsg::NameCanNotFind;
+        }
+
         values.swap( kfquery->_value );
         return KFMsg::Ok;
     }
