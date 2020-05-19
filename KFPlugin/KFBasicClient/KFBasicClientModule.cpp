@@ -221,7 +221,7 @@ namespace KFrame
         req.set_oldname( name );
         req.set_newname( kfmsg.name() );
         req.set_costdata( _invalid_string );
-        req.set_zoneid( KFGlobal::Instance()->STUuidZoneId( __STRING__( player ), playerid ) );
+        req.set_zoneid( KFZoneConfig::Instance()->ZoneSetting()->_data_id );
         auto ok = _kf_route->SendToRand( playerid, __ROUTE_NAME__, KFMsg::S2S_SET_PLAYER_NAME_TO_BASIC_REQ, &req );
         if ( !ok )
         {
