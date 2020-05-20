@@ -608,7 +608,7 @@ namespace KFrame
         _kf_display->DelayToClient( player, KFMsg::RelationDelOk, kfmsg.relationid(), name );
 
         // 直接删除好友
-        player->RemoveData( kfrelation, kfmsg.relationid() );
+        player->RemoveData( kfrelationrecord, kfmsg.relationid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleSetRefuseRelationInviteReq )
