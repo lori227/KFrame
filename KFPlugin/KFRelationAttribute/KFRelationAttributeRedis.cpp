@@ -142,7 +142,6 @@ namespace KFrame
         {
             redisdriver->Append( "expire {} {}", invitekey, keeptime );
         }
-
         redisdriver->Pipeline();
     }
 
