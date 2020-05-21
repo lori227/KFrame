@@ -252,6 +252,14 @@ namespace KFrame
         _kf_tcp_server->SendNetMessage( KFMsg::S2S_BROADCAST_TO_GATE_REQ, &req );
     }
 
+    void KFGameModule::BroadcastToServer( uint32 msgid, ::google::protobuf::Message* message )
+    {
+        KFMsg::S2SBroadcastToServerReq req;
+        req.set_msgid( msgid );
+        req.set_msgdata( message->SerializeAsString() );
+        _kf_tcp_server->SendNetMessage( KFMsg::S2S_BROADCAST_TO_SERVER_REQ, &req );
+    }
+
     // 转发服务器
     void KFGameModule::BroadcastToGame( uint32 msgid, ::google::protobuf::Message* message )
     {

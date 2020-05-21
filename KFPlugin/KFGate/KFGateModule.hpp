@@ -79,6 +79,8 @@ namespace KFrame
 
         // 处理消息广播
         __KF_MESSAGE_FUNCTION__( HandleBroadcastToGateReq );
+        __KF_MESSAGE_FUNCTION__( HandleBroadcastToServerReq );
+
     protected:
         // 登录到登录服务器
         void LoginToLogin( uint64 sessionid, uint64 accountid, const std::string& token );

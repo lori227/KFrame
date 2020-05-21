@@ -38,6 +38,7 @@ enum FrameServerProtocol
 	S2S_BROADCAST_TO_WORLD_REQ					= 20303;	// 广播消息
 	S2S_BROADCAST_TO_WORLD_ACK					= 20304;	// 广播消息
 	S2S_BROADCAST_TO_GATE_REQ					= 20305;	// 广播消息
+	S2S_BROADCAST_TO_SERVER_REQ					= 20306;	// 广播消息
 	
 	// data
 	S2S_LOAD_PLAYER_TO_DATA_REQ					= 20401;	// 加载玩家数据
@@ -322,6 +323,13 @@ message S2SBroadcastToGateReq
 	bytes msgdata = 2;		// 消息内容
 	uint32 serial = 3;		// 序列号
 	uint64 worldid = 4;		// worldid
+}
+
+// S2S_BROADCAST_TO_SERVER_REQ
+message S2SBroadcastToServerReq
+{
+	uint32 msgid = 1;		// 消息id
+	bytes msgdata = 2;		// 消息内容
 }
 
 // S2S_BROADCAST_TO_WORLD_REQ

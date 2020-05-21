@@ -25,6 +25,7 @@ namespace KFrame
 
         __REGISTER_MESSAGE__( KFMsg::S2S_KICK_PLAYER_TO_GATE_REQ, &KFGateModule::HandleKickPlayerToGateReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_BROADCAST_TO_GATE_REQ, &KFGateModule::HandleBroadcastToGateReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_BROADCAST_TO_SERVER_REQ, &KFGateModule::HandleBroadcastToServerReq );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
@@ -47,6 +48,7 @@ namespace KFrame
         __UN_MESSAGE__( KFMsg::S2S_ENTER_TO_GATE_ACK );
 
         __UN_MESSAGE__( KFMsg::S2S_BROADCAST_TO_GATE_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_BROADCAST_TO_SERVER_REQ );
         __UN_MESSAGE__( KFMsg::S2S_KICK_PLAYER_TO_GATE_REQ );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -174,6 +176,21 @@ namespace KFrame
         {
             auto kfrole = iter.second;
             kfrole->SendToClient( kfmsg.msgid(), msgdata.data(), static_cast< uint32 >( msgdata.length() ) );
+        }
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFGateModule::HandleBroadcastToServerReq )
+    {
+        __PROTO_PARSE__( KFMsg::S2SBroadcastToServerReq );
+
+        auto& msgdata = kfmsg.msgdata();
+        for ( auto& iter : _kf_role_list._objects )
+        {
+            auto kfrole = iter.second;
+            if ( kfrole->_game_id == __ROUTE_SERVER_ID__ )
+            {
+                kfrole->SendToClient( kfmsg.msgid(), msgdata.data(), static_cast< uint32 >( msgdata.length() ) );
+            }
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////

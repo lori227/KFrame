@@ -54,6 +54,7 @@ namespace KFrame
         virtual void BroadcastToGate( uint32 msgid, ::google::protobuf::Message* message );
         virtual void BroadcastToGame( uint32 msgid, ::google::protobuf::Message* message );
         virtual void BroadcastToWorld( uint32 msgid, ::google::protobuf::Message* message );
+        virtual void BroadcastToServer( uint32 msgid, ::google::protobuf::Message* message );
 
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
