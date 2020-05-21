@@ -65,9 +65,7 @@ namespace KFrame
 
             // 邀请信息
             auto relationkey = FormatRelationKey( relationname, playerid, relationid, false );
-
-            // 获得邀请的数据
-            auto kfinvitedata = redisdriver->QueryMap( "hgetall {}:{}:{}", relationname, playerid, relationid );
+            auto kfinvitedata = redisdriver->QueryMap( "hgetall {}", relationkey );
             if ( kfinvitedata->_value.empty() )
             {
                 removelist.push_back( strid );
