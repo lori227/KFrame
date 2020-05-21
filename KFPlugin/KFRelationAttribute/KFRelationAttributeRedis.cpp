@@ -129,14 +129,15 @@ namespace KFrame
     void KFRelationAttributeRedis::AddInvite( const std::string& listname, const std::string& relationname, uint64 playerid, uint64 targetid, const std::string& message, uint64 keeptime )
     {
         auto redisdriver = __RELATION_REDIS_DRIVER__;
+        redisdriver->Append( "sadd {}:{} {}", listname, playerid, targetid );
 
         // 加入到申请列表
         auto invitekey = FormatRelationKey( relationname, playerid, targetid, false );
-
-        redisdriver->Append( "sadd {}:{} {}", listname, playerid, targetid );
-        redisdriver->Append( "hmset {} {} {} {} {}", invitekey,
-                             __STRING__( message ), message,
-                             __STRING__( time ), KFGlobal::Instance()->_real_time );
+        redisdriver->Append( "hset {} {} {}", invitekey, __STRING__( time ), KFGlobal::Instance()->_real_time );
+        if ( !message.empty() )
+        {
+            redisdriver->Append( "hset {} {} {}", invitekey, __STRING__( message ), message );
+        }
         if ( keeptime > 0u )
         {
             redisdriver->Append( "expire {} {}", invitekey, keeptime );
