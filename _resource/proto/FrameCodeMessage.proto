@@ -193,4 +193,8 @@ enum FrameCodeEnum
 	RelationDataError			= 13315;	// 找不到关系数据
 	FriendLinessAdd				= 13316;	// 与<Text>%s</Text>情义小涨<Text>%s</Text>
 
+	
+	// chat 
+	ChatNotFriend			= 32201;	// 不是好友, 不能私聊
+	ChatFriendNotOnline		= 32102;	// 好友不在线, 发送私聊失败
 }

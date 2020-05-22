@@ -204,12 +204,14 @@ enum FrameCodeEnum {
   RelationSettingError = 13314,
   RelationDataError = 13315,
   FriendLinessAdd = 13316,
+  ChatNotFriend = 32201,
+  ChatFriendNotOnline = 32102,
   FrameCodeEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   FrameCodeEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 LIBPROTOC_EXPORT bool FrameCodeEnum_IsValid(int value);
 const FrameCodeEnum FrameCodeEnum_MIN = Error;
-const FrameCodeEnum FrameCodeEnum_MAX = FriendLinessAdd;
+const FrameCodeEnum FrameCodeEnum_MAX = ChatNotFriend;
 const int FrameCodeEnum_ARRAYSIZE = FrameCodeEnum_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* FrameCodeEnum_descriptor();

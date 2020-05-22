@@ -93,6 +93,13 @@ enum FrameClientProtocol
 	MSG_TASK_REWARD_REQ 				= 601;	// 领取奖励
 	MSG_TASK_REMOVE_REQ					= 602;	// 放弃任务
 	MSG_TASK_ADD_REQ 					= 603;	// 添加任务
+
+	
+	// chat
+	MSG_FRIEND_CHAT_REQ					= 610;	// 好友私聊
+	MSG_TELL_FRIEND_CHAT				= 611;	// 通知收到好友聊天
+	MSG_SERVER_CHAT_REQ					= 612;	// 本服务器(进程)的公屏聊天
+	MSG_TELL_SERVER_CHAT				= 613;	// 通知本服务器(进程)的公屏聊天
  }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -580,4 +587,36 @@ message MsgTaskRemoveReq
 message MsgTaskAddReq
 {
 	uint32 id = 1;
+}
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+// 好友私聊
+// MSG_FRIEND_CHAT_REQ
+message MsgFriendChatReq
+{
+	uint64 playerid = 1;	// 好友id
+	bytes content = 2;		// 聊天内容
+}
+
+// 通知收到好友聊天
+// MSG_TELL_FRIEND_CHAT
+message MsgTellFriendChat
+{
+	uint64 playerid = 1;	// 好友id
+	bytes content = 2;		// 聊天内容
+}
+
+// 本服务器(进程)的公屏聊天
+// MSG_SERVER_CHAT_REQ
+message MsgServerChatReq
+{
+	bytes content = 1;		// 聊天内容
+}
+
+// 通知收到本服务器(进程)的公屏聊天
+// MSG_TELL_SERVER_CHAT
+message MsgTellServerChat
+{
+	PBObject player = 1;	// 玩家数据
+	bytes content = 2;		// 聊天内容
 }

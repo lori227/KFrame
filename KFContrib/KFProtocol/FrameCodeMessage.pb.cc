@@ -58,7 +58,7 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\026FrameCodeMessage.proto\022\005KFMsg*\341\032\n\rFram"
+      "\n\026FrameCodeMessage.proto\022\005KFMsg*\221\033\n\rFram"
       "eCodeEnum\022\t\n\005Error\020\000\022\006\n\002Ok\020\001\022\022\n\rHttpData"
       "Error\020\220N\022\025\n\020AuthDatabaseBusy\020\221N\022\023\n\016AuthS"
       "erverBusy\020\222N\022\023\n\016ZoneServerBusy\020\223N\022\025\n\020Zon"
@@ -144,10 +144,11 @@ void AddDescriptorsImpl() {
       "InviteLimit\020\377g\022\025\n\020RelationInviteOk\020\200h\022\033\n"
       "\026RelationInviteNotExist\020\201h\022\031\n\024RelationSe"
       "ttingError\020\202h\022\026\n\021RelationDataError\020\203h\022\024\n"
-      "\017FriendLinessAdd\020\204hb\006proto3"
+      "\017FriendLinessAdd\020\204h\022\023\n\rChatNotFriend\020\311\373\001"
+      "\022\031\n\023ChatFriendNotOnline\020\346\372\001b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 3467);
+      descriptor, 3515);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "FrameCodeMessage.proto", &protobuf_RegisterTypes);
 }
@@ -320,6 +321,8 @@ bool FrameCodeEnum_IsValid(int value) {
     case 13314:
     case 13315:
     case 13316:
+    case 32102:
+    case 32201:
       return true;
     default:
       return false;
