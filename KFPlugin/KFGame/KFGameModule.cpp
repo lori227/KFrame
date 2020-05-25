@@ -345,6 +345,14 @@ namespace KFrame
                     // 序列化玩家数据
                     auto pbnewdata = _kf_kernel->SerializeToClient( player );
 
+#ifdef __KF_DEBUG__
+                    static auto _print_enter = 0u;
+                    if ( _print_enter == 1u )
+                    {
+                        __LOG_DEBUG__( "player=[{}], data=[{}]", player->GetKeyID(), pbnewdata->DebugString() );
+                    }
+#endif
+
                     KFMsg::S2SEnterToGateAck ack;
                     ack.mutable_pblogin()->CopyFrom( *pblogin );
                     ack.mutable_playerdata()->CopyFrom( *pbnewdata );
