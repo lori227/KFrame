@@ -36,4 +36,6 @@ sh build_release.sh
 
 #清空编译文件
 sh build_clean.sh
+sh build_clean.sh debug
+sh build_clean.sh release
 ```

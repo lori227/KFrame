@@ -4,7 +4,7 @@
 
 	cd /home/server/frame/trunk/_build/linux
 	sh build_release.sh
-	sh cp.deploy.sh
+	sh cp.deploy.sh release
 
 生成的部署工具包在`/data/`目录下
 
@@ -13,18 +13,18 @@
 
 	tar -zxvf deploy.tar.gz
 	cd deploy
-	sh run.deploy.server.sh 1 2
+	sh run.deploy.server.sh
 
-!> `sh run.deploy.server.sh 1 2` 参数根据你channel和service而定
+!> `sh run.deploy.server.sh` 参数根据你channel和service而定
 
 ## 运行部署Agent
 选择一个服务器运行agent服务器
 
 	tar -zxvf deploy.tar.gz
 	cd deploy
-	sh run.deploy.agent.sh 1 2
+	sh run.deploy.agent.sh
 
-!> `sh run.deploy.agent.sh 1 2` 参数根据你channel和service而定
+!> `sh run.deploy.agent.sh` agent会自动读取数据库中的配置
 
 	
 	

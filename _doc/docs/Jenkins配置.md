@@ -29,30 +29,24 @@
 send files or execute commands over ssh
 
 
-	cd /home/server/project/chess/trunk
-	svn up Resource/
-	svn up Server
-	cd Server/_build/linux
+	cd /home/server/project/chess/trunk/Server/
+	rm -rf _bin/config
+	svn up
+	cd _build/linux
 	sh make_develop.sh
-
-
-	svnversion=`svn info |awk 'NR==6{print $2}'`
-	cd ../../
-	days=$(((($(date +%s ) - $(date +%s -d '20190401'))/86400) + 1));
-	defineversion=`cat ../Resource/proto/6.version.txt | cut -d "." -f 1`
-	clientversion=`cat ../Resource/proto/6.version.txt | cut -d "." -f 2`
-	version=$defineversion.$clientversion.$days.$svnversion
+	
+	version=`cat /tmp/develop_projectversion`
 	echo $version
-
+	
 	curl -d'
 	{
 	"command":"version",
-  	"value":"chess_develop_'$version.tar.gz'",
-  	"appname":"*",
-  	"apptype":"*",
-  	"appid":"*",
-  	"zoneid":"0"
-	}' http://192.168.1.250:9999/deploy
+	  "value":"chess_develop_'$version'.tar.gz",
+	  "appname":"zone",
+	  "apptype":"*",
+	  "appid":"*",
+	  "zoneid":"1"
+	}' http://192.168.2.30:9999/deploy
 
 
 ## 一键构建任务 ok!
