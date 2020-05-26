@@ -56,6 +56,7 @@
   - [属性说明(KFCore)](/docs/属性说明.md)
   - [属性配置](/docs/属性配置.md)
   - [属性插件(KFKernel)](/docs/属性插件.md)
+  - [属性条件(KFCondition)](/docs/属性条件.md)
   - [属性道具(elemenettool)](/docs/属性道具.md)
 
 - Lua接口
@@ -66,6 +67,7 @@
 
   - [项目配置](/docs/项目配置.md)
   - [常量配置](/docs/常量配置.md)
+  - [时间配置](/docs/时间配置.md)
  
 - 系统逻辑
 
