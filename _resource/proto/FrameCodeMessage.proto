@@ -133,6 +133,8 @@ enum FrameCodeEnum
 	ItemBagCanNotMove			= 12618;	// 背包不支持移动
 	ItemBagCanNotClean			= 12619;	// 背包不支持清空
 	ItemTabNotExist				= 12620;	// 仓库页签不存在
+	ItemCanNotSell				= 12621;	// 道具不能出售
+	ItemSellOk					= 12622;	// 道具出售成功
 
 	// signin
 	SignInNotDay				= 12700;	// 没有签到数据
@@ -163,6 +165,7 @@ enum FrameCodeEnum
 	StoreRefreshOk				= 12912;	// 商店刷新成功
 	StoreRefreshTypeError		= 12913;	// 错误的刷新类型
 	StoreRefreshCostEmpty		= 12914;	// 没有配置刷新花费
+	StoreGoodsRefreshOk			= 12915;	// 商品限购数量刷新成功
 
 	// pay
 	PayIdError					= 13000;	// 充值信息错误

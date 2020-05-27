@@ -56,6 +56,7 @@ enum FrameClientProtocol
 	MSG_REMOVE_ITEM_REQ					= 408;	// 删除道具
 	MSG_MOVE_ALL_ITEM_REQ				= 409;	// 移动所有道具
 	MSG_REMOVE_ITEM_COUNT_REQ			= 410;	// 删除道具数量
+	MSG_SELL_ITEM_REQ					= 411;	// 出售道具
 
 	MSG_USE_ITEM_TO_HERO_REQ			= 451;	// 对英雄使用道具
 
@@ -413,6 +414,15 @@ message MsgUseItemToHeroReq
 	uint64 itemuuid = 2; 	// 道具uuid
 	uint64 herouuid = 3;	// 英雄uuid
 }
+
+// 出售道具
+// MSG_SELL_ITEM_REQ
+message MsgSellItemReq
+{
+	bytes name = 1;		// 背包名字
+	uint64 uuid = 2;	// 道具uuid
+}
+
 ////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
 // 查看邮件

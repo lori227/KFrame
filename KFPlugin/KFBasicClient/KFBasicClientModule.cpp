@@ -247,6 +247,7 @@ namespace KFrame
         }
 
         player->UpdateData( __STRING__( basic ), __STRING__( name ), kfmsg.name() );
+
         if ( kfmsg.costdata() != _invalid_string )
         {
             KFElements kfelements;

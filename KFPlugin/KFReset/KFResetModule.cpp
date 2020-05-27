@@ -98,6 +98,17 @@ namespace KFrame
         return KFDate::CalcTimeData( &kfsetting->_time_data, time, 1 );
     }
 
+    void KFResetModule::ResetTime( KFEntity* player, uint32 timeid )
+    {
+        if ( timeid == 0u )
+        {
+            return;
+        }
+
+        auto kftimerecord = player->Find( __STRING__( time ) );
+        player->UpdateData( kftimerecord, timeid, kftimerecord->_data_setting->_value_key_name, KFEnum::Set, KFGlobal::Instance()->_real_time );
+    }
+
     __KF_RUN_PLAYER_FUNCTION__( KFResetModule::RunResetPlayerData )
     {
         auto kfresetdata = player->Find( __STRING__( resettime ) );

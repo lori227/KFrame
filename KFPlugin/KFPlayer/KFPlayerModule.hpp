@@ -76,6 +76,9 @@ namespace KFrame
         virtual void AddNewPlayerFunction( const std::string& moudle, KFEntityFunction& function );
         virtual void RemoveNewPlayerFunction( const std::string& moudle );
 
+        virtual void AddCreateRoleFunction( const std::string& moudle, KFEntityFunction& function );
+        virtual void RemoveCreateRoleFunction( const std::string& moudle );
+
     protected:
         // 初始化
         void InitPlayer( KFEntity* player );
@@ -89,9 +92,6 @@ namespace KFrame
         void OnEnterCreatePlayer( KFEntity* player, uint64 playerid );
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // 名字更新
-        __KF_UPDATE_STRING_FUNCTION__( OnUpdateNameCallBack );
-
         // 添加属性
         __KF_COMMAND_FUNCTION__( OnCommandAddData );
 
@@ -124,6 +124,9 @@ namespace KFrame
         // 请求取消同步
         __KF_MESSAGE_FUNCTION__( HandleCancelSyncReq );
 
+        // 名字更新
+        __KF_UPDATE_STRING_FUNCTION__( OnUpdateNameCallBack );
+
     private:
         // 玩家组件
         KFComponent* _kf_component = nullptr;
@@ -151,6 +154,9 @@ namespace KFrame
 
         // 新玩家处理函数
         KFBind< std::string, const std::string&, KFEntityFunction > _new_player_function;
+
+        // 创建角色函数
+        KFBind< std::string, const std::string&, KFEntityFunction > _create_role_function;
     };
 }
 

@@ -286,6 +286,7 @@ namespace KFrame
         __STRING_DEFINE__( playername );
         __STRING_DEFINE__( refuse );
         __STRING_DEFINE__( rewardtype );
+        __STRING_DEFINE__( sell );
     }
 }
 

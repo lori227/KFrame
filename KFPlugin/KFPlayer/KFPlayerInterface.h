@@ -149,6 +149,20 @@ namespace KFrame
         {
             RemoveNewPlayerFunction( typeid( T ).name() );
         }
+
+        // 创建角色
+        template< class T >
+        void RegisterCreateRoleFunction( T* object, void ( T::*handle )( KFEntity* player ) )
+        {
+            KFEntityFunction function = std::bind( handle, object, std::placeholders::_1 );
+            AddCreateRoleFunction( typeid( T ).name(), function );
+        }
+
+        template< class T >
+        void UnRegisterCreateRoleFunction( T* object )
+        {
+            RemoveCreateRoleFunction( typeid( T ).name() );
+        }
         ///////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -201,6 +215,9 @@ namespace KFrame
 
         virtual void AddNewPlayerFunction( const std::string& moudle, KFEntityFunction& function ) = 0;
         virtual void RemoveNewPlayerFunction( const std::string& moudle ) = 0;
+
+        virtual void AddCreateRoleFunction( const std::string& moudle, KFEntityFunction& function ) = 0;
+        virtual void RemoveCreateRoleFunction( const std::string& moudle ) = 0;
     };
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -273,6 +290,11 @@ namespace KFrame
 #define __KF_UNINIT_PLAYER_FUNCTION__( function ) void function( KFEntity* player )
 #define __REGISTER_UNINIT_PLAYER__( function ) _kf_player->RegisterUnInitDataFunction( this, function )
 #define __UN_UNINIT_PLAYER__() _kf_player->UnRegisterUnInitDataFunction( this )
+
+#define __KF_CREATE_ROLE_FUNCTION__( function ) void function( KFEntity* player )
+#define __REGISTER_CREATE_ROLE__( function ) _kf_player->RegisterCreateRoleFunction( this, function )
+#define __UN_CREATE_ROLE__() _kf_player->UnRegisterCreateRoleFunction( this )
+
 }
 
 #endif

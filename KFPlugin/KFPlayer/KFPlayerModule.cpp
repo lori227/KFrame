@@ -17,8 +17,9 @@ namespace KFrame
         _kf_component->RegisterSyncRemoveFunction( this, &KFPlayerModule::SendRemoveDataToClient );
         _kf_component->RegisterSyncUpdateFunction( this, &KFPlayerModule::SendUpdateDataToClient );
         _kf_component->RegisterShowElementFunction( this, &KFPlayerModule::SendElementToClient );
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         __REGISTER_UPDATE_STRING_2__( __STRING__( basic ), __STRING__( name ), &KFPlayerModule::OnUpdateNameCallBack );
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 注册command函数
         __REGISTER_COMMAND_FUNCTION__( __STRING__( adddata ), &KFPlayerModule::OnCommandAddData );
         __REGISTER_COMMAND_FUNCTION__( __STRING__( setdata ), &KFPlayerModule::OnCommandSetData );
@@ -46,7 +47,6 @@ namespace KFrame
         _kf_component->UnRegisterShowElementFunction();
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UN_UPDATE_STRING_2__( __STRING__( basic ), __STRING__( name ) );
-
         // 取消注册command函数
         __UN_COMMAND_FUNCTION__( __STRING__( adddata ) );
         __UN_COMMAND_FUNCTION__( __STRING__( setdata ) );
@@ -167,6 +167,17 @@ namespace KFrame
     void KFPlayerModule::RemoveNewPlayerFunction( const std::string& moudle )
     {
         _new_player_function.Remove( moudle );
+    }
+
+    void KFPlayerModule::AddCreateRoleFunction( const std::string& moudle, KFEntityFunction& function )
+    {
+        auto kffunction = _create_role_function.Create( moudle );
+        kffunction->_function = function;
+    }
+
+    void KFPlayerModule::RemoveCreateRoleFunction( const std::string& moudle )
+    {
+        _create_role_function.Remove( moudle );
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////3
@@ -344,6 +355,23 @@ namespace KFrame
         return player;
     }
 
+    __KF_UPDATE_STRING_FUNCTION__( KFPlayerModule::OnUpdateNameCallBack )
+    {
+        if ( oldvalue == _invalid_string )
+        {
+            for ( auto& iter : _create_role_function._objects )
+            {
+                auto kffunction = iter.second;
+                kffunction->_function( player );
+            }
+
+            for ( auto elements : KFPlayerConfig::Instance()->_new_role_elements )
+            {
+                player->AddElement( elements, _default_multiple, __STRING__( newrole ), 0u, __FUNC_LINE__ );
+            }
+        }
+    }
+
     void KFPlayerModule::OnEnterCreatePlayer( KFEntity* player, uint64 playerid )
     {
         // 判断新玩家
@@ -373,16 +401,6 @@ namespace KFrame
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_UPDATE_STRING_FUNCTION__( KFPlayerModule::OnUpdateNameCallBack )
-    {
-        if ( oldvalue == _invalid_string )
-        {
-            for ( auto elements : KFPlayerConfig::Instance()->_new_role_elements )
-            {
-                player->AddElement( elements, _default_multiple, __STRING__( newrole ), 0u, __FUNC_LINE__ );
-            }
-        }
-    }
 
     __KF_COMMAND_FUNCTION__( KFPlayerModule::OnCommandAddData )
     {
