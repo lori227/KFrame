@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <Config>
 	<!-- 数据库类型 1:redis 2:mongo 3:mysql-->
-	<!-- Open 是否打开使用 0 开放 1 关闭 -->
+	<!-- Open 是否打开使用 1:开放 0:关闭 -->
 	<!-- SaveFlag 保存类型 1 在线更新保存 2 离线保存(数据落地) -->
 	<!-- Sort 读取数据的优先级 -->
 	<!-- CacheTime 缓存保存时间 只对缓存数据库有效 -->
