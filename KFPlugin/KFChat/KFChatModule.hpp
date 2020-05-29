@@ -39,6 +39,16 @@ namespace KFrame
 
         // 本服务器(进程)的公屏聊天
         __KF_MESSAGE_FUNCTION__( HandleServerChatReq );
+
+        // 判断老天请求间隔
+        bool CheckChatIntervalTime( KFEntity* player );
+
+        // 离开游戏
+        __KF_LEAVE_PLAYER_FUNCTION__( OnLeaveChatModule );
+
+    private:
+        // 上次聊天的时间的列表
+        UInt64Map _chat_interval_time;
     };
 }
 

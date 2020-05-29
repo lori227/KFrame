@@ -200,4 +200,5 @@ enum FrameCodeEnum
 	// chat 
 	ChatNotFriend			= 32201;	// 不是好友, 不能私聊
 	ChatFriendNotOnline		= 32102;	// 好友不在线, 发送私聊失败
+	ChatIntervalTimeLimit	= 32103;	// 聊天速度过快, 请稍后
 }

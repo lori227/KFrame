@@ -4,12 +4,16 @@ namespace KFrame
 {
     void KFChatModule::BeforeRun()
     {
+        __REGISTER_LEAVE_PLAYER__( &KFChatModule::OnLeaveChatModule );
+        ///////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_FRIEND_CHAT_REQ, &KFChatModule::HandleFriendChatReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_SERVER_CHAT_REQ, &KFChatModule::HandleServerChatReq );
     }
 
     void KFChatModule::BeforeShut()
     {
+        __UN_LEAVE_PLAYER__();
+        ///////////////////////////////////////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::MSG_FRIEND_CHAT_REQ );
         __UN_MESSAGE__( KFMsg::MSG_SERVER_CHAT_REQ );
     }
@@ -17,6 +21,11 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFChatModule::HandleFriendChatReq )
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgFriendChatReq );
+
+        if ( !CheckChatIntervalTime( player ) )
+        {
+            return;
+        }
 
         // 判断是否是好友
         auto kfrelation = player->Find( __STRING__( friend ), kfmsg.playerid() );
@@ -44,6 +53,11 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgServerChatReq );
 
+        if ( !CheckChatIntervalTime( player ) )
+        {
+            return;
+        }
+
         // 判断屏蔽字符
         std::string content = kfmsg.content();
         _kf_filter->CensorFilter( content );
@@ -55,5 +69,27 @@ namespace KFrame
         chat.set_content( content );
         chat.mutable_player()->CopyFrom( *pbbasic );
         _kf_game->BroadcastToServer( KFMsg::MSG_TELL_SERVER_CHAT, &chat );
+    }
+
+    bool KFChatModule::CheckChatIntervalTime( KFEntity* player )
+    {
+        auto iter = _chat_interval_time.find( player->GetKeyID() );
+        if ( iter != _chat_interval_time.end() )
+        {
+            if ( KFGlobal::Instance()->_game_time < iter->second )
+            {
+                _kf_display->SendToClient( player, KFMsg::ChatIntervalTimeLimit );
+                return false;
+            }
+        }
+
+        static auto _chat_constant = KFGlobal::Instance()->FindConstant( "chatintervaltime" );
+        _chat_interval_time[ player->GetKeyID() ] = KFGlobal::Instance()->_game_time + _chat_constant->_uint32_value;
+        return true;
+    }
+
+    __KF_LEAVE_PLAYER_FUNCTION__( KFChatModule::OnLeaveChatModule )
+    {
+        _chat_interval_time.erase( player->GetKeyID() );
     }
 }
