@@ -115,6 +115,9 @@ namespace KFrame
 
         // 删除数据
         void ClearRankData( const std::string& rankdatakey, const std::string&  ranksortkey, const KFRankSetting* kfsetting );
+
+        // 查询玩家排名
+        uint32 QueryPlayerRank( uint64 playerid, uint32 rankid, uint32 zoneid );
     private:
         // 排行榜
         KFRedisDriver* _rank_redis_driver = nullptr;

@@ -519,6 +519,7 @@ message MsgQueryRankListAck
 {
 	uint32 rankid = 1;			// 排行榜id
 	PBRankDatas rankdatas = 2;	// 榜单数据
+	uint32 selfindex = 3;		// 自己的排名
 }
 
 // 查询好友排行榜

@@ -343,6 +343,7 @@ namespace KFrame
 
         KFMsg::MsgQueryRankListAck ack;
         ack.set_rankid( kfmsg.rankid() );
+        ack.set_selfindex( QueryPlayerRank( __ROUTE_SEND_ID__, kfmsg.rankid(), kfmsg.zoneid() ) );
 
         if ( kfmsg.start() == 1u && kfmsg.count() >= ( uint32 )kfrankdata->_rank_datas.rankdata_size() )
         {
@@ -365,6 +366,13 @@ namespace KFrame
         }
 
         _kf_route->SendToRoute( route, KFMsg::MSG_QUERY_RANK_LIST_ACK, &ack );
+    }
+
+    uint32 KFRankShardModule::QueryPlayerRank( uint64 playerid, uint32 rankid, uint32 zoneid )
+    {
+        auto& ranksortkey = FormatRankSortKey( rankid, zoneid );
+        auto kfresult = _rank_redis_driver->QueryUInt64( "zrank {} {}", ranksortkey, playerid );
+        return ( uint32 )kfresult->_value;
     }
 
     __KF_MESSAGE_FUNCTION__( KFRankShardModule::HandleQueryFriendRanklistReq )

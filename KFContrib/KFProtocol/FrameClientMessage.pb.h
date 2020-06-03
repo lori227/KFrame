@@ -6385,12 +6385,19 @@ class LIBPROTOC_EXPORT MsgQueryRankListAck : public ::google::protobuf::Message 
   ::google::protobuf::uint32 rankid() const;
   void set_rankid(::google::protobuf::uint32 value);
 
+  // uint32 selfindex = 3;
+  void clear_selfindex();
+  static const int kSelfindexFieldNumber = 3;
+  ::google::protobuf::uint32 selfindex() const;
+  void set_selfindex(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:KFMsg.MsgQueryRankListAck)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::KFMsg::PBRankDatas* rankdatas_;
   ::google::protobuf::uint32 rankid_;
+  ::google::protobuf::uint32 selfindex_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameClientMessage_2eproto::TableStruct;
 };
@@ -11190,6 +11197,20 @@ inline void MsgQueryRankListAck::set_allocated_rankdatas(::KFMsg::PBRankDatas* r
   }
   rankdatas_ = rankdatas;
   // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgQueryRankListAck.rankdatas)
+}
+
+// uint32 selfindex = 3;
+inline void MsgQueryRankListAck::clear_selfindex() {
+  selfindex_ = 0u;
+}
+inline ::google::protobuf::uint32 MsgQueryRankListAck::selfindex() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgQueryRankListAck.selfindex)
+  return selfindex_;
+}
+inline void MsgQueryRankListAck::set_selfindex(::google::protobuf::uint32 value) {
+  
+  selfindex_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.MsgQueryRankListAck.selfindex)
 }
 
 // -------------------------------------------------------------------
