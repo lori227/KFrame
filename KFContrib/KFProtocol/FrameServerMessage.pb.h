@@ -5359,12 +5359,26 @@ class LIBPROTOC_EXPORT S2SQueryRankListReq : public ::google::protobuf::Message 
   ::google::protobuf::uint32 zoneid() const;
   void set_zoneid(::google::protobuf::uint32 value);
 
+  // uint32 start = 3;
+  void clear_start();
+  static const int kStartFieldNumber = 3;
+  ::google::protobuf::uint32 start() const;
+  void set_start(::google::protobuf::uint32 value);
+
+  // uint32 count = 4;
+  void clear_count();
+  static const int kCountFieldNumber = 4;
+  ::google::protobuf::uint32 count() const;
+  void set_count(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:KFMsg.S2SQueryRankListReq)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::uint32 rankid_;
   ::google::protobuf::uint32 zoneid_;
+  ::google::protobuf::uint32 start_;
+  ::google::protobuf::uint32 count_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameServerMessage_2eproto::TableStruct;
 };
@@ -11078,6 +11092,34 @@ inline void S2SQueryRankListReq::set_zoneid(::google::protobuf::uint32 value) {
   
   zoneid_ = value;
   // @@protoc_insertion_point(field_set:KFMsg.S2SQueryRankListReq.zoneid)
+}
+
+// uint32 start = 3;
+inline void S2SQueryRankListReq::clear_start() {
+  start_ = 0u;
+}
+inline ::google::protobuf::uint32 S2SQueryRankListReq::start() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SQueryRankListReq.start)
+  return start_;
+}
+inline void S2SQueryRankListReq::set_start(::google::protobuf::uint32 value) {
+  
+  start_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SQueryRankListReq.start)
+}
+
+// uint32 count = 4;
+inline void S2SQueryRankListReq::clear_count() {
+  count_ = 0u;
+}
+inline ::google::protobuf::uint32 S2SQueryRankListReq::count() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2SQueryRankListReq.count)
+  return count_;
+}
+inline void S2SQueryRankListReq::set_count(::google::protobuf::uint32 value) {
+  
+  count_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2SQueryRankListReq.count)
 }
 
 // -------------------------------------------------------------------

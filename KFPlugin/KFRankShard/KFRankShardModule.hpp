@@ -112,6 +112,9 @@ namespace KFrame
 
         // 计算zoneid
         uint32 CalcRankZoneId( uint64 playerid, const KFRankSetting* kfsetting );
+
+        // 删除数据
+        void ClearRankData( const std::string& rankdatakey, const std::string&  ranksortkey, const KFRankSetting* kfsetting );
     private:
         // 排行榜
         KFRedisDriver* _rank_redis_driver = nullptr;

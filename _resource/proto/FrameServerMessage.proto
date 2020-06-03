@@ -448,8 +448,10 @@ message S2SUpdateRankDataReq
 // S2S_QUERY_RANK_LIST_REQ
 message S2SQueryRankListReq
 {
-	uint32 rankid = 1;			// 排行榜id
-	uint32 zoneid = 2;			// 小区id
+	uint32 rankid = 1;	// 排行榜id
+	uint32 zoneid = 2;	// 小区id
+	uint32 start = 3;	// 从排行第几开始(默认为1)
+	uint32 count = 4;	// 查询排行的数量
 }
 
 // 查询好友排行榜

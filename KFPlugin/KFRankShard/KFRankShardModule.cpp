@@ -120,7 +120,7 @@ namespace KFrame
 
     void KFRankShardModule::StartRefreshRankDataTimer( const KFRankSetting* kfsetting )
     {
-        if ( kfsetting->_refresh_type == KFTimeEnum::None )
+        if ( kfsetting->_refresh_type == KFTimeEnum::Minute )
         {
             // 每5分钟 就在5分钟就在0, 5, 10... 整除关系
             auto passtime = KFGlobal::Instance()->_real_time % kfsetting->_refresh_time;
@@ -232,31 +232,44 @@ namespace KFrame
             // 保存排行榜信息
             SaveRankData( kfrankdata );
 
-            if ( kfsetting->_is_reset_data )
-            {
-                // 清空数据
-                _rank_redis_driver->Append( "del {}", rankdatakey );
-                _rank_redis_driver->Append( "del {}", ranksortkey );
-                _rank_redis_driver->Pipeline();
-            }
-            else
-            {
-                // 最小积分
-                //auto playerid = idlist.back();
-                //std::string minscore = "";
-                //_rank_driver->StringExecute( minscore, "zscore {}:{}:{} {}", __STRING__( ranksort ), rankid, zoneid, playerid );
-                //kfrankdata->_min_rank_score = __TO_UINT64__( minscore );
-
-                // 删除指定数量以后的排序
-                auto rankcount = _rank_redis_driver->QueryUInt64( "zcard {}", ranksortkey );
-                if ( rankcount->_value > kfsetting->_max_count + 1 )
-                {
-                    _rank_redis_driver->Execute( "zremrangebyrank {} 0 {}", ranksortkey, rankcount->_value - ( kfsetting->_max_count + 1 ) );
-                }
-            }
+            // 清除排行榜数据
+            ClearRankData( rankdatakey, ranksortkey, kfsetting );
         }
 
         return true;
+    }
+
+    void KFRankShardModule::ClearRankData( const std::string& rankdatakey, const std::string& ranksortkey, const KFRankSetting* kfsetting )
+    {
+        switch ( kfsetting->_reset_data_type )
+        {
+        case KFRankEnum::DataClearRank:
+        {
+            // 最小积分
+            //auto playerid = idlist.back();
+            //std::string minscore = "";
+            //_rank_driver->StringExecute( minscore, "zscore {}:{}:{} {}", __STRING__( ranksort ), rankid, zoneid, playerid );
+            //kfrankdata->_min_rank_score = __TO_UINT64__( minscore );
+
+            // 删除指定数量以后的排序
+            auto maxcount = kfsetting->_max_count + 1u;
+            auto rankcount = _rank_redis_driver->QueryUInt64( "zcard {}", ranksortkey );
+            if ( rankcount->_value > maxcount )
+            {
+                _rank_redis_driver->Execute( "zremrangebyrank {} 0 {}", ranksortkey, rankcount->_value - maxcount );
+            }
+        }
+        break;
+        case KFRankEnum::DataClearAll:	// 清除所有
+        {
+            _rank_redis_driver->Append( "del {}", rankdatakey );
+            _rank_redis_driver->Append( "del {}", ranksortkey );
+            _rank_redis_driver->Pipeline();
+        }
+        break;
+        default:
+            break;
+        }
     }
 
     __KF_MESSAGE_FUNCTION__( KFRankShardModule::HandleSyncRefreshRank )
@@ -330,7 +343,27 @@ namespace KFrame
 
         KFMsg::MsgQueryRankListAck ack;
         ack.set_rankid( kfmsg.rankid() );
-        ack.mutable_rankdatas()->CopyFrom( kfrankdata->_rank_datas );
+
+        if ( kfmsg.start() == 1u && kfmsg.count() >= ( uint32 )kfrankdata->_rank_datas.rankdata_size() )
+        {
+            ack.mutable_rankdatas()->CopyFrom( kfrankdata->_rank_datas );
+        }
+        else
+        {
+            auto startindex = kfmsg.start() - 1u;
+            auto maxindex = kfmsg.start() + kfmsg.count();
+            for ( auto i = startindex; i < ( uint32 )kfrankdata->_rank_datas.rankdata_size(); ++i )
+            {
+                auto& pbrankdata = kfrankdata->_rank_datas.rankdata( i );
+                if ( pbrankdata.rankindex() < kfmsg.start() || pbrankdata.rankindex() > maxindex )
+                {
+                    continue;
+                }
+
+                ack.mutable_rankdatas()->add_rankdata()->CopyFrom( pbrankdata );
+            }
+        }
+
         _kf_route->SendToRoute( route, KFMsg::MSG_QUERY_RANK_LIST_ACK, &ack );
     }
 

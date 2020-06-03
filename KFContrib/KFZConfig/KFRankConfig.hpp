@@ -6,6 +6,18 @@
 
 namespace KFrame
 {
+    namespace KFRankEnum
+    {
+        enum MyEnum
+        {
+            TotalRank = 1,		// 全区全服排行榜
+            ZoneRank = 2,		// 分区排行榜
+            ////////////////////////////////////////////////////
+            DataClearNone = 0,	// 不清空数据
+            DataClearRank = 1,	// 只保留排行榜数据
+            DataClearAll  = 2,	// 清除所有数据
+        };
+    }
     /////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////
     class KFRandCalcData
@@ -39,8 +51,8 @@ namespace KFrame
         // 刷新分钟
         uint32 _refresh_minute = 0u;
 
-        // 是否清除数据
-        bool _is_reset_data = false;
+        // 清除数据类型
+        uint32 _reset_data_type = 0u;
 
         // 计算属性
         std::vector< KFRandCalcData > _calc_data;

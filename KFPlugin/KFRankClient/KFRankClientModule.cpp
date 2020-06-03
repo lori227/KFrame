@@ -90,7 +90,6 @@ namespace KFrame
         req.set_rankid( kfsetting->_id );
 
         auto pbrankdata = req.mutable_pbrankdata();
-        pbrankdata->set_rankindex( 0 );
         pbrankdata->set_playerid( playerid );
         pbrankdata->set_rankscore( rankscore );
 
@@ -147,6 +146,8 @@ namespace KFrame
         KFMsg::S2SQueryRankListReq req;
         req.set_rankid( kfmsg.rankid() );
         req.set_zoneid( CalcRankZoneId( playerid, kfsetting ) );
+        req.set_start( kfmsg.start() == 0u ? 1u : kfmsg.start() );
+        req.set_count( kfmsg.count() );
         auto ok = _kf_route->SendToRand( playerid, __STRING__( rank ), KFMsg::S2S_QUERY_RANK_LIST_REQ, &req );
         if ( !ok )
         {

@@ -509,6 +509,8 @@ message MsgQueryPayReq
 message MsgQueryRankListReq
 {
 	uint32 rankid = 1;
+	uint32 start = 2;	// 从排行第几开始(默认为1)
+	uint32 count = 3;	// 查询排行的数量
 }
 
 // 查询排行榜反馈
