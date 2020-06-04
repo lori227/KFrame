@@ -135,6 +135,7 @@ message PBRankData
 	uint64 playerid = 2;				// 玩家id
 	uint64 rankscore = 3;				// 排行的数据( 客户端好友排行根据这个排序 )
 	map< string, bytes > pbdata = 4;	// 排行榜数据
+	map< string, bytes > pbplayer = 5;	// 玩家数据
 }
 
 message PBRankDatas

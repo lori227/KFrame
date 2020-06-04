@@ -225,8 +225,8 @@ namespace KFrame
                 KFProto::Parse( pbrankdata, queryrankdata->_value, KFCompressEnum::None, true );
                 pbrankdata->set_rankindex( ++rankindex );
 
-                auto& pbdata = *pbrankdata->mutable_pbdata();
-                __MAP_TO_PROTO__( basicdata, pbdata );
+                auto& pbplayer = *pbrankdata->mutable_pbplayer();
+                __MAP_TO_PROTO__( basicdata, pbplayer );
             }
 
             // 保存排行榜信息

@@ -46,7 +46,7 @@ namespace protobuf_FrameDefineMessage_2eproto {
 struct LIBPROTOC_EXPORT TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[27];
+  static const ::google::protobuf::internal::ParseTable schema[28];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -105,6 +105,9 @@ LIBPROTOC_EXPORT extern PBRankDataDefaultTypeInternal _PBRankData_default_instan
 class PBRankData_PbdataEntry_DoNotUse;
 class PBRankData_PbdataEntry_DoNotUseDefaultTypeInternal;
 LIBPROTOC_EXPORT extern PBRankData_PbdataEntry_DoNotUseDefaultTypeInternal _PBRankData_PbdataEntry_DoNotUse_default_instance_;
+class PBRankData_PbplayerEntry_DoNotUse;
+class PBRankData_PbplayerEntry_DoNotUseDefaultTypeInternal;
+LIBPROTOC_EXPORT extern PBRankData_PbplayerEntry_DoNotUseDefaultTypeInternal _PBRankData_PbplayerEntry_DoNotUse_default_instance_;
 class PBRankDatas;
 class PBRankDatasDefaultTypeInternal;
 LIBPROTOC_EXPORT extern PBRankDatasDefaultTypeInternal _PBRankDatas_default_instance_;
@@ -155,6 +158,7 @@ template<> LIBPROTOC_EXPORT ::KFMsg::PBObject_Pbuint32Entry_DoNotUse* Arena::Cre
 template<> LIBPROTOC_EXPORT ::KFMsg::PBObject_Pbuint64Entry_DoNotUse* Arena::CreateMaybeMessage<::KFMsg::PBObject_Pbuint64Entry_DoNotUse>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::PBRankData* Arena::CreateMaybeMessage<::KFMsg::PBRankData>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::PBRankData_PbdataEntry_DoNotUse* Arena::CreateMaybeMessage<::KFMsg::PBRankData_PbdataEntry_DoNotUse>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::PBRankData_PbplayerEntry_DoNotUse* Arena::CreateMaybeMessage<::KFMsg::PBRankData_PbplayerEntry_DoNotUse>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::PBRankDatas* Arena::CreateMaybeMessage<::KFMsg::PBRankDatas>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::PBRecord* Arena::CreateMaybeMessage<::KFMsg::PBRecord>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::PBRecord_PbobjectEntry_DoNotUse* Arena::CreateMaybeMessage<::KFMsg::PBRecord_PbobjectEntry_DoNotUse>(Arena*);
@@ -1795,6 +1799,27 @@ public:
 
 // -------------------------------------------------------------------
 
+class PBRankData_PbplayerEntry_DoNotUse : public ::google::protobuf::internal::MapEntry<PBRankData_PbplayerEntry_DoNotUse, 
+    ::std::string, ::std::string,
+    ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
+    ::google::protobuf::internal::WireFormatLite::TYPE_BYTES,
+    0 > {
+public:
+  typedef ::google::protobuf::internal::MapEntry<PBRankData_PbplayerEntry_DoNotUse, 
+    ::std::string, ::std::string,
+    ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
+    ::google::protobuf::internal::WireFormatLite::TYPE_BYTES,
+    0 > SuperType;
+  PBRankData_PbplayerEntry_DoNotUse();
+  PBRankData_PbplayerEntry_DoNotUse(::google::protobuf::Arena* arena);
+  void MergeFrom(const PBRankData_PbplayerEntry_DoNotUse& other);
+  static const PBRankData_PbplayerEntry_DoNotUse* internal_default_instance() { return reinterpret_cast<const PBRankData_PbplayerEntry_DoNotUse*>(&_PBRankData_PbplayerEntry_DoNotUse_default_instance_); }
+  void MergeFrom(const ::google::protobuf::Message& other) final;
+  ::google::protobuf::Metadata GetMetadata() const;
+};
+
+// -------------------------------------------------------------------
+
 class LIBPROTOC_EXPORT PBRankData : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.PBRankData) */ {
  public:
   PBRankData();
@@ -1830,7 +1855,7 @@ class LIBPROTOC_EXPORT PBRankData : public ::google::protobuf::Message /* @@prot
                &_PBRankData_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    25;
+    26;
 
   void Swap(PBRankData* other);
   friend void swap(PBRankData& a, PBRankData& b) {
@@ -1892,6 +1917,15 @@ class LIBPROTOC_EXPORT PBRankData : public ::google::protobuf::Message /* @@prot
   ::google::protobuf::Map< ::std::string, ::std::string >*
       mutable_pbdata();
 
+  // map<string, bytes> pbplayer = 5;
+  int pbplayer_size() const;
+  void clear_pbplayer();
+  static const int kPbplayerFieldNumber = 5;
+  const ::google::protobuf::Map< ::std::string, ::std::string >&
+      pbplayer() const;
+  ::google::protobuf::Map< ::std::string, ::std::string >*
+      mutable_pbplayer();
+
   // uint64 playerid = 2;
   void clear_playerid();
   static const int kPlayeridFieldNumber = 2;
@@ -1920,6 +1954,12 @@ class LIBPROTOC_EXPORT PBRankData : public ::google::protobuf::Message /* @@prot
       ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
       ::google::protobuf::internal::WireFormatLite::TYPE_BYTES,
       0 > pbdata_;
+  ::google::protobuf::internal::MapField<
+      PBRankData_PbplayerEntry_DoNotUse,
+      ::std::string, ::std::string,
+      ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
+      ::google::protobuf::internal::WireFormatLite::TYPE_BYTES,
+      0 > pbplayer_;
   ::google::protobuf::uint64 playerid_;
   ::google::protobuf::uint64 rankscore_;
   ::google::protobuf::uint32 rankindex_;
@@ -1963,7 +2003,7 @@ class LIBPROTOC_EXPORT PBRankDatas : public ::google::protobuf::Message /* @@pro
                &_PBRankDatas_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    26;
+    27;
 
   void Swap(PBRankDatas* other);
   friend void swap(PBRankDatas& a, PBRankDatas& b) {
@@ -2914,6 +2954,8 @@ inline void PBNotice::set_count(::google::protobuf::uint32 value) {
 
 // -------------------------------------------------------------------
 
+// -------------------------------------------------------------------
+
 // PBRankData
 
 // uint32 rankindex = 1;
@@ -2976,6 +3018,24 @@ PBRankData::mutable_pbdata() {
   return pbdata_.MutableMap();
 }
 
+// map<string, bytes> pbplayer = 5;
+inline int PBRankData::pbplayer_size() const {
+  return pbplayer_.size();
+}
+inline void PBRankData::clear_pbplayer() {
+  pbplayer_.Clear();
+}
+inline const ::google::protobuf::Map< ::std::string, ::std::string >&
+PBRankData::pbplayer() const {
+  // @@protoc_insertion_point(field_map:KFMsg.PBRankData.pbplayer)
+  return pbplayer_.GetMap();
+}
+inline ::google::protobuf::Map< ::std::string, ::std::string >*
+PBRankData::mutable_pbplayer() {
+  // @@protoc_insertion_point(field_mutable_map:KFMsg.PBRankData.pbplayer)
+  return pbplayer_.MutableMap();
+}
+
 // -------------------------------------------------------------------
 
 // PBRankDatas
@@ -3013,6 +3073,8 @@ PBRankDatas::rankdata() const {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

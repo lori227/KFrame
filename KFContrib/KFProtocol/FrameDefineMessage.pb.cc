@@ -37,14 +37,15 @@ extern PROTOBUF_INTERNAL_EXPORT_protobuf_FrameDefineMessage_2eproto ::google::pr
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_FrameDefineMessage_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_PBObject_Pbuint32Entry_DoNotUse;
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_FrameDefineMessage_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_PBObject_Pbuint64Entry_DoNotUse;
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_FrameDefineMessage_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_PBRankData_PbdataEntry_DoNotUse;
+extern PROTOBUF_INTERNAL_EXPORT_protobuf_FrameDefineMessage_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_PBRankData_PbplayerEntry_DoNotUse;
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_FrameDefineMessage_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_PBShowData_Pbuint64Entry_DoNotUse;
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_FrameDefineMessage_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_PBValues_PbstringEntry_DoNotUse;
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_FrameDefineMessage_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_PBValues_Pbuint64Entry_DoNotUse;
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_FrameDefineMessage_2eproto ::google::protobuf::internal::SCCInfo<1> scc_info_PBArray;
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_FrameDefineMessage_2eproto ::google::protobuf::internal::SCCInfo<1> scc_info_PBObject_PbarrayEntry_DoNotUse;
-extern PROTOBUF_INTERNAL_EXPORT_protobuf_FrameDefineMessage_2eproto ::google::protobuf::internal::SCCInfo<1> scc_info_PBRankData;
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_FrameDefineMessage_2eproto ::google::protobuf::internal::SCCInfo<1> scc_info_PBShowData;
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_FrameDefineMessage_2eproto ::google::protobuf::internal::SCCInfo<1> scc_info_PBShowElement;
+extern PROTOBUF_INTERNAL_EXPORT_protobuf_FrameDefineMessage_2eproto ::google::protobuf::internal::SCCInfo<2> scc_info_PBRankData;
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_FrameDefineMessage_2eproto ::google::protobuf::internal::SCCInfo<7> scc_info_PBObject;
 }  // namespace protobuf_FrameDefineMessage_2eproto
 namespace KFMsg {
@@ -173,6 +174,11 @@ class PBRankData_PbdataEntry_DoNotUseDefaultTypeInternal {
   ::google::protobuf::internal::ExplicitlyConstructed<PBRankData_PbdataEntry_DoNotUse>
       _instance;
 } _PBRankData_PbdataEntry_DoNotUse_default_instance_;
+class PBRankData_PbplayerEntry_DoNotUseDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<PBRankData_PbplayerEntry_DoNotUse>
+      _instance;
+} _PBRankData_PbplayerEntry_DoNotUse_default_instance_;
 class PBRankDataDefaultTypeInternal {
  public:
   ::google::protobuf::internal::ExplicitlyConstructed<PBRankData>
@@ -502,6 +508,19 @@ static void InitDefaultsPBRankData_PbdataEntry_DoNotUse() {
 LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<0> scc_info_PBRankData_PbdataEntry_DoNotUse =
     {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsPBRankData_PbdataEntry_DoNotUse}, {}};
 
+static void InitDefaultsPBRankData_PbplayerEntry_DoNotUse() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::KFMsg::_PBRankData_PbplayerEntry_DoNotUse_default_instance_;
+    new (ptr) ::KFMsg::PBRankData_PbplayerEntry_DoNotUse();
+  }
+  ::KFMsg::PBRankData_PbplayerEntry_DoNotUse::InitAsDefaultInstance();
+}
+
+LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<0> scc_info_PBRankData_PbplayerEntry_DoNotUse =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsPBRankData_PbplayerEntry_DoNotUse}, {}};
+
 static void InitDefaultsPBRankData() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -513,9 +532,10 @@ static void InitDefaultsPBRankData() {
   ::KFMsg::PBRankData::InitAsDefaultInstance();
 }
 
-LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<1> scc_info_PBRankData =
-    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 1, InitDefaultsPBRankData}, {
-      &protobuf_FrameDefineMessage_2eproto::scc_info_PBRankData_PbdataEntry_DoNotUse.base,}};
+LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<2> scc_info_PBRankData =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 2, InitDefaultsPBRankData}, {
+      &protobuf_FrameDefineMessage_2eproto::scc_info_PBRankData_PbdataEntry_DoNotUse.base,
+      &protobuf_FrameDefineMessage_2eproto::scc_info_PBRankData_PbplayerEntry_DoNotUse.base,}};
 
 static void InitDefaultsPBRankDatas() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -554,11 +574,12 @@ void InitDefaults() {
   ::google::protobuf::internal::InitSCC(&scc_info_PBShowElements.base);
   ::google::protobuf::internal::InitSCC(&scc_info_PBNotice.base);
   ::google::protobuf::internal::InitSCC(&scc_info_PBRankData_PbdataEntry_DoNotUse.base);
+  ::google::protobuf::internal::InitSCC(&scc_info_PBRankData_PbplayerEntry_DoNotUse.base);
   ::google::protobuf::internal::InitSCC(&scc_info_PBRankData.base);
   ::google::protobuf::internal::InitSCC(&scc_info_PBRankDatas.base);
 }
 
-::google::protobuf::Metadata file_level_metadata[27];
+::google::protobuf::Metadata file_level_metadata[28];
 
 const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBObject_Pbint32Entry_DoNotUse, _has_bits_),
@@ -784,6 +805,15 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBRankData_PbdataEntry_DoNotUse, value_),
   0,
   1,
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBRankData_PbplayerEntry_DoNotUse, _has_bits_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBRankData_PbplayerEntry_DoNotUse, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBRankData_PbplayerEntry_DoNotUse, key_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBRankData_PbplayerEntry_DoNotUse, value_),
+  0,
+  1,
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBRankData, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -793,6 +823,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBRankData, playerid_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBRankData, rankscore_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBRankData, pbdata_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBRankData, pbplayer_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::PBRankDatas, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -826,8 +857,9 @@ static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROT
   { 201, -1, sizeof(::KFMsg::PBShowElements)},
   { 207, -1, sizeof(::KFMsg::PBNotice)},
   { 214, 221, sizeof(::KFMsg::PBRankData_PbdataEntry_DoNotUse)},
-  { 223, -1, sizeof(::KFMsg::PBRankData)},
-  { 232, -1, sizeof(::KFMsg::PBRankDatas)},
+  { 223, 230, sizeof(::KFMsg::PBRankData_PbplayerEntry_DoNotUse)},
+  { 232, -1, sizeof(::KFMsg::PBRankData)},
+  { 242, -1, sizeof(::KFMsg::PBRankDatas)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -856,6 +888,7 @@ static ::google::protobuf::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_PBShowElements_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_PBNotice_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_PBRankData_PbdataEntry_DoNotUse_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_PBRankData_PbplayerEntry_DoNotUse_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_PBRankData_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_PBRankDatas_default_instance_),
 };
@@ -875,7 +908,7 @@ void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) GOOGLE_PROTOBUF_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 27);
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 28);
 }
 
 void AddDescriptorsImpl() {
@@ -932,16 +965,18 @@ void AddDescriptorsImpl() {
       "eid\030\002 \001(\004\022!\n\006pbdata\030\003 \003(\0132\021.KFMsg.PBShow"
       "Data\"7\n\016PBShowElements\022%\n\007element\030\001 \003(\0132"
       "\024.KFMsg.PBShowElement\"\'\n\010PBNotice\022\014\n\004typ"
-      "e\030\001 \001(\r\022\r\n\005count\030\002 \001(\r\"\242\001\n\nPBRankData\022\021\n"
+      "e\030\001 \001(\r\022\r\n\005count\030\002 \001(\r\"\206\002\n\nPBRankData\022\021\n"
       "\trankindex\030\001 \001(\r\022\020\n\010playerid\030\002 \001(\004\022\021\n\tra"
       "nkscore\030\003 \001(\004\022-\n\006pbdata\030\004 \003(\0132\035.KFMsg.PB"
-      "RankData.PbdataEntry\032-\n\013PbdataEntry\022\013\n\003k"
-      "ey\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:\0028\001\"2\n\013PBRankDat"
-      "as\022#\n\010rankdata\030\001 \003(\0132\021.KFMsg.PBRankDatab"
-      "\006proto3"
+      "RankData.PbdataEntry\0221\n\010pbplayer\030\005 \003(\0132\037"
+      ".KFMsg.PBRankData.PbplayerEntry\032-\n\013Pbdat"
+      "aEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:\0028\001\032/"
+      "\n\rPbplayerEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 "
+      "\001(\014:\0028\001\"2\n\013PBRankDatas\022#\n\010rankdata\030\001 \003(\013"
+      "2\021.KFMsg.PBRankDatab\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 2287);
+      descriptor, 2387);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "FrameDefineMessage.proto", &protobuf_RegisterTypes);
 }
@@ -5785,6 +5820,23 @@ void PBRankData_PbdataEntry_DoNotUse::MergeFrom(
 
 // ===================================================================
 
+PBRankData_PbplayerEntry_DoNotUse::PBRankData_PbplayerEntry_DoNotUse() {}
+PBRankData_PbplayerEntry_DoNotUse::PBRankData_PbplayerEntry_DoNotUse(::google::protobuf::Arena* arena) : SuperType(arena) {}
+void PBRankData_PbplayerEntry_DoNotUse::MergeFrom(const PBRankData_PbplayerEntry_DoNotUse& other) {
+  MergeFromInternal(other);
+}
+::google::protobuf::Metadata PBRankData_PbplayerEntry_DoNotUse::GetMetadata() const {
+  ::protobuf_FrameDefineMessage_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_FrameDefineMessage_2eproto::file_level_metadata[25];
+}
+void PBRankData_PbplayerEntry_DoNotUse::MergeFrom(
+    const ::google::protobuf::Message& other) {
+  ::google::protobuf::Message::MergeFrom(other);
+}
+
+
+// ===================================================================
+
 void PBRankData::InitAsDefaultInstance() {
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
@@ -5792,6 +5844,7 @@ const int PBRankData::kRankindexFieldNumber;
 const int PBRankData::kPlayeridFieldNumber;
 const int PBRankData::kRankscoreFieldNumber;
 const int PBRankData::kPbdataFieldNumber;
+const int PBRankData::kPbplayerFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 PBRankData::PBRankData()
@@ -5806,6 +5859,7 @@ PBRankData::PBRankData(const PBRankData& from)
       _internal_metadata_(NULL) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   pbdata_.MergeFrom(from.pbdata_);
+  pbplayer_.MergeFrom(from.pbplayer_);
   ::memcpy(&playerid_, &from.playerid_,
     static_cast<size_t>(reinterpret_cast<char*>(&rankindex_) -
     reinterpret_cast<char*>(&playerid_)) + sizeof(rankindex_));
@@ -5847,6 +5901,7 @@ void PBRankData::Clear() {
   (void) cached_has_bits;
 
   pbdata_.Clear();
+  pbplayer_.Clear();
   ::memset(&playerid_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&rankindex_) -
       reinterpret_cast<char*>(&playerid_)) + sizeof(rankindex_));
@@ -5922,6 +5977,29 @@ bool PBRankData::MergePartialFromCodedStream(
             parser.key().data(), static_cast<int>(parser.key().length()),
             ::google::protobuf::internal::WireFormatLite::PARSE,
             "KFMsg.PBRankData.PbdataEntry.key"));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // map<string, bytes> pbplayer = 5;
+      case 5: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(42u /* 42 & 0xFF */)) {
+          PBRankData_PbplayerEntry_DoNotUse::Parser< ::google::protobuf::internal::MapField<
+              PBRankData_PbplayerEntry_DoNotUse,
+              ::std::string, ::std::string,
+              ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
+              ::google::protobuf::internal::WireFormatLite::TYPE_BYTES,
+              0 >,
+            ::google::protobuf::Map< ::std::string, ::std::string > > parser(&pbplayer_);
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+              input, &parser));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            parser.key().data(), static_cast<int>(parser.key().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "KFMsg.PBRankData.PbplayerEntry.key"));
         } else {
           goto handle_unusual;
         }
@@ -6018,6 +6096,55 @@ void PBRankData::SerializeWithCachedSizes(
     }
   }
 
+  // map<string, bytes> pbplayer = 5;
+  if (!this->pbplayer().empty()) {
+    typedef ::google::protobuf::Map< ::std::string, ::std::string >::const_pointer
+        ConstPtr;
+    typedef ConstPtr SortItem;
+    typedef ::google::protobuf::internal::CompareByDerefFirst<SortItem> Less;
+    struct Utf8Check {
+      static void Check(ConstPtr p) {
+        ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          p->first.data(), static_cast<int>(p->first.length()),
+          ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+          "KFMsg.PBRankData.PbplayerEntry.key");
+      }
+    };
+
+    if (output->IsSerializationDeterministic() &&
+        this->pbplayer().size() > 1) {
+      ::std::unique_ptr<SortItem[]> items(
+          new SortItem[this->pbplayer().size()]);
+      typedef ::google::protobuf::Map< ::std::string, ::std::string >::size_type size_type;
+      size_type n = 0;
+      for (::google::protobuf::Map< ::std::string, ::std::string >::const_iterator
+          it = this->pbplayer().begin();
+          it != this->pbplayer().end(); ++it, ++n) {
+        items[static_cast<ptrdiff_t>(n)] = SortItem(&*it);
+      }
+      ::std::sort(&items[0], &items[static_cast<ptrdiff_t>(n)], Less());
+      ::std::unique_ptr<PBRankData_PbplayerEntry_DoNotUse> entry;
+      for (size_type i = 0; i < n; i++) {
+        entry.reset(pbplayer_.NewEntryWrapper(
+            items[static_cast<ptrdiff_t>(i)]->first, items[static_cast<ptrdiff_t>(i)]->second));
+        ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+            5, *entry, output);
+        Utf8Check::Check(items[static_cast<ptrdiff_t>(i)]);
+      }
+    } else {
+      ::std::unique_ptr<PBRankData_PbplayerEntry_DoNotUse> entry;
+      for (::google::protobuf::Map< ::std::string, ::std::string >::const_iterator
+          it = this->pbplayer().begin();
+          it != this->pbplayer().end(); ++it) {
+        entry.reset(pbplayer_.NewEntryWrapper(
+            it->first, it->second));
+        ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+            5, *entry, output);
+        Utf8Check::Check(&*it);
+      }
+    }
+  }
+
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
@@ -6100,6 +6227,59 @@ void PBRankData::SerializeWithCachedSizes(
     }
   }
 
+  // map<string, bytes> pbplayer = 5;
+  if (!this->pbplayer().empty()) {
+    typedef ::google::protobuf::Map< ::std::string, ::std::string >::const_pointer
+        ConstPtr;
+    typedef ConstPtr SortItem;
+    typedef ::google::protobuf::internal::CompareByDerefFirst<SortItem> Less;
+    struct Utf8Check {
+      static void Check(ConstPtr p) {
+        ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          p->first.data(), static_cast<int>(p->first.length()),
+          ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+          "KFMsg.PBRankData.PbplayerEntry.key");
+      }
+    };
+
+    if (deterministic &&
+        this->pbplayer().size() > 1) {
+      ::std::unique_ptr<SortItem[]> items(
+          new SortItem[this->pbplayer().size()]);
+      typedef ::google::protobuf::Map< ::std::string, ::std::string >::size_type size_type;
+      size_type n = 0;
+      for (::google::protobuf::Map< ::std::string, ::std::string >::const_iterator
+          it = this->pbplayer().begin();
+          it != this->pbplayer().end(); ++it, ++n) {
+        items[static_cast<ptrdiff_t>(n)] = SortItem(&*it);
+      }
+      ::std::sort(&items[0], &items[static_cast<ptrdiff_t>(n)], Less());
+      ::std::unique_ptr<PBRankData_PbplayerEntry_DoNotUse> entry;
+      for (size_type i = 0; i < n; i++) {
+        entry.reset(pbplayer_.NewEntryWrapper(
+            items[static_cast<ptrdiff_t>(i)]->first, items[static_cast<ptrdiff_t>(i)]->second));
+        target = ::google::protobuf::internal::WireFormatLite::
+                   InternalWriteMessageNoVirtualToArray(
+                       5, *entry, deterministic, target);
+;
+        Utf8Check::Check(items[static_cast<ptrdiff_t>(i)]);
+      }
+    } else {
+      ::std::unique_ptr<PBRankData_PbplayerEntry_DoNotUse> entry;
+      for (::google::protobuf::Map< ::std::string, ::std::string >::const_iterator
+          it = this->pbplayer().begin();
+          it != this->pbplayer().end(); ++it) {
+        entry.reset(pbplayer_.NewEntryWrapper(
+            it->first, it->second));
+        target = ::google::protobuf::internal::WireFormatLite::
+                   InternalWriteMessageNoVirtualToArray(
+                       5, *entry, deterministic, target);
+;
+        Utf8Check::Check(&*it);
+      }
+    }
+  }
+
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
@@ -6126,6 +6306,20 @@ size_t PBRankData::ByteSizeLong() const {
         it = this->pbdata().begin();
         it != this->pbdata().end(); ++it) {
       entry.reset(pbdata_.NewEntryWrapper(it->first, it->second));
+      total_size += ::google::protobuf::internal::WireFormatLite::
+          MessageSizeNoVirtual(*entry);
+    }
+  }
+
+  // map<string, bytes> pbplayer = 5;
+  total_size += 1 *
+      ::google::protobuf::internal::FromIntSize(this->pbplayer_size());
+  {
+    ::std::unique_ptr<PBRankData_PbplayerEntry_DoNotUse> entry;
+    for (::google::protobuf::Map< ::std::string, ::std::string >::const_iterator
+        it = this->pbplayer().begin();
+        it != this->pbplayer().end(); ++it) {
+      entry.reset(pbplayer_.NewEntryWrapper(it->first, it->second));
       total_size += ::google::protobuf::internal::WireFormatLite::
           MessageSizeNoVirtual(*entry);
     }
@@ -6180,6 +6374,7 @@ void PBRankData::MergeFrom(const PBRankData& from) {
   (void) cached_has_bits;
 
   pbdata_.MergeFrom(from.pbdata_);
+  pbplayer_.MergeFrom(from.pbplayer_);
   if (from.playerid() != 0) {
     set_playerid(from.playerid());
   }
@@ -6216,6 +6411,7 @@ void PBRankData::Swap(PBRankData* other) {
 void PBRankData::InternalSwap(PBRankData* other) {
   using std::swap;
   pbdata_.Swap(&other->pbdata_);
+  pbplayer_.Swap(&other->pbplayer_);
   swap(playerid_, other->playerid_);
   swap(rankscore_, other->rankscore_);
   swap(rankindex_, other->rankindex_);
@@ -6535,6 +6731,9 @@ template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::KFMsg::PBNotice* Arena::CreateMa
 }
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::KFMsg::PBRankData_PbdataEntry_DoNotUse* Arena::CreateMaybeMessage< ::KFMsg::PBRankData_PbdataEntry_DoNotUse >(Arena* arena) {
   return Arena::CreateInternal< ::KFMsg::PBRankData_PbdataEntry_DoNotUse >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::KFMsg::PBRankData_PbplayerEntry_DoNotUse* Arena::CreateMaybeMessage< ::KFMsg::PBRankData_PbplayerEntry_DoNotUse >(Arena* arena) {
+  return Arena::CreateInternal< ::KFMsg::PBRankData_PbplayerEntry_DoNotUse >(arena);
 }
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::KFMsg::PBRankData* Arena::CreateMaybeMessage< ::KFMsg::PBRankData >(Arena* arena) {
   return Arena::CreateInternal< ::KFMsg::PBRankData >(arena);

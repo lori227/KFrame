@@ -98,6 +98,11 @@ namespace KFrame
         for ( auto& calcdata : kfsetting->_calc_data )
         {
             auto kfdata = player->Find( calcdata._parent_name, calcdata._child_name );
+            if ( kfdata == nullptr )
+            {
+                kfdata = player->Find( calcdata._child_name );
+            }
+
             if ( kfdata != nullptr )
             {
                 ( *pbdatas )[ calcdata._child_name ] = kfdata->ToString();
