@@ -6,6 +6,7 @@ namespace KFrame
     // 清除配置
     void KFRankConfig::ClearSetting()
     {
+        _show_data_list.clear();
         _kf_rank_data_list.clear();
         KFConfigT<KFRankSetting>::ClearSetting();
     }
@@ -35,6 +36,11 @@ namespace KFrame
                 RankDataType key( calcdata._parent_name, calcdata._child_name );
                 _kf_rank_data_list[ key ].push_back( kfsetting );
             }
+        }
+
+        if ( _show_data_list.empty() )
+        {
+            _show_data_list = xmlnode.GetStringSet( "ShowData" );
         }
     }
 

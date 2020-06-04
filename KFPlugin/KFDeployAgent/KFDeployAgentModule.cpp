@@ -218,7 +218,6 @@ namespace KFrame
                     deploydata->_is_shutdown ||
                     !deploydata->_is_startup ||
                     !deploydata->_is_conencted ||
-                    deploydata->_heartbeat == 0u ||
                     deploydata->_heartbeat_timeout > KFGlobal::Instance()->_game_time )
             {
                 continue;

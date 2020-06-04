@@ -76,6 +76,10 @@ namespace KFrame
         // 读取配置
         virtual void ReadSetting( KFNode& xmlnode, KFRankSetting* kfsetting );
 
+    public:
+        // 显示的数据
+        StringSet _show_data_list;
+
     private:
         typedef std::pair< std::string, std::string > RankDataType;
         std::map< RankDataType, std::vector< KFRankSetting* > > _kf_rank_data_list;

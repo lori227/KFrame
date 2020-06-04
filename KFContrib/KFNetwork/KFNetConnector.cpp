@@ -88,7 +88,7 @@ namespace KFrame
 
                     // 断线处理
                     _net_services->SendEventToServices( this, KFNetDefine::DisconnectEvent );
-                    __LOG_DEBUG__( "net connector=[{}:{}] message timeout", _session_id, _object_id );
+                    __LOG_ERROR__( "net connector=[{}:{}] message timeout", _session_id, _object_id );
                 }
             }
         }

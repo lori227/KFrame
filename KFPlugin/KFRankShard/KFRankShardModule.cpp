@@ -226,7 +226,16 @@ namespace KFrame
                 pbrankdata->set_rankindex( ++rankindex );
 
                 auto& pbplayer = *pbrankdata->mutable_pbplayer();
-                __MAP_TO_PROTO__( basicdata, pbplayer );
+                for ( auto& showname : KFRankConfig::Instance()->_show_data_list )
+                {
+                    auto iter = basicdata.find( showname );
+                    if ( iter == basicdata.end() )
+                    {
+                        continue;
+                    }
+
+                    pbplayer[ showname ] = iter->second;
+                }
             }
 
             // 保存排行榜信息

@@ -135,6 +135,7 @@ enum FrameCodeEnum
 	ItemTabNotExist				= 12620;	// 仓库页签不存在
 	ItemCanNotSell				= 12621;	// 道具不能出售
 	ItemSellOk					= 12622;	// 道具出售成功
+	ItemSellCountError			= 12623;	// 道具出售数量错误
 
 	// signin
 	SignInNotDay				= 12700;	// 没有签到数据
