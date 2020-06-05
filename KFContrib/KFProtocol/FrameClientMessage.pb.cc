@@ -1708,6 +1708,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _weak_field_map_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::MsgStoreBuyGoodsReq, storeid_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::MsgStoreBuyGoodsReq, goodsid_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::MsgStoreBuyGoodsReq, index_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::MsgStoreBuyGoodsReq, buycount_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::MsgStoreRefreshReq, _internal_metadata_),
@@ -1901,27 +1902,27 @@ static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROT
   { 292, -1, sizeof(::KFMsg::MsgQueryMailReq)},
   { 297, -1, sizeof(::KFMsg::MsgMailRewardReq)},
   { 303, -1, sizeof(::KFMsg::MsgStoreBuyGoodsReq)},
-  { 311, -1, sizeof(::KFMsg::MsgStoreRefreshReq)},
-  { 318, -1, sizeof(::KFMsg::MsgApplyPayOrderReq)},
-  { 324, -1, sizeof(::KFMsg::MsgApplyPayOrderAck)},
-  { 331, -1, sizeof(::KFMsg::MsgPayResultReq)},
-  { 339, -1, sizeof(::KFMsg::MsgQueryPayReq)},
-  { 344, -1, sizeof(::KFMsg::MsgQueryRankListReq)},
-  { 352, -1, sizeof(::KFMsg::MsgQueryRankListAck)},
-  { 360, -1, sizeof(::KFMsg::MsgQueryFriendRankListReq)},
-  { 366, -1, sizeof(::KFMsg::MsgQueryFriendRankListAck)},
-  { 373, -1, sizeof(::KFMsg::MsgAddRelationReq)},
-  { 382, -1, sizeof(::KFMsg::MsgDelRelationReq)},
-  { 389, -1, sizeof(::KFMsg::MsgReplyRelationInviteReq)},
-  { 397, -1, sizeof(::KFMsg::MsgSetRefuseRelationInviteReq)},
-  { 404, -1, sizeof(::KFMsg::MsgTaskReceiveReq)},
-  { 410, -1, sizeof(::KFMsg::MsgTaskRewardReq)},
-  { 416, -1, sizeof(::KFMsg::MsgTaskRemoveReq)},
-  { 422, -1, sizeof(::KFMsg::MsgTaskAddReq)},
-  { 428, -1, sizeof(::KFMsg::MsgFriendChatReq)},
-  { 435, -1, sizeof(::KFMsg::MsgTellFriendChat)},
-  { 442, -1, sizeof(::KFMsg::MsgServerChatReq)},
-  { 448, -1, sizeof(::KFMsg::MsgTellServerChat)},
+  { 312, -1, sizeof(::KFMsg::MsgStoreRefreshReq)},
+  { 319, -1, sizeof(::KFMsg::MsgApplyPayOrderReq)},
+  { 325, -1, sizeof(::KFMsg::MsgApplyPayOrderAck)},
+  { 332, -1, sizeof(::KFMsg::MsgPayResultReq)},
+  { 340, -1, sizeof(::KFMsg::MsgQueryPayReq)},
+  { 345, -1, sizeof(::KFMsg::MsgQueryRankListReq)},
+  { 353, -1, sizeof(::KFMsg::MsgQueryRankListAck)},
+  { 361, -1, sizeof(::KFMsg::MsgQueryFriendRankListReq)},
+  { 367, -1, sizeof(::KFMsg::MsgQueryFriendRankListAck)},
+  { 374, -1, sizeof(::KFMsg::MsgAddRelationReq)},
+  { 383, -1, sizeof(::KFMsg::MsgDelRelationReq)},
+  { 390, -1, sizeof(::KFMsg::MsgReplyRelationInviteReq)},
+  { 398, -1, sizeof(::KFMsg::MsgSetRefuseRelationInviteReq)},
+  { 405, -1, sizeof(::KFMsg::MsgTaskReceiveReq)},
+  { 411, -1, sizeof(::KFMsg::MsgTaskRewardReq)},
+  { 417, -1, sizeof(::KFMsg::MsgTaskRemoveReq)},
+  { 423, -1, sizeof(::KFMsg::MsgTaskAddReq)},
+  { 429, -1, sizeof(::KFMsg::MsgFriendChatReq)},
+  { 436, -1, sizeof(::KFMsg::MsgTellFriendChat)},
+  { 443, -1, sizeof(::KFMsg::MsgServerChatReq)},
+  { 449, -1, sizeof(::KFMsg::MsgTellServerChat)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -2075,86 +2076,87 @@ void AddDescriptorsImpl() {
       "\n\005count\030\002 \001(\r\"\034\n\016MsgViewMailReq\022\n\n\002id\030\001 "
       "\001(\004\"\036\n\020MsgDeleteMailReq\022\n\n\002id\030\001 \001(\004\"\021\n\017M"
       "sgQueryMailReq\"\036\n\020MsgMailRewardReq\022\n\n\002id"
-      "\030\001 \001(\004\"I\n\023MsgStoreBuyGoodsReq\022\017\n\007storeid"
-      "\030\001 \001(\r\022\017\n\007goodsid\030\002 \001(\r\022\020\n\010buycount\030\003 \001("
-      "\r\":\n\022MsgStoreRefreshReq\022\017\n\007storeid\030\001 \001(\r"
-      "\022\023\n\013refreshtype\030\002 \001(\r\"$\n\023MsgApplyPayOrde"
-      "rReq\022\r\n\005payid\030\001 \001(\t\"3\n\023MsgApplyPayOrderA"
-      "ck\022\r\n\005payid\030\001 \001(\t\022\r\n\005order\030\002 \001(\t\"\?\n\017MsgP"
-      "ayResultReq\022\r\n\005payid\030\001 \001(\t\022\r\n\005order\030\002 \001("
-      "\t\022\016\n\006result\030\003 \001(\010\"\020\n\016MsgQueryPayReq\"C\n\023M"
-      "sgQueryRankListReq\022\016\n\006rankid\030\001 \001(\r\022\r\n\005st"
-      "art\030\002 \001(\r\022\r\n\005count\030\003 \001(\r\"_\n\023MsgQueryRank"
-      "ListAck\022\016\n\006rankid\030\001 \001(\r\022%\n\trankdatas\030\002 \001"
-      "(\0132\022.KFMsg.PBRankDatas\022\021\n\tselfindex\030\003 \001("
-      "\r\"+\n\031MsgQueryFriendRankListReq\022\016\n\006rankid"
-      "\030\001 \001(\r\"R\n\031MsgQueryFriendRankListAck\022\016\n\006r"
-      "ankid\030\001 \001(\r\022%\n\trankdatas\030\002 \001(\0132\022.KFMsg.P"
-      "BRankDatas\"`\n\021MsgAddRelationReq\022\024\n\014relat"
-      "ionname\030\001 \001(\014\022\022\n\nplayername\030\002 \001(\014\022\020\n\010pla"
-      "yerid\030\003 \001(\004\022\017\n\007message\030\004 \001(\014\";\n\021MsgDelRe"
-      "lationReq\022\024\n\014relationname\030\001 \001(\014\022\020\n\010playe"
-      "rid\030\002 \001(\004\"T\n\031MsgReplyRelationInviteReq\022\024"
-      "\n\014relationname\030\001 \001(\014\022\020\n\010playerid\030\002 \001(\004\022\017"
-      "\n\007operate\030\003 \001(\r\"C\n\035MsgSetRefuseRelationI"
-      "nviteReq\022\022\n\nrefusename\030\001 \001(\014\022\016\n\006refuse\030\002"
-      " \001(\r\"\037\n\021MsgTaskReceiveReq\022\n\n\002id\030\001 \001(\r\"\036\n"
-      "\020MsgTaskRewardReq\022\n\n\002id\030\001 \001(\r\"\036\n\020MsgTask"
-      "RemoveReq\022\n\n\002id\030\001 \001(\r\"\033\n\rMsgTaskAddReq\022\n"
-      "\n\002id\030\001 \001(\r\"5\n\020MsgFriendChatReq\022\020\n\010player"
-      "id\030\001 \001(\004\022\017\n\007content\030\002 \001(\014\"6\n\021MsgTellFrie"
-      "ndChat\022\020\n\010playerid\030\001 \001(\004\022\017\n\007content\030\002 \001("
-      "\014\"#\n\020MsgServerChatReq\022\017\n\007content\030\001 \001(\014\"E"
-      "\n\021MsgTellServerChat\022\037\n\006player\030\001 \001(\0132\017.KF"
-      "Msg.PBObject\022\017\n\007content\030\002 \001(\014*\376\r\n\023FrameC"
-      "lientProtocol\022\032\n\026MSG_FRAME_CLIENT_BEGIN\020"
-      "\000\022\026\n\022MSG_RESULT_DISPLAY\020\001\022\023\n\017MSG_COMMAND"
-      "_REQ\020\002\022\023\n\017MSG_TELL_NOTICE\020\003\022\027\n\023MSG_DEBUG"
-      "_SHOW_DROP\020c\022\021\n\rMSG_LOGIN_REQ\020d\022\021\n\rMSG_L"
-      "OGIN_ACK\020e\022\022\n\016MSG_LOGOUT_REQ\020f\022\022\n\016MSG_LO"
-      "GOUT_ACK\020g\022\024\n\020MSG_TELL_BE_KICK\020h\022\025\n\021MSG_"
-      "TELL_SHUTDOWN\020i\022\031\n\024MSG_SYNC_UPDATE_DATA\020"
-      "\311\001\022\026\n\021MSG_SYNC_ADD_DATA\020\312\001\022\031\n\024MSG_SYNC_R"
-      "EMOVE_DATA\020\313\001\022\030\n\023MSG_REMOVE_DATA_REQ\020\314\001\022"
-      "\031\n\024MSG_QUERY_PLAYER_REQ\020\315\001\022\031\n\024MSG_QUERY_"
-      "PLAYER_ACK\020\316\001\022\030\n\023MSG_QUERY_BASIC_REQ\020\317\001\022"
-      "\030\n\023MSG_QUERY_BASIC_ACK\020\320\001\022\025\n\020MSG_SHOW_EL"
-      "EMENT\020\321\001\022\031\n\024MSG_REQUEST_SYNC_REQ\020\322\001\022\030\n\023M"
-      "SG_CANCEL_SYNC_REQ\020\323\001\022\025\n\020MSG_SET_NAME_RE"
-      "Q\020\254\002\022\024\n\017MSG_SET_SEX_REQ\020\255\002\022\033\n\026MSG_ACHIEV"
-      "E_REWARD_REQ\020\256\002\022\034\n\027MSG_ACTIVITY_REWARD_R"
-      "EQ\020\260\002\022\025\n\020MSG_COMPOUND_REQ\020\261\002\022 \n\033MSG_SEVE"
-      "N_SIGNIN_REWARD_REQ\020\263\002\022\027\n\022MSG_SPLIT_ITEM"
-      "_REQ\020\221\003\022\027\n\022MSG_MERGE_ITEM_REQ\020\222\003\022\025\n\020MSG_"
-      "USE_ITEM_REQ\020\223\003\022\026\n\021MSG_MOVE_ITEM_REQ\020\224\003\022"
-      "\032\n\025MSG_EXCHANGE_ITEM_REQ\020\225\003\022\027\n\022MSG_CLEAN"
-      "_ITEM_REQ\020\226\003\022\026\n\021MSG_SORT_ITEM_REQ\020\227\003\022\030\n\023"
-      "MSG_REMOVE_ITEM_REQ\020\230\003\022\032\n\025MSG_MOVE_ALL_I"
-      "TEM_REQ\020\231\003\022\036\n\031MSG_REMOVE_ITEM_COUNT_REQ\020"
-      "\232\003\022\026\n\021MSG_SELL_ITEM_REQ\020\233\003\022\026\n\021MSG_SELL_I"
-      "TEM_ACK\020\234\003\022\035\n\030MSG_USE_ITEM_TO_HERO_REQ\020\303"
-      "\003\022\026\n\021MSG_VIEW_MAIL_REQ\020\365\003\022\030\n\023MSG_DELETE_"
-      "MAIL_REQ\020\366\003\022\027\n\022MSG_QUERY_MAIL_REQ\020\367\003\022\030\n\023"
-      "MSG_MAIL_REWARD_REQ\020\370\003\022\034\n\027MSG_STORE_BUY_"
-      "GOODS_REQ\020\377\003\022\032\n\025MSG_STORE_REFRESH_REQ\020\200\004"
-      "\022\034\n\027MSG_APPLY_PAY_ORDER_REQ\020\223\004\022\034\n\027MSG_AP"
-      "PLY_PAY_ORDER_ACK\020\224\004\022\027\n\022MSG_PAY_RESULT_R"
-      "EQ\020\225\004\022\026\n\021MSG_QUERY_PAY_REQ\020\226\004\022\031\n\024MSG_ADD"
-      "_RELATION_REQ\020\247\004\022\031\n\024MSG_DEL_RELATION_REQ"
-      "\020\250\004\022\"\n\035MSG_REPLY_RELATION_INVITE_REQ\020\251\004\022"
-      "\'\n\"MSG_SET_REFUSE_RELATION_INVITE_REQ\020\252\004"
-      "\022\034\n\027MSG_QUERY_RANK_LIST_REQ\020\273\004\022\034\n\027MSG_QU"
-      "ERY_RANK_LIST_ACK\020\274\004\022#\n\036MSG_QUERY_FRIEND"
-      "_RANK_LIST_REQ\020\275\004\022#\n\036MSG_QUERY_FRIEND_RA"
-      "NK_LIST_ACK\020\276\004\022\031\n\024MSG_TASK_RECEIVE_REQ\020\330"
-      "\004\022\030\n\023MSG_TASK_REWARD_REQ\020\331\004\022\030\n\023MSG_TASK_"
-      "REMOVE_REQ\020\332\004\022\025\n\020MSG_TASK_ADD_REQ\020\333\004\022\030\n\023"
-      "MSG_FRIEND_CHAT_REQ\020\342\004\022\031\n\024MSG_TELL_FRIEN"
-      "D_CHAT\020\343\004\022\030\n\023MSG_SERVER_CHAT_REQ\020\344\004\022\031\n\024M"
-      "SG_TELL_SERVER_CHAT\020\345\004b\006proto3"
+      "\030\001 \001(\004\"X\n\023MsgStoreBuyGoodsReq\022\017\n\007storeid"
+      "\030\001 \001(\r\022\017\n\007goodsid\030\002 \001(\r\022\r\n\005index\030\003 \001(\r\022\020"
+      "\n\010buycount\030\004 \001(\r\":\n\022MsgStoreRefreshReq\022\017"
+      "\n\007storeid\030\001 \001(\r\022\023\n\013refreshtype\030\002 \001(\r\"$\n\023"
+      "MsgApplyPayOrderReq\022\r\n\005payid\030\001 \001(\t\"3\n\023Ms"
+      "gApplyPayOrderAck\022\r\n\005payid\030\001 \001(\t\022\r\n\005orde"
+      "r\030\002 \001(\t\"\?\n\017MsgPayResultReq\022\r\n\005payid\030\001 \001("
+      "\t\022\r\n\005order\030\002 \001(\t\022\016\n\006result\030\003 \001(\010\"\020\n\016MsgQ"
+      "ueryPayReq\"C\n\023MsgQueryRankListReq\022\016\n\006ran"
+      "kid\030\001 \001(\r\022\r\n\005start\030\002 \001(\r\022\r\n\005count\030\003 \001(\r\""
+      "_\n\023MsgQueryRankListAck\022\016\n\006rankid\030\001 \001(\r\022%"
+      "\n\trankdatas\030\002 \001(\0132\022.KFMsg.PBRankDatas\022\021\n"
+      "\tselfindex\030\003 \001(\r\"+\n\031MsgQueryFriendRankLi"
+      "stReq\022\016\n\006rankid\030\001 \001(\r\"R\n\031MsgQueryFriendR"
+      "ankListAck\022\016\n\006rankid\030\001 \001(\r\022%\n\trankdatas\030"
+      "\002 \001(\0132\022.KFMsg.PBRankDatas\"`\n\021MsgAddRelat"
+      "ionReq\022\024\n\014relationname\030\001 \001(\014\022\022\n\nplayerna"
+      "me\030\002 \001(\014\022\020\n\010playerid\030\003 \001(\004\022\017\n\007message\030\004 "
+      "\001(\014\";\n\021MsgDelRelationReq\022\024\n\014relationname"
+      "\030\001 \001(\014\022\020\n\010playerid\030\002 \001(\004\"T\n\031MsgReplyRela"
+      "tionInviteReq\022\024\n\014relationname\030\001 \001(\014\022\020\n\010p"
+      "layerid\030\002 \001(\004\022\017\n\007operate\030\003 \001(\r\"C\n\035MsgSet"
+      "RefuseRelationInviteReq\022\022\n\nrefusename\030\001 "
+      "\001(\014\022\016\n\006refuse\030\002 \001(\r\"\037\n\021MsgTaskReceiveReq"
+      "\022\n\n\002id\030\001 \001(\r\"\036\n\020MsgTaskRewardReq\022\n\n\002id\030\001"
+      " \001(\r\"\036\n\020MsgTaskRemoveReq\022\n\n\002id\030\001 \001(\r\"\033\n\r"
+      "MsgTaskAddReq\022\n\n\002id\030\001 \001(\r\"5\n\020MsgFriendCh"
+      "atReq\022\020\n\010playerid\030\001 \001(\004\022\017\n\007content\030\002 \001(\014"
+      "\"6\n\021MsgTellFriendChat\022\020\n\010playerid\030\001 \001(\004\022"
+      "\017\n\007content\030\002 \001(\014\"#\n\020MsgServerChatReq\022\017\n\007"
+      "content\030\001 \001(\014\"E\n\021MsgTellServerChat\022\037\n\006pl"
+      "ayer\030\001 \001(\0132\017.KFMsg.PBObject\022\017\n\007content\030\002"
+      " \001(\014*\376\r\n\023FrameClientProtocol\022\032\n\026MSG_FRAM"
+      "E_CLIENT_BEGIN\020\000\022\026\n\022MSG_RESULT_DISPLAY\020\001"
+      "\022\023\n\017MSG_COMMAND_REQ\020\002\022\023\n\017MSG_TELL_NOTICE"
+      "\020\003\022\027\n\023MSG_DEBUG_SHOW_DROP\020c\022\021\n\rMSG_LOGIN"
+      "_REQ\020d\022\021\n\rMSG_LOGIN_ACK\020e\022\022\n\016MSG_LOGOUT_"
+      "REQ\020f\022\022\n\016MSG_LOGOUT_ACK\020g\022\024\n\020MSG_TELL_BE"
+      "_KICK\020h\022\025\n\021MSG_TELL_SHUTDOWN\020i\022\031\n\024MSG_SY"
+      "NC_UPDATE_DATA\020\311\001\022\026\n\021MSG_SYNC_ADD_DATA\020\312"
+      "\001\022\031\n\024MSG_SYNC_REMOVE_DATA\020\313\001\022\030\n\023MSG_REMO"
+      "VE_DATA_REQ\020\314\001\022\031\n\024MSG_QUERY_PLAYER_REQ\020\315"
+      "\001\022\031\n\024MSG_QUERY_PLAYER_ACK\020\316\001\022\030\n\023MSG_QUER"
+      "Y_BASIC_REQ\020\317\001\022\030\n\023MSG_QUERY_BASIC_ACK\020\320\001"
+      "\022\025\n\020MSG_SHOW_ELEMENT\020\321\001\022\031\n\024MSG_REQUEST_S"
+      "YNC_REQ\020\322\001\022\030\n\023MSG_CANCEL_SYNC_REQ\020\323\001\022\025\n\020"
+      "MSG_SET_NAME_REQ\020\254\002\022\024\n\017MSG_SET_SEX_REQ\020\255"
+      "\002\022\033\n\026MSG_ACHIEVE_REWARD_REQ\020\256\002\022\034\n\027MSG_AC"
+      "TIVITY_REWARD_REQ\020\260\002\022\025\n\020MSG_COMPOUND_REQ"
+      "\020\261\002\022 \n\033MSG_SEVEN_SIGNIN_REWARD_REQ\020\263\002\022\027\n"
+      "\022MSG_SPLIT_ITEM_REQ\020\221\003\022\027\n\022MSG_MERGE_ITEM"
+      "_REQ\020\222\003\022\025\n\020MSG_USE_ITEM_REQ\020\223\003\022\026\n\021MSG_MO"
+      "VE_ITEM_REQ\020\224\003\022\032\n\025MSG_EXCHANGE_ITEM_REQ\020"
+      "\225\003\022\027\n\022MSG_CLEAN_ITEM_REQ\020\226\003\022\026\n\021MSG_SORT_"
+      "ITEM_REQ\020\227\003\022\030\n\023MSG_REMOVE_ITEM_REQ\020\230\003\022\032\n"
+      "\025MSG_MOVE_ALL_ITEM_REQ\020\231\003\022\036\n\031MSG_REMOVE_"
+      "ITEM_COUNT_REQ\020\232\003\022\026\n\021MSG_SELL_ITEM_REQ\020\233"
+      "\003\022\026\n\021MSG_SELL_ITEM_ACK\020\234\003\022\035\n\030MSG_USE_ITE"
+      "M_TO_HERO_REQ\020\303\003\022\026\n\021MSG_VIEW_MAIL_REQ\020\365\003"
+      "\022\030\n\023MSG_DELETE_MAIL_REQ\020\366\003\022\027\n\022MSG_QUERY_"
+      "MAIL_REQ\020\367\003\022\030\n\023MSG_MAIL_REWARD_REQ\020\370\003\022\034\n"
+      "\027MSG_STORE_BUY_GOODS_REQ\020\377\003\022\032\n\025MSG_STORE"
+      "_REFRESH_REQ\020\200\004\022\034\n\027MSG_APPLY_PAY_ORDER_R"
+      "EQ\020\223\004\022\034\n\027MSG_APPLY_PAY_ORDER_ACK\020\224\004\022\027\n\022M"
+      "SG_PAY_RESULT_REQ\020\225\004\022\026\n\021MSG_QUERY_PAY_RE"
+      "Q\020\226\004\022\031\n\024MSG_ADD_RELATION_REQ\020\247\004\022\031\n\024MSG_D"
+      "EL_RELATION_REQ\020\250\004\022\"\n\035MSG_REPLY_RELATION"
+      "_INVITE_REQ\020\251\004\022\'\n\"MSG_SET_REFUSE_RELATIO"
+      "N_INVITE_REQ\020\252\004\022\034\n\027MSG_QUERY_RANK_LIST_R"
+      "EQ\020\273\004\022\034\n\027MSG_QUERY_RANK_LIST_ACK\020\274\004\022#\n\036M"
+      "SG_QUERY_FRIEND_RANK_LIST_REQ\020\275\004\022#\n\036MSG_"
+      "QUERY_FRIEND_RANK_LIST_ACK\020\276\004\022\031\n\024MSG_TAS"
+      "K_RECEIVE_REQ\020\330\004\022\030\n\023MSG_TASK_REWARD_REQ\020"
+      "\331\004\022\030\n\023MSG_TASK_REMOVE_REQ\020\332\004\022\025\n\020MSG_TASK"
+      "_ADD_REQ\020\333\004\022\030\n\023MSG_FRIEND_CHAT_REQ\020\342\004\022\031\n"
+      "\024MSG_TELL_FRIEND_CHAT\020\343\004\022\030\n\023MSG_SERVER_C"
+      "HAT_REQ\020\344\004\022\031\n\024MSG_TELL_SERVER_CHAT\020\345\004b\006p"
+      "roto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 5470);
+      descriptor, 5485);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "FrameClientMessage.proto", &protobuf_RegisterTypes);
   ::protobuf_FrameDefineMessage_2eproto::AddDescriptors();
@@ -13919,6 +13921,7 @@ void MsgStoreBuyGoodsReq::InitAsDefaultInstance() {
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int MsgStoreBuyGoodsReq::kStoreidFieldNumber;
 const int MsgStoreBuyGoodsReq::kGoodsidFieldNumber;
+const int MsgStoreBuyGoodsReq::kIndexFieldNumber;
 const int MsgStoreBuyGoodsReq::kBuycountFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -14017,10 +14020,24 @@ bool MsgStoreBuyGoodsReq::MergePartialFromCodedStream(
         break;
       }
 
-      // uint32 buycount = 3;
+      // uint32 index = 3;
       case 3: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &index_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint32 buycount = 4;
+      case 4: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(32u /* 32 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -14067,9 +14084,14 @@ void MsgStoreBuyGoodsReq::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->goodsid(), output);
   }
 
-  // uint32 buycount = 3;
+  // uint32 index = 3;
+  if (this->index() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->index(), output);
+  }
+
+  // uint32 buycount = 4;
   if (this->buycount() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->buycount(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->buycount(), output);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -14096,9 +14118,14 @@ void MsgStoreBuyGoodsReq::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->goodsid(), target);
   }
 
-  // uint32 buycount = 3;
+  // uint32 index = 3;
+  if (this->index() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->index(), target);
+  }
+
+  // uint32 buycount = 4;
   if (this->buycount() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->buycount(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->buycount(), target);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -14132,7 +14159,14 @@ size_t MsgStoreBuyGoodsReq::ByteSizeLong() const {
         this->goodsid());
   }
 
-  // uint32 buycount = 3;
+  // uint32 index = 3;
+  if (this->index() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->index());
+  }
+
+  // uint32 buycount = 4;
   if (this->buycount() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
@@ -14172,6 +14206,9 @@ void MsgStoreBuyGoodsReq::MergeFrom(const MsgStoreBuyGoodsReq& from) {
   if (from.goodsid() != 0) {
     set_goodsid(from.goodsid());
   }
+  if (from.index() != 0) {
+    set_index(from.index());
+  }
   if (from.buycount() != 0) {
     set_buycount(from.buycount());
   }
@@ -14203,6 +14240,7 @@ void MsgStoreBuyGoodsReq::InternalSwap(MsgStoreBuyGoodsReq* other) {
   using std::swap;
   swap(storeid_, other->storeid_);
   swap(goodsid_, other->goodsid_);
+  swap(index_, other->index_);
   swap(buycount_, other->buycount_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
