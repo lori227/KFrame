@@ -1708,8 +1708,8 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _weak_field_map_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::MsgStoreBuyGoodsReq, storeid_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::MsgStoreBuyGoodsReq, goodsid_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::MsgStoreBuyGoodsReq, buycount_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::MsgStoreBuyGoodsReq, index_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::MsgStoreBuyGoodsReq, buycount_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::MsgStoreRefreshReq, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -2077,8 +2077,8 @@ void AddDescriptorsImpl() {
       "\001(\004\"\036\n\020MsgDeleteMailReq\022\n\n\002id\030\001 \001(\004\"\021\n\017M"
       "sgQueryMailReq\"\036\n\020MsgMailRewardReq\022\n\n\002id"
       "\030\001 \001(\004\"X\n\023MsgStoreBuyGoodsReq\022\017\n\007storeid"
-      "\030\001 \001(\r\022\017\n\007goodsid\030\002 \001(\r\022\020\n\010buycount\030\003 \001("
-      "\r\022\r\n\005index\030\004 \001(\r\":\n\022MsgStoreRefreshReq\022\017"
+      "\030\001 \001(\r\022\017\n\007goodsid\030\002 \001(\r\022\r\n\005index\030\003 \001(\r\022\020"
+      "\n\010buycount\030\004 \001(\r\":\n\022MsgStoreRefreshReq\022\017"
       "\n\007storeid\030\001 \001(\r\022\023\n\013refreshtype\030\002 \001(\r\"$\n\023"
       "MsgApplyPayOrderReq\022\r\n\005payid\030\001 \001(\t\"3\n\023Ms"
       "gApplyPayOrderAck\022\r\n\005payid\030\001 \001(\t\022\r\n\005orde"
@@ -13921,8 +13921,8 @@ void MsgStoreBuyGoodsReq::InitAsDefaultInstance() {
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int MsgStoreBuyGoodsReq::kStoreidFieldNumber;
 const int MsgStoreBuyGoodsReq::kGoodsidFieldNumber;
-const int MsgStoreBuyGoodsReq::kBuycountFieldNumber;
 const int MsgStoreBuyGoodsReq::kIndexFieldNumber;
+const int MsgStoreBuyGoodsReq::kBuycountFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 MsgStoreBuyGoodsReq::MsgStoreBuyGoodsReq()
@@ -13937,15 +13937,15 @@ MsgStoreBuyGoodsReq::MsgStoreBuyGoodsReq(const MsgStoreBuyGoodsReq& from)
       _internal_metadata_(NULL) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   ::memcpy(&storeid_, &from.storeid_,
-    static_cast<size_t>(reinterpret_cast<char*>(&index_) -
-    reinterpret_cast<char*>(&storeid_)) + sizeof(index_));
+    static_cast<size_t>(reinterpret_cast<char*>(&buycount_) -
+    reinterpret_cast<char*>(&storeid_)) + sizeof(buycount_));
   // @@protoc_insertion_point(copy_constructor:KFMsg.MsgStoreBuyGoodsReq)
 }
 
 void MsgStoreBuyGoodsReq::SharedCtor() {
   ::memset(&storeid_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&index_) -
-      reinterpret_cast<char*>(&storeid_)) + sizeof(index_));
+      reinterpret_cast<char*>(&buycount_) -
+      reinterpret_cast<char*>(&storeid_)) + sizeof(buycount_));
 }
 
 MsgStoreBuyGoodsReq::~MsgStoreBuyGoodsReq() {
@@ -13977,8 +13977,8 @@ void MsgStoreBuyGoodsReq::Clear() {
   (void) cached_has_bits;
 
   ::memset(&storeid_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&index_) -
-      reinterpret_cast<char*>(&storeid_)) + sizeof(index_));
+      reinterpret_cast<char*>(&buycount_) -
+      reinterpret_cast<char*>(&storeid_)) + sizeof(buycount_));
   _internal_metadata_.Clear();
 }
 
@@ -14020,28 +14020,28 @@ bool MsgStoreBuyGoodsReq::MergePartialFromCodedStream(
         break;
       }
 
-      // uint32 buycount = 3;
+      // uint32 index = 3;
       case 3: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &buycount_)));
+                 input, &index_)));
         } else {
           goto handle_unusual;
         }
         break;
       }
 
-      // uint32 index = 4;
+      // uint32 buycount = 4;
       case 4: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(32u /* 32 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &index_)));
+                 input, &buycount_)));
         } else {
           goto handle_unusual;
         }
@@ -14084,14 +14084,14 @@ void MsgStoreBuyGoodsReq::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->goodsid(), output);
   }
 
-  // uint32 buycount = 3;
-  if (this->buycount() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->buycount(), output);
+  // uint32 index = 3;
+  if (this->index() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->index(), output);
   }
 
-  // uint32 index = 4;
-  if (this->index() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->index(), output);
+  // uint32 buycount = 4;
+  if (this->buycount() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->buycount(), output);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -14118,14 +14118,14 @@ void MsgStoreBuyGoodsReq::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->goodsid(), target);
   }
 
-  // uint32 buycount = 3;
-  if (this->buycount() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->buycount(), target);
+  // uint32 index = 3;
+  if (this->index() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->index(), target);
   }
 
-  // uint32 index = 4;
-  if (this->index() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->index(), target);
+  // uint32 buycount = 4;
+  if (this->buycount() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->buycount(), target);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -14159,18 +14159,18 @@ size_t MsgStoreBuyGoodsReq::ByteSizeLong() const {
         this->goodsid());
   }
 
-  // uint32 buycount = 3;
-  if (this->buycount() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->buycount());
-  }
-
-  // uint32 index = 4;
+  // uint32 index = 3;
   if (this->index() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
         this->index());
+  }
+
+  // uint32 buycount = 4;
+  if (this->buycount() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->buycount());
   }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
@@ -14206,11 +14206,11 @@ void MsgStoreBuyGoodsReq::MergeFrom(const MsgStoreBuyGoodsReq& from) {
   if (from.goodsid() != 0) {
     set_goodsid(from.goodsid());
   }
-  if (from.buycount() != 0) {
-    set_buycount(from.buycount());
-  }
   if (from.index() != 0) {
     set_index(from.index());
+  }
+  if (from.buycount() != 0) {
+    set_buycount(from.buycount());
   }
 }
 
@@ -14240,8 +14240,8 @@ void MsgStoreBuyGoodsReq::InternalSwap(MsgStoreBuyGoodsReq* other) {
   using std::swap;
   swap(storeid_, other->storeid_);
   swap(goodsid_, other->goodsid_);
-  swap(buycount_, other->buycount_);
   swap(index_, other->index_);
+  swap(buycount_, other->buycount_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
 

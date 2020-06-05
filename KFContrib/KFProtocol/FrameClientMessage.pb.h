@@ -5691,17 +5691,17 @@ class LIBPROTOC_EXPORT MsgStoreBuyGoodsReq : public ::google::protobuf::Message 
   ::google::protobuf::uint32 goodsid() const;
   void set_goodsid(::google::protobuf::uint32 value);
 
-  // uint32 buycount = 3;
-  void clear_buycount();
-  static const int kBuycountFieldNumber = 3;
-  ::google::protobuf::uint32 buycount() const;
-  void set_buycount(::google::protobuf::uint32 value);
-
-  // uint32 index = 4;
+  // uint32 index = 3;
   void clear_index();
-  static const int kIndexFieldNumber = 4;
+  static const int kIndexFieldNumber = 3;
   ::google::protobuf::uint32 index() const;
   void set_index(::google::protobuf::uint32 value);
+
+  // uint32 buycount = 4;
+  void clear_buycount();
+  static const int kBuycountFieldNumber = 4;
+  ::google::protobuf::uint32 buycount() const;
+  void set_buycount(::google::protobuf::uint32 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.MsgStoreBuyGoodsReq)
  private:
@@ -5709,8 +5709,8 @@ class LIBPROTOC_EXPORT MsgStoreBuyGoodsReq : public ::google::protobuf::Message 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::uint32 storeid_;
   ::google::protobuf::uint32 goodsid_;
-  ::google::protobuf::uint32 buycount_;
   ::google::protobuf::uint32 index_;
+  ::google::protobuf::uint32 buycount_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameClientMessage_2eproto::TableStruct;
 };
@@ -10921,21 +10921,7 @@ inline void MsgStoreBuyGoodsReq::set_goodsid(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:KFMsg.MsgStoreBuyGoodsReq.goodsid)
 }
 
-// uint32 buycount = 3;
-inline void MsgStoreBuyGoodsReq::clear_buycount() {
-  buycount_ = 0u;
-}
-inline ::google::protobuf::uint32 MsgStoreBuyGoodsReq::buycount() const {
-  // @@protoc_insertion_point(field_get:KFMsg.MsgStoreBuyGoodsReq.buycount)
-  return buycount_;
-}
-inline void MsgStoreBuyGoodsReq::set_buycount(::google::protobuf::uint32 value) {
-  
-  buycount_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.MsgStoreBuyGoodsReq.buycount)
-}
-
-// uint32 index = 4;
+// uint32 index = 3;
 inline void MsgStoreBuyGoodsReq::clear_index() {
   index_ = 0u;
 }
@@ -10947,6 +10933,20 @@ inline void MsgStoreBuyGoodsReq::set_index(::google::protobuf::uint32 value) {
   
   index_ = value;
   // @@protoc_insertion_point(field_set:KFMsg.MsgStoreBuyGoodsReq.index)
+}
+
+// uint32 buycount = 4;
+inline void MsgStoreBuyGoodsReq::clear_buycount() {
+  buycount_ = 0u;
+}
+inline ::google::protobuf::uint32 MsgStoreBuyGoodsReq::buycount() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgStoreBuyGoodsReq.buycount)
+  return buycount_;
+}
+inline void MsgStoreBuyGoodsReq::set_buycount(::google::protobuf::uint32 value) {
+  
+  buycount_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.MsgStoreBuyGoodsReq.buycount)
 }
 
 // -------------------------------------------------------------------

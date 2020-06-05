@@ -471,8 +471,8 @@ message MsgStoreBuyGoodsReq
 {
 	uint32 storeid = 1;		// 商城id
 	uint32 goodsid = 2;		// 商品id
-	uint32 buycount = 3;	// 购买数量
-	uint32 index = 4;		// 商品索引
+	uint32 index = 3;		// 商品索引
+	uint32 buycount = 4;	// 购买数量
 }
 
 // 客户端请求刷新商店
