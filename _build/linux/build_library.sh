@@ -67,7 +67,7 @@ blue "start building zstd"
 
 cd zstd/build/cmake
 mkdir -p .build
-cd ./build
+cd .build
 cmake ../ -G "Unix Makefiles"
 make clean
 make -j 4
