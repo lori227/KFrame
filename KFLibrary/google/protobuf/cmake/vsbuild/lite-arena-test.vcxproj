@@ -19,11 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{CEAF1D11-38A8-31D6-9D96-D8958A104CA0}</ProjectGuid>
+    <ProjectGuid>{05C946A1-807C-3606-AB09-69B89F913E61}</ProjectGuid>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
     <Keyword>Win32Proj</Keyword>
     <Platform>x64</Platform>
-    <ProjectName>protoc</ProjectName>
+    <ProjectName>lite-arena-test</ProjectName>
     <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -57,26 +57,26 @@
   <PropertyGroup>
     <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\Debug\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">protoc.dir\Debug\</IntDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">protoc</TargetName>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">lite-arena-test.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">lite-arena-test</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.exe</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\Release\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">protoc.dir\Release\</IntDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">protoc</TargetName>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">lite-arena-test.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">lite-arena-test</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.exe</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\MinSizeRel\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">protoc.dir\MinSizeRel\</IntDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">protoc</TargetName>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">lite-arena-test.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">lite-arena-test</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.exe</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">true</GenerateManifest>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\RelWithDebInfo\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">protoc.dir\RelWithDebInfo\</IntDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">protoc</TargetName>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">lite-arena-test.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">lite-arena-test</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.exe</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</GenerateManifest>
@@ -98,11 +98,11 @@
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;GOOGLE_PROTOBUF_CMAKE_BUILD;CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;GOOGLE_PROTOBUF_TEST_PLUGIN_PATH="D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/Debug/test_plugin.exe";GOOGLE_PROTOBUF_CMAKE_BUILD;CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;GOOGLE_PROTOBUF_CMAKE_BUILD;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;GOOGLE_PROTOBUF_TEST_PLUGIN_PATH=\"D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/Debug/test_plugin.exe\";GOOGLE_PROTOBUF_CMAKE_BUILD;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\third_party\googletest\googlemock;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\third_party\googletest\googletest;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\third_party\googletest\googletest\include;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\third_party\googletest\googlemock\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
@@ -114,13 +114,13 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>Debug\libprotobufd.lib;Debug\libprotocd.lib;Debug\libprotobufd.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>Debug\libprotobuf-lited.lib;Debug\gmock_main.lib;Debug\gmock.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ImportLibrary>D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/Debug/protoc.lib</ImportLibrary>
-      <ProgramDataBaseFile>D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/Debug/protoc.pdb</ProgramDataBaseFile>
+      <ImportLibrary>D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/Debug/lite-arena-test.lib</ImportLibrary>
+      <ProgramDataBaseFile>D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/Debug/lite-arena-test.pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
     </Link>
     <ProjectReference>
@@ -142,13 +142,13 @@
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;GOOGLE_PROTOBUF_CMAKE_BUILD;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;GOOGLE_PROTOBUF_TEST_PLUGIN_PATH="D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/Release/test_plugin.exe";GOOGLE_PROTOBUF_CMAKE_BUILD;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <DebugInformationFormat>
       </DebugInformationFormat>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;GOOGLE_PROTOBUF_CMAKE_BUILD;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;GOOGLE_PROTOBUF_TEST_PLUGIN_PATH=\"D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/Release/test_plugin.exe\";GOOGLE_PROTOBUF_CMAKE_BUILD;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\third_party\googletest\googlemock;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\third_party\googletest\googletest;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\third_party\googletest\googletest\include;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\third_party\googletest\googlemock\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
@@ -160,13 +160,13 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>Release\libprotobuf.lib;Release\libprotoc.lib;Release\libprotobuf.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>Release\libprotobuf-lite.lib;Release\gmock_main.lib;Release\gmock.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ImportLibrary>D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/Release/protoc.lib</ImportLibrary>
-      <ProgramDataBaseFile>D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/Release/protoc.pdb</ProgramDataBaseFile>
+      <ImportLibrary>D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/Release/lite-arena-test.lib</ImportLibrary>
+      <ProgramDataBaseFile>D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/Release/lite-arena-test.pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
     </Link>
     <ProjectReference>
@@ -188,13 +188,13 @@
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;GOOGLE_PROTOBUF_CMAKE_BUILD;CMAKE_INTDIR="MinSizeRel";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;GOOGLE_PROTOBUF_TEST_PLUGIN_PATH="D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/MinSizeRel/test_plugin.exe";GOOGLE_PROTOBUF_CMAKE_BUILD;CMAKE_INTDIR="MinSizeRel";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <DebugInformationFormat>
       </DebugInformationFormat>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;GOOGLE_PROTOBUF_CMAKE_BUILD;CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;GOOGLE_PROTOBUF_TEST_PLUGIN_PATH=\"D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/MinSizeRel/test_plugin.exe\";GOOGLE_PROTOBUF_CMAKE_BUILD;CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\third_party\googletest\googlemock;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\third_party\googletest\googletest;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\third_party\googletest\googletest\include;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\third_party\googletest\googlemock\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
@@ -206,13 +206,13 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>MinSizeRel\libprotobuf.lib;MinSizeRel\libprotoc.lib;MinSizeRel\libprotobuf.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>MinSizeRel\libprotobuf-lite.lib;MinSizeRel\gmock_main.lib;MinSizeRel\gmock.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ImportLibrary>D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/MinSizeRel/protoc.lib</ImportLibrary>
-      <ProgramDataBaseFile>D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/MinSizeRel/protoc.pdb</ProgramDataBaseFile>
+      <ImportLibrary>D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/MinSizeRel/lite-arena-test.lib</ImportLibrary>
+      <ProgramDataBaseFile>D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/MinSizeRel/lite-arena-test.pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
     </Link>
     <ProjectReference>
@@ -235,11 +235,11 @@
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;GOOGLE_PROTOBUF_CMAKE_BUILD;CMAKE_INTDIR="RelWithDebInfo";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;GOOGLE_PROTOBUF_TEST_PLUGIN_PATH="D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/RelWithDebInfo/test_plugin.exe";GOOGLE_PROTOBUF_CMAKE_BUILD;CMAKE_INTDIR="RelWithDebInfo";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;GOOGLE_PROTOBUF_CMAKE_BUILD;CMAKE_INTDIR=\"RelWithDebInfo\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;GOOGLE_PROTOBUF_TEST_PLUGIN_PATH=\"D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/RelWithDebInfo/test_plugin.exe\";GOOGLE_PROTOBUF_CMAKE_BUILD;CMAKE_INTDIR=\"RelWithDebInfo\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\third_party\googletest\googlemock;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\third_party\googletest\googletest;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\third_party\googletest\googletest\include;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\third_party\googletest\googlemock\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
@@ -251,19 +251,299 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>RelWithDebInfo\libprotobuf.lib;RelWithDebInfo\libprotoc.lib;RelWithDebInfo\libprotobuf.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>RelWithDebInfo\libprotobuf-lite.lib;RelWithDebInfo\gmock_main.lib;RelWithDebInfo\gmock.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ImportLibrary>D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/RelWithDebInfo/protoc.lib</ImportLibrary>
-      <ProgramDataBaseFile>D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/RelWithDebInfo/protoc.pdb</ProgramDataBaseFile>
+      <ImportLibrary>D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/RelWithDebInfo/lite-arena-test.lib</ImportLibrary>
+      <ProgramDataBaseFile>D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/RelWithDebInfo/lite-arena-test.pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\0d7f6887a9ff860439c65c8858d3c114\map_lite_unittest.pb.cc.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Generating D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src/google/protobuf/map_lite_unittest.pb.cc</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+Debug\protoc.exe D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src/google/protobuf/map_lite_unittest.proto --proto_path=D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src --cpp_out=D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\Debug\protoc.exe;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\map_lite_unittest.proto;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\map_lite_unittest.pb.cc</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Generating D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src/google/protobuf/map_lite_unittest.pb.cc</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+Release\protoc.exe D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src/google/protobuf/map_lite_unittest.proto --proto_path=D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src --cpp_out=D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\Release\protoc.exe;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\map_lite_unittest.proto;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\map_lite_unittest.pb.cc</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Generating D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src/google/protobuf/map_lite_unittest.pb.cc</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+MinSizeRel\protoc.exe D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src/google/protobuf/map_lite_unittest.proto --proto_path=D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src --cpp_out=D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\MinSizeRel\protoc.exe;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\map_lite_unittest.proto;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\map_lite_unittest.pb.cc</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Generating D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src/google/protobuf/map_lite_unittest.pb.cc</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+RelWithDebInfo\protoc.exe D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src/google/protobuf/map_lite_unittest.proto --proto_path=D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src --cpp_out=D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\RelWithDebInfo\protoc.exe;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\map_lite_unittest.proto;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\map_lite_unittest.pb.cc</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\0d7f6887a9ff860439c65c8858d3c114\unittest_import_lite.pb.cc.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Generating D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src/google/protobuf/unittest_import_lite.pb.cc</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+Debug\protoc.exe D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src/google/protobuf/unittest_import_lite.proto --proto_path=D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src --cpp_out=D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\Debug\protoc.exe;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\unittest_import_lite.proto;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\unittest_import_lite.pb.cc</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Generating D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src/google/protobuf/unittest_import_lite.pb.cc</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+Release\protoc.exe D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src/google/protobuf/unittest_import_lite.proto --proto_path=D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src --cpp_out=D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\Release\protoc.exe;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\unittest_import_lite.proto;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\unittest_import_lite.pb.cc</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Generating D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src/google/protobuf/unittest_import_lite.pb.cc</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+MinSizeRel\protoc.exe D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src/google/protobuf/unittest_import_lite.proto --proto_path=D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src --cpp_out=D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\MinSizeRel\protoc.exe;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\unittest_import_lite.proto;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\unittest_import_lite.pb.cc</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Generating D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src/google/protobuf/unittest_import_lite.pb.cc</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+RelWithDebInfo\protoc.exe D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src/google/protobuf/unittest_import_lite.proto --proto_path=D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src --cpp_out=D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\RelWithDebInfo\protoc.exe;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\unittest_import_lite.proto;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\unittest_import_lite.pb.cc</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\0d7f6887a9ff860439c65c8858d3c114\unittest_import_public_lite.pb.cc.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Generating D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src/google/protobuf/unittest_import_public_lite.pb.cc</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+Debug\protoc.exe D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src/google/protobuf/unittest_import_public_lite.proto --proto_path=D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src --cpp_out=D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\Debug\protoc.exe;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\unittest_import_public_lite.proto;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\unittest_import_public_lite.pb.cc</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Generating D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src/google/protobuf/unittest_import_public_lite.pb.cc</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+Release\protoc.exe D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src/google/protobuf/unittest_import_public_lite.proto --proto_path=D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src --cpp_out=D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\Release\protoc.exe;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\unittest_import_public_lite.proto;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\unittest_import_public_lite.pb.cc</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Generating D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src/google/protobuf/unittest_import_public_lite.pb.cc</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+MinSizeRel\protoc.exe D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src/google/protobuf/unittest_import_public_lite.proto --proto_path=D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src --cpp_out=D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\MinSizeRel\protoc.exe;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\unittest_import_public_lite.proto;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\unittest_import_public_lite.pb.cc</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Generating D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src/google/protobuf/unittest_import_public_lite.pb.cc</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+RelWithDebInfo\protoc.exe D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src/google/protobuf/unittest_import_public_lite.proto --proto_path=D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src --cpp_out=D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\RelWithDebInfo\protoc.exe;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\unittest_import_public_lite.proto;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\unittest_import_public_lite.pb.cc</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\0d7f6887a9ff860439c65c8858d3c114\unittest_lite.pb.cc.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Generating D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src/google/protobuf/unittest_lite.pb.cc</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+Debug\protoc.exe D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src/google/protobuf/unittest_lite.proto --proto_path=D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src --cpp_out=D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\Debug\protoc.exe;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\unittest_lite.proto;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\unittest_lite.pb.cc</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Generating D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src/google/protobuf/unittest_lite.pb.cc</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+Release\protoc.exe D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src/google/protobuf/unittest_lite.proto --proto_path=D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src --cpp_out=D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\Release\protoc.exe;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\unittest_lite.proto;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\unittest_lite.pb.cc</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Generating D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src/google/protobuf/unittest_lite.pb.cc</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+MinSizeRel\protoc.exe D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src/google/protobuf/unittest_lite.proto --proto_path=D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src --cpp_out=D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\MinSizeRel\protoc.exe;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\unittest_lite.proto;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\unittest_lite.pb.cc</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Generating D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src/google/protobuf/unittest_lite.pb.cc</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+RelWithDebInfo\protoc.exe D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src/google/protobuf/unittest_lite.proto --proto_path=D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src --cpp_out=D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\RelWithDebInfo\protoc.exe;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\unittest_lite.proto;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\unittest_lite.pb.cc</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\0d7f6887a9ff860439c65c8858d3c114\unittest_no_arena_lite.pb.cc.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Generating D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src/google/protobuf/unittest_no_arena_lite.pb.cc</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+Debug\protoc.exe D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src/google/protobuf/unittest_no_arena_lite.proto --proto_path=D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src --cpp_out=D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\Debug\protoc.exe;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\unittest_no_arena_lite.proto;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\unittest_no_arena_lite.pb.cc</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Generating D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src/google/protobuf/unittest_no_arena_lite.pb.cc</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+Release\protoc.exe D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src/google/protobuf/unittest_no_arena_lite.proto --proto_path=D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src --cpp_out=D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\Release\protoc.exe;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\unittest_no_arena_lite.proto;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\unittest_no_arena_lite.pb.cc</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Generating D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src/google/protobuf/unittest_no_arena_lite.pb.cc</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+MinSizeRel\protoc.exe D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src/google/protobuf/unittest_no_arena_lite.proto --proto_path=D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src --cpp_out=D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\MinSizeRel\protoc.exe;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\unittest_no_arena_lite.proto;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\unittest_no_arena_lite.pb.cc</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Generating D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src/google/protobuf/unittest_no_arena_lite.pb.cc</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+RelWithDebInfo\protoc.exe D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src/google/protobuf/unittest_no_arena_lite.proto --proto_path=D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src --cpp_out=D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/src
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\RelWithDebInfo\protoc.exe;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\unittest_no_arena_lite.proto;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\unittest_no_arena_lite.pb.cc</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\CMakeLists.txt">
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule D:/KFrame/Frame/trunk/KFLibrary/google/protobuf/cmake/CMakeLists.txt</Message>
@@ -321,7 +601,15 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\compiler\main.cc" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\lite_arena_unittest.cc" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\arena_test_util.cc" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\map_lite_test_util.cc" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\test_util_lite.cc" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\map_lite_unittest.pb.cc" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\unittest_import_lite.pb.cc" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\unittest_import_public_lite.pb.cc" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\unittest_lite.pb.cc" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src\google\protobuf\unittest_no_arena_lite.pb.cc" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\ZERO_CHECK.vcxproj">
@@ -330,13 +618,21 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\libprotobuf.vcxproj">
-      <Project>{3BC52484-13F6-35AD-8DA0-10FC8497E739}</Project>
-      <Name>libprotobuf</Name>
+    <ProjectReference Include="D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\gmock.vcxproj">
+      <Project>{FBA22118-5F92-3E04-8F0F-B0772BD0953F}</Project>
+      <Name>gmock</Name>
     </ProjectReference>
-    <ProjectReference Include="D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\libprotoc.vcxproj">
-      <Project>{7700122F-8655-3D8E-B7BA-D9C39CEEA256}</Project>
-      <Name>libprotoc</Name>
+    <ProjectReference Include="D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\gmock_main.vcxproj">
+      <Project>{302A0F89-7E7D-3A71-A072-9BC58AF6AF3B}</Project>
+      <Name>gmock_main</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\libprotobuf-lite.vcxproj">
+      <Project>{89D6427E-EAD9-3D63-978D-ECD21595D175}</Project>
+      <Name>libprotobuf-lite</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\protoc.vcxproj">
+      <Project>{CEAF1D11-38A8-31D6-9D96-D8958A104CA0}</Project>
+      <Name>protoc</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

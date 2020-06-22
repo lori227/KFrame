@@ -44,7 +44,7 @@ macro(_check_and_save_build_option OPTION VALUE)
   endif()
   set(${PACKAGE_FIND_NAME}_${OPTION} ${VALUE} PARENT_SCOPE)
 endmacro()
-_check_and_save_build_option(WITH_ZLIB OFF)
+_check_and_save_build_option(WITH_ZLIB ON)
 _check_and_save_build_option(MSVC_STATIC_RUNTIME ON)
 _check_and_save_build_option(BUILD_SHARED_LIBS OFF)
 

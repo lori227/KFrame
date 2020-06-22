@@ -1,9 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <CustomBuild Include="D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\f904f2736c0e10034779f38d70503974\generate.stamp.rule">
+    <CustomBuild Include="D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\f904f2736c0e10034779f38d70503974\check.rule">
       <Filter>CMake Rules</Filter>
     </CustomBuild>
+    <CustomBuild Include="D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\check" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="CMake Rules">

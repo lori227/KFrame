@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{27F28E5C-5E93-3353-A068-AA2AD8EDE483}</ProjectGuid>
+    <ProjectGuid>{2DEF6355-D456-30EC-A874-E3684FAEC444}</ProjectGuid>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
     <Keyword>Win32Proj</Keyword>
     <Platform>x64</Platform>
@@ -63,7 +63,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Midl>
-      <AdditionalIncludeDirectories>D:\Work\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild;D:\Work\Frame\trunk\KFLibrary\google\protobuf\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\third_party\googletest\googlemock;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\third_party\googletest\googletest;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\third_party\googletest\googletest\include;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\third_party\googletest\googlemock\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -85,7 +85,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Midl>
-      <AdditionalIncludeDirectories>D:\Work\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild;D:\Work\Frame\trunk\KFLibrary\google\protobuf\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\third_party\googletest\googlemock;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\third_party\googletest\googletest;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\third_party\googletest\googletest\include;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\third_party\googletest\googlemock\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -107,7 +107,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
     <Midl>
-      <AdditionalIncludeDirectories>D:\Work\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild;D:\Work\Frame\trunk\KFLibrary\google\protobuf\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\third_party\googletest\googlemock;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\third_party\googletest\googletest;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\third_party\googletest\googletest\include;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\third_party\googletest\googlemock\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -129,7 +129,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
     <Midl>
-      <AdditionalIncludeDirectories>D:\Work\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild;D:\Work\Frame\trunk\KFLibrary\google\protobuf\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\src;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\third_party\googletest\googlemock;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\third_party\googletest\googletest;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\third_party\googletest\googletest\include;D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\third_party\googletest\googlemock\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -150,7 +150,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CustomBuild Include="D:\Work\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\dd274d0890d77f398165e9e043852ee2\INSTALL_force.rule">
+    <CustomBuild Include="D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\f904f2736c0e10034779f38d70503974\INSTALL_force.rule">
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'"> </Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
 cd .
@@ -161,8 +161,8 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:/Work/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/CMakeFiles/dd274d0890d77f398165e9e043852ee2/INSTALL_force.rule;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\Work\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\INSTALL_force</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\INSTALL_force</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'"> </Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
@@ -174,8 +174,8 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:/Work/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/CMakeFiles/dd274d0890d77f398165e9e043852ee2/INSTALL_force.rule;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\Work\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\INSTALL_force</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\INSTALL_force</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
       <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'"> </Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
@@ -187,8 +187,8 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:/Work/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/CMakeFiles/dd274d0890d77f398165e9e043852ee2/INSTALL_force.rule;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\Work\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\INSTALL_force</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\INSTALL_force</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
       <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'"> </Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
@@ -200,20 +200,20 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:/Work/Frame/trunk/KFLibrary/google/protobuf/cmake/vsbuild/CMakeFiles/dd274d0890d77f398165e9e043852ee2/INSTALL_force.rule;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\Work\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\INSTALL_force</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\INSTALL_force</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="D:\Work\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\ZERO_CHECK.vcxproj">
-      <Project>{753561C2-5B80-35A1-BF68-DD5930EE033B}</Project>
+    <ProjectReference Include="D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\ZERO_CHECK.vcxproj">
+      <Project>{9C996646-B2F8-398B-9665-AB6AC550B605}</Project>
       <Name>ZERO_CHECK</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="D:\Work\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\ALL_BUILD.vcxproj">
-      <Project>{7A2EEB14-CEAA-37F3-BD09-1844CB336857}</Project>
+    <ProjectReference Include="D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\ALL_BUILD.vcxproj">
+      <Project>{1D8BDC99-26E2-3B95-9526-3536219247B4}</Project>
       <Name>ALL_BUILD</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>

@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <CustomBuild Include="D:\Work\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\dd274d0890d77f398165e9e043852ee2\INSTALL_force.rule">
+    <CustomBuild Include="D:\KFrame\Frame\trunk\KFLibrary\google\protobuf\cmake\vsbuild\CMakeFiles\f904f2736c0e10034779f38d70503974\INSTALL_force.rule">
       <Filter>CMake Rules</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="CMake Rules">
-      <UniqueIdentifier>{58D0F659-7892-3F00-8C83-04EC6FD171EB}</UniqueIdentifier>
+      <UniqueIdentifier>{7C6BFD75-781C-3CB6-A6D2-C48453B08E37}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
