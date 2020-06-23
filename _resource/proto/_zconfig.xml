@@ -1,4 +1,4 @@
 <?xml version = '1.0' encoding = 'utf-8' ?>
 <Config>
-	<Path ServerCpp="D:\Work\Frame\trunk\KFContrib\KFProtocol" ServerLua="" ClientCpp="" ClientLua=""/>
+	<Path ServerCpp="D:\KFrame\Frame\trunk\KFContrib\KFProtocol" ServerLua="" ClientCpp="" ClientLua=""/>
 </Config>
