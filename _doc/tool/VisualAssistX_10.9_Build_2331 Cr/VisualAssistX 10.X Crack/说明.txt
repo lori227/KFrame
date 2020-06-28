@@ -1,0 +1,14 @@
+安装软件。 
+把附件中的OLEDLG.dll复制到VS各个版本的主程序所在目录
+（注意是VisualStudio的 Devenv.exe所在目录, 不是VisualAssist所在目录。
+  可以鼠标右键点击VS启动图标查看属性，可以查看目录位置）。 
+启动VS，进入VAX的配置项来输入下面的key完成注册：
+
+
+* (255-user license) Support ends 2027.07.07
+00001M-CC22T6-YFRP89-C7UGMH-NXU4HU-U9JDV6-PRQG20-J9GXXA-1H7141-VPDZJY-7PYWTZ
+
+注册完之后，升级、卸载或重新安装VAX时，会有key提示无效，点"Cancel"按钮即可。如果有新VS版本增加，需要点"No"按钮。 
+DLL劫持可能会受到某些杀软的保护而失效。 
+本方法与PYG的通杀补丁原理类似，不修改代码，而是通过替换公钥来完成注册，但PYG采用硬件断点机制，还是依赖程序的指令特征，而且还加了虚拟机壳。PYG提供的key包含中文，不支持英文版系统。本方法则没有以上问题，适用于VAX 1559以后的版本。 
+这个patch是两年前搞的，由于VAX从2318版本开始引入了新的License机制，因此现在放出来。因为不知道什么时候老的License机制就会被弃用，此patch也就失效了。
