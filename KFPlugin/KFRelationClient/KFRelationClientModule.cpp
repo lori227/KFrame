@@ -64,8 +64,13 @@ namespace KFrame
 
         for ( auto kfrelation = kfrecord->First(); kfrelation != nullptr; kfrelation = kfrecord->Next() )
         {
-            auto kfbasic = kfrelation->Find( __STRING__( basic ) );
-            _kf_game->SendToPlayer( player->GetKeyID(), kfbasic, msgid, message );
+            auto serverid = kfrelation->Get( __STRING__( basic ), __STRING__( serverid ) );
+            if ( serverid == 0u )
+            {
+                continue;
+            }
+
+            _kf_route->RepeatToPlayer( player->GetKeyID(), serverid, kfrelation->GetKeyID(), msgid, message );
         }
     }
 

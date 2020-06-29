@@ -17,7 +17,6 @@ namespace KFrame
 
     void KFRelationClientPlugin::LoadModule()
     {
-        __FIND_MODULE__( _kf_game, KFGameInterface );
         __FIND_MODULE__( _kf_config, KFConfigInterface );
         __FIND_MODULE__( _kf_filter, KFFilterInterface );
         __FIND_MODULE__( _kf_player, KFPlayerInterface );

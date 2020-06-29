@@ -10,7 +10,6 @@
 ************************************************************************/
 
 #include "KFProtocol/KFProtocol.h"
-#include "KFGame/KFGameInterface.h"
 #include "KFRelationClientInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFKernel/KFKernelInterface.h"
