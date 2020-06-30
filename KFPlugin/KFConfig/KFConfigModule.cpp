@@ -121,7 +121,7 @@ namespace KFrame
         // 重新加载配置列表
         LoadConfigListAndVersion();
 
-        auto loadok = false;
+        auto loadallok = false;
         for ( auto& iter : _config_list )
         {
             auto kfconfig = iter.second;
@@ -132,6 +132,7 @@ namespace KFrame
             }
 
             // 判断版本号是否相同
+            auto loadok = false;
             auto havechild = false;
             for ( auto& kfdata : kfconfigsetting->_config_data_list )
             {
@@ -162,12 +163,19 @@ namespace KFrame
                 }
 
                 loadok = true;
+                loadallok = true;
                 kfconfig->SetVersion( kfdata._file_name, kfversionsetting->_new_version );
                 LoadConfigFile( kfconfig, kfdata._file_name, kfdata._file_path, kfdata._load_mask );
             }
+
+            // 加载完成
+            if ( loadok )
+            {
+                kfconfig->LoadComplete();
+            }
         }
 
-        if ( loadok )
+        if ( loadallok )
         {
             for ( auto& iter : _config_list )
             {
