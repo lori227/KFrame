@@ -20,21 +20,7 @@ lib库路径: `Server/_lib/win64/3rd/`
 进入`Server/_build/win64`目录下, 
 执行`build150-library-x64.bat`, 等待编译结束,生成的结果在默认链接目录下.
 
-!> ps: openssl 已经编译好, 如果需要请自己重新编译.
-
-	安装 perl
-	https://downloads.activestate.com/ActivePerl/releases/5.26.3.2603/ActivePerl-5.26.3.2603-MSWin32-x64-a95bce075.exe
-	
-	打开vs2017 x64工具集
-	ppm install dmake
-
-	进入openssl目录
-	perl Configure VC-WIN64A no-asm no-shared no-tests --release --prefix=e:\openssl
-	nmake
-	nmake install
-	
-
-!> protobuf 请自己安装cmake生成sln工程( 因为camke生成的都带绝对路径 )
+!> protobuf 请自己安装cmake生成sln工程( 因为camke生成的都带绝对路径, 路径在`Server/KFLibrary/google/protobuf` )
 
 	https://blog.csdn.net/hp_cpp/article/details/81561310
 
