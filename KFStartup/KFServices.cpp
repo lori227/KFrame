@@ -78,7 +78,10 @@ namespace KFrame
         {
             return false;
         }
-        KFMalloc::Instance()->SetLogOpen( false );
+
+        // 打开内存日志
+        auto logmemory = params[ __STRING__( logmemory ) ];
+        KFMalloc::Instance()->SetLogOpen( logmemory == "1" );
 
         // 设置标题
         kfglobal->_title_text = KFUtility::FormatTitleText( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->ToString() );
