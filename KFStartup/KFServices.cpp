@@ -107,6 +107,7 @@ namespace KFrame
             startupfile = __FORMAT__( "./startup/{}.{}.startup", kfglobal->_app_name, kfglobal->_app_type );
         }
 
+        // 加载插件, 并初始化
         if ( !_kf_startup->InitStartup( startupfile ) )
         {
             return false;
