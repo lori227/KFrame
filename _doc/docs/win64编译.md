@@ -14,15 +14,15 @@ Win+pausebreak=>高级系统设置=>环境变量, 在系统变量下面新建:
 
 ## 编译第3方库
 
+!> 如果目录不同, vs版本不同, 需要重新编译protobuf. ( 请自己安装cmake生成sln工程, 因为camke生成的都带绝对路径, 路径在`Server/KFLibrary/google/protobuf` )
+
+	https://blog.csdn.net/hp_cpp/article/details/81561310
+
 源码路径: `Server/KFLibrary/`
 lib库路径: `Server/_lib/win64/3rd/`
 
 进入`Server/_build/win64`目录下, 
 执行`build150-library-x64.bat`, 等待编译结束,生成的结果在默认链接目录下.
-
-!> 如果目录不同, vs版本不同, 需要重新编译protobuf. ( 请自己安装cmake生成sln工程, 因为camke生成的都带绝对路径, 路径在`Server/KFLibrary/google/protobuf` )
-
-	https://blog.csdn.net/hp_cpp/article/details/81561310
 
 # 编译框架工程
 
