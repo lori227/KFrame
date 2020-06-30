@@ -20,7 +20,7 @@ lib库路径: `Server/_lib/win64/3rd/`
 进入`Server/_build/win64`目录下, 
 执行`build150-library-x64.bat`, 等待编译结束,生成的结果在默认链接目录下.
 
-!> protobuf 请自己安装cmake生成sln工程( 因为camke生成的都带绝对路径, 路径在`Server/KFLibrary/google/protobuf` )
+!> 如果目录不同, vs版本不同, 需要重新编译protobuf. ( 请自己安装cmake生成sln工程, 因为camke生成的都带绝对路径, 路径在`Server/KFLibrary/google/protobuf` )
 
 	https://blog.csdn.net/hp_cpp/article/details/81561310
 
