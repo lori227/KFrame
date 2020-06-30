@@ -46,7 +46,9 @@ lib库路径: `Server/_lib/win64/3rd/`
 
 	打开Frame.sln  
 	先编译KFContrib目录( 框架封装的lib库 )  
-	然后编译KFPlugin目录( 模块插件目录 )  
+	然后编译KFPlugin目录( 模块插件目录 )  ( 编译前, 进入_resource\proto, 执行_protocol.exe编译proto文件)
 	最后编译KFStartup( 进程启动程序 )  
 	KFTool可以不编译
+
+
 			
