@@ -7,8 +7,8 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////
     KFConfigModule::KFConfigModule()
     {
-        _kf_config_config = new KFConfigConfig();
-        _kf_version_config = new KFVersionConfig();
+        _kf_config_config = __NEW_OBJECT__( KFConfigConfig );
+        _kf_version_config = __NEW_OBJECT__( KFVersionConfig );
     }
 
     KFConfigModule::~KFConfigModule()
@@ -100,8 +100,12 @@ namespace KFrame
                     kfconfig->SetVersion( kfdata._file_name, kfversionsetting->_new_version );
                 }
             }
+
+            // 配置加载完成
+            kfconfig->LoadComplete();
         }
 
+        // 所有配置加载完成
         for ( auto& iter : _config_list )
         {
             auto kfconfig = iter.second;
@@ -184,7 +188,6 @@ namespace KFrame
             auto ok = config->LoadConfig( filename, filepath, loadmask );
             if ( ok )
             {
-                config->LoadComplete();
                 __LOG_INFO__( "load [{}] ok", filepath );
             }
             else
