@@ -176,8 +176,15 @@ namespace KFrame
 
     bool KFNetServerEngine::BindObjectId( uint64 handleid, uint64 objectid )
     {
+        // 正在关闭队列
+        if ( _close_handles.find( handleid ) != _close_handles.end() )
+        {
+            return false;
+        }
+
+        // 找不到处理器, 或者正在关闭
         auto kfhandle = _kf_handles.Find( handleid );
-        if ( kfhandle == nullptr )
+        if ( kfhandle == nullptr || kfhandle->_is_shutdown )
         {
             return false;
         }

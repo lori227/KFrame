@@ -218,7 +218,7 @@ namespace KFrame
         // 删除连接关系
         if ( role->_session_id != _invalid_int )
         {
-            _kf_tcp_server->CloseNetHandle( role->_session_id, 2000, __FUNC_LINE__ );
+            _kf_tcp_server->CloseNetHandle( role->_session_id, 1000, __FUNC_LINE__ );
         }
 
         _token_list.erase( role->_token );
@@ -490,6 +490,11 @@ namespace KFrame
 
             // 删除玩家
             RemoveRole( kfrole );
+        }
+        else
+        {
+            // 找不到直接关闭
+            _kf_tcp_server->CloseNetHandle( __ROUTE_SERVER_ID__, 1000, __FUNC_LINE__ );
         }
 
         KFMsg::MsgLogoutAck ack;
