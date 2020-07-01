@@ -29,11 +29,21 @@ namespace KFrame
     // 发送消息到Game
     bool KFRole::SendToGame( uint32 msgid, const char* data, uint32 length )
     {
+        if ( _game_id == _invalid_int )
+        {
+            return false;
+        }
+
         return _kf_tcp_client->SendNetMessage( _game_id, _id, msgid, data, length );
     }
 
     bool KFRole::SendToGame( uint32 msgid, ::google::protobuf::Message* message )
     {
+        if ( _game_id == _invalid_int )
+        {
+            return false;
+        }
+
         return _kf_tcp_client->SendNetMessage( _game_id, _id, msgid, message );
     }
 }
