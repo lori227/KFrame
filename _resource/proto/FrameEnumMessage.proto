@@ -1,6 +1,7 @@
 syntax = "proto3";
-package KFMsg;
+//option optimize_for = LITE_RUNTIME;
 
+package KFMsg;
 //////////////////////////////////////////////////////////////////////////////////
 // 渠道
 enum ChannelEnum

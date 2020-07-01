@@ -1,5 +1,6 @@
 syntax = "proto3";
 import "FrameDefineMessage.proto";
+//option optimize_for = LITE_RUNTIME;
 
 package KFMsg;
 

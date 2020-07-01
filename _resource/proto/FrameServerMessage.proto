@@ -1,8 +1,9 @@
 syntax = "proto3";
 import "FrameDefineMessage.proto";
+//option optimize_for = LITE_RUNTIME;
 
 package KFMsg;
-
+///////////////////////////////////////////////////////////////////////////
 enum FrameServerProtocol
 {	
 	S2S_FRAME_SERVER_PROTOCOL_BEGIN 			= 0;		// pb3 0 开始
