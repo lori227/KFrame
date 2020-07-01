@@ -1715,6 +1715,9 @@ namespace KFrame
 
     void KFEntityEx::SetStatus( uint32 status )
     {
-        UpdateData( __STRING__( basic ), __STRING__( status ), KFEnum::Set, status );
+        auto kfbasic = Find( __STRING__( basic ) );
+
+        UpdateData( kfbasic, __STRING__( status ), KFEnum::Set, status );
+        UpdateData( kfbasic, __STRING__( statustime ), KFEnum::Set, KFGlobal::Instance()->_real_time );
     }
 }

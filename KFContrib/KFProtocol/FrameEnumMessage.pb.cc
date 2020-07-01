@@ -76,18 +76,17 @@ void AddDescriptorsImpl() {
       "ludeRandom\020\002*:\n\010MailEnum\022\016\n\nUnknowMail\020\000"
       "\022\016\n\nGlobalMail\020\001\022\016\n\nPersonMail\020\002*7\n\010Rank"
       "Enum\022\016\n\nUnknowRank\020\000\022\r\n\tTotalRank\020\001\022\014\n\010Z"
-      "oneRank\020\002*X\n\020PlayerStatusEnum\022\025\n\021UnknowF"
-      "rameStatus\020\000\022\025\n\021FrameOnlineStatus\020\001\022\026\n\022F"
-      "rameOfflineStatus\020\002*U\n\nInviteEnum\022\020\n\014Unk"
-      "nowInvite\020\000\022\013\n\007Consent\020\001\022\n\n\006Refuse\020\002\022\n\n\006"
-      "Delete\020\003\022\020\n\014RefuseMinute\020\004*@\n\016RewardType"
-      "Enum\022\017\n\013InvalidType\020\000\022\017\n\013CurrenyType\020\001\022\014"
-      "\n\010ItemType\020\002*D\n\014DatabaseEnum\022\023\n\017InvalidD"
-      "atabase\020\000\022\t\n\005Redis\020\001\022\t\n\005Mongo\020\002\022\t\n\005MySQL"
-      "\020\003b\006proto3"
+      "oneRank\020\002*N\n\020PlayerStatusEnum\022\025\n\021UnknowF"
+      "rameStatus\020\000\022\020\n\014OnlineStatus\020\001\022\021\n\rOfflin"
+      "eStatus\020\002*U\n\nInviteEnum\022\020\n\014UnknowInvite\020"
+      "\000\022\013\n\007Consent\020\001\022\n\n\006Refuse\020\002\022\n\n\006Delete\020\003\022\020"
+      "\n\014RefuseMinute\020\004*@\n\016RewardTypeEnum\022\017\n\013In"
+      "validType\020\000\022\017\n\013CurrenyType\020\001\022\014\n\010ItemType"
+      "\020\002*D\n\014DatabaseEnum\022\023\n\017InvalidDatabase\020\000\022"
+      "\t\n\005Redis\020\001\022\t\n\005Mongo\020\002\022\t\n\005MySQL\020\003b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 1050);
+      descriptor, 1040);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "FrameEnumMessage.proto", &protobuf_RegisterTypes);
 }

@@ -35,10 +35,10 @@ namespace KFrame
         auto status = _get_status_value( values );
         switch ( status )
         {
-        case KFMsg::FrameOnlineStatus:
+        case KFMsg::OnlineStatus:
             redisdriver->Execute( "sadd {}:{} {}", __STRING__( onlinelist ), serverid, playerid );
             break;
-        case KFMsg::FrameOfflineStatus:
+        case KFMsg::OfflineStatus:
             redisdriver->Execute( "srem {}:{} {}", __STRING__( onlinelist ), serverid, playerid );
             break;
         default:
@@ -62,7 +62,7 @@ namespace KFrame
             {
                 redisdriver->Execute( "hmset {}:{} {} {} {} {}", __STRING__( basic ), id,
                                       __STRING__( serverid ), 0,
-                                      __STRING__( status ), KFMsg::FrameOfflineStatus );
+                                      __STRING__( status ), KFMsg::OfflineStatus );
             }
 
         }

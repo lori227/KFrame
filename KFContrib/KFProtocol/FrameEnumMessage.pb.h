@@ -242,14 +242,14 @@ inline bool RankEnum_Parse(
 }
 enum PlayerStatusEnum {
   UnknowFrameStatus = 0,
-  FrameOnlineStatus = 1,
-  FrameOfflineStatus = 2,
+  OnlineStatus = 1,
+  OfflineStatus = 2,
   PlayerStatusEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   PlayerStatusEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 LIBPROTOC_EXPORT bool PlayerStatusEnum_IsValid(int value);
 const PlayerStatusEnum PlayerStatusEnum_MIN = UnknowFrameStatus;
-const PlayerStatusEnum PlayerStatusEnum_MAX = FrameOfflineStatus;
+const PlayerStatusEnum PlayerStatusEnum_MAX = OfflineStatus;
 const int PlayerStatusEnum_ARRAYSIZE = PlayerStatusEnum_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* PlayerStatusEnum_descriptor();

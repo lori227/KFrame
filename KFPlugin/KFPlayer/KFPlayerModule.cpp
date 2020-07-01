@@ -235,7 +235,7 @@ namespace KFrame
     {
         auto kfbasic = player->Find( __STRING__( basic ) );
         kfbasic->Set( __STRING__( serverid ), 0 );
-        kfbasic->Set( __STRING__( status ), ( uint32 )KFMsg::FrameOfflineStatus );
+        kfbasic->Set( __STRING__( status ), ( uint32 )KFMsg::OfflineStatus );
         kfbasic->Set( __STRING__( statustime ), KFGlobal::Instance()->_real_time );
 
         // 调用函数, 处理离开游戏的一些事务逻辑
@@ -303,9 +303,9 @@ namespace KFrame
         player->Set( __STRING__( accountid ), pblogin->accountid() );
 
         auto kfbasic = player->Find( __STRING__( basic ) );
-        kfbasic->Set( __STRING__( serverid ), KFGlobal::Instance()->_app_id->GetId() );
-        kfbasic->Set( __STRING__( status ), ( uint32 )KFMsg::FrameOnlineStatus );
+        kfbasic->Set( __STRING__( status ), ( uint32 )KFMsg::OnlineStatus );
         kfbasic->Set( __STRING__( statustime ), KFGlobal::Instance()->_real_time );
+        kfbasic->Set( __STRING__( serverid ), KFGlobal::Instance()->_app_id->GetId() );
 
         // 渠道数据
         auto pbchanneldata = &pblogin->channeldata();
