@@ -21,7 +21,7 @@ namespace KFrame
         {"Sync", KFDataDefine::Mask_Client},
         {"Delay", KFDataDefine::Mask_Delay},
         {"View", KFDataDefine::Mask_View},
-        {"Public", KFDataDefine::Mask_Basic},
+        {"Basic", KFDataDefine::Mask_Basic},
         {"Relation", KFDataDefine::Mask_Relation},
         {"Team", KFDataDefine::Mask_Team},
         {"Guild", KFDataDefine::Mask_Guild},

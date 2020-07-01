@@ -58,8 +58,12 @@ namespace KFrame
     void KFConfigModule::LoadConfigListAndVersion()
     {
         {
-            auto configfile = _config_path + "config.xml";
+            auto configfile = _config_path + "frameconfig.xml";
             LoadConfigFile( _kf_config_config, "config", configfile, KFConfigEnum::CanReload | KFConfigEnum::NeedClearData );
+        }
+        {
+            auto configfile = _config_path + "config.xml";
+            LoadConfigFile( _kf_config_config, "config", configfile, KFConfigEnum::CanReload );
         }
 
         {
