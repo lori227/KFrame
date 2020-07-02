@@ -8,7 +8,7 @@ namespace KFrame
     class KFConfigData
     {
     public:
-        // 文件名路径
+        // 文件路径
         std::string _file_path;
 
         // 文件名
