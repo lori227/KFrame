@@ -19,7 +19,7 @@ namespace KFrame
     {
         if ( kflogger == nullptr )
         {
-            kflogger = new KFLogger();
+            kflogger = __NEW_OBJECT__( KFLogger );
         }
 
         KFLogger::_kf_logger = kflogger;

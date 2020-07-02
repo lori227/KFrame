@@ -137,7 +137,7 @@ namespace KFrame
 
             // 判断版本号是否相同
             auto loadok = false;
-            auto havechild = false;
+            auto childfilereload = false;
             for ( auto& kfdata : kfconfigsetting->_config_data_list )
             {
                 if ( !KFUtility::HaveBitMask<uint32>( kfdata._load_mask, KFConfigEnum::CanReload ) )
@@ -152,7 +152,7 @@ namespace KFrame
                     continue;
                 }
 
-                if ( !havechild )
+                if ( !childfilereload )
                 {
                     // 不需要更新
                     if ( !kfversionsetting->IsNeedReload() )
@@ -162,7 +162,7 @@ namespace KFrame
 
                     if ( KFUtility::HaveBitMask<uint32>( kfdata._load_mask, KFConfigEnum::ChildFile ) )
                     {
-                        havechild = true;
+                        childfilereload = true;
                     }
                 }
 
