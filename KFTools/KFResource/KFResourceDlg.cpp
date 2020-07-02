@@ -965,7 +965,7 @@ bool CKFResourceDlg::ParseExcelFiles( const std::string& version )
 
 void CKFResourceDlg::SaveXmlVersionList( const std::string& path, uint32 type )
 {
-    auto file = path + "\\_xmlversion.xml";
+    auto file = path + "\\version.xml";
     std::ofstream xmlfile( file );
     if ( !xmlfile )
     {

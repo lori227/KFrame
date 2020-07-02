@@ -67,7 +67,7 @@ namespace KFrame
         }
 
         {
-            auto configfile = _config_path + "_xmlversion.xml";
+            auto configfile = _config_path + "version.xml";
             LoadConfigFile( _kf_version_config, "version", configfile, KFConfigEnum::CanReload );
         }
     }
