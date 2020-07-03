@@ -125,7 +125,6 @@ namespace KFrame
             {
                 return __LOG_ERROR__( "plugin=[{}] not exist", newfilename );
             }
-
         }
         catch ( ... )
         {
@@ -154,9 +153,13 @@ namespace KFrame
             oldfile.remove();
             __LOG_INFO__( "plugin=[{}] remove ok", filename );
 
-            // 修改文件名
+            // 拷贝新文件
             Poco::File newfile( newfilename );
             newfile.copyTo( filename );
+
+            // 删除新文件
+            newfile.remove();
+            __LOG_INFO__( "plugin=[{}] copy ok", filename );
         }
         catch ( ... )
         {
