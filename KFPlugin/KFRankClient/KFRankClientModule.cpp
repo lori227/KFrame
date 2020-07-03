@@ -25,8 +25,8 @@ namespace KFrame
     __KF_UPDATE_DATA_FUNCTION__( KFRankClientModule::OnDataUpdateCallBack )
     {
         auto kfparent = kfdata->GetParent();
-        if ( !kfdata->HaveMask( KFDataDefine::Mask_Rank ) ||
-                !kfparent->HaveMask( KFDataDefine::Mask_Rank ) )
+        if ( !kfdata->HaveMask( KFDataDefine::DataMaskRank ) ||
+                !kfparent->HaveMask( KFDataDefine::DataMaskRank ) )
         {
             return;
         }

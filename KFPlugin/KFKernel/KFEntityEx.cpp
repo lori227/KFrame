@@ -66,7 +66,7 @@ namespace KFrame
     {
         auto oldvalue = kfdata->Get<std::string>();
         kfdata->Set<std::string>( value );
-        if ( kfdata->_data_type == KFDataDefine::Type_Array )
+        if ( kfdata->_data_type == KFDataDefine::DataTypeArray )
         {
             for ( auto i = KFGlobal::Instance()->_array_index; i < kfdata->Size(); ++i )
             {
@@ -78,7 +78,7 @@ namespace KFrame
                 }
             }
         }
-        else if ( kfdata->_data_type == KFDataDefine::Type_String )
+        else if ( kfdata->_data_type == KFDataDefine::DataTypeString )
         {
             // 属性更新回调
             _kf_component->UpdateDataCallBack( this, kfdata, oldvalue, value, true );
@@ -620,7 +620,7 @@ namespace KFrame
                 }
 
                 // 如果是record/object 判断value是否相同
-                if ( kfdatasetting->_type == KFDataDefine::Type_Record || kfdatasetting->_type == KFDataDefine::Type_Object )
+                if ( kfdatasetting->_type == KFDataDefine::DataTypeRecord || kfdatasetting->_type == KFDataDefine::DataTypeObject )
                 {
                     if ( pbdata->value() != value )
                     {
@@ -879,29 +879,29 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFEntityEx::AddDataToShow( KFMsg::PBShowElement* pbshowelement, KFData* kfdata )
     {
-        if ( !kfdata->_data_setting->HaveMask( KFDataDefine::Mask_Show ) )
+        if ( !kfdata->_data_setting->HaveMask( KFDataDefine::DataMaskShow ) )
         {
             return;
         }
 
         switch ( kfdata->_data_type )
         {
-        case KFDataDefine::Type_Int32:
-        case KFDataDefine::Type_UInt32:
-        case KFDataDefine::Type_Int64:
-        case KFDataDefine::Type_UInt64:
+        case KFDataDefine::DataTypeInt32:
+        case KFDataDefine::DataTypeUInt32:
+        case KFDataDefine::DataTypeInt64:
+        case KFDataDefine::DataTypeUInt64:
         {
             CreateShowData( pbshowelement, kfdata->_data_setting->_logic_name, kfdata->Get(), true, kfdata->_data_setting->_name );
             break;
         }
-        case KFDataDefine::Type_Object:
-        case KFDataDefine::Type_Record:
+        case KFDataDefine::DataTypeObject:
+        case KFDataDefine::DataTypeRecord:
         {
             auto configid = kfdata->Get( kfdata->_data_setting->_config_key_name );
             auto pbshowdata = CreateShowData( pbshowelement, kfdata->_data_setting->_logic_name, configid, false, kfdata->_data_setting->_name );
             for ( auto kfchild = kfdata->First(); kfchild != nullptr; kfchild = kfdata->Next() )
             {
-                if ( !kfchild->_data_setting->HaveMask( KFDataDefine::Mask_Show ) ||
+                if ( !kfchild->_data_setting->HaveMask( KFDataDefine::DataMaskShow ) ||
                         !kfchild->IsValid() )
                 {
                     continue;
@@ -1006,7 +1006,7 @@ namespace KFrame
         elementresult._operate = KFEnum::Add;
         elementresult._sequence = _element_sequence;
         elementresult._element = const_cast< KFElement* >( kfelement );
-        elementresult._is_need_show = kfdata->_data_setting->HaveMask( KFDataDefine::Mask_Show );
+        elementresult._is_need_show = kfdata->_data_setting->HaveMask( KFDataDefine::DataMaskShow );
         elementresult._module_name = modulename;
         elementresult._module_id = moduleid;
 
@@ -1021,10 +1021,10 @@ namespace KFrame
             // 没有注册的函数
             switch ( kfdata->_data_type )
             {
-            case KFDataDefine::Type_Object:
+            case KFDataDefine::DataTypeObject:
                 ok = AddObjectElement( kfdata, &elementresult, function, line );
                 break;
-            case KFDataDefine::Type_Record:
+            case KFDataDefine::DataTypeRecord:
                 ok = AddRecordElement( kfdata, &elementresult, function, line );
                 break;
             default:
@@ -1057,7 +1057,7 @@ namespace KFrame
         auto kfelementvalue = reinterpret_cast< KFElementValue* >( kfresult->_element );
         switch ( kfelementvalue->_value->_type )
         {
-        case KFDataDefine::Type_UInt32:
+        case KFDataDefine::DataTypeUInt32:
         {
             auto usevalue = kfelementvalue->_value->CalcUseValue( kfdata->_data_setting, kfresult->_multiple );
             UpdateData( kfdata, kfelementvalue->_operate, usevalue );
@@ -1065,7 +1065,7 @@ namespace KFrame
             kfresult->AddResult( usevalue );
         }
         break;
-        case KFDataDefine::Type_String:
+        case KFDataDefine::DataTypeString:
             UpdateData( kfdata, kfelementvalue->_value->GetValue() );
             break;
         default:
@@ -1090,13 +1090,13 @@ namespace KFrame
             auto kfvalue = iter.second;
             switch ( kfvalue->_type )
             {
-            case KFDataDefine::Type_UInt32:
+            case KFDataDefine::DataTypeUInt32:
                 UpdateData( 0, kfchild, kfelement->_operate, kfvalue->CalcUseValue( kfchild->_data_setting, multiple ) );
                 break;
-            case KFDataDefine::Type_String:
+            case KFDataDefine::DataTypeString:
                 UpdateData( kfchild, kfvalue->GetValue() );
                 break;
-            case KFDataDefine::Type_Object:
+            case KFDataDefine::DataTypeObject:
             {
                 auto kfobjvalue = static_cast< KFObjValue* >( kfvalue );
                 kfobjvalue->_element->SetOperate( kfelement->_operate );
@@ -1122,13 +1122,13 @@ namespace KFrame
             auto kfvalue = iter.second;
             switch ( kfvalue->_type )
             {
-            case KFDataDefine::Type_UInt32:
+            case KFDataDefine::DataTypeUInt32:
                 kfchild->Set( kfvalue->CalcUseValue( kfchild->_data_setting, multiple ) );
                 break;
-            case KFDataDefine::Type_String:
+            case KFDataDefine::DataTypeString:
                 kfchild->Set( kfvalue->GetValue() );
                 break;
-            case KFDataDefine::Type_Object:
+            case KFDataDefine::DataTypeObject:
                 SetElementToData( kfchild, static_cast< KFObjValue* >( kfvalue )->_element, multiple );
                 break;
             default:
@@ -1220,10 +1220,10 @@ namespace KFrame
         // 找不到处理函数, 用基础函数来处理
         switch ( kfdata->_data_type )
         {
-        case KFDataDefine::Type_Record:
+        case KFDataDefine::DataTypeRecord:
             return CheckRecordElement( kfdata, const_cast< KFElement* >( kfelement ), multiple, function, line );
             break;
-        case KFDataDefine::Type_Object:
+        case KFDataDefine::DataTypeObject:
             return CheckObjectElement( kfdata, const_cast< KFElement* >( kfelement ), multiple, function, line );
             break;
         default:
@@ -1243,7 +1243,7 @@ namespace KFrame
         }
 
         auto kfelementvalue = reinterpret_cast< KFElementValue* >( kfelement );
-        if ( !kfelementvalue->_value->IsType( KFDataDefine::Type_UInt32 ) )
+        if ( !kfelementvalue->_value->IsType( KFDataDefine::DataTypeUInt32 ) )
         {
             __LOG_ERROR_FUNCTION__( function, line, "element=[{}] is not int", kfelement->_data_name );
             return false;
@@ -1267,7 +1267,7 @@ namespace KFrame
         {
             auto& name = iter.first;
             auto kfvalue = iter.second;
-            if ( !kfvalue->IsType( KFDataDefine::Type_UInt32 ) )
+            if ( !kfvalue->IsType( KFDataDefine::DataTypeUInt32 ) )
             {
                 __LOG_ERROR_FUNCTION__( function, line, "element=[{}] is not int", name );
                 return false;
@@ -1370,10 +1370,10 @@ namespace KFrame
             // 找不到处理函数, 用基础函数来处理
             switch ( kfdata->_data_type )
             {
-            case KFDataDefine::Type_Record:
+            case KFDataDefine::DataTypeRecord:
                 ok = RemoveRecordElement( kfdata, &elementresult, function, line );
                 break;
-            case KFDataDefine::Type_Object:
+            case KFDataDefine::DataTypeObject:
                 ok = RemoveObjectElement( kfdata, &elementresult, function, line );
                 break;
             default:
@@ -1401,7 +1401,7 @@ namespace KFrame
         }
 
         auto kfelementvalue = reinterpret_cast< KFElementValue* >( kfresult->_element );
-        if ( !kfelementvalue->_value->IsType( KFDataDefine::Type_UInt32 ) )
+        if ( !kfelementvalue->_value->IsType( KFDataDefine::DataTypeUInt32 ) )
         {
             __LOG_ERROR_FUNCTION__( function, line, "element=[{}] is not int", kfresult->_element->_data_name );
             return false;
@@ -1428,7 +1428,7 @@ namespace KFrame
         {
             auto& name = iter.first;
             auto kfvalue = iter.second;
-            if ( !kfvalue->IsType( KFDataDefine::Type_UInt32 ) )
+            if ( !kfvalue->IsType( KFDataDefine::DataTypeUInt32 ) )
             {
                 __LOG_ERROR_FUNCTION__( function, line, "element=[{}] is not int", name );
                 continue;
@@ -1466,7 +1466,7 @@ namespace KFrame
         {
             auto& name = iter.first;
             auto kfvalue = iter.second;
-            if ( !kfvalue->IsType( KFDataDefine::Type_UInt32 ) )
+            if ( !kfvalue->IsType( KFDataDefine::DataTypeUInt32 ) )
             {
                 __LOG_ERROR_FUNCTION__( function, line, "element=[{}] is not int", name );
                 continue;
@@ -1507,11 +1507,11 @@ namespace KFrame
 #define __FIND_PROTO_OBJECT__\
     auto savedata = datahierarchy.front();\
     datahierarchy.pop_front();\
-    if ( savedata->_data_type == KFDataDefine::Type_Object )\
+    if ( savedata->_data_type == KFDataDefine::DataTypeObject )\
     {\
         pbobject = &( ( *pbobject->mutable_pbobject() )[ savedata->_data_setting->_name ] );\
     }\
-    else if ( savedata->_data_type == KFDataDefine::Type_Record )\
+    else if ( savedata->_data_type == KFDataDefine::DataTypeRecord )\
     {\
         auto pbrecord = &( ( *pbobject->mutable_pbrecord() )[ savedata->_data_setting->_name ] );\
         savedata = datahierarchy.front();\
@@ -1528,7 +1528,7 @@ namespace KFrame
             __FIND_PROTO_OBJECT__;
             if ( savedata == kfdata )
             {
-                static_cast<KFKernelModule*>( _kf_kernel )->SaveToObject( savedata, pbobject, KFDataDefine::Mask_Client );
+                static_cast<KFKernelModule*>( _kf_kernel )->SaveToObject( savedata, pbobject, KFDataDefine::DataMaskClient );
             }
         } while ( !datahierarchy.empty() );
     }
@@ -1558,7 +1558,7 @@ namespace KFrame
         do
         {
             __FIND_PROTO_OBJECT__;
-            if ( savedata->_data_type == KFDataDefine::Type_Array )
+            if ( savedata->_data_type == KFDataDefine::DataTypeArray )
             {
                 auto pbarray = &( ( *pbobject->mutable_pbarray() )[ savedata->_data_setting->_name ] );
                 savedata = datahierarchy.front();
@@ -1581,26 +1581,26 @@ namespace KFrame
         auto datasetting = kfdata->_data_setting;
         switch ( kfdata->_data_type )
         {
-        case KFDataDefine::Type_Int32:
+        case KFDataDefine::DataTypeInt32:
             ( *pbobject->mutable_pbint32() )[ datasetting->_name ] = kfdata->Get< int32 >();
             break;
-        case KFDataDefine::Type_UInt32:
+        case KFDataDefine::DataTypeUInt32:
             ( *pbobject->mutable_pbuint32() )[ datasetting->_name ] = kfdata->Get< uint32 >();
             break;
-        case KFDataDefine::Type_Int64:
+        case KFDataDefine::DataTypeInt64:
             ( *pbobject->mutable_pbint64() )[ datasetting->_name ] = kfdata->Get< int64 >();
             break;
-        case KFDataDefine::Type_UInt64:
+        case KFDataDefine::DataTypeUInt64:
             ( *pbobject->mutable_pbuint64() )[ datasetting->_name ] = kfdata->Get< uint64 >();
             break;
-        case KFDataDefine::Type_Double:
+        case KFDataDefine::DataTypeDouble:
             ( *pbobject->mutable_pbdouble() )[ datasetting->_name ] = kfdata->Get< double >();
             break;
-        case KFDataDefine::Type_String:
+        case KFDataDefine::DataTypeString:
             ( *pbobject->mutable_pbstring() )[ datasetting->_name ] = kfdata->Get< std::string >();
             break;
-        case KFDataDefine::Type_Object:
-            static_cast< KFKernelModule* >( _kf_kernel )->SaveToObject( kfdata, pbobject, KFDataDefine::Mask_Client );
+        case KFDataDefine::DataTypeObject:
+            static_cast< KFKernelModule* >( _kf_kernel )->SaveToObject( kfdata, pbobject, KFDataDefine::DataMaskClient );
             break;
         }
     }

@@ -15,20 +15,20 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static StringUInt32 _data_mask_list =
     {
-        {"Show", KFDataDefine::Mask_Show},
-        {"Multiple", KFDataDefine::Mask_Multiple},
-        {"Save", KFDataDefine::Mask_Save},
-        {"Sync", KFDataDefine::Mask_Client},
-        {"Delay", KFDataDefine::Mask_Delay},
-        {"View", KFDataDefine::Mask_View},
-        {"Basic", KFDataDefine::Mask_Basic},
-        {"Relation", KFDataDefine::Mask_Relation},
-        {"Team", KFDataDefine::Mask_Team},
-        {"Guild", KFDataDefine::Mask_Guild},
-        {"Rank", KFDataDefine::Mask_Rank},
-        {"AddCall", KFDataDefine::Mask_AddCall},
-        {"RemoveCall", KFDataDefine::Mask_RemoveCall},
-        {"UpdateCall", KFDataDefine::Mask_UpdataCall},
+        {"Show", KFDataDefine::DataMaskShow},
+        {"Multiple", KFDataDefine::DataMaskMultiple},
+        {"Save", KFDataDefine::DataMaskSave},
+        {"Sync", KFDataDefine::DataMaskClient},
+        {"Delay", KFDataDefine::DataMaskDelay},
+        {"View", KFDataDefine::DataMaskView},
+        {"Basic", KFDataDefine::DataMaskBasic},
+        {"Relation", KFDataDefine::DataMaskRelation},
+        {"Team", KFDataDefine::DataMaskTeam},
+        {"Guild", KFDataDefine::DataMaskGuild},
+        {"Rank", KFDataDefine::DataMaskRank},
+        {"AddCall", KFDataDefine::DataMaskAddCall},
+        {"RemoveCall", KFDataDefine::DataMaskRemoveCall},
+        {"UpdateCall", KFDataDefine::DataMaskUpdataCall},
     };
 
     void KFDataConfig::ReadSetting( KFNode& xmlnode, KFClassSetting* kfsetting )
@@ -51,16 +51,16 @@ namespace KFrame
         kfdatasetting->_logic_type = kfdatasetting->_type;
         switch ( kfdatasetting->_type )
         {
-        case KFDataDefine::Type_Int32:
+        case KFDataDefine::DataTypeInt32:
             kfdatasetting->_int_max_value = __MAX_INT32__;
             break;
-        case KFDataDefine::Type_UInt32:
+        case KFDataDefine::DataTypeUInt32:
             kfdatasetting->_int_max_value = __MAX_UINT32__;
             break;
-        case KFDataDefine::Type_Int64:
+        case KFDataDefine::DataTypeInt64:
             kfdatasetting->_int_max_value = __MAX_INT64__;
             break;
-        case KFDataDefine::Type_UInt64:
+        case KFDataDefine::DataTypeUInt64:
             kfdatasetting->_int_max_value = __MAX_UINT64__;
             break;
         }
@@ -69,13 +69,13 @@ namespace KFrame
         if ( !kfdatasetting->_contain_class.empty() )
         {
             auto type = KFDataDefine::ConvertDataType( kfdatasetting->_contain_class );
-            if ( type != KFDataDefine::Type_Unknow )
+            if ( type != KFDataDefine::DataTypeUnknow )
             {
                 kfdatasetting->_logic_type = type;
             }
             else
             {
-                kfdatasetting->_logic_type = KFDataDefine::Type_Object;
+                kfdatasetting->_logic_type = KFDataDefine::DataTypeObject;
             }
         }
 

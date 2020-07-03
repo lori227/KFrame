@@ -72,22 +72,22 @@ namespace KFrame
 
     KFMsg::PBObject* KFKernelModule::Serialize( KFData* kfdata )
     {
-        return SerializeObject( kfdata, KFDataDefine::Mask_Null );
+        return SerializeObject( kfdata, KFDataDefine::DataMaskNull );
     }
 
     KFMsg::PBObject* KFKernelModule::SerializeToClient( KFData* kfdata )
     {
-        return SerializeObject( kfdata, KFDataDefine::Mask_Client );
+        return SerializeObject( kfdata, KFDataDefine::DataMaskClient );
     }
 
     KFMsg::PBObject* KFKernelModule::SerializeToData( KFData* kfdata )
     {
-        return SerializeObject( kfdata, KFDataDefine::Mask_Save );
+        return SerializeObject( kfdata, KFDataDefine::DataMaskSave );
     }
 
     KFMsg::PBObject* KFKernelModule::SerializeToView( KFData* kfdata )
     {
-        return SerializeObject( kfdata, KFDataDefine::Mask_View );
+        return SerializeObject( kfdata, KFDataDefine::DataMaskView );
     }
 
     KFMsg::PBObject* KFKernelModule::SerializeObject( KFData* kfdata, uint32 datamask )
@@ -214,14 +214,14 @@ case datatype:\
 
             switch ( datasetting->_type )
             {
-                __SAVE_TO_PROTO__( KFDataDefine::Type_Int32, pbint32, int32 );
-                __SAVE_TO_PROTO__( KFDataDefine::Type_UInt32, pbuint32, uint32 );
-                __SAVE_TO_PROTO__( KFDataDefine::Type_Int64, pbint64, int64 );
-                __SAVE_TO_PROTO__( KFDataDefine::Type_UInt64, pbuint64, uint64 );
-                __SAVE_TO_PROTO__( KFDataDefine::Type_Double, pbdouble, double );
-                __SAVE_TO_PROTO__( KFDataDefine::Type_String, pbstring, std::string );
+                __SAVE_TO_PROTO__( KFDataDefine::DataTypeInt32, pbint32, int32 );
+                __SAVE_TO_PROTO__( KFDataDefine::DataTypeUInt32, pbuint32, uint32 );
+                __SAVE_TO_PROTO__( KFDataDefine::DataTypeInt64, pbint64, int64 );
+                __SAVE_TO_PROTO__( KFDataDefine::DataTypeUInt64, pbuint64, uint64 );
+                __SAVE_TO_PROTO__( KFDataDefine::DataTypeDouble, pbdouble, double );
+                __SAVE_TO_PROTO__( KFDataDefine::DataTypeString, pbstring, std::string );
 
-            case KFDataDefine::Type_Array:
+            case KFDataDefine::DataTypeArray:
             {
                 auto& pbarray = ( *proto->mutable_pbarray() )[ datasetting->_name ];
 
@@ -236,13 +236,13 @@ case datatype:\
                 }
                 break;
             }
-            case KFDataDefine::Type_Object:
+            case KFDataDefine::DataTypeObject:
             {
                 auto& pbobject = ( *proto->mutable_pbobject() )[ datasetting->_name ];
                 SaveToObject( kfchild, &pbobject, datamask );
                 break;
             }
-            case KFDataDefine::Type_Record:
+            case KFDataDefine::DataTypeRecord:
             {
                 auto& pbrecord = ( *proto->mutable_pbrecord() )[ datasetting->_name ];
                 for ( auto kfobject = kfchild->First(); kfobject != nullptr; kfobject = kfchild->Next() )

@@ -4,7 +4,7 @@ namespace KFrame
 {
     KFUInt64::KFUInt64()
     {
-        _data_type = KFDataDefine::Type_UInt64;
+        _data_type = KFDataDefine::DataTypeUInt64;
     }
 
     uint64 KFUInt64::GetUInt64()

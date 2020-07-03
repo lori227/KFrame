@@ -4,7 +4,7 @@ namespace KFrame
 {
     KFArray::KFArray()
     {
-        _data_type = KFDataDefine::Type_Array;
+        _data_type = KFDataDefine::DataTypeArray;
     }
 
     void KFArray::Resize( uint32 size )

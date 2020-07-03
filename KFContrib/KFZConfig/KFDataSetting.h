@@ -14,55 +14,55 @@ namespace KFrame
             ////////////////////////////////////////////////////////////////////////////
             ////////////////////////////////////////////////////////////////////////////
             // 数据类型
-            Type_Unknow = 0,
-            Type_Int32 = 1,
-            Type_UInt32 = 2,
-            Type_Int64 = 3,
-            Type_UInt64 = 4,
-            Type_Double = 5,
-            Type_String = 6,
-            Type_Vector3D = 7,
-            Type_Object = 8,
-            Type_Record = 9,
-            Type_Array = 10,
+            DataTypeUnknow = 0,
+            DataTypeInt32 = 1,
+            DataTypeUInt32 = 2,
+            DataTypeInt64 = 3,
+            DataTypeUInt64 = 4,
+            DataTypeDouble = 5,
+            DataTypeString = 6,
+            DataTypeVector3D = 7,
+            DataTypeObject = 8,
+            DataTypeRecord = 9,
+            DataTypeArray = 10,
             ////////////////////////////////////////////////////////////////////////////
 
-            Mask_Null = 0,				// 无效值
-            Mask_Client = 1 << 1,		// 更新同步玩家
-            Mask_View = 1 << 2,			// 同步给附近玩家
-            Mask_Save = 1 << 3,			// 是否保存数据
-            Mask_Multiple = 1 << 4,		// 是否支持倍数
-            Mask_Show = 1 << 5,			// 是否显示给客户端
-            Mask_Delay = 1 << 6,		// 延迟同步到客户端
-            Mask_AddCall = 1 << 7,		// 是否添加回调
-            Mask_RemoveCall = 1 << 8,	// 是否删除回调
-            Mask_UpdataCall = 1 << 9,	// 是否更新回调
+            DataMaskNull = 0,				// 无效值
+            DataMaskClient = 1 << 1,		// 更新同步玩家
+            DataMaskView = 1 << 2,			// 同步给附近玩家
+            DataMaskSave = 1 << 3,			// 是否保存数据
+            DataMaskMultiple = 1 << 4,		// 是否支持倍数
+            DataMaskShow = 1 << 5,			// 是否显示给客户端
+            DataMaskDelay = 1 << 6,			// 延迟同步到客户端
+            DataMaskAddCall = 1 << 7,		// 是否添加回调
+            DataMaskRemoveCall = 1 << 8,	// 是否删除回调
+            DataMaskUpdataCall = 1 << 9,	// 是否更新回调
 
-            Mask_Basic = 1 << 20,		// 基础属性
-            Mask_Relation = 1 << 21,	// 关系属性
-            Mask_Team = 1 << 22,		// 队伍属性
-            Mask_Guild = 1 << 23,		// 帮派属性
-            Mask_Rank = 1 << 24,		// 排行榜属性
+            DataMaskBasic = 1 << 20,		// 基础属性
+            DataMaskRelation = 1 << 21,		// 关系属性
+            DataMaskTeam = 1 << 22,			// 队伍属性
+            DataMaskGuild = 1 << 23,		// 帮派属性
+            DataMaskRank = 1 << 24,			// 排行榜属性
             ////////////////////////////////////////////////////////////////////////////
-            Data_Delete_None  = 0,		// 需要保存
-            Data_Delete_Save = 1,		// 保存数据库
-            Data_Delete_Remove = 2,		// 删除数据库
+            DataDeleteNone  = 0,			// 需要保存
+            DataDeleteSave = 1,				// 保存数据库
+            DataDeleteRemove = 2,			// 删除数据库
             ////////////////////////////////////////////////////////////////////////////
             ////////////////////////////////////////////////////////////////////////////
         };
 
         static const StringUInt32 _data_type_list =
         {
-            {"int32", Type_Int32},
-            {"uint32", Type_UInt32},
-            {"int64", Type_Int64},
-            {"uint64", Type_UInt64},
-            {"double", Type_Double},
-            {"string", Type_String},
-            {"vector3d", Type_Vector3D},
-            {"object", Type_Object},
-            {"record", Type_Record},
-            {"array", Type_Array},
+            {"int32", DataTypeInt32},
+            {"uint32", DataTypeUInt32},
+            {"int64", DataTypeInt64},
+            {"uint64", DataTypeUInt64},
+            {"double", DataTypeDouble},
+            {"string", DataTypeString},
+            {"vector3d", DataTypeVector3D},
+            {"object", DataTypeObject},
+            {"record", DataTypeRecord},
+            {"array", DataTypeArray},
         };
 
         static uint32 ConvertDataType( const std::string& strtype )
@@ -70,7 +70,7 @@ namespace KFrame
             auto iter = _data_type_list.find( strtype );
             if ( iter == _data_type_list.end() )
             {
-                return Type_Unknow;
+                return DataTypeUnknow;
             }
 
             return iter->second;

@@ -409,7 +409,7 @@ namespace KFrame
     const DataKeyType& KFComponentEx::FormatDataKey( KFData* kfdata )
     {
         auto kfparent = kfdata->GetParent();
-        if ( kfparent->_data_setting->_type == KFDataDefine::Type_Array )
+        if ( kfparent->_data_setting->_type == KFDataDefine::DataTypeArray )
         {
             if ( kfparent->GetParent() != nullptr )
             {
@@ -611,8 +611,8 @@ namespace KFrame
         }
 
         // 模块回调
-        if ( kfdata->HaveMask( KFDataDefine::Mask_UpdataCall ) &&
-                kfdata->GetParent()->HaveMask( KFDataDefine::Mask_UpdataCall ) )
+        if ( kfdata->HaveMask( KFDataDefine::DataMaskUpdataCall ) &&
+                kfdata->GetParent()->HaveMask( KFDataDefine::DataMaskUpdataCall ) )
         {
             for ( auto& iter : _update_data_module._objects )
             {
@@ -643,8 +643,8 @@ namespace KFrame
         }
 
         // 模块回调
-        if ( kfdata->HaveMask( KFDataDefine::Mask_UpdataCall ) &&
-                kfdata->GetParent()->HaveMask( KFDataDefine::Mask_UpdataCall ) )
+        if ( kfdata->HaveMask( KFDataDefine::DataMaskUpdataCall ) &&
+                kfdata->GetParent()->HaveMask( KFDataDefine::DataMaskUpdataCall ) )
         {
             for ( auto& iter : _update_string_module._objects )
             {
@@ -699,7 +699,7 @@ namespace KFrame
             kfentity->SyncAddData( kfdata, key );
 
             // 模块回调
-            if ( kfdata->HaveMask( KFDataDefine::Mask_AddCall ) )
+            if ( kfdata->HaveMask( KFDataDefine::DataMaskAddCall ) )
             {
                 for ( auto& iter : _add_data_module._objects )
                 {
@@ -737,7 +737,7 @@ namespace KFrame
         }
 
         // 模块回调
-        if ( kfdata->HaveMask( KFDataDefine::Mask_RemoveCall ) )
+        if ( kfdata->HaveMask( KFDataDefine::DataMaskRemoveCall ) )
         {
             for ( auto& iter : _remove_data_module._objects )
             {
@@ -768,8 +768,8 @@ namespace KFrame
     void KFComponentEx::StartSaveEntityTimer( KFEntity* kfentity, KFData* kfdata )
     {
         // 不需要保存
-        if ( !kfdata->HaveMask( KFDataDefine::Mask_Save ) ||
-                !kfentity->HaveMask( KFDataDefine::Mask_Save ) )
+        if ( !kfdata->HaveMask( KFDataDefine::DataMaskSave ) ||
+                !kfentity->HaveMask( KFDataDefine::DataMaskSave ) )
         {
             return;
         }
@@ -801,10 +801,10 @@ namespace KFrame
     {
         switch ( kfentity->_data_setting->_delete_type )
         {
-        case KFDataDefine::Data_Delete_Save:
+        case KFDataDefine::DataDeleteSave:
             SaveEntity( kfentity, KFSaveEnum::OfflineSave, __FUNC_LINE__ );
             break;
-        case KFDataDefine::Data_Delete_Remove:
+        case KFDataDefine::DataDeleteRemove:
             DeleteEntity( kfentity );
             break;
         default:

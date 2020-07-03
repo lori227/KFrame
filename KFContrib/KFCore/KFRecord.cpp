@@ -4,7 +4,7 @@ namespace KFrame
 {
     KFRecord::KFRecord()
     {
-        _data_type = KFDataDefine::Type_Record;
+        _data_type = KFDataDefine::DataTypeRecord;
     }
 
     void KFRecord::Reset( bool isdelete /* = true */ )

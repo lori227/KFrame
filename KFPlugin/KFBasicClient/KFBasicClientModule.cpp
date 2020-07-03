@@ -101,8 +101,8 @@ namespace KFrame
     {
         // 只有公共属性才更新
         if ( !player->IsInited() ||
-                !kfdata->HaveMask( KFDataDefine::Mask_Basic ) ||
-                !kfdata->GetParent()->HaveMask( KFDataDefine::Mask_Basic ) )
+                !kfdata->HaveMask( KFDataDefine::DataMaskBasic ) ||
+                !kfdata->GetParent()->HaveMask( KFDataDefine::DataMaskBasic ) )
         {
             return;
         }
@@ -114,8 +114,8 @@ namespace KFrame
     {
         // 只有公共属性才更新
         if ( !player->IsInited() ||
-                !kfdata->HaveMask( KFDataDefine::Mask_Basic ) ||
-                !kfdata->GetParent()->HaveMask( KFDataDefine::Mask_Basic ) )
+                !kfdata->HaveMask( KFDataDefine::DataMaskBasic ) ||
+                !kfdata->GetParent()->HaveMask( KFDataDefine::DataMaskBasic ) )
         {
             return;
         }

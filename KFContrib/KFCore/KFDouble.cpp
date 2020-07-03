@@ -4,7 +4,7 @@ namespace KFrame
 {
     KFDouble::KFDouble()
     {
-        _data_type = KFDataDefine::Type_Double;
+        _data_type = KFDataDefine::DataTypeDouble;
     }
 
     double KFDouble::GetDouble()

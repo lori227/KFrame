@@ -4,7 +4,7 @@ namespace KFrame
 {
     KFInt32::KFInt32()
     {
-        _data_type = KFDataDefine::Type_Int32;
+        _data_type = KFDataDefine::DataTypeInt32;
     }
 
     int32 KFInt32::GetInt32()

@@ -7,13 +7,13 @@ namespace KFrame
 {
     bool KFValue::IsNeedShow()
     {
-        return _data_setting != nullptr && _data_setting->HaveMask( KFDataDefine::Mask_Show );
+        return _data_setting != nullptr && _data_setting->HaveMask( KFDataDefine::DataMaskShow );
     }
     /////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////
     KFIntValue::KFIntValue()
     {
-        _type = KFDataDefine::Type_UInt32;
+        _type = KFDataDefine::DataTypeUInt32;
     }
 
     void KFIntValue::SetValue( std::string value )
@@ -26,7 +26,7 @@ namespace KFrame
         _data_setting = kfsetting;
         _use_value = _range.CalcValue();
 
-        if ( multiple != 1.0f && _data_setting != nullptr && _data_setting->HaveMask( KFDataDefine::Mask_Multiple ) )
+        if ( multiple != 1.0f && _data_setting != nullptr && _data_setting->HaveMask( KFDataDefine::DataMaskMultiple ) )
         {
             _use_value = static_cast< uint64 >( std::round( _use_value * multiple ) );
             _use_value = __MAX__( 1u, _use_value );
@@ -53,7 +53,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////
     KFStrValue::KFStrValue()
     {
-        _type = KFDataDefine::Type_String;
+        _type = KFDataDefine::DataTypeString;
     }
 
     void KFStrValue::SetValue( std::string value )
@@ -68,7 +68,7 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////
     KFObjValue::KFObjValue()
     {
-        _type = KFDataDefine::Type_Object;
+        _type = KFDataDefine::DataTypeObject;
         _element = __KF_NEW__( KFElementObject );
     }
 
@@ -80,7 +80,7 @@ namespace KFrame
 
     bool KFElement::IsNeedShow() const
     {
-        return _data_setting != nullptr && _data_setting->HaveMask( KFDataDefine::Mask_Show );
+        return _data_setting != nullptr && _data_setting->HaveMask( KFDataDefine::DataMaskShow );
     }
     //////////////////////////////////////////////////////////////////////////////////////
 
@@ -115,10 +115,10 @@ namespace KFrame
 
         switch ( _value->_type )
         {
-        case KFDataDefine::Type_UInt32:
+        case KFDataDefine::DataTypeUInt32:
             _result = __FORMAT__( "{{\"{}\":\"{}\"}}", _data_name, _value->GetUseValue() );
             break;
-        case KFDataDefine::Type_String:
+        case KFDataDefine::DataTypeString:
             _result = __FORMAT__( "{{\"{}\":\"{}\"}}", _data_name, _value->GetValue() );
             break;
         default:
@@ -152,7 +152,7 @@ namespace KFrame
     uint64 KFElementObject::CalcValue( const KFDataSetting* kfsetting, const std::string& dataname, double multiple )
     {
         auto kfvalue = _values.Find( dataname );
-        if ( kfvalue == nullptr || !kfvalue->IsType( KFDataDefine::Type_UInt32 ) )
+        if ( kfvalue == nullptr || !kfvalue->IsType( KFDataDefine::DataTypeUInt32 ) )
         {
             return _invalid_int;
         }
@@ -163,7 +163,7 @@ namespace KFrame
     uint64 KFElementObject::GetValue( const std::string& dataname ) const
     {
         auto kfvalue = _values.Find( dataname );
-        if ( kfvalue == nullptr || !kfvalue->IsType( KFDataDefine::Type_UInt32 ) )
+        if ( kfvalue == nullptr || !kfvalue->IsType( KFDataDefine::DataTypeUInt32 ) )
         {
             return _invalid_int;
         }
@@ -200,13 +200,13 @@ namespace KFrame
             auto kfvalue = iter.second;
             switch ( kfvalue->_type )
             {
-            case KFDataDefine::Type_UInt32:
+            case KFDataDefine::DataTypeUInt32:
                 __JSON_SET_VALUE__( kfobject, iter.first, kfvalue->GetUseValue() );
                 break;
-            case KFDataDefine::Type_String:
+            case KFDataDefine::DataTypeString:
                 __JSON_SET_VALUE__( kfobject, iter.first, kfvalue->GetValue() );
                 break;
-            case KFDataDefine::Type_Object:
+            case KFDataDefine::DataTypeObject:
             {
                 __JSON_OBJECT__( kfchild );
                 auto objvalue = static_cast< KFObjValue* >( kfvalue );
@@ -215,10 +215,10 @@ namespace KFrame
                     auto kfvalue = iter.second;
                     switch ( kfvalue->_type )
                     {
-                    case KFDataDefine::Type_UInt32:
+                    case KFDataDefine::DataTypeUInt32:
                         __JSON_SET_VALUE__( kfchild, iter.first, kfvalue->GetUseValue() );
                         break;
-                    case KFDataDefine::Type_String:
+                    case KFDataDefine::DataTypeString:
                         __JSON_SET_VALUE__( kfchild, iter.first, kfvalue->GetValue() );
                         break;
                     }
@@ -375,7 +375,7 @@ namespace KFrame
             }
 
             auto kfelementvalue = static_cast< KFElementValue* >( kfelement );
-            if ( kfelementvalue->_value->IsType( KFDataDefine::Type_UInt32 ) )
+            if ( kfelementvalue->_value->IsType( KFDataDefine::DataTypeUInt32 ) )
             {
                 auto value = static_cast< uint64 >( kfelementvalue->_value->GetUseValue() * multiple );
 

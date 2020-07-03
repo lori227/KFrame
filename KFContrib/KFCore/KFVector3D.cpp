@@ -4,7 +4,7 @@ namespace KFrame
 {
     KFVector3D::KFVector3D()
     {
-        _data_type = KFDataDefine::Type_Vector3D;
+        _data_type = KFDataDefine::DataTypeVector3D;
     }
 
     const Math3D::Vector3D& KFVector3D::GetVector3D()

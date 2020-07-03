@@ -33,34 +33,34 @@ namespace KFrame
     {
         switch ( type )
         {
-        case KFDataDefine::Type_Int32:
+        case KFDataDefine::DataTypeInt32:
             return __KF_NEW__( KFInt32 );
             break;
-        case KFDataDefine::Type_UInt32:
+        case KFDataDefine::DataTypeUInt32:
             return __KF_NEW__( KFUInt32 );
             break;
-        case KFDataDefine::Type_Int64:
+        case KFDataDefine::DataTypeInt64:
             return __KF_NEW__( KFInt64 );
             break;
-        case KFDataDefine::Type_UInt64:
+        case KFDataDefine::DataTypeUInt64:
             return __KF_NEW__( KFUInt64 );
             break;
-        case KFDataDefine::Type_Double:
+        case KFDataDefine::DataTypeDouble:
             return __KF_NEW__( KFDouble );
             break;
-        case KFDataDefine::Type_String:
+        case KFDataDefine::DataTypeString:
             return __KF_NEW__( KFString );
             break;
-        case KFDataDefine::Type_Vector3D:
+        case KFDataDefine::DataTypeVector3D:
             return __KF_NEW__( KFVector3D );
             break;
-        case KFDataDefine::Type_Object:
+        case KFDataDefine::DataTypeObject:
             return __KF_NEW__( KFObject );
             break;
-        case KFDataDefine::Type_Record:
+        case KFDataDefine::DataTypeRecord:
             return __KF_NEW__( KFRecord );
             break;
-        case KFDataDefine::Type_Array:
+        case KFDataDefine::DataTypeArray:
             return __KF_NEW__( KFArray );
             break;
         default:
@@ -163,10 +163,10 @@ namespace KFrame
         {
             switch ( kfchild->_data_type )
             {
-            case KFDataDefine::Type_Object:
+            case KFDataDefine::DataTypeObject:
                 DestroyObjectToDataPool( kfchild );
                 break;
-            case KFDataDefine::Type_Record:
+            case KFDataDefine::DataTypeRecord:
                 DestroyRecordToDataPool( kfchild );
                 break;
             }
@@ -221,10 +221,10 @@ namespace KFrame
             // 初始化
             switch ( childdatasetting->_type )
             {
-            case KFDataDefine::Type_Object:
+            case KFDataDefine::DataTypeObject:
                 InitData( kfchilddata, childdatasetting );
                 break;
-            case KFDataDefine::Type_Array:
+            case KFDataDefine::DataTypeArray:
                 InitArray( kfchilddata, childdatasetting->_int_max_capacity );
                 break;
             default:

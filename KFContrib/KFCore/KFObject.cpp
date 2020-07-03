@@ -4,7 +4,7 @@ namespace KFrame
 {
     KFObject::KFObject()
     {
-        _data_type = KFDataDefine::Type_Object;
+        _data_type = KFDataDefine::DataTypeObject;
     }
 
     uint32 KFObject::GetConfigID()

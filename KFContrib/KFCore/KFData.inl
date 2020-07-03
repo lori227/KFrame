@@ -231,19 +231,19 @@ namespace KFrame
     {
         switch ( _data_type )
         {
-        case KFDataDefine::Type_Int32:
+        case KFDataDefine::DataTypeInt32:
             return static_cast<T>( GetInt32() );
             break;
-        case KFDataDefine::Type_UInt32:
+        case KFDataDefine::DataTypeUInt32:
             return static_cast<T>( GetUInt32() );
             break;
-        case KFDataDefine::Type_Int64:
+        case KFDataDefine::DataTypeInt64:
             return static_cast<T>( GetInt64() );
             break;
-        case KFDataDefine::Type_UInt64:
+        case KFDataDefine::DataTypeUInt64:
             return static_cast<T>( GetUInt64() );
             break;
-        case KFDataDefine::Type_Double:
+        case KFDataDefine::DataTypeDouble:
             return static_cast<T>( GetDouble() );
             break;
         default:
@@ -258,19 +258,19 @@ namespace KFrame
     {
         switch ( _data_type )
         {
-        case KFDataDefine::Type_Int32:
+        case KFDataDefine::DataTypeInt32:
             return static_cast< T >( SetInt32( static_cast<int32>( value ) ) );
             break;
-        case KFDataDefine::Type_UInt32:
+        case KFDataDefine::DataTypeUInt32:
             return static_cast< T >( SetUInt32( static_cast<uint32>( value ) ) );
             break;
-        case KFDataDefine::Type_Int64:
+        case KFDataDefine::DataTypeInt64:
             return static_cast< T >( SetInt64( static_cast<int64>( value ) ) );
             break;
-        case KFDataDefine::Type_UInt64:
+        case KFDataDefine::DataTypeUInt64:
             return static_cast< T >( SetUInt64( static_cast<uint64>( value ) ) );
             break;
-        case KFDataDefine::Type_Double:
+        case KFDataDefine::DataTypeDouble:
             return static_cast< T >( SetDouble( static_cast<double>( value ) ) );
             break;
         default:

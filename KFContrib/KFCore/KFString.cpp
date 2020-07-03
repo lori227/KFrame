@@ -4,7 +4,7 @@ namespace KFrame
 {
     KFString::KFString()
     {
-        _data_type = KFDataDefine::Type_String;
+        _data_type = KFDataDefine::DataTypeString;
     }
 
     const std::string& KFString::GetString()

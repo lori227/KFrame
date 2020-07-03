@@ -531,13 +531,13 @@ namespace KFrame
             return;
         }
 
-        kfdata->AddMask( KFDataDefine::Mask_Client );
+        kfdata->AddMask( KFDataDefine::DataMaskClient );
         switch (  kfdata->_data_setting->_type )
         {
-        case KFDataDefine::Type_Object:
+        case KFDataDefine::DataTypeObject:
             player->SyncUpdateData( kfdata, kfdata->GetKeyID() );
             break;
-        case KFDataDefine::Type_Record:
+        case KFDataDefine::DataTypeRecord:
             player->SynAddRecordData( kfdata );
             break;
         default:
@@ -555,6 +555,6 @@ namespace KFrame
             return;
         }
 
-        kfdata->RemoveMask( KFDataDefine::Mask_Client );
+        kfdata->RemoveMask( KFDataDefine::DataMaskClient );
     }
 }
