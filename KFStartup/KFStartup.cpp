@@ -109,7 +109,7 @@ namespace KFrame
         auto kfsetting = _app_config->FindStartupSetting( pluginname );
         if ( kfsetting == nullptr )
         {
-            return;
+            return __LOG_ERROR__( "plugin=[{}] not setting", pluginname );
         }
 
         auto name = params[ 1 ];
@@ -142,7 +142,7 @@ namespace KFrame
         }
         else
         {
-            __LOG_INFO__( "plugin=[{}] uninstall failed", pluginname );
+            return __LOG_ERROR__( "plugin=[{}] uninstall failed", pluginname );
         }
 
         KFThread::Sleep( 200 );
