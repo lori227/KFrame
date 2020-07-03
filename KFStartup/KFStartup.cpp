@@ -115,16 +115,21 @@ namespace KFrame
         auto name = params[ 1 ];
         auto path = params[ 2 ];
         auto filename = __FORMAT__( "{}{}", path, name );
+        auto newfilename = __FORMAT__( "{}.new", filename );
 
         try
         {
-            // 修改文件名
-            auto newfilename = __FORMAT__( "{}.new", filename );
+            // 判断新文件是否存在
             Poco::File newfile( newfilename );
             if ( !newfile.exists() )
             {
-                return __LOG_ERROR__( "plugin=[{}] not exist", filename );
+                return __LOG_ERROR__( "plugin=[{}] not exist", newfilename );
             }
+
+            // 删除旧文件
+            Poco::File oldfile( filename );
+            oldfile.remove();
+            __LOG_INFO__( "plugin=[{}] remove ok", filename );
         }
         catch ( ... )
         {
@@ -132,6 +137,7 @@ namespace KFrame
         }
 
         __LOG_INFO__( "plugin=[{}] uninstall start", pluginname );
+
         // 卸载
         auto ok = UnLoadPluginLibrary( pluginname );
         if ( ok )
@@ -145,18 +151,13 @@ namespace KFrame
 
         try
         {
-            // 删除旧文件
-            Poco::File oldfile( filename );
-            oldfile.remove();
-
             // 修改文件名
-            auto newfilename = __FORMAT__( "{}.new", filename );
             Poco::File newfile( newfilename );
-            newfile.renameTo( filename );
+            newfile.copyTo( filename );
         }
         catch ( ... )
         {
-            __LOG_ERROR__( "plugin=[{}] rename failed", filename );
+            __LOG_ERROR__( "plugin=[{}] rename failed", newfilename );
         }
 
         // 加载
