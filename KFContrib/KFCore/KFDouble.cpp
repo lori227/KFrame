@@ -31,10 +31,7 @@ namespace KFrame
 
     void KFDouble::InitData()
     {
-        if ( _data_setting->_int_init_value != 0.0f )
-        {
-            _data = _data_setting->_int_init_value;
-        }
+        _data = _data_setting->_int_init_value;
     }
 
     void KFDouble::CopyFrom( KFData* kfother )
