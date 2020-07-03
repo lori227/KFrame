@@ -92,6 +92,7 @@ namespace KFrame
     void KFPlugin::Reload()
     {
         InitModule();
+        AfterLoad();
         BeforeRun();
         PrepareRun();
 
@@ -142,7 +143,6 @@ namespace KFrame
             kfmodule->AfterShut();
         }
 
-        __DELETE_OBJECT__( kfmodule );
         _modules.erase( iter );
     }
 }

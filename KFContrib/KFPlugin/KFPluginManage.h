@@ -75,7 +75,8 @@
         auto kfmodule = (modulename##Module*)FindModule( typeid( modulename##Interface ).name());\
         __UN_PLUGIN_FUNCTION__( modulename##Module, Run ); \
         __UN_PLUGIN_FUNCTION__( modulename##Module, AfterRun );\
-        _kf_plugin_manage->UnRegistModule< modulename##Module >( this, _save_data );\
+        _kf_plugin_manage->UnRegistModule< modulename##Interface >( this, _save_data );\
+        delete kfmodule;\
     }\
 
 #define __FIND_MODULE__( module, classname ) \
