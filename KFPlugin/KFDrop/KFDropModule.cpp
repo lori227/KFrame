@@ -281,13 +281,10 @@ namespace KFrame
             }
 
             // 判断概率
-            auto rand = KFGlobal::Instance()->RandRatio( KFRandEnum::TenThousand );
-            if ( rand >= kfdropweight->_weight )
+            if ( KFGlobal::Instance()->RandCheck( KFRandEnum::TenThousand, kfdropweight->_weight ) )
             {
-                continue;
+                RandDropData( player, kfsetting, outlist, kfdropweight, excludedropdata, __FUNC_LINE__ );
             }
-
-            RandDropData( player, kfsetting, outlist, kfdropweight, excludedropdata, __FUNC_LINE__ );
         }
     }
 

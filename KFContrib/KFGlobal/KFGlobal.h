@@ -38,6 +38,9 @@ namespace KFrame
         uint32 Rand();
         uint32 RandRatio( uint32 ratio );
 
+        // 是否随机成功
+        bool RandCheck( uint32 ratio, uint32 value );
+
         // 范围内随机
         uint64 RandRange( uint64 min, uint64 max, uint64 base = 1u );
 

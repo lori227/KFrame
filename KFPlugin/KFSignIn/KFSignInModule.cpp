@@ -37,19 +37,15 @@ namespace KFrame
         }
 
         // 设置标记
-        player->UpdateData( __STRING__( sevenreward ), KFEnum::ABit, kfmsg.day() );
+        player->UpdateData( __STRING__( sevenreward ), KFEnum::Or, kfmsg.day() );
 
         // 添加奖励
-        player->AddElement( &kfsetting->_reward, true, __FUNC_LINE__ );
+        player->AddElement( &kfsetting->_reward, _default_multiple, __STRING__( signin ), kfmsg.day(), __FUNC_LINE__ );
 
         // 额外的奖励
-        if ( kfsetting->_probability > 0u )
+        if ( KFGlobal::Instance()->RandCheck( KFRandEnum::TenThousand, kfsetting->_probability ) )
         {
-            auto rand = KFGlobal::Instance()->RandRatio( KFRandEnum::TenThousand );
-            if ( rand < kfsetting->_probability )
-            {
-                player->AddElement( &kfsetting->_extend, true, __FUNC_LINE__ );
-            }
+            player->AddElement( &kfsetting->_extend, _default_multiple, __STRING__( signin ), kfmsg.day(), __FUNC_LINE__ );
         }
 
         _kf_display->SendToClient( player, KFMsg::SignInRewardOk );

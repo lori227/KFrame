@@ -95,6 +95,17 @@ namespace KFrame
         return value % ratio;
     }
 
+    bool KFGlobal::RandCheck( uint32 ratio, uint32 value )
+    {
+        if ( ratio == 0u || value == 0u )
+        {
+            return false;
+        }
+
+        auto rand = RandRatio( ratio );
+        return rand < value;
+    }
+
     uint64 KFGlobal::RandRange( uint64 min, uint64 max, uint64 base )
     {
         if ( max <= min )
