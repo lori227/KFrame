@@ -49,6 +49,22 @@ namespace KFrame
 
         kfdatasetting->_type = KFDataDefine::ConvertDataType( xmlnode.GetString( "Type" ) );
         kfdatasetting->_logic_type = kfdatasetting->_type;
+        switch ( kfdatasetting->_type )
+        {
+        case KFDataDefine::Type_Int32:
+            kfdatasetting->_int_max_value = __MAX_INT32__;
+            break;
+        case KFDataDefine::Type_UInt32:
+            kfdatasetting->_int_max_value = __MAX_UINT32__;
+            break;
+        case KFDataDefine::Type_Int64:
+            kfdatasetting->_int_max_value = __MAX_INT64__;
+            break;
+        case KFDataDefine::Type_UInt64:
+            kfdatasetting->_int_max_value = __MAX_UINT64__;
+            break;
+        }
+
         kfdatasetting->_contain_class = xmlnode.GetString( "ContainClass", true );
         if ( !kfdatasetting->_contain_class.empty() )
         {
@@ -61,18 +77,6 @@ namespace KFrame
             {
                 kfdatasetting->_logic_type = KFDataDefine::Type_Object;
             }
-        }
-
-        switch ( kfdatasetting->_type )
-        {
-        case KFDataDefine::Type_Int32:
-            kfdatasetting->_int_max_value = __MAX_INT32__;
-            break;
-        case KFDataDefine::Type_Int64:
-        case KFDataDefine::Type_UInt32:
-        case KFDataDefine::Type_UInt64:
-            kfdatasetting->_int_max_value = __MAX_UINT32__;
-            break;
         }
 
         kfdatasetting->_delay_save_time = xmlnode.GetUInt32( "SaveTime", true );

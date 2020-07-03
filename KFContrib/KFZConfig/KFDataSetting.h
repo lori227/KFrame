@@ -122,7 +122,7 @@ namespace KFrame
 
         // 最大值
         std::string _str_max_value;
-        uint32 _int_max_value = __MAX_UINT32__;
+        uint64 _int_max_value = __MAX_UINT64__;
 
         // 运行时参数
         std::string _str_run_param;
