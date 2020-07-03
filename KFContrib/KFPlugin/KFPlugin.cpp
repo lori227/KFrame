@@ -91,6 +91,7 @@ namespace KFrame
 
     void KFPlugin::Reload()
     {
+        Install();
         InitModule();
         AfterLoad();
         BeforeRun();

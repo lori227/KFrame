@@ -204,7 +204,6 @@ namespace KFrame
 
     void KFPluginManage::ReloadPlugin( KFPlugin* kfplugin )
     {
-        kfplugin->Install();
         kfplugin->Reload();
 
         // 重新初始化插件
