@@ -144,7 +144,7 @@ namespace KFrame
             return __LOG_ERROR__( "plugin=[{}] uninstall failed", pluginname );
         }
 
-        KFThread::Sleep( 200 );
+        KFThread::Sleep( 100 );
 
         try
         {
@@ -166,7 +166,7 @@ namespace KFrame
             __LOG_ERROR__( "plugin=[{}] rename failed", newfilename );
         }
 
-        KFThread::Sleep( 200 );
+        KFThread::Sleep( 100 );
 
         // 加载
         __LOG_INFO__( "plugin=[{}] install start", pluginname );
