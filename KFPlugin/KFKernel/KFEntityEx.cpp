@@ -68,7 +68,7 @@ namespace KFrame
         kfdata->Set<std::string>( value );
         if ( kfdata->_data_type == KFDataDefine::Type_Array )
         {
-            for ( uint32 i = KFGlobal::Instance()->_array_index; i < kfdata->Size(); ++i )
+            for ( auto i = KFGlobal::Instance()->_array_index; i < kfdata->Size(); ++i )
             {
                 auto kfchild = kfdata->Find( i );
                 if ( kfchild != nullptr )
