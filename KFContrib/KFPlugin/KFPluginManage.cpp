@@ -202,6 +202,15 @@ namespace KFrame
         return false;
     }
 
+    void KFPluginManage::ReloadPlugin( KFPlugin* kfplugin )
+    {
+        kfplugin->Install();
+        kfplugin->Reload();
+
+        // 重新初始化插件
+        LoadModule();
+    }
+
     void KFPluginManage::ShutDown()
     {
         for ( auto kfplugin : _plugins )

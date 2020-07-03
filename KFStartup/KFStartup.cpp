@@ -177,9 +177,7 @@ namespace KFrame
         }
 
         // 重新load
-        kfplugin->Install();
-        KFPluginManage::Instance()->LoadModule();
-        kfplugin->Reload();
+        KFPluginManage::Instance()->ReloadPlugin( kfplugin );
         __LOG_INFO__( "plugin=[{}] install ok", pluginname );
     }
 }

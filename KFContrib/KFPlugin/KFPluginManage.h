@@ -109,6 +109,9 @@ namespace KFrame
         // 初始化
         bool InitPlugin();
 
+        // 重新加载插件
+        void ReloadPlugin( KFPlugin* kfplugin );
+
         // 关闭
         void ShutDown();
 
