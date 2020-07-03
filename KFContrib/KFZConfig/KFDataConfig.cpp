@@ -68,7 +68,9 @@ namespace KFrame
         case KFDataDefine::Type_Int32:
             kfdatasetting->_int_max_value = __MAX_INT32__;
             break;
+        case KFDataDefine::Type_Int64:
         case KFDataDefine::Type_UInt32:
+        case KFDataDefine::Type_UInt64:
             kfdatasetting->_int_max_value = __MAX_UINT32__;
             break;
         }
@@ -78,7 +80,8 @@ namespace KFrame
         kfdatasetting->_str_init_value = xmlnode.GetString( "InitValue", true );
         kfdatasetting->_str_min_value = xmlnode.GetString( "MinValue", true );
         kfdatasetting->_str_max_value = xmlnode.GetString( "MaxValue", true );
-        kfdatasetting->_str_logic_value = xmlnode.GetString( "LogicValue", true );
+        kfdatasetting->_str_run_param = xmlnode.GetString( "RunParam", true );
+        kfdatasetting->_str_max_capacity = xmlnode.GetString( "Capacity", true );
         kfdatasetting->_key_name = xmlnode.GetString( "KeyName", true );
         kfdatasetting->_config_key_name = xmlnode.GetString( "ConfigKeyName", true );
         kfdatasetting->_value_key_name = xmlnode.GetString( "ValueKeyName", true );
@@ -113,6 +116,18 @@ namespace KFrame
         }
     }
 
+#define __INIT_INT_VALUE__( strvalue, intvalue )\
+    if ( strvalue != _invalid_string )\
+    {\
+        if ( KFUtility::IsNumber( strvalue ) )\
+        {\
+            intvalue = __TO_UINT32__( strvalue );\
+        }\
+        else\
+        {\
+            intvalue = kfglobal->GetUInt32( strvalue );\
+        }\
+    }
 
     void KFDataConfig::LoadAllComplete()
     {
@@ -126,56 +141,19 @@ namespace KFrame
                 auto kfdatasetting = siter.second;
 
                 // 初始值
-                if ( kfdatasetting->_str_init_value != _invalid_string )
-                {
-                    if ( KFUtility::IsNumber( kfdatasetting->_str_init_value ) )
-                    {
-                        kfdatasetting->_int_init_value = __TO_UINT32__( kfdatasetting->_str_init_value );
-                    }
-                    else
-                    {
-                        kfdatasetting->_int_init_value = kfglobal->GetUInt32( kfdatasetting->_str_init_value );
-                    }
-                }
+                __INIT_INT_VALUE__( kfdatasetting->_str_init_value, kfdatasetting->_int_init_value );
 
                 // 最小值
-                if ( kfdatasetting->_str_min_value != _invalid_string )
-                {
-                    if ( KFUtility::IsNumber( kfdatasetting->_str_min_value ) )
-                    {
-                        kfdatasetting->_int_min_value = __TO_UINT32__( kfdatasetting->_str_min_value );
-                    }
-                    else
-                    {
-                        kfdatasetting->_int_min_value = kfglobal->GetUInt32( kfdatasetting->_str_min_value );
-                    }
-                }
+                __INIT_INT_VALUE__( kfdatasetting->_str_min_value, kfdatasetting->_int_min_value );
 
                 // 最大值
-                if ( kfdatasetting->_str_max_value != _invalid_string )
-                {
-                    if ( KFUtility::IsNumber( kfdatasetting->_str_max_value ) )
-                    {
-                        kfdatasetting->_int_max_value = __TO_UINT32__( kfdatasetting->_str_max_value );
-                    }
-                    else
-                    {
-                        kfdatasetting->_int_max_value = kfglobal->GetUInt32( kfdatasetting->_str_max_value );
-                    }
-                }
+                __INIT_INT_VALUE__( kfdatasetting->_str_max_value, kfdatasetting->_int_max_value );
 
-                // 逻辑值
-                if ( kfdatasetting->_str_logic_value != _invalid_string )
-                {
-                    if ( KFUtility::IsNumber( kfdatasetting->_str_logic_value ) )
-                    {
-                        kfdatasetting->_int_logic_value = __TO_UINT32__( kfdatasetting->_str_logic_value );
-                    }
-                    else
-                    {
-                        kfdatasetting->_int_logic_value = kfglobal->GetUInt32( kfdatasetting->_str_logic_value );
-                    }
-                }
+                // 运行时参数
+                __INIT_INT_VALUE__( kfdatasetting->_str_run_param, kfdatasetting->_int_run_param );
+
+                // 数组, 集合的最大容量
+                __INIT_INT_VALUE__( kfdatasetting->_str_max_capacity, kfdatasetting->_int_max_capacity );
             }
         }
     }

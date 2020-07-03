@@ -24,9 +24,14 @@ namespace KFrame
         return _data.Size();
     }
 
+    uint32 KFRecord::MaxSize()
+    {
+        return _data_setting->_int_max_capacity;
+    }
+
     bool KFRecord::IsFull()
     {
-        return _data.Size() >= _data_setting->_int_max_value;
+        return _data.Size() >= _data_setting->_int_max_capacity;
     }
 
     KFData* KFRecord::First()

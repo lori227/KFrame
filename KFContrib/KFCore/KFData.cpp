@@ -32,7 +32,7 @@ namespace KFrame
 
     uint32 KFData::MaxSize()
     {
-        return _data_setting->_int_max_value;
+        return 0;
     }
 
     uint32 KFData::GetConfigID()

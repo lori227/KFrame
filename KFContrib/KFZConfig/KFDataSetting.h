@@ -108,6 +108,10 @@ namespace KFrame
         std::string _contain_class;
         const KFClassSetting* _class_setting = nullptr;
 
+        // 最大容量
+        std::string _str_max_capacity;
+        uint32 _int_max_capacity = __MAX_UINT32__;
+
         // 初始值
         std::string _str_init_value;
         uint32 _int_init_value = 0u;
@@ -120,9 +124,9 @@ namespace KFrame
         std::string _str_max_value;
         uint32 _int_max_value = __MAX_UINT32__;
 
-        // 逻辑值
-        std::string _str_logic_value;
-        uint32 _int_logic_value = 0u;
+        // 运行时参数
+        std::string _str_run_param;
+        uint32 _int_run_param = 0u;
 
         // 属性标记
         uint32 _data_mask = 0u;

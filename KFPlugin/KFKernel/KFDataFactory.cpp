@@ -225,7 +225,7 @@ namespace KFrame
                 InitData( kfchilddata, childdatasetting );
                 break;
             case KFDataDefine::Type_Array:
-                InitArray( kfchilddata, childdatasetting->_int_logic_value );
+                InitArray( kfchilddata, childdatasetting->_int_max_capacity );
                 break;
             default:
                 break;
@@ -237,7 +237,7 @@ namespace KFrame
     {
         size += KFGlobal::Instance()->_array_index;
         kfarray->Resize( size );
-        for ( uint32 i = KFGlobal::Instance()->_array_index; i < size; ++i )
+        for ( auto i = KFGlobal::Instance()->_array_index; i < size; ++i )
         {
             auto kfarraydata = Create( kfarray->_data_setting->_contain_class );
             kfarraydata->Initialize( kfarray->_data_setting );

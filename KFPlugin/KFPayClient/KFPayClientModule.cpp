@@ -131,7 +131,7 @@ namespace KFrame
     void KFPayClientModule::StartQueryPayTimer( KFEntity* player )
     {
         auto kfpayorder = player->Find( __STRING__( payorder ) );
-        auto querytime = kfpayorder->_data_setting->_int_logic_value;
+        auto querytime = kfpayorder->_data_setting->_int_run_param;
         auto querycount = kfpayorder->_data_setting->_int_max_value;
         __LIMIT_TIMER_1__( player->GetKeyID(), querytime, querycount, &KFPayClientModule::OnTimerQueryPayData );
     }

@@ -15,6 +15,15 @@ namespace KFrame
     int64 KFInt64::SetInt64( int64 value )
     {
         _data = value;
+        if ( _data > ( int64 )_data_setting->_int_max_value )
+        {
+            _data = ( int64 )_data_setting->_int_max_value;
+        }
+        else if ( _data < ( int64 )_data_setting->_int_min_value )
+        {
+            _data = ( int64 )_data_setting->_int_min_value;
+        }
+
         return _data;
     }
 
@@ -31,15 +40,12 @@ namespace KFrame
 
     bool KFInt64::IsFull()
     {
-        return false;
+        return _data >= ( int64 )_data_setting->_int_max_value;
     }
 
     void KFInt64::InitData()
     {
-        if ( _data_setting->_int_init_value != 0 )
-        {
-            _data = _data_setting->_int_init_value;
-        }
+        _data = _data_setting->_int_init_value;
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////

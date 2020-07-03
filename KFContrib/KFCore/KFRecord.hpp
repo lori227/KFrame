@@ -20,6 +20,9 @@ namespace KFrame
         // common
         virtual uint32 Size();
 
+        // 最大数量
+        virtual uint32 MaxSize();
+
         // 是否达到了最大值
         virtual bool IsFull();
         //////////////////////////////////////////////////////////////////////////////////////////////////////

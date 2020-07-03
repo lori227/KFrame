@@ -83,9 +83,6 @@ namespace KFrame
         virtual const KFDataSetting* FindDataSetting( const std::string& dataname );
         virtual const KFDataSetting* FindDataSetting( const std::string& parentname, const std::string& dataname );
         //////////////////////////////////////////////////////////////////////////////////////
-        virtual void SetLogicValue( const std::string& dataname, uint32 value );
-        virtual void SetLogicValue( const std::string& parentname, const std::string& dataname, uint32 value );
-
         virtual void SetMaxValue( const std::string& dataname, uint32 value );
         virtual void SetMaxValue( const std::string& parentname, const std::string& dataname, uint32 value );
         //////////////////////////////////////////////////////////////////////////////////////

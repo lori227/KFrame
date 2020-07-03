@@ -237,18 +237,6 @@ namespace KFrame
         _sync_entitys.insert( entity );
     }
 
-    void KFComponentEx::SetLogicValue( const std::string& dataname, uint32 value )
-    {
-        auto kfsetting = FindDataSetting( dataname );
-        const_cast< KFDataSetting* >( kfsetting )->_int_logic_value = value;
-    }
-
-    void KFComponentEx::SetLogicValue( const std::string& parentname, const std::string& dataname, uint32 value )
-    {
-        auto kfsetting = FindDataSetting( parentname, dataname );
-        const_cast< KFDataSetting* >( kfsetting )->_int_logic_value = value;
-    }
-
     void KFComponentEx::SetMaxValue( const std::string& dataname, uint32 value )
     {
         auto kfsetting = FindDataSetting( dataname );
