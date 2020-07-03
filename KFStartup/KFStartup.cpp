@@ -126,10 +126,6 @@ namespace KFrame
                 return __LOG_ERROR__( "plugin=[{}] not exist", newfilename );
             }
 
-            // 删除旧文件
-            Poco::File oldfile( filename );
-            oldfile.remove();
-            __LOG_INFO__( "plugin=[{}] remove ok", filename );
         }
         catch ( ... )
         {
@@ -149,8 +145,15 @@ namespace KFrame
             __LOG_INFO__( "plugin=[{}] uninstall failed", pluginname );
         }
 
+        KFThread::Sleep( 200 );
+
         try
         {
+            // 删除旧文件
+            Poco::File oldfile( filename );
+            oldfile.remove();
+            __LOG_INFO__( "plugin=[{}] remove ok", filename );
+
             // 修改文件名
             Poco::File newfile( newfilename );
             newfile.copyTo( filename );
@@ -159,6 +162,8 @@ namespace KFrame
         {
             __LOG_ERROR__( "plugin=[{}] rename failed", newfilename );
         }
+
+        KFThread::Sleep( 200 );
 
         // 加载
         __LOG_INFO__( "plugin=[{}] install start", pluginname );
