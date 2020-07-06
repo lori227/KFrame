@@ -16,5 +16,6 @@
     <ClInclude Include="KFRedisModule.hpp" />
     <ClInclude Include="KFRedisPlugin.hpp" />
     <ClInclude Include="KFRedisFormat.h" />
+    <ClInclude Include="KFRedisDriver.h" />
   </ItemGroup>
 </Project>

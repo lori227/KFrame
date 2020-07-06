@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFRedisConfig.hpp" />
+    <ClInclude Include="KFRedisDriver.h" />
     <ClInclude Include="KFRedisExecute.hpp" />
     <ClInclude Include="KFRedisFormat.h" />
     <ClInclude Include="KFRedisInterface.h" />

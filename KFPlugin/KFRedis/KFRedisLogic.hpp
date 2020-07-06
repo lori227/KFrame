@@ -1,7 +1,7 @@
 ﻿#ifndef __KF_REDIS_LOGIC_H__
 #define __KF_REDIS_LOGIC_H__
 
-#include "KFRedisInterface.h"
+#include "KFRedisDriver.h"
 #include "KFRedisExecute.hpp"
 #include "KFRedisConfig.hpp"
 
