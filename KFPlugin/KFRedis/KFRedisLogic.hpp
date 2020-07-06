@@ -45,7 +45,7 @@ namespace KFrame
 
         // 添加执行命令
         virtual KFResult< StringList >::UniqueType ListPipelineExecute();
-        virtual KFResult< StringListMap >::UniqueType ListMapPipelineExecute();
+        virtual KFResult< StringMapList >::UniqueType ListMapPipelineExecute();
 
     private:
         // 需要执行的命令集

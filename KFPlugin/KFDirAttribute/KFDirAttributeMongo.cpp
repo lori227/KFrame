@@ -28,13 +28,30 @@ namespace KFrame
         return mongodriver->Insert( __STRING__( gate ), zoneid, dbvalue );
     }
 
-    StringListMap KFDirAttributeMongo::QueryZoneList( const std::string& flag )
+    uint32 KFDirAttributeMongo::QueryZoneStatus( uint32 zoneid )
     {
-        StringListMap zonedatalist;
+        auto mongodriver = __DIR_MONGO_DRIVER__;
+        auto kfresult = mongodriver->QueryUInt64( __STRING__( zone ), zoneid, __STRING__( status ) );
+        return kfresult->_value;
+    }
+
+    bool KFDirAttributeMongo::UpdateZoneStatus( uint32 zoneid, uint32 status )
+    {
+        auto mongodriver = __DIR_MONGO_DRIVER__;
+        if ( zoneid != 0u )
+        {
+            return mongodriver->Insert( __STRING__( zone ), zoneid, __STRING__( status ), status );
+        }
+
+        return mongodriver->Insert( __STRING__( zone ), __STRING__( status ), status );
+    }
+
+    StringMapList KFDirAttributeMongo::QueryZoneList( const std::string& flag )
+    {
+        StringMapList zonedatalist;
         auto mongodriver = __DIR_MONGO_DRIVER__;
 
-        KFMongoSelector kfselector;
-        auto kfresult = mongodriver->QueryListRecord( __STRING__( zone ), kfselector );
+        auto kfresult = mongodriver->QueryListRecord( __STRING__( zone ) );
         for ( auto& dbvalue : kfresult->_value )
         {
             auto zoneid = dbvalue.FindValue( __STRING__( zoneid ) );
@@ -227,9 +244,9 @@ namespace KFrame
         return masterdata;
     }
 
-    StringListMap KFDirAttributeMongo::QueryMasterList( const std::string& appname, uint32 zoneid )
+    StringMapList KFDirAttributeMongo::QueryMasterList( const std::string& appname, uint32 zoneid )
     {
-        StringListMap masterdatalist;
+        StringMapList masterdatalist;
         auto mongodriver = __DIR_MONGO_DRIVER__;
 
         KFMongoSelector kfselector;

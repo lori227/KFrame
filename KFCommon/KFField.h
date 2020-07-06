@@ -45,6 +45,8 @@ namespace KFrame
         __STRING_DEFINE__( loginzoneid );
         __STRING_DEFINE__( datazoneid );
         __STRING_DEFINE__( zonebalance );
+        __STRING_DEFINE__( zonestatus );
+
         __STRING_DEFINE__( logurl );
         __STRING_DEFINE__( scheduletime );
         __STRING_DEFINE__( msg );
@@ -108,6 +110,26 @@ namespace KFrame
         __STRING_DEFINE__( querymasterip );
         __STRING_DEFINE__( querymasterlist );
         __STRING_DEFINE__( masterlist );
+        __STRING_DEFINE__( ipblacklist );
+        __STRING_DEFINE__( ipwhitelist );
+        __STRING_DEFINE__( accountblacklist );
+        __STRING_DEFINE__( accountwhitelist );
+        __STRING_DEFINE__( starttime );
+        __STRING_DEFINE__( endtime );
+        __STRING_DEFINE__( comment );
+        __STRING_DEFINE__( retlist );
+        __STRING_DEFINE__( addipblacklist );
+        __STRING_DEFINE__( removeipblacklist );
+        __STRING_DEFINE__( queryipblacklist );
+        __STRING_DEFINE__( addipwhitelist );
+        __STRING_DEFINE__( removeipwhitelist );
+        __STRING_DEFINE__( queryipwhitelist );
+        __STRING_DEFINE__( addaccountblacklist );
+        __STRING_DEFINE__( removeaccountblacklist );
+        __STRING_DEFINE__( queryaccountblacklist );
+        __STRING_DEFINE__( addaccountwhitelist );
+        __STRING_DEFINE__( removeaccountwhitelist );
+        __STRING_DEFINE__( queryaccountwhitelist );
 
 
         __STRING_DEFINE__( zoneregister );

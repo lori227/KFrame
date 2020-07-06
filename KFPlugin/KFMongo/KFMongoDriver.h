@@ -34,6 +34,8 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 插入数值( 存在更新, 不存在插入 )
         virtual bool Insert( const std::string& table, const KFDBValue& dbvalue ) = 0;
+        virtual bool Insert( const std::string& table, const std::string& field, uint64 value ) = 0;
+        virtual bool Insert( const std::string& table, const std::string& field, const std::string& value, bool isbinary = false ) = 0;
         virtual bool Insert( const std::string& table, uint64 key, const KFDBValue& dbvalue ) = 0;
         virtual bool Insert( const std::string& table, const std::string& key, const KFDBValue& dbvalue ) = 0;
         virtual bool Insert( const std::string& table, uint64 key, const std::string& field, uint64 value ) = 0;
@@ -100,6 +102,8 @@ namespace KFrame
         virtual KFResult< KFDBValue >::UniqueType QueryRecord( const std::string& table, const std::string& key ) = 0;
         virtual KFResult< KFDBValue >::UniqueType QueryRecord( const std::string& table, uint64 key, const StringList& fields ) = 0;
         virtual KFResult< KFDBValue >::UniqueType QueryRecord( const std::string& table, const std::string& key, const StringList& fields ) = 0;
+
+        virtual KFResult< std::list< KFDBValue > >::UniqueType QueryListRecord( const std::string& table ) = 0;
         virtual KFResult< std::list< KFDBValue > >::UniqueType QueryListRecord( const std::string& table, const KFMongoSelector& kfseletor ) = 0;
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     };

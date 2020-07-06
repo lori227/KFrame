@@ -88,19 +88,19 @@ namespace KFrame
         }
 
         template< typename... P >
-        KFResult< StringListMap >::UniqueType QueryListMap( const char* myfmt, P&& ... args )
+        KFResult< StringMapList >::UniqueType QueryListMap( const char* myfmt, P&& ... args )
         {
             auto strsql = __FORMAT__( myfmt, std::forward<P>( args )... );
             return ListMapExecute( strsql );
         }
 
         // 查询所有
-        virtual KFResult< StringListMap >::UniqueType Select( const std::string& table ) = 0;
-        virtual KFResult< StringListMap >::UniqueType Select( const std::string& table, const StringList& fields ) = 0;
-        virtual KFResult< StringListMap >::UniqueType Select( const std::string& table, const std::string& key ) = 0;
-        virtual KFResult< StringListMap >::UniqueType Select( const std::string& table, const std::string& key, const StringList& fields ) = 0;
-        virtual KFResult< StringListMap >::UniqueType Select( const std::string& table, const StringMap& key ) = 0;
-        virtual KFResult< StringListMap >::UniqueType Select( const std::string& table, const StringMap& key, const StringList& fields ) = 0;
+        virtual KFResult< StringMapList >::UniqueType Select( const std::string& table ) = 0;
+        virtual KFResult< StringMapList >::UniqueType Select( const std::string& table, const StringList& fields ) = 0;
+        virtual KFResult< StringMapList >::UniqueType Select( const std::string& table, const std::string& key ) = 0;
+        virtual KFResult< StringMapList >::UniqueType Select( const std::string& table, const std::string& key, const StringList& fields ) = 0;
+        virtual KFResult< StringMapList >::UniqueType Select( const std::string& table, const StringMap& key ) = 0;
+        virtual KFResult< StringMapList >::UniqueType Select( const std::string& table, const StringMap& key, const StringList& fields ) = 0;
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -114,7 +114,7 @@ namespace KFrame
         virtual KFResult< std::string >::UniqueType StringExecute( std::string& strsql ) = 0;
         virtual KFResult< StringMap >::UniqueType MapExecute( std::string& strsql ) = 0;
         virtual KFResult< StringList >::UniqueType ListExecute( std::string& strsql ) = 0;
-        virtual KFResult< StringListMap >::UniqueType ListMapExecute( std::string& strsql ) = 0;
+        virtual KFResult< StringMapList >::UniqueType ListMapExecute( std::string& strsql ) = 0;
     };
 
     /////////////////////////////////////////////////////////////////////////////////////////

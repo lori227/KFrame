@@ -111,6 +111,20 @@ namespace KFrame
         const_cast< KFDBValue& >( dbvalue ).AddValue( MongoKeyword::_id, uuid );
         return _write_execute->Insert( table, dbvalue );
     }
+
+    bool KFMongoLogic::Insert( const std::string& table, const std::string& field, uint64 value )
+    {
+        KFDBValue dbvalue;
+        dbvalue.AddValue( field, value );
+        return _write_execute->Update( table, dbvalue );
+    }
+
+    bool KFMongoLogic::Insert( const std::string& table, const std::string& field, const std::string& value, bool isbinary )
+    {
+        KFDBValue dbvalue;
+        dbvalue.AddValue( field, value, isbinary );
+        return _write_execute->Update( table, dbvalue );
+    }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFMongoLogic::Insert( const std::string& table, uint64 key, const KFDBValue& dbvalue )
     {
@@ -387,6 +401,12 @@ namespace KFrame
         return _read_execute->QueryRecord( table, key, fields );
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////
+    KFResult< std::list< KFDBValue > >::UniqueType KFMongoLogic::QueryListRecord( const std::string& table )
+    {
+        static KFMongoSelector kfseletor;
+        return _read_execute->QueryListRecord( table, kfseletor );
+    }
+
     KFResult< std::list< KFDBValue > >::UniqueType KFMongoLogic::QueryListRecord( const std::string& table, const KFMongoSelector& kfseletor )
     {
         return _read_execute->QueryListRecord( table, kfseletor );

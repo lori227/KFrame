@@ -57,7 +57,7 @@ typedef std::list< std::string > StringList;
 typedef std::vector< std::string > StringVector;
 
 typedef std::unordered_map< std::string, std::string > StringMap;
-typedef std::list< StringMap > StringListMap;
+typedef std::list< StringMap > StringMapList;
 
 typedef std::set< uint32 > UInt32Set;
 typedef std::list< uint32 > UInt32List;

@@ -16,6 +16,7 @@ namespace KFrame
         __REGISTER_HTTP__( __STRING__( updatemasterip ), false, &KFDirShardModule::HandleUpdateMasterIp );
         __REGISTER_HTTP__( __STRING__( querymasterip ), false, &KFDirShardModule::HandleQueryMasterIp );
         __REGISTER_HTTP__( __STRING__( querymasterlist ), false, &KFDirShardModule::HandleQueryMasterList );
+        __REGISTER_HTTP__( __STRING__( zonestatus ), false, &KFDirShardModule::HandleZoneStatus );
 
         /////////////////////////////////////////////////////////////////////////////////////////
     }
@@ -33,6 +34,7 @@ namespace KFrame
         __UN_HTTP__( __STRING__( updatemasterip ) );
         __UN_HTTP__( __STRING__( querymasterip ) );
         __UN_HTTP__( __STRING__( querymasterlist ) );
+        __UN_HTTP__( __STRING__( zonestatus ) );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_HTTP_FUNCTION__( KFDirShardModule::HandleZoneRegister )
@@ -48,6 +50,16 @@ namespace KFrame
         __JSON_PARSE_STRING__( request, data );
 
         auto ok = _kf_dir_attribute->ZoneUpdate( request );
+        return _kf_http_server->SendCode( ok ? KFMsg::Ok : KFMsg::Error );
+    }
+
+    __KF_HTTP_FUNCTION__( KFDirShardModule::HandleZoneStatus )
+    {
+        __JSON_PARSE_STRING__( request, data );
+
+        auto zoneid = __JSON_GET_UINT32__( request, __STRING__( zoneid ) );
+        auto status = __JSON_GET_UINT32__( request, __STRING__( status ) );
+        auto ok = _kf_dir_attribute->UpdateZoneStatus( zoneid, status );
         return _kf_http_server->SendCode( ok ? KFMsg::Ok : KFMsg::Error );
     }
 

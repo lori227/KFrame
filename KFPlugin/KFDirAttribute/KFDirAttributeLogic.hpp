@@ -19,7 +19,7 @@ namespace KFrame
         virtual bool ZoneUpdate( uint64 appid, uint32 zoneid, uint32 count, const std::string& ip, uint32 port, uint32 expiretime ) = 0;
 
         // 查询小区列表
-        virtual StringListMap QueryZoneList( const std::string& flag ) = 0;
+        virtual StringMapList QueryZoneList( const std::string& flag ) = 0;
 
         // 查询小区ip
         virtual StringMap QueryZoneIp( uint32 zoneid ) = 0;
@@ -32,6 +32,12 @@ namespace KFrame
 
         // 分配玩家小区
         virtual StringMap AllocPlayerZone( const std::string& flag, uint32 zoneid ) = 0;
+
+        // 查询小区状态
+        virtual uint32 QueryZoneStatus( uint32 zoneid ) = 0;
+
+        // 更新小区状态
+        virtual bool UpdateZoneStatus( uint32 zoneid, uint32 status ) = 0;
 
         // world http地址注册
         virtual bool SetWorldUrl( uint64 worldid, const std::string& url ) = 0;
@@ -46,7 +52,7 @@ namespace KFrame
         virtual StringMap QueryMasterIp( const std::string& appname, uint32 zoneid ) = 0;
 
         // 查询masterlist
-        virtual StringListMap QueryMasterList( const std::string& appname, uint32 zoneid ) = 0;
+        virtual StringMapList QueryMasterList( const std::string& appname, uint32 zoneid ) = 0;
     public:
         // 分配一个小区
         virtual uint32 BalanceAllocZone( const std::string& flag ) = 0;

@@ -228,4 +228,182 @@ namespace KFrame
         auto kfresult = mongodriver->QueryString( __STRING__( refresh_token ), machinecode, __STRING__( token ) );
         return kfresult->_value;
     }
+
+    uint64 KFAccountMongo::CheckIpInBlackList( const std::string& ip )
+    {
+        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
+        auto kfresult = mongodriver->QueryUInt64( __STRING__( ipblacklist ), ip, __STRING__( endtime ) );
+        return kfresult->_value;
+    }
+
+    bool KFAccountMongo::AddIpBlackList( const std::string& ip, uint64 time, const std::string& comment )
+    {
+        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
+        mongodriver->CreateIndex( __STRING__( ipblacklist ), MongoKeyword::_expire );
+
+
+        KFDBValue dbvalue;
+        dbvalue.AddValue( __STRING__( starttime ), KFGlobal::Instance()->_real_time );
+        dbvalue.AddValue( __STRING__( endtime ), KFGlobal::Instance()->_real_time + time );
+        dbvalue.AddValue( __STRING__( ip ), ip );
+        dbvalue.AddValue( __STRING__( comment ), comment );
+        dbvalue.AddValue( MongoKeyword::_expire, time );
+        return mongodriver->Insert( __STRING__( ipblacklist ), ip, dbvalue );
+    }
+
+    bool KFAccountMongo::RemoveIpBlackList( const std::string& ip )
+    {
+        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
+        return mongodriver->Delete( __STRING__( ipblacklist ), ip );
+    }
+
+    StringMapList KFAccountMongo::QueryIpBlackList()
+    {
+        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
+        auto kfresult = mongodriver->QueryListRecord( __STRING__( ipblacklist ) );
+
+        StringMapList stringmaplist;
+        for ( auto& dbvalue : kfresult->_value )
+        {
+            StringMap values;
+            __DBVALUE_TO_MAP__( dbvalue, values );
+            stringmaplist.emplace_back( values );
+        }
+
+        return stringmaplist;
+    }
+
+    bool KFAccountMongo::CheckIpInWhiteList( const std::string& ip )
+    {
+        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
+        auto kfresult = mongodriver->QueryUInt64( __STRING__( ipwhitelist ), ip, __STRING__( endtime ) );
+        return kfresult->_value > 0u;
+    }
+
+    bool KFAccountMongo::AddIpWhiteList( const std::string& ip, uint64 time, const std::string& comment )
+    {
+        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
+        mongodriver->CreateIndex( __STRING__( ipwhitelist ), MongoKeyword::_expire );
+
+
+        KFDBValue dbvalue;
+        dbvalue.AddValue( __STRING__( starttime ), KFGlobal::Instance()->_real_time );
+        dbvalue.AddValue( __STRING__( endtime ), KFGlobal::Instance()->_real_time + time );
+        dbvalue.AddValue( __STRING__( ip ), ip );
+        dbvalue.AddValue( __STRING__( comment ), comment );
+        dbvalue.AddValue( MongoKeyword::_expire, time );
+        return mongodriver->Insert( __STRING__( ipwhitelist ), ip, dbvalue );
+    }
+
+    bool KFAccountMongo::RemoveIpWhiteList( const std::string& ip )
+    {
+        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
+        return mongodriver->Delete( __STRING__( ipwhitelist ), ip );
+    }
+
+    StringMapList KFAccountMongo::QueryIpWhiteList()
+    {
+        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
+        auto kfresult = mongodriver->QueryListRecord( __STRING__( ipwhitelist ) );
+
+        StringMapList stringmaplist;
+        for ( auto& dbvalue : kfresult->_value )
+        {
+            StringMap values;
+            __DBVALUE_TO_MAP__( dbvalue, values );
+            stringmaplist.emplace_back( values );
+        }
+
+        return stringmaplist;
+    }
+
+    uint64 KFAccountMongo::CheckAccountInBlackList( uint64 accountid )
+    {
+        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
+        auto kfresult = mongodriver->QueryUInt64( __STRING__( accountblacklist ), accountid, __STRING__( endtime ) );
+        return kfresult->_value;
+    }
+
+    bool KFAccountMongo::AddAccountBlackList( uint64 accountid, const std::string& account, uint32 channel, uint64 time, const std::string& comment )
+    {
+        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
+        mongodriver->CreateIndex( __STRING__( accountblacklist ), MongoKeyword::_expire );
+
+        KFDBValue dbvalue;
+        dbvalue.AddValue( __STRING__( starttime ), KFGlobal::Instance()->_real_time );
+        dbvalue.AddValue( __STRING__( endtime ), KFGlobal::Instance()->_real_time + time );
+        dbvalue.AddValue( __STRING__( account ), account );
+        dbvalue.AddValue( __STRING__( channel ), channel );
+        dbvalue.AddValue( __STRING__( accountid ), accountid );
+        dbvalue.AddValue( __STRING__( comment ), comment );
+        dbvalue.AddValue( MongoKeyword::_expire, time );
+        return mongodriver->Insert( __STRING__( accountblacklist ), accountid, dbvalue );
+    }
+
+    bool KFAccountMongo::RemoveAccountBlackList( uint64 accountid )
+    {
+        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
+        return mongodriver->Delete( __STRING__( accountblacklist ), accountid );
+    }
+
+    StringMapList KFAccountMongo::QueryAccountBlackList()
+    {
+        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
+        auto kfresult = mongodriver->QueryListRecord( __STRING__( accountblacklist ) );
+
+        StringMapList stringmaplist;
+        for ( auto& dbvalue : kfresult->_value )
+        {
+            StringMap values;
+            __DBVALUE_TO_MAP__( dbvalue, values );
+            stringmaplist.emplace_back( values );
+        }
+
+        return stringmaplist;
+    }
+
+    bool KFAccountMongo::CheckAccountInWhiteList( uint64 accountid )
+    {
+        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
+        auto kfresult = mongodriver->QueryUInt64( __STRING__( accountwhitelist ), accountid, __STRING__( endtime ) );
+        return kfresult->_value > 0u;
+    }
+
+    bool KFAccountMongo::AddAccountWhiteList( uint64 accountid, const std::string& account, uint32 channel, uint64 time, const std::string& comment )
+    {
+        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
+        mongodriver->CreateIndex( __STRING__( accountwhitelist ), MongoKeyword::_expire );
+
+        KFDBValue dbvalue;
+        dbvalue.AddValue( __STRING__( starttime ), KFGlobal::Instance()->_real_time );
+        dbvalue.AddValue( __STRING__( endtime ), KFGlobal::Instance()->_real_time + time );
+        dbvalue.AddValue( __STRING__( account ), account );
+        dbvalue.AddValue( __STRING__( channel ), channel );
+        dbvalue.AddValue( __STRING__( accountid ), accountid );
+        dbvalue.AddValue( __STRING__( comment ), comment );
+        dbvalue.AddValue( MongoKeyword::_expire, time );
+        return mongodriver->Insert( __STRING__( accountwhitelist ), accountid, dbvalue );
+    }
+
+    bool KFAccountMongo::RemoveAccountWhiteList( uint64 accountid )
+    {
+        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
+        return mongodriver->Delete( __STRING__( accountwhitelist ), accountid );
+    }
+
+    StringMapList KFAccountMongo::QueryAccountWhiteList()
+    {
+        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
+        auto kfresult = mongodriver->QueryListRecord( __STRING__( accountwhitelist ) );
+
+        StringMapList stringmaplist;
+        for ( auto& dbvalue : kfresult->_value )
+        {
+            StringMap values;
+            __DBVALUE_TO_MAP__( dbvalue, values );
+            stringmaplist.emplace_back( values );
+        }
+
+        return stringmaplist;
+    }
 }

@@ -35,6 +35,9 @@ namespace KFrame
         // 小区信息更新
         __KF_HTTP_FUNCTION__( HandleZoneUpdate );
 
+        // 更新小区状态
+        __KF_HTTP_FUNCTION__( HandleZoneStatus );
+
         // 查询小区列表
         __KF_HTTP_FUNCTION__( HandleQueryZoneList );
 

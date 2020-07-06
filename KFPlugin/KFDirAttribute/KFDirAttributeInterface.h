@@ -15,7 +15,7 @@ namespace KFrame
         virtual bool ZoneUpdate( KFJson& zonedata ) = 0;
 
         // 查询小区列表
-        virtual StringListMap QueryZoneList( const std::string& flag ) = 0;
+        virtual StringMapList QueryZoneList( const std::string& flag ) = 0;
 
         // 查询小区ip
         virtual StringMap QueryZoneIp( uint32 zoneid ) = 0;
@@ -28,6 +28,12 @@ namespace KFrame
 
         // 分配玩家小区
         virtual StringMap AllocPlayerZone( const std::string& flag, uint32 zoneid ) = 0;
+
+        // 查询小区状态
+        virtual uint32 QueryZoneStatus( uint32 zoneid ) = 0;
+
+        // 更新小区状态
+        virtual bool UpdateZoneStatus( uint32 zoneid,  uint32 status ) = 0;
 
         // world http地址注册
         virtual bool SetWorldUrl( uint64 worldid, const std::string& url ) = 0;
@@ -42,7 +48,7 @@ namespace KFrame
         virtual StringMap QueryMasterIp( KFJson& masterdata ) = 0;
 
         // 查询masterlist
-        virtual StringListMap QueryMasterList( KFJson& masterdata ) = 0;
+        virtual StringMapList QueryMasterList( KFJson& masterdata ) = 0;
     };
     /////////////////////////////////////////////////////////////////////////////////
     __KF_INTERFACE__( _kf_dir_attribute, KFDirAttributeInterface );

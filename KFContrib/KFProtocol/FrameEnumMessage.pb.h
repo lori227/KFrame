@@ -76,6 +76,29 @@ inline bool ChannelEnum_Parse(
   return ::google::protobuf::internal::ParseNamedEnum<ChannelEnum>(
     ChannelEnum_descriptor(), name, value);
 }
+enum ServerStatusEnum {
+  UnknowServerStatus = 0,
+  ServerStopStatus = 1,
+  ServerTestStatus = 2,
+  ServerOpenStatus = 3,
+  ServerStatusEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  ServerStatusEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+LIBPROTOC_EXPORT bool ServerStatusEnum_IsValid(int value);
+const ServerStatusEnum ServerStatusEnum_MIN = UnknowServerStatus;
+const ServerStatusEnum ServerStatusEnum_MAX = ServerOpenStatus;
+const int ServerStatusEnum_ARRAYSIZE = ServerStatusEnum_MAX + 1;
+
+LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* ServerStatusEnum_descriptor();
+inline const ::std::string& ServerStatusEnum_Name(ServerStatusEnum value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    ServerStatusEnum_descriptor(), value);
+}
+inline bool ServerStatusEnum_Parse(
+    const ::std::string& name, ServerStatusEnum* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<ServerStatusEnum>(
+    ServerStatusEnum_descriptor(), name, value);
+}
 enum SexEnum {
   UnknowSex = 0,
   Male = 1,
@@ -358,6 +381,11 @@ template <> struct is_proto_enum< ::KFMsg::ChannelEnum> : ::std::true_type {};
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::ChannelEnum>() {
   return ::KFMsg::ChannelEnum_descriptor();
+}
+template <> struct is_proto_enum< ::KFMsg::ServerStatusEnum> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::ServerStatusEnum>() {
+  return ::KFMsg::ServerStatusEnum_descriptor();
 }
 template <> struct is_proto_enum< ::KFMsg::SexEnum> : ::std::true_type {};
 template <>

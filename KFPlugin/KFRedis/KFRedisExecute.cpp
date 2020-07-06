@@ -341,9 +341,9 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< StringListMap >::UniqueType KFRedisReadExecute::ListMapPipelineExecute( const StringList& commands )
+    KFResult< StringMapList >::UniqueType KFRedisReadExecute::ListMapPipelineExecute( const StringList& commands )
     {
-        __NEW_RESULT__( StringListMap );
+        __NEW_RESULT__( StringMapList );
         if ( _redis_context == nullptr )
         {
             kfresult->SetResult( KFEnum::Error );

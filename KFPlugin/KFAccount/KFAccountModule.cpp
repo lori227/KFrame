@@ -77,6 +77,86 @@ namespace KFrame
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////
+    uint64 KFAccountModule::CheckIpInBlackList( const std::string& ip )
+    {
+        return _account_logic->CheckIpInBlackList( ip );
+    }
+
+    bool KFAccountModule::AddIpBlackList( const std::string& ip, uint64 time, const std::string& comment )
+    {
+        return _account_logic->AddIpBlackList( ip, time, comment );
+    }
+
+    bool KFAccountModule::RemoveIpBlackList( const std::string& ip )
+    {
+        return _account_logic->RemoveIpBlackList( ip );
+    }
+
+    StringMapList KFAccountModule::QueryIpBlackList()
+    {
+        return _account_logic->QueryIpBlackList();
+    }
+
+    bool KFAccountModule::CheckIpInWhiteList( const std::string& ip )
+    {
+        return _account_logic->CheckIpInWhiteList( ip );
+    }
+
+    bool KFAccountModule::AddIpWhiteList( const std::string& ip, uint64 time, const std::string& comment )
+    {
+        return _account_logic->AddIpWhiteList( ip, time, comment );
+    }
+
+    bool KFAccountModule::RemoveIpWhiteList( const std::string& ip )
+    {
+        return _account_logic->RemoveIpWhiteList( ip );
+    }
+
+    StringMapList KFAccountModule::QueryIpWhiteList()
+    {
+        return _account_logic->QueryIpWhiteList();
+    }
+
+    uint64 KFAccountModule::CheckAccountInBlackList( uint64 accountid )
+    {
+        return _account_logic->CheckAccountInBlackList( accountid );
+    }
+
+    bool KFAccountModule::AddAccountBlackList( uint64 accountid, const std::string& account, uint32 channel, uint64 time, const std::string& comment )
+    {
+        return _account_logic->AddAccountBlackList( accountid, account, channel, time, comment );
+    }
+
+    bool KFAccountModule::RemoveAccountBlackList( uint64 accountid )
+    {
+        return _account_logic->RemoveAccountBlackList( accountid );
+    }
+
+    StringMapList KFAccountModule::QueryAccountBlackList()
+    {
+        return _account_logic->QueryAccountBlackList();
+    }
+
+    bool KFAccountModule::CheckAccountInWhiteList( uint64 accountid )
+    {
+        return _account_logic->CheckAccountInWhiteList( accountid );
+    }
+
+    bool KFAccountModule::AddAccountWhiteList( uint64 accountid, const std::string& account, uint32 channel, uint64 time, const std::string& comment )
+    {
+        return _account_logic->AddAccountWhiteList( accountid, account, channel, time, comment );
+    }
+
+    bool KFAccountModule::RemoveAccountWhiteList( uint64 accountid )
+    {
+        return _account_logic->RemoveAccountWhiteList( accountid );
+    }
+
+    StringMapList KFAccountModule::QueryAccountWhiteList()
+    {
+        return _account_logic->QueryAccountWhiteList();
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFAccountModule::SaveWeiXinAccessToken( const std::string& machinecode, const std::string& openid,
             const std::string& scope, const std::string& accesstoken, uint32 expirestime )
     {

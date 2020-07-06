@@ -40,6 +40,42 @@ namespace KFrame
 
         // 更新在线信息
         __KF_HTTP_FUNCTION__( HandleAccountOnline );
+        ////////////////////////////////////////////////////////////////////////////////
+        // 添加ip黑名单
+        __KF_HTTP_FUNCTION__( HandleAddIpBlackList );
+
+        // 删除ip黑名单
+        __KF_HTTP_FUNCTION__( HandleRemoveIpBlackList );
+
+        // 查询ip黑名单
+        __KF_HTTP_FUNCTION__( HandleQueryIpBlackList );
+
+        // 添加ip白名单
+        __KF_HTTP_FUNCTION__( HandleAddIpWhiteList );
+
+        // 删除ip白名单
+        __KF_HTTP_FUNCTION__( HandleRemoveIpWhiteList );
+
+        // 查询ip白名单
+        __KF_HTTP_FUNCTION__( HandleQueryIpWhiteList );
+
+        // 添加账号黑名单
+        __KF_HTTP_FUNCTION__( HandleAddAccountBlackList );
+
+        // 删除账号黑名单
+        __KF_HTTP_FUNCTION__( HandleRemoveAccountBlackList );
+
+        // 查询账号黑名单
+        __KF_HTTP_FUNCTION__( HandleQueryAccountBlackList );
+
+        // 添加账号白名单
+        __KF_HTTP_FUNCTION__( HandleAddAccountWhiteList );
+
+        // 删除账号白名单
+        __KF_HTTP_FUNCTION__( HandleRemoveAccountWhiteList );
+
+        // 查询账号白名单
+        __KF_HTTP_FUNCTION__( HandleQueryAccountWhiteList );
 
     private:
         // 踢掉在线玩家

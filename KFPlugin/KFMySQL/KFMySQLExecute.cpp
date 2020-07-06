@@ -236,7 +236,7 @@ namespace KFrame
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    KFResult< StringListMap >::UniqueType KFMySQLReadExecute::Select( const std::string& table )
+    KFResult< StringMapList >::UniqueType KFMySQLReadExecute::Select( const std::string& table )
     {
         static StringMap _empty_key;
         static StringList _empty_field;
@@ -244,13 +244,13 @@ namespace KFrame
         return Select( table, _empty_key, _empty_field );
     }
 
-    KFResult< StringListMap >::UniqueType KFMySQLReadExecute::Select( const std::string& table, const StringList& fields )
+    KFResult< StringMapList >::UniqueType KFMySQLReadExecute::Select( const std::string& table, const StringList& fields )
     {
         static StringMap _empty_key;
         return Select( table, _empty_key, fields );
     }
 
-    KFResult< StringListMap >::UniqueType KFMySQLReadExecute::Select( const std::string& table, const std::string& key )
+    KFResult< StringMapList >::UniqueType KFMySQLReadExecute::Select( const std::string& table, const std::string& key )
     {
         static StringList _empty_field;
 
@@ -259,22 +259,22 @@ namespace KFrame
         return Select( table, keyvalue, _empty_field );
     }
 
-    KFResult< StringListMap >::UniqueType KFMySQLReadExecute::Select( const std::string& table, const std::string& key, const StringList& fields )
+    KFResult< StringMapList >::UniqueType KFMySQLReadExecute::Select( const std::string& table, const std::string& key, const StringList& fields )
     {
         StringMap keyvalue;
         keyvalue[ __STRING__( id ) ] = key;
         return Select( table, keyvalue, fields );
     }
 
-    KFResult< StringListMap >::UniqueType KFMySQLReadExecute::Select( const std::string& table, const StringMap& keyvalue )
+    KFResult< StringMapList >::UniqueType KFMySQLReadExecute::Select( const std::string& table, const StringMap& keyvalue )
     {
         static StringList _empty_field;
         return Select( table, keyvalue, _empty_field );
     }
 
-    KFResult< StringListMap >::UniqueType KFMySQLReadExecute::Select( const std::string& table, const StringMap& keyvalue, const StringList& fields )
+    KFResult< StringMapList >::UniqueType KFMySQLReadExecute::Select( const std::string& table, const StringMap& keyvalue, const StringList& fields )
     {
-        __NEW_RESULT__( StringListMap );
+        __NEW_RESULT__( StringMapList );
 
         std::string sql = "";
         auto strfield = FormatFieldString( fields );
@@ -455,9 +455,9 @@ namespace KFrame
         return kfresult;
     }
 
-    KFResult< StringListMap >::UniqueType KFMySQLReadExecute::ListMapExecute( std::string& strsql )
+    KFResult< StringMapList >::UniqueType KFMySQLReadExecute::ListMapExecute( std::string& strsql )
     {
-        __NEW_RESULT__( StringListMap );
+        __NEW_RESULT__( StringMapList );
 
         Statement statement( *_session );
         auto ok = ExecuteSql( statement, strsql );

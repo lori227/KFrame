@@ -68,12 +68,12 @@ namespace KFrame
         virtual ~KFMySQLReadExecute() = default;
 
         // 查询所有
-        KFResult< StringListMap >::UniqueType Select( const std::string& table );
-        KFResult< StringListMap >::UniqueType Select( const std::string& table, const StringList& fields );
-        KFResult< StringListMap >::UniqueType Select( const std::string& table, const std::string& key );
-        KFResult< StringListMap >::UniqueType Select( const std::string& table, const std::string& key, const StringList& fields );
-        KFResult< StringListMap >::UniqueType Select( const std::string& table, const StringMap& key );
-        KFResult< StringListMap >::UniqueType Select( const std::string& table, const StringMap& key, const StringList& fields );
+        KFResult< StringMapList >::UniqueType Select( const std::string& table );
+        KFResult< StringMapList >::UniqueType Select( const std::string& table, const StringList& fields );
+        KFResult< StringMapList >::UniqueType Select( const std::string& table, const std::string& key );
+        KFResult< StringMapList >::UniqueType Select( const std::string& table, const std::string& key, const StringList& fields );
+        KFResult< StringMapList >::UniqueType Select( const std::string& table, const StringMap& key );
+        KFResult< StringMapList >::UniqueType Select( const std::string& table, const StringMap& key, const StringList& fields );
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -82,7 +82,7 @@ namespace KFrame
         KFResult< std::string >::UniqueType StringExecute( std::string& strsql );
         KFResult< StringMap >::UniqueType MapExecute( std::string& strsql );
         KFResult< StringList >::UniqueType ListExecute( std::string& strsql );
-        KFResult< StringListMap >::UniqueType ListMapExecute( std::string& strsql );
+        KFResult< StringMapList >::UniqueType ListMapExecute( std::string& strsql );
     };
 }
 

@@ -32,6 +32,7 @@ namespace KFrame
         bool Insert( const std::string& table, const KFDBValue& dbvalue );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 更新数据
+        bool Update( const std::string& table, const KFDBValue& dbvalue );
         bool Update( const std::string& table, const KFDBValue& dbvalue, const KFMongoSelector& kfseletor );
 
         template< class KeyType >

@@ -229,4 +229,273 @@ namespace KFrame
         auto kfresult = redisdriver->QueryString( "hget {}:{} {}", __STRING__( refresh_token ), machinecode, __STRING__( token ) );
         return kfresult->_value;
     }
+
+    uint64 KFAccountRedis::CheckIpInBlackList( const std::string& ip )
+    {
+        auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
+        auto kfresult = redisdriver->QueryUInt64( "hget {}:{} {}", __STRING__( ipblacklist ), ip, __STRING__( endtime ) );
+        return kfresult->_value;
+    }
+
+    bool KFAccountRedis::AddIpBlackList( const std::string& ip, uint64 time, const std::string& comment )
+    {
+        auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
+
+        redisdriver->Append( "sadd {} {}", __STRING__( ipblacklist ), ip );
+        redisdriver->Append( "hmset {}:{} {} {} {} {} {} {}",
+                             __STRING__( ipblacklist ), ip,
+                             __STRING__( starttime ), KFGlobal::Instance()->_real_time,
+                             __STRING__( endtime ), KFGlobal::Instance()->_real_time + time,
+                             __STRING__( comment ), comment );
+        redisdriver->Append( "expire {}:{} {}", __STRING__( ipblacklist ), ip, time );
+        auto kfresult = redisdriver->Pipeline();
+        return kfresult->IsOk();
+    }
+
+    bool KFAccountRedis::RemoveIpBlackList( const std::string& ip )
+    {
+        auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
+        redisdriver->Append( "srem {} {}", __STRING__( ipblacklist ), ip );
+        redisdriver->Append( "del {}:{}", __STRING__( ipblacklist ), ip );
+        auto kfresult = redisdriver->Pipeline();
+        return kfresult->IsOk();
+    }
+
+    StringMapList KFAccountRedis::QueryIpBlackList()
+    {
+        StringMapList stringmaplist;
+        auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
+        auto kflist = redisdriver->QueryList( "smembers {}", __STRING__( ipblacklist ) );
+
+        StringList removes;
+        for ( auto& ip : kflist->_value )
+        {
+            auto kfdata = redisdriver->QueryMap( "hgetall {}:{}", __STRING__( ipblacklist ), ip );
+            if ( !kfdata->IsOk() )
+            {
+                continue;
+            }
+
+            if ( kfdata->_value.empty() )
+            {
+                removes.push_back( ip );
+                continue;
+            }
+
+
+            StringMap values;
+            values = kfdata->_value;
+            stringmaplist.emplace_back( values );
+        }
+
+        if ( !removes.empty() )
+        {
+            redisdriver->Update( removes, "srem {}", __STRING__( ipblacklist ) );
+        }
+
+        return stringmaplist;
+    }
+
+    bool KFAccountRedis::CheckIpInWhiteList( const std::string& ip )
+    {
+        auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
+        auto kfresult = redisdriver->QueryUInt64( "hget {}:{} {}", __STRING__( ipwhitelist ), ip, __STRING__( endtime ) );
+        return kfresult->_value > 0u;
+    }
+
+    bool KFAccountRedis::AddIpWhiteList( const std::string& ip, uint64 time, const std::string& comment )
+    {
+        auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
+
+        redisdriver->Append( "sadd {} {}", __STRING__( ipwhitelist ), ip );
+        redisdriver->Append( "hmset {}:{} {} {} {} {} {} {}",
+                             __STRING__( ipwhitelist ), ip,
+                             __STRING__( starttime ), KFGlobal::Instance()->_real_time,
+                             __STRING__( endtime ), KFGlobal::Instance()->_real_time + time,
+                             __STRING__( comment ), comment );
+        redisdriver->Append( "expire {}:{} {}", __STRING__( ipwhitelist ), ip, time );
+        auto kfresult = redisdriver->Pipeline();
+        return kfresult->IsOk();
+    }
+
+    bool KFAccountRedis::RemoveIpWhiteList( const std::string& ip )
+    {
+        auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
+        redisdriver->Append( "srem {} {}", __STRING__( ipwhitelist ), ip );
+        redisdriver->Append( "del {}:{}", __STRING__( ipwhitelist ), ip );
+        auto kfresult = redisdriver->Pipeline();
+        return kfresult->IsOk();
+    }
+
+    StringMapList KFAccountRedis::QueryIpWhiteList()
+    {
+        StringMapList stringmaplist;
+        auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
+        auto kflist = redisdriver->QueryList( "smembers {}", __STRING__( ipwhitelist ) );
+
+        StringList removes;
+        for ( auto& ip : kflist->_value )
+        {
+            auto kfdata = redisdriver->QueryMap( "hgetall {}:{}", __STRING__( ipwhitelist ), ip );
+            if ( !kfdata->IsOk() )
+            {
+                continue;
+            }
+
+            if ( kfdata->_value.empty() )
+            {
+                removes.push_back( ip );
+                continue;
+            }
+
+
+            StringMap values;
+            values = kfdata->_value;
+            stringmaplist.emplace_back( values );
+        }
+
+        if ( !removes.empty() )
+        {
+            redisdriver->Update( removes, "srem {}", __STRING__( ipwhitelist ) );
+        }
+
+        return stringmaplist;
+    }
+
+    uint64 KFAccountRedis::CheckAccountInBlackList( uint64 accountid )
+    {
+        auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
+        auto kfresult = redisdriver->QueryUInt64( "hget {}:{} {}", __STRING__( accountblacklist ), accountid, __STRING__( endtime ) );
+        return kfresult->_value;
+    }
+
+    bool KFAccountRedis::AddAccountBlackList( uint64 accountid, const std::string& account, uint32 channel, uint64 time, const std::string& comment )
+    {
+        auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
+
+        redisdriver->Append( "sadd {} {}", __STRING__( accountblacklist ), accountid );
+        redisdriver->Append( "hmset {}:{} {} {} {} {} {} {} {} {} {} {}",
+                             __STRING__( accountblacklist ), accountid,
+                             __STRING__( starttime ), KFGlobal::Instance()->_real_time,
+                             __STRING__( endtime ), KFGlobal::Instance()->_real_time + time,
+                             __STRING__( account ), account,
+                             __STRING__( channel ), channel,
+                             __STRING__( comment ), comment );
+        redisdriver->Append( "expire {}:{} {}", __STRING__( accountblacklist ), accountid, time );
+        auto kfresult = redisdriver->Pipeline();
+        return kfresult->IsOk();
+    }
+
+    bool KFAccountRedis::RemoveAccountBlackList( uint64 accountid )
+    {
+        auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
+        redisdriver->Append( "srem {} {}", __STRING__( accountblacklist ), accountid );
+        redisdriver->Append( "del {}:{}", __STRING__( accountblacklist ), accountid );
+        auto kfresult = redisdriver->Pipeline();
+        return kfresult->IsOk();
+    }
+
+    StringMapList KFAccountRedis::QueryAccountBlackList()
+    {
+        StringMapList stringmaplist;
+        auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
+        auto kflist = redisdriver->QueryList( "smembers {}", __STRING__( accountblacklist ) );
+
+        StringList removes;
+        for ( auto& accountid : kflist->_value )
+        {
+            auto kfdata = redisdriver->QueryMap( "hgetall {}:{}", __STRING__( accountblacklist ), accountid );
+            if ( !kfdata->IsOk() )
+            {
+                continue;
+            }
+
+            if ( kfdata->_value.empty() )
+            {
+                removes.push_back( accountid );
+                continue;
+            }
+
+
+            StringMap values;
+            values = kfdata->_value;
+            stringmaplist.emplace_back( values );
+        }
+
+        if ( !removes.empty() )
+        {
+            redisdriver->Update( removes, "srem {}", __STRING__( accountblacklist ) );
+        }
+
+        return stringmaplist;
+    }
+
+    bool KFAccountRedis::CheckAccountInWhiteList( uint64 accountid )
+    {
+        auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
+        auto kfresult = redisdriver->QueryUInt64( "hget {}:{} {}", __STRING__( accountwhitelist ), accountid, __STRING__( endtime ) );
+        return kfresult->_value > 0u;
+    }
+
+    bool KFAccountRedis::AddAccountWhiteList( uint64 accountid, const std::string& account, uint32 channel, uint64 time, const std::string& comment )
+    {
+        auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
+
+        redisdriver->Append( "sadd {} {}", __STRING__( accountwhitelist ), accountid );
+        redisdriver->Append( "hmset {}:{} {} {} {} {} {} {} {} {} {} {}",
+                             __STRING__( accountwhitelist ), accountid,
+                             __STRING__( starttime ), KFGlobal::Instance()->_real_time,
+                             __STRING__( endtime ), KFGlobal::Instance()->_real_time + time,
+                             __STRING__( account ), account,
+                             __STRING__( channel ), channel,
+                             __STRING__( comment ), comment );
+        redisdriver->Append( "expire {}:{} {}", __STRING__( accountwhitelist ), accountid, time );
+        auto kfresult = redisdriver->Pipeline();
+        return kfresult->IsOk();
+    }
+
+    bool KFAccountRedis::RemoveAccountWhiteList( uint64 accountid )
+    {
+        auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
+        redisdriver->Append( "srem {} {}", __STRING__( accountwhitelist ), accountid );
+        redisdriver->Append( "del {}:{}", __STRING__( accountwhitelist ), accountid );
+        auto kfresult = redisdriver->Pipeline();
+        return kfresult->IsOk();
+    }
+
+    StringMapList KFAccountRedis::QueryAccountWhiteList()
+    {
+        StringMapList stringmaplist;
+        auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
+        auto kflist = redisdriver->QueryList( "smembers {}", __STRING__( accountwhitelist ) );
+
+        StringList removes;
+        for ( auto& accountid : kflist->_value )
+        {
+            auto kfdata = redisdriver->QueryMap( "hgetall {}:{}", __STRING__( accountwhitelist ), accountid );
+            if ( !kfdata->IsOk() )
+            {
+                continue;
+            }
+
+            if ( kfdata->_value.empty() )
+            {
+                removes.push_back( accountid );
+                continue;
+            }
+
+
+            StringMap values;
+            values = kfdata->_value;
+            stringmaplist.emplace_back( values );
+        }
+
+        if ( !removes.empty() )
+        {
+            redisdriver->Update( removes, "srem {}", __STRING__( accountwhitelist ) );
+        }
+
+        return stringmaplist;
+    }
+
 }

@@ -12,6 +12,15 @@ enum ChannelEnum
 	Steam 			= 3;	// steam
 }
 
+// 服务器状态
+enum ServerStatusEnum
+{
+	UnknowServerStatus 	= 0;	// 无效
+	ServerStopStatus = 1;		// 服务器维护
+	ServerTestStatus = 2;		// 服务器开服测试( 只对白名单有效 )
+	ServerOpenStatus = 3;		// 服务器开放
+}
+
 //////////////////////////////////////////////////////////////////////////////////
 enum SexEnum
 {
@@ -58,7 +67,6 @@ enum RefreshEnum
 	RefreshByItem		= 4;	// 使用道具刷新
 	RefreshByMoney		= 5;	// 使用金币刷新
 	RefreshByDiamond	= 6;	// 使用钻石刷新
-
 }
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////

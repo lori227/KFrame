@@ -45,6 +45,10 @@ enum FrameCodeEnum
 	SteamError					= 11015;	// 查询Steam错误
 	SteamDataError				= 11016;	// 查询Steam数据错误
 	SteamAuthError				= 11017;	// Steam认证错误
+	IpInBlackList				= 11018;	// ip在黑名单中
+	AccountInBlackList			= 11019;	// 账号在黑名单
+	LoginNotInWhiteList			= 11020;	// 登录不在白名单中(还没开放登录)
+	LoginServerStopStatus		= 11021;	// 服务器正在维护中
 
 	// login
 	VersionNotCompatibility 	= 12001;	// 版本号不兼容

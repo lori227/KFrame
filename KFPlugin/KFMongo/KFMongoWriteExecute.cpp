@@ -52,6 +52,12 @@ namespace KFrame
         return SendRequest( request );
     }
 
+    bool KFMongoWriteExecute::Update( const std::string& table, const KFDBValue& dbvalue )
+    {
+        static KFMongoSelector kfseletor;
+        return Update( table, dbvalue, kfseletor );
+    }
+
     bool KFMongoWriteExecute::Update( const std::string& table, const KFDBValue& dbvalue, const KFMongoSelector& kfseletor )
     {
         auto fullname = __FORMAT__( "{}.{}", _database, table );

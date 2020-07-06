@@ -42,7 +42,7 @@ namespace KFrame
         return _dir_attribute_logic->ZoneUpdate( appid, zoneid, count, ip, port, time );
     }
 
-    StringListMap KFDirAttributeModule::QueryZoneList( const std::string& flag )
+    StringMapList KFDirAttributeModule::QueryZoneList( const std::string& flag )
     {
         return _dir_attribute_logic->QueryZoneList( flag );
     }
@@ -65,6 +65,16 @@ namespace KFrame
     StringMap KFDirAttributeModule::AllocPlayerZone( const std::string& flag, uint32 zoneid )
     {
         return _dir_attribute_logic->AllocPlayerZone( flag, zoneid );
+    }
+
+    uint32 KFDirAttributeModule::QueryZoneStatus( uint32 zoneid )
+    {
+        return _dir_attribute_logic->QueryZoneStatus( zoneid );
+    }
+
+    bool KFDirAttributeModule::UpdateZoneStatus( uint32 zoneid, uint32 status )
+    {
+        return _dir_attribute_logic->UpdateZoneStatus( zoneid, status );
     }
 
     bool KFDirAttributeModule::SetWorldUrl( uint64 worldid, const std::string& url )
@@ -95,7 +105,7 @@ namespace KFrame
         return _dir_attribute_logic->QueryMasterIp( appname, zoneid );
     }
 
-    StringListMap KFDirAttributeModule::QueryMasterList( KFJson& masterdata )
+    StringMapList KFDirAttributeModule::QueryMasterList( KFJson& masterdata )
     {
         auto appname = __JSON_GET_STRING__( masterdata, __STRING__( appname ) );
         auto zoneid = __JSON_GET_UINT32__( masterdata, __STRING__( zoneid ) );

@@ -43,9 +43,36 @@ namespace KFrame
         return kfresult->IsOk();
     }
 
-    StringListMap KFDirAttributeRedis::QueryZoneList( const std::string& flag )
+    uint32 KFDirAttributeRedis::QueryZoneStatus( uint32 zoneid )
     {
-        StringListMap zonedatalist;
+        auto redisdriver = __DIR_REDIS_DRIVER__;
+        auto kfresult = redisdriver->QueryUInt64( "hget {}:{} {}", __STRING__( zone ), zoneid, __STRING__( status ) );
+        return kfresult->_value;
+    }
+
+    bool KFDirAttributeRedis::UpdateZoneStatus( uint32 zoneid, uint32 status )
+    {
+        auto redisdriver = __DIR_REDIS_DRIVER__;
+        if ( zoneid != 0u )
+        {
+            redisdriver->Append( "hset {}:{} {} {}", __STRING__( zone ), zoneid, __STRING__( status ), status );
+        }
+        else
+        {
+            auto kflist = redisdriver->QueryList( "zrange {} 0 -1", __STRING__( zonelist ) );
+            for ( auto& strzoneid : kflist->_value )
+            {
+                redisdriver->Append( "hset {}:{} {} {}", __STRING__( zone ), strzoneid, __STRING__( status ), status );
+            }
+        }
+
+        auto kfresult = redisdriver->Pipeline();
+        return kfresult->IsOk();
+    }
+
+    StringMapList KFDirAttributeRedis::QueryZoneList( const std::string& flag )
+    {
+        StringMapList zonedatalist;
         auto redisdriver = __DIR_REDIS_DRIVER__;
         auto kfquerylist = redisdriver->QueryList( "zrange {} 0 -1", __STRING__( zonelist ) );
         for ( auto& strid : kfquerylist->_value )
@@ -242,9 +269,9 @@ namespace KFrame
         return zonedata;
     }
 
-    StringListMap KFDirAttributeRedis::QueryMasterList( const std::string& appname, uint32 zoneid )
+    StringMapList KFDirAttributeRedis::QueryMasterList( const std::string& appname, uint32 zoneid )
     {
-        StringListMap masterdatalist;
+        StringMapList masterdatalist;
         auto redisdriver = __DIR_REDIS_DRIVER__;
 
         auto kfappidlist = redisdriver->QueryList( "smembers {}:{}:{}", __STRING__( master ), appname, zoneid );
