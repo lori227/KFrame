@@ -16,6 +16,7 @@
 #include "KFSchedule/KFScheduleInterface.h"
 #include "KFHttpServer/KFHttpServerInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"
+#include "KFBasicAttribute/KFBasicAttributeInterface.h"
 
 namespace KFrame
 {
@@ -69,7 +70,6 @@ namespace KFrame
     private:
         // 邮件数据库
         KFRedisDriver* _mail_driver = nullptr;
-        KFRedisDriver* _auth_driver = nullptr;
     };
 }
 

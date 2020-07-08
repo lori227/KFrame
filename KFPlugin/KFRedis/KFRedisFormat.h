@@ -12,9 +12,7 @@ namespace KFrame
         template< typename T >
         inline static std::string ToString( const T& value )
         {
-            std::stringstream ss;
-            ss << value;
-            return ss.str();
+            return KFUtility::ToString<T>( value );
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -49,6 +47,30 @@ namespace KFrame
             {
                 ss << iter.first << " " << iter.second << " ";
             }
+        }
+
+        return ss.str();
+    }
+
+    template<>
+    inline std::string KFRedisFormat::ToString( const UInt64Map& value )
+    {
+        std::stringstream ss;
+        for ( auto& iter : value )
+        {
+            ss << iter.first << " " << iter.second << " ";
+        }
+
+        return ss.str();
+    }
+
+    template<>
+    inline std::string KFRedisFormat::ToString( const StringUInt64& value )
+    {
+        std::stringstream ss;
+        for ( auto& iter : value )
+        {
+            ss << iter.first << " " << iter.second << " ";
         }
 
         return ss.str();

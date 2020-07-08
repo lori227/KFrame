@@ -21,6 +21,7 @@ namespace KFrame
             Xor = 6,		// &~
             Mul = 7,		// *
             Div = 8,		// /
+            Not = 9,		// !
 
             Greater = 11,		// >
             Less = 12,			// <

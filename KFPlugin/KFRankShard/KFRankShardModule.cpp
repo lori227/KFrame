@@ -46,14 +46,14 @@ namespace KFrame
     std::string& KFRankShardModule::FormatRankDataKey( uint32 rankid, uint32 zoneid )
     {
         static std::string rankdatakey = "";
-        rankdatakey = __FORMAT__( "{}:{}:{}", __STRING__( rankdata ), rankid, zoneid );
+        rankdatakey = __REDIS_KEY_3__( __STRING__( rankdata ), rankid, zoneid );
         return rankdatakey;
     }
 
     std::string& KFRankShardModule::FormatRankSortKey( uint32 rankid, uint32 zoneid )
     {
         static std::string ranksortkey = "";
-        ranksortkey = __FORMAT__( "{}:{}:{}", __STRING__( ranksort ), rankid, zoneid );
+        ranksortkey = __REDIS_KEY_3__( __STRING__( ranksort ), rankid, zoneid );
         return ranksortkey;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -63,7 +63,7 @@ namespace KFrame
         kfrankdata->_rank_id = rankid;
         kfrankdata->_zone_id = zoneid;
 
-        auto querydata = _rank_redis_driver->QueryMap( "hgetall {}:{}:{}", __STRING__( rank ), rankid, zoneid );
+        auto querydata = _rank_redis_driver->HGetAll( __REDIS_KEY_3__( __STRING__( rank ), rankid, zoneid ) );
         if ( !querydata->_value.empty() )
         {
             auto strrankata = querydata->_value[ __STRING__( rankdata ) ];
@@ -84,7 +84,7 @@ namespace KFrame
         rankdata[ __STRING__( zoneid ) ] = __TO_STRING__( kfrankdata->_zone_id );
         rankdata[ __STRING__( minrankscore ) ] = __TO_STRING__( kfrankdata->_min_rank_score );
         rankdata[ __STRING__( rankdata ) ] = strrankdata;
-        auto kfresult = _rank_redis_driver->Update( rankdata, "hmset {}:{}:{}", __STRING__( rank ), kfrankdata->_rank_id, kfrankdata->_zone_id );
+        auto kfresult = _rank_redis_driver->HMSet( __REDIS_KEY_3__( __STRING__( rank ), kfrankdata->_rank_id, kfrankdata->_zone_id ), rankdata );
         if ( !kfresult->IsOk() )
         {
             __LOG_ERROR__( "rank=[{}:{}] save failed", kfrankdata->_rank_id, kfrankdata->_zone_id );
@@ -182,7 +182,7 @@ namespace KFrame
         }
 
         // 获得排行榜列表
-        auto queryzonelist = _rank_redis_driver->QueryList( "smembers {}:{}", __STRING__( ranksortlist ), rankid );
+        auto queryzonelist = _rank_redis_driver->SMembers( __REDIS_KEY_2__( __STRING__( ranksortlist ), rankid ) );
         for ( auto& strzoneid : queryzonelist->_value )
         {
             auto zoneid = __TO_UINT32__( strzoneid );
@@ -196,19 +196,18 @@ namespace KFrame
             auto& ranksortkey = FormatRankSortKey( rankid, zoneid );
             auto& rankdatakey = FormatRankDataKey( rankid, zoneid );
 
-            auto queryidlist = _rank_redis_driver->QueryList( "zrevrange {} 0 {}", ranksortkey, kfsetting->_max_count - 1 );
+            auto queryidlist = _rank_redis_driver->ZRevRange( ranksortkey, 0, kfsetting->_max_count - 1 );
             if ( queryidlist->_value.empty() )
             {
                 continue;
             }
 
             auto rankindex = 0u;
-            for ( auto& strplayerid : queryidlist->_value )
+            for ( auto& idpair : queryidlist->_value )
             {
-                auto playerid = __TO_UINT64__( strplayerid );
-
                 // 读取排行榜信息
-                auto queryrankdata = _rank_redis_driver->QueryString( "hget {} {}", rankdatakey, playerid );
+                auto playerid = __TO_UINT64__( idpair.first );
+                auto queryrankdata = _rank_redis_driver->HGet( rankdatakey, playerid );
                 if ( queryrankdata->_value.empty() )
                 {
                     continue;
@@ -262,18 +261,19 @@ namespace KFrame
 
             // 删除指定数量以后的排序
             auto maxcount = kfsetting->_max_count + 1u;
-            auto rankcount = _rank_redis_driver->QueryUInt64( "zcard {}", ranksortkey );
+            auto rankcount = _rank_redis_driver->ZCard( ranksortkey );
             if ( rankcount->_value > maxcount )
             {
-                _rank_redis_driver->Execute( "zremrangebyrank {} 0 {}", ranksortkey, rankcount->_value - maxcount );
+                _rank_redis_driver->ZRemRangeByRank( ranksortkey, 0, rankcount->_value - maxcount );
             }
         }
         break;
         case KFRankEnum::DataClearAll:	// 清除所有
         {
-            _rank_redis_driver->Append( "del {}", rankdatakey );
-            _rank_redis_driver->Append( "del {}", ranksortkey );
-            _rank_redis_driver->Pipeline();
+            StringList values;
+            values.emplace_back( rankdatakey );
+            values.emplace_back( ranksortkey );
+            _rank_redis_driver->Del( ranksortkey );
         }
         break;
         default:
@@ -314,19 +314,21 @@ namespace KFrame
 
         // 排行显示属性
         auto strrankdata = KFProto::Serialize( pbrankdata, KFCompressEnum::None, 0u, true );
-        _rank_redis_driver->Append( "hset {} {} {}", rankdatakey, kfmsg.playerid(), strrankdata );
+
+        _rank_redis_driver->WriteMulti();
+        _rank_redis_driver->HSet( rankdatakey, kfmsg.playerid(), strrankdata );
 
         // 判断最低的分数
         // if ( IsNeedUpdateRankData( kfmsg.rankid(), kfmsg.zoneid(), kfmsg.rankscore() ) )
         {
             // 添加到排行榜的zone列表
-            _rank_redis_driver->Append( "sadd {}:{} {}", __STRING__( ranksortlist ), kfmsg.rankid(), kfmsg.zoneid() );
+            _rank_redis_driver->SAdd(  __REDIS_KEY_2__( __STRING__( ranksortlist ), kfmsg.rankid() ), kfmsg.zoneid() );
 
             // 积分排行列表
-            _rank_redis_driver->Append( "zadd {} {} {}", ranksortkey, pbrankdata->rankscore(), kfmsg.playerid() );
+            _rank_redis_driver->ZAdd( ranksortkey, kfmsg.playerid(), pbrankdata->rankscore() );
         }
 
-        _rank_redis_driver->Pipeline();
+        _rank_redis_driver->WriteExec();
     }
 
     bool KFRankShardModule::IsNeedUpdateRankData( uint32 rankid, uint32 zoneid, uint64 rankscore )
@@ -380,7 +382,7 @@ namespace KFrame
     uint32 KFRankShardModule::QueryPlayerRank( uint64 playerid, uint32 rankid, uint32 zoneid )
     {
         auto& ranksortkey = FormatRankSortKey( rankid, zoneid );
-        auto kfresult = _rank_redis_driver->QueryUInt64( "zrank {} {}", ranksortkey, playerid );
+        auto kfresult = _rank_redis_driver->ZRank( ranksortkey, playerid );
         return ( uint32 )kfresult->_value;
     }
 
@@ -395,15 +397,15 @@ namespace KFrame
         }
 
         // 查询
+        _rank_redis_driver->ReadMulti();
         for ( auto i = 0; i < kfmsg.friendid_size(); ++i )
         {
             auto friendid = kfmsg.friendid( i );
 
             auto& rankdatakey = FormatRankDataKey( kfmsg.rankid(), CalcRankZoneId( friendid, kfsetting ) );
-            _rank_redis_driver->Append( "hget {} {}", rankdatakey, friendid );
+            _rank_redis_driver->HGet( rankdatakey, friendid );
         }
-
-        auto rankdatalist = _rank_redis_driver->PipelineList();
+        auto rankdatalist = _rank_redis_driver->ReadListExec();
 
         KFMsg::MsgQueryFriendRankListAck ack;
         ack.set_rankid( kfmsg.rankid() );

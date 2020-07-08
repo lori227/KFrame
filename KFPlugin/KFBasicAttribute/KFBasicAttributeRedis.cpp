@@ -19,7 +19,7 @@ namespace KFrame
     void KFBasicAttributeRedis::UpdateBasicStrValue( uint64 playerid, uint64 serverid, const StringMap& values )
     {
         auto redisdriver = __BASIC_REDIS_DRIVER__;
-        redisdriver->Update( values, "hmset {}:{}", __STRING__( basic ), playerid );
+        redisdriver->HMSet( __REDIS_KEY_2__( __STRING__( basic ), playerid ), values );
 
         static auto _get_status_value = []( const StringMap & values )
         {
@@ -36,10 +36,10 @@ namespace KFrame
         switch ( status )
         {
         case KFMsg::OnlineStatus:
-            redisdriver->Execute( "sadd {}:{} {}", __STRING__( onlinelist ), serverid, playerid );
+            redisdriver->SAdd( __REDIS_KEY_2__( __STRING__( onlinelist ), serverid ), playerid );
             break;
         case KFMsg::OfflineStatus:
-            redisdriver->Execute( "srem {}:{} {}", __STRING__( onlinelist ), serverid, playerid );
+            redisdriver->SRem( __REDIS_KEY_2__( __STRING__( onlinelist ), serverid ), playerid );
             break;
         default:
             break;
@@ -49,25 +49,27 @@ namespace KFrame
     void KFBasicAttributeRedis::ClearBasicServerId( uint64 serverid )
     {
         auto redisdriver = __BASIC_REDIS_DRIVER__;
-        auto kfplayerlist = redisdriver->QueryList( "smembers {}:{}", __STRING__( onlinelist ), serverid );
+        auto kfplayerlist = redisdriver->SMembers( __REDIS_KEY_2__( __STRING__( onlinelist ), serverid ) );
         if ( kfplayerlist->_value.empty() )
         {
             return;
         }
 
+        StringMap values;
+        values[ __STRING__( serverid ) ] = "0";
+        values[ __STRING__( status ) ] = __TO_STRING__( KFMsg::OfflineStatus );
+
         for ( auto& id : kfplayerlist->_value )
         {
-            auto queryserverid = redisdriver->QueryUInt64( "hget {}:{} {}", __STRING__( basic ), id, __STRING__( serverid ) );
+            auto strkey = __REDIS_KEY_2__( __STRING__( basic ), id );
+            auto queryserverid = redisdriver->HGetUInt64( strkey, __STRING__( serverid ) );
             if ( queryserverid->_value == serverid )
             {
-                redisdriver->Execute( "hmset {}:{} {} {} {} {}", __STRING__( basic ), id,
-                                      __STRING__( serverid ), 0,
-                                      __STRING__( status ), KFMsg::OfflineStatus );
+                redisdriver->HMSet( strkey, values );
             }
-
         }
 
-        redisdriver->Execute( "del {}:{}", __STRING__( onlinelist ), serverid );
+        redisdriver->Del( __REDIS_KEY_2__( __STRING__( onlinelist ), serverid ) );
     }
 
     uint64 KFBasicAttributeRedis::QueryBasicServerId( uint64 playerid )
@@ -78,7 +80,7 @@ namespace KFrame
     uint32 KFBasicAttributeRedis::QueryBasicAttribute( uint64 playerid, StringMap& values )
     {
         auto redisdriver = __BASIC_REDIS_DRIVER__;
-        auto kfquery = redisdriver->QueryMap( "hgetall {}:{}", __STRING__( basic ), playerid );
+        auto kfquery = redisdriver->HGetAll( __REDIS_KEY_2__( __STRING__( basic ), playerid ) );
         if ( !kfquery->IsOk() )
         {
             return KFMsg::PublicDatabaseBusy;
@@ -95,7 +97,7 @@ namespace KFrame
 
     std::string KFBasicAttributeRedis::FormatNameKey( const std::string& name, uint32 zoneid )
     {
-        return __FORMAT__( "{}:{}:{}:{}", __STRING__( player ), __STRING__( name ), zoneid, name );
+        return __REDIS_KEY_4__( __STRING__( player ), __STRING__( name ), zoneid, name );
     }
 
     uint32 KFBasicAttributeRedis::SetPlayerName( uint32 zoneid, uint64 playerid, const std::string& oldname, const std::string& newname )
@@ -103,7 +105,7 @@ namespace KFrame
         auto redisdriver = __BASIC_REDIS_DRIVER__;
 
         auto newnamekey = FormatNameKey( newname, zoneid );
-        auto kfplayerid = redisdriver->QueryUInt64( "get {}", newnamekey );
+        auto kfplayerid = redisdriver->GetUInt64( newnamekey );
         if ( !kfplayerid->IsOk() )
         {
             return KFMsg::NameDatabaseBusy;
@@ -113,7 +115,7 @@ namespace KFrame
         if ( kfplayerid->_value == _invalid_int )
         {
             // 保存名字
-            auto kfresult = redisdriver->Execute( "set {} {}", newnamekey, playerid );
+            auto kfresult = redisdriver->Set( newnamekey, playerid );
             if ( !kfresult->IsOk() )
             {
                 return KFMsg::NameDatabaseBusy;
@@ -123,7 +125,7 @@ namespace KFrame
             if ( !oldname.empty() )
             {
                 auto oldnamekey = FormatNameKey( oldname, zoneid );
-                redisdriver->Execute( "del {}", oldnamekey );
+                redisdriver->Del( oldnamekey );
             }
         }
         else if ( kfplayerid->_value != playerid )
@@ -140,21 +142,21 @@ namespace KFrame
         auto redisdriver = __BASIC_REDIS_DRIVER__;
 
         auto namekey = FormatNameKey( playername, zoneid );
-        auto kfplayerid = redisdriver->QueryUInt64( "get {}", namekey );
+        auto kfplayerid = redisdriver->GetUInt64( namekey );
         return kfplayerid->_value;
     }
 
     uint64 KFBasicAttributeRedis::QueryBasicIntValue( uint64 playerid, const std::string& dataname )
     {
         auto redisdriver = __BASIC_REDIS_DRIVER__;
-        auto kfserverid = redisdriver->QueryUInt64( "hget {}:{} {}", __STRING__( basic ), playerid, dataname );
+        auto kfserverid = redisdriver->HGetUInt64( __REDIS_KEY_2__( __STRING__( basic ), playerid ), dataname );
         return kfserverid->_value;
     }
 
     std::string KFBasicAttributeRedis::QueryBasicStrValue( uint64 playerid, const std::string& dataname )
     {
         auto redisdriver = __BASIC_REDIS_DRIVER__;
-        auto kfserverid = redisdriver->QueryString( "hget {}:{} {}", __STRING__( basic ), playerid, dataname );
+        auto kfserverid = redisdriver->HGet( __REDIS_KEY_2__( __STRING__( basic ), playerid ), dataname );
         return kfserverid->_value;
     }
 }

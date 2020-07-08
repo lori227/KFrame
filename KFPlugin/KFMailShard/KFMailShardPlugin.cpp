@@ -21,5 +21,6 @@ namespace KFrame
         __FIND_MODULE__( _kf_schedule, KFScheduleInterface );
         __FIND_MODULE__( _kf_route, KFRouteClientInterface );
         __FIND_MODULE__( _kf_http_server, KFHttpServerInterface );
+        __FIND_MODULE__( _kf_basic_attribute, KFBasicAttributeInterface );
     }
 }

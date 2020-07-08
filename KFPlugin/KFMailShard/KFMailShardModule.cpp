@@ -110,12 +110,17 @@ namespace KFrame
 
         const auto& maillist = __JSON_GET_ARRRY__( request, __STRING__( mailid ) );
         auto count = __JSON_ARRAY_SIZE__( maillist );
+
+        StringList mailkeylist;
         for ( auto i = 0u; i < count; ++i )
         {
             auto mailid = __JSON_ARRAY_INDEX__( maillist, i ).GetUint64();
-            _mail_driver->Append( "del {}:{}", __STRING__( mail ), mailid );
+            mailkeylist.push_back( __REDIS_KEY_2__( __STRING__( mail ), mailid ) );
         }
-        _mail_driver->Pipeline();
+        if ( !mailkeylist.empty() )
+        {
+            _mail_driver->Del( mailkeylist );
+        }
 
         return _kf_http_server->SendCode( KFMsg::Ok );
     }
@@ -132,59 +137,57 @@ namespace KFrame
         // 清空过期的全局邮件列表
         for ( auto zoneid : kflist->_value )
         {
-            auto globalmailkey = __FORMAT__( "{}:{}", __STRING__( globalmail ), zoneid );
-
-            auto kfresult = _mail_driver->QueryList( "zrangebyscore {} -inf +inf", globalmailkey );
+            auto globalmailkey = __REDIS_KEY_2__( __STRING__( globalmail ), zoneid );
+            auto kfresult = _mail_driver->ZRangeByScore( globalmailkey, 0, __MAX_UINT64__ );
             if ( kfresult->_value.empty() )
             {
                 continue;
             }
 
             StringList overduelist;
-            for ( auto& strmailid : kfresult->_value )
+            for ( auto& mailpair : kfresult->_value )
             {
-                auto stringresult = _mail_driver->QueryString( "hget {}:{} {}", __STRING__( mail ), strmailid, __STRING__( id ) );
+                auto stringresult = _mail_driver->HGet( __REDIS_KEY_2__( __STRING__( mail ), mailpair.first ), __STRING__( id ) );
                 if ( stringresult->IsOk() && stringresult->_value == _invalid_string )
                 {
-                    overduelist.push_back( strmailid );
+                    overduelist.push_back( mailpair.first );
                 }
             }
 
             if ( !overduelist.empty() )
             {
-                _mail_driver->Update( overduelist, "zrem {}", globalmailkey );
+                _mail_driver->ZRem( globalmailkey, overduelist );
             }
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFMailShardModule::LoadGlobalMailToPerson( uint64 playerid, uint32 zoneid )
     {
-        auto mailinfokey = __FORMAT__( "{}:{}:{}", __STRING__( mailinfo ), playerid, zoneid );
+        auto mailinfokey = __REDIS_KEY_3__( __STRING__( mailinfo ), playerid, zoneid );
 
         // 获取玩家已经加载的最近一封GM邮件id
-        auto kfmailid = _mail_driver->QueryUInt64( "hget {} {}", mailinfokey, __STRING__( gmmailid ) );
+        auto kfmailid = _mail_driver->HGetUInt64( mailinfokey, __STRING__( gmmailid ) );
         if ( !kfmailid->IsOk() )
         {
             return;
         }
 
         // 查询全局邮件列表
-        auto listresult = _mail_driver->QueryList( "zrangebyscore {}:{} ({} +inf", __STRING__( globalmail ), zoneid, kfmailid->_value );
+        auto listresult = _mail_driver->ZRangeByScore( __REDIS_KEY_2__( __STRING__( globalmail ), zoneid ), kfmailid->_value, __MAX_UINT64__ );
         if ( listresult->_value.empty() )
         {
             return;
         }
 
         auto& newmaxmailid = listresult->_value.back();
-        _mail_driver->Append( "hset {} {} {}", mailinfokey, __STRING__( gmmailid ), newmaxmailid );
 
-        // 添加到个人邮件列表中
+        _mail_driver->WriteMulti();
+        _mail_driver->HSet( mailinfokey, __STRING__( gmmailid ), newmaxmailid );
         for ( auto& strmailid : listresult->_value )
         {
-            _mail_driver->Append( "hset {}:{} {} {}", __STRING__( maillist ), playerid, strmailid, KFMsg::InitStatus );
+            _mail_driver->HSet( __REDIS_KEY_2__( __STRING__( maillist ), playerid ), strmailid, KFMsg::InitStatus );
         }
-
-        auto kfresult = _mail_driver->Pipeline();
+        auto kfresult = _mail_driver->WriteExec();
         if ( !kfresult->IsOk() )
         {
             __LOG_ERROR__( "reload gm mail[{}] failed", playerid );
@@ -202,7 +205,7 @@ namespace KFrame
         LoadGlobalMailToPerson( kfmsg.playerid(), kfmsg.zoneid() );
 
         // 查询邮件列表
-        auto mailkeylist = _mail_driver->QueryMap( "hgetall {}:{}", __STRING__( maillist ), kfmsg.playerid() );
+        auto mailkeylist = _mail_driver->HGetAll( __REDIS_KEY_2__( __STRING__( maillist ), kfmsg.playerid() ) );
         if ( mailkeylist->_value.empty() )
         {
             return;
@@ -223,7 +226,7 @@ namespace KFrame
                 continue;
             }
 
-            auto kfresult = _mail_driver->QueryMap( "hgetall {}:{}", __STRING__( mail ), strmailid );
+            auto kfresult = _mail_driver->HGetAll( __REDIS_KEY_2__( __STRING__( mail ), strmailid ) );
             if ( !kfresult->IsOk() )
             {
                 continue;
@@ -255,7 +258,7 @@ namespace KFrame
         // 删除过期邮件
         if ( !overduelist.empty() )
         {
-            _mail_driver->Update( overduelist, "hdel {}:{}", __STRING__( maillist ), kfmsg.playerid() );
+            _mail_driver->HDel( __REDIS_KEY_2__( __STRING__( maillist ), kfmsg.playerid() ), overduelist );
         }
     }
 
@@ -284,7 +287,7 @@ namespace KFrame
     uint64 KFMailShardModule::AddMail( uint32 flag, uint64 objectid, StringMap& maildata )
     {
         // 创建一个邮件id
-        auto uint64result = _mail_driver->Execute( "incr {}", __STRING__( mailidcreater ) );
+        auto uint64result = _mail_driver->Incr( __STRING__( mailidcreater ) );
         if ( uint64result->_value == _invalid_int )
         {
             return _invalid_int;
@@ -295,44 +298,44 @@ namespace KFrame
         maildata[ __STRING__( id ) ] = __TO_STRING__( mailid );
         maildata[ __STRING__( flag ) ] = __TO_STRING__( flag );
         maildata[ __STRING__( sendtime ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time );
+        auto validtime = __TO_UINT32__( maildata[ __STRING__( validtime ) ] );
+        if ( validtime == 0u )
+        {
+            validtime = 2592000;	// 默认30天有效期
+            maildata[ __STRING__( validtime ) ] = __TO_STRING__( validtime );
+        }
 
         // 添加邮件
-        _mail_driver->Append( maildata, "hmset {}:{}", __STRING__( mail ), mailid );
-
-        auto validtime = maildata[ __STRING__( validtime ) ];
-        if ( validtime.empty() )
-        {
-            validtime = "2592000";	// 默认30天有效期
-            maildata[ __STRING__( validtime ) ] = validtime;
-        }
-        _mail_driver->Append( "expire {}:{} {}", __STRING__( mail ), mailid, validtime );
+        _mail_driver->WriteMulti();
+        _mail_driver->HMSet( __REDIS_KEY_2__( __STRING__( mail ), mailid ), maildata );
+        _mail_driver->Expire( __REDIS_KEY_2__( __STRING__( mail ), mailid ), validtime );
 
         switch ( flag )
         {
         case KFMsg::GlobalMail: // 全局邮件
-            _mail_driver->Append( "zadd {}:{} {} {}", __STRING__( globalmail ), objectid, mailid, mailid );
-            _mail_driver->Append( "sadd {} {}", __STRING__( mailzonelist ), objectid );
+            _mail_driver->SAdd( __STRING__( mailzonelist ), objectid );
+            _mail_driver->ZAdd( __REDIS_KEY_2__( __STRING__( globalmail ), objectid ), mailid, mailid );
             break;
         case KFMsg::PersonMail:	// 个人邮件
-            _mail_driver->Append( "hset {}:{} {} {}", __STRING__( maillist ), objectid, mailid, KFMsg::InitStatus );
+            _mail_driver->HSet( __REDIS_KEY_2__( __STRING__( maillist ), objectid ), mailid, KFMsg::InitStatus );
             break;
         default:
             break;
         }
 
         // 执行添加
-        auto kfresult = _mail_driver->Pipeline();
+        auto kfresult = _mail_driver->WriteExec();
         if ( kfresult->IsOk() )
         {
             if ( flag == KFMsg::PersonMail )
             {
                 // 通知有新邮件
-                auto kfresult = _auth_driver->QueryUInt64( "hget {}:{} {}", __STRING__( online ), objectid, __STRING__( game ) );
-                if ( kfresult->_value != _invalid_int )
+                auto serverid = _kf_basic_attribute->QueryBasicServerId( objectid );
+                if ( serverid != _invalid_int )
                 {
                     KFMsg::S2SNoticeNewMailReq notice;
                     notice.set_playerid( objectid );
-                    _kf_route->SendToServer( kfresult->_value, KFMsg::S2S_NOTICE_NEW_MAIL_REQ, &notice, true );
+                    _kf_route->RepeatToServer( serverid, KFMsg::S2S_NOTICE_NEW_MAIL_REQ, &notice );
                 }
             }
         }
@@ -348,7 +351,7 @@ namespace KFrame
     {
         {
             // 判断玩家是否有拥有此邮件
-            auto kfquery = _mail_driver->QueryString( "hget {}:{} {}", __STRING__( maillist ), playerid, mailid );
+            auto kfquery = _mail_driver->HGet( __REDIS_KEY_2__( __STRING__( maillist ), playerid ), mailid );
             if ( !kfquery->IsOk() || kfquery->_value == _invalid_string )
             {
                 return false;
@@ -361,21 +364,22 @@ namespace KFrame
         case KFMsg::Remove:
         case KFMsg::ReceiveRemove:
         {
-            _mail_driver->Append( "hdel {}:{} {}", __STRING__( maillist ), playerid, mailid );
+            _mail_driver->WriteMulti();
+            _mail_driver->HDel( __REDIS_KEY_2__( __STRING__( maillist ), playerid ), mailid );
             if ( flag == KFMsg::PersonMail )
             {
                 // 删除个人邮件数据
-                _mail_driver->Append( "del {}:{}", __STRING__( mail ), mailid );
+                _mail_driver->Del( __REDIS_KEY_2__( __STRING__( mail ), mailid ) );
             }
 
-            auto kfresult = _mail_driver->Pipeline();
+            auto kfresult = _mail_driver->WriteExec();
             ok = kfresult->IsOk();
         }
         break;
         case KFMsg::DoneStatus:
         case KFMsg::ReceiveStatus:
         {
-            auto kfresult = _mail_driver->Execute( "hset {}:{} {} {}", __STRING__( maillist ), playerid, mailid, status );
+            auto kfresult = _mail_driver->HSet( __REDIS_KEY_2__( __STRING__( maillist ), playerid ), mailid, status );
             ok = kfresult->IsOk();
         }
         break;
@@ -409,20 +413,20 @@ namespace KFrame
 
         // 设置最大的gm邮件id
         {
-            auto listresult = _mail_driver->QueryList( "zrevrange {}:{} 0 0", __STRING__( globalmail ), _invalid_int );
+            auto listresult = _mail_driver->ZRevRange( __REDIS_KEY_2__( __STRING__( globalmail ), _invalid_int ), 0, 0 );
             if ( !listresult->_value.empty() )
             {
-                auto& strmaxmailid = listresult->_value.front();
-                _mail_driver->Execute( "hset {}:{}:{} {} {}", __STRING__( mailinfo ), kfmsg.playerid(), _invalid_int, __STRING__( gmmailid ), strmaxmailid );
+                auto& strmaxmailid = listresult->_value.front().first;
+                _mail_driver->HSet( __REDIS_KEY_3__( __STRING__( mailinfo ), kfmsg.playerid(), _invalid_int ), __STRING__( gmmailid ), strmaxmailid );
             }
         }
 
         {
-            auto listresult = _mail_driver->QueryList( "zrevrange {}:{} 0 0", __STRING__( globalmail ), kfmsg.zoneid() );
+            auto listresult = _mail_driver->ZRevRange( __REDIS_KEY_2__(  __STRING__( globalmail ), kfmsg.zoneid() ), 0, 0 );
             if ( !listresult->_value.empty() )
             {
-                auto& strmaxmailid = listresult->_value.front();
-                _mail_driver->Execute( "hset {}:{}:{} {} {}", __STRING__( mailinfo ), kfmsg.playerid(), kfmsg.zoneid(), __STRING__( gmmailid ), strmaxmailid );
+                auto& strmaxmailid = listresult->_value.front().first;
+                _mail_driver->HSet( __REDIS_KEY_3__( __STRING__( mailinfo ), kfmsg.playerid(), kfmsg.zoneid() ), __STRING__( gmmailid ), strmaxmailid );
             }
         }
     }

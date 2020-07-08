@@ -56,13 +56,9 @@ namespace KFrame
         KFRedisWriteExecute() = default;
         virtual ~KFRedisWriteExecute() = default;
 
-        // 写操作
-        KFResult< voidptr >::UniqueType VoidExecute( const std::string& strsql );
-        KFResult< uint64 >::UniqueType UpdateExecute( const std::string& strsql );
-
-        // 批量写
-        KFResult< voidptr >::UniqueType Pipeline( const StringList& commands );
-
+        KFResult< voidptr >::UniqueType WriteVoid( const std::string& strsql );
+        KFResult< uint64 >::UniqueType WriteUInt64( const std::string& strsql );
+        KFResult< std::string >::UniqueType WriteString( const std::string& strsql );
         /////////////////////////////////////////////////////////////////////////////////////////////
     };
     /////////////////////////////////////////////////////////////////////////////////////////////
@@ -74,17 +70,15 @@ namespace KFrame
         virtual ~KFRedisReadExecute() = default;
 
         ///////////////////////////////////////////////////////
-        // 读操作
-        KFResult< uint64 >::UniqueType UInt64Execute( const std::string& strsql );
-        KFResult< std::string >::UniqueType StringExecute( const std::string& strsql );
-        KFResult< StringMap >::UniqueType MapExecute( const std::string& strsql );
-        KFResult< StringList >::UniqueType ListExecute( const std::string& strsql );
-        KFResult< StringVector >::UniqueType VectorExecute( const std::string& strsql );
+        KFResult< uint64 >::UniqueType ReadUInt64( const std::string& strsql );
+        KFResult< std::string >::UniqueType ReadString( const std::string& strsql );
+        KFResult< StringMap >::UniqueType ReadMap( const std::string& strsql );
+        KFResult< StringPair >::UniqueType ReadPair( const std::string& strsql );
+        KFResult< StringList >::UniqueType ReadList( const std::string& strsql );
+        KFResult< StringVector >::UniqueType ReadVector( const std::string& strsql );
+        KFResult< StringMapList >::UniqueType ReadMapList( const std::string& strsql );
+        KFResult< StringPairList >::UniqueType ReadPairList( const std::string& strsql );
 
-        // 添加执行命令
-        KFResult< StringList >::UniqueType ListPipelineExecute( const StringList& commands );
-        KFResult< StringMapList >::UniqueType ListMapPipelineExecute( const StringList& commands );
-        ///////////////////////////////////////////////////////
     };
 }
 #endif

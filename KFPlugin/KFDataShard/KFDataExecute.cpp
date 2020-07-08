@@ -105,7 +105,8 @@ namespace KFrame
             return false;
         }
 
-        auto kfresult = redisdriver->Execute( "hset {}:{} {} {}", __STRING__( player ), playerid, __STRING__( data ), playerdata );
+        auto strplayerkey = __REDIS_KEY_2__( __STRING__( player ), playerid );
+        auto kfresult = redisdriver->HSet( strplayerkey, __STRING__( data ), playerdata );
         if ( !kfresult->IsOk() )
         {
             __LOG_ERROR__( "redis player[{}:{}] save failed", zoneid, playerid );
@@ -115,7 +116,7 @@ namespace KFrame
         if ( _kf_setting->_cache_time != 0u && saveflag == KFSaveEnum::OfflineSave )
         {
             // 设置缓存时间
-            redisdriver->Execute( "expire {}:{} {}", __STRING__( player ), playerid, _kf_setting->_cache_time );
+            redisdriver->Expire( strplayerkey, _kf_setting->_cache_time );
         }
 
         __LOG_INFO__( "redis player [{}:{}] size=[{}] save ok", zoneid, playerid, playerdata.size() );
@@ -131,7 +132,7 @@ namespace KFrame
             return nullptr;
         }
 
-        return redisdriver->QueryString( "hget {}:{} {}", __STRING__( player ), playerid, __STRING__( data ) );
+        return redisdriver->HGet( __REDIS_KEY_2__( __STRING__( player ), playerid ), __STRING__( data ) );
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFMongoDataExecute::SaveData( uint32 zoneid, uint64 playerid, const std::string& playerdata, uint32 saveflag )

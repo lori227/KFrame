@@ -58,67 +58,62 @@ namespace KFrame
         }
     }
 
-    void KFRedisLogic::AppendCommand( const std::string& strsql )
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // 写操作
+    KFResult< voidptr >::UniqueType KFRedisLogic::WriteVoid( const std::string& strsql )
     {
-        _commands.push_back( strsql );
+        return _write_execute->WriteVoid( strsql );
     }
 
-    KFResult< voidptr >::UniqueType KFRedisLogic::VoidExecute( const std::string& strsql )
+    KFResult< uint64 >::UniqueType KFRedisLogic::WriteUInt64( const std::string& strsql )
     {
-        return _write_execute->VoidExecute( strsql );
+        return _write_execute->WriteUInt64( strsql );
     }
 
-    KFResult< uint64 >::UniqueType KFRedisLogic::UpdateExecute( const std::string& strsql )
+    KFResult< std::string >::UniqueType KFRedisLogic::WriteString( const std::string& strsql )
     {
-        return _write_execute->UpdateExecute( strsql );
+        return _write_execute->WriteString( strsql );
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // 读操作
+    KFResult< uint64 >::UniqueType KFRedisLogic::ReadUInt64( const std::string& strsql )
+    {
+        return _read_execute->ReadUInt64( strsql );
     }
 
-    KFResult< voidptr >::UniqueType KFRedisLogic::Pipeline()
+    KFResult< std::string >::UniqueType KFRedisLogic::ReadString( const std::string& strsql )
     {
-        auto kfresult = _write_execute->Pipeline( _commands );
-        _commands.clear();
-
-        return kfresult;
+        return _read_execute->ReadString( strsql );
     }
 
-    KFResult< std::string >::UniqueType KFRedisLogic::StringExecute( const std::string& strsql )
+    KFResult< StringMap >::UniqueType KFRedisLogic::ReadMap( const std::string& strsql )
     {
-        return _read_execute->StringExecute( strsql );
+        return _read_execute->ReadMap( strsql );
     }
 
-    KFResult< uint64 >::UniqueType KFRedisLogic::UInt64Execute( const std::string& strsql )
+    KFResult< StringPair >::UniqueType KFRedisLogic::ReadPair( const std::string& strsql )
     {
-        return _read_execute->UInt64Execute( strsql );
+        return _read_execute->ReadPair( strsql );
     }
 
-    KFResult< StringMap >::UniqueType KFRedisLogic::MapExecute( const std::string& strsql )
+    KFResult< StringList >::UniqueType KFRedisLogic::ReadList( const std::string& strsql )
     {
-        return _read_execute->MapExecute( strsql );
+        return _read_execute->ReadList( strsql );
     }
 
-    KFResult< StringVector >::UniqueType KFRedisLogic::VectorExecute( const std::string& strsql )
+    KFResult< StringVector >::UniqueType KFRedisLogic::ReadVector( const std::string& strsql )
     {
-        return _read_execute->VectorExecute( strsql );
+        return _read_execute->ReadVector( strsql );
     }
 
-    KFResult< StringList >::UniqueType KFRedisLogic::ListExecute( const std::string& strsql )
+    KFResult< StringMapList >::UniqueType KFRedisLogic::ReadMapList( const std::string& strsql )
     {
-        return _read_execute->ListExecute( strsql );
+        return _read_execute->ReadMapList( strsql );
     }
 
-    KFResult< StringList >::UniqueType KFRedisLogic::ListPipelineExecute()
+    KFResult< StringPairList >::UniqueType KFRedisLogic::ReadPairList( const std::string& strsql )
     {
-        auto kfresult = _read_execute->ListPipelineExecute( _commands );
-        _commands.clear();
-
-        return kfresult;
-    }
-
-    KFResult< StringMapList >::UniqueType KFRedisLogic::ListMapPipelineExecute()
-    {
-        auto kfresult = _read_execute->ListMapPipelineExecute( _commands );
-        _commands.clear();
-
-        return kfresult;
+        return _read_execute->ReadPairList( strsql );
     }
 }

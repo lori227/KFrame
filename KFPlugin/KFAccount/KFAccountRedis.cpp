@@ -11,7 +11,8 @@ namespace KFrame
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
 
         // 先查询是否存在
-        auto kfquery = redisdriver->QueryUInt64( "hget {}:{}:{} {}", __STRING__( account ), account, channel, __STRING__( accountid ) );
+        auto straccountkey = __REDIS_KEY_3__( __STRING__( account ), account, channel );
+        auto kfquery = redisdriver->HGetUInt64( straccountkey, __STRING__( accountid ) );
         if ( !kfquery->IsOk() )
         {
             __LOG_DEBUG__( "account[{}] channel[{}] query accountid failed", account, channel );
@@ -37,10 +38,11 @@ namespace KFrame
         accountdata[ __STRING__( channel ) ] = __TO_STRING__( channel );
         accountdata[ __STRING__( accountid ) ] = __TO_STRING__( accountid );
 
-        redisdriver->Append( "hset {}:{}:{} {} {}", __STRING__( account ), account, channel, __STRING__( accountid ), accountid );
-        redisdriver->Append( "sadd {} {}", __STRING__( accountlist ), accountid );
-        redisdriver->Append( accountdata, "hmset {}:{}", __STRING__( accountid ), accountid );
-        auto kfresult = redisdriver->Pipeline();
+        redisdriver->WriteMulti();
+        redisdriver->SAdd( __STRING__( accountlist ), accountid );
+        redisdriver->HSet( straccountkey, __STRING__( accountid ), accountid );
+        redisdriver->HMSet( __REDIS_KEY_2__( __STRING__( accountid ), accountid ), accountdata );
+        auto kfresult = redisdriver->WriteExec();
         if ( kfresult->IsOk() )
         {
             __LOG_DEBUG__( "create account successfully, account[{}] accountid[{}] channel[{}] ", account, accountid, channel );
@@ -62,42 +64,43 @@ namespace KFrame
             return;
         }
 
-        auto& kfextend = channeldata[ __STRING__( extend ) ];
+        auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
 
+        auto& kfextend = channeldata[ __STRING__( extend ) ];
         StringMap values;
         __JSON_TO_MAP__( kfextend, values );
-
-        auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
-        redisdriver->Update( values, "hmset {}:{}", __STRING__( extend ), accountid );
+        redisdriver->HMSet( __REDIS_KEY_2__( __STRING__( extend ), accountid ), values );
     }
 
     StringMap KFAccountRedis::QueryChannelData( uint64 accountid )
     {
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
-        auto kfresult = redisdriver->QueryMap( "hgetall {}:{}", __STRING__( extend ), accountid );
+        auto kfresult = redisdriver->HGetAll( __REDIS_KEY_2__( __STRING__( extend ), accountid ) );
         return kfresult->_value;
     }
 
     std::string KFAccountRedis::MakeAccountToken( const std::string& account, uint32 channel, uint64 accountid, uint32 expiretime )
     {
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
+        auto tokenkey = __FORMAT__( "{}:{}", __STRING__( token ), accountid );
         auto token = KFAccountLogic::MakeAccountToken( account, channel, accountid, expiretime );
 
-        auto tokenkey = __FORMAT__( "{}:{}", __STRING__( token ), accountid );
-        redisdriver->Append( "hmset {} {} {} {} {} {} {}",
-                             tokenkey,
-                             __STRING__( token ), token,
-                             __STRING__( account ), account,
-                             __STRING__( channel ), channel );
-        redisdriver->Append( "expire {} {}", tokenkey, expiretime );
-        redisdriver->Pipeline();
+        StringMap values;
+        values[ __STRING__( token ) ] = token;
+        values[ __STRING__( account ) ] = account;
+        values[ __STRING__( channel ) ] = __TO_STRING__( channel );
+
+        redisdriver->WriteMulti();
+        redisdriver->HMSet( tokenkey, values );
+        redisdriver->Expire( tokenkey, expiretime );
+        redisdriver->WriteExec();
         return token;
     }
 
     StringMap KFAccountRedis::VerifyAccountToken( uint64 accountid, const std::string& token )
     {
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
-        auto kftokenresult = redisdriver->QueryMap( "hgetall {}:{}", __STRING__( token ), accountid );
+        auto kftokenresult = redisdriver->HGetAll( __REDIS_KEY_2__( __STRING__( token ), accountid ) );
         if ( !kftokenresult->_value.empty() )
         {
             auto querytoken = kftokenresult->_value[ __STRING__( token ) ];
@@ -122,15 +125,17 @@ namespace KFrame
         values[ __STRING__( account ) ] = account;
         values[ __STRING__( channel ) ] = __TO_STRING__( channel );
         values[ __STRING__( accountid ) ] = __TO_STRING__( accountid );
-        redisdriver->Append( values, "hmset {}", tokenkey );
-        redisdriver->Append( "expire {} {}", tokenkey, expiretime );
-        redisdriver->Pipeline();
+
+        redisdriver->WriteMulti();
+        redisdriver->HMSet( tokenkey, values );
+        redisdriver->Expire( tokenkey, expiretime );
+        redisdriver->WriteExec();
     }
 
     StringMap KFAccountRedis::VerifyZoneToken( uint64 accountid, uint32 zoneid, const std::string& token )
     {
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
-        auto kftoken = redisdriver->QueryMap( "hgetall {}:{}:{}", __STRING__( token ), zoneid, accountid );
+        auto kftoken = redisdriver->HGetAll( __REDIS_KEY_3__( __STRING__( token ), zoneid, accountid ) );
         if ( !kftoken->_value.empty() )
         {
             auto querytoken = kftoken->_value[ __STRING__( token ) ];
@@ -146,11 +151,12 @@ namespace KFrame
 
     void KFAccountRedis::SaveLoginData( uint64 accountid, const std::string& ip, uint32 zoneid )
     {
+        StringMap values;
+        values[ __STRING__( ip ) ] = ip;
+        values[ __STRING__( zoneid ) ] = __TO_STRING__( zoneid );
+
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
-        redisdriver->Execute( "hmset {}:{} {} {} {} {}",
-                              __STRING__( accountid ), accountid,
-                              __STRING__( ip ), ip,
-                              __STRING__( zoneid ), zoneid );
+        redisdriver->HMSet( __REDIS_KEY_2__( __STRING__( accountid ), accountid ), values );
     }
 
     std::tuple<uint64, bool> KFAccountRedis::QueryCreatePlayer( uint64 accountid, uint32 zoneid )
@@ -158,7 +164,7 @@ namespace KFrame
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
 
         // 查询是否存在
-        auto queryplayerid = redisdriver->QueryUInt64( "hget {}:{} {}:{}", __STRING__( accountid ), accountid, __STRING__( zone ), zoneid );
+        auto queryplayerid = redisdriver->HGetUInt64( __REDIS_KEY_2__( __STRING__( accountid ), accountid ), __REDIS_KEY_2__( __STRING__( zone ), zoneid ) );
         if ( !queryplayerid->IsOk() )
         {
             return std::make_tuple( _invalid_int, false );
@@ -173,9 +179,12 @@ namespace KFrame
         // 创建playerid
         auto playerid = KFGlobal::Instance()->MTMakeUuid( __STRING__( player ), zoneid );
 
-        redisdriver->Execute( "hset {}:{} {} {}", __STRING__( player ), playerid, __STRING__( accountid ), accountid );
-        auto voidresult = redisdriver->Execute( "hset {}:{} {}:{} {}", __STRING__( accountid ), accountid, __STRING__( zone ), zoneid, playerid );
-        if ( !voidresult->IsOk() )
+        // 保存玩家id信息
+        redisdriver->WriteMulti();
+        redisdriver->HSet( __REDIS_KEY_2__( __STRING__( player ), playerid ), __STRING__( accountid ), accountid );
+        redisdriver->HSet( __REDIS_KEY_2__( __STRING__( accountid ), accountid ), __REDIS_KEY_2__( __STRING__( zone ), zoneid ), playerid );
+        auto kfresult = redisdriver->WriteExec();
+        if ( !kfresult->IsOk() )
         {
             return std::make_tuple( _invalid_int, false );
         }
@@ -186,13 +195,13 @@ namespace KFrame
     // 更新玩家在线信息
     bool KFAccountRedis::UpdateOnline( uint64 accountid, uint64 playerid, uint64 worldid, uint64 gameid )
     {
-        auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
-        auto kfresult = redisdriver->Execute( "hmset {}:{} {} {} {} {} {} {}",
-                                              __STRING__( accountid ), accountid,
-                                              __STRING__( playerid ), playerid,
-                                              __STRING__( world ), worldid,
-                                              __STRING__( game ), gameid );
+        StringMap values;
+        values[ __STRING__( game ) ] = __TO_STRING__( gameid );
+        values[ __STRING__( world ) ] = __TO_STRING__( worldid );
+        values[ __STRING__( playerid ) ] = __TO_STRING__( playerid );
 
+        auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
+        auto kfresult = redisdriver->HMSet( __REDIS_KEY_2__( __STRING__( accountid ), accountid ), values );
         return kfresult->IsOk();
     }
 
@@ -200,64 +209,77 @@ namespace KFrame
             const std::string& scope, const std::string& accesstoken, uint32 expirestime )
     {
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
-        redisdriver->Append( "hmset {}:{} {} {} {} {} {} {}",
-                             __STRING__( access_token ), machinecode, __STRING__( token ), accesstoken,
-                             __STRING__( openid ), openid, __STRING__( scope ), scope );
+        auto strtokenkey = __REDIS_KEY_2__( __STRING__( access_token ), machinecode );
 
-        redisdriver->Append( "expire {}:{} {}", __STRING__( access_token ), machinecode, expirestime - 200 );
-        redisdriver->Pipeline();
+        StringMap values;
+        values[ __STRING__( scope ) ] = scope;
+        values[ __STRING__( openid ) ] = openid;
+        values[ __STRING__( token ) ] = accesstoken;
+
+        redisdriver->WriteMulti();
+        redisdriver->HMSet( strtokenkey, values );
+        redisdriver->Expire( strtokenkey, expirestime - 200 );
+        redisdriver->WriteExec();
     }
 
     StringMap KFAccountRedis::QueryWeiXinAccessToken( const std::string& machinecode )
     {
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
-        auto kfresult = redisdriver->QueryMap( "hgetall {}:{}", __STRING__( access_token ), machinecode );
+        auto kfresult = redisdriver->HGetAll( __REDIS_KEY_2__( __STRING__( access_token ), machinecode ) );
         return kfresult->_value;
     }
 
     void KFAccountRedis::SaveWeiXinRefreshToken( const std::string& machinecode, const std::string& refreshtoken )
     {
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
-        redisdriver->Append( "hset {}:{} {} {}", __STRING__( refresh_token ), machinecode, __STRING__( token ), refreshtoken );
-        redisdriver->Append( "expire {}:{} {}", __STRING__( refresh_token ), machinecode, 2590000 );
-        redisdriver->Pipeline();
+        auto strtokenkey = __REDIS_KEY_2__( __STRING__( refresh_token ), machinecode );
+
+        redisdriver->WriteMulti();
+        redisdriver->HSet( strtokenkey, __STRING__( token ), refreshtoken );
+        redisdriver->Expire( strtokenkey, 2590000 );
+        redisdriver->WriteExec();
     }
 
     std::string KFAccountRedis::QueryWeiXinRefreshToken( const std::string& machinecode )
     {
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
-        auto kfresult = redisdriver->QueryString( "hget {}:{} {}", __STRING__( refresh_token ), machinecode, __STRING__( token ) );
+        auto kfresult = redisdriver->HGet( __REDIS_KEY_2__( __STRING__( refresh_token ), machinecode ), __STRING__( token ) );
         return kfresult->_value;
     }
 
     uint64 KFAccountRedis::CheckIpInBlackList( const std::string& ip )
     {
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
-        auto kfresult = redisdriver->QueryUInt64( "hget {}:{} {}", __STRING__( ipblacklist ), ip, __STRING__( endtime ) );
+        auto kfresult = redisdriver->HGetUInt64( __REDIS_KEY_2__( __STRING__( ipblacklist ), ip ), __STRING__( endtime ) );
         return kfresult->_value;
     }
 
     bool KFAccountRedis::AddIpBlackList( const std::string& ip, uint64 time, const std::string& comment )
     {
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
+        auto stripkey = __REDIS_KEY_2__( __STRING__( ipblacklist ), ip );
 
-        redisdriver->Append( "sadd {} {}", __STRING__( ipblacklist ), ip );
-        redisdriver->Append( "hmset {}:{} {} {} {} {} {} {}",
-                             __STRING__( ipblacklist ), ip,
-                             __STRING__( starttime ), KFGlobal::Instance()->_real_time,
-                             __STRING__( endtime ), KFGlobal::Instance()->_real_time + time,
-                             __STRING__( comment ), comment );
-        redisdriver->Append( "expire {}:{} {}", __STRING__( ipblacklist ), ip, time );
-        auto kfresult = redisdriver->Pipeline();
+        StringMap values;
+        values[ __STRING__( comment ) ] = comment;
+        values[ __STRING__( starttime ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time );
+        values[ __STRING__( endtime ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time + time );
+
+        redisdriver->WriteMulti();
+        redisdriver->HMSet( stripkey, values );
+        redisdriver->Expire( stripkey, time );
+        redisdriver->SAdd( __STRING__( ipblacklist ), ip );
+        auto kfresult = redisdriver->WriteExec();
         return kfresult->IsOk();
     }
 
     bool KFAccountRedis::RemoveIpBlackList( const std::string& ip )
     {
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
-        redisdriver->Append( "srem {} {}", __STRING__( ipblacklist ), ip );
-        redisdriver->Append( "del {}:{}", __STRING__( ipblacklist ), ip );
-        auto kfresult = redisdriver->Pipeline();
+
+        redisdriver->WriteMulti();
+        redisdriver->SRem( __STRING__( ipblacklist ), ip );
+        redisdriver->Del( __REDIS_KEY_2__( __STRING__( ipblacklist ), ip ) );
+        auto kfresult = redisdriver->WriteExec();
         return kfresult->IsOk();
     }
 
@@ -265,12 +287,12 @@ namespace KFrame
     {
         StringMapList stringmaplist;
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
-        auto kflist = redisdriver->QueryList( "smembers {}", __STRING__( ipblacklist ) );
+        auto kflist = redisdriver->SMembers( __STRING__( ipblacklist ) );
 
         StringList removes;
         for ( auto& ip : kflist->_value )
         {
-            auto kfdata = redisdriver->QueryMap( "hgetall {}:{}", __STRING__( ipblacklist ), ip );
+            auto kfdata = redisdriver->HGetAll( __REDIS_KEY_2__( __STRING__( ipblacklist ), ip ) );
             if ( !kfdata->IsOk() )
             {
                 continue;
@@ -290,7 +312,7 @@ namespace KFrame
 
         if ( !removes.empty() )
         {
-            redisdriver->Update( removes, "srem {}", __STRING__( ipblacklist ) );
+            redisdriver->SRem( __STRING__( ipblacklist ), removes );
         }
 
         return stringmaplist;
@@ -299,31 +321,35 @@ namespace KFrame
     bool KFAccountRedis::CheckIpInWhiteList( const std::string& ip )
     {
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
-        auto kfresult = redisdriver->QueryUInt64( "hget {}:{} {}", __STRING__( ipwhitelist ), ip, __STRING__( endtime ) );
+        auto kfresult = redisdriver->HGetUInt64( __REDIS_KEY_2__( __STRING__( ipwhitelist ), ip ), __STRING__( endtime ) );
         return kfresult->_value > 0u;
     }
 
     bool KFAccountRedis::AddIpWhiteList( const std::string& ip, uint64 time, const std::string& comment )
     {
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
+        auto stripkey = __REDIS_KEY_2__( __STRING__( ipwhitelist ), ip );
 
-        redisdriver->Append( "sadd {} {}", __STRING__( ipwhitelist ), ip );
-        redisdriver->Append( "hmset {}:{} {} {} {} {} {} {}",
-                             __STRING__( ipwhitelist ), ip,
-                             __STRING__( starttime ), KFGlobal::Instance()->_real_time,
-                             __STRING__( endtime ), KFGlobal::Instance()->_real_time + time,
-                             __STRING__( comment ), comment );
-        redisdriver->Append( "expire {}:{} {}", __STRING__( ipwhitelist ), ip, time );
-        auto kfresult = redisdriver->Pipeline();
+        StringMap values;
+        values[ __STRING__( comment ) ] = comment;
+        values[ __STRING__( starttime ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time );
+        values[ __STRING__( endtime ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time + time );
+
+        redisdriver->WriteMulti();
+        redisdriver->HMSet( stripkey, values );
+        redisdriver->Expire( stripkey, time );
+        redisdriver->SAdd( __STRING__( ipwhitelist ), ip );
+        auto kfresult = redisdriver->WriteExec();
         return kfresult->IsOk();
     }
 
     bool KFAccountRedis::RemoveIpWhiteList( const std::string& ip )
     {
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
-        redisdriver->Append( "srem {} {}", __STRING__( ipwhitelist ), ip );
-        redisdriver->Append( "del {}:{}", __STRING__( ipwhitelist ), ip );
-        auto kfresult = redisdriver->Pipeline();
+        redisdriver->WriteMulti();
+        redisdriver->SRem( __STRING__( ipwhitelist ), ip );
+        redisdriver->Del( __REDIS_KEY_2__( __STRING__( ipwhitelist ), ip ) );
+        auto kfresult = redisdriver->WriteExec();
         return kfresult->IsOk();
     }
 
@@ -331,12 +357,12 @@ namespace KFrame
     {
         StringMapList stringmaplist;
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
-        auto kflist = redisdriver->QueryList( "smembers {}", __STRING__( ipwhitelist ) );
+        auto kflist = redisdriver->SMembers( __STRING__( ipwhitelist ) );
 
         StringList removes;
         for ( auto& ip : kflist->_value )
         {
-            auto kfdata = redisdriver->QueryMap( "hgetall {}:{}", __STRING__( ipwhitelist ), ip );
+            auto kfdata = redisdriver->HGetAll( __REDIS_KEY_2__( __STRING__( ipwhitelist ), ip ) );
             if ( !kfdata->IsOk() )
             {
                 continue;
@@ -348,7 +374,6 @@ namespace KFrame
                 continue;
             }
 
-
             StringMap values;
             values = kfdata->_value;
             stringmaplist.emplace_back( values );
@@ -356,7 +381,7 @@ namespace KFrame
 
         if ( !removes.empty() )
         {
-            redisdriver->Update( removes, "srem {}", __STRING__( ipwhitelist ) );
+            redisdriver->SRem( __STRING__( ipwhitelist ), removes );
         }
 
         return stringmaplist;
@@ -365,33 +390,38 @@ namespace KFrame
     uint64 KFAccountRedis::CheckAccountInBlackList( uint64 accountid )
     {
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
-        auto kfresult = redisdriver->QueryUInt64( "hget {}:{} {}", __STRING__( accountblacklist ), accountid, __STRING__( endtime ) );
+        auto kfresult = redisdriver->HGetUInt64( __REDIS_KEY_2__(  __STRING__( accountblacklist ), accountid ), __STRING__( endtime ) );
         return kfresult->_value;
     }
 
     bool KFAccountRedis::AddAccountBlackList( uint64 accountid, const std::string& account, uint32 channel, uint64 time, const std::string& comment )
     {
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
+        auto straccountkey = __REDIS_KEY_2__( __STRING__( accountblacklist ), accountid );
 
-        redisdriver->Append( "sadd {} {}", __STRING__( accountblacklist ), accountid );
-        redisdriver->Append( "hmset {}:{} {} {} {} {} {} {} {} {} {} {}",
-                             __STRING__( accountblacklist ), accountid,
-                             __STRING__( starttime ), KFGlobal::Instance()->_real_time,
-                             __STRING__( endtime ), KFGlobal::Instance()->_real_time + time,
-                             __STRING__( account ), account,
-                             __STRING__( channel ), channel,
-                             __STRING__( comment ), comment );
-        redisdriver->Append( "expire {}:{} {}", __STRING__( accountblacklist ), accountid, time );
-        auto kfresult = redisdriver->Pipeline();
+        StringMap values;
+        values[ __STRING__( comment ) ] = comment;
+        values[ __STRING__( account ) ] = account;
+        values[ __STRING__( channel ) ] = __TO_STRING__( channel );
+        values[ __STRING__( starttime ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time );
+        values[ __STRING__( endtime ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time + time );
+
+        redisdriver->WriteMulti();
+        redisdriver->HMSet( straccountkey, values );
+        redisdriver->Expire( straccountkey, time );
+        redisdriver->SAdd( __STRING__( accountblacklist ), accountid );
+        auto kfresult = redisdriver->WriteExec();
         return kfresult->IsOk();
     }
 
     bool KFAccountRedis::RemoveAccountBlackList( uint64 accountid )
     {
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
-        redisdriver->Append( "srem {} {}", __STRING__( accountblacklist ), accountid );
-        redisdriver->Append( "del {}:{}", __STRING__( accountblacklist ), accountid );
-        auto kfresult = redisdriver->Pipeline();
+
+        redisdriver->WriteMulti();
+        redisdriver->SRem( __STRING__( accountblacklist ), accountid );
+        redisdriver->Del(  __REDIS_KEY_2__( __STRING__( accountblacklist ), accountid ) );
+        auto kfresult = redisdriver->WriteExec();
         return kfresult->IsOk();
     }
 
@@ -399,12 +429,12 @@ namespace KFrame
     {
         StringMapList stringmaplist;
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
-        auto kflist = redisdriver->QueryList( "smembers {}", __STRING__( accountblacklist ) );
+        auto kflist = redisdriver->SMembers( __STRING__( accountblacklist ) );
 
         StringList removes;
         for ( auto& accountid : kflist->_value )
         {
-            auto kfdata = redisdriver->QueryMap( "hgetall {}:{}", __STRING__( accountblacklist ), accountid );
+            auto kfdata = redisdriver->HGetAll( __REDIS_KEY_2__( __STRING__( accountblacklist ), accountid ) );
             if ( !kfdata->IsOk() )
             {
                 continue;
@@ -424,7 +454,7 @@ namespace KFrame
 
         if ( !removes.empty() )
         {
-            redisdriver->Update( removes, "srem {}", __STRING__( accountblacklist ) );
+            redisdriver->SRem( __STRING__( accountblacklist ), removes );
         }
 
         return stringmaplist;
@@ -433,33 +463,38 @@ namespace KFrame
     bool KFAccountRedis::CheckAccountInWhiteList( uint64 accountid )
     {
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
-        auto kfresult = redisdriver->QueryUInt64( "hget {}:{} {}", __STRING__( accountwhitelist ), accountid, __STRING__( endtime ) );
+        auto kfresult = redisdriver->HGetUInt64( __REDIS_KEY_2__( __STRING__( accountwhitelist ), accountid ), __STRING__( endtime ) );
         return kfresult->_value > 0u;
     }
 
     bool KFAccountRedis::AddAccountWhiteList( uint64 accountid, const std::string& account, uint32 channel, uint64 time, const std::string& comment )
     {
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
+        auto straccountkey = __REDIS_KEY_2__( __STRING__( accountwhitelist ), accountid );
 
-        redisdriver->Append( "sadd {} {}", __STRING__( accountwhitelist ), accountid );
-        redisdriver->Append( "hmset {}:{} {} {} {} {} {} {} {} {} {} {}",
-                             __STRING__( accountwhitelist ), accountid,
-                             __STRING__( starttime ), KFGlobal::Instance()->_real_time,
-                             __STRING__( endtime ), KFGlobal::Instance()->_real_time + time,
-                             __STRING__( account ), account,
-                             __STRING__( channel ), channel,
-                             __STRING__( comment ), comment );
-        redisdriver->Append( "expire {}:{} {}", __STRING__( accountwhitelist ), accountid, time );
-        auto kfresult = redisdriver->Pipeline();
+        StringMap values;
+        values[ __STRING__( comment ) ] = comment;
+        values[ __STRING__( account ) ] = account;
+        values[ __STRING__( channel ) ] = __TO_STRING__( channel );
+        values[ __STRING__( starttime ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time );
+        values[ __STRING__( endtime ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time + time );
+
+        redisdriver->WriteMulti();
+        redisdriver->SAdd( __STRING__( accountwhitelist ), accountid );
+        redisdriver->HMSet( straccountkey, values );
+        redisdriver->Expire( __REDIS_KEY_2__( __STRING__( accountwhitelist ), accountid ), time );
+        auto kfresult = redisdriver->WriteExec();
         return kfresult->IsOk();
     }
 
     bool KFAccountRedis::RemoveAccountWhiteList( uint64 accountid )
     {
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
-        redisdriver->Append( "srem {} {}", __STRING__( accountwhitelist ), accountid );
-        redisdriver->Append( "del {}:{}", __STRING__( accountwhitelist ), accountid );
-        auto kfresult = redisdriver->Pipeline();
+
+        redisdriver->WriteMulti();
+        redisdriver->SRem( __STRING__( accountwhitelist ), accountid );
+        redisdriver->Del( __REDIS_KEY_2__( __STRING__( accountwhitelist ), accountid ) );
+        auto kfresult = redisdriver->WriteExec();
         return kfresult->IsOk();
     }
 
@@ -467,12 +502,12 @@ namespace KFrame
     {
         StringMapList stringmaplist;
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
-        auto kflist = redisdriver->QueryList( "smembers {}", __STRING__( accountwhitelist ) );
+        auto kflist = redisdriver->SMembers( __STRING__( accountwhitelist ) );
 
         StringList removes;
         for ( auto& accountid : kflist->_value )
         {
-            auto kfdata = redisdriver->QueryMap( "hgetall {}:{}", __STRING__( accountwhitelist ), accountid );
+            auto kfdata = redisdriver->HGetAll( __REDIS_KEY_2__( __STRING__( accountwhitelist ), accountid ) );
             if ( !kfdata->IsOk() )
             {
                 continue;
@@ -492,7 +527,7 @@ namespace KFrame
 
         if ( !removes.empty() )
         {
-            redisdriver->Update( removes, "srem {}", __STRING__( accountwhitelist ) );
+            redisdriver->SRem( __STRING__( accountwhitelist ), removes );
         }
 
         return stringmaplist;

@@ -124,6 +124,12 @@ namespace KFrame
         return srcstring;
     }
 
+    template<>
+    inline double KFUtility::ToValue( const char* srcstring )
+    {
+        return static_cast< double >( atof( srcstring ) );
+    }
+
     template< class T >
     inline T KFUtility::SplitValue( std::string& srcstring, const std::string& split )
     {
@@ -203,11 +209,7 @@ namespace KFrame
 
 
     ///////////////////////////////////////////////////////////////////////
-    template<>
-    inline double KFUtility::ToValue( const char* srcstring )
-    {
-        return static_cast< double >( atof( srcstring ) );
-    }
+
 
     ///////////////////////////////////////////////////////////////////////
     template< class T >
