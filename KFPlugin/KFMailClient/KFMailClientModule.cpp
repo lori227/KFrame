@@ -39,7 +39,7 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFMailClientModule::SendMessageToMail( uint64 playerid, uint32 msgid, ::google::protobuf::Message* message )
     {
-        return _kf_route->SendToRand( playerid, __STRING__( mail ), msgid, message, true );
+        return _kf_route->SendToRand( playerid, __STRING__( mail ), msgid, message );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_ENTER_PLAYER_FUNCTION__( KFMailClientModule::OnEnterMailModule )
@@ -289,7 +289,7 @@ namespace KFrame
         }
 
         player->UpdateData( kfmail, __STRING__( status ), KFEnum::Set, KFMsg::ReceiveStatus );
-        player->AddElement( &kfelements, __STRING__( mail ), __FUNC_LINE__ );
+        player->AddElement( &kfelements, _default_multiple, __STRING__( mail ), id, __FUNC_LINE__ );
     }
 
     StringMap& KFMailClientModule::FormatMailData( KFEntity* sender, const KFMailSetting* kfsetting, const KFElements* kfelements )
@@ -317,11 +317,11 @@ namespace KFrame
         // 奖励
         if ( kfelements != nullptr )
         {
-            _mail_data.insert( std::make_pair( __STRING__( reward ), kfelements->_str_element ) );
+            _mail_data.insert( std::make_pair( __STRING__( reward ), kfelements->GetElement() ) );
         }
-        else if ( !kfsetting->_rewards._str_element.empty() )
+        else if ( !kfsetting->_rewards.GetElement().empty() )
         {
-            _mail_data.insert( std::make_pair( __STRING__( reward ), kfsetting->_rewards._str_element ) );
+            _mail_data.insert( std::make_pair( __STRING__( reward ), kfsetting->_rewards.GetElement() ) );
         }
 
         // 发送者信息
