@@ -763,7 +763,7 @@ namespace KFrame
                     {KFEnum::Or, "or"},
                     {KFEnum::Xor, "xor"},
                     {KFEnum::Not, "not"},
-                }
+                };
 
                 auto iter = _op_map.find( operate );
                 if ( iter == _op_map.end() )
