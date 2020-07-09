@@ -37,7 +37,6 @@ namespace KFrame
         {
             return KFEnum::Error;
         }
-        redisEnableKeepAlive( _redis_context );
 
         auto result = TryAuthPassword( _password );
         if ( result != KFEnum::Ok )
@@ -45,6 +44,7 @@ namespace KFrame
             return result;
         }
 
+        redisEnableKeepAlive( _redis_context );
         __LOG_INFO__( "redis connect[module={} ip={}:{}] ok", _name, _ip, _port );
         return KFEnum::Ok;
     }
