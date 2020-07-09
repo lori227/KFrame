@@ -37,6 +37,39 @@ namespace KFrame
             return WriteUInt64( strsql );
         }
 
+        template< typename T >
+        inline KFResult<voidptr>::UniqueType Rename( const T& oldkey, const T& newkey )
+        {
+            auto strsql = __FORMAT__( "rename {}", oldkey, newkey );
+            return WriteVoid( strsql );
+        }
+
+        template< typename T >
+        inline KFResult<voidptr>::UniqueType RenameNX( const T& oldkey, const T& newkey )
+        {
+            auto strsql = __FORMAT__( "renamenx {}", oldkey, newkey );
+            return WriteVoid( strsql );
+        }
+
+        template< typename T >
+        inline KFResult<uint64>::UniqueType Exists( const T& key )
+        {
+            auto strsql = __FORMAT__( "exists {}", key );
+            return ReadUInt64( strsql );
+        }
+
+        template< typename T >
+        inline KFResult<std::string>::UniqueType Type( const T& key )
+        {
+            auto strsql = __FORMAT__( "type {}", key );
+            return ReadString( strsql );
+        }
+
+        inline KFResult<voidptr>::UniqueType Select( uint64 index )
+        {
+            auto strsql = __FORMAT__( "select {}", index );
+            return WriteVoid( strsql );
+        }
         //////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////
         // 字段(key, ttl)
