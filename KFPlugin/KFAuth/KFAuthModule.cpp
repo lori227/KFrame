@@ -129,9 +129,31 @@ namespace KFrame
     {
         __JSON_PARSE_STRING__( request, data );
 
+        auto loginip = __JSON_GET_STRING__( request, __STRING__( ip ) );
         auto token = __JSON_GET_STRING__( request, __STRING__( token ) );
+        auto zoneid = __JSON_GET_UINT32__( request, __STRING__( zoneid ) );
         auto accountid = __JSON_GET_UINT64__( request, __STRING__( accountid ) );
 
+        // 查询小区服务器状态
+        auto status = _kf_dir_attribute->QueryZoneStatus( zoneid );
+        if ( status == KFMsg::ServerStopStatus )
+        {
+            return _kf_http_server->SendCode( KFMsg::LoginServerStopStatus );
+        }
+
+        // 验证账号,ip白名单
+        if ( status == KFMsg::ServerTestStatus )
+        {
+            if ( !_kf_account->CheckAccountInWhiteList( accountid ) )
+            {
+                if ( !_kf_account->CheckIpInWhiteList( loginip ) )
+                {
+                    return _kf_http_server->SendCode( KFMsg::LoginNotInWhiteList );
+                }
+            }
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////
         auto accountdata = _kf_account->VerifyAccountToken( accountid, token );
         if ( accountdata.empty() )
         {
@@ -147,28 +169,6 @@ namespace KFrame
             return _kf_http_server->SendCode( KFMsg::LoginCreatePlayerError );
         }
 
-        auto loginip = __JSON_GET_STRING__( request, __STRING__( ip ) );
-        auto zoneid = __JSON_GET_UINT32__( request, __STRING__( zoneid ) );
-
-        // 查询小区服务器状态
-        auto status = _kf_dir_attribute->QueryZoneStatus( zoneid );
-        if ( status == KFMsg::ServerStopStatus )
-        {
-            return _kf_http_server->SendCode( KFMsg::LoginServerStopStatus );
-        }
-
-        // 验证账号,ip白名单
-        if ( status == KFMsg::ServerTestStatus )
-        {
-            if ( !_kf_account->CheckAccountInWhiteList( accountid ) )
-            {
-                if ( !_kf_account->CheckIpInWhiteList( ip ) )
-                {
-                    return _kf_http_server->SendCode( KFMsg::LoginNotInWhiteList );
-                }
-            }
-        }
-
         // 新创建玩家, 增加改小区的注册人数
         auto isnew = std::get<1>( playerdata );
         if ( isnew )
@@ -177,7 +177,7 @@ namespace KFrame
         }
 
         // 保存登录ip
-        _kf_account->SaveLoginData( accountid, ip, zoneid );
+        _kf_account->SaveLoginData( accountid, loginip, zoneid );
 
         // 获得账号和渠道 小区信息
         auto account = accountdata[ __STRING__( account ) ];
