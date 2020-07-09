@@ -58,6 +58,8 @@ namespace KFrame
             break;
         }
 
+        retmessage->_head._route._send_id = _object_id;
+        retmessage->_head._route._server_id = _session_id;
         return retmessage;
     }
 
@@ -179,8 +181,6 @@ namespace KFrame
             _recv_queue.PopRemove();
         }
 
-        retmessage->_head._route._send_id = _object_id;
-        retmessage->_head._route._server_id = _session_id;
         return retmessage;
     }
 

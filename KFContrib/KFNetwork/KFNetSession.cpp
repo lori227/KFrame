@@ -306,8 +306,6 @@ namespace KFrame
 
     bool KFNetSession::AddRecvMessage( KFNetMessage* message )
     {
-        message->_head._route._send_id = _object_id;
-        message->_head._route._server_id = _session_id;
         auto ok = _recv_queue.PushObject( message );
         if ( !ok )
         {

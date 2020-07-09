@@ -50,9 +50,6 @@ namespace KFrame
 
         // 远程ip
         std::string _remote_ip;
-
-        // 托管结束时间
-        uint64 _trustee_timeout;
     protected:
         // 网络服务
         uv_tcp_t* _uv_tcp;

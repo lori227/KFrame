@@ -85,7 +85,7 @@ namespace KFrame
         void RunRemoveTrusteeHandle();
 
         // 判断托管超时
-        void RunCheckTrusteeTimeout();
+        void RunCheckBindTimeout();
 
         // 需要关闭的连接
         void RunCloseHandle();
@@ -95,8 +95,6 @@ namespace KFrame
         void RunHandleMessage( uint64 nowtime );
 
     public:
-        // 有效连接列表
-        KFHashMap< uint64, uint64, KFNetHandle > _kf_handles;
 
     protected:
         // 服务器服务
@@ -104,6 +102,12 @@ namespace KFrame
 
         // 等待验证的托管连接
         KFHashMap< uint64, uint64, KFNetHandle > _trustee_handles;
+
+        // 有效连接列表
+        KFHashMap< uint64, uint64, KFNetHandle > _kf_handles;
+
+        // 需要验证超时的连接
+        UInt64Map _bind_timeout_list;
 
         // 已经注册的链接
         UInt64Set _remove_trustees;

@@ -10,7 +10,6 @@ namespace KFrame
     {
         _uv_tcp = nullptr;
         _is_trustee = true;
-        _trustee_timeout = 0;
     }
 
     KFNetHandle::~KFNetHandle()
@@ -47,21 +46,6 @@ namespace KFrame
         _net_compress_encrypt = &_net_services->_compress_encrypt;
     }
 
-    void KFNetHandle::SetTrusteeTimeout( uint64 time )
-    {
-        _trustee_timeout = time;
-    }
-
-    bool KFNetHandle::IsTrusteeTimeout( uint64 nowtime )
-    {
-        if ( _trustee_timeout == 0 )
-        {
-            return false;
-        }
-
-        return nowtime >= _trustee_timeout;
-    }
-
     void KFNetHandle::OnDisconnect( int32 code, const char* function, uint32 line )
     {
         KFNetSession::OnDisconnect( code, function, line );
@@ -70,8 +54,6 @@ namespace KFrame
 
     void KFNetHandle::CloseHandle()
     {
-        _trustee_timeout = 0;
-
         if ( !_is_shutdown )
         {
             _is_shutdown = true;
@@ -82,7 +64,6 @@ namespace KFrame
     void KFNetHandle::CloseSession()
     {
         _is_shutdown = true;
-        _trustee_timeout = 0;
         KFNetSession::CloseSession();
 
         _uv_tcp->data = this;

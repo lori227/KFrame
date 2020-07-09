@@ -56,6 +56,7 @@ namespace KFrame
             }
         }
 
+        _bind_timeout_list.clear();
         _net_server_services->ShutServices();
     }
 
@@ -65,7 +66,7 @@ namespace KFrame
         _net_server_services->_net_event->RunEvent();
 
         // 判断托管超时
-        RunCheckTrusteeTimeout();
+        RunCheckBindTimeout();
 
         // 需要关闭的连接
         RunCloseHandle();
@@ -117,8 +118,8 @@ namespace KFrame
         auto kfhandle = reinterpret_cast< KFNetHandle* >( eventdata->_data );
         _trustee_handles.Insert( eventdata->_id, kfhandle );
 
-        // 设置托管超时时间
-        kfhandle->SetTrusteeTimeout( _net_server_services->_now_time + 30000 );
+        // 1分钟没有验证绑定, 自动断开
+        _bind_timeout_list[ eventdata->_id ] = _net_server_services->_now_time + 60000;
     }
 
     void KFNetServerEngine::OnServerShutDown( const KFNetEventData* eventdata )
@@ -192,6 +193,9 @@ namespace KFrame
         kfhandle->_object_id = objectid;
         kfhandle->_net_data._id = objectid;
         kfhandle->_net_data._session = handleid;
+
+        // 删除超时列表
+        _bind_timeout_list.erase( handleid );
         return true;
     }
 
@@ -211,15 +215,14 @@ namespace KFrame
             return nullptr;
         }
 
+        // 加入删除列表( 不能直接删除, 应为在托管队列的消息循环中 )
+        _remove_trustees.insert( trusteeid );
+
         // 设置属性, 并加入注册列表中
         kfhandle->_is_trustee = false;
-        kfhandle->_trustee_timeout = 0;
         kfhandle->_object_id = objectid;
         kfhandle->_session_id = handleid;
         _kf_handles.Insert( handleid, kfhandle );
-
-        _remove_trustees.insert( trusteeid );
-
         return kfhandle;
     }
 
@@ -238,17 +241,33 @@ namespace KFrame
         _remove_trustees.clear();
     }
 
-    void KFNetServerEngine::RunCheckTrusteeTimeout()
+    void KFNetServerEngine::RunCheckBindTimeout()
     {
-        auto kfhandle = _trustee_handles.First();
-        while ( kfhandle != nullptr )
+        std::list< uint64 > removes;
+        for ( auto iter : _bind_timeout_list )
         {
-            if ( kfhandle->IsTrusteeTimeout( _net_server_services->_now_time ) )
+            if ( _net_server_services->_now_time < iter.second )
+            {
+                continue;
+            }
+
+            // 已经超时
+            auto kfhandle = _trustee_handles.Find( iter.first );
+            if ( kfhandle == nullptr )
+            {
+                kfhandle = _kf_handles.Find( iter.first );
+            }
+            if ( kfhandle != nullptr )
             {
                 kfhandle->CloseHandle();
             }
 
-            kfhandle = _trustee_handles.Next();
+            removes.push_back( iter.first );
+        }
+
+        for ( auto handleid : removes )
+        {
+            _bind_timeout_list.erase( handleid );
         }
     }
 

@@ -10,7 +10,7 @@ namespace KFrame
     {
     public:
         /////////////////////////////////////////////////////////////////////////////////////////////
-        KFRedisExecute();
+        KFRedisExecute() = default;
         virtual ~KFRedisExecute();
 
         // 初始化
