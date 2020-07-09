@@ -42,13 +42,13 @@ namespace KFrame
         std::string _ip;
 
         // 端口
-        uint32 _port;
+        uint32 _port = 0;
 
         // 密码
         std::string _password;
 
         // redis环境
-        redisContext* _redis_context;
+        redisContext* _redis_context = nullptr;
     };
 
     /////////////////////////////////////////////////////////////////////////////////////////////

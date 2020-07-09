@@ -6,12 +6,6 @@ namespace KFrame
 #define __FREE_REPLY__( p ) if ( p != nullptr ) { freeReplyObject( p ); p = nullptr; }
 
     /////////////////////////////////////////////////////////////////////////////
-    KFRedisExecute::KFRedisExecute()
-    {
-        _port = 0;
-        _redis_context = nullptr;
-    }
-
     KFRedisExecute::~KFRedisExecute()
     {
         ShutDown();
