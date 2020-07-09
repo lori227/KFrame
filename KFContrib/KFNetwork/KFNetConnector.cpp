@@ -307,7 +307,7 @@ namespace KFrame
 
     void KFNetConnector::RunMessage( KFMessageFunction& netfunction, uint32 maxcount )
     {
-        auto messagecount = _invalid_int;
+        auto messagecount = 0u;
         auto message = PopNetMessage();
         while ( message != nullptr )
         {
@@ -323,7 +323,6 @@ namespace KFrame
             // 处理回调函数
             netfunction( message->_head._route, message->_head._msgid, retdata, retlength );
 
-            // 每次处理200个消息
             ++messagecount;
             if ( messagecount >= maxcount )
             {

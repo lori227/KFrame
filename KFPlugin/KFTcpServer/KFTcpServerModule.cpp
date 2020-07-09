@@ -56,6 +56,7 @@ namespace KFrame
         _compress_length = kftcpsetting->_compress_length;
         _is_open_encrypt = kftcpsetting->_open_encrypt;
         _server_engine->InitEngine( kftcpsetting->_max_queue_size,
+                                    kftcpsetting->_handle_message_count,
                                     kftcpsetting->_message_type,
                                     KFTcpServerConfig::Instance()->_compress_type,
                                     KFTcpServerConfig::Instance()->_compress_level,

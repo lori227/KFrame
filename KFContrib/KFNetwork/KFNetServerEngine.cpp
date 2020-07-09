@@ -15,8 +15,11 @@ namespace KFrame
     }
 
     ////////////////////////////////////////////////////
-    void KFNetServerEngine::InitEngine( uint32 maxqueuesize, uint32 messagetype, uint32 compresstype, uint32 compresslevel, uint32 compresslength, const std::string& encryptkey, bool openencrypt )
+    void KFNetServerEngine::InitEngine( uint32 maxqueuesize, uint32 handlecount, uint32 messagetype,
+                                        uint32 compresstype, uint32 compresslevel, uint32 compresslength,
+                                        const std::string& encryptkey, bool openencrypt )
     {
+        _handle_message_count = handlecount;
         _net_server_services = new KFNetServerServices();
         _net_server_services->InitServices( 10000, maxqueuesize, messagetype );
         _net_server_services->InitCompress( compresstype, compresslevel, compresslength );
@@ -305,13 +308,11 @@ namespace KFrame
 
     void KFNetServerEngine::RunHandleMessage( uint64 nowtime )
     {
-        // 每次取200个消息, 防止占用过多的cpu
-        static const uint32 _max_message_count = 200;
-
+        // 每次取设置消息数量, 防止占用过多的cpu
         for ( auto& iter : _kf_handles._objects )
         {
             auto kfhandle = iter.second;
-            kfhandle->RunUpdate( _net_function, _max_message_count );
+            kfhandle->RunUpdate( _net_function, _handle_message_count );
         }
     }
 

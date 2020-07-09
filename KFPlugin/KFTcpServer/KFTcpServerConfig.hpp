@@ -18,6 +18,7 @@ namespace KFrame
         uint32 _time_out = 20;
         uint32 _max_connection = 20000;
         uint32 _max_queue_size = 10000;
+        uint32 _handle_message_count = 20; // 每帧处理消息数量
         uint32 _message_type = KFMessageEnum::Server;
         uint32 _compress_length = 0u;
         bool _open_encrypt = false;

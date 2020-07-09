@@ -6,6 +6,7 @@
 	<!-- Port 端口 -->
 	<!-- InteranetIp 外网ip 127.0.0.1 提供局域网ip  0.0.0.0 提供公网ip -->
 	<!-- MaxQueue 最大队列数量 默认20000 -->
+	<!-- HandleMessage 每一帧处理消息个数( 为了不占满cpu时间 ) -->
 	<!-- TimeOut 掉线监测时间 默认20 -->
 	<!-- MessageType 消息类型 默认为1  1 服务器之间通讯  2 服务器与客户端之间通讯 -->
 	<!-- CompressType 压缩类型 1:lz4 2:zstd -->
@@ -17,13 +18,13 @@
 	<!-- tcp服务器配置 -->
 	<TcpServer CompressType="2" CompressLevel="5" EncryptKey="kframe,./">
 		<!-- deploy server 服务器-->
-		<Server AppName="deploy" AppType="server" Type="0" Port="10000" MaxQueue="20000"/>
+		<Server AppName="deploy" AppType="server" Type="0" Port="10000" MaxQueue="20000" HandleMessage="100"/>
 
 		<!-- 通用服务器 -->
-		<Server AppName="*" AppType="*" Type="2" Port="12000" MaxQueue="20000"/>
+		<Server AppName="*" AppType="*" Type="2" Port="12000" MaxQueue="20000" HandleMessage="500"/>
 
 		<!-- gate服务器 -->
-		<Server AppName="zone" AppType="gate" Type="2" Port="12000" MaxQueue="200" MessageType="2" CompressLength="0" OpenEncrypt="0"/>
+		<Server AppName="zone" AppType="gate" Type="2" Port="12000" MaxQueue="200" HandleMessage="10" MessageType="2" CompressLength="0" OpenEncrypt="0" />
 	</TcpServer>
 </Config>
 

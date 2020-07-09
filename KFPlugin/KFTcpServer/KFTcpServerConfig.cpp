@@ -42,6 +42,7 @@ namespace KFrame
                 kfsetting._port = servernode.GetUInt32( "Port", true, 0 );
                 kfsetting._time_out = servernode.GetUInt32( "TimeOut", true, 20 );
                 kfsetting._max_queue_size = servernode.GetUInt32( "MaxQueue" );
+                kfsetting._handle_message_count = servernode.GetUInt64( "HandleMessage", true, 500 );
                 kfsetting._message_type = servernode.GetUInt32( "MessageType", true, KFMessageEnum::Server );
                 kfsetting._open_encrypt = servernode.GetBoolen( "OpenEncrypt", true );
                 kfsetting._compress_length = servernode.GetUInt32( "CompressLength", true );
