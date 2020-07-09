@@ -356,7 +356,7 @@ namespace KFrame
 
         inline KFResult<StringMap>::UniqueType HGetAll( const std::string& key )
         {
-            auto strsql = __FORMAT__( "hmgetall {}", key );
+            auto strsql = __FORMAT__( "hgetall {}", key );
             return ReadMap( strsql );
         }
         //////////////////////////////////////////////////////////////////////////////////////////////

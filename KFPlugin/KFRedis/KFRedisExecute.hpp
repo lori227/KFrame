@@ -24,6 +24,9 @@ namespace KFrame
         // 连接
         int32 TryConnect();
 
+        // 验证密码
+        uint32 TryAuthPassword( const std::string& password );
+
         // 是否断开连接
         bool IsDisconnected();
 

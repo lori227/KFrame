@@ -1,6 +1,5 @@
 ﻿#include "KFAuthModule.hpp"
 #include "KFProtocol/KFProtocol.h"
-
 namespace KFrame
 {
     void KFAuthModule::BeforeRun()
@@ -24,6 +23,7 @@ namespace KFrame
         __REGISTER_HTTP__( __STRING__( removeaccountwhitelist ), false, &KFAuthModule::HandleRemoveAccountWhiteList );
         __REGISTER_HTTP__( __STRING__( queryaccountwhitelist ), false, &KFAuthModule::HandleQueryAccountWhiteList );
 
+        /////////////////////////////////////////////////////////////////////////////////////////
     }
 
     void KFAuthModule::BeforeShut()

@@ -39,18 +39,40 @@ namespace KFrame
         }
         redisEnableKeepAlive( _redis_context );
 
-        if ( !_password.empty() )
+        auto result = TryAuthPassword( _password );
+        if ( result != KFEnum::Ok )
         {
-            auto reply = ( redisReply* )redisCommand( _redis_context, "auth %s", _password.c_str() );
-            if ( reply == nullptr )
-            {
-                return KFEnum::Error;
-            }
-
-            __FREE_REPLY__( reply );
+            return result;
         }
 
         __LOG_INFO__( "redis connect[module={} ip={}:{}] ok", _name, _ip, _port );
+        return KFEnum::Ok;
+    }
+
+    uint32 KFRedisExecute::TryAuthPassword( const std::string& password )
+    {
+        if ( _password.empty() )
+        {
+            return KFEnum::Ok;
+        }
+
+        auto reply = ( redisReply* )redisCommand( _redis_context, "auth %s", _password.c_str() );
+        if ( reply == nullptr )
+        {
+            __LOG_ERROR__( "redis auth failed", _name, _ip, _port );
+            return KFEnum::Error;
+        }
+
+        auto type = reply->type;
+        __FREE_REPLY__( reply );
+
+        if ( type == REDIS_REPLY_ERROR )
+        {
+            ShutDown();
+            __LOG_ERROR__( "redis password error!" );
+            return KFEnum::Error;
+        }
+
         return KFEnum::Ok;
     }
 
@@ -129,7 +151,14 @@ namespace KFrame
         else
         {
             kfresult->SetResult( KFEnum::Error );
-            __LOG_ERROR__( "redis[{}] execute error=[{}:{}]", strsql, _redis_context->err, _redis_context->errstr );
+            if ( _redis_context == nullptr )
+            {
+                __LOG_ERROR__( "redis[{}] execute failed", strsql );
+            }
+            else
+            {
+                __LOG_ERROR__( "redis[{}] execute failed[{}:{}]", strsql, _redis_context->err, _redis_context->errstr );
+            }
         }
 
         return redisreply;
