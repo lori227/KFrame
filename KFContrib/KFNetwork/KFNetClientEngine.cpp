@@ -59,8 +59,8 @@ namespace KFrame
 
     void KFNetClientEngine::HandleClientMessage()
     {
-        // 每次取200个消息, 防止占用过多的cpu
-        static const uint32 _max_message_count = 200;
+        // 每次取500个消息, 防止占用过多的cpu
+        static const uint32 _max_message_count = 500;
 
         for ( auto iter : _kf_clients._objects )
         {
