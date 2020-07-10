@@ -163,7 +163,7 @@ namespace KFrame
         }
 
         // 更新状态
-        UpdateFlagToMail( player, kfmail, KFMsg::DoneStatus );
+        UpdateMailStatusToShard( player, kfmail, KFMsg::DoneStatus );
     }
 
     __KF_MESSAGE_FUNCTION__( KFMailClientModule::HandleDeleteMailReq )
@@ -185,7 +185,7 @@ namespace KFrame
         }
 
         // 更新到邮件集群
-        UpdateFlagToMail( player, kfmail, KFMsg::Remove );
+        UpdateMailStatusToShard( player, kfmail, KFMsg::Remove );
     }
 
     __KF_MESSAGE_FUNCTION__( KFMailClientModule::HandleMailReceiveReq )
@@ -215,10 +215,10 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::MailTimeOut );
         }
 
-        UpdateFlagToMail( player, kfmail, KFMsg::ReceiveRemove );
+        UpdateMailStatusToShard( player, kfmail, KFMsg::ReceiveRemove );
     }
 
-    void KFMailClientModule::UpdateFlagToMail( KFEntity* player, KFData* kfmail, uint32 status )
+    void KFMailClientModule::UpdateMailStatusToShard( KFEntity* player, KFData* kfmail, uint32 status )
     {
         auto mailid = kfmail->GetKeyID();
         auto flag = kfmail->Get( __STRING__( flag ) );
