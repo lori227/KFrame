@@ -49,13 +49,13 @@ namespace KFrame
         __KF_RESET_FUNCTION__( OnResetRefreshTaskChain );
 
         // 开启任务链
-        bool OpenTaskChain( KFEntity* player, uint32 taskchainid, uint32 order, uint32 time, uint32 refreshid, const char* function, uint32 line );
+        bool OpenTaskChain( KFEntity* player, uint32 chainid, uint32 chainindex, uint32 validtime, uint32 refreshid, const char* function, uint32 line );
 
         // 开启任务链数据
-        bool OpenTaskLogicDataList( KFEntity* player, const KFWeightList<KFTaskData>* taskdatalist, uint32 taskchainid, uint32 order, uint64 time, uint32 refreshid, const char* function, uint32 line );
+        bool OpenTaskLogicDataList( KFEntity* player, const KFWeightList<KFTaskData>* taskdatalist, uint32 chainid, uint32 chainindex, uint32 validtime, uint32 refreshid, const char* function, uint32 line );
 
         // 开启任务链逻辑数据
-        bool OpenTaskLogicData( KFEntity* player, uint32 taskchainid, uint32 order, const KFTaskData* taskdata, uint32 logicid, const char* function, uint32 line );
+        bool OpenTaskLogicData( KFEntity* player, uint32 chainid, uint32 chainindex, const KFTaskData* taskdata, uint32 logicid, const char* function, uint32 line );
 
         // 完成任务链逻辑数据
         void FinishTaskLogicData( KFEntity* player, KFData* kftask, const KFTaskData* taskdata );
@@ -64,7 +64,7 @@ namespace KFrame
         void RemoveTaskLogicData( KFEntity* player, KFData* kftask, const KFTaskData* taskdata );
 
         // 清除任务链
-        void CleanTaskChain( KFEntity* player, uint32 taskchainid );
+        void CleanTaskChain( KFEntity* player, uint32 chainid );
 
         // 间隔刷新任务链
         void StartRefreshTaskChain( KFEntity* player, const KFTaskChainRefreshSetting* kfrefreshsetting );

@@ -6,15 +6,10 @@ namespace KFrame
     void KFTaskConfig::ReadSetting( KFNode& xmlnode, KFTaskSetting* kfsetting )
     {
         kfsetting->_type = xmlnode.GetUInt32( "Type" );
-        kfsetting->_active_status = xmlnode.GetUInt32( "Active" );
         kfsetting->_complete_type = xmlnode.GetUInt32( "CompleteMode" );
-        kfsetting->_area = xmlnode.GetUInt32( "Area" );
 
         auto strprecondition = xmlnode.GetString( "PreCondition" );
         kfsetting->_pre_condition_type = KFReadSetting::ParseConditionList( strprecondition, kfsetting->_pre_condition );
-
-        auto strplacecondition = xmlnode.GetString( "PlaceCondition" );
-        kfsetting->_place_condition.Parse( strplacecondition, 0, __FILE__, __LINE__ );
 
         auto strcompletecondition = xmlnode.GetString( "CompleteCondition" );
         kfsetting->_complete_condition_type = KFReadSetting::ParseConditionList( strcompletecondition, kfsetting->_complete_condition );
@@ -34,6 +29,7 @@ namespace KFrame
 
             if ( kfsetting->_execute_data._param_list._params.size() < 3u )
             {
+                __LOG_ERROR__( "task=[{}] execute=[data] param size<3 error", kfsetting->_id );
                 continue;
             }
 

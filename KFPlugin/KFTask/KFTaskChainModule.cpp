@@ -110,91 +110,52 @@ namespace KFrame
             return false;
         }
 
-        auto order = kfelementobject->CalcValue( kfparent->_data_setting, __STRING__( order ), 1.0f );
-        OpenTaskChain( player, kfelementobject->_config_id, order, 0u, 0u, __FUNC_LINE__ );
+        auto chainindex = kfelementobject->CalcValue( kfparent->_data_setting, __STRING__( index ), 1.0f );
+        OpenTaskChain( player, kfelementobject->_config_id, chainindex, 0u, 0u, __FUNC_LINE__ );
         return true;
     }
 
-    bool KFTaskChainModule::OpenTaskChain( KFEntity* player, uint32 taskchainid, uint32 order, uint32 time, uint32 refreshid, const char* function, uint32 line )
+    bool KFTaskChainModule::OpenTaskChain( KFEntity* player, uint32 chainid, uint32 chainindex, uint32 validtime, uint32 refreshid, const char* function, uint32 line )
     {
-        auto kftaskchainsetting = KFTaskChainConfig::Instance()->FindSetting( taskchainid );
+        auto kftaskchainsetting = KFTaskChainConfig::Instance()->FindSetting( chainid );
         if ( kftaskchainsetting == nullptr )
         {
-            _kf_display->SendToClient( player, KFMsg::TaskChainSettingNotExist, taskchainid );
-            __LOG_ERROR_FUNCTION__( function, line, "taskchain=[{}] can't find setting", taskchainid );
+            _kf_display->SendToClient( player, KFMsg::TaskChainSettingNotExist, chainid );
+            __LOG_ERROR_FUNCTION__( function, line, "taskchain=[{}] can't find setting", chainid );
             return false;
         }
 
-        order = __MAX__( order, 1u );
-        auto kftaskdatalist = kftaskchainsetting->_task_data_list.Find( order );
+        chainindex = __MAX__( chainindex, 1u );
+        auto kftaskdatalist = kftaskchainsetting->_task_data_list.Find( chainindex );
         if ( kftaskdatalist == nullptr )
         {
-            __LOG_ERROR_FUNCTION__( function, line, "taskchain=[{}] order=[{}] is error", taskchainid, order );
+            __LOG_ERROR_FUNCTION__( function, line, "taskchain=[{}] order=[{}] is error", chainid, chainindex );
             return false;
         }
 
-        uint64 timeout = 0u;
-        if ( time != 0u )
-        {
-            timeout = KFGlobal::Instance()->_real_time + time;
-        }
-
-        return OpenTaskLogicDataList( player, kftaskdatalist, taskchainid, order, timeout, refreshid, function, line );
+        return OpenTaskLogicDataList( player, kftaskdatalist, chainid, chainindex, validtime, refreshid, function, line );
     }
 
-    bool KFTaskChainModule::OpenTaskLogicDataList( KFEntity* player, const KFWeightList<KFTaskData>* taskdatalist, uint32 taskchainid, uint32 order, uint64 time, uint32 refreshid, const char* function, uint32 line )
+    bool KFTaskChainModule::OpenTaskLogicDataList( KFEntity* player, const KFWeightList<KFTaskData>* taskdatalist, uint32 chainid, uint32 chainindex, uint32 validtime, uint32 refreshid, const char* function, uint32 line )
     {
         auto taskdata = taskdatalist->Rand();
         if ( taskdata == nullptr )
         {
-            __LOG_ERROR_FUNCTION__( function, line, "taskchain=[{}] order=[{}] can't rand taskdata", taskchainid, order );
+            __LOG_ERROR_FUNCTION__( function, line, "taskchain=[{}] order=[{}] can't rand taskdata", chainid, chainindex );
             return false;
         }
 
-        // 开启逻辑功能
-        UInt32List logicids;
-        switch ( taskdata->_logic_type )
-        {
-        case KFEnum::Or:
-        {
-            auto count = taskdata->_logic_id_list.size();
-            if ( count != 0u )
-            {
-                auto index = KFGlobal::Instance()->RandRatio( count );
-                auto logicid = taskdata->_logic_id_list[ index ];
-                auto ok = OpenTaskLogicData( player, taskchainid, order, taskdata, logicid, function, line );
-                if ( ok )
-                {
-                    logicids.push_back( logicid );
-                }
-            }
-        }
-        break;
-        case KFEnum::And:
-        {
-            for ( auto logicid : taskdata->_logic_id_list )
-            {
-                auto ok = OpenTaskLogicData( player, taskchainid, order, taskdata, logicid, function, line );
-                if ( ok )
-                {
-                    logicids.push_back( logicid );
-                }
-            }
-        }
-        break;
-        }
-
         // 开启任务
-        auto kftask = _kf_task->OpenTask( player, taskdata->_id, taskdata->_task_status, time, refreshid, taskchainid, order, logicids );
+        auto kftask = _kf_task->OpenTask( player, taskdata->_id, taskdata->_task_status, validtime, chainid, chainindex, refreshid );
         return kftask != nullptr;
     }
 
-    void KFTaskChainModule::CleanTaskChain( KFEntity* player, uint32 taskchainid )
+    void KFTaskChainModule::CleanTaskChain( KFEntity* player, uint32 chainid )
     {
         auto kftaskrecord = player->Find( __STRING__( task ) );
 
         std::list< KFData* > tasklist;
-        kftaskrecord->Find( __STRING__( chain ), taskchainid, tasklist, true );
+        kftaskrecord->Find( __STRING__( chain ), chainid, tasklist, true );
 
         for ( auto kftask : tasklist )
         {
@@ -338,14 +299,14 @@ namespace KFrame
 
     void KFTaskChainModule::RemoveTaskChain( KFEntity* player, KFData* kftask )
     {
-        auto taskchainid = kftask->Get<uint32>( __STRING__( chain ) );
-        auto order = kftask->Get<uint32>( __STRING__( order ) );
-        if ( taskchainid == 0u || order == 0u )
+        auto chainid = kftask->Get<uint32>( __STRING__( chain ) );
+        auto chainindex = kftask->Get<uint32>( __STRING__( index ) );
+        if ( chainid == 0u || chainindex == 0u )
         {
             return;
         }
 
-        auto kftaskchainsetting = KFTaskChainConfig::Instance()->FindSetting( taskchainid );
+        auto kftaskchainsetting = KFTaskChainConfig::Instance()->FindSetting( chainid );
         if ( kftaskchainsetting == nullptr )
         {
             return;
@@ -353,7 +314,7 @@ namespace KFrame
 
         // 附加的掉落组id
         auto taskid = kftask->Get<uint32>( __STRING__( id ) );
-        auto taskdata = kftaskchainsetting->FindTaskData( order, taskid );
+        auto taskdata = kftaskchainsetting->FindTaskData( chainindex, taskid );
         if ( taskdata == nullptr )
         {
             return;
@@ -365,10 +326,10 @@ namespace KFrame
     void KFTaskChainModule::FinishTaskChain( KFEntity* player, KFData* kftask, const char* function, uint32 line )
     {
         auto taskchainid = kftask->Get<uint32>( __STRING__( chain ) );
-        auto order = kftask->Get<uint32>( __STRING__( order ) );
-        auto time = kftask->Get( __STRING__( time ) );
+        auto chainindex = kftask->Get<uint32>( __STRING__( index ) );
+        auto validtime = kftask->Get( __STRING__( time ) );
         auto refreshid = kftask->Get( __STRING__( refresh ) );
-        if ( taskchainid == 0u || order == 0u )
+        if ( taskchainid == 0u || chainindex == 0u )
         {
             return;
         }
@@ -381,7 +342,7 @@ namespace KFrame
 
         // 附加的掉落组id
         auto taskid = kftask->Get<uint32>( __STRING__( id ) );
-        auto taskdata = kftaskchainsetting->FindTaskData( order, taskid );
+        auto taskdata = kftaskchainsetting->FindTaskData( chainindex, taskid );
         if ( taskdata != nullptr )
         {
             // 开启额外任务链
@@ -396,14 +357,14 @@ namespace KFrame
             FinishTaskLogicData( player, kftask, taskdata );
         }
 
-        ++order;
-        auto kftaskdatalist = kftaskchainsetting->_task_data_list.Find( order );
+        ++chainindex;
+        auto kftaskdatalist = kftaskchainsetting->_task_data_list.Find( chainindex );
         if ( kftaskdatalist == nullptr )
         {
             return;
         }
 
-        OpenTaskLogicDataList( player, kftaskdatalist, taskchainid, order, time, refreshid, function, line );
+        OpenTaskLogicDataList( player, kftaskdatalist, taskchainid, chainindex, validtime, refreshid, function, line );
     }
 
     bool KFTaskChainModule::OpenTaskLogicData( KFEntity* player, uint32 taskchainid, uint32 order, const KFTaskData* taskdata, uint32 logicid, const char* function, uint32 line )

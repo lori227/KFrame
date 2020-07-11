@@ -8,11 +8,14 @@ namespace KFrame
     class KFTaskInterface : public KFModule
     {
     public:
-        // 开启任务
-        virtual KFData* OpenTask( KFEntity* player, uint32 taskid, uint32 status, uint64 time ) = 0;
-
-        // 开启任务链中的任务
-        virtual KFData* OpenTask( KFEntity* player, uint32 taskid, uint32 status, uint64 time, uint32 refreshid, uint32 taskchainid, uint32 order, const UInt32List& logicids ) = 0;
+        // create task data with taskchain
+        // @taskid			task config id
+        // @status			task init status
+        // @validtime		task valid time( must be finish in time )
+        // @chainid			task chain config id
+        // @chainindex		index in the task chain( default start from 1 )
+        // @refreshid		task chain refresh config id
+        virtual KFData* OpenTask( KFEntity* player, uint32 taskid, uint32 status, uint64 validtime, uint32 chainid = 0u, uint32 chainindex = 1u, uint32 refreshid = 0u ) = 0;
     };
 
     //////////////////////////////////////////////////////////////////////////

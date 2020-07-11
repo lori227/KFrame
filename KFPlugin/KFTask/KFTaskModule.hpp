@@ -36,11 +36,8 @@ namespace KFrame
         // 关闭
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
-        // 开启时限任务
-        virtual KFData* OpenTask( KFEntity* player, uint32 taskid, uint32 status, uint64 time );
-
-        // 开启任务链中的任务
-        virtual KFData* OpenTask( KFEntity* player, uint32 taskid, uint32 status, uint64 time, uint32 refreshid, uint32 taskchainid, uint32 order, const UInt32List& logicids );
+        // 开启任务
+        virtual KFData* OpenTask( KFEntity* player, uint32 taskid, uint32 status, uint64 validtime, uint32 chainid = 0u, uint32 chainindex = 1u, uint32 refreshid = 0u );
     protected:
         // 接取任务
         __KF_MESSAGE_FUNCTION__( HandleTaskReceiveReq );
@@ -50,9 +47,6 @@ namespace KFrame
 
         // 放弃任务
         __KF_MESSAGE_FUNCTION__( HandleTaskRemoveReq );
-
-        // 添加任务
-        __KF_MESSAGE_FUNCTION__( HandleTaskAddReq );
     protected:
         // 添加任务
         __KF_ADD_ELEMENT_FUNCTION__( AddTaskElement );
@@ -65,13 +59,13 @@ namespace KFrame
         // 任务超时定时器
         __KF_TIMER_FUNCTION__( OnTimerTaskTimeout );
         // 设置任务时间
-        void SetTaskTime( KFEntity* player, KFData* kftask, const KFTaskSetting* kfsetting, uint64 time, bool update );
+        void SetTaskTime( KFEntity* player, KFData* kftask, const KFTaskSetting* kfsetting, uint64 validtime, bool update );
         // 启动任务超时定时器
         void StartTaskTimeoutTimer( KFEntity* player, uint32 taskid, uint64 time );
         void StopTaskTimeoutTimer( KFEntity* player, KFData* kftask, uint32 taskid );
 
         // 开启任务
-        KFData* OpenTask( KFEntity* player, const KFTaskSetting* kfsetting, uint32 status, uint64 time, uint32 refreshid );
+        KFData* CreateTask( KFEntity* player, const KFTaskSetting* kfsetting, uint32 status, uint64 time );
         void UpdataTaskStatus( KFEntity* player, const KFTaskSetting* kfsetting, KFData* kftask, uint32 status, uint64 time );
 
         // 任务条件完成
