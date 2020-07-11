@@ -309,6 +309,13 @@ namespace KFrame
         __STRING_DEFINE__( refuse );
         __STRING_DEFINE__( rewardtype );
         __STRING_DEFINE__( sell );
+        __STRING_DEFINE__( taskchain );
+        __STRING_DEFINE__( retaskchain );
+        __STRING_DEFINE__( chain );
+        __STRING_DEFINE__( taskreceive );
+        __STRING_DEFINE__( taskcondition );
+        __STRING_DEFINE__( preconditions );
+
     }
 }
 

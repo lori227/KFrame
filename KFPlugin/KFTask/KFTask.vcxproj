@@ -12,18 +12,23 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="KFTaskChainConfig.cpp" />
+    <ClCompile Include="KFTaskChainModule.cpp" />
     <ClCompile Include="KFTaskConfig.cpp" />
     <ClCompile Include="KFTaskModule.cpp" />
     <ClCompile Include="KFTaskPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="KFTaskChainConfig.hpp" />
+    <ClInclude Include="KFTaskChainInterface.h" />
+    <ClInclude Include="KFTaskChainModule.hpp" />
     <ClInclude Include="KFTaskConfig.hpp" />
     <ClInclude Include="KFTaskInterface.h" />
     <ClInclude Include="KFTaskModule.hpp" />
     <ClInclude Include="KFTaskPlugin.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{59EF0F5C-709C-4C73-A333-C009484664BD}</ProjectGuid>
+    <ProjectGuid>{09A95B0B-192E-4D62-B10E-1381740339AA}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>NFProxyPlugin</RootNamespace>
     <ProjectName>KFTask</ProjectName>

@@ -135,6 +135,7 @@ enum FrameCodeEnum {
   TaskReceiveFailed = 12308,
   TaskReceiveOk = 12309,
   TaskAreaError = 12310,
+  TaskChainSettingNotExist = 12320,
   ActivityCanNotFind = 12400,
   ActivityCanNotFindData = 12401,
   ActivityAlreadyReceived = 12402,

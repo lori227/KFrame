@@ -2,14 +2,19 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFTaskConfig.cpp" />
-    <ClCompile Include="KFTaskPlugin.cpp" />
     <ClCompile Include="KFTaskModule.cpp" />
+    <ClCompile Include="KFTaskPlugin.cpp" />
+    <ClCompile Include="KFTaskChainConfig.cpp" />
+    <ClCompile Include="KFTaskConfig.cpp" />
+    <ClCompile Include="KFTaskChainModule.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFTaskInterface.h" />
-    <ClInclude Include="KFTaskConfig.hpp" />
     <ClInclude Include="KFTaskModule.hpp" />
     <ClInclude Include="KFTaskPlugin.hpp" />
+    <ClInclude Include="KFTaskChainConfig.hpp" />
+    <ClInclude Include="KFTaskConfig.hpp" />
+    <ClInclude Include="KFTaskChainModule.hpp" />
+    <ClInclude Include="KFTaskChainInterface.h" />
   </ItemGroup>
 </Project>

@@ -103,6 +103,7 @@ enum FrameCodeEnum
 	TaskReceiveFailed			= 12308;	// 任务接取失败
 	TaskReceiveOk				= 12309;	// 任务接取成功
 	TaskAreaError				= 12310;	// 任务区域不正确
+	TaskChainSettingNotExist	= 12320;	// 任务栏配置不存在
 
 
 	//activity
