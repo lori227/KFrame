@@ -37,7 +37,8 @@ namespace KFrame
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         // 开启任务
-        virtual KFData* OpenTask( KFEntity* player, uint32 taskid, uint32 status, uint64 validtime, uint32 chainid = 0u, uint32 chainindex = 1u, uint32 refreshid = 0u );
+        virtual KFData* OpenTask( KFEntity* player, uint32 taskid, uint32 status, uint64 validtime = 0u,
+                                  uint32 chainid = 0u, uint32 chainindex = 1u, uint32 refreshid = 0u );
     protected:
         // 接取任务
         __KF_MESSAGE_FUNCTION__( HandleTaskReceiveReq );
@@ -65,7 +66,7 @@ namespace KFrame
         void StopTaskTimeoutTimer( KFEntity* player, KFData* kftask, uint32 taskid );
 
         // 开启任务
-        KFData* CreateTask( KFEntity* player, const KFTaskSetting* kfsetting, uint32 status, uint64 time );
+        KFData* CreateTask( KFEntity* player, const KFTaskSetting* kfsetting, uint32 status, uint64 validtime = 0u );
         void UpdataTaskStatus( KFEntity* player, const KFTaskSetting* kfsetting, KFData* kftask, uint32 status, uint64 time );
 
         // 任务条件完成

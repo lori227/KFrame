@@ -142,7 +142,7 @@ namespace KFrame
         __UN_TIMER_1__( player->GetKeyID() );
     }
 
-    KFData* KFTaskModule::OpenTask( KFEntity* player, uint32 taskid, uint32 status, uint64 validtime,
+    KFData* KFTaskModule::OpenTask( KFEntity* player, uint32 taskid, uint32 status, uint64 validtime /* = 0u */,
                                     uint32 chainid /* = 0u */, uint32 chainindex /* = 1u */, uint32 refreshid /* = 0u */ )
     {
         auto kfsetting = KFTaskConfig::Instance()->FindSetting( taskid );
@@ -160,7 +160,7 @@ namespace KFrame
         return kftask;
     }
 
-    KFData* KFTaskModule::CreateTask( KFEntity* player, const KFTaskSetting* kfsetting, uint32 status, uint64 validtime )
+    KFData* KFTaskModule::CreateTask( KFEntity* player, const KFTaskSetting* kfsetting, uint32 status, uint64 validtime /* = 0u */ )
     {
         auto kftaskrecord = player->Find( __STRING__( task ) );
         auto kftask = kftaskrecord->Find( kfsetting->_id );
@@ -217,10 +217,9 @@ namespace KFrame
         }
 
         validtime += KFGlobal::Instance()->_real_time;
-
         if ( !update )
         {
-            kftask->Set( __STRING__( validtime ), validtime );
+            kftask->Set( __STRING__( time ), validtime );
         }
         else
         {
@@ -697,7 +696,7 @@ namespace KFrame
             else
             {
                 // 开启任务
-                CreateTask( player, kfsetting, status, 0u );
+                CreateTask( player, kfsetting, status );
             }
         }
         break;

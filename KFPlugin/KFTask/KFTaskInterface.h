@@ -15,7 +15,8 @@ namespace KFrame
         // @chainid			task chain config id
         // @chainindex		index in the task chain( default start from 1 )
         // @refreshid		task chain refresh config id
-        virtual KFData* OpenTask( KFEntity* player, uint32 taskid, uint32 status, uint64 validtime, uint32 chainid = 0u, uint32 chainindex = 1u, uint32 refreshid = 0u ) = 0;
+        virtual KFData* OpenTask( KFEntity* player, uint32 taskid, uint32 status, uint64 validtime = 0u,
+                                  uint32 chainid = 0u, uint32 chainindex = 1u, uint32 refreshid = 0u ) = 0;
     };
 
     //////////////////////////////////////////////////////////////////////////
