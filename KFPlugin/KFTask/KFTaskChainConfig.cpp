@@ -37,9 +37,6 @@ namespace KFrame
         auto taskdata = taskdatalist->Create( taskid, ( weight == 0u ? 100u : weight ) );
 
         taskdata->_task_status = xmlnode.GetUInt32( "TaskStatus" );
-        taskdata->_logic_name = xmlnode.GetString( "LogicName" );
-        taskdata->_logic_status = xmlnode.GetUInt32( "LogicStatus" );
-        taskdata->_finish_status = xmlnode.GetUInt32( "FinishStatus" );
 
         auto strextend = xmlnode.GetString( "ExtendChain" );
         KFReadSetting::ParseMapUInt32( strextend, taskdata->_extend_task_chain_list );
@@ -49,9 +46,6 @@ namespace KFrame
 
         auto strstoprefresh = xmlnode.GetString( "StopRefresh" );
         KFReadSetting::ParseMapUInt32( strstoprefresh, taskdata->_stop_refresh_id_list );
-
-        auto strlogicid = xmlnode.GetString( "LogicId" );
-        taskdata->_logic_type = KFReadSetting::ParseConditionList( strlogicid, taskdata->_logic_id_list );
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////
     void KFTaskChainRefreshConfig::ClearSetting()

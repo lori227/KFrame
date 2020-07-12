@@ -15,19 +15,6 @@ namespace KFrame
         // 任务状态
         uint32 _task_status = 0u;
 
-        // 状态id
-        uint32 _logic_status = 0u;
-
-        // 逻辑属性
-        std::string _logic_name;
-
-        // 逻辑id
-        uint32 _logic_type = 0u;
-        UInt32Vector _logic_id_list;
-
-        // 结束状态
-        uint32 _finish_status = 0u;
-
         // 附加的任务链
         UInt32Map _extend_task_chain_list;
 

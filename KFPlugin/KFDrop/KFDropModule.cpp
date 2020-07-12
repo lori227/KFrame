@@ -34,7 +34,7 @@ namespace KFrame
             return false;
         }
 
-        auto count = kfelementobject->CalcValue( kfparent->_data_setting, kfparent->_data_setting->_value_key_name, 1.0f );
+        auto count = kfelementobject->CalcValue( kfparent->_data_setting, kfparent->_data_setting->_value_key_name );
         Drop( player, kfelementobject->_config_id, __MAX__( count, 1u ), __STRING__( command ), 0u, __FUNC_LINE__ );
 #endif
 

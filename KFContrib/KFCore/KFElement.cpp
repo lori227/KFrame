@@ -149,7 +149,7 @@ namespace KFrame
         _values.Insert( dataname, kfvalue );
     }
 
-    uint64 KFElementObject::CalcValue( const KFDataSetting* kfsetting, const std::string& dataname, double multiple )
+    uint64 KFElementObject::CalcValue( const KFDataSetting* kfsetting, const std::string& dataname, double multiple /* = _default_multiple */ )
     {
         auto kfvalue = _values.Find( dataname );
         if ( kfvalue == nullptr || !kfvalue->IsType( KFDataDefine::DataTypeUInt32 ) )

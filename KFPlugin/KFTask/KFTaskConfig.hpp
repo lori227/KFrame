@@ -36,7 +36,7 @@ namespace KFrame
         KFExecuteData _execute_data;
     public:
         // 是否是自动提交类型
-        bool IsAutoTask() const
+        bool IsAutoFinish() const
         {
             return _complete_type == KFTaskEnum::ComplelteAuto;
         }

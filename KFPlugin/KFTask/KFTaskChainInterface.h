@@ -37,11 +37,6 @@ namespace KFrame
             UnBindFinishTaskChainFunction( name );
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // 完成任务链任务
-        virtual void FinishTaskChain( KFEntity* player, KFData* kftask, const char* function, uint32 line ) = 0;
-
-        // 删除任务链任务
-        virtual void RemoveTaskChain( KFEntity* player, KFData* kftask ) = 0;
     private:
         virtual void BindOpenTaskChainFunction( const std::string& name, KFOpenTaskChainFunction& function ) = 0;
         virtual void UnBindOpenTaskChainFunction( const std::string& name ) = 0;

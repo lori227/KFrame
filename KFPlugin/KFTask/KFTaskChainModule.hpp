@@ -33,11 +33,6 @@ namespace KFrame
         // 关闭
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
-        // 完成任务链任务
-        virtual void FinishTaskChain( KFEntity* player, KFData* kftask, const char* function, uint32 line );
-
-        // 删除任务链任务
-        virtual void RemoveTaskChain( KFEntity* player, KFData* kftask );
     protected:
         // 添加任务链
         __KF_ADD_ELEMENT_FUNCTION__( AddTaskChainElement );
@@ -49,19 +44,10 @@ namespace KFrame
         __KF_RESET_FUNCTION__( OnResetRefreshTaskChain );
 
         // 开启任务链
-        bool OpenTaskChain( KFEntity* player, uint32 chainid, uint32 chainindex, uint32 validtime, uint32 refreshid, const char* function, uint32 line );
+        bool OpenTaskChain( KFEntity* player, uint32 chainid, uint32 chainindex, uint32 validtime, uint32 refreshid );
 
         // 开启任务链数据
-        bool OpenTaskLogicDataList( KFEntity* player, const KFWeightList<KFTaskData>* taskdatalist, uint32 chainid, uint32 chainindex, uint32 validtime, uint32 refreshid, const char* function, uint32 line );
-
-        // 开启任务链逻辑数据
-        bool OpenTaskLogicData( KFEntity* player, uint32 chainid, uint32 chainindex, const KFTaskData* taskdata, uint32 logicid, const char* function, uint32 line );
-
-        // 完成任务链逻辑数据
-        void FinishTaskLogicData( KFEntity* player, KFData* kftask, const KFTaskData* taskdata );
-
-        // 删除任务链逻辑数据
-        void RemoveTaskLogicData( KFEntity* player, KFData* kftask, const KFTaskData* taskdata );
+        bool OpenTaskLogicDataList( KFEntity* player, const KFWeightList<KFTaskData>* taskdatalist, uint32 chainid, uint32 chainindex, uint32 validtime, uint32 refreshid );
 
         // 清除任务链
         void CleanTaskChain( KFEntity* player, uint32 chainid );
@@ -79,13 +65,20 @@ namespace KFrame
         __KF_LEAVE_PLAYER_FUNCTION__( OnLeaveTaskChainModule );
 
         // 开启附加任务链
-        void OpenExtendChain( KFEntity* player, const UInt32Map& chainlist, const char* function, uint32 line );
+        void OpenExtendChain( KFEntity* player, const UInt32Map& chainlist );
 
         // 开启刷新循环链
-        void OpenRefreshIdToLoop( KFEntity* player, const UInt32Map& idlist, const char* function, uint32 line );
+        void OpenRefreshIdToLoop( KFEntity* player, const UInt32Map& idlist );
 
         // 关闭刷新循环链
-        void StopRefreshIdToLoop( KFEntity* player, const UInt32Map& idlist, const char* function, uint32 line );
+        void StopRefreshIdToLoop( KFEntity* player, const UInt32Map& idlist );
+
+        // 删除任务
+        __KF_REMOVE_DATA_FUNCTION__( OnRemoveTaskTaskChainModule );
+        // 完成任务链任务
+        void FinishTaskChain( KFEntity* player, KFData* kftask );
+        // 删除任务链
+        void RemoveTaskChain( KFEntity* player, KFData* kftask );
 
     private:
         virtual void BindOpenTaskChainFunction( const std::string& name, KFOpenTaskChainFunction& function );
@@ -98,10 +91,10 @@ namespace KFrame
         KFComponent* _kf_component = nullptr;
 
         // 开启任务链回调
-        KFBind < std::string, const std::string&, KFOpenTaskChainFunction > _open_task_chain_function;
+        KFBind< std::string, const std::string&, KFOpenTaskChainFunction > _open_task_chain_function;
 
         // 关闭任务链回调
-        KFBind < std::string, const std::string&, KFFinishTaskChainFunction > _finish_task_chain_function;
+        KFBind< std::string, const std::string&, KFFinishTaskChainFunction > _finish_task_chain_function;
     };
 }
 

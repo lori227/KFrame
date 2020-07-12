@@ -177,7 +177,7 @@ namespace KFrame
         void SetValue( const std::string& dataname, std::string value );
 
         // 获得数值
-        uint64 CalcValue( const KFDataSetting* kfsetting, const std::string& dataname, double multiple );
+        uint64 CalcValue( const KFDataSetting* kfsetting, const std::string& dataname, double multiple = _default_multiple );
         uint64 GetValue( const std::string& dataname ) const;
 
         // 格式化
