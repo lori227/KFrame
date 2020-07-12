@@ -29,6 +29,7 @@ namespace KFrame
         {"AddCall", KFDataDefine::DataMaskAddCall},
         {"RemoveCall", KFDataDefine::DataMaskRemoveCall},
         {"UpdateCall", KFDataDefine::DataMaskUpdataCall},
+        {"Create", KFDataDefine::DataMaskCreate},
     };
 
     void KFDataConfig::ReadSetting( KFNode& xmlnode, KFClassSetting* kfsetting )

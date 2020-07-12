@@ -37,6 +37,7 @@ namespace KFrame
             DataMaskAddCall = 1 << 7,		// 是否添加回调
             DataMaskRemoveCall = 1 << 8,	// 是否删除回调
             DataMaskUpdataCall = 1 << 9,	// 是否更新回调
+            DataMaskCreate = 1 << 10,		// 是否创建属性(项目可设置这个属性来屏蔽框架创建)
 
             DataMaskBasic = 1 << 20,		// 基础属性
             DataMaskRelation = 1 << 21,		// 关系属性

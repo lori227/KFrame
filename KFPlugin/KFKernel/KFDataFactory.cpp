@@ -136,9 +136,12 @@ namespace KFrame
             }
             else
             {
-                // 没有就创建出来
-                kfchild = CreateData( childdatasetting, false );
-                kfdata->Add( childdatasetting->_name, kfchild );
+                if ( childdatasetting->HaveMask( KFDataDefine::DataMaskCreate ) )
+                {
+                    // 没有就创建出来
+                    kfchild = CreateData( childdatasetting, false );
+                    kfdata->Add( childdatasetting->_name, kfchild );
+                }
             }
         }
     }
@@ -207,6 +210,10 @@ namespace KFrame
         for ( auto& iter : datasetting->_class_setting->_static_data._objects )
         {
             auto childdatasetting = iter.second;
+            if ( !childdatasetting->HaveMask( KFDataDefine::DataMaskCreate ) )
+            {
+                continue;
+            }
 
             auto kfchilddata = Create( childdatasetting->_type );
             if ( kfchilddata == nullptr )
