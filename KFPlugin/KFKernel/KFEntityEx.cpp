@@ -27,7 +27,7 @@ namespace KFrame
         _is_new = isnew;
     }
 
-    void KFEntityEx::InitData( KFComponentEx* kfcomponent )
+    void KFEntityEx::InitEntity( KFComponentEx* kfcomponent )
     {
         _is_new = false;
         _is_inited = false;
@@ -57,7 +57,6 @@ namespace KFrame
     KFData* KFEntityEx::CreateData( KFData* kfdata )
     {
         auto child = KFDataFactory::Instance()->CreateData( kfdata->_data_setting, true );
-        child->InitData();
         return child;
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////

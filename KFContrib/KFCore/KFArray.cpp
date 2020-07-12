@@ -84,13 +84,13 @@ namespace KFrame
 
     KFData* KFArray::First()
     {
-        if ( KFGlobal::Instance()->_array_index == 0u )
+        auto kfdata = _data.First();
+        if ( KFGlobal::Instance()->_array_index == 1u )
         {
-            return _data.First();
+            kfdata = _data.Next();
         }
 
-        _data.First();
-        return _data.Next();
+        return kfdata;
     }
 
     KFData* KFArray::Next()

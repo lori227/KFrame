@@ -309,6 +309,7 @@ namespace KFrame
     void KFData::Initialize( const KFDataSetting* datasetting )
     {
         _data_setting = datasetting;
+        InitData();
     }
 
     void KFData::InitData()

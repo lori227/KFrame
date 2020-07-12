@@ -82,7 +82,7 @@ namespace KFrame
         if ( kfdata == nullptr )
         {
             kfdata = Create( datasetting->_logic_type );
-            InitData( kfdata, datasetting );
+            InitCreateData( kfdata, datasetting );
         }
 
         if ( addautolist )
@@ -198,7 +198,7 @@ namespace KFrame
         }
     }
 
-    void KFDataFactory::InitData( KFData* kfdata, const KFDataSetting* datasetting )
+    void KFDataFactory::InitCreateData( KFData* kfdata, const KFDataSetting* datasetting )
     {
         kfdata->Initialize( datasetting );
         if ( datasetting->_class_setting == nullptr )
@@ -229,7 +229,7 @@ namespace KFrame
             switch ( childdatasetting->_type )
             {
             case KFDataDefine::DataTypeObject:
-                InitData( kfchilddata, childdatasetting );
+                InitCreateData( kfchilddata, childdatasetting );
                 break;
             case KFDataDefine::DataTypeArray:
                 InitArray( kfchilddata, childdatasetting->_int_max_capacity );

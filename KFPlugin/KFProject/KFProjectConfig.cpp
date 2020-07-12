@@ -16,6 +16,10 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////
         auto arraynode = config.FindNode( "ArrayIndex" );
         kfglobal->_array_index = arraynode.GetUInt32( "Value" );
+        if ( kfglobal->_array_index > 1u )
+        {
+            kfglobal->_array_index = 1u;
+        }
         //////////////////////////////////////////////////////////////////
         auto disconnetnode = config.FindNode( "Disconnet" );
         auto disconnecttime = disconnetnode.GetUInt32( "Time" );

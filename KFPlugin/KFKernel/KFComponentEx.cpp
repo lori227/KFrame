@@ -152,10 +152,10 @@ namespace KFrame
         if ( kfentity == nullptr )
         {
             kfentity = __KF_NEW__( KFEntityEx );
-            KFDataFactory::Instance()->InitData( kfentity, _data_setting );
+            KFDataFactory::Instance()->InitCreateData( kfentity, _data_setting );
         }
 
-        static_cast< KFEntityEx* >( kfentity )->InitData( this );
+        static_cast< KFEntityEx* >( kfentity )->InitEntity( this );
         AddEntity( key, kfentity );
         return kfentity;
     }

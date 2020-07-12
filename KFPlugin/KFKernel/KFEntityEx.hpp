@@ -33,7 +33,7 @@ namespace KFrame
         ~KFEntityEx() = default;
 
         // 初始化
-        void InitData( KFComponentEx* kfcomponent );
+        void InitEntity( KFComponentEx* kfcomponent );
 
         // 是否初始化完成
         virtual bool IsInited();

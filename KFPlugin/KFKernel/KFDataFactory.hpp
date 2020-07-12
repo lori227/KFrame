@@ -27,7 +27,7 @@ namespace KFrame
         void InitPoolData( KFData* kfdata );
 
         // 初始化创建对象
-        void InitData( KFData* kfdata, const KFDataSetting* datasetting );
+        void InitCreateData( KFData* kfdata, const KFDataSetting* datasetting );
 
         // 初始化数组
         void InitArray( KFData* kfarray, uint32 size );
