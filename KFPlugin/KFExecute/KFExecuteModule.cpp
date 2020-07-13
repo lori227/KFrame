@@ -31,9 +31,56 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    bool KFExecuteModule::Execute( KFEntity* player, uint32 executeid, const char* function, uint32 line )
+    {
+        return Execute( player, executeid, _invalid_string, _invalid_int, function, line );
+    }
+
+    bool KFExecuteModule::Execute( KFEntity* player, uint32 executeid, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
+    {
+        auto kfsetting = KFExecuteConfig::Instance()->FindSetting( executeid );
+        if ( kfsetting == nullptr )
+        {
+            __LOG_ERROR_FUNCTION__( function, line, "execute=[{}] can't find setting", executeid );
+            return false;
+        }
+
+        for ( auto kfexecutedata : kfsetting->_execute_list._objects )
+        {
+            Execute( player, kfexecutedata, modulename, moduleid, function, line );
+        }
+
+        return true;
+    }
+
+    bool KFExecuteModule::Execute( KFEntity* player, const UInt32Vector& executelist, const char* function, uint32 line )
+    {
+        return Execute( player, executelist, _invalid_string, _invalid_int, function, line );
+    }
+
+    bool KFExecuteModule::Execute( KFEntity* player, const UInt32Vector& executelist, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
+    {
+        for ( auto executeid : executelist )
+        {
+            auto kfsetting = KFExecuteConfig::Instance()->FindSetting( executeid );
+            if ( kfsetting == nullptr )
+            {
+                __LOG_ERROR_FUNCTION__( function, line, "execute=[{}] can't find setting", executeid );
+                continue;
+            }
+
+            for ( auto kfexecutedata : kfsetting->_execute_list._objects )
+            {
+                Execute( player, kfexecutedata, modulename, moduleid, function, line );
+            }
+        }
+
+        return true;
+    }
+
     bool KFExecuteModule::Execute( KFEntity* player, const KFExecuteData* executedata, const char* function, uint32 line )
     {
-        return Execute( player, executedata, _invalid_string, 0u, function, line );
+        return Execute( player, executedata, _invalid_string, _invalid_int, function, line );
     }
 
     bool KFExecuteModule::Execute( KFEntity* player, const KFExecuteData* executedata, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
@@ -97,18 +144,7 @@ namespace KFrame
             return false;
         }
 
-        auto executeid = executedata->_param_list._params[ 0 ]->_int_value;
-        auto kfsetting = KFExecuteConfig::Instance()->FindSetting( executeid );
-        if ( kfsetting == nullptr )
-        {
-            return false;
-        }
-
-        for ( auto& iter : kfsetting->_sort_execute_data_list._objects )
-        {
-            Execute( player, iter.second, modulename, moduleid, function, line );
-        }
-
-        return true;
+        auto& executelist = executedata->_param_list._params[ 0 ]->_vector_value;
+        return Execute( player, executelist, modulename, moduleid, function, line );
     }
 }

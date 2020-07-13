@@ -80,9 +80,6 @@ namespace KFrame
         void FinishTask( KFEntity* player, uint32 taskid );
         void FinishTask( KFEntity* player, KFData* kftask, const KFTaskSetting* kfsetting );
 
-        // 任务输出执行
-        void TaskExecute( KFEntity* player, KFData* kftask, const KFTaskSetting* kfsetting );
-
         // 更新数据回调
         __KF_ADD_DATA_FUNCTION__( OnAddDataTaskModule );
         __KF_REMOVE_DATA_FUNCTION__( OnRemoveDataTaskModule );

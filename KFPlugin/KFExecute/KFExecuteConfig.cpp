@@ -7,7 +7,7 @@ namespace KFrame
     {
         auto executedata = __KF_NEW__( KFExecuteData );
         KFReadSetting::ReadExecuteData( xmlnode, executedata );
-        kfsetting->_execute_data_list.push_back( executedata );
+        kfsetting->_execute_list.Insert( executedata );
     }
 
     void KFExecuteConfig::LoadAllComplete()
@@ -15,32 +15,28 @@ namespace KFrame
         for ( auto& iter : _settings._objects )
         {
             auto kfsetting = iter.second;
-            kfsetting->_sort_execute_data_list.Clear( false );
-            for ( auto executedata : kfsetting->_execute_data_list )
+
+            for ( auto executedata : kfsetting->_execute_list._objects )
             {
-                auto sort = KFExecuteSortConfig::Instance()->GetExecuteSort( executedata->_name );
-                kfsetting->_sort_execute_data_list.Insert( sort, executedata );
+                if ( executedata->_name != __STRING__( data ) )
+                {
+                    continue;
+                }
+
+                if ( executedata->_param_list._params.size() < 3u )
+                {
+                    __LOG_ERROR__( "task=[{}] execute=[data] param size<3 error", kfsetting->_id );
+                    continue;
+                }
+
+                auto& dataname = executedata->_param_list._params[ 0 ]->_str_value;
+                auto& datavalue = executedata->_param_list._params[ 1 ]->_str_value;
+                auto& datakey = executedata->_param_list._params[ 2 ]->_int_value;
+                KFElementConfig::Instance()->FormatElement( executedata->_param_list._elements, dataname, datavalue, datakey );
             }
+
         }
     }
+
     /////////////////////////////////////////////////////////////////////////////////////////////
-    void KFExecuteSortConfig::ReadSetting( KFNode& xmlnode, KFExecuteSortSetting* kfsetting )
-    {
-        kfsetting->_sort = xmlnode.GetUInt32( "Sort" );
-        if ( kfsetting->_sort > _max_sort )
-        {
-            _max_sort = kfsetting->_sort;
-        }
-    }
-
-    uint32 KFExecuteSortConfig::GetExecuteSort( const std::string& name )
-    {
-        auto kfsetting = _settings.Create( name );
-        if ( kfsetting->_sort == 0u )
-        {
-            kfsetting->_sort = ++_max_sort;
-        }
-
-        return kfsetting->_sort;
-    }
 }

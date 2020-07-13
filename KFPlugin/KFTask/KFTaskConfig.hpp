@@ -33,7 +33,7 @@ namespace KFrame
         UInt32Vector _complete_condition;
 
         // 输出( 掉落等 )
-        KFExecuteData _execute_data;
+        UInt32Vector _execute_list;
     public:
         // 是否是自动提交类型
         bool IsAutoFinish() const
@@ -51,9 +51,6 @@ namespace KFrame
         {
             _file_name = "task";
         }
-
-        // 加载完成
-        virtual void LoadAllComplete();
 
     protected:
         // 读取配置

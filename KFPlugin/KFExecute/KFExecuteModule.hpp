@@ -26,6 +26,13 @@ namespace KFrame
         virtual void BeforeRun();
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
+
+        virtual bool Execute( KFEntity* player, uint32 executeid, const char* function, uint32 line );
+        virtual bool Execute( KFEntity* player, uint32 executeid, const std::string& modulename, uint64 moduleid, const char* function, uint32 line );
+
+        virtual bool Execute( KFEntity* player, const UInt32Vector& executelist, const char* function, uint32 line );
+        virtual bool Execute( KFEntity* player, const UInt32Vector& executelist, const std::string& modulename, uint64 moduleid, const char* function, uint32 line );
+
         virtual bool Execute( KFEntity* player, const KFExecuteData* executedata, const char* function, uint32 line );
         virtual bool Execute( KFEntity* player, const KFExecuteData* executedata, const std::string& modulename, uint64 moduleid, const char* function, uint32 line );
 

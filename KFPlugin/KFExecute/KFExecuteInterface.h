@@ -10,6 +10,12 @@ namespace KFrame
     {
     public:
         // 执行输出
+        virtual bool Execute( KFEntity* player, uint32 executeid, const char* function, uint32 line ) = 0;
+        virtual bool Execute( KFEntity* player, uint32 executeid, const std::string& modulename, uint64 moduleid, const char* function, uint32 line ) = 0;
+
+        virtual bool Execute( KFEntity* player, const UInt32Vector& executelist, const char* function, uint32 line ) = 0;
+        virtual bool Execute( KFEntity* player, const UInt32Vector& executelist, const std::string& modulename, uint64 moduleid, const char* function, uint32 line ) = 0;
+
         virtual bool Execute( KFEntity* player, const KFExecuteData* executedata, const char* function, uint32 line ) = 0;
         virtual bool Execute( KFEntity* player, const KFExecuteData* executedata, const std::string& modulename, uint64 moduleid, const char* function, uint32 line ) = 0;
         //////////////////////////////////////////////////////////////////////////////////////////////////

@@ -260,35 +260,13 @@ namespace KFrame
         kftask->Set<uint32>( __STRING__( status ), KFMsg::ReceiveStatus );
 
         // 任务输出执行
-        TaskExecute( player, kftask, kfsetting );
+        _kf_execute->Execute( player, kfsetting->_execute_list, __STRING__( task ), kfsetting->_id, __FUNC_LINE__ );
 
         // 删除任务
         player->RemoveData( kftask->GetParent(), kfsetting->_id );
 
         // 提示客户端
         _kf_display->DelayToClient( player, KFMsg::TaskRewardOk, kfsetting->_id );
-    }
-
-    void KFTaskModule::TaskExecute( KFEntity* player, KFData* kftask, const KFTaskSetting* kfsetting )
-    {
-        auto executedata = &kfsetting->_execute_data;
-        if ( executedata->_name == __STRING__( drop ) )
-        {
-            // 掉落根据任务条件计数来计算奖励
-            if ( executedata->_param_list._params.size() >= 3u )
-            {
-                const_cast< KFExecuteData* >( executedata )->_calc_value = 0u;
-                auto conditionid = executedata->_param_list._params[ 1 ]->_int_value;
-                if ( conditionid != 0u )
-                {
-                    auto kfconditionobject = kftask->Find( __STRING__( conditions ) );
-                    auto value = kfconditionobject->Get<uint32>( __STRING__( condition ), conditionid, __STRING__( value ) );
-                    const_cast< KFExecuteData* >( executedata )->_calc_value = value;
-                }
-            }
-        }
-
-        _kf_execute->Execute( player, executedata, __STRING__( task ), kfsetting->_id, __FUNC_LINE__ );
     }
 
     void KFTaskModule::StartTaskTimeoutTimer( KFEntity* player, uint32 taskid, uint64 timeout )
