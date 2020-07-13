@@ -27,20 +27,18 @@ namespace KFrame
         virtual void LoadAllComplete() {}
 
         // 设置版本号
-        void SetVersion( const std::string& file, const std::string& version )
+        void SetVersion( const std::string& version )
         {
-            _versions[ file ] = version;
+            if ( _version.empty() && !version.empty() )
+            {
+                _version = version;
+            }
         }
 
         // 获得版本
         const std::string& GetVersion()
         {
-            if ( _versions.empty() )
-            {
-                return _invalid_string;
-            }
-
-            return _versions.begin()->second;
+            return _version;
         }
 
     public:
@@ -48,8 +46,8 @@ namespace KFrame
         std::string _file_name;
 
     protected:
-        // 版本列表
-        StringMap _versions;
+        // 版本号
+        std::string _version;
 
         // 配置文件名
         std::string _setting_file_anme;
@@ -111,13 +109,13 @@ namespace KFrame
             else
             {
                 ClearSetting();
-                _versions.clear();
             }
         }
 
         virtual void ClearSetting()
         {
             _settings.Clear();
+            _version.clear();
         }
 
         virtual void ClearFileSetting()

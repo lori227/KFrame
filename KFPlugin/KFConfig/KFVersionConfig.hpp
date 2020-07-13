@@ -30,6 +30,9 @@ namespace KFrame
             _key_name = "name";
         }
 
+        // 判断是否需要重新加载
+        const std::string& CheckNeedReload( const std::string& filename );
+
     protected:
         // 读取配置
         virtual void ReadSetting( KFNode& xmlnode, KFVersionSetting* kfsetting );

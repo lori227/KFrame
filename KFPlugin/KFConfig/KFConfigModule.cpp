@@ -92,16 +92,16 @@ namespace KFrame
                 continue;
             }
 
-            for ( auto& kfdata : kfsetting->_config_data_list )
+            for ( auto& configdata : kfsetting->_config_data_list )
             {
                 // 加载配置
-                LoadConfigFile( kfconfig, kfdata._file_name, kfdata._file_path, kfdata._load_mask );
+                LoadConfigFile( kfconfig, configdata._file_name, configdata._file_path, configdata._load_mask );
 
                 // 设置版本号
-                auto kfversionsetting = _kf_version_config->FindSetting( kfdata._file_name );
+                auto kfversionsetting = _kf_version_config->FindSetting( configdata._file_name );
                 if ( kfversionsetting != nullptr )
                 {
-                    kfconfig->SetVersion( kfdata._file_name, kfversionsetting->_new_version );
+                    kfconfig->SetVersion( kfversionsetting->_new_version );
                 }
             }
 
@@ -138,38 +138,37 @@ namespace KFrame
             // 判断版本号是否相同
             auto loadok = false;
             auto childfilereload = false;
-            for ( auto& kfdata : kfconfigsetting->_config_data_list )
+            for ( auto& configdata : kfconfigsetting->_config_data_list )
             {
-                if ( !KFUtility::HaveBitMask<uint32>( kfdata._load_mask, KFConfigEnum::CanReload ) )
-                {
-                    continue;
-                }
-
-                // 没找到版本配置
-                auto kfversionsetting = _kf_version_config->FindSetting( kfdata._file_name );
-                if ( kfversionsetting == nullptr )
-                {
-                    continue;
-                }
-
+                // 检查是否需要更新
+                auto& newversion = _kf_version_config->CheckNeedReload( configdata._file_name );
                 if ( !childfilereload )
                 {
-                    // 不需要更新
-                    if ( !kfversionsetting->IsNeedReload() )
+                    // 版本相同
+                    if ( newversion.empty() )
                     {
                         continue;
                     }
 
-                    if ( KFUtility::HaveBitMask<uint32>( kfdata._load_mask, KFConfigEnum::ChildFile ) )
+                    // 不能重新加载
+                    if ( !KFUtility::HaveBitMask<uint32>( configdata._load_mask, KFConfigEnum::CanReload ) )
+                    {
+                        continue;
+                    }
+
+                    if ( KFUtility::HaveBitMask<uint32>( configdata._load_mask, KFConfigEnum::ClearChildFile ) )
                     {
                         childfilereload = true;
                     }
+
                 }
+
+                // 加载配置
+                LoadConfigFile( kfconfig, configdata._file_name, configdata._file_path, configdata._load_mask );
 
                 loadok = true;
                 loadallok = true;
-                kfconfig->SetVersion( kfdata._file_name, kfversionsetting->_new_version );
-                LoadConfigFile( kfconfig, kfdata._file_name, kfdata._file_path, kfdata._load_mask );
+                kfconfig->SetVersion( newversion );
             }
 
             // 加载完成
