@@ -160,7 +160,6 @@ namespace KFrame
                     {
                         childfilereload = true;
                     }
-
                 }
 
                 // 加载配置
