@@ -12,11 +12,22 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="KFItemMoveModule.cpp" />
+    <ClCompile Include="KFItemRuneModule.cpp" />
+    <ClCompile Include="KFItemWeaponModule.cpp" />
     <ClCompile Include="KFItemModule.cpp" />
     <ClCompile Include="KFItemPlugin.cpp" />
     <ClCompile Include="KFItemUseModule.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="KFItemIndex.hpp" />
+    <ClInclude Include="KFItemMoveInterface.h" />
+    <ClInclude Include="KFItemMoveModule.hpp" />
+    <ClInclude Include="KFItemRuneInterface.h" />
+    <ClInclude Include="KFItemRuneModule.hpp" />
+    <ClInclude Include="KFItemUseInterface.h" />
+    <ClInclude Include="KFItemWeaponInterface.h" />
+    <ClInclude Include="KFItemWeaponModule.hpp" />
     <ClInclude Include="KFItemInterface.h" />
     <ClInclude Include="KFItemModule.hpp" />
     <ClInclude Include="KFItemPlugin.hpp" />

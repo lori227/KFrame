@@ -225,6 +225,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KFChat", "KFPlugin\KFChat\K
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KFTask", "KFPlugin\KFTask\KFTask.vcxproj", "{09A95B0B-192E-4D62-B10E-1381740339AA}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KFStore", "KFPlugin\KFStore\KFStore.vcxproj", "{9F702011-8B8A-480B-A01B-9D5DBC823714}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -743,6 +745,12 @@ Global
 		{09A95B0B-192E-4D62-B10E-1381740339AA}.Release|x64.ActiveCfg = Release|x64
 		{09A95B0B-192E-4D62-B10E-1381740339AA}.Release|x64.Build.0 = Release|x64
 		{09A95B0B-192E-4D62-B10E-1381740339AA}.Release|x86.ActiveCfg = Release|x64
+		{9F702011-8B8A-480B-A01B-9D5DBC823714}.Debug|x64.ActiveCfg = Debug|x64
+		{9F702011-8B8A-480B-A01B-9D5DBC823714}.Debug|x64.Build.0 = Debug|x64
+		{9F702011-8B8A-480B-A01B-9D5DBC823714}.Debug|x86.ActiveCfg = Debug|x64
+		{9F702011-8B8A-480B-A01B-9D5DBC823714}.Release|x64.ActiveCfg = Release|x64
+		{9F702011-8B8A-480B-A01B-9D5DBC823714}.Release|x64.Build.0 = Release|x64
+		{9F702011-8B8A-480B-A01B-9D5DBC823714}.Release|x86.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -855,9 +863,10 @@ Global
 		{EFCCC04D-F3F4-4568-A05E-869AABEC6187} = {B17E5A10-E5A4-4F3E-BB10-5C6E0E6ABA93}
 		{F6DF256B-FB77-4E69-A95B-1FB2DE18242D} = {EFCCC04D-F3F4-4568-A05E-869AABEC6187}
 		{09A95B0B-192E-4D62-B10E-1381740339AA} = {4FA07098-DDF4-4938-BB9E-0659533B5A94}
+		{9F702011-8B8A-480B-A01B-9D5DBC823714} = {4FA07098-DDF4-4938-BB9E-0659533B5A94}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		Qt5Version = msvc2015_86
 		SolutionGuid = {0F58A6B8-C040-4A92-9898-1E6968E55CF1}
+		Qt5Version = msvc2015_86
 	EndGlobalSection
 EndGlobal

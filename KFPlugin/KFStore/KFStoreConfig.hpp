@@ -12,47 +12,31 @@ namespace KFrame
     class KFStoreSetting : public KFIntSetting
     {
     public:
-        // 商品类型
-        std::string _data_name;
+        // 刷新类型
+        uint32 _refresh_type = 0u;
 
-        // 购买得到的道具
-        KFElements _buy_elements;
+        // 刷新时间id
+        uint32 _refresh_time_id = 0u;
 
-        // 购买花费的道具
-        KFHashMap< std::string, const std::string&, KFElements > _cost_elements;
-        /////////////////////////////////////////////////////////////////////////////////////////////////
-        // 折扣的开始时间
-        uint64 _start_discount_time = 0u;
+        // 刷新的商品组数量
+        std::list < std::tuple< uint32, uint32, uint32 > > _refresh_group_count;
 
-        // 折扣的结束时间
-        uint64 _end_discount_time = 0u;
+        // 随机类型( 1 可重复商品, 2 不可重复商品 )
+        uint32 _random_type = 0u;
 
-        // 折扣后的价格
-        KFHashMap< std::string, const std::string&, KFElements > _discount_elements;
-        /////////////////////////////////////////////////////////////////////////////////////////////////
-        // 购买限制类型
-        std::string _buy_limit_type;
+        // 商品列表
+        UInt32Set _goods_list;
 
-        // 购买限制数量
-        uint32 _buy_limit_count = 0u;
-        /////////////////////////////////////////////////////////////////////////////////////////////////
-        // 商品上架的商店类型
-        uint32 _store_type = 0u;
+        // 刷新花费列表
+        UInt32Vector _refresh_cost_list;
 
-        // 单次购买数量上限
-        uint32 _buy_max_count = 0u;
-
-        // 最大拥有限制数( 比如皮肤之类, 拥有就不能再次购买 )
-        uint32 _max_own_count = 0u;
-        /////////////////////////////////////////////////////////////////////////////////////////////////
-
+        // 手动刷新是否重置时间
+        bool _is_refresh_reset_time = false;
     public:
-        // 查找商品价格
-        const KFElements* FindCostElements( const std::string& buytype, uint64 nowtime ) const;
-
-        // 判断是否在折扣时间内
-        bool CheckInDiscount( uint64 nowtime ) const;
+        // 是否有该商品
+        bool IsHaveGoods( uint32 goodsid ) const;
     };
+
 
     class KFStoreConfig : public KFConfigT< KFStoreSetting >, public KFInstance< KFStoreConfig >
     {
@@ -62,10 +46,12 @@ namespace KFrame
             _file_name = "store";
         }
 
+        virtual void LoadAllComplete();
+
     protected:
         // 读取配置
         virtual void ReadSetting( KFNode& xmlnode, KFStoreSetting* kfsetting );
     };
 }
 
-#endif//__KF_STORE_CONFIG_H__
+#endif

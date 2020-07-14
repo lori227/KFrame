@@ -176,15 +176,12 @@ enum RefreshEnum {
   RefreshByFree = 1,
   RefreshByCount = 2,
   RefreshByCost = 3,
-  RefreshByItem = 4,
-  RefreshByMoney = 5,
-  RefreshByDiamond = 6,
   RefreshEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   RefreshEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 LIBPROTOC_EXPORT bool RefreshEnum_IsValid(int value);
 const RefreshEnum RefreshEnum_MIN = RefreshNever;
-const RefreshEnum RefreshEnum_MAX = RefreshByDiamond;
+const RefreshEnum RefreshEnum_MAX = RefreshByCost;
 const int RefreshEnum_ARRAYSIZE = RefreshEnum_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* RefreshEnum_descriptor();

@@ -26,7 +26,7 @@ namespace KFrame
         }
 
         auto ok = false;
-        auto status = player->GetData()->GetValue<uint32>( __KF_STRING__( basic ), __KF_STRING__( status ) );
+        auto status = player->GetStatus();
         switch ( status )
         {
         case KFMsg::ExploreStatus:
@@ -48,13 +48,13 @@ namespace KFrame
         __CLIENT_PROTO_PARSE__( KFMsg::MsgUseItemReq );
 
         // 判断是否有这个道具
-        auto kfitem = player->GetData()->FindData( kfmsg.name(), kfmsg.uuid() );
+        auto kfitem = player->Find( kfmsg.name(), kfmsg.uuid() );
         if ( kfitem == nullptr )
         {
             return _kf_display->SendToClient( player, KFMsg::ItemDataNotExist );
         }
 
-        auto itemid = kfitem->GetValue<uint32>( kfitem->_data_setting->_config_key_name  );
+        auto itemid = kfitem->Get<uint32>( kfitem->_data_setting->_config_key_name  );
         auto kfsetting = KFItemConfig::Instance()->FindSetting( itemid );
         if ( kfsetting == nullptr )
         {
@@ -77,17 +77,7 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::ItemUseFailed );
         }
 
-        // 扣除数量
-        auto usecount = kfitem->GetValue<uint32>( __KF_STRING__( usecount ) );
-        if ( usecount + 1u >= kfsetting->_use_count )
-        {
-            player->UpdateData( kfitem, __KF_STRING__( count ), KFEnum::Dec, 1u );
-        }
-        else
-        {
-            player->UpdateData( kfitem, __KF_STRING__( usecount ), KFEnum::Add, 1u );
-        }
-
+        UseCoseItem( player, kfitem, kfsetting );
         _kf_display->SendToClient( player, KFMsg::ItemUseOk, kfsetting->_id );
     }
 
@@ -95,8 +85,11 @@ namespace KFrame
     {
         switch ( kfsetting->_type )
         {
-        case KFItemEnum::Gift:	// 礼包
+        case KFItemEnum::Gift:		// 礼包
             return UseGiftItem( player, kfitem, kfsetting );
+            break;
+        case KFItemEnum::Drug:		// 药品道具
+            return UseDrugItem( player, kfitem, kfsetting );
             break;
         case KFItemEnum::Script:	// 脚本
             return UseScriptItem( player, kfitem, kfsetting );
@@ -113,12 +106,28 @@ namespace KFrame
         // 判断各类资源是否满了
         if ( kfsetting->_drop_id != 0u )
         {
-            _kf_drop->Drop( player, kfsetting->_drop_id, 1u, true, __FUNC_LINE__ );
+            _kf_drop->Drop( player, kfsetting->_drop_id, __STRING__( useitem ), kfsetting->_id, __FUNC_LINE__ );
         }
 
         if ( !kfsetting->_reward.IsEmpty() )
         {
-            player->AddElement( &kfsetting->_reward, true, __FUNC_LINE__ );
+            player->AddElement( &kfsetting->_reward, _default_multiple, __STRING__( useitem ), kfsetting->_id, __FUNC_LINE__ );
+        }
+
+        return true;
+    }
+
+    bool KFItemUseModule::UseDrugItem( KFEntity* player, KFData* kfitem, const KFItemSetting* kfsetting )
+    {
+        if ( kfsetting->_use_target > 0u )
+        {
+            return false;
+        }
+
+        auto& executelist = kfsetting->_execute_list;
+        for ( auto iter : executelist )
+        {
+            _kf_execute->Execute( player, iter, __STRING__( useitem ), kfsetting->_id, __FUNC_LINE__ );
         }
 
         return true;
@@ -147,20 +156,26 @@ namespace KFrame
         __CLIENT_PROTO_PARSE__( KFMsg::MsgUseItemToHeroReq );
 
         // 判断是否有这个道具
-        auto kfitem = player->GetData()->FindData( kfmsg.name(), kfmsg.itemuuid() );
+        auto kfitem = player->Find( kfmsg.name(), kfmsg.itemuuid() );
         if ( kfitem == nullptr )
         {
             return _kf_display->SendToClient( player, KFMsg::ItemDataNotExist );
         }
 
         // 判断英雄是否存在
-        auto kfhero = player->GetData()->FindData( __KF_STRING__( hero ), kfmsg.herouuid() );
+        auto kfhero = player->Find( __STRING__( hero ), kfmsg.herouuid() );
         if ( kfhero == nullptr )
         {
             return _kf_display->SendToClient( player, KFMsg::HeroNotExist );
         }
 
-        auto itemid = kfitem->GetValue<uint32>( kfitem->_data_setting->_config_key_name );
+        auto hp = kfhero->Get( __STRING__( fighter ), __STRING__( hp ) );
+        if ( hp == 0u )
+        {
+            return _kf_display->SendToClient( player, KFMsg::HeroIsDead );
+        }
+
+        auto itemid = kfitem->Get<uint32>( kfitem->_data_setting->_config_key_name );
         auto kfsetting = KFItemConfig::Instance()->FindSetting( itemid );
         if ( kfsetting == nullptr )
         {
@@ -173,28 +188,40 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::ItemCanNotUse );
         }
 
+        // 该药品不能对英雄使用
+        if ( kfsetting->_use_target == 0u )
+        {
+            return _kf_display->SendToClient( player, KFMsg::ItemCanNotUseToHero );
+        }
+
         if ( !CheckCanUseItem( player, kfsetting ) )
         {
             return _kf_display->SendToClient( player, KFMsg::ItemCanNotUseStatus );
         }
 
         // 对英雄使用
-        for ( auto& iter : kfsetting->_drug_values )
+        auto& executelist = kfsetting->_execute_list;
+        for ( auto iter : executelist )
         {
-            _kf_hero->AddHeroData( player, kfhero, iter.first, iter.second );
+            iter->_calc_value = kfmsg.herouuid();
+            _kf_execute->Execute( player, iter, __STRING__( useitem ), itemid, __FUNC_LINE__ );
         }
 
+        UseCoseItem( player, kfitem, kfsetting );
+        _kf_display->SendToClient( player, KFMsg::ItemUseToHeroOk, kfsetting->_id, kfmsg.herouuid() );
+    }
+
+    void KFItemUseModule::UseCoseItem( KFEntity* player, KFData* kfitem, const KFItemSetting* kfsetting )
+    {
         // 扣除数量
-        auto usecount = kfitem->GetValue<uint32>( __KF_STRING__( usecount ) );
+        auto usecount = kfitem->Get<uint32>( __STRING__( usecount ) );
         if ( usecount + 1u >= kfsetting->_use_count )
         {
-            player->UpdateData( kfitem, __KF_STRING__( count ), KFEnum::Dec, 1u );
+            _kf_item->RemoveItemCount( player, kfitem, 1u );
         }
         else
         {
-            player->UpdateData( kfitem, __KF_STRING__( usecount ), KFEnum::Add, 1u );
+            player->UpdateData( kfitem, __STRING__( usecount ), KFEnum::Add, 1u );
         }
-
-        _kf_display->SendToClient( player, KFMsg::ItemUseToHeroOk, kfsetting->_id, kfmsg.herouuid() );
     }
 }

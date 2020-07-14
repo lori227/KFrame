@@ -2,14 +2,47 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFStoreConfig.cpp" />
-    <ClCompile Include="KFStoreModule.cpp" />
     <ClCompile Include="KFStorePlugin.cpp" />
+    <ClCompile Include="KFStoreModule.cpp">
+      <Filter>Store</Filter>
+    </ClCompile>
+    <ClCompile Include="KFStoreConfig.cpp">
+      <Filter>Store</Filter>
+    </ClCompile>
+    <ClCompile Include="KFGoodsConfig.cpp">
+      <Filter>Goods</Filter>
+    </ClCompile>
+    <ClCompile Include="KFGoodsModule.cpp">
+      <Filter>Goods</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFStoreInterface.h" />
-    <ClInclude Include="KFStoreConfig.hpp" />
-    <ClInclude Include="KFStoreModule.hpp" />
     <ClInclude Include="KFStorePlugin.hpp" />
+    <ClInclude Include="KFStoreModule.hpp">
+      <Filter>Store</Filter>
+    </ClInclude>
+    <ClInclude Include="KFStoreInterface.h">
+      <Filter>Store</Filter>
+    </ClInclude>
+    <ClInclude Include="KFStoreConfig.hpp">
+      <Filter>Store</Filter>
+    </ClInclude>
+    <ClInclude Include="KFGoodsConfig.hpp">
+      <Filter>Goods</Filter>
+    </ClInclude>
+    <ClInclude Include="KFGoodsInterface.h">
+      <Filter>Goods</Filter>
+    </ClInclude>
+    <ClInclude Include="KFGoodsModule.hpp">
+      <Filter>Goods</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Store">
+      <UniqueIdentifier>{2fe7f2ce-d387-4408-be6d-6e4bf471ffa9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Goods">
+      <UniqueIdentifier>{160cccc8-85a2-4325-a6ab-a674d900d8fb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

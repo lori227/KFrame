@@ -9,7 +9,9 @@
 //    @Date             :    2017-1-22
 ************************************************************************/
 
+#include "KFrameEx.h"
 #include "KFItemInterface.h"
+#include "KFItemUseInterface.h"
 #include "KFLua/KFLuaInterface.h"
 #include "KFKernel/KFKernelInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
@@ -17,7 +19,9 @@
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFDrop/KFDropInterface.h"
 #include "KFHero/KFHeroInterface.h"
+#include "KFRealm/KFPVEInterface.h"
 #include "KFZConfig/KFItemConfig.hpp"
+#include "KFExecute/KFExecuteInterface.h"
 
 namespace KFrame
 {
@@ -46,10 +50,14 @@ namespace KFrame
         // 使用道具
         bool UseItem( KFEntity* player, KFData* kfitem, const KFItemSetting* kfsetting );
         bool UseGiftItem( KFEntity* player, KFData* kfitem, const KFItemSetting* kfsetting );
+        bool UseDrugItem( KFEntity* player, KFData* kfitem, const KFItemSetting* kfsetting );
         bool UseScriptItem( KFEntity* player, KFData* kfitem, const KFItemSetting* kfsetting );
 
         // 判断道具是否能使用
         bool CheckCanUseItem( KFEntity* player, const KFItemSetting* kfsetting );
+
+        // 使用扣除物品
+        void UseCoseItem( KFEntity* player, KFData* kfitem, const KFItemSetting* kfsetting );
     };
 }
 

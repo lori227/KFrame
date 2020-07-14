@@ -2,14 +2,25 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFItemUseModule.cpp" />
-    <ClCompile Include="KFItemModule.cpp" />
     <ClCompile Include="KFItemPlugin.cpp" />
+    <ClCompile Include="KFItemModule.cpp" />
+    <ClCompile Include="KFItemUseModule.cpp" />
+    <ClCompile Include="KFItemWeaponModule.cpp" />
+    <ClCompile Include="KFItemRuneModule.cpp" />
+    <ClCompile Include="KFItemMoveModule.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFItemUseModule.hpp" />
     <ClInclude Include="KFItemInterface.h" />
     <ClInclude Include="KFItemModule.hpp" />
     <ClInclude Include="KFItemPlugin.hpp" />
+    <ClInclude Include="KFItemUseModule.hpp" />
+    <ClInclude Include="KFItemWeaponModule.hpp" />
+    <ClInclude Include="KFItemRuneModule.hpp" />
+    <ClInclude Include="KFItemUseInterface.h" />
+    <ClInclude Include="KFItemWeaponInterface.h" />
+    <ClInclude Include="KFItemRuneInterface.h" />
+    <ClInclude Include="KFItemIndex.hpp" />
+    <ClInclude Include="KFItemMoveInterface.h" />
+    <ClInclude Include="KFItemMoveModule.hpp" />
   </ItemGroup>
 </Project>
