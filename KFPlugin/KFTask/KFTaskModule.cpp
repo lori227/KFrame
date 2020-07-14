@@ -363,18 +363,6 @@ namespace KFrame
             return KFConditionEnum::LimitNull;
         }
 
-        if ( status == KFMsg::DoneStatus )
-        {
-            if ( kfsetting->_execute_data._param_list._params.size() >= 2u )
-            {
-                auto conditionid = kfsetting->_execute_data._param_list._params[ 2 ]->_int_value;
-                if ( conditionid != 0u )
-                {
-                    return KFConditionEnum::LimitStatus;
-                }
-            }
-        }
-
         return KFConditionEnum::LimitStop;
     }
 
