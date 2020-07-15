@@ -60,15 +60,14 @@ namespace KFrame
         // 设置插件信息
         auto kfplugin = function( KFPluginManage::Instance(), KFGlobal::Instance(), KFMalloc::Instance(), KFLogger::Instance() );
         kfplugin->_sort = kfsetting->_sort;
-        kfplugin->_plugin_name = kfsetting->_name;
         kfplugin->_param = kfsetting->_param;
+        kfplugin->_plugin_name = kfsetting->_name;
 
         __LOG_INFO__( "load [{}] ok", library->_path );
         return kfplugin;
     }
 
     typedef void( *PluginLeaveFunction )( KFPluginManage*, bool );
-
     bool KFStartup::UnLoadPluginLibrary( const std::string& pluginname )
     {
         auto library = _kf_library.Find( pluginname );
