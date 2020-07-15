@@ -185,12 +185,12 @@ namespace KFrame
 
         // 返回结果
         __JSON_OBJECT_DOCUMENT__( response );
+        __JSON_SET_VALUE__( response, __STRING__( ip ), loginip );
         __JSON_SET_VALUE__( response, __STRING__( token ), token );
         __JSON_SET_VALUE__( response, __STRING__( channel ), channel );
         __JSON_SET_VALUE__( response, __STRING__( account ), account );
-        __JSON_SET_VALUE__( response, __STRING__( accountid ), accountid );
         __JSON_SET_VALUE__( response, __STRING__( playerid ), playerid );
-        __JSON_SET_VALUE__( response, __STRING__( ip ), loginip );
+        __JSON_SET_VALUE__( response, __STRING__( accountid ), accountid );
 
         // 渠道数据
         auto channeldata = _kf_account->QueryChannelData( accountid );
