@@ -9,9 +9,9 @@
 	</Includes>
 
 	<Plugins>
-		<Plugin Name="KFRedis" Config=""/>
-		<Plugin Name="KFMongo" Config=""/>
-		<Plugin Name="KFLogin" Config=""/>	
-		<Plugin Name="KFAccount" Config=""/>	
+		<Plugin Name="KFRedis" Param=""/>
+		<Plugin Name="KFMongo" Param=""/>
+		<Plugin Name="KFLogin" Param=""/>	
+		<Plugin Name="KFAccount" Param=""/>	
 	</Plugins>
 </Setting>

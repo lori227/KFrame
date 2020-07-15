@@ -9,8 +9,8 @@
 	</Includes>
 
 	<Plugins>
-		<Plugin Name="KFDisplay" Config=""/>	
-		<Plugin Name="KFGate" Config=""/>	
-		<Plugin Name="KFDirClient" Config=""/>	
+		<Plugin Name="KFDisplay" Param=""/>	
+		<Plugin Name="KFGate" Param=""/>	
+		<Plugin Name="KFDirClient" Param=""/>	
 	</Plugins>
 </Setting>

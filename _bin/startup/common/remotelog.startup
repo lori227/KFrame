@@ -2,9 +2,9 @@
 <Setting>
 	<Plugins>
 	<!--
-		<Plugin Name="KFTcpClient" Config=""/>
-		<Plugin Name="KFLogClient" Config=""/>	
-		<Plugin Name="KFMessage" Config=""/>
+		<Plugin Name="KFTcpClient" Param=""/>
+		<Plugin Name="KFLogClient" Param=""/>	
+		<Plugin Name="KFMessage" Param=""/>
 		 -->
 	</Plugins>
 </Setting>

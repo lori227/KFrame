@@ -10,13 +10,13 @@
 	</Includes>
 
 	<Plugins>
-		<Plugin Name="KFKernel" Config=""/>	
-		<Plugin Name="KFOption" Config=""/>	
-		<Plugin Name="KFGame" Config=""/>	
-		<Plugin Name="KFDisplay" Config=""/>	
-		<Plugin Name="KFPlayer" Config=""/>	
-		<Plugin Name="KFCommand" Config=""/>	
-		<Plugin Name="KFDataClient" Config=""/>	
-		<Plugin Name="KFBasicClient" Config=""/>	
+		<Plugin Name="KFKernel" Param=""/>	
+		<Plugin Name="KFOption" Param=""/>	
+		<Plugin Name="KFGame" Param=""/>	
+		<Plugin Name="KFDisplay" Param=""/>	
+		<Plugin Name="KFPlayer" Param=""/>	
+		<Plugin Name="KFCommand" Param=""/>	
+		<Plugin Name="KFDataClient" Param=""/>	
+		<Plugin Name="KFBasicClient" Param=""/>	
 	</Plugins>
 </Setting>

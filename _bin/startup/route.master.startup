@@ -9,7 +9,7 @@
 	</Includes>
 
 	<Plugins>
-		<Plugin Name="KFTcpDiscover" Config=""/>	
-		<Plugin Name="KFClusterMaster" Config=""/>	
+		<Plugin Name="KFTcpDiscover" Param=""/>	
+		<Plugin Name="KFClusterMaster" Param=""/>	
 	</Plugins>
 </Setting>

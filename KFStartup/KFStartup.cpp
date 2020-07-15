@@ -61,7 +61,7 @@ namespace KFrame
         auto kfplugin = function( KFPluginManage::Instance(), KFGlobal::Instance(), KFMalloc::Instance(), KFLogger::Instance() );
         kfplugin->_sort = kfsetting->_sort;
         kfplugin->_plugin_name = kfsetting->_name;
-        kfplugin->_config = kfsetting->_config_file;
+        kfplugin->_param = kfsetting->_param;
 
         __LOG_INFO__( "load [{}] ok", library->_path );
         return kfplugin;

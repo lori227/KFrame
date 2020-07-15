@@ -9,9 +9,9 @@
 	</Includes>
 
 	<Plugins>
-		<Plugin Name="KFRedis" Config=""/>	
-		<Plugin Name="KFMongo" Config=""/>	
-		<Plugin Name="KFBasicShard" Config=""/>	
-		<Plugin Name="KFBasicAttribute" Config=""/>	
+		<Plugin Name="KFRedis" Param=""/>	
+		<Plugin Name="KFMongo" Param=""/>	
+		<Plugin Name="KFBasicShard" Param=""/>	
+		<Plugin Name="KFBasicAttribute" Param=""/>	
 	</Plugins>
 </Setting>

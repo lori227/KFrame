@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Setting>
 	<Plugins>
-		<Plugin Name="KFBus" Config=""/>
-		<Plugin Name="KFIpAddress" Config=""/>
-		<Plugin Name="KFHttpClient" Config=""/>
-		<Plugin Name="KFTcpClient" Config=""/>
-		<Plugin Name="KFMessage" Config=""/>
-		<Plugin Name="KFClusterClient" Config=""/>
-		<Plugin Name="KFRouteClient" Config=""/>
+		<Plugin Name="KFBus" Param=""/>
+		<Plugin Name="KFIpAddress" Param=""/>
+		<Plugin Name="KFHttpClient" Param=""/>
+		<Plugin Name="KFTcpClient" Param=""/>
+		<Plugin Name="KFMessage" Param=""/>
+		<Plugin Name="KFClusterClient" Param=""/>
+		<Plugin Name="KFRouteClient" Param=""/>
 	</Plugins>
 </Setting>

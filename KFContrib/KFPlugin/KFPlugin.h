@@ -61,7 +61,7 @@ namespace KFrame
         uint32 _sort;
 
         // 配置文件
-        std::string _config;
+        std::string _param;
 
         // 绑定模块
         KFModule* _init_module = nullptr;

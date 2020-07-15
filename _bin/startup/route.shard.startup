@@ -9,7 +9,7 @@
 	</Includes>
 
 	<Plugins>
-		<Plugin Name="KFClusterShard" Config=""/>	
-		<Plugin Name="KFRouteShard" Config=""/>	
+		<Plugin Name="KFClusterShard" Param=""/>	
+		<Plugin Name="KFRouteShard" Param=""/>	
 	</Plugins>
 </Setting>

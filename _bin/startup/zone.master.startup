@@ -9,6 +9,6 @@
 	</Includes>
 
 	<Plugins>
-		<Plugin Name="KFTcpDiscover" Config=""/>	
+		<Plugin Name="KFTcpDiscover" Param=""/>	
 	</Plugins>
 </Setting>

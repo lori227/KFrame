@@ -9,8 +9,8 @@
 	</Includes>
 
 	<Plugins>
-		<Plugin Name="KFOption" Config="./config/option.xml"/>	
-		<Plugin Name="KFClusterProxy" Config=""/>	
-		<Plugin Name="KFRouteProxy" Config=""/>	
+		<Plugin Name="KFOption" Param="./Param/option.xml"/>	
+		<Plugin Name="KFClusterProxy" Param=""/>	
+		<Plugin Name="KFRouteProxy" Param=""/>	
 	</Plugins>
 </Setting>

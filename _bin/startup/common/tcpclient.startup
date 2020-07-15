@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Setting>
 	<Plugins>
-		<Plugin Name="KFHttpClient" Config=""/>
-		<Plugin Name="KFTcpClient" Config=""/>
-		<Plugin Name="KFMessage" Config=""/>
-		<Plugin Name="KFBus" Config=""/>
-		<Plugin Name="KFIpAddress" Config=""/>
+		<Plugin Name="KFHttpClient" Param=""/>
+		<Plugin Name="KFTcpClient" Param=""/>
+		<Plugin Name="KFMessage" Param=""/>
+		<Plugin Name="KFBus" Param=""/>
+		<Plugin Name="KFIpAddress" Param=""/>
 	</Plugins>
 </Setting>

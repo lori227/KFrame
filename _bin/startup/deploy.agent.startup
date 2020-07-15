@@ -6,9 +6,9 @@
 	</Includes>
 
 	<Plugins>
-		<Plugin Name="KFTimer" Config=""/>
-		<Plugin Name="KFConfig" Config=""/>	
-		<Plugin Name="KFMySQL" Config="./setting/{}_{}_mysql.setting"/>
-		<Plugin Name="KFDeployAgent" Config=""/>
+		<Plugin Name="KFTimer" Param=""/>
+		<Plugin Name="KFParam" Param=""/>	
+		<Plugin Name="KFMySQL" Param="./setting/{}_{}_mysql.setting"/>
+		<Plugin Name="KFDeployAgent" Param=""/>
 	</Plugins>
 </Setting>

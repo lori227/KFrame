@@ -17,8 +17,8 @@ namespace KFrame
         // 名字
         std::string _name;
 
-        // 配置路径
-        std::string _config_file;
+        // 启动参数
+        std::string _param;
     };
     //////////////////////////////////////////////////////////////////////////////
     class KFAppConfig : public KFSingleton< KFAppConfig >

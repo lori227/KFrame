@@ -10,7 +10,7 @@
 	</Includes>
 
 	<Plugins>
-		<Plugin Name="KFWorld" Config=""/>	
-		<Plugin Name="KFDirClient" Config=""/>	
+		<Plugin Name="KFWorld" Param=""/>	
+		<Plugin Name="KFDirClient" Param=""/>	
 	</Plugins>
 </Setting>

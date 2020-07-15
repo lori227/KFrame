@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Setting>
 	<Plugins>
-		<Plugin Name="KFHttpClient" Config=""/>
-		<Plugin Name="KFMessage" Config=""/>
-		<Plugin Name="KFIpAddress" Config=""/>
-		<Plugin Name="KFTcpServer" Config=""/>
+		<Plugin Name="KFHttpClient" Param=""/>
+		<Plugin Name="KFMessage" Param=""/>
+		<Plugin Name="KFIpAddress" Param=""/>
+		<Plugin Name="KFTcpServer" Param=""/>
 	</Plugins>
 </Setting>

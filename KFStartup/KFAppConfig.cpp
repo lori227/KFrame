@@ -88,8 +88,7 @@ namespace KFrame
             {
                 KFAppSetting setting;
                 setting._name = node.GetString( "Name" );
-                auto configfile = node.GetString( "Config" );
-                setting._config_file = KFUtility::FormatConfigFile( configfile, kfglobal->_channel, kfglobal->_service );
+                setting._param = node.GetString( "Config", true );
                 AddStartupSetting( setting );
             }
 

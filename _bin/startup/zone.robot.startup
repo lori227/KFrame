@@ -5,12 +5,12 @@
 	</Includes>
 
 	<Plugins>
-		<Plugin Name="KFTimer" Config=""/>		
-		<Plugin Name="KFHttpClient" Config=""/>	
-		<Plugin Name="KFTcpClient" Config=""/>	
-		<Plugin Name="KFMessage" Config=""/>	
-		<Plugin Name="KFIpAddress" Config=""/>	
-		<Plugin Name="KFRobot" Config=""/>	
-		<Plugin Name="KFKernel" Config=""/>	
+		<Plugin Name="KFTimer" Param=""/>		
+		<Plugin Name="KFHttpClient" Param=""/>	
+		<Plugin Name="KFTcpClient" Param=""/>	
+		<Plugin Name="KFMessage" Param=""/>	
+		<Plugin Name="KFIpAddress" Param=""/>	
+		<Plugin Name="KFRobot" Param=""/>	
+		<Plugin Name="KFKernel" Param=""/>	
 	</Plugins>
 </Setting>
