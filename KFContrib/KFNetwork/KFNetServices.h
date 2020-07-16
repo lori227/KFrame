@@ -31,7 +31,7 @@ namespace KFrame
         char* GetBuffAddress( uint32 msgid, uint32 length );
 
         // 发送事件到网络服务
-        void SendEventToServices( KFNetSession* netsession, uint32 evnettype );
+        void SendEventToServices( KFNetSession* netsession, uint32 eventtype );
 
         //////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -107,8 +107,7 @@ namespace KFrame
 
         // 异步事件
         uv_async_t* _uv_event_async = nullptr;
-        void* _uv_event_mutex = nullptr;
-        std::map< KFNetSession*, uint32 > _event_session;
+        KFQueue<KFNetSession, false> _event_session;
 
         // 关闭服务
         uv_async_t* _uv_close_async = nullptr;

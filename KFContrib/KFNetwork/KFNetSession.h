@@ -48,6 +48,9 @@ namespace KFrame
         // 开始发送消息
         void StartSendMessage();
 
+        // 处理主线程事件
+        void HandleEvent();
+
     protected:
         // 初始化
         void InitSession( uint64 id, uint32 queuecount, uint32 headlength );
@@ -106,6 +109,9 @@ namespace KFrame
 
         // 已经关闭
         std::atomic<bool> _is_shutdown;
+
+        // 事件类型
+        std::atomic<uint32> _event_type = 0u;
 
     protected:
         // 发送消息队列

@@ -331,5 +331,26 @@ namespace KFrame
         return ok;
     }
 
+    void KFNetSession::HandleEvent()
+    {
+        uint32 eventtype = _event_type.exchange( 0u );
+        switch ( eventtype )
+        {
+        case KFNetDefine::ConnectEvent:
+            StartSession();
+            break;
+        case KFNetDefine::SendEvent:
+            StartSendMessage();
+            break;
+        case KFNetDefine::CloseEvent:
+            CloseSession();
+            break;
+        case KFNetDefine::DisconnectEvent:
+            OnDisconnect( 0, __FUNC_LINE__ );
+            break;
+        default:
+            break;
+        }
+    }
 }
 
