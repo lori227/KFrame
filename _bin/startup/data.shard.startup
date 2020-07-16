@@ -9,9 +9,9 @@
 	</Includes>
 
 	<Plugins>
-		<Plugin Name="KFDataShard" Param="./setting/datashard.setting"/>	
-		<Plugin Name="KFRedis" Param="./setting/{}_{}_redis.setting"/>	
-		<Plugin Name="KFMongo" Param="./setting/{}_{}_mongo.setting"/>	
-		<Plugin Name="KFMySQL" Param="./setting/{}_{}_mysql.setting"/>	
+		<Plugin Name="KFDataShard" Param=""/>	
+		<Plugin Name="KFRedis" Param=""/>	
+		<Plugin Name="KFMongo" Param=""/>	
+		<Plugin Name="KFMySQL" Param=""/>	
 	</Plugins>
 </Setting>
