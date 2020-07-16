@@ -106,14 +106,12 @@ namespace KFrame
 
     void KFNetServices::SendEventToServices( KFNetSession* netsession, uint32 eventtype )
     {
-        // 已经在关闭, 不再加入队列
-        if ( netsession->_event_type == KFNetDefine::CloseEvent )
+        if ( !netsession->SetMainLoopEvent( eventtype ) )
         {
             return;
         }
 
         // 加入队列
-        netsession->_event_type = eventtype;
         _event_session.PushObject( netsession );
 
         // 通知io线程
@@ -129,7 +127,7 @@ namespace KFrame
         auto netsession = netservices->_event_session.PopObject();
         while ( netsession != nullptr )
         {
-            netsession->HandleEvent();
+            netsession->HandleMainLoopEvent();
             netsession = netservices->_event_session.PopObject();
         }
     }

@@ -34,7 +34,7 @@ namespace KFrame
         return _is_connected;
     }
 
-    bool KFNetSession::IsNeedSend()
+    bool KFNetSession::IsNeedToSend()
     {
         // 已经在发送 断开连接 已经关闭
         if ( _is_sending || !_is_connected || _is_shutdown  )
@@ -331,7 +331,20 @@ namespace KFrame
         return ok;
     }
 
-    void KFNetSession::HandleEvent()
+    bool KFNetSession::SetMainLoopEvent( uint32 eventtype )
+    {
+        // 已经在关闭, 不再加入队列
+        if ( _is_shutdown ||
+                _event_type == KFNetDefine::CloseEvent )
+        {
+            return false;
+        }
+
+        _event_type = eventtype;
+        return true;
+    }
+
+    void KFNetSession::HandleMainLoopEvent()
     {
         uint32 eventtype = _event_type.exchange( 0u );
         switch ( eventtype )

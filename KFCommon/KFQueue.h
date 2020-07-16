@@ -7,7 +7,7 @@
 namespace KFrame
 {
     // 环形队列, 适用于一个生产者和一个消费者的多线程情况
-    template< class T, bool _need_delete = true >
+    template< class T, bool _need_to_delete = true >
     class KFQueue
     {
     public:
@@ -101,7 +101,7 @@ namespace KFrame
             auto oldobject = _objects[ _push_index ];
             if ( oldobject != nullptr )
             {
-                if ( _need_delete )
+                if ( _need_to_delete )
                 {
                     __KF_DELETE__( T, object );
                 }
@@ -141,7 +141,7 @@ namespace KFrame
                 return;
             }
 
-            if ( _need_delete )
+            if ( _need_to_delete )
             {
                 __KF_DELETE__( T, object );
             }
@@ -157,7 +157,7 @@ namespace KFrame
                 auto object = _objects[ i ];
                 if ( object != nullptr )
                 {
-                    if ( _need_delete )
+                    if ( _need_to_delete )
                     {
                         __KF_DELETE__( T, object );
                     }

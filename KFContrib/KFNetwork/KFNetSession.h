@@ -43,13 +43,16 @@ namespace KFrame
         bool IsConnected() const;
 
         // 是否需要发送
-        bool IsNeedSend();
+        bool IsNeedToSend();
 
         // 开始发送消息
         void StartSendMessage();
 
+        // 设置主线程事件
+        bool SetMainLoopEvent( uint32 eventtype );
+
         // 处理主线程事件
-        void HandleEvent();
+        void HandleMainLoopEvent();
 
     protected:
         // 初始化
@@ -110,8 +113,6 @@ namespace KFrame
         // 已经关闭
         std::atomic<bool> _is_shutdown;
 
-        // 事件类型
-        std::atomic<uint32> _event_type = 0u;
 
     protected:
         // 发送消息队列
@@ -132,6 +133,9 @@ namespace KFrame
         uv_stream_t* _uv_stream = nullptr;
 
     private:
+        // 事件类型
+        std::atomic<uint32> _event_type = 0u;
+
         // 是否正在发送
         std::atomic<bool> _is_sending;
 

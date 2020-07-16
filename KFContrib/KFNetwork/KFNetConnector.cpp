@@ -267,7 +267,7 @@ namespace KFrame
 
         // 发送消息
         _last_send_time = _net_services->_now_time;
-        if ( IsNeedSend() )
+        if ( IsNeedToSend() )
         {
             _net_services->SendEventToServices( this, KFNetDefine::SendEvent );
         }
@@ -357,7 +357,7 @@ namespace KFrame
             }
         }
 
-        if ( havemessage && IsNeedSend() )
+        if ( havemessage && IsNeedToSend() )
         {
             _net_services->SendEventToServices( this, KFNetDefine::SendEvent );
         }

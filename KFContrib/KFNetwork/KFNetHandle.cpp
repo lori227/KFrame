@@ -56,7 +56,6 @@ namespace KFrame
     {
         if ( !_is_shutdown )
         {
-            _is_shutdown = true;
             _net_services->SendEventToServices( this, KFNetDefine::CloseEvent );
         }
     }

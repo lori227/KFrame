@@ -107,7 +107,7 @@ namespace KFrame
 
         // 异步事件
         uv_async_t* _uv_event_async = nullptr;
-        KFQueue<KFNetSession, false> _event_session;
+        KFQueue< KFNetSession, false > _event_session;
 
         // 关闭服务
         uv_async_t* _uv_close_async = nullptr;
