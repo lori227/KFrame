@@ -3,8 +3,8 @@
 
 #include "KFrame.h"
 #include "uv.h"
-#include "KFNetServices.h"
-#include "KFNetClient.h"
+#include "KFNetServices.hpp"
+#include "KFNetClient.hpp"
 
 namespace KFrame
 {

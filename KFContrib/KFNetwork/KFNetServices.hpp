@@ -1,7 +1,7 @@
 ﻿#ifndef __NET_SERVICES_H__
 #define __NET_SERVICES_H__
 
-#include "KFNetEvent.h"
+#include "KFNetEvent.hpp"
 
 struct uv_loop_s;
 typedef struct uv_loop_s uv_loop_t;

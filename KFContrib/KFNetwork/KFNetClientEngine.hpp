@@ -2,7 +2,7 @@
 #define __CLIENT_ENGINE_H__
 
 #include "KFrame.h"
-#include "KFNetClient.h"
+#include "KFNetClient.hpp"
 
 namespace KFrame
 {

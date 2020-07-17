@@ -1,6 +1,6 @@
 ﻿#include "KFrame.h"
-#include "KFNetHandle.h"
-#include "KFNetServerServices.h"
+#include "KFNetHandle.hpp"
+#include "KFNetServerServices.hpp"
 #include "uv.h"
 
 namespace KFrame

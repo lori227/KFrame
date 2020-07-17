@@ -34,33 +34,30 @@
     <ClCompile Include="KFNetLocker.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFNetEvent.h" />
-    <ClInclude Include="KFNetDefine.h" />
-    <ClInclude Include="KFNetClientServices.h">
+    <ClInclude Include="KFNetClient.hpp">
       <Filter>NetClient</Filter>
     </ClInclude>
-    <ClInclude Include="KFNetMessage.h" />
-    <ClInclude Include="KFNetSetting.h">
+    <ClInclude Include="KFNetClientEngine.hpp">
       <Filter>NetClient</Filter>
     </ClInclude>
-    <ClInclude Include="KFNetClient.h">
+    <ClInclude Include="KFNetClientServices.hpp">
       <Filter>NetClient</Filter>
     </ClInclude>
-    <ClInclude Include="KFNetConnector.h" />
-    <ClInclude Include="KFNetSession.h" />
-    <ClInclude Include="KFNetServerServices.h">
+    <ClInclude Include="KFNetHandle.hpp">
       <Filter>NetServer</Filter>
     </ClInclude>
-    <ClInclude Include="KFNetHandle.h">
+    <ClInclude Include="KFNetServerEngine.hpp">
       <Filter>NetServer</Filter>
     </ClInclude>
-    <ClInclude Include="KFNetClientEngine.h">
-      <Filter>NetClient</Filter>
-    </ClInclude>
-    <ClInclude Include="KFNetServerEngine.h">
+    <ClInclude Include="KFNetServerServices.hpp">
       <Filter>NetServer</Filter>
     </ClInclude>
-    <ClInclude Include="KFNetServices.h" />
-    <ClInclude Include="KFNetLocker.h" />
+    <ClInclude Include="KFNetConnector.hpp" />
+    <ClInclude Include="KFNetDefine.hpp" />
+    <ClInclude Include="KFNetEvent.hpp" />
+    <ClInclude Include="KFNetLocker.hpp" />
+    <ClInclude Include="KFNetMessage.hpp" />
+    <ClInclude Include="KFNetServices.hpp" />
+    <ClInclude Include="KFNetSession.hpp" />
   </ItemGroup>
 </Project>

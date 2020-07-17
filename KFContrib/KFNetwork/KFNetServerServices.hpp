@@ -2,7 +2,7 @@
 #define __NET_SERVER_SERVICES_H__
 
 #include "KFrame.h"
-#include "KFNetServices.h"
+#include "KFNetServices.hpp"
 
 struct uv_tcp_s;
 typedef struct uv_tcp_s uv_tcp_t;

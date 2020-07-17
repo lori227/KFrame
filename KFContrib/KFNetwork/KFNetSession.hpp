@@ -3,8 +3,8 @@
 
 #include "KFrame.h"
 #include "KFQueue.h"
-#include "KFNetDefine.h"
-#include "KFNetMessage.h"
+#include "KFNetDefine.hpp"
+#include "KFNetMessage.hpp"
 
 struct uv_stream_s;
 typedef struct uv_stream_s uv_stream_t;

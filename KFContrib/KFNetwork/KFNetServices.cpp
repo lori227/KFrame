@@ -1,7 +1,7 @@
 ﻿#include "KFrame.h"
-#include "KFNetServices.h"
-#include "KFNetSession.h"
-#include "KFNetLocker.h"
+#include "KFNetServices.hpp"
+#include "KFNetSession.hpp"
+#include "KFNetLocker.hpp"
 #include "lz4/lib/lz4.h"
 #include "zstd/lib/zstd.h"
 

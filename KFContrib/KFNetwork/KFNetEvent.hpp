@@ -1,7 +1,7 @@
 ﻿#ifndef __NET_EVENT_H__
 #define __NET_EVENT_H__
 
-#include "KFNetDefine.h"
+#include "KFNetDefine.hpp"
 #include "KFBind.h"
 #include "KFQueue.h"
 

@@ -1,7 +1,7 @@
-﻿#include "KFNetSession.h"
-#include "KFDefine.h"
-#include "KFNetEvent.h"
-#include "KFNetConnector.h"
+﻿#include "KFDefine.h"
+#include "KFNetSession.hpp"
+#include "KFNetEvent.hpp"
+#include "KFNetConnector.hpp"
 #include "uv.h"
 
 namespace KFrame
