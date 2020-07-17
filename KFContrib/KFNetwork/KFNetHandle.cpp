@@ -14,7 +14,7 @@ namespace KFrame
 
     KFNetHandle::~KFNetHandle()
     {
-        delete _uv_tcp;
+        __DELETE_OBJECT__( _uv_tcp );
     }
 
     void KFNetHandle::InitHandle( uint64 id, void* uvtcp, KFNetServerServices* netservices )

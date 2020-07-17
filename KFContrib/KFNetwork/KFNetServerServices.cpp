@@ -7,12 +7,12 @@ namespace KFrame
 {
     KFNetServerServices::KFNetServerServices()
     {
-        _uv_server = new uv_tcp_t();
+        _uv_server = __NEW_OBJECT__( uv_tcp_t );
     }
 
     KFNetServerServices::~KFNetServerServices()
     {
-        delete _uv_server;
+        __DELETE_OBJECT__( _uv_server );
     }
 
     void KFNetServerServices::InitServices( uint32 eventcount, uint32 queuesize, uint32 messagetype )
@@ -65,7 +65,7 @@ namespace KFrame
         // 创建一个id
         auto id = netservices->MakeTrusteeID();
 
-        auto uvtcp = new uv_tcp_t();
+        auto uvtcp = __NEW_OBJECT__( uv_tcp_t );
         uv_tcp_init( netservices->_uv_loop, uvtcp );
 
         uvtcp->data = stream;

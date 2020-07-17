@@ -29,12 +29,6 @@ namespace KFrame
         // 断开事件
         virtual void OnDisconnect( int32 code, const char* function, uint32 line );
 
-        // 设置托管超时时间
-        void SetTrusteeTimeout( uint64 time );
-
-        // 判断是否超时
-        bool IsTrusteeTimeout( uint64 nowtime );
-
         // 初始化压缩加密数据
         void InitCompressEncrypt();
         //////////////////////////////////////////////////////////////////////////////////////////////
