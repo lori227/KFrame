@@ -8,16 +8,16 @@ namespace KFrame
 {
     KFNetClient::KFNetClient()
     {
-        _uv_client = new uv_tcp_t();
-        _uv_connect = new uv_connect_t();
-        _uv_connect_timer = new uv_timer_t();
+        _uv_client = __NEW_OBJECT__( uv_tcp_t );
+        _uv_connect = __NEW_OBJECT__( uv_connect_t );
+        _uv_connect_timer = __NEW_OBJECT__( uv_timer_t );
     }
 
     KFNetClient::~KFNetClient()
     {
-        delete _uv_client;
-        delete _uv_connect;
-        delete _uv_connect_timer;
+        __DELETE_OBJECT__( _uv_client );
+        __DELETE_OBJECT__( _uv_connect );
+        __DELETE_OBJECT__( _uv_connect_timer );
     }
 
     void KFNetClient::StartClient( KFNetClientServices* netservices, const KFNetData& netdata )
