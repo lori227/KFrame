@@ -141,8 +141,8 @@ namespace KFrame
                 auto newaddress = reinterpret_cast< char* >( realloc( _serialize_buff, length ) );
                 if ( newaddress != nullptr )
                 {
-                    _max_serialize_buff_length = length;
                     _serialize_buff = newaddress;
+                    _max_serialize_buff_length = length;
                 }
             }
         }
