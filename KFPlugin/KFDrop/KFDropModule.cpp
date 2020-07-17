@@ -169,7 +169,7 @@ namespace KFrame
         for ( auto kfdropweight : kfsetting->_necessary_list._objects )
         {
             // 判断条件
-            auto ok = _kf_condition->CheckCondition( player, &kfdropweight->_conditions );
+            auto ok = _kf_condition->CheckStaticCondition( player, &kfdropweight->_conditions );
             if ( ok )
             {
                 RandDropData( player, kfsetting, outlist, kfdropweight, excludedropdata, __FUNC_LINE__ );
@@ -197,7 +197,7 @@ namespace KFrame
         UInt32Set excludelist;
         for ( auto kfdropweight : kfsetting->_rand_list._weight_data )
         {
-            auto ok = _kf_condition->CheckCondition( player, &kfdropweight->_conditions );
+            auto ok = _kf_condition->CheckStaticCondition( player, &kfdropweight->_conditions );
             if ( ok )
             {
                 if ( !kfdropweight->_conditions.IsEmpty() )
@@ -228,7 +228,7 @@ namespace KFrame
         UInt32Set excludelist;
         for ( auto kfdropweight : kfsetting->_rand_list._weight_data )
         {
-            auto ok = _kf_condition->CheckCondition( player, &kfdropweight->_conditions );
+            auto ok = _kf_condition->CheckStaticCondition( player, &kfdropweight->_conditions );
             if ( !ok )
             {
                 excludelist.insert( kfdropweight->_id );
