@@ -9,9 +9,9 @@ namespace KFrame
     KFMalloc* KFMalloc::_kf_malloc = nullptr;
     KFMalloc::KFMalloc()
     {
-        _memory_list_mutex = new KFMutex();
-        _thread_buffer_mutex = new KFMutex();
-        _share_memory_mutex = new KFMutex();
+        _memory_list_mutex = __NEW_OBJECT__( KFMutex );
+        _share_memory_mutex = __NEW_OBJECT__( KFMutex );
+        _thread_buffer_mutex = __NEW_OBJECT__( KFMutex );
     }
 
     KFMalloc::~KFMalloc()
@@ -28,9 +28,9 @@ namespace KFrame
         }
         _uint8_list.clear();
 
-        delete _memory_list_mutex;
-        delete _thread_buffer_mutex;
-        delete _share_memory_mutex;
+        __DELETE_OBJECT__( _memory_list_mutex );
+        __DELETE_OBJECT__( _share_memory_mutex );
+        __DELETE_OBJECT__( _thread_buffer_mutex );
     }
 
     void KFMalloc::Initialize( KFMalloc* kfmalloc )
