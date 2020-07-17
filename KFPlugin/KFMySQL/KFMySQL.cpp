@@ -12,7 +12,7 @@ namespace KFrame
 
     KFMySQL::~KFMySQL()
     {
-        delete _session;
+        __DELETE_OBJECT__( _session );
     }
 
     void KFMySQL::InitMySQL( const KFMySQLSetting* kfsetting )
@@ -22,7 +22,7 @@ namespace KFrame
 
         try
         {
-            _session = new Session( SessionFactory::instance().create( MySQL::Connector::KEY, _connect_data ) );
+            _session = __NEW_OBJECT__( Session, SessionFactory::instance().create( MySQL::Connector::KEY, _connect_data ) );
             auto ok = _session->isConnected();
             if ( ok )
             {

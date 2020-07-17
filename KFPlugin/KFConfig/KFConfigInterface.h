@@ -16,7 +16,7 @@ namespace KFrame
             auto kfconfig = FindConfig( name );
             if ( kfconfig == nullptr )
             {
-                kfconfig = new T();
+                kfconfig = __NEW_OBJECT__( T );
                 AddConfig( name, kfconfig );
             }
 

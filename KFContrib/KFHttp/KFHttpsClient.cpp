@@ -15,27 +15,28 @@ namespace KFrame
 
     KFHttpsClient::KFHttpsClient()
     {
-        _https_session = new Poco::Net::HTTPSClientSession( _context );
+        _https_session = __NEW_OBJECT__( Poco::Net::HTTPSClientSession, _context );
+    }
+
+    KFHttpsClient::~KFHttpsClient()
+    {
+        __DELETE_OBJECT__( _https_session );
     }
 
     void KFHttpsClient::Initialize()
     {
         Poco::Net::initializeSSL();
 #if __KF_SYSTEM__ == __KF_WIN__
-        _context = __KF_NEW__( Context, Context::CLIENT_USE, "" );
+        _context = __NEW_OBJECT__( Context, Context::CLIENT_USE, "" );
 #else
-        _context = __KF_NEW__( Context, Context::CLIENT_USE, "", Context::VERIFY_RELAXED, 9, true );
+        _context = __NEW_OBJECT__( Context, Context::CLIENT_USE, "", Context::VERIFY_RELAXED, 9, true );
         _context->disableProtocols( Context::PROTO_SSLV2 | Context::PROTO_SSLV3 );
 #endif
 
-        Poco::SharedPtr<InvalidCertificateHandler> pCert = new AcceptCertificateHandler( false );
+        Poco::SharedPtr<InvalidCertificateHandler> pCert = __NEW_OBJECT__( AcceptCertificateHandler, false );
         Poco::Net::SSLManager::instance().initializeClient( 0, pCert, _context );
     }
 
-    KFHttpsClient::~KFHttpsClient()
-    {
-        delete _https_session;
-    }
 
     Poco::Net::HTTPClientSession* KFHttpsClient::GetHttpSession()
     {

@@ -36,9 +36,8 @@ namespace KFrame
     {
         for ( auto runable : _idle_pool )
         {
-            delete runable;
+            __DELETE_OBJECT__( runable );
         }
-
         _idle_pool.clear();
     }
 
@@ -46,7 +45,7 @@ namespace KFrame
     {
         //if ( _idle_pool.empty() )
         {
-            return new KFRunable();
+            return __NEW_OBJECT__( KFRunable );
         }
 
         auto kfrunable = _idle_pool.front();

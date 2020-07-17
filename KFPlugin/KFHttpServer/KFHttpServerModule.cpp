@@ -6,12 +6,12 @@ namespace KFrame
 {
     KFHttpServerModule::KFHttpServerModule()
     {
-        _http_server = new KFHttpServer();
+        _http_server = __NEW_OBJECT__( KFHttpServer );
     }
 
     KFHttpServerModule::~KFHttpServerModule()
     {
-        delete _http_server;
+        __DELETE_OBJECT__( _http_server );
     }
 
     void KFHttpServerModule::BeforeRun()

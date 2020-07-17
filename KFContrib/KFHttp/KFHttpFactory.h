@@ -20,7 +20,7 @@ namespace KFrame
     private:
 
         // httpserver
-        KFHttpServer* _http_server;
+        KFHttpServer* _http_server = nullptr;
     };
 }
 

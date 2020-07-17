@@ -11,7 +11,7 @@ namespace KFrame
 
     KFNetServerEngine::~KFNetServerEngine()
     {
-        delete _net_server_services;
+        __DELETE_OBJECT__( _net_server_services );
     }
 
     ////////////////////////////////////////////////////
@@ -20,7 +20,7 @@ namespace KFrame
                                         const std::string& encryptkey, bool openencrypt )
     {
         _handle_message_count = handlecount;
-        _net_server_services = new KFNetServerServices();
+        _net_server_services = __NEW_OBJECT__( KFNetServerServices );
         _net_server_services->InitServices( 10000, maxqueuesize, messagetype );
         _net_server_services->InitCompress( compresstype, compresslevel, compresslength );
         _net_server_services->InitEncrypt( encryptkey, openencrypt );

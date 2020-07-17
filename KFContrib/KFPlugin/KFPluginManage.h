@@ -63,7 +63,7 @@
 // 注册模块
 #define __REGISTER_MODULE__( modulename ) \
     {\
-        auto kfmodule = new modulename##Module(); \
+        auto kfmodule = __NEW_OBJECT__( modulename##Module ); \
         _kf_plugin_manage->RegistModule< modulename##Interface >( this, kfmodule );\
         __REGISTER_PLUGIN__( modulename##Module, Run );\
         __REGISTER_PLUGIN__( modulename##Module, AfterRun );\
@@ -76,7 +76,7 @@
         __UN_PLUGIN_FUNCTION__( modulename##Module, Run ); \
         __UN_PLUGIN_FUNCTION__( modulename##Module, AfterRun );\
         _kf_plugin_manage->UnRegistModule< modulename##Interface >( this, _save_data );\
-        delete kfmodule;\
+        __DELETE_OBJECT__( kfmodule );\
     }\
 
 #define __FIND_MODULE__( module, classname ) \
@@ -129,7 +129,7 @@ namespace KFrame
         template< class T >
         T* RegistPlugin()
         {
-            auto plugin = new T ();
+            auto plugin = __NEW_OBJECT__( T );
             return dynamic_cast<T*>( RegistPlugin( typeid( T ).name(), plugin ) );
         }
 

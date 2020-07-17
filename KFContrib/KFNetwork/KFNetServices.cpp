@@ -12,21 +12,21 @@ namespace KFrame
         _is_shutdown = false;
         _thread_run = false;
 
-        _uv_event_async = new uv_async_t();
-        _uv_close_async = new uv_async_t();
+        _uv_event_async = __NEW_OBJECT__( uv_async_t );
+        _uv_close_async = __NEW_OBJECT__( uv_async_t );
     }
 
     KFNetServices::~KFNetServices()
     {
         _max_serialize_buff_length = 0;
         free( _serialize_buff );
-        delete _net_event;
+        __DELETE_OBJECT__( _net_event );
 
         uv_loop_delete( _uv_loop );
         _uv_loop = nullptr;
 
-        delete _uv_event_async;
-        delete _uv_close_async;
+        __DELETE_OBJECT__( _uv_event_async );
+        __DELETE_OBJECT__( _uv_close_async );
     }
 
     void KFNetServices::InitServices( uint32 eventcount, uint32 queuecount, uint32 messagetype )
@@ -36,7 +36,7 @@ namespace KFrame
             _queue_size = queuecount;
         }
 
-        _net_event = new KFNetEvent();
+        _net_event = __NEW_OBJECT__( KFNetEvent );
         _net_event->InitEvent( eventcount );
 
         _event_session.InitQueue( 10000u );

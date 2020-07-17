@@ -8,11 +8,6 @@
 
 namespace KFrame
 {
-    KFHttpServer::KFHttpServer()
-    {
-        _http_server = nullptr;
-    }
-
     KFHttpServer::~KFHttpServer()
     {
         __DELETE_OBJECT__( _http_server );
@@ -34,7 +29,7 @@ namespace KFrame
     {
         try
         {
-            Poco::Net::HTTPServerParams* params = new Poco::Net::HTTPServerParams();
+            Poco::Net::HTTPServerParams* params = __NEW_OBJECT__( Poco::Net::HTTPServerParams );
             params->setKeepAlive( keeplive );
             params->setMaxThreads( maxthread );
             params->setMaxQueued( maxqueue );
@@ -43,8 +38,8 @@ namespace KFrame
             Poco::Net::SocketAddress address( ip, port );
             Poco::Net::ServerSocket socket( address );
 
-            auto httpfactory = new KFHttpFactory( this );
-            _http_server = new Poco::Net::HTTPServer( httpfactory, socket, params );
+            auto httpfactory = __NEW_OBJECT__( KFHttpFactory, this );
+            _http_server = __NEW_OBJECT__( Poco::Net::HTTPServer, httpfactory, socket, params );
             _http_server->start();
         }
         catch ( Poco::Exception& exc )

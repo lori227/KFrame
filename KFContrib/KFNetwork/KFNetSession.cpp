@@ -12,12 +12,12 @@ namespace KFrame
         _is_shutdown = false;
         _is_sending = false;
 
-        _uv_write = new uv_write_t();
+        _uv_write = __NEW_OBJECT__( uv_write_t );
     }
 
     KFNetSession::~KFNetSession()
     {
-        delete _uv_write;
+        __DELETE_OBJECT__( _uv_write );
     }
 
     void KFNetSession::InitSession( uint64 id, uint32 queuecount, uint32 headlength )

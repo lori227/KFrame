@@ -11,7 +11,7 @@ namespace KFrame
     {
         for ( auto plugin : _plugins )
         {
-            delete plugin;
+            __DELETE_OBJECT__( plugin );
         }
         _plugins.clear();
     }
@@ -36,7 +36,7 @@ namespace KFrame
                 plugin->_save_data = savedata;
                 plugin->UnInstall();
 
-                delete plugin;
+                __DELETE_OBJECT__( plugin );
                 _plugins.erase( iter );
                 break;
             }

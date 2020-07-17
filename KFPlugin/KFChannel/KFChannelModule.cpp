@@ -10,7 +10,7 @@ namespace KFrame
     {
         for ( auto iter : _kf_channel_list )
         {
-            delete iter.second;
+            __DELETE_OBJECT__( iter.second );
         }
         _kf_channel_list.clear();
     }
@@ -19,9 +19,9 @@ namespace KFrame
     void KFChannelModule::BeforeRun()
     {
         /////////////////////////////////////////////////////////////////////////////////
-        RegisterChannel( KFMsg::Internal, new KFInternal() );
-        RegisterChannel( KFMsg::WeiXin, new KFWeiXin( ) );
-        RegisterChannel( KFMsg::Steam, new KFSteam() );
+        RegisterChannel( KFMsg::Internal, __NEW_OBJECT__( KFInternal ) );
+        RegisterChannel( KFMsg::WeiXin, __NEW_OBJECT__( KFWeiXin ) );
+        RegisterChannel( KFMsg::Steam, __NEW_OBJECT__( KFSteam ) );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////

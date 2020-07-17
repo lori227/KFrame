@@ -28,7 +28,7 @@ namespace KFrame
 
         for ( auto& iter : _config_list )
         {
-            delete iter.second;
+            __DELETE_OBJECT__( iter.second );
         }
         _config_list.clear();
     }

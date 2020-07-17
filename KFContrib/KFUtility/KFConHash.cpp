@@ -6,13 +6,12 @@ namespace KFrame
 {
     KFConHash::KFConHash()
     {
-        _hash_logic = new KFHashLogic();
+        _hash_logic = __NEW_OBJECT__( KFHashLogic );
     }
 
     KFConHash::~KFConHash()
     {
-        delete _hash_logic;
-        _hash_logic = nullptr;
+        __DELETE_OBJECT__( _hash_logic );
     }
 
     void KFConHash::AddHashNode( const std::string& name, uint64 id, uint32 virtualcount )

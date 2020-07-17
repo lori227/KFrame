@@ -40,7 +40,7 @@ namespace KFrame
     {
     public:
 
-        KFHttpServer();
+        KFHttpServer() = default;
         ~KFHttpServer();
 
         ////////////////////////////////////////////////////////////////////
@@ -64,7 +64,7 @@ namespace KFrame
         std::string ProcessHttpRequest( const std::string& url, const std::string& ip, const std::string& data );
 
     private:
-        Poco::Net::HTTPServer* _http_server;
+        Poco::Net::HTTPServer* _http_server = nullptr;
 
         // 函数列表
         KFHashMap< std::string, const std::string&, KFHttpFuncton > _functions;

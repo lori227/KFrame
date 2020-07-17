@@ -7,12 +7,12 @@ namespace KFrame
 {
     KFUuid::KFUuid()
     {
-        _kf_mutex = new KFMutex();
+        _kf_mutex = __NEW_OBJECT__( KFMutex );
     }
 
     KFUuid::~KFUuid()
     {
-        delete _kf_mutex;
+        __DELETE_OBJECT__( _kf_mutex );
         for ( auto& iter : _uuid_data_list )
         {
             delete iter.second;
@@ -31,7 +31,7 @@ namespace KFrame
         auto iter = _uuid_setting_list.find( name );
         if ( iter == _uuid_setting_list.end() )
         {
-            auto kfsetting = new KFUuidSetting();
+            auto kfsetting = __NEW_OBJECT__( KFUuidSetting );
             iter = _uuid_setting_list.insert( std::make_pair( name, kfsetting ) ).first;
         }
 
@@ -58,7 +58,7 @@ namespace KFrame
         }
 
         auto kfsetting = FindUuidSetting( name );
-        auto kfuuiddata = new KFUuidData( kfsetting );
+        auto kfuuiddata = __NEW_OBJECT__( KFUuidData, kfsetting );
         _uuid_data_list[ name ] = kfuuiddata;
         return kfuuiddata;
     }
