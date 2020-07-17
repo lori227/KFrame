@@ -3,7 +3,7 @@
 
 namespace KFrame
 {
-    bool KFConditionModule::CheckCondition( KFEntity* kfentity, const KFConditions* kfconditions )
+    bool KFConditionModule::CheckStaticCondition( KFEntity* kfentity, const KFConditions* kfconditions )
     {
         if ( !kfconditions->IsValid() )
         {
@@ -20,11 +20,11 @@ namespace KFrame
 
         // 取出第一个
         auto conditionindex = 0u;
-        auto result = CheckCondition( kfentity, kfconditions->_condition_list[ conditionindex++ ] );
+        auto result = CheckStaticCondition( kfentity, kfconditions->_condition_list[ conditionindex++ ] );
         for ( auto i = 0u; i < conditioncount && i < linkcount; ++i )
         {
             auto linktype = kfconditions->_link_type[ i ];
-            auto ok = CheckCondition( kfentity, kfconditions->_condition_list[ conditionindex + i ] );
+            auto ok = CheckStaticCondition( kfentity, kfconditions->_condition_list[ conditionindex + i ] );
             switch ( linktype )
             {
             case KFEnum::And:
@@ -39,7 +39,7 @@ namespace KFrame
         return result;
     }
 
-    bool KFConditionModule::CheckCondition( KFEntity* kfentity, const KFCondition* kfcondition )
+    bool KFConditionModule::CheckStaticCondition( KFEntity* kfentity, const KFCondition* kfcondition )
     {
         // 计算左值
         auto leftvalue = CalcExpression( kfentity, kfcondition->_left );

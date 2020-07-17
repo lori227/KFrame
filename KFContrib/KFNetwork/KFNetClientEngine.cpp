@@ -79,7 +79,7 @@ namespace KFrame
 
         auto netdata = &kfclient->_net_data;
 
-        __LOG_DEBUG__( "[{}:{}:{}|{}:{}] connect ok", netdata->_name, netdata->_type, netdata->_str_id, netdata->_ip, netdata->_port );
+        __LOG_INFO__( "[{}:{}:{}|{}:{}] connect ok", netdata->_name, netdata->_type, netdata->_str_id, netdata->_ip, netdata->_port );
 
         // 上层回调
         if ( _client_connect_function != nullptr )

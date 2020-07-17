@@ -25,7 +25,7 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 判断属性条件
-        virtual bool CheckCondition( KFEntity* kfentity, const KFConditions* kfconditions );
+        virtual bool CheckStaticCondition( KFEntity* kfentity, const KFConditions* kfconditions );
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 初始化条件
@@ -51,7 +51,7 @@ namespace KFrame
 
     protected:
         // 判断属性条件
-        bool CheckCondition( KFEntity* kfentity, const KFCondition* kfcondition );
+        bool CheckStaticCondition( KFEntity* kfentity, const KFCondition* kfcondition );
 
         // 计算条件表达式
         uint32 CalcExpression( KFEntity* kfentity, const KFExpression* kfexpression );

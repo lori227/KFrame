@@ -10,7 +10,7 @@ namespace KFrame
     {
     public:
         // 判断静态配置条件
-        virtual bool CheckCondition( KFEntity* kfentity, const KFConditions* kfconditions ) = 0;
+        virtual bool CheckStaticCondition( KFEntity* kfentity, const KFConditions* kfconditions ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////
         // 初始化条件
         virtual void AddCondition( KFEntity* kfentity, KFData* kfconditionobject, const UInt32Vector& conditionlist, uint32 conditiontype ) = 0;
