@@ -171,7 +171,7 @@ namespace KFrame
 
         {
             // 判断条件
-            if ( !_kf_condition->CheckCondition( player, &kfrefreshsetting->_conditions ) )
+            if ( !_kf_condition->CheckStaticCondition( player, &kfrefreshsetting->_conditions ) )
             {
                 return;
             }
