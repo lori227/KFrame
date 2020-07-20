@@ -41,7 +41,7 @@ namespace KFrame
     {
         __JSON_PARSE_STRING__( request, data );
 
-        auto ok = _kf_dir_attribute->ZoneRegister( request );
+        auto ok = _kf_dir_database->ZoneRegister( request );
         return _kf_http_server->SendCode( ok ? KFMsg::Ok : KFMsg::Error );
     }
 
@@ -49,7 +49,7 @@ namespace KFrame
     {
         __JSON_PARSE_STRING__( request, data );
 
-        auto ok = _kf_dir_attribute->ZoneUpdate( request );
+        auto ok = _kf_dir_database->ZoneUpdate( request );
         return _kf_http_server->SendCode( ok ? KFMsg::Ok : KFMsg::Error );
     }
 
@@ -59,7 +59,7 @@ namespace KFrame
 
         auto zoneid = __JSON_GET_UINT32__( request, __STRING__( zoneid ) );
         auto status = __JSON_GET_UINT32__( request, __STRING__( status ) );
-        auto ok = _kf_dir_attribute->UpdateZoneStatus( zoneid, status );
+        auto ok = _kf_dir_database->UpdateZoneStatus( zoneid, status );
         return _kf_http_server->SendCode( ok ? KFMsg::Ok : KFMsg::Error );
     }
 
@@ -68,7 +68,7 @@ namespace KFrame
         __JSON_PARSE_STRING__( request, data );
 
         auto flag = __JSON_GET_STRING__( request, __STRING__( flag ) );
-        auto zonedatalist = _kf_dir_attribute->QueryZoneList( flag );
+        auto zonedatalist = _kf_dir_database->QueryZoneList( flag );
 
         __JSON_OBJECT_DOCUMENT__( response );
         __JSON_ARRAY__( kfarray );
@@ -89,7 +89,7 @@ namespace KFrame
     {
         __JSON_PARSE_STRING__( request, data );
         auto zoneid = __JSON_GET_UINT32__( request, __STRING__( zoneid ) );
-        auto zonedata = _kf_dir_attribute->QueryZoneIp( zoneid );
+        auto zonedata = _kf_dir_database->QueryZoneIp( zoneid );
 
         __JSON_OBJECT_DOCUMENT__( response );
         __JSON_SET_VALUE__( response, __STRING__( zoneid ), zoneid );
@@ -104,7 +104,7 @@ namespace KFrame
         auto zoneid = __JSON_GET_UINT32__( request, __STRING__( zoneid ) );
         auto count = __JSON_GET_UINT64__( request, __STRING__( count ) );
 
-        auto ok = _kf_dir_attribute->ZoneBalance( zoneid, count );
+        auto ok = _kf_dir_database->ZoneBalance( zoneid, count );
         return _kf_http_server->SendCode( ok ? KFMsg::Ok : KFMsg::Error );
     }
 
@@ -114,7 +114,7 @@ namespace KFrame
         auto flag = __JSON_GET_STRING__( request, __STRING__( flag ) );
         auto zoneid = __JSON_GET_UINT32__( request, __STRING__( zoneid ) );
         auto recommend = __JSON_GET_UINT32__( request, __STRING__( recommend ) );
-        auto ok = _kf_dir_attribute->SetZoneRecommend( flag, zoneid, recommend == 1u );
+        auto ok = _kf_dir_database->SetZoneRecommend( flag, zoneid, recommend == 1u );
         return _kf_http_server->SendCode( ok ? KFMsg::Ok : KFMsg::Error );
     }
 
@@ -125,21 +125,21 @@ namespace KFrame
         auto worldid = __JSON_GET_UINT64__( request, __STRING__( world ) );
         auto url = __JSON_GET_STRING__( request, __STRING__( url ) );
 
-        auto ok = _kf_dir_attribute->SetWorldUrl( worldid, url );
+        auto ok = _kf_dir_database->SetWorldUrl( worldid, url );
         return _kf_http_server->SendCode( ok ? KFMsg::Ok : KFMsg::Error );
     }
 
     __KF_HTTP_FUNCTION__( KFDirShardModule::HandleUpdateMasterIp )
     {
         __JSON_PARSE_STRING__( request, data );
-        auto ok = _kf_dir_attribute->UpdateMasterIp( request );
+        auto ok = _kf_dir_database->UpdateMasterIp( request );
         return _kf_http_server->SendCode( ok ? KFMsg::Ok : KFMsg::Error );
     }
 
     __KF_HTTP_FUNCTION__( KFDirShardModule::HandleQueryMasterIp )
     {
         __JSON_PARSE_STRING__( request, data );
-        auto masterdata = _kf_dir_attribute->QueryMasterIp( request );
+        auto masterdata = _kf_dir_database->QueryMasterIp( request );
 
         __JSON_OBJECT_DOCUMENT__( response );
         __JSON_FROM_MAP__( response, masterdata );
@@ -149,7 +149,7 @@ namespace KFrame
     __KF_HTTP_FUNCTION__( KFDirShardModule::HandleQueryMasterList )
     {
         __JSON_PARSE_STRING__( request, data );
-        auto masterdatalist = _kf_dir_attribute->QueryMasterList( request );
+        auto masterdatalist = _kf_dir_database->QueryMasterList( request );
 
         __JSON_OBJECT_DOCUMENT__( response );
         __JSON_ARRAY__( kfarray );

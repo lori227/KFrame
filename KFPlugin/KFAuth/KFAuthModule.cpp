@@ -110,7 +110,7 @@ namespace KFrame
         // 查询小区信息, 返回给客户端
         auto zoneflag = __JSON_GET_STRING__( request, __STRING__( flag ) );
         auto zoneid = __TO_UINT32__( accountdata[ __STRING__( zoneid ) ] );
-        auto zonedata = _kf_dir_attribute->AllocPlayerZone( zoneflag, zoneid );
+        auto zonedata = _kf_dir_database->AllocPlayerZone( zoneflag, zoneid );
 
         __JSON_OBJECT_DOCUMENT__( response );
         __JSON_SET_VALUE__( response, __STRING__( token ), token );
@@ -135,7 +135,7 @@ namespace KFrame
         auto accountid = __JSON_GET_UINT64__( request, __STRING__( accountid ) );
 
         // 查询小区服务器状态
-        auto status = _kf_dir_attribute->QueryZoneStatus( zoneid );
+        auto status = _kf_dir_database->QueryZoneStatus( zoneid );
         if ( status == KFMsg::ServerStopStatus )
         {
             return _kf_http_server->SendCode( KFMsg::LoginServerStopStatus );
@@ -173,7 +173,7 @@ namespace KFrame
         auto isnew = std::get<1>( playerdata );
         if ( isnew )
         {
-            _kf_dir_attribute->ZoneBalance( zoneid, 1u );
+            _kf_dir_database->ZoneBalance( zoneid, 1u );
         }
 
         // 保存登录ip
@@ -227,7 +227,7 @@ namespace KFrame
             return;
         }
 
-        auto worldurl = _kf_dir_attribute->GetWorldUrl( worldid );
+        auto worldurl = _kf_dir_database->GetWorldUrl( worldid );
         if ( worldurl.empty() )
         {
             return;
