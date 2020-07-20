@@ -12,6 +12,6 @@
 		<Plugin Name="KFRedis" Param=""/>	
 		<Plugin Name="KFMongo" Param=""/>	
 		<Plugin Name="KFBasicShard" Param=""/>	
-		<Plugin Name="KFBasicAttribute" Param=""/>	
+		<Plugin Name="KFBasicDatabase" Param=""/>	
 	</Plugins>
 </Setting>

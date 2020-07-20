@@ -17,7 +17,7 @@
 #include "KFSchedule/KFScheduleInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"
 #include "KFZConfig/KFRankConfig.hpp"
-#include "KFBasicAttribute/KFBasicAttributeInterface.h"
+#include "KFBasicDatabase/KFBasicDatabaseInterface.h"
 
 namespace KFrame
 {

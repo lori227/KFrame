@@ -16,7 +16,7 @@
 #include "KFSchedule/KFScheduleInterface.h"
 #include "KFHttpServer/KFHttpServerInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"
-#include "KFBasicAttribute/KFBasicAttributeInterface.h"
+#include "KFBasicDatabase/KFBasicDatabaseInterface.h"
 
 namespace KFrame
 {

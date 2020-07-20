@@ -11,6 +11,6 @@
 		<Plugin Name="KFRedis" Param=""/>
 		<Plugin Name="KFMongo" Param=""/>	
 		<Plugin Name="KFDirShard" Param=""/>	
-		<Plugin Name="KFDirAttribute" Param=""/>	
+		<Plugin Name="KFDirDatabase" Param=""/>	
 	</Plugins>
 </Setting>

@@ -11,7 +11,7 @@
 
 #include "KFDirShardInterface.h"
 #include "KFHttpServer/KFHttpServerInterface.h"
-#include "KFDirAttribute/KFDirAttributeInterface.h"
+#include "KFDirDatabase/KFDirDatabaseInterface.h"
 
 namespace KFrame
 {

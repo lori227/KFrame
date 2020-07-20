@@ -66,7 +66,7 @@ namespace KFrame
         }
 
         RelationListType relationlist;
-        _kf_relation_attribute->QueryRelationList( kfsetting->_relation_list_name, kfsetting->_id, kfmsg.playerid(), relationlist );
+        _kf_relation_database->QueryRelationList( kfsetting->_relation_list_name, kfsetting->_id, kfmsg.playerid(), relationlist );
         if ( relationlist.empty() )
         {
             return;
@@ -80,7 +80,7 @@ namespace KFrame
             auto playerid = iter.first;
 
             StringMap basicdata;
-            _kf_basic_attribute->QueryBasicAttribute( playerid, basicdata );
+            _kf_basic_database->QueryBasicAttribute( playerid, basicdata );
             if ( basicdata.empty() )
             {
                 continue;
@@ -103,7 +103,7 @@ namespace KFrame
         }
 
         RelationListType invitelist;
-        _kf_relation_attribute->QueryInviteList( kfsetting->_invite_list_name, kfsetting->_invite_data_name, kfmsg.playerid(), invitelist );
+        _kf_relation_database->QueryInviteList( kfsetting->_invite_list_name, kfsetting->_invite_data_name, kfmsg.playerid(), invitelist );
         if ( invitelist.empty() )
         {
             return;
@@ -117,7 +117,7 @@ namespace KFrame
             auto playerid = iter.first;
 
             StringMap basicdata;
-            _kf_basic_attribute->QueryBasicAttribute( playerid, basicdata );
+            _kf_basic_database->QueryBasicAttribute( playerid, basicdata );
             if ( basicdata.empty() )
             {
                 continue;
@@ -139,45 +139,45 @@ namespace KFrame
             return __LOG_ERROR__( "relation=[{}] no setting", kfmsg.relationname() );
         }
 
-        auto name = _kf_basic_attribute->QueryBasicStrValue( kfmsg.playerid(), __STRING__( name ) );
+        auto name = _kf_basic_database->QueryBasicStrValue( kfmsg.playerid(), __STRING__( name ) );
         if ( name.empty() )
         {
             return _kf_display->SendToPlayer( route, KFMsg::RoleNotExist, kfmsg.playername() );
         }
 
         // 是否已经设置拒绝
-        auto refuseinvite = _kf_relation_attribute->IsRefuse( kfsetting->_refuse_name, kfmsg.playerid() );
+        auto refuseinvite = _kf_relation_database->IsRefuse( kfsetting->_refuse_name, kfmsg.playerid() );
         if ( refuseinvite )
         {
             return _kf_display->SendToPlayer( route, KFMsg::RelationRefuseInvite, kfmsg.playername() );
         }
 
         // 查找对方申请列表是否有自己
-        bool isrelationexist = _kf_relation_attribute->RelationExist( kfsetting->_invite_list_name, kfmsg.playerid(), selfid );
+        bool isrelationexist = _kf_relation_database->RelationExist( kfsetting->_invite_list_name, kfmsg.playerid(), selfid );
         if ( isrelationexist )
         {
             return _kf_display->SendToPlayer( route, KFMsg::RelationInviteAlready, kfmsg.playername() );
         }
 
         // 查找对方申请列表数量
-        auto invitecount = _kf_relation_attribute->RelationCount( kfsetting->_invite_list_name, kfmsg.playerid() );
+        auto invitecount = _kf_relation_database->RelationCount( kfsetting->_invite_list_name, kfmsg.playerid() );
         if ( invitecount >= kfsetting->_invite_data_count )
         {
             return _kf_display->SendToPlayer( route, KFMsg::RelationInviteLimit, kfmsg.playername() );
         }
 
-        _kf_relation_attribute->AddInvite( kfsetting->_invite_list_name, kfsetting->_invite_data_name, kfmsg.playerid(), selfid, kfmsg.message(), kfsetting->_invite_keep_time );
+        _kf_relation_database->AddInvite( kfsetting->_invite_list_name, kfsetting->_invite_data_name, kfmsg.playerid(), selfid, kfmsg.message(), kfsetting->_invite_keep_time );
         _kf_display->SendToPlayer( route, KFMsg::RelationInviteOk, kfmsg.playername() );
 
         // 判断对方是否在线, 如果在线直接发送消息
-        auto serverid = _kf_basic_attribute->QueryBasicServerId( kfmsg.playerid() );
+        auto serverid = _kf_basic_database->QueryBasicServerId( kfmsg.playerid() );
         if ( serverid == _invalid_int )
         {
             return;
         }
 
         StringMap selfbasicdata;
-        _kf_basic_attribute->QueryBasicAttribute( selfid, selfbasicdata );
+        _kf_basic_database->QueryBasicAttribute( selfid, selfbasicdata );
         if ( selfbasicdata.empty() )
         {
             return;
@@ -204,7 +204,7 @@ namespace KFrame
             return __LOG_ERROR__( "relation=[{}] no setting", kfmsg.relationname() );
         }
 
-        _kf_relation_attribute->RemoveRelation( kfsetting->_invite_list_name, kfsetting->_invite_data_name, kfmsg.selfplayerid(), kfmsg.targetplayerid(), false );
+        _kf_relation_database->RemoveRelation( kfsetting->_invite_list_name, kfsetting->_invite_data_name, kfmsg.selfplayerid(), kfmsg.targetplayerid(), false );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRelationShardModule::HandleAddRelationToRelationReq )
@@ -219,7 +219,7 @@ namespace KFrame
         }
 
         // 判断自己的关系数量
-        auto selfcount = _kf_relation_attribute->RelationCount( kfsetting->_relation_list_name, selfid );
+        auto selfcount = _kf_relation_database->RelationCount( kfsetting->_relation_list_name, selfid );
         if ( selfcount >= kfsetting->_max_count )
         {
             return _kf_display->SendToPlayer( route, KFMsg::RelationSelfLimit, kfsetting->_max_count );
@@ -228,7 +228,7 @@ namespace KFrame
         // 判断对方关系的数量
         if ( kfsetting->_both_way )
         {
-            auto targetcount = _kf_relation_attribute->RelationCount( kfsetting->_relation_list_name, kfmsg.playerid() );
+            auto targetcount = _kf_relation_database->RelationCount( kfsetting->_relation_list_name, kfmsg.playerid() );
             if ( targetcount >= kfsetting->_max_count )
             {
                 return _kf_display->SendToPlayer( route, KFMsg::RelationTargetLimit, kfmsg.playername() );
@@ -245,14 +245,14 @@ namespace KFrame
 
     void KFRelationShardModule::AddRelation( uint64 playerid, uint64 targetid, const KFRelationSetting* kfsetting )
     {
-        _kf_relation_attribute->AddRelation( kfsetting->_relation_list_name, kfsetting->_id, playerid, targetid, kfsetting->_both_way );
+        _kf_relation_database->AddRelation( kfsetting->_relation_list_name, kfsetting->_id, playerid, targetid, kfsetting->_both_way );
         if ( !kfsetting->_invite_data_name.empty() )
         {
-            _kf_relation_attribute->RemoveRelation( kfsetting->_invite_list_name, kfsetting->_invite_data_name, playerid, targetid, false );
+            _kf_relation_database->RemoveRelation( kfsetting->_invite_list_name, kfsetting->_invite_data_name, playerid, targetid, false );
         }
 
         // 发送消息给游戏玩家
-        auto serverid = _kf_basic_attribute->QueryBasicServerId( playerid );
+        auto serverid = _kf_basic_database->QueryBasicServerId( playerid );
         if ( serverid == _invalid_int )
         {
             return;
@@ -260,7 +260,7 @@ namespace KFrame
 
         // 获得对方数据
         StringMap querytargtedata;
-        _kf_basic_attribute->QueryBasicAttribute( targetid, querytargtedata );
+        _kf_basic_database->QueryBasicAttribute( targetid, querytargtedata );
         if ( querytargtedata.empty() )
         {
             return;
@@ -297,9 +297,9 @@ namespace KFrame
 
     void KFRelationShardModule::DelRelation( uint64 playerid, uint64 targetid, const KFRelationSetting* kfsetting )
     {
-        _kf_relation_attribute->RemoveRelation( kfsetting->_relation_list_name, kfsetting->_id, playerid, targetid, kfsetting->_both_way );
+        _kf_relation_database->RemoveRelation( kfsetting->_relation_list_name, kfsetting->_id, playerid, targetid, kfsetting->_both_way );
 
-        auto serverid = _kf_basic_attribute->QueryBasicServerId( playerid );
+        auto serverid = _kf_basic_database->QueryBasicServerId( playerid );
         if ( serverid == _invalid_int )
         {
             return;
@@ -316,7 +316,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SRefuseRelationToRelationReq );
 
-        _kf_relation_attribute->SetRefuse( kfmsg.refusename(), kfmsg.playerid(), kfmsg.refusevalue() );
+        _kf_relation_database->SetRefuse( kfmsg.refusename(), kfmsg.playerid(), kfmsg.refusevalue() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRelationShardModule::HandleUpdateFriendLinessToRelationReq )

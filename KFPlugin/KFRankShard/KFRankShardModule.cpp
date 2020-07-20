@@ -214,7 +214,7 @@ namespace KFrame
                 }
 
                 StringMap basicdata;
-                _kf_basic_attribute->QueryBasicAttribute( playerid, basicdata );
+                _kf_basic_database->QueryBasicAttribute( playerid, basicdata );
                 if ( basicdata.empty() )
                 {
                     continue;

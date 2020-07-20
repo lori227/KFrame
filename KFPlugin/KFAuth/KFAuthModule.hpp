@@ -14,7 +14,7 @@
 #include "KFAccount/KFAccountInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
 #include "KFHttpServer/KFHttpServerInterface.h"
-#include "KFDirAttribute/KFDirAttributeInterface.h"
+#include "KFDirDatabase/KFDirDatabaseInterface.h"
 
 namespace KFrame
 {

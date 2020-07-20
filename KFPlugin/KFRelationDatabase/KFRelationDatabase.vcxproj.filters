@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="KFRelationDatabaseLogic.cpp" />
+    <ClCompile Include="KFRelationDatabaseModule.cpp" />
+    <ClCompile Include="KFRelationDatabaseMongo.cpp" />
+    <ClCompile Include="KFRelationDatabasePlugin.cpp" />
+    <ClCompile Include="KFRelationDatabaseRedis.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="KFRelationDatabaseInterface.h" />
+    <ClInclude Include="KFRelationDatabaseLogic.hpp" />
+    <ClInclude Include="KFRelationDatabaseModule.hpp" />
+    <ClInclude Include="KFRelationDatabaseMongo.hpp" />
+    <ClInclude Include="KFRelationDatabasePlugin.hpp" />
+    <ClInclude Include="KFRelationDatabaseRedis.hpp" />
+  </ItemGroup>
+</Project>

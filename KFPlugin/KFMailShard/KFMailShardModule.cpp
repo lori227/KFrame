@@ -330,7 +330,7 @@ namespace KFrame
             if ( flag == KFMsg::PersonMail )
             {
                 // 通知有新邮件
-                auto serverid = _kf_basic_attribute->QueryBasicServerId( objectid );
+                auto serverid = _kf_basic_database->QueryBasicServerId( objectid );
                 if ( serverid != _invalid_int )
                 {
                     KFMsg::S2SNoticeNewMailReq notice;

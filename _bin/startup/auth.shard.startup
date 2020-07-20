@@ -13,6 +13,6 @@
 		<Plugin Name="KFChannel" Param=""/>
 		<Plugin Name="KFAuth" Param=""/>	
 		<Plugin Name="KFAccount" Param=""/>	
-		<Plugin Name="KFDirAttribute" Param=""/>	
+		<Plugin Name="KFDirDatabase" Param=""/>	
 	</Plugins>
 </Setting>

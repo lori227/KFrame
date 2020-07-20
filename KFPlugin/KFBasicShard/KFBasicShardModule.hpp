@@ -12,7 +12,7 @@
 #include "KFBasicShardInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"
-#include "KFBasicAttribute/KFBasicAttributeInterface.h"
+#include "KFBasicDatabase/KFBasicDatabaseInterface.h"
 
 namespace KFrame
 {

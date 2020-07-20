@@ -21,8 +21,8 @@ namespace KFrame
         __FIND_MODULE__( _kf_message, KFMessageInterface );
         __FIND_MODULE__( _kf_display, KFDisplayInterface );
         __FIND_MODULE__( _kf_route, KFRouteClientInterface );
-        __FIND_MODULE__( _kf_basic_attribute, KFBasicAttributeInterface );
-        __FIND_MODULE__( _kf_relation_attribute, KFRelationAttributeInterface );
+        __FIND_MODULE__( _kf_basic_database, KFBasicDatabaseInterface );
+        __FIND_MODULE__( _kf_relation_database, KFRelationDatabaseInterface );
     }
 
     void KFRelationShardPlugin::AddConfig()
