@@ -9,9 +9,12 @@
 //    @Date             :    2017-11-30
 ************************************************************************/
 
-#include "KFProtocol/KFProtocol.h"
 #include "KFMailShardInterface.h"
+#include "KFMailDatabaseRedis.hpp"
+#include "KFMailDatabaseMongo.hpp"
+#include "KFProtocol/KFProtocol.h"
 #include "KFRedis/KFRedisInterface.h"
+#include "KFMongo/KFMongoInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFSchedule/KFScheduleInterface.h"
 #include "KFHttpServer/KFHttpServerInterface.h"
@@ -58,18 +61,12 @@ namespace KFrame
 
         ///////////////////////////////////////////////////////////////////////////////
     protected:
-        // 处理全局邮件到个人邮件
-        void LoadGlobalMailToPerson( uint64 playerid, uint32 zoneid );
-
-        // 设置邮件状态
-        bool UpdateMailStatus( uint32 flag, uint64 playerid, uint64 mailid, uint32 status );
-
         // 添加邮件
         uint64 AddMail( uint32 flag, uint64 objectid, StringMap& maildata );
 
     private:
-        // 邮件数据库
-        KFRedisDriver* _mail_driver = nullptr;
+        // 邮件数据库逻辑
+        KFMailDatabaseLogic* _mail_database_logic = nullptr;
     };
 }
 

@@ -97,6 +97,11 @@ namespace KFrame
         }\
     }
 
+#define __MAP_TO_DBVALUE__( value, dbvalue  )\
+    {\
+        __MAP_TO_PROTO__( value, dbvalue._str_list);\
+    }
+
 #define __JSON_TO_DBVALUE__( kfjson, dbvalue )\
     for ( auto iter = kfjson.MemberBegin(); iter != kfjson.MemberEnd(); ++iter )\
     {\

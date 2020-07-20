@@ -46,14 +46,14 @@ namespace KFrame
     std::string& KFRankShardModule::FormatRankDataKey( uint32 rankid, uint32 zoneid )
     {
         static std::string rankdatakey = "";
-        rankdatakey = __REDIS_KEY_3__( __STRING__( rankdata ), rankid, zoneid );
+        rankdatakey = __DATABASE_KEY_3__( __STRING__( rankdata ), rankid, zoneid );
         return rankdatakey;
     }
 
     std::string& KFRankShardModule::FormatRankSortKey( uint32 rankid, uint32 zoneid )
     {
         static std::string ranksortkey = "";
-        ranksortkey = __REDIS_KEY_3__( __STRING__( ranksort ), rankid, zoneid );
+        ranksortkey = __DATABASE_KEY_3__( __STRING__( ranksort ), rankid, zoneid );
         return ranksortkey;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -63,7 +63,7 @@ namespace KFrame
         kfrankdata->_rank_id = rankid;
         kfrankdata->_zone_id = zoneid;
 
-        auto querydata = _rank_redis_driver->HGetAll( __REDIS_KEY_3__( __STRING__( rank ), rankid, zoneid ) );
+        auto querydata = _rank_redis_driver->HGetAll( __DATABASE_KEY_3__( __STRING__( rank ), rankid, zoneid ) );
         if ( !querydata->_value.empty() )
         {
             auto strrankata = querydata->_value[ __STRING__( rankdata ) ];
@@ -84,7 +84,7 @@ namespace KFrame
         rankdata[ __STRING__( zoneid ) ] = __TO_STRING__( kfrankdata->_zone_id );
         rankdata[ __STRING__( minrankscore ) ] = __TO_STRING__( kfrankdata->_min_rank_score );
         rankdata[ __STRING__( rankdata ) ] = strrankdata;
-        auto kfresult = _rank_redis_driver->HMSet( __REDIS_KEY_3__( __STRING__( rank ), kfrankdata->_rank_id, kfrankdata->_zone_id ), rankdata );
+        auto kfresult = _rank_redis_driver->HMSet( __DATABASE_KEY_3__( __STRING__( rank ), kfrankdata->_rank_id, kfrankdata->_zone_id ), rankdata );
         if ( !kfresult->IsOk() )
         {
             __LOG_ERROR__( "rank=[{}:{}] save failed", kfrankdata->_rank_id, kfrankdata->_zone_id );
@@ -182,7 +182,7 @@ namespace KFrame
         }
 
         // 获得排行榜列表
-        auto queryzonelist = _rank_redis_driver->SMembers( __REDIS_KEY_2__( __STRING__( ranksortlist ), rankid ) );
+        auto queryzonelist = _rank_redis_driver->SMembers( __DATABASE_KEY_2__( __STRING__( ranksortlist ), rankid ) );
         for ( auto& strzoneid : queryzonelist->_value )
         {
             auto zoneid = __TO_UINT32__( strzoneid );
@@ -322,7 +322,7 @@ namespace KFrame
         // if ( IsNeedUpdateRankData( kfmsg.rankid(), kfmsg.zoneid(), kfmsg.rankscore() ) )
         {
             // 添加到排行榜的zone列表
-            _rank_redis_driver->SAdd(  __REDIS_KEY_2__( __STRING__( ranksortlist ), kfmsg.rankid() ), kfmsg.zoneid() );
+            _rank_redis_driver->SAdd(  __DATABASE_KEY_2__( __STRING__( ranksortlist ), kfmsg.rankid() ), kfmsg.zoneid() );
 
             // 积分排行列表
             _rank_redis_driver->ZAdd( ranksortkey, kfmsg.playerid(), pbrankdata->rankscore() );

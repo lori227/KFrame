@@ -70,7 +70,7 @@ namespace KFrame
         // 查询masterlist
         virtual StringMapList QueryMasterList( KFJson& masterdata );
     protected:
-        KFDirDatabaseLogic* _dir_attribute_logic = nullptr;
+        KFDirDatabaseLogic* _dir_database_logic = nullptr;
     };
 }
 

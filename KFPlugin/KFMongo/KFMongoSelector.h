@@ -9,6 +9,7 @@ namespace KFrame
     {
         static std::string _id = "_id";				// mongo 默认的主键字段( 自带索引 )
         static std::string _set = "$set";			// 更新
+        static std::string _unset = "$unset";		// 删除字段
         static std::string _push = "$addToSet";		// 添加到集合
         static std::string _each = "$each";			// 数组
         static std::string _pull = "$pull";			// 数组

@@ -187,17 +187,17 @@ namespace KFrame
         return _write_execute->Update( table, MongoKeyword::_id, key, field, value );
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFMongoLogic::Operate( const std::string& table, const std::string& field, uint32 operate, uint64 value )
+    uint64 KFMongoLogic::Operate( const std::string& table, const std::string& field, uint32 operate, uint64 value )
     {
         return _write_execute->Operate( table, _invalid_string, 0u, field, operate, value );
     }
 
-    bool KFMongoLogic::Operate( const std::string& table, uint64 key, const std::string& field, uint32 operate, uint64 value )
+    uint64 KFMongoLogic::Operate( const std::string& table, uint64 key, const std::string& field, uint32 operate, uint64 value )
     {
         return _write_execute->Operate( table, MongoKeyword::_id, key, field, operate, value );
     }
 
-    bool KFMongoLogic::Operate( const std::string& table, const std::string& key, const std::string& field, uint32 operate, uint64 value )
+    uint64 KFMongoLogic::Operate( const std::string& table, const std::string& key, const std::string& field, uint32 operate, uint64 value )
     {
         return _write_execute->Operate( table, MongoKeyword::_id, key, field, operate, value );
     }
@@ -231,6 +231,12 @@ namespace KFrame
     {
         return _write_execute->Delete( table, kfseletor );
     }
+
+    bool KFMongoLogic::DeleteField( const std::string& table, uint64 key, const std::string& field )
+    {
+        return _write_execute->DeleteField( table, key, field );
+    }
+
     //////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFMongoLogic::Push( const std::string& table, uint64 key, const std::string& field, uint64 value )
     {

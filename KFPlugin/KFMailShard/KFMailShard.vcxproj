@@ -12,10 +12,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="KFMailDatabaseLogic.cpp" />
+    <ClCompile Include="KFMailDatabaseMongo.cpp" />
+    <ClCompile Include="KFMailDatabaseRedis.cpp" />
     <ClCompile Include="KFMailShardModule.cpp" />
     <ClCompile Include="KFMailShardPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="KFMailDatabaseLogic.hpp" />
+    <ClInclude Include="KFMailDatabaseMongo.hpp" />
+    <ClInclude Include="KFMailDatabaseRedis.hpp" />
     <ClInclude Include="KFMailShardInterface.h" />
     <ClInclude Include="KFMailShardModule.hpp" />
     <ClInclude Include="KFMailShardPlugin.hpp" />

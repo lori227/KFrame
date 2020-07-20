@@ -19,7 +19,7 @@ namespace KFrame
     void KFBasicDatabaseRedis::UpdateBasicStrValue( uint64 playerid, uint64 serverid, const StringMap& values )
     {
         auto redisdriver = __BASIC_REDIS_DRIVER__;
-        redisdriver->HMSet( __REDIS_KEY_2__( __STRING__( basic ), playerid ), values );
+        redisdriver->HMSet( __DATABASE_KEY_2__( __STRING__( basic ), playerid ), values );
 
         static auto _get_status_value = []( const StringMap & values )
         {
@@ -36,10 +36,10 @@ namespace KFrame
         switch ( status )
         {
         case KFMsg::OnlineStatus:
-            redisdriver->SAdd( __REDIS_KEY_2__( __STRING__( onlinelist ), serverid ), playerid );
+            redisdriver->SAdd( __DATABASE_KEY_2__( __STRING__( onlinelist ), serverid ), playerid );
             break;
         case KFMsg::OfflineStatus:
-            redisdriver->SRem( __REDIS_KEY_2__( __STRING__( onlinelist ), serverid ), playerid );
+            redisdriver->SRem( __DATABASE_KEY_2__( __STRING__( onlinelist ), serverid ), playerid );
             break;
         default:
             break;
@@ -49,7 +49,7 @@ namespace KFrame
     void KFBasicDatabaseRedis::ClearBasicServerId( uint64 serverid )
     {
         auto redisdriver = __BASIC_REDIS_DRIVER__;
-        auto kfplayerlist = redisdriver->SMembers( __REDIS_KEY_2__( __STRING__( onlinelist ), serverid ) );
+        auto kfplayerlist = redisdriver->SMembers( __DATABASE_KEY_2__( __STRING__( onlinelist ), serverid ) );
         if ( kfplayerlist->_value.empty() )
         {
             return;
@@ -61,7 +61,7 @@ namespace KFrame
 
         for ( auto& id : kfplayerlist->_value )
         {
-            auto strkey = __REDIS_KEY_2__( __STRING__( basic ), id );
+            auto strkey = __DATABASE_KEY_2__( __STRING__( basic ), id );
             auto queryserverid = redisdriver->HGetUInt64( strkey, __STRING__( serverid ) );
             if ( queryserverid->_value == serverid )
             {
@@ -69,7 +69,7 @@ namespace KFrame
             }
         }
 
-        redisdriver->Del( __REDIS_KEY_2__( __STRING__( onlinelist ), serverid ) );
+        redisdriver->Del( __DATABASE_KEY_2__( __STRING__( onlinelist ), serverid ) );
     }
 
     uint64 KFBasicDatabaseRedis::QueryBasicServerId( uint64 playerid )
@@ -80,7 +80,7 @@ namespace KFrame
     uint32 KFBasicDatabaseRedis::QueryBasicAttribute( uint64 playerid, StringMap& values )
     {
         auto redisdriver = __BASIC_REDIS_DRIVER__;
-        auto kfquery = redisdriver->HGetAll( __REDIS_KEY_2__( __STRING__( basic ), playerid ) );
+        auto kfquery = redisdriver->HGetAll( __DATABASE_KEY_2__( __STRING__( basic ), playerid ) );
         if ( !kfquery->IsOk() )
         {
             return KFMsg::PublicDatabaseBusy;
@@ -97,7 +97,7 @@ namespace KFrame
 
     std::string KFBasicDatabaseRedis::FormatNameKey( const std::string& name, uint32 zoneid )
     {
-        return __REDIS_KEY_4__( __STRING__( player ), __STRING__( name ), zoneid, name );
+        return __DATABASE_KEY_4__( __STRING__( player ), __STRING__( name ), zoneid, name );
     }
 
     uint32 KFBasicDatabaseRedis::SetPlayerName( uint32 zoneid, uint64 playerid, const std::string& oldname, const std::string& newname )
@@ -149,14 +149,14 @@ namespace KFrame
     uint64 KFBasicDatabaseRedis::QueryBasicIntValue( uint64 playerid, const std::string& dataname )
     {
         auto redisdriver = __BASIC_REDIS_DRIVER__;
-        auto kfserverid = redisdriver->HGetUInt64( __REDIS_KEY_2__( __STRING__( basic ), playerid ), dataname );
+        auto kfserverid = redisdriver->HGetUInt64( __DATABASE_KEY_2__( __STRING__( basic ), playerid ), dataname );
         return kfserverid->_value;
     }
 
     std::string KFBasicDatabaseRedis::QueryBasicStrValue( uint64 playerid, const std::string& dataname )
     {
         auto redisdriver = __BASIC_REDIS_DRIVER__;
-        auto kfserverid = redisdriver->HGet( __REDIS_KEY_2__( __STRING__( basic ), playerid ), dataname );
+        auto kfserverid = redisdriver->HGet( __DATABASE_KEY_2__( __STRING__( basic ), playerid ), dataname );
         return kfserverid->_value;
     }
 }

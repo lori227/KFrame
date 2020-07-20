@@ -53,7 +53,7 @@ namespace KFrame
         virtual std::string QueryBasicStrValue( uint64 playerid, const std::string& dataname );
     private:
         // 属性逻辑
-        KFBasicDatabaseLogic* _basic_attribute_logic = nullptr;
+        KFBasicDatabaseLogic* _basic_database_logic = nullptr;
     };
 }
 

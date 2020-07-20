@@ -4,10 +4,33 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="KFMailShardModule.cpp" />
     <ClCompile Include="KFMailShardPlugin.cpp" />
+    <ClCompile Include="KFMailDatabaseLogic.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="KFMailDatabaseMongo.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="KFMailDatabaseRedis.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFMailShardInterface.h" />
     <ClInclude Include="KFMailShardModule.hpp" />
     <ClInclude Include="KFMailShardPlugin.hpp" />
+    <ClInclude Include="KFMailDatabaseLogic.hpp">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="KFMailDatabaseMongo.hpp">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="KFMailDatabaseRedis.hpp">
+      <Filter>Database</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Database">
+      <UniqueIdentifier>{15c86aac-1667-4c89-96f2-698b75480501}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

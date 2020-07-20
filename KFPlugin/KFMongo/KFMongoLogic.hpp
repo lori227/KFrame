@@ -53,9 +53,9 @@ namespace KFrame
         virtual bool Insert( const std::string& table, const std::string& key, const std::string& field, const std::string& value, bool isbinary = false );
 
         // 操作数值
-        virtual bool Operate( const std::string& table, const std::string& field, uint32 operate, uint64 value );
-        virtual bool Operate( const std::string& table, uint64 key, const std::string& field, uint32 operate, uint64 value );
-        virtual bool Operate( const std::string& table, const std::string& key, const std::string& field, uint32 operate, uint64 value );
+        virtual uint64 Operate( const std::string& table, const std::string& field, uint32 operate, uint64 value );
+        virtual uint64 Operate( const std::string& table, uint64 key, const std::string& field, uint32 operate, uint64 value );
+        virtual uint64 Operate( const std::string& table, const std::string& key, const std::string& field, uint32 operate, uint64 value );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 删除数据
@@ -65,6 +65,9 @@ namespace KFrame
         virtual bool Delete( const std::string& table, const std::string& keyname, uint64 key );
         virtual bool Delete( const std::string& table, const std::string& keyname, const std::string& key );
         virtual bool Delete( const std::string& table, const KFMongoSelector& kfseletor );
+
+        // 删除字段
+        virtual bool DeleteField( const std::string& table, uint64 key, const std::string& field );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 添加数组元素

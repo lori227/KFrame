@@ -104,11 +104,6 @@ namespace KFrame
                     for ( auto iter = elements->begin(); iter != elements->end(); ++iter )
                     {
                         auto& name = ( *iter )->name();
-                        if ( name == MongoKeyword::_expire )
-                        {
-                            continue;
-                        }
-
                         if ( kfselector._limit_returns.find( name ) != kfselector._limit_returns.end() )
                         {
                             continue;

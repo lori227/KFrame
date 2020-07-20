@@ -105,7 +105,7 @@ namespace KFrame
             return false;
         }
 
-        auto strplayerkey = __REDIS_KEY_2__( __STRING__( player ), playerid );
+        auto strplayerkey = __DATABASE_KEY_2__( __STRING__( player ), playerid );
         auto kfresult = redisdriver->HSet( strplayerkey, __STRING__( data ), playerdata );
         if ( !kfresult->IsOk() )
         {
@@ -132,7 +132,7 @@ namespace KFrame
             return nullptr;
         }
 
-        return redisdriver->HGet( __REDIS_KEY_2__( __STRING__( player ), playerid ), __STRING__( data ) );
+        return redisdriver->HGet( __DATABASE_KEY_2__( __STRING__( player ), playerid ), __STRING__( data ) );
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFMongoDataExecute::SaveData( uint32 zoneid, uint64 playerid, const std::string& playerdata, uint32 saveflag )

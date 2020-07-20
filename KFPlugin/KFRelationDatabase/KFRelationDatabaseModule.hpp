@@ -55,7 +55,7 @@ namespace KFrame
         // 设置拒绝
         virtual void SetRefuse( const std::string& refusename, uint64 playerid, uint32 refusevalue );
     protected:
-        KFRelationDatabaseLogic* _relation_attribute_logic = nullptr;
+        KFRelationDatabaseLogic* _relation_database_logic = nullptr;
     };
 }
 

@@ -223,7 +223,7 @@ namespace KFrame
         __STRING_DEFINE__( gmmailid );
         __STRING_DEFINE__( mailzonelist );
         __STRING_DEFINE__( maillist );
-        __STRING_DEFINE__( mailidcreater );
+        __STRING_DEFINE__( idcreater );
         __STRING_DEFINE__( mailid );
         __STRING_DEFINE__( addmail );
         __STRING_DEFINE__( delmail );

@@ -9,7 +9,7 @@ namespace KFrame
     {
         auto redisdriver = __AUTH_REDIS_DRIVER__;
 
-        auto kforderdata = redisdriver->HGetAll( __REDIS_KEY_2__( __STRING__( payorder ), order ) );
+        auto kforderdata = redisdriver->HGetAll( __DATABASE_KEY_2__( __STRING__( payorder ), order ) );
         if ( kforderdata->_value.empty() )
         {
             __LOG_ERROR__( "order=[{}] no record", order );
@@ -37,13 +37,13 @@ namespace KFrame
         payvalues[ __STRING__( flag ) ] = "0";
 
         redisdriver->WriteMulti();
-        redisdriver->HMSet( __REDIS_KEY_2__( __STRING__( pay ), order ), payvalues );
-        redisdriver->SAdd( __REDIS_KEY_2__( __STRING__( paydata ), playerid ), order );
+        redisdriver->HMSet( __DATABASE_KEY_2__( __STRING__( pay ), order ), payvalues );
+        redisdriver->SAdd( __DATABASE_KEY_2__( __STRING__( paydata ), playerid ), order );
         auto kfresult = redisdriver->WriteExec();
         if ( kfresult->IsOk() )
         {
             // 删除订单信息
-            redisdriver->Del( __REDIS_KEY_2__( __STRING__( payorder ), order ) );
+            redisdriver->Del( __DATABASE_KEY_2__( __STRING__( payorder ), order ) );
         }
 
         return kfresult->IsOk();

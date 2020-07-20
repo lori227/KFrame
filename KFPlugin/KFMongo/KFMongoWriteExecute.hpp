@@ -70,16 +70,16 @@ namespace KFrame
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         template< class KeyType >
-        bool Operate( const std::string& table, const std::string& keyname, const KeyType& keyvalue, const std::string& field, uint32 operate, uint64 value )
+        uint64 Operate( const std::string& table, const std::string& keyname, const KeyType& keyvalue, const std::string& field, uint32 operate, uint64 value )
         {
             auto fullname = __FORMAT__( "{}.{}", _database, table );
             UpdateRequest request( fullname, UpdateRequest::UPDATE_UPSERT );
-
             if ( !keyname.empty() )
             {
                 request.selector().add( keyname, keyvalue );
             }
 
+            uint64 result = 0u;
             Poco::MongoDB::Document::Ptr update = new Poco::MongoDB::Document();
             switch ( operate )
             {
@@ -99,7 +99,24 @@ namespace KFrame
                 break;
             }
 
-            return SendRequest( request );
+            ResponseMessage response;
+            auto ok = SendRequest( request, response );
+            if ( ok )
+            {
+                if ( response.documents().size() > 0 )
+                {
+                    Poco::MongoDB::Document::Ptr doc = response.documents()[ 0 ];
+                    try
+                    {
+                        result = doc->get<Poco::UInt64>( field );
+                    }
+                    catch ( Poco::Exception& )
+                    {
+                    }
+                }
+            }
+
+            return result;
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 删除数据
@@ -113,6 +130,23 @@ namespace KFrame
             DeleteRequest request( fullname, DeleteRequest::DELETE_DEFAULT );
 
             request.selector().add( keyname, keyvalue );
+            return SendRequest( request );
+        }
+
+        // 删除字段
+        bool DeleteField( const std::string& table, uint64 key, const std::string& field )
+        {
+            auto fullname = __FORMAT__( "{}.{}", _database, table );
+            UpdateRequest request( fullname, UpdateRequest::UPDATE_UPSERT );
+
+            // key
+            request.selector().add( MongoKeyword::_id, key );
+
+            // value
+            Poco::MongoDB::Document::Ptr update = new Poco::MongoDB::Document();
+            update->add( field, _invalid_string );
+            request.update().add( MongoKeyword::_unset, update );
+
             return SendRequest( request );
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////

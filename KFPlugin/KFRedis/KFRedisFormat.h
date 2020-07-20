@@ -100,6 +100,16 @@ namespace KFrame
         return ss.str();
     }
 
+    template<>
+    inline std::string KFRedisFormat::ToString( const StringSet& value )
+    {
+        std::stringstream ss;
+        for ( auto& iter : value )
+        {
+            ss << iter << " ";
+        }
 
+        return ss.str();
+    }
 }
 #endif

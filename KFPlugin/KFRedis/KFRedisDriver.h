@@ -4,22 +4,6 @@
 #include "KFrame.h"
 #include "KFRedisFormat.h"
 
-#ifndef __REDIS_KEY_1__
-    #define __REDIS_KEY_1__( key ) __FORMAT__( "{}", key )
-#endif
-
-#ifndef __REDIS_KEY_2__
-    #define __REDIS_KEY_2__( key1, key2 ) __FORMAT__( "{}:{}", key1, key2 )
-#endif
-
-#ifndef __REDIS_KEY_3__
-    #define __REDIS_KEY_3__( key1, key2, key3 ) __FORMAT__( "{}:{}:{}", key1, key2, key3 )
-#endif
-
-#ifndef __REDIS_KEY_4__
-    #define __REDIS_KEY_4__( key1, key2, key3, key4 ) __FORMAT__( "{}:{}:{}:{}", key1, key2, key3, key4 )
-#endif
-
 namespace KFrame
 {
     class KFRedisDriver
@@ -280,13 +264,15 @@ namespace KFrame
             return ReadString( strsql );
         }
 
-        inline KFResult<uint64>::UniqueType HGetUInt64( const std::string& key, const std::string& field )
+        template< typename T >
+        inline KFResult<uint64>::UniqueType HGetUInt64( const std::string& key, const T& field )
         {
             auto strsql = __FORMAT__( "hget {} {}", key, field );
             return ReadUInt64( strsql );
         }
 
-        inline KFResult<uint64>::UniqueType HExists( const std::string& key, const std::string& field )
+        template< typename T >
+        inline KFResult<uint64>::UniqueType HExists( const std::string& key, const T& field )
         {
             auto strsql = __FORMAT__( "hexists {} {}", key, field );
             return ReadUInt64( strsql );

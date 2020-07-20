@@ -166,5 +166,21 @@
     #define __OR_STRING__ _or_string
 #endif
 //////////////////////////////////////////////////////////////////////////////////////////////////
+#ifndef __DATABASE_KEY_1__
+    #define __DATABASE_KEY_1__( key ) __FORMAT__( "{}", key )
+#endif
+
+#ifndef __DATABASE_KEY_2__
+    #define __DATABASE_KEY_2__( key1, key2 ) __FORMAT__( "{}:{}", key1, key2 )
+#endif
+
+#ifndef __DATABASE_KEY_3__
+    #define __DATABASE_KEY_3__( key1, key2, key3 ) __FORMAT__( "{}:{}:{}", key1, key2, key3 )
+#endif
+
+#ifndef __DATABASE_KEY_4__
+    #define __DATABASE_KEY_4__( key1, key2, key3, key4 ) __FORMAT__( "{}:{}:{}:{}", key1, key2, key3, key4 )
+#endif
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 #endif //!__KF_MACROS_H__
