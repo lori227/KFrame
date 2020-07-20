@@ -86,15 +86,18 @@ namespace KFrame
     {
         // 查询全局邮件列表
         auto tablename = __DATABASE_KEY_2__( __STRING__( globalmail ), zoneid );
-        auto kflistresult = _mongo_driver->QueryListRecord( tablename );
-        if ( kflistresult->_value.empty() )
-        {
-            return;
-        }
 
         // 获取玩家已经加载的最近一封全局邮件id
         auto kfmailid = _mongo_driver->QueryUInt64( __STRING__( mailinfo ), playerid, tablename );
         if ( !kfmailid->IsOk() )
+        {
+            return;
+        }
+
+        KFMongoSelector selector;
+        selector._document.AddExpression( MongoKeyword::_id, MongoKeyword::_gt, kfmailid->_value );
+        auto kflistresult = _mongo_driver->QueryListRecord( tablename, selector );
+        if ( kflistresult->_value.empty() )
         {
             return;
         }
