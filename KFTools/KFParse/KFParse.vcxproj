@@ -18,7 +18,6 @@
   <ItemGroup>
     <ClInclude Include="KFFile.h" />
     <ClInclude Include="KFParse.h" />
-    <ClInclude Include="Utf8ToGbk.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{4CDF2BD7-71EB-40AC-9A60-562909BDBDAA}</ProjectGuid>

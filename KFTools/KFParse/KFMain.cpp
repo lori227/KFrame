@@ -8,11 +8,17 @@
     #ifdef __KF_DEBUG__
         #pragma comment( lib, "KFExceld.lib" )
         #pragma comment( lib, "KFUtilityd.lib" )
+        #pragma comment( lib, "KFGlobald.lib" )
+        #pragma comment( lib, "KFMemoryd.lib" )
+        #pragma comment( lib, "KFLoggerd.lib" )
     #endif
     //////////////////////////////////////////////////////////////////////////////////////////////////
     #ifdef __KF_RELEASE__
         #pragma comment( lib, "KFExcel.lib" )
         #pragma comment( lib, "KFUtility.lib" )
+        #pragma comment( lib, "KFGlobal.lib" )
+        #pragma comment( lib, "KFMemory.lib" )
+        #pragma comment( lib, "KFLogger.lib" )
     #endif
     //////////////////////////////////////////////////////////////////////////////////////////////////
 #endif

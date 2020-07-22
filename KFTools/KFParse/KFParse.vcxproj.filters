@@ -7,7 +7,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFParse.h" />
-    <ClInclude Include="Utf8ToGbk.hpp" />
     <ClInclude Include="KFFile.h" />
   </ItemGroup>
 </Project>
