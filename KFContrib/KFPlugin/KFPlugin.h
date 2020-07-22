@@ -42,6 +42,7 @@ namespace KFrame
         // 执行
         virtual void BeforeRun();
         virtual void PrepareRun();
+        virtual void Run() {};
 
         //////////////////////////////////////////////////////////////
         // 重新加载

@@ -10,7 +10,7 @@ namespace KFrame
     {
     public:
         KFInterface() = default;
-        virtual ~KFInterface() {};
+        virtual ~KFInterface() = default;
 
         // 释放
         virtual void Release() {};
@@ -30,6 +30,7 @@ namespace KFrame
 
         // 执行一次
         virtual void PrepareRun() = 0;
+        virtual void Run() = 0;
 
         // 关闭
         virtual void BeforeShut() = 0;
