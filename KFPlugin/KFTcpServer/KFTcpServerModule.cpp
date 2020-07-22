@@ -3,17 +3,6 @@
 
 namespace KFrame
 {
-    KFTcpServerModule::KFTcpServerModule()
-    {
-        _server_engine = nullptr;
-        _kf_transpond_function = nullptr;
-    }
-
-    KFTcpServerModule::~KFTcpServerModule()
-    {
-        __DELETE_OBJECT__( _server_engine );
-    }
-
     void KFTcpServerModule::InitModule()
     {
         _server_engine = __NEW_OBJECT__( KFNetServerEngine );
@@ -92,6 +81,7 @@ namespace KFrame
     void KFTcpServerModule::ShutDown()
     {
         _server_engine->ShutEngine();
+        __DELETE_OBJECT__( _server_engine );
     }
 
     void KFTcpServerModule::Run()

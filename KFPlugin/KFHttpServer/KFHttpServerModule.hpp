@@ -20,8 +20,8 @@ namespace KFrame
     class KFHttpServerModule : public KFHttpServerInterface
     {
     public:
-        KFHttpServerModule();
-        ~KFHttpServerModule();
+        KFHttpServerModule() = default;
+        ~KFHttpServerModule() = default;
 
         // 运行
         virtual void BeforeRun();

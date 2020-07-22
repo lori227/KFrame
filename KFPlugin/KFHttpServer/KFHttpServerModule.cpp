@@ -4,16 +4,6 @@
 
 namespace KFrame
 {
-    KFHttpServerModule::KFHttpServerModule()
-    {
-        _http_server = __NEW_OBJECT__( KFHttpServer );
-    }
-
-    KFHttpServerModule::~KFHttpServerModule()
-    {
-        __DELETE_OBJECT__( _http_server );
-    }
-
     void KFHttpServerModule::BeforeRun()
     {
         //////////////////////////////////////////////////////////////////////////////////
@@ -23,6 +13,7 @@ namespace KFrame
         // 计算端口
         kfsetting->_port = _kf_ip_address->CalcListenPort( kfsetting->_port_type, kfsetting->_port, kfglogal->_app_id->GetId() );
 
+        _http_server = __NEW_OBJECT__( KFHttpServer );
         _http_server->Start( kfsetting->_local_ip, kfsetting->_port, kfsetting->_max_thread,
                              kfsetting->_max_queue, kfsetting->_idle_time, kfsetting->_keep_alive );
 
@@ -40,6 +31,7 @@ namespace KFrame
     void KFHttpServerModule::ShutDown()
     {
         _http_server->ShutDown();
+        __DELETE_OBJECT__( _http_server );
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////

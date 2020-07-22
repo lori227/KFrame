@@ -120,7 +120,7 @@ namespace KFrame
             dbvalue.AddValue( MongoKeyword::_expire, ( time + validtime - KFGlobal::Instance()->_real_time ) );
             dbvalue.AddValue( __STRING__( status ), ( uint32 )KFMsg::InitStatus );
             auto ok = _mongo_driver->Insert( tablename, dbvalue );
-            if ( ok &&  mailid > maxmailid )
+            if ( ok && mailid > maxmailid )
             {
                 maxmailid = mailid;
             }

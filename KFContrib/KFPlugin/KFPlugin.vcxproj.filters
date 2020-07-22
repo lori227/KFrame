@@ -8,7 +8,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KFPluginManage.cpp" />
-    <ClCompile Include="KFModule.cpp" />
     <ClCompile Include="KFPlugin.cpp" />
+    <ClCompile Include="KFModule.cpp" />
   </ItemGroup>
 </Project>

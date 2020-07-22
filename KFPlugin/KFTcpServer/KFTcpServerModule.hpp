@@ -22,8 +22,8 @@ namespace KFrame
     class KFTcpServerModule : public KFTcpServerInterface
     {
     public:
-        KFTcpServerModule();
-        ~KFTcpServerModule();
+        KFTcpServerModule() = default;
+        ~KFTcpServerModule() = default;
 
         // 初始化
         virtual void InitModule();
@@ -107,10 +107,10 @@ namespace KFrame
 
     private:
         // 网络服务器引擎
-        KFNetServerEngine* _server_engine;
+        KFNetServerEngine* _server_engine = nullptr;
 
         // 压缩长度
-        uint32 _compress_length;
+        uint32 _compress_length = 0u;
 
         // 是否加密
         bool _is_open_encrypt = false;
@@ -122,7 +122,7 @@ namespace KFrame
         KFBind< std::string, const std::string&, KFNetEventFunction > _kf_lost_function;
 
         // 转发函数
-        KFTranspondFunction _kf_transpond_function;
+        KFTranspondFunction _kf_transpond_function = nullptr;
     };
 }
 

@@ -4,17 +4,6 @@
 
 namespace KFrame
 {
-    KFTcpClientModule::KFTcpClientModule()
-    {
-        _client_engine = nullptr;
-        _kf_transpond_function = nullptr;
-    }
-
-    KFTcpClientModule::~KFTcpClientModule()
-    {
-        __DELETE_OBJECT__( _client_engine );
-    }
-
     void KFTcpClientModule::InitModule()
     {
         _client_engine = __NEW_OBJECT__( KFNetClientEngine );
@@ -43,6 +32,7 @@ namespace KFrame
     void KFTcpClientModule::ShutDown()
     {
         _client_engine->ShutEngine();
+        __DELETE_OBJECT__( _client_engine );
     }
 
     void KFTcpClientModule::Run()

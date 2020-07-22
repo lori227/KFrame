@@ -10,8 +10,8 @@ namespace KFrame
     class KFModule : public KFInterface
     {
     public:
-        KFModule();
-        ~KFModule();
+        KFModule() = default;
+        virtual ~KFModule() = default;
 
         // 安装
         virtual void Install() {}
@@ -48,7 +48,7 @@ namespace KFrame
 
     public:
         // 插件
-        KFPlugin* _kf_plugin;
+        KFPlugin* _kf_plugin = nullptr;
     };
 }
 

@@ -9,11 +9,7 @@ namespace KFrame
     class KFInterface
     {
     public:
-        KFInterface()
-        {
-            _kf_plugin_manage = nullptr;
-        }
-
+        KFInterface() = default;
         virtual ~KFInterface() {};
 
         // 释放
@@ -48,7 +44,7 @@ namespace KFrame
         std::string _plugin_name;
 
         // 插件管理
-        KFPluginManage* _kf_plugin_manage;
+        KFPluginManage* _kf_plugin_manage = nullptr;
     };
 }
 

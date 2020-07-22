@@ -19,8 +19,8 @@ namespace KFrame
     class KFTcpClientModule : public KFTcpClientInterface
     {
     public:
-        KFTcpClientModule();
-        ~KFTcpClientModule();
+        KFTcpClientModule() = default;
+        ~KFTcpClientModule() = default;
 
         // 初始化
         virtual void InitModule();
@@ -109,10 +109,10 @@ namespace KFrame
         bool IsSelfConnection( const std::string& name, const std::string& type, uint64 id );
     public:
         // 客户端引擎
-        KFNetClientEngine* _client_engine;
+        KFNetClientEngine* _client_engine = nullptr;
 
         // 转发函数
-        KFTranspondFunction _kf_transpond_function;
+        KFTranspondFunction _kf_transpond_function = nullptr;
 
         // 注册成功回调函数
         KFBind< std::string, const std::string&, KFNetEventFunction > _kf_connection_function;
