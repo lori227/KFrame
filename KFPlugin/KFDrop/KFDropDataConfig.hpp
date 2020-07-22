@@ -34,6 +34,7 @@ namespace KFrame
         virtual void LoadAllComplete();
 
     protected:
+
         // 读取配置
         virtual void ReadSetting( KFNode& xmlnode, KFDropDataSetting* kfsetting );
     };

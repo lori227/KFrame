@@ -65,29 +65,34 @@ namespace KFrame
 
     const DropDataList& KFDropModule::Drop( KFEntity* player, const UInt32Vector& droplist, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
     {
-        static DropDataList _drop_data_list;
-        _drop_data_list.clear();
-
+        // 逻辑里面可能还会触发drop, 所以这里不能使用static
+        DropDataList dropdatalist;
         for ( auto dropid : droplist )
         {
-            RandDropLogic( player, dropid, 1u, _drop_data_list, function, line );
+            RandDropLogic( player, dropid, 1u, dropdatalist, function, line );
         }
 
         // 执行掉落
-        ExecuteDropLogic( player, _drop_data_list, modulename, moduleid, function, line );
+        ExecuteDropLogic( player, dropdatalist, modulename, moduleid, function, line );
+
+        // 返回列表
+        static DropDataList _drop_data_list;
+        _drop_data_list.swap( dropdatalist );
         return _drop_data_list;
     }
 
     const DropDataList& KFDropModule::Drop( KFEntity* player, uint32 dropid, uint32 count, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
     {
-        static DropDataList _drop_data_list;
-        _drop_data_list.clear();
-
-        // 随机掉落数据
-        RandDropLogic( player, dropid, count, _drop_data_list, function, line );
+        // 逻辑里面可能还会触发drop, 所以这里不能使用static
+        DropDataList dropdatalist;
+        RandDropLogic( player, dropid, count, dropdatalist, function, line );
 
         // 执行掉落
-        ExecuteDropLogic( player, _drop_data_list, modulename, moduleid, function, line );
+        ExecuteDropLogic( player, dropdatalist, modulename, moduleid, function, line );
+
+        // 返回列表
+        static DropDataList _drop_data_list;
+        _drop_data_list.swap( dropdatalist );
         return _drop_data_list;
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -96,9 +101,8 @@ namespace KFrame
         player->AddDataToShow( modulename, moduleid );
 
         // 执行掉落逻辑
-        for ( auto iter = dropdatalist.begin(); iter != dropdatalist.end(); ++iter )
+        for ( auto dropdata : dropdatalist )
         {
-            auto dropdata = *iter;
             auto kffunction = _drop_logic_function.Find( dropdata->_logic_name );
             if ( kffunction != nullptr )
             {
