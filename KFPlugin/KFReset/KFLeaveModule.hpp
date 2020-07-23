@@ -28,7 +28,7 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
     protected:
         // 离开游戏世界
-        __KF_LEAVE_PLAYER_FUNCTION__( LeaveGameWorld );
+        __KF_PLAYER_LEAVE_FUNCTION__( LeaveGameWorld );
     };
 }
 

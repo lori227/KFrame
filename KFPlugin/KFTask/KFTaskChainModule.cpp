@@ -11,8 +11,8 @@ namespace KFrame
         __REGISTER_ADD_ELEMENT__( __STRING__( taskchain ), &KFTaskChainModule::AddTaskChainElement );
         __REGISTER_ADD_ELEMENT__( __STRING__( retaskchain ), &KFTaskChainModule::AddTaskChainrefreshElement );
 
-        __REGISTER_ENTER_PLAYER__( &KFTaskChainModule::OnEnterTaskChainModule );
-        __REGISTER_LEAVE_PLAYER__( &KFTaskChainModule::OnLeaveTaskChainModule );
+        __REGISTER_PLAYER_ENTER__( &KFTaskChainModule::OnEnterTaskChainModule );
+        __REGISTER_PLAYER_LEAVE__( &KFTaskChainModule::OnLeaveTaskChainModule );
 
         __REGISTER_REMOVE_DATA_1__( __STRING__( task ), &KFTaskChainModule::OnRemoveTaskTaskChainModule );
     }
@@ -20,14 +20,14 @@ namespace KFrame
     void KFTaskChainModule::BeforeShut()
     {
         __UN_RESET__();
-        __UN_ENTER_PLAYER__();
-        __UN_LEAVE_PLAYER__();
+        __UN_PLAYER_ENTER__();
+        __UN_PLAYER_LEAVE__();
 
         __UN_ADD_ELEMENT__( __STRING__( taskchain ) );
         __UN_ADD_ELEMENT__( __STRING__( retaskchain ) );
     }
 
-    __KF_ENTER_PLAYER_FUNCTION__( KFTaskChainModule::OnEnterTaskChainModule )
+    __KF_PLAYER_ENTER_FUNCTION__( KFTaskChainModule::OnEnterTaskChainModule )
     {
         UInt64List removes;
         auto kfrecord = player->Find( __STRING__( retaskchain ) );
@@ -66,7 +66,7 @@ namespace KFrame
         }
     }
 
-    __KF_LEAVE_PLAYER_FUNCTION__( KFTaskChainModule::OnLeaveTaskChainModule )
+    __KF_PLAYER_LEAVE_FUNCTION__( KFTaskChainModule::OnLeaveTaskChainModule )
     {
         __UN_TIMER_1__( player->GetKeyID() );
     }

@@ -75,10 +75,10 @@ namespace KFrame
 
     protected:
         // 进入游戏查询邮件信息
-        __KF_ENTER_PLAYER_FUNCTION__( OnEnterMailModule );
+        __KF_PLAYER_ENTER_FUNCTION__( OnEnterMailModule );
 
         // 离开回调
-        __KF_LEAVE_PLAYER_FUNCTION__( OnLeaveMailModule );
+        __KF_PLAYER_LEAVE_FUNCTION__( OnLeaveMailModule );
 
         // 新玩家首次登陆处理
         __KF_NEW_PLAYER_FUNCTION__( OnNewPlayerMailModule );

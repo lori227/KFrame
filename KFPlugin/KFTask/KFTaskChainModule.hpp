@@ -59,10 +59,10 @@ namespace KFrame
         __KF_TIMER_FUNCTION__( OnTimerTaskChainRefreshTimeout );
 
         // 进入游戏检查任务
-        __KF_ENTER_PLAYER_FUNCTION__( OnEnterTaskChainModule );
+        __KF_PLAYER_ENTER_FUNCTION__( OnEnterTaskChainModule );
 
         // 离开游戏删除定时器
-        __KF_LEAVE_PLAYER_FUNCTION__( OnLeaveTaskChainModule );
+        __KF_PLAYER_LEAVE_FUNCTION__( OnLeaveTaskChainModule );
 
         // 开启附加任务链
         void OpenExtendChain( KFEntity* player, const UInt32Map& chainlist );

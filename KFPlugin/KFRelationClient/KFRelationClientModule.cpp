@@ -6,8 +6,8 @@ namespace KFrame
 
     void KFRelationClientModule::BeforeRun()
     {
-        __REGISTER_ENTER_PLAYER__( &KFRelationClientModule::OnEnterQueryRelation );
-        __REGISTER_LEAVE_PLAYER__( &KFRelationClientModule::OnLeaveUpdateRelation );
+        __REGISTER_PLAYER_ENTER__( &KFRelationClientModule::OnEnterQueryRelation );
+        __REGISTER_PLAYER_LEAVE__( &KFRelationClientModule::OnLeaveUpdateRelation );
 
         // 注册属性回调
         _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
@@ -31,8 +31,8 @@ namespace KFrame
 
     void KFRelationClientModule::BeforeShut()
     {
-        __UN_ENTER_PLAYER__();
-        __UN_LEAVE_PLAYER__();
+        __UN_PLAYER_ENTER__();
+        __UN_PLAYER_LEAVE__();
 
         __UN_UPDATE_DATA__();
         __UN_UPDATE_STRING__();
@@ -104,7 +104,7 @@ namespace KFrame
         kfrelation->SetKeyID( pbrelation->playerid() );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_ENTER_PLAYER_FUNCTION__( KFRelationClientModule::OnEnterQueryRelation )
+    __KF_PLAYER_ENTER_FUNCTION__( KFRelationClientModule::OnEnterQueryRelation )
     {
         for ( auto& iter : KFRelationConfig::Instance()->_settings._objects )
         {
@@ -184,7 +184,7 @@ namespace KFrame
         }
     }
 
-    __KF_LEAVE_PLAYER_FUNCTION__( KFRelationClientModule::OnLeaveUpdateRelation )
+    __KF_PLAYER_LEAVE_FUNCTION__( KFRelationClientModule::OnLeaveUpdateRelation )
     {
         for ( auto& iter : KFRelationConfig::Instance()->_settings._objects )
         {

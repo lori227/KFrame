@@ -11,7 +11,7 @@ namespace KFrame
         __REGISTER_REMOVE_DATA__( &KFAchieveModule::OnRemoveDataAchieveModule );
         __REGISTER_UPDATE_DATA__( &KFAchieveModule::OnUpdateDataAchieveModule );
 
-        __REGISTER_ENTER_PLAYER__( &KFAchieveModule::OnEnterAchieveModule );
+        __REGISTER_PLAYER_ENTER__( &KFAchieveModule::OnEnterAchieveModule );
         //////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_ACHIEVE_REWARD_REQ, &KFAchieveModule::HandleAchieveRewardReq );
     }
@@ -22,12 +22,12 @@ namespace KFrame
         __UN_REMOVE_DATA__();
         __UN_UPDATE_DATA__();
 
-        __UN_ENTER_PLAYER__();
+        __UN_PLAYER_ENTER__();
         //////////////////////////////////////////////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::MSG_ACHIEVE_REWARD_REQ );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_ENTER_PLAYER_FUNCTION__( KFAchieveModule::OnEnterAchieveModule )
+    __KF_PLAYER_ENTER_FUNCTION__( KFAchieveModule::OnEnterAchieveModule )
     {
         auto kfachieverecord = player->Find( __STRING__( achieve ) );
         for ( auto& iter : KFAchieveConfig::Instance()->_settings._objects )

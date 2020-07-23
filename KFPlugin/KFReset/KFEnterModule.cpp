@@ -4,15 +4,15 @@ namespace KFrame
 {
     void KFEnterModule::BeforeRun()
     {
-        __REGISTER_ENTER_PLAYER__( &KFEnterModule::EnterGameWorld );
+        __REGISTER_PLAYER_ENTER__( &KFEnterModule::EnterGameWorld );
     }
 
     void KFEnterModule::BeforeShut()
     {
-        __UN_ENTER_PLAYER__();
+        __UN_PLAYER_ENTER__();
     }
 
-    __KF_ENTER_PLAYER_FUNCTION__( KFEnterModule::EnterGameWorld )
+    __KF_PLAYER_ENTER_FUNCTION__( KFEnterModule::EnterGameWorld )
     {
         // 上线时间
         player->Set( __STRING__( logintime ), KFGlobal::Instance()->_real_time );

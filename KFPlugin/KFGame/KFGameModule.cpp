@@ -16,8 +16,8 @@ namespace KFrame
         _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
         _kf_component->RegisterEntitySaveFunction( this, &KFGameModule::SavePlayer );
 
-        __REGISTER_ENTER_PLAYER__( &KFGameModule::OnEnterGame );
-        __REGISTER_LEAVE_PLAYER__( &KFGameModule::OnLeaveGame );
+        __REGISTER_PLAYER_ENTER__( &KFGameModule::OnEnterGame );
+        __REGISTER_PLAYER_LEAVE__( &KFGameModule::OnLeaveGame );
 
         _kf_data_client->BindLoadPlayerFunction( this, &KFGameModule::OnAfterLoadPlayerData );
         _kf_data_client->BindQueryPlayerFunction( this, &KFGameModule::OnAfterQueryPlayerData );
@@ -47,8 +47,8 @@ namespace KFrame
         __UN_ROUTE_MESSAGE_FUNCTION__();
         __UN_TCP_CLIENT_TRANSPOND__();
 
-        __UN_ENTER_PLAYER__();
-        __UN_LEAVE_PLAYER__();
+        __UN_PLAYER_ENTER__();
+        __UN_PLAYER_LEAVE__();
 
         _kf_data_client->UnBindLoadPlayerFunction( this );
         _kf_data_client->UnBindLoadPlayerFunction( this );
@@ -291,7 +291,7 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_ENTER_PLAYER_FUNCTION__( KFGameModule::OnEnterGame )
+    __KF_PLAYER_ENTER_FUNCTION__( KFGameModule::OnEnterGame )
     {
         // 发送消息到世界服务器
         KFMsg::S2SPlayerEnterToWorldReq req;
@@ -300,7 +300,7 @@ namespace KFrame
         SendToWorld( KFMsg::S2S_PLAYER_ENTER_TO_WORLD_REQ, &req );
     }
 
-    __KF_LEAVE_PLAYER_FUNCTION__( KFGameModule::OnLeaveGame )
+    __KF_PLAYER_LEAVE_FUNCTION__( KFGameModule::OnLeaveGame )
     {
         // 发送消息到世界服务器
         KFMsg::S2SPlayerLeaveToWorldReq req;

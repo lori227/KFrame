@@ -252,44 +252,43 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#define __KF_ENTER_PLAYER_FUNCTION__( function ) void function( KFEntity* player )
+#define __KF_PLAYER_ENTER_FUNCTION__( function ) void function( KFEntity* player )
+#define __REGISTER_PLAYER_ENTER__( function ) _kf_player->RegisterEnterFunction( this, function )
+#define __UN_PLAYER_ENTER__() _kf_player->UnRegisterEnterFunction( this )
 
-#define __REGISTER_ENTER_PLAYER__( function ) _kf_player->RegisterEnterFunction( this, function )
-#define __UN_ENTER_PLAYER__() _kf_player->UnRegisterEnterFunction( this )
+#define __REGISTER_PLAYER_BEFORE_ENTER__( function ) _kf_player->RegisterBeforeEnterFunction( this, function )
+#define __UN_PLAYER_BEFORE_ENTER__() _kf_player->UnRegisterBeforeEnterFunction( this )
 
-#define __REGISTER_BEFORE_ENTER_PLAYER__( function ) _kf_player->RegisterBeforeEnterFunction( this, function )
-#define __UN_BEFORE_ENTER_PLAYER__() _kf_player->UnRegisterBeforeEnterFunction( this )
+#define __REGISTER_PLAYER_AFTER_ENTER__( function ) _kf_player->RegisterAfterEnterFunction( this, function )
+#define __UN_PLAYER_AFTER_ENTER__() _kf_player->UnRegisterAfterEnterFunction( this )
 
-#define __REGISTER_AFTER_ENTER_PLAYER__( function ) _kf_player->RegisterAfterEnterFunction( this, function )
-#define __UN_AFTER_ENTER_PLAYER__() _kf_player->UnRegisterAfterEnterFunction( this )
+#define __KF_PLAYER_LEAVE_FUNCTION__( function ) void function( KFEntity* player )
+#define __REGISTER_PLAYER_LEAVE__( function ) _kf_player->RegisterLeaveFunction( this, function )
+#define __UN_PLAYER_LEAVE__() _kf_player->UnRegisterLeaveFunction( this )
 
-#define __KF_LEAVE_PLAYER_FUNCTION__( function ) void function( KFEntity* player )
-#define __REGISTER_LEAVE_PLAYER__( function ) _kf_player->RegisterLeaveFunction( this, function )
-#define __UN_LEAVE_PLAYER__() _kf_player->UnRegisterLeaveFunction( this )
+#define __KF_PLAYER_RESET_FUNCTION__( function ) void function( KFEntity* player )
+#define __REGISTER_PLAYER_RESET__( function ) _kf_player->RegisterResetFunction( this, function )
+#define __UN_PLAYER_RESET__() _kf_player->UnRegisterResetFunction( this )
 
-#define __KF_RESET_PLAYER_FUNCTION__( function ) void function( KFEntity* player )
-#define __REGISTER_RESET_PLAYER__( function ) _kf_player->RegisterResetFunction( this, function )
-#define __UN_RESET_PLAYER__() _kf_player->UnRegisterResetFunction( this )
+#define __KF_PLAYER_RUN_FUNCTION__( function ) void function( KFEntity* player )
+#define __REGISTER_PLAYER_RUN__( function ) _kf_player->RegisterRunDataFunction( this, function )
+#define __UN_PLAYER_RUN__() _kf_player->UnRegisterRunDataFunction( this )
+
+#define __KF_PLAYER_AFTER_RUN_FUNCTION__( function ) void function( KFEntity* player )
+#define __REGISTER_PLAYER_AFTER_RUN__( function ) _kf_player->RegisterAfterRunDataFunction( this, function )
+#define __UN_PLAYER_AFTER_RUN__() _kf_player->UnRegisterAfterRunDataFunction( this )
+
+#define __KF_PLAYER_INIT_FUNCTION__( function ) void function( KFEntity* player )
+#define __REGISTER_PLAYER_INIT__( function ) _kf_player->RegisterInitDataFunction( this, function )
+#define __UN_PLAYER_INIT__() _kf_player->UnRegisterInitDataFunction( this )
+
+#define __KF_PLAYER_UNINIT_FUNCTION__( function ) void function( KFEntity* player )
+#define __REGISTER_PLAYER_UNINIT__( function ) _kf_player->RegisterUnInitDataFunction( this, function )
+#define __UN_PLAYER_UNINIT__() _kf_player->UnRegisterUnInitDataFunction( this )
 
 #define __KF_NEW_PLAYER_FUNCTION__( function ) void function( KFEntity* player )
 #define __REGISTER_NEW_PLAYER__( function ) _kf_player->RegisterNewPlayerFunction( this, function )
 #define __UN_NEW_PLAYER__() _kf_player->UnRegisterNewPlayerFunction( this )
-
-#define __KF_RUN_PLAYER_FUNCTION__( function ) void function( KFEntity* player )
-#define __REGISTER_RUN_PLAYER__( function ) _kf_player->RegisterRunDataFunction( this, function )
-#define __UN_RUN_PLAYER__() _kf_player->UnRegisterRunDataFunction( this )
-
-#define __KF_AFTER_RUN_PLAYER_FUNCTION__( function ) void function( KFEntity* player )
-#define __REGISTER_AFTER_RUN_PLAYER__( function ) _kf_player->RegisterAfterRunDataFunction( this, function )
-#define __UN_AFTER_RUN_PLAYER__() _kf_player->UnRegisterAfterRunDataFunction( this )
-
-#define __KF_INIT_PLAYER_FUNCTION__( function ) void function( KFEntity* player )
-#define __REGISTER_INIT_PLAYER__( function ) _kf_player->RegisterInitDataFunction( this, function )
-#define __UN_INIT_PLAYER__() _kf_player->UnRegisterInitDataFunction( this )
-
-#define __KF_UNINIT_PLAYER_FUNCTION__( function ) void function( KFEntity* player )
-#define __REGISTER_UNINIT_PLAYER__( function ) _kf_player->RegisterUnInitDataFunction( this, function )
-#define __UN_UNINIT_PLAYER__() _kf_player->UnRegisterUnInitDataFunction( this )
 
 #define __KF_CREATE_ROLE_FUNCTION__( function ) void function( KFEntity* player )
 #define __REGISTER_CREATE_ROLE__( function ) _kf_player->RegisterCreateRoleFunction( this, function )

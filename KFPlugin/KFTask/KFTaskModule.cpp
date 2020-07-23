@@ -8,8 +8,8 @@ namespace KFrame
         _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
         __REGISTER_ADD_ELEMENT__( __STRING__( task ), &KFTaskModule::AddTaskElement );
 
-        __REGISTER_ENTER_PLAYER__( &KFTaskModule::OnEnterTaskModule );
-        __REGISTER_LEAVE_PLAYER__( &KFTaskModule::OnLeaveTaskModule );
+        __REGISTER_PLAYER_ENTER__( &KFTaskModule::OnEnterTaskModule );
+        __REGISTER_PLAYER_LEAVE__( &KFTaskModule::OnLeaveTaskModule );
 
         __REGISTER_ADD_DATA__( &KFTaskModule::OnAddDataTaskModule );
         __REGISTER_REMOVE_DATA__( &KFTaskModule::OnRemoveDataTaskModule );
@@ -28,8 +28,8 @@ namespace KFrame
     void KFTaskModule::BeforeShut()
     {
         __UN_TIMER_0__();
-        __UN_ENTER_PLAYER__();
-        __UN_LEAVE_PLAYER__();
+        __UN_PLAYER_ENTER__();
+        __UN_PLAYER_LEAVE__();
 
         __UN_ADD_DATA__();
         __UN_REMOVE_DATA__();
@@ -81,7 +81,7 @@ namespace KFrame
         }
     }
 
-    __KF_ENTER_PLAYER_FUNCTION__( KFTaskModule::OnEnterTaskModule )
+    __KF_PLAYER_ENTER_FUNCTION__( KFTaskModule::OnEnterTaskModule )
     {
         UInt64List removes;
         std::map<KFData*, const KFTaskSetting*> finishtasklist;
@@ -125,7 +125,7 @@ namespace KFrame
         }
     }
 
-    __KF_LEAVE_PLAYER_FUNCTION__( KFTaskModule::OnLeaveTaskModule )
+    __KF_PLAYER_LEAVE_FUNCTION__( KFTaskModule::OnLeaveTaskModule )
     {
         __UN_TIMER_1__( player->GetKeyID() );
     }

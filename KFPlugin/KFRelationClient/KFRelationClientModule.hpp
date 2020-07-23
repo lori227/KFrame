@@ -40,10 +40,10 @@ namespace KFrame
 
     protected:
         // 上线查询好友数据
-        __KF_ENTER_PLAYER_FUNCTION__( OnEnterQueryRelation );
+        __KF_PLAYER_ENTER_FUNCTION__( OnEnterQueryRelation );
 
         // 下线通知
-        __KF_LEAVE_PLAYER_FUNCTION__( OnLeaveUpdateRelation );
+        __KF_PLAYER_LEAVE_FUNCTION__( OnLeaveUpdateRelation );
 
         // 属性更新回调
         __KF_UPDATE_DATA_FUNCTION__( OnRelationValueUpdate );

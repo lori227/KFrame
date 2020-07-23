@@ -4,15 +4,15 @@ namespace KFrame
 {
     void KFLeaveModule::BeforeRun()
     {
-        __REGISTER_LEAVE_PLAYER__( &KFLeaveModule::LeaveGameWorld );
+        __REGISTER_PLAYER_LEAVE__( &KFLeaveModule::LeaveGameWorld );
     }
 
     void KFLeaveModule::BeforeShut()
     {
-        __UN_LEAVE_PLAYER__();
+        __UN_PLAYER_LEAVE__();
     }
 
-    __KF_LEAVE_PLAYER_FUNCTION__( KFLeaveModule::LeaveGameWorld )
+    __KF_PLAYER_LEAVE_FUNCTION__( KFLeaveModule::LeaveGameWorld )
     {
         // 更新总时间
         auto logintime = player->Get( __STRING__( logintime ) );

@@ -4,20 +4,20 @@ namespace KFrame
 {
     void KFResetModule::BeforeRun()
     {
-        __REGISTER_RESET_PLAYER__( &KFResetModule::ResetPlayerData );
-        __REGISTER_RUN_PLAYER__( &KFResetModule::RunResetPlayerData );
-        __REGISTER_ENTER_PLAYER__( &KFResetModule::OnEnterResetModule );
+        __REGISTER_PLAYER_RESET__( &KFResetModule::ResetPlayerData );
+        __REGISTER_PLAYER_RUN__( &KFResetModule::RunResetPlayerData );
+        __REGISTER_PLAYER_ENTER__( &KFResetModule::OnEnterResetModule );
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
     void KFResetModule::ShutDown()
     {
-        __UN_RUN_PLAYER__();
-        __UN_RESET_PLAYER__();
-        __UN_ENTER_PLAYER__();
+        __UN_PLAYER_RUN__();
+        __UN_PLAYER_RESET__();
+        __UN_PLAYER_ENTER__();
     }
 
-    __KF_ENTER_PLAYER_FUNCTION__( KFResetModule::OnEnterResetModule )
+    __KF_PLAYER_ENTER_FUNCTION__( KFResetModule::OnEnterResetModule )
     {
         // 把列表中不存在的时间数据删除掉
         UInt32List removes;
@@ -109,7 +109,7 @@ namespace KFrame
         player->UpdateData( kftimerecord, timeid, kftimerecord->_data_setting->_value_key_name, KFEnum::Set, KFGlobal::Instance()->_real_time );
     }
 
-    __KF_RUN_PLAYER_FUNCTION__( KFResetModule::RunResetPlayerData )
+    __KF_PLAYER_RUN_FUNCTION__( KFResetModule::RunResetPlayerData )
     {
         auto kfresetdata = player->Find( __STRING__( resettime ) );
         auto resettime = kfresetdata->Get();
@@ -123,7 +123,7 @@ namespace KFrame
         ResetPlayerData( player );
     }
 
-    __KF_RESET_PLAYER_FUNCTION__( KFResetModule::ResetPlayerData )
+    __KF_PLAYER_RESET_FUNCTION__( KFResetModule::ResetPlayerData )
     {
         // 判断所有时间id, 是否有需要更新
         auto kftimerecord = player->Find( __STRING__( time ) );

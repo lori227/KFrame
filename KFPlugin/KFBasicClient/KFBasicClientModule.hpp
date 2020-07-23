@@ -42,10 +42,10 @@ namespace KFrame
         __KF_UPDATE_STRING_FUNCTION__( OnUpdateStringCallBack );
 
         // 上线更新公共数据
-        __KF_ENTER_PLAYER_FUNCTION__( OnEnterUpdateBasicAttribute );
+        __KF_PLAYER_ENTER_FUNCTION__( OnEnterUpdateBasicAttribute );
 
         // 离线更新公共数据
-        __KF_LEAVE_PLAYER_FUNCTION__( OnLeaveUpdateBasicAttribute );
+        __KF_PLAYER_LEAVE_FUNCTION__( OnLeaveUpdateBasicAttribute );
 
         // 上下线更新玩家数据
         void EnterLeaveUpdateAttributeToBasic( KFEntity* player );

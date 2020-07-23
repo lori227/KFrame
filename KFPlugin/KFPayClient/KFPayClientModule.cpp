@@ -4,8 +4,8 @@ namespace KFrame
 {
     void KFPayClientModule::BeforeRun()
     {
-        __REGISTER_ENTER_PLAYER__( &KFPayClientModule::OnEnterPayModule );
-        __REGISTER_LEAVE_PLAYER__( &KFPayClientModule::OnLeavePayModule );
+        __REGISTER_PLAYER_ENTER__( &KFPayClientModule::OnEnterPayModule );
+        __REGISTER_PLAYER_LEAVE__( &KFPayClientModule::OnLeavePayModule );
         ////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_APPLY_PAY_ORDER_REQ, &KFPayClientModule::HandleApplyPayOrderReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_PAY_RESULT_REQ, &KFPayClientModule::HandlePayResultReq );
@@ -15,8 +15,8 @@ namespace KFrame
     void KFPayClientModule::BeforeShut()
     {
         __UN_TIMER_0__();
-        __UN_ENTER_PLAYER__();
-        __UN_LEAVE_PLAYER__();
+        __UN_PLAYER_ENTER__();
+        __UN_PLAYER_LEAVE__();
         //////////////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::MSG_APPLY_PAY_ORDER_REQ );
         __UN_MESSAGE__( KFMsg::MSG_PAY_RESULT_REQ );
@@ -25,7 +25,7 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_ENTER_PLAYER_FUNCTION__( KFPayClientModule::OnEnterPayModule )
+    __KF_PLAYER_ENTER_FUNCTION__( KFPayClientModule::OnEnterPayModule )
     {
         auto order = player->Get< std::string >( __STRING__( payorder ) );
         if ( order.empty() )
@@ -36,7 +36,7 @@ namespace KFrame
         QueryPayData( player->GetKeyID() );
     }
 
-    __KF_LEAVE_PLAYER_FUNCTION__( KFPayClientModule::OnLeavePayModule )
+    __KF_PLAYER_LEAVE_FUNCTION__( KFPayClientModule::OnLeavePayModule )
     {
         __UN_TIMER_1__( player->GetKeyID() );
     }

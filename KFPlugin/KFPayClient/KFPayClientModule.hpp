@@ -45,8 +45,8 @@ namespace KFrame
 
     protected:
         // 上线查询充值订单
-        __KF_ENTER_PLAYER_FUNCTION__( OnEnterPayModule );
-        __KF_LEAVE_PLAYER_FUNCTION__( OnLeavePayModule );
+        __KF_PLAYER_ENTER_FUNCTION__( OnEnterPayModule );
+        __KF_PLAYER_LEAVE_FUNCTION__( OnLeavePayModule );
 
         // 开启查询充值定时器
         void StartQueryPayTimer( KFEntity* player );

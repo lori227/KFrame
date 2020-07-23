@@ -4,7 +4,7 @@ namespace KFrame
 {
     void KFChatModule::BeforeRun()
     {
-        __REGISTER_LEAVE_PLAYER__( &KFChatModule::OnLeaveChatModule );
+        __REGISTER_PLAYER_LEAVE__( &KFChatModule::OnLeaveChatModule );
         ///////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_FRIEND_CHAT_REQ, &KFChatModule::HandleFriendChatReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_SERVER_CHAT_REQ, &KFChatModule::HandleServerChatReq );
@@ -12,7 +12,7 @@ namespace KFrame
 
     void KFChatModule::BeforeShut()
     {
-        __UN_LEAVE_PLAYER__();
+        __UN_PLAYER_LEAVE__();
         ///////////////////////////////////////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::MSG_FRIEND_CHAT_REQ );
         __UN_MESSAGE__( KFMsg::MSG_SERVER_CHAT_REQ );
@@ -88,7 +88,7 @@ namespace KFrame
         return true;
     }
 
-    __KF_LEAVE_PLAYER_FUNCTION__( KFChatModule::OnLeaveChatModule )
+    __KF_PLAYER_LEAVE_FUNCTION__( KFChatModule::OnLeaveChatModule )
     {
         _chat_interval_time.erase( player->GetKeyID() );
     }

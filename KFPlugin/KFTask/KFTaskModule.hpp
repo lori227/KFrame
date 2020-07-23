@@ -52,9 +52,9 @@ namespace KFrame
         __KF_ADD_ELEMENT_FUNCTION__( AddTaskElement );
 
         // 进入游戏检查任务
-        __KF_ENTER_PLAYER_FUNCTION__( OnEnterTaskModule );
+        __KF_PLAYER_ENTER_FUNCTION__( OnEnterTaskModule );
         // 离开游戏删除定时器
-        __KF_LEAVE_PLAYER_FUNCTION__( OnLeaveTaskModule );
+        __KF_PLAYER_LEAVE_FUNCTION__( OnLeaveTaskModule );
 
         // 任务超时定时器
         __KF_TIMER_FUNCTION__( OnTimerTaskTimeout );

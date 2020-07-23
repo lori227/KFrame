@@ -46,7 +46,7 @@ namespace KFrame
         __KF_ADD_DATA_FUNCTION__( OnAddDataAchieveModule );
         __KF_REMOVE_DATA_FUNCTION__( OnRemoveDataAchieveModule );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __KF_ENTER_PLAYER_FUNCTION__( OnEnterAchieveModule );
+        __KF_PLAYER_ENTER_FUNCTION__( OnEnterAchieveModule );
 
     private:
         // 玩家组件上下文

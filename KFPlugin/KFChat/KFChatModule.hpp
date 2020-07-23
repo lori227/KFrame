@@ -44,7 +44,7 @@ namespace KFrame
         bool CheckChatIntervalTime( KFEntity* player );
 
         // 离开游戏
-        __KF_LEAVE_PLAYER_FUNCTION__( OnLeaveChatModule );
+        __KF_PLAYER_LEAVE_FUNCTION__( OnLeaveChatModule );
 
     private:
         // 上次聊天的时间的列表

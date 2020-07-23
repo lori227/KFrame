@@ -11,8 +11,8 @@ namespace KFrame
         __REGISTER_UPDATE_DATA__( &KFBasicClientModule::OnUpdateDataCallBack );
         __REGISTER_UPDATE_STRING__( &KFBasicClientModule::OnUpdateStringCallBack );
 
-        __REGISTER_AFTER_ENTER_PLAYER__( &KFBasicClientModule::OnEnterUpdateBasicAttribute );
-        __REGISTER_LEAVE_PLAYER__( &KFBasicClientModule::OnLeaveUpdateBasicAttribute );
+        __REGISTER_PLAYER_AFTER_ENTER__( &KFBasicClientModule::OnEnterUpdateBasicAttribute );
+        __REGISTER_PLAYER_LEAVE__( &KFBasicClientModule::OnLeaveUpdateBasicAttribute );
 
         _kf_route->RegisterConnectionFunction( this, &KFBasicClientModule::OnRouteConnectCluster );
         ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -27,8 +27,8 @@ namespace KFrame
     {
         __UN_UPDATE_DATA__();
         __UN_UPDATE_STRING__();
-        __UN_AFTER_ENTER_PLAYER__();
-        __UN_LEAVE_PLAYER__();
+        __UN_PLAYER_AFTER_ENTER__();
+        __UN_PLAYER_LEAVE__();
 
         _kf_route->UnRegisterConnectionFunction( this );
         ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -75,12 +75,12 @@ namespace KFrame
         _kf_route->RepeatToRand( playerid, __ROUTE_NAME__, KFMsg::S2S_UPDATE_STR_VALUE_TO_BASIC_REQ, &req );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_ENTER_PLAYER_FUNCTION__( KFBasicClientModule::OnEnterUpdateBasicAttribute )
+    __KF_PLAYER_ENTER_FUNCTION__( KFBasicClientModule::OnEnterUpdateBasicAttribute )
     {
         EnterLeaveUpdateAttributeToBasic( player );
     }
 
-    __KF_LEAVE_PLAYER_FUNCTION__( KFBasicClientModule::OnLeaveUpdateBasicAttribute )
+    __KF_PLAYER_LEAVE_FUNCTION__( KFBasicClientModule::OnLeaveUpdateBasicAttribute )
     {
         EnterLeaveUpdateAttributeToBasic( player );
     }

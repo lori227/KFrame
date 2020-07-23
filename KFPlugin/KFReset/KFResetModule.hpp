@@ -66,13 +66,13 @@ namespace KFrame
         virtual void RemoveResetFunction( const std::string& module );
     protected:
         // 进入游戏
-        __KF_ENTER_PLAYER_FUNCTION__( OnEnterResetModule );
+        __KF_PLAYER_ENTER_FUNCTION__( OnEnterResetModule );
 
         // 重置数据
-        __KF_RESET_PLAYER_FUNCTION__( ResetPlayerData );
+        __KF_PLAYER_RESET_FUNCTION__( ResetPlayerData );
 
         // 刷新数据
-        __KF_RUN_PLAYER_FUNCTION__( RunResetPlayerData );
+        __KF_PLAYER_RUN_FUNCTION__( RunResetPlayerData );
 
         // 判断所有
         bool UpdateAllResetTime( KFEntity* player, KFData* kftimerecord );

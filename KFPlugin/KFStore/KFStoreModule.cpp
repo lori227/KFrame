@@ -6,8 +6,8 @@ namespace KFrame
     void KFStoreModule::BeforeRun()
     {
         _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
-        __REGISTER_ENTER_PLAYER__( &KFStoreModule::OnEnterStoreModule );
-        __REGISTER_LEAVE_PLAYER__( &KFStoreModule::OnLeaveStoreModule );
+        __REGISTER_PLAYER_ENTER__( &KFStoreModule::OnEnterStoreModule );
+        __REGISTER_PLAYER_LEAVE__( &KFStoreModule::OnLeaveStoreModule );
 
         __REGISTER_RESET__( 0u, &KFStoreModule::OnResetRefreshStoreCount );
         //////////////////////////////////////////////////////////////////
@@ -19,8 +19,8 @@ namespace KFrame
     {
         __UN_RESET__();
         __UN_TIMER_0__();
-        __UN_ENTER_PLAYER__();
-        __UN_LEAVE_PLAYER__();
+        __UN_PLAYER_ENTER__();
+        __UN_PLAYER_LEAVE__();
         //////////////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::MSG_STORE_BUY_GOODS_REQ );
         __UN_MESSAGE__( KFMsg::MSG_STORE_REFRESH_REQ );
@@ -250,7 +250,7 @@ namespace KFrame
         player->RemoveData( __STRING__( store ), storeid );
     }
 
-    __KF_ENTER_PLAYER_FUNCTION__( KFStoreModule::OnEnterStoreModule )
+    __KF_PLAYER_ENTER_FUNCTION__( KFStoreModule::OnEnterStoreModule )
     {
         auto kfstorerecord = player->Find( __STRING__( store ) );
         for ( auto& iter : KFStoreConfig::Instance()->_settings._objects )
@@ -267,7 +267,7 @@ namespace KFrame
         }
     }
 
-    __KF_LEAVE_PLAYER_FUNCTION__( KFStoreModule::OnLeaveStoreModule )
+    __KF_PLAYER_LEAVE_FUNCTION__( KFStoreModule::OnLeaveStoreModule )
     {
         __UN_TIMER_1__( player->GetKeyID() );
     }

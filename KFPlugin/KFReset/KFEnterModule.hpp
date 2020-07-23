@@ -30,7 +30,7 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
     protected:
         // 进入游戏世界
-        __KF_ENTER_PLAYER_FUNCTION__( EnterGameWorld );
+        __KF_PLAYER_ENTER_FUNCTION__( EnterGameWorld );
     };
 }
 

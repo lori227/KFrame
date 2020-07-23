@@ -109,10 +109,10 @@ namespace KFrame
 
     protected:
         // 进入游戏世界
-        __KF_ENTER_PLAYER_FUNCTION__( OnEnterGame );
+        __KF_PLAYER_ENTER_FUNCTION__( OnEnterGame );
 
         // 离开游戏世界
-        __KF_LEAVE_PLAYER_FUNCTION__( OnLeaveGame );
+        __KF_PLAYER_LEAVE_FUNCTION__( OnLeaveGame );
 
         // 加载玩家数据
         void OnAfterLoadPlayerData( uint32 result, const KFMsg::PBLoginData* pblogin, const KFMsg::PBObject* pbplayerdata );

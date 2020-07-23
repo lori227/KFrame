@@ -9,7 +9,7 @@ namespace KFrame
         __REGISTER_REMOVE_DATA__( &KFUnlockModule::OnRemoveDataUnlockModule );
         __REGISTER_UPDATE_DATA__( &KFUnlockModule::OnUpdateDataUnlockModule );
 
-        __REGISTER_ENTER_PLAYER__( &KFUnlockModule::OnEnterUnlockModule );
+        __REGISTER_PLAYER_ENTER__( &KFUnlockModule::OnEnterUnlockModule );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
@@ -19,13 +19,13 @@ namespace KFrame
         __UN_REMOVE_DATA__();
         __UN_UPDATE_DATA__();
 
-        __UN_ENTER_PLAYER__();
+        __UN_PLAYER_ENTER__();
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_ENTER_PLAYER_FUNCTION__( KFUnlockModule::OnEnterUnlockModule )
+    __KF_PLAYER_ENTER_FUNCTION__( KFUnlockModule::OnEnterUnlockModule )
     {
         auto kfunlockrecord = player->Find( __STRING__( unlock ) );
         for ( auto& iter : KFUnlockConfig::Instance()->_settings._objects )

@@ -36,7 +36,7 @@ namespace KFrame
         __KF_UPDATE_DATA_FUNCTION__( OnUpdateDataUnlockModule );
 
         // 进入游戏
-        __KF_ENTER_PLAYER_FUNCTION__( OnEnterUnlockModule );
+        __KF_PLAYER_ENTER_FUNCTION__( OnEnterUnlockModule );
 
     protected:
         //////////////////////////////////////////////////////////////////////////////////////

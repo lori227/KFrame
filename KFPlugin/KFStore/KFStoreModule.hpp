@@ -48,10 +48,10 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleStoreRefreshReq );
 
         // 进入游戏
-        __KF_ENTER_PLAYER_FUNCTION__( OnEnterStoreModule );
+        __KF_PLAYER_ENTER_FUNCTION__( OnEnterStoreModule );
 
         // 离开游戏
-        __KF_LEAVE_PLAYER_FUNCTION__( OnLeaveStoreModule );
+        __KF_PLAYER_LEAVE_FUNCTION__( OnLeaveStoreModule );
 
     protected:
         // 刷新商城

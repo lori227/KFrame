@@ -6,8 +6,8 @@ namespace KFrame
 
     void KFMailClientModule::BeforeRun()
     {
-        __REGISTER_ENTER_PLAYER__( &KFMailClientModule::OnEnterMailModule );
-        __REGISTER_LEAVE_PLAYER__( &KFMailClientModule::OnLeaveMailModule );
+        __REGISTER_PLAYER_ENTER__( &KFMailClientModule::OnEnterMailModule );
+        __REGISTER_PLAYER_LEAVE__( &KFMailClientModule::OnLeaveMailModule );
         __REGISTER_NEW_PLAYER__( &KFMailClientModule::OnNewPlayerMailModule );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_QUERY_MAIL_REQ, &KFMailClientModule::HandleQueryMailReq );
@@ -23,8 +23,8 @@ namespace KFrame
     void KFMailClientModule::BeforeShut()
     {
         __UN_NEW_PLAYER__();
-        __UN_ENTER_PLAYER__();
-        __UN_LEAVE_PLAYER__();
+        __UN_PLAYER_ENTER__();
+        __UN_PLAYER_LEAVE__();
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::MSG_QUERY_MAIL_REQ );
         __UN_MESSAGE__( KFMsg::MSG_VIEW_MAIL_REQ );
@@ -42,13 +42,13 @@ namespace KFrame
         return _kf_route->SendToRand( playerid, __STRING__( mail ), msgid, message );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_ENTER_PLAYER_FUNCTION__( KFMailClientModule::OnEnterMailModule )
+    __KF_PLAYER_ENTER_FUNCTION__( KFMailClientModule::OnEnterMailModule )
     {
         auto playerid = player->GetKeyID();
         __LOOP_TIMER_1__( playerid, KFTimeEnum::OneMinuteMicSecond * 5, 1, &KFMailClientModule::OnTimerQueryMail );
     }
 
-    __KF_LEAVE_PLAYER_FUNCTION__( KFMailClientModule::OnLeaveMailModule )
+    __KF_PLAYER_LEAVE_FUNCTION__( KFMailClientModule::OnLeaveMailModule )
     {
         auto playerid = player->GetKeyID();
         __UN_TIMER_1__( playerid );
