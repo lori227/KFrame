@@ -3,6 +3,6 @@
 	<Plugins>
 		<Plugin Name="KFProject" Param=""/>
 		<Plugin Name="KFTimer" Param=""/>
-		<Plugin Name="KFParam" Param=""/>		
+		<Plugin Name="KFConfig" Param=""/>		
 	</Plugins>
 </Setting>

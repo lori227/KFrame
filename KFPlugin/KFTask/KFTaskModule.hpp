@@ -11,7 +11,6 @@
 
 #include "KFTaskInterface.h"
 #include "KFTaskChainInterface.h"
-#include "KFDrop/KFDropInterface.h"
 #include "KFTimer/KFTimerInterface.h"
 #include "KFKernel/KFKernelInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"

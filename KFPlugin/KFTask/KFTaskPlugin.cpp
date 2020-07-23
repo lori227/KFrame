@@ -21,7 +21,6 @@ namespace KFrame
     void KFTaskPlugin::LoadModule()
     {
         __FIND_MODULE__( _kf_task, KFTaskInterface );
-        __FIND_MODULE__( _kf_drop, KFDropInterface );
         __FIND_MODULE__( _kf_timer, KFTimerInterface );
         __FIND_MODULE__( _kf_reset, KFResetInterface );
         __FIND_MODULE__( _kf_kernel, KFKernelInterface );
