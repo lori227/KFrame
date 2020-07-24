@@ -118,7 +118,7 @@ namespace KFrame
         uint64 _game_time;
 
         // 上一次循环消耗时间
-        uint64 _last_frame_cost_time = 0u;
+        uint64 _last_frame_use_time = 0u;
 
         // appid
         KFAppId* _app_id;

@@ -21,7 +21,7 @@ namespace KFrame
             // 运行时间( 单位:毫秒 )
             auto lastlooptime = kfglobal->_game_time;
             kfglobal->_game_time = KFClock::GetTime();
-            kfglobal->_last_frame_cost_time = kfglobal->_game_time - lastlooptime;
+            kfglobal->_last_frame_use_time = kfglobal->_game_time - lastlooptime;
 
 #if __KF_SYSTEM__ == __KF_WIN__
             __try

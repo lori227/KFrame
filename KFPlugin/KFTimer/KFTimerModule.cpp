@@ -352,7 +352,7 @@ namespace KFrame
     void KFTimerModule::RunTimerUpdate()
     {
         // 添加总使用时间, 计算时间轮走过的槽数
-        _total_run_use_time += KFGlobal::Instance()->_last_frame_cost_time;
+        _total_run_use_time += KFGlobal::Instance()->_last_frame_use_time;
         auto passslot = _total_run_use_time / TimerEnum::SlotTime;
         if ( passslot == 0u )
         {
