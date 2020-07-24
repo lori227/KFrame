@@ -12,12 +12,16 @@ namespace KFrame
     void KFServices::Run()
     {
         auto kfglobal = KFGlobal::Instance();
-        _last_loop_time = kfglobal->_game_time;
+
         do
         {
-            kfglobal->_game_time = KFClock::GetTime();
+            // 现实时间( 单位:秒 )
             kfglobal->_real_time = KFDate::GetTimeEx();
-            kfglobal->_last_frame_cost_time = kfglobal->_game_time - _last_loop_time;
+
+            // 运行时间( 单位:毫秒 )
+            auto lastlooptime = kfglobal->_game_time;
+            kfglobal->_game_time = KFClock::GetTime();
+            kfglobal->_last_frame_cost_time = kfglobal->_game_time - lastlooptime;
 
 #if __KF_SYSTEM__ == __KF_WIN__
             __try

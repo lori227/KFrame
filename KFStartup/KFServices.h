@@ -30,9 +30,6 @@ namespace KFrame
     protected:
         // 进程
         KFApplication* _application = nullptr;
-
-        // 上一次执行的时间
-        uint64 _last_loop_time = 0u;
     };
 }
 #endif
