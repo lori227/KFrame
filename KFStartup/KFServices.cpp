@@ -11,10 +11,14 @@ namespace KFrame
 {
     void KFServices::Run()
     {
+        auto kfglobal = KFGlobal::Instance();
+        _last_loop_time = kfglobal->_game_time;
         do
         {
-            KFGlobal::Instance()->_game_time = KFClock::GetTime();
-            KFGlobal::Instance()->_real_time = KFDate::GetTimeEx();
+            kfglobal->_game_time = KFClock::GetTime();
+            kfglobal->_real_time = KFDate::GetTimeEx();
+            kfglobal->_last_frame_cost_time = kfglobal->_game_time - _last_loop_time;
+
 #if __KF_SYSTEM__ == __KF_WIN__
             __try
             {
@@ -38,7 +42,7 @@ namespace KFrame
             }
 #endif
             KFThread::Sleep( 1 );
-        } while ( KFGlobal::Instance()->_app_run );
+        } while ( kfglobal->_app_run );
 
         ShutDown();
     }

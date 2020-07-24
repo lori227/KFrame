@@ -87,9 +87,25 @@ namespace KFrame
         SendQueryMailMessage( player );
     }
 
+    uint64 KFMailClientModule::GetMaxMailId( KFEntity* player )
+    {
+        auto maxmailid = 0u;
+        auto kfmailrecord = player->Find( __STRING__( mail ) );
+        for ( auto kfmail = kfmailrecord->First(); kfmail != nullptr; kfmail = kfmailrecord->Next() )
+        {
+            auto mailid = kfmail->GetKeyID();
+            if ( mailid > maxmailid )
+            {
+                maxmailid = mailid;
+            }
+        }
+
+        return maxmailid;
+    }
+
     void KFMailClientModule::SendQueryMailMessage( KFEntity* player )
     {
-        auto maxmailid = player->Get( __STRING__( maxmailid ) );
+        auto maxmailid = GetMaxMailId( player );
         auto zoneid = KFGlobal::Instance()->_app_id->GetZoneId();
 
         KFMsg::S2SQueryMailReq req;
@@ -104,7 +120,6 @@ namespace KFrame
         __SERVER_PROTO_PARSE__( KFMsg::S2SQueryMailAck );
 
         // 将邮件保存到玩家属性中
-        uint64 maxmailid = 0u;
         auto kfmailrecord = player->Find( __STRING__( mail ) );
         for ( auto i = 0; i < kfmsg.mail_size(); ++i )
         {
@@ -118,17 +133,7 @@ namespace KFrame
                 kfmail->Set( iter->first, iter->second );
             }
             player->AddData( kfmailrecord, kfmail );
-
-            // 最大邮件id
-            auto mailid = kfmail->GetKeyID();
-            if ( mailid > maxmailid )
-            {
-                maxmailid = mailid;
-            }
         }
-
-        // 更新最大邮件id
-        player->Set( __STRING__( maxmailid ), maxmailid );
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

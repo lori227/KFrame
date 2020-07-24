@@ -5,7 +5,7 @@ namespace KFrame
     KFTimerModule::KFTimerModule()
     {
         _now_slot = 0u;
-        _last_update_time = 0u;
+        _total_run_use_time = 0u;
         memset( _slot_timer_data, 0u, sizeof( _slot_timer_data ) );
     }
 
@@ -23,7 +23,6 @@ namespace KFrame
     void KFTimerModule::BeforeRun()
     {
         _now_slot = 0;
-        _last_update_time = KFGlobal::Instance()->_game_time;
     }
 
     void KFTimerModule::Run()
@@ -352,13 +351,14 @@ namespace KFrame
 
     void KFTimerModule::RunTimerUpdate()
     {
-        auto nowtime = KFGlobal::Instance()->_game_time;
-        auto passslot = ( nowtime - _last_update_time ) / TimerEnum::SlotTime;
+        // 添加总使用时间, 计算时间轮走过的槽数
+        _total_run_use_time += KFGlobal::Instance()->_last_frame_cost_time;
+        auto passslot = _total_run_use_time / TimerEnum::SlotTime;
         if ( passslot == 0u )
         {
             return;
         }
-        _last_update_time += passslot * TimerEnum::SlotTime;
+        _total_run_use_time -= passslot * TimerEnum::SlotTime;
 
         for ( auto i = 0u; i < passslot; ++i )
         {

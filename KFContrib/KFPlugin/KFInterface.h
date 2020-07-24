@@ -30,6 +30,8 @@ namespace KFrame
 
         // 执行一次
         virtual void PrepareRun() = 0;
+
+        // 逻辑循环
         virtual void Run() = 0;
 
         // 关闭

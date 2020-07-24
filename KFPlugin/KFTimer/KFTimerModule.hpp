@@ -75,14 +75,14 @@ namespace KFrame
         void ExecuteDoneTimer( KFTimerData* timerdata );
 
     private:
+        // 运行消耗时间
+        uint64 _total_run_use_time;
+
         // 当前槽索引
         uint32 _now_slot;
 
         // 定时器列表
         KFTimerData* _slot_timer_data[ TimerEnum::MaxSlot ];
-
-        // 上一次刷新时间
-        uint64 _last_update_time;
 
         // 定时器数据
         std::unordered_map< std::string, KFModuleData* > _kf_timer_data;

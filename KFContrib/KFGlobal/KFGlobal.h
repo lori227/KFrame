@@ -117,6 +117,9 @@ namespace KFrame
         // 游戏时间( 单位 : 毫秒 )
         uint64 _game_time;
 
+        // 上一次循环消耗时间
+        uint64 _last_frame_cost_time = 0u;
+
         // appid
         KFAppId* _app_id;
 

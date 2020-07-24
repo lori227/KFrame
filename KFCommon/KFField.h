@@ -216,7 +216,6 @@ namespace KFrame
         __STRING_DEFINE__( flag );
         __STRING_DEFINE__( sendid );
         __STRING_DEFINE__( sendname );
-        __STRING_DEFINE__( maxmailid );
         __STRING_DEFINE__( sendtime );
         __STRING_DEFINE__( globalmail );
         __STRING_DEFINE__( mailinfo );

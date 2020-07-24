@@ -28,8 +28,6 @@ namespace KFrame
         KFMailClientModule() = default;
         ~KFMailClientModule() = default;
 
-
-
         // 刷新
         virtual void BeforeRun();
 
@@ -84,6 +82,9 @@ namespace KFrame
         __KF_NEW_PLAYER_FUNCTION__( OnNewPlayerMailModule );
 
         //////////////////////////////////////////////////////////////////////////////////////
+        // 获得最大邮件id
+        uint64 GetMaxMailId( KFEntity* player );
+
         // 发送消息到邮件
         bool SendMessageToMail( uint64 playerid, uint32 msgid, ::google::protobuf::Message* message );
 
