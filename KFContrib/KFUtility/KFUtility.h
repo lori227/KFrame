@@ -38,9 +38,11 @@ namespace KFrame
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////
-        // 判断float double 是否为0
-        static bool IsZeroFloat( float value, float epsilon = 1e-6 );
-        static bool IsZeroDouble( double value, double epsilon = 1e-15 );
+        // 判断float double 是否相等
+        static bool IsFloatEqual( float first, float second );
+        static bool IsDoubleEqual( double first, double second );
+
+        // 简单判断是不是数字
         static bool IsNumber( const std::string& value );
 
         // 计算两点之间距离

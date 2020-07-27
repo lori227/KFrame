@@ -24,14 +24,14 @@ namespace KFrame
         return ch >= '0' && ch <= '9';
     }
 
-    bool KFUtility::IsZeroFloat( float value, float epsilon )
+    bool KFUtility::IsFloatEqual( float first, float second )
     {
-        return std::abs( value ) <= epsilon;
+        return std::abs( first - second ) <= 1e-6;
     }
 
-    bool KFUtility::IsZeroDouble( double value, double epsilon )
+    bool KFUtility::IsDoubleEqual( double first, double second )
     {
-        return std::abs( value ) <= epsilon;
+        return std::abs( first - second ) <= 1e-15;
     }
 
     uint32 KFUtility::CalcDistance( uint32 nowx, uint32 nowy, uint32 targetx, uint32 targety )

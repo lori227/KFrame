@@ -26,7 +26,7 @@ namespace KFrame
         _data_setting = kfsetting;
         _use_value = _range.CalcValue();
 
-        if ( multiple != 1.0f && _data_setting != nullptr && _data_setting->HaveMask( KFDataDefine::DataMaskMultiple ) )
+        if ( !KFUtility::IsDoubleEqual( multiple, _default_multiple ) && _data_setting != nullptr && _data_setting->HaveMask( KFDataDefine::DataMaskMultiple ) )
         {
             _use_value = static_cast< uint64 >( std::round( _use_value * multiple ) );
             _use_value = __MAX__( 1u, _use_value );

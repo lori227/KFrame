@@ -107,13 +107,26 @@ namespace KFrame
         {
             ////////////////////////////////////////////////////////////////////////
             // log level
-            Debug = 1,
-            Info = 2,
-            Warn = 3,
-            Error = 4,
+            Trace = 0,		// 调试
+            Debug = 1,		// 调试
+            Info = 2,		// 普通
+            Warn = 3,		// 警告
+            Error = 4,		// 普通错误
+            Critical = 5,	// 致命错误
+            Off = 6,		// 程序关闭
             ////////////////////////////////////////////////////////////////////////
         };
     };
+
+#ifdef __KF_DEBUG__
+#define __LOG_TRACE__( myfmt, ...) \
+    KFLogger::Instance()->Log( KFLogEnum::Trace, __FUNC_LINE__, myfmt, ##__VA_ARGS__ )
+#define __LOG_TRACE_FUNCTION__( function, line, myfmt, ...) \
+    KFLogger::Instance()->Log( KFLogEnum::Trace, function, line, myfmt, ##__VA_ARGS__ )
+#else
+#define __LOG_TRACE__( myfmt, ...)
+#define __LOG_TRACE_FUNCTION__( function, line, myfmt, ...)
+#endif // __KF_DEBUG__
 
 #ifdef __KF_DEBUG__
 #define __LOG_DEBUG__( myfmt, ...) \
@@ -139,6 +152,16 @@ namespace KFrame
     KFLogger::Instance()->Log( KFLogEnum::Error, __FUNC_LINE__, myfmt, ##__VA_ARGS__ )
 #define __LOG_ERROR_FUNCTION__( function, line, myfmt, ...) \
     KFLogger::Instance()->Log( KFLogEnum::Error, function, line, myfmt, ##__VA_ARGS__ )
+
+#define __LOG_CRITICAL__( myfmt, ...) \
+    KFLogger::Instance()->Log( KFLogEnum::Critical, __FUNC_LINE__, myfmt, ##__VA_ARGS__ )
+#define __LOG_CRITICAL_FUNCTION__( function, line, myfmt, ...) \
+    KFLogger::Instance()->Log( KFLogEnum::Critical, function, line, myfmt, ##__VA_ARGS__ )
+
+#define __LOG_OFF__( myfmt, ...) \
+    KFLogger::Instance()->Log( KFLogEnum::Off, __FUNC_LINE__, myfmt, ##__VA_ARGS__ )
+#define __LOG_OFF_FUNCTION__( funCompressction, line, myfmt, ...) \
+    KFLogger::Instance()->Log( KFLogEnum::Off, function, line, myfmt, ##__VA_ARGS__ )
 }
 
 #endif
