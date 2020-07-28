@@ -44,7 +44,10 @@ namespace KFrame
         for ( auto& iter : KFTimeConfig::Instance()->_settings._objects )
         {
             auto kfsetting = iter.second;
-            reset |= UpdateResetTime( player, kftimerecord, kfsetting );
+            if ( kfsetting->_type == KFTimeEnum::Loop )
+            {
+                reset |= UpdateResetTime( player, kftimerecord, kfsetting );
+            }
         }
 
         return reset;
@@ -60,7 +63,8 @@ namespace KFrame
         }
 
         auto lasttime = kftime->Get<uint64>( __STRING__( value ) );
-        auto ok = KFDate::CheckTime( &kfsetting->_time_data, lasttime, KFGlobal::Instance()->_real_time );
+        auto timedate = &kfsetting->_time_section_list.front()._start_time;
+        auto ok = KFDate::CheckLoopTimeData( timedate, lasttime, KFGlobal::Instance()->_real_time );
         if ( ok )
         {
             kftime->Set( __STRING__( status ), 1u );
@@ -95,7 +99,8 @@ namespace KFrame
             return 0u;
         }
 
-        return KFDate::CalcTimeData( &kfsetting->_time_data, time, 1 );
+        auto timedata = &kfsetting->_time_section_list.front()._start_time;
+        return KFDate::CalcTimeData( timedata, time, 1 );
     }
 
     void KFResetModule::ResetTime( KFEntity* player, uint32 timeid )
@@ -117,7 +122,7 @@ namespace KFrame
         {
             return;
         }
-        kfresetdata->Set( KFGlobal::Instance()->_game_time + KFTimeEnum::OneSecondMicSecond );
+        kfresetdata->Set( KFGlobal::Instance()->_game_time + KFTimeEnum::OneMinuteMicSecond );
 
         // 玩家重置逻辑
         ResetPlayerData( player );
@@ -189,7 +194,7 @@ namespace KFrame
                     continue;
                 }
 
-                timedata = &kfresetsetting->_time_setting->_time_data;
+                timedata = &kfresetsetting->_time_setting->_time_section_list.front()._start_time;
                 lasttime = kftimerecord->Get<uint64>( kfresetsetting->_time_setting->_id, __STRING__( lasttime ) );
             }
 

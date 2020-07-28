@@ -11,35 +11,30 @@
 
 #include "KFRankShardInterface.h"
 #include "KFProtocol/KFProtocol.h"
-#include "KFRedis/KFRedisInterface.h"
 #include "KFTimer/KFTimerInterface.h"
+#include "KFRedis/KFRedisInterface.h"
 #include "KFMessage/KFMessageInterface.h"
-#include "KFSchedule/KFScheduleInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"
-#include "KFZConfig/KFRankConfig.hpp"
 #include "KFBasicDatabase/KFBasicDatabaseInterface.h"
+#include "KFZConfig/KFRankConfig.hpp"
+#include "KFZConfig/KFTimeConfig.h"
 
 namespace KFrame
 {
     class KFRankData
     {
     public:
-        KFRankData()
-        {
-            _rank_id = 0;
-            _zone_id = 0;
-            _min_rank_score = 0;
-        }
-
-    public:
         // 排行榜id
-        uint32 _rank_id;
+        uint32 _rank_id = 0;
 
         // 分区id
-        uint32 _zone_id;
+        uint32 _zone_id = 0;
 
         // 最小分数
-        uint64 _min_rank_score;
+        uint64 _min_rank_score = 0;
+
+        // 上次刷新时间
+        uint64 _last_refresh_time = 0;
 
         // 排行榜数据
         KFMsg::PBRankDatas _rank_datas;
@@ -47,7 +42,6 @@ namespace KFrame
 
     //////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////
-
     class KFRankShardModule : public KFRankShardInterface
     {
     public:
@@ -87,12 +81,8 @@ namespace KFrame
 
         // 刷新排行榜定时器
         __KF_TIMER_FUNCTION__( OnTimerRefreshRankData );
-
-        // 计划任务
-        __KF_SCHEDULE_FUNCTION__( OnScheduleRefreshRankData );
         //////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////
-
         // 格式化排行榜数据key
         std::string& FormatRankDataKey( uint32 rankid, uint32 zoneid );
         std::string& FormatRankSortKey( uint32 rankid, uint32 zoneid );
@@ -109,6 +99,7 @@ namespace KFrame
         // 刷新排行榜
         void SyncRefreshRankData( uint32 rankid );
         bool RefreshRankData( uint32 rankid );
+        bool RefreshRankData( const KFRankSetting* kfsetting, uint32 zoneid, const KFTimeData* timedata );
 
         // 计算zoneid
         uint32 CalcRankZoneId( uint64 playerid, const KFRankSetting* kfsetting );
@@ -128,9 +119,10 @@ namespace KFrame
         // 排行榜列表
         typedef std::pair< uint32, uint32 > RankKey;
         KFMap< RankKey, const RankKey&, KFRankData > _kf_rank_data;
+
+        // 需要刷新的排行榜id列表
+        UInt32Vector _refresh_rank_id_list;
     };
 }
-
-
 
 #endif

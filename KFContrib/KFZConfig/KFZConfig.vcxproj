@@ -23,6 +23,7 @@
     <ClInclude Include="KFRelationConfig.hpp" />
     <ClInclude Include="KFRouteConfig.hpp" />
     <ClInclude Include="KFSetting.h" />
+    <ClInclude Include="KFTimeConfig.h" />
     <ClInclude Include="KFWeightConfig.h" />
     <ClInclude Include="KFZoneConfig.hpp" />
   </ItemGroup>

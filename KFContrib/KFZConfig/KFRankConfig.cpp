@@ -15,10 +15,7 @@ namespace KFrame
     {
         kfsetting->_zone_type = xmlnode.GetUInt32( "ZoneType" );
         kfsetting->_max_count = xmlnode.GetUInt32( "MaxCount" );
-        kfsetting->_refresh_type = xmlnode.GetUInt32( "RefreshType" );
-        kfsetting->_refresh_time = xmlnode.GetUInt32( "RefreshTime" );
-        kfsetting->_refresh_hour = xmlnode.GetUInt32( "RefreshHour" );
-        kfsetting->_refresh_minute = xmlnode.GetUInt32( "RefreshMinute" );
+        kfsetting->_refresh_time_id = xmlnode.GetUInt32( "RefreshTimeId" );
         kfsetting->_reset_data_type = xmlnode.GetUInt32( "RefreshReset" );
 
         auto strcalcdata = xmlnode.GetString( "CalcData" );

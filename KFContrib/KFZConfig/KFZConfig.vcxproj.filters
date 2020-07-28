@@ -27,6 +27,7 @@
     </ClInclude>
     <ClInclude Include="KFCountCostConfig.h" />
     <ClInclude Include="KFWeightConfig.h" />
+    <ClInclude Include="KFTimeConfig.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Kernel">

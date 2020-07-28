@@ -38,18 +38,8 @@ namespace KFrame
         // 最大数量
         uint32 _max_count = 0u;
 
-        // 刷新类型
-        // 0 间隔时间 1 每小时  2 每天 3 每周 4 每月
-        uint32 _refresh_type = 0u;
-
-        // 刷新时间
-        uint32 _refresh_time = 0u;
-
-        // 刷新小时
-        uint32 _refresh_hour = 0u;
-
-        // 刷新分钟
-        uint32 _refresh_minute = 0u;
+        // 刷新的时间id
+        uint32 _refresh_time_id = 0u;
 
         // 清除数据类型
         uint32 _reset_data_type = 0u;
