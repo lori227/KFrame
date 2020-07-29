@@ -6,28 +6,53 @@
 
 namespace KFrame
 {
-    class KFScheduleTime;
+    namespace KFScheduleEnum
+    {
+        enum MyEnum
+        {
+            Stop = 0,	// 停止状态
+            Runing = 1,	// 执行状态
+        };
+    }
+
+    /////////////////////////////////////////////////////////////////////////
     class KFScheduleData
     {
     public:
-        KFScheduleData();
-        ~KFScheduleData();
+        // 时间id
+        uint32 _time_id = 0u;
 
-        // 执行
-        bool Execute( uint64 year, uint64 month, uint64 day, uint64 dayofweek, uint64 hour, uint64 minute );
-
-    public:
         // 模块名
         std::string _module;
 
-        // 定时器
-        KFScheduleTime* _schedule_time;
+        // 对象id
+        uint64 _object_id = 0u;
 
-        // 类型
-        uint64 _last_execute_time;
+        // 开始回调函数
+        KFScheduleFunction _start_function = nullptr;
 
-        // 回调函数
-        KFScheduleFunction _function;
+        // 结束回调函数
+        KFScheduleFunction _finish_function = nullptr;
+    };
+    /////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////
+    class KFScheduleDataList
+    {
+    public:
+        // 时间id
+        uint32 _time_id = 0u;
+
+        // 状态
+        uint32 _status = KFScheduleEnum::Stop;
+
+        // 持续时间
+        uint64 _duration_time = 0u;
+
+        // 保存结束的时间
+        KFTimeData _finish_time_data;
+
+        // 计划任务列表
+        KFHashMap< std::string, const std::string&, KFScheduleData > _schedule_data_list;
     };
 }
 

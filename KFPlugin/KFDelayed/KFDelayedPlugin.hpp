@@ -1,10 +1,10 @@
-﻿#ifndef __KF_SCHEDULE_PLUGIN_H__
-#define __KF_SCHEDULE_PLUGIN_H__
+﻿#ifndef __KF_DELAYED_PLUGIN_H__
+#define __KF_DELAYED_PLUGIN_H__
 #include "KFrame.h"
 
 namespace KFrame
 {
-    class KFSchedulePlugin : public KFPlugin
+    class KFDelayedPlugin : public KFPlugin
     {
     public:
         // 注册
@@ -15,9 +15,6 @@ namespace KFrame
 
         // 加载
         virtual void LoadModule();
-
-        // 配置
-        virtual void AddConfig();
     };
 }
 

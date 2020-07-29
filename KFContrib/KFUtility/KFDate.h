@@ -55,7 +55,7 @@ namespace KFrame
     {
     public:
         // 时间标识
-        uint32 _flag = KFTimeEnum::Hour;
+        uint32 _flag = 0u;
 
         // 年
         uint32 _year = 0u;

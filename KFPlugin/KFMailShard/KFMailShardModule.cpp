@@ -31,7 +31,7 @@ namespace KFrame
     {
         __DELETE_OBJECT__( _mail_database_logic );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __UN_SCHEDULE__();
+        __UN_DELAYED_0__();
         __UN_HTTP__( __STRING__( addmail ) );
         __UN_HTTP__( __STRING__( delmail ) );
 
@@ -45,9 +45,13 @@ namespace KFrame
     void KFMailShardModule::PrepareRun()
     {
         // 每天5点 清理过期的全局邮件
-        auto kfsetting = _kf_schedule->CreateScheduleSetting();
-        kfsetting->SetDate( KFScheduleEnum::Loop, 0, 5 );
-        __REGISTER_SCHEDULE__( kfsetting, &KFMailShardModule::OnScheduleClearWholeOverdueMail );
+        if ( KFGlobal::Instance()->_app_id->GetWorkId() == 1u )
+        {
+            KFTimeData timedata;
+            timedata._flag = KFTimeEnum::Day;
+            timedata._hour = 5;
+            __REGISTER_DELAYED_NO_DATA__( &timedata, 0, &KFMailShardModule::OnDelayedClearWholeOverdueMail );
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -132,14 +136,12 @@ namespace KFrame
         return _kf_http_server->SendCode( KFMsg::Ok );
     }
 
-    __KF_SCHEDULE_FUNCTION__( KFMailShardModule::OnScheduleClearWholeOverdueMail )
+    __KF_DELAYED_FUNCTION__( KFMailShardModule::OnDelayedClearWholeOverdueMail )
     {
         // 清空过期的全局邮件列表
         _mail_database_logic->ClearOverdueGlobalMail();
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
     __KF_MESSAGE_FUNCTION__( KFMailShardModule::HandleQueryMailReq )
     {
         __PROTO_PARSE__( KFMsg::S2SQueryMailReq );

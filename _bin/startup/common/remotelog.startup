@@ -2,6 +2,8 @@
 <Setting>
 	<Plugins>
 	<!--
+		<Plugin Name="KFTimer" Param=""/>
+		<Plugin Name="KFConfig" Param=""/>	
 		<Plugin Name="KFTcpClient" Param=""/>
 		<Plugin Name="KFLogClient" Param=""/>	
 		<Plugin Name="KFMessage" Param=""/>

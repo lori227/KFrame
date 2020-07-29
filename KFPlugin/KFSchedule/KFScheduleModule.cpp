@@ -2,56 +2,66 @@
 
 namespace KFrame
 {
-    KFScheduleModule::KFScheduleModule()
-    {
-        // 25秒检查一次, 太频繁浪费性能
-        _update_timer.StartLoop( 25000 );
-    }
-
     KFScheduleModule::~KFScheduleModule()
     {
-        for ( auto iter : _kf_schedule_data )
+        for ( auto data : _kf_schedule_register )
         {
-            for ( auto miter : iter.second )
-            {
-                __KF_DELETE__( KFScheduleData, miter.second );
-            }
+            __KF_DELETE__( KFScheduleData, data );
         }
 
-        _kf_schedule_data.clear();
+        _kf_schedule_register.clear();
     }
 
     void KFScheduleModule::Run()
     {
-        RunScheduleRegister();
         RunScheduleRemove();
+        RunScheduleRegister();
         RunScheduleUpdate();
     }
 
-    KFScheduleSetting* KFScheduleModule::CreateScheduleSetting()
+    void KFScheduleModule::BeforeRun()
     {
-        return __KF_NEW__( KFScheduleTime );
+        CalcNextCheckRunTime();
+    }
+
+    void KFScheduleModule::CalcNextCheckRunTime()
+    {
+        auto minute = KFGlobal::Instance()->_real_time / KFTimeEnum::OneMinuteSecond;
+        _next_check_run_time = ( minute + 1u ) * KFTimeEnum::OneMinuteSecond;
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFScheduleModule::AddSchedule( const std::string& module, KFScheduleSetting* kfsetting, KFScheduleFunction& function )
+    void KFScheduleModule::AddSchedule( uint32 timeid, const std::string& module, uint64 objectid,
+                                        KFScheduleFunction& startfunction,
+                                        KFScheduleFunction& finishfunction )
     {
-        auto kftimerdata = __KF_NEW__( KFScheduleData );
-        kftimerdata->_module = module;
-        kftimerdata->_schedule_time = static_cast< KFScheduleTime* >( kfsetting );
-        kftimerdata->_function = function;
-        _kf_schedule_register.push_back( kftimerdata );
+        auto scheduledata = __KF_NEW__( KFScheduleData );
+        scheduledata->_time_id = timeid;
+        scheduledata->_module = module;
+        scheduledata->_object_id = objectid;
+        scheduledata->_start_function = startfunction;
+        scheduledata->_finish_function = finishfunction;
+        _kf_schedule_register.push_back( scheduledata );
     }
 
     void KFScheduleModule::RemoveSchedule( const std::string& module )
     {
-        RemoveSchedule( module, _invalid_int );
+        for ( auto& iter : _kf_schedule_list._objects )
+        {
+            for ( auto& miter : iter.second->_schedule_data_list._objects )
+            {
+                auto scheduledata = miter.second;
+                if ( scheduledata->_module == module )
+                {
+                    _kf_schedule_remove.emplace_back( std::make_tuple( scheduledata->_time_id, scheduledata->_module ) );
+                }
+            }
+        }
     }
 
-    void KFScheduleModule::RemoveSchedule( const std::string& module, uint64 objectid )
+    void KFScheduleModule::RemoveSchedule( uint32 timeid, const std::string& module )
     {
-        auto remove = std::make_tuple( module, objectid );
-        _kf_schedule_remove.push_back( remove );
+        _kf_schedule_remove.emplace_back( std::make_tuple( timeid, module ) );
     }
 
     void KFScheduleModule::RunScheduleRemove()
@@ -64,23 +74,17 @@ namespace KFrame
 
         for ( auto& data : _kf_schedule_remove )
         {
+            uint32 timeid = 0u;
             std::string module = "";
-            uint64 objectid = 0u;
-            std::tie( module, objectid ) = data;
+            std::tie( timeid, module ) = data;
 
-            if ( objectid != _invalid_int )
+            auto kfschedulelist = _kf_schedule_list.Find( timeid );
+            if ( kfschedulelist != nullptr )
             {
-                RemoveScheduleData( module, objectid );
-            }
-            else
-            {
-                auto miter = _kf_schedule_data.find( module );
-                if ( miter != _kf_schedule_data.end() )
+                kfschedulelist->_schedule_data_list.Remove( module );
+                if ( kfschedulelist->_schedule_data_list.IsEmpty() )
                 {
-                    for ( auto& diter : miter->second )
-                    {
-                        RemoveScheduleData( module, diter.first );
-                    }
+                    _kf_schedule_list.Remove( timeid );
                 }
             }
         }
@@ -97,72 +101,107 @@ namespace KFrame
 
         for ( auto kfdata : _kf_schedule_register )
         {
-            RemoveScheduleData( kfdata->_module, kfdata->_schedule_time->_object_id );
             AddSchedule( kfdata );
         }
 
         _kf_schedule_register.clear();
     }
 
-    void KFScheduleModule::RunScheduleUpdate()
+    void KFScheduleModule::AddSchedule( KFScheduleData* scheduledata )
     {
-        if ( !_update_timer.DoneTimer() )
+        auto schedulelist = _kf_schedule_list.Create( scheduledata->_time_id );
+        schedulelist->_time_id = scheduledata->_time_id;
+        schedulelist->_schedule_data_list.Insert( scheduledata->_module, scheduledata );
+
+        // 如果正在执行, 需要执行回调
+        if ( schedulelist->_status == KFScheduleEnum::Runing )
         {
-            return;
-        }
-
-        auto realtime = KFGlobal::Instance()->_real_time;
-        KFDate kfdate( realtime );
-
-        auto year = kfdate.GetYear();
-        auto month = kfdate.GetMonth();
-        auto day = kfdate.GetDay();
-        auto hour = kfdate.GetHour();
-        auto minute = kfdate.GetMinute();
-        auto dayofweek = kfdate.GetDayOfWeek();
-
-        for ( auto iter : _kf_schedule_data )
-        {
-            auto templist = iter.second;
-            for ( auto miter : templist )
+            if ( scheduledata->_start_function != nullptr )
             {
-                auto kfdata = miter.second;
-                auto ok = kfdata->Execute( year, month, day, dayofweek, hour, minute );
-                if ( ok )
-                {
-                    RemoveSchedule( iter.first, miter.first );
-                }
+                scheduledata->_start_function( scheduledata->_object_id, schedulelist->_duration_time );
             }
         }
     }
 
-    void KFScheduleModule::AddSchedule( KFScheduleData* kfdata )
+    void KFScheduleModule::RunScheduleUpdate()
     {
-        auto iter = _kf_schedule_data.find( kfdata->_module );
-        if ( iter == _kf_schedule_data.end() )
+        // 还没有到时间
+        if ( _next_check_run_time > KFGlobal::Instance()->_real_time )
         {
-            std::unordered_map< uint64, KFScheduleData* > temp;
-            iter = _kf_schedule_data.insert( std::make_pair( kfdata->_module, temp ) ).first;
+            return;
         }
+        CalcNextCheckRunTime();
 
-        iter->second.insert( std::make_pair( kfdata->_schedule_time->_object_id, kfdata ) );
+        // 检查计划任务状态
+        KFDate nowdate( KFGlobal::Instance()->_real_time );
+        for ( auto& iter : _kf_schedule_list._objects )
+        {
+            auto schedulelist = iter.second;
+            switch ( schedulelist->_status )
+            {
+            case KFScheduleEnum::Stop:
+                ExecuteScheduleStart( schedulelist, nowdate );
+                break;
+            case KFScheduleEnum::Runing:
+                ExecuteScheduleFinish( schedulelist, nowdate );
+                break;
+            default:
+                break;
+            }
+        }
     }
 
-    void KFScheduleModule::RemoveScheduleData( const std::string& module, uint64 objectid )
+    void KFScheduleModule::ExecuteScheduleStart( KFScheduleDataList* schedulelist, KFDate& nowdate )
     {
-        auto iter = _kf_schedule_data.find( module );
-        if ( iter == _kf_schedule_data.end() )
+        auto kftimesetting = KFTimeConfig::Instance()->FindSetting( schedulelist->_time_id );
+        if ( kftimesetting == nullptr )
         {
             return;
         }
 
-        auto miter = iter->second.find( objectid );
-        if ( miter == iter->second.end() )
+        for ( auto& timesection : kftimesetting->_time_section_list )
+        {
+            // 在[starttime,endtime]区间内
+            if ( KFDate::CheckSectionTimeData( &timesection._start_time, nowdate ) &&
+                    !KFDate::CheckSectionTimeData( &timesection._end_time, nowdate ) )
+            {
+                schedulelist->_status = KFScheduleEnum::Runing;
+                schedulelist->_finish_time_data = timesection._end_time;
+                //schedulelist->_duration_time = CaclSectionTimeDataDuration( &timesection._start_time, &timesection._end_time );
+
+                // 功能函数回调
+                for ( auto& iter : schedulelist->_schedule_data_list._objects )
+                {
+                    auto scheduledata = iter.second;
+                    if ( scheduledata->_start_function != nullptr )
+                    {
+                        scheduledata->_start_function( scheduledata->_object_id, schedulelist->_duration_time );
+                    }
+                }
+
+                break;
+            }
+        }
+    }
+
+    void KFScheduleModule::ExecuteScheduleFinish( KFScheduleDataList* schedulelist, KFDate& nowdate )
+    {
+        // 没有过结束时间
+        if ( !KFDate::CheckSectionTimeData( &schedulelist->_finish_time_data, nowdate ) )
         {
             return;
         }
 
-        __KF_DELETE__( KFScheduleData, miter->second );
-        iter->second.erase( miter );
+        schedulelist->_status = KFScheduleEnum::Stop;
+
+        // 功能函数回调
+        for ( auto& iter : schedulelist->_schedule_data_list._objects )
+        {
+            auto scheduledata = iter.second;
+            if ( scheduledata->_finish_function != nullptr )
+            {
+                scheduledata->_finish_function( scheduledata->_object_id, schedulelist->_duration_time );
+            }
+        }
     }
 }

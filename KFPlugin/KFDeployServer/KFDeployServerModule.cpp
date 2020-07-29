@@ -21,7 +21,7 @@ namespace KFrame
 
     void KFDeployServerModule::ShutDown()
     {
-        __UN_SCHEDULE__();
+        __UN_DELAYED_0__();
         __UN_TCP_SERVER_LOST__();
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         __UN_HTTP__( __STRING__( deploy ) );
@@ -219,7 +219,7 @@ namespace KFrame
         if ( pbcommand->command() == __STRING__( unschedule ) )
         {
             auto id = __TO_UINT64__( pbcommand->value() );
-            __UN_SCHEDULE_OBJECT__( id );
+            __UN_DELAYED_1__( id );
         }
         else
         {
@@ -229,17 +229,13 @@ namespace KFrame
             }
             else
             {
-                auto kfsetting = _kf_schedule->CreateScheduleSetting();
-                kfsetting->SetTime( kfmsg.time() );
-                kfsetting->SetData( ++_schedule_id, data, length );
-                __REGISTER_SCHEDULE__( kfsetting, &KFDeployServerModule::OnTcpDeployCommandToAgent );
-
-                LogDeploy( 0, "schedule=[{}] time=[{}]", _schedule_id, KFDate::GetTimeString( kfmsg.time() ) );
+                LogDeploy( 0, "schedule=[{}] time=[{}]", _delayed_id, KFDate::GetTimeString( kfmsg.time() ) );
+                __REGISTER_DELAYED_WITH_DATA__( kfmsg.time(), ++_delayed_id, data, length, &KFDeployServerModule::OnTcpDeployCommandToAgent );
             }
         }
     }
 
-    __KF_SCHEDULE_FUNCTION__( KFDeployServerModule::OnTcpDeployCommandToAgent )
+    __KF_DELAYED_FUNCTION__( KFDeployServerModule::OnTcpDeployCommandToAgent )
     {
         auto length = size;
         __PROTO_PARSE__( KFMsg::S2SDeployToolCommandReq );
@@ -271,7 +267,7 @@ namespace KFrame
         if ( command == __STRING__( unschedule ) )
         {
             auto id = __JSON_GET_UINT64__( request, __STRING__( value ) );
-            __UN_SCHEDULE_OBJECT__( id );
+            __UN_DELAYED_1__( id );
         }
         else
         {
@@ -282,19 +278,15 @@ namespace KFrame
             }
             else
             {
-                auto kfsetting = _kf_schedule->CreateScheduleSetting();
-                kfsetting->SetTime( scheduletime );
-                kfsetting->SetData( ++_schedule_id, data.c_str(), data.size() );
-                __REGISTER_SCHEDULE__( kfsetting, &KFDeployServerModule::OnHttpDeployCommandToAgent );
-
-                LogDeploy( 0, "schedule=[{}] time=[{}]", _schedule_id, KFDate::GetTimeString( scheduletime ) );
+                LogDeploy( 0, "schedule=[{}] time=[{}]", _delayed_id, KFDate::GetTimeString( scheduletime ) );
+                __REGISTER_DELAYED_WITH_DATA__( scheduletime, ++_delayed_id, data.c_str(), data.size(), &KFDeployServerModule::OnHttpDeployCommandToAgent );
             }
         }
 
         return _invalid_string;
     }
 
-    __KF_SCHEDULE_FUNCTION__( KFDeployServerModule::OnHttpDeployCommandToAgent )
+    __KF_DELAYED_FUNCTION__( KFDeployServerModule::OnHttpDeployCommandToAgent )
     {
         __JSON_PARSE_CHAR__( request, data, size );
 

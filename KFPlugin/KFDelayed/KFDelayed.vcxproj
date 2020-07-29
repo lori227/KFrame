@@ -12,20 +12,20 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFScheduleModule.cpp" />
-    <ClCompile Include="KFSchedulePlugin.cpp" />
+    <ClCompile Include="KFDelayedModule.cpp" />
+    <ClCompile Include="KFDelayedPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFScheduleData.hpp" />
-    <ClInclude Include="KFScheduleInterface.h" />
-    <ClInclude Include="KFScheduleModule.hpp" />
-    <ClInclude Include="KFSchedulePlugin.hpp" />
+    <ClInclude Include="KFDelayedData.hpp" />
+    <ClInclude Include="KFDelayedInterface.h" />
+    <ClInclude Include="KFDelayedModule.hpp" />
+    <ClInclude Include="KFDelayedPlugin.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{426BA182-20AE-4977-8963-EA26E6D11438}</ProjectGuid>
+    <ProjectGuid>{F0D08CFF-9809-487A-804E-214FF53FAB3F}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>NFProxyPlugin</RootNamespace>
-    <ProjectName>KFSchedule</ProjectName>
+    <ProjectName>KFDelayed</ProjectName>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

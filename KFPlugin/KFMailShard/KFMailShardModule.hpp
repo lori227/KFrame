@@ -16,7 +16,7 @@
 #include "KFRedis/KFRedisInterface.h"
 #include "KFMongo/KFMongoInterface.h"
 #include "KFMessage/KFMessageInterface.h"
-#include "KFSchedule/KFScheduleInterface.h"
+#include "KFDelayed/KFDelayedInterface.h"
 #include "KFHttpServer/KFHttpServerInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"
 #include "KFBasicDatabase/KFBasicDatabaseInterface.h"
@@ -38,7 +38,7 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
     protected:
         // 计划清理过期的全局邮件
-        __KF_SCHEDULE_FUNCTION__( OnScheduleClearWholeOverdueMail );
+        __KF_DELAYED_FUNCTION__( OnDelayedClearWholeOverdueMail );
 
         // 增加邮件
         __KF_HTTP_FUNCTION__( HandleGMAddMailReq );

@@ -225,7 +225,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KFDirDatabase", "KFPlugin\K
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KFRelationDatabase", "KFPlugin\KFRelationDatabase\KFRelationDatabase.vcxproj", "{08B230ED-9561-4702-B366-2C7F4C28799B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KFBasicAttribute", "KFPlugin\KFBasicDatabase\KFBasicDatabase.vcxproj", "{2EC77F3F-BAA6-485A-99D3-CCD140225DAB}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KFBasicDatabase", "KFPlugin\KFBasicDatabase\KFBasicDatabase.vcxproj", "{2EC77F3F-BAA6-485A-99D3-CCD140225DAB}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KFDelayed", "KFPlugin\KFDelayed\KFDelayed.vcxproj", "{F0D08CFF-9809-487A-804E-214FF53FAB3F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -751,6 +753,12 @@ Global
 		{2EC77F3F-BAA6-485A-99D3-CCD140225DAB}.Release|x64.ActiveCfg = Release|x64
 		{2EC77F3F-BAA6-485A-99D3-CCD140225DAB}.Release|x64.Build.0 = Release|x64
 		{2EC77F3F-BAA6-485A-99D3-CCD140225DAB}.Release|x86.ActiveCfg = Release|x64
+		{F0D08CFF-9809-487A-804E-214FF53FAB3F}.Debug|x64.ActiveCfg = Debug|x64
+		{F0D08CFF-9809-487A-804E-214FF53FAB3F}.Debug|x64.Build.0 = Debug|x64
+		{F0D08CFF-9809-487A-804E-214FF53FAB3F}.Debug|x86.ActiveCfg = Debug|x64
+		{F0D08CFF-9809-487A-804E-214FF53FAB3F}.Release|x64.ActiveCfg = Release|x64
+		{F0D08CFF-9809-487A-804E-214FF53FAB3F}.Release|x64.Build.0 = Release|x64
+		{F0D08CFF-9809-487A-804E-214FF53FAB3F}.Release|x86.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -864,9 +872,10 @@ Global
 		{24518CD5-3851-4CAD-B7B3-BFE83AB4842B} = {92764806-EB74-446F-AA1B-A5C8B7538F26}
 		{08B230ED-9561-4702-B366-2C7F4C28799B} = {BF933D88-C186-4FEE-ACCE-EC32A7A3A624}
 		{2EC77F3F-BAA6-485A-99D3-CCD140225DAB} = {AF91071A-47A2-49D3-8347-D71134A00472}
+		{F0D08CFF-9809-487A-804E-214FF53FAB3F} = {75A62E4D-9879-4F0B-9B82-D2411C0332B1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {0F58A6B8-C040-4A92-9898-1E6968E55CF1}
 		Qt5Version = msvc2015_86
+		SolutionGuid = {0F58A6B8-C040-4A92-9898-1E6968E55CF1}
 	EndGlobalSection
 EndGlobal

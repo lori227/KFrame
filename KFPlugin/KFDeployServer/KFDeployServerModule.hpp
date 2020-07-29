@@ -14,7 +14,7 @@
 #include "KFDeployServerInterface.h"
 #include "KFMySQL/KFMySQLInterface.h"
 #include "KFMessage/KFMessageInterface.h"
-#include "KFSchedule/KFScheduleInterface.h"
+#include "KFDelayed/KFDelayedInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
 #include "KFHttpServer/KFHttpServerInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
@@ -75,8 +75,8 @@ namespace KFrame
         __KF_HTTP_FUNCTION__( HandleDeployCommand );
 
         // 部署命令
-        __KF_SCHEDULE_FUNCTION__( OnHttpDeployCommandToAgent );
-        __KF_SCHEDULE_FUNCTION__( OnTcpDeployCommandToAgent );
+        __KF_DELAYED_FUNCTION__( OnHttpDeployCommandToAgent );
+        __KF_DELAYED_FUNCTION__( OnTcpDeployCommandToAgent );
 
     protected:
         // 注册Agent
@@ -120,8 +120,8 @@ namespace KFrame
         // Agent列表
         KFHashMap< std::string, const std::string&, KFAgentData > _agent_list;
 
-        // 计划任务id
-        uint64 _schedule_id = 0u;
+        // 定时任务id
+        uint64 _delayed_id = 0u;
 
         // web列表
         std::string _web_deploy_url;
