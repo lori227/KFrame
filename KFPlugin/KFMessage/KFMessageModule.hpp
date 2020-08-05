@@ -8,12 +8,20 @@
 //    @Mail			    :    lori227@qq.com
 //    @Date             :    2017-1-8
 ************************************************************************/
-
-#include "KFrame.h"
 #include "KFMessageInterface.h"
 
 namespace KFrame
 {
+    class KFMessageHandle
+    {
+    public:
+        // 消息函数
+        KFMessageFunction _function = nullptr;
+
+        // 是否开放
+        bool _is_open = true;
+    };
+
     class KFMessageModule : public KFMessageInterface
     {
     public:
@@ -29,6 +37,8 @@ namespace KFrame
         // 取消注册
         virtual void UnRegisterFunction( uint32 msgid );
 
+        // 关闭消息处理
+        virtual bool OpenFunction( uint32 msgid, bool open );
     protected:
 
         // 添加函数
@@ -36,7 +46,7 @@ namespace KFrame
 
     private:
         // 处理器函数
-        KFBind< uint32, uint32, KFMessageFunction > _kf_message_function;
+        KFHashMap< uint32, uint32, KFMessageHandle > _kf_message_handle;
     };
 }
 

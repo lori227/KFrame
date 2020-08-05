@@ -22,6 +22,10 @@ namespace KFrame
 
         // 调用函数
         virtual bool CallFunction( const Route& route, uint32 msgid, const char* data, uint32 length ) = 0;
+        //////////////////////////////////////////////////////////////////////////////////////////
+        // 关闭消息处理
+        virtual bool OpenFunction( uint32 msgid, bool open ) = 0;
+
     protected:
         // 添加消息函数
         virtual void AddFunction( uint32 msgid, KFMessageFunction& function ) = 0;

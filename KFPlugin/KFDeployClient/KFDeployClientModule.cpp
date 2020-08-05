@@ -122,6 +122,26 @@ namespace KFrame
             auto strcommand = __FORMAT__( "{}={}", command, value );
             return _kf_plugin_manage->AddCommand( strcommand );
         }
+        else if ( command == __STRING__( messageclose ) )
+        {
+            UInt32List messagelist;
+            auto strvalue = value;
+            KFUtility::SplitList( messagelist, strvalue, __SPLIT_STRING__ );
+            for ( auto messageid : messagelist )
+            {
+                _kf_message->OpenFunction( messageid, false );
+            }
+        }
+        else if ( command == __STRING__( messageopen ) )
+        {
+            UInt32List messagelist;
+            auto strvalue = value;
+            KFUtility::SplitList( messagelist, strvalue, __SPLIT_STRING__ );
+            for ( auto messageid : messagelist )
+            {
+                _kf_message->OpenFunction( messageid, true );
+            }
+        }
 
         auto kfcommand = _command_data.Find( command );
         if ( kfcommand != nullptr )
