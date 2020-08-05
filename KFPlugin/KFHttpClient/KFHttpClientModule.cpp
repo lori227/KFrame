@@ -49,24 +49,12 @@ namespace KFrame
     {
         return KFHttpCommon::SendResponse( json );
     }
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     bool KFHttpClientModule::IsHttpsClient( const std::string& url )
     {
         return url.compare( 0, 5, "https" ) == 0;
     }
-
-    std::string KFHttpClientModule::STRequest( uint32 type, const std::string& url, const std::string& data )
-    {
-        if ( IsHttpsClient( url ) )
-        {
-            KFHttpsClient httpclient;
-            return httpclient.RunHttp( type, url, data );
-        }
-
-        KFHttpClient httpclient;
-        return httpclient.RunHttp( type, url, data );
-    }
-
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     std::string KFHttpClientModule::STGet( const std::string& url, const std::string& data )
     {
         return STRequest( KFHttp::Get, url, data );
@@ -87,6 +75,18 @@ namespace KFrame
     {
         auto data = __JSON_SERIALIZE__( json );
         return STRequest( KFHttp::Post, url, data );
+    }
+
+    std::string KFHttpClientModule::STRequest( uint32 type, const std::string& url, const std::string& data )
+    {
+        if ( IsHttpsClient( url ) )
+        {
+            KFHttpsClient httpclient;
+            return httpclient.RunHttp( type, url, data );
+        }
+
+        KFHttpClient httpclient;
+        return httpclient.RunHttp( type, url, data );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFHttpClientModule::MTGetRequest( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& args )
@@ -110,8 +110,7 @@ namespace KFrame
         auto data = __JSON_SERIALIZE__( json );
         MTRequest( KFHttp::Post, function, url, data, args );
     }
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     void KFHttpClientModule::MTRequest( uint32 type, KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& args )
     {
         auto httpdata = __KF_NEW__( KFHttpData );

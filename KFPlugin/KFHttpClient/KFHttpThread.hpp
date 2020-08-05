@@ -17,12 +17,11 @@ namespace KFrame
         // 添加异步请求
         void AddHttpRequest( KFHttpData* httpdata );
 
-        // http请求
-        void RunHttpRequest();
-
         // http相应
         void RunHttpResponse();
-
+    protected:
+        // http请求
+        void RunHttpRequest();
     private:
         std::atomic<bool> _thread_run;
 
