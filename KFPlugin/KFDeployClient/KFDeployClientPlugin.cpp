@@ -19,5 +19,7 @@ namespace KFrame
         __FIND_MODULE__( _kf_timer, KFTimerInterface );
         __FIND_MODULE__( _kf_message, KFMessageInterface );
         __FIND_MODULE__( _kf_tcp_client, KFTcpClientInterface );
+        __FIND_MODULE__( _kf_deploy_client, KFDeployClientInterface );
+
     }
 }
