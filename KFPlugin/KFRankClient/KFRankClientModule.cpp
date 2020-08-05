@@ -6,7 +6,7 @@ namespace KFrame
     void KFRankClientModule::BeforeRun()
     {
         _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
-        _kf_component->RegisterUpdateDataModule( this, &KFRankClientModule::OnDataUpdateCallBack );
+        __REGISTER_UPDATE_DATA__( &KFRankClientModule::OnDataUpdateCallBack );
         ///////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_QUERY_RANK_LIST_REQ, &KFRankClientModule::HandleQueryRankListReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_QUERY_FRIEND_RANK_LIST_REQ, &KFRankClientModule::HandleQueryFriendRankListReq );
@@ -14,9 +14,8 @@ namespace KFrame
 
     void KFRankClientModule::BeforeShut()
     {
-        _kf_component->UnRegisterUpdateDataModule( this );
+        __UN_UPDATE_DATA__();
         ///////////////////////////////////////////////////////////////////////////////////////////
-
         __UN_MESSAGE__( KFMsg::MSG_QUERY_RANK_LIST_REQ );
         __UN_MESSAGE__( KFMsg::MSG_QUERY_FRIEND_RANK_LIST_REQ );
     }

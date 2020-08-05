@@ -152,3 +152,6 @@ add_subdirectory(KFChat)
 add_subdirectory(KFStore)
 add_subdirectory(KFRankClient)
 add_subdirectory(KFRankShard)
+add_subdirectory(KFTeamClient)
+add_subdirectory(KFTeamShard)
+
