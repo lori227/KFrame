@@ -14,11 +14,13 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="KFHttpClientModule.cpp" />
     <ClCompile Include="KFHttpClientPlugin.cpp" />
+    <ClCompile Include="KFHttpThread.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFHttpClientInterface.h" />
     <ClInclude Include="KFHttpClientModule.hpp" />
     <ClInclude Include="KFHttpClientPlugin.hpp" />
+    <ClInclude Include="KFHttpThread.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{E966C3FF-3ACB-40BE-BBBC-4B7FBB6EB8E7}</ProjectGuid>

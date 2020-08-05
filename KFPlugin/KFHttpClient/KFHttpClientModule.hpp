@@ -9,16 +9,15 @@
 //    @Date             :    2017-1-10
 ************************************************************************/
 
-#include "KFrame.h"
 #include "KFHttpClientInterface.h"
-#include "KFHttp/KFHttpData.h"
+#include "KFHttpThread.hpp"
 
 namespace KFrame
 {
     class KFHttpClientModule : public KFHttpClientInterface
     {
     public:
-        KFHttpClientModule();
+        KFHttpClientModule() = default;
         ~KFHttpClientModule();
 
         // 逻辑
@@ -55,27 +54,22 @@ namespace KFrame
         // 添加异步请求
         void AddHttpData( KFHttpData* httpdata );
 
-        // http请求
-        void RunHttpRequest();
-
         // 判断是否是https
         bool IsHttpsClient( const std::string& url );
+
+        // 创建http线程
+        void CreateHttpThread();
         /////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////
         std::string STRequest( uint32 type, const std::string& url, const std::string& data );
         void MTRequest( uint32 type, KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& args );
 
     private:
+        // http线程列表
+        std::vector< KFHttpThread* > _http_thread_list;
 
-        std::atomic<bool> _thread_run;
-
-        // 请求的数据队列
-        KFMutex _kf_req_mutex;
-        std::list< KFHttpData* > _req_http_data;
-
-        // 完成的数据队列
-        KFMutex _kf_ack_mutex;
-        std::list< KFHttpData* > _ack_http_data;
+        // 当前的索引
+        uint32 _thread_index = 0;
     };
 }
 

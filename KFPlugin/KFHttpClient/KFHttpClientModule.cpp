@@ -5,30 +5,13 @@
 
 namespace KFrame
 {
-    KFHttpClientModule::KFHttpClientModule()
-    {
-        _thread_run = false;
-    }
-
     KFHttpClientModule::~KFHttpClientModule()
     {
+        for ( auto httpthread : _http_thread_list )
         {
-            KFLocker locker( _kf_req_mutex );
-            for ( auto httpdata : _req_http_data )
-            {
-                __KF_DELETE__( KFHttpData, httpdata );
-            }
-            _req_http_data.clear();
+            __KF_DELETE__( KFHttpThread, httpthread );
         }
-
-        {
-            KFLocker locker( _kf_ack_mutex );
-            for ( auto httpdata : _ack_http_data )
-            {
-                __KF_DELETE__( KFHttpData, httpdata );
-            }
-            _ack_http_data.clear();
-        }
+        _http_thread_list.clear();
     }
 
     void KFHttpClientModule::BeforeRun()
@@ -38,51 +21,19 @@ namespace KFrame
 
     void KFHttpClientModule::BeforeShut()
     {
-        _thread_run = false;
+        for ( auto httpthread : _http_thread_list )
+        {
+            httpthread->ShutDown();
+        }
     }
 
     void KFHttpClientModule::Run()
     {
-        std::list< KFHttpData* > templist;
+        for ( auto httpthread : _http_thread_list )
         {
-            KFLocker locker( _kf_ack_mutex );
-            templist.swap( _ack_http_data );
-        }
-
-        for ( auto httpdata : templist )
-        {
-            httpdata->Response();
-            __KF_DELETE__( KFHttpData, httpdata );
+            httpthread->RunHttpResponse();
         }
     }
-
-    void KFHttpClientModule::RunHttpRequest()
-    {
-        while ( _thread_run )
-        {
-            std::list< KFHttpData* > templist;
-            {
-                KFLocker locker( _kf_req_mutex );
-                templist.swap( _req_http_data );
-            }
-
-            for ( auto httpdata : templist )
-            {
-                httpdata->Request();
-
-                KFLocker locker( _kf_ack_mutex );
-                _ack_http_data.push_back( httpdata );
-            }
-
-            KFThread::Sleep( 1 );
-        }
-    }
-
-    bool KFHttpClientModule::IsHttpsClient( const std::string& url )
-    {
-        return url.compare( 0, 5, "https" ) == 0;
-    }
-
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     std::string KFHttpClientModule::SendCode( uint32 code )
     {
@@ -99,6 +50,11 @@ namespace KFrame
         return KFHttpCommon::SendResponse( json );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    bool KFHttpClientModule::IsHttpsClient( const std::string& url )
+    {
+        return url.compare( 0, 5, "https" ) == 0;
+    }
+
     std::string KFHttpClientModule::STRequest( uint32 type, const std::string& url, const std::string& data )
     {
         if ( IsHttpsClient( url ) )
@@ -133,6 +89,29 @@ namespace KFrame
         return STRequest( KFHttp::Post, url, data );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    void KFHttpClientModule::MTGetRequest( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& args )
+    {
+        MTRequest( KFHttp::Get, function, url, data, _invalid_string );
+    }
+
+    void KFHttpClientModule::MTGetRequest( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& args )
+    {
+        auto data = __JSON_SERIALIZE__( json );
+        MTRequest( KFHttp::Get, function, url, data, _invalid_string );
+    }
+
+    void KFHttpClientModule::MTPostRequest( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& args )
+    {
+        MTRequest( KFHttp::Post, function, url, data, args );
+    }
+
+    void KFHttpClientModule::MTPostRequest( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& args )
+    {
+        auto data = __JSON_SERIALIZE__( json );
+        MTRequest( KFHttp::Post, function, url, data, args );
+    }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFHttpClientModule::MTRequest( uint32 type, KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& args )
     {
         auto httpdata = __KF_NEW__( KFHttpData );
@@ -156,37 +135,29 @@ namespace KFrame
 
     void KFHttpClientModule::AddHttpData( KFHttpData* httpdata )
     {
-        if ( !_thread_run )
+        // 先创建http异步线程
+        CreateHttpThread();
+
+        if ( _thread_index >= ( uint32 )_http_thread_list.size() )
         {
-            _thread_run = true;
-            KFThread::CreateThread( this, &KFHttpClientModule::RunHttpRequest, __FUNC_LINE__ );
+            _thread_index = 0u;
         }
 
-        KFLocker locker( _kf_req_mutex );
-        _req_http_data.push_back( httpdata );
+        auto httpthread = _http_thread_list[ _thread_index++ ];
+        httpthread->AddHttpRequest( httpdata );
     }
 
-    void KFHttpClientModule::MTGetRequest( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& args )
+    void KFHttpClientModule::CreateHttpThread()
     {
-        MTRequest( KFHttp::Get, function, url, data, _invalid_string );
+        if ( !_http_thread_list.empty() )
+        {
+            return;
+        }
+
+        // 创建4个线程来执行异步http逻辑
+        for ( auto i = 0u; i < 4u; ++i )
+        {
+            _http_thread_list.push_back( __KF_NEW__( KFHttpThread ) );
+        }
     }
-
-    void KFHttpClientModule::MTGetRequest( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& args )
-    {
-        auto data = __JSON_SERIALIZE__( json );
-        MTRequest( KFHttp::Get, function, url, data, _invalid_string );
-    }
-
-    void KFHttpClientModule::MTPostRequest( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& args )
-    {
-        MTRequest( KFHttp::Post, function, url, data, args );
-    }
-
-    void KFHttpClientModule::MTPostRequest( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& args )
-    {
-        auto data = __JSON_SERIALIZE__( json );
-        MTRequest( KFHttp::Post, function, url, data, args );
-    }
-
-
 }

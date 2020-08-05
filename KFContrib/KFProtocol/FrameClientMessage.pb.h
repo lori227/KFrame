@@ -45,7 +45,7 @@ namespace protobuf_FrameClientMessage_2eproto {
 struct LIBPROTOC_EXPORT TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[67];
+  static const ::google::protobuf::internal::ParseTable schema[68];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -227,6 +227,9 @@ LIBPROTOC_EXPORT extern MsgTaskRemoveReqDefaultTypeInternal _MsgTaskRemoveReq_de
 class MsgTaskRewardReq;
 class MsgTaskRewardReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgTaskRewardReqDefaultTypeInternal _MsgTaskRewardReq_default_instance_;
+class MsgTeamCreateReq;
+class MsgTeamCreateReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern MsgTeamCreateReqDefaultTypeInternal _MsgTeamCreateReq_default_instance_;
 class MsgTellBeKick;
 class MsgTellBeKickDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgTellBeKickDefaultTypeInternal _MsgTellBeKick_default_instance_;
@@ -315,6 +318,7 @@ template<> LIBPROTOC_EXPORT ::KFMsg::MsgTaskAddReq* Arena::CreateMaybeMessage<::
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgTaskReceiveReq* Arena::CreateMaybeMessage<::KFMsg::MsgTaskReceiveReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgTaskRemoveReq* Arena::CreateMaybeMessage<::KFMsg::MsgTaskRemoveReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgTaskRewardReq* Arena::CreateMaybeMessage<::KFMsg::MsgTaskRewardReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::MsgTeamCreateReq* Arena::CreateMaybeMessage<::KFMsg::MsgTeamCreateReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgTellBeKick* Arena::CreateMaybeMessage<::KFMsg::MsgTellBeKick>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgTellFriendChat* Arena::CreateMaybeMessage<::KFMsg::MsgTellFriendChat>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgTellNotice* Arena::CreateMaybeMessage<::KFMsg::MsgTellNotice>(Arena*);
@@ -396,12 +400,13 @@ enum FrameClientProtocol {
   MSG_TELL_FRIEND_CHAT = 611,
   MSG_SERVER_CHAT_REQ = 612,
   MSG_TELL_SERVER_CHAT = 613,
+  MSG_TEAM_CREATE_REQ = 630,
   FrameClientProtocol_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   FrameClientProtocol_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 LIBPROTOC_EXPORT bool FrameClientProtocol_IsValid(int value);
 const FrameClientProtocol FrameClientProtocol_MIN = MSG_FRAME_CLIENT_BEGIN;
-const FrameClientProtocol FrameClientProtocol_MAX = MSG_TELL_SERVER_CHAT;
+const FrameClientProtocol FrameClientProtocol_MAX = MSG_TEAM_CREATE_REQ;
 const int FrameClientProtocol_ARRAYSIZE = FrameClientProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* FrameClientProtocol_descriptor();
@@ -8141,6 +8146,109 @@ class LIBPROTOC_EXPORT MsgTellServerChat : public ::google::protobuf::Message /*
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameClientMessage_2eproto::TableStruct;
 };
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgTeamCreateReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgTeamCreateReq) */ {
+ public:
+  MsgTeamCreateReq();
+  virtual ~MsgTeamCreateReq();
+
+  MsgTeamCreateReq(const MsgTeamCreateReq& from);
+
+  inline MsgTeamCreateReq& operator=(const MsgTeamCreateReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  MsgTeamCreateReq(MsgTeamCreateReq&& from) noexcept
+    : MsgTeamCreateReq() {
+    *this = ::std::move(from);
+  }
+
+  inline MsgTeamCreateReq& operator=(MsgTeamCreateReq&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgTeamCreateReq& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MsgTeamCreateReq* internal_default_instance() {
+    return reinterpret_cast<const MsgTeamCreateReq*>(
+               &_MsgTeamCreateReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    67;
+
+  void Swap(MsgTeamCreateReq* other);
+  friend void swap(MsgTeamCreateReq& a, MsgTeamCreateReq& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MsgTeamCreateReq* New() const final {
+    return CreateMaybeMessage<MsgTeamCreateReq>(NULL);
+  }
+
+  MsgTeamCreateReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MsgTeamCreateReq>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const MsgTeamCreateReq& from);
+  void MergeFrom(const MsgTeamCreateReq& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MsgTeamCreateReq* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // uint32 maxcount = 1;
+  void clear_maxcount();
+  static const int kMaxcountFieldNumber = 1;
+  ::google::protobuf::uint32 maxcount() const;
+  void set_maxcount(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgTeamCreateReq)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 maxcount_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_FrameClientMessage_2eproto::TableStruct;
+};
 // ===================================================================
 
 
@@ -12266,9 +12374,29 @@ inline void MsgTellServerChat::set_allocated_content(::std::string* content) {
   // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgTellServerChat.content)
 }
 
+// -------------------------------------------------------------------
+
+// MsgTeamCreateReq
+
+// uint32 maxcount = 1;
+inline void MsgTeamCreateReq::clear_maxcount() {
+  maxcount_ = 0u;
+}
+inline ::google::protobuf::uint32 MsgTeamCreateReq::maxcount() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgTeamCreateReq.maxcount)
+  return maxcount_;
+}
+inline void MsgTeamCreateReq::set_maxcount(::google::protobuf::uint32 value) {
+  
+  maxcount_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.MsgTeamCreateReq.maxcount)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

@@ -4,10 +4,12 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="KFHttpClientModule.cpp" />
     <ClCompile Include="KFHttpClientPlugin.cpp" />
+    <ClCompile Include="KFHttpThread.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFHttpClientInterface.h" />
     <ClInclude Include="KFHttpClientPlugin.hpp" />
     <ClInclude Include="KFHttpClientModule.hpp" />
+    <ClInclude Include="KFHttpThread.hpp" />
   </ItemGroup>
 </Project>

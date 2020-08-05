@@ -55,7 +55,7 @@ namespace KFrame
 
     void KFRunablePool::DestroyRunable( KFRunable* runable )
     {
-        delete runable;
+        __DELETE_OBJECT__( runable );
         //_idle_pool.push_back( runable );
     }
 }

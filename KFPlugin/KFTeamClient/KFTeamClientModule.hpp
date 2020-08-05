@@ -23,7 +23,7 @@ namespace KFrame
     {
     public:
         KFTeamClientModule() = default;
-        ~KFTeamClientModule() = default;
+        virtual ~KFTeamClientModule() = default;
 
         // 刷新
         virtual void BeforeRun();
@@ -32,6 +32,18 @@ namespace KFrame
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
+    protected:
+        // 属性更新回调
+        __KF_UPDATE_DATA_FUNCTION__( OnDataUpdateCallBack );
+
+        // 玩家进入游戏
+        __KF_PLAYER_ENTER_FUNCTION__( OnEnterTeamModule );
+
+        // 玩家离开游戏
+        __KF_PLAYER_LEAVE_FUNCTION__( OnLeaveTeamModule );
+
+        // 请求创建队伍
+        __KF_MESSAGE_FUNCTION__( HandleTeamCreateReq );
 
     private:
         // 玩家组件
