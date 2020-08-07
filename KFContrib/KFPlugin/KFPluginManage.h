@@ -64,7 +64,8 @@
 #define __REGISTER_MODULE__( modulename ) \
     {\
         auto kfmodule = __NEW_OBJECT__( modulename##Module ); \
-        _kf_plugin_manage->RegistModule< modulename##Interface >( this, kfmodule );\
+        kfmodule->_plugin_name = #modulename;\
+        _kf_plugin_manage->RegistModule < modulename##Interface >( this, kfmodule );\
         __REGISTER_PLUGIN__( modulename##Module, Run );\
         __REGISTER_PLUGIN__( modulename##Module, AfterRun );\
     }\

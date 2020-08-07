@@ -5,51 +5,48 @@
 
 namespace KFrame
 {
-    typedef std::function<void( const std::string&, uint64, uint64 )> KFTimerFunction;
+    typedef std::function<void( uint64, uint64 )> KFTimerFunction;
     ////////////////////////////////////////////////////////////////////////////
     class KFTimerInterface : public KFModule
     {
     public:
         // 注册循环定时器
         template< class T >
-        void RegisterLoopTimer( uint64 objectid, uint64 subid, uint32 intervaltime, uint32 delaytime, T* object, void ( T::*handle )( const std::string&, uint64, uint64 ) )
+        void RegisterLoopTimer( uint64 objectid, uint64 subid, uint32 intervaltime, uint32 delaytime, T* module, void ( T::*handle )( uint64, uint64 ) )
         {
-            KFTimerFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
-            AddLoopTimer( typeid( T ).name(), objectid, subid, intervaltime, delaytime, function );
+            KFTimerFunction function = std::bind( handle, module, std::placeholders::_1, std::placeholders::_2 );
+            AddLoopTimer( module, objectid, subid, intervaltime, delaytime, function );
         }
 
         // 注册指定次数定时器
         template< class T >
-        void RegisterLimitTimer( uint64 objectid, uint64 subid, uint32 intervaltime, uint32 count, T* object, void ( T::*handle )( const std::string&, uint64, uint64 ) )
+        void RegisterLimitTimer( uint64 objectid, uint64 subid, uint32 intervaltime, uint32 count, T* module, void ( T::*handle )( uint64, uint64 ) )
         {
-            KFTimerFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
-            AddLimitTimer( typeid( T ).name(), objectid, subid, intervaltime, count, function );
+            KFTimerFunction function = std::bind( handle, module, std::placeholders::_1, std::placeholders::_2 );
+            AddLimitTimer( module, objectid, subid, intervaltime, count, function );
         }
 
         // 注册延迟定时器( 一定时间内只执行一次 )
         template< class T >
-        void RegisterDelayTimer( uint64 objectid, uint64 subid, uint32 intervaltime, T* object, void ( T::*handle )( const std::string&, uint64, uint64 ) )
+        void RegisterDelayTimer( uint64 objectid, uint64 subid, uint32 intervaltime, T* module, void ( T::*handle )( uint64, uint64 ) )
         {
-            KFTimerFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
-            AddDelayTimer( typeid( T ).name(), objectid, subid, intervaltime, function );
+            KFTimerFunction function = std::bind( handle, module, std::placeholders::_1, std::placeholders::_2 );
+            AddDelayTimer( module, objectid, subid, intervaltime, function );
         }
 
         // 删除定时器
         template< class T >
-        void UnRegisterTimer( T* object, uint64 objectid, uint64 subid )
+        void UnRegisterTimer( T* module, uint64 objectid, uint64 subid )
         {
-            RemoveTimer( typeid( T ).name(), objectid, subid );
+            RemoveTimer( module, objectid, subid );
         }
-
-        // 获得定时器剩余时间
-        virtual uint32 FindLeftTime( const std::string& module, uint64 objectid, uint64 subid ) = 0;
 
     protected:
         // 注册定时器
-        virtual void AddLoopTimer( const std::string& module, uint64 objectid, uint64 subid, uint32 intervaltime, uint32 delaytime, KFTimerFunction& function ) = 0;
-        virtual void AddLimitTimer( const std::string& module, uint64 objectid, uint64 subid, uint32 intervaltime, uint32 count, KFTimerFunction& function ) = 0;
-        virtual void AddDelayTimer( const std::string& module, uint64 objectid, uint64 subid, uint32 intervaltime, KFTimerFunction& function ) = 0;
-        virtual void RemoveTimer( const std::string& module, uint64 objectid, uint64 subid ) = 0;
+        virtual void AddLoopTimer( KFModule* module, uint64 objectid, uint64 subid, uint32 intervaltime, uint32 delaytime, KFTimerFunction& function ) = 0;
+        virtual void AddLimitTimer( KFModule* module, uint64 objectid, uint64 subid, uint32 intervaltime, uint32 count, KFTimerFunction& function ) = 0;
+        virtual void AddDelayTimer( KFModule* module, uint64 objectid, uint64 subid, uint32 intervaltime, KFTimerFunction& function ) = 0;
+        virtual void RemoveTimer( KFModule* module, uint64 objectid, uint64 subid ) = 0;
     };
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -57,7 +54,7 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 #define __KF_TIMER_FUNCTION__( function ) \
-    void function( const std::string& module, uint64 objectid, uint64 subid )
+    void function( uint64 objectid, uint64 subid )
 
 #define __LOOP_TIMER_0__( intervaltime, delaytime, function ) \
     _kf_timer->RegisterLoopTimer( 0u, 0u, intervaltime, delaytime, this, function )

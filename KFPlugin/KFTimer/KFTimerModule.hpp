@@ -35,17 +35,15 @@ namespace KFrame
         virtual void Run();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
-        // 获得定时器剩余时间
-        virtual uint32 FindLeftTime( const std::string& module, uint64 objectid, uint64 subid );
 
     protected:
         // 注册定时器
-        virtual void AddLoopTimer( const std::string& module, uint64 objectid, uint64 subid, uint32 intervaltime, uint32 delaytime, KFTimerFunction& function );
-        virtual void AddLimitTimer( const std::string& module, uint64 objectid, uint64 subid, uint32 intervaltime, uint32 count, KFTimerFunction& function );
-        virtual void AddDelayTimer( const std::string& module, uint64 objectid, uint64 subid, uint32 intervaltime, KFTimerFunction& function );
+        virtual void AddLoopTimer( KFModule* module, uint64 objectid, uint64 subid, uint32 intervaltime, uint32 delaytime, KFTimerFunction& function );
+        virtual void AddLimitTimer( KFModule* module, uint64 objectid, uint64 subid, uint32 intervaltime, uint32 count, KFTimerFunction& function );
+        virtual void AddDelayTimer( KFModule* module, uint64 objectid, uint64 subid, uint32 intervaltime, KFTimerFunction& function );
 
         // 删除定时器
-        virtual void RemoveTimer( const std::string& module, uint64 objectid, uint64 subid );
+        virtual void RemoveTimer( KFModule* module, uint64 objectid, uint64 subid );
 
     protected:
         void RunTimerUpdate();
@@ -53,14 +51,14 @@ namespace KFrame
         void RunTimerRemove();
 
         // 查找定时器
-        KFTimerData* FindTimerData( const std::string& module, uint64 objectid, uint64 subid );
+        KFTimerData* FindTimerData( KFModule* module, uint64 objectid, uint64 subid );
 
         // 添加定时器
-        bool AddTimerData( const std::string& module, KFTimerData* kfdata );
+        bool AddTimerData( KFModule* module, KFTimerData* kfdata );
 
         // 删除定时器
-        void RemoveRegisterData( const std::string& module, uint64 objectid, uint64 subid );
-        bool RemoveTimerData( const std::string& module, uint64 objectid, uint64 subid );
+        void RemoveRegisterData( KFModule* module, uint64 objectid, uint64 subid );
+        bool RemoveTimerData( KFModule* module, uint64 objectid, uint64 subid );
 
         // 从槽里删除定时器
         void RemoveSlotTimer( KFTimerData* timerdata );
@@ -85,13 +83,13 @@ namespace KFrame
         KFTimerData* _slot_timer_data[ TimerEnum::MaxSlot ];
 
         // 定时器数据
-        std::unordered_map< std::string, KFModuleData* > _kf_timer_data;
+        std::unordered_map< KFModule*, KFModuleData* > _kf_timer_data;
 
         // 需要注册的定时器
         std::list< KFTimerData* > _register_timer_data;
 
         // 需要删除的定时器
-        std::list< std::tuple< std::string, uint64, uint64 > > _remove_timer_data;
+        std::list< std::tuple< KFModule*, uint64, uint64 > > _remove_timer_data;
     };
 }
 

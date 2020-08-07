@@ -22,8 +22,8 @@ namespace KFrame
         // 时间id
         uint32 _time_id = 0u;
 
-        // 模块名
-        std::string _module;
+        // 模块
+        KFModule* _module = nullptr;
 
         // 对象id
         uint64 _object_id = 0u;
@@ -52,7 +52,7 @@ namespace KFrame
         KFTimeData _finish_time_data;
 
         // 计划任务列表
-        KFHashMap< std::string, const std::string&, KFScheduleData > _schedule_data_list;
+        KFHashMap< KFModule*, KFModule*, KFScheduleData > _schedule_data_list;
     };
 }
 

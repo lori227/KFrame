@@ -41,7 +41,7 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFDelayedModule::AddDelayedFunction( uint64 time, uint64 objectid, const int8* data, uint32 size,
-            const std::string& module, KFDelayedFunction& function )
+            KFModule* module, KFDelayedFunction& function )
     {
         auto delayeddata = __KF_NEW__( KFDelayedData, data, size );
         delayeddata->_loop_type = KFDelayedEnum::Once;
@@ -53,7 +53,7 @@ namespace KFrame
     }
 
     void KFDelayedModule::AddDelayedFunction( KFTimeData* timedata, uint64 objectid, const int8* data, uint32 size,
-            const std::string& module, KFDelayedFunction& function )
+            KFModule* module, KFDelayedFunction& function )
     {
         auto delayeddata = __KF_NEW__( KFDelayedData, data, size );
         delayeddata->_loop_type = KFDelayedEnum::Loop;
@@ -65,12 +65,12 @@ namespace KFrame
         _kf_delayed_register.push_back( delayeddata );
     }
 
-    void KFDelayedModule::RemoveDelayedFunction( const std::string& module )
+    void KFDelayedModule::RemoveDelayedFunction( KFModule* module )
     {
         RemoveDelayedFunction( module, _invalid_int );
     }
 
-    void KFDelayedModule::RemoveDelayedFunction( const std::string& module, uint64 objectid )
+    void KFDelayedModule::RemoveDelayedFunction( KFModule* module, uint64 objectid )
     {
         _kf_delayed_remove.emplace_back( std::make_tuple( module, objectid ) );
     }
@@ -86,7 +86,7 @@ namespace KFrame
 
         for ( auto& data : _kf_delayed_remove )
         {
-            std::string module = "";
+            KFModule* module = nullptr;
             uint64 objectid = 0u;
             std::tie( module, objectid ) = data;
             RemoveDelayedData( module, objectid );
@@ -95,7 +95,7 @@ namespace KFrame
         _kf_delayed_remove.clear();
     }
 
-    void KFDelayedModule::RemoveDelayedData( const std::string& module, uint64 objectid )
+    void KFDelayedModule::RemoveDelayedData( KFModule* module, uint64 objectid )
     {
         auto iter = _kf_delayed_data.find( module );
         if ( iter == _kf_delayed_data.end() )

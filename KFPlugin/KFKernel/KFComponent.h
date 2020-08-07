@@ -28,7 +28,7 @@ namespace KFrame
     typedef std::function< bool( KFEntity*, const KFElementResult* ) > KFElementResultFunction;
 
     // 游戏中的组件, 负责属性回调事件
-    class KFComponent
+    class KFComponent : public KFModule
     {
     public:
         KFComponent() = default;

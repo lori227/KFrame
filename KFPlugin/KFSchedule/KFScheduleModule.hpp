@@ -30,10 +30,10 @@ namespace KFrame
 
     protected:
         // 注册计划任务
-        virtual void AddSchedule( uint32 timeid, const std::string& module, uint64 objectid,
+        virtual void AddSchedule( uint32 timeid, KFModule* module, uint64 objectid,
                                   KFScheduleFunction& startfunction, KFScheduleFunction& finishfunction );
-        virtual void RemoveSchedule( const std::string& module );
-        virtual void RemoveSchedule( uint32 timeid, const std::string& module );
+        virtual void RemoveSchedule( KFModule* module );
+        virtual void RemoveSchedule( uint32 timeid, KFModule* module );
 
     protected:
         // 添加计划任务
@@ -61,7 +61,7 @@ namespace KFrame
         KFHashMap< uint32, uint32, KFScheduleDataList > _kf_schedule_list;
 
         // 需要删除的任务
-        std::list< std::tuple< uint32, std::string > > _kf_schedule_remove;
+        std::list< std::tuple< uint32, KFModule* > > _kf_schedule_remove;
     };
 }
 

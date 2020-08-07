@@ -16,40 +16,40 @@ namespace KFrame
         // 注册定时功能
         template< class T >
         void RegisterDelayed( uint64 time, uint64 objectid, const int8* data, uint32 size,
-                              T* object, void ( T::*handle )( uint64, const int8*, uint32 ) )
+                              T* module, void ( T::*handle )( uint64, const int8*, uint32 ) )
         {
-            KFDelayedFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
-            AddDelayedFunction( time, objectid, data, size, typeid( T ).name(), function );
+            KFDelayedFunction function = std::bind( handle, module, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
+            AddDelayedFunction( time, objectid, data, size, module, function );
         }
 
         // 注册定时功能
         template< class T >
         void RegisterDelayed( KFTimeData* timedata, uint64 objectid, const int8* data, uint32 size,
-                              T* object, void ( T::*handle )( uint64, const int8*, uint32 ) )
+                              T* module, void ( T::*handle )( uint64, const int8*, uint32 ) )
         {
-            KFDelayedFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
-            AddDelayedFunction( timedata, objectid, data, size, typeid( T ).name(), function );
+            KFDelayedFunction function = std::bind( handle, module, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
+            AddDelayedFunction( timedata, objectid, data, size, module, function );
         }
 
         // 删除定时功能
         template< class T >
-        void UnRegisterDelayed( T* object )
+        void UnRegisterDelayed( T* module )
         {
-            RemoveDelayedFunction( typeid( T ).name() );
+            RemoveDelayedFunction( module );
         }
 
         // 删除计划功能
         template< class T >
-        void UnRegisterDelayed( T* object, uint64 objectid )
+        void UnRegisterDelayed( T* module, uint64 objectid )
         {
-            RemoveDelayedFunction( typeid( T ).name(), objectid );
+            RemoveDelayedFunction( module, objectid );
         }
 
     protected:
-        virtual void AddDelayedFunction( uint64 time, uint64 objectid, const int8* data, uint32 size, const std::string& module, KFDelayedFunction& function ) = 0;
-        virtual void AddDelayedFunction( KFTimeData* timedata, uint64 objectid, const int8* data, uint32 size, const std::string& module, KFDelayedFunction& function ) = 0;
-        virtual void RemoveDelayedFunction( const std::string& module ) = 0;
-        virtual void RemoveDelayedFunction( const std::string& module, uint64 objectid ) = 0;
+        virtual void AddDelayedFunction( uint64 time, uint64 objectid, const int8* data, uint32 size, KFModule* module, KFDelayedFunction& function ) = 0;
+        virtual void AddDelayedFunction( KFTimeData* timedata, uint64 objectid, const int8* data, uint32 size, KFModule* module, KFDelayedFunction& function ) = 0;
+        virtual void RemoveDelayedFunction( KFModule* module ) = 0;
+        virtual void RemoveDelayedFunction( KFModule* module, uint64 objectid ) = 0;
     };
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////

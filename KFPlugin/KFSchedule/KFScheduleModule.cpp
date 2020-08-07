@@ -31,7 +31,7 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFScheduleModule::AddSchedule( uint32 timeid, const std::string& module, uint64 objectid,
+    void KFScheduleModule::AddSchedule( uint32 timeid, KFModule* module, uint64 objectid,
                                         KFScheduleFunction& startfunction,
                                         KFScheduleFunction& finishfunction )
     {
@@ -44,7 +44,7 @@ namespace KFrame
         _kf_schedule_register.push_back( scheduledata );
     }
 
-    void KFScheduleModule::RemoveSchedule( const std::string& module )
+    void KFScheduleModule::RemoveSchedule( KFModule* module )
     {
         for ( auto& iter : _kf_schedule_list._objects )
         {
@@ -59,7 +59,7 @@ namespace KFrame
         }
     }
 
-    void KFScheduleModule::RemoveSchedule( uint32 timeid, const std::string& module )
+    void KFScheduleModule::RemoveSchedule( uint32 timeid, KFModule* module )
     {
         _kf_schedule_remove.emplace_back( std::make_tuple( timeid, module ) );
     }
@@ -75,7 +75,7 @@ namespace KFrame
         for ( auto& data : _kf_schedule_remove )
         {
             uint32 timeid = 0u;
-            std::string module = "";
+            KFModule* module = nullptr;
             std::tie( timeid, module ) = data;
 
             auto kfschedulelist = _kf_schedule_list.Find( timeid );

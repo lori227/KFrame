@@ -10,8 +10,8 @@ namespace KFrame
     class KFTimerData
     {
     public:
-        //
-        std::string _module;
+        // 模块指针
+        KFModule* _module = nullptr;
 
         // objectid
         uint64 _object_id = 0;

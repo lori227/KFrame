@@ -32,7 +32,7 @@ namespace KFrame
         RunTimerUpdate();
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    KFTimerData* KFTimerModule::FindTimerData( const std::string& module, uint64 objectid, uint64 subid )
+    KFTimerData* KFTimerModule::FindTimerData( KFModule* module, uint64 objectid, uint64 subid )
     {
         auto iter = _kf_timer_data.find( module );
         if ( iter == _kf_timer_data.end() )
@@ -43,7 +43,7 @@ namespace KFrame
         return iter->second->FindTimerData( objectid, subid );
     }
 
-    bool KFTimerModule::AddTimerData( const std::string& module, KFTimerData* kfdata )
+    bool KFTimerModule::AddTimerData( KFModule* module, KFTimerData* kfdata )
     {
         auto iter = _kf_timer_data.find( module );
         if ( iter == _kf_timer_data.end() )
@@ -55,7 +55,7 @@ namespace KFrame
         return iter->second->AddTimerData( kfdata );
     }
 
-    void KFTimerModule::RemoveRegisterData( const std::string& module, uint64 objectid, uint64 subid )
+    void KFTimerModule::RemoveRegisterData( KFModule* module, uint64 objectid, uint64 subid )
     {
         for ( auto iter = _register_timer_data.begin(); iter != _register_timer_data.end(); )
         {
@@ -74,7 +74,7 @@ namespace KFrame
         }
     }
 
-    bool KFTimerModule::RemoveTimerData( const std::string& module, uint64 objectid, uint64 subid )
+    bool KFTimerModule::RemoveTimerData( KFModule* module, uint64 objectid, uint64 subid )
     {
         auto iter = _kf_timer_data.find( module );
         if ( iter == _kf_timer_data.end() )
@@ -176,12 +176,12 @@ namespace KFrame
         timerdata->_next = nullptr;
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFTimerModule::AddLoopTimer( const std::string& module, uint64 objectid, uint64 subid, uint32 intervaltime, uint32 delaytime, KFTimerFunction& function )
+    void KFTimerModule::AddLoopTimer( KFModule* module, uint64 objectid, uint64 subid, uint32 intervaltime, uint32 delaytime, KFTimerFunction& function )
     {
         if ( intervaltime == 0u )
         {
             intervaltime = __MAX_UINT32__;
-            __LOG_ERROR__( "module=[{}] id=[{}] intervaltime error", module, objectid );
+            __LOG_ERROR__( "module=[{}] id=[{}] intervaltime error", module->_plugin_name, objectid );
         }
 
         auto kfdata = __KF_NEW__( KFTimerData );
@@ -195,12 +195,12 @@ namespace KFrame
         _register_timer_data.push_back( kfdata );
     }
 
-    void KFTimerModule::AddLimitTimer( const std::string& module, uint64 objectid, uint64 subid, uint32 intervaltime, uint32 count, KFTimerFunction& function )
+    void KFTimerModule::AddLimitTimer( KFModule* module, uint64 objectid, uint64 subid, uint32 intervaltime, uint32 count, KFTimerFunction& function )
     {
         if ( intervaltime == 0u )
         {
             intervaltime = 1u;
-            __LOG_ERROR__( "module=[{}] id=[{}] intervaltime error", module, objectid );
+            __LOG_ERROR__( "module=[{}] id=[{}] intervaltime error", module->_plugin_name, objectid );
         }
 
         auto kfdata = __KF_NEW__( KFTimerData );
@@ -215,12 +215,12 @@ namespace KFrame
         _register_timer_data.push_back( kfdata );
     }
 
-    void KFTimerModule::AddDelayTimer( const std::string& module, uint64 objectid, uint64 subid, uint32 intervaltime, KFTimerFunction& function )
+    void KFTimerModule::AddDelayTimer( KFModule* module, uint64 objectid, uint64 subid, uint32 intervaltime, KFTimerFunction& function )
     {
         if ( intervaltime == 0u )
         {
             intervaltime = 1u;
-            __LOG_ERROR__( "module=[{}] id=[{}] intervaltime error", module, objectid );
+            __LOG_ERROR__( "module=[{}] id=[{}] intervaltime error", module->_plugin_name, objectid );
         }
 
         // 已经存在就不继续注册
@@ -242,7 +242,7 @@ namespace KFrame
         _register_timer_data.push_back( kfdata );
     }
 
-    void KFTimerModule::RemoveTimer( const std::string& module, uint64 objectid, uint64 subid )
+    void KFTimerModule::RemoveTimer( KFModule* module, uint64 objectid, uint64 subid )
     {
         auto remove = std::make_tuple( module, objectid, subid );
         _remove_timer_data.push_back( remove );
@@ -296,7 +296,7 @@ namespace KFrame
 
         for ( auto& data : _remove_timer_data )
         {
-            std::string module;
+            KFModule* module;
             uint64 objectid = 0u;
             uint64 subid = 0u;
             std::tie( module, objectid, subid ) = data;
@@ -304,27 +304,6 @@ namespace KFrame
         }
 
         _remove_timer_data.clear();
-    }
-
-    uint32 KFTimerModule::FindLeftTime( const std::string& module, uint64 objectid, uint64 subid )
-    {
-        auto timerdata = FindTimerData( module, objectid, subid );
-        if ( timerdata == nullptr )
-        {
-            return 0u;
-        }
-
-        auto lefttime = timerdata->_rotation * TimerEnum::WheelTime;
-        if ( timerdata->_slot >= _now_slot )
-        {
-            lefttime += ( timerdata->_slot - _now_slot ) * TimerEnum::SlotTime;
-        }
-        else
-        {
-            lefttime += ( TimerEnum::MaxSlot + timerdata->_slot - _now_slot ) * TimerEnum::SlotTime;
-        }
-
-        return lefttime;
     }
 
     void KFTimerModule::RunTimerRegister()
@@ -401,7 +380,7 @@ namespace KFrame
         RemoveSlotTimer( timerdata );
 
         // 执行回调函数
-        timerdata->_function( timerdata->_module, timerdata->_object_id, timerdata->_sub_id );
+        timerdata->_function( timerdata->_object_id, timerdata->_sub_id );
         if ( timerdata->_type == TimerEnum::Loop )
         {
             AddSlotTimer( timerdata );

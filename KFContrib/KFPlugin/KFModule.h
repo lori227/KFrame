@@ -49,6 +49,9 @@ namespace KFrame
     public:
         // 插件
         KFPlugin* _kf_plugin = nullptr;
+
+        // 是否开启
+        bool _is_open = true;
     };
 }
 

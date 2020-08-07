@@ -16,35 +16,35 @@ namespace KFrame
     public:
         // 注册计划任务
         template< class T >
-        void RegisterSchedule( uint32 timeid, uint64 objectid, T* object,
+        void RegisterSchedule( uint32 timeid, uint64 objectid, T* module,
                                void ( T::*starthandle )( uint64, uint64 ),
                                void ( T::*finishhandle )( uint64, uint64 ) )
         {
-            KFScheduleFunction startfunction = std::bind( starthandle, object, std::placeholders::_1, std::placeholders::_2 );
-            KFScheduleFunction finishfunction = std::bind( finishhandle, object, std::placeholders::_1, std::placeholders::_2 );
-            AddSchedule( timeid, typeid( T ).name(), objectid, startfunction, finishfunction );
+            KFScheduleFunction startfunction = std::bind( starthandle, module, std::placeholders::_1, std::placeholders::_2 );
+            KFScheduleFunction finishfunction = std::bind( finishhandle, module, std::placeholders::_1, std::placeholders::_2 );
+            AddSchedule( timeid, module, objectid, startfunction, finishfunction );
         }
 
         // 删除计划任务
         template< class T >
-        void UnRegisterSchedule( uint32 timeid, T* object )
+        void UnRegisterSchedule( uint32 timeid, T* module )
         {
-            RemoveSchedule( timeid, typeid( T ).name() );
+            RemoveSchedule( timeid, module );
         }
 
         // 删除计划任务
         template< class T >
-        void UnRegisterSchedule( T* object )
+        void UnRegisterSchedule( T* module )
         {
-            RemoveSchedule( typeid( T ).name() );
+            RemoveSchedule( module );
         }
 
     protected:
         // 注册计划任务
-        virtual void AddSchedule( uint32 timeid, const std::string& module, uint64 objectid,
+        virtual void AddSchedule( uint32 timeid, KFModule* module, uint64 objectid,
                                   KFScheduleFunction& startfunction, KFScheduleFunction& finishfunction ) = 0;
-        virtual void RemoveSchedule( const std::string& module ) = 0;
-        virtual void RemoveSchedule( uint32 timeid, const std::string& module ) = 0;
+        virtual void RemoveSchedule( KFModule* module ) = 0;
+        virtual void RemoveSchedule( uint32 timeid, KFModule* module ) = 0;
     };
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_INTERFACE__( _kf_schedule, KFScheduleInterface );
