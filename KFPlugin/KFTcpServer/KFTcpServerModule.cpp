@@ -154,13 +154,13 @@ namespace KFrame
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFTcpServerModule::AddDiscoverFunction( const char* module, KFNetEventFunction& function )
+    void KFTcpServerModule::AddDiscoverFunction( KFModule* module, KFNetEventFunction& function )
     {
         auto kffunction = _kf_discover_function.Create( module );
         kffunction->_function = function;
     }
 
-    void KFTcpServerModule::RemoveDiscoverFunction( const char* module )
+    void KFTcpServerModule::RemoveDiscoverFunction( KFModule* module )
     {
         _kf_discover_function.Remove( module );
     }
@@ -174,13 +174,13 @@ namespace KFrame
         }
     }
 
-    void KFTcpServerModule::AddLostFunction( const char* module, KFNetEventFunction& function )
+    void KFTcpServerModule::AddLostFunction( KFModule* module, KFNetEventFunction& function )
     {
         auto kffunction = _kf_lost_function.Create( module );
         kffunction->_function = function;
     }
 
-    void KFTcpServerModule::RemoveLostFunction( const char* module )
+    void KFTcpServerModule::RemoveLostFunction( KFModule* module )
     {
         _kf_lost_function.Remove( module );
     }
@@ -194,12 +194,12 @@ namespace KFrame
         }
     }
 
-    void KFTcpServerModule::AddTranspondFunction( const char* module, KFTranspondFunction& function )
+    void KFTcpServerModule::AddTranspondFunction( KFModule* module, KFTranspondFunction& function )
     {
         _kf_transpond_function = function;
     }
 
-    void KFTcpServerModule::RemoveTranspondFunction( const char* module )
+    void KFTcpServerModule::RemoveTranspondFunction( KFModule* module )
     {
         _kf_transpond_function = nullptr;
     }

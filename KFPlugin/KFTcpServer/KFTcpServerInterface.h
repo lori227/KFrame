@@ -54,58 +54,58 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////
         // 注册连接成功函数
         template< class T >
-        void RegisterDiscoverFunction( T* object, void ( T::*handle )( const KFNetData* ) )
+        void RegisterDiscoverFunction( T* module, void ( T::*handle )( const KFNetData* ) )
         {
-            KFNetEventFunction function = std::bind( handle, object, std::placeholders::_1 );
-            AddDiscoverFunction( typeid( T ).name(), function );
+            KFNetEventFunction function = std::bind( handle, module, std::placeholders::_1 );
+            AddDiscoverFunction( module, function );
         }
 
         // 卸载
         template< class T >
-        void UnRegisterDiscoverFunction( T* object )
+        void UnRegisterDiscoverFunction( T* module )
         {
-            RemoveDiscoverFunction( typeid( T ).name() );
+            RemoveDiscoverFunction( module );
         }
         //////////////////////////////////////////////////////////////////////////////////////////
 
         // 注册断线回调函数
         template< class T >
-        void RegisterLostFunction( T* object, void ( T::*handle )( const KFNetData* ) )
+        void RegisterLostFunction( T* module, void ( T::*handle )( const KFNetData* ) )
         {
-            KFNetEventFunction function = std::bind( handle, object, std::placeholders::_1 );
-            AddLostFunction( typeid( T ).name(), function );
+            KFNetEventFunction function = std::bind( handle, module, std::placeholders::_1 );
+            AddLostFunction( module, function );
         }
 
         // 卸载
         template< class T >
-        void UnRegisterLostFunction( T* object )
+        void UnRegisterLostFunction( T* module )
         {
-            RemoveLostFunction( typeid( T ).name() );
+            RemoveLostFunction( module );
         }
         /////////////////////////////////////////////////////////////////////////////
         // 注册转发
         template< class T >
-        void RegisterTranspondFunction( T* object, bool ( T::*handle )( const Route& route, uint32 msgid, const char* data, uint32 length ) )
+        void RegisterTranspondFunction( T* module, bool ( T::*handle )( const Route& route, uint32 msgid, const char* data, uint32 length ) )
         {
-            KFTranspondFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
-            AddTranspondFunction( typeid( T ).name(), function );
+            KFTranspondFunction function = std::bind( handle, module, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
+            AddTranspondFunction( module, function );
         }
 
         template< class T >
-        void UnRegisterTranspondFunction( T* object )
+        void UnRegisterTranspondFunction( T* module )
         {
-            RemoveTranspondFunction( typeid( T ).name() );
+            RemoveTranspondFunction( module );
         }
 
     private:
-        virtual void AddDiscoverFunction( const char* module, KFNetEventFunction& function ) = 0;
-        virtual void RemoveDiscoverFunction( const char* module ) = 0;
+        virtual void AddDiscoverFunction( KFModule* module, KFNetEventFunction& function ) = 0;
+        virtual void RemoveDiscoverFunction( KFModule* module ) = 0;
 
-        virtual void AddLostFunction( const char* module, KFNetEventFunction& function ) = 0;
-        virtual void RemoveLostFunction( const char* module ) = 0;
+        virtual void AddLostFunction( KFModule* module, KFNetEventFunction& function ) = 0;
+        virtual void RemoveLostFunction( KFModule* module ) = 0;
 
-        virtual void AddTranspondFunction( const char* module, KFTranspondFunction& function ) = 0;
-        virtual void RemoveTranspondFunction( const char* module ) = 0;
+        virtual void AddTranspondFunction( KFModule* module, KFTranspondFunction& function ) = 0;
+        virtual void RemoveTranspondFunction( KFModule* module ) = 0;
 
     };
 

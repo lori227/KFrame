@@ -214,15 +214,15 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFTcpClientModule::AddConnectionFunction( const std::string& name, KFNetEventFunction& function )
+    void KFTcpClientModule::AddConnectionFunction( KFModule* module, KFNetEventFunction& function )
     {
-        auto kffunction = _kf_connection_function.Create( name );
+        auto kffunction = _kf_connection_function.Create( module );
         kffunction->_function = function;
     }
 
-    void KFTcpClientModule::RemoveConnectionFunction( const std::string& name )
+    void KFTcpClientModule::RemoveConnectionFunction( KFModule* module )
     {
-        _kf_connection_function.Remove( name );
+        _kf_connection_function.Remove( module );
     }
 
     void KFTcpClientModule::CallClientConnectionFunction( const KFNetData* netdata )
@@ -234,15 +234,15 @@ namespace KFrame
         }
     }
 
-    void KFTcpClientModule::AddLostFunction( const std::string& name, KFNetEventFunction& function )
+    void KFTcpClientModule::AddLostFunction( KFModule* module, KFNetEventFunction& function )
     {
-        auto kffunction = _kf_lost_function.Create( name );
+        auto kffunction = _kf_lost_function.Create( module );
         kffunction->_function = function;
     }
 
-    void KFTcpClientModule::RemoveLostFunction( const std::string& name )
+    void KFTcpClientModule::RemoveLostFunction( KFModule* module )
     {
-        _kf_lost_function.Remove( name );
+        _kf_lost_function.Remove( module );
     }
 
     void KFTcpClientModule::CallClientLostFunction( const KFNetData* netdata )
@@ -254,15 +254,15 @@ namespace KFrame
         }
     }
 
-    void KFTcpClientModule::AddShutdownFunction( const std::string& name, KFNetEventFunction& function )
+    void KFTcpClientModule::AddShutdownFunction( KFModule* module, KFNetEventFunction& function )
     {
-        auto kffunction = _kf_shutdown_function.Create( name );
+        auto kffunction = _kf_shutdown_function.Create( module );
         kffunction->_function = function;
     }
 
-    void KFTcpClientModule::RemoveShutdownFunction( const std::string& name )
+    void KFTcpClientModule::RemoveShutdownFunction( KFModule* module )
     {
-        _kf_shutdown_function.Remove( name );
+        _kf_shutdown_function.Remove( module );
     }
 
     void KFTcpClientModule::CallClientShutdownFunction( const KFNetData* netdata )
@@ -274,15 +274,15 @@ namespace KFrame
         }
     }
 
-    void KFTcpClientModule::AddFailedFunction( const std::string& name, KFNetEventFunction& function )
+    void KFTcpClientModule::AddFailedFunction( KFModule* module, KFNetEventFunction& function )
     {
-        auto kffunction = _kf_failed_function.Create( name );
+        auto kffunction = _kf_failed_function.Create( module );
         kffunction->_function = function;
     }
 
-    void KFTcpClientModule::RemoveFailedFunction( const std::string& name )
+    void KFTcpClientModule::RemoveFailedFunction( KFModule* module )
     {
-        _kf_failed_function.Remove( name );
+        _kf_failed_function.Remove( module );
     }
 
     void KFTcpClientModule::CallClientFailedFunction( const KFNetData* netdata )
@@ -294,12 +294,12 @@ namespace KFrame
         }
     }
 
-    void KFTcpClientModule::RemoveTranspondFunction( const std::string& name )
+    void KFTcpClientModule::RemoveTranspondFunction( KFModule* module )
     {
         _kf_transpond_function = nullptr;
     }
 
-    void KFTcpClientModule::AddTranspondFunction( const std::string& name, KFTranspondFunction& function )
+    void KFTcpClientModule::AddTranspondFunction( KFModule* module, KFTranspondFunction& function )
     {
         _kf_transpond_function = function;
     }

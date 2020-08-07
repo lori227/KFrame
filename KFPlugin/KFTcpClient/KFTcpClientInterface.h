@@ -39,98 +39,98 @@ namespace KFrame
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 添加注册回调函数
         template< class T >
-        void RegisterConnectionFunction( T* object, void ( T::*handle )( const KFNetData* ) )
+        void RegisterConnectionFunction( T* module, void ( T::*handle )( const KFNetData* ) )
         {
-            KFNetEventFunction function = std::bind( handle, object, std::placeholders::_1 );
-            AddConnectionFunction( typeid( T ).name(), function );
+            KFNetEventFunction function = std::bind( handle, module, std::placeholders::_1 );
+            AddConnectionFunction( module, function );
         }
 
         // 删除注册回调函数
         template< class T >
-        void UnRegisterConnectionFunction( T* object )
+        void UnRegisterConnectionFunction( T* module )
         {
-            RemoveConnectionFunction( typeid( T ).name() );
+            RemoveConnectionFunction( module );
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 断线函数回调
         template< class T >
-        void RegisterLostFunction( T* object, void ( T::*handle )( const KFNetData* ) )
+        void RegisterLostFunction( T* module, void ( T::*handle )( const KFNetData* ) )
         {
-            KFNetEventFunction function = std::bind( handle, object, std::placeholders::_1 );
-            AddLostFunction( typeid( T ).name(), function );
+            KFNetEventFunction function = std::bind( handle, module, std::placeholders::_1 );
+            AddLostFunction( module, function );
         }
 
         // 删除注册回调函数
         template< class T >
-        void UnRegisterLostFunction( T* object )
+        void UnRegisterLostFunction( T* module )
         {
-            RemoveLostFunction( typeid( T ).name() );
+            RemoveLostFunction( module );
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 关闭函数回调
         template< class T >
-        void RegisterShutdownFunction( T* object, void ( T::*handle )( const KFNetData* ) )
+        void RegisterShutdownFunction( T* module, void ( T::*handle )( const KFNetData* ) )
         {
-            KFNetEventFunction function = std::bind( handle, object, std::placeholders::_1 );
-            AddShutdownFunction( typeid( T ).name(), function );
+            KFNetEventFunction function = std::bind( handle, module, std::placeholders::_1 );
+            AddShutdownFunction( module, function );
         }
 
         // 删除注册回调函数
         template< class T >
-        void UnRegisterShutdownFunction( T* object )
+        void UnRegisterShutdownFunction( T* module )
         {
-            RemoveShutdownFunction( typeid( T ).name() );
+            RemoveShutdownFunction( module );
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 失败函数回调
         template< class T >
-        void RegisterFailedFunction( T* object, void ( T::*handle )( const KFNetData* ) )
+        void RegisterFailedFunction( T* module, void ( T::*handle )( const KFNetData* ) )
         {
-            KFNetEventFunction function = std::bind( handle, object, std::placeholders::_1 );
-            AddFailedFunction( typeid( T ).name(), function );
+            KFNetEventFunction function = std::bind( handle, module, std::placeholders::_1 );
+            AddFailedFunction( module, function );
         }
 
         // 删除失败函数
         template< class T >
-        void UnRegisterFailedFunction( T* object )
+        void UnRegisterFailedFunction( T* module )
         {
-            RemoveFailedFunction( typeid( T ).name() );
+            RemoveFailedFunction( module );
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 注册转发
         template< class T >
-        void RegisterTranspondFunction( T* object, bool ( T::*handle )( const Route& route, uint32 msgid, const char* data, uint32 length ) )
+        void RegisterTranspondFunction( T* module, bool ( T::*handle )( const Route& route, uint32 msgid, const char* data, uint32 length ) )
         {
-            KFTranspondFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
-            AddTranspondFunction( typeid( T ).name(), function );
+            KFTranspondFunction function = std::bind( handle, module, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
+            AddTranspondFunction( module, function );
         }
 
         template< class T >
-        void UnRegisterTranspondFunction( T* object )
+        void UnRegisterTranspondFunction( T* module )
         {
-            RemoveTranspondFunction( typeid( T ).name() );
+            RemoveTranspondFunction( module );
         }
 
     protected:
         // 添加注册回调函数
-        virtual void AddConnectionFunction( const std::string& name, KFNetEventFunction& function ) = 0;
-        virtual void RemoveConnectionFunction( const std::string& name ) = 0;
+        virtual void AddConnectionFunction( KFModule* module, KFNetEventFunction& function ) = 0;
+        virtual void RemoveConnectionFunction( KFModule* module ) = 0;
 
         // 添加断线函数
-        virtual void AddLostFunction( const std::string& name, KFNetEventFunction& function ) = 0;
-        virtual void RemoveLostFunction( const std::string& name ) = 0;
+        virtual void AddLostFunction( KFModule* module, KFNetEventFunction& function ) = 0;
+        virtual void RemoveLostFunction( KFModule* module ) = 0;
 
         // 添加关闭函数
-        virtual void AddShutdownFunction( const std::string& name, KFNetEventFunction& function ) = 0;
-        virtual void RemoveShutdownFunction( const std::string& name ) = 0;
+        virtual void AddShutdownFunction( KFModule* module, KFNetEventFunction& function ) = 0;
+        virtual void RemoveShutdownFunction( KFModule* module ) = 0;
 
         // 添加失败函数
-        virtual void AddFailedFunction( const std::string& name, KFNetEventFunction& function ) = 0;
-        virtual void RemoveFailedFunction( const std::string& name ) = 0;
+        virtual void AddFailedFunction( KFModule* module, KFNetEventFunction& function ) = 0;
+        virtual void RemoveFailedFunction( KFModule* module ) = 0;
 
         // 转发函数
-        virtual void AddTranspondFunction( const std::string& name, KFTranspondFunction& function ) = 0;
-        virtual void RemoveTranspondFunction( const std::string& name ) = 0;
+        virtual void AddTranspondFunction( KFModule* module, KFTranspondFunction& function ) = 0;
+        virtual void RemoveTranspondFunction( KFModule* module ) = 0;
     };
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -79,28 +79,28 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleRegisterAck );
     private:
         // 连接回调
-        void AddConnectionFunction( const std::string& name, KFNetEventFunction& function );
-        void RemoveConnectionFunction( const std::string& name );
+        void AddConnectionFunction( KFModule* module, KFNetEventFunction& function );
+        void RemoveConnectionFunction( KFModule* module );
         void CallClientConnectionFunction( const KFNetData* netdata );
 
         // 断线函数
-        virtual void AddLostFunction( const std::string& name, KFNetEventFunction& function );
-        void RemoveLostFunction( const std::string& name );
+        virtual void AddLostFunction( KFModule* module, KFNetEventFunction& function );
+        void RemoveLostFunction( KFModule* module );
         void CallClientLostFunction( const KFNetData* netdata );
 
         // 添加关闭函数
-        virtual void AddShutdownFunction( const std::string& name, KFNetEventFunction& function );
-        virtual void RemoveShutdownFunction( const std::string& name );
+        virtual void AddShutdownFunction( KFModule* module, KFNetEventFunction& function );
+        virtual void RemoveShutdownFunction( KFModule* module );
         void CallClientShutdownFunction( const KFNetData* netdata );
 
         // 添加失败函数
-        virtual void AddFailedFunction( const std::string& name, KFNetEventFunction& function );
-        virtual void RemoveFailedFunction( const std::string& name );
+        virtual void AddFailedFunction( KFModule* module, KFNetEventFunction& function );
+        virtual void RemoveFailedFunction( KFModule* module );
         void CallClientFailedFunction( const KFNetData* netdata );
 
         // 转发函数
-        virtual void AddTranspondFunction( const std::string& name, KFTranspondFunction& function );
-        virtual void RemoveTranspondFunction( const std::string& name );
+        virtual void AddTranspondFunction( KFModule* module, KFTranspondFunction& function );
+        virtual void RemoveTranspondFunction( KFModule* module );
         ////////////////////////////////////////////////////////////////
         // 处理客户端消息
         void HandleNetMessage( const Route& route, uint32 msgid, const char* data, uint32 length );
@@ -115,16 +115,16 @@ namespace KFrame
         KFTranspondFunction _kf_transpond_function = nullptr;
 
         // 注册成功回调函数
-        KFBind< std::string, const std::string&, KFNetEventFunction > _kf_connection_function;
+        KFBind< KFModule*, KFModule*, KFNetEventFunction > _kf_connection_function;
 
         // 客户端掉线
-        KFBind< std::string, const std::string&, KFNetEventFunction > _kf_lost_function;
+        KFBind< KFModule*, KFModule*, KFNetEventFunction > _kf_lost_function;
 
         // 客户端关闭
-        KFBind< std::string, const std::string&, KFNetEventFunction > _kf_shutdown_function;
+        KFBind< KFModule*, KFModule*, KFNetEventFunction > _kf_shutdown_function;
 
         // 客户端失败
-        KFBind< std::string, const std::string&, KFNetEventFunction > _kf_failed_function;
+        KFBind< KFModule*, KFModule*, KFNetEventFunction > _kf_failed_function;
     };
 }
 

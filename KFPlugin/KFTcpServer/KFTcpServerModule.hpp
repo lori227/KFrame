@@ -77,14 +77,14 @@ namespace KFrame
 
     private:
 
-        virtual void AddDiscoverFunction( const char* module, KFNetEventFunction& function );
-        virtual void RemoveDiscoverFunction( const char* module );
+        virtual void AddDiscoverFunction( KFModule* module, KFNetEventFunction& function );
+        virtual void RemoveDiscoverFunction( KFModule* module );
 
-        virtual void AddLostFunction( const char* module, KFNetEventFunction& function );
-        virtual void RemoveLostFunction( const char* module );
+        virtual void AddLostFunction( KFModule* module, KFNetEventFunction& function );
+        virtual void RemoveLostFunction( KFModule* module );
 
-        virtual void AddTranspondFunction( const char* module, KFTranspondFunction& function );
-        virtual void RemoveTranspondFunction( const char* module );
+        virtual void AddTranspondFunction( KFModule* module, KFTranspondFunction& function );
+        virtual void RemoveTranspondFunction( KFModule* module );
 
     protected:
         // 处理客户端注册
@@ -116,10 +116,10 @@ namespace KFrame
         bool _is_open_encrypt = false;
 
         // 发现客户端回调
-        KFBind< std::string, const std::string&, KFNetEventFunction > _kf_discover_function;
+        KFBind< KFModule*, KFModule*, KFNetEventFunction > _kf_discover_function;
 
         // 丢失客户端回调
-        KFBind< std::string, const std::string&, KFNetEventFunction > _kf_lost_function;
+        KFBind< KFModule*, KFModule*, KFNetEventFunction > _kf_lost_function;
 
         // 转发函数
         KFTranspondFunction _kf_transpond_function = nullptr;

@@ -22,13 +22,13 @@ namespace KFrame
         // 多线程 string
         template< class T >
         void MTGet( const std::string& url, const std::string& data,
-                    T* object = nullptr, void ( T::*handle )( std::string&, std::string&, std::string& ) = nullptr,
+                    T* module = nullptr, void ( T::*handle )( std::string&, std::string&, std::string& ) = nullptr,
                     const std::string& args = _invalid_string )
         {
             KFHttpClientFunction function = nullptr;
-            if ( object != nullptr )
+            if ( module != nullptr )
             {
-                function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
+                function = std::bind( handle, module, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
             }
 
             MTGetRequest( function, url, data, args );
@@ -36,13 +36,13 @@ namespace KFrame
 
         template< class T >
         void MTPost( const std::string& url, const std::string& data,
-                     T* object = nullptr, void ( T::*handle )( std::string&, std::string&, std::string& ) = nullptr,
+                     T* module = nullptr, void ( T::*handle )( std::string&, std::string&, std::string& ) = nullptr,
                      const std::string& args = _invalid_string )
         {
             KFHttpClientFunction function = nullptr;
-            if ( object != nullptr )
+            if ( module != nullptr )
             {
-                function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
+                function = std::bind( handle, module, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
             }
 
             MTPostRequest( function, url, data, args );
@@ -52,13 +52,13 @@ namespace KFrame
         // 多线程 json
         template< class T >
         void MTGet( const std::string& url, KFJson& json,
-                    T* object = nullptr, void ( T::*handle )( std::string&, std::string&, std::string& ) = nullptr,
+                    T* module = nullptr, void ( T::*handle )( std::string&, std::string&, std::string& ) = nullptr,
                     const std::string& args = _invalid_string )
         {
             KFHttpClientFunction function = nullptr;
-            if ( object != nullptr )
+            if ( module != nullptr )
             {
-                function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
+                function = std::bind( handle, module, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
             }
 
             MTGetRequest( function, url, json, args );
@@ -66,13 +66,13 @@ namespace KFrame
 
         template< class T >
         void MTPost( const std::string& url, KFJson& json,
-                     T* object = nullptr, void ( T::*handle )( std::string&, std::string&, std::string& ) = nullptr,
+                     T* module = nullptr, void ( T::*handle )( std::string&, std::string&, std::string& ) = nullptr,
                      const std::string& args = _invalid_string )
         {
             KFHttpClientFunction function = nullptr;
-            if ( object != nullptr )
+            if ( module != nullptr )
             {
-                function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
+                function = std::bind( handle, module, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
             }
 
             MTPostRequest( function, url, json, args );
