@@ -113,7 +113,7 @@ namespace KFrame
         auto kfhandle = _execute_handle.Find( executedata->_name );
         if ( kfhandle != nullptr )
         {
-            if ( kfhandle->_is_open && kfhandle->_module->_is_open )
+            if ( kfhandle->IsOpen() )
             {
                 return kfhandle->_function( player, executedata, modulename, moduleid, function, line );
             }

@@ -29,6 +29,12 @@ namespace KFrame
 
         // 模块
         KFModule* _module = nullptr;
+
+    public:
+        bool IsOpen() const
+        {
+            return _is_open && _module->_is_open;
+        }
     };
 
     class KFExecuteModule : public KFExecuteInterface

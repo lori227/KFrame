@@ -132,7 +132,7 @@ namespace KFrame
             auto kfhandle = _drop_logic_handle.Find( dropdata->_logic_name );
             if ( kfhandle != nullptr )
             {
-                if ( kfhandle->_is_open && kfhandle->_module->_is_open )
+                if ( kfhandle->IsOpen() )
                 {
                     kfhandle->_function( player, dropdata, modulename, moduleid, function, line );
                 }
