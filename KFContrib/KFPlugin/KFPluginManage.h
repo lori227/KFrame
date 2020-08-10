@@ -180,10 +180,11 @@ namespace KFrame
         }
         /////////////////////////////////////////////////////////////////
         template< class T >
-        void RegisterCommandFunction( const std::string& command, T* object, void ( T::*handle )( const StringVector& ) )
+        void RegisterCommandFunction( const std::string& command, T* module, void ( T::*handle )( const StringVector& ) )
         {
             auto kffunction = _command_functions.Create( command );
-            kffunction->_function = std::bind( handle, object, std::placeholders::_1 );
+            kffunction->_module = module;
+            kffunction->_function = std::bind( handle, module, std::placeholders::_1 );
         }
 
         void UnRegisterCommandFunction( const std::string& command )
@@ -193,7 +194,7 @@ namespace KFrame
 
         /////////////////////////////////////////////////////////////////
         template< class T >
-        bool RegisterRunFunction( uint32 sort, T* object, void ( T::*handle )() )
+        bool RegisterRunFunction( uint32 sort, T* module, void ( T::*handle )() )
         {
             auto kffunction = _run_functions.Find( sort );
             if ( kffunction != nullptr )
@@ -202,7 +203,8 @@ namespace KFrame
             }
 
             kffunction = _run_functions.Create( sort );
-            kffunction->_function = std::bind( handle, object );
+            kffunction->_module = module;
+            kffunction->_function = std::bind( handle, module );
             return true;
         }
 
@@ -213,7 +215,7 @@ namespace KFrame
 
         /////////////////////////////////////////////////////////////////
         template< class T >
-        bool RegisterAfterRunFunction( uint32 sort, T* object, void ( T::*handle )( ) )
+        bool RegisterAfterRunFunction( uint32 sort, T* module, void ( T::*handle )( ) )
         {
             auto kffunction = _after_run_functions.Find( sort );
             if ( kffunction != nullptr )
@@ -222,7 +224,8 @@ namespace KFrame
             }
 
             kffunction = _after_run_functions.Create( sort );
-            kffunction->_function = std::bind( handle, object );
+            kffunction->_module = module;
+            kffunction->_function = std::bind( handle, module );
             return true;
         }
 

@@ -235,13 +235,21 @@ namespace KFrame
         // 逻辑run
         for ( auto& iter : _run_functions._objects )
         {
-            iter.second->_function();
+            auto kfmodule = iter.second;
+            if ( kfmodule->IsOpen() )
+            {
+                kfmodule->_function();
+            }
         }
 
         // 延迟执行的逻辑
         for ( auto& iter : _after_run_functions._objects )
         {
-            iter.second->_function();
+            auto kfmodule = iter.second;
+            if ( kfmodule->IsOpen() )
+            {
+                kfmodule->_function();
+            }
         }
     }
 
@@ -297,7 +305,7 @@ namespace KFrame
         while ( kfcommand != nullptr )
         {
             auto kffunction = _command_functions.Find( kfcommand->_command );
-            if ( kffunction != nullptr )
+            if ( kffunction != nullptr && kffunction->IsOpen() )
             {
                 kffunction->_function( kfcommand->_params );
             }
