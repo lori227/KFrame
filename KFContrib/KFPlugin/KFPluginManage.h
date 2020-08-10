@@ -183,7 +183,6 @@ namespace KFrame
         void RegisterCommandFunction( const std::string& command, T* module, void ( T::*handle )( const StringVector& ) )
         {
             auto kffunction = _command_functions.Create( command );
-            kffunction->_module = module;
             kffunction->_function = std::bind( handle, module, std::placeholders::_1 );
         }
 

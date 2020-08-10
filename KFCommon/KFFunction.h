@@ -12,7 +12,17 @@ namespace KFrame
     public:
         bool IsOpen() const
         {
-            return _is_open && _module->_is_open;
+            if ( !_is_open )
+            {
+                return false;
+            }
+
+            if ( _module != nullptr && !_module->_is_open )
+            {
+                return false;
+            }
+
+            return true;
         }
 
         void SetFunction( KFModule* module, T& function )
