@@ -124,6 +124,12 @@ namespace KFrame
 
         // 加载模块
         void LoadModule();
+
+        // 加载完成
+        void AfterLoad();
+
+        // 设置模块开关
+        void SetModuleOpen( const std::string& modulename, bool isopen );
         /////////////////////////////////////////////////////////////////////////
 
         // 注册插件
@@ -239,10 +245,6 @@ namespace KFrame
 
         // 加载配置
         void LoadConfig();
-
-    public:
-        // 加载完成
-        void AfterLoad();
 
     protected:
         // 准备执行

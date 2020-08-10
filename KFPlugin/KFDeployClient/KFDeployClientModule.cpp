@@ -16,7 +16,8 @@ namespace KFrame
         __REGISTER_DEPLOY_FUNCTION__( __STRING__( loadplugin ), &KFDeployClientModule::OnDeployLoadPlugin );
         __REGISTER_DEPLOY_FUNCTION__( __STRING__( messageclose ), &KFDeployClientModule::OnDeployMessageClose );
         __REGISTER_DEPLOY_FUNCTION__( __STRING__( messageopen ), &KFDeployClientModule::OnDeployMessageOpen );
-
+        __REGISTER_DEPLOY_FUNCTION__( __STRING__( moduleopen ), &KFDeployClientModule::OnDeployModuleOpen );
+        __REGISTER_DEPLOY_FUNCTION__( __STRING__( moduleclose ), &KFDeployClientModule::OnDeployModuleClose );
         ////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_COMMAND_TO_CLIENT_REQ, &KFDeployClientModule::HandleDeployCommandToClientReq );
     }
@@ -250,5 +251,15 @@ namespace KFrame
         {
             _kf_message->OpenFunction( messageid, true );
         }
+    }
+
+    __KF_DEPLOY_FUNCTION__( KFDeployClientModule::OnDeployModuleOpen )
+    {
+        KFPluginManage::Instance()->SetModuleOpen( param, true );
+    }
+
+    __KF_DEPLOY_FUNCTION__( KFDeployClientModule::OnDeployModuleClose )
+    {
+        KFPluginManage::Instance()->SetModuleOpen( param, false );
     }
 }

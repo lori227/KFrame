@@ -85,6 +85,9 @@ namespace KFrame
         __KF_DEPLOY_FUNCTION__( OnDeployMessageClose );
         __KF_DEPLOY_FUNCTION__( OnDeployMessageOpen );
 
+        // 关闭, 开启模块
+        __KF_DEPLOY_FUNCTION__( OnDeployModuleClose );
+        __KF_DEPLOY_FUNCTION__( OnDeployModuleOpen );
 
     private:
         // agentid

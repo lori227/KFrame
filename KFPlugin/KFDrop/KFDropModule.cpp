@@ -9,12 +9,18 @@ namespace KFrame
         _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
         __REGISTER_ADD_ELEMENT__( __STRING__( drop ), &KFDropModule::AddDropElement );
         __REGISTER_DROP_LOGIC__( __STRING__( data ), &KFDropModule::OnDropDataElement );
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        __REGISTER_DEPLOY_FUNCTION__( __STRING__( dropopen ), &KFDropModule::OnDeployDropOpen );
+        __REGISTER_DEPLOY_FUNCTION__( __STRING__( dropclose ), &KFDropModule::OnDeployDropClose );
     }
 
     void KFDropModule::BeforeShut()
     {
         __UN_ADD_ELEMENT__( __STRING__( drop ) );
         __UN_DROP_LOGIC__( __STRING__( data ) );
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        __UN_DEPLOY_FUNCTION__( __STRING__( dropopen ) );
+        __UN_DEPLOY_FUNCTION__( __STRING__( dropclose ) );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -46,15 +52,35 @@ namespace KFrame
         player->AddElement( &dropdata->_elements, _default_multiple, modulename, moduleid, function, line );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFDropModule::BindDropLogicFunction( const std::string& dataname, KFDropLogicFunction& function )
+    void KFDropModule::BindDropLogicFunction( KFModule* module, const std::string& logicname, KFDropLogicFunction& function )
     {
-        auto kffucntion = _drop_logic_function.Create( dataname );
-        kffucntion->_function = function;
+        auto kfhandle = _drop_logic_handle.Create( logicname );
+        kfhandle->_module = module;
+        kfhandle->_function = function;
     }
 
-    void KFDropModule::UnRegisterDropLogicFunction( const std::string& dataname )
+    void KFDropModule::UnRegisterDropLogicFunction( const std::string& logicname )
     {
-        _drop_logic_function.Remove( dataname );
+        _drop_logic_handle.Remove( logicname );
+    }
+
+    void KFDropModule::SetDropLogicOpen( const std::string& logicname, bool isopen )
+    {
+        auto kfhandle = _drop_logic_handle.Find( logicname );
+        if ( kfhandle != nullptr )
+        {
+            kfhandle->_is_open = isopen;
+        }
+    }
+
+    __KF_DEPLOY_FUNCTION__( KFDropModule::OnDeployDropOpen )
+    {
+        SetDropLogicOpen( param, true );
+    }
+
+    __KF_DEPLOY_FUNCTION__( KFDropModule::OnDeployDropClose )
+    {
+        SetDropLogicOpen( param, false );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -103,10 +129,13 @@ namespace KFrame
         // 执行掉落逻辑
         for ( auto dropdata : dropdatalist )
         {
-            auto kffunction = _drop_logic_function.Find( dropdata->_logic_name );
-            if ( kffunction != nullptr )
+            auto kfhandle = _drop_logic_handle.Find( dropdata->_logic_name );
+            if ( kfhandle != nullptr )
             {
-                kffunction->_function( player, dropdata, modulename, moduleid, function, line );
+                if ( kfhandle->_is_open && kfhandle->_module->_is_open )
+                {
+                    kfhandle->_function( player, dropdata, modulename, moduleid, function, line );
+                }
             }
             else
             {

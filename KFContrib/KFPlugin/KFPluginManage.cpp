@@ -306,4 +306,20 @@ namespace KFrame
             kfcommand = _commands.PopObject();
         }
     }
+
+    void KFPluginManage::SetModuleOpen( const std::string& modulename, bool isopen )
+    {
+        for ( auto kfplugin : _plugins )
+        {
+            for ( auto& iter : kfplugin->_modules )
+            {
+                auto kfmodule = iter.second;
+                if ( kfmodule->_plugin_name == modulename )
+                {
+                    kfmodule->_is_open = isopen;
+                    return;
+                }
+            }
+        }
+    }
 }

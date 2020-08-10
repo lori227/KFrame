@@ -21,11 +21,11 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////////////
         // 注册执行函数
         template< class T >
-        void RegisterExecuteFunction( const std::string& name, T* object, bool( T::*handle )( KFEntity*, const KFExecuteData*, const std::string&, uint64, const char*, uint32 ) )
+        void RegisterExecuteFunction( const std::string& name, T* module, bool( T::*handle )( KFEntity*, const KFExecuteData*, const std::string&, uint64, const char*, uint32 ) )
         {
-            KFExecuteFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
+            KFExecuteFunction function = std::bind( handle, module, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
                                                     std::placeholders::_4, std::placeholders::_5, std::placeholders::_6 );
-            BindExecuteFunction( name, function );
+            BindExecuteFunction( module, name, function );
         }
 
         void UnRegisterExecuteFunction( const std::string& name )
@@ -34,7 +34,7 @@ namespace KFrame
         }
         //////////////////////////////////////////////////////////////////////////////////////////////////
     protected:
-        virtual void BindExecuteFunction( const std::string& name, KFExecuteFunction& function ) = 0;
+        virtual void BindExecuteFunction( KFModule* module, const std::string& name, KFExecuteFunction& function ) = 0;
         virtual void UnBindExecuteFunction( const std::string& name ) = 0;
     };
 

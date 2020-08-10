@@ -15,9 +15,23 @@
 #include "KFKernel/KFKernelInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFCondition/KFConditionInterface.h"
+#include "KFDeployClient/KFDeployClientInterface.h"
 
 namespace KFrame
 {
+    class KFDropHandle
+    {
+    public:
+        // 消息函数
+        KFDropLogicFunction _function = nullptr;
+
+        // 是否开放
+        bool _is_open = true;
+
+        // 模块
+        KFModule* _module = nullptr;
+    };
+
     class KFDropModule : public KFDropInterface
     {
     public:
@@ -30,16 +44,24 @@ namespace KFrame
         // 关闭
         virtual void BeforeShut();
 
-        virtual void UnRegisterDropLogicFunction( const std::string& dataname );
+        // 卸载回调
+        virtual void UnRegisterDropLogicFunction( const std::string& logicname );
+
         ////////////////////////////////////////////////////////////////////////////////
         // 掉落
         virtual const DropDataList& Drop( KFEntity* player, uint32 dropid, const std::string& modulename, uint64 moduleid, const char* function, uint32 line );
         virtual const DropDataList& Drop( KFEntity* player, const UInt32Vector& droplist, const std::string& modulename, uint64 moduleid, const char* function, uint32 line );
         virtual const DropDataList& Drop( KFEntity* player, uint32 dropid, uint32 count, const std::string& modulename, uint64 moduleid, const char* function, uint32 line );
-
     protected:
+        // 关闭, 开启掉落功能
+        __KF_DEPLOY_FUNCTION__( OnDeployDropClose );
+        __KF_DEPLOY_FUNCTION__( OnDeployDropOpen );
+
         // 绑定掉落逻辑函数
-        virtual void BindDropLogicFunction( const std::string& dataname, KFDropLogicFunction& function );
+        virtual void BindDropLogicFunction( KFModule* module, const std::string& logicname, KFDropLogicFunction& function );
+
+        // 设置掉落开关
+        void SetDropLogicOpen( const std::string& logicname, bool isopen );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         // 掉落
         __KF_ADD_ELEMENT_FUNCTION__( AddDropElement );
@@ -75,7 +97,7 @@ namespace KFrame
         KFComponent* _kf_component = nullptr;
 
         // 掉落逻辑函数
-        KFBind < std::string, const std::string&, KFDropLogicFunction > _drop_logic_function;
+        KFHashMap< std::string, const std::string&, KFDropHandle > _drop_logic_handle;
     };
 }
 

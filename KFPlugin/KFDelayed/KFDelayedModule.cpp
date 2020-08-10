@@ -176,7 +176,11 @@ namespace KFrame
                 }
 
                 // 时间到了, 执行回调
-                delayeddata->_function( delayeddata->_object_id, delayeddata->_data, delayeddata->_size );
+                if ( delayeddata->_module->_is_open )
+                {
+                    delayeddata->_function( delayeddata->_object_id, delayeddata->_data, delayeddata->_size );
+                }
+
                 if ( delayeddata->_loop_type == KFDelayedEnum::Once )
                 {
                     RemoveDelayedFunction( delayeddata->_module, delayeddata->_object_id );

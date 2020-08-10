@@ -380,7 +380,11 @@ namespace KFrame
         RemoveSlotTimer( timerdata );
 
         // 执行回调函数
-        timerdata->_function( timerdata->_object_id, timerdata->_sub_id );
+        if ( timerdata->_module->_is_open )
+        {
+            timerdata->_function( timerdata->_object_id, timerdata->_sub_id );
+        }
+
         if ( timerdata->_type == TimerEnum::Loop )
         {
             AddSlotTimer( timerdata );

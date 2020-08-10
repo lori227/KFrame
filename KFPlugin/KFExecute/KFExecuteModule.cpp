@@ -4,6 +4,8 @@ namespace KFrame
 {
     void KFExecuteModule::BeforeRun()
     {
+        __REGISTER_DEPLOY_FUNCTION__( __STRING__( executeopen ), &KFExecuteModule::OnDeployExecuteOpen );
+        __REGISTER_DEPLOY_FUNCTION__( __STRING__( executeclose ), &KFExecuteModule::OnDeployExecuteClose );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_EXECUTE__( __STRING__( data ), &KFExecuteModule::OnExecuteAddData );
         __REGISTER_EXECUTE__( __STRING__( drop ), &KFExecuteModule::OnExecuteDropLogic );
@@ -12,6 +14,8 @@ namespace KFrame
 
     void KFExecuteModule::BeforeShut()
     {
+        __UN_DEPLOY_FUNCTION__( __STRING__( executeopen ) );
+        __UN_DEPLOY_FUNCTION__( __STRING__( executeclose ) );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UN_EXECUTE__( __STRING__( data ) );
         __UN_EXECUTE__( __STRING__( drop ) );
@@ -19,15 +23,35 @@ namespace KFrame
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFExecuteModule::BindExecuteFunction( const std::string& name, KFExecuteFunction& function )
+    void KFExecuteModule::BindExecuteFunction( KFModule* module, const std::string& name, KFExecuteFunction& function )
     {
-        auto kffucntion = _execute_function.Create( name );
-        kffucntion->_function = function;
+        auto kfhandle = _execute_handle.Create( name );
+        kfhandle->_module = module;
+        kfhandle->_function = function;
     }
 
     void KFExecuteModule::UnBindExecuteFunction( const std::string& name )
     {
-        _execute_function.Remove( name );
+        _execute_handle.Remove( name );
+    }
+
+    void KFExecuteModule::SetExecuteOpen( const std::string& name, bool isopen )
+    {
+        auto kfhandle = _execute_handle.Find( name );
+        if ( kfhandle != nullptr )
+        {
+            kfhandle->_is_open = isopen;
+        }
+    }
+
+    __KF_DEPLOY_FUNCTION__( KFExecuteModule::OnDeployExecuteOpen )
+    {
+        SetExecuteOpen( param, true );
+    }
+
+    __KF_DEPLOY_FUNCTION__( KFExecuteModule::OnDeployExecuteClose )
+    {
+        SetExecuteOpen( param, false );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -86,10 +110,17 @@ namespace KFrame
     bool KFExecuteModule::Execute( KFEntity* player, const KFExecuteData* executedata, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
     {
         // 注册的执行逻辑
-        auto kffunction = _execute_function.Find( executedata->_name );
-        if ( kffunction != nullptr )
+        auto kfhandle = _execute_handle.Find( executedata->_name );
+        if ( kfhandle != nullptr )
         {
-            return kffunction->_function( player, executedata, modulename, moduleid, function, line );
+            if ( kfhandle->_is_open && kfhandle->_module->_is_open )
+            {
+                return kfhandle->_function( player, executedata, modulename, moduleid, function, line );
+            }
+        }
+        else
+        {
+            __LOG_ERROR_FUNCTION__( function, line, "execute name=[{}] no function!", executedata->_name );
         }
 
         return false;

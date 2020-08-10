@@ -173,7 +173,7 @@ namespace KFrame
                 for ( auto& iter : schedulelist->_schedule_data_list._objects )
                 {
                     auto scheduledata = iter.second;
-                    if ( scheduledata->_start_function != nullptr )
+                    if ( scheduledata->_start_function != nullptr && scheduledata->_module->_is_open )
                     {
                         scheduledata->_start_function( scheduledata->_object_id, schedulelist->_duration_time );
                     }
@@ -198,7 +198,7 @@ namespace KFrame
         for ( auto& iter : schedulelist->_schedule_data_list._objects )
         {
             auto scheduledata = iter.second;
-            if ( scheduledata->_finish_function != nullptr )
+            if ( scheduledata->_finish_function != nullptr && scheduledata->_module->_is_open )
             {
                 scheduledata->_finish_function( scheduledata->_object_id, schedulelist->_duration_time );
             }

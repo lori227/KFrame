@@ -316,7 +316,12 @@ namespace KFrame
         __STRING_DEFINE__( preconditions );
         __STRING_DEFINE__( messageopen );
         __STRING_DEFINE__( messageclose );
-
+        __STRING_DEFINE__( moduleopen );
+        __STRING_DEFINE__( moduleclose );
+        __STRING_DEFINE__( dropopen );
+        __STRING_DEFINE__( dropclose );
+        __STRING_DEFINE__( executeopen );
+        __STRING_DEFINE__( executeclose );
     }
 }
 

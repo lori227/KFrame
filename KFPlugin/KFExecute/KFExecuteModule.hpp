@@ -13,10 +13,24 @@
 #include "KFDrop/KFDropInterface.h"
 #include "KFKernel/KFKernelInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
+#include "KFDeployClient/KFDeployClientInterface.h"
 #include "KFExecuteConfig.hpp"
 
 namespace KFrame
 {
+    class KFExecuteHandle
+    {
+    public:
+        // 消息函数
+        KFExecuteFunction _function = nullptr;
+
+        // 是否开放
+        bool _is_open = true;
+
+        // 模块
+        KFModule* _module = nullptr;
+    };
+
     class KFExecuteModule : public KFExecuteInterface
     {
     public:
@@ -25,6 +39,7 @@ namespace KFrame
 
         virtual void BeforeRun();
         virtual void BeforeShut();
+
         ////////////////////////////////////////////////////////////////////////////////
 
         virtual bool Execute( KFEntity* player, uint32 executeid, const char* function, uint32 line );
@@ -37,10 +52,17 @@ namespace KFrame
         virtual bool Execute( KFEntity* player, const KFExecuteData* executedata, const std::string& modulename, uint64 moduleid, const char* function, uint32 line );
 
     protected:
-        virtual void BindExecuteFunction( const std::string& name, KFExecuteFunction& function );
+        virtual void BindExecuteFunction( KFModule* module, const std::string& name, KFExecuteFunction& function );
         virtual void UnBindExecuteFunction( const std::string& name );
 
+        // 设置执行开关
+        void SetExecuteOpen( const std::string& name, bool isopen );
     protected:
+
+        // 关闭, 开启执行功能
+        __KF_DEPLOY_FUNCTION__( OnDeployExecuteClose );
+        __KF_DEPLOY_FUNCTION__( OnDeployExecuteOpen );
+
         // 执行添加道具
         __KF_EXECUTE_FUNCTION__( OnExecuteAddData );
 
@@ -52,7 +74,7 @@ namespace KFrame
 
     protected:
         // 执行列表
-        KFBind < std::string, const std::string&, KFExecuteFunction > _execute_function;
+        KFHashMap< std::string, const std::string&, KFExecuteHandle > _execute_handle;
     };
 }
 

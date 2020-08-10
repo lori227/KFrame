@@ -23,6 +23,7 @@ namespace KFrame
         __FIND_MODULE__( _kf_player, KFPlayerInterface );
         __FIND_MODULE__( _kf_display, KFDisplayInterface );
         __FIND_MODULE__( _kf_condition, KFConditionInterface );
+        __FIND_MODULE__( _kf_deploy_client, KFDeployClientInterface );
     }
 
     void KFDropPlugin::AddConfig()

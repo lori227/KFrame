@@ -18,17 +18,17 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 注册掉落逻辑
         template< class T >
-        void RegisterDropLogicFunction( const std::string& dataname, T* object, void ( T::*handle )( KFEntity*, const KFDropData*, const std::string&, uint64, const char*, uint32 ) )
+        void RegisterDropLogicFunction( const std::string& logicname, T* module, void ( T::*handle )( KFEntity*, const KFDropData*, const std::string&, uint64, const char*, uint32 ) )
         {
-            KFDropLogicFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
+            KFDropLogicFunction function = std::bind( handle, module, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
                                            std::placeholders::_4, std::placeholders::_5, std::placeholders::_6 );
-            BindDropLogicFunction( dataname, function );
+            BindDropLogicFunction( module, logicname, function );
         }
-        virtual void UnRegisterDropLogicFunction( const std::string& dataname ) = 0;
+        virtual void UnRegisterDropLogicFunction( const std::string& logicname ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
     protected:
         // 绑定掉落逻辑函数
-        virtual void BindDropLogicFunction( const std::string& dataname, KFDropLogicFunction& function ) = 0;
+        virtual void BindDropLogicFunction( KFModule* module, const std::string& logicname, KFDropLogicFunction& function ) = 0;
     };
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
