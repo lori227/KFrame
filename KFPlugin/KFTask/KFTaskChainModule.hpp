@@ -91,10 +91,10 @@ namespace KFrame
         KFComponent* _kf_component = nullptr;
 
         // 开启任务链回调
-        KFBind< std::string, const std::string&, KFOpenTaskChainFunction > _open_task_chain_function;
+        KFFunctionMap< std::string, const std::string&, KFOpenTaskChainFunction > _open_task_chain_function;
 
         // 关闭任务链回调
-        KFBind< std::string, const std::string&, KFFinishTaskChainFunction > _finish_task_chain_function;
+        KFFunctionMap< std::string, const std::string&, KFFinishTaskChainFunction > _finish_task_chain_function;
     };
 }
 

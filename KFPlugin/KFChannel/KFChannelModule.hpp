@@ -57,10 +57,10 @@ namespace KFrame
         virtual std::string AuthPay( uint32 channel, const std::string& data );
     private:
         // 绑定的登录函数
-        KFBind< uint32, uint32, KFLoginFunction > _kf_login_function;
+        KFFunctionMap< uint32, uint32, KFLoginFunction > _kf_login_function;
 
         // 充值函数
-        KFBind< uint32, uint32, KFPayFunction > _kf_pay_function;
+        KFFunctionMap< uint32, uint32, KFPayFunction > _kf_pay_function;
 
         // 注册的渠道
         std::unordered_map< uint32, KFChannel* > _kf_channel_list;

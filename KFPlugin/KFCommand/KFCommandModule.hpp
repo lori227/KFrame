@@ -41,7 +41,7 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleCommandReq );
 
     protected:
-        KFBind< std::string, const std::string&, KFCommandFunction > _kf_command_function;
+        KFFunctionMap< std::string, const std::string&, KFCommandFunction > _kf_command_function;
     };
 }
 

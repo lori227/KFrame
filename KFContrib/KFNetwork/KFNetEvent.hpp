@@ -2,7 +2,6 @@
 #define __NET_EVENT_H__
 
 #include "KFNetDefine.hpp"
-#include "KFBind.h"
 #include "KFQueue.h"
 
 namespace KFrame

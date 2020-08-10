@@ -46,8 +46,8 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFClusterClientModule::AddConnectionFunction( const std::string& name, KFClusterConnectionFunction& function )
     {
-        auto kfbind = _kf_connection_function.Create( name );
-        kfbind->_function = function;
+        auto kffunction = _kf_connection_function.Create( name );
+        kffunction->_function = function;
     }
 
     void KFClusterClientModule::RemoveConnectionFunction( const std::string& name )
@@ -60,8 +60,8 @@ namespace KFrame
         // 执行回调函数
         for ( auto& iter : _kf_connection_function._objects )
         {
-            auto kfbind = iter.second;
-            kfbind->_function( serverid );
+            auto kffunction = iter.second;
+            kffunction->_function( serverid );
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////

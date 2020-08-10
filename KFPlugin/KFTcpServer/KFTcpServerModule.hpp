@@ -116,10 +116,10 @@ namespace KFrame
         bool _is_open_encrypt = false;
 
         // 发现客户端回调
-        KFBind< KFModule*, KFModule*, KFNetEventFunction > _kf_discover_function;
+        KFFunctionMap< KFModule*, KFModule*, KFNetEventFunction > _kf_discover_function;
 
         // 丢失客户端回调
-        KFBind< KFModule*, KFModule*, KFNetEventFunction > _kf_lost_function;
+        KFFunctionMap< KFModule*, KFModule*, KFNetEventFunction > _kf_lost_function;
 
         // 转发函数
         KFTranspondFunction _kf_transpond_function = nullptr;

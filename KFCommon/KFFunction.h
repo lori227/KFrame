@@ -6,7 +6,6 @@
 
 namespace KFrame
 {
-    class KFModule;
     template< class T >
     class KFFunction
     {
@@ -36,18 +35,11 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////
     template< class KeyType, class ParamType, class ObjectType >
-    class KFBind : public KFHashMap< KeyType, ParamType, KFFunction< ObjectType > >
+    class KFFunctionMap : public KFHashMap< KeyType, ParamType, KFFunction< ObjectType > >
     {
     public:
-        KFBind()
-        {
-
-        }
-
-        ~KFBind()
-        {
-
-        }
+        KFFunctionMap() = default;
+        ~KFFunctionMap() = default;
 
     public:
     };

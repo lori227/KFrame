@@ -58,7 +58,7 @@ namespace KFrame
 
     private:
         // 处理器函数
-        KFBind< uint32, uint32, KFMessageFunction > _kf_message_function;
+        KFFunctionMap< uint32, uint32, KFMessageFunction > _kf_message_function;
 
         // 工作者索引
         uint32 _actor_index;
