@@ -18,25 +18,6 @@
 
 namespace KFrame
 {
-    class KFExecuteHandle
-    {
-    public:
-        // 消息函数
-        KFExecuteFunction _function = nullptr;
-
-        // 是否开放
-        bool _is_open = true;
-
-        // 模块
-        KFModule* _module = nullptr;
-
-    public:
-        bool IsOpen() const
-        {
-            return _is_open && _module->_is_open;
-        }
-    };
-
     class KFExecuteModule : public KFExecuteInterface
     {
     public:
@@ -80,7 +61,7 @@ namespace KFrame
 
     protected:
         // 执行列表
-        KFHashMap< std::string, const std::string&, KFExecuteHandle > _execute_handle;
+        KFBind< std::string, const std::string&, KFExecuteFunction > _execute_function;
     };
 }
 

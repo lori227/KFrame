@@ -25,19 +25,18 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFExecuteModule::BindExecuteFunction( KFModule* module, const std::string& name, KFExecuteFunction& function )
     {
-        auto kfhandle = _execute_handle.Create( name );
-        kfhandle->_module = module;
-        kfhandle->_function = function;
+        auto kfhandle = _execute_function.Create( name );
+        kfhandle->SetFunction( module, function );
     }
 
     void KFExecuteModule::UnBindExecuteFunction( const std::string& name )
     {
-        _execute_handle.Remove( name );
+        _execute_function.Remove( name );
     }
 
     void KFExecuteModule::SetExecuteOpen( const std::string& name, bool isopen )
     {
-        auto kfhandle = _execute_handle.Find( name );
+        auto kfhandle = _execute_function.Find( name );
         if ( kfhandle != nullptr )
         {
             kfhandle->_is_open = isopen;
@@ -110,12 +109,12 @@ namespace KFrame
     bool KFExecuteModule::Execute( KFEntity* player, const KFExecuteData* executedata, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
     {
         // 注册的执行逻辑
-        auto kfhandle = _execute_handle.Find( executedata->_name );
-        if ( kfhandle != nullptr )
+        auto kffunction = _execute_function.Find( executedata->_name );
+        if ( kffunction != nullptr )
         {
-            if ( kfhandle->IsOpen() )
+            if ( kffunction->IsOpen() )
             {
-                return kfhandle->_function( player, executedata, modulename, moduleid, function, line );
+                return kffunction->_function( player, executedata, modulename, moduleid, function, line );
             }
         }
         else

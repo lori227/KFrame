@@ -12,16 +12,6 @@
 
 namespace KFrame
 {
-    class KFMessageHandle
-    {
-    public:
-        // 消息函数
-        KFMessageFunction _function = nullptr;
-
-        // 是否开放
-        bool _is_open = true;
-    };
-
     class KFMessageModule : public KFMessageInterface
     {
     public:
@@ -42,11 +32,11 @@ namespace KFrame
     protected:
 
         // 添加函数
-        virtual void AddFunction( uint32 msgid, KFMessageFunction& function );
+        virtual void AddFunction( KFModule* module, uint32 msgid, KFMessageFunction& function );
 
     private:
         // 处理器函数
-        KFHashMap< uint32, uint32, KFMessageHandle > _kf_message_handle;
+        KFBind< uint32, uint32, KFMessageFunction > _kf_message_function;
     };
 }
 

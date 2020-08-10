@@ -19,24 +19,6 @@
 
 namespace KFrame
 {
-    class KFDropHandle
-    {
-    public:
-        // 消息函数
-        KFDropLogicFunction _function = nullptr;
-
-        // 是否开放
-        bool _is_open = true;
-
-        // 模块
-        KFModule* _module = nullptr;
-    public:
-        bool IsOpen() const
-        {
-            return _is_open && _module->_is_open;
-        }
-    };
-
     class KFDropModule : public KFDropInterface
     {
     public:
@@ -102,7 +84,7 @@ namespace KFrame
         KFComponent* _kf_component = nullptr;
 
         // 掉落逻辑函数
-        KFHashMap< std::string, const std::string&, KFDropHandle > _drop_logic_handle;
+        KFBind< std::string, const std::string&, KFDropLogicFunction > _drop_logic_function;
     };
 }
 

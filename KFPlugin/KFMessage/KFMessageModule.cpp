@@ -4,13 +4,13 @@ namespace KFrame
 {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFMessageModule::AddFunction( uint32 msgid, KFMessageFunction& function )
+    void KFMessageModule::AddFunction( KFModule* module, uint32 msgid, KFMessageFunction& function )
     {
-        auto kfhandle = _kf_message_handle.Find( msgid );
-        if ( kfhandle == nullptr )
+        auto kffunction = _kf_message_function.Find( msgid );
+        if ( kffunction == nullptr )
         {
-            kfhandle = _kf_message_handle.Create( msgid );
-            kfhandle->_function = function;
+            kffunction = _kf_message_function.Create( msgid );
+            kffunction->SetFunction( module, function );
         }
         else
         {
@@ -20,22 +20,22 @@ namespace KFrame
 
     bool KFMessageModule::CallFunction( const Route& route, uint32 msgid, const char* data, uint32 length )
     {
-        auto kfhandle = _kf_message_handle.Find( msgid );
-        if ( kfhandle == nullptr )
+        auto kffunction = _kf_message_function.Find( msgid );
+        if ( kffunction == nullptr )
         {
             return false;
         }
 
-        if ( kfhandle->_is_open )
+        if ( kffunction->IsOpen() )
         {
-            kfhandle->_function( route, msgid, data, length );
+            kffunction->_function( route, msgid, data, length );
         }
         return true;
     }
 
     void KFMessageModule::UnRegisterFunction( uint32 msgid )
     {
-        auto ok = _kf_message_handle.Remove( msgid );
+        auto ok = _kf_message_function.Remove( msgid );
         if ( !ok )
         {
             __LOG_ERROR__( "msgid[{}] unregister failed", msgid );
@@ -44,13 +44,13 @@ namespace KFrame
 
     bool KFMessageModule::OpenFunction( uint32 msgid, bool open )
     {
-        auto kfhandle = _kf_message_handle.Find( msgid );
-        if ( kfhandle == nullptr )
+        auto kffunction = _kf_message_function.Find( msgid );
+        if ( kffunction == nullptr )
         {
             return false;
         }
 
-        kfhandle->_is_open = open;
+        kffunction->_is_open = open;
         return true;
     }
 

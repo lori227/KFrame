@@ -2,30 +2,41 @@
 #define __KF_BIND_H__
 
 #include "KFMap.h"
+#include "KFPlugin/KFModule.h"
 
 namespace KFrame
 {
+    class KFModule;
     template< class T >
     class KFFunction
     {
     public:
-        KFFunction()
+        bool IsOpen() const
         {
-
+            return _is_open && _module->_is_open;
         }
 
-        ~KFFunction()
+        void SetFunction( KFModule* module, T& function )
         {
-
+            _module = module;
+            _function = function;
         }
+
     public:
-        T _function;
+        // 逻辑函数
+        T _function = nullptr;
+
+        // 是否开启
+        bool _is_open = true;
+
+        // 模块名
+        KFModule* _module = nullptr;
     };
 
     //////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////
     template< class KeyType, class ParamType, class ObjectType >
-    class KFBind : public KFMap< KeyType, ParamType, KFFunction< ObjectType > >
+    class KFBind : public KFHashMap< KeyType, ParamType, KFFunction< ObjectType > >
     {
     public:
         KFBind()
