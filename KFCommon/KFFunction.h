@@ -10,7 +10,7 @@ namespace KFrame
     class KFFunction
     {
     public:
-        bool IsOpen() const
+        inline bool IsOpen() const
         {
             if ( !_is_open || _function == nullptr )
             {
@@ -25,19 +25,19 @@ namespace KFrame
             return true;
         }
 
-        void SetFunction( KFModule* module, T& function )
+        inline void SetFunction( KFModule* module, T& function )
         {
             _is_open = true;
             _module = module;
             _function = function;
         }
 
-        void SetOpen( bool isopen )
+        inline void SetOpen( bool isopen )
         {
             _is_open = isopen;
         }
 
-        void Reset()
+        inline void Reset()
         {
             _is_open = true;
             _module = nullptr;
