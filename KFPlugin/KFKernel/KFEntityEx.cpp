@@ -1480,7 +1480,7 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////
 #define __PREPARE_SYNC__( function )\
-    if ( function == nullptr ||\
+    if ( !function.IsOpen() ||\
             !IsInited() || !kfdata->IsNeedSyncToClient() )\
     {\
         return;\
@@ -1622,7 +1622,7 @@ namespace KFrame
         }
 
         _have_show_client = false;
-        _kf_component->_show_element_function( this, _pb_show_elements );
+        _kf_component->_show_element_function.Call( this, _pb_show_elements );
         _pb_show_elements.Clear();
     }
 
@@ -1671,13 +1671,13 @@ namespace KFrame
                 switch ( kfsyncdata->_type )
                 {
                 case KFEnum::Add:
-                    _kf_component->_entity_sync_add_function( this, kfsyncdata->_pbobject );
+                    _kf_component->_entity_sync_add_function.Call( this, kfsyncdata->_pbobject );
                     break;
                 case KFEnum::Dec:
-                    _kf_component->_entity_sync_remove_function( this, kfsyncdata->_pbobject );
+                    _kf_component->_entity_sync_remove_function.Call( this, kfsyncdata->_pbobject );
                     break;
                 case KFEnum::Set:
-                    _kf_component->_entity_sync_update_function( this, kfsyncdata->_pbobject );
+                    _kf_component->_entity_sync_update_function.Call( this, kfsyncdata->_pbobject );
                     break;
                 }
 
@@ -1695,16 +1695,16 @@ namespace KFrame
         auto kffunction = _kf_component->_get_config_value_function.Find( name );
         if ( kffunction != nullptr )
         {
-            return kffunction->_function( this, id, maxvalue );
+            return kffunction->CallEx<uint64>( this, id, maxvalue );
         }
 
         auto kfobject = Find( name, id );
-        if ( kfobject == nullptr )
+        if ( kfobject != nullptr )
         {
-            return 0u;
+            return kfobject->Get<uint64>( kfobject->_data_setting->_value_key_name );
         }
 
-        return kfobject->Get<uint64>( kfobject->_data_setting->_value_key_name );
+        return _invalid_int;
     }
 
     uint32 KFEntityEx::GetStatus()

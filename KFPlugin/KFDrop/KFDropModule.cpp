@@ -68,7 +68,7 @@ namespace KFrame
         auto kffunction = _drop_logic_function.Find( logicname );
         if ( kffunction != nullptr )
         {
-            kffunction->_is_open = isopen;
+            kffunction->SetOpen( isopen );
         }
     }
 
@@ -131,10 +131,7 @@ namespace KFrame
             auto kffunction = _drop_logic_function.Find( dropdata->_logic_name );
             if ( kffunction != nullptr )
             {
-                if ( kffunction->IsOpen() )
-                {
-                    kffunction->_function( player, dropdata, modulename, moduleid, function, line );
-                }
+                kffunction->Call( player, dropdata, modulename, moduleid, function, line );
             }
             else
             {

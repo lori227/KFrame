@@ -22,17 +22,14 @@ namespace KFrame
         // 时间id
         uint32 _time_id = 0u;
 
-        // 模块
-        KFModule* _module = nullptr;
-
         // 对象id
         uint64 _object_id = 0u;
 
         // 开始回调函数
-        KFScheduleFunction _start_function = nullptr;
+        KFFunction< KFScheduleFunction > _start_function;
 
         // 结束回调函数
-        KFScheduleFunction _finish_function = nullptr;
+        KFFunction < KFScheduleFunction > _finish_function;
     };
     /////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////

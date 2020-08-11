@@ -12,7 +12,7 @@ namespace KFrame
     public:
         bool IsOpen() const
         {
-            if ( !_is_open )
+            if ( !_is_open || _function == nullptr )
             {
                 return false;
             }
@@ -27,8 +27,42 @@ namespace KFrame
 
         void SetFunction( KFModule* module, T& function )
         {
+            _is_open = true;
             _module = module;
             _function = function;
+        }
+
+        void SetOpen( bool isopen )
+        {
+            _is_open = isopen;
+        }
+
+        void Reset()
+        {
+            _is_open = true;
+            _module = nullptr;
+            _function = nullptr;
+        }
+
+        template< class ... Arg >
+        inline void Call( Arg&& ...params ) const
+        {
+            if ( IsOpen() )
+            {
+                _function( std::forward<Arg>( params )... );
+            }
+        }
+
+        template< class ReturnType, class ... Arg >
+        inline ReturnType CallEx( Arg&& ...params ) const
+        {
+            if ( IsOpen() )
+            {
+                return _function( std::forward<Arg>( params )... );
+            }
+
+            static ReturnType _result;
+            return _result;
         }
 
     public:

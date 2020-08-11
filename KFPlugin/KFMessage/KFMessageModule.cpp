@@ -26,10 +26,7 @@ namespace KFrame
             return false;
         }
 
-        if ( kffunction->IsOpen() )
-        {
-            kffunction->_function( route, msgid, data, length );
-        }
+        kffunction->Call( route, msgid, data, length );
         return true;
     }
 

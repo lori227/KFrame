@@ -60,7 +60,7 @@ namespace KFrame
         for ( auto iter = _register_timer_data.begin(); iter != _register_timer_data.end(); )
         {
             auto kfdata = *iter;
-            if ( kfdata->_module == module &&
+            if ( kfdata->_function._module == module &&
                     ( objectid == 0u || kfdata->_object_id == objectid ) &&
                     ( subid == 0u || subid == kfdata->_sub_id ) )
             {
@@ -187,11 +187,10 @@ namespace KFrame
         auto kfdata = __KF_NEW__( KFTimerData );
         kfdata->_object_id = objectid;
         kfdata->_sub_id = subid;
-        kfdata->_module = module;
         kfdata->_type = TimerEnum::Loop;
-        kfdata->_function = function;
         kfdata->_delay = delaytime;
         kfdata->_interval = intervaltime;
+        kfdata->_function.SetFunction( module, function );
         _register_timer_data.push_back( kfdata );
     }
 
@@ -206,12 +205,11 @@ namespace KFrame
         auto kfdata = __KF_NEW__( KFTimerData );
         kfdata->_object_id = objectid;
         kfdata->_sub_id = subid;
-        kfdata->_module = module;
         kfdata->_type = TimerEnum::Limit;
         kfdata->_count = __MAX__( 1u, count );
-        kfdata->_function = function;
         kfdata->_delay = 0u;
         kfdata->_interval = intervaltime;
+        kfdata->_function.SetFunction( module, function );
         _register_timer_data.push_back( kfdata );
     }
 
@@ -233,12 +231,11 @@ namespace KFrame
         kfdata = __KF_NEW__( KFTimerData );
         kfdata->_object_id = objectid;
         kfdata->_sub_id = subid;
-        kfdata->_module = module;
         kfdata->_type = TimerEnum::Limit;
         kfdata->_count = 1u;
-        kfdata->_function = function;
         kfdata->_delay = 0u;
         kfdata->_interval = intervaltime;
+        kfdata->_function.SetFunction( module, function );
         _register_timer_data.push_back( kfdata );
     }
 
@@ -316,10 +313,10 @@ namespace KFrame
         for ( auto kfdata : _register_timer_data )
         {
             // 先删除列表
-            RemoveTimerData( kfdata->_module, kfdata->_object_id, kfdata->_sub_id );
+            RemoveTimerData( kfdata->_function._module, kfdata->_object_id, kfdata->_sub_id );
 
             // 添加进列表
-            AddTimerData( kfdata->_module, kfdata );
+            AddTimerData( kfdata->_function._module, kfdata );
 
             // 加入时间轮中
             AddSlotTimer( kfdata );
@@ -380,11 +377,7 @@ namespace KFrame
         RemoveSlotTimer( timerdata );
 
         // 执行回调函数
-        if ( timerdata->_module->_is_open )
-        {
-            timerdata->_function( timerdata->_object_id, timerdata->_sub_id );
-        }
-
+        timerdata->_function.Call( timerdata->_object_id, timerdata->_sub_id );
         if ( timerdata->_type == TimerEnum::Loop )
         {
             AddSlotTimer( timerdata );
@@ -394,7 +387,7 @@ namespace KFrame
             --timerdata->_count;
             if ( timerdata->_count == 0u )
             {
-                RemoveTimerData( timerdata->_module, timerdata->_object_id, timerdata->_sub_id );
+                RemoveTimerData( timerdata->_function._module, timerdata->_object_id, timerdata->_sub_id );
             }
             else
             {
@@ -403,7 +396,7 @@ namespace KFrame
         }
         else
         {
-            RemoveTimerData( timerdata->_module, timerdata->_object_id, timerdata->_sub_id );
+            RemoveTimerData( timerdata->_function._module, timerdata->_object_id, timerdata->_sub_id );
         }
     }
 }

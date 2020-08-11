@@ -231,17 +231,6 @@ namespace KFrame
         _kf_plugin_manage->AddCommand( strcommand );
     }
 
-    __KF_DEPLOY_FUNCTION__( KFDeployClientModule::OnDeployMessageClose )
-    {
-        UInt32List messagelist;
-        auto strvalue = param;
-        KFUtility::SplitList( messagelist, strvalue, __SPLIT_STRING__ );
-        for ( auto messageid : messagelist )
-        {
-            _kf_message->OpenFunction( messageid, false );
-        }
-    }
-
     __KF_DEPLOY_FUNCTION__( KFDeployClientModule::OnDeployMessageOpen )
     {
         UInt32List messagelist;
@@ -250,6 +239,17 @@ namespace KFrame
         for ( auto messageid : messagelist )
         {
             _kf_message->OpenFunction( messageid, true );
+        }
+    }
+
+    __KF_DEPLOY_FUNCTION__( KFDeployClientModule::OnDeployMessageClose )
+    {
+        UInt32List messagelist;
+        auto strvalue = param;
+        KFUtility::SplitList( messagelist, strvalue, __SPLIT_STRING__ );
+        for ( auto messageid : messagelist )
+        {
+            _kf_message->OpenFunction( messageid, false );
         }
     }
 

@@ -14,15 +14,15 @@ namespace KFrame
     class KFDataFunction
     {
     public:
-        void AddFunction( const std::string& name, T& function )
+        void AddFunction( KFModule* module, T& function )
         {
-            auto kffunction = _functions.Create( name );
-            kffunction->_function = function;
+            auto kffunction = _functions.Create( module );
+            kffunction->SetFunction( module, function );
         }
 
-        void RemoveFunction( const std::string& name )
+        void RemoveFunction( KFModule* module )
         {
-            _functions.Remove( name );
+            _functions.Remove( module );
         }
 
         template< class ... Arg >
@@ -31,19 +31,19 @@ namespace KFrame
             for ( auto& iter : _functions._objects )
             {
                 auto kffunction = iter.second;
-                kffunction->_function( std::forward<Arg>( params )... );
+                kffunction->Call( std::forward<Arg>( params )... );
             }
         }
 
     public:
         // 函数列表
-        KFFunctionMap< std::string, const std::string&, T > _functions;
+        KFFunctionMap< KFModule*, KFModule*, T > _functions;
     };
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
     class KFComponentEx : public KFComponent
     {
     public:
-        KFComponentEx();
+        KFComponentEx() = default;
         ~KFComponentEx();
         //////////////////////////////////////////////////////////////////////////////////////////////
         void Run();
@@ -124,72 +124,73 @@ namespace KFrame
         virtual void BindRemoveElementFunction( const std::string& dataname, KFRemoveElementFunction& function );
         virtual void UnRegisterRemoveElementFunction( const std::string& dataname );
         ///////////////////////////////////////////////////////////////////////////////////////////////
-        virtual void BindAddDataLogic( const std::string& dataname, const std::string& module, KFAddDataFunction& function );
-        virtual void UnBindAddDataLogic( const std::string& dataname, const std::string& module );
-        virtual void BindAddDataModule( const std::string& module, KFAddDataFunction& function );
-        virtual void UnBindAddDataModule( const std::string& module );
-        virtual void BindAddDataFunction( const std::string& module, const std::string& dataname, uint64 key, KFAddDataFunction& function );
-        virtual void UnBindAddDataFunction( const std::string& module, const std::string& dataname, uint64 key );
+        virtual void BindAddDataLogic( KFModule* module, const std::string& dataname, KFAddDataFunction& function );
+        virtual void UnBindAddDataLogic( KFModule* module, const std::string& dataname );
 
-        virtual void BindRemoveDataLogic( const std::string& dataname, const std::string& module, KFRemoveDataFunction& function );
-        virtual void UnBindRemoveDataLogic( const std::string& dataname, const std::string& module );
-        virtual void BindRemoveDataModule( const std::string& module, KFRemoveDataFunction& function );
-        virtual void UnBindRemoveDataModule( const std::string& module );
-        virtual void BindRemoveDataFunction( const std::string& module, const std::string& dataname, uint64 key, KFRemoveDataFunction& function );
-        virtual void UnBindRemoveDataFunction( const std::string& module, const std::string& dataname, uint64 key );
+        virtual void BindAddDataModule( KFModule* module, KFAddDataFunction& function );
+        virtual void UnBindAddDataModule( KFModule* module );
+        virtual void BindAddDataFunction( KFModule* module, const std::string& dataname, uint64 key, KFAddDataFunction& function );
+        virtual void UnBindAddDataFunction( KFModule* module, const std::string& dataname, uint64 key );
 
-        virtual void BindUpdateDataModule( const std::string& module, KFUpdateDataFunction& function );
-        virtual void UnBindUpdateDataModule( const std::string& module );
-        virtual void BindUpdateDataFunction( const std::string& module, const std::string& parentname, const std::string& dataname, KFUpdateDataFunction& function );
-        virtual void UnBindUpdateDataFunction( const std::string& module, const std::string& parentname, const std::string& dataname );
+        virtual void BindRemoveDataLogic( KFModule* module, const std::string& dataname, KFRemoveDataFunction& function );
+        virtual void UnBindRemoveDataLogic( KFModule* module, const std::string& dataname );
 
-        virtual void BindUpdateStringModule( const std::string& module, KFUpdateStringFunction& function );
-        virtual void UnBindUpdateStringModule( const std::string& module );
-        virtual void BindUpdateStringFunction( const std::string& module, const std::string& parentname, const std::string& dataname, KFUpdateStringFunction& function );
-        virtual void UnBindUpdateStringFunction( const std::string& module, const std::string& parentname, const std::string& dataname );
+        virtual void BindRemoveDataModule( KFModule* module, KFRemoveDataFunction& function );
+        virtual void UnBindRemoveDataModule( KFModule* module );
+        virtual void BindRemoveDataFunction( KFModule* module, const std::string& dataname, uint64 key, KFRemoveDataFunction& function );
+        virtual void UnBindRemoveDataFunction( KFModule* module, const std::string& dataname, uint64 key );
+
+        virtual void BindUpdateDataModule( KFModule* module, KFUpdateDataFunction& function );
+        virtual void UnBindUpdateDataModule( KFModule* module );
+        virtual void BindUpdateDataFunction( KFModule* module, const std::string& parentname, const std::string& dataname, KFUpdateDataFunction& function );
+        virtual void UnBindUpdateDataFunction( KFModule* module, const std::string& parentname, const std::string& dataname );
+
+        virtual void BindUpdateStringModule( KFModule* module, KFUpdateStringFunction& function );
+        virtual void UnBindUpdateStringModule( KFModule* module );
+        virtual void BindUpdateStringFunction( KFModule* module, const std::string& parentname, const std::string& dataname, KFUpdateStringFunction& function );
+        virtual void UnBindUpdateStringFunction( KFModule* module, const std::string& parentname, const std::string& dataname );
         /////////////////////////////////////////////////////////////////////////////////////////////////////
-        virtual void BindEntityInitializeFunction( KFEntityFunction& function );
+        virtual void BindEntityInitializeFunction( KFModule* module, KFEntityFunction& function );
         virtual void UnRegisterEntityInitializeFunction();
 
-        virtual void BindEntityUninitializeFunction( KFEntityFunction& function );
+        virtual void BindEntityUninitializeFunction( KFModule* module, KFEntityFunction& function );
         virtual void UnRegisterEntityUninitializeFunction();
 
-        virtual void BindEntityRunFunction( KFEntityFunction& function );
+        virtual void BindEntityRunFunction( KFModule* module, KFEntityFunction& function );
         virtual void UnRegisterEntityRunFunction();
 
-        virtual void BindEntityAfterRunFunction( KFEntityFunction& function );
+        virtual void BindEntityAfterRunFunction( KFModule* module, KFEntityFunction& function );
         virtual void UnRegisterEntityAfterRunFunction();
 
-        virtual void BindEntitySaveFunction( KFSaveEntityFunction& function );
+        virtual void BindEntitySaveFunction( KFModule* module, KFSaveEntityFunction& function );
         virtual void UnRegisterEntitySaveFunction();
 
-        virtual void BindEntityDeleteFunction( KFEntityFunction& function );
+        virtual void BindEntityDeleteFunction( KFModule* module, KFEntityFunction& function );
         virtual void UnRegisterEntityDeleteFunction();
         /////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        virtual void BindSyncUpdateFunction( KFSyncFunction& function );
+        virtual void BindSyncUpdateFunction( KFModule* module, KFSyncFunction& function );
         virtual void UnRegisterSyncUpdateFunction();
 
-        virtual void BindSyncAddFunction( KFSyncFunction& function );
+        virtual void BindSyncAddFunction( KFModule* module, KFSyncFunction& function );
         virtual void UnRegisterSyncAddFunction();
 
-        virtual void BindSyncRemoveFunction( KFSyncFunction& function );
+        virtual void BindSyncRemoveFunction( KFModule* module, KFSyncFunction& function );
         virtual void UnRegisterSyncRemoveFunction();
         /////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////
-        virtual void BindShowElementFunction( KFShowElementFunction& function );
+        virtual void BindShowElementFunction( KFModule* module, KFShowElementFunction& function );
         virtual void UnRegisterShowElementFunction();
         /////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////
-        virtual void BindGetConfigValueFunction( const std::string& name, KFGetConfigValueFunction& function );
+        virtual void BindGetConfigValueFunction( KFModule* module, const std::string& name, KFGetConfigValueFunction& function );
         virtual void UnBindGetConfigValueFunction( const std::string& name );
         /////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////
-        virtual void BindLogElementFunction( const std::string& name, KFLogElementFunction& function );
+        virtual void BindLogElementFunction( KFModule* module, const std::string& name, KFLogElementFunction& function );
         virtual void UnBindLogElementFunction( const std::string& name );
 
-        virtual void BindElementResultFunction( const std::string& name, KFElementResultFunction& function );
+        virtual void BindElementResultFunction( KFModule* module, const std::string& name, KFElementResultFunction& function );
         virtual void UnBindElementResultFunction( const std::string& name );
     protected:
         // 保存数据到数据库
@@ -227,10 +228,10 @@ namespace KFrame
         KFFunctionMap< std::string, const std::string&, KFRemoveElementFunction > _remove_element_function;
         /////////////////////////////////////////////////////////////////////////////////////////////
         // 属性更新回调列表
-        KFFunctionMap< std::string, const std::string&, KFAddDataFunction > _add_data_module;
-        KFFunctionMap< std::string, const std::string&, KFRemoveDataFunction > _remove_data_module;
-        KFFunctionMap< std::string, const std::string&, KFUpdateDataFunction > _update_data_module;
-        KFFunctionMap< std::string, const std::string&, KFUpdateStringFunction > _update_string_module;
+        KFFunctionMap< KFModule*, KFModule*, KFAddDataFunction > _add_data_module;
+        KFFunctionMap< KFModule*, KFModule*, KFRemoveDataFunction > _remove_data_module;
+        KFFunctionMap< KFModule*, KFModule*, KFUpdateDataFunction > _update_data_module;
+        KFFunctionMap< KFModule*, KFModule*, KFUpdateStringFunction > _update_string_module;
 
         // 添加属性逻辑
         KFMap< std::string, const std::string&, KFDataFunction< KFAddDataFunction > > _add_logic_function;
@@ -250,25 +251,25 @@ namespace KFrame
         // 更新数据的回调函数
         KFMap< DataKeyType, const DataKeyType&, KFDataFunction< KFUpdateStringFunction > > _update_string_function;
         /////////////////////////////////////////////////////////////////////////////////////////////
-        KFEntityFunction _entity_initialize_function;
-        KFEntityFunction _entity_uninitialize_function;
-        KFEntityFunction _entity_run_function;
-        KFEntityFunction _entity_after_run_function;
-        KFEntityFunction _entity_delete_function;
-        KFSaveEntityFunction _entity_save_function;
+        KFFunction< KFEntityFunction > _entity_initialize_function;
+        KFFunction< KFEntityFunction > _entity_uninitialize_function;
+        KFFunction< KFEntityFunction > _entity_run_function;
+        KFFunction< KFEntityFunction > _entity_after_run_function;
+        KFFunction< KFEntityFunction > _entity_delete_function;
+        KFFunction< KFSaveEntityFunction > _entity_save_function;
         /////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////
         // 对象同步更新函数
-        KFSyncFunction _entity_sync_update_function;
+        KFFunction< KFSyncFunction > _entity_sync_update_function;
 
         // 对象同步添加函数
-        KFSyncFunction _entity_sync_add_function;
+        KFFunction< KFSyncFunction > _entity_sync_add_function;
 
         // 对象同步删除函数
-        KFSyncFunction _entity_sync_remove_function;
+        KFFunction< KFSyncFunction > _entity_sync_remove_function;
 
         // 显示奖励函数
-        KFShowElementFunction _show_element_function;
+        KFFunction< KFShowElementFunction > _show_element_function;
         /////////////////////////////////////////////////////////////////////////////////////////////
         // 获得属性逻辑
         KFFunctionMap< std::string, const std::string&, KFGetConfigValueFunction > _get_config_value_function;

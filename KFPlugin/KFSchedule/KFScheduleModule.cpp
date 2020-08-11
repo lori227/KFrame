@@ -37,10 +37,9 @@ namespace KFrame
     {
         auto scheduledata = __KF_NEW__( KFScheduleData );
         scheduledata->_time_id = timeid;
-        scheduledata->_module = module;
         scheduledata->_object_id = objectid;
-        scheduledata->_start_function = startfunction;
-        scheduledata->_finish_function = finishfunction;
+        scheduledata->_start_function.SetFunction( module, startfunction );
+        scheduledata->_finish_function.SetFunction( module, finishfunction );
         _kf_schedule_register.push_back( scheduledata );
     }
 
@@ -51,9 +50,9 @@ namespace KFrame
             for ( auto& miter : iter.second->_schedule_data_list._objects )
             {
                 auto scheduledata = miter.second;
-                if ( scheduledata->_module == module )
+                if ( scheduledata->_start_function._module == module )
                 {
-                    _kf_schedule_remove.emplace_back( std::make_tuple( scheduledata->_time_id, scheduledata->_module ) );
+                    _kf_schedule_remove.emplace_back( std::make_tuple( scheduledata->_time_id, scheduledata->_start_function._module ) );
                 }
             }
         }
@@ -111,15 +110,12 @@ namespace KFrame
     {
         auto schedulelist = _kf_schedule_list.Create( scheduledata->_time_id );
         schedulelist->_time_id = scheduledata->_time_id;
-        schedulelist->_schedule_data_list.Insert( scheduledata->_module, scheduledata );
+        schedulelist->_schedule_data_list.Insert( scheduledata->_start_function._module, scheduledata );
 
         // 如果正在执行, 需要执行回调
         if ( schedulelist->_status == KFScheduleEnum::Runing )
         {
-            if ( scheduledata->_start_function != nullptr )
-            {
-                scheduledata->_start_function( scheduledata->_object_id, schedulelist->_duration_time );
-            }
+            scheduledata->_start_function.Call( scheduledata->_object_id, schedulelist->_duration_time );
         }
     }
 
@@ -173,14 +169,11 @@ namespace KFrame
                 for ( auto& iter : schedulelist->_schedule_data_list._objects )
                 {
                     auto scheduledata = iter.second;
-                    if ( scheduledata->_start_function != nullptr && scheduledata->_module->_is_open )
-                    {
-                        scheduledata->_start_function( scheduledata->_object_id, schedulelist->_duration_time );
-                    }
+                    scheduledata->_start_function.Call( scheduledata->_object_id, schedulelist->_duration_time );
                 }
-
-                break;
             }
+
+            break;
         }
     }
 
@@ -198,10 +191,7 @@ namespace KFrame
         for ( auto& iter : schedulelist->_schedule_data_list._objects )
         {
             auto scheduledata = iter.second;
-            if ( scheduledata->_finish_function != nullptr && scheduledata->_module->_is_open )
-            {
-                scheduledata->_finish_function( scheduledata->_object_id, schedulelist->_duration_time );
-            }
+            scheduledata->_finish_function.Call( scheduledata->_object_id, schedulelist->_duration_time );
         }
     }
 }

@@ -45,10 +45,9 @@ namespace KFrame
     {
         auto delayeddata = __KF_NEW__( KFDelayedData, data, size );
         delayeddata->_loop_type = KFDelayedEnum::Once;
-        delayeddata->_module = module;
         delayeddata->_next_execute_time = time;
         delayeddata->_object_id = objectid;
-        delayeddata->_function = function;
+        delayeddata->_function.SetFunction( module, function );
         _kf_delayed_register.push_back( delayeddata );
     }
 
@@ -57,11 +56,10 @@ namespace KFrame
     {
         auto delayeddata = __KF_NEW__( KFDelayedData, data, size );
         delayeddata->_loop_type = KFDelayedEnum::Loop;
-        delayeddata->_module = module;
         delayeddata->_time_data = *timedata;
         delayeddata->_next_execute_time = KFDate::CalcTimeData( timedata, KFGlobal::Instance()->_real_time, 1 );
         delayeddata->_object_id = objectid;
-        delayeddata->_function = function;
+        delayeddata->_function.SetFunction( module, function );
         _kf_delayed_register.push_back( delayeddata );
     }
 
@@ -137,7 +135,7 @@ namespace KFrame
 
         for ( auto kfdata : _kf_delayed_register )
         {
-            RemoveDelayedData( kfdata->_module, kfdata->_object_id );
+            RemoveDelayedData( kfdata->_function._module, kfdata->_object_id );
             AddDelayedData( kfdata );
         }
 
@@ -146,11 +144,11 @@ namespace KFrame
 
     void KFDelayedModule::AddDelayedData( KFDelayedData* kfdata )
     {
-        auto iter = _kf_delayed_data.find( kfdata->_module );
+        auto iter = _kf_delayed_data.find( kfdata->_function._module );
         if ( iter == _kf_delayed_data.end() )
         {
             std::unordered_map< uint64, KFDelayedData* > temp;
-            iter = _kf_delayed_data.emplace( std::make_pair( kfdata->_module, temp ) ).first;
+            iter = _kf_delayed_data.emplace( std::make_pair( kfdata->_function._module, temp ) ).first;
         }
 
         iter->second.emplace( std::make_pair( kfdata->_object_id, kfdata ) );
@@ -176,14 +174,10 @@ namespace KFrame
                 }
 
                 // 时间到了, 执行回调
-                if ( delayeddata->_module->_is_open )
-                {
-                    delayeddata->_function( delayeddata->_object_id, delayeddata->_data, delayeddata->_size );
-                }
-
+                delayeddata->_function.Call( delayeddata->_object_id, delayeddata->_data, delayeddata->_size );
                 if ( delayeddata->_loop_type == KFDelayedEnum::Once )
                 {
-                    RemoveDelayedFunction( delayeddata->_module, delayeddata->_object_id );
+                    RemoveDelayedFunction( delayeddata->_function._module, delayeddata->_object_id );
                 }
                 else
                 {
@@ -191,7 +185,7 @@ namespace KFrame
                     delayeddata->_next_execute_time = KFDate::CalcTimeData( &delayeddata->_time_data, KFGlobal::Instance()->_real_time, 1 );
                     if ( delayeddata->_next_execute_time <= KFGlobal::Instance()->_real_time )
                     {
-                        RemoveDelayedFunction( delayeddata->_module, delayeddata->_object_id );
+                        RemoveDelayedFunction( delayeddata->_function._module, delayeddata->_object_id );
                     }
                 }
             }

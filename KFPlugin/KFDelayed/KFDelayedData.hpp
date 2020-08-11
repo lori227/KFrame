@@ -39,8 +39,6 @@ namespace KFrame
         }
 
     public:
-        KFModule* _module = nullptr;
-
         // 设定的执行时间
         KFTimeData _time_data;
 
@@ -51,7 +49,7 @@ namespace KFrame
         uint32 _loop_type = KFDelayedEnum::Once;
 
         // 回调函数
-        KFDelayedFunction _function = nullptr;
+        KFFunction< KFDelayedFunction > _function;
 
         // 回调参数
         uint64 _object_id = 0u;

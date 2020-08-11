@@ -39,7 +39,7 @@ namespace KFrame
         auto kfhandle = _execute_function.Find( name );
         if ( kfhandle != nullptr )
         {
-            kfhandle->_is_open = isopen;
+            kfhandle->SetOpen( isopen );
         }
     }
 
@@ -112,10 +112,7 @@ namespace KFrame
         auto kffunction = _execute_function.Find( executedata->_name );
         if ( kffunction != nullptr )
         {
-            if ( kffunction->IsOpen() )
-            {
-                return kffunction->_function( player, executedata, modulename, moduleid, function, line );
-            }
+            return kffunction->CallEx<bool>( player, executedata, modulename, moduleid, function, line );
         }
         else
         {

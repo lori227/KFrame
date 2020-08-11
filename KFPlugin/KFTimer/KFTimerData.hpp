@@ -10,9 +10,6 @@ namespace KFrame
     class KFTimerData
     {
     public:
-        // 模块指针
-        KFModule* _module = nullptr;
-
         // objectid
         uint64 _object_id = 0;
 
@@ -38,7 +35,7 @@ namespace KFrame
         uint32 _slot = 0;
 
         // 回调函数
-        KFTimerFunction _function = nullptr;
+        KFFunction< KFTimerFunction > _function;
 
         // 链表
         KFTimerData* _prev = nullptr;
