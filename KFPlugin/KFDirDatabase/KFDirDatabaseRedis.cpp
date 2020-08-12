@@ -36,7 +36,7 @@ namespace KFrame
         }
 
         StringMap values;
-        values[ ip ] = ip;
+        values[ __STRING__( ip ) ] = ip;
         values[ __STRING__( port ) ] = __TO_STRING__( port );
         values[ __STRING__( count ) ] = __TO_STRING__( count );
         values[ __STRING__( appid ) ] = __TO_STRING__( appid );
