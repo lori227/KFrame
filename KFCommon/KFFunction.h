@@ -67,7 +67,7 @@ namespace KFrame
 
     public:
         // Âß¼­º¯Êý
-        T _function = nullptr;
+        T _function;
 
         // ÊÇ·ñ¿ªÆô
         bool _is_open = true;
