@@ -11,6 +11,7 @@ namespace KFrame
         _is_connected = false;
         _is_shutdown = false;
         _is_sending = false;
+        _event_type = 0u;
 
         _uv_write = __NEW_OBJECT__( uv_write_t );
     }
