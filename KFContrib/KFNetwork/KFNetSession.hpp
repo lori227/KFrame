@@ -134,7 +134,7 @@ namespace KFrame
 
     private:
         // 事件类型
-        std::atomic<uint32> _event_type = 0u;
+        std::atomic<uint32> _event_type;
 
         // 是否正在发送
         std::atomic<bool> _is_sending;
