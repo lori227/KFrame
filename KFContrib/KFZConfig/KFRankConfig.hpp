@@ -25,6 +25,7 @@ namespace KFrame
     public:
         std::string _parent_name;
         std::string _child_name;
+        uint64 _key = 0u;
         uint64 _max_value = 0u;
     };
     /////////////////////////////////////////////////////////////////
@@ -57,7 +58,7 @@ namespace KFrame
         }
 
         // 获得排行榜列表
-        std::vector< KFRankSetting* >& FindRankSetting( const std::string& parentname, const std::string& childname );
+        std::vector< KFRankSetting* >& FindRankSetting( const std::string& parentname, uint64 key, const std::string& childname );
 
     protected:
         // 清除配置
@@ -71,8 +72,7 @@ namespace KFrame
         StringSet _show_data_list;
 
     private:
-        typedef std::pair< std::string, std::string > RankDataType;
-        std::map< RankDataType, std::vector< KFRankSetting* > > _kf_rank_data_list;
+        std::map< std::string, std::vector< KFRankSetting* > > _kf_rank_data_list;
     };
 }
 

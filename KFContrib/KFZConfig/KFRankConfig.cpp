@@ -26,12 +26,13 @@ namespace KFrame
             {
                 KFRandCalcData calcdata;
                 calcdata._parent_name = KFUtility::SplitString( strdata, __DOMAIN_STRING__ );
+                calcdata._key = KFUtility::SplitValue<uint64>( strdata, __DOMAIN_STRING__ );
                 calcdata._child_name = KFUtility::SplitString( strdata, __DOMAIN_STRING__ );
                 calcdata._max_value = KFUtility::SplitValue<uint32>( strdata, __DOMAIN_STRING__ );
                 kfsetting->_calc_data.emplace_back( calcdata );
 
-                RankDataType key( calcdata._parent_name, calcdata._child_name );
-                _kf_rank_data_list[ key ].push_back( kfsetting );
+                auto strkey = __FORMAT__( "{}:{}:{}", calcdata._parent_name, calcdata._key, calcdata._child_name );
+                _kf_rank_data_list[ strkey ].push_back( kfsetting );
             }
         }
 
@@ -41,10 +42,10 @@ namespace KFrame
         }
     }
 
-    std::vector< KFRankSetting* >& KFRankConfig::FindRankSetting( const std::string& parentname, const std::string& childname )
+    std::vector< KFRankSetting* >& KFRankConfig::FindRankSetting( const std::string& parentname, uint64 key, const std::string& childname )
     {
-        RankDataType key( parentname, childname );
-        auto iter = _kf_rank_data_list.find( key );
+        auto strkey = __FORMAT__( "{}:{}:{}", parentname, key, childname );
+        auto iter = _kf_rank_data_list.find( strkey );
         if ( iter == _kf_rank_data_list.end() )
         {
             static std::vector< KFRankSetting* > _empty_list;
