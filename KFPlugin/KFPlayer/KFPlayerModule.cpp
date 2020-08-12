@@ -584,6 +584,7 @@ namespace KFrame
             {
                 player->UpdateData( kfdata, kfmsg.operate(), kfmsg.value() );
             }
+
             return;
         }
 
@@ -627,6 +628,7 @@ namespace KFrame
             {
                 player->UpdateData( kfdata, kfmsg.value() );
             }
+
             return;
         }
 
