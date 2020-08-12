@@ -338,10 +338,10 @@ namespace KFrame
 
     bool KFData::IsNeedSyncToClient() const
     {
-        if ( _data_setting->HaveMask( KFDataDefine::DataMaskClient ) )
+        if ( _data_setting->HaveMask( KFDataDefine::DataMaskSync ) )
         {
             if ( !_data_setting->HaveMask( KFDataDefine::DataMaskDelay ) ||
-                    KFUtility::HaveBitMask<uint32>( _run_mask, KFDataDefine::DataMaskClient ) )
+                    KFUtility::HaveBitMask<uint32>( _run_mask, KFDataDefine::DataMaskSync ) )
             {
                 return true;
             }

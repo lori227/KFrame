@@ -77,7 +77,7 @@ namespace KFrame
 
     KFMsg::PBObject* KFKernelModule::SerializeToClient( KFData* kfdata )
     {
-        return SerializeObject( kfdata, KFDataDefine::DataMaskClient );
+        return SerializeObject( kfdata, KFDataDefine::DataMaskSync );
     }
 
     KFMsg::PBObject* KFKernelModule::SerializeToData( KFData* kfdata )

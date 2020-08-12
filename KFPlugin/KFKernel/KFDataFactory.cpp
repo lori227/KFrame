@@ -136,7 +136,7 @@ namespace KFrame
             }
             else
             {
-                if ( childdatasetting->HaveMask( KFDataDefine::DataMaskCreate ) )
+                if ( !childdatasetting->HaveMask( KFDataDefine::DataMaskShield ) )
                 {
                     // 没有就创建出来
                     kfchild = CreateData( childdatasetting, false );
@@ -210,7 +210,7 @@ namespace KFrame
         for ( auto& iter : datasetting->_class_setting->_static_data._objects )
         {
             auto childdatasetting = iter.second;
-            if ( !childdatasetting->HaveMask( KFDataDefine::DataMaskCreate ) )
+            if ( childdatasetting->HaveMask( KFDataDefine::DataMaskShield ) )
             {
                 continue;
             }

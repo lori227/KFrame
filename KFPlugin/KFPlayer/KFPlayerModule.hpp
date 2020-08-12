@@ -124,6 +124,10 @@ namespace KFrame
         // 请求取消同步
         __KF_MESSAGE_FUNCTION__( HandleCancelSyncReq );
 
+        // 请求更新数据
+        __KF_MESSAGE_FUNCTION__( HandleUpdateIntReq );
+        __KF_MESSAGE_FUNCTION__( HandleUpdateStrReq );
+
         // 名字更新
         __KF_UPDATE_STRING_FUNCTION__( OnUpdateNameCallBack );
 

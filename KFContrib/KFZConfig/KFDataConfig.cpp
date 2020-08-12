@@ -18,7 +18,7 @@ namespace KFrame
         {"Show", KFDataDefine::DataMaskShow},
         {"Multiple", KFDataDefine::DataMaskMultiple},
         {"Save", KFDataDefine::DataMaskSave},
-        {"Sync", KFDataDefine::DataMaskClient},
+        {"Sync", KFDataDefine::DataMaskSync},
         {"Delay", KFDataDefine::DataMaskDelay},
         {"View", KFDataDefine::DataMaskView},
         {"Basic", KFDataDefine::DataMaskBasic},
@@ -29,7 +29,8 @@ namespace KFrame
         {"AddCall", KFDataDefine::DataMaskAddCall},
         {"RemoveCall", KFDataDefine::DataMaskRemoveCall},
         {"UpdateCall", KFDataDefine::DataMaskUpdataCall},
-        {"Create", KFDataDefine::DataMaskCreate},
+        {"Shield", KFDataDefine::DataMaskShield},
+        {"Client", KFDataDefine::DataMaskClient},
     };
 
     void KFDataConfig::ReadSetting( KFNode& xmlnode, KFClassSetting* kfsetting )

@@ -28,7 +28,7 @@ namespace KFrame
             ////////////////////////////////////////////////////////////////////////////
 
             DataMaskNull = 0,				// 无效值
-            DataMaskClient = 1 << 1,		// 更新同步玩家
+            DataMaskSync = 1 << 1,			// 更新同步玩家
             DataMaskView = 1 << 2,			// 同步给附近玩家
             DataMaskSave = 1 << 3,			// 是否保存数据
             DataMaskMultiple = 1 << 4,		// 是否支持倍数
@@ -37,7 +37,8 @@ namespace KFrame
             DataMaskAddCall = 1 << 7,		// 是否添加回调
             DataMaskRemoveCall = 1 << 8,	// 是否删除回调
             DataMaskUpdataCall = 1 << 9,	// 是否更新回调
-            DataMaskCreate = 1 << 10,		// 是否创建属性(项目可设置这个属性来屏蔽框架创建)
+            DataMaskShield = 1 << 10,		// 是否屏蔽属性(项目可设置这个属性来屏蔽框架创建)
+            DataMaskClient = 1 << 11,		// 是否客户端属性(客户端可随意修改)
 
             DataMaskBasic = 1 << 20,		// 基础属性
             DataMaskRelation = 1 << 21,		// 关系属性

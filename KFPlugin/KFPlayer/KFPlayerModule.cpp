@@ -29,6 +29,8 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFMsg::MSG_REMOVE_DATA_REQ, &KFPlayerModule::HandleRemoveDataReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_REQUEST_SYNC_REQ, &KFPlayerModule::HandleRequestSyncReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_CANCEL_SYNC_REQ, &KFPlayerModule::HandleCancelSyncReq );
+        __REGISTER_MESSAGE__( KFMsg::MSG_UPDATE_INT_REQ, &KFPlayerModule::HandleUpdateIntReq );
+        __REGISTER_MESSAGE__( KFMsg::MSG_UPDATE_STR_REQ, &KFPlayerModule::HandleUpdateStrReq );
 
     }
 
@@ -531,7 +533,7 @@ namespace KFrame
             return;
         }
 
-        kfdata->AddMask( KFDataDefine::DataMaskClient );
+        kfdata->AddMask( KFDataDefine::DataMaskSync );
         switch (  kfdata->_data_setting->_type )
         {
         case KFDataDefine::DataTypeObject:
@@ -555,6 +557,92 @@ namespace KFrame
             return;
         }
 
-        kfdata->RemoveMask( KFDataDefine::DataMaskClient );
+        kfdata->RemoveMask( KFDataDefine::DataMaskSync );
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleUpdateIntReq )
+    {
+        __CLIENT_PROTO_PARSE__( KFMsg::MsgUpdateIntReq );
+
+        // 1级属性
+        if ( kfmsg.parentname().empty() )
+        {
+            auto kfdata = player->Find( kfmsg.dataname() );
+            if ( kfdata != nullptr && kfdata->HaveMask( KFDataDefine::DataMaskClient ) )
+            {
+                player->UpdateData( kfdata, kfmsg.operate(), kfmsg.value() );
+            }
+
+            return;
+        }
+
+        // 2级object属性
+        if ( kfmsg.key() == 0u )
+        {
+            auto kfdata = player->Find( kfmsg.parentname(), kfmsg.dataname() );
+            if ( kfdata != nullptr && kfdata->HaveMask( KFDataDefine::DataMaskClient ) )
+            {
+                player->UpdateData( kfdata, kfmsg.operate(), kfmsg.value() );
+            }
+            return;
+        }
+
+        // 3级record属性
+        auto kfparent = player->Find( kfmsg.parentname() );
+        if ( kfparent == nullptr )
+        {
+            return;
+        }
+
+        auto kfdatasetting = kfparent->_data_setting->_class_setting->FindSetting( kfmsg.dataname() );
+        if ( kfdatasetting == nullptr || !kfdatasetting->HaveMask( KFDataDefine::DataMaskClient ) )
+        {
+            return;
+        }
+
+        player->UpdateData( kfparent, kfmsg.key(), kfmsg.dataname(), kfmsg.operate(), kfmsg.value() );
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleUpdateStrReq )
+    {
+        __CLIENT_PROTO_PARSE__( KFMsg::MsgUpdateStrReq );
+
+        // 1级属性
+        if ( kfmsg.parentname().empty() )
+        {
+            auto kfdata = player->Find( kfmsg.dataname() );
+            if ( kfdata != nullptr && kfdata->HaveMask( KFDataDefine::DataMaskClient ) )
+            {
+                player->UpdateData( kfdata, kfmsg.value() );
+            }
+
+            return;
+        }
+
+        // 2级object属性
+        if ( kfmsg.key() == 0u )
+        {
+            auto kfdata = player->Find( kfmsg.parentname(), kfmsg.dataname() );
+            if ( kfdata != nullptr && kfdata->HaveMask( KFDataDefine::DataMaskClient ) )
+            {
+                player->UpdateData( kfdata, kfmsg.value() );
+            }
+            return;
+        }
+
+        // 3级record属性
+        auto kfparent = player->Find( kfmsg.parentname() );
+        if ( kfparent == nullptr )
+        {
+            return;
+        }
+
+        auto kfdatasetting = kfparent->_data_setting->_class_setting->FindSetting( kfmsg.dataname() );
+        if ( kfdatasetting == nullptr || !kfdatasetting->HaveMask( KFDataDefine::DataMaskClient ) )
+        {
+            return;
+        }
+
+        player->UpdateData( kfmsg.parentname(), kfmsg.key(), kfmsg.dataname(), kfmsg.value() );
     }
 }

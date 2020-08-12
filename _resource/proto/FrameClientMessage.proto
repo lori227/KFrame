@@ -37,6 +37,8 @@ enum FrameClientProtocol
 	MSG_SHOW_ELEMENT 					= 209;	// 显示奖励
 	MSG_REQUEST_SYNC_REQ				= 210;	// 客户端请求同步
 	MSG_CANCEL_SYNC_REQ					= 211;	// 客户端取消同步
+	MSG_UPDATE_INT_REQ					= 212;	// 客户端请求修改数据
+	MSG_UPDATE_STR_REQ					= 213;	// 客户端请求修改数据
 
 	// attribute
 	MSG_SET_NAME_REQ 					= 300;	// 设置名字
@@ -231,6 +233,27 @@ message MsgRemoveDataReq
 {
 	bytes dataname = 1;		// 属性名称
 	uint64 key = 2;			// id
+}
+
+// 更新属性
+// MSG_UPDATE_INT_REQ
+message MsgUpdateIntReq
+{
+	bytes parentname = 1;	// 父属性名称
+	bytes dataname = 2;		// 子属性名称
+	uint64 key = 3;			// 属性key
+	uint64 value = 4;		// 属性值
+	uint32 operate = 5;		// 操作类型( 1=增加, 2=减少, 3=设置 )
+}
+
+// 更新属性
+// MSG_UPDATE_STR_REQ
+message MsgUpdateStrReq
+{
+	bytes parentname = 1;	// 父属性名称
+	bytes dataname = 2;		// 子属性名称
+	uint64 key = 3;			// 属性key
+	bytes value = 4;		// 属性值
 }
 
 // 请求同步属性
