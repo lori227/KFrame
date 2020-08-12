@@ -103,7 +103,7 @@ namespace KFrame
         StringMap rankdata;
         rankdata[ __STRING__( id ) ] = __TO_STRING__( kfrankdata->_rank_id );
         rankdata[ __STRING__( zoneid ) ] = __TO_STRING__( kfrankdata->_zone_id );
-        rankdata[ __STRING__( time ) ] = __TO_STRING__( kfrankdata->_last_refresh_time );
+        rankdata[ __STRING__( time ) ] = __TO_STRING__( kfrankdata->_next_refresh_time );
         rankdata[ __STRING__( minrankscore ) ] = __TO_STRING__( kfrankdata->_min_rank_score );
         rankdata[ __STRING__( rankdata ) ] = strrankdata;
         auto kfresult = _rank_redis_driver->HMSet( __DATABASE_KEY_3__( __STRING__( rank ), kfrankdata->_rank_id, kfrankdata->_zone_id ), rankdata );
