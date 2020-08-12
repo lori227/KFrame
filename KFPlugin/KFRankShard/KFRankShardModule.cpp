@@ -125,7 +125,7 @@ namespace KFrame
             auto strrankata = querydata->_value[ __STRING__( rankdata ) ];
             KFProto::Parse( &kfrankdata->_rank_datas, strrankata, KFCompressEnum::ZSTD, true );
 
-            kfrankdata->_last_refresh_time = __TO_UINT64__( querydata->_value[ __STRING__( time ) ] );
+            kfrankdata->_next_refresh_time = __TO_UINT64__( querydata->_value[ __STRING__( time ) ] );
             kfrankdata->_min_rank_score = __TO_UINT64__( querydata->_value[ __STRING__( minrankscore ) ] );
         }
 
@@ -342,7 +342,7 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SQueryRankListReq );
 
         auto kfrankdata = _kf_rank_data.Find( RankKey( kfmsg.rankid(), kfmsg.zoneid() ) );
-        if ( kfrankdata == nullptr || kfrankdata->_last_refresh_time == 0u )
+        if ( kfrankdata == nullptr || KFDate::CheckPassTime( KFGlobal::Instance()->_real_time, kfrankdata->_next_refresh_time ) )
         {
             kfrankdata = LoadRankData( kfmsg.rankid(), kfmsg.zoneid() );
         }
