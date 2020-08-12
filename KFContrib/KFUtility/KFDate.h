@@ -125,6 +125,7 @@ namespace KFrame
         static uint64 CalcLeftTime( uint64 nowtime, uint64 starttime, uint32 keeptime );
 
         // 判断是否过了时间点
+        static bool CheckPassTime( uint64 nowtime, uint64 nexttime );
         static bool CheckPassTime( uint32 year, uint32 month, uint32 day, uint32 hour, uint32 minute );
 
         // 获得0点0分的时间

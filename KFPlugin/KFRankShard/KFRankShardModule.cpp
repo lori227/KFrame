@@ -184,7 +184,6 @@ namespace KFrame
             return false;
         }
 
-
         // 获得排行榜列表
         auto refreshok = false;
         auto timedata = &kftimesetting->_time_section_list.front()._start_time;
@@ -201,7 +200,7 @@ namespace KFrame
     bool KFRankShardModule::RefreshRankData( const KFRankSetting* kfsetting, uint32 zoneid, const KFTimeData* timedata )
     {
         auto kfrankdata = _kf_rank_data.Create( RankKey( kfsetting->_id, zoneid ) );
-        if ( !KFDate::CheckLoopTimeData( timedata, kfrankdata->_last_refresh_time, KFGlobal::Instance()->_real_time ) )
+        if ( !KFDate::CheckPassTime(  KFGlobal::Instance()->_real_time, kfrankdata->_next_refresh_time ) )
         {
             return false;
         }
@@ -210,7 +209,7 @@ namespace KFrame
         kfrankdata->_rank_id = kfsetting->_id;
         kfrankdata->_zone_id = zoneid;
         kfrankdata->_min_rank_score = 0;
-        kfrankdata->_last_refresh_time = KFGlobal::Instance()->_real_time;
+        kfrankdata->_next_refresh_time = KFDate::CalcTimeData( timedata, KFGlobal::Instance()->_real_time, 1 );
 
         auto& ranksortkey = FormatRankSortKey( kfsetting->_id, zoneid );
         auto& rankdatakey = FormatRankDataKey( kfsetting->_id, zoneid );

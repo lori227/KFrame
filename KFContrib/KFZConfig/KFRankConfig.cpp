@@ -44,11 +44,11 @@ namespace KFrame
 
     std::vector< KFRankSetting* >& KFRankConfig::FindRankSetting( const std::string& parentname, uint64 key, const std::string& childname )
     {
+        static std::vector< KFRankSetting* > _empty_list;
         auto strkey = __FORMAT__( "{}:{}:{}", parentname, key, childname );
         auto iter = _kf_rank_data_list.find( strkey );
         if ( iter == _kf_rank_data_list.end() )
         {
-            static std::vector< KFRankSetting* > _empty_list;
             return _empty_list;
         }
 

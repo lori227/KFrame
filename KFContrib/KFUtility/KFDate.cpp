@@ -204,6 +204,11 @@ namespace KFrame
         return nowdate.GetDay() == lastdate.GetDay();
     }
 
+    bool KFDate::CheckPassTime( uint64 nowtime, uint64 nexttime )
+    {
+        return nowtime >= nexttime;
+    }
+
     bool KFDate::CheckPassTime( uint32 year, uint32 month, uint32 day, uint32 hour, uint32 minute )
     {
         auto nowdate = KFDate::GetDate();

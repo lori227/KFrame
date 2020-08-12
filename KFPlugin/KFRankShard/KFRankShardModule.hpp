@@ -33,8 +33,8 @@ namespace KFrame
         // 最小分数
         uint64 _min_rank_score = 0;
 
-        // 上次刷新时间
-        uint64 _last_refresh_time = 0;
+        // 下次刷新时间
+        uint64 _next_refresh_time = 0;
 
         // 排行榜数据
         KFMsg::PBRankDatas _rank_datas;

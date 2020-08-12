@@ -62,14 +62,15 @@ namespace KFrame
             kftimerecord->Add( kfsetting->_id, kftime );
         }
 
-        auto lasttime = kftime->Get<uint64>( __STRING__( value ) );
-        auto timedate = &kfsetting->_time_section_list.front()._start_time;
-        auto ok = KFDate::CheckLoopTimeData( timedate, lasttime, KFGlobal::Instance()->_real_time );
+        auto nexttime = kftime->Get<uint64>( __STRING__( value ) );
+        auto ok = KFDate::CheckPassTime( KFGlobal::Instance()->_real_time, nexttime );
         if ( ok )
         {
             kftime->Set( __STRING__( status ), 1u );
-            kftime->Set( __STRING__( lasttime ), lasttime );
-            kftime->Set( __STRING__( value ), KFGlobal::Instance()->_real_time );
+
+            auto timedata = &kfsetting->_time_section_list.front()._start_time;
+            nexttime = KFDate::CalcTimeData( timedata, KFGlobal::Instance()->_real_time, 1 );
+            kftime->Set( __STRING__( value ), nexttime );
         }
         else
         {
