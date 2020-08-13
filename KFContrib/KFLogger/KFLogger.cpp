@@ -51,8 +51,7 @@ namespace KFrame
 
         auto kfglobal = KFGlobal::Instance();
         _local_log = __NEW_OBJECT__( KFSpdLog, kfsetting );
-        auto filename = __FORMAT__( "{}-{}-{}.log", kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->ToString() );
-        _local_log->Initialize( filename );
+        _local_log->Initialize( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->ToString() );
 
         // 注册函数
         RegisterLogFunction( this, &KFLogger::Log );
