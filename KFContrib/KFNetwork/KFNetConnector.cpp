@@ -71,11 +71,10 @@ namespace KFrame
         {
             // 收到消息时间
             _last_recv_time = _net_services->_now_time;
-
-            // ping 消息不处理
             if ( message->_head._msgid == 0 )
             {
-                message = nullptr;
+                // ping 消息不处理, 继续取下一个消息
+                message = PopMessage();
             }
         }
         else
