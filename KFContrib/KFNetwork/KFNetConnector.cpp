@@ -140,6 +140,7 @@ namespace KFrame
         {
             // 长度异常, 直接丢弃
             _recv_queue.PopRemove();
+            __LOG_ERROR__( "session=[{}] msg=[{}] length=[{}] error!", _object_id, nethead->_msgid, nethead->_length );
             return nullptr;
         }
 
