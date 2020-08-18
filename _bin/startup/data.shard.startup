@@ -6,12 +6,10 @@
 		<Include File="./startup/common/routeclient.startup"/>
 		<Include File="./startup/common/remotelog.startup"/>
 		<Include File="./startup/common/deployclient.startup"/>
+		<Include File="./startup/common/database.startup"/>
 	</Includes>
 
 	<Plugins>
 		<Plugin Name="KFDataShard" Param=""/>	
-		<Plugin Name="KFRedis" Param=""/>	
-		<Plugin Name="KFMongo" Param=""/>	
-		<Plugin Name="KFMySQL" Param=""/>	
 	</Plugins>
 </Setting>
