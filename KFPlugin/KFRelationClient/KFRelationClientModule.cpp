@@ -367,18 +367,18 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::RelationAlready, kfmsg.playername() );
         }
 
-        // 不需要申请, 直接添加
-        if ( kfsetting->_invite_data_name.empty() )
-        {
-            return AddRelationToRelation( player, kfmsg.playerid(), kfmsg.playername(), kfrelationrecord, kfsetting );
-        }
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 判断自己好友数量
         if ( kfrelationrecord->Size() >= kfsetting->_max_count )
         {
             return _kf_display->SendToClient( player, KFMsg::RelationSelfLimit, kfsetting->_max_count );
         }
 
+        // 不需要申请, 直接添加
+        if ( kfsetting->_invite_data_name.empty() )
+        {
+            return AddRelationToRelation( player, kfmsg.playerid(), kfmsg.playername(), kfrelationrecord, kfsetting );
+        }
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 检查屏蔽字
         auto message = kfmsg.message();
         KFUtility::ReplaceString( message, " ", "" );
