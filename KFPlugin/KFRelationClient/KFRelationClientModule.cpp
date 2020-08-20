@@ -360,14 +360,14 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::RelationDataError );
         }
 
-        // 已经是好友, 不能申请
+        // 已经是关系, 不能申请
         auto kfrelation = kfrelationrecord->Find( kfmsg.playerid() );
         if ( kfrelation != nullptr )
         {
             return _kf_display->SendToClient( player, KFMsg::RelationAlready, kfmsg.playername() );
         }
 
-        // 判断自己好友数量
+        // 判断自己关系数量
         if ( kfrelationrecord->Size() >= kfsetting->_max_count )
         {
             return _kf_display->SendToClient( player, KFMsg::RelationSelfLimit, kfsetting->_max_count );
@@ -511,7 +511,7 @@ namespace KFrame
         {
             removeid = kfinvite->GetKeyID();
 
-            // 发送到好友集群
+            // 发送到关系集群
             KFMsg::S2SDelRelationInviteToRelationReq req;
             req.set_relationname( kfsetting->_id );
             req.set_selfplayerid( player->GetKeyID() );
@@ -587,7 +587,7 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::RelationNotExist );
         }
 
-        // 发送好友集群处理
+        // 发送关系集群处理
         KFMsg::S2SDelRelationToRelationReq req;
         req.set_playerid( kfmsg.playerid() );
         req.set_relationname( kfmsg.relationname() );
@@ -612,7 +612,7 @@ namespace KFrame
         auto name = kfrelation->Get< std::string >( __STRING__( basic ), __STRING__( name ) );
         _kf_display->DelayToClient( player, KFMsg::RelationDelOk, kfmsg.relationid(), name );
 
-        // 直接删除好友
+        // 直接删除关系
         player->RemoveData( kfrelationrecord, kfmsg.relationid() );
     }
 
