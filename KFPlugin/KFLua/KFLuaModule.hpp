@@ -148,7 +148,7 @@ namespace KFrame
         UInt32Map _run_variable;
 
         // 玩家组件
-        KFComponent* _kf_player = nullptr;
+        KFComponent* _kf_player_component = nullptr;
     };
 }
 
