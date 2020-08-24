@@ -193,7 +193,7 @@
 
 #ifndef __WHILE__
 #define __WHILE__(conditon) \
-    while( (conditon) && (++doloopcount < __MAX_LOOP_COUNT__ ) );\
+    while( (conditon) && (++doloopcount < __MAX_LOOP_COUNT__) );\
     if ( doloopcount >= __MAX_LOOP_COUNT__ )\
     {\
         __LOG_ERROR__( "infinite loop!");\
