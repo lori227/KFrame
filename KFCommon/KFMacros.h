@@ -188,17 +188,20 @@
 
 #ifndef __DO__
 #define __DO__ \
-    auto doloopcount = 0u;\
-    do
+    auto doloopcount = 0u;do
 #endif
 
 #ifndef __WHILE__
 #define __WHILE__(conditon) \
-    while( (++doloopcount < __MAX_LOOP_COUNT__ ) && (conditon) );\
+    while( (conditon) && (++doloopcount < __MAX_LOOP_COUNT__ ) );\
     if ( doloopcount >= __MAX_LOOP_COUNT__ )\
     {\
         __LOG_ERROR__( "infinite loop!");\
     }
+#endif
+//////////////////////////////////////////////////////////////////////////////////////////////////
+#ifndef __BETWEEN__
+    #define __BETWEEN__(value, min, max) ((value) >= (min) && (value) < (max))
 #endif
 
 #endif //!__KF_MACROS_H__
