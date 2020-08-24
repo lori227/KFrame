@@ -81,7 +81,7 @@ namespace KFrame
         if ( count != 0 )
         {
             auto loopcount = count;
-            do
+            __DO__
             {
                 --loopcount;
 
@@ -91,7 +91,7 @@ namespace KFrame
                 {
                     return kfactor;
                 }
-            } while ( loopcount > 0 );
+            } __WHILE__ ( loopcount > 0 );
         }
 
         return CreateWorkActor();

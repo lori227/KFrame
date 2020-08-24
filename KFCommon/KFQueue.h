@@ -27,16 +27,8 @@ namespace KFrame
         // 初始化
         void InitQueue( uint32 maxcount )
         {
-            Resize( maxcount );
-        }
-
-        void Resize( uint32 maxcount )
-        {
-            if ( maxcount > _max_count )
-            {
-                _max_count = maxcount;
-                _objects.resize( maxcount, nullptr );
-            }
+            _max_count = maxcount;
+            _objects.resize( maxcount, nullptr );
         }
 
         uint32 Capacity()
