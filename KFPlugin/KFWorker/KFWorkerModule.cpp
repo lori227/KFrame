@@ -91,7 +91,7 @@ namespace KFrame
                 {
                     return kfactor;
                 }
-            } __WHILE__ ( loopcount > 0 );
+            } __DO_WHILE__ ( loopcount > 0 );
         }
 
         return CreateWorkActor();

@@ -189,7 +189,7 @@ namespace KFrame
     {
         KFDate nowdate( nowtime );
         KFDate lastdate( lasttime );
-        return CheckSameDay( lasttime, nowtime );
+        return CheckSameDay( lastdate, nowdate );
     }
 
     bool KFDate::CheckSameDay( KFDate& lastdate, KFDate& nowdate )
@@ -353,7 +353,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFDate::CheckLoopMinute( const KFTimeData* timedata, KFDate& lastdate, KFDate& nowdate )
     {
-        return CheckLoopMinute( timedata, lastdate, nowdate );
+        return CheckLoopMinute( timedata, lastdate.GetTime(), nowdate.GetTime() );
     }
 
     bool KFDate::CheckLoopMinute( const KFTimeData* timedata, uint64 lasttime, uint64 nowtime )
