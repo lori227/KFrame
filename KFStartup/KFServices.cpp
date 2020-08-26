@@ -13,9 +13,6 @@ namespace KFrame
     {
         do
         {
-            // 更新时间
-            UpdateTime();
-
 #if __KF_SYSTEM__ == __KF_WIN__
             __try
             {
@@ -150,7 +147,13 @@ namespace KFrame
 
     void KFServices::RunUpdate()
     {
+        // 更新时间
+        UpdateTime();
+
+        // 内存分配日志
         KFMalloc::Instance()->Run();
+
+        // 模块
         KFPluginManage::Instance()->Run();
     }
 
