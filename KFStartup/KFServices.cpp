@@ -40,35 +40,6 @@ namespace KFrame
 
         ShutDown();
     }
-
-    void KFServices::UpdateTime()
-    {
-        auto kfglobal = KFGlobal::Instance();
-
-        // 现实时间( 单位:秒 ), 可能会出现对时回退的问题
-        {
-            auto realtime = KFDate::GetTimeEx();
-            if ( realtime > kfglobal->_real_time )
-            {
-                kfglobal->_real_time = realtime;
-            }
-        }
-
-        // 运行时间( 单位:毫秒 ),
-        {
-            auto lastlooptime = kfglobal->_game_time;
-            auto gametime = KFClock::GetTime();
-            if ( gametime > kfglobal->_game_time )
-            {
-                kfglobal->_game_time = gametime;
-                kfglobal->_last_frame_use_time = kfglobal->_game_time - lastlooptime;
-            }
-            else
-            {
-                kfglobal->_last_frame_use_time = 0u;
-            }
-        }
-    }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFServices::InitService( KFApplication* application, StringMap& params )
@@ -167,5 +138,34 @@ namespace KFrame
     bool KFServices::IsShutDown()
     {
         return _application == nullptr;
+    }
+
+    void KFServices::UpdateTime()
+    {
+        auto kfglobal = KFGlobal::Instance();
+
+        // 现实时间( 单位:秒 ), 可能会出现对时回退的问题
+        {
+            auto realtime = KFDate::GetTimeEx();
+            if ( realtime > kfglobal->_real_time )
+            {
+                kfglobal->_real_time = realtime;
+            }
+        }
+
+        // 运行时间( 单位:毫秒 ),
+        {
+            auto lastlooptime = kfglobal->_game_time;
+            auto gametime = KFClock::GetTime();
+            if ( gametime > kfglobal->_game_time )
+            {
+                kfglobal->_game_time = gametime;
+                kfglobal->_last_frame_use_time = kfglobal->_game_time - lastlooptime;
+            }
+            else
+            {
+                kfglobal->_last_frame_use_time = 0u;
+            }
+        }
     }
 }
