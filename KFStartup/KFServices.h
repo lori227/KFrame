@@ -27,6 +27,11 @@ namespace KFrame
 
         // 是否已经关闭
         bool IsShutDown();
+
+    protected:
+        // 设置游戏的显示和运行时间
+        void UpdateTime();
+
     protected:
         // 进程
         KFApplication* _application = nullptr;

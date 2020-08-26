@@ -11,17 +11,10 @@ namespace KFrame
 {
     void KFServices::Run()
     {
-        auto kfglobal = KFGlobal::Instance();
-
         do
         {
-            // 现实时间( 单位:秒 )
-            kfglobal->_real_time = KFDate::GetTimeEx();
-
-            // 运行时间( 单位:毫秒 )
-            auto lastlooptime = kfglobal->_game_time;
-            kfglobal->_game_time = KFClock::GetTime();
-            kfglobal->_last_frame_use_time = kfglobal->_game_time - lastlooptime;
+            // 更新时间
+            UpdateTime();
 
 #if __KF_SYSTEM__ == __KF_WIN__
             __try
@@ -46,11 +39,39 @@ namespace KFrame
             }
 #endif
             KFThread::Sleep( 1 );
-        } while ( kfglobal->_app_run );
+        } while ( KFGlobal::Instance()->_app_run );
 
         ShutDown();
     }
 
+    void KFServices::UpdateTime()
+    {
+        auto kfglobal = KFGlobal::Instance();
+
+        // 现实时间( 单位:秒 ), 可能会出现对时回退的问题
+        {
+            auto realtime = KFDate::GetTimeEx();
+            if ( realtime > kfglobal->_real_time )
+            {
+                kfglobal->_real_time = realtime;
+            }
+        }
+
+        // 运行时间( 单位:毫秒 ),
+        {
+            auto lastlooptime = kfglobal->_game_time;
+            auto gametime = KFClock::GetTime();
+            if ( gametime > kfglobal->_game_time )
+            {
+                kfglobal->_game_time = gametime;
+                kfglobal->_last_frame_use_time = kfglobal->_game_time - lastlooptime;
+            }
+            else
+            {
+                kfglobal->_last_frame_use_time = 0u;
+            }
+        }
+    }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFServices::InitService( KFApplication* application, StringMap& params )
