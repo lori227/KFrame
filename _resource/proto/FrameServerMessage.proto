@@ -81,7 +81,6 @@ enum FrameServerProtocol
 	S2S_QUERY_RELATION_INVITE_TO_GAME_ACK 		= 20804;	// 查询关系申请信息
 	S2S_UPDATE_INT_VALUE_TO_RELATION_REQ 		= 20805;	// 更新关系属性
 	S2S_UPDATE_STR_VALUE_TO_RELATION_REQ 		= 20806;	// 更新关系属性
-
 	S2S_APPLY_ADD_RELATION_TO_RELATION_REQ 		= 20807;	// 申请添加关系请求
 	S2S_APPLY_ADD_RELATION_TO_GAME_ACK 			= 20808;	// 申请添加关系请求
 	S2S_DEL_RELATION_INVITE_TO_RELATION_REQ		= 20809;	// 删除关系邀请
@@ -92,8 +91,13 @@ enum FrameServerProtocol
 	S2S_UPDATE_FRIENDLINESS_TO_RELATION_REQ	 	= 20814;	// 更新好友度
 	S2S_UPDATE_FRIENDLINESS_TO_GAME_ACK 		= 20815;	// 更新好友度反馈
 	S2S_REFUSE_RELATION_TO_RELATION_REQ			= 20816;	// 设置拒绝关系
-	
-	
+
+	// team
+	S2S_TEAM_CREATE_TO_TEAM_REQ					= 20901;	// 创建队伍
+	S2S_TEAM_JON_TO_GAME_ACK					= 20902;	// 加入队伍
+	S2S_TEAM_SYNC_UPDATE_DATA					= 20903;	// 更新队伍
+	S2S_TEAM_SYNC_ADD_DATA						= 20904;	// 添加成员
+	S2S_TEAM_SYNC_REMOVE_DATA					= 20905;	// 删除成员
 }
 
 ///////////////////////////////////////////////////////////////////
@@ -678,4 +682,43 @@ message S2SRefuseRelationToRelationReq
 	bytes refusename = 1;
 	uint64 playerid = 2;		// 玩家id
 	uint64 refusevalue = 3;	// 拒绝数值
+}
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+// 创建队伍
+// S2S_TEAM_CREATE_TO_TEAM_REQ
+message S2STeamCreateToTeamReq
+{
+	uint32 id = 1;			// 队伍配置id
+	bytes name = 2;			// 队伍名字
+	bytes info = 3;			// 队伍介绍
+	PBObject pbcaptain = 4;	// 创建者属性
+}
+
+// 加入队伍
+// S2S_TEAM_JON_TO_GAME_ACK
+message S2STeamJoinToGameAck
+{
+	PBObject pbteam = 1;	// 加入队伍
+}
+
+// 更新更新
+// S2S_TEAM_SYNC_UPDATE_DATA
+message S2STeamSyncUpdateData
+{
+	PBObject pbdata = 1;	
+}
+
+// 队伍添加
+// S2S_TEAM_SYNC_ADD_DATA
+message S2STeamSyncAddData
+{
+	PBObject pbdata = 1;	
+}
+
+// 队伍删除
+// S2S_TEAM_SYNC_REMOVE_DATA
+message S2STeamSyncRemoveData
+{
+	PBObject pbdata = 1;	
 }

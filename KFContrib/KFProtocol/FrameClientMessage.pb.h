@@ -8540,17 +8540,47 @@ class LIBPROTOC_EXPORT MsgTeamCreateReq : public ::google::protobuf::Message /* 
 
   // accessors -------------------------------------------------------
 
-  // uint32 maxcount = 1;
-  void clear_maxcount();
-  static const int kMaxcountFieldNumber = 1;
-  ::google::protobuf::uint32 maxcount() const;
-  void set_maxcount(::google::protobuf::uint32 value);
+  // bytes name = 2;
+  void clear_name();
+  static const int kNameFieldNumber = 2;
+  const ::std::string& name() const;
+  void set_name(const ::std::string& value);
+  #if LANG_CXX11
+  void set_name(::std::string&& value);
+  #endif
+  void set_name(const char* value);
+  void set_name(const void* value, size_t size);
+  ::std::string* mutable_name();
+  ::std::string* release_name();
+  void set_allocated_name(::std::string* name);
+
+  // bytes info = 3;
+  void clear_info();
+  static const int kInfoFieldNumber = 3;
+  const ::std::string& info() const;
+  void set_info(const ::std::string& value);
+  #if LANG_CXX11
+  void set_info(::std::string&& value);
+  #endif
+  void set_info(const char* value);
+  void set_info(const void* value, size_t size);
+  ::std::string* mutable_info();
+  ::std::string* release_info();
+  void set_allocated_info(::std::string* info);
+
+  // uint32 id = 1;
+  void clear_id();
+  static const int kIdFieldNumber = 1;
+  ::google::protobuf::uint32 id() const;
+  void set_id(::google::protobuf::uint32 value);
 
   // @@protoc_insertion_point(class_scope:KFMsg.MsgTeamCreateReq)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::uint32 maxcount_;
+  ::google::protobuf::internal::ArenaStringPtr name_;
+  ::google::protobuf::internal::ArenaStringPtr info_;
+  ::google::protobuf::uint32 id_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameClientMessage_2eproto::TableStruct;
 };
@@ -13012,18 +13042,124 @@ inline void MsgTellServerChat::set_allocated_content(::std::string* content) {
 
 // MsgTeamCreateReq
 
-// uint32 maxcount = 1;
-inline void MsgTeamCreateReq::clear_maxcount() {
-  maxcount_ = 0u;
+// uint32 id = 1;
+inline void MsgTeamCreateReq::clear_id() {
+  id_ = 0u;
 }
-inline ::google::protobuf::uint32 MsgTeamCreateReq::maxcount() const {
-  // @@protoc_insertion_point(field_get:KFMsg.MsgTeamCreateReq.maxcount)
-  return maxcount_;
+inline ::google::protobuf::uint32 MsgTeamCreateReq::id() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgTeamCreateReq.id)
+  return id_;
 }
-inline void MsgTeamCreateReq::set_maxcount(::google::protobuf::uint32 value) {
+inline void MsgTeamCreateReq::set_id(::google::protobuf::uint32 value) {
   
-  maxcount_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.MsgTeamCreateReq.maxcount)
+  id_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.MsgTeamCreateReq.id)
+}
+
+// bytes name = 2;
+inline void MsgTeamCreateReq::clear_name() {
+  name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& MsgTeamCreateReq::name() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgTeamCreateReq.name)
+  return name_.GetNoArena();
+}
+inline void MsgTeamCreateReq::set_name(const ::std::string& value) {
+  
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.MsgTeamCreateReq.name)
+}
+#if LANG_CXX11
+inline void MsgTeamCreateReq::set_name(::std::string&& value) {
+  
+  name_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgTeamCreateReq.name)
+}
+#endif
+inline void MsgTeamCreateReq::set_name(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.MsgTeamCreateReq.name)
+}
+inline void MsgTeamCreateReq::set_name(const void* value, size_t size) {
+  
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgTeamCreateReq.name)
+}
+inline ::std::string* MsgTeamCreateReq::mutable_name() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.MsgTeamCreateReq.name)
+  return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* MsgTeamCreateReq::release_name() {
+  // @@protoc_insertion_point(field_release:KFMsg.MsgTeamCreateReq.name)
+  
+  return name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgTeamCreateReq::set_allocated_name(::std::string* name) {
+  if (name != NULL) {
+    
+  } else {
+    
+  }
+  name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgTeamCreateReq.name)
+}
+
+// bytes info = 3;
+inline void MsgTeamCreateReq::clear_info() {
+  info_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& MsgTeamCreateReq::info() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgTeamCreateReq.info)
+  return info_.GetNoArena();
+}
+inline void MsgTeamCreateReq::set_info(const ::std::string& value) {
+  
+  info_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.MsgTeamCreateReq.info)
+}
+#if LANG_CXX11
+inline void MsgTeamCreateReq::set_info(::std::string&& value) {
+  
+  info_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgTeamCreateReq.info)
+}
+#endif
+inline void MsgTeamCreateReq::set_info(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  info_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.MsgTeamCreateReq.info)
+}
+inline void MsgTeamCreateReq::set_info(const void* value, size_t size) {
+  
+  info_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgTeamCreateReq.info)
+}
+inline ::std::string* MsgTeamCreateReq::mutable_info() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.MsgTeamCreateReq.info)
+  return info_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* MsgTeamCreateReq::release_info() {
+  // @@protoc_insertion_point(field_release:KFMsg.MsgTeamCreateReq.info)
+  
+  return info_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgTeamCreateReq::set_allocated_info(::std::string* info) {
+  if (info != NULL) {
+    
+  } else {
+    
+  }
+  info_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), info);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgTeamCreateReq.info)
 }
 
 #ifdef __GNUC__

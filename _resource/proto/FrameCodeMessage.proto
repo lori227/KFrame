@@ -26,6 +26,7 @@ enum FrameCodeEnum
 	LoginDatabaseBusy			= 10012;	// 登录数据库繁忙
 	PublicServerBusy			= 10013;	// 公共数据服务器繁忙
 	LogicServerBusy				= 10014;	// 逻辑服务器繁忙
+	RouteServerBusy				= 10015;	// 转发服务器繁忙
 
 	// auth
 	AccountIsEmpty 				= 11001;	// 账号不能为空
@@ -206,7 +207,13 @@ enum FrameCodeEnum
 
 	
 	// chat 
-	ChatNotFriend			= 32201;	// 不是好友, 不能私聊
-	ChatFriendNotOnline		= 32102;	// 好友不在线, 发送私聊失败
-	ChatIntervalTimeLimit	= 32103;	// 聊天速度过快, 请稍后
+	ChatNotFriend				= 13401;	// 不是好友, 不能私聊
+	ChatFriendNotOnline			= 13402;	// 好友不在线, 发送私聊失败
+	ChatIntervalTimeLimit		= 13403;	// 聊天速度过快, 请稍后
+
+	// team 
+	TeamAlready					= 13501;	// 已经在队伍中
+	TeamNameFilter				= 13502;	// 队伍名字有屏蔽字符
+	TeamInfoFilter				= 13503;	// 队伍介绍有屏蔽字符
+	TeamSettingError			= 13504;	// 队伍配置不存在
 }

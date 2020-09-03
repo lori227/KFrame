@@ -322,6 +322,14 @@ namespace KFrame
         __STRING_DEFINE__( dropclose );
         __STRING_DEFINE__( executeopen );
         __STRING_DEFINE__( executeclose );
+
+        __STRING_DEFINE__( team );
+        __STRING_DEFINE__( info );
+        __STRING_DEFINE__( maxcount );
+        __STRING_DEFINE__( member );
+        __STRING_DEFINE__( captainid );
+        __STRING_DEFINE__( captainname );
+
     }
 }
 

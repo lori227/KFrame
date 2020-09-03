@@ -98,7 +98,7 @@ namespace KFrame
 
         for ( auto& iter : _data_mask_list )
         {
-            if ( xmlnode.GetString( iter.first.c_str(), true ) == "1" )
+            if ( xmlnode.GetString( iter.first.c_str() ) == "1" )
             {
                 KFUtility::AddBitMask< uint32 >( kfdatasetting->_data_mask, iter.second );
             }

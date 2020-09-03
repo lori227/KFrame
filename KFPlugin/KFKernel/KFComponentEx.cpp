@@ -583,7 +583,7 @@ namespace KFrame
         StartSaveEntityTimer( kfentity, kfdata );
 
         // 更新同步
-        kfentity->SyncUpdateData( kfdata, index );
+        kfentity->SyncUpdateDataToClient( kfdata, index );
         if ( !callback )
         {
             return;
@@ -615,7 +615,7 @@ namespace KFrame
         StartSaveEntityTimer( kfentity, kfdata );
 
         // 更新同步
-        kfentity->SyncUpdateData( kfdata, kfentity->GetKeyID() );
+        kfentity->SyncUpdateDataToClient( kfdata, kfentity->GetKeyID() );
         if ( !callback )
         {
             return;
@@ -675,7 +675,7 @@ namespace KFrame
             }
 
             // 同步属性
-            kfentity->SyncAddData( kfdata, key );
+            kfentity->SyncAddDataToClient( kfdata, key );
 
             // 模块回调
             if ( kfdata->HaveMask( KFDataDefine::DataMaskAddCall ) )
@@ -690,7 +690,7 @@ namespace KFrame
         else
         {
             // 同步属性
-            kfentity->SyncAddData( kfdata, key );
+            kfentity->SyncAddDataToClient( kfdata, key );
         }
     }
 
@@ -709,7 +709,7 @@ namespace KFrame
         }
 
         // 同步客户端
-        kfentity->SyncRemoveData( kfdata, key );
+        kfentity->SyncRemoveDataToClient( kfdata, key );
         if ( !callback )
         {
             return;

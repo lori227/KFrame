@@ -537,10 +537,10 @@ namespace KFrame
         switch (  kfdata->_data_setting->_type )
         {
         case KFDataDefine::DataTypeObject:
-            player->SyncUpdateData( kfdata, kfdata->GetKeyID() );
+            player->SyncUpdateDataToClient( kfdata, kfdata->GetKeyID() );
             break;
         case KFDataDefine::DataTypeRecord:
-            player->SynAddRecordData( kfdata );
+            player->SynAddRecordDataToClient( kfdata );
             break;
         default:
             break;

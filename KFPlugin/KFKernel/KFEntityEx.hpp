@@ -142,20 +142,29 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
         // 同步更新数据
-        virtual void SyncUpdateData( KFData* kfdata, uint64 key );
+        virtual void SyncUpdateDataToClient( KFData* kfdata, uint64 key );
 
         // 同步添加数据
-        virtual void SyncAddData( KFData* kfdata, uint64 key );
+        virtual void SyncAddDataToClient( KFData* kfdata, uint64 key );
 
         // 同步删除数据
-        virtual void SyncRemoveData( KFData* kfdata, uint64 key );
+        virtual void SyncRemoveDataToClient( KFData* kfdata, uint64 key );
 
         // 同步添加record数据
-        virtual void SynAddRecordData( KFData* kfdata );
+        virtual void SynAddRecordDataToClient( KFData* kfdata );
 
         // 同步数据的顺序
         virtual void SyncDataToClient();
         virtual void SyncDataToClient( uint32 first, uint32 second, uint32 third );
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////
+        // 同步来自服务器的数据 更新, 添加, 删除
+        virtual void SyncUpdateDataFromServer( KFData* kfobject, const KFMsg::PBObject* pbobject );
+        virtual void SyncAddDataFromServer( KFData* kfobject, const KFMsg::PBObject* pbobject );
+        virtual void SyncRemoveDataFromServer( KFData* kfobject, const KFMsg::PBObject* pbobject );
+
+        // 添加集合
+        void SyncAddRecordFormServer( KFData* kfrecord, const KFMsg::PBRecord* pbrecord );
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
         virtual uint64 GetConfigValue( const std::string& name, uint64 id, uint64 maxvalue = __MAX_UINT64__ );
@@ -232,6 +241,8 @@ namespace KFrame
 
         // 同步更新给客户端
         void SyncDataToClient( const uint32* syncsort );
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     public:
         // 组件
         KFComponentEx* _kf_component = nullptr;

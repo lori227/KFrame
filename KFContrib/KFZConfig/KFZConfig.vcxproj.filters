@@ -28,6 +28,9 @@
     <ClInclude Include="KFCountCostConfig.h" />
     <ClInclude Include="KFWeightConfig.h" />
     <ClInclude Include="KFTimeConfig.h" />
+    <ClInclude Include="KFTeamConfig.hpp">
+      <Filter>Team</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Kernel">
@@ -45,6 +48,9 @@
     <Filter Include="Route">
       <UniqueIdentifier>{b350ddb8-511f-4858-9038-c0f1b9b0a6af}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Team">
+      <UniqueIdentifier>{ac350375-2c2b-469a-9449-8d2c9a80cc89}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KFDataConfig.cpp">
@@ -61,6 +67,9 @@
     </ClCompile>
     <ClCompile Include="KFRouteConfig.cpp">
       <Filter>Route</Filter>
+    </ClCompile>
+    <ClCompile Include="KFTeamConfig.cpp">
+      <Filter>Team</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

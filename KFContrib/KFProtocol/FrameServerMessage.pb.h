@@ -48,7 +48,7 @@ namespace protobuf_FrameServerMessage_2eproto {
 struct LIBPROTOC_EXPORT TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[75];
+  static const ::google::protobuf::internal::ParseTable schema[80];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -242,6 +242,21 @@ LIBPROTOC_EXPORT extern S2SSetPlayerNameToGameAckDefaultTypeInternal _S2SSetPlay
 class S2SSyncRefreshRank;
 class S2SSyncRefreshRankDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2SSyncRefreshRankDefaultTypeInternal _S2SSyncRefreshRank_default_instance_;
+class S2STeamCreateToTeamReq;
+class S2STeamCreateToTeamReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2STeamCreateToTeamReqDefaultTypeInternal _S2STeamCreateToTeamReq_default_instance_;
+class S2STeamJoinToGameAck;
+class S2STeamJoinToGameAckDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2STeamJoinToGameAckDefaultTypeInternal _S2STeamJoinToGameAck_default_instance_;
+class S2STeamSyncAddData;
+class S2STeamSyncAddDataDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2STeamSyncAddDataDefaultTypeInternal _S2STeamSyncAddData_default_instance_;
+class S2STeamSyncRemoveData;
+class S2STeamSyncRemoveDataDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2STeamSyncRemoveDataDefaultTypeInternal _S2STeamSyncRemoveData_default_instance_;
+class S2STeamSyncUpdateData;
+class S2STeamSyncUpdateDataDefaultTypeInternal;
+LIBPROTOC_EXPORT extern S2STeamSyncUpdateDataDefaultTypeInternal _S2STeamSyncUpdateData_default_instance_;
 class S2SUpdateFriendLinessToGameAck;
 class S2SUpdateFriendLinessToGameAckDefaultTypeInternal;
 LIBPROTOC_EXPORT extern S2SUpdateFriendLinessToGameAckDefaultTypeInternal _S2SUpdateFriendLinessToGameAck_default_instance_;
@@ -346,6 +361,11 @@ template<> LIBPROTOC_EXPORT ::KFMsg::S2SSavePlayerToGameAck* Arena::CreateMaybeM
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SSetPlayerNameToBasicReq* Arena::CreateMaybeMessage<::KFMsg::S2SSetPlayerNameToBasicReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SSetPlayerNameToGameAck* Arena::CreateMaybeMessage<::KFMsg::S2SSetPlayerNameToGameAck>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SSyncRefreshRank* Arena::CreateMaybeMessage<::KFMsg::S2SSyncRefreshRank>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2STeamCreateToTeamReq* Arena::CreateMaybeMessage<::KFMsg::S2STeamCreateToTeamReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2STeamJoinToGameAck* Arena::CreateMaybeMessage<::KFMsg::S2STeamJoinToGameAck>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2STeamSyncAddData* Arena::CreateMaybeMessage<::KFMsg::S2STeamSyncAddData>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2STeamSyncRemoveData* Arena::CreateMaybeMessage<::KFMsg::S2STeamSyncRemoveData>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::S2STeamSyncUpdateData* Arena::CreateMaybeMessage<::KFMsg::S2STeamSyncUpdateData>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SUpdateFriendLinessToGameAck* Arena::CreateMaybeMessage<::KFMsg::S2SUpdateFriendLinessToGameAck>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SUpdateFriendLinessToRelationReq* Arena::CreateMaybeMessage<::KFMsg::S2SUpdateFriendLinessToRelationReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::S2SUpdateIntValueToBasicReq* Arena::CreateMaybeMessage<::KFMsg::S2SUpdateIntValueToBasicReq>(Arena*);
@@ -430,12 +450,17 @@ enum FrameServerProtocol {
   S2S_UPDATE_FRIENDLINESS_TO_RELATION_REQ = 20814,
   S2S_UPDATE_FRIENDLINESS_TO_GAME_ACK = 20815,
   S2S_REFUSE_RELATION_TO_RELATION_REQ = 20816,
+  S2S_TEAM_CREATE_TO_TEAM_REQ = 20901,
+  S2S_TEAM_JON_TO_GAME_ACK = 20902,
+  S2S_TEAM_SYNC_UPDATE_DATA = 20903,
+  S2S_TEAM_SYNC_ADD_DATA = 20904,
+  S2S_TEAM_SYNC_REMOVE_DATA = 20905,
   FrameServerProtocol_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   FrameServerProtocol_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 LIBPROTOC_EXPORT bool FrameServerProtocol_IsValid(int value);
 const FrameServerProtocol FrameServerProtocol_MIN = S2S_FRAME_SERVER_PROTOCOL_BEGIN;
-const FrameServerProtocol FrameServerProtocol_MAX = S2S_REFUSE_RELATION_TO_RELATION_REQ;
+const FrameServerProtocol FrameServerProtocol_MAX = S2S_TEAM_SYNC_REMOVE_DATA;
 const int FrameServerProtocol_ARRAYSIZE = FrameServerProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* FrameServerProtocol_descriptor();
@@ -8712,6 +8737,588 @@ class LIBPROTOC_EXPORT S2SRefuseRelationToRelationReq : public ::google::protobu
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameServerMessage_2eproto::TableStruct;
 };
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2STeamCreateToTeamReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2STeamCreateToTeamReq) */ {
+ public:
+  S2STeamCreateToTeamReq();
+  virtual ~S2STeamCreateToTeamReq();
+
+  S2STeamCreateToTeamReq(const S2STeamCreateToTeamReq& from);
+
+  inline S2STeamCreateToTeamReq& operator=(const S2STeamCreateToTeamReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  S2STeamCreateToTeamReq(S2STeamCreateToTeamReq&& from) noexcept
+    : S2STeamCreateToTeamReq() {
+    *this = ::std::move(from);
+  }
+
+  inline S2STeamCreateToTeamReq& operator=(S2STeamCreateToTeamReq&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2STeamCreateToTeamReq& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const S2STeamCreateToTeamReq* internal_default_instance() {
+    return reinterpret_cast<const S2STeamCreateToTeamReq*>(
+               &_S2STeamCreateToTeamReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    75;
+
+  void Swap(S2STeamCreateToTeamReq* other);
+  friend void swap(S2STeamCreateToTeamReq& a, S2STeamCreateToTeamReq& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline S2STeamCreateToTeamReq* New() const final {
+    return CreateMaybeMessage<S2STeamCreateToTeamReq>(NULL);
+  }
+
+  S2STeamCreateToTeamReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2STeamCreateToTeamReq>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const S2STeamCreateToTeamReq& from);
+  void MergeFrom(const S2STeamCreateToTeamReq& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(S2STeamCreateToTeamReq* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // bytes name = 2;
+  void clear_name();
+  static const int kNameFieldNumber = 2;
+  const ::std::string& name() const;
+  void set_name(const ::std::string& value);
+  #if LANG_CXX11
+  void set_name(::std::string&& value);
+  #endif
+  void set_name(const char* value);
+  void set_name(const void* value, size_t size);
+  ::std::string* mutable_name();
+  ::std::string* release_name();
+  void set_allocated_name(::std::string* name);
+
+  // bytes info = 3;
+  void clear_info();
+  static const int kInfoFieldNumber = 3;
+  const ::std::string& info() const;
+  void set_info(const ::std::string& value);
+  #if LANG_CXX11
+  void set_info(::std::string&& value);
+  #endif
+  void set_info(const char* value);
+  void set_info(const void* value, size_t size);
+  ::std::string* mutable_info();
+  ::std::string* release_info();
+  void set_allocated_info(::std::string* info);
+
+  // .KFMsg.PBObject pbcaptain = 4;
+  bool has_pbcaptain() const;
+  void clear_pbcaptain();
+  static const int kPbcaptainFieldNumber = 4;
+  private:
+  const ::KFMsg::PBObject& _internal_pbcaptain() const;
+  public:
+  const ::KFMsg::PBObject& pbcaptain() const;
+  ::KFMsg::PBObject* release_pbcaptain();
+  ::KFMsg::PBObject* mutable_pbcaptain();
+  void set_allocated_pbcaptain(::KFMsg::PBObject* pbcaptain);
+
+  // uint32 id = 1;
+  void clear_id();
+  static const int kIdFieldNumber = 1;
+  ::google::protobuf::uint32 id() const;
+  void set_id(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2STeamCreateToTeamReq)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr name_;
+  ::google::protobuf::internal::ArenaStringPtr info_;
+  ::KFMsg::PBObject* pbcaptain_;
+  ::google::protobuf::uint32 id_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_FrameServerMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2STeamJoinToGameAck : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2STeamJoinToGameAck) */ {
+ public:
+  S2STeamJoinToGameAck();
+  virtual ~S2STeamJoinToGameAck();
+
+  S2STeamJoinToGameAck(const S2STeamJoinToGameAck& from);
+
+  inline S2STeamJoinToGameAck& operator=(const S2STeamJoinToGameAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  S2STeamJoinToGameAck(S2STeamJoinToGameAck&& from) noexcept
+    : S2STeamJoinToGameAck() {
+    *this = ::std::move(from);
+  }
+
+  inline S2STeamJoinToGameAck& operator=(S2STeamJoinToGameAck&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2STeamJoinToGameAck& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const S2STeamJoinToGameAck* internal_default_instance() {
+    return reinterpret_cast<const S2STeamJoinToGameAck*>(
+               &_S2STeamJoinToGameAck_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    76;
+
+  void Swap(S2STeamJoinToGameAck* other);
+  friend void swap(S2STeamJoinToGameAck& a, S2STeamJoinToGameAck& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline S2STeamJoinToGameAck* New() const final {
+    return CreateMaybeMessage<S2STeamJoinToGameAck>(NULL);
+  }
+
+  S2STeamJoinToGameAck* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2STeamJoinToGameAck>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const S2STeamJoinToGameAck& from);
+  void MergeFrom(const S2STeamJoinToGameAck& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(S2STeamJoinToGameAck* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // .KFMsg.PBObject pbteam = 1;
+  bool has_pbteam() const;
+  void clear_pbteam();
+  static const int kPbteamFieldNumber = 1;
+  private:
+  const ::KFMsg::PBObject& _internal_pbteam() const;
+  public:
+  const ::KFMsg::PBObject& pbteam() const;
+  ::KFMsg::PBObject* release_pbteam();
+  ::KFMsg::PBObject* mutable_pbteam();
+  void set_allocated_pbteam(::KFMsg::PBObject* pbteam);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2STeamJoinToGameAck)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::KFMsg::PBObject* pbteam_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_FrameServerMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2STeamSyncUpdateData : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2STeamSyncUpdateData) */ {
+ public:
+  S2STeamSyncUpdateData();
+  virtual ~S2STeamSyncUpdateData();
+
+  S2STeamSyncUpdateData(const S2STeamSyncUpdateData& from);
+
+  inline S2STeamSyncUpdateData& operator=(const S2STeamSyncUpdateData& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  S2STeamSyncUpdateData(S2STeamSyncUpdateData&& from) noexcept
+    : S2STeamSyncUpdateData() {
+    *this = ::std::move(from);
+  }
+
+  inline S2STeamSyncUpdateData& operator=(S2STeamSyncUpdateData&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2STeamSyncUpdateData& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const S2STeamSyncUpdateData* internal_default_instance() {
+    return reinterpret_cast<const S2STeamSyncUpdateData*>(
+               &_S2STeamSyncUpdateData_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    77;
+
+  void Swap(S2STeamSyncUpdateData* other);
+  friend void swap(S2STeamSyncUpdateData& a, S2STeamSyncUpdateData& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline S2STeamSyncUpdateData* New() const final {
+    return CreateMaybeMessage<S2STeamSyncUpdateData>(NULL);
+  }
+
+  S2STeamSyncUpdateData* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2STeamSyncUpdateData>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const S2STeamSyncUpdateData& from);
+  void MergeFrom(const S2STeamSyncUpdateData& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(S2STeamSyncUpdateData* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // .KFMsg.PBObject pbdata = 1;
+  bool has_pbdata() const;
+  void clear_pbdata();
+  static const int kPbdataFieldNumber = 1;
+  private:
+  const ::KFMsg::PBObject& _internal_pbdata() const;
+  public:
+  const ::KFMsg::PBObject& pbdata() const;
+  ::KFMsg::PBObject* release_pbdata();
+  ::KFMsg::PBObject* mutable_pbdata();
+  void set_allocated_pbdata(::KFMsg::PBObject* pbdata);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2STeamSyncUpdateData)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::KFMsg::PBObject* pbdata_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_FrameServerMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2STeamSyncAddData : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2STeamSyncAddData) */ {
+ public:
+  S2STeamSyncAddData();
+  virtual ~S2STeamSyncAddData();
+
+  S2STeamSyncAddData(const S2STeamSyncAddData& from);
+
+  inline S2STeamSyncAddData& operator=(const S2STeamSyncAddData& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  S2STeamSyncAddData(S2STeamSyncAddData&& from) noexcept
+    : S2STeamSyncAddData() {
+    *this = ::std::move(from);
+  }
+
+  inline S2STeamSyncAddData& operator=(S2STeamSyncAddData&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2STeamSyncAddData& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const S2STeamSyncAddData* internal_default_instance() {
+    return reinterpret_cast<const S2STeamSyncAddData*>(
+               &_S2STeamSyncAddData_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    78;
+
+  void Swap(S2STeamSyncAddData* other);
+  friend void swap(S2STeamSyncAddData& a, S2STeamSyncAddData& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline S2STeamSyncAddData* New() const final {
+    return CreateMaybeMessage<S2STeamSyncAddData>(NULL);
+  }
+
+  S2STeamSyncAddData* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2STeamSyncAddData>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const S2STeamSyncAddData& from);
+  void MergeFrom(const S2STeamSyncAddData& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(S2STeamSyncAddData* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // .KFMsg.PBObject pbdata = 1;
+  bool has_pbdata() const;
+  void clear_pbdata();
+  static const int kPbdataFieldNumber = 1;
+  private:
+  const ::KFMsg::PBObject& _internal_pbdata() const;
+  public:
+  const ::KFMsg::PBObject& pbdata() const;
+  ::KFMsg::PBObject* release_pbdata();
+  ::KFMsg::PBObject* mutable_pbdata();
+  void set_allocated_pbdata(::KFMsg::PBObject* pbdata);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2STeamSyncAddData)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::KFMsg::PBObject* pbdata_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_FrameServerMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT S2STeamSyncRemoveData : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.S2STeamSyncRemoveData) */ {
+ public:
+  S2STeamSyncRemoveData();
+  virtual ~S2STeamSyncRemoveData();
+
+  S2STeamSyncRemoveData(const S2STeamSyncRemoveData& from);
+
+  inline S2STeamSyncRemoveData& operator=(const S2STeamSyncRemoveData& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  S2STeamSyncRemoveData(S2STeamSyncRemoveData&& from) noexcept
+    : S2STeamSyncRemoveData() {
+    *this = ::std::move(from);
+  }
+
+  inline S2STeamSyncRemoveData& operator=(S2STeamSyncRemoveData&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2STeamSyncRemoveData& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const S2STeamSyncRemoveData* internal_default_instance() {
+    return reinterpret_cast<const S2STeamSyncRemoveData*>(
+               &_S2STeamSyncRemoveData_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    79;
+
+  void Swap(S2STeamSyncRemoveData* other);
+  friend void swap(S2STeamSyncRemoveData& a, S2STeamSyncRemoveData& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline S2STeamSyncRemoveData* New() const final {
+    return CreateMaybeMessage<S2STeamSyncRemoveData>(NULL);
+  }
+
+  S2STeamSyncRemoveData* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<S2STeamSyncRemoveData>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const S2STeamSyncRemoveData& from);
+  void MergeFrom(const S2STeamSyncRemoveData& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(S2STeamSyncRemoveData* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // .KFMsg.PBObject pbdata = 1;
+  bool has_pbdata() const;
+  void clear_pbdata();
+  static const int kPbdataFieldNumber = 1;
+  private:
+  const ::KFMsg::PBObject& _internal_pbdata() const;
+  public:
+  const ::KFMsg::PBObject& pbdata() const;
+  ::KFMsg::PBObject* release_pbdata();
+  ::KFMsg::PBObject* mutable_pbdata();
+  void set_allocated_pbdata(::KFMsg::PBObject* pbdata);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.S2STeamSyncRemoveData)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::KFMsg::PBObject* pbdata_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_FrameServerMessage_2eproto::TableStruct;
+};
 // ===================================================================
 
 
@@ -13347,9 +13954,399 @@ inline void S2SRefuseRelationToRelationReq::set_refusevalue(::google::protobuf::
   // @@protoc_insertion_point(field_set:KFMsg.S2SRefuseRelationToRelationReq.refusevalue)
 }
 
+// -------------------------------------------------------------------
+
+// S2STeamCreateToTeamReq
+
+// uint32 id = 1;
+inline void S2STeamCreateToTeamReq::clear_id() {
+  id_ = 0u;
+}
+inline ::google::protobuf::uint32 S2STeamCreateToTeamReq::id() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2STeamCreateToTeamReq.id)
+  return id_;
+}
+inline void S2STeamCreateToTeamReq::set_id(::google::protobuf::uint32 value) {
+  
+  id_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.S2STeamCreateToTeamReq.id)
+}
+
+// bytes name = 2;
+inline void S2STeamCreateToTeamReq::clear_name() {
+  name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& S2STeamCreateToTeamReq::name() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2STeamCreateToTeamReq.name)
+  return name_.GetNoArena();
+}
+inline void S2STeamCreateToTeamReq::set_name(const ::std::string& value) {
+  
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.S2STeamCreateToTeamReq.name)
+}
+#if LANG_CXX11
+inline void S2STeamCreateToTeamReq::set_name(::std::string&& value) {
+  
+  name_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2STeamCreateToTeamReq.name)
+}
+#endif
+inline void S2STeamCreateToTeamReq::set_name(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.S2STeamCreateToTeamReq.name)
+}
+inline void S2STeamCreateToTeamReq::set_name(const void* value, size_t size) {
+  
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2STeamCreateToTeamReq.name)
+}
+inline ::std::string* S2STeamCreateToTeamReq::mutable_name() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2STeamCreateToTeamReq.name)
+  return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* S2STeamCreateToTeamReq::release_name() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2STeamCreateToTeamReq.name)
+  
+  return name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void S2STeamCreateToTeamReq::set_allocated_name(::std::string* name) {
+  if (name != NULL) {
+    
+  } else {
+    
+  }
+  name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2STeamCreateToTeamReq.name)
+}
+
+// bytes info = 3;
+inline void S2STeamCreateToTeamReq::clear_info() {
+  info_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& S2STeamCreateToTeamReq::info() const {
+  // @@protoc_insertion_point(field_get:KFMsg.S2STeamCreateToTeamReq.info)
+  return info_.GetNoArena();
+}
+inline void S2STeamCreateToTeamReq::set_info(const ::std::string& value) {
+  
+  info_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:KFMsg.S2STeamCreateToTeamReq.info)
+}
+#if LANG_CXX11
+inline void S2STeamCreateToTeamReq::set_info(::std::string&& value) {
+  
+  info_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2STeamCreateToTeamReq.info)
+}
+#endif
+inline void S2STeamCreateToTeamReq::set_info(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  info_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:KFMsg.S2STeamCreateToTeamReq.info)
+}
+inline void S2STeamCreateToTeamReq::set_info(const void* value, size_t size) {
+  
+  info_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.S2STeamCreateToTeamReq.info)
+}
+inline ::std::string* S2STeamCreateToTeamReq::mutable_info() {
+  
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2STeamCreateToTeamReq.info)
+  return info_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* S2STeamCreateToTeamReq::release_info() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2STeamCreateToTeamReq.info)
+  
+  return info_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void S2STeamCreateToTeamReq::set_allocated_info(::std::string* info) {
+  if (info != NULL) {
+    
+  } else {
+    
+  }
+  info_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), info);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2STeamCreateToTeamReq.info)
+}
+
+// .KFMsg.PBObject pbcaptain = 4;
+inline bool S2STeamCreateToTeamReq::has_pbcaptain() const {
+  return this != internal_default_instance() && pbcaptain_ != NULL;
+}
+inline const ::KFMsg::PBObject& S2STeamCreateToTeamReq::_internal_pbcaptain() const {
+  return *pbcaptain_;
+}
+inline const ::KFMsg::PBObject& S2STeamCreateToTeamReq::pbcaptain() const {
+  const ::KFMsg::PBObject* p = pbcaptain_;
+  // @@protoc_insertion_point(field_get:KFMsg.S2STeamCreateToTeamReq.pbcaptain)
+  return p != NULL ? *p : *reinterpret_cast<const ::KFMsg::PBObject*>(
+      &::KFMsg::_PBObject_default_instance_);
+}
+inline ::KFMsg::PBObject* S2STeamCreateToTeamReq::release_pbcaptain() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2STeamCreateToTeamReq.pbcaptain)
+  
+  ::KFMsg::PBObject* temp = pbcaptain_;
+  pbcaptain_ = NULL;
+  return temp;
+}
+inline ::KFMsg::PBObject* S2STeamCreateToTeamReq::mutable_pbcaptain() {
+  
+  if (pbcaptain_ == NULL) {
+    auto* p = CreateMaybeMessage<::KFMsg::PBObject>(GetArenaNoVirtual());
+    pbcaptain_ = p;
+  }
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2STeamCreateToTeamReq.pbcaptain)
+  return pbcaptain_;
+}
+inline void S2STeamCreateToTeamReq::set_allocated_pbcaptain(::KFMsg::PBObject* pbcaptain) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete reinterpret_cast< ::google::protobuf::MessageLite*>(pbcaptain_);
+  }
+  if (pbcaptain) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      pbcaptain = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, pbcaptain, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  pbcaptain_ = pbcaptain;
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2STeamCreateToTeamReq.pbcaptain)
+}
+
+// -------------------------------------------------------------------
+
+// S2STeamJoinToGameAck
+
+// .KFMsg.PBObject pbteam = 1;
+inline bool S2STeamJoinToGameAck::has_pbteam() const {
+  return this != internal_default_instance() && pbteam_ != NULL;
+}
+inline const ::KFMsg::PBObject& S2STeamJoinToGameAck::_internal_pbteam() const {
+  return *pbteam_;
+}
+inline const ::KFMsg::PBObject& S2STeamJoinToGameAck::pbteam() const {
+  const ::KFMsg::PBObject* p = pbteam_;
+  // @@protoc_insertion_point(field_get:KFMsg.S2STeamJoinToGameAck.pbteam)
+  return p != NULL ? *p : *reinterpret_cast<const ::KFMsg::PBObject*>(
+      &::KFMsg::_PBObject_default_instance_);
+}
+inline ::KFMsg::PBObject* S2STeamJoinToGameAck::release_pbteam() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2STeamJoinToGameAck.pbteam)
+  
+  ::KFMsg::PBObject* temp = pbteam_;
+  pbteam_ = NULL;
+  return temp;
+}
+inline ::KFMsg::PBObject* S2STeamJoinToGameAck::mutable_pbteam() {
+  
+  if (pbteam_ == NULL) {
+    auto* p = CreateMaybeMessage<::KFMsg::PBObject>(GetArenaNoVirtual());
+    pbteam_ = p;
+  }
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2STeamJoinToGameAck.pbteam)
+  return pbteam_;
+}
+inline void S2STeamJoinToGameAck::set_allocated_pbteam(::KFMsg::PBObject* pbteam) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete reinterpret_cast< ::google::protobuf::MessageLite*>(pbteam_);
+  }
+  if (pbteam) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      pbteam = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, pbteam, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  pbteam_ = pbteam;
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2STeamJoinToGameAck.pbteam)
+}
+
+// -------------------------------------------------------------------
+
+// S2STeamSyncUpdateData
+
+// .KFMsg.PBObject pbdata = 1;
+inline bool S2STeamSyncUpdateData::has_pbdata() const {
+  return this != internal_default_instance() && pbdata_ != NULL;
+}
+inline const ::KFMsg::PBObject& S2STeamSyncUpdateData::_internal_pbdata() const {
+  return *pbdata_;
+}
+inline const ::KFMsg::PBObject& S2STeamSyncUpdateData::pbdata() const {
+  const ::KFMsg::PBObject* p = pbdata_;
+  // @@protoc_insertion_point(field_get:KFMsg.S2STeamSyncUpdateData.pbdata)
+  return p != NULL ? *p : *reinterpret_cast<const ::KFMsg::PBObject*>(
+      &::KFMsg::_PBObject_default_instance_);
+}
+inline ::KFMsg::PBObject* S2STeamSyncUpdateData::release_pbdata() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2STeamSyncUpdateData.pbdata)
+  
+  ::KFMsg::PBObject* temp = pbdata_;
+  pbdata_ = NULL;
+  return temp;
+}
+inline ::KFMsg::PBObject* S2STeamSyncUpdateData::mutable_pbdata() {
+  
+  if (pbdata_ == NULL) {
+    auto* p = CreateMaybeMessage<::KFMsg::PBObject>(GetArenaNoVirtual());
+    pbdata_ = p;
+  }
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2STeamSyncUpdateData.pbdata)
+  return pbdata_;
+}
+inline void S2STeamSyncUpdateData::set_allocated_pbdata(::KFMsg::PBObject* pbdata) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete reinterpret_cast< ::google::protobuf::MessageLite*>(pbdata_);
+  }
+  if (pbdata) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      pbdata = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, pbdata, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  pbdata_ = pbdata;
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2STeamSyncUpdateData.pbdata)
+}
+
+// -------------------------------------------------------------------
+
+// S2STeamSyncAddData
+
+// .KFMsg.PBObject pbdata = 1;
+inline bool S2STeamSyncAddData::has_pbdata() const {
+  return this != internal_default_instance() && pbdata_ != NULL;
+}
+inline const ::KFMsg::PBObject& S2STeamSyncAddData::_internal_pbdata() const {
+  return *pbdata_;
+}
+inline const ::KFMsg::PBObject& S2STeamSyncAddData::pbdata() const {
+  const ::KFMsg::PBObject* p = pbdata_;
+  // @@protoc_insertion_point(field_get:KFMsg.S2STeamSyncAddData.pbdata)
+  return p != NULL ? *p : *reinterpret_cast<const ::KFMsg::PBObject*>(
+      &::KFMsg::_PBObject_default_instance_);
+}
+inline ::KFMsg::PBObject* S2STeamSyncAddData::release_pbdata() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2STeamSyncAddData.pbdata)
+  
+  ::KFMsg::PBObject* temp = pbdata_;
+  pbdata_ = NULL;
+  return temp;
+}
+inline ::KFMsg::PBObject* S2STeamSyncAddData::mutable_pbdata() {
+  
+  if (pbdata_ == NULL) {
+    auto* p = CreateMaybeMessage<::KFMsg::PBObject>(GetArenaNoVirtual());
+    pbdata_ = p;
+  }
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2STeamSyncAddData.pbdata)
+  return pbdata_;
+}
+inline void S2STeamSyncAddData::set_allocated_pbdata(::KFMsg::PBObject* pbdata) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete reinterpret_cast< ::google::protobuf::MessageLite*>(pbdata_);
+  }
+  if (pbdata) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      pbdata = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, pbdata, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  pbdata_ = pbdata;
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2STeamSyncAddData.pbdata)
+}
+
+// -------------------------------------------------------------------
+
+// S2STeamSyncRemoveData
+
+// .KFMsg.PBObject pbdata = 1;
+inline bool S2STeamSyncRemoveData::has_pbdata() const {
+  return this != internal_default_instance() && pbdata_ != NULL;
+}
+inline const ::KFMsg::PBObject& S2STeamSyncRemoveData::_internal_pbdata() const {
+  return *pbdata_;
+}
+inline const ::KFMsg::PBObject& S2STeamSyncRemoveData::pbdata() const {
+  const ::KFMsg::PBObject* p = pbdata_;
+  // @@protoc_insertion_point(field_get:KFMsg.S2STeamSyncRemoveData.pbdata)
+  return p != NULL ? *p : *reinterpret_cast<const ::KFMsg::PBObject*>(
+      &::KFMsg::_PBObject_default_instance_);
+}
+inline ::KFMsg::PBObject* S2STeamSyncRemoveData::release_pbdata() {
+  // @@protoc_insertion_point(field_release:KFMsg.S2STeamSyncRemoveData.pbdata)
+  
+  ::KFMsg::PBObject* temp = pbdata_;
+  pbdata_ = NULL;
+  return temp;
+}
+inline ::KFMsg::PBObject* S2STeamSyncRemoveData::mutable_pbdata() {
+  
+  if (pbdata_ == NULL) {
+    auto* p = CreateMaybeMessage<::KFMsg::PBObject>(GetArenaNoVirtual());
+    pbdata_ = p;
+  }
+  // @@protoc_insertion_point(field_mutable:KFMsg.S2STeamSyncRemoveData.pbdata)
+  return pbdata_;
+}
+inline void S2STeamSyncRemoveData::set_allocated_pbdata(::KFMsg::PBObject* pbdata) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete reinterpret_cast< ::google::protobuf::MessageLite*>(pbdata_);
+  }
+  if (pbdata) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      pbdata = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, pbdata, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  pbdata_ = pbdata;
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.S2STeamSyncRemoveData.pbdata)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

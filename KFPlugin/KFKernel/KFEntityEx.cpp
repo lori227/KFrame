@@ -470,7 +470,7 @@ namespace KFrame
 
         // 添加属性
         targetdata->Add( dataname, kfdata );
-        SyncUpdateData( kfdata, key );
+        SyncUpdateDataToClient( kfdata, key );
 
         return kfdata;
     }
@@ -487,7 +487,7 @@ namespace KFrame
 
         // 添加属性
         targetdata->Add( targetname, kfdata );
-        SyncUpdateData( kfdata, 0u );
+        SyncUpdateDataToClient( kfdata, 0u );
 
         return kfdata;
     }
@@ -1518,7 +1518,7 @@ namespace KFrame
         pbobject = &( ( *pbrecord->mutable_pbobject() )[ savedata->GetKeyID() ] ); \
     }\
 
-    void KFEntityEx::SyncAddData( KFData* kfdata, uint64 key )
+    void KFEntityEx::SyncAddDataToClient( KFData* kfdata, uint64 key )
     {
         __PREPARE_SYNC__( _kf_component->_entity_sync_add_function );
         auto pbobject = CreateSyncPBObject( KFEnum::Add );
@@ -1532,7 +1532,7 @@ namespace KFrame
         } while ( !datahierarchy.empty() );
     }
 
-    void KFEntityEx::SyncRemoveData( KFData* kfdata, uint64 key )
+    void KFEntityEx::SyncRemoveDataToClient( KFData* kfdata, uint64 key )
     {
         __PREPARE_SYNC__( _kf_component->_entity_sync_remove_function );
         auto pbobject = CreateSyncPBObject( KFEnum::Dec );
@@ -1542,15 +1542,15 @@ namespace KFrame
         } while ( !datahierarchy.empty() );
     }
 
-    void KFEntityEx::SynAddRecordData( KFData* kfdata )
+    void KFEntityEx::SynAddRecordDataToClient( KFData* kfdata )
     {
         for ( auto kfchild = kfdata->First(); kfchild != nullptr; kfchild = kfdata->Next() )
         {
-            SyncAddData( kfchild, kfchild->GetKeyID() );
+            SyncAddDataToClient( kfchild, kfchild->GetKeyID() );
         }
     }
 
-    void KFEntityEx::SyncUpdateData( KFData* kfdata, uint64 key )
+    void KFEntityEx::SyncUpdateDataToClient( KFData* kfdata, uint64 key )
     {
         __PREPARE_SYNC__( _kf_component->_entity_sync_update_function );
         auto pbobject = CreateSyncPBObject( KFEnum::Set );
@@ -1688,6 +1688,186 @@ namespace KFrame
             kfsyncdata->_type = syncsequence[ i ];
         }
     }
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////
+#define __SYNC_UPDATE_INT_DATA__( datatype, pbdata )\
+    {\
+        auto pbdata = &pbobject->pbdata();\
+        for ( auto iter = pbdata->begin(); iter != pbdata->end(); ++iter )\
+        {\
+            auto kfdata = kfobject->Find( iter->first );\
+            if ( kfdata != nullptr )\
+            {\
+                UpdateData( kfdata, KFEnum::Set, iter->second );\
+            }\
+        }\
+    }
+
+#define __SYNC_UPDATE_STR_DATA__( datatype, pbdata )\
+    {\
+        auto pbdata = &pbobject->pbdata();\
+        for ( auto iter = pbdata->begin(); iter != pbdata->end(); ++iter )\
+        {\
+            auto kfdata = kfobject->Find( iter->first );\
+            if ( kfdata != nullptr )\
+            {\
+                UpdateData( kfdata, iter->second );\
+            }\
+        }\
+    }
+
+    void KFEntityEx::SyncUpdateDataFromServer( KFData* kfobject, const KFMsg::PBObject* pbobject )
+    {
+        __SYNC_UPDATE_INT_DATA__( int32, pbint32 );
+        __SYNC_UPDATE_INT_DATA__( uint32, pbuint32 );
+        __SYNC_UPDATE_INT_DATA__( int64, pbint64 );
+        __SYNC_UPDATE_INT_DATA__( uint64, pbuint64 );
+        __SYNC_UPDATE_INT_DATA__( double, pbdouble );
+        __SYNC_UPDATE_STR_DATA__( std::string, pbstring );
+
+        // array
+        {
+            auto pbarray = &pbobject->pbarray();
+            for ( auto iter = pbarray->begin(); iter != pbarray->end(); ++iter )
+            {
+                auto kfdata = kfobject->Find( iter->first );
+                if ( kfdata == nullptr )
+                {
+                    continue;
+                }
+
+                auto pbuint64 = &iter->second.pbuint64();
+                for ( auto citer = pbuint64->begin(); citer != pbuint64->end(); ++citer )
+                {
+                    auto kfchilddata = kfdata->Find( citer->first );
+                    if ( kfchilddata != nullptr )
+                    {
+                        UpdateData( kfchilddata, citer->first, KFEnum::Set, citer->second );
+                    }
+                }
+            }
+        }
+
+
+        // object
+        {
+            auto pbchild = &pbobject->pbobject();
+            for ( auto iter = pbchild->begin(); iter != pbchild->end(); ++iter )
+            {
+                auto kfdata = kfobject->Find( iter->first );
+                if ( kfdata != nullptr )
+                {
+                    SyncUpdateDataFromServer( kfdata, &iter->second );
+                }
+            }
+        }
+
+        // record
+        {
+            auto pbchild = &pbobject->pbrecord();
+            for ( auto iter = pbchild->begin(); iter != pbchild->end(); ++iter )
+            {
+                auto kfrecord = kfobject->Find( iter->first );
+                if ( kfrecord == nullptr )
+                {
+                    continue;
+                }
+
+                auto pbchildobject = &iter->second.pbobject();
+                for ( auto citer = pbchildobject->begin(); citer != pbchildobject->end(); ++citer )
+                {
+                    auto kfchildobject = kfrecord->Find( citer->first );
+                    if ( kfchildobject != nullptr )
+                    {
+                        SyncUpdateDataFromServer( kfchildobject, &citer->second );
+                    }
+                }
+            }
+        }
+    }
+
+    void KFEntityEx::SyncAddDataFromServer( KFData* kfobject, const KFMsg::PBObject* pbobject )
+    {
+        // 对象
+        {
+            auto pbchild = &pbobject->pbobject();
+            for ( auto iter = pbchild->begin(); iter != pbchild->end(); ++iter )
+            {
+                auto kfdata = kfobject->Find( iter->first );
+                if ( kfdata == nullptr )
+                {
+                    continue;
+                }
+
+                SyncAddDataFromServer( kfdata, &iter->second );
+            }
+        }
+
+        // 集合
+        {
+            auto pbchild = &pbobject->pbrecord();
+            for ( auto iter = pbchild->begin(); iter != pbchild->end(); ++iter )
+            {
+                auto kfdata = kfobject->Find( iter->first );
+                if ( kfdata == nullptr )
+                {
+                    continue;
+                }
+
+                SyncAddRecordFormServer( kfdata, &iter->second );
+            }
+        }
+    }
+
+    void KFEntityEx::SyncAddRecordFormServer( KFData* kfrecord, const KFMsg::PBRecord* pbrecord )
+    {
+        auto pbchild = &pbrecord->pbobject();
+        for ( auto iter = pbchild->begin(); iter != pbchild->end(); ++iter )
+        {
+            auto kfdata = CreateData( kfrecord );
+            auto ok = _kf_kernel->ParseFromProto( kfdata, &iter->second );
+            if ( ok )
+            {
+                AddData( kfrecord, iter->first, kfdata );
+            }
+        }
+    }
+
+    void KFEntityEx::SyncRemoveDataFromServer( KFData* kfobject, const KFMsg::PBObject* pbobject )
+    {
+        // object
+        {
+            auto pbchild = &pbobject->pbobject();
+            for ( auto iter = pbchild->begin(); iter != pbchild->end(); ++iter )
+            {
+                auto kfdata = kfobject->Find( iter->first );
+                if ( kfdata != nullptr )
+                {
+                    SyncRemoveDataFromServer( kfdata, &iter->second );
+                }
+            }
+        }
+
+        // record
+        {
+            auto pbchild = &pbobject->pbrecord();
+            for ( auto iter = pbchild->begin(); iter != pbchild->end(); ++iter )
+            {
+                auto kfrecord = kfobject->Find( iter->first );
+                if ( kfrecord == nullptr )
+                {
+                    continue;
+                }
+
+                auto pbchildobject = &iter->second.pbobject();
+                for ( auto citer = pbchildobject->begin(); citer != pbchildobject->end(); ++citer )
+                {
+                    RemoveData( kfrecord, citer->first );
+                }
+            }
+        }
+    }
+
     /////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////
     uint64 KFEntityEx::GetConfigValue( const std::string& name, uint64 id, uint64 maxvalue )

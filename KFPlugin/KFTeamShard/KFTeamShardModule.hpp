@@ -11,13 +11,11 @@
 
 #include "KFTeamShardInterface.h"
 #include "KFProtocol/KFProtocol.h"
-#include "KFTimer/KFTimerInterface.h"
-#include "KFRedis/KFRedisInterface.h"
+#include "KFKernel/KFKernelInterface.h"
 #include "KFMessage/KFMessageInterface.h"
+#include "KFDisplay/KFDisplayInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"
-#include "KFBasicDatabase/KFBasicDatabaseInterface.h"
-#include "KFZConfig/KFRankConfig.hpp"
-#include "KFZConfig/KFTimeConfig.h"
+#include "KFZConfig/KFTeamConfig.hpp"
 
 namespace KFrame
 {
@@ -36,15 +34,38 @@ namespace KFrame
         virtual void BeforeShut();
 
     protected:
+        // 初始化
+        void InitTeam( KFEntity* team );
+        void UnInitTeam( KFEntity* team );
 
-    protected:
         // 连接成功
         void OnRouteConnectCluster( uint64 serverid );
-        //////////////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////////////
+
+        // 设置队长信息
+        void SetTeamCaptain( KFEntity* kfteam, KFData* kfmember, bool update );
+
+        // 发送消息到队伍
+        void SendMessageToTeam( KFEntity* kfteam, uint32 msgid, ::google::protobuf::Message* message );
+
+        // 通知加入队伍
+        void SendJoinTeamToMember( KFEntity* kfteam, KFData* kfmember );
+
+        // 同步更新属性到客户端
+        void SendTeamUpdateDataToMember( KFEntity* kfteam, KFMsg::PBObject& pbobject );
+
+        // 同步添加属性到客户端
+        void SendTeamAddDataToMember( KFEntity* kfteam, KFMsg::PBObject& pbobject );
+
+        // 同步删除属性到客户端
+        void SendTeamRemoveDataToMember( KFEntity* kfteam, KFMsg::PBObject& pbobject );
+
+    protected:
+        // 创建队伍请求
+        __KF_MESSAGE_FUNCTION__( HandleTeamCreateToTeamReq );
 
     private:
-
+        // 队伍上下文组件
+        KFComponent* _kf_component = nullptr;
     };
 }
 

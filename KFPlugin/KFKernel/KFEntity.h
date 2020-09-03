@@ -130,28 +130,35 @@ namespace KFrame
         virtual void AddDataToShow( const std::string& modulename, uint64 moduleid, const std::string& name, uint64 value, StringUInt64& values, bool find, const std::string& extendname = _invalid_string ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
         // 同步更新数据
-        virtual void SyncUpdateData( KFData* kfdata, uint64 key ) = 0;
+        virtual void SyncUpdateDataToClient( KFData* kfdata, uint64 key ) = 0;
 
         // 同步添加数据
-        virtual void SyncAddData( KFData* kfdata, uint64 key ) = 0;
+        virtual void SyncAddDataToClient( KFData* kfdata, uint64 key ) = 0;
 
         // 同步删除数据
-        virtual void SyncRemoveData( KFData* kfdata, uint64 key ) = 0;
+        virtual void SyncRemoveDataToClient( KFData* kfdata, uint64 key ) = 0;
 
         // 同步添加record数据
-        virtual void SynAddRecordData( KFData* kfdata ) = 0;
+        virtual void SynAddRecordDataToClient( KFData* kfdata ) = 0;
 
         // 同步数据的顺序
         virtual void SyncDataToClient() = 0;
         virtual void SyncDataToClient( uint32 first, uint32 second, uint32 third ) = 0;
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 同步来自服务器的数据 更新, 添加, 删除
+        virtual void SyncUpdateDataFromServer( KFData* kfobject, const KFMsg::PBObject* pbobject ) = 0;
+        virtual void SyncAddDataFromServer( KFData* kfobject, const KFMsg::PBObject* pbobject ) = 0;
+        virtual void SyncRemoveDataFromServer( KFData* kfobject, const KFMsg::PBObject* pbobject ) = 0;
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         virtual uint64 GetConfigValue( const std::string& name, uint64 id, uint64 maxvalue = __MAX_UINT64__ ) = 0;
 
         // status
         virtual uint32 GetStatus() = 0;
         virtual void SetStatus( uint32 status ) = 0;
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     };
 }
 

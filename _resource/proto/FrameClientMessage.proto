@@ -678,5 +678,7 @@ message MsgTellServerChat
 // MSG_TEAM_CREATE_REQ
 message MsgTeamCreateReq
 {
-	uint32 maxcount = 1;		// 队伍的最大人数
+	uint32 id = 1;		// 队伍配置表id
+	bytes name = 2;		// 队伍名字
+	bytes info = 3;		// 队伍介绍
 }
