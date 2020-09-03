@@ -176,7 +176,17 @@ namespace KFrame
         auto redisreply = TryExecute( kfresult.get(), strsql );
         if ( redisreply != nullptr )
         {
-            kfresult->_value = redisreply->integer;
+            if ( redisreply->type == REDIS_REPLY_INTEGER )
+            {
+                kfresult->_value = redisreply->integer;
+            }
+            else if ( redisreply->type == REDIS_REPLY_STRING )
+            {
+                if ( !KFRedisFormat::IsEmptyString( redisreply->str ) )
+                {
+                    kfresult->_value = __TO_UINT64__( redisreply->str );
+                }
+            }
         }
         __FREE_REPLY__( redisreply );
         return kfresult;
@@ -201,13 +211,16 @@ namespace KFrame
         auto redisreply = TryExecute( kfresult.get(), strsql );
         if ( redisreply != nullptr )
         {
-            if ( redisreply->integer != _invalid_int )
+            if ( redisreply->type == REDIS_REPLY_INTEGER )
             {
                 kfresult->_value = redisreply->integer;
             }
-            else if ( !KFRedisFormat::IsEmptyString( redisreply->str ) )
+            else if ( redisreply->type == REDIS_REPLY_STRING )
             {
-                kfresult->_value = __TO_UINT64__( redisreply->str );
+                if ( !KFRedisFormat::IsEmptyString( redisreply->str ) )
+                {
+                    kfresult->_value = __TO_UINT64__( redisreply->str );
+                }
             }
         }
 
