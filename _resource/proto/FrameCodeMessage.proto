@@ -216,4 +216,18 @@ enum FrameCodeEnum
 	TeamNameFilter				= 13502;	// 队伍名字有屏蔽字符
 	TeamInfoFilter				= 13503;	// 队伍介绍有屏蔽字符
 	TeamSettingError			= 13504;	// 队伍配置不存在
+	TeamJoinOk					= 13505;	// 加入队伍成功
+	TeamNoInTeam				= 13506;	// 不在队伍中
+	TeamNoInCaptain				= 13507;	// 不在队长中
+	TeamNotHaveMember			= 13508;	// 队伍中没有该成员
+	TeamLeave					= 13509;	// 离开队伍
+	TeamBeKick					= 13510;	// 被踢出队伍
+	TeamDissolve				= 13511;	// 队伍解散
+	TeamIsFull					= 13512;	// 队伍已经满了
+	TeamNotOnline				= 13513;	// 对方不在线
+	TeamPlaying					= 13514;	// 对方正在战斗(游戏中)
+	TeamInviteOk				= 13515;	// 发送邀请成功
+	TeamApplyOk					= 13516;	// 发送申请成功
+	TeamIdError					= 13517;	// 队伍id错误
+	TeamNotExist				= 13518;	// 队伍不存在
 }

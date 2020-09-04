@@ -108,8 +108,9 @@ namespace KFrame
             return nullptr;
         }
 
-        auto kfdata = datalist.back();
-        datalist.pop_back();
+        auto begin = datalist.rbegin();
+        auto kfdata = *( begin );
+        datalist.erase( kfdata );
 
         // 初始化数据
         InitPoolData( kfdata );
@@ -152,7 +153,7 @@ namespace KFrame
         DestroyObjectToDataPool( kfdata );
 
         // 保存在对象池
-        _data_pool[ kfdata->_data_setting->_contain_class ].push_back( kfdata );
+        _data_pool[ kfdata->_data_setting->_contain_class ].insert( kfdata );
 
 #else
         __KF_DELETE__( KFData, kfdata );

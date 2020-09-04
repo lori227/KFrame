@@ -264,12 +264,15 @@ enum PlayerStatusEnum {
   UnknowFrameStatus = 0,
   OnlineStatus = 1,
   OfflineStatus = 2,
+  TeamStatus = 3,
+  MatchStatus = 4,
+  PlayingStatus = 5,
   PlayerStatusEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   PlayerStatusEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 LIBPROTOC_EXPORT bool PlayerStatusEnum_IsValid(int value);
 const PlayerStatusEnum PlayerStatusEnum_MIN = UnknowFrameStatus;
-const PlayerStatusEnum PlayerStatusEnum_MAX = OfflineStatus;
+const PlayerStatusEnum PlayerStatusEnum_MAX = PlayingStatus;
 const int PlayerStatusEnum_ARRAYSIZE = PlayerStatusEnum_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* PlayerStatusEnum_descriptor();
@@ -350,6 +353,29 @@ inline bool DatabaseEnum_Parse(
     const ::std::string& name, DatabaseEnum* value) {
   return ::google::protobuf::internal::ParseNamedEnum<DatabaseEnum>(
     DatabaseEnum_descriptor(), name, value);
+}
+enum LeaveEnum {
+  InvalidLeave = 0,
+  Leave = 1,
+  Kick = 2,
+  Dissolve = 3,
+  LeaveEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  LeaveEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+LIBPROTOC_EXPORT bool LeaveEnum_IsValid(int value);
+const LeaveEnum LeaveEnum_MIN = InvalidLeave;
+const LeaveEnum LeaveEnum_MAX = Dissolve;
+const int LeaveEnum_ARRAYSIZE = LeaveEnum_MAX + 1;
+
+LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* LeaveEnum_descriptor();
+inline const ::std::string& LeaveEnum_Name(LeaveEnum value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    LeaveEnum_descriptor(), value);
+}
+inline bool LeaveEnum_Parse(
+    const ::std::string& name, LeaveEnum* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<LeaveEnum>(
+    LeaveEnum_descriptor(), name, value);
 }
 // ===================================================================
 
@@ -438,6 +464,11 @@ template <> struct is_proto_enum< ::KFMsg::DatabaseEnum> : ::std::true_type {};
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::DatabaseEnum>() {
   return ::KFMsg::DatabaseEnum_descriptor();
+}
+template <> struct is_proto_enum< ::KFMsg::LeaveEnum> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::KFMsg::LeaveEnum>() {
+  return ::KFMsg::LeaveEnum_descriptor();
 }
 
 }  // namespace protobuf

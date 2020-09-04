@@ -329,6 +329,7 @@ namespace KFrame
         __STRING_DEFINE__( member );
         __STRING_DEFINE__( captainid );
         __STRING_DEFINE__( captainname );
+        __STRING_DEFINE__( nowcount );
 
     }
 }

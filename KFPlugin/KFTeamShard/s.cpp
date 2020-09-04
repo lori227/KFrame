@@ -415,6 +415,9 @@ namespace KFrame
         // 加入队伍中
         kfteam->AddData( kfmemberrecord, kfmember->GetKeyID(), kfmember );
 
+		// 更新数量
+        kfteam->UpdateData( __STRING__( nowcount ), KFEnum::Set, kfmemberrecord->Size() );
+
         // 通知队员加入队伍
         SendJoinTeamToMember( kfteam, kfmember );
     }

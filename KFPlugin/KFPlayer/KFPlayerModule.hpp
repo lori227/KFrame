@@ -128,6 +128,13 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleUpdateIntReq );
         __KF_MESSAGE_FUNCTION__( HandleUpdateStrReq );
 
+        // 更新属性
+        __KF_MESSAGE_FUNCTION__( HandleSyncUpdateDataFromServerReq );
+        // 添加属性
+        __KF_MESSAGE_FUNCTION__( HandleSyncAddDataFromServerReq );
+        // 删除属性
+        __KF_MESSAGE_FUNCTION__( HandleSyncRemoveDataFromServerReq );
+
         // 名字更新
         __KF_UPDATE_STRING_FUNCTION__( OnUpdateNameCallBack );
 

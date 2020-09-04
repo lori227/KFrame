@@ -31,6 +31,9 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFMsg::MSG_CANCEL_SYNC_REQ, &KFPlayerModule::HandleCancelSyncReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_UPDATE_INT_REQ, &KFPlayerModule::HandleUpdateIntReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_UPDATE_STR_REQ, &KFPlayerModule::HandleUpdateStrReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_SYNC_UPDATE_DATA_FROM_SERVER, &KFPlayerModule::HandleSyncUpdateDataFromServerReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_SYNC_ADD_DATA_FROM_SERVER, &KFPlayerModule::HandleSyncAddDataFromServerReq );
+        __REGISTER_MESSAGE__( KFMsg::S2S_SYNC_REMOVE_DATA_FROM_SERVER, &KFPlayerModule::HandleSyncRemoveDataFromServerReq );
 
     }
 
@@ -57,6 +60,9 @@ namespace KFrame
         __UN_MESSAGE__( KFMsg::MSG_REMOVE_DATA_REQ );
         __UN_MESSAGE__( KFMsg::MSG_REQUEST_SYNC_REQ );
         __UN_MESSAGE__( KFMsg::MSG_CANCEL_SYNC_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_SYNC_UPDATE_DATA_FROM_SERVER );
+        __UN_MESSAGE__( KFMsg::S2S_SYNC_ADD_DATA_FROM_SERVER );
+        __UN_MESSAGE__( KFMsg::S2S_SYNC_REMOVE_DATA_FROM_SERVER );
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -646,5 +652,41 @@ namespace KFrame
         }
 
         player->UpdateData( kfmsg.parentname(), kfmsg.key(), kfmsg.dataname(), kfmsg.value() );
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleSyncUpdateDataFromServerReq )
+    {
+        __ROUTE_PROTO_PARSE__( KFMsg::S2SSyncUpdateDataFromServer );
+        auto kfobject = player->Find( kfmsg.dataname() );
+        if ( kfobject == nullptr )
+        {
+            return;
+        }
+
+        player->SyncUpdateDataFromServer( kfobject, &kfmsg.pbdata() );
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleSyncAddDataFromServerReq )
+    {
+        __ROUTE_PROTO_PARSE__( KFMsg::S2SSyncAddDataFromServer );
+        auto kfobject = player->Find( kfmsg.dataname() );
+        if ( kfobject == nullptr )
+        {
+            return;
+        }
+
+        player->SyncAddDataFromServer( kfobject, &kfmsg.pbdata() );
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleSyncRemoveDataFromServerReq )
+    {
+        __ROUTE_PROTO_PARSE__( KFMsg::S2SSyncRemoveDataFromServer );
+        auto kfobject = player->Find( kfmsg.dataname() );
+        if ( kfobject == nullptr )
+        {
+            return;
+        }
+
+        player->SyncRemoveDataFromServer( kfobject, &kfmsg.pbdata() );
     }
 }

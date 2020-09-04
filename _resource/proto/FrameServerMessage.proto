@@ -48,6 +48,9 @@ enum FrameServerProtocol
 	S2S_SAVE_PLAYER_TO_GAME_ACK					= 20404;	// 保存玩家
 	S2S_QUERY_PLAYER_TO_DATA_REQ				= 20405;	// 查询玩家
 	S2S_QUERY_PLAYER_TO_GAME_ACK				= 20406;	// 查询玩家
+	S2S_SYNC_UPDATE_DATA_FROM_SERVER			= 20407;	// 更新属性
+	S2S_SYNC_ADD_DATA_FROM_SERVER				= 20408;	// 添加属性成员
+	S2S_SYNC_REMOVE_DATA_FROM_SERVER			= 20409;	// 删除属性成员
 
 	// mail
 	S2S_NEW_PLAYER_MAIL_REQ 					= 20501;	// 新玩家登陆邮件服务
@@ -95,9 +98,20 @@ enum FrameServerProtocol
 	// team
 	S2S_TEAM_CREATE_TO_TEAM_REQ					= 20901;	// 创建队伍
 	S2S_TEAM_JON_TO_GAME_ACK					= 20902;	// 加入队伍
-	S2S_TEAM_SYNC_UPDATE_DATA					= 20903;	// 更新队伍
-	S2S_TEAM_SYNC_ADD_DATA						= 20904;	// 添加成员
-	S2S_TEAM_SYNC_REMOVE_DATA					= 20905;	// 删除成员
+	S2S_TEAM_JION_FAILED_TO_TEAM_REQ			= 20903;	// 加入队伍失败
+	S2S_TEAM_ONLINE_QUERY_TO_TEAM_REQ			= 20904;	// 上线查询队伍
+	S2S_TEAM_ONLINE_QUERY_TO_GAME_ACK			= 20905;	// 上线查询队伍
+	S2S_TEAM_INT_VALUE_TO_TEAM_REQ				= 20906;	// 更新队伍属性
+	S2S_TEAM_STR_VALUE_TO_TEAM_REQ				= 20907;	// 更新队伍属性
+	S2S_TEAM_MEMBER_INT_VALUE_TO_TEAM_REQ		= 20908;	// 更新队员属性
+	S2S_TEAM_MEMBER_STR_VALUE_TO_TEAM_REQ		= 20909;	// 更新队员属性
+	S2S_TEAM_LEAVE_TO_TEAM_REQ					= 20910;	// 离开队伍
+	S2S_TEAM_KICK_TO_TEAM_REQ					= 20911;	// 踢出队伍
+	S2S_TEAM_LEAVE_TO_GAME_ACK					= 20912;	// 通知离开队伍
+	S2S_TEAM_TELL_INVITE_TO_GAME_ACK			= 20913;	// 通知邀请加入队伍
+	S2S_TEAM_TELL_APPLY_TO_GAME_ACK				= 20914;	// 通知申请加入队伍
+	S2S_TEAM_AGREE_TO_TEAM_REQ					= 20915;	// 同意加入队伍
+
 }
 
 ///////////////////////////////////////////////////////////////////
@@ -264,6 +278,31 @@ message S2SQueryPlayerToGameAck
 {
 	uint32 result = 1;
 	PBObject playerdata = 2;
+}
+
+
+// 更新更新
+// S2S_SYNC_UPDATE_DATA_FROM_SERVER
+message S2SSyncUpdateDataFromServer
+{
+	bytes dataname = 1;
+	PBObject pbdata = 2;	
+}
+
+// 队伍添加
+// S2S_SYNC_ADD_DATA_FROM_SERVER
+message S2SSyncAddDataFromServer
+{
+	bytes dataname = 1;
+	PBObject pbdata = 2;	
+}
+
+// 队伍删除
+// S2S_SYNC_REMOVE_DATA_FROM_SERVER
+message S2SSyncRemoveDataFromServer
+{
+	bytes dataname = 1;
+	PBObject pbdata = 2;	
 }
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
@@ -699,26 +738,113 @@ message S2STeamCreateToTeamReq
 // S2S_TEAM_JON_TO_GAME_ACK
 message S2STeamJoinToGameAck
 {
-	PBObject pbteam = 1;	// 加入队伍
+	uint64 id = 1;			// 队伍id
+	PBObject pbteam = 2;	// 加入队伍
 }
 
-// 更新更新
-// S2S_TEAM_SYNC_UPDATE_DATA
-message S2STeamSyncUpdateData
+// 加入队伍失败
+// S2S_TEAM_JION_FAILED_TO_TEAM_REQ
+message S2STeamJoinFailedToTeamReq
 {
-	PBObject pbdata = 1;	
+	uint64 teamid = 1;			// 队伍id
+	uint64 playerid = 2;		// 玩家id
 }
 
-// 队伍添加
-// S2S_TEAM_SYNC_ADD_DATA
-message S2STeamSyncAddData
+// 上线查询队伍
+// S2S_TEAM_ONLINE_QUERY_TO_TEAM_REQ
+message S2STeamOnlineQueryToTeamReq
 {
-	PBObject pbdata = 1;	
+	uint64 teamid = 1;			// 队伍id
+	uint64 playerid = 2;		// 玩家id
 }
 
-// 队伍删除
-// S2S_TEAM_SYNC_REMOVE_DATA
-message S2STeamSyncRemoveData
+// 上线查询队伍
+// S2S_TEAM_ONLINE_QUERY_TO_GAME_ACK
+message S2STeamOnlineQueryToGameAck
 {
-	PBObject pbdata = 1;	
+	PBObject pbteam = 1;	// 队伍
+}
+
+// 更新队伍成员属性
+// S2S_TEAM_INT_VALUE_TO_TEAM_REQ
+message S2STeamIntValueToTeamReq
+{
+	uint64 teamid = 1;
+	uint64 playerid = 2;
+	map<string, uint64> pbdata = 3;
+}
+
+// 更新队伍成员属性
+// S2S_TEAM_STR_VALUE_TO_TEAM_REQ
+message S2STeamStrValueToTeamReq
+{
+	uint64 teamid = 1;
+	uint64 playerid = 2;
+	map<string, bytes> pbdata = 3;
+}
+
+// 更新队伍成员属性
+// S2S_TEAM_MEMBER_INT_VALUE_TO_TEAM_REQ
+message S2STeamMemberIntValueToTeamReq
+{
+	uint64 teamid = 1;
+	uint64 playerid = 2;
+	map<string, uint64> pbdata = 3;
+}
+
+// 更新队伍成员属性
+// S2S_TEAM_MEMBER_STR_VALUE_TO_TEAM_REQ
+message S2STeamMemberStrValueToTeamReq
+{
+	uint64 teamid = 1;
+	uint64 playerid = 2;
+	map<string, bytes> pbdata = 3;
+}
+
+// 离开队伍
+// S2S_TEAM_LEAVE_TO_TEAM_REQ
+message S2STeamLeaveToTeamReq
+{
+	uint64 teamid = 1;
+	uint64 playerid = 2;
+}
+
+// 离开队伍
+// S2S_TEAM_KICK_TO_TEAM_REQ
+message S2STeamKickToTeamReq
+{
+	uint64 teamid = 1;
+	uint64 captainid = 2;
+	uint64 memberid = 3;
+}
+
+// 通知离开队伍
+// S2S_TEAM_LEAVE_TO_GAME_ACK
+message S2STeamLeaveToGameAck
+{
+	uint64 teamid = 1;
+	uint32 type = 2;	// 离开类型
+}
+
+// 通知玩家邀请加入队伍
+// S2S_TEAM_TELL_INVITE_TO_GAME_ACK
+message S2STeamTellInviteToGameAck
+{
+	PBObject pbplayer = 1;	// 邀请者
+	PBObject pbteam = 2;	// 队伍信息
+}
+
+// 通知玩家收到申请加入队伍
+// S2S_TEAM_TELL_APPLY_TO_GAME_ACK
+message S2STeamTellApplyToGameAck
+{
+	PBObject pbplayer = 1;	// 申请者
+}
+
+// 同意加入队伍
+// S2S_TEAM_AGREE_TO_TEAM_REQ
+message S2STeamAgreeToTeamReq
+{
+	uint64 teamid = 1;		// 队伍id
+	PBObject pbplayer = 2;	// 同意者
 }

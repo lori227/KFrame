@@ -221,12 +221,26 @@ enum FrameCodeEnum {
   TeamNameFilter = 13502,
   TeamInfoFilter = 13503,
   TeamSettingError = 13504,
+  TeamJoinOk = 13505,
+  TeamNoInTeam = 13506,
+  TeamNoInCaptain = 13507,
+  TeamNotHaveMember = 13508,
+  TeamLeave = 13509,
+  TeamBeKick = 13510,
+  TeamDissolve = 13511,
+  TeamIsFull = 13512,
+  TeamNotOnline = 13513,
+  TeamPlaying = 13514,
+  TeamInviteOk = 13515,
+  TeamApplyOk = 13516,
+  TeamIdError = 13517,
+  TeamNotExist = 13518,
   FrameCodeEnum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   FrameCodeEnum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 LIBPROTOC_EXPORT bool FrameCodeEnum_IsValid(int value);
 const FrameCodeEnum FrameCodeEnum_MIN = Error;
-const FrameCodeEnum FrameCodeEnum_MAX = TeamSettingError;
+const FrameCodeEnum FrameCodeEnum_MAX = TeamNotExist;
 const int FrameCodeEnum_ARRAYSIZE = FrameCodeEnum_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* FrameCodeEnum_descriptor();

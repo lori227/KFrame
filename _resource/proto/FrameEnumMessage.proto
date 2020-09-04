@@ -101,7 +101,10 @@ enum PlayerStatusEnum
 {
 	UnknowFrameStatus= 0;	// 无效
 	OnlineStatus = 1;		// 在线状态
-	OfflineStatus = 2;		// 离线
+	OfflineStatus = 2;		// 离线状态
+	TeamStatus = 3;			// 组队状态
+	MatchStatus	= 4;		// 匹配(队列) 状态
+	PlayingStatus = 5;		// 游戏状态
 }
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
@@ -131,4 +134,15 @@ enum DatabaseEnum
 	Redis = 1;
 	Mongo = 2;
 	MySQL = 3;
+}
+
+
+// 离开类型
+enum LeaveEnum
+{
+	InvalidLeave = 0;
+
+	Leave = 1;		// 主动离开
+	Kick = 2;		// 被踢了
+	Dissolve = 3;	// 解散
 }

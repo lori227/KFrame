@@ -45,7 +45,7 @@ namespace protobuf_FrameClientMessage_2eproto {
 struct LIBPROTOC_EXPORT TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[70];
+  static const ::google::protobuf::internal::ParseTable schema[77];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -227,9 +227,30 @@ LIBPROTOC_EXPORT extern MsgTaskRemoveReqDefaultTypeInternal _MsgTaskRemoveReq_de
 class MsgTaskRewardReq;
 class MsgTaskRewardReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgTaskRewardReqDefaultTypeInternal _MsgTaskRewardReq_default_instance_;
+class MsgTeamAgreeReq;
+class MsgTeamAgreeReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern MsgTeamAgreeReqDefaultTypeInternal _MsgTeamAgreeReq_default_instance_;
+class MsgTeamApplyReq;
+class MsgTeamApplyReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern MsgTeamApplyReqDefaultTypeInternal _MsgTeamApplyReq_default_instance_;
 class MsgTeamCreateReq;
 class MsgTeamCreateReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgTeamCreateReqDefaultTypeInternal _MsgTeamCreateReq_default_instance_;
+class MsgTeamInviteReq;
+class MsgTeamInviteReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern MsgTeamInviteReqDefaultTypeInternal _MsgTeamInviteReq_default_instance_;
+class MsgTeamKickReq;
+class MsgTeamKickReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern MsgTeamKickReqDefaultTypeInternal _MsgTeamKickReq_default_instance_;
+class MsgTeamLeaveReq;
+class MsgTeamLeaveReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern MsgTeamLeaveReqDefaultTypeInternal _MsgTeamLeaveReq_default_instance_;
+class MsgTeamTellApply;
+class MsgTeamTellApplyDefaultTypeInternal;
+LIBPROTOC_EXPORT extern MsgTeamTellApplyDefaultTypeInternal _MsgTeamTellApply_default_instance_;
+class MsgTeamTellInvite;
+class MsgTeamTellInviteDefaultTypeInternal;
+LIBPROTOC_EXPORT extern MsgTeamTellInviteDefaultTypeInternal _MsgTeamTellInvite_default_instance_;
 class MsgTellBeKick;
 class MsgTellBeKickDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgTellBeKickDefaultTypeInternal _MsgTellBeKick_default_instance_;
@@ -324,7 +345,14 @@ template<> LIBPROTOC_EXPORT ::KFMsg::MsgTaskAddReq* Arena::CreateMaybeMessage<::
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgTaskReceiveReq* Arena::CreateMaybeMessage<::KFMsg::MsgTaskReceiveReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgTaskRemoveReq* Arena::CreateMaybeMessage<::KFMsg::MsgTaskRemoveReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgTaskRewardReq* Arena::CreateMaybeMessage<::KFMsg::MsgTaskRewardReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::MsgTeamAgreeReq* Arena::CreateMaybeMessage<::KFMsg::MsgTeamAgreeReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::MsgTeamApplyReq* Arena::CreateMaybeMessage<::KFMsg::MsgTeamApplyReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgTeamCreateReq* Arena::CreateMaybeMessage<::KFMsg::MsgTeamCreateReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::MsgTeamInviteReq* Arena::CreateMaybeMessage<::KFMsg::MsgTeamInviteReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::MsgTeamKickReq* Arena::CreateMaybeMessage<::KFMsg::MsgTeamKickReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::MsgTeamLeaveReq* Arena::CreateMaybeMessage<::KFMsg::MsgTeamLeaveReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::MsgTeamTellApply* Arena::CreateMaybeMessage<::KFMsg::MsgTeamTellApply>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::MsgTeamTellInvite* Arena::CreateMaybeMessage<::KFMsg::MsgTeamTellInvite>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgTellBeKick* Arena::CreateMaybeMessage<::KFMsg::MsgTellBeKick>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgTellFriendChat* Arena::CreateMaybeMessage<::KFMsg::MsgTellFriendChat>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgTellNotice* Arena::CreateMaybeMessage<::KFMsg::MsgTellNotice>(Arena*);
@@ -411,12 +439,19 @@ enum FrameClientProtocol {
   MSG_SERVER_CHAT_REQ = 612,
   MSG_TELL_SERVER_CHAT = 613,
   MSG_TEAM_CREATE_REQ = 630,
+  MSG_TEAM_LEAVE_REQ = 631,
+  MSG_TEAM_KICK_REQ = 632,
+  MSG_TEAM_INVITE_REQ = 633,
+  MSG_TEAM_APPLY_REQ = 634,
+  MSG_TEAM_TELL_INVITE = 635,
+  MSG_TEAM_TELL_APPLY = 636,
+  MSG_TEAM_AGREE_REQ = 637,
   FrameClientProtocol_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   FrameClientProtocol_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 LIBPROTOC_EXPORT bool FrameClientProtocol_IsValid(int value);
 const FrameClientProtocol FrameClientProtocol_MIN = MSG_FRAME_CLIENT_BEGIN;
-const FrameClientProtocol FrameClientProtocol_MAX = MSG_TEAM_CREATE_REQ;
+const FrameClientProtocol FrameClientProtocol_MAX = MSG_TEAM_AGREE_REQ;
 const int FrameClientProtocol_ARRAYSIZE = FrameClientProtocol_MAX + 1;
 
 LIBPROTOC_EXPORT const ::google::protobuf::EnumDescriptor* FrameClientProtocol_descriptor();
@@ -8584,6 +8619,759 @@ class LIBPROTOC_EXPORT MsgTeamCreateReq : public ::google::protobuf::Message /* 
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameClientMessage_2eproto::TableStruct;
 };
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgTeamLeaveReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgTeamLeaveReq) */ {
+ public:
+  MsgTeamLeaveReq();
+  virtual ~MsgTeamLeaveReq();
+
+  MsgTeamLeaveReq(const MsgTeamLeaveReq& from);
+
+  inline MsgTeamLeaveReq& operator=(const MsgTeamLeaveReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  MsgTeamLeaveReq(MsgTeamLeaveReq&& from) noexcept
+    : MsgTeamLeaveReq() {
+    *this = ::std::move(from);
+  }
+
+  inline MsgTeamLeaveReq& operator=(MsgTeamLeaveReq&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgTeamLeaveReq& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MsgTeamLeaveReq* internal_default_instance() {
+    return reinterpret_cast<const MsgTeamLeaveReq*>(
+               &_MsgTeamLeaveReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    70;
+
+  void Swap(MsgTeamLeaveReq* other);
+  friend void swap(MsgTeamLeaveReq& a, MsgTeamLeaveReq& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MsgTeamLeaveReq* New() const final {
+    return CreateMaybeMessage<MsgTeamLeaveReq>(NULL);
+  }
+
+  MsgTeamLeaveReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MsgTeamLeaveReq>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const MsgTeamLeaveReq& from);
+  void MergeFrom(const MsgTeamLeaveReq& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MsgTeamLeaveReq* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgTeamLeaveReq)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_FrameClientMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgTeamKickReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgTeamKickReq) */ {
+ public:
+  MsgTeamKickReq();
+  virtual ~MsgTeamKickReq();
+
+  MsgTeamKickReq(const MsgTeamKickReq& from);
+
+  inline MsgTeamKickReq& operator=(const MsgTeamKickReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  MsgTeamKickReq(MsgTeamKickReq&& from) noexcept
+    : MsgTeamKickReq() {
+    *this = ::std::move(from);
+  }
+
+  inline MsgTeamKickReq& operator=(MsgTeamKickReq&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgTeamKickReq& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MsgTeamKickReq* internal_default_instance() {
+    return reinterpret_cast<const MsgTeamKickReq*>(
+               &_MsgTeamKickReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    71;
+
+  void Swap(MsgTeamKickReq* other);
+  friend void swap(MsgTeamKickReq& a, MsgTeamKickReq& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MsgTeamKickReq* New() const final {
+    return CreateMaybeMessage<MsgTeamKickReq>(NULL);
+  }
+
+  MsgTeamKickReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MsgTeamKickReq>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const MsgTeamKickReq& from);
+  void MergeFrom(const MsgTeamKickReq& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MsgTeamKickReq* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // uint64 memberid = 1;
+  void clear_memberid();
+  static const int kMemberidFieldNumber = 1;
+  ::google::protobuf::uint64 memberid() const;
+  void set_memberid(::google::protobuf::uint64 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgTeamKickReq)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint64 memberid_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_FrameClientMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgTeamInviteReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgTeamInviteReq) */ {
+ public:
+  MsgTeamInviteReq();
+  virtual ~MsgTeamInviteReq();
+
+  MsgTeamInviteReq(const MsgTeamInviteReq& from);
+
+  inline MsgTeamInviteReq& operator=(const MsgTeamInviteReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  MsgTeamInviteReq(MsgTeamInviteReq&& from) noexcept
+    : MsgTeamInviteReq() {
+    *this = ::std::move(from);
+  }
+
+  inline MsgTeamInviteReq& operator=(MsgTeamInviteReq&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgTeamInviteReq& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MsgTeamInviteReq* internal_default_instance() {
+    return reinterpret_cast<const MsgTeamInviteReq*>(
+               &_MsgTeamInviteReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    72;
+
+  void Swap(MsgTeamInviteReq* other);
+  friend void swap(MsgTeamInviteReq& a, MsgTeamInviteReq& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MsgTeamInviteReq* New() const final {
+    return CreateMaybeMessage<MsgTeamInviteReq>(NULL);
+  }
+
+  MsgTeamInviteReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MsgTeamInviteReq>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const MsgTeamInviteReq& from);
+  void MergeFrom(const MsgTeamInviteReq& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MsgTeamInviteReq* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // uint64 serverid = 1;
+  void clear_serverid();
+  static const int kServeridFieldNumber = 1;
+  ::google::protobuf::uint64 serverid() const;
+  void set_serverid(::google::protobuf::uint64 value);
+
+  // uint64 playerid = 2;
+  void clear_playerid();
+  static const int kPlayeridFieldNumber = 2;
+  ::google::protobuf::uint64 playerid() const;
+  void set_playerid(::google::protobuf::uint64 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgTeamInviteReq)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint64 serverid_;
+  ::google::protobuf::uint64 playerid_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_FrameClientMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgTeamApplyReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgTeamApplyReq) */ {
+ public:
+  MsgTeamApplyReq();
+  virtual ~MsgTeamApplyReq();
+
+  MsgTeamApplyReq(const MsgTeamApplyReq& from);
+
+  inline MsgTeamApplyReq& operator=(const MsgTeamApplyReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  MsgTeamApplyReq(MsgTeamApplyReq&& from) noexcept
+    : MsgTeamApplyReq() {
+    *this = ::std::move(from);
+  }
+
+  inline MsgTeamApplyReq& operator=(MsgTeamApplyReq&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgTeamApplyReq& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MsgTeamApplyReq* internal_default_instance() {
+    return reinterpret_cast<const MsgTeamApplyReq*>(
+               &_MsgTeamApplyReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    73;
+
+  void Swap(MsgTeamApplyReq* other);
+  friend void swap(MsgTeamApplyReq& a, MsgTeamApplyReq& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MsgTeamApplyReq* New() const final {
+    return CreateMaybeMessage<MsgTeamApplyReq>(NULL);
+  }
+
+  MsgTeamApplyReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MsgTeamApplyReq>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const MsgTeamApplyReq& from);
+  void MergeFrom(const MsgTeamApplyReq& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MsgTeamApplyReq* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // uint64 serverid = 1;
+  void clear_serverid();
+  static const int kServeridFieldNumber = 1;
+  ::google::protobuf::uint64 serverid() const;
+  void set_serverid(::google::protobuf::uint64 value);
+
+  // uint64 playerid = 2;
+  void clear_playerid();
+  static const int kPlayeridFieldNumber = 2;
+  ::google::protobuf::uint64 playerid() const;
+  void set_playerid(::google::protobuf::uint64 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgTeamApplyReq)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint64 serverid_;
+  ::google::protobuf::uint64 playerid_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_FrameClientMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgTeamTellInvite : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgTeamTellInvite) */ {
+ public:
+  MsgTeamTellInvite();
+  virtual ~MsgTeamTellInvite();
+
+  MsgTeamTellInvite(const MsgTeamTellInvite& from);
+
+  inline MsgTeamTellInvite& operator=(const MsgTeamTellInvite& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  MsgTeamTellInvite(MsgTeamTellInvite&& from) noexcept
+    : MsgTeamTellInvite() {
+    *this = ::std::move(from);
+  }
+
+  inline MsgTeamTellInvite& operator=(MsgTeamTellInvite&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgTeamTellInvite& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MsgTeamTellInvite* internal_default_instance() {
+    return reinterpret_cast<const MsgTeamTellInvite*>(
+               &_MsgTeamTellInvite_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    74;
+
+  void Swap(MsgTeamTellInvite* other);
+  friend void swap(MsgTeamTellInvite& a, MsgTeamTellInvite& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MsgTeamTellInvite* New() const final {
+    return CreateMaybeMessage<MsgTeamTellInvite>(NULL);
+  }
+
+  MsgTeamTellInvite* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MsgTeamTellInvite>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const MsgTeamTellInvite& from);
+  void MergeFrom(const MsgTeamTellInvite& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MsgTeamTellInvite* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // .KFMsg.PBObject pbplayer = 1;
+  bool has_pbplayer() const;
+  void clear_pbplayer();
+  static const int kPbplayerFieldNumber = 1;
+  private:
+  const ::KFMsg::PBObject& _internal_pbplayer() const;
+  public:
+  const ::KFMsg::PBObject& pbplayer() const;
+  ::KFMsg::PBObject* release_pbplayer();
+  ::KFMsg::PBObject* mutable_pbplayer();
+  void set_allocated_pbplayer(::KFMsg::PBObject* pbplayer);
+
+  // .KFMsg.PBObject pbteam = 2;
+  bool has_pbteam() const;
+  void clear_pbteam();
+  static const int kPbteamFieldNumber = 2;
+  private:
+  const ::KFMsg::PBObject& _internal_pbteam() const;
+  public:
+  const ::KFMsg::PBObject& pbteam() const;
+  ::KFMsg::PBObject* release_pbteam();
+  ::KFMsg::PBObject* mutable_pbteam();
+  void set_allocated_pbteam(::KFMsg::PBObject* pbteam);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgTeamTellInvite)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::KFMsg::PBObject* pbplayer_;
+  ::KFMsg::PBObject* pbteam_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_FrameClientMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgTeamTellApply : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgTeamTellApply) */ {
+ public:
+  MsgTeamTellApply();
+  virtual ~MsgTeamTellApply();
+
+  MsgTeamTellApply(const MsgTeamTellApply& from);
+
+  inline MsgTeamTellApply& operator=(const MsgTeamTellApply& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  MsgTeamTellApply(MsgTeamTellApply&& from) noexcept
+    : MsgTeamTellApply() {
+    *this = ::std::move(from);
+  }
+
+  inline MsgTeamTellApply& operator=(MsgTeamTellApply&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgTeamTellApply& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MsgTeamTellApply* internal_default_instance() {
+    return reinterpret_cast<const MsgTeamTellApply*>(
+               &_MsgTeamTellApply_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    75;
+
+  void Swap(MsgTeamTellApply* other);
+  friend void swap(MsgTeamTellApply& a, MsgTeamTellApply& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MsgTeamTellApply* New() const final {
+    return CreateMaybeMessage<MsgTeamTellApply>(NULL);
+  }
+
+  MsgTeamTellApply* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MsgTeamTellApply>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const MsgTeamTellApply& from);
+  void MergeFrom(const MsgTeamTellApply& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MsgTeamTellApply* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // .KFMsg.PBObject pbplayer = 1;
+  bool has_pbplayer() const;
+  void clear_pbplayer();
+  static const int kPbplayerFieldNumber = 1;
+  private:
+  const ::KFMsg::PBObject& _internal_pbplayer() const;
+  public:
+  const ::KFMsg::PBObject& pbplayer() const;
+  ::KFMsg::PBObject* release_pbplayer();
+  ::KFMsg::PBObject* mutable_pbplayer();
+  void set_allocated_pbplayer(::KFMsg::PBObject* pbplayer);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgTeamTellApply)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::KFMsg::PBObject* pbplayer_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_FrameClientMessage_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LIBPROTOC_EXPORT MsgTeamAgreeReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgTeamAgreeReq) */ {
+ public:
+  MsgTeamAgreeReq();
+  virtual ~MsgTeamAgreeReq();
+
+  MsgTeamAgreeReq(const MsgTeamAgreeReq& from);
+
+  inline MsgTeamAgreeReq& operator=(const MsgTeamAgreeReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  MsgTeamAgreeReq(MsgTeamAgreeReq&& from) noexcept
+    : MsgTeamAgreeReq() {
+    *this = ::std::move(from);
+  }
+
+  inline MsgTeamAgreeReq& operator=(MsgTeamAgreeReq&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgTeamAgreeReq& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MsgTeamAgreeReq* internal_default_instance() {
+    return reinterpret_cast<const MsgTeamAgreeReq*>(
+               &_MsgTeamAgreeReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    76;
+
+  void Swap(MsgTeamAgreeReq* other);
+  friend void swap(MsgTeamAgreeReq& a, MsgTeamAgreeReq& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MsgTeamAgreeReq* New() const final {
+    return CreateMaybeMessage<MsgTeamAgreeReq>(NULL);
+  }
+
+  MsgTeamAgreeReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MsgTeamAgreeReq>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const MsgTeamAgreeReq& from);
+  void MergeFrom(const MsgTeamAgreeReq& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MsgTeamAgreeReq* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // uint64 teamid = 1;
+  void clear_teamid();
+  static const int kTeamidFieldNumber = 1;
+  ::google::protobuf::uint64 teamid() const;
+  void set_teamid(::google::protobuf::uint64 value);
+
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgTeamAgreeReq)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint64 teamid_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_FrameClientMessage_2eproto::TableStruct;
+};
 // ===================================================================
 
 
@@ -13162,9 +13950,279 @@ inline void MsgTeamCreateReq::set_allocated_info(::std::string* info) {
   // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgTeamCreateReq.info)
 }
 
+// -------------------------------------------------------------------
+
+// MsgTeamLeaveReq
+
+// -------------------------------------------------------------------
+
+// MsgTeamKickReq
+
+// uint64 memberid = 1;
+inline void MsgTeamKickReq::clear_memberid() {
+  memberid_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 MsgTeamKickReq::memberid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgTeamKickReq.memberid)
+  return memberid_;
+}
+inline void MsgTeamKickReq::set_memberid(::google::protobuf::uint64 value) {
+  
+  memberid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.MsgTeamKickReq.memberid)
+}
+
+// -------------------------------------------------------------------
+
+// MsgTeamInviteReq
+
+// uint64 serverid = 1;
+inline void MsgTeamInviteReq::clear_serverid() {
+  serverid_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 MsgTeamInviteReq::serverid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgTeamInviteReq.serverid)
+  return serverid_;
+}
+inline void MsgTeamInviteReq::set_serverid(::google::protobuf::uint64 value) {
+  
+  serverid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.MsgTeamInviteReq.serverid)
+}
+
+// uint64 playerid = 2;
+inline void MsgTeamInviteReq::clear_playerid() {
+  playerid_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 MsgTeamInviteReq::playerid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgTeamInviteReq.playerid)
+  return playerid_;
+}
+inline void MsgTeamInviteReq::set_playerid(::google::protobuf::uint64 value) {
+  
+  playerid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.MsgTeamInviteReq.playerid)
+}
+
+// -------------------------------------------------------------------
+
+// MsgTeamApplyReq
+
+// uint64 serverid = 1;
+inline void MsgTeamApplyReq::clear_serverid() {
+  serverid_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 MsgTeamApplyReq::serverid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgTeamApplyReq.serverid)
+  return serverid_;
+}
+inline void MsgTeamApplyReq::set_serverid(::google::protobuf::uint64 value) {
+  
+  serverid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.MsgTeamApplyReq.serverid)
+}
+
+// uint64 playerid = 2;
+inline void MsgTeamApplyReq::clear_playerid() {
+  playerid_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 MsgTeamApplyReq::playerid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgTeamApplyReq.playerid)
+  return playerid_;
+}
+inline void MsgTeamApplyReq::set_playerid(::google::protobuf::uint64 value) {
+  
+  playerid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.MsgTeamApplyReq.playerid)
+}
+
+// -------------------------------------------------------------------
+
+// MsgTeamTellInvite
+
+// .KFMsg.PBObject pbplayer = 1;
+inline bool MsgTeamTellInvite::has_pbplayer() const {
+  return this != internal_default_instance() && pbplayer_ != NULL;
+}
+inline const ::KFMsg::PBObject& MsgTeamTellInvite::_internal_pbplayer() const {
+  return *pbplayer_;
+}
+inline const ::KFMsg::PBObject& MsgTeamTellInvite::pbplayer() const {
+  const ::KFMsg::PBObject* p = pbplayer_;
+  // @@protoc_insertion_point(field_get:KFMsg.MsgTeamTellInvite.pbplayer)
+  return p != NULL ? *p : *reinterpret_cast<const ::KFMsg::PBObject*>(
+      &::KFMsg::_PBObject_default_instance_);
+}
+inline ::KFMsg::PBObject* MsgTeamTellInvite::release_pbplayer() {
+  // @@protoc_insertion_point(field_release:KFMsg.MsgTeamTellInvite.pbplayer)
+  
+  ::KFMsg::PBObject* temp = pbplayer_;
+  pbplayer_ = NULL;
+  return temp;
+}
+inline ::KFMsg::PBObject* MsgTeamTellInvite::mutable_pbplayer() {
+  
+  if (pbplayer_ == NULL) {
+    auto* p = CreateMaybeMessage<::KFMsg::PBObject>(GetArenaNoVirtual());
+    pbplayer_ = p;
+  }
+  // @@protoc_insertion_point(field_mutable:KFMsg.MsgTeamTellInvite.pbplayer)
+  return pbplayer_;
+}
+inline void MsgTeamTellInvite::set_allocated_pbplayer(::KFMsg::PBObject* pbplayer) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete reinterpret_cast< ::google::protobuf::MessageLite*>(pbplayer_);
+  }
+  if (pbplayer) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      pbplayer = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, pbplayer, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  pbplayer_ = pbplayer;
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgTeamTellInvite.pbplayer)
+}
+
+// .KFMsg.PBObject pbteam = 2;
+inline bool MsgTeamTellInvite::has_pbteam() const {
+  return this != internal_default_instance() && pbteam_ != NULL;
+}
+inline const ::KFMsg::PBObject& MsgTeamTellInvite::_internal_pbteam() const {
+  return *pbteam_;
+}
+inline const ::KFMsg::PBObject& MsgTeamTellInvite::pbteam() const {
+  const ::KFMsg::PBObject* p = pbteam_;
+  // @@protoc_insertion_point(field_get:KFMsg.MsgTeamTellInvite.pbteam)
+  return p != NULL ? *p : *reinterpret_cast<const ::KFMsg::PBObject*>(
+      &::KFMsg::_PBObject_default_instance_);
+}
+inline ::KFMsg::PBObject* MsgTeamTellInvite::release_pbteam() {
+  // @@protoc_insertion_point(field_release:KFMsg.MsgTeamTellInvite.pbteam)
+  
+  ::KFMsg::PBObject* temp = pbteam_;
+  pbteam_ = NULL;
+  return temp;
+}
+inline ::KFMsg::PBObject* MsgTeamTellInvite::mutable_pbteam() {
+  
+  if (pbteam_ == NULL) {
+    auto* p = CreateMaybeMessage<::KFMsg::PBObject>(GetArenaNoVirtual());
+    pbteam_ = p;
+  }
+  // @@protoc_insertion_point(field_mutable:KFMsg.MsgTeamTellInvite.pbteam)
+  return pbteam_;
+}
+inline void MsgTeamTellInvite::set_allocated_pbteam(::KFMsg::PBObject* pbteam) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete reinterpret_cast< ::google::protobuf::MessageLite*>(pbteam_);
+  }
+  if (pbteam) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      pbteam = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, pbteam, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  pbteam_ = pbteam;
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgTeamTellInvite.pbteam)
+}
+
+// -------------------------------------------------------------------
+
+// MsgTeamTellApply
+
+// .KFMsg.PBObject pbplayer = 1;
+inline bool MsgTeamTellApply::has_pbplayer() const {
+  return this != internal_default_instance() && pbplayer_ != NULL;
+}
+inline const ::KFMsg::PBObject& MsgTeamTellApply::_internal_pbplayer() const {
+  return *pbplayer_;
+}
+inline const ::KFMsg::PBObject& MsgTeamTellApply::pbplayer() const {
+  const ::KFMsg::PBObject* p = pbplayer_;
+  // @@protoc_insertion_point(field_get:KFMsg.MsgTeamTellApply.pbplayer)
+  return p != NULL ? *p : *reinterpret_cast<const ::KFMsg::PBObject*>(
+      &::KFMsg::_PBObject_default_instance_);
+}
+inline ::KFMsg::PBObject* MsgTeamTellApply::release_pbplayer() {
+  // @@protoc_insertion_point(field_release:KFMsg.MsgTeamTellApply.pbplayer)
+  
+  ::KFMsg::PBObject* temp = pbplayer_;
+  pbplayer_ = NULL;
+  return temp;
+}
+inline ::KFMsg::PBObject* MsgTeamTellApply::mutable_pbplayer() {
+  
+  if (pbplayer_ == NULL) {
+    auto* p = CreateMaybeMessage<::KFMsg::PBObject>(GetArenaNoVirtual());
+    pbplayer_ = p;
+  }
+  // @@protoc_insertion_point(field_mutable:KFMsg.MsgTeamTellApply.pbplayer)
+  return pbplayer_;
+}
+inline void MsgTeamTellApply::set_allocated_pbplayer(::KFMsg::PBObject* pbplayer) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete reinterpret_cast< ::google::protobuf::MessageLite*>(pbplayer_);
+  }
+  if (pbplayer) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      pbplayer = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, pbplayer, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  pbplayer_ = pbplayer;
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgTeamTellApply.pbplayer)
+}
+
+// -------------------------------------------------------------------
+
+// MsgTeamAgreeReq
+
+// uint64 teamid = 1;
+inline void MsgTeamAgreeReq::clear_teamid() {
+  teamid_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 MsgTeamAgreeReq::teamid() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgTeamAgreeReq.teamid)
+  return teamid_;
+}
+inline void MsgTeamAgreeReq::set_teamid(::google::protobuf::uint64 value) {
+  
+  teamid_ = value;
+  // @@protoc_insertion_point(field_set:KFMsg.MsgTeamAgreeReq.teamid)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

@@ -33,7 +33,7 @@ namespace protobuf_FrameEnumMessage_2eproto {
 void InitDefaults() {
 }
 
-const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[13];
+const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[14];
 const ::google::protobuf::uint32 TableStruct::offsets[1] = {};
 static const ::google::protobuf::internal::MigrationSchema* schemas = NULL;
 static const ::google::protobuf::Message* const* file_default_instances = NULL;
@@ -77,18 +77,21 @@ void AddDescriptorsImpl() {
       "\020\001\022\021\n\rExcludeRandom\020\002*:\n\010MailEnum\022\016\n\nUnk"
       "nowMail\020\000\022\016\n\nGlobalMail\020\001\022\016\n\nPersonMail\020"
       "\002*7\n\010RankEnum\022\016\n\nUnknowRank\020\000\022\r\n\tTotalRa"
-      "nk\020\001\022\014\n\010ZoneRank\020\002*N\n\020PlayerStatusEnum\022\025"
-      "\n\021UnknowFrameStatus\020\000\022\020\n\014OnlineStatus\020\001\022"
-      "\021\n\rOfflineStatus\020\002*U\n\nInviteEnum\022\020\n\014Unkn"
-      "owInvite\020\000\022\013\n\007Consent\020\001\022\n\n\006Refuse\020\002\022\n\n\006D"
-      "elete\020\003\022\020\n\014RefuseMinute\020\004*@\n\016RewardTypeE"
-      "num\022\017\n\013InvalidType\020\000\022\017\n\013CurrenyType\020\001\022\014\n"
-      "\010ItemType\020\002*D\n\014DatabaseEnum\022\023\n\017InvalidDa"
-      "tabase\020\000\022\t\n\005Redis\020\001\022\t\n\005Mongo\020\002\022\t\n\005MySQL\020"
-      "\003b\006proto3"
+      "nk\020\001\022\014\n\010ZoneRank\020\002*\202\001\n\020PlayerStatusEnum\022"
+      "\025\n\021UnknowFrameStatus\020\000\022\020\n\014OnlineStatus\020\001"
+      "\022\021\n\rOfflineStatus\020\002\022\016\n\nTeamStatus\020\003\022\017\n\013M"
+      "atchStatus\020\004\022\021\n\rPlayingStatus\020\005*U\n\nInvit"
+      "eEnum\022\020\n\014UnknowInvite\020\000\022\013\n\007Consent\020\001\022\n\n\006"
+      "Refuse\020\002\022\n\n\006Delete\020\003\022\020\n\014RefuseMinute\020\004*@"
+      "\n\016RewardTypeEnum\022\017\n\013InvalidType\020\000\022\017\n\013Cur"
+      "renyType\020\001\022\014\n\010ItemType\020\002*D\n\014DatabaseEnum"
+      "\022\023\n\017InvalidDatabase\020\000\022\t\n\005Redis\020\001\022\t\n\005Mong"
+      "o\020\002\022\t\n\005MySQL\020\003*@\n\tLeaveEnum\022\020\n\014InvalidLe"
+      "ave\020\000\022\t\n\005Leave\020\001\022\010\n\004Kick\020\002\022\014\n\010Dissolve\020\003"
+      "b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 1089);
+      descriptor, 1208);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "FrameEnumMessage.proto", &protobuf_RegisterTypes);
 }
@@ -256,6 +259,9 @@ bool PlayerStatusEnum_IsValid(int value) {
     case 0:
     case 1:
     case 2:
+    case 3:
+    case 4:
+    case 5:
       return true;
     default:
       return false;
@@ -299,6 +305,22 @@ const ::google::protobuf::EnumDescriptor* DatabaseEnum_descriptor() {
   return protobuf_FrameEnumMessage_2eproto::file_level_enum_descriptors[12];
 }
 bool DatabaseEnum_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::google::protobuf::EnumDescriptor* LeaveEnum_descriptor() {
+  protobuf_FrameEnumMessage_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_FrameEnumMessage_2eproto::file_level_enum_descriptors[13];
+}
+bool LeaveEnum_IsValid(int value) {
   switch (value) {
     case 0:
     case 1:

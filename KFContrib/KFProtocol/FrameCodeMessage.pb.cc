@@ -58,7 +58,7 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\026FrameCodeMessage.proto\022\005KFMsg*\367\035\n\rFram"
+      "\n\026FrameCodeMessage.proto\022\005KFMsg*\376\037\n\rFram"
       "eCodeEnum\022\t\n\005Error\020\000\022\006\n\002Ok\020\001\022\022\n\rHttpData"
       "Error\020\220N\022\025\n\020AuthDatabaseBusy\020\221N\022\023\n\016AuthS"
       "erverBusy\020\222N\022\023\n\016ZoneServerBusy\020\223N\022\025\n\020Zon"
@@ -154,10 +154,17 @@ void AddDescriptorsImpl() {
       "riend\020\331h\022\030\n\023ChatFriendNotOnline\020\332h\022\032\n\025Ch"
       "atIntervalTimeLimit\020\333h\022\020\n\013TeamAlready\020\275i"
       "\022\023\n\016TeamNameFilter\020\276i\022\023\n\016TeamInfoFilter\020"
-      "\277i\022\025\n\020TeamSettingError\020\300ib\006proto3"
+      "\277i\022\025\n\020TeamSettingError\020\300i\022\017\n\nTeamJoinOk\020"
+      "\301i\022\021\n\014TeamNoInTeam\020\302i\022\024\n\017TeamNoInCaptain"
+      "\020\303i\022\026\n\021TeamNotHaveMember\020\304i\022\016\n\tTeamLeave"
+      "\020\305i\022\017\n\nTeamBeKick\020\306i\022\021\n\014TeamDissolve\020\307i\022"
+      "\017\n\nTeamIsFull\020\310i\022\022\n\rTeamNotOnline\020\311i\022\020\n\013"
+      "TeamPlaying\020\312i\022\021\n\014TeamInviteOk\020\313i\022\020\n\013Tea"
+      "mApplyOk\020\314i\022\020\n\013TeamIdError\020\315i\022\021\n\014TeamNot"
+      "Exist\020\316ib\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 3873);
+      descriptor, 4136);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "FrameCodeMessage.proto", &protobuf_RegisterTypes);
 }
@@ -347,6 +354,20 @@ bool FrameCodeEnum_IsValid(int value) {
     case 13502:
     case 13503:
     case 13504:
+    case 13505:
+    case 13506:
+    case 13507:
+    case 13508:
+    case 13509:
+    case 13510:
+    case 13511:
+    case 13512:
+    case 13513:
+    case 13514:
+    case 13515:
+    case 13516:
+    case 13517:
+    case 13518:
       return true;
     default:
       return false;

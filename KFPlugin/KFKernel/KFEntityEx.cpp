@@ -1828,7 +1828,11 @@ namespace KFrame
             auto ok = _kf_kernel->ParseFromProto( kfdata, &iter->second );
             if ( ok )
             {
-                AddData( kfrecord, iter->first, kfdata );
+                // 不存在列表时, 才更新
+                if ( kfrecord->Find( kfdata->GetKeyID() ) == nullptr )
+                {
+                    AddData( kfrecord, iter->first, kfdata );
+                }
             }
         }
     }

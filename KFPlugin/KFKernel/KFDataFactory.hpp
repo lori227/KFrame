@@ -62,7 +62,7 @@ namespace KFrame
 
     protected:
         // 对象池
-        std::unordered_map< std::string, std::list< KFData* > > _data_pool;
+        std::unordered_map< std::string, std::set< KFData* > > _data_pool;
 
         // 自动gc的列表
         std::unordered_set< KFData* > _auto_destroy_list;

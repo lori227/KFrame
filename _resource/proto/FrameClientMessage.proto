@@ -108,6 +108,13 @@ enum FrameClientProtocol
 
 	// team
 	MSG_TEAM_CREATE_REQ					= 630;	// 请求创建队伍
+	MSG_TEAM_LEAVE_REQ					= 631;	// 请求离开队伍
+	MSG_TEAM_KICK_REQ					= 632;	// 请求踢人
+	MSG_TEAM_INVITE_REQ					= 633;	// 邀请加入队伍
+	MSG_TEAM_APPLY_REQ					= 634;	// 申请加入队伍
+	MSG_TEAM_TELL_INVITE				= 635;	// 通知收到邀请
+	MSG_TEAM_TELL_APPLY					= 636;	// 通知收到申请
+	MSG_TEAM_AGREE_REQ					= 637;	// 同意加入队伍
  }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -681,4 +688,56 @@ message MsgTeamCreateReq
 	uint32 id = 1;		// 队伍配置表id
 	bytes name = 2;		// 队伍名字
 	bytes info = 3;		// 队伍介绍
+}
+
+// 客户端请求离开队伍
+// MSG_TEAM_LEAVE_REQ
+message MsgTeamLeaveReq
+{
+
+}
+
+// 客户端请求剔除队伍
+// MSG_TEAM_KICK_REQ
+message MsgTeamKickReq
+{
+	uint64 memberid = 1;	// 被剔除玩家的id
+}
+
+// 邀请玩家加入队伍
+// MSG_TEAM_INVITE_REQ
+message MsgTeamInviteReq
+{
+	uint64 serverid = 1;	// 被邀请者服务器id
+	uint64 playerid = 2;	// 被邀请者玩家id
+}
+
+// 申请加入队伍
+// MSG_TEAM_APPLY_REQ
+message MsgTeamApplyReq
+{
+	uint64 serverid = 1;	// 被申请者服务器id
+	uint64 playerid = 2;	// 被申请者玩家id
+}
+
+// 收到玩家邀请加入队伍
+// MSG_TEAM_TELL_INVITE
+message MsgTeamTellInvite
+{
+	PBObject pbplayer = 1;	// 邀请者
+	PBObject pbteam = 2;	// 队伍信息
+}
+
+// 收到玩家申请加入队伍
+// MSG_TEAM_TELL_APPLY
+message MsgTeamTellApply
+{
+	PBObject pbplayer = 1;	// 申请者
+}
+
+// 同意加入队伍
+// MSG_TEAM_AGREE_REQ
+message MsgTeamAgreeReq
+{
+	uint64 teamid = 1;	// 队伍id
 }
