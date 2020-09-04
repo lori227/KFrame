@@ -14,6 +14,7 @@ namespace KFrame
         _kf_component->RegisterSyncAddFunction( this, &KFTeamShardModule::SendTeamAddDataToMember );
         _kf_component->RegisterSyncRemoveFunction( this, &KFTeamShardModule::SendTeamRemoveDataToMember );
         _kf_component->RegisterSyncUpdateFunction( this, &KFTeamShardModule::SendTeamUpdateDataToMember );
+
         //////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_TEAM_CREATE_TO_TEAM_REQ, &KFTeamShardModule::HandleTeamCreateToTeamReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_TEAM_JION_FAILED_TO_TEAM_REQ, &KFTeamShardModule::HandleTeamJoinFailedToTeamReq );
@@ -304,6 +305,16 @@ namespace KFrame
         for ( auto iter = kfmsg.pbdata().begin(); iter != kfmsg.pbdata().end(); ++iter )
         {
             kfteam->UpdateData( kfmember, iter->first, KFEnum::Set, iter->second );
+
+            // 如果是队长下线, 需要更换队长
+            if ( iter->first == __STRING__( serverid ) && iter->second == _invalid_int )
+            {
+                auto captainid = kfteam->Get( __STRING__( captainid ) );
+                if ( captainid == kfmember->GetKeyID() )
+                {
+                    ChangeTeamCaptain( kfteam, captainid );
+                }
+            }
         }
     }
 
