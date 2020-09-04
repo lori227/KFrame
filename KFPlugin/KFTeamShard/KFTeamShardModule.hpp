@@ -66,8 +66,6 @@ namespace KFrame
         // 删除队员
         void RemoveTeamMember( KFEntity* kfteam, uint64 memberid );
 
-        // 删除队员回调
-        __KF_REMOVE_DATA_FUNCTION__( OnRemoveTeamMemberCallBack );
     protected:
         // 创建队伍请求
         __KF_MESSAGE_FUNCTION__( HandleTeamCreateToTeamReq );

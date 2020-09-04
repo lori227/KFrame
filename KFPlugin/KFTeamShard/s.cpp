@@ -14,8 +14,6 @@ namespace KFrame
         _kf_component->RegisterSyncAddFunction( this, &KFTeamShardModule::SendTeamAddDataToMember );
         _kf_component->RegisterSyncRemoveFunction( this, &KFTeamShardModule::SendTeamRemoveDataToMember );
         _kf_component->RegisterSyncUpdateFunction( this, &KFTeamShardModule::SendTeamUpdateDataToMember );
-
-        __REGISTER_REMOVE_DATA_1__( __STRING__( member ), &KFTeamShardModule::OnRemoveTeamMemberCallBack );
         //////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_TEAM_CREATE_TO_TEAM_REQ, &KFTeamShardModule::HandleTeamCreateToTeamReq );
         __REGISTER_MESSAGE__( KFMsg::S2S_TEAM_JION_FAILED_TO_TEAM_REQ, &KFTeamShardModule::HandleTeamJoinFailedToTeamReq );
@@ -40,7 +38,6 @@ namespace KFrame
         _kf_component->UnRegisterSyncRemoveFunction();
         _kf_component->UnRegisterSyncUpdateFunction();
 
-        __UN_REMOVE_DATA_1__( __STRING__( member ) );
         //////////////////////////////////////////////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::S2S_TEAM_CREATE_TO_TEAM_REQ );
         __UN_MESSAGE__( KFMsg::S2S_TEAM_JION_FAILED_TO_TEAM_REQ );
@@ -113,17 +110,6 @@ namespace KFrame
         sync.set_dataname( __STRING__( team ) );
         sync.mutable_pbdata()->Swap( &pbobject );
         SendMessageToTeam( kfteam, KFMsg::S2S_SYNC_REMOVE_DATA_FROM_SERVER, &sync );
-    }
-
-    __KF_REMOVE_DATA_FUNCTION__( KFTeamShardModule::OnRemoveTeamMemberCallBack )
-    {
-        auto kfteam = kfparent->GetParent();
-        auto captainid = kfteam->Get<uint64>( __STRING__( captainid ) );
-        if ( captainid == key )
-        {
-            // 更新队长
-            ChangeTeamCaptain( ( KFEntity* )kfteam, captainid );
-        }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamCreateToTeamReq )
@@ -223,6 +209,13 @@ namespace KFrame
         {
             // 更新队伍当前数量
             kfteam->UpdateData( __STRING__( nowcount ), KFEnum::Set, kfmemberrecord->Size() );
+
+			auto captainid = kfteam->Get<uint64>( __STRING__( captainid ) );
+			if ( captainid == memberid )
+			{
+				// 更新队长
+				ChangeTeamCaptain( ( KFEntity* )kfteam, captainid );
+			}
         }
     }
 
