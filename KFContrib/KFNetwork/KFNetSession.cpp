@@ -26,8 +26,11 @@ namespace KFrame
         _session_id = id;
         _uv_write->data = this;
         _message_head_length = headlength;
-        _send_queue.InitQueue( queuecount );
-        _recv_queue.InitQueue( queuecount );
+
+        auto extendcount = IsServerSession() ? queuecount : 0u;
+
+        _send_queue.InitQueue( queuecount, extendcount );
+        _recv_queue.InitQueue( queuecount, extendcount );
     }
 
     bool KFNetSession::IsConnected() const
@@ -280,7 +283,7 @@ namespace KFrame
 
     bool KFNetSession::AddSendMessage( KFNetMessage* message )
     {
-        auto ok = _send_queue.PushObject( message );
+        auto ok = _send_queue.PushObject( message, _object_id, __FUNC_LINE__ );
         if ( !ok )
         {
             if ( !_is_send_queue_full )
@@ -307,7 +310,7 @@ namespace KFrame
 
     bool KFNetSession::AddRecvMessage( KFNetMessage* message )
     {
-        auto ok = _recv_queue.PushObject( message );
+        auto ok = _recv_queue.PushObject( message, _object_id, __FUNC_LINE__ );
         if ( !ok )
         {
             if ( !_is_recv_queue_full )

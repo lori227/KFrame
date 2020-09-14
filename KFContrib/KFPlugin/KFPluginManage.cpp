@@ -4,7 +4,7 @@ namespace KFrame
 {
     KFPluginManage::KFPluginManage()
     {
-        _commands.InitQueue( 100 );
+        _commands.InitQueue( 100u, 100u );
     }
 
     KFPluginManage::~KFPluginManage()
@@ -296,7 +296,7 @@ namespace KFrame
             }
         }
 
-        _commands.PushObject( kfcommand );
+        _commands.PushObject( kfcommand, 0u, __FUNC_LINE__ );
     }
 
     void KFPluginManage::RunCommand()

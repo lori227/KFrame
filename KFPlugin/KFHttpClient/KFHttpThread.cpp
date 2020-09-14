@@ -6,7 +6,7 @@ namespace KFrame
     KFHttpThread::KFHttpThread()
     {
         _thread_run = true;
-        _http_response_list.InitQueue( 20000u );
+        _http_response_list.InitQueue( 20000u, 20000u );
         KFThread::CreateThread( this, &KFHttpThread::RunHttpRequest, __FUNC_LINE__ );
     }
 
@@ -47,7 +47,14 @@ namespace KFrame
             for ( auto httpdata : templist )
             {
                 httpdata->Request();
-                _http_response_list.PushObject( httpdata );
+                if ( httpdata->_function == nullptr )
+                {
+                    __KF_DELETE__( KFHttpData, httpdata );
+                }
+                else
+                {
+                    _http_response_list.PushObject( httpdata, 0u, __FUNC_LINE__ );
+                }
             }
 
             KFThread::Sleep( 1 );

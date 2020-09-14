@@ -39,7 +39,7 @@ namespace KFrame
         _net_event = __NEW_OBJECT__( KFNetEvent );
         _net_event->InitEvent( eventcount );
 
-        _event_session.InitQueue( 10000u );
+        _event_session.InitQueue( 10000u, 10000u );
 
         _message_type = messagetype;
         _max_serialize_buff_length = KFNetDefine::SerializeBuffLength;
@@ -112,7 +112,7 @@ namespace KFrame
         }
 
         // 加入队列
-        _event_session.PushObject( netsession );
+        _event_session.PushObject( netsession, 0u, __FUNC_LINE__ );
 
         // 通知io线程
         _uv_event_async->data = this;

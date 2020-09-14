@@ -137,12 +137,13 @@ namespace KFrame
         // 先创建http异步线程
         CreateHttpThread();
 
-        if ( _thread_index >= ( uint32 )_http_thread_list.size() )
+        auto index = _thread_index++;
+        if ( index >= ( uint32 )_http_thread_list.size() )
         {
-            _thread_index = 0u;
+            index = 0u;
         }
 
-        auto httpthread = _http_thread_list[ _thread_index++ ];
+        auto httpthread = _http_thread_list[ index ];
         httpthread->AddHttpRequest( httpdata );
     }
 

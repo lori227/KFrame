@@ -69,7 +69,7 @@ namespace KFrame
         std::vector< KFHttpThread* > _http_thread_list;
 
         // 当前的索引
-        uint32 _thread_index = 0;
+        uint32 _thread_index = 0u;
     };
 }
 

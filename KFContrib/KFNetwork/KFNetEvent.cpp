@@ -16,7 +16,7 @@ namespace KFrame
 
     void KFNetEvent::InitEvent( uint32 maxcount )
     {
-        _net_event_data.InitQueue( maxcount );
+        _net_event_data.InitQueue( maxcount, maxcount );
     }
 
     void KFNetEvent::AddEvent( uint32 type, uint64 id, void* data, const char* describe /* = "" */, int32 code /* = 0 */ )
@@ -28,7 +28,7 @@ namespace KFrame
         eventdata->_code = code;
         eventdata->_describe = describe;
         eventdata->_data = data;
-        _net_event_data.PushObject( eventdata );
+        _net_event_data.PushObject( eventdata, 0u, __FUNC_LINE__ );
     }
 
     void KFNetEvent::RunEvent()

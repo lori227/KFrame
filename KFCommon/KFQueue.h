@@ -2,7 +2,9 @@
 #define __KF_QUEUE_H__
 
 #include "KFInclude.h"
+#include "KFUtility/KFAppId.h"
 #include "KFMemory/KFMalloc.h"
+#include "KFLogger/KFLogger.h"
 
 namespace KFrame
 {
@@ -24,10 +26,12 @@ namespace KFrame
             ClearObject();
         }
 
-        // 初始化
-        void InitQueue( uint32 maxcount )
+        // maxcount 环形队列的最大数量,
+        // extendcount 当环形队列满时,额外的链表的最大数量, 0 表示丢弃
+        void InitQueue( uint32 maxcount, uint32 extendcount )
         {
             _max_count = maxcount;
+            _extend_count = extendcount;
             _objects.resize( maxcount, nullptr );
         }
 
@@ -87,12 +91,27 @@ namespace KFrame
         }
 
         // 添加元素
-        bool PushObject( T* object )
+        bool PushObject( T* object, uint64 parentid, const char* function, uint32 line )
         {
-            // 如果还有数据, 不能再push了,否则覆盖会造成内存泄漏
-            auto oldobject = _objects[ _push_index ];
-            if ( oldobject != nullptr )
+            if ( _extends.empty() )
             {
+                auto oldobject = _objects[ _push_index ];
+                if ( oldobject == nullptr )
+                {
+                    // 列表未满, 直接插入
+                    _objects[ _push_index ] = object;
+                    _push_index = ( _push_index + 1 ) % _max_count;
+                    return true;
+                }
+
+                // 列表满了, 判断是否需要插入额外列表
+                if ( _extend_count > 0u )
+                {
+                    _extends.push_back( object );
+                    return true;
+                }
+
+                // 不能插入push了,否则覆盖会造成内存泄漏
                 if ( _need_to_delete )
                 {
                     __KF_DELETE__( T, object );
@@ -100,8 +119,32 @@ namespace KFrame
                 return false;
             }
 
-            _objects[ _push_index ] = object;
-            _push_index = ( _push_index + 1 ) % _max_count;
+            // 先插入列表中( todo : 如果考虑到内存问题, 需要判断_extend_count的数量限制 )
+            _extends.push_back( object );
+
+            // 需要日志报警
+            if ( _extends.size() % 100u == 0 )
+            {
+                __LOG_WARN_FUNCTION__( function, line, "parent=[{}:{}] queue object list extend size={}",
+                                       parentid, KFAppId::ToString( parentid ), _extends.size() );
+            }
+
+            // 判断是否环形列表是否有空位
+            do
+            {
+                auto oldobject = _objects[ _push_index ];
+                if ( oldobject != nullptr )
+                {
+                    break;
+                }
+
+                auto popobject = _extends.front();
+                _extends.pop_front();
+
+                _objects[ _push_index ] = popobject;
+                _push_index = ( _push_index + 1 ) % _max_count;
+            } while ( !_extends.empty() );
+
             return true;
         }
 
@@ -159,6 +202,12 @@ namespace KFrame
 
             _pop_index = 0;
             _push_index = 0;
+
+            for ( auto object : _extends )
+            {
+                __KF_DELETE__( T, object );
+            }
+            _extends.clear();
         }
 
     private:
@@ -173,6 +222,10 @@ namespace KFrame
 
         // 列表
         std::vector< T* > _objects;
+
+        // 额外链表的最大数量
+        uint32 _extend_count = 0;
+        std::list< T* > _extends;
     };
 
     /////////////////////////////////////////////////////////////////////////////////////
