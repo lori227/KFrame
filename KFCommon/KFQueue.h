@@ -203,9 +203,12 @@ namespace KFrame
             _pop_index = 0;
             _push_index = 0;
 
-            for ( auto object : _extends )
+            if ( _need_to_delete )
             {
-                __KF_DELETE__( T, object );
+                for ( auto object : _extends )
+                {
+                    __KF_DELETE__( T, object );
+                }
             }
             _extends.clear();
         }
