@@ -48,7 +48,7 @@ namespace KFrame
 
         for ( auto goodsid : removelist )
         {
-            player->RemoveRecordData( kfgoodsrecord, goodsid, false );
+            player->RemoveRecord( kfgoodsrecord, goodsid, false );
         }
         _kf_display->DelayToClient( player, KFMsg::StoreGoodsRefreshOk );
     }
@@ -97,7 +97,7 @@ namespace KFrame
                 return KFMsg::StoreOutOfLimits;
             }
 
-            player->UpdateRecordData( __STRING__( goods ), goodsid, __STRING__( count ), KFEnum::Add, buycount );
+            player->UpdateRecord( __STRING__( goods ), goodsid, __STRING__( count ), KFEnum::Add, buycount );
         }
 
         // 添加商品

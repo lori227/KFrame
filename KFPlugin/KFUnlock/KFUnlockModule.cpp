@@ -107,7 +107,7 @@ namespace KFrame
                 kfdata = player->CreateData( kfdatarecord );
                 kfdata->Set( __STRING__( unlock ), KFGlobal::Instance()->_real_time );
                 kfdata->Set( kfdatarecord->_data_setting->_value_key_name, kfsetting->_data_value );
-                player->AddRecordData( kfdatarecord, kfsetting->_data_id, kfdata );
+                player->AddRecord( kfdatarecord, kfsetting->_data_id, kfdata );
             }
         }
         else
@@ -117,7 +117,7 @@ namespace KFrame
                 auto value = kfdata->Get<uint32>( kfsetting->_child_name );
                 if ( value == 0u )
                 {
-                    player->UpdateObjectData( kfdata, kfsetting->_child_name, KFEnum::Set, kfsetting->_data_value );
+                    player->UpdateObject( kfdata, kfsetting->_child_name, KFEnum::Set, kfsetting->_data_value );
                 }
             }
         }

@@ -77,7 +77,7 @@ namespace KFrame
         if ( result == KFMsg::Ok )
         {
             // 减少商品数量
-            player->UpdateObjectData( kfgoods, __STRING__( count ), KFEnum::Dec, buycount );
+            player->UpdateObject( kfgoods, __STRING__( count ), KFEnum::Dec, buycount );
         }
 
         _kf_display->DelayToClient( player, result );
@@ -127,7 +127,7 @@ namespace KFrame
             // 设置刷新数量
             if ( refreshtimeid != 0u )
             {
-                player->UpdateRecordData( kfstorerecord, kfsetting->_id, __STRING__( refresh ), KFEnum::Add, 1u );
+                player->UpdateRecord( kfstorerecord, kfsetting->_id, __STRING__( refresh ), KFEnum::Add, 1u );
             }
 
             // 是否要重置时间
@@ -178,7 +178,7 @@ namespace KFrame
     {
         auto nowtime = KFGlobal::Instance()->_real_time;
         auto nexttime = _kf_reset->CalcNextResetTime( KFGlobal::Instance()->_real_time, kfsetting->_refresh_time_id );
-        player->UpdateRecordData( kfstorerecord, kfsetting->_id, __STRING__( time ), KFEnum::Set, nexttime );
+        player->UpdateRecord( kfstorerecord, kfsetting->_id, __STRING__( time ), KFEnum::Set, nexttime );
 
         // 取消定时器
         __UN_TIMER_2__( player->GetKeyID(), kfsetting->_id );
@@ -208,7 +208,7 @@ namespace KFrame
 
         // 清空商店的商品列表
         auto kfstoregoods = kfstorerecord->Find( kfsetting->_id, __STRING__( goods ) );
-        player->CleanRecordData( kfstoregoods, false );
+        player->ClearRecord( kfstoregoods, false );
 
         // 刷新商品( 每次商品组刷新随机数量个商品 )
         for ( auto& tupledata : kfsetting->_refresh_group_count )
@@ -232,7 +232,7 @@ namespace KFrame
                 auto kfgoods = player->CreateData( kfstoregoods );
                 kfgoods->Set( __STRING__( id ), goodsid );
                 kfgoods->Set( __STRING__( count ), goodscount );
-                player->AddRecordData( kfstoregoods, kfstoregoods->Size() + 1u, kfgoods );
+                player->AddRecord( kfstoregoods, kfstoregoods->Size() + 1u, kfgoods );
 
                 // 判断是否需要排除相同商品
                 if ( kfsetting->_random_type == KFMsg::ExcludeRandom )
@@ -247,7 +247,7 @@ namespace KFrame
 
     void KFStoreModule::RemoveStore( KFEntity* player, uint32 storeid )
     {
-        player->RemoveRecordData( __STRING__( store ), storeid );
+        player->RemoveRecord( __STRING__( store ), storeid );
     }
 
     __KF_PLAYER_ENTER_FUNCTION__( KFStoreModule::OnEnterStoreModule )
@@ -296,7 +296,7 @@ namespace KFrame
         // 保存下次时间
         auto kfstorerecord = player->Find( __STRING__( store ) );
         auto nexttime = _kf_reset->CalcNextResetTime( KFGlobal::Instance()->_real_time, kfsetting->_refresh_time_id );
-        player->UpdateRecordData( kfstorerecord, kfsetting->_id, __STRING__( time ), KFEnum::Set, nexttime );
+        player->UpdateRecord( kfstorerecord, kfsetting->_id, __STRING__( time ), KFEnum::Set, nexttime );
 
         // 刷新商品
         StoreRefreshGoods( player, kfsetting, kfstorerecord );
@@ -332,7 +332,7 @@ namespace KFrame
 
                 if ( _kf_reset->CheckResetTime( player, kfcostsetting->_refresh_time_id ) )
                 {
-                    player->UpdateObjectData( kfstore, __STRING__( refresh ), KFEnum::Set, 0u );
+                    player->UpdateObject( kfstore, __STRING__( refresh ), KFEnum::Set, 0u );
                 }
                 break;
             }

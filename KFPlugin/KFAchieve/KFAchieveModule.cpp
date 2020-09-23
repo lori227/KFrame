@@ -89,7 +89,7 @@ namespace KFrame
         }
 
         // 设置已经领取
-        player->UpdateObjectData( kfachieve, __STRING__( status ), KFEnum::Set, KFMsg::ReceiveStatus );
+        player->UpdateObject( kfachieve, __STRING__( status ), KFEnum::Set, KFMsg::ReceiveStatus );
 
         // 添加奖励
         player->AddElement( &kfsetting->_rewards, _default_multiple, __STRING__( achieve ), kfsetting->_id, __FUNC_LINE__ );
@@ -121,7 +121,7 @@ namespace KFrame
         auto complete = updatefunction;\
         if ( complete )\
         {\
-            player->UpdateObjectData( kfachieve, __STRING__( status ), KFEnum::Set, KFMsg::DoneStatus );\
+            player->UpdateObject( kfachieve, __STRING__( status ), KFEnum::Set, KFMsg::DoneStatus );\
         }\
     }\
 

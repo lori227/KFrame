@@ -155,7 +155,7 @@ namespace KFrame
             auto kfdata = player->CreateData( kfrecord );
 
             PBRelationToKFData( pbrelation, kfdata );
-            player->AddRecordData( kfrecord, kfdata );
+            player->AddRecord( kfrecord, kfdata );
         }
 
         if ( kfsetting->_need_update )
@@ -180,7 +180,7 @@ namespace KFrame
             auto kfinvite = player->CreateData( kfinviterecord );
 
             PBRelationToKFData( pbinvite, kfinvite );
-            player->AddRecordData( kfinviterecord, kfinvite );
+            player->AddRecord( kfinviterecord, kfinvite );
         }
     }
 
@@ -412,7 +412,7 @@ namespace KFrame
 
         auto kfinvite = player->CreateData( kfinviterecord );
         PBRelationToKFData( &kfmsg.pbinvite(), kfinvite );
-        player->AddRecordData( kfinviterecord, kfinvite );
+        player->AddRecord( kfinviterecord, kfinvite );
 
         // 通知玩家
         auto name = kfinvite->Get< std::string >( __STRING__( basic ), __STRING__( name ) );
@@ -461,7 +461,7 @@ namespace KFrame
         // 删除申请id
         for ( auto removeid : removelist )
         {
-            player->RemoveRecordData( kfinviterecord, removeid );
+            player->RemoveRecord( kfinviterecord, removeid );
         }
     }
 
@@ -476,7 +476,7 @@ namespace KFrame
         auto inviteid = ReplyInvite( player, kfsetting, operate, kfinvite );
         if ( inviteid != _invalid_int )
         {
-            player->RemoveRecordData( kfinviterecord, inviteid );
+            player->RemoveRecord( kfinviterecord, inviteid );
         }
     }
 
@@ -565,12 +565,12 @@ namespace KFrame
         // 添加关系
         auto kfrelation = player->CreateData( kfrelationrecord );
         PBRelationToKFData( &kfmsg.pbrelation(), kfrelation );
-        player->AddRecordData( kfrelationrecord, kfrelation );
+        player->AddRecord( kfrelationrecord, kfrelation );
 
         // 删除邀请
         if ( !kfsetting->_invite_data_name.empty() )
         {
-            player->RemoveRecordData( kfsetting->_invite_data_name, kfrelation->GetKeyID() );
+            player->RemoveRecord( kfsetting->_invite_data_name, kfrelation->GetKeyID() );
         }
 
         auto relationname = kfrelation->Get< std::string >( __STRING__( basic ), __STRING__( name ) );
@@ -613,7 +613,7 @@ namespace KFrame
         _kf_display->DelayToClient( player, KFMsg::RelationDelOk, kfmsg.relationid(), name );
 
         // 直接删除关系
-        player->RemoveRecordData( kfrelationrecord, kfmsg.relationid() );
+        player->RemoveRecord( kfrelationrecord, kfmsg.relationid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleSetRefuseRelationInviteReq )
@@ -682,7 +682,7 @@ namespace KFrame
         }
 
         // 更新好友度
-        player->UpdateObjectData( kffriend, __STRING__( friendliness ), KFEnum::Add, kfmsg.friendliness() );
+        player->UpdateObject( kffriend, __STRING__( friendliness ), KFEnum::Add, kfmsg.friendliness() );
 
         // 显示提示
         auto friendname = kffriend->Get< std::string >( __STRING__( basic ), __STRING__( name ) );

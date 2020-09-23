@@ -173,7 +173,7 @@ namespace KFrame
         __CLIENT_PROTO_PARSE__( KFMsg::MsgSetSexReq );
 
         _kf_display->SendToClient( player, KFMsg::SexSetOK );
-        player->UpdateObjectData( __STRING__( basic ), __STRING__( sex ), KFEnum::Set, kfmsg.sex() );
+        player->UpdateObject( __STRING__( basic ), __STRING__( sex ), KFEnum::Set, kfmsg.sex() );
     }
 
     uint32 KFBasicClientModule::CheckNameValid( const std::string& name, uint32 maxlength )
@@ -246,7 +246,7 @@ namespace KFrame
             return;
         }
 
-        player->UpdateObjectData( __STRING__( basic ), __STRING__( name ), kfmsg.name() );
+        player->UpdateObject( __STRING__( basic ), __STRING__( name ), kfmsg.name() );
 
         if ( kfmsg.costdata() != _invalid_string )
         {

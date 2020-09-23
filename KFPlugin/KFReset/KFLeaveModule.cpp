@@ -32,7 +32,7 @@ namespace KFrame
                 }
 
                 // 设置属性
-                player->UpdateRecordData( kfnoteparent, kfsetting->_id, __STRING__( value ), KFEnum::Set, 1 );
+                player->UpdateRecord( kfnoteparent, kfsetting->_id, __STRING__( value ), KFEnum::Set, 1 );
             }
 
             // 调用脚本

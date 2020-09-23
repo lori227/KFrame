@@ -329,7 +329,7 @@ namespace KFrame
         }
         else
         {
-            kfentity->UpdateObjectData( kfcondition, kfcondition->_data_setting->_value_key_name, KFEnum::Set, conditionvalue );
+            kfentity->UpdateObject( kfcondition, kfcondition->_data_setting->_value_key_name, KFEnum::Set, conditionvalue );
         }
 
         auto ok = KFUtility::CheckOperate( conditionvalue, kfsetting->_done_type, kfsetting->_done_value );
@@ -517,7 +517,7 @@ namespace KFrame
         std::tie( operatetype, operatevalue ) = cleanfunction;\
         if ( operatetype != 0u )\
         {\
-            kfentity->UpdateObjectData( kfcondition, kfcondition->_data_setting->_value_key_name, operatetype, operatevalue );\
+            kfentity->UpdateObject( kfcondition, kfcondition->_data_setting->_value_key_name, operatetype, operatevalue );\
             return KFConditionEnum::UpdateOk;\
         }\
     }\
@@ -556,7 +556,7 @@ namespace KFrame
         return KFConditionEnum::UpdateFailed; \
     }\
     SaveConditionDataUUid( kfentity, kfcondition, limitdata, kfsetting->_condition_define );\
-    auto conditionvalue = kfentity->UpdateObjectData( kfcondition, kfcondition->_data_setting->_value_key_name, operatetype, operatevalue ); \
+    auto conditionvalue = kfentity->UpdateObject( kfcondition, kfcondition->_data_setting->_value_key_name, operatetype, operatevalue ); \
     auto ok = KFUtility::CheckOperate<uint32>( conditionvalue, kfsetting->_done_type, kfsetting->_done_value ); \
     if ( ok )\
     {   \
@@ -713,7 +713,7 @@ namespace KFrame
 
         if ( updateconditionid == conditionid )
         {
-            conditionvalue = kfentity->UpdateObjectData( kfcondition, kfcondition->_data_setting->_value_key_name, operate, conditionvalue );
+            conditionvalue = kfentity->UpdateObject( kfcondition, kfcondition->_data_setting->_value_key_name, operate, conditionvalue );
         }
         else
         {

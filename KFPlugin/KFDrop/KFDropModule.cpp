@@ -190,7 +190,7 @@ namespace KFrame
     {
         if ( kfsetting->_is_drop_count )
         {
-            player->UpdateRecordData( __STRING__( drop ), kfsetting->_id, __STRING__( value ), KFEnum::Add, 1u );
+            player->UpdateRecord( __STRING__( drop ), kfsetting->_id, __STRING__( value ), KFEnum::Add, 1u );
         }
 
         // 必掉的列表
@@ -322,7 +322,7 @@ namespace KFrame
         // 如果需要重置
         if ( kfdropweight->_is_clear_var && kfsetting->_is_drop_count )
         {
-            player->UpdateRecordData( __STRING__( drop ), kfsetting->_id, __STRING__( value ), KFEnum::Set, 0u );
+            player->UpdateRecord( __STRING__( drop ), kfsetting->_id, __STRING__( value ), KFEnum::Set, 0u );
         }
 
         if ( kfdropweight->_drop_data_setting == nullptr )

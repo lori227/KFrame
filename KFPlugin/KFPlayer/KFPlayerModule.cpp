@@ -525,7 +525,7 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgRemoveDataReq );
 
-        player->RemoveRecordData( kfmsg.dataname(), kfmsg.key() );
+        player->RemoveRecord( kfmsg.dataname(), kfmsg.key() );
         __LOG_INFO__( "remove data[{}:{}] ok", kfmsg.dataname(), kfmsg.key() );
     }
 
@@ -607,7 +607,7 @@ namespace KFrame
             return;
         }
 
-        player->UpdateRecordData( kfparent, kfmsg.key(), kfmsg.dataname(), kfmsg.operate(), kfmsg.value() );
+        player->UpdateRecord( kfparent, kfmsg.key(), kfmsg.dataname(), kfmsg.operate(), kfmsg.value() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleUpdateStrReq )
@@ -651,7 +651,7 @@ namespace KFrame
             return;
         }
 
-        player->UpdateRecordData( kfmsg.parentname(), kfmsg.key(), kfmsg.dataname(), kfmsg.value() );
+        player->UpdateRecord( kfmsg.parentname(), kfmsg.key(), kfmsg.dataname(), kfmsg.value() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleSyncUpdateDataFromServerReq )
