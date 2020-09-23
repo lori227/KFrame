@@ -199,7 +199,7 @@ namespace KFrame
     {
         // 删除队员
         auto kfmemberrecord = kfteam->Find( __STRING__( member ) );
-        kfteam->RemoveData( kfmemberrecord, memberid );
+        kfteam->RemoveRecordData( kfmemberrecord, memberid );
         if ( kfmemberrecord->Size() == 0u )
         {
             // 已经没有队员了, 删除队伍
@@ -304,7 +304,7 @@ namespace KFrame
 
         for ( auto iter = kfmsg.pbdata().begin(); iter != kfmsg.pbdata().end(); ++iter )
         {
-            kfteam->UpdateData( kfmember, iter->first, KFEnum::Set, iter->second );
+            kfteam->UpdateObjectData( kfmember, iter->first, KFEnum::Set, iter->second );
 
             // 如果是队长下线, 需要更换队长
             if ( iter->first == __STRING__( serverid ) && iter->second == _invalid_int )
@@ -336,7 +336,7 @@ namespace KFrame
 
         for ( auto iter = kfmsg.pbdata().begin(); iter != kfmsg.pbdata().end(); ++iter )
         {
-            kfteam->UpdateData( kfmember, iter->first, iter->second );
+            kfteam->UpdateObjectData( kfmember, iter->first, iter->second );
         }
     }
 
@@ -416,7 +416,7 @@ namespace KFrame
         _kf_kernel->ParseFromProto( kfmember, &kfmsg.pbplayer() );
 
         // 加入队伍中
-        kfteam->AddData( kfmemberrecord, kfmember->GetKeyID(), kfmember );
+        kfteam->AddRecordData( kfmemberrecord, kfmember->GetKeyID(), kfmember );
 
         // 通知队员加入队伍
         SendJoinTeamToMember( kfteam, kfmember );

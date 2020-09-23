@@ -86,6 +86,13 @@ namespace KFrame
 
         // 是否需要同步给客户端
         bool IsNeedSyncToClient() const;
+
+        // 判断属性
+        bool IsInt() const;
+        bool IsArray() const;
+        bool IsRecord() const;
+        bool IsObject() const;
+        bool IsString() const;
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 父属性
         KFData* GetParent();

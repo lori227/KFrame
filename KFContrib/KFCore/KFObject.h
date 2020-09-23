@@ -37,6 +37,7 @@ namespace KFrame
         virtual void CopyFrom( KFData* kfother );
         virtual void SaveTo( KFData* kfother );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
+
         virtual KFData* Find( const std::string& dataname );
         virtual KFData* Find( const std::string& dataname, uint64 key );
         virtual KFData* Find( const std::string& parentname, const std::string& childname );

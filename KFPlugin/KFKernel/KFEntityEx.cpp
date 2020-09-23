@@ -61,11 +61,10 @@ namespace KFrame
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFEntityEx::UpdateData( KFData* kfdata, const std::string& value )
+    void KFEntityEx::UpdateData( KFData* kfdata, const std::string& value, bool callback )
     {
-        auto oldvalue = kfdata->Get<std::string>();
         kfdata->Set<std::string>( value );
-        if ( kfdata->_data_type == KFDataDefine::DataTypeArray )
+        if ( kfdata->IsArray() )
         {
             for ( auto i = KFGlobal::Instance()->_array_index; i < kfdata->Size(); ++i )
             {
@@ -73,106 +72,137 @@ namespace KFrame
                 if ( kfchild != nullptr )
                 {
                     auto newvalue = kfchild->Get<uint64>();
-                    _kf_component->UpdateDataCallBack( this, i, kfchild, i, KFEnum::Set, newvalue, 0u, newvalue, true );
+                    _kf_component->UpdateDataCallBack( this, i, kfchild, i, KFEnum::Set, newvalue, 0u, newvalue, callback );
                 }
             }
         }
-        else if ( kfdata->_data_type == KFDataDefine::DataTypeString )
+        else if ( kfdata->IsString() )
         {
             // 属性更新回调
-            _kf_component->UpdateDataCallBack( this, kfdata, oldvalue, value, true );
+            auto oldvalue = kfdata->Get<std::string>();
+            _kf_component->UpdateDataCallBack( this, kfdata, oldvalue, value, callback );
         }
     }
 
-    void KFEntityEx::UpdateData( KFData* kfparent, const std::string& dataname, const std::string& value )
+    void KFEntityEx::UpdateData( const std::string& dataname, const std::string& value, bool callback )
+    {
+        auto kfdata = Find( dataname );
+        if ( kfdata == nullptr )
+        {
+            return __LOG_ERROR__( "parent=[{}] not have data=[{}]", _data_setting->_name, dataname );
+        }
+
+        UpdateData( kfdata, value, callback );
+    }
+
+    void KFEntityEx::UpdateObjectData( KFData* kfparent, const std::string& dataname, const std::string& value, bool callback )
     {
         auto kfdata = kfparent->Find( dataname );
         if ( kfdata == nullptr )
         {
-            return;
+            return __LOG_ERROR__( "parent=[{}] not have data=[{}]", kfparent->_data_setting->_name, dataname );
         }
 
-        UpdateData( kfdata, value );
+        UpdateData( kfdata, value, callback );
     }
 
-    void KFEntityEx::UpdateData( const std::string& dataname, const std::string& value )
-    {
-        auto kfdata = Find( dataname );
-        if ( kfdata == nullptr )
-        {
-            return;
-        }
-
-        UpdateData( kfdata, value );
-    }
-
-    void KFEntityEx::UpdateData( const std::string& parentname, const std::string& dataname, const std::string& value )
-    {
-        auto kfdata = Find( parentname, dataname );
-        if ( kfdata == nullptr )
-        {
-            return;
-        }
-
-        UpdateData( kfdata, value );
-    }
-
-    void KFEntityEx::UpdateData( const std::string& parentname, uint64 key, const std::string& dataname, const std::string& value )
-    {
-        auto kfdata = Find( parentname, key );
-        if ( kfdata == nullptr )
-        {
-            return;
-        }
-
-        UpdateData( kfdata, value );
-    }
-
-    uint64 KFEntityEx::UpdateData( const std::string& dataname, uint32 operate, uint64 value )
-    {
-        auto kfdata = Find( dataname );
-        if ( kfdata == nullptr )
-        {
-            return _invalid_int;
-        }
-
-        return UpdateData( _invalid_int, kfdata, operate, value );
-    }
-
-    uint64 KFEntityEx::UpdateData( const std::string& parentname, const std::string& dataname, uint32 operate, uint64 value )
-    {
-        auto kfdata = Find( parentname, dataname );
-        if ( kfdata == nullptr )
-        {
-            return _invalid_int;
-        }
-
-        return UpdateData( _invalid_int, kfdata, operate, value );
-    }
-
-    uint64 KFEntityEx::UpdateData( const std::string& parentname, uint64 key, const std::string& dataname, uint32 operate, uint64 value )
+    void KFEntityEx::UpdateObjectData( const std::string& parentname, const std::string& dataname, const std::string& value, bool callback )
     {
         auto kfparent = Find( parentname );
         if ( kfparent == nullptr )
         {
-            return false;
+            return __LOG_ERROR__( "parent=[{}] not have object=[{}]", _data_setting->_name, parentname );
         }
 
-        return UpdateData( kfparent, key, dataname, operate, value );
+        UpdateObjectData( kfparent, dataname, value, callback );
     }
 
-    uint64 KFEntityEx::UpdateData( KFData* kfparent, const std::string& dataname, uint32 operate, uint64 value )
+    void KFEntityEx::UpdateRecordData( const std::string& parentname, uint64 key, const std::string& dataname, const std::string& value, bool callback )
+    {
+        auto kfparent = Find( parentname );
+        if ( kfparent == nullptr )
+        {
+            return __LOG_ERROR__( "parent=[{}] not have object=[{}]", _data_setting->_name, parentname );
+        }
+
+        auto kfobject = kfparent->Find( key );
+        if ( kfobject == nullptr )
+        {
+            return __LOG_ERROR__( "record=[{}] not have object=[{}]", parentname, key );
+        }
+
+        UpdateObjectData( kfobject, dataname, value, callback );
+    }
+
+    uint64 KFEntityEx::UpdateData( const std::string& dataname, uint32 operate, uint64 value, bool callback )
+    {
+        auto kfdata = Find( dataname );
+        if ( kfdata == nullptr )
+        {
+            __LOG_ERROR__( "parent=[{}] not have object=[{}]", _data_setting->_name, dataname );
+            return _invalid_int;
+        }
+
+        return UpdateData( _invalid_int, kfdata, operate, value, callback );
+    }
+
+    uint64 KFEntityEx::UpdateData( KFData* kfdata, uint32 operate, uint64 value, bool callback )
+    {
+        return UpdateData( _invalid_int, kfdata, operate, value );
+    }
+
+    uint64 KFEntityEx::UpdateData( uint64 key, KFData* kfdata, uint32 operate, uint64 value, bool callback )
+    {
+        if ( !kfdata->IsInt() )
+        {
+            __LOG_ERROR__( "data=[{}] is not int=[{}]", kfdata->_data_setting->_name );
+            return _invalid_int;
+        }
+
+        auto oldvalue = kfdata->Get< uint64 >();
+        auto newvalue = kfdata->Operate( operate, value );
+        _kf_component->UpdateDataCallBack( this, key, kfdata, _invalid_int, operate, value, oldvalue, newvalue, callback );
+
+        return newvalue;
+    }
+
+    uint64 KFEntityEx::UpdateObjectData( const std::string& parentname, const std::string& dataname, uint32 operate, uint64 value, bool callback )
+    {
+        auto kfparent = Find( parentname );
+        if ( kfparent == nullptr )
+        {
+            __LOG_ERROR__( "parent=[{}] not have object=[{}]", _data_setting->_name, parentname );
+            return _invalid_int;
+        }
+
+        return UpdateObjectData( kfparent, dataname, operate, value );
+    }
+
+    uint64 KFEntityEx::UpdateObjectData( KFData* kfparent, const std::string& dataname, uint32 operate, uint64 value, bool callback )
     {
         auto kfdata = kfparent->Find( dataname );
         if ( kfdata == nullptr )
         {
+            __LOG_ERROR__( "parent=[{}] not have data=[{}]", kfparent->_data_setting->_name, dataname );
             return _invalid_int;
         }
 
         return UpdateData( kfparent->GetKeyID(), kfdata, operate, value );
     }
 
-    uint64 KFEntityEx::UpdateData( KFData* kfparent, uint64 key, const std::string& dataname, uint32 operate, uint64 value )
+    uint64 KFEntityEx::UpdateRecordData( const std::string& parentname, uint64 key, const std::string& dataname, uint32 operate, uint64 value, bool callback )
+    {
+        auto kfparent = Find( parentname );
+        if ( kfparent == nullptr )
+        {
+            __LOG_ERROR__( "parent=[{}] not have record=[{}]", _data_setting->_name, parentname );
+            return _invalid_int;
+        }
+
+        return UpdateRecordData( kfparent, key, dataname, operate, value, callback );
+    }
+
+    uint64 KFEntityEx::UpdateRecordData( KFData* kfparent, uint64 key, const std::string& dataname, uint32 operate, uint64 value, bool callback )
     {
         // 不存在, 创建
         auto kfobject = kfparent->Find( key );
@@ -180,7 +210,7 @@ namespace KFrame
         {
             kfobject = CreateData( kfparent );
             value = kfobject->Operate( dataname, operate, value );
-            AddData( kfparent, key, kfobject );
+            AddRecordData( kfparent, key, kfobject, callback );
             return value;
         }
 
@@ -188,81 +218,108 @@ namespace KFrame
         auto kfdata = kfobject->Find( dataname );
         if ( kfdata == nullptr )
         {
+            __LOG_ERROR__( "object=[{}] not have data=[{}]", kfobject->_data_setting->_name, dataname );
             return _invalid_int;
         }
 
-        return UpdateData( key, kfdata, operate, value );
+        return UpdateData( key, kfdata, operate, value, callback );
     }
 
-    uint64 KFEntityEx::UpdateData( KFData* kfdata, uint32 operate, uint64 value )
-    {
-        return UpdateData( _invalid_int, kfdata, operate, value );
-    }
-
-    uint64 KFEntityEx::UpdateData( uint64 key, KFData* kfdata, const std::string& dataname, uint32 operate, uint64 value )
+    uint64 KFEntityEx::UpdateObjectData( uint64 key, KFData* kfdata, const std::string& dataname, uint32 operate, uint64 value, bool callback )
     {
         auto kfchild = kfdata->Find( dataname );
         if ( kfchild == nullptr )
         {
-            return 0u;
-        }
-
-        return UpdateData( key, kfchild, operate, value );
-    }
-
-    uint64 KFEntityEx::UpdateData( uint64 key, KFData* kfdata, uint32 operate, uint64 value )
-    {
-        auto oldvalue = kfdata->Get< uint64 >();
-        auto newvalue = kfdata->Operate( operate, value );
-        _kf_component->UpdateDataCallBack( this, key, kfdata, _invalid_int, operate, value, oldvalue, newvalue, true );
-
-        return newvalue;
-    }
-
-    uint64 KFEntityEx::UpdateData( const std::string& dataname, uint64 index, uint32 operate, uint64 value )
-    {
-        auto kfdata = Find( dataname );
-        if ( kfdata == nullptr )
-        {
-            return 0u;
-        }
-
-        return UpdateData( index, kfdata, index, operate, value );
-    }
-
-    uint64 KFEntityEx::UpdateData( KFData* kfdata, uint64 index, uint32 operate, uint64 value )
-    {
-        return UpdateData( index, kfdata, index, operate, value );
-    }
-
-    uint64 KFEntityEx::UpdateData( uint64 key, KFData* kfdata, uint64 index, uint32 operate, uint64 value )
-    {
-        auto kfchild = kfdata->Find( index );
-        if ( kfchild == nullptr )
-        {
+            __LOG_ERROR__( "object=[{}] not have data=[{}]", kfdata->_data_setting->_name, dataname );
             return _invalid_int;
         }
 
-        auto oldvalue = kfchild->Get< uint64 >();
-        auto newvalue = kfchild->Operate( operate, value );
-        _kf_component->UpdateDataCallBack( this, key, kfchild, index, operate, value, oldvalue, newvalue, true );
+        return UpdateData( key, kfchild, operate, value, callback );
+    }
+
+    uint64 KFEntityEx::UpdateArrayData( const std::string& dataname, uint64 index, uint32 operate, uint64 value, bool callback )
+    {
+        auto kfarray = Find( dataname );
+        if ( kfarray == nullptr )
+        {
+            __LOG_ERROR__( "object=[{}] not have array=[{}]", _data_setting->_name, dataname );
+            return _invalid_int;
+        }
+
+        if ( !kfarray->IsArray() )
+        {
+            __LOG_ERROR__( "data=[{}] is not array", dataname );
+            return _invalid_int;
+        }
+
+        return UpdateObjectArrayData( index, kfarray, index, operate, value );
+    }
+
+    uint64 KFEntityEx::UpdateArrayData( KFData* kfarray, uint64 index, uint32 operate, uint64 value, bool callback )
+    {
+        return UpdateObjectArrayData( index, kfarray, index, operate, value );
+    }
+
+    uint64 KFEntityEx::UpdateObjectArrayData( uint64 key, KFData* kfarray, uint64 index, uint32 operate, uint64 value, bool callback )
+    {
+        auto kfdata = kfarray->Find( index );
+        if ( kfdata == nullptr )
+        {
+            __LOG_ERROR__( "array=[{}] not index=[{}] max=[{}]", kfarray->_data_setting->_name, index, kfarray->MaxSize() );
+            return _invalid_int;
+        }
+
+        auto oldvalue = kfdata->Get< uint64 >();
+        auto newvalue = kfdata->Operate( operate, value );
+        _kf_component->UpdateDataCallBack( this, key, kfdata, index, operate, value, oldvalue, newvalue, callback );
 
         return newvalue;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFEntityEx::AddData( const std::string& parentname, uint64 key, KFData* kfdata, bool callback )
+    bool KFEntityEx::AddRecordData( const std::string& parentname, uint64 key, KFData* kfdata, bool callback )
     {
         auto kfparent = Find( parentname );
         if ( kfparent == nullptr )
         {
+            __LOG_ERROR__( "parent=[{}] not have data=[{}]", _data_setting->_name, parentname );
             return false;
         }
 
-        return AddData( kfparent, key, kfdata, callback );
+        if ( !kfparent->IsRecord() )
+        {
+            __LOG_ERROR__( "data=[{}] is not record", parentname );
+            return false;
+        }
+
+        if ( kfdata->IsObject() )
+        {
+            __LOG_ERROR__( "data=[{}] is not object", kfdata->_data_setting->_name );
+            return false;
+        }
+
+        return AddRecordData( kfparent, key, kfdata, callback );
     }
 
-    bool KFEntityEx::AddData( KFData* kfparent, uint64 key, KFData* kfdata, bool callback )
+    bool KFEntityEx::AddRecordData( KFData* kfparent, KFData* kfdata, bool callback )
+    {
+        if ( !kfparent->IsRecord() )
+        {
+            __LOG_ERROR__( "data=[{}] is not record", kfparent->_data_setting->_name );
+            return false;
+        }
+
+        if ( kfdata->IsObject() )
+        {
+            __LOG_ERROR__( "data=[{}] is not object", kfdata->_data_setting->_name );
+            return false;
+        }
+
+        auto key = kfdata->GetKeyID();
+        return AddRecordData( kfparent, key, kfdata, callback );
+    }
+
+    bool KFEntityEx::AddRecordData( KFData* kfparent, uint64 key, KFData* kfdata, bool callback )
     {
         bool result = kfparent->Add( key, kfdata );
         if ( result )
@@ -273,13 +330,6 @@ namespace KFrame
 
         return result;
     }
-
-    bool KFEntityEx::AddData( KFData* kfparent, KFData* kfdata, bool callback )
-    {
-        auto key = kfdata->GetKeyID();
-        return AddData( kfparent, key, kfdata, callback );
-    }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFEntityEx::InitArray( KFData* kfarray, uint32 size )
@@ -295,8 +345,12 @@ namespace KFrame
     }
 
 #define __ADD_ARRAY_DATA__( type )\
-    void KFEntityEx::AddData( KFData* kfdata, const type& inlist )\
+    void KFEntityEx::AddArray( KFData* kfdata, const type& inlist )\
     {\
+        if ( kfdata->IsArray() )\
+        {\
+            return __LOG_ERROR__( "data=[{}] is not array", kfdata->_data_setting->_name );\
+        }\
         for ( auto value : inlist )\
         {\
             AddArray( kfdata, value );\
@@ -304,14 +358,18 @@ namespace KFrame
     }\
 
 #define __ADD_ARRAY_DATA_1__( type )\
-    void KFEntityEx::AddData( KFData* kfdata, const std::string& dataname, const type& inlist )\
+    void KFEntityEx::AddObjectArray( KFData* kfdata, const std::string& dataname, const type& inlist )\
     {\
+        if ( kfdata->IsObject() )\
+        {\
+            return __LOG_ERROR__( "data=[{}] is not object", kfdata->_data_setting->_name );\
+        }\
         auto kfarray = kfdata->Find( dataname );\
         if ( kfarray == nullptr )\
         {\
-            return;\
+            return __LOG_ERROR__( "parent=[{}] not have data=[{}]", kfdata->_data_setting->_name, dataname );\
         }\
-        AddData( kfarray, inlist );\
+        AddArray( kfarray, inlist );\
     }\
 
     __ADD_ARRAY_DATA__( UInt32Set );
@@ -323,22 +381,30 @@ namespace KFrame
     __ADD_ARRAY_DATA_1__( UInt32Vector );
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFEntityEx::RemoveData( const std::string& parentname, uint64 key, bool callback )
+    bool KFEntityEx::RemoveRecordData( const std::string& parentname, uint64 key, bool callback )
     {
         auto kfparent = Find( parentname );
         if ( kfparent == nullptr )
         {
+            __LOG_ERROR__( "parent=[{}] not have data=[{}]", _data_setting->_name, parentname );
             return false;
         }
 
-        return RemoveData( kfparent, key, callback );
+        return RemoveRecordData( kfparent, key, callback );
     }
 
-    bool KFEntityEx::RemoveData( KFData* kfparent, uint64 key, bool callback )
+    bool KFEntityEx::RemoveRecordData( KFData* kfparent, uint64 key, bool callback )
     {
+        if ( !kfparent->IsRecord() )
+        {
+            __LOG_ERROR__( "data=[{}] is not record", kfparent->_data_setting->_name );
+            return false;
+        }
+
         auto kfdata = kfparent->Find( key );
         if ( kfdata == nullptr )
         {
+            __LOG_ERROR__( "record=[{}] not have object=[{}]", kfparent->_data_setting->_name, key );
             return false;
         }
 
@@ -349,19 +415,26 @@ namespace KFrame
         return kfparent->Move( key );
     }
 
-    bool KFEntityEx::CleanData( const std::string& parentname, bool callback )
+    bool KFEntityEx::CleanRecordData( const std::string& parentname, bool callback )
     {
         auto kfparent = Find( parentname );
         if ( kfparent == nullptr )
         {
+            __LOG_ERROR__( "parent=[{}] not have data=[{}]", _data_setting->_name, parentname );
             return false;
         }
 
-        return CleanData( kfparent, callback );
+        return CleanRecordData( kfparent, callback );
     }
 
-    bool KFEntityEx::CleanData( KFData* kfparent, bool callback )
+    bool KFEntityEx::CleanRecordData( KFData* kfparent, bool callback )
     {
+        if ( !kfparent->IsRecord() )
+        {
+            __LOG_ERROR__( "data=[{}] is not record", kfparent->_data_setting->_name );
+            return false;
+        }
+
         UInt64List keys;
         for ( auto kfdata = kfparent->First(); kfdata != nullptr; kfdata = kfparent->Next() )
         {
@@ -370,17 +443,24 @@ namespace KFrame
 
         for ( auto key : keys )
         {
-            RemoveData( kfparent, key, callback );
+            RemoveRecordData( kfparent, key, callback );
         }
 
         return true;
     }
 
-    bool KFEntityEx::RemoveData( KFData* kfparent, const std::string& dataname, bool callback )
+    bool KFEntityEx::RemoveObjectData( KFData* kfparent, const std::string& dataname, bool callback )
     {
+        if ( !kfparent->IsObject() )
+        {
+            __LOG_ERROR__( "data=[{}] is not object", kfparent->_data_setting->_name );
+            return false;
+        }
+
         auto kfdata = kfparent->Find( dataname );
         if ( kfdata == nullptr )
         {
+            __LOG_ERROR__( "parent=[{}] not have data=[{}]", kfparent->_data_setting->_name, dataname );
             return false;
         }
 
@@ -391,25 +471,70 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    KFData* KFEntityEx::MoveData( const std::string& sourcename, uint64 key, const std::string& targetname )
+    KFData* KFEntityEx::MoveRecordData( KFData* kfparent, uint64 key, bool callback )
+    {
+        if ( !kfparent->IsRecord() )
+        {
+            __LOG_ERROR__( "data=[{}] is not record", kfparent->_data_setting->_name );
+            return nullptr;
+        }
+
+        // 移除属性
+        auto kfdata = kfparent->Move( key );
+        if ( kfdata != nullptr )
+        {
+            _kf_component->RemoveDataCallBack( this, kfparent, key, kfdata, callback );
+        }
+        else
+        {
+            __LOG_WARN__( "record=[{}] not have object=[{}]", kfparent->_data_setting->_name, key );
+        }
+
+        return kfdata;
+    }
+
+
+    KFData* KFEntityEx::MoveRecordDataToRecord( const std::string& sourcename, uint64 key, const std::string& targetname )
     {
         auto sourcedata = Find( sourcename );
         auto targetdata = Find( targetname );
-        if ( sourcedata == nullptr || targetdata == nullptr )
+        if ( sourcedata == nullptr )
         {
+            __LOG_ERROR__( "parent=[{}] not have record=[{}]", _data_setting->_name, sourcename );
             return nullptr;
         }
 
-        return MoveData( sourcedata, key, targetdata );
+        if ( targetdata == nullptr )
+        {
+            __LOG_ERROR__( "parent=[{}] not have record=[{}]", _data_setting->_name, targetname );
+            return nullptr;
+        }
+
+        return MoveRecordDataToRecord( sourcedata, key, targetdata );
     }
 
-    KFData* KFEntityEx::MoveData( KFData* sourcedata, uint64 key, KFData* targetdata )
+    KFData* KFEntityEx::MoveRecordDataToRecord( KFData* sourcedata, uint64 key, KFData* targetdata )
     {
+        if ( !sourcedata->IsRecord() )
+        {
+            __LOG_ERROR__( "data=[{}] is not record", sourcedata->_data_setting->_name );
+            return nullptr;
+        }
+
+        if ( !targetdata->IsRecord() )
+        {
+            __LOG_ERROR__( "data=[{}] is not record", targetdata->_data_setting->_name );
+            return nullptr;
+        }
+
+
         auto kfdata = sourcedata->Move( key );
         if ( kfdata == nullptr )
         {
+            __LOG_ERROR__( "record=[{}] not have object=[{}]", sourcedata->_data_setting->_name, key );
             return nullptr;
         }
+
         _kf_component->RemoveDataCallBack( this, sourcedata, key, kfdata, false );
 
         targetdata->Add( key, kfdata );
@@ -418,34 +543,37 @@ namespace KFrame
         return kfdata;
     }
 
-    KFData* KFEntityEx::MoveData( KFData* sourcedata, const std::string& dataname, const std::string& targetname )
+    KFData* KFEntityEx::MoveObjectDataToRecord( KFData* sourcedata, const std::string& dataname, const std::string& targetname )
     {
         auto targetdata = Find( targetname );
         if ( targetdata == nullptr )
         {
+            __LOG_ERROR__( "parent=[{}] not have record=[{}]", _data_setting->_name, targetname );
             return nullptr;
         }
 
-        return MoveData( sourcedata, dataname, targetdata );
+        return MoveObjectDataToRecord( sourcedata, dataname, targetdata );
     }
 
-    KFData* KFEntityEx::MoveData( KFData* kfparent, uint64 key, bool callback )
+    KFData* KFEntityEx::MoveObjectDataToRecord( KFData* sourcedata, const std::string& dataname, KFData* targetdata )
     {
-        // 移除属性
-        auto kfdata = kfparent->Move( key );
-        if ( kfdata != nullptr )
+        if ( !sourcedata->IsObject() )
         {
-            _kf_component->RemoveDataCallBack( this, kfparent, key, kfdata, callback );
+            __LOG_ERROR__( "data=[{}] is not object", sourcedata->_data_setting->_name );
+            return nullptr;
         }
-        return kfdata;
-    }
 
-    KFData* KFEntityEx::MoveData( KFData* sourcedata, const std::string& dataname, KFData* targetdata )
-    {
+        if ( !targetdata->IsRecord() )
+        {
+            __LOG_ERROR__( "data=[{}] is not record", targetdata->_data_setting->_name );
+            return nullptr;
+        }
+
         // 移除属性
         auto kfdata = sourcedata->Move( dataname, true );
         if ( kfdata == nullptr )
         {
+            __LOG_ERROR__( "object=[{}] not have data=[{}]", sourcedata->_data_setting->_name, dataname );
             return nullptr;
         }
         _kf_component->RemoveDataCallBack( this, sourcedata, 0, kfdata, false );
@@ -458,12 +586,25 @@ namespace KFrame
         return kfdata;
     }
 
-    KFData* KFEntityEx::MoveData( KFData* sourcedata, uint64 key, KFData* targetdata, const std::string& dataname )
+    KFData* KFEntityEx::MoveRecordDataToObject( KFData* sourcedata, uint64 key, KFData* targetdata, const std::string& dataname )
     {
+        if ( !sourcedata->IsRecord() )
+        {
+            __LOG_ERROR__( "data=[{}] is not record", sourcedata->_data_setting->_name );
+            return nullptr;
+        }
+
+        if ( !targetdata->IsObject() )
+        {
+            __LOG_ERROR__( "data=[{}] is not object", targetdata->_data_setting->_name );
+            return nullptr;
+        }
+
         // 移除属性
         auto kfdata = sourcedata->Move( key );
         if ( kfdata == nullptr )
         {
+            __LOG_ERROR__( "record=[{}] not have object=[{}]", sourcedata->_data_setting->_name, key );
             return nullptr;
         }
         _kf_component->RemoveDataCallBack( this, sourcedata, key, kfdata, false );
@@ -475,12 +616,26 @@ namespace KFrame
         return kfdata;
     }
 
-    KFData* KFEntityEx::MoveData( KFData* sourcedata, const std::string& sourcename, KFData* targetdata, const std::string& targetname )
+    KFData* KFEntityEx::MoveObjectDataToObject( KFData* sourcedata, const std::string& sourcename, KFData* targetdata, const std::string& targetname )
     {
+        if ( !sourcedata->IsObject() )
+        {
+            __LOG_ERROR__( "data=[{}] is not object", sourcedata->_data_setting->_name );
+            return nullptr;
+        }
+
+
+        if ( !targetdata->IsObject() )
+        {
+            __LOG_ERROR__( "data=[{}] is not object", targetdata->_data_setting->_name );
+            return nullptr;
+        }
+
         // 移除属性
         auto kfdata = sourcedata->Move( sourcename, true );
         if ( kfdata == nullptr )
         {
+            __LOG_ERROR__( "object=[{}] not have object=[{}]", sourcedata->_data_setting->_name, sourcename );
             return nullptr;
         }
         _kf_component->RemoveDataCallBack( this, sourcedata, 0, kfdata, false );
@@ -490,26 +645,6 @@ namespace KFrame
         SyncUpdateDataToClient( kfdata, 0u );
 
         return kfdata;
-    }
-
-    uint64 KFEntityEx::MoveData( KFData* kfparent, const std::string& dataname, uint32 operate, uint64 value )
-    {
-        auto kfdata = kfparent->Find( dataname );
-        if ( kfdata == nullptr )
-        {
-            return _invalid_int;
-        }
-
-        return MoveData( kfparent->GetKeyID(), kfdata, operate, value );
-    }
-
-    uint64 KFEntityEx::MoveData( uint64 key, KFData* kfdata, uint32 operate, uint64 value )
-    {
-        auto oldvalue = kfdata->Get< uint64 >();
-        auto newvalue = kfdata->Operate( operate, value );
-        _kf_component->UpdateDataCallBack( this, key, kfdata, _invalid_int, operate, value, oldvalue, newvalue, false );
-
-        return newvalue;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1090,7 +1225,7 @@ namespace KFrame
             switch ( kfvalue->_type )
             {
             case KFDataDefine::DataTypeUInt32:
-                UpdateData( 0, kfchild, kfelement->_operate, kfvalue->CalcUseValue( kfchild->_data_setting, multiple ) );
+                UpdateData( kfchild, kfelement->_operate, kfvalue->CalcUseValue( kfchild->_data_setting, multiple ) );
                 break;
             case KFDataDefine::DataTypeString:
                 UpdateData( kfchild, kfvalue->GetValue() );
@@ -1169,7 +1304,7 @@ namespace KFrame
             // 不存在, 创建一个, 并更新属性
             kfchild = CreateData( kfparent );
             SetElementToData( kfchild, kfelementobject, kfresult->_multiple );
-            AddData( kfparent, kfelementobject->_config_id, kfchild );
+            AddRecordData( kfparent, kfelementobject->_config_id, kfchild );
         }
         else
         {
@@ -1414,7 +1549,7 @@ namespace KFrame
         return true;
     }
 
-    bool KFEntityEx::RemoveObjectElement( KFData* kfparent, KFElementResult* kfresult, const char* function, uint32 line )
+    bool KFEntityEx::RemoveObjectElement( KFData* kfobject, KFElementResult* kfresult, const char* function, uint32 line )
     {
         if ( !kfresult->_element->IsObject() )
         {
@@ -1433,7 +1568,7 @@ namespace KFrame
                 continue;
             }
 
-            UpdateData( kfparent, name, KFEnum::Dec, kfvalue->GetUseValue() );
+            UpdateObjectData( kfobject, name, KFEnum::Dec, kfvalue->GetUseValue() );
         }
 
         return true;
@@ -1454,8 +1589,8 @@ namespace KFrame
             return false;
         }
 
-        auto kfdata = kfparent->Find( kfelementobject->_config_id );
-        if ( kfdata == nullptr )
+        auto kfobject = kfparent->Find( kfelementobject->_config_id );
+        if ( kfobject == nullptr )
         {
             __LOG_ERROR_FUNCTION__( function, line, "element=[{}] can't find id=[{}]", kfelementobject->_data_name, kfelementobject->_config_id );
             return false;
@@ -1471,7 +1606,7 @@ namespace KFrame
                 continue;
             }
 
-            UpdateData( kfdata, name, KFEnum::Dec, kfvalue->GetUseValue() );
+            UpdateObjectData( kfobject, name, KFEnum::Dec, kfvalue->GetUseValue() );
         }
 
         return true;
@@ -1831,7 +1966,7 @@ namespace KFrame
                 // 不存在列表时, 才更新
                 if ( kfrecord->Find( kfdata->GetKeyID() ) == nullptr )
                 {
-                    AddData( kfrecord, iter->first, kfdata );
+                    AddRecordData( kfrecord, iter->first, kfdata );
                 }
             }
         }
@@ -1866,7 +2001,7 @@ namespace KFrame
                 auto pbchildobject = &iter->second.pbobject();
                 for ( auto citer = pbchildobject->begin(); citer != pbchildobject->end(); ++citer )
                 {
-                    RemoveData( kfrecord, citer->first );
+                    RemoveRecordData( kfrecord, citer->first );
                 }
             }
         }
@@ -1900,7 +2035,7 @@ namespace KFrame
     {
         auto kfbasic = Find( __STRING__( basic ) );
 
-        UpdateData( kfbasic, __STRING__( status ), KFEnum::Set, status );
-        UpdateData( kfbasic, __STRING__( statustime ), KFEnum::Set, KFGlobal::Instance()->_real_time );
+        UpdateObjectData( kfbasic, __STRING__( status ), KFEnum::Set, status );
+        UpdateObjectData( kfbasic, __STRING__( statustime ), KFEnum::Set, KFGlobal::Instance()->_real_time );
     }
 }

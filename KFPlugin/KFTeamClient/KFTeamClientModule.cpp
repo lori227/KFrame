@@ -346,8 +346,8 @@ namespace KFrame
         }
 
         // 清空队伍信息
-        player->CleanData( kfteam->Find( __STRING__( member ) ) );
-        player->UpdateData( kfteam, __STRING__( id ), KFEnum::Set, _invalid_int );
+        player->CleanRecordData( kfteam->Find( __STRING__( member ) ) );
+        player->UpdateObjectData( kfteam, __STRING__( id ), KFEnum::Set, _invalid_int );
 
         switch ( kfmsg.type() )
         {

@@ -351,4 +351,39 @@ namespace KFrame
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////
+    bool KFData::IsArray() const
+    {
+        return _data_type == KFDataDefine::DataTypeArray;
+    }
+
+    bool KFData::IsRecord() const
+    {
+        return _data_type == KFDataDefine::DataTypeRecord;
+    }
+
+    bool KFData::IsObject() const
+    {
+        return _data_type == KFDataDefine::DataTypeObject;
+    }
+
+    bool KFData::IsString() const
+    {
+        return _data_type == KFDataDefine::DataTypeString;
+    }
+
+    bool KFData::IsInt() const
+    {
+        switch ( _data_type )
+        {
+        case KFDataDefine::DataTypeInt32:
+        case KFDataDefine::DataTypeUInt32:
+        case KFDataDefine::DataTypeInt64:
+        case KFDataDefine::DataTypeUInt64:
+            return true;
+        default:
+            break;
+        }
+
+        return false;
+    }
 }

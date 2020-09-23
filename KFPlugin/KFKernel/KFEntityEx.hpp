@@ -51,67 +51,82 @@ namespace KFrame
 
         // 添加数组元素( kfarray )
         virtual KFData* AddArray( KFData* kfarray, int64 value );
-        //////////////////////////////////////////////////////////////////////////////////////////
-        // record 添加属性
-        virtual bool AddData( KFData* kfparent, KFData* kfdata, bool callback = true );
-        virtual bool AddData( KFData* kfparent, uint64 key, KFData* kfdata, bool callback = true );
-        virtual bool AddData( const std::string& parentname, uint64 key, KFData* kfdata, bool callback = true );
 
         // array 添加数组
-        virtual void AddData( KFData* kfdata, const UInt32List& inlist );
-        virtual void AddData( KFData* kfdata, const std::string& dataname, const UInt32List& inlist );
-        virtual void AddData( KFData* kfdata, const UInt32Vector& inlist );
-        virtual void AddData( KFData* kfdata, const std::string& dataname, const UInt32Vector& inlist );
-        virtual void AddData( KFData* kfdata, const UInt32Set& inlist );
-        virtual void AddData( KFData* kfdata, const std::string& dataname, const UInt32Set& inlist );
-        //////////////////////////////////////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////////////////////////////////////
-        // 清空属性
-        virtual bool CleanData( const std::string& parentname, bool callback = true );
-        virtual bool CleanData( KFData* kfparent, bool callback = true );
+        virtual void AddArray( KFData* kfdata, const UInt32Set& inlist );
+        virtual void AddArray( KFData* kfdata, const UInt32List& inlist );
+        virtual void AddArray( KFData* kfdata, const UInt32Vector& inlist );
 
-        // 删除属性
-        virtual bool RemoveData( const std::string& parentname, uint64 key, bool callback = true );
-        virtual bool RemoveData( KFData* kfparent, uint64 key, bool callback = true );
-        virtual bool RemoveData( KFData* kfparent, const std::string& dataname, bool callback = true );
+        virtual void AddObjectArray( KFData* kfdata, const std::string& dataname, const UInt32List& inlist );
+        virtual void AddObjectArray( KFData* kfdata, const std::string& dataname, const UInt32Vector& inlist );
+        virtual void AddObjectArray( KFData* kfdata, const std::string& dataname, const UInt32Set& inlist );
+        //////////////////////////////////////////////////////////////////////////////////////////
+        // record 添加属性
+        virtual bool AddRecordData( KFData* kfparent, KFData* kfdata, bool callback = true );
+        virtual bool AddRecordData( KFData* kfparent, uint64 key, KFData* kfdata, bool callback = true );
+        virtual bool AddRecordData( const std::string& parentname, uint64 key, KFData* kfdata, bool callback = true );
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////
+        // 删除所有集合属性
+        virtual bool CleanRecordData( KFData* kfparent, bool callback = true );
+        virtual bool CleanRecordData( const std::string& parentname, bool callback = true );
+
+        // 删除集合属性
+        virtual bool RemoveRecordData( KFData* kfparent, uint64 key, bool callback = true );
+        virtual bool RemoveRecordData( const std::string& parentname, uint64 key, bool callback = true );
+
+        // 删除对象属性
+        virtual bool RemoveObjectData( KFData* kfparent, const std::string& dataname, bool callback = true );
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
         // 移动属性
-        virtual KFData* MoveData( KFData* kfparent, uint64 key, bool callback = false );
-        virtual KFData* MoveData( const std::string& sourcename, uint64 key, const std::string& targetname );
-        virtual KFData* MoveData( KFData* sourcedata, uint64 key, KFData* targetdata );
+        virtual KFData* MoveRecordData( KFData* kfparent, uint64 key, bool callback = false );
 
-        virtual KFData* MoveData( KFData* sourcedata, const std::string& dataname, const std::string& targetname );
-        virtual KFData* MoveData( KFData* sourcedata, const std::string& dataname, KFData* targetdata );
-        virtual KFData* MoveData( KFData* sourcedata, uint64 key, KFData* targetdata, const std::string& dataname );
-        virtual KFData* MoveData( KFData* sourcedata, const std::string& sourcename, KFData* targetdata, const std::string& targetname );
+        virtual KFData* MoveRecordDataToRecord( const std::string& sourcename, uint64 key, const std::string& targetname );
+        virtual KFData* MoveRecordDataToRecord( KFData* sourcedata, uint64 key, KFData* targetdata );
 
-        virtual uint64 MoveData( uint64 key, KFData* kfdata, uint32 operate, uint64 value );
-        virtual uint64 MoveData( KFData* kfparent, const std::string& dataname, uint32 operate, uint64 value );
+        virtual KFData* MoveObjectDataToRecord( KFData* sourcedata, const std::string& dataname, const std::string& targetname );
+        virtual KFData* MoveObjectDataToRecord( KFData* sourcedata, const std::string& dataname, KFData* targetdata );
 
+        virtual KFData* MoveRecordDataToObject( KFData* sourcedata, uint64 key, KFData* targetdata, const std::string& dataname );
+
+        virtual KFData* MoveObjectDataToObject( KFData* sourcedata, const std::string& sourcename, KFData* targetdata, const std::string& targetname );
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
-        // 更新属性
-        virtual void UpdateData( const std::string& dataname, const std::string& value );
-        virtual void UpdateData( const std::string& parentname, const std::string& dataname, const std::string& value );
-        virtual void UpdateData( const std::string& parentname, uint64 key, const std::string& dataname, const std::string& value );
-        virtual void UpdateData( KFData* kfdata, const std::string& value );
-        virtual void UpdateData( KFData* kfparent, const std::string& dataname, const std::string& value );
+        // 更新string属性
+        // 更新1层属性 如:money 直接属于player下的属性
+        virtual void UpdateData( KFData* kfdata, const std::string& value, bool callback = true );
+        virtual void UpdateData( const std::string& dataname, const std::string& value, bool callback = true );
 
-        // 更新属性
-        virtual uint64 UpdateData( const std::string& dataname, uint32 operate, uint64 value );
-        virtual uint64 UpdateData( const std::string& parentname, const std::string& dataname, uint32 operate, uint64 value );
-        virtual uint64 UpdateData( const std::string& parentname, uint64 key, const std::string& dataname, uint32 operate, uint64 value );
+        virtual void UpdateObjectData( KFData* kfdata, const std::string& dataname, const std::string& value, bool callback = true );
+        virtual void UpdateObjectData( const std::string& parentname, const std::string& dataname, const std::string& value, bool callback = true );
 
-        virtual uint64 UpdateData( KFData* kfdata, uint32 operate, uint64 value );
-        virtual uint64 UpdateData( uint64 key, KFData* kfdata, uint32 operate, uint64 value );
-        virtual uint64 UpdateData( uint64 key, KFData* kfdata, const std::string& dataname, uint32 operate, uint64 value );
-        virtual uint64 UpdateData( KFData* kfdata, uint64 index, uint32 operate, uint64 value );
-        virtual uint64 UpdateData( uint64 key, KFData* kfdata, uint64 index, uint32 operate, uint64 value );
-        virtual uint64 UpdateData( KFData* kfparent, const std::string& dataname, uint32 operate, uint64 value );
-        virtual uint64 UpdateData( KFData* kfparent, uint64 key, const std::string& dataname, uint32 operate, uint64 value );
-        virtual uint64 UpdateData( const std::string& dataname, uint64 index, uint32 operate, uint64 value );
+        virtual void UpdateRecordData( const std::string& parentname, uint64 key, const std::string& dataname, const std::string& value, bool callback = true );
 
+        // 更新int属性
+        virtual uint64 UpdateData( KFData* kfdata, uint32 operate, uint64 value, bool callback = true );
+        virtual uint64 UpdateData( const std::string& dataname, uint32 operate, uint64 value, bool callback = true );
+
+        // 更新某集合下key的某对象的kfdata属性值 如: 英雄id=1的level值
+        virtual uint64 UpdateData( uint64 key, KFData* kfdata, uint32 operate, uint64 value, bool callback = true );
+
+        // 更新2层属性 如: signin=>day 属于player下的signin对象下的属性
+        virtual uint64 UpdateObjectData( KFData* kfparent, const std::string& dataname, uint32 operate, uint64 value, bool callback = true );
+        virtual uint64 UpdateObjectData( const std::string& parentname, const std::string& dataname, uint32 operate, uint64 value, bool callback = true );
+
+        // 更新某集合下key的某对象的kfdata属性值 如: 英雄id=1的level值
+        virtual uint64 UpdateObjectData( uint64 key, KFData* kfdata, const std::string& dataname, uint32 operate, uint64 value, bool callback = true );
+
+        // 更新3层属性 如: hero=>id:1=>level 属于player下的hero集合, id=1的英雄的level属性
+        virtual uint64 UpdateRecordData( const std::string& parentname, uint64 key, const std::string& dataname, uint32 operate, uint64 value, bool callback = true );
+        virtual uint64 UpdateRecordData( KFData* kfparent, uint64 key, const std::string& dataname, uint32 operate, uint64 value, bool callback = true );
+
+        // 更新array属性
+        // kfdata的index值
+        virtual uint64 UpdateArrayData( KFData* kfarray, uint64 index, uint32 operate, uint64 value, bool callback = true );
+        virtual uint64 UpdateArrayData( const std::string& dataname, uint64 index, uint32 operate, uint64 value, bool callback = true );
+
+        virtual uint64 UpdateObjectArrayData( uint64 key, KFData* kfarray, uint64 index, uint32 operate, uint64 value, bool callback = true );
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
         // 判断是否能够添加元数据

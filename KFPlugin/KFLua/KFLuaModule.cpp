@@ -250,7 +250,7 @@ namespace KFrame
             return _invalid_int;
         }
 
-        return kfentity->UpdateData( parentname, dataname, operate, value );
+        return kfentity->UpdateObjectData( parentname, dataname, operate, value );
     }
 
     uint64 KFLuaModule::LuaGetRecordValue( uint64 objectid, const char* parentname, uint64 key, const char* dataname )
@@ -272,7 +272,7 @@ namespace KFrame
             return _invalid_int;
         }
 
-        return kfentity->UpdateData( parentname, key, dataname, operate, value );
+        return kfentity->UpdateRecordData( parentname, key, dataname, operate, value );
     }
 
     uint32 KFLuaModule::LuaGetVariable( uint32 varid )

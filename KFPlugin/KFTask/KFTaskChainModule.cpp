@@ -160,7 +160,7 @@ namespace KFrame
         for ( auto kftask : tasklist )
         {
             auto taskid = kftask->Get<uint32>( __STRING__( id ) );
-            player->RemoveData( kftaskrecord, taskid );
+            player->RemoveRecordData( kftaskrecord, taskid );
         }
     }
 
@@ -267,7 +267,7 @@ namespace KFrame
             __UN_TIMER_2__( player->GetKeyID(), iter.first );
 
             // 移除刷新记录
-            player->RemoveData( __STRING__( retaskchain ), iter.first );
+            player->RemoveRecordData( __STRING__( retaskchain ), iter.first );
         }
     }
 
@@ -286,8 +286,8 @@ namespace KFrame
         }
 
         // 更新定时时间
-        player->UpdateData( __STRING__( retaskchain ), kfrefreshsetting->_id, __STRING__( time ),
-                            KFEnum::Set, KFGlobal::Instance()->_real_time + kfrefreshsetting->_timer_refresh_time );
+        player->UpdateRecordData( __STRING__( retaskchain ), kfrefreshsetting->_id, __STRING__( time ),
+                                  KFEnum::Set, KFGlobal::Instance()->_real_time + kfrefreshsetting->_timer_refresh_time );
         ///////////////////////////////////////////////////////////////
         StartRefreshTaskChain( player, kfrefreshsetting );
     }

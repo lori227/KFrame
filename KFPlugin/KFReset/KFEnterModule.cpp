@@ -31,7 +31,7 @@ namespace KFrame
                 }
 
                 // 设置属性
-                player->UpdateData( kfnoterecord, kfsetting->_id, __STRING__( value ), KFEnum::Set, 1 );
+                player->UpdateRecordData( kfnoterecord, kfsetting->_id, __STRING__( value ), KFEnum::Set, 1 );
             }
 
             // 调用脚本

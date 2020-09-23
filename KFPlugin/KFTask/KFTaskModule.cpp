@@ -168,7 +168,7 @@ namespace KFrame
             _kf_condition->AddCondition( player, kfconditionobject, kfsetting->_complete_condition, kfsetting->_complete_condition_type );
             InitTaskCondition( player, kfsetting, kftask, status, false );
 
-            player->AddData( kftaskrecord, kfsetting->_id, kftask );
+            player->AddRecordData( kftaskrecord, kfsetting->_id, kftask );
         }
         else
         {
@@ -188,7 +188,7 @@ namespace KFrame
         }
 
         // 更新状态
-        player->UpdateData( kftask, __STRING__( status ), KFEnum::Set, status );
+        player->UpdateObjectData( kftask, __STRING__( status ), KFEnum::Set, status );
 
         // 设置时间
         SetTaskTime( player, kftask, kfsetting, validtime, true );
@@ -211,7 +211,7 @@ namespace KFrame
         }
         else
         {
-            player->UpdateData( kftask, __STRING__( time ), KFEnum::Set, validtime );
+            player->UpdateObjectData( kftask, __STRING__( time ), KFEnum::Set, validtime );
         }
 
         // 启动定时器
@@ -263,7 +263,7 @@ namespace KFrame
         _kf_execute->Execute( player, kfsetting->_execute_list, __STRING__( task ), kfsetting->_id, __FUNC_LINE__ );
 
         // 删除任务
-        player->RemoveData( kftask->GetParent(), kfsetting->_id );
+        player->RemoveRecordData( kftask->GetParent(), kfsetting->_id );
 
         // 提示客户端
         _kf_display->DelayToClient( player, KFMsg::TaskRewardOk, kfsetting->_id );
@@ -288,7 +288,7 @@ namespace KFrame
             return;
         }
 
-        player->RemoveData( __STRING__( task ), subid );
+        player->RemoveRecordData( __STRING__( task ), subid );
     }
 
     void KFTaskModule::StopTaskTimeoutTimer( KFEntity* player, KFData* kftask, uint32 taskid )
@@ -297,7 +297,7 @@ namespace KFrame
         if ( time != 0u )
         {
             __UN_TIMER_2__( player->GetKeyID(), taskid );
-            player->UpdateData( kftask, __STRING__( time ), KFEnum::Set, 0u );
+            player->UpdateObjectData( kftask, __STRING__( time ), KFEnum::Set, 0u );
         }
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -595,7 +595,7 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::TaskCanNotFind, kfmsg.id() );
         }
 
-        player->RemoveData( __STRING__( task ), kfmsg.id() );
+        player->RemoveRecordData( __STRING__( task ), kfmsg.id() );
     }
 
     __KF_EXECUTE_FUNCTION__( KFTaskModule::OnExecuteUpdateTaskStatus )
@@ -619,7 +619,7 @@ namespace KFrame
         {
         case KFMsg::InitStatus:
         {
-            player->RemoveData( kftaskrecord, taskid );
+            player->RemoveRecordData( kftaskrecord, taskid );
         }
         break;
         case KFMsg::ActiveStatus:

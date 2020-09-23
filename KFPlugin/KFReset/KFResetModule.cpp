@@ -112,7 +112,7 @@ namespace KFrame
         }
 
         auto kftimerecord = player->Find( __STRING__( time ) );
-        player->UpdateData( kftimerecord, timeid, kftimerecord->_data_setting->_value_key_name, KFEnum::Set, KFGlobal::Instance()->_real_time );
+        player->UpdateRecordData( kftimerecord, timeid, kftimerecord->_data_setting->_value_key_name, KFEnum::Set, KFGlobal::Instance()->_real_time );
     }
 
     __KF_PLAYER_RUN_FUNCTION__( KFResetModule::RunResetPlayerData )
@@ -165,15 +165,15 @@ namespace KFrame
                 }
                 else if ( resetdata._data_name.empty() )
                 {
-                    player->CleanData( resetdata._parent_name );
+                    player->CleanRecordData( resetdata._parent_name );
                 }
                 else if ( resetdata._key == 0u )
                 {
-                    player->UpdateData( resetdata._parent_name, resetdata._data_name, resetdata._operate, resetdata._value );
+                    player->UpdateObjectData( resetdata._parent_name, resetdata._data_name, resetdata._operate, resetdata._value );
                 }
                 else
                 {
-                    player->UpdateData( resetdata._parent_name, resetdata._key, resetdata._data_name, resetdata._operate, resetdata._value );
+                    player->UpdateRecordData( resetdata._parent_name, resetdata._key, resetdata._data_name, resetdata._operate, resetdata._value );
                 }
             }
         }
