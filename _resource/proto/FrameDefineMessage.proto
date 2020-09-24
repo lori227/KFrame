@@ -103,7 +103,6 @@ message PBShowData
 	bytes name = 1;		// 属性名
 	uint64 value = 2;	// 属性值
 	map< string, uint64 > pbuint64 = 3;		// 属性值列表
-	bytes extendname = 4;		// 扩展名
 }
 
 message PBShowElement

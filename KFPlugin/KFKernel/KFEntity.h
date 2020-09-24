@@ -84,7 +84,6 @@ namespace KFrame
 
 
         virtual uint64 UpdateData( KFData* kfdata, uint32 operate, uint64 value, bool callback = true ) = 0;
-
         virtual uint64 UpdateData( const std::string& dataname, uint32 operate, uint64 value, bool callback = true ) = 0;
         virtual uint64 UpdateData( uint64 key, KFData* kfdata, uint32 operate, uint64 value, bool callback = true ) = 0;
 
@@ -116,15 +115,14 @@ namespace KFrame
         virtual void SetElementToData( KFData* kfdata, KFElementObject* kfelement, double multiple ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 显示奖励接口相关
-        virtual void AddDataToShow( const std::string& modulename, uint64 moduleid ) = 0;
+        virtual void SetDataShowModule( const std::string& modulename, uint64 moduleid ) = 0;
 
-        virtual void AddDataToShow( const std::string& name, uint64 value, bool find ) = 0;
-        virtual void AddDataToShow( const std::string& modulename, uint64 moduleid, const std::string& name, uint64 value, bool find ) = 0;
+        virtual void AddDataToShow( const std::string& name, uint64 value, bool independ = true ) = 0;
+        virtual void AddDataToShow( const std::string& modulename, uint64 moduleid, KFData* kfdata, bool independ = true ) = 0;
+        virtual void AddDataToShow( const std::string& modulename, uint64 moduleid, const std::string& name, uint64 value, bool independ = true ) = 0;
 
-        virtual void AddDataToShow( const std::string& modulename, uint64 moduleid, KFData* kfdata ) = 0;
-
-        virtual void AddDataToShow( const std::string& name, uint64 value, StringUInt64& values, bool find, const std::string& extendname = _invalid_string ) = 0;
-        virtual void AddDataToShow( const std::string& modulename, uint64 moduleid, const std::string& name, uint64 value, StringUInt64& values, bool find, const std::string& extendname = _invalid_string ) = 0;
+        virtual void AddDataToShow( const std::string& name, uint64 value, StringUInt64& values, bool independ = true ) = 0;
+        virtual void AddDataToShow( const std::string& modulename, uint64 moduleid, const std::string& name, uint64 value, StringUInt64& values, bool independ = true ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 同步更新数据

@@ -123,7 +123,7 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFDropModule::ExecuteDropLogic( KFEntity* player, const DropDataList& dropdatalist, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
     {
-        player->AddDataToShow( modulename, moduleid );
+        player->SetDataShowModule( modulename, moduleid );
 
         // 执行掉落逻辑
         for ( auto dropdata : dropdatalist )

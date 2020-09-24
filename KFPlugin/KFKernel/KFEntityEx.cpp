@@ -729,14 +729,14 @@ namespace KFrame
         return pbshowelement;
     }
 
-    KFMsg::PBShowData* KFEntityEx::CreateShowData( KFMsg::PBShowElement* pbshowelement, const std::string& name, uint64 value, bool find, const std::string& extendname )
+    KFMsg::PBShowData* KFEntityEx::CreateShowData( KFMsg::PBShowElement* pbshowelement, const std::string& name, uint64 value, bool independ )
     {
-        if ( find )
+        if ( !independ )
         {
             for ( auto i = 0; i < pbshowelement->pbdata_size(); ++i )
             {
                 auto pbdata = pbshowelement->mutable_pbdata( i );
-                if ( pbdata->name() != name || pbdata->extendname() != extendname )
+                if ( pbdata->name() != name )
                 {
                     continue;
                 }
@@ -767,7 +767,6 @@ namespace KFrame
         auto pbdata = pbshowelement->add_pbdata();
         pbdata->set_name( name );
         pbdata->set_value( value );
-        pbdata->set_extendname( extendname );
         return pbdata;
     }
 
@@ -808,7 +807,7 @@ namespace KFrame
             auto kfelementvalue = reinterpret_cast< const KFElementValue* >( kfelement );
             if ( kfelementvalue->_value->IsNeedShow() )
             {
-                CreateShowData( pbshowelement, kfelementvalue->_data_name, kfelementvalue->_value->GetUseValue(), false, _invalid_string );
+                CreateShowData( pbshowelement, kfelementvalue->_data_name, kfelementvalue->_value->GetUseValue(), false );
             }
         }
         else if ( kfelement->IsObject() )
@@ -816,7 +815,7 @@ namespace KFrame
             auto kfelementobject = reinterpret_cast< const KFElementObject* >( kfelement );
             if ( kfelementobject->IsNeedShow() )
             {
-                auto pbshowdata = CreateShowData( pbshowelement, kfelementobject->_data_name, kfelementobject->_config_id, false, _invalid_string );
+                auto pbshowdata = CreateShowData( pbshowelement, kfelementobject->_data_name, kfelementobject->_config_id, false );
                 ( *pbshowdata->mutable_pbuint64() )[ __STRING__( id ) ] = kfelementobject->_config_id;
                 for ( auto& iter : kfelementobject->_values._objects )
                 {
@@ -849,7 +848,7 @@ namespace KFrame
     {
         if ( IsElementResultShow( kfresult ) )
         {
-            AddDataToShow( kfresult->_module_name, kfresult->_module_id, kfresult->_element->_data_name, kfresult->_total_value, false );
+            AddDataToShow( kfresult->_module_name, kfresult->_module_id, kfresult->_element->_data_name, kfresult->_total_value, true );
         }
     }
 
@@ -871,7 +870,7 @@ namespace KFrame
     {
         if ( IsElementResultShow( kfresult ) )
         {
-            AddDataToShow( kfresult->_module_name, kfresult->_module_id, kfresult->_element->_data_name, kfresult->_total_value, false );
+            AddDataToShow( kfresult->_module_name, kfresult->_module_id, kfresult->_element->_data_name, kfresult->_total_value, true );
         }
     }
 
@@ -901,9 +900,9 @@ namespace KFrame
             if ( IsElementResultShow( kfresult ) )
             {
                 StringUInt64 values;
-                values[ __STRING__( id ) ] = kfresult->_config_id;
                 values[ kfresult->_data_name ] = iter.second;
-                AddDataToShow( kfresult->_module_name, kfresult->_module_id, kfresult->_element->_data_name, kfresult->_config_id, values, false, iter.first );
+                values[ __STRING__( id ) ] = kfresult->_config_id;
+                AddDataToShow( kfresult->_module_name, kfresult->_module_id, kfresult->_element->_data_name, kfresult->_config_id, values, true );
             }
         }
     }
@@ -939,7 +938,7 @@ namespace KFrame
         }
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFEntityEx::AddDataToShow( const std::string& modulename, uint64 moduleid )
+    void KFEntityEx::SetDataShowModule( const std::string& modulename, uint64 moduleid )
     {
         if ( modulename.empty() )
         {
@@ -949,7 +948,13 @@ namespace KFrame
         CreateShowElement( modulename, moduleid );
     }
 
-    void KFEntityEx::AddDataToShow( const std::string& name, uint64 value, bool find )
+    void KFEntityEx::AddDataToShow( const std::string& modulename, uint64 moduleid, KFData* kfdata, bool independ )
+    {
+        auto pbshowelement = CreateShowElement( modulename, moduleid );
+        AddDataToShowElement( pbshowelement, kfdata, independ );
+    }
+
+    void KFEntityEx::AddDataToShow( const std::string& name, uint64 value, bool independ )
     {
         auto pbshowelement = CreateShowElement();
         if ( pbshowelement == nullptr )
@@ -957,10 +962,10 @@ namespace KFrame
             return;
         }
 
-        CreateShowData( pbshowelement, name, value, find, _invalid_string );
+        CreateShowData( pbshowelement, name, value, independ );
     }
 
-    void KFEntityEx::AddDataToShow( const std::string& modulename, uint64 moduleid, const std::string& name, uint64 value, bool find )
+    void KFEntityEx::AddDataToShow( const std::string& modulename, uint64 moduleid, const std::string& name, uint64 value, bool independ )
     {
         if ( value == 0u )
         {
@@ -968,11 +973,11 @@ namespace KFrame
         }
 
         auto pbshowelement = CreateShowElement( modulename, moduleid );
-        CreateShowData( pbshowelement, name, value, find, _invalid_string );
+        CreateShowData( pbshowelement, name, value, independ );
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFEntityEx::AddDataToShow( const std::string& name, uint64 value, StringUInt64& values, bool find, const std::string& extendname )
+    void KFEntityEx::AddDataToShow( const std::string& name, uint64 value, StringUInt64& values, bool independ )
     {
         auto pbshowelement = CreateShowElement();
         if ( pbshowelement == nullptr )
@@ -980,32 +985,18 @@ namespace KFrame
             return;
         }
 
-        AddDataToShow( pbshowelement, name, value, values, find, extendname );
+        AddDataToShowElement( pbshowelement, name, value, values, independ );
     }
 
-    void KFEntityEx::AddDataToShow( const std::string& modulename, uint64 moduleid, const std::string& name, uint64 value, StringUInt64& values, bool find, const std::string& extendname /* = _invalid_string */ )
+    void KFEntityEx::AddDataToShow( const std::string& modulename, uint64 moduleid, const std::string& name, uint64 value, StringUInt64& values, bool independ )
     {
         auto pbshowelement = CreateShowElement( modulename, moduleid );
-        AddDataToShow( pbshowelement, name, value, values, find, extendname );
+        AddDataToShowElement( pbshowelement, name, value, values, independ );
     }
 
-    void KFEntityEx::AddDataToShow( KFMsg::PBShowElement* pbshowelement, const std::string& name, uint64 value, StringUInt64& values, bool find, const std::string& extendname )
-    {
-        auto pbshowdata = CreateShowData( pbshowelement, name, value, find, extendname );
-        for ( auto& iter : values )
-        {
-            if ( iter.first == __STRING__( count ) )
-            {
-                ( *pbshowdata->mutable_pbuint64() )[ iter.first ] += iter.second;
-            }
-            else
-            {
-                ( *pbshowdata->mutable_pbuint64() )[ iter.first ] = iter.second;
-            }
-        }
-    }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFEntityEx::AddDataToShow( KFMsg::PBShowElement* pbshowelement, KFData* kfdata )
+    void KFEntityEx::AddDataToShowElement( KFMsg::PBShowElement* pbshowelement, KFData* kfdata, bool independ )
     {
         if ( !kfdata->_data_setting->HaveMask( KFDataDefine::DataMaskShow ) )
         {
@@ -1019,14 +1010,14 @@ namespace KFrame
         case KFDataDefine::DataTypeInt64:
         case KFDataDefine::DataTypeUInt64:
         {
-            CreateShowData( pbshowelement, kfdata->_data_setting->_logic_name, kfdata->Get(), true, kfdata->_data_setting->_name );
+            CreateShowData( pbshowelement, kfdata->_data_setting->_logic_name, kfdata->Get(), independ );
             break;
         }
         case KFDataDefine::DataTypeObject:
         case KFDataDefine::DataTypeRecord:
         {
             auto configid = kfdata->Get( kfdata->_data_setting->_config_key_name );
-            auto pbshowdata = CreateShowData( pbshowelement, kfdata->_data_setting->_logic_name, configid, false, kfdata->_data_setting->_name );
+            auto pbshowdata = CreateShowData( pbshowelement, kfdata->_data_setting->_logic_name, configid, false );
             for ( auto kfchild = kfdata->First(); kfchild != nullptr; kfchild = kfdata->Next() )
             {
                 if ( !kfchild->_data_setting->HaveMask( KFDataDefine::DataMaskShow ) ||
@@ -1042,10 +1033,20 @@ namespace KFrame
         }
     }
 
-    void KFEntityEx::AddDataToShow( const std::string& modulename, uint64 moduleid, KFData* kfdata )
+    void KFEntityEx::AddDataToShowElement( KFMsg::PBShowElement* pbshowelement, const std::string& name, uint64 value, StringUInt64& values, bool independ )
     {
-        auto pbshowelement = CreateShowElement( modulename, moduleid );
-        AddDataToShow( pbshowelement, kfdata );
+        auto pbshowdata = CreateShowData( pbshowelement, name, value, independ );
+        for ( auto& iter : values )
+        {
+            if ( iter.first == __STRING__( count ) )
+            {
+                ( *pbshowdata->mutable_pbuint64() )[ iter.first ] += iter.second;
+            }
+            else
+            {
+                ( *pbshowdata->mutable_pbuint64() )[ iter.first ] = iter.second;
+            }
+        }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////

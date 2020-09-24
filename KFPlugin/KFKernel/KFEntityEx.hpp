@@ -140,16 +140,15 @@ namespace KFrame
         virtual void SetElementToData( KFData* kfdata, KFElementObject* kfelement, double multiple );
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
-        // 添加显示数据
-        virtual void AddDataToShow( const std::string& modulename, uint64 moduleid );
+        // 显示奖励
+        virtual void SetDataShowModule( const std::string& modulename, uint64 moduleid );
 
-        virtual void AddDataToShow( const std::string& name, uint64 value, bool find );
-        virtual void AddDataToShow( const std::string& modulename, uint64 moduleid, const std::string& name, uint64 value, bool find );
+        virtual void AddDataToShow( const std::string& name, uint64 value, bool independ = true );
+        virtual void AddDataToShow( const std::string& modulename, uint64 moduleid, KFData* kfdata, bool independ = true );
+        virtual void AddDataToShow( const std::string& modulename, uint64 moduleid, const std::string& name, uint64 value, bool independ = true );
 
-        virtual void AddDataToShow( const std::string& modulename, uint64 moduleid, KFData* kfdata );
-
-        virtual void AddDataToShow( const std::string& name, uint64 value, StringUInt64& values, bool find, const std::string& extendname = _invalid_string );
-        virtual void AddDataToShow( const std::string& modulename, uint64 moduleid, const std::string& name, uint64 value, StringUInt64& values, bool find, const std::string& extendname = _invalid_string );
+        virtual void AddDataToShow( const std::string& name, uint64 value, StringUInt64& values, bool independ = true );
+        virtual void AddDataToShow( const std::string& modulename, uint64 moduleid, const std::string& name, uint64 value, StringUInt64& values, bool independ = true );
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
@@ -230,13 +229,12 @@ namespace KFrame
         void ShowElementResultNotOverlay( const KFElementResult* kfresult );
 
         // 添加显示数据
-        void AddDataToShow( KFMsg::PBShowElement* pbshowelement, KFData* kfdata );
-        void AddDataToShow( KFMsg::PBShowElement* pbshowelement, const std::string& name, uint64 value, StringUInt64& values, bool find, const std::string& extendname );
+        void AddDataToShowElement( KFMsg::PBShowElement* pbshowelement, KFData* kfdata, bool independ );
+        void AddDataToShowElement( KFMsg::PBShowElement* pbshowelement, const std::string& name, uint64 value, StringUInt64& values, bool independ );
 
-        // 创建显示元素
         KFMsg::PBShowElement* CreateShowElement();
         KFMsg::PBShowElement* CreateShowElement( const std::string& modulename, uint64 moduleid );
-        KFMsg::PBShowData* CreateShowData( KFMsg::PBShowElement* pbshowelement, const std::string& name, uint64 value, bool find, const std::string& extendname );
+        KFMsg::PBShowData* CreateShowData( KFMsg::PBShowElement* pbshowelement, const std::string& name, uint64 value, bool independ );
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
