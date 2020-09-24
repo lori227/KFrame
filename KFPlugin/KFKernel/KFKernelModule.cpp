@@ -108,6 +108,10 @@ namespace KFrame
             {\
                 kfchild->Set( iter->second );\
             }\
+            else\
+            {\
+                __LOG_CRITICAL__( "playerdata parent=[{}] not data=[{}]", kfdata->_data_setting->_name, iter->first);\
+            }\
         }\
     }\
 
@@ -138,6 +142,7 @@ namespace KFrame
             auto kfarray = kfdata->Find( iter->first );
             if ( kfarray == nullptr )
             {
+                __LOG_CRITICAL__( "playerdata parent=[{}] not array=[{}]", kfdata->_data_setting->_name, iter->first );
                 continue;
             }
 
@@ -161,6 +166,7 @@ namespace KFrame
             auto kfobject = kfdata->Find( iter->first );
             if ( kfobject == nullptr )
             {
+                __LOG_CRITICAL__( "playerdata parent=[{}] not object=[{}]", kfdata->_data_setting->_name, iter->first );
                 continue;
             }
 
@@ -174,6 +180,7 @@ namespace KFrame
             auto kfrecord = kfdata->Find( iter->first );
             if ( kfrecord == nullptr )
             {
+                __LOG_CRITICAL__( "playerdata parent=[{}] not record=[{}]", kfdata->_data_setting->_name, iter->first );
                 continue;
             }
 

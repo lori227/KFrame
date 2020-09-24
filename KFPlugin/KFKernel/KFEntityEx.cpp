@@ -63,9 +63,9 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFEntityEx::UpdateData( KFData* kfdata, const std::string& value, bool callback )
     {
-        kfdata->Set<std::string>( value );
         if ( kfdata->IsArray() )
         {
+            kfdata->Set<std::string>( value );
             for ( auto i = KFGlobal::Instance()->_array_index; i < kfdata->Size(); ++i )
             {
                 auto kfchild = kfdata->Find( i );
@@ -80,7 +80,13 @@ namespace KFrame
         {
             // 属性更新回调
             auto oldvalue = kfdata->Get<std::string>();
+            kfdata->Set<std::string>( value );
             _kf_component->UpdateDataCallBack( this, kfdata, oldvalue, value, callback );
+        }
+        else if ( kfdata->IsInt() )
+        {
+            auto intvalue = KFUtility::ToValue( value );
+            UpdateData( kfdata, KFEnum::Set, intvalue, callback );
         }
     }
 
