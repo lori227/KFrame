@@ -18,8 +18,8 @@ namespace KFrame
     void KFActor::InitActor( KFWorkerModule* kfmodule, uint32 maxreqcount, uint32 maxackcount )
     {
         _kf_worker_moduler = kfmodule;
-        _req_message_queue.InitQueue( maxreqcount );
-        _ack_message_queue.InitQueue( maxackcount );
+        _req_message_queue.InitQueue( maxreqcount, maxreqcount );
+        _ack_message_queue.InitQueue( maxackcount, maxreqcount );
 
         // 创建执行线程
         _actor_thread_run = true;
