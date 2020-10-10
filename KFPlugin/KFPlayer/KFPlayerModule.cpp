@@ -596,7 +596,7 @@ namespace KFrame
 
         // 3级record属性
         auto kfparent = player->Find( kfmsg.parentname() );
-        if ( kfparent == nullptr )
+        if ( kfparent == nullptr || !kfparent->_data_setting->HaveMask( KFDataDefine::DataMaskClient ) )
         {
             return;
         }
