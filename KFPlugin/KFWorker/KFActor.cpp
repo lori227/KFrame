@@ -87,7 +87,7 @@ namespace KFrame
 
         auto message = __KF_NEW__( KFWorkerMessage );
         message->CopyFrom( route, msgid, data, length );
-        _req_message_queue.PushObject( message );
+        _req_message_queue.PushObject( message, 0, __FUNC_LINE__ );
         return true;
     }
 
@@ -102,7 +102,7 @@ namespace KFrame
 
         auto workermessage = __KF_NEW__( KFWorkerMessage );
         workermessage->CopyFrom( _route, msgid, strdata.data(), static_cast< uint32 >( strdata.size() ) );
-        _ack_message_queue.PushObject( workermessage );
+        _ack_message_queue.PushObject( workermessage, 0, __FUNC_LINE__ );
         return true;
     }
 
@@ -119,7 +119,7 @@ namespace KFrame
 
         auto workermessage = __KF_NEW__( KFWorkerMessage );
         workermessage->CopyFrom( route, msgid, strdata.data(), static_cast< uint32 >( strdata.size() ) );
-        _ack_message_queue.PushObject( workermessage );
+        _ack_message_queue.PushObject( workermessage, 0, __FUNC_LINE__ );
         return true;
     }
 }
