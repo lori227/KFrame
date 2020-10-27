@@ -1,0 +1,17 @@
+[ 0% ] redis 优化改造( 考虑集群, multi操作 )
+[ 0% ] 使用mongo-cxx-driver来替换poco mongodb
+[ 0% ] 属性更新，删除，增加。直接更新，不做定时器缓存( 使用mongodb,  qps是否能抗的住?? )
+[ 0% ] 尝试引入etcd/zookeeper ( 管理gate等信息, 去除master服务器 )
+[ 0% ] 尝试引入性能分析工具 ( vtune/ gperftools )
+[ 0% ] 后台管理搭建( https://panjiachen.gitee.io/vue-element-admin-site/zh/guide/ )
+[ 0% ] 道具item加入到frame中( 如何把项目的item config 扩展到框架中 )
+[ 0% ] 道具的锁定逻辑( 锁定一定时间,  )
+[ 0% ] 工会guild加到frame中
+[ 0% ] hash一致性算法优化( 丢失的进程不从hash列表中删除 ) 防止数据迁移, 等进程重新拉起后在执行逻辑.( 被影响的部分暂时无法提供服务 )
+[ 0% ] 属性登录时分级发送( 分批次发送, 最重要的先发, 客户端收到可以算进入游戏了, 后面的属性( 如成就, 图鉴之类) 依次再发 )
+[ 0% ] 是否可以把每个消息函数里的解析函数封装到message插件中
+[ 0% ] frame框架版本更新工具( 包括插件, 代码 配置文件, 一键更新到项目目录)
+[ 0% ] centos版本的配置生成工具
+[ 0% ] config自动生成读取代码  需要吗?????
+[ 0% ] 客户端demo完善( ue4 / u3d )
+[ 0% ] dll/so 瘦身
