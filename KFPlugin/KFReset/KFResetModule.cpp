@@ -165,7 +165,14 @@ namespace KFrame
                 }
                 else if ( resetdata._data_name.empty() )
                 {
-                    player->ClearRecord( resetdata._parent_name );
+                    if ( resetdata._key == 0u )
+                    {
+                        player->ClearRecord( resetdata._parent_name );
+                    }
+                    else
+                    {
+                        player->RemoveRecord( resetdata._parent_name, resetdata._key );
+                    }
                 }
                 else if ( resetdata._key == 0u )
                 {

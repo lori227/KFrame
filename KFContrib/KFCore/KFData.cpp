@@ -340,7 +340,7 @@ namespace KFrame
     {
         if ( _data_setting->HaveMask( KFDataDefine::DataMaskSync ) )
         {
-            if ( !_data_setting->HaveMask( KFDataDefine::DataMaskDelay ) ||
+            if ( !_data_setting->HaveMask( KFDataDefine::DataMaskRequest ) ||
                     KFUtility::HaveBitMask<uint32>( _run_mask, KFDataDefine::DataMaskSync ) )
             {
                 return true;

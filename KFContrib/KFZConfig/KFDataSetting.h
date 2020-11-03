@@ -33,7 +33,7 @@ namespace KFrame
             DataMaskSave = 1 << 3,			// 是否保存数据
             DataMaskMultiple = 1 << 4,		// 是否支持倍数
             DataMaskShow = 1 << 5,			// 是否显示给客户端
-            DataMaskDelay = 1 << 6,			// 延迟同步到客户端
+            DataMaskRequest = 1 << 6,		// 是否请求才同步客户端
             DataMaskAddCall = 1 << 7,		// 是否添加回调
             DataMaskRemoveCall = 1 << 8,	// 是否删除回调
             DataMaskUpdataCall = 1 << 9,	// 是否更新回调
@@ -135,6 +135,9 @@ namespace KFrame
 
         // 延迟保存时间
         uint32 _delay_save_time = 0u;
+
+        // 延迟发送给客户端( 0, 表示理解发送, 只在玩家上线时有效, 保证客户端最快速度进入主界面 )
+        uint32 _delay_online_sync_time = 0u;
 
         // 删除时操作
         uint32 _delete_type = 0u;

@@ -19,7 +19,7 @@ namespace KFrame
         {"Multiple", KFDataDefine::DataMaskMultiple},
         {"Save", KFDataDefine::DataMaskSave},
         {"Sync", KFDataDefine::DataMaskSync},
-        {"Delay", KFDataDefine::DataMaskDelay},
+        {"Request", KFDataDefine::DataMaskRequest},
         {"View", KFDataDefine::DataMaskView},
         {"Basic", KFDataDefine::DataMaskBasic},
         {"Relation", KFDataDefine::DataMaskRelation},
