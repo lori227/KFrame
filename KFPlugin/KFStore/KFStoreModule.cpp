@@ -9,7 +9,7 @@ namespace KFrame
         __REGISTER_PLAYER_ENTER__( &KFStoreModule::OnEnterStoreModule );
         __REGISTER_PLAYER_LEAVE__( &KFStoreModule::OnLeaveStoreModule );
 
-        __REGISTER_RESET__( 0u, &KFStoreModule::OnResetRefreshStoreCount );
+        __REGISTER_RESET__( __STRING__( store ), &KFStoreModule::OnResetRefreshStoreCount );
         //////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_STORE_BUY_GOODS_REQ, &KFStoreModule::HandleStoreBuyGoodsReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_STORE_REFRESH_REQ, &KFStoreModule::HandleStoreRefreshReq );
@@ -17,7 +17,7 @@ namespace KFrame
 
     void KFStoreModule::BeforeShut()
     {
-        __UN_RESET__();
+        __UN_RESET__( __STRING__( store ) );
         __UN_TIMER_0__();
         __UN_PLAYER_ENTER__();
         __UN_PLAYER_LEAVE__();
@@ -177,7 +177,7 @@ namespace KFrame
     void KFStoreModule::UpdateStoreRefreshTime( KFEntity* player, const KFStoreSetting* kfsetting, KFData* kfstorerecord )
     {
         auto nowtime = KFGlobal::Instance()->_real_time;
-        auto nexttime = _kf_reset->CalcNextResetTime( KFGlobal::Instance()->_real_time, kfsetting->_refresh_time_id );
+        auto nexttime = _kf_reset->CalcNextResetTime( player, kfsetting->_refresh_time_id );
         player->UpdateRecord( kfstorerecord, kfsetting->_id, __STRING__( time ), KFEnum::Set, nexttime );
 
         // 取消定时器
@@ -295,7 +295,7 @@ namespace KFrame
 
         // 保存下次时间
         auto kfstorerecord = player->Find( __STRING__( store ) );
-        auto nexttime = _kf_reset->CalcNextResetTime( KFGlobal::Instance()->_real_time, kfsetting->_refresh_time_id );
+        auto nexttime = _kf_reset->CalcNextResetTime( player, kfsetting->_refresh_time_id );
         player->UpdateRecord( kfstorerecord, kfsetting->_id, __STRING__( time ), KFEnum::Set, nexttime );
 
         // 刷新商品
@@ -325,15 +325,12 @@ namespace KFrame
             for ( auto& costid : kfsetting->_refresh_cost_list )
             {
                 auto kfcostsetting = KFCountCostConfig::Instance()->FindSetting( costid );
-                if ( kfcostsetting->_refresh_time_id == 0u )
+                if ( kfcostsetting->_refresh_time_id != timeid )
                 {
                     continue;
                 }
 
-                if ( _kf_reset->CheckResetTime( player, kfcostsetting->_refresh_time_id ) )
-                {
-                    player->UpdateObject( kfstore, __STRING__( refresh ), KFEnum::Set, 0u );
-                }
+                player->UpdateObject( kfstore, __STRING__( refresh ), KFEnum::Set, 0u );
                 break;
             }
         }

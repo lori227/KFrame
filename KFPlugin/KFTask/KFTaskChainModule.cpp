@@ -5,7 +5,7 @@ namespace KFrame
 {
     void KFTaskChainModule::BeforeRun()
     {
-        __REGISTER_RESET__( 0u, &KFTaskChainModule::OnResetRefreshTaskChain );
+        __REGISTER_RESET__( __STRING__( taskchain ), &KFTaskChainModule::OnResetRefreshTaskChain );
 
         _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
         __REGISTER_ADD_ELEMENT__( __STRING__( taskchain ), &KFTaskChainModule::AddTaskChainElement );
@@ -19,7 +19,7 @@ namespace KFrame
 
     void KFTaskChainModule::BeforeShut()
     {
-        __UN_RESET__();
+        __UN_RESET__( __STRING__( taskchain ) );
         __UN_PLAYER_ENTER__();
         __UN_PLAYER_LEAVE__();
 
@@ -377,8 +377,9 @@ namespace KFrame
     {
         for ( auto& iter : KFTaskChainRefreshConfig::Instance()->_reset_data_list._objects )
         {
+            // 判断时间id是否相同
             auto kfrefreshdata = iter.second;
-            if ( !_kf_reset->CheckResetTime( player, iter.first ) )
+            if ( timeid != iter.first )
             {
                 continue;
             }

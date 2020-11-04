@@ -5,12 +5,12 @@ namespace KFrame
 {
     void KFGoodsModule::BeforeRun()
     {
-        __REGISTER_RESET__( 0u, &KFGoodsModule::OnResetRefreshGoods );
+        __REGISTER_RESET__( __STRING__( goods ), &KFGoodsModule::OnResetRefreshGoods );
     }
 
     void KFGoodsModule::BeforeShut()
     {
-        __UN_RESET__();
+        __UN_RESET__( __STRING__( goods ) );
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -28,17 +28,12 @@ namespace KFrame
         {
             // 永久限购
             auto kfsetting = KFGoodsConfig::Instance()->FindSetting( kfgoods->GetKeyID() );
-            if ( kfsetting == nullptr || kfsetting->_limit_buy_time_id == 0 )
+            if ( kfsetting == nullptr || kfsetting->_limit_buy_time_id != timeid || !kfsetting->IsLimitBuy() )
             {
                 continue;
             }
 
-            // 时间到了
-            if ( !kfsetting->IsLimitBuy() ||
-                    _kf_reset->CheckResetTime( player, kfsetting->_limit_buy_time_id ) )
-            {
-                removelist.insert( kfsetting->_id );
-            }
+            removelist.insert( kfsetting->_id );
         }
 
         if ( removelist.empty() )

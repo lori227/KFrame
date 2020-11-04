@@ -20,6 +20,7 @@ namespace KFrame
 
         // 重置信息
         KFResetData resetdata;
+        resetdata._function_name = xmlnode.GetString( "FunctionName", true );
         resetdata._parent_name = xmlnode.GetString( "ParentName", true );
         resetdata._key = xmlnode.GetUInt32( "Key", true );
         resetdata._data_name = xmlnode.GetString( "DataName" );

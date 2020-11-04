@@ -20,23 +20,11 @@ namespace KFrame
     class KFResetLogicData
     {
     public:
-        std::string _module;
-
         // 次数
         uint32 _count = 0u;
 
         // 回调函数
         KFResetFunction _function = nullptr;
-    };
-
-    class KFResetLogicSetting
-    {
-    public:
-        // 时间逻辑
-        const KFTimeSetting* _time_setting = nullptr;
-
-        // 重置逻辑
-        KFVector< KFResetLogicData > _reset_logic_data;
     };
 
     class KFResetModule : public KFResetInterface
@@ -50,20 +38,18 @@ namespace KFrame
         virtual void ShutDown();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
-        // 判断是否重置时间是否ok
-        virtual bool CheckResetTime( KFEntity* player, uint32 timeid );
-
         // 获得下一次重置时间
-        virtual uint64 CalcNextResetTime( uint64 time, uint32 timeid );
+        virtual uint64 CalcNextResetTime( KFEntity* player, uint32 timeid );
 
-        // 重置时间
-        virtual void ResetTime( KFEntity* player, uint32 timeid );
+        // 设置重置时间
+        virtual void SetResetTime( KFEntity* player, uint32 timeid, uint64 nowtime );
+
     protected:
         // 添加重置函数
-        virtual void AddResetFunction( uint32 timeid, uint32 count, const std::string& module, KFResetFunction& function );
+        virtual void AddResetFunction( const std::string& functionname, uint32 count, KFResetFunction& function );
 
         // 删除重置函数
-        virtual void RemoveResetFunction( const std::string& module );
+        virtual void RemoveResetFunction( const std::string& functionname );
     protected:
         // 进入游戏
         __KF_PLAYER_ENTER_FUNCTION__( OnEnterResetModule );
@@ -74,22 +60,20 @@ namespace KFrame
         // 刷新数据
         __KF_PLAYER_RUN_FUNCTION__( RunResetPlayerData );
 
-        // 判断所有
-        bool UpdateAllResetTime( KFEntity* player, KFData* kftimerecord );
-        bool UpdateResetTime( KFEntity* player, KFData* kftimerecord, const KFTimeSetting* kfsetting );
+        // 判断所有重置时间
+        UInt64Map& UpdateAllResetTime( KFEntity* player, KFData* kftimerecord );
 
-        // 判断是否重置时间是否ok
-        bool CheckResetTimeData( KFData* kftimerecord, uint32 timeid );
+        // 判断重置时间, 返回是否成功, 上次重置时间
+        std::tuple<bool, uint64> UpdateResetTime( KFEntity* player, KFData* kftimerecord, const KFTimeSetting* kfsetting );
 
-        // 重置配置属性
-        void ResetConfigData( KFEntity* player, KFData* kftimerecord );
+        // 重置玩家属性
+        void ResetPlayerData( KFEntity* player, const KFResetData* resetdata );
 
         // 重置逻辑
-        void ResetPlayerLogic( KFEntity* player, KFData* kftimerecord );
-        void ResetPlayerLogicCount( KFEntity* player, const KFTimeData* timedata, const KFResetLogicData* resetdata, uint64 lasttime, uint64 nowtime );
+        void ResetPlayerLogic( KFEntity* player, uint32 timeid, uint64 lastresettime, const std::string& functionname );
     private:
         // 注册的重置逻辑
-        KFHashMap< uint32, uint32, KFResetLogicSetting > _reset_data_list;
+        KFHashMap< std::string, const std::string&, KFResetLogicData > _reset_logic_list;
     };
 }
 

@@ -9,6 +9,8 @@ namespace KFrame
     class KFResetData
     {
     public:
+        std::string _function_name;		// 调用的函数名
+
         std::string _parent_name;		// 父属性变量名称
         uint32 _key = 0u;				// 属性的变量id
         std::string _data_name;			// 属性变量名称
