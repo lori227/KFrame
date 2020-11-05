@@ -33,6 +33,15 @@
     <ClInclude Include="KFTaskRefreshModule.hpp">
       <Filter>Refresh</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\KFResource\KFXmlReader\KFTaskChainConfig.hpp">
+      <Filter>Chain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\KFResource\KFXmlReader\KFTaskRefreshConfig.hpp">
+      <Filter>Refresh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\KFResource\KFXmlReader\KFTaskConfig.h">
+      <Filter>Task</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Task">

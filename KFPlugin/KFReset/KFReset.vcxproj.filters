@@ -6,19 +6,10 @@
     <ClCompile Include="KFResetModule.cpp">
       <Filter>Reset</Filter>
     </ClCompile>
-    <ClCompile Include="KFResetConfig.cpp">
-      <Filter>Reset</Filter>
-    </ClCompile>
-    <ClCompile Include="KFEnterConfig.cpp">
-      <Filter>Enter</Filter>
-    </ClCompile>
     <ClCompile Include="KFEnterModule.cpp">
       <Filter>Enter</Filter>
     </ClCompile>
     <ClCompile Include="KFLeaveModule.cpp">
-      <Filter>Leave</Filter>
-    </ClCompile>
-    <ClCompile Include="KFLeaveConfig.cpp">
       <Filter>Leave</Filter>
     </ClCompile>
   </ItemGroup>
@@ -30,17 +21,8 @@
     <ClInclude Include="KFResetInterface.h">
       <Filter>Reset</Filter>
     </ClInclude>
-    <ClInclude Include="KFResetConfig.hpp">
-      <Filter>Reset</Filter>
-    </ClInclude>
-    <ClInclude Include="KFEnterConfig.hpp">
-      <Filter>Enter</Filter>
-    </ClInclude>
     <ClInclude Include="KFEnterModule.hpp">
       <Filter>Enter</Filter>
-    </ClInclude>
-    <ClInclude Include="KFLeaveConfig.hpp">
-      <Filter>Leave</Filter>
     </ClInclude>
     <ClInclude Include="KFLeaveInterface.h">
       <Filter>Leave</Filter>
@@ -50,6 +32,15 @@
     </ClInclude>
     <ClInclude Include="KFEnterInterface.h">
       <Filter>Enter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\KFResource\KFXmlReader\KFEnterConfig.hpp">
+      <Filter>Enter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\KFResource\KFXmlReader\KFLeaveConfig.hpp">
+      <Filter>Leave</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\KFResource\KFXmlReader\KFResetConfig.hpp">
+      <Filter>Reset</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

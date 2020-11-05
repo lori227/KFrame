@@ -12,22 +12,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFEnterConfig.cpp" />
     <ClCompile Include="KFEnterModule.cpp" />
-    <ClCompile Include="KFLeaveConfig.cpp" />
     <ClCompile Include="KFLeaveModule.cpp" />
-    <ClCompile Include="KFResetConfig.cpp" />
     <ClCompile Include="KFResetModule.cpp" />
     <ClCompile Include="KFResetPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFEnterConfig.hpp" />
+    <ClInclude Include="..\..\KFResource\KFXmlReader\KFEnterConfig.hpp" />
+    <ClInclude Include="..\..\KFResource\KFXmlReader\KFLeaveConfig.hpp" />
+    <ClInclude Include="..\..\KFResource\KFXmlReader\KFResetConfig.hpp" />
     <ClInclude Include="KFEnterInterface.h" />
     <ClInclude Include="KFEnterModule.hpp" />
-    <ClInclude Include="KFLeaveConfig.hpp" />
     <ClInclude Include="KFLeaveInterface.h" />
     <ClInclude Include="KFLeaveModule.hpp" />
-    <ClInclude Include="KFResetConfig.hpp" />
     <ClInclude Include="KFResetInterface.h" />
     <ClInclude Include="KFResetModule.hpp" />
     <ClInclude Include="KFResetPlugin.hpp" />

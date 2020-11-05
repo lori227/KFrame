@@ -18,6 +18,9 @@
     <ClCompile Include="KFTaskRefreshModule.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\KFResource\KFXmlReader\KFTaskChainConfig.hpp" />
+    <ClInclude Include="..\..\KFResource\KFXmlReader\KFTaskConfig.h" />
+    <ClInclude Include="..\..\KFResource\KFXmlReader\KFTaskRefreshConfig.hpp" />
     <ClInclude Include="KFTaskChainInterface.h" />
     <ClInclude Include="KFTaskChainModule.hpp" />
     <ClInclude Include="KFTaskInterface.h" />

@@ -60,8 +60,8 @@ namespace KFrame
         // 读取配置
         virtual void ReadSetting( KFNode& xmlnode, KFTaskSetting* kfsetting )
         {
-            kfsetting->_quality = xmlnode.GetUInt32( "Quality" );
             kfsetting->_type = xmlnode.GetUInt32( "Type" );
+            kfsetting->_quality = xmlnode.GetUInt32( "Quality" );
             kfsetting->_complete_type = xmlnode.GetUInt32( "CompleteMode" );
 
             auto strprecondition = xmlnode.GetString( "PreCondition" );
