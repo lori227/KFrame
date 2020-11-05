@@ -1,74 +1,20 @@
 ﻿#include "KFTaskChainModule.hpp"
 #include "KFProtocol/KFProtocol.h"
+#include "KFTaskRefreshModule.hpp"
 
 namespace KFrame
 {
     void KFTaskChainModule::BeforeRun()
     {
-        __REGISTER_RESET__( __STRING__( taskchain ), &KFTaskChainModule::OnResetRefreshTaskChain );
-
         _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
         __REGISTER_ADD_ELEMENT__( __STRING__( taskchain ), &KFTaskChainModule::AddTaskChainElement );
-        __REGISTER_ADD_ELEMENT__( __STRING__( retaskchain ), &KFTaskChainModule::AddTaskChainrefreshElement );
-
-        __REGISTER_PLAYER_ENTER__( &KFTaskChainModule::OnEnterTaskChainModule );
-        __REGISTER_PLAYER_LEAVE__( &KFTaskChainModule::OnLeaveTaskChainModule );
-
         __REGISTER_REMOVE_DATA_1__( __STRING__( task ), &KFTaskChainModule::OnRemoveTaskTaskChainModule );
     }
 
     void KFTaskChainModule::BeforeShut()
     {
-        __UN_RESET__( __STRING__( taskchain ) );
-        __UN_PLAYER_ENTER__();
-        __UN_PLAYER_LEAVE__();
-
         __UN_ADD_ELEMENT__( __STRING__( taskchain ) );
-        __UN_ADD_ELEMENT__( __STRING__( retaskchain ) );
-    }
-
-    __KF_PLAYER_ENTER_FUNCTION__( KFTaskChainModule::OnEnterTaskChainModule )
-    {
-        UInt64List removes;
-        auto kfrecord = player->Find( __STRING__( retaskchain ) );
-        for ( auto kfretaskchain = kfrecord->First(); kfretaskchain != nullptr; kfretaskchain = kfrecord->Next() )
-        {
-            auto refreshid = kfretaskchain->Get<uint32>( __STRING__( id ) );
-            auto kfsetting = KFTaskChainRefreshConfig::Instance()->FindSetting( refreshid );
-            if ( kfsetting == nullptr || kfsetting->_timer_refresh_time == _invalid_int )
-            {
-                removes.push_back( refreshid );
-                continue;
-            }
-
-            auto lefttime = 0u;
-            auto time = kfretaskchain->Get<uint64>( __STRING__( time ) );
-            if ( time > KFGlobal::Instance()->_real_time )
-            {
-                lefttime = ( time - KFGlobal::Instance()->_real_time );
-            }
-            else
-            {
-                // 计算最后一次循环的剩余时间
-                lefttime = ( KFGlobal::Instance()->_real_time - time ) % kfsetting->_timer_refresh_time;
-
-                // 重新附上最后一次循环
-                OpenTaskChain( player, kfsetting->_task_chain_id, 1u, lefttime, kfsetting->_id );
-            }
-
-            // 重新附上该有的任务链定时器
-            __LOOP_TIMER_2__( player->GetKeyID(), refreshid, kfsetting->_timer_refresh_time * 1000u, lefttime * 1000u, &KFTaskChainModule::OnTimerTaskChainRefreshTimeout );
-        }
-
-        for ( auto refreshid : removes )
-        {
-            kfrecord->Remove( refreshid );
-        }
-    }
-
-    __KF_PLAYER_LEAVE_FUNCTION__( KFTaskChainModule::OnLeaveTaskChainModule )
-    {
-        __UN_TIMER_1__( player->GetKeyID() );
+        __UN_REMOVE_DATA_1__( __STRING__( task ) );
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -164,30 +110,6 @@ namespace KFrame
         }
     }
 
-    void KFTaskChainModule::StartRefreshTaskChain( KFEntity* player, const KFTaskChainRefreshSetting* kfrefreshsetting )
-    {
-        // 清除原来的任务
-        CleanTaskChain( player, kfrefreshsetting->_task_chain_id );
-
-        {
-            // 判断条件
-            if ( !_kf_condition->CheckStaticCondition( player, &kfrefreshsetting->_conditions ) )
-            {
-                return;
-            }
-
-            // 判断几率
-            auto rand = KFGlobal::Instance()->RandRatio( KFRandEnum::TenThousand );
-            if ( rand >= kfrefreshsetting->_refresh_rate )
-            {
-                return;
-            }
-
-            // 开启新的任务链
-            OpenTaskChain( player, kfrefreshsetting->_task_chain_id, 1u, kfrefreshsetting->_receive_time, kfrefreshsetting->_id );
-        }
-    }
-
     void KFTaskChainModule::OpenExtendChain( KFEntity* player, const UInt32Map& chainlist )
     {
         // 额外任务链id列表
@@ -201,95 +123,11 @@ namespace KFrame
         }
     }
 
-    __KF_ADD_ELEMENT_FUNCTION__( KFTaskChainModule::AddTaskChainrefreshElement )
+    bool KFTaskChainModule::IsTaskChain( KFEntity* player, KFData* kftask )
     {
-        auto kfelement = kfresult->_element;
-        if ( !kfelement->IsObject() )
-        {
-            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object", kfelement->_data_name );
-            return false;
-        }
-
-        auto kfelementobject = reinterpret_cast< KFElementObject* >( kfelement );
-        if ( kfelementobject->_config_id == _invalid_int )
-        {
-            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id", kfelement->_data_name );
-            return false;
-        }
-
-        UInt32Map idlist;
-        idlist[ kfelementobject->_config_id ] = KFRandEnum::TenThousand;
-        OpenRefreshIdToLoop( player, idlist );
-        return true;
-    }
-
-    void KFTaskChainModule::OpenRefreshIdToLoop( KFEntity* player, const UInt32Map& idlist )
-    {
-        // 刷新id 列表
-        // first=刷新Id second=万分比几率
-        for ( auto& iter : idlist )
-        {
-            if ( !KFGlobal::Instance()->RandCheck( KFRandEnum::TenThousand, iter.second ) )
-            {
-                continue;
-            }
-
-            auto refreshtid = iter.first;
-            auto kfrefreshsetting = KFTaskChainRefreshConfig::Instance()->FindSetting( iter.first );
-            if ( kfrefreshsetting == nullptr )
-            {
-                __LOG_ERROR__( "player=[{}] refreshid=[{}] can't find refresh setting", player->GetKeyID(), iter.first );
-                continue;
-            }
-
-            auto timerrefeshtime = kfrefreshsetting->_timer_refresh_time;
-            if ( timerrefeshtime == _invalid_int )
-            {
-                __LOG_ERROR__( "refreshid=[{}] be use timerrefeshtime == 0 ", iter.first );
-                continue;
-            }
-
-            __LOOP_TIMER_2__( player->GetKeyID(), iter.first, timerrefeshtime * 1000u, 1u, &KFTaskChainModule::OnTimerTaskChainRefreshTimeout );
-        }
-    }
-
-    void KFTaskChainModule::StopRefreshIdToLoop( KFEntity* player, const UInt32Map& idlist )
-    {
-        // 关闭id 列表
-        // first=刷新Id second=万分比几率
-        for ( auto& iter : idlist )
-        {
-            if ( !KFGlobal::Instance()->RandCheck( KFRandEnum::TenThousand, iter.second ) )
-            {
-                continue;
-            }
-
-            __UN_TIMER_2__( player->GetKeyID(), iter.first );
-
-            // 移除刷新记录
-            player->RemoveRecord( __STRING__( retaskchain ), iter.first );
-        }
-    }
-
-    __KF_TIMER_FUNCTION__( KFTaskChainModule::OnTimerTaskChainRefreshTimeout )
-    {
-        auto player = _kf_player->FindPlayer( objectid );
-        if ( player == nullptr )
-        {
-            return;
-        }
-
-        auto kfrefreshsetting = KFTaskChainRefreshConfig::Instance()->FindSetting( subid );
-        if ( kfrefreshsetting == nullptr )
-        {
-            return __LOG_ERROR__( "player=[{}] refreshid=[{}] can not find.", player->GetKeyID(), subid );
-        }
-
-        // 更新定时时间
-        player->UpdateRecord( __STRING__( retaskchain ), kfrefreshsetting->_id, __STRING__( time ),
-                              KFEnum::Set, KFGlobal::Instance()->_real_time + kfrefreshsetting->_timer_refresh_time );
-        ///////////////////////////////////////////////////////////////
-        StartRefreshTaskChain( player, kfrefreshsetting );
+        auto taskchainid = kftask->Get<uint32>( __STRING__( chain ) );
+        auto chainindex = kftask->Get<uint32>( __STRING__( index ) );
+        return taskchainid != 0u && chainindex != 0u;
     }
 
     __KF_REMOVE_DATA_FUNCTION__( KFTaskChainModule::OnRemoveTaskTaskChainModule )
@@ -299,34 +137,6 @@ namespace KFrame
         if ( status == KFMsg::ReceiveStatus )
         {
             FinishTaskChain( player, kfdata );
-        }
-        else
-        {
-            RemoveTaskChain( player, kfdata );
-        }
-    }
-
-    void KFTaskChainModule::RemoveTaskChain( KFEntity* player, KFData* kftask )
-    {
-        auto chainid = kftask->Get<uint32>( __STRING__( chain ) );
-        auto chainindex = kftask->Get<uint32>( __STRING__( index ) );
-        if ( chainid == 0u || chainindex == 0u )
-        {
-            return;
-        }
-
-        auto kftaskchainsetting = KFTaskChainConfig::Instance()->FindSetting( chainid );
-        if ( kftaskchainsetting == nullptr )
-        {
-            return;
-        }
-
-        // 附加的掉落组id
-        auto taskid = kftask->Get<uint32>( __STRING__( id ) );
-        auto taskdata = kftaskchainsetting->FindTaskData( chainindex, taskid );
-        if ( taskdata == nullptr )
-        {
-            return;
         }
     }
 
@@ -356,10 +166,10 @@ namespace KFrame
             OpenExtendChain( player, taskdata->_extend_task_chain_list );
 
             // 开启循环刷新链
-            OpenRefreshIdToLoop( player, taskdata->_start_refresh_id_list );
+            static_cast<KFTaskRefreshModule*>( _kf_task_refresh )->OpenRefreshIdToLoop( player, taskdata->_start_refresh_id_list );
 
             // 关闭循环刷新链
-            StopRefreshIdToLoop( player, taskdata->_stop_refresh_id_list );
+            static_cast< KFTaskRefreshModule* >( _kf_task_refresh )->StopRefreshIdToLoop( player, taskdata->_stop_refresh_id_list );
         }
 
         ++chainindex;
@@ -373,21 +183,4 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_RESET_FUNCTION__( KFTaskChainModule::OnResetRefreshTaskChain )
-    {
-        for ( auto& iter : KFTaskChainRefreshConfig::Instance()->_reset_data_list._objects )
-        {
-            // 判断时间id是否相同
-            auto kfrefreshdata = iter.second;
-            if ( timeid != iter.first )
-            {
-                continue;
-            }
-
-            for ( auto kfsetting : kfrefreshdata->_refresh_list )
-            {
-                StartRefreshTaskChain( player, kfsetting );
-            }
-        }
-    }
 }

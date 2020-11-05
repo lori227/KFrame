@@ -537,7 +537,7 @@ namespace KFrame
 
         // 判断任务链的接取消耗
         auto refreshid = kftask->Get<uint32>( __STRING__( refresh ) );
-        auto kfrefreshsetting = KFTaskChainRefreshConfig::Instance()->FindSetting( refreshid );
+        auto kfrefreshsetting = KFTaskRefreshConfig::Instance()->FindSetting( refreshid );
         if ( kfrefreshsetting != nullptr )
         {
             // 判断接取消耗
@@ -631,10 +631,10 @@ namespace KFrame
                 auto refreshid = kftaskrecord->Get( taskid, __STRING__( refresh ) );
                 if ( refreshid != 0u )
                 {
-                    auto kfrefreshsetting = KFTaskChainRefreshConfig::Instance()->FindSetting( refreshid );
+                    auto kfrefreshsetting = KFTaskRefreshConfig::Instance()->FindSetting( refreshid );
                     if ( kfrefreshsetting != nullptr && kfrefreshsetting->_receive_time != 0u )
                     {
-                        timeout = KFGlobal::Instance()->_real_time + kfrefreshsetting->_receive_time;
+                        timeout = kfrefreshsetting->_receive_time;
                     }
                 }
 
@@ -654,10 +654,10 @@ namespace KFrame
             auto refreshid = kftaskrecord->Get( taskid, __STRING__( refresh ) );
             if ( refreshid != 0u )
             {
-                auto kfrefreshsetting = KFTaskChainRefreshConfig::Instance()->FindSetting( refreshid );
+                auto kfrefreshsetting = KFTaskRefreshConfig::Instance()->FindSetting( refreshid );
                 if ( kfrefreshsetting != nullptr && kfrefreshsetting->_done_time != 0u )
                 {
-                    timeout = KFGlobal::Instance()->_real_time + kfrefreshsetting->_done_time;
+                    timeout = kfrefreshsetting->_done_time;
                 }
             }
 

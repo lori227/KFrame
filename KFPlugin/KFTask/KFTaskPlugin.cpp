@@ -1,6 +1,7 @@
 ﻿#include "KFTaskPlugin.hpp"
 #include "KFTaskModule.hpp"
 #include "KFTaskChainModule.hpp"
+#include "KFTaskRefreshModule.hpp"
 #include "KFConfig/KFConfigInterface.h"
 //////////////////////////////////////////////////////////////////////////
 
@@ -10,12 +11,14 @@ namespace KFrame
     {
         __REGISTER_MODULE__( KFTask );
         __REGISTER_MODULE__( KFTaskChain );
+        __REGISTER_MODULE__( KFTaskRefresh );
     }
 
     void KFTaskPlugin::UnInstall()
     {
         __UN_MODULE__( KFTask );
         __UN_MODULE__( KFTaskChain );
+        __UN_MODULE__( KFTaskRefresh );
     }
 
     void KFTaskPlugin::LoadModule()
@@ -31,6 +34,7 @@ namespace KFrame
         __FIND_MODULE__( _kf_execute, KFExecuteInterface );
         __FIND_MODULE__( _kf_condition, KFConditionInterface );
         __FIND_MODULE__( _kf_task_chain, KFTaskChainInterface );
+        __FIND_MODULE__( _kf_task_refresh, KFTaskRefreshInterface );
     }
 
     void KFTaskPlugin::AddConfig()
@@ -38,6 +42,6 @@ namespace KFrame
         __KF_ADD_CONFIG__( KFElementConfig );
         __KF_ADD_CONFIG__( KFTaskConfig );
         __KF_ADD_CONFIG__( KFTaskChainConfig );
-        __KF_ADD_CONFIG__( KFTaskChainRefreshConfig );
+        __KF_ADD_CONFIG__( KFTaskRefreshConfig );
     }
 }

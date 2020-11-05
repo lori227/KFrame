@@ -15,6 +15,12 @@
     <ClCompile Include="KFTaskModule.cpp">
       <Filter>Task</Filter>
     </ClCompile>
+    <ClCompile Include="KFTaskRefreshConfig.cpp">
+      <Filter>Refresh</Filter>
+    </ClCompile>
+    <ClCompile Include="KFTaskRefreshModule.cpp">
+      <Filter>Refresh</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFTaskPlugin.hpp" />
@@ -36,6 +42,15 @@
     <ClInclude Include="KFTaskModule.hpp">
       <Filter>Task</Filter>
     </ClInclude>
+    <ClInclude Include="KFTaskRefreshConfig.hpp">
+      <Filter>Refresh</Filter>
+    </ClInclude>
+    <ClInclude Include="KFTaskRefreshInterface.h">
+      <Filter>Refresh</Filter>
+    </ClInclude>
+    <ClInclude Include="KFTaskRefreshModule.hpp">
+      <Filter>Refresh</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Task">
@@ -43,6 +58,9 @@
     </Filter>
     <Filter Include="Chain">
       <UniqueIdentifier>{fa3949e1-cfd0-48eb-a4d3-631ddf1b60d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Refresh">
+      <UniqueIdentifier>{6793f8bf-023c-40f2-a5da-dd165c65b23e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
