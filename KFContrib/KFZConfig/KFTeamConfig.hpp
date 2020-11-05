@@ -24,7 +24,10 @@ namespace KFrame
 
     protected:
         // 读取配置
-        virtual void ReadSetting( KFNode& xmlnode, KFTeamSetting* kfsetting );
+        virtual void ReadSetting( KFNode& xmlnode, KFTeamSetting* kfsetting )
+        {
+            kfsetting->_max_count = xmlnode.GetUInt32( "MaxCount" );
+        }
     };
 }
 

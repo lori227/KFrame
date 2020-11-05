@@ -14,7 +14,6 @@ macro(PLUGIN_PROPERTIES_MACRO project_name)
     add_dependencies(${project_name} KFProto)
     add_dependencies(${project_name} KFProtocol)
     add_dependencies(${project_name} KFUtility)
-    add_dependencies(${project_name} KFZConfig)
 
     set_target_properties(${project_name} PROPERTIES PREFIX "")
     set_target_properties(${project_name} PROPERTIES OUTPUT_NAME_DEBUG "${project_name}d")
@@ -27,8 +26,8 @@ macro(PLUGIN_PROPERTIES_MACRO project_name)
 endmacro(PLUGIN_PROPERTIES_MACRO project_name)
 
 
-set(FRAME_LIB_DEBUG KFGlobald KFLoggerd KFPlugind KFMemoryd KFZConfigd KFUtilityd)
-set(FRAME_LIB_RELEASE KFGlobal KFLogger KFPlugin KFMemory KFZConfig KFUtility)
+set(FRAME_LIB_DEBUG KFGlobald KFLoggerd KFPlugind KFMemoryd KFUtilityd)
+set(FRAME_LIB_RELEASE KFGlobal KFLogger KFPlugin KFMemory KFUtility)
 
 macro(LINK_PLUGIN_MACRO project_name)
     if(CMAKE_BUILD_TYPE MATCHES "Debug") 

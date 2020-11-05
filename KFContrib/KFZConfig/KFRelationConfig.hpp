@@ -50,11 +50,35 @@ namespace KFrame
         }
 
         // 查找关系配置
-        const KFRelationSetting* FindRelationSettingByInviteName( const std::string& name );
+        const KFRelationSetting* FindRelationSettingByInviteName( const std::string& name )
+        {
+            for ( auto& iter : _settings._objects )
+            {
+                auto kfsetting = iter.second;
+                if ( kfsetting->_invite_data_name == name )
+                {
+                    return kfsetting;
+                }
+            }
+
+            return nullptr;
+        }
 
     protected:
         // 读取配置
-        virtual void ReadSetting( KFNode& xmlnode, KFRelationSetting* kfsetting );
+        virtual void ReadSetting( KFNode& xmlnode, KFRelationSetting* kfsetting )
+        {
+            kfsetting->_max_count = xmlnode.GetUInt32( "MaxCount" );
+            kfsetting->_both_way = xmlnode.GetBoolen( "BothWay" );
+            kfsetting->_need_update = xmlnode.GetBoolen( "NeedUpdate" );
+            kfsetting->_online_load = xmlnode.GetBoolen( "OnlineLoad" );
+            kfsetting->_invite_data_name = xmlnode.GetString( "InviteDataName" );
+            kfsetting->_invite_data_count = xmlnode.GetUInt32( "InviteListCount" );
+            kfsetting->_invite_list_name = xmlnode.GetString( "InviteListName" );
+            kfsetting->_relation_list_name = xmlnode.GetString( "DataListName" );
+            kfsetting->_invite_keep_time = xmlnode.GetUInt32( "InviteKeepTime" );
+            kfsetting->_refuse_name = xmlnode.GetString( "RefuseName" );
+        }
     };
 }
 
