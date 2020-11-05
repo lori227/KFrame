@@ -402,11 +402,11 @@ namespace KFrame
             return false;
         }
 
-        // 属性删除回调
+        // 先移除属性
+        kfparent->Move( key );
         _kf_component->RemoveDataCallBack( this, kfparent, key, kfdata, callback );
-
         KFDataFactory::Instance()->DestroyData( kfdata );
-        return kfparent->Move( key );
+        return true;
     }
 
     bool KFEntityEx::ClearRecord( const std::string& parentname, bool callback )
@@ -458,10 +458,11 @@ namespace KFrame
             return false;
         }
 
+        // 先移除属性
+        kfparent->Move( dataname, false );
         _kf_component->RemoveDataCallBack( this, kfparent, 0, kfdata, callback );
-
         KFDataFactory::Instance()->DestroyData( kfdata );
-        return kfparent->Move( dataname, false ) != nullptr;
+        return true;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
