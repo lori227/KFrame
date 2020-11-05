@@ -12,7 +12,7 @@
 #include "KFDirClientInterface.h"
 #include "KFIpAddress/KFIpAddressInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
-#include "KFZConfig/KFZoneConfig.hpp"
+#include "KFXmlReader/KFZoneConfig.hpp"
 
 namespace KFrame
 {

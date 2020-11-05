@@ -1,8 +1,8 @@
 ﻿#ifndef __KF_CONDITION_CONFIG_H__
 #define __KF_CONDITION_CONFIG_H__
 
-#include "KFZConfig/KFConfig.h"
-#include "KFZConfig/KFReadSetting.h"
+#include "KFConfig.h"
+#include "KFXmlReader/KFReadSetting.h"
 
 namespace KFrame
 {

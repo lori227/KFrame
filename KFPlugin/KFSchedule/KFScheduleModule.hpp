@@ -12,7 +12,7 @@
 
 #include "KFScheduleData.hpp"
 #include "KFScheduleInterface.h"
-#include "KFZConfig/KFTimeConfig.h"
+#include "KFXmlReader/KFTimeConfig.h"
 
 namespace KFrame
 {

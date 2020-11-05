@@ -1,10 +1,9 @@
 ﻿#ifndef __KF_DROP_DATA_CONFIG_H__
 #define __KF_DROP_DATA_CONFIG_H__
 
-#include "KFZConfig/KFSetting.h"
-#include "KFZConfig/KFConfig.h"
-#include "KFZConfig/KFDropData.h"
-#include "KFZConfig/KFElementConfig.h"
+#include "KFConfig.h"
+#include "KFXmlReader/KFDropData.h"
+#include "KFXmlReader/KFElementConfig.h"
 
 namespace KFrame
 {

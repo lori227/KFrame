@@ -2,7 +2,7 @@
 #define __KF_PLAYER_CONFIG_H__
 
 #include "KFCore/KFElement.h"
-#include "KFZConfig/KFConfig.h"
+#include "KFConfig.h"
 
 namespace KFrame
 {

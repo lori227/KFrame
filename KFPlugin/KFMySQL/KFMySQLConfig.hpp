@@ -2,7 +2,7 @@
 #define __KF_MYSQL_CONFIG_H__
 
 #include "KFrame.h"
-#include "KFZConfig/KFConfig.h"
+#include "KFConfig.h"
 
 namespace KFrame
 {

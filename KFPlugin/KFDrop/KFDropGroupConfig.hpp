@@ -2,8 +2,7 @@
 #define __KF_DROP_GROUP_CONFIG_H__
 
 #include "KFCore/KFCondition.h"
-#include "KFZConfig/KFSetting.h"
-#include "KFZConfig/KFConfig.h"
+#include "KFConfig.h"
 #include "KFDropDataConfig.hpp"
 
 namespace KFrame

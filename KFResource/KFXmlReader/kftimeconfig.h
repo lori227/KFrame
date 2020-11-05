@@ -1,8 +1,7 @@
 ﻿#ifndef __KF_TIME_CONFIG_H__
 #define __KF_TIME_CONFIG_H__
 
-#include "KFZConfig/KFConfig.h"
-#include "KFZConfig/KFSetting.h"
+#include "KFConfig.h"
 
 namespace KFrame
 {

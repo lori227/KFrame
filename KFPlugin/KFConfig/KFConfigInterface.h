@@ -1,7 +1,7 @@
 ﻿#ifndef __KF_CONFIG_INTERFACE_H__
 #define __KF_CONFIG_INTERFACE_H__
 
-#include "KFZConfig/KFConfig.h"
+#include "KFConfig.h"
 
 namespace KFrame
 {

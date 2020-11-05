@@ -2,7 +2,7 @@
 #define __KF_DATA_SHARD_CONFIG_H__
 
 #include "KFrame.h"
-#include "KFZConfig/KFConfig.h"
+#include "KFConfig.h"
 
 namespace KFrame
 {

@@ -2,7 +2,6 @@
 #define __KF_EXECUTE_DATA_H__
 
 #include "KFParam.h"
-#include "KFZConfig/KFSetting.h"
 
 namespace KFrame
 {

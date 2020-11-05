@@ -78,7 +78,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_WIN32;POCO_STATIC;_DEBUG;_CONSOLE;_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>.\;..\KFContrib\;..\KFCommon\;..\KFLibrary\;..\KFLibrary\poco\Util\include\;..\KFLibrary\poco\Foundation\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;..\KFContrib\;..\KFCommon\;..\KFLibrary\;..\KFLibrary\poco\Util\include\;..\KFLibrary\poco\Foundation\include\;..\KFResource\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <BrowseInformation>false</BrowseInformation>
     </ClCompile>
@@ -107,7 +107,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>_WIN32;POCO_STATIC;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>.\;..\KFContrib\;..\KFCommon\;..\KFLibrary\;..\KFLibrary\poco\Util\include\;..\KFLibrary\poco\Foundation\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;..\KFContrib\;..\KFCommon\;..\KFLibrary\;..\KFLibrary\poco\Util\include\;..\KFLibrary\poco\Foundation\include\;..\KFResource\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <BrowseInformation>false</BrowseInformation>
     </ClCompile>

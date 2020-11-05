@@ -14,6 +14,7 @@ include_directories(
     ${ROOT_DIR}/KFContrib
     ${ROOT_DIR}/KFLibrary
     ${ROOT_DIR}/KFPlugin
+    ${ROOT_DIR}/KFResource
     ${ROOT_DIR}/KFLibrary/google/protobuf/src
     ${ROOT_DIR}/KFLibrary/libuv/include
     ${ROOT_DIR}/KFLibrary/luaplus

@@ -16,7 +16,7 @@
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFFilter/KFFilterInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"
-#include "KFZConfig/KFTeamConfig.hpp"
+#include "KFXmlReader/KFTeamConfig.hpp"
 
 
 namespace KFrame

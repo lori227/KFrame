@@ -2,7 +2,7 @@
 #define __KF_DATA_H__
 
 #include "KFMath3D/Math3D.h"
-#include "KFZConfig/KFDataSetting.h"
+#include "KFDataSetting.h"
 
 namespace KFrame
 {

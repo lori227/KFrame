@@ -1,7 +1,7 @@
 ﻿#ifndef __KF_EXECUTE_INTERFACE_H__
 #define __KF_EXECUTE_INTERFACE_H__
 
-#include "KFZConfig/KFExecuteData.h"
+#include "KFXmlReader/KFExecuteData.h"
 
 namespace KFrame
 {

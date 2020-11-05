@@ -2,9 +2,9 @@
 #define __KF_TASK_REFRESH_CONFIG_H__
 
 #include "KFCore/KFCondition.h"
-#include "KFZConfig/KFConfig.h"
-#include "KFZConfig/KFElementConfig.h"
-#include "KFZConfig/KFWeightConfig.h"
+#include "KFConfig.h"
+#include "KFXmlReader/KFElementConfig.h"
+#include "KFXmlReader/KFWeightConfig.h"
 
 namespace KFrame
 {

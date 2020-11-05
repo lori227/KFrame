@@ -2,8 +2,8 @@
 #define __KF_GOODS_CONFIG_H__
 
 #include "KFCore/KFElement.h"
-#include "KFZConfig/KFConfig.h"
-#include "KFZConfig/KFElementConfig.h"
+#include "KFConfig.h"
+#include "KFXmlReader/KFElementConfig.h"
 
 namespace KFrame
 {

@@ -1,9 +1,9 @@
 ﻿#ifndef __KF_EXECUTE_CONFIG_H__
 #define __KF_EXECUTE_CONFIG_H__
 
-#include "KFZConfig/KFConfig.h"
-#include "KFZConfig/KFExecuteData.h"
-#include "KFZConfig/KFElementConfig.h"
+#include "KFConfig.h"
+#include "KFXmlReader/KFExecuteData.h"
+#include "KFXmlReader/KFElementConfig.h"
 
 namespace KFrame
 {

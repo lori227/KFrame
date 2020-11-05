@@ -2,7 +2,7 @@
 #define __KF_TASK_CHAIN_CONFIG_H__
 
 #include "KFCore/KFCondition.h"
-#include "KFZConfig/KFConfig.h"
+#include "KFConfig.h"
 
 namespace KFrame
 {

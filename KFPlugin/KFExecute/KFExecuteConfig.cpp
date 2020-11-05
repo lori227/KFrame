@@ -1,5 +1,5 @@
 ﻿#include "KFExecuteConfig.hpp"
-#include "KFZConfig/KFReadSetting.h"
+#include "KFXmlReader/KFReadSetting.h"
 
 namespace KFrame
 {

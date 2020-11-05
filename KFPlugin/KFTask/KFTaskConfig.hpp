@@ -1,10 +1,10 @@
 ﻿#ifndef __KF_TASK_CONFIG_H__
 #define __KF_TASK_CONFIG_H__
 
-#include "KFZConfig/KFConfig.h"
+#include "KFConfig.h"
 #include "KFCore/KFCondition.h"
-#include "KFZConfig/KFExecuteData.h"
-#include "KFZConfig/KFElementConfig.h"
+#include "KFXmlReader/KFExecuteData.h"
+#include "KFXmlReader/KFElementConfig.h"
 
 namespace KFrame
 {
