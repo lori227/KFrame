@@ -3,20 +3,11 @@
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="KFTaskPlugin.cpp" />
-    <ClCompile Include="KFTaskChainConfig.cpp">
-      <Filter>Chain</Filter>
-    </ClCompile>
     <ClCompile Include="KFTaskChainModule.cpp">
       <Filter>Chain</Filter>
     </ClCompile>
-    <ClCompile Include="KFTaskConfig.cpp">
-      <Filter>Task</Filter>
-    </ClCompile>
     <ClCompile Include="KFTaskModule.cpp">
       <Filter>Task</Filter>
-    </ClCompile>
-    <ClCompile Include="KFTaskRefreshConfig.cpp">
-      <Filter>Refresh</Filter>
     </ClCompile>
     <ClCompile Include="KFTaskRefreshModule.cpp">
       <Filter>Refresh</Filter>
@@ -24,26 +15,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFTaskPlugin.hpp" />
-    <ClInclude Include="KFTaskChainConfig.hpp">
-      <Filter>Chain</Filter>
-    </ClInclude>
     <ClInclude Include="KFTaskChainInterface.h">
       <Filter>Chain</Filter>
     </ClInclude>
     <ClInclude Include="KFTaskChainModule.hpp">
       <Filter>Chain</Filter>
     </ClInclude>
-    <ClInclude Include="KFTaskConfig.hpp">
-      <Filter>Task</Filter>
-    </ClInclude>
     <ClInclude Include="KFTaskInterface.h">
       <Filter>Task</Filter>
     </ClInclude>
     <ClInclude Include="KFTaskModule.hpp">
       <Filter>Task</Filter>
-    </ClInclude>
-    <ClInclude Include="KFTaskRefreshConfig.hpp">
-      <Filter>Refresh</Filter>
     </ClInclude>
     <ClInclude Include="KFTaskRefreshInterface.h">
       <Filter>Refresh</Filter>

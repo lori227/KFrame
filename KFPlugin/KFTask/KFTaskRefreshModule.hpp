@@ -18,7 +18,7 @@
 #include "KFCondition/KFConditionInterface.h"
 #include "KFTimer/KFTimerInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
-#include "KFTaskRefreshConfig.hpp"
+#include "KFXmlReader/KFTaskRefreshConfig.hpp"
 
 namespace KFrame
 {

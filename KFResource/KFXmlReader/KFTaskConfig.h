@@ -2,9 +2,10 @@
 #define __KF_TASK_CONFIG_H__
 
 #include "KFConfig.h"
+#include "KFExecuteData.h"
+#include "KFElementConfig.h"
+#include "KFReadSetting.h"
 #include "KFCore/KFCondition.h"
-#include "KFXmlReader/KFExecuteData.h"
-#include "KFXmlReader/KFElementConfig.h"
 
 namespace KFrame
 {
@@ -20,6 +21,9 @@ namespace KFrame
     public:
         // 任务类型
         uint32 _type = 0u;
+
+        // 品质
+        uint32 _quality = 0u;
 
         // 完成方式( 1=玩家请求交付 2=ComplelteAuto )
         uint32 _complete_type = 0u;
@@ -54,7 +58,20 @@ namespace KFrame
 
     protected:
         // 读取配置
-        virtual void ReadSetting( KFNode& xmlnode, KFTaskSetting* kfsetting );
+        virtual void ReadSetting( KFNode& xmlnode, KFTaskSetting* kfsetting )
+        {
+            kfsetting->_quality = xmlnode.GetUInt32( "Quality" );
+            kfsetting->_type = xmlnode.GetUInt32( "Type" );
+            kfsetting->_complete_type = xmlnode.GetUInt32( "CompleteMode" );
+
+            auto strprecondition = xmlnode.GetString( "PreCondition" );
+            kfsetting->_pre_condition_type = KFReadSetting::ParseConditionList( strprecondition, kfsetting->_pre_condition );
+
+            auto strcompletecondition = xmlnode.GetString( "CompleteCondition" );
+            kfsetting->_complete_condition_type = KFReadSetting::ParseConditionList( strcompletecondition, kfsetting->_complete_condition );
+
+            kfsetting->_execute_list = xmlnode.GetUInt32Vector( "Execute" );
+        }
     };
 }
 

@@ -18,8 +18,8 @@
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFExecute/KFExecuteInterface.h"
 #include "KFCondition/KFConditionInterface.h"
-#include "KFTaskConfig.hpp"
-#include "KFTaskRefreshConfig.hpp"
+#include "KFXmlReader/KFTaskConfig.h"
+#include "KFXmlReader/KFTaskRefreshConfig.hpp"
 
 namespace KFrame
 {

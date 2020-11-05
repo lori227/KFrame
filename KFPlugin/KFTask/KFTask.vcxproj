@@ -12,23 +12,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFTaskChainConfig.cpp" />
     <ClCompile Include="KFTaskChainModule.cpp" />
-    <ClCompile Include="KFTaskConfig.cpp" />
     <ClCompile Include="KFTaskModule.cpp" />
     <ClCompile Include="KFTaskPlugin.cpp" />
-    <ClCompile Include="KFTaskRefreshConfig.cpp" />
     <ClCompile Include="KFTaskRefreshModule.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFTaskChainConfig.hpp" />
     <ClInclude Include="KFTaskChainInterface.h" />
     <ClInclude Include="KFTaskChainModule.hpp" />
-    <ClInclude Include="KFTaskConfig.hpp" />
     <ClInclude Include="KFTaskInterface.h" />
     <ClInclude Include="KFTaskModule.hpp" />
     <ClInclude Include="KFTaskPlugin.hpp" />
-    <ClInclude Include="KFTaskRefreshConfig.hpp" />
     <ClInclude Include="KFTaskRefreshInterface.h" />
     <ClInclude Include="KFTaskRefreshModule.hpp" />
   </ItemGroup>

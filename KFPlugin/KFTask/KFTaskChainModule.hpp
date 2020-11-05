@@ -16,7 +16,7 @@
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFCondition/KFConditionInterface.h"
-#include "KFTaskChainConfig.hpp"
+#include "KFXmlReader/KFTaskChainConfig.hpp"
 
 namespace KFrame
 {
