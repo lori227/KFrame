@@ -59,13 +59,13 @@ namespace KFrame
         auto modulenode = config.FindNode( "Module" );
         while ( modulenode.IsValid() )
         {
-            auto name = modulenode.GetString( "Name" );
+            auto name = modulenode.ReadString( "Name" );
 
             auto redisnode = modulenode.FindNode( "Redis" );
             while ( redisnode.IsValid() )
             {
-                auto minlogicid = redisnode.GetUInt32( "MinLogicId" );
-                auto maxlogicid = redisnode.GetUInt32( "MaxLogicId" );
+                auto minlogicid = redisnode.ReadUInt32( "MinLogicId" );
+                auto maxlogicid = redisnode.ReadUInt32( "MaxLogicId" );
 
                 for ( auto i = minlogicid; i <= maxlogicid; ++i )
                 {
@@ -79,9 +79,9 @@ namespace KFrame
                         KFRedisSetting kfsetting;
 
                         kfsetting._module = name;
-                        kfsetting._ip = writenode.GetString( "IP" );
-                        kfsetting._port = writenode.GetUInt32( "Port" );
-                        kfsetting._password = writenode.GetString( "Password" );
+                        kfsetting._ip = writenode.ReadString( "IP" );
+                        kfsetting._port = writenode.ReadUInt32( "Port" );
+                        kfsetting._password = writenode.ReadString( "Password" );
 
                         auto kfredislist = kfredistype->AddRedisList( KFDatabaseEnum::Write );
                         kfredislist->AddSetting( kfsetting );
@@ -96,9 +96,9 @@ namespace KFrame
 
                         KFRedisSetting kfsetting;
                         kfsetting._module = name;
-                        kfsetting._ip = readnode.GetString( "IP" );
-                        kfsetting._port = readnode.GetUInt32( "Port" );
-                        kfsetting._password = readnode.GetString( "Password" );
+                        kfsetting._ip = readnode.ReadString( "IP" );
+                        kfsetting._port = readnode.ReadUInt32( "Port" );
+                        kfsetting._password = readnode.ReadString( "Password" );
 
                         auto kfredislist = kfredistype->AddRedisList( KFDatabaseEnum::Read );
                         kfredislist->AddSetting( kfsetting );

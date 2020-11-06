@@ -2,8 +2,6 @@
 #define __KF_ENTITY_H__
 
 #include "KFCore/KFObject.h"
-#include "KFCore/KFElement.h"
-#include "KFCore/KFCondition.h"
 
 namespace KFrame
 {

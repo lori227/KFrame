@@ -61,17 +61,17 @@ namespace KFrame
         auto modulenode = config.FindNode( "Module" );
         while ( modulenode.IsValid() )
         {
-            auto name = modulenode.GetString( "Name" );
-            auto usessl = modulenode.GetString( "UseSSL" );
-            auto authtype = modulenode.GetString( "Auth" );
-            auto connecttimeout = modulenode.GetUInt32( "ConnectTimeout" );
-            auto executetimeout = modulenode.GetUInt32( "ExecuteTimeout" );
+            auto name = modulenode.ReadString( "Name" );
+            auto usessl = modulenode.ReadString( "UseSSL" );
+            auto authtype = modulenode.ReadString( "Auth" );
+            auto connecttimeout = modulenode.ReadUInt32( "ConnectTimeout" );
+            auto executetimeout = modulenode.ReadUInt32( "ExecuteTimeout" );
 
             auto mongonode = modulenode.FindNode( "Mongo" );
             while ( mongonode.IsValid() )
             {
-                auto minlogicid = mongonode.GetUInt32( "MinLogicId" );
-                auto maxlogicid = mongonode.GetUInt32( "MaxLogicId" );
+                auto minlogicid = mongonode.ReadUInt32( "MinLogicId" );
+                auto maxlogicid = mongonode.ReadUInt32( "MaxLogicId" );
 
                 for ( auto i = minlogicid; i <= maxlogicid; ++i )
                 {
@@ -88,11 +88,11 @@ namespace KFrame
                         kfsetting._auth_type = authtype;
                         kfsetting._connect_timeout = connecttimeout;
                         kfsetting._execute_timeout = executetimeout;
-                        kfsetting._ip = writenode.GetString( "IP" );
-                        kfsetting._port = writenode.GetUInt32( "Port" );
-                        kfsetting._database = writenode.GetString( "Database" );
-                        kfsetting._user = writenode.GetString( "User" );
-                        kfsetting._password = writenode.GetString( "Password" );
+                        kfsetting._ip = writenode.ReadString( "IP" );
+                        kfsetting._port = writenode.ReadUInt32( "Port" );
+                        kfsetting._database = writenode.ReadString( "Database" );
+                        kfsetting._user = writenode.ReadString( "User" );
+                        kfsetting._password = writenode.ReadString( "Password" );
 
                         auto kfmongolist = kfmongotype->AddMongoList( KFDatabaseEnum::Write );
                         kfmongolist->AddSetting( kfsetting );
@@ -109,11 +109,11 @@ namespace KFrame
                         kfsetting._auth_type = authtype;
                         kfsetting._connect_timeout = connecttimeout;
                         kfsetting._execute_timeout = executetimeout;
-                        kfsetting._ip = readnode.GetString( "IP" );
-                        kfsetting._port = readnode.GetUInt32( "Port" );
-                        kfsetting._database = readnode.GetString( "Database" );
-                        kfsetting._user = readnode.GetString( "User" );
-                        kfsetting._password = readnode.GetString( "Password" );
+                        kfsetting._ip = readnode.ReadString( "IP" );
+                        kfsetting._port = readnode.ReadUInt32( "Port" );
+                        kfsetting._database = readnode.ReadString( "Database" );
+                        kfsetting._user = readnode.ReadString( "User" );
+                        kfsetting._password = readnode.ReadString( "Password" );
 
                         auto kfmongolist = kfmongotype->AddMongoList( KFDatabaseEnum::Read );
                         kfmongolist->AddSetting( kfsetting );

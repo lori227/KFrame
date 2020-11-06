@@ -132,7 +132,7 @@ namespace KFrame
             {
                 kfmail->Set( iter->first, iter->second );
             }
-            player->AddData( kfmailrecord, kfmail );
+            player->AddRecord( kfmailrecord, kfmail );
         }
     }
 
@@ -248,12 +248,12 @@ namespace KFrame
         {
         case KFMsg::DoneStatus:
         {
-            player->UpdateData( __STRING__( mail ), kfmsg.id(), __STRING__( status ), KFEnum::Set, KFMsg::DoneStatus );
+            player->UpdateRecord( __STRING__( mail ), kfmsg.id(), __STRING__( status ), KFEnum::Set, KFMsg::DoneStatus );
         }
         break;
         case KFMsg::Remove:
         {
-            player->RemoveData( __STRING__( mail ), kfmsg.id() );
+            player->RemoveRecord( __STRING__( mail ), kfmsg.id() );
         }
         break;
         case KFMsg::ReceiveStatus:
@@ -264,7 +264,7 @@ namespace KFrame
         case KFMsg::ReceiveRemove:
         {
             ReceiveMailReward( player, kfmsg.id() );
-            player->RemoveData( __STRING__( mail ), kfmsg.id() );
+            player->RemoveRecord( __STRING__( mail ), kfmsg.id() );
         }
         break;
         default:
@@ -293,7 +293,7 @@ namespace KFrame
             return __LOG_ERROR__( "player={} mail={} reward={} error", player->GetKeyID(), id, reward );
         }
 
-        player->UpdateData( kfmail, __STRING__( status ), KFEnum::Set, KFMsg::ReceiveStatus );
+        player->UpdateObject( kfmail, __STRING__( status ), KFEnum::Set, KFMsg::ReceiveStatus );
         player->AddElement( &kfelements, _default_multiple, __STRING__( mail ), id, __FUNC_LINE__ );
     }
 

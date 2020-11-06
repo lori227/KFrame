@@ -1,7 +1,6 @@
 ﻿#ifndef __KF_TASK_REFRESH_CONFIG_H__
 #define __KF_TASK_REFRESH_CONFIG_H__
 
-#include "KFCore/KFCondition.h"
 #include "KFConfig.h"
 #include "KFXmlReader/KFElementConfig.h"
 #include "KFXmlReader/KFWeightConfig.h"
@@ -82,23 +81,22 @@ namespace KFrame
         }
 
         // 读取配置
-        virtual void ReadSetting( KFNode& xmlnode, KFTaskRefreshSetting* kfsetting )
+        virtual void ReadSetting( KFXmlNode& xmlnode, KFTaskRefreshSetting* kfsetting )
         {
-            kfsetting->_refresh_rate = xmlnode.GetUInt32( "Rate" );
-            kfsetting->_task_chain_id = xmlnode.GetUInt32( "ChainId" );
-            kfsetting->_receive_time = xmlnode.GetUInt32( "PickupTime" );
-            kfsetting->_done_time = xmlnode.GetUInt32( "CompleteTime" );
-            kfsetting->_receive_cost._str_parse = xmlnode.GetString( "PickupCost" );
+            kfsetting->_refresh_rate = xmlnode.ReadUInt32( "Rate" );
+            kfsetting->_task_chain_id = xmlnode.ReadUInt32( "ChainId" );
+            kfsetting->_receive_time = xmlnode.ReadUInt32( "PickupTime" );
+            kfsetting->_done_time = xmlnode.ReadUInt32( "CompleteTime" );
+            kfsetting->_receive_cost._str_parse = xmlnode.ReadString( "PickupCost" );
 
-            auto strtaskpool = xmlnode.GetString( "TaskPool" );
+            auto strtaskpool = xmlnode.ReadString( "TaskPool" );
             kfsetting->_task_pool_id = KFUtility::SplitValue<uint32>( strtaskpool, __SPLIT_STRING__ );
             kfsetting->_task_count = KFUtility::SplitValue<uint32>( strtaskpool, __SPLIT_STRING__ );
             kfsetting->_task_status = KFUtility::SplitValue<uint32>( strtaskpool, __SPLIT_STRING__ );
 
-            auto strcondition = xmlnode.GetString( "Condition" );
-            kfsetting->_conditions.Parse( strcondition, kfsetting->_id, __FILE__, __LINE__ );
+            xmlnode.ReadStaticCondition( kfsetting->_conditions, "Condition" );
 
-            auto resettimeid = xmlnode.GetUInt32( "ResetTime" );
+            auto resettimeid = xmlnode.ReadUInt32( "ResetTime" );
             if ( resettimeid != 0 )
             {
                 kfsetting->_reset_refresh_time = resettimeid;
@@ -106,7 +104,7 @@ namespace KFrame
                 kfrefreshdata->_refresh_list.push_back( kfsetting );
             }
 
-            auto timertime = xmlnode.GetUInt32( "TimerTime" );
+            auto timertime = xmlnode.ReadUInt32( "TimerTime" );
             if ( timertime )
             {
                 kfsetting->_timer_refresh_time = timertime;

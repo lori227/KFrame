@@ -125,12 +125,12 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_EXECUTE_FUNCTION__( KFExecuteModule::OnExecuteAddData )
     {
-        if ( executedata->_param_list._elements.IsEmpty() )
+        if ( executedata->_elements.IsEmpty() )
         {
             return false;
         }
 
-        player->AddElement( &executedata->_param_list._elements, _default_multiple, modulename, moduleid, __FUNC_LINE__ );
+        player->AddElement( &executedata->_elements, _default_multiple, modulename, moduleid, __FUNC_LINE__ );
         return true;
     }
 

@@ -54,7 +54,7 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::PayIdError );
         }
 
-        auto source = __FORMAT__( "{}-{}-{}", playerid, kfmsg.payid(), KFGlobal::Instance()->STMakeUUID() );
+        auto source = __FORMAT__( "{}-{}-{}", playerid, kfmsg.payid(), KFGlobal::Instance()->STMakeUuid() );
         auto order = KFCrypto::Md5Encode( source );
 
         // 发送给auth服务器
@@ -198,17 +198,17 @@ namespace KFrame
         }
 
         // 添加元素
-        player->AddElement( &kfsetting->_buy_elements, false, __FUNC_LINE__ );
+        player->AddElement( &kfsetting->_buy_elements, _default_multiple, __STRING__( pay ), 0, __FUNC_LINE__ );
 
         // 判断是否首冲
         auto firstvalue = player->Get< uint64 >( __STRING__( variable ), kfsetting->_first_variable_id, __STRING__( value ) );
         if ( firstvalue == _invalid_int )
         {
             // 更新变量
-            player->UpdateData( __STRING__( variable ), kfsetting->_first_variable_id, __STRING__( value ), KFEnum::Set, 1 );
+            player->UpdateRecord( __STRING__( variable ), kfsetting->_first_variable_id, __STRING__( value ), KFEnum::Set, 1 );
 
             // 添加元素
-            player->AddElement( &kfsetting->_first_elements, false, __FUNC_LINE__ );
+            player->AddElement( &kfsetting->_first_elements, _default_multiple, __STRING__( firstpay ), 0, __FUNC_LINE__ );
         }
 
         // 清空order

@@ -9,7 +9,6 @@
 //    @Date             :    2018-2-1
 ************************************************************************/
 
-#include "KFMailConfig.hpp"
 #include "KFProtocol/KFProtocol.h"
 #include "KFMailClientInterface.h"
 #include "KFTimer/KFTimerInterface.h"
@@ -18,6 +17,7 @@
 #include "KFMessage/KFMessageInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"
+#include "KFXmlReader/KFMailConfig.hpp"
 
 namespace KFrame
 {

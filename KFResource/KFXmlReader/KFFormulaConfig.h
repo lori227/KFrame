@@ -121,7 +121,7 @@ namespace KFrame
             auto kfformulaparam = __KF_NEW__( KFFormulaParam );
             kfsetting->_formula_param_list.Add( kfformulaparam );
             /////////////////////////////////////////////////////////////////////////////////
-            kfformulaparam->_type = xmlnode.GetString( "Type" );
+            kfformulaparam->_type = xmlnode.ReadString( "Type" );
 
             auto index = 1u;
             while ( true )
@@ -133,7 +133,7 @@ namespace KFrame
                     break;
                 }
 
-                auto strvalue = xmlnode.GetString( strkey.c_str() );
+                auto strvalue = xmlnode.ReadString( strkey.c_str() );
                 auto param = kfformulaparam->AddParam();
                 param->_str_value = strvalue;
                 param->_int_value = __TO_UINT32__( strvalue );

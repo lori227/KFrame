@@ -34,10 +34,10 @@ namespace KFrame
         }
     protected:
         // 读取配置
-        virtual void ReadSetting( KFNode& xmlnode, KFWeightSetting* kfsetting )
+        virtual void ReadSetting( KFXmlNode& xmlnode, KFWeightSetting* kfsetting )
         {
-            auto value = xmlnode.GetUInt32( "Value" );
-            auto weight = xmlnode.GetUInt32( "Weight" );
+            auto value = xmlnode.ReadUInt32( "Value" );
+            auto weight = xmlnode.ReadUInt32( "Weight" );
             kfsetting->_weight_list.Create( value, weight );
         }
     };

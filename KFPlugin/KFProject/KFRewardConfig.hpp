@@ -1,7 +1,6 @@
 ﻿#ifndef __KF_REWARD_CONFIG_H__
 #define __KF_REWARD_CONFIG_H__
 
-#include "KFCore/KFElement.h"
 #include "KFConfig.h"
 #include "KFXmlReader/KFElementConfig.h"
 
@@ -44,7 +43,7 @@ namespace KFrame
         virtual void ClearSetting();
 
         // 读取配置
-        virtual void ReadSetting( KFNode& xmlnode, KFRewardSetting* kfsetting );
+        virtual void ReadSetting( KFXmlNode& xmlnode, KFRewardSetting* kfsetting );
 
         // 保存type和code的对应
         uint64 CalcTypeCodeValue( uint64 type, uint64 code );

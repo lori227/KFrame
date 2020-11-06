@@ -2,7 +2,7 @@
 #define __KF_DATA_CONFIG_H__
 
 #include "KFConfig.h"
-#include "KFCore/KFDataSetting.h"
+#include "KFDataSetting.h"
 
 namespace KFrame
 {
@@ -109,13 +109,13 @@ namespace KFrame
         }
     protected:
         // 读取配置
-        virtual void ReadSetting( KFNode& xmlnode, KFClassSetting* kfsetting )
+        virtual void ReadSetting( KFXmlNode& xmlnode, KFClassSetting* kfsetting )
         {
-            auto dataname = xmlnode.GetString( "Name" );
+            auto dataname = xmlnode.ReadString( "Name" );
             auto kfdatasetting = kfsetting->_static_data.Create( dataname );
             kfdatasetting->_name = dataname;
 
-            kfdatasetting->_logic_name = xmlnode.GetString( "LogicName", true );
+            kfdatasetting->_logic_name = xmlnode.ReadString( "LogicName", true );
             if ( kfdatasetting->_logic_name.empty() )
             {
                 kfdatasetting->_logic_name = kfdatasetting->_name;
@@ -125,7 +125,7 @@ namespace KFrame
                 kfsetting->_logic_name_list[ kfdatasetting->_logic_name ] = kfdatasetting->_name;
             }
 
-            kfdatasetting->_type = KFDataDefine::ConvertDataType( xmlnode.GetString( "Type" ) );
+            kfdatasetting->_type = KFDataDefine::ConvertDataType( xmlnode.ReadString( "Type" ) );
             kfdatasetting->_logic_type = kfdatasetting->_type;
             switch ( kfdatasetting->_type )
             {
@@ -143,7 +143,7 @@ namespace KFrame
                 break;
             }
 
-            kfdatasetting->_contain_class = xmlnode.GetString( "ContainClass", true );
+            kfdatasetting->_contain_class = xmlnode.ReadString( "ContainClass", true );
             if ( !kfdatasetting->_contain_class.empty() )
             {
                 auto type = KFDataDefine::ConvertDataType( kfdatasetting->_contain_class );
@@ -157,24 +157,24 @@ namespace KFrame
                 }
             }
 
-            kfdatasetting->_delay_save_time = xmlnode.GetUInt32( "SaveTime", true );
-            kfdatasetting->_delete_type = xmlnode.GetUInt32( "DeleteType", true );
-            kfdatasetting->_str_init_value = xmlnode.GetString( "InitValue", true );
-            kfdatasetting->_str_min_value = xmlnode.GetString( "MinValue", true );
-            kfdatasetting->_str_max_value = xmlnode.GetString( "MaxValue", true );
-            kfdatasetting->_str_run_param = xmlnode.GetString( "RunParam", true );
-            kfdatasetting->_str_max_capacity = xmlnode.GetString( "Capacity", true );
-            kfdatasetting->_key_name = xmlnode.GetString( "KeyName", true );
-            kfdatasetting->_config_key_name = xmlnode.GetString( "ConfigKeyName", true );
-            kfdatasetting->_value_key_name = xmlnode.GetString( "ValueKeyName", true );
-            kfdatasetting->_lua_file = xmlnode.GetString( "LuaFile", true );
-            kfdatasetting->_add_function = xmlnode.GetString( "AddFunction", true );
-            kfdatasetting->_update_function = xmlnode.GetString( "UpdateFunction", true );
-            kfdatasetting->_remove_function = xmlnode.GetString( "RemoveFunction", true );
+            kfdatasetting->_delay_save_time = xmlnode.ReadUInt32( "SaveTime", true );
+            kfdatasetting->_delete_type = xmlnode.ReadUInt32( "DeleteType", true );
+            kfdatasetting->_str_init_value = xmlnode.ReadString( "InitValue", true );
+            kfdatasetting->_str_min_value = xmlnode.ReadString( "MinValue", true );
+            kfdatasetting->_str_max_value = xmlnode.ReadString( "MaxValue", true );
+            kfdatasetting->_str_run_param = xmlnode.ReadString( "RunParam", true );
+            kfdatasetting->_str_max_capacity = xmlnode.ReadString( "Capacity", true );
+            kfdatasetting->_key_name = xmlnode.ReadString( "KeyName", true );
+            kfdatasetting->_config_key_name = xmlnode.ReadString( "ConfigKeyName", true );
+            kfdatasetting->_value_key_name = xmlnode.ReadString( "ValueKeyName", true );
+            kfdatasetting->_lua_file = xmlnode.ReadString( "LuaFile", true );
+            kfdatasetting->_add_function = xmlnode.ReadString( "AddFunction", true );
+            kfdatasetting->_update_function = xmlnode.ReadString( "UpdateFunction", true );
+            kfdatasetting->_remove_function = xmlnode.ReadString( "RemoveFunction", true );
 
             for ( auto& iter : _data_mask_list )
             {
-                if ( xmlnode.GetString( iter.first.c_str() ) == "1" )
+                if ( xmlnode.ReadString( iter.first.c_str() ) == "1" )
                 {
                     KFUtility::AddBitMask< uint32 >( kfdatasetting->_data_mask, iter.second );
                 }

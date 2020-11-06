@@ -24,15 +24,15 @@ namespace KFrame
             auto config = kfxml.RootNode();
 
             auto clusternode = config.FindNode( "Cluster" );
-            _cluster_name = clusternode.GetString( "Name" );
-            _cluster_key = clusternode.GetString( "Key" );
+            _cluster_name = clusternode.ReadString( "Name" );
+            _cluster_key = clusternode.ReadString( "Key" );
             //////////////////////////////////////////////////////////////////
             auto routesnode = config.FindNode( "Routes" );
             auto routenode = routesnode.FindNode( "Route" );
             while ( routenode.IsValid() )
             {
-                auto source = routenode.GetString( "Source" );
-                auto target = routenode.GetString( "Target" );
+                auto source = routenode.ReadString( "Source" );
+                auto target = routenode.ReadString( "Target" );
                 _route_list[ source ] = target;
 
                 routenode.NextNode();

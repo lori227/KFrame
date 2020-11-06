@@ -356,14 +356,14 @@ namespace KFrame
         return value;
     }
 
-    KFConditionData* KFAnalysis::ParseConstant( const int8* data, uint32& size, uint32& startpos )
+    KFConditionAbstract* KFAnalysis::ParseConstant( const int8* data, uint32& size, uint32& startpos )
     {
         auto kfdata = __KF_NEW__( KFConditionConstant );
         kfdata->_value = ReadInteger( data, size, startpos );
         return kfdata;
     }
 
-    KFConditionData* KFAnalysis::ParseVariable( const int8* data, uint32& size, uint32& startpos )
+    KFConditionAbstract* KFAnalysis::ParseVariable( const int8* data, uint32& size, uint32& startpos )
     {
         auto kfdata = __KF_NEW__( KFConditionVariable );
 

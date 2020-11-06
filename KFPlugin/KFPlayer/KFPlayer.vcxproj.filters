@@ -4,12 +4,11 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="KFPlayerPlugin.cpp" />
     <ClCompile Include="KFPlayerModule.cpp" />
-    <ClCompile Include="KFPlayerConfig.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFPlayerInterface.h" />
     <ClInclude Include="KFPlayerModule.hpp" />
     <ClInclude Include="KFPlayerPlugin.hpp" />
-    <ClInclude Include="KFPlayerConfig.hpp" />
+    <ClInclude Include="..\..\KFResource\KFXmlReader\KFPlayerConfig.hpp" />
   </ItemGroup>
 </Project>

@@ -8,26 +8,26 @@ namespace KFrame
         KFConfigT< KFGoodsSetting >::ClearSetting();
     }
 
-    void KFGoodsConfig::ReadSetting( KFNode& xmlnode, KFGoodsSetting* kfsetting )
+    void KFGoodsConfig::ReadSetting( KFXmlNode& xmlnode, KFGoodsSetting* kfsetting )
     {
-        kfsetting->_store_id = xmlnode.GetUInt32( "StoreId" );
-        kfsetting->_goods_data._str_parse = xmlnode.GetString( "Item" );
-        kfsetting->_buy_price._str_parse = xmlnode.GetString( "Price" );
-        kfsetting->_discount_price._str_parse = xmlnode.GetString( "Discount" );
-        kfsetting->_start_buy_time = KFDate::FromString( xmlnode.GetString( "BeginTime" ) );
-        kfsetting->_end_buy_time = KFDate::FromString( xmlnode.GetString( "EndTime" ) );
-        kfsetting->_start_discount_time = KFDate::FromString( xmlnode.GetString( "DiscountBeginTime" ) );
-        kfsetting->_end_discount_time = KFDate::FromString( xmlnode.GetString( "DiscountEndTime" ) );
-        kfsetting->_limit_buy_time_id = xmlnode.GetUInt32( "LimitTimeId" );
-        kfsetting->_limit_buy_count = xmlnode.GetUInt32( "LimitCount" );
-        kfsetting->_limit_buy_count = xmlnode.GetUInt32( "LimitCount" );
+        kfsetting->_store_id = xmlnode.ReadUInt32( "StoreId" );
+        kfsetting->_goods_data._str_parse = xmlnode.ReadString( "Item" );
+        kfsetting->_buy_price._str_parse = xmlnode.ReadString( "Price" );
+        kfsetting->_discount_price._str_parse = xmlnode.ReadString( "Discount" );
+        kfsetting->_start_buy_time = xmlnode.ReadDate( "BeginTime" );
+        kfsetting->_end_buy_time = xmlnode.ReadDate( "EndTime" );
+        kfsetting->_start_discount_time =  xmlnode.ReadDate( "DiscountBeginTime" );
+        kfsetting->_end_discount_time = xmlnode.ReadDate( "DiscountEndTime" );
+        kfsetting->_limit_buy_time_id = xmlnode.ReadUInt32( "LimitTimeId" );
+        kfsetting->_limit_buy_count = xmlnode.ReadUInt32( "LimitCount" );
+        kfsetting->_limit_buy_count = xmlnode.ReadUInt32( "LimitCount" );
 
         // 刷新组
-        auto groupid = xmlnode.GetUInt32( "GroupId" );
-        auto groupweight = xmlnode.GetUInt32( "GroupWeight" );
+        auto groupid = xmlnode.ReadUInt32( "GroupId" );
+        auto groupweight = xmlnode.ReadUInt32( "GroupWeight" );
         auto goodsgroupweight = _goods_group_weight_list.Create( groupid );
         auto goodsweightdata = goodsgroupweight->Create( kfsetting->_id, groupweight );
-        goodsweightdata->_refresh_count = xmlnode.GetUInt32( "RefreshCount" );
+        goodsweightdata->_refresh_count = xmlnode.ReadUInt32( "RefreshCount" );
     }
 
     void KFGoodsConfig::LoadAllComplete()

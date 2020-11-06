@@ -22,9 +22,9 @@ namespace KFrame
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    KFChannelSetting* KFChannelConfig::CreateSetting( KFNode& xmlnode )
+    KFChannelSetting* KFChannelConfig::CreateSetting( KFXmlNode& xmlnode )
     {
-        auto service = xmlnode.GetUInt32( "Service", true, _invalid_int );
+        auto service = xmlnode.ReadUInt32( "Service", true, _invalid_int );
         auto ok = KFGlobal::Instance()->CheckChannelService( _invalid_int, service );
         if ( !ok )
         {
@@ -34,14 +34,14 @@ namespace KFrame
         return KFConfigT< KFChannelSetting >::CreateSetting( xmlnode );
     }
 
-    void KFChannelConfig::ReadSetting( KFNode& xmlnode, KFChannelSetting* kfsetting )
+    void KFChannelConfig::ReadSetting( KFXmlNode& xmlnode, KFChannelSetting* kfsetting )
     {
-        kfsetting->_login_url = xmlnode.GetString( "LoginUrl", true );
-        kfsetting->_pay_url = xmlnode.GetString( "PayUrl", true );
-        kfsetting->_app_id = xmlnode.GetString( "AppId", true );
-        kfsetting->_app_key = xmlnode.GetString( "AppKey", true );
-        kfsetting->_debug_open = xmlnode.GetBoolen( "Debug", true );
-        kfsetting->_release_open = xmlnode.GetBoolen( "Release", true );
-        kfsetting->_support_list = xmlnode.GetUInt32Set( "Support", true );
+        kfsetting->_login_url = xmlnode.ReadString( "LoginUrl", true );
+        kfsetting->_pay_url = xmlnode.ReadString( "PayUrl", true );
+        kfsetting->_app_id = xmlnode.ReadString( "AppId", true );
+        kfsetting->_app_key = xmlnode.ReadString( "AppKey", true );
+        kfsetting->_debug_open = xmlnode.ReadBoolen( "Debug", true );
+        kfsetting->_release_open = xmlnode.ReadBoolen( "Release", true );
+        kfsetting->_support_list = xmlnode.ReadUInt32Set( "Support", true );
     }
 }

@@ -96,14 +96,14 @@ namespace KFrame
         KFConfigT< KFFilterSetting >::ClearSetting();
     }
 
-    KFFilterSetting* KFFilterConfig::CreateSetting( KFNode& xmlnode )
+    KFFilterSetting* KFFilterConfig::CreateSetting( KFXmlNode& xmlnode )
     {
         return _settings.Create( 0u );
     }
 
-    void KFFilterConfig::ReadSetting( KFNode& xmlnode, KFFilterSetting* kfsetting )
+    void KFFilterConfig::ReadSetting( KFXmlNode& xmlnode, KFFilterSetting* kfsetting )
     {
-        auto word = xmlnode.GetString( "Word" );
+        auto word = xmlnode.ReadString( "Word" );
         InsertWord( &_root_word_data, word.data(), static_cast< uint32 >( word.length() ), 0 );
     }
 }

@@ -107,16 +107,16 @@ namespace KFrame
             {
                 KFConnection kfconnection;
 
-                kfconnection._app_name = connectionnode.GetString( "AppName" );
-                kfconnection._app_type = connectionnode.GetString( "AppType" );
-                kfconnection._app_id = connectionnode.GetString( "AppId" );
+                kfconnection._app_name = connectionnode.ReadString( "AppName" );
+                kfconnection._app_type = connectionnode.ReadString( "AppType" );
+                kfconnection._app_id = connectionnode.ReadString( "AppId" );
 
-                kfconnection._connect_name = connectionnode.GetString( "ConnectName" );
-                kfconnection._connect_type = connectionnode.GetString( "ConnectType" );
-                kfconnection._connect_id = connectionnode.GetString( "ConnectId" );
+                kfconnection._connect_name = connectionnode.ReadString( "ConnectName" );
+                kfconnection._connect_type = connectionnode.ReadString( "ConnectType" );
+                kfconnection._connect_id = connectionnode.ReadString( "ConnectId" );
 
-                kfconnection._interval = connectionnode.GetUInt32( "Interval", true, _invalid_int );
-                kfconnection._multi = connectionnode.GetUInt32( "Multi", true, _invalid_int );
+                kfconnection._interval = connectionnode.ReadUInt32( "Interval", true, _invalid_int );
+                kfconnection._multi = connectionnode.ReadUInt32( "Multi", true, _invalid_int );
 
                 _bus_connection.push_back( kfconnection );
 

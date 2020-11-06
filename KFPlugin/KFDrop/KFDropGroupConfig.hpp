@@ -1,7 +1,6 @@
 ﻿#ifndef __KF_DROP_GROUP_CONFIG_H__
 #define __KF_DROP_GROUP_CONFIG_H__
 
-#include "KFCore/KFCondition.h"
 #include "KFConfig.h"
 #include "KFDropDataConfig.hpp"
 
@@ -66,7 +65,7 @@ namespace KFrame
 
     protected:
         // 读取配置
-        virtual void ReadSetting( KFNode& xmlnode, KFDropSetting* kfsetting );
+        virtual void ReadSetting( KFXmlNode& xmlnode, KFDropSetting* kfsetting );
 
         // 初始化掉落
         void InitDropDataSetting( KFDropSetting* kfsetting, KFDropGroupWeight* dropgroupweight );

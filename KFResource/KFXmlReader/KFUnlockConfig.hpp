@@ -1,7 +1,6 @@
 ﻿#ifndef __KF_UNLOCK_CONFIG_H__
 #define __KF_UNLOCK_CONFIG_H__
 
-#include "KFCore/KFCondition.h"
 #include "KFConfig.h"
 
 namespace KFrame
@@ -22,8 +21,7 @@ namespace KFrame
         std::string _child_name;
 
         // 完成条件
-        uint32 _condition_type = 0u;
-        UInt32Vector _unlock_condition;
+        KFConditionGroup _condition_group;
     };
 
     class KFUnlockConfig : public KFConfigT< KFUnlockSetting >, public KFInstance< KFUnlockConfig >
@@ -37,7 +35,14 @@ namespace KFrame
     protected:
 
         // 读取配置
-        virtual void ReadSetting( KFNode& xmlnode, KFUnlockSetting* kfsetting );
+        virtual void ReadSetting( KFXmlNode& xmlnode, KFUnlockSetting* kfsetting )
+        {
+            kfsetting->_data_name = xmlnode.ReadString( "DataName" );
+            kfsetting->_data_id = xmlnode.ReadUInt32( "DataKey" );
+            kfsetting->_data_value = xmlnode.ReadUInt32( "DataValue" );
+            kfsetting->_child_name = xmlnode.ReadString( "ChildName" );
+            kfsetting->_condition_group = xmlnode.ReadConditionGroup( "UnLockCondition" );
+        }
     };
 }
 

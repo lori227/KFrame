@@ -65,18 +65,18 @@ namespace KFrame
 
     protected:
         // 读取配置
-        virtual void ReadSetting( KFNode& xmlnode, KFRelationSetting* kfsetting )
+        virtual void ReadSetting( KFXmlNode& xmlnode, KFRelationSetting* kfsetting )
         {
-            kfsetting->_max_count = xmlnode.GetUInt32( "MaxCount" );
-            kfsetting->_both_way = xmlnode.GetBoolen( "BothWay" );
-            kfsetting->_need_update = xmlnode.GetBoolen( "NeedUpdate" );
-            kfsetting->_online_load = xmlnode.GetBoolen( "OnlineLoad" );
-            kfsetting->_invite_data_name = xmlnode.GetString( "InviteDataName" );
-            kfsetting->_invite_data_count = xmlnode.GetUInt32( "InviteListCount" );
-            kfsetting->_invite_list_name = xmlnode.GetString( "InviteListName" );
-            kfsetting->_relation_list_name = xmlnode.GetString( "DataListName" );
-            kfsetting->_invite_keep_time = xmlnode.GetUInt32( "InviteKeepTime" );
-            kfsetting->_refuse_name = xmlnode.GetString( "RefuseName" );
+            kfsetting->_max_count = xmlnode.ReadUInt32( "MaxCount" );
+            kfsetting->_both_way = xmlnode.ReadBoolen( "BothWay" );
+            kfsetting->_need_update = xmlnode.ReadBoolen( "NeedUpdate" );
+            kfsetting->_online_load = xmlnode.ReadBoolen( "OnlineLoad" );
+            kfsetting->_invite_data_name = xmlnode.ReadString( "InviteDataName" );
+            kfsetting->_invite_data_count = xmlnode.ReadUInt32( "InviteListCount" );
+            kfsetting->_invite_list_name = xmlnode.ReadString( "InviteListName" );
+            kfsetting->_relation_list_name = xmlnode.ReadString( "DataListName" );
+            kfsetting->_invite_keep_time = xmlnode.ReadUInt32( "InviteKeepTime" );
+            kfsetting->_refuse_name = xmlnode.ReadString( "RefuseName" );
         }
     };
 }

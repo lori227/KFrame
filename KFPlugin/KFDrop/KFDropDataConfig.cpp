@@ -3,19 +3,19 @@
 namespace KFrame
 {
     /////////////////////////////////////////////////////////////////////////////////
-    void KFDropDataConfig::ReadSetting( KFNode& xmlnode, KFDropDataSetting* kfsetting )
+    void KFDropDataConfig::ReadSetting( KFXmlNode& xmlnode, KFDropDataSetting* kfsetting )
     {
         auto id = kfsetting->_drop_data_list._weight_data.size();
-        auto weight = xmlnode.GetUInt32( "Weight", true );
+        auto weight = xmlnode.ReadUInt32( "Weight", true );
         auto kfdropdataweight = kfsetting->_drop_data_list.Create( ++id, weight );
 
         kfdropdataweight->_drop_data._data_index = id;
         kfdropdataweight->_drop_data._drop_data_id = kfsetting->_id;
-        kfdropdataweight->_drop_data._logic_name = xmlnode.GetString( "LogicName" );
-        kfdropdataweight->_drop_data._data_name = xmlnode.GetString( "DataName" );
-        kfdropdataweight->_drop_data._data_key = xmlnode.GetUInt32( "DropKey", true );
+        kfdropdataweight->_drop_data._logic_name = xmlnode.ReadString( "LogicName" );
+        kfdropdataweight->_drop_data._data_name = xmlnode.ReadString( "DataName" );
+        kfdropdataweight->_drop_data._data_key = xmlnode.ReadUInt32( "DropKey", true );
 
-        auto strdropvalue = xmlnode.GetString( "DropValue" );
+        auto strdropvalue = xmlnode.ReadString( "DropValue" );
         kfdropdataweight->_drop_data._data_value = strdropvalue;
         kfdropdataweight->_drop_data._data_range.SetValue( strdropvalue );
     }

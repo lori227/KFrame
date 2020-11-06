@@ -10,11 +10,11 @@ namespace KFrame
     }
 
     // 读取配置
-    void KFRewardConfig::ReadSetting( KFNode& xmlnode, KFRewardSetting* kfsetting )
+    void KFRewardConfig::ReadSetting( KFXmlNode& xmlnode, KFRewardSetting* kfsetting )
     {
-        kfsetting->_type = xmlnode.GetUInt32( "Type" );
-        kfsetting->_code = xmlnode.GetUInt32( "Code" );
-        kfsetting->_element_template = xmlnode.GetString( "Template" );
+        kfsetting->_type = xmlnode.ReadUInt32( "Type" );
+        kfsetting->_code = xmlnode.ReadUInt32( "Code" );
+        kfsetting->_element_template = xmlnode.ReadString( "Template" );
 
         auto idvalue = CalcTypeCodeValue( kfsetting->_type, kfsetting->_code );
         _id_name_list[ idvalue ] = kfsetting->_id;

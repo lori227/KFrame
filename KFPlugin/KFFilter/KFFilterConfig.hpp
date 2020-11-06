@@ -52,10 +52,10 @@ namespace KFrame
         virtual void ClearSetting();
 
         // 创建配置
-        virtual KFFilterSetting* CreateSetting( KFNode& xmlnode );
+        virtual KFFilterSetting* CreateSetting( KFXmlNode& xmlnode );
 
         // 读取配置
-        virtual void ReadSetting( KFNode& xmlnode, KFFilterSetting* kfsetting );
+        virtual void ReadSetting( KFXmlNode& xmlnode, KFFilterSetting* kfsetting );
 
         // 插入单词
         void InsertWord( KFWordData* kfworddata, const char* source, uint32 length, uint32 index );

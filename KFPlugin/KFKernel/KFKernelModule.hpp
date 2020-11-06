@@ -13,7 +13,7 @@
 #include "KFComponentEx.hpp"
 #include "KFKernelInterface.h"
 #include "KFTimer/KFTimerInterface.h"
-#include "KFXmlReader/KFDataConfig.hpp"
+#include "KFDataConfig.hpp"
 
 namespace KFrame
 {

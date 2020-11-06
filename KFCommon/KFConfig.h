@@ -2,7 +2,6 @@
 #define __KF_CONFIG_H__
 
 #include "KFrame.h"
-#include "KFSetting.h"
 
 namespace KFrame
 {
@@ -136,7 +135,7 @@ namespace KFrame
             }
         }
 
-        virtual T* CreateSetting( KFNode& xmlnode )
+        virtual T* CreateSetting( KFXmlNode& xmlnode )
         {
             auto id = xmlnode.ReadT< KeyType >( _key_name.c_str() );
             auto kfsetting = _settings.Create( id );
@@ -146,7 +145,7 @@ namespace KFrame
         }
 
         // 读取配置
-        virtual void ReadSetting( KFNode& xmlnode, T* kfsetting ) = 0;
+        virtual void ReadSetting( KFXmlNode& xmlnode, T* kfsetting ) = 0;
 
     protected:
         // 配置表主键字段名

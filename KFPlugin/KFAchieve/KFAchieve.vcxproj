@@ -12,12 +12,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFAchieveConfig.cpp" />
     <ClCompile Include="KFAchieveModule.cpp" />
     <ClCompile Include="KFAchievePlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFAchieveConfig.hpp" />
+    <ClInclude Include="..\..\KFResource\KFXmlReader\KFAchieveConfig.hpp" />
     <ClInclude Include="KFAchieveInterface.h" />
     <ClInclude Include="KFAchieveModule.hpp" />
     <ClInclude Include="KFAchievePlugin.hpp" />

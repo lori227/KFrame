@@ -14,13 +14,12 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="KFMailClientModule.cpp" />
     <ClCompile Include="KFMailClientPlugin.cpp" />
-    <ClCompile Include="KFMailConfig.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\KFResource\KFXmlReader\KFMailConfig.hpp" />
     <ClInclude Include="KFMailClientInterface.h" />
     <ClInclude Include="KFMailClientModule.hpp" />
     <ClInclude Include="KFMailClientPlugin.hpp" />
-    <ClInclude Include="KFMailConfig.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{907DE7BA-DE59-4F70-8677-9D0616671843}</ProjectGuid>

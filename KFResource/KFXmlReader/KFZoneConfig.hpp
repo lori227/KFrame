@@ -45,30 +45,30 @@ namespace KFrame
             auto config = kfxml.RootNode();
 
             auto defaultnode = config.FindNode( "Default" );
-            _zone_template._name = defaultnode.GetString( "Name" );
-            _zone_template._login_id = defaultnode.GetUInt32( "LoginId" );
-            _zone_template._data_id = defaultnode.GetUInt32( "DataId" );
-            _zone_template._flag = defaultnode.GetString( "Flag" );
-            _zone_template._recommend = defaultnode.GetUInt32( "Recommend" );
+            _zone_template._name = defaultnode.ReadString( "Name" );
+            _zone_template._login_id = defaultnode.ReadUInt32( "LoginId" );
+            _zone_template._data_id = defaultnode.ReadUInt32( "DataId" );
+            _zone_template._flag = defaultnode.ReadString( "Flag" );
+            _zone_template._recommend = defaultnode.ReadUInt32( "Recommend" );
 
             // 本小区属性
             _zone = _zone_template;
             /////////////////////////////////////////////////////////////////////////////////////
             auto zones = config.FindNode( "Zones" );
-            _is_open_recommend = zones.GetBoolen( "OpenRecommend", true );
+            _is_open_recommend = zones.ReadBoolen( "OpenRecommend", true );
 
             auto xmlnode = zones.FindNode( "Zone" );
             while ( xmlnode.IsValid() )
             {
                 // 小区列表
-                auto id = xmlnode.GetUInt32( "Id" );
+                auto id = xmlnode.ReadUInt32( "Id" );
                 auto zone = _zone_list.Create( id );
                 zone->_id = id;
-                zone->_name = xmlnode.GetString( "Name" );;
-                zone->_login_id = xmlnode.GetUInt32( "LoginId" );
-                zone->_data_id = xmlnode.GetUInt32( "DataId" );
-                zone->_flag = xmlnode.GetString( "Flag" );
-                zone->_recommend = xmlnode.GetUInt32( "Recommend" );
+                zone->_name = xmlnode.ReadString( "Name" );;
+                zone->_login_id = xmlnode.ReadUInt32( "LoginId" );
+                zone->_data_id = xmlnode.ReadUInt32( "DataId" );
+                zone->_flag = xmlnode.ReadString( "Flag" );
+                zone->_recommend = xmlnode.ReadUInt32( "Recommend" );
 
                 // 本小区
                 if ( KFGlobal::Instance()->_app_id->GetZoneId() == id )

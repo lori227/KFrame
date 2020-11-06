@@ -10,22 +10,21 @@ namespace KFrame
         KFXml kfxml( filepath );
         auto config = kfxml.RootNode();
         auto savenode = config.FindNode( "Save" );
-        _compress_type = savenode.GetUInt32( "CompressType" );
-        _compress_level = savenode.GetUInt32( "CompressLevel" );
+        _compress_type = savenode.ReadUInt32( "CompressType" );
+        _compress_level = savenode.ReadUInt32( "CompressLevel" );
 
 
         auto databasenode = savenode.FindNode( "Database" );
         while ( databasenode.IsValid() )
         {
-            auto type = databasenode.GetUInt32( "Type" );
+            auto type = databasenode.ReadUInt32( "Type" );
             auto kfsetting = _settings.Create( type );
 
             kfsetting->_id = type;
-            kfsetting->_save_flag = databasenode.GetUInt32( "SaveFlag" );
-            kfsetting->_sort = databasenode.GetUInt32( "Sort" );
-            kfsetting->_is_open = databasenode.GetUInt32( "Open" );
-            kfsetting->_cache_time = databasenode.GetUInt32( "CacheTime" );
-
+            kfsetting->_save_flag = databasenode.ReadUInt32( "SaveFlag" );
+            kfsetting->_sort = databasenode.ReadUInt32( "Sort" );
+            kfsetting->_is_open = databasenode.ReadUInt32( "Open" );
+            kfsetting->_cache_time = databasenode.ReadUInt32( "CacheTime" );
 
             databasenode.NextNode();
         }

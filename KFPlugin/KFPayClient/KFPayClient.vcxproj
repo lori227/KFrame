@@ -14,13 +14,12 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="KFPayClientModule.cpp" />
     <ClCompile Include="KFPayClientPlugin.cpp" />
-    <ClCompile Include="KFPayConfig.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\KFResource\KFXmlReader\KFPayConfig.hpp" />
     <ClInclude Include="KFPayClientInterface.h" />
     <ClInclude Include="KFPayClientModule.hpp" />
     <ClInclude Include="KFPayClientPlugin.hpp" />
-    <ClInclude Include="KFPayConfig.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{DE211CE6-D01D-438C-B36F-61BDFA450601}</ProjectGuid>

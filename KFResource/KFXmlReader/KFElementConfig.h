@@ -2,7 +2,6 @@
 #define __KF_ELEMENT_CONFIG_H__
 
 #include "KFConfig.h"
-#include "KFCore/KFElement.h"
 
 namespace KFrame
 {

@@ -1,9 +1,7 @@
 ﻿#ifndef __KF_TASK_CHAIN_CONFIG_H__
 #define __KF_TASK_CHAIN_CONFIG_H__
 
-#include "KFCore/KFCondition.h"
 #include "KFConfig.h"
-#include "KFReadSetting.h"
 
 namespace KFrame
 {
@@ -63,9 +61,9 @@ namespace KFrame
 
     protected:
         // 读取配置
-        virtual void ReadSetting( KFNode& xmlnode, KFTaskChainSetting* kfsetting )
+        virtual void ReadSetting( KFXmlNode& xmlnode, KFTaskChainSetting* kfsetting )
         {
-            auto order = xmlnode.GetUInt32( "Order" );
+            auto order = xmlnode.ReadUInt32( "Order" );
             auto taskdatalist = kfsetting->_task_data_list.Find( order );
             if ( taskdatalist == nullptr )
             {
@@ -73,20 +71,15 @@ namespace KFrame
                 kfsetting->_task_data_list.Insert( order, taskdatalist );
             }
 
-            auto taskid = xmlnode.GetUInt32( "Task" );
-            auto weight = xmlnode.GetUInt32( "Weight", true );
+            auto taskid = xmlnode.ReadUInt32( "Task" );
+            auto weight = xmlnode.ReadUInt32( "Weight", true );
             auto taskdata = taskdatalist->Create( taskid, ( weight == 0u ? 100u : weight ) );
 
-            taskdata->_task_status = xmlnode.GetUInt32( "TaskStatus" );
+            taskdata->_task_status = xmlnode.ReadUInt32( "TaskStatus" );
 
-            auto strextend = xmlnode.GetString( "ExtendChain" );
-            KFReadSetting::ParseMapUInt32( strextend, taskdata->_extend_task_chain_list );
-
-            auto strstartrefresh = xmlnode.GetString( "StartRefresh" );
-            KFReadSetting::ParseMapUInt32( strstartrefresh, taskdata->_start_refresh_id_list );
-
-            auto strstoprefresh = xmlnode.GetString( "StopRefresh" );
-            KFReadSetting::ParseMapUInt32( strstoprefresh, taskdata->_stop_refresh_id_list );
+            taskdata->_extend_task_chain_list = xmlnode.ReadUInt32Map( "ExtendChain" );
+            taskdata->_start_refresh_id_list = xmlnode.ReadUInt32Map( "StartRefresh" );
+            taskdata->_stop_refresh_id_list = xmlnode.ReadUInt32Map( "StopRefresh" );
         }
     };
 

@@ -41,7 +41,7 @@ namespace KFrame
 
             kfachieve = player->CreateData( kfachieverecord );
             auto kfconditionobject = kfachieve->Find( __STRING__( conditions ) );
-            _kf_condition->AddCondition( player, kfconditionobject, kfsetting->_complete_condition, kfsetting->_complete_condition_type );
+            _kf_condition->AddCondition( player, kfconditionobject, kfsetting->_complete_condition_group );
 
             // 判断条件
             auto complete = _kf_condition->InitCondition( player, kfconditionobject, KFConditionEnum::LimitNull, false );

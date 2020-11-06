@@ -74,7 +74,7 @@ namespace KFrame
         return result;
     }
 
-    uint32 KFConditionModule::CalcConditionData( KFEntity* kfentity, const KFConditionData* kfconditiondata )
+    uint32 KFConditionModule::CalcConditionData( KFEntity* kfentity, const KFConditionAbstract* kfconditiondata )
     {
         auto result = 0u;
         if ( kfconditiondata->IsConstant() )
@@ -178,9 +178,9 @@ namespace KFrame
         return true;
     }
 
-    void KFConditionModule::AddCondition( KFEntity* kfentity, KFData* kfconditionobject, const UInt32Vector& conditionlist, uint32 conditiontype )
+    void KFConditionModule::AddCondition( KFEntity* kfentity, KFData* kfconditionobject, const KFConditionGroup& conditiongroup )
     {
-        if ( conditionlist.empty() )
+        if ( conditiongroup._ids.empty() )
         {
             return;
         }
@@ -191,8 +191,8 @@ namespace KFrame
             return;
         }
 
-        kfconditionobject->Set( __STRING__( type ), conditiontype );
-        for ( auto conditionid : conditionlist )
+        kfconditionobject->Set( __STRING__( type ), conditiongroup._type );
+        for ( auto conditionid : conditiongroup._ids )
         {
             auto kfsetting = KFConditionConfig::Instance()->FindSetting( conditionid );
             if ( kfsetting == nullptr )
@@ -205,7 +205,7 @@ namespace KFrame
             auto kfcondition = kfentity->CreateData( kfconditionrecord );
 
             // 前置条件
-            AddCondition( kfentity, kfcondition, kfsetting->_limit_condition_list, kfsetting->_limit_condition_type );
+            AddCondition( kfentity, kfcondition, kfsetting->_limit_condition_group );
 
             kfcondition->Set( __STRING__( id ), conditionid );
             kfconditionrecord->Add( conditionid, kfcondition );

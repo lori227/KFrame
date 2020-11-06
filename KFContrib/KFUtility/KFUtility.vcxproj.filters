@@ -1,44 +1,161 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <None Include="KFUtility.inl" />
+    <ClInclude Include="KFXmlNode.h">
+      <Filter>Xml</Filter>
+    </ClInclude>
+    <ClInclude Include="KFXml.h">
+      <Filter>Xml</Filter>
+    </ClInclude>
+    <ClInclude Include="KFCondition.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="KFAnalysis.hpp">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="KFDate.h">
+      <Filter>Time</Filter>
+    </ClInclude>
+    <ClInclude Include="KFTimer.h">
+      <Filter>Time</Filter>
+    </ClInclude>
+    <ClInclude Include="KFClock.h">
+      <Filter>Time</Filter>
+    </ClInclude>
+    <ClInclude Include="KFMutex.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="KFRunable.hpp">
+      <Filter>Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="KFThread.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="KFCrypto.h">
+      <Filter>Crypto</Filter>
+    </ClInclude>
+    <ClInclude Include="KFDecode.h">
+      <Filter>Crypto</Filter>
+    </ClInclude>
+    <ClInclude Include="KFCompress.h">
+      <Filter>Crypto</Filter>
+    </ClInclude>
+    <ClInclude Include="KFHashData.hpp">
+      <Filter>Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="KFHashLogic.hpp">
+      <Filter>Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="KFConHash.h">
+      <Filter>Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="KFAppId.h">
+      <Filter>AppId</Filter>
+    </ClInclude>
+    <ClInclude Include="KFConvert.h">
+      <Filter>String</Filter>
+    </ClInclude>
+    <ClInclude Include="KFUtility.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="KFElement.h">
+      <Filter>Data</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFUtility.h" />
-    <ClInclude Include="KFClock.h" />
-    <ClInclude Include="KFCompress.h" />
-    <ClInclude Include="KFConvert.h" />
-    <ClInclude Include="KFDate.h" />
-    <ClInclude Include="KFDecode.h" />
-    <ClInclude Include="KFMutex.h" />
-    <ClInclude Include="KFNode.h" />
-    <ClInclude Include="KFRunable.hpp" />
-    <ClInclude Include="KFThread.h" />
-    <ClInclude Include="KFXml.h" />
-    <ClInclude Include="KFConHash.h" />
-    <ClInclude Include="KFCrypto.h" />
-    <ClInclude Include="KFHashData.hpp" />
-    <ClInclude Include="KFHashLogic.hpp" />
-    <ClInclude Include="KFAppId.h" />
-    <ClInclude Include="KFTimer.h" />
+    <ClCompile Include="KFXmlNode.cpp">
+      <Filter>Xml</Filter>
+    </ClCompile>
+    <ClCompile Include="KFXml.cpp">
+      <Filter>Xml</Filter>
+    </ClCompile>
+    <ClCompile Include="KFCondition.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="KFAnalysis.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="KFDate.cpp">
+      <Filter>Time</Filter>
+    </ClCompile>
+    <ClCompile Include="KFTimer.cpp">
+      <Filter>Time</Filter>
+    </ClCompile>
+    <ClCompile Include="KFClock.cpp">
+      <Filter>Time</Filter>
+    </ClCompile>
+    <ClCompile Include="KFMutex.cpp">
+      <Filter>Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="KFRunable.cpp">
+      <Filter>Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="KFThread.cpp">
+      <Filter>Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="KFCrypto.cpp">
+      <Filter>Crypto</Filter>
+    </ClCompile>
+    <ClCompile Include="KFDecode.cpp">
+      <Filter>Crypto</Filter>
+    </ClCompile>
+    <ClCompile Include="KFCompress.cpp">
+      <Filter>Crypto</Filter>
+    </ClCompile>
+    <ClCompile Include="KFHashData.cpp">
+      <Filter>Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="KFHashLogic.cpp">
+      <Filter>Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="KFConHash.cpp">
+      <Filter>Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="KFAppId.cpp">
+      <Filter>AppId</Filter>
+    </ClCompile>
+    <ClCompile Include="KFConvert.cpp">
+      <Filter>String</Filter>
+    </ClCompile>
+    <ClCompile Include="KFUtility.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="KFElement.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="KFUtility.cpp" />
-    <ClCompile Include="KFClock.cpp" />
-    <ClCompile Include="KFCompress.cpp" />
-    <ClCompile Include="KFConvert.cpp" />
-    <ClCompile Include="KFDate.cpp" />
-    <ClCompile Include="KFDecode.cpp" />
-    <ClCompile Include="KFMutex.cpp" />
-    <ClCompile Include="KFNode.cpp" />
-    <ClCompile Include="KFRunable.cpp" />
-    <ClCompile Include="KFThread.cpp" />
-    <ClCompile Include="KFXml.cpp" />
-    <ClCompile Include="KFConHash.cpp" />
-    <ClCompile Include="KFCrypto.cpp" />
-    <ClCompile Include="KFHashData.cpp" />
-    <ClCompile Include="KFHashLogic.cpp" />
-    <ClCompile Include="KFAppId.cpp" />
-    <ClCompile Include="KFTimer.cpp" />
+    <Filter Include="Xml">
+      <UniqueIdentifier>{4365645c-52e4-461c-99c4-4aade35e0cc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Time">
+      <UniqueIdentifier>{61053132-28bc-49dc-8325-da46ee106905}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Thread">
+      <UniqueIdentifier>{34a1ceac-435e-43ee-8d56-9d5219e0995d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Crypto">
+      <UniqueIdentifier>{5e5fa5bf-a5a6-481e-82f7-265ac4155a55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hash">
+      <UniqueIdentifier>{8f0c0d7f-a951-4cd2-949b-85ef37a84616}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AppId">
+      <UniqueIdentifier>{e2917c27-07bb-4cc0-bcfa-6e6ba6cecc25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="String">
+      <UniqueIdentifier>{ccb415e5-ebdb-48c6-9e05-881a4693dd0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility">
+      <UniqueIdentifier>{f3fbab72-816f-4b37-92eb-9644644f7ddc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data">
+      <UniqueIdentifier>{69da87a5-e469-43aa-8845-a0bb181542cf}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="KFUtility.inl">
+      <Filter>Utility</Filter>
+    </None>
   </ItemGroup>
 </Project>

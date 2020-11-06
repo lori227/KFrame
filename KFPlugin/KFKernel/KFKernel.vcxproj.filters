@@ -18,5 +18,6 @@
     <ClInclude Include="KFKernelPlugin.hpp" />
     <ClInclude Include="KFDataFactory.hpp" />
     <ClInclude Include="KFElementResult.h" />
+    <ClInclude Include="KFDataConfig.hpp" />
   </ItemGroup>
 </Project>

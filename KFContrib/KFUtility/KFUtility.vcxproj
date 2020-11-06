@@ -11,18 +11,21 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="KFAnalysis.cpp" />
     <ClCompile Include="KFAppId.cpp" />
     <ClCompile Include="KFClock.cpp" />
     <ClCompile Include="KFCompress.cpp" />
+    <ClCompile Include="KFCondition.cpp" />
     <ClCompile Include="KFConHash.cpp" />
     <ClCompile Include="KFConvert.cpp" />
     <ClCompile Include="KFCrypto.cpp" />
     <ClCompile Include="KFDate.cpp" />
     <ClCompile Include="KFDecode.cpp" />
+    <ClCompile Include="KFElement.cpp" />
     <ClCompile Include="KFHashData.cpp" />
     <ClCompile Include="KFHashLogic.cpp" />
     <ClCompile Include="KFMutex.cpp" />
-    <ClCompile Include="KFNode.cpp" />
+    <ClCompile Include="KFXmlNode.cpp" />
     <ClCompile Include="KFRunable.cpp" />
     <ClCompile Include="KFThread.cpp" />
     <ClCompile Include="KFTimer.cpp" />
@@ -30,18 +33,21 @@
     <ClCompile Include="KFXml.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="KFAnalysis.hpp" />
     <ClInclude Include="KFAppId.h" />
     <ClInclude Include="KFClock.h" />
     <ClInclude Include="KFCompress.h" />
+    <ClInclude Include="KFCondition.h" />
     <ClInclude Include="KFConHash.h" />
     <ClInclude Include="KFConvert.h" />
     <ClInclude Include="KFCrypto.h" />
     <ClInclude Include="KFDate.h" />
     <ClInclude Include="KFDecode.h" />
+    <ClInclude Include="KFElement.h" />
     <ClInclude Include="KFHashData.hpp" />
     <ClInclude Include="KFHashLogic.hpp" />
     <ClInclude Include="KFMutex.h" />
-    <ClInclude Include="KFNode.h" />
+    <ClInclude Include="KFXmlNode.h" />
     <ClInclude Include="KFRunable.hpp" />
     <ClInclude Include="KFThread.h" />
     <ClInclude Include="KFTimer.h" />

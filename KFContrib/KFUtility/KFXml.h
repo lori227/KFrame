@@ -1,7 +1,7 @@
 ﻿#ifndef __KF_DOCUMENT_H__
 #define __KF_DOCUMENT_H__
 
-#include "KFNode.h"
+#include "KFXmlNode.h"
 
 namespace KFrame
 {
@@ -14,8 +14,8 @@ namespace KFrame
         ~KFXml();
 
         // 查找节点
-        KFNode RootNode();
-        KFNode FindNode( const char* key );
+        KFXmlNode RootNode();
+        KFXmlNode FindNode( const char* key );
 
         const char* GetFileName() const;
 

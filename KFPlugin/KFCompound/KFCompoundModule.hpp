@@ -13,7 +13,7 @@
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFMessage/KFMessageInterface.h"
-#include "KFCompoundConfig.hpp"
+#include "KFXmlReader/KFCompoundConfig.hpp"
 
 namespace KFrame
 {
@@ -22,8 +22,6 @@ namespace KFrame
     public:
         KFCompoundModule() = default;
         ~KFCompoundModule() = default;
-
-
 
         virtual void BeforeRun();
 

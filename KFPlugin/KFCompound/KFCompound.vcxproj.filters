@@ -2,14 +2,13 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFCompoundConfig.cpp" />
     <ClCompile Include="KFCompoundModule.cpp" />
     <ClCompile Include="KFCompoundPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFCompoundInterface.h" />
-    <ClInclude Include="KFCompoundConfig.hpp" />
     <ClInclude Include="KFCompoundModule.hpp" />
     <ClInclude Include="KFCompoundPlugin.hpp" />
+    <ClInclude Include="..\..\KFResource\KFXmlReader\KFCompoundConfig.hpp" />
   </ItemGroup>
 </Project>

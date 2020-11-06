@@ -1,7 +1,4 @@
-﻿#include "KFElement.h"
-#include "KFEnum.h"
-#include "KFData.h"
-#include "KFJson.h"
+﻿#include "KFDataSetting.h"
 
 namespace KFrame
 {

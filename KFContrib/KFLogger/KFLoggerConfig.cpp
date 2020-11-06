@@ -13,28 +13,28 @@ namespace KFrame
         auto root = kfxml.FindNode( "Config" );
         //////////////////////////////////////////////////////////////////////////
         auto loggersnode = root.FindNode( "Loggers" );
-        _default_log_name = loggersnode.GetString( "Default", true );
+        _default_log_name = loggersnode.ReadString( "Default", true );
 
         auto node = loggersnode.FindNode( "Logger" );
         while ( node.IsValid() )
         {
-            auto name = node.GetString( "Name", true );
+            auto name = node.ReadString( "Name", true );
             if ( !name.empty() )
             {
                 auto kfsetting = _settings.Create( name );
 
-                kfsetting->_queue_count = node.GetUInt32( "QueueCount", true );
-                kfsetting->_sink_type = node.GetUInt32( "SinkType", true );
-                kfsetting->_step_seconds = node.GetUInt32( "StepSeconds", true );
-                kfsetting->_max_log_size = node.GetUInt32( "MaxLogSize", true );
-                kfsetting->_file_name = node.GetString( "FileInfo", true );
-                kfsetting->_split = node.GetString( "Split", true );
+                kfsetting->_queue_count = node.ReadUInt32( "QueueCount", true );
+                kfsetting->_sink_type = node.ReadUInt32( "SinkType", true );
+                kfsetting->_step_seconds = node.ReadUInt32( "StepSeconds", true );
+                kfsetting->_max_log_size = node.ReadUInt32( "MaxLogSize", true );
+                kfsetting->_file_name = node.ReadString( "FileInfo", true );
+                kfsetting->_split = node.ReadString( "Split", true );
 
 #if __KF_SYSTEM__ == __KF_WIN__
-                kfsetting->_output_path = node.GetString( "WinPath", true );
+                kfsetting->_output_path = node.ReadString( "WinPath", true );
                 KFUtility::ReplaceString( kfsetting->_output_path, "/", "\\" );
 #else
-                kfsetting->_output_path = node.GetString( "LinuxPath", true );
+                kfsetting->_output_path = node.ReadString( "LinuxPath", true );
 #endif
 
 #ifdef __KF_DEBUG__
@@ -42,9 +42,9 @@ namespace KFrame
 #else
                 auto modenode = node.FindNode( "Release" );
 #endif
-                kfsetting->_level = modenode.GetUInt32( "Level", true );
-                kfsetting->_console = modenode.GetBoolen( "Console", true );
-                kfsetting->_pattern = modenode.GetString( "Pattern", true );
+                kfsetting->_level = modenode.ReadUInt32( "Level", true );
+                kfsetting->_console = modenode.ReadBoolen( "Console", true );
+                kfsetting->_pattern = modenode.ReadString( "Pattern", true );
             }
 
             node.NextNode();

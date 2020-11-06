@@ -3,14 +3,14 @@
 
 namespace KFrame
 {
-    void KFStoreConfig::ReadSetting( KFNode& xmlnode, KFStoreSetting* kfsetting )
+    void KFStoreConfig::ReadSetting( KFXmlNode& xmlnode, KFStoreSetting* kfsetting )
     {
-        kfsetting->_refresh_type = xmlnode.GetUInt32( "RefreshType" );
-        kfsetting->_refresh_time_id = xmlnode.GetUInt32( "RefreshTimeId" );
-        kfsetting->_random_type = xmlnode.GetUInt32( "RandomType" );
-        kfsetting->_is_refresh_reset_time = xmlnode.GetBoolen( "RefreshResetTime" );
+        kfsetting->_refresh_type = xmlnode.ReadUInt32( "RefreshType" );
+        kfsetting->_refresh_time_id = xmlnode.ReadUInt32( "RefreshTimeId" );
+        kfsetting->_random_type = xmlnode.ReadUInt32( "RandomType" );
+        kfsetting->_is_refresh_reset_time = xmlnode.ReadBoolen( "RefreshResetTime" );
 
-        auto strrefreshgoods = xmlnode.GetString( "RefreshGoods" );
+        auto strrefreshgoods = xmlnode.ReadString( "RefreshGoods" );
         while ( !strrefreshgoods.empty() )
         {
             auto strrefresh = KFUtility::SplitString( strrefreshgoods, __SPLIT_STRING__ );
@@ -28,7 +28,7 @@ namespace KFrame
             }
         }
 
-        kfsetting->_refresh_cost_list = xmlnode.GetUInt32Vector( "RefreshCost" );
+        kfsetting->_refresh_cost_list = xmlnode.ReadUInt32Vector( "RefreshCost" );
     }
 
     void KFStoreConfig::LoadAllComplete()

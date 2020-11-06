@@ -2,7 +2,6 @@
 #define __KF_COUNT_COST_CONFIG_H__
 
 #include "KFConfig.h"
-#include "KFCore/KFElement.h"
 #include "KFElementConfig.h"
 
 namespace KFrame
@@ -86,14 +85,14 @@ namespace KFrame
 
     protected:
         // 读取配置
-        virtual void ReadSetting( KFNode& xmlnode, KFCountCostSetting* kfsetting )
+        virtual void ReadSetting( KFXmlNode& xmlnode, KFCountCostSetting* kfsetting )
         {
-            kfsetting->_refresh_time_id = xmlnode.GetUInt32( "RefreshTimeId" );
+            kfsetting->_refresh_time_id = xmlnode.ReadUInt32( "RefreshTimeId" );
 
             auto countcostdata = __KF_NEW__( KFCountCostData );
-            countcostdata->_min_count = xmlnode.GetUInt32( "MinCount" );
-            countcostdata->_max_count = xmlnode.GetUInt32( "MaxCount" );
-            countcostdata->_cost_elements._str_parse = xmlnode.GetString( "Cost" );
+            countcostdata->_min_count = xmlnode.ReadUInt32( "MinCount" );
+            countcostdata->_max_count = xmlnode.ReadUInt32( "MaxCount" );
+            countcostdata->_cost_elements._str_parse = xmlnode.ReadString( "Cost" );
             kfsetting->_count_cost_list.Add( countcostdata );
         }
     };

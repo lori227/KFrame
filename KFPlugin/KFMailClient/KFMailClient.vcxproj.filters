@@ -4,12 +4,11 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="KFMailClientModule.cpp" />
     <ClCompile Include="KFMailClientPlugin.cpp" />
-    <ClCompile Include="KFMailConfig.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFMailClientInterface.h" />
     <ClInclude Include="KFMailClientModule.hpp" />
     <ClInclude Include="KFMailClientPlugin.hpp" />
-    <ClInclude Include="KFMailConfig.hpp" />
+    <ClInclude Include="..\..\KFResource\KFXmlReader\KFMailConfig.hpp" />
   </ItemGroup>
 </Project>

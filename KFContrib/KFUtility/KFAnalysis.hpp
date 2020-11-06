@@ -52,10 +52,10 @@ namespace KFrame
         static std::tuple<KFExpression*, bool> ParseExpression( const int8* data, uint32 size, uint32 startpos );
 
         // 解析数字
-        static KFConditionData* ParseConstant( const int8* data, uint32& size, uint32& startpos );
+        static KFConditionAbstract* ParseConstant( const int8* data, uint32& size, uint32& startpos );
 
         // 解析属性名
-        static KFConditionData* ParseVariable( const int8* data, uint32& size, uint32& startpos );
+        static KFConditionAbstract* ParseVariable( const int8* data, uint32& size, uint32& startpos );
 
         // 读取Integer
         static uint32 ReadInteger( const int8* data, uint32& size, uint32& startpos );

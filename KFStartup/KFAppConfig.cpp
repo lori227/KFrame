@@ -70,7 +70,7 @@ namespace KFrame
             auto includenode = includesnode.FindNode( "Include" );
             while ( includenode.IsValid() )
             {
-                auto filename = includenode.GetString( "File" );
+                auto filename = includenode.ReadString( "File" );
                 ReadStartupConfig( filename );
                 includenode.NextNode();
             }
@@ -83,12 +83,12 @@ namespace KFrame
         auto node = plugins.FindNode( "Plugin" );
         while ( node.IsValid() )
         {
-            auto channel = node.GetUInt32( "Channel", true, _invalid_int );
+            auto channel = node.ReadUInt32( "Channel", true, _invalid_int );
             if ( kfglobal->CheckChannelService( channel, _invalid_int ) )
             {
                 KFAppSetting setting;
-                setting._name = node.GetString( "Name" );
-                setting._param = node.GetString( "Config", true );
+                setting._name = node.ReadString( "Name" );
+                setting._param = node.ReadString( "Config", true );
                 AddStartupSetting( setting );
             }
 

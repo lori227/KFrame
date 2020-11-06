@@ -30,10 +30,10 @@ namespace KFrame
 
     protected:
         // 创建配置
-        KFIntSetting* CreateSetting( KFNode& xmlnode );
+        KFIntSetting* CreateSetting( KFXmlNode& xmlnode );
 
         // 读取配置
-        virtual void ReadSetting( KFNode& xmlnode, KFIntSetting* kfsetting );
+        virtual void ReadSetting( KFXmlNode& xmlnode, KFIntSetting* kfsetting );
     };
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////

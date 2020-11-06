@@ -61,13 +61,13 @@ namespace KFrame
         auto modulenode = config.FindNode( "Module" );
         while ( modulenode.IsValid() )
         {
-            auto name = modulenode.GetString( "Name" );
+            auto name = modulenode.ReadString( "Name" );
 
             auto mysqlnode = modulenode.FindNode( "MySQL" );
             while ( mysqlnode.IsValid() )
             {
-                auto minlogicid = mysqlnode.GetUInt32( "MinLogicId" );
-                auto maxlogicid = mysqlnode.GetUInt32( "MaxLogicId" );
+                auto minlogicid = mysqlnode.ReadUInt32( "MinLogicId" );
+                auto maxlogicid = mysqlnode.ReadUInt32( "MaxLogicId" );
 
                 for ( auto i = minlogicid; i <= maxlogicid; ++i )
                 {
@@ -80,11 +80,11 @@ namespace KFrame
                     {
                         KFMySQLSetting kfsetting;
 
-                        kfsetting._ip = writenode.GetString( "IP" );
-                        kfsetting._port = writenode.GetUInt32( "Port" );
-                        kfsetting._database = writenode.GetString( "Database" );
-                        kfsetting._user = writenode.GetString( "User" );
-                        kfsetting._password = writenode.GetString( "Password" );
+                        kfsetting._ip = writenode.ReadString( "IP" );
+                        kfsetting._port = writenode.ReadUInt32( "Port" );
+                        kfsetting._database = writenode.ReadString( "Database" );
+                        kfsetting._user = writenode.ReadString( "User" );
+                        kfsetting._password = writenode.ReadString( "Password" );
 
                         auto kfmysqllist = kfmysqltype->AddMySQLList( KFDatabaseEnum::Write );
                         kfmysqllist->AddSetting( kfsetting );
@@ -98,11 +98,11 @@ namespace KFrame
                     {
 
                         KFMySQLSetting kfsetting;
-                        kfsetting._ip = readnode.GetString( "IP" );
-                        kfsetting._port = readnode.GetUInt32( "Port" );
-                        kfsetting._database = readnode.GetString( "Database" );
-                        kfsetting._user = readnode.GetString( "User" );
-                        kfsetting._password = readnode.GetString( "Password" );
+                        kfsetting._ip = readnode.ReadString( "IP" );
+                        kfsetting._port = readnode.ReadUInt32( "Port" );
+                        kfsetting._database = readnode.ReadString( "Database" );
+                        kfsetting._user = readnode.ReadString( "User" );
+                        kfsetting._password = readnode.ReadString( "Password" );
 
                         auto kfmysqllist = kfmysqltype->AddMySQLList( KFDatabaseEnum::Read );
                         kfmysqllist->AddSetting( kfsetting );

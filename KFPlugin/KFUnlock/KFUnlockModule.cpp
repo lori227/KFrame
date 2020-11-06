@@ -37,7 +37,7 @@ namespace KFrame
                 continue;
             }
 
-            if ( kfsetting->_unlock_condition.empty() )
+            if ( kfsetting->_condition_group._ids.empty() )
             {
                 UnlockPlayerData( player, kfsetting, kfdatarecord );
                 continue;
@@ -52,7 +52,7 @@ namespace KFrame
 
             kfunlock = player->CreateData( kfunlockrecord );
             auto kfconditionobject = kfunlock->Find( __STRING__( conditions ) );
-            _kf_condition->AddCondition( player, kfconditionobject, kfsetting->_unlock_condition, kfsetting->_condition_type );
+            _kf_condition->AddCondition( player, kfconditionobject, kfsetting->_condition_group );
             kfunlockrecord->Add( kfsetting->_id, kfunlock );
 
             // 判断条件

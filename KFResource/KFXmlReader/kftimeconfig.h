@@ -36,26 +36,26 @@ namespace KFrame
 
     protected:
         // 读取配置
-        virtual void ReadSetting( KFNode& xmlnode, KFTimeSetting* kfsetting )
+        virtual void ReadSetting( KFXmlNode& xmlnode, KFTimeSetting* kfsetting )
         {
-            kfsetting->_type = xmlnode.GetUInt32( "Type" );
+            kfsetting->_type = xmlnode.ReadUInt32( "Type" );
 
             KFTimeSection timesection;
-            timesection._start_time._flag = xmlnode.GetUInt32( "Flag" );
-            timesection._start_time._year = xmlnode.GetUInt32( "StartYear" );
-            timesection._start_time._month = xmlnode.GetUInt32( "StartMonth" );
-            timesection._start_time._day = xmlnode.GetUInt32( "StartDay" );
-            timesection._start_time._day_of_week = xmlnode.GetUInt32( "StartDayOfWeek" );
-            timesection._start_time._hour = xmlnode.GetUInt32( "StartHour" );
-            timesection._start_time._minute = xmlnode.GetUInt32( "StartMinute" );
+            timesection._start_time._flag = xmlnode.ReadUInt32( "Flag" );
+            timesection._start_time._year = xmlnode.ReadUInt32( "StartYear" );
+            timesection._start_time._month = xmlnode.ReadUInt32( "StartMonth" );
+            timesection._start_time._day = xmlnode.ReadUInt32( "StartDay" );
+            timesection._start_time._day_of_week = xmlnode.ReadUInt32( "StartDayOfWeek" );
+            timesection._start_time._hour = xmlnode.ReadUInt32( "StartHour" );
+            timesection._start_time._minute = xmlnode.ReadUInt32( "StartMinute" );
 
-            timesection._end_time._flag = xmlnode.GetUInt32( "Flag" );
-            timesection._end_time._year = xmlnode.GetUInt32( "EndYear" );
-            timesection._end_time._month = xmlnode.GetUInt32( "EndMonth" );
-            timesection._end_time._day = xmlnode.GetUInt32( "EndDay" );
-            timesection._end_time._day_of_week = xmlnode.GetUInt32( "EndDayOfWeek" );
-            timesection._end_time._hour = xmlnode.GetUInt32( "EndHour" );
-            timesection._end_time._minute = xmlnode.GetUInt32( "EndMinute" );
+            timesection._end_time._flag = xmlnode.ReadUInt32( "Flag" );
+            timesection._end_time._year = xmlnode.ReadUInt32( "EndYear" );
+            timesection._end_time._month = xmlnode.ReadUInt32( "EndMonth" );
+            timesection._end_time._day = xmlnode.ReadUInt32( "EndDay" );
+            timesection._end_time._day_of_week = xmlnode.ReadUInt32( "EndDayOfWeek" );
+            timesection._end_time._hour = xmlnode.ReadUInt32( "EndHour" );
+            timesection._end_time._minute = xmlnode.ReadUInt32( "EndMinute" );
 
             kfsetting->_time_section_list.emplace_back( timesection );
         }

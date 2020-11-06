@@ -29,7 +29,7 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 初始化条件
-        virtual void AddCondition( KFEntity* kfentity, KFData* kfconditionobject, const UInt32Vector& conditionlist, uint32 conditiontype );
+        virtual void AddCondition( KFEntity* kfentity, KFData* kfconditionobject, const KFConditionGroup& conditiongroup );
 
         // 初始化条件
         virtual bool InitCondition( KFEntity* kfentity, KFData* kfconditionobject, uint32 limitmask, bool update );
@@ -57,7 +57,7 @@ namespace KFrame
         uint32 CalcExpression( KFEntity* kfentity, const KFExpression* kfexpression );
 
         // 计算属性值
-        uint32 CalcConditionData( KFEntity* kfentity, const KFConditionData* kfconditiondata );
+        uint32 CalcConditionData( KFEntity* kfentity, const KFConditionAbstract* kfconditiondata );
 
         // 判断限制条件
         bool CheckConditionLimit( KFEntity* kfentity, KFData* kfdata, const KFConditionSetting* kfsetting );

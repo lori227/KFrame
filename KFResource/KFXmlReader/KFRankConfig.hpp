@@ -81,14 +81,14 @@ namespace KFrame
         }
 
         // 读取配置
-        virtual void ReadSetting( KFNode& xmlnode, KFRankSetting* kfsetting )
+        virtual void ReadSetting( KFXmlNode& xmlnode, KFRankSetting* kfsetting )
         {
-            kfsetting->_zone_type = xmlnode.GetUInt32( "ZoneType" );
-            kfsetting->_max_count = xmlnode.GetUInt32( "MaxCount" );
-            kfsetting->_refresh_time_id = xmlnode.GetUInt32( "RefreshTimeId" );
-            kfsetting->_reset_data_type = xmlnode.GetUInt32( "RefreshReset" );
+            kfsetting->_zone_type = xmlnode.ReadUInt32( "ZoneType" );
+            kfsetting->_max_count = xmlnode.ReadUInt32( "MaxCount" );
+            kfsetting->_refresh_time_id = xmlnode.ReadUInt32( "RefreshTimeId" );
+            kfsetting->_reset_data_type = xmlnode.ReadUInt32( "RefreshReset" );
 
-            auto strcalcdata = xmlnode.GetString( "CalcData" );
+            auto strcalcdata = xmlnode.ReadString( "CalcData" );
             while ( !strcalcdata.empty() )
             {
                 auto strdata = KFUtility::SplitString( strcalcdata, __SPLIT_STRING__ );
@@ -108,7 +108,7 @@ namespace KFrame
 
             if ( _show_data_list.empty() )
             {
-                _show_data_list = xmlnode.GetStringSet( "ShowData" );
+                _show_data_list = xmlnode.ReadStringSet( "ShowData" );
             }
         }
 

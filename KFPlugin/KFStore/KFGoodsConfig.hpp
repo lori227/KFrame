@@ -1,8 +1,6 @@
 ﻿#ifndef __KF_GOODS_CONFIG_H__
 #define __KF_GOODS_CONFIG_H__
 
-#include "KFCore/KFElement.h"
-#include "KFConfig.h"
 #include "KFXmlReader/KFElementConfig.h"
 
 namespace KFrame
@@ -90,7 +88,7 @@ namespace KFrame
 
     protected:
         // 读取配置
-        virtual void ReadSetting( KFNode& xmlnode, KFGoodsSetting* kfsetting );
+        virtual void ReadSetting( KFXmlNode& xmlnode, KFGoodsSetting* kfsetting );
 
         // 清空配置
         virtual void ClearSetting();

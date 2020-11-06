@@ -160,12 +160,12 @@ namespace KFrame
 
             // 前置条件
             auto kfpreconditionobject = kftask->Find( __STRING__( preconditions ) );
-            _kf_condition->AddCondition( player, kfpreconditionobject, kfsetting->_pre_condition, kfsetting->_pre_condition_type );
+            _kf_condition->AddCondition( player, kfpreconditionobject, kfsetting->_pre_condition_group );
             _kf_condition->InitCondition( player, kfpreconditionobject, KFConditionEnum::LimitNull, false );
 
             // 完成条件
             auto kfconditionobject = kftask->Find( __STRING__( conditions ) );
-            _kf_condition->AddCondition( player, kfconditionobject, kfsetting->_complete_condition, kfsetting->_complete_condition_type );
+            _kf_condition->AddCondition( player, kfconditionobject, kfsetting->_complete_condition_group );
             InitTaskCondition( player, kfsetting, kftask, status, false );
 
             player->AddRecord( kftaskrecord, kfsetting->_id, kftask );

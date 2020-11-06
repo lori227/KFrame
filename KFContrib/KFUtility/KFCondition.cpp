@@ -9,7 +9,7 @@ namespace KFrame
     {
         for ( auto kfdata : _data_list )
         {
-            __KF_DELETE__( KFConditionData, kfdata );
+            __KF_DELETE__( KFConditionAbstract, kfdata );
         }
         _data_list.clear();
         _operator_list.clear();
@@ -55,7 +55,7 @@ namespace KFrame
         _link_type.clear();
     }
 
-    bool KFConditions::Parse( std::string& strcondition, uint64 id, const char* function, uint32 line )
+    bool KFConditions::Parse( std::string& strcondition, const char* function, uint32 line )
     {
         Reset();
         _is_valid = true;
@@ -71,7 +71,7 @@ namespace KFrame
         if ( !_is_valid )
         {
             Reset();
-            __LOG_ERROR_FUNCTION__( function, line, "id=[{}] condition=[{}] parse failed", id, strcondition );
+            __LOG_ERROR_FUNCTION__( function, line, "condition=[{}] parse failed", strcondition );
         }
 
         return _is_valid;

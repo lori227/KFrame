@@ -12,12 +12,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFSignInConfig.cpp" />
     <ClCompile Include="KFSignInModule.cpp" />
     <ClCompile Include="KFSignInPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFSignInConfig.hpp" />
+    <ClInclude Include="..\..\KFResource\KFXmlReader\KFSignInConfig.hpp" />
     <ClInclude Include="KFSignInInterface.h" />
     <ClInclude Include="KFSignInModule.hpp" />
     <ClInclude Include="KFSignInPlugin.hpp" />

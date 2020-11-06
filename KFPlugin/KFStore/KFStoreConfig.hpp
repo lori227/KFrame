@@ -1,7 +1,6 @@
 ﻿#ifndef __KF_STORE_CONFIG_H__
 #define __KF_STORE_CONFIG_H__
 
-#include "KFCore/KFElement.h"
 #include "KFConfig.h"
 
 namespace KFrame
@@ -50,7 +49,7 @@ namespace KFrame
 
     protected:
         // 读取配置
-        virtual void ReadSetting( KFNode& xmlnode, KFStoreSetting* kfsetting );
+        virtual void ReadSetting( KFXmlNode& xmlnode, KFStoreSetting* kfsetting );
     };
 }
 

@@ -49,10 +49,10 @@ namespace KFrame
         // 渠道是否开放
     protected:
         // 创建配置
-        KFChannelSetting* CreateSetting( KFNode& xmlnode );
+        KFChannelSetting* CreateSetting( KFXmlNode& xmlnode );
 
         // 读取配置
-        virtual void ReadSetting( KFNode& xmlnode, KFChannelSetting* kfsetting );
+        virtual void ReadSetting( KFXmlNode& xmlnode, KFChannelSetting* kfsetting );
     };
 }
 

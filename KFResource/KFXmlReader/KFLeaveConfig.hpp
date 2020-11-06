@@ -25,10 +25,10 @@ namespace KFrame
 
     protected:
         // 创建配置
-        KFLeaveSetting* CreateSetting( KFNode& xmlnode )
+        KFLeaveSetting* CreateSetting( KFXmlNode& xmlnode )
         {
-            auto service = xmlnode.GetUInt32( "Service", true );
-            auto channel = xmlnode.GetUInt32( "Channel", true );
+            auto service = xmlnode.ReadUInt32( "Service", true );
+            auto channel = xmlnode.ReadUInt32( "Channel", true );
             auto ok = KFGlobal::Instance()->CheckChannelService( channel, service );
             if ( !ok )
             {
@@ -39,10 +39,10 @@ namespace KFrame
         }
 
         // 读取配置
-        virtual void ReadSetting( KFNode& xmlnode, KFLeaveSetting* kfsetting )
+        virtual void ReadSetting( KFXmlNode& xmlnode, KFLeaveSetting* kfsetting )
         {
-            kfsetting->_lua_file = xmlnode.GetString( "LuaFile" );
-            kfsetting->_lua_function = xmlnode.GetString( "LuaFunction" );
+            kfsetting->_lua_file = xmlnode.ReadString( "LuaFile" );
+            kfsetting->_lua_function = xmlnode.ReadString( "LuaFunction" );
         }
     };
 }

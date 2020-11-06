@@ -2,7 +2,6 @@
 #define __KF_CONDITION_INTERFACE_H__
 
 #include "KFrame.h"
-#include "KFCore/KFCondition.h"
 
 namespace KFrame
 {
@@ -13,7 +12,7 @@ namespace KFrame
         virtual bool CheckStaticCondition( KFEntity* kfentity, const KFConditions* kfconditions ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////
         // 初始化条件
-        virtual void AddCondition( KFEntity* kfentity, KFData* kfconditionobject, const UInt32Vector& conditionlist, uint32 conditiontype ) = 0;
+        virtual void AddCondition( KFEntity* kfentity, KFData* kfconditionobject, const KFConditionGroup& conditiongroup ) = 0;
 
         // 初始化条件
         virtual bool InitCondition( KFEntity* kfentity, KFData* kfconditionobject, uint32 limitmask, bool update ) = 0;

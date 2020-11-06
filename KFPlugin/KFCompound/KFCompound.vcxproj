@@ -12,12 +12,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFCompoundConfig.cpp" />
     <ClCompile Include="KFCompoundModule.cpp" />
     <ClCompile Include="KFCompoundPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFCompoundConfig.hpp" />
+    <ClInclude Include="..\..\KFResource\KFXmlReader\KFCompoundConfig.hpp" />
     <ClInclude Include="KFCompoundInterface.h" />
     <ClInclude Include="KFCompoundModule.hpp" />
     <ClInclude Include="KFCompoundPlugin.hpp" />

@@ -2,14 +2,13 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFAchieveConfig.cpp" />
     <ClCompile Include="KFAchievePlugin.cpp" />
     <ClCompile Include="KFAchieveModule.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFAchieveInterface.h" />
-    <ClInclude Include="KFAchieveConfig.hpp" />
     <ClInclude Include="KFAchieveModule.hpp" />
     <ClInclude Include="KFAchievePlugin.hpp" />
+    <ClInclude Include="..\..\KFResource\KFXmlReader\KFAchieveConfig.hpp" />
   </ItemGroup>
 </Project>

@@ -1,32 +1,31 @@
 ﻿#include "KFConditionConfig.hpp"
-#include "KFCore/KFAnalysis.hpp"
 
 namespace KFrame
 {
-    void KFConditionDefineConfig::ReadSetting( KFNode& xmlnode, KFConditionDefine* kfsetting )
+    void KFConditionDefineConfig::ReadSetting( KFXmlNode& xmlnode, KFConditionDefine* kfsetting )
     {
         if ( kfsetting->_parent_name.empty() )
         {
-            kfsetting->_parent_name = xmlnode.GetString( "ParentName" );
-            kfsetting->_data_name = xmlnode.GetString( "DataName" );
-            kfsetting->_init_calc_type = xmlnode.GetUInt32( "InitCalc" );
+            kfsetting->_parent_name = xmlnode.ReadString( "ParentName" );
+            kfsetting->_data_name = xmlnode.ReadString( "DataName" );
+            kfsetting->_init_calc_type = xmlnode.ReadUInt32( "InitCalc" );
         }
 
         if ( !kfsetting->_is_save_uuid )
         {
-            kfsetting->_is_save_uuid = xmlnode.GetBoolen( "SaveUUid" );
+            kfsetting->_is_save_uuid = xmlnode.ReadBoolen( "SaveUUid" );
         }
 
         KFConditionTrigger trigger;
-        trigger._call_type = xmlnode.GetUInt32( "CallType" );
-        trigger._trigger_type = xmlnode.GetUInt32( "TriggerType" );
-        trigger._trigger_check = xmlnode.GetUInt32( "TriggerCheck" );
-        trigger._trigger_use = xmlnode.GetUInt32( "TriggerUse" );
-        trigger._trigger_value = xmlnode.GetUInt32( "TriggerValue" );
+        trigger._call_type = xmlnode.ReadUInt32( "CallType" );
+        trigger._trigger_type = xmlnode.ReadUInt32( "TriggerType" );
+        trigger._trigger_check = xmlnode.ReadUInt32( "TriggerCheck" );
+        trigger._trigger_use = xmlnode.ReadUInt32( "TriggerUse" );
+        trigger._trigger_value = xmlnode.ReadUInt32( "TriggerValue" );
 
-        trigger._use_type = xmlnode.GetUInt32( "UseType" );
-        trigger._use_value = xmlnode.GetUInt32( "UseValue" );
-        trigger._use_operate = xmlnode.GetUInt32( "UseOperate" );
+        trigger._use_type = xmlnode.ReadUInt32( "UseType" );
+        trigger._use_value = xmlnode.ReadUInt32( "UseValue" );
+        trigger._use_operate = xmlnode.ReadUInt32( "UseOperate" );
         kfsetting->_trigger_list.push_back( trigger );
     }
     //////////////////////////////////////////////////////////////////////////////////////////
@@ -36,14 +35,14 @@ namespace KFrame
         {"Calculate", KFConditionEnum::LimitStatus},
         {"PlaceLimit", KFConditionEnum::LimitPlace},
     };
-    void KFConditionConfig::ReadSetting( KFNode& xmlnode, KFConditionSetting* kfsetting )
+    void KFConditionConfig::ReadSetting( KFXmlNode& xmlnode, KFConditionSetting* kfsetting )
     {
         kfsetting->_limits.clear();
-        kfsetting->_str_condition = xmlnode.GetString( "Condition" );
-        kfsetting->_done_value = xmlnode.GetUInt32( "DoneValue" );
-        kfsetting->_str_clean = xmlnode.GetString( "Clean", true );
+        kfsetting->_str_condition = xmlnode.ReadString( "Condition" );
+        kfsetting->_done_value = xmlnode.ReadUInt32( "DoneValue" );
+        kfsetting->_str_clean = xmlnode.ReadString( "Clean", true );
 
-        auto strdonetype = xmlnode.GetString( "DoneType" );
+        auto strdonetype = xmlnode.ReadString( "DoneType" );
         kfsetting->_done_type = KFAnalysis::GetCheckType( strdonetype );
         if ( kfsetting->_done_type == KFEnum::Null )
         {
@@ -52,14 +51,13 @@ namespace KFrame
 
         for ( auto& iter : _conditon_mask_list )
         {
-            if ( xmlnode.GetString( iter.first.c_str(), true ) == "1" )
+            if ( xmlnode.ReadString( iter.first.c_str(), true ) == "1" )
             {
                 KFUtility::AddBitMask< uint32 >( kfsetting->_limit_mask, iter.second );
             }
         }
 
-        auto strlimitcondition = xmlnode.GetString( "LimitCondition", true );
-        kfsetting->_limit_condition_type = KFReadSetting::ParseConditionList( strlimitcondition, kfsetting->_limit_condition_list );
+        kfsetting->_limit_condition_group = xmlnode.ReadConditionGroup( "LimitCondition", true );
 
         StringList keylist;
         xmlnode.GetKeyList( keylist );
@@ -67,7 +65,7 @@ namespace KFrame
         {
             if ( strkey.find( "Limits" ) != std::string::npos )
             {
-                auto strlimit = xmlnode.GetString( strkey.c_str() );
+                auto strlimit = xmlnode.ReadString( strkey.c_str() );
                 auto ok = AnalysisLimit( kfsetting, strlimit );
                 if ( !ok )
                 {

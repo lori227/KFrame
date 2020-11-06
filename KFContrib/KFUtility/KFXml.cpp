@@ -46,20 +46,20 @@ namespace KFrame
         xmldocument->parse<0>( xmlfile->data() );
     }
 
-    KFNode KFXml::RootNode()
+    KFXmlNode KFXml::RootNode()
     {
         auto xmldocument = reinterpret_cast<rapidxml::xml_document<>*>( _document );
 
-        KFNode kfnode( this );
+        KFXmlNode kfnode( this );
         kfnode._node = xmldocument->first_node();
         return kfnode;
     }
 
-    KFNode KFXml::FindNode( const char* key )
+    KFXmlNode KFXml::FindNode( const char* key )
     {
         auto xmldocument = reinterpret_cast<rapidxml::xml_document<>*>( _document );
 
-        KFNode kfnode( this );
+        KFXmlNode kfnode( this );
         kfnode._node = xmldocument->first_node( key );
         return kfnode;
     }

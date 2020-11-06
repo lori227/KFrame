@@ -1,8 +1,8 @@
 ﻿#ifndef __KF_COMPOUND_CONFIG_H__
 #define __KF_COMPOUND_CONFIG_H__
 
-#include "KFCore/KFElement.h"
 #include "KFConfig.h"
+#include "KFElementConfig.h"
 
 namespace KFrame
 {
@@ -32,9 +32,27 @@ namespace KFrame
             _file_name = "compound";
         }
 
+        virtual void LoadAllComplete()
+        {
+            for ( auto& iter : _settings._objects )
+            {
+                auto kfsetting = iter.second;
+
+                KFElementConfig::Instance()->ParseElement( kfsetting->_cost_data, __FILE__, __LINE__ );
+                KFElementConfig::Instance()->ParseElement( kfsetting->_compound_data, __FILE__, __LINE__ );
+            }
+        }
+
     protected:
         // 读取配置
-        virtual void ReadSetting( KFNode& xmlnode, KFCompoundSetting* kfsetting );
+        virtual void ReadSetting( KFXmlNode& xmlnode, KFCompoundSetting* kfsetting )
+        {
+            kfsetting->_key = xmlnode.ReadUInt32( "DataKey" );
+            kfsetting->_data_name = xmlnode.ReadString( "DataName" );
+
+            kfsetting->_cost_data._str_parse = xmlnode.ReadString( "CostData" );
+            kfsetting->_compound_data._str_parse = xmlnode.ReadString( "CompoundData" );
+        }
     };
 }
 

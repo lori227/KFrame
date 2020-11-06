@@ -1,8 +1,8 @@
 ﻿#ifndef __KF_SIGNIN_CONFIG_H__
 #define __KF_SIGNIN_CONFIG_H__
 
-#include "KFCore/KFElement.h"
 #include "KFConfig.h"
+#include "KFElementConfig.h"
 
 namespace KFrame
 {
@@ -40,9 +40,29 @@ namespace KFrame
             _file_name = "signin";
         }
 
+
+        virtual void LoadAllComplete()
+        {
+            for ( auto& iter : _settings._objects )
+            {
+                auto kfsetting = iter.second;
+
+                KFElementConfig::Instance()->ParseElement( kfsetting->_reward, __FILE__, __LINE__ );
+                KFElementConfig::Instance()->ParseElement( kfsetting->_extend, __FILE__, __LINE__ );
+            }
+        }
+
     protected:
-        // 赌球配置
-        virtual void ReadSetting( KFNode& xmlnode, KFSignInSetting* kfsetting );
+        // 读取配置
+        virtual void ReadSetting( KFXmlNode& xmlnode, KFSignInSetting* kfsetting )
+        {
+            kfsetting->_type = xmlnode.ReadUInt32( "Type" );
+            kfsetting->_day = xmlnode.ReadUInt32( "Day" );
+            kfsetting->_probability = xmlnode.ReadUInt32( "Probability" );
+
+            kfsetting->_reward._str_parse = xmlnode.ReadString( "Reward" );
+            kfsetting->_extend._str_parse = xmlnode.ReadString( "ExtendReward" );
+        }
     };
 }
 

@@ -2,14 +2,13 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFSignInConfig.cpp" />
     <ClCompile Include="KFSignInModule.cpp" />
     <ClCompile Include="KFSignInPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFSignInInterface.h" />
-    <ClInclude Include="KFSignInConfig.hpp" />
     <ClInclude Include="KFSignInModule.hpp" />
     <ClInclude Include="KFSignInPlugin.hpp" />
+    <ClInclude Include="..\..\KFResource\KFXmlReader\KFSignInConfig.hpp" />
   </ItemGroup>
 </Project>

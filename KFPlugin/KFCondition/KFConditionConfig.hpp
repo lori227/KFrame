@@ -2,7 +2,6 @@
 #define __KF_CONDITION_CONFIG_H__
 
 #include "KFConfig.h"
-#include "KFXmlReader/KFReadSetting.h"
 
 namespace KFrame
 {
@@ -68,7 +67,7 @@ namespace KFrame
         }
     protected:
         // 读取配置
-        virtual void ReadSetting( KFNode& xmlnode, KFConditionDefine* kfsetting );
+        virtual void ReadSetting( KFXmlNode& xmlnode, KFConditionDefine* kfsetting );
     };
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
@@ -116,8 +115,7 @@ namespace KFrame
         uint32 _limit_mask = 0u;
 
         // 限制的完成条件
-        uint32 _limit_condition_type = 0;
-        UInt32Vector _limit_condition_list;
+        KFConditionGroup _limit_condition_group;
     };
 
     class KFConditionConfig : public KFConfigT< KFConditionSetting >, public KFInstance< KFConditionConfig >
@@ -133,7 +131,7 @@ namespace KFrame
 
     protected:
         // 读取配置
-        virtual void ReadSetting( KFNode& xmlnode, KFConditionSetting* kfsetting );
+        virtual void ReadSetting( KFXmlNode& xmlnode, KFConditionSetting* kfsetting );
 
         // 解析限制条件
         bool AnalysisLimit( KFConditionSetting* kfsetting, const std::string& strlimit );

@@ -1,12 +1,11 @@
 ﻿#include "KFExecuteConfig.hpp"
-#include "KFXmlReader/KFReadSetting.h"
 
 namespace KFrame
 {
-    void KFExecuteConfig::ReadSetting( KFNode& xmlnode, KFExecuteSetting* kfsetting )
+    void KFExecuteConfig::ReadSetting( KFXmlNode& xmlnode, KFExecuteSetting* kfsetting )
     {
         auto executedata = __KF_NEW__( KFExecuteData );
-        KFReadSetting::ReadExecuteData( xmlnode, executedata );
+        xmlnode.ReadExecuteData( executedata, "Execute", false );
         kfsetting->_execute_list.Insert( executedata );
     }
 
@@ -32,7 +31,7 @@ namespace KFrame
                 auto& dataname = executedata->_param_list._params[ 0 ]->_str_value;
                 auto& datavalue = executedata->_param_list._params[ 1 ]->_str_value;
                 auto& datakey = executedata->_param_list._params[ 2 ]->_int_value;
-                KFElementConfig::Instance()->FormatElement( executedata->_param_list._elements, dataname, datavalue, datakey );
+                KFElementConfig::Instance()->FormatElement( executedata->_elements, dataname, datavalue, datakey );
             }
 
         }

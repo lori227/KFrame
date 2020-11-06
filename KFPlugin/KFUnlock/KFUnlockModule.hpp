@@ -13,7 +13,7 @@
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFKernel/KFKernelInterface.h"
 #include "KFCondition/KFConditionInterface.h"
-#include "KFUnlockConfig.hpp"
+#include "KFXmlReader/KFUnlockConfig.hpp"
 
 namespace KFrame
 {

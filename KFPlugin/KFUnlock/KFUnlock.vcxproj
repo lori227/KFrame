@@ -12,12 +12,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFUnlockConfig.cpp" />
     <ClCompile Include="KFUnlockModule.cpp" />
     <ClCompile Include="KFUnlockPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFUnlockConfig.hpp" />
+    <ClInclude Include="..\..\KFResource\KFXmlReader\KFUnlockConfig.hpp" />
     <ClInclude Include="KFUnlockInterface.h" />
     <ClInclude Include="KFUnlockModule.hpp" />
     <ClInclude Include="KFUnlockPlugin.hpp" />

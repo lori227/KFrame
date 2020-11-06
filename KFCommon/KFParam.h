@@ -1,8 +1,7 @@
 ﻿#ifndef __KF_PARAM_H__
 #define __KF_PARAM_H__
 
-#include "KFrame.h"
-#include "KFCore/KFElement.h"
+#include "KFInclude.h"
 
 namespace KFrame
 {
@@ -21,7 +20,6 @@ namespace KFrame
     public:
         KFParamList()
         {
-            _elements.Clear();
             _params.clear();
         }
 
@@ -32,7 +30,6 @@ namespace KFrame
 
         void Reset()
         {
-            _elements.Clear();
             for ( auto param : _params )
             {
                 __KF_DELETE__( KFParam, param );
@@ -50,9 +47,6 @@ namespace KFrame
     public:
         // 属性列表
         std::vector< KFParam* > _params;
-
-        // 如果是属性, 格式化的属性元素
-        KFElements _elements;
     };
     ////////////////////////////////////////////////////////////////////////////////////////
 }

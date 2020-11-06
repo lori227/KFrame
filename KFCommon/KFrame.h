@@ -13,6 +13,7 @@
 #include "KFWeight.h"
 #include "KFField.h"
 #include "KFRange.h"
+#include "KFParam.h"
 #include "KFResult.h"
 #include "KFNetData.h"
 #include "KFDBValue.h"
@@ -20,6 +21,7 @@
 #include "KFInstance.h"
 #include "KFSingleton.h"
 #include "KFInterfaces.h"
+#include "KFConditionGroup.h"
 #include "KFProto/KFProto.h"
 #include "KFUtility/KFXml.h"
 #include "KFUtility/KFClock.h"
@@ -34,11 +36,17 @@
 #include "KFUtility/KFUtility.h"
 #include "KFUtility/KFCompress.h"
 #include "KFUtility/KFConHash.h"
+#include "KFUtility/KFCondition.h"
+#include "KFUtility/KFAnalysis.hpp"
 #include "KFGlobal/KFGlobal.h"
 #include "KFLogger/KFLogger.h"
 #include "KFMemory/KFMalloc.h"
 #include "KFPlugin/KFPlugin.h"
 #include "KFPlugin/KFPluginManage.h"
+#include "KFSetting.h"
+#include "KFConfig.h"
+#include "KFUtility/KFElement.h"
+#include "KFExecuteData.h"
 
 
 #endif

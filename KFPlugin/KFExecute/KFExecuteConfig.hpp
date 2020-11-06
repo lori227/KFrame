@@ -2,7 +2,6 @@
 #define __KF_EXECUTE_CONFIG_H__
 
 #include "KFConfig.h"
-#include "KFXmlReader/KFExecuteData.h"
 #include "KFXmlReader/KFElementConfig.h"
 
 namespace KFrame
@@ -26,7 +25,7 @@ namespace KFrame
 
     protected:
         // 读取配置
-        virtual void ReadSetting( KFNode& xmlnode, KFExecuteSetting* kfsetting );
+        virtual void ReadSetting( KFXmlNode& xmlnode, KFExecuteSetting* kfsetting );
     };
     /////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////

@@ -6,7 +6,7 @@
 namespace KFrame
 {
     // 条件数据
-    class KFConditionData
+    class KFConditionAbstract
     {
     public:
         virtual bool IsConstant() const
@@ -21,7 +21,7 @@ namespace KFrame
     };
 
     // 常量数据
-    class KFConditionConstant : public KFConditionData
+    class KFConditionConstant : public KFConditionAbstract
     {
     public:
         virtual bool IsConstant() const
@@ -33,7 +33,7 @@ namespace KFrame
     };
 
     // 变量数据
-    class KFConditionVariable : public KFConditionData
+    class KFConditionVariable : public KFConditionAbstract
     {
     public:
         virtual bool IsVariable() const
@@ -59,7 +59,7 @@ namespace KFrame
         ~KFExpression();
     public:
         // 数据列表
-        std::vector< KFConditionData* > _data_list;
+        std::vector< KFConditionAbstract* > _data_list;
 
         // 计算符号列表
         UInt32Vector _operator_list;
@@ -94,7 +94,7 @@ namespace KFrame
         bool IsValid() const;
 
         // 格式化
-        bool Parse( std::string& strcondition, uint64 id, const char* function, uint32 line );
+        bool Parse( std::string& strcondition, const char* function, uint32 line );
 
     protected:
         // 重置

@@ -3,27 +3,27 @@
 namespace KFrame
 {
     /////////////////////////////////////////////////////////////////////////////////
-    void KFDropGroupConfig::ReadSetting( KFNode& xmlnode, KFDropSetting* kfsetting )
+    void KFDropGroupConfig::ReadSetting( KFXmlNode& xmlnode, KFDropSetting* kfsetting )
     {
         if ( !kfsetting->_is_drop_count )
         {
-            kfsetting->_is_drop_count = xmlnode.GetBoolen( "DropCount", true );
+            kfsetting->_is_drop_count = xmlnode.ReadBoolen( "DropCount", true );
         }
         if ( !kfsetting->_is_exclude )
         {
-            kfsetting->_is_exclude = xmlnode.GetBoolen( "Exclude", true );
+            kfsetting->_is_exclude = xmlnode.ReadBoolen( "Exclude", true );
         }
         if ( kfsetting->_condition_type == 0u )
         {
-            kfsetting->_condition_type = xmlnode.GetUInt32( "ConditionType" );
+            kfsetting->_condition_type = xmlnode.ReadUInt32( "ConditionType" );
         }
         if ( kfsetting->_rand_type == 0u )
         {
-            kfsetting->_rand_type = xmlnode.GetUInt32( "RandType" );
+            kfsetting->_rand_type = xmlnode.ReadUInt32( "RandType" );
         }
 
         KFDropGroupWeight* kfdropweight = nullptr;
-        auto weight = xmlnode.GetUInt32( "Weight", true );
+        auto weight = xmlnode.ReadUInt32( "Weight", true );
 
         if ( weight == KFRandEnum::TenThousand )
         {
@@ -37,12 +37,11 @@ namespace KFrame
             kfdropweight = kfsetting->_rand_list.Create( ++id, weight );
         }
 
-        kfdropweight->_is_clear_var = xmlnode.GetBoolen( "Reset", true );
-        kfdropweight->_drop_data_id = xmlnode.GetUInt32( "DropDataId", true );
+        kfdropweight->_is_clear_var = xmlnode.ReadBoolen( "Reset", true );
+        kfdropweight->_drop_data_id = xmlnode.ReadUInt32( "DropDataId", true );
 
         // 条件
-        auto strcondition = xmlnode.GetString( "Condition", true );
-        kfdropweight->_conditions.Parse( strcondition, kfsetting->_id, __FUNC_LINE__ );
+        xmlnode.ReadStaticCondition( kfdropweight->_conditions, "Condition", true );
     }
 
     void KFDropGroupConfig::LoadAllComplete()
@@ -59,8 +58,6 @@ namespace KFrame
             {
                 InitDropDataSetting( kfsetting, kfdropgroupweight );
             }
-
-
         }
     }
 

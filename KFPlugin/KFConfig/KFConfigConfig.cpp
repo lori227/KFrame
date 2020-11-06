@@ -11,17 +11,17 @@ namespace KFrame
         {"ChildFile", KFConfigEnum::ClearChildFile},
     };
 
-    void KFConfigConfig::ReadSetting( KFNode& xmlnode, KFConfigSetting* kfsetting )
+    void KFConfigConfig::ReadSetting( KFXmlNode& xmlnode, KFConfigSetting* kfsetting )
     {
-        auto filename = xmlnode.GetString( "FileName" );
+        auto filename = xmlnode.ReadString( "FileName" );
         auto configfile = KFUtility::FormatConfigFile( filename, KFGlobal::Instance()->_channel, KFGlobal::Instance()->_service );
 
         KFConfigData data;
         data._file_path = configfile;
-        data._file_name = xmlnode.GetString( "Name" );
+        data._file_name = xmlnode.ReadString( "Name" );
         for ( auto& iter : _mask_list )
         {
-            if ( xmlnode.GetString( iter.first.c_str(), true ) == "1" )
+            if ( xmlnode.ReadString( iter.first.c_str(), true ) == "1" )
             {
                 KFUtility::AddBitMask< uint32 >( data._load_mask, iter.second );
             }

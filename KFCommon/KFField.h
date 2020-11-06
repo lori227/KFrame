@@ -253,6 +253,7 @@ namespace KFrame
         __STRING_DEFINE__( playersavetime );
         __STRING_DEFINE__( payorder );
         __STRING_DEFINE__( pay );
+        __STRING_DEFINE__( firstpay );
         __STRING_DEFINE__( payid );
         __STRING_DEFINE__( paydata );
         __STRING_DEFINE__( price );

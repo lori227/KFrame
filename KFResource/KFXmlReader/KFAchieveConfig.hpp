@@ -1,9 +1,8 @@
 ﻿#ifndef __KF_ACHIEVE_CONFIG_H__
 #define __KF_ACHIEVE_CONFIG_H__
 
-#include "KFCore/KFElement.h"
 #include "KFConfig.h"
-#include "KFXmlReader/KFElementConfig.h"
+#include "KFElementConfig.h"
 
 namespace KFrame
 {
@@ -11,8 +10,7 @@ namespace KFrame
     {
     public:
         // 完成条件
-        uint32 _complete_condition_type = 0u;
-        UInt32Vector _complete_condition;
+        KFConditionGroup _complete_condition_group;
 
         // 奖励
         KFElements _rewards;
@@ -27,11 +25,22 @@ namespace KFrame
             _file_name = "achieve";
         }
 
-        virtual void LoadAllComplete();
+        virtual void LoadAllComplete()
+        {
+            for ( auto& iter : _settings._objects )
+            {
+                auto kfsetting = iter.second;
+                KFElementConfig::Instance()->ParseElement( kfsetting->_rewards, __FUNC_LINE__ );
+            }
+        }
 
     protected:
         // 读取配置
-        virtual void ReadSetting( KFNode& xmlnode, KFAchieveSetting* kfsetting );
+        virtual void ReadSetting( KFXmlNode& xmlnode, KFAchieveSetting* kfsetting )
+        {
+            kfsetting->_rewards._str_parse = xmlnode.ReadString( "Reward" );
+            kfsetting->_complete_condition_group = xmlnode.ReadConditionGroup( "CompleteCondition" );
+        }
     };
 }
 
