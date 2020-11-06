@@ -1,4 +1,5 @@
 ﻿#include "KFConditionConfig.hpp"
+#include "KFUtility/KFAnalysis.hpp"
 
 namespace KFrame
 {

@@ -10,19 +10,19 @@ namespace KFrame
         auto config = kfxml.RootNode();
         //////////////////////////////////////////////////////////////////
         auto dnsnode = config.FindNode( "DNSServer" );
-        _dns_get_ip_url = dnsnode.GetString( "Url" );
+        _dns_get_ip_url = dnsnode.ReadString( "Url" );
         //////////////////////////////////////////////////////////////////
         auto lognode = config.FindNode( "LogServer" );
-        _log_url = lognode.GetString( "Url" );
+        _log_url = lognode.ReadString( "Url" );
         //////////////////////////////////////////////////////////////////
         auto authnode = config.FindNode( "AuthServer" );
-        _auth_url = authnode.GetString( "Url" );
+        _auth_url = authnode.ReadString( "Url" );
         //////////////////////////////////////////////////////////////////
         auto dirnode = config.FindNode( "DirServer" );
-        _dir_url = dirnode.GetString( "Url" );
+        _dir_url = dirnode.ReadString( "Url" );
         //////////////////////////////////////////////////////////////////
         auto paynode = config.FindNode( "PayServer" );
-        _pay_url = authnode.GetString( "Url" );
+        _pay_url = authnode.ReadString( "Url" );
         //////////////////////////////////////////////////////////////////
         auto vpnnodes = config.FindNode( "Vpns" );
         if ( vpnnodes.IsValid() )
@@ -30,9 +30,9 @@ namespace KFrame
             auto vpnnode = vpnnodes.FindNode( "Vpn" );
             while ( vpnnode.IsValid() )
             {
-                auto zoneid = vpnnode.GetUInt32( "Zone" );
-                auto ip = vpnnode.GetString( "Ip" );
-                auto port = vpnnode.GetUInt32( "Port", true );
+                auto zoneid = vpnnode.ReadUInt32( "Zone" );
+                auto ip = vpnnode.ReadString( "Ip" );
+                auto port = vpnnode.ReadUInt32( "Port", true );
                 _vpn_list[ zoneid ] = std::make_tuple( ip, port );
 
                 vpnnode.NextNode();

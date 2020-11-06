@@ -2,7 +2,7 @@
 #define __KF_DROP_DATA_CONFIG_H__
 
 #include "KFConfig.h"
-#include "KFXmlReader/KFDropData.h"
+#include "KFDropData.h"
 #include "KFXmlReader/KFElementConfig.h"
 
 namespace KFrame

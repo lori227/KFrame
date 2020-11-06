@@ -2,7 +2,7 @@
 #define __KF_DROP_INTERFACE_H__
 
 #include "KFrame.h"
-#include "KFXmlReader/KFDropData.h"
+#include "KFDropData.h"
 
 namespace KFrame
 {
