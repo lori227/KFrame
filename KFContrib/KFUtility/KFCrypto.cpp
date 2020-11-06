@@ -29,14 +29,13 @@ namespace KFrame
             return "";
         }
 
-        std::string data = "";
-        DigestEngine engine( "MD5" );
-        while ( std::getline( ifile, data ) )
-        {
-            engine.update( data );
-        }
+        std::stringstream data;
+        data << ifile.rdbuf();
 
         ifile.close();
+
+        DigestEngine engine( "MD5" );
+        engine.update( data.str() );
         return DigestEngine::digestToHex( engine.digest() );
     }
 
