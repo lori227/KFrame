@@ -12,24 +12,24 @@ namespace KFrame
         auto httpserver = config.FindNode( "HttpServer" );
         if ( httpserver.IsValid() )
         {
-            auto kepplive = httpserver.GetBoolen( "KeepAlive" );
-            auto maxthread = httpserver.GetUInt32( "MaxThread" );
-            auto maxqueue = httpserver.GetUInt32( "MaxQueue" );
-            auto idletime = httpserver.GetUInt32( "IdleTime" );
+            auto kepplive = httpserver.ReadBoolen( "KeepAlive" );
+            auto maxthread = httpserver.ReadUInt32( "MaxThread" );
+            auto maxqueue = httpserver.ReadUInt32( "MaxQueue" );
+            auto idletime = httpserver.ReadUInt32( "IdleTime" );
 
             auto servernode = httpserver.FindNode( "Server" );
             while ( servernode.IsValid() )
             {
                 KFHttpSetting kfsetting;
 
-                kfsetting._app_name = servernode.GetString( "AppName" );
-                kfsetting._app_type = servernode.GetString( "AppType" );
-                kfsetting._port_type = servernode.GetUInt32( "Type" );
-                kfsetting._port = servernode.GetUInt32( "Port" );
-                kfsetting._keep_alive = servernode.GetBoolen( "KeepAlive", true, kepplive );
-                kfsetting._max_thread = servernode.GetUInt32( "MaxThread", true, maxthread );
-                kfsetting._max_queue = servernode.GetUInt32( "MaxQueue", true, maxqueue );
-                kfsetting._idle_time = servernode.GetUInt32( "IdleTime", true, idletime );
+                kfsetting._app_name = servernode.ReadString( "AppName" );
+                kfsetting._app_type = servernode.ReadString( "AppType" );
+                kfsetting._port_type = servernode.ReadUInt32( "Type" );
+                kfsetting._port = servernode.ReadUInt32( "Port" );
+                kfsetting._keep_alive = servernode.ReadBoolen( "KeepAlive", true, kepplive );
+                kfsetting._max_thread = servernode.ReadUInt32( "MaxThread", true, maxthread );
+                kfsetting._max_queue = servernode.ReadUInt32( "MaxQueue", true, maxqueue );
+                kfsetting._idle_time = servernode.ReadUInt32( "IdleTime", true, idletime );
                 _http_setting_list.push_back( kfsetting );
 
                 servernode.NextNode();
