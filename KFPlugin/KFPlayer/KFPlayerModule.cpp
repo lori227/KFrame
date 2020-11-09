@@ -39,6 +39,8 @@ namespace KFrame
 
     void KFPlayerModule::BeforeShut()
     {
+        __UN_TIMER_0__();
+
         // 卸载逻辑函数
         _kf_component->UnRegisterEntityInitializeFunction();
         _kf_component->UnRegisterEntityUninitializeFunction();
@@ -292,7 +294,7 @@ namespace KFrame
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    KFEntity* KFPlayerModule::CreatePlayer( const KFMsg::PBLoginData* pblogin, const KFMsg::PBObject* pbplayerdata )
+    KFEntity* KFPlayerModule::Login( const KFMsg::PBLoginData* pblogin, const KFMsg::PBObject* pbplayerdata )
     {
         auto player = _kf_component->CreateEntity( pblogin->playerid(), pbplayerdata );
         if ( player == nullptr )
@@ -360,7 +362,50 @@ namespace KFrame
 
         player->SetInited();
         player->SetNew( false );
+
+        // 启动延迟上线数据同步
+        StartSyncOnlineTimer( player );
         return player;
+    }
+
+    KFEntity* KFPlayerModule::ReLogin( uint64 playerid, uint64 gateid )
+    {
+        auto player = FindPlayer( playerid );
+        if ( player == nullptr )
+        {
+            return nullptr;
+        }
+
+        player->Set( __STRING__( gateid ), gateid );
+
+        // 启动延迟上线数据同步
+        StartSyncOnlineTimer( player );
+        return player;
+    }
+
+    void KFPlayerModule::StartSyncOnlineTimer( KFEntity* player )
+    {
+        for ( auto delaytime : player->_data_setting->_class_setting->_online_sync_time )
+        {
+            if ( delaytime > 0u )
+            {
+                __LIMIT_TIMER_2__( player->GetKeyID(), delaytime, delaytime, 1u, &KFPlayerModule::OnTimerSyncEntityToOnline );
+            }
+        }
+    }
+
+    __KF_TIMER_FUNCTION__( KFPlayerModule::OnTimerSyncEntityToOnline )
+    {
+        auto player = FindPlayer( objectid );
+        if ( player == nullptr )
+        {
+            return;
+        }
+
+        KFMsg::MsgSyncOnlineData sync;
+        auto playerdata = _kf_kernel->SerializeToOnline( player, subid );
+        sync.mutable_pbdata()->CopyFrom( *playerdata );
+        SendToClient( player, KFMsg::MSG_SYNC_ONLINE_DATA, sync );
     }
 
     __KF_UPDATE_STRING_FUNCTION__( KFPlayerModule::OnUpdateNameCallBack )

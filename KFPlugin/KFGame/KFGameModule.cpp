@@ -343,7 +343,7 @@ namespace KFrame
                 if ( !pblogin->loginbycrash() )
                 {
                     // 序列化玩家数据
-                    auto pbnewdata = _kf_kernel->SerializeToClient( player );
+                    auto pbnewdata = _kf_kernel->SerializeToOnline( player );
 
 #ifdef __KF_DEBUG__
                     static auto _print_enter = 0u;
@@ -392,11 +392,9 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SReLoginToGameReq );
 
-        auto player = _kf_player->FindPlayer( kfmsg.playerid() );
+        auto player = _kf_player->ReLogin( kfmsg.playerid(), __ROUTE_RECV_ID__ );
         if ( player != nullptr )
         {
-            player->Set( __STRING__( gateid ), __ROUTE_RECV_ID__ );
-
             KFMsg::S2SEnterToGateAck ack;
             ack.set_servertime( KFGlobal::Instance()->_real_time );
 
@@ -406,7 +404,7 @@ namespace KFrame
             pblogin->set_sessionid( kfmsg.sessionid() );
             pblogin->set_accountid( kfmsg.accountid() );
 
-            auto playerdata = _kf_kernel->SerializeToClient( player );
+            auto playerdata = _kf_kernel->SerializeToOnline( player );
             ack.mutable_playerdata()->CopyFrom( *playerdata );
             auto ok = SendToGate( __ROUTE_SERVER_ID__, KFMsg::S2S_ENTER_TO_GATE_ACK, &ack );
             if ( !ok )

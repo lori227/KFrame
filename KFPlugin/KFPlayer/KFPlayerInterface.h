@@ -171,7 +171,10 @@ namespace KFrame
         ///////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////
         // 创建玩家
-        virtual KFEntity* CreatePlayer( const KFMsg::PBLoginData* pblogin, const KFMsg::PBObject* pbplayerdata ) = 0;
+        virtual KFEntity* Login( const KFMsg::PBLoginData* pblogin, const KFMsg::PBObject* pbplayerdata ) = 0;
+
+        // 重新登录
+        virtual KFEntity* ReLogin( uint64 playerid, uint64 gateid ) = 0;
 
         // 查找玩家
         virtual KFEntity* FindPlayer( uint64 playerid ) = 0;

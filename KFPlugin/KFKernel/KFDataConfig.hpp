@@ -172,6 +172,12 @@ namespace KFrame
             kfdatasetting->_update_function = xmlnode.ReadString( "UpdateFunction", true );
             kfdatasetting->_remove_function = xmlnode.ReadString( "RemoveFunction", true );
 
+            kfdatasetting->_delay_online_sync_time = xmlnode.ReadUInt32( "Delay", true );
+            if ( kfdatasetting->_delay_online_sync_time > 0u )
+            {
+                kfsetting->_online_sync_time.insert( kfdatasetting->_delay_online_sync_time );
+            }
+
             for ( auto& iter : _data_mask_list )
             {
                 if ( xmlnode.ReadString( iter.first.c_str() ) == "1" )

@@ -14,6 +14,7 @@
 #include "KFKernel/KFKernelInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFCommand/KFCommandInterface.h"
+#include "KFTimer/KFTimerInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
 #include "KFXmlReader/KFPlayerConfig.hpp"
 
@@ -32,7 +33,8 @@ namespace KFrame
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         // 创建玩家
-        virtual KFEntity* CreatePlayer( const KFMsg::PBLoginData* pblogin, const KFMsg::PBObject* pbplayerdata );
+        virtual KFEntity* Login( const KFMsg::PBLoginData* pblogin, const KFMsg::PBObject* pbplayerdata );
+        virtual KFEntity* ReLogin( uint64 playerid, uint64 gateid );
 
         // 查找玩家
         virtual KFEntity* FindPlayer( uint64 playerid );
@@ -91,6 +93,10 @@ namespace KFrame
         // 创建角色
         void OnEnterCreatePlayer( KFEntity* player, uint64 playerid );
 
+        // 启动上线同步数据定时器
+        void StartSyncOnlineTimer( KFEntity* player );
+        // 同步上线数据
+        __KF_TIMER_FUNCTION__( OnTimerSyncEntityToOnline );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 添加属性
         __KF_COMMAND_FUNCTION__( OnCommandAddData );

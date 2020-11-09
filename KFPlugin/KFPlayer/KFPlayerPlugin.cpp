@@ -16,6 +16,7 @@ namespace KFrame
 
     void KFPlayerPlugin::LoadModule()
     {
+        __FIND_MODULE__( _kf_timer, KFTimerInterface );
         __FIND_MODULE__( _kf_player, KFPlayerInterface );
         __FIND_MODULE__( _kf_config, KFConfigInterface );
         __FIND_MODULE__( _kf_kernel, KFKernelInterface );

@@ -31,9 +31,18 @@ namespace KFrame
 
         // 序列化
         virtual KFMsg::PBObject* Serialize( KFData* kfdata ) = 0;
-        virtual KFMsg::PBObject* SerializeToClient( KFData* kfdata ) = 0;
+
+        // 序列化存储到数据库
         virtual KFMsg::PBObject* SerializeToData( KFData* kfdata ) = 0;
+
+        // 序列化到观察者
         virtual KFMsg::PBObject* SerializeToView( KFData* kfdata ) = 0;
+
+        // 序列化到客户端
+        virtual KFMsg::PBObject* SerializeToClient( KFData* kfdata ) = 0;
+
+        // 序列化到客户端( 优化上线的数据量, 登录时才使用 )
+        virtual KFMsg::PBObject* SerializeToOnline( KFEntity* kfentity, uint32 delaytime = 0u ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////
     };
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////

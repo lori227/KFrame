@@ -27,7 +27,6 @@ namespace KFrame
             iter.second->AfterRun();
         }
     }
-
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     static std::string _global_class = "Global";
@@ -72,29 +71,36 @@ namespace KFrame
 
     KFMsg::PBObject* KFKernelModule::Serialize( KFData* kfdata )
     {
-        return SerializeObject( kfdata, KFDataDefine::DataMaskNull );
-    }
-
-    KFMsg::PBObject* KFKernelModule::SerializeToClient( KFData* kfdata )
-    {
-        return SerializeObject( kfdata, KFDataDefine::DataMaskSync );
+        return SerializeObject( kfdata, KFDataDefine::DataMaskNull, false, 0u );
     }
 
     KFMsg::PBObject* KFKernelModule::SerializeToData( KFData* kfdata )
     {
-        return SerializeObject( kfdata, KFDataDefine::DataMaskSave );
+        return SerializeObject( kfdata, KFDataDefine::DataMaskSave, false, 0u );
     }
 
     KFMsg::PBObject* KFKernelModule::SerializeToView( KFData* kfdata )
     {
-        return SerializeObject( kfdata, KFDataDefine::DataMaskView );
+        return SerializeObject( kfdata, KFDataDefine::DataMaskView, false, 0u );
     }
 
-    KFMsg::PBObject* KFKernelModule::SerializeObject( KFData* kfdata, uint32 datamask )
+    KFMsg::PBObject* KFKernelModule::SerializeToClient( KFData* kfdata )
+    {
+        return SerializeObject( kfdata, KFDataDefine::DataMaskSync, false, 0u );
+    }
+
+    KFMsg::PBObject* KFKernelModule::SerializeToOnline( KFEntity* kfentity, uint32 delaytime /* = 0u */ )
+    {
+        // 把直接发送的数据返回给客户端
+        return SerializeObject( kfentity, KFDataDefine::DataMaskSync, true, delaytime );
+    }
+
+    KFMsg::PBObject* KFKernelModule::SerializeObject( KFData* kfdata, uint32 datamask, bool online, uint32 delaytime )
     {
         static KFMsg::PBObject pbobject;
         pbobject.Clear();
-        SaveToObject( kfdata, &pbobject, datamask );
+
+        SaveToEntity( kfdata, &pbobject, datamask, online, delaytime );
         return &pbobject;
     }
 
@@ -203,7 +209,8 @@ case datatype:\
         break; \
     }\
 
-    void KFKernelModule::SaveToObject( KFData* kfdata, KFMsg::PBObject* proto, uint32 datamask )
+
+    void KFKernelModule::SaveToEntity( KFData* kfdata, KFMsg::PBObject* proto, uint32 datamask, bool online, uint32 delaytime )
     {
         auto datasetting = kfdata->_data_setting;
         if ( !datasetting->HaveMask( datamask ) )
@@ -211,10 +218,17 @@ case datatype:\
             return;
         }
 
+        SaveToObject( kfdata, proto, datamask, online, delaytime );
+    }
+
+    void KFKernelModule::SaveToObject( KFData* kfdata, KFMsg::PBObject* proto, uint32 datamask, bool online /* = false */, uint32 delaytime /* = 0u */ )
+    {
         for ( auto kfchild = kfdata->First(); kfchild != nullptr; kfchild = kfdata->Next() )
         {
             auto datasetting = kfchild->_data_setting;
-            if ( !datasetting->HaveMask( datamask ) || !kfchild->IsValid() )
+            if ( !datasetting->HaveMask( datamask ) ||
+                    !kfchild->IsValid() ||
+                    ( online && datasetting->_delay_online_sync_time != delaytime ) )
             {
                 continue;
             }

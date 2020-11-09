@@ -26,7 +26,8 @@ enum FrameClientProtocol
 	MSG_TELL_SHUTDOWN 					= 105;	// 通知服务器关闭
 
 	// data
- 	MSG_SYNC_UPDATE_DATA 				= 201;	// 同步更新属性
+	MSG_SYNC_ONLINE_DATA				= 200;	// 同步上线属性
+	MSG_SYNC_UPDATE_DATA 				= 201;	// 同步更新属性
 	MSG_SYNC_ADD_DATA 					= 202;	// 同步增加属性
 	MSG_SYNC_REMOVE_DATA 				= 203;	// 同步删除属性
 	MSG_REMOVE_DATA_REQ 				= 204;	// 请求删除属性
@@ -207,6 +208,12 @@ message MsgDebugShowDrop
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 同步上线消息
+// MSG_SYNC_ONLINE_DATA
+message MsgSyncOnlineData
+{
+	PBObject pbdata = 1;	
+}
 
 // 所有的游戏属性同通过这3个消息来完成同步
 // MSG_SYNC_UPDATE_DATA
