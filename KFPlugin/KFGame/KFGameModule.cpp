@@ -337,7 +337,7 @@ namespace KFrame
 
         if ( result == KFMsg::Ok )
         {
-            auto player = _kf_player->CreatePlayer( pblogin, pbplayerdata );
+            auto player = _kf_player->Login( pblogin, pbplayerdata );
             if ( player != nullptr )
             {
                 if ( !pblogin->loginbycrash() )

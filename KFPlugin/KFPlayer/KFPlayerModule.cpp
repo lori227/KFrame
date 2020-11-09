@@ -405,7 +405,7 @@ namespace KFrame
         KFMsg::MsgSyncOnlineData sync;
         auto playerdata = _kf_kernel->SerializeToOnline( player, subid );
         sync.mutable_pbdata()->CopyFrom( *playerdata );
-        SendToClient( player, KFMsg::MSG_SYNC_ONLINE_DATA, sync );
+        SendToClient( player, KFMsg::MSG_SYNC_ONLINE_DATA, &sync );
     }
 
     __KF_UPDATE_STRING_FUNCTION__( KFPlayerModule::OnUpdateNameCallBack )
