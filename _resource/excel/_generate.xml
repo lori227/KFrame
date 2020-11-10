@@ -1,0 +1,32 @@
+<?xml version = '1.0' encoding = 'utf-8' ?>
+<config>
+	<!-- 项目相关 -->
+	<project name="fighter" time="1554048000"/>
+
+	<!-- 中控服务器列表 -->
+	<servers>
+		<server id="1" name="测试服 | 180.169.238.146" url="http://180.169.238.146:9999/deploy"/>
+	</servers>
+
+	<!-- 仓库列表 -->
+	<repositorys>
+		<repository type="git" user="lori227@qq.com" password="lori@19840227" path="../../"/>
+		<repository type="svn" user="lori227@qq.com" password="lori@19840227" path="../../"/>
+	</repositorys>
+
+	<!-- 类型列表 -->
+	<types>
+		<type name="bool" cpp="bool" csharp="bool" lua="local"/>
+		<type name="uint32" cpp="uint32" csharp="UInt32" lua="local"/>
+		<type name="uint64" cpp="uint64" csharp="UInt64" lua="local"/>
+		<type name="string" cpp="std::string" csharp="string" lua="local"/>
+		<type name="element" cpp="KFElements" csharp="string" lua="local"/>
+		<type name="uint32set" cpp="UInt32Set" csharp="string" lua="local"/>
+		<type name="uint32map" cpp="UInt32Map" csharp="string" lua="local"/>
+		<type name="uint32vector" cpp="UInt32Vector" csharp="string" lua="local"/>
+		<type name="date" cpp="KFDate" csharp="string" lua="local"/>
+		<type name="staticcondition" cpp="KFConditions" csharp="string" lua="local"/>
+		<type name="conditiongroup" cpp="KFConditionGroup" csharp="string" lua="local"/>
+	</types>
+
+</config>

@@ -1,40 +1,68 @@
 <?xml version = '1.0' encoding = 'utf-8' ?>
 <Config>
-	<Project Name="chess" Time="1554048000" Store="svn"/>
+	<Project Name="chess" Time="1554048000" Store="git"/>
 	<Servers>
 		<Server Id="0" Name="请选择" Ip="" Url=""/>
 		<Server Id="1" Name="研发服" Ip="192.168.2.31" Url="http://192.168.2.31:9999/deploy"/>
 		<Server Id="2" Name="测试服" Ip="192.168.2.30" Url="http://192.168.2.30:9999/deploy"/>
 	</Servers>
 	<Files>
-		<File Name="1000-框架-屏蔽字符.xlsx" Type="3" MD5Client="" MD5Server="9af4144dbe57e86dad73664c8d6eafb1"/>
-		<File Name="1001-框架-掉落配置.xlsx" Type="3" MD5Client="" MD5Server="42286aa281059fa439a7069efa3fb439"/>
-		<File Name="1000-框架-渠道配置.xlsx" Type="3" MD5Client="" MD5Server="807fcda0d6f7c9eb05ff6e3745fb88f3"/>
-		<File Name="1001-框架-元素转换.xlsx" Type="3" MD5Client="" MD5Server="85260af8c18dcf361d92c8fd456c0f25"/>
-		<File Name="1107-商城配置.xlsx" Type="3" MD5Client="" MD5Server="f57fcd91eda806f5b0cbeab2b8089df2"/>
-		<File Name="1000-框架-配置列表.xlsx" Type="3" MD5Client="" MD5Server="2b16563f8b14045bfb9fa7adf8c3adae"/>
-		<File Name="1001-玩家-属性定义.xlsx" Type="3" MD5Client="" MD5Server="43c12ac362983d6a87e297d50f36364d"/>
-		<File Name="1001-玩家-属性重置.xlsx" Type="3" MD5Client="" MD5Server="5b710e455b89cc1c0cca88fa47eb49b9"/>
-		<File Name="1001-玩家-离开游戏.xlsx" Type="3" MD5Client="" MD5Server="7a86bfb5fea2e3b41d60eb7814f8f2d7"/>
-		<File Name="1113-关系配置.xlsx" Type="3" MD5Client="" MD5Server=""/>
-		<File Name="1001-玩家-进入游戏.xlsx" Type="3" MD5Client="" MD5Server="6afc3a64dc2e283e3f65a491f1c0e781"/>
-		<File Name="1002-常量-全局常量.xlsx" Type="3" MD5Client="" MD5Server="26230a675935caa816f4034dd7755339"/>
-		<File Name="1002-常量-道具常量.xlsx" Type="3" MD5Client="" MD5Server="cf8fedc12455c6dc7e03e9fb81f0ec2d"/>
-		<File Name="1104-合成配置.xlsx" Type="3" MD5Client="" MD5Server="6a0c04f23ea10fdf48a8ef6ab064bfe9"/>
-		<File Name="1105-任务配置.xlsx" Type="3" MD5Client="" MD5Server="be352346957acbc1d5b5eed00a37be5a"/>
-		<File Name="2006-玩家-成就系统.xlsx" Type="3" MD5Client="" MD5Server="0ac5eb7ca2efb4e4e25979836e1de51e"/>
-		<File Name="1001-玩家-新建角色.xlsx" Type="3" MD5Client="" MD5Server="8355f8766f47bfcd8236b42f4c3a4e50"/>
-		<File Name="4010-道具-公共配置.xlsx" Type="3" MD5Client="" MD5Server="9d9801f0eb70cdd51482059fcfa02c74"/>
-		<File Name="1108-物品配置.xlsx" Type="3" MD5Client="" MD5Server="0c49adf4c17ed87a5e475bfa610a374e"/>
-		<File Name="1109-皮肤配置.xlsx" Type="3" MD5Client="" MD5Server="a8af5d32967f1e509769bfbe71009b19"/>
-		<File Name="1110-英雄配置.xlsx" Type="3" MD5Client="" MD5Server=""/>
-		<File Name="1111-签到配置.xlsx" Type="3" MD5Client="" MD5Server="aebb8154fecd5a5d8bf672fb131dc120"/>
-		<File Name="1112-邮件配置.xlsx" Type="3" MD5Client="" MD5Server="956dd322212be7770d6fece5c51e4e66"/>
-		<File Name="1001-框架-掉落数据.xlsx" Type="3" MD5Client="" MD5Server="62794c3cf0e1e1fb9114e2069baf2dc1"/>
-		<File Name="1114-充值配置.xlsx" Type="3" MD5Client="" MD5Server="21bf8621a5f416236a5eff469325e182"/>
-		<File Name="1000-框架-时间配置.xlsx" Type="3" MD5Client="" MD5Server="2064482b93c87aeae6733a8f9c6e149e"/>
-		<File Name="1001-框架-转发配置.xlsx" Type="3" MD5Client="" MD5Server="853bdd3bd5970651c44a5bc577818ab7"/>
-		<File Name="4010-道具-礼包配置.xlsx" Type="3" MD5Client="" MD5Server="3f548198550c1be9cf7d4493aa07924e"/>
-		<File Name="4010-道具-道具类型.xlsx" Type="3" MD5Client="" MD5Server="dabb30237ea18f71e858737a4f23c9e6"/>
+		<File Name="4010-道具-公共配置.xlsx" Type="3" XmlName="" MD5Client="" MD5Server="9d9801f0eb70cdd51482059fcfa02c74"/>
+		<File Name="G-关系-关系配置-(框架定义,策划填写).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="C-成就-玩家属性-(框架维护,请勿修改).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="C-成就-条件配置-(框架定义,策划填写).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="C-成就-成就配置-(框架定义,策划填写).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="K-框架-全局常量-(框架定义,策划填写).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="1109-皮肤配置.xlsx" Type="3" XmlName="" MD5Client="" MD5Server="a8af5d32967f1e509769bfbe71009b19"/>
+		<File Name="1108-物品配置.xlsx" Type="3" XmlName="" MD5Client="" MD5Server="0c49adf4c17ed87a5e475bfa610a374e"/>
+		<File Name="1110-英雄配置.xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="K-框架-随机权重-(框架定义,策划填写).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="4010-道具-道具类型.xlsx" Type="3" XmlName="" MD5Client="" MD5Server="dabb30237ea18f71e858737a4f23c9e6"/>
+		<File Name="4010-道具-礼包配置.xlsx" Type="3" XmlName="" MD5Client="" MD5Server="3f548198550c1be9cf7d4493aa07924e"/>
+		<File Name="Y-英雄-英雄配置-(后端定义,策划填写).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="1114-充值配置.xlsx" Type="3" XmlName="" MD5Client="" MD5Server="21bf8621a5f416236a5eff469325e182"/>
+		<File Name="K-框架-渠道配置-(框架定义,后端维护).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="0000-Template.xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="D-道具-玩家属性-(框架定义,后端维护).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="D-掉落-掉落数据-(框架定义,策划填写).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="D-掉落-掉落配置-(框架定义,策划填写).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="W-玩家-离开游戏-(框架定义,后端维护).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="R-任务-任务链刷新-(框架定义,策划填写).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="D-掉落-玩家属性-(框架维护,请勿修改).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="D-道具-公共配置-(后端定义,策划填写).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="D-道具-礼包配置-(后端定义,策划填写).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="G-关系-玩家属性-(框架维护,请勿修改).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="P-匹配-匹配设置-(后端定义,策划填写).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="K-框架-全局常量-(框架使用,请勿修改).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="R-任务-执行输出-(框架定义,策划填写).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="K-框架-奖励格式-(框架维护,请勿修改).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="K-框架-屏蔽字符-(框架定义,策划填写).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="K-框架-屏蔽字符-(框架维护,请勿修改).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="K-框架-执行输出-(框架定义,策划填写).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="W-玩家-属性重置-(框架定义,策划填写).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="K-框架-时间配置-(框架定义,策划填写).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="K-框架-条件定义-(框架定义,后端维护).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="K-框架-条件配置-(框架定义,策划填写).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="K-框架-次数花费-(框架定义,策划填写).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="K-框架-配置列表-(框架维护,请勿修改).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="R-任务-任务配置-(框架定义,策划填写).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="P-匹配-名字随机-(后端定义,策划填写).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="Y-英雄-脚印配置-(后端定义,策划填写).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="P-排行-排行配置-(框架定义,策划填写).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="Y-英雄-特效配置-(后端定义,策划填写).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="Q-签到-签到配置-(框架定义,策划填写).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="Q-签到-玩家属性-(框架定义,后端维护).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="R-任务-任务链配置-(框架定义,策划填写).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="R-任务-条件配置-(框架定义,策划填写).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="R-任务-玩家属性-(框架维护,请勿修改).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="Z-组队-组队配置-(后端定义,策划填写).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="S-商店-商品配置-(框架定义,策划填写).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="W-玩家-新建角色-(框架定义,贴花填写).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="S-商店-商店配置-(框架定义,策划填写).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="S-商店-玩家属性-(框架维护,请勿修改).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="W-玩家-框架属性-(框架维护,请勿修改).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="W-玩家-进入游戏-(框架定义,后端维护).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="Y-邮件-玩家属性-(框架维护,请勿修改).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
+		<File Name="Z-组队-玩家属性-(框架维护,请勿修改).xlsx" Type="3" XmlName="" MD5Client="" MD5Server=""/>
 	</Files>
 </Config>
