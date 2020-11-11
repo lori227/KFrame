@@ -244,9 +244,9 @@ void CKFGenerateDlg::InitControlData()
         auto width = rect.right / 10.f;
 
         int index = 0;
-        _list_excel.InsertColumn( index++, "", LVCFMT_CENTER, width * 2 );
-        _list_excel.InsertColumn( index++, "文件名称", LVCFMT_CENTER, width * 7.7 );
-        _list_excel.InsertColumn( index++, "文件类型", LVCFMT_CENTER, width * 2.1 );
+        _list_excel.InsertColumn( index++, "", LVCFMT_CENTER, ( uint32 )width * 2 );
+        _list_excel.InsertColumn( index++, "文件名称", LVCFMT_CENTER, ( uint32 )( width * 7.7 ) );
+        _list_excel.InsertColumn( index++, "文件类型", LVCFMT_CENTER, ( uint32 )( width * 2.1 ) );
         _list_excel.DeleteColumn( 0 );
     }
 
