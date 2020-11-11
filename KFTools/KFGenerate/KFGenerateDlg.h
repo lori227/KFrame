@@ -4,6 +4,7 @@
 
 #pragma once
 #include "KFGenerateLogic.h"
+using namespace KFrame;
 
 
 // CKFGenerateDlg 对话框
@@ -29,9 +30,28 @@ protected:
     // 初始化界面数据
     void InitControlData();
 
+    // 注册事件函数
+    void InitEventFunction();
+
     // 选择文件夹
     std::string BrowsePath();
 
+
+protected:
+    // 添加Excel文件
+    void AddExcelFile( EventData* eventdata );
+
+    // 删除Excel文件
+    void RemoveExcelFile( EventData* eventdata );
+
+    // 查找Excel文件
+    int32 FindExcelFile( const std::string& filename );
+
+    // 修改文件类型
+    void ChangeExcelType( uint32 type );
+
+    // 重置Excel文件列表
+    void ResetExcelFileList();
     // 实现
 protected:
     HICON m_hIcon;
@@ -54,4 +74,19 @@ public:
     afx_msg void OnBnClickedButton1();
     afx_msg void OnBnClickedButton2();
     afx_msg void OnBnClickedButton3();
+    CButton _check_server_type;
+    CButton _check_client_type;
+    CComboBox _combo_repository_list;
+    CComboBox _combo_server_list;
+    afx_msg void OnCbnSelchangeCombo1();
+    afx_msg void OnCbnSelchangeCombo2();
+    afx_msg void OnBnClickedCheck1();
+    afx_msg void OnBnClickedCheck2();
+    CListCtrl _list_excel;
+    afx_msg void OnTimer( UINT_PTR nIDEvent );
+    afx_msg void OnClose();
+    afx_msg void OnNMRClickList1( NMHDR* pNMHDR, LRESULT* pResult );
+    afx_msg void OnChangeExcelServerType();
+    afx_msg void OnChangeExcelClientType();
+    afx_msg void OnChangeExcelCommonType();
 };

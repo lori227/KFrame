@@ -1,8 +1,54 @@
 <?xml version = '1.0' encoding = 'utf-8' ?>
 <config>
-	<file name="4010-道具-公共配置.xlsx" type="3" md5client="" md5server="9d9801f0eb70cdd51482059fcfa02c74">
-		<code type="cpp" md5=""/>
-		<code type="csharp" md5=""/>
-		<code type="lua" md5=""/>
-	</file>
-</config>
+	<file name="K-框架-渠道配置-(框架定义,后端维护).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="0000-Template.xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="K-框架-随机权重-(框架定义,策划填写).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="Y-英雄-英雄配置-(后端定义,策划填写).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="1114-充值配置.xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="G-关系-关系配置-(框架定义,策划填写).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="C-成就-成就配置-(框架定义,策划填写).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="C-成就-条件配置-(框架定义,策划填写).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="C-成就-玩家属性-(框架维护,请勿修改).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="D-道具-玩家属性-(框架定义,后端维护).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="D-掉落-掉落数据-(框架定义,策划填写).xlsx" type="1" md5client="" md5server="">
+	</file>	<file name="D-掉落-掉落配置-(框架定义,策划填写).xlsx" type="1" md5client="" md5server="">
+	</file>	<file name="W-玩家-离开游戏-(框架定义,后端维护).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="R-任务-任务链刷新-(框架定义,策划填写).xlsx" type="1" md5client="" md5server="">
+	</file>	<file name="D-掉落-玩家属性-(框架维护,请勿修改).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="D-道具-公共配置-(后端定义,策划填写).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="D-道具-礼包配置-(后端定义,策划填写).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="G-关系-玩家属性-(框架维护,请勿修改).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="P-匹配-匹配设置-(后端定义,策划填写).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="K-框架-全局常量-(框架使用,请勿修改).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="K-框架-全局常量-(框架定义,策划填写).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="R-任务-执行输出-(框架定义,策划填写).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="K-框架-奖励格式-(框架维护,请勿修改).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="K-框架-屏蔽字符-(框架定义,策划填写).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="K-框架-屏蔽字符-(框架维护,请勿修改).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="K-框架-执行输出-(框架定义,策划填写).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="W-玩家-属性重置-(框架定义,策划填写).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="K-框架-时间配置-(框架定义,策划填写).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="K-框架-条件定义-(框架定义,后端维护).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="K-框架-条件配置-(框架定义,策划填写).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="K-框架-次数花费-(框架定义,策划填写).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="K-框架-配置列表-(框架维护,请勿修改).xlsx" type="1" md5client="" md5server="">
+	</file>	<file name="R-任务-任务配置-(框架定义,策划填写).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="P-匹配-名字随机-(后端定义,策划填写).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="Y-英雄-脚印配置-(后端定义,策划填写).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="P-排行-排行配置-(框架定义,策划填写).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="Y-英雄-特效配置-(后端定义,策划填写).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="Q-签到-签到配置-(框架定义,策划填写).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="Q-签到-玩家属性-(框架定义,后端维护).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="R-任务-任务链配置-(框架定义,策划填写).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="R-任务-条件配置-(框架定义,策划填写).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="R-任务-玩家属性-(框架维护,请勿修改).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="Z-组队-组队配置-(后端定义,策划填写).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="S-商店-商品配置-(框架定义,策划填写).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="W-玩家-新建角色-(框架定义,贴花填写).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="S-商店-商店配置-(框架定义,策划填写).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="S-商店-玩家属性-(框架维护,请勿修改).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="W-玩家-框架属性-(框架维护,请勿修改).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="W-玩家-进入游戏-(框架定义,后端维护).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="Y-邮件-玩家属性-(框架维护,请勿修改).xlsx" type="3" md5client="" md5server="">
+	</file>	<file name="Z-组队-玩家属性-(框架维护,请勿修改).xlsx" type="3" md5client="" md5server="">
+	</file></config>

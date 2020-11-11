@@ -1,8 +1,8 @@
-﻿#ifndef __KF_RESOURCE_CONFIG_H__
-#define __KF_RESOURCE_CONFIG_H__
+﻿#ifndef __KF_GENERATE_LOGIC_H__
+#define __KF_GENERATE_LOGIC_H__
 
 #include "KFGenerateDefine.h"
-#include "Poco/File.h"
+#include "KFGenerateEvent.h"
 
 namespace KFrame
 {
@@ -22,6 +22,17 @@ namespace KFrame
         // 保存配置表数据
         bool SaveExcelXml();
 
+    public:
+        // 检查文件md5线程
+        void RunCheckExecelMd5Thread();
+
+
+    protected:
+        // 检查所有的文件
+        void CheckAllExecelMd5();
+
+        // 判断是否Excel文件
+        bool IsExcelFile( const std::string& path );
 
     public:
         // 项目名称
@@ -54,19 +65,25 @@ namespace KFrame
         KFHashMap< std::string, const std::string&, RepositoryData > _repository_list;
 
         // 服务器列表
-        uint32 _server_id = 0;
-        KFHashMap< uint32, uint32, ServerData > _server_list;
+        std::string _server_id;
+        KFHashMap< std::string, const std::string, ServerData > _server_list;
 
         // 类型列表
         KFHashMap< std::string, const std::string&, TypeInfo > _type_list;
 
         // 文件列表
-        KFHashMap< std::string, const std::string&, FileData > _file_list;
+        KFMap< std::string, const std::string&, FileData > _file_list;
 
+    public:
+        // 逻辑线程run
+        bool _thread_run = true;
+
+        // 事件锁
+        KFMutex _mutex;
     };
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////
-static auto _generate_logic = KFrame::KFGenerateLogic::Instance();
+static auto _logic = KFrame::KFGenerateLogic::Instance();
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 #endif

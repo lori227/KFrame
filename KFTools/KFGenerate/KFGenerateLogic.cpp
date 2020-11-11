@@ -1,4 +1,6 @@
 ﻿#include "KFGenerateLogic.h"
+#include "Poco/File.h"
+#include "Poco/Path.h"
 
 namespace KFrame
 {
@@ -39,7 +41,7 @@ namespace KFrame
                     auto generatenode = root.FindNode( "generate" );
                     _file_type = generatenode.ReadUInt32( "type" );
                     _repository_type = generatenode.ReadString( "repository" );
-                    _server_id = generatenode.ReadUInt32( "serverid" );
+                    _server_id = generatenode.ReadString( "serverid" );
 
                 }
             }
@@ -95,8 +97,8 @@ namespace KFrame
                     auto filedata = _file_list.Create( name );
                     filedata->_name = name;
                     filedata->_type = filenode.ReadUInt32( "type" );
-                    filedata->_md5_client = filenode.ReadString( "md5client" );
-                    filedata->_md5_server = filenode.ReadString( "md5server" );
+                    filedata->_md5_client_repository = filenode.ReadString( "md5client" );
+                    filedata->_md5_server_repository = filenode.ReadString( "md5server" );
 
                     auto codenode = filenode.FindNode( "code" );
                     while ( codenode.IsValid() )
@@ -135,7 +137,7 @@ namespace KFrame
         {
             auto filedata = iter.second;
             xmlfile << __FORMAT__( "\t<file name=\"{}\" type=\"{}\" md5client=\"{}\" md5server=\"{}\">\n",
-                                   KFConvert::ToUTF8( filedata->_name ), filedata->_type, filedata->_md5_client, filedata->_md5_server );
+                                   KFConvert::ToUTF8( filedata->_name ), filedata->_type, filedata->_md5_client_repository, filedata->_md5_server_repository );
 
             for ( auto fiter : filedata->_md5_list )
             {
@@ -176,7 +178,7 @@ namespace KFrame
                 auto servernode = node.FindNode( "server" );
                 while ( servernode.IsValid() )
                 {
-                    auto id = servernode.ReadUInt32( "id" );
+                    auto id = servernode.ReadString( "id" );
                     auto serverdata = _server_list.Create( id );
                     serverdata->_id = id;
                     serverdata->_name = KFConvert::ToAscii( servernode.ReadString( "name" ) );
@@ -227,5 +229,115 @@ namespace KFrame
         }
 
         return true;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    void KFGenerateLogic::RunCheckExecelMd5Thread()
+    {
+        auto _next_check_time = _invalid_int;
+        while ( _thread_run )
+        {
+            if ( KFGlobal::Instance()->_game_time > _next_check_time )
+            {
+                _next_check_time = KFGlobal::Instance()->_game_time + 10000;
+
+                CheckAllExecelMd5();
+            }
+
+            KFThread::Sleep( 1 );
+        }
+    }
+
+    void KFGenerateLogic::CheckAllExecelMd5()
+    {
+        // 列出所有的excel文件
+        Poco::File file( "./" );
+        std::vector< Poco::File > filelist;
+        file.list( filelist );
+
+        bool savexml = false;
+        auto filecount = 0u;
+        auto nowtime = KFGlobal::Instance()->_game_time;
+
+        // 先检查删除的文件
+        for ( auto& file : filelist )
+        {
+            auto filename = KFConvert::ToAscii( file.path() );
+            auto ok = IsExcelFile( filename );
+            if ( !ok )
+            {
+                continue;
+            }
+
+            ++filecount;
+            auto filedata = _file_list.Find( filename );
+            if ( filedata == nullptr )
+            {
+                filedata = _file_list.Create( filename );
+                filedata->_name = filename;
+
+                savexml = true;
+            }
+
+            filedata->_last_md5_check_time = nowtime;
+            auto md5 = KFCrypto::Md5File( filename );
+            if ( KFUtility::HaveBitMask( _file_type, ( uint32 )FileType::Server ) )
+            {
+                if ( filedata->IsServerFile() && filedata->_md5_server_current != md5 )
+                {
+                    filedata->_md5_server_current = md5;
+                    _event->AddEvent( EventType::AddFile, filedata->_type, filedata->_name );
+                }
+            }
+            else if ( KFUtility::HaveBitMask( _file_type, ( uint32 )FileType::Client ) )
+            {
+                if ( filedata->IsClientFile() && filedata->_md5_client_current != md5 )
+                {
+                    filedata->_md5_client_current = md5;
+                    _event->AddEvent( EventType::AddFile, filedata->_type, filedata->_name );
+                }
+            }
+        }
+
+
+        if ( filecount != _file_list.Size() )
+        {
+            // 说明有文件删除了
+            savexml = true;
+            StringList removes;
+            for ( auto& iter : _file_list._objects )
+            {
+                auto filedata = iter.second;
+                if ( filedata->_last_md5_check_time != nowtime )
+                {
+                    removes.push_back( filedata->_name );
+                }
+            }
+
+            for ( auto& filename : removes )
+            {
+                _file_list.Remove( filename );
+                _event->AddEvent( EventType::RemoveFile, 0, filename );
+            }
+        }
+
+        if ( savexml )
+        {
+            SaveExcelXml();
+        }
+    }
+
+
+    bool KFGenerateLogic::IsExcelFile( const std::string& path )
+    {
+        if ( path.at( 0 ) == '~' )
+        {
+            return false;
+        }
+
+        Poco::Path pocopath( path );
+        auto& extension = pocopath.getExtension();
+        return extension == "xlsx";
     }
 }

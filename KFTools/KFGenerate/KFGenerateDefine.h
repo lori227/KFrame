@@ -89,20 +89,61 @@ namespace KFrame
         std::string _name;
 
         // 文件类型( FileType 枚举 )
-        uint32 _type;
+        uint32 _type = FileType::All;
 
         // 修改时间
         uint64 _time;
 
         // md5值
-        std::string _md5_server;
-        std::string _md5_client;
+        std::string _md5_server_current;
+        std::string _md5_client_current;
+
+        // md5值
+        std::string _md5_client_repository;
+        std::string _md5_server_repository;
 
         // 生成的配置文件md5值
         std::map<std::string, std::string> _md5_list;
+
+        // 上次文件检查时间
+        uint64 _last_md5_check_time = 0u;
+
+    public:
+        // 服务器文件
+        bool IsServerFile()
+        {
+            return KFUtility::HaveBitMask( _type, ( uint32 )FileType::Server );
+        }
+
+        // 客户端文件
+        bool IsClientFile()
+        {
+            return KFUtility::HaveBitMask( _type, ( uint32 )FileType::Client );
+        }
     };
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    namespace EventType
+    {
+        enum MyEnum
+        {
+            RemoveFile = 1,
+            AddFile = 2,
+        };
+    }
+
+    class EventData
+    {
+    public:
+        // 事件类型
+        uint32 _type = 0u;
+
+        // 事件参数
+        uint32 _int_param = 0u;
+
+        // 事件参数
+        std::string _str_param;
+    };
 }
 
 #endif

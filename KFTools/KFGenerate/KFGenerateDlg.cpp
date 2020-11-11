@@ -13,7 +13,8 @@
 
 
 // CKFGenerateDlg 对话框
-
+#define __FRAME_TIMER__ 700
+#define __EVENT_TIMER__ 701
 
 
 CKFGenerateDlg::CKFGenerateDlg( CWnd* pParent /*=nullptr*/ )
@@ -30,6 +31,11 @@ void CKFGenerateDlg::DoDataExchange( CDataExchange* pDX )
     DDX_Control( pDX, IDC_EDIT5, _edit_client_xml_path );
     DDX_Control( pDX, IDC_EDIT2, _edit_csharp_path );
     DDX_Control( pDX, IDC_EDIT3, _edit_lua_path );
+    DDX_Control( pDX, IDC_CHECK1, _check_server_type );
+    DDX_Control( pDX, IDC_CHECK2, _check_client_type );
+    DDX_Control( pDX, IDC_COMBO1, _combo_repository_list );
+    DDX_Control( pDX, IDC_COMBO2, _combo_server_list );
+    DDX_Control( pDX, IDC_LIST1, _list_excel );
 }
 
 BEGIN_MESSAGE_MAP( CKFGenerateDlg, CDialogEx )
@@ -40,6 +46,16 @@ BEGIN_MESSAGE_MAP( CKFGenerateDlg, CDialogEx )
     ON_BN_CLICKED( IDC_BUTTON1, &CKFGenerateDlg::OnBnClickedButton1 )
     ON_BN_CLICKED( IDC_BUTTON2, &CKFGenerateDlg::OnBnClickedButton2 )
     ON_BN_CLICKED( IDC_BUTTON3, &CKFGenerateDlg::OnBnClickedButton3 )
+    ON_CBN_SELCHANGE( IDC_COMBO1, &CKFGenerateDlg::OnCbnSelchangeCombo1 )
+    ON_CBN_SELCHANGE( IDC_COMBO2, &CKFGenerateDlg::OnCbnSelchangeCombo2 )
+    ON_BN_CLICKED( IDC_CHECK1, &CKFGenerateDlg::OnBnClickedCheck1 )
+    ON_BN_CLICKED( IDC_CHECK2, &CKFGenerateDlg::OnBnClickedCheck2 )
+    ON_WM_TIMER()
+    ON_WM_CLOSE()
+    ON_NOTIFY( NM_RCLICK, IDC_LIST1, &CKFGenerateDlg::OnNMRClickList1 )
+    ON_COMMAND( ID_32771, &CKFGenerateDlg::OnChangeExcelServerType )
+    ON_COMMAND( ID_32772, &CKFGenerateDlg::OnChangeExcelClientType )
+    ON_COMMAND( ID_32773, &CKFGenerateDlg::OnChangeExcelCommonType )
 END_MESSAGE_MAP()
 
 
@@ -110,10 +126,43 @@ BOOL CKFGenerateDlg::PreTranslateMessage( MSG* pMsg )
     return CDialog::PreTranslateMessage( pMsg );
 }
 
+void CKFGenerateDlg::OnTimer( UINT_PTR nIDEvent )
+{
+    // TODO: 在此添加消息处理程序代码和/或调用默认值
+    switch ( nIDEvent )
+    {
+    case __FRAME_TIMER__:
+        KFGlobal::Instance()->_real_time = KFDate::GetTimeEx();
+        KFGlobal::Instance()->_game_time = KFClock::GetTime();
+        break;
+    case __EVENT_TIMER__:
+        _event->ExecuteEvent();
+        break;
+    default:
+        break;
+    }
+
+    CDialogEx::OnTimer( nIDEvent );
+}
+
+
+void CKFGenerateDlg::OnClose()
+{
+    // TODO: 在此添加消息处理程序代码和/或调用默认值
+    _logic->_thread_run = false;
+    Sleep( 1000 );
+
+    CDialogEx::OnClose();
+}
+
+
 void CKFGenerateDlg::InitGenerateDialog()
 {
-    KFrame::KFGlobal::Initialize( nullptr );
-    KFrame::KFMalloc::Initialize( nullptr );
+    KFGlobal::Initialize( nullptr );
+    KFMalloc::Initialize( nullptr );
+
+    SetTimer( __FRAME_TIMER__, 1000, nullptr );
+    SetTimer( __EVENT_TIMER__, 100, nullptr );
 
     // 加载xml配置
     LoadXmlData();
@@ -121,18 +170,29 @@ void CKFGenerateDlg::InitGenerateDialog()
     // 初始化界面
     InitControlData();
 
+    // 注册事件函数
+    InitEventFunction();
+
+    // 启动文件检查线程
+    KFThread::CreateThread( _logic, &KFGenerateLogic::RunCheckExecelMd5Thread, __FILE__, __LINE__ );
+}
+
+void CKFGenerateDlg::InitEventFunction()
+{
+    _event->RegisterEventFunction( EventType::AddFile, this, &CKFGenerateDlg::AddExcelFile );
+    _event->RegisterEventFunction( EventType::RemoveFile, this, &CKFGenerateDlg::RemoveExcelFile );
 }
 
 void CKFGenerateDlg::LoadXmlData()
 {
     // 加载数据
-    _generate_logic->LoadTempXml();
+    _logic->LoadTempXml();
 
     // 加载文件列表
-    _generate_logic->LoadExcelXml();
+    _logic->LoadExcelXml();
 
     // 加载生成配置
-    auto ok = _generate_logic->LoadGenerateXml();
+    auto ok = _logic->LoadGenerateXml();
     if ( !ok )
     {
         AfxMessageBox( "加载生成配置失败, 请检查_generate.xml文件是否正确!" );
@@ -141,11 +201,56 @@ void CKFGenerateDlg::LoadXmlData()
 
 void CKFGenerateDlg::InitControlData()
 {
-    _edit_server_xml_path.SetWindowTextA( _generate_logic->_server_xml_path.c_str() );
-    _edit_client_xml_path.SetWindowTextA( _generate_logic->_client_xml_path.c_str() );
-    _edit_cpp_path.SetWindowTextA( _generate_logic->_cpp_file_path.c_str() );
-    _edit_csharp_path.SetWindowTextA( _generate_logic->_csharp_file_path.c_str() );
-    _edit_lua_path.SetWindowTextA( _generate_logic->_lua_file_path.c_str() );
+    _edit_server_xml_path.SetWindowTextA( _logic->_server_xml_path.c_str() );
+    _edit_client_xml_path.SetWindowTextA( _logic->_client_xml_path.c_str() );
+    _edit_cpp_path.SetWindowTextA( _logic->_cpp_file_path.c_str() );
+    _edit_csharp_path.SetWindowTextA( _logic->_csharp_file_path.c_str() );
+    _edit_lua_path.SetWindowTextA( _logic->_lua_file_path.c_str() );
+    _check_server_type.SetCheck( KFUtility::HaveBitMask( _logic->_file_type, ( uint32 )FileType::Server ) );
+    _check_client_type.SetCheck( KFUtility::HaveBitMask( _logic->_file_type, ( uint32 )FileType::Client ) );
+
+    {
+        auto index = 0;
+        for ( auto& iter : _logic->_repository_list._objects )
+        {
+            _combo_repository_list.AddString( iter.second->_type.c_str() );
+            if ( iter.second->_type == _logic->_repository_type )
+            {
+                _combo_repository_list.SetCurSel( index );
+            }
+            ++index;
+        }
+    }
+
+    {
+        auto index = 0;
+        for ( auto& iter : _logic->_server_list._objects )
+        {
+            _combo_server_list.AddString( iter.second->_name.c_str() );
+            if ( iter.second->_id == _logic->_server_id )
+            {
+                _combo_server_list.SetCurSel( index );
+            }
+            ++index;
+        }
+    }
+
+    {
+        auto style = _list_excel.GetExtendedStyle();
+        _list_excel.SetExtendedStyle( style | LVS_EX_GRIDLINES | LVS_EX_FULLROWSELECT );
+
+        RECT rect;
+        _list_excel.GetClientRect( &rect );
+        auto width = rect.right / 10.f;
+
+        int index = 0;
+        _list_excel.InsertColumn( index++, "", LVCFMT_CENTER, width * 2 );
+        _list_excel.InsertColumn( index++, "文件名称", LVCFMT_CENTER, width * 7.7 );
+        _list_excel.InsertColumn( index++, "文件类型", LVCFMT_CENTER, width * 2.1 );
+        _list_excel.DeleteColumn( 0 );
+    }
+
+
 }
 
 std::string CKFGenerateDlg::BrowsePath()
@@ -179,8 +284,8 @@ void CKFGenerateDlg::OnBnClickedButton8()
     auto path = BrowsePath();
     if ( !path.empty() )
     {
-        _generate_logic->_server_xml_path = path;
-        _generate_logic->SaveTempXml();
+        _logic->_server_xml_path = path;
+        _logic->SaveTempXml();
         _edit_server_xml_path.SetWindowTextA( path.c_str() );
     }
 }
@@ -192,8 +297,8 @@ void CKFGenerateDlg::OnBnClickedButton5()
     auto path = BrowsePath();
     if ( !path.empty() )
     {
-        _generate_logic->_client_xml_path = path;
-        _generate_logic->SaveTempXml();
+        _logic->_client_xml_path = path;
+        _logic->SaveTempXml();
         _edit_client_xml_path.SetWindowTextA( path.c_str() );
     }
 }
@@ -205,8 +310,8 @@ void CKFGenerateDlg::OnBnClickedButton1()
     auto path = BrowsePath();
     if ( !path.empty() )
     {
-        _generate_logic->_cpp_file_path = path;
-        _generate_logic->SaveTempXml();
+        _logic->_cpp_file_path = path;
+        _logic->SaveTempXml();
         _edit_cpp_path.SetWindowTextA( path.c_str() );
     }
 }
@@ -218,8 +323,8 @@ void CKFGenerateDlg::OnBnClickedButton2()
     auto path = BrowsePath();
     if ( !path.empty() )
     {
-        _generate_logic->_csharp_file_path = path;
-        _generate_logic->SaveTempXml();
+        _logic->_csharp_file_path = path;
+        _logic->SaveTempXml();
         _edit_csharp_path.SetWindowTextA( path.c_str() );
     }
 }
@@ -231,8 +336,189 @@ void CKFGenerateDlg::OnBnClickedButton3()
     auto path = BrowsePath();
     if ( !path.empty() )
     {
-        _generate_logic->_lua_file_path = path;
-        _generate_logic->SaveTempXml();
+        _logic->_lua_file_path = path;
+        _logic->SaveTempXml();
         _edit_lua_path.SetWindowTextA( path.c_str() );
+    }
+}
+
+
+void CKFGenerateDlg::OnCbnSelchangeCombo1()
+{
+    // TODO: 在此添加控件通知处理程序代码
+    CString text;
+    _combo_repository_list.GetWindowTextA( text );
+    _logic->_repository_type = text.GetBuffer();
+    _logic->SaveTempXml();
+}
+
+void CKFGenerateDlg::OnCbnSelchangeCombo2()
+{
+    // TODO: 在此添加控件通知处理程序代码
+    CString text;
+    _combo_server_list.GetWindowTextA( text );
+    auto name = text.GetBuffer();
+
+    for ( auto& iter : _logic->_server_list._objects )
+    {
+        auto serverdata = iter.second;
+        if ( serverdata->_name == name )
+        {
+            _logic->_server_id = serverdata->_id;
+            _logic->SaveTempXml();
+        }
+    }
+}
+
+
+void CKFGenerateDlg::OnBnClickedCheck1()
+{
+    // TODO: 在此添加控件通知处理程序代码
+    auto check = _check_server_type.GetCheck();
+    if ( check == TRUE )
+    {
+        KFUtility::AddBitMask( _logic->_file_type, ( uint32 )FileType::Server );
+    }
+    else
+    {
+        KFUtility::ClearBitMask( _logic->_file_type, ( uint32 )FileType::Server );
+    }
+    _logic->SaveTempXml();
+
+    ResetExcelFileList();
+}
+
+
+void CKFGenerateDlg::OnBnClickedCheck2()
+{
+    // TODO: 在此添加控件通知处理程序代码
+    auto check = _check_client_type.GetCheck();
+    if ( check == TRUE )
+    {
+        KFUtility::AddBitMask( _logic->_file_type, ( uint32 )FileType::Client );
+    }
+    else
+    {
+        KFUtility::ClearBitMask( _logic->_file_type, ( uint32 )FileType::Client );
+    }
+    _logic->SaveTempXml();
+
+    ResetExcelFileList();
+}
+
+
+int32 CKFGenerateDlg::FindExcelFile( const std::string& filename )
+{
+    auto count = _list_excel.GetItemCount();
+    for ( auto i = 0; i < count; ++i )
+    {
+        std::string text = _list_excel.GetItemText( i, 0 ).GetBuffer();
+        if ( text == filename )
+        {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
+void CKFGenerateDlg::AddExcelFile( EventData* eventdata )
+{
+    auto index = FindExcelFile( eventdata->_str_param );
+    if ( index == -1 )
+    {
+        index = _list_excel.GetItemCount();
+        _list_excel.InsertItem( index, eventdata->_str_param.c_str() );
+        _list_excel.SetItemText( index, 1, _file_type_name[ eventdata->_int_param ] );
+    }
+}
+
+void CKFGenerateDlg::RemoveExcelFile( EventData* eventdata )
+{
+    auto index = FindExcelFile( eventdata->_str_param );
+    if ( index != -1 )
+    {
+        _list_excel.DeleteItem( index );
+    }
+}
+
+void CKFGenerateDlg::OnNMRClickList1( NMHDR* pNMHDR, LRESULT* pResult )
+{
+    LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>( pNMHDR );
+    // TODO: 在此添加控件通知处理程序代码
+    CMenu popMenu;
+    popMenu.LoadMenu( IDR_MENU1 );
+
+    CPoint posMouse;
+    GetCursorPos( &posMouse );
+
+    CMenu* pSubMenu = NULL;
+    pSubMenu = popMenu.GetSubMenu( 0 );
+    pSubMenu->TrackPopupMenu( 0, posMouse.x, posMouse.y, this );
+
+    *pResult = 0;
+}
+
+void CKFGenerateDlg::OnChangeExcelServerType()
+{
+    // TODO: 在此添加命令处理程序代码
+    ChangeExcelType( FileType::Server );
+
+}
+
+
+void CKFGenerateDlg::OnChangeExcelClientType()
+{
+    // TODO: 在此添加命令处理程序代码
+    ChangeExcelType( FileType::Client );
+
+}
+
+
+void CKFGenerateDlg::OnChangeExcelCommonType()
+{
+    // TODO: 在此添加命令处理程序代码
+    ChangeExcelType( FileType::All );
+
+}
+
+void CKFGenerateDlg::ChangeExcelType( uint32 type )
+{
+    auto index = _list_excel.GetSelectionMark();
+    if ( index == -1 )
+    {
+        return;
+    }
+
+    auto strtext = _list_excel.GetItemText( index, 0 );
+    auto filedata = _logic->_file_list.Find( strtext.GetBuffer() );
+    if ( filedata == nullptr )
+    {
+        return;
+    }
+
+    filedata->_type = type;
+    _list_excel.SetItemText( index, 1, _file_type_name[ type ] );
+    _logic->SaveExcelXml();
+
+    if ( !KFUtility::HaveBitMask( _logic->_file_type, filedata->_type ) )
+    {
+        _list_excel.DeleteItem( index );
+    }
+}
+
+void CKFGenerateDlg::ResetExcelFileList()
+{
+    _list_excel.DeleteAllItems();
+
+    for ( auto& iter : _logic->_file_list._objects )
+    {
+        auto filedata = iter.second;
+        if ( KFUtility::HaveBitMask( filedata->_type, _logic->_file_type ) )
+        {
+            auto index = _list_excel.GetItemCount();
+            _list_excel.InsertItem( index, filedata->_name.c_str() );
+            _list_excel.SetItemText( index, 1, _file_type_name[ filedata->_type ] );
+        }
     }
 }
