@@ -181,12 +181,20 @@ namespace KFrame
         // xml字段
         std::string _config_name;
 
+        // cpp名字
+        std::string _cpp_name;
+
         // 类型名
-        std::string _server_class;
-        std::string _client_class;
+        std::string _cpp_class;
+        std::string _cpp_parent_class;
+
+        std::string _csharp_class;
 
         // 生成类型( FileType )
         uint32 _flag = 0u;
+
+        // 注释
+        std::string _comments;
     };
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -259,6 +267,17 @@ namespace KFrame
     };
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // 类结构
+    class CodeClass
+    {
+    public:
+        // 类名
+        std::string _name;
+
+        // 属性字段(列索引)
+        std::vector< uint32 > _columns;
+    };
+
 }
 
 #endif

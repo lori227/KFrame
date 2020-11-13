@@ -32,10 +32,28 @@ namespace KFrame
         bool ReadExcelContent( KFExcelSheet* sheet, ExcelFileData* exceldata );
 
         // 保存配置文件
-        bool SaveConfigFile( ExcelFileData* exceldata );
+        bool WriteConfigFile( ExcelFileData* exceldata );
 
         // 保存xml文件
-        bool SaveXmlFile( ExcelFileData* exceldata, std::string filename );
+        bool WriteXmlFile( ExcelFileData* exceldata, std::string filename );
+
+        // 生成代码
+        bool WriteCodeFile( ExcelFileData* exceldata );
+
+        // 生成cpp文件
+        bool GenreateCppFile( ExcelFileData* exceldata, std::string filename );
+        // 检查cpp类数据
+        void CheckCppClassData( ExcelFileData* exceldata, std::map< std::string, CodeClass >& classlist );
+        // 获得cpp父类列表
+        void FormatCppParentClass( ExcelAttribute* attribute, std::map< std::string, CodeClass >& classlist );
+        // 写文件
+        bool WriteCppFile( ExcelFileData* exceldata, std::map< std::string, CodeClass >& classlist, std::string filename );
+
+
+
+    private:
+        // 把配置表字段名转换成cpp的变量名
+        std::string TransformNameToCpp( const std::string& name );
 
     private:
 
