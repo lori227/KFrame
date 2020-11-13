@@ -229,6 +229,9 @@ namespace KFrame
                         cell->_value = ( char* )s;
                     }
                 }
+
+                ReplaceString( cell->_value, " ", "" );
+                ReplaceString( cell->_value, "\"", "&quot;" );
                 sheet->_cells[ index ] = cell;
                 c = c->next_sibling( "c" );
             }
@@ -237,6 +240,18 @@ namespace KFrame
         }
     }
 
+    void KFExcelFile::ReplaceString( std::string& srcstring, const std::string& strold, const std::string& strnew )
+    {
+        std::string::size_type pos = 0;
+        auto oldlength = strold.size();
+        auto newlength = strnew.size();
+
+        while ( ( pos = srcstring.find( strold, pos ) ) != std::string::npos )
+        {
+            srcstring.replace( pos, oldlength, strnew );
+            pos += newlength;
+        }
+    }
 
 
     bool KFExcelFile::Open( const char* file )

@@ -56,6 +56,7 @@ BEGIN_MESSAGE_MAP( CKFGenerateDlg, CDialogEx )
     ON_COMMAND( ID_32771, &CKFGenerateDlg::OnChangeExcelServerType )
     ON_COMMAND( ID_32772, &CKFGenerateDlg::OnChangeExcelClientType )
     ON_COMMAND( ID_32773, &CKFGenerateDlg::OnChangeExcelCommonType )
+    ON_BN_CLICKED( IDC_BUTTON6, &CKFGenerateDlg::OnBnClickedButton6 )
 END_MESSAGE_MAP()
 
 
@@ -249,8 +250,6 @@ void CKFGenerateDlg::InitControlData()
         _list_excel.InsertColumn( index++, "文件类型", LVCFMT_CENTER, ( uint32 )( width * 2.1 ) );
         _list_excel.DeleteColumn( 0 );
     }
-
-
 }
 
 std::string CKFGenerateDlg::BrowsePath()
@@ -521,4 +520,11 @@ void CKFGenerateDlg::ResetExcelFileList()
             _list_excel.SetItemText( index, 1, _file_type_name[ filedata->_type ] );
         }
     }
+}
+
+
+void CKFGenerateDlg::OnBnClickedButton6()
+{
+    // TODO: 在此添加控件通知处理程序代码
+    _parse->ParseExcel( "1114-充值配置.xlsx" );
 }

@@ -8,6 +8,11 @@ namespace KFrame
     static const std::string _temp_xml = "_temp.xml";			// 生成路径配置( 每个机器都不通 )
     static const std::string _excel_xml = "_excel.xml";			// 文件列表配置( 由程序生成 )
     static const std::string _generate_xml = "_generate.xml";	// 仓库, 服务器配置( 不变 )
+    static const std::string _xml_root_name = "root";			// xml 根节点名字
+    static const std::string _xml_node_name = "node";			// xml 子节点名字
+    static const std::string _xml_row_name = "row";				// xml row字段名字
+    static const std::string _xml_version_name = "version";		// xml version字段名字
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     namespace FileType
@@ -150,6 +155,11 @@ namespace KFrame
     class ExcelOption
     {
     public:
+        bool IsValid() const
+        {
+            return !_key.empty() && !_value.empty();
+        }
+    public:
         // 选项名
         std::string _key;
 
@@ -162,14 +172,21 @@ namespace KFrame
     class ExcelAttribute
     {
     public:
+        // 列索引
+        uint32 _column = 0u;
+
         // 字段名
         std::string _name;
 
+        // xml字段
+        std::string _config_name;
+
         // 类型名
-        std::string _class;
+        std::string _server_class;
+        std::string _client_class;
 
         // 生成类型( FileType )
-        uint32 _type = 0u;
+        uint32 _flag = 0u;
     };
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -196,6 +213,9 @@ namespace KFrame
         }
 
     public:
+        // 行数
+        uint32 _row = 0u;
+
         // 数据列表
         UInt32String _columns;
     };
@@ -205,11 +225,34 @@ namespace KFrame
     class ExcelFileData
     {
     public:
+        const ExcelAttribute* FindAttribute( uint32 column )
+        {
+            auto iter = _attributes.find( column );
+            if ( iter == _attributes.end() )
+            {
+                return nullptr;
+            }
+
+            return &iter->second;
+        }
+
+        const ExcelOption* FindOption( const std::string& key )
+        {
+            auto iter = _options.find( key );
+            if ( iter == _options.end() )
+            {
+                return nullptr;
+            }
+
+            return &iter->second;
+        }
+
+    public:
         // 选项列表
-        std::vector< ExcelOption > _options;
+        std::map< std::string, ExcelOption > _options;
 
         // 描述信息
-        std::unordered_map< uint32, ExcelAttribute > _attributes;
+        std::map< uint32, ExcelAttribute > _attributes;
 
         // 数据信息
         std::vector< ExcelRow > _datas;

@@ -26,6 +26,7 @@ namespace KFrame
         void ParseCell( const std::string& value, int& row, int& col );
         void ParseRange( const std::string& value, KFExcelRange& range );
 
+        void ReplaceString( std::string& srcstring, const std::string& strold, const std::string& strnew );
     public:
         KFExcelZip* _zip;
 

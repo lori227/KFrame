@@ -4,6 +4,7 @@
 
 #pragma once
 #include "KFGenerateLogic.h"
+#include "KFGenerateParse.h"
 using namespace KFrame;
 
 
@@ -89,4 +90,5 @@ public:
     afx_msg void OnChangeExcelServerType();
     afx_msg void OnChangeExcelClientType();
     afx_msg void OnChangeExcelCommonType();
+    afx_msg void OnBnClickedButton6();
 };

@@ -1,3 +1,3 @@
-<root version="1006">
-	<item Id="diamond60" Price="600" BuyElement="[{&quot;diamond&quot;:&quot;60&quot;}]" FirstVarId="10000" FirstElement="[{&quot;diamond&quot;:&quot;6&quot;}]"/>
+<root version="0">
+	<node row="7" id="1" dataname="xxxx" datakey="yyyy" costdata="[{&quot;diamon&quot;:&quot;3333&quot;}]" compounddata="[{&quot;money&quot;:&quot;111&quot;}]"/>
 </root>
