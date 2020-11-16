@@ -9,8 +9,11 @@ namespace KFrame
     class KFGenerateParse : public KFSingleton< KFGenerateParse >
     {
     public:
-        // 加载excel文件
-        bool ParseExcel( const char* file );
+        // 解析文件列表
+        void ParseExcels( StringList& listfile );
+
+        // 解析excel文件
+        bool ParseExcel( std::string& file );
 
         // 获得错误信息
         const std::string GetError() const
@@ -19,8 +22,11 @@ namespace KFrame
         }
 
     protected:
+        // 解析文件线程
+        void ParseExecelThread();
+
         // 加载excel文件
-        bool LoadExcel( KFExcelSheet* sheet );
+        bool LoadExcel( KFExcelSheet* sheet, const std::string& version );
 
         // 读取option数据
         void ReadExcelOptionData( KFExcelSheet* sheet, ExcelFileData* exceldata );
@@ -32,10 +38,10 @@ namespace KFrame
         bool ReadExcelContent( KFExcelSheet* sheet, ExcelFileData* exceldata );
 
         // 保存配置文件
-        bool WriteConfigFile( ExcelFileData* exceldata );
+        bool WriteConfigFile( ExcelFileData* exceldata, const std::string& version );
 
         // 保存xml文件
-        bool WriteXmlFile( ExcelFileData* exceldata, std::string filename );
+        bool WriteXmlFile( ExcelFileData* exceldata, std::string filepath, std::string filename, const std::string& version );
 
         // 生成代码
         bool WriteCodeFile( ExcelFileData* exceldata );
@@ -49,16 +55,22 @@ namespace KFrame
         // 写文件
         bool WriteCppFile( ExcelFileData* exceldata, std::map< std::string, CodeClass >& classlist, std::string filename );
 
-
-
     private:
         // 把配置表字段名转换成cpp的变量名
         std::string TransformNameToCpp( const std::string& name );
 
     private:
-
         // 错误信息
         std::string _error;
+
+        // 文件列表
+        StringList _file_list;
+
+        // 线程锁
+        KFMutex _kf_mutex;
+
+        // 完成数量
+        std::atomic<uint32> _finish_count;
     };
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////

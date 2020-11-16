@@ -9,10 +9,11 @@ namespace KFrame
         return threadid;
     }
 
-    void KFThread::CreateThread( KFThreadFunction& function, const char* file, uint32 line )
+    uint32 KFThread::CreateThread( KFThreadFunction& function, const char* file, uint32 line )
     {
         auto kfrunable = KFRunablePool::Instance()->CreateRunable();
         kfrunable->StartThread( function, file, line );
+        return kfrunable->GetID();
     }
 
     void KFThread::Sleep( uint32 milliseconds )

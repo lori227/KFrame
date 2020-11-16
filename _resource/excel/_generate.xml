@@ -16,17 +16,17 @@
 
 	<!-- 类型列表 -->
 	<types>
-		<type name="bool" cpp="bool" csharp="bool" lua="local"/>
-		<type name="uint32" cpp="uint32" csharp="UInt32" lua="local"/>
-		<type name="uint64" cpp="uint64" csharp="UInt64" lua="local"/>
-		<type name="string" cpp="std::string" csharp="string" lua="local"/>
-		<type name="element" cpp="KFElements" csharp="string" lua="local"/>
-		<type name="uint32set" cpp="UInt32Set" csharp="string" lua="local"/>
-		<type name="uint32map" cpp="UInt32Map" csharp="string" lua="local"/>
-		<type name="uint32vector" cpp="UInt32Vector" csharp="string" lua="local"/>
-		<type name="date" cpp="KFDate" csharp="string" lua="local"/>
-		<type name="staticcondition" cpp="KFConditions" csharp="string" lua="local"/>
-		<type name="conditiongroup" cpp="KFConditionGroup" csharp="string" lua="local"/>
+		<type name="bool" cpp="bool" cppfunction="ReadBoolen" cppextend="" csharp="bool" lua="local"/>
+		<type name="uint32" cpp="uint32" cppfunction="ReadUInt32" cppextend="" csharp="UInt32" lua="local"/>
+		<type name="uint64" cpp="uint64" cppfunction="ReadUInt64" cppextend="" csharp="UInt64" lua="local"/>
+		<type name="string" cpp="std::string" cppfunction="ReadString" cppextend="" csharp="string" lua="local"/>
+		<type name="element" cpp="KFElements" cppfunction="ReadString" cppextend="._str_parse" csharp="string" lua="local"/>
+		<type name="uint32set" cpp="UInt32Set" cppfunction="ReadUInt32Set" cppextend="" csharp="string" lua="local"/>
+		<type name="uint32map" cpp="UInt32Map" cppfunction="ReadUInt32Map" cppextend="" csharp="string" lua="local"/>
+		<type name="uint32vector" cpp="UInt32Vector" cppfunction="ReadUInt32Vector" cppextend="" csharp="string" lua="local"/>
+		<type name="date" cpp="KFDate" cppfunction="ReadDate" cppextend="" csharp="string" lua="local"/>
+		<type name="staticcondition" cpp="KFConditions" cppfunction="ReadStaticCondition" cppextend="" csharp="string" lua="local"/>
+		<type name="conditiongroup" cpp="KFConditionGroup" cppfunction="ReadConditionGroup" cppextend="" csharp="string" lua="local"/>
 	</types>
 
 </config>

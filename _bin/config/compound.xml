@@ -1,4 +1,3 @@
-<root version="1006">
-	<item Id="1" DataName="skill" DataKey="1" CostData="[{&quot;money&quot;:&quot;10000&quot;}]" CompoundData="[{&quot;skill&quot;:{&quot;id&quot;:&quot;1&quot;}}] "/>
-	<item Id="2" DataName="hero" DataKey="1" CostData="[{&quot;money&quot;:&quot;10000&quot;}]" CompoundData="[{&quot;skill&quot;:{&quot;hero&quot;:&quot;1&quot;}}] "/>
+<root version="b23436e3e9f4daa80e38a6dcab7724c8">
+	<node row="7" id="1" dataname="xxxx" datakey="yyyy" costdata="[{&quot;diamon&quot;:&quot;3333&quot;}]" compounddata="[{&quot;money&quot;:&quot;111&quot;}]"/>
 </root>

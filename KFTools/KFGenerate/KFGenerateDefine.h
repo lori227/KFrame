@@ -8,11 +8,6 @@ namespace KFrame
     static const std::string _temp_xml = "_temp.xml";			// 生成路径配置( 每个机器都不通 )
     static const std::string _excel_xml = "_excel.xml";			// 文件列表配置( 由程序生成 )
     static const std::string _generate_xml = "_generate.xml";	// 仓库, 服务器配置( 不变 )
-    static const std::string _xml_root_name = "root";			// xml 根节点名字
-    static const std::string _xml_node_name = "node";			// xml 子节点名字
-    static const std::string _xml_row_name = "row";				// xml row字段名字
-    static const std::string _xml_version_name = "version";		// xml version字段名字
-
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     namespace FileType
@@ -78,6 +73,10 @@ namespace KFrame
 
         // cpp类型
         std::string _cpp_name;
+        // cpp读取函数
+        std::string _cpp_function;
+        // cpp变量名读物额外变量
+        std::string _cpp_extend;
 
         // csharp类型
         std::string _csharp_name;
@@ -100,8 +99,7 @@ namespace KFrame
         uint64 _time;
 
         // md5值
-        std::string _md5_server_current;
-        std::string _md5_client_current;
+        std::string _md5_current;
 
         // md5值
         std::string _md5_client_repository;
@@ -134,6 +132,9 @@ namespace KFrame
         {
             RemoveFile = 1,
             AddFile = 2,
+            ParseOk = 3,
+            ParseFailed = 4,
+            ParseFinish = 5,
         };
     }
 

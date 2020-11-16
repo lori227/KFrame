@@ -14,6 +14,9 @@ namespace KFrame
     public:
         // 文件名
         std::string _file_name;
+
+        // 行数
+        uint32 _row = 0u;
     };
     ///////////////////////////////////////////////////////////////
     class KFIntSetting : public KFSetting

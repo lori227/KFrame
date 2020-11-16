@@ -5,6 +5,7 @@
 #pragma once
 #include "KFGenerateLogic.h"
 #include "KFGenerateParse.h"
+#include "KFGenerateVersion.h"
 using namespace KFrame;
 
 
@@ -53,6 +54,16 @@ protected:
 
     // 重置Excel文件列表
     void ResetExcelFileList();
+
+    // 解析文件成功
+    void ParseExcelOk( EventData* eventdata );
+
+    // 解析文件成功
+    void ParseExcelFailed( EventData* eventdata );
+
+    // 解析文件完成
+    void ParseExcelFinish( EventData* eventdata );
+
     // 实现
 protected:
     HICON m_hIcon;
@@ -91,4 +102,6 @@ public:
     afx_msg void OnChangeExcelClientType();
     afx_msg void OnChangeExcelCommonType();
     afx_msg void OnBnClickedButton6();
+    CListBox _list_info;
+    CButton _button_generate;
 };

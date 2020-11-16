@@ -1,6 +1,5 @@
 ﻿#include "KFGenerateLogic.h"
-#include "Poco/File.h"
-#include "Poco/Path.h"
+
 
 namespace KFrame
 {
@@ -215,6 +214,8 @@ namespace KFrame
                     auto typedata = _type_list.Create( name );
                     typedata->_name = name;
                     typedata->_cpp_name = typenode.ReadString( "cpp" );
+                    typedata->_cpp_function = typenode.ReadString( "cppfunction" );
+                    typedata->_cpp_extend = typenode.ReadString( "cppextend" );
                     typedata->_csharp_name = typenode.ReadString( "csharp" );
                     typedata->_lua_name = typenode.ReadString( "lua" );
 
@@ -284,17 +285,17 @@ namespace KFrame
             auto md5 = KFCrypto::Md5File( filename );
             if ( KFUtility::HaveBitMask( _file_type, ( uint32 )FileType::Server ) )
             {
-                if ( filedata->IsServerFile() && filedata->_md5_server_current != md5 )
+                if ( filedata->IsServerFile() && filedata->_md5_current != md5 )
                 {
-                    filedata->_md5_server_current = md5;
+                    filedata->_md5_current = md5;
                     _event->AddEvent( EventType::AddFile, filedata->_type, filedata->_name );
                 }
             }
             else if ( KFUtility::HaveBitMask( _file_type, ( uint32 )FileType::Client ) )
             {
-                if ( filedata->IsClientFile() && filedata->_md5_client_current != md5 )
+                if ( filedata->IsClientFile() && filedata->_md5_current != md5 )
                 {
-                    filedata->_md5_client_current = md5;
+                    filedata->_md5_current = md5;
                     _event->AddEvent( EventType::AddFile, filedata->_type, filedata->_name );
                 }
             }

@@ -3,6 +3,8 @@
 
 #include "KFGenerateDefine.h"
 #include "KFGenerateEvent.h"
+#include "Poco/File.h"
+#include "Poco/Path.h"
 
 namespace KFrame
 {

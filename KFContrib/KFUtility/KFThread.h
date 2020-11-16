@@ -16,10 +16,10 @@ namespace KFrame
 
         // 创建线程
         template< class T >
-        static void CreateThread( T* object, void( T::*handle )(), const char* file, uint32 line )
+        static uint32 CreateThread( T* object, void( T::*handle )(), const char* file, uint32 line )
         {
             KFThreadFunction function = std::bind( handle, object );
-            CreateThread( function, file, line );
+            return CreateThread( function, file, line );
         }
 
         // 睡眠
@@ -27,7 +27,7 @@ namespace KFrame
 
     protected:
         // 创建线程
-        static void CreateThread( KFThreadFunction& function, const char* file, uint32 line );
+        static uint32 CreateThread( KFThreadFunction& function, const char* file, uint32 line );
     };
 
 

@@ -1,52 +1,67 @@
-﻿#ifndef __KF_PAY_CONFIG_H__
-#define __KF_PAY_CONFIG_H__
+#ifndef	__KF_PAY_CONFIG_H__
+#define	__KF_PAY_CONFIG_H__
 
 #include "KFConfig.h"
+#include "KFElementConfig.h"
 
 namespace KFrame
 {
-    ///////////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////////
-    // 充值配置
-    class KFPaySetting : public KFStrSetting
-    {
-    public:
-        // 价钱( 单位: 分 )
-        uint32 _price;
+	/////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////
+	class KFPaySetting : public KFIntSetting
+	{
+	public:
+		// Id
+		uint32 _id = 0u;
 
-        // 购买得到的道具
-        KFElements _buy_elements;
+		// 属性名字
+		std::string _data_name;
 
-        // 首冲变量id
-        uint32 _first_variable_id;
+		// 属性id
+		uint32 _data_key = 0u;
 
-        // 首冲获得道具
-        KFElements _first_elements;
-    };
+		// 消耗物品
+		KFElements _cost_data;
 
-    class KFPayConfig : public KFConfigT< KFPaySetting >, public KFInstance< KFPayConfig >
-    {
-    public:
-        KFPayConfig()
-        {
-            _file_name = "pay";
-        }
+		// 合成的物品
+		KFElements _compound_data;
 
-    protected:
-        // 读取配置
-        virtual void ReadSetting( KFXmlNode& xmlnode, KFPaySetting* kfsetting )
-        {
-            kfsetting->_price = xmlnode.ReadUInt32( "Price" );
+	};
 
-            auto strbuyelement = xmlnode.ReadString( "BuyElement" );
-            kfsetting->_buy_elements.Parse( strbuyelement, __FUNC_LINE__ );
+	/////////////////////////////////////////////////////////////////////////////////
+	class KFPayConfig : public KFConfigT< KFPaySetting >, public KFInstance< KFPayConfig >
+	{
+	public:
+		KFPayConfig()
+		{
+			_key_name = "id";
+			_file_name = "pay";
+		}
 
-            kfsetting->_first_variable_id = xmlnode.ReadUInt32( "FirstVarId" );
+		~KFPayConfig() = default;
 
-            auto strfirstelement = xmlnode.ReadString( "FirstElement" );
-            kfsetting->_first_elements.Parse( strfirstelement, __FUNC_LINE__ );
-        }
-    };
+		virtual void LoadAllComplete()
+		{
+			for ( auto& iter : _settings._objects )
+			{
+				auto kfsetting = iter.second;
+				KFElementConfig::Instance()->ParseElement( kfsetting->_cost_data, _file_name, kfsetting->_row );
+				KFElementConfig::Instance()->ParseElement( kfsetting->_compound_data, _file_name, kfsetting->_row );
+			}
+		}
+
+	protected:
+		virtual void ReadSetting( KFXmlNode& xmlnode, KFPaySetting* kfsetting )
+		{
+			kfsetting->_id = xmlnode.ReadUInt32( "id" );
+			kfsetting->_data_name = xmlnode.ReadString( "dataname" );
+			kfsetting->_data_key = xmlnode.ReadUInt32( "datakey" );
+			kfsetting->_cost_data._str_parse = xmlnode.ReadString( "costdata" );
+			kfsetting->_compound_data._str_parse = xmlnode.ReadString( "compounddata" );
+		}
+
+	};
+
+	/////////////////////////////////////////////////////////////////////////////////
 }
-
 #endif

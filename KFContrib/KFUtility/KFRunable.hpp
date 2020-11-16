@@ -18,6 +18,9 @@ namespace KFrame
 
         // poco run
         virtual void run();
+
+        // 获得线程id
+        uint32 GetID();
     private:
         // 线程
         Poco::Thread _thread;

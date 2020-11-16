@@ -21,10 +21,13 @@ namespace KFrame
     void KFRunable::run()
     {
         _function();
-
         KFRunablePool::Instance()->DestroyRunable( this );
     }
 
+    uint32 KFRunable::GetID()
+    {
+        return _thread.id();
+    }
     ////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////
     KFRunablePool::KFRunablePool()

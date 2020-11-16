@@ -1,27 +1,99 @@
 ﻿#include "KFGenerateParse.h"
 #include "KFGenerateLogic.h"
+#include "KFGenerateEvent.h"
+#include "KFGenerateVersion.h"
 
 namespace KFrame
 {
-    bool KFGenerateParse::ParseExcel( const char* file )
+#define __MAX_PARSE_THREAD__ 4
+
+    void KFGenerateParse::ParseExcels( StringList& listfile )
     {
-        KFExcelFile excelfile;
-        if ( !excelfile.Open( file ) )
+        _file_list.swap( listfile );
+
+        // 开启4个线程
+        _finish_count = 0u;
+        for ( auto i = 0; i < __MAX_PARSE_THREAD__; ++i )
         {
-            _error = __FORMAT__( "无法打开文件[{}], 请检查是否存在", file );
+            KFThread::CreateThread( this, &KFGenerateParse::ParseExecelThread, __FILE__, __LINE__ );
+        }
+    }
+
+    void KFGenerateParse::ParseExecelThread()
+    {
+        auto ok = false;
+        do
+        {
+            ok = false;
+            std::string file;
+            {
+                KFLocker locker( _kf_mutex );
+                if ( !_file_list.empty() )
+                {
+                    file = _file_list.front();
+                    _file_list.pop_front();
+                }
+            }
+
+            if ( !file.empty() )
+            {
+                ok = ParseExcel( file );
+                if ( ok )
+                {
+                    auto strok = __FORMAT__( "解析=[{}] 完成", file );
+                    _event->AddEvent( EventType::ParseOk, 0, strok );
+                }
+                else
+                {
+                    auto strerror = __FORMAT__( "解析=[{}], 错误=[{}]", file, _error );
+                    _event->AddEvent( EventType::ParseFailed, 0, strerror );
+                }
+            }
+        } while ( ok );
+
+        ++_finish_count;
+        if ( _finish_count >= __MAX_PARSE_THREAD__ )
+        {
+            auto strfinish = __FORMAT__( "解析文件结束" );
+            _event->AddEvent( EventType::ParseFinish, 0, strfinish );
+        }
+    }
+
+    bool KFGenerateParse::ParseExcel( std::string& file )
+    {
+        auto filedata = _logic->_file_list.Find( file );
+        if ( filedata == nullptr )
+        {
+            _error = __FORMAT__( "找不到文件=[{}]版本信息", file );
             return false;
         }
 
-        for ( auto sheet : excelfile._sheets )
+        try
         {
-            auto ok = LoadExcel( sheet );
-            if ( !ok )
+            KFExcelFile excelfile;
+            if ( !excelfile.Open( file.c_str() ) )
             {
+                _error = __FORMAT__( "无法打开文件[{}], 请检查是否存在", file );
                 return false;
             }
+
+            for ( auto sheet : excelfile._sheets )
+            {
+                auto ok = LoadExcel( sheet, filedata->_md5_current );
+                if ( !ok )
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+        catch ( ... )
+        {
+            _error = __FORMAT__( "无法打开文件[{}], 请检查是否存在", file );
         }
 
-        return true;
+        return false;
     }
 
     // 第1行 option data
@@ -40,9 +112,7 @@ namespace KFrame
     // 起始列索引
 #define __BEGIN_CLOUMN__ 1
 
-
-
-    bool KFGenerateParse::LoadExcel( KFExcelSheet* sheet )
+    bool KFGenerateParse::LoadExcel( KFExcelSheet* sheet, const std::string& version )
     {
         ExcelFileData exceldata;
 
@@ -58,7 +128,7 @@ namespace KFrame
         ReadExcelContent( sheet, &exceldata );
 
         // 保存配置表
-        if ( !WriteConfigFile( &exceldata ) )
+        if ( !WriteConfigFile( &exceldata, version ) )
         {
             return false;
         }
@@ -184,14 +254,19 @@ namespace KFrame
         return true;
     }
 
-    bool KFGenerateParse::WriteConfigFile( ExcelFileData* exceldata )
+    bool KFGenerateParse::WriteConfigFile( ExcelFileData* exceldata, const std::string& version )
     {
         // xml
         {
             auto option = exceldata->FindOption( "xml" );
             if ( option != nullptr )
             {
-                if ( !WriteXmlFile( exceldata, option->_value ) )
+                if ( !WriteXmlFile( exceldata, _logic->_server_xml_path, option->_value, version ) )
+                {
+                    return false;
+                }
+
+                if ( !WriteXmlFile( exceldata, _logic->_client_xml_path, option->_value, version ) )
                 {
                     return false;
                 }
@@ -201,11 +276,16 @@ namespace KFrame
         return true;
     }
 
-    bool KFGenerateParse::WriteXmlFile( ExcelFileData* exceldata, std::string filename )
+    bool KFGenerateParse::WriteXmlFile( ExcelFileData* exceldata, std::string filepath, std::string filename, const std::string& version )
     {
+        if ( filepath.empty() )
+        {
+            return true;
+        }
         std::transform( filename.begin(), filename.end(), filename.begin(), ::tolower );
-        auto file = _logic->_server_xml_path + "/" + filename + ".xml";
+        _version->AddVersion( filepath, filename, version );
 
+        auto file = filepath + "/" + filename + ".xml";
         std::ofstream xmlfile( file );
         if ( !xmlfile )
         {
@@ -214,12 +294,12 @@ namespace KFrame
         }
 
         //xmlfile << "<?xml version = '1.0' encoding = 'utf-8' ?>\n";
-        xmlfile << __FORMAT__( "<{} {}=\"{}\">\n", _xml_root_name, _xml_version_name, 0000 );
+        xmlfile << __FORMAT__( "<{} {}=\"{}\">\n", __STRING__( root ), __STRING__( version ), version );
 
         for ( auto& iter : exceldata->_datas )
         {
             auto rowdata = &iter;
-            xmlfile << __FORMAT__( "\t<{} {}=\"{}\"", _xml_node_name, _xml_row_name, rowdata->_row );
+            xmlfile << __FORMAT__( "\t<{} {}=\"{}\"", __STRING__( node ), __STRING__( row ), rowdata->_row );
 
             for ( auto& miter : rowdata->_columns )
             {
@@ -229,7 +309,7 @@ namespace KFrame
 
             xmlfile << "/>\n";
         }
-        xmlfile << __FORMAT__( "</{}>\n", _xml_root_name );
+        xmlfile << __FORMAT__( "</{}>\n", __STRING__( root ) );
 
         xmlfile.flush();
         xmlfile.close();
@@ -244,7 +324,7 @@ namespace KFrame
             auto option = exceldata->FindOption( "cpp" );
             if ( option != nullptr )
             {
-                if ( !WriteCppFile( exceldata, option->_value ) )
+                if ( !GenreateCppFile( exceldata, option->_value ) )
                 {
                     return false;
                 }
@@ -331,11 +411,11 @@ namespace KFrame
     }\
     if ( typeinfo->_cpp_name == "uint32" )\
     {\
-        xmlfile << __FORMAT__( "\t\t{} {} = 0u;\n", typeinfo->_cpp_name, attribute->_cpp_name );\
+        xmlfile << __FORMAT__( "\t\t{} {} = 0u;\n\n", typeinfo->_cpp_name, attribute->_cpp_name );\
     }\
     else\
     {\
-        xmlfile << __FORMAT__( "\t\t{} {};\n", typeinfo->_cpp_name, attribute->_cpp_name );\
+        xmlfile << __FORMAT__( "\t\t{} {};\n\n", typeinfo->_cpp_name, attribute->_cpp_name );\
     }\
 
     bool KFGenerateParse::WriteCppFile( ExcelFileData* exceldata, std::map<std::string, CodeClass>& classlist, std::string filename )
@@ -351,13 +431,19 @@ namespace KFrame
         }
 
         auto stroption = keyoption->_value;
-        auto keyname = KFUtility::SplitString( stroption, __SPLIT_STRING__ );
         auto settingsubname = KFUtility::SplitString( stroption, __SPLIT_STRING__ );
         if ( settingsubname != "Int" && settingsubname != "Str" )
         {
             _error = __FORMAT__( "继承的配置字段[{}]错误", settingsubname );
             return false;
         }
+
+        auto keyname = KFUtility::SplitString( stroption, __SPLIT_STRING__ );
+        if ( keyname.empty() )
+        {
+            keyname = __STRING__( row );
+        }
+        std::transform( keyname.begin(), keyname.end(), keyname.begin(), ::tolower );
 
         std::ofstream xmlfile( file );
         if ( !xmlfile )
@@ -368,60 +454,145 @@ namespace KFrame
 
         auto upname = filename;
         std::transform( upname.begin(), upname.end(), upname.begin(), ::toupper );
+        auto lowername = filename;
+        std::transform( lowername.begin(), lowername.end(), lowername.begin(), ::tolower );
+
 
         xmlfile << __FORMAT__( "#ifndef	__KF_{}_CONFIG_H__\n", upname );
-        xmlfile << __FORMAT__( "#define	__KF_{}_CONFIG_H__\n", upname );
+        xmlfile << __FORMAT__( "#define	__KF_{}_CONFIG_H__\n\n", upname );
+
+        // 头文件
+        {
+            xmlfile << "#include \"KFConfig.h\"\n";
+            xmlfile << "#include \"KFElementConfig.h\"\n";
+            xmlfile << "\n";
+        }
+
         xmlfile << "namespace KFrame\n";
         xmlfile << "{\n";
         xmlfile << "\t/////////////////////////////////////////////////////////////////////////////////\n";
 
         // 先写子类
-        for ( auto& iter : classlist )
         {
-            auto codeclass = &iter.second;
-            xmlfile << __FORMAT__( "\tclass {}\n", codeclass->_name );
+            for ( auto& iter : classlist )
+            {
+                auto codeclass = &iter.second;
+                xmlfile << __FORMAT__( "\tclass {}\n", codeclass->_name );
+                xmlfile << "\t{\n";
+                xmlfile << "\tpublic:\n";
+
+                // 子属性
+                for ( auto column : codeclass->_columns )
+                {
+                    auto attribute = exceldata->FindAttribute( column );
+                    if ( attribute == nullptr )
+                    {
+                        continue;
+                    }
+
+                    // 基础属性
+                    __WRITE_CPP_ATTRIBUTE__( attribute );
+                }
+
+                xmlfile << "\t};\n\n";
+            }
+            xmlfile << "\t/////////////////////////////////////////////////////////////////////////////////\n";
+        }
+
+
+        // 写配置类
+        {
+            xmlfile << __FORMAT__( "\tclass KF{}Setting : public KF{}Setting\n", filename, settingsubname );
             xmlfile << "\t{\n";
             xmlfile << "\tpublic:\n";
-
-            // 子属性
-            for ( auto column : codeclass->_columns )
+            for ( auto& iter : exceldata->_attributes )
             {
-                auto attribute = exceldata->FindAttribute( column );
-                if ( attribute == nullptr )
+                auto attribute = &iter.second;
+                if ( !attribute->_cpp_parent_class.empty() || attribute->_config_name == keyname )
                 {
                     continue;
                 }
 
                 // 基础属性
                 __WRITE_CPP_ATTRIBUTE__( attribute );
+
+                // 写类
             }
+            xmlfile << "\t};\n\n";
+            xmlfile << "\t/////////////////////////////////////////////////////////////////////////////////\n";
+        }
+
+        // 写配置config
+        {
+            xmlfile << __FORMAT__( "\tclass KF{}Config : public KFConfigT< KF{}Setting >, public KFInstance< KF{}Config >\n", filename, filename, filename );
+            xmlfile << "\t{\n";
+            xmlfile << "\tpublic:\n";
+            // 构造函数
+            {
+                xmlfile << __FORMAT__( "\t\tKF{}Config()\n", filename );
+                xmlfile << "\t\t{\n";
+                xmlfile << __FORMAT__( "\t\t\t_key_name = \"{}\";\n", keyname );
+                xmlfile << __FORMAT__( "\t\t\t_file_name = \"{}\";\n", lowername );
+                xmlfile << "\t\t}\n\n";
+            }
+
+            // 析构函数
+            {
+                xmlfile << __FORMAT__( "\t\t~KF{}Config() = default;\n\n", filename );
+            }
+
+            // 加载完成函数
+            {
+                xmlfile << "\t\tvirtual void LoadAllComplete()\n";
+                xmlfile << "\t\t{\n";
+                xmlfile << "\t\t\tfor ( auto& iter : _settings._objects )\n";
+                xmlfile << "\t\t\t{\n";
+                xmlfile << "\t\t\t\tauto kfsetting = iter.second;\n";
+
+                for ( auto& iter : exceldata->_attributes )
+                {
+                    auto attribute = &iter.second;
+                    if ( attribute->_cpp_class == "element" )
+                    {
+                        xmlfile << __FORMAT__( "\t\t\t\tKFElementConfig::Instance()->ParseElement( kfsetting->{}, _file_name, kfsetting->_row );\n", attribute->_cpp_name );
+                    }
+                }
+
+                xmlfile << "\t\t\t}\n";
+                xmlfile << "\t\t}\n\n";
+            }
+
+            xmlfile << "\tprotected:\n";
+
+            // 读取配置
+            {
+                xmlfile << __FORMAT__( "\t\tvirtual void ReadSetting( KFXmlNode& xmlnode, KF{}Setting* kfsetting )\n", filename );
+                xmlfile << "\t\t{\n";
+                for ( auto& iter : exceldata->_attributes )
+                {
+                    auto attribte = &iter.second;
+                    auto typeinfo = _logic->_type_list.Find( attribte->_cpp_class );
+                    if ( typeinfo == nullptr )
+                    {
+                        _error = __FORMAT__( "找不到类型配置=[{}]", attribte->_cpp_class );
+                        return false;
+                    }
+
+                    xmlfile << __FORMAT__( "\t\t\tkfsetting->{}{} = xmlnode.{}( \"{}\" );\n", attribte->_cpp_name, typeinfo->_cpp_extend, typeinfo->_cpp_function, attribte->_config_name );
+                }
+                xmlfile << "\t\t}\n\n";
+            }
+
+
 
             xmlfile << "\t};\n\n";
-        }
-        xmlfile << "\t/////////////////////////////////////////////////////////////////////////////////\n";
-
-        // 写配置类
-        xmlfile << __FORMAT__( "\tclass KF{}Setting : public KF{}Setting\n", filename, settingsubname );
-        xmlfile << "\t{\n";
-        xmlfile << "\tpublic:\n";
-        for ( auto& iter : exceldata->_attributes )
-        {
-            auto attribute = &iter.second;
-            if ( !attribute->_cpp_parent_class.empty() )
-            {
-                continue;
-            }
-
-            // 基础属性
-            __WRITE_CPP_ATTRIBUTE__( attribute );
-
-            // 写类
-
+            xmlfile << "\t/////////////////////////////////////////////////////////////////////////////////\n";
         }
 
-        xmlfile << "\t};\n\n";
 
         xmlfile << "}\n";
         xmlfile << "#endif\n";
+
+        return true;
     }
 }

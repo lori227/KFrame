@@ -36,6 +36,8 @@ void CKFGenerateDlg::DoDataExchange( CDataExchange* pDX )
     DDX_Control( pDX, IDC_COMBO1, _combo_repository_list );
     DDX_Control( pDX, IDC_COMBO2, _combo_server_list );
     DDX_Control( pDX, IDC_LIST1, _list_excel );
+    DDX_Control( pDX, IDC_LIST2, _list_info );
+    DDX_Control( pDX, IDC_BUTTON6, _button_generate );
 }
 
 BEGIN_MESSAGE_MAP( CKFGenerateDlg, CDialogEx )
@@ -86,7 +88,7 @@ void CKFGenerateDlg::OnPaint()
     {
         CPaintDC dc( this ); // 用于绘制的设备上下文
 
-        SendMessage( WM_ICONERASEBKGND, reinterpret_cast<WPARAM>( dc.GetSafeHdc() ), 0 );
+        SendMessage( WM_ICONERASEBKGND, reinterpret_cast< WPARAM >( dc.GetSafeHdc() ), 0 );
 
         // 使图标在工作区矩形中居中
         int cxIcon = GetSystemMetrics( SM_CXICON );
@@ -109,7 +111,7 @@ void CKFGenerateDlg::OnPaint()
 //显示。
 HCURSOR CKFGenerateDlg::OnQueryDragIcon()
 {
-    return static_cast<HCURSOR>( m_hIcon );
+    return static_cast< HCURSOR >( m_hIcon );
 }
 
 BOOL CKFGenerateDlg::PreTranslateMessage( MSG* pMsg )
@@ -182,6 +184,9 @@ void CKFGenerateDlg::InitEventFunction()
 {
     _event->RegisterEventFunction( EventType::AddFile, this, &CKFGenerateDlg::AddExcelFile );
     _event->RegisterEventFunction( EventType::RemoveFile, this, &CKFGenerateDlg::RemoveExcelFile );
+    _event->RegisterEventFunction( EventType::ParseOk, this, &CKFGenerateDlg::ParseExcelOk );
+    _event->RegisterEventFunction( EventType::ParseFailed, this, &CKFGenerateDlg::ParseExcelFailed );
+    _event->RegisterEventFunction( EventType::ParseFinish, this, &CKFGenerateDlg::ParseExcelFinish );
 }
 
 void CKFGenerateDlg::LoadXmlData()
@@ -443,7 +448,7 @@ void CKFGenerateDlg::RemoveExcelFile( EventData* eventdata )
 
 void CKFGenerateDlg::OnNMRClickList1( NMHDR* pNMHDR, LRESULT* pResult )
 {
-    LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>( pNMHDR );
+    LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast< LPNMITEMACTIVATE >( pNMHDR );
     // TODO: 在此添加控件通知处理程序代码
     CMenu popMenu;
     popMenu.LoadMenu( IDR_MENU1 );
@@ -526,5 +531,39 @@ void CKFGenerateDlg::ResetExcelFileList()
 void CKFGenerateDlg::OnBnClickedButton6()
 {
     // TODO: 在此添加控件通知处理程序代码
-    _parse->ParseExcel( "1114-充值配置.xlsx" );
+    _button_generate.EnableWindow( FALSE );
+    _version->LoadVersionXml( _logic->_server_xml_path );
+    _version->LoadVersionXml( _logic->_client_xml_path );
+
+    // 清空list
+    _list_info.ResetContent();
+
+    StringList parselist;
+    for ( auto& iter : _logic->_file_list._objects )
+    {
+        auto filedata = iter.second;
+        parselist.push_back( filedata->_name );
+    }
+
+    _parse->ParseExcels( parselist );
+}
+
+void CKFGenerateDlg::ParseExcelOk( EventData* eventdata )
+{
+    _list_info.AddString( eventdata->_str_param.c_str() );
+}
+
+void CKFGenerateDlg::ParseExcelFailed( EventData* eventdata )
+{
+    _list_info.AddString( eventdata->_str_param.c_str() );
+    AfxMessageBox( eventdata->_str_param.c_str() );
+}
+
+void CKFGenerateDlg::ParseExcelFinish( EventData* eventdata )
+{
+    _list_info.AddString( eventdata->_str_param.c_str() );
+    _button_generate.EnableWindow( TRUE );
+
+    _version->SaveVersionXml( _logic->_server_xml_path );
+    _version->SaveVersionXml( _logic->_client_xml_path );
 }

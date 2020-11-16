@@ -42,6 +42,9 @@
     <ClInclude Include="KFGenerateParse.h">
       <Filter>Logic</Filter>
     </ClInclude>
+    <ClInclude Include="KFGenerateVersion.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KFGenerate.cpp">
@@ -60,6 +63,9 @@
       <Filter>Logic</Filter>
     </ClCompile>
     <ClCompile Include="KFGenerateParse.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="KFGenerateVersion.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
   </ItemGroup>

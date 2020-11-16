@@ -5,6 +5,7 @@
 
 namespace KFrame
 {
+
     ///////////////////////////////////////////////////////////////
     class KFConfig
     {
@@ -44,6 +45,9 @@ namespace KFrame
         // 默认配置文件名
         std::string _file_name;
 
+        // 配置表主键字段名
+        std::string _key_name;
+
     protected:
         // 版本号
         std::string _version;
@@ -57,12 +61,6 @@ namespace KFrame
     {
         typedef typename T::Type KeyType;
     public:
-        KFConfigT()
-        {
-            _key_name = "Id";
-            _row_name = "item";
-        }
-
         // 加载配置
         bool LoadConfig( const std::string& filename, const std::string& filepath, uint32 loadmask )
         {
@@ -72,13 +70,12 @@ namespace KFrame
             _setting_file_anme = filename;
             CheckClearSetting( loadmask );
 
-            auto xmlnode = config.FindNode( _row_name.c_str() );
+            auto xmlnode = config.FindNode( __STRING__( node ).c_str() );
             while ( xmlnode.IsValid() )
             {
                 auto kfsetting = CreateSetting( xmlnode );
                 if ( kfsetting != nullptr )
                 {
-                    kfsetting->_file_name = _setting_file_anme;
                     ReadSetting( xmlnode, kfsetting );
                 }
                 xmlnode.NextNode();
@@ -137,25 +134,25 @@ namespace KFrame
 
         virtual T* CreateSetting( KFXmlNode& xmlnode )
         {
+            auto service = xmlnode.ReadUInt32( __STRING__( service ).c_str(), true );
+            auto channel = xmlnode.ReadUInt32( __STRING__( channel ).c_str(), true );
+            auto ok = KFGlobal::Instance()->CheckChannelService( channel, service );
+            if ( !ok )
+            {
+                return nullptr;
+            }
+
             auto id = xmlnode.ReadT< KeyType >( _key_name.c_str() );
             auto kfsetting = _settings.Create( id );
             kfsetting->_id = id;
-
+            kfsetting->_file_name = _setting_file_anme;
+            kfsetting->_row = xmlnode.ReadUInt32( __STRING__( row ).c_str() );
             return kfsetting;
         }
 
         // 读取配置
         virtual void ReadSetting( KFXmlNode& xmlnode, T* kfsetting ) = 0;
 
-    protected:
-        // 配置表主键字段名
-        std::string _key_name;
-
-        // 每一行字段名
-        std::string _row_name;
-
-        // 版本号字段名
-        std::string _version_name;
     public:
         // 列表
         KFHashMap< KeyType, const KeyType&, T > _settings;
