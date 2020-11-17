@@ -13,6 +13,7 @@
 #include "KFProjectInterface.h"
 #include "KFProjectConfig.hpp"
 #include "KFRewardConfig.hpp"
+#include "KFConstantConfig.hpp"
 #include "KFXmlReader/KFElementConfig.h"
 
 namespace KFrame

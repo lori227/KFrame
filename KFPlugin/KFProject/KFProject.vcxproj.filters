@@ -13,5 +13,6 @@
     <ClInclude Include="KFProjectPlugin.hpp" />
     <ClInclude Include="KFProjectConfig.hpp" />
     <ClInclude Include="KFRewardConfig.hpp" />
+    <ClInclude Include="KFConstantConfig.hpp" />
   </ItemGroup>
 </Project>

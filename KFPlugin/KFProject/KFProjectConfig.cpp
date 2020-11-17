@@ -64,11 +64,4 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFConstantConfig::ReadSetting( KFXmlNode& xmlnode, KFIntSetting* kfsetting )
-    {
-        auto name = xmlnode.ReadString( "name" );
-        auto key = xmlnode.ReadUInt32( "key", true );
-        auto value = xmlnode.ReadString( "value", true );
-        KFGlobal::Instance()->AddConstant( name, key, value );
-    }
 }
