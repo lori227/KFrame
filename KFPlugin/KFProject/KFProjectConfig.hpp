@@ -29,9 +29,6 @@ namespace KFrame
         }
 
     protected:
-        // 创建配置
-        KFIntSetting* CreateSetting( KFXmlNode& xmlnode );
-
         // 读取配置
         virtual void ReadSetting( KFXmlNode& xmlnode, KFIntSetting* kfsetting );
     };

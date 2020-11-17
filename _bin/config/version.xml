@@ -1,11 +1,14 @@
 <root>
-	<node name="compound" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
-	<node name="achieve" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
-	<node name="conditiondefine" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
-	<node name="achievecondition" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
-	<node name="condition" version="26230a675935caa816f4034dd7755339"/>
-	<node name="execute" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
+	<node name="compound" version=""/>
+	<node name="achieve" version=""/>
+	<node name="conditiondefine" version=""/>
+	<node name="achievecondition" version=""/>
+	<node name="frameconstant" version=""/>
+	<node name="condition" version=""/>
+	<node name="execute" version=""/>
 	<node name="dripgroup" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
-	<node name="unlock" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
-	<node name="dropgroup" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
+	<node name="unlock" version=""/>
+	<node name="dropgroup" version=""/>
+	<node name="reward" version=""/>
+	<node name="constant" version=""/>
 </root>

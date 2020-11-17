@@ -292,7 +292,7 @@ namespace KFrame
             auto md5 = KFCrypto::Md5File( filepath );
             if ( KFUtility::HaveBitMask( _file_type, ( uint32 )FileType::Server ) )
             {
-                if ( filedata->IsServerFile() && filedata->_md5_current != md5 )
+                if ( filedata->IsServerFile() && filedata->_md5_server_repository != md5 )
                 {
                     filedata->_md5_current = md5;
                     _event->AddEvent( EventType::AddFile, filedata->_type, filedata->_name );
@@ -300,7 +300,7 @@ namespace KFrame
             }
             else if ( KFUtility::HaveBitMask( _file_type, ( uint32 )FileType::Client ) )
             {
-                if ( filedata->IsClientFile() && filedata->_md5_current != md5 )
+                if ( filedata->IsClientFile() && filedata->_md5_client_repository != md5 )
                 {
                     filedata->_md5_current = md5;
                     _event->AddEvent( EventType::AddFile, filedata->_type, filedata->_name );

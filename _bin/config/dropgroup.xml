@@ -1,4 +1,4 @@
-<root version="b23436e3e9f4daa80e38a6dcab7724c8">
+<root version="">
 	<node row="8" id="1" randtype="1" dropdataid="1" weight="100" dropcount="1" conditiontype="1"/>
 	<node row="9" id="1" randtype="1" dropdataid="2" weight="100" dropcount="1" conditiontype="1"/>
 	<node row="10" id="1" randtype="1" dropdataid="3" dropcount="1" conditiontype="1"/>

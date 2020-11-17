@@ -722,7 +722,6 @@ Global
 		{F6DF256B-FB77-4E69-A95B-1FB2DE18242D}.Release|x64.Build.0 = Release|x64
 		{F6DF256B-FB77-4E69-A95B-1FB2DE18242D}.Release|x86.ActiveCfg = Release|x64
 		{09A95B0B-192E-4D62-B10E-1381740339AA}.Debug|x64.ActiveCfg = Debug|x64
-		{09A95B0B-192E-4D62-B10E-1381740339AA}.Debug|x64.Build.0 = Debug|x64
 		{09A95B0B-192E-4D62-B10E-1381740339AA}.Debug|x86.ActiveCfg = Debug|x64
 		{09A95B0B-192E-4D62-B10E-1381740339AA}.Release|x64.ActiveCfg = Release|x64
 		{09A95B0B-192E-4D62-B10E-1381740339AA}.Release|x64.Build.0 = Release|x64
@@ -887,7 +886,7 @@ Global
 		{492D1D8C-D5CD-4E93-A13A-C6E9CEC65402} = {767558FA-7EA7-41D1-9A9A-70B2B272CA81}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		Qt5Version = msvc2015_86
 		SolutionGuid = {0F58A6B8-C040-4A92-9898-1E6968E55CF1}
+		Qt5Version = msvc2015_86
 	EndGlobalSection
 EndGlobal

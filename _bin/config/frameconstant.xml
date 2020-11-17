@@ -1,5 +1,4 @@
-<root version="00000">
-	<item Name="playernamelength" Key="" Value="14" Channel="" Service=""/>
-	<item Name="signinresettime" Key="" Value="2" Channel="" Service=""/>
-	<item Name="chatintervaltime" Key="" Value="2000" Channel="" Service=""/>
+<root version="">
+	<node row="8" name="playernamelength" value="14"/>
+	<node row="9" name="chatintervaltime" value="2000"/>
 </root>

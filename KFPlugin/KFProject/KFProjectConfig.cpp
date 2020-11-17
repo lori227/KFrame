@@ -64,24 +64,11 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    KFIntSetting* KFConstantConfig::CreateSetting( KFXmlNode& xmlnode )
-    {
-        auto service = xmlnode.ReadUInt32( "Service", true );
-        auto channel = xmlnode.ReadUInt32( "Channel", true );
-        auto ok = KFGlobal::Instance()->CheckChannelService( channel, service );
-        if ( !ok )
-        {
-            return nullptr;
-        }
-
-        return _settings.Create( 0u );
-    }
-
     void KFConstantConfig::ReadSetting( KFXmlNode& xmlnode, KFIntSetting* kfsetting )
     {
-        auto name = xmlnode.ReadString( "Name" );
-        auto key = xmlnode.ReadUInt32( "Key", true );
-        auto value = xmlnode.ReadString( "Value" );
+        auto name = xmlnode.ReadString( "name" );
+        auto key = xmlnode.ReadUInt32( "key", true );
+        auto value = xmlnode.ReadString( "value", true );
         KFGlobal::Instance()->AddConstant( name, key, value );
     }
 }

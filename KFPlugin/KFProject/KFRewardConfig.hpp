@@ -22,7 +22,7 @@ namespace KFrame
         uint32 _code;
 
         // 格式化字串
-        std::string _element_template;
+        std::string _template;
     };
 
     class KFRewardConfig : public KFConfigT< KFRewardSetting >, public KFInstance< KFRewardConfig >
@@ -30,6 +30,7 @@ namespace KFrame
     public:
         KFRewardConfig()
         {
+            _key_name = "id";
             _file_name = "reward";
         }
 

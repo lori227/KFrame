@@ -142,7 +142,7 @@ namespace KFrame
                 return nullptr;
             }
 
-            auto id = xmlnode.ReadT< KeyType >( _key_name.c_str() );
+            auto id = xmlnode.ReadT< KeyType >( _key_name.c_str(), true );
             auto kfsetting = _settings.Create( id );
             kfsetting->_id = id;
             kfsetting->_file_name = _setting_file_anme;

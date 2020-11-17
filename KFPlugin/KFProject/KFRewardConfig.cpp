@@ -12,9 +12,9 @@ namespace KFrame
     // 读取配置
     void KFRewardConfig::ReadSetting( KFXmlNode& xmlnode, KFRewardSetting* kfsetting )
     {
-        kfsetting->_type = xmlnode.ReadUInt32( "Type" );
-        kfsetting->_code = xmlnode.ReadUInt32( "Code" );
-        kfsetting->_element_template = xmlnode.ReadString( "Template" );
+        kfsetting->_type = xmlnode.ReadUInt32( "type" );
+        kfsetting->_code = xmlnode.ReadUInt32( "code" );
+        kfsetting->_template = xmlnode.ReadString( "template" );
 
         auto idvalue = CalcTypeCodeValue( kfsetting->_type, kfsetting->_code );
         _id_name_list[ idvalue ] = kfsetting->_id;
@@ -53,7 +53,7 @@ namespace KFrame
         if ( kfsetting != nullptr )
         {
             _str_element = "[";
-            _str_element += __FORMAT__( kfsetting->_element_template, datavalue, dataid );
+            _str_element += __FORMAT__( kfsetting->_template, datavalue, dataid );
             _str_element += "]";
         }
         else
@@ -90,7 +90,7 @@ namespace KFrame
             }
 
             ++index;
-            _str_element += __FORMAT__( kfrewardsetting->_element_template, datavalue, dataid );
+            _str_element += __FORMAT__( kfrewardsetting->_template, datavalue, dataid );
         }
 
         _str_element += "]";
@@ -110,6 +110,7 @@ namespace KFrame
         return strparse;
     }
 
+    // [1,1,2]
     const std::string& KFRewardConfig::ParseCodeString( const std::string& strparse )
     {
         static std::string _str_element = _invalid_string;
@@ -177,7 +178,7 @@ namespace KFrame
         }
 
         static std::string _str_element;
-        _str_element = __FORMAT__( kfsetting->_element_template, num, code );
+        _str_element = __FORMAT__( kfsetting->_template, num, code );
         return _str_element;
     }
 
