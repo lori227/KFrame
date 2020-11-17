@@ -12,7 +12,7 @@
 #include "KFConditionInterface.h"
 #include "KFKernel/KFKernelInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
-#include "KFConditionConfig.hpp"
+#include "KFXmlReader/KFConditionConfig.hpp"
 
 namespace KFrame
 {
@@ -25,11 +25,11 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 判断属性条件
-        virtual bool CheckStaticCondition( KFEntity* kfentity, const KFConditions* kfconditions );
+        virtual bool CheckStaticCondition( KFData* kfobject, const StaticConditionsPtr& kfconditions );
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 初始化条件
-        virtual void AddCondition( KFEntity* kfentity, KFData* kfconditionobject, const KFConditionGroup& conditiongroup );
+        virtual void AddCondition( KFEntity* kfentity, KFData* kfconditionobject, const DynamicConditionGroupPtr& conditiongroup );
 
         // 初始化条件
         virtual bool InitCondition( KFEntity* kfentity, KFData* kfconditionobject, uint32 limitmask, bool update );
@@ -51,16 +51,19 @@ namespace KFrame
 
     protected:
         // 判断属性条件
-        bool CheckStaticCondition( KFEntity* kfentity, const KFCondition* kfcondition );
+        bool CheckStaticCondition( KFData* kfobject, const KFStaticCondition* kfcondition );
 
         // 计算条件表达式
-        uint32 CalcExpression( KFEntity* kfentity, const KFExpression* kfexpression );
+        uint32 CalcExpression( KFData* kfobject, const KFStaticConditionExpression* kfexpression );
 
         // 计算属性值
-        uint32 CalcConditionData( KFEntity* kfentity, const KFConditionAbstract* kfconditiondata );
+        uint32 CalcConditionData( KFData* kfobject, const KFStaticConditionAbstract* kfconditiondata );
 
         // 判断限制条件
-        bool CheckConditionLimit( KFEntity* kfentity, KFData* kfdata, const KFConditionSetting* kfsetting );
+        bool CheckStaticConditionLimit( KFData* kfobject, const KFConditionSetting* kfsetting );
+
+        // 计算触发值
+        bool CalcTriggerUpdateValue( const ConditionTrigger* trigger, uint64 operate, uint64& operatevalue, uint64 nowvalue );
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // 初始化条件
@@ -92,19 +95,19 @@ namespace KFrame
         uint32 CheckConditionData( KFEntity* kfentity, KFData* kfcondition );
 
         // 计算添加数值
-        std::tuple<uint32, uint32> CalcAddConditionValue( KFEntity* kfentity, const KFConditionDefine* kfdefine, KFData* kfdata );
+        std::tuple<uint32, uint32> CalcAddConditionValue( KFEntity* kfentity, const KFConditionDefineSetting* kfdefine, KFData* kfdata );
 
         // 计算删除数值
-        std::tuple<uint32, uint32> CalcRemoveConditionValue( KFEntity* kfentity, const KFConditionDefine* kfsetting, KFData* kfdata );
+        std::tuple<uint32, uint32> CalcRemoveConditionValue( KFEntity* kfentity, const KFConditionDefineSetting* kfsetting, KFData* kfdata );
 
         // 计算更新数值
-        std::tuple<uint32, uint32> CalcUpdateConditionValue( KFEntity* kfentity, const KFConditionDefine* kfsetting, KFData* kfdata, uint32 operate, uint64 value, uint64 nowvalue );
+        std::tuple<uint32, uint32> CalcUpdateConditionValue( KFEntity* kfentity, const KFConditionDefineSetting* kfsetting, KFData* kfdata, uint32 operate, uint64 value, uint64 nowvalue );
 
         // 保存纪录的keyid
-        void SaveConditionDataUUid( KFEntity* kfentity, KFData* kfcondition, KFData* kfdata, const KFConditionDefine* kfsetting );
+        void SaveConditionDataUUid( KFEntity* kfentity, KFData* kfcondition, KFData* kfdata, const KFConditionDefineSetting* kfsetting );
 
         // 判断是否存在key
-        bool CheckUUidInConditionData( KFEntity* kfentity, KFData* kfcondition, KFData* kfdata, const KFConditionDefine* kfsetting );
+        bool CheckUUidInConditionData( KFEntity* kfentity, KFData* kfcondition, KFData* kfdata, const KFConditionDefineSetting* kfsetting );
     };
 }
 

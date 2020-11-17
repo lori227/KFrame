@@ -11,16 +11,16 @@ namespace KFrame
 	class KFCompoundSetting : public KFIntSetting
 	{
 	public:
-		// å±žæ€§åå­—
+		// ÊôÐÔÃû×Ö
 		std::string _data_name;
 
-		// å±žæ€§id
+		// ÊôÐÔid
 		uint32 _data_key = 0u;
 
-		// æ¶ˆè€—ç‰©å“
+		// ÏûºÄÎïÆ·
 		KFElements _cost_data;
 
-		// åˆæˆçš„ç‰©å“
+		// ºÏ³ÉµÄÎïÆ·
 		KFElements _compound_data;
 
 	};
@@ -42,19 +42,19 @@ namespace KFrame
 			for ( auto& iter : _settings._objects )
 			{
 				auto kfsetting = iter.second;
-				KFElementConfig::Instance()->ParseElement( kfsetting->_cost_data, _file_name, kfsetting->_row );
-				KFElementConfig::Instance()->ParseElement( kfsetting->_compound_data, _file_name, kfsetting->_row );
+
+				KFElementConfig::Instance()->ParseElement( kfsetting->_cost_data, _file_name.c_str(), kfsetting->_row );
+				KFElementConfig::Instance()->ParseElement( kfsetting->_compound_data, _file_name.c_str(), kfsetting->_row );
 			}
 		}
 
 	protected:
 		virtual void ReadSetting( KFXmlNode& xmlnode, KFCompoundSetting* kfsetting )
 		{
-			kfsetting->_id = xmlnode.ReadUInt32( "id" );
-			kfsetting->_data_name = xmlnode.ReadString( "dataname" );
-			kfsetting->_data_key = xmlnode.ReadUInt32( "datakey" );
-			kfsetting->_cost_data._str_parse = xmlnode.ReadString( "costdata" );
-			kfsetting->_compound_data._str_parse = xmlnode.ReadString( "compounddata" );
+			kfsetting->_data_name = xmlnode.ReadString( "dataname", true );
+			kfsetting->_data_key = xmlnode.ReadUInt32( "datakey", true );
+			kfsetting->_cost_data._str_parse = xmlnode.ReadString( "costdata", true );
+			kfsetting->_compound_data._str_parse = xmlnode.ReadString( "compounddata", true );
 		}
 
 	};

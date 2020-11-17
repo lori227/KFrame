@@ -26,12 +26,14 @@ namespace KFrame
 
     public:
         // 检查文件md5线程
-        void RunCheckExecelMd5Thread();
-
+        void RunCheckExcelMd5Thread();
 
     protected:
         // 检查所有的文件
-        void CheckAllExecelMd5();
+        void CheckAllExcelMd5();
+
+        // 获得文件名
+        std::string FormatExecelName( const std::string& filename );
 
         // 判断是否Excel文件
         bool IsExcelFile( const std::string& path );

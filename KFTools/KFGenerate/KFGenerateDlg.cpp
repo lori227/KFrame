@@ -177,7 +177,7 @@ void CKFGenerateDlg::InitGenerateDialog()
     InitEventFunction();
 
     // 启动文件检查线程
-    KFThread::CreateThread( _logic, &KFGenerateLogic::RunCheckExecelMd5Thread, __FILE__, __LINE__ );
+    KFThread::CreateThread( _logic, &KFGenerateLogic::RunCheckExcelMd5Thread, __FILE__, __LINE__ );
 }
 
 void CKFGenerateDlg::InitEventFunction()
@@ -544,13 +544,27 @@ void CKFGenerateDlg::OnBnClickedButton6()
         auto filedata = iter.second;
         parselist.push_back( filedata->_name );
     }
-
     _parse->ParseExcels( parselist );
 }
 
 void CKFGenerateDlg::ParseExcelOk( EventData* eventdata )
 {
-    _list_info.AddString( eventdata->_str_param.c_str() );
+    auto strinfo = __FORMAT__( "解析=[{}] 完成", eventdata->_str_param );
+    _list_info.AddString( strinfo.c_str() );
+
+    auto filedata = _logic->_file_list.Find( eventdata->_str_param );
+    if ( filedata != nullptr )
+    {
+        if ( KFUtility::HaveBitMask( _logic->_file_type, ( uint32 )FileType::Server ) )
+        {
+            filedata->_md5_server_repository = filedata->_md5_current;
+        }
+
+        if ( KFUtility::HaveBitMask( _logic->_file_type, ( uint32 )FileType::Client ) )
+        {
+            filedata->_md5_client_repository = filedata->_md5_current;
+        }
+    }
 }
 
 void CKFGenerateDlg::ParseExcelFailed( EventData* eventdata )
@@ -564,6 +578,7 @@ void CKFGenerateDlg::ParseExcelFinish( EventData* eventdata )
     _list_info.AddString( eventdata->_str_param.c_str() );
     _button_generate.EnableWindow( TRUE );
 
+    _logic->SaveExcelXml();
     _version->SaveVersionXml( _logic->_server_xml_path );
     _version->SaveVersionXml( _logic->_client_xml_path );
 }

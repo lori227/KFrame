@@ -171,6 +171,8 @@ namespace KFrame
         virtual uint32 GetEmpty();
         virtual uint32 GetIndex( uint64 value );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 获得配置表属性
+        virtual uint64 GetConfigValue( const std::string& name, uint64 id, uint64 maxvalue = __MAX_UINT64__ );
     protected:
         virtual int32 GetInt32();
         virtual int32 SetInt32( int32 );

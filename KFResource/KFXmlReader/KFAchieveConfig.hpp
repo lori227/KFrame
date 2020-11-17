@@ -1,47 +1,55 @@
-Ôªø#ifndef __KF_ACHIEVE_CONFIG_H__
-#define __KF_ACHIEVE_CONFIG_H__
+#ifndef	__KF_ACHIEVE_CONFIG_H__
+#define	__KF_ACHIEVE_CONFIG_H__
 
 #include "KFConfig.h"
 #include "KFElementConfig.h"
 
 namespace KFrame
 {
-    class KFAchieveSetting : public KFIntSetting
-    {
-    public:
-        // ÂÆåÊàêÊù°‰ª∂
-        KFConditionGroup _complete_condition_group;
+	/////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////
+	class KFAchieveSetting : public KFIntSetting
+	{
+	public:
+		// ÕÍ≥…Ãıº˛
+		DynamicConditionGroupPtr _complete_condition;
 
-        // Â•ñÂä±
-        KFElements _rewards;
-    };
-    /////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////
-    class KFAchieveConfig : public KFConfigT< KFAchieveSetting >, public KFInstance< KFAchieveConfig >
-    {
-    public:
-        KFAchieveConfig()
-        {
-            _file_name = "achieve";
-        }
+		// Ω±¿¯
+		KFElements _reward;
 
-        virtual void LoadAllComplete()
-        {
-            for ( auto& iter : _settings._objects )
-            {
-                auto kfsetting = iter.second;
-                KFElementConfig::Instance()->ParseElement( kfsetting->_rewards, __FUNC_LINE__ );
-            }
-        }
+	};
 
-    protected:
-        // ËØªÂèñÈÖçÁΩÆ
-        virtual void ReadSetting( KFXmlNode& xmlnode, KFAchieveSetting* kfsetting )
-        {
-            kfsetting->_rewards._str_parse = xmlnode.ReadString( "Reward" );
-            kfsetting->_complete_condition_group = xmlnode.ReadConditionGroup( "CompleteCondition" );
-        }
-    };
+	/////////////////////////////////////////////////////////////////////////////////
+	class KFAchieveConfig : public KFConfigT< KFAchieveSetting >, public KFInstance< KFAchieveConfig >
+	{
+	public:
+		KFAchieveConfig()
+		{
+			_key_name = "id";
+			_file_name = "achieve";
+		}
+
+		~KFAchieveConfig() = default;
+
+		virtual void LoadAllComplete()
+		{
+			for ( auto& iter : _settings._objects )
+			{
+				auto kfsetting = iter.second;
+
+				KFElementConfig::Instance()->ParseElement( kfsetting->_reward, _file_name.c_str(), kfsetting->_row );
+			}
+		}
+
+	protected:
+		virtual void ReadSetting( KFXmlNode& xmlnode, KFAchieveSetting* kfsetting )
+		{
+			kfsetting->_complete_condition = xmlnode.ReadDynamicConditionGroup( "completecondition", true );
+			kfsetting->_reward._str_parse = xmlnode.ReadString( "reward", true );
+		}
+
+	};
+
+	/////////////////////////////////////////////////////////////////////////////////
 }
-
 #endif

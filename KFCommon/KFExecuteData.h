@@ -29,8 +29,7 @@ namespace KFrame
         // 动态数值
         uint64 _calc_value = 0u;
     };
-
-
+    typedef std::shared_ptr< KFExecuteData > ExecuteDataPtr;
 }
 
 #endif

@@ -37,6 +37,7 @@ namespace KFrame
                 auto file = node.ReadString( "name" );
                 auto verson = node.ReadString( "version" );
                 kfversion->AddVersion( file, verson );
+
                 node.NextNode();
             }
         }
@@ -57,7 +58,6 @@ namespace KFrame
         {
             return;
         }
-
 
         auto filename = __FORMAT__( "{}/version.xml", path );
         std::ofstream xmlfile( filename );

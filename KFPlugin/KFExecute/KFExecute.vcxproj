@@ -12,12 +12,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFExecuteConfig.cpp" />
     <ClCompile Include="KFExecuteModule.cpp" />
     <ClCompile Include="KFExecutePlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFExecuteConfig.hpp" />
+    <ClInclude Include="..\..\KFResource\KFXmlReader\KFExecuteConfig.hpp" />
     <ClInclude Include="KFExecuteInterface.h" />
     <ClInclude Include="KFExecuteModule.hpp" />
     <ClInclude Include="KFExecutePlugin.hpp" />

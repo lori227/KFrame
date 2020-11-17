@@ -37,7 +37,7 @@ namespace KFrame
                 continue;
             }
 
-            if ( kfsetting->_condition_group._ids.empty() )
+            if ( kfsetting->_unlock_condition->_ids.empty() )
             {
                 UnlockPlayerData( player, kfsetting, kfdatarecord );
                 continue;
@@ -52,7 +52,7 @@ namespace KFrame
 
             kfunlock = player->CreateData( kfunlockrecord );
             auto kfconditionobject = kfunlock->Find( __STRING__( conditions ) );
-            _kf_condition->AddCondition( player, kfconditionobject, kfsetting->_condition_group );
+            _kf_condition->AddCondition( player, kfconditionobject, kfsetting->_unlock_condition );
             kfunlockrecord->Add( kfsetting->_id, kfunlock );
 
             // 判断条件
@@ -78,7 +78,7 @@ namespace KFrame
 
     bool KFUnlockModule::CheckNeedUnlock( KFEntity* player, const KFUnlockSetting* kfsetting, KFData* kfdatarecord )
     {
-        auto kfdata = kfdatarecord->Find( kfsetting->_data_id );
+        auto kfdata = kfdatarecord->Find( kfsetting->_data_key );
         if ( kfsetting->_child_name.empty() )
         {
             if ( kfdata != nullptr )
@@ -99,7 +99,7 @@ namespace KFrame
 
     void KFUnlockModule::UnlockPlayerData( KFEntity* player, const KFUnlockSetting* kfsetting, KFData* kfdatarecord )
     {
-        auto kfdata = kfdatarecord->Find( kfsetting->_data_id );
+        auto kfdata = kfdatarecord->Find( kfsetting->_data_key );
         if ( kfsetting->_child_name.empty() )
         {
             if ( kfdata == nullptr )
@@ -107,7 +107,7 @@ namespace KFrame
                 kfdata = player->CreateData( kfdatarecord );
                 kfdata->Set( __STRING__( unlock ), KFGlobal::Instance()->_real_time );
                 kfdata->Set( kfdatarecord->_data_setting->_value_key_name, kfsetting->_data_value );
-                player->AddRecord( kfdatarecord, kfsetting->_data_id, kfdata );
+                player->AddRecord( kfdatarecord, kfsetting->_data_key, kfdata );
             }
         }
         else

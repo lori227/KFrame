@@ -25,8 +25,13 @@
 		<type name="uint32map" cpp="UInt32Map" cppfunction="ReadUInt32Map" cppextend="" csharp="string" lua="local"/>
 		<type name="uint32vector" cpp="UInt32Vector" cppfunction="ReadUInt32Vector" cppextend="" csharp="string" lua="local"/>
 		<type name="date" cpp="KFDate" cppfunction="ReadDate" cppextend="" csharp="string" lua="local"/>
-		<type name="staticcondition" cpp="KFConditions" cppfunction="ReadStaticCondition" cppextend="" csharp="string" lua="local"/>
-		<type name="conditiongroup" cpp="KFConditionGroup" cppfunction="ReadConditionGroup" cppextend="" csharp="string" lua="local"/>
+		<type name="staticcondition" cpp="StaticConditionsPtr" cppfunction="ReadStaticConditions" cppextend="" csharp="string" lua="local"/>
+		<type name="staticconditionList" cpp="StaticConditionListPtr" cppfunction="ReadStaticConditionList" cppextend="" csharp="string" lua="local"/>
+		<type name="dynamiccondition" cpp="DynamicConditionGroupPtr" cppfunction="ReadDynamicConditionGroup" cppextend="" csharp="string" lua="local"/>
+		<type name="operatetype" cpp="uint32" cppfunction="ReadOperateType" cppextend="" csharp="string" lua="local"/>
+		<type name="checktype" cpp="uint32" cppfunction="ReadCheckType" cppextend="" csharp="string" lua="local"/>
+		<type name="conditiondefine" cpp="KFConditionDefineOption" cppfunction="ReadString" cppextend="._str_condition" csharp="string" lua="local"/>
+		<type name="execute" cpp="ExecuteDataPtr" cppfunction="ReadExecuteData" cppextend="" csharp="string" lua="local"/>
 	</types>
 
 </config>

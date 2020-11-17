@@ -11,11 +11,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="KFAnalysis.cpp" />
+    <ClCompile Include="KFStaticAnalysis.cpp" />
     <ClCompile Include="KFAppId.cpp" />
     <ClCompile Include="KFClock.cpp" />
     <ClCompile Include="KFCompress.cpp" />
-    <ClCompile Include="KFCondition.cpp" />
+    <ClCompile Include="KFDynamicCondition.cpp" />
+    <ClCompile Include="KFStaticCondition.cpp" />
     <ClCompile Include="KFConHash.cpp" />
     <ClCompile Include="KFConvert.cpp" />
     <ClCompile Include="KFCrypto.cpp" />
@@ -33,11 +34,12 @@
     <ClCompile Include="KFXml.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFAnalysis.hpp" />
+    <ClInclude Include="KFStaticAnalysis.hpp" />
     <ClInclude Include="KFAppId.h" />
     <ClInclude Include="KFClock.h" />
     <ClInclude Include="KFCompress.h" />
-    <ClInclude Include="KFCondition.h" />
+    <ClInclude Include="KFDynamicCondition.h" />
+    <ClInclude Include="KFStaticCondition.h" />
     <ClInclude Include="KFConHash.h" />
     <ClInclude Include="KFConvert.h" />
     <ClInclude Include="KFCrypto.h" />

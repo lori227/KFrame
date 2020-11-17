@@ -139,7 +139,7 @@
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <PostBuildEvent>
-      <Command>copy /Y "$(TargetPath)" "..\..\_resource\excel\_generated.exe"</Command>
+      <Command>copy /Y "$(TargetPath)" "..\..\_resource\excel\generated.exe"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -198,7 +198,7 @@
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <PostBuildEvent>
-      <Command>copy /Y "$(TargetPath)" "..\..\_resource\excel\_generate.exe"</Command>
+      <Command>copy /Y "$(TargetPath)" "..\..\_resource\excel\generate.exe"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

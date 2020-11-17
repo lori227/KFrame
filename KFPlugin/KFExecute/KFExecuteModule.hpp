@@ -14,7 +14,7 @@
 #include "KFKernel/KFKernelInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFDeployClient/KFDeployClientInterface.h"
-#include "KFExecuteConfig.hpp"
+#include "KFXmlReader/KFExecuteConfig.hpp"
 
 namespace KFrame
 {
@@ -35,8 +35,8 @@ namespace KFrame
         virtual bool Execute( KFEntity* player, const UInt32Vector& executelist, const char* function, uint32 line );
         virtual bool Execute( KFEntity* player, const UInt32Vector& executelist, const std::string& modulename, uint64 moduleid, const char* function, uint32 line );
 
-        virtual bool Execute( KFEntity* player, const KFExecuteData* executedata, const char* function, uint32 line );
-        virtual bool Execute( KFEntity* player, const KFExecuteData* executedata, const std::string& modulename, uint64 moduleid, const char* function, uint32 line );
+        virtual bool Execute( KFEntity* player, const ExecuteDataPtr& executedata, const char* function, uint32 line );
+        virtual bool Execute( KFEntity* player, const ExecuteDataPtr& executedata, const std::string& modulename, uint64 moduleid, const char* function, uint32 line );
 
     protected:
         virtual void BindExecuteFunction( KFModule* module, const std::string& name, KFExecuteFunction& function );

@@ -16,7 +16,7 @@ namespace KFrame
         uint32 _drop_data_id = 0u;
 
         // 条件
-        KFConditions _conditions;
+        StaticConditionsPtr _conditions;
 
         // 掉落数据配置
         const KFDropDataSetting* _drop_data_setting = nullptr;
@@ -71,7 +71,7 @@ namespace KFrame
         void InitDropDataSetting( KFDropSetting* kfsetting, KFDropGroupWeight* dropgroupweight );
 
         // 初始化掉落条件
-        void InitDropConditonSetting( KFDropSetting* kfsetting, KFExpression* kfexpression );
+        void InitDropConditonSetting( KFDropSetting* kfsetting, KFStaticConditionExpression* kfexpression );
     };
 }
 

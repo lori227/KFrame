@@ -5,25 +5,13 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////
     void KFDropGroupConfig::ReadSetting( KFXmlNode& xmlnode, KFDropSetting* kfsetting )
     {
-        if ( !kfsetting->_is_drop_count )
-        {
-            kfsetting->_is_drop_count = xmlnode.ReadBoolen( "DropCount", true );
-        }
-        if ( !kfsetting->_is_exclude )
-        {
-            kfsetting->_is_exclude = xmlnode.ReadBoolen( "Exclude", true );
-        }
-        if ( kfsetting->_condition_type == 0u )
-        {
-            kfsetting->_condition_type = xmlnode.ReadUInt32( "ConditionType" );
-        }
-        if ( kfsetting->_rand_type == 0u )
-        {
-            kfsetting->_rand_type = xmlnode.ReadUInt32( "RandType" );
-        }
+        kfsetting->_is_drop_count = xmlnode.ReadBoolen( "dropcount", true );
+        kfsetting->_is_exclude = xmlnode.ReadBoolen( "exclude", true );
+        kfsetting->_condition_type = xmlnode.ReadUInt32( "conditiontype" );
+        kfsetting->_rand_type = xmlnode.ReadUInt32( "randtype" );
 
         KFDropGroupWeight* kfdropweight = nullptr;
-        auto weight = xmlnode.ReadUInt32( "Weight", true );
+        auto weight = xmlnode.ReadUInt32( "weight", true );
 
         if ( weight == KFRandEnum::TenThousand )
         {
@@ -37,11 +25,11 @@ namespace KFrame
             kfdropweight = kfsetting->_rand_list.Create( ++id, weight );
         }
 
-        kfdropweight->_is_clear_var = xmlnode.ReadBoolen( "Reset", true );
-        kfdropweight->_drop_data_id = xmlnode.ReadUInt32( "DropDataId", true );
+        kfdropweight->_is_clear_var = xmlnode.ReadBoolen( "reset", true );
+        kfdropweight->_drop_data_id = xmlnode.ReadUInt32( "dropdataid", true );
 
         // 条件
-        xmlnode.ReadStaticCondition( kfdropweight->_conditions, "Condition", true );
+        kfdropweight->_conditions = xmlnode.ReadStaticConditions( "condition", true );
     }
 
     void KFDropGroupConfig::LoadAllComplete()
@@ -73,14 +61,14 @@ namespace KFrame
         }
 
         // 判断掉落条件
-        for ( auto kfcondition : dropgroupweight->_conditions._condition_list )
+        for ( auto kfcondition : dropgroupweight->_conditions->_condition_list )
         {
             InitDropConditonSetting( kfsetting, kfcondition->_left );
             InitDropConditonSetting( kfsetting, kfcondition->_right );
         }
     }
 
-    void KFDropGroupConfig::InitDropConditonSetting( KFDropSetting* kfsetting, KFExpression* kfexpression )
+    void KFDropGroupConfig::InitDropConditonSetting( KFDropSetting* kfsetting, KFStaticConditionExpression* kfexpression )
     {
         for ( auto kfdata : kfexpression->_data_list )
         {
@@ -89,7 +77,7 @@ namespace KFrame
                 continue;
             }
 
-            auto kfvariable = ( KFConditionVariable* )kfdata;
+            auto kfvariable = ( KFStaticConditionVariable* )kfdata;
             if ( kfvariable->_data_name == __STRING__( drop ) )
             {
                 kfvariable->_parent_name = __STRING__( drop );

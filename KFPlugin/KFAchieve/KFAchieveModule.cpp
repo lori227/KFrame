@@ -41,7 +41,7 @@ namespace KFrame
 
             kfachieve = player->CreateData( kfachieverecord );
             auto kfconditionobject = kfachieve->Find( __STRING__( conditions ) );
-            _kf_condition->AddCondition( player, kfconditionobject, kfsetting->_complete_condition_group );
+            _kf_condition->AddCondition( player, kfconditionobject, kfsetting->_complete_condition );
 
             // 判断条件
             auto complete = _kf_condition->InitCondition( player, kfconditionobject, KFConditionEnum::LimitNull, false );
@@ -92,7 +92,7 @@ namespace KFrame
         player->UpdateObject( kfachieve, __STRING__( status ), KFEnum::Set, KFMsg::ReceiveStatus );
 
         // 添加奖励
-        player->AddElement( &kfsetting->_rewards, _default_multiple, __STRING__( achieve ), kfsetting->_id, __FUNC_LINE__ );
+        player->AddElement( &kfsetting->_reward, _default_multiple, __STRING__( achieve ), kfsetting->_id, __FUNC_LINE__ );
         return KFMsg::AchieveReceiveOk;
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////

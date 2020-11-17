@@ -146,7 +146,6 @@ namespace KFrame
         virtual void SyncRemoveDataFromServer( KFData* kfobject, const KFMsg::PBObject* pbobject ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        virtual uint64 GetConfigValue( const std::string& name, uint64 id, uint64 maxvalue = __MAX_UINT64__ ) = 0;
 
         // status
         virtual uint32 GetStatus() = 0;

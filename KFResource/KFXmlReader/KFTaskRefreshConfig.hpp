@@ -40,7 +40,7 @@ namespace KFrame
         KFElements _receive_cost;
 
         // 前置条件
-        KFConditions _conditions;
+        KFStaticConditions _conditions;
     };
 
     class KFTaskRefreshTimeData

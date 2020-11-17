@@ -1,0 +1,9 @@
+<root version="b23436e3e9f4daa80e38a6dcab7724c8">
+	<node row="8" id="1" condition="costmoney" donetype=">=" donevalue="100"/>
+	<node row="9" id="2" condition="owngrade" donetype=">=" donevalue="85"/>
+	<node row="10" id="3" condition="owngrade" donetype=">=" donevalue="510"/>
+	<node row="11" id="4" condition="costmoney" donetype=">=" donevalue="2000"/>
+	<node row="12" id="5" condition="totalsignin" donetype=">=" donevalue="1"/>
+	<node row="13" id="6" condition="totalsignin" donetype=">=" donevalue="4"/>
+	<node row="14" id="7" condition="totalsignin" donetype=">=" donevalue="7"/>
+</root>

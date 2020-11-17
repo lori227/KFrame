@@ -12,12 +12,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFConditionConfig.cpp" />
     <ClCompile Include="KFConditionModule.cpp" />
     <ClCompile Include="KFConditionPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFConditionConfig.hpp" />
+    <ClInclude Include="..\..\KFResource\KFXmlReader\KFConditionConfig.hpp" />
+    <ClInclude Include="..\..\KFResource\KFXmlReader\KFConditionDefineConfig.hpp" />
     <ClInclude Include="KFConditionInterface.h" />
     <ClInclude Include="KFConditionModule.hpp" />
     <ClInclude Include="KFConditionPlugin.hpp" />

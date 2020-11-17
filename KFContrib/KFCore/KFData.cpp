@@ -386,4 +386,10 @@ namespace KFrame
 
         return false;
     }
+
+    // 获得配置表属性
+    uint64 KFData::GetConfigValue( const std::string& name, uint64 id, uint64 maxvalue )
+    {
+        return 0u;
+    }
 }

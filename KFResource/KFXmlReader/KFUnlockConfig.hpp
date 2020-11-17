@@ -1,49 +1,56 @@
-ï»¿#ifndef __KF_UNLOCK_CONFIG_H__
-#define __KF_UNLOCK_CONFIG_H__
+#ifndef	__KF_UNLOCK_CONFIG_H__
+#define	__KF_UNLOCK_CONFIG_H__
 
 #include "KFConfig.h"
 
 namespace KFrame
 {
-    class KFUnlockSetting : public KFIntSetting
-    {
-    public:
-        // å±æ€§
-        std::string _data_name;
+	/////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////
+	class KFUnlockSetting : public KFIntSetting
+	{
+	public:
+		// Êı¾İÃû
+		std::string _data_name;
 
-        // key
-        uint32 _data_id;
+		// Êı¾İid
+		uint32 _data_key = 0u;
 
-        // æ•°å€¼
-        uint32 _data_value;
+		// ×ÓÊı¾İÃû³Æ
+		std::string _child_name;
 
-        // å­å±æ€§
-        std::string _child_name;
+		// Êı¾İÖµ
+		uint32 _data_value = 0u;
 
-        // å®Œæˆæ¡ä»¶
-        KFConditionGroup _condition_group;
-    };
+		// ½âËøÌõ¼ş
+		DynamicConditionGroupPtr _unlock_condition;
 
-    class KFUnlockConfig : public KFConfigT< KFUnlockSetting >, public KFInstance< KFUnlockConfig >
-    {
-    public:
-        KFUnlockConfig()
-        {
-            _file_name = "unlock";
-        }
+	};
 
-    protected:
+	/////////////////////////////////////////////////////////////////////////////////
+	class KFUnlockConfig : public KFConfigT< KFUnlockSetting >, public KFInstance< KFUnlockConfig >
+	{
+	public:
+		KFUnlockConfig()
+		{
+			_key_name = "id";
+			_file_name = "unlock";
+		}
 
-        // è¯»å–é…ç½®
-        virtual void ReadSetting( KFXmlNode& xmlnode, KFUnlockSetting* kfsetting )
-        {
-            kfsetting->_data_name = xmlnode.ReadString( "DataName" );
-            kfsetting->_data_id = xmlnode.ReadUInt32( "DataKey" );
-            kfsetting->_data_value = xmlnode.ReadUInt32( "DataValue" );
-            kfsetting->_child_name = xmlnode.ReadString( "ChildName" );
-            kfsetting->_condition_group = xmlnode.ReadConditionGroup( "UnLockCondition" );
-        }
-    };
+		~KFUnlockConfig() = default;
+
+	protected:
+		virtual void ReadSetting( KFXmlNode& xmlnode, KFUnlockSetting* kfsetting )
+		{
+			kfsetting->_data_name = xmlnode.ReadString( "dataname", true );
+			kfsetting->_data_key = xmlnode.ReadUInt32( "datakey", true );
+			kfsetting->_child_name = xmlnode.ReadString( "childname", true );
+			kfsetting->_data_value = xmlnode.ReadUInt32( "datavalue", true );
+			kfsetting->_unlock_condition = xmlnode.ReadDynamicConditionGroup( "unlockcondition", true );
+		}
+
+	};
+
+	/////////////////////////////////////////////////////////////////////////////////
 }
-
 #endif

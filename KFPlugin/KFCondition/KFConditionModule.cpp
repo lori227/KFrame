@@ -3,7 +3,24 @@
 
 namespace KFrame
 {
-    bool KFConditionModule::CheckStaticCondition( KFEntity* kfentity, const KFConditions* kfconditions )
+
+#define __CHECK_CONDITION_RESULT__( linktype, result )\
+    if ( linktype == KFEnum::And  )\
+    {\
+        if ( !result )\
+        {\
+            return false;\
+        }\
+    }\
+    else if ( linktype == KFEnum::Or )\
+    {\
+        if ( result )\
+        {\
+            return true;\
+        }\
+    }\
+
+    bool KFConditionModule::CheckStaticCondition( KFData* kfobject, const StaticConditionsPtr& kfconditions )
     {
         if ( !kfconditions->IsValid() )
         {
@@ -20,38 +37,32 @@ namespace KFrame
 
         // 取出第一个
         auto conditionindex = 0u;
-        auto result = CheckStaticCondition( kfentity, kfconditions->_condition_list[ conditionindex++ ] );
+        auto result = CheckStaticCondition( kfobject, kfconditions->_condition_list[ conditionindex++ ] );
         for ( auto i = 0u; i < conditioncount && i < linkcount; ++i )
         {
             auto linktype = kfconditions->_link_type[ i ];
-            auto ok = CheckStaticCondition( kfentity, kfconditions->_condition_list[ conditionindex + i ] );
-            switch ( linktype )
-            {
-            case KFEnum::And:
-                result &= ok;
-                break;
-            case KFEnum::Or:
-                result |= ok;
-                break;
-            }
+            __CHECK_CONDITION_RESULT__( linktype, result );
+
+            auto ok = CheckStaticCondition( kfobject, kfconditions->_condition_list[ conditionindex + i ] );
+            __CHECK_CONDITION_RESULT__( linktype, ok );
         }
 
         return result;
     }
 
-    bool KFConditionModule::CheckStaticCondition( KFEntity* kfentity, const KFCondition* kfcondition )
+    bool KFConditionModule::CheckStaticCondition( KFData* kfobject, const KFStaticCondition* kfcondition )
     {
         // 计算左值
-        auto leftvalue = CalcExpression( kfentity, kfcondition->_left );
+        auto leftvalue = CalcExpression( kfobject, kfcondition->_left );
 
         // 计算右值
-        auto rightvalue = CalcExpression( kfentity, kfcondition->_right );
+        auto rightvalue = CalcExpression( kfobject, kfcondition->_right );
 
         // 判断左有值
         return KFUtility::CheckOperate( leftvalue, kfcondition->_check_type, rightvalue );
     }
 
-    uint32 KFConditionModule::CalcExpression( KFEntity* kfentity, const KFExpression* kfexpression )
+    uint32 KFConditionModule::CalcExpression( KFData* kfobject, const KFStaticConditionExpression* kfexpression )
     {
         if ( kfexpression->_data_list.empty() )
         {
@@ -63,47 +74,47 @@ namespace KFrame
 
         // 取出第一个
         auto dataindex = 0u;
-        auto result = CalcConditionData( kfentity, kfexpression->_data_list[ dataindex++ ] );
+        auto result = CalcConditionData( kfobject, kfexpression->_data_list[ dataindex++ ] );
         for ( auto i = 0u; i < datacount && i < operatorcount; ++i )
         {
             auto operatortype = kfexpression->_operator_list[ i ];
-            auto value = CalcConditionData( kfentity, kfexpression->_data_list[ dataindex + i ] );
+            auto value = CalcConditionData( kfobject, kfexpression->_data_list[ dataindex + i ] );
             result = KFUtility::Operate( operatortype, result, value );
         }
 
         return result;
     }
 
-    uint32 KFConditionModule::CalcConditionData( KFEntity* kfentity, const KFConditionAbstract* kfconditiondata )
+    uint32 KFConditionModule::CalcConditionData( KFData* kfobject, const KFStaticConditionAbstract* kfconditiondata )
     {
         auto result = 0u;
         if ( kfconditiondata->IsConstant() )
         {
-            auto kfconstant = ( const KFConditionConstant* )kfconditiondata;
+            auto kfconstant = ( const KFStaticConditionConstant* )kfconditiondata;
             result = kfconstant->_value;
         }
         else if ( kfconditiondata->IsVariable() )
         {
-            auto kfvariable = ( const KFConditionVariable* )kfconditiondata;
+            auto kfvariable = ( const KFStaticConditionVariable* )kfconditiondata;
 
             if ( !kfvariable->_parent_name.empty() )
             {
                 if ( kfvariable->_data_id == 0u )
                 {
-                    result = kfentity->Get<uint32>( kfvariable->_parent_name, kfvariable->_data_name );
+                    result = kfobject->Get<uint32>( kfvariable->_parent_name, kfvariable->_data_name );
                 }
                 else
                 {
-                    result = kfentity->Get<uint32>( kfvariable->_parent_name, kfvariable->_data_id, kfvariable->_data_name );
+                    result = kfobject->Get<uint32>( kfvariable->_parent_name, kfvariable->_data_id, kfvariable->_data_name );
                 }
             }
             else if ( kfvariable->_data_id == 0u )
             {
-                result = kfentity->Get<uint32>( kfvariable->_data_name );
+                result = kfobject->Get<uint32>( kfvariable->_data_name );
             }
             else
             {
-                result = kfentity->GetConfigValue( kfvariable->_data_name, kfvariable->_data_id );
+                result = kfobject->GetConfigValue( kfvariable->_data_name, kfvariable->_data_id );
             }
         }
 
@@ -114,73 +125,25 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFConditionModule::CheckConditionLimit( KFEntity* kfentity, KFData* kfdata, const KFConditionSetting* kfsetting )
+    bool KFConditionModule::CheckStaticConditionLimit( KFData* kfobject, const KFConditionSetting* kfsetting )
     {
-        if ( kfsetting->_limits.empty() )
+        if ( kfsetting->_static_condition_limit->_conditions_list.empty() )
         {
             return true;
         }
 
-        for ( auto& limits : kfsetting->_limits )
+        auto result = ( kfsetting->_static_condition_limit->_check_type == KFEnum::And ) ? true : false;
+        for ( auto& limits : kfsetting->_static_condition_limit->_conditions_list )
         {
-            bool limitok = false;
-            switch ( limits._link_type )
-            {
-            case KFEnum::Or:
-            {
-                for ( auto& limit : limits._limit )
-                {
-                    auto kfchild = kfdata->Find( limit._data_name );
-                    if ( kfchild == nullptr )
-                    {
-                        continue;
-                    }
-
-                    auto value = kfchild->Get();
-                    auto ok = KFUtility::CheckOperate( value, limit._operate, limit._data_value );
-                    if ( ok )
-                    {
-                        limitok = true;
-                        break;
-                    }
-                }
-            }
-            break;
-            case KFEnum::And:
-            {
-                limitok = true;
-                for ( auto& limit : limits._limit )
-                {
-                    auto kfchild = kfdata->Find( limit._data_name );
-                    if ( kfchild == nullptr )
-                    {
-                        continue;
-                    }
-
-                    auto value = kfchild->Get();
-                    auto ok = KFUtility::CheckOperate( value, limit._operate, limit._data_value );
-                    if ( !ok )
-                    {
-                        limitok = false;
-                        break;
-                    }
-                }
-            }
-            break;
-            }
-
-            if ( !limitok )
-            {
-                return false;
-            }
+            auto ok = CheckStaticCondition( kfobject, limits );
+            __CHECK_CONDITION_RESULT__( kfsetting->_static_condition_limit->_check_type, ok );
         }
-
-        return true;
+        return result;
     }
 
-    void KFConditionModule::AddCondition( KFEntity* kfentity, KFData* kfconditionobject, const KFConditionGroup& conditiongroup )
+    void KFConditionModule::AddCondition( KFEntity* kfentity, KFData* kfconditionobject, const DynamicConditionGroupPtr& conditiongroup )
     {
-        if ( conditiongroup._ids.empty() )
+        if ( conditiongroup->_ids.empty() )
         {
             return;
         }
@@ -191,8 +154,8 @@ namespace KFrame
             return;
         }
 
-        kfconditionobject->Set( __STRING__( type ), conditiongroup._type );
-        for ( auto conditionid : conditiongroup._ids )
+        kfconditionobject->Set( __STRING__( type ), conditiongroup->_type );
+        for ( auto conditionid : conditiongroup->_ids )
         {
             auto kfsetting = KFConditionConfig::Instance()->FindSetting( conditionid );
             if ( kfsetting == nullptr )
@@ -205,7 +168,7 @@ namespace KFrame
             auto kfcondition = kfentity->CreateData( kfconditionrecord );
 
             // 前置条件
-            AddCondition( kfentity, kfcondition, kfsetting->_limit_condition_group );
+            AddCondition( kfentity, kfcondition, kfsetting->_dynamic_condition_limit );
 
             kfcondition->Set( __STRING__( id ), conditionid );
             kfconditionrecord->Add( conditionid, kfcondition );
@@ -289,14 +252,14 @@ namespace KFrame
             return KFConditionEnum::UpdateDone;
         }
 
-        if ( kfsetting->_condition_define == nullptr ||
-                kfsetting->_condition_define->_init_calc_type == KFConditionEnum::InitNull )
+        if ( kfsetting->_condition._condition_define == nullptr ||
+                kfsetting->_condition._condition_define->_init_calc_type == KFConditionEnum::InitNull )
         {
             return KFConditionEnum::UpdateFailed;
         }
 
         // 地点限制
-        if ( KFUtility::HaveBitMask<uint32>( kfsetting->_limit_mask, KFConditionEnum::LimitPlace ) )
+        if ( KFUtility::HaveBitMask<uint32>( kfsetting->_place_limit, KFConditionEnum::LimitPlace ) )
         {
             if ( KFUtility::HaveBitMask<uint32>( limitmask, KFConditionEnum::LimitPlace ) )
             {
@@ -305,7 +268,7 @@ namespace KFrame
         }
 
         auto conditionvalue = 0u;
-        switch ( kfsetting->_condition_define->_init_calc_type )
+        switch ( kfsetting->_condition._condition_define->_init_calc_type )
         {
         case KFConditionEnum::InitCalcCount:
             conditionvalue = InitCalcRecordCount( kfentity, kfcondition, kfsetting );
@@ -368,16 +331,16 @@ namespace KFrame
     uint32 KFConditionModule::InitCalcRecordCount( KFEntity* kfentity, KFData* kfcondition, const KFConditionSetting* kfsetting )
     {
         auto recordcount = 0u;
-        auto& kfrecords = FindRecordList( kfentity, kfsetting->_condition_define->_parent_name );
+        auto& kfrecords = FindRecordList( kfentity, kfsetting->_condition._condition_define->_parent_name );
         for ( auto kfrecord : kfrecords )
         {
             for ( auto kfchild = kfrecord->First(); kfchild != nullptr; kfchild = kfrecord->Next() )
             {
-                auto ok = CheckConditionLimit( kfentity, kfchild, kfsetting );
+                auto ok = CheckStaticConditionLimit( kfchild, kfsetting );
                 if ( ok )
                 {
                     ++recordcount;
-                    SaveConditionDataUUid( kfentity, kfcondition, kfchild, kfsetting->_condition_define );
+                    SaveConditionDataUUid( kfentity, kfcondition, kfchild, kfsetting->_condition._condition_define );
                 }
             }
         }
@@ -389,15 +352,15 @@ namespace KFrame
     uint32 KFConditionModule::InitCalcRecordValue( KFEntity* kfentity, KFData* kfcondition, const KFConditionSetting* kfsetting )
     {
         auto recordvalue = 0u;
-        auto& kfrecords = FindRecordList( kfentity, kfsetting->_condition_define->_parent_name );
+        auto& kfrecords = FindRecordList( kfentity, kfsetting->_condition._condition_define->_parent_name );
         for ( auto kfrecord : kfrecords )
         {
             for ( auto kfchild = kfrecord->First(); kfchild != nullptr; kfchild = kfrecord->Next() )
             {
-                auto ok = CheckConditionLimit( kfentity, kfchild, kfsetting );
+                auto ok = CheckStaticConditionLimit( kfchild, kfsetting );
                 if ( ok )
                 {
-                    SaveConditionDataUUid( kfentity, kfcondition, kfcondition, kfsetting->_condition_define );
+                    SaveConditionDataUUid( kfentity, kfcondition, kfcondition, kfsetting->_condition._condition_define );
                     recordvalue += kfchild->Get<uint32>( kfchild->_data_setting->_value_key_name );
                 }
             }
@@ -408,46 +371,46 @@ namespace KFrame
 
     uint32 KFConditionModule::InitCalcRecordExist( KFEntity* kfentity, KFData* kfcondition, const KFConditionSetting* kfsetting )
     {
-        auto& kfrecords = FindRecordList( kfentity, kfsetting->_condition_define->_parent_name );
-        for ( auto kfrecord : kfrecords )
-        {
-            for ( auto& limits : kfsetting->_limits )
-            {
-                for ( auto& limit : limits._limit )
-                {
-                    if ( limit._data_name == __STRING__( id ) )
-                    {
-                        auto kfdata = kfrecord->Find( limit._data_value );
-                        if ( kfdata != nullptr )
-                        {
-                            return 1u;
-                        }
-                    }
-                }
-            }
-        }
+        auto& kfrecords = FindRecordList( kfentity, kfsetting->_condition._condition_define->_parent_name );
+        //for ( auto kfrecord : kfrecords )
+        //{
+        //    for ( auto& limits : kfsetting->_static_condition_limit->_conditions_list )
+        //    {
+        //        for ( auto& limit : limits._limit )
+        //        {
+        //            if ( limit._data_name == __STRING__( id ) )
+        //            {
+        //                auto kfdata = kfrecord->Find( limit._data_value );
+        //                if ( kfdata != nullptr )
+        //                {
+        //                    return 1u;
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
 
         return 0u;
     }
 
     uint32 KFConditionModule::InitCalcGetValue( KFEntity* kfentity, KFData* kfcondition, const KFConditionSetting* kfsetting )
     {
-        if ( kfsetting->_condition_define->_parent_name == __STRING__( player ) )
+        if ( kfsetting->_condition._condition_define->_parent_name == __STRING__( player ) )
         {
-            return kfentity->Get<uint32>( kfsetting->_condition_define->_data_name );
+            return kfentity->Get<uint32>( kfsetting->_condition._condition_define->_data_name );
         }
 
         // 集合
         auto recordvalue = 0u;
-        auto& kfrecords = FindRecordList( kfentity, kfsetting->_condition_define->_parent_name );
+        auto& kfrecords = FindRecordList( kfentity, kfsetting->_condition._condition_define->_parent_name );
         for ( auto kfrecord : kfrecords )
         {
             for ( auto kfchild = kfrecord->First(); kfchild != nullptr; kfchild = kfrecord->Next() )
             {
-                auto ok = CheckConditionLimit( kfentity, kfchild, kfsetting );
+                auto ok = CheckStaticConditionLimit( kfchild, kfsetting );
                 if ( ok )
                 {
-                    recordvalue = kfchild->Get<uint32>( kfsetting->_condition_define->_data_name );
+                    recordvalue = kfchild->Get<uint32>( kfsetting->_condition._condition_define->_data_name );
                     break;
                 }
             }
@@ -460,7 +423,7 @@ namespace KFrame
     {
         auto conditionid = kfcondition->Get( kfcondition->_data_setting->_config_key_name );
         auto kfsetting = KFConditionConfig::Instance()->FindSetting( conditionid );
-        if ( kfsetting == nullptr || kfsetting->_condition_define == nullptr )
+        if ( kfsetting == nullptr || kfsetting->_condition._condition_define == nullptr )
         {
             _kf_display->SendToClient( kfentity, KFMsg::ConditionSettingError, conditionid );
             return KFConditionEnum::UpdateFailed;
@@ -512,7 +475,7 @@ namespace KFrame
     }\
     auto operatetype = 0u;\
     auto operatevalue = 0u;\
-    if ( kfsetting->_clean_define != nullptr )\
+    if ( kfsetting->_clean._condition_define != nullptr )\
     {\
         std::tie( operatetype, operatevalue ) = cleanfunction;\
         if ( operatetype != 0u )\
@@ -523,11 +486,11 @@ namespace KFrame
     }\
 
 #define __UPDATE_CONDITION__( updatefunction, limitdata )\
-    if ( kfsetting->_condition_define == nullptr )\
+    if ( kfsetting->_condition._condition_define == nullptr )\
     {\
         return KFConditionEnum::UpdateFailed;\
     }\
-    if ( !KFUtility::HaveBitMask<uint32>( kfsetting->_limit_mask, KFConditionEnum::LimitStatus ) )\
+    if ( !KFUtility::HaveBitMask<uint32>( kfsetting->_place_limit, KFConditionEnum::LimitStatus ) )\
     {   \
         auto conditionvalue = kfcondition->Get<uint32>( kfcondition->_data_setting->_value_key_name ); \
         if ( KFUtility::CheckOperate( conditionvalue, kfsetting->_done_type, kfsetting->_done_value ) )\
@@ -535,14 +498,14 @@ namespace KFrame
             return KFConditionEnum::UpdateDone;\
         }\
     }\
-    if ( KFUtility::HaveBitMask<uint32>( kfsetting->_limit_mask, KFConditionEnum::LimitPlace ) )\
+    if ( KFUtility::HaveBitMask<uint32>( kfsetting->_place_limit, KFConditionEnum::LimitPlace ) )\
     {   \
         if ( KFUtility::HaveBitMask<uint32>( limitmask, KFConditionEnum::LimitPlace ) )\
         {   \
             return KFConditionEnum::UpdateFailed; \
         }\
     }\
-    if ( CheckUUidInConditionData( kfentity, kfcondition, limitdata, kfsetting->_condition_define ) )\
+    if ( CheckUUidInConditionData( kfentity, kfcondition, limitdata, kfsetting->_condition._condition_define ) )\
     {\
         return KFConditionEnum::UpdateOk; \
     }\
@@ -551,11 +514,11 @@ namespace KFrame
     {   \
         return KFConditionEnum::UpdateFailed;\
     }\
-    if ( !CheckConditionLimit( kfentity, limitdata, kfsetting ) )\
+    if ( !CheckStaticConditionLimit( limitdata, kfsetting ) )\
     {   \
         return KFConditionEnum::UpdateFailed; \
     }\
-    SaveConditionDataUUid( kfentity, kfcondition, limitdata, kfsetting->_condition_define );\
+    SaveConditionDataUUid( kfentity, kfcondition, limitdata, kfsetting->_condition._condition_define );\
     auto conditionvalue = kfentity->UpdateObject( kfcondition, kfcondition->_data_setting->_value_key_name, operatetype, operatevalue ); \
     auto ok = KFUtility::CheckOperate<uint32>( conditionvalue, kfsetting->_done_type, kfsetting->_done_value ); \
     if ( ok )\
@@ -575,8 +538,8 @@ namespace KFrame
             }
         }
 
-        __CLEAN_CONDITION__( CalcAddConditionValue( kfentity, kfsetting->_clean_define, kfdata ) );
-        __UPDATE_CONDITION__( CalcAddConditionValue( kfentity, kfsetting->_condition_define, kfdata ), kfdata );
+        __CLEAN_CONDITION__( CalcAddConditionValue( kfentity, kfsetting->_clean._condition_define, kfdata ) );
+        __UPDATE_CONDITION__( CalcAddConditionValue( kfentity, kfsetting->_condition._condition_define, kfdata ), kfdata );
     }
 
     uint32 KFConditionModule::UpdateRemoveConditionData( KFEntity* kfentity, KFData* kfcondition, uint32 limitmask, KFData* kfdata )
@@ -590,8 +553,8 @@ namespace KFrame
             }
         }
 
-        __CLEAN_CONDITION__( CalcRemoveConditionValue( kfentity, kfsetting->_clean_define, kfdata ) );
-        __UPDATE_CONDITION__( CalcRemoveConditionValue( kfentity, kfsetting->_condition_define, kfdata ), kfdata );
+        __CLEAN_CONDITION__( CalcRemoveConditionValue( kfentity, kfsetting->_clean._condition_define, kfdata ) );
+        __UPDATE_CONDITION__( CalcRemoveConditionValue( kfentity, kfsetting->_condition._condition_define, kfdata ), kfdata );
     }
 
     uint32 KFConditionModule::UpdateUpdateConditionData( KFEntity* kfentity, KFData* kfcondition, uint32 limitmask, KFData* kfdata, uint32 operate, uint64 value, uint64 nowvalue )
@@ -605,11 +568,11 @@ namespace KFrame
             }
         }
 
-        __CLEAN_CONDITION__( CalcUpdateConditionValue( kfentity, kfsetting->_clean_define, kfdata, operate, value, nowvalue ) );
-        __UPDATE_CONDITION__( CalcUpdateConditionValue( kfentity, kfsetting->_condition_define, kfdata, operate, value, nowvalue ), kfdata->GetParent() );
+        __CLEAN_CONDITION__( CalcUpdateConditionValue( kfentity, kfsetting->_clean._condition_define, kfdata, operate, value, nowvalue ) );
+        __UPDATE_CONDITION__( CalcUpdateConditionValue( kfentity, kfsetting->_condition._condition_define, kfdata, operate, value, nowvalue ), kfdata->GetParent() );
     }
 
-    std::tuple<uint32, uint32> KFConditionModule::CalcAddConditionValue( KFEntity* kfentity, const KFConditionDefine* kfsetting, KFData* kfdata )
+    std::tuple<uint32, uint32> KFConditionModule::CalcAddConditionValue( KFEntity* kfentity, const KFConditionDefineSetting* kfsetting, KFData* kfdata )
     {
         if ( kfdata->_data_setting->_name != kfsetting->_parent_name &&
                 kfdata->_data_setting->_logic_name != kfsetting->_parent_name )
@@ -617,7 +580,7 @@ namespace KFrame
             return std::make_tuple( 0u, 0u );
         }
 
-        for ( auto& trigger : kfsetting->_trigger_list )
+        for ( auto& trigger : kfsetting->_condition_trigger_list )
         {
             if ( trigger._call_type != KFConditionEnum::AddCall )
             {
@@ -630,7 +593,7 @@ namespace KFrame
                 value = kfdata->Get( kfsetting->_data_name );
             }
 
-            auto ok = trigger.CalcUpdateValue( KFEnum::Set, value, value );
+            auto ok = CalcTriggerUpdateValue( &trigger, KFEnum::Set, value, value );
             if ( ok )
             {
                 return std::make_tuple( trigger._use_operate, value );
@@ -640,7 +603,7 @@ namespace KFrame
         return std::make_tuple( 0u, 0u );
     }
 
-    std::tuple<uint32, uint32> KFConditionModule::CalcRemoveConditionValue( KFEntity* kfentity, const KFConditionDefine* kfsetting, KFData* kfdata )
+    std::tuple<uint32, uint32> KFConditionModule::CalcRemoveConditionValue( KFEntity* kfentity, const KFConditionDefineSetting* kfsetting, KFData* kfdata )
     {
         if ( kfdata->_data_setting->_name != kfsetting->_parent_name &&
                 kfdata->_data_setting->_logic_name != kfsetting->_parent_name )
@@ -648,7 +611,7 @@ namespace KFrame
             return std::make_tuple( 0u, 0u );
         }
 
-        for ( auto& trigger : kfsetting->_trigger_list )
+        for ( auto& trigger : kfsetting->_condition_trigger_list )
         {
             if ( trigger._call_type != KFConditionEnum::RemoveCall )
             {
@@ -661,7 +624,7 @@ namespace KFrame
                 value = kfdata->Get( kfsetting->_data_name );
             }
 
-            auto ok = trigger.CalcUpdateValue( KFEnum::Dec, value, value );
+            auto ok = CalcTriggerUpdateValue( &trigger, KFEnum::Dec, value, value );
             if ( ok )
             {
                 return std::make_tuple( trigger._use_operate, value );
@@ -671,7 +634,7 @@ namespace KFrame
         return std::make_tuple( 0u, 0u );
     }
 
-    std::tuple<uint32, uint32> KFConditionModule::CalcUpdateConditionValue( KFEntity* kfentity, const KFConditionDefine* kfsetting, KFData* kfdata, uint32 operate, uint64 value, uint64 nowvalue )
+    std::tuple<uint32, uint32> KFConditionModule::CalcUpdateConditionValue( KFEntity* kfentity, const KFConditionDefineSetting* kfsetting, KFData* kfdata, uint32 operate, uint64 value, uint64 nowvalue )
     {
         if ( ( kfdata->GetParent()->_data_setting->_name != kfsetting->_parent_name && kfdata->GetParent()->_data_setting->_logic_name != kfsetting->_parent_name ) )
         {
@@ -684,14 +647,14 @@ namespace KFrame
             return std::make_tuple( 0u, 0u );
         }
 
-        for ( auto& trigger : kfsetting->_trigger_list )
+        for ( auto& trigger : kfsetting->_condition_trigger_list )
         {
             if ( trigger._call_type != KFConditionEnum::UpdateCall )
             {
                 continue;
             }
 
-            auto ok = trigger.CalcUpdateValue( operate, value, nowvalue );
+            auto ok = CalcTriggerUpdateValue( &trigger, operate, value, nowvalue );
             if ( ok )
             {
                 return std::make_tuple( trigger._use_operate, value );
@@ -705,7 +668,7 @@ namespace KFrame
     {
         auto updateconditionid = kfcondition->GetKeyID();
         auto kfsetting = KFConditionConfig::Instance()->FindSetting( updateconditionid );
-        if ( kfsetting == nullptr || kfsetting->_condition_define == nullptr )
+        if ( kfsetting == nullptr || kfsetting->_condition._condition_define == nullptr )
         {
             _kf_display->SendToClient( kfentity, KFMsg::ConditionSettingError, updateconditionid );
             return KFConditionEnum::UpdateFailed;
@@ -729,9 +692,9 @@ namespace KFrame
         return KFConditionEnum::UpdateOk;
     }
 
-    void KFConditionModule::SaveConditionDataUUid( KFEntity* kfentity, KFData* kfcondition, KFData* kfdata, const KFConditionDefine* kfsetting )
+    void KFConditionModule::SaveConditionDataUUid( KFEntity* kfentity, KFData* kfcondition, KFData* kfdata, const KFConditionDefineSetting* kfsetting )
     {
-        if ( !kfsetting->_is_save_uuid )
+        if ( !kfsetting->_save_uuid )
         {
             return;
         }
@@ -749,9 +712,9 @@ namespace KFrame
         kfuuidrecord->Add( uuid, kfuuid );
     }
 
-    bool KFConditionModule::CheckUUidInConditionData( KFEntity* kfentity, KFData* kfcondition, KFData* kfdata, const KFConditionDefine* kfsetting )
+    bool KFConditionModule::CheckUUidInConditionData( KFEntity* kfentity, KFData* kfcondition, KFData* kfdata, const KFConditionDefineSetting* kfsetting )
     {
-        if ( !kfsetting->_is_save_uuid )
+        if ( !kfsetting->_save_uuid )
         {
             return false;
         }
@@ -759,6 +722,45 @@ namespace KFrame
         auto uuid = kfdata->GetKeyID();
         auto kfuuid = kfcondition->Find( __STRING__( uuid ), uuid );
         return kfuuid != nullptr;
+    }
+
+    bool KFConditionModule::CalcTriggerUpdateValue( const ConditionTrigger* trigger, uint64 operate, uint64& operatevalue, uint64 nowvalue )
+    {
+        if ( trigger->_trigger_type != 0u && trigger->_trigger_type != operate )
+        {
+            return false;
+        }
+
+        // 触发值
+        if ( trigger->_trigger_check != 0u )
+        {
+            auto triggervalue = operatevalue;
+            if ( trigger->_trigger_use == KFConditionEnum::UseFinal )
+            {
+                triggervalue = nowvalue;
+            }
+
+            auto ok = KFUtility::CheckOperate<uint64>( triggervalue, trigger->_trigger_check, trigger->_trigger_value );
+            if ( !ok )
+            {
+                return false;
+            }
+        }
+
+        // 最终使用值
+        switch ( trigger->_use_type )
+        {
+        case KFConditionEnum::UseSetting:
+            operatevalue = trigger->_use_value;
+            break;
+        case KFConditionEnum::UseFinal:
+            operatevalue = nowvalue;
+            break;
+        default:
+            break;
+        }
+
+        return true;
     }
 }
 

@@ -1,14 +1,2 @@
-<root version="2493">
-	<item Id="1" DataName="build" DataKey="202" DataValue="1" UnLockCondition="39001001" />
-	<item Id="2" DataName="build" DataKey="203" DataValue="1" UnLockCondition="39001006" />
-	<item Id="3" DataName="build" DataKey="204" DataValue="1" UnLockCondition="39001003" />
-	<item Id="4" DataName="build" DataKey="205" DataValue="1" UnLockCondition="39001006" />
-	<item Id="5" DataName="build" DataKey="206" DataValue="1" UnLockCondition="39000001" />
-	<item Id="6" DataName="build" DataKey="207" DataValue="1" UnLockCondition="39001009" />
-	<item Id="7" DataName="build" DataKey="208" DataValue="1" UnLockCondition="39000001" />
-	<item Id="8" DataName="build" DataKey="209" DataValue="1" UnLockCondition="39000001" />
-	<item Id="9" DataName="build" DataKey="210" DataValue="1" UnLockCondition="39000001" />
-	<item Id="10" DataName="build" DataKey="211" DataValue="1" UnLockCondition="39000001" />
-	<item Id="11" DataName="build" DataKey="212" DataValue="1" UnLockCondition="39001001" />
-	<item Id="12" DataName="build" DataKey="213" DataValue="1" UnLockCondition="39001004" />
+<root version="b23436e3e9f4daa80e38a6dcab7724c8">
 </root>

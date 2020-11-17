@@ -32,14 +32,14 @@ namespace KFrame
         {
             for ( auto param : _params )
             {
-                __KF_DELETE__( KFParam, param );
+                delete param;
             }
             _params.clear();
         }
 
         KFParam* AddParam()
         {
-            auto param = __KF_NEW__( KFParam );
+            auto param = new KFParam;
             _params.push_back( param );
             return param;
         }

@@ -1,0 +1,6 @@
+<root version="b23436e3e9f4daa80e38a6dcab7724c8">
+	<node row="8" id="1" completecondition="6" reward="[{&quot;hero&quot;:{&quot;id&quot;:&quot;2&quot;}}]"/>
+	<node row="9" id="2" completecondition="2" reward="[{&quot;item&quot;:{&quot;id&quot;:&quot;11001&quot;}}]"/>
+	<node row="10" id="3" completecondition="3" reward="[{&quot;item&quot;:{&quot;id&quot;:&quot;10001&quot;}}]"/>
+	<node row="11" id="4" completecondition="4" reward="[{&quot;item&quot;:{&quot;id&quot;:&quot;12001&quot;}}]"/>
+</root>

@@ -3,6 +3,7 @@
 #include "xml/rapidxml.hpp"
 #include "xml/rapidxml_print.hpp"
 #include "xml/rapidxml_utils.hpp"
+#include "KFStaticAnalysis.hpp"
 
 namespace KFrame
 {
@@ -264,41 +265,40 @@ namespace KFrame
         return attribute != nullptr;
     }
 
-    const KFConditionGroup& KFXmlNode::ReadConditionGroup( const char* key, bool optional /* = false */ )
+    DynamicConditionGroupPtr KFXmlNode::ReadDynamicConditionGroup( const char* key, bool optional /* = false */ )
     {
-        static KFConditionGroup _condition_group;
-        _condition_group._ids.clear();
-        _condition_group._type = KFEnum::Or;
+        DynamicConditionGroupPtr conditiongroup( new KFDynamicConditionGroup() );
+        conditiongroup->_type = KFEnum::Or;
 
         auto strline = ReadString( key, optional );
         if ( !strline.empty() )
         {
             if ( strline.find( __OR_STRING__ ) != std::string::npos )
             {
-                _condition_group._type = KFEnum::Or;
-                KFUtility::SplitList( _condition_group._ids, strline, __OR_STRING__ );
+                conditiongroup->_type = KFEnum::Or;
+                KFUtility::SplitList( conditiongroup->_ids, strline, __OR_STRING__ );
             }
             else if ( strline.find( __AND_STRING__ ) != std::string::npos )
             {
-                _condition_group._type = KFEnum::And;
-                KFUtility::SplitList( _condition_group._ids, strline, __AND_STRING__ );
+                conditiongroup->_type = KFEnum::And;
+                KFUtility::SplitList( conditiongroup->_ids, strline, __AND_STRING__ );
             }
             else
             {
                 auto conditionid = __TO_UINT32__( strline );
                 if ( conditionid != 0u )
                 {
-                    _condition_group._ids.push_back( conditionid );
+                    conditiongroup->_ids.push_back( conditionid );
                 }
             }
         }
 
-        return _condition_group;
+        return conditiongroup;
     }
 
-    void KFXmlNode::ReadExecuteData( KFExecuteData* executedata, const char* key, bool optional /* = false */ )
+    ExecuteDataPtr KFXmlNode::ReadExecuteData( const char* key, bool optional /* = false */ )
     {
-        executedata->Reset();
+        ExecuteDataPtr executedata( new KFExecuteData() );
         executedata->_name = ReadString( key );
 
         auto index = 1u;
@@ -317,17 +317,90 @@ namespace KFrame
             param->_map_value = ReadUInt32Map( strkey.c_str() );
             param->_vector_value = ReadUInt32Vector( strkey.c_str() );
         }
+
+        return executedata;
     }
 
-    bool KFXmlNode::ReadStaticCondition( KFConditions& conditions, const char* key, bool optional /* = false */ )
+    StaticConditionsPtr KFXmlNode::ReadStaticConditions( const char* key, bool optional /* = false */ )
     {
         auto strcondition = ReadString( key, optional );
-        return conditions.Parse( strcondition, __FUNC_LINE__ );
+        return KFStaticConditionAnalysis::Parse( strcondition );
+    }
+
+    StaticConditionListPtr KFXmlNode::ReadStaticConditionList( const char* key, bool optional /* = false */ )
+    {
+        StaticConditionListPtr conditionlist( new KFStaticConditionList() );
+        conditionlist->_check_type = KFEnum::And;
+
+        auto strcondition = ReadString( key );
+        auto conditions = KFStaticConditionAnalysis::Parse( strcondition );
+        conditionlist->_conditions_list.push_back( conditions );
+
+        auto index = 1u;
+        while ( true )
+        {
+            auto strkey = __FORMAT__( "{}{}", key, index++ );
+            auto ok = HaveChild( strkey.c_str() );
+            if ( !ok )
+            {
+                break;
+            }
+
+            auto strcondition = ReadString( strkey.c_str() );
+            auto conditions = KFStaticConditionAnalysis::Parse( strcondition );
+            conditionlist->_conditions_list.push_back( conditions );
+        }
+
+        return conditionlist;
     }
 
     uint64 KFXmlNode::ReadDate( const char* key, bool optional /* = false */ )
     {
         auto strdata = ReadString( key, optional );
         return KFDate::FromString( strdata );
+    }
+
+    uint32 KFXmlNode::ReadOperateType( const char* key, bool optional /* = false */ )
+    {
+        auto strtemp = ReadString( key, optional );
+        if ( strtemp.empty() )
+        {
+            return KFEnum::Null;
+        }
+
+        auto type = KFStaticConditionAnalysis::GetOperatorType( strtemp.at( 0 ) );
+        if ( type == KFEnum::Null )
+        {
+            type = __TO_UINT32__( strtemp );
+        }
+
+        return type;
+    }
+
+    uint32 KFXmlNode::ReadCheckType( const char* key, bool optional /* = false */ )
+    {
+        auto strtemp = ReadString( key, optional );
+        auto type = KFStaticConditionAnalysis::GetCheckType( strtemp );
+        if ( type == KFEnum::Null )
+        {
+            type = __TO_UINT32__( strtemp );
+        }
+
+        return type;
+    }
+
+    KFRange<uint32> KFXmlNode::ReadRange( const char* key, bool optional /* = false */ )
+    {
+        KFRange<uint32> range;
+        auto strtemp = ReadString( key, optional );
+
+        range._min_value = KFUtility::SplitValue<uint32>( strtemp, __RANGE_STRING__ );
+        range._max_value = KFUtility::SplitValue<uint32>( strtemp, __RANGE_STRING__ );
+        if ( range._max_value < range._min_value )
+        {
+            range._max_value = range._min_value;
+        }
+
+        return range;
     }
 }

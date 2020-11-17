@@ -135,15 +135,8 @@ namespace KFrame
         for ( auto& iter : _file_list._objects )
         {
             auto filedata = iter.second;
-            xmlfile << __FORMAT__( "\t<file name=\"{}\" type=\"{}\" md5client=\"{}\" md5server=\"{}\">\n",
+            xmlfile << __FORMAT__( "\t<file name=\"{}\" type=\"{}\" md5client=\"{}\" md5server=\"{}\"/>\n",
                                    KFConvert::ToUTF8( filedata->_name ), filedata->_type, filedata->_md5_client_repository, filedata->_md5_server_repository );
-
-            for ( auto fiter : filedata->_md5_list )
-            {
-                xmlfile << __FORMAT__( "\t\t<code type=\"{}\" md5=\"{}\"/>\n", fiter.first, fiter.second );
-            }
-
-            xmlfile <<  "\t</file>";
         }
 
         xmlfile << "</config>\n";
@@ -234,7 +227,7 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFGenerateLogic::RunCheckExecelMd5Thread()
+    void KFGenerateLogic::RunCheckExcelMd5Thread()
     {
         auto _next_check_time = _invalid_int;
         while ( _thread_run )
@@ -243,17 +236,27 @@ namespace KFrame
             {
                 _next_check_time = KFGlobal::Instance()->_game_time + 10000;
 
-                CheckAllExecelMd5();
+                CheckAllExcelMd5();
             }
 
             KFThread::Sleep( 1 );
         }
     }
 
-    void KFGenerateLogic::CheckAllExecelMd5()
+    std::string KFGenerateLogic::FormatExecelName( const std::string& filename )
+    {
+        auto temp = filename;
+
+        // 把文件夹去掉
+        KFUtility::SplitString( temp, "\\" );
+        return temp;
+    }
+
+
+    void KFGenerateLogic::CheckAllExcelMd5()
     {
         // 列出所有的excel文件
-        Poco::File file( "./" );
+        Poco::File file( "./table" );
         std::vector< Poco::File > filelist;
         file.list( filelist );
 
@@ -264,7 +267,8 @@ namespace KFrame
         // 先检查删除的文件
         for ( auto& file : filelist )
         {
-            auto filename = KFConvert::ToAscii( file.path() );
+            auto filepath = KFConvert::ToAscii( file.path() );
+            auto filename = FormatExecelName( filepath );
             auto ok = IsExcelFile( filename );
             if ( !ok )
             {
@@ -275,14 +279,17 @@ namespace KFrame
             auto filedata = _file_list.Find( filename );
             if ( filedata == nullptr )
             {
+                savexml = true;
                 filedata = _file_list.Create( filename );
                 filedata->_name = filename;
-
-                savexml = true;
+            }
+            if ( filedata->_path.empty() )
+            {
+                filedata->_path = filepath;
             }
 
             filedata->_last_md5_check_time = nowtime;
-            auto md5 = KFCrypto::Md5File( filename );
+            auto md5 = KFCrypto::Md5File( filepath );
             if ( KFUtility::HaveBitMask( _file_type, ( uint32 )FileType::Server ) )
             {
                 if ( filedata->IsServerFile() && filedata->_md5_current != md5 )

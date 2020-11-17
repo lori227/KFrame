@@ -68,9 +68,9 @@ namespace KFrame
             return false;
         }
 
-        for ( auto kfexecutedata : kfsetting->_execute_list._objects )
+        for ( auto& executedata : kfsetting->_execute_data_list )
         {
-            Execute( player, kfexecutedata, modulename, moduleid, function, line );
+            Execute( player, executedata._execute, modulename, moduleid, function, line );
         }
 
         return true;
@@ -92,21 +92,21 @@ namespace KFrame
                 continue;
             }
 
-            for ( auto kfexecutedata : kfsetting->_execute_list._objects )
+            for ( auto& executedata : kfsetting->_execute_data_list )
             {
-                Execute( player, kfexecutedata, modulename, moduleid, function, line );
+                Execute( player, executedata._execute, modulename, moduleid, function, line );
             }
         }
 
         return true;
     }
 
-    bool KFExecuteModule::Execute( KFEntity* player, const KFExecuteData* executedata, const char* function, uint32 line )
+    bool KFExecuteModule::Execute( KFEntity* player, const ExecuteDataPtr& executedata, const char* function, uint32 line )
     {
         return Execute( player, executedata, _invalid_string, _invalid_int, function, line );
     }
 
-    bool KFExecuteModule::Execute( KFEntity* player, const KFExecuteData* executedata, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
+    bool KFExecuteModule::Execute( KFEntity* player, const ExecuteDataPtr& executedata, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
     {
         // 注册的执行逻辑
         auto kffunction = _execute_function.Find( executedata->_name );

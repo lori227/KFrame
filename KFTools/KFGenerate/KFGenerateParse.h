@@ -54,10 +54,18 @@ namespace KFrame
         void FormatCppParentClass( ExcelAttribute* attribute, std::map< std::string, CodeClass >& classlist );
         // 写文件
         bool WriteCppFile( ExcelFileData* exceldata, std::map< std::string, CodeClass >& classlist, std::string filename );
+        // 判断是否需要写加载完成函数
+        bool IsNeedWriteLoadAllComplete( ExcelFileData* exceldata );
 
     private:
         // 把配置表字段名转换成cpp的变量名
         std::string TransformNameToCpp( const std::string& name );
+
+        // 格式化子类变量
+        std::string FormatParentVariable( const std::string& classname );
+
+        // 判断子类的类型
+        bool IsParentCppClass( ExcelFileData* exceldata, const std::string& parentclass, const std::string& cppclass );
 
     private:
         // 错误信息

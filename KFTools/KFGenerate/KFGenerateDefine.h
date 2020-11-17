@@ -8,6 +8,19 @@ namespace KFrame
     static const std::string _temp_xml = "_temp.xml";			// 生成路径配置( 每个机器都不通 )
     static const std::string _excel_xml = "_excel.xml";			// 文件列表配置( 由程序生成 )
     static const std::string _generate_xml = "_generate.xml";	// 仓库, 服务器配置( 不变 )
+
+    static const std::string _str_cpp = "cpp";
+    static const std::string _str_xml = "xml";
+    static const std::string _str_key = "key";
+    static const std::string _str_repeat = "repeat";
+    static const std::string _str_vector = "vector";
+    static const std::string _str_list = "list";
+    static const std::string _str_set = "set";
+    static const std::string _str_map = "map";
+
+    static const std::string _str_element = "element";
+    static const std::string _str_execute = "execute";
+    static const std::string _str_condition_define = "conditiondefine";
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     namespace FileType
@@ -89,6 +102,9 @@ namespace KFrame
     class FileData
     {
     public:
+        // 路径
+        std::string _path;
+
         // 文件名
         std::string _name;
 
@@ -254,6 +270,30 @@ namespace KFrame
             }
 
             return &iter->second;
+        }
+
+        bool HaveCppAttribute( const std::string& cppclass )
+        {
+            for ( auto& iter : _attributes )
+            {
+                if ( iter.second._cpp_class == cppclass )
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        bool IsRepeat() const
+        {
+            auto iter = _options.find( _str_repeat );
+            if ( iter == _options.end() )
+            {
+                return false;
+            }
+
+            return iter->second._value == "1";
         }
 
     public:

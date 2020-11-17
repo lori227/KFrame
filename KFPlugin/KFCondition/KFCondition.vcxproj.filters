@@ -2,14 +2,14 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFConditionConfig.cpp" />
     <ClCompile Include="KFConditionModule.cpp" />
     <ClCompile Include="KFConditionPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFConditionConfig.hpp" />
     <ClInclude Include="KFConditionInterface.h" />
     <ClInclude Include="KFConditionModule.hpp" />
     <ClInclude Include="KFConditionPlugin.hpp" />
+    <ClInclude Include="..\..\KFResource\KFXmlReader\KFConditionDefineConfig.hpp" />
+    <ClInclude Include="..\..\KFResource\KFXmlReader\KFConditionConfig.hpp" />
   </ItemGroup>
 </Project>

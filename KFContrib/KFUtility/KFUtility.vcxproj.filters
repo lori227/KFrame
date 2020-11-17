@@ -7,12 +7,6 @@
     <ClInclude Include="KFXml.h">
       <Filter>Xml</Filter>
     </ClInclude>
-    <ClInclude Include="KFCondition.h">
-      <Filter>Data</Filter>
-    </ClInclude>
-    <ClInclude Include="KFAnalysis.hpp">
-      <Filter>Data</Filter>
-    </ClInclude>
     <ClInclude Include="KFDate.h">
       <Filter>Time</Filter>
     </ClInclude>
@@ -61,6 +55,15 @@
     <ClInclude Include="KFElement.h">
       <Filter>Data</Filter>
     </ClInclude>
+    <ClInclude Include="KFStaticCondition.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="KFDynamicCondition.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="KFStaticAnalysis.hpp">
+      <Filter>Data</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KFXmlNode.cpp">
@@ -68,12 +71,6 @@
     </ClCompile>
     <ClCompile Include="KFXml.cpp">
       <Filter>Xml</Filter>
-    </ClCompile>
-    <ClCompile Include="KFCondition.cpp">
-      <Filter>Data</Filter>
-    </ClCompile>
-    <ClCompile Include="KFAnalysis.cpp">
-      <Filter>Data</Filter>
     </ClCompile>
     <ClCompile Include="KFDate.cpp">
       <Filter>Time</Filter>
@@ -121,6 +118,15 @@
       <Filter>Utility</Filter>
     </ClCompile>
     <ClCompile Include="KFElement.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="KFStaticCondition.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="KFDynamicCondition.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="KFStaticAnalysis.cpp">
       <Filter>Data</Filter>
     </ClCompile>
   </ItemGroup>
