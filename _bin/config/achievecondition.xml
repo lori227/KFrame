@@ -1,4 +1,4 @@
-<root version="">
+<root version="b23436e3e9f4daa80e38a6dcab7724c8">
 	<node row="8" id="1" condition="costmoney" donetype=">=" donevalue="100"/>
 	<node row="9" id="2" condition="owngrade" donetype=">=" donevalue="85"/>
 	<node row="10" id="3" condition="owngrade" donetype=">=" donevalue="510"/>

@@ -289,20 +289,18 @@ namespace KFrame
             }
 
             filedata->_last_md5_check_time = nowtime;
-            auto md5 = KFCrypto::Md5File( filepath );
+            filedata->_md5_current = KFCrypto::Md5File( filepath );
             if ( KFUtility::HaveBitMask( _file_type, ( uint32 )FileType::Server ) )
             {
-                if ( filedata->IsServerFile() && filedata->_md5_server_repository != md5 )
+                if ( filedata->IsServerFile() && filedata->_md5_server_repository != filedata->_md5_current )
                 {
-                    filedata->_md5_current = md5;
                     _event->AddEvent( EventType::AddFile, filedata->_type, filedata->_name );
                 }
             }
             else if ( KFUtility::HaveBitMask( _file_type, ( uint32 )FileType::Client ) )
             {
-                if ( filedata->IsClientFile() && filedata->_md5_client_repository != md5 )
+                if ( filedata->IsClientFile() && filedata->_md5_client_repository != filedata->_md5_current )
                 {
-                    filedata->_md5_current = md5;
                     _event->AddEvent( EventType::AddFile, filedata->_type, filedata->_name );
                 }
             }
