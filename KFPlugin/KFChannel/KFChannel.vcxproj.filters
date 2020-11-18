@@ -10,7 +10,6 @@
       <Filter>Channel</Filter>
     </ClCompile>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFChannelConfig.cpp" />
     <ClCompile Include="KFChannelModule.cpp" />
     <ClCompile Include="KFChannelPlugin.cpp" />
     <ClCompile Include="KFWeiXin.cpp">
@@ -25,7 +24,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFChannelInterface.h" />
-    <ClInclude Include="KFChannelConfig.hpp" />
     <ClInclude Include="KFChannelModule.hpp" />
     <ClInclude Include="KFChannelPlugin.hpp" />
     <ClInclude Include="KFChannel.hpp">
@@ -40,5 +38,6 @@
     <ClInclude Include="KFWeiXin.hpp">
       <Filter>Channel</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\KFResource\KFXmlReader\KFChannelConfig.hpp" />
   </ItemGroup>
 </Project>

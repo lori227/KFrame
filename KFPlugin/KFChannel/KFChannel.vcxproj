@@ -13,7 +13,6 @@
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="KFChannel.cpp" />
-    <ClCompile Include="KFChannelConfig.cpp" />
     <ClCompile Include="KFChannelModule.cpp" />
     <ClCompile Include="KFChannelPlugin.cpp" />
     <ClCompile Include="KFInternal.cpp" />
@@ -21,8 +20,8 @@
     <ClCompile Include="KFWeiXin.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\KFResource\KFXmlReader\KFChannelConfig.hpp" />
     <ClInclude Include="KFChannel.hpp" />
-    <ClInclude Include="KFChannelConfig.hpp" />
     <ClInclude Include="KFChannelInterface.h" />
     <ClInclude Include="KFChannelModule.hpp" />
     <ClInclude Include="KFChannelPlugin.hpp" />

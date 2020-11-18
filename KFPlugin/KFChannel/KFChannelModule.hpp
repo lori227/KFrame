@@ -10,7 +10,7 @@
 ************************************************************************/
 
 #include "KFChannelInterface.h"
-#include "KFChannelConfig.hpp"
+#include "KFXmlReader/KFChannelConfig.hpp"
 #include "KFAccount/KFAccountInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
 #include "KFHttpServer/KFHttpServerInterface.h"
@@ -55,6 +55,14 @@ namespace KFrame
 
         // 充值回调
         virtual std::string AuthPay( uint32 channel, const std::string& data );
+
+    protected:
+        // 渠道是否开放
+        bool IsOpen( const KFChannelSetting* kfsetting ) const;
+
+        // 渠道是否支持
+        bool IsSupport( const KFChannelSetting* kfsetting, uint32 channel ) const;
+
     private:
         // 绑定的登录函数
         KFFunctionMap< uint32, uint32, KFLoginFunction > _kf_login_function;
