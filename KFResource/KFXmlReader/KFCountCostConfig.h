@@ -54,7 +54,7 @@ namespace KFrame
     public:
         KFCountCostConfig()
         {
-            _key_name = "CostId";
+            _key_name = "id";
             _file_name = "countcost";
         }
 
@@ -87,12 +87,12 @@ namespace KFrame
         // 读取配置
         virtual void ReadSetting( KFXmlNode& xmlnode, KFCountCostSetting* kfsetting )
         {
-            kfsetting->_refresh_time_id = xmlnode.ReadUInt32( "RefreshTimeId" );
+            kfsetting->_refresh_time_id = xmlnode.ReadUInt32( "refreshtimeid" );
 
             auto countcostdata = __KF_NEW__( KFCountCostData );
-            countcostdata->_min_count = xmlnode.ReadUInt32( "MinCount" );
-            countcostdata->_max_count = xmlnode.ReadUInt32( "MaxCount" );
-            countcostdata->_cost_elements._str_parse = xmlnode.ReadString( "Cost" );
+            countcostdata->_min_count = xmlnode.ReadUInt32( "mincount" );
+            countcostdata->_max_count = xmlnode.ReadUInt32( "maxcount" );
+            countcostdata->_cost_elements._str_parse = xmlnode.ReadString( "cost" );
             kfsetting->_count_cost_list.Add( countcostdata );
         }
     };

@@ -24,4 +24,5 @@
 	<node name="relation" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
 	<node name="taskexecute" version="26230a675935caa816f4034dd7755339"/>
 	<node name="team" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
+	<node name="countcost" version="26230a675935caa816f4034dd7755339"/>
 </root>
