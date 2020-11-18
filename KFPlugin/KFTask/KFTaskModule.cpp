@@ -3,6 +3,17 @@
 
 namespace KFrame
 {
+    namespace KFTaskEnum
+    {
+        enum MyEnum
+        {
+            CompleteRequest = 1,	// 玩家请求交付
+            ComplelteAuto = 2,		// 自动交付
+        };
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFTaskModule::BeforeRun()
     {
         _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
@@ -160,12 +171,12 @@ namespace KFrame
 
             // 前置条件
             auto kfpreconditionobject = kftask->Find( __STRING__( preconditions ) );
-            _kf_condition->AddCondition( player, kfpreconditionobject, kfsetting->_pre_condition_group );
+            _kf_condition->AddCondition( player, kfpreconditionobject, kfsetting->_pre_condition );
             _kf_condition->InitCondition( player, kfpreconditionobject, KFConditionEnum::LimitNull, false );
 
             // 完成条件
             auto kfconditionobject = kftask->Find( __STRING__( conditions ) );
-            _kf_condition->AddCondition( player, kfconditionobject, kfsetting->_complete_condition_group );
+            _kf_condition->AddCondition( player, kfconditionobject, kfsetting->_complete_condition );
             InitTaskCondition( player, kfsetting, kftask, status, false );
 
             player->AddRecord( kftaskrecord, kfsetting->_id, kftask );
@@ -221,7 +232,7 @@ namespace KFrame
     void KFTaskModule::AddFinishTask( KFEntity* player, KFData* kftask, const KFTaskSetting* kfsetting, bool update )
     {
         // 不是自动提交
-        if ( !kfsetting->IsAutoFinish() )
+        if ( kfsetting->_complete_mode != KFTaskEnum::ComplelteAuto )
         {
             return;
         }
@@ -260,7 +271,7 @@ namespace KFrame
         kftask->Set<uint32>( __STRING__( status ), KFMsg::ReceiveStatus );
 
         // 任务输出执行
-        _kf_execute->Execute( player, kfsetting->_execute_list, __STRING__( task ), kfsetting->_id, __FUNC_LINE__ );
+        _kf_execute->Execute( player, kfsetting->_execute, __STRING__( task ), kfsetting->_id, __FUNC_LINE__ );
 
         // 删除任务
         player->RemoveRecord( kftask->GetParent(), kfsetting->_id );
