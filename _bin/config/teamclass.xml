@@ -1,0 +1,15 @@
+<root version="50a3c4ddfd1a143bd998c0992c219a00">
+	<node row="8" id="Global" name="team" type="object" containclass="Team" keyname="id" show="1" deletetype="2" sync="1" view="1" team="1"/>
+	<node row="9" id="Player" name="team" type="object" containclass="Team" keyname="id" save="1" sync="1"/>
+	<node row="10" id="Team" name="id" type="uint64" save="1" sync="1" view="1"/>
+	<node row="11" id="Team" name="configid" type="uint32" sync="1" view="1"/>
+	<node row="12" id="Team" name="name" type="string" sync="1" view="1"/>
+	<node row="13" id="Team" name="info" type="string" sync="1" view="1"/>
+	<node row="14" id="Team" name="maxcount" type="uint32" sync="1" view="1"/>
+	<node row="15" id="Team" name="nowcount" type="uint32" initvalue="1" sync="1" view="1"/>
+	<node row="16" id="Team" name="captainid" type="uint64" sync="1" view="1"/>
+	<node row="17" id="Team" name="captainname" type="string" sync="1" view="1"/>
+	<node row="18" id="Team" name="member" type="record" containclass="TeamMember" keyname="id" sync="1"/>
+	<node row="19" id="TeamMember" name="id" type="uint64" sync="1"/>
+	<node row="20" id="TeamMember" name="basic" type="object" containclass="BasicPlayer" sync="1"/>
+</root>

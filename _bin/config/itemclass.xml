@@ -1,0 +1,9 @@
+<root version="50a3c4ddfd1a143bd998c0992c219a00">
+	<node row="8" element="道具" id="Player" name="item" type="record" containclass="Item" keyname="uuid" configkeyname="id" valuekeyname="count" maxvalue="100" show="1" save="1" sync="1" addcall="1" removecall="1" updatecall="1"/>
+	<node row="9" id="Item" name="uuid" type="uint64" sync="1" addcall="1" removecall="1" updatecall="1"/>
+	<node row="10" element="道具id" id="Item" name="id" type="uint32" show="1" save="1" sync="1" addcall="1" removecall="1" updatecall="1"/>
+	<node row="11" element="道具数量" id="Item" name="count" type="uint32" show="1" save="1" sync="1" addcall="1" removecall="1" updatecall="1"/>
+	<node row="12" element="道具有效时间(单位:秒)" id="Item" name="time" type="uint64" save="1" sync="1" addcall="1" removecall="1" updatecall="1"/>
+	<node row="13" id="Item" name="usecount" type="uint32" save="1" sync="1" addcall="1" removecall="1" updatecall="1"/>
+	<node row="14" id="Item" name="index" type="uint32" save="1" sync="1" addcall="1" removecall="1" updatecall="1"/>
+</root>

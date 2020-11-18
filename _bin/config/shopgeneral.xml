@@ -1,6 +1,0 @@
-<root version="335">
-	<item Id="100111" Type="0" RefreshTime="2" RefreshCd="0" ProductNum="" ProductLimit="" RandomType="0" RefreshItem="" RefreshCost="" Pos="0" />
-	<item Id="100112" Type="0" RefreshTime="0" RefreshCd="120" ProductNum="" ProductLimit="" RandomType="0" RefreshItem="[1000007,1]" RefreshCost="[{&quot;money&quot;:&quot;10&quot;}]" Pos="0" />
-	<item Id="100113" Type="1" RefreshTime="2" RefreshCd="0" ProductNum="" ProductLimit="[[5010001,1],[5010002,1]]" RandomType="1" RefreshItem="[1000006,2]" RefreshCost="[{&quot;money&quot;:&quot;10&quot;}]" Pos="1" />
-	<item Id="100114" Type="1" RefreshTime="0" RefreshCd="300" ProductNum="[2,,3]" ProductLimit="[[5010003,0]]" RandomType="0" RefreshItem="" RefreshCost="[{&quot;money&quot;:&quot;10&quot;}]" Pos="1" />
-</root>

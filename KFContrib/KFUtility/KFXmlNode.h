@@ -63,6 +63,9 @@ namespace KFrame
         // 读取string set
         StringSet& ReadStringSet( const char* key, bool optional = false );
 
+        // 读取string list
+        StringList& ReadStringList( const char* key, bool optional = false );
+
         // 读取<string,uint64>
         StringUInt64& ReadStringUInt64( const char* key, bool optional = false );
 

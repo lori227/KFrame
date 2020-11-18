@@ -1,4 +1,6 @@
-<root version="00000">
-	<item Word="销售"/>
-	<item Word="转让"/>
+<root version="b23436e3e9f4daa80e38a6dcab7724c8">
+	<node row="8" word="销售"/>
+	<node row="9" word="转让"/>
+	<node row="10" word="%"/>
+	<node row="11" word="\"/>
 </root>

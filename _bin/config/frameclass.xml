@@ -1,0 +1,34 @@
+<root version="50a3c4ddfd1a143bd998c0992c219a00">
+	<node row="8" id="Global" name="player" type="object" containclass="Player" keyname="id" show="1" savetime="60000" deletetype="1" save="1" sync="1" view="1" addcall="1" removecall="1" updatecall="1" basic="1" relation="1" team="1" guild="1" rank="1"/>
+	<node row="9" id="Player" name="id" type="uint64" save="1" sync="1" view="1"/>
+	<node row="10" id="Player" name="basic" type="object" containclass="BasicPlayer" keyname="id" save="1" sync="1" view="1" updatecall="1" basic="1" relation="1" team="1" guild="1" rank="1"/>
+	<node row="11" id="Player" name="account" type="string" save="1"/>
+	<node row="12" id="Player" name="accountid" type="uint64" save="1"/>
+	<node row="13" id="Player" name="channel" type="uint32" save="1"/>
+	<node row="14" id="Player" name="gateid" type="uint64"/>
+	<node row="15" id="Player" name="birthday" type="uint64" save="1"/>
+	<node row="16" id="Player" name="logintime" type="uint64" save="1"/>
+	<node row="17" id="Player" name="resettime" type="uint64" save="1"/>
+	<node row="18" id="Player" name="totaltime" type="uint64" save="1"/>
+	<node row="19" id="Player" name="note" type="record" containclass="KeyValue" keyname="id" configkeyname="id" valuekeyname="value" save="1"/>
+	<node row="20" id="Player" name="time" type="record" containclass="Time" keyname="id" configkeyname="id" valuekeyname="value" save="1"/>
+	<node row="21" element="金币" id="Player" name="money" type="uint32" show="1" save="1" sync="1" updatecall="1"/>
+	<node row="22" element="钻石" id="Player" name="diamond" type="uint32" show="1" save="1" sync="1" updatecall="1"/>
+	<node row="23" id="BasicPlayer" name="id" type="uint64" save="1" sync="1" view="1" addcall="1" removecall="1" updatecall="1" basic="1" relation="1" team="1" guild="1"/>
+	<node row="24" id="BasicPlayer" name="name" type="string" maxvalue="playernamelength" save="1" sync="1" view="1" addcall="1" removecall="1" updatecall="1" basic="1" relation="1" team="1" guild="1"/>
+	<node row="25" id="BasicPlayer" name="sex" type="uint32" save="1" sync="1" view="1" addcall="1" removecall="1" updatecall="1" basic="1" relation="1" team="1" guild="1"/>
+	<node row="26" id="BasicPlayer" name="status" type="uint32" sync="1" view="1" addcall="1" removecall="1" updatecall="1" basic="1" relation="1" team="1" guild="1"/>
+	<node row="27" id="BasicPlayer" name="statustime" type="uint64" sync="1" view="1" addcall="1" removecall="1" updatecall="1" basic="1" relation="1" team="1" guild="1"/>
+	<node row="28" id="BasicPlayer" name="serverid" type="uint64" view="1" addcall="1" removecall="1" updatecall="1" basic="1" relation="1" team="1" guild="1"/>
+	<node row="29" id="Condition" name="type" type="uint32" save="1" sync="1"/>
+	<node row="30" id="Condition" name="condition" type="record" containclass="ConditionData" keyname="id" configkeyname="id" valuekeyname="value" save="1" sync="1"/>
+	<node row="31" id="ConditionData" name="id" type="uint32" save="1" sync="1"/>
+	<node row="32" id="ConditionData" name="value" type="uint32" save="1" sync="1"/>
+	<node row="33" id="ConditionData" name="type" type="uint32" save="1"/>
+	<node row="34" id="ConditionData" name="condition" type="record" containclass="ConditionData" keyname="id" configkeyname="id" valuekeyname="value" save="1"/>
+	<node row="35" id="ConditionData" name="uuid" type="record" containclass="KeyValue" keyname="id" configkeyname="id" valuekeyname="value" save="1"/>
+	<node row="36" id="KeyValue" name="id" type="uint32" save="1" addcall="1" removecall="1" updatecall="1"/>
+	<node row="37" id="KeyValue" name="value" type="uint64" save="1" addcall="1" removecall="1" updatecall="1"/>
+	<node row="38" id="Time" name="id" type="uint32"/>
+	<node row="39" id="Time" name="value" type="uint64" save="1"/>
+</root>

@@ -1,0 +1,18 @@
+<root version="50a3c4ddfd1a143bd998c0992c219a00">
+	<node row="8" element="任务" id="Player" name="task" type="record" containclass="Task" keyname="id" configkeyname="id" valuekeyname="status" save="1" sync="1" removecall="1"/>
+	<node row="9" element="任务链" id="Player" name="taskchain" type="record" containclass="TaskChain" keyname="id" configkeyname="id"/>
+	<node row="10" element="刷新任务链" id="Player" name="taskrefresh" type="record" containclass="TaskRefresh" keyname="id" configkeyname="id" save="1"/>
+	<node row="11" element="任务链" id="TaskChain" name="id" type="uint32"/>
+	<node row="12" element="序号" id="TaskChain" name="order" type="uint32"/>
+	<node row="13" id="TaskRefresh" name="id" type="uint32" save="1"/>
+	<node row="14" id="TaskRefresh" name="time" type="uint64" save="1"/>
+	<node row="15" element="id" id="Task" name="id" type="uint32" sync="1"/>
+	<node row="16" element="状态" id="Task" name="status" type="uint32" save="1" sync="1"/>
+	<node row="17" id="Task" name="conditions" type="object" containclass="Condition" save="1" sync="1"/>
+	<node row="18" id="Task" name="preconditions" type="object" containclass="Condition" save="1" sync="1"/>
+	<node row="19" element="任务链" id="Task" name="chain" type="uint32" save="1"/>
+	<node row="20" element="序号" id="Task" name="order" type="uint32" save="1"/>
+	<node row="21" element="时间" id="Task" name="time" type="uint64" save="1" sync="1"/>
+	<node row="22" id="Task" name="type" type="uint64"/>
+	<node row="23" id="Task" name="refresh" type="uint32" save="1" sync="1"/>
+</root>

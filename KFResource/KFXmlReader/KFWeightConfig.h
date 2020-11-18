@@ -18,6 +18,7 @@ namespace KFrame
     public:
         KFWeightConfig()
         {
+            _key_name = "id";
             _file_name = "weight";
         }
 

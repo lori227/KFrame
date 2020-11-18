@@ -8,22 +8,22 @@ namespace KFrame
 {
     static StringUInt32 _data_mask_list =
     {
-        {"Show", KFDataDefine::DataMaskShow},
-        {"Multiple", KFDataDefine::DataMaskMultiple},
-        {"Save", KFDataDefine::DataMaskSave},
-        {"Sync", KFDataDefine::DataMaskSync},
-        {"Request", KFDataDefine::DataMaskRequest},
-        {"View", KFDataDefine::DataMaskView},
-        {"Basic", KFDataDefine::DataMaskBasic},
-        {"Relation", KFDataDefine::DataMaskRelation},
-        {"Team", KFDataDefine::DataMaskTeam},
-        {"Guild", KFDataDefine::DataMaskGuild},
-        {"Rank", KFDataDefine::DataMaskRank},
-        {"AddCall", KFDataDefine::DataMaskAddCall},
-        {"RemoveCall", KFDataDefine::DataMaskRemoveCall},
-        {"UpdateCall", KFDataDefine::DataMaskUpdataCall},
-        {"Shield", KFDataDefine::DataMaskShield},
-        {"Client", KFDataDefine::DataMaskClient},
+        {"show", KFDataDefine::DataMaskShow},
+        {"multiple", KFDataDefine::DataMaskMultiple},
+        {"save", KFDataDefine::DataMaskSave},
+        {"sync", KFDataDefine::DataMaskSync},
+        {"request", KFDataDefine::DataMaskRequest},
+        {"view", KFDataDefine::DataMaskView},
+        {"basic", KFDataDefine::DataMaskBasic},
+        {"relation", KFDataDefine::DataMaskRelation},
+        {"team", KFDataDefine::DataMaskTeam},
+        {"guild", KFDataDefine::DataMaskGuild},
+        {"rank", KFDataDefine::DataMaskRank},
+        {"addcall", KFDataDefine::DataMaskAddCall},
+        {"removecall", KFDataDefine::DataMaskRemoveCall},
+        {"updatecall", KFDataDefine::DataMaskUpdataCall},
+        {"shield", KFDataDefine::DataMaskShield},
+        {"client", KFDataDefine::DataMaskClient},
     };
 
 
@@ -45,6 +45,7 @@ namespace KFrame
     public:
         KFDataConfig()
         {
+            _key_name = "id";
             _file_name = "class";
         }
 
@@ -111,11 +112,11 @@ namespace KFrame
         // 读取配置
         virtual void ReadSetting( KFXmlNode& xmlnode, KFClassSetting* kfsetting )
         {
-            auto dataname = xmlnode.ReadString( "Name" );
+            auto dataname = xmlnode.ReadString( "name" );
             auto kfdatasetting = kfsetting->_static_data.Create( dataname );
             kfdatasetting->_name = dataname;
 
-            kfdatasetting->_logic_name = xmlnode.ReadString( "LogicName", true );
+            kfdatasetting->_logic_name = xmlnode.ReadString( "logicname", true );
             if ( kfdatasetting->_logic_name.empty() )
             {
                 kfdatasetting->_logic_name = kfdatasetting->_name;
@@ -125,7 +126,7 @@ namespace KFrame
                 kfsetting->_logic_name_list[ kfdatasetting->_logic_name ] = kfdatasetting->_name;
             }
 
-            kfdatasetting->_type = KFDataDefine::ConvertDataType( xmlnode.ReadString( "Type" ) );
+            kfdatasetting->_type = KFDataDefine::ConvertDataType( xmlnode.ReadString( "type" ) );
             kfdatasetting->_logic_type = kfdatasetting->_type;
             switch ( kfdatasetting->_type )
             {
@@ -143,7 +144,7 @@ namespace KFrame
                 break;
             }
 
-            kfdatasetting->_contain_class = xmlnode.ReadString( "ContainClass", true );
+            kfdatasetting->_contain_class = xmlnode.ReadString( "containclass", true );
             if ( !kfdatasetting->_contain_class.empty() )
             {
                 auto type = KFDataDefine::ConvertDataType( kfdatasetting->_contain_class );
@@ -157,22 +158,22 @@ namespace KFrame
                 }
             }
 
-            kfdatasetting->_delay_save_time = xmlnode.ReadUInt32( "SaveTime", true );
-            kfdatasetting->_delete_type = xmlnode.ReadUInt32( "DeleteType", true );
-            kfdatasetting->_str_init_value = xmlnode.ReadString( "InitValue", true );
-            kfdatasetting->_str_min_value = xmlnode.ReadString( "MinValue", true );
-            kfdatasetting->_str_max_value = xmlnode.ReadString( "MaxValue", true );
-            kfdatasetting->_str_run_param = xmlnode.ReadString( "RunParam", true );
-            kfdatasetting->_str_max_capacity = xmlnode.ReadString( "Capacity", true );
-            kfdatasetting->_key_name = xmlnode.ReadString( "KeyName", true );
-            kfdatasetting->_config_key_name = xmlnode.ReadString( "ConfigKeyName", true );
-            kfdatasetting->_value_key_name = xmlnode.ReadString( "ValueKeyName", true );
-            kfdatasetting->_lua_file = xmlnode.ReadString( "LuaFile", true );
-            kfdatasetting->_add_function = xmlnode.ReadString( "AddFunction", true );
-            kfdatasetting->_update_function = xmlnode.ReadString( "UpdateFunction", true );
-            kfdatasetting->_remove_function = xmlnode.ReadString( "RemoveFunction", true );
+            kfdatasetting->_delay_save_time = xmlnode.ReadUInt32( "savetime", true );
+            kfdatasetting->_delete_type = xmlnode.ReadUInt32( "deletetype", true );
+            kfdatasetting->_str_init_value = xmlnode.ReadString( "initvalue", true );
+            kfdatasetting->_str_min_value = xmlnode.ReadString( "minvalue", true );
+            kfdatasetting->_str_max_value = xmlnode.ReadString( "maxvalue", true );
+            kfdatasetting->_str_run_param = xmlnode.ReadString( "runparam", true );
+            kfdatasetting->_str_max_capacity = xmlnode.ReadString( "capacity", true );
+            kfdatasetting->_key_name = xmlnode.ReadString( "keyname", true );
+            kfdatasetting->_config_key_name = xmlnode.ReadString( "configkeyname", true );
+            kfdatasetting->_value_key_name = xmlnode.ReadString( "valuekeyname", true );
+            kfdatasetting->_lua_file = xmlnode.ReadString( "luafile", true );
+            kfdatasetting->_add_function = xmlnode.ReadString( "addfunction", true );
+            kfdatasetting->_update_function = xmlnode.ReadString( "updatefunction", true );
+            kfdatasetting->_remove_function = xmlnode.ReadString( "removefunction", true );
 
-            kfdatasetting->_delay_online_sync_time = xmlnode.ReadUInt32( "Delay", true );
+            kfdatasetting->_delay_online_sync_time = xmlnode.ReadUInt32( "delay", true );
             if ( kfdatasetting->_delay_online_sync_time > 0u )
             {
                 kfsetting->_online_sync_time.insert( kfdatasetting->_delay_online_sync_time );

@@ -1,8 +1,0 @@
-<root version="335">
-	<item Id="1001110" ItemId="100001" ShopId="100111" CategoryId="101" Price="[{&quot;money&quot;:&quot;10&quot;}]" Discount="" RefreshTime="0" RefreshCd="120" LimitNum="[3,5]" BeginTime="0" EndTime="0" />
-	<item Id="1001120" ItemId="100002" ShopId="100111" CategoryId="101" Price="[{&quot;money&quot;:&quot;10&quot;}]" Discount="[90,90]" RefreshTime="0" RefreshCd="300" LimitNum="[3,3]" BeginTime="1570636800" EndTime="1571932800" />
-	<item Id="1001130" ItemId="100003" ShopId="100111" CategoryId="101" Price="[{&quot;money&quot;:&quot;10&quot;}]" Discount="[30,50]" RefreshTime="3" RefreshCd="0" LimitNum="" BeginTime="1570636800" EndTime="1571932800" />
-	<item Id="1001140" ItemId="100004" ShopId="100113" CategoryId="103" Price="[{&quot;money&quot;:&quot;10&quot;}]" Discount="[10,20]" RefreshTime="3" RefreshCd="0" LimitNum="[4,6]" BeginTime="1570636800" EndTime="1571932800" />
-	<item Id="1001150" ItemId="100005" ShopId="100113" CategoryId="103" Price="[{&quot;money&quot;:&quot;10&quot;}]" Discount="[10,20]" RefreshTime="3" RefreshCd="0" LimitNum="[4,6]" BeginTime="1570636800" EndTime="1571932800" />
-	<item Id="1001160" ItemId="100006" ShopId="100113" CategoryId="103" Price="[{&quot;money&quot;:&quot;10&quot;}]" Discount="[10,20]" RefreshTime="3" RefreshCd="0" LimitNum="" BeginTime="1570636800" EndTime="1571932800" />
-</root>

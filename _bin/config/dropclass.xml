@@ -1,0 +1,3 @@
+<root version="50a3c4ddfd1a143bd998c0992c219a00">
+	<node row="8" id="Player" name="drop" type="record" containclass="KeyValue" keyname="id" configkeyname="id" valuekeyname="value" save="1" sync="1"/>
+</root>

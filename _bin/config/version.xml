@@ -1,30 +1,39 @@
 <root>
-	<node name="dropdata" version="4abcd717e041c603923dcfe080a82919"/>
-	<node name="achieve" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
+	<node name="achieveclass" version="50a3c4ddfd1a143bd998c0992c219a00"/>
 	<node name="compound" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
-	<node name="achievecondition" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
-	<node name="conditiondefine" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
-	<node name="frameconstant" version="26230a675935caa816f4034dd7755339"/>
-	<node name="condition" version="26230a675935caa816f4034dd7755339"/>
-	<node name="execute" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
-	<node name="enter" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
-	<node name="dripgroup" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
-	<node name="unlock" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
+	<node name="taskclass" version="50a3c4ddfd1a143bd998c0992c219a00"/>
+	<node name="achieve" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
+	<node name="dropdata" version="4abcd717e041c603923dcfe080a82919"/>
+	<node name="sign" version="26230a675935caa816f4034dd7755339"/>
+	<node name="channel" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
+	<node name="relation" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
+	<node name="countcost" version="26230a675935caa816f4034dd7755339"/>
 	<node name="dropgroup" version="4abcd717e041c603923dcfe080a82919"/>
 	<node name="reward" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
-	<node name="constant" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
-	<node name="player" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
-	<node name="leave" version="26230a675935caa816f4034dd7755339"/>
-	<node name="frameconfig" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
-	<node name="channel" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
-	<node name="sign" version="26230a675935caa816f4034dd7755339"/>
-	<node name="reset" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
+	<node name="unlock" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
 	<node name="timeloop" version="4abcd717e041c603923dcfe080a82919"/>
+	<node name="frameconstant" version="26230a675935caa816f4034dd7755339"/>
+	<node name="condition" version="26230a675935caa816f4034dd7755339"/>
 	<node name="timesection" version="4abcd717e041c603923dcfe080a82919"/>
-	<node name="relation" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
-	<node name="taskexecute" version="26230a675935caa816f4034dd7755339"/>
-	<node name="team" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
-	<node name="countcost" version="26230a675935caa816f4034dd7755339"/>
+	<node name="framefilter" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
+	<node name="frameconfig" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
+	<node name="leave" version="4abcd717e041c603923dcfe080a82919"/>
+	<node name="player" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
+	<node name="execute" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
+	<node name="conditiondefine" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
 	<node name="task" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
-	<node name="taskcondition" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
+	<node name="signclass" version="50a3c4ddfd1a143bd998c0992c219a00"/>
+	<node name="enter" version="4abcd717e041c603923dcfe080a82919"/>
+	<node name="taskexecute" version="26230a675935caa816f4034dd7755339"/>
+	<node name="relationclass" version="50a3c4ddfd1a143bd998c0992c219a00"/>
+	<node name="team" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
+	<node name="reset" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
+	<node name="frameclass" version="50a3c4ddfd1a143bd998c0992c219a00"/>
+	<node name="itemclass" version="50a3c4ddfd1a143bd998c0992c219a00"/>
+	<node name="storeclass" version="50a3c4ddfd1a143bd998c0992c219a00"/>
+	<node name="mailclass" version="50a3c4ddfd1a143bd998c0992c219a00"/>
+	<node name="teamclass" version="50a3c4ddfd1a143bd998c0992c219a00"/>
+	<node name="dropclass" version="50a3c4ddfd1a143bd998c0992c219a00"/>
+	<node name="rank" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
+	<node name="weightpool" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
 </root>

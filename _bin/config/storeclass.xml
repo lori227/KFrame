@@ -1,0 +1,13 @@
+<root version="50a3c4ddfd1a143bd998c0992c219a00">
+	<node row="8" id="Player" name="goods" type="record" containclass="Goods" keyname="id" configkeyname="id" valuekeyname="count" save="1" sync="1"/>
+	<node row="9" id="Player" name="store" type="record" containclass="Store" keyname="id" configkeyname="id" save="1" sync="1"/>
+	<node row="10" id="Goods" name="id" type="uint32" save="1" sync="1"/>
+	<node row="11" id="Goods" name="count" type="uint32" save="1" sync="1"/>
+	<node row="12" id="Store" name="id" type="uint32" save="1" sync="1"/>
+	<node row="13" id="Store" name="time" type="uint64" save="1" sync="1"/>
+	<node row="14" id="Store" name="refresh" type="uint32" save="1" sync="1"/>
+	<node row="15" id="Store" name="goods" type="record" containclass="GoodsData" keyname="index" save="1" sync="1"/>
+	<node row="16" id="GoodsData" name="index" type="uint32" save="1" sync="1"/>
+	<node row="17" id="GoodsData" name="id" type="uint32" save="1" sync="1"/>
+	<node row="18" id="GoodsData" name="count" type="uint32" save="1" sync="1"/>
+</root>

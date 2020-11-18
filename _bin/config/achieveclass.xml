@@ -1,0 +1,6 @@
+<root version="50a3c4ddfd1a143bd998c0992c219a00">
+	<node row="8" id="Player" name="achieve" type="record" containclass="Achieve" keyname="id" configkeyname="id" valuekeyname="value" save="1" sync="1" updatecall="1"/>
+	<node row="9" id="Achieve" name="id" type="uint32" save="1" sync="1" addcall="1" removecall="1" updatecall="1"/>
+	<node row="10" id="Achieve" name="conditions" type="object" containclass="Condition" save="1" sync="1"/>
+	<node row="11" id="Achieve" name="status" type="uint32" save="1" sync="1" addcall="1" removecall="1" updatecall="1"/>
+</root>

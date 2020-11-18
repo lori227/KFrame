@@ -1,5 +1,0 @@
-<root version="1658">
-	<item Id="1" GenerateId="7290001" Clear="0" Cost="" />
-	<item Id="2" GenerateId="7290000" Clear="1" Cost="" />
-	<item Id="3" GenerateId="7290000" Clear="1" Cost="[[1,1,1000]]" />
-</root>

@@ -103,7 +103,7 @@ namespace KFrame
 
     void KFFilterConfig::ReadSetting( KFXmlNode& xmlnode, KFFilterSetting* kfsetting )
     {
-        auto word = xmlnode.ReadString( "Word" );
+        auto word = xmlnode.ReadString( "word" );
         InsertWord( &_root_word_data, word.data(), static_cast< uint32 >( word.length() ), 0 );
     }
 }

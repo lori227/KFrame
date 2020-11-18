@@ -1,0 +1,16 @@
+<root version="50a3c4ddfd1a143bd998c0992c219a00">
+	<node row="8" id="Player" name="mail" type="record" containclass="Mail" keyname="id" configkeyname="id" sync="1"/>
+	<node row="9" id="Mail" name="id" type="uint64" sync="1"/>
+	<node row="10" id="Mail" name="configid" type="uint32" sync="1"/>
+	<node row="11" id="Mail" name="flag" type="uint32" sync="1"/>
+	<node row="12" id="Mail" name="type" type="uint32" sync="1"/>
+	<node row="13" id="Mail" name="status" type="uint32" sync="1"/>
+	<node row="14" id="Mail" name="title" type="string" sync="1"/>
+	<node row="15" id="Mail" name="content" type="string" sync="1"/>
+	<node row="16" id="Mail" name="reward" type="string" sync="1"/>
+	<node row="17" id="Mail" name="validtime" type="uint64" sync="1"/>
+	<node row="18" id="Mail" name="sendtime" type="uint64" sync="1"/>
+	<node row="19" id="Mail" name="sendname" type="string" sync="1"/>
+	<node row="20" id="Mail" name="sendid" type="uint64" sync="1"/>
+	<node row="21" id="Mail" name="sendsex" type="uint64" sync="1"/>
+</root>
