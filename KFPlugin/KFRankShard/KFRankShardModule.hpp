@@ -17,7 +17,7 @@
 #include "KFRouteClient/KFRouteClientInterface.h"
 #include "KFBasicDatabase/KFBasicDatabaseInterface.h"
 #include "KFXmlReader/KFRankConfig.hpp"
-#include "KFXmlReader/KFTimeConfig.h"
+#include "KFXmlReader/KFTimeLoopConfig.hpp"
 
 namespace KFrame
 {

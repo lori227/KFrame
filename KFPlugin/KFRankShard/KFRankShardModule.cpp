@@ -178,7 +178,7 @@ namespace KFrame
         }
 
         // 时间配置
-        auto kftimesetting = KFTimeConfig::Instance()->FindSetting( kfranksetting->_refresh_time_id );
+        auto kftimesetting = KFTimeLoopConfig::Instance()->FindSetting( kfranksetting->_refresh_time_id );
         if ( kftimesetting == nullptr )
         {
             return false;
@@ -186,7 +186,7 @@ namespace KFrame
 
         // 获得排行榜列表
         auto refreshok = false;
-        auto timedata = &kftimesetting->_time_section_list.front()._start_time;
+        auto timedata = &kftimesetting->_time_data;
         auto queryzonelist = _rank_redis_driver->SMembers( __DATABASE_KEY_2__( __STRING__( ranksortlist ), rankid ) );
         for ( auto& strzoneid : queryzonelist->_value )
         {
