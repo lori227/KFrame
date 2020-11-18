@@ -33,6 +33,7 @@
 		<type name="conditiondefine" cpp="KFConditionDefineOption" cppfunction="ReadString" cppextend="._str_condition" csharp="string" lua="local"/>
 		<type name="execute" cpp="ExecuteDataPtr" cppfunction="ReadExecuteData" cppextend="" csharp="string" lua="local"/>
 		<type name="range" cpp="KFRange<uint32>" cppfunction="ReadRange" cppextend="" csharp="string" lua="local"/>
+		<type name="stringset" cpp="StringSet" cppfunction="ReadStringSet" cppextend="" csharp="string" lua="local"/>
 		<type name="stringlist" cpp="StringList" cppfunction="ReadStringList" cppextend="" csharp="string" lua="local"/>
 	</types>
 
