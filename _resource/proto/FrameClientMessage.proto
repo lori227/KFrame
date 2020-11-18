@@ -47,7 +47,7 @@ enum FrameClientProtocol
 	MSG_ACHIEVE_REWARD_REQ				= 302;	// 领取成就奖励
 	MSG_ACTIVITY_REWARD_REQ 			= 304;	// 领取活动奖励
 	MSG_COMPOUND_REQ					= 305;	// 属性合成请求
-	MSG_SEVEN_SIGNIN_REWARD_REQ			= 307;	// 领取7天签到奖励
+	MSG_SEVEN_SIGN_REWARD_REQ			= 307;	// 领取7天签到奖励
 
 	// item
 	MSG_SPLIT_ITEM_REQ					= 401;	// 拆分道具( 把一堆堆叠物品拆分成2个 )
@@ -352,8 +352,8 @@ message MsgActivityRewardReq
 }
 
 // 领取7天签到奖励
-// MSG_SEVEN_SIGNIN_REWARD_REQ
-message MsgSevenSignInRewardReq
+// MSG_SEVEN_SIGN_REWARD_REQ
+message MsgSevenSignRewardReq
 {
 	uint32 day = 1;		// 第几天的奖励( 根据角色属性singin的sevenday的天数, 和sevenreward奖励标记来判断 )
 }

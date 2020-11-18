@@ -1,2 +1,9 @@
-<root version="26">
+<root version="b23436e3e9f4daa80e38a6dcab7724c8">
+	<node row="8" id="1" dataname="sevenday" operate="3"/>
+	<node row="9" id="1" dataname="sevenreward" operate="3"/>
+	<node row="10" id="1" functionname="goods"/>
+	<node row="11" id="1" functionname="store"/>
+	<node row="12" id="2" functionname="taskchain"/>
+	<node row="13" id="2" functionname="goods"/>
+	<node row="14" id="2" functionname="store"/>
 </root>

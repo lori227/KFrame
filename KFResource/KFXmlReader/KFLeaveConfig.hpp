@@ -1,50 +1,44 @@
-ï»¿#ifndef __KF_LEAVE_CONFIG_H__
-#define __KF_LEAVE_CONFIG_H__
+#ifndef	__KF_LEAVE_CONFIG_H__
+#define	__KF_LEAVE_CONFIG_H__
 
 #include "KFConfig.h"
 
 namespace KFrame
 {
-    class KFLeaveSetting : public KFIntSetting
-    {
-    public:
-        // luaè„šæœ¬
-        std::string _lua_file;
+	/////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////
+	class KFLeaveSetting : public KFIntSetting
+	{
+	public:
+		// lua½Å±¾
+		std::string _lua_file;
 
-        // luaå‡½æ•°
-        std::string _lua_function;
-    };
-    ////////////////////////////////////////////////////////////////////////////////////
-    class KFLeaveConfig : public KFConfigT< KFLeaveSetting >, public KFInstance< KFLeaveConfig >
-    {
-    public:
-        KFLeaveConfig()
-        {
-            _file_name = "leave";
-        }
+		// µ÷ÓÃº¯Êý
+		std::string _lua_function;
 
-    protected:
-        // åˆ›å»ºé…ç½®
-        KFLeaveSetting* CreateSetting( KFXmlNode& xmlnode )
-        {
-            auto service = xmlnode.ReadUInt32( "Service", true );
-            auto channel = xmlnode.ReadUInt32( "Channel", true );
-            auto ok = KFGlobal::Instance()->CheckChannelService( channel, service );
-            if ( !ok )
-            {
-                return nullptr;
-            }
+	};
 
-            return KFConfigT< KFLeaveSetting >::CreateSetting( xmlnode );
-        }
+	/////////////////////////////////////////////////////////////////////////////////
+	class KFLeaveConfig : public KFConfigT< KFLeaveSetting >, public KFInstance< KFLeaveConfig >
+	{
+	public:
+		KFLeaveConfig()
+		{
+			_key_name = "id";
+			_file_name = "leave";
+		}
 
-        // è¯»å–é…ç½®
-        virtual void ReadSetting( KFXmlNode& xmlnode, KFLeaveSetting* kfsetting )
-        {
-            kfsetting->_lua_file = xmlnode.ReadString( "LuaFile" );
-            kfsetting->_lua_function = xmlnode.ReadString( "LuaFunction" );
-        }
-    };
+		~KFLeaveConfig() = default;
+
+	protected:
+		virtual void ReadSetting( KFXmlNode& xmlnode, KFLeaveSetting* kfsetting )
+		{
+			kfsetting->_lua_file = xmlnode.ReadString( "luafile", true );
+			kfsetting->_lua_function = xmlnode.ReadString( "luafunction", true );
+		}
+
+	};
+
+	/////////////////////////////////////////////////////////////////////////////////
 }
-
 #endif

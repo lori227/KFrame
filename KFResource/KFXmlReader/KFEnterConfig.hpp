@@ -1,50 +1,44 @@
-ï»¿#ifndef __KF_ENTER_CONFIG_H__
-#define __KF_ENTER_CONFIG_H__
+#ifndef	__KF_ENTER_CONFIG_H__
+#define	__KF_ENTER_CONFIG_H__
 
 #include "KFConfig.h"
 
 namespace KFrame
 {
-    class KFEnterSetting : public KFIntSetting
-    {
-    public:
-        // luaè„šæœ¬
-        std::string _lua_file;
+	/////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////
+	class KFEnterSetting : public KFIntSetting
+	{
+	public:
+		// lua½Å±¾
+		std::string _lua_file;
 
-        // luaå‡½æ•°
-        std::string _lua_function;
-    };
-    ////////////////////////////////////////////////////////////////////////////////////
-    class KFEnterConfig : public KFConfigT< KFEnterSetting >, public KFInstance< KFEnterConfig >
-    {
-    public:
-        KFEnterConfig()
-        {
-            _file_name = "enter";
-        }
+		// µ÷ÓÃº¯Êý
+		std::string _lua_function;
 
-    protected:
-        // åˆ›å»ºé…ç½®
-        KFEnterSetting* CreateSetting( KFXmlNode& xmlnode )
-        {
-            auto service = xmlnode.ReadUInt32( "Service", true );
-            auto channel = xmlnode.ReadUInt32( "Channel", true );
-            auto ok = KFGlobal::Instance()->CheckChannelService( channel, service );
-            if ( !ok )
-            {
-                return nullptr;
-            }
+	};
 
-            return KFConfigT< KFEnterSetting >::CreateSetting( xmlnode );
-        }
+	/////////////////////////////////////////////////////////////////////////////////
+	class KFEnterConfig : public KFConfigT< KFEnterSetting >, public KFInstance< KFEnterConfig >
+	{
+	public:
+		KFEnterConfig()
+		{
+			_key_name = "id";
+			_file_name = "enter";
+		}
 
-        // è¯»å–é…ç½®
-        virtual void ReadSetting( KFXmlNode& xmlnode, KFEnterSetting* kfsetting )
-        {
-            kfsetting->_lua_file = xmlnode.ReadString( "LuaFile" );
-            kfsetting->_lua_function = xmlnode.ReadString( "LuaFunction" );
-        }
-    };
+		~KFEnterConfig() = default;
+
+	protected:
+		virtual void ReadSetting( KFXmlNode& xmlnode, KFEnterSetting* kfsetting )
+		{
+			kfsetting->_lua_file = xmlnode.ReadString( "luafile", true );
+			kfsetting->_lua_function = xmlnode.ReadString( "luafunction", true );
+		}
+
+	};
+
+	/////////////////////////////////////////////////////////////////////////////////
 }
-
 #endif

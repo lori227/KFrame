@@ -1,5 +1,5 @@
-﻿#ifndef __KF_SIGNIN_MODULE_H__
-#define __KF_SIGNIN_MODULE_H__
+﻿#ifndef __KF_SIGN_MODULE_H__
+#define __KF_SIGN_MODULE_H__
 
 /************************************************************************
 //    @Module			:    签到模块
@@ -9,20 +9,20 @@
 //    @Date             :    2018-7-28
 ************************************************************************/
 
-#include "KFSignInInterface.h"
+#include "KFSignInterface.h"
 #include "KFGame/KFGameInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFMessage/KFMessageInterface.h"
-#include "KFXmlReader/KFSignInConfig.hpp"
+#include "KFXmlReader/KFSignConfig.hpp"
 
 namespace KFrame
 {
-    class KFSignInModule : public KFSignInInterface
+    class KFSignModule : public KFSignInterface
     {
     public:
-        KFSignInModule() = default;
-        ~KFSignInModule() = default;
+        KFSignModule() = default;
+        ~KFSignModule() = default;
 
         virtual void BeforeRun();
 

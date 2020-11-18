@@ -1,7 +1,7 @@
-﻿#include "KFSignInPlugin.hpp"
+﻿#include "KFSignPlugin.hpp"
 #include "KFLibrary.h"
 
-__KF_EXPORT__ __KF_PLUGIN_ENRTY__( KFrame::KFSignInPlugin );
-__KF_EXPORT__ __KF_PLUGIN_LEAVE__( KFrame::KFSignInPlugin );
+__KF_EXPORT__ __KF_PLUGIN_ENRTY__( KFrame::KFSignPlugin );
+__KF_EXPORT__ __KF_PLUGIN_LEAVE__( KFrame::KFSignPlugin );
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////

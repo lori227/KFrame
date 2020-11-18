@@ -6,11 +6,6 @@
 
 namespace KFrame
 {
-    enum KFSignInEnum
-    {
-        SevenDay = 1,		// 7天签到
-    };
-
     /////////////////////////////////////////////////////////////////////////////////
     class KFSignInSetting : public KFIntSetting
     {

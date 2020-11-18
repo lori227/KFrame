@@ -1,21 +1,21 @@
-﻿#include "KFSignInPlugin.hpp"
-#include "KFSignInModule.hpp"
+﻿#include "KFSignPlugin.hpp"
+#include "KFSignModule.hpp"
 #include "KFConfig/KFConfigInterface.h"
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame
 {
-    void KFSignInPlugin::Install()
+    void KFSignPlugin::Install()
     {
-        __REGISTER_MODULE__( KFSignIn );
+        __REGISTER_MODULE__( KFSign );
     }
 
-    void KFSignInPlugin::UnInstall()
+    void KFSignPlugin::UnInstall()
     {
-        __UN_MODULE__( KFSignIn );
+        __UN_MODULE__( KFSign );
     }
 
-    void KFSignInPlugin::LoadModule()
+    void KFSignPlugin::LoadModule()
     {
         __FIND_MODULE__( _kf_game, KFGameInterface );
         __FIND_MODULE__( _kf_config, KFConfigInterface );
@@ -24,8 +24,8 @@ namespace KFrame
         __FIND_MODULE__( _kf_message, KFMessageInterface );
     }
 
-    void KFSignInPlugin::AddConfig()
+    void KFSignPlugin::AddConfig()
     {
-        __KF_ADD_CONFIG__( KFSignInConfig );
+        __KF_ADD_CONFIG__( KFSignConfig );
     }
 }

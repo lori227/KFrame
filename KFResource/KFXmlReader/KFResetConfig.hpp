@@ -1,72 +1,69 @@
-ï»¿#ifndef __KF_RESET_CONFIG_H__
-#define __KF_RESET_CONFIG_H__
+#ifndef	__KF_RESET_CONFIG_H__
+#define	__KF_RESET_CONFIG_H__
 
 #include "KFConfig.h"
 
 namespace KFrame
 {
-    /////////////////////////////////////////////////////////////////////////////////
-    class KFResetData
-    {
-    public:
-        std::string _function_name;		// è°ƒç”¨çš„å‡½æ•°å
+	/////////////////////////////////////////////////////////////////////////////////
+	class ResetData
+	{
+	public:
+		// µ÷ÓÃµÄº¯ÊıÃû×Ö
+		std::string _function_name;
 
-        std::string _parent_name;		// çˆ¶å±æ€§å˜é‡åç§°
-        uint32 _key = 0u;				// å±æ€§çš„å˜é‡id
-        std::string _data_name;			// å±æ€§å˜é‡åç§°
-        uint32 _operate = KFEnum::Set;	// æ“ä½œçš„ç±»å‹
-        uint32 _value = 0u;				// æ“ä½œçš„åˆå§‹å€¼
-    };
+		// ¸¸ÊôĞÔÃû³Æ
+		std::string _parent_name;
 
-    class KFResetSetting : public KFIntSetting
-    {
-    public:
-        // é‡ç½®çš„æ•°æ®åˆ—è¡¨
-        std::vector< KFResetData > _reset_data_list;
-    };
+		// ¼üÖµ
+		uint32 _key = 0u;
 
-    ////////////////////////////////////////////////////////////////////////////////////
-    class KFResetConfig : public KFConfigT< KFResetSetting >, public KFInstance< KFResetConfig >
-    {
-    public:
-        KFResetConfig()
-        {
-            _file_name = "reset";
-        }
+		// ÊôĞÔÃû³Æ
+		std::string _data_name;
 
-    protected:
-        // åˆ›å»ºé…ç½®
-        KFResetSetting* CreateSetting( KFXmlNode& xmlnode )
-        {
-            return _settings.Create( 0 );
-        }
+		// ²Ù×÷
+		uint32 _operate = 0u;
 
-        virtual void ClearSetting()
-        {
-            _reset_settings.Clear();
-            KFConfigT< KFResetSetting >::ClearSetting();
-        }
+		// ÊıÖµ
+		uint32 _value = 0u;
 
-        // è¯»å–é…ç½®
-        virtual void ReadSetting( KFXmlNode& xmlnode, KFResetSetting* kfsetting )
-        {
-            auto timeid = xmlnode.ReadUInt32( "TimeId" );
-            auto resetsetting = _reset_settings.Create( timeid );
+	};
 
-            // é‡ç½®ä¿¡æ¯
-            KFResetData resetdata;
-            resetdata._function_name = xmlnode.ReadString( "FunctionName", true );
-            resetdata._parent_name = xmlnode.ReadString( "ParentName", true );
-            resetdata._key = xmlnode.ReadUInt32( "Key", true );
-            resetdata._data_name = xmlnode.ReadString( "DataName" );
-            resetdata._operate = xmlnode.ReadUInt32( "Operate" );
-            resetdata._value = xmlnode.ReadUInt32( "Value", true );
-            resetsetting->_reset_data_list.push_back( resetdata );
-        }
+	/////////////////////////////////////////////////////////////////////////////////
+	class KFResetSetting : public KFIntSetting
+	{
+	public:
+		std::vector<ResetData> _reset_data_list;
+	};
 
-    public:
-        KFMap<uint32, uint32, KFResetSetting> _reset_settings;
-    };
+	/////////////////////////////////////////////////////////////////////////////////
+	class KFResetConfig : public KFConfigT< KFResetSetting >, public KFInstance< KFResetConfig >
+	{
+	public:
+		KFResetConfig()
+		{
+			_key_name = "id";
+			_file_name = "reset";
+		}
+
+		~KFResetConfig() = default;
+
+	protected:
+		virtual void ReadSetting( KFXmlNode& xmlnode, KFResetSetting* kfsetting )
+		{
+		
+			ResetData resetdata;
+			resetdata._function_name = xmlnode.ReadString( "functionname" );
+			resetdata._parent_name = xmlnode.ReadString( "parentname" );
+			resetdata._key = xmlnode.ReadUInt32( "key" );
+			resetdata._data_name = xmlnode.ReadString( "dataname" );
+			resetdata._operate = xmlnode.ReadUInt32( "operate" );
+			resetdata._value = xmlnode.ReadUInt32( "value" );
+			kfsetting->_reset_data_list.push_back( resetdata );
+		}
+
+	};
+
+	/////////////////////////////////////////////////////////////////////////////////
 }
-
 #endif

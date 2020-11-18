@@ -1,0 +1,9 @@
+<root version="26230a675935caa816f4034dd7755339">
+	<node row="8" id="1" reward="[{&quot;money&quot;:&quot;90&quot;}]" extendreward="[{&quot;item&quot;:{&quot;id&quot;:&quot;11001&quot;,&quot;count&quot;:&quot;1&quot;}}]"/>
+	<node row="9" id="2" reward="[{&quot;money&quot;:&quot;100&quot;}]" extendreward="[{&quot;money&quot;:&quot;0&quot;}]"/>
+	<node row="10" id="3" reward="[{&quot;money&quot;:&quot;120&quot;}]" extendreward="[{&quot;money&quot;:&quot;0&quot;}]"/>
+	<node row="11" id="4" reward="[{&quot;money&quot;:&quot;160&quot;}]" extendreward="[{&quot;item&quot;:{&quot;id&quot;:&quot;10001&quot;,&quot;count&quot;:&quot;1&quot;}}]"/>
+	<node row="12" id="5" reward="[{&quot;money&quot;:&quot;230&quot;}]" extendreward="[{&quot;money&quot;:&quot;0&quot;}]"/>
+	<node row="13" id="6" reward="[{&quot;money&quot;:&quot;340&quot;}]" extendreward="[{&quot;money&quot;:&quot;0&quot;}]"/>
+	<node row="14" id="7" reward="[{&quot;money&quot;:&quot;500&quot;}]" extendreward="[{&quot;item&quot;:{&quot;id&quot;:&quot;20001&quot;,&quot;count&quot;:&quot;1&quot;}}]"/>
+</root>

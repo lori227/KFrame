@@ -4,7 +4,7 @@
 
 namespace KFrame
 {
-    class KFSignInPlugin : public KFPlugin
+    class KFSignPlugin : public KFPlugin
     {
     public:
         // 注册

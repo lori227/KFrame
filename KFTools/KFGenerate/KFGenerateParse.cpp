@@ -466,6 +466,23 @@ namespace KFrame
         return ( pos != std::string::npos );
     }
 
+    bool KFGenerateParse::IsNeedWriteCppVariable( const ExcelAttribute* attribute, const std::string& keyname )
+    {
+        if ( !attribute->_cpp_parent_class.empty() || attribute->_cpp_class.empty() )
+        {
+            return false;
+        }
+
+        if ( attribute->_config_name == keyname ||
+                attribute->_config_name == __STRING__( channel ) ||
+                attribute->_config_name == __STRING__( service ) )
+        {
+            return false;
+        }
+
+        return true;
+    }
+
 #define __WRITE_CPP_ATTRIBUTE__( attribute ) \
     if ( !attribute->_comments.empty() )\
     {\
@@ -590,9 +607,7 @@ namespace KFrame
             for ( auto& iter : exceldata->_attributes )
             {
                 auto attribute = &iter.second;
-                if ( !attribute->_cpp_parent_class.empty() ||
-                        attribute->_config_name == keyname ||
-                        attribute->_cpp_class.empty() )
+                if ( !IsNeedWriteCppVariable( attribute, keyname ) )
                 {
                     continue;
                 }
@@ -707,7 +722,7 @@ namespace KFrame
                 for ( auto& iter : exceldata->_attributes )
                 {
                     auto attribute = &iter.second;
-                    if ( attribute->_config_name == keyname || attribute->_cpp_class.empty() )
+                    if ( !IsNeedWriteCppVariable( attribute, keyname ) )
                     {
                         continue;
                     }
@@ -719,10 +734,7 @@ namespace KFrame
                         return false;
                     }
 
-                    if ( attribute->_cpp_parent_class.empty() )
-                    {
-                        xmlfile << __FORMAT__( "\t\t\tkfsetting->{}{} = xmlnode.{}( \"{}\", true );\n", attribute->_cpp_name, typeinfo->_cpp_extend, typeinfo->_cpp_function, attribute->_config_name );
-                    }
+                    xmlfile << __FORMAT__( "\t\t\tkfsetting->{}{} = xmlnode.{}( \"{}\", true );\n", attribute->_cpp_name, typeinfo->_cpp_extend, typeinfo->_cpp_function, attribute->_config_name );
                 }
 
                 // 子类的列表

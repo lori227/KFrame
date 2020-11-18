@@ -188,9 +188,9 @@ LIBPROTOC_EXPORT extern MsgSetRefuseRelationInviteReqDefaultTypeInternal _MsgSet
 class MsgSetSexReq;
 class MsgSetSexReqDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgSetSexReqDefaultTypeInternal _MsgSetSexReq_default_instance_;
-class MsgSevenSignInRewardReq;
-class MsgSevenSignInRewardReqDefaultTypeInternal;
-LIBPROTOC_EXPORT extern MsgSevenSignInRewardReqDefaultTypeInternal _MsgSevenSignInRewardReq_default_instance_;
+class MsgSevenSignRewardReq;
+class MsgSevenSignRewardReqDefaultTypeInternal;
+LIBPROTOC_EXPORT extern MsgSevenSignRewardReqDefaultTypeInternal _MsgSevenSignRewardReq_default_instance_;
 class MsgShowElement;
 class MsgShowElementDefaultTypeInternal;
 LIBPROTOC_EXPORT extern MsgShowElementDefaultTypeInternal _MsgShowElement_default_instance_;
@@ -335,7 +335,7 @@ template<> LIBPROTOC_EXPORT ::KFMsg::MsgServerChatReq* Arena::CreateMaybeMessage
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgSetNameReq* Arena::CreateMaybeMessage<::KFMsg::MsgSetNameReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgSetRefuseRelationInviteReq* Arena::CreateMaybeMessage<::KFMsg::MsgSetRefuseRelationInviteReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgSetSexReq* Arena::CreateMaybeMessage<::KFMsg::MsgSetSexReq>(Arena*);
-template<> LIBPROTOC_EXPORT ::KFMsg::MsgSevenSignInRewardReq* Arena::CreateMaybeMessage<::KFMsg::MsgSevenSignInRewardReq>(Arena*);
+template<> LIBPROTOC_EXPORT ::KFMsg::MsgSevenSignRewardReq* Arena::CreateMaybeMessage<::KFMsg::MsgSevenSignRewardReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgShowElement* Arena::CreateMaybeMessage<::KFMsg::MsgShowElement>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgSortItemReq* Arena::CreateMaybeMessage<::KFMsg::MsgSortItemReq>(Arena*);
 template<> LIBPROTOC_EXPORT ::KFMsg::MsgSplitItemReq* Arena::CreateMaybeMessage<::KFMsg::MsgSplitItemReq>(Arena*);
@@ -403,7 +403,7 @@ enum FrameClientProtocol {
   MSG_ACHIEVE_REWARD_REQ = 302,
   MSG_ACTIVITY_REWARD_REQ = 304,
   MSG_COMPOUND_REQ = 305,
-  MSG_SEVEN_SIGNIN_REWARD_REQ = 307,
+  MSG_SEVEN_SIGN_REWARD_REQ = 307,
   MSG_SPLIT_ITEM_REQ = 401,
   MSG_MERGE_ITEM_REQ = 402,
   MSG_USE_ITEM_REQ = 403,
@@ -3892,24 +3892,24 @@ class LIBPROTOC_EXPORT MsgActivityRewardReq : public ::google::protobuf::Message
 };
 // -------------------------------------------------------------------
 
-class LIBPROTOC_EXPORT MsgSevenSignInRewardReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgSevenSignInRewardReq) */ {
+class LIBPROTOC_EXPORT MsgSevenSignRewardReq : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:KFMsg.MsgSevenSignRewardReq) */ {
  public:
-  MsgSevenSignInRewardReq();
-  virtual ~MsgSevenSignInRewardReq();
+  MsgSevenSignRewardReq();
+  virtual ~MsgSevenSignRewardReq();
 
-  MsgSevenSignInRewardReq(const MsgSevenSignInRewardReq& from);
+  MsgSevenSignRewardReq(const MsgSevenSignRewardReq& from);
 
-  inline MsgSevenSignInRewardReq& operator=(const MsgSevenSignInRewardReq& from) {
+  inline MsgSevenSignRewardReq& operator=(const MsgSevenSignRewardReq& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  MsgSevenSignInRewardReq(MsgSevenSignInRewardReq&& from) noexcept
-    : MsgSevenSignInRewardReq() {
+  MsgSevenSignRewardReq(MsgSevenSignRewardReq&& from) noexcept
+    : MsgSevenSignRewardReq() {
     *this = ::std::move(from);
   }
 
-  inline MsgSevenSignInRewardReq& operator=(MsgSevenSignInRewardReq&& from) noexcept {
+  inline MsgSevenSignRewardReq& operator=(MsgSevenSignRewardReq&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -3919,34 +3919,34 @@ class LIBPROTOC_EXPORT MsgSevenSignInRewardReq : public ::google::protobuf::Mess
   }
   #endif
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgSevenSignInRewardReq& default_instance();
+  static const MsgSevenSignRewardReq& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const MsgSevenSignInRewardReq* internal_default_instance() {
-    return reinterpret_cast<const MsgSevenSignInRewardReq*>(
-               &_MsgSevenSignInRewardReq_default_instance_);
+  static inline const MsgSevenSignRewardReq* internal_default_instance() {
+    return reinterpret_cast<const MsgSevenSignRewardReq*>(
+               &_MsgSevenSignRewardReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     30;
 
-  void Swap(MsgSevenSignInRewardReq* other);
-  friend void swap(MsgSevenSignInRewardReq& a, MsgSevenSignInRewardReq& b) {
+  void Swap(MsgSevenSignRewardReq* other);
+  friend void swap(MsgSevenSignRewardReq& a, MsgSevenSignRewardReq& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline MsgSevenSignInRewardReq* New() const final {
-    return CreateMaybeMessage<MsgSevenSignInRewardReq>(NULL);
+  inline MsgSevenSignRewardReq* New() const final {
+    return CreateMaybeMessage<MsgSevenSignRewardReq>(NULL);
   }
 
-  MsgSevenSignInRewardReq* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<MsgSevenSignInRewardReq>(arena);
+  MsgSevenSignRewardReq* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MsgSevenSignRewardReq>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const MsgSevenSignInRewardReq& from);
-  void MergeFrom(const MsgSevenSignInRewardReq& from);
+  void CopyFrom(const MsgSevenSignRewardReq& from);
+  void MergeFrom(const MsgSevenSignRewardReq& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -3963,7 +3963,7 @@ class LIBPROTOC_EXPORT MsgSevenSignInRewardReq : public ::google::protobuf::Mess
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(MsgSevenSignInRewardReq* other);
+  void InternalSwap(MsgSevenSignRewardReq* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -3985,7 +3985,7 @@ class LIBPROTOC_EXPORT MsgSevenSignInRewardReq : public ::google::protobuf::Mess
   ::google::protobuf::uint32 day() const;
   void set_day(::google::protobuf::uint32 value);
 
-  // @@protoc_insertion_point(class_scope:KFMsg.MsgSevenSignInRewardReq)
+  // @@protoc_insertion_point(class_scope:KFMsg.MsgSevenSignRewardReq)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -11269,20 +11269,20 @@ inline void MsgActivityRewardReq::set_id(::google::protobuf::uint32 value) {
 
 // -------------------------------------------------------------------
 
-// MsgSevenSignInRewardReq
+// MsgSevenSignRewardReq
 
 // uint32 day = 1;
-inline void MsgSevenSignInRewardReq::clear_day() {
+inline void MsgSevenSignRewardReq::clear_day() {
   day_ = 0u;
 }
-inline ::google::protobuf::uint32 MsgSevenSignInRewardReq::day() const {
-  // @@protoc_insertion_point(field_get:KFMsg.MsgSevenSignInRewardReq.day)
+inline ::google::protobuf::uint32 MsgSevenSignRewardReq::day() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgSevenSignRewardReq.day)
   return day_;
 }
-inline void MsgSevenSignInRewardReq::set_day(::google::protobuf::uint32 value) {
+inline void MsgSevenSignRewardReq::set_day(::google::protobuf::uint32 value) {
   
   day_ = value;
-  // @@protoc_insertion_point(field_set:KFMsg.MsgSevenSignInRewardReq.day)
+  // @@protoc_insertion_point(field_set:KFMsg.MsgSevenSignRewardReq.day)
 }
 
 // -------------------------------------------------------------------

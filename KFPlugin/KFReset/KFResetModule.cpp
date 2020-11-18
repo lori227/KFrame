@@ -151,7 +151,7 @@ namespace KFrame
         }
     }
 
-    void KFResetModule::ResetPlayerData( KFEntity* player, const KFResetData* resetdata )
+    void KFResetModule::ResetPlayerData( KFEntity* player, const ResetData* resetdata )
     {
         if ( resetdata->_parent_name.empty() )
         {

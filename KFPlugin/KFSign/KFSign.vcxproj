@@ -12,20 +12,20 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFSignInModule.cpp" />
-    <ClCompile Include="KFSignInPlugin.cpp" />
+    <ClCompile Include="KFSignModule.cpp" />
+    <ClCompile Include="KFSignPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\KFResource\KFXmlReader\KFSignInConfig.hpp" />
-    <ClInclude Include="KFSignInInterface.h" />
-    <ClInclude Include="KFSignInModule.hpp" />
-    <ClInclude Include="KFSignInPlugin.hpp" />
+    <ClInclude Include="..\..\KFResource\KFXmlReader\KFSignConfig.hpp" />
+    <ClInclude Include="KFSignInterface.h" />
+    <ClInclude Include="KFSignModule.hpp" />
+    <ClInclude Include="KFSignPlugin.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{A6417992-C5CF-42A8-98B9-D434921586F2}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>NFProxyPlugin</RootNamespace>
-    <ProjectName>KFSignIn</ProjectName>
+    <ProjectName>KFSign</ProjectName>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

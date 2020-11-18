@@ -67,7 +67,7 @@ namespace KFrame
         std::tuple<bool, uint64> UpdateResetTime( KFEntity* player, KFData* kftimerecord, const KFTimeSetting* kfsetting );
 
         // 重置玩家属性
-        void ResetPlayerData( KFEntity* player, const KFResetData* resetdata );
+        void ResetPlayerData( KFEntity* player, const ResetData* resetdata );
 
         // 重置逻辑
         void ResetPlayerLogic( KFEntity* player, uint32 timeid, uint64 lastresettime, const std::string& functionname );
