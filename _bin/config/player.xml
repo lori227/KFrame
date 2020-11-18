@@ -1,5 +1,5 @@
-<root version="1754">
-	<item Channel="0" Service="0" Elements="[{&quot;taskchain&quot;:{&quot;id&quot;:&quot;1&quot;}}]" />
-	<item Channel="0" Service="0" Elements="[{&quot;hero&quot;:{&quot;id&quot;:&quot;4100004&quot;}},{&quot;hero&quot;:{&quot;id&quot;:&quot;4100005&quot;}}]" />
-	<item Channel="0" Service="0" Elements="[{&quot;buildskin&quot;:{&quot;id&quot;:&quot;1&quot;}}]" />
+<root version="b23436e3e9f4daa80e38a6dcab7724c8">
+	<node row="8" type="1" reward="[{&quot;hero&quot;:{&quot;id&quot;:&quot;1&quot;}}]"/>
+	<node row="9" type="1" reward="[{&quot;effect&quot;:{&quot;id&quot;:&quot;1&quot;}}]"/>
+	<node row="10" type="1" reward="[{&quot;foot&quot;:{&quot;id&quot;:&quot;1&quot;}}]"/>
 </root>

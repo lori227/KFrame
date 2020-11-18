@@ -311,7 +311,7 @@ namespace KFrame
         case KFTimeEnum::Hour:		// 小时
             return CheckLoopHour( timedata, lasttime, nowtime );
             break;
-        case  KFTimeEnum::Ever:
+        case KFTimeEnum::Ever:
             return CheckLoopEver( lasttime );
             break;
         }
@@ -473,10 +473,16 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFDate::CheckSectionTimeData( const KFTimeData* timedata, uint64 time )
+    bool KFDate::CheckInTimeSection( const KFTimeSection* timesection, uint64 time )
     {
         KFDate date( time );
-        return CheckSectionTimeData( timedata, date );
+        return CheckInTimeSection( timesection, date );
+    }
+
+    bool KFDate::CheckInTimeSection( const KFTimeSection* timesection, KFDate& date )
+    {
+        return CheckSectionTimeData( &timesection->_start_time_data, date ) &&
+               !CheckSectionTimeData( &timesection->_finish_time_data, date );
     }
 
     bool KFDate::CheckSectionTimeData( const KFTimeData* timedata, KFDate& date )

@@ -16,20 +16,20 @@ namespace KFrame
     public:
         // 注册计划任务
         template< class T >
-        void RegisterSchedule( uint32 timeid, uint64 objectid, T* module,
+        void RegisterSchedule( uint32 timesectionid, uint64 objectid, T* module,
                                void ( T::*starthandle )( uint64, uint64 ),
                                void ( T::*finishhandle )( uint64, uint64 ) )
         {
             KFScheduleFunction startfunction = std::bind( starthandle, module, std::placeholders::_1, std::placeholders::_2 );
             KFScheduleFunction finishfunction = std::bind( finishhandle, module, std::placeholders::_1, std::placeholders::_2 );
-            AddSchedule( timeid, module, objectid, startfunction, finishfunction );
+            AddSchedule( timesectionid, module, objectid, startfunction, finishfunction );
         }
 
         // 删除计划任务
         template< class T >
-        void UnRegisterSchedule( uint32 timeid, T* module )
+        void UnRegisterSchedule( uint32 timesectionid, T* module )
         {
-            RemoveSchedule( timeid, module );
+            RemoveSchedule( timesectionid, module );
         }
 
         // 删除计划任务
@@ -41,10 +41,10 @@ namespace KFrame
 
     protected:
         // 注册计划任务
-        virtual void AddSchedule( uint32 timeid, KFModule* module, uint64 objectid,
+        virtual void AddSchedule( uint32 timesectionid, KFModule* module, uint64 objectid,
                                   KFScheduleFunction& startfunction, KFScheduleFunction& finishfunction ) = 0;
         virtual void RemoveSchedule( KFModule* module ) = 0;
-        virtual void RemoveSchedule( uint32 timeid, KFModule* module ) = 0;
+        virtual void RemoveSchedule( uint32 timesectionid, KFModule* module ) = 0;
     };
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_INTERFACE__( _kf_schedule, KFScheduleInterface );
@@ -52,14 +52,14 @@ namespace KFrame
 #define __KF_SCHEDULE_FUNCTION__( function )\
     void function( uint64 objectid, uint64 durationtime )
 
-#define __REGISTER_SCHEDULE__( timeid, objectid, startfunction, finishfunction ) \
-    _kf_schedule->RegisterSchedule( timeid, objectid, this, startfunction, finishfunction )
+#define __REGISTER_SCHEDULE__( timesectionid, objectid, startfunction, finishfunction ) \
+    _kf_schedule->RegisterSchedule( timesectionid, objectid, this, startfunction, finishfunction )
 
 #define  __UN_SCHEDULE_0__() \
     _kf_schedule->UnRegisterSchedule( this )
 
-#define  __UN_SCHEDULE_1__( timeid ) \
-    _kf_schedule->UnRegisterSchedule( timeid, this )
+#define  __UN_SCHEDULE_1__( timesectionid ) \
+    _kf_schedule->UnRegisterSchedule( timesectionid, this )
 }
 
 #endif

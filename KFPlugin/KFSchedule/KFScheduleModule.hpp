@@ -12,7 +12,7 @@
 
 #include "KFScheduleData.hpp"
 #include "KFScheduleInterface.h"
-#include "KFXmlReader/KFTimeConfig.h"
+#include "KFXmlReader/KFTimeSectionConfig.hpp"
 
 namespace KFrame
 {
@@ -30,10 +30,10 @@ namespace KFrame
 
     protected:
         // 注册计划任务
-        virtual void AddSchedule( uint32 timeid, KFModule* module, uint64 objectid,
+        virtual void AddSchedule( uint32 timesectionid, KFModule* module, uint64 objectid,
                                   KFScheduleFunction& startfunction, KFScheduleFunction& finishfunction );
         virtual void RemoveSchedule( KFModule* module );
-        virtual void RemoveSchedule( uint32 timeid, KFModule* module );
+        virtual void RemoveSchedule( uint32 timesectionid, KFModule* module );
 
     protected:
         // 添加计划任务

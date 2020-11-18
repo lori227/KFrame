@@ -31,12 +31,12 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFScheduleModule::AddSchedule( uint32 timeid, KFModule* module, uint64 objectid,
+    void KFScheduleModule::AddSchedule( uint32 timesectionid, KFModule* module, uint64 objectid,
                                         KFScheduleFunction& startfunction,
                                         KFScheduleFunction& finishfunction )
     {
         auto scheduledata = __KF_NEW__( KFScheduleData );
-        scheduledata->_time_id = timeid;
+        scheduledata->_time_section_id = timesectionid;
         scheduledata->_object_id = objectid;
         scheduledata->_start_function.SetFunction( module, startfunction );
         scheduledata->_finish_function.SetFunction( module, finishfunction );
@@ -52,7 +52,7 @@ namespace KFrame
                 auto scheduledata = miter.second;
                 if ( scheduledata->_start_function._module == module )
                 {
-                    _kf_schedule_remove.emplace_back( std::make_tuple( scheduledata->_time_id, scheduledata->_start_function._module ) );
+                    _kf_schedule_remove.emplace_back( std::make_tuple( scheduledata->_time_section_id, scheduledata->_start_function._module ) );
                 }
             }
         }
@@ -73,17 +73,16 @@ namespace KFrame
 
         for ( auto& data : _kf_schedule_remove )
         {
-            uint32 timeid = 0u;
-            KFModule* module = nullptr;
-            std::tie( timeid, module ) = data;
+            auto _time_section_id = std::get<0>( data );
+            auto module = std::get<1>( data );
 
-            auto kfschedulelist = _kf_schedule_list.Find( timeid );
+            auto kfschedulelist = _kf_schedule_list.Find( _time_section_id );
             if ( kfschedulelist != nullptr )
             {
                 kfschedulelist->_schedule_data_list.Remove( module );
                 if ( kfschedulelist->_schedule_data_list.IsEmpty() )
                 {
-                    _kf_schedule_list.Remove( timeid );
+                    _kf_schedule_list.Remove( _time_section_id );
                 }
             }
         }
@@ -108,8 +107,8 @@ namespace KFrame
 
     void KFScheduleModule::AddSchedule( KFScheduleData* scheduledata )
     {
-        auto schedulelist = _kf_schedule_list.Create( scheduledata->_time_id );
-        schedulelist->_time_id = scheduledata->_time_id;
+        auto schedulelist = _kf_schedule_list.Create( scheduledata->_time_section_id );
+        schedulelist->_time_section_id = scheduledata->_time_section_id;
         schedulelist->_schedule_data_list.Insert( scheduledata->_start_function._module, scheduledata );
 
         // 如果正在执行, 需要执行回调
@@ -149,20 +148,19 @@ namespace KFrame
 
     void KFScheduleModule::ExecuteScheduleStart( KFScheduleDataList* schedulelist, KFDate& nowdate )
     {
-        auto kftimesetting = KFTimeConfig::Instance()->FindSetting( schedulelist->_time_id );
+        auto kftimesetting = KFTimeSectionConfig::Instance()->FindSetting( schedulelist->_time_section_id );
         if ( kftimesetting == nullptr )
         {
             return;
         }
 
-        for ( auto& timesection : kftimesetting->_time_section_list )
+        for ( auto& timesection : kftimesetting->_time_section )
         {
             // 在[starttime,endtime]区间内
-            if ( KFDate::CheckSectionTimeData( &timesection._start_time, nowdate ) &&
-                    !KFDate::CheckSectionTimeData( &timesection._end_time, nowdate ) )
+            if ( KFDate::CheckInTimeSection( &timesection, nowdate ) )
             {
                 schedulelist->_status = KFScheduleEnum::Runing;
-                schedulelist->_finish_time_data = timesection._end_time;
+                schedulelist->_finish_time_data = timesection._finish_time_data;
                 //schedulelist->_duration_time = CaclSectionTimeDataDuration( &timesection._start_time, &timesection._end_time );
 
                 // 功能函数回调

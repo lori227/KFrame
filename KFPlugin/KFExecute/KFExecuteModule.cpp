@@ -68,7 +68,7 @@ namespace KFrame
             return false;
         }
 
-        for ( auto& executedata : kfsetting->_execute_data_list )
+        for ( auto& executedata : kfsetting->_execute_data )
         {
             Execute( player, executedata._execute, modulename, moduleid, function, line );
         }
@@ -92,7 +92,7 @@ namespace KFrame
                 continue;
             }
 
-            for ( auto& executedata : kfsetting->_execute_data_list )
+            for ( auto& executedata : kfsetting->_execute_data )
             {
                 Execute( player, executedata._execute, modulename, moduleid, function, line );
             }

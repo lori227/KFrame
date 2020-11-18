@@ -13,6 +13,9 @@
 	<node name="reward" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
 	<node name="constant" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
 	<node name="leave" version="26230a675935caa816f4034dd7755339"/>
+	<node name="player" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
 	<node name="sign" version="26230a675935caa816f4034dd7755339"/>
 	<node name="reset" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
+	<node name="timeloop" version="4abcd717e041c603923dcfe080a82919"/>
+	<node name="timesection" version="4abcd717e041c603923dcfe080a82919"/>
 </root>

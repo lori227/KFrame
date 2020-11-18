@@ -54,9 +54,6 @@ namespace KFrame
     class KFTimeData
     {
     public:
-        // 时间标识
-        uint32 _flag = 0u;
-
         // 年
         uint32 _year = 0u;
 
@@ -74,6 +71,20 @@ namespace KFrame
 
         // 分钟
         uint32 _minute = 0u;
+
+        // 时间类型( 逻辑使用 )
+        uint32 _flag = 0u;
+    };
+
+    // 时间区间
+    class KFTimeSection
+    {
+    public:
+        // 开始时间
+        KFTimeData _start_time_data;
+
+        // 结束时间
+        KFTimeData _finish_time_data;
     };
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // 系统时间
@@ -139,7 +150,8 @@ namespace KFrame
         static bool CheckLoopTimeData( const KFTimeData* timedata, KFDate& lastdate, KFDate& nowdate );
 
         // 判断时间( 区间时间, 是否过了某一个时间点 )
-        static bool CheckSectionTimeData( const KFTimeData* timedata, uint64 time );
+        static bool CheckInTimeSection( const KFTimeSection* timesection, uint64 time );
+        static bool CheckInTimeSection( const KFTimeSection* timesection, KFDate& date );
         static bool CheckSectionTimeData( const KFTimeData* timedata, KFDate& date );
         //////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////

@@ -37,7 +37,7 @@ namespace KFrame
         for ( auto kftime = kftimerecord->First(); kftime != nullptr; kftime = kftimerecord->Next() )
         {
             auto id = kftime->GetKeyID();
-            auto kfsetting = KFTimeConfig::Instance()->FindSetting( id );
+            auto kfsetting = KFTimeLoopConfig::Instance()->FindSetting( id );
             if ( kfsetting == nullptr )
             {
                 removes.push_back( id );
@@ -55,25 +55,22 @@ namespace KFrame
         static UInt64Map _time_id_list;
         _time_id_list.clear();
 
-        for ( auto& iter : KFTimeConfig::Instance()->_settings._objects )
+        for ( auto& iter : KFTimeLoopConfig::Instance()->_settings._objects )
         {
             auto kfsetting = iter.second;
-            if ( kfsetting->_type == KFTimeEnum::Loop )
+            auto ok = false;
+            auto lasttime = _invalid_int;
+            std::tie( ok, lasttime ) = UpdateResetTime( player, kftimerecord, kfsetting );
+            if ( ok )
             {
-                auto ok = false;
-                auto lasttime = _invalid_int;
-                std::tie( ok, lasttime ) = UpdateResetTime( player, kftimerecord, kfsetting );
-                if ( ok )
-                {
-                    _time_id_list[ iter.first ] = lasttime;
-                }
+                _time_id_list[ iter.first ] = lasttime;
             }
         }
 
         return _time_id_list;
     }
 
-    std::tuple<bool, uint64> KFResetModule::UpdateResetTime( KFEntity* player, KFData* kftimerecord, const KFTimeSetting* kfsetting )
+    std::tuple<bool, uint64> KFResetModule::UpdateResetTime( KFEntity* player, KFData* kftimerecord, const KFTimeLoopSetting* kfsetting )
     {
         auto kftime = kftimerecord->Find( kfsetting->_id );
         if ( kftime == nullptr )
@@ -86,8 +83,7 @@ namespace KFrame
         auto ok = KFDate::CheckPassTime( KFGlobal::Instance()->_real_time, nexttime );
         if ( ok )
         {
-            auto timedata = &kfsetting->_time_section_list.front()._start_time;
-            auto newtime = KFDate::CalcTimeData( timedata, KFGlobal::Instance()->_real_time, 1 );
+            auto newtime = KFDate::CalcTimeData( &kfsetting->_time_data, KFGlobal::Instance()->_real_time, 1 );
             kftime->Set( __STRING__( value ), newtime );
         }
 
@@ -137,7 +133,7 @@ namespace KFrame
                 continue;
             }
 
-            for ( auto& resetdata : kfsetting->_reset_data_list )
+            for ( auto& resetdata : kfsetting->_reset_data )
             {
                 if ( resetdata._function_name.empty() )
                 {
@@ -186,12 +182,12 @@ namespace KFrame
             return;
         }
 
-        auto kftimesetting = KFTimeConfig::Instance()->FindSetting( timeid );
+        auto kftimesetting = KFTimeLoopConfig::Instance()->FindSetting( timeid );
         if ( kftimesetting == nullptr )
         {
             return;
         }
-        auto timedata = &kftimesetting->_time_section_list.front()._start_time;
+        auto timedata = &kftimesetting->_time_data;
         auto nowresettime = KFDate::CalcTimeData( timedata, KFGlobal::Instance()->_real_time );
 
         // 如果只计算一次

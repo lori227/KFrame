@@ -31,7 +31,7 @@ namespace KFrame
 
     void KFResetPlugin::AddConfig()
     {
-        __KF_ADD_CONFIG__( KFTimeConfig );
+        __KF_ADD_CONFIG__( KFTimeLoopConfig );
         __KF_ADD_CONFIG__( KFResetConfig );
         __KF_ADD_CONFIG__( KFEnterConfig );
         __KF_ADD_CONFIG__( KFLeaveConfig );

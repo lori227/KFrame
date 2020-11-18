@@ -399,8 +399,10 @@ namespace KFrame
 
     std::string KFGenerateParse::TransformNameToCpp( const std::string& name )
     {
+        // 删除最前面的KF
+        auto temp = RemovePrefix( name, _str_kf_prefix );
         std::string cppname;
-        for ( auto ch : name )
+        for ( auto ch : temp )
         {
             if ( ch >= 'A' && ch <= 'Z' )
             {
@@ -450,19 +452,16 @@ namespace KFrame
 
     std::string KFGenerateParse::FormatParentVariable( const std::string& classname )
     {
-        auto temp = __FORMAT__( "{}_list", TransformNameToCpp( classname ) );
+        auto temp = __FORMAT__( "{}", TransformNameToCpp( classname ) );
         return temp;
     }
 
     bool KFGenerateParse::IsParentCppClass( ExcelFileData* exceldata, const std::string& parentclass, const std::string& cppclass )
     {
-        auto option = exceldata->FindOption( parentclass );
-        if ( option == nullptr )
-        {
-            return false;
-        }
+        auto tupledata = FormatParentOption( exceldata, parentclass );
+        auto varibaleclass = std::get<1>( tupledata );
 
-        auto pos = option->_value.find( cppclass );
+        auto pos = varibaleclass.find( cppclass );
         return ( pos != std::string::npos );
     }
 
@@ -482,6 +481,28 @@ namespace KFrame
 
         return true;
     }
+
+    std::tuple<uint32, std::string, std::string> KFGenerateParse::FormatParentOption( ExcelFileData* exceldata, const std::string& classname )
+    {
+        auto option = exceldata->FindOption( classname );
+        if ( option == nullptr )
+        {
+            return std::make_tuple( 0u, _invalid_string, _invalid_string );
+        }
+
+        auto strvalue = option->_value;
+        auto type = KFUtility::SplitValue<uint32>( strvalue, __SPLIT_STRING__ );
+        auto parentname = KFUtility::SplitString( strvalue, __SPLIT_STRING__ );
+        auto comment = KFConvert::ToAscii( KFUtility::SplitString( strvalue, __SPLIT_STRING__ ) );
+        return std::make_tuple( type, parentname, comment );
+    }
+
+    std::string KFGenerateParse::RemovePrefix( std::string name, const std::string& prefix )
+    {
+        auto result = KFUtility::SplitString( name, prefix );
+        return !result.empty() ? result : name;
+    }
+
 
 #define __WRITE_CPP_ATTRIBUTE__( attribute ) \
     if ( !attribute->_comments.empty() )\
@@ -576,6 +597,20 @@ namespace KFrame
             for ( auto& iter : classlist )
             {
                 auto codeclass = &iter.second;
+
+                auto& tupledata = FormatParentOption( exceldata, iter.first );
+                auto type = std::get<0>( tupledata );
+                if ( type == CodeEnum::None )
+                {
+                    _error = __FORMAT__( "子类=[{}]没有填写option类型", iter.first );
+                    return false;
+                }
+
+                if ( type == CodeEnum::WriteNothing )
+                {
+                    continue;
+                }
+
                 xmlfile << __FORMAT__( "\tclass {}\n", codeclass->_name );
                 xmlfile << "\t{\n";
                 xmlfile << "\tpublic:\n";
@@ -619,15 +654,12 @@ namespace KFrame
             // 写子类
             for ( auto& iter : classlist )
             {
-                auto option = exceldata->FindOption( iter.first );
-                if ( option == nullptr )
-                {
-                    _error = __FORMAT__( "子类=[{}]没有填写option类型", file );
-                    return false;
-                }
+                auto& tupledata = FormatParentOption( exceldata, iter.first );
+                auto& classname = std::get<1>( tupledata );
+                auto& comment = std::get<2>( tupledata );
 
-
-                auto temp = __FORMAT__( "\t\t{} {};\n", option->_value, FormatParentVariable( iter.first ) );
+                xmlfile << __FORMAT__( "\t\t// {}\n", comment );
+                auto temp = __FORMAT__( "\t\t{} {};\n", classname, FormatParentVariable( iter.first ) );
                 xmlfile << __FORMAT__( temp, iter.first );
             }
 
@@ -742,7 +774,7 @@ namespace KFrame
                 {
                     xmlfile << __FORMAT__( "\t\t\n" );
 
-                    auto variablename = iter.first;
+                    auto variablename = RemovePrefix( iter.first, _str_kf_prefix );
                     std::transform( variablename.begin(), variablename.end(), variablename.begin(), ::tolower );
                     xmlfile << __FORMAT__( "\t\t\t{} {};\n", iter.first, variablename );
 
@@ -765,10 +797,14 @@ namespace KFrame
                     }
 
                     // 加入列表
+                    auto subname = FormatParentVariable( iter.first );
                     if ( IsParentCppClass( exceldata, iter.first, _str_vector ) )
                     {
-                        auto subname = FormatParentVariable( iter.first );
                         xmlfile << __FORMAT__( "\t\t\tkfsetting->{}.push_back( {} );\n", subname, variablename );
+                    }
+                    else
+                    {
+                        xmlfile << __FORMAT__( "\t\t\tkfsetting->{} = {};\n", subname, variablename );
                     }
                 }
 

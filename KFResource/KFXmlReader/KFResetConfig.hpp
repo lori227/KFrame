@@ -33,7 +33,8 @@ namespace KFrame
 	class KFResetSetting : public KFIntSetting
 	{
 	public:
-		std::vector<ResetData> _reset_data_list;
+		// ÖØÖÃÊı¾İ
+		std::vector<ResetData> _reset_data;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////////
@@ -59,7 +60,7 @@ namespace KFrame
 			resetdata._data_name = xmlnode.ReadString( "dataname" );
 			resetdata._operate = xmlnode.ReadUInt32( "operate" );
 			resetdata._value = xmlnode.ReadUInt32( "value" );
-			kfsetting->_reset_data_list.push_back( resetdata );
+			kfsetting->_reset_data.push_back( resetdata );
 		}
 
 	};

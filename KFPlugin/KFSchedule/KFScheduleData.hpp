@@ -19,8 +19,8 @@ namespace KFrame
     class KFScheduleData
     {
     public:
-        // 时间id
-        uint32 _time_id = 0u;
+        // 时间区间id
+        uint32 _time_section_id = 0u;
 
         // 对象id
         uint64 _object_id = 0u;
@@ -36,8 +36,8 @@ namespace KFrame
     class KFScheduleDataList
     {
     public:
-        // 时间id
-        uint32 _time_id = 0u;
+        // 时间区间id
+        uint32 _time_section_id = 0u;
 
         // 状态
         uint32 _status = KFScheduleEnum::Stop;

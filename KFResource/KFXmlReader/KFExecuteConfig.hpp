@@ -19,7 +19,8 @@ namespace KFrame
 	class KFExecuteSetting : public KFIntSetting
 	{
 	public:
-		std::vector<ExecuteData> _execute_data_list;
+		// 输出执行列表
+		std::vector<ExecuteData> _execute_data;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////////
@@ -40,7 +41,7 @@ namespace KFrame
 			{
 				auto kfsetting = iter.second;
 
-				for ( auto& executedata : kfsetting->_execute_data_list)
+				for ( auto& executedata : kfsetting->_execute_data)
 				{
 					auto& execute = executedata._execute;
 					if ( execute->_name == __STRING__( data ) )
@@ -61,7 +62,7 @@ namespace KFrame
 		
 			ExecuteData executedata;
 			executedata._execute = xmlnode.ReadExecuteData( "execute" );
-			kfsetting->_execute_data_list.push_back( executedata );
+			kfsetting->_execute_data.push_back( executedata );
 		}
 
 	};

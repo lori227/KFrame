@@ -16,6 +16,7 @@
     <ClCompile Include="KFSchedulePlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\KFResource\KFXmlReader\KFTimeSectionConfig.hpp" />
     <ClInclude Include="KFScheduleData.hpp" />
     <ClInclude Include="KFScheduleInterface.h" />
     <ClInclude Include="KFScheduleModule.hpp" />

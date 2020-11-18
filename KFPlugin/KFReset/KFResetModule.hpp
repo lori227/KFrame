@@ -13,7 +13,7 @@
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFKernel/KFKernelInterface.h"
 #include "KFXmlReader/KFResetConfig.hpp"
-#include "KFXmlReader/KFTimeConfig.h"
+#include "KFXmlReader/KFTimeLoopConfig.hpp"
 
 namespace KFrame
 {
@@ -64,7 +64,7 @@ namespace KFrame
         UInt64Map& UpdateAllResetTime( KFEntity* player, KFData* kftimerecord );
 
         // 判断重置时间, 返回是否成功, 上次重置时间
-        std::tuple<bool, uint64> UpdateResetTime( KFEntity* player, KFData* kftimerecord, const KFTimeSetting* kfsetting );
+        std::tuple<bool, uint64> UpdateResetTime( KFEntity* player, KFData* kftimerecord, const KFTimeLoopSetting* kfsetting );
 
         // 重置玩家属性
         void ResetPlayerData( KFEntity* player, const ResetData* resetdata );

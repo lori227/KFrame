@@ -70,6 +70,12 @@ namespace KFrame
         // 判断是否需要写cpp文件
         bool IsNeedWriteCppVariable( const ExcelAttribute* attribute, const std::string& keyname );
 
+        // 获得Cpp Parent类的数据(是否要写类定义, 注释, 变量)
+        std::tuple<uint32, std::string, std::string> FormatParentOption( ExcelFileData* exceldata, const std::string& classname );
+
+        // 删除KF前缀
+        std::string RemovePrefix( std::string name, const std::string& prefix );
+
     private:
         // 错误信息
         std::string _error;

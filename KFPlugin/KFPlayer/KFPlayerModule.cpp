@@ -3,6 +3,16 @@
 
 namespace KFrame
 {
+    namespace NewPlayerEnum
+    {
+        enum EConstEnum
+        {
+            NewAccount = 1,	// 新建账号
+            NewRole = 2,	// 新建角色
+        };
+    }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFPlayerModule::BeforeRun()
     {
         // 注册逻辑函数
@@ -423,7 +433,7 @@ namespace KFrame
                 auto kfsetting = iter.second;
                 if ( kfsetting->_type == NewPlayerEnum::NewRole )
                 {
-                    player->AddElement( &kfsetting->_elements, _default_multiple, __STRING__( newrole ), 0u, __FUNC_LINE__ );
+                    player->AddElement( &kfsetting->_reward, _default_multiple, __STRING__( newrole ), 0u, __FUNC_LINE__ );
                 }
             }
         }
@@ -456,7 +466,7 @@ namespace KFrame
             auto kfsetting = iter.second;
             if ( kfsetting->_type == NewPlayerEnum::NewAccount )
             {
-                player->AddElement( &kfsetting->_elements, _default_multiple, __STRING__( newplayer ), 0u, __FUNC_LINE__ );
+                player->AddElement( &kfsetting->_reward, _default_multiple, __STRING__( newplayer ), 0u, __FUNC_LINE__ );
             }
         }
     }

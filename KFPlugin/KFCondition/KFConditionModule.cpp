@@ -580,7 +580,7 @@ namespace KFrame
             return std::make_tuple( 0u, 0u );
         }
 
-        for ( auto& trigger : kfsetting->_condition_trigger_list )
+        for ( auto& trigger : kfsetting->_condition_trigger )
         {
             if ( trigger._call_type != KFConditionEnum::AddCall )
             {
@@ -611,7 +611,7 @@ namespace KFrame
             return std::make_tuple( 0u, 0u );
         }
 
-        for ( auto& trigger : kfsetting->_condition_trigger_list )
+        for ( auto& trigger : kfsetting->_condition_trigger )
         {
             if ( trigger._call_type != KFConditionEnum::RemoveCall )
             {
@@ -647,7 +647,7 @@ namespace KFrame
             return std::make_tuple( 0u, 0u );
         }
 
-        for ( auto& trigger : kfsetting->_condition_trigger_list )
+        for ( auto& trigger : kfsetting->_condition_trigger )
         {
             if ( trigger._call_type != KFConditionEnum::UpdateCall )
             {

@@ -18,6 +18,7 @@ namespace KFrame
     static const std::string _str_set = "set";
     static const std::string _str_map = "map";
 
+    static const std::string _str_kf_prefix = "KF";
     static const std::string _str_element = "element";
     static const std::string _str_execute = "execute";
     static const std::string _str_condition_define = "conditiondefine";
@@ -308,6 +309,16 @@ namespace KFrame
     };
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    namespace CodeEnum
+    {
+        enum MyEnum
+        {
+            None = 0,
+            WriteClass = 1,		// 需要写子类
+            WriteNothing = 2,	// 不需要写子类
+        };
+    }
+
     // 类结构
     class CodeClass
     {
@@ -318,6 +329,8 @@ namespace KFrame
         // 属性字段(列索引)
         std::vector< uint32 > _columns;
     };
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }
 

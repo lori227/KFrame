@@ -51,7 +51,8 @@ namespace KFrame
 		// 是否保存uuid
 		bool _save_uuid = false;
 
-		std::vector<ConditionTrigger> _condition_trigger_list;
+		// 条件触发数据
+		std::vector<ConditionTrigger> _condition_trigger;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////////
@@ -83,7 +84,7 @@ namespace KFrame
 			conditiontrigger._use_operate = xmlnode.ReadUInt32( "useoperate" );
 			conditiontrigger._use_type = xmlnode.ReadUInt32( "usetype" );
 			conditiontrigger._use_value = xmlnode.ReadUInt32( "usevalue" );
-			kfsetting->_condition_trigger_list.push_back( conditiontrigger );
+			kfsetting->_condition_trigger.push_back( conditiontrigger );
 		}
 
 	};

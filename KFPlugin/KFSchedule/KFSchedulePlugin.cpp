@@ -22,6 +22,6 @@ namespace KFrame
 
     void KFSchedulePlugin::AddConfig()
     {
-        __KF_ADD_CONFIG__( KFTimeConfig );
+        __KF_ADD_CONFIG__( KFTimeSectionConfig );
     }
 }

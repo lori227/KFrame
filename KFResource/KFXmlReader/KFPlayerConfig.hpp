@@ -1,69 +1,55 @@
-Ôªø#ifndef __KF_PLAYER_CONFIG_H__
-#define __KF_PLAYER_CONFIG_H__
+#ifndef	__KF_PLAYER_CONFIG_H__
+#define	__KF_PLAYER_CONFIG_H__
 
 #include "KFConfig.h"
 #include "KFElementConfig.h"
 
 namespace KFrame
 {
-    namespace NewPlayerEnum
-    {
-        enum EConstEnum
-        {
-            NewAccount = 1,	// Êñ∞Âª∫Ë¥¶Âè∑
-            NewRole = 2,	// Êñ∞Âª∫ËßíËâ≤
-        };
-    }
+	/////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////
+	class KFPlayerSetting : public KFIntSetting
+	{
+	public:
+		// ¥¥Ω®¿‡–Õ(1=–¬’À∫≈,2=–¬Ω«…´)
+		uint32 _type = 0u;
 
-    class KFPlayerSetting : public KFIntSetting
-    {
-    public:
-        // Á±ªÂûã
-        uint32 _type;
+		// ªÒµ√µƒ Ù–‘
+		KFElements _reward;
 
-        // Â•ñÂä±Áâ©ÂìÅ
-        KFElements _elements;
-    };
-    ////////////////////////////////////////////////////////////////////////////////////
-    class KFPlayerConfig : public KFConfigT< KFPlayerSetting >, public KFInstance< KFPlayerConfig >
-    {
-    public:
-        KFPlayerConfig()
-        {
-            _file_name = "player";
-        }
+	};
 
-        virtual void LoadAllComplete()
-        {
-            for ( auto& iter : _settings._objects )
-            {
-                auto kfsetting = iter.second;
-                KFElementConfig::Instance()->ParseElement( kfsetting->_elements, __FILE__, __LINE__ );
-            }
-        }
+	/////////////////////////////////////////////////////////////////////////////////
+	class KFPlayerConfig : public KFConfigT< KFPlayerSetting >, public KFInstance< KFPlayerConfig >
+	{
+	public:
+		KFPlayerConfig()
+		{
+			_key_name = "row";
+			_file_name = "player";
+		}
 
-    protected:
-        // ÂàõÂª∫ÈÖçÁΩÆ
-        KFPlayerSetting* CreateSetting( KFXmlNode& xmlnode )
-        {
-            auto service = xmlnode.ReadUInt32( "Service", true );
-            auto channel = xmlnode.ReadUInt32( "Channel", true );
-            auto ok = KFGlobal::Instance()->CheckChannelService( channel, service );
-            if ( !ok )
-            {
-                return nullptr;
-            }
+		~KFPlayerConfig() = default;
 
-            return KFConfigT< KFPlayerSetting >::CreateSetting( xmlnode );
-        }
+		virtual void LoadAllComplete()
+		{
+			for ( auto& iter : _settings._objects )
+			{
+				auto kfsetting = iter.second;
 
-        // ËØªÂèñÈÖçÁΩÆ
-        virtual void ReadSetting( KFXmlNode& xmlnode, KFPlayerSetting* kfsetting )
-        {
-            kfsetting->_type = xmlnode.ReadUInt32( "Type" );
-            kfsetting->_elements._str_parse = xmlnode.ReadString( "Elements" );
-        }
-    };
+				KFElementConfig::Instance()->ParseElement( kfsetting->_reward, _file_name.c_str(), kfsetting->_row );
+			}
+		}
+
+	protected:
+		virtual void ReadSetting( KFXmlNode& xmlnode, KFPlayerSetting* kfsetting )
+		{
+			kfsetting->_type = xmlnode.ReadUInt32( "type", true );
+			kfsetting->_reward._str_parse = xmlnode.ReadString( "reward", true );
+		}
+
+	};
+
+	/////////////////////////////////////////////////////////////////////////////////
 }
-
 #endif
