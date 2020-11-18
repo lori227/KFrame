@@ -419,11 +419,27 @@ namespace KFrame
         _kf_display->DelayToClient( player, KFMsg::RelationInviteReq, name );
     }
 
+    // 查找关系配置
+    const KFRelationSetting* KFRelationClientModule::FindRelationSettingByInviteName( const std::string& name )
+    {
+        for ( auto& iter : KFRelationConfig::Instance()->_settings._objects )
+        {
+            auto kfsetting = iter.second;
+            if ( kfsetting->_invite_data_name == name )
+            {
+                return kfsetting;
+            }
+        }
+
+        return nullptr;
+    }
+
+
     __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleReplyRelationInviteReq )
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgReplyRelationInviteReq );
 
-        auto kfsetting = KFRelationConfig::Instance()->FindRelationSettingByInviteName( kfmsg.relationname () );
+        auto kfsetting = FindRelationSettingByInviteName( kfmsg.relationname () );
         if ( kfsetting == nullptr )
         {
             return __LOG_ERROR__( "invitelist=[{}] setting is null", kfmsg.relationname() );

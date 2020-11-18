@@ -109,6 +109,10 @@ namespace KFrame
 
         // 添加关系
         void AddRelationToRelation( KFEntity* player, uint64 playerid, const std::string& playername, KFData* kfrelationrecord, const KFRelationSetting* kfsetting );
+
+        // 通过邀请名查找关系属性配置
+        const KFRelationSetting* FindRelationSettingByInviteName( const std::string& name );
+
     private:
         // 玩家组件
         KFComponent* _kf_component = nullptr;

@@ -9,5 +9,6 @@
     <ClInclude Include="KFRelationClientInterface.h" />
     <ClInclude Include="KFRelationClientModule.hpp" />
     <ClInclude Include="KFRelationClientPlugin.hpp" />
+    <ClInclude Include="..\..\KFResource\KFXmlReader\KFRelationConfig.hpp" />
   </ItemGroup>
 </Project>

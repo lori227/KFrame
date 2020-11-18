@@ -1,84 +1,76 @@
-ï»¿#ifndef __KF_RELATION_CONFIG_H__
-#define __KF_RELATION_CONFIG_H__
+#ifndef	__KF_RELATION_CONFIG_H__
+#define	__KF_RELATION_CONFIG_H__
 
 #include "KFConfig.h"
 
 namespace KFrame
 {
-    class KFRelationSetting : public KFStrSetting
-    {
-    public:
-        // æœ€å¤§æ•°é‡
-        uint32 _max_count = 0u;
+	/////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////
+	class KFRelationSetting : public KFStrSetting
+	{
+	public:
+		// ×î´óÊıÁ¿
+		uint32 _max_count = 0u;
 
-        // æ˜¯å¦éœ€è¦æ›´æ–°
-        bool _need_update = false;
+		// ÊÇ·ñÊÇË«ÏòµÄ
+		bool _both_way = false;
 
-        // æ˜¯å¦æ˜¯åŒå‘çš„
-        bool _both_way = false;
+		// ÊÇ·ñĞèÒª¸üĞÂÊôĞÔ
+		bool _need_update = false;
 
-        // æ˜¯å¦ä¸Šçº¿åŠ è½½
-        bool _online_load = false;
+		// ÊÇ·ñĞèÒªÖ÷¶¯¼ÓÔØ
+		bool _online_load = false;
 
-        // é‚€è¯·åˆ—è¡¨åå­—
-        std::string _invite_data_name;
+		// ÑûÇëÁĞ±í×î´óÊıÁ¿
+		uint32 _invite_list_count = 0u;
 
-        // é‚€è¯·åˆ—è¡¨æ•°é‡
-        uint32 _invite_data_count = 0u;
+		// ÑûÇë±£ÁôÊ±¼ä(Ãë)
+		uint32 _invite_keep_time = 0u;
 
-        // é‚€è¯·æ•°æ®åº“åˆ—è¡¨å
-        std::string _invite_list_name;
+		// Êı¾İ¿âÁĞ±íÃû×Ö(·şÎñÆ÷Ê¹ÓÃ,Îğ¸Ä)
+		std::string _data_list_name;
 
-        // æ•°æ®åº“åˆ—è¡¨å
-        std::string _relation_list_name;
+		// ÑûÇëÁĞ±íÊôĞÔÃû×Ö(¿Õ¾ÍÊÇ²»ĞèÒªÑûÇë)
+		std::string _invite_data_name;
 
-        // é‚€è¯·ä¿ç•™æ—¶é—´( ç§’ )
-        uint32 _invite_keep_time = 0u;
+		// ÑûÇëÁĞ±íÊôĞÔÃû×Ö(·şÎñÆ÷Ê¹ÓÃ,Îğ¸Ä)
+		std::string _invite_list_name;
 
-        // æ‹’ç»ç”³è¯·åå­—
-        std::string _refuse_name;
-    };
-    /////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////
-    class KFRelationConfig : public KFConfigT< KFRelationSetting >, public KFInstance< KFRelationConfig >
-    {
-    public:
-        KFRelationConfig()
-        {
-            _file_name = "relation";
-        }
+		// ¾Ü¾øÉêÇë(·şÎñÆ÷Ê¹ÓÃ)
+		std::string _refuse_name;
 
-        // æŸ¥æ‰¾å…³ç³»é…ç½®
-        const KFRelationSetting* FindRelationSettingByInviteName( const std::string& name )
-        {
-            for ( auto& iter : _settings._objects )
-            {
-                auto kfsetting = iter.second;
-                if ( kfsetting->_invite_data_name == name )
-                {
-                    return kfsetting;
-                }
-            }
+	};
 
-            return nullptr;
-        }
+	/////////////////////////////////////////////////////////////////////////////////
+	class KFRelationConfig : public KFConfigT< KFRelationSetting >, public KFInstance< KFRelationConfig >
+	{
+	public:
+		KFRelationConfig()
+		{
+			_key_name = "id";
+			_file_name = "relation";
+		}
 
-    protected:
-        // è¯»å–é…ç½®
-        virtual void ReadSetting( KFXmlNode& xmlnode, KFRelationSetting* kfsetting )
-        {
-            kfsetting->_max_count = xmlnode.ReadUInt32( "MaxCount" );
-            kfsetting->_both_way = xmlnode.ReadBoolen( "BothWay" );
-            kfsetting->_need_update = xmlnode.ReadBoolen( "NeedUpdate" );
-            kfsetting->_online_load = xmlnode.ReadBoolen( "OnlineLoad" );
-            kfsetting->_invite_data_name = xmlnode.ReadString( "InviteDataName" );
-            kfsetting->_invite_data_count = xmlnode.ReadUInt32( "InviteListCount" );
-            kfsetting->_invite_list_name = xmlnode.ReadString( "InviteListName" );
-            kfsetting->_relation_list_name = xmlnode.ReadString( "DataListName" );
-            kfsetting->_invite_keep_time = xmlnode.ReadUInt32( "InviteKeepTime" );
-            kfsetting->_refuse_name = xmlnode.ReadString( "RefuseName" );
-        }
-    };
+		~KFRelationConfig() = default;
+
+	protected:
+		virtual void ReadSetting( KFXmlNode& xmlnode, KFRelationSetting* kfsetting )
+		{
+			kfsetting->_max_count = xmlnode.ReadUInt32( "maxcount", true );
+			kfsetting->_both_way = xmlnode.ReadBoolen( "bothway", true );
+			kfsetting->_need_update = xmlnode.ReadBoolen( "needupdate", true );
+			kfsetting->_online_load = xmlnode.ReadBoolen( "onlineload", true );
+			kfsetting->_invite_list_count = xmlnode.ReadUInt32( "invitelistcount", true );
+			kfsetting->_invite_keep_time = xmlnode.ReadUInt32( "invitekeeptime", true );
+			kfsetting->_data_list_name = xmlnode.ReadString( "datalistname", true );
+			kfsetting->_invite_data_name = xmlnode.ReadString( "invitedataname", true );
+			kfsetting->_invite_list_name = xmlnode.ReadString( "invitelistname", true );
+			kfsetting->_refuse_name = xmlnode.ReadString( "refusename", true );
+		}
+
+	};
+
+	/////////////////////////////////////////////////////////////////////////////////
 }
-
 #endif

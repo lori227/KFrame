@@ -66,7 +66,7 @@ namespace KFrame
         }
 
         RelationListType relationlist;
-        _kf_relation_database->QueryRelationList( kfsetting->_relation_list_name, kfsetting->_id, kfmsg.playerid(), relationlist );
+        _kf_relation_database->QueryRelationList( kfsetting->_data_list_name, kfsetting->_id, kfmsg.playerid(), relationlist );
         if ( relationlist.empty() )
         {
             return;
@@ -161,7 +161,7 @@ namespace KFrame
 
         // 查找对方申请列表数量
         auto invitecount = _kf_relation_database->RelationCount( kfsetting->_invite_list_name, kfmsg.playerid() );
-        if ( invitecount >= kfsetting->_invite_data_count )
+        if ( invitecount >= kfsetting->_invite_list_count )
         {
             return _kf_display->SendToPlayer( route, KFMsg::RelationInviteLimit, kfmsg.playername() );
         }
@@ -219,7 +219,7 @@ namespace KFrame
         }
 
         // 判断自己的关系数量
-        auto selfcount = _kf_relation_database->RelationCount( kfsetting->_relation_list_name, selfid );
+        auto selfcount = _kf_relation_database->RelationCount( kfsetting->_data_list_name, selfid );
         if ( selfcount >= kfsetting->_max_count )
         {
             return _kf_display->SendToPlayer( route, KFMsg::RelationSelfLimit, kfsetting->_max_count );
@@ -228,7 +228,7 @@ namespace KFrame
         // 判断对方关系的数量
         if ( kfsetting->_both_way )
         {
-            auto targetcount = _kf_relation_database->RelationCount( kfsetting->_relation_list_name, kfmsg.playerid() );
+            auto targetcount = _kf_relation_database->RelationCount( kfsetting->_data_list_name, kfmsg.playerid() );
             if ( targetcount >= kfsetting->_max_count )
             {
                 return _kf_display->SendToPlayer( route, KFMsg::RelationTargetLimit, kfmsg.playername() );
@@ -245,7 +245,7 @@ namespace KFrame
 
     void KFRelationShardModule::AddRelation( uint64 playerid, uint64 targetid, const KFRelationSetting* kfsetting )
     {
-        _kf_relation_database->AddRelation( kfsetting->_relation_list_name, kfsetting->_id, playerid, targetid, kfsetting->_both_way );
+        _kf_relation_database->AddRelation( kfsetting->_data_list_name, kfsetting->_id, playerid, targetid, kfsetting->_both_way );
         if ( !kfsetting->_invite_data_name.empty() )
         {
             _kf_relation_database->RemoveRelation( kfsetting->_invite_list_name, kfsetting->_invite_data_name, playerid, targetid, false );
@@ -297,7 +297,7 @@ namespace KFrame
 
     void KFRelationShardModule::DelRelation( uint64 playerid, uint64 targetid, const KFRelationSetting* kfsetting )
     {
-        _kf_relation_database->RemoveRelation( kfsetting->_relation_list_name, kfsetting->_id, playerid, targetid, kfsetting->_both_way );
+        _kf_relation_database->RemoveRelation( kfsetting->_data_list_name, kfsetting->_id, playerid, targetid, kfsetting->_both_way );
 
         auto serverid = _kf_basic_database->QueryBasicServerId( playerid );
         if ( serverid == _invalid_int )
