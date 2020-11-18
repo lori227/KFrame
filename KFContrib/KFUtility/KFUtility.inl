@@ -148,6 +148,17 @@ namespace KFrame
         }
     }
 
+    template< >
+    inline void KFUtility::SplitList( StringList& outlist, std::string& srcstring, const std::string& split )
+    {
+        outlist.clear();
+        while ( !srcstring.empty() )
+        {
+            auto value = SplitString( srcstring, split );
+            outlist.push_back( value );
+        }
+    }
+
     template< class T >
     inline void KFUtility::SplitSet( T& outlist, std::string& srcstring, const std::string& split )
     {
@@ -155,6 +166,17 @@ namespace KFrame
         while ( !srcstring.empty() )
         {
             auto value = SplitValue< uint32 >( srcstring, split );
+            outlist.insert( value );
+        }
+    }
+
+    template<>
+    inline void KFUtility::SplitSet( StringSet& outlist, std::string& srcstring, const std::string& split )
+    {
+        outlist.clear();
+        while ( !srcstring.empty() )
+        {
+            auto value = SplitString( srcstring, split );
             outlist.insert( value );
         }
     }
