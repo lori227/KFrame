@@ -38,4 +38,8 @@
 	<!-- 奖励字串类型 -->
 	<!-- 1: 默认字串, 2:简化的类型和编号字串-->
 	<RewardType Value="1"/>
+
+	<!-- 是否开启小区推荐 -->
+	<ZoneRecommend Value="1"/>
+
 </Config>

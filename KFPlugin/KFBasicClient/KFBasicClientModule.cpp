@@ -128,6 +128,12 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgQueryBasicReq );
 
+        auto kfsetting = KFZoneConfig::Instance()->FindSetting( KFGlobal::Instance()->_app_id->GetZoneId() );
+        if ( kfsetting == nullptr )
+        {
+            return __LOG_ERROR__( "can't find zone=[{}] setting", KFGlobal::Instance()->_app_id->GetZoneId() );
+        }
+
         // 屏蔽字检查
         auto filter = _kf_filter->CheckFilter( kfmsg.name() );
         if ( filter )
@@ -138,7 +144,7 @@ namespace KFrame
         // 发送到basic
         KFMsg::S2SQueryAttributeToBasicReq req;
         req.set_name( kfmsg.name() );
-        req.set_zoneid( KFZoneConfig::Instance()->ZoneSetting()->_data_id );
+        req.set_zoneid( kfsetting->_data_id );
         _kf_route->SendToRand( playerid, __ROUTE_NAME__, KFMsg::S2S_QUERY_ATTRIBUTE_TO_BASIC_REQ, &req );
     }
 
@@ -216,13 +222,19 @@ namespace KFrame
             return _kf_display->SendToClient( player, result );
         }
 
+        auto kfsetting = KFZoneConfig::Instance()->FindSetting( KFGlobal::Instance()->_app_id->GetZoneId() );
+        if ( kfsetting == nullptr )
+        {
+            return __LOG_ERROR__( "can't find zone=[{}] setting", KFGlobal::Instance()->_app_id->GetZoneId() );
+        }
+
         // 修改名字
         KFMsg::S2SSetPlayerNameToBasicReq req;
         req.set_playerid( playerid );
         req.set_oldname( name );
         req.set_newname( kfmsg.name() );
         req.set_costdata( _invalid_string );
-        req.set_zoneid( KFZoneConfig::Instance()->ZoneSetting()->_data_id );
+        req.set_zoneid( kfsetting->_data_id );
         auto ok = _kf_route->SendToRand( playerid, __ROUTE_NAME__, KFMsg::S2S_SET_PLAYER_NAME_TO_BASIC_REQ, &req );
         if ( !ok )
         {

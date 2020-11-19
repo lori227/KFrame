@@ -4,12 +4,12 @@
 	<node row="10" name="mongo" filename="./setting/{}_{}_mongo.xml"/>
 	<node row="11" name="mysql" filename="./setting/{}_{}_mysql.xml"/>
 	<node row="12" name="ip" filename="./setting/{}_{}_ip.xml"/>
-	<node row="13" name="zone" filename="./setting/{}_{}_zone.xml" reload="1" cleardata="1"/>
-	<node row="14" name="bus" filename="./setting/bus.xml"/>
-	<node row="15" name="httpserver" filename="./setting/httpserver.xml"/>
-	<node row="16" name="tcpserver" filename="./setting/tcpserver.xml"/>
-	<node row="17" name="datashard" filename="./setting/datashard.xml"/>
-	<node row="18" name="route" filename="./setting/route.xml"/>
+	<node row="13" name="bus" filename="./setting/bus.xml"/>
+	<node row="14" name="httpserver" filename="./setting/httpserver.xml"/>
+	<node row="15" name="tcpserver" filename="./setting/tcpserver.xml"/>
+	<node row="16" name="datashard" filename="./setting/datashard.xml"/>
+	<node row="17" name="route" filename="./setting/route.xml"/>
+	<node row="18" name="zone" filename="./config/{}_{}_zone.xml" reload="1" cleardata="1"/>
 	<node row="19" name="channel" filename="./config/channel.xml" reload="1" cleardata="1"/>
 	<node row="20" name="framefilter" filename="./config/framefilter.xml" reload="1" cleardata="1" childfile="1"/>
 	<node row="21" name="relation" filename="./config/relation.xml" reload="1" cleardata="1"/>
