@@ -20,6 +20,9 @@
     <ClInclude Include="KFConstantData.hpp">
       <Filter>Constant</Filter>
     </ClInclude>
+    <ClInclude Include="KFElementFormat.hpp">
+      <Filter>Element</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KFGlobal.cpp" />
@@ -38,6 +41,9 @@
     <ClCompile Include="KFConstantData.cpp">
       <Filter>Constant</Filter>
     </ClCompile>
+    <ClCompile Include="KFElementFormat.cpp">
+      <Filter>Element</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Rand">
@@ -48,6 +54,9 @@
     </Filter>
     <Filter Include="Constant">
       <UniqueIdentifier>{31825480-b919-4951-b84b-9aa9b6d55f97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Element">
+      <UniqueIdentifier>{b050fe46-4381-45bf-b719-dc2206ebce73}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

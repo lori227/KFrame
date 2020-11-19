@@ -235,6 +235,30 @@ namespace KFrame
         // 元素列表
         std::vector< KFElement* > _element_list;
     };
+
+    //////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    // 元属性数据
+    class KFElementData
+    {
+    public:
+        void AddData( const std::string& dataname, const std::string& datavalue, uint32 dataid = 0u )
+        {
+            _data_list.emplace_back( std::make_tuple( dataname, datavalue, dataid ) );
+        }
+
+        void AddData( const std::string& dataname, uint32 datavalue, uint32 dataid = 0u )
+        {
+            _data_list.emplace_back( std::make_tuple( dataname, __TO_STRING__( datavalue ), dataid ) );
+        }
+
+        bool IsEmpty() const
+        {
+            return _data_list.empty();
+        }
+    public:
+        std::list<std::tuple<std::string, std::string, uint32>> _data_list;
+    };
 }
 
 #endif

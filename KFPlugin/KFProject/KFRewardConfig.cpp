@@ -64,14 +64,14 @@ namespace KFrame
         return _str_element;
     }
 
-    const std::string& KFRewardConfig::FormatSettingString( const KFElementSetting& kfsetting )
+    const std::string& KFRewardConfig::FormatDatatring( const KFElementData& elementdata )
     {
         static std::string _str_element = _invalid_string;
         _str_element.clear();
 
         auto index = 0u;
         _str_element = "[";
-        for ( auto& tupledata : kfsetting._data_list )
+        for ( auto& tupledata : elementdata._data_list )
         {
             auto& dataname = std::get<0>( tupledata );
             auto& datavalue = std::get<1>( tupledata );

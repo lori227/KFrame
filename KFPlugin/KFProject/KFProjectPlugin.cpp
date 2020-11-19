@@ -25,7 +25,6 @@ namespace KFrame
         __KF_ADD_CONFIG__( KFProjectConfig );
         __KF_ADD_CONFIG__( KFConstantConfig );
         __KF_ADD_CONFIG__( KFRewardConfig );
-        __KF_ADD_CONFIG__( KFElementConfig );
     }
 
 }

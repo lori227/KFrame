@@ -316,7 +316,6 @@ namespace KFrame
         __STRING_DEFINE__( chain );
         __STRING_DEFINE__( taskreceive );
         __STRING_DEFINE__( taskcondition );
-        __STRING_DEFINE__( preconditions );
         __STRING_DEFINE__( messageopen );
         __STRING_DEFINE__( messageclose );
         __STRING_DEFINE__( moduleopen );

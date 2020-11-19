@@ -15,7 +15,7 @@ namespace KFrame
         virtual void AddCondition( KFEntity* kfentity, KFData* kfconditionobject, const DynamicConditionGroupPtr& conditiongroup ) = 0;
 
         // 初始化条件
-        virtual bool InitCondition( KFEntity* kfentity, KFData* kfconditionobject, uint32 limitmask, bool update ) = 0;
+        virtual bool InitCondition( KFEntity* kfentity, KFData* kfconditionobject, bool update ) = 0;
 
         // 直接更新条件
         virtual bool UpdateCondition( KFEntity* kfentity, KFData* kfconditionobject, uint32 conditionid, uint32 operate, uint32 conditionvalue ) = 0;
@@ -24,13 +24,13 @@ namespace KFrame
         virtual bool CheckCondition( KFEntity* kfentity, KFData* kfconditionobject ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 添加属性更新条件, 返回true, 条件全部完成
-        virtual bool UpdateAddCondition( KFEntity* kfentity, KFData* kfconditionobject, uint32 limitmask, KFData* kfdata ) = 0;
+        virtual bool UpdateAddCondition( KFEntity* kfentity, KFData* kfconditionobject, KFData* kfdata ) = 0;
 
         // 删除属性更新条件, 返回true, 条件全部完成
-        virtual bool UpdateRemoveCondition( KFEntity* kfentity, KFData* kfconditionobject, uint32 limitmask, KFData* kfdata ) = 0;
+        virtual bool UpdateRemoveCondition( KFEntity* kfentity, KFData* kfconditionobject, KFData* kfdata ) = 0;
 
         // 更新属性更新条件, 返回true, 条件全部完成
-        virtual bool UpdateUpdateCondition( KFEntity* kfentity, KFData* kfconditionobject, uint32 limitmask, KFData* kfdata, uint32 operate, uint64 value, uint64 nowvalue ) = 0;
+        virtual bool UpdateUpdateCondition( KFEntity* kfentity, KFData* kfconditionobject, KFData* kfdata, uint32 operate, uint64 value, uint64 nowvalue ) = 0;
     };
 
     //////////////////////////////////////////////////////////////////////////////////////

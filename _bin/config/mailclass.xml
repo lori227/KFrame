@@ -1,4 +1,4 @@
-<root version="50a3c4ddfd1a143bd998c0992c219a00">
+<root version="552e5fadd4a107818b216c0724d88f96">
 	<node row="8" id="Player" name="mail" type="record" containclass="Mail" keyname="id" configkeyname="id" sync="1"/>
 	<node row="9" id="Mail" name="id" type="uint64" sync="1"/>
 	<node row="10" id="Mail" name="configid" type="uint32" sync="1"/>

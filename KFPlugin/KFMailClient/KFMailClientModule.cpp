@@ -324,9 +324,9 @@ namespace KFrame
         {
             _mail_data.insert( std::make_pair( __STRING__( reward ), kfelements->GetElement() ) );
         }
-        else if ( !kfsetting->_rewards.GetElement().empty() )
+        else if ( !kfsetting->_reward.GetElement().empty() )
         {
-            _mail_data.insert( std::make_pair( __STRING__( reward ), kfsetting->_rewards.GetElement() ) );
+            _mail_data.insert( std::make_pair( __STRING__( reward ), kfsetting->_reward.GetElement() ) );
         }
 
         // 发送者信息

@@ -2,7 +2,6 @@
 #define	__KF_EXECUTE_CONFIG_H__
 
 #include "KFConfig.h"
-#include "KFElementConfig.h"
 
 namespace KFrame
 {
@@ -49,7 +48,7 @@ namespace KFrame
 						auto& datavalue = execute->_param_list._params[ 0 ]->_str_value;
 						auto& dataname = execute->_param_list._params[ 1 ]->_str_value;
 						auto& datakey = execute->_param_list._params[ 2 ]->_int_value;
-						KFElementConfig::Instance()->FormatElement( execute->_elements, dataname, datavalue, datakey );
+						KFGlobal::Instance()->FormatElement( execute->_elements, dataname, datavalue, datakey );
 					}
 				}
 

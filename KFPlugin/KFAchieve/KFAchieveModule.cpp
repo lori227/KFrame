@@ -44,7 +44,7 @@ namespace KFrame
             _kf_condition->AddCondition( player, kfconditionobject, kfsetting->_complete_condition );
 
             // 判断条件
-            auto complete = _kf_condition->InitCondition( player, kfconditionobject, KFConditionEnum::LimitNull, false );
+            auto complete = _kf_condition->InitCondition( player, kfconditionobject, false );
             if ( complete )
             {
                 kfachieve->Set<uint32>( __STRING__( status ), KFMsg::DoneStatus );
@@ -127,16 +127,16 @@ namespace KFrame
 
     __KF_ADD_DATA_FUNCTION__( KFAchieveModule::OnAddDataAchieveModule )
     {
-        __UPDATA_ACHIEVE_LIST__( _kf_condition->UpdateAddCondition( player, kfconditionobject, KFConditionEnum::LimitNull, kfdata ) );
+        __UPDATA_ACHIEVE_LIST__( _kf_condition->UpdateAddCondition( player, kfconditionobject, kfdata ) );
     }
 
     __KF_REMOVE_DATA_FUNCTION__( KFAchieveModule::OnRemoveDataAchieveModule )
     {
-        __UPDATA_ACHIEVE_LIST__( _kf_condition->UpdateRemoveCondition( player, kfconditionobject, KFConditionEnum::LimitNull, kfdata ) );
+        __UPDATA_ACHIEVE_LIST__( _kf_condition->UpdateRemoveCondition( player, kfconditionobject, kfdata ) );
     }
 
     __KF_UPDATE_DATA_FUNCTION__( KFAchieveModule::OnUpdateDataAchieveModule )
     {
-        __UPDATA_ACHIEVE_LIST__( _kf_condition->UpdateUpdateCondition( player, kfconditionobject, KFConditionEnum::LimitNull, kfdata, operate, oldvalue, newvalue ) );
+        __UPDATA_ACHIEVE_LIST__( _kf_condition->UpdateUpdateCondition( player, kfconditionobject, kfdata, operate, oldvalue, newvalue ) );
     }
 }

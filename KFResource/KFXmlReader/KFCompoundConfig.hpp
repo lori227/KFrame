@@ -2,7 +2,6 @@
 #define	__KF_COMPOUND_CONFIG_H__
 
 #include "KFConfig.h"
-#include "KFElementConfig.h"
 
 namespace KFrame
 {
@@ -43,8 +42,8 @@ namespace KFrame
 			{
 				auto kfsetting = iter.second;
 
-				KFElementConfig::Instance()->ParseElement( kfsetting->_cost_data, _file_name.c_str(), kfsetting->_row );
-				KFElementConfig::Instance()->ParseElement( kfsetting->_compound_data, _file_name.c_str(), kfsetting->_row );
+				KFGlobal::Instance()->ParseElement( kfsetting->_cost_data, _file_name.c_str(), kfsetting->_row );
+				KFGlobal::Instance()->ParseElement( kfsetting->_compound_data, _file_name.c_str(), kfsetting->_row );
 			}
 		}
 

@@ -574,12 +574,6 @@ namespace KFrame
         // 头文件
         {
             xmlfile << "#include \"KFConfig.h\"\n";
-
-            if ( exceldata->HaveCppAttribute( _str_element ) ||
-                    exceldata->HaveCppAttribute( _str_execute ) )
-            {
-                xmlfile << "#include \"KFElementConfig.h\"\n";
-            }
             if ( exceldata->HaveCppAttribute( _str_condition_define ) )
             {
                 xmlfile << "#include \"KFConditionDefineConfig.hpp\"\n";
@@ -700,7 +694,7 @@ namespace KFrame
                     auto attribute = &iter.second;
                     if ( attribute->_cpp_class == _str_element )
                     {
-                        xmlfile << __FORMAT__( "\t\t\t\tKFElementConfig::Instance()->ParseElement( kfsetting->{}, _file_name.c_str(), kfsetting->_row );\n", attribute->_cpp_name );
+                        xmlfile << __FORMAT__( "\t\t\t\tKFGlobal::Instance()->ParseElement( kfsetting->{}, _file_name.c_str(), kfsetting->_row );\n", attribute->_cpp_name );
                     }
                     else if ( attribute->_cpp_class == _str_condition_define )
                     {
@@ -720,7 +714,7 @@ namespace KFrame
                             xmlfile << "\t\t\t\t\t\tauto& datavalue = execute->_param_list._params[ 0 ]->_str_value;\n";
                             xmlfile << "\t\t\t\t\t\tauto& dataname = execute->_param_list._params[ 1 ]->_str_value;\n";
                             xmlfile << "\t\t\t\t\t\tauto& datakey = execute->_param_list._params[ 2 ]->_int_value;\n";
-                            xmlfile << "\t\t\t\t\t\tKFElementConfig::Instance()->FormatElement( execute->_elements, dataname, datavalue, datakey );\n";
+                            xmlfile << "\t\t\t\t\t\tKFGlobal::Instance()->FormatElement( execute->_elements, dataname, datavalue, datakey );\n";
                             xmlfile << "\t\t\t\t}\n\n";
                         }
                         else
@@ -734,7 +728,7 @@ namespace KFrame
                             xmlfile << "\t\t\t\t\t\tauto& datavalue = execute->_param_list._params[ 0 ]->_str_value;\n";
                             xmlfile << "\t\t\t\t\t\tauto& dataname = execute->_param_list._params[ 1 ]->_str_value;\n";
                             xmlfile << "\t\t\t\t\t\tauto& datakey = execute->_param_list._params[ 2 ]->_int_value;\n";
-                            xmlfile << "\t\t\t\t\t\tKFElementConfig::Instance()->FormatElement( execute->_elements, dataname, datavalue, datakey );\n";
+                            xmlfile << "\t\t\t\t\t\tKFGlobal::Instance()->FormatElement( execute->_elements, dataname, datavalue, datakey );\n";
                             xmlfile << "\t\t\t\t\t}\n";
                             xmlfile << "\t\t\t\t}\n\n";
                         }

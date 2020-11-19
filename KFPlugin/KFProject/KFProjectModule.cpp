@@ -4,10 +4,10 @@ namespace KFrame
 {
     void KFProjectModule::InitModule()
     {
-        KFElementConfig::Instance()->SetParseStringFunction( KFRewardConfig::Instance(), &KFRewardConfig::ParseString );
-        KFElementConfig::Instance()->SetIntStringFunction( KFRewardConfig::Instance(), &KFRewardConfig::FormatIntString );
-        KFElementConfig::Instance()->SetStrStringFunction( KFRewardConfig::Instance(), &KFRewardConfig::FormatStrString );
-        KFElementConfig::Instance()->SetSettingStringFunction( KFRewardConfig::Instance(), &KFRewardConfig::FormatSettingString );
+        KFGlobal::Instance()->RegisterParseToElementStringFunction( KFRewardConfig::Instance(), &KFRewardConfig::ParseString );
+        KFGlobal::Instance()->RegisterIntStringFunction( KFRewardConfig::Instance(), &KFRewardConfig::FormatIntString );
+        KFGlobal::Instance()->RegisterStrStringFunction( KFRewardConfig::Instance(), &KFRewardConfig::FormatStrString );
+        KFGlobal::Instance()->RegisterDataToElementStringFunction( KFRewardConfig::Instance(), &KFRewardConfig::FormatDatatring );
     }
 
     void KFProjectModule::BeforeRun()

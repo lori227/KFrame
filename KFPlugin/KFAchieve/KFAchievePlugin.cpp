@@ -28,6 +28,5 @@ namespace KFrame
     void KFAchievePlugin::AddConfig()
     {
         __KF_ADD_CONFIG__( KFAchieveConfig );
-        __KF_ADD_CONFIG__( KFElementConfig );
     }
 }

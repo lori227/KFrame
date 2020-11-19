@@ -19,9 +19,6 @@ namespace KFrame
 		// 完成方式
 		uint32 _complete_mode = 0u;
 
-		// 前置条件
-		DynamicConditionGroupPtr _pre_condition;
-
 		// 完成条件
 		DynamicConditionGroupPtr _complete_condition;
 
@@ -48,7 +45,6 @@ namespace KFrame
 			kfsetting->_type = xmlnode.ReadUInt32( "type", true );
 			kfsetting->_quality = xmlnode.ReadUInt32( "quality", true );
 			kfsetting->_complete_mode = xmlnode.ReadUInt32( "completemode", true );
-			kfsetting->_pre_condition = xmlnode.ReadDynamicConditionGroup( "precondition", true );
 			kfsetting->_complete_condition = xmlnode.ReadDynamicConditionGroup( "completecondition", true );
 			kfsetting->_execute = xmlnode.ReadUInt32Vector( "execute", true );
 		}

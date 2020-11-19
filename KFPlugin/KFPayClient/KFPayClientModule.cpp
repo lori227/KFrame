@@ -197,19 +197,19 @@ namespace KFrame
             return __LOG_ERROR__( "payid=[{}] can't find setting", payid );
         }
 
-        // 添加元素
-        player->AddElement( &kfsetting->_buy_elements, _default_multiple, __STRING__( pay ), 0, __FUNC_LINE__ );
-
         // 判断是否首冲
-        auto firstvalue = player->Get< uint64 >( __STRING__( variable ), kfsetting->_first_variable_id, __STRING__( value ) );
+        auto firstvalue = player->Get< uint64 >( __STRING__( pay ), kfsetting->_note_id, __STRING__( value ) );
+
+        // 添加元素
+        player->AddElement( &kfsetting->_reward, _default_multiple, __STRING__( pay ), firstvalue, __FUNC_LINE__ );
         if ( firstvalue == _invalid_int )
         {
-            // 更新变量
-            player->UpdateRecord( __STRING__( variable ), kfsetting->_first_variable_id, __STRING__( value ), KFEnum::Set, 1 );
-
             // 添加元素
-            player->AddElement( &kfsetting->_first_elements, _default_multiple, __STRING__( firstpay ), 0, __FUNC_LINE__ );
+            player->AddElement( &kfsetting->_first_reward, _default_multiple, __STRING__( firstpay ), firstvalue, __FUNC_LINE__ );
         }
+
+        // 更新变量
+        player->UpdateRecord( __STRING__( pay ), kfsetting->_note_id, __STRING__( value ), KFEnum::Add, 1 );
 
         // 清空order
         auto playerorder = player->Get< std::string>( __STRING__( payorder ) );

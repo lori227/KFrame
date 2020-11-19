@@ -1,7 +1,7 @@
 ﻿#ifndef __KF_GOODS_CONFIG_H__
 #define __KF_GOODS_CONFIG_H__
 
-#include "KFXmlReader/KFElementConfig.h"
+#include "KFConfig.h"
 
 namespace KFrame
 {

@@ -45,7 +45,15 @@ namespace KFrame
 
     // 集群连接
     typedef std::function< void( uint64 ) > KFClusterConnectionFunction;
-    /////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    class KFElements;
+    class KFElementData;
+    typedef std::function< const std::string&( const std::string& ) > KFParseToElementStringFunction;
+    typedef std::function< const std::string&( const KFElementData& ) > KFDataToElementStringFunction;
+    typedef std::function< const std::string&( const std::string&, uint32, uint32 ) > KFIntToElementStringFunction;
+    typedef std::function< const std::string&( const std::string&, const std::string&, uint32 ) > KFStrToElementStringFunction;
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 #endif // !__KF_DEFINE_H__

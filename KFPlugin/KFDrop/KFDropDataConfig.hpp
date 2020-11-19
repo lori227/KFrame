@@ -3,7 +3,6 @@
 
 #include "KFConfig.h"
 #include "KFDropData.h"
-#include "KFXmlReader/KFElementConfig.h"
 
 namespace KFrame
 {

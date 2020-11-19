@@ -2,7 +2,6 @@
 #define	__KF_PLAYER_CONFIG_H__
 
 #include "KFConfig.h"
-#include "KFElementConfig.h"
 
 namespace KFrame
 {
@@ -37,7 +36,7 @@ namespace KFrame
 			{
 				auto kfsetting = iter.second;
 
-				KFElementConfig::Instance()->ParseElement( kfsetting->_reward, _file_name.c_str(), kfsetting->_row );
+				KFGlobal::Instance()->ParseElement( kfsetting->_reward, _file_name.c_str(), kfsetting->_row );
 			}
 		}
 

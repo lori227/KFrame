@@ -26,7 +26,6 @@ namespace KFrame
     void KFCompoundPlugin::AddConfig()
     {
         __KF_ADD_CONFIG__( KFCompoundConfig );
-        ///////////////////////////////////////////////////////////////////////////////
     }
 
 }

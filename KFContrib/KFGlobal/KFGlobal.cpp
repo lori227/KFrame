@@ -3,6 +3,7 @@
 #include "KFUuid.hpp"
 #include "KFVersion.h"
 #include "KFConstantData.hpp"
+#include "KFElementFormat.hpp"
 
 namespace KFrame
 {
@@ -21,6 +22,7 @@ namespace KFrame
         _kf_version = __NEW_OBJECT__( KFVersion );
         _kf_uuid = __NEW_OBJECT__( KFUuid );
         _kf_constant_data = __NEW_OBJECT__( KFConstantData );
+        _kf_element_format = __NEW_OBJECT__( KFElementFormat );
     }
 
     KFGlobal::~KFGlobal()
@@ -30,6 +32,7 @@ namespace KFrame
         __DELETE_OBJECT__( _kf_version );
         __DELETE_OBJECT__( _kf_uuid );
         __DELETE_OBJECT__( _kf_constant_data );
+        __DELETE_OBJECT__( _kf_element_format );
     }
 
     void KFGlobal::Initialize( KFGlobal* kfglobal )
@@ -280,4 +283,65 @@ namespace KFrame
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    void KFGlobal::BindParseToElementStringFunction( KFParseToElementStringFunction& function )
+    {
+        _kf_element_format->BindParseToElementStringFunction( function );
+    }
+
+    void KFGlobal::BindIntToElementStringFunction( KFIntToElementStringFunction& function )
+    {
+        _kf_element_format->BindIntToElementStringFunction( function );
+    }
+
+    void KFGlobal::BindStrToElementStringFunction( KFStrToElementStringFunction& function )
+    {
+        _kf_element_format->BindStrToElementStringFunction( function );
+    }
+
+    void KFGlobal::BindDataToElementStringFunction( KFDataToElementStringFunction& function )
+    {
+        _kf_element_format->BindDataToElementStringFunction( function );
+    }
+
+    const std::string& KFGlobal::ParseString( const std::string& strparse )
+    {
+        return _kf_element_format->ParseString( strparse );
+    }
+
+    const std::string& KFGlobal::FormatString( const std::string& dataname, uint32 datavalue, uint32 dataid )
+    {
+        return _kf_element_format->FormatString( dataname, datavalue, dataid );
+    }
+
+    const std::string& KFGlobal::FormatString( const std::string& dataname, const std::string& datavalue, uint32 dataid )
+    {
+        return _kf_element_format->FormatString( dataname, datavalue, dataid );
+    }
+
+    const std::string& KFGlobal::FormatString( const KFElementData& elementdata )
+    {
+        return _kf_element_format->FormatString( elementdata );
+    }
+
+    bool KFGlobal::FormatElement( KFElements& kfelements, const std::string& dataname, uint32 datavalue, uint32 dataid  )
+    {
+        return _kf_element_format->FormatElement( kfelements, dataname, datavalue, dataid );
+    }
+
+    bool KFGlobal::FormatElement( KFElements& kfelements, const std::string& dataname, const std::string& datavalue, uint32 dataid )
+    {
+        return _kf_element_format->FormatElement( kfelements, dataname, datavalue, dataid );
+    }
+
+    bool KFGlobal::FormatElement( KFElements& kfelements, const KFElementData& elementdata )
+    {
+        return _kf_element_format->FormatElement( kfelements, elementdata );
+    }
+
+    bool KFGlobal::ParseElement( KFElements& kfelements, const char* file, uint64 id )
+    {
+        return _kf_element_format->FormatElement( kfelements, file, id );
+    }
 }

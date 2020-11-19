@@ -10,7 +10,6 @@
 ************************************************************************/
 
 #include "KFTaskInterface.h"
-#include "KFTaskChainInterface.h"
 #include "KFTimer/KFTimerInterface.h"
 #include "KFKernel/KFKernelInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
@@ -19,7 +18,6 @@
 #include "KFExecute/KFExecuteInterface.h"
 #include "KFCondition/KFConditionInterface.h"
 #include "KFXmlReader/KFTaskConfig.hpp"
-#include "KFXmlReader/KFTaskRefreshConfig.hpp"
 
 namespace KFrame
 {
@@ -86,10 +84,6 @@ namespace KFrame
 
         // 删除任务回调
         __KF_REMOVE_DATA_FUNCTION__( OnRemoveTask );
-
-        // 判断任务是否能更新
-        uint32 CheckTaskUpdateStatus( KFData* kftask, const KFTaskSetting* kfsetting );
-        uint32 CheckTaskCanUpdate( KFEntity* player, KFData* kftask, const KFTaskSetting* kfsetting );
 
         // 初始化任务条件
         void InitTaskCondition( KFEntity* player, const KFTaskSetting* kfsetting, KFData* kftask, uint32 status, bool update );

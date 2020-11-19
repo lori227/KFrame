@@ -169,11 +169,6 @@ namespace KFrame
             kftask->Set( __STRING__( status ), status );
             SetTaskTime( player, kftask, kfsetting, validtime, false );
 
-            // 前置条件
-            auto kfpreconditionobject = kftask->Find( __STRING__( preconditions ) );
-            _kf_condition->AddCondition( player, kfpreconditionobject, kfsetting->_pre_condition );
-            _kf_condition->InitCondition( player, kfpreconditionobject, KFConditionEnum::LimitNull, false );
-
             // 完成条件
             auto kfconditionobject = kftask->Find( __STRING__( conditions ) );
             _kf_condition->AddCondition( player, kfconditionobject, kfsetting->_complete_condition );
@@ -322,7 +317,7 @@ namespace KFrame
 
         // 初始化条件
         auto kfconditionobject = kftask->Find( __STRING__( conditions ) );
-        auto complete = _kf_condition->InitCondition( player, kfconditionobject, KFConditionEnum::LimitNull, update );
+        auto complete = _kf_condition->InitCondition( player, kfconditionobject, update );
         if ( complete )
         {
             DoneTask( player, kftask, kfsetting, update );
@@ -366,38 +361,14 @@ namespace KFrame
         FinishTask( player, subid );
     }
 
-    uint32 KFTaskModule::CheckTaskUpdateStatus( KFData* kftask, const KFTaskSetting* kfsetting )
-    {
-        auto status = kftask->Get<uint32>( __STRING__( status ) );
-        if ( status == KFMsg::ExecuteStatus )
-        {
-            return KFConditionEnum::LimitNull;
-        }
-
-        return KFConditionEnum::LimitStop;
-    }
-
-    uint32 KFTaskModule::CheckTaskCanUpdate( KFEntity* player, KFData* kftask, const KFTaskSetting* kfsetting )
-    {
-        auto limitmask = CheckTaskUpdateStatus( kftask, kfsetting );
-        if ( limitmask == KFConditionEnum::LimitStop )
-        {
-            return limitmask;
-        }
-
-        return limitmask;
-    }
-
     class KFUpdateTaskData
     {
     public:
         KFData* _task;
         const KFTaskSetting* _kfsetting = nullptr;
-        uint32 _limit_mask = KFConditionEnum::LimitNull;
     };
 
 #define __GET_UPDATA_TASK_LIST__()\
-    std::list< KFUpdateTaskData > _pre_task;\
     std::list< KFUpdateTaskData > _update_task;\
     auto kftaskrecord = player->Find( __STRING__( task ) );\
     for ( auto kftask = kftaskrecord->First(); kftask != nullptr; kftask = kftaskrecord->Next() )\
@@ -410,48 +381,26 @@ namespace KFrame
             continue;\
         }\
         auto status = kftask->Get<uint32>( __STRING__( status ) );\
-        if ( status == KFMsg::ActiveStatus )\
+        if ( status == KFMsg::ExecuteStatus )\
         {\
-            KFUpdateTaskData updatedata;\
+            KFUpdateTaskData updatedata; \
             updatedata._task = kftask; \
             updatedata._kfsetting = kfsetting; \
-            _pre_task.emplace_back( updatedata );\
-        }\
-        else\
-        {\
-            auto limitmask = CheckTaskCanUpdate( player, kftask, kfsetting ); \
-            if ( limitmask != KFConditionEnum::LimitStop )\
-            {\
-                KFUpdateTaskData updatedata; \
-                updatedata._task = kftask; \
-                updatedata._kfsetting = kfsetting; \
-                updatedata._limit_mask = limitmask; \
-                _update_task.emplace_back( updatedata ); \
-            }\
+            _update_task.emplace_back( updatedata ); \
         }\
     }\
 
     __KF_ADD_DATA_FUNCTION__( KFTaskModule::OnAddDataTaskModule )
     {
         __GET_UPDATA_TASK_LIST__();
-        for ( auto& data : _pre_task )
-        {
-            auto kftask = data._task;
-            auto kfsetting = data._kfsetting;
-            auto limitmask = data._limit_mask;
-
-            auto kfconditionobject = kftask->Find( __STRING__( preconditions ) );
-            _kf_condition->UpdateAddCondition( player, kfconditionobject, limitmask, kfdata );
-        }
 
         for ( auto& data : _update_task )
         {
             auto kftask = data._task;
             auto kfsetting = data._kfsetting;
-            auto limitmask = data._limit_mask;
 
             auto kfconditionobject = kftask->Find( __STRING__( conditions ) );
-            auto complete = _kf_condition->UpdateAddCondition( player, kfconditionobject, limitmask, kfdata );
+            auto complete = _kf_condition->UpdateAddCondition( player, kfconditionobject, kfdata );
             if ( complete )
             {
                 DoneTask( player, kftask, kfsetting, true );
@@ -462,24 +411,14 @@ namespace KFrame
     __KF_ADD_DATA_FUNCTION__( KFTaskModule::OnRemoveDataTaskModule )
     {
         __GET_UPDATA_TASK_LIST__();
-        for ( auto& data : _pre_task )
-        {
-            auto kftask = data._task;
-            auto kfsetting = data._kfsetting;
-            auto limitmask = data._limit_mask;
-
-            auto kfconditionobject = kftask->Find( __STRING__( preconditions ) );
-            _kf_condition->UpdateRemoveCondition( player, kfconditionobject, limitmask, kfdata );
-        }
 
         for ( auto& data : _update_task )
         {
             auto kftask = data._task;
             auto kfsetting = data._kfsetting;
-            auto limitmask = data._limit_mask;
 
             auto kfconditionobject = kftask->Find( __STRING__( conditions ) );
-            auto complete = _kf_condition->UpdateRemoveCondition( player, kfconditionobject, limitmask, kfdata );
+            auto complete = _kf_condition->UpdateRemoveCondition( player, kfconditionobject, kfdata );
             if ( complete )
             {
                 DoneTask( player, kftask, kfsetting, true );
@@ -490,24 +429,14 @@ namespace KFrame
     __KF_UPDATE_DATA_FUNCTION__( KFTaskModule::OnUpdateDataTaskModule )
     {
         __GET_UPDATA_TASK_LIST__();
-        for ( auto& data : _pre_task )
-        {
-            auto kftask = data._task;
-            auto kfsetting = data._kfsetting;
-            auto limitmask = data._limit_mask;
-
-            auto kfconditionobject = kftask->Find( __STRING__( preconditions ) );
-            _kf_condition->UpdateUpdateCondition( player, kfconditionobject, limitmask, kfdata, operate, value, newvalue );
-        }
 
         for ( auto& data : _update_task )
         {
             auto kftask = data._task;
             auto kfsetting = data._kfsetting;
-            auto limitmask = data._limit_mask;
 
             auto kfconditionobject = kftask->Find( __STRING__( conditions ) );
-            auto complete = _kf_condition->UpdateUpdateCondition( player, kfconditionobject, limitmask, kfdata, operate, value, newvalue );
+            auto complete = _kf_condition->UpdateUpdateCondition( player, kfconditionobject, kfdata, operate, value, newvalue );
             if ( complete )
             {
                 DoneTask( player, kftask, kfsetting, true );
@@ -538,28 +467,7 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::TaskAlreadyReceive );
         }
 
-        // 判断前置条件
-        auto kfconditionobject = kftask->Find( __STRING__( preconditions ) );
-        auto ok = _kf_condition->CheckCondition( player, kfconditionobject );
-        if ( !ok )
-        {
-            return _kf_display->SendToClient( player, KFMsg::TaskNotPreCondition );
-        }
-
-        // 判断任务链的接取消耗
-        auto refreshid = kftask->Get<uint32>( __STRING__( refresh ) );
-        auto kfrefreshsetting = KFTaskRefreshConfig::Instance()->FindSetting( refreshid );
-        if ( kfrefreshsetting != nullptr )
-        {
-            // 判断接取消耗
-            auto& dataname = player->RemoveElement( &kfrefreshsetting->_receive_cost, _default_multiple, __STRING__( taskreceive ), kfsetting->_id, __FUNC_LINE__ );
-            if ( !dataname.empty() )
-            {
-                return _kf_display->SendToClient( player, KFMsg::DataNotEnough, dataname );
-            }
-        }
-
-        UpdataTaskStatus( player, kfsetting, kftask, KFMsg::ExecuteStatus, kfrefreshsetting->_done_time );
+        UpdataTaskStatus( player, kfsetting, kftask, KFMsg::ExecuteStatus, 0u );
     }
 
     __KF_MESSAGE_FUNCTION__( KFTaskModule::HandleTaskRewardReq )
@@ -638,19 +546,8 @@ namespace KFrame
             auto kftask = kftaskrecord->Find( taskid );
             if ( kftask != nullptr )
             {
-                auto timeout = 0u;
-                auto refreshid = kftaskrecord->Get( taskid, __STRING__( refresh ) );
-                if ( refreshid != 0u )
-                {
-                    auto kfrefreshsetting = KFTaskRefreshConfig::Instance()->FindSetting( refreshid );
-                    if ( kfrefreshsetting != nullptr && kfrefreshsetting->_receive_time != 0u )
-                    {
-                        timeout = kfrefreshsetting->_receive_time;
-                    }
-                }
-
                 // 更新状态
-                UpdataTaskStatus( player, kfsetting, kftask, status, timeout );
+                UpdataTaskStatus( player, kfsetting, kftask, status, 0u );
             }
             else
             {
@@ -661,19 +558,8 @@ namespace KFrame
         break;
         case KFMsg::ExecuteStatus:
         {
-            auto timeout = 0u;
-            auto refreshid = kftaskrecord->Get( taskid, __STRING__( refresh ) );
-            if ( refreshid != 0u )
-            {
-                auto kfrefreshsetting = KFTaskRefreshConfig::Instance()->FindSetting( refreshid );
-                if ( kfrefreshsetting != nullptr && kfrefreshsetting->_done_time != 0u )
-                {
-                    timeout = kfrefreshsetting->_done_time;
-                }
-            }
-
             // 开启任务
-            CreateTask( player, kfsetting, status, timeout );
+            CreateTask( player, kfsetting, status, 0u );
         }
         break;
         case KFMsg::DoneStatus:

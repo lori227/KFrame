@@ -2,7 +2,6 @@
 #define __KF_COUNT_COST_CONFIG_H__
 
 #include "KFConfig.h"
-#include "KFElementConfig.h"
 
 namespace KFrame
 {
@@ -65,7 +64,7 @@ namespace KFrame
                 auto kfsetting = iter.second;
                 for ( auto countcostdata : kfsetting->_count_cost_list._objects )
                 {
-                    KFElementConfig::Instance()->ParseElement( countcostdata->_cost_elements, __FILE__, kfsetting->_id );
+                    KFGlobal::Instance()->ParseElement( countcostdata->_cost_elements, __FILE__, kfsetting->_id );
                 }
             }
         }

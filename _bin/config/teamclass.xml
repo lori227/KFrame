@@ -1,4 +1,4 @@
-<root version="50a3c4ddfd1a143bd998c0992c219a00">
+<root version="552e5fadd4a107818b216c0724d88f96">
 	<node row="8" id="Global" name="team" type="object" containclass="Team" keyname="id" show="1" deletetype="2" sync="1" view="1" team="1"/>
 	<node row="9" id="Player" name="team" type="object" containclass="Team" keyname="id" save="1" sync="1"/>
 	<node row="10" id="Team" name="id" type="uint64" save="1" sync="1" view="1"/>

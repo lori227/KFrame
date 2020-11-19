@@ -32,7 +32,7 @@ namespace KFrame
         virtual void AddCondition( KFEntity* kfentity, KFData* kfconditionobject, const DynamicConditionGroupPtr& conditiongroup );
 
         // 初始化条件
-        virtual bool InitCondition( KFEntity* kfentity, KFData* kfconditionobject, uint32 limitmask, bool update );
+        virtual bool InitCondition( KFEntity* kfentity, KFData* kfconditionobject, bool update );
 
         // 直接更新条件
         virtual bool UpdateCondition( KFEntity* kfentity, KFData* kfconditionobject, uint32 conditionid, uint32 operate, uint32 conditionvalue );
@@ -41,13 +41,13 @@ namespace KFrame
         virtual bool CheckCondition( KFEntity* kfentity, KFData* kfconditionobject );
 
         // 添加属性更新条件, 返回true, 条件全部完成
-        virtual bool UpdateAddCondition( KFEntity* kfentity, KFData* kfconditionobject, uint32 limitmask, KFData* kfdata );
+        virtual bool UpdateAddCondition( KFEntity* kfentity, KFData* kfconditionobject, KFData* kfdata );
 
         // 删除属性更新条件, 返回true, 条件全部完成
-        virtual bool UpdateRemoveCondition( KFEntity* kfentity, KFData* kfconditionobject, uint32 limitmask, KFData* kfdata );
+        virtual bool UpdateRemoveCondition( KFEntity* kfentity, KFData* kfconditionobject, KFData* kfdata );
 
         // 更新属性更新条件, 返回true, 条件全部完成
-        virtual bool UpdateUpdateCondition( KFEntity* kfentity, KFData* kfconditionobject, uint32 limitmask, KFData* kfdata, uint32 operate, uint64 value, uint64 nowvalue );
+        virtual bool UpdateUpdateCondition( KFEntity* kfentity, KFData* kfconditionobject, KFData* kfdata, uint32 operate, uint64 value, uint64 nowvalue );
 
     protected:
         // 判断属性条件
@@ -67,7 +67,7 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // 初始化条件
-        uint32 InitConditionData( KFEntity* kfentity, KFData* kfcondition, uint32 limitmask, bool update );
+        uint32 InitConditionData( KFEntity* kfentity, KFData* kfcondition, bool update );
         // 初始化计算数量
         uint32 InitCalcRecordCount( KFEntity* kfentity, KFData* kfcondition, const KFConditionSetting* kfsetting );
         // 计算是否存在
@@ -83,19 +83,19 @@ namespace KFrame
         uint32 UpdateConditionData( KFEntity* kfentity, KFData* kfcondition, uint32 conditionid, uint32 operate, uint32 conditionvalue );
 
         // 添加属性更新条件, 返回true, 条件全部完成
-        uint32 UpdateAddConditionData( KFEntity* kfentity, KFData* kfcondition, uint32 limitmask, KFData* kfdata );
+        uint32 UpdateAddConditionData( KFEntity* kfentity, KFData* kfcondition, KFData* kfdata );
 
         // 删除属性更新条件, 返回true, 条件全部完成
-        uint32 UpdateRemoveConditionData( KFEntity* kfentity, KFData* kfcondition, uint32 limitmask, KFData* kfdata );
+        uint32 UpdateRemoveConditionData( KFEntity* kfentity, KFData* kfcondition, KFData* kfdata );
 
         // 更新条件
-        uint32 UpdateUpdateConditionData( KFEntity* kfentity, KFData* kfcondition, uint32 limitmask, KFData* kfdata, uint32 operate, uint64 value, uint64 nowvalue );
+        uint32 UpdateUpdateConditionData( KFEntity* kfentity, KFData* kfcondition, KFData* kfdata, uint32 operate, uint64 value, uint64 nowvalue );
 
         // 判断属性条件
         uint32 CheckConditionData( KFEntity* kfentity, KFData* kfcondition );
 
         // 计算添加数值
-        std::tuple<uint32, uint32> CalcAddConditionValue( KFEntity* kfentity, const KFConditionDefineSetting* kfdefine, KFData* kfdata );
+        std::tuple<uint32, uint32> CalcAddConditionValue( KFEntity* kfentity, const KFConditionDefineSetting* kfsetting, KFData* kfdata );
 
         // 计算删除数值
         std::tuple<uint32, uint32> CalcRemoveConditionValue( KFEntity* kfentity, const KFConditionDefineSetting* kfsetting, KFData* kfdata );

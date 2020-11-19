@@ -206,11 +206,6 @@ namespace KFrame
         CalculateNormal = 0,	// 完成后停止计数
         CalculateContinue = 1,	// 持续计数
         //////////////////////////////////////////////////////////////////
-        // 条件限制类型
-        LimitNull = 0x0,		// 无限制
-        LimitStatus = 0x1,		// 完成后继续计数
-        LimitPlace = 0x2,		// 地点限制
-        LimitStop = 0xFFFF,		// 限制停止
     };
 }
 

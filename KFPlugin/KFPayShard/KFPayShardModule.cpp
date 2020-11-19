@@ -46,7 +46,7 @@ namespace KFrame
         auto orderkey = __FORMAT__( "{}:{}", __STRING__( payorder ), order );
 
         // 保存到数据库
-        auto redisdriver = __AUTH_REDIS_DRIVER__;
+        auto redisdriver = __PAY_REDIS_DRIVER__;
 
         __JSON_OBJECT_DOCUMENT__( response );
         __JSON_SET_VALUE__( response, __STRING__( playerid ), playerid );

@@ -38,9 +38,9 @@ namespace KFrame
         {
             auto kfgoodssetting = iter.second;
 
-            KFElementConfig::Instance()->ParseElement( kfgoodssetting->_goods_data, __FILE__, kfgoodssetting->_id );
-            KFElementConfig::Instance()->ParseElement( kfgoodssetting->_buy_price, __FILE__, kfgoodssetting->_id );
-            KFElementConfig::Instance()->ParseElement( kfgoodssetting->_discount_price, __FILE__, kfgoodssetting->_id );
+            KFGlobal::Instance()->ParseElement( kfgoodssetting->_goods_data, __FILE__, kfgoodssetting->_id );
+            KFGlobal::Instance()->ParseElement( kfgoodssetting->_buy_price, __FILE__, kfgoodssetting->_id );
+            KFGlobal::Instance()->ParseElement( kfgoodssetting->_discount_price, __FILE__, kfgoodssetting->_id );
         }
     }
 

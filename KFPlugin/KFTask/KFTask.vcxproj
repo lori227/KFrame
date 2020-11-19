@@ -12,22 +12,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFTaskChainModule.cpp" />
     <ClCompile Include="KFTaskModule.cpp" />
     <ClCompile Include="KFTaskPlugin.cpp" />
-    <ClCompile Include="KFTaskRefreshModule.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\KFResource\KFXmlReader\KFTaskChainConfig.hpp" />
-    <ClInclude Include="..\..\KFResource\KFXmlReader\KFTaskConfig.h" />
-    <ClInclude Include="..\..\KFResource\KFXmlReader\KFTaskRefreshConfig.hpp" />
-    <ClInclude Include="KFTaskChainInterface.h" />
-    <ClInclude Include="KFTaskChainModule.hpp" />
+    <ClInclude Include="..\..\KFResource\KFXmlReader\KFTaskConfig.hpp" />
     <ClInclude Include="KFTaskInterface.h" />
     <ClInclude Include="KFTaskModule.hpp" />
     <ClInclude Include="KFTaskPlugin.hpp" />
-    <ClInclude Include="KFTaskRefreshInterface.h" />
-    <ClInclude Include="KFTaskRefreshModule.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{09A95B0B-192E-4D62-B10E-1381740339AA}</ProjectGuid>

@@ -56,7 +56,7 @@ namespace KFrame
             kfunlockrecord->Add( kfsetting->_id, kfunlock );
 
             // 判断条件
-            auto complete = _kf_condition->InitCondition( player, kfconditionobject, KFConditionEnum::LimitNull, false );
+            auto complete = _kf_condition->InitCondition( player, kfconditionobject, false );
             if ( complete )
             {
                 kfunlockrecord->Remove( kfsetting->_id );
@@ -162,17 +162,17 @@ namespace KFrame
 
     __KF_ADD_DATA_FUNCTION__( KFUnlockModule::OnAddDataUnlockModule )
     {
-        __UPDATE_UNLOCK_LIST__( _kf_condition->UpdateAddCondition( player, kfconditionobject, KFConditionEnum::LimitNull, kfdata ) );
+        __UPDATE_UNLOCK_LIST__( _kf_condition->UpdateAddCondition( player, kfconditionobject, kfdata ) );
     }
 
     __KF_REMOVE_DATA_FUNCTION__( KFUnlockModule::OnRemoveDataUnlockModule )
     {
-        __UPDATE_UNLOCK_LIST__( _kf_condition->UpdateRemoveCondition( player, kfconditionobject, KFConditionEnum::LimitNull, kfdata ) );
+        __UPDATE_UNLOCK_LIST__( _kf_condition->UpdateRemoveCondition( player, kfconditionobject, kfdata ) );
     }
 
     __KF_UPDATE_DATA_FUNCTION__( KFUnlockModule::OnUpdateDataUnlockModule )
     {
-        __UPDATE_UNLOCK_LIST__( _kf_condition->UpdateUpdateCondition( player, kfconditionobject, KFConditionEnum::LimitNull, kfdata, operate, value, newvalue ) );
+        __UPDATE_UNLOCK_LIST__( _kf_condition->UpdateUpdateCondition( player, kfconditionobject, kfdata, operate, value, newvalue ) );
     }
 }
 

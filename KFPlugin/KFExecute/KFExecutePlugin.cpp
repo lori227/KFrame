@@ -28,6 +28,5 @@ namespace KFrame
     void KFExecutePlugin::AddConfig()
     {
         __KF_ADD_CONFIG__( KFExecuteConfig );
-        __KF_ADD_CONFIG__( KFElementConfig );
     }
 }

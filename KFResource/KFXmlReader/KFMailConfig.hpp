@@ -1,79 +1,70 @@
-ï»¿#ifndef __KF_MAIL_CONFIG_H__
-#define __KF_MAIL_CONFIG_H__
+#ifndef	__KF_MAIL_CONFIG_H__
+#define	__KF_MAIL_CONFIG_H__
 
 #include "KFConfig.h"
-#include "KFElementConfig.h"
 
 namespace KFrame
 {
-    /////////////////////////////////////////////////////////////////////////////////
-    class KFMailSetting : public KFIntSetting
-    {
-    public:
-        // é‚®ä»¶çš„ç±»å‹
-        uint32 _type = 0u;
+	/////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////
+	class KFMailSetting : public KFIntSetting
+	{
+	public:
+		// ÀàĞÍ
+		uint32 _type = 0u;
 
-        // æ ‡é¢˜
-        std::string _title;
+		// ±êÌâ
+		std::string _title;
 
-        // å†…å®¹
-        std::string _content;
+		// ÄÚÈİ
+		std::string _content;
 
-        // æœ‰æ•ˆæ—¶é—´
-        uint32 _valid_time = 0u;
+		// ÓĞĞ§Ê±¼ä(Ãë)
+		uint32 _valid_time = 0u;
 
-        // é™„ä»¶å¥–åŠ±é…ç½®
-        KFElements _rewards;
+		// ¸½¼ş½±ÀøÅäÖÃ
+		KFElements _reward;
 
-        // è¯»å–/é¢†å–å®Œæˆåæ˜¯å¦ç«‹å³åˆ é™¤
-        uint32 _del_now = 0u;
+		// ÁìÈ¡ºóµÄ»Ø¸´ÓÊ¼şid(0±íÊ¾²»»Ø¸´)
+		uint32 _reply_id = 0u;
 
-        // é¢†å–é‚®ä»¶çš„å›å¤é‚®ä»¶id
-        uint32 _reply_id = 0u;
+	};
 
-        // é™„åŠ ä¿¡æ¯
-        std::string _extend;
-    };
+	/////////////////////////////////////////////////////////////////////////////////
+	class KFMailConfig : public KFConfigT< KFMailSetting >, public KFInstance< KFMailConfig >
+	{
+	public:
+		KFMailConfig()
+		{
+			_key_name = "id";
+			_file_name = "mail";
+		}
 
-    ////////////////////////////////////////////////////////////////////////////////////
+		~KFMailConfig() = default;
 
-    class KFMailConfig : public KFConfigT< KFMailSetting >, public KFInstance< KFMailConfig >
-    {
-    public:
-        KFMailConfig()
-        {
-            _file_name = "mail";
-        }
+		virtual void LoadAllComplete()
+		{
+			for ( auto& iter : _settings._objects )
+			{
+				auto kfsetting = iter.second;
 
-        virtual void LoadAllComplete()
-        {
-            for ( auto& iter : _settings._objects )
-            {
-                auto kfsetting = iter.second;
-                KFElementConfig::Instance()->ParseElement( kfsetting->_rewards, __FILE__, __LINE__ );
-            }
-        }
+				KFGlobal::Instance()->ParseElement( kfsetting->_reward, _file_name.c_str(), kfsetting->_row );
+			}
+		}
 
-    protected:
-        // è¯»å–é…ç½®
-        virtual void ReadSetting( KFXmlNode& xmlnode, KFMailSetting* kfsetting )
-        {
-            kfsetting->_type = xmlnode.ReadUInt32( "Type" );
-            kfsetting->_reply_id = xmlnode.ReadUInt32( "ReplyId" );
+	protected:
+		virtual void ReadSetting( KFXmlNode& xmlnode, KFMailSetting* kfsetting )
+		{
+			kfsetting->_type = xmlnode.ReadUInt32( "type", true );
+			kfsetting->_title = xmlnode.ReadString( "title", true );
+			kfsetting->_content = xmlnode.ReadString( "content", true );
+			kfsetting->_valid_time = xmlnode.ReadUInt32( "validtime", true );
+			kfsetting->_reward._str_parse = xmlnode.ReadString( "reward", true );
+			kfsetting->_reply_id = xmlnode.ReadUInt32( "replyid", true );
+		}
 
-            kfsetting->_title = xmlnode.ReadString( "Title" );
-            KFUtility::ReplaceString( kfsetting->_title, " ", "" );
+	};
 
-            kfsetting->_content = xmlnode.ReadString( "Content" );
-            KFUtility::ReplaceString( kfsetting->_content, " ", "" );
-
-            kfsetting->_valid_time = xmlnode.ReadUInt32( "ValidTime" ) * KFTimeEnum::OneDaySecond;
-            kfsetting->_extend = xmlnode.ReadString( "Extend" );
-            KFUtility::ReplaceString( kfsetting->_extend, " ", "" );
-
-            kfsetting->_rewards._str_parse = xmlnode.ReadString( "Reward" );
-        }
-    };
+	/////////////////////////////////////////////////////////////////////////////////
 }
-
 #endif
