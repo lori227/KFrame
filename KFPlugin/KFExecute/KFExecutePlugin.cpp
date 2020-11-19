@@ -1,6 +1,6 @@
 ﻿#include "KFExecutePlugin.hpp"
 #include "KFExecuteModule.hpp"
-#include "KFConfig/KFConfigInterface.h"
+#include "KFLoader/KFLoaderInterface.h"
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame
@@ -18,7 +18,7 @@ namespace KFrame
     void KFExecutePlugin::LoadModule()
     {
         __FIND_MODULE__( _kf_drop, KFDropInterface );
-        __FIND_MODULE__( _kf_config, KFConfigInterface );
+        __FIND_MODULE__( _kf_loader, KFLoaderInterface );
         __FIND_MODULE__( _kf_kernel, KFKernelInterface );
         __FIND_MODULE__( _kf_player, KFPlayerInterface );
         __FIND_MODULE__( _kf_execute, KFExecuteInterface );

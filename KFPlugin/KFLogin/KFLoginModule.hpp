@@ -16,7 +16,7 @@
 #include "KFTcpClient/KFTcpClientInterface.h"
 #include "KFIpAddress/KFIpAddressInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
-#include "KFXmlReader/KFZoneConfig.hpp"
+#include "KFConfig/KFZoneConfig.hpp"
 
 namespace KFrame
 {

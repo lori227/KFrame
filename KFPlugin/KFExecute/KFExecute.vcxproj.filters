@@ -9,6 +9,5 @@
     <ClInclude Include="KFExecuteInterface.h" />
     <ClInclude Include="KFExecuteModule.hpp" />
     <ClInclude Include="KFExecutePlugin.hpp" />
-    <ClInclude Include="..\..\KFResource\KFXmlReader\KFExecuteConfig.hpp" />
   </ItemGroup>
 </Project>

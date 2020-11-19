@@ -1,28 +1,28 @@
-﻿#ifndef __KF_CONFIG_MODULE_H__
-#define __KF_CONFIG_MODULE_H__
+﻿#ifndef __KF_LOADER_MODULE_H__
+#define __KF_LOADER_MODULE_H__
 
 
 /************************************************************************
-//    @Module			:    配置管理模块
+//    @Module			:    配置加载模块
 //    @Author           :    __凌_痕__
 //    @QQ				:    7969936
 //    @Mail			    :    lori227@qq.com
 //    @Date             :    2017-3-19
 ************************************************************************/
 
-#include "KFConfigConfig.hpp"
+#include "KFLoaderConfig.hpp"
 #include "KFVersionConfig.hpp"
-#include "KFConfigInterface.h"
+#include "KFLoaderInterface.h"
 
 namespace KFrame
 {
     ////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////
-    class KFConfigModule : public KFConfigInterface
+    class KFLoaderModule : public KFLoaderInterface
     {
     public:
-        KFConfigModule();
-        ~KFConfigModule();
+        KFLoaderModule();
+        ~KFLoaderModule();
 
         // 加载配置
         virtual void LoadConfig();
@@ -52,7 +52,7 @@ namespace KFrame
         void LoadConfigFile( KFConfig* config, const std::string& filename, const std::string& filepath, uint32 loadmask );
     private:
         // 配置列表
-        KFConfigConfig* _kf_config_config = nullptr;
+        KFLoaderConfig* _kf_loader_config = nullptr;
 
         // 版本列表
         KFVersionConfig* _kf_version_config = nullptr;

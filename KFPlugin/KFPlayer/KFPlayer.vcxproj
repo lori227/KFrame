@@ -16,7 +16,6 @@
     <ClCompile Include="KFPlayerPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\KFResource\KFXmlReader\KFPlayerConfig.hpp" />
     <ClInclude Include="KFPlayerInterface.h" />
     <ClInclude Include="KFPlayerModule.hpp" />
     <ClInclude Include="KFPlayerPlugin.hpp" />

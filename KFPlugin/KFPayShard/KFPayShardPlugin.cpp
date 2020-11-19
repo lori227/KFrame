@@ -1,6 +1,6 @@
 ﻿#include "KFPayShardPlugin.hpp"
 #include "KFPayShardModule.hpp"
-#include "KFConfig/KFConfigInterface.h"
+#include "KFLoader/KFLoaderInterface.h"
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame

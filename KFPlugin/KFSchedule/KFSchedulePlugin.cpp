@@ -1,6 +1,6 @@
 ﻿#include "KFSchedulePlugin.hpp"
 #include "KFScheduleModule.hpp"
-#include "KFConfig/KFConfigInterface.h"
+#include "KFLoader/KFLoaderInterface.h"
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame
@@ -17,7 +17,7 @@ namespace KFrame
 
     void KFSchedulePlugin::LoadModule()
     {
-        __FIND_MODULE__( _kf_config, KFConfigInterface );
+        __FIND_MODULE__( _kf_loader, KFLoaderInterface );
     }
 
     void KFSchedulePlugin::AddConfig()

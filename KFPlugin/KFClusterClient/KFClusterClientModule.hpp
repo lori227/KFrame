@@ -14,7 +14,7 @@
 #include "KFMessage/KFMessageInterface.h"
 #include "KFIpAddress/KFIpAddressInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"
-#include "KFXmlReader/KFRouteConfig.hpp"
+#include "KFConfig/KFRouteConfig.hpp"
 
 namespace KFrame
 {

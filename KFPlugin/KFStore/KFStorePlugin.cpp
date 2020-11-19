@@ -1,7 +1,7 @@
 ﻿#include "KFStorePlugin.hpp"
 #include "KFStoreModule.hpp"
 #include "KFGoodsModule.hpp"
-#include "KFConfig/KFConfigInterface.h"
+#include "KFLoader/KFLoaderInterface.h"
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame
@@ -22,7 +22,7 @@ namespace KFrame
     {
         __FIND_MODULE__( _kf_timer, KFTimerInterface );
         __FIND_MODULE__( _kf_reset, KFResetInterface );
-        __FIND_MODULE__( _kf_config, KFConfigInterface );
+        __FIND_MODULE__( _kf_loader, KFLoaderInterface );
         __FIND_MODULE__( _kf_message, KFMessageInterface );
         __FIND_MODULE__( _kf_kernel, KFKernelInterface );
         __FIND_MODULE__( _kf_player, KFPlayerInterface );

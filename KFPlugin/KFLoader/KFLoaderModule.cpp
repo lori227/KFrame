@@ -1,28 +1,28 @@
-﻿#include "KFConfigModule.hpp"
+﻿#include "KFLoaderModule.hpp"
 
 namespace KFrame
 {
     static std::string _config_path = "./config/";
     //////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////
-    KFConfigModule::KFConfigModule()
+    KFLoaderModule::KFLoaderModule()
     {
-        _kf_config_config = __NEW_OBJECT__( KFConfigConfig );
+        _kf_loader_config = __NEW_OBJECT__( KFLoaderConfig );
         _kf_version_config = __NEW_OBJECT__( KFVersionConfig );
     }
 
-    KFConfigModule::~KFConfigModule()
+    KFLoaderModule::~KFLoaderModule()
     {
-        __DELETE_OBJECT__( _kf_config_config );
+        __DELETE_OBJECT__( _kf_loader_config );
         __DELETE_OBJECT__( _kf_version_config );
     }
 
-    void KFConfigModule::BeforeRun()
+    void KFLoaderModule::BeforeRun()
     {
-        _kf_plugin_manage->RegisterCommandFunction( __STRING__( reloadconfig ), this, &KFConfigModule::ProcessReloadCommand );
+        _kf_plugin_manage->RegisterCommandFunction( __STRING__( reloadconfig ), this, &KFLoaderModule::ProcessReloadCommand );
     }
 
-    void KFConfigModule::ShutDown()
+    void KFLoaderModule::ShutDown()
     {
         _kf_plugin_manage->UnRegisterCommandFunction( __STRING__( reloadconfig ) );
 
@@ -33,17 +33,17 @@ namespace KFrame
         _config_list.clear();
     }
 
-    void KFConfigModule::ProcessReloadCommand( const StringVector& params )
+    void KFLoaderModule::ProcessReloadCommand( const StringVector& params )
     {
         ReloadConfig( _globbing_string );
     }
 
-    void KFConfigModule::AddConfig( const std::string& name, KFConfig* kfconfig )
+    void KFLoaderModule::AddConfig( const std::string& name, KFConfig* kfconfig )
     {
         _config_list[ name ] = kfconfig;
     }
 
-    KFConfig* KFConfigModule::FindConfig( const std::string& name )
+    KFConfig* KFLoaderModule::FindConfig( const std::string& name )
     {
         auto iter = _config_list.find( name );
         if ( iter == _config_list.end() )
@@ -55,15 +55,15 @@ namespace KFrame
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
-    void KFConfigModule::LoadConfigListAndVersion()
+    void KFLoaderModule::LoadConfigListAndVersion()
     {
         {
             auto configfile = _config_path + "frameconfig.xml";
-            LoadConfigFile( _kf_config_config, "config", configfile, KFConfigEnum::CanReload | KFConfigEnum::NeedClearData );
+            LoadConfigFile( _kf_loader_config, "config", configfile, KFConfigEnum::CanReload | KFConfigEnum::NeedClearData );
         }
         {
             auto configfile = _config_path + "config.xml";
-            LoadConfigFile( _kf_config_config, "config", configfile, KFConfigEnum::CanReload );
+            LoadConfigFile( _kf_loader_config, "config", configfile, KFConfigEnum::CanReload );
         }
 
         {
@@ -72,7 +72,7 @@ namespace KFrame
         }
     }
 
-    void KFConfigModule::LoadConfig()
+    void KFLoaderModule::LoadConfig()
     {
         // 读取配置文件列表
         LoadConfigListAndVersion();
@@ -85,7 +85,7 @@ namespace KFrame
                 continue;
             }
 
-            auto kfsetting = _kf_config_config->FindSetting( kfconfig->_file_name );
+            auto kfsetting = _kf_loader_config->FindSetting( kfconfig->_file_name );
             if ( kfsetting == nullptr )
             {
                 __LOG_ERROR__( "config=[{}:{}] can't find setting", iter.first, kfconfig->_file_name );
@@ -118,7 +118,7 @@ namespace KFrame
     }
 
 
-    void KFConfigModule::ReloadConfig( const std::string& file )
+    void KFLoaderModule::ReloadConfig( const std::string& file )
     {
         __LOG_INFO__( "reload [{}] start", file );
 
@@ -129,7 +129,7 @@ namespace KFrame
         for ( auto& iter : _config_list )
         {
             auto kfconfig = iter.second;
-            auto kfconfigsetting = _kf_config_config->FindSetting( kfconfig->_file_name );
+            auto kfconfigsetting = _kf_loader_config->FindSetting( kfconfig->_file_name );
             if ( kfconfigsetting == nullptr )
             {
                 continue;
@@ -191,7 +191,7 @@ namespace KFrame
         __LOG_INFO__( "reload [{}] ok", file );
     }
 
-    void KFConfigModule::LoadConfigFile( KFConfig* config, const std::string& filename, const std::string& filepath, uint32 loadmask )
+    void KFLoaderModule::LoadConfigFile( KFConfig* config, const std::string& filename, const std::string& filepath, uint32 loadmask )
     {
         try
         {

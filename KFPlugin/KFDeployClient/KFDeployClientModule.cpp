@@ -1,6 +1,6 @@
 ﻿#include "KFDeployClientModule.hpp"
 #include "KFProtocol/KFProtocol.h"
-#include "KFConfig/KFConfigInterface.h"
+#include "KFLoader/KFLoaderInterface.h"
 
 namespace KFrame
 {
@@ -222,7 +222,7 @@ namespace KFrame
 
     __KF_DEPLOY_FUNCTION__( KFDeployClientModule::OnDeployLoadConfig )
     {
-        _kf_config->ReloadConfig( param );
+        _kf_loader->ReloadConfig( param );
     }
 
     __KF_DEPLOY_FUNCTION__( KFDeployClientModule::OnDeployLoadPlugin )

@@ -9,6 +9,5 @@
     <ClInclude Include="KFCompoundInterface.h" />
     <ClInclude Include="KFCompoundModule.hpp" />
     <ClInclude Include="KFCompoundPlugin.hpp" />
-    <ClInclude Include="..\..\KFResource\KFXmlReader\KFCompoundConfig.hpp" />
   </ItemGroup>
 </Project>

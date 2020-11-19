@@ -12,7 +12,7 @@
 #include "KFConditionInterface.h"
 #include "KFKernel/KFKernelInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
-#include "KFXmlReader/KFConditionConfig.hpp"
+#include "KFConfig/KFConditionConfig.hpp"
 
 namespace KFrame
 {

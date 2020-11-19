@@ -14,7 +14,7 @@
 #include "KFMessage/KFMessageInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFCondition/KFConditionInterface.h"
-#include "KFXmlReader/KFAchieveConfig.hpp"
+#include "KFConfig/KFAchieveConfig.hpp"
 
 namespace KFrame
 {

@@ -16,7 +16,6 @@
     <ClCompile Include="KFRelationClientPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\KFResource\KFXmlReader\KFRelationConfig.hpp" />
     <ClInclude Include="KFRelationClientInterface.h" />
     <ClInclude Include="KFRelationClientModule.hpp" />
     <ClInclude Include="KFRelationClientPlugin.hpp" />

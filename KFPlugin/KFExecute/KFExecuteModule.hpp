@@ -14,7 +14,7 @@
 #include "KFKernel/KFKernelInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFDeployClient/KFDeployClientInterface.h"
-#include "KFXmlReader/KFExecuteConfig.hpp"
+#include "KFConfig/KFExecuteConfig.hpp"
 
 namespace KFrame
 {

@@ -9,6 +9,5 @@
     <ClInclude Include="KFUnlockInterface.h" />
     <ClInclude Include="KFUnlockModule.hpp" />
     <ClInclude Include="KFUnlockPlugin.hpp" />
-    <ClInclude Include="..\..\KFResource\KFXmlReader\KFUnlockConfig.hpp" />
   </ItemGroup>
 </Project>

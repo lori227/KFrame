@@ -1,6 +1,6 @@
 ﻿#include "KFDirClientPlugin.hpp"
 #include "KFDirClientModule.hpp"
-#include "KFConfig/KFConfigInterface.h"
+#include "KFLoader/KFLoaderInterface.h"
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame
@@ -17,7 +17,7 @@ namespace KFrame
 
     void KFDirClientPlugin::LoadModule()
     {
-        __FIND_MODULE__( _kf_config, KFConfigInterface );
+        __FIND_MODULE__( _kf_loader, KFLoaderInterface );
         __FIND_MODULE__( _kf_ip_address, KFIpAddressInterface );
         __FIND_MODULE__( _kf_http_client, KFHttpClientInterface );
     }

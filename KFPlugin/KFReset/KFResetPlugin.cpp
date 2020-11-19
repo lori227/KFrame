@@ -2,7 +2,7 @@
 #include "KFResetModule.hpp"
 #include "KFEnterModule.hpp"
 #include "KFLeaveModule.hpp"
-#include "KFConfig/KFConfigInterface.h"
+#include "KFLoader/KFLoaderInterface.h"
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame
@@ -24,7 +24,7 @@ namespace KFrame
     void KFResetPlugin::LoadModule()
     {
         __FIND_MODULE__( _kf_lua, KFLuaInterface );
-        __FIND_MODULE__( _kf_config, KFConfigInterface );
+        __FIND_MODULE__( _kf_loader, KFLoaderInterface );
         __FIND_MODULE__( _kf_player, KFPlayerInterface );
         __FIND_MODULE__( _kf_kernel, KFKernelInterface );
     }

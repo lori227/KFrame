@@ -15,7 +15,7 @@
 #include "KFMessage/KFMessageInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"
-#include "KFXmlReader/KFRankConfig.hpp"
+#include "KFConfig/KFRankConfig.hpp"
 
 
 namespace KFrame

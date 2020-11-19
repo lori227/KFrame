@@ -9,6 +9,5 @@
     <ClInclude Include="KFPlayerInterface.h" />
     <ClInclude Include="KFPlayerModule.hpp" />
     <ClInclude Include="KFPlayerPlugin.hpp" />
-    <ClInclude Include="..\..\KFResource\KFXmlReader\KFPlayerConfig.hpp" />
   </ItemGroup>
 </Project>

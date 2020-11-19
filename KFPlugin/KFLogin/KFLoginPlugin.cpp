@@ -1,6 +1,6 @@
 ﻿#include "KFLoginPlugin.hpp"
 #include "KFLoginModule.hpp"
-#include "KFConfig/KFConfigInterface.h"
+#include "KFLoader/KFLoaderInterface.h"
 
 namespace KFrame
 {
@@ -16,7 +16,7 @@ namespace KFrame
 
     void KFLoginPlugin::LoadModule()
     {
-        __FIND_MODULE__( _kf_config, KFConfigInterface );
+        __FIND_MODULE__( _kf_loader, KFLoaderInterface );
         __FIND_MODULE__( _kf_message, KFMessageInterface );
         __FIND_MODULE__( _kf_tcp_server, KFTcpServerInterface );
         __FIND_MODULE__( _kf_tcp_client, KFTcpClientInterface );

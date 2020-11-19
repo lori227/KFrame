@@ -18,9 +18,6 @@
     <ClCompile Include="KFResetPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\KFResource\KFXmlReader\KFEnterConfig.hpp" />
-    <ClInclude Include="..\..\KFResource\KFXmlReader\KFLeaveConfig.hpp" />
-    <ClInclude Include="..\..\KFResource\KFXmlReader\KFResetConfig.hpp" />
     <ClInclude Include="KFEnterInterface.h" />
     <ClInclude Include="KFEnterModule.hpp" />
     <ClInclude Include="KFLeaveInterface.h" />

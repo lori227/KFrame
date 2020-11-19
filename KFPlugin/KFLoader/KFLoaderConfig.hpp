@@ -1,5 +1,5 @@
-﻿#ifndef __KF_CONFIG_CONFIG_H__
-#define __KF_CONFIG_CONFIG_H__
+﻿#ifndef __KF_LOADER_CONFIG_H__
+#define __KF_LOADER_CONFIG_H__
 
 #include "KFConfig.h"
 
@@ -18,7 +18,7 @@ namespace KFrame
         uint32 _load_mask = 0u;
     };
 
-    class KFConfigSetting : public KFStrSetting
+    class KFLoaderSetting : public KFStrSetting
     {
     public:
         // 是否是配置文件
@@ -30,11 +30,11 @@ namespace KFrame
     };
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
-    class KFConfigConfig : public KFConfigT< KFConfigSetting >
+    class KFLoaderConfig : public KFConfigT< KFLoaderSetting >
     {
     protected:
         // 读取配置
-        virtual void ReadSetting( KFXmlNode& xmlnode, KFConfigSetting* kfsetting );
+        virtual void ReadSetting( KFXmlNode& xmlnode, KFLoaderSetting* kfsetting );
     };
 }
 

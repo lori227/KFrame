@@ -12,8 +12,8 @@
 #include "KFResetInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFKernel/KFKernelInterface.h"
-#include "KFXmlReader/KFResetConfig.hpp"
-#include "KFXmlReader/KFTimeLoopConfig.hpp"
+#include "KFConfig/KFResetConfig.hpp"
+#include "KFConfig/KFTimeLoopConfig.hpp"
 
 namespace KFrame
 {

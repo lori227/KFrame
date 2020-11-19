@@ -16,7 +16,6 @@
     <ClCompile Include="KFPayClientPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\KFResource\KFXmlReader\KFPayConfig.hpp" />
     <ClInclude Include="KFPayClientInterface.h" />
     <ClInclude Include="KFPayClientModule.hpp" />
     <ClInclude Include="KFPayClientPlugin.hpp" />

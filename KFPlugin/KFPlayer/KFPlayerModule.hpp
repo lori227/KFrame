@@ -16,7 +16,7 @@
 #include "KFCommand/KFCommandInterface.h"
 #include "KFTimer/KFTimerInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
-#include "KFXmlReader/KFPlayerConfig.hpp"
+#include "KFConfig/KFPlayerConfig.hpp"
 
 namespace KFrame
 {

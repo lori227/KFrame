@@ -193,7 +193,7 @@ namespace KFrame
         hppfile << "#ifndef __KF_" << upfilename << "_CONFIG_H__\n";
         hppfile << "\n";
         hppfile << "#include \"KFrame.h\"\n";
-        hppfile << "#include \"KFConfig/KFConfigInterface.h\"\n";
+        hppfile << "#include \"KFLoader/KFLoaderInterface.h\"\n";
         hppfile << "\n";
         hppfile << "namespace KFrame\n";
         hppfile << "{\n";

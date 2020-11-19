@@ -20,7 +20,6 @@
     <ClCompile Include="KFWeiXin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\KFResource\KFXmlReader\KFChannelConfig.hpp" />
     <ClInclude Include="KFChannel.hpp" />
     <ClInclude Include="KFChannelInterface.h" />
     <ClInclude Include="KFChannelModule.hpp" />

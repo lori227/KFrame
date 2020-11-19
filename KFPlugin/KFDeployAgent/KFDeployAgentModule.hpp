@@ -14,7 +14,6 @@
 #include "KFDeployAgentInterface.h"
 #include "KFTimer/KFTimerInterface.h"
 #include "KFMySQL/KFMySQLInterface.h"
-#include "KFConfig/KFConfigInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFIpAddress/KFIpAddressInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"

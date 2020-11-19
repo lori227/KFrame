@@ -10,7 +10,7 @@
 ************************************************************************/
 
 #include "KFChannelInterface.h"
-#include "KFXmlReader/KFChannelConfig.hpp"
+#include "KFConfig/KFChannelConfig.hpp"
 #include "KFAccount/KFAccountInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
 #include "KFHttpServer/KFHttpServerInterface.h"

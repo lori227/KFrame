@@ -17,7 +17,7 @@
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFIpAddress/KFIpAddressInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
-#include "KFXmlReader/KFPayConfig.hpp"
+#include "KFConfig/KFPayConfig.hpp"
 
 namespace KFrame
 {

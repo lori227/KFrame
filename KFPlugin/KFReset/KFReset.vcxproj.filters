@@ -33,15 +33,6 @@
     <ClInclude Include="KFEnterInterface.h">
       <Filter>Enter</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\KFResource\KFXmlReader\KFEnterConfig.hpp">
-      <Filter>Enter</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\KFResource\KFXmlReader\KFLeaveConfig.hpp">
-      <Filter>Leave</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\KFResource\KFXmlReader\KFResetConfig.hpp">
-      <Filter>Reset</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Reset">

@@ -1,11 +1,11 @@
-﻿#ifndef __KF_CONFIG_INTERFACE_H__
-#define __KF_CONFIG_INTERFACE_H__
+﻿#ifndef __KF_LOADER_INTERFACE_H__
+#define __KF_LOADER_INTERFACE_H__
 
 #include "KFConfig.h"
 
 namespace KFrame
 {
-    class KFConfigInterface : public KFModule
+    class KFLoaderInterface : public KFModule
     {
     public:
         // 注册config
@@ -33,9 +33,9 @@ namespace KFrame
         virtual KFConfig* FindConfig( const std::string& name ) = 0;
     };
     ///////////////////////////////////////////////////////////////////////
-    __KF_INTERFACE__( _kf_config, KFConfigInterface );
+    __KF_INTERFACE__( _kf_loader, KFLoaderInterface );
     ///////////////////////////////////////////////////////////////////////
-#define __KF_ADD_CONFIG__( name )  _kf_config->AddConfig< name >()
+#define __KF_ADD_CONFIG__( name )  _kf_loader->AddConfig< name >()
 }
 
 #endif

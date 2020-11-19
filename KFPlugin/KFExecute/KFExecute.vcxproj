@@ -16,7 +16,6 @@
     <ClCompile Include="KFExecutePlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\KFResource\KFXmlReader\KFExecuteConfig.hpp" />
     <ClInclude Include="KFExecuteInterface.h" />
     <ClInclude Include="KFExecuteModule.hpp" />
     <ClInclude Include="KFExecutePlugin.hpp" />

@@ -19,7 +19,7 @@
 #include "KFTimer/KFTimerInterface.h"
 #include "KFStoreConfig.hpp"
 #include "KFGoodsConfig.hpp"
-#include "KFXmlReader/KFCountCostConfig.h"
+#include "KFConfig/KFCountCostConfig.h"
 
 namespace KFrame
 {

@@ -16,8 +16,6 @@
     <ClCompile Include="KFConditionPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\KFResource\KFXmlReader\KFConditionConfig.hpp" />
-    <ClInclude Include="..\..\KFResource\KFXmlReader\KFConditionDefineConfig.hpp" />
     <ClInclude Include="KFConditionInterface.h" />
     <ClInclude Include="KFConditionModule.hpp" />
     <ClInclude Include="KFConditionPlugin.hpp" />

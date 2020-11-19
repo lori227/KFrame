@@ -1,10 +1,10 @@
-﻿#ifndef __KF_CONFIG_PLUGIN_H__
-#define __KF_CONFIG_PLUGIN_H__
+﻿#ifndef __KF_LOADER_PLUGIN_H__
+#define __KF_LOADER_PLUGIN_H__
 #include "KFrame.h"
 
 namespace KFrame
 {
-    class KFConfigPlugin : public KFPlugin
+    class KFLoaderPlugin : public KFPlugin
     {
     public:
         // 注册

@@ -16,7 +16,6 @@
     <ClCompile Include="KFMailClientPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\KFResource\KFXmlReader\KFMailConfig.hpp" />
     <ClInclude Include="KFMailClientInterface.h" />
     <ClInclude Include="KFMailClientModule.hpp" />
     <ClInclude Include="KFMailClientPlugin.hpp" />

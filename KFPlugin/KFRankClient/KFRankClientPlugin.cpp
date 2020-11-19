@@ -1,6 +1,6 @@
 ﻿#include "KFRankClientPlugin.hpp"
 #include "KFRankClientModule.hpp"
-#include "KFConfig/KFConfigInterface.h"
+#include "KFLoader/KFLoaderInterface.h"
 
 namespace KFrame
 {
@@ -16,7 +16,7 @@ namespace KFrame
 
     void KFRankClientPlugin::LoadModule()
     {
-        __FIND_MODULE__( _kf_config, KFConfigInterface );
+        __FIND_MODULE__( _kf_loader, KFLoaderInterface );
         __FIND_MODULE__( _kf_player, KFPlayerInterface );
         __FIND_MODULE__( _kf_kernel, KFKernelInterface );
         __FIND_MODULE__( _kf_message, KFMessageInterface );

@@ -16,7 +16,7 @@
 #include "KFRouteClient/KFRouteClientInterface.h"
 #include "KFBasicDatabase/KFBasicDatabaseInterface.h"
 #include "KFRelationDatabase/KFRelationDatabaseInterface.h"
-#include "KFXmlReader/KFRelationConfig.hpp"
+#include "KFConfig/KFRelationConfig.hpp"
 
 namespace KFrame
 {

@@ -1,6 +1,6 @@
 ﻿#include "KFChannelPlugin.hpp"
 #include "KFChannelModule.hpp"
-#include "KFConfig/KFConfigInterface.h"
+#include "KFLoader/KFLoaderInterface.h"
 //////////////////////////////////////////////////////////////////////////
 
 namespace KFrame
@@ -17,7 +17,7 @@ namespace KFrame
 
     void KFChannelPlugin::LoadModule()
     {
-        __FIND_MODULE__( _kf_config, KFConfigInterface );
+        __FIND_MODULE__( _kf_loader, KFLoaderInterface );
         __FIND_MODULE__( _kf_account, KFAccountInterface );
         __FIND_MODULE__( _kf_http_client, KFHttpClientInterface );
         __FIND_MODULE__( _kf_http_server, KFHttpServerInterface );

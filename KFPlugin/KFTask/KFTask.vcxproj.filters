@@ -9,6 +9,5 @@
     <ClInclude Include="KFTaskPlugin.hpp" />
     <ClInclude Include="KFTaskInterface.h" />
     <ClInclude Include="KFTaskModule.hpp" />
-    <ClInclude Include="..\..\KFResource\KFXmlReader\KFTaskConfig.hpp" />
   </ItemGroup>
 </Project>

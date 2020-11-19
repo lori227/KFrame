@@ -38,6 +38,5 @@
     <ClInclude Include="KFWeiXin.hpp">
       <Filter>Channel</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\KFResource\KFXmlReader\KFChannelConfig.hpp" />
   </ItemGroup>
 </Project>

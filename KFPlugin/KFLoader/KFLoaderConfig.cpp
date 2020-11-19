@@ -1,4 +1,4 @@
-﻿#include "KFConfigConfig.hpp"
+﻿#include "KFLoaderConfig.hpp"
 
 
 namespace KFrame
@@ -11,7 +11,7 @@ namespace KFrame
         {"ChildFile", KFConfigEnum::ClearChildFile},
     };
 
-    void KFConfigConfig::ReadSetting( KFXmlNode& xmlnode, KFConfigSetting* kfsetting )
+    void KFLoaderConfig::ReadSetting( KFXmlNode& xmlnode, KFLoaderSetting* kfsetting )
     {
         auto filename = xmlnode.ReadString( "FileName" );
         auto configfile = KFUtility::FormatConfigFile( filename, KFGlobal::Instance()->_channel, KFGlobal::Instance()->_service );
@@ -30,7 +30,7 @@ namespace KFrame
         kfsetting->_config_data_list.push_back( data );
     }
 
-    const KFConfigData* KFConfigSetting::IsFile( const std::string& file ) const
+    const KFConfigData* KFLoaderSetting::IsFile( const std::string& file ) const
     {
         for ( auto& kfdata : _config_data_list )
         {

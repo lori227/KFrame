@@ -17,7 +17,7 @@
 #include "KFMessage/KFMessageInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"
-#include "KFXmlReader/KFMailConfig.hpp"
+#include "KFConfig/KFMailConfig.hpp"
 
 namespace KFrame
 {

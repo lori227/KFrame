@@ -16,7 +16,6 @@
     <ClCompile Include="KFTaskPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\KFResource\KFXmlReader\KFTaskConfig.hpp" />
     <ClInclude Include="KFTaskInterface.h" />
     <ClInclude Include="KFTaskModule.hpp" />
     <ClInclude Include="KFTaskPlugin.hpp" />

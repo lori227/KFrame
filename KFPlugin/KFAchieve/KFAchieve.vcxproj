@@ -16,7 +16,6 @@
     <ClCompile Include="KFAchievePlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\KFResource\KFXmlReader\KFAchieveConfig.hpp" />
     <ClInclude Include="KFAchieveInterface.h" />
     <ClInclude Include="KFAchieveModule.hpp" />
     <ClInclude Include="KFAchievePlugin.hpp" />

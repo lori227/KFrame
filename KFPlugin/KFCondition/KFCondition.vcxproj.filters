@@ -9,7 +9,5 @@
     <ClInclude Include="KFConditionInterface.h" />
     <ClInclude Include="KFConditionModule.hpp" />
     <ClInclude Include="KFConditionPlugin.hpp" />
-    <ClInclude Include="..\..\KFResource\KFXmlReader\KFConditionDefineConfig.hpp" />
-    <ClInclude Include="..\..\KFResource\KFXmlReader\KFConditionConfig.hpp" />
   </ItemGroup>
 </Project>

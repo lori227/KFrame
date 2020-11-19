@@ -9,6 +9,5 @@
     <ClInclude Include="KFSignInterface.h" />
     <ClInclude Include="KFSignModule.hpp" />
     <ClInclude Include="KFSignPlugin.hpp" />
-    <ClInclude Include="..\..\KFResource\KFXmlReader\KFSignConfig.hpp" />
   </ItemGroup>
 </Project>

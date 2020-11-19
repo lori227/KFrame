@@ -16,7 +16,7 @@
 #include "KFFilter/KFFilterInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"
-#include "KFXmlReader/KFZoneConfig.hpp"
+#include "KFConfig/KFZoneConfig.hpp"
 
 namespace KFrame
 {

@@ -9,6 +9,5 @@
     <ClInclude Include="KFRelationShardInterface.h" />
     <ClInclude Include="KFRelationShardModule.hpp" />
     <ClInclude Include="KFRelationShardPlugin.hpp" />
-    <ClInclude Include="..\..\KFResource\KFXmlReader\KFRelationConfig.hpp" />
   </ItemGroup>
 </Project>

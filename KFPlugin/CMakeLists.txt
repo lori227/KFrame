@@ -86,7 +86,7 @@ endmacro(BUILD_PLUGIN_WITH_LOGIC project_name)
 
 add_subdirectory(KFProject)
 add_subdirectory(KFBus)
-add_subdirectory(KFConfig)
+add_subdirectory(KFLoader)
 add_subdirectory(KFHttpClient)
 add_subdirectory(KFHttpServer)
 add_subdirectory(KFIpAddress)
