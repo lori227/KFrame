@@ -1,47 +1,27 @@
 ﻿#include "KFUuidData.hpp"
-#include "KFUuidSetting.hpp"
 
 namespace KFrame
 {
-    KFUuidData::KFUuidData( const KFUuidSetting* kfsetting )
+    void KFUuidData::InitData( uint64 projecttime, uint32 timebits, uint32 zonebits, uint32 workerbits, uint32 seqbits )
     {
-        _kf_setting = kfsetting;
-    }
-    /////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////
-    uint64 KFUuidData::Make( uint32 zoneid, uint32 workerid, uint64 nowtime )
-    {
-        // time
-        auto time = ( nowtime - _kf_setting->_start_time ) & _kf_setting->_max_time;
-        if ( time != _last_time )
-        {
-            // 确保同1秒内序列号是递增的
-            _sequence = 0;
-            _last_time = time;
-        }
+        static const int64 _base = -1;
 
-        // 序列号
-        _sequence = ( _sequence + 1 ) & _kf_setting->_max_seq;
+        _start_time = projecttime;
 
-        // appid
-        zoneid &= _kf_setting->_max_zone;
-        workerid &= _kf_setting->_max_seq;
-        return ( time << _kf_setting->_time_shift ) | ( zoneid << _kf_setting->_zone_shift ) | ( workerid << _kf_setting->_worker_shift ) | _sequence;
-    }
+        _seq_bits = seqbits;
+        _max_seq = ~( _base << _seq_bits );
 
-    uint32 KFUuidData::ZoneId( uint64 uuid )
-    {
-        auto zoneid = ( ( uuid >> _kf_setting->_zone_shift ) & _kf_setting->_max_zone );
-        return ( uint32 )zoneid;
-    }
+        _worker_bits = workerbits;
+        _max_worker = ~( _base << _worker_bits );
+        _worker_shift = _seq_bits;
 
-    std::tuple<uint64, uint32, uint32, uint32> KFUuidData::Parse( uint64 uuid )
-    {
-        auto sequence = ( uuid & _kf_setting->_max_seq );
-        auto workerid = ( ( uuid >> _kf_setting->_worker_shift ) & _kf_setting->_max_worker );
-        auto zoneid = ( ( uuid >> _kf_setting->_zone_shift ) & _kf_setting->_max_zone );
-        auto time = ( ( uuid >> _kf_setting->_time_shift ) & _kf_setting->_max_time ) + _kf_setting->_start_time;
-        return std::make_tuple( time, ( uint32 )zoneid, ( uint32 )workerid, ( uint32 )sequence );
+        _zone_bits = zonebits;
+        _max_zone = ~( _base << _zone_bits );
+        _zone_shift = _worker_shift + _worker_bits;
+
+        _time_bits = timebits;
+        _max_time = ~( _base << _time_bits );
+        _time_shift = _zone_shift + _zone_bits;
     }
 }
 

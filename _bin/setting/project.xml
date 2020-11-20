@@ -1,45 +1,43 @@
-<?xml version='1.0' encoding='utf-8' ?>
-<Config>
+<root version="0000">
 	<!-- 项目开始时间 -->
-	<Project Time="1559318400"/>
+	<node name="projecttime" value="1559318400"/>
 
-	<!-- core array起始索引 -->
-	<!-- 客户端为lua设置为1, 其他设置为0 -->
-	<ArrayIndex Value="1"/>
+	<!-- core array起始索引 客户端为lua设置为1, 其他设置为0 -->
+	<node name="arrayindex" value="1"/>
 
 	<!-- 断线保留时间 -->
-	<Disconnet Time="10"/>
+	<node name="disconnecttime" value="10"/>
+	
+	<!-- 集群的名字 -->
+	<node name="clustername" value="route"/>
 
-	<!-- 数据库类型 1:redis 2:mongo 3:mysql(暂不支持)-->
-	<Databases>
-		<!-- Auth 认证数据 -->
-		<Database Name="authdatabase" Type="1"/>
-		<!-- Dir 目录数据 -->
-		<Database Name="dirdatabase" Type="1"/>
-		<!-- Pay 充值数据 -->
-		<Database Name="paydatabase" Type="1"/>
-		<!-- Basic 玩家基础数据 -->
-		<Database Name="basicdatabase" Type="1"/>
-		<!-- Relation 关系数据 -->
-		<Database Name="relationdatabase" Type="1"/>
-		<!-- Mail 邮件数据 -->
-		<Database Name="maildatabase" Type="1"/>
-		<!-- Guild 工会/军团/帮派数据 -->
-		<Database Name="guilddatabase" Type="1"/>
-	</Databases>
+	<!-- 集群的秘钥 -->
+	<node name="clusterkey" value="route@kframe,./"/>
 
-	<!-- uuid -->
-	<Uuids>
-		<Uuid Name="normal" Time="32" Zone="0" Worker="10" Seq="21"/>
-		<Uuid Name="account" Time="32" Zone="0" Worker="10" Seq="21"/>
-		<Uuid Name="player" Time="29" Zone="8" Worker="10" Seq="16"/>
-	</Uuids>
+	<!-- Auth 认证数据 -->
+	<node name="authdatabase" value="1"/>
+	
+	<!-- Dir 目录数据 -->
+	<node name="dirdatabase" value="1"/>
 
-	<!-- 奖励字串类型 -->
-	<!-- 1: 默认字串, 2:简化的类型和编号字串-->
-	<RewardType Value="1"/>
+	<!-- Pay 充值数据 -->
+	<node name="paydatabase" value="1"/>
+
+	<!-- Basic 玩家基础数据 -->
+	<node name="basicdatabase" value="1"/>
+
+	<!-- Relation 关系数据 -->
+	<node name="relationdatabase" value="1"/>	
+
+	<!-- Mail 邮件数据 -->
+	<node name="maildatabase" value="1"/>
+
+	<!-- Guild 工会/军团/帮派数据 -->
+	<node name="guilddatabase" value="1"/>
+
+	<!-- 奖励字串模板类型 1: 默认字串, 2:简化的类型和编号字串-->
+	<node name="rewardtype" value="1"/>
 
 	<!-- 是否开启小区推荐 -->
-	<ZoneRecommend Value="1"/>
-
-</Config>
+	<node name="zonerecommend" value="1"/>
+</root>

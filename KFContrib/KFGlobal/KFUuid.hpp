@@ -6,7 +6,7 @@
 namespace KFrame
 {
     class KFUuidData;
-    class KFUuidSetting;
+    class KFUuidGenerate;
     class KFUuid
     {
     public:
@@ -15,7 +15,7 @@ namespace KFrame
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 初始化配置
-        void AddSetting( const std::string& name, uint64 projecttime, uint32 timebits, uint32 zonebits, uint32 workerbits, uint32 seqbits );
+        void AddData( const std::string& name, uint64 projecttime, uint32 timebits, uint32 zonebits, uint32 workerbits, uint32 seqbits );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         uint64 STMake( const std::string& name, uint32 zoneid, uint32 workerid, uint64 nowtime );
@@ -31,20 +31,20 @@ namespace KFrame
         std::tuple<uint64, uint32, uint32, uint32> MTParse( const std::string& name, uint64 uuid );
     protected:
         // 查找uuidsetting
-        const KFUuidSetting* FindUuidSetting( const std::string& name );
+        const KFUuidData* FindUuidData( const std::string& name );
 
         // 创建uuiddata
-        KFUuidData* CreateUuidData( const std::string& name );
+        KFUuidGenerate* CreateUuidGenerate( const std::string& name );
 
     private:
         // 多线程互斥量
         KFMutex* _kf_mutex = nullptr;
 
         // uuid生成列表
-        std::unordered_map<std::string, KFUuidData*> _uuid_data_list;
+        std::unordered_map<std::string, KFUuidGenerate*> _uuid_data_list;
 
         // 配置列表
-        std::unordered_map<std::string, KFUuidSetting*> _uuid_setting_list;
+        std::unordered_map<std::string, KFUuidData*> _uuid_setting_list;
     };
 }
 

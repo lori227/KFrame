@@ -16,8 +16,8 @@
     <ClCompile Include="KFGlobal.cpp" />
     <ClCompile Include="KFRand.cpp" />
     <ClCompile Include="KFUuid.cpp" />
+    <ClCompile Include="KFUuidGenerate.cpp" />
     <ClCompile Include="KFUuidData.cpp" />
-    <ClCompile Include="KFUuidSetting.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFConstant.h" />
@@ -26,8 +26,8 @@
     <ClInclude Include="KFGlobal.h" />
     <ClInclude Include="KFRand.hpp" />
     <ClInclude Include="KFUuid.hpp" />
+    <ClInclude Include="KFUuidGenerate.hpp" />
     <ClInclude Include="KFUuidData.hpp" />
-    <ClInclude Include="KFUuidSetting.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C8B331DD-A70B-4B02-9F88-6E5296DFEEA5}</ProjectGuid>

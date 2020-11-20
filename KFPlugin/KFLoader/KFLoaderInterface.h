@@ -24,7 +24,7 @@ namespace KFrame
         }
 
         // 重新加载配置
-        virtual void ReloadConfig( const std::string& file ) = 0;
+        virtual void ReloadConfig() = 0;
     protected:
         // 创建config
         virtual void AddConfig(  const std::string& name, KFConfig* kfconfig ) = 0;

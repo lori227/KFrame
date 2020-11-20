@@ -8,12 +8,6 @@
     <ClInclude Include="KFUuid.hpp">
       <Filter>Uuid</Filter>
     </ClInclude>
-    <ClInclude Include="KFUuidData.hpp">
-      <Filter>Uuid</Filter>
-    </ClInclude>
-    <ClInclude Include="KFUuidSetting.hpp">
-      <Filter>Uuid</Filter>
-    </ClInclude>
     <ClInclude Include="KFConstant.h">
       <Filter>Constant</Filter>
     </ClInclude>
@@ -22,6 +16,12 @@
     </ClInclude>
     <ClInclude Include="KFElementFormat.hpp">
       <Filter>Element</Filter>
+    </ClInclude>
+    <ClInclude Include="KFUuidGenerate.hpp">
+      <Filter>Uuid</Filter>
+    </ClInclude>
+    <ClInclude Include="KFUuidData.hpp">
+      <Filter>Uuid</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -32,17 +32,17 @@
     <ClCompile Include="KFUuid.cpp">
       <Filter>Uuid</Filter>
     </ClCompile>
-    <ClCompile Include="KFUuidData.cpp">
-      <Filter>Uuid</Filter>
-    </ClCompile>
-    <ClCompile Include="KFUuidSetting.cpp">
-      <Filter>Uuid</Filter>
-    </ClCompile>
     <ClCompile Include="KFConstantData.cpp">
       <Filter>Constant</Filter>
     </ClCompile>
     <ClCompile Include="KFElementFormat.cpp">
       <Filter>Element</Filter>
+    </ClCompile>
+    <ClCompile Include="KFUuidGenerate.cpp">
+      <Filter>Uuid</Filter>
+    </ClCompile>
+    <ClCompile Include="KFUuidData.cpp">
+      <Filter>Uuid</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

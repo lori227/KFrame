@@ -5,7 +5,6 @@
 			<file Name="mysql.xml" Type="1"/>
 			<file Name="redis.xml" Type="1"/>
 			<file Name="mongo.xml" Type="1"/>
-			<file Name="zone.xml" Type="1"/>
 
 			<file Name="logger.xml" Type="0"/>
 			<file Name="bus.xml" Type="0"/>
@@ -14,5 +13,7 @@
 			<file Name="tcpserver.xml" Type="0"/>
 			<file Name="datashard.xml" Type="0"/>
 			<file Name="project.xml" Type="0"/>
+			<file Name="uuid.xml" Type="0"/>
+			<file Name="route.xml" Type="0"/>
     </setting>
 </gcm>

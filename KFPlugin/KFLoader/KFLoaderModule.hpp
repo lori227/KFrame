@@ -10,9 +10,9 @@
 //    @Date             :    2017-3-19
 ************************************************************************/
 
-#include "KFLoaderConfig.hpp"
-#include "KFVersionConfig.hpp"
 #include "KFLoaderInterface.h"
+#include "KFVersionConfig.hpp"
+#include "KFConfig/KFLoaderConfig.hpp"
 
 namespace KFrame
 {
@@ -34,7 +34,7 @@ namespace KFrame
         virtual void ShutDown();
 
         // 重新加载配置
-        virtual void ReloadConfig( const std::string& file );
+        virtual void ReloadConfig();
         ////////////////////////////////////////////////////////////////////////////////
     protected:
         void ProcessReloadCommand( const StringVector& params );
@@ -49,7 +49,10 @@ namespace KFrame
         void LoadConfigListAndVersion();
 
         // 加载配置
-        void LoadConfigFile( KFConfig* config, const std::string& filename, const std::string& filepath, uint32 loadmask );
+        void LoadConfigFile( KFConfig* config, const std::string& filepath, uint32 cleartype );
+
+        // 判断是否需要重新加载
+        const std::string& CheckConfigFileNeedReload( KFConfig* config, const KFConfigData* configdata, StringSet& reloadlist );
     private:
         // 配置列表
         KFLoaderConfig* _kf_loader_config = nullptr;

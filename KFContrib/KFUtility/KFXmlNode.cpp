@@ -407,4 +407,11 @@ namespace KFrame
 
         return range;
     }
+
+    std::string KFXmlNode::ReadChannelString( const char* key, bool optional /* = false */ )
+    {
+        auto strtemp = ReadString( key, optional );
+        auto result = KFUtility::FormatConfigFile( strtemp, KFGlobal::Instance()->_channel, KFGlobal::Instance()->_service );
+        return result;
+    }
 }

@@ -13,7 +13,7 @@ namespace KFrame
         virtual ~KFSetting() = default;
     public:
         // 文件名
-        std::string _file_name;
+        std::string _file_path;
 
         // 行数
         uint32 _row = 0u;

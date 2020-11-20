@@ -69,7 +69,8 @@ namespace KFrame
     __KF_NET_EVENT_FUNCTION__( KFClusterClientModule::OnClientConnectionClusterServer )
     {
         // cluster 只会连接和自己不同类型的服务
-        if ( netdata->_name != KFRouteConfig::Instance()->_cluster_name )
+        static auto _cluster_name_constant = KFGlobal::Instance()->FindConstant( __STRING__( clustername ) );
+        if ( netdata->_name != _cluster_name_constant->_str_value )
         {
             return;
         }
@@ -97,10 +98,12 @@ namespace KFrame
 
     __KF_TIMER_FUNCTION__( KFClusterClientModule::OnTimerSendClusterAuthMessage )
     {
+        static auto _cluster_key_constant = KFGlobal::Instance()->FindConstant( __STRING__( clusterkey ) );
+
         // 请求认证
         KFMsg::S2SClusterAuthToMasterReq req;
         req.set_clientid( KFGlobal::Instance()->_app_id->GetId() );
-        req.set_clusterkey( KFRouteConfig::Instance()->_cluster_key );
+        req.set_clusterkey( _cluster_key_constant->_str_value );
         auto ok = _kf_tcp_client->SendNetMessage( _cluster_master_id, KFMsg::S2S_CLUSTER_AUTH_TO_MASTER_REQ, &req );
         if ( !ok )
         {

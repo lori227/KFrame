@@ -186,9 +186,9 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     // 初始化配置
-    void KFGlobal::AddUuidSetting( const std::string& name, uint32 timebits, uint32 zonebits, uint32 workerbits, uint32 seqbits )
+    void KFGlobal::AddUuidData( const std::string& name, uint32 timebits, uint32 zonebits, uint32 workerbits, uint32 seqbits )
     {
-        _kf_uuid->AddSetting( name, _project_time, timebits, zonebits, workerbits, seqbits );
+        _kf_uuid->AddData( name, _project_time, timebits, zonebits, workerbits, seqbits );
     }
 
     uint64 KFGlobal::STMakeUuid()
@@ -342,6 +342,6 @@ namespace KFrame
 
     bool KFGlobal::ParseElement( KFElements& kfelements, const char* file, uint64 id )
     {
-        return _kf_element_format->FormatElement( kfelements, file, id );
+        return _kf_element_format->ParseElement( kfelements, file, id );
     }
 }

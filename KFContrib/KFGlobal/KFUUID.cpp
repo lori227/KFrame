@@ -1,7 +1,7 @@
 ﻿#include "KFrame.h"
 #include "KFUuid.hpp"
+#include "KFUuidGenerate.hpp"
 #include "KFUuidData.hpp"
-#include "KFUuidSetting.hpp"
 
 namespace KFrame
 {
@@ -26,19 +26,19 @@ namespace KFrame
         _uuid_setting_list.clear();
     }
 
-    void KFUuid::AddSetting( const std::string& name, uint64 projecttime, uint32 timebits, uint32 zonebits, uint32 workerbits, uint32 seqbits )
+    void KFUuid::AddData( const std::string& name, uint64 projecttime, uint32 timebits, uint32 zonebits, uint32 workerbits, uint32 seqbits )
     {
         auto iter = _uuid_setting_list.find( name );
         if ( iter == _uuid_setting_list.end() )
         {
-            auto kfsetting = __NEW_OBJECT__( KFUuidSetting );
+            auto kfsetting = __NEW_OBJECT__( KFUuidData );
             iter = _uuid_setting_list.insert( std::make_pair( name, kfsetting ) ).first;
         }
 
-        iter->second->InitSetting( projecttime, timebits, zonebits, workerbits, seqbits );
+        iter->second->InitData( projecttime, timebits, zonebits, workerbits, seqbits );
     }
 
-    const KFUuidSetting* KFUuid::FindUuidSetting( const std::string& name )
+    const KFUuidData* KFUuid::FindUuidData( const std::string& name )
     {
         auto iter = _uuid_setting_list.find( name );
         if ( iter == _uuid_setting_list.end() )
@@ -49,7 +49,7 @@ namespace KFrame
         return iter->second;
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    KFUuidData* KFUuid::CreateUuidData( const std::string& name )
+    KFUuidGenerate* KFUuid::CreateUuidGenerate( const std::string& name )
     {
         auto iter = _uuid_data_list.find( name );
         if ( iter != _uuid_data_list.end() )
@@ -57,15 +57,15 @@ namespace KFrame
             return iter->second;
         }
 
-        auto kfsetting = FindUuidSetting( name );
-        auto kfuuiddata = __NEW_OBJECT__( KFUuidData, kfsetting );
-        _uuid_data_list[ name ] = kfuuiddata;
-        return kfuuiddata;
+        auto kfdata = FindUuidData( name );
+        auto kfuuidgenerate = __NEW_OBJECT__( KFUuidGenerate, kfdata );
+        _uuid_data_list[ name ] = kfuuidgenerate;
+        return kfuuidgenerate;
     }
 
     uint64 KFUuid::STMake( const std::string& name, uint32 zoneid, uint32 workerid, uint64 nowtime )
     {
-        auto kfuuiddata = CreateUuidData( name );
+        auto kfuuiddata = CreateUuidGenerate( name );
         return kfuuiddata->Make( zoneid, workerid, nowtime );
     }
 
@@ -77,7 +77,7 @@ namespace KFrame
 
     uint32 KFUuid::STZoneId( const std::string& name, uint64 uuid )
     {
-        auto kfuuiddata = CreateUuidData( name );
+        auto kfuuiddata = CreateUuidGenerate( name );
         return kfuuiddata->ZoneId( uuid );
     }
 
@@ -89,7 +89,7 @@ namespace KFrame
 
     std::tuple<uint64, uint32, uint32, uint32> KFUuid::STParse( const std::string& name, uint64 uuid )
     {
-        auto kfuuiddata = CreateUuidData( name );
+        auto kfuuiddata = CreateUuidGenerate( name );
         return kfuuiddata->Parse( uuid );
     }
 

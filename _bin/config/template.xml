@@ -1,0 +1,7 @@
+<root version="b23436e3e9f4daa80e38a6dcab7724c8">
+	<node row="8" id="money" type="1" code="1" template="{{&quot;money&quot;:&quot;{}&quot;}}"/>
+	<node row="9" id="diamond" type="1" code="2" template="{{&quot;diamond&quot;:&quot;{}&quot;}}"/>
+	<node row="10" id="item" type="2" template="{{&quot;item&quot;:{{&quot;count&quot;:&quot;{}&quot;,&quot;id&quot;:&quot;{}&quot;}}}}"/>
+	<node row="11" id="hero" type="3" template="{{&quot;hero&quot;:{{&quot;id&quot;:&quot;{}&quot;}}}}"/>
+	<node row="12" id="task" type="100" template="{{&quot;task&quot;:{{&quot;status&quot;:&quot;{}&quot;,&quot;id&quot;:&quot;{}&quot;}}}}"/>
+</root>

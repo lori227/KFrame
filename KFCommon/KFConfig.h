@@ -5,8 +5,17 @@
 
 namespace KFrame
 {
-
-    ///////////////////////////////////////////////////////////////
+    namespace KFLoaderEnum
+    {
+        enum MyEnum
+        {
+            ClearTypeNone = 0,	// 不需要清空数据
+            ClearTypeAll = 1,	// 清空所有数据
+            ClearTypeFile = 2,	// 清空某个文件数据
+        };
+    }
+    /////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
     class KFConfig
     {
     public:
@@ -15,7 +24,7 @@ namespace KFrame
 
         ////////////////////////////////////////////////////////////////////////////
         // 加载配置
-        virtual bool LoadConfig( const std::string& filename, const std::string& filepath, uint32 loadmask )
+        virtual bool LoadConfig( const std::string& filepath, uint32 loadmask )
         {
             return false;
         }
@@ -25,22 +34,6 @@ namespace KFrame
 
         // 所有配置加载完
         virtual void LoadAllComplete() {}
-
-        // 设置版本号
-        void SetVersion( const std::string& version )
-        {
-            if ( _version.empty() && !version.empty() )
-            {
-                _version = version;
-            }
-        }
-
-        // 获得版本
-        const std::string& GetVersion()
-        {
-            return _version;
-        }
-
     public:
         // 默认配置文件名
         std::string _file_name;
@@ -48,12 +41,39 @@ namespace KFrame
         // 配置表主键字段名
         std::string _key_name;
 
-    protected:
         // 版本号
         std::string _version;
 
-        // 配置文件名
-        std::string _setting_file_anme;
+        // 是否加载成功
+        bool _load_ok = false;
+
+    public:
+        //////////////////////////////////////////////////////////////////////
+        // 添加版本号
+        void AddFileVersion( const std::string& name, const std::string& version )
+        {
+            _file_version_list[ name ] = version;
+            if ( _version.empty() )
+            {
+                _version = version;
+            }
+        }
+
+        // 获得文件版本号
+        const std::string& GetFileVersion( const std::string& name )
+        {
+            auto iter = _file_version_list.find( name );
+            if ( iter == _file_version_list.end() )
+            {
+                return _invalid_string;
+            }
+
+            return iter->second;
+        }
+        //////////////////////////////////////////////////////////////////////
+    private:
+        // 版本号列表
+        StringMap _file_version_list;
     };
     ///////////////////////////////////////////////////////////////
     template< class T >
@@ -62,13 +82,12 @@ namespace KFrame
         typedef typename T::Type KeyType;
     public:
         // 加载配置
-        bool LoadConfig( const std::string& filename, const std::string& filepath, uint32 loadmask )
+        bool LoadConfig( const std::string& filepath, uint32 cleartype )
         {
             KFXml kfxml( filepath );
             auto config = kfxml.RootNode();
 
-            _setting_file_anme = filename;
-            CheckClearSetting( loadmask );
+            CheckClearSetting( filepath, cleartype );
 
             auto xmlnode = config.FindNode( __STRING__( node ).c_str() );
             while ( xmlnode.IsValid() )
@@ -76,6 +95,7 @@ namespace KFrame
                 auto kfsetting = CreateSetting( xmlnode );
                 if ( kfsetting != nullptr )
                 {
+                    kfsetting->_file_path = filepath;
                     ReadSetting( xmlnode, kfsetting );
                 }
                 xmlnode.NextNode();
@@ -91,20 +111,18 @@ namespace KFrame
         }
 
     protected:
-        void CheckClearSetting( uint32 loadmask )
+        void CheckClearSetting( const std::string& filepath, uint32 cleartype )
         {
-            if ( !KFUtility::HaveBitMask<uint32>( loadmask, KFConfigEnum::NeedClearData ) )
+            switch ( cleartype )
             {
-                return;
-            }
-
-            if ( KFUtility::HaveBitMask<uint32>( loadmask, KFConfigEnum::ClearFileData ) )
-            {
-                ClearFileSetting();
-            }
-            else
-            {
+            case KFLoaderEnum::ClearTypeAll:
                 ClearSetting();
+                break;
+            case KFLoaderEnum::ClearTypeFile:
+                ClearFileSetting( filepath );
+                break;
+            default:
+                break;
             }
         }
 
@@ -114,13 +132,13 @@ namespace KFrame
             _version.clear();
         }
 
-        virtual void ClearFileSetting()
+        virtual void ClearFileSetting( const std::string& filepath )
         {
             std::list< KeyType > removes;
             for ( auto& iter : _settings._objects )
             {
                 auto kfsetting = iter.second;
-                if ( kfsetting->_file_name == _setting_file_anme )
+                if ( kfsetting->_file_path == filepath )
                 {
                     removes.push_back( kfsetting->_id );
                 }
@@ -145,8 +163,7 @@ namespace KFrame
             auto id = xmlnode.ReadT< KeyType >( _key_name.c_str(), true );
             auto kfsetting = _settings.Create( id );
             kfsetting->_id = id;
-            kfsetting->_file_name = _setting_file_anme;
-            kfsetting->_row = xmlnode.ReadUInt32( __STRING__( row ).c_str() );
+            kfsetting->_row = xmlnode.ReadUInt32( __STRING__( row ).c_str(), true );
             return kfsetting;
         }
 

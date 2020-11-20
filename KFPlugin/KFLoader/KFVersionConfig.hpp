@@ -8,34 +8,26 @@ namespace KFrame
     class KFVersionSetting : public KFStrSetting
     {
     public:
-        bool IsNeedReload() const
-        {
-            return _old_version != _new_version;
-        }
-
-    public:
-        // 老版本号
-        std::string _old_version;
-
-        // 新版本号
-        std::string _new_version;
+        // 版本号
+        std::string _version;
     };
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
-    class KFVersionConfig : public KFConfigT< KFVersionSetting >
+    class KFVersionConfig : public KFConfigT< KFVersionSetting >, public KFInstance< KFVersionConfig >
     {
     public:
         KFVersionConfig()
         {
             _key_name = "name";
+            _file_name = "version";
         }
-
-        // 判断是否需要重新加载
-        const std::string& CheckNeedReload( const std::string& filename );
 
     protected:
         // 读取配置
-        virtual void ReadSetting( KFXmlNode& xmlnode, KFVersionSetting* kfsetting );
+        virtual void ReadSetting( KFXmlNode& xmlnode, KFVersionSetting* kfsetting )
+        {
+            kfsetting->_version = xmlnode.ReadString( "version" );
+        }
     };
 }
 

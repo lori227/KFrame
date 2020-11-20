@@ -49,7 +49,9 @@ namespace KFrame
         __STRING_DEFINE__( row );
         __STRING_DEFINE__( node );
         __STRING_DEFINE__( root );
-
+        __STRING_DEFINE__( config );
+        __STRING_DEFINE__( projecttime );
+        __STRING_DEFINE__( arrayindex );
         __STRING_DEFINE__( logurl );
         __STRING_DEFINE__( scheduletime );
         __STRING_DEFINE__( msg );

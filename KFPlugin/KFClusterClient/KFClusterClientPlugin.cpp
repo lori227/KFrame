@@ -26,6 +26,5 @@ namespace KFrame
 
     void KFClusterClientPlugin::AddConfig()
     {
-        __KF_ADD_CONFIG__( KFRouteConfig );
     }
 }

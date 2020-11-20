@@ -222,7 +222,7 @@ namespace KFrame
 
     __KF_DEPLOY_FUNCTION__( KFDeployClientModule::OnDeployLoadConfig )
     {
-        _kf_loader->ReloadConfig( param );
+        _kf_loader->ReloadConfig();
     }
 
     __KF_DEPLOY_FUNCTION__( KFDeployClientModule::OnDeployLoadPlugin )

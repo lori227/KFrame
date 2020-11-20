@@ -83,6 +83,9 @@ namespace KFrame
 
         // 读取返回
         KFRange<uint32> ReadRange( const char* key, bool optional = false );
+
+        // 读取渠道格式化字串({}_{}_xxxx)
+        std::string ReadChannelString( const char* key, bool optional = false );
         /////////////////////////////////////////////////////////////////////////////////////
         // 读取静态条件配置列表( 如:money=100 )
         StaticConditionsPtr ReadStaticConditions( const char* key, bool optional = false );

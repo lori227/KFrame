@@ -64,7 +64,7 @@ namespace KFrame
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 初始化配置
-        void AddUuidSetting( const std::string& name, uint32 timebits, uint32 zonebits, uint32 workerbits, uint32 seqbits );
+        void AddUuidData( const std::string& name, uint32 timebits, uint32 zonebits, uint32 workerbits, uint32 seqbits );
 
         // 生成uuid
         uint64 STMakeUuid();

@@ -1,55 +1,41 @@
-﻿#ifndef __KF_UUID_DATA_H__
-#define __KF_UUID_DATA_H__
+﻿#ifndef __KF_UUID_SETTING_H__
+#define __KF_UUID_SETTING_H__
 
 #include "KFInclude.h"
 
 namespace KFrame
 {
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /*
-    +------+---------------+----------+----------------+----------+
-    | sign | delta seconds | zone id  | worker node id | sequence |
-    +------+---------------+----------+----------------+----------+
-    | 1bit |     29bits    |  10bits  |     10bits      |  14bits  |
-    +------+---------------+----------+----------------+----------+
-    */
-
-    // 默认
-    // 1	符号位
-    // 29	时间( 大概可以支持17年, 可以修改项目开始时间 )
-    // 10	zoneid  可以支持1023个小区不会重复
-    // 10	workerid 1023个工作者进程不会重复
-    // 14	序列号 同一进程1秒钟内超过‭16383‬个就会重复 -- 应该不可能, 除非你要疯
-    // 可以保证同一模块生成的guid不相同, 不同模块可能会一样
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    class KFUuidSetting;
     class KFUuidData
     {
     public:
-        KFUuidData( const KFUuidSetting* kfsetting );
-        ~KFUuidData() = default;
-        ///////////////////////////////////////////////////////////////////////////////////////////////
-        ///////////////////////////////////////////////////////////////////////////////////////////////
-        // 生产guid
-        uint64 Make( uint32 zoneid, uint32 workerid, uint64 nowtime );
+        // 设置数据排列格式
+        void InitData( uint64 projecttime, uint32 timebits, uint32 zonebits, uint32 workerbits, uint32 seqbits );
 
-        // 获得zoneid
-        uint32 ZoneId( uint64 uuid );
+    public:
+        // 时间戳缩减值
+        uint64 _start_time = 1577808000;
 
-        // 解析guid( time, zone, worker, seq )
-        std::tuple<uint64, uint32, uint32, uint32> Parse( uint64 uuid );
+        // 符号位
+        uint32 _sign_bits = 1;
 
-    private:
-        // uuid 配置
-        const KFUuidSetting* _kf_setting = nullptr;
+        // 时间位
+        uint32 _time_bits = 30;
+        uint64 _max_time = 0x1FFFFFFF;
+        uint32 _time_shift = 33;
 
-        // 上一次时间
-        uint64 _last_time = 0u;
+        // 小区位
+        uint32 _zone_bits = 12;
+        uint64 _max_zone = 0xFFF;
+        uint32 _zone_shift = 22;
 
-        // 序列号
-        uint32 _sequence = 0u;
+        // 进程位
+        uint32 _worker_bits = 8;
+        uint64 _max_worker = 0xFF;
+        uint32 _worker_shift = 14;
+
+        // 序列位
+        uint32 _seq_bits = 13;
+        uint64 _max_seq = 0x1FFF;
     };
 }
 

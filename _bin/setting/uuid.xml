@@ -1,0 +1,10 @@
+<root version="0000">
+    <!-- name 模块名 -->
+    <!-- time 时间占位数 -->
+    <!-- zone 小区占位数 -->
+    <!-- worker 工作者id占位数 -->
+    <!-- seq 序列号占位数 -->
+	<node name="normal" time="32" zone="0" worker="10" seq="21"/>
+	<node name="account" time="32" zone="0" worker="10" seq="21"/>
+	<node name="player" time="29" zone="8" worker="10" seq="16"/>
+</root>

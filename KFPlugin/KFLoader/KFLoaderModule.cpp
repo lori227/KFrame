@@ -35,7 +35,7 @@ namespace KFrame
 
     void KFLoaderModule::ProcessReloadCommand( const StringVector& params )
     {
-        ReloadConfig( _globbing_string );
+        ReloadConfig();
     }
 
     void KFLoaderModule::AddConfig( const std::string& name, KFConfig* kfconfig )
@@ -58,17 +58,17 @@ namespace KFrame
     void KFLoaderModule::LoadConfigListAndVersion()
     {
         {
-            auto configfile = _config_path + "frameconfig.xml";
-            LoadConfigFile( _kf_loader_config, "config", configfile, KFConfigEnum::CanReload | KFConfigEnum::NeedClearData );
+            auto configfilepath = _config_path + "frameconfig.xml";
+            LoadConfigFile( _kf_loader_config, configfilepath, KFLoaderEnum::ClearTypeAll );
         }
         {
-            auto configfile = _config_path + "config.xml";
-            LoadConfigFile( _kf_loader_config, "config", configfile, KFConfigEnum::CanReload );
+            auto configfilepath = _config_path + "config.xml";
+            LoadConfigFile( _kf_loader_config, configfilepath, KFLoaderEnum::ClearTypeNone );
         }
 
         {
-            auto configfile = _config_path + "version.xml";
-            LoadConfigFile( _kf_version_config, "version", configfile, KFConfigEnum::CanReload );
+            auto configfilepath = _config_path + "version.xml";
+            LoadConfigFile( _kf_version_config, configfilepath, KFLoaderEnum::ClearTypeAll );
         }
     }
 
@@ -88,20 +88,22 @@ namespace KFrame
             auto kfsetting = _kf_loader_config->FindSetting( kfconfig->_file_name );
             if ( kfsetting == nullptr )
             {
-                __LOG_ERROR__( "config=[{}:{}] can't find setting", iter.first, kfconfig->_file_name );
-                continue;
+                static std::string error = __FORMAT__( "config=[{}] can't find load setting", kfconfig->_file_name );
+                throw std::runtime_error( error );
             }
 
-            for ( auto& configdata : kfsetting->_config_data_list )
+            for ( auto& configdata : kfsetting->_config_data )
             {
+                auto filepath = __FORMAT__( "{}{}.xml", configdata._path, configdata._name );
+
                 // 加载配置
-                LoadConfigFile( kfconfig, configdata._file_name, configdata._file_path, configdata._load_mask );
+                LoadConfigFile( kfconfig, filepath, configdata._clear_type );
 
                 // 设置版本号
-                auto kfversionsetting = _kf_version_config->FindSetting( configdata._file_name );
+                auto kfversionsetting = _kf_version_config->FindSetting( configdata._name );
                 if ( kfversionsetting != nullptr )
                 {
-                    kfconfig->SetVersion( kfversionsetting->_new_version );
+                    kfconfig->AddFileVersion( configdata._name, kfversionsetting->_version );
                 }
             }
 
@@ -117,10 +119,39 @@ namespace KFrame
         }
     }
 
-
-    void KFLoaderModule::ReloadConfig( const std::string& file )
+    const std::string& KFLoaderModule::CheckConfigFileNeedReload( KFConfig* config, const KFConfigData* configdata, StringSet& reloadlist )
     {
-        __LOG_INFO__( "reload [{}] start", file );
+        if ( !configdata->_can_reload )
+        {
+            return _invalid_string;
+        }
+
+        auto kfversionsetting = _kf_version_config->FindSetting( configdata->_name );
+        if ( kfversionsetting == nullptr )
+        {
+            return _invalid_string;
+        }
+
+        // 如果父文件重新加载过了
+        if ( !configdata->_parent_name.empty() &&
+                reloadlist.find( configdata->_parent_name ) != reloadlist.end()  )
+        {
+            return kfversionsetting->_version;
+        }
+
+        auto oldversion = config->GetFileVersion( configdata->_name );
+        if ( oldversion != kfversionsetting->_version )
+        {
+            return kfversionsetting->_version;
+        }
+
+        return _invalid_string;
+    }
+
+
+    void KFLoaderModule::ReloadConfig()
+    {
+        __LOG_INFO__( "reload config start" );
 
         // 重新加载配置列表
         LoadConfigListAndVersion();
@@ -129,49 +160,34 @@ namespace KFrame
         for ( auto& iter : _config_list )
         {
             auto kfconfig = iter.second;
+            kfconfig->_load_ok = false;
+
             auto kfconfigsetting = _kf_loader_config->FindSetting( kfconfig->_file_name );
             if ( kfconfigsetting == nullptr )
             {
                 continue;
             }
 
-            // 判断版本号是否相同
-            auto loadok = false;
-            auto childfilereload = false;
-            for ( auto& configdata : kfconfigsetting->_config_data_list )
+            // 加载的文件列表
+            StringSet reloadlist;
+            for ( auto& configdata : kfconfigsetting->_config_data )
             {
-                // 检查是否需要更新
-                auto& newversion = _kf_version_config->CheckNeedReload( configdata._file_name );
-                if ( !childfilereload )
+                auto newversion = CheckConfigFileNeedReload( kfconfig, &configdata, reloadlist );
+                if ( !newversion.empty() )
                 {
-                    // 版本相同
-                    if ( newversion.empty() )
-                    {
-                        continue;
-                    }
-
-                    // 不能重新加载
-                    if ( !KFUtility::HaveBitMask<uint32>( configdata._load_mask, KFConfigEnum::CanReload ) )
-                    {
-                        continue;
-                    }
-
-                    if ( KFUtility::HaveBitMask<uint32>( configdata._load_mask, KFConfigEnum::ClearChildFile ) )
-                    {
-                        childfilereload = true;
-                    }
+                    continue;
                 }
 
                 // 加载配置
-                LoadConfigFile( kfconfig, configdata._file_name, configdata._file_path, configdata._load_mask );
+                auto filepath = __FORMAT__( "{}{}.xml", configdata._path, configdata._name );
+                LoadConfigFile( kfconfig, filepath, configdata._clear_type );
 
-                loadok = true;
                 loadallok = true;
-                kfconfig->SetVersion( newversion );
+                kfconfig->AddFileVersion( configdata._name, newversion );
             }
 
             // 加载完成
-            if ( loadok )
+            if ( kfconfig->_load_ok )
             {
                 kfconfig->LoadComplete();
             }
@@ -188,16 +204,17 @@ namespace KFrame
             _kf_plugin_manage->AfterLoad();
         }
 
-        __LOG_INFO__( "reload [{}] ok", file );
+        __LOG_INFO__( "reload config ok" );
     }
 
-    void KFLoaderModule::LoadConfigFile( KFConfig* config, const std::string& filename, const std::string& filepath, uint32 loadmask )
+    void KFLoaderModule::LoadConfigFile( KFConfig* config, const std::string& filepath, uint32 cleartype )
     {
         try
         {
-            auto ok = config->LoadConfig( filename, filepath, loadmask );
+            auto ok = config->LoadConfig( filepath, cleartype );
             if ( ok )
             {
+                config->_load_ok = true;
                 __LOG_INFO__( "load [{}] ok", filepath );
             }
             else
