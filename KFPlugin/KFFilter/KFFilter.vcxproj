@@ -12,12 +12,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFFilterConfig.cpp" />
     <ClCompile Include="KFFilterModule.cpp" />
     <ClCompile Include="KFFilterPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFFilterConfig.hpp" />
     <ClInclude Include="KFFilterInterface.h" />
     <ClInclude Include="KFFilterModule.hpp" />
     <ClInclude Include="KFFilterPlugin.hpp" />
