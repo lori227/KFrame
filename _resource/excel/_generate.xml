@@ -36,6 +36,7 @@
 		<type name="stringset" cpp="StringSet" cppfunction="ReadStringSet" cppextend="" csharp="string" lua="local"/>
 		<type name="stringlist" cpp="StringList" cppfunction="ReadStringList" cppextend="" csharp="string" lua="local"/>
 		<type name="channelstring" cpp="std::string" cppfunction="ReadChannelString" cppextend="" csharp="string" lua="local"/>
+
 	</types>
 
 </config>

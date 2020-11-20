@@ -796,6 +796,10 @@ namespace KFrame
                     {
                         xmlfile << __FORMAT__( "\t\t\tkfsetting->{}.push_back( {} );\n", subname, variablename );
                     }
+                    else if ( IsParentCppClass( exceldata, iter.first, _str_weight ) )
+                    {
+                        xmlfile << __FORMAT__( "\t\t\tkfsetting->{}.Create( {}._value, {}._weight );\n", subname, variablename, variablename );
+                    }
                     else
                     {
                         xmlfile << __FORMAT__( "\t\t\tkfsetting->{} = {};\n", subname, variablename );

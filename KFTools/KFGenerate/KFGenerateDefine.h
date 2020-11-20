@@ -17,6 +17,7 @@ namespace KFrame
     static const std::string _str_list = "list";
     static const std::string _str_set = "set";
     static const std::string _str_map = "map";
+    static const std::string _str_weight = "KFWeightList";
 
     static const std::string _str_kf_prefix = "KF";
     static const std::string _str_element = "element";

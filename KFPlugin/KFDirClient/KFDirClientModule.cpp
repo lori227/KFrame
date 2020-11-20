@@ -42,7 +42,8 @@ namespace KFrame
             return false;
         }
 
-        //if ( KFZoneConfig::Instance()->IsOpenRecommend() )
+        static auto _zone_recomend_constant = KFGlobal::Instance()->FindConstant( __STRING__( zonerecommend ) );
+        if ( _zone_recomend_constant->_uint32_value == 1u )
         {
             // 推荐小区
             static auto _recommend_url = _kf_ip_address->GetDirUrl() + __STRING__( zonerecommend );
