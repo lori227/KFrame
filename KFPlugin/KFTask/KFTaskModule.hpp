@@ -35,7 +35,7 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         // 开启任务
         virtual KFData* OpenTask( KFEntity* player, uint32 taskid, uint32 status, uint64 validtime = 0u,
-                                  uint32 chainid = 0u, uint32 chainindex = 1u, uint32 refreshid = 0u );
+                                  uint32 chainid = 0u, uint32 chainindex = 1u );
     protected:
         // 接取任务
         __KF_MESSAGE_FUNCTION__( HandleTaskReceiveReq );

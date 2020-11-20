@@ -142,7 +142,7 @@ namespace KFrame
     }
 
     KFData* KFTaskModule::OpenTask( KFEntity* player, uint32 taskid, uint32 status, uint64 validtime /* = 0u */,
-                                    uint32 chainid /* = 0u */, uint32 chainindex /* = 1u */, uint32 refreshid /* = 0u */ )
+                                    uint32 chainid /* = 0u */, uint32 chainindex /* = 1u */ )
     {
         auto kfsetting = KFTaskConfig::Instance()->FindSetting( taskid );
         if ( kfsetting == nullptr )
@@ -155,7 +155,6 @@ namespace KFrame
         auto kftask = CreateTask( player, kfsetting, status, validtime );
         kftask->Set( __STRING__( chain ), chainid );
         kftask->Set( __STRING__( index ), chainindex );
-        kftask->Set( __STRING__( refresh ), refreshid );
         return kftask;
     }
 
