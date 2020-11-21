@@ -17,7 +17,7 @@ namespace KFrame
         {
             kfdropweight = __KF_NEW__( KFDropGroupWeight );
             kfsetting->_necessary_list.Add( kfdropweight );
-            kfdropweight->_id = kfsetting->_necessary_list._objects.size();
+            kfdropweight->_value = kfsetting->_necessary_list._objects.size();
         }
         else
         {
@@ -54,7 +54,7 @@ namespace KFrame
         dropgroupweight->_drop_data_setting = KFDropDataConfig::Instance()->FindSetting( dropgroupweight->_drop_data_id );
         if ( dropgroupweight->_drop_data_setting == nullptr )
         {
-            if ( dropgroupweight->_id != 0u )
+            if ( dropgroupweight->_value != 0u )
             {
                 __LOG_ERROR__( "dropid=[{}] dropdata=[{}] can't find setting", kfsetting->_id, dropgroupweight->_drop_data_id );
             }

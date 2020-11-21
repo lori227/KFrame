@@ -239,13 +239,13 @@ namespace KFrame
                     // 如果是无条件掉落, 并且已经有了条件掉落, 排除这个无条件掉落
                     if ( ishaveconditiondrop )
                     {
-                        excludelist.insert( kfdropweight->_id );
+                        excludelist.insert( kfdropweight->_value );
                     }
                 }
             }
             else
             {
-                excludelist.insert( kfdropweight->_id );
+                excludelist.insert( kfdropweight->_value );
             }
         }
 
@@ -260,7 +260,7 @@ namespace KFrame
             auto ok = _kf_condition->CheckStaticCondition( player, kfdropweight->_conditions );
             if ( !ok )
             {
-                excludelist.insert( kfdropweight->_id );
+                excludelist.insert( kfdropweight->_value );
             }
         }
 
@@ -304,7 +304,7 @@ namespace KFrame
             }
 
             // 判断不在列表中
-            if ( excludelist.find( kfdropweight->_id ) != excludelist.end() )
+            if ( excludelist.find( kfdropweight->_value ) != excludelist.end() )
             {
                 continue;
             }
@@ -356,7 +356,7 @@ namespace KFrame
         // 添加排除项
         if ( kfsetting->_is_exclude )
         {
-            excludedatalist.insert( kfdropdataweight->_id );
+            excludedatalist.insert( kfdropdataweight->_value );
         }
     }
 }

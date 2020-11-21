@@ -1,90 +1,70 @@
-Ôªø#ifndef __KF_TASK_CHAIN_CONFIG_H__
-#define __KF_TASK_CHAIN_CONFIG_H__
+#ifndef	__KF_TASKCHAIN_CONFIG_H__
+#define	__KF_TASKCHAIN_CONFIG_H__
 
 #include "KFConfig.h"
 
 namespace KFrame
 {
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    class KFTaskData : public KFWeight
-    {
-    public:
-        // ‰ªªÂä°Áä∂ÊÄÅ
-        uint32 _task_status = 0u;
+	/////////////////////////////////////////////////////////////////////////////////
+	class TaskChainData
+	{
+	public:
+		// »ŒŒÒ–Ú¡–
+		uint32 _index = 0u;
 
-        // ÈôÑÂä†ÁöÑ‰ªªÂä°Èìæ
-        UInt32Map _extend_task_chain_list;
+		// ¿‡–Õ
+		uint32 _type = 0u;
 
-        // ÈôÑÂä†ÂºÄÂêØÁöÑÂà∑Êñ∞Èìæ
-        UInt32Map _start_refresh_id_list;
+		// »ŒŒÒid/»ŒŒÒ≥ÿid
+		uint32 _task = 0u;
 
-        // ÈôÑÂä†ÂÖ≥Èó≠ÁöÑÂà∑Êñ∞Èìæ
-        UInt32Map _stop_refresh_id_list;
+		// »ŒŒÒ◊¥Ã¨
+		uint32 _task_status = 0u;
 
-    };
+		// ∏Ωº”ø™∆Ù¿‡–Õ
+		uint32 _extend_type = 0u;
 
-    class KFTaskChainSetting : public KFIntSetting
-    {
-    public:
-        const KFTaskData* FindTaskData( uint32 order, uint32 taskid ) const
-        {
-            auto eventlist = _task_data_list.Find( order );
-            if ( eventlist == nullptr )
-            {
-                return nullptr;
-            }
+		// ∏Ωº”ø™∆Ù»ŒŒÒ¡¥id/≥ÿ
+		uint32 _extend_chain = 0u;
 
-            for ( auto eventdata : eventlist->_weight_data )
-            {
-                if ( eventdata->_id == taskid )
-                {
-                    return eventdata;
-                }
-            }
+	};
 
-            return nullptr;
-        }
+	/////////////////////////////////////////////////////////////////////////////////
+	class KFTaskChainSetting : public KFIntSetting
+	{
+	public:
+		// »ŒŒÒ¡¥ ˝æ›
+		std::vector<TaskChainData> _task_chain_data;
+	};
 
-    public:
-        // ‰ªªÂä°Êï∞ÊçÆ
-        KFVector< KFWeightList< KFTaskData > > _task_data_list;
-    };
+	/////////////////////////////////////////////////////////////////////////////////
+	class KFTaskChainConfig : public KFConfigT< KFTaskChainSetting >, public KFInstance< KFTaskChainConfig >
+	{
+	public:
+		KFTaskChainConfig()
+		{
+			_key_name = "id";
+			_file_name = "taskchain";
+		}
 
-    class KFTaskChainConfig : public KFConfigT< KFTaskChainSetting >, public KFInstance< KFTaskChainConfig >
-    {
-    public:
-        KFTaskChainConfig()
-        {
-            _file_name = "taskchain";
-        }
+		~KFTaskChainConfig() = default;
 
-    protected:
-        // ËØªÂèñÈÖçÁΩÆ
-        virtual void ReadSetting( KFXmlNode& xmlnode, KFTaskChainSetting* kfsetting )
-        {
-            auto order = xmlnode.ReadUInt32( "Order" );
-            auto taskdatalist = kfsetting->_task_data_list.Find( order );
-            if ( taskdatalist == nullptr )
-            {
-                taskdatalist = __KF_NEW__( KFWeightList< KFTaskData > );
-                kfsetting->_task_data_list.Insert( order, taskdatalist );
-            }
+	protected:
+		virtual void ReadSetting( KFXmlNode& xmlnode, KFTaskChainSetting* kfsetting )
+		{
+		
+			TaskChainData taskchaindata;
+			taskchaindata._index = xmlnode.ReadUInt32( "index" );
+			taskchaindata._type = xmlnode.ReadUInt32( "type" );
+			taskchaindata._task = xmlnode.ReadUInt32( "task" );
+			taskchaindata._task_status = xmlnode.ReadUInt32( "taskstatus" );
+			taskchaindata._extend_type = xmlnode.ReadUInt32( "extendtype" );
+			taskchaindata._extend_chain = xmlnode.ReadUInt32( "extendchain" );
+			kfsetting->_task_chain_data.push_back( taskchaindata );
+		}
 
-            auto taskid = xmlnode.ReadUInt32( "Task" );
-            auto weight = xmlnode.ReadUInt32( "Weight", true );
-            auto taskdata = taskdatalist->Create( taskid, ( weight == 0u ? 100u : weight ) );
+	};
 
-            taskdata->_task_status = xmlnode.ReadUInt32( "TaskStatus" );
-
-            taskdata->_extend_task_chain_list = xmlnode.ReadUInt32Map( "ExtendChain" );
-            taskdata->_start_refresh_id_list = xmlnode.ReadUInt32Map( "StartRefresh" );
-            taskdata->_stop_refresh_id_list = xmlnode.ReadUInt32Map( "StopRefresh" );
-        }
-    };
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////
 }
-
 #endif

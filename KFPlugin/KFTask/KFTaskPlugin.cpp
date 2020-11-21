@@ -1,5 +1,6 @@
 ﻿#include "KFTaskPlugin.hpp"
 #include "KFTaskModule.hpp"
+#include "KFTaskChainModule.hpp"
 #include "KFLoader/KFLoaderInterface.h"
 //////////////////////////////////////////////////////////////////////////
 
@@ -8,11 +9,13 @@ namespace KFrame
     void KFTaskPlugin::Install()
     {
         __REGISTER_MODULE__( KFTask );
+        __REGISTER_MODULE__( KFTaskChain );
     }
 
     void KFTaskPlugin::UnInstall()
     {
         __UN_MODULE__( KFTask );
+        __UN_MODULE__( KFTaskChain );
     }
 
     void KFTaskPlugin::LoadModule()
@@ -31,5 +34,7 @@ namespace KFrame
     void KFTaskPlugin::AddConfig()
     {
         __KF_ADD_CONFIG__( KFTaskConfig );
+        __KF_ADD_CONFIG__( KFWeightConfig );
+        __KF_ADD_CONFIG__( KFTaskChainConfig );
     }
 }

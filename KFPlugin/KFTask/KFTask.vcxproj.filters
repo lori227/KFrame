@@ -4,10 +4,13 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="KFTaskPlugin.cpp" />
     <ClCompile Include="KFTaskModule.cpp" />
+    <ClCompile Include="KFTaskChainModule.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFTaskPlugin.hpp" />
     <ClInclude Include="KFTaskInterface.h" />
     <ClInclude Include="KFTaskModule.hpp" />
+    <ClInclude Include="KFTaskChainInterface.h" />
+    <ClInclude Include="KFTaskChainModule.hpp" />
   </ItemGroup>
 </Project>

@@ -6,5 +6,5 @@
 	<node row="12" element="任务链" id="Task" name="chain" type="uint32" save="1"/>
 	<node row="13" element="序号" id="Task" name="order" type="uint32" save="1"/>
 	<node row="14" element="时间" id="Task" name="time" type="uint64" save="1" sync="1"/>
-	<node row="15" id="Task" name="type" type="uint64"/>
+	<node row="15" id="Task" name="type" type="uint32"/>
 </root>

@@ -108,6 +108,6 @@ namespace KFrame
             return std::make_tuple( 0u, 0u );
         }
 
-        return std::make_tuple( kfgoodsweightdata->_id, kfgoodsweightdata->_refresh_count );
+        return std::make_tuple( kfgoodsweightdata->_value, kfgoodsweightdata->_refresh_count );
     }
 }
