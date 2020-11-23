@@ -36,7 +36,7 @@ namespace KFrame
 
     public:
         // 数据库信息
-        KFHashMap< uint64, uint64, KFDatabaseSetting > _settings;
+        KFHashMap< uint64, KFDatabaseSetting > _settings;
 
         // 压缩类型 1:lz4 2:zstd
         uint32 _compress_type = 1u;

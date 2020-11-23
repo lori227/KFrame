@@ -28,7 +28,7 @@ namespace KFrame
 
     private:
         // 插件列表
-        KFHashMap< std::string, const std::string&, KFDeployLibrary > _kf_library;
+        KFHashMap< std::string, KFDeployLibrary > _kf_library;
     };
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////

@@ -49,7 +49,7 @@ namespace KFrame
         KFTimeData _finish_time_data;
 
         // 计划任务列表
-        KFHashMap< KFModule*, KFModule*, KFScheduleData > _schedule_data_list;
+        KFHashMap< KFModule*, KFScheduleData > _schedule_data_list;
     };
 }
 

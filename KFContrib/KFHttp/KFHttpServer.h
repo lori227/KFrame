@@ -67,7 +67,7 @@ namespace KFrame
         Poco::Net::HTTPServer* _http_server = nullptr;
 
         // 函数列表
-        KFHashMap< std::string, const std::string&, KFHttpFuncton > _functions;
+        KFHashMap< std::string, KFHttpFuncton > _functions;
 
         // 线程锁
         KFMutex _kf_mutex;

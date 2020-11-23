@@ -227,7 +227,7 @@ namespace KFrame
         std::string _deploy_table_name;
 
         // deploy列表
-        KFHashMap< std::string, const std::string&, KFDeployData > _deploy_list;
+        KFHashMap< std::string, KFDeployData > _deploy_list;
 
         // 当前执行的任务
         KFDeployTask* _kf_task = nullptr;

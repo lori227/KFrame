@@ -46,7 +46,7 @@ namespace KFrame
         uint32 _id = 0;
 
         // 列表
-        KFHashMap< uint32, uint32, KFMySQLList > _mysql_list;
+        KFHashMap< uint32, KFMySQLList > _mysql_list;
     };
 
     class KFMySQLConfig : public KFConfig, public KFInstance< KFMySQLConfig >
@@ -66,7 +66,7 @@ namespace KFrame
     public:
         // 逻辑数据库映射
         typedef std::pair< std::string, uint32 > ModuleKey;
-        KFMap< ModuleKey, const ModuleKey&, KFMySQLType > _mysql_type;
+        KFMap< ModuleKey, KFMySQLType > _mysql_type;
     };
 }
 

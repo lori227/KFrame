@@ -99,7 +99,7 @@ namespace KFrame
         bool _is_server_shutdown = false;
 
         // 玩家列表
-        KFHashMap< uint64, uint64, KFRole > _kf_role_list;
+        KFHashMap< uint64, KFRole > _kf_role_list;
         std::unordered_map< std::string, KFRole* > _token_list;
 
         // login服务器列表

@@ -68,7 +68,7 @@ namespace KFrame
         uint64 _key = 0u;
 
         // 列表
-        KFHashMap< std::string, const std::string&, KFData > _data;
+        KFHashMap< std::string, KFData > _data;
     };
 }
 

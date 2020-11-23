@@ -6,7 +6,7 @@
 
 namespace KFrame
 {
-    template < typename KeyType, typename ParamType, typename ObjectType, typename MapType >
+    template < typename KeyType, typename ObjectType, typename MapType >
     class KFMapT
     {
     public:
@@ -27,14 +27,14 @@ namespace KFrame
         }
 
         // 添加
-        void Insert( ParamType key, ObjectType* object )
+        void Insert( const KeyType& key, ObjectType* object )
         {
             Remove( key, true );
             _objects[ key ] = object;
         }
 
         // 查找
-        ObjectType* Find( ParamType key ) const
+        ObjectType* Find( const KeyType& key ) const
         {
             auto iter = _objects.find( key );
             if ( iter == _objects.end() )
@@ -45,7 +45,7 @@ namespace KFrame
             return iter->second;
         }
 
-        ObjectType* Create( ParamType key )
+        ObjectType* Create( const KeyType& key )
         {
             auto object = Find( key );
             if ( object != nullptr )
@@ -59,13 +59,13 @@ namespace KFrame
         }
 
         // 存在
-        bool IsExist( ParamType key )
+        bool IsExist( const KeyType& key )
         {
             return Find( key ) != nullptr;
         }
 
         // 删除
-        bool Remove( ParamType key, bool isdelete = true )
+        bool Remove( const KeyType& key, bool isdelete = true )
         {
             auto iter = _objects.find( key );
             if ( iter == _objects.end() )
@@ -83,7 +83,7 @@ namespace KFrame
         }
 
         // 移动
-        ObjectType* Move( ParamType key )
+        ObjectType* Move( const KeyType& key )
         {
             auto iter = _objects.find( key );
             if ( iter == _objects.end() )
@@ -162,15 +162,15 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
-    template< typename KeyType, typename ParamType, typename ObjectType >
-    class KFMap : public KFMapT < KeyType, ParamType, ObjectType, std::map< KeyType, ObjectType* > >
+    template< typename KeyType, typename ObjectType >
+    class KFMap : public KFMapT< KeyType, ObjectType, std::map< KeyType, ObjectType* > >
     {
 
     };
 
     /////////////////////////////////////////////////////////////////////////////////////
-    template< typename KeyType, typename ParamType, typename ObjectType >
-    class KFHashMap : public KFMapT < KeyType, ParamType, ObjectType, std::unordered_map< KeyType, ObjectType* > >
+    template< typename KeyType, typename ObjectType >
+    class KFHashMap : public KFMapT< KeyType, ObjectType, std::unordered_map< KeyType, ObjectType* > >
     {
 
     };

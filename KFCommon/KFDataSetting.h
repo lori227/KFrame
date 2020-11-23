@@ -214,7 +214,7 @@ namespace KFrame
 
     public:
         // 属性列表
-        KFHashMap< std::string, const std::string&, KFDataSetting > _static_data;
+        KFHashMap< std::string, KFDataSetting > _static_data;
 
         // 逻辑名字对应的属性名
         StringMap _logic_name_list;

@@ -9,19 +9,15 @@
 //    @Date             :    2017-1-22
 ************************************************************************/
 
-#include "KFrameEx.h"
 #include "KFItemInterface.h"
 #include "KFItemUseInterface.h"
-#include "KFLua/KFLuaInterface.h"
 #include "KFKernel/KFKernelInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
-#include "KFDrop/KFDropInterface.h"
-#include "KFHero/KFHeroInterface.h"
-#include "KFRealm/KFPVEInterface.h"
-#include "KFZConfig/KFItemConfig.hpp"
 #include "KFExecute/KFExecuteInterface.h"
+#include "KFConfig/KFItemConfig.hpp"
+#include "KFConfig/KFItemTypeConfig.hpp"
 
 namespace KFrame
 {
@@ -42,22 +38,28 @@ namespace KFrame
         // 使用道具
         __KF_MESSAGE_FUNCTION__( HandleUseItemReq );
 
-        // 给英雄使用道具
-        __KF_MESSAGE_FUNCTION__( HandleUseItemToHeroReq );
-
     protected:
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // 使用道具
-        bool UseItem( KFEntity* player, KFData* kfitem, const KFItemSetting* kfsetting );
-        bool UseGiftItem( KFEntity* player, KFData* kfitem, const KFItemSetting* kfsetting );
-        bool UseDrugItem( KFEntity* player, KFData* kfitem, const KFItemSetting* kfsetting );
-        bool UseScriptItem( KFEntity* player, KFData* kfitem, const KFItemSetting* kfsetting );
+        virtual void BindCheckItemUseFunction( uint32 itemtype, const std::string& module, KFItemUseFunction& function );
+        virtual void UnBindCheckItemUseFunction( uint32 itemtype, const std::string& module );
+
+        virtual void BindItemUseFunction( uint32 itemtype, const std::string& module, KFItemUseFunction& function );
+        virtual void UnBindItemUseFunction( uint32 itemtype, const std::string& module );
 
         // 判断道具是否能使用
-        bool CheckCanUseItem( KFEntity* player, const KFItemSetting* kfsetting );
+        bool CheckCanUseItem( KFEntity* player, KFData* kfitem, const KFItemSetting* kfitemsetting, const KFItemTypeSetting* kftypesetting );
+
+        // 使用道具
+        bool UseItem( KFEntity* player, KFData* kfitem, const KFItemSetting* kfitemsetting, const KFItemTypeSetting* kftypesetting );
 
         // 使用扣除物品
         void UseCoseItem( KFEntity* player, KFData* kfitem, const KFItemSetting* kfsetting );
+
+    private:
+        // 检查道具是否能使用
+        KFFunctionMap<uint32, KFItemUseFunction > _check_item_use_function;
+
+        // 使用道具
+        KFFunctionMap<uint32, KFItemUseFunction > _item_use_function;
     };
 }
 

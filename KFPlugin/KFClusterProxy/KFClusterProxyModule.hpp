@@ -103,7 +103,7 @@ namespace KFrame
         bool _in_service{ false };
 
         // 认证的token列表
-        KFHashMap< std::string, const std::string&, KFClusterToken > _kf_token_list;
+        KFHashMap< std::string, KFClusterToken > _kf_token_list;
 
         // hash一致性列表
         KFConHash _kf_hash;

@@ -36,7 +36,7 @@ namespace KFrame
 
     private:
         // 处理器函数
-        KFFunctionMap< uint32, uint32, KFMessageFunction > _kf_message_function;
+        KFFunctionMap< uint32, KFMessageFunction > _kf_message_function;
     };
 }
 

@@ -87,10 +87,10 @@ namespace KFrame
         void SendRouteFailedMessage( const std::string& name );
     private:
         // 注册的转发服务
-        KFHashMap< std::string, const std::string&, KFRouteService > _route_service_list;
+        KFHashMap< std::string, KFRouteService > _route_service_list;
 
         // 转发失败的消息
-        KFHashMap< std::string, const std::string&, KFMessageData > _route_message_list;
+        KFHashMap< std::string, KFMessageData > _route_message_list;
     };
 }
 

@@ -118,7 +118,7 @@ namespace KFrame
         KFMySQLDriver* _mysql_driver{ nullptr };
 
         // Agent列表
-        KFHashMap< std::string, const std::string&, KFAgentData > _agent_list;
+        KFHashMap< std::string, KFAgentData > _agent_list;
 
         // 定时任务id
         uint64 _delayed_id = 0u;

@@ -172,7 +172,7 @@ namespace KFrame
 
     public:
         // 列表
-        KFHashMap< KeyType, const KeyType&, T > _settings;
+        KFHashMap< KeyType, T > _settings;
     };
 
     ///////////////////////////////////////////////////////////////

@@ -41,7 +41,7 @@ namespace KFrame
 
         // 多线程列表
         typedef std::pair< uint32, uint32 > RedisKey;
-        KFMap< RedisKey, const RedisKey&, KFRedisLogic > _redis_logic;
+        KFMap< RedisKey,  KFRedisLogic > _redis_logic;
     };
 }
 

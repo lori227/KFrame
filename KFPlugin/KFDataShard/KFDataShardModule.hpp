@@ -55,7 +55,7 @@ namespace KFrame
         bool SavePlayerData( uint32 zoneid, uint64 playerid, const KFMsg::PBObject* pbobject, uint32 saveflag );
     private:
         // 数据库逻辑
-        KFMap< uint32, uint32, KFDataExecute > _data_execute;
+        KFMap< uint32, KFDataExecute > _data_execute;
     };
 }
 

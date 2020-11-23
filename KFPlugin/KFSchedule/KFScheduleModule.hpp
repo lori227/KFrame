@@ -58,7 +58,7 @@ namespace KFrame
         std::list< KFScheduleData* > _kf_schedule_register;
 
         // 计划任务
-        KFHashMap< uint32, uint32, KFScheduleDataList > _kf_schedule_list;
+        KFHashMap< uint32, KFScheduleDataList > _kf_schedule_list;
 
         // 需要删除的任务
         std::list< std::tuple< uint32, KFModule* > > _kf_schedule_remove;

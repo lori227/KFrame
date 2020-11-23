@@ -53,7 +53,7 @@ namespace KFrame
         uint32 _id = 0;
 
         // Redis列表
-        KFHashMap< uint32, uint32, KFRedisList > _redis_list;
+        KFHashMap< uint32, KFRedisList > _redis_list;
     };
 
     /////////////////////////////////////////////////////////////////////////////////
@@ -74,7 +74,7 @@ namespace KFrame
     public:
         // 逻辑数据库映射
         typedef std::pair< std::string, uint32 > ModuleKey;
-        KFMap< ModuleKey, const ModuleKey&, KFRedisType > _redis_type;
+        KFMap< ModuleKey, KFRedisType > _redis_type;
     };
 }
 

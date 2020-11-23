@@ -108,7 +108,7 @@ namespace KFrame
         std::unordered_map< uint64, KFNetData > _wait_clients;
 
         // 客户端列表
-        KFHashMap< uint64, uint64, KFNetClient > _kf_clients;
+        KFHashMap< uint64, KFNetClient > _kf_clients;
 
     protected:
         // 消息函数

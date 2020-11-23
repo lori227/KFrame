@@ -3,24 +3,49 @@
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="KFItemPlugin.cpp" />
-    <ClCompile Include="KFItemModule.cpp" />
-    <ClCompile Include="KFItemUseModule.cpp" />
-    <ClCompile Include="KFItemWeaponModule.cpp" />
-    <ClCompile Include="KFItemRuneModule.cpp" />
-    <ClCompile Include="KFItemMoveModule.cpp" />
+    <ClCompile Include="KFItemModule.cpp">
+      <Filter>ItemBag</Filter>
+    </ClCompile>
+    <ClCompile Include="KFItemMoveModule.cpp">
+      <Filter>ItemMove</Filter>
+    </ClCompile>
+    <ClCompile Include="KFItemUseModule.cpp">
+      <Filter>ItemUse</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFItemInterface.h" />
-    <ClInclude Include="KFItemModule.hpp" />
     <ClInclude Include="KFItemPlugin.hpp" />
-    <ClInclude Include="KFItemUseModule.hpp" />
-    <ClInclude Include="KFItemWeaponModule.hpp" />
-    <ClInclude Include="KFItemRuneModule.hpp" />
-    <ClInclude Include="KFItemUseInterface.h" />
-    <ClInclude Include="KFItemWeaponInterface.h" />
-    <ClInclude Include="KFItemRuneInterface.h" />
-    <ClInclude Include="KFItemIndex.hpp" />
-    <ClInclude Include="KFItemMoveInterface.h" />
-    <ClInclude Include="KFItemMoveModule.hpp" />
+    <ClInclude Include="KFItemModule.hpp">
+      <Filter>ItemBag</Filter>
+    </ClInclude>
+    <ClInclude Include="KFItemMoveInterface.h">
+      <Filter>ItemMove</Filter>
+    </ClInclude>
+    <ClInclude Include="KFItemMoveModule.hpp">
+      <Filter>ItemMove</Filter>
+    </ClInclude>
+    <ClInclude Include="KFItemInterface.h">
+      <Filter>ItemBag</Filter>
+    </ClInclude>
+    <ClInclude Include="KFItemUseInterface.h">
+      <Filter>ItemUse</Filter>
+    </ClInclude>
+    <ClInclude Include="KFItemUseModule.hpp">
+      <Filter>ItemUse</Filter>
+    </ClInclude>
+    <ClInclude Include="KFItemIndex.hpp">
+      <Filter>ItemMove</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="ItemBag">
+      <UniqueIdentifier>{a593cc6e-3f73-46a0-8d99-246f54346de2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ItemMove">
+      <UniqueIdentifier>{d4a0801f-7897-4910-a109-6194d24a8b4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ItemUse">
+      <UniqueIdentifier>{65f51472-18bf-45f1-9fa1-ddccb50e1028}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

@@ -204,11 +204,11 @@ namespace KFrame
         RouteObjectList _service_object_list;
 
         // 集群认证成功的回调函数
-        KFFunctionMap< std::string, const std::string&, KFClusterConnectionFunction >_kf_connection_function;
+        KFFunctionMap< std::string, KFClusterConnectionFunction >_kf_connection_function;
 
         // 转发消息
         uint64 _route_serial = 0u;
-        KFMap<uint64, uint64, KFRouteMessage > _route_message_list;
+        KFMap<uint64, KFRouteMessage > _route_message_list;
 
         // 连接route master失败次数
         uint32 _connect_route_master_failed_count = 0u;

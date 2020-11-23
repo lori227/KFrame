@@ -5,33 +5,29 @@ namespace KFrame
 {
     void KFItemMoveModule::BeforeRun()
     {
-        _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
         __REGISTER_ADD_LOGIC__( __STRING__( item ), &KFItemMoveModule::OnAddItemMoveLogic );
         __REGISTER_REMOVE_LOGIC__( __STRING__( item ), &KFItemMoveModule::OnRemoveItemMoveLogic );
 
-        __REGISTER_AFTER_ENTER_PLAYER__( &KFItemMoveModule::OnEnterItemMoveModule );
-        __REGISTER_LEAVE_PLAYER__( &KFItemMoveModule::OnLeaveItemMoveModule );
+        __REGISTER_PLAYER_AFTER_ENTER__( &KFItemMoveModule::OnEnterItemMoveModule );
+        __REGISTER_PLAYER_LEAVE__( &KFItemMoveModule::OnLeaveItemMoveModule );
         //////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_EXECUTE__( __STRING__( item ), &KFItemMoveModule::OnExecuteItemMaxCount );
-        //////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::MSG_SPLIT_ITEM_REQ, &KFItemMoveModule::HandleSplitItemReq );
-        __REGISTER_MESSAGE__( KFMsg::MSG_MERGE_ITEM_REQ, &KFItemMoveModule::HandleMergeItemReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_MOVE_ITEM_REQ, &KFItemMoveModule::HandleMoveItemReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_MOVE_ALL_ITEM_REQ, &KFItemMoveModule::HandleMoveAllItemReq );
-        __REGISTER_MESSAGE__( KFMsg::MSG_EXCHANGE_ITEM_REQ, &KFItemMoveModule::HandleExchangeItemReq );
-        __REGISTER_MESSAGE__( KFMsg::MSG_CLEAN_ITEM_REQ, &KFItemMoveModule::HandleCleanItemReq );
         __REGISTER_MESSAGE__( KFMsg::MSG_SORT_ITEM_REQ, &KFItemMoveModule::HandleSortItemReq );
     }
 
     void KFItemMoveModule::AfterLoad()
     {
         _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
-        for ( auto& iter : KFItemBagConfig::Instance()->_settings._objects )
+        if ( KFItemBagConfig::Instance()->_load_ok )
         {
-            auto kfsetting = iter.second;
-            for ( auto& tabname : kfsetting->_tab_list )
+            for ( auto& iter : KFItemBagConfig::Instance()->_settings._objects )
             {
-                __REGISTER_UPDATE_DATA_2__( __STRING__( item ), tabname, &KFItemMoveModule::OnUpdateItemTabIndexCallBack );
+                auto kfsetting = iter.second;
+                for ( auto& tabname : kfsetting->_tab_list )
+                {
+                    __REGISTER_UPDATE_DATA_2__( __STRING__( item ), tabname, &KFItemMoveModule::OnUpdateItemTabIndexCallBack );
+                }
             }
         }
     }
@@ -50,41 +46,12 @@ namespace KFrame
             }
         }
 
-        __UN_ENTER_PLAYER__();
-        __UN_LEAVE_PLAYER__();
+        __UN_PLAYER_AFTER_ENTER__();
+        __UN_PLAYER_LEAVE__();
         //////////////////////////////////////////////////////////////////////////////////////////////////
-        __UN_EXECUTE__( __STRING__( item ) );
-        //////////////////////////////////////////////////////////////////////////////////////////////////
-        __UN_MESSAGE__( KFMsg::MSG_SPLIT_ITEM_REQ );
-        __UN_MESSAGE__( KFMsg::MSG_MERGE_ITEM_REQ );
         __UN_MESSAGE__( KFMsg::MSG_MOVE_ITEM_REQ );
         __UN_MESSAGE__( KFMsg::MSG_MOVE_ALL_ITEM_REQ );
-        __UN_MESSAGE__( KFMsg::MSG_EXCHANGE_ITEM_REQ );
-        __UN_MESSAGE__( KFMsg::MSG_CLEAN_ITEM_REQ );
         __UN_MESSAGE__( KFMsg::MSG_SORT_ITEM_REQ );
-    }
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_EXECUTE_FUNCTION__( KFItemMoveModule::OnExecuteItemMaxCount )
-    {
-        if ( executedata->_param_list._params.size() < 2u )
-        {
-            return false;
-        }
-
-        auto itemname = executedata->_param_list._params[ 0 ]->_str_value;
-        auto addcount = executedata->_param_list._params[ 1 ]->_int_value;
-        auto kfitemrecord = player->Find( itemname );
-        if ( kfitemrecord == nullptr )
-        {
-            return false;
-        }
-
-        // 添加科技效果
-        player->UpdateData( __STRING__( effect ), itemname, KFEnum::Add, addcount );
-
-        // 添加索引
-        AddItemMaxIndex( player, kfitemrecord, addcount );
-        return true;
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_ADD_DATA_FUNCTION__( KFItemMoveModule::OnAddItemMoveLogic )
@@ -96,8 +63,7 @@ namespace KFrame
             return;
         }
 
-        auto itemid = kfdata->Get<uint32>( kfdata->_data_setting->_config_key_name );
-        auto kfitemsetting = KFItemConfig::Instance()->FindSetting( itemid );
+        auto kfitemsetting = KFItemConfig::Instance()->FindSetting( kfdata->Get<uint32>( __STRING__( id ) ) );
         if ( kfitemsetting == nullptr )
         {
             return;
@@ -140,8 +106,7 @@ namespace KFrame
             return;
         }
 
-        auto itemid = kfdata->Get<uint32>( kfdata->_data_setting->_config_key_name );
-        auto kfitemsetting = KFItemConfig::Instance()->FindSetting( itemid );
+        auto kfitemsetting = KFItemConfig::Instance()->FindSetting( kfdata->Get<uint32>( __STRING__( id ) ) );
         if ( kfitemsetting == nullptr )
         {
             return;
@@ -215,7 +180,7 @@ namespace KFrame
 
     void KFItemMoveModule::InitItemEmptyIndexData( KFEntity* player, KFData* kfitemrecord, const KFItemBagSetting* kfbagsetting )
     {
-        auto maxitemcount = _kf_item->GetItemRecordMaxCount( player, kfitemrecord );
+        auto maxitemcount = _kf_item->GetItemBagMaxCount( player, kfitemrecord );
 
         // 初始化最大数量
         ItemIndexKey key( player->GetKeyID(), kfitemrecord->_data_setting->_name );
@@ -479,13 +444,13 @@ namespace KFrame
         if ( sourceitemcount > maxsourceoverlaycount && targetitemcount > maxtargetoverlaycount )
         {
             // 需要拆分, 所以需要判断格子数
-            if ( _kf_item->IsItemRecordFull( player, kffindrecord ) )
+            if ( _kf_item->CheckItemBagFull( player, kffindrecord ) )
             {
                 return KFMsg::ItemBagIsFull;
             }
 
             // 需要拆分, 所以需要判断格子数
-            if ( _kf_item->IsItemRecordFull( player, kftargetrecord ) )
+            if ( _kf_item->CheckItemBagFull( player, kftargetrecord ) )
             {
                 return KFMsg::ItemBagIsFull;
             }
@@ -499,7 +464,7 @@ namespace KFrame
         else if ( sourceitemcount > maxsourceoverlaycount )
         {
             // 需要拆分, 所以需要判断格子数
-            if ( _kf_item->IsItemRecordFull( player, kffindrecord ) )
+            if ( _kf_item->CheckItemBagFull( player, kffindrecord ) )
             {
                 return KFMsg::ItemBagIsFull;
             }
@@ -513,7 +478,7 @@ namespace KFrame
         else if ( targetitemcount > maxtargetoverlaycount )
         {
             // 需要拆分, 所以需要判断格子数
-            if ( _kf_item->IsItemRecordFull( player, kftargetrecord ) )
+            if ( _kf_item->CheckItemBagFull( player, kftargetrecord ) )
             {
                 return KFMsg::ItemBagIsFull;
             }
@@ -528,7 +493,7 @@ namespace KFrame
         {
             if ( kffindrecord != kfsourcerecord )
             {
-                if ( _kf_item->IsItemRecordFull( player, kffindrecord ) )
+                if ( _kf_item->CheckItemBagFull( player, kffindrecord ) )
                 {
                     return KFMsg::ItemBagIsFull;
                 }
@@ -696,7 +661,7 @@ namespace KFrame
         auto kftargetitem = FindIndexItem( player, kftargetrecord, targetindex );
         if ( kftargetitem == nullptr )
         {
-            if ( !_kf_item->IsItemRecordFull( player, kftargetrecord ) )
+            if ( !_kf_item->CheckItemBagFull( player, kftargetrecord ) )
             {
                 // 移动到空格子上
                 // 判断堆叠数量, 如果目标小于源堆叠, 并且源数量大于目标堆叠数量, 拆分物品
@@ -1046,7 +1011,7 @@ namespace KFrame
             // 剩下的道具数量
             while ( sourcecount > maxoverlaycount )
             {
-                if ( _kf_item->IsItemRecordFull( player, kftargetrecord ) )
+                if ( _kf_item->CheckItemBagFull( player, kftargetrecord ) )
                 {
                     break;
                 }
@@ -1057,7 +1022,7 @@ namespace KFrame
         }
 
         // 不能堆叠或者剩下没有堆叠完的
-        auto isfull = _kf_item->IsItemRecordFull( player, kftargetrecord );
+        auto isfull = _kf_item->CheckItemBagFull( player, kftargetrecord );
         if ( !isfull )
         {
             MoveItemLogic( player, kfitemsetting, kfsourcebagsetting, kfsourcerecord, kfsourceitem, kftargetbagsetting, kftargetrecord, 0u );

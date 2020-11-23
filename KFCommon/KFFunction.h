@@ -78,8 +78,8 @@ namespace KFrame
 
     //////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////
-    template< class KeyType, class ParamType, class ObjectType >
-    class KFFunctionMap : public KFHashMap< KeyType, ParamType, KFFunction< ObjectType > >
+    template< class KeyType, class ObjectType >
+    class KFFunctionMap : public KFHashMap< KeyType, KFFunction< ObjectType > >
     {
     public:
         KFFunctionMap() = default;

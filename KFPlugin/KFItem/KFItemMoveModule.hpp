@@ -8,7 +8,6 @@
 //    @Mail			    :    lori227@qq.com
 //    @Date             :    2020-2-28
 ************************************************************************/
-#include "KFrameEx.h"
 #include "KFItemIndex.hpp"
 #include "KFItemInterface.h"
 #include "KFItemMoveInterface.h"
@@ -17,9 +16,9 @@
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFExecute/KFExecuteInterface.h"
-#include "KFZConfig/KFItemConfig.hpp"
-#include "KFZConfig/KFItemTypeConfig.hpp"
-#include "KFZConfig/KFItemBagConfig.hpp"
+#include "KFConfig/KFItemConfig.hpp"
+#include "KFConfig/KFItemTypeConfig.hpp"
+#include "KFConfig/KFItemBagConfig.hpp"
 
 namespace KFrame
 {
@@ -46,31 +45,19 @@ namespace KFrame
         // 清空包裹
         virtual void BalanceItem( KFEntity* player, const std::string& name, bool autodestory );
     protected:
-        // 拆分道具
-        __KF_MESSAGE_FUNCTION__( HandleSplitItemReq );
-
-        // 合并道具
-        __KF_MESSAGE_FUNCTION__( HandleMergeItemReq );
-
         // 移动道具(从背包到仓库 或者从仓库到背包)
         __KF_MESSAGE_FUNCTION__( HandleMoveItemReq );
         __KF_MESSAGE_FUNCTION__( HandleMoveAllItemReq );
-
-        // 交换道具(从背包到仓库 或者从仓库到背包)
-        __KF_MESSAGE_FUNCTION__( HandleExchangeItemReq );
-
-        // 移动某包裹道具
-        __KF_MESSAGE_FUNCTION__( HandleCleanItemReq );
 
         // 整理背包
         __KF_MESSAGE_FUNCTION__( HandleSortItemReq );
 
     protected:
         // 进入游戏
-        __KF_ENTER_PLAYER_FUNCTION__( OnEnterItemMoveModule );
+        __KF_PLAYER_ENTER_FUNCTION__( OnEnterItemMoveModule );
 
         // 离开游戏
-        __KF_LEAVE_PLAYER_FUNCTION__( OnLeaveItemMoveModule );
+        __KF_PLAYER_LEAVE_FUNCTION__( OnLeaveItemMoveModule );
 
         // 添加物品回调
         __KF_ADD_DATA_FUNCTION__( OnAddItemMoveLogic );
@@ -160,7 +147,7 @@ namespace KFrame
 
         // 保存玩家的背包格子信息
         typedef std::pair<uint64, std::string> ItemIndexKey;
-        KFMap< ItemIndexKey, const ItemIndexKey&, KFItemBagIndex > _player_item_index;
+        KFMap< ItemIndexKey, KFItemBagIndex > _player_item_index;
     };
 }
 

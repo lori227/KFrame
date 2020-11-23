@@ -99,10 +99,10 @@ namespace KFrame
         KFNetServerServices* _net_server_services;
 
         // 等待验证的托管连接
-        KFHashMap< uint64, uint64, KFNetHandle > _trustee_handles;
+        KFHashMap< uint64, KFNetHandle > _trustee_handles;
 
         // 有效连接列表
-        KFHashMap< uint64, uint64, KFNetHandle > _kf_handles;
+        KFHashMap< uint64, KFNetHandle > _kf_handles;
 
         // 需要验证超时的连接
         UInt64Map _bind_timeout_list;

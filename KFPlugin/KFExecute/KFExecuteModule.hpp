@@ -61,7 +61,7 @@ namespace KFrame
 
     protected:
         // 执行列表
-        KFFunctionMap< std::string, const std::string&, KFExecuteFunction > _execute_function;
+        KFFunctionMap< std::string, KFExecuteFunction > _execute_function;
     };
 }
 

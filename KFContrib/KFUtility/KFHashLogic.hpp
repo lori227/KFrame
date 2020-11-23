@@ -44,10 +44,10 @@ namespace KFrame
         uint64 FindSelectNode( const std::string& data );
     private:
         // 节点列表
-        KFHashMap< uint64, uint64, HashNode > _node_list;
+        KFHashMap< uint64, HashNode > _node_list;
 
         // 虚拟节点列表
-        KFMap< uint64, uint64, VirtualHashNode > _virtual_list;
+        KFMap< uint64, VirtualHashNode > _virtual_list;
 
         // 已经选择的节点
         StringUInt64 _select_list;

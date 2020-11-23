@@ -21,7 +21,7 @@ namespace KFrame
     class KFDeployCommand
     {
     public:
-        KFFunctionMap< std::string, const std::string&, KFDeployFunction > _functions;
+        KFFunctionMap< std::string, KFDeployFunction > _functions;
     };
 
     class KFDeployClientModule : public KFDeployClientInterface
@@ -96,7 +96,7 @@ namespace KFrame
         uint32 _agent_port = 0u;
 
         // 命令回调函数
-        KFHashMap< std::string, const std::string&, KFDeployCommand > _command_data;
+        KFHashMap< std::string, KFDeployCommand > _command_data;
     };
 }
 

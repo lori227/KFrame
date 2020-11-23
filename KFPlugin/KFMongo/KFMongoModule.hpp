@@ -40,7 +40,7 @@ namespace KFrame
 
         // 数据库列表
         typedef std::pair< uint32, uint32 > MongoKey;
-        KFMap< MongoKey, const MongoKey&, KFMongoLogic > _mongo_logic_map;
+        KFMap< MongoKey, KFMongoLogic > _mongo_logic_map;
     };
 }
 

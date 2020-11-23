@@ -69,7 +69,7 @@ namespace KFrame
         const KFDatabaseSetting* _kf_setting = nullptr;
 
         // 保存失败的数据
-        KFHashMap< uint64, uint64, KFDataKeeper > _data_keeper;
+        KFHashMap< uint64, KFDataKeeper > _data_keeper;
     };
 
     ///////////////////////////////////////////////////////////////////////////////////

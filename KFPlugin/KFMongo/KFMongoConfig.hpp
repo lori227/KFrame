@@ -67,7 +67,7 @@ namespace KFrame
         uint32 _id;
 
         // 列表
-        KFHashMap< uint32, uint32, KFMongoList > _mongo_list;
+        KFHashMap< uint32, KFMongoList > _mongo_list;
     };
 
     class KFMongoConfig : public KFConfig, public KFInstance< KFMongoConfig >
@@ -87,7 +87,7 @@ namespace KFrame
     public:
         // 逻辑数据库映射
         typedef std::pair< std::string, uint32 > ModuleKey;
-        KFMap< ModuleKey, const ModuleKey&, KFMongoType > _mongo_type;
+        KFMap< ModuleKey, KFMongoType > _mongo_type;
     };
 }
 

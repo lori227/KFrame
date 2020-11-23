@@ -31,7 +31,7 @@ namespace KFrame
         typedef std::pair< std::string, uint32 > ConstantKey;
 
         // 常量列表
-        KFMap< ConstantKey, const ConstantKey&, KFConstant > _constant_list;
+        KFMap< ConstantKey, KFConstant > _constant_list;
     };
 }
 

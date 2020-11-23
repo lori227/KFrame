@@ -118,7 +118,7 @@ namespace KFrame
 
         // 排行榜列表
         typedef std::pair< uint32, uint32 > RankKey;
-        KFMap< RankKey, const RankKey&, KFRankData > _kf_rank_data;
+        KFMap< RankKey, KFRankData > _kf_rank_data;
 
         // 需要刷新的排行榜id列表
         UInt32Vector _refresh_rank_id_list;

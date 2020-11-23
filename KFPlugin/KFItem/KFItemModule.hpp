@@ -8,7 +8,6 @@
 //    @Mail			    :    lori227@qq.com
 //    @Date             :    2017-1-22
 ************************************************************************/
-#include "KFrameEx.h"
 #include "KFItemInterface.h"
 #include "KFLua/KFLuaInterface.h"
 #include "KFTimer/KFTimerInterface.h"
@@ -16,9 +15,9 @@
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
-#include "KFZConfig/KFItemConfig.hpp"
-#include "KFZConfig/KFItemTypeConfig.hpp"
-#include "KFZConfig/KFItemBagConfig.hpp"
+#include "KFConfig/KFItemConfig.hpp"
+#include "KFConfig/KFItemTypeConfig.hpp"
+#include "KFConfig/KFItemBagConfig.hpp"
 
 namespace KFrame
 {
@@ -36,40 +35,33 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 背包格子最大数量
-        virtual uint32 GetItemRecordMaxCount( KFEntity* player, KFData* kfitemrecord );
+        virtual uint32 GetItemBagMaxCount( KFEntity* player, KFData* kfitemrecord );
 
-        // 创建一个道具
+        // 创建一个道具( 可传入一个存在的kfitem, 直接返回 )
         virtual KFData* CreateItem( KFEntity* player, uint32 itemid, KFData* kfitem, const char* function, uint32 line );
 
         // 获取能添加物品数量
-        virtual uint32 GetCanAddItemCount( KFEntity* player, uint32 itemid, uint32 num );
+        virtual uint32 GetCanAddItemCount( KFEntity* player, uint32 itemid, uint32 count );
 
-        // 查找道具
-        virtual std::tuple<KFData*, KFData*> FindItem( KFEntity* player, uint64 itemuuid );
+        // 查找道具  返回<背包指针, 道具指针>
+        virtual std::tuple<KFData*, KFData*> FindItem( KFEntity* player, uint64 itemuuid ) ;
 
         // 获得背包空格子数量
-        virtual uint32 GetItemEmptyCount( KFEntity* player, KFData* kfitemrecord );
+        virtual uint32 GetItemEmptyCount( KFEntity* player, KFData* kfitemrecord ) ;
 
         // 判断包裹是否满了
-        virtual bool IsItemRecordFull( KFEntity* player, KFData* kfitemrecord );
+        virtual bool CheckItemBagFull( KFEntity* player, KFData* kfitemrecord );
 
-        // 获得包裹内道具数量
+        // 获得包裹内道具数量( maxcount 最多查找数量, 优化用 )
         virtual uint32 GetItemCount( KFEntity* player, KFData* kfitemrecord, uint32 itemid, uint32 maxcount = __MAX_UINT32__ );
-
-        // 添加物品
-        virtual void AddItem( KFEntity* player, KFData* kfitemrecord, uint32 itemid, uint32 itemcount, uint32 itemindex, bool callback );
 
         // 删除包裹内道具
         virtual void RemoveItem( KFEntity* player, KFData* kfitemrecord, uint32 itemid, uint32 itemcount );
         virtual uint32 RemoveItemCount( KFEntity* player, KFData* kfitem, uint32 itemcount );
 
-        // 随机删除包裹内道具
-        virtual uint32 RandRemoveItem( KFEntity* player, KFData* kfitemrecord, uint32& itemcount );
-
         // 获得背包属性
-        virtual KFData* FindItemRecord( KFEntity* player, uint32 itemid );
-        virtual KFData* FindItemRecord( KFEntity* player, KFData* kfitem );
-
+        virtual KFData* FindItemBag( KFEntity* player, uint32 itemid );
+        virtual KFData* FindItemBag( KFEntity* player, KFData* kfitem );
     protected:
         // 删除道具
         __KF_MESSAGE_FUNCTION__( HandleRemoveItemReq );
@@ -105,44 +97,44 @@ namespace KFrame
         // 物品时间更新回调
         __KF_UPDATE_DATA_FUNCTION__( OnItemTimeUpdateCallBack );
 
-        // 删除物品回调
-        __KF_REMOVE_DATA_FUNCTION__( OnRemoveItemCallBack );
-
         // 删除时间道具
         __KF_TIMER_FUNCTION__( OnTimerRemoveTimeItem );
 
         // 进入游戏
-        __KF_ENTER_PLAYER_FUNCTION__( OnEnterItemModule );
+        __KF_PLAYER_ENTER_FUNCTION__( OnEnterItemModule );
 
         // 离开游戏
-        __KF_LEAVE_PLAYER_FUNCTION__( OnLeaveItemModule );
+        __KF_PLAYER_LEAVE_FUNCTION__( OnLeaveItemModule );
 
     protected:
-        virtual void BindInitItemFunction( uint32 itemtype, KFItemFunction& function );
-        virtual void UnRegisteInitItemFunction( uint32 itemtype );
+        virtual void BindItemInitFunction( uint32 itemtype, const std::string& module, KFItemInitFunction& function );
+        virtual void UnBindItemInitFunction( uint32 itemtype, const std::string& module );
 
     protected:
-        //背包是否满了
-        bool CheckItemRecordFull( KFEntity* player, KFData* kfitemrecord, const KFItemSetting* kfsetting, uint32 itemcount );
-
         // 获得背包
-        KFData* FindItemRecord( KFEntity* player, KFData* kfitemrecord, const KFItemSetting* kfsetting, uint32 itemcount );
+        KFData* FindFinalItemBag( KFEntity* player, KFData* kfitemrecord, const KFItemSetting* kfitemsetting, const KFItemTypeSetting* kftypesetting, uint32 itemcount );
+
+        //背包是否满了
+        bool CheckItemBagFull( KFEntity* player, KFData* kfitemrecord, const KFItemSetting* kfsetting, uint32 itemcount );
 
         // 添加时间叠加数量
-        void AddOverlayTimeItem( KFEntity* player, KFData* kfparent, KFElementResult* kfresult, const KFItemSetting* kfsetting, uint32 count, uint32 time );
+        void AddOverlayTimeItem( KFEntity* player, KFData* kfparent, KFElementResult* kfresult,
+                                 const KFItemSetting* kfitemsetting, const KFItemTypeSetting* kftypesetting, uint32 count, uint32 time );
 
         // 添加数量叠加道具
-        void AddOverlayCountItem( KFEntity* player, KFData* kfparent, KFElementResult* kfresult, const KFItemSetting* kfsetting, uint32 count );
+        void AddOverlayCountItem( KFEntity* player, KFData* kfparent, KFElementResult* kfresult,
+                                  const KFItemSetting* kfitemsetting, const KFItemTypeSetting* kftypesetting, uint32 count );
 
         // 不能叠加的道具
-        void AddNotOverlayItem( KFEntity* player, KFData* kfparent, KFElementResult* kfresult, const KFItemSetting* kfsetting, uint32 count );
+        void AddNotOverlayItem( KFEntity* player, KFData* kfparent, KFElementResult* kfresult,
+                                const KFItemSetting* kfitemsetting, const KFItemTypeSetting* kftypesetting, uint32 count );
 
         // 添加新物品
-        KFData* AddNewItemData( KFEntity* player, KFData* kfparent, const KFItemSetting* kfsetting, uint32& count, uint32 time );
-
+        KFData* AddNewItemData( KFEntity* player, KFData* kfparent,
+                                const KFItemSetting* kfitemsetting, const KFItemTypeSetting* kftypesetting, uint32& count, uint32 time );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // 调用函数lua函数
-        bool CallItemLuaFunction( KFEntity* player, uint32 functiontype, const KFItemSetting* kfsetting, uint32 itemcount );
+        // 调用道具初始化函数
+        void CallItemInitFunction( KFEntity* player, KFData* kfitem, const KFItemSetting* kfitemsetting );
 
         // 启动检查时间道具
         void StartItemCheckTimer( KFEntity* player, KFData* kfitem );
@@ -156,14 +148,15 @@ namespace KFrame
         void AddItemResult( KFElementResult* kfresult, const std::string& itemname, uint32 itemid, uint32 count );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        bool FindUseRemoveItem( KFEntity* player, KFData* kfparent, const KFItemSetting* kfsetting, uint32 itemcount, std::list<KFData*>& itemlist );
+        // 如果不满足itemcount, 返回空列表
+        const std::list<KFData*>& FindRemoveItemList( KFEntity* player, KFData* kfparent, const KFItemSetting* kfsetting, uint32 itemcount );
 
     protected:
         // 玩家组件上下文
         KFComponent* _kf_component = nullptr;
 
         // 初始化
-        KFBind< uint32, uint32, KFItemFunction > _init_item_function;
+        KFMap<uint32, KFFunctionMap<std::string, KFItemInitFunction>> _item_init_function;
     };
 }
 

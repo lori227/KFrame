@@ -58,7 +58,7 @@ namespace KFrame
 
     protected:
         // 列表
-        KFMap< uint64, uint64, KFData > _data;
+        KFMap< uint64, KFData > _data;
     };
 }
 

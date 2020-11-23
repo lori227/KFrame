@@ -34,7 +34,7 @@ namespace KFrame
 
     private:
         // 版本信息
-        KFHashMap< std::string, const std::string&, VersionData > _versions;
+        KFHashMap< std::string, VersionData > _versions;
 
         // 线程锁
         KFMutex _kf_mutex;

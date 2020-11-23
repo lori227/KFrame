@@ -44,7 +44,7 @@ namespace KFrame
 
         // 数据库列表
         typedef std::pair< uint32, uint32 > MySQLKey;
-        KFMap< MySQLKey, const MySQLKey&, KFMySQLLogic > _mysql_logic_map;
+        KFMap< MySQLKey, KFMySQLLogic > _mysql_logic_map;
     };
 }
 

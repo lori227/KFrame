@@ -63,7 +63,7 @@ namespace KFrame
         const KFLoggerSetting* FindSetting( const std::string& name );
     public:
         // 配置列表
-        KFHashMap< std::string, const std::string&, KFLoggerSetting > _settings;
+        KFHashMap< std::string, KFLoggerSetting > _settings;
 
         // 默认的日志
         std::string _default_log_name;

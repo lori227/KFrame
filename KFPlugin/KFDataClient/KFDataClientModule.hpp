@@ -97,10 +97,10 @@ namespace KFrame
         KFQueryPlayerFunction _query_player_function = nullptr;
 
         // 数据保存
-        KFHashMap< uint64, uint64, KFDataKeeper > _data_keeper;
+        KFHashMap< uint64, KFDataKeeper > _data_keeper;
 
         // 数据加载
-        KFHashMap< uint64, uint64, KFLoadKeeper > _load_keeper;
+        KFHashMap< uint64, KFLoadKeeper > _load_keeper;
     };
 
 

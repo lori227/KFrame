@@ -82,7 +82,7 @@ namespace KFrame
 
     private:
         // 游戏服务列表
-        KFHashMap< uint64, uint64, KFConHash > _gate_conhash;
+        KFHashMap< uint64, KFConHash > _gate_conhash;
 
         // 广播的序号
         uint32 _broadcast_serial = 0u;

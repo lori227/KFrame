@@ -198,7 +198,7 @@ namespace KFrame
         uint32 _max_count = 0u;
 
         // 页签列表
-        KFHashMap<std::string, const std::string&, KFItemTabIndex> _tab_index_list;
+        KFHashMap<std::string, KFItemTabIndex> _tab_index_list;
     };
 
 }

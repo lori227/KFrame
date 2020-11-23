@@ -237,7 +237,7 @@ public:
     CKFDeployDlg* _dlg_deploy = nullptr;
 
     // 中控服务器列表
-    KFHashMap< std::string, const std::string&, DeployData > _deploy_data;
+    KFHashMap< std::string, DeployData > _deploy_data;
 
     // 正在连接的id
     uint32 _channel = 0u;

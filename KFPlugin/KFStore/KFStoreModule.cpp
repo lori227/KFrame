@@ -6,24 +6,14 @@ namespace KFrame
     void KFStoreModule::BeforeRun()
     {
         _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
-        __REGISTER_PLAYER_ENTER__( &KFStoreModule::OnEnterStoreModule );
-        __REGISTER_PLAYER_LEAVE__( &KFStoreModule::OnLeaveStoreModule );
-
-        __REGISTER_RESET__( __STRING__( store ), &KFStoreModule::OnResetRefreshStoreCount );
         //////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_STORE_BUY_GOODS_REQ, &KFStoreModule::HandleStoreBuyGoodsReq );
-        __REGISTER_MESSAGE__( KFMsg::MSG_STORE_REFRESH_REQ, &KFStoreModule::HandleStoreRefreshReq );
     }
 
     void KFStoreModule::BeforeShut()
     {
-        __UN_RESET__( __STRING__( store ) );
-        __UN_TIMER_0__();
-        __UN_PLAYER_ENTER__();
-        __UN_PLAYER_LEAVE__();
         //////////////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::MSG_STORE_BUY_GOODS_REQ );
-        __UN_MESSAGE__( KFMsg::MSG_STORE_REFRESH_REQ );
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////

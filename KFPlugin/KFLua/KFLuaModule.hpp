@@ -142,7 +142,7 @@ namespace KFrame
 
     private:
         // lua 脚本
-        KFHashMap< std::string, const std::string&, KFLuaScript > _lua_script;
+        KFHashMap< std::string, KFLuaScript > _lua_script;
 
         // 运行时的一些变量
         UInt32Map _run_variable;

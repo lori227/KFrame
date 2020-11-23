@@ -50,20 +50,14 @@ enum FrameClientProtocol
 	MSG_SEVEN_SIGN_REWARD_REQ			= 307;	// 领取7天签到奖励
 
 	// item
-	MSG_SPLIT_ITEM_REQ					= 401;	// 拆分道具( 把一堆堆叠物品拆分成2个 )
-	MSG_MERGE_ITEM_REQ					= 402;	// 合并道具( 把2个堆叠物品合并成一个 )
-	MSG_USE_ITEM_REQ					= 403;	// 使用道具
-	MSG_MOVE_ITEM_REQ					= 404;	// 移动物品(从背包到仓库 或者从仓库到背包)
-	MSG_EXCHANGE_ITEM_REQ				= 405;	// 交换物品(从背包到仓库 或者从仓库到背包)
-	MSG_CLEAN_ITEM_REQ					= 406;	// 移动某个包裹
-	MSG_SORT_ITEM_REQ					= 407;	// 整理背包
-	MSG_REMOVE_ITEM_REQ					= 408;	// 删除道具
-	MSG_MOVE_ALL_ITEM_REQ				= 409;	// 移动所有道具
-	MSG_REMOVE_ITEM_COUNT_REQ			= 410;	// 删除道具数量
-	MSG_SELL_ITEM_REQ					= 411;	// 出售道具请求
-	MSG_SELL_ITEM_ACK					= 412;	// 出售道具返回
-
-	MSG_USE_ITEM_TO_HERO_REQ			= 451;	// 对英雄使用道具
+	MSG_MOVE_ITEM_REQ					= 401;	// 移动物品(从背包到仓库 或者从仓库到背包)
+	MSG_MOVE_ALL_ITEM_REQ				= 402;	// 移动所有道具
+	MSG_SORT_ITEM_REQ					= 403;	// 整理背包
+	MSG_REMOVE_ITEM_REQ					= 404;	// 删除道具
+	MSG_REMOVE_ITEM_COUNT_REQ			= 405;	// 删除道具数量
+	MSG_SELL_ITEM_REQ					= 406;	// 出售道具请求
+	MSG_SELL_ITEM_ACK					= 407;	// 出售道具返回
+	MSG_USE_ITEM_REQ					= 408;	// 使用道具
 
 	// mail
 	MSG_VIEW_MAIL_REQ 					= 501;	// 查看邮件
@@ -359,27 +353,6 @@ message MsgSevenSignRewardReq
 }
 
 ////////////////////////////////////////////////////////////////////
-// 拆分道具( 把一堆堆叠物品拆分成2个 )
-// MSG_SPLIT_ITEM_REQ
-message MsgSplitItemReq
-{
-	bytes sourcename = 1;	// 源背包名字
-	uint64 sourceuuid = 2;	// 道具uuid
-	uint32 sourcecount = 3;	// 移动数量
-	bytes targetname = 4;	// 目标背包名字
-	uint32 targetindex = 5;	// 目标背包位置( 0 表示服务器自己找空位置 )
-}
-
-// 合并道具( 把2个堆叠物品合并成一个 )
-// MSG_MERGE_ITEM_REQ
-message MsgMergeItemReq
-{
-	bytes sourcename = 1;	// 源背包名字
-	uint64 sourceuuid = 2;	// 道具uuid
-	bytes targetname = 3;	// 目标背包名字
-	uint64 targetuuid = 4;	// 合并的目标道具
-}
-
 // 移动物品(从背包到仓库 或者从仓库到背包)
 // MSG_MOVE_ITEM_REQ
 message MsgMoveItemReq
@@ -388,7 +361,7 @@ message MsgMoveItemReq
 	uint64 sourceuuid = 2;	// 道具uuid
 	bytes targetname = 3;	// 目标背包名字
 	uint32 targetindex = 4;	// 目标背包位置( 0 表示服务器自己找空位置 )
-	bytes tabname = 5;		// 页签名字	
+	bytes tabname = 5;		// 页签名字( 没有不填 )
 }
 
 // 移动所有道具到包裹
@@ -399,29 +372,12 @@ message MsgMoveAllItemReq
 	bytes targetname = 2;	// 目标背包名字
 }
 
-// 交换物品(从背包到仓库 或者从仓库到背包)
-// MSG_EXCHANGE_ITEM_REQ
-message MsgExchangeItemReq
-{
-	bytes sourcename = 1;	// 源背包名字
-	uint64 sourceuuid = 2;	// 道具uuid
-	bytes targetname = 3;	// 目标背包名字
-	uint64 targetuuid = 4;	// 目标uuid
-}
-
-// 清空某个包裹
-// MSG_CLEAN_ITEM_REQ
-message MsgCleanItemReq
-{
-	bytes sourcename = 1;	// 源背包名字
-}
-
 // 整理背包
 // MSG_SORT_ITEM_REQ
 message MsgSortItemReq
 {
 	bytes bagname = 1;	// 背包名字
-	bytes tabname = 2;	// 页签名字
+	bytes tabname = 2;	// 页签名字( 没有不填 )
 }
 
 // 删除道具
@@ -448,15 +404,6 @@ message MsgUseItemReq
 	uint64 uuid = 2;
 }
 
-// 对英雄使用道具
-// MSG_USE_ITEM_TO_HERO_REQ
-message MsgUseItemToHeroReq
-{
-	bytes name = 1;		// 背包名字
-	uint64 itemuuid = 2; 	// 道具uuid
-	uint64 herouuid = 3;	// 英雄uuid
-}
-
 // 出售道具请求
 // MSG_SELL_ITEM_REQ
 message MsgSellItemReq
@@ -473,7 +420,6 @@ message MsgSellItemAck
 	uint32 itemid = 1;	// 道具id
 	uint32 count = 2;	// 道具数量
 }
-
 
 ////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////

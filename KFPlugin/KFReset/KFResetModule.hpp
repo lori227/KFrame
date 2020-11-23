@@ -73,7 +73,7 @@ namespace KFrame
         void ResetPlayerLogic( KFEntity* player, uint32 timeid, uint64 lastresettime, const std::string& functionname );
     private:
         // 注册的重置逻辑
-        KFHashMap< std::string, const std::string&, KFResetLogicData > _reset_logic_list;
+        KFHashMap< std::string, KFResetLogicData > _reset_logic_list;
     };
 }
 

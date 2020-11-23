@@ -66,17 +66,17 @@ namespace KFrame
         // 当前选择的仓库类型
         std::string _repository_type;
         // 仓库数据列表
-        KFHashMap< std::string, const std::string&, RepositoryData > _repository_list;
+        KFHashMap< std::string, RepositoryData > _repository_list;
 
         // 服务器列表
         std::string _server_id;
-        KFHashMap< std::string, const std::string, ServerData > _server_list;
+        KFHashMap< std::string, ServerData > _server_list;
 
         // 类型列表
-        KFHashMap< std::string, const std::string&, TypeInfo > _type_list;
+        KFHashMap< std::string, TypeInfo > _type_list;
 
         // 文件列表
-        KFMap< std::string, const std::string&, FileData > _file_list;
+        KFMap< std::string, FileData > _file_list;
 
     public:
         // 逻辑线程run
