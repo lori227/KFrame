@@ -12,17 +12,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFGoodsConfig.cpp" />
     <ClCompile Include="KFGoodsModule.cpp" />
-    <ClCompile Include="KFStoreConfig.cpp" />
     <ClCompile Include="KFStoreModule.cpp" />
     <ClCompile Include="KFStorePlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KFGoodsConfig.hpp" />
     <ClInclude Include="KFGoodsInterface.h" />
     <ClInclude Include="KFGoodsModule.hpp" />
-    <ClInclude Include="KFStoreConfig.hpp" />
     <ClInclude Include="KFStoreInterface.h" />
     <ClInclude Include="KFStoreModule.hpp" />
     <ClInclude Include="KFStorePlugin.hpp" />

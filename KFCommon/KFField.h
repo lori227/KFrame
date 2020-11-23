@@ -334,6 +334,10 @@ namespace KFrame
         __STRING_DEFINE__( captainid );
         __STRING_DEFINE__( captainname );
         __STRING_DEFINE__( nowcount );
+        __STRING_DEFINE__( signtime );
+        __STRING_DEFINE__( continuoussign );
+
+
 
     }
 }

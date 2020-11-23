@@ -5,39 +5,39 @@
 
 namespace KFrame
 {
-    /////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////
-    class KFWeightSetting : public KFIntSetting
-    {
-    public:
-        // 权重列表
-        KFWeightList<KFWeight> _weight;
-    };
+	/////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////
+	class KFWeightSetting : public KFIntSetting
+	{
+	public:
+		// 权重列表
+		KFWeightList<KFWeight> _weight;
+	};
 
-    /////////////////////////////////////////////////////////////////////////////////
-    class KFWeightConfig : public KFConfigT< KFWeightSetting >, public KFInstance< KFWeightConfig >
-    {
-    public:
-        KFWeightConfig()
-        {
-            _key_name = "id";
-            _file_name = "weight";
-        }
+	/////////////////////////////////////////////////////////////////////////////////
+	class KFWeightConfig : public KFConfigT< KFWeightSetting >, public KFInstance< KFWeightConfig >
+	{
+	public:
+		KFWeightConfig()
+		{
+			_key_name = "id";
+			_file_name = "weight";
+		}
 
-        ~KFWeightConfig() = default;
+		~KFWeightConfig() = default;
 
-    protected:
-        virtual void ReadSetting( KFXmlNode& xmlnode, KFWeightSetting* kfsetting )
-        {
+	protected:
+		virtual void ReadSetting( KFXmlNode& xmlnode, KFWeightSetting* kfsetting )
+		{
+		
+			KFWeight weight;
+			weight._value = xmlnode.ReadUInt32( "value" );
+			weight._weight = xmlnode.ReadUInt32( "weight" );
+			kfsetting->_weight.Create( weight._value, weight._weight );
+		}
 
-            KFWeight weight;
-            weight._value = xmlnode.ReadUInt32( "value" );
-            weight._weight = xmlnode.ReadUInt32( "weight" );
-            kfsetting->_weight.Create( weight._value, weight._weight );
-        }
+	};
 
-    };
-
-    /////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////
 }
 #endif

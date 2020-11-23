@@ -35,6 +35,5 @@ namespace KFrame
     {
         __KF_ADD_CONFIG__( KFStoreConfig );
         __KF_ADD_CONFIG__( KFGoodsConfig );
-        __KF_ADD_CONFIG__( KFCountCostConfig );
     }
 }

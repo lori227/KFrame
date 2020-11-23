@@ -14,7 +14,6 @@ namespace KFrame
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_RESET_FUNCTION__( KFGoodsModule::OnResetRefreshGoods )
     {
         auto kfgoodsrecord = player->Find( __STRING__( goods ) );
@@ -28,7 +27,7 @@ namespace KFrame
         {
             // 永久限购
             auto kfsetting = KFGoodsConfig::Instance()->FindSetting( kfgoods->GetKeyID() );
-            if ( kfsetting == nullptr || kfsetting->_limit_buy_time_id != timeid || !kfsetting->IsLimitBuy() )
+            if ( kfsetting == nullptr || kfsetting->_limit_time_id != timeid )
             {
                 continue;
             }
@@ -47,13 +46,19 @@ namespace KFrame
         }
         _kf_display->DelayToClient( player, KFMsg::StoreGoodsRefreshOk );
     }
-
-    uint32 KFGoodsModule::BuyGoods( KFEntity* player, uint32 goodsid, uint32 buycount )
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    uint32 KFGoodsModule::BuyGoods( KFEntity* player, uint32 storeid, uint32 goodsid, uint32 buycount )
     {
         auto kfsetting = KFGoodsConfig::Instance()->FindSetting( goodsid );
         if ( kfsetting == nullptr )
         {
             return KFMsg::StoreGoodsSettingError;
+        }
+
+        if ( kfsetting->_store_id != storeid )
+        {
+            return KFMsg::StoreNotHaveGoods;
         }
 
         // 判断购买数量
@@ -63,20 +68,20 @@ namespace KFrame
         }
 
         // 不在购买时间内
-        if ( !kfsetting->CheckInBuyTime( KFGlobal::Instance()->_real_time ) )
+        if ( !KFDate::CheckInTime( kfsetting->_buy_start_time, kfsetting->_buy_finish_time, KFGlobal::Instance()->_real_time ) )
         {
             return KFMsg::StoreGoodsBuyTimeError;
         }
 
         // 判断包裹是否满了
-        auto& checkname = player->CheckAddElement( &kfsetting->_goods_data, buycount, __FUNC_LINE__ );
+        auto& checkname = player->CheckAddElement( &kfsetting->_buy_data, buycount, __FUNC_LINE__ );
         if ( !checkname.empty() )
         {
             return KFMsg::ItemBagIsFull;
         }
 
         // 判断价钱
-        auto costprice = kfsetting->CalcBuyPrice( KFGlobal::Instance()->_real_time );
+        auto costprice = CalcBuyPrice( kfsetting, KFGlobal::Instance()->_real_time );
         auto& dataname = player->RemoveElement( costprice, buycount, __STRING__( goods ), goodsid, __FUNC_LINE__ );
         if ( !dataname.empty() )
         {
@@ -84,10 +89,10 @@ namespace KFrame
         }
 
         // 判断如果是限购商品
-        if ( kfsetting->IsLimitBuy() )
+        if ( kfsetting->_limit_time_id != 0u )
         {
             auto hasbuycount = player->Get<uint32>( __STRING__( goods ), goodsid, __STRING__( count ) );
-            if ( hasbuycount + buycount > kfsetting->_limit_buy_count )
+            if ( hasbuycount + buycount > kfsetting->_limit_count )
             {
                 return KFMsg::StoreOutOfLimits;
             }
@@ -96,18 +101,17 @@ namespace KFrame
         }
 
         // 添加商品
-        player->AddElement( &kfsetting->_goods_data, buycount, __STRING__( goods ), goodsid, __FUNC_LINE__ );
+        player->AddElement( &kfsetting->_buy_data, buycount, __STRING__( goods ), goodsid, __FUNC_LINE__ );
         return KFMsg::StoreBuyOK;
     }
 
-    std::tuple<uint32, uint32> KFGoodsModule::RandGoods( KFEntity* player, uint32 groupid, UInt32Set& excludelist )
+    const KFElements* KFGoodsModule::CalcBuyPrice( const KFGoodsSetting* kfsetting, uint64 nowtime )
     {
-        auto kfgoodsweightdata = KFGoodsConfig::Instance()->RandGroupGoods( groupid, excludelist );
-        if ( kfgoodsweightdata == nullptr )
+        if ( KFDate::CheckInTime( kfsetting->_discount_start_time, kfsetting->_discount_finish_time, nowtime ) )
         {
-            return std::make_tuple( 0u, 0u );
+            return &kfsetting->_discount;
         }
 
-        return std::make_tuple( kfgoodsweightdata->_value, kfgoodsweightdata->_refresh_count );
+        return &kfsetting->_price;
     }
 }

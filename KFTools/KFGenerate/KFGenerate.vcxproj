@@ -185,7 +185,7 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>..\..\_lib\win64\debug;..\..\_lib\win64\debug\3rd;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\_lib\win64\release;..\..\_lib\win64\release\3rd;</AdditionalLibraryDirectories>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>

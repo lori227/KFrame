@@ -13,7 +13,7 @@
 #include "KFKernel/KFKernelInterface.h"
 #include "KFReset/KFResetInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
-#include "KFGoodsConfig.hpp"
+#include "KFConfig/KFGoodsConfig.hpp"
 
 namespace KFrame
 {
@@ -30,14 +30,16 @@ namespace KFrame
         virtual void BeforeShut();
 
         // 购买商品
-        virtual uint32 BuyGoods( KFEntity* player, uint32 goodsid, uint32 buycount );
-
-        // 随机一个商品
-        virtual std::tuple<uint32, uint32> RandGoods( KFEntity* player, uint32 groupid, UInt32Set& excludelist );
+        virtual uint32 BuyGoods( KFEntity* player, uint32 storeid, uint32 goodsid, uint32 buycount );
 
     protected:
         // 刷新限购商品
         __KF_RESET_FUNCTION__( OnResetRefreshGoods );
+
+    protected:
+        // 获得购买价格
+        const KFElements* KFGoodsModule::CalcBuyPrice( const KFGoodsSetting* kfsetting, uint64 nowtime );
+
     };
 
 }

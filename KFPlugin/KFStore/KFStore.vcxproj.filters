@@ -6,12 +6,6 @@
     <ClCompile Include="KFStoreModule.cpp">
       <Filter>Store</Filter>
     </ClCompile>
-    <ClCompile Include="KFStoreConfig.cpp">
-      <Filter>Store</Filter>
-    </ClCompile>
-    <ClCompile Include="KFGoodsConfig.cpp">
-      <Filter>Goods</Filter>
-    </ClCompile>
     <ClCompile Include="KFGoodsModule.cpp">
       <Filter>Goods</Filter>
     </ClCompile>
@@ -23,12 +17,6 @@
     </ClInclude>
     <ClInclude Include="KFStoreInterface.h">
       <Filter>Store</Filter>
-    </ClInclude>
-    <ClInclude Include="KFStoreConfig.hpp">
-      <Filter>Store</Filter>
-    </ClInclude>
-    <ClInclude Include="KFGoodsConfig.hpp">
-      <Filter>Goods</Filter>
     </ClInclude>
     <ClInclude Include="KFGoodsInterface.h">
       <Filter>Goods</Filter>

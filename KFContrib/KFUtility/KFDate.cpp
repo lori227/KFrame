@@ -155,6 +155,11 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFDate::CheckInTime( uint64 starttime, uint64 endtime, uint64 nowtime )
     {
+        if ( starttime == 0u || endtime == 0u )
+        {
+            return false;
+        }
+
         return nowtime >= starttime && nowtime <= endtime;
     }
 

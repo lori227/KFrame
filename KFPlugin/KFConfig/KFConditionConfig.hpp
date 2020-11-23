@@ -23,12 +23,6 @@ namespace KFrame
 		// 清除计数条件定义
 		KFConditionDefineOption _clean;
 
-		// 完成后是否持续计数
-		uint32 _place_limit = 0u;
-
-		// 动态计数的限制条件
-		uint32 _calculate = 0u;
-
 		// 动态限制条件
 		DynamicConditionGroupPtr _dynamic_condition_limit;
 
@@ -77,8 +71,6 @@ namespace KFrame
 			kfsetting->_done_type = xmlnode.ReadUInt32( "donetype", true );
 			kfsetting->_done_value = xmlnode.ReadUInt32( "donevalue", true );
 			kfsetting->_clean._str_condition = xmlnode.ReadString( "clean", true );
-			kfsetting->_place_limit = xmlnode.ReadUInt32( "placelimit", true );
-			kfsetting->_calculate = xmlnode.ReadUInt32( "calculate", true );
 			kfsetting->_dynamic_condition_limit = xmlnode.ReadDynamicConditionGroup( "dynamicconditionlimit", true );
 			kfsetting->_static_condition_limit = xmlnode.ReadStaticConditionList( "staticconditionlimit", true );
 		}

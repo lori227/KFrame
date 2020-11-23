@@ -17,9 +17,8 @@
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFReset/KFResetInterface.h"
 #include "KFTimer/KFTimerInterface.h"
-#include "KFStoreConfig.hpp"
-#include "KFGoodsConfig.hpp"
-#include "KFConfig/KFCountCostConfig.h"
+#include "KFConfig/KFStoreConfig.hpp"
+#include "KFConfig/KFGoodsConfig.hpp"
 
 namespace KFrame
 {

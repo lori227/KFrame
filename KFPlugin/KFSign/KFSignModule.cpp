@@ -14,11 +14,15 @@ namespace KFrame
 
     void KFSignModule::BeforeRun()
     {
+        __REGISTER_RESET__( __STRING__( sign ), &KFSignModule::OnResetSigninData );
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::MSG_SEVEN_SIGN_REWARD_REQ, &KFSignModule::HandleReceiveSevenRewardReq );
     }
 
     void KFSignModule::ShutDown()
     {
+        __UN_RESET__( __STRING__( sign ) );
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::MSG_SEVEN_SIGN_REWARD_REQ );
     }
 
@@ -58,5 +62,50 @@ namespace KFrame
         }
 
         _kf_display->SendToClient( player, KFMsg::SignInRewardOk );
+    }
+
+    __KF_RESET_FUNCTION__( KFSignModule::OnResetSigninData )
+    {
+        // 计算签到
+        CalcSignDay( player );
+
+        // 计算连续签到
+        CalcContinuousSign( player, lastresettime, nowresettime );
+    }
+
+    void KFSignModule::CalcSignDay( KFEntity* player )
+    {
+        // 签到逻辑, 只有到前一天奖励领取了, 才算成功签到
+        auto day = player->Get< uint32 >( __STRING__( sevenday ) );
+        if ( day > 0u )
+        {
+            auto sevenflag = player->Get< uint32 >( __STRING__( sevenreward ) );
+            auto flag = 1u << day;
+            if ( !KFUtility::HaveBitMask< uint32 >( sevenflag, flag ) )
+            {
+                return;
+            }
+        }
+
+        player->UpdateData( __STRING__( sevenday ), KFEnum::Add, 1u );
+    }
+
+    void KFSignModule::CalcContinuousSign( KFEntity* player, uint64 lastresettime, uint64 nowresettime )
+    {
+        auto kfsignintime = player->Find( __STRING__( signtime ) );
+
+        // 判断连续签到
+        auto lastsignintime = kfsignintime->Get();
+        if ( lastsignintime == lastresettime )
+        {
+            player->UpdateData( __STRING__( continuoussign ), KFEnum::Add, 1u );
+        }
+        else
+        {
+            player->UpdateData( __STRING__( continuoussign ), KFEnum::Set, 1u );
+        }
+
+        // 更新本次签到
+        player->UpdateData( kfsignintime, KFEnum::Set, nowresettime );
     }
 }

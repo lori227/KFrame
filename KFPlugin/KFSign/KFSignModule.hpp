@@ -11,6 +11,7 @@
 
 #include "KFSignInterface.h"
 #include "KFGame/KFGameInterface.h"
+#include "KFReset/KFResetInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFMessage/KFMessageInterface.h"
@@ -31,6 +32,16 @@ namespace KFrame
     protected:
         // 领取7天签到奖励
         __KF_MESSAGE_FUNCTION__( HandleReceiveSevenRewardReq );
+
+    protected:
+        // 签到逻辑
+        __KF_RESET_FUNCTION__( OnResetSigninData );
+
+        // 计算签到天数
+        void CalcSignDay( KFEntity* player );
+
+        // 计算连续签到
+        void CalcContinuousSign( KFEntity* player, uint64 lastresettime, uint64 nowresettime );
     };
 }
 
