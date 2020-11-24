@@ -13,8 +13,11 @@ namespace KFrame
 		// 最大数量
 		uint32 _max_count = 0u;
 
+		// 主索引的名字
+		std::string _index_name;
+
 		// 页签列表
-		StringList _tab_list;
+		StringSet _tab_list;
 
 		// 满包是否弹出额外背包
 		std::string _extend_bag;
@@ -61,7 +64,8 @@ namespace KFrame
 		virtual void ReadSetting( KFXmlNode& xmlnode, KFItemBagSetting* kfsetting )
 		{
 			kfsetting->_max_count = xmlnode.ReadUInt32( "maxcount", true );
-			kfsetting->_tab_list = xmlnode.ReadStringList( "tablist", true );
+			kfsetting->_index_name = xmlnode.ReadString( "indexname", true );
+			kfsetting->_tab_list = xmlnode.ReadStringSet( "tablist", true );
 			kfsetting->_extend_bag = xmlnode.ReadString( "extendbag", true );
 			kfsetting->_use_child_bag = xmlnode.ReadStringList( "usechildbag", true );
 			kfsetting->_update_add_from_source = xmlnode.ReadStringSet( "updateaddfromsource", true );

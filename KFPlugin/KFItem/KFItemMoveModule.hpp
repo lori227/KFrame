@@ -15,7 +15,6 @@
 #include "KFKernel/KFKernelInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
-#include "KFExecute/KFExecuteInterface.h"
 #include "KFConfig/KFItemConfig.hpp"
 #include "KFConfig/KFItemTypeConfig.hpp"
 #include "KFConfig/KFItemBagConfig.hpp"
@@ -42,8 +41,6 @@ namespace KFrame
         // 查找索引的道具
         virtual KFData* FindIndexItem( KFEntity* player, KFData* kfitemrecord, uint32 index );
 
-        // 清空包裹
-        virtual void BalanceItem( KFEntity* player, const std::string& name, bool autodestory );
     protected:
         // 移动道具(从背包到仓库 或者从仓库到背包)
         __KF_MESSAGE_FUNCTION__( HandleMoveItemReq );
@@ -68,23 +65,21 @@ namespace KFrame
         // 更新道具索引回调
         __KF_UPDATE_DATA_FUNCTION__( OnUpdateItemTabIndexCallBack );
         ///////////////////////////////////////////////////////////////////////////
-        // 包裹数量
-        __KF_EXECUTE_FUNCTION__( OnExecuteItemMaxCount );
     protected:
         // 初始化道具格子信息
-        void InitItemEmptyIndexData( KFEntity* player, KFData* kfitemrecord, const KFItemBagSetting* kfbagsetting );
+        void InitItemEmptyIndexData( KFEntity* player, KFData* kfitembag, const KFItemBagSetting* kfbagsetting );
 
         // 删除格子信息
         void UnInitItemEmptyIndexData( KFEntity* player, const std::string& name );
 
         // 清空格子信息
-        void AddItemEmptyIndex( KFEntity* player, KFData* kfitemrecord, KFData* kfitem );
+        void AddItemEmptyIndex( KFEntity* player, KFData* kfitembag, KFData* kfitem );
 
         // 最大索引
-        uint32 GetItemMaxIndex( KFEntity* player, KFData* kfitemrecord );
+        uint32 GetItemMaxIndex( KFEntity* player, KFData* kfitembag );
 
         // 添加最大索引
-        void AddItemMaxIndex( KFEntity* player, KFData* kfitemrecord, uint32 count );
+        void AddItemMaxIndex( KFEntity* player, KFData* kfitembag, uint32 count );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 计算可以叠加物品数量
         uint32 CalcItemAddCount( uint32 sourcecount, uint32 targetcount, uint32 maxcount );
@@ -93,7 +88,7 @@ namespace KFrame
         bool CheckItemCanMove( const KFItemSetting* kfsetting, const std::string& sourcename, const std::string& targetname );
 
         // 找到可以移动的背包
-        KFData* FindItemMoveRecord( KFEntity* player, const KFItemSetting* kfsetting, const std::string& sourcename, const std::string& excludename );
+        KFData* FindCanMoveItemBag( KFEntity* player, const KFItemSetting* kfsetting, const std::string& sourcename, const std::string& excludename );
 
         // 判断是否能合并
         bool CheckItemCanMerge( const KFItemSetting* kfsourcesetting, KFData* kfsourceitem, const KFItemSetting* kftargetsetting, KFData* kftargetitem );

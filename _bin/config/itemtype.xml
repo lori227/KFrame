@@ -1,6 +1,6 @@
 <root version="b23436e3e9f4daa80e38a6dcab7724c8">
-	<node row="8" type="1" obtainbag="package" movelist="storage,package" tablist="index,normal" sort="1"/>
-	<node row="9" type="2" obtainbag="package" movelist="storage,package" tablist="index,gift" sort="2"/>
-	<node row="10" type="3" obtainbag="package" movelist="storage,package" tablist="index,drug" sort="3"/>
-	<node row="11" type="4" obtainbag="package" movelist="storage,package" tablist="index,weapon" sort="4"/>
+	<node row="8" type="1" obtainbag="package" movebaglist="storage,package" tablist="index,normal" sort="1"/>
+	<node row="9" type="2" obtainbag="package" movebaglist="storage,package" tablist="index,gift" sort="2"/>
+	<node row="10" type="3" obtainbag="package" movebaglist="storage,package" tablist="index,drug" sort="3"/>
+	<node row="11" type="4" obtainbag="package" movebaglist="storage,package" tablist="index,weapon" sort="4"/>
 </root>

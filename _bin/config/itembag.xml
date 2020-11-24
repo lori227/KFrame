@@ -1,4 +1,4 @@
 <root version="b23436e3e9f4daa80e38a6dcab7724c8">
-	<node row="8" showwhenadd="1" id="package" maxcount="100" tablist="index,normal,gift" canmove="1"/>
-	<node row="9" showwhenadd="1" id="storage" maxcount="100" tablist="index,normal,gift" canmove="1"/>
+	<node row="8" id="package" maxcount="100" indexname="index" tablist="index,normal,gift" showwhenadd="1" canmove="1"/>
+	<node row="9" id="storage" maxcount="100" indexname="index" tablist="index,normal,gift" showwhenadd="1" canmove="1"/>
 </root>

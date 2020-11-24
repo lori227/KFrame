@@ -14,7 +14,7 @@ namespace KFrame
 		std::string _obtain_bag;
 
 		// 可移动的背包/仓库名
-		StringSet _move_list;
+		StringSet _move_bag_list;
 
 		// 可放入子页签名字
 		StringSet _tab_list;
@@ -43,7 +43,7 @@ namespace KFrame
 		virtual void ReadSetting( KFXmlNode& xmlnode, KFItemTypeSetting* kfsetting )
 		{
 			kfsetting->_obtain_bag = xmlnode.ReadString( "obtainbag", true );
-			kfsetting->_move_list = xmlnode.ReadStringSet( "movelist", true );
+			kfsetting->_move_bag_list = xmlnode.ReadStringSet( "movebaglist", true );
 			kfsetting->_tab_list = xmlnode.ReadStringSet( "tablist", true );
 			kfsetting->_use_limit = xmlnode.ReadUInt32( "uselimit", true );
 			kfsetting->_sort = xmlnode.ReadUInt32( "sort", true );
