@@ -34,7 +34,7 @@ namespace KFrame
         void ReloadPlugin( const StringVector& params );
     private:
         // 插件列表
-        KFHashMap< std::string, const std::string&, KFLibrary > _kf_library;
+        KFHashMap< std::string, KFLibrary > _kf_library;
     };
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////
