@@ -24,7 +24,7 @@ namespace KFrame
 
         ////////////////////////////////////////////////////////////////////////////
         // 加载配置
-        virtual bool LoadConfig( const std::string& filepath, uint32 loadmask )
+        virtual bool LoadConfig( const std::string& filepath, uint32 cleartype )
         {
             return false;
         }
@@ -85,11 +85,15 @@ namespace KFrame
         bool LoadConfig( const std::string& filepath, uint32 cleartype )
         {
             KFXml kfxml( filepath );
-            auto config = kfxml.RootNode();
+            auto root = kfxml.FindNode( __STRING__( root ).c_str() );
+            if ( !root.IsValid() )
+            {
+                return false;
+            }
 
             CheckClearSetting( filepath, cleartype );
 
-            auto xmlnode = config.FindNode( __STRING__( node ).c_str() );
+            auto xmlnode = root.FindNode( __STRING__( node ).c_str() );
             while ( xmlnode.IsValid() )
             {
                 auto kfsetting = CreateSetting( xmlnode );
