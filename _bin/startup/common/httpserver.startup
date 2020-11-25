@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Setting>
 	<Plugins>
-		<Plugin Name="KFTimer" Param=""/>
-		<Plugin Name="KFConfig" Param=""/>	
 		<Plugin Name="KFHttpClient" Param=""/>
 		<Plugin Name="KFIpAddress" Param=""/>
 		<Plugin Name="KFHttpServer" Param=""/>
