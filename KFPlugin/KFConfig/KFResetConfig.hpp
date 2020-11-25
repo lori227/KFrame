@@ -54,12 +54,12 @@ namespace KFrame
 		{
 		
 			ResetData resetdata;
-			resetdata._function_name = xmlnode.ReadString( "functionname" );
-			resetdata._parent_name = xmlnode.ReadString( "parentname" );
-			resetdata._key = xmlnode.ReadUInt32( "key" );
-			resetdata._data_name = xmlnode.ReadString( "dataname" );
-			resetdata._operate = xmlnode.ReadUInt32( "operate" );
-			resetdata._value = xmlnode.ReadUInt32( "value" );
+			resetdata._function_name = xmlnode.ReadString( "functionname", true );
+			resetdata._parent_name = xmlnode.ReadString( "parentname", true );
+			resetdata._key = xmlnode.ReadUInt32( "key", true );
+			resetdata._data_name = xmlnode.ReadString( "dataname", true );
+			resetdata._operate = xmlnode.ReadUInt32( "operate", true );
+			resetdata._value = xmlnode.ReadUInt32( "value", true );
 			kfsetting->_reset_data.push_back( resetdata );
 		}
 

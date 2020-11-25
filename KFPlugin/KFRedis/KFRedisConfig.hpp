@@ -66,7 +66,7 @@ namespace KFrame
             _file_name = "redis";
         }
 
-        bool LoadConfig( const std::string& filename, const std::string& filepath, uint32 loadmask );
+        bool LoadConfig( const std::string& filepath, uint32 cleartype );
 
         // 查找redis配置
         KFRedisType* FindRedisType( const std::string& module, uint32 logicid );

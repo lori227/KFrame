@@ -50,7 +50,7 @@ namespace KFrame
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFMySQLConfig::LoadConfig( const std::string& filename, const std::string& filepath, uint32 loadmask )
+    bool KFMySQLConfig::LoadConfig( const std::string& filepath, uint32 cleartype )
     {
         auto _mysql_id = 0u;
         _mysql_type.Clear();

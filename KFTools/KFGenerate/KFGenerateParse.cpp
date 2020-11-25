@@ -806,7 +806,7 @@ namespace KFrame
                             return false;
                         }
 
-                        xmlfile << __FORMAT__( "\t\t\t{}.{}{} = xmlnode.{}( \"{}\" );\n", variablename, attribute->_cpp_name, typeinfo->_cpp_extend, typeinfo->_cpp_function, attribute->_config_name );
+                        xmlfile << __FORMAT__( "\t\t\t{}.{}{} = xmlnode.{}( \"{}\", true );\n", variablename, attribute->_cpp_name, typeinfo->_cpp_extend, typeinfo->_cpp_function, attribute->_config_name );
                     }
 
                     // 加入列表

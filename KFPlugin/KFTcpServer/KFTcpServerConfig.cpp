@@ -18,7 +18,7 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    bool KFTcpServerConfig::LoadConfig( const std::string& filename, const std::string& filepath, uint32 loadmask )
+    bool KFTcpServerConfig::LoadConfig( const std::string& filepath, uint32 cleartype )
     {
         _tcp_setting_list.clear();
         //////////////////////////////////////////////////////////////////

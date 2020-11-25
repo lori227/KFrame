@@ -211,15 +211,16 @@ namespace KFrame
     {
         try
         {
-            auto ok = config->LoadConfig( filepath, cleartype );
+            auto finalfilepath = KFUtility::FormatConfigFile( filepath, KFGlobal::Instance()->_channel, KFGlobal::Instance()->_service );
+            auto ok = config->LoadConfig( finalfilepath, cleartype );
             if ( ok )
             {
                 config->_load_ok = true;
-                __LOG_INFO__( "load [{}] ok", filepath );
+                __LOG_INFO__( "load [{}] ok", finalfilepath );
             }
             else
             {
-                __LOG_ERROR__( "load [{}] failed", filepath );
+                __LOG_ERROR__( "load [{}] failed", finalfilepath );
             }
         }
         catch ( ... )

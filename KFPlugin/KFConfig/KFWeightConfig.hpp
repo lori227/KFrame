@@ -31,8 +31,8 @@ namespace KFrame
 		{
 		
 			KFWeight weight;
-			weight._value = xmlnode.ReadUInt32( "value" );
-			weight._weight = xmlnode.ReadUInt32( "weight" );
+			weight._value = xmlnode.ReadUInt32( "value", true );
+			weight._weight = xmlnode.ReadUInt32( "weight", true );
 			kfsetting->_weight.Create( weight._value, weight._weight );
 		}
 

@@ -33,7 +33,7 @@ namespace KFrame
         }
 
         // 加载配置文件
-        bool LoadConfig( const std::string& filename, const std::string& filepath, uint32 loadmask );
+        bool LoadConfig( const std::string& filepath, uint32 cleartype );
 
         // 查找TcpData
         KFTcpSetting* FindTcpSetting( const std::string& appname, const std::string& apptype );

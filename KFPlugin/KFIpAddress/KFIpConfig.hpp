@@ -15,7 +15,7 @@ namespace KFrame
             _file_name = "ip";
         }
 
-        bool LoadConfig( const std::string& filename, const std::string& filepath, uint32 loadmask );
+        bool LoadConfig( const std::string& filepath, uint32 cleartype );
 
         // 查找vpn ip
         std::tuple<std::string, uint32> FindVPNIpAddress( const std::string& appname, const std::string& apptype, uint32 zoneid );

@@ -3,7 +3,7 @@
 namespace KFrame
 {
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFIpConfig::LoadConfig( const std::string& filename, const std::string& filepath, uint32 loadmask )
+    bool KFIpConfig::LoadConfig( const std::string& filepath, uint32 cleartype )
     {
         //////////////////////////////////////////////////////////////////
         KFXml kfxml( filepath );

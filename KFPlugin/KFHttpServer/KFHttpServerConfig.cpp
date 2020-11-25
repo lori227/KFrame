@@ -3,7 +3,7 @@
 namespace KFrame
 {
     /////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFHttpServerConfig::LoadConfig( const std::string& filename, const std::string& filepath, uint32 loadmask )
+    bool KFHttpServerConfig::LoadConfig( const std::string& filepath, uint32 cleartype )
     {
         _http_setting_list.clear();
         //////////////////////////////////////////////////////////////////

@@ -1,41 +1,41 @@
 <root version="b23436e3e9f4daa80e38a6dcab7724c8">
-	<node row="8" name="{}_{}_redis" path="./setting/"/>
-	<node row="9" name="{}_{}_mongo" path="./setting/"/>
-	<node row="10" name="{}_{}_mysql" path="./setting/"/>
-	<node row="11" name="{}_{}_ip" path="./setting/"/>
-	<node row="12" name="project" path="./setting/"/>
-	<node row="13" name="uuid" path="./setting/"/>
-	<node row="14" name="bus" path="./setting/"/>
-	<node row="15" name="httpserver" path="./setting/"/>
-	<node row="16" name="tcpserver" path="./setting/"/>
-	<node row="17" name="datashard" path="./setting/"/>
-	<node row="18" name="route" path="./setting/"/>
-	<node row="19" name="{}_{}_zone" path="./config/" canreload="1" cleartype="1"/>
-	<node row="20" name="channel" path="./config/" canreload="1" cleartype="1"/>
-	<node row="21" name="framefilter" path="./config/" canreload="1" cleartype="1"/>
-	<node row="22" name="relation" path="./config/" canreload="1" cleartype="1"/>
-	<node row="23" name="rank" path="./config/" canreload="1" cleartype="1"/>
-	<node row="24" name="compound" path="./config/" canreload="1" cleartype="1"/>
-	<node row="25" name="pay" path="./config/" canreload="1" cleartype="1"/>
-	<node row="26" name="player" path="./config/" canreload="1" cleartype="1"/>
-	<node row="27" name="timeloop" path="./config/" canreload="1" cleartype="1"/>
-	<node row="28" name="timesection" path="./config/" canreload="1" cleartype="1"/>
-	<node row="29" name="enter" path="./config/" canreload="1" cleartype="1"/>
-	<node row="30" name="leave" path="./config/" canreload="1" cleartype="1"/>
-	<node row="31" name="reset" path="./config/" canreload="1" cleartype="1"/>
-	<node row="32" name="sign" path="./config/" canreload="1" cleartype="1"/>
-	<node row="33" name="goods" path="./config/" canreload="1" cleartype="1"/>
-	<node row="34" name="store" path="./config/" canreload="1" cleartype="1"/>
-	<node row="35" name="task" path="./config/" canreload="1" cleartype="1"/>
-	<node row="36" name="taskchain" path="./config/" canreload="1" cleartype="1"/>
-	<node row="37" name="achieve" path="./config/" canreload="1" cleartype="1"/>
-	<node row="38" name="constant" path="./config/" canreload="1"/>
-	<node row="39" name="dropgroup" path="./config/" canreload="1" cleartype="1"/>
-	<node row="40" name="dropdata" path="./config/" canreload="1" cleartype="1"/>
-	<node row="41" name="conditiondefine" path="./config/" canreload="1" cleartype="1"/>
-	<node row="42" name="condition" path="./config/" canreload="1" cleartype="1"/>
-	<node row="43" name="template" path="./config/" canreload="1" cleartype="1"/>
-	<node row="44" name="countcost" path="./config/" canreload="1" cleartype="1"/>
-	<node row="45" name="frameclass" path="./config/" canreload="1"/>
-	<node row="46" name="execute" path="./config/" canreload="1" cleartype="1"/>
+	<node row="8" id="redis" name="{}_{}_redis" path="./setting/"/>
+	<node row="9" id="mongo" name="{}_{}_mongo" path="./setting/"/>
+	<node row="10" id="mysql" name="{}_{}_mysql" path="./setting/"/>
+	<node row="11" id="ip" name="{}_{}_ip" path="./setting/"/>
+	<node row="12" id="project" name="project" path="./setting/"/>
+	<node row="13" id="uuid" name="uuid" path="./setting/"/>
+	<node row="14" id="bus" name="bus" path="./setting/"/>
+	<node row="15" id="http" name="httpserver" path="./setting/"/>
+	<node row="16" id="tcp" name="tcpserver" path="./setting/"/>
+	<node row="17" id="datashard" name="datashard" path="./setting/"/>
+	<node row="18" id="route" name="route" path="./setting/"/>
+	<node row="19" id="zone" name="{}_{}_zone" path="./config/" canreload="1" cleartype="1"/>
+	<node row="20" id="channel" name="channel" path="./config/" canreload="1" cleartype="1"/>
+	<node row="21" id="filter" name="framefilter" path="./config/" canreload="1" cleartype="1"/>
+	<node row="22" id="relation" name="relation" path="./config/" canreload="1" cleartype="1"/>
+	<node row="23" id="rank" name="rank" path="./config/" canreload="1" cleartype="1"/>
+	<node row="24" id="compound" name="compound" path="./config/" canreload="1" cleartype="1"/>
+	<node row="25" id="pay" name="pay" path="./config/" canreload="1" cleartype="1"/>
+	<node row="26" id="player" name="player" path="./config/" canreload="1" cleartype="1"/>
+	<node row="27" id="timeloop" name="timeloop" path="./config/" canreload="1" cleartype="1"/>
+	<node row="28" id="timesection" name="timesection" path="./config/" canreload="1" cleartype="1"/>
+	<node row="29" id="enter" name="enter" path="./config/" canreload="1" cleartype="1"/>
+	<node row="30" id="leave" name="leave" path="./config/" canreload="1" cleartype="1"/>
+	<node row="31" id="reset" name="reset" path="./config/" canreload="1" cleartype="1"/>
+	<node row="32" id="sign" name="sign" path="./config/" canreload="1" cleartype="1"/>
+	<node row="33" id="goods" name="goods" path="./config/" canreload="1" cleartype="1"/>
+	<node row="34" id="store" name="store" path="./config/" canreload="1" cleartype="1"/>
+	<node row="35" id="task" name="task" path="./config/" canreload="1" cleartype="1"/>
+	<node row="36" id="taskchain" name="taskchain" path="./config/" canreload="1" cleartype="1"/>
+	<node row="37" id="achieve" name="achieve" path="./config/" canreload="1" cleartype="1"/>
+	<node row="38" id="constant" name="constant" path="./config/" canreload="1"/>
+	<node row="39" id="dropgroup" name="dropgroup" path="./config/" canreload="1" cleartype="1"/>
+	<node row="40" id="dropdata" name="dropdata" path="./config/" canreload="1" cleartype="1"/>
+	<node row="41" id="conditiondefine" name="conditiondefine" path="./config/" canreload="1" cleartype="1"/>
+	<node row="42" id="condition" name="condition" path="./config/" canreload="1" cleartype="1"/>
+	<node row="43" id="template" name="template" path="./config/" canreload="1" cleartype="1"/>
+	<node row="44" id="countcost" name="countcost" path="./config/" canreload="1" cleartype="1"/>
+	<node row="45" id="class" name="frameclass" path="./config/" canreload="1"/>
+	<node row="46" id="execute" name="execute" path="./config/" canreload="1" cleartype="1"/>
 </root>

@@ -3,7 +3,7 @@
 namespace KFrame
 {
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFDataShardConfig::LoadConfig( const std::string& filename, const std::string& filepath, uint32 loadmask )
+    bool KFDataShardConfig::LoadConfig( const std::string& filepath, uint32 cleartype )
     {
         _settings.Clear();
         //////////////////////////////////////////////////////////////////

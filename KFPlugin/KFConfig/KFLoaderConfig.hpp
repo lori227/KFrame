@@ -51,11 +51,11 @@ namespace KFrame
 		{
 		
 			KFConfigData configdata;
-			configdata._name = xmlnode.ReadString( "name" );
-			configdata._path = xmlnode.ReadChannelString( "path" );
-			configdata._parent_name = xmlnode.ReadString( "parentname" );
-			configdata._can_reload = xmlnode.ReadBoolen( "canreload" );
-			configdata._clear_type = xmlnode.ReadUInt32( "cleartype" );
+			configdata._name = xmlnode.ReadString( "name", true );
+			configdata._path = xmlnode.ReadString( "path", true );
+			configdata._parent_name = xmlnode.ReadString( "parentname", true );
+			configdata._can_reload = xmlnode.ReadBoolen( "canreload", true );
+			configdata._clear_type = xmlnode.ReadUInt32( "cleartype", true );
 			kfsetting->_config_data.push_back( configdata );
 		}
 

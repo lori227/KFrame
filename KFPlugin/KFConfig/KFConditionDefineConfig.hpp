@@ -76,14 +76,14 @@ namespace KFrame
 			kfsetting->_save_uuid = xmlnode.ReadBoolen( "saveuuid", true );
 		
 			ConditionTrigger conditiontrigger;
-			conditiontrigger._call_type = xmlnode.ReadUInt32( "calltype" );
-			conditiontrigger._trigger_type = xmlnode.ReadUInt32( "triggertype" );
-			conditiontrigger._trigger_check = xmlnode.ReadUInt32( "triggercheck" );
-			conditiontrigger._trigger_use = xmlnode.ReadUInt32( "triggeruse" );
-			conditiontrigger._trigger_value = xmlnode.ReadUInt32( "triggervalue" );
-			conditiontrigger._use_operate = xmlnode.ReadUInt32( "useoperate" );
-			conditiontrigger._use_type = xmlnode.ReadUInt32( "usetype" );
-			conditiontrigger._use_value = xmlnode.ReadUInt32( "usevalue" );
+			conditiontrigger._call_type = xmlnode.ReadUInt32( "calltype", true );
+			conditiontrigger._trigger_type = xmlnode.ReadUInt32( "triggertype", true );
+			conditiontrigger._trigger_check = xmlnode.ReadUInt32( "triggercheck", true );
+			conditiontrigger._trigger_use = xmlnode.ReadUInt32( "triggeruse", true );
+			conditiontrigger._trigger_value = xmlnode.ReadUInt32( "triggervalue", true );
+			conditiontrigger._use_operate = xmlnode.ReadUInt32( "useoperate", true );
+			conditiontrigger._use_type = xmlnode.ReadUInt32( "usetype", true );
+			conditiontrigger._use_value = xmlnode.ReadUInt32( "usevalue", true );
 			kfsetting->_condition_trigger.push_back( conditiontrigger );
 		}
 

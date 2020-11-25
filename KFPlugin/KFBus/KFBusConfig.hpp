@@ -38,7 +38,7 @@ namespace KFrame
             _file_name = "bus";
         }
 
-        bool LoadConfig( const std::string& filename, const std::string& filepath, uint32 loadmask );
+        bool LoadConfig( const std::string& filepath, uint32 cleartype );
 
         // 查找连接
         const KFConnection* FindMasterConnection( const std::string& appname, const std::string& apptype, const std::string& appid );

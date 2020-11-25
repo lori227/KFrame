@@ -93,7 +93,7 @@ namespace KFrame
         return nullptr;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFBusConfig::LoadConfig( const std::string& filename, const std::string& filepath, uint32 loadmask )
+    bool KFBusConfig::LoadConfig( const std::string& filepath, uint32 cleartype )
     {
         _bus_connection.clear();
         //////////////////////////////////////////////////////////////////

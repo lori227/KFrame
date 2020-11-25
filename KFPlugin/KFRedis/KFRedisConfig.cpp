@@ -48,7 +48,7 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////
-    bool KFRedisConfig::LoadConfig( const std::string& filename, const std::string& filepath, uint32 loadmask )
+    bool KFRedisConfig::LoadConfig( const std::string& filepath, uint32 cleartype )
     {
         auto _redis_id = 0u;
         _redis_type.Clear();

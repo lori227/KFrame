@@ -31,12 +31,12 @@ namespace KFrame
 		{
 		
 			KFTimeData timedata;
-			timedata._flag = xmlnode.ReadUInt32( "flag" );
-			timedata._month = xmlnode.ReadUInt32( "month" );
-			timedata._day = xmlnode.ReadUInt32( "day" );
-			timedata._day_of_week = xmlnode.ReadUInt32( "dayofweek" );
-			timedata._hour = xmlnode.ReadUInt32( "hour" );
-			timedata._minute = xmlnode.ReadUInt32( "minute" );
+			timedata._flag = xmlnode.ReadUInt32( "flag", true );
+			timedata._month = xmlnode.ReadUInt32( "month", true );
+			timedata._day = xmlnode.ReadUInt32( "day", true );
+			timedata._day_of_week = xmlnode.ReadUInt32( "dayofweek", true );
+			timedata._hour = xmlnode.ReadUInt32( "hour", true );
+			timedata._minute = xmlnode.ReadUInt32( "minute", true );
 			kfsetting->_time_data = timedata;
 		}
 

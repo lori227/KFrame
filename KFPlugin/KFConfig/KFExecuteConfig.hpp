@@ -60,7 +60,7 @@ namespace KFrame
 		{
 		
 			ExecuteData executedata;
-			executedata._execute = xmlnode.ReadExecuteData( "execute" );
+			executedata._execute = xmlnode.ReadExecuteData( "execute", true );
 			kfsetting->_execute_data.push_back( executedata );
 		}
 

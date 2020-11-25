@@ -54,12 +54,12 @@ namespace KFrame
 		{
 		
 			TaskChainData taskchaindata;
-			taskchaindata._index = xmlnode.ReadUInt32( "index" );
-			taskchaindata._type = xmlnode.ReadUInt32( "type" );
-			taskchaindata._task = xmlnode.ReadUInt32( "task" );
-			taskchaindata._task_status = xmlnode.ReadUInt32( "taskstatus" );
-			taskchaindata._extend_type = xmlnode.ReadUInt32( "extendtype" );
-			taskchaindata._extend_chain = xmlnode.ReadUInt32( "extendchain" );
+			taskchaindata._index = xmlnode.ReadUInt32( "index", true );
+			taskchaindata._type = xmlnode.ReadUInt32( "type", true );
+			taskchaindata._task = xmlnode.ReadUInt32( "task", true );
+			taskchaindata._task_status = xmlnode.ReadUInt32( "taskstatus", true );
+			taskchaindata._extend_type = xmlnode.ReadUInt32( "extendtype", true );
+			taskchaindata._extend_chain = xmlnode.ReadUInt32( "extendchain", true );
 			kfsetting->_task_chain_data.push_back( taskchaindata );
 		}
 

@@ -50,7 +50,7 @@ namespace KFrame
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFMongoConfig::LoadConfig( const std::string& filename, const std::string& filepath, uint32 loadmask )
+    bool KFMongoConfig::LoadConfig( const std::string& filepath, uint32 cleartype )
     {
         auto _mongo_id = 0u;
         _mongo_type.Clear();

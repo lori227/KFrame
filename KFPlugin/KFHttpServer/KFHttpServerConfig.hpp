@@ -41,6 +41,7 @@ namespace KFrame
         // 最大线程
         uint32 _max_thread;
 
+
         // 最大队列
         uint32 _max_queue;
 
@@ -59,7 +60,7 @@ namespace KFrame
         }
 
         // 加载配置文件
-        bool LoadConfig( const std::string& filename, const std::string& filepath, uint32 loadmask );
+        bool LoadConfig( const std::string& filepath, uint32 cleartype );
 
         // 查找配置
         KFHttpSetting* FindHttpSetting( const std::string& appname, const std::string& apptype );
