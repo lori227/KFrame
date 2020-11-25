@@ -66,6 +66,9 @@ namespace KFrame
         // 读取string list
         StringList& ReadStringList( const char* key, bool optional = false );
 
+        // 读取string vector
+        StringVector& ReadStringVector( const char* key, bool optional = false );
+
         // 读取<string,uint64>
         StringUInt64& ReadStringUInt64( const char* key, bool optional = false );
 

@@ -207,6 +207,17 @@ namespace KFrame
         return _result;
     }
 
+    // 读取string vector
+    StringVector& KFXmlNode::ReadStringVector( const char* key, bool optional )
+    {
+        static StringVector _result;
+        _result.clear();
+
+        auto strdata = ReadString( key, optional );
+        KFUtility::SplitList( _result, strdata, __SPLIT_STRING__ );
+        return _result;
+    }
+
     // 读取<string,uint64>
     StringUInt64& KFXmlNode::ReadStringUInt64( const char* key, bool optional )
     {

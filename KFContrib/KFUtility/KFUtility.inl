@@ -159,6 +159,17 @@ namespace KFrame
         }
     }
 
+    template< >
+    inline void KFUtility::SplitList( StringVector& outlist, std::string& srcstring, const std::string& split )
+    {
+        outlist.clear();
+        while ( !srcstring.empty() )
+        {
+            auto value = SplitString( srcstring, split );
+            outlist.push_back( value );
+        }
+    }
+
     template< class T >
     inline void KFUtility::SplitSet( T& outlist, std::string& srcstring, const std::string& split )
     {

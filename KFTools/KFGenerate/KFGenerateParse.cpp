@@ -465,6 +465,18 @@ namespace KFrame
         return ( pos != std::string::npos );
     }
 
+    bool KFGenerateParse::IsCppInlineClass( const std::string& cppclass )
+    {
+        if ( cppclass == "StringSet" ||
+                cppclass == "StringList" ||
+                cppclass == "StringVector" )
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     bool KFGenerateParse::IsNeedWriteCppVariable( const ExcelAttribute* attribute, const std::string& keyname )
     {
         if ( !attribute->_cpp_parent_class.empty() || attribute->_cpp_class.empty() )
@@ -760,7 +772,14 @@ namespace KFrame
                         return false;
                     }
 
-                    xmlfile << __FORMAT__( "\t\t\tkfsetting->{}{} = xmlnode.{}( \"{}\", true );\n", attribute->_cpp_name, typeinfo->_cpp_extend, typeinfo->_cpp_function, attribute->_config_name );
+                    if ( attribute->_cpp_class == "rowofstringvector" )
+                    {
+                        xmlfile << __FORMAT__( "\t\t\tkfsetting->{}{}.push_back( xmlnode.{}( \"{}\", true ) );\n", attribute->_cpp_name, typeinfo->_cpp_extend, typeinfo->_cpp_function, attribute->_config_name );
+                    }
+                    else
+                    {
+                        xmlfile << __FORMAT__( "\t\t\tkfsetting->{}{} = xmlnode.{}( \"{}\", true );\n", attribute->_cpp_name, typeinfo->_cpp_extend, typeinfo->_cpp_function, attribute->_config_name );
+                    }
                 }
 
                 // 子类的列表

@@ -67,6 +67,9 @@ namespace KFrame
         // 判断子类的类型
         bool IsParentCppClass( ExcelFileData* exceldata, const std::string& parentclass, const std::string& cppclass );
 
+        // 是否内置的列表
+        bool IsCppInlineClass( const std::string& cppclass );
+
         // 判断是否需要写cpp文件
         bool IsNeedWriteCppVariable( const ExcelAttribute* attribute, const std::string& keyname );
 

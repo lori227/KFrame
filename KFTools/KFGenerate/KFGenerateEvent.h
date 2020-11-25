@@ -30,7 +30,7 @@ namespace KFrame
         std::list< EventData* > _event_list;
 
         // 事件回调列表
-        KFFunctionMap< uint32, uint32, KFEventFunction > _event_function;
+        KFFunctionMap< uint32, KFEventFunction > _event_function;
     };
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////
