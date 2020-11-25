@@ -117,7 +117,7 @@ namespace KFrame
             return;
         }
 
-        auto chainid = taskchaindata->_extend_chain;
+        auto extendchainid = taskchaindata->_extend_chain;
         if ( taskchaindata->_extend_type == KFTaskChainEnum::ChainTypePool )
         {
             auto kfweightsetting = KFWeightConfig::Instance()->FindSetting( taskchaindata->_extend_chain );
@@ -132,10 +132,10 @@ namespace KFrame
                 return __LOG_ERROR__( "taskchain=[{}] order=[{}] weight pool=[{}] empty", chainid, taskchaindata->_index, taskchaindata->_extend_chain );
             }
 
-            chainid = randdata->_value;
+            extendchainid = randdata->_value;
         }
 
-        OpenTaskChain( player, chainid, 0u, 0u );
+        OpenTaskChain( player, extendchainid, 0u, 0u );
     }
 
     bool KFTaskChainModule::IsTaskChain( KFEntity* player, KFData* kftask )
