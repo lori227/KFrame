@@ -38,4 +38,8 @@
 	<node row="44" id="countcost" name="countcost" path="./config/" canreload="1" cleartype="1"/>
 	<node row="45" id="class" name="frameclass" path="./config/" canreload="1"/>
 	<node row="46" id="execute" name="execute" path="./config/" canreload="1" cleartype="1"/>
+	<node row="47" id="weight" name="weight" path="./config/" canreload="1" cleartype="1"/>
+	<node row="48" id="item" name="itemcommon" path="./config/" canreload="1" cleartype="1"/>
+	<node row="49" id="itemtype" name="itemtype" path="./config/" canreload="1" cleartype="1"/>
+	<node row="50" id="itembag" name="itembag" path="./config/" canreload="1" cleartype="1"/>
 </root>
