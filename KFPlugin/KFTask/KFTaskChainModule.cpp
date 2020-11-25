@@ -45,7 +45,7 @@ namespace KFrame
         }
 
         auto chainindex = kfelementobject->CalcValue( kfparent->_data_setting, __STRING__( index ) );
-        OpenTaskChain( player, kfelementobject->_config_id, chainindex, 0u, 0u );
+        OpenTaskChain( player, kfelementobject->_config_id, chainindex, 0u );
         return true;
     }
 
@@ -88,7 +88,7 @@ namespace KFrame
                 return false;
             }
 
-            taskid = randdata->_id;
+            taskid = randdata->_value;
         }
 
         // 开启任务
@@ -132,7 +132,7 @@ namespace KFrame
                 return __LOG_ERROR__( "taskchain=[{}] order=[{}] weight pool=[{}] empty", chainid, taskchaindata->_index, taskchaindata->_extend_chain );
             }
 
-            chainid = randdata->_id;
+            chainid = randdata->_value;
         }
 
         OpenTaskChain( player, chainid, 0u, 0u );
