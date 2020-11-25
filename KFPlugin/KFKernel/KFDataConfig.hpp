@@ -112,7 +112,7 @@ namespace KFrame
         // 读取配置
         virtual void ReadSetting( KFXmlNode& xmlnode, KFClassSetting* kfsetting )
         {
-            auto dataname = xmlnode.ReadString( "name" );
+            auto dataname = xmlnode.ReadString( "name", true );
             auto kfdatasetting = kfsetting->_static_data.Create( dataname );
             kfdatasetting->_name = dataname;
 
@@ -126,7 +126,7 @@ namespace KFrame
                 kfsetting->_logic_name_list[ kfdatasetting->_logic_name ] = kfdatasetting->_name;
             }
 
-            kfdatasetting->_type = KFDataDefine::ConvertDataType( xmlnode.ReadString( "type" ) );
+            kfdatasetting->_type = KFDataDefine::ConvertDataType( xmlnode.ReadString( "type", true ) );
             kfdatasetting->_logic_type = kfdatasetting->_type;
             switch ( kfdatasetting->_type )
             {
@@ -181,7 +181,7 @@ namespace KFrame
 
             for ( auto& iter : _data_mask_list )
             {
-                if ( xmlnode.ReadString( iter.first.c_str() ) == "1" )
+                if ( xmlnode.ReadString( iter.first.c_str(), true ) == "1" )
                 {
                     KFUtility::AddBitMask< uint32 >( kfdatasetting->_data_mask, iter.second );
                 }

@@ -7,8 +7,8 @@ namespace KFrame
     {
         kfsetting->_is_drop_count = xmlnode.ReadBoolen( "dropcount", true );
         kfsetting->_is_exclude = xmlnode.ReadBoolen( "exclude", true );
-        kfsetting->_condition_type = xmlnode.ReadUInt32( "conditiontype" );
-        kfsetting->_rand_type = xmlnode.ReadUInt32( "randtype" );
+        kfsetting->_condition_type = xmlnode.ReadUInt32( "conditiontype", true );
+        kfsetting->_rand_type = xmlnode.ReadUInt32( "randtype", true );
 
         KFDropGroupWeight* kfdropweight = nullptr;
         auto weight = xmlnode.ReadUInt32( "weight", true );
