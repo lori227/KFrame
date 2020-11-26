@@ -34,14 +34,12 @@ namespace KFrame
         }
 
         // 查找需要连接的master服务器, 自动连接
-        auto kfconnection = KFBusConfig::Instance()->FindMasterConnection( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->ToString() );
-        if ( kfconnection == nullptr )
+        auto kfsetting = FindMasterConnection( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->ToString() );
+        if ( kfsetting != nullptr )
         {
-            return;
+            // 启动定时器
+            __LOOP_TIMER_0__( 6000u, 0u, &KFBusModule::OnTimerConnectionMaster );
         }
-
-        // 启动定时器
-        __LOOP_TIMER_0__( 6000u, 0u, &KFBusModule::OnTimerConnectionMaster );
     }
 
     __KF_TIMER_FUNCTION__( KFBusModule::OnTimerConnectionMaster )
@@ -81,9 +79,38 @@ namespace KFrame
             __LOOP_TIMER_0__( 6000u, 1000u, &KFBusModule::OnTimerConnectionMaster );
         }
     }
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFBusModule::IsConnection( const std::string& connectname, const std::string& connecttype, uint64 connectid )
+    // 通知有客户端注册
+    __KF_MESSAGE_FUNCTION__( KFBusModule::HanldeTellRegisterToServer )
+    {
+        __PROTO_PARSE__( KFMsg::TellRegisterToServer );
+
+        auto listendata = &kfmsg.listen();
+        if ( !CheckNeedConnection( listendata->appname(), listendata->apptype(), listendata->appid() ) )
+        {
+            return;
+        }
+
+        _kf_tcp_client->StartClient( listendata->appname(), listendata->apptype(), listendata->appid(), listendata->ip(), listendata->port() );
+    }
+
+    __KF_MESSAGE_FUNCTION__( KFBusModule::HanldeTellUnRegisterFromServer )
+    {
+        __PROTO_PARSE__( KFMsg::TellUnRegisterFromServer );
+
+        if ( !CheckNeedConnection( kfmsg.appname(), kfmsg.apptype(), kfmsg.appid() ) )
+        {
+            return;
+        }
+
+        _kf_tcp_client->CloseClient( kfmsg.appid(), __FUNC_LINE__ );
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    bool KFBusModule::CheckNeedConnection( const std::string& connectname, const std::string& connecttype, uint64 connectid )
     {
         auto kfglobal = KFGlobal::Instance();
 
@@ -98,33 +125,91 @@ namespace KFrame
         }
 
         auto strconnectid = KFAppId::ToString( connectid );
-        return KFBusConfig::Instance()->IsValidConnection( connectname, connecttype, strconnectid );
-    }
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // 通知有客户端注册
-    __KF_MESSAGE_FUNCTION__( KFBusModule::HanldeTellRegisterToServer )
-    {
-        __PROTO_PARSE__( KFMsg::TellRegisterToServer );
-
-        auto listendata = &kfmsg.listen();
-        if ( !IsConnection( listendata->appname(), listendata->apptype(), listendata->appid() ) )
+        for ( auto& iter : KFBusConfig::Instance()->_settings._objects )
         {
-            return;
+            auto kfsetting = iter.second;
+            if ( kfsetting->_app_name != _globbing_string && kfsetting->_app_name != kfglobal->_app_name )
+            {
+                continue;
+            }
+
+            if ( kfsetting->_app_type != _globbing_string && kfsetting->_app_type != kfglobal->_app_type )
+            {
+                continue;
+            }
+
+            if ( kfsetting->_app_id != _globbing_string && kfsetting->_app_id != kfglobal->_app_id->ToString() )
+            {
+                continue;
+            }
+
+            // 判断连接目标信息
+            if ( kfsetting->_connect_name != _globbing_string && kfsetting->_connect_name != connectname )
+            {
+                continue;
+            }
+
+            if ( kfsetting->_connect_type != _globbing_string && kfsetting->_connect_type != connecttype )
+            {
+                continue;
+            }
+
+            if ( kfsetting->_connect_id != _globbing_string && kfsetting->_connect_id != strconnectid )
+            {
+                continue;
+            }
+
+            // 连接间隔
+            if ( kfsetting->_interval != _invalid_int && kfsetting->_multi != _invalid_int )
+            {
+                KFAppId kfappid( connectid );
+                auto connectworkid = kfappid.GetWorkId();
+                auto workid = ( kfglobal->_app_id->GetWorkId() + kfsetting->_multi - 1 ) / kfsetting->_multi;
+                if ( ( __MAX__( workid, connectworkid ) ) - ( __MIN__( workid, connectworkid ) ) > kfsetting->_interval )
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
-        _kf_tcp_client->StartClient( listendata->appname(), listendata->apptype(), listendata->appid(), listendata->ip(), listendata->port() );
+        return false;
     }
 
-    __KF_MESSAGE_FUNCTION__( KFBusModule::HanldeTellUnRegisterFromServer )
+    const KFBusSetting* KFBusModule::FindMasterConnection( const std::string& appname, const std::string& apptype, const std::string& appid )
     {
-        __PROTO_PARSE__( KFMsg::TellUnRegisterFromServer );
-
-        if ( !IsConnection( kfmsg.appname(), kfmsg.apptype(), kfmsg.appid() ) )
+        for ( auto& iter : KFBusConfig::Instance()->_settings._objects )
         {
-            return;
+            auto kfsetting = iter.second;
+            if ( kfsetting->_app_name != _globbing_string && kfsetting->_app_name != appname )
+            {
+                continue;
+            }
+
+            if ( kfsetting->_app_type != _globbing_string && kfsetting->_app_type != apptype )
+            {
+                continue;
+            }
+
+            if ( kfsetting->_app_id != _globbing_string && kfsetting->_app_id != appid )
+            {
+                continue;
+            }
+
+            if ( kfsetting->_connect_name != _globbing_string && kfsetting->_app_name != appname )
+            {
+                continue;
+            }
+
+            if ( kfsetting->_connect_type != _globbing_string && kfsetting->_connect_type != __STRING__( master ) )
+            {
+                continue;
+            }
+
+            return kfsetting;
         }
 
-        _kf_tcp_client->CloseClient( kfmsg.appid(), __FUNC_LINE__ );
+        return nullptr;
     }
 }

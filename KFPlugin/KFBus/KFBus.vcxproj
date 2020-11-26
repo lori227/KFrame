@@ -12,7 +12,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFBusConfig.cpp" />
     <ClCompile Include="KFBusModule.cpp" />
     <ClCompile Include="KFBusPlugin.cpp" />
   </ItemGroup>

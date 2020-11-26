@@ -5,13 +5,8 @@
 
 namespace KFrame
 {
-    class KFConnection
+    class KFBusSetting : public KFIntSetting
     {
-    public:
-        KFConnection()
-        {
-        }
-
     public:
         std::string _app_name;
         std::string _app_type;
@@ -30,24 +25,27 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
-    class KFBusConfig : public KFConfig, public KFInstance< KFBusConfig >
+    class KFBusConfig : public KFConfigT< KFBusSetting >, public KFInstance< KFBusConfig >
     {
     public:
         KFBusConfig()
         {
+            _key_name = "id";
             _file_name = "bus";
         }
 
-        bool LoadConfig( const std::string& filepath, uint32 cleartype );
-
-        // 查找连接
-        const KFConnection* FindMasterConnection( const std::string& appname, const std::string& apptype, const std::string& appid );
-
-        // 判断是否是连接
-        bool IsValidConnection( const std::string& connectname, const std::string& connecttype, const std::string& connectid );
     public:
-        // 连接信息
-        std::vector< KFConnection > _bus_connection;
+        virtual void ReadSetting( KFXmlNode& xmlnode, KFBusSetting* kfsetting )
+        {
+            kfsetting->_app_name = xmlnode.ReadString( "appname", false );
+            kfsetting->_app_type = xmlnode.ReadString( "apptype", false );
+            kfsetting->_app_id = xmlnode.ReadString( "appid", false );
+            kfsetting->_connect_name = xmlnode.ReadString( "connectname", false );
+            kfsetting->_connect_type = xmlnode.ReadString( "connecttype", false );
+            kfsetting->_connect_id = xmlnode.ReadString( "connectid", false );
+            kfsetting->_interval = xmlnode.ReadUInt32( "interval", false );
+            kfsetting->_multi = xmlnode.ReadUInt32( "multi", false );
+        }
     };
 }
 
