@@ -314,7 +314,7 @@ namespace KFrame
     ExecuteDataPtr KFXmlNode::ReadExecuteData( const char* key, bool optional /* = false */ )
     {
         ExecuteDataPtr executedata( new KFExecuteData() );
-        executedata->_name = ReadString( key );
+        executedata->_name = ReadString( key, optional );
 
         auto index = 1u;
         while ( true )
@@ -347,7 +347,7 @@ namespace KFrame
         StaticConditionListPtr conditionlist( new KFStaticConditionList() );
         conditionlist->_check_type = KFEnum::And;
 
-        auto strcondition = ReadString( key );
+        auto strcondition = ReadString( key, optional );
         auto conditions = KFStaticConditionAnalysis::Parse( strcondition );
         conditionlist->_conditions_list.push_back( conditions );
 
