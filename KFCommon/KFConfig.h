@@ -19,9 +19,12 @@ namespace KFrame
     class KFConfig
     {
     public:
-        KFConfig() = default;
-        virtual ~KFConfig() = default;
+        KFConfig()
+        {
+            _key_name = "id";
+        }
 
+        virtual ~KFConfig() = default;
         ////////////////////////////////////////////////////////////////////////////
         // 加载配置
         virtual bool LoadConfig( const std::string& filepath, uint32 cleartype )

@@ -26,6 +26,7 @@ namespace KFrame
     public:
         KFDropDataConfig()
         {
+            _key_name = "id";
             _file_name = "dropdata";
         }
 

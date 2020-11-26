@@ -57,6 +57,7 @@ namespace KFrame
     public:
         KFDropGroupConfig()
         {
+            _key_name = "id";
             _file_name = "dropgroup";
         }
 
