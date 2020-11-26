@@ -141,29 +141,32 @@ namespace KFrame
     {
         // Cleanup( strcondition );
         StaticConditionsPtr staticconditions( new KFStaticConditions() );
-
-        auto startpos = 0u;
-        auto endpos = 0u;
-        auto size = ( uint32 )strcondition.length();
-        auto data = strcondition.data();
-
-        do
+        if ( !strcondition.empty() )
         {
-            // 解析条件
-            auto ok = false;
-            uint32 linktype = 0u;
-            KFStaticCondition* kfcondition = nullptr;
-            std::tie( kfcondition, linktype, ok ) = ParseCondition( data, size, startpos, endpos );
-            staticconditions->_condition_list.push_back( kfcondition );
-            if ( ok )
+            auto startpos = 0u;
+            auto endpos = 0u;
+            auto size = ( uint32 )strcondition.length();
+            auto data = strcondition.data();
+
+            do
             {
-                startpos = endpos + 2;
-                if ( linktype != 0u )
+                // 解析条件
+                auto ok = false;
+                uint32 linktype = 0u;
+                KFStaticCondition* kfcondition = nullptr;
+                std::tie( kfcondition, linktype, ok ) = ParseCondition( data, size, startpos, endpos );
+
+                staticconditions->_condition_list.push_back( kfcondition );
+                if ( ok )
                 {
-                    staticconditions->_link_type.push_back( linktype );
+                    startpos = endpos + 2;
+                    if ( linktype != 0u )
+                    {
+                        staticconditions->_link_type.push_back( linktype );
+                    }
                 }
-            }
-        } while ( startpos < size );
+            } while ( startpos < size );
+        }
 
         return staticconditions;
     }
