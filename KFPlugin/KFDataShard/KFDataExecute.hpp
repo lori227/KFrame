@@ -1,7 +1,7 @@
 ﻿#ifndef __KF_DATA_EXECUTE_H__
 #define __KF_DATA_EXECUTE_H__
 
-#include "KFDataShardConfig.hpp"
+#include "KFDataSaveConfig.hpp"
 
 namespace KFrame
 {
@@ -38,19 +38,13 @@ namespace KFrame
         virtual ~KFDataExecute() = default;
 
         // 初始化
-        void InitExecute( const KFDatabaseSetting* kfsetting );
-
-        // 获得类型
-        inline uint64 GetType() const
-        {
-            return _kf_setting->_id;
-        }
+        void InitExecute( const KFDataSaveSetting* kfsetting );
 
         // 逻辑执行
         void RunDataKeeper();
 
         // 保存玩家数据
-        void SavePlayerData( uint32 zoneid, uint64 playerid, const std::string& playerdata, uint32 saveflag );
+        void SavePlayerData( uint32 zoneid, uint64 playerid, const KFMsg::PBObject* pbobject, uint32 saveflag );
 
         // 读取玩家数据
         KFResult< std::string >::UniqueType LoadPlayerData( uint32 zoneid, uint64 playeid );
@@ -64,10 +58,11 @@ namespace KFrame
 
         // 读取数据
         virtual KFResult< std::string >::UniqueType LoadData( uint32 zoneid, uint64 playerid ) = 0;
-    protected:
-        // 数据配置
-        const KFDatabaseSetting* _kf_setting = nullptr;
 
+    public:
+        // 数据配置
+        const KFDataSaveSetting* _kf_setting = nullptr;
+    protected:
         // 保存失败的数据
         KFHashMap< uint64, KFDataKeeper > _data_keeper;
     };

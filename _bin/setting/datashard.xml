@@ -1,22 +1,20 @@
-<?xml version='1.0' encoding='utf-8' ?>
-<Config>
-	<!-- 数据库类型 1:redis 2:mongo 3:mysql-->
-	<!-- Open 是否打开使用 1:开放 0:关闭 -->
-	<!-- SaveFlag 保存类型 1 在线更新保存 2 离线保存(数据落地) -->
-	<!-- Sort 读取数据的优先级 -->
-	<!-- CacheTime 缓存保存时间 只对缓存数据库有效 -->
-	<!-- CompressType 压缩类型 1:lz4 2:zstd -->
-	<!-- CompressLevel 压缩等级 -->
+<!-- 数据库类型 1:redis 2:mongo 3:mysql-->
+<!-- Open 是否打开使用 1:开放 0:关闭 -->
+<!-- SaveFlag 保存类型 1 在线更新保存 2 离线保存(数据落地) -->
+<!-- Sort 读取数据的优先级 -->
+<!-- CacheTime 缓存保存时间 只对缓存数据库有效 -->
+<!-- CompressType 压缩类型 1:lz4 2:zstd -->
+<!-- CompressLevel 压缩等级 -->
 
-	<Save CompressType="2" CompressLevel="5">
-		<!-- redis -->
-		<Database Type="1" Open="1" SaveFlag="3" Sort="1" CacheTime="2592000‬"/>
+<root version="0000">
+	<!-- redis -->
+	<node type="1" open="1" sort="1" saveflag="3" cachetime="2592000‬" compresstype="2" compresslevel="5"/>
 
-		<!-- mongo -->
-		<Database Type="2" Open="0" SaveFlag="2" Sort="2" CacheTime="0"/>
+	<!-- mongo -->
+	<node type="2" open="0" sort="2" saveflag="2" cachetime="0" compresstype="2" compresslevel="5"/>
 		
-		<!-- mysql -->
-		<Database Type="3" Open="0" SaveFlag="2" Sort="3" CacheTime="0"/>
-	</Save>	
-</Config>
+	<!-- mysql -->
+	<node type="3" open="0" sort="3" saveflag="2" cachetime="0" compresstype="2" compresslevel="5"/>
+</root>	
+
 

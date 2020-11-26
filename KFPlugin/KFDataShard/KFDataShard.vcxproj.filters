@@ -4,14 +4,13 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="KFDataShardModule.cpp" />
     <ClCompile Include="KFDataShardPlugin.cpp" />
-    <ClCompile Include="KFDataShardConfig.cpp" />
     <ClCompile Include="KFDataExecute.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFDataShardInterface.h" />
     <ClInclude Include="KFDataShardModule.hpp" />
     <ClInclude Include="KFDataShardPlugin.hpp" />
-    <ClInclude Include="KFDataShardConfig.hpp" />
     <ClInclude Include="KFDataExecute.hpp" />
+    <ClInclude Include="KFDataSaveConfig.hpp" />
   </ItemGroup>
 </Project>

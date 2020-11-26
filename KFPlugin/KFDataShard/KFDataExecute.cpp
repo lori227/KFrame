@@ -2,6 +2,7 @@
 #include "KFRedis/KFRedisInterface.h"
 #include "KFMongo/KFMongoInterface.h"
 #include "KFMySQL/KFMySQLInterface.h"
+#include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
@@ -20,7 +21,7 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////
-    void KFDataExecute::InitExecute( const KFDatabaseSetting* kfsetting )
+    void KFDataExecute::InitExecute( const KFDataSaveSetting* kfsetting )
     {
         _kf_setting = kfsetting;
         InitExecute();
@@ -51,12 +52,18 @@ namespace KFrame
         }
     }
 
-    void KFDataExecute::SavePlayerData( uint32 zoneid, uint64 playerid, const std::string& playerdata, uint32 saveflag )
+    void KFDataExecute::SavePlayerData( uint32 zoneid, uint64 playerid, const KFMsg::PBObject* pbobject, uint32 saveflag )
     {
         // 没有保存标记
         if ( !KFUtility::HaveBitMask( _kf_setting->_save_flag, saveflag ) )
         {
             return;
+        }
+
+        auto playerdata = KFProto::Serialize( pbobject, _kf_setting->_compress_type, _kf_setting->_compress_level, true );
+        if ( playerdata == _invalid_string )
+        {
+            return __LOG_ERROR__( "player[{}:{}] serialize failed", zoneid, playerid );
         }
 
         // 不在keeper中

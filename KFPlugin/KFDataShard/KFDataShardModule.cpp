@@ -23,7 +23,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFDataShardModule::PrepareRun()
     {
-        for ( auto& iter : KFDataShardConfig::Instance()->_settings._objects )
+        for ( auto& iter : KFDataSaveConfig::Instance()->_settings._objects )
         {
             auto kfsetting = iter.second;
             if ( !kfsetting->_is_open )
@@ -148,15 +148,15 @@ namespace KFrame
             }
 
             // 反序列化数据
-            auto ok = KFProto::Parse( pbobject, kfresult->_value, KFDataShardConfig::Instance()->_compress_type, true );
+            auto ok = KFProto::Parse( pbobject, kfresult->_value, dataexecute->_kf_setting->_compress_type, true );
             if ( !ok )
             {
-                __LOG_ERROR__( "database=[{}] player[{}:{}] parse failed", dataexecute->GetType(), zoneid, playerid );
+                __LOG_ERROR__( "database=[{}] player[{}:{}] parse failed", dataexecute->_kf_setting->_id, zoneid, playerid );
                 continue;
             }
             else
             {
-                __LOG_INFO__( "database=[{}] player[{}:{}] load ok", dataexecute->GetType(), zoneid, playerid );
+                __LOG_INFO__( "database=[{}] player[{}:{}] load ok", dataexecute->_kf_setting->_id, zoneid, playerid );
                 return true;
             }
         }
@@ -166,19 +166,11 @@ namespace KFrame
 
     bool KFDataShardModule::SavePlayerData( uint32 zoneid, uint64 playerid, const KFMsg::PBObject* pbobject, uint32 saveflag )
     {
-        // 序列化数据
-        auto strdata = KFProto::Serialize( pbobject, KFDataShardConfig::Instance()->_compress_type, KFDataShardConfig::Instance()->_compress_level, true );
-        if ( strdata == _invalid_string )
-        {
-            __LOG_ERROR__( "player[{}:{}] serialize failed", zoneid, playerid );
-            return false;
-        }
-
         // 保存数据
         for ( auto& iter : _data_execute._objects )
         {
             auto dataexecute = iter.second;
-            dataexecute->SavePlayerData( zoneid, playerid, strdata, saveflag );
+            dataexecute->SavePlayerData( zoneid, playerid, pbobject, saveflag );
         }
 
         return true;

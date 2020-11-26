@@ -27,6 +27,6 @@ namespace KFrame
 
     void KFDataShardPlugin::AddConfig()
     {
-        __KF_ADD_CONFIG__( KFDataShardConfig );
+        __KF_ADD_CONFIG__( KFDataSaveConfig );
     }
 }
