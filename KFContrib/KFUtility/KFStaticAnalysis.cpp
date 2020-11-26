@@ -155,15 +155,13 @@ namespace KFrame
             KFStaticCondition* kfcondition = nullptr;
             std::tie( kfcondition, linktype, ok ) = ParseCondition( data, size, startpos, endpos );
             staticconditions->_condition_list.push_back( kfcondition );
-            if ( !ok )
+            if ( ok )
             {
-                return false;
-            }
-
-            startpos = endpos + 2;
-            if ( linktype != 0u )
-            {
-                staticconditions->_link_type.push_back( linktype );
+                startpos = endpos + 2;
+                if ( linktype != 0u )
+                {
+                    staticconditions->_link_type.push_back( linktype );
+                }
             }
         } while ( startpos < size );
 
