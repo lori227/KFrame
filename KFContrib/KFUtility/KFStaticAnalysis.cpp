@@ -145,8 +145,8 @@ namespace KFrame
         {
             auto startpos = 0u;
             auto endpos = 0u;
-            auto size = ( uint32 )strcondition.length();
             auto data = strcondition.data();
+            auto size = ( uint32 )strcondition.length();
 
             do
             {

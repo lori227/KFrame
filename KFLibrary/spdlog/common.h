@@ -122,7 +122,7 @@ namespace spdlog {
 #if !defined(SPDLOG_LEVEL_NAMES)
 #define SPDLOG_LEVEL_NAMES                                                                                                                 \
     {                                                                                                                                      \
-        "trace", "debug", " info", " warn", "error", "criti", "  off"                                                                    \
+        "tace", "dbug", "info", "warn", "eror", "crit", "offf"																			   \
     }
 #endif
 
