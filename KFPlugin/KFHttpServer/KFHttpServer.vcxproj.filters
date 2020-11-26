@@ -2,7 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFHttpServerConfig.cpp" />
     <ClCompile Include="KFHttpServerModule.cpp" />
     <ClCompile Include="KFHttpServerPlugin.cpp" />
   </ItemGroup>

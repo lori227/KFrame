@@ -12,7 +12,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFHttpServerConfig.cpp" />
     <ClCompile Include="KFHttpServerModule.cpp" />
     <ClCompile Include="KFHttpServerPlugin.cpp" />
   </ItemGroup>

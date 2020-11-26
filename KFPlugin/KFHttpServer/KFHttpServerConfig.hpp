@@ -8,18 +8,6 @@ namespace KFrame
     class KFHttpSetting : public KFIntSetting
     {
     public:
-        KFHttpSetting()
-        {
-            _local_ip = "0.0.0.0";
-            _port_type = 0;
-            _port = 0;
-            _keep_alive = false;
-            _max_thread = 4;
-            _max_queue = 64;
-            _idle_time = 100;
-        }
-
-    public:
         // 服务器名字
         std::string _app_name;
 
@@ -27,47 +15,50 @@ namespace KFrame
         std::string _app_type;
 
         // 内网ip
-        std::string _local_ip;
+        std::string _local_ip = "0.0.0.0";
 
         // 端口类型
-        uint32 _port_type;
+        uint32 _port_type = 0u;
 
         // 端口
-        uint32 _port;
+        uint32 _port = 0u;
 
         // 是否保持
-        bool _keep_alive;
+        bool _keep_alive = false;
 
         // 最大线程
-        uint32 _max_thread;
-
+        uint32 _max_thread = 4;
 
         // 最大队列
-        uint32 _max_queue;
+        uint32 _max_queue = 64u;
 
         // 线程idle时间
-        uint32 _idle_time;
+        uint32 _idle_time = 100u;
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
-    class KFHttpServerConfig : public KFConfig, public KFInstance< KFHttpServerConfig >
+    class KFHttpServerConfig : public KFConfigT< KFHttpSetting >, public KFInstance< KFHttpServerConfig >
     {
     public:
         KFHttpServerConfig()
         {
+            _key_name = "id";
             _file_name = "http";
         }
 
-        // 加载配置文件
-        bool LoadConfig( const std::string& filepath, uint32 cleartype );
-
-        // 查找配置
-        KFHttpSetting* FindHttpSetting( const std::string& appname, const std::string& apptype );
-
     public:
-        // 配置列表
-        std::vector < KFHttpSetting > _http_setting_list;
+        virtual void ReadSetting( KFXmlNode& xmlnode, KFHttpSetting* kfsetting )
+        {
+            kfsetting->_app_name = xmlnode.ReadString( "appname" );
+            kfsetting->_app_type = xmlnode.ReadString( "apptype" );
+            kfsetting->_port_type = xmlnode.ReadUInt32( "porttype" );
+            kfsetting->_port = xmlnode.ReadUInt32( "port" );
+            kfsetting->_keep_alive = xmlnode.ReadBoolen( "keepalive" );
+            kfsetting->_max_thread = xmlnode.ReadUInt32( "maxthread" );
+            kfsetting->_max_queue = xmlnode.ReadUInt32( "maxqueue" );
+            kfsetting->_idle_time = xmlnode.ReadUInt32( "idletime" );
+        }
     };
 }
 

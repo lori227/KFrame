@@ -8,7 +8,7 @@ namespace KFrame
     {
         //////////////////////////////////////////////////////////////////////////////////
         auto kfglogal = KFGlobal::Instance();
-        auto kfsetting = KFHttpServerConfig::Instance()->FindHttpSetting( kfglogal->_app_name, kfglogal->_app_type );
+        auto kfsetting = FindHttpSetting( kfglogal->_app_name, kfglogal->_app_type );
 
         // 计算端口
         kfsetting->_port = _kf_ip_address->CalcListenPort( kfsetting->_port_type, kfsetting->_port, kfglogal->_app_id->GetId() );
@@ -50,6 +50,21 @@ namespace KFrame
         return KFGlobal::Instance()->_http_server_url;
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    KFHttpSetting* KFHttpServerModule::FindHttpSetting( const std::string& appname, const std::string& apptype )
+    {
+        for ( auto& iter : KFHttpServerConfig::Instance()->_settings._objects )
+        {
+            auto kfsetting = iter.second;
+            if ( kfsetting->_app_name == appname &&
+                    kfsetting->_app_type == apptype )
+            {
+                return kfsetting;
+            }
+        }
+
+        return nullptr;
+    }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     std::string KFHttpServerModule::SendCode( uint32 code )
