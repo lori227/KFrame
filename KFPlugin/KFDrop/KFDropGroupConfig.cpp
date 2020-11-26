@@ -54,7 +54,7 @@ namespace KFrame
         dropgroupweight->_drop_data_setting = KFDropDataConfig::Instance()->FindSetting( dropgroupweight->_drop_data_id );
         if ( dropgroupweight->_drop_data_setting == nullptr )
         {
-            if ( dropgroupweight->_value != 0u )
+            if ( dropgroupweight->_drop_data_id != 0u )
             {
                 __LOG_ERROR__( "dropid=[{}] dropdata=[{}] can't find setting", kfsetting->_id, dropgroupweight->_drop_data_id );
             }
