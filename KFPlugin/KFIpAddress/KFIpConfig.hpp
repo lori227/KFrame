@@ -5,38 +5,30 @@
 
 namespace KFrame
 {
+    class KFIpSetting : public KFIntSetting
+    {
+    public:
+
+    };
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
-    class KFIpConfig : public KFConfig, public KFInstance< KFIpConfig >
+    class KFIpConfig : public KFConfigT<KFIpSetting>, public KFInstance< KFIpConfig >
     {
     public:
         KFIpConfig()
         {
             _file_name = "ip";
         }
+        ~KFIpConfig() = default;
 
-        bool LoadConfig( const std::string& filepath, uint32 cleartype );
-
-        // 查找vpn ip
-        std::tuple<std::string, uint32> FindVPNIpAddress( const std::string& appname, const std::string& apptype, uint32 zoneid );
     public:
-        // 获得ip的访问地址
-        std::string _dns_get_ip_url;
-
-        // log地址
-        std::string _log_url;
-
-        // 认证地址
-        std::string _auth_url;
-
-        // dir地址
-        std::string _dir_url;
-
-        // dir地址
-        std::string _pay_url;
-
-        // vpn 地址
-        std::unordered_map<uint32, std::tuple<std::string, uint32>> _vpn_list;
+        virtual void ReadSetting( KFXmlNode& xmlnode, KFIpSetting* kfsetting )
+        {
+            auto name = xmlnode.ReadString( "name", false );
+            auto key = xmlnode.ReadUInt32( "key", true );
+            auto value = xmlnode.ReadString( "value", false );
+            KFGlobal::Instance()->AddConstant( name, key, value );
+        }
     };
 }
 

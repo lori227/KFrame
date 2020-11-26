@@ -55,7 +55,7 @@ namespace KFrame
     __KF_TIMER_FUNCTION__( KFDeployAgentModule::OnTimerQueryAgentData )
     {
         // 获得本机ip, 查询appid
-        auto localip = _kf_ip_address->GetLocalIp();
+        auto localip = KFGlobal::Instance()->_local_ip;
         auto kfquery = _deploy_driver->QueryMap( "select * from `agent` where `{}`='{}'", __STRING__( localip ), localip );
         if ( kfquery->_value.empty() )
         {
@@ -155,8 +155,8 @@ namespace KFrame
             req.set_agentid( kfglobal->_app_id->ToString() );
             req.set_name( kfglobal->_app_name );
             req.set_type( kfglobal->_app_type );
+            req.set_localip( kfglobal->_local_ip );
             req.set_port( kfglobal->_listen_port );
-            req.set_localip( _kf_ip_address->GetLocalIp() );
             req.set_service( __FORMAT__( "{}.{}", kfglobal->_channel, kfglobal->_service ) );
             _kf_tcp_client->SendNetMessage( netdata->_id, KFMsg::S2S_REGISTER_AGENT_TO_SERVER_REQ, &req );
         }
@@ -856,8 +856,7 @@ namespace KFrame
                                   _kf_task->_app_name, _kf_task->_app_type, _kf_task->_app_id, _kf_task->_zone_id );
         }
 
-        auto localip = _kf_ip_address->GetLocalIp();
-        _deploy_driver->Execute( "update `agent` set `command`='{}' where `{}`='{}'", command, __STRING__( localip ), localip );
+        _deploy_driver->Execute( "update `agent` set `command`='{}' where `{}`='{}'", command, __STRING__( localip ), KFGlobal::Instance()->_local_ip );
     }
 
     void KFDeployAgentModule::StartDeployTask()

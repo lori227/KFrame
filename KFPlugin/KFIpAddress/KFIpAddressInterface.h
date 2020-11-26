@@ -10,11 +10,6 @@ namespace KFrame
     {
     public:
         /////////////////////////////////////////////////////////////////////////
-        // 获得本机局域网ip
-        virtual const std::string& GetLocalIp() = 0;
-
-        // 获得本机外网ip
-        virtual const std::string& GetInteranetIp() = 0;
         // 计算监听端口
         virtual uint32 CalcListenPort( uint32 type, uint32 port, uint64 appid ) = 0;
         /////////////////////////////////////////////////////////////////////////

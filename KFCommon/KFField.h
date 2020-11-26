@@ -52,7 +52,6 @@ namespace KFrame
         __STRING_DEFINE__( config );
         __STRING_DEFINE__( projecttime );
         __STRING_DEFINE__( arrayindex );
-        __STRING_DEFINE__( logurl );
         __STRING_DEFINE__( scheduletime );
         __STRING_DEFINE__( msg );
         __STRING_DEFINE__( startup );
@@ -135,6 +134,12 @@ namespace KFrame
         __STRING_DEFINE__( addaccountwhitelist );
         __STRING_DEFINE__( removeaccountwhitelist );
         __STRING_DEFINE__( queryaccountwhitelist );
+        __STRING_DEFINE__( vpn );
+        __STRING_DEFINE__( logurl );
+        __STRING_DEFINE__( authurl );
+        __STRING_DEFINE__( dirurl );
+        __STRING_DEFINE__( payurl );
+        __STRING_DEFINE__( dnsurl );
 
 
         __STRING_DEFINE__( zoneregister );

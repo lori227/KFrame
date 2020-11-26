@@ -18,31 +18,10 @@ namespace KFrame
 {
     void KFIpAddressModule::AfterLoad()
     {
-        // 计算ip地址
-        auto kfglobal = KFGlobal::Instance();
-        kfglobal->_local_ip = GetLocalIp();
-        if ( kfglobal->_net_type == KFServerEnum::Internet )
-        {
-            kfglobal->_interanet_ip = GetInteranetIp();
-        }
-        else
-        {
-            kfglobal->_interanet_ip = kfglobal->_local_ip;
-        }
-
-        auto vpndata = KFIpConfig::Instance()->FindVPNIpAddress( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->GetZoneId() );
-        auto vpnip = std::get<0>( vpndata );
-        auto vpnport = std::get<1>( vpndata );
-        if ( !vpnip.empty() )
-        {
-            kfglobal->_interanet_ip = vpnip;
-            if ( vpnport != 0u )
-            {
-                kfglobal->_listen_port = vpnport;
-            }
-
-            __LOG_INFO__( "use vpn ip=[{}] port=[{}]", kfglobal->_interanet_ip, kfglobal->_listen_port );
-        }
+        // 初始化内网ip地址
+        InitLocalIp();
+        // 初始化外网ip地址
+        InitInteranetIp();
     }
 
     void KFIpAddressModule::BeforeRun()
@@ -54,6 +33,26 @@ namespace KFrame
 
         // 启动定时器, 更新master数据( 60秒更新一次 )
         __LOOP_TIMER_0__( 60000u, 1u, &KFIpAddressModule::OnTimerUpdateMasterIp );
+    }
+
+    void KFIpAddressModule::OnceRun()
+    {
+        // 初始化vpn地址( 只有zone.gate需要处理 )
+        auto kfglobal = KFGlobal::Instance();
+        if ( kfglobal->_app_name == __STRING__( zone ) && kfglobal->_app_type == __STRING__( gate ) )
+        {
+            auto value = kfglobal->GetString( __STRING__( vpn ), kfglobal->_app_id->GetZoneId() );
+            if ( !value.empty() )
+            {
+                kfglobal->_interanet_ip = KFUtility::SplitString( value, __DOMAIN_STRING__ );
+                auto port = KFUtility::SplitValue<uint32>( value, __DOMAIN_STRING__ );
+                if ( port != 0u )
+                {
+                    kfglobal->_listen_port = port;
+                }
+                __LOG_INFO__( "use vpn ip=[{}] port=[{}]", kfglobal->_interanet_ip, kfglobal->_listen_port );
+            }
+        }
     }
 
     void KFIpAddressModule::BeforeShut()
@@ -184,41 +183,47 @@ namespace KFrame
         return port;
     }
 
-    const std::string& KFIpAddressModule::GetInteranetIp()
+    void KFIpAddressModule::InitInteranetIp()
     {
-        while ( _interanet_ip.empty() )
+        auto kfglobal = KFGlobal::Instance();
+        if ( kfglobal->_net_type == KFServerEnum::Internet )
         {
-            // 获得外网地址
-            auto interanetip = _kf_http_client->STGet( KFIpConfig::Instance()->_dns_get_ip_url, _invalid_string );
-            if ( !interanetip.empty() )
+            kfglobal->_interanet_ip = kfglobal->_local_ip;
+        }
+        else
+        {
+            auto& dnsurl = kfglobal->GetString( __STRING__( dnsurl ) );
+            do
             {
-                _interanet_ip = KFUtility::SplitString( interanetip, "\n" );
-                __LOG_INFO__( " interanetip=[{}]", _interanet_ip );
-            }
+                // 获得外网地址
+                auto interanetip = _kf_http_client->STGet( dnsurl, _invalid_string );
+                if ( !interanetip.empty() )
+                {
+                    kfglobal->_interanet_ip = KFUtility::SplitString( interanetip, "\n" );
+                }
+            } while ( kfglobal->_interanet_ip.empty() );
         }
 
-        return _interanet_ip;
+        __LOG_INFO__( "interanetip=[{}]", kfglobal->_interanet_ip );
     }
 
     static std::string _default_ip = "127.0.0.1";
-    const std::string& KFIpAddressModule::GetLocalIp()
+    void KFIpAddressModule::InitLocalIp()
     {
-        if ( _local_ip.empty() )
-        {
-#if __KF_SYSTEM__ == __KF_WIN__
-            _local_ip = GetWinLocalIp();
-#else
-            _local_ip = GetLinuxLocalIp();
-#endif
-            if ( _local_ip.empty() )
-            {
-                _local_ip = _default_ip;
-            }
+        auto kfglobal = KFGlobal::Instance();
 
-            __LOG_INFO__( "localip=[{}]", _local_ip );
+#if __KF_SYSTEM__ == __KF_WIN__
+        kfglobal->_local_ip = GetWinLocalIp();
+#else
+        kfglobal->_local_ip = GetLinuxLocalIp();
+#endif
+        if ( kfglobal->_local_ip.empty() )
+        {
+            kfglobal->_local_ip = _default_ip;
         }
 
-        return _local_ip;
+        // 初始化外网ip
+        __LOG_INFO__( "localip=[{}]", kfglobal->_local_ip );
     }
 
 #if __KF_SYSTEM__ == __KF_WIN__
@@ -284,22 +289,21 @@ namespace KFrame
 
     const std::string& KFIpAddressModule::GetLogUrl()
     {
-        return KFIpConfig::Instance()->_log_url;
+        return KFGlobal::Instance()->GetString( __STRING__( logurl ) );
     }
 
     const std::string& KFIpAddressModule::GetAuthUrl()
     {
-        return KFIpConfig::Instance()->_auth_url;
+        return KFGlobal::Instance()->GetString( __STRING__( authurl ) );
     }
 
     const std::string& KFIpAddressModule::GetDirUrl()
     {
-        return KFIpConfig::Instance()->_dir_url;
+        return KFGlobal::Instance()->GetString( __STRING__( dirurl ) );
     }
 
     const std::string& KFIpAddressModule::GetPayUrl()
     {
-        return KFIpConfig::Instance()->_pay_url;
+        return KFGlobal::Instance()->GetString( __STRING__( payurl ) );
     }
-
 }

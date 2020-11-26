@@ -18,8 +18,7 @@ namespace KFrame
                              kfsetting->_max_queue, kfsetting->_idle_time, kfsetting->_keep_alive );
 
         // 重新获得外网ip
-        auto localip = _kf_ip_address->GetLocalIp();
-        kfglogal->_http_server_url = __FORMAT__( "http://{}:{}/", localip, kfsetting->_port );
+        kfglogal->_http_server_url = __FORMAT__( "http://{}:{}/", kfglogal->_local_ip, kfsetting->_port );
         __LOG_INFO__( "http server[{}] startup ok", kfglogal->_http_server_url );
     }
 

@@ -1,22 +1,20 @@
-﻿<?xml version='1.0' encoding='utf-8' ?>
-<Config>
+﻿<root version="0000">
 	<!-- 查询外网ip的dns服务器 -->
-	<DNSServer Url="http://members.3322.org/dyndns/getip"/>
+	<node name="dnsurl" value="http://members.3322.org/dyndns/getip"/>
 
 	<!-- 日志服务器 -->
-	<LogServer Url="Http://127.0.0.1:6001/"/>
+	<node name="logurl" value="http://127.0.0.1:6001/"/>
 
 	<!-- 认证服务器地址 -->
-	<AuthServer Url="http://127.0.0.1:7001/"/>
+	<node name="authurl" value="http://127.0.0.1:7001/"/>
 
 	<!-- 目录服务器地址 -->
-	<DirServer Url="http://127.0.0.1:7501/"/>
+	<node name="dirurl" value="http://127.0.0.1:7501/"/>
 
 	<!-- 充值服务器地址 -->
-	<PayServer Url="http://127.0.0.1:7001/"/>
+	<node name="payurl" value="http://127.0.0.1:7001/"/>
 	
   	<!-- vpn 地址-->
-  	<Vpns>
-  	</Vpns>
-</Config>
+	<!--<node name="vpn" key="1" value="127.0.0.1:8888"/> -->
+</root>
 

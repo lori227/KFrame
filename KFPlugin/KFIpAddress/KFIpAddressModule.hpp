@@ -24,18 +24,13 @@ namespace KFrame
 
         // 初始化
         virtual void BeforeRun();
+        virtual void OnceRun();
 
         // 加载配置
         virtual void AfterLoad();
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
-        // 获得本机局域网ip
-        virtual const std::string& GetLocalIp();
-
-        // 获得本机外网ip
-        virtual const std::string& GetInteranetIp();
-
         // 计算监听端口
         virtual uint32 CalcListenPort( uint32 type, uint32 port, uint64 appid );
 
@@ -66,12 +61,11 @@ namespace KFrame
         // 更新masterip
         __KF_TIMER_FUNCTION__( OnTimerUpdateMasterIp );
 
-    protected:
-        // 内网ip
-        std::string _local_ip;
+        // 获得本机局域网ip
+        void InitLocalIp();
 
-        // 外网ip
-        std::string _interanet_ip;
+        // 获得本机外网ip
+        void InitInteranetIp();
     };
 }
 

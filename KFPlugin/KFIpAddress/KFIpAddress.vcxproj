@@ -12,7 +12,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFIpConfig.cpp" />
     <ClCompile Include="KFIpAddressModule.cpp" />
     <ClCompile Include="KFIpAddressPlugin.cpp" />
     <ClCompile Include="KFPort.cpp" />

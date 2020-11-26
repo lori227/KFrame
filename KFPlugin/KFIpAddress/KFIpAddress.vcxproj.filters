@@ -5,7 +5,6 @@
     <ClCompile Include="KFIpAddressModule.cpp" />
     <ClCompile Include="KFIpAddressPlugin.cpp" />
     <ClCompile Include="KFPort.cpp" />
-    <ClCompile Include="KFIpConfig.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFIpAddressInterface.h" />
