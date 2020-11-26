@@ -104,16 +104,13 @@ namespace KFrame
 
         // 查找tcpdata
         KFTcpSetting* FindTcpServerSetting();
-
+        KFTcpSetting* FindTcpSetting( const std::string& appname, const std::string& apptype );
     private:
         // 网络服务器引擎
         KFNetServerEngine* _server_engine = nullptr;
 
-        // 压缩长度
-        uint32 _compress_length = 0u;
-
-        // 是否加密
-        bool _is_open_encrypt = false;
+        // 网路配置
+        KFTcpSetting* _kf_tcp_setting = nullptr;
 
         // 发现客户端回调
         KFFunctionMap< KFModule*, KFNetEventFunction > _kf_discover_function;

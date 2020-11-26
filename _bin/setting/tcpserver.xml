@@ -1,5 +1,3 @@
-<?xml version='1.0' encoding='utf-8' ?>
-<Config>
 	<!-- AppName 服务器名字 -->
 	<!-- AppType 服务器类型 -->
 	<!-- Type 端口计算类型 0=固定端口 1=由id计算 2=共享内存计算 -->
@@ -14,17 +12,16 @@
 	<!-- CompressLength 消息超过设定值大小, 则使用压缩, 默认不填是不压缩 -->
 	<!-- OpenEncrypt 是否使用加密 0:不开启  1:开启 -->
 	<!-- EncryptKey 加密秘钥 -->
-	
-	<!-- tcp服务器配置 -->
-	<TcpServer CompressType="2" CompressLevel="5" EncryptKey="kframe,./">
-		<!-- deploy server 服务器-->
-		<Server AppName="deploy" AppType="server" Type="0" Port="10000" MaxQueue="20000" HandleMessage="100"/>
 
-		<!-- 通用服务器 -->
-		<Server AppName="*" AppType="*" Type="2" Port="12000" MaxQueue="20000" HandleMessage="500"/>
+<!-- tcp服务器配置 -->
+<root version="0000">
+	<!-- 通用服务器 -->
+	<node id="1" appname="*" apptype="*" porttype="2" port="12000" maxqueue="20000" handlemessage="500" messagetype="1" compresstype="2" compresslevel="5" compresslength="1000000000" openencrypt="0" encryptkey="kframe,./"/>
 
-		<!-- gate服务器 -->
-		<Server AppName="zone" AppType="gate" Type="2" Port="12000" MaxQueue="200" HandleMessage="10" MessageType="2" CompressLength="0" OpenEncrypt="0" />
-	</TcpServer>
-</Config>
+	<!-- deploy server 服务器-->
+	<node id="2" appname="deploy" apptype="server" porttype="0" port="10000" maxqueue="20000" handlemessage="100" messagetype="1" compresstype="2" compresslevel="5" compresslength="1000000000" openencrypt="0" encryptkey="kframe,./"/>
+
+	<!-- gate服务器 -->
+	<node id="3" appname="zone" apptype="gate" porttype="2" port="12000" maxqueue="200" handlemessage="10" messagetype="2" compresstype="2" compresslevel="5" compresslength="1000000000" openencrypt="0" encryptkey="kframe,./" />
+</TcpServer>
 

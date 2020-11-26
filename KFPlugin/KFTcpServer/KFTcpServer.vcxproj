@@ -12,7 +12,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFTcpServerConfig.cpp" />
     <ClCompile Include="KFTcpServerModule.cpp" />
     <ClCompile Include="KFTcpServerPlugin.cpp" />
   </ItemGroup>

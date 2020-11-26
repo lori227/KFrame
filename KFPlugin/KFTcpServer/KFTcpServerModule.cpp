@@ -12,16 +12,16 @@ namespace KFrame
     {
         auto kfglobal = KFGlobal::Instance();
 
-        auto kftcpsetting = KFTcpServerConfig::Instance()->FindTcpSetting( kfglobal->_app_name, kfglobal->_app_type );
+        auto kftcpsetting = FindTcpSetting( kfglobal->_app_name, kfglobal->_app_type );
         if ( kftcpsetting == nullptr )
         {
-            kftcpsetting = KFTcpServerConfig::Instance()->FindTcpSetting( _globbing_string, kfglobal->_app_type );
+            kftcpsetting = FindTcpSetting( _globbing_string, kfglobal->_app_type );
             if ( kftcpsetting == nullptr )
             {
-                kftcpsetting = KFTcpServerConfig::Instance()->FindTcpSetting( kfglobal->_app_name, _globbing_string );
+                kftcpsetting = FindTcpSetting( kfglobal->_app_name, _globbing_string );
                 if ( kftcpsetting == nullptr )
                 {
-                    kftcpsetting = KFTcpServerConfig::Instance()->FindTcpSetting( _globbing_string, _globbing_string );
+                    kftcpsetting = FindTcpSetting( _globbing_string, _globbing_string );
                     if ( kftcpsetting == nullptr )
                     {
                         __LOG_ERROR__( "can't find [{}:{}] setting", kfglobal->_app_name, kfglobal->_app_type );
@@ -35,31 +35,45 @@ namespace KFrame
         return kftcpsetting;
     }
 
+    KFTcpSetting* KFTcpServerModule::FindTcpSetting( const std::string& appname, const std::string& apptype )
+    {
+        for ( auto& iter : KFTcpServerConfig::Instance()->_settings._objects )
+        {
+            auto kfsetting = iter.second;
+            if ( kfsetting->_app_name == appname &&
+                    kfsetting->_app_type == apptype )
+            {
+                return kfsetting;
+            }
+        }
+
+        return nullptr;
+    }
+
+
     void KFTcpServerModule::BeforeRun()
     {
         ////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMsg::S2S_REGISTER_TO_SERVER_REQ, &KFTcpServerModule::HandleRegisterReq );
         ////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////
-        auto kftcpsetting = FindTcpServerSetting();
-        _compress_length = kftcpsetting->_compress_length;
-        _is_open_encrypt = kftcpsetting->_open_encrypt;
-        _server_engine->InitEngine( kftcpsetting->_max_queue_size,
-                                    kftcpsetting->_handle_message_count,
-                                    kftcpsetting->_message_type,
-                                    KFTcpServerConfig::Instance()->_compress_type,
-                                    KFTcpServerConfig::Instance()->_compress_level,
-                                    kftcpsetting->_compress_length,
-                                    KFTcpServerConfig::Instance()->_encrypt_key,
-                                    kftcpsetting->_open_encrypt );
+        _kf_tcp_setting = FindTcpServerSetting();
+        _server_engine->InitEngine( _kf_tcp_setting->_max_queue_size,
+                                    _kf_tcp_setting->_handle_message_count,
+                                    _kf_tcp_setting->_message_type,
+                                    _kf_tcp_setting->_compress_type,
+                                    _kf_tcp_setting->_compress_level,
+                                    _kf_tcp_setting->_compress_length,
+                                    _kf_tcp_setting->_encrypt_key,
+                                    _kf_tcp_setting->_open_encrypt );
 
         _server_engine->BindNetFunction( this, &KFTcpServerModule::HandleNetMessage );
         _server_engine->BindLostFunction( this, &KFTcpServerModule::OnServerLostHandle );
 
         // 启动tcp服务器
         auto kfglobal = KFGlobal::Instance();
-        kfglobal->_listen_port = kftcpsetting->_port;
-        auto result = _server_engine->StartEngine( kftcpsetting->_local_ip, kftcpsetting->_port );
+        kfglobal->_listen_port = _kf_tcp_setting->_port;
+        auto result = _server_engine->StartEngine( _kf_tcp_setting->_local_ip, _kf_tcp_setting->_port );
         if ( result == 0 )
         {
             __LOG_INFO__( "[{}:{}|{}:{}] tcp services ok",
@@ -256,11 +270,11 @@ namespace KFrame
         ack.set_apptype( kfglobal->_app_type );
         ack.set_appname( kfglobal->_app_name );
         ack.set_appid( kfglobal->_app_id->GetId() );
-        ack.set_compresslength( _compress_length );
-        ack.set_compresstype( KFTcpServerConfig::Instance()->_compress_type );
-        ack.set_compresslevel( KFTcpServerConfig::Instance()->_compress_level );
-        ack.set_openencrypt( _is_open_encrypt );
-        ack.set_encryptkey( KFTcpServerConfig::Instance()->_encrypt_key );
+        ack.set_compresslength( _kf_tcp_setting->_compress_length );
+        ack.set_compresstype( _kf_tcp_setting->_compress_type );
+        ack.set_compresslevel( _kf_tcp_setting->_compress_level );
+        ack.set_openencrypt( _kf_tcp_setting->_open_encrypt );
+        ack.set_encryptkey( _kf_tcp_setting->_encrypt_key );
         SendNetMessage( handlid, KFMsg::S2S_REGISTER_TO_SERVER_ACK, &ack );
 
         // 初始化压缩加密

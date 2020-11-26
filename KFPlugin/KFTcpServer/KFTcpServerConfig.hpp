@@ -1,12 +1,11 @@
 ﻿#ifndef __KF_NET_CONFIG_H__
 #define __KF_NET_CONFIG_H__
 
-#include "KFrame.h"
 #include "KFConfig.h"
 
 namespace KFrame
 {
-    class KFTcpSetting
+    class KFTcpSetting : public KFIntSetting
     {
     public:
         std::string _app_name;
@@ -20,36 +19,39 @@ namespace KFrame
         uint32 _max_queue_size = 10000;
         uint32 _handle_message_count = 20; // 每帧处理消息数量
         uint32 _message_type = KFMessageEnum::Server;
+        uint32 _compress_type = 0;
+        uint32 _compress_level = 0u;
         uint32 _compress_length = 0u;
         bool _open_encrypt = false;
+        std::string _encrypt_key;
     };
 
-    class KFTcpServerConfig : public KFConfig, public KFInstance< KFTcpServerConfig >
+    class KFTcpServerConfig : public KFConfigT< KFTcpSetting >, public KFInstance< KFTcpServerConfig >
     {
     public:
         KFTcpServerConfig()
         {
+            _key_name = "id";
             _file_name = "tcp";
         }
 
-        // 加载配置文件
-        bool LoadConfig( const std::string& filepath, uint32 cleartype );
-
-        // 查找TcpData
-        KFTcpSetting* FindTcpSetting( const std::string& appname, const std::string& apptype );
-
     public:
-        // 服务器列表
-        std::vector < KFTcpSetting > _tcp_setting_list;
-
-        // 压缩类型
-        uint32 _compress_type = 0u;
-
-        // 压缩等级
-        uint32 _compress_level = 0u;
-
-        // 加密秘钥
-        std::string _encrypt_key;
+        virtual void ReadSetting( KFXmlNode& xmlnode, KFTcpSetting* kfsetting )
+        {
+            kfsetting->_app_name = xmlnode.ReadString( "appname" );
+            kfsetting->_app_type = xmlnode.ReadString( "apptype" );
+            kfsetting->_port_type = xmlnode.ReadUInt32( "porttype" );
+            kfsetting->_port = xmlnode.ReadUInt32( "port" );
+            kfsetting->_time_out = xmlnode.ReadUInt32( "timeout", true, 20 );
+            kfsetting->_max_queue_size = xmlnode.ReadUInt32( "maxqueue" );
+            kfsetting->_handle_message_count = xmlnode.ReadUInt32( "handlemessage", true, 500 );
+            kfsetting->_message_type = xmlnode.ReadUInt32( "messagetype", true, KFMessageEnum::Server );
+            kfsetting->_open_encrypt = xmlnode.ReadBoolen( "openencrypt" );
+            kfsetting->_encrypt_key = xmlnode.ReadString( "encryptkey" );
+            kfsetting->_compress_type = xmlnode.ReadUInt32( "compresstype" );
+            kfsetting->_compress_level = xmlnode.ReadUInt32( "compresslevel" );
+            kfsetting->_compress_length = xmlnode.ReadUInt32( "compresslength" );
+        }
     };
 }
 
