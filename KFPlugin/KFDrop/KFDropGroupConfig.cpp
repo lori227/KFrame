@@ -70,6 +70,11 @@ namespace KFrame
 
     void KFDropGroupConfig::InitDropConditonSetting( KFDropSetting* kfsetting, KFStaticConditionExpression* kfexpression )
     {
+        if ( kfexpression == nullptr )
+        {
+            return;
+        }
+
         for ( auto kfdata : kfexpression->_data_list )
         {
             if ( !kfdata->IsVariable() )
