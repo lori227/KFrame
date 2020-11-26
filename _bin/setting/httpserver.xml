@@ -5,7 +5,7 @@
 <!--MaxQueue 最大队列数量-->
 <!--IdleTime 空闲时间-->
 
-<root>
+<root version="0000">
 	<!-- deploy 服务器 -->
 	<node id="1" appname="deploy" apptype="server" porttype="0" port="9999" keepalive="0" maxthread="4" maxqueue="64" idletime="1000"/>
 
