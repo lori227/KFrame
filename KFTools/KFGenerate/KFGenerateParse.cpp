@@ -197,8 +197,17 @@ namespace KFrame
             ExcelAttribute attribute;
             attribute._column = i;
             attribute._flag = filedflag;
-            attribute._name = kfname->_value;
-            attribute._config_name = kfname->_value;
+
+            auto strvalue = kfname->_value;
+            attribute._name = KFUtility::SplitString( strvalue, __SPLIT_STRING__ );
+
+            auto optional = KFUtility::SplitValue<uint32>( strvalue, __SPLIT_STRING__ );
+            if ( optional == 1 )
+            {
+                attribute._optional = "false";
+            }
+
+            attribute._config_name = attribute._name;
             std::transform( attribute._config_name.begin(), attribute._config_name.end(), attribute._config_name.begin(), ::tolower );
 
             // 读取服务器类型
@@ -339,10 +348,13 @@ namespace KFrame
             for ( auto& miter : rowdata->_columns )
             {
                 auto attribute = exceldata->FindAttribute( miter.first );
-                if ( !miter.second.empty() && miter.second != "0" )
+                if ( ( miter.second.empty() || miter.second == "0" ) &&
+                        attribute->_optional == "true" )
                 {
-                    xmlfile << __FORMAT__( " {}=\"{}\"", attribute->_config_name, miter.second );
+                    continue;
                 }
+
+                xmlfile << __FORMAT__( " {}=\"{}\"", attribute->_config_name, miter.second );
             }
 
             xmlfile << "/>\n";
@@ -774,11 +786,11 @@ namespace KFrame
 
                     if ( attribute->_cpp_class == "rowofstringvector" )
                     {
-                        xmlfile << __FORMAT__( "\t\t\tkfsetting->{}{}.push_back( xmlnode.{}( \"{}\", true ) );\n", attribute->_cpp_name, typeinfo->_cpp_extend, typeinfo->_cpp_function, attribute->_config_name );
+                        xmlfile << __FORMAT__( "\t\t\tkfsetting->{}{}.push_back( xmlnode.{}( \"{}\", {} ) );\n", attribute->_cpp_name, typeinfo->_cpp_extend, typeinfo->_cpp_function, attribute->_config_name, attribute->_optional );
                     }
                     else
                     {
-                        xmlfile << __FORMAT__( "\t\t\tkfsetting->{}{} = xmlnode.{}( \"{}\", true );\n", attribute->_cpp_name, typeinfo->_cpp_extend, typeinfo->_cpp_function, attribute->_config_name );
+                        xmlfile << __FORMAT__( "\t\t\tkfsetting->{}{} = xmlnode.{}( \"{}\", {} );\n", attribute->_cpp_name, typeinfo->_cpp_extend, typeinfo->_cpp_function, attribute->_config_name, attribute->_optional );
                     }
                 }
 
@@ -806,7 +818,7 @@ namespace KFrame
                             return false;
                         }
 
-                        xmlfile << __FORMAT__( "\t\t\t{}.{}{} = xmlnode.{}( \"{}\", true );\n", variablename, attribute->_cpp_name, typeinfo->_cpp_extend, typeinfo->_cpp_function, attribute->_config_name );
+                        xmlfile << __FORMAT__( "\t\t\t{}.{}{} = xmlnode.{}( \"{}\", {} );\n", variablename, attribute->_cpp_name, typeinfo->_cpp_extend, typeinfo->_cpp_function, attribute->_config_name, attribute->_optional );
                     }
 
                     // 加入列表
