@@ -23,37 +23,23 @@ namespace KFrame
         _write_execute->ShutDown();
     }
 
-    void KFRedisLogic::Initialize( KFRedisType* kfredistype )
+    void KFRedisLogic::Initialize( const std::string& name, const KFRedisConnectOption* kfredisoption )
     {
         {
-            auto kfredislist = kfredistype->FindRedisList( KFDatabaseEnum::Read );
-            if ( kfredislist != nullptr )
+            auto connectdata = &kfredisoption->_read_connect_data;
+            auto result = _read_execute->Initialize( name, connectdata->_ip, connectdata->_port, connectdata->_password );
+            if ( result != KFEnum::Ok )
             {
-                auto kfsetting = kfredislist->FindSetting();
-                if ( kfsetting != nullptr )
-                {
-                    auto result = _read_execute->Initialize( kfsetting->_module, kfsetting->_ip, kfsetting->_port, kfsetting->_password );
-                    if ( result != KFEnum::Ok )
-                    {
-                        __LOG_ERROR__( "redis connect[module={} ip={}:{}] failed", kfsetting->_module, kfsetting->_ip, kfsetting->_port );
-                    }
-                }
+                __LOG_ERROR__( "read redis connect[module={} ip={}:{}] failed", name, connectdata->_ip, connectdata->_port );
             }
         }
 
         {
-            auto kfredislist = kfredistype->FindRedisList( KFDatabaseEnum::Write );
-            if ( kfredislist != nullptr )
+            auto connectdata = &kfredisoption->_write_connect_data;
+            auto result = _write_execute->Initialize( name, connectdata->_ip, connectdata->_port, connectdata->_password );
+            if ( result != KFEnum::Ok )
             {
-                auto kfsetting = kfredislist->FindSetting();
-                if ( kfsetting != nullptr )
-                {
-                    auto result = _write_execute->Initialize( kfsetting->_module, kfsetting->_ip, kfsetting->_port, kfsetting->_password );
-                    if ( result != KFEnum::Ok )
-                    {
-                        __LOG_ERROR__( "redis connect[module={} ip={}:{}] failed", kfsetting->_module, kfsetting->_ip, kfsetting->_port );
-                    }
-                }
+                __LOG_ERROR__( "read redis connect[module={} ip={}:{}] failed", name, connectdata->_ip, connectdata->_port );
             }
         }
     }

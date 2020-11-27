@@ -29,6 +29,9 @@ namespace KFrame
         virtual KFRedisDriver* Create( const std::string& module, uint32 logicid = 0 );
 
     protected:
+        // 查找redis配置
+        const KFRedisConnectOption* FindRedisConnectOption( const std::string& module, uint32 logicid );
+
         // 查找
         KFRedisLogic* FindRedisLogic( uint32 id );
 

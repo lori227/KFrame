@@ -6,14 +6,9 @@
 
 namespace KFrame
 {
-    /////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////
-    class KFRedisSetting : public KFIntSetting
+    class KFRedisConnnectData
     {
     public:
-        // 名字
-        std::string _module;
-
         // ip
         std::string _ip;
 
@@ -24,57 +19,58 @@ namespace KFrame
         std::string _password;
     };
 
-    class KFRedisList
+    class KFRedisConnectOption
     {
     public:
-        // 清空
-        void Reset();
+        // 运行时id
+        uint32 _runtime_id = 0u;
 
-        const KFRedisSetting* FindSetting();
-        void AddSetting( KFRedisSetting& kfsetting );
+        // 最小逻辑id
+        uint32 _min_logic_id = 0u;
 
-    private:
-        std::vector< KFRedisSetting > _redis_list;
+        // 最大逻辑id
+        uint32 _max_logic_id = 0u;
 
-        // 返回的连接设置
-        KFRedisSetting* _kf_seting = nullptr;
+        KFRedisConnnectData _write_connect_data;
+        KFRedisConnnectData _read_connect_data;
     };
-
-    class KFRedisType
+    /////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////
+    class KFRedisSetting : public KFStrSetting
     {
     public:
-        // 查询redislist
-        KFRedisList* FindRedisList( uint32 type );
-
-        // 添加redislist
-        KFRedisList* AddRedisList( uint32 type );
-
-    public:
-        uint32 _id = 0;
-
-        // Redis列表
-        KFHashMap< uint32, KFRedisList > _redis_list;
+        // redis 连接配置
+        std::vector< KFRedisConnectOption > _redis_connect_option;
     };
-
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
-    class KFRedisConfig : public KFConfig, public KFInstance< KFRedisConfig >
+    class KFRedisConfig : public KFConfigT< KFRedisSetting >, public KFInstance< KFRedisConfig >
     {
     public:
         KFRedisConfig()
         {
+            _key_name = "name";
             _file_name = "redis";
         }
 
-        bool LoadConfig( const std::string& filepath, uint32 cleartype );
-
-        // 查找redis配置
-        KFRedisType* FindRedisType( const std::string& module, uint32 logicid );
-
     public:
-        // 逻辑数据库映射
-        typedef std::pair< std::string, uint32 > ModuleKey;
-        KFMap< ModuleKey, KFRedisType > _redis_type;
+        virtual void ReadSetting( KFXmlNode& xmlnode, KFRedisSetting* kfsetting )
+        {
+            KFRedisConnectOption option;
+            option._min_logic_id = xmlnode.ReadUInt32( "minid" );
+            option._max_logic_id = xmlnode.ReadUInt32( "maxid" );
+
+            option._write_connect_data._ip = xmlnode.ReadString( "writeip" );
+            option._write_connect_data._port = xmlnode.ReadUInt32( "writeport" );
+            option._write_connect_data._password = xmlnode.ReadString( "writepassword" );
+
+            option._read_connect_data._ip = xmlnode.ReadString( "readip" );
+            option._read_connect_data._port = xmlnode.ReadUInt32( "readport" );
+            option._read_connect_data._password = xmlnode.ReadString( "readpassword" );
+
+            option._runtime_id = ( uint32 )kfsetting->_redis_connect_option.size() + 1u;
+            kfsetting->_redis_connect_option.push_back( option );
+        }
     };
 }
 

@@ -14,26 +14,45 @@ namespace KFrame
         }
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    KFRedisDriver* KFRedisModule::Create( const std::string& module, uint32 logicid /* = 0 */ )
+    const KFRedisConnectOption* KFRedisModule::FindRedisConnectOption( const std::string& module, uint32 logicid )
     {
-        auto kfredistype = KFRedisConfig::Instance()->FindRedisType( module, logicid );
-        if ( kfredistype == nullptr )
+        auto kfsetting = KFRedisConfig::Instance()->FindSetting( module );
+        if ( kfsetting == nullptr )
         {
-            __LOG_ERROR__( "[{}:{}] can't find redis type", module, logicid );
+            __LOG_ERROR__( "[{}:{}] can't find redis setting", module, logicid );
             return nullptr;
         }
 
-        auto kfredislogic = FindRedisLogic( kfredistype->_id );
+        for ( auto& connectoption : kfsetting->_redis_connect_option )
+        {
+            if ( logicid >= connectoption._min_logic_id && logicid <= connectoption._max_logic_id )
+            {
+                return &connectoption;
+            }
+        }
+
+        return nullptr;
+    }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    KFRedisDriver* KFRedisModule::Create( const std::string& module, uint32 logicid /* = 0 */ )
+    {
+        auto kfredisoption = FindRedisConnectOption( module, logicid );
+        if ( kfredisoption == nullptr )
+        {
+            __LOG_ERROR__( "[{}:{}] can't find redis option", module, logicid );
+            return nullptr;
+        }
+
+        auto kfredislogic = FindRedisLogic( kfredisoption->_runtime_id );
         if ( kfredislogic != nullptr )
         {
             return kfredislogic;
         }
 
         kfredislogic = __KF_NEW__( KFRedisLogic );
-        kfredislogic->Initialize( kfredistype );
+        kfredislogic->Initialize( module, kfredisoption );
 
-        InsertRedisLogic( kfredistype->_id, kfredislogic );
+        InsertRedisLogic( kfredisoption->_runtime_id, kfredislogic );
         return kfredislogic;
     }
 

@@ -20,7 +20,7 @@ namespace KFrame
         void ShutDown();
 
         // 初始化
-        void Initialize( KFRedisType* kfredistype );
+        void Initialize( const std::string& name, const KFRedisConnectOption* kfredisoption );
 
     protected:
         // 写操作
@@ -41,10 +41,10 @@ namespace KFrame
     private:
 
         // 读执行器
-        KFRedisReadExecute* _read_execute{ nullptr };
+        KFRedisReadExecute* _read_execute = nullptr;
 
         // 写执行器
-        KFRedisWriteExecute* _write_execute{ nullptr };
+        KFRedisWriteExecute* _write_execute = nullptr;
     };
 }
 #endif

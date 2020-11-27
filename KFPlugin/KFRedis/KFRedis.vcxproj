@@ -12,7 +12,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="KFRedisConfig.cpp" />
     <ClCompile Include="KFRedisExecute.cpp" />
     <ClCompile Include="KFRedisLogic.cpp" />
     <ClCompile Include="KFRedisModule.cpp" />
