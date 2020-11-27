@@ -15,14 +15,14 @@ namespace KFrame
         __KF_DELETE__( Connection::SocketFactory, _factory );
     }
 
-    void KFMongo::InitMongo( const KFMongoSetting* kfsetting )
+    void KFMongo::InitMongo( const KFMongoConnectOption* connectoption, const KFMongoConnnectData* connectdata )
     {
-        _database = kfsetting->_database;
+        _database = connectoption->_database;
 
         ///     mongodb://<user>:<password>@hostname.com:<port>/database-name?options
         _connect_data = __FORMAT__( "mongodb://{}:{}@{}:{}/{}?ssl={}&connectTimeoutMS={}&socketTimeoutMS={}&authMechanism={}",
-                                    kfsetting->_user, kfsetting->_password, kfsetting->_ip, kfsetting->_port, kfsetting->_database,
-                                    kfsetting->_use_ssl, kfsetting->_connect_timeout, kfsetting->_execute_timeout, kfsetting->_auth_type );
+                                    connectoption->_user, connectoption->_password, connectdata->_ip, connectdata->_port, connectoption->_database,
+                                    connectoption->_use_ssl, connectoption->_connect_timeout, connectoption->_execute_timeout, connectoption->_auth_type );
 
         ConnectMongo();
     }

@@ -12,6 +12,25 @@ namespace KFrame
         }
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    const KFMongoConnectOption* KFMongoModule::FindMongoConnectOption( const std::string& module, uint32 logicid )
+    {
+        auto kfsetting = KFMongoConfig::Instance()->FindSetting( module );
+        if ( kfsetting == nullptr )
+        {
+            __LOG_ERROR__( "[{}:{}] can't find mongo setting", module, logicid );
+            return nullptr;
+        }
+
+        for ( auto& connectoption : kfsetting->_connect_option )
+        {
+            if ( logicid >= connectoption._min_logic_id && logicid <= connectoption._max_logic_id )
+            {
+                return &connectoption;
+            }
+        }
+
+        return nullptr;
+    }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     KFMongoLogic* KFMongoModule::FindMongoLogic( uint32 id )
     {
@@ -33,22 +52,22 @@ namespace KFrame
 
     KFMongoDriver* KFMongoModule::Create( const std::string& module, uint32 logicid /* = 0 */ )
     {
-        auto kfmongotype = KFMongoConfig::Instance()->FindMongoType( module, logicid );
-        if ( kfmongotype == nullptr )
+        auto kfmongooption = FindMongoConnectOption( module, logicid );
+        if ( kfmongooption == nullptr )
         {
-            __LOG_ERROR__( "[{}:{}] can't find mysql type", module, logicid );
+            __LOG_ERROR__( "[{}:{}] can't find mongo option", module, logicid );
             return nullptr;
         }
 
-        auto kflogic = FindMongoLogic( kfmongotype->_id );
+        auto kflogic = FindMongoLogic( kfmongooption->_runtime_id );
         if ( kflogic != nullptr )
         {
             return kflogic;
         }
 
         kflogic = __KF_NEW__( KFMongoLogic );
-        kflogic->Initialize( kfmongotype );
-        InsertMongoLogic( kfmongotype->_id, kflogic );
+        kflogic->Initialize( module, kfmongooption );
+        InsertMongoLogic( kfmongooption->_runtime_id, kflogic );
 
         return kflogic;
     }

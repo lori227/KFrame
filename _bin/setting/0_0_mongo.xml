@@ -1,5 +1,3 @@
-<?xml version='1.0' encoding='utf-8' ?>
-<Config>
 	<!--Id 配置id -->
 	<!--Database 数据库名字 -->
 	<!--Ip 数据库地址 -->
@@ -11,51 +9,22 @@
 	<!--ExecuteTimeout 执行超时时间(毫秒) -->
 	<!--Auth 认证方式 SCRAM-SHA-1/MONGODB-CR-->
 
+<root version="0000">
 	<!--目录信息-->
-	<Module Name="dir" ConnectTimeout="10000" ExecuteTimeout="10000" UseSSL="false" Auth="SCRAM-SHA-1">
-		<Mongo MinLogicId="0" MaxLogicId="0">
-			<Write IP="192.168.2.31" Port="27017" Database="chess" User="root" Password="mongo=lori227-="/>
-			<Read IP="192.168.2.31" Port="27017" Database="chess" User="root" Password="mongo=lori227-="/>
-		</Mongo>			 
-	</Module>
+	<node name="dir" minid="0" maxid="0" usessl="false" auth="SCRAM-SHA-1" database="chess" user="root" password="mongo=lori227-=" writeip="127.0.0.1" writeort="27017" readip="127.0.0.1" readport="27017"/>
 
 	<!--账号信息-->
-	<Module Name="account" ConnectTimeout="10000" ExecuteTimeout="10000" UseSSL="false" Auth="SCRAM-SHA-1">
-		<Mongo MinLogicId="0" MaxLogicId="0">
-			<Write IP="192.168.2.31" Port="27017" Database="chess" User="root" Password="mongo=lori227-="/>
-			<Read IP="192.168.2.31" Port="27017" Database="chess" User="root" Password="mongo=lori227-="/>
-		</Mongo>			 
-	</Module>
+	<node name="account" minid="0" maxid="0" usessl="false" auth="SCRAM-SHA-1" database="chess" user="root" password="mongo=lori227-=" writeip="127.0.0.1" writeort="27017" readip="127.0.0.1" readport="27017"/>
 
 	<!--充值信息-->
-	<Module Name="pay" ConnectTimeout="10000" ExecuteTimeout="10000" UseSSL="false" Auth="SCRAM-SHA-1">
-		<Mongo MinLogicId="0" MaxLogicId="0">
-			<Write IP="192.168.2.31" Port="27017" Database="chess" User="root" Password="mongo=lori227-="/>
-			<Read IP="192.168.2.31" Port="27017" Database="chess" User="root" Password="mongo=lori227-="/>
-		</Mongo>			 
-	</Module>
+	<node name="pay" minid="0" maxid="0" usessl="false" auth="SCRAM-SHA-1" database="chess" user="root" password="mongo=lori227-=" writeip="127.0.0.1" writeort="27017" readip="127.0.0.1" readport="27017"/>
 
 	<!-- 保存玩家数据数据库 -->
-	<Module Name="data" ConnectTimeout="10000" ExecuteTimeout="10000" UseSSL="false" Auth="SCRAM-SHA-1">
-		<Mongo MinLogicId="1" MaxLogicId="100">
-			<Write IP="192.168.2.31" Port="27017" Database="chess" User="root" Password="mongo=lori227-="/>
-			<Read IP="192.168.2.31" Port="27017" Database="chess" User="root" Password="mongo=lori227-="/>
-		</Mongo>			 
-	</Module>
+	<node name="data" minid="0" maxid="0" usessl="false" auth="SCRAM-SHA-1" database="chess" user="root" password="mongo=lori227-=" writeip="127.0.0.1" writeort="27017" readip="127.0.0.1" readport="27017"/>
 
 	<!-- 玩家基础数据数据库 -->
-	<Module Name="basic" ConnectTimeout="10000" ExecuteTimeout="10000" UseSSL="false" Auth="SCRAM-SHA-1">
-		<Mongo MinLogicId="0" MaxLogicId="0">
-			<Write IP="192.168.2.31" Port="27017" Database="chess" User="root" Password="mongo=lori227-="/>
-			<Read IP="192.168.2.31" Port="27017" Database="chess" User="root" Password="mongo=lori227-="/>
-		</Mongo>			 
-	</Module>
+	<node name="basic" minid="0" maxid="0" usessl="false" auth="SCRAM-SHA-1" database="chess" user="root" password="mongo=lori227-=" writeip="127.0.0.1" writeort="27017" readip="127.0.0.1" readport="27017"/>
 
 	<!-- 逻辑数据数据库 -->
-	<Module Name="logic" ConnectTimeout="10000" ExecuteTimeout="10000" UseSSL="false" Auth="SCRAM-SHA-1">
-		<Mongo MinLogicId="0" MaxLogicId="0">
-			<Write IP="192.168.2.31" Port="27017" Database="chess" User="root" Password="mongo=lori227-="/>
-			<Read IP="192.168.2.31" Port="27017" Database="chess" User="root" Password="mongo=lori227-="/>
-		</Mongo>			 
-	</Module>
-</Config>
+	<node name="logic" minid="0" maxid="0" usessl="false" auth="SCRAM-SHA-1" database="chess" user="root" password="mongo=lori227-=" writeip="127.0.0.1" writeort="27017" readip="127.0.0.1" readport="27017"/>
+</root>

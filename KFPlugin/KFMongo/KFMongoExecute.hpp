@@ -23,7 +23,7 @@ namespace KFrame
         virtual ~KFMongoExecute() = default;
 
         // 初始化
-        virtual void InitMongo( const KFMongoSetting* kfsetting );
+        virtual void InitMongo( const KFMongoConnectOption* connectoption, const KFMongoConnnectData* connectdata );
 
         // 创建索引
         bool CreateIndex( const std::string& table, const std::string& indexname, const MongoIndexType& values, bool unique, uint32 ttl );

@@ -1,19 +1,31 @@
 ﻿#ifndef __KF_MONGO_CONFIG_H__
 #define __KF_MONGO_CONFIG_H__
 
-#include "KFrame.h"
 #include "KFConfig.h"
 
 namespace KFrame
 {
-    class KFMongoSetting : public KFIntSetting
+    class KFMongoConnnectData
     {
     public:
-        //ip
+        // ip
         std::string _ip;
 
-        // 端口
-        uint32 _port = 0;
+        // port
+        uint32 _port = 27017;
+    };
+
+    class KFMongoConnectOption
+    {
+    public:
+        // 运行时id
+        uint32 _runtime_id = 0u;
+
+        // 最小逻辑id
+        uint32 _min_logic_id = 0u;
+
+        // 最大逻辑id
+        uint32 _max_logic_id = 0u;
 
         // 用户名
         std::string _user;
@@ -35,59 +47,56 @@ namespace KFrame
 
         // 认证方式
         std::string _auth_type;
-    };
 
-    class KFMongoList
+        // 写连接
+        KFMongoConnnectData _write_connect_data;
+
+        // 读连接
+        KFMongoConnnectData _read_connect_data;
+    };
+    /////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////
+    class KFMongoSetting : public KFStrSetting
     {
     public:
-        // 清空
-        void Reset();
-
-        const KFMongoSetting* FindSetting();
-        void AddSetting( KFMongoSetting& kfsetting );
-
-    private:
-        std::vector< KFMongoSetting > _mongo_list;
-
-        // 返回的连接设置
-        KFMongoSetting* _kf_seting;
+        // redis 连接配置
+        std::vector< KFMongoConnectOption > _connect_option;
     };
-
-
-    class KFMongoType
-    {
-    public:
-        // 查询list
-        KFMongoList* FindMongoList( uint32 type );
-
-        // 添加list
-        KFMongoList* AddMongoList( uint32 type );
-
-    public:
-        uint32 _id;
-
-        // 列表
-        KFHashMap< uint32, KFMongoList > _mongo_list;
-    };
-
-    class KFMongoConfig : public KFConfig, public KFInstance< KFMongoConfig >
+    /////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////
+    class KFMongoConfig : public KFConfigT< KFMongoSetting >, public KFInstance< KFMongoConfig >
     {
     public:
         KFMongoConfig()
         {
+            _key_name = "name";
             _file_name = "mongo";
         }
 
-        // 加载配置文件
-        bool LoadConfig( const std::string& filepath, uint32 cleartype );
-
-        // 查找配置
-        KFMongoType* FindMongoType( const std::string& module, uint32 logicid );
-
     public:
-        // 逻辑数据库映射
-        typedef std::pair< std::string, uint32 > ModuleKey;
-        KFMap< ModuleKey, KFMongoType > _mongo_type;
+        virtual void ReadSetting( KFXmlNode& xmlnode, KFMongoSetting* kfsetting )
+        {
+            KFMongoConnectOption option;
+            option._min_logic_id = xmlnode.ReadUInt32( "minid" );
+            option._max_logic_id = xmlnode.ReadUInt32( "maxid" );
+            option._connect_timeout = xmlnode.ReadUInt32( "connecttimeout", true, 10000 );
+            option._execute_timeout = xmlnode.ReadUInt32( "executetimeout", true, 10000 );
+            option._use_ssl = xmlnode.ReadString( "usessl" );
+            option._auth_type = xmlnode.ReadString( "auth" );
+
+            option._database = xmlnode.ReadString( "database" );
+            option._user = xmlnode.ReadString( "user" );
+            option._password = xmlnode.ReadString( "password" );
+
+            option._write_connect_data._ip = xmlnode.ReadString( "writeip" );
+            option._write_connect_data._port = xmlnode.ReadUInt32( "writeport" );
+
+            option._read_connect_data._ip = xmlnode.ReadString( "readip" );
+            option._read_connect_data._port = xmlnode.ReadUInt32( "readport" );
+
+            option._runtime_id = ( uint32 )kfsetting->_connect_option.size() + 1u;
+            kfsetting->_connect_option.push_back( option );
+        }
     };
 }
 

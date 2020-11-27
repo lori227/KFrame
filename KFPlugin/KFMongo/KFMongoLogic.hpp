@@ -17,7 +17,7 @@ namespace KFrame
         virtual ~KFMongoLogic();
 
         void ShutDown();
-        void Initialize( KFMongoType* kfmongotype );
+        void Initialize( const std::string& name, const KFMongoConnectOption* kfmongooption );
         /////////////////////////////////////////////////////////////////////////////////////////////
         // 创建索引
         virtual bool CreateIndex( const std::string& table, const std::string& indexname, bool unique = false, uint32 ttl = 0u );

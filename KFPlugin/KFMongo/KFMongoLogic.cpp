@@ -22,30 +22,14 @@ namespace KFrame
         _write_execute->ShutDown();
     }
 
-    void KFMongoLogic::Initialize( KFMongoType* kfmongotype )
+    void KFMongoLogic::Initialize( const std::string& name, const KFMongoConnectOption* kfmongooption )
     {
         {
-            auto kfmongolist = kfmongotype->FindMongoList( KFDatabaseEnum::Read );
-            if ( kfmongolist != nullptr )
-            {
-                auto kfsetting = kfmongolist->FindSetting();
-                if ( kfsetting != nullptr )
-                {
-                    _read_execute->InitMongo( kfsetting );
-                }
-            }
+            _read_execute->InitMongo( kfmongooption, &kfmongooption->_read_connect_data );
         }
 
         {
-            auto kfmongolist = kfmongotype->FindMongoList( KFDatabaseEnum::Write );
-            if ( kfmongolist != nullptr )
-            {
-                auto kfsetting = kfmongolist->FindSetting();
-                if ( kfsetting != nullptr )
-                {
-                    _write_execute->InitMongo( kfsetting );
-                }
-            }
+            _write_execute->InitMongo( kfmongooption, &kfmongooption->_write_connect_data );
         }
     }
 

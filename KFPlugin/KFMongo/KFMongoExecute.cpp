@@ -4,9 +4,9 @@ namespace KFrame
 {
     /////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////
-    void KFMongoExecute::InitMongo( const KFMongoSetting* kfsetting )
+    void KFMongoExecute::InitMongo( const KFMongoConnectOption* connectoption, const KFMongoConnnectData* connectdata )
     {
-        return KFMongo::InitMongo( kfsetting );
+        return KFMongo::InitMongo( connectoption, connectdata );
     }
 
     bool KFMongoExecute::IsIndexCreate( const std::string& table, const std::string& indexname )

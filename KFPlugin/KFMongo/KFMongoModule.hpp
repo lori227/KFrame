@@ -28,6 +28,9 @@ namespace KFrame
         virtual KFMongoDriver* Create( const std::string& module, uint32 logicid = 0 );
 
     protected:
+        // 查找mongo配置
+        const KFMongoConnectOption* FindMongoConnectOption( const std::string& module, uint32 logicid );
+
         // 查询
         KFMongoLogic* FindMongoLogic( uint32 id );
 

@@ -3,7 +3,6 @@
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="KFMongo.cpp" />
-    <ClCompile Include="KFMongoConfig.cpp" />
     <ClCompile Include="KFMongoExecute.cpp" />
     <ClCompile Include="KFMongoLogic.cpp" />
     <ClCompile Include="KFMongoModule.cpp" />
