@@ -21,7 +21,7 @@ namespace KFrame
         virtual ~KFMySQL();
 
         // 初始化
-        virtual void InitMySQL( const KFMySQLSetting* kfsetting );
+        virtual void InitMySQL( const std::string& database, const std::string& user, const std::string& password, const std::string& ip, uint32 port );
 
         // 关闭
         virtual void ShutDown();

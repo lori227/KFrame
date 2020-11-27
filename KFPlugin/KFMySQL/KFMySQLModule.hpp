@@ -32,6 +32,9 @@ namespace KFrame
         virtual KFMySQLDriver* Create( const std::string& module, uint32 logicid = 0 );
 
     protected:
+        // 查找mysql配置
+        const KFMySQLConnectOption* FindMySQLConnectOption( const std::string& module, uint32 logicid );
+
         // 查询
         KFMySQLLogic* FindMySQLLogic( uint32 id );
 

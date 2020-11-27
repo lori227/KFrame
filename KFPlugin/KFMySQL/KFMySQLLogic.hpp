@@ -19,7 +19,7 @@ namespace KFrame
         void ShutDown();
 
         // 初始化
-        void Initialize( KFMySQLType* kfmysqltype );
+        void Initialize( const std::string& name, const KFMySQLConnectOption* kfmysqloption );
         /////////////////////////////////////////////////////////////////////////////////////////////
 
         // 插入记录

@@ -21,6 +21,25 @@ namespace KFrame
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    const KFMySQLConnectOption* KFMySQLModule::FindMySQLConnectOption( const std::string& module, uint32 logicid )
+    {
+        auto kfsetting = KFMySQLConfig::Instance()->FindSetting( module );
+        if ( kfsetting == nullptr )
+        {
+            __LOG_ERROR__( "[{}:{}] can't find mysql setting", module, logicid );
+            return nullptr;
+        }
+
+        for ( auto& connectoption : kfsetting->_connect_option )
+        {
+            if ( logicid >= connectoption._min_logic_id && logicid <= connectoption._max_logic_id )
+            {
+                return &connectoption;
+            }
+        }
+
+        return nullptr;
+    }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     KFMySQLLogic* KFMySQLModule::FindMySQLLogic( uint32 id )
     {
@@ -42,22 +61,22 @@ namespace KFrame
 
     KFMySQLDriver* KFMySQLModule::Create( const std::string& module, uint32 logicid /* = 0 */ )
     {
-        auto kfmysqltype = KFMySQLConfig::Instance()->FindMySQLType( module, logicid );
-        if ( kfmysqltype == nullptr )
+        auto kfmysqloption = FindMySQLConnectOption( module, logicid );
+        if ( kfmysqloption == nullptr )
         {
-            __LOG_ERROR__( "[{}:{}] can't find mysql type", module, logicid );
+            __LOG_ERROR__( "[{}:{}] can't find mysql option", module, logicid );
             return nullptr;
         }
 
-        auto kflogic = FindMySQLLogic( kfmysqltype->_id );
+        auto kflogic = FindMySQLLogic( kfmysqloption->_runtime_id );
         if ( kflogic != nullptr )
         {
             return kflogic;
         }
 
         kflogic = __KF_NEW__( KFMySQLLogic );
-        kflogic->Initialize( kfmysqltype );
-        InsertMySQLLogic( kfmysqltype->_id, kflogic );
+        kflogic->Initialize( module, kfmysqloption );
+        InsertMySQLLogic( kfmysqloption->_runtime_id, kflogic );
 
         return kflogic;
     }

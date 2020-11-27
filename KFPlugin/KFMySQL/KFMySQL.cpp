@@ -15,10 +15,10 @@ namespace KFrame
         __DELETE_OBJECT__( _session );
     }
 
-    void KFMySQL::InitMySQL( const KFMySQLSetting* kfsetting )
+    void KFMySQL::InitMySQL( const std::string& database, const std::string& user, const std::string& password, const std::string& ip, uint32 port )
     {
         _connect_data = __FORMAT__( "host={};port={};user={};password={};db={};compress=true;auto-reconnect=true;character-set=utf8",
-                                    kfsetting->_ip, kfsetting->_port, kfsetting->_user, kfsetting->_password, kfsetting->_database );
+                                    ip, port, user, password, database );
 
         try
         {
@@ -26,11 +26,11 @@ namespace KFrame
             auto ok = _session->isConnected();
             if ( ok )
             {
-                __LOG_INFO__( "mysql connect[ {}|{}:{} ] ok", kfsetting->_database, kfsetting->_ip, kfsetting->_port );
+                __LOG_INFO__( "mysql connect[ {}|{}:{} ] ok", database, ip, port );
             }
             else
             {
-                __LOG_ERROR__( "mysql connect[ {}|{}:{} ] failed", kfsetting->_database, kfsetting->_ip, kfsetting->_port );
+                __LOG_ERROR__( "mysql connect[ {}|{}:{} ] failed", database, ip, port );
             }
         }
         catch ( Poco::Exception& ex )

@@ -27,7 +27,7 @@ namespace KFrame
     {
         {
             auto connectdata = &kfredisoption->_read_connect_data;
-            auto result = _read_execute->Initialize( name, connectdata->_ip, connectdata->_port, connectdata->_password );
+            auto result = _read_execute->Initialize( name, connectdata->_ip, connectdata->_port, kfredisoption->_password );
             if ( result != KFEnum::Ok )
             {
                 __LOG_ERROR__( "read redis connect[module={} ip={}:{}] failed", name, connectdata->_ip, connectdata->_port );
@@ -36,7 +36,7 @@ namespace KFrame
 
         {
             auto connectdata = &kfredisoption->_write_connect_data;
-            auto result = _write_execute->Initialize( name, connectdata->_ip, connectdata->_port, connectdata->_password );
+            auto result = _write_execute->Initialize( name, connectdata->_ip, connectdata->_port, kfredisoption->_password );
             if ( result != KFEnum::Ok )
             {
                 __LOG_ERROR__( "read redis connect[module={} ip={}:{}] failed", name, connectdata->_ip, connectdata->_port );

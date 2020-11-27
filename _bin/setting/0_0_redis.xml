@@ -6,25 +6,25 @@
 	<!--MinId 最小逻辑id -->
 	<!--MaxId 最大逻辑id -->
 
-<root>
+<root version="0000">
 	<!--目录信息-->
-	<node name="dir" minid="0" maxid="0" writeip="127.0.0.1" writeport="6379" writepassword="redis@lori227-=" readip="127.0.0.1" readport="6379" readpassword="redis@lori227-="/>
+	<node name="dir" minid="0" maxid="0" password="redis@lori227-=" writeip="127.0.0.1" writeport="6379" readip="127.0.0.1" readport="6379" />
 
 	<!--账号信息-->
-	<node name="account" minid="0" maxid="0" writeip="127.0.0.1" writeport="6379" writepassword="redis@lori227-=" readip="127.0.0.1" readport="6379" readpassword="redis@lori227-="/>
+	<node name="account" minid="0" maxid="0" password="redis@lori227-=" writeip="127.0.0.1" writeport="6379" readip="127.0.0.1" readport="6379"/>
 
 	<!--充值信息-->
-	<node name="pay" minid="0" maxid="0" writeip="127.0.0.1" writeport="6379" writepassword="redis@lori227-=" readip="127.0.0.1" readport="6379" readpassword="redis@lori227-="/>
+	<node name="pay" minid="0" maxid="0" password="redis@lori227-=" writeip="127.0.0.1" writeport="6379" readip="127.0.0.1" readport="6379"/>
 
 	<!--保存小区玩家数据信息-->
-	<node name="data" minid="1" maxid="100" writeip="127.0.0.1" writeport="6379" writepassword="redis@lori227-=" readip="127.0.0.1" readport="6379" readpassword="redis@lori227-="/>
+	<node name="data" minid="1" maxid="100" password="redis@lori227-=" writeip="127.0.0.1" writeport="6379" readip="127.0.0.1" readport="6379"/>
 
 	<!--公共数据, 玩家名字信息-->
-	<node name="basic" minid="0" maxid="0" writeip="127.0.0.1" writeport="6379" writepassword="redis@lori227-=" readip="127.0.0.1" readport="6379" readpassword="redis@lori227-="/>
+	<node name="basic" minid="0" maxid="0" password="redis@lori227-=" writeip="127.0.0.1" writeport="6379" readip="127.0.0.1" readport="6379"/>
 	
 	<!--保存邮件信息-->
-	<node name="mail" minid="0" maxid="0" writeip="127.0.0.1" writeport="6379" writepassword="redis@lori227-=" readip="127.0.0.1" readport="6379" readpassword="redis@lori227-="/>
+	<node name="mail" minid="0" maxid="0" password="redis@lori227-=" writeip="127.0.0.1" writeport="6379" readip="127.0.0.1" readport="6379"/>
 
 	<!--逻辑数据库(房间, rank, relation, guild)-->
-	<node name="logic" minid="0" maxid="0" writeip="127.0.0.1" writeport="6379" writepassword="redis@lori227-=" readip="127.0.0.1" readport="6379" readpassword="redis@lori227-="/>
+	<node name="logic" minid="0" maxid="0" password="redis@lori227-=" writeip="127.0.0.1" writeport="6379" readip="127.0.0.1" readport="6379"/>
 </root>

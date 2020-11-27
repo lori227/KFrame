@@ -21,30 +21,16 @@ namespace KFrame
         _write_execute->ShutDown();
     }
 
-    void KFMySQLLogic::Initialize( KFMySQLType* kfmysqltype )
+    void KFMySQLLogic::Initialize( const std::string& name, const KFMySQLConnectOption* kfmysqloption )
     {
         {
-            auto kfmysqllist = kfmysqltype->FindMySQLList( KFDatabaseEnum::Read );
-            if ( kfmysqllist != nullptr )
-            {
-                auto kfsetting = kfmysqllist->FindSetting();
-                if ( kfsetting != nullptr )
-                {
-                    _read_execute->InitMySQL( kfsetting );
-                }
-            }
+            _read_execute->InitMySQL( kfmysqloption->_database, kfmysqloption->_user, kfmysqloption->_password,
+                                      kfmysqloption->_read_connect_data._ip, kfmysqloption->_read_connect_data._port );
         }
 
         {
-            auto kfmysqllist = kfmysqltype->FindMySQLList( KFDatabaseEnum::Write );
-            if ( kfmysqllist != nullptr )
-            {
-                auto kfsetting = kfmysqllist->FindSetting();
-                if ( kfsetting != nullptr )
-                {
-                    _write_execute->InitMySQL( kfsetting );
-                }
-            }
+            _write_execute->InitMySQL( kfmysqloption->_database, kfmysqloption->_user, kfmysqloption->_password,
+                                       kfmysqloption->_write_connect_data._ip, kfmysqloption->_write_connect_data._port );
         }
     }
 

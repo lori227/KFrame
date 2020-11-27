@@ -13,7 +13,6 @@
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="KFMySQL.cpp" />
-    <ClCompile Include="KFMySQLConfig.cpp" />
     <ClCompile Include="KFMySQLExecute.cpp" />
     <ClCompile Include="KFMySQLLogic.cpp" />
     <ClCompile Include="KFMySQLModule.cpp" />

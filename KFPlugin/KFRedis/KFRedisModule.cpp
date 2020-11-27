@@ -23,7 +23,7 @@ namespace KFrame
             return nullptr;
         }
 
-        for ( auto& connectoption : kfsetting->_redis_connect_option )
+        for ( auto& connectoption : kfsetting->_connect_option )
         {
             if ( logicid >= connectoption._min_logic_id && logicid <= connectoption._max_logic_id )
             {

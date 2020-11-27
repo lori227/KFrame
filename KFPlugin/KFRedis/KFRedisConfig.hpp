@@ -1,7 +1,6 @@
 ﻿#ifndef __KF_REDIS_CONFIG_H__
 #define __KF_REDIS_CONFIG_H__
 
-#include "KFrame.h"
 #include "KFConfig.h"
 
 namespace KFrame
@@ -14,9 +13,6 @@ namespace KFrame
 
         // port
         uint32 _port = 6379;
-
-        // 密码
-        std::string _password;
     };
 
     class KFRedisConnectOption
@@ -31,7 +27,13 @@ namespace KFrame
         // 最大逻辑id
         uint32 _max_logic_id = 0u;
 
+        // 密码
+        std::string _password;
+
+        // 写连接
         KFRedisConnnectData _write_connect_data;
+
+        // 读连接
         KFRedisConnnectData _read_connect_data;
     };
     /////////////////////////////////////////////////////////////////////////////////
@@ -40,7 +42,7 @@ namespace KFrame
     {
     public:
         // redis 连接配置
-        std::vector< KFRedisConnectOption > _redis_connect_option;
+        std::vector< KFRedisConnectOption > _connect_option;
     };
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
@@ -59,17 +61,16 @@ namespace KFrame
             KFRedisConnectOption option;
             option._min_logic_id = xmlnode.ReadUInt32( "minid" );
             option._max_logic_id = xmlnode.ReadUInt32( "maxid" );
+            option._password = xmlnode.ReadString( "password" );
 
             option._write_connect_data._ip = xmlnode.ReadString( "writeip" );
             option._write_connect_data._port = xmlnode.ReadUInt32( "writeport" );
-            option._write_connect_data._password = xmlnode.ReadString( "writepassword" );
 
             option._read_connect_data._ip = xmlnode.ReadString( "readip" );
             option._read_connect_data._port = xmlnode.ReadUInt32( "readport" );
-            option._read_connect_data._password = xmlnode.ReadString( "readpassword" );
 
-            option._runtime_id = ( uint32 )kfsetting->_redis_connect_option.size() + 1u;
-            kfsetting->_redis_connect_option.push_back( option );
+            option._runtime_id = ( uint32 )kfsetting->_connect_option.size() + 1u;
+            kfsetting->_connect_option.push_back( option );
         }
     };
 }
