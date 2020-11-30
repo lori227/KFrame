@@ -5,6 +5,7 @@
 #pragma once
 #include "KFGenerateLogic.h"
 #include "KFGenerateParse.h"
+#include "KFGenerateGit.h"
 #include "KFGenerateVersion.h"
 using namespace KFrame;
 
@@ -34,6 +35,12 @@ protected:
 
     // 注册事件函数
     void InitEventFunction();
+
+    // 初始化仓库
+    void InitRepository();
+
+    // 关闭
+    void ShutdownGenerate();
 
     // 选择文件夹
     std::string BrowsePath();

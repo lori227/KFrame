@@ -148,16 +148,20 @@ void CKFGenerateDlg::OnTimer( UINT_PTR nIDEvent )
     CDialogEx::OnTimer( nIDEvent );
 }
 
-
 void CKFGenerateDlg::OnClose()
 {
     // TODO: 在此添加消息处理程序代码和/或调用默认值
-    _logic->_thread_run = false;
+    ShutdownGenerate();
     Sleep( 1000 );
 
     CDialogEx::OnClose();
 }
 
+void CKFGenerateDlg::ShutdownGenerate()
+{
+    _git->Shutdown();
+    _logic->_thread_run = false;
+}
 
 void CKFGenerateDlg::InitGenerateDialog()
 {
@@ -175,6 +179,9 @@ void CKFGenerateDlg::InitGenerateDialog()
 
     // 注册事件函数
     InitEventFunction();
+
+    // 初始化仓库
+    InitRepository();
 
     // 启动文件检查线程
     KFThread::CreateThread( _logic, &KFGenerateLogic::RunCheckExcelMd5Thread, __FILE__, __LINE__ );
@@ -255,6 +262,11 @@ void CKFGenerateDlg::InitControlData()
         _list_excel.InsertColumn( index++, "文件类型", LVCFMT_CENTER, ( uint32 )( width * 2.1 ) );
         _list_excel.DeleteColumn( 0 );
     }
+}
+
+void CKFGenerateDlg::InitRepository()
+{
+    _git->Initialize();
 }
 
 std::string CKFGenerateDlg::BrowsePath()
