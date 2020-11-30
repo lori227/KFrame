@@ -159,7 +159,7 @@ void CKFGenerateDlg::OnClose()
 
 void CKFGenerateDlg::ShutdownGenerate()
 {
-    _git->Shutdown();
+    _repository->Shutdown();
     _logic->_thread_run = false;
 }
 
@@ -189,6 +189,7 @@ void CKFGenerateDlg::InitGenerateDialog()
 
 void CKFGenerateDlg::InitEventFunction()
 {
+    _event->RegisterEventFunction( EventType::ShowMessage, this, &CKFGenerateDlg::ShowLogicMessage );
     _event->RegisterEventFunction( EventType::AddFile, this, &CKFGenerateDlg::AddExcelFile );
     _event->RegisterEventFunction( EventType::RemoveFile, this, &CKFGenerateDlg::RemoveExcelFile );
     _event->RegisterEventFunction( EventType::ParseOk, this, &CKFGenerateDlg::ParseExcelOk );
@@ -266,7 +267,7 @@ void CKFGenerateDlg::InitControlData()
 
 void CKFGenerateDlg::InitRepository()
 {
-    _git->Initialize();
+    _repository->Open( _logic->_repository_type );
 }
 
 std::string CKFGenerateDlg::BrowsePath()
@@ -366,6 +367,8 @@ void CKFGenerateDlg::OnCbnSelchangeCombo1()
     _combo_repository_list.GetWindowTextA( text );
     _logic->_repository_type = text.GetBuffer();
     _logic->SaveTempXml();
+
+    _repository->Open( _logic->_repository_type );
 }
 
 void CKFGenerateDlg::OnCbnSelchangeCombo2()
@@ -593,4 +596,9 @@ void CKFGenerateDlg::ParseExcelFinish( EventData* eventdata )
     _logic->SaveExcelXml();
     _version->SaveVersionXml( _logic->_server_xml_path );
     _version->SaveVersionXml( _logic->_client_xml_path );
+}
+
+void CKFGenerateDlg::ShowLogicMessage( EventData* eventdata )
+{
+    _list_info.AddString( eventdata->_str_param.c_str() );
 }

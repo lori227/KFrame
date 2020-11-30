@@ -22,6 +22,13 @@ namespace KFrame
             kffunction->_function = std::bind( handle, object, std::placeholders::_1 );
         }
 
+        template<typename... P>
+        void ShowEventMessage( const std::string& myfmt, P&& ... args )
+        {
+            auto content = __FORMAT__( myfmt, std::forward<P>( args )... );
+            AddEvent( EventType::ShowMessage, 0, content );
+        }
+
     public:
         // 事件锁
         KFMutex _mutex;

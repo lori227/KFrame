@@ -210,7 +210,10 @@
     <ClInclude Include="KFGenerateGit.h" />
     <ClInclude Include="KFGenerateLogic.h" />
     <ClInclude Include="KFGenerateParse.h" />
+    <ClInclude Include="KFGenerateRepository.h" />
+    <ClInclude Include="KFGenerateSvn.h" />
     <ClInclude Include="KFGenerateVersion.h" />
+    <ClInclude Include="KFRepository.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -222,6 +225,8 @@
     <ClCompile Include="KFGenerateLink.cpp" />
     <ClCompile Include="KFGenerateLogic.cpp" />
     <ClCompile Include="KFGenerateParse.cpp" />
+    <ClCompile Include="KFGenerateRepository.cpp" />
+    <ClCompile Include="KFGenerateSvn.cpp" />
     <ClCompile Include="KFGenerateVersion.cpp" />
   </ItemGroup>
   <ItemGroup>

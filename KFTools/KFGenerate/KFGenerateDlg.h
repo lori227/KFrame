@@ -5,8 +5,8 @@
 #pragma once
 #include "KFGenerateLogic.h"
 #include "KFGenerateParse.h"
-#include "KFGenerateGit.h"
 #include "KFGenerateVersion.h"
+#include "KFGenerateRepository.h"
 using namespace KFrame;
 
 
@@ -70,6 +70,9 @@ protected:
 
     // 解析文件完成
     void ParseExcelFinish( EventData* eventdata );
+
+    // 显示信息
+    void ShowLogicMessage( EventData* eventdata );
 
     // 实现
 protected:

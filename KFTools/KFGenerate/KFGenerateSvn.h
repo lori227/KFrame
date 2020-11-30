@@ -1,12 +1,12 @@
-﻿#ifndef __KF_GENERATE_GIT_H__
-#define __KF_GENERATE_GIT_H__
+﻿#ifndef __KF_GENERATE_SVN_H__
+#define __KF_GENERATE_SVN_H__
 #include "KFGenerateDefine.h"
 #include "KFRepository.h"
 
 struct git_repository;
 namespace KFrame
 {
-    class KFGenerateGit : public KFRepository
+    class KFGenerateSvn : public KFRepository
     {
     public:
         // 初始化
@@ -18,8 +18,6 @@ namespace KFrame
         // 打开仓库
         bool Open( const RepositoryData* data );
     private:
-        // 仓库的会话
-        git_repository* _git_repository = nullptr;
     };
 }
 #endif

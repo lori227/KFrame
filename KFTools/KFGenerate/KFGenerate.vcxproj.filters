@@ -48,6 +48,15 @@
     <ClInclude Include="KFGenerateGit.h">
       <Filter>Logic</Filter>
     </ClInclude>
+    <ClInclude Include="KFGenerateRepository.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="KFRepository.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="KFGenerateSvn.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KFGenerate.cpp">
@@ -72,6 +81,12 @@
       <Filter>Logic</Filter>
     </ClCompile>
     <ClCompile Include="KFGenerateGit.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="KFGenerateRepository.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="KFGenerateSvn.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
   </ItemGroup>

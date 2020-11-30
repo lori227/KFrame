@@ -148,6 +148,7 @@ namespace KFrame
     {
         enum MyEnum
         {
+            ShowMessage = 0,
             RemoveFile = 1,
             AddFile = 2,
             ParseOk = 3,
