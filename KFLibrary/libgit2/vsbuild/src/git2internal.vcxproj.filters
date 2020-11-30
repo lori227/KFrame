@@ -1,0 +1,1278 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\hash\sha1\collisiondetect.c">
+      <Filter>src\hash\sha1</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\hash\sha1\sha1dc\sha1.c">
+      <Filter>src\hash\sha1\sha1dc</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\hash\sha1\sha1dc\ubc_check.c">
+      <Filter>src\hash\sha1\sha1dc</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\win32\dir.c">
+      <Filter>src\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\win32\error.c">
+      <Filter>src\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\win32\findfile.c">
+      <Filter>src\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\win32\map.c">
+      <Filter>src\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\win32\path_w32.c">
+      <Filter>src\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\win32\posix_w32.c">
+      <Filter>src\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\win32\precompiled.c">
+      <Filter>src\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\win32\thread.c">
+      <Filter>src\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\win32\utf-conv.c">
+      <Filter>src\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\win32\w32_buffer.c">
+      <Filter>src\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\win32\w32_crtdbg_stacktrace.c">
+      <Filter>src\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\win32\w32_stack.c">
+      <Filter>src\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\win32\w32_util.c">
+      <Filter>src\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\alloc.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\allocators\stdalloc.c">
+      <Filter>src\allocators</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\allocators\win32_crtdbg.c">
+      <Filter>src\allocators</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\annotated_commit.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\apply.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\attr.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\attr_file.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\attrcache.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\blame.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\blame_git.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\blob.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\branch.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\buf_text.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\buffer.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\cache.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\checkout.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\cherrypick.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\clone.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\commit.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\commit_list.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\config.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\config_cache.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\config_entries.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\config_file.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\config_mem.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\config_parse.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\config_snapshot.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\crlf.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\date.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\delta.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\describe.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\diff.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\diff_driver.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\diff_file.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\diff_generate.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\diff_parse.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\diff_print.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\diff_stats.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\diff_tform.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\diff_xdiff.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\errors.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\fetch.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\fetchhead.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\filebuf.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\filter.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\futils.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\global.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\graph.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\hash.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\hashsig.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\ident.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\idxmap.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\ignore.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\index.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\indexer.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\iterator.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\mailmap.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\merge.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\merge_driver.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\merge_file.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\message.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\midx.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\mwindow.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\net.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\netops.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\notes.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\object.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\object_api.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\odb.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\odb_loose.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\odb_mempack.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\odb_pack.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\offmap.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\oid.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\oidarray.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\oidmap.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\pack-objects.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\pack.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\parse.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\patch.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\patch_generate.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\patch_parse.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\path.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\pathspec.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\pool.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\posix.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\pqueue.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\proxy.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\push.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\reader.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\rebase.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\refdb.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\refdb_fs.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\reflog.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\refs.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\refspec.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\regexp.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\remote.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\repository.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\reset.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\revert.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\revparse.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\revwalk.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\settings.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\signature.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\sortedcache.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\stash.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\status.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\strarray.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\streams\mbedtls.c">
+      <Filter>src\streams</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\streams\openssl.c">
+      <Filter>src\streams</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\streams\registry.c">
+      <Filter>src\streams</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\streams\socket.c">
+      <Filter>src\streams</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\streams\stransport.c">
+      <Filter>src\streams</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\streams\tls.c">
+      <Filter>src\streams</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\strmap.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\submodule.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\sysdir.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\tag.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\thread-utils.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\trace.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\trailer.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\transaction.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\transport.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\transports\auth.c">
+      <Filter>src\transports</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\transports\auth_negotiate.c">
+      <Filter>src\transports</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\transports\auth_ntlm.c">
+      <Filter>src\transports</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\transports\credential.c">
+      <Filter>src\transports</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\transports\credential_helpers.c">
+      <Filter>src\transports</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\transports\git.c">
+      <Filter>src\transports</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\transports\http.c">
+      <Filter>src\transports</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\transports\httpclient.c">
+      <Filter>src\transports</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\transports\local.c">
+      <Filter>src\transports</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\transports\smart.c">
+      <Filter>src\transports</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\transports\smart_pkt.c">
+      <Filter>src\transports</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\transports\smart_protocol.c">
+      <Filter>src\transports</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\transports\ssh.c">
+      <Filter>src\transports</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\transports\winhttp.c">
+      <Filter>src\transports</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\tree-cache.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\tree.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\tsort.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\util.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\varint.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\vector.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\wildmatch.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\worktree.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\xdiff\xdiffi.c">
+      <Filter>src\xdiff</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\xdiff\xemit.c">
+      <Filter>src\xdiff</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\xdiff\xhistogram.c">
+      <Filter>src\xdiff</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\xdiff\xmerge.c">
+      <Filter>src\xdiff</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\xdiff\xpatience.c">
+      <Filter>src\xdiff</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\xdiff\xprepare.c">
+      <Filter>src\xdiff</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\xdiff\xutils.c">
+      <Filter>src\xdiff</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\zstream.c">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\hash\sha1\collisiondetect.h">
+      <Filter>src\hash\sha1</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\hash\sha1\sha1dc\sha1.h">
+      <Filter>src\hash\sha1\sha1dc</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\hash\sha1\sha1dc\ubc_check.h">
+      <Filter>src\hash\sha1\sha1dc</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\annotated_commit.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\apply.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\attr.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\blame.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\blob.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\branch.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\buffer.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\cert.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\checkout.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\cherrypick.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\clone.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\commit.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\common.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\config.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\cred_helpers.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\credential.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\credential_helpers.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\deprecated.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\describe.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\diff.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\errors.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\filter.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\global.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\graph.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\ignore.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\index.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\indexer.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\mailmap.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\merge.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\message.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\net.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\notes.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\object.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\odb.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\odb_backend.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\oid.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\oidarray.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\pack.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\patch.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\pathspec.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\proxy.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\rebase.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\refdb.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\reflog.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\refs.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\refspec.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\remote.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\repository.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\reset.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\revert.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\revparse.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\revwalk.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\signature.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\stash.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\status.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\stdint.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\strarray.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\submodule.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\sys\alloc.h">
+      <Filter>include\git2\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\sys\commit.h">
+      <Filter>include\git2\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\sys\config.h">
+      <Filter>include\git2\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\sys\cred.h">
+      <Filter>include\git2\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\sys\credential.h">
+      <Filter>include\git2\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\sys\diff.h">
+      <Filter>include\git2\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\sys\filter.h">
+      <Filter>include\git2\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\sys\hashsig.h">
+      <Filter>include\git2\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\sys\index.h">
+      <Filter>include\git2\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\sys\mempack.h">
+      <Filter>include\git2\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\sys\merge.h">
+      <Filter>include\git2\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\sys\odb_backend.h">
+      <Filter>include\git2\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\sys\openssl.h">
+      <Filter>include\git2\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\sys\path.h">
+      <Filter>include\git2\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\sys\refdb_backend.h">
+      <Filter>include\git2\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\sys\reflog.h">
+      <Filter>include\git2\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\sys\refs.h">
+      <Filter>include\git2\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\sys\repository.h">
+      <Filter>include\git2\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\sys\stream.h">
+      <Filter>include\git2\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\sys\transport.h">
+      <Filter>include\git2\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\tag.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\trace.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\transaction.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\transport.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\tree.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\types.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\version.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\include\git2\worktree.h">
+      <Filter>include\git2</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\win32\dir.h">
+      <Filter>src\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\win32\error.h">
+      <Filter>src\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\win32\findfile.h">
+      <Filter>src\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\win32\mingw-compat.h">
+      <Filter>src\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\win32\msvc-compat.h">
+      <Filter>src\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\win32\path_w32.h">
+      <Filter>src\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\win32\posix.h">
+      <Filter>src\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\win32\precompiled.h">
+      <Filter>src\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\win32\reparse.h">
+      <Filter>src\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\win32\thread.h">
+      <Filter>src\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\win32\utf-conv.h">
+      <Filter>src\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\win32\version.h">
+      <Filter>src\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\win32\w32_buffer.h">
+      <Filter>src\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\win32\w32_common.h">
+      <Filter>src\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\win32\w32_crtdbg_stacktrace.h">
+      <Filter>src\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\win32\w32_stack.h">
+      <Filter>src\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\win32\w32_util.h">
+      <Filter>src\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\win32\win32-compat.h">
+      <Filter>src\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\alloc.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\allocators\stdalloc.h">
+      <Filter>src\allocators</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\allocators\win32_crtdbg.h">
+      <Filter>src\allocators</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\annotated_commit.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\apply.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\array.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\assert_safe.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\attr.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\attr_file.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\attrcache.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\bitvec.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\blame.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\blame_git.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\blob.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\branch.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\buf_text.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\buffer.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\cache.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\cc-compat.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\checkout.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\clone.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\commit.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\commit_list.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\common.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\config.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\config_backend.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\config_entries.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\config_parse.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\delta.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\diff.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\diff_driver.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\diff_file.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\diff_generate.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\diff_parse.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\diff_tform.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\diff_xdiff.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\errors.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\fetch.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\fetchhead.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\filebuf.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\filter.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\futils.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\global.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\hash.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\idxmap.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\ignore.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\index.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\indexer.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\integer.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\iterator.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\khash.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\mailmap.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\map.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\merge.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\merge_driver.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\message.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\midx.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\mwindow.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\net.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\netops.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\notes.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\object.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\odb.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\offmap.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\oid.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\oidarray.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\oidmap.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\pack-objects.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\pack.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\parse.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\patch.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\patch_generate.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\patch_parse.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\path.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\pathspec.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\pool.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\posix.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\pqueue.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\proxy.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\push.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\reader.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\refdb.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\reflog.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\refs.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\refspec.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\regexp.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\remote.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\repo_template.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\repository.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\revwalk.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\signature.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\sortedcache.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\status.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\stream.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\streams\mbedtls.h">
+      <Filter>src\streams</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\streams\openssl.h">
+      <Filter>src\streams</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\streams\registry.h">
+      <Filter>src\streams</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\streams\socket.h">
+      <Filter>src\streams</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\streams\stransport.h">
+      <Filter>src\streams</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\streams\tls.h">
+      <Filter>src\streams</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\strmap.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\strnlen.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\submodule.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\sysdir.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\tag.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\thread-utils.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\trace.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\transaction.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\transports\auth.h">
+      <Filter>src\transports</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\transports\auth_negotiate.h">
+      <Filter>src\transports</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\transports\auth_ntlm.h">
+      <Filter>src\transports</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\transports\http.h">
+      <Filter>src\transports</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\transports\httpclient.h">
+      <Filter>src\transports</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\transports\smart.h">
+      <Filter>src\transports</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\transports\ssh.h">
+      <Filter>src\transports</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\tree-cache.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\tree.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\userdiff.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\util.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\varint.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\vector.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\wildmatch.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\worktree.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\xdiff\xdiff.h">
+      <Filter>src\xdiff</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\xdiff\xdiffi.h">
+      <Filter>src\xdiff</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\xdiff\xemit.h">
+      <Filter>src\xdiff</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\xdiff\xinclude.h">
+      <Filter>src\xdiff</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\xdiff\xmacros.h">
+      <Filter>src\xdiff</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\xdiff\xprepare.h">
+      <Filter>src\xdiff</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\xdiff\xtypes.h">
+      <Filter>src\xdiff</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\xdiff\xutils.h">
+      <Filter>src\xdiff</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\zstream.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\src\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{AB5B6158-0CD1-36D1-A218-415A21A1425F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\git2">
+      <UniqueIdentifier>{6E5155B7-625F-3ECE-9D3F-0FF09B7C09BE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\git2\sys">
+      <UniqueIdentifier>{2A2F4AD2-19D9-3751-B14F-68A7F10E8636}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{F0769F15-4923-3AB0-8500-32AF2B7BB936}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\allocators">
+      <UniqueIdentifier>{30C501C7-0A5C-3EE9-B7EA-1A39C81E6C0A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\hash">
+      <UniqueIdentifier>{5F913A5E-C3DC-350E-BAAC-CCC01411651F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\hash\sha1">
+      <UniqueIdentifier>{54B06808-F605-386A-83B3-8111F209AA7B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\hash\sha1\sha1dc">
+      <UniqueIdentifier>{ACBB2693-A12C-3328-8A21-BCB9F1AEE06A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\streams">
+      <UniqueIdentifier>{6F6B5CBF-7A3D-32FA-A9E1-950D4DE58A0A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\transports">
+      <UniqueIdentifier>{3BA3610B-D5CE-3AD1-865D-AB48D690F807}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\win32">
+      <UniqueIdentifier>{2A74F9B4-0570-39C2-BFEB-0DC1FA895BB9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\xdiff">
+      <UniqueIdentifier>{2B1B7CBE-8ECF-32B0-AB5E-5C63F19876F6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

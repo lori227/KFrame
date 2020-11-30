@@ -1,0 +1,12 @@
+D:/KFrame/Frame/trunk/KFLibrary/libgit2/vsbuild/CMakeFiles/INSTALL.dir
+D:/KFrame/Frame/trunk/KFLibrary/libgit2/vsbuild/CMakeFiles/ALL_BUILD.dir
+D:/KFrame/Frame/trunk/KFLibrary/libgit2/vsbuild/CMakeFiles/ZERO_CHECK.dir
+D:/KFrame/Frame/trunk/KFLibrary/libgit2/vsbuild/src/CMakeFiles/git2internal.dir
+D:/KFrame/Frame/trunk/KFLibrary/libgit2/vsbuild/src/CMakeFiles/git2.dir
+D:/KFrame/Frame/trunk/KFLibrary/libgit2/vsbuild/src/CMakeFiles/INSTALL.dir
+D:/KFrame/Frame/trunk/KFLibrary/libgit2/vsbuild/deps/pcre/CMakeFiles/pcre.dir
+D:/KFrame/Frame/trunk/KFLibrary/libgit2/vsbuild/deps/pcre/CMakeFiles/INSTALL.dir
+D:/KFrame/Frame/trunk/KFLibrary/libgit2/vsbuild/deps/http-parser/CMakeFiles/http-parser.dir
+D:/KFrame/Frame/trunk/KFLibrary/libgit2/vsbuild/deps/http-parser/CMakeFiles/INSTALL.dir
+D:/KFrame/Frame/trunk/KFLibrary/libgit2/vsbuild/deps/zlib/CMakeFiles/zlib.dir
+D:/KFrame/Frame/trunk/KFLibrary/libgit2/vsbuild/deps/zlib/CMakeFiles/INSTALL.dir

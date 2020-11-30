@@ -1,0 +1,329 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{2AA6D44F-EFFD-37E8-9001-28B3E63B8CBD}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>x64</Platform>
+    <ProjectName>pcre</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pcre.dir\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pcre.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pcre</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pcre.dir\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pcre.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pcre</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">pcre.dir\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">pcre.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">pcre</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">pcre.dir\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">pcre.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">pcre</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\KFrame\Frame\trunk\KFLibrary\libgit2\vsbuild\deps\pcre;D:\KFrame\Frame\trunk\KFLibrary\libgit2\deps\pcre;D:\KFrame\Frame\trunk\KFLibrary\libgit2\vsbuild\src\pcre;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <CallingConvention>Cdecl</CallingConvention>
+      <CompileAs>CompileAsC</CompileAs>
+      <ControlFlowGuard>Guard</ControlFlowGuard>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <StringPooling>true</StringPooling>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WIN32_WINNT=0x0600;SHA1DC_NO_STANDARD_INCLUDES=1;SHA1DC_CUSTOM_INCLUDE_SHA1_C="common.h";SHA1DC_CUSTOM_INCLUDE_UBC_CHECK_C="common.h";HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WIN32_WINNT=0x0600;SHA1DC_NO_STANDARD_INCLUDES=1;SHA1DC_CUSTOM_INCLUDE_SHA1_C=\"common.h\";SHA1DC_CUSTOM_INCLUDE_UBC_CHECK_C=\"common.h\";HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\KFrame\Frame\trunk\KFLibrary\libgit2\vsbuild\deps\pcre;D:\KFrame\Frame\trunk\KFLibrary\libgit2\deps\pcre;D:\KFrame\Frame\trunk\KFLibrary\libgit2\vsbuild\src\pcre;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\KFrame\Frame\trunk\KFLibrary\libgit2\vsbuild\deps\pcre;D:\KFrame\Frame\trunk\KFLibrary\libgit2\deps\pcre;D:\KFrame\Frame\trunk\KFLibrary\libgit2\vsbuild\src\pcre;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /IGNORE:4221</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\KFrame\Frame\trunk\KFLibrary\libgit2\vsbuild\deps\pcre;D:\KFrame\Frame\trunk\KFLibrary\libgit2\deps\pcre;D:\KFrame\Frame\trunk\KFLibrary\libgit2\vsbuild\src\pcre;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <CallingConvention>Cdecl</CallingConvention>
+      <CompileAs>CompileAsC</CompileAs>
+      <ControlFlowGuard>Guard</ControlFlowGuard>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OmitFramePointers>true</OmitFramePointers>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <StringPooling>true</StringPooling>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WIN32_WINNT=0x0600;SHA1DC_NO_STANDARD_INCLUDES=1;SHA1DC_CUSTOM_INCLUDE_SHA1_C="common.h";SHA1DC_CUSTOM_INCLUDE_UBC_CHECK_C="common.h";HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WIN32_WINNT=0x0600;SHA1DC_NO_STANDARD_INCLUDES=1;SHA1DC_CUSTOM_INCLUDE_SHA1_C=\"common.h\";SHA1DC_CUSTOM_INCLUDE_UBC_CHECK_C=\"common.h\";HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\KFrame\Frame\trunk\KFLibrary\libgit2\vsbuild\deps\pcre;D:\KFrame\Frame\trunk\KFLibrary\libgit2\deps\pcre;D:\KFrame\Frame\trunk\KFLibrary\libgit2\vsbuild\src\pcre;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\KFrame\Frame\trunk\KFLibrary\libgit2\vsbuild\deps\pcre;D:\KFrame\Frame\trunk\KFLibrary\libgit2\deps\pcre;D:\KFrame\Frame\trunk\KFLibrary\libgit2\vsbuild\src\pcre;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /IGNORE:4221</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\KFrame\Frame\trunk\KFLibrary\libgit2\vsbuild\deps\pcre;D:\KFrame\Frame\trunk\KFLibrary\libgit2\deps\pcre;D:\KFrame\Frame\trunk\KFLibrary\libgit2\vsbuild\src\pcre;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <CallingConvention>Cdecl</CallingConvention>
+      <CompileAs>CompileAsC</CompileAs>
+      <ControlFlowGuard>Guard</ControlFlowGuard>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OmitFramePointers>true</OmitFramePointers>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <StringPooling>true</StringPooling>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WIN32_WINNT=0x0600;SHA1DC_NO_STANDARD_INCLUDES=1;SHA1DC_CUSTOM_INCLUDE_SHA1_C="common.h";SHA1DC_CUSTOM_INCLUDE_UBC_CHECK_C="common.h";HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="MinSizeRel";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WIN32_WINNT=0x0600;SHA1DC_NO_STANDARD_INCLUDES=1;SHA1DC_CUSTOM_INCLUDE_SHA1_C=\"common.h\";SHA1DC_CUSTOM_INCLUDE_UBC_CHECK_C=\"common.h\";HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\KFrame\Frame\trunk\KFLibrary\libgit2\vsbuild\deps\pcre;D:\KFrame\Frame\trunk\KFLibrary\libgit2\deps\pcre;D:\KFrame\Frame\trunk\KFLibrary\libgit2\vsbuild\src\pcre;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\KFrame\Frame\trunk\KFLibrary\libgit2\vsbuild\deps\pcre;D:\KFrame\Frame\trunk\KFLibrary\libgit2\deps\pcre;D:\KFrame\Frame\trunk\KFLibrary\libgit2\vsbuild\src\pcre;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /IGNORE:4221</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\KFrame\Frame\trunk\KFLibrary\libgit2\vsbuild\deps\pcre;D:\KFrame\Frame\trunk\KFLibrary\libgit2\deps\pcre;D:\KFrame\Frame\trunk\KFLibrary\libgit2\vsbuild\src\pcre;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <CallingConvention>Cdecl</CallingConvention>
+      <CompileAs>CompileAsC</CompileAs>
+      <ControlFlowGuard>Guard</ControlFlowGuard>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OmitFramePointers>false</OmitFramePointers>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <StringPooling>true</StringPooling>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WIN32_WINNT=0x0600;SHA1DC_NO_STANDARD_INCLUDES=1;SHA1DC_CUSTOM_INCLUDE_SHA1_C="common.h";SHA1DC_CUSTOM_INCLUDE_UBC_CHECK_C="common.h";HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="RelWithDebInfo";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WIN32_WINNT=0x0600;SHA1DC_NO_STANDARD_INCLUDES=1;SHA1DC_CUSTOM_INCLUDE_SHA1_C=\"common.h\";SHA1DC_CUSTOM_INCLUDE_UBC_CHECK_C=\"common.h\";HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"RelWithDebInfo\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\KFrame\Frame\trunk\KFLibrary\libgit2\vsbuild\deps\pcre;D:\KFrame\Frame\trunk\KFLibrary\libgit2\deps\pcre;D:\KFrame\Frame\trunk\KFLibrary\libgit2\vsbuild\src\pcre;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\KFrame\Frame\trunk\KFLibrary\libgit2\vsbuild\deps\pcre;D:\KFrame\Frame\trunk\KFLibrary\libgit2\deps\pcre;D:\KFrame\Frame\trunk\KFLibrary\libgit2\vsbuild\src\pcre;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /IGNORE:4221</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\deps\pcre\CMakeLists.txt">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule D:/KFrame/Frame/trunk/KFLibrary/libgit2/deps/pcre/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"D:\Program Files\CMake\bin\cmake.exe" -SD:/KFrame/Frame/trunk/KFLibrary/libgit2 -BD:/KFrame/Frame/trunk/KFLibrary/libgit2/vsbuild --check-stamp-file D:/KFrame/Frame/trunk/KFLibrary/libgit2/vsbuild/deps/pcre/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\KFrame\Frame\trunk\KFLibrary\libgit2\deps\pcre\config.h.in;D:\KFrame\Frame\trunk\KFLibrary\libgit2\vsbuild\CMakeFiles\CheckTypeSize\LONG_LONG.c;D:\KFrame\Frame\trunk\KFLibrary\libgit2\vsbuild\CMakeFiles\CheckTypeSize\UNSIGNED_LONG_LONG.c;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckFunctionExists.c;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckFunctionExists.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckIncludeFile.c.in;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckIncludeFile.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckIncludeFileCXX.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckTypeSize.c.in;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckTypeSize.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\KFrame\Frame\trunk\KFLibrary\libgit2\vsbuild\deps\pcre\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule D:/KFrame/Frame/trunk/KFLibrary/libgit2/deps/pcre/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"D:\Program Files\CMake\bin\cmake.exe" -SD:/KFrame/Frame/trunk/KFLibrary/libgit2 -BD:/KFrame/Frame/trunk/KFLibrary/libgit2/vsbuild --check-stamp-file D:/KFrame/Frame/trunk/KFLibrary/libgit2/vsbuild/deps/pcre/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\KFrame\Frame\trunk\KFLibrary\libgit2\deps\pcre\config.h.in;D:\KFrame\Frame\trunk\KFLibrary\libgit2\vsbuild\CMakeFiles\CheckTypeSize\LONG_LONG.c;D:\KFrame\Frame\trunk\KFLibrary\libgit2\vsbuild\CMakeFiles\CheckTypeSize\UNSIGNED_LONG_LONG.c;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckFunctionExists.c;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckFunctionExists.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckIncludeFile.c.in;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckIncludeFile.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckIncludeFileCXX.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckTypeSize.c.in;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckTypeSize.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\KFrame\Frame\trunk\KFLibrary\libgit2\vsbuild\deps\pcre\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule D:/KFrame/Frame/trunk/KFLibrary/libgit2/deps/pcre/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"D:\Program Files\CMake\bin\cmake.exe" -SD:/KFrame/Frame/trunk/KFLibrary/libgit2 -BD:/KFrame/Frame/trunk/KFLibrary/libgit2/vsbuild --check-stamp-file D:/KFrame/Frame/trunk/KFLibrary/libgit2/vsbuild/deps/pcre/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\KFrame\Frame\trunk\KFLibrary\libgit2\deps\pcre\config.h.in;D:\KFrame\Frame\trunk\KFLibrary\libgit2\vsbuild\CMakeFiles\CheckTypeSize\LONG_LONG.c;D:\KFrame\Frame\trunk\KFLibrary\libgit2\vsbuild\CMakeFiles\CheckTypeSize\UNSIGNED_LONG_LONG.c;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckFunctionExists.c;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckFunctionExists.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckIncludeFile.c.in;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckIncludeFile.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckIncludeFileCXX.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckTypeSize.c.in;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckTypeSize.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\KFrame\Frame\trunk\KFLibrary\libgit2\vsbuild\deps\pcre\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule D:/KFrame/Frame/trunk/KFLibrary/libgit2/deps/pcre/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"D:\Program Files\CMake\bin\cmake.exe" -SD:/KFrame/Frame/trunk/KFLibrary/libgit2 -BD:/KFrame/Frame/trunk/KFLibrary/libgit2/vsbuild --check-stamp-file D:/KFrame/Frame/trunk/KFLibrary/libgit2/vsbuild/deps/pcre/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\KFrame\Frame\trunk\KFLibrary\libgit2\deps\pcre\config.h.in;D:\KFrame\Frame\trunk\KFLibrary\libgit2\vsbuild\CMakeFiles\CheckTypeSize\LONG_LONG.c;D:\KFrame\Frame\trunk\KFLibrary\libgit2\vsbuild\CMakeFiles\CheckTypeSize\UNSIGNED_LONG_LONG.c;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckFunctionExists.c;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckFunctionExists.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckIncludeFile.c.in;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckIncludeFile.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckIncludeFileCXX.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckTypeSize.c.in;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckTypeSize.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\KFrame\Frame\trunk\KFLibrary\libgit2\vsbuild\deps\pcre\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\vsbuild\src\pcre\config.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\deps\pcre\pcre_byte_order.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\deps\pcre\pcre_chartables.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\deps\pcre\pcre_compile.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\deps\pcre\pcre_config.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\deps\pcre\pcre_dfa_exec.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\deps\pcre\pcre_exec.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\deps\pcre\pcre_fullinfo.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\deps\pcre\pcre_get.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\deps\pcre\pcre_globals.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\deps\pcre\pcre_jit_compile.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\deps\pcre\pcre_maketables.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\deps\pcre\pcre_newline.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\deps\pcre\pcre_ord2utf8.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\deps\pcre\pcre_refcount.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\deps\pcre\pcre_string_utils.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\deps\pcre\pcre_study.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\deps\pcre\pcre_tables.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\deps\pcre\pcre_ucd.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\deps\pcre\pcre_valid_utf8.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\deps\pcre\pcre_version.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\deps\pcre\pcre_xclass.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\deps\pcre\pcreposix.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="D:\KFrame\Frame\trunk\KFLibrary\libgit2\vsbuild\ZERO_CHECK.vcxproj">
+      <Project>{11BB8411-F327-3518-ADDF-84929CDA885A}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

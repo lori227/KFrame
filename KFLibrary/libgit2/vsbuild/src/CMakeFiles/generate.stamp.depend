@@ -1,0 +1,16 @@
+# CMake generation dependency list for this directory.
+D:/KFrame/Frame/trunk/KFLibrary/libgit2/cmake/FindGSSAPI.cmake
+D:/KFrame/Frame/trunk/KFLibrary/libgit2/cmake/FindPCRE.cmake
+D:/KFrame/Frame/trunk/KFLibrary/libgit2/cmake/FindmbedTLS.cmake
+D:/KFrame/Frame/trunk/KFLibrary/libgit2/cmake/PkgBuildConfig.cmake
+D:/KFrame/Frame/trunk/KFLibrary/libgit2/cmake/SanitizeBool.cmake
+D:/KFrame/Frame/trunk/KFLibrary/libgit2/cmake/SelectGSSAPI.cmake
+D:/KFrame/Frame/trunk/KFLibrary/libgit2/cmake/SelectHTTPSBackend.cmake
+D:/KFrame/Frame/trunk/KFLibrary/libgit2/cmake/SelectHashes.cmake
+D:/KFrame/Frame/trunk/KFLibrary/libgit2/src/CMakeLists.txt
+D:/KFrame/Frame/trunk/KFLibrary/libgit2/src/features.h.in
+D:/Program Files/CMake/share/cmake-3.17/Modules/FindOpenSSL.cmake
+D:/Program Files/CMake/share/cmake-3.17/Modules/FindPackageHandleStandardArgs.cmake
+D:/Program Files/CMake/share/cmake-3.17/Modules/FindPackageMessage.cmake
+D:/Program Files/CMake/share/cmake-3.17/Modules/FindZLIB.cmake
+D:/Program Files/CMake/share/cmake-3.17/Modules/SelectLibraryConfigurations.cmake

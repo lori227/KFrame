@@ -1,0 +1,39 @@
+# CMake generation dependency list for this directory.
+D:/KFrame/Frame/trunk/KFLibrary/libgit2/CMakeLists.txt
+D:/KFrame/Frame/trunk/KFLibrary/libgit2/cmake/AddCFlagIfSupported.cmake
+D:/KFrame/Frame/trunk/KFLibrary/libgit2/cmake/EnableWarnings.cmake
+D:/KFrame/Frame/trunk/KFLibrary/libgit2/cmake/FindPkgLibraries.cmake
+D:/KFrame/Frame/trunk/KFLibrary/libgit2/cmake/FindStatNsec.cmake
+D:/KFrame/Frame/trunk/KFLibrary/libgit2/cmake/IdeSplitSources.cmake
+D:/KFrame/Frame/trunk/KFLibrary/libgit2/vsbuild/CMakeFiles/3.17.3/CMakeCCompiler.cmake
+D:/KFrame/Frame/trunk/KFLibrary/libgit2/vsbuild/CMakeFiles/3.17.3/CMakeRCCompiler.cmake
+D:/KFrame/Frame/trunk/KFLibrary/libgit2/vsbuild/CMakeFiles/3.17.3/CMakeSystem.cmake
+D:/Program Files/CMake/share/cmake-3.17/Modules/CMakeCInformation.cmake
+D:/Program Files/CMake/share/cmake-3.17/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake
+D:/Program Files/CMake/share/cmake-3.17/Modules/CMakeCommonLanguageInclude.cmake
+D:/Program Files/CMake/share/cmake-3.17/Modules/CMakeGenericSystem.cmake
+D:/Program Files/CMake/share/cmake-3.17/Modules/CMakeInitializeConfigs.cmake
+D:/Program Files/CMake/share/cmake-3.17/Modules/CMakeLanguageInformation.cmake
+D:/Program Files/CMake/share/cmake-3.17/Modules/CMakeRCInformation.cmake
+D:/Program Files/CMake/share/cmake-3.17/Modules/CMakeSystemSpecificInformation.cmake
+D:/Program Files/CMake/share/cmake-3.17/Modules/CMakeSystemSpecificInitialize.cmake
+D:/Program Files/CMake/share/cmake-3.17/Modules/CheckCCompilerFlag.cmake
+D:/Program Files/CMake/share/cmake-3.17/Modules/CheckCSourceCompiles.cmake
+D:/Program Files/CMake/share/cmake-3.17/Modules/CheckCXXSourceCompiles.cmake
+D:/Program Files/CMake/share/cmake-3.17/Modules/CheckFunctionExists.cmake
+D:/Program Files/CMake/share/cmake-3.17/Modules/CheckIncludeFile.cmake
+D:/Program Files/CMake/share/cmake-3.17/Modules/CheckLibraryExists.cmake
+D:/Program Files/CMake/share/cmake-3.17/Modules/CheckPrototypeDefinition.cmake
+D:/Program Files/CMake/share/cmake-3.17/Modules/CheckStructHasMember.cmake
+D:/Program Files/CMake/share/cmake-3.17/Modules/CheckSymbolExists.cmake
+D:/Program Files/CMake/share/cmake-3.17/Modules/Compiler/MSVC-C.cmake
+D:/Program Files/CMake/share/cmake-3.17/Modules/FeatureSummary.cmake
+D:/Program Files/CMake/share/cmake-3.17/Modules/FindPackageHandleStandardArgs.cmake
+D:/Program Files/CMake/share/cmake-3.17/Modules/FindPackageMessage.cmake
+D:/Program Files/CMake/share/cmake-3.17/Modules/FindPkgConfig.cmake
+D:/Program Files/CMake/share/cmake-3.17/Modules/FindThreads.cmake
+D:/Program Files/CMake/share/cmake-3.17/Modules/GNUInstallDirs.cmake
+D:/Program Files/CMake/share/cmake-3.17/Modules/Platform/Windows-MSVC-C.cmake
+D:/Program Files/CMake/share/cmake-3.17/Modules/Platform/Windows-MSVC.cmake
+D:/Program Files/CMake/share/cmake-3.17/Modules/Platform/Windows.cmake
+D:/Program Files/CMake/share/cmake-3.17/Modules/Platform/WindowsPaths.cmake
