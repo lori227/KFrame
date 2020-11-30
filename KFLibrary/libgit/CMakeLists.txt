@@ -35,9 +35,9 @@ INCLUDE(EnableWarnings)
 # Build options
 #
 OPTION(SONAME				"Set the (SO)VERSION of the target"			 ON)
-OPTION(BUILD_SHARED_LIBS		"Build Shared Library (OFF for Static)"			 ON)
+OPTION(BUILD_SHARED_LIBS		"Build Shared Library (OFF for Static)"			 OFF)
 OPTION(THREADSAFE			"Build libgit2 as threadsafe"				 ON)
-OPTION(BUILD_CLAR			"Build Tests using the Clar suite"			 ON)
+OPTION(BUILD_CLAR			"Build Tests using the Clar suite"			 OFF)
 OPTION(BUILD_EXAMPLES			"Build library usage example apps"			OFF)
 OPTION(BUILD_FUZZERS			"Build the fuzz targets"				OFF)
 OPTION(ENABLE_TRACE			"Enables tracing support"				ON)

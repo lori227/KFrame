@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\CMakeFiles\0a5ac11d31adacf751d20a2821570bdc\INSTALL_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{32BB22C4-DFCD-3A4E-813C-91DD788D07D3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

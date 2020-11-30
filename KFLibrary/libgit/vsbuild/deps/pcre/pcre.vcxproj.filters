@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\pcre\pcre_byte_order.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\pcre\pcre_chartables.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\pcre\pcre_compile.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\pcre\pcre_config.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\pcre\pcre_dfa_exec.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\pcre\pcre_exec.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\pcre\pcre_fullinfo.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\pcre\pcre_get.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\pcre\pcre_globals.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\pcre\pcre_jit_compile.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\pcre\pcre_maketables.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\pcre\pcre_newline.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\pcre\pcre_ord2utf8.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\pcre\pcre_refcount.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\pcre\pcre_string_utils.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\pcre\pcre_study.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\pcre\pcre_tables.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\pcre\pcre_ucd.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\pcre\pcre_valid_utf8.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\pcre\pcre_version.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\pcre\pcre_xclass.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\pcre\pcreposix.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\src\pcre\config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\pcre\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{F83B8FE3-5AA7-3982-A2F0-8157804EE5CD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{E3363919-A3C8-331A-921E-5EB3AADB0E48}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{9970288E-15AE-3FB3-8123-9E9A13250D14}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>x64</Platform>
+    <ProjectName>ALL_BUILD</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\CMakeLists.txt">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule D:/KFrame/Frame/trunk/KFLibrary/libgit/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"D:\Program Files\CMake\bin\cmake.exe" -SD:/KFrame/Frame/trunk/KFLibrary/libgit -BD:/KFrame/Frame/trunk/KFLibrary/libgit/vsbuild --check-stamp-file D:/KFrame/Frame/trunk/KFLibrary/libgit/vsbuild/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\AddCFlagIfSupported.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\EnableWarnings.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\FindPkgLibraries.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\FindStatNsec.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\IdeSplitSources.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\CMakeFiles\3.17.3\CMakeCCompiler.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\CMakeFiles\3.17.3\CMakeRCCompiler.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\CMakeFiles\3.17.3\CMakeSystem.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CMakeCInformation.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CMakeCommonLanguageInclude.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CMakeGenericSystem.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CMakeInitializeConfigs.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CMakeLanguageInformation.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CMakeRCInformation.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CMakeSystemSpecificInformation.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CMakeSystemSpecificInitialize.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckCCompilerFlag.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckCSourceCompiles.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckCXXSourceCompiles.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckFunctionExists.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckIncludeFile.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckLibraryExists.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckPrototypeDefinition.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckStructHasMember.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckSymbolExists.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\Compiler\MSVC-C.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\FeatureSummary.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\FindPackageHandleStandardArgs.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\FindPackageMessage.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\FindPkgConfig.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\FindThreads.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\GNUInstallDirs.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\Platform\Windows-MSVC-C.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\Platform\Windows-MSVC.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\Platform\Windows.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\Platform\WindowsPaths.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule D:/KFrame/Frame/trunk/KFLibrary/libgit/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"D:\Program Files\CMake\bin\cmake.exe" -SD:/KFrame/Frame/trunk/KFLibrary/libgit -BD:/KFrame/Frame/trunk/KFLibrary/libgit/vsbuild --check-stamp-file D:/KFrame/Frame/trunk/KFLibrary/libgit/vsbuild/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\AddCFlagIfSupported.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\EnableWarnings.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\FindPkgLibraries.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\FindStatNsec.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\IdeSplitSources.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\CMakeFiles\3.17.3\CMakeCCompiler.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\CMakeFiles\3.17.3\CMakeRCCompiler.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\CMakeFiles\3.17.3\CMakeSystem.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CMakeCInformation.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CMakeCommonLanguageInclude.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CMakeGenericSystem.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CMakeInitializeConfigs.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CMakeLanguageInformation.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CMakeRCInformation.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CMakeSystemSpecificInformation.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CMakeSystemSpecificInitialize.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckCCompilerFlag.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckCSourceCompiles.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckCXXSourceCompiles.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckFunctionExists.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckIncludeFile.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckLibraryExists.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckPrototypeDefinition.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckStructHasMember.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckSymbolExists.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\Compiler\MSVC-C.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\FeatureSummary.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\FindPackageHandleStandardArgs.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\FindPackageMessage.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\FindPkgConfig.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\FindThreads.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\GNUInstallDirs.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\Platform\Windows-MSVC-C.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\Platform\Windows-MSVC.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\Platform\Windows.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\Platform\WindowsPaths.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule D:/KFrame/Frame/trunk/KFLibrary/libgit/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"D:\Program Files\CMake\bin\cmake.exe" -SD:/KFrame/Frame/trunk/KFLibrary/libgit -BD:/KFrame/Frame/trunk/KFLibrary/libgit/vsbuild --check-stamp-file D:/KFrame/Frame/trunk/KFLibrary/libgit/vsbuild/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\AddCFlagIfSupported.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\EnableWarnings.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\FindPkgLibraries.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\FindStatNsec.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\IdeSplitSources.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\CMakeFiles\3.17.3\CMakeCCompiler.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\CMakeFiles\3.17.3\CMakeRCCompiler.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\CMakeFiles\3.17.3\CMakeSystem.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CMakeCInformation.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CMakeCommonLanguageInclude.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CMakeGenericSystem.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CMakeInitializeConfigs.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CMakeLanguageInformation.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CMakeRCInformation.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CMakeSystemSpecificInformation.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CMakeSystemSpecificInitialize.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckCCompilerFlag.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckCSourceCompiles.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckCXXSourceCompiles.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckFunctionExists.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckIncludeFile.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckLibraryExists.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckPrototypeDefinition.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckStructHasMember.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckSymbolExists.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\Compiler\MSVC-C.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\FeatureSummary.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\FindPackageHandleStandardArgs.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\FindPackageMessage.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\FindPkgConfig.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\FindThreads.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\GNUInstallDirs.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\Platform\Windows-MSVC-C.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\Platform\Windows-MSVC.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\Platform\Windows.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\Platform\WindowsPaths.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule D:/KFrame/Frame/trunk/KFLibrary/libgit/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"D:\Program Files\CMake\bin\cmake.exe" -SD:/KFrame/Frame/trunk/KFLibrary/libgit -BD:/KFrame/Frame/trunk/KFLibrary/libgit/vsbuild --check-stamp-file D:/KFrame/Frame/trunk/KFLibrary/libgit/vsbuild/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\AddCFlagIfSupported.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\EnableWarnings.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\FindPkgLibraries.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\FindStatNsec.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\IdeSplitSources.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\CMakeFiles\3.17.3\CMakeCCompiler.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\CMakeFiles\3.17.3\CMakeRCCompiler.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\CMakeFiles\3.17.3\CMakeSystem.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CMakeCInformation.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CMakeCommonLanguageInclude.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CMakeGenericSystem.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CMakeInitializeConfigs.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CMakeLanguageInformation.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CMakeRCInformation.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CMakeSystemSpecificInformation.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CMakeSystemSpecificInitialize.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckCCompilerFlag.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckCSourceCompiles.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckCXXSourceCompiles.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckFunctionExists.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckIncludeFile.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckLibraryExists.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckPrototypeDefinition.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckStructHasMember.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\CheckSymbolExists.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\Compiler\MSVC-C.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\FeatureSummary.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\FindPackageHandleStandardArgs.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\FindPackageMessage.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\FindPkgConfig.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\FindThreads.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\GNUInstallDirs.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\Platform\Windows-MSVC-C.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\Platform\Windows-MSVC.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\Platform\Windows.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\Platform\WindowsPaths.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\ZERO_CHECK.vcxproj">
+      <Project>{0DEE307F-0085-3BB3-9EF0-656A32FD1192}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\src\git2.vcxproj">
+      <Project>{B984DE4C-568A-3ACD-91BF-CEF25FF050C3}</Project>
+      <Name>git2</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\src\git2internal.vcxproj">
+      <Project>{DC93B084-8B71-3946-B15E-1859D75F2447}</Project>
+      <Name>git2internal</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\deps\http-parser\http-parser.vcxproj">
+      <Project>{F4E18576-C213-375C-BE34-FDEFFEF73339}</Project>
+      <Name>http-parser</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\deps\pcre\pcre.vcxproj">
+      <Project>{0EC6DE08-0948-3872-AFE4-7658F4AD6F39}</Project>
+      <Name>pcre</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\deps\zlib\zlib.vcxproj">
+      <Project>{818F5D17-117C-3AD6-9661-4E22FBA3C41F}</Project>
+      <Name>zlib</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

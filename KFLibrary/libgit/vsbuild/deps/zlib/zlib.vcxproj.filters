@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\zlib\adler32.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\zlib\crc32.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\zlib\deflate.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\zlib\infback.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\zlib\inffast.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\zlib\inflate.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\zlib\inftrees.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\zlib\trees.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\zlib\zutil.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\zlib\crc32.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\zlib\deflate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\zlib\gzguts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\zlib\inffast.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\zlib\inffixed.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\zlib\inflate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\zlib\inftrees.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\zlib\trees.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\zlib\zconf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\zlib\zlib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\zlib\zutil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\zlib\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{F83B8FE3-5AA7-3982-A2F0-8157804EE5CD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{E3363919-A3C8-331A-921E-5EB3AADB0E48}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

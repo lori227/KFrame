@@ -1,0 +1,735 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{DC93B084-8B71-3946-B15E-1859D75F2447}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>x64</Platform>
+    <ProjectName>git2internal</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">git2internal.dir\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">git2internal.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">git2internal</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">git2internal.dir\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">git2internal.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">git2internal</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">git2internal.dir\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">git2internal.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">git2internal</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">git2internal.dir\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">git2internal.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">git2internal</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\src;D:\KFrame\Frame\trunk\KFLibrary\libgit\src;D:\KFrame\Frame\trunk\KFLibrary\libgit\include;D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\pcre;D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\http-parser;D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <CallingConvention>Cdecl</CallingConvention>
+      <CompileAs>CompileAsC</CompileAs>
+      <ControlFlowGuard>Guard</ControlFlowGuard>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <StringPooling>true</StringPooling>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;HAVE_QSORT_S;_FILE_OFFSET_BITS=64;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WIN32_WINNT=0x0600;SHA1DC_NO_STANDARD_INCLUDES=1;SHA1DC_CUSTOM_INCLUDE_SHA1_C="common.h";SHA1DC_CUSTOM_INCLUDE_UBC_CHECK_C="common.h";CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;HAVE_QSORT_S;_FILE_OFFSET_BITS=64;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WIN32_WINNT=0x0600;SHA1DC_NO_STANDARD_INCLUDES=1;SHA1DC_CUSTOM_INCLUDE_SHA1_C=\"common.h\";SHA1DC_CUSTOM_INCLUDE_UBC_CHECK_C=\"common.h\";CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\src;D:\KFrame\Frame\trunk\KFLibrary\libgit\src;D:\KFrame\Frame\trunk\KFLibrary\libgit\include;D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\pcre;D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\http-parser;D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\src;D:\KFrame\Frame\trunk\KFLibrary\libgit\src;D:\KFrame\Frame\trunk\KFLibrary\libgit\include;D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\pcre;D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\http-parser;D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /IGNORE:4221</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\src;D:\KFrame\Frame\trunk\KFLibrary\libgit\src;D:\KFrame\Frame\trunk\KFLibrary\libgit\include;D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\pcre;D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\http-parser;D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <CallingConvention>Cdecl</CallingConvention>
+      <CompileAs>CompileAsC</CompileAs>
+      <ControlFlowGuard>Guard</ControlFlowGuard>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OmitFramePointers>true</OmitFramePointers>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <StringPooling>true</StringPooling>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;HAVE_QSORT_S;_FILE_OFFSET_BITS=64;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WIN32_WINNT=0x0600;SHA1DC_NO_STANDARD_INCLUDES=1;SHA1DC_CUSTOM_INCLUDE_SHA1_C="common.h";SHA1DC_CUSTOM_INCLUDE_UBC_CHECK_C="common.h";CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;HAVE_QSORT_S;_FILE_OFFSET_BITS=64;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WIN32_WINNT=0x0600;SHA1DC_NO_STANDARD_INCLUDES=1;SHA1DC_CUSTOM_INCLUDE_SHA1_C=\"common.h\";SHA1DC_CUSTOM_INCLUDE_UBC_CHECK_C=\"common.h\";CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\src;D:\KFrame\Frame\trunk\KFLibrary\libgit\src;D:\KFrame\Frame\trunk\KFLibrary\libgit\include;D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\pcre;D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\http-parser;D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\src;D:\KFrame\Frame\trunk\KFLibrary\libgit\src;D:\KFrame\Frame\trunk\KFLibrary\libgit\include;D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\pcre;D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\http-parser;D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /IGNORE:4221</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\src;D:\KFrame\Frame\trunk\KFLibrary\libgit\src;D:\KFrame\Frame\trunk\KFLibrary\libgit\include;D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\pcre;D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\http-parser;D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <CallingConvention>Cdecl</CallingConvention>
+      <CompileAs>CompileAsC</CompileAs>
+      <ControlFlowGuard>Guard</ControlFlowGuard>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OmitFramePointers>true</OmitFramePointers>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <StringPooling>true</StringPooling>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;HAVE_QSORT_S;_FILE_OFFSET_BITS=64;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WIN32_WINNT=0x0600;SHA1DC_NO_STANDARD_INCLUDES=1;SHA1DC_CUSTOM_INCLUDE_SHA1_C="common.h";SHA1DC_CUSTOM_INCLUDE_UBC_CHECK_C="common.h";CMAKE_INTDIR="MinSizeRel";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;HAVE_QSORT_S;_FILE_OFFSET_BITS=64;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WIN32_WINNT=0x0600;SHA1DC_NO_STANDARD_INCLUDES=1;SHA1DC_CUSTOM_INCLUDE_SHA1_C=\"common.h\";SHA1DC_CUSTOM_INCLUDE_UBC_CHECK_C=\"common.h\";CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\src;D:\KFrame\Frame\trunk\KFLibrary\libgit\src;D:\KFrame\Frame\trunk\KFLibrary\libgit\include;D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\pcre;D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\http-parser;D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\src;D:\KFrame\Frame\trunk\KFLibrary\libgit\src;D:\KFrame\Frame\trunk\KFLibrary\libgit\include;D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\pcre;D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\http-parser;D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /IGNORE:4221</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\src;D:\KFrame\Frame\trunk\KFLibrary\libgit\src;D:\KFrame\Frame\trunk\KFLibrary\libgit\include;D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\pcre;D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\http-parser;D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <CallingConvention>Cdecl</CallingConvention>
+      <CompileAs>CompileAsC</CompileAs>
+      <ControlFlowGuard>Guard</ControlFlowGuard>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OmitFramePointers>false</OmitFramePointers>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <StringPooling>true</StringPooling>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;HAVE_QSORT_S;_FILE_OFFSET_BITS=64;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WIN32_WINNT=0x0600;SHA1DC_NO_STANDARD_INCLUDES=1;SHA1DC_CUSTOM_INCLUDE_SHA1_C="common.h";SHA1DC_CUSTOM_INCLUDE_UBC_CHECK_C="common.h";CMAKE_INTDIR="RelWithDebInfo";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;HAVE_QSORT_S;_FILE_OFFSET_BITS=64;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WIN32_WINNT=0x0600;SHA1DC_NO_STANDARD_INCLUDES=1;SHA1DC_CUSTOM_INCLUDE_SHA1_C=\"common.h\";SHA1DC_CUSTOM_INCLUDE_UBC_CHECK_C=\"common.h\";CMAKE_INTDIR=\"RelWithDebInfo\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\src;D:\KFrame\Frame\trunk\KFLibrary\libgit\src;D:\KFrame\Frame\trunk\KFLibrary\libgit\include;D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\pcre;D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\http-parser;D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\src;D:\KFrame\Frame\trunk\KFLibrary\libgit\src;D:\KFrame\Frame\trunk\KFLibrary\libgit\include;D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\pcre;D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\http-parser;D:\KFrame\Frame\trunk\KFLibrary\libgit\deps\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /IGNORE:4221</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\CMakeLists.txt">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule D:/KFrame/Frame/trunk/KFLibrary/libgit/src/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"D:\Program Files\CMake\bin\cmake.exe" -SD:/KFrame/Frame/trunk/KFLibrary/libgit -BD:/KFrame/Frame/trunk/KFLibrary/libgit/vsbuild --check-stamp-file D:/KFrame/Frame/trunk/KFLibrary/libgit/vsbuild/src/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\FindGSSAPI.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\FindPCRE.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\FindmbedTLS.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\PkgBuildConfig.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\SanitizeBool.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\SelectGSSAPI.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\SelectHTTPSBackend.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\SelectHashes.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\src\features.h.in;D:\Program Files\CMake\share\cmake-3.17\Modules\FindOpenSSL.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\FindPackageHandleStandardArgs.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\FindPackageMessage.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\FindZLIB.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\SelectLibraryConfigurations.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\src\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule D:/KFrame/Frame/trunk/KFLibrary/libgit/src/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"D:\Program Files\CMake\bin\cmake.exe" -SD:/KFrame/Frame/trunk/KFLibrary/libgit -BD:/KFrame/Frame/trunk/KFLibrary/libgit/vsbuild --check-stamp-file D:/KFrame/Frame/trunk/KFLibrary/libgit/vsbuild/src/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\FindGSSAPI.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\FindPCRE.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\FindmbedTLS.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\PkgBuildConfig.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\SanitizeBool.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\SelectGSSAPI.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\SelectHTTPSBackend.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\SelectHashes.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\src\features.h.in;D:\Program Files\CMake\share\cmake-3.17\Modules\FindOpenSSL.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\FindPackageHandleStandardArgs.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\FindPackageMessage.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\FindZLIB.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\SelectLibraryConfigurations.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\src\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule D:/KFrame/Frame/trunk/KFLibrary/libgit/src/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"D:\Program Files\CMake\bin\cmake.exe" -SD:/KFrame/Frame/trunk/KFLibrary/libgit -BD:/KFrame/Frame/trunk/KFLibrary/libgit/vsbuild --check-stamp-file D:/KFrame/Frame/trunk/KFLibrary/libgit/vsbuild/src/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\FindGSSAPI.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\FindPCRE.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\FindmbedTLS.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\PkgBuildConfig.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\SanitizeBool.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\SelectGSSAPI.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\SelectHTTPSBackend.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\SelectHashes.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\src\features.h.in;D:\Program Files\CMake\share\cmake-3.17\Modules\FindOpenSSL.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\FindPackageHandleStandardArgs.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\FindPackageMessage.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\FindZLIB.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\SelectLibraryConfigurations.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\src\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule D:/KFrame/Frame/trunk/KFLibrary/libgit/src/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"D:\Program Files\CMake\bin\cmake.exe" -SD:/KFrame/Frame/trunk/KFLibrary/libgit -BD:/KFrame/Frame/trunk/KFLibrary/libgit/vsbuild --check-stamp-file D:/KFrame/Frame/trunk/KFLibrary/libgit/vsbuild/src/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\FindGSSAPI.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\FindPCRE.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\FindmbedTLS.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\PkgBuildConfig.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\SanitizeBool.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\SelectGSSAPI.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\SelectHTTPSBackend.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\cmake\SelectHashes.cmake;D:\KFrame\Frame\trunk\KFLibrary\libgit\src\features.h.in;D:\Program Files\CMake\share\cmake-3.17\Modules\FindOpenSSL.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\FindPackageHandleStandardArgs.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\FindPackageMessage.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\FindZLIB.cmake;D:\Program Files\CMake\share\cmake-3.17\Modules\SelectLibraryConfigurations.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\src\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\hash\sha1\collisiondetect.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\hash\sha1\collisiondetect.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\hash\sha1\sha1dc\sha1.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\hash\sha1\sha1dc\sha1.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\hash\sha1\sha1dc\ubc_check.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\hash\sha1\sha1dc\ubc_check.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\annotated_commit.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\apply.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\attr.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\blame.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\blob.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\branch.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\buffer.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\cert.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\checkout.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\cherrypick.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\clone.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\commit.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\common.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\config.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\cred_helpers.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\credential.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\credential_helpers.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\deprecated.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\describe.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\diff.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\errors.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\filter.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\global.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\graph.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\ignore.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\index.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\indexer.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\mailmap.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\merge.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\message.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\net.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\notes.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\object.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\odb.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\odb_backend.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\oid.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\oidarray.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\pack.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\patch.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\pathspec.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\proxy.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\rebase.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\refdb.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\reflog.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\refs.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\refspec.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\remote.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\repository.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\reset.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\revert.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\revparse.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\revwalk.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\signature.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\stash.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\status.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\stdint.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\strarray.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\submodule.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\sys\alloc.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\sys\commit.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\sys\config.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\sys\cred.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\sys\credential.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\sys\diff.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\sys\filter.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\sys\hashsig.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\sys\index.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\sys\mempack.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\sys\merge.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\sys\odb_backend.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\sys\openssl.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\sys\path.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\sys\refdb_backend.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\sys\reflog.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\sys\refs.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\sys\repository.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\sys\stream.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\sys\transport.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\tag.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\trace.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\transaction.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\transport.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\tree.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\types.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\version.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\include\git2\worktree.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\win32\dir.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\win32\dir.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\win32\error.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\win32\error.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\win32\findfile.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\win32\findfile.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\win32\map.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\win32\mingw-compat.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\win32\msvc-compat.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\win32\path_w32.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\win32\path_w32.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\win32\posix.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\win32\posix_w32.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\win32\precompiled.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">precompiled.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">precompiled.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">precompiled.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">precompiled.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\win32\precompiled.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\win32\reparse.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\win32\thread.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\win32\thread.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\win32\utf-conv.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\win32\utf-conv.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\win32\version.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\win32\w32_buffer.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\win32\w32_buffer.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\win32\w32_common.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\win32\w32_crtdbg_stacktrace.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\win32\w32_crtdbg_stacktrace.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\win32\w32_stack.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\win32\w32_stack.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\win32\w32_util.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\win32\w32_util.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\win32\win32-compat.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\alloc.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\alloc.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\allocators\stdalloc.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\allocators\stdalloc.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\allocators\win32_crtdbg.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\allocators\win32_crtdbg.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\annotated_commit.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\annotated_commit.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\apply.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\apply.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\array.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\assert_safe.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\attr.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\attr.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\attr_file.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\attr_file.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\attrcache.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\attrcache.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\bitvec.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\blame.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\blame.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\blame_git.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\blame_git.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\blob.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\blob.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\branch.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\branch.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\buf_text.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\buf_text.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\buffer.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\buffer.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\cache.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\cache.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\cc-compat.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\checkout.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\checkout.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\cherrypick.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\clone.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\clone.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\commit.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\commit.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\commit_list.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\commit_list.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\common.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\config.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\config.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\config_backend.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\config_cache.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\config_entries.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\config_entries.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\config_file.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\config_mem.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\config_parse.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\config_parse.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\config_snapshot.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\crlf.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\date.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\delta.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\delta.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\describe.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\diff.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\diff.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\diff_driver.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\diff_driver.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\diff_file.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\diff_file.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\diff_generate.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\diff_generate.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\diff_parse.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\diff_parse.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\diff_print.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\diff_stats.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\diff_tform.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\diff_tform.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\diff_xdiff.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\diff_xdiff.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\errors.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\errors.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\fetch.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\fetch.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\fetchhead.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\fetchhead.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\filebuf.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\filebuf.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\filter.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\filter.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\futils.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\futils.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\global.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\global.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\graph.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\hash.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\hash.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\hashsig.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\ident.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\idxmap.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\idxmap.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\ignore.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\ignore.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\index.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\index.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\indexer.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\indexer.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\integer.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\iterator.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\iterator.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\khash.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\mailmap.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\mailmap.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\map.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\merge.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\merge.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\merge_driver.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\merge_driver.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\merge_file.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\message.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\message.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\midx.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\midx.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\mwindow.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\mwindow.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\net.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\net.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\netops.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\netops.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\notes.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\notes.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\object.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\object.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\object_api.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\odb.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\odb.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\odb_loose.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\odb_mempack.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\odb_pack.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\offmap.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\offmap.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\oid.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\oid.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\oidarray.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\oidarray.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\oidmap.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\oidmap.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\pack-objects.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\pack-objects.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\pack.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\pack.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\parse.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\parse.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\patch.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\patch.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\patch_generate.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\patch_generate.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\patch_parse.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\patch_parse.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\path.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\path.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\pathspec.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\pathspec.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\pool.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\pool.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\posix.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\posix.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\pqueue.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\pqueue.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\proxy.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\proxy.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\push.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\push.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\reader.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\reader.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\rebase.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\refdb.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\refdb.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\refdb_fs.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\reflog.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\reflog.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\refs.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\refs.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\refspec.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\refspec.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\regexp.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\regexp.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\remote.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\remote.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\repo_template.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\repository.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\repository.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\reset.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\revert.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\revparse.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\revwalk.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\revwalk.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\settings.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\signature.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\signature.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\sortedcache.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\sortedcache.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\stash.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\status.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\status.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\strarray.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\stream.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\streams\mbedtls.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\streams\mbedtls.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\streams\openssl.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\streams\openssl.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\streams\registry.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\streams\registry.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\streams\socket.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\streams\socket.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\streams\stransport.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\streams\stransport.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\streams\tls.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\streams\tls.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\strmap.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\strmap.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\strnlen.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\submodule.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\submodule.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\sysdir.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\sysdir.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\tag.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\tag.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\thread-utils.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\thread-utils.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\trace.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\trace.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\trailer.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\transaction.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\transaction.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\transport.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\transports\auth.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\transports\auth.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\transports\auth_negotiate.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\transports\auth_negotiate.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\transports\auth_ntlm.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\transports\auth_ntlm.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\transports\credential.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\transports\credential_helpers.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\transports\git.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\transports\http.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\transports\http.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\transports\httpclient.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\transports\httpclient.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\transports\local.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\transports\smart.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\transports\smart.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\transports\smart_pkt.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\transports\smart_protocol.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\transports\ssh.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\transports\ssh.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\transports\winhttp.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\tree-cache.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\tree-cache.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\tree.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\tree.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\tsort.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\userdiff.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\util.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\util.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\varint.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\varint.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\vector.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\vector.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\wildmatch.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\wildmatch.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\worktree.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\worktree.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\xdiff\xdiff.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\xdiff\xdiffi.c">
+      <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</TreatWarningAsError>
+      <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</TreatWarningAsError>
+      <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</TreatWarningAsError>
+      <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</TreatWarningAsError>
+    </ClCompile>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\xdiff\xdiffi.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\xdiff\xemit.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\xdiff\xemit.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\xdiff\xhistogram.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\xdiff\xinclude.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\xdiff\xmacros.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\xdiff\xmerge.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\xdiff\xpatience.c" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\xdiff\xprepare.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\xdiff\xprepare.h" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\xdiff\xtypes.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\xdiff\xutils.c">
+      <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</TreatWarningAsError>
+      <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</TreatWarningAsError>
+      <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</TreatWarningAsError>
+      <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</TreatWarningAsError>
+    </ClCompile>
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\xdiff\xutils.h" />
+    <ClCompile Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\zstream.c" />
+    <ClInclude Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\src\zstream.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="D:\KFrame\Frame\trunk\KFLibrary\libgit\vsbuild\ZERO_CHECK.vcxproj">
+      <Project>{0DEE307F-0085-3BB3-9EF0-656A32FD1192}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

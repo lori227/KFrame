@@ -1,0 +1,7 @@
+# CMake generation dependency list for this directory.
+D:/KFrame/Frame/trunk/KFLibrary/libgit/deps/pcre/CMakeLists.txt
+D:/KFrame/Frame/trunk/KFLibrary/libgit/deps/pcre/config.h.in
+D:/Program Files/CMake/share/cmake-3.17/Modules/CheckFunctionExists.cmake
+D:/Program Files/CMake/share/cmake-3.17/Modules/CheckIncludeFile.cmake
+D:/Program Files/CMake/share/cmake-3.17/Modules/CheckIncludeFileCXX.cmake
+D:/Program Files/CMake/share/cmake-3.17/Modules/CheckTypeSize.cmake
