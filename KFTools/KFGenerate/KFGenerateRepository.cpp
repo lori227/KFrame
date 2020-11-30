@@ -8,17 +8,17 @@ namespace KFrame
 {
     void KFGenerateRepository::Shutdown()
     {
-        if ( _repository != nullptr )
+        if ( _git_svn != nullptr )
         {
-            _repository->Shutdown();
-            __DELETE_OBJECT__( _repository );
+            _git_svn->Shutdown();
+            __DELETE_OBJECT__( _git_svn );
         }
     }
 
     void KFGenerateRepository::CreateRepository( const std::string& type )
     {
         _type = type;
-        __DELETE_OBJECT__( _repository );
+        __DELETE_OBJECT__( _git_svn );
         if ( _type == "git" )
         {
             _git_svn = __NEW_OBJECT__( KFGenerateGit );
