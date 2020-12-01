@@ -3,7 +3,9 @@
 #include "git2/repository.h"
 #include "git2/errors.h"
 #include "git2/deprecated.h"
+#include "git2/signature.h"
 #include "KFGenerateEvent.h"
+#include "KFUtility/KFConvert.h"
 
 namespace KFrame
 {
@@ -30,5 +32,127 @@ namespace KFrame
         }
 
         return KFRepository::Open( data );
+    }
+
+    int index_matched_path_cb( const char* path, const char* matched_pathspec, void* payload )
+    {
+        auto filename = KFConvert::ToAscii( path );
+        _event->ShowEventMessage( __FORMAT__( "文件=[{}]添加成功", filename ) );
+        return 0;
+    }
+
+    bool KFGenerateGit::AddAllFile( const std::string& path )
+    {
+        // get index
+        git_index* index = nullptr;
+        git_repository_index( &index, _git_repository );
+
+        char* paths[ 1 ];
+        paths[ 0 ] = ( char* )path.c_str();
+
+        git_strarray gitpath = { nullptr, 0 };
+        gitpath.strings = paths;
+        gitpath.count = sizeof( paths ) / sizeof( char* );
+
+        auto result = git_index_add_all( index, &gitpath, GIT_INDEX_ADD_DEFAULT, index_matched_path_cb, nullptr );
+        if ( result < 0 )
+        {
+            const git_error* error = giterr_last();
+            _event->ShowEventMessage( __FORMAT__( "添加文件失败[{}:{}]", error->klass, error->message ) );
+            return false;
+        }
+
+        git_index_write( index );
+        return true;
+    }
+
+    bool KFGenerateGit::Commit( const std::string& message )
+    {
+        // head ref
+        git_reference* ref_head = nullptr;
+        auto result = git_repository_head( &ref_head, _git_repository );
+        if ( result != 0 && result != GIT_EUNBORNBRANCH )
+        {
+            _event->ShowEventMessage( __FORMAT__( "获取git仓库的头信息失败=[{}]", result ) );
+            return false;
+        }
+
+        // get parent commit
+        git_commit* parent_commit = nullptr;
+        git_commit_lookup( &parent_commit, _git_repository, git_reference_target( ref_head ) );
+        git_reference_free( ref_head );
+
+
+        const git_commit* parents[] = { nullptr };
+        parents[ 0 ] = parent_commit;
+        auto parent_count = 1;
+
+        // get index
+        git_index* index = nullptr;
+        git_repository_index( &index, _git_repository );
+
+        // write index to tree
+        git_oid new_tree_id;
+        auto writeresult = git_index_write_tree( &new_tree_id, index );
+        if ( writeresult < 0 )
+        {
+            const git_error* error = giterr_last();
+            _event->ShowEventMessage( __FORMAT__( "写入git仓库树失败[{}:{}]", error->klass, error->message ) );
+            return false;
+        }
+        git_index_free( index );
+
+        git_tree* new_tree = nullptr;
+        git_tree_lookup( &new_tree, _git_repository, &new_tree_id );
+
+        // signature
+        git_signature* author = nullptr;
+        git_signature_now( &author, _data->_user.c_str(), _data->_mail.c_str() );
+
+        // new commit
+        git_oid new_commit;
+        auto commitresult = git_commit_create( &new_commit, _git_repository, "HEAD", author, author,
+                                               "UTF-8", KFConvert::ToUTF8( message ).c_str(), new_tree, parent_count, parents );
+        if ( commitresult < 0 )
+        {
+            const git_error* error = giterr_last();
+            _event->ShowEventMessage( __FORMAT__( "提交git仓库失败[{}:{}]", error->klass, error->message ) );
+            return false;
+        }
+
+        git_commit_free( parent_commit );
+        git_tree_free( new_tree );
+        git_signature_free( author );
+        return true;
+    }
+
+    bool KFGenerateGit::Push()
+    {
+        const char* refs[] = { "refs/heads/master:refs/heads/master" };
+        git_strarray strarr = { ( char** )refs, 1 };
+
+        git_credential_userpass_payload user_pass =
+        {
+            _data->_user.c_str(), _data->_password.c_str()
+        };
+
+        git_remote* remote = nullptr;
+        git_remote_lookup( &remote, _git_repository, "origin" );
+
+        git_push_options opts = GIT_PUSH_OPTIONS_INIT;
+        opts.callbacks.credentials = git_credential_userpass;
+        opts.callbacks.payload = &user_pass;
+        auto result = git_remote_push( remote, &strarr, &opts );
+        if ( result == 0 )
+        {
+            _event->ShowEventMessage( __FORMAT__( "push git仓库成功" ) );
+        }
+        else
+        {
+            const git_error* error = giterr_last();
+            _event->ShowEventMessage( __FORMAT__( "push git仓库失败[{}:{}]", error->klass, error->message ) );
+        }
+
+        return result == 0;
     }
 }

@@ -16,7 +16,16 @@ namespace KFrame
         virtual void Shutdown();
 
         // 打开仓库
-        bool Open( const RepositoryData* data );
+        virtual bool Open( const RepositoryData* data );
+
+        // 添加文件
+        virtual bool AddAllFile( const std::string& path );
+
+        // 提交修改
+        virtual bool Commit( const std::string& message );
+
+        // push更新
+        virtual bool Push();
     private:
         // 仓库的会话
         git_repository* _git_repository = nullptr;

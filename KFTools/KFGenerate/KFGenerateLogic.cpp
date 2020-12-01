@@ -190,6 +190,7 @@ namespace KFrame
                     auto repositorydata = _repository_list.Create( type );
                     repositorydata->_type = type;
                     repositorydata->_user = repositorynode.ReadString( "user" );
+                    repositorydata->_mail = repositorynode.ReadString( "mail" );
                     repositorydata->_password = repositorynode.ReadString( "password" );
                     repositorydata->_path = repositorynode.ReadString( "path" );
 

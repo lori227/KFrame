@@ -59,6 +59,7 @@ BEGIN_MESSAGE_MAP( CKFGenerateDlg, CDialogEx )
     ON_COMMAND( ID_32772, &CKFGenerateDlg::OnChangeExcelClientType )
     ON_COMMAND( ID_32773, &CKFGenerateDlg::OnChangeExcelCommonType )
     ON_BN_CLICKED( IDC_BUTTON6, &CKFGenerateDlg::OnBnClickedButton6 )
+    ON_BN_CLICKED( IDC_BUTTON7, &CKFGenerateDlg::OnBnClickedButton7 )
 END_MESSAGE_MAP()
 
 
@@ -601,4 +602,13 @@ void CKFGenerateDlg::ParseExcelFinish( EventData* eventdata )
 void CKFGenerateDlg::ShowLogicMessage( EventData* eventdata )
 {
     _list_info.AddString( eventdata->_str_param.c_str() );
+}
+
+void CKFGenerateDlg::OnBnClickedButton7()
+{
+    // TODO: 在此添加控件通知处理程序代码
+    // _repository->AddAllFile( "_resource/excel/table/*.xlsx" );
+    //_repository->AddAllFile( "_bin/config/*.xml" );
+    //_repository->Commit( "提交配置表" );
+    _repository->Push();
 }

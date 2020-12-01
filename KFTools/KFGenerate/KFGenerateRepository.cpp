@@ -57,5 +57,41 @@ namespace KFrame
         return true;
     }
 
+    bool KFGenerateRepository::IsOpen() const
+    {
+        return _git_svn != nullptr && _git_svn->_data != nullptr;
+    }
 
+    bool KFGenerateRepository::AddAllFile( const std::string& path )
+    {
+        if ( !IsOpen() )
+        {
+            _event->ShowEventMessage( "仓库打开失败, 请检查配置和网络!" );
+            return false;
+        }
+
+        return _git_svn->AddAllFile( path );
+    }
+
+    bool KFGenerateRepository::Commit( const std::string& message )
+    {
+        if ( !IsOpen() )
+        {
+            _event->ShowEventMessage( "仓库打开失败, 请检查配置和网络!" );
+            return false;
+        }
+
+        return _git_svn->Commit( message );
+    }
+
+    bool KFGenerateRepository::Push()
+    {
+        if ( !IsOpen() )
+        {
+            _event->ShowEventMessage( "仓库打开失败, 请检查配置和网络!" );
+            return false;
+        }
+
+        return _git_svn->Push();
+    }
 }

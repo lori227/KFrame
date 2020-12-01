@@ -114,4 +114,5 @@ public:
     afx_msg void OnBnClickedButton6();
     CListBox _list_info;
     CButton _button_generate;
+    afx_msg void OnBnClickedButton7();
 };

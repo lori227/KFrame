@@ -10,8 +10,8 @@
 
 	<!-- 仓库列表 -->
 	<repositorys>
-		<repository type="git" user="lori227@qq.com" password="lori@19840227" path="../../"/>
-		<repository type="svn" user="lori227@qq.com" password="lori@19840227" path="../../"/>
+		<repository type="git" user="lori227" mail="lori227@qq.com" password="lori@19840227" path="../../"/>
+		<repository type="svn" user="lori227" mail="lori227@qq.com" password="lori@19840227" path="../../"/>
 	</repositorys>
 
 	<!-- 类型列表 -->

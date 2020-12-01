@@ -7,13 +7,25 @@ namespace KFrame
     class KFGenerateRepository: public KFSingleton< KFGenerateRepository >
     {
     public:
-        // 打开仓库
-        bool Open( const std::string& type );
-
         // 关闭
         void Shutdown();
 
+        // 打开仓库
+        bool Open( const std::string& type );
+
+        // 添加所有文件
+        bool AddAllFile( const std::string& path );
+
+        // 提交修改
+        bool Commit( const std::string& message );
+
+        // 拉取更新
+        virtual bool Push();
+
     protected:
+        // 仓库是否打开
+        bool IsOpen() const;
+
         // 创建仓库
         void CreateRepository( const std::string& type );
     private:
