@@ -13,4 +13,5 @@
 	<node row="19" id="ownexp" parentname="player" dataname="exp" initcalctype="2" calltype="3" useoperate="3" usetype="2"/>
 	<node row="20" id="owngrade" parentname="basic" dataname="grade" initcalctype="2" calltype="3" useoperate="3" usetype="2"/>
 	<node row="21" triggeruse="2" id="ownachieve" parentname="achieve" dataname="status" initcalctype="1" calltype="3" triggertype="3" triggercheck="13" triggervalue="4" useoperate="1" usevalue="1"/>
+	<node row="22" id="fight" parentname="player" dataname="roomid" calltype="3" triggertype="3" triggercheck="16" useoperate="1" usevalue="1"/>
 </root>
