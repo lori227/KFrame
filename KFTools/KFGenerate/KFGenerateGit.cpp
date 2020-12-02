@@ -263,7 +263,7 @@ namespace KFrame
         git_signature_now( &author, _data->_user.c_str(), _data->_mail.c_str() );
 
         git_oid commit_id;
-        auto commitresult = git_commit_create_v( &commit_id, _git_repository, git_reference_name( localmaster ), author, author, "UTF-8", "pull commit", newtree, 2, ourcommit, theircommit );
+        auto commitresult = git_commit_create_v( &commit_id, _git_repository, git_reference_name( localmaster ), author, author, "UTF-8", "配置表生成工具自动提交", newtree, 2, ourcommit, theircommit );
         if ( commitresult < 0 )
         {
             const git_error* error = giterr_last();
