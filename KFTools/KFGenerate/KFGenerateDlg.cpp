@@ -607,10 +607,10 @@ void CKFGenerateDlg::ParseExcelFinish( EventData* eventdata )
 
     if ( _need_repository )
     {
-        _repository->Pull();
+        _repository->Pull( "配置表生成工具自动提交" );
         _repository->AddAllFile( "table/*.xlsx" );
         _repository->AddAllFile( _logic->_server_xml_path + "/*.xml" );
-        _repository->Commit( "提交配置表" );
+        _repository->Commit( "配置表生成工具自动提交" );
         _repository->Push();
     }
 }

@@ -39,7 +39,7 @@ namespace KFrame
         }
 
         // 拉取更新
-        virtual bool Pull()
+        virtual bool Pull( const std::string& message )
         {
             return false;
         }

@@ -70,8 +70,8 @@ namespace KFrame
     bool KFGenerateGit::Commit( const std::string& message )
     {
         // head ref
-        git_reference* ref_head = nullptr;
-        auto result = git_repository_head( &ref_head, _git_repository );
+        git_reference* refhead = nullptr;
+        auto result = git_repository_head( &refhead, _git_repository );
         if ( result != 0 && result != GIT_EUNBORNBRANCH )
         {
             _event->ShowEventMessage( __FORMAT__( "获取git仓库的头信息失败=[{}]", result ) );
@@ -79,12 +79,12 @@ namespace KFrame
         }
 
         // get parent commit
-        git_commit* parent_commit = nullptr;
-        git_commit_lookup( &parent_commit, _git_repository, git_reference_target( ref_head ) );
-        git_reference_free( ref_head );
+        git_commit* parentcommit = nullptr;
+        git_commit_lookup( &parentcommit, _git_repository, git_reference_target( refhead ) );
+        git_reference_free( refhead );
 
         const git_commit* parents[] = { nullptr };
-        parents[ 0 ] = parent_commit;
+        parents[ 0 ] = parentcommit;
         auto parent_count = 1;
 
         // get index
@@ -92,8 +92,8 @@ namespace KFrame
         git_repository_index( &index, _git_repository );
 
         // write index to tree
-        git_oid new_tree_id;
-        auto writeresult = git_index_write_tree( &new_tree_id, index );
+        git_oid newtreeid;
+        auto writeresult = git_index_write_tree( &newtreeid, index );
         if ( writeresult < 0 )
         {
             const git_error* error = giterr_last();
@@ -102,8 +102,8 @@ namespace KFrame
         }
         git_index_free( index );
 
-        git_tree* new_tree = nullptr;
-        git_tree_lookup( &new_tree, _git_repository, &new_tree_id );
+        git_tree* newtree = nullptr;
+        git_tree_lookup( &newtree, _git_repository, &newtreeid );
 
         // signature
         git_signature* author = nullptr;
@@ -112,7 +112,7 @@ namespace KFrame
         // new commit
         git_oid new_commit;
         auto commitresult = git_commit_create( &new_commit, _git_repository, "HEAD", author, author,
-                                               "UTF-8", KFConvert::ToUTF8( message ).c_str(), new_tree, parent_count, parents );
+                                               "UTF-8", KFConvert::ToUTF8( message ).c_str(), newtree, parent_count, parents );
         if ( commitresult < 0 )
         {
             const git_error* error = giterr_last();
@@ -120,8 +120,8 @@ namespace KFrame
             return false;
         }
 
-        git_commit_free( parent_commit );
-        git_tree_free( new_tree );
+        git_commit_free( parentcommit );
+        git_tree_free( newtree );
         git_signature_free( author );
         return true;
     }
@@ -131,7 +131,7 @@ namespace KFrame
         const char* refs[] = { "refs/heads/master:refs/heads/master" };
         git_strarray strarr = { ( char** )refs, 1 };
 
-        git_credential_userpass_payload user_pass =
+        git_credential_userpass_payload userpass =
         {
             _data->_user.c_str(), _data->_password.c_str()
         };
@@ -141,7 +141,7 @@ namespace KFrame
 
         git_push_options opts = GIT_PUSH_OPTIONS_INIT;
         opts.callbacks.credentials = git_credential_userpass;
-        opts.callbacks.payload = &user_pass;
+        opts.callbacks.payload = &userpass;
         auto result = git_remote_push( remote, &strarr, &opts );
         if ( result == 0 )
         {
@@ -156,7 +156,7 @@ namespace KFrame
         return result == 0;
     }
 
-    bool KFGenerateGit::Pull()
+    bool KFGenerateGit::Pull( const std::string& message )
     {
         // get a remote
         git_remote* remote = nullptr;
@@ -262,10 +262,8 @@ namespace KFrame
         git_signature* author = nullptr;
         git_signature_now( &author, _data->_user.c_str(), _data->_mail.c_str() );
 
-        static auto message = KFConvert::ToUTF8( "配置表生成工具自动提交" );
-
         git_oid commit_id;
-        auto commitresult = git_commit_create_v( &commit_id, _git_repository, git_reference_name( localmaster ), author, author, "UTF-8", message.c_str(), newtree, 2, ourcommit, theircommit );
+        auto commitresult = git_commit_create_v( &commit_id, _git_repository, git_reference_name( localmaster ), author, author, "UTF-8", KFConvert::ToUTF8( message ).c_str(), newtree, 2, ourcommit, theircommit );
         if ( commitresult < 0 )
         {
             const git_error* error = giterr_last();
@@ -273,6 +271,7 @@ namespace KFrame
             return false;
         }
 
+        git_signature_free( author );
         git_repository_state_cleanup( _git_repository );
         return true;
     }

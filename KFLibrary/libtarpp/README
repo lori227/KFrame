@@ -1,0 +1,27 @@
+This library is licensed under modified BSD License.
+===========
+
+
+*How to build?
+===========
+
+$ make
+
+*How to use?
+===========
+
+source:
+
+#include "TarReader.hpp"
+#include <iostream>
+int main(void)
+{
+	TarReader t;
+	t.load("path/to/tar.tar");
+	cout << t.readText("filename") << endl;
+}
+
+compile:
+
+g++ -std=c++11 source.cpp -I/path/to/header/dir /path/to/libtarpp.a
+

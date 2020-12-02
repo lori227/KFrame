@@ -28,7 +28,7 @@ namespace KFrame
         virtual bool Push();
 
         // 拉取更新
-        virtual bool Pull();
+        virtual bool Pull( const std::string& message );
 
     private:
         // 仓库的会话
