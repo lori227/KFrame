@@ -26,6 +26,10 @@ namespace KFrame
 
         // push更新
         virtual bool Push();
+
+        // 拉取更新
+        virtual bool Pull();
+
     private:
         // 仓库的会话
         git_repository* _git_repository = nullptr;

@@ -32,11 +32,18 @@ namespace KFrame
             return false;
         }
 
-        // 拉取更新
+        // 推送更新
         virtual bool Push()
         {
             return false;
         }
+
+        // 拉取更新
+        virtual bool Pull()
+        {
+            return false;
+        }
+
     public:
         // 仓库配置
         const RepositoryData* _data = nullptr;

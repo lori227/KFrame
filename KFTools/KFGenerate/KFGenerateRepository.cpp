@@ -94,4 +94,15 @@ namespace KFrame
 
         return _git_svn->Push();
     }
+
+    bool KFGenerateRepository::Pull()
+    {
+        if ( !IsOpen() )
+        {
+            _event->ShowEventMessage( "仓库打开失败, 请检查配置和网络!" );
+            return false;
+        }
+
+        return _git_svn->Pull();
+    }
 }

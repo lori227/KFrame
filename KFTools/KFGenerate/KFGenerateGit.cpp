@@ -4,6 +4,7 @@
 #include "git2/errors.h"
 #include "git2/deprecated.h"
 #include "git2/signature.h"
+#include "git2/branch.h"
 #include "KFGenerateEvent.h"
 #include "KFUtility/KFConvert.h"
 
@@ -82,7 +83,6 @@ namespace KFrame
         git_commit_lookup( &parent_commit, _git_repository, git_reference_target( ref_head ) );
         git_reference_free( ref_head );
 
-
         const git_commit* parents[] = { nullptr };
         parents[ 0 ] = parent_commit;
         auto parent_count = 1;
@@ -145,14 +145,133 @@ namespace KFrame
         auto result = git_remote_push( remote, &strarr, &opts );
         if ( result == 0 )
         {
-            _event->ShowEventMessage( __FORMAT__( "push git仓库成功" ) );
+            _event->ShowEventMessage( __FORMAT__( "推送git仓库成功" ) );
         }
         else
         {
             const git_error* error = giterr_last();
-            _event->ShowEventMessage( __FORMAT__( "push git仓库失败[{}:{}]", error->klass, error->message ) );
+            _event->ShowEventMessage( __FORMAT__( "推送git仓库失败[{}:{}]", error->klass, error->message ) );
         }
 
         return result == 0;
+    }
+
+    bool KFGenerateGit::Pull()
+    {
+        // get a remote
+        git_remote* remote = nullptr;
+        auto result = git_remote_lookup( &remote, _git_repository, "origin" );
+        if ( result < 0 )
+        {
+            const git_error* error = giterr_last();
+            _event->ShowEventMessage( __FORMAT__( "拉取git仓库失败[{}:{}]", error->klass, error->message ) );
+            return false;
+        }
+
+        // git fetch
+        git_credential_userpass_payload userpass =
+        {
+            _data->_user.c_str(), _data->_password.c_str()
+        };
+
+        git_fetch_options fetchopts = GIT_FETCH_OPTIONS_INIT;
+        fetchopts.callbacks.credentials = git_credential_userpass;
+        fetchopts.callbacks.payload = &userpass;
+
+        auto fetchresult = git_remote_fetch( remote, nullptr, &fetchopts, nullptr );
+        if ( fetchresult < 0 )
+        {
+            const git_error* error = giterr_last();
+            _event->ShowEventMessage( __FORMAT__( "拉取git仓库失败[{}:{}]", error->klass, error->message ) );
+            return false;
+        }
+
+        // merge
+        git_reference* originmaster = nullptr;
+        git_branch_lookup( &originmaster, _git_repository, "origin/master", GIT_BRANCH_REMOTE );
+        git_reference* localmaster = nullptr;
+        git_branch_lookup( &localmaster, _git_repository, "master", GIT_BRANCH_LOCAL );
+
+        git_repository_set_head( _git_repository, git_reference_name( localmaster ) );
+
+        const git_annotated_commit* theirhead[ 100 ];
+        git_annotated_commit_from_ref( ( git_annotated_commit** )&theirhead[ 0 ], _git_repository, originmaster );
+
+        git_merge_options mergeopt = GIT_MERGE_OPTIONS_INIT;
+        git_checkout_options checkoutopt = GIT_CHECKOUT_OPTIONS_INIT;
+        auto mergteresult = git_merge( _git_repository, theirhead, 1, &mergeopt, &checkoutopt );
+        if ( mergteresult < 0 )
+        {
+            const git_error* error = giterr_last();
+            _event->ShowEventMessage( __FORMAT__( "合并git仓库失败[{}:{}]", error->klass, error->message ) );
+            return false;
+        }
+
+        // reslove conflicts
+        git_index* index = nullptr;
+        git_repository_index( &index, _git_repository );
+        if ( git_index_has_conflicts( index ) )
+        {
+            const git_index_entry* ancestorout = nullptr;
+            const git_index_entry* ourout = nullptr;
+            const git_index_entry* theirout = nullptr;
+
+            git_index_conflict_iterator* conflictiterator = nullptr;
+            git_index_conflict_iterator_new( &conflictiterator, index );
+
+            while ( git_index_conflict_next( &ancestorout, &ourout, &theirout, conflictiterator ) != GIT_ITEROVER )
+            {
+                if ( ancestorout != nullptr )
+                {
+                    _event->ShowEventMessage( __FORMAT__( "git冲突: ancestor=[{}] ", ancestorout->path ) );
+                }
+
+                if ( ourout != nullptr )
+                {
+                    _event->ShowEventMessage( __FORMAT__( "git冲突: mine=[{}] ", ourout->path ) );
+                }
+
+                if ( theirout != nullptr )
+                {
+                    _event->ShowEventMessage( __FORMAT__( "git冲突: their=[{}] ", theirout->path ) );
+                }
+            }
+
+            // git checkout --theirs <file>
+            git_checkout_options opt = GIT_CHECKOUT_OPTIONS_INIT;
+            opt.checkout_strategy |= GIT_CHECKOUT_USE_THEIRS;
+            git_checkout_index( _git_repository, index, &opt );
+
+            git_index_conflict_iterator_free( conflictiterator );
+        }
+
+        git_commit* theircommit = nullptr;
+        git_commit_lookup( &theircommit, _git_repository, git_reference_target( originmaster ) );
+        git_commit* ourcommit = nullptr;
+        git_commit_lookup( &ourcommit, _git_repository, git_reference_target( localmaster ) );
+
+        // add and commit
+        git_index_update_all( index, nullptr, nullptr, nullptr );
+        git_index_write( index );
+        git_oid newtreeid;
+        git_index_write_tree( &newtreeid, index );
+        git_tree* newtree = nullptr;
+        git_tree_lookup( &newtree, _git_repository, &newtreeid );
+
+        // signature
+        git_signature* author = nullptr;
+        git_signature_now( &author, _data->_user.c_str(), _data->_mail.c_str() );
+
+        git_oid commit_id;
+        auto commitresult = git_commit_create_v( &commit_id, _git_repository, git_reference_name( localmaster ), author, author, "UTF-8", "pull commit", newtree, 2, ourcommit, theircommit );
+        if ( commitresult < 0 )
+        {
+            const git_error* error = giterr_last();
+            _event->ShowEventMessage( __FORMAT__( "合并提交git仓库失败[{}:{}]", error->klass, error->message ) );
+            return false;
+        }
+
+        git_repository_state_cleanup( _git_repository );
+        return true;
     }
 }

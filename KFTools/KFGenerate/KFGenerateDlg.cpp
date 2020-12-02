@@ -610,5 +610,6 @@ void CKFGenerateDlg::OnBnClickedButton7()
     // _repository->AddAllFile( "_resource/excel/table/*.xlsx" );
     //_repository->AddAllFile( "_bin/config/*.xml" );
     //_repository->Commit( "提交配置表" );
+    _repository->Pull();
     _repository->Push();
 }

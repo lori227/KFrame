@@ -19,9 +19,11 @@ namespace KFrame
         // 提交修改
         bool Commit( const std::string& message );
 
-        // 拉取更新
-        virtual bool Push();
+        // 推送更新
+        bool Push();
 
+        // 拉取更新
+        bool Pull();
     protected:
         // 仓库是否打开
         bool IsOpen() const;
