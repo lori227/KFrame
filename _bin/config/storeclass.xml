@@ -1,4 +1,4 @@
-<root version="552e5fadd4a107818b216c0724d88f96">
+<root version="4c2c8be0c025893b2d3d9524d23e1c25">
 	<node row="8" id="Player" name="goods" type="record" containclass="Goods" keyname="id" configkeyname="id" valuekeyname="count" save="1" sync="1"/>
 	<node row="9" id="Goods" name="id" type="uint32" save="1" sync="1"/>
 	<node row="10" id="Goods" name="count" type="uint32" save="1" sync="1"/>

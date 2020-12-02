@@ -1,4 +1,4 @@
-<root version="b23436e3e9f4daa80e38a6dcab7724c8">
+<root version="839a87a99fb21f10cf910bace7466ea6">
 	<node row="8" id="1" debug="1" release="1"/>
 	<node row="9" id="2" support="1" debug="1" release="1" appid="wxb40dae200ff6ad9b" appkey="7db4acedf06deaaa7e0775035462fad6" loginurl="https://api.weixin.qq.com"/>
 	<node row="10" id="3" support="1" debug="1" release="1" appid="982550" appkey="A9A9AD18A647444DB16CB8CB1F497216" loginurl="https://api.steampowered.com/ISteamUserAuth/AuthenticateUserTicket/v1/"/>

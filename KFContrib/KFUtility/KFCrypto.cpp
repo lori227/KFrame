@@ -1,5 +1,6 @@
 ﻿#include "KFCrypto.h"
 #include "Poco/Crypto/DigestEngine.h"
+#include "md5.hpp"
 
 namespace KFrame
 {
@@ -23,20 +24,7 @@ namespace KFrame
 
     std::string KFCrypto::Md5File( const std::string& file )
     {
-        std::ifstream ifile( file );
-        if ( !ifile )
-        {
-            return "";
-        }
-
-        std::stringstream data;
-        data << ifile.rdbuf();
-
-        ifile.close();
-
-        DigestEngine engine( "MD5" );
-        engine.update( data.str() );
-        return DigestEngine::digestToHex( engine.digest() );
+        return Md5::Md5File( file.c_str() );
     }
 
     ///////////////////////////////////////////////////////////////////////////////

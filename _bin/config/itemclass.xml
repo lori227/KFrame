@@ -1,4 +1,4 @@
-<root version="552e5fadd4a107818b216c0724d88f96">
+<root version="4c2c8be0c025893b2d3d9524d23e1c25">
 	<node row="8" element="道具" id="Player" name="package" logicname="item" type="record" containclass="Item" keyname="uuid" configkeyname="id" valuekeyname="count" maxvalue="100" show="1" save="1" sync="1" addcall="1" removecall="1" updatecall="1"/>
 	<node row="9" element="道具" id="Player" name="storage" logicname="item" type="record" containclass="Item" keyname="uuid" configkeyname="id" valuekeyname="count" maxvalue="100" show="1" save="1" sync="1" addcall="1" removecall="1" updatecall="1"/>
 	<node row="10" id="Item" name="uuid" type="uint64" sync="1" addcall="1" removecall="1" updatecall="1"/>

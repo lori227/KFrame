@@ -1,4 +1,4 @@
-<root version="b23436e3e9f4daa80e38a6dcab7724c8">
+<root version="e49534e87e516d902e03e821e3a0b949">
 	<node row="8" id="addmoney" parentname="player" dataname="money" calltype="3" triggertype="1" useoperate="1" usetype="1"/>
 	<node row="9" id="costmoney" parentname="player" dataname="money" calltype="3" triggertype="2" useoperate="1" usetype="1"/>
 	<node row="10" id="adddiamond" parentname="player" dataname="diamond" calltype="3" triggertype="1" useoperate="1" usetype="1"/>

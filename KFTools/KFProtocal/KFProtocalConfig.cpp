@@ -1,5 +1,4 @@
 ﻿#include "KFProtocalConfig.h"
-#include "Poco/File.h"
 
 namespace KFrame
 {
@@ -14,10 +13,10 @@ namespace KFrame
             if ( root.IsValid() )
             {
                 auto pathnode = root.FindNode( "Path" );
-                _server_cpp_path = pathnode.GetString( "ServerCpp" );
-                _server_lua_path = pathnode.GetString( "ServerLua" );
-                _client_cpp_path = pathnode.GetString( "ClientCpp" );
-                _client_lua_path = pathnode.GetString( "ClientLua" );
+                _server_cpp_path = pathnode.ReadString( "ServerCpp" );
+                _server_lua_path = pathnode.ReadString( "ServerLua" );
+                _client_cpp_path = pathnode.ReadString( "ClientCpp" );
+                _client_lua_path = pathnode.ReadString( "ClientLua" );
             }
         }
         catch ( ... )
@@ -40,7 +39,8 @@ namespace KFrame
         xmlfile << "<?xml version = '1.0' encoding = 'utf-8' ?>\n";
         xmlfile << "<Config>\n";
 
-        xmlfile << __FORMAT__( "\t<Path ServerCpp=\"{}\" ServerLua=\"{}\" ClientCpp=\"{}\" ClientLua=\"{}\"/>\n", _server_cpp_path, _server_lua_path, _client_cpp_path, _client_lua_path );
+        xmlfile << __FORMAT__( "\t<Path ServerCpp=\"{}\" ServerLua=\"{}\" ClientCpp=\"{}\" ClientLua=\"{}\"/>\n",
+                               _server_cpp_path, _server_lua_path, _client_cpp_path, _client_lua_path );
 
         xmlfile << "</Config>\n";
 

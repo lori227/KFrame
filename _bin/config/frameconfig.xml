@@ -1,4 +1,4 @@
-<root version="b23436e3e9f4daa80e38a6dcab7724c8">
+<root version="0430ec162766733e7b757f5214bfaf0c">
 	<node row="8" id="redis" name="{}_{}_redis" path="./setting/"/>
 	<node row="9" id="mongo" name="{}_{}_mongo" path="./setting/"/>
 	<node row="10" id="mysql" name="{}_{}_mysql" path="./setting/"/>

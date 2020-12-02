@@ -1,4 +1,4 @@
-<root version="b23436e3e9f4daa80e38a6dcab7724c8">
+<root version="d7d18e06957603934dd5726f1054d73d">
 	<node row="8" type="1" obtainbag="package" movebaglist="storage,package" tablist="index,normal" sort="1"/>
 	<node row="9" type="2" obtainbag="package" movebaglist="storage,package" tablist="index,gift" sort="2"/>
 	<node row="10" type="3" obtainbag="package" movebaglist="storage,package" tablist="index,drug" sort="3"/>

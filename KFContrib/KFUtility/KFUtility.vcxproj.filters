@@ -64,6 +64,9 @@
     <ClInclude Include="KFStaticAnalysis.hpp">
       <Filter>Data</Filter>
     </ClInclude>
+    <ClInclude Include="md5.hpp">
+      <Filter>Crypto</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KFXmlNode.cpp">
@@ -128,6 +131,9 @@
     </ClCompile>
     <ClCompile Include="KFStaticAnalysis.cpp">
       <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="md5.cpp">
+      <Filter>Crypto</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,4 @@
-<root version="b23436e3e9f4daa80e38a6dcab7724c8">
+<root version="d3f6e2668b7968a91cf92a5660a62b72">
 	<node row="8" id="money" type="1" code="1" template="{{&quot;money&quot;:&quot;{}&quot;}}"/>
 	<node row="9" id="diamond" type="1" code="2" template="{{&quot;diamond&quot;:&quot;{}&quot;}}"/>
 	<node row="10" id="item" type="2" template="{{&quot;item&quot;:{{&quot;count&quot;:&quot;{}&quot;,&quot;id&quot;:&quot;{}&quot;}}}}"/>

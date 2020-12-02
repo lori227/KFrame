@@ -1,4 +1,4 @@
-<root version="26230a675935caa816f4034dd7755339">
+<root version="1ff2472bb132760d73ae30e3d4e6f3c8">
 	<node row="8" id="1" reward="[{&quot;money&quot;:&quot;90&quot;}]" extendreward="[{&quot;item&quot;:{&quot;id&quot;:&quot;11001&quot;,&quot;count&quot;:&quot;1&quot;}}]"/>
 	<node row="9" id="2" reward="[{&quot;money&quot;:&quot;100&quot;}]" extendreward="[{&quot;money&quot;:&quot;0&quot;}]"/>
 	<node row="10" id="3" reward="[{&quot;money&quot;:&quot;120&quot;}]" extendreward="[{&quot;money&quot;:&quot;0&quot;}]"/>

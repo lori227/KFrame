@@ -1,4 +1,4 @@
-<root version="b23436e3e9f4daa80e38a6dcab7724c8">
+<root version="ba75db42b68b1f84c2f9f29f60e39c4a">
 	<node row="8" id="10001" storeid="1" buydata="[{&quot;hero&quot;:{&quot;id&quot;:&quot;3&quot;}}]" price="[{&quot;money&quot;:&quot;1700&quot;}]" discount="[{&quot;money&quot;:&quot;1700&quot;}]" minbuycount="1" maxbuycount="1"/>
 	<node row="9" id="10002" storeid="1" buydata="[{&quot;hero&quot;:{&quot;id&quot;:&quot;4&quot;}}]" price="[{&quot;money&quot;:&quot;4250&quot;}]" discount="[{&quot;money&quot;:&quot;4250&quot;}]" minbuycount="1" maxbuycount="1"/>
 	<node row="10" id="10003" storeid="1" buydata="[{&quot;hero&quot;:{&quot;id&quot;:&quot;5&quot;}}]" price="[{&quot;money&quot;:&quot;5950&quot;}]" discount="[{&quot;money&quot;:&quot;5950&quot;}]" minbuycount="1" maxbuycount="1"/>

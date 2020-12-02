@@ -1,3 +1,3 @@
-<root version="b23436e3e9f4daa80e38a6dcab7724c8">
+<root version="5d9331f4f85c88a0d2aeca78cfcf1c93">
 	<node row="8" invitedataname="friendinvite" id="friend" maxcount="100" bothway="1" needupdate="1" onlineload="1" invitelistcount="20" datalistname="friendlist" invitelistname="friendinvitelist" refusename="refusefriend"/>
 </root>
