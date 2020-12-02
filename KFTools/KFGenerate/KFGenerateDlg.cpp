@@ -38,6 +38,7 @@ void CKFGenerateDlg::DoDataExchange( CDataExchange* pDX )
     DDX_Control( pDX, IDC_LIST1, _list_excel );
     DDX_Control( pDX, IDC_LIST2, _list_info );
     DDX_Control( pDX, IDC_BUTTON6, _button_generate );
+    DDX_Control( pDX, IDC_BUTTON7, _button_repository );
 }
 
 BEGIN_MESSAGE_MAP( CKFGenerateDlg, CDialogEx )
@@ -543,10 +544,9 @@ void CKFGenerateDlg::ResetExcelFileList()
     }
 }
 
-
-void CKFGenerateDlg::OnBnClickedButton6()
+void CKFGenerateDlg::ParseAllExcels( bool repository )
 {
-    // TODO: 在此添加控件通知处理程序代码
+    _need_repository = repository;
     _button_generate.EnableWindow( FALSE );
     _version->LoadVersionXml( _logic->_server_xml_path );
     _version->LoadVersionXml( _logic->_client_xml_path );
@@ -561,6 +561,12 @@ void CKFGenerateDlg::OnBnClickedButton6()
         parselist.push_back( filedata->_name );
     }
     _parse->ParseExcels( parselist );
+}
+
+void CKFGenerateDlg::OnBnClickedButton6()
+{
+    // TODO: 在此添加控件通知处理程序代码
+    ParseAllExcels( false );
 }
 
 void CKFGenerateDlg::ParseExcelOk( EventData* eventdata )
@@ -593,10 +599,20 @@ void CKFGenerateDlg::ParseExcelFinish( EventData* eventdata )
 {
     _list_info.AddString( eventdata->_str_param.c_str() );
     _button_generate.EnableWindow( TRUE );
+    _button_repository.EnableWindow( TRUE );
 
     _logic->SaveExcelXml();
     _version->SaveVersionXml( _logic->_server_xml_path );
     _version->SaveVersionXml( _logic->_client_xml_path );
+
+    if ( _need_repository )
+    {
+        _repository->Pull();
+        _repository->AddAllFile( "table/*.xlsx" );
+        _repository->AddAllFile( _logic->_server_xml_path + "/*.xml" );
+        _repository->Commit( "提交配置表" );
+        _repository->Push();
+    }
 }
 
 void CKFGenerateDlg::ShowLogicMessage( EventData* eventdata )
@@ -607,9 +623,7 @@ void CKFGenerateDlg::ShowLogicMessage( EventData* eventdata )
 void CKFGenerateDlg::OnBnClickedButton7()
 {
     // TODO: 在此添加控件通知处理程序代码
-    // _repository->AddAllFile( "_resource/excel/table/*.xlsx" );
-    //_repository->AddAllFile( "_bin/config/*.xml" );
-    //_repository->Commit( "提交配置表" );
-    _repository->Pull();
-    _repository->Push();
+
+    _button_repository.EnableWindow( FALSE );
+    ParseAllExcels( true );
 }

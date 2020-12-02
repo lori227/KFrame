@@ -56,6 +56,9 @@ protected:
     // 查找Excel文件
     int32 FindExcelFile( const std::string& filename );
 
+    // 解析所有excel文件
+    void ParseAllExcels( bool repository );
+
     // 修改文件类型
     void ChangeExcelType( uint32 type );
 
@@ -73,6 +76,10 @@ protected:
 
     // 显示信息
     void ShowLogicMessage( EventData* eventdata );
+
+protected:
+    // 是否上传仓库
+    bool _need_repository = false;;
 
     // 实现
 protected:
@@ -115,4 +122,5 @@ public:
     CListBox _list_info;
     CButton _button_generate;
     afx_msg void OnBnClickedButton7();
+    CButton _button_repository;
 };
