@@ -7,6 +7,7 @@
 #include "KFGenerateParse.h"
 #include "KFGenerateVersion.h"
 #include "KFGenerateRepository.h"
+#include "KFGenerateSSH.h"
 using namespace KFrame;
 
 
@@ -78,10 +79,17 @@ protected:
     void ShowLogicMessage( EventData* eventdata );
 
     // 仓库提交上传
-    void RepositoryPushCommit();
+    void ThreadRunPushCommit();
 
     // 解析文件完成
     void RepositoryPushOk( EventData* eventdata );
+
+    // 执行ssh失败
+    void ExecuteSSHOk( EventData* eventdata );
+    void ExecuteSSHFailed( EventData* eventdata );
+
+    // 远程执行命令
+    void ThreadRunSSHCommand();
 
 protected:
     // 是否上传仓库

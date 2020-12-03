@@ -57,6 +57,12 @@
     <ClInclude Include="KFGenerateSvn.h">
       <Filter>Logic</Filter>
     </ClInclude>
+    <ClInclude Include="KFGenerateSSH.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="KFSSH.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KFGenerate.cpp">
@@ -87,6 +93,12 @@
       <Filter>Logic</Filter>
     </ClCompile>
     <ClCompile Include="KFGenerateSvn.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="KFGenerateSSH.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="KFSSH.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
   </ItemGroup>

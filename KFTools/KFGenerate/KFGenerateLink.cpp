@@ -13,6 +13,7 @@
     #pragma comment( lib, "KFExceld.lib" )
     #pragma comment( lib, "KFLoggerd.lib" )
     #pragma comment( lib, "git2d.lib" )
+    #pragma comment( lib, "libssh2d.lib" )
 #endif
 //////////////////////////////////////////////////////////////////////////////////////////////////
 #ifdef __KF_RELEASE__
@@ -22,5 +23,6 @@
     #pragma comment( lib, "KFExcel.lib" )
     #pragma comment( lib, "KFLogger.lib" )
     #pragma comment( lib, "git2.lib" )
+    #pragma comment( lib, "libssh2.lib" )
 #endif
 //////////////////////////////////////////////////////////////////////////////////////////////////

@@ -81,6 +81,8 @@ namespace KFrame
         // 提交信息
         CommitData _commit_data;
 
+        // ssh 数据
+        SSHData _ssh_data;
     public:
         // 逻辑线程run
         bool _thread_run = true;

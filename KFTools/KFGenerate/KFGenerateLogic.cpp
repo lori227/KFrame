@@ -212,6 +212,23 @@ namespace KFrame
                 }
             }
 
+            // ssh数据
+            {
+                auto node = root.FindNode( "sshs" );
+                _ssh_data._ip = node.ReadString( "ip" );
+                _ssh_data._port = node.ReadUInt32( "port" );
+                _ssh_data._user = node.ReadString( "user" );
+                _ssh_data._password = node.ReadString( "password" );
+
+                auto sshnode = node.FindNode( "ssh" );
+                while ( sshnode.IsValid() )
+                {
+                    auto command = sshnode.ReadString( "command" );
+                    _ssh_data._command_list.push_back( command );
+                    sshnode.NextNode();
+                }
+            }
+
             // 类型列表
             {
                 auto node = root.FindNode( "types" );

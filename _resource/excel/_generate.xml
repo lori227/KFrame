@@ -20,6 +20,11 @@
 		<commit file="_bin/config/*.xml"/>
 	</commits>
 
+	<!-- 远程ssh信息 -->
+	<sshs ip="180.169.238.146" port="9222" user="root" password="WR4bEPoqcim6BK4r">
+		<ssh command="sh test.sh"/>
+	</sshs>
+
 	<!-- 类型列表 -->
 	<types>
 		<type name="bool" cpp="bool" cppfunction="ReadBoolen" cppextend="" csharp="bool" lua="local"/>

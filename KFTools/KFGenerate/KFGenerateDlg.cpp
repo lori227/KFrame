@@ -198,6 +198,8 @@ void CKFGenerateDlg::InitEventFunction()
     _event->RegisterEventFunction( EventType::ParseFailed, this, &CKFGenerateDlg::ParseExcelFailed );
     _event->RegisterEventFunction( EventType::ParseFinish, this, &CKFGenerateDlg::ParseExcelFinish );
     _event->RegisterEventFunction( EventType::RepositoryOk, this, &CKFGenerateDlg::RepositoryPushOk );
+    _event->RegisterEventFunction( EventType::SSHOk, this, &CKFGenerateDlg::ExecuteSSHOk );
+    _event->RegisterEventFunction( EventType::SSHFailed, this, &CKFGenerateDlg::ExecuteSSHFailed );
 }
 
 void CKFGenerateDlg::LoadXmlData()
@@ -222,8 +224,6 @@ void CKFGenerateDlg::LoadXmlData()
 
 void CKFGenerateDlg::InitControlData()
 {
-
-
     _edit_server_xml_path.SetWindowTextA( _logic->_server_xml_path.c_str() );
     _edit_client_xml_path.SetWindowTextA( _logic->_client_xml_path.c_str() );
     _edit_cpp_path.SetWindowTextA( _logic->_cpp_file_path.c_str() );
@@ -551,8 +551,6 @@ void CKFGenerateDlg::ResetExcelFileList()
     }
 }
 
-
-
 void CKFGenerateDlg::ParseExcelOk( EventData* eventdata )
 {
     auto strinfo = __FORMAT__( "解析=[{}] 完成", eventdata->_str_param );
@@ -595,7 +593,7 @@ void CKFGenerateDlg::ParseExcelFinish( EventData* eventdata )
 
     if ( _need_repository )
     {
-        KFThread::CreateThread( this, &CKFGenerateDlg::RepositoryPushCommit, __FUNC_LINE__ );
+        KFThread::CreateThread( this, &CKFGenerateDlg::ThreadRunPushCommit, __FUNC_LINE__ );
     }
 }
 
@@ -628,16 +626,19 @@ void CKFGenerateDlg::OnBnClickedButton6()
 void CKFGenerateDlg::OnBnClickedButton7()
 {
     // TODO: 在此添加控件通知处理程序代码
-    _button_repository.EnableWindow( FALSE );
+    //_button_repository.EnableWindow( FALSE );
 
     // 先拉取更新
-    _repository->Pull( false, _logic->_commit_data._merge_message );
+    //_repository->Pull( false, _logic->_commit_data._merge_message );
 
     // 生成新配置文件
-    ParseAllExcels( true );
+    //ParseAllExcels( true );
+
+    ThreadRunSSHCommand();
+    //KFThread::CreateThread( this, &CKFGenerateDlg::ThreadRunSSHCommand, __FUNC_LINE__ );
 }
 
-void CKFGenerateDlg::RepositoryPushCommit()
+void CKFGenerateDlg::ThreadRunPushCommit()
 {
     _repository->Push( _logic->_commit_data._commit_file_list, _logic->_commit_data._push_message );
     _event->AddEvent( EventType::RepositoryOk, 0, _invalid_string );
@@ -646,4 +647,22 @@ void CKFGenerateDlg::RepositoryPushCommit()
 void CKFGenerateDlg::RepositoryPushOk( EventData* eventdata )
 {
     _button_repository.EnableWindow( TRUE );
+}
+
+void CKFGenerateDlg::ExecuteSSHOk( EventData* eventdata )
+{
+    auto strinfo = __FORMAT__( "执行SSH成功=[{}]", eventdata->_str_param );
+    _list_info.AddString( strinfo.c_str() );
+}
+
+void CKFGenerateDlg::ExecuteSSHFailed( EventData* eventdata )
+{
+    auto strinfo = __FORMAT__( "执行SSH失败=[{}:{}]", eventdata->_int_param, eventdata->_str_param );
+    _list_info.AddString( strinfo.c_str() );
+}
+
+
+void CKFGenerateDlg::ThreadRunSSHCommand()
+{
+    _ssh->ExecuteCommand( &_logic->_ssh_data );
 }
