@@ -46,3 +46,5 @@ _resource/excel/_temp.xml
 _resource/excel/generated.exe
 Debug
 Release
+Debug_lib
+Release_lib

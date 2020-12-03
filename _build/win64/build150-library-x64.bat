@@ -85,6 +85,12 @@ cd libgit2/vsbuild
 call build150-git2-x64.bat
 cd ../../
 :================================================================
+:  build libssh2
+
+cd libssh2/win32
+call build150-ssh2-x64.bat
+cd ../../
+:================================================================
 
 :  build poco
 
