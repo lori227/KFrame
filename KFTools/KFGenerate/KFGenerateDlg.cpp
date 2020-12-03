@@ -625,5 +625,5 @@ void CKFGenerateDlg::OnBnClickedButton7()
     // TODO: 在此添加控件通知处理程序代码
 
     _button_repository.EnableWindow( FALSE );
-    ParseAllExcels( true );
+    //ParseAllExcels( true );
 }

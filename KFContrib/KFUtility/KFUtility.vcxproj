@@ -26,6 +26,7 @@
     <ClCompile Include="KFHashData.cpp" />
     <ClCompile Include="KFHashLogic.cpp" />
     <ClCompile Include="KFMutex.cpp" />
+    <ClCompile Include="KFTar.cpp" />
     <ClCompile Include="KFXmlNode.cpp" />
     <ClCompile Include="KFRunable.cpp" />
     <ClCompile Include="KFThread.cpp" />
@@ -33,6 +34,7 @@
     <ClCompile Include="KFUtility.cpp" />
     <ClCompile Include="KFXml.cpp" />
     <ClCompile Include="md5.cpp" />
+    <ClCompile Include="tar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFStaticAnalysis.hpp" />
@@ -50,6 +52,7 @@
     <ClInclude Include="KFHashData.hpp" />
     <ClInclude Include="KFHashLogic.hpp" />
     <ClInclude Include="KFMutex.h" />
+    <ClInclude Include="KFTar.h" />
     <ClInclude Include="KFXmlNode.h" />
     <ClInclude Include="KFRunable.hpp" />
     <ClInclude Include="KFThread.h" />
@@ -57,6 +60,7 @@
     <ClInclude Include="KFUtility.h" />
     <ClInclude Include="KFXml.h" />
     <ClInclude Include="md5.hpp" />
+    <ClInclude Include="tar.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="KFUtility.inl" />
