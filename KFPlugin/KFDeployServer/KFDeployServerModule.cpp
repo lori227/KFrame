@@ -305,7 +305,7 @@ namespace KFrame
 
     void KFDeployServerModule::SendLogMessage( uint64 agentid, const std::string& msg )
     {
-        __LOG_DEBUG__( "{}", msg );
+        __LOG_INFO__( "{}", msg );
 
         // 广播给所有工具
         KFMsg::S2SDeployLogToToolAck ack;

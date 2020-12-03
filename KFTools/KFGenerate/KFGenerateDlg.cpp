@@ -634,8 +634,7 @@ void CKFGenerateDlg::OnBnClickedButton7()
     // 生成新配置文件
     //ParseAllExcels( true );
 
-    ThreadRunSSHCommand();
-    //KFThread::CreateThread( this, &CKFGenerateDlg::ThreadRunSSHCommand, __FUNC_LINE__ );
+    KFThread::CreateThread( this, &CKFGenerateDlg::ThreadRunSSHCommand, __FUNC_LINE__ );
 }
 
 void CKFGenerateDlg::ThreadRunPushCommit()
