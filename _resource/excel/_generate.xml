@@ -22,7 +22,7 @@
 
 	<!-- 远程ssh信息 -->
 	<sshs ip="180.169.238.146" port="9222" user="root" password="WR4bEPoqcim6BK4r">
-		<ssh command="sh test.sh"/>
+		<ssh command="sh /root/Fighter/Server/_build/linux/jenkins-resource.sh /root/Fighter/Server/_build/linux/ fight http://180.169.238.146:9999/deploy"/>
 	</sshs>
 
 	<!-- 类型列表 -->

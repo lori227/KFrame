@@ -1,7 +1,7 @@
 
-echo $pwd
+basepath=$(cd `dirname $0`;pwd)
 
-cd $1
+cd $basepath
 git pull
 sh make_develop.sh 0
 
@@ -11,9 +11,9 @@ echo $version
 curl -d'
 {
 "command":"resource",
-  "value":"'$2'_resource_'$version'.tar.gz",
+  "value":"'$1'_resource_'$version'.tar.gz",
   "appname":"*",
   "apptype":"*",
   "appid":"*",
   "zoneid":"0"
-}' $3
+}' $2
