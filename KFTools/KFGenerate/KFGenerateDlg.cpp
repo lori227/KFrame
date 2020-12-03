@@ -551,10 +551,16 @@ void CKFGenerateDlg::ResetExcelFileList()
     }
 }
 
+void CKFGenerateDlg::AddInfoToList( const std::string& info )
+{
+    _list_info.AddString( info.c_str() );
+    _list_info.SetCurSel( _list_info.GetCount() - 1 );
+}
+
 void CKFGenerateDlg::ParseExcelOk( EventData* eventdata )
 {
     auto strinfo = __FORMAT__( "解析=[{}] 完成", eventdata->_str_param );
-    _list_info.AddString( strinfo.c_str() );
+    AddInfoToList( strinfo );
 
     auto filedata = _logic->_file_list.Find( eventdata->_str_param );
     if ( filedata != nullptr )
@@ -573,18 +579,18 @@ void CKFGenerateDlg::ParseExcelOk( EventData* eventdata )
 
 void CKFGenerateDlg::ShowLogicMessage( EventData* eventdata )
 {
-    _list_info.AddString( eventdata->_str_param.c_str() );
+    AddInfoToList( eventdata->_str_param );
 }
 
 void CKFGenerateDlg::ParseExcelFailed( EventData* eventdata )
 {
-    _list_info.AddString( eventdata->_str_param.c_str() );
+    AddInfoToList( eventdata->_str_param );
     AfxMessageBox( eventdata->_str_param.c_str() );
 }
 
 void CKFGenerateDlg::ParseExcelFinish( EventData* eventdata )
 {
-    _list_info.AddString( eventdata->_str_param.c_str() );
+    AddInfoToList( eventdata->_str_param );
     _button_generate.EnableWindow( TRUE );
 
     _logic->SaveExcelXml();
@@ -626,19 +632,18 @@ void CKFGenerateDlg::OnBnClickedButton6()
 void CKFGenerateDlg::OnBnClickedButton7()
 {
     // TODO: 在此添加控件通知处理程序代码
-    //_button_repository.EnableWindow( FALSE );
+    _button_repository.EnableWindow( FALSE );
 
     // 先拉取更新
-    //_repository->Pull( false, _logic->_commit_data._merge_message );
+    _repository->Pull( false, _logic->_commit_data._merge_message );
 
     // 生成新配置文件
-    //ParseAllExcels( true );
-
-    KFThread::CreateThread( this, &CKFGenerateDlg::ThreadRunSSHCommand, __FUNC_LINE__ );
+    ParseAllExcels( true );
 }
 
 void CKFGenerateDlg::ThreadRunPushCommit()
 {
+    _event->ShowEventMessage( "开始更新文件到仓库" );
     _repository->Push( _logic->_commit_data._commit_file_list, _logic->_commit_data._push_message );
     _event->AddEvent( EventType::RepositoryOk, 0, _invalid_string );
 }
@@ -646,22 +651,23 @@ void CKFGenerateDlg::ThreadRunPushCommit()
 void CKFGenerateDlg::RepositoryPushOk( EventData* eventdata )
 {
     _button_repository.EnableWindow( TRUE );
+    KFThread::CreateThread( this, &CKFGenerateDlg::ThreadRunSSHCommand, __FUNC_LINE__ );
 }
 
 void CKFGenerateDlg::ExecuteSSHOk( EventData* eventdata )
 {
     auto strinfo = __FORMAT__( "执行SSH成功=[{}]", eventdata->_str_param );
-    _list_info.AddString( strinfo.c_str() );
+    AddInfoToList( strinfo );
 }
 
 void CKFGenerateDlg::ExecuteSSHFailed( EventData* eventdata )
 {
     auto strinfo = __FORMAT__( "执行SSH失败=[{}:{}]", eventdata->_int_param, eventdata->_str_param );
-    _list_info.AddString( strinfo.c_str() );
+    AddInfoToList( strinfo );
 }
-
 
 void CKFGenerateDlg::ThreadRunSSHCommand()
 {
+    _event->ShowEventMessage( "开始打包资源包, 请通知服务器更新" );
     _ssh->ExecuteCommand( &_logic->_ssh_data );
 }

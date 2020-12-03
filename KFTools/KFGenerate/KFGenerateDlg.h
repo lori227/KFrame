@@ -48,6 +48,9 @@ protected:
 
 
 protected:
+    // 添加信息到列表
+    void AddInfoToList( const std::string& info );
+
     // 添加Excel文件
     void AddExcelFile( EventData* eventdata );
 
