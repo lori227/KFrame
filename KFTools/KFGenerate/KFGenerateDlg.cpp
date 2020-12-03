@@ -197,6 +197,7 @@ void CKFGenerateDlg::InitEventFunction()
     _event->RegisterEventFunction( EventType::ParseOk, this, &CKFGenerateDlg::ParseExcelOk );
     _event->RegisterEventFunction( EventType::ParseFailed, this, &CKFGenerateDlg::ParseExcelFailed );
     _event->RegisterEventFunction( EventType::ParseFinish, this, &CKFGenerateDlg::ParseExcelFinish );
+    _event->RegisterEventFunction( EventType::RepositoryOk, this, &CKFGenerateDlg::RepositoryPushOk );
 }
 
 void CKFGenerateDlg::LoadXmlData()
@@ -544,30 +545,7 @@ void CKFGenerateDlg::ResetExcelFileList()
     }
 }
 
-void CKFGenerateDlg::ParseAllExcels( bool repository )
-{
-    _need_repository = repository;
-    _button_generate.EnableWindow( FALSE );
-    _version->LoadVersionXml( _logic->_server_xml_path );
-    _version->LoadVersionXml( _logic->_client_xml_path );
 
-    // 清空list
-    _list_info.ResetContent();
-
-    StringList parselist;
-    for ( auto& iter : _logic->_file_list._objects )
-    {
-        auto filedata = iter.second;
-        parselist.push_back( filedata->_name );
-    }
-    _parse->ParseExcels( parselist );
-}
-
-void CKFGenerateDlg::OnBnClickedButton6()
-{
-    // TODO: 在此添加控件通知处理程序代码
-    ParseAllExcels( false );
-}
 
 void CKFGenerateDlg::ParseExcelOk( EventData* eventdata )
 {
@@ -589,6 +567,11 @@ void CKFGenerateDlg::ParseExcelOk( EventData* eventdata )
     }
 }
 
+void CKFGenerateDlg::ShowLogicMessage( EventData* eventdata )
+{
+    _list_info.AddString( eventdata->_str_param.c_str() );
+}
+
 void CKFGenerateDlg::ParseExcelFailed( EventData* eventdata )
 {
     _list_info.AddString( eventdata->_str_param.c_str() );
@@ -599,7 +582,6 @@ void CKFGenerateDlg::ParseExcelFinish( EventData* eventdata )
 {
     _list_info.AddString( eventdata->_str_param.c_str() );
     _button_generate.EnableWindow( TRUE );
-    _button_repository.EnableWindow( TRUE );
 
     _logic->SaveExcelXml();
     _version->SaveVersionXml( _logic->_server_xml_path );
@@ -607,23 +589,59 @@ void CKFGenerateDlg::ParseExcelFinish( EventData* eventdata )
 
     if ( _need_repository )
     {
-        _repository->Pull( "配置表生成工具自动提交" );
-        _repository->AddAllFile( "table/*.xlsx" );
-        _repository->AddAllFile( _logic->_server_xml_path + "/*.xml" );
-        _repository->Commit( "配置表生成工具自动提交" );
-        _repository->Push();
+        KFThread::CreateThread( this, &CKFGenerateDlg::RepositoryPushCommit, __FUNC_LINE__ );
     }
 }
 
-void CKFGenerateDlg::ShowLogicMessage( EventData* eventdata )
+void CKFGenerateDlg::ParseAllExcels( bool repository )
 {
-    _list_info.AddString( eventdata->_str_param.c_str() );
+    _need_repository = repository;
+    _button_generate.EnableWindow( FALSE );
+    _version->LoadVersionXml( _logic->_server_xml_path );
+    _version->LoadVersionXml( _logic->_client_xml_path );
+
+    // 清空list
+    _list_info.ResetContent();
+
+    StringList parselist;
+    for ( auto& iter : _logic->_file_list._objects )
+    {
+        auto filedata = iter.second;
+        parselist.push_back( filedata->_name );
+    }
+    _parse->ParseExcels( parselist );
+}
+
+
+void CKFGenerateDlg::OnBnClickedButton6()
+{
+    // TODO: 在此添加控件通知处理程序代码
+    ParseAllExcels( false );
 }
 
 void CKFGenerateDlg::OnBnClickedButton7()
 {
     // TODO: 在此添加控件通知处理程序代码
-
     _button_repository.EnableWindow( FALSE );
-    //ParseAllExcels( true );
+
+    // 先拉取更新
+    _repository->Pull( true, "配置表生成工具拉取更新Merge提交" );
+
+    // 生成新配置文件
+    ParseAllExcels( true );
+}
+
+void CKFGenerateDlg::RepositoryPushCommit()
+{
+    _repository->AddAllFile( "table/*.xlsx" );
+    _repository->AddAllFile( _logic->_server_xml_path + "/*.xml" );
+    _repository->Commit( "配置表生成工具自动提交" );
+    _repository->Push();
+
+    _event->AddEvent( EventType::RepositoryOk, 0, _invalid_string );
+}
+
+void CKFGenerateDlg::RepositoryPushOk( EventData* eventdata )
+{
+    _button_repository.EnableWindow( TRUE );
 }

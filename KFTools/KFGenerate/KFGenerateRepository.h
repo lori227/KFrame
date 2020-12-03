@@ -23,7 +23,7 @@ namespace KFrame
         bool Push();
 
         // 拉取更新
-        bool Pull( const std::string& message );
+        bool Pull( bool commit = false, const std::string& message = _invalid_string );
     protected:
         // 仓库是否打开
         bool IsOpen() const;

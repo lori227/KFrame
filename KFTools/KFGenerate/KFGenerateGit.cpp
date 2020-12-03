@@ -156,7 +156,7 @@ namespace KFrame
         return result == 0;
     }
 
-    bool KFGenerateGit::Pull( const std::string& message )
+    bool KFGenerateGit::Pull( bool commit, const std::string& message )
     {
         // get a remote
         git_remote* remote = nullptr;
@@ -245,33 +245,37 @@ namespace KFrame
             git_index_conflict_iterator_free( conflictiterator );
         }
 
-        git_commit* theircommit = nullptr;
-        git_commit_lookup( &theircommit, _git_repository, git_reference_target( originmaster ) );
-        git_commit* ourcommit = nullptr;
-        git_commit_lookup( &ourcommit, _git_repository, git_reference_target( localmaster ) );
-
-        // add and commit
-        git_index_update_all( index, nullptr, nullptr, nullptr );
-        git_index_write( index );
-        git_oid newtreeid;
-        git_index_write_tree( &newtreeid, index );
-        git_tree* newtree = nullptr;
-        git_tree_lookup( &newtree, _git_repository, &newtreeid );
-
-        // signature
-        git_signature* author = nullptr;
-        git_signature_now( &author, _data->_user.c_str(), _data->_mail.c_str() );
-
-        git_oid commit_id;
-        auto commitresult = git_commit_create_v( &commit_id, _git_repository, git_reference_name( localmaster ), author, author, "UTF-8", KFConvert::ToUTF8( message ).c_str(), newtree, 2, ourcommit, theircommit );
-        if ( commitresult < 0 )
+        if ( commit )
         {
-            const git_error* error = giterr_last();
-            _event->ShowEventMessage( __FORMAT__( "合并提交git仓库失败[{}:{}]", error->klass, error->message ) );
-            return false;
+            git_commit* theircommit = nullptr;
+            git_commit_lookup( &theircommit, _git_repository, git_reference_target( originmaster ) );
+            git_commit* ourcommit = nullptr;
+            git_commit_lookup( &ourcommit, _git_repository, git_reference_target( localmaster ) );
+
+            // add and commit
+            git_index_update_all( index, nullptr, nullptr, nullptr );
+            git_index_write( index );
+            git_oid newtreeid;
+            git_index_write_tree( &newtreeid, index );
+            git_tree* newtree = nullptr;
+            git_tree_lookup( &newtree, _git_repository, &newtreeid );
+
+            // signature
+            git_signature* author = nullptr;
+            git_signature_now( &author, _data->_user.c_str(), _data->_mail.c_str() );
+
+            git_oid commit_id;
+            auto commitresult = git_commit_create_v( &commit_id, _git_repository, git_reference_name( localmaster ), author, author, "UTF-8", KFConvert::ToUTF8( message ).c_str(), newtree, 2, ourcommit, theircommit );
+            if ( commitresult < 0 )
+            {
+                const git_error* error = giterr_last();
+                _event->ShowEventMessage( __FORMAT__( "合并提交git仓库失败[{}:{}]", error->klass, error->message ) );
+                return false;
+            }
+
+            git_signature_free( author );
         }
 
-        git_signature_free( author );
         git_repository_state_cleanup( _git_repository );
         return true;
     }

@@ -157,6 +157,7 @@ namespace KFrame
             ParseOk = 3,
             ParseFailed = 4,
             ParseFinish = 5,
+            RepositoryOk = 6,
         };
     }
 

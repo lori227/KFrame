@@ -95,7 +95,7 @@ namespace KFrame
         return _git_svn->Push();
     }
 
-    bool KFGenerateRepository::Pull( const std::string& message )
+    bool KFGenerateRepository::Pull( bool commit, const std::string& message )
     {
         if ( !IsOpen() )
         {
@@ -103,6 +103,6 @@ namespace KFrame
             return false;
         }
 
-        return _git_svn->Pull( message );
+        return _git_svn->Pull( commit, message );
     }
 }

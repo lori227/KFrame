@@ -77,6 +77,12 @@ protected:
     // 显示信息
     void ShowLogicMessage( EventData* eventdata );
 
+    // 仓库提交上传
+    void RepositoryPushCommit();
+
+    // 解析文件完成
+    void RepositoryPushOk( EventData* eventdata );
+
 protected:
     // 是否上传仓库
     bool _need_repository = false;;
