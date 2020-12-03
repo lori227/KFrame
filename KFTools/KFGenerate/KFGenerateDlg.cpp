@@ -204,6 +204,10 @@ void CKFGenerateDlg::LoadXmlData()
 {
     // 加载数据
     _logic->LoadTempXml();
+    if ( _logic->_server_xml_path.empty() )
+    {
+        _logic->_server_xml_path = "../config/server/";
+    }
 
     // 加载文件列表
     _logic->LoadExcelXml();
@@ -218,6 +222,8 @@ void CKFGenerateDlg::LoadXmlData()
 
 void CKFGenerateDlg::InitControlData()
 {
+
+
     _edit_server_xml_path.SetWindowTextA( _logic->_server_xml_path.c_str() );
     _edit_client_xml_path.SetWindowTextA( _logic->_client_xml_path.c_str() );
     _edit_cpp_path.SetWindowTextA( _logic->_cpp_file_path.c_str() );
@@ -625,7 +631,7 @@ void CKFGenerateDlg::OnBnClickedButton7()
     _button_repository.EnableWindow( FALSE );
 
     // 先拉取更新
-    _repository->Pull( true, "配置表生成工具拉取更新Merge提交" );
+    _repository->Pull( false, _logic->_commit_data._merge_message );
 
     // 生成新配置文件
     ParseAllExcels( true );
@@ -633,11 +639,7 @@ void CKFGenerateDlg::OnBnClickedButton7()
 
 void CKFGenerateDlg::RepositoryPushCommit()
 {
-    _repository->AddAllFile( "table/*.xlsx" );
-    _repository->AddAllFile( _logic->_server_xml_path + "/*.xml" );
-    _repository->Commit( "配置表生成工具自动提交" );
-    _repository->Push();
-
+    _repository->Push( _logic->_commit_data._commit_file_list, _logic->_commit_data._push_message );
     _event->AddEvent( EventType::RepositoryOk, 0, _invalid_string );
 }
 

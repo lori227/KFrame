@@ -42,55 +42,31 @@ namespace KFrame
         return 0;
     }
 
-    bool KFGenerateGit::AddAllFile( const std::string& path )
+    bool KFGenerateGit::Push( const StringList& filelist, const std::string& message )
     {
         // get index
         git_index* index = nullptr;
         git_repository_index( &index, _git_repository );
 
-        char* paths[ 1 ];
-        paths[ 0 ] = ( char* )path.c_str();
-
-        git_strarray gitpath = { nullptr, 0 };
-        gitpath.strings = paths;
-        gitpath.count = sizeof( paths ) / sizeof( char* );
-
-        auto result = git_index_add_all( index, &gitpath, GIT_INDEX_ADD_DEFAULT, index_matched_path_cb, nullptr );
-        if ( result < 0 )
+        for ( auto& file : filelist )
         {
-            const git_error* error = giterr_last();
-            _event->ShowEventMessage( __FORMAT__( "添加文件失败[{}:{}]", error->klass, error->message ) );
-            return false;
-        }
+            char* paths[ 1 ];
+            paths[ 0 ] = ( char* )file.c_str();
 
+            git_strarray gitpath = { nullptr, 0 };
+            gitpath.strings = paths;
+            gitpath.count = sizeof( paths ) / sizeof( char* );
+
+            auto result = git_index_add_all( index, &gitpath, GIT_INDEX_ADD_DEFAULT, index_matched_path_cb, nullptr );
+            if ( result < 0 )
+            {
+                const git_error* error = giterr_last();
+                _event->ShowEventMessage( __FORMAT__( "添加文件失败[{}:{}]", error->klass, error->message ) );
+                return false;
+            }
+        }
         git_index_write( index );
-        return true;
-    }
-
-    bool KFGenerateGit::Commit( const std::string& message )
-    {
-        // head ref
-        git_reference* refhead = nullptr;
-        auto result = git_repository_head( &refhead, _git_repository );
-        if ( result != 0 && result != GIT_EUNBORNBRANCH )
-        {
-            _event->ShowEventMessage( __FORMAT__( "获取git仓库的头信息失败=[{}]", result ) );
-            return false;
-        }
-
-        // get parent commit
-        git_commit* parentcommit = nullptr;
-        git_commit_lookup( &parentcommit, _git_repository, git_reference_target( refhead ) );
-        git_reference_free( refhead );
-
-        const git_commit* parents[] = { nullptr };
-        parents[ 0 ] = parentcommit;
-        auto parent_count = 1;
-
-        // get index
-        git_index* index = nullptr;
-        git_repository_index( &index, _git_repository );
-
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // write index to tree
         git_oid newtreeid;
         auto writeresult = git_index_write_tree( &newtreeid, index );
@@ -101,6 +77,15 @@ namespace KFrame
             return false;
         }
         git_index_free( index );
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // head ref
+        git_reference* refhead = nullptr;
+        auto result = git_repository_head( &refhead, _git_repository );
+        if ( result != 0 && result != GIT_EUNBORNBRANCH )
+        {
+            _event->ShowEventMessage( __FORMAT__( "获取git仓库的头信息失败=[{}]", result ) );
+            return false;
+        }
 
         git_tree* newtree = nullptr;
         git_tree_lookup( &newtree, _git_repository, &newtreeid );
@@ -108,6 +93,15 @@ namespace KFrame
         // signature
         git_signature* author = nullptr;
         git_signature_now( &author, _data->_user.c_str(), _data->_mail.c_str() );
+
+        // get parent commit
+        git_commit* parentcommit = nullptr;
+        git_commit_lookup( &parentcommit, _git_repository, git_reference_target( refhead ) );
+        git_reference_free( refhead );
+
+        const git_commit* parents[] = { nullptr };
+        parents[ 0 ] = parentcommit;
+        auto parent_count = 1;
 
         // new commit
         git_oid new_commit;
@@ -120,16 +114,8 @@ namespace KFrame
             return false;
         }
 
-        git_commit_free( parentcommit );
-        git_tree_free( newtree );
-        git_signature_free( author );
-        return true;
-    }
-
-    bool KFGenerateGit::Push()
-    {
-        const char* refs[] = { "refs/heads/master:refs/heads/master" };
-        git_strarray strarr = { ( char** )refs, 1 };
+        static const char* refs[] = { "refs/heads/master:refs/heads/master" };
+        static git_strarray strarr = { ( char** )refs, 1 };
 
         git_credential_userpass_payload userpass =
         {
@@ -142,8 +128,8 @@ namespace KFrame
         git_push_options opts = GIT_PUSH_OPTIONS_INIT;
         opts.callbacks.credentials = git_credential_userpass;
         opts.callbacks.payload = &userpass;
-        auto result = git_remote_push( remote, &strarr, &opts );
-        if ( result == 0 )
+        auto pushresult = git_remote_push( remote, &strarr, &opts );
+        if ( pushresult == 0 )
         {
             _event->ShowEventMessage( __FORMAT__( "推送git仓库成功" ) );
         }
@@ -153,7 +139,10 @@ namespace KFrame
             _event->ShowEventMessage( __FORMAT__( "推送git仓库失败[{}:{}]", error->klass, error->message ) );
         }
 
-        return result == 0;
+        git_commit_free( parentcommit );
+        git_tree_free( newtree );
+        git_signature_free( author );
+        return pushresult == 0;
     }
 
     bool KFGenerateGit::Pull( bool commit, const std::string& message )

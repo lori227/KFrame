@@ -20,20 +20,8 @@ namespace KFrame
             return true;
         }
 
-        // 添加文件
-        virtual bool AddAllFile( const std::string& path )
-        {
-            return false;
-        }
-
-        // 提交修改
-        virtual bool Commit( const std::string& message )
-        {
-            return false;
-        }
-
         // 推送更新
-        virtual bool Push()
+        virtual bool Push( const StringList& filelist, const std::string& message )
         {
             return false;
         }

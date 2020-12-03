@@ -78,6 +78,9 @@ namespace KFrame
         // 文件列表
         KFMap< std::string, FileData > _file_list;
 
+        // 提交信息
+        CommitData _commit_data;
+
     public:
         // 逻辑线程run
         bool _thread_run = true;

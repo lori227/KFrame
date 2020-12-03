@@ -14,6 +14,12 @@
 		<repository type="svn" user="lori227" mail="lori227@qq.com" password="lori@19840227" path="../../"/>
 	</repositorys>
 
+	<!-- 提交信息 -->
+	<commits merge="配置表生成工具拉取更新Merge提交" push="配置表生成工具自动提交">
+		<commit file="_resource/excel/table/*.xlsx"/>
+		<commit file="_bin/config/*.xml"/>
+	</commits>
+
 	<!-- 类型列表 -->
 	<types>
 		<type name="bool" cpp="bool" cppfunction="ReadBoolen" cppextend="" csharp="bool" lua="local"/>

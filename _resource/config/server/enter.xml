@@ -1,3 +1,0 @@
-<root version="1006">
-	<item Id="1" LuaFile="./script/game/enter.lua" LuaFunction="NewPlayerFunction"/>
-</root>

@@ -13,17 +13,11 @@ namespace KFrame
         // 打开仓库
         bool Open( const std::string& type );
 
-        // 添加所有文件
-        bool AddAllFile( const std::string& path );
-
-        // 提交修改
-        bool Commit( const std::string& message );
-
-        // 推送更新
-        bool Push();
-
         // 拉取更新
         bool Pull( bool commit = false, const std::string& message = _invalid_string );
+
+        // 推送更新
+        bool Push( const StringList& filelist, const std::string& message );
     protected:
         // 仓库是否打开
         bool IsOpen() const;

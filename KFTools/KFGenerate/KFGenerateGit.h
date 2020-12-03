@@ -18,14 +18,8 @@ namespace KFrame
         // 打开仓库
         virtual bool Open( const RepositoryData* data );
 
-        // 添加文件
-        virtual bool AddAllFile( const std::string& path );
-
-        // 提交修改
-        virtual bool Commit( const std::string& message );
-
         // push更新
-        virtual bool Push();
+        virtual bool Push( const StringList& filelist, const std::string& message );
 
         // 拉取更新
         virtual bool Pull( bool commit, const std::string& message );

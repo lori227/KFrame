@@ -49,7 +49,6 @@ namespace KFrame
         {
             return false;
         }
-
         return true;
     }
 
@@ -195,6 +194,21 @@ namespace KFrame
                     repositorydata->_path = repositorynode.ReadString( "path" );
 
                     repositorynode.NextNode();
+                }
+            }
+
+            // 提交数据
+            {
+                auto node = root.FindNode( "commits" );
+                _commit_data._merge_message = KFConvert::ToAscii( node.ReadString( "merge" ) );
+                _commit_data._push_message = KFConvert::ToAscii( node.ReadString( "push" ) );
+
+                auto commitnode = node.FindNode( "commit" );
+                while ( commitnode.IsValid() )
+                {
+                    auto file = commitnode.ReadString( "file" );
+                    _commit_data._commit_file_list.push_back( file );
+                    commitnode.NextNode();
                 }
             }
 
