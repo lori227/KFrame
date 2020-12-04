@@ -2,6 +2,7 @@
 #define __KF_LOG_CLIENT_MODULE__
 
 #include "KFLogClientInterface.h"
+#include "KFMessage/KFMessageInterface.h"
 #include "KFIpAddress/KFIpAddressInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
@@ -11,7 +12,7 @@ namespace KFrame
     class KFLogData
     {
     public:
-        uint32 _level = { 0 };
+        uint32 _level = 0u;
         std::string _content;
     };
 

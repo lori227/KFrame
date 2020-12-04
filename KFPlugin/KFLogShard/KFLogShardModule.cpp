@@ -7,7 +7,7 @@ namespace KFrame
     {
         __REGISTER_HTTP__( __STRING__( address ), false, &KFLogShardModule::HandleRequestLogAddressReq );
         //////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::S2S_REMOTE_LOG_TO_SERVER_REQ, &KFLogShardModule::HandleRemoteLogToServerReq );
+        __REGISTER_MESSAGE__( KFLogShardModule, KFMsg::S2S_REMOTE_LOG_TO_SERVER_REQ, KFMsg::S2SRemoteLogToServerReq, HandleRemoteLogToServerReq );
     }
 
     void KFLogShardModule::BeforeShut()
@@ -41,10 +41,8 @@ namespace KFrame
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_MESSAGE_FUNCTION__( KFLogShardModule::HandleRemoteLogToServerReq )
+    __KF_MESSAGE_FUNCTION__( KFLogShardModule::HandleRemoteLogToServerReq, KFMsg::S2SRemoteLogToServerReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SRemoteLogToServerReq );
-
         auto filename = __FORMAT__( "{}-{}-{}.log", kfmsg->appname(), kfmsg->apptype(), kfmsg->strappid() );
         auto spdlog = KFLogger::Instance()->NewLogger( kfmsg->appid(), __STRING__( remote ), filename );
         for ( auto i = 0; i < kfmsg->logdata_size(); ++i )

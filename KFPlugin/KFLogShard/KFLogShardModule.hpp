@@ -22,7 +22,7 @@ namespace KFrame
         __KF_HTTP_FUNCTION__( HandleRequestLogAddressReq );
 
         // 远程日志
-        __KF_MESSAGE_FUNCTION__( HandleRemoteLogToServerReq );
+        __KF_MESSAGE_FUNCTION__( HandleRemoteLogToServerReq, KFMsg::S2SRemoteLogToServerReq );
     };
 
 }
