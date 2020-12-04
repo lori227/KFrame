@@ -28,7 +28,7 @@ namespace KFrame
         return true;
     }
 
-    bool KFMessageModule::CallHandle( const Route& route, uint32 msgid, const char* data, uint32 length )
+    bool KFMessageModule::HandleMessage( const Route& route, uint32 msgid, const char* data, uint32 length )
     {
         auto iter = _handles.find( msgid );
         if ( iter == _handles.end() )
@@ -40,7 +40,7 @@ namespace KFrame
         return true;
     }
 
-    bool KFMessageModule::OpenHandle( uint32 msgid, bool open )
+    bool KFMessageModule::OpenFunction( uint32 msgid, bool open )
     {
         auto iter = _handles.find( msgid );
         if ( iter == _handles.end() )
@@ -48,7 +48,7 @@ namespace KFrame
             return false;
         }
 
-        iter->second->OpenHandle( open );
+        iter->second->OpenFunction( open );
         return true;
     }
 

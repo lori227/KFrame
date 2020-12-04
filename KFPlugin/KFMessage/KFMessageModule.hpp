@@ -21,10 +21,10 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 关闭消息处理
-        virtual bool OpenHandle( uint32 msgid, bool open );
+        virtual bool OpenFunction( uint32 msgid, bool open );
 
         // 执行函数
-        virtual bool CallHandle( const Route& route, uint32 msgid, const char* data, uint32 length );
+        virtual bool HandleMessage( const Route& route, uint32 msgid, const char* data, uint32 length );
         //////////////////////////////////////////////////////////////////////////////////////////
     protected:
         // 添加消息函数

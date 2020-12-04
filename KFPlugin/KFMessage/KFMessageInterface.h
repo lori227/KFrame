@@ -26,7 +26,7 @@ namespace KFrame
         virtual KFModule* GetModule() = 0;
 
         // 设置开关
-        virtual void OpenHandle( bool open ) = 0;
+        virtual void OpenFunction( bool open ) = 0;
 
         // 调用函数
         virtual void CallFunction( const Route& route, const char* data, uint32 length ) = 0;
@@ -57,7 +57,7 @@ namespace KFrame
         }
 
         // 设置开关
-        virtual void OpenHandle( bool open )
+        virtual void OpenFunction( bool open )
         {
             _function.SetOpen( open );
         }
@@ -104,10 +104,10 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 关闭消息处理
-        virtual bool OpenHandle( uint32 msgid, bool open ) = 0;
+        virtual bool OpenFunction( uint32 msgid, bool open ) = 0;
 
         // 调用函数
-        virtual bool CallHandle( const Route& route, uint32 msgid, const char* data, uint32 length ) = 0;
+        virtual bool HandleMessage( const Route& route, uint32 msgid, const char* data, uint32 length ) = 0;
         //////////////////////////////////////////////////////////////////////////////////////////
     protected:
         // 添加消息函数
@@ -124,8 +124,8 @@ namespace KFrame
 #define __KF_MESSAGE_FUNCTION__( function, msgtype ) \
     void function( const Route& route, uint32 msgid, const msgtype* kfmsg )
 
-#define __CALL_MESSAGE__( route, msgid, data, length )\
-    _kf_message->CallHandle( route, msgid, data, length )
+#define __HANDLE_MESSAGE__( route, msgid, data, length )\
+    _kf_message->HandleMessage( route, msgid, data, length )
 
 #define __REGISTER_MESSAGE__( moduletype, msgid, msgtype, function ) \
     _kf_message->RegisterHandle<moduletype, msgtype>( msgid, this, &moduletype::function )
