@@ -10,7 +10,6 @@
 ************************************************************************/
 
 #include "KFPayClientInterface.h"
-#include "KFProtocol/KFProtocol.h"
 #include "KFTimer/KFTimerInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFMessage/KFMessageInterface.h"

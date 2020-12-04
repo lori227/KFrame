@@ -1,5 +1,4 @@
 ﻿#include "KFCommandModule.hpp"
-#include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
@@ -34,7 +33,7 @@ namespace KFrame
 #endif // __KF_DEBUG__
 
         // 调用注册的函数
-        std::string command = kfmsg.command();
+        std::string command = kfmsg->command();
         std::transform( command.begin(), command.end(), command.begin(), ::tolower );
 
         __LOG_DEBUG__( "player[{}] debug command[{}]", playerid, command );
@@ -43,9 +42,9 @@ namespace KFrame
         if ( kffunction != nullptr )
         {
             StringVector params;
-            for ( auto i = 0; i < kfmsg.params_size(); ++i )
+            for ( auto i = 0; i < kfmsg->params_size(); ++i )
             {
-                params.push_back( kfmsg.params( i ) );
+                params.push_back( kfmsg->params( i ) );
             }
 
             return kffunction->_function( player, params );

@@ -76,7 +76,7 @@ namespace KFrame
         __KF_NET_EVENT_FUNCTION__( OnClientFailed );
 
         // 注册回馈
-        __KF_MESSAGE_FUNCTION__( HandleRegisterAck );
+        __KF_MESSAGE_FUNCTION__( HandleRegisterAck, KFMsg::RegisterToServerAck );
     private:
         // 连接回调
         void AddConnectionFunction( KFModule* module, KFNetEventFunction& function );

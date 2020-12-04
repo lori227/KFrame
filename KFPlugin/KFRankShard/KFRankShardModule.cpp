@@ -50,13 +50,13 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFRankShardModule::HandleNoticeRankWorkerReq )
     {
         __PROTO_PARSE__( KFMsg::S2SNoticeRankWorkerReq );
-        if ( kfmsg.workerid() < _max_rank_worker_id )
+        if ( kfmsg->workerid() < _max_rank_worker_id )
         {
             return;
         }
 
         _refresh_rank_id_list.clear();
-        _max_rank_worker_id = kfmsg.workerid();
+        _max_rank_worker_id = kfmsg->workerid();
         for ( auto& iter : KFRankConfig::Instance()->_settings._objects )
         {
             auto kfsetting = iter.second;
@@ -302,25 +302,25 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SUpdateRankDataReq );
 
-        auto& ranksortkey = FormatRankSortKey( kfmsg.rankid(), kfmsg.zoneid() );
-        auto& rankdatakey = FormatRankDataKey( kfmsg.rankid(), kfmsg.zoneid() );
+        auto& ranksortkey = FormatRankSortKey( kfmsg->rankid(), kfmsg->zoneid() );
+        auto& rankdatakey = FormatRankDataKey( kfmsg->rankid(), kfmsg->zoneid() );
 
-        auto pbrankdata = &kfmsg.pbrankdata();
+        auto pbrankdata = &kfmsg->pbrankdata();
 
         // 排行显示属性
         auto strrankdata = KFProto::Serialize( pbrankdata, KFCompressEnum::None, 0u, true );
 
         _rank_redis_driver->WriteMulti();
-        _rank_redis_driver->HSet( rankdatakey, kfmsg.playerid(), strrankdata );
+        _rank_redis_driver->HSet( rankdatakey, kfmsg->playerid(), strrankdata );
 
         // 判断最低的分数
-        // if ( IsNeedUpdateRankData( kfmsg.rankid(), kfmsg.zoneid(), kfmsg.rankscore() ) )
+        // if ( IsNeedUpdateRankData( kfmsg->rankid(), kfmsg->zoneid(), kfmsg->rankscore() ) )
         {
             // 添加到排行榜的zone列表
-            _rank_redis_driver->SAdd(  __DATABASE_KEY_2__( __STRING__( ranksortlist ), kfmsg.rankid() ), kfmsg.zoneid() );
+            _rank_redis_driver->SAdd(  __DATABASE_KEY_2__( __STRING__( ranksortlist ), kfmsg->rankid() ), kfmsg->zoneid() );
 
             // 积分排行列表
-            _rank_redis_driver->ZAdd( ranksortkey, kfmsg.playerid(), pbrankdata->rankscore() );
+            _rank_redis_driver->ZAdd( ranksortkey, kfmsg->playerid(), pbrankdata->rankscore() );
         }
 
         _rank_redis_driver->WriteExec();
@@ -341,28 +341,28 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SQueryRankListReq );
 
-        auto kfrankdata = _kf_rank_data.Find( RankKey( kfmsg.rankid(), kfmsg.zoneid() ) );
+        auto kfrankdata = _kf_rank_data.Find( RankKey( kfmsg->rankid(), kfmsg->zoneid() ) );
         if ( kfrankdata == nullptr || KFDate::CheckPassTime( KFGlobal::Instance()->_real_time, kfrankdata->_next_refresh_time ) )
         {
-            kfrankdata = LoadRankData( kfmsg.rankid(), kfmsg.zoneid() );
+            kfrankdata = LoadRankData( kfmsg->rankid(), kfmsg->zoneid() );
         }
 
         KFMsg::MsgQueryRankListAck ack;
-        ack.set_rankid( kfmsg.rankid() );
-        ack.set_selfindex( QueryPlayerRank( __ROUTE_SEND_ID__, kfmsg.rankid(), kfmsg.zoneid() ) );
+        ack.set_rankid( kfmsg->rankid() );
+        ack.set_selfindex( QueryPlayerRank( __ROUTE_SEND_ID__, kfmsg->rankid(), kfmsg->zoneid() ) );
 
-        if ( kfmsg.start() == 1u && kfmsg.count() >= ( uint32 )kfrankdata->_rank_datas.rankdata_size() )
+        if ( kfmsg->start() == 1u && kfmsg->count() >= ( uint32 )kfrankdata->_rank_datas.rankdata_size() )
         {
             ack.mutable_rankdatas()->CopyFrom( kfrankdata->_rank_datas );
         }
         else
         {
-            auto startindex = kfmsg.start() - 1u;
-            auto maxindex = kfmsg.start() + kfmsg.count();
+            auto startindex = kfmsg->start() - 1u;
+            auto maxindex = kfmsg->start() + kfmsg->count();
             for ( auto i = startindex; i < ( uint32 )kfrankdata->_rank_datas.rankdata_size(); ++i )
             {
                 auto& pbrankdata = kfrankdata->_rank_datas.rankdata( i );
-                if ( pbrankdata.rankindex() < kfmsg.start() || pbrankdata.rankindex() > maxindex )
+                if ( pbrankdata.rankindex() < kfmsg->start() || pbrankdata.rankindex() > maxindex )
                 {
                     continue;
                 }
@@ -385,7 +385,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SQueryFriendRankListReq );
 
-        auto kfsetting = KFRankConfig::Instance()->FindSetting( kfmsg.rankid() );
+        auto kfsetting = KFRankConfig::Instance()->FindSetting( kfmsg->rankid() );
         if ( kfsetting == nullptr )
         {
             return;
@@ -393,17 +393,17 @@ namespace KFrame
 
         // 查询
         _rank_redis_driver->ReadMulti();
-        for ( auto i = 0; i < kfmsg.friendid_size(); ++i )
+        for ( auto i = 0; i < kfmsg->friendid_size(); ++i )
         {
-            auto friendid = kfmsg.friendid( i );
+            auto friendid = kfmsg->friendid( i );
 
-            auto& rankdatakey = FormatRankDataKey( kfmsg.rankid(), CalcRankZoneId( friendid, kfsetting ) );
+            auto& rankdatakey = FormatRankDataKey( kfmsg->rankid(), CalcRankZoneId( friendid, kfsetting ) );
             _rank_redis_driver->HGet( rankdatakey, friendid );
         }
         auto rankdatalist = _rank_redis_driver->ReadListExec();
 
         KFMsg::MsgQueryFriendRankListAck ack;
-        ack.set_rankid( kfmsg.rankid() );
+        ack.set_rankid( kfmsg->rankid() );
         auto pbrankdatas = ack.mutable_rankdatas();
         for ( auto& strrankdata : rankdatalist->_value )
         {

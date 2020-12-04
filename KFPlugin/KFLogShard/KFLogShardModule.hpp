@@ -3,7 +3,6 @@
 
 #include "KFrame.h"
 #include "KFLogShardInterface.h"
-#include "KFProtocol/KFProtocol.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFHttpServer/KFHttpServerInterface.h"
 

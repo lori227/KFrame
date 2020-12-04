@@ -9,7 +9,6 @@
 //    @Date             :    2018-2-1
 ************************************************************************/
 
-#include "KFProtocol/KFProtocol.h"
 #include "KFDataClientInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFRouteClient/KFRouteClientInterface.h"

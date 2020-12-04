@@ -20,23 +20,22 @@ namespace KFrame
 
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
-        // 执行函数
-        virtual bool CallFunction( const Route& route, uint32 msgid, const char* data, uint32 length );
-        //////////////////////////////////////////////////////////////////////////////////////////
-
-        // 取消注册
-        virtual void UnRegisterFunction( uint32 msgid );
-
         // 关闭消息处理
-        virtual bool OpenFunction( uint32 msgid, bool open );
-    protected:
+        virtual bool OpenHandle( uint32 msgid, bool open );
 
-        // 添加函数
-        virtual void AddFunction( KFModule* module, uint32 msgid, KFMessageFunction& function );
+        // 执行函数
+        virtual bool CallHandle( const Route& route, uint32 msgid, const char* data, uint32 length );
+        //////////////////////////////////////////////////////////////////////////////////////////
+    protected:
+        // 添加消息函数
+        virtual void AddMessageHandle( KFMessageHandleAbstract* messagehandle );
+
+        // 删除消息函数
+        virtual bool RemoveMessageHandle( uint32 msgide, KFModule* module );
 
     private:
         // 处理器函数
-        KFFunctionMap< uint32, KFMessageFunction > _kf_message_function;
+        std::unordered_map<uint32, KFMessageHandleAbstract*> _handles;
     };
 }
 

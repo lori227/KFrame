@@ -63,7 +63,7 @@ namespace KFrame
         __KF_TIMER_FUNCTION__( OnTimerSendHeartbeatToAgent );
     protected:
         // 关闭服务器
-        __KF_MESSAGE_FUNCTION__( HandleDeployCommandToClientReq );
+        __KF_MESSAGE_FUNCTION__( HandleDeployCommandToClientReq, KFMsg::S2SDeployCommandToClientReq );
 
     protected:
         // 关闭服务器

@@ -1,5 +1,4 @@
 ﻿#include "KFCompoundModule.hpp"
-#include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
@@ -19,7 +18,7 @@ namespace KFrame
         __CLIENT_PROTO_PARSE__( KFMsg::MsgCompoundReq );
 
         // 查找合成信息
-        auto kfsetting = KFCompoundConfig::Instance()->FindSetting( kfmsg.id() );
+        auto kfsetting = KFCompoundConfig::Instance()->FindSetting( kfmsg->id() );
         if ( kfsetting == nullptr )
         {
             return _kf_display->SendToClient( player, KFMsg::CompoundNotExist );

@@ -1,5 +1,4 @@
 ﻿#include "KFTeamClientModule.hpp"
-#include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
@@ -202,18 +201,18 @@ namespace KFrame
         }
 
         // 非法字符判断
-        if ( !kfmsg.name().empty() && _kf_filter->CheckFilter( kfmsg.name() ) )
+        if ( !kfmsg->name().empty() && _kf_filter->CheckFilter( kfmsg->name() ) )
         {
             return _kf_display->SendToClient( player, KFMsg::TeamNameFilter );
         }
 
-        if ( !kfmsg.info().empty() && _kf_filter->CheckFilter( kfmsg.info() ) )
+        if ( !kfmsg->info().empty() && _kf_filter->CheckFilter( kfmsg->info() ) )
         {
             return _kf_display->SendToClient( player, KFMsg::TeamInfoFilter );
         }
 
         // 队伍配置
-        auto kfsetting = KFTeamConfig::Instance()->FindSetting( kfmsg.id() );
+        auto kfsetting = KFTeamConfig::Instance()->FindSetting( kfmsg->id() );
         if ( kfsetting == nullptr )
         {
             return _kf_display->SendToClient( player, KFMsg::TeamSettingError );
@@ -223,9 +222,9 @@ namespace KFrame
 
         // 发送到队伍集群处理
         KFMsg::S2STeamCreateToTeamReq req;
-        req.set_id( kfmsg.id() );
-        req.set_name( kfmsg.name() );
-        req.set_info( kfmsg.info() );
+        req.set_id( kfmsg->id() );
+        req.set_name( kfmsg->name() );
+        req.set_info( kfmsg->info() );
         req.mutable_pbcaptain()->CopyFrom( *pbbasic );
         auto ok = _kf_route->SendToRand( __TEAM_ROUTE_NAME__, KFMsg::S2S_TEAM_CREATE_TO_TEAM_REQ, &req );
         if ( !ok )
@@ -243,22 +242,22 @@ namespace KFrame
         auto teamid = kfteam->Get( __STRING__( id ) );
         if ( teamid != _invalid_int )
         {
-            if ( teamid != kfmsg.id() )
+            if ( teamid != kfmsg->id() )
             {
                 // 已经在队伍, 并且不是同一个队伍, 需要从队伍中删除玩家
                 KFMsg::S2STeamJoinFailedToTeamReq req;
-                req.set_teamid( kfmsg.id() );
+                req.set_teamid( kfmsg->id() );
                 req.set_playerid( playerid );
-                _kf_route->RepeatToObject( __TEAM_ROUTE_NAME__, kfmsg.id(), KFMsg::S2S_TEAM_JION_FAILED_TO_TEAM_REQ, &req );
+                _kf_route->RepeatToObject( __TEAM_ROUTE_NAME__, kfmsg->id(), KFMsg::S2S_TEAM_JION_FAILED_TO_TEAM_REQ, &req );
             }
             return;
         }
 
         // 保存队伍数据
-        _kf_kernel->ParseFromProto( kfteam, &kfmsg.pbteam() );
+        _kf_kernel->ParseFromProto( kfteam, &kfmsg->pbteam() );
 
         // 同步给客户端
-        player->SyncUpdateDataToClient( kfteam, kfmsg.id() );
+        player->SyncUpdateDataToClient( kfteam, kfmsg->id() );
 
         // 提示
         _kf_display->DelayToClient( player, KFMsg::TeamJoinOk );
@@ -271,7 +270,7 @@ namespace KFrame
         auto kfteam = player->Find( __STRING__( team ) );
 
         // 保存队伍数据
-        _kf_kernel->ParseFromProto( kfteam, &kfmsg.pbteam() );
+        _kf_kernel->ParseFromProto( kfteam, &kfmsg->pbteam() );
 
         // 同步给客户端
         player->SyncUpdateDataToClient( kfteam, kfteam->Get( __STRING__( id ) ) );
@@ -317,7 +316,7 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::TeamNoInCaptain );
         }
 
-        auto kfmember = kfteam->Find( __STRING__( member ), kfmsg.memberid() );
+        auto kfmember = kfteam->Find( __STRING__( member ), kfmsg->memberid() );
         if ( kfmember == nullptr )
         {
             return _kf_display->SendToClient( player, KFMsg::TeamNotHaveMember );
@@ -326,7 +325,7 @@ namespace KFrame
         KFMsg::S2STeamKickToTeamReq req;
         req.set_teamid( teamid );
         req.set_captainid( playerid );
-        req.set_memberid( kfmsg.memberid() );
+        req.set_memberid( kfmsg->memberid() );
         auto ok = _kf_route->SendToObject( playerid, __TEAM_ROUTE_NAME__, teamid, KFMsg::S2S_TEAM_KICK_TO_TEAM_REQ, &req );
         if ( !ok )
         {
@@ -340,7 +339,7 @@ namespace KFrame
 
         auto kfteam = player->Find( __STRING__( team ) );
         auto teamid = kfteam->Get( __STRING__( id ) );
-        if ( teamid != kfmsg.teamid() )
+        if ( teamid != kfmsg->teamid() )
         {
             return;
         }
@@ -349,7 +348,7 @@ namespace KFrame
         player->ClearRecord( kfteam->Find( __STRING__( member ) ) );
         player->UpdateObject( kfteam, __STRING__( id ), KFEnum::Set, _invalid_int );
 
-        switch ( kfmsg.type() )
+        switch ( kfmsg->type() )
         {
         case KFMsg::Leave:
             _kf_display->DelayToClient( player, KFMsg::TeamLeave );
@@ -381,7 +380,7 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::TeamIsFull );
         }
 
-        SendTeamInviteToTarget( player, kfteam, kfmsg.serverid(), kfmsg.playerid() );
+        SendTeamInviteToTarget( player, kfteam, kfmsg->serverid(), kfmsg->playerid() );
     }
 
     void KFTeamClientModule::SendTeamInviteToTarget( KFEntity* player, KFData* kfteam, uint64 serverid, uint64 playerid )
@@ -421,8 +420,8 @@ namespace KFrame
 
         // 通知邀请
         KFMsg::MsgTeamTellInvite tell;
-        tell.mutable_pbteam()->CopyFrom( kfmsg.pbteam() );
-        tell.mutable_pbplayer()->CopyFrom( kfmsg.pbplayer() );
+        tell.mutable_pbteam()->CopyFrom( kfmsg->pbteam() );
+        tell.mutable_pbplayer()->CopyFrom( kfmsg->pbplayer() );
         _kf_player->SendToClient( player, KFMsg::MSG_TEAM_TELL_INVITE, &tell );
 
         // 通知发送邀请成功
@@ -443,7 +442,7 @@ namespace KFrame
 
         KFMsg::S2STeamTellApplyToGameAck tell;
         tell.mutable_pbplayer()->CopyFrom( *pbbasic );
-        auto ok = _kf_route->SendToPlayer( player->GetKeyID(), kfmsg.serverid(), kfmsg.playerid(), KFMsg::S2S_TEAM_TELL_APPLY_TO_GAME_ACK, &tell );
+        auto ok = _kf_route->SendToPlayer( player->GetKeyID(), kfmsg->serverid(), kfmsg->playerid(), KFMsg::S2S_TEAM_TELL_APPLY_TO_GAME_ACK, &tell );
         if ( !ok )
         {
             _kf_display->SendToClient( player, KFMsg::RouteServerBusy );
@@ -484,7 +483,7 @@ namespace KFrame
         }
 
         KFMsg::MsgTeamTellApply tell;
-        tell.mutable_pbplayer()->CopyFrom( kfmsg.pbplayer() );
+        tell.mutable_pbplayer()->CopyFrom( kfmsg->pbplayer() );
         _kf_player->SendToClient( player, KFMsg::MSG_TEAM_TELL_APPLY, &tell );
 
         // 通知申请玩家
@@ -495,7 +494,7 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgTeamAgreeReq );
 
-        if ( kfmsg.teamid() == _invalid_int )
+        if ( kfmsg->teamid() == _invalid_int )
         {
             return _kf_display->SendToClient( player, KFMsg::TeamIdError );
         }
@@ -510,9 +509,9 @@ namespace KFrame
         auto pbbasic = _kf_kernel->SerializeToView( player->Find( __STRING__( basic ) ) );
 
         KFMsg::S2STeamAgreeToTeamReq req;
-        req.set_teamid( kfmsg.teamid() );
+        req.set_teamid( kfmsg->teamid() );
         req.mutable_pbplayer()->CopyFrom( *pbbasic );
-        auto ok = _kf_route->SendToObject( player->GetKeyID(), __TEAM_ROUTE_NAME__, kfmsg.teamid(), KFMsg::S2S_TEAM_AGREE_TO_TEAM_REQ, &req );
+        auto ok = _kf_route->SendToObject( player->GetKeyID(), __TEAM_ROUTE_NAME__, kfmsg->teamid(), KFMsg::S2S_TEAM_AGREE_TO_TEAM_REQ, &req );
         if ( !ok )
         {
             _kf_display->SendToClient( player, KFMsg::RouteServerBusy );

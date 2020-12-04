@@ -1,5 +1,4 @@
 ﻿#include "KFClusterMasterModule.hpp"
-#include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
@@ -108,15 +107,15 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SClusterLostProxyToMasterReq );
 
-        _kf_proxy_list.Remove( kfmsg.proxyid() );
-        _proxy_hash.RemoveHashNode( kfmsg.proxyid() );
+        _kf_proxy_list.Remove( kfmsg->proxyid() );
+        _proxy_hash.RemoveHashNode( kfmsg->proxyid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFClusterMasterModule::HandleClusterRegisterToMasterReq )
     {
         __PROTO_PARSE__( KFMsg::S2SClusterRegisterToMasterReq );
 
-        auto listen = &kfmsg.listen();
+        auto listen = &kfmsg->listen();
 
         auto kfproxy = _kf_proxy_list.Create( listen->appid() );
         kfproxy->_name = listen->appname();
@@ -140,9 +139,9 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SClusterSyncProxyToMasterReq );
 
-        for ( auto i = 0; i < kfmsg.listen_size(); ++i )
+        for ( auto i = 0; i < kfmsg->listen_size(); ++i )
         {
-            auto listen = &kfmsg.listen( i );
+            auto listen = &kfmsg->listen( i );
 
             auto kfproxy = _kf_proxy_list.Create( listen->appid() );
             kfproxy->_name = listen->appname();
@@ -196,16 +195,16 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SClusterAuthToMasterReq );
 
-        auto strclientid = KFAppId::ToString( kfmsg.clientid() );
+        auto strclientid = KFAppId::ToString( kfmsg->clientid() );
         __LOG_DEBUG__( "cluster client[{}] auth req", strclientid );
 
         static auto _cluster_key_constant = KFGlobal::Instance()->FindConstant( __STRING__( clusterkey ) );
-        if ( kfmsg.clusterkey() != _cluster_key_constant->_str_value )
+        if ( kfmsg->clusterkey() != _cluster_key_constant->_str_value )
         {
-            return __LOG_ERROR__( "cluster client[{}] key[{}!={}] error", strclientid, kfmsg.clusterkey(), _cluster_key_constant->_str_value );
+            return __LOG_ERROR__( "cluster client[{}] key[{}!={}] error", strclientid, kfmsg->clusterkey(), _cluster_key_constant->_str_value );
         }
 
-        auto kfproxy = SelectProxyServer( kfmsg.clientid() ) ;
+        auto kfproxy = SelectProxyServer( kfmsg->clientid() ) ;
         if ( kfproxy == nullptr )
         {
             return __LOG_ERROR__( "cluster client[{}] no proxy error", strclientid );
@@ -214,14 +213,14 @@ namespace KFrame
         __LOG_DEBUG__( "cluster client[{}] auth proxy[{}] ok", strclientid, KFAppId::ToString( kfproxy->_id ) );
 
         // 创建token
-        auto token = CreateToken( kfmsg.clientid() );
+        auto token = CreateToken( kfmsg->clientid() );
         if ( kfproxy->_master_id == KFGlobal::Instance()->_app_id->GetId() )
         {
             // Token发送给ProxyServer
             KFMsg::S2SClusterTokenToProxyReq req;
             req.set_token( token );
             req.set_proxyid( kfproxy->_id );
-            req.set_clientid( kfmsg.clientid() );
+            req.set_clientid( kfmsg->clientid() );
             req.set_masterid( KFGlobal::Instance()->_app_id->GetId() );
             _kf_tcp_server->SendNetMessage( kfproxy->_id, KFMsg::S2S_CLUSTER_TOKEN_TO_PROXY_REQ, &req );
         }
@@ -230,7 +229,7 @@ namespace KFrame
             // 转发到其他master
             KFMsg::S2SClusterTokenToMasterReq req;
             req.set_token( token );
-            req.set_clientid( kfmsg.clientid() );
+            req.set_clientid( kfmsg->clientid() );
             req.set_proxyid( kfproxy->_id );
             req.set_masterid( KFGlobal::Instance()->_app_id->GetId() );
             _kf_tcp_server->SendNetMessage( kfproxy->_master_id, KFMsg::S2S_CLUSTER_TOKEN_TO_MASTER_REQ, &req );
@@ -243,29 +242,29 @@ namespace KFrame
 
         // Token发送给ProxyServer
         KFMsg::S2SClusterTokenToProxyReq req;
-        req.set_token( kfmsg.token() );
-        req.set_proxyid( kfmsg.proxyid() );
-        req.set_clientid( kfmsg.clientid() );
-        req.set_masterid( kfmsg.masterid() );
-        _kf_tcp_server->SendNetMessage( kfmsg.proxyid(), KFMsg::S2S_CLUSTER_TOKEN_TO_PROXY_REQ, &req );
+        req.set_token( kfmsg->token() );
+        req.set_proxyid( kfmsg->proxyid() );
+        req.set_clientid( kfmsg->clientid() );
+        req.set_masterid( kfmsg->masterid() );
+        _kf_tcp_server->SendNetMessage( kfmsg->proxyid(), KFMsg::S2S_CLUSTER_TOKEN_TO_PROXY_REQ, &req );
     }
 
     __KF_MESSAGE_FUNCTION__( KFClusterMasterModule::HandleClusterTokenToProxyAck )
     {
         __PROTO_PARSE__( KFMsg::S2SClusterTokenToProxyAck );
 
-        if ( kfmsg.masterid() == KFGlobal::Instance()->_app_id->GetId() )
+        if ( kfmsg->masterid() == KFGlobal::Instance()->_app_id->GetId() )
         {
-            auto token = FindToken( kfmsg.clientid() );
-            if ( token != kfmsg.token() )
+            auto token = FindToken( kfmsg->clientid() );
+            if ( token != kfmsg->token() )
             {
-                return __LOG_ERROR__( "client[{}] token error", KFAppId::ToString( kfmsg.clientid() ) );
+                return __LOG_ERROR__( "client[{}] token error", KFAppId::ToString( kfmsg->clientid() ) );
             }
 
-            auto kfproxy = _kf_proxy_list.Find( kfmsg.proxyid() );
+            auto kfproxy = _kf_proxy_list.Find( kfmsg->proxyid() );
             if ( kfproxy == nullptr )
             {
-                return __LOG_ERROR__( "client[{}] can't find proxy[{}]!", KFAppId::ToString( kfmsg.clientid() ), KFAppId::ToString( kfmsg.proxyid() ) );
+                return __LOG_ERROR__( "client[{}] can't find proxy[{}]!", KFAppId::ToString( kfmsg->clientid() ), KFAppId::ToString( kfmsg->proxyid() ) );
             }
 
             // 发送给client
@@ -278,16 +277,16 @@ namespace KFrame
             listen->set_appid( kfproxy->_id );
             listen->set_ip( kfproxy->_ip );
             listen->set_port( kfproxy->_port );
-            _kf_tcp_server->SendNetMessage( kfmsg.clientid(), KFMsg::S2S_CLUSTER_AUTH_TO_CLIENT_ACK, &ack );
-            _kf_tcp_server->CloseNetHandle( kfmsg.clientid(), 2000, __FUNC_LINE__ );
+            _kf_tcp_server->SendNetMessage( kfmsg->clientid(), KFMsg::S2S_CLUSTER_AUTH_TO_CLIENT_ACK, &ack );
+            _kf_tcp_server->CloseNetHandle( kfmsg->clientid(), 2000, __FUNC_LINE__ );
         }
         else
         {
             KFMsg::S2SClusterTokenToMasterAck ack;
-            ack.set_token( kfmsg.token() );
-            ack.set_clientid( kfmsg.clientid() );
-            ack.set_proxyid( kfmsg.proxyid() );
-            _kf_tcp_client->SendNetMessage( kfmsg.masterid(), KFMsg::S2S_CLUSTER_TOKEN_TO_MASTER_ACK, &ack );
+            ack.set_token( kfmsg->token() );
+            ack.set_clientid( kfmsg->clientid() );
+            ack.set_proxyid( kfmsg->proxyid() );
+            _kf_tcp_client->SendNetMessage( kfmsg->masterid(), KFMsg::S2S_CLUSTER_TOKEN_TO_MASTER_ACK, &ack );
         }
     }
 
@@ -295,16 +294,16 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SClusterTokenToMasterAck );
 
-        auto token = FindToken( kfmsg.clientid() );
-        if ( token != kfmsg.token() )
+        auto token = FindToken( kfmsg->clientid() );
+        if ( token != kfmsg->token() )
         {
-            return __LOG_ERROR__( "client[{}] token error", KFAppId::ToString( kfmsg.clientid() ) );
+            return __LOG_ERROR__( "client[{}] token error", KFAppId::ToString( kfmsg->clientid() ) );
         }
 
-        auto kfproxy = _kf_proxy_list.Find( kfmsg.proxyid() );
+        auto kfproxy = _kf_proxy_list.Find( kfmsg->proxyid() );
         if ( kfproxy == nullptr )
         {
-            return __LOG_ERROR__( "client[{}] can't find proxy[{}]!", KFAppId::ToString( kfmsg.clientid() ), KFAppId::ToString( kfmsg.proxyid() ) );
+            return __LOG_ERROR__( "client[{}] can't find proxy[{}]!", KFAppId::ToString( kfmsg->clientid() ), KFAppId::ToString( kfmsg->proxyid() ) );
         }
 
         // 发送给client
@@ -317,7 +316,7 @@ namespace KFrame
         listen->set_appid( kfproxy->_id );
         listen->set_ip( kfproxy->_ip );
         listen->set_port( kfproxy->_port );
-        _kf_tcp_server->SendNetMessage( kfmsg.clientid(), KFMsg::S2S_CLUSTER_AUTH_TO_CLIENT_ACK, &ack );
-        _kf_tcp_server->CloseNetHandle( kfmsg.clientid(), 2000, __FUNC_LINE__ );
+        _kf_tcp_server->SendNetMessage( kfmsg->clientid(), KFMsg::S2S_CLUSTER_AUTH_TO_CLIENT_ACK, &ack );
+        _kf_tcp_server->CloseNetHandle( kfmsg->clientid(), 2000, __FUNC_LINE__ );
     }
 }

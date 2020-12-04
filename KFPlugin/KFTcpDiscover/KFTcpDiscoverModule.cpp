@@ -1,5 +1,4 @@
 ﻿#include "KFTcpDiscoverModule.hpp"
-#include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
@@ -9,10 +8,10 @@ namespace KFrame
         __REGISTER_TCP_SERVER_LOST__( &KFTcpDiscoverModule::OnServerLostClient );
         __REGISTER_TCP_CLIENT_CONNECTION__( &KFTcpDiscoverModule::OnClientConnectServer );
         //////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::S2S_TELL_DISCOVER_SERVER_TO_MASTER, &KFTcpDiscoverModule::HandleTellDiscoverServerToMaster );
-        __REGISTER_MESSAGE__( KFMsg::S2S_TELL_LOST_SERVER_TO_MASTER, &KFTcpDiscoverModule::HandleTellLostServerToMaster );
-        __REGISTER_MESSAGE__( KFMsg::S2S_TELL_REGISTER_SERVER_TO_MASTER, &KFTcpDiscoverModule::HandleTellRegisterServerToMaster );
-        __REGISTER_MESSAGE__( KFMsg::S2S_TELL_SERVER_LIST_TO_MASTER, &KFTcpDiscoverModule::HandleTellServerListToMaster );
+        __REGISTER_MESSAGE__( KFTcpDiscoverModule, KFMsg::S2S_TELL_DISCOVER_SERVER_TO_MASTER, KFMsg::S2STellDiscoverServerToMaster, HandleTellDiscoverServerToMaster );
+        __REGISTER_MESSAGE__( KFTcpDiscoverModule, KFMsg::S2S_TELL_LOST_SERVER_TO_MASTER, KFMsg::S2STellLostServerToMaster, HandleTellLostServerToMaster );
+        __REGISTER_MESSAGE__( KFTcpDiscoverModule, KFMsg::S2S_TELL_REGISTER_SERVER_TO_MASTER, KFMsg::S2STellRegisterServerToMaster, HandleTellRegisterServerToMaster );
+        __REGISTER_MESSAGE__( KFTcpDiscoverModule, KFMsg::S2S_TELL_SERVER_LIST_TO_MASTER, KFMsg::S2STellServerListToMaster, HandleTellServerListToMaster );
     }
 
     void KFTcpDiscoverModule::ShutDown()
@@ -111,11 +110,9 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFTcpDiscoverModule::HandleTellDiscoverServerToMaster )
+    __KF_MESSAGE_FUNCTION__( KFTcpDiscoverModule::HandleTellDiscoverServerToMaster, KFMsg::S2STellDiscoverServerToMaster )
     {
-        __PROTO_PARSE__( KFMsg::S2STellDiscoverServerToMaster );
-
-        auto listendata = &kfmsg.listen();
+        auto listendata = &kfmsg->listen();
 
         // 广播新连接给所有连接
         {
@@ -140,18 +137,16 @@ namespace KFrame
                 listen->set_appid( kfhandle->_id );
                 listen->set_ip( kfhandle->_ip );
                 listen->set_port( kfhandle->_port );
-                _kf_tcp_client->SendNetMessage( kfmsg.serverid(), KFMsg::S2S_TELL_REGISTER_SERVER_TO_MASTER, &tell );
+                _kf_tcp_client->SendNetMessage( kfmsg->serverid(), KFMsg::S2S_TELL_REGISTER_SERVER_TO_MASTER, &tell );
             }
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFTcpDiscoverModule::HandleTellRegisterServerToMaster )
+    __KF_MESSAGE_FUNCTION__( KFTcpDiscoverModule::HandleTellRegisterServerToMaster, KFMsg::S2STellRegisterServerToMaster )
     {
-        __PROTO_PARSE__( KFMsg::S2STellRegisterServerToMaster );
-
         KFMsg::TellRegisterToServer tell;
-        tell.mutable_listen()->CopyFrom( kfmsg.listen() );
-        _kf_tcp_server->SendNetMessage( kfmsg.serverid(), KFMsg::S2S_TELL_REGISTER_TO_SERVER, &tell );
+        tell.mutable_listen()->CopyFrom( kfmsg->listen() );
+        _kf_tcp_server->SendNetMessage( kfmsg->serverid(), KFMsg::S2S_TELL_REGISTER_TO_SERVER, &tell );
     }
 
     __KF_NET_EVENT_FUNCTION__( KFTcpDiscoverModule::OnServerLostClient )
@@ -188,14 +183,12 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFTcpDiscoverModule::HandleTellLostServerToMaster )
+    __KF_MESSAGE_FUNCTION__( KFTcpDiscoverModule::HandleTellLostServerToMaster, KFMsg::S2STellLostServerToMaster )
     {
-        __PROTO_PARSE__( KFMsg::S2STellLostServerToMaster );
-
         KFMsg::TellUnRegisterFromServer tell;
-        tell.set_appname( kfmsg.appname() );
-        tell.set_apptype( kfmsg.apptype() );
-        tell.set_appid( kfmsg.appid() );
+        tell.set_appname( kfmsg->appname() );
+        tell.set_apptype( kfmsg->apptype() );
+        tell.set_appid( kfmsg->appid() );
         _kf_tcp_server->SendNetMessage( KFMsg::S2S_TELL_UNREGISTER_FROM_SERVER, &tell );
     }
 
@@ -224,14 +217,12 @@ namespace KFrame
         _kf_tcp_client->SendNetMessage( netdata->_id, KFMsg::S2S_TELL_SERVER_LIST_TO_MASTER, &tell );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFTcpDiscoverModule::HandleTellServerListToMaster )
+    __KF_MESSAGE_FUNCTION__( KFTcpDiscoverModule::HandleTellServerListToMaster, KFMsg::S2STellServerListToMaster )
     {
-        __PROTO_PARSE__( KFMsg::S2STellServerListToMaster );
-
-        for ( auto i = 0; i < kfmsg.listen_size(); ++i )
+        for ( auto i = 0; i < kfmsg->listen_size(); ++i )
         {
             KFMsg::TellRegisterToServer tell;
-            tell.mutable_listen()->CopyFrom( kfmsg.listen( i ) );
+            tell.mutable_listen()->CopyFrom( kfmsg->listen( i ) );
             _kf_tcp_server->SendNetMessage( KFMsg::S2S_TELL_REGISTER_TO_SERVER, &tell );
         }
     }

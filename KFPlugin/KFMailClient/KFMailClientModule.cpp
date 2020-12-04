@@ -121,9 +121,9 @@ namespace KFrame
 
         // 将邮件保存到玩家属性中
         auto kfmailrecord = player->Find( __STRING__( mail ) );
-        for ( auto i = 0; i < kfmsg.mail_size(); ++i )
+        for ( auto i = 0; i < kfmsg->mail_size(); ++i )
         {
-            auto pbmail = &kfmsg.mail( i );
+            auto pbmail = &kfmsg->mail( i );
             auto pbdata = &pbmail->data();
 
             // 初始化邮件内容
@@ -150,7 +150,7 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgViewMailReq );
 
-        auto kfmail = player->Find( __STRING__( mail ), kfmsg.id() );
+        auto kfmail = player->Find( __STRING__( mail ), kfmsg->id() );
         if ( kfmail == nullptr )
         {
             return _kf_display->SendToClient( player, KFMsg::MailNotExist );
@@ -175,7 +175,7 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgDeleteMailReq );
 
-        auto kfmail = player->Find( __STRING__( mail ), kfmsg.id() );
+        auto kfmail = player->Find( __STRING__( mail ), kfmsg->id() );
         if ( kfmail == nullptr )
         {
             return _kf_display->SendToClient( player, KFMsg::MailNotExist );
@@ -197,7 +197,7 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgMailRewardReq );
 
-        auto kfmail = player->Find( __STRING__( mail ), kfmsg.id() );
+        auto kfmail = player->Find( __STRING__( mail ), kfmsg->id() );
         if ( kfmail == nullptr )
         {
             return _kf_display->SendToClient( player, KFMsg::MailNotExist );
@@ -244,27 +244,27 @@ namespace KFrame
     {
         __SERVER_PROTO_PARSE__( KFMsg::S2SUpdateMailStatusAck );
 
-        switch ( kfmsg.status() )
+        switch ( kfmsg->status() )
         {
         case KFMsg::DoneStatus:
         {
-            player->UpdateRecord( __STRING__( mail ), kfmsg.id(), __STRING__( status ), KFEnum::Set, KFMsg::DoneStatus );
+            player->UpdateRecord( __STRING__( mail ), kfmsg->id(), __STRING__( status ), KFEnum::Set, KFMsg::DoneStatus );
         }
         break;
         case KFMsg::Remove:
         {
-            player->RemoveRecord( __STRING__( mail ), kfmsg.id() );
+            player->RemoveRecord( __STRING__( mail ), kfmsg->id() );
         }
         break;
         case KFMsg::ReceiveStatus:
         {
-            ReceiveMailReward( player, kfmsg.id() );
+            ReceiveMailReward( player, kfmsg->id() );
         }
         break;
         case KFMsg::ReceiveRemove:
         {
-            ReceiveMailReward( player, kfmsg.id() );
-            player->RemoveRecord( __STRING__( mail ), kfmsg.id() );
+            ReceiveMailReward( player, kfmsg->id() );
+            player->RemoveRecord( __STRING__( mail ), kfmsg->id() );
         }
         break;
         default:

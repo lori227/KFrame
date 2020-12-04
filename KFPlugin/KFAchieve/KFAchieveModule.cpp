@@ -1,5 +1,4 @@
 ﻿#include "KFAchieveModule.hpp"
-#include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
@@ -59,8 +58,8 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgAchieveRewardReq );
 
-        auto result = ReceiveAchieveReward( player, kfmsg.id() );
-        _kf_display->SendToClient( player, result, kfmsg.id() );
+        auto result = ReceiveAchieveReward( player, kfmsg->id() );
+        _kf_display->SendToClient( player, result, kfmsg->id() );
     }
 
     uint32 KFAchieveModule::ReceiveAchieveReward( KFEntity* player, uint32 achieveid )

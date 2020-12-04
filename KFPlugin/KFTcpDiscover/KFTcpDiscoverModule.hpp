@@ -45,16 +45,16 @@ namespace KFrame
         __KF_TIMER_FUNCTION__( OnTimerQueryMasterList );
 
         // 通知发现新的服务器
-        __KF_MESSAGE_FUNCTION__( HandleTellDiscoverServerToMaster );
+        __KF_MESSAGE_FUNCTION__( HandleTellDiscoverServerToMaster, KFMsg::S2STellDiscoverServerToMaster );
 
         // 通知丢失服务器
-        __KF_MESSAGE_FUNCTION__( HandleTellLostServerToMaster );
+        __KF_MESSAGE_FUNCTION__( HandleTellLostServerToMaster, KFMsg::S2STellLostServerToMaster );
 
         // 通知注册
-        __KF_MESSAGE_FUNCTION__( HandleTellRegisterServerToMaster );
+        __KF_MESSAGE_FUNCTION__( HandleTellRegisterServerToMaster, KFMsg::S2STellRegisterServerToMaster );
 
         // 服务器列表
-        __KF_MESSAGE_FUNCTION__( HandleTellServerListToMaster );
+        __KF_MESSAGE_FUNCTION__( HandleTellServerListToMaster, KFMsg::S2STellServerListToMaster );
     };
 }
 

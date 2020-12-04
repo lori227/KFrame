@@ -1,5 +1,4 @@
 ﻿#include "KFRankClientModule.hpp"
-#include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
@@ -141,17 +140,17 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgQueryRankListReq );
 
-        auto kfsetting = KFRankConfig::Instance()->FindSetting( kfmsg.rankid() );
+        auto kfsetting = KFRankConfig::Instance()->FindSetting( kfmsg->rankid() );
         if ( kfsetting == nullptr )
         {
             return _kf_display->SendToClient( player, KFMsg::RankNotExist );
         }
 
         KFMsg::S2SQueryRankListReq req;
-        req.set_rankid( kfmsg.rankid() );
+        req.set_rankid( kfmsg->rankid() );
         req.set_zoneid( CalcRankZoneId( playerid, kfsetting ) );
-        req.set_start( kfmsg.start() == 0u ? 1u : kfmsg.start() );
-        req.set_count( kfmsg.count() );
+        req.set_start( kfmsg->start() == 0u ? 1u : kfmsg->start() );
+        req.set_count( kfmsg->count() );
         auto ok = _kf_route->SendToRand( playerid, __STRING__( rank ), KFMsg::S2S_QUERY_RANK_LIST_REQ, &req );
         if ( !ok )
         {
@@ -163,14 +162,14 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgQueryFriendRankListReq );
 
-        auto kfsetting = KFRankConfig::Instance()->FindSetting( kfmsg.rankid() );
+        auto kfsetting = KFRankConfig::Instance()->FindSetting( kfmsg->rankid() );
         if ( kfsetting == nullptr )
         {
             return _kf_display->SendToClient( player, KFMsg::RankNotExist );
         }
 
         KFMsg::S2SQueryFriendRankListReq req;
-        req.set_rankid( kfmsg.rankid() );
+        req.set_rankid( kfmsg->rankid() );
 
         auto kffriendrecord = player->Find( __STRING__( friend ) );
         auto kffriend = kffriendrecord->First();

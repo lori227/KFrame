@@ -1,5 +1,4 @@
 ﻿#include "KFLoginModule.hpp"
-#include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
@@ -77,20 +76,20 @@ namespace KFrame
             return __LOG_ERROR__( "can't find zone=[{}] setting", KFGlobal::Instance()->_app_id->GetZoneId() );
         }
 
-        auto& token = kfmsg.token();
-        auto accountid = kfmsg.accountid();
-        auto sessionid = kfmsg.sessionid();
+        auto& token = kfmsg->token();
+        auto accountid = kfmsg->accountid();
+        auto sessionid = kfmsg->sessionid();
         static auto _url = _kf_ip_address->GetAuthUrl() + __STRING__( verify );
 
         __LOG_DEBUG__( "accountid[{}] login verify", accountid );
 
         // 认证服务器, 验证token
         __JSON_OBJECT_DOCUMENT__( sendjson );
-        __JSON_SET_VALUE__( sendjson, __STRING__( ip ), kfmsg.ip() );
+        __JSON_SET_VALUE__( sendjson, __STRING__( ip ), kfmsg->ip() );
         __JSON_SET_VALUE__( sendjson, __STRING__( gateid ), gateid );
-        __JSON_SET_VALUE__( sendjson, __STRING__( token ), kfmsg.token() );
+        __JSON_SET_VALUE__( sendjson, __STRING__( token ), kfmsg->token() );
         __JSON_SET_VALUE__( sendjson, __STRING__( sessionid ), sessionid );
-        __JSON_SET_VALUE__( sendjson, __STRING__( accountid ), kfmsg.accountid() );
+        __JSON_SET_VALUE__( sendjson, __STRING__( accountid ), kfmsg->accountid() );
         __JSON_SET_VALUE__( sendjson, __STRING__( zoneid ), kfsetting->_id );
         __JSON_SET_VALUE__( sendjson, __STRING__( datazoneid ), kfsetting->_data_id );
         _kf_http_client->MTGet( _url, sendjson, this, &KFLoginModule::OnHttpAuthLoginVerifyCallBack );
@@ -160,10 +159,10 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SLoginToLoginAck );
 
-        __LOG_DEBUG__( "player[{}] login result[{}] ack", kfmsg.accountid(), kfmsg.result() );
+        __LOG_DEBUG__( "player[{}] login result[{}] ack", kfmsg->accountid(), kfmsg->result() );
 
         // 通知客户端
-        SendLoginAckToGate( kfmsg.result(), kfmsg.gateid(), kfmsg.sessionid(), kfmsg.accountid(), _invalid_int );
+        SendLoginAckToGate( kfmsg->result(), kfmsg->gateid(), kfmsg->sessionid(), kfmsg->accountid(), _invalid_int );
     }
 
     void KFLoginModule::SendLoginAckToGate( uint32 result, uint64 gateid, uint64 sessionid, uint64 accountid, uint64 bantime )

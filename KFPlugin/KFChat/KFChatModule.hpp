@@ -10,7 +10,6 @@
 ************************************************************************/
 #include "KFrame.h"
 #include "KFChatInterface.h"
-#include "KFProtocol/KFProtocol.h"
 #include "KFKernel/KFKernelInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"

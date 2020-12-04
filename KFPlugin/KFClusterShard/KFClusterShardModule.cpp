@@ -1,5 +1,4 @@
 ﻿#include "KFClusterShardModule.hpp"
-#include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
@@ -24,9 +23,9 @@ namespace KFrame
         auto proxyid = __ROUTE_SERVER_ID__;
         __PROTO_PARSE__( KFMsg::S2SClusterClientDiscoverToShardReq );
 
-        for ( auto i = 0; i < kfmsg.clientid_size(); ++i )
+        for ( auto i = 0; i < kfmsg->clientid_size(); ++i )
         {
-            auto clientid = kfmsg.clientid( i );
+            auto clientid = kfmsg->clientid( i );
             _proxy_client_list[ clientid ] = proxyid;
             __LOG_INFO__( "route discover client=[{}] proxy=[{}] ", KFAppId::ToString( clientid ), KFAppId::ToString( proxyid ) );
         }
@@ -36,9 +35,9 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SClusterClientLostToShardReq );
 
-        _proxy_client_list.erase( kfmsg.clientid() );
+        _proxy_client_list.erase( kfmsg->clientid() );
 
-        __LOG_WARN__( "route lost client=[{}]", KFAppId::ToString( kfmsg.clientid() ) );
+        __LOG_WARN__( "route lost client=[{}]", KFAppId::ToString( kfmsg->clientid() ) );
     }
 
     __KF_NET_EVENT_FUNCTION__( KFClusterShardModule::OnServerLostHandle )

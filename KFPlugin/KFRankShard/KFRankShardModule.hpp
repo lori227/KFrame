@@ -10,7 +10,6 @@
 ************************************************************************/
 
 #include "KFRankShardInterface.h"
-#include "KFProtocol/KFProtocol.h"
 #include "KFTimer/KFTimerInterface.h"
 #include "KFRedis/KFRedisInterface.h"
 #include "KFMessage/KFMessageInterface.h"

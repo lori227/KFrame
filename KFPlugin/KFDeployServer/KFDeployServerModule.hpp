@@ -10,7 +10,6 @@
 //    @Date             :    2018-7-2
 ************************************************************************/
 
-#include "KFProtocol/KFProtocol.h"
 #include "KFDeployServerInterface.h"
 #include "KFMySQL/KFMySQLInterface.h"
 #include "KFMessage/KFMessageInterface.h"
@@ -80,25 +79,25 @@ namespace KFrame
 
     protected:
         // 注册Agent
-        __KF_MESSAGE_FUNCTION__( HandleRegisterAgentToServerReq );
+        __KF_MESSAGE_FUNCTION__( HandleRegisterAgentToServerReq, KFMsg::S2SRegisterAgentToServerReq );
 
         // 执行sql语句
-        __KF_MESSAGE_FUNCTION__( HandleExecuteMySQLReq );
+        __KF_MESSAGE_FUNCTION__( HandleExecuteMySQLReq, KFMsg::S2SDeployToolExecuteMySQLReq );
 
         // 查询sql语句
-        __KF_MESSAGE_FUNCTION__( HandleQueryMySQLReq );
+        __KF_MESSAGE_FUNCTION__( HandleQueryMySQLReq, KFMsg::S2SDeployToolQueryMySQLReq );
 
         // 查询sql语句
-        __KF_MESSAGE_FUNCTION__( HandleDeleteMySQLReq );
+        __KF_MESSAGE_FUNCTION__( HandleDeleteMySQLReq, KFMsg::S2SDeployToolDeleteMySQLReq );
 
         // 部署命令
-        __KF_MESSAGE_FUNCTION__( HandleDeployToolCommandReq );
+        __KF_MESSAGE_FUNCTION__( HandleDeployToolCommandReq, KFMsg::S2SDeployToolCommandReq );
 
         // 日志
-        __KF_MESSAGE_FUNCTION__( HandleDeployLogToServerReq );
+        __KF_MESSAGE_FUNCTION__( HandleDeployLogToServerAck, KFMsg::S2SDeployLogToServerAck );
 
         // 查询toolid
-        __KF_MESSAGE_FUNCTION__( HandleDeployQueryToolIdReq );
+        __KF_MESSAGE_FUNCTION__( HandleDeployQueryToolIdReq, KFMsg::S2SDeployToolQueryToolIdReq );
 
     protected:
         // 更新Agnet状态

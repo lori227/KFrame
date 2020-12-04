@@ -1,5 +1,4 @@
 ﻿#include "KFGoodsModule.hpp"
-#include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {

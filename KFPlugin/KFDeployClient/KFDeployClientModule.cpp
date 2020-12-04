@@ -1,5 +1,4 @@
 ﻿#include "KFDeployClientModule.hpp"
-#include "KFProtocol/KFProtocol.h"
 #include "KFLoader/KFLoaderInterface.h"
 
 namespace KFrame
@@ -19,7 +18,7 @@ namespace KFrame
         __REGISTER_DEPLOY_FUNCTION__( __STRING__( moduleopen ), &KFDeployClientModule::OnDeployModuleOpen );
         __REGISTER_DEPLOY_FUNCTION__( __STRING__( moduleclose ), &KFDeployClientModule::OnDeployModuleClose );
         ////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_COMMAND_TO_CLIENT_REQ, &KFDeployClientModule::HandleDeployCommandToClientReq );
+        __REGISTER_MESSAGE__( KFDeployClientModule, KFMsg::S2S_DEPLOY_COMMAND_TO_CLIENT_REQ, KFMsg::S2SDeployCommandToClientReq, HandleDeployCommandToClientReq );
     }
 
     void KFDeployClientModule::ShutDown()
@@ -85,11 +84,9 @@ namespace KFrame
         kfcommand->_functions.Remove( module );
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_MESSAGE_FUNCTION__( KFDeployClientModule::HandleDeployCommandToClientReq )
+    __KF_MESSAGE_FUNCTION__( KFDeployClientModule::HandleDeployCommandToClientReq, KFMsg::S2SDeployCommandToClientReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SDeployCommandToClientReq );
-
-        auto pbdeploy = &kfmsg.deploycommand();
+        auto pbdeploy = &kfmsg->deploycommand();
 
         // 部署命令
         DeployCommand( pbdeploy->command(), pbdeploy->value(), pbdeploy->appname(), pbdeploy->apptype(), pbdeploy->appid(), pbdeploy->zoneid() );
@@ -238,7 +235,7 @@ namespace KFrame
         KFUtility::SplitList( messagelist, strvalue, __SPLIT_STRING__ );
         for ( auto messageid : messagelist )
         {
-            _kf_message->OpenFunction( messageid, true );
+            _kf_message->OpenHandle( messageid, true );
         }
     }
 
@@ -249,7 +246,7 @@ namespace KFrame
         KFUtility::SplitList( messagelist, strvalue, __SPLIT_STRING__ );
         for ( auto messageid : messagelist )
         {
-            _kf_message->OpenFunction( messageid, false );
+            _kf_message->OpenHandle( messageid, false );
         }
     }
 

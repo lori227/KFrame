@@ -9,7 +9,6 @@
 //    @Date             :    2018-3-8
 ************************************************************************/
 
-#include "KFProtocol/KFProtocol.h"
 #include "KFRelationClientInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFKernel/KFKernelInterface.h"

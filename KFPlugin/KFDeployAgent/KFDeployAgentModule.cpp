@@ -29,8 +29,8 @@ namespace KFrame
         __REGISTER_TCP_CLIENT_CONNECTION__( &KFDeployAgentModule::OnClientConnectServer );
         __REGISTER_TCP_CLIENT_SHUTDOWN__( &KFDeployAgentModule::OnClientLostServer );
         ////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_COMMAND_TO_AGENT_REQ, &KFDeployAgentModule::HandleDeployCommandReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_HEARTBEAT_TO_AGENT_REQ, &KFDeployAgentModule::HandleClientHeartbeatReq );
+        __REGISTER_MESSAGE__( KFDeployAgentModule, KFMsg::S2S_DEPLOY_COMMAND_TO_AGENT_REQ, KFMsg::S2SDeployCommandToAgentReq, HandleDeployCommandReq );
+        __REGISTER_MESSAGE__( KFDeployAgentModule, KFMsg::S2S_DEPLOY_HEARTBEAT_TO_AGENT_REQ, KFMsg::S2SDeployHeartbeatToAgentReq, HandleClientHeartbeatReq );
     }
 
     void KFDeployAgentModule::ShutDown()
@@ -171,11 +171,9 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFDeployAgentModule::HandleClientHeartbeatReq )
+    __KF_MESSAGE_FUNCTION__( KFDeployAgentModule::HandleClientHeartbeatReq, KFMsg::S2SDeployHeartbeatToAgentReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SDeployHeartbeatToAgentReq );
-        auto strid = KFAppId::ToString( kfmsg.id() );
-
+        auto strid = KFAppId::ToString( kfmsg->id() );
         auto kfdeploydata = _deploy_list.Find( strid );
         if ( kfdeploydata == nullptr || kfdeploydata->_heartbeat == 0u )
         {
@@ -656,12 +654,9 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFDeployAgentModule::HandleDeployCommandReq )
+    __KF_MESSAGE_FUNCTION__( KFDeployAgentModule::HandleDeployCommandReq, KFMsg::S2SDeployCommandToAgentReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SDeployCommandToAgentReq );
-
-        auto pbdeploy = kfmsg.mutable_deploycommand();
-
+        auto pbdeploy = &kfmsg->deploycommand();
         LogDeploy( "command=[{}:{}|{}:{}:{}:{}]",
                    pbdeploy->command(), pbdeploy->value(), pbdeploy->appname(), pbdeploy->apptype(), pbdeploy->appid(), pbdeploy->zoneid() );
 
@@ -704,7 +699,6 @@ namespace KFrame
         {
             AddDeployTask( __STRING__( downresource ), pbdeploy );
 
-            pbdeploy->set_value( _globbing_string );
             AddDeployTask( __STRING__( loadconfig ), pbdeploy );
             AddDeployTask( __STRING__( loadscript ), pbdeploy );
         }
@@ -741,7 +735,7 @@ namespace KFrame
         }
     }
 
-    void KFDeployAgentModule::AddDeployTask( const std::string& command, KFMsg::PBDeployCommand* pbdeploy )
+    void KFDeployAgentModule::AddDeployTask( const std::string& command, const KFMsg::PBDeployCommand* pbdeploy )
     {
         auto kftask = __KF_NEW__( KFDeployTask );
         kftask->_command = command;

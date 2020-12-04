@@ -88,7 +88,7 @@ namespace KFrame
 
     protected:
         // 处理客户端注册
-        __KF_MESSAGE_FUNCTION__( HandleRegisterReq );
+        __KF_MESSAGE_FUNCTION__( HandleRegisterReq, KFMsg::RegisterToServerReq );
 
         // 断线处理
         __KF_NET_EVENT_FUNCTION__( OnServerLostHandle );

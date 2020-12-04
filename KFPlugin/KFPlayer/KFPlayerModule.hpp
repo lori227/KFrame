@@ -10,7 +10,6 @@
 ************************************************************************/
 
 #include "KFPlayerInterface.h"
-#include "KFProtocol/KFProtocol.h"
 #include "KFKernel/KFKernelInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFCommand/KFCommandInterface.h"

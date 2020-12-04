@@ -1,5 +1,4 @@
 ﻿#include "KFPlayerModule.hpp"
-#include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
@@ -588,15 +587,15 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgRemoveDataReq );
 
-        player->RemoveRecord( kfmsg.dataname(), kfmsg.key() );
-        __LOG_INFO__( "remove data[{}:{}] ok", kfmsg.dataname(), kfmsg.key() );
+        player->RemoveRecord( kfmsg->dataname(), kfmsg->key() );
+        __LOG_INFO__( "remove data[{}:{}] ok", kfmsg->dataname(), kfmsg->key() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleRequestSyncReq )
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgRequestSyncReq );
 
-        auto kfdata = player->Find( kfmsg.dataname() );
+        auto kfdata = player->Find( kfmsg->dataname() );
         if ( kfdata == nullptr )
         {
             return;
@@ -620,7 +619,7 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgCancelSyncReq );
 
-        auto kfdata = player->Find( kfmsg.dataname() );
+        auto kfdata = player->Find( kfmsg->dataname() );
         if ( kfdata == nullptr )
         {
             return;
@@ -634,43 +633,43 @@ namespace KFrame
         __CLIENT_PROTO_PARSE__( KFMsg::MsgUpdateIntReq );
 
         // 1级属性
-        if ( kfmsg.parentname().empty() )
+        if ( kfmsg->parentname().empty() )
         {
-            auto kfdata = player->Find( kfmsg.dataname() );
+            auto kfdata = player->Find( kfmsg->dataname() );
             if ( kfdata != nullptr && kfdata->HaveMask( KFDataDefine::DataMaskClient ) )
             {
-                player->UpdateData( kfdata, kfmsg.operate(), kfmsg.value() );
+                player->UpdateData( kfdata, kfmsg->operate(), kfmsg->value() );
             }
 
             return;
         }
 
         // 2级object属性
-        if ( kfmsg.key() == 0u )
+        if ( kfmsg->key() == 0u )
         {
-            auto kfdata = player->Find( kfmsg.parentname(), kfmsg.dataname() );
+            auto kfdata = player->Find( kfmsg->parentname(), kfmsg->dataname() );
             if ( kfdata != nullptr && kfdata->HaveMask( KFDataDefine::DataMaskClient ) )
             {
-                player->UpdateData( kfdata, kfmsg.operate(), kfmsg.value() );
+                player->UpdateData( kfdata, kfmsg->operate(), kfmsg->value() );
             }
 
             return;
         }
 
         // 3级record属性
-        auto kfparent = player->Find( kfmsg.parentname() );
+        auto kfparent = player->Find( kfmsg->parentname() );
         if ( kfparent == nullptr || !kfparent->_data_setting->HaveMask( KFDataDefine::DataMaskClient ) )
         {
             return;
         }
 
-        auto kfdatasetting = kfparent->_data_setting->_class_setting->FindSetting( kfmsg.dataname() );
+        auto kfdatasetting = kfparent->_data_setting->_class_setting->FindSetting( kfmsg->dataname() );
         if ( kfdatasetting == nullptr || !kfdatasetting->HaveMask( KFDataDefine::DataMaskClient ) )
         {
             return;
         }
 
-        player->UpdateRecord( kfparent, kfmsg.key(), kfmsg.dataname(), kfmsg.operate(), kfmsg.value() );
+        player->UpdateRecord( kfparent, kfmsg->key(), kfmsg->dataname(), kfmsg->operate(), kfmsg->value() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleUpdateStrReq )
@@ -678,78 +677,78 @@ namespace KFrame
         __CLIENT_PROTO_PARSE__( KFMsg::MsgUpdateStrReq );
 
         // 1级属性
-        if ( kfmsg.parentname().empty() )
+        if ( kfmsg->parentname().empty() )
         {
-            auto kfdata = player->Find( kfmsg.dataname() );
+            auto kfdata = player->Find( kfmsg->dataname() );
             if ( kfdata != nullptr && kfdata->HaveMask( KFDataDefine::DataMaskClient ) )
             {
-                player->UpdateData( kfdata, kfmsg.value() );
+                player->UpdateData( kfdata, kfmsg->value() );
             }
 
             return;
         }
 
         // 2级object属性
-        if ( kfmsg.key() == 0u )
+        if ( kfmsg->key() == 0u )
         {
-            auto kfdata = player->Find( kfmsg.parentname(), kfmsg.dataname() );
+            auto kfdata = player->Find( kfmsg->parentname(), kfmsg->dataname() );
             if ( kfdata != nullptr && kfdata->HaveMask( KFDataDefine::DataMaskClient ) )
             {
-                player->UpdateData( kfdata, kfmsg.value() );
+                player->UpdateData( kfdata, kfmsg->value() );
             }
 
             return;
         }
 
         // 3级record属性
-        auto kfparent = player->Find( kfmsg.parentname() );
+        auto kfparent = player->Find( kfmsg->parentname() );
         if ( kfparent == nullptr )
         {
             return;
         }
 
-        auto kfdatasetting = kfparent->_data_setting->_class_setting->FindSetting( kfmsg.dataname() );
+        auto kfdatasetting = kfparent->_data_setting->_class_setting->FindSetting( kfmsg->dataname() );
         if ( kfdatasetting == nullptr || !kfdatasetting->HaveMask( KFDataDefine::DataMaskClient ) )
         {
             return;
         }
 
-        player->UpdateRecord( kfmsg.parentname(), kfmsg.key(), kfmsg.dataname(), kfmsg.value() );
+        player->UpdateRecord( kfmsg->parentname(), kfmsg->key(), kfmsg->dataname(), kfmsg->value() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleSyncUpdateDataFromServerReq )
     {
         __ROUTE_PROTO_PARSE__( KFMsg::S2SSyncUpdateDataFromServer );
-        auto kfobject = player->Find( kfmsg.dataname() );
+        auto kfobject = player->Find( kfmsg->dataname() );
         if ( kfobject == nullptr )
         {
             return;
         }
 
-        player->SyncUpdateDataFromServer( kfobject, &kfmsg.pbdata() );
+        player->SyncUpdateDataFromServer( kfobject, &kfmsg->pbdata() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleSyncAddDataFromServerReq )
     {
         __ROUTE_PROTO_PARSE__( KFMsg::S2SSyncAddDataFromServer );
-        auto kfobject = player->Find( kfmsg.dataname() );
+        auto kfobject = player->Find( kfmsg->dataname() );
         if ( kfobject == nullptr )
         {
             return;
         }
 
-        player->SyncAddDataFromServer( kfobject, &kfmsg.pbdata() );
+        player->SyncAddDataFromServer( kfobject, &kfmsg->pbdata() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleSyncRemoveDataFromServerReq )
     {
         __ROUTE_PROTO_PARSE__( KFMsg::S2SSyncRemoveDataFromServer );
-        auto kfobject = player->Find( kfmsg.dataname() );
+        auto kfobject = player->Find( kfmsg->dataname() );
         if ( kfobject == nullptr )
         {
             return;
         }
 
-        player->SyncRemoveDataFromServer( kfobject, &kfmsg.pbdata() );
+        player->SyncRemoveDataFromServer( kfobject, &kfmsg->pbdata() );
     }
 }

@@ -1,5 +1,4 @@
 ﻿#include "KFStoreModule.hpp"
-#include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
@@ -22,13 +21,13 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgStoreBuyGoodsReq );
 
-        auto kfsetting = KFStoreConfig::Instance()->FindSetting( kfmsg.storeid() );
+        auto kfsetting = KFStoreConfig::Instance()->FindSetting( kfmsg->storeid() );
         if ( kfsetting == nullptr )
         {
-            return _kf_display->SendToClient( player, KFMsg::StoreSettingError, kfmsg.storeid() );
+            return _kf_display->SendToClient( player, KFMsg::StoreSettingError, kfmsg->storeid() );
         }
 
-        auto result = _kf_goods->BuyGoods( player, kfmsg.storeid(), kfmsg.goodsid(), kfmsg.buycount() );
+        auto result = _kf_goods->BuyGoods( player, kfmsg->storeid(), kfmsg->goodsid(), kfmsg->buycount() );
         return _kf_display->DelayToClient( player, result );
     }
 }

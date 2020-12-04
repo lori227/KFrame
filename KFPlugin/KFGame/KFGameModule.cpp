@@ -1,5 +1,4 @@
 ﻿#include "KFGameModule.hpp"
-#include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
@@ -283,10 +282,10 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SBroadcastToGameAck );
 
         KFMsg::S2SBroadcastToGateReq req;
-        req.set_msgid( kfmsg.msgid() );
-        req.set_msgdata( kfmsg.msgdata() );
-        req.set_serial( kfmsg.serial() );
-        req.set_worldid( kfmsg.worldid() );
+        req.set_msgid( kfmsg->msgid() );
+        req.set_msgdata( kfmsg->msgdata() );
+        req.set_serial( kfmsg->serial() );
+        req.set_worldid( kfmsg->worldid() );
         _kf_tcp_server->SendNetMessage( KFMsg::S2S_BROADCAST_TO_GATE_REQ, &req );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -313,7 +312,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SLoginToGameReq );
 
-        auto pblogin = &kfmsg.pblogin();
+        auto pblogin = &kfmsg->pblogin();
         __LOG_DEBUG__( "player[{}:{}:{}] login game req", pblogin->account(), pblogin->accountid(), pblogin->playerid() );
 
         // 踢掉在线玩家
@@ -392,37 +391,37 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SReLoginToGameReq );
 
-        auto player = _kf_player->ReLogin( kfmsg.playerid(), __ROUTE_RECV_ID__ );
+        auto player = _kf_player->ReLogin( kfmsg->playerid(), __ROUTE_RECV_ID__ );
         if ( player != nullptr )
         {
             KFMsg::S2SEnterToGateAck ack;
             ack.set_servertime( KFGlobal::Instance()->_real_time );
 
             auto pblogin = ack.mutable_pblogin();
-            pblogin->set_token( kfmsg.token() );
-            pblogin->set_playerid( kfmsg.playerid() );
-            pblogin->set_sessionid( kfmsg.sessionid() );
-            pblogin->set_accountid( kfmsg.accountid() );
+            pblogin->set_token( kfmsg->token() );
+            pblogin->set_playerid( kfmsg->playerid() );
+            pblogin->set_sessionid( kfmsg->sessionid() );
+            pblogin->set_accountid( kfmsg->accountid() );
 
             auto playerdata = _kf_kernel->SerializeToOnline( player );
             ack.mutable_playerdata()->CopyFrom( *playerdata );
             auto ok = SendToGate( __ROUTE_SERVER_ID__, KFMsg::S2S_ENTER_TO_GATE_ACK, &ack );
             if ( !ok )
             {
-                __LOG_ERROR__( "player[{}:{}] relogin failed", kfmsg.accountid(), kfmsg.playerid() );
+                __LOG_ERROR__( "player[{}:{}] relogin failed", kfmsg->accountid(), kfmsg->playerid() );
             }
         }
         else
         {
             KFMsg::S2SReLoginToGateAck ack;
-            ack.set_token( kfmsg.token() );
-            ack.set_playerid( kfmsg.playerid() );
-            ack.set_sessionid( kfmsg.sessionid() );
-            ack.set_accountid( kfmsg.accountid() );
+            ack.set_token( kfmsg->token() );
+            ack.set_playerid( kfmsg->playerid() );
+            ack.set_sessionid( kfmsg->sessionid() );
+            ack.set_accountid( kfmsg->accountid() );
             auto ok = SendToGate( __ROUTE_SERVER_ID__, KFMsg::S2S_RELOGIN_TO_GATE_ACK, &ack );
             if ( !ok )
             {
-                __LOG_ERROR__( "player[{}:{}] ack failed", kfmsg.accountid(), kfmsg.playerid() );
+                __LOG_ERROR__( "player[{}:{}] ack failed", kfmsg->accountid(), kfmsg->playerid() );
             }
         }
     }
@@ -431,9 +430,9 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SConnectToGameReq );
 
-        for ( auto i = 0; i < kfmsg.pblogin_size(); ++i )
+        for ( auto i = 0; i < kfmsg->pblogin_size(); ++i )
         {
-            auto pblogin = &kfmsg.pblogin( i );
+            auto pblogin = &kfmsg->pblogin( i );
             auto player = _kf_player->FindPlayer( pblogin->playerid() );
             if ( player == nullptr )
             {
@@ -446,43 +445,43 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SDisconnectToGameReq );
 
-        auto player = _kf_player->FindPlayer( kfmsg.playerid() );
+        auto player = _kf_player->FindPlayer( kfmsg->playerid() );
         if ( player == nullptr )
         {
             return;
         }
 
-        __LOG_INFO__( "player=[{}] disconnect", kfmsg.playerid() );
+        __LOG_INFO__( "player=[{}] disconnect", kfmsg->playerid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGameModule::HandleLeaveToGameReq )
     {
         __PROTO_PARSE__( KFMsg::S2SLeaveToGameReq );
 
-        __LOG_DEBUG__( "player[{}] lost", kfmsg.playerid() );
+        __LOG_DEBUG__( "player[{}] lost", kfmsg->playerid() );
 
-        _kf_player->RemovePlayer( kfmsg.playerid() );
-        _kf_data_client->RemoveLoadData( kfmsg.playerid() );
+        _kf_player->RemovePlayer( kfmsg->playerid() );
+        _kf_data_client->RemoveLoadData( kfmsg->playerid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGameModule::HandleLogoutToGameReq )
     {
         __SERVER_PROTO_PARSE__( KFMsg::S2SLogoutToGameReq );
 
-        __LOG_DEBUG__( "player[{}] logout", kfmsg.playerid() );
+        __LOG_DEBUG__( "player[{}] logout", kfmsg->playerid() );
 
         // 设置不在线, 后续不发送消息
         player->Set( __STRING__( gateid ), _invalid_int );
 
         // 删除玩家
-        _kf_player->RemovePlayer( kfmsg.playerid() );
+        _kf_player->RemovePlayer( kfmsg->playerid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGameModule::HandleKickPlayerToGameReq )
     {
         __PROTO_PARSE__( KFMsg::S2SKickPlayerToGameReq );
 
-        KickPlayer( kfmsg.playerid(), kfmsg.type(), __FUNC_LINE__ );
+        KickPlayer( kfmsg->playerid(), kfmsg->type(), __FUNC_LINE__ );
     }
 
     bool KFGameModule::KickPlayer( uint64 playerid, uint32 type, const char* function, uint32 line )
@@ -512,13 +511,13 @@ namespace KFrame
         __CLIENT_PROTO_PARSE__( KFMsg::MsgQueryPlayerReq );
 
         // 不能查询自己的数据，客户端本地可以获取到
-        if ( playerid == kfmsg.playerid() )
+        if ( playerid == kfmsg->playerid() )
         {
             return;
         }
 
         //查询玩家数据
-        auto ok = _kf_data_client->QueryPlayerData( playerid, kfmsg.playerid() );
+        auto ok = _kf_data_client->QueryPlayerData( playerid, kfmsg->playerid() );
         if ( !ok )
         {
             _kf_display->SendToClient( player, KFMsg::DataServerBusy );

@@ -147,20 +147,20 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SQueryMailReq );
 
         // 全局邮件信息
-        _mail_database_logic->LoadGlobalMailToPerson( kfmsg.playerid(), _invalid_int );
+        _mail_database_logic->LoadGlobalMailToPerson( kfmsg->playerid(), _invalid_int );
 
         // 小区邮件
-        _mail_database_logic->LoadGlobalMailToPerson( kfmsg.playerid(), kfmsg.zoneid() );
+        _mail_database_logic->LoadGlobalMailToPerson( kfmsg->playerid(), kfmsg->zoneid() );
 
         // 查询邮件列表
-        auto kfmailist = _mail_database_logic->QueryMailList( kfmsg.playerid(), kfmsg.maxid() );
+        auto kfmailist = _mail_database_logic->QueryMailList( kfmsg->playerid(), kfmsg->maxid() );
         if ( kfmailist == nullptr || kfmailist->_value.empty() )
         {
             return;
         }
 
         KFMsg::S2SQueryMailAck ack;
-        ack.set_playerid( kfmsg.playerid() );
+        ack.set_playerid( kfmsg->playerid() );
         for ( auto& maildata : kfmailist->_value )
         {
             auto& pbmail = *( ack.add_mail()->mutable_data() );
@@ -175,16 +175,16 @@ namespace KFrame
 
         // 邮件数据
         StringMap maildata;
-        auto pbmail = &kfmsg.pbmail().data();
+        auto pbmail = &kfmsg->pbmail().data();
         __PROTO_TO_MAP__( pbmail, maildata );
 
         // 添加邮件
-        auto mailid = AddMail( kfmsg.flag(), kfmsg.objectid(), maildata );
+        auto mailid = AddMail( kfmsg->flag(), kfmsg->objectid(), maildata );
         if ( mailid == _invalid_int )
         {
             std::string strdata;
             google::protobuf::util::MessageToJsonString( kfmsg, &strdata );
-            __LOG_ERROR__( "objectid[{}] add mail[{}] failed", kfmsg.objectid(), strdata );
+            __LOG_ERROR__( "objectid[{}] add mail[{}] failed", kfmsg->objectid(), strdata );
         }
     }
 
@@ -220,16 +220,16 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SUpdateMailStatusReq );
 
-        auto ok = _mail_database_logic->UpdateMailStatus( kfmsg.flag(), kfmsg.playerid(), kfmsg.id(), kfmsg.status() );
+        auto ok = _mail_database_logic->UpdateMailStatus( kfmsg->flag(), kfmsg->playerid(), kfmsg->id(), kfmsg->status() );
         if ( !ok )
         {
             return;
         }
 
         KFMsg::S2SUpdateMailStatusAck ack;
-        ack.set_playerid( kfmsg.playerid() );
-        ack.set_id( kfmsg.id() );
-        ack.set_status( kfmsg.status() );
+        ack.set_playerid( kfmsg->playerid() );
+        ack.set_id( kfmsg->id() );
+        ack.set_status( kfmsg->status() );
         _kf_route->SendToRoute( route, KFMsg::S2S_UPDATE_MAIL_STATUS_ACK, &ack );
     }
 
@@ -238,6 +238,6 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SNewPlayerMailReq );
 
         // 设置最大的gm邮件id
-        _mail_database_logic->InitNewPlayerMail( kfmsg.playerid(), kfmsg.zoneid() );
+        _mail_database_logic->InitNewPlayerMail( kfmsg->playerid(), kfmsg->zoneid() );
     }
 }

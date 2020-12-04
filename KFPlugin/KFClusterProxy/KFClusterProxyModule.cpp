@@ -1,5 +1,4 @@
 ﻿#include "KFClusterProxyModule.hpp"
-#include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
@@ -187,16 +186,16 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SClusterTokenToProxyReq );
 
-        auto kftoken = _kf_token_list.Create( kfmsg.token() );
-        kftoken->_token = kfmsg.token();
-        kftoken->_client_id = kfmsg.clientid();
+        auto kftoken = _kf_token_list.Create( kfmsg->token() );
+        kftoken->_token = kfmsg->token();
+        kftoken->_client_id = kfmsg->clientid();
         kftoken->_valid_time = KFGlobal::Instance()->_game_time + 60000;
 
         KFMsg::S2SClusterTokenToProxyAck ack;
-        ack.set_token( kfmsg.token() );
-        ack.set_proxyid( kfmsg.proxyid() );
-        ack.set_clientid( kfmsg.clientid() );
-        ack.set_masterid( kfmsg.masterid() );
+        ack.set_token( kfmsg->token() );
+        ack.set_proxyid( kfmsg->proxyid() );
+        ack.set_clientid( kfmsg->clientid() );
+        ack.set_masterid( kfmsg->masterid() );
         _kf_tcp_client->SendNetMessage( __ROUTE_SERVER_ID__, KFMsg::S2S_CLUSTER_TOKEN_TO_PROXY_ACK, &ack );
 
         __LOG_DEBUG__( "update client[{}] token[{}]", KFAppId::ToString( kftoken->_client_id ), kftoken->_token );
@@ -207,7 +206,7 @@ namespace KFrame
         auto clientid = __ROUTE_SERVER_ID__;
         __PROTO_PARSE__( KFMsg::S2SClusterVerifyToProxyReq );
 
-        auto serverid = ClusterVerifyLogin( kfmsg.token(), kfmsg.serverid() );
+        auto serverid = ClusterVerifyLogin( kfmsg->token(), kfmsg->serverid() );
 
         KFMsg::S2SClusterVerifyToClientAck ack;
         ack.set_serverid( serverid );
@@ -215,7 +214,7 @@ namespace KFrame
 
         if ( serverid == _invalid_int )
         {
-            return __LOG_ERROR__( "cluster client[{}] verify failed", KFAppId::ToString( kfmsg.serverid() ) );
+            return __LOG_ERROR__( "cluster client[{}] verify failed", KFAppId::ToString( kfmsg->serverid() ) );
         }
 
         // 删除定时器
@@ -225,7 +224,7 @@ namespace KFrame
         KFMsg::S2SClusterClientDiscoverToShardReq req;
         req.add_clientid( serverid );
         _kf_tcp_client->SendMessageToType( __STRING__( shard ), KFMsg::S2S_CLUSTER_CLIENT_DISCOVER_TO_SHARD_REQ, &req );
-        __LOG_DEBUG__( "cluster client [{}] verify ok", KFAppId::ToString( kfmsg.serverid() ) );
+        __LOG_DEBUG__( "cluster client [{}] verify ok", KFAppId::ToString( kfmsg->serverid() ) );
     }
 
     uint64 KFClusterProxyModule::ClusterVerifyLogin( const std::string& token, uint64 serverid )

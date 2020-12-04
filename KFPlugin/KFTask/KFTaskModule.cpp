@@ -1,5 +1,4 @@
 ﻿#include "KFTaskModule.hpp"
-#include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
@@ -448,13 +447,13 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgTaskReceiveReq );
 
-        auto kfsetting = KFTaskConfig::Instance()->FindSetting( kfmsg.id() );
+        auto kfsetting = KFTaskConfig::Instance()->FindSetting( kfmsg->id() );
         if ( kfsetting == nullptr )
         {
-            return _kf_display->SendToClient( player, KFMsg::TaskCanNotFind, kfmsg.id() );
+            return _kf_display->SendToClient( player, KFMsg::TaskCanNotFind, kfmsg->id() );
         }
 
-        auto kftask = player->Find( __STRING__( task ), kfmsg.id() );
+        auto kftask = player->Find( __STRING__( task ), kfmsg->id() );
         if ( kftask == nullptr )
         {
             return _kf_display->SendToClient( player, KFMsg::TaskNotActive );
@@ -473,13 +472,13 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgTaskRewardReq );
 
-        auto kfsetting = KFTaskConfig::Instance()->FindSetting( kfmsg.id() );
+        auto kfsetting = KFTaskConfig::Instance()->FindSetting( kfmsg->id() );
         if ( kfsetting == nullptr )
         {
-            return _kf_display->SendToClient( player, KFMsg::TaskCanNotFind, kfmsg.id() );
+            return _kf_display->SendToClient( player, KFMsg::TaskCanNotFind, kfmsg->id() );
         }
 
-        auto kftask = player->Find( __STRING__( task ), kfmsg.id() );
+        auto kftask = player->Find( __STRING__( task ), kfmsg->id() );
         if ( kftask == nullptr )
         {
             return _kf_display->SendToClient( player, KFMsg::TaskCanNotFindData );
@@ -507,13 +506,13 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgTaskRemoveReq );
 
-        auto kfsetting = KFTaskConfig::Instance()->FindSetting( kfmsg.id() );
+        auto kfsetting = KFTaskConfig::Instance()->FindSetting( kfmsg->id() );
         if ( kfsetting == nullptr )
         {
-            return _kf_display->SendToClient( player, KFMsg::TaskCanNotFind, kfmsg.id() );
+            return _kf_display->SendToClient( player, KFMsg::TaskCanNotFind, kfmsg->id() );
         }
 
-        player->RemoveRecord( __STRING__( task ), kfmsg.id() );
+        player->RemoveRecord( __STRING__( task ), kfmsg->id() );
     }
 
     __KF_EXECUTE_FUNCTION__( KFTaskModule::OnExecuteUpdateTaskStatus )

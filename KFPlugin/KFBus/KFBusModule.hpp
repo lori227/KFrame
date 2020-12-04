@@ -33,10 +33,10 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
     protected:
         // 通知注册
-        __KF_MESSAGE_FUNCTION__( HanldeTellRegisterToServer );
+        __KF_MESSAGE_FUNCTION__( HanldeTellRegisterToServer, KFMsg::TellRegisterToServer );
 
         // 取消注册
-        __KF_MESSAGE_FUNCTION__( HanldeTellUnRegisterFromServer );
+        __KF_MESSAGE_FUNCTION__( HanldeTellUnRegisterFromServer, KFMsg::TellUnRegisterFromServer );
 
         // 连接master服务器
         __KF_TIMER_FUNCTION__( OnTimerConnectionMaster );

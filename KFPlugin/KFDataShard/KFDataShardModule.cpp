@@ -78,11 +78,11 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SSavePlayerToDataReq );
 
-        auto ok = SavePlayerData( kfmsg.zoneid(), kfmsg.id(), &kfmsg.data(), kfmsg.flag() );
+        auto ok = SavePlayerData( kfmsg->zoneid(), kfmsg->id(), &kfmsg->data(), kfmsg->flag() );
         if ( ok )
         {
             KFMsg::S2SSavePlayerToGameAck ack;
-            ack.set_id( kfmsg.id() );
+            ack.set_id( kfmsg->id() );
             _kf_route->SendToRoute( route, KFMsg::S2S_SAVE_PLAYER_TO_GAME_ACK, &ack );
         }
     }
@@ -90,7 +90,7 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFDataShardModule::HandleLoadPlayerToDataReq )
     {
         __PROTO_PARSE__( KFMsg::S2SLoadPlayerToDataReq );
-        auto pblogin = &kfmsg.pblogin();
+        auto pblogin = &kfmsg->pblogin();
 
         KFMsg::S2SLoadPlayerToGameAck ack;
         ack.mutable_pblogin()->CopyFrom( *pblogin );
@@ -112,7 +112,7 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SQueryPlayerToDataReq );
 
         KFMsg::S2SQueryPlayerToGameAck ack;
-        auto ok = LoadPlayerData( kfmsg.zoneid(), kfmsg.playerid(), ack.mutable_playerdata() );
+        auto ok = LoadPlayerData( kfmsg->zoneid(), kfmsg->playerid(), ack.mutable_playerdata() );
         if ( ok )
         {
             ack.set_result( KFMsg::Ok );

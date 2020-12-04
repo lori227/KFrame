@@ -1,5 +1,4 @@
 ﻿#include "KFClusterClientModule.hpp"
-#include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
@@ -141,9 +140,9 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFClusterClientModule::HandleClusterAuthToClientAck )
     {
         __PROTO_PARSE__( KFMsg::S2SClusterAuthToClientAck );
-        auto listen = &kfmsg.listen();
+        auto listen = &kfmsg->listen();
 
-        _auth_token = kfmsg.token();
+        _auth_token = kfmsg->token();
         _cluster_proxy_id = listen->appid();
 
         // 停止定时器
@@ -163,7 +162,7 @@ namespace KFrame
         // 停止定时器
         __UN_TIMER_1__( _cluster_proxy_id );
 
-        if ( kfmsg.serverid() == 0 )
+        if ( kfmsg->serverid() == 0 )
         {
             // 重新连接
             ReconnectClusterMaster();

@@ -9,7 +9,6 @@
 //    @Date             :    2017-11-30
 ************************************************************************/
 
-#include "KFProtocol/KFProtocol.h"
 #include "KFDataShardInterface.h"
 #include "KFRedis/KFRedisInterface.h"
 #include "KFMySQL/KFMySQLInterface.h"

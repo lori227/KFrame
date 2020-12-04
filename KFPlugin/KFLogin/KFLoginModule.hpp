@@ -10,7 +10,6 @@
 ************************************************************************/
 
 #include "KFLoginInterface.h"
-#include "KFProtocol/KFProtocol.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFTcpServer/KFTcpServerInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"

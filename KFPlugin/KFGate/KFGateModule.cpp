@@ -1,5 +1,4 @@
 ﻿#include "KFGateModule.hpp"
-#include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
@@ -156,26 +155,26 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SBroadcastToGateReq );
 
-        if ( kfmsg.worldid() != _invalid_int )
+        if ( kfmsg->worldid() != _invalid_int )
         {
             // 检查是否重复广播
-            auto iter = _broadcast_list.find( kfmsg.worldid() );
+            auto iter = _broadcast_list.find( kfmsg->worldid() );
             if ( iter != _broadcast_list.end() )
             {
-                if ( iter->second >= kfmsg.serial() )
+                if ( iter->second >= kfmsg->serial() )
                 {
                     return;
                 }
             }
 
-            iter->second = kfmsg.serial();
+            iter->second = kfmsg->serial();
         }
 
-        auto& msgdata = kfmsg.msgdata();
+        auto& msgdata = kfmsg->msgdata();
         for ( auto& iter : _kf_role_list._objects )
         {
             auto kfrole = iter.second;
-            kfrole->SendToClient( kfmsg.msgid(), msgdata.data(), static_cast< uint32 >( msgdata.length() ) );
+            kfrole->SendToClient( kfmsg->msgid(), msgdata.data(), static_cast< uint32 >( msgdata.length() ) );
         }
     }
 
@@ -183,13 +182,13 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SBroadcastToServerReq );
 
-        auto& msgdata = kfmsg.msgdata();
+        auto& msgdata = kfmsg->msgdata();
         for ( auto& iter : _kf_role_list._objects )
         {
             auto kfrole = iter.second;
             if ( kfrole->_game_id == __ROUTE_SERVER_ID__ )
             {
-                kfrole->SendToClient( kfmsg.msgid(), msgdata.data(), static_cast< uint32 >( msgdata.length() ) );
+                kfrole->SendToClient( kfmsg->msgid(), msgdata.data(), static_cast< uint32 >( msgdata.length() ) );
             }
         }
     }
@@ -256,10 +255,10 @@ namespace KFrame
         auto sessionid = __ROUTE_SERVER_ID__;
         __PROTO_PARSE__( KFMsg::MsgLoginReq );
 
-        auto& token = kfmsg.token();
-        auto accountid = kfmsg.accountid();
+        auto& token = kfmsg->token();
+        auto accountid = kfmsg->accountid();
 
-        __LOG_DEBUG__( "session[{}] accountid[{}] version[{}] token[{}] login req", sessionid, accountid, kfmsg.version(), token );
+        __LOG_DEBUG__( "session[{}] accountid[{}] version[{}] token[{}] login req", sessionid, accountid, kfmsg->version(), token );
         // 注册连接器
         if ( !_kf_tcp_server->RegisteNetHandle( sessionid, sessionid, _invalid_int ) )
         {
@@ -273,7 +272,7 @@ namespace KFrame
         }
 
         // 判断版本号
-        auto compatibility = KFGlobal::Instance()->CheckVersionCompatibility( kfmsg.version() );
+        auto compatibility = KFGlobal::Instance()->CheckVersionCompatibility( kfmsg->version() );
         if ( !compatibility )
         {
             return SendLoginAckMessage( sessionid, KFMsg::VersionNotCompatibility, 0 );
@@ -349,26 +348,26 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFGateModule::HandleLoginToGateAck )
     {
         __PROTO_PARSE__( KFMsg::S2SLoginToGateAck );
-        __LOG_DEBUG__( "player[{}] login result[{}]", kfmsg.accountid(), kfmsg.result() );
+        __LOG_DEBUG__( "player[{}] login result[{}]", kfmsg->accountid(), kfmsg->result() );
 
-        SendLoginAckMessage( kfmsg.sessionid(), kfmsg.result(), kfmsg.bantime() );
+        SendLoginAckMessage( kfmsg->sessionid(), kfmsg->result(), kfmsg->bantime() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGateModule::HandleReLoginToGateAck )
     {
         __PROTO_PARSE__( KFMsg::S2SReLoginToGateAck );
 
-        __LOG_DEBUG__( "player[{}:{}] relogin ack", kfmsg.accountid(), kfmsg.playerid() );
+        __LOG_DEBUG__( "player[{}:{}] relogin ack", kfmsg->accountid(), kfmsg->playerid() );
 
         // game server上没有角色了, 重新登录
-        LoginToLogin( kfmsg.sessionid(), kfmsg.accountid(), kfmsg.token() );
+        LoginToLogin( kfmsg->sessionid(), kfmsg->accountid(), kfmsg->token() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGateModule::HandleEnterToGateAck )
     {
         __PROTO_PARSE__( KFMsg::S2SEnterToGateAck );
 
-        auto pblogin = &kfmsg.pblogin();
+        auto pblogin = &kfmsg->pblogin();
         __LOG_DEBUG__( "player[{}:{}] session[{}] enter game", pblogin->accountid(), pblogin->playerid(), pblogin->sessionid() );
 
         auto kfrole = FindRole( pblogin->playerid() );
@@ -411,8 +410,8 @@ namespace KFrame
         // 通知进入游戏
         KFMsg::MsgLoginAck ack;
         ack.set_playerid( pblogin->playerid() );
-        ack.set_servertime( kfmsg.servertime() );
-        ack.mutable_playerdata()->CopyFrom( kfmsg.playerdata() );
+        ack.set_servertime( kfmsg->servertime() );
+        ack.mutable_playerdata()->CopyFrom( kfmsg->playerdata() );
         auto ok = kfrole->SendToClient( KFMsg::MSG_LOGIN_ACK, &ack );
         if ( !ok )
         {
@@ -460,7 +459,7 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFGateModule::HandleKickPlayerToGateReq )
     {
         __PROTO_PARSE__( KFMsg::S2SKickPlayerToGateReq );
-        auto kfrole = FindRole( kfmsg.playerid() );
+        auto kfrole = FindRole( kfmsg->playerid() );
         if ( kfrole == nullptr )
         {
             return;
@@ -468,7 +467,7 @@ namespace KFrame
 
         // 通知客户端你被踢了
         KFMsg::MsgTellBeKick kick;
-        kick.set_type( kfmsg.type() );
+        kick.set_type( kfmsg->type() );
         kfrole->SendToClient( KFMsg::MSG_TELL_BE_KICK, &kick );
 
         // 删除玩家

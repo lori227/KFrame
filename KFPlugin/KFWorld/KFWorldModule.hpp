@@ -10,7 +10,6 @@
 ************************************************************************/
 
 #include "KFWorldInterface.h"
-#include "KFProtocol/KFProtocol.h"
 #include "KFTimer/KFTimerInterface.h"
 #include "KFMessage/KFMessageInterface.h"
 #include "KFIpAddress/KFIpAddressInterface.h"

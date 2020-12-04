@@ -19,7 +19,6 @@
 #include "KFTcpServer/KFTcpServerInterface.h"
 #include "KFTcpClient/KFTcpClientInterface.h"
 #include "KFHttpClient/KFHttpClientInterface.h"
-#include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
@@ -96,10 +95,10 @@ namespace KFrame
 
     protected:
         // 启动服务器
-        __KF_MESSAGE_FUNCTION__( HandleDeployCommandReq );
+        __KF_MESSAGE_FUNCTION__( HandleDeployCommandReq, KFMsg::S2SDeployCommandToAgentReq );
 
         // 心跳消息
-        __KF_MESSAGE_FUNCTION__( HandleClientHeartbeatReq );
+        __KF_MESSAGE_FUNCTION__( HandleClientHeartbeatReq, KFMsg::S2SDeployHeartbeatToAgentReq );
 
     protected:
         // 连接deployserver
@@ -168,7 +167,7 @@ namespace KFrame
 #endif
     protected:
         // 添加部署任务
-        void AddDeployTask( const std::string& command, KFMsg::PBDeployCommand* pbdeploy );
+        void AddDeployTask( const std::string& command, const KFMsg::PBDeployCommand* pbdeploy );
 
         // 开始任务
         void StartDeployTask();

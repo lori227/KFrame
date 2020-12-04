@@ -1,5 +1,4 @@
 ﻿#include "KFDirShardModule.hpp"
-#include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {

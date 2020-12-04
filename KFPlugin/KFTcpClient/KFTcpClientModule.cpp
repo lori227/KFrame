@@ -1,5 +1,4 @@
 ﻿#include "KFTcpClientModule.hpp"
-#include "KFProtocol/KFProtocol.h"
 #include "KFNetwork/KFNetClient.hpp"
 
 namespace KFrame
@@ -20,7 +19,7 @@ namespace KFrame
         _client_engine->BindFailedFunction( this, &KFTcpClientModule::OnClientFailed );
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::S2S_REGISTER_TO_SERVER_ACK, &KFTcpClientModule::HandleRegisterAck );
+        __REGISTER_MESSAGE__( KFTcpClientModule, KFMsg::S2S_REGISTER_TO_SERVER_ACK, KFMsg::RegisterToServerAck, HandleRegisterAck );
     }
 
     void KFTcpClientModule::BeforeShut()
@@ -306,24 +305,22 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////////////////////
     // 注册回馈
-    __KF_MESSAGE_FUNCTION__( KFTcpClientModule::HandleRegisterAck )
+    __KF_MESSAGE_FUNCTION__( KFTcpClientModule::HandleRegisterAck, KFMsg::RegisterToServerAck )
     {
-        __PROTO_PARSE__( KFMsg::RegisterToServerAck );
-
         auto kfclient = _client_engine->FindClient( __ROUTE_SERVER_ID__ );
         if ( kfclient != nullptr )
         {
             auto netdata = &kfclient->_net_data;
             __LOG_INFO__( "[{}:{}:{}|{}:{}] service ok", netdata->_name, netdata->_type, netdata->_str_id, netdata->_ip, netdata->_port );
 
-            kfclient->InitCompressEncrypt( kfmsg.compresstype(), kfmsg.compresslevel(), kfmsg.compresslength(), kfmsg.encryptkey(), kfmsg.openencrypt() );
+            kfclient->InitCompressEncrypt( kfmsg->compresstype(), kfmsg->compresslevel(), kfmsg->compresslength(), kfmsg->encryptkey(), kfmsg->openencrypt() );
 
             // 处理回调函数
             CallClientConnectionFunction( netdata );
         }
         else
         {
-            __LOG_ERROR__( "can't find client[{}|{}]", KFAppId::ToString( __ROUTE_SERVER_ID__ ), KFAppId::ToString( kfmsg.appid() ) );
+            __LOG_ERROR__( "can't find client[{}|{}]", KFAppId::ToString( __ROUTE_SERVER_ID__ ), KFAppId::ToString( kfmsg->appid() ) );
         }
     }
 }

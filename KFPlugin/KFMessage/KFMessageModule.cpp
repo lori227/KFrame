@@ -4,50 +4,51 @@ namespace KFrame
 {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFMessageModule::AddFunction( KFModule* module, uint32 msgid, KFMessageFunction& function )
+    void KFMessageModule::AddMessageHandle( KFMessageHandleAbstract* messagehandle )
     {
-        auto kffunction = _kf_message_function.Find( msgid );
-        if ( kffunction == nullptr )
+        auto ok = RemoveMessageHandle( messagehandle->_msgid, messagehandle->GetModule() );
+        if ( ok )
         {
-            kffunction = _kf_message_function.Create( msgid );
-            kffunction->SetFunction( module, function );
+            __LOG_ERROR__( "msgid=[{}] already register", messagehandle->_msgid );
         }
-        else
-        {
-            __LOG_ERROR__( "msgid[{}] already register", msgid );
-        }
+
+        _handles[ messagehandle->_msgid ] = messagehandle;
     }
 
-    bool KFMessageModule::CallFunction( const Route& route, uint32 msgid, const char* data, uint32 length )
+    bool KFMessageModule::RemoveMessageHandle( uint32 msgid, KFModule* module )
     {
-        auto kffunction = _kf_message_function.Find( msgid );
-        if ( kffunction == nullptr )
+        auto iter = _handles.find( msgid );
+        if ( iter == _handles.end() )
         {
             return false;
         }
 
-        kffunction->Call( route, msgid, data, length );
+        __KF_DELETE__( KFMessageHandleAbstract, iter->second );
+        _handles.erase( iter );
         return true;
     }
 
-    void KFMessageModule::UnRegisterFunction( uint32 msgid )
+    bool KFMessageModule::CallHandle( const Route& route, uint32 msgid, const char* data, uint32 length )
     {
-        auto ok = _kf_message_function.Remove( msgid );
-        if ( !ok )
-        {
-            __LOG_ERROR__( "msgid[{}] unregister failed", msgid );
-        }
-    }
-
-    bool KFMessageModule::OpenFunction( uint32 msgid, bool open )
-    {
-        auto kffunction = _kf_message_function.Find( msgid );
-        if ( kffunction == nullptr )
+        auto iter = _handles.find( msgid );
+        if ( iter == _handles.end() )
         {
             return false;
         }
 
-        kffunction->_is_open = open;
+        iter->second->CallFunction( route, data, length );
+        return true;
+    }
+
+    bool KFMessageModule::OpenHandle( uint32 msgid, bool open )
+    {
+        auto iter = _handles.find( msgid );
+        if ( iter == _handles.end() )
+        {
+            return false;
+        }
+
+        iter->second->OpenHandle( open );
         return true;
     }
 

@@ -1,5 +1,4 @@
 ﻿#include "KFTcpServerModule.hpp"
-#include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
@@ -54,7 +53,7 @@ namespace KFrame
     void KFTcpServerModule::BeforeRun()
     {
         ////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::S2S_REGISTER_TO_SERVER_REQ, &KFTcpServerModule::HandleRegisterReq );
+        __REGISTER_MESSAGE__( KFTcpServerModule, KFMsg::S2S_REGISTER_TO_SERVER_REQ, KFMsg::RegisterToServerReq, HandleRegisterReq );
         ////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////
         _kf_tcp_setting = FindTcpServerSetting();
@@ -241,12 +240,11 @@ namespace KFrame
         }
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_MESSAGE_FUNCTION__( KFTcpServerModule::HandleRegisterReq )
+    __KF_MESSAGE_FUNCTION__( KFTcpServerModule::HandleRegisterReq, KFMsg::RegisterToServerReq )
     {
         auto sessionid = __ROUTE_SERVER_ID__;
-        __PROTO_PARSE__( KFMsg::RegisterToServerReq );
 
-        auto listendata = &kfmsg.listen();
+        auto listendata = &kfmsg->listen();
         auto handlid = listendata->appid();
         auto kfhandle = _server_engine->RegisteHandle( sessionid, handlid, handlid );
         if ( kfhandle == nullptr )

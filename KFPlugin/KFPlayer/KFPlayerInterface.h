@@ -237,7 +237,7 @@ namespace KFrame
 
 #define __SERVER_PROTO_PARSE__( msgtype ) \
     __PROTO_PARSE__( msgtype ); \
-    auto player = _kf_player->FindPlayer( kfmsg.playerid() );\
+    auto player = _kf_player->FindPlayer( kfmsg->playerid() );\
     if ( player == nullptr )\
     {\
         return;\

@@ -48,13 +48,13 @@ namespace KFrame
         __CLIENT_PROTO_PARSE__( KFMsg::MsgApplyPayOrderReq );
 
         // 申请充值订单号
-        auto kfsetting = KFPayConfig::Instance()->FindSetting( kfmsg.payid() );
+        auto kfsetting = KFPayConfig::Instance()->FindSetting( kfmsg->payid() );
         if ( kfsetting == nullptr )
         {
             return _kf_display->SendToClient( player, KFMsg::PayIdError );
         }
 
-        auto source = __FORMAT__( "{}-{}-{}", playerid, kfmsg.payid(), KFGlobal::Instance()->STMakeUuid() );
+        auto source = __FORMAT__( "{}-{}-{}", playerid, kfmsg->payid(), KFGlobal::Instance()->STMakeUuid() );
         auto order = KFCrypto::Md5Encode( source );
 
         // 发送给auth服务器
@@ -102,20 +102,20 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgPayResultReq );
 
-        if ( kfmsg.result() )
+        if ( kfmsg->result() )
         {
             // 启动定时器, 查询充值信息
             StartQueryPayTimer( player );
-            player->UpdateData( __STRING__( payorder ), kfmsg.order() );
+            player->UpdateData( __STRING__( payorder ), kfmsg->order() );
 
-            __LOG_INFO__( "player=[{}] payid=[{}] order=[{}] pay ok", playerid, kfmsg.payid(), kfmsg.order() );
+            __LOG_INFO__( "player=[{}] payid=[{}] order=[{}] pay ok", playerid, kfmsg->payid(), kfmsg->order() );
         }
         else
         {
             static auto _url = _kf_ip_address->GetAuthUrl() + __STRING__( removeorder );
 
             __JSON_OBJECT_DOCUMENT__( kfjson );
-            __JSON_SET_VALUE__( kfjson, __STRING__( payorder ), kfmsg.order() );
+            __JSON_SET_VALUE__( kfjson, __STRING__( payorder ), kfmsg->order() );
             _kf_http_client->MTGet< KFPayClientModule >( _url, kfjson );
         }
     }

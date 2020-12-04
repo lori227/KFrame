@@ -99,7 +99,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SLoadPlayerToGameAck );
 
-        auto pblogin = &kfmsg.pblogin();
+        auto pblogin = &kfmsg->pblogin();
         auto keeper = _load_keeper.Find( pblogin->playerid() );
         if ( keeper == nullptr || keeper->_pb_login.sessionid() != pblogin->sessionid() )
         {
@@ -110,7 +110,7 @@ namespace KFrame
         __LOG_INFO__( "load palyer=[{}] ok", pblogin->playerid() );
 
         // 回调函数
-        _load_player_function( kfmsg.result(), &kfmsg.pblogin(), &kfmsg.playerdata() );
+        _load_player_function( kfmsg->result(), &kfmsg->pblogin(), &kfmsg->playerdata() );
     }
 
     void KFDataClientModule::RemoveLoadData( uint64 playerid )
@@ -153,9 +153,9 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SSavePlayerToGameAck );
 
-        _data_keeper.Remove( kfmsg.id() );
+        _data_keeper.Remove( kfmsg->id() );
 
-        __LOG_INFO__( "save palyer=[{}] ok", kfmsg.id() );
+        __LOG_INFO__( "save palyer=[{}] ok", kfmsg->id() );
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -181,7 +181,7 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SQueryPlayerToGameAck );
 
         // 回调函数
-        _query_player_function( kfmsg.result(), playerid, &kfmsg.playerdata() );
+        _query_player_function( kfmsg->result(), playerid, &kfmsg->playerdata() );
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////

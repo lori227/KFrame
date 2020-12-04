@@ -1,5 +1,4 @@
 ﻿#include "KFItemUseModule.hpp"
-#include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
@@ -71,7 +70,7 @@ namespace KFrame
         __CLIENT_PROTO_PARSE__( KFMsg::MsgUseItemReq );
 
         // 判断是否有这个道具
-        auto kfitem = player->Find( kfmsg.name(), kfmsg.uuid() );
+        auto kfitem = player->Find( kfmsg->name(), kfmsg->uuid() );
         if ( kfitem == nullptr )
         {
             return _kf_display->SendToClient( player, KFMsg::ItemDataNotExist );

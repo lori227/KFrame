@@ -581,8 +581,8 @@ __KF_MESSAGE_FUNCTION__( CKFDeployDlg::HandleDeployQueryToolIdAck )
 {
     __PROTO_PARSE__( KFMsg::S2SDeployToolQueryToolIdAck );
 
-    KFGlobal::Instance()->_app_id->SetWorkId( kfmsg.id() );
-    AddDeployLog( 0, __FORMAT__( "query id=[{}] ok", kfmsg.id() ) );
+    KFGlobal::Instance()->_app_id->SetWorkId( kfmsg->id() );
+    AddDeployLog( 0, __FORMAT__( "query id=[{}] ok", kfmsg->id() ) );
 }
 
 __KF_NET_EVENT_FUNCTION__( CKFDeployDlg::OnClientConnectFailed )
@@ -599,8 +599,8 @@ __KF_MESSAGE_FUNCTION__( CKFDeployDlg::HandleDeployLogToToolAck )
 {
     __PROTO_PARSE__( KFMsg::S2SDeployLogToToolAck );
 
-    AddDeployLog( kfmsg.agentid(), kfmsg.content() );
-    if ( kfmsg.content().find( "finish" ) != std::string::npos )
+    AddDeployLog( kfmsg->agentid(), kfmsg->content() );
+    if ( kfmsg->content().find( "finish" ) != std::string::npos )
     {
         QueryAgentData();
     }
@@ -661,37 +661,37 @@ __KF_MESSAGE_FUNCTION__( CKFDeployDlg::HandleDeployQueryMySQLAck )
 {
     __PROTO_PARSE__( KFMsg::S2SDeployToolQueryMySQLAck );
 
-    if ( !kfmsg.result() )
+    if ( !kfmsg->result() )
     {
         return AddDeployLog( 0, "查询数据库失败" );
     }
 
-    if ( kfmsg.table() == __STRING__( agent ) )
+    if ( kfmsg->table() == __STRING__( agent ) )
     {
-        RefreshAgentData( &kfmsg.datas() );
+        RefreshAgentData( &kfmsg->datas() );
 
         // 查询服务器列表
         QueryServerList();
     }
-    else if ( kfmsg.table().find( __STRING__( deploy ) ) != std::string::npos )
+    else if ( kfmsg->table().find( __STRING__( deploy ) ) != std::string::npos )
     {
-        RefreshServerList( &kfmsg.datas() );
+        RefreshServerList( &kfmsg->datas() );
     }
-    else if ( kfmsg.table() == __STRING__( version ) )
+    else if ( kfmsg->table() == __STRING__( version ) )
     {
-        _version_dlg->RefreshVersionList( &kfmsg.datas() );
+        _version_dlg->RefreshVersionList( &kfmsg->datas() );
     }
-    else if ( kfmsg.table() == __STRING__( file ) )
+    else if ( kfmsg->table() == __STRING__( file ) )
     {
-        _file_dlg->RefreshFileList( &kfmsg.datas() );
+        _file_dlg->RefreshFileList( &kfmsg->datas() );
     }
-    else if ( kfmsg.table() == __STRING__( resource ) )
+    else if ( kfmsg->table() == __STRING__( resource ) )
     {
-        _resource_dlg->RefreshResourceList( &kfmsg.datas() );
+        _resource_dlg->RefreshResourceList( &kfmsg->datas() );
     }
-    else if ( kfmsg.table() == __STRING__( plugin ) )
+    else if ( kfmsg->table() == __STRING__( plugin ) )
     {
-        _plugin_dlg->RefreshPluginList( &kfmsg.datas() );
+        _plugin_dlg->RefreshPluginList( &kfmsg->datas() );
     }
 }
 
@@ -699,16 +699,16 @@ __KF_MESSAGE_FUNCTION__( CKFDeployDlg::HandleDeployDeleteMySQLAck )
 {
     __PROTO_PARSE__( KFMsg::S2SDeployToolDeleteMySQLAck );
 
-    if ( !kfmsg.result() )
+    if ( !kfmsg->result() )
     {
         return AddDeployLog( 0, "删除数据库失败" );
     }
 
-    if ( kfmsg.table() == __STRING__( agent ) )
+    if ( kfmsg->table() == __STRING__( agent ) )
     {
         QueryAgentData();
     }
-    else if ( kfmsg.table().find( __STRING__( deploy ) ) != std::string::npos )
+    else if ( kfmsg->table().find( __STRING__( deploy ) ) != std::string::npos )
     {
         QueryServerList();
     }
@@ -718,17 +718,17 @@ __KF_MESSAGE_FUNCTION__( CKFDeployDlg::HandleDeployExecuteMySQLAck )
 {
     __PROTO_PARSE__( KFMsg::S2SDeployToolExecuteMySQLAck );
 
-    if ( !kfmsg.result() )
+    if ( !kfmsg->result() )
     {
         return AddDeployLog( 0, "执行数据库失败" );
     }
 
-    if ( kfmsg.table() == __STRING__( agent ) )
+    if ( kfmsg->table() == __STRING__( agent ) )
     {
         QueryAgentData();
         _add_agent_dlg->ShowWindow( SW_HIDE );
     }
-    else if ( kfmsg.table().find( __STRING__( deploy ) ) != std::string::npos )
+    else if ( kfmsg->table().find( __STRING__( deploy ) ) != std::string::npos )
     {
         QueryServerList();
     }

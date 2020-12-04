@@ -1,5 +1,4 @@
 ﻿#include "KFItemMoveModule.hpp"
-#include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
@@ -771,13 +770,13 @@ namespace KFrame
         __CLIENT_PROTO_PARSE__( KFMsg::MsgMoveItemReq );
 
         uint32 result = KFMsg::Error;
-        if ( kfmsg.sourcename() == kfmsg.targetname() )
+        if ( kfmsg->sourcename() == kfmsg->targetname() )
         {
-            result = MoveTabItem( player, kfmsg.sourcename(), kfmsg.tabname(), kfmsg.sourceuuid(), kfmsg.targetindex() );
+            result = MoveTabItem( player, kfmsg->sourcename(), kfmsg->tabname(), kfmsg->sourceuuid(), kfmsg->targetindex() );
         }
         else
         {
-            result = MoveBagItem( player, kfmsg.sourcename(), kfmsg.sourceuuid(), kfmsg.targetname(), kfmsg.targetindex() );
+            result = MoveBagItem( player, kfmsg->sourcename(), kfmsg->sourceuuid(), kfmsg->targetname(), kfmsg->targetindex() );
         }
         if ( result != KFMsg::Ok )
         {
@@ -898,8 +897,8 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgMoveAllItemReq );
 
-        auto kfsourcebagsetting = KFItemBagConfig::Instance()->FindSetting( kfmsg.sourcename() );
-        auto kftargetbagsetting = KFItemBagConfig::Instance()->FindSetting( kfmsg.targetname() );
+        auto kfsourcebagsetting = KFItemBagConfig::Instance()->FindSetting( kfmsg->sourcename() );
+        auto kftargetbagsetting = KFItemBagConfig::Instance()->FindSetting( kfmsg->targetname() );
         if ( kfsourcebagsetting == nullptr || kftargetbagsetting == nullptr || !kfsourcebagsetting->_can_move_all )
         {
             return _kf_display->SendToClient( player, KFMsg::ItemBagCanNotMove );
@@ -907,8 +906,8 @@ namespace KFrame
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 全部拾取
-        auto kfsourcerecord = player->Find( kfmsg.sourcename() );
-        auto kftargetrecord = player->Find( kfmsg.targetname() );
+        auto kfsourcerecord = player->Find( kfmsg->sourcename() );
+        auto kftargetrecord = player->Find( kfmsg->targetname() );
         if ( kfsourcerecord == nullptr || kftargetrecord == nullptr )
         {
             return _kf_display->SendToClient( player, KFMsg::ItemBagNameError );
@@ -1000,7 +999,7 @@ namespace KFrame
     {
         __CLIENT_PROTO_PARSE__( KFMsg::MsgSortItemReq );
 
-        SortItem( player, kfmsg.bagname(), kfmsg.tabname() );
+        SortItem( player, kfmsg->bagname(), kfmsg->tabname() );
     }
 
     void KFItemMoveModule::SortItem( KFEntity* player, const std::string& bagname, const std::string& tabname )

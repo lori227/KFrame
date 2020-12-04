@@ -1,6 +1,4 @@
 ﻿#include "KFBusModule.hpp"
-#include "KFBusConfig.hpp"
-#include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
@@ -10,8 +8,8 @@ namespace KFrame
         __REGISTER_TCP_CLIENT_SHUTDOWN__( &KFBusModule::OnClientDisconnectMaster );
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::S2S_TELL_REGISTER_TO_SERVER, &KFBusModule::HanldeTellRegisterToServer );
-        __REGISTER_MESSAGE__( KFMsg::S2S_TELL_UNREGISTER_FROM_SERVER, &KFBusModule::HanldeTellUnRegisterFromServer );
+        __REGISTER_MESSAGE__( KFBusModule, KFMsg::S2S_TELL_REGISTER_TO_SERVER, KFMsg::TellRegisterToServer, HanldeTellRegisterToServer );
+        __REGISTER_MESSAGE__( KFBusModule, KFMsg::S2S_TELL_UNREGISTER_FROM_SERVER, KFMsg::TellUnRegisterFromServer, HanldeTellUnRegisterFromServer );
     }
 
     void KFBusModule::ShutDown()
@@ -83,11 +81,9 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // 通知有客户端注册
-    __KF_MESSAGE_FUNCTION__( KFBusModule::HanldeTellRegisterToServer )
+    __KF_MESSAGE_FUNCTION__( KFBusModule::HanldeTellRegisterToServer, KFMsg::TellRegisterToServer )
     {
-        __PROTO_PARSE__( KFMsg::TellRegisterToServer );
-
-        auto listendata = &kfmsg.listen();
+        auto listendata = &kfmsg->listen();
         if ( !CheckNeedConnection( listendata->appname(), listendata->apptype(), listendata->appid() ) )
         {
             return;
@@ -96,16 +92,14 @@ namespace KFrame
         _kf_tcp_client->StartClient( listendata->appname(), listendata->apptype(), listendata->appid(), listendata->ip(), listendata->port() );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFBusModule::HanldeTellUnRegisterFromServer )
+    __KF_MESSAGE_FUNCTION__( KFBusModule::HanldeTellUnRegisterFromServer, KFMsg::TellUnRegisterFromServer )
     {
-        __PROTO_PARSE__( KFMsg::TellUnRegisterFromServer );
-
-        if ( !CheckNeedConnection( kfmsg.appname(), kfmsg.apptype(), kfmsg.appid() ) )
+        if ( !CheckNeedConnection( kfmsg->appname(), kfmsg->apptype(), kfmsg->appid() ) )
         {
             return;
         }
 
-        _kf_tcp_client->CloseClient( kfmsg.appid(), __FUNC_LINE__ );
+        _kf_tcp_client->CloseClient( kfmsg->appid(), __FUNC_LINE__ );
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////

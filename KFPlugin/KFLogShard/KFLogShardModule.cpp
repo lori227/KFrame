@@ -45,11 +45,11 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SRemoteLogToServerReq );
 
-        auto filename = __FORMAT__( "{}-{}-{}.log", kfmsg.appname(), kfmsg.apptype(), kfmsg.strappid() );
-        auto spdlog = KFLogger::Instance()->NewLogger( kfmsg.appid(), __STRING__( remote ), filename );
-        for ( auto i = 0; i < kfmsg.logdata_size(); ++i )
+        auto filename = __FORMAT__( "{}-{}-{}.log", kfmsg->appname(), kfmsg->apptype(), kfmsg->strappid() );
+        auto spdlog = KFLogger::Instance()->NewLogger( kfmsg->appid(), __STRING__( remote ), filename );
+        for ( auto i = 0; i < kfmsg->logdata_size(); ++i )
         {
-            auto logdata = &kfmsg.logdata( i );
+            auto logdata = &kfmsg->logdata( i );
             spdlog->Log( logdata->level(), logdata->content() );
         }
     }

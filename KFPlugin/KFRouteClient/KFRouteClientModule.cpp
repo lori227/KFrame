@@ -1,5 +1,4 @@
 ﻿#include "KFRouteClientModule.hpp"
-#include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
@@ -158,7 +157,7 @@ namespace KFrame
         __PROTO_PARSE__( KFMsg::S2SRouteDiscoverToClientReq )
 
         // 把所有对象列表同步到shard
-        RouteSyncObjectToProxy( kfmsg.shardid() );
+        RouteSyncObjectToProxy( kfmsg->shardid() );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -449,16 +448,16 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SRouteMessageToClientAck );
 
-        auto pbroute = &kfmsg.pbroute();
+        auto pbroute = &kfmsg->pbroute();
         {
             // 回复转发消息成功
             SendRouteMessageOk( pbroute->serverid(), pbroute->serial() );
         }
 
-        auto msgdata = kfmsg.msgdata().data();
-        auto msglength = static_cast< uint32 >( kfmsg.msgdata().length() );
+        auto msgdata = kfmsg->msgdata().data();
+        auto msglength = static_cast< uint32 >( kfmsg->msgdata().length() );
         Route temproute( pbroute->serverid(), pbroute->sendid(), pbroute->recvid() );
-        bool ok = __CALL_MESSAGE__( temproute, kfmsg.msgid(), msgdata, msglength );
+        bool ok = __CALL_MESSAGE__( temproute, kfmsg->msgid(), msgdata, msglength );
         if ( ok )
         {
             return;
@@ -466,15 +465,15 @@ namespace KFrame
 
         if ( _kf_transpond_function != nullptr )
         {
-            auto ok = _kf_transpond_function( temproute, kfmsg.msgid(), msgdata, msglength );
+            auto ok = _kf_transpond_function( temproute, kfmsg->msgid(), msgdata, msglength );
             if ( !ok )
             {
-                __LOG_ERROR__( "route msgid[{}] failed", kfmsg.msgid() );
+                __LOG_ERROR__( "route msgid[{}] failed", kfmsg->msgid() );
             }
         }
         else
         {
-            __LOG_ERROR__( "msgid[{}] can't find handle", kfmsg.msgid() );
+            __LOG_ERROR__( "msgid[{}] can't find handle", kfmsg->msgid() );
         }
     }
 
@@ -494,7 +493,7 @@ namespace KFrame
     {
         __PROTO_PARSE__( KFMsg::S2SRouteMessageOk );
 
-        _route_message_list.Remove( kfmsg.serial() );
+        _route_message_list.Remove( kfmsg->serial() );
     }
 
     bool KFRouteClientModule::SendRouteMessage( uint32 msgid, ::google::protobuf::Message* message )

@@ -11,7 +11,6 @@
 
 #include "KFrame.h"
 #include "KFRouteService.hpp"
-#include "KFProtocol/KFProtocol.h"
 #include "KFRouteShardInterface.h"
 #include "KFNetwork/KFNetMessage.hpp"
 #include "KFMessage/KFMessageInterface.h"

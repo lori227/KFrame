@@ -9,13 +9,13 @@ namespace KFrame
         __REGISTER_HTTP__( __STRING__( deploy ), true, &KFDeployServerModule::HandleDeployCommand );
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::S2S_REGISTER_AGENT_TO_SERVER_REQ, &KFDeployServerModule::HandleRegisterAgentToServerReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_TOOL_EXECUTE_MYSQL_REQ, &KFDeployServerModule::HandleExecuteMySQLReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_TOOL_DELETE_MYSQL_REQ, &KFDeployServerModule::HandleDeleteMySQLReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_TOOL_QUERY_MYSQL_REQ, &KFDeployServerModule::HandleQueryMySQLReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_TOOL_COMMAND_REQ, &KFDeployServerModule::HandleDeployToolCommandReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_LOG_TO_SERVER_ACK, &KFDeployServerModule::HandleDeployLogToServerReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_DEPLOY_TOOL_QUERY_TOOL_ID_REQ, &KFDeployServerModule::HandleDeployQueryToolIdReq );
+        __REGISTER_MESSAGE__( KFDeployServerModule, KFMsg::S2S_REGISTER_AGENT_TO_SERVER_REQ, KFMsg::S2SRegisterAgentToServerReq, HandleRegisterAgentToServerReq );
+        __REGISTER_MESSAGE__( KFDeployServerModule, KFMsg::S2S_DEPLOY_TOOL_EXECUTE_MYSQL_REQ, KFMsg::S2SDeployToolExecuteMySQLReq, HandleExecuteMySQLReq );
+        __REGISTER_MESSAGE__( KFDeployServerModule, KFMsg::S2S_DEPLOY_TOOL_DELETE_MYSQL_REQ, KFMsg::S2SDeployToolDeleteMySQLReq, HandleDeleteMySQLReq );
+        __REGISTER_MESSAGE__( KFDeployServerModule, KFMsg::S2S_DEPLOY_TOOL_QUERY_MYSQL_REQ, KFMsg::S2SDeployToolQueryMySQLReq, HandleQueryMySQLReq );
+        __REGISTER_MESSAGE__( KFDeployServerModule, KFMsg::S2S_DEPLOY_TOOL_COMMAND_REQ, KFMsg::S2SDeployToolCommandReq, HandleDeployToolCommandReq );
+        __REGISTER_MESSAGE__( KFDeployServerModule, KFMsg::S2S_DEPLOY_LOG_TO_SERVER_ACK, KFMsg::S2SDeployLogToServerAck, HandleDeployLogToServerAck );
+        __REGISTER_MESSAGE__( KFDeployServerModule, KFMsg::S2S_DEPLOY_TOOL_QUERY_TOOL_ID_REQ, KFMsg::S2SDeployToolQueryToolIdReq, HandleDeployQueryToolIdReq );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
@@ -59,17 +59,15 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFDeployServerModule::HandleRegisterAgentToServerReq )
+    __KF_MESSAGE_FUNCTION__( KFDeployServerModule::HandleRegisterAgentToServerReq, KFMsg::S2SRegisterAgentToServerReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SRegisterAgentToServerReq );
-
-        auto kfagentdata = _agent_list.Create( kfmsg.agentid() );
-        kfagentdata->_agent_id = kfmsg.agentid();
-        kfagentdata->_local_ip = kfmsg.localip();
-        kfagentdata->_name = kfmsg.name();
-        kfagentdata->_type = kfmsg.type();
-        kfagentdata->_port = kfmsg.port();
-        kfagentdata->_service = kfmsg.service();
+        auto kfagentdata = _agent_list.Create( kfmsg->agentid() );
+        kfagentdata->_agent_id = kfmsg->agentid();
+        kfagentdata->_local_ip = kfmsg->localip();
+        kfagentdata->_name = kfmsg->name();
+        kfagentdata->_type = kfmsg->type();
+        kfagentdata->_port = kfmsg->port();
+        kfagentdata->_service = kfmsg->service();
 
         UpdateAgentToDatabase( kfagentdata, 1u );
     }
@@ -86,61 +84,55 @@ namespace KFrame
         _mysql_driver->Update( __STRING__( agent ), keyvalue, updatevalue );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFDeployServerModule::HandleDeleteMySQLReq )
+    __KF_MESSAGE_FUNCTION__( KFDeployServerModule::HandleDeleteMySQLReq, KFMsg::S2SDeployToolDeleteMySQLReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SDeployToolDeleteMySQLReq );
-
         StringMap values;
-        auto pbkeys = kfmsg.keys();
+        auto pbkeys = kfmsg->keys();
         for ( auto iter = pbkeys.begin(); iter != pbkeys.end(); ++iter )
         {
             values[ iter->first ] = iter->second;
         }
 
-        auto ok = _mysql_driver->Delete( kfmsg.table(), values );
+        auto ok = _mysql_driver->Delete( kfmsg->table(), values );
         KFMsg::S2SDeployToolDeleteMySQLAck ack;
         ack.set_result( ok );
-        ack.set_table( kfmsg.table() );
+        ack.set_table( kfmsg->table() );
         *ack.mutable_keys() = pbkeys;
         _kf_tcp_server->SendNetMessage( __ROUTE_SERVER_ID__, KFMsg::S2S_DEPLOY_TOOL_DELETE_MYSQL_ACK, &ack );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFDeployServerModule::HandleExecuteMySQLReq )
+    __KF_MESSAGE_FUNCTION__( KFDeployServerModule::HandleExecuteMySQLReq, KFMsg::S2SDeployToolExecuteMySQLReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SDeployToolExecuteMySQLReq );
-
         StringMap values;
-        auto pbvalues = kfmsg.values();
+        auto pbvalues = kfmsg->values();
         for ( auto iter = pbvalues.begin(); iter != pbvalues.end(); ++iter )
         {
             values[ iter->first ] = iter->second;
         }
 
-        auto ok = _mysql_driver->Insert( kfmsg.table(), values );
+        auto ok = _mysql_driver->Insert( kfmsg->table(), values );
 
         KFMsg::S2SDeployToolExecuteMySQLAck ack;
         ack.set_result( ok );
-        ack.set_table( kfmsg.table() );
+        ack.set_table( kfmsg->table() );
         *ack.mutable_values() = pbvalues;
         _kf_tcp_server->SendNetMessage( __ROUTE_SERVER_ID__, KFMsg::S2S_DEPLOY_TOOL_EXECUTE_MYSQL_ACK, &ack );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFDeployServerModule::HandleQueryMySQLReq )
+    __KF_MESSAGE_FUNCTION__( KFDeployServerModule::HandleQueryMySQLReq, KFMsg::S2SDeployToolQueryMySQLReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SDeployToolQueryMySQLReq );
-
         StringMap keys;
-        auto pbkeys = kfmsg.keys();
+        auto pbkeys = kfmsg->keys();
         for ( auto iter = pbkeys.begin(); iter != pbkeys.end(); ++iter )
         {
             keys[ iter->first ] = iter->second;
         }
 
-        auto kfresult = _mysql_driver->Select( kfmsg.table(), keys );
+        auto kfresult = _mysql_driver->Select( kfmsg->table(), keys );
 
         KFMsg::S2SDeployToolQueryMySQLAck ack;
         ack.set_result( kfresult->IsOk() );
-        ack.set_table( kfmsg.table() );
+        ack.set_table( kfmsg->table() );
 
         if ( kfresult->IsOk() )
         {
@@ -159,24 +151,22 @@ namespace KFrame
         _kf_tcp_server->SendNetMessage( __ROUTE_SERVER_ID__, KFMsg::S2S_DEPLOY_TOOL_QUERY_MYSQL_ACK, &ack );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFDeployServerModule::HandleDeployQueryToolIdReq )
+    __KF_MESSAGE_FUNCTION__( KFDeployServerModule::HandleDeployQueryToolIdReq, KFMsg::S2SDeployToolQueryToolIdReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SDeployToolQueryToolIdReq );
-
         static const char* _sql = "select `id` from `tool` where `toolip`='{}';";
 
         // 查询id
-        auto kfqueryid = _mysql_driver->QueryUInt32( _sql, kfmsg.ip() );
+        auto kfqueryid = _mysql_driver->QueryUInt32( _sql, kfmsg->ip() );
         if ( kfqueryid->IsOk() )
         {
             auto toolid = 0u;
             if ( kfqueryid->_value == 0u )
             {
                 StringMap values;
-                values[ "toolip" ] = kfmsg.ip();
+                values[ "toolip" ] = kfmsg->ip();
                 _mysql_driver->Insert( "tool", values );
 
-                auto kfresult = _mysql_driver->QueryUInt32( _sql, kfmsg.ip() );
+                auto kfresult = _mysql_driver->QueryUInt32( _sql, kfmsg->ip() );
                 if ( kfresult->_value != 0u )
                 {
                     toolid = kfresult->_value;
@@ -198,20 +188,16 @@ namespace KFrame
         _kf_tcp_server->CloseNetHandle( __ROUTE_SERVER_ID__, 1000, __FUNC_LINE__ );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFDeployServerModule::HandleDeployLogToServerReq )
+    __KF_MESSAGE_FUNCTION__( KFDeployServerModule::HandleDeployLogToServerAck, KFMsg::S2SDeployLogToServerAck )
     {
-        __PROTO_PARSE__( KFMsg::S2SDeployLogToServerAck );
-
-        LogDeploy( kfmsg.agentid(), "{}", kfmsg.content() );
+        LogDeploy( kfmsg->agentid(), "{}", kfmsg->content() );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFDeployServerModule::HandleDeployToolCommandReq )
+    __KF_MESSAGE_FUNCTION__( KFDeployServerModule::HandleDeployToolCommandReq, KFMsg::S2SDeployToolCommandReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SDeployToolCommandReq );
+        auto pbcommand = &kfmsg->deploycommand();
 
-        auto pbcommand = &kfmsg.deploycommand();
-
-        LogDeploy( 0, "deploy tool=[{}|{}] req", kfmsg.toolid(), kfmsg.ip() );
+        LogDeploy( 0, "deploy tool=[{}|{}] req", kfmsg->toolid(), kfmsg->ip() );
         LogDeploy( 0, "recv=[{}:{} | {}:{}:{}:{}]",
                    pbcommand->command(), pbcommand->value(),
                    pbcommand->appname(), pbcommand->apptype(), pbcommand->zoneid(), pbcommand->appid() );
@@ -223,14 +209,15 @@ namespace KFrame
         }
         else
         {
-            if ( kfmsg.time() <= KFGlobal::Instance()->_real_time )
+            auto strdata = kfmsg->SerializeAsString();
+            if ( kfmsg->time() <= KFGlobal::Instance()->_real_time )
             {
-                OnTcpDeployCommandToAgent( _invalid_int, data, length );
+                OnTcpDeployCommandToAgent( _invalid_int, strdata.data(), strdata.length() );
             }
             else
             {
-                LogDeploy( 0, "schedule=[{}] time=[{}]", _delayed_id, KFDate::GetTimeString( kfmsg.time() ) );
-                __REGISTER_DELAYED_WITH_DATA__( kfmsg.time(), ++_delayed_id, data, length, &KFDeployServerModule::OnTcpDeployCommandToAgent );
+                LogDeploy( 0, "schedule=[{}] time=[{}]", _delayed_id, KFDate::GetTimeString( kfmsg->time() ) );
+                __REGISTER_DELAYED_WITH_DATA__( kfmsg->time(), ++_delayed_id, strdata.data(), strdata.length(), &KFDeployServerModule::OnTcpDeployCommandToAgent );
             }
         }
     }

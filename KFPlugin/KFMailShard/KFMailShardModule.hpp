@@ -12,7 +12,6 @@
 #include "KFMailShardInterface.h"
 #include "KFMailDatabaseRedis.hpp"
 #include "KFMailDatabaseMongo.hpp"
-#include "KFProtocol/KFProtocol.h"
 #include "KFRedis/KFRedisInterface.h"
 #include "KFMongo/KFMongoInterface.h"
 #include "KFMessage/KFMessageInterface.h"

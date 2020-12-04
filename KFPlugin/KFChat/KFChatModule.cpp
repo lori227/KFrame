@@ -28,7 +28,7 @@ namespace KFrame
         }
 
         // 判断是否是好友
-        auto kfrelation = player->Find( __STRING__( friend ), kfmsg.playerid() );
+        auto kfrelation = player->Find( __STRING__( friend ), kfmsg->playerid() );
         if ( kfrelation == nullptr )
         {
             return _kf_display->SendToClient( player, KFMsg::ChatNotFriend );
@@ -36,7 +36,7 @@ namespace KFrame
         auto kfbasic = kfrelation->Find( __STRING__( basic ) );
 
         // 判断屏蔽字符
-        std::string content = kfmsg.content();
+        std::string content = kfmsg->content();
         _kf_filter->CensorFilter( content );
 
         KFMsg::MsgTellFriendChat chat;
@@ -59,7 +59,7 @@ namespace KFrame
         }
 
         // 判断屏蔽字符
-        std::string content = kfmsg.content();
+        std::string content = kfmsg->content();
         _kf_filter->CensorFilter( content );
 
         auto kfbasic = player->Find( __STRING__( basic ) );
