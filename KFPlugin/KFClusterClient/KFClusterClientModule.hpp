@@ -80,10 +80,10 @@ namespace KFrame
 
     protected:
         // 认证回馈
-        __KF_MESSAGE_FUNCTION__( HandleClusterAuthToClientAck );
+        __KF_MESSAGE_FUNCTION__( HandleClusterAuthToClientAck, KFMsg::S2SClusterAuthToClientAck );
 
         // 验证token回馈
-        __KF_MESSAGE_FUNCTION__( HandleClusterVerifyToClientAck );
+        __KF_MESSAGE_FUNCTION__( HandleClusterVerifyToClientAck, KFMsg::S2SClusterVerifyToClientAck );
 
     protected:
         // 连接事件

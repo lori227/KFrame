@@ -17,8 +17,8 @@ namespace KFrame
         __REGISTER_TCP_CLIENT_SHUTDOWN__( &KFClusterClientModule::OnClientLostClusterProxy );
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_AUTH_TO_CLIENT_ACK, &KFClusterClientModule::HandleClusterAuthToClientAck );
-        __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_VERIFY_TO_CLIENT_ACK, &KFClusterClientModule::HandleClusterVerifyToClientAck );
+        __REGISTER_MESSAGE__( KFClusterClientModule, KFMsg::S2S_CLUSTER_AUTH_TO_CLIENT_ACK, KFMsg::S2SClusterAuthToClientAck, HandleClusterAuthToClientAck );
+        __REGISTER_MESSAGE__( KFClusterClientModule, KFMsg::S2S_CLUSTER_VERIFY_TO_CLIENT_ACK, KFMsg::S2SClusterVerifyToClientAck, HandleClusterVerifyToClientAck );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
@@ -137,9 +137,8 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFClusterClientModule::HandleClusterAuthToClientAck )
+    __KF_MESSAGE_FUNCTION__( KFClusterClientModule::HandleClusterAuthToClientAck, KFMsg::S2SClusterAuthToClientAck )
     {
-        __PROTO_PARSE__( KFMsg::S2SClusterAuthToClientAck );
         auto listen = &kfmsg->listen();
 
         _auth_token = kfmsg->token();
@@ -155,10 +154,8 @@ namespace KFrame
         _kf_tcp_client->StartClient( listen->appname(), listen->apptype(), listen->appid(), listen->ip(), listen->port() );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFClusterClientModule::HandleClusterVerifyToClientAck )
+    __KF_MESSAGE_FUNCTION__( KFClusterClientModule::HandleClusterVerifyToClientAck, KFMsg::S2SClusterVerifyToClientAck )
     {
-        __PROTO_PARSE__( KFMsg::S2SClusterVerifyToClientAck );
-
         // 停止定时器
         __UN_TIMER_1__( _cluster_proxy_id );
 
