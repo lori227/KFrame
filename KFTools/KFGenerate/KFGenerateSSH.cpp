@@ -10,15 +10,7 @@ namespace KFrame
 
         {
             KFSSH kfssh( sshdata->_ip, sshdata->_port, sshdata->_user, sshdata->_password );
-
-            for ( auto& command : sshdata->_command_list )
-            {
-                auto ok = kfssh.Execute( command );
-                if ( ok )
-                {
-                    _event->AddEvent( EventType::SSHOk, 0, command );
-                }
-            }
+            kfssh.Execute( sshdata->_command_list );
         }
 
         KFSSH::Shutdown();

@@ -19,7 +19,7 @@ namespace KFrame
         ~KFSSH();
 
         // command 被远程执行的命令，如：whoami
-        bool Execute( const std::string& command );
+        bool Execute( const StringList& commandlist );
 
     protected:
         int32 GetErrorCode() const;

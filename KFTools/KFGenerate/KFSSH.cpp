@@ -272,7 +272,7 @@ namespace KFrame
         return numbytes;
     }
 
-    bool KFSSH::Execute( const std::string& command )
+    bool KFSSH::Execute( const StringList& commandlist )
     {
         auto channel = OpenChannel();
         if ( channel == nullptr )
@@ -284,18 +284,21 @@ namespace KFrame
         int32 numbytes = 0;
         try
         {
-            do
+            for ( auto& command : commandlist )
             {
-                int errcode = libssh2_channel_exec( channel, command.c_str() );
-                if ( 0 == errcode )
+                do
                 {
-                    break;
-                }
+                    int errcode = libssh2_channel_exec( channel, command.c_str() );
+                    if ( 0 == errcode )
+                    {
+                        break;
+                    }
 
-                KFThread::Sleep( 10 );
-            } while ( true );
+                    KFThread::Sleep( 10 );
+                } while ( true );
 
-            numbytes = ReadChannel( channel );
+                numbytes = ReadChannel( channel );
+            }
         }
         catch ( ... )
         {
@@ -304,7 +307,6 @@ namespace KFrame
         std::string errmsg;
         std::string exitsignal;
         auto exitcode = CloseChannel( channel, &exitsignal, &errmsg );
-
 
         return true;
     }
