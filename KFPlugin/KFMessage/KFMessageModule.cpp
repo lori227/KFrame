@@ -52,4 +52,14 @@ namespace KFrame
         return true;
     }
 
+    void KFMessageModule::BindFindEngityFunction( KFFindEntityFunction& function )
+    {
+        _find_entity_function = function;
+    }
+
+    void KFMessageModule::UnBindFindEngityFunction()
+    {
+        _find_entity_function = nullptr;
+    }
+
 }
