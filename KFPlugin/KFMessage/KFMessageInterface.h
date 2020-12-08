@@ -75,7 +75,7 @@ namespace KFrame
 
     public:
         // 处理调用函数
-        typename std::function<void( const Route&, uint32, const typename T* )> HandleFunctionType;
+        typedef std::function<void( const Route&, uint32, const typename T* )> HandleFunctionType;
         KFFunction< HandleFunctionType > _function;
     };
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
