@@ -33,13 +33,13 @@ namespace KFrame
         // 删除消息函数
         virtual bool RemoveMessageHandle( uint32 msgide, KFModule* module );
 
-        virtual void BindFindEngityFunction( KFFindEntityFunction& function );
-        virtual void UnBindFindEngityFunction();
+        virtual void BindFindEngityFunction( uint32 type, KFModule* module, KFFindEntityFunction& function );
+        virtual void UnBindFindEngityFunction( uint32 type );
     private:
         // 处理器函数
         std::unordered_map<uint32, KFMessageHandleAbstract*> _handles;
 
-        KFFindEntityFunction _find_entity_function = nullptr;
+        KFFunctionMap<uint32, KFFindEntityFunction> _find_entity_function;
     };
 }
 

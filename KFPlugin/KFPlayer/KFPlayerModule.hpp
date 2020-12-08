@@ -37,7 +37,6 @@ namespace KFrame
 
         // 查找玩家
         virtual KFEntity* FindPlayer( uint64 playerid );
-        virtual KFEntity* FindPlayer( uint64 playerid, const char* function, uint32 line );
 
         // 删除玩家
         virtual void RemovePlayer();

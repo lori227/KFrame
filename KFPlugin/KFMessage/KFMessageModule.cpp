@@ -36,7 +36,20 @@ namespace KFrame
             return false;
         }
 
-        iter->second->CallFunction( route, data, length );
+        KFEntity* kfentity = nullptr;
+        auto kfhandle = iter->second;
+        auto findentityfunction = _find_entity_function.Find( kfhandle->_type );
+        if ( findentityfunction != nullptr )
+        {
+            kfentity = findentityfunction->_function( route._recv_id );
+            if ( kfentity == nullptr )
+            {
+                __LOG_WARN__( "msgid=[{}:{}] can't find entity=[{}]!", kfhandle->_type, kfhandle->_message->GetTypeName(), route._recv_id );
+                return true;
+            }
+        }
+
+        kfhandle->CallFunction( kfentity, route, data, length );
         return true;
     }
 
@@ -52,14 +65,15 @@ namespace KFrame
         return true;
     }
 
-    void KFMessageModule::BindFindEngityFunction( KFFindEntityFunction& function )
+    void KFMessageModule::BindFindEngityFunction( uint32 type, KFModule* module, KFFindEntityFunction& function )
     {
-        _find_entity_function = function;
+        auto kffunction = _find_entity_function.Find( type );
+        kffunction->SetFunction( module, function );
     }
 
-    void KFMessageModule::UnBindFindEngityFunction()
+    void KFMessageModule::UnBindFindEngityFunction( uint32 type )
     {
-        _find_entity_function = nullptr;
+        _find_entity_function.Remove( type );
     }
 
 }

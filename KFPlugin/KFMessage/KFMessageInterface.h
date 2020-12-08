@@ -13,8 +13,9 @@ namespace KFrame
     class KFMessageHandleAbstract
     {
     public:
-        KFMessageHandleAbstract( uint32 msgid )
+        KFMessageHandleAbstract( uint32 type, uint32 msgid )
         {
+            _type = type;
             _msgid = msgid;
         }
 
@@ -30,9 +31,12 @@ namespace KFrame
         virtual void OpenFunction( bool open ) = 0;
 
         // 调用函数
-        virtual void CallFunction( const Route& route, const char* data, uint32 length ) = 0;
+        virtual void CallFunction( KFEntity* kfentity, const Route& route, const char* data, uint32 length ) = 0;
 
     public:
+        // 消息处理类型
+        uint32 _type = KFMessageEnum::Normal;
+
         // 消息id
         uint32 _msgid = 0u;
 
@@ -45,8 +49,8 @@ namespace KFrame
     class KFMessageHandleData : public KFMessageHandleAbstract
     {
     public:
-        KFMessageHandleData( uint32 msgid )
-            : KFMessageHandleAbstract( msgid )
+        KFMessageHandleData( uint32 type, uint32 msgid )
+            : KFMessageHandleAbstract( type, msgid )
         {
             _message = __KF_NEW__( T );
         }
@@ -64,24 +68,20 @@ namespace KFrame
         }
 
         // 调用函数
-        virtual void CallFunction( const Route& route, const char* data, uint32 length )
+        virtual void CallFunction( KFEntity* kfentity, const Route& route, const char* data, uint32 length )
         {
             auto ok = KFProto::Parse( _message, data, length );
             if ( ok )
             {
-                _function.Call( route, _msgid, reinterpret_cast<T*>( _message ) );
+                _function.Call( kfentity, route, _msgid, reinterpret_cast<T*>( _message ) );
             }
         }
 
     public:
         // 处理调用函数
-        typedef std::function<void( const Route&, uint32, const T* )> HandleFunctionType;
+        typedef std::function<void( KFEntity*, const Route&, uint32, const T* )> HandleFunctionType;
         KFFunction< HandleFunctionType > _function;
     };
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     class KFMessageInterface : public KFModule
@@ -89,10 +89,10 @@ namespace KFrame
     public:
         // 添加消息函数
         template<typename ModuleType, typename MessageType >
-        void RegisterHandle( uint32 msgid, ModuleType* module, void( ModuleType::* function )( const Route&, uint32, const MessageType* ) )
+        void RegisterHandle( uint32 type, uint32 msgid, ModuleType* module, void( ModuleType::* function )( KFEntity*, const Route&, uint32, const MessageType* ) )
         {
-            auto messagehandle = __KF_NEW__( KFMessageHandleData< MessageType >, msgid );
-            typename KFMessageHandleData< MessageType >::HandleFunctionType handlefunction = std::bind( function, module, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
+            auto messagehandle = __KF_NEW__( KFMessageHandleData< MessageType >, type, msgid );
+            typename KFMessageHandleData< MessageType >::HandleFunctionType handlefunction = std::bind( function, module, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
             messagehandle->_function.SetFunction( module, handlefunction );
             AddMessageHandle( messagehandle );
         }
@@ -108,16 +108,16 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 为了减少game逻辑, 提供一个查找玩家的回调函数
         template< typename T >
-        void RegisterFindEntityFunction( T* module, void( T::* function )( uint64 ) )
+        void RegisterFindEntityFunction( uint32 type, T* module, KFEntity * ( T::* function )( uint64 ) )
         {
             KFFindEntityFunction bindfunction = std::bind( function, module, std::placeholders::_1 );
-            BindFindEngityFunction( bindfunction );
+            BindFindEngityFunction( type, module, bindfunction );
         }
 
         template< typename T >
-        void RegisterFindEntityFunction( T* module )
+        void RegisterFindEntityFunction( uint32 type, T* module )
         {
-            UnBindFindEngityFunction();
+            UnBindFindEngityFunction( type );
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -135,8 +135,8 @@ namespace KFrame
         // 删除消息函数
         virtual bool RemoveMessageHandle( uint32 msgide, KFModule* module ) = 0;
 
-        virtual void BindFindEngityFunction( KFFindEntityFunction& function ) = 0;
-        virtual void UnBindFindEngityFunction() = 0;
+        virtual void BindFindEngityFunction( uint32 type, KFModule* module, KFFindEntityFunction& function ) = 0;
+        virtual void UnBindFindEngityFunction( uint32 type ) = 0;
     };
 
     ///////////////////////////////////////////////////////////////////////////////////////////
@@ -144,10 +144,10 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////////////////////////
     // 消息函数
 #define __KF_MESSAGE_FUNCTION__( function, msgtype ) \
-    void function( const Route& route, uint32 msgid, const msgtype* kfmsg )
+    void function( KFEntity* kfentity, const Route& route, uint32 msgid, const msgtype* kfmsg )
 
-#define __REGISTER_MESSAGE__( moduletype, msgid, msgtype, function ) \
-    _kf_message->RegisterHandle<moduletype, msgtype>( msgid, this, &moduletype::function )
+#define __REGISTER_MESSAGE__( moduletype, msgflag, msgid, msgtype, function ) \
+    _kf_message->RegisterHandle<moduletype, msgtype>( msgflag, msgid, this, &moduletype::function )
 
 #define __HANDLE_MESSAGE__( route, msgid, data, length )\
     _kf_message->HandleMessage( route, msgid, data, length )
@@ -158,6 +158,12 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////////////////////////
 #define __KF_TRANSPOND_MESSAGE_FUNCTION__( function ) \
     bool function( const Route& route, uint32 msgid, const char* data, uint32 length )
+    ///////////////////////////////////////////////////////////////////////////////////////////
+#define __REGISTER_FIND_ENTITY__(type, function)\
+    _kf_message->RegisterFindEntityFunction( type, this, function )
+#define __UN_FIND_ENGITY__( type )\
+    _kf_message->RegisterFindEntityFunction( type, this )
+
 }
 
 
