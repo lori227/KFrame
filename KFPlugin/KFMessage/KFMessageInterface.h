@@ -75,7 +75,7 @@ namespace KFrame
 
     public:
         // 处理调用函数
-        typedef std::function<void( const Route&, uint32, const typename T* )> HandleFunctionType;
+        typedef std::function<void( const Route&, uint32, const T* )> HandleFunctionType;
         KFFunction< HandleFunctionType > _function;
     };
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -89,10 +89,10 @@ namespace KFrame
     public:
         // 添加消息函数
         template<typename ModuleType, typename MessageType >
-        void RegisterHandle( uint32 msgid, ModuleType* module, void( ModuleType::* function )( const Route&, uint32, const typename MessageType* ) )
+        void RegisterHandle( uint32 msgid, ModuleType* module, void( ModuleType::* function )( const Route&, uint32, const MessageType* ) )
         {
             auto messagehandle = __KF_NEW__( KFMessageHandleData< MessageType >, msgid );
-            KFMessageHandleData< MessageType >::HandleFunctionType handlefunction = std::bind( function, module, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
+            typename KFMessageHandleData< MessageType >::HandleFunctionType handlefunction = std::bind( function, module, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
             messagehandle->_function.SetFunction( module, handlefunction );
             AddMessageHandle( messagehandle );
         }
