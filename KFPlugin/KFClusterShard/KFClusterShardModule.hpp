@@ -43,10 +43,10 @@ namespace KFrame
 
     protected:
         // 注册路由信息
-        __KF_MESSAGE_FUNCTION__( HandleClusterClientDiscoverToShardReq );
+        __KF_MESSAGE_FUNCTION__( HandleClusterClientDiscoverToShardReq, KFMsg::S2SClusterClientDiscoverToShardReq );
 
         // 客户端丢失
-        __KF_MESSAGE_FUNCTION__( HandleClusterClientLostToShardReq );
+        __KF_MESSAGE_FUNCTION__( HandleClusterClientLostToShardReq, KFMsg::S2SClusterClientLostToShardReq );
 
         // 丢失连接
         __KF_NET_EVENT_FUNCTION__( OnServerLostHandle );

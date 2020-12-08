@@ -33,28 +33,28 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
     protected:
         // 查询玩家关系信息
-        __KF_MESSAGE_FUNCTION__( HandleQueryRelationToRelationReq );
+        __KF_MESSAGE_FUNCTION__( HandleQueryRelationToRelationReq, KFMsg::S2SQueryRelationToRelationReq );
 
         // 查询关系申请
-        __KF_MESSAGE_FUNCTION__( HandleQueryRelationInviteToRelationReq );
+        __KF_MESSAGE_FUNCTION__( HandleQueryRelationInviteToRelationReq, KFMsg::S2SQueryRelationInviteToRelationReq );
 
         // 申请添加好友
-        __KF_MESSAGE_FUNCTION__( HandleApplyAddRelationToRelationReq );
+        __KF_MESSAGE_FUNCTION__( HandleApplyAddRelationToRelationReq, KFMsg::S2SApplyAddRelationToRelationReq );
 
         // 删除好友邀请
-        __KF_MESSAGE_FUNCTION__( HandleDelRelationInviteToRelationReq );
+        __KF_MESSAGE_FUNCTION__( HandleDelRelationInviteToRelationReq, KFMsg::S2SDelRelationInviteToRelationReq );
 
         // 添加关系
-        __KF_MESSAGE_FUNCTION__( HandleAddRelationToRelationReq );
+        __KF_MESSAGE_FUNCTION__( HandleAddRelationToRelationReq, KFMsg::S2SAddRelationToRelationReq );
 
         // 删除关系
-        __KF_MESSAGE_FUNCTION__( HandleDelRelationToRelationReq );
+        __KF_MESSAGE_FUNCTION__( HandleDelRelationToRelationReq, KFMsg::S2SDelRelationToRelationReq );
 
         // 设置拒绝
-        __KF_MESSAGE_FUNCTION__( HandleRefuseRelationToRelationReq );
+        __KF_MESSAGE_FUNCTION__( HandleRefuseRelationToRelationReq, KFMsg::S2SRefuseRelationToRelationReq );
 
         // 更新好友度
-        __KF_MESSAGE_FUNCTION__( HandleUpdateFriendLinessToRelationReq );
+        __KF_MESSAGE_FUNCTION__( HandleUpdateFriendLinessToRelationReq, KFMsg::S2SUpdateFriendLinessToRelationReq );
 
     protected:
         // 信息转换成关系信息

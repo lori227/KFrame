@@ -43,11 +43,11 @@ namespace KFrame
 
     protected:
         // 移动道具(从背包到仓库 或者从仓库到背包)
-        __KF_MESSAGE_FUNCTION__( HandleMoveItemReq );
-        __KF_MESSAGE_FUNCTION__( HandleMoveAllItemReq );
+        __KF_MESSAGE_FUNCTION__( HandleMoveItemReq, KFMsg::MsgMoveItemReq );
+        __KF_MESSAGE_FUNCTION__( HandleMoveAllItemReq, KFMsg::MsgMoveAllItemReq );
 
         // 整理背包
-        __KF_MESSAGE_FUNCTION__( HandleSortItemReq );
+        __KF_MESSAGE_FUNCTION__( HandleSortItemReq, KFMsg::MsgSortItemReq );
 
     protected:
         // 进入游戏

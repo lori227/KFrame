@@ -10,9 +10,11 @@ namespace KFrame
     public:
         // 转发消息到shard
         virtual bool TranspondToShard( const Route& route, uint32 msgid, const char* data, uint32 length ) = 0;
+        virtual bool TranspondToShard( const Route& route, uint32 msgid, const google::protobuf::Message* message ) = 0;
 
         // 转发消息到client
         virtual bool TranspondToClient( const Route& route, uint32 msgid, const char* data, uint32 length ) = 0;
+        virtual bool TranspondToClient( const Route& route, uint32 msgid, const google::protobuf::Message* message ) = 0;
     };
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////

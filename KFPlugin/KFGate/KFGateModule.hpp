@@ -59,27 +59,27 @@ namespace KFrame
         __KF_TIMER_FUNCTION__( OnTimerPlayerDisconnetion );
     protected:
         // 登录验证
-        __KF_MESSAGE_FUNCTION__( HandleLoginReq );
+        __KF_MESSAGE_FUNCTION__( HandleLoginReq, KFMsg::MsgLoginReq );
 
         // 登出游戏
-        __KF_MESSAGE_FUNCTION__( HandleLogoutReq );
+        __KF_MESSAGE_FUNCTION__( HandleLogoutReq, KFMsg::MsgLogoutReq );
         //////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////
         // 验证结果
-        __KF_MESSAGE_FUNCTION__( HandleLoginToGateAck );
+        __KF_MESSAGE_FUNCTION__( HandleLoginToGateAck, KFMsg::S2SLoginToGateAck );
 
         // 重新登录
-        __KF_MESSAGE_FUNCTION__( HandleReLoginToGateAck );
+        __KF_MESSAGE_FUNCTION__( HandleReLoginToGateAck, KFMsg::S2SReLoginToGateAck );
 
         // 踢出玩家
-        __KF_MESSAGE_FUNCTION__( HandleKickPlayerToGateReq );
+        __KF_MESSAGE_FUNCTION__( HandleKickPlayerToGateReq, KFMsg::S2SKickPlayerToGateReq );
 
         // 处理登录回馈
-        __KF_MESSAGE_FUNCTION__( HandleEnterToGateAck );
+        __KF_MESSAGE_FUNCTION__( HandleEnterToGateAck, KFMsg::S2SEnterToGateAck );
 
         // 处理消息广播
-        __KF_MESSAGE_FUNCTION__( HandleBroadcastToGateReq );
-        __KF_MESSAGE_FUNCTION__( HandleBroadcastToServerReq );
+        __KF_MESSAGE_FUNCTION__( HandleBroadcastToGateReq, KFMsg::S2SBroadcastToGateReq );
+        __KF_MESSAGE_FUNCTION__( HandleBroadcastToServerReq, KFMsg::S2SBroadcastToServerReq );
 
     protected:
         // 登录到登录服务器

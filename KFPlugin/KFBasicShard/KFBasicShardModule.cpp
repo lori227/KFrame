@@ -4,11 +4,11 @@ namespace KFrame
 {
     void KFBasicShardModule::BeforeRun()
     {
-        __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_INT_VALUE_TO_BASIC_REQ, &KFBasicShardModule::HandleUpdateIntValueToBasicReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_STR_VALUE_TO_BASIC_REQ, &KFBasicShardModule::HandleUpdateStrValueToBasicReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_CLEAR_ONLINE_TO_BASIC_REQ, &KFBasicShardModule::HandleClearOnlineToBasicReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_ATTRIBUTE_TO_BASIC_REQ, &KFBasicShardModule::HandleQueryAttributeToBasicReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_SET_PLAYER_NAME_TO_BASIC_REQ, &KFBasicShardModule::HandleSetPlayerNameToBasicReq );
+        __REGISTER_MESSAGE__( KFBasicShardModule, KFMsg::S2S_UPDATE_INT_VALUE_TO_BASIC_REQ, KFMsg::S2SUpdateIntValueToBasicReq, HandleUpdateIntValueToBasicReq );
+        __REGISTER_MESSAGE__( KFBasicShardModule, KFMsg::S2S_UPDATE_STR_VALUE_TO_BASIC_REQ, KFMsg::S2SUpdateStrValueToBasicReq, HandleUpdateStrValueToBasicReq );
+        __REGISTER_MESSAGE__( KFBasicShardModule, KFMsg::S2S_CLEAR_ONLINE_TO_BASIC_REQ, KFMsg::S2SClearOnlineToBasicReq, HandleClearOnlineToBasicReq );
+        __REGISTER_MESSAGE__( KFBasicShardModule, KFMsg::S2S_QUERY_ATTRIBUTE_TO_BASIC_REQ, KFMsg::S2SQueryAttributeToBasicReq, HandleQueryAttributeToBasicReq );
+        __REGISTER_MESSAGE__( KFBasicShardModule, KFMsg::S2S_SET_PLAYER_NAME_TO_BASIC_REQ, KFMsg::S2SSetPlayerNameToBasicReq, HandleSetPlayerNameToBasicReq );
     }
 
     void KFBasicShardModule::BeforeShut()
@@ -21,37 +21,29 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_MESSAGE_FUNCTION__( KFBasicShardModule::HandleUpdateIntValueToBasicReq )
+    __KF_MESSAGE_FUNCTION__( KFBasicShardModule::HandleUpdateIntValueToBasicReq, KFMsg::S2SUpdateIntValueToBasicReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SUpdateIntValueToBasicReq );
-
         StringUInt64 values;
         auto pbdata = &kfmsg->pbdata();
         __PROTO_TO_MAP__( pbdata, values );
         _kf_basic_database->UpdateBasicIntValue( __ROUTE_SEND_ID__, __ROUTE_SERVER_ID__, values );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFBasicShardModule::HandleUpdateStrValueToBasicReq )
+    __KF_MESSAGE_FUNCTION__( KFBasicShardModule::HandleUpdateStrValueToBasicReq, KFMsg::S2SUpdateStrValueToBasicReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SUpdateStrValueToBasicReq );
-
         StringMap values;
         auto pbdata = &kfmsg->pbdata();
         __PROTO_TO_MAP__( pbdata, values );
         _kf_basic_database->UpdateBasicStrValue( __ROUTE_SEND_ID__, __ROUTE_SERVER_ID__, values );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFBasicShardModule::HandleClearOnlineToBasicReq )
+    __KF_MESSAGE_FUNCTION__( KFBasicShardModule::HandleClearOnlineToBasicReq, KFMsg::S2SClearOnlineToBasicReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SClearOnlineToBasicReq );
-
         _kf_basic_database->ClearBasicServerId( kfmsg->serverid() );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFBasicShardModule::HandleQueryAttributeToBasicReq )
+    __KF_MESSAGE_FUNCTION__( KFBasicShardModule::HandleQueryAttributeToBasicReq, KFMsg::S2SQueryAttributeToBasicReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SQueryAttributeToBasicReq );
-
         StringMap values;
         auto result = _kf_basic_database->QueryBasicAttribute( kfmsg->name(), kfmsg->zoneid(), values );
 
@@ -64,10 +56,8 @@ namespace KFrame
         _kf_route->SendToRoute( route, KFMsg::S2S_QUERY_ATTRIBUTE_TO_GAME_ACK, &ack );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFBasicShardModule::HandleSetPlayerNameToBasicReq )
+    __KF_MESSAGE_FUNCTION__( KFBasicShardModule::HandleSetPlayerNameToBasicReq, KFMsg::S2SSetPlayerNameToBasicReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SSetPlayerNameToBasicReq );
-
         auto result = _kf_basic_database->SetPlayerName( kfmsg->zoneid(), kfmsg->playerid(), kfmsg->oldname(), kfmsg->newname() );
 
         KFMsg::S2SSetPlayerNameToGameAck ack;

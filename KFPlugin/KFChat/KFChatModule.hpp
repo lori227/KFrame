@@ -34,11 +34,12 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
     protected:
         // 好友私聊
-        __KF_MESSAGE_FUNCTION__( HandleFriendChatReq );
+        __KF_MESSAGE_FUNCTION__( HandleFriendChatReq, KFMsg::MsgFriendChatReq );
 
         // 本服务器(进程)的公屏聊天
-        __KF_MESSAGE_FUNCTION__( HandleServerChatReq );
+        __KF_MESSAGE_FUNCTION__( HandleServerChatReq, KFMsg::MsgServerChatReq );
 
+    protected:
         // 判断老天请求间隔
         bool CheckChatIntervalTime( KFEntity* player );
 

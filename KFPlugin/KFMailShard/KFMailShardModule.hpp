@@ -47,16 +47,16 @@ namespace KFrame
 
     protected:
         // 查询邮件
-        __KF_MESSAGE_FUNCTION__ ( HandleQueryMailReq );
+        __KF_MESSAGE_FUNCTION__ ( HandleQueryMailReq, KFMsg::S2SQueryMailReq );
 
         // 添加邮件
-        __KF_MESSAGE_FUNCTION__( HandleAddMailReq );
+        __KF_MESSAGE_FUNCTION__( HandleAddMailReq, KFMsg::S2SAddMailReq );
 
         // 设置邮件状态
-        __KF_MESSAGE_FUNCTION__( HandleUpdateMailStatusReq );
+        __KF_MESSAGE_FUNCTION__( HandleUpdateMailStatusReq, KFMsg::S2SUpdateMailStatusReq );
 
         // 新玩家登陆邮件处理
-        __KF_MESSAGE_FUNCTION__( HandleNewPlayerMailReq );
+        __KF_MESSAGE_FUNCTION__( HandleNewPlayerMailReq, KFMsg::S2SNewPlayerMailReq );
 
         ///////////////////////////////////////////////////////////////////////////////
     protected:

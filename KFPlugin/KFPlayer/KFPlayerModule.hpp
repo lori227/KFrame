@@ -121,24 +121,24 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     protected:
         // 删除属性请求
-        __KF_MESSAGE_FUNCTION__( HandleRemoveDataReq );
+        __KF_MESSAGE_FUNCTION__( HandleRemoveDataReq, KFMsg::MsgRemoveDataReq );
 
         // 请求同步属性
-        __KF_MESSAGE_FUNCTION__( HandleRequestSyncReq );
+        __KF_MESSAGE_FUNCTION__( HandleRequestSyncReq, KFMsg::MsgRequestSyncReq );
 
         // 请求取消同步
-        __KF_MESSAGE_FUNCTION__( HandleCancelSyncReq );
+        __KF_MESSAGE_FUNCTION__( HandleCancelSyncReq, KFMsg::MsgCancelSyncReq );
 
         // 请求更新数据
-        __KF_MESSAGE_FUNCTION__( HandleUpdateIntReq );
-        __KF_MESSAGE_FUNCTION__( HandleUpdateStrReq );
+        __KF_MESSAGE_FUNCTION__( HandleUpdateIntReq, KFMsg::MsgUpdateIntReq );
+        __KF_MESSAGE_FUNCTION__( HandleUpdateStrReq, KFMsg::MsgUpdateStrReq );
 
         // 更新属性
-        __KF_MESSAGE_FUNCTION__( HandleSyncUpdateDataFromServerReq );
+        __KF_MESSAGE_FUNCTION__( HandleSyncUpdateDataFromServerReq, KFMsg::S2SSyncUpdateDataFromServer );
         // 添加属性
-        __KF_MESSAGE_FUNCTION__( HandleSyncAddDataFromServerReq );
+        __KF_MESSAGE_FUNCTION__( HandleSyncAddDataFromServerReq, KFMsg::S2SSyncAddDataFromServer );
         // 删除属性
-        __KF_MESSAGE_FUNCTION__( HandleSyncRemoveDataFromServerReq );
+        __KF_MESSAGE_FUNCTION__( HandleSyncRemoveDataFromServerReq, KFMsg::S2SSyncRemoveDataFromServer );
 
         // 名字更新
         __KF_UPDATE_STRING_FUNCTION__( OnUpdateNameCallBack );

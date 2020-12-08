@@ -1,4 +1,5 @@
 ﻿#include "KFAccountModule.hpp"
+#include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {

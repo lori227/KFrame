@@ -38,13 +38,13 @@ namespace KFrame
                                   uint32 chainid = 0u, uint32 chainindex = 1u );
     protected:
         // 接取任务
-        __KF_MESSAGE_FUNCTION__( HandleTaskReceiveReq );
+        __KF_MESSAGE_FUNCTION__( HandleTaskReceiveReq, KFMsg::MsgTaskReceiveReq );
 
         // 领取任务奖励
-        __KF_MESSAGE_FUNCTION__( HandleTaskRewardReq );
+        __KF_MESSAGE_FUNCTION__( HandleTaskRewardReq, KFMsg::MsgTaskRewardReq );
 
         // 放弃任务
-        __KF_MESSAGE_FUNCTION__( HandleTaskRemoveReq );
+        __KF_MESSAGE_FUNCTION__( HandleTaskRemoveReq, KFMsg::MsgTaskRemoveReq );
     protected:
         // 添加任务
         __KF_ADD_ELEMENT_FUNCTION__( AddTaskElement );

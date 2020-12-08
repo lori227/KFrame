@@ -2,11 +2,12 @@
 
 namespace KFrame
 {
-    void KFMessageData::AddNetMessage( uint32 msgid, const char* data, uint32 length )
+    void KFMessageData::AddNetMessage( uint32 msgid, const google::protobuf::Message* message )
     {
-        auto netmessge = KFNetMessage::Create( length );
+        auto strdata = message->SerializeAsString();
+        auto netmessge = KFNetMessage::Create( strdata.length() );
         netmessge->_head._msgid = msgid;
-        netmessge->CopyData( data, length );
+        netmessge->CopyData( strdata.data(), strdata.length() );
         _messages.push_back( netmessge );
     }
 
@@ -19,7 +20,7 @@ namespace KFrame
 
         for ( auto netmessage : _messages )
         {
-            __CALL_MESSAGE__( netmessage->_head._route, netmessage->_head._msgid, netmessage->_data, netmessage->_head._length );
+            __HANDLE_MESSAGE__( netmessage->_head._route, netmessage->_head._msgid, netmessage->_data, netmessage->_head._length );
             netmessage->Release();
         }
         _messages.clear();
@@ -29,16 +30,16 @@ namespace KFrame
     void KFRouteShardModule::BeforeRun()
     {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::S2S_ROUTE_MESSAGE_TO_NAME_ALL_REQ, &KFRouteShardModule::HandleRouteMessageToNameAllReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_ROUTE_MESSAGE_TO_NAME_RAND_REQ, &KFRouteShardModule::HandleRouteMessageToNameRandReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_ROUTE_MESSAGE_TO_NAME_BALANCE_REQ, &KFRouteShardModule::HandleRouteMessageToNameBalanceReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_ROUTE_MESSAGE_TO_NAME_OBJECT_REQ, &KFRouteShardModule::HandleRouteMessageToNameObjectReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_ROUTE_MESSAGE_TO_SERVER_REQ, &KFRouteShardModule::HandleRouteMessageToServerReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_ROUTE_MESSAGE_TO_PLAYER_REQ, &KFRouteShardModule::HandleRouteMessageToPlayerReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_ROUTE_CLIENT_LOST_TO_SHARD_REQ, &KFRouteShardModule::HandleRouteClientLostToShardReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_ROUTE_SYNC_OBJECT_TO_SHARD_REQ, &KFRouteShardModule::HandleRouteSyncObjectToShardReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_ROUTE_ADD_OBJECT_TO_SHARD_REQ, &KFRouteShardModule::HandleRouteAddObjectToShardReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_ROUTE_REMOVE_OBJECT_TO_SHARD_REQ, &KFRouteShardModule::HandleRouteRemoveObjectToShardReq );
+        __REGISTER_MESSAGE__( KFRouteShardModule, KFMsg::S2S_ROUTE_MESSAGE_TO_NAME_ALL_REQ, KFMsg::S2SRouteMessageToNameAllReq, HandleRouteMessageToNameAllReq );
+        __REGISTER_MESSAGE__( KFRouteShardModule, KFMsg::S2S_ROUTE_MESSAGE_TO_NAME_RAND_REQ, KFMsg::S2SRouteMessageToNameRandReq, HandleRouteMessageToNameRandReq );
+        __REGISTER_MESSAGE__( KFRouteShardModule, KFMsg::S2S_ROUTE_MESSAGE_TO_NAME_BALANCE_REQ, KFMsg::S2SRouteMessageToNameBalanceReq, HandleRouteMessageToNameBalanceReq );
+        __REGISTER_MESSAGE__( KFRouteShardModule, KFMsg::S2S_ROUTE_MESSAGE_TO_NAME_OBJECT_REQ, KFMsg::S2SRouteMessageToNameObjectReq, HandleRouteMessageToNameObjectReq );
+        __REGISTER_MESSAGE__( KFRouteShardModule, KFMsg::S2S_ROUTE_MESSAGE_TO_SERVER_REQ, KFMsg::S2SRouteMessageToServerReq, HandleRouteMessageToServerReq );
+        __REGISTER_MESSAGE__( KFRouteShardModule, KFMsg::S2S_ROUTE_MESSAGE_TO_PLAYER_REQ, KFMsg::S2SRouteMessageToPlayerReq, HandleRouteMessageToPlayerReq );
+        __REGISTER_MESSAGE__( KFRouteShardModule, KFMsg::S2S_ROUTE_CLIENT_LOST_TO_SHARD_REQ, KFMsg::S2SRouteClientLostToShardReq, HandleRouteClientLostToShardReq );
+        __REGISTER_MESSAGE__( KFRouteShardModule, KFMsg::S2S_ROUTE_SYNC_OBJECT_TO_SHARD_REQ, KFMsg::S2SRouteSyncObjectToShardReq, HandleRouteSyncObjectToShardReq );
+        __REGISTER_MESSAGE__( KFRouteShardModule, KFMsg::S2S_ROUTE_ADD_OBJECT_TO_SHARD_REQ, KFMsg::S2SRouteAddObjectToShardReq, HandleRouteAddObjectToShardReq );
+        __REGISTER_MESSAGE__( KFRouteShardModule, KFMsg::S2S_ROUTE_REMOVE_OBJECT_TO_SHARD_REQ, KFMsg::S2SRouteRemoveObjectToShardReq, HandleRouteRemoveObjectToShardReq );
 
     }
 
@@ -62,28 +63,26 @@ namespace KFrame
     auto routeservice = _route_service_list.Find( name );\
     if ( routeservice == nullptr )\
     {\
-        AddRouteFailedMessage( name, msgid, data, length );\
+        AddRouteFailedMessage( name, msgid, kfmsg );\
         return __LOG_ERROR__( "can't find service[{}]", name );\
     }\
 
-    __KF_MESSAGE_FUNCTION__( KFRouteShardModule::HandleRouteMessageToNameAllReq )
+    __KF_MESSAGE_FUNCTION__( KFRouteShardModule::HandleRouteMessageToNameAllReq, KFMsg::S2SRouteMessageToNameAllReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SRouteMessageToNameAllReq );
-
-        auto pbroute = kfmsg->mutable_pbroute();
         __FIND_ROUTE_SERVICE__( kfmsg->name() );
+
+        auto pbroute = &kfmsg->pbroute();
         for ( auto& iter : routeservice->_server_object_count_list )
         {
             SendRouteMessage( iter.first, pbroute, kfmsg->msgid(), kfmsg->msgdata() );
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRouteShardModule::HandleRouteMessageToNameRandReq )
+    __KF_MESSAGE_FUNCTION__( KFRouteShardModule::HandleRouteMessageToNameRandReq, KFMsg::S2SRouteMessageToNameRandReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SRouteMessageToNameRandReq );
-
-        auto pbroute = kfmsg->mutable_pbroute();
         __FIND_ROUTE_SERVICE__( kfmsg->name() );
+
+        auto pbroute = &kfmsg->pbroute();
         auto randid = ( pbroute->sendid() != 0u ? pbroute->sendid() : pbroute->serverid() );
         auto serverid = routeservice->RandServer( randid );
         if ( serverid == _invalid_int )
@@ -94,10 +93,8 @@ namespace KFrame
         SendRouteMessage( serverid, pbroute, kfmsg->msgid(), kfmsg->msgdata() );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRouteShardModule::HandleRouteMessageToNameBalanceReq )
+    __KF_MESSAGE_FUNCTION__( KFRouteShardModule::HandleRouteMessageToNameBalanceReq, KFMsg::S2SRouteMessageToNameBalanceReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SRouteMessageToNameBalanceReq );
-
         __FIND_ROUTE_SERVICE__( kfmsg->name() );
         auto serverid = routeservice->BalanceServer();
         if ( serverid == _invalid_int )
@@ -105,16 +102,15 @@ namespace KFrame
             return __LOG_ERROR__( "service[{}] no server", kfmsg->name() );
         }
 
-        auto pbroute = kfmsg->mutable_pbroute();
+        auto pbroute = &kfmsg->pbroute();
         SendRouteMessage( serverid, pbroute, kfmsg->msgid(), kfmsg->msgdata() );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRouteShardModule::HandleRouteMessageToNameObjectReq )
+    __KF_MESSAGE_FUNCTION__( KFRouteShardModule::HandleRouteMessageToNameObjectReq, KFMsg::S2SRouteMessageToNameObjectReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SRouteMessageToNameObjectReq );
-
-        auto pbroute = kfmsg->mutable_pbroute();
         __FIND_ROUTE_SERVICE__( kfmsg->name() );
+
+        auto pbroute = &kfmsg->pbroute();
         auto serverid = routeservice->ObjectServer( pbroute->recvid() );
         if ( serverid == _invalid_int )
         {
@@ -124,26 +120,22 @@ namespace KFrame
         SendRouteMessage( serverid, pbroute, kfmsg->msgid(), kfmsg->msgdata() );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRouteShardModule::HandleRouteMessageToServerReq )
+    __KF_MESSAGE_FUNCTION__( KFRouteShardModule::HandleRouteMessageToServerReq, KFMsg::S2SRouteMessageToServerReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SRouteMessageToServerReq );
-
-        auto pbroute = kfmsg->mutable_pbroute();
+        auto pbroute = &kfmsg->pbroute();
         SendRouteMessage( kfmsg->targetid(), pbroute, kfmsg->msgid(), kfmsg->msgdata() );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRouteShardModule::HandleRouteMessageToPlayerReq )
+    __KF_MESSAGE_FUNCTION__( KFRouteShardModule::HandleRouteMessageToPlayerReq, KFMsg::S2SRouteMessageToPlayerReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SRouteMessageToPlayerReq );
-
-        auto pbroute = kfmsg->mutable_pbroute();
+        auto pbroute = &kfmsg->pbroute();
         SendRouteMessage( kfmsg->targetid(), pbroute, kfmsg->msgid(), kfmsg->msgdata() );
     }
 
-    void KFRouteShardModule::AddRouteFailedMessage( const std::string& name, uint32 msgid, const char* data, uint32 length )
+    void KFRouteShardModule::AddRouteFailedMessage( const std::string& name, uint32 msgid, const google::protobuf::Message* message )
     {
         auto messagedata = _route_message_list.Create( name );
-        messagedata->AddNetMessage( msgid, data, length );
+        messagedata->AddNetMessage( msgid, message );
     }
 
     void KFRouteShardModule::SendRouteFailedMessage( const std::string& name )
@@ -157,7 +149,7 @@ namespace KFrame
         messagedata->SendNetMessage();
     }
 
-    void KFRouteShardModule::SendRouteMessage( uint64 clientid, KFMsg::PBRoute* pbroute, uint32 msgid, const std::string& msgdata )
+    void KFRouteShardModule::SendRouteMessage( uint64 clientid, const KFMsg::PBRoute* pbroute, uint32 msgid, const std::string& msgdata )
     {
         KFMsg::S2SRouteMessageToClientAck ack;
         ack.set_msgid( msgid );
@@ -170,10 +162,8 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRouteShardModule::HandleRouteSyncObjectToShardReq )
+    __KF_MESSAGE_FUNCTION__( KFRouteShardModule::HandleRouteSyncObjectToShardReq, KFMsg::S2SRouteSyncObjectToShardReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SRouteSyncObjectToShardReq );
-
         auto routeservice = _route_service_list.Create( kfmsg->name() );
         routeservice->_name = kfmsg->name();
 
@@ -189,10 +179,8 @@ namespace KFrame
         __LOG_INFO__( "service[{}:{}] register ok", kfmsg->name(), KFAppId::ToString( kfmsg->clientid() ) );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRouteShardModule::HandleRouteAddObjectToShardReq )
+    __KF_MESSAGE_FUNCTION__( KFRouteShardModule::HandleRouteAddObjectToShardReq, KFMsg::S2SRouteAddObjectToShardReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SRouteAddObjectToShardReq );
-
         auto routeservice = _route_service_list.Find( kfmsg->name() );
         if ( routeservice == nullptr )
         {
@@ -201,10 +189,8 @@ namespace KFrame
         routeservice->AddObject( kfmsg->clientid(), kfmsg->objectid(), kfmsg->objectcount() );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRouteShardModule::HandleRouteRemoveObjectToShardReq )
+    __KF_MESSAGE_FUNCTION__( KFRouteShardModule::HandleRouteRemoveObjectToShardReq, KFMsg::S2SRouteRemoveObjectToShardReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SRouteRemoveObjectToShardReq );
-
         auto routeservice = _route_service_list.Find( kfmsg->name() );
         if ( routeservice == nullptr )
         {
@@ -214,10 +200,8 @@ namespace KFrame
         routeservice->RemoveObject( kfmsg->clientid(), kfmsg->objectid(), kfmsg->objectcount() );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRouteShardModule::HandleRouteClientLostToShardReq )
+    __KF_MESSAGE_FUNCTION__( KFRouteShardModule::HandleRouteClientLostToShardReq, KFMsg::S2SRouteClientLostToShardReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SRouteClientLostToShardReq );
-
         __LOG_WARN__( "route client[{}:{}] lost", kfmsg->name(), KFAppId::ToString( kfmsg->clientid() ) );
 
         auto routeservice = _route_service_list.Find( kfmsg->name() );

@@ -6,9 +6,9 @@ namespace KFrame
 
     void KFDataClientModule::BeforeRun()
     {
-        __REGISTER_MESSAGE__( KFMsg::S2S_SAVE_PLAYER_TO_GAME_ACK, &KFDataClientModule::HandleSavePlayerToGameAck );
-        __REGISTER_MESSAGE__( KFMsg::S2S_LOAD_PLAYER_TO_GAME_ACK, &KFDataClientModule::HandleLoadPlayerToGameAck );
-        __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_PLAYER_TO_GAME_ACK, &KFDataClientModule::HandleQueryPlayerToGameAck );
+        __REGISTER_MESSAGE__( KFDataClientModule, KFMsg::S2S_SAVE_PLAYER_TO_GAME_ACK, KFMsg::S2SSavePlayerToGameAck, HandleSavePlayerToGameAck );
+        __REGISTER_MESSAGE__( KFDataClientModule, KFMsg::S2S_LOAD_PLAYER_TO_GAME_ACK, KFMsg::S2SLoadPlayerToGameAck, HandleLoadPlayerToGameAck );
+        __REGISTER_MESSAGE__( KFDataClientModule, KFMsg::S2S_QUERY_PLAYER_TO_GAME_ACK, KFMsg::S2SQueryPlayerToGameAck, HandleQueryPlayerToGameAck );
     }
 
     void KFDataClientModule::BeforeShut()
@@ -95,10 +95,8 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFDataClientModule::HandleLoadPlayerToGameAck )
+    __KF_MESSAGE_FUNCTION__( KFDataClientModule::HandleLoadPlayerToGameAck, KFMsg::S2SLoadPlayerToGameAck )
     {
-        __PROTO_PARSE__( KFMsg::S2SLoadPlayerToGameAck );
-
         auto pblogin = &kfmsg->pblogin();
         auto keeper = _load_keeper.Find( pblogin->playerid() );
         if ( keeper == nullptr || keeper->_pb_login.sessionid() != pblogin->sessionid() )
@@ -149,12 +147,9 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFDataClientModule::HandleSavePlayerToGameAck )
+    __KF_MESSAGE_FUNCTION__( KFDataClientModule::HandleSavePlayerToGameAck, KFMsg::S2SSavePlayerToGameAck )
     {
-        __PROTO_PARSE__( KFMsg::S2SSavePlayerToGameAck );
-
         _data_keeper.Remove( kfmsg->id() );
-
         __LOG_INFO__( "save palyer=[{}] ok", kfmsg->id() );
     }
 
@@ -175,12 +170,9 @@ namespace KFrame
         return _kf_route->SendToRand( sendid, __STRING__( data ), KFMsg::S2S_QUERY_PLAYER_TO_DATA_REQ, &req );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFDataClientModule::HandleQueryPlayerToGameAck )
+    __KF_MESSAGE_FUNCTION__( KFDataClientModule::HandleQueryPlayerToGameAck, KFMsg::S2SQueryPlayerToGameAck )
     {
         auto playerid = __ROUTE_RECV_ID__;
-        __PROTO_PARSE__( KFMsg::S2SQueryPlayerToGameAck );
-
-        // 回调函数
         _query_player_function( kfmsg->result(), playerid, &kfmsg->playerdata() );
     }
 

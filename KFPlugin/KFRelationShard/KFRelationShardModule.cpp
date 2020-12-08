@@ -5,14 +5,14 @@ namespace KFrame
     void KFRelationShardModule::BeforeRun()
     {
         /////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_RELATION_TO_RELATION_REQ, &KFRelationShardModule::HandleQueryRelationToRelationReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_RELATION_INVITE_TO_RELATION_REQ, &KFRelationShardModule::HandleQueryRelationInviteToRelationReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_APPLY_ADD_RELATION_TO_RELATION_REQ, &KFRelationShardModule::HandleApplyAddRelationToRelationReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_DEL_RELATION_INVITE_TO_RELATION_REQ, &KFRelationShardModule::HandleDelRelationInviteToRelationReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_ADD_RELATION_TO_RELATION_REQ, &KFRelationShardModule::HandleAddRelationToRelationReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_DEL_RELATION_TO_RELATION_REQ, &KFRelationShardModule::HandleDelRelationToRelationReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_REFUSE_RELATION_TO_RELATION_REQ, &KFRelationShardModule::HandleRefuseRelationToRelationReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_FRIENDLINESS_TO_RELATION_REQ, &KFRelationShardModule::HandleUpdateFriendLinessToRelationReq );
+        __REGISTER_MESSAGE__( KFRelationShardModule, KFMsg::S2S_QUERY_RELATION_TO_RELATION_REQ, KFMsg::S2SQueryRelationToRelationReq, HandleQueryRelationToRelationReq );
+        __REGISTER_MESSAGE__( KFRelationShardModule, KFMsg::S2S_QUERY_RELATION_INVITE_TO_RELATION_REQ, KFMsg::S2SQueryRelationInviteToRelationReq, HandleQueryRelationInviteToRelationReq );
+        __REGISTER_MESSAGE__( KFRelationShardModule, KFMsg::S2S_APPLY_ADD_RELATION_TO_RELATION_REQ, KFMsg::S2SApplyAddRelationToRelationReq, HandleApplyAddRelationToRelationReq );
+        __REGISTER_MESSAGE__( KFRelationShardModule, KFMsg::S2S_DEL_RELATION_INVITE_TO_RELATION_REQ, KFMsg::S2SDelRelationInviteToRelationReq, HandleDelRelationInviteToRelationReq );
+        __REGISTER_MESSAGE__( KFRelationShardModule, KFMsg::S2S_ADD_RELATION_TO_RELATION_REQ, KFMsg::S2SAddRelationToRelationReq, HandleAddRelationToRelationReq );
+        __REGISTER_MESSAGE__( KFRelationShardModule, KFMsg::S2S_DEL_RELATION_TO_RELATION_REQ, KFMsg::S2SDelRelationToRelationReq, HandleDelRelationToRelationReq );
+        __REGISTER_MESSAGE__( KFRelationShardModule, KFMsg::S2S_REFUSE_RELATION_TO_RELATION_REQ, KFMsg::S2SRefuseRelationToRelationReq, HandleRefuseRelationToRelationReq );
+        __REGISTER_MESSAGE__( KFRelationShardModule, KFMsg::S2S_UPDATE_FRIENDLINESS_TO_RELATION_REQ, KFMsg::S2SUpdateFriendLinessToRelationReq, HandleUpdateFriendLinessToRelationReq );
     }
 
     void KFRelationShardModule::BeforeShut()
@@ -55,10 +55,8 @@ namespace KFrame
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_MESSAGE_FUNCTION__( KFRelationShardModule::HandleQueryRelationToRelationReq )
+    __KF_MESSAGE_FUNCTION__( KFRelationShardModule::HandleQueryRelationToRelationReq, KFMsg::S2SQueryRelationToRelationReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SQueryRelationToRelationReq );
-
         auto kfsetting = KFRelationConfig::Instance()->FindSetting( kfmsg->relationname() );
         if ( kfsetting == nullptr )
         {
@@ -92,10 +90,8 @@ namespace KFrame
         _kf_route->SendToRoute( route, KFMsg::S2S_QUERY_RELATION_TO_GAME_ACK, &ack );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRelationShardModule::HandleQueryRelationInviteToRelationReq )
+    __KF_MESSAGE_FUNCTION__( KFRelationShardModule::HandleQueryRelationInviteToRelationReq, KFMsg::S2SQueryRelationInviteToRelationReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SQueryRelationInviteToRelationReq );
-
         auto kfsetting = KFRelationConfig::Instance()->FindSetting( kfmsg->relationname() );
         if ( kfsetting == nullptr )
         {
@@ -128,10 +124,8 @@ namespace KFrame
         _kf_route->SendToRoute( route, KFMsg::S2S_QUERY_RELATION_INVITE_TO_GAME_ACK, &ack );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRelationShardModule::HandleApplyAddRelationToRelationReq )
+    __KF_MESSAGE_FUNCTION__( KFRelationShardModule::HandleApplyAddRelationToRelationReq, KFMsg::S2SApplyAddRelationToRelationReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SApplyAddRelationToRelationReq );
-
         auto selfid = __ROUTE_SEND_ID__;
         auto kfsetting = KFRelationConfig::Instance()->FindSetting( kfmsg->relationname() );
         if ( kfsetting == nullptr )
@@ -194,10 +188,8 @@ namespace KFrame
         _kf_route->RepeatToPlayer( selfid, serverid, kfmsg->playerid(), KFMsg::S2S_APPLY_ADD_RELATION_TO_GAME_ACK, &ack );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRelationShardModule::HandleDelRelationInviteToRelationReq )
+    __KF_MESSAGE_FUNCTION__( KFRelationShardModule::HandleDelRelationInviteToRelationReq, KFMsg::S2SDelRelationInviteToRelationReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SDelRelationInviteToRelationReq );
-
         auto kfsetting = KFRelationConfig::Instance()->FindSetting( kfmsg->relationname() );
         if ( kfsetting == nullptr )
         {
@@ -207,10 +199,8 @@ namespace KFrame
         _kf_relation_database->RemoveRelation( kfsetting->_invite_list_name, kfsetting->_invite_data_name, kfmsg->selfplayerid(), kfmsg->targetplayerid(), false );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRelationShardModule::HandleAddRelationToRelationReq )
+    __KF_MESSAGE_FUNCTION__( KFRelationShardModule::HandleAddRelationToRelationReq, KFMsg::S2SAddRelationToRelationReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SAddRelationToRelationReq );
-
         auto selfid = __ROUTE_SEND_ID__;
         auto kfsetting = KFRelationConfig::Instance()->FindSetting( kfmsg->relationname() );
         if ( kfsetting == nullptr )
@@ -276,10 +266,8 @@ namespace KFrame
         _kf_route->RepeatToPlayer( playerid, serverid, playerid, KFMsg::S2S_ADD_RELATION_TO_GAME_ACK, &ack );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRelationShardModule::HandleDelRelationToRelationReq )
+    __KF_MESSAGE_FUNCTION__( KFRelationShardModule::HandleDelRelationToRelationReq, KFMsg::S2SDelRelationToRelationReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SDelRelationToRelationReq );
-
         auto selfid = __ROUTE_SEND_ID__;
         auto kfsetting = KFRelationConfig::Instance()->FindSetting( kfmsg->relationname() );
         if ( kfsetting == nullptr )
@@ -312,17 +300,13 @@ namespace KFrame
         _kf_route->SendToPlayer( playerid, serverid, playerid, KFMsg::S2S_DEL_RELATION_TO_GAME_ACK, &ack );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRelationShardModule::HandleRefuseRelationToRelationReq )
+    __KF_MESSAGE_FUNCTION__( KFRelationShardModule::HandleRefuseRelationToRelationReq, KFMsg::S2SRefuseRelationToRelationReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SRefuseRelationToRelationReq );
-
         _kf_relation_database->SetRefuse( kfmsg->refusename(), kfmsg->playerid(), kfmsg->refusevalue() );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRelationShardModule::HandleUpdateFriendLinessToRelationReq )
+    __KF_MESSAGE_FUNCTION__( KFRelationShardModule::HandleUpdateFriendLinessToRelationReq, KFMsg::S2SUpdateFriendLinessToRelationReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SUpdateFriendLinessToRelationReq );
-
         UpdateFriendLiness( kfmsg->selfplayerid(), kfmsg->targetplayerid(), kfmsg->type(), kfmsg->friendliness() );
     }
 

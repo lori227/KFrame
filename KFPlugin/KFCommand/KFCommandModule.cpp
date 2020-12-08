@@ -4,7 +4,7 @@ namespace KFrame
 {
     void KFCommandModule::BeforeRun()
     {
-        __REGISTER_MESSAGE__( KFMsg::MSG_COMMAND_REQ, &KFCommandModule::HandleCommandReq );
+        __REGISTER_MESSAGE__( KFCommandModule, KFMsg::MSG_COMMAND_REQ, KFMsg::MsgCommandReq, HandleCommandReq );
     }
 
     void KFCommandModule::BeforeShut()
@@ -24,13 +24,13 @@ namespace KFrame
         _kf_command_function.Remove( command );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFCommandModule::HandleCommandReq )
+    __KF_MESSAGE_FUNCTION__( KFCommandModule::HandleCommandReq, KFMsg::MsgCommandReq )
     {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgCommandReq );
-
 #ifndef __KF_DEBUG__
         return;
 #endif // __KF_DEBUG__
+
+        __ROUTE_FIND_PLAYER__;
 
         // 调用注册的函数
         std::string command = kfmsg->command();

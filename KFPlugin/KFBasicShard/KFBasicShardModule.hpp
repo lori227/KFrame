@@ -32,17 +32,17 @@ namespace KFrame
     protected:
         ///////////////////////////////////////////////////////////
         // 更新基础数据
-        __KF_MESSAGE_FUNCTION__( HandleUpdateIntValueToBasicReq );
-        __KF_MESSAGE_FUNCTION__( HandleUpdateStrValueToBasicReq );
+        __KF_MESSAGE_FUNCTION__( HandleUpdateIntValueToBasicReq, KFMsg::S2SUpdateIntValueToBasicReq );
+        __KF_MESSAGE_FUNCTION__( HandleUpdateStrValueToBasicReq, KFMsg::S2SUpdateStrValueToBasicReq );
 
         // 清空在线数据
-        __KF_MESSAGE_FUNCTION__( HandleClearOnlineToBasicReq );
+        __KF_MESSAGE_FUNCTION__( HandleClearOnlineToBasicReq, KFMsg::S2SClearOnlineToBasicReq );
 
         // 查询基础数据
-        __KF_MESSAGE_FUNCTION__( HandleQueryAttributeToBasicReq );
+        __KF_MESSAGE_FUNCTION__( HandleQueryAttributeToBasicReq, KFMsg::S2SQueryAttributeToBasicReq );
 
         // 处理设置名字
-        __KF_MESSAGE_FUNCTION__( HandleSetPlayerNameToBasicReq );
+        __KF_MESSAGE_FUNCTION__( HandleSetPlayerNameToBasicReq, KFMsg::S2SSetPlayerNameToBasicReq );
     };
 }
 

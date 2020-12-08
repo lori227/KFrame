@@ -30,9 +30,9 @@ namespace KFrame
         __REGISTER_EXECUTE__( __STRING__( task ), &KFTaskModule::OnExecuteUpdateTaskStatus );
         __REGISTER_EXECUTE__( __STRING__( taskcondition ), &KFTaskModule::OnExecuteUpdateTaskCondition );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::MSG_TASK_RECEIVE_REQ, &KFTaskModule::HandleTaskReceiveReq );
-        __REGISTER_MESSAGE__( KFMsg::MSG_TASK_REWARD_REQ, &KFTaskModule::HandleTaskRewardReq );
-        __REGISTER_MESSAGE__( KFMsg::MSG_TASK_REMOVE_REQ, &KFTaskModule::HandleTaskRemoveReq );
+        __REGISTER_MESSAGE__( KFTaskModule, KFMsg::MSG_TASK_RECEIVE_REQ, KFMsg::MsgTaskReceiveReq, HandleTaskReceiveReq );
+        __REGISTER_MESSAGE__( KFTaskModule, KFMsg::MSG_TASK_REWARD_REQ, KFMsg::MsgTaskRewardReq, HandleTaskRewardReq );
+        __REGISTER_MESSAGE__( KFTaskModule, KFMsg::MSG_TASK_REMOVE_REQ, KFMsg::MsgTaskRemoveReq, HandleTaskRemoveReq );
     }
 
     void KFTaskModule::BeforeShut()
@@ -443,9 +443,9 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_MESSAGE_FUNCTION__( KFTaskModule::HandleTaskReceiveReq )
+    __KF_MESSAGE_FUNCTION__( KFTaskModule::HandleTaskReceiveReq, KFMsg::MsgTaskReceiveReq )
     {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgTaskReceiveReq );
+        __ROUTE_FIND_PLAYER__;
 
         auto kfsetting = KFTaskConfig::Instance()->FindSetting( kfmsg->id() );
         if ( kfsetting == nullptr )
@@ -468,9 +468,9 @@ namespace KFrame
         UpdataTaskStatus( player, kfsetting, kftask, KFMsg::ExecuteStatus, 0u );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFTaskModule::HandleTaskRewardReq )
+    __KF_MESSAGE_FUNCTION__( KFTaskModule::HandleTaskRewardReq, KFMsg::MsgTaskRewardReq )
     {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgTaskRewardReq );
+        __ROUTE_FIND_PLAYER__;
 
         auto kfsetting = KFTaskConfig::Instance()->FindSetting( kfmsg->id() );
         if ( kfsetting == nullptr )
@@ -502,9 +502,9 @@ namespace KFrame
         FinishTask( player, kftask, kfsetting );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFTaskModule::HandleTaskRemoveReq )
+    __KF_MESSAGE_FUNCTION__( KFTaskModule::HandleTaskRemoveReq, KFMsg::MsgTaskRemoveReq )
     {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgTaskRemoveReq );
+        __ROUTE_FIND_PLAYER__;
 
         auto kfsetting = KFTaskConfig::Instance()->FindSetting( kfmsg->id() );
         if ( kfsetting == nullptr )

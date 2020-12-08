@@ -11,12 +11,11 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////////////
         _kf_route->RegisterConnectionFunction( this, &KFRankShardModule::OnRouteConnectCluster );
         //////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::S2S_NOTICE_RANK_WORKER_REQ, &KFRankShardModule::HandleNoticeRankWorkerReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_SYNC_REFRESH_RANK, &KFRankShardModule::HandleSyncRefreshRank );
-
-        __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_RANK_DATA_REQ, &KFRankShardModule::HandleUpdateRankDataReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_RANK_LIST_REQ, &KFRankShardModule::HandleQueryRanklistReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_FRIEND_RANK_LIST_REQ, &KFRankShardModule::HandleQueryFriendRanklistReq );
+        __REGISTER_MESSAGE__( KFRankShardModule, KFMsg::S2S_NOTICE_RANK_WORKER_REQ, KFMsg::S2SNoticeRankWorkerReq, HandleNoticeRankWorkerReq );
+        __REGISTER_MESSAGE__( KFRankShardModule, KFMsg::S2S_SYNC_REFRESH_RANK, KFMsg::S2SSyncRefreshRank, HandleSyncRefreshRank );
+        __REGISTER_MESSAGE__( KFRankShardModule, KFMsg::S2S_UPDATE_RANK_DATA_REQ, KFMsg::S2SUpdateRankDataReq, HandleUpdateRankDataReq );
+        __REGISTER_MESSAGE__( KFRankShardModule, KFMsg::S2S_QUERY_RANK_LIST_REQ, KFMsg::S2SQueryRankListReq, HandleQueryRanklistReq );
+        __REGISTER_MESSAGE__( KFRankShardModule, KFMsg::S2S_QUERY_FRIEND_RANK_LIST_REQ, KFMsg::S2SQueryFriendRankListReq, HandleQueryFriendRanklistReq );
     }
 
     void KFRankShardModule::BeforeShut()
@@ -27,7 +26,6 @@ namespace KFrame
 
         __UN_MESSAGE__( KFMsg::S2S_NOTICE_RANK_WORKER_REQ );
         __UN_MESSAGE__( KFMsg::S2S_SYNC_REFRESH_RANK );
-
         __UN_MESSAGE__( KFMsg::S2S_UPDATE_RANK_DATA_REQ );
         __UN_MESSAGE__( KFMsg::S2S_QUERY_RANK_LIST_REQ );
         __UN_MESSAGE__( KFMsg::S2S_QUERY_FRIEND_RANK_LIST_REQ );
@@ -47,9 +45,8 @@ namespace KFrame
         _kf_route->RepeatToAll( __STRING__( rank ), KFMsg::S2S_NOTICE_RANK_WORKER_REQ, &req );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRankShardModule::HandleNoticeRankWorkerReq )
+    __KF_MESSAGE_FUNCTION__( KFRankShardModule::HandleNoticeRankWorkerReq, KFMsg::S2SNoticeRankWorkerReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SNoticeRankWorkerReq );
         if ( kfmsg->workerid() < _max_rank_worker_id )
         {
             return;
@@ -148,10 +145,8 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRankShardModule::HandleSyncRefreshRank )
+    __KF_MESSAGE_FUNCTION__( KFRankShardModule::HandleSyncRefreshRank, KFMsg::S2SSyncRefreshRank )
     {
-        __PROTO_PARSE__( KFMsg::S2SSyncRefreshRank );
-
         // 这里只删除, 防止同一时间加载, 造成数据压力
         std::set< RankKey > removes;
         for ( auto& iter : _kf_rank_data._objects )
@@ -298,10 +293,8 @@ namespace KFrame
     }
 
     // 处理打榜请求
-    __KF_MESSAGE_FUNCTION__( KFRankShardModule::HandleUpdateRankDataReq )
+    __KF_MESSAGE_FUNCTION__( KFRankShardModule::HandleUpdateRankDataReq, KFMsg::S2SUpdateRankDataReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SUpdateRankDataReq );
-
         auto& ranksortkey = FormatRankSortKey( kfmsg->rankid(), kfmsg->zoneid() );
         auto& rankdatakey = FormatRankDataKey( kfmsg->rankid(), kfmsg->zoneid() );
 
@@ -337,10 +330,8 @@ namespace KFrame
         return rankscore > kfrankdata->_min_rank_score;
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRankShardModule::HandleQueryRanklistReq )
+    __KF_MESSAGE_FUNCTION__( KFRankShardModule::HandleQueryRanklistReq, KFMsg::S2SQueryRankListReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SQueryRankListReq );
-
         auto kfrankdata = _kf_rank_data.Find( RankKey( kfmsg->rankid(), kfmsg->zoneid() ) );
         if ( kfrankdata == nullptr || KFDate::CheckPassTime( KFGlobal::Instance()->_real_time, kfrankdata->_next_refresh_time ) )
         {
@@ -381,10 +372,8 @@ namespace KFrame
         return ( uint32 )kfresult->_value;
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRankShardModule::HandleQueryFriendRanklistReq )
+    __KF_MESSAGE_FUNCTION__( KFRankShardModule::HandleQueryFriendRanklistReq, KFMsg::S2SQueryFriendRankListReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SQueryFriendRankListReq );
-
         auto kfsetting = KFRankConfig::Instance()->FindSetting( kfmsg->rankid() );
         if ( kfsetting == nullptr )
         {

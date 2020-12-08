@@ -47,30 +47,30 @@ namespace KFrame
     protected:
 
         // 客户端请求查询邮件
-        __KF_MESSAGE_FUNCTION__( HandleQueryMailReq );
+        __KF_MESSAGE_FUNCTION__( HandleQueryMailReq, KFMsg::MsgQueryMailReq );
 
         // 新邮件通知
-        __KF_MESSAGE_FUNCTION__( HandleNoticeNewMailReq );
+        __KF_MESSAGE_FUNCTION__( HandleNoticeNewMailReq, KFMsg::S2SNoticeNewMailReq );
 
         // 处理查询邮件回馈
-        __KF_MESSAGE_FUNCTION__( HandleQueryMailAck );
+        __KF_MESSAGE_FUNCTION__( HandleQueryMailAck, KFMsg::S2SQueryMailAck );
 
         // 查看邮件
-        __KF_MESSAGE_FUNCTION__( HandleViewMailReq );
+        __KF_MESSAGE_FUNCTION__( HandleViewMailReq, KFMsg::MsgViewMailReq );
 
         // 领取邮件奖励
-        __KF_MESSAGE_FUNCTION__( HandleMailReceiveReq );
+        __KF_MESSAGE_FUNCTION__( HandleMailReceiveReq, KFMsg::MsgMailRewardReq );
 
         // 处理删除邮件请求
-        __KF_MESSAGE_FUNCTION__( HandleDeleteMailReq );
+        __KF_MESSAGE_FUNCTION__( HandleDeleteMailReq, KFMsg::MsgDeleteMailReq );
 
         // 处理邮件状态重置反馈
-        __KF_MESSAGE_FUNCTION__( HandleUpdateMailStatusAck );
+        __KF_MESSAGE_FUNCTION__( HandleUpdateMailStatusAck, KFMsg::S2SUpdateMailStatusAck );
 
+    protected:
         // 定时查询邮件变化
         __KF_TIMER_FUNCTION__( OnTimerQueryMail );
 
-    protected:
         // 进入游戏查询邮件信息
         __KF_PLAYER_ENTER_FUNCTION__( OnEnterMailModule );
 

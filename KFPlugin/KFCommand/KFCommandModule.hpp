@@ -38,7 +38,7 @@ namespace KFrame
 
     protected:
         // 处理客户端命令请求
-        __KF_MESSAGE_FUNCTION__( HandleCommandReq );
+        __KF_MESSAGE_FUNCTION__( HandleCommandReq, KFMsg::MsgCommandReq );
 
     protected:
         KFFunctionMap< std::string, KFCommandFunction > _kf_command_function;

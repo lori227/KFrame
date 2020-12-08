@@ -41,16 +41,10 @@ namespace KFrame
 
     protected:
         // 请求查询全服排行榜
-        __KF_MESSAGE_FUNCTION__( HandleQueryRankListReq );
-
-        // 请求排行榜数据返回
-        __KF_MESSAGE_FUNCTION__( HandleQueryRankListAck );
+        __KF_MESSAGE_FUNCTION__( HandleQueryRankListReq, KFMsg::MsgQueryRankListReq );
 
         // 请求好友排行榜
-        __KF_MESSAGE_FUNCTION__( HandleQueryFriendRankListReq );
-
-        // 请求排行榜数据返回
-        __KF_MESSAGE_FUNCTION__( HandleQueryFriendRankListAck );
+        __KF_MESSAGE_FUNCTION__( HandleQueryFriendRankListReq, KFMsg::MsgQueryFriendRankListReq );
 
     protected:
         // 更新排行榜数据

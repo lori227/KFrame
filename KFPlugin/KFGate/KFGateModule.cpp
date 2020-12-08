@@ -15,16 +15,14 @@ namespace KFrame
 
         __REGISTER_DEPLOY_FUNCTION__( __STRING__( shutdown ), &KFGateModule::OnDeployShutDownServer );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::MSG_LOGIN_REQ, &KFGateModule::HandleLoginReq );
-        __REGISTER_MESSAGE__( KFMsg::MSG_LOGOUT_REQ, &KFGateModule::HandleLogoutReq );
-
-        __REGISTER_MESSAGE__( KFMsg::S2S_LOGIN_TO_GATE_ACK, &KFGateModule::HandleLoginToGateAck );
-        __REGISTER_MESSAGE__( KFMsg::S2S_RELOGIN_TO_GATE_ACK, &KFGateModule::HandleReLoginToGateAck );
-        __REGISTER_MESSAGE__( KFMsg::S2S_ENTER_TO_GATE_ACK, &KFGateModule::HandleEnterToGateAck );
-
-        __REGISTER_MESSAGE__( KFMsg::S2S_KICK_PLAYER_TO_GATE_REQ, &KFGateModule::HandleKickPlayerToGateReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_BROADCAST_TO_GATE_REQ, &KFGateModule::HandleBroadcastToGateReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_BROADCAST_TO_SERVER_REQ, &KFGateModule::HandleBroadcastToServerReq );
+        __REGISTER_MESSAGE__( KFGateModule, KFMsg::MSG_LOGIN_REQ, KFMsg::MsgLoginReq, HandleLoginReq );
+        __REGISTER_MESSAGE__( KFGateModule, KFMsg::MSG_LOGOUT_REQ, KFMsg::MsgLogoutReq, HandleLogoutReq );
+        __REGISTER_MESSAGE__( KFGateModule, KFMsg::S2S_LOGIN_TO_GATE_ACK, KFMsg::S2SLoginToGateAck, HandleLoginToGateAck );
+        __REGISTER_MESSAGE__( KFGateModule, KFMsg::S2S_RELOGIN_TO_GATE_ACK, KFMsg::S2SReLoginToGateAck, HandleReLoginToGateAck );
+        __REGISTER_MESSAGE__( KFGateModule, KFMsg::S2S_ENTER_TO_GATE_ACK, KFMsg::S2SEnterToGateAck, HandleEnterToGateAck );
+        __REGISTER_MESSAGE__( KFGateModule, KFMsg::S2S_KICK_PLAYER_TO_GATE_REQ, KFMsg::S2SKickPlayerToGateReq, HandleKickPlayerToGateReq );
+        __REGISTER_MESSAGE__( KFGateModule, KFMsg::S2S_BROADCAST_TO_GATE_REQ, KFMsg::S2SBroadcastToGateReq, HandleBroadcastToGateReq );
+        __REGISTER_MESSAGE__( KFGateModule, KFMsg::S2S_BROADCAST_TO_SERVER_REQ, KFMsg::S2SBroadcastToServerReq, HandleBroadcastToServerReq );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
@@ -42,10 +40,8 @@ namespace KFrame
         __UN_MESSAGE__( KFMsg::MSG_LOGIN_REQ );
         __UN_MESSAGE__( KFMsg::S2S_RELOGIN_TO_GATE_ACK );
         __UN_MESSAGE__( KFMsg::MSG_LOGOUT_REQ );
-
         __UN_MESSAGE__( KFMsg::S2S_LOGIN_TO_GATE_ACK );
         __UN_MESSAGE__( KFMsg::S2S_ENTER_TO_GATE_ACK );
-
         __UN_MESSAGE__( KFMsg::S2S_BROADCAST_TO_GATE_REQ );
         __UN_MESSAGE__( KFMsg::S2S_BROADCAST_TO_SERVER_REQ );
         __UN_MESSAGE__( KFMsg::S2S_KICK_PLAYER_TO_GATE_REQ );
@@ -151,10 +147,8 @@ namespace KFrame
         return true;
     }
 
-    __KF_MESSAGE_FUNCTION__( KFGateModule::HandleBroadcastToGateReq )
+    __KF_MESSAGE_FUNCTION__( KFGateModule::HandleBroadcastToGateReq, KFMsg::S2SBroadcastToGateReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SBroadcastToGateReq );
-
         if ( kfmsg->worldid() != _invalid_int )
         {
             // 检查是否重复广播
@@ -178,10 +172,8 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFGateModule::HandleBroadcastToServerReq )
+    __KF_MESSAGE_FUNCTION__( KFGateModule::HandleBroadcastToServerReq, KFMsg::S2SBroadcastToServerReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SBroadcastToServerReq );
-
         auto& msgdata = kfmsg->msgdata();
         for ( auto& iter : _kf_role_list._objects )
         {
@@ -250,10 +242,9 @@ namespace KFrame
         _kf_tcp_server->CloseNetHandle( sessionid, 1000, __FUNC_LINE__ );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFGateModule::HandleLoginReq )
+    __KF_MESSAGE_FUNCTION__( KFGateModule::HandleLoginReq, KFMsg::MsgLoginReq )
     {
         auto sessionid = __ROUTE_SERVER_ID__;
-        __PROTO_PARSE__( KFMsg::MsgLoginReq );
 
         auto& token = kfmsg->token();
         auto accountid = kfmsg->accountid();
@@ -345,17 +336,14 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFGateModule::HandleLoginToGateAck )
+    __KF_MESSAGE_FUNCTION__( KFGateModule::HandleLoginToGateAck, KFMsg::S2SLoginToGateAck )
     {
-        __PROTO_PARSE__( KFMsg::S2SLoginToGateAck );
         __LOG_DEBUG__( "player[{}] login result[{}]", kfmsg->accountid(), kfmsg->result() );
-
         SendLoginAckMessage( kfmsg->sessionid(), kfmsg->result(), kfmsg->bantime() );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFGateModule::HandleReLoginToGateAck )
+    __KF_MESSAGE_FUNCTION__( KFGateModule::HandleReLoginToGateAck, KFMsg::S2SReLoginToGateAck )
     {
-        __PROTO_PARSE__( KFMsg::S2SReLoginToGateAck );
 
         __LOG_DEBUG__( "player[{}:{}] relogin ack", kfmsg->accountid(), kfmsg->playerid() );
 
@@ -363,10 +351,8 @@ namespace KFrame
         LoginToLogin( kfmsg->sessionid(), kfmsg->accountid(), kfmsg->token() );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFGateModule::HandleEnterToGateAck )
+    __KF_MESSAGE_FUNCTION__( KFGateModule::HandleEnterToGateAck, KFMsg::S2SEnterToGateAck )
     {
-        __PROTO_PARSE__( KFMsg::S2SEnterToGateAck );
-
         auto pblogin = &kfmsg->pblogin();
         __LOG_DEBUG__( "player[{}:{}] session[{}] enter game", pblogin->accountid(), pblogin->playerid(), pblogin->sessionid() );
 
@@ -456,9 +442,8 @@ namespace KFrame
         RemoveRole( kfrole );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFGateModule::HandleKickPlayerToGateReq )
+    __KF_MESSAGE_FUNCTION__( KFGateModule::HandleKickPlayerToGateReq, KFMsg::S2SKickPlayerToGateReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SKickPlayerToGateReq );
         auto kfrole = FindRole( kfmsg->playerid() );
         if ( kfrole == nullptr )
         {
@@ -474,9 +459,8 @@ namespace KFrame
         RemoveRole( kfrole );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFGateModule::HandleLogoutReq )
+    __KF_MESSAGE_FUNCTION__( KFGateModule::HandleLogoutReq, KFMsg::MsgLogoutReq )
     {
-        __PROTO_PARSE__( KFMsg::MsgLogoutReq );
         auto playerid = __ROUTE_SEND_ID__;
         auto kfrole = FindRole( playerid );
         if ( kfrole != nullptr )

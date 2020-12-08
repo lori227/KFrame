@@ -52,17 +52,19 @@ namespace KFrame
 
     protected:
         // 处理更新token信息
-        __KF_MESSAGE_FUNCTION__( HandleClusterTokenToProxyReq );
+        __KF_MESSAGE_FUNCTION__( HandleClusterTokenToProxyReq, KFMsg::S2SClusterTokenToProxyReq );
 
         // 验证toekn
-        __KF_MESSAGE_FUNCTION__( HandleClusterVerifyToProxyReq );
+        __KF_MESSAGE_FUNCTION__( HandleClusterVerifyToProxyReq, KFMsg::S2SClusterVerifyToProxyReq );
 
     protected:
-        // 转发消息到Shard
-        __KF_TRANSPOND_MESSAGE_FUNCTION__( TranspondToShard );
+        // 转发消息到shard
+        virtual bool TranspondToShard( const Route& route, uint32 msgid, const char* data, uint32 length );
+        virtual bool TranspondToShard( const Route& route, uint32 msgid, const google::protobuf::Message* message );
 
-        // 转发消息到Client
-        __KF_TRANSPOND_MESSAGE_FUNCTION__( TranspondToClient );
+        // 转发消息到client
+        virtual bool TranspondToClient( const Route& route, uint32 msgid, const char* data, uint32 length );
+        virtual bool TranspondToClient( const Route& route, uint32 msgid, const google::protobuf::Message* message );
 
     protected:
         // 更新

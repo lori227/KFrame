@@ -16,16 +16,16 @@ namespace KFrame
         _kf_component->RegisterSyncUpdateFunction( this, &KFTeamShardModule::SendTeamUpdateDataToMember );
 
         //////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::S2S_TEAM_CREATE_TO_TEAM_REQ, &KFTeamShardModule::HandleTeamCreateToTeamReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_TEAM_JION_FAILED_TO_TEAM_REQ, &KFTeamShardModule::HandleTeamJoinFailedToTeamReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_TEAM_ONLINE_QUERY_TO_TEAM_REQ, &KFTeamShardModule::HandleTeamOnlineQueryToTeamReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_TEAM_INT_VALUE_TO_TEAM_REQ, &KFTeamShardModule::HandleTeamIntValueToTeamReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_TEAM_STR_VALUE_TO_TEAM_REQ, &KFTeamShardModule::HandleTeamStrValueToTeamReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_TEAM_MEMBER_INT_VALUE_TO_TEAM_REQ, &KFTeamShardModule::HandleTeamMemberIntValueToTeamReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_TEAM_MEMBER_STR_VALUE_TO_TEAM_REQ, &KFTeamShardModule::HandleTeamMemberStrValueToTeamReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_TEAM_LEAVE_TO_TEAM_REQ, &KFTeamShardModule::HandleTeamLeaveToTeamReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_TEAM_KICK_TO_TEAM_REQ, &KFTeamShardModule::HandleTeamKickToTeamReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_TEAM_AGREE_TO_TEAM_REQ, &KFTeamShardModule::HandleTeamAgreeToTeamReq );
+        __REGISTER_MESSAGE__( KFTeamShardModule, KFMsg::S2S_TEAM_CREATE_TO_TEAM_REQ, KFMsg::S2STeamCreateToTeamReq, HandleTeamCreateToTeamReq );
+        __REGISTER_MESSAGE__( KFTeamShardModule, KFMsg::S2S_TEAM_JION_FAILED_TO_TEAM_REQ, KFMsg::S2STeamJoinFailedToTeamReq, HandleTeamJoinFailedToTeamReq );
+        __REGISTER_MESSAGE__( KFTeamShardModule, KFMsg::S2S_TEAM_ONLINE_QUERY_TO_TEAM_REQ, KFMsg::S2STeamOnlineQueryToTeamReq, HandleTeamOnlineQueryToTeamReq );
+        __REGISTER_MESSAGE__( KFTeamShardModule, KFMsg::S2S_TEAM_INT_VALUE_TO_TEAM_REQ, KFMsg::S2STeamIntValueToTeamReq, HandleTeamIntValueToTeamReq );
+        __REGISTER_MESSAGE__( KFTeamShardModule, KFMsg::S2S_TEAM_STR_VALUE_TO_TEAM_REQ, KFMsg::S2STeamStrValueToTeamReq, HandleTeamStrValueToTeamReq );
+        __REGISTER_MESSAGE__( KFTeamShardModule, KFMsg::S2S_TEAM_MEMBER_INT_VALUE_TO_TEAM_REQ, KFMsg::S2STeamMemberIntValueToTeamReq, HandleTeamMemberIntValueToTeamReq );
+        __REGISTER_MESSAGE__( KFTeamShardModule, KFMsg::S2S_TEAM_MEMBER_STR_VALUE_TO_TEAM_REQ, KFMsg::S2STeamMemberStrValueToTeamReq, HandleTeamMemberStrValueToTeamReq );
+        __REGISTER_MESSAGE__( KFTeamShardModule, KFMsg::S2S_TEAM_LEAVE_TO_TEAM_REQ, KFMsg::S2STeamLeaveToTeamReq, HandleTeamLeaveToTeamReq );
+        __REGISTER_MESSAGE__( KFTeamShardModule, KFMsg::S2S_TEAM_KICK_TO_TEAM_REQ, KFMsg::S2STeamKickToTeamReq, HandleTeamKickToTeamReq );
+        __REGISTER_MESSAGE__( KFTeamShardModule, KFMsg::S2S_TEAM_AGREE_TO_TEAM_REQ, KFMsg::S2STeamAgreeToTeamReq, HandleTeamAgreeToTeamReq );
     }
 
     void KFTeamShardModule::BeforeShut()
@@ -112,10 +112,8 @@ namespace KFrame
         SendMessageToTeam( kfteam, KFMsg::S2S_SYNC_REMOVE_DATA_FROM_SERVER, &sync );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamCreateToTeamReq )
+    __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamCreateToTeamReq, KFMsg::S2STeamCreateToTeamReq )
     {
-        __PROTO_PARSE__( KFMsg::S2STeamCreateToTeamReq );
-
         auto kfsetting = KFTeamConfig::Instance()->FindSetting( kfmsg->id() );
         if ( kfsetting == nullptr )
         {
@@ -182,10 +180,8 @@ namespace KFrame
         SendMessageToMember( kfmember, KFMsg::S2S_TEAM_JON_TO_GAME_ACK, &ack );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamJoinFailedToTeamReq )
+    __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamJoinFailedToTeamReq, KFMsg::S2STeamJoinFailedToTeamReq )
     {
-        __PROTO_PARSE__( KFMsg::S2STeamJoinFailedToTeamReq );
-
         auto kfteam = _kf_component->FindEntity( kfmsg->teamid() );
         if ( kfteam == nullptr )
         {
@@ -219,9 +215,8 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamOnlineQueryToTeamReq )
+    __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamOnlineQueryToTeamReq, KFMsg::S2STeamOnlineQueryToTeamReq )
     {
-        __PROTO_PARSE__( KFMsg::S2STeamOnlineQueryToTeamReq );
         auto kfteam = _kf_component->FindEntity( kfmsg->teamid() );
         if ( kfteam == nullptr )
         {
@@ -242,10 +237,8 @@ namespace KFrame
         _kf_route->RepeatToRoute( route, KFMsg::S2S_TEAM_ONLINE_QUERY_TO_GAME_ACK, &ack );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamIntValueToTeamReq )
+    __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamIntValueToTeamReq, KFMsg::S2STeamIntValueToTeamReq )
     {
-        __PROTO_PARSE__( KFMsg::S2STeamIntValueToTeamReq );
-
         auto kfteam = _kf_component->FindEntity( kfmsg->teamid() );
         if ( kfteam == nullptr )
         {
@@ -264,10 +257,8 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamStrValueToTeamReq )
+    __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamStrValueToTeamReq, KFMsg::S2STeamStrValueToTeamReq )
     {
-        __PROTO_PARSE__( KFMsg::S2STeamStrValueToTeamReq );
-
         auto kfteam = _kf_component->FindEntity( kfmsg->teamid() );
         if ( kfteam == nullptr )
         {
@@ -286,10 +277,8 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamMemberIntValueToTeamReq )
+    __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamMemberIntValueToTeamReq, KFMsg::S2STeamMemberIntValueToTeamReq )
     {
-        __PROTO_PARSE__( KFMsg::S2STeamMemberIntValueToTeamReq );
-
         auto kfteam = _kf_component->FindEntity( kfmsg->teamid() );
         if ( kfteam == nullptr )
         {
@@ -318,10 +307,8 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamMemberStrValueToTeamReq )
+    __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamMemberStrValueToTeamReq, KFMsg::S2STeamMemberStrValueToTeamReq )
     {
-        __PROTO_PARSE__( KFMsg::S2STeamMemberStrValueToTeamReq );
-
         auto kfteam = _kf_component->FindEntity( kfmsg->teamid() );
         if ( kfteam == nullptr )
         {
@@ -340,10 +327,8 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamLeaveToTeamReq )
+    __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamLeaveToTeamReq, KFMsg::S2STeamLeaveToTeamReq )
     {
-        __PROTO_PARSE__( KFMsg::S2STeamLeaveToTeamReq );
-
         auto kfteam = _kf_component->FindEntity( kfmsg->teamid() );
         if ( kfteam == nullptr )
         {
@@ -360,10 +345,8 @@ namespace KFrame
         RemoveTeamMember( kfteam, kfmsg->playerid() );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamKickToTeamReq )
+    __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamKickToTeamReq, KFMsg::S2STeamKickToTeamReq )
     {
-        __PROTO_PARSE__( KFMsg::S2STeamKickToTeamReq );
-
         auto kfteam = _kf_component->FindEntity( kfmsg->teamid() );
         if ( kfteam == nullptr )
         {
@@ -394,10 +377,8 @@ namespace KFrame
         RemoveTeamMember( kfteam, kfmsg->memberid() );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamAgreeToTeamReq )
+    __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamAgreeToTeamReq, KFMsg::S2STeamAgreeToTeamReq )
     {
-        __PROTO_PARSE__( KFMsg::S2STeamAgreeToTeamReq );
-
         auto kfteam = _kf_component->FindEntity( kfmsg->teamid() );
         if ( kfteam == nullptr )
         {

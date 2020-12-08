@@ -13,8 +13,8 @@ namespace KFrame
         __REGISTER_TCP_CLIENT_TRANSPOND__( &KFClusterProxyModule::TranspondToClient );
         __REGISTER_TCP_SERVER_TRANSPOND__( &KFClusterProxyModule::TranspondToShard );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_TOKEN_TO_PROXY_REQ, &KFClusterProxyModule::HandleClusterTokenToProxyReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_VERIFY_TO_PROXY_REQ, &KFClusterProxyModule::HandleClusterVerifyToProxyReq );
+        __REGISTER_MESSAGE__( KFClusterProxyModule, KFMsg::S2S_CLUSTER_TOKEN_TO_PROXY_REQ, KFMsg::S2SClusterTokenToProxyReq, HandleClusterTokenToProxyReq );
+        __REGISTER_MESSAGE__( KFClusterProxyModule, KFMsg::S2S_CLUSTER_VERIFY_TO_PROXY_REQ, KFMsg::S2SClusterVerifyToProxyReq, HandleClusterVerifyToProxyReq );
     }
 
     void KFClusterProxyModule::BeforeShut()
@@ -182,10 +182,8 @@ namespace KFrame
         _kf_hash.RemoveHashNode( serverid );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFClusterProxyModule::HandleClusterTokenToProxyReq )
+    __KF_MESSAGE_FUNCTION__( KFClusterProxyModule::HandleClusterTokenToProxyReq, KFMsg::S2SClusterTokenToProxyReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SClusterTokenToProxyReq );
-
         auto kftoken = _kf_token_list.Create( kfmsg->token() );
         kftoken->_token = kfmsg->token();
         kftoken->_client_id = kfmsg->clientid();
@@ -201,11 +199,9 @@ namespace KFrame
         __LOG_DEBUG__( "update client[{}] token[{}]", KFAppId::ToString( kftoken->_client_id ), kftoken->_token );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFClusterProxyModule::HandleClusterVerifyToProxyReq )
+    __KF_MESSAGE_FUNCTION__( KFClusterProxyModule::HandleClusterVerifyToProxyReq, KFMsg::S2SClusterVerifyToProxyReq )
     {
         auto clientid = __ROUTE_SERVER_ID__;
-        __PROTO_PARSE__( KFMsg::S2SClusterVerifyToProxyReq );
-
         auto serverid = ClusterVerifyLogin( kfmsg->token(), kfmsg->serverid() );
 
         KFMsg::S2SClusterVerifyToClientAck ack;
@@ -247,7 +243,13 @@ namespace KFrame
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_TRANSPOND_MESSAGE_FUNCTION__( KFClusterProxyModule::TranspondToShard )
+    bool KFClusterProxyModule::TranspondToShard( const Route& route, uint32 msgid, const google::protobuf::Message* message )
+    {
+        auto strdata = message->SerializeAsString();
+        return TranspondToShard( route, msgid, strdata.data(), strdata.length() );
+    }
+
+    bool KFClusterProxyModule::TranspondToShard( const Route& route, uint32 msgid, const char* data, uint32 length )
     {
         auto clientid = __ROUTE_SERVER_ID__;
         auto shardid = __ROUTE_RECV_ID__;
@@ -264,7 +266,13 @@ namespace KFrame
         return _kf_tcp_client->SendNetMessage( shardid, clientid, msgid, data, length );
     }
 
-    __KF_TRANSPOND_MESSAGE_FUNCTION__( KFClusterProxyModule::TranspondToClient )
+    bool KFClusterProxyModule::TranspondToClient( const Route& route, uint32 msgid, const google::protobuf::Message* message )
+    {
+        auto strdata = message->SerializeAsString();
+        return TranspondToClient( route, msgid, strdata.data(), strdata.length() );
+    }
+
+    bool KFClusterProxyModule::TranspondToClient( const Route& route, uint32 msgid, const char* data, uint32 length )
     {
         auto clientid = __ROUTE_RECV_ID__;
         return _kf_tcp_server->SendNetMessage( clientid, msgid, data, length );

@@ -62,31 +62,31 @@ namespace KFrame
         virtual bool KickPlayer( uint64 playerid, uint32 type, const char* function, uint32 line );
     protected:
         // 登录token
-        __KF_MESSAGE_FUNCTION__( HandleLoginToGameReq );
-
-        // 处理登出游戏
-        __KF_MESSAGE_FUNCTION__( HandleLogoutToGameReq );
-
-        // 处理玩家掉线
-        __KF_MESSAGE_FUNCTION__( HandleDisconnectToGameReq );
-
-        // 连接
-        __KF_MESSAGE_FUNCTION__( HandleConnectToGameReq );
-
-        // 玩家断线离开
-        __KF_MESSAGE_FUNCTION__( HandleLeaveToGameReq );
-
-        // 处理踢人消息
-        __KF_MESSAGE_FUNCTION__( HandleKickPlayerToGameReq );
+        __KF_MESSAGE_FUNCTION__( HandleLoginToGameReq, KFMsg::S2SLoginToGameReq );
 
         // 重新登录游戏
-        __KF_MESSAGE_FUNCTION__( HandleReLoginToGameReq );
+        __KF_MESSAGE_FUNCTION__( HandleReLoginToGameReq, KFMsg::S2SReLoginToGameReq );
+
+        // 处理登出游戏
+        __KF_MESSAGE_FUNCTION__( HandleLogoutToGameReq, KFMsg::S2SLogoutToGameReq );
+
+        // 处理玩家掉线
+        __KF_MESSAGE_FUNCTION__( HandleDisconnectToGameReq, KFMsg::S2SDisconnectToGameReq );
+
+        // 连接
+        __KF_MESSAGE_FUNCTION__( HandleConnectToGameReq, KFMsg::S2SConnectToGameReq );
+
+        // 玩家断线离开
+        __KF_MESSAGE_FUNCTION__( HandleLeaveToGameReq, KFMsg::S2SLeaveToGameReq );
+
+        // 处理踢人消息
+        __KF_MESSAGE_FUNCTION__( HandleKickPlayerToGameReq, KFMsg::S2SKickPlayerToGameReq );
 
         // 处理消息转发
-        __KF_MESSAGE_FUNCTION__( HandleBroadcastToGameAck );
+        __KF_MESSAGE_FUNCTION__( HandleBroadcastToGameAck, KFMsg::S2SBroadcastToGameAck );
 
         // 查询玩家所有数据
-        __KF_MESSAGE_FUNCTION__( HandleQueryPlayerReq );
+        __KF_MESSAGE_FUNCTION__( HandleQueryPlayerReq, KFMsg::MsgQueryPlayerReq );
 
     protected:
         // 发现新Gate

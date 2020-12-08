@@ -14,19 +14,18 @@ namespace KFrame
         __REGISTER_UPDATE_DATA__( &KFRelationClientModule::OnRelationValueUpdate );
         __REGISTER_UPDATE_STRING__( &KFRelationClientModule::OnRelationStringUpdate );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::MSG_ADD_RELATION_REQ, &KFRelationClientModule::HandleAddRelationReq );
-        __REGISTER_MESSAGE__( KFMsg::MSG_DEL_RELATION_REQ, &KFRelationClientModule::HandleDelRelationReq );
-        __REGISTER_MESSAGE__( KFMsg::MSG_REPLY_RELATION_INVITE_REQ, &KFRelationClientModule::HandleReplyRelationInviteReq );
-        __REGISTER_MESSAGE__( KFMsg::MSG_SET_REFUSE_RELATION_INVITE_REQ, &KFRelationClientModule::HandleSetRefuseRelationInviteReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_INT_VALUE_TO_RELATION_REQ, &KFRelationClientModule::HandleUpdateIntValueToRelationReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_STR_VALUE_TO_RELATION_REQ, &KFRelationClientModule::HandleUpdateStrValueToRelationReq );
-
-        __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_RELATION_TO_GAME_ACK, &KFRelationClientModule::HandleQueryRelationToGameAck );
-        __REGISTER_MESSAGE__( KFMsg::S2S_ADD_RELATION_TO_GAME_ACK, &KFRelationClientModule::HandleAddRelationToGameAck );
-        __REGISTER_MESSAGE__( KFMsg::S2S_DEL_RELATION_TO_GAME_ACK, &KFRelationClientModule::HandleDelRelationToGameAck );
-        __REGISTER_MESSAGE__( KFMsg::S2S_APPLY_ADD_RELATION_TO_GAME_ACK, &KFRelationClientModule::HandleApplyAddRelationToGameAck );
-        __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_RELATION_INVITE_TO_GAME_ACK, &KFRelationClientModule::HandleQueryRelationInviteToGameAck );
-        __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_FRIENDLINESS_TO_GAME_ACK, &KFRelationClientModule::HandleUpdateFriendLinessToGameAck );
+        __REGISTER_MESSAGE__( KFRelationClientModule, KFMsg::MSG_ADD_RELATION_REQ, KFMsg::MsgAddRelationReq, HandleAddRelationReq );
+        __REGISTER_MESSAGE__( KFRelationClientModule, KFMsg::MSG_DEL_RELATION_REQ, KFMsg::MsgDelRelationReq, HandleDelRelationReq );
+        __REGISTER_MESSAGE__( KFRelationClientModule, KFMsg::MSG_REPLY_RELATION_INVITE_REQ, KFMsg::MsgReplyRelationInviteReq, HandleReplyRelationInviteReq );
+        __REGISTER_MESSAGE__( KFRelationClientModule, KFMsg::MSG_SET_REFUSE_RELATION_INVITE_REQ, KFMsg::MsgSetRefuseRelationInviteReq, HandleSetRefuseRelationInviteReq );
+        __REGISTER_MESSAGE__( KFRelationClientModule, KFMsg::S2S_UPDATE_INT_VALUE_TO_RELATION_REQ, KFMsg::S2SUpdateIntValueToRelationReq, HandleUpdateIntValueToRelationReq );
+        __REGISTER_MESSAGE__( KFRelationClientModule, KFMsg::S2S_UPDATE_STR_VALUE_TO_RELATION_REQ, KFMsg::S2SUpdateStrValueToRelationReq, HandleUpdateStrValueToRelationReq );
+        __REGISTER_MESSAGE__( KFRelationClientModule, KFMsg::S2S_QUERY_RELATION_TO_GAME_ACK, KFMsg::S2SQueryRelationToGameAck, HandleQueryRelationToGameAck );
+        __REGISTER_MESSAGE__( KFRelationClientModule, KFMsg::S2S_ADD_RELATION_TO_GAME_ACK, KFMsg::S2SAddRelationToGameAck, HandleAddRelationToGameAck );
+        __REGISTER_MESSAGE__( KFRelationClientModule, KFMsg::S2S_DEL_RELATION_TO_GAME_ACK, KFMsg::S2SDelRelationToGameAck, HandleDelRelationToGameAck );
+        __REGISTER_MESSAGE__( KFRelationClientModule, KFMsg::S2S_APPLY_ADD_RELATION_TO_GAME_ACK, KFMsg::S2SApplyAddRelationToGameAck, HandleApplyAddRelationToGameAck );
+        __REGISTER_MESSAGE__( KFRelationClientModule, KFMsg::S2S_QUERY_RELATION_INVITE_TO_GAME_ACK, KFMsg::S2SQueryRelationInviteToGameAck, HandleQueryRelationInviteToGameAck );
+        __REGISTER_MESSAGE__( KFRelationClientModule, KFMsg::S2S_UPDATE_FRIENDLINESS_TO_GAME_ACK, KFMsg::S2SUpdateFriendLinessToGameAck, HandleUpdateFriendLinessToGameAck );
     }
 
     void KFRelationClientModule::BeforeShut()
@@ -133,10 +132,9 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleQueryRelationToGameAck )
+    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleQueryRelationToGameAck, KFMsg::S2SQueryRelationToGameAck )
     {
-        __SERVER_PROTO_PARSE__( KFMsg::S2SQueryRelationToGameAck );
-
+        __SERVER_FIND_PLAYER__;
         auto kfsetting = KFRelationConfig::Instance()->FindSetting( kfmsg->relationname() );
         if ( kfsetting == nullptr )
         {
@@ -165,9 +163,9 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleQueryRelationInviteToGameAck )
+    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleQueryRelationInviteToGameAck, KFMsg::S2SQueryRelationInviteToGameAck )
     {
-        __SERVER_PROTO_PARSE__( KFMsg::S2SQueryRelationInviteToGameAck );
+        __SERVER_FIND_PLAYER__;
         auto kfinviterecord = player->Find( kfmsg->relationname() );
         if ( kfinviterecord == nullptr )
         {
@@ -282,9 +280,9 @@ namespace KFrame
         SendMessageToRelation( player, relationname, KFMsg::S2S_UPDATE_STR_VALUE_TO_RELATION_REQ, &req );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleUpdateIntValueToRelationReq )
+    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleUpdateIntValueToRelationReq, KFMsg::S2SUpdateIntValueToRelationReq )
     {
-        __ROUTE_PROTO_PARSE__( KFMsg::S2SUpdateIntValueToRelationReq );
+        __ROUTE_FIND_PLAYER__;
 
         auto kfrelation = player->Find( kfmsg->relationname(), kfmsg->playerid() );
         if ( kfrelation == nullptr )
@@ -310,9 +308,9 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleUpdateStrValueToRelationReq )
+    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleUpdateStrValueToRelationReq, KFMsg::S2SUpdateStrValueToRelationReq )
     {
-        __ROUTE_PROTO_PARSE__( KFMsg::S2SUpdateStrValueToRelationReq );
+        __ROUTE_FIND_PLAYER__;
 
         auto kfrelation = player->Find( kfmsg->relationname(), kfmsg->playerid() );
         if ( kfrelation == nullptr )
@@ -338,9 +336,9 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleAddRelationReq )
+    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleAddRelationReq, KFMsg::MsgAddRelationReq )
     {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgAddRelationReq );
+        __ROUTE_FIND_PLAYER__;
 
         // 不能添加自己
         if ( playerid == kfmsg->playerid() || kfmsg->playerid() == 0u )
@@ -400,9 +398,9 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleApplyAddRelationToGameAck )
+    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleApplyAddRelationToGameAck, KFMsg::S2SApplyAddRelationToGameAck )
     {
-        __SERVER_PROTO_PARSE__( KFMsg::S2SApplyAddRelationToGameAck );
+        __SERVER_FIND_PLAYER__;
 
         auto kfinviterecord = player->Find( kfmsg->relationname() );
         if ( kfinviterecord == nullptr )
@@ -435,9 +433,9 @@ namespace KFrame
     }
 
 
-    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleReplyRelationInviteReq )
+    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleReplyRelationInviteReq, KFMsg::MsgReplyRelationInviteReq )
     {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgReplyRelationInviteReq );
+        __ROUTE_FIND_PLAYER__;
 
         auto kfsetting = FindRelationSettingByInviteName( kfmsg->relationname () );
         if ( kfsetting == nullptr )
@@ -562,9 +560,9 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleAddRelationToGameAck )
+    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleAddRelationToGameAck, KFMsg::S2SAddRelationToGameAck )
     {
-        __SERVER_PROTO_PARSE__( KFMsg::S2SAddRelationToGameAck );
+        __SERVER_FIND_PLAYER__;
 
         auto kfsetting = KFRelationConfig::Instance()->FindSetting( kfmsg->relationname() );
         if ( kfsetting == nullptr )
@@ -593,9 +591,9 @@ namespace KFrame
         _kf_display->DelayToClient( player, KFMsg::RelationAddOk, relationname );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleDelRelationReq )
+    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleDelRelationReq, KFMsg::MsgDelRelationReq )
     {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgDelRelationReq );
+        __ROUTE_FIND_PLAYER__;
 
         auto kfrelation = player->Find( kfmsg->relationname(), kfmsg->playerid() );
         if ( kfrelation == nullptr )
@@ -614,9 +612,9 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleDelRelationToGameAck )
+    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleDelRelationToGameAck, KFMsg::S2SDelRelationToGameAck )
     {
-        __SERVER_PROTO_PARSE__( KFMsg::S2SDelRelationToGameAck );
+        __ROUTE_FIND_PLAYER__;
 
         auto kfrelationrecord = player->Find( kfmsg->relationname() );
         auto kfrelation = kfrelationrecord->Find( kfmsg->relationid() );
@@ -632,9 +630,9 @@ namespace KFrame
         player->RemoveRecord( kfrelationrecord, kfmsg->relationid() );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleSetRefuseRelationInviteReq )
+    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleSetRefuseRelationInviteReq, KFMsg::MsgSetRefuseRelationInviteReq )
     {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgSetRefuseRelationInviteReq );
+        __ROUTE_FIND_PLAYER__;
 
         auto kfdata = player->Find( kfmsg->refusename() );
         if ( kfdata == nullptr )
@@ -687,9 +685,9 @@ namespace KFrame
         AddFriendLiness( player, friendid, type, value );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleUpdateFriendLinessToGameAck )
+    __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleUpdateFriendLinessToGameAck, KFMsg::S2SUpdateFriendLinessToGameAck )
     {
-        __SERVER_PROTO_PARSE__( KFMsg::S2SUpdateFriendLinessToGameAck );
+        __SERVER_FIND_PLAYER__;
 
         auto kffriend = player->Find( __STRING__( friend ), kfmsg->targetplayerid() );
         if ( kffriend == nullptr )

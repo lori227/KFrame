@@ -31,7 +31,7 @@ namespace KFrame
 
     protected:
         // 领取7天签到奖励
-        __KF_MESSAGE_FUNCTION__( HandleReceiveSevenRewardReq );
+        __KF_MESSAGE_FUNCTION__( HandleReceiveSevenRewardReq, KFMsg::MsgSevenSignRewardReq );
 
     protected:
         // 签到逻辑

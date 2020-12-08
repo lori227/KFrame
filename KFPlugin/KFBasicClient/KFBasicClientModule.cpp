@@ -15,11 +15,11 @@ namespace KFrame
 
         _kf_route->RegisterConnectionFunction( this, &KFBasicClientModule::OnRouteConnectCluster );
         ///////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::MSG_SET_SEX_REQ, &KFBasicClientModule::HandleSetSexReq );
-        __REGISTER_MESSAGE__( KFMsg::MSG_SET_NAME_REQ, &KFBasicClientModule::HandleSetNameReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_SET_PLAYER_NAME_TO_GAME_ACK, &KFBasicClientModule::HandleSetPlayerNameToGameAck );
-        __REGISTER_MESSAGE__( KFMsg::MSG_QUERY_BASIC_REQ, &KFBasicClientModule::HandleQueryBasicReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_ATTRIBUTE_TO_GAME_ACK, &KFBasicClientModule::HandleQueryAttributeToGameAck );
+        __REGISTER_MESSAGE__( KFBasicClientModule, KFMsg::MSG_SET_SEX_REQ, KFMsg::MsgSetSexReq, HandleSetSexReq );
+        __REGISTER_MESSAGE__( KFBasicClientModule, KFMsg::MSG_SET_NAME_REQ, KFMsg::MsgSetNameReq, HandleSetNameReq );
+        __REGISTER_MESSAGE__( KFBasicClientModule, KFMsg::S2S_SET_PLAYER_NAME_TO_GAME_ACK, KFMsg::S2SSetPlayerNameToGameAck, HandleSetPlayerNameToGameAck );
+        __REGISTER_MESSAGE__( KFBasicClientModule, KFMsg::MSG_QUERY_BASIC_REQ, KFMsg::MsgQueryBasicReq, HandleQueryBasicReq );
+        __REGISTER_MESSAGE__( KFBasicClientModule, KFMsg::S2S_QUERY_ATTRIBUTE_TO_GAME_ACK, KFMsg::S2SQueryAttributeToGameAck, HandleQueryAttributeToGameAck );
     }
 
     void KFBasicClientModule::BeforeShut()
@@ -123,9 +123,9 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    __KF_MESSAGE_FUNCTION__( KFBasicClientModule::HandleQueryBasicReq )
+    __KF_MESSAGE_FUNCTION__( KFBasicClientModule::HandleQueryBasicReq, KFMsg::MsgQueryBasicReq )
     {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgQueryBasicReq );
+        __ROUTE_FIND_PLAYER__;
 
         auto kfsetting = KFZoneConfig::Instance()->FindSetting( KFGlobal::Instance()->_app_id->GetZoneId() );
         if ( kfsetting == nullptr )
@@ -147,10 +147,9 @@ namespace KFrame
         _kf_route->SendToRand( playerid, __ROUTE_NAME__, KFMsg::S2S_QUERY_ATTRIBUTE_TO_BASIC_REQ, &req );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFBasicClientModule::HandleQueryAttributeToGameAck )
+    __KF_MESSAGE_FUNCTION__( KFBasicClientModule::HandleQueryAttributeToGameAck, KFMsg::S2SQueryAttributeToGameAck )
     {
-        __ROUTE_PROTO_PARSE__( KFMsg::S2SQueryAttributeToGameAck );
-
+        __ROUTE_FIND_PLAYER__;
         if ( kfmsg->result() != KFMsg::Ok )
         {
             return _kf_display->SendToClient( player, kfmsg->result(), kfmsg->name() );
@@ -173,9 +172,9 @@ namespace KFrame
         _kf_player->SendToClient( player, KFMsg::MSG_QUERY_BASIC_ACK, &ack );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFBasicClientModule::HandleSetSexReq )
+    __KF_MESSAGE_FUNCTION__( KFBasicClientModule::HandleSetSexReq, KFMsg::MsgSetSexReq )
     {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgSetSexReq );
+        __ROUTE_FIND_PLAYER__;
 
         _kf_display->SendToClient( player, KFMsg::SexSetOK );
         player->UpdateObject( __STRING__( basic ), __STRING__( sex ), KFEnum::Set, kfmsg->sex() );
@@ -198,10 +197,9 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_MESSAGE_FUNCTION__( KFBasicClientModule::HandleSetNameReq )
+    __KF_MESSAGE_FUNCTION__( KFBasicClientModule::HandleSetNameReq, KFMsg::MsgSetNameReq )
     {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgSetNameReq );
-
+        __ROUTE_FIND_PLAYER__;
         if ( kfmsg->name().empty() )
         {
             return _kf_display->SendToClient( player, KFMsg::NameEmpty );
@@ -241,10 +239,8 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFBasicClientModule::HandleSetPlayerNameToGameAck )
+    __KF_MESSAGE_FUNCTION__( KFBasicClientModule::HandleSetPlayerNameToGameAck, KFMsg::S2SSetPlayerNameToGameAck )
     {
-        __PROTO_PARSE__( KFMsg::S2SSetPlayerNameToGameAck );
-
         auto player = _kf_player->FindPlayer( kfmsg->playerid() );
         if ( player == nullptr )
         {

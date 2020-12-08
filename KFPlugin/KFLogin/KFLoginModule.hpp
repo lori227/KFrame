@@ -50,14 +50,11 @@ namespace KFrame
         __KF_HTTP_CALL_BACK_FUNCTION__( OnHttpAuthLoginVerifyCallBack );
 
     protected:
-        // 更新小区登录信息
-        __KF_MESSAGE_FUNCTION__( HandleUpdateZoneToLoginReq );
-
         // 登录验证请求
-        __KF_MESSAGE_FUNCTION__( HandleLoginToLoginReq );
+        __KF_MESSAGE_FUNCTION__( HandleLoginToLoginReq, KFMsg::S2SLoginToLoginReq );
 
         // 登录验证结果
-        __KF_MESSAGE_FUNCTION__( HandleLoginToLoginAck );
+        __KF_MESSAGE_FUNCTION__( HandleLoginToLoginAck, KFMsg::S2SLoginToLoginAck );
 
     protected:
         // 发送登录验证结果消息

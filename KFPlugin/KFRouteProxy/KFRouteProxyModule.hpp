@@ -36,19 +36,19 @@ namespace KFrame
         __KF_NET_EVENT_FUNCTION__( OnClientConnectServer );
 
         // 同步对象
-        __KF_MESSAGE_FUNCTION__( HandleRouteSyncObjectToProxyReq );
+        __KF_MESSAGE_FUNCTION__( HandleRouteSyncObjectToProxyReq, KFMsg::S2SRouteSyncObjectToProxyReq );
 
         // 添加对象
-        __KF_MESSAGE_FUNCTION__( HandleRouteAddObjectToProxyReq );
+        __KF_MESSAGE_FUNCTION__( HandleRouteAddObjectToProxyReq, KFMsg::S2SRouteAddObjectToProxyReq );
 
         // 删除对象
-        __KF_MESSAGE_FUNCTION__( HandleRouteRemoveObjectToProxyReq );
+        __KF_MESSAGE_FUNCTION__( HandleRouteRemoveObjectToProxyReq, KFMsg::S2SRouteRemoveObjectToProxyReq );
 
         // 转发消息到指定服务器
-        __KF_MESSAGE_FUNCTION__( HandleRouteMessageToServerReq );
+        __KF_MESSAGE_FUNCTION__( HandleRouteMessageToServerReq, KFMsg::S2SRouteMessageToServerReq );
 
         // 转发消息到指定玩家
-        __KF_MESSAGE_FUNCTION__( HandleRouteMessageToPlayerReq );
+        __KF_MESSAGE_FUNCTION__( HandleRouteMessageToPlayerReq, KFMsg::S2SRouteMessageToPlayerReq );
     };
 }
 

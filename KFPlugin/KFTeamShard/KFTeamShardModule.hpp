@@ -66,29 +66,29 @@ namespace KFrame
         void RemoveTeamMember( KFEntity* kfteam, uint64 memberid );
     protected:
         // 创建队伍请求
-        __KF_MESSAGE_FUNCTION__( HandleTeamCreateToTeamReq );
+        __KF_MESSAGE_FUNCTION__( HandleTeamCreateToTeamReq, KFMsg::S2STeamCreateToTeamReq );
 
         // 加入队伍失败
-        __KF_MESSAGE_FUNCTION__( HandleTeamJoinFailedToTeamReq );
+        __KF_MESSAGE_FUNCTION__( HandleTeamJoinFailedToTeamReq, KFMsg::S2STeamJoinFailedToTeamReq );
 
         // 上线查询队伍
-        __KF_MESSAGE_FUNCTION__( HandleTeamOnlineQueryToTeamReq );
+        __KF_MESSAGE_FUNCTION__( HandleTeamOnlineQueryToTeamReq, KFMsg::S2STeamOnlineQueryToTeamReq );
 
         // 更新队伍属性
-        __KF_MESSAGE_FUNCTION__( HandleTeamIntValueToTeamReq );
-        __KF_MESSAGE_FUNCTION__( HandleTeamStrValueToTeamReq );
+        __KF_MESSAGE_FUNCTION__( HandleTeamIntValueToTeamReq, KFMsg::S2STeamIntValueToTeamReq );
+        __KF_MESSAGE_FUNCTION__( HandleTeamStrValueToTeamReq, KFMsg::S2STeamStrValueToTeamReq );
 
         // 更新队伍成员属性
-        __KF_MESSAGE_FUNCTION__( HandleTeamMemberIntValueToTeamReq );
-        __KF_MESSAGE_FUNCTION__( HandleTeamMemberStrValueToTeamReq );
+        __KF_MESSAGE_FUNCTION__( HandleTeamMemberIntValueToTeamReq, KFMsg::S2STeamMemberIntValueToTeamReq );
+        __KF_MESSAGE_FUNCTION__( HandleTeamMemberStrValueToTeamReq, KFMsg::S2STeamMemberStrValueToTeamReq );
 
         // 离开队伍
-        __KF_MESSAGE_FUNCTION__( HandleTeamLeaveToTeamReq );
+        __KF_MESSAGE_FUNCTION__( HandleTeamLeaveToTeamReq, KFMsg::S2STeamLeaveToTeamReq );
         // 踢出队伍
-        __KF_MESSAGE_FUNCTION__( HandleTeamKickToTeamReq );
+        __KF_MESSAGE_FUNCTION__( HandleTeamKickToTeamReq, KFMsg::S2STeamKickToTeamReq );
 
         // 同意加入队伍
-        __KF_MESSAGE_FUNCTION__( HandleTeamAgreeToTeamReq );
+        __KF_MESSAGE_FUNCTION__( HandleTeamAgreeToTeamReq, KFMsg::S2STeamAgreeToTeamReq );
     private:
         // 队伍上下文组件
         KFComponent* _kf_component = nullptr;

@@ -36,7 +36,7 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
     protected:
         // 使用道具
-        __KF_MESSAGE_FUNCTION__( HandleUseItemReq );
+        __KF_MESSAGE_FUNCTION__( HandleUseItemReq, KFMsg::MsgUseItemReq );
 
     protected:
         virtual void BindCheckItemUseFunction( uint32 itemtype, const std::string& module, KFItemUseFunction& function );

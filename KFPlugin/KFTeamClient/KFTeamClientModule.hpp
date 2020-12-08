@@ -46,37 +46,37 @@ namespace KFrame
         __KF_PLAYER_LEAVE_FUNCTION__( OnLeaveTeamModule );
 
         // 请求创建队伍
-        __KF_MESSAGE_FUNCTION__( HandleTeamCreateReq );
+        __KF_MESSAGE_FUNCTION__( HandleTeamCreateReq, KFMsg::MsgTeamCreateReq );
 
         // 加入队伍
-        __KF_MESSAGE_FUNCTION__( HandleTeamJoinToGameAck );
+        __KF_MESSAGE_FUNCTION__( HandleTeamJoinToGameAck, KFMsg::S2STeamJoinToGameAck );
 
         // 查询队伍
-        __KF_MESSAGE_FUNCTION__( HandleTeamOnlineQueryToGameAck );
+        __KF_MESSAGE_FUNCTION__( HandleTeamOnlineQueryToGameAck, KFMsg::S2STeamOnlineQueryToGameAck );
 
         // 请求离开队伍
-        __KF_MESSAGE_FUNCTION__( HandleTeamLeaveReq );
+        __KF_MESSAGE_FUNCTION__( HandleTeamLeaveReq, KFMsg::MsgTeamLeaveReq );
 
         // 请求剔出队伍
-        __KF_MESSAGE_FUNCTION__( HandleTeamKickReq );
+        __KF_MESSAGE_FUNCTION__( HandleTeamKickReq, KFMsg::MsgTeamKickReq );
 
         // 离开队伍同步
-        __KF_MESSAGE_FUNCTION__( HandleTeamLeaveToGameAck );
+        __KF_MESSAGE_FUNCTION__( HandleTeamLeaveToGameAck, KFMsg::S2STeamLeaveToGameAck );
 
         // 请求邀请加入队伍
-        __KF_MESSAGE_FUNCTION__( HandleTeamInviteReq );
+        __KF_MESSAGE_FUNCTION__( HandleTeamInviteReq, KFMsg::MsgTeamInviteReq );
 
         // 请求申请加入队伍
-        __KF_MESSAGE_FUNCTION__( HandleTeamApplyReq );
+        __KF_MESSAGE_FUNCTION__( HandleTeamApplyReq, KFMsg::MsgTeamApplyReq );
 
         // 收到邀请请求
-        __KF_MESSAGE_FUNCTION__( HandleTeamTellInviteToGameAck );
+        __KF_MESSAGE_FUNCTION__( HandleTeamTellInviteToGameAck, KFMsg::S2STeamTellInviteToGameAck );
 
         // 收到申请加入队伍
-        __KF_MESSAGE_FUNCTION__( HandleTeamTellApplyToGameAck );
+        __KF_MESSAGE_FUNCTION__( HandleTeamTellApplyToGameAck, KFMsg::S2STeamTellInviteToGameAck );
 
         // 同意加入队伍
-        __KF_MESSAGE_FUNCTION__( HandleTeamAgreeReq );
+        __KF_MESSAGE_FUNCTION__( HandleTeamAgreeReq, KFMsg::MsgTeamAgreeReq );
 
     protected:
         // 更新队伍信息

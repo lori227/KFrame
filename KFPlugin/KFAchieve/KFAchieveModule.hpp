@@ -35,7 +35,7 @@ namespace KFrame
 
     protected:
         // 领取奖励
-        __KF_MESSAGE_FUNCTION__( HandleAchieveRewardReq );
+        __KF_MESSAGE_FUNCTION__( HandleAchieveRewardReq, KFMsg::MsgAchieveRewardReq );
 
     private:
         // 领取成就奖励

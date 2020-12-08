@@ -36,7 +36,7 @@ namespace KFrame
 
     protected:
         // 请求购买商城道具
-        __KF_MESSAGE_FUNCTION__( HandleStoreBuyGoodsReq );
+        __KF_MESSAGE_FUNCTION__( HandleStoreBuyGoodsReq, KFMsg::MsgStoreBuyGoodsReq );
 
     protected:
         // 玩家组件上下文

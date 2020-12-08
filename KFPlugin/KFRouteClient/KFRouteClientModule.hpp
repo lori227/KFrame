@@ -180,13 +180,13 @@ namespace KFrame
         void RouteSyncObjectToProxy( uint64 shardid );
 
         // 转发消息成功
-        __KF_MESSAGE_FUNCTION__( HandleRouteMessageOk );
+        __KF_MESSAGE_FUNCTION__( HandleRouteMessageOk, KFMsg::S2SRouteMessageOk );
 
         // 转发消息
-        __KF_MESSAGE_FUNCTION__( HandleRouteMessageToClientAck );
+        __KF_MESSAGE_FUNCTION__( HandleRouteMessageToClientAck, KFMsg::S2SRouteMessageToClientAck );
 
         // 通知有新的shard
-        __KF_MESSAGE_FUNCTION__( HandleRouteDiscoverToClientReq );
+        __KF_MESSAGE_FUNCTION__( HandleRouteDiscoverToClientReq, KFMsg::S2SRouteDiscoverToClientReq );
 
         // 连接route master
         __KF_TIMER_FUNCTION__( OnTimerConnectionRouteMaster );

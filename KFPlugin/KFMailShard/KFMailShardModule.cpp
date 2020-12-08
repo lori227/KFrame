@@ -20,10 +20,10 @@ namespace KFrame
         __REGISTER_HTTP__( __STRING__( delmail ), true, &KFMailShardModule::HandleGMDeleteMailReq );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_MAIL_REQ, &KFMailShardModule::HandleQueryMailReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_ADD_MAIL_REQ, &KFMailShardModule::HandleAddMailReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_UPDATE_MAIL_STATUS_REQ, &KFMailShardModule::HandleUpdateMailStatusReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_NEW_PLAYER_MAIL_REQ, &KFMailShardModule::HandleNewPlayerMailReq );
+        __REGISTER_MESSAGE__( KFMailShardModule, KFMsg::S2S_QUERY_MAIL_REQ, KFMsg::S2SQueryMailReq, HandleQueryMailReq );
+        __REGISTER_MESSAGE__( KFMailShardModule, KFMsg::S2S_ADD_MAIL_REQ, KFMsg::S2SAddMailReq, HandleAddMailReq );
+        __REGISTER_MESSAGE__( KFMailShardModule, KFMsg::S2S_UPDATE_MAIL_STATUS_REQ, KFMsg::S2SUpdateMailStatusReq, HandleUpdateMailStatusReq );
+        __REGISTER_MESSAGE__( KFMailShardModule, KFMsg::S2S_NEW_PLAYER_MAIL_REQ, KFMsg::S2SNewPlayerMailReq, HandleNewPlayerMailReq );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
@@ -142,10 +142,8 @@ namespace KFrame
         _mail_database_logic->ClearOverdueGlobalMail();
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_MESSAGE_FUNCTION__( KFMailShardModule::HandleQueryMailReq )
+    __KF_MESSAGE_FUNCTION__( KFMailShardModule::HandleQueryMailReq, KFMsg::S2SQueryMailReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SQueryMailReq );
-
         // 全局邮件信息
         _mail_database_logic->LoadGlobalMailToPerson( kfmsg->playerid(), _invalid_int );
 
@@ -169,10 +167,8 @@ namespace KFrame
         _kf_route->SendToRoute( route, KFMsg::S2S_QUERY_MAIL_ACK, &ack );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFMailShardModule::HandleAddMailReq )
+    __KF_MESSAGE_FUNCTION__( KFMailShardModule::HandleAddMailReq, KFMsg::S2SAddMailReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SAddMailReq );
-
         // 邮件数据
         StringMap maildata;
         auto pbmail = &kfmsg->pbmail().data();
@@ -183,7 +179,7 @@ namespace KFrame
         if ( mailid == _invalid_int )
         {
             std::string strdata;
-            google::protobuf::util::MessageToJsonString( kfmsg, &strdata );
+            google::protobuf::util::MessageToJsonString( *kfmsg, &strdata );
             __LOG_ERROR__( "objectid[{}] add mail[{}] failed", kfmsg->objectid(), strdata );
         }
     }
@@ -216,10 +212,8 @@ namespace KFrame
     }
 
 
-    __KF_MESSAGE_FUNCTION__( KFMailShardModule::HandleUpdateMailStatusReq )
+    __KF_MESSAGE_FUNCTION__( KFMailShardModule::HandleUpdateMailStatusReq, KFMsg::S2SUpdateMailStatusReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SUpdateMailStatusReq );
-
         auto ok = _mail_database_logic->UpdateMailStatus( kfmsg->flag(), kfmsg->playerid(), kfmsg->id(), kfmsg->status() );
         if ( !ok )
         {
@@ -233,10 +227,8 @@ namespace KFrame
         _kf_route->SendToRoute( route, KFMsg::S2S_UPDATE_MAIL_STATUS_ACK, &ack );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFMailShardModule::HandleNewPlayerMailReq )
+    __KF_MESSAGE_FUNCTION__( KFMailShardModule::HandleNewPlayerMailReq, KFMsg::S2SNewPlayerMailReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SNewPlayerMailReq );
-
         // 设置最大的gm邮件id
         _mail_database_logic->InitNewPlayerMail( kfmsg->playerid(), kfmsg->zoneid() );
     }

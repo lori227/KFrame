@@ -6,8 +6,8 @@ namespace KFrame
     {
         __REGISTER_PLAYER_LEAVE__( &KFChatModule::OnLeaveChatModule );
         ///////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::MSG_FRIEND_CHAT_REQ, &KFChatModule::HandleFriendChatReq );
-        __REGISTER_MESSAGE__( KFMsg::MSG_SERVER_CHAT_REQ, &KFChatModule::HandleServerChatReq );
+        __REGISTER_MESSAGE__( KFChatModule, KFMsg::MSG_FRIEND_CHAT_REQ, KFMsg::MsgFriendChatReq, HandleFriendChatReq );
+        __REGISTER_MESSAGE__( KFChatModule, KFMsg::MSG_SERVER_CHAT_REQ, KFMsg::MsgServerChatReq, HandleServerChatReq );
     }
 
     void KFChatModule::BeforeShut()
@@ -18,9 +18,9 @@ namespace KFrame
         __UN_MESSAGE__( KFMsg::MSG_SERVER_CHAT_REQ );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_MESSAGE_FUNCTION__( KFChatModule::HandleFriendChatReq )
+    __KF_MESSAGE_FUNCTION__( KFChatModule::HandleFriendChatReq, KFMsg::MsgFriendChatReq )
     {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgFriendChatReq );
+        __ROUTE_FIND_PLAYER__;
 
         if ( !CheckChatIntervalTime( player ) )
         {
@@ -49,9 +49,9 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFChatModule::HandleServerChatReq )
+    __KF_MESSAGE_FUNCTION__( KFChatModule::HandleServerChatReq, KFMsg::MsgServerChatReq )
     {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgServerChatReq );
+        __ROUTE_FIND_PLAYER__;
 
         if ( !CheckChatIntervalTime( player ) )
         {

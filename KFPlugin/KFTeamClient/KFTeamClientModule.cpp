@@ -13,17 +13,17 @@ namespace KFrame
         __REGISTER_PLAYER_ENTER__( &KFTeamClientModule::OnEnterTeamModule );
         __REGISTER_PLAYER_LEAVE__( &KFTeamClientModule::OnLeaveTeamModule );
         ///////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::MSG_TEAM_CREATE_REQ, &KFTeamClientModule::HandleTeamCreateReq );
-        __REGISTER_MESSAGE__( KFMsg::MSG_TEAM_LEAVE_REQ, &KFTeamClientModule::HandleTeamLeaveReq );
-        __REGISTER_MESSAGE__( KFMsg::MSG_TEAM_KICK_REQ, &KFTeamClientModule::HandleTeamKickReq );
-        __REGISTER_MESSAGE__( KFMsg::MSG_TEAM_INVITE_REQ, &KFTeamClientModule::HandleTeamInviteReq );
-        __REGISTER_MESSAGE__( KFMsg::MSG_TEAM_APPLY_REQ, &KFTeamClientModule::HandleTeamApplyReq );
-        __REGISTER_MESSAGE__( KFMsg::MSG_TEAM_AGREE_REQ, &KFTeamClientModule::HandleTeamAgreeReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_TEAM_JON_TO_GAME_ACK, &KFTeamClientModule::HandleTeamJoinToGameAck );
-        __REGISTER_MESSAGE__( KFMsg::S2S_TEAM_ONLINE_QUERY_TO_GAME_ACK, &KFTeamClientModule::HandleTeamOnlineQueryToGameAck );
-        __REGISTER_MESSAGE__( KFMsg::S2S_TEAM_LEAVE_TO_GAME_ACK, &KFTeamClientModule::HandleTeamLeaveToGameAck );
-        __REGISTER_MESSAGE__( KFMsg::S2S_TEAM_TELL_INVITE_TO_GAME_ACK, &KFTeamClientModule::HandleTeamTellInviteToGameAck );
-        __REGISTER_MESSAGE__( KFMsg::S2S_TEAM_TELL_APPLY_TO_GAME_ACK, &KFTeamClientModule::HandleTeamTellApplyToGameAck );
+        __REGISTER_MESSAGE__( KFTeamClientModule, KFMsg::MSG_TEAM_CREATE_REQ, KFMsg::MsgTeamCreateReq, HandleTeamCreateReq );
+        __REGISTER_MESSAGE__( KFTeamClientModule, KFMsg::MSG_TEAM_LEAVE_REQ, KFMsg::MsgTeamLeaveReq, HandleTeamLeaveReq );
+        __REGISTER_MESSAGE__( KFTeamClientModule, KFMsg::MSG_TEAM_KICK_REQ, KFMsg::MsgTeamKickReq, HandleTeamKickReq );
+        __REGISTER_MESSAGE__( KFTeamClientModule, KFMsg::MSG_TEAM_INVITE_REQ, KFMsg::MsgTeamInviteReq, HandleTeamInviteReq );
+        __REGISTER_MESSAGE__( KFTeamClientModule, KFMsg::MSG_TEAM_APPLY_REQ, KFMsg::MsgTeamApplyReq, HandleTeamApplyReq );
+        __REGISTER_MESSAGE__( KFTeamClientModule, KFMsg::MSG_TEAM_AGREE_REQ, KFMsg::MsgTeamAgreeReq, HandleTeamAgreeReq );
+        __REGISTER_MESSAGE__( KFTeamClientModule, KFMsg::S2S_TEAM_JON_TO_GAME_ACK, KFMsg::S2STeamJoinToGameAck, HandleTeamJoinToGameAck );
+        __REGISTER_MESSAGE__( KFTeamClientModule, KFMsg::S2S_TEAM_ONLINE_QUERY_TO_GAME_ACK, KFMsg::S2STeamOnlineQueryToGameAck, HandleTeamOnlineQueryToGameAck );
+        __REGISTER_MESSAGE__( KFTeamClientModule, KFMsg::S2S_TEAM_LEAVE_TO_GAME_ACK, KFMsg::S2STeamLeaveToGameAck, HandleTeamLeaveToGameAck );
+        __REGISTER_MESSAGE__( KFTeamClientModule, KFMsg::S2S_TEAM_TELL_INVITE_TO_GAME_ACK, KFMsg::S2STeamTellInviteToGameAck, HandleTeamTellInviteToGameAck );
+        __REGISTER_MESSAGE__( KFTeamClientModule, KFMsg::S2S_TEAM_TELL_APPLY_TO_GAME_ACK, KFMsg::S2STeamTellInviteToGameAck, HandleTeamTellApplyToGameAck );
     }
 
     void KFTeamClientModule::BeforeShut()
@@ -189,9 +189,9 @@ namespace KFrame
         UpdateMemberIntValueToTeam( player, values );
     }
     ///////////////////////////////////////////////////////////////////////////////////////////
-    __KF_MESSAGE_FUNCTION__( KFTeamClientModule::HandleTeamCreateReq )
+    __KF_MESSAGE_FUNCTION__( KFTeamClientModule::HandleTeamCreateReq, KFMsg::MsgTeamCreateReq )
     {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgTeamCreateReq );
+        __ROUTE_FIND_PLAYER__;
 
         // 判断自己是否有队伍
         auto teamid = player->Get( __STRING__( team ), __STRING__( id ) );
@@ -233,9 +233,9 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFTeamClientModule::HandleTeamJoinToGameAck )
+    __KF_MESSAGE_FUNCTION__( KFTeamClientModule::HandleTeamJoinToGameAck, KFMsg::S2STeamJoinToGameAck )
     {
-        __ROUTE_PROTO_PARSE__( KFMsg::S2STeamJoinToGameAck );
+        __ROUTE_FIND_PLAYER__;
 
         // 先判断是否有队伍
         auto kfteam = player->Find( __STRING__( team ) );
@@ -263,9 +263,9 @@ namespace KFrame
         _kf_display->DelayToClient( player, KFMsg::TeamJoinOk );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFTeamClientModule::HandleTeamOnlineQueryToGameAck )
+    __KF_MESSAGE_FUNCTION__( KFTeamClientModule::HandleTeamOnlineQueryToGameAck, KFMsg::S2STeamOnlineQueryToGameAck )
     {
-        __ROUTE_PROTO_PARSE__( KFMsg::S2STeamOnlineQueryToGameAck );
+        __ROUTE_FIND_PLAYER__;
 
         auto kfteam = player->Find( __STRING__( team ) );
 
@@ -279,9 +279,9 @@ namespace KFrame
         EnterLeaveUpdateToTeam( player );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFTeamClientModule::HandleTeamLeaveReq )
+    __KF_MESSAGE_FUNCTION__( KFTeamClientModule::HandleTeamLeaveReq, KFMsg::MsgTeamLeaveReq )
     {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgTeamLeaveReq );
+        __ROUTE_FIND_PLAYER__;
 
         auto teamid = player->Get( __STRING__( team ), __STRING__( id ) );
         if ( teamid == _invalid_int )
@@ -299,9 +299,9 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFTeamClientModule::HandleTeamKickReq )
+    __KF_MESSAGE_FUNCTION__( KFTeamClientModule::HandleTeamKickReq, KFMsg::MsgTeamKickReq )
     {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgTeamKickReq );
+        __ROUTE_FIND_PLAYER__;
 
         auto kfteam = player->Find( __STRING__( team ) );
         auto teamid = kfteam->Get( __STRING__( id ) );
@@ -333,10 +333,9 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFTeamClientModule::HandleTeamLeaveToGameAck )
+    __KF_MESSAGE_FUNCTION__( KFTeamClientModule::HandleTeamLeaveToGameAck, KFMsg::S2STeamLeaveToGameAck )
     {
-        __ROUTE_PROTO_PARSE__( KFMsg::S2STeamLeaveToGameAck );
-
+        __ROUTE_FIND_PLAYER__;
         auto kfteam = player->Find( __STRING__( team ) );
         auto teamid = kfteam->Get( __STRING__( id ) );
         if ( teamid != kfmsg->teamid() )
@@ -362,9 +361,9 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFTeamClientModule::HandleTeamInviteReq )
+    __KF_MESSAGE_FUNCTION__( KFTeamClientModule::HandleTeamInviteReq, KFMsg::MsgTeamInviteReq )
     {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgTeamInviteReq );
+        __ROUTE_FIND_PLAYER__;
 
         auto kfteam = player->Find( __STRING__( team ) );
         auto teamid = kfteam->Get( __STRING__( id ) );
@@ -385,7 +384,6 @@ namespace KFrame
 
     void KFTeamClientModule::SendTeamInviteToTarget( KFEntity* player, KFData* kfteam, uint64 serverid, uint64 playerid )
     {
-
         auto pbteam = _kf_kernel->SerializeToView( kfteam );
         auto pbbasic = _kf_kernel->SerializeToView( player->Find( __STRING__( basic ) ) );
 
@@ -400,10 +398,8 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFTeamClientModule::HandleTeamTellInviteToGameAck )
+    __KF_MESSAGE_FUNCTION__( KFTeamClientModule::HandleTeamTellInviteToGameAck, KFMsg::S2STeamTellInviteToGameAck )
     {
-        __PROTO_PARSE__( KFMsg::S2STeamTellInviteToGameAck );
-
         auto playerid = __ROUTE_RECV_ID__;
         auto player = _kf_player->FindPlayer( playerid );
         if ( player == nullptr )
@@ -428,9 +424,9 @@ namespace KFrame
         _kf_display->SendToPlayer( route, KFMsg::TeamInviteOk );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFTeamClientModule::HandleTeamApplyReq )
+    __KF_MESSAGE_FUNCTION__( KFTeamClientModule::HandleTeamApplyReq, KFMsg::MsgTeamApplyReq )
     {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgTeamApplyReq );
+        __ROUTE_FIND_PLAYER__;
 
         auto status = player->GetStatus();
         if ( status == KFMsg::PlayingStatus )
@@ -450,10 +446,8 @@ namespace KFrame
     }
 
     // 客户端收到申请, 直接再发一次邀请即可
-    __KF_MESSAGE_FUNCTION__( KFTeamClientModule::HandleTeamTellApplyToGameAck )
+    __KF_MESSAGE_FUNCTION__( KFTeamClientModule::HandleTeamTellApplyToGameAck, KFMsg::S2STeamTellInviteToGameAck )
     {
-        __PROTO_PARSE__( KFMsg::S2STeamTellInviteToGameAck );
-
         auto playerid = __ROUTE_RECV_ID__;
         auto player = _kf_player->FindPlayer( playerid );
         if ( player == nullptr )
@@ -490,9 +484,9 @@ namespace KFrame
         _kf_display->SendToPlayer( route, KFMsg::TeamApplyOk );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFTeamClientModule::HandleTeamAgreeReq )
+    __KF_MESSAGE_FUNCTION__( KFTeamClientModule::HandleTeamAgreeReq, KFMsg::MsgTeamAgreeReq )
     {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgTeamAgreeReq );
+        __ROUTE_FIND_PLAYER__;
 
         if ( kfmsg->teamid() == _invalid_int )
         {

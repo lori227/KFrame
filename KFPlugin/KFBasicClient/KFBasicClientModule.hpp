@@ -60,19 +60,19 @@ namespace KFrame
         uint32 CheckNameValid( const std::string& name, uint32 maxlength );
     protected:
         // 处理设置性别请求
-        __KF_MESSAGE_FUNCTION__( HandleSetSexReq );
+        __KF_MESSAGE_FUNCTION__( HandleSetSexReq, KFMsg::MsgSetSexReq );
 
         // 处理设置名字请求
-        __KF_MESSAGE_FUNCTION__( HandleSetNameReq );
+        __KF_MESSAGE_FUNCTION__( HandleSetNameReq, KFMsg::MsgSetNameReq );
 
         // 处理设置名字回馈
-        __KF_MESSAGE_FUNCTION__( HandleSetPlayerNameToGameAck );
+        __KF_MESSAGE_FUNCTION__( HandleSetPlayerNameToGameAck, KFMsg::S2SSetPlayerNameToGameAck );
 
         // 查询玩家基本数据
-        __KF_MESSAGE_FUNCTION__( HandleQueryBasicReq );
+        __KF_MESSAGE_FUNCTION__( HandleQueryBasicReq, KFMsg::MsgQueryBasicReq );
 
         // 查询玩家基本数据
-        __KF_MESSAGE_FUNCTION__( HandleQueryAttributeToGameAck );
+        __KF_MESSAGE_FUNCTION__( HandleQueryAttributeToGameAck, KFMsg::S2SQueryAttributeToGameAck );
     private:
         // 组件
         KFComponent* _kf_component = nullptr;

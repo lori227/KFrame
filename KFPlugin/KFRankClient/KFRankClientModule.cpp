@@ -7,8 +7,8 @@ namespace KFrame
         _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
         __REGISTER_UPDATE_DATA__( &KFRankClientModule::OnDataUpdateCallBack );
         ///////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::MSG_QUERY_RANK_LIST_REQ, &KFRankClientModule::HandleQueryRankListReq );
-        __REGISTER_MESSAGE__( KFMsg::MSG_QUERY_FRIEND_RANK_LIST_REQ, &KFRankClientModule::HandleQueryFriendRankListReq );
+        __REGISTER_MESSAGE__( KFRankClientModule, KFMsg::MSG_QUERY_RANK_LIST_REQ, KFMsg::MsgQueryRankListReq, HandleQueryRankListReq );
+        __REGISTER_MESSAGE__( KFRankClientModule, KFMsg::MSG_QUERY_FRIEND_RANK_LIST_REQ, KFMsg::MsgQueryFriendRankListReq, HandleQueryFriendRankListReq );
     }
 
     void KFRankClientModule::BeforeShut()
@@ -136,9 +136,9 @@ namespace KFrame
         return rankscore;
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRankClientModule::HandleQueryRankListReq )
+    __KF_MESSAGE_FUNCTION__( KFRankClientModule::HandleQueryRankListReq, KFMsg::MsgQueryRankListReq )
     {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgQueryRankListReq );
+        __ROUTE_FIND_PLAYER__;
 
         auto kfsetting = KFRankConfig::Instance()->FindSetting( kfmsg->rankid() );
         if ( kfsetting == nullptr )
@@ -158,9 +158,9 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRankClientModule::HandleQueryFriendRankListReq )
+    __KF_MESSAGE_FUNCTION__( KFRankClientModule::HandleQueryFriendRankListReq, KFMsg::MsgQueryFriendRankListReq )
     {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgQueryFriendRankListReq );
+        __ROUTE_FIND_PLAYER__;
 
         auto kfsetting = KFRankConfig::Instance()->FindSetting( kfmsg->rankid() );
         if ( kfsetting == nullptr )

@@ -6,9 +6,9 @@ namespace KFrame
     void KFDataShardModule::BeforeRun()
     {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::S2S_LOAD_PLAYER_TO_DATA_REQ, &KFDataShardModule::HandleLoadPlayerToDataReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_SAVE_PLAYER_TO_DATA_REQ, &KFDataShardModule::HandleSavePlayerToDataReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_QUERY_PLAYER_TO_DATA_REQ, &KFDataShardModule::HandleQueryPlayerToDataReq );
+        __REGISTER_MESSAGE__( KFDataShardModule, KFMsg::S2S_LOAD_PLAYER_TO_DATA_REQ, KFMsg::S2SLoadPlayerToDataReq, HandleLoadPlayerToDataReq );
+        __REGISTER_MESSAGE__( KFDataShardModule, KFMsg::S2S_SAVE_PLAYER_TO_DATA_REQ, KFMsg::S2SSavePlayerToDataReq, HandleSavePlayerToDataReq );
+        __REGISTER_MESSAGE__( KFDataShardModule, KFMsg::S2S_QUERY_PLAYER_TO_DATA_REQ, KFMsg::S2SQueryPlayerToDataReq, HandleQueryPlayerToDataReq );
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
@@ -74,10 +74,8 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_MESSAGE_FUNCTION__( KFDataShardModule::HandleSavePlayerToDataReq )
+    __KF_MESSAGE_FUNCTION__( KFDataShardModule::HandleSavePlayerToDataReq, KFMsg::S2SSavePlayerToDataReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SSavePlayerToDataReq );
-
         auto ok = SavePlayerData( kfmsg->zoneid(), kfmsg->id(), &kfmsg->data(), kfmsg->flag() );
         if ( ok )
         {
@@ -87,9 +85,8 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFDataShardModule::HandleLoadPlayerToDataReq )
+    __KF_MESSAGE_FUNCTION__( KFDataShardModule::HandleLoadPlayerToDataReq, KFMsg::S2SLoadPlayerToDataReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SLoadPlayerToDataReq );
         auto pblogin = &kfmsg->pblogin();
 
         KFMsg::S2SLoadPlayerToGameAck ack;
@@ -107,10 +104,8 @@ namespace KFrame
         _kf_route->SendToRoute( route, KFMsg::S2S_LOAD_PLAYER_TO_GAME_ACK, &ack );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFDataShardModule::HandleQueryPlayerToDataReq )
+    __KF_MESSAGE_FUNCTION__( KFDataShardModule::HandleQueryPlayerToDataReq, KFMsg::S2SQueryPlayerToDataReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SQueryPlayerToDataReq );
-
         KFMsg::S2SQueryPlayerToGameAck ack;
         auto ok = LoadPlayerData( kfmsg->zoneid(), kfmsg->playerid(), ack.mutable_playerdata() );
         if ( ok )

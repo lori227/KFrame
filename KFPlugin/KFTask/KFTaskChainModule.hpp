@@ -12,6 +12,7 @@
 #include "KFTaskInterface.h"
 #include "KFTaskChainInterface.h"
 #include "KFKernel/KFKernelInterface.h"
+#include "KFMessage/KFMessageInterface.h"
 #include "KFPlayer/KFPlayerInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFCondition/KFConditionInterface.h"

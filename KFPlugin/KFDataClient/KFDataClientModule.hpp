@@ -82,13 +82,13 @@ namespace KFrame
         uint32 CalcZoneId( uint64 playerid );
     protected:
         // 保存玩家
-        __KF_MESSAGE_FUNCTION__( HandleSavePlayerToGameAck );
+        __KF_MESSAGE_FUNCTION__( HandleSavePlayerToGameAck, KFMsg::S2SSavePlayerToGameAck );
 
         // 处理加载玩家数据
-        __KF_MESSAGE_FUNCTION__( HandleLoadPlayerToGameAck );
+        __KF_MESSAGE_FUNCTION__( HandleLoadPlayerToGameAck, KFMsg::S2SLoadPlayerToGameAck );
 
         // 查询玩家数据
-        __KF_MESSAGE_FUNCTION__( HandleQueryPlayerToGameAck );
+        __KF_MESSAGE_FUNCTION__( HandleQueryPlayerToGameAck, KFMsg::S2SQueryPlayerToGameAck );
 
 
     private:

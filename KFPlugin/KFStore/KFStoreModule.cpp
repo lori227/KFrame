@@ -6,7 +6,7 @@ namespace KFrame
     {
         _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
         //////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::MSG_STORE_BUY_GOODS_REQ, &KFStoreModule::HandleStoreBuyGoodsReq );
+        __REGISTER_MESSAGE__( KFStoreModule, KFMsg::MSG_STORE_BUY_GOODS_REQ, KFMsg::MsgStoreBuyGoodsReq, HandleStoreBuyGoodsReq );
     }
 
     void KFStoreModule::BeforeShut()
@@ -17,9 +17,9 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_MESSAGE_FUNCTION__( KFStoreModule::HandleStoreBuyGoodsReq )
+    __KF_MESSAGE_FUNCTION__( KFStoreModule::HandleStoreBuyGoodsReq, KFMsg::MsgStoreBuyGoodsReq )
     {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgStoreBuyGoodsReq );
+        __ROUTE_FIND_PLAYER__;
 
         auto kfsetting = KFStoreConfig::Instance()->FindSetting( kfmsg->storeid() );
         if ( kfsetting == nullptr )

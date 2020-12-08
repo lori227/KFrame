@@ -1,4 +1,5 @@
 ﻿#include "KFDirDatabaseModule.hpp"
+#include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {

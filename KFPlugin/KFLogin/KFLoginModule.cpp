@@ -8,8 +8,8 @@ namespace KFrame
         __REGISTER_TCP_CLIENT_CONNECTION__( &KFLoginModule::OnClientConnectionWorld );
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::S2S_LOGIN_TO_LOGIN_REQ, &KFLoginModule::HandleLoginToLoginReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_LOGIN_TO_LOGIN_ACK, &KFLoginModule::HandleLoginToLoginAck );
+        __REGISTER_MESSAGE__( KFLoginModule, KFMsg::S2S_LOGIN_TO_LOGIN_REQ, KFMsg::S2SLoginToLoginReq, HandleLoginToLoginReq );
+        __REGISTER_MESSAGE__( KFLoginModule, KFMsg::S2S_LOGIN_TO_LOGIN_ACK, KFMsg::S2SLoginToLoginAck, HandleLoginToLoginAck );
     }
 
     void KFLoginModule::BeforeShut()
@@ -65,11 +65,9 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_MESSAGE_FUNCTION__( KFLoginModule::HandleLoginToLoginReq )
+    __KF_MESSAGE_FUNCTION__( KFLoginModule::HandleLoginToLoginReq, KFMsg::S2SLoginToLoginReq )
     {
         auto gateid = __ROUTE_SERVER_ID__;
-        __PROTO_PARSE__( KFMsg::S2SLoginToLoginReq );
-
         auto kfsetting = KFZoneConfig::Instance()->FindSetting( KFGlobal::Instance()->_app_id->GetZoneId() );
         if ( kfsetting == nullptr )
         {
@@ -155,10 +153,8 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_MESSAGE_FUNCTION__( KFLoginModule::HandleLoginToLoginAck )
+    __KF_MESSAGE_FUNCTION__( KFLoginModule::HandleLoginToLoginAck, KFMsg::S2SLoginToLoginAck )
     {
-        __PROTO_PARSE__( KFMsg::S2SLoginToLoginAck );
-
         __LOG_DEBUG__( "player[{}] login result[{}] ack", kfmsg->accountid(), kfmsg->result() );
 
         // 通知客户端

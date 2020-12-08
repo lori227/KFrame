@@ -22,7 +22,7 @@ namespace KFrame
     {
     public:
         // 添加消息
-        void AddNetMessage( uint32 msgid, const char* data, uint32 length );
+        void AddNetMessage( uint32 msgid, const google::protobuf::Message* message );
 
         // 发送消息
         void SendNetMessage();
@@ -46,41 +46,41 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
     protected:
         // 转发消息到某类型所有服务器
-        __KF_MESSAGE_FUNCTION__( HandleRouteMessageToNameAllReq );
+        __KF_MESSAGE_FUNCTION__( HandleRouteMessageToNameAllReq, KFMsg::S2SRouteMessageToNameAllReq );
 
         // 转发消息到随机服务器
-        __KF_MESSAGE_FUNCTION__( HandleRouteMessageToNameRandReq );
+        __KF_MESSAGE_FUNCTION__( HandleRouteMessageToNameRandReq, KFMsg::S2SRouteMessageToNameRandReq );
 
         // 转发消息到负载最小服务器
-        __KF_MESSAGE_FUNCTION__( HandleRouteMessageToNameBalanceReq );
+        __KF_MESSAGE_FUNCTION__( HandleRouteMessageToNameBalanceReq, KFMsg::S2SRouteMessageToNameBalanceReq );
 
         // 转发消息到对象所在服务器
-        __KF_MESSAGE_FUNCTION__( HandleRouteMessageToNameObjectReq );
+        __KF_MESSAGE_FUNCTION__( HandleRouteMessageToNameObjectReq, KFMsg::S2SRouteMessageToNameObjectReq );
 
         // 转发消息到指定服务器
-        __KF_MESSAGE_FUNCTION__( HandleRouteMessageToServerReq );
+        __KF_MESSAGE_FUNCTION__( HandleRouteMessageToServerReq, KFMsg::S2SRouteMessageToServerReq );
 
         // 转发消息到指定玩家
-        __KF_MESSAGE_FUNCTION__( HandleRouteMessageToPlayerReq );
+        __KF_MESSAGE_FUNCTION__( HandleRouteMessageToPlayerReq, KFMsg::S2SRouteMessageToPlayerReq );
 
         // Route客户端丢失
-        __KF_MESSAGE_FUNCTION__( HandleRouteClientLostToShardReq );
+        __KF_MESSAGE_FUNCTION__( HandleRouteClientLostToShardReq, KFMsg::S2SRouteClientLostToShardReq );
 
         // 同步对象
-        __KF_MESSAGE_FUNCTION__( HandleRouteSyncObjectToShardReq );
+        __KF_MESSAGE_FUNCTION__( HandleRouteSyncObjectToShardReq, KFMsg::S2SRouteSyncObjectToShardReq );
 
         // 添加对象
-        __KF_MESSAGE_FUNCTION__( HandleRouteAddObjectToShardReq );
+        __KF_MESSAGE_FUNCTION__( HandleRouteAddObjectToShardReq, KFMsg::S2SRouteAddObjectToShardReq );
 
         // 删除对象
-        __KF_MESSAGE_FUNCTION__( HandleRouteRemoveObjectToShardReq );
+        __KF_MESSAGE_FUNCTION__( HandleRouteRemoveObjectToShardReq, KFMsg::S2SRouteRemoveObjectToShardReq );
 
     protected:
         // 转发消息
-        void SendRouteMessage( uint64 clientid, KFMsg::PBRoute* pbroute, uint32 msgid, const std::string& msgdata );
+        void SendRouteMessage( uint64 clientid, const KFMsg::PBRoute* pbroute, uint32 msgid, const std::string& msgdata );
 
         // 添加转发失败的消息
-        void AddRouteFailedMessage( const std::string& name, uint32 msgid, const char* data, uint32 length );
+        void AddRouteFailedMessage( const std::string& name, uint32 msgid, const google::protobuf::Message* message );
 
         // 发送转发失败的消息
         void SendRouteFailedMessage( const std::string& name );

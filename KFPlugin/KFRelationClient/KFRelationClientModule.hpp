@@ -53,38 +53,38 @@ namespace KFrame
 
     protected:
         // 查询好友回馈
-        __KF_MESSAGE_FUNCTION__( HandleQueryRelationToGameAck );
+        __KF_MESSAGE_FUNCTION__( HandleQueryRelationToGameAck, KFMsg::S2SQueryRelationToGameAck );
 
         // 查询好友申请回馈
-        __KF_MESSAGE_FUNCTION__( HandleQueryRelationInviteToGameAck );
+        __KF_MESSAGE_FUNCTION__( HandleQueryRelationInviteToGameAck, KFMsg::S2SQueryRelationInviteToGameAck );
 
         // 申请添加关系请求
-        __KF_MESSAGE_FUNCTION__( HandleAddRelationReq );
+        __KF_MESSAGE_FUNCTION__( HandleAddRelationReq, KFMsg::MsgAddRelationReq );
 
         // 删除关系请求
-        __KF_MESSAGE_FUNCTION__( HandleDelRelationReq );
+        __KF_MESSAGE_FUNCTION__( HandleDelRelationReq, KFMsg::MsgDelRelationReq );
 
         // 申请添加好友请求
-        __KF_MESSAGE_FUNCTION__( HandleApplyAddRelationToGameAck );
+        __KF_MESSAGE_FUNCTION__( HandleApplyAddRelationToGameAck, KFMsg::S2SApplyAddRelationToGameAck );
 
         // 删除好友回馈
-        __KF_MESSAGE_FUNCTION__( HandleDelRelationToGameAck );
+        __KF_MESSAGE_FUNCTION__( HandleDelRelationToGameAck, KFMsg::S2SDelRelationToGameAck );
 
         // 添加好友
-        __KF_MESSAGE_FUNCTION__( HandleAddRelationToGameAck );
+        __KF_MESSAGE_FUNCTION__( HandleAddRelationToGameAck, KFMsg::S2SAddRelationToGameAck );
 
         // 更新好友
-        __KF_MESSAGE_FUNCTION__( HandleUpdateIntValueToRelationReq );
-        __KF_MESSAGE_FUNCTION__( HandleUpdateStrValueToRelationReq );
+        __KF_MESSAGE_FUNCTION__( HandleUpdateIntValueToRelationReq, KFMsg::S2SUpdateIntValueToRelationReq );
+        __KF_MESSAGE_FUNCTION__( HandleUpdateStrValueToRelationReq, KFMsg::S2SUpdateStrValueToRelationReq );
 
         // 关系申请回复
-        __KF_MESSAGE_FUNCTION__( HandleReplyRelationInviteReq );
+        __KF_MESSAGE_FUNCTION__( HandleReplyRelationInviteReq, KFMsg::MsgReplyRelationInviteReq );
 
         // 拒绝好友申请设置
-        __KF_MESSAGE_FUNCTION__( HandleSetRefuseRelationInviteReq );
+        __KF_MESSAGE_FUNCTION__( HandleSetRefuseRelationInviteReq, KFMsg::MsgSetRefuseRelationInviteReq );
 
         // 更新好感度
-        __KF_MESSAGE_FUNCTION__( HandleUpdateFriendLinessToGameAck );
+        __KF_MESSAGE_FUNCTION__( HandleUpdateFriendLinessToGameAck, KFMsg::S2SUpdateFriendLinessToGameAck );
 
     private:
         // 上下限更新关系属性

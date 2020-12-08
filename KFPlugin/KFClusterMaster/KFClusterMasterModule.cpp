@@ -9,13 +9,13 @@ namespace KFrame
         __REGISTER_TCP_CLIENT_SHUTDOWN__( &KFClusterMasterModule::OnClientLostClusterMaster );
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_REGISTER_TO_MASTER_REQ, &KFClusterMasterModule::HandleClusterRegisterToMasterReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_SYNC_PROXY_TO_MASTER_REQ, &KFClusterMasterModule::HandleClusterSyncProxyToMasterReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_AUTH_TO_MASTER_REQ, &KFClusterMasterModule::HandleClusterAuthToMasterReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_LOST_PROXY_TO_MASTER_REQ, &KFClusterMasterModule::HandleClusterLostProxyToMasterReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_TOKEN_TO_MASTER_REQ, &KFClusterMasterModule::HandleClusterTokenToMasterReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_TOKEN_TO_PROXY_ACK, &KFClusterMasterModule::HandleClusterTokenToProxyAck );
-        __REGISTER_MESSAGE__( KFMsg::S2S_CLUSTER_TOKEN_TO_MASTER_ACK, &KFClusterMasterModule::HandleClusterTokenToMasterAck );
+        __REGISTER_MESSAGE__( KFClusterMasterModule, KFMsg::S2S_CLUSTER_REGISTER_TO_MASTER_REQ, KFMsg::S2SClusterRegisterToMasterReq, HandleClusterRegisterToMasterReq );
+        __REGISTER_MESSAGE__( KFClusterMasterModule, KFMsg::S2S_CLUSTER_SYNC_PROXY_TO_MASTER_REQ, KFMsg::S2SClusterSyncProxyToMasterReq, HandleClusterSyncProxyToMasterReq );
+        __REGISTER_MESSAGE__( KFClusterMasterModule, KFMsg::S2S_CLUSTER_AUTH_TO_MASTER_REQ, KFMsg::S2SClusterAuthToMasterReq, HandleClusterAuthToMasterReq );
+        __REGISTER_MESSAGE__( KFClusterMasterModule, KFMsg::S2S_CLUSTER_LOST_PROXY_TO_MASTER_REQ, KFMsg::S2SClusterLostProxyToMasterReq, HandleClusterLostProxyToMasterReq );
+        __REGISTER_MESSAGE__( KFClusterMasterModule, KFMsg::S2S_CLUSTER_TOKEN_TO_MASTER_REQ, KFMsg::S2SClusterTokenToMasterReq, HandleClusterTokenToMasterReq );
+        __REGISTER_MESSAGE__( KFClusterMasterModule, KFMsg::S2S_CLUSTER_TOKEN_TO_PROXY_ACK, KFMsg::S2SClusterTokenToProxyAck, HandleClusterTokenToProxyAck  );
+        __REGISTER_MESSAGE__( KFClusterMasterModule, KFMsg::S2S_CLUSTER_TOKEN_TO_MASTER_ACK, KFMsg::S2SClusterTokenToMasterAck, HandleClusterTokenToMasterAck );
     }
 
     void KFClusterMasterModule::BeforeShut()
@@ -103,18 +103,14 @@ namespace KFrame
         __LOG_ERROR__( "[{}|{}:{}] lost", netdata->_name, netdata->_type, netdata->_str_id );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFClusterMasterModule::HandleClusterLostProxyToMasterReq )
+    __KF_MESSAGE_FUNCTION__( KFClusterMasterModule::HandleClusterLostProxyToMasterReq, KFMsg::S2SClusterLostProxyToMasterReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SClusterLostProxyToMasterReq );
-
         _kf_proxy_list.Remove( kfmsg->proxyid() );
         _proxy_hash.RemoveHashNode( kfmsg->proxyid() );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFClusterMasterModule::HandleClusterRegisterToMasterReq )
+    __KF_MESSAGE_FUNCTION__( KFClusterMasterModule::HandleClusterRegisterToMasterReq, KFMsg::S2SClusterRegisterToMasterReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SClusterRegisterToMasterReq );
-
         auto listen = &kfmsg->listen();
 
         auto kfproxy = _kf_proxy_list.Create( listen->appid() );
@@ -135,10 +131,8 @@ namespace KFrame
         __LOG_INFO__( "add cluster proxy[{}|{}:{}]", KFAppId::ToString( listen->appid() ), listen->ip(), listen->port() );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFClusterMasterModule::HandleClusterSyncProxyToMasterReq )
+    __KF_MESSAGE_FUNCTION__( KFClusterMasterModule::HandleClusterSyncProxyToMasterReq, KFMsg::S2SClusterSyncProxyToMasterReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SClusterSyncProxyToMasterReq );
-
         for ( auto i = 0; i < kfmsg->listen_size(); ++i )
         {
             auto listen = &kfmsg->listen( i );
@@ -191,10 +185,8 @@ namespace KFrame
         return token;
     }
 
-    __KF_MESSAGE_FUNCTION__( KFClusterMasterModule::HandleClusterAuthToMasterReq )
+    __KF_MESSAGE_FUNCTION__( KFClusterMasterModule::HandleClusterAuthToMasterReq, KFMsg::S2SClusterAuthToMasterReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SClusterAuthToMasterReq );
-
         auto strclientid = KFAppId::ToString( kfmsg->clientid() );
         __LOG_DEBUG__( "cluster client[{}] auth req", strclientid );
 
@@ -236,10 +228,8 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFClusterMasterModule::HandleClusterTokenToMasterReq )
+    __KF_MESSAGE_FUNCTION__( KFClusterMasterModule::HandleClusterTokenToMasterReq, KFMsg::S2SClusterTokenToMasterReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SClusterTokenToMasterReq );
-
         // Token发送给ProxyServer
         KFMsg::S2SClusterTokenToProxyReq req;
         req.set_token( kfmsg->token() );
@@ -249,10 +239,8 @@ namespace KFrame
         _kf_tcp_server->SendNetMessage( kfmsg->proxyid(), KFMsg::S2S_CLUSTER_TOKEN_TO_PROXY_REQ, &req );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFClusterMasterModule::HandleClusterTokenToProxyAck )
+    __KF_MESSAGE_FUNCTION__( KFClusterMasterModule::HandleClusterTokenToProxyAck, KFMsg::S2SClusterTokenToProxyAck )
     {
-        __PROTO_PARSE__( KFMsg::S2SClusterTokenToProxyAck );
-
         if ( kfmsg->masterid() == KFGlobal::Instance()->_app_id->GetId() )
         {
             auto token = FindToken( kfmsg->clientid() );
@@ -290,10 +278,8 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFClusterMasterModule::HandleClusterTokenToMasterAck )
+    __KF_MESSAGE_FUNCTION__( KFClusterMasterModule::HandleClusterTokenToMasterAck, KFMsg::S2SClusterTokenToMasterAck )
     {
-        __PROTO_PARSE__( KFMsg::S2SClusterTokenToMasterAck );
-
         auto token = FindToken( kfmsg->clientid() );
         if ( token != kfmsg->token() )
         {

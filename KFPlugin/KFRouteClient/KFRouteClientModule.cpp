@@ -6,9 +6,9 @@ namespace KFrame
     {
         _kf_cluster_client->RegisterConnectionFunction( this, &KFRouteClientModule::OnRouteConnectCluster );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::S2S_ROUTE_MESSAGE_OK, &KFRouteClientModule::HandleRouteMessageOk );
-        __REGISTER_MESSAGE__( KFMsg::S2S_ROUTE_DISCOVER_TO_CLIENT_REQ, &KFRouteClientModule::HandleRouteDiscoverToClientReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_ROUTE_MESSAGE_TO_CLIENT_ACK, &KFRouteClientModule::HandleRouteMessageToClientAck );
+        __REGISTER_MESSAGE__( KFRouteClientModule, KFMsg::S2S_ROUTE_MESSAGE_OK, KFMsg::S2SRouteMessageOk, HandleRouteMessageOk );
+        __REGISTER_MESSAGE__( KFRouteClientModule, KFMsg::S2S_ROUTE_DISCOVER_TO_CLIENT_REQ, KFMsg::S2SRouteDiscoverToClientReq, HandleRouteDiscoverToClientReq );
+        __REGISTER_MESSAGE__( KFRouteClientModule, KFMsg::S2S_ROUTE_MESSAGE_TO_CLIENT_ACK, KFMsg::S2SRouteMessageToClientAck, HandleRouteMessageToClientAck );
     }
 
     void KFRouteClientModule::BeforeShut()
@@ -152,10 +152,8 @@ namespace KFrame
         _kf_cluster_client->SendToProxy( KFMsg::S2S_ROUTE_REMOVE_OBJECT_TO_PROXY_REQ, &req );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRouteClientModule::HandleRouteDiscoverToClientReq )
+    __KF_MESSAGE_FUNCTION__( KFRouteClientModule::HandleRouteDiscoverToClientReq, KFMsg::S2SRouteDiscoverToClientReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SRouteDiscoverToClientReq )
-
         // 把所有对象列表同步到shard
         RouteSyncObjectToProxy( kfmsg->shardid() );
     }
@@ -444,10 +442,8 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_MESSAGE_FUNCTION__( KFRouteClientModule::HandleRouteMessageToClientAck )
+    __KF_MESSAGE_FUNCTION__( KFRouteClientModule::HandleRouteMessageToClientAck, KFMsg::S2SRouteMessageToClientAck )
     {
-        __PROTO_PARSE__( KFMsg::S2SRouteMessageToClientAck );
-
         auto pbroute = &kfmsg->pbroute();
         {
             // 回复转发消息成功
@@ -457,7 +453,7 @@ namespace KFrame
         auto msgdata = kfmsg->msgdata().data();
         auto msglength = static_cast< uint32 >( kfmsg->msgdata().length() );
         Route temproute( pbroute->serverid(), pbroute->sendid(), pbroute->recvid() );
-        bool ok = __CALL_MESSAGE__( temproute, kfmsg->msgid(), msgdata, msglength );
+        bool ok = __HANDLE_MESSAGE__( temproute, kfmsg->msgid(), msgdata, msglength );
         if ( ok )
         {
             return;
@@ -489,10 +485,8 @@ namespace KFrame
         SendToServer( serverid, KFMsg::S2S_ROUTE_MESSAGE_OK, &req );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRouteClientModule::HandleRouteMessageOk )
+    __KF_MESSAGE_FUNCTION__( KFRouteClientModule::HandleRouteMessageOk, KFMsg::S2SRouteMessageOk )
     {
-        __PROTO_PARSE__( KFMsg::S2SRouteMessageOk );
-
         _route_message_list.Remove( kfmsg->serial() );
     }
 

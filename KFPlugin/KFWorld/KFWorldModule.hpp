@@ -44,24 +44,24 @@ namespace KFrame
         __KF_TIMER_FUNCTION__( OnTimerZoneRegister );
     protected:
         // 添加Gate信息
-        __KF_MESSAGE_FUNCTION__( HandleAddGateToWorldReq );
+        __KF_MESSAGE_FUNCTION__( HandleAddGateToWorldReq, KFMsg::S2SAddGateToWorldReq );
 
         // 删除gate信息
-        __KF_MESSAGE_FUNCTION__( HandleRemoveGateToWorldReq );
+        __KF_MESSAGE_FUNCTION__( HandleRemoveGateToWorldReq, KFMsg::S2SRemoveGateToWorldReq );
 
         // 验证登录
-        __KF_MESSAGE_FUNCTION__( HandleLoginToWorldReq );
+        __KF_MESSAGE_FUNCTION__( HandleLoginToWorldReq, KFMsg::S2SLoginToWorldReq );
 
         // 玩家进入游戏
-        __KF_MESSAGE_FUNCTION__( HandlePlayerEnterToWorldReq );
+        __KF_MESSAGE_FUNCTION__( HandlePlayerEnterToWorldReq, KFMsg::S2SPlayerEnterToWorldReq );
 
         // 玩家离开游戏
-        __KF_MESSAGE_FUNCTION__( HandlePlayerLeaveToWorldReq );
+        __KF_MESSAGE_FUNCTION__( HandlePlayerLeaveToWorldReq, KFMsg::S2SPlayerLeaveToWorldReq );
 
         // 广播消息
-        __KF_MESSAGE_FUNCTION__( HandleBroadcastToGameReq );
-        __KF_MESSAGE_FUNCTION__( HandleBroadcastToWorldReq );
-        __KF_MESSAGE_FUNCTION__( HandleBroadcastToWorldAck );
+        __KF_MESSAGE_FUNCTION__( HandleBroadcastToGameReq, KFMsg::S2SBroadcastToGameReq );
+        __KF_MESSAGE_FUNCTION__( HandleBroadcastToWorldReq, KFMsg::S2SBroadcastToWorldReq );
+        __KF_MESSAGE_FUNCTION__( HandleBroadcastToWorldAck, KFMsg::S2SBroadcastToWorldAck );
 
     protected:
         // 发送验证结果消息

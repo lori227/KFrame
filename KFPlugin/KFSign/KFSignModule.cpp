@@ -15,7 +15,7 @@ namespace KFrame
     {
         __REGISTER_RESET__( __STRING__( sign ), &KFSignModule::OnResetSigninData );
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::MSG_SEVEN_SIGN_REWARD_REQ, &KFSignModule::HandleReceiveSevenRewardReq );
+        __REGISTER_MESSAGE__( KFSignModule, KFMsg::MSG_SEVEN_SIGN_REWARD_REQ, KFMsg::MsgSevenSignRewardReq, HandleReceiveSevenRewardReq );
     }
 
     void KFSignModule::ShutDown()
@@ -25,9 +25,9 @@ namespace KFrame
         __UN_MESSAGE__( KFMsg::MSG_SEVEN_SIGN_REWARD_REQ );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFSignModule::HandleReceiveSevenRewardReq )
+    __KF_MESSAGE_FUNCTION__( KFSignModule::HandleReceiveSevenRewardReq, KFMsg::MsgSevenSignRewardReq )
     {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgSevenSignRewardReq );
+        __ROUTE_FIND_PLAYER__;
 
         auto day = player->Get< uint32 >( __STRING__( sevenday ) );
         if ( day < kfmsg->day() )

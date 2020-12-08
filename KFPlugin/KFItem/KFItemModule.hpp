@@ -64,13 +64,13 @@ namespace KFrame
         virtual KFData* FindItemBag( KFEntity* player, KFData* kfitem );
     protected:
         // 删除道具
-        __KF_MESSAGE_FUNCTION__( HandleRemoveItemReq );
+        __KF_MESSAGE_FUNCTION__( HandleRemoveItemReq, KFMsg::MsgRemoveItemReq );
 
         // 删除道具数量
-        __KF_MESSAGE_FUNCTION__( HandleRemoveItemCountReq );
+        __KF_MESSAGE_FUNCTION__( HandleRemoveItemCountReq, KFMsg::MsgRemoveItemCountReq );
 
         // 出售道具
-        __KF_MESSAGE_FUNCTION__( HandleSellItemReq );
+        __KF_MESSAGE_FUNCTION__( HandleSellItemReq, KFMsg::MsgSellItemReq );
 
     protected:
         // 获得道具数量

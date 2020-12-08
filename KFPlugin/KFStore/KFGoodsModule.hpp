@@ -10,8 +10,9 @@
 ************************************************************************/
 
 #include "KFGoodsInterface.h"
-#include "KFKernel/KFKernelInterface.h"
 #include "KFReset/KFResetInterface.h"
+#include "KFKernel/KFKernelInterface.h"
+#include "KFMessage/KFMessageInterface.h"
 #include "KFDisplay/KFDisplayInterface.h"
 #include "KFConfig/KFGoodsConfig.hpp"
 

@@ -56,19 +56,19 @@ namespace KFrame
 
     protected:
         // 通知rank worker
-        __KF_MESSAGE_FUNCTION__( HandleNoticeRankWorkerReq );
+        __KF_MESSAGE_FUNCTION__( HandleNoticeRankWorkerReq, KFMsg::S2SNoticeRankWorkerReq );
 
         // 刷新排行榜
-        __KF_MESSAGE_FUNCTION__( HandleSyncRefreshRank );
+        __KF_MESSAGE_FUNCTION__( HandleSyncRefreshRank, KFMsg::S2SSyncRefreshRank );
 
         // 更新排行榜
-        __KF_MESSAGE_FUNCTION__( HandleUpdateRankDataReq );
+        __KF_MESSAGE_FUNCTION__( HandleUpdateRankDataReq, KFMsg::S2SUpdateRankDataReq );
 
         // 查询全服排行榜数据
-        __KF_MESSAGE_FUNCTION__( HandleQueryRanklistReq );
+        __KF_MESSAGE_FUNCTION__( HandleQueryRanklistReq, KFMsg::S2SQueryRankListReq );
 
         // 查询好友排行榜数据
-        __KF_MESSAGE_FUNCTION__( HandleQueryFriendRanklistReq );
+        __KF_MESSAGE_FUNCTION__( HandleQueryFriendRanklistReq, KFMsg::S2SQueryFriendRankListReq );
 
     protected:
         // 连接成功

@@ -59,19 +59,19 @@ namespace KFrame
 
     protected:
         // 注册proxy
-        __KF_MESSAGE_FUNCTION__( HandleClusterRegisterToMasterReq );
-        __KF_MESSAGE_FUNCTION__( HandleClusterSyncProxyToMasterReq );
+        __KF_MESSAGE_FUNCTION__( HandleClusterRegisterToMasterReq, KFMsg::S2SClusterRegisterToMasterReq );
+        __KF_MESSAGE_FUNCTION__( HandleClusterSyncProxyToMasterReq, KFMsg::S2SClusterSyncProxyToMasterReq );
 
         // 登录认证
-        __KF_MESSAGE_FUNCTION__( HandleClusterAuthToMasterReq );
+        __KF_MESSAGE_FUNCTION__( HandleClusterAuthToMasterReq, KFMsg::S2SClusterAuthToMasterReq );
 
         // 丢失proxy
-        __KF_MESSAGE_FUNCTION__( HandleClusterLostProxyToMasterReq );
+        __KF_MESSAGE_FUNCTION__( HandleClusterLostProxyToMasterReq, KFMsg::S2SClusterLostProxyToMasterReq );
 
         // token
-        __KF_MESSAGE_FUNCTION__( HandleClusterTokenToMasterReq );
-        __KF_MESSAGE_FUNCTION__( HandleClusterTokenToProxyAck );
-        __KF_MESSAGE_FUNCTION__( HandleClusterTokenToMasterAck );
+        __KF_MESSAGE_FUNCTION__( HandleClusterTokenToMasterReq, KFMsg::S2SClusterTokenToMasterReq );
+        __KF_MESSAGE_FUNCTION__( HandleClusterTokenToProxyAck, KFMsg::S2SClusterTokenToProxyAck );
+        __KF_MESSAGE_FUNCTION__( HandleClusterTokenToMasterAck, KFMsg::S2SClusterTokenToMasterAck );
 
     protected:
         // 连接Mster

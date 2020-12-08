@@ -24,16 +24,15 @@ namespace KFrame
         __REGISTER_DEPLOY_FUNCTION__( __STRING__( shutdown ), &KFGameModule::OnDeployShutDownServer );
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::S2S_LOGIN_TO_GAME_REQ, &KFGameModule::HandleLoginToGameReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_KICK_PLAYER_TO_GAME_REQ, &KFGameModule::HandleKickPlayerToGameReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_RELOGIN_TO_GAME_REQ, &KFGameModule::HandleReLoginToGameReq );
-
-        __REGISTER_MESSAGE__( KFMsg::S2S_CONNECT_TO_GAME_REQ, &KFGameModule::HandleConnectToGameReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_DISCONNECT_TO_GAME_REQ, &KFGameModule::HandleDisconnectToGameReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_LEAVE_TO_GAME_REQ, &KFGameModule::HandleLeaveToGameReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_LOGOUT_TO_GAME_REQ, &KFGameModule::HandleLogoutToGameReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_BROADCAST_TO_GAME_ACK, &KFGameModule::HandleBroadcastToGameAck );
-        __REGISTER_MESSAGE__( KFMsg::MSG_QUERY_PLAYER_REQ, &KFGameModule::HandleQueryPlayerReq );
+        __REGISTER_MESSAGE__( KFGameModule, KFMsg::S2S_LOGIN_TO_GAME_REQ, KFMsg::S2SLoginToGameReq, HandleLoginToGameReq );
+        __REGISTER_MESSAGE__( KFGameModule, KFMsg::S2S_RELOGIN_TO_GAME_REQ, KFMsg::S2SReLoginToGameReq, HandleReLoginToGameReq );
+        __REGISTER_MESSAGE__( KFGameModule, KFMsg::S2S_CONNECT_TO_GAME_REQ, KFMsg::S2SConnectToGameReq, HandleConnectToGameReq );
+        __REGISTER_MESSAGE__( KFGameModule, KFMsg::S2S_DISCONNECT_TO_GAME_REQ, KFMsg::S2SDisconnectToGameReq, HandleDisconnectToGameReq );
+        __REGISTER_MESSAGE__( KFGameModule, KFMsg::S2S_LEAVE_TO_GAME_REQ, KFMsg::S2SLeaveToGameReq,  HandleLeaveToGameReq );
+        __REGISTER_MESSAGE__( KFGameModule, KFMsg::S2S_LOGOUT_TO_GAME_REQ, KFMsg::S2SLogoutToGameReq, HandleLogoutToGameReq );
+        __REGISTER_MESSAGE__( KFGameModule, KFMsg::S2S_BROADCAST_TO_GAME_ACK, KFMsg::S2SBroadcastToGameAck, HandleBroadcastToGameAck );
+        __REGISTER_MESSAGE__( KFGameModule, KFMsg::MSG_QUERY_PLAYER_REQ, KFMsg::MsgQueryPlayerReq, HandleQueryPlayerReq );
+        __REGISTER_MESSAGE__( KFGameModule, KFMsg::S2S_KICK_PLAYER_TO_GAME_REQ, KFMsg::S2SKickPlayerToGameReq, HandleKickPlayerToGameReq );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
@@ -277,10 +276,8 @@ namespace KFrame
         SendToWorld( KFMsg::S2S_BROADCAST_TO_WORLD_REQ, &req );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFGameModule::HandleBroadcastToGameAck )
+    __KF_MESSAGE_FUNCTION__( KFGameModule::HandleBroadcastToGameAck, KFMsg::S2SBroadcastToGameAck )
     {
-        __PROTO_PARSE__( KFMsg::S2SBroadcastToGameAck );
-
         KFMsg::S2SBroadcastToGateReq req;
         req.set_msgid( kfmsg->msgid() );
         req.set_msgdata( kfmsg->msgdata() );
@@ -308,10 +305,8 @@ namespace KFrame
         SendToWorld( KFMsg::S2S_PLAYER_LEAVE_TO_WORLD_REQ, &req );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFGameModule::HandleLoginToGameReq )
+    __KF_MESSAGE_FUNCTION__( KFGameModule::HandleLoginToGameReq, KFMsg::S2SLoginToGameReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SLoginToGameReq );
-
         auto pblogin = &kfmsg->pblogin();
         __LOG_DEBUG__( "player[{}:{}:{}] login game req", pblogin->account(), pblogin->accountid(), pblogin->playerid() );
 
@@ -387,10 +382,8 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFGameModule::HandleReLoginToGameReq )
+    __KF_MESSAGE_FUNCTION__( KFGameModule::HandleReLoginToGameReq, KFMsg::S2SReLoginToGameReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SReLoginToGameReq );
-
         auto player = _kf_player->ReLogin( kfmsg->playerid(), __ROUTE_RECV_ID__ );
         if ( player != nullptr )
         {
@@ -426,10 +419,8 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFGameModule::HandleConnectToGameReq )
+    __KF_MESSAGE_FUNCTION__( KFGameModule::HandleConnectToGameReq, KFMsg::S2SConnectToGameReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SConnectToGameReq );
-
         for ( auto i = 0; i < kfmsg->pblogin_size(); ++i )
         {
             auto pblogin = &kfmsg->pblogin( i );
@@ -441,33 +432,23 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFGameModule::HandleDisconnectToGameReq )
+    __KF_MESSAGE_FUNCTION__( KFGameModule::HandleDisconnectToGameReq, KFMsg::S2SDisconnectToGameReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SDisconnectToGameReq );
-
-        auto player = _kf_player->FindPlayer( kfmsg->playerid() );
-        if ( player == nullptr )
-        {
-            return;
-        }
-
+        __SERVER_FIND_PLAYER__;
         __LOG_INFO__( "player=[{}] disconnect", kfmsg->playerid() );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFGameModule::HandleLeaveToGameReq )
+    __KF_MESSAGE_FUNCTION__( KFGameModule::HandleLeaveToGameReq, KFMsg::S2SLeaveToGameReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SLeaveToGameReq );
-
         __LOG_DEBUG__( "player[{}] lost", kfmsg->playerid() );
 
         _kf_player->RemovePlayer( kfmsg->playerid() );
         _kf_data_client->RemoveLoadData( kfmsg->playerid() );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFGameModule::HandleLogoutToGameReq )
+    __KF_MESSAGE_FUNCTION__( KFGameModule::HandleLogoutToGameReq, KFMsg::S2SLogoutToGameReq )
     {
-        __SERVER_PROTO_PARSE__( KFMsg::S2SLogoutToGameReq );
-
+        __SERVER_FIND_PLAYER__;
         __LOG_DEBUG__( "player[{}] logout", kfmsg->playerid() );
 
         // 设置不在线, 后续不发送消息
@@ -477,10 +458,8 @@ namespace KFrame
         _kf_player->RemovePlayer( kfmsg->playerid() );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFGameModule::HandleKickPlayerToGameReq )
+    __KF_MESSAGE_FUNCTION__( KFGameModule::HandleKickPlayerToGameReq, KFMsg::S2SKickPlayerToGameReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SKickPlayerToGameReq );
-
         KickPlayer( kfmsg->playerid(), kfmsg->type(), __FUNC_LINE__ );
     }
 
@@ -506,10 +485,9 @@ namespace KFrame
         return true;
     }
 
-    __KF_MESSAGE_FUNCTION__( KFGameModule::HandleQueryPlayerReq )
+    __KF_MESSAGE_FUNCTION__( KFGameModule::HandleQueryPlayerReq, KFMsg::MsgQueryPlayerReq )
     {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgQueryPlayerReq );
-
+        __ROUTE_FIND_PLAYER__;
         // 不能查询自己的数据，客户端本地可以获取到
         if ( playerid == kfmsg->playerid() )
         {

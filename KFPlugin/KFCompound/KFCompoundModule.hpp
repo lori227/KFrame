@@ -31,7 +31,7 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
     protected:
         // 请求合成
-        __KF_MESSAGE_FUNCTION__( HandleCompoundReq );
+        __KF_MESSAGE_FUNCTION__( HandleCompoundReq, KFMsg::MsgCompoundReq );
     };
 }
 

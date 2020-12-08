@@ -49,9 +49,9 @@ namespace KFrame
         __REGISTER_PLAYER_ENTER__( &KFItemModule::OnEnterItemModule );
         __REGISTER_PLAYER_LEAVE__( &KFItemModule::OnLeaveItemModule );
         ///////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::MSG_REMOVE_ITEM_REQ, &KFItemModule::HandleRemoveItemReq );
-        __REGISTER_MESSAGE__( KFMsg::MSG_REMOVE_ITEM_COUNT_REQ, &KFItemModule::HandleRemoveItemCountReq );
-        __REGISTER_MESSAGE__( KFMsg::MSG_SELL_ITEM_REQ, &KFItemModule::HandleSellItemReq );
+        __REGISTER_MESSAGE__( KFItemModule, KFMsg::MSG_REMOVE_ITEM_REQ, KFMsg::MsgRemoveItemReq, HandleRemoveItemReq );
+        __REGISTER_MESSAGE__( KFItemModule, KFMsg::MSG_REMOVE_ITEM_COUNT_REQ, KFMsg::MsgRemoveItemCountReq, HandleRemoveItemCountReq );
+        __REGISTER_MESSAGE__( KFItemModule, KFMsg::MSG_SELL_ITEM_REQ, KFMsg::MsgSellItemReq, HandleSellItemReq );
     }
 
     void KFItemModule::BeforeShut()
@@ -93,11 +93,11 @@ namespace KFrame
         }
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_MESSAGE_FUNCTION__( KFItemModule::HandleRemoveItemReq )
+    __KF_MESSAGE_FUNCTION__( KFItemModule::HandleRemoveItemReq, KFMsg::MsgRemoveItemReq )
     {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgRemoveItemReq );
-
+        __ROUTE_FIND_PLAYER__;
         __LOG_INFO__( "player=[{}] remove item=[{}:{}]", playerid, kfmsg->sourcename(), kfmsg->uuid() );
+
         if ( kfmsg->uuid() == 0u )
         {
             player->ClearRecord( kfmsg->sourcename() );
@@ -108,10 +108,9 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFItemModule::HandleRemoveItemCountReq )
+    __KF_MESSAGE_FUNCTION__( KFItemModule::HandleRemoveItemCountReq, KFMsg::MsgRemoveItemCountReq )
     {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgRemoveItemCountReq );
-
+        __ROUTE_FIND_PLAYER__;
         __LOG_INFO__( "player=[{}] remove itemcount=[{}:{}]", playerid, kfmsg->itemid(), kfmsg->count() );
 
         auto kfitemrecord = FindItemBag( player, kfmsg->itemid() );
@@ -926,9 +925,9 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_MESSAGE_FUNCTION__( KFItemModule::HandleSellItemReq )
+    __KF_MESSAGE_FUNCTION__( KFItemModule::HandleSellItemReq, KFMsg::MsgSellItemReq )
     {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgSellItemReq );
+        __ROUTE_FIND_PLAYER__;
 
         auto kfitembag = player->Find( kfmsg->name() );
         auto kfitem = kfitembag->Find( kfmsg->uuid() );

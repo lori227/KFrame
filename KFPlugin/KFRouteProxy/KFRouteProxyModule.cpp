@@ -8,11 +8,11 @@ namespace KFrame
         __REGISTER_TCP_CLIENT_CONNECTION__( &KFRouteProxyModule::OnClientConnectServer );
 
         //////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::S2S_ROUTE_SYNC_OBJECT_TO_PROXY_REQ, &KFRouteProxyModule::HandleRouteSyncObjectToProxyReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_ROUTE_ADD_OBJECT_TO_PROXY_REQ, &KFRouteProxyModule::HandleRouteAddObjectToProxyReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_ROUTE_REMOVE_OBJECT_TO_PROXY_REQ, &KFRouteProxyModule::HandleRouteRemoveObjectToProxyReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_ROUTE_MESSAGE_TO_SERVER_REQ, &KFRouteProxyModule::HandleRouteMessageToServerReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_ROUTE_MESSAGE_TO_PLAYER_REQ, &KFRouteProxyModule::HandleRouteMessageToPlayerReq );
+        __REGISTER_MESSAGE__( KFRouteProxyModule, KFMsg::S2S_ROUTE_SYNC_OBJECT_TO_PROXY_REQ, KFMsg::S2SRouteSyncObjectToProxyReq, HandleRouteSyncObjectToProxyReq );
+        __REGISTER_MESSAGE__( KFRouteProxyModule, KFMsg::S2S_ROUTE_ADD_OBJECT_TO_PROXY_REQ, KFMsg::S2SRouteAddObjectToProxyReq, HandleRouteAddObjectToProxyReq );
+        __REGISTER_MESSAGE__( KFRouteProxyModule, KFMsg::S2S_ROUTE_REMOVE_OBJECT_TO_PROXY_REQ, KFMsg::S2SRouteRemoveObjectToProxyReq, HandleRouteRemoveObjectToProxyReq );
+        __REGISTER_MESSAGE__( KFRouteProxyModule, KFMsg::S2S_ROUTE_MESSAGE_TO_SERVER_REQ, KFMsg::S2SRouteMessageToServerReq, HandleRouteMessageToServerReq );
+        __REGISTER_MESSAGE__( KFRouteProxyModule, KFMsg::S2S_ROUTE_MESSAGE_TO_PLAYER_REQ, KFMsg::S2SRouteMessageToPlayerReq, HandleRouteMessageToPlayerReq );
     }
 
     void KFRouteProxyModule::BeforeShut()
@@ -50,10 +50,8 @@ namespace KFrame
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_MESSAGE_FUNCTION__( KFRouteProxyModule::HandleRouteSyncObjectToProxyReq )
+    __KF_MESSAGE_FUNCTION__( KFRouteProxyModule::HandleRouteSyncObjectToProxyReq, KFMsg::S2SRouteSyncObjectToProxyReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SRouteSyncObjectToProxyReq );
-
         KFMsg::S2SRouteSyncObjectToShardReq req;
         req.set_name( kfmsg->name() );
         req.set_clientid( kfmsg->clientid() );
@@ -69,10 +67,8 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRouteProxyModule::HandleRouteAddObjectToProxyReq )
+    __KF_MESSAGE_FUNCTION__( KFRouteProxyModule::HandleRouteAddObjectToProxyReq, KFMsg::S2SRouteAddObjectToProxyReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SRouteAddObjectToProxyReq );
-
         KFMsg::S2SRouteAddObjectToShardReq req;
         req.set_name( kfmsg->name() );
         req.set_clientid( kfmsg->clientid() );
@@ -81,10 +77,8 @@ namespace KFrame
         _kf_tcp_client->SendMessageToType( __STRING__( shard ), KFMsg::S2S_ROUTE_ADD_OBJECT_TO_SHARD_REQ, &req );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRouteProxyModule::HandleRouteRemoveObjectToProxyReq )
+    __KF_MESSAGE_FUNCTION__( KFRouteProxyModule::HandleRouteRemoveObjectToProxyReq, KFMsg::S2SRouteRemoveObjectToProxyReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SRouteRemoveObjectToProxyReq );
-
         KFMsg::S2SRouteRemoveObjectToShardReq req;
         req.set_name( kfmsg->name() );
         req.set_clientid( kfmsg->clientid() );
@@ -93,12 +87,10 @@ namespace KFrame
         _kf_tcp_client->SendMessageToType( __STRING__( shard ), KFMsg::S2S_ROUTE_REMOVE_OBJECT_TO_SHARD_REQ, &req );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRouteProxyModule::HandleRouteMessageToServerReq )
+    __KF_MESSAGE_FUNCTION__( KFRouteProxyModule::HandleRouteMessageToServerReq, KFMsg::S2SRouteMessageToServerReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SRouteMessageToServerReq );
-        auto pbroute = kfmsg->mutable_pbroute();
-
         // 判断是否在本服务器上
+        auto pbroute = &kfmsg->pbroute();
         bool havehandle = _kf_tcp_server->HaveHandle( kfmsg->targetid() );
         if ( havehandle )
         {
@@ -110,14 +102,12 @@ namespace KFrame
         }
         else
         {
-            _kf_cluster_proxy->TranspondToShard( route, KFMsg::S2S_ROUTE_MESSAGE_TO_SERVER_REQ, data, length );
+            _kf_cluster_proxy->TranspondToShard( route, KFMsg::S2S_ROUTE_MESSAGE_TO_SERVER_REQ, kfmsg );
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRouteProxyModule::HandleRouteMessageToPlayerReq )
+    __KF_MESSAGE_FUNCTION__( KFRouteProxyModule::HandleRouteMessageToPlayerReq, KFMsg::S2SRouteMessageToPlayerReq )
     {
-        __PROTO_PARSE__( KFMsg::S2SRouteMessageToPlayerReq );
-
         // 判断是否在本服务器上
         bool havehandle = _kf_tcp_server->HaveHandle( kfmsg->targetid() );
         if ( havehandle )
@@ -130,7 +120,7 @@ namespace KFrame
         }
         else
         {
-            _kf_cluster_proxy->TranspondToShard( route, KFMsg::S2S_ROUTE_MESSAGE_TO_PLAYER_REQ, data, length );
+            _kf_cluster_proxy->TranspondToShard( route, KFMsg::S2S_ROUTE_MESSAGE_TO_PLAYER_REQ, kfmsg );
         }
     }
 }

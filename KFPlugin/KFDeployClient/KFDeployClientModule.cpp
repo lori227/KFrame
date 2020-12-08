@@ -235,7 +235,7 @@ namespace KFrame
         KFUtility::SplitList( messagelist, strvalue, __SPLIT_STRING__ );
         for ( auto messageid : messagelist )
         {
-            _kf_message->OpenHandle( messageid, true );
+            _kf_message->OpenFunction( messageid, true );
         }
     }
 
@@ -246,7 +246,7 @@ namespace KFrame
         KFUtility::SplitList( messagelist, strvalue, __SPLIT_STRING__ );
         for ( auto messageid : messagelist )
         {
-            _kf_message->OpenHandle( messageid, false );
+            _kf_message->OpenFunction( messageid, false );
         }
     }
 

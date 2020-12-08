@@ -35,14 +35,14 @@ namespace KFrame
         __REGISTER_COMMAND_FUNCTION__( __STRING__( deldata ), &KFPlayerModule::OnCommandDelData );
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::MSG_REMOVE_DATA_REQ, &KFPlayerModule::HandleRemoveDataReq );
-        __REGISTER_MESSAGE__( KFMsg::MSG_REQUEST_SYNC_REQ, &KFPlayerModule::HandleRequestSyncReq );
-        __REGISTER_MESSAGE__( KFMsg::MSG_CANCEL_SYNC_REQ, &KFPlayerModule::HandleCancelSyncReq );
-        __REGISTER_MESSAGE__( KFMsg::MSG_UPDATE_INT_REQ, &KFPlayerModule::HandleUpdateIntReq );
-        __REGISTER_MESSAGE__( KFMsg::MSG_UPDATE_STR_REQ, &KFPlayerModule::HandleUpdateStrReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_SYNC_UPDATE_DATA_FROM_SERVER, &KFPlayerModule::HandleSyncUpdateDataFromServerReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_SYNC_ADD_DATA_FROM_SERVER, &KFPlayerModule::HandleSyncAddDataFromServerReq );
-        __REGISTER_MESSAGE__( KFMsg::S2S_SYNC_REMOVE_DATA_FROM_SERVER, &KFPlayerModule::HandleSyncRemoveDataFromServerReq );
+        __REGISTER_MESSAGE__( KFPlayerModule, KFMsg::MSG_REMOVE_DATA_REQ, KFMsg::MsgRemoveDataReq, HandleRemoveDataReq );
+        __REGISTER_MESSAGE__( KFPlayerModule, KFMsg::MSG_REQUEST_SYNC_REQ, KFMsg::MsgRequestSyncReq, HandleRequestSyncReq );
+        __REGISTER_MESSAGE__( KFPlayerModule, KFMsg::MSG_CANCEL_SYNC_REQ, KFMsg::MsgCancelSyncReq, HandleCancelSyncReq );
+        __REGISTER_MESSAGE__( KFPlayerModule, KFMsg::MSG_UPDATE_INT_REQ, KFMsg::MsgUpdateIntReq, HandleUpdateIntReq );
+        __REGISTER_MESSAGE__( KFPlayerModule, KFMsg::MSG_UPDATE_STR_REQ, KFMsg::MsgUpdateStrReq, HandleUpdateStrReq );
+        __REGISTER_MESSAGE__( KFPlayerModule, KFMsg::S2S_SYNC_UPDATE_DATA_FROM_SERVER, KFMsg::S2SSyncUpdateDataFromServer, HandleSyncUpdateDataFromServerReq );
+        __REGISTER_MESSAGE__( KFPlayerModule, KFMsg::S2S_SYNC_ADD_DATA_FROM_SERVER, KFMsg::S2SSyncAddDataFromServer, HandleSyncAddDataFromServerReq );
+        __REGISTER_MESSAGE__( KFPlayerModule, KFMsg::S2S_SYNC_REMOVE_DATA_FROM_SERVER, KFMsg::S2SSyncRemoveDataFromServer, HandleSyncRemoveDataFromServerReq );
 
     }
 
@@ -583,17 +583,17 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleRemoveDataReq )
+    __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleRemoveDataReq, KFMsg::MsgRemoveDataReq )
     {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgRemoveDataReq );
+        __ROUTE_FIND_PLAYER__;
 
         player->RemoveRecord( kfmsg->dataname(), kfmsg->key() );
         __LOG_INFO__( "remove data[{}:{}] ok", kfmsg->dataname(), kfmsg->key() );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleRequestSyncReq )
+    __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleRequestSyncReq, KFMsg::MsgRequestSyncReq )
     {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgRequestSyncReq );
+        __ROUTE_FIND_PLAYER__;
 
         auto kfdata = player->Find( kfmsg->dataname() );
         if ( kfdata == nullptr )
@@ -615,9 +615,9 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleCancelSyncReq )
+    __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleCancelSyncReq, KFMsg::MsgCancelSyncReq )
     {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgCancelSyncReq );
+        __ROUTE_FIND_PLAYER__;
 
         auto kfdata = player->Find( kfmsg->dataname() );
         if ( kfdata == nullptr )
@@ -628,9 +628,9 @@ namespace KFrame
         kfdata->RemoveMask( KFDataDefine::DataMaskSync );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleUpdateIntReq )
+    __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleUpdateIntReq, KFMsg::MsgUpdateIntReq )
     {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgUpdateIntReq );
+        __ROUTE_FIND_PLAYER__;
 
         // 1级属性
         if ( kfmsg->parentname().empty() )
@@ -672,9 +672,9 @@ namespace KFrame
         player->UpdateRecord( kfparent, kfmsg->key(), kfmsg->dataname(), kfmsg->operate(), kfmsg->value() );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleUpdateStrReq )
+    __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleUpdateStrReq, KFMsg::MsgUpdateStrReq )
     {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgUpdateStrReq );
+        __ROUTE_FIND_PLAYER__;
 
         // 1级属性
         if ( kfmsg->parentname().empty() )
@@ -716,9 +716,10 @@ namespace KFrame
         player->UpdateRecord( kfmsg->parentname(), kfmsg->key(), kfmsg->dataname(), kfmsg->value() );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleSyncUpdateDataFromServerReq )
+    __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleSyncUpdateDataFromServerReq, KFMsg::S2SSyncUpdateDataFromServer )
     {
-        __ROUTE_PROTO_PARSE__( KFMsg::S2SSyncUpdateDataFromServer );
+        __ROUTE_FIND_PLAYER__;
+
         auto kfobject = player->Find( kfmsg->dataname() );
         if ( kfobject == nullptr )
         {
@@ -728,9 +729,10 @@ namespace KFrame
         player->SyncUpdateDataFromServer( kfobject, &kfmsg->pbdata() );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleSyncAddDataFromServerReq )
+    __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleSyncAddDataFromServerReq, KFMsg::S2SSyncAddDataFromServer )
     {
-        __ROUTE_PROTO_PARSE__( KFMsg::S2SSyncAddDataFromServer );
+        __ROUTE_FIND_PLAYER__;
+
         auto kfobject = player->Find( kfmsg->dataname() );
         if ( kfobject == nullptr )
         {
@@ -740,9 +742,10 @@ namespace KFrame
         player->SyncAddDataFromServer( kfobject, &kfmsg->pbdata() );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleSyncRemoveDataFromServerReq )
+    __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleSyncRemoveDataFromServerReq, KFMsg::S2SSyncRemoveDataFromServer )
     {
-        __ROUTE_PROTO_PARSE__( KFMsg::S2SSyncRemoveDataFromServer );
+        __ROUTE_FIND_PLAYER__;
+
         auto kfobject = player->Find( kfmsg->dataname() );
         if ( kfobject == nullptr )
         {

@@ -10,9 +10,9 @@ namespace KFrame
         __REGISTER_PLAYER_AFTER_ENTER__( &KFItemMoveModule::OnEnterItemMoveModule );
         __REGISTER_PLAYER_LEAVE__( &KFItemMoveModule::OnLeaveItemMoveModule );
         //////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::MSG_MOVE_ITEM_REQ, &KFItemMoveModule::HandleMoveItemReq );
-        __REGISTER_MESSAGE__( KFMsg::MSG_MOVE_ALL_ITEM_REQ, &KFItemMoveModule::HandleMoveAllItemReq );
-        __REGISTER_MESSAGE__( KFMsg::MSG_SORT_ITEM_REQ, &KFItemMoveModule::HandleSortItemReq );
+        __REGISTER_MESSAGE__( KFItemMoveModule, KFMsg::MSG_MOVE_ITEM_REQ, KFMsg::MsgMoveItemReq, HandleMoveItemReq );
+        __REGISTER_MESSAGE__( KFItemMoveModule, KFMsg::MSG_MOVE_ALL_ITEM_REQ, KFMsg::MsgMoveAllItemReq, HandleMoveAllItemReq );
+        __REGISTER_MESSAGE__( KFItemMoveModule, KFMsg::MSG_SORT_ITEM_REQ, KFMsg::MsgSortItemReq, HandleSortItemReq );
     }
 
     void KFItemMoveModule::AfterLoad()
@@ -765,9 +765,9 @@ namespace KFrame
         return false;
     }
 
-    __KF_MESSAGE_FUNCTION__( KFItemMoveModule::HandleMoveItemReq )
+    __KF_MESSAGE_FUNCTION__( KFItemMoveModule::HandleMoveItemReq, KFMsg::MsgMoveItemReq )
     {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgMoveItemReq );
+        __ROUTE_FIND_PLAYER__;
 
         uint32 result = KFMsg::Error;
         if ( kfmsg->sourcename() == kfmsg->targetname() )
@@ -893,9 +893,9 @@ namespace KFrame
         return KFMsg::Ok;
     }
 
-    __KF_MESSAGE_FUNCTION__( KFItemMoveModule::HandleMoveAllItemReq )
+    __KF_MESSAGE_FUNCTION__( KFItemMoveModule::HandleMoveAllItemReq, KFMsg::MsgMoveAllItemReq )
     {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgMoveAllItemReq );
+        __ROUTE_FIND_PLAYER__;
 
         auto kfsourcebagsetting = KFItemBagConfig::Instance()->FindSetting( kfmsg->sourcename() );
         auto kftargetbagsetting = KFItemBagConfig::Instance()->FindSetting( kfmsg->targetname() );
@@ -995,10 +995,9 @@ namespace KFrame
         return isfull ? KFMsg::ItemBagIsFull : KFMsg::Ok;
     }
 
-    __KF_MESSAGE_FUNCTION__( KFItemMoveModule::HandleSortItemReq )
+    __KF_MESSAGE_FUNCTION__( KFItemMoveModule::HandleSortItemReq, KFMsg::MsgSortItemReq )
     {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgSortItemReq );
-
+        __ROUTE_FIND_PLAYER__;
         SortItem( player, kfmsg->bagname(), kfmsg->tabname() );
     }
 

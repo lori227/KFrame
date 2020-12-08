@@ -38,13 +38,13 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
     protected:
         // 玩家登陆
-        __KF_MESSAGE_FUNCTION__( HandleLoadPlayerToDataReq );
+        __KF_MESSAGE_FUNCTION__( HandleLoadPlayerToDataReq, KFMsg::S2SLoadPlayerToDataReq );
 
         // 保存数据
-        __KF_MESSAGE_FUNCTION__( HandleSavePlayerToDataReq );
+        __KF_MESSAGE_FUNCTION__( HandleSavePlayerToDataReq, KFMsg::S2SSavePlayerToDataReq );
 
         // 查询玩家属性
-        __KF_MESSAGE_FUNCTION__( HandleQueryPlayerToDataReq );
+        __KF_MESSAGE_FUNCTION__( HandleQueryPlayerToDataReq, KFMsg::S2SQueryPlayerToDataReq );
 
     protected:
         // 加载数据

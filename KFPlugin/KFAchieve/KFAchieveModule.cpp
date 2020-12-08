@@ -12,7 +12,7 @@ namespace KFrame
 
         __REGISTER_PLAYER_ENTER__( &KFAchieveModule::OnEnterAchieveModule );
         //////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::MSG_ACHIEVE_REWARD_REQ, &KFAchieveModule::HandleAchieveRewardReq );
+        __REGISTER_MESSAGE__( KFAchieveModule, KFMsg::MSG_ACHIEVE_REWARD_REQ, KFMsg::MsgAchieveRewardReq, HandleAchieveRewardReq );
     }
 
     void KFAchieveModule::BeforeShut()
@@ -54,10 +54,9 @@ namespace KFrame
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_MESSAGE_FUNCTION__( KFAchieveModule::HandleAchieveRewardReq )
+    __KF_MESSAGE_FUNCTION__( KFAchieveModule::HandleAchieveRewardReq, KFMsg::MsgAchieveRewardReq )
     {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgAchieveRewardReq );
-
+        __ROUTE_FIND_PLAYER__;
         auto result = ReceiveAchieveReward( player, kfmsg->id() );
         _kf_display->SendToClient( player, result, kfmsg->id() );
     }

@@ -4,7 +4,7 @@ namespace KFrame
 {
     void KFCompoundModule::BeforeRun()
     {
-        __REGISTER_MESSAGE__( KFMsg::MSG_COMPOUND_REQ, &KFCompoundModule::HandleCompoundReq );
+        __REGISTER_MESSAGE__( KFCompoundModule, KFMsg::MSG_COMPOUND_REQ, KFMsg::MsgCompoundReq, HandleCompoundReq );
     }
 
     void KFCompoundModule::ShutDown()
@@ -13,9 +13,9 @@ namespace KFrame
         __UN_MESSAGE__( KFMsg::MSG_COMPOUND_REQ );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFCompoundModule::HandleCompoundReq )
+    __KF_MESSAGE_FUNCTION__( KFCompoundModule::HandleCompoundReq, KFMsg::MsgCompoundReq )
     {
-        __CLIENT_PROTO_PARSE__( KFMsg::MsgCompoundReq );
+        __ROUTE_FIND_PLAYER__;
 
         // 查找合成信息
         auto kfsetting = KFCompoundConfig::Instance()->FindSetting( kfmsg->id() );
