@@ -15,14 +15,14 @@ namespace KFrame
 
         __REGISTER_DEPLOY_FUNCTION__( __STRING__( shutdown ), &KFGateModule::OnDeployShutDownServer );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFGateModule, KFMsg::MSG_LOGIN_REQ, KFMsg::MsgLoginReq, HandleLoginReq );
-        __REGISTER_MESSAGE__( KFGateModule, KFMsg::MSG_LOGOUT_REQ, KFMsg::MsgLogoutReq, HandleLogoutReq );
-        __REGISTER_MESSAGE__( KFGateModule, KFMsg::S2S_LOGIN_TO_GATE_ACK, KFMsg::S2SLoginToGateAck, HandleLoginToGateAck );
-        __REGISTER_MESSAGE__( KFGateModule, KFMsg::S2S_RELOGIN_TO_GATE_ACK, KFMsg::S2SReLoginToGateAck, HandleReLoginToGateAck );
-        __REGISTER_MESSAGE__( KFGateModule, KFMsg::S2S_ENTER_TO_GATE_ACK, KFMsg::S2SEnterToGateAck, HandleEnterToGateAck );
-        __REGISTER_MESSAGE__( KFGateModule, KFMsg::S2S_KICK_PLAYER_TO_GATE_REQ, KFMsg::S2SKickPlayerToGateReq, HandleKickPlayerToGateReq );
-        __REGISTER_MESSAGE__( KFGateModule, KFMsg::S2S_BROADCAST_TO_GATE_REQ, KFMsg::S2SBroadcastToGateReq, HandleBroadcastToGateReq );
-        __REGISTER_MESSAGE__( KFGateModule, KFMsg::S2S_BROADCAST_TO_SERVER_REQ, KFMsg::S2SBroadcastToServerReq, HandleBroadcastToServerReq );
+        __REGISTER_MESSAGE__( KFGateModule, KFMessageEnum::Normal, KFMsg::MSG_LOGIN_REQ, KFMsg::MsgLoginReq, HandleLoginReq );
+        __REGISTER_MESSAGE__( KFGateModule, KFMessageEnum::Normal, KFMsg::MSG_LOGOUT_REQ, KFMsg::MsgLogoutReq, HandleLogoutReq );
+        __REGISTER_MESSAGE__( KFGateModule, KFMessageEnum::Normal, KFMsg::S2S_LOGIN_TO_GATE_ACK, KFMsg::S2SLoginToGateAck, HandleLoginToGateAck );
+        __REGISTER_MESSAGE__( KFGateModule, KFMessageEnum::Normal, KFMsg::S2S_RELOGIN_TO_GATE_ACK, KFMsg::S2SReLoginToGateAck, HandleReLoginToGateAck );
+        __REGISTER_MESSAGE__( KFGateModule, KFMessageEnum::Normal, KFMsg::S2S_ENTER_TO_GATE_ACK, KFMsg::S2SEnterToGateAck, HandleEnterToGateAck );
+        __REGISTER_MESSAGE__( KFGateModule, KFMessageEnum::Normal, KFMsg::S2S_KICK_PLAYER_TO_GATE_REQ, KFMsg::S2SKickPlayerToGateReq, HandleKickPlayerToGateReq );
+        __REGISTER_MESSAGE__( KFGateModule, KFMessageEnum::Normal, KFMsg::S2S_BROADCAST_TO_GATE_REQ, KFMsg::S2SBroadcastToGateReq, HandleBroadcastToGateReq );
+        __REGISTER_MESSAGE__( KFGateModule, KFMessageEnum::Normal, KFMsg::S2S_BROADCAST_TO_SERVER_REQ, KFMsg::S2SBroadcastToServerReq, HandleBroadcastToServerReq );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 

@@ -8,7 +8,7 @@ namespace KFrame
         auto databasetype = KFGlobal::Instance()->GetUInt32( __STRING__( basicdatabase ) );
         switch ( databasetype )
         {
-        case KFMsg::Mongo:
+        case KFDatabaseEnum::Mongo:
             _basic_database_logic = __NEW_OBJECT__( KFBasicDatabaseMongo );
             break;
         default:

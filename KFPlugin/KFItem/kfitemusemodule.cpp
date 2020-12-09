@@ -21,7 +21,7 @@ namespace KFrame
     void KFItemUseModule::BeforeRun()
     {
         ///////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFItemUseModule, KFMsg::MSG_USE_ITEM_REQ, KFMsg::MsgUseItemReq, HandleUseItemReq );
+        __REGISTER_MESSAGE__( KFItemUseModule, KFMessageEnum::Player, KFMsg::MSG_USE_ITEM_REQ, KFMsg::MsgUseItemReq, HandleUseItemReq );
     }
 
     void KFItemUseModule::BeforeShut()
@@ -67,47 +67,45 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFItemUseModule::HandleUseItemReq, KFMsg::MsgUseItemReq )
     {
-        __ROUTE_FIND_PLAYER__;
-
         // 判断是否有这个道具
-        auto kfitem = player->Find( kfmsg->name(), kfmsg->uuid() );
+        auto kfitem = kfentity->Find( kfmsg->name(), kfmsg->uuid() );
         if ( kfitem == nullptr )
         {
-            return _kf_display->SendToClient( player, KFMsg::ItemDataNotExist );
+            return _kf_display->SendToClient( kfentity, KFMsg::ItemDataNotExist );
         }
 
         auto itemid = kfitem->Get<uint32>( kfitem->_data_setting->_config_key_name  );
         auto kfitemsetting = KFItemConfig::Instance()->FindSetting( itemid );
         if ( kfitemsetting == nullptr )
         {
-            return _kf_display->SendToClient( player, KFMsg::ItemSettingNotExist, itemid );
+            return _kf_display->SendToClient( kfentity, KFMsg::ItemSettingNotExist, itemid );
         }
 
         auto kftypesetting = KFItemTypeConfig::Instance()->FindSetting( kfitemsetting->_type );
         if ( kftypesetting == nullptr )
         {
-            return _kf_display->SendToClient( player, KFMsg::ItemSettingNotExist, itemid );
+            return _kf_display->SendToClient( kfentity, KFMsg::ItemSettingNotExist, itemid );
         }
 
         // 不能使用
         if ( kfitemsetting->_use_count == 0u )
         {
-            return _kf_display->SendToClient( player, KFMsg::ItemCanNotUse );
+            return _kf_display->SendToClient( kfentity, KFMsg::ItemCanNotUse );
         }
 
-        if ( !CheckCanUseItem( player, kfitem, kfitemsetting, kftypesetting ) )
+        if ( !CheckCanUseItem( kfentity, kfitem, kfitemsetting, kftypesetting ) )
         {
-            return _kf_display->SendToClient( player, KFMsg::ItemCanNotUseStatus );
+            return _kf_display->SendToClient( kfentity, KFMsg::ItemCanNotUseStatus );
         }
 
-        auto ok = UseItem( player, kfitem, kfitemsetting, kftypesetting );
+        auto ok = UseItem( kfentity, kfitem, kfitemsetting, kftypesetting );
         if ( !ok )
         {
-            return _kf_display->SendToClient( player, KFMsg::ItemUseFailed );
+            return _kf_display->SendToClient( kfentity, KFMsg::ItemUseFailed );
         }
 
-        UseCoseItem( player, kfitem, kfitemsetting );
-        _kf_display->SendToClient( player, KFMsg::ItemUseOk, kfitemsetting->_id );
+        UseCoseItem( kfentity, kfitem, kfitemsetting );
+        _kf_display->SendToClient( kfentity, KFMsg::ItemUseOk, kfitemsetting->_id );
     }
 
     bool KFItemUseModule::UseItem( KFEntity* player, KFData* kfitem, const KFItemSetting* kfitemsetting, const KFItemTypeSetting* kftypesetting )

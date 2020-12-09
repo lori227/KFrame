@@ -1,5 +1,4 @@
 ﻿#include "KFAccountModule.hpp"
-#include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
@@ -8,7 +7,7 @@ namespace KFrame
         auto authdatabasetype = KFGlobal::Instance()->GetUInt32( __STRING__( authdatabase ) );
         switch ( authdatabasetype )
         {
-        case KFMsg::Mongo:
+        case KFDatabaseEnum::Mongo:
             _account_logic = __NEW_OBJECT__( KFAccountMongo );
             break;
         default:

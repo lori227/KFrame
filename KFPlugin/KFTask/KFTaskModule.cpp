@@ -30,9 +30,9 @@ namespace KFrame
         __REGISTER_EXECUTE__( __STRING__( task ), &KFTaskModule::OnExecuteUpdateTaskStatus );
         __REGISTER_EXECUTE__( __STRING__( taskcondition ), &KFTaskModule::OnExecuteUpdateTaskCondition );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFTaskModule, KFMsg::MSG_TASK_RECEIVE_REQ, KFMsg::MsgTaskReceiveReq, HandleTaskReceiveReq );
-        __REGISTER_MESSAGE__( KFTaskModule, KFMsg::MSG_TASK_REWARD_REQ, KFMsg::MsgTaskRewardReq, HandleTaskRewardReq );
-        __REGISTER_MESSAGE__( KFTaskModule, KFMsg::MSG_TASK_REMOVE_REQ, KFMsg::MsgTaskRemoveReq, HandleTaskRemoveReq );
+        __REGISTER_MESSAGE__( KFTaskModule, KFMessageEnum::Player, KFMsg::MSG_TASK_RECEIVE_REQ, KFMsg::MsgTaskReceiveReq, HandleTaskReceiveReq );
+        __REGISTER_MESSAGE__( KFTaskModule, KFMessageEnum::Player, KFMsg::MSG_TASK_REWARD_REQ, KFMsg::MsgTaskRewardReq, HandleTaskRewardReq );
+        __REGISTER_MESSAGE__( KFTaskModule, KFMessageEnum::Player, KFMsg::MSG_TASK_REMOVE_REQ, KFMsg::MsgTaskRemoveReq, HandleTaskRemoveReq );
     }
 
     void KFTaskModule::BeforeShut()
@@ -445,43 +445,39 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFTaskModule::HandleTaskReceiveReq, KFMsg::MsgTaskReceiveReq )
     {
-        __ROUTE_FIND_PLAYER__;
-
         auto kfsetting = KFTaskConfig::Instance()->FindSetting( kfmsg->id() );
         if ( kfsetting == nullptr )
         {
-            return _kf_display->SendToClient( player, KFMsg::TaskCanNotFind, kfmsg->id() );
+            return _kf_display->SendToClient( kfentity, KFMsg::TaskCanNotFind, kfmsg->id() );
         }
 
-        auto kftask = player->Find( __STRING__( task ), kfmsg->id() );
+        auto kftask = kfentity->Find( __STRING__( task ), kfmsg->id() );
         if ( kftask == nullptr )
         {
-            return _kf_display->SendToClient( player, KFMsg::TaskNotActive );
+            return _kf_display->SendToClient( kfentity, KFMsg::TaskNotActive );
         }
 
         auto status = kftask->Get<uint32>( __STRING__( status ) );
         if ( status != KFMsg::ActiveStatus )
         {
-            return _kf_display->SendToClient( player, KFMsg::TaskAlreadyReceive );
+            return _kf_display->SendToClient( kfentity, KFMsg::TaskAlreadyReceive );
         }
 
-        UpdataTaskStatus( player, kfsetting, kftask, KFMsg::ExecuteStatus, 0u );
+        UpdataTaskStatus( kfentity, kfsetting, kftask, KFMsg::ExecuteStatus, 0u );
     }
 
     __KF_MESSAGE_FUNCTION__( KFTaskModule::HandleTaskRewardReq, KFMsg::MsgTaskRewardReq )
     {
-        __ROUTE_FIND_PLAYER__;
-
         auto kfsetting = KFTaskConfig::Instance()->FindSetting( kfmsg->id() );
         if ( kfsetting == nullptr )
         {
-            return _kf_display->SendToClient( player, KFMsg::TaskCanNotFind, kfmsg->id() );
+            return _kf_display->SendToClient( kfentity, KFMsg::TaskCanNotFind, kfmsg->id() );
         }
 
-        auto kftask = player->Find( __STRING__( task ), kfmsg->id() );
+        auto kftask = kfentity->Find( __STRING__( task ), kfmsg->id() );
         if ( kftask == nullptr )
         {
-            return _kf_display->SendToClient( player, KFMsg::TaskCanNotFindData );
+            return _kf_display->SendToClient( kfentity, KFMsg::TaskCanNotFindData );
         }
 
         // 不是完成状态
@@ -490,29 +486,27 @@ namespace KFrame
         {
             if ( taskstatus == KFMsg::ReceiveStatus )
             {
-                return _kf_display->SendToClient( player, KFMsg::TaskAlreadyReward );
+                return _kf_display->SendToClient( kfentity, KFMsg::TaskAlreadyReward );
             }
             else
             {
-                return _kf_display->SendToClient( player, KFMsg::TaskNotDone );
+                return _kf_display->SendToClient( kfentity, KFMsg::TaskNotDone );
             }
         }
 
         // 交付完成任务
-        FinishTask( player, kftask, kfsetting );
+        FinishTask( kfentity, kftask, kfsetting );
     }
 
     __KF_MESSAGE_FUNCTION__( KFTaskModule::HandleTaskRemoveReq, KFMsg::MsgTaskRemoveReq )
     {
-        __ROUTE_FIND_PLAYER__;
-
         auto kfsetting = KFTaskConfig::Instance()->FindSetting( kfmsg->id() );
         if ( kfsetting == nullptr )
         {
-            return _kf_display->SendToClient( player, KFMsg::TaskCanNotFind, kfmsg->id() );
+            return _kf_display->SendToClient( kfentity, KFMsg::TaskCanNotFind, kfmsg->id() );
         }
 
-        player->RemoveRecord( __STRING__( task ), kfmsg->id() );
+        kfentity->RemoveRecord( __STRING__( task ), kfmsg->id() );
     }
 
     __KF_EXECUTE_FUNCTION__( KFTaskModule::OnExecuteUpdateTaskStatus )

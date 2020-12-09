@@ -7,14 +7,14 @@ namespace KFrame
         __LOOP_TIMER_0__( 10000, 5000, &KFWorldModule::OnTimerZoneRegister );
         __REGISTER_TCP_SERVER_LOST__( &KFWorldModule::OnServerLostGame );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFWorldModule, KFMsg::S2S_ADD_GATE_TO_WORLD_REQ, KFMsg::S2SAddGateToWorldReq, HandleAddGateToWorldReq );
-        __REGISTER_MESSAGE__( KFWorldModule, KFMsg::S2S_REMOVE_GATE_TO_WORLD_REQ, KFMsg::S2SRemoveGateToWorldReq, HandleRemoveGateToWorldReq );
-        __REGISTER_MESSAGE__( KFWorldModule, KFMsg::S2S_LOGIN_TO_WORLD_REQ, KFMsg::S2SLoginToWorldReq, HandleLoginToWorldReq );
-        __REGISTER_MESSAGE__( KFWorldModule, KFMsg::S2S_PLAYER_ENTER_TO_WORLD_REQ, KFMsg::S2SPlayerEnterToWorldReq, HandlePlayerEnterToWorldReq );
-        __REGISTER_MESSAGE__( KFWorldModule, KFMsg::S2S_PLAYER_LEAVE_TO_WORLD_REQ, KFMsg::S2SPlayerLeaveToWorldReq, HandlePlayerLeaveToWorldReq );
-        __REGISTER_MESSAGE__( KFWorldModule, KFMsg::S2S_BROADCAST_TO_GAME_REQ, KFMsg::S2SBroadcastToGameReq, HandleBroadcastToGameReq );
-        __REGISTER_MESSAGE__( KFWorldModule, KFMsg::S2S_BROADCAST_TO_WORLD_REQ, KFMsg::S2SBroadcastToWorldReq, HandleBroadcastToWorldReq );
-        __REGISTER_MESSAGE__( KFWorldModule, KFMsg::S2S_BROADCAST_TO_WORLD_ACK, KFMsg::S2SBroadcastToWorldAck, HandleBroadcastToWorldAck );
+        __REGISTER_MESSAGE__( KFWorldModule, KFMessageEnum::Normal, KFMsg::S2S_ADD_GATE_TO_WORLD_REQ, KFMsg::S2SAddGateToWorldReq, HandleAddGateToWorldReq );
+        __REGISTER_MESSAGE__( KFWorldModule, KFMessageEnum::Normal, KFMsg::S2S_REMOVE_GATE_TO_WORLD_REQ, KFMsg::S2SRemoveGateToWorldReq, HandleRemoveGateToWorldReq );
+        __REGISTER_MESSAGE__( KFWorldModule, KFMessageEnum::Normal, KFMsg::S2S_LOGIN_TO_WORLD_REQ, KFMsg::S2SLoginToWorldReq, HandleLoginToWorldReq );
+        __REGISTER_MESSAGE__( KFWorldModule, KFMessageEnum::Normal, KFMsg::S2S_PLAYER_ENTER_TO_WORLD_REQ, KFMsg::S2SPlayerEnterToWorldReq, HandlePlayerEnterToWorldReq );
+        __REGISTER_MESSAGE__( KFWorldModule, KFMessageEnum::Normal, KFMsg::S2S_PLAYER_LEAVE_TO_WORLD_REQ, KFMsg::S2SPlayerLeaveToWorldReq, HandlePlayerLeaveToWorldReq );
+        __REGISTER_MESSAGE__( KFWorldModule, KFMessageEnum::Normal, KFMsg::S2S_BROADCAST_TO_GAME_REQ, KFMsg::S2SBroadcastToGameReq, HandleBroadcastToGameReq );
+        __REGISTER_MESSAGE__( KFWorldModule, KFMessageEnum::Normal, KFMsg::S2S_BROADCAST_TO_WORLD_REQ, KFMsg::S2SBroadcastToWorldReq, HandleBroadcastToWorldReq );
+        __REGISTER_MESSAGE__( KFWorldModule, KFMessageEnum::Normal, KFMsg::S2S_BROADCAST_TO_WORLD_ACK, KFMsg::S2SBroadcastToWorldAck, HandleBroadcastToWorldAck );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_HTTP__( __STRING__( kickonline ), true, &KFWorldModule::HandleHttpKickOnline );
     }

@@ -4,11 +4,11 @@ namespace KFrame
 {
     void KFBasicShardModule::BeforeRun()
     {
-        __REGISTER_MESSAGE__( KFBasicShardModule, KFMsg::S2S_UPDATE_INT_VALUE_TO_BASIC_REQ, KFMsg::S2SUpdateIntValueToBasicReq, HandleUpdateIntValueToBasicReq );
-        __REGISTER_MESSAGE__( KFBasicShardModule, KFMsg::S2S_UPDATE_STR_VALUE_TO_BASIC_REQ, KFMsg::S2SUpdateStrValueToBasicReq, HandleUpdateStrValueToBasicReq );
-        __REGISTER_MESSAGE__( KFBasicShardModule, KFMsg::S2S_CLEAR_ONLINE_TO_BASIC_REQ, KFMsg::S2SClearOnlineToBasicReq, HandleClearOnlineToBasicReq );
-        __REGISTER_MESSAGE__( KFBasicShardModule, KFMsg::S2S_QUERY_ATTRIBUTE_TO_BASIC_REQ, KFMsg::S2SQueryAttributeToBasicReq, HandleQueryAttributeToBasicReq );
-        __REGISTER_MESSAGE__( KFBasicShardModule, KFMsg::S2S_SET_PLAYER_NAME_TO_BASIC_REQ, KFMsg::S2SSetPlayerNameToBasicReq, HandleSetPlayerNameToBasicReq );
+        __REGISTER_MESSAGE__( KFBasicShardModule, KFMessageEnum::Normal, KFMsg::S2S_UPDATE_INT_VALUE_TO_BASIC_REQ, KFMsg::S2SUpdateIntValueToBasicReq, HandleUpdateIntValueToBasicReq );
+        __REGISTER_MESSAGE__( KFBasicShardModule, KFMessageEnum::Normal, KFMsg::S2S_UPDATE_STR_VALUE_TO_BASIC_REQ, KFMsg::S2SUpdateStrValueToBasicReq, HandleUpdateStrValueToBasicReq );
+        __REGISTER_MESSAGE__( KFBasicShardModule, KFMessageEnum::Normal, KFMsg::S2S_CLEAR_ONLINE_TO_BASIC_REQ, KFMsg::S2SClearOnlineToBasicReq, HandleClearOnlineToBasicReq );
+        __REGISTER_MESSAGE__( KFBasicShardModule, KFMessageEnum::Normal, KFMsg::S2S_QUERY_ATTRIBUTE_TO_BASIC_REQ, KFMsg::S2SQueryAttributeToBasicReq, HandleQueryAttributeToBasicReq );
+        __REGISTER_MESSAGE__( KFBasicShardModule, KFMessageEnum::Normal, KFMsg::S2S_SET_PLAYER_NAME_TO_BASIC_REQ, KFMsg::S2SSetPlayerNameToBasicReq, HandleSetPlayerNameToBasicReq );
     }
 
     void KFBasicShardModule::BeforeShut()

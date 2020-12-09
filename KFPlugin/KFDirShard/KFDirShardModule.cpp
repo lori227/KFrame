@@ -1,5 +1,4 @@
 ﻿#include "KFDirShardModule.hpp"
-#include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
@@ -42,7 +41,7 @@ namespace KFrame
         __JSON_PARSE_STRING__( request, data );
 
         auto ok = _kf_dir_database->ZoneRegister( request );
-        return _kf_http_server->SendCode( ok ? KFMsg::Ok : KFMsg::Error );
+        return _kf_http_server->SendCode( ok ? KFEnum::Ok : KFEnum::Error );
     }
 
     __KF_HTTP_FUNCTION__( KFDirShardModule::HandleZoneUpdate )
@@ -50,7 +49,7 @@ namespace KFrame
         __JSON_PARSE_STRING__( request, data );
 
         auto ok = _kf_dir_database->ZoneUpdate( request );
-        return _kf_http_server->SendCode( ok ? KFMsg::Ok : KFMsg::Error );
+        return _kf_http_server->SendCode( ok ? KFEnum::Ok : KFEnum::Error );
     }
 
     __KF_HTTP_FUNCTION__( KFDirShardModule::HandleZoneStatus )
@@ -60,7 +59,7 @@ namespace KFrame
         auto zoneid = __JSON_GET_UINT32__( request, __STRING__( zoneid ) );
         auto status = __JSON_GET_UINT32__( request, __STRING__( status ) );
         auto ok = _kf_dir_database->UpdateZoneStatus( zoneid, status );
-        return _kf_http_server->SendCode( ok ? KFMsg::Ok : KFMsg::Error );
+        return _kf_http_server->SendCode( ok ? KFEnum::Ok : KFEnum::Error );
     }
 
     __KF_HTTP_FUNCTION__( KFDirShardModule::HandleQueryZoneList )
@@ -105,7 +104,7 @@ namespace KFrame
         auto count = __JSON_GET_UINT64__( request, __STRING__( count ) );
 
         auto ok = _kf_dir_database->ZoneBalance( zoneid, count );
-        return _kf_http_server->SendCode( ok ? KFMsg::Ok : KFMsg::Error );
+        return _kf_http_server->SendCode( ok ? KFEnum::Ok : KFEnum::Error );
     }
 
     __KF_HTTP_FUNCTION__( KFDirShardModule::HandleZoneRecommend )
@@ -115,7 +114,7 @@ namespace KFrame
         auto zoneid = __JSON_GET_UINT32__( request, __STRING__( zoneid ) );
         auto recommend = __JSON_GET_UINT32__( request, __STRING__( recommend ) );
         auto ok = _kf_dir_database->SetZoneRecommend( flag, zoneid, recommend == 1u );
-        return _kf_http_server->SendCode( ok ? KFMsg::Ok : KFMsg::Error );
+        return _kf_http_server->SendCode( ok ? KFEnum::Ok : KFEnum::Error );
     }
 
     __KF_HTTP_FUNCTION__( KFDirShardModule::HandleWorldRegister )
@@ -126,14 +125,14 @@ namespace KFrame
         auto url = __JSON_GET_STRING__( request, __STRING__( url ) );
 
         auto ok = _kf_dir_database->SetWorldUrl( worldid, url );
-        return _kf_http_server->SendCode( ok ? KFMsg::Ok : KFMsg::Error );
+        return _kf_http_server->SendCode( ok ? KFEnum::Ok : KFEnum::Error );
     }
 
     __KF_HTTP_FUNCTION__( KFDirShardModule::HandleUpdateMasterIp )
     {
         __JSON_PARSE_STRING__( request, data );
         auto ok = _kf_dir_database->UpdateMasterIp( request );
-        return _kf_http_server->SendCode( ok ? KFMsg::Ok : KFMsg::Error );
+        return _kf_http_server->SendCode( ok ? KFEnum::Ok : KFEnum::Error );
     }
 
     __KF_HTTP_FUNCTION__( KFDirShardModule::HandleQueryMasterIp )

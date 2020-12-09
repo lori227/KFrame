@@ -16,16 +16,16 @@ namespace KFrame
         _kf_component->RegisterSyncUpdateFunction( this, &KFTeamShardModule::SendTeamUpdateDataToMember );
 
         //////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFTeamShardModule, KFMsg::S2S_TEAM_CREATE_TO_TEAM_REQ, KFMsg::S2STeamCreateToTeamReq, HandleTeamCreateToTeamReq );
-        __REGISTER_MESSAGE__( KFTeamShardModule, KFMsg::S2S_TEAM_JION_FAILED_TO_TEAM_REQ, KFMsg::S2STeamJoinFailedToTeamReq, HandleTeamJoinFailedToTeamReq );
-        __REGISTER_MESSAGE__( KFTeamShardModule, KFMsg::S2S_TEAM_ONLINE_QUERY_TO_TEAM_REQ, KFMsg::S2STeamOnlineQueryToTeamReq, HandleTeamOnlineQueryToTeamReq );
-        __REGISTER_MESSAGE__( KFTeamShardModule, KFMsg::S2S_TEAM_INT_VALUE_TO_TEAM_REQ, KFMsg::S2STeamIntValueToTeamReq, HandleTeamIntValueToTeamReq );
-        __REGISTER_MESSAGE__( KFTeamShardModule, KFMsg::S2S_TEAM_STR_VALUE_TO_TEAM_REQ, KFMsg::S2STeamStrValueToTeamReq, HandleTeamStrValueToTeamReq );
-        __REGISTER_MESSAGE__( KFTeamShardModule, KFMsg::S2S_TEAM_MEMBER_INT_VALUE_TO_TEAM_REQ, KFMsg::S2STeamMemberIntValueToTeamReq, HandleTeamMemberIntValueToTeamReq );
-        __REGISTER_MESSAGE__( KFTeamShardModule, KFMsg::S2S_TEAM_MEMBER_STR_VALUE_TO_TEAM_REQ, KFMsg::S2STeamMemberStrValueToTeamReq, HandleTeamMemberStrValueToTeamReq );
-        __REGISTER_MESSAGE__( KFTeamShardModule, KFMsg::S2S_TEAM_LEAVE_TO_TEAM_REQ, KFMsg::S2STeamLeaveToTeamReq, HandleTeamLeaveToTeamReq );
-        __REGISTER_MESSAGE__( KFTeamShardModule, KFMsg::S2S_TEAM_KICK_TO_TEAM_REQ, KFMsg::S2STeamKickToTeamReq, HandleTeamKickToTeamReq );
-        __REGISTER_MESSAGE__( KFTeamShardModule, KFMsg::S2S_TEAM_AGREE_TO_TEAM_REQ, KFMsg::S2STeamAgreeToTeamReq, HandleTeamAgreeToTeamReq );
+        __REGISTER_MESSAGE__( KFTeamShardModule, KFMessageEnum::Normal, KFMsg::S2S_TEAM_CREATE_TO_TEAM_REQ, KFMsg::S2STeamCreateToTeamReq, HandleTeamCreateToTeamReq );
+        __REGISTER_MESSAGE__( KFTeamShardModule, KFMessageEnum::Normal, KFMsg::S2S_TEAM_JION_FAILED_TO_TEAM_REQ, KFMsg::S2STeamJoinFailedToTeamReq, HandleTeamJoinFailedToTeamReq );
+        __REGISTER_MESSAGE__( KFTeamShardModule, KFMessageEnum::Normal, KFMsg::S2S_TEAM_ONLINE_QUERY_TO_TEAM_REQ, KFMsg::S2STeamOnlineQueryToTeamReq, HandleTeamOnlineQueryToTeamReq );
+        __REGISTER_MESSAGE__( KFTeamShardModule, KFMessageEnum::Normal, KFMsg::S2S_TEAM_INT_VALUE_TO_TEAM_REQ, KFMsg::S2STeamIntValueToTeamReq, HandleTeamIntValueToTeamReq );
+        __REGISTER_MESSAGE__( KFTeamShardModule, KFMessageEnum::Normal, KFMsg::S2S_TEAM_STR_VALUE_TO_TEAM_REQ, KFMsg::S2STeamStrValueToTeamReq, HandleTeamStrValueToTeamReq );
+        __REGISTER_MESSAGE__( KFTeamShardModule, KFMessageEnum::Normal, KFMsg::S2S_TEAM_MEMBER_INT_VALUE_TO_TEAM_REQ, KFMsg::S2STeamMemberIntValueToTeamReq, HandleTeamMemberIntValueToTeamReq );
+        __REGISTER_MESSAGE__( KFTeamShardModule, KFMessageEnum::Normal, KFMsg::S2S_TEAM_MEMBER_STR_VALUE_TO_TEAM_REQ, KFMsg::S2STeamMemberStrValueToTeamReq, HandleTeamMemberStrValueToTeamReq );
+        __REGISTER_MESSAGE__( KFTeamShardModule, KFMessageEnum::Normal, KFMsg::S2S_TEAM_LEAVE_TO_TEAM_REQ, KFMsg::S2STeamLeaveToTeamReq, HandleTeamLeaveToTeamReq );
+        __REGISTER_MESSAGE__( KFTeamShardModule, KFMessageEnum::Normal, KFMsg::S2S_TEAM_KICK_TO_TEAM_REQ, KFMsg::S2STeamKickToTeamReq, HandleTeamKickToTeamReq );
+        __REGISTER_MESSAGE__( KFTeamShardModule, KFMessageEnum::Normal, KFMsg::S2S_TEAM_AGREE_TO_TEAM_REQ, KFMsg::S2STeamAgreeToTeamReq, HandleTeamAgreeToTeamReq );
     }
 
     void KFTeamShardModule::BeforeShut()

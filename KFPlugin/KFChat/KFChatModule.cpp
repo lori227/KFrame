@@ -6,8 +6,8 @@ namespace KFrame
     {
         __REGISTER_PLAYER_LEAVE__( &KFChatModule::OnLeaveChatModule );
         ///////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFChatModule, KFMsg::MSG_FRIEND_CHAT_REQ, KFMsg::MsgFriendChatReq, HandleFriendChatReq );
-        __REGISTER_MESSAGE__( KFChatModule, KFMsg::MSG_SERVER_CHAT_REQ, KFMsg::MsgServerChatReq, HandleServerChatReq );
+        __REGISTER_MESSAGE__( KFChatModule, KFMessageEnum::Player, KFMsg::MSG_FRIEND_CHAT_REQ, KFMsg::MsgFriendChatReq, HandleFriendChatReq );
+        __REGISTER_MESSAGE__( KFChatModule, KFMessageEnum::Player, KFMsg::MSG_SERVER_CHAT_REQ, KFMsg::MsgServerChatReq, HandleServerChatReq );
     }
 
     void KFChatModule::BeforeShut()
@@ -20,18 +20,16 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFChatModule::HandleFriendChatReq, KFMsg::MsgFriendChatReq )
     {
-        __ROUTE_FIND_PLAYER__;
-
-        if ( !CheckChatIntervalTime( player ) )
+        if ( !CheckChatIntervalTime( kfentity ) )
         {
             return;
         }
 
         // 判断是否是好友
-        auto kfrelation = player->Find( __STRING__( friend ), kfmsg->playerid() );
+        auto kfrelation = kfentity->Find( __STRING__( friend ), kfmsg->playerid() );
         if ( kfrelation == nullptr )
         {
-            return _kf_display->SendToClient( player, KFMsg::ChatNotFriend );
+            return _kf_display->SendToClient( kfentity, KFMsg::ChatNotFriend );
         }
         auto kfbasic = kfrelation->Find( __STRING__( basic ) );
 
@@ -40,20 +38,18 @@ namespace KFrame
         _kf_filter->CensorFilter( content );
 
         KFMsg::MsgTellFriendChat chat;
-        chat.set_playerid( playerid );
         chat.set_content( content );
-        auto ok = _kf_game->SendToPlayer( playerid, kfbasic, KFMsg::MSG_TELL_FRIEND_CHAT, &chat );
+        chat.set_playerid( kfentity->GetKeyID() );
+        auto ok = _kf_game->SendToPlayer( kfentity->GetKeyID(), kfbasic, KFMsg::MSG_TELL_FRIEND_CHAT, &chat );
         if ( !ok )
         {
-            return _kf_display->SendToClient( player, KFMsg::ChatFriendNotOnline );
+            return _kf_display->SendToClient( kfentity, KFMsg::ChatFriendNotOnline );
         }
     }
 
     __KF_MESSAGE_FUNCTION__( KFChatModule::HandleServerChatReq, KFMsg::MsgServerChatReq )
     {
-        __ROUTE_FIND_PLAYER__;
-
-        if ( !CheckChatIntervalTime( player ) )
+        if ( !CheckChatIntervalTime( kfentity ) )
         {
             return;
         }
@@ -62,7 +58,7 @@ namespace KFrame
         std::string content = kfmsg->content();
         _kf_filter->CensorFilter( content );
 
-        auto kfbasic = player->Find( __STRING__( basic ) );
+        auto kfbasic = kfentity->Find( __STRING__( basic ) );
         auto pbbasic = _kf_kernel->SerializeToView( kfbasic );
 
         KFMsg::MsgTellServerChat chat;

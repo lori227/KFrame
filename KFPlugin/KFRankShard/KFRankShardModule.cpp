@@ -11,11 +11,11 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////////////
         _kf_route->RegisterConnectionFunction( this, &KFRankShardModule::OnRouteConnectCluster );
         //////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFRankShardModule, KFMsg::S2S_NOTICE_RANK_WORKER_REQ, KFMsg::S2SNoticeRankWorkerReq, HandleNoticeRankWorkerReq );
-        __REGISTER_MESSAGE__( KFRankShardModule, KFMsg::S2S_SYNC_REFRESH_RANK, KFMsg::S2SSyncRefreshRank, HandleSyncRefreshRank );
-        __REGISTER_MESSAGE__( KFRankShardModule, KFMsg::S2S_UPDATE_RANK_DATA_REQ, KFMsg::S2SUpdateRankDataReq, HandleUpdateRankDataReq );
-        __REGISTER_MESSAGE__( KFRankShardModule, KFMsg::S2S_QUERY_RANK_LIST_REQ, KFMsg::S2SQueryRankListReq, HandleQueryRanklistReq );
-        __REGISTER_MESSAGE__( KFRankShardModule, KFMsg::S2S_QUERY_FRIEND_RANK_LIST_REQ, KFMsg::S2SQueryFriendRankListReq, HandleQueryFriendRanklistReq );
+        __REGISTER_MESSAGE__( KFRankShardModule, KFMessageEnum::Normal, KFMsg::S2S_NOTICE_RANK_WORKER_REQ, KFMsg::S2SNoticeRankWorkerReq, HandleNoticeRankWorkerReq );
+        __REGISTER_MESSAGE__( KFRankShardModule, KFMessageEnum::Normal, KFMsg::S2S_SYNC_REFRESH_RANK, KFMsg::S2SSyncRefreshRank, HandleSyncRefreshRank );
+        __REGISTER_MESSAGE__( KFRankShardModule, KFMessageEnum::Normal, KFMsg::S2S_UPDATE_RANK_DATA_REQ, KFMsg::S2SUpdateRankDataReq, HandleUpdateRankDataReq );
+        __REGISTER_MESSAGE__( KFRankShardModule, KFMessageEnum::Normal, KFMsg::S2S_QUERY_RANK_LIST_REQ, KFMsg::S2SQueryRankListReq, HandleQueryRanklistReq );
+        __REGISTER_MESSAGE__( KFRankShardModule, KFMessageEnum::Normal, KFMsg::S2S_QUERY_FRIEND_RANK_LIST_REQ, KFMsg::S2SQueryFriendRankListReq, HandleQueryFriendRanklistReq );
     }
 
     void KFRankShardModule::BeforeShut()

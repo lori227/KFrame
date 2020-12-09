@@ -53,7 +53,7 @@ namespace KFrame
     void KFTcpServerModule::BeforeRun()
     {
         ////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFTcpServerModule, KFMsg::S2S_REGISTER_TO_SERVER_REQ, KFMsg::RegisterToServerReq, HandleRegisterReq );
+        __REGISTER_MESSAGE__( KFTcpServerModule, KFMessageEnum::Normal, KFMsg::S2S_REGISTER_TO_SERVER_REQ, KFMsg::RegisterToServerReq, HandleRegisterReq );
         ////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////
         _kf_tcp_setting = FindTcpServerSetting();

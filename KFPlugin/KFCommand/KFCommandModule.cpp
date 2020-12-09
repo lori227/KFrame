@@ -4,7 +4,7 @@ namespace KFrame
 {
     void KFCommandModule::BeforeRun()
     {
-        __REGISTER_MESSAGE__( KFCommandModule, KFMsg::MSG_COMMAND_REQ, KFMsg::MsgCommandReq, HandleCommandReq );
+        __REGISTER_MESSAGE__( KFCommandModule, KFMessageEnum::Player, KFMsg::MSG_COMMAND_REQ, KFMsg::MsgCommandReq, HandleCommandReq );
     }
 
     void KFCommandModule::BeforeShut()
@@ -30,13 +30,11 @@ namespace KFrame
         return;
 #endif // __KF_DEBUG__
 
-        __ROUTE_FIND_PLAYER__;
-
         // 调用注册的函数
         std::string command = kfmsg->command();
         std::transform( command.begin(), command.end(), command.begin(), ::tolower );
 
-        __LOG_DEBUG__( "player[{}] debug command[{}]", playerid, command );
+        __LOG_DEBUG__( "player=[{}] debug command[{}]", kfentity->GetKeyID(), command );
 
         auto kffunction = _kf_command_function.Find( command );
         if ( kffunction != nullptr )
@@ -47,7 +45,7 @@ namespace KFrame
                 params.push_back( kfmsg->params( i ) );
             }
 
-            return kffunction->_function( player, params );
+            return kffunction->_function( kfentity, params );
         }
     }
 }

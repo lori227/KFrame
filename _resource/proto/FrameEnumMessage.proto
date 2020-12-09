@@ -126,17 +126,6 @@ enum RewardTypeEnum
 	ItemType = 2;		// 道具类型
 }
 
-// 数据库类型
-enum DatabaseEnum
-{
-	InvalidDatabase = 0;
-
-	Redis = 1;
-	Mongo = 2;
-	MySQL = 3;
-}
-
-
 // 离开类型
 enum LeaveEnum
 {

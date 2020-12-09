@@ -24,15 +24,15 @@ namespace KFrame
         __REGISTER_DEPLOY_FUNCTION__( __STRING__( shutdown ), &KFGameModule::OnDeployShutDownServer );
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFGameModule, KFMsg::S2S_LOGIN_TO_GAME_REQ, KFMsg::S2SLoginToGameReq, HandleLoginToGameReq );
-        __REGISTER_MESSAGE__( KFGameModule, KFMsg::S2S_RELOGIN_TO_GAME_REQ, KFMsg::S2SReLoginToGameReq, HandleReLoginToGameReq );
-        __REGISTER_MESSAGE__( KFGameModule, KFMsg::S2S_CONNECT_TO_GAME_REQ, KFMsg::S2SConnectToGameReq, HandleConnectToGameReq );
-        __REGISTER_MESSAGE__( KFGameModule, KFMsg::S2S_DISCONNECT_TO_GAME_REQ, KFMsg::S2SDisconnectToGameReq, HandleDisconnectToGameReq );
-        __REGISTER_MESSAGE__( KFGameModule, KFMsg::S2S_LEAVE_TO_GAME_REQ, KFMsg::S2SLeaveToGameReq,  HandleLeaveToGameReq );
-        __REGISTER_MESSAGE__( KFGameModule, KFMsg::S2S_LOGOUT_TO_GAME_REQ, KFMsg::S2SLogoutToGameReq, HandleLogoutToGameReq );
-        __REGISTER_MESSAGE__( KFGameModule, KFMsg::S2S_BROADCAST_TO_GAME_ACK, KFMsg::S2SBroadcastToGameAck, HandleBroadcastToGameAck );
-        __REGISTER_MESSAGE__( KFGameModule, KFMsg::MSG_QUERY_PLAYER_REQ, KFMsg::MsgQueryPlayerReq, HandleQueryPlayerReq );
-        __REGISTER_MESSAGE__( KFGameModule, KFMsg::S2S_KICK_PLAYER_TO_GAME_REQ, KFMsg::S2SKickPlayerToGameReq, HandleKickPlayerToGameReq );
+        __REGISTER_MESSAGE__( KFGameModule, KFMessageEnum::Normal, KFMsg::S2S_LOGIN_TO_GAME_REQ, KFMsg::S2SLoginToGameReq, HandleLoginToGameReq );
+        __REGISTER_MESSAGE__( KFGameModule, KFMessageEnum::Normal, KFMsg::S2S_RELOGIN_TO_GAME_REQ, KFMsg::S2SReLoginToGameReq, HandleReLoginToGameReq );
+        __REGISTER_MESSAGE__( KFGameModule, KFMessageEnum::Normal, KFMsg::S2S_CONNECT_TO_GAME_REQ, KFMsg::S2SConnectToGameReq, HandleConnectToGameReq );
+        __REGISTER_MESSAGE__( KFGameModule, KFMessageEnum::Normal, KFMsg::S2S_DISCONNECT_TO_GAME_REQ, KFMsg::S2SDisconnectToGameReq, HandleDisconnectToGameReq );
+        __REGISTER_MESSAGE__( KFGameModule, KFMessageEnum::Normal, KFMsg::S2S_LEAVE_TO_GAME_REQ, KFMsg::S2SLeaveToGameReq,  HandleLeaveToGameReq );
+        __REGISTER_MESSAGE__( KFGameModule, KFMessageEnum::Normal, KFMsg::S2S_LOGOUT_TO_GAME_REQ, KFMsg::S2SLogoutToGameReq, HandleLogoutToGameReq );
+        __REGISTER_MESSAGE__( KFGameModule, KFMessageEnum::Normal, KFMsg::S2S_BROADCAST_TO_GAME_ACK, KFMsg::S2SBroadcastToGameAck, HandleBroadcastToGameAck );
+        __REGISTER_MESSAGE__( KFGameModule, KFMessageEnum::Player, KFMsg::MSG_QUERY_PLAYER_REQ, KFMsg::MsgQueryPlayerReq, HandleQueryPlayerReq );
+        __REGISTER_MESSAGE__( KFGameModule, KFMessageEnum::Normal, KFMsg::S2S_KICK_PLAYER_TO_GAME_REQ, KFMsg::S2SKickPlayerToGameReq, HandleKickPlayerToGameReq );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
@@ -434,7 +434,7 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFGameModule::HandleDisconnectToGameReq, KFMsg::S2SDisconnectToGameReq )
     {
-        __SERVER_FIND_PLAYER__;
+        __FIND_PLAYER_BY_ID__;
         __LOG_INFO__( "player=[{}] disconnect", kfmsg->playerid() );
     }
 
@@ -448,7 +448,7 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFGameModule::HandleLogoutToGameReq, KFMsg::S2SLogoutToGameReq )
     {
-        __SERVER_FIND_PLAYER__;
+        __FIND_PLAYER_BY_ID__;
         __LOG_DEBUG__( "player[{}] logout", kfmsg->playerid() );
 
         // 设置不在线, 后续不发送消息
@@ -487,18 +487,17 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFGameModule::HandleQueryPlayerReq, KFMsg::MsgQueryPlayerReq )
     {
-        __ROUTE_FIND_PLAYER__;
         // 不能查询自己的数据，客户端本地可以获取到
-        if ( playerid == kfmsg->playerid() )
+        if ( kfentity->GetKeyID() == kfmsg->playerid() )
         {
             return;
         }
 
         //查询玩家数据
-        auto ok = _kf_data_client->QueryPlayerData( playerid, kfmsg->playerid() );
+        auto ok = _kf_data_client->QueryPlayerData( kfentity->GetKeyID(), kfmsg->playerid() );
         if ( !ok )
         {
-            _kf_display->SendToClient( player, KFMsg::DataServerBusy );
+            _kf_display->SendToClient( kfentity, KFMsg::DataServerBusy );
         }
     }
 

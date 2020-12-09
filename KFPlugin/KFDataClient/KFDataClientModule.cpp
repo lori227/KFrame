@@ -6,9 +6,9 @@ namespace KFrame
 
     void KFDataClientModule::BeforeRun()
     {
-        __REGISTER_MESSAGE__( KFDataClientModule, KFMsg::S2S_SAVE_PLAYER_TO_GAME_ACK, KFMsg::S2SSavePlayerToGameAck, HandleSavePlayerToGameAck );
-        __REGISTER_MESSAGE__( KFDataClientModule, KFMsg::S2S_LOAD_PLAYER_TO_GAME_ACK, KFMsg::S2SLoadPlayerToGameAck, HandleLoadPlayerToGameAck );
-        __REGISTER_MESSAGE__( KFDataClientModule, KFMsg::S2S_QUERY_PLAYER_TO_GAME_ACK, KFMsg::S2SQueryPlayerToGameAck, HandleQueryPlayerToGameAck );
+        __REGISTER_MESSAGE__( KFDataClientModule, KFMessageEnum::Normal, KFMsg::S2S_SAVE_PLAYER_TO_GAME_ACK, KFMsg::S2SSavePlayerToGameAck, HandleSavePlayerToGameAck );
+        __REGISTER_MESSAGE__( KFDataClientModule, KFMessageEnum::Normal, KFMsg::S2S_LOAD_PLAYER_TO_GAME_ACK, KFMsg::S2SLoadPlayerToGameAck, HandleLoadPlayerToGameAck );
+        __REGISTER_MESSAGE__( KFDataClientModule, KFMessageEnum::Normal, KFMsg::S2S_QUERY_PLAYER_TO_GAME_ACK, KFMsg::S2SQueryPlayerToGameAck, HandleQueryPlayerToGameAck );
     }
 
     void KFDataClientModule::BeforeShut()

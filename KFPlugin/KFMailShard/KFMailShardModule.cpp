@@ -7,7 +7,7 @@ namespace KFrame
         auto maildatabasetype = KFGlobal::Instance()->GetUInt32( __STRING__( maildatabase ) );
         switch ( maildatabasetype )
         {
-        case KFMsg::Mongo:
+        case KFDatabaseEnum::Mongo:
             _mail_database_logic = __NEW_OBJECT__( KFMailDatabaseMongo );
             break;
         default:
@@ -20,10 +20,10 @@ namespace KFrame
         __REGISTER_HTTP__( __STRING__( delmail ), true, &KFMailShardModule::HandleGMDeleteMailReq );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        __REGISTER_MESSAGE__( KFMailShardModule, KFMsg::S2S_QUERY_MAIL_REQ, KFMsg::S2SQueryMailReq, HandleQueryMailReq );
-        __REGISTER_MESSAGE__( KFMailShardModule, KFMsg::S2S_ADD_MAIL_REQ, KFMsg::S2SAddMailReq, HandleAddMailReq );
-        __REGISTER_MESSAGE__( KFMailShardModule, KFMsg::S2S_UPDATE_MAIL_STATUS_REQ, KFMsg::S2SUpdateMailStatusReq, HandleUpdateMailStatusReq );
-        __REGISTER_MESSAGE__( KFMailShardModule, KFMsg::S2S_NEW_PLAYER_MAIL_REQ, KFMsg::S2SNewPlayerMailReq, HandleNewPlayerMailReq );
+        __REGISTER_MESSAGE__( KFMailShardModule, KFMessageEnum::Normal, KFMsg::S2S_QUERY_MAIL_REQ, KFMsg::S2SQueryMailReq, HandleQueryMailReq );
+        __REGISTER_MESSAGE__( KFMailShardModule, KFMessageEnum::Normal, KFMsg::S2S_ADD_MAIL_REQ, KFMsg::S2SAddMailReq, HandleAddMailReq );
+        __REGISTER_MESSAGE__( KFMailShardModule, KFMessageEnum::Normal, KFMsg::S2S_UPDATE_MAIL_STATUS_REQ, KFMsg::S2SUpdateMailStatusReq, HandleUpdateMailStatusReq );
+        __REGISTER_MESSAGE__( KFMailShardModule, KFMessageEnum::Normal, KFMsg::S2S_NEW_PLAYER_MAIL_REQ, KFMsg::S2SNewPlayerMailReq, HandleNewPlayerMailReq );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
@@ -204,7 +204,7 @@ namespace KFrame
             {
                 KFMsg::S2SNoticeNewMailReq notice;
                 notice.set_playerid( objectid );
-                _kf_route->RepeatToServer( serverid, KFMsg::S2S_NOTICE_NEW_MAIL_REQ, &notice );
+                _kf_route->RepeatToPlayer( 0, serverid, objectid, KFMsg::S2S_NOTICE_NEW_MAIL_REQ, &notice );
             }
         }
 

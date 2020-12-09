@@ -6,9 +6,9 @@ namespace KFrame
     void KFDataShardModule::BeforeRun()
     {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFDataShardModule, KFMsg::S2S_LOAD_PLAYER_TO_DATA_REQ, KFMsg::S2SLoadPlayerToDataReq, HandleLoadPlayerToDataReq );
-        __REGISTER_MESSAGE__( KFDataShardModule, KFMsg::S2S_SAVE_PLAYER_TO_DATA_REQ, KFMsg::S2SSavePlayerToDataReq, HandleSavePlayerToDataReq );
-        __REGISTER_MESSAGE__( KFDataShardModule, KFMsg::S2S_QUERY_PLAYER_TO_DATA_REQ, KFMsg::S2SQueryPlayerToDataReq, HandleQueryPlayerToDataReq );
+        __REGISTER_MESSAGE__( KFDataShardModule, KFMessageEnum::Normal, KFMsg::S2S_LOAD_PLAYER_TO_DATA_REQ, KFMsg::S2SLoadPlayerToDataReq, HandleLoadPlayerToDataReq );
+        __REGISTER_MESSAGE__( KFDataShardModule, KFMessageEnum::Normal, KFMsg::S2S_SAVE_PLAYER_TO_DATA_REQ, KFMsg::S2SSavePlayerToDataReq, HandleSavePlayerToDataReq );
+        __REGISTER_MESSAGE__( KFDataShardModule, KFMessageEnum::Normal, KFMsg::S2S_QUERY_PLAYER_TO_DATA_REQ, KFMsg::S2SQueryPlayerToDataReq, HandleQueryPlayerToDataReq );
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
@@ -42,13 +42,13 @@ namespace KFrame
 
             switch ( kfsetting->_id )
             {
-            case KFMsg::Redis:
+            case KFDatabaseEnum::Redis:
                 kfexecute = __KF_NEW__( KFRedisDataExecute );
                 break;
-            case KFMsg::Mongo:
+            case KFDatabaseEnum::Mongo:
                 kfexecute = __KF_NEW__( KFMongoDataExecute );
                 break;
-            case KFMsg::MySQL:
+            case KFDatabaseEnum::MySQL:
                 kfexecute = __KF_NEW__( KFMySQLDataExecute );
                 break;
             default:

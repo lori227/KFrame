@@ -1,5 +1,4 @@
 ﻿#include "KFDirDatabaseModule.hpp"
-#include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
@@ -8,7 +7,7 @@ namespace KFrame
         auto dirdatabasetype = KFGlobal::Instance()->GetUInt32( __STRING__( dirdatabase ) );
         switch ( dirdatabasetype )
         {
-        case KFMsg::Mongo:
+        case KFDatabaseEnum::Mongo:
             _dir_database_logic = __NEW_OBJECT__( KFDirDatabaseMongo );
             break;
         default:

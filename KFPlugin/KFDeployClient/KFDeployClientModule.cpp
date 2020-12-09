@@ -18,7 +18,7 @@ namespace KFrame
         __REGISTER_DEPLOY_FUNCTION__( __STRING__( moduleopen ), &KFDeployClientModule::OnDeployModuleOpen );
         __REGISTER_DEPLOY_FUNCTION__( __STRING__( moduleclose ), &KFDeployClientModule::OnDeployModuleClose );
         ////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFDeployClientModule, KFMsg::S2S_DEPLOY_COMMAND_TO_CLIENT_REQ, KFMsg::S2SDeployCommandToClientReq, HandleDeployCommandToClientReq );
+        __REGISTER_MESSAGE__( KFDeployClientModule, KFMessageEnum::Normal, KFMsg::S2S_DEPLOY_COMMAND_TO_CLIENT_REQ, KFMsg::S2SDeployCommandToClientReq, HandleDeployCommandToClientReq );
     }
 
     void KFDeployClientModule::ShutDown()

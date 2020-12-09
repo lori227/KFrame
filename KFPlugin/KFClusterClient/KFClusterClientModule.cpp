@@ -17,8 +17,8 @@ namespace KFrame
         __REGISTER_TCP_CLIENT_SHUTDOWN__( &KFClusterClientModule::OnClientLostClusterProxy );
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFClusterClientModule, KFMsg::S2S_CLUSTER_AUTH_TO_CLIENT_ACK, KFMsg::S2SClusterAuthToClientAck, HandleClusterAuthToClientAck );
-        __REGISTER_MESSAGE__( KFClusterClientModule, KFMsg::S2S_CLUSTER_VERIFY_TO_CLIENT_ACK, KFMsg::S2SClusterVerifyToClientAck, HandleClusterVerifyToClientAck );
+        __REGISTER_MESSAGE__( KFClusterClientModule, KFMessageEnum::Normal, KFMsg::S2S_CLUSTER_AUTH_TO_CLIENT_ACK, KFMsg::S2SClusterAuthToClientAck, HandleClusterAuthToClientAck );
+        __REGISTER_MESSAGE__( KFClusterClientModule, KFMessageEnum::Normal, KFMsg::S2S_CLUSTER_VERIFY_TO_CLIENT_ACK, KFMsg::S2SClusterVerifyToClientAck, HandleClusterVerifyToClientAck );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 

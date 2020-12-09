@@ -7,8 +7,8 @@ namespace KFrame
         _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
         __REGISTER_UPDATE_DATA__( &KFRankClientModule::OnDataUpdateCallBack );
         ///////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFRankClientModule, KFMsg::MSG_QUERY_RANK_LIST_REQ, KFMsg::MsgQueryRankListReq, HandleQueryRankListReq );
-        __REGISTER_MESSAGE__( KFRankClientModule, KFMsg::MSG_QUERY_FRIEND_RANK_LIST_REQ, KFMsg::MsgQueryFriendRankListReq, HandleQueryFriendRankListReq );
+        __REGISTER_MESSAGE__( KFRankClientModule, KFMessageEnum::Player, KFMsg::MSG_QUERY_RANK_LIST_REQ, KFMsg::MsgQueryRankListReq, HandleQueryRankListReq );
+        __REGISTER_MESSAGE__( KFRankClientModule, KFMessageEnum::Player, KFMsg::MSG_QUERY_FRIEND_RANK_LIST_REQ, KFMsg::MsgQueryFriendRankListReq, HandleQueryFriendRankListReq );
     }
 
     void KFRankClientModule::BeforeShut()
@@ -138,40 +138,36 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFRankClientModule::HandleQueryRankListReq, KFMsg::MsgQueryRankListReq )
     {
-        __ROUTE_FIND_PLAYER__;
-
         auto kfsetting = KFRankConfig::Instance()->FindSetting( kfmsg->rankid() );
         if ( kfsetting == nullptr )
         {
-            return _kf_display->SendToClient( player, KFMsg::RankNotExist );
+            return _kf_display->SendToClient( kfentity, KFMsg::RankNotExist );
         }
 
         KFMsg::S2SQueryRankListReq req;
         req.set_rankid( kfmsg->rankid() );
-        req.set_zoneid( CalcRankZoneId( playerid, kfsetting ) );
         req.set_start( kfmsg->start() == 0u ? 1u : kfmsg->start() );
         req.set_count( kfmsg->count() );
-        auto ok = _kf_route->SendToRand( playerid, __STRING__( rank ), KFMsg::S2S_QUERY_RANK_LIST_REQ, &req );
+        req.set_zoneid( CalcRankZoneId( kfentity->GetKeyID(), kfsetting ) );
+        auto ok = _kf_route->SendToRand( kfentity->GetKeyID(), __STRING__( rank ), KFMsg::S2S_QUERY_RANK_LIST_REQ, &req );
         if ( !ok )
         {
-            _kf_display->SendToClient( player, KFMsg::RankServerBusy );
+            _kf_display->SendToClient( kfentity, KFMsg::RankServerBusy );
         }
     }
 
     __KF_MESSAGE_FUNCTION__( KFRankClientModule::HandleQueryFriendRankListReq, KFMsg::MsgQueryFriendRankListReq )
     {
-        __ROUTE_FIND_PLAYER__;
-
         auto kfsetting = KFRankConfig::Instance()->FindSetting( kfmsg->rankid() );
         if ( kfsetting == nullptr )
         {
-            return _kf_display->SendToClient( player, KFMsg::RankNotExist );
+            return _kf_display->SendToClient( kfentity, KFMsg::RankNotExist );
         }
 
         KFMsg::S2SQueryFriendRankListReq req;
         req.set_rankid( kfmsg->rankid() );
 
-        auto kffriendrecord = player->Find( __STRING__( friend ) );
+        auto kffriendrecord = kfentity->Find( __STRING__( friend ) );
         auto kffriend = kffriendrecord->First();
         while ( kffriend != nullptr )
         {
@@ -180,10 +176,10 @@ namespace KFrame
             kffriend = kffriendrecord->Next();
         }
 
-        auto ok = _kf_route->SendToRand( playerid, __STRING__( rank ), KFMsg::S2S_QUERY_FRIEND_RANK_LIST_REQ, &req );
+        auto ok = _kf_route->SendToRand( kfentity->GetKeyID(), __STRING__( rank ), KFMsg::S2S_QUERY_FRIEND_RANK_LIST_REQ, &req );
         if ( !ok )
         {
-            _kf_display->SendToClient( player, KFMsg::RankServerBusy );
+            _kf_display->SendToClient( kfentity, KFMsg::RankServerBusy );
         }
     }
 }

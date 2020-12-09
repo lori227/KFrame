@@ -6,7 +6,7 @@ namespace KFrame
     {
         _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
         //////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFStoreModule, KFMsg::MSG_STORE_BUY_GOODS_REQ, KFMsg::MsgStoreBuyGoodsReq, HandleStoreBuyGoodsReq );
+        __REGISTER_MESSAGE__( KFStoreModule, KFMessageEnum::Player, KFMsg::MSG_STORE_BUY_GOODS_REQ, KFMsg::MsgStoreBuyGoodsReq, HandleStoreBuyGoodsReq );
     }
 
     void KFStoreModule::BeforeShut()
@@ -19,15 +19,13 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFStoreModule::HandleStoreBuyGoodsReq, KFMsg::MsgStoreBuyGoodsReq )
     {
-        __ROUTE_FIND_PLAYER__;
-
         auto kfsetting = KFStoreConfig::Instance()->FindSetting( kfmsg->storeid() );
         if ( kfsetting == nullptr )
         {
-            return _kf_display->SendToClient( player, KFMsg::StoreSettingError, kfmsg->storeid() );
+            return _kf_display->SendToClient( kfentity, KFMsg::StoreSettingError, kfmsg->storeid() );
         }
 
-        auto result = _kf_goods->BuyGoods( player, kfmsg->storeid(), kfmsg->goodsid(), kfmsg->buycount() );
-        return _kf_display->DelayToClient( player, result );
+        auto result = _kf_goods->BuyGoods( kfentity, kfmsg->storeid(), kfmsg->goodsid(), kfmsg->buycount() );
+        return _kf_display->DelayToClient( kfentity, result );
     }
 }

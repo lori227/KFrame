@@ -10,9 +10,9 @@ namespace KFrame
         __REGISTER_PLAYER_AFTER_ENTER__( &KFItemMoveModule::OnEnterItemMoveModule );
         __REGISTER_PLAYER_LEAVE__( &KFItemMoveModule::OnLeaveItemMoveModule );
         //////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFItemMoveModule, KFMsg::MSG_MOVE_ITEM_REQ, KFMsg::MsgMoveItemReq, HandleMoveItemReq );
-        __REGISTER_MESSAGE__( KFItemMoveModule, KFMsg::MSG_MOVE_ALL_ITEM_REQ, KFMsg::MsgMoveAllItemReq, HandleMoveAllItemReq );
-        __REGISTER_MESSAGE__( KFItemMoveModule, KFMsg::MSG_SORT_ITEM_REQ, KFMsg::MsgSortItemReq, HandleSortItemReq );
+        __REGISTER_MESSAGE__( KFItemMoveModule, KFMessageEnum::Player, KFMsg::MSG_MOVE_ITEM_REQ, KFMsg::MsgMoveItemReq, HandleMoveItemReq );
+        __REGISTER_MESSAGE__( KFItemMoveModule, KFMessageEnum::Player, KFMsg::MSG_MOVE_ALL_ITEM_REQ, KFMsg::MsgMoveAllItemReq, HandleMoveAllItemReq );
+        __REGISTER_MESSAGE__( KFItemMoveModule, KFMessageEnum::Player, KFMsg::MSG_SORT_ITEM_REQ, KFMsg::MsgSortItemReq, HandleSortItemReq );
     }
 
     void KFItemMoveModule::AfterLoad()
@@ -767,20 +767,18 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFItemMoveModule::HandleMoveItemReq, KFMsg::MsgMoveItemReq )
     {
-        __ROUTE_FIND_PLAYER__;
-
         uint32 result = KFMsg::Error;
         if ( kfmsg->sourcename() == kfmsg->targetname() )
         {
-            result = MoveTabItem( player, kfmsg->sourcename(), kfmsg->tabname(), kfmsg->sourceuuid(), kfmsg->targetindex() );
+            result = MoveTabItem( kfentity, kfmsg->sourcename(), kfmsg->tabname(), kfmsg->sourceuuid(), kfmsg->targetindex() );
         }
         else
         {
-            result = MoveBagItem( player, kfmsg->sourcename(), kfmsg->sourceuuid(), kfmsg->targetname(), kfmsg->targetindex() );
+            result = MoveBagItem( kfentity, kfmsg->sourcename(), kfmsg->sourceuuid(), kfmsg->targetname(), kfmsg->targetindex() );
         }
         if ( result != KFMsg::Ok )
         {
-            return _kf_display->SendToClient( player, result );
+            return _kf_display->SendToClient( kfentity, result );
         }
     }
 
@@ -895,22 +893,20 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFItemMoveModule::HandleMoveAllItemReq, KFMsg::MsgMoveAllItemReq )
     {
-        __ROUTE_FIND_PLAYER__;
-
         auto kfsourcebagsetting = KFItemBagConfig::Instance()->FindSetting( kfmsg->sourcename() );
         auto kftargetbagsetting = KFItemBagConfig::Instance()->FindSetting( kfmsg->targetname() );
         if ( kfsourcebagsetting == nullptr || kftargetbagsetting == nullptr || !kfsourcebagsetting->_can_move_all )
         {
-            return _kf_display->SendToClient( player, KFMsg::ItemBagCanNotMove );
+            return _kf_display->SendToClient( kfentity, KFMsg::ItemBagCanNotMove );
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 全部拾取
-        auto kfsourcerecord = player->Find( kfmsg->sourcename() );
-        auto kftargetrecord = player->Find( kfmsg->targetname() );
+        auto kfsourcerecord = kfentity->Find( kfmsg->sourcename() );
+        auto kftargetrecord = kfentity->Find( kfmsg->targetname() );
         if ( kfsourcerecord == nullptr || kftargetrecord == nullptr )
         {
-            return _kf_display->SendToClient( player, KFMsg::ItemBagNameError );
+            return _kf_display->SendToClient( kfentity, KFMsg::ItemBagNameError );
         }
 
         // 遍历出可以移动的道具
@@ -929,10 +925,10 @@ namespace KFrame
 
         for ( auto& iter : movelist )
         {
-            auto result = MoveItemDataLogic( player, iter.second, kfsourcebagsetting, kfsourcerecord, iter.first, kftargetbagsetting, kftargetrecord );
+            auto result = MoveItemDataLogic( kfentity, iter.second, kfsourcebagsetting, kfsourcerecord, iter.first, kftargetbagsetting, kftargetrecord );
             if ( result != KFMsg::Ok )
             {
-                return _kf_display->SendToClient( player, result );
+                return _kf_display->SendToClient( kfentity, result );
             }
         }
     }
@@ -997,8 +993,7 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFItemMoveModule::HandleSortItemReq, KFMsg::MsgSortItemReq )
     {
-        __ROUTE_FIND_PLAYER__;
-        SortItem( player, kfmsg->bagname(), kfmsg->tabname() );
+        SortItem( kfentity, kfmsg->bagname(), kfmsg->tabname() );
     }
 
     void KFItemMoveModule::SortItem( KFEntity* player, const std::string& bagname, const std::string& tabname )

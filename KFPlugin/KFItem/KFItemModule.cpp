@@ -49,9 +49,9 @@ namespace KFrame
         __REGISTER_PLAYER_ENTER__( &KFItemModule::OnEnterItemModule );
         __REGISTER_PLAYER_LEAVE__( &KFItemModule::OnLeaveItemModule );
         ///////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFItemModule, KFMsg::MSG_REMOVE_ITEM_REQ, KFMsg::MsgRemoveItemReq, HandleRemoveItemReq );
-        __REGISTER_MESSAGE__( KFItemModule, KFMsg::MSG_REMOVE_ITEM_COUNT_REQ, KFMsg::MsgRemoveItemCountReq, HandleRemoveItemCountReq );
-        __REGISTER_MESSAGE__( KFItemModule, KFMsg::MSG_SELL_ITEM_REQ, KFMsg::MsgSellItemReq, HandleSellItemReq );
+        __REGISTER_MESSAGE__( KFItemModule, KFMessageEnum::Player, KFMsg::MSG_REMOVE_ITEM_REQ, KFMsg::MsgRemoveItemReq, HandleRemoveItemReq );
+        __REGISTER_MESSAGE__( KFItemModule, KFMessageEnum::Player, KFMsg::MSG_REMOVE_ITEM_COUNT_REQ, KFMsg::MsgRemoveItemCountReq, HandleRemoveItemCountReq );
+        __REGISTER_MESSAGE__( KFItemModule, KFMessageEnum::Player, KFMsg::MSG_SELL_ITEM_REQ, KFMsg::MsgSellItemReq, HandleSellItemReq );
     }
 
     void KFItemModule::BeforeShut()
@@ -95,26 +95,24 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFItemModule::HandleRemoveItemReq, KFMsg::MsgRemoveItemReq )
     {
-        __ROUTE_FIND_PLAYER__;
-        __LOG_INFO__( "player=[{}] remove item=[{}:{}]", playerid, kfmsg->sourcename(), kfmsg->uuid() );
+        __LOG_INFO__( "player=[{}] remove item=[{}:{}]", kfentity->GetKeyID(), kfmsg->sourcename(), kfmsg->uuid() );
 
         if ( kfmsg->uuid() == 0u )
         {
-            player->ClearRecord( kfmsg->sourcename() );
+            kfentity->ClearRecord( kfmsg->sourcename() );
         }
         else
         {
-            player->RemoveRecord( kfmsg->sourcename(), kfmsg->uuid() );
+            kfentity->RemoveRecord( kfmsg->sourcename(), kfmsg->uuid() );
         }
     }
 
     __KF_MESSAGE_FUNCTION__( KFItemModule::HandleRemoveItemCountReq, KFMsg::MsgRemoveItemCountReq )
     {
-        __ROUTE_FIND_PLAYER__;
-        __LOG_INFO__( "player=[{}] remove itemcount=[{}:{}]", playerid, kfmsg->itemid(), kfmsg->count() );
+        __LOG_INFO__( "player=[{}] remove itemcount=[{}:{}]", kfentity->GetKeyID(), kfmsg->itemid(), kfmsg->count() );
 
-        auto kfitemrecord = FindItemBag( player, kfmsg->itemid() );
-        RemoveItem( player, kfitemrecord, kfmsg->itemid(), kfmsg->count() );
+        auto kfitemrecord = FindItemBag( kfentity, kfmsg->itemid() );
+        RemoveItem( kfentity, kfitemrecord, kfmsg->itemid(), kfmsg->count() );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_GET_CONFIG_VALUE_FUNCTION__( KFItemModule::GetItemTotalCount )
@@ -927,42 +925,40 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFItemModule::HandleSellItemReq, KFMsg::MsgSellItemReq )
     {
-        __ROUTE_FIND_PLAYER__;
-
-        auto kfitembag = player->Find( kfmsg->name() );
+        auto kfitembag = kfentity->Find( kfmsg->name() );
         auto kfitem = kfitembag->Find( kfmsg->uuid() );
         if ( kfitem == nullptr )
         {
-            return _kf_display->SendToClient( player, KFMsg::ItemDataNotExist );
+            return _kf_display->SendToClient( kfentity, KFMsg::ItemDataNotExist );
         }
 
         auto itemid = kfitem->Get<uint32>( __STRING__( id ) );
         auto kfsetting = KFItemConfig::Instance()->FindSetting( itemid );
         if ( kfsetting == nullptr )
         {
-            return _kf_display->SendToClient( player, KFMsg::ItemSettingNotExist );
+            return _kf_display->SendToClient( kfentity, KFMsg::ItemSettingNotExist );
         }
 
         if ( kfsetting->_sell.IsEmpty() )
         {
-            return _kf_display->SendToClient( player, KFMsg::ItemCanNotSell );
+            return _kf_display->SendToClient( kfentity, KFMsg::ItemCanNotSell );
         }
 
         auto count = kfitem->Get<uint32>( __STRING__( count ) );
         if ( kfmsg->count() == 0u || count < kfmsg->count() )
         {
-            return _kf_display->SendToClient( player, KFMsg::ItemSellCountError );
+            return _kf_display->SendToClient( kfentity, KFMsg::ItemSellCountError );
         }
 
         // 更新道具数量
-        player->UpdateObject( kfitem, __STRING__( count ), KFEnum::Dec, kfmsg->count() );
+        kfentity->UpdateObject( kfitem, __STRING__( count ), KFEnum::Dec, kfmsg->count() );
 
         // 添加道具
-        player->AddElement( &kfsetting->_sell, kfmsg->count(), __STRING__( sell ), itemid, __FUNC_LINE__ );
+        kfentity->AddElement( &kfsetting->_sell, kfmsg->count(), __STRING__( sell ), itemid, __FUNC_LINE__ );
 
         KFMsg::MsgSellItemAck ack;
         ack.set_itemid( itemid );
         ack.set_count( kfmsg->count() );
-        _kf_player->SendToClient( player, KFMsg::MSG_SELL_ITEM_ACK, &ack );
+        _kf_player->SendToClient( kfentity, KFMsg::MSG_SELL_ITEM_ACK, &ack );
     }
 }

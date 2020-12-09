@@ -8,10 +8,10 @@ namespace KFrame
         __REGISTER_TCP_SERVER_LOST__( &KFTcpDiscoverModule::OnServerLostClient );
         __REGISTER_TCP_CLIENT_CONNECTION__( &KFTcpDiscoverModule::OnClientConnectServer );
         //////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFTcpDiscoverModule, KFMsg::S2S_TELL_DISCOVER_SERVER_TO_MASTER, KFMsg::S2STellDiscoverServerToMaster, HandleTellDiscoverServerToMaster );
-        __REGISTER_MESSAGE__( KFTcpDiscoverModule, KFMsg::S2S_TELL_LOST_SERVER_TO_MASTER, KFMsg::S2STellLostServerToMaster, HandleTellLostServerToMaster );
-        __REGISTER_MESSAGE__( KFTcpDiscoverModule, KFMsg::S2S_TELL_REGISTER_SERVER_TO_MASTER, KFMsg::S2STellRegisterServerToMaster, HandleTellRegisterServerToMaster );
-        __REGISTER_MESSAGE__( KFTcpDiscoverModule, KFMsg::S2S_TELL_SERVER_LIST_TO_MASTER, KFMsg::S2STellServerListToMaster, HandleTellServerListToMaster );
+        __REGISTER_MESSAGE__( KFTcpDiscoverModule, KFMessageEnum::Normal, KFMsg::S2S_TELL_DISCOVER_SERVER_TO_MASTER, KFMsg::S2STellDiscoverServerToMaster, HandleTellDiscoverServerToMaster );
+        __REGISTER_MESSAGE__( KFTcpDiscoverModule, KFMessageEnum::Normal, KFMsg::S2S_TELL_LOST_SERVER_TO_MASTER, KFMsg::S2STellLostServerToMaster, HandleTellLostServerToMaster );
+        __REGISTER_MESSAGE__( KFTcpDiscoverModule, KFMessageEnum::Normal, KFMsg::S2S_TELL_REGISTER_SERVER_TO_MASTER, KFMsg::S2STellRegisterServerToMaster, HandleTellRegisterServerToMaster );
+        __REGISTER_MESSAGE__( KFTcpDiscoverModule, KFMessageEnum::Normal, KFMsg::S2S_TELL_SERVER_LIST_TO_MASTER, KFMsg::S2STellServerListToMaster, HandleTellServerListToMaster );
     }
 
     void KFTcpDiscoverModule::ShutDown()

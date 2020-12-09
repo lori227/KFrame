@@ -1,5 +1,4 @@
 ﻿#include "KFRelationDatabaseModule.hpp"
-#include "KFProtocol/KFProtocol.h"
 
 namespace KFrame
 {
@@ -8,7 +7,7 @@ namespace KFrame
         auto databasetype = KFGlobal::Instance()->GetUInt32( __STRING__( relationdatabase ) );
         switch ( databasetype )
         {
-        case KFMsg::Mongo:
+        case KFDatabaseEnum::Mongo:
             _relation_database_logic = __NEW_OBJECT__( KFRelationDatabaseMongo );
             break;
         default:

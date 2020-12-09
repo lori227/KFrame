@@ -1,6 +1,4 @@
 ﻿#include "KFDirClientModule.hpp"
-#include "KFProtocol/KFProtocol.h"
-
 namespace KFrame
 {
 
@@ -70,7 +68,7 @@ namespace KFrame
             auto recvdata = _kf_http_client->STGet( _register_url, kfjson );
             __JSON_PARSE_STRING__( kfresult, recvdata );
             auto retcode = _kf_http_client->GetCode( kfresult );
-            return ( retcode == KFMsg::Ok );
+            return ( retcode == KFEnum::Ok );
         }
     }
 
@@ -85,7 +83,7 @@ namespace KFrame
 
         __JSON_PARSE_STRING__( recvjson, resultdata );
         auto retcode = _kf_http_client->GetCode( recvjson );
-        return ( retcode == KFMsg::Ok );
+        return ( retcode == KFEnum::Ok );
     }
 
     void KFDirClientModule::ZoneBalanceToDir( uint32 zoneid, uint32 count )
