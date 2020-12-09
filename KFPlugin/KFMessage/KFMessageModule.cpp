@@ -67,7 +67,7 @@ namespace KFrame
 
     void KFMessageModule::BindFindEngityFunction( uint32 type, KFModule* module, KFFindEntityFunction& function )
     {
-        auto kffunction = _find_entity_function.Find( type );
+        auto kffunction = _find_entity_function.Create( type );
         kffunction->SetFunction( module, function );
     }
 
