@@ -55,7 +55,7 @@ enum FrameProtocol
 	S2S_ROUTE_MESSAGE_TO_NAME_BALANCE_REQ = 10204;		// 转发消息到负载最小服务器
 	S2S_ROUTE_MESSAGE_TO_NAME_OBJECT_REQ = 10205;		// 转发消息到对象所在服务器
 	S2S_ROUTE_MESSAGE_TO_SERVER_REQ = 10206;			// 转发消息到指定服务器
-	S2S_ROUTE_MESSAGE_TO_PLAYER_REQ = 10207;			// 转发消息到指定玩家
+	S2S_ROUTE_MESSAGE_TO_ENTITY_REQ = 10207;			// 转发消息到指定实体
 	S2S_ROUTE_CLIENT_LOST_TO_SHARD_REQ = 10208;			// Route客户端丢失
 	S2S_ROUTE_DISCOVER_TO_CLIENT_REQ = 10209;			// 通知客户端发现新的服务器
 	S2S_ROUTE_SYNC_OBJECT_TO_PROXY_REQ = 10210;			// 同步对象列表到Proxy
@@ -327,9 +327,9 @@ message S2SRouteMessageToServerReq
 	bytes msgdata = 4;		// 消息内容
 }
 
-// 转发消息到指定玩家
-// S2S_ROUTE_MESSAGE_TO_PLAYER_REQ
-message S2SRouteMessageToPlayerReq
+// 转发消息到指定实体
+// S2S_ROUTE_MESSAGE_TO_ENTITY_REQ
+message S2SRouteMessageToEntityReq
 {
 	PBRoute pbroute = 1;	// 路由信息
 	uint64 targetid = 2;	// 目标服务器

@@ -142,12 +142,12 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 发送到指定玩家( 只发送一次 )
-        virtual bool SendToPlayer( uint64 serverid, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool SendToPlayer( uint64 sendid, uint64 serverid, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToEntity( uint64 serverid, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToEntity( uint64 sendid, uint64 serverid, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message );
 
         // 发送到指定玩家( 失败重复发送 )
-        virtual bool RepeatToPlayer( uint64 serverid, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool RepeatToPlayer( uint64 sendid, uint64 serverid, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool RepeatToEntity( uint64 serverid, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool RepeatToEntity( uint64 sendid, uint64 serverid, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     protected:

@@ -12,7 +12,7 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFRouteProxyModule, KFMessageEnum::Normal, KFMsg::S2S_ROUTE_ADD_OBJECT_TO_PROXY_REQ, KFMsg::S2SRouteAddObjectToProxyReq, HandleRouteAddObjectToProxyReq );
         __REGISTER_MESSAGE__( KFRouteProxyModule, KFMessageEnum::Normal, KFMsg::S2S_ROUTE_REMOVE_OBJECT_TO_PROXY_REQ, KFMsg::S2SRouteRemoveObjectToProxyReq, HandleRouteRemoveObjectToProxyReq );
         __REGISTER_MESSAGE__( KFRouteProxyModule, KFMessageEnum::Normal, KFMsg::S2S_ROUTE_MESSAGE_TO_SERVER_REQ, KFMsg::S2SRouteMessageToServerReq, HandleRouteMessageToServerReq );
-        __REGISTER_MESSAGE__( KFRouteProxyModule, KFMessageEnum::Normal, KFMsg::S2S_ROUTE_MESSAGE_TO_PLAYER_REQ, KFMsg::S2SRouteMessageToPlayerReq, HandleRouteMessageToPlayerReq );
+        __REGISTER_MESSAGE__( KFRouteProxyModule, KFMessageEnum::Normal, KFMsg::S2S_ROUTE_MESSAGE_TO_ENTITY_REQ, KFMsg::S2SRouteMessageToEntityReq, HandleRouteMessageToEntityReq );
     }
 
     void KFRouteProxyModule::BeforeShut()
@@ -25,7 +25,7 @@ namespace KFrame
         __UN_MESSAGE__( KFMsg::S2S_ROUTE_ADD_OBJECT_TO_PROXY_REQ );
         __UN_MESSAGE__( KFMsg::S2S_ROUTE_REMOVE_OBJECT_TO_PROXY_REQ );
         __UN_MESSAGE__( KFMsg::S2S_ROUTE_MESSAGE_TO_SERVER_REQ );
-        __UN_MESSAGE__( KFMsg::S2S_ROUTE_MESSAGE_TO_PLAYER_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_ROUTE_MESSAGE_TO_ENTITY_REQ );
 
     }
     //////////////////////////////////////////////////////////////////////////////////////////////
@@ -106,7 +106,7 @@ namespace KFrame
         }
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRouteProxyModule::HandleRouteMessageToPlayerReq, KFMsg::S2SRouteMessageToPlayerReq )
+    __KF_MESSAGE_FUNCTION__( KFRouteProxyModule::HandleRouteMessageToEntityReq, KFMsg::S2SRouteMessageToEntityReq )
     {
         // 判断是否在本服务器上
         bool havehandle = _kf_tcp_server->HaveHandle( kfmsg->targetid() );
@@ -120,7 +120,7 @@ namespace KFrame
         }
         else
         {
-            _kf_cluster_proxy->TranspondToShard( route, KFMsg::S2S_ROUTE_MESSAGE_TO_PLAYER_REQ, kfmsg );
+            _kf_cluster_proxy->TranspondToShard( route, msgid, kfmsg );
         }
     }
 }

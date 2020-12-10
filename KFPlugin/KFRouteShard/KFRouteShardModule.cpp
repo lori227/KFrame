@@ -35,7 +35,7 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFRouteShardModule, KFMessageEnum::Normal, KFMsg::S2S_ROUTE_MESSAGE_TO_NAME_BALANCE_REQ, KFMsg::S2SRouteMessageToNameBalanceReq, HandleRouteMessageToNameBalanceReq );
         __REGISTER_MESSAGE__( KFRouteShardModule, KFMessageEnum::Normal, KFMsg::S2S_ROUTE_MESSAGE_TO_NAME_OBJECT_REQ, KFMsg::S2SRouteMessageToNameObjectReq, HandleRouteMessageToNameObjectReq );
         __REGISTER_MESSAGE__( KFRouteShardModule, KFMessageEnum::Normal, KFMsg::S2S_ROUTE_MESSAGE_TO_SERVER_REQ, KFMsg::S2SRouteMessageToServerReq, HandleRouteMessageToServerReq );
-        __REGISTER_MESSAGE__( KFRouteShardModule, KFMessageEnum::Normal, KFMsg::S2S_ROUTE_MESSAGE_TO_PLAYER_REQ, KFMsg::S2SRouteMessageToPlayerReq, HandleRouteMessageToPlayerReq );
+        __REGISTER_MESSAGE__( KFRouteShardModule, KFMessageEnum::Normal, KFMsg::S2S_ROUTE_MESSAGE_TO_ENTITY_REQ, KFMsg::S2SRouteMessageToEntityReq, HandleRouteMessageToEntityReq );
         __REGISTER_MESSAGE__( KFRouteShardModule, KFMessageEnum::Normal, KFMsg::S2S_ROUTE_CLIENT_LOST_TO_SHARD_REQ, KFMsg::S2SRouteClientLostToShardReq, HandleRouteClientLostToShardReq );
         __REGISTER_MESSAGE__( KFRouteShardModule, KFMessageEnum::Normal, KFMsg::S2S_ROUTE_SYNC_OBJECT_TO_SHARD_REQ, KFMsg::S2SRouteSyncObjectToShardReq, HandleRouteSyncObjectToShardReq );
         __REGISTER_MESSAGE__( KFRouteShardModule, KFMessageEnum::Normal, KFMsg::S2S_ROUTE_ADD_OBJECT_TO_SHARD_REQ, KFMsg::S2SRouteAddObjectToShardReq, HandleRouteAddObjectToShardReq );
@@ -50,7 +50,7 @@ namespace KFrame
         __UN_MESSAGE__( KFMsg::S2S_ROUTE_MESSAGE_TO_NAME_BALANCE_REQ );
         __UN_MESSAGE__( KFMsg::S2S_ROUTE_MESSAGE_TO_NAME_OBJECT_REQ );
         __UN_MESSAGE__( KFMsg::S2S_ROUTE_MESSAGE_TO_SERVER_REQ );
-        __UN_MESSAGE__( KFMsg::S2S_ROUTE_MESSAGE_TO_PLAYER_REQ );
+        __UN_MESSAGE__( KFMsg::S2S_ROUTE_MESSAGE_TO_ENTITY_REQ );
         __UN_MESSAGE__( KFMsg::S2S_ROUTE_CLIENT_LOST_TO_SHARD_REQ );
         __UN_MESSAGE__( KFMsg::S2S_ROUTE_SYNC_OBJECT_TO_SHARD_REQ );
         __UN_MESSAGE__( KFMsg::S2S_ROUTE_ADD_OBJECT_TO_SHARD_REQ );
@@ -125,7 +125,7 @@ namespace KFrame
         SendRouteMessage( kfmsg->targetid(), pbroute, kfmsg->msgid(), kfmsg->msgdata() );
     }
 
-    __KF_MESSAGE_FUNCTION__( KFRouteShardModule::HandleRouteMessageToPlayerReq, KFMsg::S2SRouteMessageToPlayerReq )
+    __KF_MESSAGE_FUNCTION__( KFRouteShardModule::HandleRouteMessageToEntityReq, KFMsg::S2SRouteMessageToEntityReq )
     {
         auto pbroute = &kfmsg->pbroute();
         SendRouteMessage( kfmsg->targetid(), pbroute, kfmsg->msgid(), kfmsg->msgdata() );

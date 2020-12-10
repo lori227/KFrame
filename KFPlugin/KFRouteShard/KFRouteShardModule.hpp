@@ -61,7 +61,7 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleRouteMessageToServerReq, KFMsg::S2SRouteMessageToServerReq );
 
         // 转发消息到指定玩家
-        __KF_MESSAGE_FUNCTION__( HandleRouteMessageToPlayerReq, KFMsg::S2SRouteMessageToPlayerReq );
+        __KF_MESSAGE_FUNCTION__( HandleRouteMessageToEntityReq, KFMsg::S2SRouteMessageToEntityReq );
 
         // Route客户端丢失
         __KF_MESSAGE_FUNCTION__( HandleRouteClientLostToShardReq, KFMsg::S2SRouteClientLostToShardReq );

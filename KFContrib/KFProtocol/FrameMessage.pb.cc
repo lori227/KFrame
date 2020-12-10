@@ -192,11 +192,11 @@ class S2SRouteMessageToServerReqDefaultTypeInternal {
   ::google::protobuf::internal::ExplicitlyConstructed<S2SRouteMessageToServerReq>
       _instance;
 } _S2SRouteMessageToServerReq_default_instance_;
-class S2SRouteMessageToPlayerReqDefaultTypeInternal {
+class S2SRouteMessageToEntityReqDefaultTypeInternal {
  public:
-  ::google::protobuf::internal::ExplicitlyConstructed<S2SRouteMessageToPlayerReq>
+  ::google::protobuf::internal::ExplicitlyConstructed<S2SRouteMessageToEntityReq>
       _instance;
-} _S2SRouteMessageToPlayerReq_default_instance_;
+} _S2SRouteMessageToEntityReq_default_instance_;
 class S2SRouteClientLostToShardReqDefaultTypeInternal {
  public:
   ::google::protobuf::internal::ExplicitlyConstructed<S2SRouteClientLostToShardReq>
@@ -804,19 +804,19 @@ LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<1> scc_info_S2SRouteMessa
     {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 1, InitDefaultsS2SRouteMessageToServerReq}, {
       &protobuf_FrameMessage_2eproto::scc_info_PBRoute.base,}};
 
-static void InitDefaultsS2SRouteMessageToPlayerReq() {
+static void InitDefaultsS2SRouteMessageToEntityReq() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   {
-    void* ptr = &::KFMsg::_S2SRouteMessageToPlayerReq_default_instance_;
-    new (ptr) ::KFMsg::S2SRouteMessageToPlayerReq();
+    void* ptr = &::KFMsg::_S2SRouteMessageToEntityReq_default_instance_;
+    new (ptr) ::KFMsg::S2SRouteMessageToEntityReq();
     ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
   }
-  ::KFMsg::S2SRouteMessageToPlayerReq::InitAsDefaultInstance();
+  ::KFMsg::S2SRouteMessageToEntityReq::InitAsDefaultInstance();
 }
 
-LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<1> scc_info_S2SRouteMessageToPlayerReq =
-    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 1, InitDefaultsS2SRouteMessageToPlayerReq}, {
+LIBPROTOC_EXPORT ::google::protobuf::internal::SCCInfo<1> scc_info_S2SRouteMessageToEntityReq =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 1, InitDefaultsS2SRouteMessageToEntityReq}, {
       &protobuf_FrameMessage_2eproto::scc_info_PBRoute.base,}};
 
 static void InitDefaultsS2SRouteClientLostToShardReq() {
@@ -1332,7 +1332,7 @@ void InitDefaults() {
   ::google::protobuf::internal::InitSCC(&scc_info_S2SRouteMessageToNameBalanceReq.base);
   ::google::protobuf::internal::InitSCC(&scc_info_S2SRouteMessageToNameObjectReq.base);
   ::google::protobuf::internal::InitSCC(&scc_info_S2SRouteMessageToServerReq.base);
-  ::google::protobuf::internal::InitSCC(&scc_info_S2SRouteMessageToPlayerReq.base);
+  ::google::protobuf::internal::InitSCC(&scc_info_S2SRouteMessageToEntityReq.base);
   ::google::protobuf::internal::InitSCC(&scc_info_S2SRouteClientLostToShardReq.base);
   ::google::protobuf::internal::InitSCC(&scc_info_S2SRouteDiscoverToClientReq.base);
   ::google::protobuf::internal::InitSCC(&scc_info_S2SRouteSyncObjectToProxyReq.base);
@@ -1606,14 +1606,14 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToServerReq, msgid_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToServerReq, msgdata_),
   ~0u,  // no _has_bits_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToPlayerReq, _internal_metadata_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToEntityReq, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToPlayerReq, pbroute_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToPlayerReq, targetid_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToPlayerReq, msgid_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToPlayerReq, msgdata_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToEntityReq, pbroute_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToEntityReq, targetid_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToEntityReq, msgid_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteMessageToEntityReq, msgdata_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SRouteClientLostToShardReq, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -1916,7 +1916,7 @@ static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROT
   { 205, -1, sizeof(::KFMsg::S2SRouteMessageToNameBalanceReq)},
   { 214, -1, sizeof(::KFMsg::S2SRouteMessageToNameObjectReq)},
   { 223, -1, sizeof(::KFMsg::S2SRouteMessageToServerReq)},
-  { 232, -1, sizeof(::KFMsg::S2SRouteMessageToPlayerReq)},
+  { 232, -1, sizeof(::KFMsg::S2SRouteMessageToEntityReq)},
   { 241, -1, sizeof(::KFMsg::S2SRouteClientLostToShardReq)},
   { 248, -1, sizeof(::KFMsg::S2SRouteDiscoverToClientReq)},
   { 254, -1, sizeof(::KFMsg::S2SRouteSyncObjectToProxyReq)},
@@ -1984,7 +1984,7 @@ static ::google::protobuf::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_S2SRouteMessageToNameBalanceReq_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_S2SRouteMessageToNameObjectReq_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_S2SRouteMessageToServerReq_default_instance_),
-  reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_S2SRouteMessageToPlayerReq_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_S2SRouteMessageToEntityReq_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_S2SRouteClientLostToShardReq_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_S2SRouteDiscoverToClientReq_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::KFMsg::_S2SRouteSyncObjectToProxyReq_default_instance_),
@@ -2105,8 +2105,8 @@ void AddDescriptorsImpl() {
       "\030\003 \001(\r\022\017\n\007msgdata\030\004 \001(\014\"o\n\032S2SRouteMessa"
       "geToServerReq\022\037\n\007pbroute\030\001 \001(\0132\016.KFMsg.P"
       "BRoute\022\020\n\010targetid\030\002 \001(\004\022\r\n\005msgid\030\003 \001(\r\022"
-      "\017\n\007msgdata\030\004 \001(\014\"o\n\032S2SRouteMessageToPla"
-      "yerReq\022\037\n\007pbroute\030\001 \001(\0132\016.KFMsg.PBRoute\022"
+      "\017\n\007msgdata\030\004 \001(\014\"o\n\032S2SRouteMessageToEnt"
+      "ityReq\022\037\n\007pbroute\030\001 \001(\0132\016.KFMsg.PBRoute\022"
       "\020\n\010targetid\030\002 \001(\004\022\r\n\005msgid\030\003 \001(\r\022\017\n\007msgd"
       "ata\030\004 \001(\014\">\n\034S2SRouteClientLostToShardRe"
       "q\022\014\n\004name\030\001 \001(\014\022\020\n\010clientid\030\002 \001(\004\".\n\033S2S"
@@ -2220,7 +2220,7 @@ void AddDescriptorsImpl() {
       "E_MESSAGE_TO_NAME_BALANCE_REQ\020\334O\022)\n$S2S_"
       "ROUTE_MESSAGE_TO_NAME_OBJECT_REQ\020\335O\022$\n\037S"
       "2S_ROUTE_MESSAGE_TO_SERVER_REQ\020\336O\022$\n\037S2S"
-      "_ROUTE_MESSAGE_TO_PLAYER_REQ\020\337O\022\'\n\"S2S_R"
+      "_ROUTE_MESSAGE_TO_ENTITY_REQ\020\337O\022\'\n\"S2S_R"
       "OUTE_CLIENT_LOST_TO_SHARD_REQ\020\340O\022%\n S2S_"
       "ROUTE_DISCOVER_TO_CLIENT_REQ\020\341O\022\'\n\"S2S_R"
       "OUTE_SYNC_OBJECT_TO_PROXY_REQ\020\342O\022&\n!S2S_"
@@ -11410,25 +11410,25 @@ void S2SRouteMessageToServerReq::InternalSwap(S2SRouteMessageToServerReq* other)
 
 // ===================================================================
 
-void S2SRouteMessageToPlayerReq::InitAsDefaultInstance() {
-  ::KFMsg::_S2SRouteMessageToPlayerReq_default_instance_._instance.get_mutable()->pbroute_ = const_cast< ::KFMsg::PBRoute*>(
+void S2SRouteMessageToEntityReq::InitAsDefaultInstance() {
+  ::KFMsg::_S2SRouteMessageToEntityReq_default_instance_._instance.get_mutable()->pbroute_ = const_cast< ::KFMsg::PBRoute*>(
       ::KFMsg::PBRoute::internal_default_instance());
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int S2SRouteMessageToPlayerReq::kPbrouteFieldNumber;
-const int S2SRouteMessageToPlayerReq::kTargetidFieldNumber;
-const int S2SRouteMessageToPlayerReq::kMsgidFieldNumber;
-const int S2SRouteMessageToPlayerReq::kMsgdataFieldNumber;
+const int S2SRouteMessageToEntityReq::kPbrouteFieldNumber;
+const int S2SRouteMessageToEntityReq::kTargetidFieldNumber;
+const int S2SRouteMessageToEntityReq::kMsgidFieldNumber;
+const int S2SRouteMessageToEntityReq::kMsgdataFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
-S2SRouteMessageToPlayerReq::S2SRouteMessageToPlayerReq()
+S2SRouteMessageToEntityReq::S2SRouteMessageToEntityReq()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   ::google::protobuf::internal::InitSCC(
-      &protobuf_FrameMessage_2eproto::scc_info_S2SRouteMessageToPlayerReq.base);
+      &protobuf_FrameMessage_2eproto::scc_info_S2SRouteMessageToEntityReq.base);
   SharedCtor();
-  // @@protoc_insertion_point(constructor:KFMsg.S2SRouteMessageToPlayerReq)
+  // @@protoc_insertion_point(constructor:KFMsg.S2SRouteMessageToEntityReq)
 }
-S2SRouteMessageToPlayerReq::S2SRouteMessageToPlayerReq(const S2SRouteMessageToPlayerReq& from)
+S2SRouteMessageToEntityReq::S2SRouteMessageToEntityReq(const S2SRouteMessageToEntityReq& from)
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
@@ -11444,42 +11444,42 @@ S2SRouteMessageToPlayerReq::S2SRouteMessageToPlayerReq(const S2SRouteMessageToPl
   ::memcpy(&targetid_, &from.targetid_,
     static_cast<size_t>(reinterpret_cast<char*>(&msgid_) -
     reinterpret_cast<char*>(&targetid_)) + sizeof(msgid_));
-  // @@protoc_insertion_point(copy_constructor:KFMsg.S2SRouteMessageToPlayerReq)
+  // @@protoc_insertion_point(copy_constructor:KFMsg.S2SRouteMessageToEntityReq)
 }
 
-void S2SRouteMessageToPlayerReq::SharedCtor() {
+void S2SRouteMessageToEntityReq::SharedCtor() {
   msgdata_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&pbroute_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&msgid_) -
       reinterpret_cast<char*>(&pbroute_)) + sizeof(msgid_));
 }
 
-S2SRouteMessageToPlayerReq::~S2SRouteMessageToPlayerReq() {
-  // @@protoc_insertion_point(destructor:KFMsg.S2SRouteMessageToPlayerReq)
+S2SRouteMessageToEntityReq::~S2SRouteMessageToEntityReq() {
+  // @@protoc_insertion_point(destructor:KFMsg.S2SRouteMessageToEntityReq)
   SharedDtor();
 }
 
-void S2SRouteMessageToPlayerReq::SharedDtor() {
+void S2SRouteMessageToEntityReq::SharedDtor() {
   msgdata_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (this != internal_default_instance()) delete pbroute_;
 }
 
-void S2SRouteMessageToPlayerReq::SetCachedSize(int size) const {
+void S2SRouteMessageToEntityReq::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
-const ::google::protobuf::Descriptor* S2SRouteMessageToPlayerReq::descriptor() {
+const ::google::protobuf::Descriptor* S2SRouteMessageToEntityReq::descriptor() {
   ::protobuf_FrameMessage_2eproto::protobuf_AssignDescriptorsOnce();
   return ::protobuf_FrameMessage_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
 }
 
-const S2SRouteMessageToPlayerReq& S2SRouteMessageToPlayerReq::default_instance() {
-  ::google::protobuf::internal::InitSCC(&protobuf_FrameMessage_2eproto::scc_info_S2SRouteMessageToPlayerReq.base);
+const S2SRouteMessageToEntityReq& S2SRouteMessageToEntityReq::default_instance() {
+  ::google::protobuf::internal::InitSCC(&protobuf_FrameMessage_2eproto::scc_info_S2SRouteMessageToEntityReq.base);
   return *internal_default_instance();
 }
 
 
-void S2SRouteMessageToPlayerReq::Clear() {
-// @@protoc_insertion_point(message_clear_start:KFMsg.S2SRouteMessageToPlayerReq)
+void S2SRouteMessageToEntityReq::Clear() {
+// @@protoc_insertion_point(message_clear_start:KFMsg.S2SRouteMessageToEntityReq)
   ::google::protobuf::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -11495,11 +11495,11 @@ void S2SRouteMessageToPlayerReq::Clear() {
   _internal_metadata_.Clear();
 }
 
-bool S2SRouteMessageToPlayerReq::MergePartialFromCodedStream(
+bool S2SRouteMessageToEntityReq::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:KFMsg.S2SRouteMessageToPlayerReq)
+  // @@protoc_insertion_point(parse_start:KFMsg.S2SRouteMessageToEntityReq)
   for (;;) {
     ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
     tag = p.first;
@@ -11569,17 +11569,17 @@ bool S2SRouteMessageToPlayerReq::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:KFMsg.S2SRouteMessageToPlayerReq)
+  // @@protoc_insertion_point(parse_success:KFMsg.S2SRouteMessageToEntityReq)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:KFMsg.S2SRouteMessageToPlayerReq)
+  // @@protoc_insertion_point(parse_failure:KFMsg.S2SRouteMessageToEntityReq)
   return false;
 #undef DO_
 }
 
-void S2SRouteMessageToPlayerReq::SerializeWithCachedSizes(
+void S2SRouteMessageToEntityReq::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:KFMsg.S2SRouteMessageToPlayerReq)
+  // @@protoc_insertion_point(serialize_start:KFMsg.S2SRouteMessageToEntityReq)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -11609,13 +11609,13 @@ void S2SRouteMessageToPlayerReq::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
   }
-  // @@protoc_insertion_point(serialize_end:KFMsg.S2SRouteMessageToPlayerReq)
+  // @@protoc_insertion_point(serialize_end:KFMsg.S2SRouteMessageToEntityReq)
 }
 
-::google::protobuf::uint8* S2SRouteMessageToPlayerReq::InternalSerializeWithCachedSizesToArray(
+::google::protobuf::uint8* S2SRouteMessageToEntityReq::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-  // @@protoc_insertion_point(serialize_to_array_start:KFMsg.S2SRouteMessageToPlayerReq)
+  // @@protoc_insertion_point(serialize_to_array_start:KFMsg.S2SRouteMessageToEntityReq)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -11647,12 +11647,12 @@ void S2SRouteMessageToPlayerReq::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:KFMsg.S2SRouteMessageToPlayerReq)
+  // @@protoc_insertion_point(serialize_to_array_end:KFMsg.S2SRouteMessageToEntityReq)
   return target;
 }
 
-size_t S2SRouteMessageToPlayerReq::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:KFMsg.S2SRouteMessageToPlayerReq)
+size_t S2SRouteMessageToEntityReq::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:KFMsg.S2SRouteMessageToEntityReq)
   size_t total_size = 0;
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -11693,23 +11693,23 @@ size_t S2SRouteMessageToPlayerReq::ByteSizeLong() const {
   return total_size;
 }
 
-void S2SRouteMessageToPlayerReq::MergeFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:KFMsg.S2SRouteMessageToPlayerReq)
+void S2SRouteMessageToEntityReq::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:KFMsg.S2SRouteMessageToEntityReq)
   GOOGLE_DCHECK_NE(&from, this);
-  const S2SRouteMessageToPlayerReq* source =
-      ::google::protobuf::internal::DynamicCastToGenerated<const S2SRouteMessageToPlayerReq>(
+  const S2SRouteMessageToEntityReq* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const S2SRouteMessageToEntityReq>(
           &from);
   if (source == NULL) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:KFMsg.S2SRouteMessageToPlayerReq)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:KFMsg.S2SRouteMessageToEntityReq)
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:KFMsg.S2SRouteMessageToPlayerReq)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:KFMsg.S2SRouteMessageToEntityReq)
     MergeFrom(*source);
   }
 }
 
-void S2SRouteMessageToPlayerReq::MergeFrom(const S2SRouteMessageToPlayerReq& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:KFMsg.S2SRouteMessageToPlayerReq)
+void S2SRouteMessageToEntityReq::MergeFrom(const S2SRouteMessageToEntityReq& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:KFMsg.S2SRouteMessageToEntityReq)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   ::google::protobuf::uint32 cached_has_bits = 0;
@@ -11730,29 +11730,29 @@ void S2SRouteMessageToPlayerReq::MergeFrom(const S2SRouteMessageToPlayerReq& fro
   }
 }
 
-void S2SRouteMessageToPlayerReq::CopyFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:KFMsg.S2SRouteMessageToPlayerReq)
+void S2SRouteMessageToEntityReq::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:KFMsg.S2SRouteMessageToEntityReq)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void S2SRouteMessageToPlayerReq::CopyFrom(const S2SRouteMessageToPlayerReq& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:KFMsg.S2SRouteMessageToPlayerReq)
+void S2SRouteMessageToEntityReq::CopyFrom(const S2SRouteMessageToEntityReq& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:KFMsg.S2SRouteMessageToEntityReq)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool S2SRouteMessageToPlayerReq::IsInitialized() const {
+bool S2SRouteMessageToEntityReq::IsInitialized() const {
   return true;
 }
 
-void S2SRouteMessageToPlayerReq::Swap(S2SRouteMessageToPlayerReq* other) {
+void S2SRouteMessageToEntityReq::Swap(S2SRouteMessageToEntityReq* other) {
   if (other == this) return;
   InternalSwap(other);
 }
-void S2SRouteMessageToPlayerReq::InternalSwap(S2SRouteMessageToPlayerReq* other) {
+void S2SRouteMessageToEntityReq::InternalSwap(S2SRouteMessageToEntityReq* other) {
   using std::swap;
   msgdata_.Swap(&other->msgdata_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
@@ -11762,7 +11762,7 @@ void S2SRouteMessageToPlayerReq::InternalSwap(S2SRouteMessageToPlayerReq* other)
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
 
-::google::protobuf::Metadata S2SRouteMessageToPlayerReq::GetMetadata() const {
+::google::protobuf::Metadata S2SRouteMessageToEntityReq::GetMetadata() const {
   protobuf_FrameMessage_2eproto::protobuf_AssignDescriptorsOnce();
   return ::protobuf_FrameMessage_2eproto::file_level_metadata[kIndexInFileMessages];
 }
@@ -21042,8 +21042,8 @@ template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::KFMsg::S2SRouteMessageToNameObje
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::KFMsg::S2SRouteMessageToServerReq* Arena::CreateMaybeMessage< ::KFMsg::S2SRouteMessageToServerReq >(Arena* arena) {
   return Arena::CreateInternal< ::KFMsg::S2SRouteMessageToServerReq >(arena);
 }
-template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::KFMsg::S2SRouteMessageToPlayerReq* Arena::CreateMaybeMessage< ::KFMsg::S2SRouteMessageToPlayerReq >(Arena* arena) {
-  return Arena::CreateInternal< ::KFMsg::S2SRouteMessageToPlayerReq >(arena);
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::KFMsg::S2SRouteMessageToEntityReq* Arena::CreateMaybeMessage< ::KFMsg::S2SRouteMessageToEntityReq >(Arena* arena) {
+  return Arena::CreateInternal< ::KFMsg::S2SRouteMessageToEntityReq >(arena);
 }
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::KFMsg::S2SRouteClientLostToShardReq* Arena::CreateMaybeMessage< ::KFMsg::S2SRouteClientLostToShardReq >(Arena* arena) {
   return Arena::CreateInternal< ::KFMsg::S2SRouteClientLostToShardReq >(arena);

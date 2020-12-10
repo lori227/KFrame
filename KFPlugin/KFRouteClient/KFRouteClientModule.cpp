@@ -179,7 +179,7 @@ namespace KFrame
         auto sendid = __ROUTE_RECV_ID__;
         auto recvid = __ROUTE_SEND_ID__;
 
-        return SendToPlayer( sendid, serverid, recvid, msgid, message );
+        return SendToEntity( sendid, serverid, recvid, msgid, message );
     }
 
     bool KFRouteClientModule::RepeatToRoute( const Route& route, uint32 msgid, ::google::protobuf::Message* message )
@@ -188,7 +188,7 @@ namespace KFrame
         auto sendid = __ROUTE_RECV_ID__;
         auto recvid = __ROUTE_SEND_ID__;
 
-        return RepeatToPlayer( sendid, serverid, recvid, msgid, message );
+        return RepeatToEntity( sendid, serverid, recvid, msgid, message );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -402,43 +402,43 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFRouteClientModule::SendToPlayer( uint64 serverid, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFRouteClientModule::SendToEntity( uint64 serverid, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message )
     {
-        return SendToPlayer( recvid, serverid, recvid, msgid, message );
+        return SendToEntity( recvid, serverid, recvid, msgid, message );
     }
 
-    bool KFRouteClientModule::SendToPlayer( uint64 sendid, uint64 serverid, uint64 playerid, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFRouteClientModule::SendToEntity( uint64 sendid, uint64 serverid, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message )
     {
-        KFMsg::S2SRouteMessageToPlayerReq req;
+        KFMsg::S2SRouteMessageToEntityReq req;
         auto pbroute = req.mutable_pbroute();
         pbroute->set_sendid( sendid );
-        pbroute->set_recvid( playerid );
+        pbroute->set_recvid( recvid );
         pbroute->set_serverid( KFGlobal::Instance()->_app_id->GetId() );
 
         req.set_targetid( serverid );
         req.set_msgid( msgid );
         req.set_msgdata( message->SerializeAsString() );
-        return _kf_cluster_client->RepeatToProxy( KFMsg::S2S_ROUTE_MESSAGE_TO_PLAYER_REQ, &req );
+        return _kf_cluster_client->RepeatToProxy( KFMsg::S2S_ROUTE_MESSAGE_TO_ENTITY_REQ, &req );
     }
 
-    bool KFRouteClientModule::RepeatToPlayer( uint64 serverid, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFRouteClientModule::RepeatToEntity( uint64 serverid, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message )
     {
-        return RepeatToPlayer( recvid, serverid, recvid, msgid, message );
+        return RepeatToEntity( recvid, serverid, recvid, msgid, message );
     }
 
-    bool KFRouteClientModule::RepeatToPlayer( uint64 sendid, uint64 serverid, uint64 playerid, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFRouteClientModule::RepeatToEntity( uint64 sendid, uint64 serverid, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message )
     {
-        KFMsg::S2SRouteMessageToPlayerReq req;
+        KFMsg::S2SRouteMessageToEntityReq req;
         auto pbroute = req.mutable_pbroute();
         pbroute->set_sendid( sendid );
-        pbroute->set_recvid( playerid );
+        pbroute->set_recvid( recvid );
         pbroute->set_serverid( KFGlobal::Instance()->_app_id->GetId() );
         pbroute->set_serial( ++_route_serial );
 
         req.set_targetid( serverid );
         req.set_msgid( msgid );
         req.set_msgdata( message->SerializeAsString() );
-        return SendRouteMessage( KFMsg::S2S_ROUTE_MESSAGE_TO_PLAYER_REQ, &req );
+        return SendRouteMessage( KFMsg::S2S_ROUTE_MESSAGE_TO_ENTITY_REQ, &req );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
