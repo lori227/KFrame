@@ -186,7 +186,7 @@ namespace KFrame
     void KFIpAddressModule::InitInteranetIp()
     {
         auto kfglobal = KFGlobal::Instance();
-        if ( kfglobal->_net_type == KFServerEnum::Internet )
+        if ( kfglobal->_net_type == KFServerEnum::Local )
         {
             kfglobal->_interanet_ip = kfglobal->_local_ip;
         }
