@@ -387,15 +387,8 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFTeamClientModule::HandleTeamTellInviteToGameAck, KFMsg::S2STeamTellInviteToGameAck )
     {
-        auto playerid = __ROUTE_RECV_ID__;
-        auto player = _kf_player->FindPlayer( playerid );
-        if ( player == nullptr )
-        {
-            return _kf_display->SendToPlayer( route, KFMsg::TeamNotOnline );
-        }
-
         // 判断状态
-        auto status = player->GetStatus();
+        auto status = kfentity->GetStatus();
         if ( status == KFMsg::PlayingStatus )
         {
             return _kf_display->SendToPlayer( route, KFMsg::TeamPlaying );
@@ -405,7 +398,7 @@ namespace KFrame
         KFMsg::MsgTeamTellInvite tell;
         tell.mutable_pbteam()->CopyFrom( kfmsg->pbteam() );
         tell.mutable_pbplayer()->CopyFrom( kfmsg->pbplayer() );
-        _kf_player->SendToClient( player, KFMsg::MSG_TEAM_TELL_INVITE, &tell );
+        _kf_player->SendToClient( kfentity, KFMsg::MSG_TEAM_TELL_INVITE, &tell );
 
         // 通知发送邀请成功
         _kf_display->SendToPlayer( route, KFMsg::TeamInviteOk );
@@ -433,14 +426,7 @@ namespace KFrame
     // 客户端收到申请, 直接再发一次邀请即可
     __KF_MESSAGE_FUNCTION__( KFTeamClientModule::HandleTeamTellApplyToGameAck, KFMsg::S2STeamTellInviteToGameAck )
     {
-        auto playerid = __ROUTE_RECV_ID__;
-        auto player = _kf_player->FindPlayer( playerid );
-        if ( player == nullptr )
-        {
-            return _kf_display->SendToPlayer( route, KFMsg::TeamNotOnline );
-        }
-
-        auto kfteam = player->Find( __STRING__( team ) );
+        auto kfteam = kfentity->Find( __STRING__( team ) );
         auto teamid = kfteam->Get( __STRING__( id ) );
         if ( teamid == _invalid_int )
         {
@@ -455,7 +441,7 @@ namespace KFrame
         }
 
         // 判断状态
-        auto status = player->GetStatus();
+        auto status = kfentity->GetStatus();
         if ( status == KFMsg::PlayingStatus )
         {
             return _kf_display->SendToPlayer( route, KFMsg::TeamPlaying );
@@ -463,7 +449,7 @@ namespace KFrame
 
         KFMsg::MsgTeamTellApply tell;
         tell.mutable_pbplayer()->CopyFrom( kfmsg->pbplayer() );
-        _kf_player->SendToClient( player, KFMsg::MSG_TEAM_TELL_APPLY, &tell );
+        _kf_player->SendToClient( kfentity, KFMsg::MSG_TEAM_TELL_APPLY, &tell );
 
         // 通知申请玩家
         _kf_display->SendToPlayer( route, KFMsg::TeamApplyOk );
