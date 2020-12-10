@@ -73,7 +73,7 @@ namespace KFrame
     void KFTeamShardModule::SendMessageToMember( KFData* kfmember, uint32 msgid, ::google::protobuf::Message* message )
     {
         auto serverid = kfmember->Get<uint64>( __STRING__( basic ), __STRING__( serverid ) );
-        _kf_route->SendToPlayer( serverid, kfmember->GetKeyID(), msgid, message );
+        _kf_route->SendToEntity( serverid, kfmember->GetKeyID(), msgid, message );
     }
 
     void KFTeamShardModule::InitTeam( KFEntity* team )

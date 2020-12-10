@@ -69,7 +69,7 @@ namespace KFrame
                 continue;
             }
 
-            _kf_route->RepeatToPlayer( player->GetKeyID(), serverid, kfrelation->GetKeyID(), msgid, message );
+            _kf_route->RepeatToEntity( player->GetKeyID(), serverid, kfrelation->GetKeyID(), msgid, message );
         }
     }
 

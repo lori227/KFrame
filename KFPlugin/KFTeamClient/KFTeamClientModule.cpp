@@ -378,7 +378,7 @@ namespace KFrame
         KFMsg::S2STeamTellInviteToGameAck tell;
         tell.mutable_pbteam()->CopyFrom( *pbteam );
         tell.mutable_pbplayer()->CopyFrom( *pbbasic );
-        auto ok = _kf_route->SendToPlayer( player->GetKeyID(), serverid, playerid, KFMsg::S2S_TEAM_TELL_INVITE_TO_GAME_ACK, &tell );
+        auto ok = _kf_route->SendToEntity( player->GetKeyID(), serverid, playerid, KFMsg::S2S_TEAM_TELL_INVITE_TO_GAME_ACK, &tell );
         if ( !ok )
         {
             _kf_display->SendToClient( player, KFMsg::RouteServerBusy );
@@ -423,7 +423,7 @@ namespace KFrame
 
         KFMsg::S2STeamTellApplyToGameAck tell;
         tell.mutable_pbplayer()->CopyFrom( *pbbasic );
-        auto ok = _kf_route->SendToPlayer( kfentity->GetKeyID(), kfmsg->serverid(), kfmsg->playerid(), KFMsg::S2S_TEAM_TELL_APPLY_TO_GAME_ACK, &tell );
+        auto ok = _kf_route->SendToEntity( kfentity->GetKeyID(), kfmsg->serverid(), kfmsg->playerid(), KFMsg::S2S_TEAM_TELL_APPLY_TO_GAME_ACK, &tell );
         if ( !ok )
         {
             _kf_display->SendToClient( kfentity, KFMsg::RouteServerBusy );

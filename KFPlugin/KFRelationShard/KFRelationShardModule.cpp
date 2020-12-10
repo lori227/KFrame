@@ -185,7 +185,7 @@ namespace KFrame
         ack.set_playerid( kfmsg->playerid() );
         ack.set_relationname( kfsetting->_invite_data_name );
         MapStringToPBRelation( selfid, ack.mutable_pbinvite(), selfbasicdata, invitedata );
-        _kf_route->RepeatToPlayer( selfid, serverid, kfmsg->playerid(), KFMsg::S2S_APPLY_ADD_RELATION_TO_GAME_ACK, &ack );
+        _kf_route->RepeatToEntity( selfid, serverid, kfmsg->playerid(), KFMsg::S2S_APPLY_ADD_RELATION_TO_GAME_ACK, &ack );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRelationShardModule::HandleDelRelationInviteToRelationReq, KFMsg::S2SDelRelationInviteToRelationReq )
@@ -263,7 +263,7 @@ namespace KFrame
         ack.set_playerid( playerid );
         ack.set_relationname( kfsetting->_id );
         MapStringToPBRelation( targetid, ack.mutable_pbrelation(), querytargtedata, relationdata );
-        _kf_route->RepeatToPlayer( playerid, serverid, playerid, KFMsg::S2S_ADD_RELATION_TO_GAME_ACK, &ack );
+        _kf_route->RepeatToEntity( playerid, serverid, playerid, KFMsg::S2S_ADD_RELATION_TO_GAME_ACK, &ack );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRelationShardModule::HandleDelRelationToRelationReq, KFMsg::S2SDelRelationToRelationReq )
@@ -297,7 +297,7 @@ namespace KFrame
         ack.set_playerid( playerid );
         ack.set_relationid( targetid );
         ack.set_relationname( kfsetting->_id );
-        _kf_route->SendToPlayer( playerid, serverid, playerid, KFMsg::S2S_DEL_RELATION_TO_GAME_ACK, &ack );
+        _kf_route->SendToEntity( playerid, serverid, playerid, KFMsg::S2S_DEL_RELATION_TO_GAME_ACK, &ack );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRelationShardModule::HandleRefuseRelationToRelationReq, KFMsg::S2SRefuseRelationToRelationReq )

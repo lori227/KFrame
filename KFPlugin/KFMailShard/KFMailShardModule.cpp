@@ -204,7 +204,7 @@ namespace KFrame
             {
                 KFMsg::S2SNoticeNewMailReq notice;
                 notice.set_playerid( objectid );
-                _kf_route->RepeatToPlayer( 0, serverid, objectid, KFMsg::S2S_NOTICE_NEW_MAIL_REQ, &notice );
+                _kf_route->RepeatToEntity( 0, serverid, objectid, KFMsg::S2S_NOTICE_NEW_MAIL_REQ, &notice );
             }
         }
 
