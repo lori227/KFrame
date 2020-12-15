@@ -23,7 +23,7 @@ namespace KFrame
     {
     public:
         KFNetSession();
-        ~KFNetSession();
+        virtual ~KFNetSession();
 
         /////////////////////////////////////////////////////////////////////////
         // 处理连接成功
