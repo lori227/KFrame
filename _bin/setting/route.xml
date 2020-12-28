@@ -7,4 +7,6 @@
 	<node row="3" source="mail" target="logic"/>
 	<!-- 帮派/军团/工会系统 -->		
 	<node row="4" source="guild" target="logic"/>
+	<!-- 排行榜 -->		
+	<node row="5" source="rank" target="logic"/>
 </root>

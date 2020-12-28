@@ -33,7 +33,7 @@ namespace KFrame
         virtual void ReadSetting( KFXmlNode& xmlnode, KFRouteSetting* kfsetting )
         {
             kfsetting->_source = xmlnode.ReadString( "source", true );
-            kfsetting->_target = xmlnode.ReadUInt32( "target", true );
+            kfsetting->_target = xmlnode.ReadString( "target", true );
         }
 
     };
