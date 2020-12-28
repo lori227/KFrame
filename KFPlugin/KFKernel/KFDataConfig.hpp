@@ -3,6 +3,7 @@
 
 #include "KFConfig.h"
 #include "KFDataSetting.h"
+#include "KFConfig/KFConstantConfig.hpp"
 
 namespace KFrame
 {
@@ -35,8 +36,12 @@ namespace KFrame
             intvalue = __TO_UINT32__( strvalue );\
         }\
         else\
-        {\
-            intvalue = kfglobal->GetUInt32( strvalue );\
+        {                                       \
+            auto kfsetting = KFConstantConfig::Instance()->FindSetting( strvalue ); \
+            if ( kfsetting != nullptr )         \
+            {                                   \
+                intvalue= __TO_UINT32__( kfsetting->_value );\
+            }\
         }\
     }
 
