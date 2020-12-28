@@ -7,16 +7,13 @@ namespace KFrame
 {
 	/////////////////////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////////////////////
-	class KFConstantSetting : public KFIntSetting
+	class KFConstantSetting : public KFStrSetting
 	{
 	public:
-		// ×Ö¶ÎÃû(²»ÄÜ¸ÄÕâ¸ö×Ö¶Î)
+		// ï¿½Ö¶ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½Ü¸ï¿½ï¿½ï¿½ï¿½ï¿½Ö¶ï¿½)
 		std::string _name;
 
-		// ¼üÖµ
-		uint32 _key = 0u;
-
-		// ÉèÖÃÊýÖµ
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
 		std::string _value;
 
 	};
@@ -27,7 +24,7 @@ namespace KFrame
 	public:
 		KFConstantConfig()
 		{
-			_key_name = "id";
+			_key_name = "name";
 			_file_name = "constant";
 		}
 
@@ -37,7 +34,6 @@ namespace KFrame
 		virtual void ReadSetting( KFXmlNode& xmlnode, KFConstantSetting* kfsetting )
 		{
 			kfsetting->_name = xmlnode.ReadString( "name", true );
-			kfsetting->_key = xmlnode.ReadUInt32( "key", true );
 			kfsetting->_value = xmlnode.ReadString( "value", true );
 		}
 
