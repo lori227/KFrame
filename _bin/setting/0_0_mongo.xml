@@ -11,20 +11,20 @@
 
 <root version="0000">
 	<!--目录信息-->
-	<node name="dir" minid="0" maxid="0" usessl="false" auth="SCRAM-SHA-1" database="chess" user="root" password="mongo=lori227-=" writeip="127.0.0.1" writeort="27017" readip="127.0.0.1" readport="27017"/>
+	<node name="dir" minid="0" maxid="0" usessl="false" auth="SCRAM-SHA-1" database="chess" user="root" password="mongo=lori227-=" writeip="127.0.0.1" writeport="27017" readip="127.0.0.1" readport="27017"/>
 
 	<!--账号信息-->
-	<node name="account" minid="0" maxid="0" usessl="false" auth="SCRAM-SHA-1" database="chess" user="root" password="mongo=lori227-=" writeip="127.0.0.1" writeort="27017" readip="127.0.0.1" readport="27017"/>
+	<node name="account" minid="0" maxid="0" usessl="false" auth="SCRAM-SHA-1" database="chess" user="root" password="mongo=lori227-=" writeip="127.0.0.1" writeport="27017" readip="127.0.0.1" readport="27017"/>
 
 	<!--充值信息-->
-	<node name="pay" minid="0" maxid="0" usessl="false" auth="SCRAM-SHA-1" database="chess" user="root" password="mongo=lori227-=" writeip="127.0.0.1" writeort="27017" readip="127.0.0.1" readport="27017"/>
+	<node name="pay" minid="0" maxid="0" usessl="false" auth="SCRAM-SHA-1" database="chess" user="root" password="mongo=lori227-=" writeip="127.0.0.1" writeport="27017" readip="127.0.0.1" readport="27017"/>
 
 	<!-- 保存玩家数据数据库 -->
-	<node name="data" minid="0" maxid="0" usessl="false" auth="SCRAM-SHA-1" database="chess" user="root" password="mongo=lori227-=" writeip="127.0.0.1" writeort="27017" readip="127.0.0.1" readport="27017"/>
+	<node name="data" minid="0" maxid="0" usessl="false" auth="SCRAM-SHA-1" database="chess" user="root" password="mongo=lori227-=" writeip="127.0.0.1" writeport="27017" readip="127.0.0.1" readport="27017"/>
 
 	<!-- 玩家基础数据数据库 -->
-	<node name="basic" minid="0" maxid="0" usessl="false" auth="SCRAM-SHA-1" database="chess" user="root" password="mongo=lori227-=" writeip="127.0.0.1" writeort="27017" readip="127.0.0.1" readport="27017"/>
+	<node name="basic" minid="0" maxid="0" usessl="false" auth="SCRAM-SHA-1" database="chess" user="root" password="mongo=lori227-=" writeip="127.0.0.1" writeport="27017" readip="127.0.0.1" readport="27017"/>
 
 	<!-- 逻辑数据数据库 -->
-	<node name="logic" minid="0" maxid="0" usessl="false" auth="SCRAM-SHA-1" database="chess" user="root" password="mongo=lori227-=" writeip="127.0.0.1" writeort="27017" readip="127.0.0.1" readport="27017"/>
+	<node name="logic" minid="0" maxid="0" usessl="false" auth="SCRAM-SHA-1" database="chess" user="root" password="mongo=lori227-=" writeip="127.0.0.1" writeport="27017" readip="127.0.0.1" readport="27017"/>
 </root>
