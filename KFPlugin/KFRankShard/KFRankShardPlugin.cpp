@@ -27,5 +27,6 @@ namespace KFrame
     void KFRankShardPlugin::AddConfig()
     {
         __KF_ADD_CONFIG__( KFRankConfig );
+        __KF_ADD_CONFIG__( KFTimeLoopConfig );
     }
 }
