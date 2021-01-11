@@ -872,6 +872,21 @@ FMT_CONSTEXPR typename internal::result_of<Visitor(int)>::type
   return visit_format_arg(std::forward<Visitor>(vis), arg);
 }
 
+template<typename Char>
+inline std::string transform_format_to_string(basic_string_view<Char>& str_format, const char* message){
+    return message;
+}
+
+template<>
+inline std::string transform_format_to_string(basic_string_view<char>& str_format, const char* message){
+    std::string str_message = "[ ";
+    str_message += str_format.data();
+    str_message += " ]  ";
+    str_message += message;
+    return str_message;
+}
+
+
 // Parsing context consisting of a format string range being parsed and an
 // argument counter for automatic indexing.
 template <typename Char, typename ErrorHandler = internal::error_handler>
@@ -916,7 +931,8 @@ class basic_parse_context : private ErrorHandler {
   void check_arg_id(basic_string_view<Char>) {}
 
   FMT_CONSTEXPR void on_error(const char *message) {
-    ErrorHandler::on_error(message);
+    auto str_message = transform_format_to_string( format_str_, message);
+    ErrorHandler::on_error(str_message.c_str());
   }
 
   FMT_CONSTEXPR ErrorHandler error_handler() const { return *this; }
