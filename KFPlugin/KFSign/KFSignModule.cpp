@@ -15,7 +15,7 @@ namespace KFrame
     {
         __REGISTER_RESET__( __STRING__( sign ), &KFSignModule::OnResetSigninData );
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFSignModule, KFMessageEnum::Player, KFMsg::MSG_SEVEN_SIGN_REWARD_REQ, KFMsg::MsgSevenSignRewardReq, HandleReceiveSevenRewardReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_SEVEN_SIGN_REWARD_REQ, &KFSignModule::HandleReceiveSevenRewardReq );
     }
 
     void KFSignModule::ShutDown()

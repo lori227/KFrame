@@ -4,10 +4,9 @@
 
 namespace KFrame
 {
-
     void KFActivityModule::BeforeRun()
     {
-        _kf_componnet = _kf_kernel->FindComponent( __STRING__( player ) );
+        _kf_componnet = _kf_kernel->FindComponent( __STRING__( player ) );ß
 
         _kf_componnet->RegisterUpdateDataModule( this, &KFActivityModule::OnUpdateDataCallBack );
         _kf_componnet->RegisterAddDataModule( this, &KFActivityModule::OnAddDataCallBack );
@@ -16,7 +15,7 @@ namespace KFrame
         _kf_componnet->RegisterUpdateDataFunction( __STRING__( activity ), __STRING__( value ), this, &KFActivityModule::OnActivityValueUpdateCallBack );
 
         //////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::MSG_ACTIVITY_REWARD_REQ, &KFActivityModule::HandleActivityRewardReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_ACTIVITY_REWARD_REQ, &KFActivityModule::HandleActivityRewardReq );
     }
 
     void KFActivityModule::BeforeShut()

@@ -21,7 +21,7 @@ namespace KFrame
     void KFItemUseModule::BeforeRun()
     {
         ///////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFItemUseModule, KFMessageEnum::Player, KFMsg::MSG_USE_ITEM_REQ, KFMsg::MsgUseItemReq, HandleUseItemReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_USE_ITEM_REQ, &KFItemUseModule::HandleUseItemReq );
     }
 
     void KFItemUseModule::BeforeShut()

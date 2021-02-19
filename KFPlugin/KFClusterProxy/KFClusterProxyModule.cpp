@@ -13,8 +13,8 @@ namespace KFrame
         __REGISTER_TCP_CLIENT_TRANSPOND__( &KFClusterProxyModule::TranspondToClient );
         __REGISTER_TCP_SERVER_TRANSPOND__( &KFClusterProxyModule::TranspondToShard );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFClusterProxyModule, KFMessageEnum::Normal, KFMsg::S2S_CLUSTER_TOKEN_TO_PROXY_REQ, KFMsg::S2SClusterTokenToProxyReq, HandleClusterTokenToProxyReq );
-        __REGISTER_MESSAGE__( KFClusterProxyModule, KFMessageEnum::Normal, KFMsg::S2S_CLUSTER_VERIFY_TO_PROXY_REQ, KFMsg::S2SClusterVerifyToProxyReq, HandleClusterVerifyToProxyReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_CLUSTER_TOKEN_TO_PROXY_REQ, &KFClusterProxyModule::HandleClusterTokenToProxyReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_CLUSTER_VERIFY_TO_PROXY_REQ, &KFClusterProxyModule::HandleClusterVerifyToProxyReq );
     }
 
     void KFClusterProxyModule::BeforeShut()

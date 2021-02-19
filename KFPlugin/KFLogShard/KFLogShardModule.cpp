@@ -7,7 +7,7 @@ namespace KFrame
     {
         __REGISTER_HTTP__( __STRING__( address ), false, &KFLogShardModule::HandleRequestLogAddressReq );
         //////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFLogShardModule, KFMessageEnum::Normal, KFMsg::S2S_REMOTE_LOG_TO_SERVER_REQ, KFMsg::S2SRemoteLogToServerReq, HandleRemoteLogToServerReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_REMOTE_LOG_TO_SERVER_REQ, &KFLogShardModule::HandleRemoteLogToServerReq );
     }
 
     void KFLogShardModule::BeforeShut()

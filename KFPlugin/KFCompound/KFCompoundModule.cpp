@@ -4,7 +4,7 @@ namespace KFrame
 {
     void KFCompoundModule::BeforeRun()
     {
-        __REGISTER_MESSAGE__( KFCompoundModule, KFMessageEnum::Player, KFMsg::MSG_COMPOUND_REQ, KFMsg::MsgCompoundReq, HandleCompoundReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_COMPOUND_REQ, &KFCompoundModule::HandleCompoundReq );
     }
 
     void KFCompoundModule::ShutDown()

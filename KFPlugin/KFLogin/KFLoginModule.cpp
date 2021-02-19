@@ -8,8 +8,8 @@ namespace KFrame
         __REGISTER_TCP_CLIENT_CONNECTION__( &KFLoginModule::OnClientConnectionWorld );
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFLoginModule, KFMessageEnum::Normal, KFMsg::S2S_LOGIN_TO_LOGIN_REQ, KFMsg::S2SLoginToLoginReq, HandleLoginToLoginReq );
-        __REGISTER_MESSAGE__( KFLoginModule, KFMessageEnum::Normal, KFMsg::S2S_LOGIN_TO_LOGIN_ACK, KFMsg::S2SLoginToLoginAck, HandleLoginToLoginAck );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_LOGIN_TO_LOGIN_REQ, &KFLoginModule::HandleLoginToLoginReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_LOGIN_TO_LOGIN_ACK, &KFLoginModule::HandleLoginToLoginAck );
     }
 
     void KFLoginModule::BeforeShut()

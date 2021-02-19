@@ -10,9 +10,9 @@ namespace KFrame
         __REGISTER_PLAYER_AFTER_ENTER__( &KFItemMoveModule::OnEnterItemMoveModule );
         __REGISTER_PLAYER_LEAVE__( &KFItemMoveModule::OnLeaveItemMoveModule );
         //////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFItemMoveModule, KFMessageEnum::Player, KFMsg::MSG_MOVE_ITEM_REQ, KFMsg::MsgMoveItemReq, HandleMoveItemReq );
-        __REGISTER_MESSAGE__( KFItemMoveModule, KFMessageEnum::Player, KFMsg::MSG_MOVE_ALL_ITEM_REQ, KFMsg::MsgMoveAllItemReq, HandleMoveAllItemReq );
-        __REGISTER_MESSAGE__( KFItemMoveModule, KFMessageEnum::Player, KFMsg::MSG_SORT_ITEM_REQ, KFMsg::MsgSortItemReq, HandleSortItemReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_MOVE_ITEM_REQ, &KFItemMoveModule::HandleMoveItemReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_MOVE_ALL_ITEM_REQ, &KFItemMoveModule::HandleMoveAllItemReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_SORT_ITEM_REQ, &KFItemMoveModule::HandleSortItemReq );
     }
 
     void KFItemMoveModule::AfterLoad()

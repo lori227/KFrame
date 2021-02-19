@@ -37,14 +37,14 @@ namespace KFrame
         __REGISTER_COMMAND_FUNCTION__( __STRING__( deldata ), &KFPlayerModule::OnCommandDelData );
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFPlayerModule, KFMessageEnum::Player, KFMsg::MSG_REMOVE_DATA_REQ, KFMsg::MsgRemoveDataReq, HandleRemoveDataReq );
-        __REGISTER_MESSAGE__( KFPlayerModule, KFMessageEnum::Player, KFMsg::MSG_REQUEST_SYNC_REQ, KFMsg::MsgRequestSyncReq, HandleRequestSyncReq );
-        __REGISTER_MESSAGE__( KFPlayerModule, KFMessageEnum::Player, KFMsg::MSG_CANCEL_SYNC_REQ, KFMsg::MsgCancelSyncReq, HandleCancelSyncReq );
-        __REGISTER_MESSAGE__( KFPlayerModule, KFMessageEnum::Player, KFMsg::MSG_UPDATE_INT_REQ, KFMsg::MsgUpdateIntReq, HandleUpdateIntReq );
-        __REGISTER_MESSAGE__( KFPlayerModule, KFMessageEnum::Player, KFMsg::MSG_UPDATE_STR_REQ, KFMsg::MsgUpdateStrReq, HandleUpdateStrReq );
-        __REGISTER_MESSAGE__( KFPlayerModule, KFMessageEnum::Player, KFMsg::S2S_SYNC_UPDATE_DATA_FROM_SERVER, KFMsg::S2SSyncUpdateDataFromServer, HandleSyncUpdateDataFromServerReq );
-        __REGISTER_MESSAGE__( KFPlayerModule, KFMessageEnum::Player, KFMsg::S2S_SYNC_ADD_DATA_FROM_SERVER, KFMsg::S2SSyncAddDataFromServer, HandleSyncAddDataFromServerReq );
-        __REGISTER_MESSAGE__( KFPlayerModule, KFMessageEnum::Player, KFMsg::S2S_SYNC_REMOVE_DATA_FROM_SERVER, KFMsg::S2SSyncRemoveDataFromServer, HandleSyncRemoveDataFromServerReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_REMOVE_DATA_REQ, &KFPlayerModule::HandleRemoveDataReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_REQUEST_SYNC_REQ, &KFPlayerModule::HandleRequestSyncReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_CANCEL_SYNC_REQ, &KFPlayerModule::HandleCancelSyncReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_UPDATE_INT_REQ, &KFPlayerModule::HandleUpdateIntReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_UPDATE_STR_REQ, &KFPlayerModule::HandleUpdateStrReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::S2S_SYNC_UPDATE_DATA_FROM_SERVER, &KFPlayerModule::HandleSyncUpdateDataFromServerReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::S2S_SYNC_ADD_DATA_FROM_SERVER, &KFPlayerModule::HandleSyncAddDataFromServerReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::S2S_SYNC_REMOVE_DATA_FROM_SERVER, &KFPlayerModule::HandleSyncRemoveDataFromServerReq );
 
     }
 

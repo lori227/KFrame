@@ -31,10 +31,10 @@ namespace KFrame
         virtual void AddMessageHandle( KFMessageHandleAbstract* messagehandle );
 
         // 删除消息函数
-        virtual bool RemoveMessageHandle( uint32 msgide, KFModule* module );
+        virtual bool RemoveMessageHandle( uint32 msgid, KFModule* module );
 
-        virtual void BindFindEngityFunction( uint32 type, KFModule* module, KFFindEntityFunction& function );
-        virtual void UnBindFindEngityFunction( uint32 type );
+        virtual void BindFindEntityFunction( uint32 type, KFModule* module, KFFindEntityFunction& function );
+        virtual void UnBindFindEntityFunction( uint32 type );
     private:
         // 处理器函数
         std::unordered_map<uint32, KFMessageHandleAbstract*> _handles;

@@ -6,8 +6,8 @@ namespace KFrame
     {
         __REGISTER_PLAYER_LEAVE__( &KFChatModule::OnLeaveChatModule );
         ///////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFChatModule, KFMessageEnum::Player, KFMsg::MSG_FRIEND_CHAT_REQ, KFMsg::MsgFriendChatReq, HandleFriendChatReq );
-        __REGISTER_MESSAGE__( KFChatModule, KFMessageEnum::Player, KFMsg::MSG_SERVER_CHAT_REQ, KFMsg::MsgServerChatReq, HandleServerChatReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_FRIEND_CHAT_REQ, &KFChatModule::HandleFriendChatReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_SERVER_CHAT_REQ, &KFChatModule::HandleServerChatReq );
     }
 
     void KFChatModule::BeforeShut()

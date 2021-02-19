@@ -8,11 +8,11 @@ namespace KFrame
         __REGISTER_TCP_CLIENT_CONNECTION__( &KFRouteProxyModule::OnClientConnectServer );
 
         //////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFRouteProxyModule, KFMessageEnum::Normal, KFMsg::S2S_ROUTE_SYNC_OBJECT_TO_PROXY_REQ, KFMsg::S2SRouteSyncObjectToProxyReq, HandleRouteSyncObjectToProxyReq );
-        __REGISTER_MESSAGE__( KFRouteProxyModule, KFMessageEnum::Normal, KFMsg::S2S_ROUTE_ADD_OBJECT_TO_PROXY_REQ, KFMsg::S2SRouteAddObjectToProxyReq, HandleRouteAddObjectToProxyReq );
-        __REGISTER_MESSAGE__( KFRouteProxyModule, KFMessageEnum::Normal, KFMsg::S2S_ROUTE_REMOVE_OBJECT_TO_PROXY_REQ, KFMsg::S2SRouteRemoveObjectToProxyReq, HandleRouteRemoveObjectToProxyReq );
-        __REGISTER_MESSAGE__( KFRouteProxyModule, KFMessageEnum::Normal, KFMsg::S2S_ROUTE_MESSAGE_TO_SERVER_REQ, KFMsg::S2SRouteMessageToServerReq, HandleRouteMessageToServerReq );
-        __REGISTER_MESSAGE__( KFRouteProxyModule, KFMessageEnum::Normal, KFMsg::S2S_ROUTE_MESSAGE_TO_ENTITY_REQ, KFMsg::S2SRouteMessageToEntityReq, HandleRouteMessageToEntityReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_ROUTE_SYNC_OBJECT_TO_PROXY_REQ, &KFRouteProxyModule::HandleRouteSyncObjectToProxyReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_ROUTE_ADD_OBJECT_TO_PROXY_REQ, &KFRouteProxyModule::HandleRouteAddObjectToProxyReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_ROUTE_REMOVE_OBJECT_TO_PROXY_REQ, &KFRouteProxyModule::HandleRouteRemoveObjectToProxyReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_ROUTE_MESSAGE_TO_SERVER_REQ, &KFRouteProxyModule::HandleRouteMessageToServerReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_ROUTE_MESSAGE_TO_ENTITY_REQ, &KFRouteProxyModule::HandleRouteMessageToEntityReq );
     }
 
     void KFRouteProxyModule::BeforeShut()

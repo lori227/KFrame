@@ -6,9 +6,9 @@ namespace KFrame
     {
         _kf_cluster_client->RegisterConnectionFunction( this, &KFRouteClientModule::OnRouteConnectCluster );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFRouteClientModule, KFMessageEnum::Normal, KFMsg::S2S_ROUTE_MESSAGE_OK, KFMsg::S2SRouteMessageOk, HandleRouteMessageOk );
-        __REGISTER_MESSAGE__( KFRouteClientModule, KFMessageEnum::Normal, KFMsg::S2S_ROUTE_DISCOVER_TO_CLIENT_REQ, KFMsg::S2SRouteDiscoverToClientReq, HandleRouteDiscoverToClientReq );
-        __REGISTER_MESSAGE__( KFRouteClientModule, KFMessageEnum::Normal, KFMsg::S2S_ROUTE_MESSAGE_TO_CLIENT_ACK, KFMsg::S2SRouteMessageToClientAck, HandleRouteMessageToClientAck );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_ROUTE_MESSAGE_OK, &KFRouteClientModule::HandleRouteMessageOk );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_ROUTE_DISCOVER_TO_CLIENT_REQ, &KFRouteClientModule::HandleRouteDiscoverToClientReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_ROUTE_MESSAGE_TO_CLIENT_ACK, &KFRouteClientModule::HandleRouteMessageToClientAck );
     }
 
     void KFRouteClientModule::BeforeShut()

@@ -30,9 +30,9 @@ namespace KFrame
         __REGISTER_EXECUTE__( __STRING__( task ), &KFTaskModule::OnExecuteUpdateTaskStatus );
         __REGISTER_EXECUTE__( __STRING__( taskcondition ), &KFTaskModule::OnExecuteUpdateTaskCondition );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFTaskModule, KFMessageEnum::Player, KFMsg::MSG_TASK_RECEIVE_REQ, KFMsg::MsgTaskReceiveReq, HandleTaskReceiveReq );
-        __REGISTER_MESSAGE__( KFTaskModule, KFMessageEnum::Player, KFMsg::MSG_TASK_REWARD_REQ, KFMsg::MsgTaskRewardReq, HandleTaskRewardReq );
-        __REGISTER_MESSAGE__( KFTaskModule, KFMessageEnum::Player, KFMsg::MSG_TASK_REMOVE_REQ, KFMsg::MsgTaskRemoveReq, HandleTaskRemoveReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_TASK_RECEIVE_REQ, &KFTaskModule::HandleTaskReceiveReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_TASK_REWARD_REQ, &KFTaskModule::HandleTaskRewardReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_TASK_REMOVE_REQ, &KFTaskModule::HandleTaskRemoveReq );
     }
 
     void KFTaskModule::BeforeShut()

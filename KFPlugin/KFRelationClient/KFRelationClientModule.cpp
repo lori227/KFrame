@@ -14,18 +14,18 @@ namespace KFrame
         __REGISTER_UPDATE_DATA__( &KFRelationClientModule::OnRelationValueUpdate );
         __REGISTER_UPDATE_STRING__( &KFRelationClientModule::OnRelationStringUpdate );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFRelationClientModule, KFMessageEnum::Player, KFMsg::MSG_ADD_RELATION_REQ, KFMsg::MsgAddRelationReq, HandleAddRelationReq );
-        __REGISTER_MESSAGE__( KFRelationClientModule, KFMessageEnum::Player, KFMsg::MSG_DEL_RELATION_REQ, KFMsg::MsgDelRelationReq, HandleDelRelationReq );
-        __REGISTER_MESSAGE__( KFRelationClientModule, KFMessageEnum::Player, KFMsg::MSG_REPLY_RELATION_INVITE_REQ, KFMsg::MsgReplyRelationInviteReq, HandleReplyRelationInviteReq );
-        __REGISTER_MESSAGE__( KFRelationClientModule, KFMessageEnum::Player, KFMsg::MSG_SET_REFUSE_RELATION_INVITE_REQ, KFMsg::MsgSetRefuseRelationInviteReq, HandleSetRefuseRelationInviteReq );
-        __REGISTER_MESSAGE__( KFRelationClientModule, KFMessageEnum::Player, KFMsg::S2S_UPDATE_INT_VALUE_TO_RELATION_REQ, KFMsg::S2SUpdateIntValueToRelationReq, HandleUpdateIntValueToRelationReq );
-        __REGISTER_MESSAGE__( KFRelationClientModule, KFMessageEnum::Player, KFMsg::S2S_UPDATE_STR_VALUE_TO_RELATION_REQ, KFMsg::S2SUpdateStrValueToRelationReq, HandleUpdateStrValueToRelationReq );
-        __REGISTER_MESSAGE__( KFRelationClientModule, KFMessageEnum::Player, KFMsg::S2S_QUERY_RELATION_TO_GAME_ACK, KFMsg::S2SQueryRelationToGameAck, HandleQueryRelationToGameAck );
-        __REGISTER_MESSAGE__( KFRelationClientModule, KFMessageEnum::Player, KFMsg::S2S_ADD_RELATION_TO_GAME_ACK, KFMsg::S2SAddRelationToGameAck, HandleAddRelationToGameAck );
-        __REGISTER_MESSAGE__( KFRelationClientModule, KFMessageEnum::Player, KFMsg::S2S_DEL_RELATION_TO_GAME_ACK, KFMsg::S2SDelRelationToGameAck, HandleDelRelationToGameAck );
-        __REGISTER_MESSAGE__( KFRelationClientModule, KFMessageEnum::Player, KFMsg::S2S_APPLY_ADD_RELATION_TO_GAME_ACK, KFMsg::S2SApplyAddRelationToGameAck, HandleApplyAddRelationToGameAck );
-        __REGISTER_MESSAGE__( KFRelationClientModule, KFMessageEnum::Player, KFMsg::S2S_QUERY_RELATION_INVITE_TO_GAME_ACK, KFMsg::S2SQueryRelationInviteToGameAck, HandleQueryRelationInviteToGameAck );
-        __REGISTER_MESSAGE__( KFRelationClientModule, KFMessageEnum::Player, KFMsg::S2S_UPDATE_FRIENDLINESS_TO_GAME_ACK, KFMsg::S2SUpdateFriendLinessToGameAck, HandleUpdateFriendLinessToGameAck );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_ADD_RELATION_REQ, &KFRelationClientModule::HandleAddRelationReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_DEL_RELATION_REQ, &KFRelationClientModule::HandleDelRelationReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_REPLY_RELATION_INVITE_REQ, &KFRelationClientModule::HandleReplyRelationInviteReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_SET_REFUSE_RELATION_INVITE_REQ, &KFRelationClientModule::HandleSetRefuseRelationInviteReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::S2S_UPDATE_INT_VALUE_TO_RELATION_REQ, &KFRelationClientModule::HandleUpdateIntValueToRelationReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::S2S_UPDATE_STR_VALUE_TO_RELATION_REQ, &KFRelationClientModule::HandleUpdateStrValueToRelationReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::S2S_QUERY_RELATION_TO_GAME_ACK, &KFRelationClientModule::HandleQueryRelationToGameAck );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::S2S_ADD_RELATION_TO_GAME_ACK, &KFRelationClientModule::HandleAddRelationToGameAck );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::S2S_DEL_RELATION_TO_GAME_ACK, &KFRelationClientModule::HandleDelRelationToGameAck );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::S2S_APPLY_ADD_RELATION_TO_GAME_ACK, &KFRelationClientModule::HandleApplyAddRelationToGameAck );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::S2S_QUERY_RELATION_INVITE_TO_GAME_ACK, &KFRelationClientModule::HandleQueryRelationInviteToGameAck );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::S2S_UPDATE_FRIENDLINESS_TO_GAME_ACK, &KFRelationClientModule::HandleUpdateFriendLinessToGameAck );
     }
 
     void KFRelationClientModule::BeforeShut()

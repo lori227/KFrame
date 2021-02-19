@@ -9,13 +9,13 @@ namespace KFrame
         __REGISTER_TCP_CLIENT_SHUTDOWN__( &KFClusterMasterModule::OnClientLostClusterMaster );
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFClusterMasterModule, KFMessageEnum::Normal, KFMsg::S2S_CLUSTER_REGISTER_TO_MASTER_REQ, KFMsg::S2SClusterRegisterToMasterReq, HandleClusterRegisterToMasterReq );
-        __REGISTER_MESSAGE__( KFClusterMasterModule, KFMessageEnum::Normal, KFMsg::S2S_CLUSTER_SYNC_PROXY_TO_MASTER_REQ, KFMsg::S2SClusterSyncProxyToMasterReq, HandleClusterSyncProxyToMasterReq );
-        __REGISTER_MESSAGE__( KFClusterMasterModule, KFMessageEnum::Normal, KFMsg::S2S_CLUSTER_AUTH_TO_MASTER_REQ, KFMsg::S2SClusterAuthToMasterReq, HandleClusterAuthToMasterReq );
-        __REGISTER_MESSAGE__( KFClusterMasterModule, KFMessageEnum::Normal, KFMsg::S2S_CLUSTER_LOST_PROXY_TO_MASTER_REQ, KFMsg::S2SClusterLostProxyToMasterReq, HandleClusterLostProxyToMasterReq );
-        __REGISTER_MESSAGE__( KFClusterMasterModule, KFMessageEnum::Normal, KFMsg::S2S_CLUSTER_TOKEN_TO_MASTER_REQ, KFMsg::S2SClusterTokenToMasterReq, HandleClusterTokenToMasterReq );
-        __REGISTER_MESSAGE__( KFClusterMasterModule, KFMessageEnum::Normal, KFMsg::S2S_CLUSTER_TOKEN_TO_PROXY_ACK, KFMsg::S2SClusterTokenToProxyAck, HandleClusterTokenToProxyAck  );
-        __REGISTER_MESSAGE__( KFClusterMasterModule, KFMessageEnum::Normal, KFMsg::S2S_CLUSTER_TOKEN_TO_MASTER_ACK, KFMsg::S2SClusterTokenToMasterAck, HandleClusterTokenToMasterAck );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_CLUSTER_REGISTER_TO_MASTER_REQ, &KFClusterMasterModule::HandleClusterRegisterToMasterReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_CLUSTER_SYNC_PROXY_TO_MASTER_REQ, &KFClusterMasterModule::HandleClusterSyncProxyToMasterReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_CLUSTER_AUTH_TO_MASTER_REQ, &KFClusterMasterModule::HandleClusterAuthToMasterReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_CLUSTER_LOST_PROXY_TO_MASTER_REQ, &KFClusterMasterModule::HandleClusterLostProxyToMasterReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_CLUSTER_TOKEN_TO_MASTER_REQ, &KFClusterMasterModule::HandleClusterTokenToMasterReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_CLUSTER_TOKEN_TO_PROXY_ACK, &KFClusterMasterModule::HandleClusterTokenToProxyAck  );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_CLUSTER_TOKEN_TO_MASTER_ACK, &KFClusterMasterModule::HandleClusterTokenToMasterAck );
     }
 
     void KFClusterMasterModule::BeforeShut()

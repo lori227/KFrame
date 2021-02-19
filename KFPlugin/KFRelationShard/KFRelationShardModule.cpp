@@ -5,14 +5,14 @@ namespace KFrame
     void KFRelationShardModule::BeforeRun()
     {
         /////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFRelationShardModule, KFMessageEnum::Player, KFMsg::S2S_QUERY_RELATION_TO_RELATION_REQ, KFMsg::S2SQueryRelationToRelationReq, HandleQueryRelationToRelationReq );
-        __REGISTER_MESSAGE__( KFRelationShardModule, KFMessageEnum::Player, KFMsg::S2S_QUERY_RELATION_INVITE_TO_RELATION_REQ, KFMsg::S2SQueryRelationInviteToRelationReq, HandleQueryRelationInviteToRelationReq );
-        __REGISTER_MESSAGE__( KFRelationShardModule, KFMessageEnum::Player, KFMsg::S2S_APPLY_ADD_RELATION_TO_RELATION_REQ, KFMsg::S2SApplyAddRelationToRelationReq, HandleApplyAddRelationToRelationReq );
-        __REGISTER_MESSAGE__( KFRelationShardModule, KFMessageEnum::Player, KFMsg::S2S_DEL_RELATION_INVITE_TO_RELATION_REQ, KFMsg::S2SDelRelationInviteToRelationReq, HandleDelRelationInviteToRelationReq );
-        __REGISTER_MESSAGE__( KFRelationShardModule, KFMessageEnum::Player, KFMsg::S2S_ADD_RELATION_TO_RELATION_REQ, KFMsg::S2SAddRelationToRelationReq, HandleAddRelationToRelationReq );
-        __REGISTER_MESSAGE__( KFRelationShardModule, KFMessageEnum::Player, KFMsg::S2S_DEL_RELATION_TO_RELATION_REQ, KFMsg::S2SDelRelationToRelationReq, HandleDelRelationToRelationReq );
-        __REGISTER_MESSAGE__( KFRelationShardModule, KFMessageEnum::Player, KFMsg::S2S_REFUSE_RELATION_TO_RELATION_REQ, KFMsg::S2SRefuseRelationToRelationReq, HandleRefuseRelationToRelationReq );
-        __REGISTER_MESSAGE__( KFRelationShardModule, KFMessageEnum::Player, KFMsg::S2S_UPDATE_FRIENDLINESS_TO_RELATION_REQ, KFMsg::S2SUpdateFriendLinessToRelationReq, HandleUpdateFriendLinessToRelationReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::S2S_QUERY_RELATION_TO_RELATION_REQ, &KFRelationShardModule::HandleQueryRelationToRelationReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::S2S_QUERY_RELATION_INVITE_TO_RELATION_REQ, &KFRelationShardModule::HandleQueryRelationInviteToRelationReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::S2S_APPLY_ADD_RELATION_TO_RELATION_REQ, &KFRelationShardModule::HandleApplyAddRelationToRelationReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::S2S_DEL_RELATION_INVITE_TO_RELATION_REQ, &KFRelationShardModule::HandleDelRelationInviteToRelationReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::S2S_ADD_RELATION_TO_RELATION_REQ, &KFRelationShardModule::HandleAddRelationToRelationReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::S2S_DEL_RELATION_TO_RELATION_REQ, &KFRelationShardModule::HandleDelRelationToRelationReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::S2S_REFUSE_RELATION_TO_RELATION_REQ, &KFRelationShardModule::HandleRefuseRelationToRelationReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::S2S_UPDATE_FRIENDLINESS_TO_RELATION_REQ, &KFRelationShardModule::HandleUpdateFriendLinessToRelationReq );
     }
 
     void KFRelationShardModule::BeforeShut()

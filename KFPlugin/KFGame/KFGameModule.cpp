@@ -20,19 +20,19 @@ namespace KFrame
 
         _kf_data_client->BindLoadPlayerFunction( this, &KFGameModule::OnAfterLoadPlayerData );
         _kf_data_client->BindQueryPlayerFunction( this, &KFGameModule::OnAfterQueryPlayerData );
-
+ß
         __REGISTER_DEPLOY_FUNCTION__( __STRING__( shutdown ), &KFGameModule::OnDeployShutDownServer );
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFGameModule, KFMessageEnum::Normal, KFMsg::S2S_LOGIN_TO_GAME_REQ, KFMsg::S2SLoginToGameReq, HandleLoginToGameReq );
-        __REGISTER_MESSAGE__( KFGameModule, KFMessageEnum::Normal, KFMsg::S2S_RELOGIN_TO_GAME_REQ, KFMsg::S2SReLoginToGameReq, HandleReLoginToGameReq );
-        __REGISTER_MESSAGE__( KFGameModule, KFMessageEnum::Normal, KFMsg::S2S_CONNECT_TO_GAME_REQ, KFMsg::S2SConnectToGameReq, HandleConnectToGameReq );
-        __REGISTER_MESSAGE__( KFGameModule, KFMessageEnum::Normal, KFMsg::S2S_DISCONNECT_TO_GAME_REQ, KFMsg::S2SDisconnectToGameReq, HandleDisconnectToGameReq );
-        __REGISTER_MESSAGE__( KFGameModule, KFMessageEnum::Normal, KFMsg::S2S_LEAVE_TO_GAME_REQ, KFMsg::S2SLeaveToGameReq,  HandleLeaveToGameReq );
-        __REGISTER_MESSAGE__( KFGameModule, KFMessageEnum::Normal, KFMsg::S2S_LOGOUT_TO_GAME_REQ, KFMsg::S2SLogoutToGameReq, HandleLogoutToGameReq );
-        __REGISTER_MESSAGE__( KFGameModule, KFMessageEnum::Normal, KFMsg::S2S_BROADCAST_TO_GAME_ACK, KFMsg::S2SBroadcastToGameAck, HandleBroadcastToGameAck );
-        __REGISTER_MESSAGE__( KFGameModule, KFMessageEnum::Player, KFMsg::MSG_QUERY_PLAYER_REQ, KFMsg::MsgQueryPlayerReq, HandleQueryPlayerReq );
-        __REGISTER_MESSAGE__( KFGameModule, KFMessageEnum::Normal, KFMsg::S2S_KICK_PLAYER_TO_GAME_REQ, KFMsg::S2SKickPlayerToGameReq, HandleKickPlayerToGameReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_LOGIN_TO_GAME_REQ, &KFGameModule::HandleLoginToGameReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_RELOGIN_TO_GAME_REQ, &KFGameModule::HandleReLoginToGameReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_CONNECT_TO_GAME_REQ, &KFGameModule::HandleConnectToGameReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_DISCONNECT_TO_GAME_REQ, &KFGameModule::HandleDisconnectToGameReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_LEAVE_TO_GAME_REQ, &KFGameModule::HandleLeaveToGameReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_LOGOUT_TO_GAME_REQ, &KFGameModule::HandleLogoutToGameReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_BROADCAST_TO_GAME_ACK, &KFGameModule::HandleBroadcastToGameAck );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_QUERY_PLAYER_REQ, &KFGameModule::HandleQueryPlayerReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_KICK_PLAYER_TO_GAME_REQ, &KFGameModule::HandleKickPlayerToGameReq );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 

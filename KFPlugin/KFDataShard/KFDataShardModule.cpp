@@ -6,9 +6,9 @@ namespace KFrame
     void KFDataShardModule::BeforeRun()
     {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFDataShardModule, KFMessageEnum::Normal, KFMsg::S2S_LOAD_PLAYER_TO_DATA_REQ, KFMsg::S2SLoadPlayerToDataReq, HandleLoadPlayerToDataReq );
-        __REGISTER_MESSAGE__( KFDataShardModule, KFMessageEnum::Normal, KFMsg::S2S_SAVE_PLAYER_TO_DATA_REQ, KFMsg::S2SSavePlayerToDataReq, HandleSavePlayerToDataReq );
-        __REGISTER_MESSAGE__( KFDataShardModule, KFMessageEnum::Normal, KFMsg::S2S_QUERY_PLAYER_TO_DATA_REQ, KFMsg::S2SQueryPlayerToDataReq, HandleQueryPlayerToDataReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_LOAD_PLAYER_TO_DATA_REQ, &KFDataShardModule::HandleLoadPlayerToDataReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_SAVE_PLAYER_TO_DATA_REQ, &KFDataShardModule::HandleSavePlayerToDataReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_QUERY_PLAYER_TO_DATA_REQ, &KFDataShardModule::HandleQueryPlayerToDataReq );
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }

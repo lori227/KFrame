@@ -20,10 +20,10 @@ namespace KFrame
         __REGISTER_HTTP__( __STRING__( delmail ), true, &KFMailShardModule::HandleGMDeleteMailReq );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        __REGISTER_MESSAGE__( KFMailShardModule, KFMessageEnum::Normal, KFMsg::S2S_QUERY_MAIL_REQ, KFMsg::S2SQueryMailReq, HandleQueryMailReq );
-        __REGISTER_MESSAGE__( KFMailShardModule, KFMessageEnum::Normal, KFMsg::S2S_ADD_MAIL_REQ, KFMsg::S2SAddMailReq, HandleAddMailReq );
-        __REGISTER_MESSAGE__( KFMailShardModule, KFMessageEnum::Normal, KFMsg::S2S_UPDATE_MAIL_STATUS_REQ, KFMsg::S2SUpdateMailStatusReq, HandleUpdateMailStatusReq );
-        __REGISTER_MESSAGE__( KFMailShardModule, KFMessageEnum::Normal, KFMsg::S2S_NEW_PLAYER_MAIL_REQ, KFMsg::S2SNewPlayerMailReq, HandleNewPlayerMailReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_QUERY_MAIL_REQ, &KFMailShardModule::HandleQueryMailReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_ADD_MAIL_REQ, &KFMailShardModule::HandleAddMailReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_UPDATE_MAIL_STATUS_REQ, &KFMailShardModule::HandleUpdateMailStatusReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_NEW_PLAYER_MAIL_REQ, &KFMailShardModule::HandleNewPlayerMailReq );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 

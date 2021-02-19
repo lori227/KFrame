@@ -13,17 +13,17 @@ namespace KFrame
         __REGISTER_PLAYER_ENTER__( &KFTeamClientModule::OnEnterTeamModule );
         __REGISTER_PLAYER_LEAVE__( &KFTeamClientModule::OnLeaveTeamModule );
         ///////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFTeamClientModule, KFMessageEnum::Player, KFMsg::MSG_TEAM_CREATE_REQ, KFMsg::MsgTeamCreateReq, HandleTeamCreateReq );
-        __REGISTER_MESSAGE__( KFTeamClientModule, KFMessageEnum::Player, KFMsg::MSG_TEAM_LEAVE_REQ, KFMsg::MsgTeamLeaveReq, HandleTeamLeaveReq );
-        __REGISTER_MESSAGE__( KFTeamClientModule, KFMessageEnum::Player, KFMsg::MSG_TEAM_KICK_REQ, KFMsg::MsgTeamKickReq, HandleTeamKickReq );
-        __REGISTER_MESSAGE__( KFTeamClientModule, KFMessageEnum::Player, KFMsg::MSG_TEAM_INVITE_REQ, KFMsg::MsgTeamInviteReq, HandleTeamInviteReq );
-        __REGISTER_MESSAGE__( KFTeamClientModule, KFMessageEnum::Player, KFMsg::MSG_TEAM_APPLY_REQ, KFMsg::MsgTeamApplyReq, HandleTeamApplyReq );
-        __REGISTER_MESSAGE__( KFTeamClientModule, KFMessageEnum::Player, KFMsg::MSG_TEAM_AGREE_REQ, KFMsg::MsgTeamAgreeReq, HandleTeamAgreeReq );
-        __REGISTER_MESSAGE__( KFTeamClientModule, KFMessageEnum::Player, KFMsg::S2S_TEAM_JON_TO_GAME_ACK, KFMsg::S2STeamJoinToGameAck, HandleTeamJoinToGameAck );
-        __REGISTER_MESSAGE__( KFTeamClientModule, KFMessageEnum::Player, KFMsg::S2S_TEAM_ONLINE_QUERY_TO_GAME_ACK, KFMsg::S2STeamOnlineQueryToGameAck, HandleTeamOnlineQueryToGameAck );
-        __REGISTER_MESSAGE__( KFTeamClientModule, KFMessageEnum::Player, KFMsg::S2S_TEAM_LEAVE_TO_GAME_ACK, KFMsg::S2STeamLeaveToGameAck, HandleTeamLeaveToGameAck );
-        __REGISTER_MESSAGE__( KFTeamClientModule, KFMessageEnum::Player, KFMsg::S2S_TEAM_TELL_INVITE_TO_GAME_ACK, KFMsg::S2STeamTellInviteToGameAck, HandleTeamTellInviteToGameAck );
-        __REGISTER_MESSAGE__( KFTeamClientModule, KFMessageEnum::Player, KFMsg::S2S_TEAM_TELL_APPLY_TO_GAME_ACK, KFMsg::S2STeamTellInviteToGameAck, HandleTeamTellApplyToGameAck );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_TEAM_CREATE_REQ, &KFTeamClientModule::HandleTeamCreateReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_TEAM_LEAVE_REQ, &KFTeamClientModule::HandleTeamLeaveReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_TEAM_KICK_REQ, &KFTeamClientModule::HandleTeamKickReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_TEAM_INVITE_REQ, &KFTeamClientModule::HandleTeamInviteReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_TEAM_APPLY_REQ, &KFTeamClientModule::HandleTeamApplyReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_TEAM_AGREE_REQ, &KFTeamClientModule::HandleTeamAgreeReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::S2S_TEAM_JON_TO_GAME_ACK, &KFTeamClientModule::HandleTeamJoinToGameAck );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::S2S_TEAM_ONLINE_QUERY_TO_GAME_ACK, &KFTeamClientModule::HandleTeamOnlineQueryToGameAck );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::S2S_TEAM_LEAVE_TO_GAME_ACK, &KFTeamClientModule::HandleTeamLeaveToGameAck );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::S2S_TEAM_TELL_INVITE_TO_GAME_ACK, &KFTeamClientModule::HandleTeamTellInviteToGameAck );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::S2S_TEAM_TELL_APPLY_TO_GAME_ACK, &KFTeamClientModule::HandleTeamTellApplyToGameAck );
     }
 
     void KFTeamClientModule::BeforeShut()

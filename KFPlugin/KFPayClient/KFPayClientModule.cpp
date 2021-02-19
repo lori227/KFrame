@@ -7,9 +7,9 @@ namespace KFrame
         __REGISTER_PLAYER_ENTER__( &KFPayClientModule::OnEnterPayModule );
         __REGISTER_PLAYER_LEAVE__( &KFPayClientModule::OnLeavePayModule );
         ////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMsg::MSG_APPLY_PAY_ORDER_REQ, &KFPayClientModule::HandleApplyPayOrderReq );
-        __REGISTER_MESSAGE__( KFMsg::MSG_PAY_RESULT_REQ, &KFPayClientModule::HandlePayResultReq );
-        __REGISTER_MESSAGE__( KFMsg::MSG_QUERY_PAY_REQ, &KFPayClientModule::HandleQueryPayReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_APPLY_PAY_ORDER_REQ, &KFPayClientModule::HandleApplyPayOrderReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_PAY_RESULT_REQ, &KFPayClientModule::HandlePayResultReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_QUERY_PAY_REQ, &KFPayClientModule::HandleQueryPayReq );
     }
 
     void KFPayClientModule::BeforeShut()

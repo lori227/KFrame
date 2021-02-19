@@ -19,7 +19,7 @@ namespace KFrame
         _client_engine->BindFailedFunction( this, &KFTcpClientModule::OnClientFailed );
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFTcpClientModule, KFMessageEnum::Normal, KFMsg::S2S_REGISTER_TO_SERVER_ACK, KFMsg::RegisterToServerAck, HandleRegisterAck );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_REGISTER_TO_SERVER_ACK, &KFTcpClientModule::HandleRegisterAck );
     }
 
     void KFTcpClientModule::BeforeShut()

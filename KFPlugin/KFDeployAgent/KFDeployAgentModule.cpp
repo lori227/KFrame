@@ -29,8 +29,8 @@ namespace KFrame
         __REGISTER_TCP_CLIENT_CONNECTION__( &KFDeployAgentModule::OnClientConnectServer );
         __REGISTER_TCP_CLIENT_SHUTDOWN__( &KFDeployAgentModule::OnClientLostServer );
         ////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFDeployAgentModule, KFMessageEnum::Normal, KFMsg::S2S_DEPLOY_COMMAND_TO_AGENT_REQ, KFMsg::S2SDeployCommandToAgentReq, HandleDeployCommandReq );
-        __REGISTER_MESSAGE__( KFDeployAgentModule, KFMessageEnum::Normal, KFMsg::S2S_DEPLOY_HEARTBEAT_TO_AGENT_REQ, KFMsg::S2SDeployHeartbeatToAgentReq, HandleClientHeartbeatReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_DEPLOY_COMMAND_TO_AGENT_REQ, &KFDeployAgentModule::HandleDeployCommandReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_DEPLOY_HEARTBEAT_TO_AGENT_REQ, &KFDeployAgentModule::HandleClientHeartbeatReq );
     }
 
     void KFDeployAgentModule::ShutDown()

@@ -9,13 +9,13 @@ namespace KFrame
         __REGISTER_HTTP__( __STRING__( deploy ), true, &KFDeployServerModule::HandleDeployCommand );
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFDeployServerModule, KFMessageEnum::Normal, KFMsg::S2S_REGISTER_AGENT_TO_SERVER_REQ, KFMsg::S2SRegisterAgentToServerReq, HandleRegisterAgentToServerReq );
-        __REGISTER_MESSAGE__( KFDeployServerModule, KFMessageEnum::Normal, KFMsg::S2S_DEPLOY_TOOL_EXECUTE_MYSQL_REQ, KFMsg::S2SDeployToolExecuteMySQLReq, HandleExecuteMySQLReq );
-        __REGISTER_MESSAGE__( KFDeployServerModule, KFMessageEnum::Normal, KFMsg::S2S_DEPLOY_TOOL_DELETE_MYSQL_REQ, KFMsg::S2SDeployToolDeleteMySQLReq, HandleDeleteMySQLReq );
-        __REGISTER_MESSAGE__( KFDeployServerModule, KFMessageEnum::Normal, KFMsg::S2S_DEPLOY_TOOL_QUERY_MYSQL_REQ, KFMsg::S2SDeployToolQueryMySQLReq, HandleQueryMySQLReq );
-        __REGISTER_MESSAGE__( KFDeployServerModule, KFMessageEnum::Normal, KFMsg::S2S_DEPLOY_TOOL_COMMAND_REQ, KFMsg::S2SDeployToolCommandReq, HandleDeployToolCommandReq );
-        __REGISTER_MESSAGE__( KFDeployServerModule, KFMessageEnum::Normal, KFMsg::S2S_DEPLOY_LOG_TO_SERVER_ACK, KFMsg::S2SDeployLogToServerAck, HandleDeployLogToServerAck );
-        __REGISTER_MESSAGE__( KFDeployServerModule, KFMessageEnum::Normal, KFMsg::S2S_DEPLOY_TOOL_QUERY_TOOL_ID_REQ, KFMsg::S2SDeployToolQueryToolIdReq, HandleDeployQueryToolIdReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_REGISTER_AGENT_TO_SERVER_REQ, &KFDeployServerModule::HandleRegisterAgentToServerReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_DEPLOY_TOOL_EXECUTE_MYSQL_REQ, &KFDeployServerModule::HandleExecuteMySQLReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_DEPLOY_TOOL_DELETE_MYSQL_REQ, &KFDeployServerModule::HandleDeleteMySQLReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_DEPLOY_TOOL_QUERY_MYSQL_REQ, &KFDeployServerModule::HandleQueryMySQLReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_DEPLOY_TOOL_COMMAND_REQ, &KFDeployServerModule::HandleDeployToolCommandReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_DEPLOY_LOG_TO_SERVER_ACK, &KFDeployServerModule::HandleDeployLogToServerAck );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_DEPLOY_TOOL_QUERY_TOOL_ID_REQ, &KFDeployServerModule::HandleDeployQueryToolIdReq );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 

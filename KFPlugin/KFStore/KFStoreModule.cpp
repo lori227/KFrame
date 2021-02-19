@@ -6,7 +6,7 @@ namespace KFrame
     {
         _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
         //////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFStoreModule, KFMessageEnum::Player, KFMsg::MSG_STORE_BUY_GOODS_REQ, KFMsg::MsgStoreBuyGoodsReq, HandleStoreBuyGoodsReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_STORE_BUY_GOODS_REQ, &KFStoreModule::HandleStoreBuyGoodsReq );
     }
 
     void KFStoreModule::BeforeShut()

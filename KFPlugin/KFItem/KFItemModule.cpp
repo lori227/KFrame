@@ -49,9 +49,9 @@ namespace KFrame
         __REGISTER_PLAYER_ENTER__( &KFItemModule::OnEnterItemModule );
         __REGISTER_PLAYER_LEAVE__( &KFItemModule::OnLeaveItemModule );
         ///////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFItemModule, KFMessageEnum::Player, KFMsg::MSG_REMOVE_ITEM_REQ, KFMsg::MsgRemoveItemReq, HandleRemoveItemReq );
-        __REGISTER_MESSAGE__( KFItemModule, KFMessageEnum::Player, KFMsg::MSG_REMOVE_ITEM_COUNT_REQ, KFMsg::MsgRemoveItemCountReq, HandleRemoveItemCountReq );
-        __REGISTER_MESSAGE__( KFItemModule, KFMessageEnum::Player, KFMsg::MSG_SELL_ITEM_REQ, KFMsg::MsgSellItemReq, HandleSellItemReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_REMOVE_ITEM_REQ, &KFItemModule::HandleRemoveItemReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_REMOVE_ITEM_COUNT_REQ, &KFItemModule::HandleRemoveItemCountReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_SELL_ITEM_REQ, &KFItemModule::HandleSellItemReq );
     }
 
     void KFItemModule::BeforeShut()

@@ -7,8 +7,8 @@ namespace KFrame
         _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
         __REGISTER_UPDATE_DATA__( &KFRankClientModule::OnDataUpdateCallBack );
         ///////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFRankClientModule, KFMessageEnum::Player, KFMsg::MSG_QUERY_RANK_LIST_REQ, KFMsg::MsgQueryRankListReq, HandleQueryRankListReq );
-        __REGISTER_MESSAGE__( KFRankClientModule, KFMessageEnum::Player, KFMsg::MSG_QUERY_FRIEND_RANK_LIST_REQ, KFMsg::MsgQueryFriendRankListReq, HandleQueryFriendRankListReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_QUERY_RANK_LIST_REQ, &KFRankClientModule::HandleQueryRankListReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_QUERY_FRIEND_RANK_LIST_REQ, &KFRankClientModule::HandleQueryFriendRankListReq );
     }
 
     void KFRankClientModule::BeforeShut()

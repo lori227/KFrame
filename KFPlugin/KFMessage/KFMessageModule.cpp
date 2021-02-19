@@ -65,13 +65,13 @@ namespace KFrame
         return true;
     }
 
-    void KFMessageModule::BindFindEngityFunction( uint32 type, KFModule* module, KFFindEntityFunction& function )
+    void KFMessageModule::BindFindEntityFunction( uint32 type, KFModule* module, KFFindEntityFunction& function )
     {
         auto kffunction = _find_entity_function.Create( type );
         kffunction->SetFunction( module, function );
     }
 
-    void KFMessageModule::UnBindFindEngityFunction( uint32 type )
+    void KFMessageModule::UnBindFindEntityFunction( uint32 type )
     {
         _find_entity_function.Remove( type );
     }

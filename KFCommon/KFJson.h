@@ -8,6 +8,7 @@
 
 namespace KFrame
 {
+    // https://github.com/simdjson/simdjson
     typedef rapidjson::Document KFJson;
 
     // 序列化

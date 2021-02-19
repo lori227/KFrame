@@ -12,7 +12,7 @@ namespace KFrame
 
         __REGISTER_PLAYER_ENTER__( &KFAchieveModule::OnEnterAchieveModule );
         //////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFAchieveModule, KFMessageEnum::Player, KFMsg::MSG_ACHIEVE_REWARD_REQ, KFMsg::MsgAchieveRewardReq, HandleAchieveRewardReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_ACHIEVE_REWARD_REQ, &KFAchieveModule::HandleAchieveRewardReq );
     }
 
     void KFAchieveModule::BeforeShut()

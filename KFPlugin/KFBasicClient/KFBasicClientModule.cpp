@@ -15,11 +15,11 @@ namespace KFrame
 
         _kf_route->RegisterConnectionFunction( this, &KFBasicClientModule::OnRouteConnectCluster );
         ///////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFBasicClientModule, KFMessageEnum::Player, KFMsg::MSG_SET_SEX_REQ, KFMsg::MsgSetSexReq, HandleSetSexReq );
-        __REGISTER_MESSAGE__( KFBasicClientModule, KFMessageEnum::Player, KFMsg::MSG_SET_NAME_REQ, KFMsg::MsgSetNameReq, HandleSetNameReq );
-        __REGISTER_MESSAGE__( KFBasicClientModule, KFMessageEnum::Player, KFMsg::S2S_SET_PLAYER_NAME_TO_GAME_ACK, KFMsg::S2SSetPlayerNameToGameAck, HandleSetPlayerNameToGameAck );
-        __REGISTER_MESSAGE__( KFBasicClientModule, KFMessageEnum::Player, KFMsg::MSG_QUERY_BASIC_REQ, KFMsg::MsgQueryBasicReq, HandleQueryBasicReq );
-        __REGISTER_MESSAGE__( KFBasicClientModule, KFMessageEnum::Player, KFMsg::S2S_QUERY_ATTRIBUTE_TO_GAME_ACK, KFMsg::S2SQueryAttributeToGameAck, HandleQueryAttributeToGameAck );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_SET_SEX_REQ, &KFBasicClientModule::HandleSetSexReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_SET_NAME_REQ, &KFBasicClientModule::HandleSetNameReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::S2S_SET_PLAYER_NAME_TO_GAME_ACK, &KFBasicClientModule::HandleSetPlayerNameToGameAck );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_QUERY_BASIC_REQ,&KFBasicClientModule::HandleQueryBasicReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::S2S_QUERY_ATTRIBUTE_TO_GAME_ACK, &KFBasicClientModule::HandleQueryAttributeToGameAck );
     }
 
     void KFBasicClientModule::BeforeShut()

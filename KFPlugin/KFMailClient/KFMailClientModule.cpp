@@ -10,13 +10,13 @@ namespace KFrame
         __REGISTER_PLAYER_LEAVE__( &KFMailClientModule::OnLeaveMailModule );
         __REGISTER_NEW_PLAYER__( &KFMailClientModule::OnNewPlayerMailModule );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFMailClientModule, KFMessageEnum::Player, KFMsg::MSG_QUERY_MAIL_REQ, KFMsg::MsgQueryMailReq, HandleQueryMailReq );
-        __REGISTER_MESSAGE__( KFMailClientModule, KFMessageEnum::Player, KFMsg::MSG_VIEW_MAIL_REQ, KFMsg::MsgViewMailReq, HandleViewMailReq );
-        __REGISTER_MESSAGE__( KFMailClientModule, KFMessageEnum::Player, KFMsg::MSG_DELETE_MAIL_REQ, KFMsg::MsgDeleteMailReq, HandleDeleteMailReq );
-        __REGISTER_MESSAGE__( KFMailClientModule, KFMessageEnum::Player, KFMsg::MSG_MAIL_REWARD_REQ, KFMsg::MsgMailRewardReq, HandleMailReceiveReq );
-        __REGISTER_MESSAGE__( KFMailClientModule, KFMessageEnum::Player, KFMsg::S2S_QUERY_MAIL_ACK, KFMsg::S2SQueryMailAck, HandleQueryMailAck );
-        __REGISTER_MESSAGE__( KFMailClientModule, KFMessageEnum::Player, KFMsg::S2S_UPDATE_MAIL_STATUS_ACK, KFMsg::S2SUpdateMailStatusAck, HandleUpdateMailStatusAck );
-        __REGISTER_MESSAGE__( KFMailClientModule, KFMessageEnum::Player, KFMsg::S2S_NOTICE_NEW_MAIL_REQ, KFMsg::S2SNoticeNewMailReq, HandleNoticeNewMailReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_QUERY_MAIL_REQ, &KFMailClientModule::HandleQueryMailReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_VIEW_MAIL_REQ, &KFMailClientModule::HandleViewMailReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_DELETE_MAIL_REQ, &KFMailClientModule::HandleDeleteMailReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_MAIL_REWARD_REQ, &KFMailClientModule::HandleMailReceiveReq );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::S2S_QUERY_MAIL_ACK, &KFMailClientModule::HandleQueryMailAck );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::S2S_UPDATE_MAIL_STATUS_ACK, &KFMailClientModule::HandleUpdateMailStatusAck );
+        __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::S2S_NOTICE_NEW_MAIL_REQ, &KFMailClientModule::HandleNoticeNewMailReq );
     }
 
     void KFMailClientModule::BeforeShut()

@@ -111,13 +111,13 @@ namespace KFrame
         void RegisterFindEntityFunction( uint32 type, T* module, KFEntity * ( T::* function )( uint64 ) )
         {
             KFFindEntityFunction bindfunction = std::bind( function, module, std::placeholders::_1 );
-            BindFindEngityFunction( type, module, bindfunction );
+            BindFindEntityFunction( type, module, bindfunction );
         }
 
         template< typename T >
         void RegisterFindEntityFunction( uint32 type, T* module )
         {
-            UnBindFindEngityFunction( type );
+            UnBindFindEntityFunction( type );
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -133,10 +133,10 @@ namespace KFrame
         virtual void AddMessageHandle( KFMessageHandleAbstract* messagehandle ) = 0;
 
         // 删除消息函数
-        virtual bool RemoveMessageHandle( uint32 msgide, KFModule* module ) = 0;
+        virtual bool RemoveMessageHandle( uint32 msgid, KFModule* module ) = 0;
 
-        virtual void BindFindEngityFunction( uint32 type, KFModule* module, KFFindEntityFunction& function ) = 0;
-        virtual void UnBindFindEngityFunction( uint32 type ) = 0;
+        virtual void BindFindEntityFunction( uint32 type, KFModule* module, KFFindEntityFunction& function ) = 0;
+        virtual void UnBindFindEntityFunction( uint32 type ) = 0;
     };
 
     ///////////////////////////////////////////////////////////////////////////////////////////
@@ -146,8 +146,8 @@ namespace KFrame
 #define __KF_MESSAGE_FUNCTION__( function, msgtype ) \
     void function( KFEntity* kfentity, const Route& route, uint32 msgid, const msgtype* kfmsg )
 
-#define __REGISTER_MESSAGE__( moduletype, msgflag, msgid, msgtype, function ) \
-    _kf_message->RegisterHandle<moduletype, msgtype>( msgflag, msgid, this, &moduletype::function )
+#define __REGISTER_MESSAGE__( msgflag, msgid, function ) \
+    _kf_message->RegisterHandle( msgflag, msgid, this, function )
 
 #define __HANDLE_MESSAGE__( route, msgid, data, length )\
     _kf_message->HandleMessage( route, msgid, data, length )
