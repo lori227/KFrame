@@ -8,8 +8,8 @@ namespace KFrame
         __REGISTER_TCP_CLIENT_SHUTDOWN__( &KFBusModule::OnClientDisconnectMaster );
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        __REGISTER_MESSAGE__( KFBusModule, KFMessageEnum::Normal, KFMsg::S2S_TELL_REGISTER_TO_SERVER, KFMsg::TellRegisterToServer, HanldeTellRegisterToServer );
-        __REGISTER_MESSAGE__( KFBusModule, KFMessageEnum::Normal, KFMsg::S2S_TELL_UNREGISTER_FROM_SERVER, KFMsg::TellUnRegisterFromServer, HanldeTellUnRegisterFromServer );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_TELL_REGISTER_TO_SERVER, &KFBusModule::HanldeTellRegisterToServer );
+        __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_TELL_UNREGISTER_FROM_SERVER, &KFBusModule::HanldeTellUnRegisterFromServer );
     }
 
     void KFBusModule::ShutDown()
