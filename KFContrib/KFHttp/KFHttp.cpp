@@ -3,10 +3,10 @@
 
 namespace KFrame
 {
-    std::string KFHttp::GetURI( const std::string& url, Poco::URI& pocouri )
+    std::string KFHttp::GetURI( const std::string& url, Poco::URI& poco_uri )
     {
-        auto path = pocouri.getPath();
-        auto query = pocouri.getQuery();
+        auto path = poco_uri.getPath();
+        auto query = poco_uri.getQuery();
 
         if ( query.empty() )
         {
@@ -38,43 +38,43 @@ namespace KFrame
             request.setMethod( Poco::Net::HTTPRequest::HTTP_GET );
         }
 
-        Poco::URI verifyuri( url );
-        request.setURI( GetURI( url, verifyuri ) );
+        Poco::URI verify_uri( url );
+        request.setURI( GetURI( url, verify_uri ) );
 
-        Poco::Net::HTTPClientSession* psession = GetHttpSession();
-        psession->setHost( verifyuri.getHost() );
-        psession->setPort( verifyuri.getPort() );
+        Poco::Net::HTTPClientSession* session = GetHttpSession();
+        session->setHost( verify_uri.getHost() );
+        session->setPort( verify_uri.getPort() );
 
         std::string result;
-        uint32 exceptioncount = 0;
+        uint32 exception_count = 0;
 
         do
         {
             try
             {
                 request.setContentLength( data.length() );
-                psession->sendRequest( request ) << data;
+                session->sendRequest( request ) << data;
 
                 Poco::Net::HTTPResponse response;
-                auto& recvstream = psession->receiveResponse( response );
+                auto& recv_stream = session->receiveResponse( response );
 
                 std::ostringstream os;
-                recvstream >> os.rdbuf();
+                recv_stream >> os.rdbuf();
                 result = os.str();
 
                 break;
             }
             catch ( Poco::Exception& exception )
             {
-                if ( exceptioncount == 0 )
+                if ( exception_count == 0 )
                 {
-                    __LOG_ERROR__( "[{}]http failed, error = {}, code = {}", verifyuri.toString(), exception.what(), exception.code() );
+                    __LOG_ERROR__( "[{}]http failed, error = {}, code = {}", verify_uri.toString(), exception.what(), exception.code() );
                 }
-                ++exceptioncount;
+                ++exception_count;
             }
-        } while ( exceptioncount < MAX_EXCEPTION );
+        } while ( exception_count < MAX_EXCEPTION );
 
-        psession->reset();
+        session->reset();
         __LOG_DEBUG__( "http result={}", result );
 
         return result;

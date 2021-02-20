@@ -12,28 +12,28 @@ namespace KFrame
         KFHttpData();
         ~KFHttpData();
 
-        // Ö´ĞĞÂß¼­
+        // æ‰§è¡Œé€»è¾‘
         void Request();
 
-        // ·ÃÎÊ½áÊø
+        // è®¿é—®ç»“æŸ
         void Response();
     public:
-        // ·ÃÎÊµØÖ·
+        // è®¿é—®åœ°å€
         std::string _url;
 
-        // ·ÃÎÊÀàĞÍ
+        // è®¿é—®ç±»å‹
         uint32 _type;
 
-        // ·¢ËÍÊı¾İ
+        // å‘é€æ•°æ®
         std::string _data;
 
-        // »Ø´«Êı¾İ
+        // å›ä¼ æ•°æ®
         std::string _args;
 
-        // ½ÓÊÜÊı¾İ
+        // æ¥å—æ•°æ®
         std::string _result;
 
-        // »Øµ÷º¯Êı
+        // å›è°ƒå‡½æ•°
         KFHttpClientFunction _function;
 
         // httpclient

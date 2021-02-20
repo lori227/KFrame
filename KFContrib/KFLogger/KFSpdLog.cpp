@@ -9,9 +9,9 @@
 
 namespace KFrame
 {
-    KFSpdLog::KFSpdLog( const KFLoggerSetting* kfsetting )
+    KFSpdLog::KFSpdLog( std::shared_ptr<const KFLoggerSetting>& setting )
     {
-        _kf_setting = kfsetting;
+        _setting = setting;
     }
 
     KFSpdLog::~KFSpdLog()
@@ -19,64 +19,64 @@ namespace KFrame
         spdlog::drop( _normal_logger->name() );
     }
 
-    void KFSpdLog::Initialize( const std::string& appname, const std::string& apptype, const std::string& appid )
+    void KFSpdLog::Initialize( const std::string& app_name, const std::string& app_type, const std::string& app_id )
     {
-        auto filename = __FORMAT__( "{}-{}-{}.log", appname, apptype, appid );
+        auto filename = __FORMAT__( "{}-{}-{}.log", app_name, app_type, app_id );
         Initialize( filename );
     }
 
-    void KFSpdLog::Initialize( const std::string& filename )
+    void KFSpdLog::Initialize( const std::string& file_name )
     {
-        auto logname = __FORMAT__( "{}{}", _kf_setting->_output_path, filename );
-        InitLogger( _normal_logger, logname );
+        auto log_name = __FORMAT__( "{}{}", _setting->_output_path, file_name );
+        InitLogger( _normal_logger, log_name );
     }
 
-    void KFSpdLog::InitLogger( std::shared_ptr<spdlog::logger>& logger, const std::string& logname )
+    void KFSpdLog::InitLogger( std::shared_ptr<spdlog::logger>& logger, const std::string& log_name )
     {
-        std::vector<spdlog::sink_ptr> sinksvec;
-        if ( _kf_setting->_console )
+        std::vector<spdlog::sink_ptr> sinks_vec;
+        if ( _setting->_console )
         {
 #if __KF_SYSTEM__ == __KF_WIN__
             auto colorsink = std::make_shared<spdlog::sinks::wincolor_stdout_sink_mt>();
 #else
-            auto colorsink = std::make_shared<spdlog::sinks::ansicolor_stdout_sink_mt>();
+            auto color_sink = std::make_shared<spdlog::sinks::ansicolor_stdout_sink_mt>();
 #endif
-            sinksvec.push_back( colorsink );
+            sinks_vec.push_back( color_sink );
         }
 
-        switch ( _kf_setting->_sink_type )
+        switch ( _setting->_sink_type )
         {
         case KFSinkEnum::DateAndHour:
-            sinksvec.push_back( std::make_shared<spdlog::sinks::date_and_hour_file_sink_mt>( logname ) );
+            sinks_vec.push_back( std::make_shared<spdlog::sinks::date_and_hour_file_sink_mt>( log_name ) );
             break;
         case KFSinkEnum::StepFile:
-            sinksvec.push_back( std::make_shared<spdlog::sinks::step_file_sink_mt>( logname, _kf_setting->_step_seconds, _kf_setting->_max_log_size ) );
+            sinks_vec.push_back( std::make_shared<spdlog::sinks::step_file_sink_mt>( log_name, _setting->_step_seconds, _setting->_max_log_size ) );
             break;
         case KFSinkEnum::GLogFile:
-            sinksvec.push_back( std::make_shared<spdlog::sinks::glog_file_sink_mt>( logname, _kf_setting->_split, _kf_setting->_step_seconds, _kf_setting->_max_log_size ) );
+            sinks_vec.push_back( std::make_shared<spdlog::sinks::glog_file_sink_mt>( log_name, _setting->_split, _setting->_step_seconds, _setting->_max_log_size ) );
             break;
         default:
             break;
         }
 
-        if ( _kf_setting->_queue_count == 0u )
+        if ( _setting->_queue_count == 0u )
         {
-            logger = std::make_shared<spdlog::logger>( logname, std::begin( sinksvec ), std::end( sinksvec ) );
+            logger = std::make_shared<spdlog::logger>( log_name, std::begin( sinks_vec ), std::end( sinks_vec ) );
         }
         else
         {
-            _thread_pool = std::make_shared<spdlog::details::thread_pool>( _kf_setting->_queue_count, 1 );
-            logger = std::make_shared<spdlog::async_logger>( logname, std::begin( sinksvec ), std::end( sinksvec ), _thread_pool );
+            _thread_pool = std::make_shared<spdlog::details::thread_pool>( _setting->_queue_count, 1 );
+            logger = std::make_shared<spdlog::async_logger>( log_name, std::begin( sinks_vec ), std::end( sinks_vec ), _thread_pool );
         }
 
-        logger->set_pattern( _kf_setting->_pattern );
+        logger->set_pattern( _setting->_pattern );
         logger->set_level( spdlog::level::level_enum::trace );
         logger->flush_on( spdlog::level::level_enum::trace );
         spdlog::register_logger( logger );
     }
 
-    void KFSpdLog::Log( uint32 loglevel, const std::string& content )
+    void KFSpdLog::Log( uint32 log_level, const std::string& content )
     {
-        _normal_logger->log( ( spdlog::level::level_enum )loglevel, content );
+        _normal_logger->log( ( spdlog::level::level_enum )log_level, content );
     }
 }

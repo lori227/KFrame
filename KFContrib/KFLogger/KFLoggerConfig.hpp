@@ -60,7 +60,7 @@ namespace KFrame
         void LoadConfig( const std::string& file );
 
         // 查找启动配置
-        const KFLoggerSetting* FindSetting( const std::string& name );
+        std::shared_ptr<const KFLoggerSetting> FindSetting( const std::string& name );
     public:
         // 配置列表
         KFHashMap< std::string, KFLoggerSetting > _settings;

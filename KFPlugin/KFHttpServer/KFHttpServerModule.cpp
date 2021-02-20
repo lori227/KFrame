@@ -37,12 +37,12 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFHttpServerModule::RegisterMethodFunction( const std::string& url, bool sync, KFHttpMethodFunction& function )
     {
-        _http_server->RegisterMethonFunction( url, sync, function );
+        _http_server->RegisterMethodFunction( url, sync, function );
     }
 
     void KFHttpServerModule::UnRegisterFunction( const std::string& url )
     {
-        _http_server->UnRegisterMethonFunction( url );
+        _http_server->UnRegisterMethodFunction( url );
     }
 
     const std::string& KFHttpServerModule::GetHttpUrl()

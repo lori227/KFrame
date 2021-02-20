@@ -10,7 +10,7 @@ namespace KFrame
     class KFHttpHandle : public Poco::Net::HTTPRequestHandler
     {
     public:
-        KFHttpHandle( KFHttpServer* kfhttpserver );
+        KFHttpHandle( KFHttpServer* http_server );
 
         // 处理请求
         virtual void handleRequest( Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response );

@@ -17,29 +17,27 @@ namespace KFrame
     {
         _http_server->stopAll();
 
-        KFLocker kflocker( _kf_mutex );
-        for ( auto kfdata : _kf_function_data )
         {
-            __KF_DELETE__( KFFunctionData, kfdata );
+            KFLocker locker( _kf_mutex );
+            _function_data_list.clear();
         }
-        _kf_function_data.clear();
     }
 
-    void KFHttpServer::Start( const std::string& ip, uint32 port, uint32 maxthread, uint32 maxqueue, uint32 idletime, bool keeplive )
+    void KFHttpServer::Start( const std::string& ip, uint32 port, uint32 max_thread, uint32 max_queue, uint32 idle_time, bool keep_live )
     {
         try
         {
             Poco::Net::HTTPServerParams* params = __NEW_OBJECT__( Poco::Net::HTTPServerParams );
-            params->setKeepAlive( keeplive );
-            params->setMaxThreads( maxthread );
-            params->setMaxQueued( maxqueue );
-            params->setThreadIdleTime( idletime );
+            params->setKeepAlive( keep_live );
+            params->setMaxQueued( max_queue );
+            params->setMaxThreads( max_thread );
+            params->setThreadIdleTime( idle_time );
 
             Poco::Net::SocketAddress address( ip, port );
             Poco::Net::ServerSocket socket( address );
 
-            auto httpfactory = __NEW_OBJECT__( KFHttpFactory, this );
-            _http_server = __NEW_OBJECT__( Poco::Net::HTTPServer, httpfactory, socket, params );
+            auto http_factory = __NEW_OBJECT__( KFHttpFactory, this );
+            _http_server = __NEW_OBJECT__( Poco::Net::HTTPServer, http_factory, socket, params );
             _http_server->start();
         }
         catch ( Poco::Exception& exc )
@@ -49,49 +47,49 @@ namespace KFrame
         }
     }
 
-    void KFHttpServer::RegisterMethonFunction( const std::string& url, bool sync, KFHttpMethodFunction& function )
+    void KFHttpServer::RegisterMethodFunction( const std::string& url, bool sync, KFHttpMethodFunction& function )
     {
-        auto kfhttpfunction = _functions.Create( url );
-        kfhttpfunction->_sync = sync;
-        kfhttpfunction->_function = function;
+        auto http_function = _functions.Create( url );
+        http_function->_sync = sync;
+        http_function->_function = function;
     }
 
-    void KFHttpServer::UnRegisterMethonFunction( const std::string& url )
+    void KFHttpServer::UnRegisterMethodFunction( const std::string& url )
     {
         _functions.Remove( url );
     }
 
     std::string KFHttpServer::ProcessHttpRequest( const std::string& url, const std::string& ip, const std::string& data )
     {
-        auto kffunction = _functions.Find( url );
-        if ( kffunction == nullptr )
+        auto function = _functions.Find( url );
+        if ( function == nullptr )
         {
             return _invalid_string;
         }
 
-        if ( !kffunction->_sync )
+        if ( !function->_sync )
         {
-            auto strdata = _invalid_string;
+            auto result_data = _invalid_string;
             try
             {
-                strdata = kffunction->_function( ip, data );
+                result_data = function->_function( ip, data );
             }
             catch ( ... )
             {
                 __LOG_ERROR__( "http function failed! data=[{}]", data );
             }
 
-            return strdata;
+            return result_data;
         }
 
-        auto kfdata = __KF_NEW__( KFFunctionData );
-        kfdata->_ip = ip;
-        kfdata->_data = data;
-        kfdata->_kf_function = kffunction;
+        auto function_data = __MAKE_SHARED__( KFFunctionData );
+        function_data->_ip = ip;
+        function_data->_data = data;
+        function_data->_http_function = function;
         {
             // 保存数据
-            KFLocker kflocker( _kf_mutex );
-            _kf_function_data.push_back( kfdata );
+            KFLocker locker( _kf_mutex );
+            _function_data_list.push_back( function_data );
         }
 
         return KFHttpCommon::SendResponseCode( KFEnum::Ok );
@@ -99,24 +97,22 @@ namespace KFrame
 
     void KFHttpServer::Run()
     {
-        std::list< KFFunctionData* > templist;
+        std::list<std::shared_ptr<KFFunctionData>> temp_list;
         {
-            KFLocker kflocker( _kf_mutex );
-            templist.swap( _kf_function_data );
+            KFLocker locker( _kf_mutex );
+            temp_list.swap( _function_data_list );
         }
 
-        for ( auto kfdata : templist )
+        for ( auto& function_data : temp_list )
         {
             try
             {
-                kfdata->_kf_function->_function( kfdata->_ip, kfdata->_data );
+                function_data->_http_function->_function( function_data->_ip, function_data->_data );
             }
             catch ( ... )
             {
-                __LOG_ERROR__( "http function failed! data=[{}]", kfdata->_data );
+                __LOG_ERROR__( "http function failed! data=[{}]", function_data->_data );
             }
-
-            __KF_DELETE__( KFFunctionData, kfdata );
         }
     }
 }

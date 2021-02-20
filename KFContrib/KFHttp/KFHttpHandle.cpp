@@ -5,9 +5,9 @@
 
 namespace KFrame
 {
-    KFHttpHandle::KFHttpHandle( KFHttpServer* kfhttpserver )
+    KFHttpHandle::KFHttpHandle( KFHttpServer* http_server )
     {
-        _http_server = kfhttpserver;
+        _http_server = http_server;
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -29,13 +29,13 @@ namespace KFrame
 
         auto& address = request.clientAddress();
         auto ip = address.host().toString();
-        auto resultdata = _http_server->ProcessHttpRequest( url, ip, data );
+        auto result_data = _http_server->ProcessHttpRequest( url, ip, data );
 
-        __LOG_DEBUG__( "response=[{}]", resultdata );
+        __LOG_DEBUG__( "response=[{}]", result_data );
 
         // 发回给客户端
         auto& send = response.send();
-        send << resultdata;
+        send << result_data;
         send.flush();
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////

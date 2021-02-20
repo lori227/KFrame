@@ -12,7 +12,7 @@ namespace KFrame
     class KFHttpFactory : public Poco::Net::HTTPRequestHandlerFactory
     {
     public:
-        KFHttpFactory( KFHttpServer* kfhttpserver );
+        KFHttpFactory( KFHttpServer* http_server );
 
         // 创建请求处理
         Poco::Net::HTTPRequestHandler* createRequestHandler( const Poco::Net::HTTPServerRequest& request );

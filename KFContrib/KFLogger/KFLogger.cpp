@@ -15,14 +15,14 @@ namespace KFrame
         __DELETE_OBJECT__( _logger_config );
     }
 
-    void KFLogger::Initialize( KFLogger* kflogger )
+    void KFLogger::Initialize( KFLogger* logger )
     {
-        if ( kflogger == nullptr )
+        if ( logger == nullptr )
         {
-            kflogger = __NEW_OBJECT__( KFLogger );
+            logger = __NEW_OBJECT__( KFLogger );
         }
 
-        KFLogger::_kf_logger = kflogger;
+        KFLogger::_kf_logger = logger;
     }
 
     KFLogger* KFLogger::Instance()
@@ -41,17 +41,17 @@ namespace KFrame
         {
         }
 
-        auto kfsetting = _logger_config->FindSetting( _logger_config->_default_log_name );
-        if ( kfsetting == nullptr )
+        auto setting = _logger_config->FindSetting( _logger_config->_default_log_name );
+        if ( setting == nullptr )
         {
             return false;
         }
 
-        SetLogLevel( kfsetting->_level );
+        SetLogLevel( setting->_level );
 
-        auto kfglobal = KFGlobal::Instance();
-        _local_log = __NEW_OBJECT__( KFSpdLog, kfsetting );
-        _local_log->Initialize( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->ToString() );
+        auto global = KFGlobal::Instance();
+        _local_log = __NEW_OBJECT__( KFSpdLog, setting );
+        _local_log->Initialize( global->_app_name, global->_app_type, global->_app_id->ToString() );
 
         // 注册函数
         RegisterLogFunction( this, &KFLogger::Log );
@@ -80,7 +80,7 @@ namespace KFrame
         _local_log->Log( level, content );
     }
 
-    KFSpdLog* KFLogger::NewLogger( uint64 id, const std::string& name, const std::string& filename )
+    KFSpdLog* KFLogger::NewLogger( uint64 id, const std::string& name, const std::string& file_name )
     {
         auto iter = _create_loggers.find( id );
         if ( iter != _create_loggers.end() )
@@ -88,17 +88,17 @@ namespace KFrame
             return iter->second;
         }
 
-        auto kfsetting = _logger_config->FindSetting( name );
-        if ( kfsetting == nullptr )
+        auto setting = _logger_config->FindSetting( name );
+        if ( setting == nullptr )
         {
             return nullptr;
         }
 
-        auto kflogger = __KF_NEW__( KFSpdLog, kfsetting );
+        auto logger = __KF_NEW__( KFSpdLog, setting );
 
-        kflogger->Initialize( filename );
-        _create_loggers[ id ] = kflogger;
-        return kflogger;
+        logger->Initialize( file_name );
+        _create_loggers[ id ] = logger;
+        return logger;
     }
 
     void KFLogger::DeleteLogger( uint64 id )
@@ -124,13 +124,13 @@ namespace KFrame
 
         static const int32 size = 1024;
         void* array[ size ];
-        auto stacknum = backtrace( array, size );
-        auto stacktrace = backtrace_symbols( array, stacknum );
-        for ( auto i = 0; i < stacknum; ++i )
+        auto stack_num = backtrace( array, size );
+        auto stack_trace = backtrace_symbols( array, stack_num );
+        for ( auto i = 0; i < stack_num; ++i )
         {
-            Log( KFLogEnum::Error, stacktrace[ i ] );
+            Log( KFLogEnum::Error, stack_trace[ i ] );
         }
-        free( stacktrace );
+        free( stack_trace );
 
         Log( KFLogEnum::Error, "========================================" );
 #endif

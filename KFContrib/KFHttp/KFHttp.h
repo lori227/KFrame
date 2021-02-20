@@ -29,7 +29,7 @@ namespace KFrame
 
     protected:
         // 获得访问路径
-        virtual std::string GetURI( const std::string& url, Poco::URI& pocouri );
+        virtual std::string GetURI( const std::string& url, Poco::URI& poco_uri );
 
         // 获得clientsession
         virtual Poco::Net::HTTPClientSession* GetHttpSession() = 0;

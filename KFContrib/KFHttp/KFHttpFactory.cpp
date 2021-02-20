@@ -5,9 +5,9 @@
 
 namespace KFrame
 {
-    KFHttpFactory::KFHttpFactory( KFHttpServer* kfhttpserver )
+    KFHttpFactory::KFHttpFactory( KFHttpServer* http_server )
     {
-        _http_server = kfhttpserver;
+        _http_server = http_server;
     }
 
     Poco::Net::HTTPRequestHandler* KFHttpFactory::createRequestHandler( const Poco::Net::HTTPServerRequest& request )
