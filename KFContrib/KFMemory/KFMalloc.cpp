@@ -33,14 +33,14 @@ namespace KFrame
         __DELETE_OBJECT__( _thread_buffer_mutex );
     }
 
-    void KFMalloc::Initialize( KFMalloc* kfmalloc )
+    void KFMalloc::Initialize( KFMalloc* malloc )
     {
-        if ( kfmalloc == nullptr )
+        if ( malloc == nullptr )
         {
-            kfmalloc = new KFMalloc();
+            malloc = new KFMalloc();
         }
 
-        KFMalloc::_kf_malloc = kfmalloc;
+        KFMalloc::_kf_malloc = malloc;
     }
 
     KFMalloc* KFMalloc::Instance()
@@ -152,31 +152,31 @@ namespace KFrame
 #define MILLION_SIZE 1048576.0f
     void KFMalloc::PrintMemoryLog()
     {
-        uint64 totalsize = 0;
+        uint64 total_size = 0;
         __LOG_INFO__( "****************print memory start*****************" );
         {
             KFLocker locker( *_memory_list_mutex );
             for ( auto& iter : _log_data_list )
             {
-                auto logdata = &iter.second;
-                totalsize += logdata->_total_size;
-                __LOG_INFO__( "count[{}] total[{}] name[{}]", logdata->_count, logdata->_total_size, iter.first );
+                auto log_data = &iter.second;
+                total_size += log_data->_total_size;
+                __LOG_INFO__( "count[{}] total[{}] name[{}]", log_data->_count, log_data->_total_size, iter.first );
             }
         }
-        __LOG_INFO__( "*********print memory end, total[{}]********", totalsize );
+        __LOG_INFO__( "*********print memory end, total[{}]********", total_size );
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////
     int8* KFMalloc::GetInt8( uint32 length, const char* function, uint32 line )
     {
-        auto threadid = KFThread::GetThreadID();
+        auto thread_id = KFThread::GetThreadID();
 
         KFLocker locker( *_thread_buffer_mutex );
-        auto iter = _int8_list.find( threadid );
+        auto iter = _int8_list.find( thread_id );
         if ( iter == _int8_list.end() )
         {
-            iter = _int8_list.insert( std::make_pair( threadid, KFThreadBuffer< int8 >() ) ).first;
+            iter = _int8_list.insert( std::make_pair( thread_id, KFThreadBuffer< int8 >() ) ).first;
         }
 
         auto kfbuffer = &iter->second;
@@ -184,7 +184,7 @@ namespace KFrame
         {
             kfbuffer->_length = length;
             kfbuffer->_buffer = reinterpret_cast< int8* >( realloc( kfbuffer->_buffer, length ) );
-            __LOG_INFO__( "thread[{}] malloc int8[{}]", threadid, length );
+            __LOG_INFO__( "thread[{}] malloc int8[{}]", thread_id, length );
         }
 
         return kfbuffer->_buffer;
@@ -192,24 +192,24 @@ namespace KFrame
 
     uint8* KFMalloc::GetUInt8( uint32 length, const char* function, uint32 line )
     {
-        auto threadid = KFThread::GetThreadID();
+        auto thread_id = KFThread::GetThreadID();
 
         KFLocker locker( *_thread_buffer_mutex );
-        auto iter = _uint8_list.find( threadid );
+        auto iter = _uint8_list.find( thread_id );
         if ( iter == _uint8_list.end() )
         {
-            iter = _uint8_list.insert( std::make_pair( threadid, KFThreadBuffer< uint8 >() ) ).first;
+            iter = _uint8_list.insert( std::make_pair( thread_id, KFThreadBuffer< uint8 >() ) ).first;
         }
 
-        auto kfbuffer = &iter->second;
-        if ( kfbuffer->_length < length )
+        auto buffer = &iter->second;
+        if ( buffer->_length < length )
         {
-            kfbuffer->_length = length;
-            kfbuffer->_buffer = reinterpret_cast< uint8* >( realloc( kfbuffer->_buffer, length ) );
-            __LOG_INFO__( "thread[{}] malloc uint8[{}]", threadid, length );
+            buffer->_length = length;
+            buffer->_buffer = reinterpret_cast< uint8* >( realloc( buffer->_buffer, length ) );
+            __LOG_INFO__( "thread[{}] malloc uint8[{}]", thread_id, length );
         }
 
-        return kfbuffer->_buffer;
+        return buffer->_buffer;
     }
 
     int8* KFMalloc::CreateShareMemory( const std::string& name, uint32 length )
@@ -218,19 +218,19 @@ namespace KFrame
         auto iter = _share_memory_list.find( name );
         if ( iter == _share_memory_list.end() )
         {
-            KFShareMemory sharememory;
-            sharememory._size = length;
-            sharememory._memory = new Poco::SharedMemory( name, length, Poco::SharedMemory::AM_WRITE );
-            iter = _share_memory_list.insert( std::make_pair( name, sharememory ) ).first;
+            KFShareMemory share_memory;
+            share_memory._size = length;
+            share_memory._memory = new Poco::SharedMemory( name, length, Poco::SharedMemory::AM_WRITE );
+            iter = _share_memory_list.insert( std::make_pair( name, share_memory ) ).first;
         }
 
-        auto sharememory = &iter->second;
-        if ( sharememory->_size != length )
+        auto share_memory = &iter->second;
+        if ( share_memory->_size != length )
         {
             __LOG_ERROR__( "share memory[{}] length[{} != {}] error", name, length );
         }
 
-        auto memory = reinterpret_cast< Poco::SharedMemory* >( sharememory->_memory );
+        auto memory = reinterpret_cast< Poco::SharedMemory* >( share_memory->_memory );
         return memory->begin();
     }
 }

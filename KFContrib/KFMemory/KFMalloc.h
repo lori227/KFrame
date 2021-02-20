@@ -37,7 +37,7 @@ namespace KFrame
         ~KFMalloc();
 
         // 创建
-        static void Initialize( KFMalloc* kfmalloc );
+        static void Initialize( KFMalloc* malloc );
 
         // 接口
         static KFMalloc* Instance();
