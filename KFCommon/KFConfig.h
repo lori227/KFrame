@@ -141,19 +141,16 @@ namespace KFrame
 
         virtual void ClearFileSetting( const std::string& file_path )
         {
-            std::list< KeyType > removes;
-            for ( auto& iter : _settings._objects )
+            for ( auto iter = _settings._objects.begin(); iter != _settings._objects.end(); )
             {
-                auto setting = iter.second;
-                if ( setting->_file_path == file_path )
+                if ( iter.second->_file_path == file_path )
                 {
-                    removes.push_back( setting->_id );
+                    iter = _settings._objects.erase( iter );
                 }
-            }
-
-            for ( auto id : removes )
-            {
-                _settings.Remove( id );
+                else
+                {
+                    ++iter;
+                }
             }
         }
 
@@ -167,7 +164,7 @@ namespace KFrame
                 return nullptr;
             }
 
-            auto id = xml_node.ReadT< KeyType >( _key_name.c_str(), true );
+            auto id = xml_node.ReadT<KeyType>( _key_name.c_str(), true );
             auto setting = _settings.Create( id );
             setting->_id = id;
             setting->_row = xml_node.ReadUInt32( __STRING__( row ).c_str(), true );
