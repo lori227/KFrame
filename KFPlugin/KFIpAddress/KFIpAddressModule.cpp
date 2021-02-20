@@ -76,7 +76,7 @@ namespace KFrame
         _kf_http_client->MTGet<KFIpAddressModule>( _url, kfjson );
     }
 
-    const KFIpAddress* KFIpAddressModule::GetMasterIp( const std::string& appname, uint32 zoneid )
+    const KFNetData* KFIpAddressModule::GetMasterIp( const std::string& appname, uint32 zoneid )
     {
         auto kfglobal = KFGlobal::Instance();
         static auto _url = GetDirUrl() + __STRING__( querymasterip );
@@ -101,7 +101,7 @@ namespace KFrame
             return nullptr;
         }
 
-        static KFIpAddress _ip_address;
+        static KFNetData _ip_address;
         _ip_address._id = appid;
         _ip_address._ip = ip;
         _ip_address._port = port;
@@ -111,12 +111,12 @@ namespace KFrame
         return &_ip_address;
     }
 
-    const std::list< KFIpAddress>& KFIpAddressModule::GetMasterList( const std::string& appname, uint32 zoneid )
+    const std::list<KFNetData>& KFIpAddressModule::GetMasterList( const std::string& appname, uint32 zoneid )
     {
         auto kfglobal = KFGlobal::Instance();
         static auto _url = GetDirUrl() + __STRING__( querymasterlist );
 
-        static std::list< KFIpAddress > _ip_address_list;
+        static std::list< KFNetData > _ip_address_list;
         _ip_address_list.clear();
 
         __JSON_OBJECT_DOCUMENT__( kfjson );
@@ -134,7 +134,7 @@ namespace KFrame
             {
                 auto& jsonobject = __JSON_ARRAY_INDEX__( kfmasterlist, i );
 
-                KFIpAddress ipaddress;
+                KFNetData ipaddress;
                 ipaddress._id = __TO_UINT64__( __JSON_GET_STRING__( jsonobject, __STRING__( appid ) ) );
                 ipaddress._ip = __JSON_GET_STRING__( jsonobject, __STRING__( ip ) );
                 ipaddress._port = __TO_UINT32__( __JSON_GET_STRING__( jsonobject, __STRING__( port ) ) );

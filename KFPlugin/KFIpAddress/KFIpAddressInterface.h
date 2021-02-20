@@ -26,10 +26,10 @@ namespace KFrame
         virtual const std::string& GetPayUrl() = 0;
 
         // 获得master ip
-        virtual const KFIpAddress* GetMasterIp( const std::string& appname, uint32 zoneid ) = 0;
+        virtual const KFNetData* GetMasterIp( const std::string& appname, uint32 zoneid ) = 0;
 
         // 查询master列表
-        virtual const std::list< KFIpAddress >& GetMasterList( const std::string& appname, uint32 zoneid ) = 0;
+        virtual const std::list< KFNetData >& GetMasterList( const std::string& appname, uint32 zoneid ) = 0;
     };
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -47,10 +47,10 @@ namespace KFrame
         virtual const std::string& GetPayUrl();
 
         // 获得master ip
-        virtual const KFIpAddress* GetMasterIp( const std::string& appname, uint32 zoneid );
+        virtual const KFNetData* GetMasterIp( const std::string& appname, uint32 zoneid );
 
         // 查询master列表
-        virtual const std::list< KFIpAddress >& GetMasterList( const std::string& appname, uint32 zoneid );
+        virtual const std::list< KFNetData >& GetMasterList( const std::string& appname, uint32 zoneid );
     protected:
 #if __KF_SYSTEM__ == __KF_WIN__
         std::string GetWinLocalIp();
