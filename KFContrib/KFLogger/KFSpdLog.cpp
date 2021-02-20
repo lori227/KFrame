@@ -21,8 +21,8 @@ namespace KFrame
 
     void KFSpdLog::Initialize( const std::string& app_name, const std::string& app_type, const std::string& app_id )
     {
-        auto filename = __FORMAT__( "{}-{}-{}.log", app_name, app_type, app_id );
-        Initialize( filename );
+        auto file_name = __FORMAT__( "{}-{}-{}.log", app_name, app_type, app_id );
+        Initialize( file_name );
     }
 
     void KFSpdLog::Initialize( const std::string& file_name )
