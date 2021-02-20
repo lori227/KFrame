@@ -311,7 +311,7 @@ namespace KFrame
         }
 
         __FREE_REPLY__( redisreply );
-        return kfresult;
+        return result;
     }
 
     KFResult< StringMapList >::UniqueType KFRedisReadExecute::ReadMapList( const std::string& strsql )
