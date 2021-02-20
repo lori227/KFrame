@@ -153,7 +153,7 @@ namespace KFrame
             if ( !kfdatasetting->_contain_class.empty() )
             {
                 auto type = KFDataDefine::ConvertDataType( kfdatasetting->_contain_class );
-                if ( type != KFDataDefine::DataTypeUnknow )
+                if ( type != KFDataDefine::DataTypeUnknown )
                 {
                     kfdatasetting->_logic_type = type;
                 }
