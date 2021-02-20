@@ -20,7 +20,7 @@ namespace KFrame
         // 初始化队列
         // @max_count 环形队列的最大数量,
         // @extend_count 当环形队列满时,额外的链表的最大数量, 0 表示丢弃
-        void InitQueue( uint32 max_count, uint32 extend_count )
+        inline void InitQueue( uint32 max_count, uint32 extend_count )
         {
             _max_count = max_count;
             _extend_count = extend_count;
@@ -28,13 +28,13 @@ namespace KFrame
         }
 
         // 最大容量
-        uint32 Capacity() const
+        inline uint32 Capacity() const
         {
             return _max_count;
         }
 
         // 队列元素数量
-        uint32 Size() const
+        inline uint32 Size() const
         {
             if ( _max_count == 0u )
             {
@@ -55,7 +55,7 @@ namespace KFrame
         }
 
         // 空闲元素数量
-        uint32 EmptySize()
+        inline uint32 EmptySize()
         {
             if ( _max_count == 0u )
             {
@@ -66,7 +66,7 @@ namespace KFrame
         }
 
         // 判断队列是否满了
-        bool IsFull()
+        inline bool IsFull()
         {
             if ( _max_count == 0u )
             {
@@ -77,7 +77,7 @@ namespace KFrame
         }
 
         // 判断队列是否为空
-        bool IsEmpty()
+        inline bool IsEmpty()
         {
             return Size() == 0;
         }
@@ -140,12 +140,12 @@ namespace KFrame
         }
 
         // 取第一个元素( 不删除 )
-        ObjectPtr Front()
+        inline ObjectPtr Front()
         {
             return _objects[ _pop_index ];
         }
 
-        void ClearObject()
+        inline void ClearObject()
         {
             _pop_index = 0;
             _push_index = 0;

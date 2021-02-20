@@ -8,10 +8,19 @@ namespace KFrame
     class KFParam
     {
     public:
+        // 字符串
         std::string _str_value;
+        
+        // 整数
         uint32 _int_value = 0u;
+
+        // 浮点
         double _double_value = 0.0f;
+
+        // map容器
         UInt32Map _map_value;
+
+        // 数组容器
         UInt32Vector _vector_value;
     };
 

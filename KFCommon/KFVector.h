@@ -18,14 +18,14 @@ namespace KFrame
         }
 
         // 清空
-        virtual void Clear()
+        inline virtual void Clear()
         {
             _objects.clear();
         }
 
         // 重置数量
         // @max_count : 最大容量
-        void Resize( uint32 max_count )
+        inline void Resize( uint32 max_count )
         {
             auto count = _objects.size();
             if ( max_count <= count )
@@ -37,7 +37,7 @@ namespace KFrame
         }
 
         // 查找空位置
-        uint32 FindEmpty()
+        inline uint32 FindEmpty()
         {
             for ( auto i = 0u; i < _objects.size(); ++i )
             {
@@ -51,21 +51,21 @@ namespace KFrame
         }
 
         // 最大数量
-        uint32 MaxSize() const
+        inline uint32 MaxSize() const
         {
             return static_cast< uint32 >( _objects.size() );
         }
 
         // 是否为空
         // @index : 索引
-        bool IsValid( uint32 index ) const
+        inline bool IsValid( uint32 index ) const
         {
             return index < MaxSize();
         }
 
         // 添加
         // @object : 数据对象
-        void Add( ObjectPtr& object )
+        inline void Add( ObjectPtr& object )
         {
             uint32 index = FindEmpty();
             Insert( index, object );
@@ -74,7 +74,7 @@ namespace KFrame
         // 插入
         // index : 索引
         // @object : 数据对象
-        void Insert( uint32 index, ObjectPtr& object )
+        inline void Insert( uint32 index, ObjectPtr& object )
         {
             // 确保容量大小
             Resize( index+ 1 );
@@ -82,7 +82,7 @@ namespace KFrame
         }
 
         // 查找
-        ObjectPtr Find( uint32 index ) const
+        inline ObjectPtr Find( uint32 index ) const
         {
             if ( !IsValid( index ) )
             {
@@ -93,7 +93,7 @@ namespace KFrame
         }
 
         // 删除
-        ObjectPtr Remove( uint32 index )
+        inline ObjectPtr Remove( uint32 index )
         {
             if ( !IsValid( index ) )
             {
@@ -105,7 +105,7 @@ namespace KFrame
             return object;
         }
 
-        ObjectPtr First()
+        inline ObjectPtr First()
         {
             _iter = _objects.begin();
             if ( _iter == _objects.end() )
@@ -116,7 +116,7 @@ namespace KFrame
             return *_iter;
         }
 
-        ObjectPtr Next()
+        inline ObjectPtr Next()
         {
             ++_iter;
             if ( _iter == _objects.end() )

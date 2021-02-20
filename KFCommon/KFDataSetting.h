@@ -165,7 +165,7 @@ namespace KFrame
     {
     public:
         // 查找配置
-        inline const KFDataSetting* FindSetting( const std::string& name ) const
+        inline std::shared_ptr<const KFDataSetting> FindSetting( const std::string& name ) const
         {
             return _static_data.Find( name );
         }
@@ -177,7 +177,7 @@ namespace KFrame
         }
 
         // 查找属性
-        inline const KFDataSetting* TraversalSetting( const std::string& name ) const
+        inline std::shared_ptr<const KFDataSetting> TraversalSetting( const std::string& name ) const
         {
             for ( auto& iter : _static_data._objects )
             {
@@ -201,7 +201,7 @@ namespace KFrame
         }
 
         // 查找属性名
-        inline const KFDataSetting* FindSettingByLogicName( const std::string& name ) const
+        inline std::shared_ptr<const KFDataSetting> FindSettingByLogicName( const std::string& name ) const
         {
             auto iter = _logic_name_list.find( name );
             if ( iter == _logic_name_list.end() )

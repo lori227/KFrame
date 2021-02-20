@@ -36,7 +36,7 @@ namespace KFrame
         }
 
         // 清空数据
-        virtual void Clear()
+        inline virtual void Clear()
         {
             _total_weight = 0u;
             _weight_data.clear();
@@ -57,14 +57,14 @@ namespace KFrame
         }
 
         // 列表大小
-        uint32 Size() const
+        inline uint32 Size() const
         {
             return (uint32)_weight_data.size();
         }
 
         // 是否含有某数值
         // @value : 判断的数值
-        bool Have( uint32 value ) const
+        inline bool Have( uint32 value ) const
         {
             for ( auto& data : _weight_data )
             {

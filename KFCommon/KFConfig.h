@@ -83,6 +83,7 @@ namespace KFrame
     class KFConfigT : public KFConfig
     {
         typedef typename T::Type KeyType;
+        typedef std::shared_ptr<T> ObjectPtr;
     public:
         // 加载配置
         bool LoadConfig( const std::string& file_path, uint32 clear_type )
@@ -112,7 +113,7 @@ namespace KFrame
         }
 
         // 获取配置
-        const T* FindSetting( const KeyType& id ) const
+        inline const ObjectPtr FindSetting( const KeyType& id ) const
         {
             return _settings.Find( id );
         }
@@ -135,8 +136,8 @@ namespace KFrame
 
         virtual void ClearSetting()
         {
-            _settings.Clear();
             _version.clear();
+            _settings.Clear();
         }
 
         virtual void ClearFileSetting( const std::string& file_path )
@@ -154,7 +155,7 @@ namespace KFrame
             }
         }
 
-        virtual T* CreateSetting( KFXmlNode& xml_node )
+        virtual ObjectPtr CreateSetting( KFXmlNode& xml_node )
         {
             auto service = xml_node.ReadUInt32( __STRING__( service ).c_str(), true );
             auto channel = xml_node.ReadUInt32( __STRING__( channel ).c_str(), true );
@@ -172,7 +173,7 @@ namespace KFrame
         }
 
         // 读取配置
-        virtual void ReadSetting( KFXmlNode& xml_node, T* setting ) = 0;
+        virtual void ReadSetting( KFXmlNode& xml_node, ObjectPtr setting ) = 0;
 
     public:
         // 列表

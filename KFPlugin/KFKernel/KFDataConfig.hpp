@@ -20,27 +20,27 @@ namespace KFrame
         {"team", KFDataDefine::DataMaskTeam},
         {"guild", KFDataDefine::DataMaskGuild},
         {"rank", KFDataDefine::DataMaskRank},
+        {"shield", KFDataDefine::DataMaskShield},
+        {"client", KFDataDefine::DataMaskClient},
         {"addcall", KFDataDefine::DataMaskAddCall},
         {"removecall", KFDataDefine::DataMaskRemoveCall},
         {"updatecall", KFDataDefine::DataMaskUpdateCall},
-        {"shield", KFDataDefine::DataMaskShield},
-        {"client", KFDataDefine::DataMaskClient},
     };
 
 
-#define __INIT_INT_VALUE__( strvalue, intvalue )\
-    if ( strvalue != _invalid_string )\
+#define __INIT_INT_VALUE__( str_value, int_value )\
+    if ( str_value != _invalid_string )\
     {\
-        if ( KFUtility::IsNumber( strvalue ) )\
+        if ( KFUtility::IsNumber( str_value ) )\
         {\
-            intvalue = __TO_UINT32__( strvalue );\
+            int_value = __TO_UINT32__( str_value );\
         }\
         else\
         {                                       \
-            auto kfsetting = KFConstantConfig::Instance()->FindSetting( strvalue ); \
-            if ( kfsetting != nullptr )         \
+            auto setting = KFConstantConfig::Instance()->FindSetting( str_value ); \
+            if ( setting != nullptr )         \
             {                                   \
-                intvalue= __TO_UINT32__( kfsetting->_value );\
+                int_value = __TO_UINT32__( setting->_value );\
             }\
         }\
     }
@@ -60,13 +60,17 @@ namespace KFrame
             // 初始化包含的类, 优化每次创建都要去查找的问题
             for ( auto& iter : _settings._objects )
             {
-                auto kfclasssetting = iter.second;
-                for ( auto& dataiter : kfclasssetting->_static_data._objects )
+                auto class_setting = iter.second;
+                for ( auto& data_iter : class_setting->_static_data._objects )
                 {
-                    auto kfdatasetting = dataiter.second;
-                    if ( !kfdatasetting->_contain_class.empty() )
+                    auto data_setting = data_iter.second;
+                    if ( !data_setting->_contain_class.empty() )
                     {
-                        kfdatasetting->_class_setting = FindSetting( kfdatasetting->_contain_class );
+                        auto find_setting = FindSetting( data_setting->_contain_class );
+                        if ( find_setting != nullptr )
+                        {
+                            data_setting->_class_setting = find_setting.get();
+                        }
                     }
                 }
             }
@@ -75,120 +79,119 @@ namespace KFrame
         // 所有加载完成
         virtual void LoadAllComplete()
         {
-            auto kfglobal = KFGlobal::Instance();
             for ( auto& iter : KFDataConfig::Instance()->_settings._objects )
             {
-                auto kfclasssetting = iter.second;
+                auto class_setting = iter.second;
 
-                for ( auto& siter : kfclasssetting->_static_data._objects )
+                for ( auto& data_iter : class_setting->_static_data._objects )
                 {
-                    auto kfdatasetting = siter.second;
+                    auto data_setting = data_iter.second;
 
                     // 初始值
-                    __INIT_INT_VALUE__( kfdatasetting->_str_init_value, kfdatasetting->_int_init_value );
+                    __INIT_INT_VALUE__( data_setting->_str_init_value, data_setting->_int_init_value );
 
                     // 最小值
-                    __INIT_INT_VALUE__( kfdatasetting->_str_min_value, kfdatasetting->_int_min_value );
+                    __INIT_INT_VALUE__( data_setting->_str_min_value, data_setting->_int_min_value );
 
                     // 最大值
-                    __INIT_INT_VALUE__( kfdatasetting->_str_max_value, kfdatasetting->_int_max_value );
+                    __INIT_INT_VALUE__( data_setting->_str_max_value, data_setting->_int_max_value );
 
                     // 运行时参数
-                    __INIT_INT_VALUE__( kfdatasetting->_str_run_param, kfdatasetting->_int_run_param );
+                    __INIT_INT_VALUE__( data_setting->_str_run_param, data_setting->_int_run_param );
 
                     // 数组, 集合的最大容量
-                    __INIT_INT_VALUE__( kfdatasetting->_str_max_capacity, kfdatasetting->_int_max_capacity );
+                    __INIT_INT_VALUE__( data_setting->_str_max_capacity, data_setting->_int_max_capacity );
                 }
             }
         }
 
         // 获得属性配置
-        const KFDataSetting* FindDataSetting( const std::string& classname, const std::string& dataname )
+        std::shared_ptr<const KFDataSetting> FindDataSetting( const std::string& class_name, const std::string& data_name )
         {
-            auto classsetting = FindSetting( classname );
-            if ( classsetting == nullptr )
+            auto class_setting = FindSetting( class_name );
+            if ( class_setting == nullptr )
             {
                 return nullptr;
             }
 
-            return classsetting->FindSetting( dataname );
+            return class_setting->FindSetting( data_name );
         }
     protected:
         // 读取配置
-        virtual void ReadSetting( KFXmlNode& xmlnode, KFClassSetting* kfsetting )
+        virtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KFClassSetting> class_setting )
         {
-            auto dataname = xmlnode.ReadString( "name", true );
-            auto kfdatasetting = kfsetting->_static_data.Create( dataname );
-            kfdatasetting->_name = dataname;
+            auto data_name = xml_node.ReadString( "name", true );
+            auto data_setting = class_setting->_static_data.Create( data_name );
+            data_setting->_name = data_name;
 
-            kfdatasetting->_logic_name = xmlnode.ReadString( "logicname", true );
-            if ( kfdatasetting->_logic_name.empty() )
+            data_setting->_logic_name = xml_node.ReadString( "logicname", true );
+            if ( data_setting->_logic_name.empty() )
             {
-                kfdatasetting->_logic_name = kfdatasetting->_name;
+                data_setting->_logic_name = data_setting->_name;
             }
             else
             {
-                kfsetting->_logic_name_list[ kfdatasetting->_logic_name ] = kfdatasetting->_name;
+                class_setting->_logic_name_list[ data_setting->_logic_name ] = data_setting->_name;
             }
 
-            kfdatasetting->_type = KFDataDefine::ConvertDataType( xmlnode.ReadString( "type", true ) );
-            kfdatasetting->_logic_type = kfdatasetting->_type;
-            switch ( kfdatasetting->_type )
+            data_setting->_type = KFDataDefine::ConvertDataType( xml_node.ReadString( "type", true ) );
+            data_setting->_logic_type = data_setting->_type;
+            switch ( data_setting->_type )
             {
             case KFDataDefine::DataTypeInt32:
-                kfdatasetting->_int_max_value = __MAX_INT32__;
+                data_setting->_int_max_value = __MAX_INT32__;
                 break;
             case KFDataDefine::DataTypeUInt32:
-                kfdatasetting->_int_max_value = __MAX_UINT32__;
+                data_setting->_int_max_value = __MAX_UINT32__;
                 break;
             case KFDataDefine::DataTypeInt64:
-                kfdatasetting->_int_max_value = __MAX_INT64__;
+                data_setting->_int_max_value = __MAX_INT64__;
                 break;
             case KFDataDefine::DataTypeUInt64:
-                kfdatasetting->_int_max_value = __MAX_UINT64__;
+                data_setting->_int_max_value = __MAX_UINT64__;
                 break;
             }
 
-            kfdatasetting->_contain_class = xmlnode.ReadString( "containclass", true );
-            if ( !kfdatasetting->_contain_class.empty() )
+            data_setting->_contain_class = xml_node.ReadString( "containclass", true );
+            if ( !data_setting->_contain_class.empty() )
             {
-                auto type = KFDataDefine::ConvertDataType( kfdatasetting->_contain_class );
+                auto type = KFDataDefine::ConvertDataType( data_setting->_contain_class );
                 if ( type != KFDataDefine::DataTypeUnknown )
                 {
-                    kfdatasetting->_logic_type = type;
+                    data_setting->_logic_type = type;
                 }
                 else
                 {
-                    kfdatasetting->_logic_type = KFDataDefine::DataTypeObject;
+                    data_setting->_logic_type = KFDataDefine::DataTypeObject;
                 }
             }
 
-            kfdatasetting->_delay_save_time = xmlnode.ReadUInt32( "savetime", true );
-            kfdatasetting->_delete_type = xmlnode.ReadUInt32( "deletetype", true );
-            kfdatasetting->_str_init_value = xmlnode.ReadString( "initvalue", true );
-            kfdatasetting->_str_min_value = xmlnode.ReadString( "minvalue", true );
-            kfdatasetting->_str_max_value = xmlnode.ReadString( "maxvalue", true );
-            kfdatasetting->_str_run_param = xmlnode.ReadString( "runparam", true );
-            kfdatasetting->_str_max_capacity = xmlnode.ReadString( "capacity", true );
-            kfdatasetting->_key_name = xmlnode.ReadString( "keyname", true );
-            kfdatasetting->_config_key_name = xmlnode.ReadString( "configkeyname", true );
-            kfdatasetting->_value_key_name = xmlnode.ReadString( "valuekeyname", true );
-            kfdatasetting->_lua_file = xmlnode.ReadString( "luafile", true );
-            kfdatasetting->_add_function = xmlnode.ReadString( "addfunction", true );
-            kfdatasetting->_update_function = xmlnode.ReadString( "updatefunction", true );
-            kfdatasetting->_remove_function = xmlnode.ReadString( "removefunction", true );
+            data_setting->_delay_save_time = xml_node.ReadUInt32( "savetime", true );
+            data_setting->_delete_type = xml_node.ReadUInt32( "deletetype", true );
+            data_setting->_str_init_value = xml_node.ReadString( "initvalue", true );
+            data_setting->_str_min_value = xml_node.ReadString( "minvalue", true );
+            data_setting->_str_max_value = xml_node.ReadString( "maxvalue", true );
+            data_setting->_str_run_param = xml_node.ReadString( "runparam", true );
+            data_setting->_str_max_capacity = xml_node.ReadString( "capacity", true );
+            data_setting->_key_name = xml_node.ReadString( "keyname", true );
+            data_setting->_config_key_name = xml_node.ReadString( "configkeyname", true );
+            data_setting->_value_key_name = xml_node.ReadString( "valuekeyname", true );
+            data_setting->_lua_file = xml_node.ReadString( "luafile", true );
+            data_setting->_add_function = xml_node.ReadString( "addfunction", true );
+            data_setting->_update_function = xml_node.ReadString( "updatefunction", true );
+            data_setting->_remove_function = xml_node.ReadString( "removefunction", true );
 
-            kfdatasetting->_delay_online_sync_time = xmlnode.ReadUInt32( "delay", true );
-            if ( kfdatasetting->_delay_online_sync_time > 0u )
+            data_setting->_delay_online_sync_time = xml_node.ReadUInt32( "delay", true );
+            if ( data_setting->_delay_online_sync_time > 0u )
             {
-                kfsetting->_online_sync_time.insert( kfdatasetting->_delay_online_sync_time );
+                class_setting->_online_sync_time.insert( data_setting->_delay_online_sync_time );
             }
 
             for ( auto& iter : _data_mask_list )
             {
-                if ( xmlnode.ReadString( iter.first.c_str(), true ) == "1" )
+                if ( xml_node.ReadString( iter.first.c_str(), true ) == "1" )
                 {
-                    KFUtility::AddBitMask< uint32 >( kfdatasetting->_data_mask, iter.second );
+                    KFUtility::AddBitMask< uint32 >( data_setting->_data_mask, iter.second );
                 }
             }
         }
