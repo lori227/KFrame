@@ -28,7 +28,7 @@ namespace KFrame
     class KFWeightList
     {
         typedef std::shared_ptr<T> WeightPtr;
-        typedef std::shared_ptr<const T> WeightConstPtr;
+        typedef std::shared_ptr<const T> ConstWeightPtr;
     public:
         virtual ~KFWeightList()
         {
@@ -56,6 +56,12 @@ namespace KFrame
             return data;
         }
 
+        // 列表大小
+        uint32 Size() const
+        {
+            return (uint32)_weight_data.size();
+        }
+
         // 是否含有某数值
         // @value : 判断的数值
         bool Have( uint32 value ) const
@@ -72,7 +78,7 @@ namespace KFrame
         }
 
         // 随机
-        const WeightConstPtr Rand() const
+        const ConstWeightPtr Rand() const
         {
             if ( _total_weight > 0u )
             {
@@ -93,11 +99,11 @@ namespace KFrame
 
         // 随机( 排除列表中的项目 )
         // @list : 需要排除的列表
-        const WeightConstPtr RandExcludeList( const UInt32Set& list ) const
+        const ConstWeightPtr RandExcludeList( const UInt32Set& list ) const
         {
             // 新的权重列表
             uint32 total_weight = 0u;
-            std::list< WeightConstPtr > rand_list;
+            std::list< ConstWeightPtr > rand_list;
 
             for ( auto& data : _weight_data )
             {
@@ -129,11 +135,11 @@ namespace KFrame
 
         // 随机( 只包含列表中的项目 )
         // @list : 需要随机的列表
-        const WeightConstPtr RandInList( const UInt32Set& list ) const
+        const ConstWeightPtr RandInList( const UInt32Set& list ) const
         {
             // 新的权重列表
             uint32 total_weight = 0u;
-            std::list< WeightConstPtr > rand_list;
+            std::list< ConstWeightPtr > rand_list;
 
             for ( auto& data : _weight_data )
             {
@@ -165,7 +171,7 @@ namespace KFrame
 
         // 随机( 附加额外的权重列表 )
         // @include_list : 额外增加的权重列表
-        const WeightConstPtr RandExtend( UInt32Map& extend_list ) const
+        const ConstWeightPtr RandExtend( UInt32Map& extend_list ) const
         {
             // 新的权重列表
             uint32 total_weight = _total_weight;
@@ -194,7 +200,7 @@ namespace KFrame
         // 随机( 添加列表中的项目 )
         // @value : 额外的权重数值
         // @weight : 额外的权重值
-        const WeightConstPtr RandExtend( uint32 value, uint32 weight ) const
+        const ConstWeightPtr RandExtend( uint32 value, uint32 weight ) const
         {
             UInt32Map extend_list;
             extend_list[ value ] = weight;
@@ -203,9 +209,9 @@ namespace KFrame
 
         // 随机指定个数的选项(可重复)
         // @count : 随机个数
-        const std::vector<WeightConstPtr>& RandRepeat( uint32 count ) const
+        const std::vector<ConstWeightPtr>& RandRepeat( uint32 count ) const
         {
-            static std::vector<WeightConstPtr> _result_list;
+            static std::vector<ConstWeightPtr> _result_list;
             _result_list.clear();
 
             for ( auto i = 0u; i < count; ++i )
@@ -222,9 +228,9 @@ namespace KFrame
 
         // 随机指定个数的选项(不可重复)
         // @count : 随机个数
-        const std::set<WeightConstPtr>& RandNoRepeat( uint32 count ) const
+        const std::set<ConstWeightPtr>& RandNoRepeat( uint32 count ) const
         {
-            static std::set<WeightConstPtr> _result_list;
+            static std::set<ConstWeightPtr> _result_list;
             _result_list.clear();
 
             auto rand_weight = 0u;

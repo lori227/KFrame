@@ -69,7 +69,7 @@ namespace KFrame
         virtual void ReadSetting( KFXmlNode& xmlnode, KFDropSetting* kfsetting );
 
         // 初始化掉落
-        void InitDropDataSetting( KFDropSetting* kfsetting, KFDropGroupWeight* dropgroupweight );
+        void InitDropDataSetting( KFDropSetting* setting, std::shared_ptr<KFDropGroupWeight>& drop_group_weight );
 
         // 初始化掉落条件
         void InitDropConditonSetting( KFDropSetting* kfsetting, KFStaticConditionExpression* kfexpression );

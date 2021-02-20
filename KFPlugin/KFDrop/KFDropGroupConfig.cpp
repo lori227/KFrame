@@ -10,61 +10,61 @@ namespace KFrame
         kfsetting->_condition_type = xmlnode.ReadUInt32( "conditiontype", true );
         kfsetting->_rand_type = xmlnode.ReadUInt32( "randtype", true );
 
-        KFDropGroupWeight* kfdropweight = nullptr;
+        std::shared_ptr<KFDropGroupWeight> drop_weight = nullptr;
         auto weight = xmlnode.ReadUInt32( "weight", true );
 
         if ( weight == KFRandEnum::TenThousand )
         {
-            kfdropweight = __KF_NEW__( KFDropGroupWeight );
-            kfsetting->_necessary_list.Add( kfdropweight );
-            kfdropweight->_value = kfsetting->_necessary_list._objects.size();
+            drop_weight = __MAKE_SHARED__( KFDropGroupWeight );
+            kfsetting->_necessary_list.Add( drop_weight );
+            drop_weight->_value = kfsetting->_necessary_list._objects.size();
         }
         else
         {
-            auto id = kfsetting->_rand_list._weight_data.size();
-            kfdropweight = kfsetting->_rand_list.Create( ++id, weight );
+            auto id = kfsetting->_rand_list.Size();
+            drop_weight = kfsetting->_rand_list.Create( ++id, weight );
         }
 
-        kfdropweight->_is_clear_var = xmlnode.ReadBoolen( "reset", true );
-        kfdropweight->_drop_data_id = xmlnode.ReadUInt32( "dropdataid", true );
+        drop_weight->_is_clear_var = xmlnode.ReadBoolen( "reset", true );
+        drop_weight->_drop_data_id = xmlnode.ReadUInt32( "dropdataid", true );
 
         // 条件
-        kfdropweight->_conditions = xmlnode.ReadStaticConditions( "condition", true );
+        drop_weight->_conditions = xmlnode.ReadStaticConditions( "condition", true );
     }
 
     void KFDropGroupConfig::LoadAllComplete()
     {
         for ( auto iter : _settings._objects )
         {
-            auto kfsetting = iter.second;
-            for ( auto kfdropgroupweight : kfsetting->_necessary_list._objects )
+            auto setting = iter.second;
+            for ( auto& drop_group_weight : setting->_necessary_list._objects )
             {
-                InitDropDataSetting( kfsetting, kfdropgroupweight );
+                InitDropDataSetting( setting, drop_group_weight );
             }
 
-            for ( auto kfdropgroupweight : kfsetting->_rand_list._weight_data )
+            for ( auto drop_group_weight : setting->_rand_list._weight_data )
             {
-                InitDropDataSetting( kfsetting, kfdropgroupweight );
+                InitDropDataSetting( setting, drop_group_weight );
             }
         }
     }
 
-    void KFDropGroupConfig::InitDropDataSetting( KFDropSetting* kfsetting, KFDropGroupWeight* dropgroupweight )
+    void KFDropGroupConfig::InitDropDataSetting( KFDropSetting* setting, std::shared_ptr<KFDropGroupWeight>& drop_group_weight )
     {
-        dropgroupweight->_drop_data_setting = KFDropDataConfig::Instance()->FindSetting( dropgroupweight->_drop_data_id );
-        if ( dropgroupweight->_drop_data_setting == nullptr )
+        drop_group_weight->_drop_data_setting = KFDropDataConfig::Instance()->FindSetting( drop_group_weight->_drop_data_id );
+        if ( drop_group_weight->_drop_data_setting == nullptr )
         {
-            if ( dropgroupweight->_drop_data_id != 0u )
+            if ( drop_group_weight->_drop_data_id != 0u )
             {
-                __LOG_ERROR__( "dropid=[{}] dropdata=[{}] can't find setting", kfsetting->_id, dropgroupweight->_drop_data_id );
+                __LOG_ERROR__( "dropid=[{}] dropdata=[{}] can't find setting", setting->_id, drop_group_weight->_drop_data_id );
             }
         }
 
         // 判断掉落条件
-        for ( auto kfcondition : dropgroupweight->_conditions->_condition_list )
+        for ( auto condition : drop_group_weight->_conditions->_condition_list )
         {
-            InitDropConditonSetting( kfsetting, kfcondition->_left );
-            InitDropConditonSetting( kfsetting, kfcondition->_right );
+            InitDropConditonSetting( setting, condition->_left );
+            InitDropConditonSetting( setting, condition->_right );
         }
     }
 
