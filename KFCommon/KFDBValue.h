@@ -14,15 +14,15 @@ namespace KFrame
             _int_list[ key ] = value;
         }
 
-        inline void AddValue( const std::string& key, const std::string& value, bool isbinary = false )
+        inline void AddValue( const std::string& key, const std::string& value, bool is_binary = false )
         {
-            if ( isbinary )
+            if ( is_binary )
             {
-                _str_list[ key ] = value;
+                _bin_list[ key ] = value;
             }
             else
             {
-                _bin_list[ key ] = value;
+                _str_list[ key ] = value;
             }
         }
 
@@ -70,48 +70,48 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////
-#define __DBVALUE_TO_PROTO__( dbvalue, pbvalue )\
+#define __DBVALUE_TO_PROTO__( db_value, pb_value )\
     {\
-        auto& pbintlist = *pbvalue->mutable_pbuint64();\
-        __MAP_TO_PROTO__( dbvalue._int_list, pbintlist);\
-        auto& pbstrlist = *pbvalue->mutable_pbstring(); \
-        __MAP_TO_PROTO__( dbvalue._str_list, pbstrlist ); \
-        __MAP_TO_PROTO__( dbvalue._bin_list, pbstrlist ); \
+        auto& int_list = *pb_value->mutable_pbuint64();\
+        __MAP_TO_PROTO__( db_value._int_list, int_list);\
+        auto& str_list = *pb_value->mutable_pbstring(); \
+        __MAP_TO_PROTO__( db_value._str_list, str_list ); \
+        __MAP_TO_PROTO__( db_value._bin_list, str_list ); \
     }
 
-#define __PROTO_TO_DBVALUE__( pbvalue, dbvalue  )\
+#define __PROTO_TO_DBVALUE__( pb_value, db_value  )\
     {\
-        auto pbintlist = &pbvalue->pbuint64();\
-        __PROTO_TO_MAP__( pbintlist, dbvalue._int_list);\
-        auto pbstrlist = &pbvalue->pbstring(); \
-        __PROTO_TO_MAP__( pbstrlist, dbvalue._str_list  ); \
+        auto int_list = &pb_value->pbuint64();\
+        __PROTO_TO_MAP__( int_list, db_value._int_list);\
+        auto str_list = &pb_value->pbstring(); \
+        __PROTO_TO_MAP__( str_list, db_value._str_list  ); \
     }
 
-#define __DBVALUE_TO_MAP__( dbvalue, values )\
+#define __DBVALUE_TO_MAP__( db_value, map_value )\
     {\
-        __MAP_TO_PROTO__( dbvalue._str_list, values ); \
-        __MAP_TO_PROTO__( dbvalue._bin_list, values ); \
-        for ( auto iter = dbvalue._int_list.begin(); iter != dbvalue._int_list.end(); ++iter )\
+        __MAP_TO_PROTO__( db_value._str_list, map_value ); \
+        __MAP_TO_PROTO__( db_value._bin_list, map_value ); \
+        for ( auto iter = db_value._int_list.begin(); iter != db_value._int_list.end(); ++iter )\
         {\
-            values[ iter->first ] = __TO_STRING__(iter->second);\
+            map_value[ iter->first ] = __TO_STRING__(iter->second);\
         }\
     }
 
-#define __MAP_TO_DBVALUE__( value, dbvalue  )\
+#define __MAP_TO_DBVALUE__( map_value, db_value )\
     {\
-        __MAP_TO_PROTO__( value, dbvalue._str_list);\
+        __MAP_TO_PROTO__( map_value, db_value._str_list);\
     }
 
-#define __JSON_TO_DBVALUE__( kfjson, dbvalue )\
-    for ( auto iter = kfjson.MemberBegin(); iter != kfjson.MemberEnd(); ++iter )\
+#define __JSON_TO_DBVALUE__( json_value, db_value )\
+    for ( auto iter = json_value.MemberBegin(); iter != json_value.MemberEnd(); ++iter )\
     {\
         if ( iter->value.IsString() )\
         {\
-            dbvalue.AddValue(iter->name.GetString(), iter->value.GetString());\
+            db_value.AddValue(iter->name.GetString(), iter->value.GetString());\
         }\
         else if ( iter->value.IsNumber() )\
         {\
-            dbvalue.AddValue(iter->name.GetString(), iter->value.GetUint64());\
+            db_value.AddValue(iter->name.GetString(), iter->value.GetUint64());\
         }\
     }
 }

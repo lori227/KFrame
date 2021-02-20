@@ -5,7 +5,7 @@
 
 namespace KFrame
 {
-    // Ip地址配置
+    // 网络连接数据
     class KFNetData
     {
     public:
@@ -31,12 +31,10 @@ namespace KFrame
         // 服务器端口
         uint32 _port = 0;
     };
-
-    typedef KFNetData KFIpAddress;
-    typedef std::vector< const KFIpAddress* > IpAddressList;
     typedef std::vector< const KFNetData* > NetDataList;
 
     // 网络事件函数
+    // 参数1 : 网络连接数据
     typedef std::function< void( const KFNetData* ) > KFNetEventFunction;
 #define __KF_NET_EVENT_FUNCTION__( function )  void function( const KFNetData* netdata )
     //////////////////////////////////////////////////////////////////////////////

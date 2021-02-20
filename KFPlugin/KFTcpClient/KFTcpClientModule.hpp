@@ -99,7 +99,7 @@ namespace KFrame
         void CallClientFailedFunction( const KFNetData* netdata );
 
         // 转发函数
-        virtual void AddTranspondFunction( KFModule* module, KFTranspondFunction& function );
+        virtual void AddTranspondFunction( KFModule* module, KFForwardFunction& function );
         virtual void RemoveTranspondFunction( KFModule* module );
         ////////////////////////////////////////////////////////////////
         // 处理客户端消息
@@ -112,7 +112,7 @@ namespace KFrame
         KFNetClientEngine* _client_engine = nullptr;
 
         // 转发函数
-        KFTranspondFunction _kf_transpond_function = nullptr;
+        KFForwardFunction _kf_transpond_function = nullptr;
 
         // 注册成功回调函数
         KFFunctionMap< KFModule*, KFNetEventFunction > _kf_connection_function;

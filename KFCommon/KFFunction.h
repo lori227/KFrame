@@ -1,5 +1,5 @@
-#ifndef __KF_BIND_H__
-#define __KF_BIND_H__
+#ifndef __KF_FUNCTION_H__
+#define __KF_FUNCTION_H__
 
 #include "KFMap.h"
 #include "KFPlugin/KFModule.h"
@@ -13,12 +13,10 @@ namespace KFrame
     public:
         inline bool IsOpen() const
         {
-            if ( !_is_open || _function == nullptr )
-            {
-                return false;
-            }
-
-            if ( _module != nullptr && !_module->_is_open )
+            if ( !_is_open ||
+                _function == nullptr ||
+                _module == nullptr ||
+                !_module->_is_open  )
             {
                 return false;
             }
@@ -33,14 +31,14 @@ namespace KFrame
             _function = function;
         }
 
-        inline void SetOpen( bool isopen )
+        inline void SetOpen( bool is_open )
         {
-            _is_open = isopen;
+            _is_open = is_open;
         }
 
         inline void Reset()
         {
-            _is_open = true;
+            _is_open = false;
             _module = nullptr;
             _function = nullptr;
         }
@@ -67,13 +65,13 @@ namespace KFrame
         }
 
     public:
-        // 逻辑函数
+        // 鎵ц鍑芥暟
         T _function;
 
-        // 是否开启
-        bool _is_open = true;
+        // 鏄惁鎵撳紑
+        bool _is_open = false;
 
-        // 模块名
+        // 妯″潡鎸囬拡
         KFModule* _module = nullptr;
     };
 
@@ -82,10 +80,6 @@ namespace KFrame
     template< class KeyType, class ObjectType >
     class KFFunctionMap : public KFHashMap< KeyType, KFFunction< ObjectType > >
     {
-    public:
-        KFFunctionMap() = default;
-        ~KFFunctionMap() = default;
-
     public:
     };
     //////////////////////////////////////////////////////////////////////////////////

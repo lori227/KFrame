@@ -193,8 +193,8 @@
 #endif
 
 #ifndef __DO_WHILE__
-#define __DO_WHILE__(conditon) \
-    while( (conditon) && (++doloopcount < __MAX_LOOP_COUNT__) );\
+#define __DO_WHILE__(condition) \
+    while( (condition) && (++doloopcount < __MAX_LOOP_COUNT__) );\
     if ( doloopcount >= __MAX_LOOP_COUNT__ )\
     {\
         __LOG_ERROR__( "infinite loop!");\
@@ -203,9 +203,9 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////
 // 有计数上限的安全的while循环, 防止死循环
 #ifndef __SAFE_WHILE__
-#define __SAFE_WHILE__(conditon) \
+#define __SAFE_WHILE__(condition) \
     auto whileloopcount = 0u;\
-    while( (conditon) && (++whileloopcount < __MAX_LOOP_COUNT__) );
+    while( (condition) && (++whileloopcount < __MAX_LOOP_COUNT__) );
 #endif
 
 #ifndef __SAFE_WHILE_END__

@@ -13,7 +13,7 @@ namespace KFrame
             ////////////////////////////////////////////////////////////////////////////
             ////////////////////////////////////////////////////////////////////////////
             // 数据类型
-            DataTypeUnknow = 0,
+            DataTypeUnknown = 0,
             DataTypeInt32 = 1,
             DataTypeUInt32 = 2,
             DataTypeInt64 = 3,
@@ -35,7 +35,7 @@ namespace KFrame
             DataMaskRequest = 1 << 6,		// 是否请求才同步客户端
             DataMaskAddCall = 1 << 7,		// 是否添加回调
             DataMaskRemoveCall = 1 << 8,	// 是否删除回调
-            DataMaskUpdataCall = 1 << 9,	// 是否更新回调
+            DataMaskUpdateCall = 1 << 9,	// 是否更新回调
             DataMaskShield = 1 << 10,		// 是否屏蔽属性(项目可设置这个属性来屏蔽框架创建)
             DataMaskClient = 1 << 11,		// 是否客户端属性(客户端可随意修改)
 
@@ -66,12 +66,12 @@ namespace KFrame
             {"array", DataTypeArray},
         };
 
-        static uint32 ConvertDataType( const std::string& strtype )
+        static uint32 ConvertDataType( const std::string& type )
         {
-            auto iter = _data_type_list.find( strtype );
+            auto iter = _data_type_list.find( type );
             if ( iter == _data_type_list.end() )
             {
-                return DataTypeUnknow;
+                return DataTypeUnknown;
             }
 
             return iter->second;
@@ -181,18 +181,18 @@ namespace KFrame
         {
             for ( auto& iter : _static_data._objects )
             {
-                auto kfdatassetting = iter.second;
-                if ( kfdatassetting->_name == name )
+                auto data_setting = iter.second;
+                if ( data_setting->_name == name )
                 {
-                    return kfdatassetting;
+                    return data_setting;
                 }
 
-                if ( kfdatassetting->_class_setting != nullptr )
+                if ( data_setting->_class_setting != nullptr )
                 {
-                    auto kfchildsetting = kfdatassetting->_class_setting->TraversalSetting( name );
-                    if ( kfchildsetting != nullptr )
+                    auto child_setting = data_setting->_class_setting->TraversalSetting( name );
+                    if ( child_setting != nullptr )
                     {
-                        return kfchildsetting;
+                        return child_setting;
                     }
                 }
             }

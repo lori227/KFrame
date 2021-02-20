@@ -1,8 +1,8 @@
 ﻿#ifndef __KF_RESULT_H__
 #define __KF_RESULT_H__
 
-#include "KFInclude.h"
 #include "KFEnum.h"
+#include "KFDefine.h"
 #include "KFUtility/KFMutex.h"
 
 namespace KFrame
@@ -67,7 +67,7 @@ namespace KFrame
     };
 
 #define __NEW_RESULT__( type ) \
-    KFResult< type >::UniqueType  kfresult( new KFResult< type >() );
+    KFResult< type >::UniqueType result( new KFResult< type >() );
     ///////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////
 }

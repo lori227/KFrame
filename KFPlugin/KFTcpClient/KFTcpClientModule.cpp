@@ -298,7 +298,7 @@ namespace KFrame
         _kf_transpond_function = nullptr;
     }
 
-    void KFTcpClientModule::AddTranspondFunction( KFModule* module, KFTranspondFunction& function )
+    void KFTcpClientModule::AddTranspondFunction( KFModule* module, KFForwardFunction& function )
     {
         _kf_transpond_function = function;
     }

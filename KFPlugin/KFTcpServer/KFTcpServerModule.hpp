@@ -83,7 +83,7 @@ namespace KFrame
         virtual void AddLostFunction( KFModule* module, KFNetEventFunction& function );
         virtual void RemoveLostFunction( KFModule* module );
 
-        virtual void AddTranspondFunction( KFModule* module, KFTranspondFunction& function );
+        virtual void AddTranspondFunction( KFModule* module, KFForwardFunction& function );
         virtual void RemoveTranspondFunction( KFModule* module );
 
     protected:
@@ -119,7 +119,7 @@ namespace KFrame
         KFFunctionMap< KFModule*, KFNetEventFunction > _kf_lost_function;
 
         // 转发函数
-        KFTranspondFunction _kf_transpond_function = nullptr;
+        KFForwardFunction _kf_transpond_function = nullptr;
     };
 }
 

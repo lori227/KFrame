@@ -20,7 +20,6 @@
 #include "KFFunction.h"
 #include "KFInstance.h"
 #include "KFSingleton.h"
-#include "KFInterfaces.h"
 #include "KFProto/KFProto.h"
 #include "KFUtility/KFXml.h"
 #include "KFUtility/KFClock.h"

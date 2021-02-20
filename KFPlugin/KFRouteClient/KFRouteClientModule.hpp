@@ -156,7 +156,7 @@ namespace KFrame
         virtual void RemoveConnectionFunction( const std::string& name );
 
         // 注册
-        virtual void SetTranspondFunction( KFTranspondFunction& function );
+        virtual void SetTranspondFunction( KFForwardFunction& function );
 
         // 转发规则
         const std::string& FindRouteProcess( const std::string& module );
@@ -195,7 +195,7 @@ namespace KFrame
         __KF_NET_EVENT_FUNCTION__( OnClientConnectRouteMasterFailed );
     private:
         // 转发函数
-        KFTranspondFunction _kf_transpond_function = nullptr;
+        KFForwardFunction _kf_transpond_function = nullptr;
 
         // 服务器名字
         std::string _service_name;

@@ -87,7 +87,7 @@ namespace KFrame
         template< class T >
         void RegisterTranspondFunction( T* module, bool ( T::*handle )( const Route& route, uint32 msgid, const char* data, uint32 length ) )
         {
-            KFTranspondFunction function = std::bind( handle, module, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
+            KFForwardFunction function = std::bind( handle, module, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
             AddTranspondFunction( module, function );
         }
 
@@ -104,7 +104,7 @@ namespace KFrame
         virtual void AddLostFunction( KFModule* module, KFNetEventFunction& function ) = 0;
         virtual void RemoveLostFunction( KFModule* module ) = 0;
 
-        virtual void AddTranspondFunction( KFModule* module, KFTranspondFunction& function ) = 0;
+        virtual void AddTranspondFunction( KFModule* module, KFForwardFunction& function ) = 0;
         virtual void RemoveTranspondFunction( KFModule* module ) = 0;
 
     };

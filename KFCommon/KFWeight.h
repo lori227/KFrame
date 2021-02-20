@@ -118,22 +118,22 @@ namespace KFrame
         }
 
         // 随机( 添加列表中的项目 )
-        const T* Rand( UInt32Map& includelist ) const
+        const T* Rand( UInt32Map& include_list ) const
         {
             // 新的权重列表
-            uint32 totalweight = _total_weight;
-            for ( auto& iter : includelist )
+            uint32 total_weight = _total_weight;
+            for ( auto& iter : include_list )
             {
-                totalweight += iter.second;
+                total_weight += iter.second;
             }
 
-            if ( totalweight != 0u )
+            if ( total_weight != 0u )
             {
                 auto value = 0u;
-                auto rand = KFGlobal::Instance()->RandRatio( totalweight );
+                auto rand = KFGlobal::Instance()->RandRatio( total_weight );
                 for ( auto data : _weight_data )
                 {
-                    value += ( data->_weight + includelist[ data->_value ] );
+                    value += ( data->_weight + include_list[ data->_value ] );
                     if ( rand < value )
                     {
                         return data;
@@ -147,9 +147,9 @@ namespace KFrame
         // 随机( 添加列表中的项目 )
         const T* Rand( uint32 value, uint32 weight ) const
         {
-            UInt32Map includelist;
-            includelist[ value ] = weight;
-            return Rand( includelist );
+            UInt32Map include_list;
+            include_list[ value ] = weight;
+            return Rand( include_list );
         }
 
         // 随机列表
@@ -158,17 +158,17 @@ namespace KFrame
             static std::set< const T* > _rand_list;
             _rand_list.clear();
 
-            auto randweight = 0u;
+            auto rand_weight = 0u;
             for ( auto i = 0u; i < count; ++i )
             {
-                auto leftweight = _total_weight - randweight;
-                if ( leftweight == 0u )
+                auto left_weight = _total_weight - rand_weight;
+                if ( left_weight == 0u )
                 {
                     break;
                 }
 
                 auto weight = 0u;
-                auto rand = KFGlobal::Instance()->RandRatio( leftweight );
+                auto rand = KFGlobal::Instance()->RandRatio( left_weight );
                 for ( auto data : _weight_data )
                 {
                     // 判断是否随机过
@@ -181,7 +181,7 @@ namespace KFrame
                     if ( rand < weight )
                     {
                         _rand_list.insert( data );
-                        randweight += data->_weight;
+                        rand_weight += data->_weight;
                         break;
                     }
                 }

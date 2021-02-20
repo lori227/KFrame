@@ -590,8 +590,8 @@ namespace KFrame
         }
 
         // 模块回调
-        if ( kfdata->HaveMask( KFDataDefine::DataMaskUpdataCall ) &&
-                kfdata->GetParent()->HaveMask( KFDataDefine::DataMaskUpdataCall ) )
+        if ( kfdata->HaveMask( KFDataDefine::DataMaskUpdateCall ) &&
+                kfdata->GetParent()->HaveMask( KFDataDefine::DataMaskUpdateCall ) )
         {
             for ( auto& iter : _update_data_module._objects )
             {
@@ -622,8 +622,8 @@ namespace KFrame
         }
 
         // 模块回调
-        if ( kfdata->HaveMask( KFDataDefine::DataMaskUpdataCall ) &&
-                kfdata->GetParent()->HaveMask( KFDataDefine::DataMaskUpdataCall ) )
+        if ( kfdata->HaveMask( KFDataDefine::DataMaskUpdateCall ) &&
+                kfdata->GetParent()->HaveMask( KFDataDefine::DataMaskUpdateCall ) )
         {
             for ( auto& iter : _update_string_module._objects )
             {

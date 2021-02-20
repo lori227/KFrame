@@ -81,7 +81,7 @@ namespace KFrame
         _kf_connection_function.Remove( name );
     }
 
-    void KFRouteClientModule::SetTranspondFunction( KFTranspondFunction& function )
+    void KFRouteClientModule::SetTranspondFunction( KFForwardFunction& function )
     {
         _kf_transpond_function = function;
     }

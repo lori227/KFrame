@@ -22,7 +22,7 @@ namespace KFrame
         {"rank", KFDataDefine::DataMaskRank},
         {"addcall", KFDataDefine::DataMaskAddCall},
         {"removecall", KFDataDefine::DataMaskRemoveCall},
-        {"updatecall", KFDataDefine::DataMaskUpdataCall},
+        {"updatecall", KFDataDefine::DataMaskUpdateCall},
         {"shield", KFDataDefine::DataMaskShield},
         {"client", KFDataDefine::DataMaskClient},
     };

@@ -20,10 +20,10 @@ namespace KFrame
             }
         }
 
-        void SetValue( std::string strdata )
+        void SetValue( std::string data )
         {
-            auto minvalue = KFUtility::SplitValue< T >( strdata, __RANGE_STRING__ );
-            auto maxvalue = KFUtility::SplitValue< T >( strdata, __RANGE_STRING__ );
+            auto minvalue = KFUtility::SplitValue< T >( data, __RANGE_STRING__ );
+            auto maxvalue = KFUtility::SplitValue< T >( data, __RANGE_STRING__ );
             SetValue( minvalue, maxvalue );
         }
 

@@ -1,7 +1,7 @@
 ﻿#ifndef __KF_QUEUE_H__
 #define __KF_QUEUE_H__
 
-#include "KFInclude.h"
+#include "KFDefine.h"
 #include "KFUtility/KFAppId.h"
 #include "KFMemory/KFMalloc.h"
 #include "KFLogger/KFLogger.h"

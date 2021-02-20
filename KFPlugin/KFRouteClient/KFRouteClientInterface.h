@@ -102,7 +102,7 @@ namespace KFrame
         template< class T >
         void RegisterTranspondFunction( T* object, bool ( T::*handle )( const Route& route, uint32 msgid, const char* data, uint32 length ) )
         {
-            KFTranspondFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
+            KFForwardFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
             SetTranspondFunction( function );
         }
 
@@ -110,7 +110,7 @@ namespace KFrame
         template< class T >
         void UnRegisterTranspondFunction( T* object )
         {
-            KFTranspondFunction function = nullptr;
+            KFForwardFunction function = nullptr;
             SetTranspondFunction( function );
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -118,7 +118,7 @@ namespace KFrame
     protected:
         virtual void AddConnectionFunction( const std::string& name, KFClusterConnectionFunction& function ) = 0;
         virtual void RemoveConnectionFunction( const std::string& name ) = 0;
-        virtual void SetTranspondFunction( KFTranspondFunction& function ) = 0;
+        virtual void SetTranspondFunction( KFForwardFunction& function ) = 0;
     };
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////

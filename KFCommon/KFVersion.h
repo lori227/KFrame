@@ -10,26 +10,26 @@ namespace KFrame
     {
     public:
         KFVersion() = default;
-        KFVersion( std::string strversion )
+        KFVersion( std::string version )
         {
-            FromString( strversion );
+            FromString( version );
         }
 
         // 判断版本号是否兼容
         bool CheckCompatibility( const std::string& version )
         {
-            KFVersion kfversion( version );
+            KFVersion kf_version( version );
 
             if ( _client_version != __EMPTY_VERSION__ &&
-                    kfversion._client_version != __EMPTY_VERSION__ &&
-                    _client_version != kfversion._client_version )
+                    kf_version._client_version != __EMPTY_VERSION__ &&
+                    _client_version != kf_version._client_version )
             {
                 return false;
             }
 
             if ( _server_version != __EMPTY_VERSION__ &&
-                    kfversion._server_version != __EMPTY_VERSION__ &&
-                    _server_version != kfversion._server_version )
+                    kf_version._server_version != __EMPTY_VERSION__ &&
+                    _server_version != kf_version._server_version )
             {
                 return false;
             }
@@ -37,13 +37,13 @@ namespace KFrame
             return true;
         }
 
-        void FromString( std::string& strversion )
+        void FromString( std::string version )
         {
-            _str_version = strversion;
-            _client_version = KFUtility::SplitString( strversion, "." );
-            _server_version = KFUtility::SplitString( strversion, "." );
-            _battle_version = KFUtility::SplitString( strversion, "." );
-            _build_version = KFUtility::SplitString( strversion, "." );
+            _str_version = version;
+            _client_version = KFUtility::SplitString( version, "." );
+            _server_version = KFUtility::SplitString( version, "." );
+            _battle_version = KFUtility::SplitString( version, "." );
+            _build_version = KFUtility::SplitString( version, "." );
         }
 
     public:

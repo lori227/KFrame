@@ -1,5 +1,5 @@
-﻿#ifndef __KF_LIBRARY_H__
-#define __KF_LIBRARY_H__
+﻿#ifndef __KF_LINK_H__
+#define __KF_LINK_H__
 #include "KFSystem.h"
 
 #if __KF_SYSTEM__ == __KF_WIN__

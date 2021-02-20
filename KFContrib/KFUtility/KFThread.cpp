@@ -1,15 +1,14 @@
 ﻿#include "KFThread.h"
 #include "KFRunable.hpp"
-
 namespace KFrame
 {
     uint32 KFThread::GetThreadID()
     {
-#ifdef __KF_WIN__
+#if __KF_SYSTEM__ == __KF_WIN__
         uint32 threadid = Poco::Thread::currentTid();
         return threadid;
 #else
-        uint32 thread = Poco::Thread::currentTid();
+        auto thread = Poco::Thread::currentTid();
         return thread->__sig;
 #endif
     }

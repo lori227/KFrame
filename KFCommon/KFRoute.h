@@ -1,7 +1,7 @@
-﻿#ifndef __KF_ROUTER_H__
-#define __KF_ROUTER_H__
+﻿#ifndef __KF_ROUTE_H__
+#define __KF_ROUTE_H__
 
-#include "KFInclude.h"
+#include "KFDefine.h"
 
 // 路由数据信息
 namespace KFrame
@@ -10,10 +10,10 @@ namespace KFrame
     {
     public:
         Route() {};
-        Route( uint64 serverid, uint64 sendid, uint64 recvid ) :
-            _server_id( serverid ),
-            _send_id( sendid ),
-            _recv_id( recvid )
+        Route( uint64 server_id, uint64 send_id, uint64 recv_id ) :
+            _server_id( server_id ),
+            _send_id( send_id ),
+            _recv_id( recv_id )
         {
 
         }

@@ -92,7 +92,8 @@ namespace KFrame
         void RegisterHandle( uint32 type, uint32 msgid, ModuleType* module, void( ModuleType::* function )( KFEntity*, const Route&, uint32, const MessageType* ) )
         {
             auto messagehandle = __KF_NEW__( KFMessageHandleData< MessageType >, type, msgid );
-            typename KFMessageHandleData< MessageType >::HandleFunctionType handlefunction = std::bind( function, module, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
+            typename KFMessageHandleData< MessageType >::HandleFunctionType handlefunction =
+                    std::bind( function, module, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
             messagehandle->_function.SetFunction( module, handlefunction );
             AddMessageHandle( messagehandle );
         }

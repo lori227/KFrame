@@ -207,7 +207,7 @@ namespace KFrame
         }
     }
 
-    void KFTcpServerModule::AddTranspondFunction( KFModule* module, KFTranspondFunction& function )
+    void KFTcpServerModule::AddTranspondFunction( KFModule* module, KFForwardFunction& function )
     {
         _kf_transpond_function = function;
     }
