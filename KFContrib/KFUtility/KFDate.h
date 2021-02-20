@@ -6,7 +6,7 @@
 
 
 ************************************************************************/
-#include "KFInclude.h"
+#include "KFDefine.h"
 typedef struct tm _tm;
 
 namespace KFrame

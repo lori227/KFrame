@@ -74,7 +74,7 @@ namespace KFrame
         static void AllocRecvBuffer( uv_handle_t* handle, size_t size, uv_buf_t* pbuffer );
 
         // 接受消息
-        static void OnRecvCallBack( uv_stream_t* pstream, int64 length, const uv_buf_t* pbuffer );
+        static void OnRecvCallBack( uv_stream_t* pstream, ssize_t length, const uv_buf_t* pbuffer );
 
         // 格式化消息
         void ParseBuffToMessage();

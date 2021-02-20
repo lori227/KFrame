@@ -1,5 +1,5 @@
 ﻿#include "KFKernelPlugin.hpp"
-#include "KFLibrary.h"
+#include "KFLink.h"
 
 __KF_EXPORT__ __KF_PLUGIN_ENRTY__( KFrame::KFKernelPlugin );
 __KF_EXPORT__ __KF_PLUGIN_LEAVE__( KFrame::KFKernelPlugin );

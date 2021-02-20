@@ -1,4 +1,4 @@
-﻿#include "KFLibrary.h"
+﻿#include "KFLink.h"
 
 #if __KF_SYSTEM__ == __KF_WIN__
     #include "windows.h"

@@ -1,7 +1,7 @@
 ﻿#ifndef __GAME_TIME_H__
 #define __GAME_TIME_H__
 
-#include "KFInclude.h"
+#include "KFDefine.h"
 
 namespace KFrame
 {

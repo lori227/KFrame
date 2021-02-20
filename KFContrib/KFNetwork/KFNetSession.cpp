@@ -255,7 +255,7 @@ namespace KFrame
         pbuffer->len = KFNetDefine::MaxRecvBuffLength - netsession->_recv_length;
     }
 
-    void KFNetSession::OnRecvCallBack( uv_stream_t* uvstream, int64 length, const uv_buf_t* pbuffer )
+    void KFNetSession::OnRecvCallBack( uv_stream_t* uvstream, ssize_t length, const uv_buf_t* pbuffer )
     {
         auto netsession = reinterpret_cast< KFNetSession* >( uvstream->data );
         if ( length < 0 )

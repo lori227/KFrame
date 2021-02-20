@@ -1,7 +1,7 @@
 #ifndef __MD5_H__
 #define __MD5_H__
 
-#include "KFInclude.h"
+#include "KFDefine.h"
 
 namespace KFrame
 {

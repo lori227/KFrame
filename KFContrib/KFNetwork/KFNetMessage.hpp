@@ -1,7 +1,7 @@
 ﻿#ifndef __NET_MESSAGE_H__
 #define __NET_MESSAGE_H__
 
-#include "KFRouter.h"
+#include "KFRoute.h"
 #include "KFMemory/KFMalloc.h"
 
 #pragma pack( 1 )

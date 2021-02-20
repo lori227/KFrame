@@ -1,5 +1,5 @@
 ﻿#include "KFAccountPlugin.hpp"
-#include "KFLibrary.h"
+#include "KFLink.h"
 
 __KF_EXPORT__ __KF_PLUGIN_ENRTY__( KFrame::KFAccountPlugin );
 __KF_EXPORT__ __KF_PLUGIN_LEAVE__( KFrame::KFAccountPlugin );

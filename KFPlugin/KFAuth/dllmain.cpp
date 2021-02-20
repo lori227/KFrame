@@ -1,5 +1,5 @@
 ﻿#include "KFAuthPlugin.hpp"
-#include "KFLibrary.h"
+#include "KFLink.h"
 
 __KF_EXPORT__ __KF_PLUGIN_ENRTY__( KFrame::KFAuthPlugin );
 __KF_EXPORT__ __KF_PLUGIN_LEAVE__( KFrame::KFAuthPlugin );

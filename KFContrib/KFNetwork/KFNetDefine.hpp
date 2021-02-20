@@ -1,7 +1,7 @@
 ﻿#ifndef __NET_DEFINE_H__
 #define __NET_DEFINE_H__
 
-#include "KFInclude.h"
+#include "KFDefine.h"
 
 namespace KFrame
 {

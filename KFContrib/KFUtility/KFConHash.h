@@ -1,7 +1,7 @@
 ﻿#ifndef __KF_CONHASH_H__
 #define __KF_CONHASH_H__
 
-#include "KFInclude.h"
+#include "KFDefine.h"
 namespace KFrame
 {
     class KFHashLogic;

@@ -2,7 +2,7 @@
 #define __KF_STARTUP_H__
 
 #include "KFMap.h"
-#include "KFLibrary.h"
+#include "KFLink.h"
 #include "KFSingleton.h"
 
 namespace KFrame

@@ -6,7 +6,7 @@
 						游戏定时器
 
 ************************************************************************/
-#include "KFInclude.h"
+#include "KFDefine.h"
 
 namespace KFrame
 {

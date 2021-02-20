@@ -1,5 +1,5 @@
 ﻿#include "KFGatePlugin.hpp"
-#include "KFLibrary.h"
+#include "KFLink.h"
 
 __KF_EXPORT__ __KF_PLUGIN_ENRTY__( KFrame::KFGatePlugin );
 __KF_EXPORT__ __KF_PLUGIN_LEAVE__( KFrame::KFGatePlugin );

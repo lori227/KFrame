@@ -1,7 +1,7 @@
 ﻿#ifndef __KF_CONDITION_OPTION_H__
 #define __KF_CONDITION_OPTION_H__
 
-#include "KFInclude.h"
+#include "KFDefine.h"
 
 namespace KFrame
 {

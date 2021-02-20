@@ -1,51 +1,51 @@
 #ifndef __KF_MEMORY_DEFINE_H__
 #define __KF_MEMORY_DEFINE_H__
 
-#include "KFInclude.h"
+#include "KFDefine.h"
 namespace KFrame
 {
-    // ÄÚ´æÐÅÏ¢
+    // ï¿½Ú´ï¿½ï¿½ï¿½Ï¢
     class MemoryData
     {
     public:
-        // Ãû×Ö
+        // ï¿½ï¿½ï¿½ï¿½
         std::string _name;
 
-        // ·ÖÅä´óÐ¡
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡
         uint32 _size{ 0 };
     };
 
-    // ÄÚ´æÈÕÖ¾ÐÅÏ¢
+    // ï¿½Ú´ï¿½ï¿½ï¿½Ö¾ï¿½ï¿½Ï¢
     class MemoryLogData
     {
     public:
-        // ·ÖÅä´ÎÊý
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         uint32 _count{ 0 };
 
-        // ·ÖÅä´óÐ¡
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡
         uint64 _total_size{ 0 };
     };
 
-    // Ïß³Ìbuffer
+    // ï¿½ß³ï¿½buffer
     template< class T >
     class KFThreadBuffer
     {
     public:
-        // ³¤¶È
+        // ï¿½ï¿½ï¿½ï¿½
         uint32 _length{ 0 };
 
-        // ÄÚ´æµØÖ·
+        // ï¿½Ú´ï¿½ï¿½Ö·
         T* _buffer{ nullptr };
     };
 
-    // ¹²ÏíÄÚ´æ
+    // ï¿½ï¿½ï¿½ï¿½ï¿½Ú´ï¿½
     class KFShareMemory
     {
     public:
-        // ³¤¶È
+        // ï¿½ï¿½ï¿½ï¿½
         uint32 _size{ 0 };
 
-        // ¹²ÏíÄÚ´æÖ¸Õë
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Ú´ï¿½Ö¸ï¿½ï¿½
         void* _memory{ nullptr };
     };
 }
