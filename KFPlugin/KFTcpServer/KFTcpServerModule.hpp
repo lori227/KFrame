@@ -113,10 +113,10 @@ namespace KFrame
         KFTcpSetting* _kf_tcp_setting = nullptr;
 
         // 发现客户端回调
-        KFFunctionMap< KFModule*, KFNetEventFunction > _kf_discover_function;
+        KFMapFunction< KFModule*, KFNetEventFunction > _kf_discover_function;
 
         // 丢失客户端回调
-        KFFunctionMap< KFModule*, KFNetEventFunction > _kf_lost_function;
+        KFMapFunction< KFModule*, KFNetEventFunction > _kf_lost_function;
 
         // 转发函数
         KFForwardFunction _kf_transpond_function = nullptr;

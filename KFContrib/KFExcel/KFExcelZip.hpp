@@ -1,7 +1,7 @@
 ﻿#ifndef __KF_EXCEL_ZIP_H__
 #define __KF_EXCEL_ZIP_H__
 
-#include "KFInclude.h"
+#include "KFDefine.h"
 #include "minizip/unzip.h"
 #include "xml/rapidxml.hpp"
 #include "xml/rapidxml_iterators.hpp"

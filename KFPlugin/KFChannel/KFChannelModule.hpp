@@ -65,10 +65,10 @@ namespace KFrame
 
     private:
         // 绑定的登录函数
-        KFFunctionMap< uint32, KFLoginFunction > _kf_login_function;
+        KFMapFunction< uint32, KFLoginFunction > _kf_login_function;
 
         // 充值函数
-        KFFunctionMap< uint32, KFPayFunction > _kf_pay_function;
+        KFMapFunction< uint32, KFPayFunction > _kf_pay_function;
 
         // 注册的渠道
         std::unordered_map< uint32, KFChannel* > _kf_channel_list;

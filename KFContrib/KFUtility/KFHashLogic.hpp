@@ -1,7 +1,6 @@
 ﻿#ifndef __KF_HASH_LOGIC_H__
 #define __KF_HASH_LOGIC_H__
 
-#include "KFInclude.h"
 #include "KFMap.h"
 #include "KFHashData.hpp"
 

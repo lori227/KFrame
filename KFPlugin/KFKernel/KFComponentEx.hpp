@@ -37,7 +37,7 @@ namespace KFrame
 
     public:
         // 函数列表
-        KFFunctionMap< KFModule*, T > _functions;
+        KFMapFunction< KFModule*, T > _functions;
     };
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
     class KFComponentEx : public KFComponent
@@ -216,22 +216,22 @@ namespace KFrame
         KFHashMap< uint64, KFEntity > _entitys;
         /////////////////////////////////////////////////////////////////////////////////////////////
         // 判断是否能添加
-        KFFunctionMap< std::string, KFCheckAddElementFunction > _check_add_element_function;
+        KFMapFunction< std::string, KFCheckAddElementFunction > _check_add_element_function;
 
         // 添加元数据函数
-        KFFunctionMap< std::string, KFAddElementFunction > _add_element_function;
+        KFMapFunction< std::string, KFAddElementFunction > _add_element_function;
 
         // 判断元数据满足
-        KFFunctionMap< std::string, KFCheckRemoveElementFunction > _check_remove_element_function;
+        KFMapFunction< std::string, KFCheckRemoveElementFunction > _check_remove_element_function;
 
         // 删除元数据函数
-        KFFunctionMap< std::string, KFRemoveElementFunction > _remove_element_function;
+        KFMapFunction< std::string, KFRemoveElementFunction > _remove_element_function;
         /////////////////////////////////////////////////////////////////////////////////////////////
         // 属性更新回调列表
-        KFFunctionMap< KFModule*, KFAddDataFunction > _add_data_module;
-        KFFunctionMap< KFModule*, KFRemoveDataFunction > _remove_data_module;
-        KFFunctionMap< KFModule*, KFUpdateDataFunction > _update_data_module;
-        KFFunctionMap< KFModule*, KFUpdateStringFunction > _update_string_module;
+        KFMapFunction< KFModule*, KFAddDataFunction > _add_data_module;
+        KFMapFunction< KFModule*, KFRemoveDataFunction > _remove_data_module;
+        KFMapFunction< KFModule*, KFUpdateDataFunction > _update_data_module;
+        KFMapFunction< KFModule*, KFUpdateStringFunction > _update_string_module;
 
         // 添加属性逻辑
         KFMap< std::string, KFDataFunction< KFAddDataFunction > > _add_logic_function;
@@ -272,13 +272,13 @@ namespace KFrame
         KFFunction< KFShowElementFunction > _show_element_function;
         /////////////////////////////////////////////////////////////////////////////////////////////
         // 获得属性逻辑
-        KFFunctionMap< std::string, KFGetConfigValueFunction > _get_config_value_function;
+        KFMapFunction< std::string, KFGetConfigValueFunction > _get_config_value_function;
 
         // 日志函数
-        KFFunctionMap< std::string, KFLogElementFunction > _log_element_function;
+        KFMapFunction< std::string, KFLogElementFunction > _log_element_function;
 
         // 操作结果
-        KFFunctionMap< std::string, KFElementResultFunction > _element_result_function;
+        KFMapFunction< std::string, KFElementResultFunction > _element_result_function;
     protected:
         // 需要发送消息的对象
         std::set< KFEntity* > _sync_entitys;

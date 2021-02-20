@@ -1,7 +1,6 @@
 ﻿#ifndef __KF_XML_NODE_H__
 #define __KF_XML_NODE_H__
 
-#include "KFInclude.h"
 #include "KFExecuteData.h"
 #include "KFStaticCondition.h"
 #include "KFDynamicCondition.h"

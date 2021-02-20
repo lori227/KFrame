@@ -115,16 +115,16 @@ namespace KFrame
         KFForwardFunction _kf_transpond_function = nullptr;
 
         // 注册成功回调函数
-        KFFunctionMap< KFModule*, KFNetEventFunction > _kf_connection_function;
+        KFMapFunction< KFModule*, KFNetEventFunction > _kf_connection_function;
 
         // 客户端掉线
-        KFFunctionMap< KFModule*, KFNetEventFunction > _kf_lost_function;
+        KFMapFunction< KFModule*, KFNetEventFunction > _kf_lost_function;
 
         // 客户端关闭
-        KFFunctionMap< KFModule*, KFNetEventFunction > _kf_shutdown_function;
+        KFMapFunction< KFModule*, KFNetEventFunction > _kf_shutdown_function;
 
         // 客户端失败
-        KFFunctionMap< KFModule*, KFNetEventFunction > _kf_failed_function;
+        KFMapFunction< KFModule*, KFNetEventFunction > _kf_failed_function;
     };
 }
 

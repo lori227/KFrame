@@ -1,7 +1,6 @@
 ﻿#ifndef __KF_ELEMENT_H__
 #define __KF_ELEMENT_H__
 
-#include "KFInclude.h"
 #include "KFRange.h"
 
 namespace KFrame

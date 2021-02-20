@@ -18,35 +18,21 @@ namespace KFrame
     class KFParamList
     {
     public:
-        KFParamList()
+        inline void Reset()
         {
             _params.clear();
         }
 
-        ~KFParamList()
+        inline std::shared_ptr<KFParam> AddParam()
         {
-            Reset();
-        }
-
-        void Reset()
-        {
-            for ( auto param : _params )
-            {
-                delete param;
-            }
-            _params.clear();
-        }
-
-        KFParam* AddParam()
-        {
-            auto param = new KFParam;
+            auto param = __MAKE_SHARED__( KFParam );
             _params.push_back( param );
             return param;
         }
 
     public:
         // 属性列表
-        std::vector< KFParam* > _params;
+        std::vector<std::shared_ptr<KFParam>> _params;
     };
     ////////////////////////////////////////////////////////////////////////////////////////
 }

@@ -137,7 +137,7 @@ namespace KFrame
 
         content += "#ifndef __KF_FIELD_H__\n";
         content += "#define __KF_FIELD_H__\n";
-        content += "#include \"KFInclude.h\"\n";
+        content += "#include \"KFDefine.h\"\n";
         content += "\n";
         content += "namespace KFrame\n";
         content += "{\n";

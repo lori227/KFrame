@@ -147,31 +147,31 @@ namespace KFrame
         KFComponent* _kf_component = nullptr;
 
         // 更新函数
-        KFFunctionMap< std::string,  KFEntityFunction  > _player_run_function;
-        KFFunctionMap< std::string, KFEntityFunction  > _player_after_run_function;
+        KFMapFunction< std::string,  KFEntityFunction  > _player_run_function;
+        KFMapFunction< std::string, KFEntityFunction  > _player_after_run_function;
 
         // 初始化函数
-        KFFunctionMap< std::string, KFEntityFunction > _player_init_function;
+        KFMapFunction< std::string, KFEntityFunction > _player_init_function;
 
         // 卸载函数
-        KFFunctionMap< std::string, KFEntityFunction > _player_uninit_function;
+        KFMapFunction< std::string, KFEntityFunction > _player_uninit_function;
 
         // 重置函数
-        KFFunctionMap< std::string, KFEntityFunction > _player_reset_function;
+        KFMapFunction< std::string, KFEntityFunction > _player_reset_function;
 
         // 登录函数
-        KFFunctionMap< std::string,  KFEntityFunction > _player_before_enter_function;
-        KFFunctionMap< std::string,  KFEntityFunction > _player_enter_function;
-        KFFunctionMap< std::string,  KFEntityFunction > _player_after_enter_function;
+        KFMapFunction< std::string,  KFEntityFunction > _player_before_enter_function;
+        KFMapFunction< std::string,  KFEntityFunction > _player_enter_function;
+        KFMapFunction< std::string,  KFEntityFunction > _player_after_enter_function;
 
         // 离开函数
-        KFFunctionMap< std::string,  KFEntityFunction > _player_leave_function;
+        KFMapFunction< std::string,  KFEntityFunction > _player_leave_function;
 
         // 新玩家处理函数
-        KFFunctionMap< std::string,  KFEntityFunction > _new_player_function;
+        KFMapFunction< std::string,  KFEntityFunction > _new_player_function;
 
         // 创建角色函数
-        KFFunctionMap< std::string, KFEntityFunction > _create_role_function;
+        KFMapFunction< std::string, KFEntityFunction > _create_role_function;
     };
 }
 

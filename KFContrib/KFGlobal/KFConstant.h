@@ -1,7 +1,7 @@
 ﻿#ifndef __KF_CONSTANT_H__
 #define __KF_CONSTANT_H__
 
-#include "KFInclude.h"
+#include "KFDefine.h"
 
 namespace KFrame
 {

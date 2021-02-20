@@ -204,7 +204,7 @@ namespace KFrame
         RouteObjectList _service_object_list;
 
         // 集群认证成功的回调函数
-        KFFunctionMap< std::string, KFClusterConnectionFunction >_kf_connection_function;
+        KFMapFunction< std::string, KFClusterConnectionFunction >_kf_connection_function;
 
         // 转发消息
         uint64 _route_serial = 0u;

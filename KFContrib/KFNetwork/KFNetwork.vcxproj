@@ -91,7 +91,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WIN32_WINDOWS;__SERVER__;_DEBUG;_LIB;POCO_EXTERNAL_OPENSSL;POCO_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\;..\..\KFContrib\;..\..\KFLibrary\;..\..\KFCommon\;..\..\KFInclude\;..\..\KFLibrary\libuv\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\;..\..\KFContrib\;..\..\KFLibrary\;..\..\KFCommon\;..\..\KFLibrary\libuv\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <BrowseInformation>false</BrowseInformation>
     </ClCompile>
     <Link>
@@ -120,7 +120,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;_WIN32_WINDOWS;__SERVER__;NDEBUG;_LIB;POCO_STATIC;POCO_EXTERNAL_OPENSSL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\;..\..\KFLibrary\;..\..\KFCommon\;..\..\KFInclude\;..\..\KFLibrary\libuv\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\;..\..\KFLibrary\;..\..\KFCommon\;..\..\KFLibrary\libuv\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <BrowseInformation>false</BrowseInformation>
     </ClCompile>

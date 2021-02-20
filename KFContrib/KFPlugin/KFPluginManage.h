@@ -278,11 +278,11 @@ namespace KFrame
 
         // 命令列表
         KFQueue< KFDebugCommand > _commands;
-        KFFunctionMap< std::string, KFCmdFunction > _command_functions;
+        KFMapFunction< std::string, KFCmdFunction > _command_functions;
 
         // 注册的Run函数
-        KFFunctionMap< uint32, KFRunFunction > _run_functions;
-        KFFunctionMap< uint32, KFRunFunction > _after_run_functions;
+        KFMapFunction< uint32, KFRunFunction > _run_functions;
+        KFMapFunction< uint32, KFRunFunction > _after_run_functions;
     };
 }
 

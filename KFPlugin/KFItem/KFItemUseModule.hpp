@@ -56,10 +56,10 @@ namespace KFrame
 
     private:
         // 检查道具是否能使用
-        KFFunctionMap<uint32, KFItemUseFunction > _check_item_use_function;
+        KFMapFunction<uint32, KFItemUseFunction > _check_item_use_function;
 
         // 使用道具
-        KFFunctionMap<uint32, KFItemUseFunction > _item_use_function;
+        KFMapFunction<uint32, KFItemUseFunction > _item_use_function;
     };
 }
 

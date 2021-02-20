@@ -1,7 +1,6 @@
 ﻿#ifndef __KF_HASH_DATA_H__
 #define __KF_HASH_DATA_H__
 
-#include "KFInclude.h"
 #include "KFMap.h"
 
 namespace KFrame

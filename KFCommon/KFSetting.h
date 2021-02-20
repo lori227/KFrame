@@ -1,7 +1,7 @@
 ﻿#ifndef __KF_SETTING_H__
 #define __KF_SETTING_H__
 
-#include "KFInclude.h"
+#include "KFDefine.h"
 
 namespace KFrame
 {
@@ -24,8 +24,6 @@ namespace KFrame
     public:
         // 类型
         typedef uint64 Type;
-        typedef uint64 ParamType;
-
     public:
         uint64 _id = 0u;
     };
@@ -35,7 +33,6 @@ namespace KFrame
     public:
         // 类型
         typedef std::string Type;
-        typedef const std::string& ParamType;
 
     public:
         std::string _id;

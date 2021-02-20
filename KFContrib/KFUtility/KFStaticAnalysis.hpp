@@ -1,7 +1,6 @@
 ﻿#ifndef __KF_STATIC_CONDITION_ANALYSIS_H__
 #define __KF_STATIC_CONDITION_ANALYSIS_H__
 
-#include "KFInclude.h"
 #include "KFStaticCondition.h"
 
 namespace KFrame

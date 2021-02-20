@@ -137,7 +137,7 @@ namespace KFrame
         bool _cluster_in_services = false;
 
         // 集群认证成功的回调函数
-        KFFunctionMap< std::string, KFClusterConnectionFunction >_kf_connection_function;
+        KFMapFunction< std::string, KFClusterConnectionFunction >_kf_connection_function;
 
         // 需要重新发送的消息
         std::list < SendKeeper* > _send_keeper;

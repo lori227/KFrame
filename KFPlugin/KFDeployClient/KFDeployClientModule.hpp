@@ -21,7 +21,7 @@ namespace KFrame
     class KFDeployCommand
     {
     public:
-        KFFunctionMap< std::string, KFDeployFunction > _functions;
+        KFMapFunction< std::string, KFDeployFunction > _functions;
     };
 
     class KFDeployClientModule : public KFDeployClientInterface

@@ -39,7 +39,7 @@ namespace KFrame
         // 处理器函数
         std::unordered_map<uint32, KFMessageHandleAbstract*> _handles;
 
-        KFFunctionMap<uint32, KFFindEntityFunction> _find_entity_function;
+        KFMapFunction<uint32, KFFindEntityFunction> _find_entity_function;
     };
 }
 

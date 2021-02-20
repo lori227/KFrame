@@ -1,7 +1,7 @@
 ﻿#ifndef __KF_JSON_H__
 #define __KF_JSON_H__
 
-#include "KFInclude.h"
+#include "KFDefine.h"
 #include "rapidjson/document.h"
 #include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"

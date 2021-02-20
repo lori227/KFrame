@@ -1,7 +1,6 @@
 ﻿#ifndef __UTILITY_H__
 #define __UTILITY_H__
 
-#include "KFInclude.h"
 #include "KFDefine.h"
 
 namespace KFrame

@@ -1,14 +1,14 @@
 ﻿#ifndef __KF_MAP_H__
 #define __KF_MAP_H__
 
-#include "KFInclude.h"
-#include "KFMemory/KFMalloc.h"
+#include "KFDefine.h"
 
 namespace KFrame
 {
     template < typename KeyType, typename ObjectType, typename MapType >
     class KFMapT
     {
+        typedef std::shared_ptr<ObjectType> ObjectPtr;
     public:
         KFMapT()
         {
@@ -17,24 +17,38 @@ namespace KFrame
 
         virtual ~KFMapT()
         {
-            Clear();
+            _objects.clear();
         }
 
         // 大小
-        uint32 Size()
+        inline uint32 Size()
         {
             return static_cast< uint32 >( _objects.size() );
         }
 
-        // 添加
-        void Insert( const KeyType& key, ObjectType* object )
+        // 清除
+        inline void Clear()
         {
-            Remove( key, true );
+            _objects.clear();
+        }
+
+        // 是否为空
+        inline bool IsEmpty()
+        {
+            return _objects.empty();
+        }
+
+        // 添加
+        // @key : 主键索引
+        // @object : 数据对象
+        inline void Insert( const KeyType& key, ObjectPtr& object )
+        {
             _objects[ key ] = object;
         }
 
         // 查找
-        ObjectType* Find( const KeyType& key ) const
+        // @key : 主键索引
+        inline ObjectPtr Find( const KeyType& key ) const
         {
             auto iter = _objects.find( key );
             if ( iter == _objects.end() )
@@ -45,7 +59,11 @@ namespace KFrame
             return iter->second;
         }
 
-        ObjectType* Create( const KeyType& key )
+        // 创建
+        // @key : 主键索引
+        // params : 参数列表
+        template<class...P>
+        inline ObjectPtr Create( const KeyType& key, P&& ... params )
         {
             auto object = Find( key );
             if ( object != nullptr )
@@ -53,37 +71,21 @@ namespace KFrame
                 return object;
             }
 
-            object = __KF_NEW__( ObjectType );
-            Insert( key, object );
+            object = std::make_shared<ObjectType>( std::forward<P>(params)... );
+            _objects[ key ] = object;
             return object;
         }
 
         // 存在
-        bool IsExist( const KeyType& key )
+        // @key : 主键索引
+        inline bool IsExist( const KeyType& key )
         {
             return Find( key ) != nullptr;
         }
 
         // 删除
-        bool Remove( const KeyType& key, bool isdelete = true )
-        {
-            auto iter = _objects.find( key );
-            if ( iter == _objects.end() )
-            {
-                return false;
-            }
-
-            if ( isdelete )
-            {
-                __KF_DELETE__( ObjectType, iter->second );
-            }
-
-            _objects.erase( iter );
-            return true;
-        }
-
-        // 移动
-        ObjectType* Move( const KeyType& key )
+        // @key : 主键索引
+        inline ObjectPtr Remove( const KeyType& key )
         {
             auto iter = _objects.find( key );
             if ( iter == _objects.end() )
@@ -96,29 +98,9 @@ namespace KFrame
             return object;
         }
 
-        // 清除
-        void Clear( bool isdelete = true )
-        {
-            if ( isdelete )
-            {
-                for ( auto iter = _objects.begin(); iter != _objects.end(); ++iter )
-                {
-                    __KF_DELETE__( ObjectType, iter->second );
-                }
-            }
-
-            _objects.clear();
-        }
-
-        // 是否为空
-        bool IsEmpty()
-        {
-            return _objects.empty();
-        }
-
         // 遍历
         // 不能嵌套遍历, 中间不能有删除添加操作
-        ObjectType* First()
+        inline ObjectPtr First()
         {
             if ( _objects.empty() )
             {
@@ -129,7 +111,7 @@ namespace KFrame
             return _iter->second;
         }
 
-        ObjectType* Next()
+        inline ObjectPtr Next()
         {
             ++_iter;
             if ( _iter == _objects.end() )
@@ -141,14 +123,14 @@ namespace KFrame
         }
 
         // 添加数据
-        void AddMap( KFMapT& kfother )
+        void AddMap( KFMapT& other )
         {
-            for ( auto iter : kfother._objects )
+            for ( auto iter : other._objects )
             {
                 Insert( iter.first, iter.second );
             }
 
-            kfother._objects.clear();
+            other.Clear();
         }
 
     public:
@@ -163,14 +145,14 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
     template< typename KeyType, typename ObjectType >
-    class KFMap : public KFMapT< KeyType, ObjectType, std::map< KeyType, ObjectType* > >
+    class KFMap : public KFMapT<KeyType, ObjectType, std::map<KeyType, std::shared_ptr<ObjectType>>>
     {
 
     };
 
     /////////////////////////////////////////////////////////////////////////////////////
     template< typename KeyType, typename ObjectType >
-    class KFHashMap : public KFMapT< KeyType, ObjectType, std::unordered_map< KeyType, ObjectType* > >
+    class KFHashMap : public KFMapT<KeyType, ObjectType, std::unordered_map<KeyType, std::shared_ptr<ObjectType>>>
     {
 
     };

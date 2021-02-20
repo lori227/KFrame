@@ -84,7 +84,7 @@ namespace KFrame
         KFComponent* _kf_component = nullptr;
 
         // 掉落逻辑函数
-        KFFunctionMap< std::string, KFDropLogicFunction > _drop_logic_function;
+        KFMapFunction< std::string, KFDropLogicFunction > _drop_logic_function;
     };
 }
 

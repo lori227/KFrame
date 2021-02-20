@@ -1,7 +1,7 @@
 ﻿#ifndef __COMPRESS_STRING_H__
 #define __COMPRESS_STRING_H__
 
-#include "KFInclude.h"
+#include "KFDefine.h"
 
 namespace KFrame
 {

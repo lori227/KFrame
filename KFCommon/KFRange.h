@@ -10,31 +10,31 @@ namespace KFrame
     class KFRange
     {
     public:
-        void SetValue( T minvalue, T maxvalue )
+        inline void SetValue( T min_value, T max_value )
         {
-            _min_value = minvalue;
-            _max_value = maxvalue;
+            _min_value = min_value;
+            _max_value = max_value;
             if ( _min_value > _max_value )
             {
                 _max_value = _min_value;
             }
         }
 
-        void SetValue( std::string data )
+        inline void SetValue( std::string data )
         {
-            auto minvalue = KFUtility::SplitValue< T >( data, __RANGE_STRING__ );
-            auto maxvalue = KFUtility::SplitValue< T >( data, __RANGE_STRING__ );
-            SetValue( minvalue, maxvalue );
+            auto min_value = KFUtility::SplitValue< T >( data, __RANGE_STRING__ );
+            auto max_value = KFUtility::SplitValue< T >( data, __RANGE_STRING__ );
+            SetValue( min_value, max_value );
         }
 
         // 计算数值
-        T CalcValue() const
+        inline T CalcValue() const
         {
             return ( T )KFGlobal::Instance()->RandRange( _min_value, _max_value );
         }
 
         // 是否有效
-        bool IsValid() const
+        inline bool IsValid() const
         {
             return _max_value > 0;
         }

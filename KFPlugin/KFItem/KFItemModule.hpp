@@ -156,7 +156,7 @@ namespace KFrame
         KFComponent* _kf_component = nullptr;
 
         // 初始化
-        KFMap<uint32, KFFunctionMap<std::string, KFItemInitFunction>> _item_init_function;
+        KFMap<uint32, KFMapFunction<std::string, KFItemInitFunction>> _item_init_function;
     };
 }
 

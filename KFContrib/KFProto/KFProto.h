@@ -1,6 +1,6 @@
 ﻿#ifndef __KF_PROTO_H__
 #define __KF_PROTO_H__
-#include "KFInclude.h"
+#include "KFDefine.h"
 
 ////////////////////////////////////////////////////////////////////
 
