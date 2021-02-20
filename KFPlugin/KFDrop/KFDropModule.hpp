@@ -57,23 +57,23 @@ namespace KFrame
         __KF_DROP_LOGIC_FUNCTION__( OnDropDataElement );
 
         // 随机掉落逻辑
-        void RandDropLogic( KFEntity* player, uint32 dropid, uint32 count, DropDataList& outlist, const char* function, uint32 line );
-        void RandDropLogic( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist );
+        void RandDropLogic( KFEntity* player, uint32 dropid, uint32 count, DropDataList& out_list, const char* function, uint32 line );
+        void RandDropLogic( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& out_list );
 
         // 执行掉落逻辑
-        void ExecuteDropLogic( KFEntity* player, const DropDataList& outlist, const std::string& modulename, uint64 moduleid, const char* function, uint32 line );
+        void ExecuteDropLogic( KFEntity* player, const DropDataList& out_list, const std::string& modulename, uint64 moduleid, const char* function, uint32 line );
 
         // 互斥条件掉落
-        void DropMutexCondition( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist );
-        void DropOverlayCondition( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist );
+        void DropMutexCondition( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& out_list );
+        void DropOverlayCondition( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& out_list );
 
         // 掉落
-        void RandDropDataList( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist, const UInt32Set& excludelist );
-        void RandDropDataByWeight( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist, const UInt32Set& excludelist );
-        void RandDropDataByProbability( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist, const UInt32Set& excludelist );
+        void RandDropDataList( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& out_list, const UInt32Set& excludelist );
+        void RandDropDataByWeight( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& out_list, const UInt32Set& excludelist );
+        void RandDropDataByProbability( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& out_list, const UInt32Set& excludelist );
 
         // 添加掉落返回数据
-        void RandDropData( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& outlist, const KFDropGroupWeight* kfdropweight, UInt32Set& excludedatalist, const char* function, uint32 line );
+        void RandDropData( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& out_list, const KFDropGroupWeight* kfdropweight, UInt32Set& excludedatalist, const char* function, uint32 line );
 
         // 发送掉落数据到客户端
 #ifdef __KF_DEBUG__

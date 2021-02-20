@@ -36,14 +36,14 @@ namespace KFrame
         void DeleteLogger( uint64 id );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        template< class T >
+        template<class T>
         void RegisterLogFunction( T* object, void ( T::*handle )( uint32, const std::string& ) )
         {
             KFLogFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2 );
             SetLogFunction( function );
         }
 
-        template< class T >
+        template<class T>
         void UnRegisterLogFunction( T* object )
         {
             KFLogFunction function = nullptr;

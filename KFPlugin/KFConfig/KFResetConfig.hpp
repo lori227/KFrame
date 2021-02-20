@@ -9,22 +9,22 @@ namespace KFrame
 	class ResetData
 	{
 	public:
-		// µ÷ÓÃµÄº¯ÊıÃû×Ö
+		// ï¿½ï¿½ï¿½ÃµÄºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		std::string _function_name;
 
-		// ¸¸ÊôĞÔÃû³Æ
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		std::string _parent_name;
 
-		// ¼üÖµ
+		// ï¿½ï¿½Öµ
 		uint32 _key = 0u;
 
-		// ÊôĞÔÃû³Æ
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		std::string _data_name;
 
-		// ²Ù×÷
+		// ï¿½ï¿½ï¿½ï¿½
 		uint32 _operate = 0u;
 
-		// ÊıÖµ
+		// ï¿½ï¿½Öµ
 		uint32 _value = 0u;
 
 	};
@@ -33,7 +33,7 @@ namespace KFrame
 	class KFResetSetting : public KFIntSetting
 	{
 	public:
-		// ÖØÖÃÊı¾İ
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		std::vector<ResetData> _reset_data;
 	};
 
@@ -55,9 +55,9 @@ namespace KFrame
 		
 			ResetData resetdata;
 			resetdata._function_name = xmlnode.ReadString( "functionname", true );
-			resetdata._parent_name = xmlnode.ReadString( "parentname", true );
+			resetdata._parent_name = xmlnode.ReadString( "parent_name", true );
 			resetdata._key = xmlnode.ReadUInt32( "key", true );
-			resetdata._data_name = xmlnode.ReadString( "dataname", true );
+			resetdata._data_name = xmlnode.ReadString( "data_name", true );
 			resetdata._operate = xmlnode.ReadUInt32( "operate", true );
 			resetdata._value = xmlnode.ReadUInt32( "value", true );
 			kfsetting->_reset_data.push_back( resetdata );

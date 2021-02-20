@@ -10,7 +10,7 @@ namespace KFrame
     {
     public:
         // 注册重置逻辑
-        template< class T >
+        template<class T>
         void RegisterResetFunction( const std::string& functionname, uint32 count, T* object, void ( T::*handle )( KFEntity*, uint32, uint64, uint64 ) )
         {
             KFResetFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );

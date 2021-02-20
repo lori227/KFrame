@@ -50,7 +50,7 @@ namespace KFrame
         }
     }
 
-    UInt64Map& KFResetModule::UpdateAllResetTime( KFEntity* player, KFData* kftimerecord )
+    UInt64Map& KFResetModule::UpdateAllResetTime( KFEntity* player, DataPtr kftimerecord )
     {
         static UInt64Map _time_id_list;
         _time_id_list.clear();
@@ -70,7 +70,7 @@ namespace KFrame
         return _time_id_list;
     }
 
-    std::tuple<bool, uint64> KFResetModule::UpdateResetTime( KFEntity* player, KFData* kftimerecord, const KFTimeLoopSetting* kfsetting )
+    std::tuple<bool, uint64> KFResetModule::UpdateResetTime( KFEntity* player, DataPtr kftimerecord, const KFTimeLoopSetting* kfsetting )
     {
         auto kftime = kftimerecord->Find( kfsetting->_id );
         if ( kftime == nullptr )

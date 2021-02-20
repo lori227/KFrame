@@ -27,7 +27,7 @@ namespace KFrame
     };
 
     // �߳�buffer
-    template< class T >
+    template<class T>
     class KFThreadBuffer
     {
     public:

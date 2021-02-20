@@ -14,32 +14,32 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////
         // 查找组件
-        virtual KFComponent* FindComponent( const std::string& dataname ) = 0;
+        virtual KFComponent* FindComponent( const std::string& data_name ) = 0;
 
         // 查找实体
-        virtual KFEntity* FindEntity( const std::string& dataname, uint64 key, const char* function, uint32 line ) = 0;
+        virtual KFEntity* FindEntity( const std::string& data_name, uint64 key, const char* function, uint32 line ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////
         // 创建数据
-        virtual KFData* CreateData( const KFDataSetting* datasetting ) = 0;
+        virtual DataPtr CreateData( const KFDataSetting* datasetting ) = 0;
 
         // 释放数据
-        virtual void DestroyData( KFData* kfdata ) = 0;
+        virtual void DestroyData( DataPtr kfdata ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////
         // 反序列化
-        virtual bool ParseFromProto( KFData* kfdata, const KFMsg::PBObject* proto ) = 0;
+        virtual bool ParseFromProto( DataPtr kfdata, const KFMsg::PBObject* proto ) = 0;
 
         // 序列化
-        virtual KFMsg::PBObject* Serialize( KFData* kfdata ) = 0;
+        virtual KFMsg::PBObject* Serialize( DataPtr kfdata ) = 0;
 
         // 序列化存储到数据库
-        virtual KFMsg::PBObject* SerializeToData( KFData* kfdata ) = 0;
+        virtual KFMsg::PBObject* SerializeToData( DataPtr kfdata ) = 0;
 
         // 序列化到观察者
-        virtual KFMsg::PBObject* SerializeToView( KFData* kfdata ) = 0;
+        virtual KFMsg::PBObject* SerializeToView( DataPtr kfdata ) = 0;
 
         // 序列化到客户端
-        virtual KFMsg::PBObject* SerializeToClient( KFData* kfdata ) = 0;
+        virtual KFMsg::PBObject* SerializeToClient( DataPtr kfdata ) = 0;
 
         // 序列化到客户端( 优化上线的数据量, 登录时才使用 )
         virtual KFMsg::PBObject* SerializeToOnline( KFEntity* kfentity, uint32 delaytime = 0u ) = 0;

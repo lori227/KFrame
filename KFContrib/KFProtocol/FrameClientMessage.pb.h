@@ -1549,10 +1549,10 @@ class LIBPROTOC_EXPORT PBDebugDrop : public ::google::protobuf::Message /* @@pro
 
   // accessors -------------------------------------------------------
 
-  // bytes dataname = 3;
+  // bytes data_name = 3;
   void clear_dataname();
   static const int kDatanameFieldNumber = 3;
-  const ::std::string& dataname() const;
+  const ::std::string& data_name() const;
   void set_dataname(const ::std::string& value);
   #if LANG_CXX11
   void set_dataname(::std::string&& value);
@@ -1561,7 +1561,7 @@ class LIBPROTOC_EXPORT PBDebugDrop : public ::google::protobuf::Message /* @@pro
   void set_dataname(const void* value, size_t size);
   ::std::string* mutable_dataname();
   ::std::string* release_dataname();
-  void set_allocated_dataname(::std::string* dataname);
+  void set_allocated_dataname(::std::string* data_name);
 
   // bytes logicname = 4;
   void clear_logicname();
@@ -2357,10 +2357,10 @@ class LIBPROTOC_EXPORT MsgRemoveDataReq : public ::google::protobuf::Message /* 
 
   // accessors -------------------------------------------------------
 
-  // bytes dataname = 1;
+  // bytes data_name = 1;
   void clear_dataname();
   static const int kDatanameFieldNumber = 1;
-  const ::std::string& dataname() const;
+  const ::std::string& data_name() const;
   void set_dataname(const ::std::string& value);
   #if LANG_CXX11
   void set_dataname(::std::string&& value);
@@ -2369,7 +2369,7 @@ class LIBPROTOC_EXPORT MsgRemoveDataReq : public ::google::protobuf::Message /* 
   void set_dataname(const void* value, size_t size);
   ::std::string* mutable_dataname();
   ::std::string* release_dataname();
-  void set_allocated_dataname(::std::string* dataname);
+  void set_allocated_dataname(::std::string* data_name);
 
   // uint64 key = 2;
   void clear_key();
@@ -2475,10 +2475,10 @@ class LIBPROTOC_EXPORT MsgUpdateIntReq : public ::google::protobuf::Message /* @
 
   // accessors -------------------------------------------------------
 
-  // bytes parentname = 1;
+  // bytes parent_name = 1;
   void clear_parentname();
   static const int kParentnameFieldNumber = 1;
-  const ::std::string& parentname() const;
+  const ::std::string& parent_name() const;
   void set_parentname(const ::std::string& value);
   #if LANG_CXX11
   void set_parentname(::std::string&& value);
@@ -2487,12 +2487,12 @@ class LIBPROTOC_EXPORT MsgUpdateIntReq : public ::google::protobuf::Message /* @
   void set_parentname(const void* value, size_t size);
   ::std::string* mutable_parentname();
   ::std::string* release_parentname();
-  void set_allocated_parentname(::std::string* parentname);
+  void set_allocated_parentname(::std::string* parent_name);
 
-  // bytes dataname = 2;
+  // bytes data_name = 2;
   void clear_dataname();
   static const int kDatanameFieldNumber = 2;
-  const ::std::string& dataname() const;
+  const ::std::string& data_name() const;
   void set_dataname(const ::std::string& value);
   #if LANG_CXX11
   void set_dataname(::std::string&& value);
@@ -2501,7 +2501,7 @@ class LIBPROTOC_EXPORT MsgUpdateIntReq : public ::google::protobuf::Message /* @
   void set_dataname(const void* value, size_t size);
   ::std::string* mutable_dataname();
   ::std::string* release_dataname();
-  void set_allocated_dataname(::std::string* dataname);
+  void set_allocated_dataname(::std::string* data_name);
 
   // uint64 key = 3;
   void clear_key();
@@ -2622,10 +2622,10 @@ class LIBPROTOC_EXPORT MsgUpdateStrReq : public ::google::protobuf::Message /* @
 
   // accessors -------------------------------------------------------
 
-  // bytes parentname = 1;
+  // bytes parent_name = 1;
   void clear_parentname();
   static const int kParentnameFieldNumber = 1;
-  const ::std::string& parentname() const;
+  const ::std::string& parent_name() const;
   void set_parentname(const ::std::string& value);
   #if LANG_CXX11
   void set_parentname(::std::string&& value);
@@ -2634,12 +2634,12 @@ class LIBPROTOC_EXPORT MsgUpdateStrReq : public ::google::protobuf::Message /* @
   void set_parentname(const void* value, size_t size);
   ::std::string* mutable_parentname();
   ::std::string* release_parentname();
-  void set_allocated_parentname(::std::string* parentname);
+  void set_allocated_parentname(::std::string* parent_name);
 
-  // bytes dataname = 2;
+  // bytes data_name = 2;
   void clear_dataname();
   static const int kDatanameFieldNumber = 2;
-  const ::std::string& dataname() const;
+  const ::std::string& data_name() const;
   void set_dataname(const ::std::string& value);
   #if LANG_CXX11
   void set_dataname(::std::string&& value);
@@ -2648,7 +2648,7 @@ class LIBPROTOC_EXPORT MsgUpdateStrReq : public ::google::protobuf::Message /* @
   void set_dataname(const void* value, size_t size);
   ::std::string* mutable_dataname();
   ::std::string* release_dataname();
-  void set_allocated_dataname(::std::string* dataname);
+  void set_allocated_dataname(::std::string* data_name);
 
   // bytes value = 4;
   void clear_value();
@@ -2770,10 +2770,10 @@ class LIBPROTOC_EXPORT MsgRequestSyncReq : public ::google::protobuf::Message /*
 
   // accessors -------------------------------------------------------
 
-  // bytes dataname = 1;
+  // bytes data_name = 1;
   void clear_dataname();
   static const int kDatanameFieldNumber = 1;
-  const ::std::string& dataname() const;
+  const ::std::string& data_name() const;
   void set_dataname(const ::std::string& value);
   #if LANG_CXX11
   void set_dataname(::std::string&& value);
@@ -2782,7 +2782,7 @@ class LIBPROTOC_EXPORT MsgRequestSyncReq : public ::google::protobuf::Message /*
   void set_dataname(const void* value, size_t size);
   ::std::string* mutable_dataname();
   ::std::string* release_dataname();
-  void set_allocated_dataname(::std::string* dataname);
+  void set_allocated_dataname(::std::string* data_name);
 
   // @@protoc_insertion_point(class_scope:KFMsg.MsgRequestSyncReq)
  private:
@@ -2881,10 +2881,10 @@ class LIBPROTOC_EXPORT MsgCancelSyncReq : public ::google::protobuf::Message /* 
 
   // accessors -------------------------------------------------------
 
-  // bytes dataname = 1;
+  // bytes data_name = 1;
   void clear_dataname();
   static const int kDatanameFieldNumber = 1;
-  const ::std::string& dataname() const;
+  const ::std::string& data_name() const;
   void set_dataname(const ::std::string& value);
   #if LANG_CXX11
   void set_dataname(::std::string&& value);
@@ -2893,7 +2893,7 @@ class LIBPROTOC_EXPORT MsgCancelSyncReq : public ::google::protobuf::Message /* 
   void set_dataname(const void* value, size_t size);
   ::std::string* mutable_dataname();
   ::std::string* release_dataname();
-  void set_allocated_dataname(::std::string* dataname);
+  void set_allocated_dataname(::std::string* data_name);
 
   // @@protoc_insertion_point(class_scope:KFMsg.MsgCancelSyncReq)
  private:
@@ -9315,57 +9315,57 @@ inline void PBDebugDrop::set_dataindex(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:KFMsg.PBDebugDrop.dataindex)
 }
 
-// bytes dataname = 3;
+// bytes data_name = 3;
 inline void PBDebugDrop::clear_dataname() {
   dataname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& PBDebugDrop::dataname() const {
-  // @@protoc_insertion_point(field_get:KFMsg.PBDebugDrop.dataname)
+inline const ::std::string& PBDebugDrop::data_name() const {
+  // @@protoc_insertion_point(field_get:KFMsg.PBDebugDrop.data_name)
   return dataname_.GetNoArena();
 }
 inline void PBDebugDrop::set_dataname(const ::std::string& value) {
   
   dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.PBDebugDrop.dataname)
+  // @@protoc_insertion_point(field_set:KFMsg.PBDebugDrop.data_name)
 }
 #if LANG_CXX11
 inline void PBDebugDrop::set_dataname(::std::string&& value) {
   
   dataname_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.PBDebugDrop.dataname)
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.PBDebugDrop.data_name)
 }
 #endif
 inline void PBDebugDrop::set_dataname(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.PBDebugDrop.dataname)
+  // @@protoc_insertion_point(field_set_char:KFMsg.PBDebugDrop.data_name)
 }
 inline void PBDebugDrop::set_dataname(const void* value, size_t size) {
   
   dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.PBDebugDrop.dataname)
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.PBDebugDrop.data_name)
 }
 inline ::std::string* PBDebugDrop::mutable_dataname() {
   
-  // @@protoc_insertion_point(field_mutable:KFMsg.PBDebugDrop.dataname)
+  // @@protoc_insertion_point(field_mutable:KFMsg.PBDebugDrop.data_name)
   return dataname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* PBDebugDrop::release_dataname() {
-  // @@protoc_insertion_point(field_release:KFMsg.PBDebugDrop.dataname)
+  // @@protoc_insertion_point(field_release:KFMsg.PBDebugDrop.data_name)
   
   return dataname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void PBDebugDrop::set_allocated_dataname(::std::string* dataname) {
-  if (dataname != NULL) {
+inline void PBDebugDrop::set_allocated_dataname(::std::string* data_name) {
+  if (data_name != NULL) {
     
   } else {
     
   }
-  dataname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), dataname);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.PBDebugDrop.dataname)
+  dataname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), data_name);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.PBDebugDrop.data_name)
 }
 
 // bytes logicname = 4;
@@ -9747,57 +9747,57 @@ inline void MsgShowElement::set_allocated_elements(::KFMsg::PBShowElements* elem
 
 // MsgRemoveDataReq
 
-// bytes dataname = 1;
+// bytes data_name = 1;
 inline void MsgRemoveDataReq::clear_dataname() {
   dataname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& MsgRemoveDataReq::dataname() const {
-  // @@protoc_insertion_point(field_get:KFMsg.MsgRemoveDataReq.dataname)
+inline const ::std::string& MsgRemoveDataReq::data_name() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgRemoveDataReq.data_name)
   return dataname_.GetNoArena();
 }
 inline void MsgRemoveDataReq::set_dataname(const ::std::string& value) {
   
   dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.MsgRemoveDataReq.dataname)
+  // @@protoc_insertion_point(field_set:KFMsg.MsgRemoveDataReq.data_name)
 }
 #if LANG_CXX11
 inline void MsgRemoveDataReq::set_dataname(::std::string&& value) {
   
   dataname_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgRemoveDataReq.dataname)
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgRemoveDataReq.data_name)
 }
 #endif
 inline void MsgRemoveDataReq::set_dataname(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.MsgRemoveDataReq.dataname)
+  // @@protoc_insertion_point(field_set_char:KFMsg.MsgRemoveDataReq.data_name)
 }
 inline void MsgRemoveDataReq::set_dataname(const void* value, size_t size) {
   
   dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgRemoveDataReq.dataname)
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgRemoveDataReq.data_name)
 }
 inline ::std::string* MsgRemoveDataReq::mutable_dataname() {
   
-  // @@protoc_insertion_point(field_mutable:KFMsg.MsgRemoveDataReq.dataname)
+  // @@protoc_insertion_point(field_mutable:KFMsg.MsgRemoveDataReq.data_name)
   return dataname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* MsgRemoveDataReq::release_dataname() {
-  // @@protoc_insertion_point(field_release:KFMsg.MsgRemoveDataReq.dataname)
+  // @@protoc_insertion_point(field_release:KFMsg.MsgRemoveDataReq.data_name)
   
   return dataname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void MsgRemoveDataReq::set_allocated_dataname(::std::string* dataname) {
-  if (dataname != NULL) {
+inline void MsgRemoveDataReq::set_allocated_dataname(::std::string* data_name) {
+  if (data_name != NULL) {
     
   } else {
     
   }
-  dataname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), dataname);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgRemoveDataReq.dataname)
+  dataname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), data_name);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgRemoveDataReq.data_name)
 }
 
 // uint64 key = 2;
@@ -9818,110 +9818,110 @@ inline void MsgRemoveDataReq::set_key(::google::protobuf::uint64 value) {
 
 // MsgUpdateIntReq
 
-// bytes parentname = 1;
+// bytes parent_name = 1;
 inline void MsgUpdateIntReq::clear_parentname() {
   parentname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& MsgUpdateIntReq::parentname() const {
-  // @@protoc_insertion_point(field_get:KFMsg.MsgUpdateIntReq.parentname)
+inline const ::std::string& MsgUpdateIntReq::parent_name() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgUpdateIntReq.parent_name)
   return parentname_.GetNoArena();
 }
 inline void MsgUpdateIntReq::set_parentname(const ::std::string& value) {
   
   parentname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.MsgUpdateIntReq.parentname)
+  // @@protoc_insertion_point(field_set:KFMsg.MsgUpdateIntReq.parent_name)
 }
 #if LANG_CXX11
 inline void MsgUpdateIntReq::set_parentname(::std::string&& value) {
   
   parentname_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgUpdateIntReq.parentname)
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgUpdateIntReq.parent_name)
 }
 #endif
 inline void MsgUpdateIntReq::set_parentname(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   parentname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.MsgUpdateIntReq.parentname)
+  // @@protoc_insertion_point(field_set_char:KFMsg.MsgUpdateIntReq.parent_name)
 }
 inline void MsgUpdateIntReq::set_parentname(const void* value, size_t size) {
   
   parentname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgUpdateIntReq.parentname)
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgUpdateIntReq.parent_name)
 }
 inline ::std::string* MsgUpdateIntReq::mutable_parentname() {
   
-  // @@protoc_insertion_point(field_mutable:KFMsg.MsgUpdateIntReq.parentname)
+  // @@protoc_insertion_point(field_mutable:KFMsg.MsgUpdateIntReq.parent_name)
   return parentname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* MsgUpdateIntReq::release_parentname() {
-  // @@protoc_insertion_point(field_release:KFMsg.MsgUpdateIntReq.parentname)
+  // @@protoc_insertion_point(field_release:KFMsg.MsgUpdateIntReq.parent_name)
   
   return parentname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void MsgUpdateIntReq::set_allocated_parentname(::std::string* parentname) {
-  if (parentname != NULL) {
+inline void MsgUpdateIntReq::set_allocated_parentname(::std::string* parent_name) {
+  if (parent_name != NULL) {
     
   } else {
     
   }
-  parentname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), parentname);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgUpdateIntReq.parentname)
+  parentname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), parent_name);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgUpdateIntReq.parent_name)
 }
 
-// bytes dataname = 2;
+// bytes data_name = 2;
 inline void MsgUpdateIntReq::clear_dataname() {
   dataname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& MsgUpdateIntReq::dataname() const {
-  // @@protoc_insertion_point(field_get:KFMsg.MsgUpdateIntReq.dataname)
+inline const ::std::string& MsgUpdateIntReq::data_name() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgUpdateIntReq.data_name)
   return dataname_.GetNoArena();
 }
 inline void MsgUpdateIntReq::set_dataname(const ::std::string& value) {
   
   dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.MsgUpdateIntReq.dataname)
+  // @@protoc_insertion_point(field_set:KFMsg.MsgUpdateIntReq.data_name)
 }
 #if LANG_CXX11
 inline void MsgUpdateIntReq::set_dataname(::std::string&& value) {
   
   dataname_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgUpdateIntReq.dataname)
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgUpdateIntReq.data_name)
 }
 #endif
 inline void MsgUpdateIntReq::set_dataname(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.MsgUpdateIntReq.dataname)
+  // @@protoc_insertion_point(field_set_char:KFMsg.MsgUpdateIntReq.data_name)
 }
 inline void MsgUpdateIntReq::set_dataname(const void* value, size_t size) {
   
   dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgUpdateIntReq.dataname)
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgUpdateIntReq.data_name)
 }
 inline ::std::string* MsgUpdateIntReq::mutable_dataname() {
   
-  // @@protoc_insertion_point(field_mutable:KFMsg.MsgUpdateIntReq.dataname)
+  // @@protoc_insertion_point(field_mutable:KFMsg.MsgUpdateIntReq.data_name)
   return dataname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* MsgUpdateIntReq::release_dataname() {
-  // @@protoc_insertion_point(field_release:KFMsg.MsgUpdateIntReq.dataname)
+  // @@protoc_insertion_point(field_release:KFMsg.MsgUpdateIntReq.data_name)
   
   return dataname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void MsgUpdateIntReq::set_allocated_dataname(::std::string* dataname) {
-  if (dataname != NULL) {
+inline void MsgUpdateIntReq::set_allocated_dataname(::std::string* data_name) {
+  if (data_name != NULL) {
     
   } else {
     
   }
-  dataname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), dataname);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgUpdateIntReq.dataname)
+  dataname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), data_name);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgUpdateIntReq.data_name)
 }
 
 // uint64 key = 3;
@@ -9970,110 +9970,110 @@ inline void MsgUpdateIntReq::set_operate(::google::protobuf::uint32 value) {
 
 // MsgUpdateStrReq
 
-// bytes parentname = 1;
+// bytes parent_name = 1;
 inline void MsgUpdateStrReq::clear_parentname() {
   parentname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& MsgUpdateStrReq::parentname() const {
-  // @@protoc_insertion_point(field_get:KFMsg.MsgUpdateStrReq.parentname)
+inline const ::std::string& MsgUpdateStrReq::parent_name() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgUpdateStrReq.parent_name)
   return parentname_.GetNoArena();
 }
 inline void MsgUpdateStrReq::set_parentname(const ::std::string& value) {
   
   parentname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.MsgUpdateStrReq.parentname)
+  // @@protoc_insertion_point(field_set:KFMsg.MsgUpdateStrReq.parent_name)
 }
 #if LANG_CXX11
 inline void MsgUpdateStrReq::set_parentname(::std::string&& value) {
   
   parentname_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgUpdateStrReq.parentname)
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgUpdateStrReq.parent_name)
 }
 #endif
 inline void MsgUpdateStrReq::set_parentname(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   parentname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.MsgUpdateStrReq.parentname)
+  // @@protoc_insertion_point(field_set_char:KFMsg.MsgUpdateStrReq.parent_name)
 }
 inline void MsgUpdateStrReq::set_parentname(const void* value, size_t size) {
   
   parentname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgUpdateStrReq.parentname)
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgUpdateStrReq.parent_name)
 }
 inline ::std::string* MsgUpdateStrReq::mutable_parentname() {
   
-  // @@protoc_insertion_point(field_mutable:KFMsg.MsgUpdateStrReq.parentname)
+  // @@protoc_insertion_point(field_mutable:KFMsg.MsgUpdateStrReq.parent_name)
   return parentname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* MsgUpdateStrReq::release_parentname() {
-  // @@protoc_insertion_point(field_release:KFMsg.MsgUpdateStrReq.parentname)
+  // @@protoc_insertion_point(field_release:KFMsg.MsgUpdateStrReq.parent_name)
   
   return parentname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void MsgUpdateStrReq::set_allocated_parentname(::std::string* parentname) {
-  if (parentname != NULL) {
+inline void MsgUpdateStrReq::set_allocated_parentname(::std::string* parent_name) {
+  if (parent_name != NULL) {
     
   } else {
     
   }
-  parentname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), parentname);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgUpdateStrReq.parentname)
+  parentname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), parent_name);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgUpdateStrReq.parent_name)
 }
 
-// bytes dataname = 2;
+// bytes data_name = 2;
 inline void MsgUpdateStrReq::clear_dataname() {
   dataname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& MsgUpdateStrReq::dataname() const {
-  // @@protoc_insertion_point(field_get:KFMsg.MsgUpdateStrReq.dataname)
+inline const ::std::string& MsgUpdateStrReq::data_name() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgUpdateStrReq.data_name)
   return dataname_.GetNoArena();
 }
 inline void MsgUpdateStrReq::set_dataname(const ::std::string& value) {
   
   dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.MsgUpdateStrReq.dataname)
+  // @@protoc_insertion_point(field_set:KFMsg.MsgUpdateStrReq.data_name)
 }
 #if LANG_CXX11
 inline void MsgUpdateStrReq::set_dataname(::std::string&& value) {
   
   dataname_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgUpdateStrReq.dataname)
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgUpdateStrReq.data_name)
 }
 #endif
 inline void MsgUpdateStrReq::set_dataname(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.MsgUpdateStrReq.dataname)
+  // @@protoc_insertion_point(field_set_char:KFMsg.MsgUpdateStrReq.data_name)
 }
 inline void MsgUpdateStrReq::set_dataname(const void* value, size_t size) {
   
   dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgUpdateStrReq.dataname)
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgUpdateStrReq.data_name)
 }
 inline ::std::string* MsgUpdateStrReq::mutable_dataname() {
   
-  // @@protoc_insertion_point(field_mutable:KFMsg.MsgUpdateStrReq.dataname)
+  // @@protoc_insertion_point(field_mutable:KFMsg.MsgUpdateStrReq.data_name)
   return dataname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* MsgUpdateStrReq::release_dataname() {
-  // @@protoc_insertion_point(field_release:KFMsg.MsgUpdateStrReq.dataname)
+  // @@protoc_insertion_point(field_release:KFMsg.MsgUpdateStrReq.data_name)
   
   return dataname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void MsgUpdateStrReq::set_allocated_dataname(::std::string* dataname) {
-  if (dataname != NULL) {
+inline void MsgUpdateStrReq::set_allocated_dataname(::std::string* data_name) {
+  if (data_name != NULL) {
     
   } else {
     
   }
-  dataname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), dataname);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgUpdateStrReq.dataname)
+  dataname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), data_name);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgUpdateStrReq.data_name)
 }
 
 // uint64 key = 3;
@@ -10147,114 +10147,114 @@ inline void MsgUpdateStrReq::set_allocated_value(::std::string* value) {
 
 // MsgRequestSyncReq
 
-// bytes dataname = 1;
+// bytes data_name = 1;
 inline void MsgRequestSyncReq::clear_dataname() {
   dataname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& MsgRequestSyncReq::dataname() const {
-  // @@protoc_insertion_point(field_get:KFMsg.MsgRequestSyncReq.dataname)
+inline const ::std::string& MsgRequestSyncReq::data_name() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgRequestSyncReq.data_name)
   return dataname_.GetNoArena();
 }
 inline void MsgRequestSyncReq::set_dataname(const ::std::string& value) {
   
   dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.MsgRequestSyncReq.dataname)
+  // @@protoc_insertion_point(field_set:KFMsg.MsgRequestSyncReq.data_name)
 }
 #if LANG_CXX11
 inline void MsgRequestSyncReq::set_dataname(::std::string&& value) {
   
   dataname_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgRequestSyncReq.dataname)
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgRequestSyncReq.data_name)
 }
 #endif
 inline void MsgRequestSyncReq::set_dataname(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.MsgRequestSyncReq.dataname)
+  // @@protoc_insertion_point(field_set_char:KFMsg.MsgRequestSyncReq.data_name)
 }
 inline void MsgRequestSyncReq::set_dataname(const void* value, size_t size) {
   
   dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgRequestSyncReq.dataname)
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgRequestSyncReq.data_name)
 }
 inline ::std::string* MsgRequestSyncReq::mutable_dataname() {
   
-  // @@protoc_insertion_point(field_mutable:KFMsg.MsgRequestSyncReq.dataname)
+  // @@protoc_insertion_point(field_mutable:KFMsg.MsgRequestSyncReq.data_name)
   return dataname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* MsgRequestSyncReq::release_dataname() {
-  // @@protoc_insertion_point(field_release:KFMsg.MsgRequestSyncReq.dataname)
+  // @@protoc_insertion_point(field_release:KFMsg.MsgRequestSyncReq.data_name)
   
   return dataname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void MsgRequestSyncReq::set_allocated_dataname(::std::string* dataname) {
-  if (dataname != NULL) {
+inline void MsgRequestSyncReq::set_allocated_dataname(::std::string* data_name) {
+  if (data_name != NULL) {
     
   } else {
     
   }
-  dataname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), dataname);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgRequestSyncReq.dataname)
+  dataname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), data_name);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgRequestSyncReq.data_name)
 }
 
 // -------------------------------------------------------------------
 
 // MsgCancelSyncReq
 
-// bytes dataname = 1;
+// bytes data_name = 1;
 inline void MsgCancelSyncReq::clear_dataname() {
   dataname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& MsgCancelSyncReq::dataname() const {
-  // @@protoc_insertion_point(field_get:KFMsg.MsgCancelSyncReq.dataname)
+inline const ::std::string& MsgCancelSyncReq::data_name() const {
+  // @@protoc_insertion_point(field_get:KFMsg.MsgCancelSyncReq.data_name)
   return dataname_.GetNoArena();
 }
 inline void MsgCancelSyncReq::set_dataname(const ::std::string& value) {
   
   dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:KFMsg.MsgCancelSyncReq.dataname)
+  // @@protoc_insertion_point(field_set:KFMsg.MsgCancelSyncReq.data_name)
 }
 #if LANG_CXX11
 inline void MsgCancelSyncReq::set_dataname(::std::string&& value) {
   
   dataname_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgCancelSyncReq.dataname)
+  // @@protoc_insertion_point(field_set_rvalue:KFMsg.MsgCancelSyncReq.data_name)
 }
 #endif
 inline void MsgCancelSyncReq::set_dataname(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:KFMsg.MsgCancelSyncReq.dataname)
+  // @@protoc_insertion_point(field_set_char:KFMsg.MsgCancelSyncReq.data_name)
 }
 inline void MsgCancelSyncReq::set_dataname(const void* value, size_t size) {
   
   dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgCancelSyncReq.dataname)
+  // @@protoc_insertion_point(field_set_pointer:KFMsg.MsgCancelSyncReq.data_name)
 }
 inline ::std::string* MsgCancelSyncReq::mutable_dataname() {
   
-  // @@protoc_insertion_point(field_mutable:KFMsg.MsgCancelSyncReq.dataname)
+  // @@protoc_insertion_point(field_mutable:KFMsg.MsgCancelSyncReq.data_name)
   return dataname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* MsgCancelSyncReq::release_dataname() {
-  // @@protoc_insertion_point(field_release:KFMsg.MsgCancelSyncReq.dataname)
+  // @@protoc_insertion_point(field_release:KFMsg.MsgCancelSyncReq.data_name)
   
   return dataname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void MsgCancelSyncReq::set_allocated_dataname(::std::string* dataname) {
-  if (dataname != NULL) {
+inline void MsgCancelSyncReq::set_allocated_dataname(::std::string* data_name) {
+  if (data_name != NULL) {
     
   } else {
     
   }
-  dataname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), dataname);
-  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgCancelSyncReq.dataname)
+  dataname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), data_name);
+  // @@protoc_insertion_point(field_set_allocated:KFMsg.MsgCancelSyncReq.data_name)
 }
 
 // -------------------------------------------------------------------

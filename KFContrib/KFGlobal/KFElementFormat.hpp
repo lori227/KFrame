@@ -9,7 +9,7 @@ namespace KFrame
     class KFElementFormat
     {
     public:
-        template< class T >
+        template<class T>
         void RegisterParseToElementStringFunction( T* object, const std::string & ( T::*handle )( const std::string& ) )
         {
             KFParseToElementStringFunction function = std::bind( handle, object, std::placeholders::_1 );
@@ -17,7 +17,7 @@ namespace KFrame
         }
         void BindParseToElementStringFunction( KFParseToElementStringFunction& function );
 
-        template< class T >
+        template<class T>
         void RegisterIntStringFunction( T* object, const std::string & ( T::*handle )( const std::string&, uint32, uint32 ) )
         {
             KFIntToElementStringFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
@@ -25,7 +25,7 @@ namespace KFrame
         }
         void BindIntToElementStringFunction( KFIntToElementStringFunction& function );
 
-        template< class T >
+        template<class T>
         void RegisterStrStringFunction( T* object, const std::string & ( T::*handle )( const std::string&, const std::string&, uint32 ) )
         {
             KFStrToElementStringFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
@@ -33,7 +33,7 @@ namespace KFrame
         }
         void BindStrToElementStringFunction( KFStrToElementStringFunction& function );
 
-        template< class T >
+        template<class T>
         void RegisterSettingStringFunction( T* object, const std::string & ( T::*handle )( const KFElementData& ) )
         {
             KFDataToElementStringFunction function = std::bind( handle, object, std::placeholders::_1 );
@@ -46,13 +46,13 @@ namespace KFrame
         const std::string& ParseString( const std::string& strparse );
 
         // 格式化成元数据结构
-        const std::string& FormatString( const std::string& dataname, uint32 datavalue, uint32 dataid = 0u );
-        const std::string& FormatString( const std::string& dataname, const std::string& datavalue, uint32 dataid = 0u );
+        const std::string& FormatString( const std::string& data_name, uint32 datavalue, uint32 dataid = 0u );
+        const std::string& FormatString( const std::string& data_name, const std::string& datavalue, uint32 dataid = 0u );
         const std::string& FormatString( const KFElementData& elementdata );
 
         // 格式化
-        bool FormatElement( KFElements& kfelements, const std::string& dataname, uint32 datavalue, uint32 dataid = 0u );
-        bool FormatElement( KFElements& kfelements, const std::string& dataname, const std::string& datavalue, uint32 dataid = 0u );
+        bool FormatElement( KFElements& kfelements, const std::string& data_name, uint32 datavalue, uint32 dataid = 0u );
+        bool FormatElement( KFElements& kfelements, const std::string& data_name, const std::string& datavalue, uint32 dataid = 0u );
         bool FormatElement( KFElements& kfelements, const KFElementData& elementdata );
         bool ParseElement( KFElements& kfelements, const char* file, uint64 id );
 

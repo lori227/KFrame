@@ -69,13 +69,13 @@ namespace KFrame
         return _basic_database_logic->SetPlayerName( zoneid, playerid, oldname, newname );
     }
 
-    uint64 KFBasicDatabaseModule::QueryBasicIntValue( uint64 playerid, const std::string& dataname )
+    uint64 KFBasicDatabaseModule::QueryBasicIntValue( uint64 playerid, const std::string& data_name )
     {
-        return _basic_database_logic->QueryBasicIntValue( playerid, dataname );
+        return _basic_database_logic->QueryBasicIntValue( playerid, data_name );
     }
 
-    std::string KFBasicDatabaseModule::QueryBasicStrValue( uint64 playerid, const std::string& dataname )
+    std::string KFBasicDatabaseModule::QueryBasicStrValue( uint64 playerid, const std::string& data_name )
     {
-        return _basic_database_logic->QueryBasicStrValue( playerid, dataname );
+        return _basic_database_logic->QueryBasicStrValue( playerid, data_name );
     }
 }

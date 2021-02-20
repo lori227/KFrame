@@ -15,7 +15,7 @@ namespace KFrame
         static uint32 GetThreadID();
 
         // 创建线程
-        template< class T >
+        template<class T>
         static uint32 CreateThread( T* object, void( T::*handle )(), const char* file, uint32 line )
         {
             KFThreadFunction function = std::bind( handle, object );

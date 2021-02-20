@@ -751,7 +751,7 @@ function PR_splitStringAndCommentTokens(chunks) {
 /** used by lexSource to split a non string, non comment token.
   * @private
   */
-function PR_splitNonStringNonCommentToken(s, outlist) {
+function PR_splitNonStringNonCommentToken(s, out_list) {
   var pos = 0;
   var state = 0;
   for (var i = 0; i <= s.length; i++) {
@@ -776,7 +776,7 @@ function PR_splitNonStringNonCommentToken(s, outlist) {
         }
         if (nstate && pos < i) {
           var t = s.substring(pos, i);
-          outlist.push(new PR_Token(t, PR_PLAIN));
+          out_list.push(new PR_Token(t, PR_PLAIN));
           pos = i;
         }
         break;
@@ -846,7 +846,7 @@ function PR_splitNonStringNonCommentToken(s, outlist) {
             style = PR_PLAIN;
           }
           pos = i;
-          outlist.push(new PR_Token(t, style));
+          out_list.push(new PR_Token(t, style));
         }
 
         state = 0;

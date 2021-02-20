@@ -260,15 +260,15 @@ namespace KFrame
         return _result;
     }
 
-    void KFXmlNode::GetKeyList( StringList& outlist )
+    void KFXmlNode::GetKeyList( StringList& out_list )
     {
-        outlist.clear();
+        out_list.clear();
 
         auto xmlnode = reinterpret_cast< rapidxml::xml_node<>* >( _node );
         auto attribute = xmlnode->first_attribute();
         while ( attribute != nullptr )
         {
-            outlist.push_back( attribute->name() );
+            out_list.push_back( attribute->name() );
             attribute = attribute->next_attribute();
         }
     }

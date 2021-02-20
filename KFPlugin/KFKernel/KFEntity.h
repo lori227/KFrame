@@ -22,81 +22,81 @@ namespace KFrame
         virtual void SetNew( bool isnew ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 创建属性
-        virtual KFData* CreateData( KFData* kfdata ) = 0;
-        virtual KFData* CreateData( const std::string& dataname ) = 0;
+        virtual DataPtr CreateData( DataPtr kfdata ) = 0;
+        virtual DataPtr CreateData( const std::string& data_name ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 初始化数组( kfarray )
-        virtual void InitArray( KFData* kfarray, uint32 size ) = 0;
+        virtual void InitArray( DataPtr kfarray, uint32 size ) = 0;
 
         // 添加数组元素( kfarray )
-        virtual KFData* AddArray( KFData* kfarray, int64 value ) = 0;
+        virtual DataPtr AddArray( DataPtr kfarray, int64 value ) = 0;
 
         // array 添加数组
-        virtual void AddArray( KFData* kfdata, const UInt32Set& inlist ) = 0;
-        virtual void AddArray( KFData* kfdata, const UInt32List& inlist ) = 0;
-        virtual void AddArray( KFData* kfdata, const UInt32Vector& inlist ) = 0;
+        virtual void AddArray( DataPtr kfdata, const UInt32Set& inlist ) = 0;
+        virtual void AddArray( DataPtr kfdata, const UInt32List& inlist ) = 0;
+        virtual void AddArray( DataPtr kfdata, const UInt32Vector& inlist ) = 0;
 
-        virtual void AddObjectArray( KFData* kfdata, const std::string& dataname, const UInt32List& inlist ) = 0;
-        virtual void AddObjectArray( KFData* kfdata, const std::string& dataname, const UInt32Vector& inlist ) = 0;
-        virtual void AddObjectArray( KFData* kfdata, const std::string& dataname, const UInt32Set& inlist ) = 0;
+        virtual void AddObjectArray( DataPtr kfdata, const std::string& data_name, const UInt32List& inlist ) = 0;
+        virtual void AddObjectArray( DataPtr kfdata, const std::string& data_name, const UInt32Vector& inlist ) = 0;
+        virtual void AddObjectArray( DataPtr kfdata, const std::string& data_name, const UInt32Set& inlist ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // record 添加属性
-        virtual bool AddRecord( KFData* kfparent, KFData* kfdata, bool callback = true ) = 0;
-        virtual bool AddRecord( KFData* kfparent, uint64 key, KFData* kfdata, bool callback = true ) = 0;
-        virtual bool AddRecord( const std::string& parentname, uint64 key, KFData* kfdata, bool callback = true ) = 0;
+        virtual bool AddRecord( DataPtr kfparent, DataPtr kfdata, bool callback = true ) = 0;
+        virtual bool AddRecord( DataPtr kfparent, uint64 key, DataPtr kfdata, bool callback = true ) = 0;
+        virtual bool AddRecord( const std::string& parent_name, uint64 key, DataPtr kfdata, bool callback = true ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 删除所有集合属性
-        virtual bool ClearRecord( const std::string& dataname, bool callback = true ) = 0;
-        virtual bool ClearRecord( KFData* kfparent, bool callback = true ) = 0;
+        virtual bool ClearRecord( const std::string& data_name, bool callback = true ) = 0;
+        virtual bool ClearRecord( DataPtr kfparent, bool callback = true ) = 0;
 
         // 删除集合属性
-        virtual bool RemoveRecord( const std::string& dataname, uint64 key, bool callback = true ) = 0;
-        virtual bool RemoveRecord( KFData* kfparent, uint64 key, bool callback = true ) = 0;
+        virtual bool RemoveRecord( const std::string& data_name, uint64 key, bool callback = true ) = 0;
+        virtual bool RemoveRecord( DataPtr kfparent, uint64 key, bool callback = true ) = 0;
 
         // 删除对象属性
-        virtual bool RemoveObject( KFData* kfparent, const std::string& dataname, bool callback = true ) = 0;
+        virtual bool RemoveObject( DataPtr kfparent, const std::string& data_name, bool callback = true ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 移动属性
-        virtual KFData* MoveRecord( KFData* kfparent, uint64 key, bool callback = false ) = 0;
+        virtual DataPtr MoveRecord( DataPtr kfparent, uint64 key, bool callback = false ) = 0;
 
-        virtual KFData* MoveRecordToRecord( const std::string& sourcename, uint64 key, const std::string& targetname ) = 0;
-        virtual KFData* MoveRecordToRecord( KFData* sourcedata, uint64 key, KFData* targetdata ) = 0;
+        virtual DataPtr MoveRecordToRecord( const std::string& sourcename, uint64 key, const std::string& targetname ) = 0;
+        virtual DataPtr MoveRecordToRecord( DataPtr sourcedata, uint64 key, DataPtr targetdata ) = 0;
 
-        virtual KFData* MoveRecordToObject( KFData* sourcedata, uint64 key, KFData* targetdata, const std::string& dataname ) = 0;
+        virtual DataPtr MoveRecordToObject( DataPtr sourcedata, uint64 key, DataPtr targetdata, const std::string& data_name ) = 0;
 
-        virtual KFData* MoveObjectToRecord( KFData* sourcedata, const std::string& dataname, const std::string& targetname ) = 0;
-        virtual KFData* MoveObjectToRecord( KFData* sourcedata, const std::string& dataname, KFData* targetdata ) = 0;
+        virtual DataPtr MoveObjectToRecord( DataPtr sourcedata, const std::string& data_name, const std::string& targetname ) = 0;
+        virtual DataPtr MoveObjectToRecord( DataPtr sourcedata, const std::string& data_name, DataPtr targetdata ) = 0;
 
-        virtual KFData* MoveObjectToObject( KFData* sourcedata, const std::string& sourcename, KFData* targetdata, const std::string& targetname ) = 0;
+        virtual DataPtr MoveObjectToObject( DataPtr sourcedata, const std::string& sourcename, DataPtr targetdata, const std::string& targetname ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 更新属性
         // 更新1层属性 如:money 直接属于player下的属性
-        virtual void UpdateData( KFData* kfdata, const std::string& value, bool callback = true ) = 0;
-        virtual void UpdateData( const std::string& dataname, const std::string& value, bool callback = true ) = 0;
-        virtual void UpdateObject( KFData* kfdata, const std::string& dataname, const std::string& value, bool callback = true ) = 0;
-        virtual void UpdateObject( const std::string& parentname, const std::string& dataname, const std::string& value, bool callback = true ) = 0;
-        virtual void UpdateRecord( const std::string& parentname, uint64 key, const std::string& dataname, const std::string& value, bool callback = true ) = 0;
+        virtual void UpdateData( DataPtr kfdata, const std::string& value, bool callback = true ) = 0;
+        virtual void UpdateData( const std::string& data_name, const std::string& value, bool callback = true ) = 0;
+        virtual void UpdateObject( DataPtr kfdata, const std::string& data_name, const std::string& value, bool callback = true ) = 0;
+        virtual void UpdateObject( const std::string& parent_name, const std::string& data_name, const std::string& value, bool callback = true ) = 0;
+        virtual void UpdateRecord( const std::string& parent_name, uint64 key, const std::string& data_name, const std::string& value, bool callback = true ) = 0;
 
 
-        virtual uint64 UpdateData( KFData* kfdata, uint32 operate, uint64 value, bool callback = true ) = 0;
-        virtual uint64 UpdateData( const std::string& dataname, uint32 operate, uint64 value, bool callback = true ) = 0;
-        virtual uint64 UpdateData( uint64 key, KFData* kfdata, uint32 operate, uint64 value, bool callback = true ) = 0;
+        virtual uint64 UpdateData( DataPtr kfdata, uint32 operate, uint64 value, bool callback = true ) = 0;
+        virtual uint64 UpdateData( const std::string& data_name, uint32 operate, uint64 value, bool callback = true ) = 0;
+        virtual uint64 UpdateData( uint64 key, DataPtr kfdata, uint32 operate, uint64 value, bool callback = true ) = 0;
 
-        virtual uint64 UpdateObject( KFData* kfparent, const std::string& dataname, uint32 operate, uint64 value, bool callback = true ) = 0;
-        virtual uint64 UpdateObject( const std::string& parentname, const std::string& dataname, uint32 operate, uint64 value, bool callback = true ) = 0;
+        virtual uint64 UpdateObject( DataPtr kfparent, const std::string& data_name, uint32 operate, uint64 value, bool callback = true ) = 0;
+        virtual uint64 UpdateObject( const std::string& parent_name, const std::string& data_name, uint32 operate, uint64 value, bool callback = true ) = 0;
 
         // 更新3层属性 如: hero=>id:1=>level 属于player下的hero集合, id=1的英雄的level属性
-        virtual uint64 UpdateRecord( const std::string& parentname, uint64 key, const std::string& dataname, uint32 operate, uint64 value, bool callback = true ) = 0;
-        virtual uint64 UpdateRecord( KFData* kfparent, uint64 key, const std::string& dataname, uint32 operate, uint64 value, bool callback = true ) = 0;
+        virtual uint64 UpdateRecord( const std::string& parent_name, uint64 key, const std::string& data_name, uint32 operate, uint64 value, bool callback = true ) = 0;
+        virtual uint64 UpdateRecord( DataPtr kfparent, uint64 key, const std::string& data_name, uint32 operate, uint64 value, bool callback = true ) = 0;
 
         // 更新array属性kfdata的index值
-        virtual uint64 UpdateArray( KFData* kfarray, uint64 index, uint32 operate, uint64 value, bool callback = true ) = 0;
-        virtual uint64 UpdateArray( const std::string& dataname, uint64 index, uint32 operate, uint64 value, bool callback = true ) = 0;
+        virtual uint64 UpdateArray( DataPtr kfarray, uint64 index, uint32 operate, uint64 value, bool callback = true ) = 0;
+        virtual uint64 UpdateArray( const std::string& data_name, uint64 index, uint32 operate, uint64 value, bool callback = true ) = 0;
 
-        virtual uint64 UpdateObjectArray( uint64 key, KFData* kfarray, uint64 index, uint32 operate, uint64 value, bool callback = true ) = 0;
+        virtual uint64 UpdateObjectArray( uint64 key, DataPtr kfarray, uint64 index, uint32 operate, uint64 value, bool callback = true ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 判断是否能够添加元数据
@@ -109,14 +109,14 @@ namespace KFrame
         virtual const std::string& RemoveElement( const KFElements* kfelements, double multiple, const std::string& modulename, uint64 moduleid, const char* function, uint32 line ) = 0;
 
         // 设置element到kfdata对象
-        virtual void UpdateElementToData( KFData* kfdata, KFElementObject* kfelement, double multiple ) = 0;
-        virtual void SetElementToData( KFData* kfdata, KFElementObject* kfelement, double multiple ) = 0;
+        virtual void UpdateElementToData( DataPtr kfdata, KFElementObject* kfelement, double multiple ) = 0;
+        virtual void SetElementToData( DataPtr kfdata, KFElementObject* kfelement, double multiple ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 显示奖励接口相关
         virtual void SetDataShowModule( const std::string& modulename, uint64 moduleid ) = 0;
 
         virtual void AddDataToShow( const std::string& name, uint64 value, bool independ = true ) = 0;
-        virtual void AddDataToShow( const std::string& modulename, uint64 moduleid, KFData* kfdata, bool independ = true ) = 0;
+        virtual void AddDataToShow( const std::string& modulename, uint64 moduleid, DataPtr kfdata, bool independ = true ) = 0;
         virtual void AddDataToShow( const std::string& modulename, uint64 moduleid, const std::string& name, uint64 value, bool independ = true ) = 0;
 
         virtual void AddDataToShow( const std::string& name, uint64 value, StringUInt64& values, bool independ = true ) = 0;
@@ -124,16 +124,16 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 同步更新数据
-        virtual void SyncUpdateDataToClient( KFData* kfdata, uint64 key ) = 0;
+        virtual void SyncUpdateDataToClient( DataPtr kfdata, uint64 key ) = 0;
 
         // 同步添加数据
-        virtual void SyncAddDataToClient( KFData* kfdata, uint64 key ) = 0;
+        virtual void SyncAddDataToClient( DataPtr kfdata, uint64 key ) = 0;
 
         // 同步删除数据
-        virtual void SyncRemoveDataToClient( KFData* kfdata, uint64 key ) = 0;
+        virtual void SyncRemoveDataToClient( DataPtr kfdata, uint64 key ) = 0;
 
         // 同步添加record数据
-        virtual void SynAddRecordDataToClient( KFData* kfdata ) = 0;
+        virtual void SynAddRecordDataToClient( DataPtr kfdata ) = 0;
 
         // 同步数据的顺序
         virtual void SyncDataToClient() = 0;
@@ -141,9 +141,9 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 同步来自服务器的数据 更新, 添加, 删除
-        virtual void SyncUpdateDataFromServer( KFData* kfobject, const KFMsg::PBObject* pbobject ) = 0;
-        virtual void SyncAddDataFromServer( KFData* kfobject, const KFMsg::PBObject* pbobject ) = 0;
-        virtual void SyncRemoveDataFromServer( KFData* kfobject, const KFMsg::PBObject* pbobject ) = 0;
+        virtual void SyncUpdateDataFromServer( DataPtr kfobject, const KFMsg::PBObject* pbobject ) = 0;
+        virtual void SyncAddDataFromServer( DataPtr kfobject, const KFMsg::PBObject* pbobject ) = 0;
+        virtual void SyncRemoveDataFromServer( DataPtr kfobject, const KFMsg::PBObject* pbobject ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

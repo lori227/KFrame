@@ -83,7 +83,7 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 注册连接回调
-        template< class T >
+        template<class T>
         void RegisterConnectionFunction( T* object, void ( T::*handle )( uint64 ) )
         {
             KFClusterConnectionFunction function = std::bind( handle, object, std::placeholders::_1 );
@@ -91,7 +91,7 @@ namespace KFrame
         }
 
         // 取消注册
-        template< class T >
+        template<class T>
         void UnRegisterConnectionFunction( T* object )
         {
             RemoveConnectionFunction( typeid( T ).name() );
@@ -99,7 +99,7 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 注册转发消息
-        template< class T >
+        template<class T>
         void RegisterTranspondFunction( T* object, bool ( T::*handle )( const Route& route, uint32 msgid, const char* data, uint32 length ) )
         {
             KFForwardFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
@@ -107,7 +107,7 @@ namespace KFrame
         }
 
         // 卸载
-        template< class T >
+        template<class T>
         void UnRegisterTranspondFunction( T* object )
         {
             KFForwardFunction function = nullptr;

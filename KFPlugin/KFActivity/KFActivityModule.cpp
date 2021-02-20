@@ -91,7 +91,7 @@ namespace KFrame
         kfdata->Operate<uint64>( KFEnum::Set, activitysetting->_max_value );
     }
 
-    void KFActivityModule::UpdateDataActivityValue( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 newvalue )
+    void KFActivityModule::UpdateDataActivityValue( KFEntity* player, uint64 key, DataPtr kfdata, uint32 operate, uint64 value, uint64 newvalue )
     {
         if ( value == _invalid_int )
         {
@@ -165,7 +165,7 @@ namespace KFrame
         UpdateDataActivityValue( player, key, kfdata, operate, value, newvalue );
     }
 
-    void KFActivityModule::UpdateObjectActivityValue( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate )
+    void KFActivityModule::UpdateObjectActivityValue( KFEntity* player, uint64 key, DataPtr kfdata, uint32 operate )
     {
         auto child = kfdata->First();
         while ( child != nullptr )

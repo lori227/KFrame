@@ -12,14 +12,14 @@ namespace KFrame
         KFVector3D();
         virtual ~KFVector3D() = default;
 
-        virtual void Reset( bool isdelete = true );
+        virtual void Reset();
 
         // 是否有效
         virtual bool IsValid();
 
         // 保存 赋值
-        virtual void CopyFrom( KFData* kfother );
-        virtual void SaveTo( KFData* kfother );
+        virtual void CopyFrom( DataPtr& other );
+        virtual void SaveTo( DataPtr& other );
 
         // 格式化成字串
         virtual std::string ToString();

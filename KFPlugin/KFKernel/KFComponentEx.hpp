@@ -10,7 +10,7 @@ namespace KFrame
     typedef std::pair< std::string, std::string > DataKeyType;
     typedef std::pair< std::string, uint64 > RecordKeyType;
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
-    template< class T >
+    template<class T>
     class KFDataFunction
     {
     public:
@@ -72,36 +72,36 @@ namespace KFrame
         virtual KFEntity* NextEntity();
 
         // 获得属性列表
-        virtual StringVector& GetDataList( const std::string& dataname );
+        virtual StringVector& GetDataList( const std::string& data_name );
 
         // 获得类配置
         virtual const KFClassSetting* FindClassSetting();
-        virtual const KFClassSetting* FindClassSetting( const std::string& dataname );
+        virtual const KFClassSetting* FindClassSetting( const std::string& data_name );
 
         // 获得属性配置
         virtual const KFDataSetting* FindDataSetting();
-        virtual const KFDataSetting* FindDataSetting( const std::string& dataname );
-        virtual const KFDataSetting* FindDataSetting( const std::string& parentname, const std::string& dataname );
+        virtual const KFDataSetting* FindDataSetting( const std::string& data_name );
+        virtual const KFDataSetting* FindDataSetting( const std::string& parent_name, const std::string& data_name );
         //////////////////////////////////////////////////////////////////////////////////////
-        virtual void SetMaxValue( const std::string& dataname, uint32 value );
-        virtual void SetMaxValue( const std::string& parentname, const std::string& dataname, uint32 value );
+        virtual void SetMaxValue( const std::string& data_name, uint32 value );
+        virtual void SetMaxValue( const std::string& parent_name, const std::string& data_name, uint32 value );
         //////////////////////////////////////////////////////////////////////////////////////
 
         // 启动保存定时器
-        void StartSaveEntityTimer( KFEntity* kfentity, KFData* kfdata );
+        void StartSaveEntityTimer( KFEntity* kfentity, DataPtr kfdata );
 
         // 停止保存定时器
         void DeleteSaveEntity( KFEntity* kfentity );
         //////////////////////////////////////////////////////////////////////////////////////
         // 属性更新回调函数
-        void UpdateDataCallBack( KFEntity* kfentity, KFData* kfdata, const std::string& oldvalue, const std::string& newvalue, bool callback );
-        void UpdateDataCallBack( KFEntity* kfentity, uint64 key, KFData* kfdata, uint64 index, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue, bool callback );
+        void UpdateDataCallBack( KFEntity* kfentity, DataPtr kfdata, const std::string& oldvalue, const std::string& newvalue, bool callback );
+        void UpdateDataCallBack( KFEntity* kfentity, uint64 key, DataPtr kfdata, uint64 index, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue, bool callback );
 
         // 属性添加回调函数
-        void AddDataCallBack( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata, bool callback );
+        void AddDataCallBack( KFEntity* kfentity, DataPtr kfparent, uint64 key, DataPtr kfdata, bool callback );
 
         // 属性删除回调函数
-        void RemoveDataCallBack( KFEntity* kfentity, KFData* kfparent, uint64 key, KFData* kfdata, bool callback );
+        void RemoveDataCallBack( KFEntity* kfentity, DataPtr kfparent, uint64 key, DataPtr kfdata, bool callback );
 
         // 添加更新的对象
         void AddSyncEntity( KFEntity* entity );
@@ -112,43 +112,43 @@ namespace KFrame
         bool CallElementResultFunction( KFEntity* kfentity, const KFElementResult* kfresult );
         ///////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////
-        virtual void BindCheckAddElementFunction( const std::string& dataname, KFCheckAddElementFunction& function );
-        virtual void UnRegisterCheckAddElementFunction( const std::string& dataname );
+        virtual void BindCheckAddElementFunction( const std::string& data_name, KFCheckAddElementFunction& function );
+        virtual void UnRegisterCheckAddElementFunction( const std::string& data_name );
 
-        virtual void BindAddElementFunction( const std::string& dataname, KFAddElementFunction& function );
-        virtual void UnRegisterAddElementFunction( const std::string& dataname );
+        virtual void BindAddElementFunction( const std::string& data_name, KFAddElementFunction& function );
+        virtual void UnRegisterAddElementFunction( const std::string& data_name );
 
-        virtual void BindCheckRemoveElementFunction( const std::string& dataname, KFCheckRemoveElementFunction& function );
-        virtual void UnRegisterCheckRemoveElementFunction( const std::string& dataname );
+        virtual void BindCheckRemoveElementFunction( const std::string& data_name, KFCheckRemoveElementFunction& function );
+        virtual void UnRegisterCheckRemoveElementFunction( const std::string& data_name );
 
-        virtual void BindRemoveElementFunction( const std::string& dataname, KFRemoveElementFunction& function );
-        virtual void UnRegisterRemoveElementFunction( const std::string& dataname );
+        virtual void BindRemoveElementFunction( const std::string& data_name, KFRemoveElementFunction& function );
+        virtual void UnRegisterRemoveElementFunction( const std::string& data_name );
         ///////////////////////////////////////////////////////////////////////////////////////////////
-        virtual void BindAddDataLogic( KFModule* module, const std::string& dataname, KFAddDataFunction& function );
-        virtual void UnBindAddDataLogic( KFModule* module, const std::string& dataname );
+        virtual void BindAddDataLogic( KFModule* module, const std::string& data_name, KFAddDataFunction& function );
+        virtual void UnBindAddDataLogic( KFModule* module, const std::string& data_name );
 
         virtual void BindAddDataModule( KFModule* module, KFAddDataFunction& function );
         virtual void UnBindAddDataModule( KFModule* module );
-        virtual void BindAddDataFunction( KFModule* module, const std::string& dataname, uint64 key, KFAddDataFunction& function );
-        virtual void UnBindAddDataFunction( KFModule* module, const std::string& dataname, uint64 key );
+        virtual void BindAddDataFunction( KFModule* module, const std::string& data_name, uint64 key, KFAddDataFunction& function );
+        virtual void UnBindAddDataFunction( KFModule* module, const std::string& data_name, uint64 key );
 
-        virtual void BindRemoveDataLogic( KFModule* module, const std::string& dataname, KFRemoveDataFunction& function );
-        virtual void UnBindRemoveDataLogic( KFModule* module, const std::string& dataname );
+        virtual void BindRemoveDataLogic( KFModule* module, const std::string& data_name, KFRemoveDataFunction& function );
+        virtual void UnBindRemoveDataLogic( KFModule* module, const std::string& data_name );
 
         virtual void BindRemoveDataModule( KFModule* module, KFRemoveDataFunction& function );
         virtual void UnBindRemoveDataModule( KFModule* module );
-        virtual void BindRemoveDataFunction( KFModule* module, const std::string& dataname, uint64 key, KFRemoveDataFunction& function );
-        virtual void UnBindRemoveDataFunction( KFModule* module, const std::string& dataname, uint64 key );
+        virtual void BindRemoveDataFunction( KFModule* module, const std::string& data_name, uint64 key, KFRemoveDataFunction& function );
+        virtual void UnBindRemoveDataFunction( KFModule* module, const std::string& data_name, uint64 key );
 
         virtual void BindUpdateDataModule( KFModule* module, KFUpdateDataFunction& function );
         virtual void UnBindUpdateDataModule( KFModule* module );
-        virtual void BindUpdateDataFunction( KFModule* module, const std::string& parentname, const std::string& dataname, KFUpdateDataFunction& function );
-        virtual void UnBindUpdateDataFunction( KFModule* module, const std::string& parentname, const std::string& dataname );
+        virtual void BindUpdateDataFunction( KFModule* module, const std::string& parent_name, const std::string& data_name, KFUpdateDataFunction& function );
+        virtual void UnBindUpdateDataFunction( KFModule* module, const std::string& parent_name, const std::string& data_name );
 
         virtual void BindUpdateStringModule( KFModule* module, KFUpdateStringFunction& function );
         virtual void UnBindUpdateStringModule( KFModule* module );
-        virtual void BindUpdateStringFunction( KFModule* module, const std::string& parentname, const std::string& dataname, KFUpdateStringFunction& function );
-        virtual void UnBindUpdateStringFunction( KFModule* module, const std::string& parentname, const std::string& dataname );
+        virtual void BindUpdateStringFunction( KFModule* module, const std::string& parent_name, const std::string& data_name, KFUpdateStringFunction& function );
+        virtual void UnBindUpdateStringFunction( KFModule* module, const std::string& parent_name, const std::string& data_name );
         /////////////////////////////////////////////////////////////////////////////////////////////////////
         virtual void BindEntityInitializeFunction( KFModule* module, KFEntityFunction& function );
         virtual void UnRegisterEntityInitializeFunction();
@@ -209,8 +209,8 @@ namespace KFrame
         void DeleteEntity( KFEntity* kfentity );
 
         // 格式化数据Key
-        const DataKeyType& FormatDataKey( KFData* kfdata );
-        const DataKeyType& FormatDataKey( const std::string& parentname, const std::string& dataname );
+        const DataKeyType& FormatDataKey( DataPtr kfdata );
+        const DataKeyType& FormatDataKey( const std::string& parent_name, const std::string& data_name );
     public:
         // 对象实例列表
         KFHashMap< uint64, KFEntity > _entitys;

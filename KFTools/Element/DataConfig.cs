@@ -104,7 +104,7 @@ public class DataConfig
             foreach (XElement item in enumerable)
             {
                 var classname = ReadXmlData(item, "Id");
-                var dataname = ReadXmlData(item, "Name");
+                var data_name = ReadXmlData(item, "Name");
                 var datatext = ReadXmlData(item,"Element");
                 var containclass = ReadXmlData(item, "ContainClass");
                 if (datatext != "" && classname != "Player")
@@ -112,7 +112,7 @@ public class DataConfig
                     DataSetting datastting = null;
                     FindDataSetting(ref classlist, classname, out datastting);
                     datastting._text = datatext;
-                    datastting.AddDataValue(datatext, dataname, "0", containclass);
+                    datastting.AddDataValue(datatext, data_name, "0", containclass);
                 }
             }
 
@@ -120,13 +120,13 @@ public class DataConfig
             foreach (XElement item in enumerable)
             {
                 var classname = ReadXmlData(item, "Id");
-                var dataname = ReadXmlData(item, "Name");
+                var data_name = ReadXmlData(item, "Name");
                 var datatext = ReadXmlData(item, "Element");
 
                 if (datatext != "" && classname == "Player")
                 {
                     DataSetting datasetting = new DataSetting();
-                    datasetting._name = dataname;
+                    datasetting._name = data_name;
                     datasetting._text = datatext;
 
                     {
@@ -164,7 +164,7 @@ public class DataConfig
                         else
                         {
                             datasetting._isobject = false;
-                            datasetting.AddDataValue(datatext, dataname, "0", containclass);
+                            datasetting.AddDataValue(datatext, data_name, "0", containclass);
                         }
                     }
 

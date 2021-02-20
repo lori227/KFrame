@@ -57,7 +57,7 @@ namespace KFrame
         _kf_route->RepeatToEntity( 0u, serverid, playerid, KFMsg::MSG_RESULT_DISPLAY, &display );
     }
 
-    void KFDisplayModule::SendToPlayer( KFData* kfbasic, uint32 result, StringList& params )
+    void KFDisplayModule::SendToPlayer( DataPtr kfbasic, uint32 result, StringList& params )
     {
         if ( _kf_game == nullptr )
         {

@@ -53,8 +53,8 @@ namespace KFrame
 
         // 更新公共数据
         void UpdateBasicIntValueToBasic( uint64 playerid, StringUInt64& values );
-        void UpdateBasicIntValueToBasic( uint64 playerid, const std::string& dataname, uint64 datavalue );
-        void UpdateBasicStrValueToBasic( uint64 playerid, const std::string& dataname, const std::string& datavalue );
+        void UpdateBasicIntValueToBasic( uint64 playerid, const std::string& data_name, uint64 datavalue );
+        void UpdateBasicStrValueToBasic( uint64 playerid, const std::string& data_name, const std::string& datavalue );
 
         // 检查名字的有效性
         uint32 CheckNameValid( const std::string& name, uint32 maxlength );

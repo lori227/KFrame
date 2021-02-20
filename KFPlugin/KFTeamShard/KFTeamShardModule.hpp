@@ -44,14 +44,14 @@ namespace KFrame
         void ChangeTeamCaptain( KFEntity* kfteam, uint64 captainid );
 
         // 设置队长信息
-        void SetTeamCaptain( KFEntity* kfteam, KFData* kfmember, bool update );
+        void SetTeamCaptain( KFEntity* kfteam, DataPtr kfmember, bool update );
 
         // 发送消息到队伍
         void SendMessageToTeam( KFEntity* kfteam, uint32 msgid, ::google::protobuf::Message* message );
-        void SendMessageToMember( KFData* kfmember, uint32 msgid, ::google::protobuf::Message* message );
+        void SendMessageToMember( DataPtr kfmember, uint32 msgid, ::google::protobuf::Message* message );
 
         // 通知加入队伍
-        void SendJoinTeamToMember( KFEntity* kfteam, KFData* kfmember );
+        void SendJoinTeamToMember( KFEntity* kfteam, DataPtr kfmember );
 
         // 同步更新属性到客户端
         void SendTeamUpdateDataToMember( KFEntity* kfteam, KFMsg::PBObject& pbobject );

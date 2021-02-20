@@ -11,7 +11,7 @@ namespace KFrame
     {
     public:
         // 注册循环定时器
-        template< class T >
+        template<class T>
         void RegisterLoopTimer( uint64 objectid, uint64 subid, uint32 intervaltime, uint32 delaytime, T* module, void ( T::*handle )( uint64, uint64 ) )
         {
             KFTimerFunction function = std::bind( handle, module, std::placeholders::_1, std::placeholders::_2 );
@@ -19,7 +19,7 @@ namespace KFrame
         }
 
         // 注册指定次数定时器
-        template< class T >
+        template<class T>
         void RegisterLimitTimer( uint64 objectid, uint64 subid, uint32 intervaltime, uint32 count, T* module, void ( T::*handle )( uint64, uint64 ) )
         {
             KFTimerFunction function = std::bind( handle, module, std::placeholders::_1, std::placeholders::_2 );
@@ -27,7 +27,7 @@ namespace KFrame
         }
 
         // 注册延迟定时器( 一定时间内只执行一次 )
-        template< class T >
+        template<class T>
         void RegisterDelayTimer( uint64 objectid, uint64 subid, uint32 intervaltime, T* module, void ( T::*handle )( uint64, uint64 ) )
         {
             KFTimerFunction function = std::bind( handle, module, std::placeholders::_1, std::placeholders::_2 );
@@ -35,7 +35,7 @@ namespace KFrame
         }
 
         // 删除定时器
-        template< class T >
+        template<class T>
         void UnRegisterTimer( T* module, uint64 objectid, uint64 subid )
         {
             RemoveTimer( module, objectid, subid );

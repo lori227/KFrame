@@ -91,10 +91,10 @@ namespace KFrame
         void SendQueryMailMessage( KFEntity* player );
 
         // 判断邮件过期
-        bool CheckMailTimeOut( KFData* kfmail );
+        bool CheckMailTimeOut( DataPtr kfmail );
 
         // 更新状态到邮件
-        void UpdateMailStatusToShard( KFEntity* player, KFData* kfmail, uint32 status );
+        void UpdateMailStatusToShard( KFEntity* player, DataPtr kfmail, uint32 status );
 
         // 领取邮件奖励
         void ReceiveMailReward( KFEntity* player, uint64 id );

@@ -45,35 +45,35 @@ namespace KFrame
 
     public:
         // 绑定消息事件
-        template< class T >
+        template<class T>
         void BindNetFunction( T* object, void ( T::*handle )( const Route& route, uint32 msgid, const char* data, uint32 length ) )
         {
             _net_function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
         }
 
         // 绑定连接事件
-        template< class T >
+        template<class T>
         void BindConnectFunction( T* object, void ( T::*handle )( const KFNetData* ) )
         {
             _client_connect_function = std::bind( handle, object, std::placeholders::_1 );
         }
 
         // 绑定断开事件
-        template< class T >
+        template<class T>
         void BindDisconnectFunction( T* object, void ( T::*handle )( const KFNetData* ) )
         {
             _client_disconnect_function = std::bind( handle, object, std::placeholders::_1 );
         }
 
         // 绑定关闭时间
-        template< class T >
+        template<class T>
         void BindShutdownFunction( T* object, void ( T::*handle )( const KFNetData* ) )
         {
             _client_shutdown_function = std::bind( handle, object, std::placeholders::_1 );
         }
 
         // 绑定关闭时间
-        template< class T >
+        template<class T>
         void BindFailedFunction( T* object, void ( T::*handle )( const KFNetData* ) )
         {
             _client_failed_function = std::bind( handle, object, std::placeholders::_1 );

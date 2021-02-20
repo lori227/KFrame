@@ -72,7 +72,7 @@ namespace KFrame
         virtual bool BindObjectId( uint64 handleid, uint64 objectid );
 
         // 连接列表
-        virtual void GetHandleList( NetDataList& outlist );
+        virtual void GetHandleList( NetDataList& out_list );
         /////////////////////////////////////////////////////////////////////////
 
     private:

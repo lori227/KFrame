@@ -32,7 +32,7 @@ namespace KFrame
         virtual void BeforeRun();
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
-        template< class T >
+        template<class T>
         void RegisterChannel( uint32 channel, T* object )
         {
             _kf_channel_list.insert( std::make_pair( channel, object ) );

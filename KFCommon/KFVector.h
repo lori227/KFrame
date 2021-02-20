@@ -5,7 +5,7 @@
 
 namespace KFrame
 {
-    template< class T >
+    template<class T>
     class KFVector
     {
         typedef std::shared_ptr<T> ObjectPtr;

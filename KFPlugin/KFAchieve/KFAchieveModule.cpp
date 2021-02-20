@@ -95,7 +95,7 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #define __UPDATA_ACHIEVE_LIST__( updatefunction )\
-    std::set< KFData* > _update_list;\
+    std::set< DataPtr > _update_list;\
     auto kfachieverecord = player->Find( __STRING__( achieve ) );\
     for ( auto kfachieve = kfachieverecord->First(); kfachieve != nullptr; kfachieve = kfachieverecord->Next() )\
     {\

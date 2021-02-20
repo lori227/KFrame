@@ -54,7 +54,7 @@ namespace KFrame
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFItemUseModule::CheckCanUseItem( KFEntity* player, KFData* kfitem, const KFItemSetting* kfitemsetting, const KFItemTypeSetting* kftypesetting )
+    bool KFItemUseModule::CheckCanUseItem( KFEntity* player, DataPtr kfitem, const KFItemSetting* kfitemsetting, const KFItemTypeSetting* kftypesetting )
     {
         auto kffunction = _check_item_use_function.Find( kfitemsetting->_type );
         if ( kffunction == nullptr )
@@ -108,7 +108,7 @@ namespace KFrame
         _kf_display->SendToClient( kfentity, KFMsg::ItemUseOk, kfitemsetting->_id );
     }
 
-    bool KFItemUseModule::UseItem( KFEntity* player, KFData* kfitem, const KFItemSetting* kfitemsetting, const KFItemTypeSetting* kftypesetting )
+    bool KFItemUseModule::UseItem( KFEntity* player, DataPtr kfitem, const KFItemSetting* kfitemsetting, const KFItemTypeSetting* kftypesetting )
     {
         auto kffunction = _item_use_function.Find( kfitemsetting->_type );
         if ( kffunction == nullptr )
@@ -119,7 +119,7 @@ namespace KFrame
         return kffunction->_function( player, kfitem, kfitemsetting, kftypesetting );
     }
 
-    void KFItemUseModule::UseCoseItem( KFEntity* player, KFData* kfitem, const KFItemSetting* kfitemsetting )
+    void KFItemUseModule::UseCoseItem( KFEntity* player, DataPtr kfitem, const KFItemSetting* kfitemsetting )
     {
         // 扣除数量
         auto usecount = kfitem->Get<uint32>( __STRING__( usecount ) );

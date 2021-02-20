@@ -12,7 +12,7 @@ namespace KFrame
         KFArray();
         virtual ~KFArray() = default;
 
-        virtual void Reset( bool isdelete = true );
+        virtual void Reset();
 
         // 是否有效
         virtual bool IsValid();
@@ -37,21 +37,21 @@ namespace KFrame
         virtual uint32 GetIndex( uint64 value );
 
         // 添加数值
-        virtual KFData* Insert( uint64 value );
+        virtual DataPtr Insert( uint64 value );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
-        virtual KFData* First();
-        virtual KFData* Next();
+        virtual DataPtr First();
+        virtual DataPtr Next();
 
-        virtual void CopyFrom( KFData* kfother );
-        virtual void SaveTo( KFData* kfother );
+        virtual void CopyFrom( DataPtr& other );
+        virtual void SaveTo( DataPtr& other );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
-        virtual KFData* Find( uint64 key );
-        virtual KFData* Find( uint64 key, const std::string& dataname );
+        virtual DataPtr Find( uint64 key );
+        virtual DataPtr Find( uint64 key, const std::string& data_name );
 
-        virtual bool Add( uint64 key, KFData* data );
-        virtual bool Add( uint64 key, const std::string& dataname, KFData* data );
+        virtual bool Add( uint64 key, DataPtr& data );
+        virtual bool Add( uint64 key, const std::string& data_name, DataPtr& data );
 
-        virtual bool Remove( uint64 key );
+        virtual DataPtr Remove( uint64 key );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // 格式化成字串

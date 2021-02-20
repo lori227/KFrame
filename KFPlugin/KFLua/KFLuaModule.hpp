@@ -78,22 +78,22 @@ namespace KFrame
         void LuaLogError( const char* data );
 
         // 获得基础属性
-        uint64 LuaGetValue( uint64 objectid, const char* dataname );
+        uint64 LuaGetValue( uint64 objectid, const char* data_name );
 
         // 操作属性
-        uint64 LuaOperateValue( uint64 objectid, const char* dataname, uint32 operate, uint64 value );
+        uint64 LuaOperateValue( uint64 objectid, const char* data_name, uint32 operate, uint64 value );
 
         // 获得对象属性
-        uint64 LuaGetObjectValue( uint64 objectid, const char* parentname, const char* dataname );
+        uint64 LuaGetObjectValue( uint64 objectid, const char* parent_name, const char* data_name );
 
         // 操作对象属性
-        uint64 LuaOperateObjectValue( uint64 objectid, const char* parentname, const char* dataname, uint32 operate, uint64 value );
+        uint64 LuaOperateObjectValue( uint64 objectid, const char* parent_name, const char* data_name, uint32 operate, uint64 value );
 
         // 获得数组属性
-        uint64 LuaGetRecordValue( uint64 objectid, const char* parentname, uint64 key, const char* dataname );
+        uint64 LuaGetRecordValue( uint64 objectid, const char* parent_name, uint64 key, const char* data_name );
 
         // 操作数组属性
-        uint64 LuaOperateRecordValue( uint64 objectid, const char* parentname, uint64 key, const char* dataname, uint32 operate, uint64 value );
+        uint64 LuaOperateRecordValue( uint64 objectid, const char* parent_name, uint64 key, const char* data_name, uint32 operate, uint64 value );
 
         // 获得运行时变量
         uint32 LuaGetVariable( uint32 varid );

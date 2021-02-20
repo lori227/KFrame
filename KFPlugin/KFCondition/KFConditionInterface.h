@@ -9,28 +9,28 @@ namespace KFrame
     {
     public:
         // 判断静态配置条件
-        virtual bool CheckStaticCondition( KFData* kfobject, const StaticConditionsPtr& kfconditions ) = 0;
+        virtual bool CheckStaticCondition( DataPtr kfobject, const StaticConditionsPtr& kfconditions ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////
         // 初始化条件
-        virtual void AddCondition( KFEntity* kfentity, KFData* kfconditionobject, const DynamicConditionGroupPtr& conditiongroup ) = 0;
+        virtual void AddCondition( KFEntity* kfentity, DataPtr kfconditionobject, const DynamicConditionGroupPtr& conditiongroup ) = 0;
 
         // 初始化条件
-        virtual bool InitCondition( KFEntity* kfentity, KFData* kfconditionobject, bool update ) = 0;
+        virtual bool InitCondition( KFEntity* kfentity, DataPtr kfconditionobject, bool update ) = 0;
 
         // 直接更新条件
-        virtual bool UpdateCondition( KFEntity* kfentity, KFData* kfconditionobject, uint32 conditionid, uint32 operate, uint32 conditionvalue ) = 0;
+        virtual bool UpdateCondition( KFEntity* kfentity, DataPtr kfconditionobject, uint32 conditionid, uint32 operate, uint32 conditionvalue ) = 0;
 
         // 判断动态计数条件
-        virtual bool CheckCondition( KFEntity* kfentity, KFData* kfconditionobject ) = 0;
+        virtual bool CheckCondition( KFEntity* kfentity, DataPtr kfconditionobject ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 添加属性更新条件, 返回true, 条件全部完成
-        virtual bool UpdateAddCondition( KFEntity* kfentity, KFData* kfconditionobject, KFData* kfdata ) = 0;
+        virtual bool UpdateAddCondition( KFEntity* kfentity, DataPtr kfconditionobject, DataPtr kfdata ) = 0;
 
         // 删除属性更新条件, 返回true, 条件全部完成
-        virtual bool UpdateRemoveCondition( KFEntity* kfentity, KFData* kfconditionobject, KFData* kfdata ) = 0;
+        virtual bool UpdateRemoveCondition( KFEntity* kfentity, DataPtr kfconditionobject, DataPtr kfdata ) = 0;
 
         // 更新属性更新条件, 返回true, 条件全部完成
-        virtual bool UpdateUpdateCondition( KFEntity* kfentity, KFData* kfconditionobject, KFData* kfdata, uint32 operate, uint64 value, uint64 nowvalue ) = 0;
+        virtual bool UpdateUpdateCondition( KFEntity* kfentity, DataPtr kfconditionobject, DataPtr kfdata, uint32 operate, uint64 value, uint64 nowvalue ) = 0;
     };
 
     //////////////////////////////////////////////////////////////////////////////////////

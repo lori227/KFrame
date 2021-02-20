@@ -146,17 +146,17 @@ namespace KFrame
         return kfplayerid->_value;
     }
 
-    uint64 KFBasicDatabaseRedis::QueryBasicIntValue( uint64 playerid, const std::string& dataname )
+    uint64 KFBasicDatabaseRedis::QueryBasicIntValue( uint64 playerid, const std::string& data_name )
     {
         auto redisdriver = __BASIC_REDIS_DRIVER__;
-        auto kfserverid = redisdriver->HGetUInt64( __DATABASE_KEY_2__( __STRING__( basic ), playerid ), dataname );
+        auto kfserverid = redisdriver->HGetUInt64( __DATABASE_KEY_2__( __STRING__( basic ), playerid ), data_name );
         return kfserverid->_value;
     }
 
-    std::string KFBasicDatabaseRedis::QueryBasicStrValue( uint64 playerid, const std::string& dataname )
+    std::string KFBasicDatabaseRedis::QueryBasicStrValue( uint64 playerid, const std::string& data_name )
     {
         auto redisdriver = __BASIC_REDIS_DRIVER__;
-        auto kfserverid = redisdriver->HGet( __DATABASE_KEY_2__( __STRING__( basic ), playerid ), dataname );
+        auto kfserverid = redisdriver->HGet( __DATABASE_KEY_2__( __STRING__( basic ), playerid ), data_name );
         return kfserverid->_value;
     }
 }

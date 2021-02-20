@@ -8,7 +8,7 @@
 
 namespace KFrame
 {
-    template< class T >
+    template<class T>
     inline T KFUtility::Operate( uint32 operate, T basevalue, T value )
     {
         static T element = 1u;
@@ -62,7 +62,7 @@ namespace KFrame
     }
 
 
-    template< class T >
+    template<class T>
     inline bool KFUtility::CheckOperate( T basevalue, uint32 operate, T operatevalue )
     {
         switch ( operate )
@@ -86,7 +86,7 @@ namespace KFrame
         return false;
     }
 
-    template< class T >
+    template<class T>
     inline std::string KFUtility::ToString( const T& value )
     {
         std::stringstream ss;
@@ -100,16 +100,16 @@ namespace KFrame
         return value;
     }
 
-    template< class T >
+    template<class T>
     inline T KFUtility::ToValue( const std::string& srcstring )
     {
-        return ToValue< T >( srcstring.c_str() );
+        return ToValue<T>( srcstring.c_str() );
     }
 
-    template< class T >
+    template<class T>
     inline T KFUtility::ToValue( const char* srcstring )
     {
-        return static_cast< T >( atoll( srcstring ) );
+        return static_cast<T>( atoll( srcstring ) );
     }
 
     template<>
@@ -127,72 +127,72 @@ namespace KFrame
     template<>
     inline double KFUtility::ToValue( const char* srcstring )
     {
-        return static_cast< double >( atof( srcstring ) );
+        return static_cast<double>( atof( srcstring ) );
     }
 
-    template< class T >
+    template<class T>
     inline T KFUtility::SplitValue( std::string& srcstring, const std::string& split )
     {
         auto data = SplitString( srcstring, split );
-        return ToValue< T >( data );
+        return ToValue<T>( data );
     }
 
-    template< class T >
-    inline void KFUtility::SplitList( T& outlist, std::string& srcstring, const std::string& split )
+    template<class T>
+    inline void KFUtility::SplitList( T& out_list, std::string& srcstring, const std::string& split )
     {
-        outlist.clear();
+        out_list.clear();
         while ( !srcstring.empty() )
         {
             auto value = SplitValue< uint32 >( srcstring, split );
-            outlist.push_back( value );
+            out_list.push_back( value );
         }
     }
 
     template< >
-    inline void KFUtility::SplitList( StringList& outlist, std::string& srcstring, const std::string& split )
+    inline void KFUtility::SplitList( StringList& out_list, std::string& srcstring, const std::string& split )
     {
-        outlist.clear();
+        out_list.clear();
         while ( !srcstring.empty() )
         {
             auto value = SplitString( srcstring, split );
-            outlist.push_back( value );
+            out_list.push_back( value );
         }
     }
 
     template< >
-    inline void KFUtility::SplitList( StringVector& outlist, std::string& srcstring, const std::string& split )
+    inline void KFUtility::SplitList( StringVector& out_list, std::string& srcstring, const std::string& split )
     {
-        outlist.clear();
+        out_list.clear();
         while ( !srcstring.empty() )
         {
             auto value = SplitString( srcstring, split );
-            outlist.push_back( value );
+            out_list.push_back( value );
         }
     }
 
-    template< class T >
-    inline void KFUtility::SplitSet( T& outlist, std::string& srcstring, const std::string& split )
+    template<class T>
+    inline void KFUtility::SplitSet( T& out_list, std::string& srcstring, const std::string& split )
     {
-        outlist.clear();
+        out_list.clear();
         while ( !srcstring.empty() )
         {
             auto value = SplitValue< uint32 >( srcstring, split );
-            outlist.insert( value );
+            out_list.insert( value );
         }
     }
 
     template<>
-    inline void KFUtility::SplitSet( StringSet& outlist, std::string& srcstring, const std::string& split )
+    inline void KFUtility::SplitSet( StringSet& out_list, std::string& srcstring, const std::string& split )
     {
-        outlist.clear();
+        out_list.clear();
         while ( !srcstring.empty() )
         {
             auto value = SplitString( srcstring, split );
-            outlist.insert( value );
+            out_list.insert( value );
         }
     }
 
-    template< class T >
+    template<class T>
     inline bool KFUtility::ParseArrayList( T& arraylist, const std::string& srcstring )
     {
         arraylist.clear();
@@ -216,7 +216,7 @@ namespace KFrame
         return true;
     }
 
-    template< class T >
+    template<class T>
     inline bool KFUtility::ParseArraySet( T& arrayset, const std::string& srcstring )
     {
         arrayset.clear();
@@ -245,19 +245,19 @@ namespace KFrame
 
 
     ///////////////////////////////////////////////////////////////////////
-    template< class T >
+    template<class T>
     inline bool KFUtility::HaveBitMask( T value, T bitmask )
     {
         return ( value & bitmask ) != 0u;
     }
 
-    template< class T >
+    template<class T>
     inline void KFUtility::ClearBitMask( T& value, T bitmask )
     {
         value &= ~bitmask;
     }
 
-    template< class T >
+    template<class T>
     inline void KFUtility::AddBitMask( T& value, T bitmask )
     {
         value |= bitmask;

@@ -50,16 +50,15 @@ namespace KFrame
 
     }
 
-    KFData* KFData::First()
+    DataPtr KFData::First()
     {
-        return this;
+        return shared_from_this();
     }
 
-    KFData* KFData::Next()
+    DataPtr KFData::Next()
     {
         return nullptr;
     }
-
 
     int32 KFData::GetInt32()
     {
@@ -136,105 +135,95 @@ namespace KFrame
     };
 
     // object
-    KFData* KFData::Find( const std::string& dataname )
+    DataPtr KFData::Find( const std::string& data_name )
     {
         return nullptr;
     }
-    KFData* KFData::Find( const std::string& dataname, uint64 key )
+    DataPtr KFData::Find( const std::string& data_name, uint64 key )
     {
         return nullptr;
     }
-    KFData* KFData::Find( const std::string& parentname, const std::string& childname )
+    DataPtr KFData::Find( const std::string& parent_name, const std::string& child_name )
     {
         return nullptr;
     }
-    KFData* KFData::Find( const std::string& parentname, uint64 key, const std::string& childname )
+    DataPtr KFData::Find( const std::string& parent_name, uint64 key, const std::string& child_name )
     {
         return nullptr;
     }
-    KFData* KFData::Find( const std::string& parentname, const std::string& childname, uint64 key )
+    DataPtr KFData::Find( const std::string& parent_name, const std::string& child_name, uint64 key )
     {
         return nullptr;
     }
-    KFData* KFData::Find( const std::string& parentname, const std::string& childname, const std::string& dataname )
+    DataPtr KFData::Find( const std::string& parent_name, const std::string& child_name, const std::string& data_name )
     {
         return nullptr;
     }
-    bool KFData::Add( const std::string& dataname, KFData* data )
+    bool KFData::Add( const std::string& data_name, DataPtr& data )
     {
         return false;
     }
-    bool KFData::Add( const std::string& dataname, uint64 key, KFData* data )
+    bool KFData::Add( const std::string& data_name, uint64 key, DataPtr& data )
     {
         return false;
     }
-    bool KFData::Add( const std::string& parentname, const std::string& childname, KFData* data )
-    {
-        return false;
-    }
-
-    KFData* KFData::Move( uint64 key )
-    {
-        return nullptr;
-    }
-
-    KFData* KFData::Move( const std::string& dataname, bool usekey )
-    {
-        return nullptr;
-    }
-
-    bool KFData::Remove( const std::string& dataname )
+    bool KFData::Add( const std::string& parent_name, const std::string& child_name, DataPtr& data )
     {
         return false;
     }
 
-    bool KFData::Remove( const std::string& dataname, uint64 key )
+    DataPtr KFData::Remove( const std::string& data_name )
     {
-        return false;
+        return nullptr;
     }
 
-    std::string KFData::ToString( const std::string& dataname )
+    DataPtr KFData::Remove( const std::string& data_name, uint64 key )
     {
-        auto kfdata = Find( dataname );
-        if ( kfdata == nullptr )
+        return nullptr;
+    }
+
+    std::string KFData::ToString( const std::string& data_name )
+    {
+        auto data = Find( data_name );
+        if ( data == nullptr )
         {
             return _invalid_string;
         }
 
-        return kfdata->ToString();
+        return data->ToString();
     }
 
-    std::string KFData::ToString( const std::string& parentname, const std::string& dataname )
+    std::string KFData::ToString( const std::string& parent_name, const std::string& data_name )
     {
-        auto kfdata = Find( parentname, dataname );
-        if ( kfdata == nullptr )
+        auto data = Find( parent_name, data_name );
+        if ( data == nullptr )
         {
             return _invalid_string;
         }
 
-        return kfdata->ToString();
+        return data->ToString();
     }
 
-    std::string KFData::ToString( uint64 key, const std::string& dataname )
+    std::string KFData::ToString( uint64 key, const std::string& data_name )
     {
-        auto kfdata = Find( key, dataname );
-        if ( kfdata == nullptr )
+        auto data = Find( key, data_name );
+        if ( data == nullptr )
         {
             return _invalid_string;
         }
 
-        return kfdata->ToString();
+        return data->ToString();
     }
 
-    std::string KFData::ToString( const std::string& parentname, uint64 key, const std::string& dataname )
+    std::string KFData::ToString( const std::string& parent_name, uint64 key, const std::string& data_name )
     {
-        auto kfdata = Find( parentname, key, dataname );
-        if ( kfdata == nullptr )
+        auto data = Find( parent_name, key, data_name );
+        if ( data == nullptr )
         {
             return _invalid_string;
         }
 
-        return kfdata->ToString();
+        return data->ToString();
     }
 
     // record
@@ -243,54 +232,54 @@ namespace KFrame
         return false;
     }
 
-    KFData* KFData::Find( uint64 key )
+    DataPtr KFData::Find( uint64 key )
     {
         return nullptr;
     }
-    KFData* KFData::Find( uint64 key, const std::string& dataname )
+    DataPtr KFData::Find( uint64 key, const std::string& data_name )
     {
         return nullptr;
     }
-    KFData* KFData::Find( uint64 parentkey, uint64 childkey )
+    DataPtr KFData::Find( uint64 parent_key, uint64 child_key )
     {
         return nullptr;
     }
-    KFData* KFData::Find( uint64 parentkey, uint64 childkey, const std::string& dataname )
+    DataPtr KFData::Find( uint64 parent_key, uint64 child_key, const std::string& data_name )
     {
         return nullptr;
     }
-    KFData* KFData::Find( uint64 parentkey, const std::string& dataname, uint64 childkey )
+    DataPtr KFData::Find( uint64 parent_key, const std::string& data_name, uint64 child_key )
     {
         return nullptr;
     }
 
-    bool KFData::Add( uint64 key, KFData* data )
+    bool KFData::Add( uint64 key, DataPtr& data )
     {
         return false;
     }
-    bool KFData::Add( uint64 parentkey, uint64 childkey, KFData* data )
+    bool KFData::Add( uint64 parent_key, uint64 child_key, DataPtr& data )
     {
         return false;
     }
-    bool KFData::Add( uint64 key, const std::string& dataname, KFData* data )
-    {
-        return false;
-    }
-
-    bool KFData::Remove( uint64 key )
+    bool KFData::Add( uint64 key, const std::string& data_name, DataPtr& data )
     {
         return false;
     }
 
-    void KFData::Find( const std::string& dataname, uint64 value, std::list< KFData* >& findlist, bool findall )
+    DataPtr KFData::Remove( uint64 key )
+    {
+        return nullptr;
+    }
+
+    void KFData::Find( const std::string& data_name, uint64 value, std::list<DataPtr>& find_list, bool find_all )
     {
     }
-    bool KFData::Check( const std::string& dataname, uint64 value, const std::string& checkname, uint64 checkvalue )
+    bool KFData::Check( const std::string& data_name, uint64 value, const std::string& check_name, uint64 check_value )
     {
         return false;
     }
 
-    KFData* KFData::Insert( uint64 value )
+    DataPtr KFData::Insert( uint64 value )
     {
         return nullptr;
     }
@@ -306,9 +295,9 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFData::Initialize( const KFDataSetting* datasetting )
+    void KFData::InitSetting( std::shared_ptr<const KFDataSetting> data_setting )
     {
-        _data_setting = datasetting;
+        _data_setting = data_setting;
         InitData();
     }
 
@@ -317,7 +306,7 @@ namespace KFrame
 
     }
 
-    void KFData::Reset( bool isdelete /* = true */ )
+    void KFData::Reset()
     {
     }
 

@@ -12,7 +12,7 @@ namespace KFrame
     {
     public:
         // 绑定加载玩家数据回调函数
-        template< class T >
+        template<class T>
         void BindLoadPlayerFunction( T* object, void ( T::*handle )( uint32, const KFMsg::PBLoginData*, const KFMsg::PBObject* ) )
         {
             KFLoadPlayerFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
@@ -20,7 +20,7 @@ namespace KFrame
         }
 
         // 取消绑定
-        template< class T >
+        template<class T>
         void UnBindLoadPlayerFunction( T* object )
         {
             KFLoadPlayerFunction function = nullptr;
@@ -28,7 +28,7 @@ namespace KFrame
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 查询玩家数据回调函数
-        template< class T >
+        template<class T>
         void BindQueryPlayerFunction( T* object, void ( T::*handle )( uint32, uint64, const KFMsg::PBObject* ) )
         {
             KFQueryPlayerFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
@@ -36,7 +36,7 @@ namespace KFrame
         }
 
         // 取消绑定
-        template< class T >
+        template<class T>
         void UnBindQueryPlayerFunction( T* object )
         {
             KFQueryPlayerFunction function = nullptr;

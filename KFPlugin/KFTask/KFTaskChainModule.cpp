@@ -99,7 +99,7 @@ namespace KFrame
     {
         auto kftaskrecord = player->Find( __STRING__( task ) );
 
-        std::list< KFData* > tasklist;
+        std::list< DataPtr > tasklist;
         kftaskrecord->Find( __STRING__( chain ), chainid, tasklist, true );
 
         for ( auto kftask : tasklist )
@@ -137,7 +137,7 @@ namespace KFrame
         OpenTaskChain( player, extendchainid, 0u, 0u );
     }
 
-    bool KFTaskChainModule::IsTaskChain( KFEntity* player, KFData* kftask )
+    bool KFTaskChainModule::IsTaskChain( KFEntity* player, DataPtr kftask )
     {
         auto taskchainid = kftask->Get<uint32>( __STRING__( chain ) );
         return taskchainid != 0u;
@@ -153,7 +153,7 @@ namespace KFrame
         }
     }
 
-    void KFTaskChainModule::FinishTaskChain( KFEntity* player, KFData* kftask )
+    void KFTaskChainModule::FinishTaskChain( KFEntity* player, DataPtr kftask )
     {
         auto taskchainid = kftask->Get<uint32>( __STRING__( chain ) );
         auto chainindex = kftask->Get<uint32>( __STRING__( index ) );

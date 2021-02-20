@@ -29,7 +29,7 @@ namespace KFrame
     };
 
     template< typename T >
-    T* KFInstance< T >::_instance = nullptr;
+    T* KFInstance<T>::_instance = nullptr;
 }
 
 #endif

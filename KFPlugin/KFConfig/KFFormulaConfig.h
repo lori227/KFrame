@@ -36,7 +36,7 @@ namespace KFrame
             return _formula_param_list._objects.front();
         }
 
-        template< class T >
+        template<class T>
         const KFFormulaParam* GetFormulaParam( uint32 paramindex, T value ) const
         {
             for ( auto formulaparam : _formula_param_list._objects )
@@ -102,7 +102,7 @@ namespace KFrame
             return kfsetting->GetFormulaParam();
         }
 
-        template< class T >
+        template<class T>
         const KFFormulaParam* FindFormulaParam( uint32 id, uint32 paramindex, const T& value ) const
         {
             auto kfsetting = FindSetting( id );
@@ -111,7 +111,7 @@ namespace KFrame
                 return nullptr;
             }
 
-            return kfsetting->GetFormulaParam< T >( paramindex, value );
+            return kfsetting->GetFormulaParam<T>( paramindex, value );
         }
 
     protected:

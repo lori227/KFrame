@@ -42,10 +42,10 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////
         // 解锁玩家数据
         void UnlockPlayerData( KFEntity* player, const KFUnlockSetting* kfsetting );
-        void UnlockPlayerData( KFEntity* player, const KFUnlockSetting* kfsetting, KFData* kfdatarecord );
+        void UnlockPlayerData( KFEntity* player, const KFUnlockSetting* kfsetting, DataPtr kfdatarecord );
 
         // 判断是否需要解锁
-        bool CheckNeedUnlock( KFEntity* player, const KFUnlockSetting* kfsetting, KFData* kfdatarecord );
+        bool CheckNeedUnlock( KFEntity* player, const KFUnlockSetting* kfsetting, DataPtr kfdatarecord );
 
     protected:
         // 玩家上下文组件

@@ -60,17 +60,17 @@ namespace KFrame
         _kf_route->RepeatToRand( playerid, __ROUTE_NAME__, KFMsg::S2S_UPDATE_INT_VALUE_TO_BASIC_REQ, &req );
     }
 
-    void KFBasicClientModule::UpdateBasicIntValueToBasic( uint64 playerid, const std::string& dataname, uint64 datavalue )
+    void KFBasicClientModule::UpdateBasicIntValueToBasic( uint64 playerid, const std::string& data_name, uint64 datavalue )
     {
         StringUInt64 values;
-        values[ dataname ] = datavalue;
+        values[ data_name ] = datavalue;
         UpdateBasicIntValueToBasic( playerid, values );
     }
 
-    void KFBasicClientModule::UpdateBasicStrValueToBasic( uint64 playerid, const std::string& dataname, const std::string& datavalue )
+    void KFBasicClientModule::UpdateBasicStrValueToBasic( uint64 playerid, const std::string& data_name, const std::string& datavalue )
     {
         KFMsg::S2SUpdateStrValueToBasicReq req;
-        ( *req.mutable_pbdata() )[ dataname ] = datavalue;
+        ( *req.mutable_pbdata() )[ data_name ] = datavalue;
         _kf_route->RepeatToRand( playerid, __ROUTE_NAME__, KFMsg::S2S_UPDATE_STR_VALUE_TO_BASIC_REQ, &req );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////

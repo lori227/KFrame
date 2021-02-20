@@ -85,14 +85,14 @@ namespace KFrame
 
         // 更新队伍成员信息
         void UpdateMemberIntValueToTeam( KFEntity* player, const StringUInt64& values );
-        void UpdateMemberIntValueToTeam( KFEntity* player, const std::string& dataname, uint64 datavalue );
-        void UpdateMemberStrValueToTeam( KFEntity* player, const std::string& dataname, const std::string& datavalue );
+        void UpdateMemberIntValueToTeam( KFEntity* player, const std::string& data_name, uint64 datavalue );
+        void UpdateMemberStrValueToTeam( KFEntity* player, const std::string& data_name, const std::string& datavalue );
 
         // 更新属性到组队
         void EnterLeaveUpdateToTeam( KFEntity* player );
 
         // 发送队伍邀请到目标
-        void SendTeamInviteToTarget( KFEntity* player, KFData* kfteam, uint64 serverid, uint64 playerid );
+        void SendTeamInviteToTarget( KFEntity* player, DataPtr kfteam, uint64 serverid, uint64 playerid );
     private:
         // 玩家组件
         KFComponent* _kf_component = nullptr;

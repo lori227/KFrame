@@ -18,10 +18,10 @@ namespace KFrame
         return _data;
     }
 
-    void KFVector3D::Reset( bool isdelete /* = true */ )
+    void KFVector3D::Reset()
     {
         _data.Set( 0.0f, 0.0f, 0.0f );
-        KFData::Reset( isdelete );
+        KFData::Reset();
     }
 
     bool KFVector3D::IsValid()
@@ -31,19 +31,19 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFVector3D::CopyFrom( KFData* kfother )
+    void KFVector3D::CopyFrom( DataPtr& other )
     {
-        _data = kfother->Get<Math3D::Vector3D>();
+        _data = other->Get<Math3D::Vector3D>();
     }
 
-    void KFVector3D::SaveTo( KFData* kfother )
+    void KFVector3D::SaveTo( DataPtr& other )
     {
-        kfother->Set( _data );
+        other->Set( _data );
     }
 
     std::string KFVector3D::ToString()
     {
-        return __FORMAT__( "(:.2f,:.2f,:.2f)", _data.GetX(), _data.GetY(), _data.GetY() );
+        return __FORMAT__( "({:.2f},{:.2f},{:.2f})", _data.GetX(), _data.GetY(), _data.GetY() );
     }
 
     void KFVector3D::FromString( const std::string& value )
@@ -51,9 +51,9 @@ namespace KFrame
         auto temp = value;
         KFUtility::SplitString( temp, "(" );
 
-        auto x = KFUtility::SplitValue< double >( temp, "," );
-        auto y = KFUtility::SplitValue< double >( temp, "," );
-        auto z = KFUtility::SplitValue< double >( temp, "," );
+        auto x = KFUtility::SplitValue<double>( temp, "," );
+        auto y = KFUtility::SplitValue<double>( temp, "," );
+        auto z = KFUtility::SplitValue<double>( temp, "," );
 
         _data.Set( x, y, z );
     }

@@ -23,7 +23,7 @@ namespace KFrame
         _kf_game->SendToClient( player, KFMsg::MSG_TELL_NOTICE, &tell );
     }
 
-    void KFNoticeModule::SendToPlayer( KFData* kfbasic, uint32 type, uint32 count )
+    void KFNoticeModule::SendToPlayer( DataPtr kfbasic, uint32 type, uint32 count )
     {
         if ( _kf_game == nullptr )
         {

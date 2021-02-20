@@ -28,14 +28,14 @@ namespace KFrame
         return _parse_string_function( strparse );
     }
 
-    const std::string& KFElementFormat::FormatString( const std::string& dataname, uint32 datavalue, uint32 dataid )
+    const std::string& KFElementFormat::FormatString( const std::string& data_name, uint32 datavalue, uint32 dataid )
     {
-        return _int_string_function( dataname, datavalue, dataid );
+        return _int_string_function( data_name, datavalue, dataid );
     }
 
-    const std::string& KFElementFormat::FormatString( const std::string& dataname, const std::string& datavalue, uint32 dataid )
+    const std::string& KFElementFormat::FormatString( const std::string& data_name, const std::string& datavalue, uint32 dataid )
     {
-        return _str_string_function( dataname, datavalue, dataid );
+        return _str_string_function( data_name, datavalue, dataid );
     }
 
     const std::string& KFElementFormat::FormatString( const KFElementData& elementdata )
@@ -44,9 +44,9 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFElementFormat::FormatElement( KFElements& kfelements, const std::string& dataname, uint32 datavalue, uint32 dataid )
+    bool KFElementFormat::FormatElement( KFElements& kfelements, const std::string& data_name, uint32 datavalue, uint32 dataid )
     {
-        auto& strelement = _int_string_function( dataname, datavalue, dataid );
+        auto& strelement = _int_string_function( data_name, datavalue, dataid );
         if ( strelement.empty() )
         {
             return false;
@@ -55,9 +55,9 @@ namespace KFrame
         return kfelements.Parse( strelement, __FUNC_LINE__ );
     }
 
-    bool KFElementFormat::FormatElement( KFElements& kfelements, const std::string& dataname, const std::string& datavalue, uint32 dataid )
+    bool KFElementFormat::FormatElement( KFElements& kfelements, const std::string& data_name, const std::string& datavalue, uint32 dataid )
     {
-        auto& strelement = _str_string_function( dataname, datavalue, dataid );
+        auto& strelement = _str_string_function( data_name, datavalue, dataid );
         if ( strelement.empty() )
         {
             return false;

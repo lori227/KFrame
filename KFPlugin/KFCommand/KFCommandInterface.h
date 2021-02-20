@@ -11,7 +11,7 @@ namespace KFrame
     {
     public:
         // 注册调试函数
-        template< class T >
+        template<class T>
         void RegisterFunction( const std::string& command, T* object, void ( T::*handle )( KFEntity*, const StringVector& ) )
         {
             KFCommandFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2 );

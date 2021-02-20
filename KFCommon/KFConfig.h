@@ -79,7 +79,7 @@ namespace KFrame
         StringMap _file_version_list;
     };
     ///////////////////////////////////////////////////////////////
-    template< class T >
+    template<class T>
     class KFConfigT : public KFConfig
     {
         typedef typename T::Type KeyType;

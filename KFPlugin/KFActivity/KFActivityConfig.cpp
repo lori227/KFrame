@@ -151,9 +151,9 @@ namespace KFrame
         //iter->second.AddKFAchieveType( setting );
     }
 
-    const KFActivityType* KFActivityConfig::FindActivityType( const std::string& parentname, const std::string& dataname ) const
+    const KFActivityType* KFActivityConfig::FindActivityType( const std::string& parent_name, const std::string& data_name ) const
     {
-        auto key = ActivityTypeKey( parentname, dataname );
+        auto key = ActivityTypeKey( parent_name, data_name );
         auto iter = _activity_types.find( key );
         if ( iter == _activity_types.end() )
         {

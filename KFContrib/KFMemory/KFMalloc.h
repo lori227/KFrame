@@ -43,7 +43,7 @@ namespace KFrame
         static KFMalloc* Instance();
         ///////////////////////////////////////////////////////////////////////////////////
         // 申请内存
-        template< class T >
+        template<class T>
         T* Malloc( uint32 size, const char* function, uint32 line )
         {
             auto* memory = malloc( size );
@@ -52,7 +52,7 @@ namespace KFrame
         }
 
         // 释放内存
-        template< class T >
+        template<class T>
         void Free( void* memory, const char* function, uint32 line )
         {
             memory = RemoveMemory( typeid( T ).name(), memory, function, line );
@@ -75,7 +75,7 @@ namespace KFrame
         }
 
         // 释放对象
-        template< class T >
+        template<class T>
         inline void Delete( T* object, const char* function, uint32 line )
         {
             object = reinterpret_cast< T* >( RemoveMemory( typeid( T ).name(), object, function, line ) );

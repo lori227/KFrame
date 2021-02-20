@@ -12,7 +12,7 @@ namespace KFrame
         KFRecord();
         virtual ~KFRecord() = default;
 
-        virtual void Reset( bool isdelete = true );
+        virtual void Reset();
 
         // 是否有效
         virtual bool IsValid();
@@ -26,27 +26,26 @@ namespace KFrame
         // 是否达到了最大值
         virtual bool IsFull();
         //////////////////////////////////////////////////////////////////////////////////////////////////////
-        virtual KFData* First();
-        virtual KFData* Next();
+        virtual DataPtr First();
+        virtual DataPtr Next();
 
-        virtual void CopyFrom( KFData* kfother );
-        virtual void SaveTo( KFData* kfother );
+        virtual void CopyFrom( DataPtr& other );
+        virtual void SaveTo( DataPtr& other );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
-        virtual KFData* Find( uint64 key );
-        virtual KFData* Find( uint64 key, const std::string& dataname );
-        virtual KFData* Find( uint64 parentkey, uint64 childkey );
-        virtual KFData* Find( uint64 parentkey, uint64 childkey, const std::string& dataname );
-        virtual KFData* Find( uint64 parentkey, const std::string& dataname, uint64 childkey );
+        virtual DataPtr Find( uint64 key );
+        virtual DataPtr Find( uint64 key, const std::string& data_name );
+        virtual DataPtr Find( uint64 parent_key, uint64 child_key );
+        virtual DataPtr Find( uint64 parent_key, uint64 child_key, const std::string& data_name );
+        virtual DataPtr Find( uint64 parent_key, const std::string& data_name, uint64 child_key );
 
-        virtual bool Add( uint64 key, KFData* data );
-        virtual bool Add( uint64 parentkey, uint64 childkey, KFData* data );
-        virtual bool Add( uint64 key, const std::string& dataname, KFData* data );
+        virtual bool Add( uint64 key, DataPtr& data );
+        virtual bool Add( uint64 parent_key, uint64 child_key, DataPtr& data );
+        virtual bool Add( uint64 key, const std::string& data_name, DataPtr& data );
 
-        virtual KFData* Move( uint64 key );
-        virtual bool Remove( uint64 key );
+        virtual DataPtr Remove( uint64 key );
 
-        virtual void Find( const std::string& dataname, uint64 value, std::list< KFData* >& findlist, bool findall );
-        virtual bool Check( const std::string& dataname, uint64 value, const std::string& checkname, uint64 checkvalue );
+        virtual void Find( const std::string& data_name, uint64 value, std::list<DataPtr>& find_list, bool find_all );
+        virtual bool Check( const std::string& data_name, uint64 value, const std::string& check_name, uint64 check_value );
 
         // 格式化成字串
         virtual std::string ToString();
@@ -57,8 +56,8 @@ namespace KFrame
         virtual void FromMap( const StringMap& values );
 
     protected:
-        // 列表
-        KFMap< uint64, KFData > _data;
+        // 数据列表
+        KFMap<uint64, KFData> _data;
     };
 }
 

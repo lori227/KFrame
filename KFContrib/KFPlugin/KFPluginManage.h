@@ -22,8 +22,8 @@
 #if __KF_SYSTEM__ == __KF_WIN__
 #define __CHECK_PLUGIN_FUNCTION__( module, function )\
     std::string basename = typeid( &KFModule::function ).name();\
-    std::string childname = typeid( &module::function ).name();\
-    if ( basename != childname )\
+    std::string child_name = typeid( &module::function ).name();\
+    if ( basename != child_name )\
 
 #else
 #define __CHECK_PLUGIN_FUNCTION__( module, function )\
@@ -133,7 +133,7 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////
 
         // 注册插件
-        template< class T >
+        template<class T>
         T* RegistPlugin()
         {
             auto plugin = __NEW_OBJECT__( T );
@@ -141,7 +141,7 @@ namespace KFrame
         }
 
         // 卸载插件
-        template< class T >
+        template<class T>
         void UnRegistPlugin( bool savedata )
         {
             std::string name = typeid( T ).name();
@@ -179,7 +179,7 @@ namespace KFrame
             return dynamic_cast< InterfaceType* >( FindModule( name ) );
         }
         /////////////////////////////////////////////////////////////////
-        template< class T >
+        template<class T>
         void RegisterCommandFunction( const std::string& command, T* module, void ( T::*handle )( const StringVector& ) )
         {
             auto kffunction = _command_functions.Create( command );
@@ -192,7 +192,7 @@ namespace KFrame
         }
 
         /////////////////////////////////////////////////////////////////
-        template< class T >
+        template<class T>
         bool RegisterRunFunction( uint32 sort, T* module, void ( T::*handle )() )
         {
             auto kffunction = _run_functions.Find( sort );
@@ -213,7 +213,7 @@ namespace KFrame
         }
 
         /////////////////////////////////////////////////////////////////
-        template< class T >
+        template<class T>
         bool RegisterAfterRunFunction( uint32 sort, T* module, void ( T::*handle )( ) )
         {
             auto kffunction = _after_run_functions.Find( sort );

@@ -188,7 +188,7 @@ message PBDebugDrop
 {
 	uint32 dataid = 1;		// 掉落数据id
 	uint32 dataindex = 2;	// 索引( 第几个, 从1开始 )
-	bytes dataname = 3;		// 掉落数据名
+	bytes data_name = 3;		// 掉落数据名
 	bytes logicname = 4;	// 逻辑名
 }
 
@@ -239,7 +239,7 @@ message MsgShowElement
 // MSG_REMOVE_DATA_REQ
 message MsgRemoveDataReq
 {
-	bytes dataname = 1;		// 属性名称
+	bytes data_name = 1;		// 属性名称
 	uint64 key = 2;			// id
 }
 
@@ -247,8 +247,8 @@ message MsgRemoveDataReq
 // MSG_UPDATE_INT_REQ
 message MsgUpdateIntReq
 {
-	bytes parentname = 1;	// 父属性名称
-	bytes dataname = 2;		// 子属性名称
+	bytes parent_name = 1;	// 父属性名称
+	bytes data_name = 2;		// 子属性名称
 	uint64 key = 3;			// 属性key
 	uint64 value = 4;		// 属性值
 	uint32 operate = 5;		// 操作类型( 1=增加, 2=减少, 3=设置 )
@@ -258,8 +258,8 @@ message MsgUpdateIntReq
 // MSG_UPDATE_STR_REQ
 message MsgUpdateStrReq
 {
-	bytes parentname = 1;	// 父属性名称
-	bytes dataname = 2;		// 子属性名称
+	bytes parent_name = 1;	// 父属性名称
+	bytes data_name = 2;		// 子属性名称
 	uint64 key = 3;			// 属性key
 	bytes value = 4;		// 属性值
 }
@@ -268,14 +268,14 @@ message MsgUpdateStrReq
 // MSG_REQUEST_SYNC_REQ
 message MsgRequestSyncReq
 {
-	bytes dataname = 1;
+	bytes data_name = 1;
 }
 
 // 取消同步属性
 // MSG_CANCEL_SYNC_REQ
 message MsgCancelSyncReq
 {
-	bytes dataname = 1;
+	bytes data_name = 1;
 }
 ////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////

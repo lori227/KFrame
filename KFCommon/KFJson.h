@@ -22,17 +22,17 @@ namespace KFrame
     }
 
     // 获得数字
-    template< class T >
+    template<class T>
     static inline T GetJsonNumber( rapidjson::Value& kfjson, std::string& name )
     {
         auto& value = kfjson[ name ];
         if ( value.IsNumber() )
         {
-            return value.Get< T >();
+            return value.Get<T>();
         }
         else if ( value.IsString() )
         {
-            return static_cast< T >( atoll( value.GetString() ) );
+            return static_cast<T>( atoll( value.GetString() ) );
         }
 
         return 0;
@@ -96,7 +96,7 @@ namespace KFrame
 #define __JSON_GET_INT64__( kfjson, name ) GetJsonNumber< int64 >( kfjson, name )
 #define __JSON_GET_UINT64__( kfjson, name ) GetJsonNumber< uint64 >( kfjson, name )
 #define __JSON_GET_FLOAT__( kfjson, name ) GetJsonNumber< float >( kfjson, name )
-#define __JSON_GET_DOUBLE__( kfjson, name ) GetJsonNumber< double >( kfjson, name )
+#define __JSON_GET_DOUBLE__( kfjson, name ) GetJsonNumber<double>( kfjson, name )
 #define __JSON_GET_STRING__( kfjson, name ) GetJsonString( kfjson, name )
 #define __JSON_GET_OBJECT__( kfjson, name ) kfjson[ name ]
 #define __JSON_GET_ARRRY__( kfjson, name ) kfjson[ name ].GetArray()

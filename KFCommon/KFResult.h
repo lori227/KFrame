@@ -6,11 +6,11 @@
 
 namespace KFrame
 {
-    template< class T >
+    template<class T>
     class KFResult
     {
     public:
-        typedef std::unique_ptr< KFResult< T > > UniqueType;
+        typedef std::unique_ptr< KFResult<T> > UniqueType;
 
         // 构造函数
         KFResult()

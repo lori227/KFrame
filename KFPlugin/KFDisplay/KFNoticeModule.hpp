@@ -25,7 +25,7 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         virtual void SendToPlayer( KFEntity* player, uint32 type, uint32 count = 1u );
-        virtual void SendToPlayer( KFData* kfbasic, uint32 type, uint32 count = 1u );
+        virtual void SendToPlayer( DataPtr kfbasic, uint32 type, uint32 count = 1u );
 
         virtual void SendToPlayer( const Route& route, uint32 type, uint32 count = 1u );
         virtual void SendToPlayer( uint64 serverid, uint64 playerid, uint32 type, uint32 count = 1u );

@@ -29,7 +29,7 @@ namespace KFrame
         virtual bool BindObjectId( uint64 handleid, uint64 objectid ) = 0;
 
         // 连接列表
-        virtual void GetHandleList( NetDataList& outlist ) = 0;
+        virtual void GetHandleList( NetDataList& out_list ) = 0;
         ////////////////////////////////////////////////////////////////////////////////////
 
         // 给全部客户端发送消息
@@ -53,7 +53,7 @@ namespace KFrame
         // 给某一类型客户端发送消息
         //////////////////////////////////////////////////////////////////////////////////////////
         // 注册连接成功函数
-        template< class T >
+        template<class T>
         void RegisterDiscoverFunction( T* module, void ( T::*handle )( const KFNetData* ) )
         {
             KFNetEventFunction function = std::bind( handle, module, std::placeholders::_1 );
@@ -61,7 +61,7 @@ namespace KFrame
         }
 
         // 卸载
-        template< class T >
+        template<class T>
         void UnRegisterDiscoverFunction( T* module )
         {
             RemoveDiscoverFunction( module );
@@ -69,7 +69,7 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////
 
         // 注册断线回调函数
-        template< class T >
+        template<class T>
         void RegisterLostFunction( T* module, void ( T::*handle )( const KFNetData* ) )
         {
             KFNetEventFunction function = std::bind( handle, module, std::placeholders::_1 );
@@ -77,21 +77,21 @@ namespace KFrame
         }
 
         // 卸载
-        template< class T >
+        template<class T>
         void UnRegisterLostFunction( T* module )
         {
             RemoveLostFunction( module );
         }
         /////////////////////////////////////////////////////////////////////////////
         // 注册转发
-        template< class T >
+        template<class T>
         void RegisterTranspondFunction( T* module, bool ( T::*handle )( const Route& route, uint32 msgid, const char* data, uint32 length ) )
         {
             KFForwardFunction function = std::bind( handle, module, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
             AddTranspondFunction( module, function );
         }
 
-        template< class T >
+        template<class T>
         void UnRegisterTranspondFunction( T* module )
         {
             RemoveTranspondFunction( module );

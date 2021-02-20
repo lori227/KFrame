@@ -38,7 +38,7 @@ namespace KFrame
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 添加注册回调函数
-        template< class T >
+        template<class T>
         void RegisterConnectionFunction( T* module, void ( T::*handle )( const KFNetData* ) )
         {
             KFNetEventFunction function = std::bind( handle, module, std::placeholders::_1 );
@@ -46,14 +46,14 @@ namespace KFrame
         }
 
         // 删除注册回调函数
-        template< class T >
+        template<class T>
         void UnRegisterConnectionFunction( T* module )
         {
             RemoveConnectionFunction( module );
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 断线函数回调
-        template< class T >
+        template<class T>
         void RegisterLostFunction( T* module, void ( T::*handle )( const KFNetData* ) )
         {
             KFNetEventFunction function = std::bind( handle, module, std::placeholders::_1 );
@@ -61,14 +61,14 @@ namespace KFrame
         }
 
         // 删除注册回调函数
-        template< class T >
+        template<class T>
         void UnRegisterLostFunction( T* module )
         {
             RemoveLostFunction( module );
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 关闭函数回调
-        template< class T >
+        template<class T>
         void RegisterShutdownFunction( T* module, void ( T::*handle )( const KFNetData* ) )
         {
             KFNetEventFunction function = std::bind( handle, module, std::placeholders::_1 );
@@ -76,14 +76,14 @@ namespace KFrame
         }
 
         // 删除注册回调函数
-        template< class T >
+        template<class T>
         void UnRegisterShutdownFunction( T* module )
         {
             RemoveShutdownFunction( module );
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 失败函数回调
-        template< class T >
+        template<class T>
         void RegisterFailedFunction( T* module, void ( T::*handle )( const KFNetData* ) )
         {
             KFNetEventFunction function = std::bind( handle, module, std::placeholders::_1 );
@@ -91,21 +91,21 @@ namespace KFrame
         }
 
         // 删除失败函数
-        template< class T >
+        template<class T>
         void UnRegisterFailedFunction( T* module )
         {
             RemoveFailedFunction( module );
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 注册转发
-        template< class T >
+        template<class T>
         void RegisterTranspondFunction( T* module, bool ( T::*handle )( const Route& route, uint32 msgid, const char* data, uint32 length ) )
         {
             KFForwardFunction function = std::bind( handle, module, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
             AddTranspondFunction( module, function );
         }
 
-        template< class T >
+        template<class T>
         void UnRegisterTranspondFunction( T* module )
         {
             RemoveTranspondFunction( module );

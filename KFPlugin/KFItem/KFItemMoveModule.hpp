@@ -36,10 +36,10 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 移动道具
-        virtual uint32 MoveItem( KFEntity* player, KFData* kfsourcerecord, KFData* kfsourceitem, KFData* kftargetrecord, uint32 targetindex );
+        virtual uint32 MoveItem( KFEntity* player, DataPtr kfsourcerecord, DataPtr kfsourceitem, DataPtr kftargetrecord, uint32 targetindex );
 
         // 查找索引的道具
-        virtual KFData* FindIndexItem( KFEntity* player, KFData* kfitemrecord, uint32 index );
+        virtual DataPtr FindIndexItem( KFEntity* player, DataPtr kfitemrecord, uint32 index );
 
     protected:
         // 移动道具(从背包到仓库 或者从仓库到背包)
@@ -67,19 +67,19 @@ namespace KFrame
         ///////////////////////////////////////////////////////////////////////////
     protected:
         // 初始化道具格子信息
-        void InitItemEmptyIndexData( KFEntity* player, KFData* kfitembag, const KFItemBagSetting* kfbagsetting );
+        void InitItemEmptyIndexData( KFEntity* player, DataPtr kfitembag, const KFItemBagSetting* kfbagsetting );
 
         // 删除格子信息
         void UnInitItemEmptyIndexData( KFEntity* player, const std::string& name );
 
         // 清空格子信息
-        void AddItemEmptyIndex( KFEntity* player, KFData* kfitembag, KFData* kfitem );
+        void AddItemEmptyIndex( KFEntity* player, DataPtr kfitembag, DataPtr kfitem );
 
         // 最大索引
-        uint32 GetItemMaxIndex( KFEntity* player, KFData* kfitembag );
+        uint32 GetItemMaxIndex( KFEntity* player, DataPtr kfitembag );
 
         // 添加最大索引
-        void AddItemMaxIndex( KFEntity* player, KFData* kfitembag, uint32 count );
+        void AddItemMaxIndex( KFEntity* player, DataPtr kfitembag, uint32 count );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 计算可以叠加物品数量
         uint32 CalcItemAddCount( uint32 sourcecount, uint32 targetcount, uint32 maxcount );
@@ -88,48 +88,48 @@ namespace KFrame
         bool CheckItemCanMove( const KFItemSetting* kfsetting, const std::string& sourcename, const std::string& targetname );
 
         // 找到可以移动的背包
-        KFData* FindCanMoveItemBag( KFEntity* player, const KFItemSetting* kfsetting, const std::string& sourcename, const std::string& excludename );
+        DataPtr FindCanMoveItemBag( KFEntity* player, const KFItemSetting* kfsetting, const std::string& sourcename, const std::string& excludename );
 
         // 判断是否能合并
-        bool CheckItemCanMerge( const KFItemSetting* kfsourcesetting, KFData* kfsourceitem, const KFItemSetting* kftargetsetting, KFData* kftargetitem );
+        bool CheckItemCanMerge( const KFItemSetting* kfsourcesetting, DataPtr kfsourceitem, const KFItemSetting* kftargetsetting, DataPtr kftargetitem );
 
         // 拆分道具
         uint32 SplitItemLogic( KFEntity* player, const KFItemSetting* kfitemsetting,
-                               const KFItemBagSetting* kfsourcebagsetting, KFData* kfsourcerecord, KFData* kfsourceitem, uint32 splitcount,
-                               const KFItemBagSetting* kftargetbagsetting, KFData* kftargetrecord, uint32 splitindex );
+                               const KFItemBagSetting* kfsourcebagsetting, DataPtr kfsourcerecord, DataPtr kfsourceitem, uint32 splitcount,
+                               const KFItemBagSetting* kftargetbagsetting, DataPtr kftargetrecord, uint32 splitindex );
 
         // 移动道具逻辑
         uint32 MoveItemDataLogic( KFEntity* player, const KFItemSetting* kfitemsetting,
-                                  const KFItemBagSetting* kfsourcebagsetting, KFData* kfsourcerecord, KFData* kfsourceitem,
-                                  const KFItemBagSetting* kftargetbagsetting, KFData* kftargetrecord );
+                                  const KFItemBagSetting* kfsourcebagsetting, DataPtr kfsourcerecord, DataPtr kfsourceitem,
+                                  const KFItemBagSetting* kftargetbagsetting, DataPtr kftargetrecord );
         // 移动堆叠道具数量
         void MoveItemCountLogic( KFEntity* player,  const KFItemSetting* kfitemsetting,
-                                 const KFItemBagSetting* kfsourcebagsetting, KFData* kfsourceitem, uint32 movecount,
-                                 const KFItemBagSetting* kftargetbagsetting, KFData* kftargetitem );
+                                 const KFItemBagSetting* kfsourcebagsetting, DataPtr kfsourceitem, uint32 movecount,
+                                 const KFItemBagSetting* kftargetbagsetting, DataPtr kftargetitem );
 
         // 移动道具
         uint32 MoveItemLogic( KFEntity* player, const KFItemSetting* kfitemsetting,
-                              const KFItemBagSetting* kfsourcebagsetting, KFData* kfsourcerecord, KFData* kfsourceitem,
-                              const KFItemBagSetting* kftargetbagsetting, KFData* kftargetrecord, uint32 targetindex );
+                              const KFItemBagSetting* kfsourcebagsetting, DataPtr kfsourcerecord, DataPtr kfsourceitem,
+                              const KFItemBagSetting* kftargetbagsetting, DataPtr kftargetrecord, uint32 targetindex );
 
         // 交换道具
         uint32 ExchangeItemLogic( KFEntity* player,
-                                  const KFItemSetting* kfsourcesetting, const KFItemBagSetting* kfsourcebagsetting, KFData* kfsourcerecord, KFData* kfsourceitem,
-                                  const KFItemSetting* kftargetsetting, const KFItemBagSetting* kftargetbagsetting, KFData* kftargetrecord, KFData* kftargetitem );
+                                  const KFItemSetting* kfsourcesetting, const KFItemBagSetting* kfsourcebagsetting, DataPtr kfsourcerecord, DataPtr kfsourceitem,
+                                  const KFItemSetting* kftargetsetting, const KFItemBagSetting* kftargetbagsetting, DataPtr kftargetrecord, DataPtr kftargetitem );
 
         // 合并道具
         uint32 MergeItemLogic( KFEntity* player, const KFItemSetting* kfitemsetting,
-                               const KFItemBagSetting* kfsourcebagsetting, KFData* kfsourceitem, uint32 mergecount,
-                               const KFItemBagSetting* kftargetbagsetting, KFData* kftargetitem );
+                               const KFItemBagSetting* kfsourcebagsetting, DataPtr kfsourceitem, uint32 mergecount,
+                               const KFItemBagSetting* kftargetbagsetting, DataPtr kftargetitem );
 
         // 排序道具
         void SortItem( KFEntity* player, const std::string& bagname, const std::string& tabname );
-        void SortItem( KFEntity* player, const KFItemSetting* kfitemsetting, const KFItemBagSetting* kfbagsetting, KFItemTabIndex* kftabindex, KFData* kfitemrecord, std::set<KFData*>& itemlist );
+        void SortItem( KFEntity* player, const KFItemSetting* kfitemsetting, const KFItemBagSetting* kfbagsetting, KFItemTabIndex* kftabindex, DataPtr kfitemrecord, std::set<DataPtr>& itemlist );
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 移动物品显示
-        void MoveItemDataToShow( KFEntity* player, const KFItemSetting* kfsetting, KFData* kfsourcerecord, KFData* kftargetrecord, KFData* kfitem );
-        void MoveItemDataToShow( KFEntity* player, const KFItemSetting* kfsetting, KFData* kfsourcerecord, KFData* kftargetrecord, uint32 count );
+        void MoveItemDataToShow( KFEntity* player, const KFItemSetting* kfsetting, DataPtr kfsourcerecord, DataPtr kftargetrecord, DataPtr kfitem );
+        void MoveItemDataToShow( KFEntity* player, const KFItemSetting* kfsetting, DataPtr kfsourcerecord, DataPtr kftargetrecord, uint32 count );
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 移动背包道具
         uint32 MoveBagItem( KFEntity* player, const std::string& sourcename, uint64 itemuuid, const std::string& targetname, uint32 targetindex );

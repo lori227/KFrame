@@ -81,8 +81,8 @@ namespace KFrame
 
         // 判断价钱
         auto costprice = CalcBuyPrice( kfsetting, KFGlobal::Instance()->_real_time );
-        auto& dataname = player->RemoveElement( costprice, buycount, __STRING__( goods ), goodsid, __FUNC_LINE__ );
-        if ( !dataname.empty() )
+        auto& data_name = player->RemoveElement( costprice, buycount, __STRING__( goods ), goodsid, __FUNC_LINE__ );
+        if ( !data_name.empty() )
         {
             return KFMsg::StoreLackCost;
         }

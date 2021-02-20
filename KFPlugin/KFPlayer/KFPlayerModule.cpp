@@ -583,13 +583,13 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleRemoveDataReq, KFMsg::MsgRemoveDataReq )
     {
-        kfentity->RemoveRecord( kfmsg->dataname(), kfmsg->key() );
-        __LOG_INFO__( "remove data[{}:{}] ok", kfmsg->dataname(), kfmsg->key() );
+        kfentity->RemoveRecord( kfmsg->data_name(), kfmsg->key() );
+        __LOG_INFO__( "remove data[{}:{}] ok", kfmsg->data_name(), kfmsg->key() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleRequestSyncReq, KFMsg::MsgRequestSyncReq )
     {
-        auto kfdata = kfentity->Find( kfmsg->dataname() );
+        auto kfdata = kfentity->Find( kfmsg->data_name() );
         if ( kfdata == nullptr )
         {
             return;
@@ -611,7 +611,7 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleCancelSyncReq, KFMsg::MsgCancelSyncReq )
     {
-        auto kfdata = kfentity->Find( kfmsg->dataname() );
+        auto kfdata = kfentity->Find( kfmsg->data_name() );
         if ( kfdata == nullptr )
         {
             return;
@@ -623,9 +623,9 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleUpdateIntReq, KFMsg::MsgUpdateIntReq )
     {
         // 1级属性
-        if ( kfmsg->parentname().empty() )
+        if ( kfmsg->parent_name().empty() )
         {
-            auto kfdata = kfentity->Find( kfmsg->dataname() );
+            auto kfdata = kfentity->Find( kfmsg->data_name() );
             if ( kfdata != nullptr && kfdata->HaveMask( KFDataDefine::DataMaskClient ) )
             {
                 kfentity->UpdateData( kfdata, kfmsg->operate(), kfmsg->value() );
@@ -637,7 +637,7 @@ namespace KFrame
         // 2级object属性
         if ( kfmsg->key() == 0u )
         {
-            auto kfdata = kfentity->Find( kfmsg->parentname(), kfmsg->dataname() );
+            auto kfdata = kfentity->Find( kfmsg->parent_name(), kfmsg->data_name() );
             if ( kfdata != nullptr && kfdata->HaveMask( KFDataDefine::DataMaskClient ) )
             {
                 kfentity->UpdateData( kfdata, kfmsg->operate(), kfmsg->value() );
@@ -647,27 +647,27 @@ namespace KFrame
         }
 
         // 3级record属性
-        auto kfparent = kfentity->Find( kfmsg->parentname() );
+        auto kfparent = kfentity->Find( kfmsg->parent_name() );
         if ( kfparent == nullptr || !kfparent->_data_setting->HaveMask( KFDataDefine::DataMaskClient ) )
         {
             return;
         }
 
-        auto kfdatasetting = kfparent->_data_setting->_class_setting->FindSetting( kfmsg->dataname() );
+        auto kfdatasetting = kfparent->_data_setting->_class_setting->FindSetting( kfmsg->data_name() );
         if ( kfdatasetting == nullptr || !kfdatasetting->HaveMask( KFDataDefine::DataMaskClient ) )
         {
             return;
         }
 
-        kfentity->UpdateRecord( kfparent, kfmsg->key(), kfmsg->dataname(), kfmsg->operate(), kfmsg->value() );
+        kfentity->UpdateRecord( kfparent, kfmsg->key(), kfmsg->data_name(), kfmsg->operate(), kfmsg->value() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleUpdateStrReq, KFMsg::MsgUpdateStrReq )
     {
         // 1级属性
-        if ( kfmsg->parentname().empty() )
+        if ( kfmsg->parent_name().empty() )
         {
-            auto kfdata = kfentity->Find( kfmsg->dataname() );
+            auto kfdata = kfentity->Find( kfmsg->data_name() );
             if ( kfdata != nullptr && kfdata->HaveMask( KFDataDefine::DataMaskClient ) )
             {
                 kfentity->UpdateData( kfdata, kfmsg->value() );
@@ -679,7 +679,7 @@ namespace KFrame
         // 2级object属性
         if ( kfmsg->key() == 0u )
         {
-            auto kfdata = kfentity->Find( kfmsg->parentname(), kfmsg->dataname() );
+            auto kfdata = kfentity->Find( kfmsg->parent_name(), kfmsg->data_name() );
             if ( kfdata != nullptr && kfdata->HaveMask( KFDataDefine::DataMaskClient ) )
             {
                 kfentity->UpdateData( kfdata, kfmsg->value() );
@@ -689,24 +689,24 @@ namespace KFrame
         }
 
         // 3级record属性
-        auto kfparent = kfentity->Find( kfmsg->parentname() );
+        auto kfparent = kfentity->Find( kfmsg->parent_name() );
         if ( kfparent == nullptr )
         {
             return;
         }
 
-        auto kfdatasetting = kfparent->_data_setting->_class_setting->FindSetting( kfmsg->dataname() );
+        auto kfdatasetting = kfparent->_data_setting->_class_setting->FindSetting( kfmsg->data_name() );
         if ( kfdatasetting == nullptr || !kfdatasetting->HaveMask( KFDataDefine::DataMaskClient ) )
         {
             return;
         }
 
-        kfentity->UpdateRecord( kfmsg->parentname(), kfmsg->key(), kfmsg->dataname(), kfmsg->value() );
+        kfentity->UpdateRecord( kfmsg->parent_name(), kfmsg->key(), kfmsg->data_name(), kfmsg->value() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleSyncUpdateDataFromServerReq, KFMsg::S2SSyncUpdateDataFromServer )
     {
-        auto kfobject = kfentity->Find( kfmsg->dataname() );
+        auto kfobject = kfentity->Find( kfmsg->data_name() );
         if ( kfobject == nullptr )
         {
             return;
@@ -717,7 +717,7 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleSyncAddDataFromServerReq, KFMsg::S2SSyncAddDataFromServer )
     {
-        auto kfobject = kfentity->Find( kfmsg->dataname() );
+        auto kfobject = kfentity->Find( kfmsg->data_name() );
         if ( kfobject == nullptr )
         {
             return;
@@ -728,7 +728,7 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleSyncRemoveDataFromServerReq, KFMsg::S2SSyncRemoveDataFromServer )
     {
-        auto kfobject = kfentity->Find( kfmsg->dataname() );
+        auto kfobject = kfentity->Find( kfmsg->data_name() );
         if ( kfobject == nullptr )
         {
             return;

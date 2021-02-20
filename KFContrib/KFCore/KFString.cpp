@@ -18,10 +18,10 @@ namespace KFrame
         return _data;
     }
 
-    void KFString::Reset( bool isdelete /* = true */ )
+    void KFString::Reset()
     {
         _data.clear();
-        KFData::Reset( isdelete );
+        KFData::Reset();
     }
 
     bool KFString::IsValid()
@@ -30,14 +30,14 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFString::CopyFrom( KFData* kfother )
+    void KFString::CopyFrom( DataPtr& other )
     {
-        _data = kfother->Get<std::string>();
+        _data = other->Get<std::string>();
     }
 
-    void KFString::SaveTo( KFData* kfother )
+    void KFString::SaveTo( DataPtr& other )
     {
-        kfother->Set( _data );
+        other->Set( _data );
     }
 
     std::string KFString::ToString()

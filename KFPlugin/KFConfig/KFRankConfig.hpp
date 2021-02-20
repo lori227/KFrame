@@ -58,10 +58,10 @@ namespace KFrame
         }
 
         // 获得排行榜列表
-        std::vector< KFRankSetting* >& FindRankSetting( const std::string& parentname, uint64 key, const std::string& childname )
+        std::vector< KFRankSetting* >& FindRankSetting( const std::string& parent_name, uint64 key, const std::string& child_name )
         {
             static std::vector< KFRankSetting* > _empty_list;
-            auto strkey = __FORMAT__( "{}:{}:{}", parentname, key, childname );
+            auto strkey = __FORMAT__( "{}:{}:{}", parent_name, key, child_name );
             auto iter = _kf_rank_data_list.find( strkey );
             if ( iter == _kf_rank_data_list.end() )
             {

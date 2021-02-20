@@ -31,28 +31,28 @@ namespace KFrame
         void RunEvent();
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 绑定连接事件
-        template< class T >
+        template<class T>
         void BindConnectFunction( T* object, void ( T::*handle )( const KFNetEventData* eventdata ) )
         {
             _kf_connect_function = std::bind( handle, object, std::placeholders::_1 );
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // 绑定关闭事件
-        template< class T >
+        template<class T>
         void BindDisconnectFunction( T* object, void ( T::*handle )( const KFNetEventData* eventdata ) )
         {
             _kf_disconnect_function = std::bind( handle, object, std::placeholders::_1 );
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // 绑定失败事件
-        template< class T >
+        template<class T>
         void BindFailedFunction( T* object, void ( T::*handle )( const KFNetEventData* eventdata ) )
         {
             _kf_failed_function = std::bind( handle, object, std::placeholders::_1 );
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // 绑定关闭事件
-        template< class T >
+        template<class T>
         void BindShutFunction( T* object, void ( T::*handle )( const KFNetEventData* eventdata ) )
         {
             _kf_shut_function = std::bind( handle, object, std::placeholders::_1 );

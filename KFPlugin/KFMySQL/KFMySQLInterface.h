@@ -18,20 +18,20 @@ namespace KFrame
 
         ///////////////////////////////////////////////////////////////////////////////////////
         // 更新字段
-        template< class T >
+        template<class T>
         bool Update( const std::string& table, const std::string& field, T invalue )
         {
             StringMap updatevalue;
-            updatevalue[ field ] = KFUtility::ToString< T >( invalue );
+            updatevalue[ field ] = KFUtility::ToString<T>( invalue );
             return Update( table, updatevalue );
         }
 
         // 默认字段
-        template< class T >
+        template<class T>
         bool Update( const std::string& table, const std::string& key, const std::string& field, T invalue )
         {
             StringMap updatevalue;
-            updatevalue[ field ] = KFUtility::ToString< T >( invalue );
+            updatevalue[ field ] = KFUtility::ToString<T>( invalue );
 
             StringMap keyvalue;
             keyvalue[ __STRING__( id ) ] = key;

@@ -15,7 +15,7 @@ namespace KFrame
         // 执行时间
         void ExecuteEvent();
 
-        template< class T >
+        template<class T>
         void RegisterEventFunction( uint32 type, T* object, void ( T::*handle )( EventData* ) )
         {
             auto kffunction = _event_function.Create( type );

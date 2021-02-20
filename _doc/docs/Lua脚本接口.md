@@ -63,7 +63,7 @@
 
 	参数: 
 	objectid : 玩家id
-	dataname : 属性名称
+	data_name : 属性名称
 
 	用例 : 
 	local money = KFrame:GetValue( 1001, "money" )
@@ -75,7 +75,7 @@
 
 	参数: 
 	objectid : 玩家id
-	dataname : 属性名称
+	data_name : 属性名称
 	operate : 操作类型( 1=加, 2=减, 3=设置, 其他请参考KFEnum枚举值 )
 	value : 操作的属性值
 
@@ -91,8 +91,8 @@
 
 	参数: 
 	objectid : 玩家id
-	parentname : 父属性名称
-	dataname : 子属性名称
+	parent_name : 父属性名称
+	data_name : 子属性名称
 
 	用例 : 
 	local dayvalue = KFrame:GetObjectValue( 1001, "sign", "day" )
@@ -103,8 +103,8 @@
 
 	参数: 
 	objectid : 玩家id
-	parentname : 父属性名称
-	dataname : 属性名称
+	parent_name : 父属性名称
+	data_name : 属性名称
 	operate : 操作类型( 1=加, 2=减, 3=设置, 其他请参考KFEnum枚举值 )
 	value : 操作的属性值	
 
@@ -119,9 +119,9 @@
 
 	参数: 
 	objectid : 玩家id
-	parentname : 父属性名称
+	parent_name : 父属性名称
 	key : 属性的key值
-	dataname : 子属性名称
+	data_name : 子属性名称
 
 	用例 : 
 	local count = KFrame:GetRecordValue( 1001, "item", 1, "count" )
@@ -133,9 +133,9 @@
 
 	参数: 
 	objectid : 玩家id
-	parentname : 父属性名称
+	parent_name : 父属性名称
 	key : 属性的key值
-	dataname : 属性名称
+	data_name : 属性名称
 	operate : 操作类型( 1=加, 2=减, 3=设置, 其他请参考KFEnum枚举值 )
 	value : 操作的属性值	
 

@@ -20,7 +20,7 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 多线程 string
-        template< class T >
+        template<class T>
         void MTGet( const std::string& url, const std::string& data,
                     T* module = nullptr, void ( T::*handle )( std::string&, std::string&, std::string& ) = nullptr,
                     const std::string& args = _invalid_string )
@@ -34,7 +34,7 @@ namespace KFrame
             MTGetRequest( function, url, data, args );
         }
 
-        template< class T >
+        template<class T>
         void MTPost( const std::string& url, const std::string& data,
                      T* module = nullptr, void ( T::*handle )( std::string&, std::string&, std::string& ) = nullptr,
                      const std::string& args = _invalid_string )
@@ -50,7 +50,7 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 多线程 json
-        template< class T >
+        template<class T>
         void MTGet( const std::string& url, KFJson& json,
                     T* module = nullptr, void ( T::*handle )( std::string&, std::string&, std::string& ) = nullptr,
                     const std::string& args = _invalid_string )
@@ -64,7 +64,7 @@ namespace KFrame
             MTGetRequest( function, url, json, args );
         }
 
-        template< class T >
+        template<class T>
         void MTPost( const std::string& url, KFJson& json,
                      T* module = nullptr, void ( T::*handle )( std::string&, std::string&, std::string& ) = nullptr,
                      const std::string& args = _invalid_string )

@@ -151,9 +151,9 @@ namespace KFrame
         return _server_engine->GetHandleCount();
     }
 
-    void KFTcpServerModule::GetHandleList( NetDataList& outlist )
+    void KFTcpServerModule::GetHandleList( NetDataList& out_list )
     {
-        _server_engine->GetHandleList( outlist );
+        _server_engine->GetHandleList( out_list );
     }
 
     const std::string& KFTcpServerModule::GetHandleIp( uint64 handleid )

@@ -241,9 +241,9 @@ bool IoWin32Test::DeleteAllUnder(wstring path) {
 
   bool result = true;
   do {
-    wstring childname = metadata.cFileName;
-    if (kDot != childname && kDotDot != childname) {
-      wstring childpath = path + childname;
+    wstring child_name = metadata.cFileName;
+    if (kDot != child_name && kDotDot != child_name) {
+      wstring childpath = path + child_name;
       if ((metadata.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) != 0) {
         // If this is not a junction, delete its contents recursively.
         // Finally delete this directory/junction too.

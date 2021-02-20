@@ -33,19 +33,19 @@ namespace KFrame
         }
 
         // 添加对象数据
-        bool AddResult( const std::string& dataname, uint32 value )
+        bool AddResult( const std::string& data_name, uint32 value )
         {
-            _data_name = dataname;
+            _data_name = data_name;
             _total_value += value;
             _show_type = KFDataShowEnum::Show_Object;
             return true;
         }
 
         // 添加可叠加的数据
-        bool AddResult( uint32 id, const std::string& overlayname, const std::string& dataname, uint32 value )
+        bool AddResult( uint32 id, const std::string& overlayname, const std::string& data_name, uint32 value )
         {
             _config_id = id;
-            _data_name = dataname;
+            _data_name = data_name;
             _total_value += value;
             _overlay_list[ overlayname ] += value;
             _show_type = KFDataShowEnum::Show_Overlay;
@@ -53,7 +53,7 @@ namespace KFrame
         }
 
         // 添加不可叠加的数据
-        bool AddResult( uint32 id, KFData* kfdata )
+        bool AddResult( uint32 id, DataPtr kfdata )
         {
             _config_id = id;
             _total_value += 1u;
@@ -99,7 +99,7 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////
         // 不可叠加的属性
-        std::list< KFData* > _not_overlay_list;
+        std::list< DataPtr > _not_overlay_list;
     };
 }
 

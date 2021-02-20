@@ -9097,7 +9097,7 @@ S2SSyncUpdateDataFromServer::S2SSyncUpdateDataFromServer(const S2SSyncUpdateData
       _internal_metadata_(NULL) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   dataname_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  if (from.dataname().size() > 0) {
+  if (from.data_name().size() > 0) {
     dataname_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.dataname_);
   }
   if (from.has_pbdata()) {
@@ -9161,7 +9161,7 @@ bool S2SSyncUpdateDataFromServer::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // bytes dataname = 1;
+      // bytes data_name = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
@@ -9211,10 +9211,10 @@ void S2SSyncUpdateDataFromServer::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // bytes dataname = 1;
-  if (this->dataname().size() > 0) {
+  // bytes data_name = 1;
+  if (this->data_name().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
-      1, this->dataname(), output);
+      1, this->data_name(), output);
   }
 
   // .KFMsg.PBObject pbdata = 2;
@@ -9237,11 +9237,11 @@ void S2SSyncUpdateDataFromServer::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // bytes dataname = 1;
-  if (this->dataname().size() > 0) {
+  // bytes data_name = 1;
+  if (this->data_name().size() > 0) {
     target =
       ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
-        1, this->dataname(), target);
+        1, this->data_name(), target);
   }
 
   // .KFMsg.PBObject pbdata = 2;
@@ -9268,11 +9268,11 @@ size_t S2SSyncUpdateDataFromServer::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
   }
-  // bytes dataname = 1;
-  if (this->dataname().size() > 0) {
+  // bytes data_name = 1;
+  if (this->data_name().size() > 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::BytesSize(
-        this->dataname());
+        this->data_name());
   }
 
   // .KFMsg.PBObject pbdata = 2;
@@ -9309,7 +9309,7 @@ void S2SSyncUpdateDataFromServer::MergeFrom(const S2SSyncUpdateDataFromServer& f
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from.dataname().size() > 0) {
+  if (from.data_name().size() > 0) {
 
     dataname_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.dataname_);
   }
@@ -9383,7 +9383,7 @@ S2SSyncAddDataFromServer::S2SSyncAddDataFromServer(const S2SSyncAddDataFromServe
       _internal_metadata_(NULL) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   dataname_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  if (from.dataname().size() > 0) {
+  if (from.data_name().size() > 0) {
     dataname_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.dataname_);
   }
   if (from.has_pbdata()) {
@@ -9447,7 +9447,7 @@ bool S2SSyncAddDataFromServer::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // bytes dataname = 1;
+      // bytes data_name = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
@@ -9497,10 +9497,10 @@ void S2SSyncAddDataFromServer::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // bytes dataname = 1;
-  if (this->dataname().size() > 0) {
+  // bytes data_name = 1;
+  if (this->data_name().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
-      1, this->dataname(), output);
+      1, this->data_name(), output);
   }
 
   // .KFMsg.PBObject pbdata = 2;
@@ -9523,11 +9523,11 @@ void S2SSyncAddDataFromServer::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // bytes dataname = 1;
-  if (this->dataname().size() > 0) {
+  // bytes data_name = 1;
+  if (this->data_name().size() > 0) {
     target =
       ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
-        1, this->dataname(), target);
+        1, this->data_name(), target);
   }
 
   // .KFMsg.PBObject pbdata = 2;
@@ -9554,11 +9554,11 @@ size_t S2SSyncAddDataFromServer::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
   }
-  // bytes dataname = 1;
-  if (this->dataname().size() > 0) {
+  // bytes data_name = 1;
+  if (this->data_name().size() > 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::BytesSize(
-        this->dataname());
+        this->data_name());
   }
 
   // .KFMsg.PBObject pbdata = 2;
@@ -9595,7 +9595,7 @@ void S2SSyncAddDataFromServer::MergeFrom(const S2SSyncAddDataFromServer& from) {
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from.dataname().size() > 0) {
+  if (from.data_name().size() > 0) {
 
     dataname_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.dataname_);
   }
@@ -9669,7 +9669,7 @@ S2SSyncRemoveDataFromServer::S2SSyncRemoveDataFromServer(const S2SSyncRemoveData
       _internal_metadata_(NULL) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   dataname_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  if (from.dataname().size() > 0) {
+  if (from.data_name().size() > 0) {
     dataname_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.dataname_);
   }
   if (from.has_pbdata()) {
@@ -9733,7 +9733,7 @@ bool S2SSyncRemoveDataFromServer::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // bytes dataname = 1;
+      // bytes data_name = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
@@ -9783,10 +9783,10 @@ void S2SSyncRemoveDataFromServer::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // bytes dataname = 1;
-  if (this->dataname().size() > 0) {
+  // bytes data_name = 1;
+  if (this->data_name().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
-      1, this->dataname(), output);
+      1, this->data_name(), output);
   }
 
   // .KFMsg.PBObject pbdata = 2;
@@ -9809,11 +9809,11 @@ void S2SSyncRemoveDataFromServer::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // bytes dataname = 1;
-  if (this->dataname().size() > 0) {
+  // bytes data_name = 1;
+  if (this->data_name().size() > 0) {
     target =
       ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
-        1, this->dataname(), target);
+        1, this->data_name(), target);
   }
 
   // .KFMsg.PBObject pbdata = 2;
@@ -9840,11 +9840,11 @@ size_t S2SSyncRemoveDataFromServer::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
   }
-  // bytes dataname = 1;
-  if (this->dataname().size() > 0) {
+  // bytes data_name = 1;
+  if (this->data_name().size() > 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::BytesSize(
-        this->dataname());
+        this->data_name());
   }
 
   // .KFMsg.PBObject pbdata = 2;
@@ -9881,7 +9881,7 @@ void S2SSyncRemoveDataFromServer::MergeFrom(const S2SSyncRemoveDataFromServer& f
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from.dataname().size() > 0) {
+  if (from.data_name().size() > 0) {
 
     dataname_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.dataname_);
   }

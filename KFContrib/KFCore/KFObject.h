@@ -13,7 +13,7 @@ namespace KFrame
         virtual ~KFObject() = default;
 
         // 重置
-        virtual void Reset( bool isdelete = true );
+        virtual void Reset();
 
         // 是否有效
         virtual bool IsValid();
@@ -24,35 +24,34 @@ namespace KFrame
         // 初始化数值
         virtual void InitData();
 
-        // configid
+        // config id
         virtual uint32 GetConfigID();
 
         // 获得key
         virtual uint64 GetKeyID();
         virtual void SetKeyID( uint64 id );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
-        virtual KFData* First();
-        virtual KFData* Next();
+        virtual DataPtr First();
+        virtual DataPtr Next();
 
-        virtual void CopyFrom( KFData* kfother );
-        virtual void SaveTo( KFData* kfother );
+        virtual void CopyFrom( DataPtr& other );
+        virtual void SaveTo( DataPtr& other );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        virtual KFData* Find( const std::string& dataname );
-        virtual KFData* Find( const std::string& dataname, uint64 key );
-        virtual KFData* Find( const std::string& parentname, const std::string& childname );
-        virtual KFData* Find( const std::string& parentname, uint64 key, const std::string& childname );
-        virtual KFData* Find( const std::string& parentname, const std::string& childname, uint64 key );
-        virtual KFData* Find( const std::string& parentname, const std::string& childname, const std::string& dataname );
+        virtual DataPtr Find( const std::string& data_name );
+        virtual DataPtr Find( const std::string& data_name, uint64 key );
+        virtual DataPtr Find( const std::string& parent_name, const std::string& child_name );
+        virtual DataPtr Find( const std::string& parent_name, uint64 key, const std::string& child_name );
+        virtual DataPtr Find( const std::string& parent_name, const std::string& child_name, uint64 key );
+        virtual DataPtr Find( const std::string& parent_name, const std::string& child_name, const std::string& data_name );
 
-        virtual bool Add( const std::string& dataname, KFData* data );
-        virtual bool Add( const std::string& dataname, uint64 key, KFData* data );
-        virtual bool Add( const std::string& parentname, const std::string& childname, KFData* data );
+        virtual bool Add( const std::string& data_name, DataPtr& data );
+        virtual bool Add( const std::string& data_name, uint64 key, DataPtr& data );
+        virtual bool Add( const std::string& parent_name, const std::string& child_name, DataPtr& data );
 
-        virtual bool Remove( const std::string& dataname );
-        virtual bool Remove( const std::string& dataname, uint64 key );
+        virtual DataPtr Remove( const std::string& data_name );
+        virtual DataPtr Remove( const std::string& data_name, uint64 key );
 
-        virtual KFData* Move( const std::string& dataname, bool usekey );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         // 格式化成字串

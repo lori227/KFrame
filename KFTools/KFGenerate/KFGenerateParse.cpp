@@ -516,9 +516,9 @@ namespace KFrame
 
         auto strvalue = option->_value;
         auto type = KFUtility::SplitValue<uint32>( strvalue, __SPLIT_STRING__ );
-        auto parentname = KFUtility::SplitString( strvalue, __SPLIT_STRING__ );
+        auto parent_name = KFUtility::SplitString( strvalue, __SPLIT_STRING__ );
         auto comment = KFConvert::ToAscii( KFUtility::SplitString( strvalue, __SPLIT_STRING__ ) );
-        return std::make_tuple( type, parentname, comment );
+        return std::make_tuple( type, parent_name, comment );
     }
 
     std::string KFGenerateParse::RemovePrefix( std::string name, const std::string& prefix )
@@ -736,9 +736,9 @@ namespace KFrame
                             xmlfile << __FORMAT__( "\t\t\t\tif ( execute->_name == __STRING__( data ) )\n",  );
                             xmlfile << "\t\t\t\t{\n";
                             xmlfile << "\t\t\t\t\t\tauto& datavalue = execute->_param_list._params[ 0 ]->_str_value;\n";
-                            xmlfile << "\t\t\t\t\t\tauto& dataname = execute->_param_list._params[ 1 ]->_str_value;\n";
+                            xmlfile << "\t\t\t\t\t\tauto& data_name = execute->_param_list._params[ 1 ]->_str_value;\n";
                             xmlfile << "\t\t\t\t\t\tauto& datakey = execute->_param_list._params[ 2 ]->_int_value;\n";
-                            xmlfile << "\t\t\t\t\t\tKFGlobal::Instance()->FormatElement( execute->_elements, dataname, datavalue, datakey );\n";
+                            xmlfile << "\t\t\t\t\t\tKFGlobal::Instance()->FormatElement( execute->_elements, data_name, datavalue, datakey );\n";
                             xmlfile << "\t\t\t\t}\n\n";
                         }
                         else
@@ -750,9 +750,9 @@ namespace KFrame
                             xmlfile << __FORMAT__( "\t\t\t\t\tif ( execute->_name == __STRING__( data ) )\n", );
                             xmlfile << "\t\t\t\t\t{\n";
                             xmlfile << "\t\t\t\t\t\tauto& datavalue = execute->_param_list._params[ 0 ]->_str_value;\n";
-                            xmlfile << "\t\t\t\t\t\tauto& dataname = execute->_param_list._params[ 1 ]->_str_value;\n";
+                            xmlfile << "\t\t\t\t\t\tauto& data_name = execute->_param_list._params[ 1 ]->_str_value;\n";
                             xmlfile << "\t\t\t\t\t\tauto& datakey = execute->_param_list._params[ 2 ]->_int_value;\n";
-                            xmlfile << "\t\t\t\t\t\tKFGlobal::Instance()->FormatElement( execute->_elements, dataname, datavalue, datakey );\n";
+                            xmlfile << "\t\t\t\t\t\tKFGlobal::Instance()->FormatElement( execute->_elements, data_name, datavalue, datakey );\n";
                             xmlfile << "\t\t\t\t\t}\n";
                             xmlfile << "\t\t\t\t}\n\n";
                         }

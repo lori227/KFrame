@@ -62,7 +62,7 @@ namespace KFrame
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFRobot::SyncAddObject( KFData* kfobject, const KFMsg::PBObject* pbobject )
+    void KFRobot::SyncAddObject( DataPtr kfobject, const KFMsg::PBObject* pbobject )
     {
         // 对象
         {
@@ -95,7 +95,7 @@ namespace KFrame
         }
     }
 
-    void KFRobot::SyncAddRecord( KFData* kfrecord, const KFMsg::PBRecord* pbrecord )
+    void KFRobot::SyncAddRecord( DataPtr kfrecord, const KFMsg::PBRecord* pbrecord )
     {
         auto pbchild = &pbrecord->pbobject();
         for ( auto iter = pbchild->begin(); iter != pbchild->end(); ++iter )
@@ -118,7 +118,7 @@ namespace KFrame
         }\
     }
 
-    void KFRobot::SyncUpdateData( KFData* kfobject, const KFMsg::PBObject* pbobject )
+    void KFRobot::SyncUpdateData( DataPtr kfobject, const KFMsg::PBObject* pbobject )
     {
         __SYNC_UPDATE_DATA__( int32, pbint32 );
         __SYNC_UPDATE_DATA__( uint32, pbuint32 );
@@ -188,7 +188,7 @@ namespace KFrame
         }
     }
 
-    void KFRobot::SyncRemoveData( KFData* kfobject, const KFMsg::PBObject* pbobject )
+    void KFRobot::SyncRemoveData( DataPtr kfobject, const KFMsg::PBObject* pbobject )
     {
         // object
         {

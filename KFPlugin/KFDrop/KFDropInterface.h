@@ -17,7 +17,7 @@ namespace KFrame
         virtual const DropDataList& Drop( KFEntity* player, const UInt32Vector& droplist, const std::string& modulename, uint64 moduleid, const char* function, uint32 line ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 注册掉落逻辑
-        template< class T >
+        template<class T>
         void RegisterDropLogicFunction( const std::string& logicname, T* module, void ( T::*handle )( KFEntity*, const KFDropData*, const std::string&, uint64, const char*, uint32 ) )
         {
             KFDropLogicFunction function = std::bind( handle, module, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
@@ -36,10 +36,10 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #define __KF_DROP_LOGIC_FUNCTION__( _function )\
     void _function( KFEntity* player, const KFDropData* dropdata,const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
-#define __REGISTER_DROP_LOGIC__( dataname, function )\
-    _kf_drop->RegisterDropLogicFunction( dataname, this, function )
-#define  __UN_DROP_LOGIC__( dataname )\
-    _kf_drop->UnRegisterDropLogicFunction( dataname )
+#define __REGISTER_DROP_LOGIC__( data_name, function )\
+    _kf_drop->RegisterDropLogicFunction( data_name, this, function )
+#define  __UN_DROP_LOGIC__( data_name )\
+    _kf_drop->UnRegisterDropLogicFunction( data_name )
 }
 
 #endif

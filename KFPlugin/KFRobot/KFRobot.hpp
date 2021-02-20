@@ -35,16 +35,16 @@ namespace KFrame
 
     public:
         // 同步添加对象
-        void SyncAddObject( KFData* kfobject, const KFMsg::PBObject* pbobject );
+        void SyncAddObject( DataPtr kfobject, const KFMsg::PBObject* pbobject );
 
         // 同步添加集合
-        void SyncAddRecord( KFData* kfrecord, const KFMsg::PBRecord* pbrecord );
+        void SyncAddRecord( DataPtr kfrecord, const KFMsg::PBRecord* pbrecord );
 
         // 同步更新属性
-        void SyncUpdateData( KFData* kfobject, const KFMsg::PBObject* pbobject );
+        void SyncUpdateData( DataPtr kfobject, const KFMsg::PBObject* pbobject );
 
         // 删除属性
-        void SyncRemoveData( KFData* kfobject, const KFMsg::PBObject* pbobject );
+        void SyncRemoveData( DataPtr kfobject, const KFMsg::PBObject* pbobject );
 
     public:
         // id

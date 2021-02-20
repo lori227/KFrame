@@ -7,7 +7,7 @@
 namespace KFrame
 {
     class KFModule;
-    template< class T >
+    template<class T>
     class KFFunction
     {
     public:

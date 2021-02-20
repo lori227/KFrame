@@ -26,10 +26,10 @@ namespace KFrame
         return _data;
     }
 
-    void KFUInt64::Reset( bool isdelete /* = true */ )
+    void KFUInt64::Reset()
     {
         _data = _invalid_int;
-        KFData::Reset( isdelete );
+        KFData::Reset();
     }
 
     bool KFUInt64::IsValid()
@@ -48,14 +48,14 @@ namespace KFrame
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFUInt64::CopyFrom( KFData* kfother )
+    void KFUInt64::CopyFrom( DataPtr& other )
     {
-        Set( kfother->Get<uint64>() );
+        Set( other->Get<uint64>() );
     }
 
-    void KFUInt64::SaveTo( KFData* kfother )
+    void KFUInt64::SaveTo( DataPtr& other )
     {
-        kfother->Set( Get<uint64>() );
+        other->Set( Get<uint64>() );
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////

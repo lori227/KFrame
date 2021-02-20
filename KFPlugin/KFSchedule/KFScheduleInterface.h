@@ -15,7 +15,7 @@ namespace KFrame
     {
     public:
         // 注册计划任务
-        template< class T >
+        template<class T>
         void RegisterSchedule( uint32 timesectionid, uint64 objectid, T* module,
                                void ( T::*starthandle )( uint64, uint64 ),
                                void ( T::*finishhandle )( uint64, uint64 ) )
@@ -26,14 +26,14 @@ namespace KFrame
         }
 
         // 删除计划任务
-        template< class T >
+        template<class T>
         void UnRegisterSchedule( uint32 timesectionid, T* module )
         {
             RemoveSchedule( timesectionid, module );
         }
 
         // 删除计划任务
-        template< class T >
+        template<class T>
         void UnRegisterSchedule( T* module )
         {
             RemoveSchedule( module );

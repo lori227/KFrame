@@ -76,7 +76,7 @@ namespace KFrame
         UnlockPlayerData( player, kfsetting, kfdatarecord );
     }
 
-    bool KFUnlockModule::CheckNeedUnlock( KFEntity* player, const KFUnlockSetting* kfsetting, KFData* kfdatarecord )
+    bool KFUnlockModule::CheckNeedUnlock( KFEntity* player, const KFUnlockSetting* kfsetting, DataPtr kfdatarecord )
     {
         auto kfdata = kfdatarecord->Find( kfsetting->_data_key );
         if ( kfsetting->_child_name.empty() )
@@ -97,7 +97,7 @@ namespace KFrame
         return true;
     }
 
-    void KFUnlockModule::UnlockPlayerData( KFEntity* player, const KFUnlockSetting* kfsetting, KFData* kfdatarecord )
+    void KFUnlockModule::UnlockPlayerData( KFEntity* player, const KFUnlockSetting* kfsetting, DataPtr kfdatarecord )
     {
         auto kfdata = kfdatarecord->Find( kfsetting->_data_key );
         if ( kfsetting->_child_name.empty() )

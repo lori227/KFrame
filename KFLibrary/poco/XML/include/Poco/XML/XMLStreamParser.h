@@ -429,7 +429,7 @@ inline XMLStreamParser::EventType XMLStreamParser::peek()
 template <typename T>
 inline T XMLStreamParser::value() const
 {
-	return ValueTraits < T > ::parse(value(), *this);
+	return ValueTraits <T> ::parse(value(), *this);
 }
 
 
@@ -442,7 +442,7 @@ inline const std::string& XMLStreamParser::attribute(const std::string& n) const
 template <typename T>
 inline T XMLStreamParser::attribute(const std::string& n) const
 {
-	return attribute < T > (QName(n));
+	return attribute <T> (QName(n));
 }
 
 
@@ -455,14 +455,14 @@ inline std::string XMLStreamParser::attribute(const std::string& n, const std::s
 template <typename T>
 inline T XMLStreamParser::attribute(const std::string& n, const T& dv) const
 {
-	return attribute < T > (QName(n), dv);
+	return attribute <T> (QName(n), dv);
 }
 
 
 template <typename T>
 inline T XMLStreamParser::attribute(const QName& qn) const
 {
-	return ValueTraits < T > ::parse(attribute(qn), *this);
+	return ValueTraits <T> ::parse(attribute(qn), *this);
 }
 
 
@@ -523,7 +523,7 @@ inline void XMLStreamParser::nextExpect(EventType e, const std::string& ns, cons
 template <typename T>
 inline T XMLStreamParser::element()
 {
-	return ValueTraits < T > ::parse(element(), *this);
+	return ValueTraits <T> ::parse(element(), *this);
 }
 
 
@@ -544,14 +544,14 @@ inline std::string XMLStreamParser::element(const QName& qn)
 template <typename T>
 inline T XMLStreamParser::element(const std::string& n)
 {
-	return ValueTraits < T > ::parse(element(n), *this);
+	return ValueTraits <T> ::parse(element(n), *this);
 }
 
 
 template <typename T>
 inline T XMLStreamParser::element(const QName& qn)
 {
-	return ValueTraits < T > ::parse(element(qn), *this);
+	return ValueTraits <T> ::parse(element(qn), *this);
 }
 
 
@@ -564,7 +564,7 @@ inline std::string XMLStreamParser::element(const std::string& n, const std::str
 template <typename T>
 inline T XMLStreamParser::element(const std::string& n, const T& dv)
 {
-	return element < T > (QName(n), dv);
+	return element <T> (QName(n), dv);
 }
 
 
@@ -607,7 +607,7 @@ T XMLStreamParser::attribute(const QName& qn, const T& dv) const
 				i->second.handled = true;
 				e->attributesUnhandled--;
 			}
-			return ValueTraits < T > ::parse(i->second.value, *this);
+			return ValueTraits <T> ::parse(i->second.value, *this);
 		}
 	}
 

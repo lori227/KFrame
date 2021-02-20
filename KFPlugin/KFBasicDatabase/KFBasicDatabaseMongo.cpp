@@ -107,17 +107,17 @@ namespace KFrame
         return kfplayerid->_value;
     }
 
-    uint64 KFBasicDatabaseMongo::QueryBasicIntValue( uint64 playerid, const std::string& dataname )
+    uint64 KFBasicDatabaseMongo::QueryBasicIntValue( uint64 playerid, const std::string& data_name )
     {
         auto mongodriver = __BASIC_MONGO_DRIVER__;
-        auto kfresult = mongodriver->QueryUInt64( __BASIC_TABLE_NAME__, playerid, dataname );
+        auto kfresult = mongodriver->QueryUInt64( __BASIC_TABLE_NAME__, playerid, data_name );
         return kfresult->_value;
     }
 
-    std::string KFBasicDatabaseMongo::QueryBasicStrValue( uint64 playerid, const std::string& dataname )
+    std::string KFBasicDatabaseMongo::QueryBasicStrValue( uint64 playerid, const std::string& data_name )
     {
         auto mongodriver = __BASIC_MONGO_DRIVER__;
-        auto kfresult = mongodriver->QueryString( __BASIC_TABLE_NAME__, playerid, dataname );
+        auto kfresult = mongodriver->QueryString( __BASIC_TABLE_NAME__, playerid, data_name );
         return kfresult->_value;
     }
 }

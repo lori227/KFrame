@@ -49,7 +49,7 @@ namespace KFrame
         __KF_UPDATE_STRING_FUNCTION__( OnRelationStringUpdate );
 
         // 更新关系属性值
-        void UpdateValueToRelation( KFEntity* player, KFData* kfdata );
+        void UpdateValueToRelation( KFEntity* player, DataPtr kfdata );
 
     protected:
         // 查询好友回馈
@@ -91,23 +91,23 @@ namespace KFrame
         void EnterLeaveUpdateToRelation( KFEntity* player, const std::string& relationname );
 
         // 解析关系信息
-        void PBRelationToKFData( const KFMsg::PBRelation* pbrelation, KFData* kfrelation );
+        void PBRelationToKFData( const KFMsg::PBRelation* pbrelation, DataPtr kfrelation );
 
         // 发送消息到好友
         void SendMessageToRelation( KFEntity* player, const std::string& relationname, uint32 msgid, google::protobuf::Message* message );
 
         // 发送好友更新消息
         void UpdateIntValueToRelation( KFEntity* player, const std::string& relationname, const StringUInt64& values );
-        void UpdateIntValueToRelation( KFEntity* player, const std::string& relationname, const std::string& dataname, uint64 datavalue );
-        void UpdateStrValueToRelation( KFEntity* player, const std::string& relationname, const std::string& dataname, const std::string& datavalue );
+        void UpdateIntValueToRelation( KFEntity* player, const std::string& relationname, const std::string& data_name, uint64 datavalue );
+        void UpdateStrValueToRelation( KFEntity* player, const std::string& relationname, const std::string& data_name, const std::string& datavalue );
 
         // 好友申请操作
-        void ReplyRelationAllInvite( KFEntity* player, KFData* kfinviterecord, const KFRelationSetting* kfsetting, uint32 operate );
-        void ReplyRelationInvite( KFEntity* player, KFData* kfinviterecord, const KFRelationSetting* kfsetting, uint32 operate, uint64 playerid );
-        uint64 ReplyInvite( KFEntity* player, const KFRelationSetting* kfsetting, uint32 operate, KFData* kfinvite );
+        void ReplyRelationAllInvite( KFEntity* player, DataPtr kfinviterecord, const KFRelationSetting* kfsetting, uint32 operate );
+        void ReplyRelationInvite( KFEntity* player, DataPtr kfinviterecord, const KFRelationSetting* kfsetting, uint32 operate, uint64 playerid );
+        uint64 ReplyInvite( KFEntity* player, const KFRelationSetting* kfsetting, uint32 operate, DataPtr kfinvite );
 
         // 添加关系
-        void AddRelationToRelation( KFEntity* player, uint64 playerid, const std::string& playername, KFData* kfrelationrecord, const KFRelationSetting* kfsetting );
+        void AddRelationToRelation( KFEntity* player, uint64 playerid, const std::string& playername, DataPtr kfrelationrecord, const KFRelationSetting* kfsetting );
 
         // 通过邀请名查找关系属性配置
         const KFRelationSetting* FindRelationSettingByInviteName( const std::string& name );

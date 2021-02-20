@@ -59,7 +59,7 @@ namespace KFrame
     };
 
     template< typename T >
-    T* KFSingleton< T >::_instance = nullptr;
+    T* KFSingleton<T>::_instance = nullptr;
 }
 
 #endif

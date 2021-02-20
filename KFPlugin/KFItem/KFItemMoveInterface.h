@@ -11,7 +11,7 @@ namespace KFrame
     {
     public:
         // 移动道具
-        virtual uint32 MoveItem( KFEntity* player, KFData* kfsourcebag, KFData* kfsourceitem, KFData* kftargetbag, uint32 targetindex ) = 0;
+        virtual uint32 MoveItem( KFEntity* player, DataPtr kfsourcebag, DataPtr kfsourceitem, DataPtr kftargetbag, uint32 targetindex ) = 0;
     };
 
     ///////////////////////////////////////////////////////////////////////////

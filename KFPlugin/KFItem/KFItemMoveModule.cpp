@@ -183,7 +183,7 @@ namespace KFrame
         }
     }
 
-    void KFItemMoveModule::InitItemEmptyIndexData( KFEntity* player, KFData* kfitembag, const KFItemBagSetting* kfbagsetting )
+    void KFItemMoveModule::InitItemEmptyIndexData( KFEntity* player, DataPtr kfitembag, const KFItemBagSetting* kfbagsetting )
     {
         auto maxitemcount = _kf_item->GetItemBagMaxCount( player, kfitembag );
 
@@ -192,7 +192,7 @@ namespace KFrame
         auto kfbagindex = _player_item_index.Create( key );
         kfbagindex->InitMaxIndex( maxitemcount, kfbagsetting->_tab_list );
 
-        std::list< std::tuple< KFData*, KFItemTabIndex* > > invalidlist;
+        std::list< std::tuple< DataPtr, KFItemTabIndex* > > invalidlist;
         for ( auto kfitem = kfitembag->First(); kfitem != nullptr; kfitem = kfitembag->Next() )
         {
             auto kfitemsetting = KFItemConfig::Instance()->FindSetting( kfitem->Get<uint32>( __STRING__( id ) ) );
@@ -247,7 +247,7 @@ namespace KFrame
         _player_item_index.Remove( key );
     }
 
-    uint32 KFItemMoveModule::GetItemMaxIndex( KFEntity* player, KFData* kfitemrecord )
+    uint32 KFItemMoveModule::GetItemMaxIndex( KFEntity* player, DataPtr kfitemrecord )
     {
         ItemIndexKey key( player->GetKeyID(), kfitemrecord->_data_setting->_name );
         auto kfbagindex = _player_item_index.Find( key );
@@ -259,7 +259,7 @@ namespace KFrame
         return kfbagindex->GetMaxIndex();
     }
 
-    void KFItemMoveModule::AddItemMaxIndex( KFEntity* player, KFData* kfitemrecord, uint32 count )
+    void KFItemMoveModule::AddItemMaxIndex( KFEntity* player, DataPtr kfitemrecord, uint32 count )
     {
         ItemIndexKey key( player->GetKeyID(), kfitemrecord->_data_setting->_name );
         auto kfbagindex = _player_item_index.Find( key );
@@ -271,7 +271,7 @@ namespace KFrame
         kfbagindex->AddMaxIndex( count );
     }
 
-    void KFItemMoveModule::AddItemEmptyIndex( KFEntity* player, KFData* kfitembag, KFData* kfitem )
+    void KFItemMoveModule::AddItemEmptyIndex( KFEntity* player, DataPtr kfitembag, DataPtr kfitem )
     {
         auto kfitemsetting = KFItemConfig::Instance()->FindSetting( kfitem->Get<uint32>( __STRING__( id ) ) );
         if ( kfitemsetting == nullptr )
@@ -305,7 +305,7 @@ namespace KFrame
         }
     }
 
-    KFData* KFItemMoveModule::FindIndexItem( KFEntity* player, KFData* kfitembag, uint32 index )
+    DataPtr KFItemMoveModule::FindIndexItem( KFEntity* player, DataPtr kfitembag, uint32 index )
     {
         auto kfbagsetting = KFItemBagConfig::Instance()->FindSetting( kfitembag->_data_setting->_name );
         if ( kfbagsetting == nullptr || kfbagsetting->_tab_list.empty() )
@@ -364,8 +364,8 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     uint32 KFItemMoveModule::SplitItemLogic( KFEntity* player, const KFItemSetting* kfitemsetting,
-            const KFItemBagSetting* kfsourcebagsetting, KFData* kfsourcebag, KFData* kfsourceitem, uint32 splitcount,
-            const KFItemBagSetting* kftargetbagsetting, KFData* kftargetbag, uint32 splitindex )
+            const KFItemBagSetting* kfsourcebagsetting, DataPtr kfsourcebag, DataPtr kfsourceitem, uint32 splitcount,
+            const KFItemBagSetting* kftargetbagsetting, DataPtr kftargetbag, uint32 splitindex )
     {
         // 扣除源物品数量
         MoveItemCountLogic( player, kfitemsetting, kfsourcebagsetting, kfsourceitem, splitcount, kftargetbagsetting, nullptr );
@@ -391,8 +391,8 @@ namespace KFrame
     }
 
     uint32 KFItemMoveModule::MoveItemLogic( KFEntity* player, const KFItemSetting* kfitemsetting,
-                                            const KFItemBagSetting* kfsourcebagsetting, KFData* kfsourcebag, KFData* kfsourceitem,
-                                            const KFItemBagSetting* kftargetbagsetting, KFData* kftargetbag, uint32 targetindex )
+                                            const KFItemBagSetting* kfsourcebagsetting, DataPtr kfsourcebag, DataPtr kfsourceitem,
+                                            const KFItemBagSetting* kftargetbagsetting, DataPtr kftargetbag, uint32 targetindex )
     {
         // 如果背包相同
         if ( kfsourcebag == kftargetbag )
@@ -428,8 +428,8 @@ namespace KFrame
     }
 
     uint32 KFItemMoveModule::ExchangeItemLogic( KFEntity* player,
-            const KFItemSetting* kfsourceitemsetting, const KFItemBagSetting* kfsourcebagsetting, KFData* kfsourcebag, KFData* kfsourceitem,
-            const KFItemSetting* kftargetitemsetting, const KFItemBagSetting* kftargetbagsetting, KFData* kftargetbag, KFData* kftargetitem )
+            const KFItemSetting* kfsourceitemsetting, const KFItemBagSetting* kfsourcebagsetting, DataPtr kfsourcebag, DataPtr kfsourceitem,
+            const KFItemSetting* kftargetitemsetting, const KFItemBagSetting* kftargetbagsetting, DataPtr kftargetbag, DataPtr kftargetitem )
     {
         if ( kfsourceitem == kftargetitem )
         {
@@ -546,8 +546,8 @@ namespace KFrame
     }
 
     uint32 KFItemMoveModule::MergeItemLogic( KFEntity* player, const KFItemSetting* kfitemsetting,
-            const KFItemBagSetting* kfsourcebagsetting, KFData* kfsourceitem, uint32 mergecount,
-            const KFItemBagSetting* kftargetbagsetting, KFData* kftargetitem )
+            const KFItemBagSetting* kfsourcebagsetting, DataPtr kfsourceitem, uint32 mergecount,
+            const KFItemBagSetting* kftargetbagsetting, DataPtr kftargetitem )
     {
         if ( kfsourceitem == kftargetitem )
         {
@@ -586,8 +586,8 @@ namespace KFrame
     }
 
     void KFItemMoveModule::MoveItemCountLogic( KFEntity* player, const KFItemSetting* kfitemsetting,
-            const KFItemBagSetting* kfsourcebagsetting, KFData* kfsourceitem, uint32 movecount,
-            const KFItemBagSetting* kftargetbagsetting, KFData* kftargetitem )
+            const KFItemBagSetting* kfsourcebagsetting, DataPtr kfsourceitem, uint32 movecount,
+            const KFItemBagSetting* kftargetbagsetting, DataPtr kftargetitem )
     {
         // 源背包
         auto ismoveupdate = IsNeedUpdateMoveToTarget( kfsourcebagsetting, kftargetbagsetting->_id );
@@ -634,7 +634,7 @@ namespace KFrame
         return kftypesetting->_move_bag_list.find( targetname ) != kftypesetting->_move_bag_list.end();
     }
 
-    KFData* KFItemMoveModule::FindCanMoveItemBag( KFEntity* player, const KFItemSetting* kfsetting, const std::string& sourcename, const std::string& excludename )
+    DataPtr KFItemMoveModule::FindCanMoveItemBag( KFEntity* player, const KFItemSetting* kfsetting, const std::string& sourcename, const std::string& excludename )
     {
         auto kftypesetting = KFItemTypeConfig::Instance()->FindSetting( kfsetting->_type );
         if ( kftypesetting == nullptr )
@@ -664,7 +664,7 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    uint32 KFItemMoveModule::MoveItem( KFEntity* player, KFData* kfsourcebag, KFData* kfsourceitem, KFData* kftargetbag, uint32 targetindex )
+    uint32 KFItemMoveModule::MoveItem( KFEntity* player, DataPtr kfsourcebag, DataPtr kfsourceitem, DataPtr kftargetbag, uint32 targetindex )
     {
         // 判断是否限制
         auto kfsourceitemsetting = KFItemConfig::Instance()->FindSetting( kfsourceitem->Get<uint32>( __STRING__( id ) ) );
@@ -739,7 +739,7 @@ namespace KFrame
         return result;
     }
 
-    bool KFItemMoveModule::CheckItemCanMerge( const KFItemSetting* kfsourcesetting, KFData* kfsourceitem, const KFItemSetting* kftargetsetting, KFData* kftargetitem )
+    bool KFItemMoveModule::CheckItemCanMerge( const KFItemSetting* kfsourcesetting, DataPtr kfsourceitem, const KFItemSetting* kftargetsetting, DataPtr kftargetitem )
     {
         // 不同道具, 不能堆叠
         if ( kfsourcesetting->_id != kftargetsetting->_id || !IsOverlayItem( kfsourcesetting ) )
@@ -910,7 +910,7 @@ namespace KFrame
         }
 
         // 遍历出可以移动的道具
-        std::map< KFData*, const KFItemSetting* > movelist;
+        std::map< DataPtr, const KFItemSetting* > movelist;
         for ( auto kfitem = kfsourcerecord->First(); kfitem != nullptr; kfitem = kfsourcerecord->Next() )
         {
             auto itemid = kfitem->Get<uint32>( kfitem->_data_setting->_config_key_name );
@@ -934,8 +934,8 @@ namespace KFrame
     }
 
     uint32 KFItemMoveModule::MoveItemDataLogic( KFEntity* player, const KFItemSetting* kfitemsetting,
-            const KFItemBagSetting* kfsourcebagsetting, KFData* kfsourcerecord, KFData* kfsourceitem,
-            const KFItemBagSetting* kftargetbagsetting, KFData* kftargetrecord )
+            const KFItemBagSetting* kfsourcebagsetting, DataPtr kfsourcerecord, DataPtr kfsourceitem,
+            const KFItemBagSetting* kftargetbagsetting, DataPtr kftargetrecord )
     {
         // 判断是否能堆叠
         if ( IsOverlayItem( kfitemsetting ) )
@@ -1016,7 +1016,7 @@ namespace KFrame
         auto kftabindex = kfbagindex->InitMaxIndex( tabname );
 
         // sort从小到大, 品质从大到小, id从小到大
-        std::map<uint32, std::map<uint32, std::map<const KFItemSetting*, std::set<KFData*>>>> sortlist;
+        std::map<uint32, std::map<uint32, std::map<const KFItemSetting*, std::set<DataPtr>>>> sortlist;
         for ( auto kfitem = kfitemrecord->First(); kfitem != nullptr; kfitem = kfitemrecord->Next() )
         {
             auto id = kfitem->Get<uint32>( kfitemrecord->_data_setting->_config_key_name );
@@ -1049,10 +1049,10 @@ namespace KFrame
         }
     }
 
-    std::tuple<KFData*, uint32> FindMaxCountItem( uint32 maxoverlaycount, std::set< KFData* >& itemlist, KFData* kfminitem )
+    std::tuple<DataPtr, uint32> FindMaxCountItem( uint32 maxoverlaycount, std::set< DataPtr >& itemlist, DataPtr kfminitem )
     {
         auto maxcount = 0u;
-        KFData* kffind = nullptr;
+        DataPtr kffind = nullptr;
 
         for ( auto kfitem : itemlist )
         {
@@ -1067,10 +1067,10 @@ namespace KFrame
         return std::make_tuple( kffind, maxcount );
     }
 
-    std::tuple<KFData*, uint32> FindMinCountItem( uint32 maxoverlaycount, std::set< KFData* >& itemlist )
+    std::tuple<DataPtr, uint32> FindMinCountItem( uint32 maxoverlaycount, std::set< DataPtr >& itemlist )
     {
         auto mincount = __MAX_UINT32__;
-        KFData* kffind = nullptr;
+        DataPtr kffind = nullptr;
 
         for ( auto kfitem : itemlist )
         {
@@ -1085,10 +1085,10 @@ namespace KFrame
         return std::make_tuple( kffind, mincount );
     }
 
-    KFData* PopMaxCountItem( uint32 maxoverlaycount, std::set< KFData* >& itemlist )
+    DataPtr PopMaxCountItem( uint32 maxoverlaycount, std::set< DataPtr >& itemlist )
     {
         auto maxcount = 0u;
-        KFData* kffind = nullptr;
+        DataPtr kffind = nullptr;
 
         for ( auto kfitem : itemlist )
         {
@@ -1115,7 +1115,7 @@ namespace KFrame
     }
 
     void KFItemMoveModule::SortItem( KFEntity* player, const KFItemSetting* kfitemsetting, const KFItemBagSetting* kfbagsetting,
-                                     KFItemTabIndex* kftabindex, KFData* kfitemrecord, std::set<KFData*>& itemlist )
+                                     KFItemTabIndex* kftabindex, DataPtr kfitemrecord, std::set<DataPtr>& itemlist )
     {
         auto maxoverlaycount = GetOverlayCount( kfitemsetting, kfitemrecord->_data_setting->_name );
         if ( IsOverlayItem( kfitemsetting ) )
@@ -1123,7 +1123,7 @@ namespace KFrame
             while ( true )
             {
                 auto mincount = 0u;
-                KFData* minitem = nullptr;
+                DataPtr minitem = nullptr;
                 std::tie( minitem, mincount ) = FindMinCountItem( maxoverlaycount, itemlist );
                 if ( minitem == nullptr )
                 {
@@ -1131,7 +1131,7 @@ namespace KFrame
                 }
 
                 auto maxcount = 0u;
-                KFData* maxitem = nullptr;
+                DataPtr maxitem = nullptr;
                 std::tie( maxitem, maxcount ) = FindMaxCountItem( maxoverlaycount, itemlist, minitem );
                 if ( maxitem == nullptr )
                 {
@@ -1164,7 +1164,7 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFItemMoveModule::MoveItemDataToShow( KFEntity* player, const KFItemSetting* kfsetting, KFData* kfsourcerecord, KFData* kftargetrecord, uint32 count )
+    void KFItemMoveModule::MoveItemDataToShow( KFEntity* player, const KFItemSetting* kfsetting, DataPtr kfsourcerecord, DataPtr kftargetrecord, uint32 count )
     {
         StringUInt64 values;
         values[ __STRING__( count ) ] = count;
@@ -1172,7 +1172,7 @@ namespace KFrame
         player->AddDataToShow( kfsourcerecord->_data_setting->_name, 0u, __STRING__( item ), kfsetting->_id, values, true );
     }
 
-    void KFItemMoveModule::MoveItemDataToShow( KFEntity* player, const KFItemSetting* kfsetting, KFData* kfsourcerecord, KFData* kftargetrecord, KFData* kfitem )
+    void KFItemMoveModule::MoveItemDataToShow( KFEntity* player, const KFItemSetting* kfsetting, DataPtr kfsourcerecord, DataPtr kftargetrecord, DataPtr kfitem )
     {
         if ( IsOverlayItem( kfsetting ) )
         {

@@ -78,7 +78,7 @@ namespace KFrame
         auto kfskinrecord = player->Find( __STRING__( skin ) );
 
         // 查找时间皮肤
-        std::unordered_map< KFData*, uint64 > timeskins;
+        std::unordered_map< DataPtr, uint64 > timeskins;
         auto kfskin = kfskinrecord->First();
         while ( kfskin != nullptr )
         {

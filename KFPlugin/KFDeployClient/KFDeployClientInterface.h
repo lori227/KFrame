@@ -13,14 +13,14 @@ namespace KFrame
     class KFDeployClientInterface : public KFModule
     {
     public:
-        template< class T >
+        template<class T>
         void RegisterFunction( const std::string& command, T* object, void( T::*handle )( const std::string& param ) )
         {
             KFDeployFunction function = std::bind( handle, object, std::placeholders::_1 );
             AddFunction( command, typeid( T ).name(), function );
         }
 
-        template< class T >
+        template<class T>
         void UnRegisterFunction( const std::string& command, T* object )
         {
             RemoveFunction( command, typeid( T ).name() );

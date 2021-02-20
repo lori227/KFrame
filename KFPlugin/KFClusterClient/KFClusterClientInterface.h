@@ -28,7 +28,7 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 注册回调
-        template< class T >
+        template<class T>
         void RegisterConnectionFunction( T* object, void ( T::*handle )( uint64 ) )
         {
             KFClusterConnectionFunction function = std::bind( handle, object, std::placeholders::_1 );
@@ -36,7 +36,7 @@ namespace KFrame
         }
 
         // 卸载回调
-        template< class T >
+        template<class T>
         void UnRegisterConnectionFunction( T* object )
         {
             RemoveConnectionFunction( typeid( T ).name() );

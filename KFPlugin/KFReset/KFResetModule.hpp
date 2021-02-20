@@ -61,10 +61,10 @@ namespace KFrame
         __KF_PLAYER_RUN_FUNCTION__( RunResetPlayerData );
 
         // 判断所有重置时间
-        UInt64Map& UpdateAllResetTime( KFEntity* player, KFData* kftimerecord );
+        UInt64Map& UpdateAllResetTime( KFEntity* player, DataPtr kftimerecord );
 
         // 判断重置时间, 返回是否成功, 上次重置时间
-        std::tuple<bool, uint64> UpdateResetTime( KFEntity* player, KFData* kftimerecord, const KFTimeLoopSetting* kfsetting );
+        std::tuple<bool, uint64> UpdateResetTime( KFEntity* player, DataPtr kftimerecord, const KFTimeLoopSetting* kfsetting );
 
         // 重置玩家属性
         void ResetPlayerData( KFEntity* player, const ResetData* resetdata );

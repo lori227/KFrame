@@ -34,8 +34,8 @@ namespace KFrame
         void AddPocoDocument( Document& pocodocument, const KFMongoDocument* kfdocument );
 
         // 添加数值
-        template< class T >
-        void AddDocumentValue( Document& pocodocument, const KFMongoExpression< T >* kfexpression )
+        template<class T>
+        void AddDocumentValue( Document& pocodocument, const KFMongoExpression<T>* kfexpression )
         {
             if ( kfexpression->_keyword == MongoKeyword::_eq )
             {

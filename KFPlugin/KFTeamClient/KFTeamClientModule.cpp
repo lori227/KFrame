@@ -144,10 +144,10 @@ namespace KFrame
         _kf_route->RepeatToObject( __TEAM_ROUTE_NAME__, teamid, KFMsg::S2S_TEAM_STR_VALUE_TO_TEAM_REQ, &req );
     }
 
-    void KFTeamClientModule::UpdateMemberIntValueToTeam( KFEntity* player, const std::string& dataname, uint64 datavalue )
+    void KFTeamClientModule::UpdateMemberIntValueToTeam( KFEntity* player, const std::string& data_name, uint64 datavalue )
     {
         StringUInt64 values;
-        values[ dataname ] = datavalue;
+        values[ data_name ] = datavalue;
         UpdateMemberIntValueToTeam( player, values );
     }
 
@@ -167,14 +167,14 @@ namespace KFrame
         _kf_route->RepeatToObject( __TEAM_ROUTE_NAME__, teamid, KFMsg::S2S_TEAM_MEMBER_INT_VALUE_TO_TEAM_REQ, &req );
     }
 
-    void KFTeamClientModule::UpdateMemberStrValueToTeam( KFEntity* player, const std::string& dataname, const std::string& datavalue )
+    void KFTeamClientModule::UpdateMemberStrValueToTeam( KFEntity* player, const std::string& data_name, const std::string& datavalue )
     {
         auto teamid = player->Get( __STRING__( team ), __STRING__( id ) );
 
         KFMsg::S2STeamMemberStrValueToTeamReq req;
         req.set_teamid( teamid );
         req.set_playerid( player->GetKeyID() );
-        ( *req.mutable_pbdata() )[ dataname ] = datavalue;
+        ( *req.mutable_pbdata() )[ data_name ] = datavalue;
         _kf_route->RepeatToObject( __TEAM_ROUTE_NAME__, teamid, KFMsg::S2S_TEAM_MEMBER_STR_VALUE_TO_TEAM_REQ, &req );
     }
 
@@ -369,7 +369,7 @@ namespace KFrame
         SendTeamInviteToTarget( kfentity, kfteam, kfmsg->serverid(), kfmsg->playerid() );
     }
 
-    void KFTeamClientModule::SendTeamInviteToTarget( KFEntity* player, KFData* kfteam, uint64 serverid, uint64 playerid )
+    void KFTeamClientModule::SendTeamInviteToTarget( KFEntity* player, DataPtr kfteam, uint64 serverid, uint64 playerid )
     {
         auto pbteam = _kf_kernel->SerializeToView( kfteam );
         auto pbbasic = _kf_kernel->SerializeToView( player->Find( __STRING__( basic ) ) );

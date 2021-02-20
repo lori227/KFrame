@@ -131,7 +131,7 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    bool KFMailClientModule::CheckMailTimeOut( KFData* kfmail )
+    bool KFMailClientModule::CheckMailTimeOut( DataPtr kfmail )
     {
         auto validtime = kfmail->Get( __STRING__( validtime ) );
         auto sendtime = kfmail->Get( __STRING__( sendtime ) );
@@ -210,7 +210,7 @@ namespace KFrame
         UpdateMailStatusToShard( kfentity, kfmail, KFMsg::ReceiveRemove );
     }
 
-    void KFMailClientModule::UpdateMailStatusToShard( KFEntity* player, KFData* kfmail, uint32 status )
+    void KFMailClientModule::UpdateMailStatusToShard( KFEntity* player, DataPtr kfmail, uint32 status )
     {
         auto mailid = kfmail->GetKeyID();
         auto flag = kfmail->Get( __STRING__( flag ) );

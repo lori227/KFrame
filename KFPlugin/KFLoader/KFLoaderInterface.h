@@ -9,7 +9,7 @@ namespace KFrame
     {
     public:
         // 注册config
-        template< class T >
+        template<class T>
         void AddConfig()
         {
             std::string name = typeid( T ).name();

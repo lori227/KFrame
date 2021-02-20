@@ -22,8 +22,8 @@ namespace KFrame
 
         inline void SetValue( std::string data )
         {
-            auto min_value = KFUtility::SplitValue< T >( data, __RANGE_STRING__ );
-            auto max_value = KFUtility::SplitValue< T >( data, __RANGE_STRING__ );
+            auto min_value = KFUtility::SplitValue<T>( data, __RANGE_STRING__ );
+            auto max_value = KFUtility::SplitValue<T>( data, __RANGE_STRING__ );
             SetValue( min_value, max_value );
         }
 

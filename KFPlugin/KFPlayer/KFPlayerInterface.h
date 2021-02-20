@@ -9,56 +9,56 @@ namespace KFrame
     class KFPlayerInterface : public KFModule
     {
     public:
-        template< class T >
+        template<class T>
         void RegisterInitDataFunction( T* object, void ( T::*handle )( KFEntity* player ) )
         {
             KFEntityFunction function = std::bind( handle, object, std::placeholders::_1 );
             AddInitDataFunction( typeid( T ).name(), function );
         }
 
-        template< class T >
+        template<class T>
         void UnRegisterInitDataFunction( T* object )
         {
             RemoveInitDataFunction( typeid( T ).name() );
         }
 
         //////////////////////////////////////////////////////////////////////////////////////////////
-        template< class T >
+        template<class T>
         void RegisterUnInitDataFunction( T* object, void ( T::*handle )( KFEntity* player ) )
         {
             KFEntityFunction function = std::bind( handle, object, std::placeholders::_1 );
             AddUnInitDataFunction( typeid( T ).name(), function );
         }
 
-        template< class T >
+        template<class T>
         void UnRegisterUnInitDataFunction( T* object )
         {
             RemoveUnInitDataFunction( typeid( T ).name() );
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////
         // 逻辑函数
-        template< class T >
+        template<class T>
         void RegisterRunDataFunction( T* object, void ( T::*handle )( KFEntity* player ) )
         {
             KFEntityFunction function = std::bind( handle, object, std::placeholders::_1 );
             AddRunDataFunction( typeid( T ).name(), function );
         }
 
-        template< class T >
+        template<class T>
         void UnRegisterRunDataFunction( T* object )
         {
             RemoveRunDataFunction( typeid( T ).name() );
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////
         // 逻辑函数
-        template< class T >
+        template<class T>
         void RegisterAfterRunDataFunction( T* object, void ( T::*handle )( KFEntity* player ) )
         {
             KFEntityFunction function = std::bind( handle, object, std::placeholders::_1 );
             AddAfterRunDataFunction( typeid( T ).name(), function );
         }
 
-        template< class T >
+        template<class T>
         void UnRegisterAfterRunDataFunction( T* object )
         {
             RemoveAfterRunDataFunction( typeid( T ).name() );
@@ -66,55 +66,55 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////////////
 
         // 重置函数
-        template< class T >
+        template<class T>
         void RegisterResetFunction( T* object, void ( T::*handle )( KFEntity* player ) )
         {
             KFEntityFunction function = std::bind( handle, object, std::placeholders::_1 );
             AddResetFunction( typeid( T ).name(), function );
         }
 
-        template< class T >
+        template<class T>
         void UnRegisterResetFunction( T* object )
         {
             RemoveResetFunction( typeid( T ).name() );
         }
         //////////////////////////////////////////////////////////////////////////////////////////////////
         // 登录函数
-        template< class T >
+        template<class T>
         void RegisterBeforeEnterFunction( T* object, void ( T::*handle )( KFEntity* player ) )
         {
             KFEntityFunction function = std::bind( handle, object, std::placeholders::_1 );
             AddBeforeEnterFunction( typeid( T ).name(), function );
         }
 
-        template< class T >
+        template<class T>
         void UnRegisterBeforeEnterFunction( T* object )
         {
             RemoveBeforeEnterFunction( typeid( T ).name() );
         }
         // 登录函数
-        template< class T >
+        template<class T>
         void RegisterEnterFunction( T* object, void ( T::*handle )( KFEntity* player ) )
         {
             KFEntityFunction function = std::bind( handle, object, std::placeholders::_1 );
             AddEnterFunction( typeid( T ).name(), function );
         }
 
-        template< class T >
+        template<class T>
         void UnRegisterEnterFunction( T* object )
         {
             RemoveEnterFunction( typeid( T ).name() );
         }
 
         // 登录函数
-        template< class T >
+        template<class T>
         void RegisterAfterEnterFunction( T* object, void ( T::*handle )( KFEntity* player ) )
         {
             KFEntityFunction function = std::bind( handle, object, std::placeholders::_1 );
             AddAfterEnterFunction( typeid( T ).name(), function );
         }
 
-        template< class T >
+        template<class T>
         void UnRegisterAfterEnterFunction( T* object )
         {
             RemoveAfterEnterFunction( typeid( T ).name() );
@@ -122,14 +122,14 @@ namespace KFrame
         ///////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////
         // 离开函数
-        template< class T >
+        template<class T>
         void RegisterLeaveFunction( T* object, void ( T::*handle )( KFEntity* player ) )
         {
             KFEntityFunction function = std::bind( handle, object, std::placeholders::_1 );
             AddLeaveFunction( typeid( T ).name(), function );
         }
 
-        template< class T >
+        template<class T>
         void UnRegisterLeaveFunction( T* object )
         {
             RemoveLeaveFunction( typeid( T ).name() );
@@ -137,28 +137,28 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////
         // 新玩家首次登陆函数
-        template< class T >
+        template<class T>
         void RegisterNewPlayerFunction( T* object, void ( T::*handle )( KFEntity* player ) )
         {
             KFEntityFunction function = std::bind( handle, object, std::placeholders::_1 );
             AddNewPlayerFunction( typeid( T ).name(), function );
         }
 
-        template< class T >
+        template<class T>
         void UnRegisterNewPlayerFunction( T* object )
         {
             RemoveNewPlayerFunction( typeid( T ).name() );
         }
 
         // 创建角色
-        template< class T >
+        template<class T>
         void RegisterCreateRoleFunction( T* object, void ( T::*handle )( KFEntity* player ) )
         {
             KFEntityFunction function = std::bind( handle, object, std::placeholders::_1 );
             AddCreateRoleFunction( typeid( T ).name(), function );
         }
 
-        template< class T >
+        template<class T>
         void UnRegisterCreateRoleFunction( T* object )
         {
             RemoveCreateRoleFunction( typeid( T ).name() );

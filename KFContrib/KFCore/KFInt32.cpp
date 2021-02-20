@@ -32,10 +32,10 @@ namespace KFrame
         return _data >= ( int32 )_data_setting->_int_max_value;
     }
 
-    void KFInt32::Reset( bool isdelete /* = true */ )
+    void KFInt32::Reset()
     {
         _data = _invalid_int;
-        KFData::Reset( isdelete );
+        KFData::Reset();
     }
 
     bool KFInt32::IsValid()
@@ -49,14 +49,14 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////
-    void KFInt32::CopyFrom( KFData* kfother )
+    void KFInt32::CopyFrom( DataPtr& other )
     {
-        Set( kfother->Get<int32>() );
+        Set( other->Get<int32>() );
     }
 
-    void KFInt32::SaveTo( KFData* kfother )
+    void KFInt32::SaveTo( DataPtr& other )
     {
-        kfother->Set( Get<int32>() );
+        other->Set( Get<int32>() );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////

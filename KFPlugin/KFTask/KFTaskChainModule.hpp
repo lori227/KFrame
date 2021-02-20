@@ -34,7 +34,7 @@ namespace KFrame
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         // 判断是否是任务链任务
-        bool IsTaskChain( KFEntity* player, KFData* kftask );
+        bool IsTaskChain( KFEntity* player, DataPtr kftask );
 
         // 清除任务链
         void CleanTaskChain( KFEntity* player, uint32 chainid );
@@ -55,7 +55,7 @@ namespace KFrame
         void OpenExtendChain( KFEntity* player, uint32 chainid, const TaskChainData* taskchaindata );
 
         // 完成任务链任务
-        void FinishTaskChain( KFEntity* player, KFData* kftask );
+        void FinishTaskChain( KFEntity* player, DataPtr kftask );
     protected:
         // 玩家组件上下文
         KFComponent* _kf_component = nullptr;

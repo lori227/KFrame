@@ -12,7 +12,7 @@ namespace KFrame
         kfdropdataweight->_drop_data._data_index = id;
         kfdropdataweight->_drop_data._drop_data_id = kfsetting->_id;
         kfdropdataweight->_drop_data._logic_name = xmlnode.ReadString( "logicname", true );
-        kfdropdataweight->_drop_data._data_name = xmlnode.ReadString( "dataname", true );
+        kfdropdataweight->_drop_data._data_name = xmlnode.ReadString( "data_name", true );
         kfdropdataweight->_drop_data._data_key = xmlnode.ReadUInt32( "dropkey", true );
 
         auto strdropvalue = xmlnode.ReadString( "dropvalue", true );

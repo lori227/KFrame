@@ -9,28 +9,28 @@ namespace KFrame
 	class ConditionTrigger
 	{
 	public:
-		// ¸üÐÂ»Øµ÷·½Ê½
+		// ï¿½ï¿½ï¿½Â»Øµï¿½ï¿½ï¿½Ê½
 		uint32 _call_type = 0u;
 
-		// ´¥·¢Ìõ¼þ
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		uint32 _trigger_type = 0u;
 
-		// ´¥·¢±í´ïÊ½
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½
 		uint32 _trigger_check = 0u;
 
-		// ´¥·¢ÖµÊ¹ÓÃÀàÐÍ
+		// ï¿½ï¿½ï¿½ï¿½ÖµÊ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		uint32 _trigger_use = 0u;
 
-		// ´¥·¢Öµ
+		// ï¿½ï¿½ï¿½ï¿½Öµ
 		uint32 _trigger_value = 0u;
 
-		// ²Ù×÷ÀàÐÍ
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		uint32 _use_operate = 0u;
 
-		// Ê¹ÓÃµÄÀàÐÍ
+		// Ê¹ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½
 		uint32 _use_type = 0u;
 
-		// ÅäÖÃµÄÊ¹ÓÃÊýÖµ
+		// ï¿½ï¿½ï¿½Ãµï¿½Ê¹ï¿½ï¿½ï¿½ï¿½Öµ
 		uint32 _use_value = 0u;
 
 	};
@@ -39,19 +39,19 @@ namespace KFrame
 	class KFConditionDefineSetting : public KFStrSetting
 	{
 	public:
-		// ¸¸ÊôÐÔÃû
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		std::string _parent_name;
 
-		// ×ÓÊôÐÔÃû
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		std::string _data_name;
 
-		// ³õÊ¼Öµ
+		// ï¿½ï¿½Ê¼Öµ
 		uint32 _init_calc_type = 0u;
 
-		// ÊÇ·ñ±£´æuuid
+		// ï¿½Ç·ñ±£´ï¿½uuid
 		bool _save_uuid = false;
 
-		// Ìõ¼þ´¥·¢Êý¾Ý
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		std::vector<ConditionTrigger> _condition_trigger;
 	};
 
@@ -70,8 +70,8 @@ namespace KFrame
 	protected:
 		virtual void ReadSetting( KFXmlNode& xmlnode, KFConditionDefineSetting* kfsetting )
 		{
-			kfsetting->_parent_name = xmlnode.ReadString( "parentname", true );
-			kfsetting->_data_name = xmlnode.ReadString( "dataname", true );
+			kfsetting->_parent_name = xmlnode.ReadString( "parent_name", true );
+			kfsetting->_data_name = xmlnode.ReadString( "data_name", true );
 			kfsetting->_init_calc_type = xmlnode.ReadUInt32( "initcalctype", true );
 			kfsetting->_save_uuid = xmlnode.ReadBoolen( "saveuuid", true );
 		

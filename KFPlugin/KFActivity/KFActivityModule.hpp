@@ -50,8 +50,8 @@ namespace KFrame
         __KF_UPDATE_DATA_FUNCTION__( OnUpdateDataCallBack );
 
         // 更新成就
-        void UpdateDataActivityValue( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate, uint64 value, uint64 newvalue );
-        void UpdateObjectActivityValue( KFEntity* player, uint64 key, KFData* kfdata, uint32 operate );
+        void UpdateDataActivityValue( KFEntity* player, uint64 key, DataPtr kfdata, uint32 operate, uint64 value, uint64 newvalue );
+        void UpdateObjectActivityValue( KFEntity* player, uint64 key, DataPtr kfdata, uint32 operate );
 
         // 判断每日活动重置
         void CheckResetDailyActivity( KFEntity* player );

@@ -310,14 +310,14 @@ namespace KFrame
         return _kf_element_format->ParseString( strparse );
     }
 
-    const std::string& KFGlobal::FormatString( const std::string& dataname, uint32 datavalue, uint32 dataid )
+    const std::string& KFGlobal::FormatString( const std::string& data_name, uint32 datavalue, uint32 dataid )
     {
-        return _kf_element_format->FormatString( dataname, datavalue, dataid );
+        return _kf_element_format->FormatString( data_name, datavalue, dataid );
     }
 
-    const std::string& KFGlobal::FormatString( const std::string& dataname, const std::string& datavalue, uint32 dataid )
+    const std::string& KFGlobal::FormatString( const std::string& data_name, const std::string& datavalue, uint32 dataid )
     {
-        return _kf_element_format->FormatString( dataname, datavalue, dataid );
+        return _kf_element_format->FormatString( data_name, datavalue, dataid );
     }
 
     const std::string& KFGlobal::FormatString( const KFElementData& elementdata )
@@ -325,14 +325,14 @@ namespace KFrame
         return _kf_element_format->FormatString( elementdata );
     }
 
-    bool KFGlobal::FormatElement( KFElements& kfelements, const std::string& dataname, uint32 datavalue, uint32 dataid  )
+    bool KFGlobal::FormatElement( KFElements& kfelements, const std::string& data_name, uint32 datavalue, uint32 dataid  )
     {
-        return _kf_element_format->FormatElement( kfelements, dataname, datavalue, dataid );
+        return _kf_element_format->FormatElement( kfelements, data_name, datavalue, dataid );
     }
 
-    bool KFGlobal::FormatElement( KFElements& kfelements, const std::string& dataname, const std::string& datavalue, uint32 dataid )
+    bool KFGlobal::FormatElement( KFElements& kfelements, const std::string& data_name, const std::string& datavalue, uint32 dataid )
     {
-        return _kf_element_format->FormatElement( kfelements, dataname, datavalue, dataid );
+        return _kf_element_format->FormatElement( kfelements, data_name, datavalue, dataid );
     }
 
     bool KFGlobal::FormatElement( KFElements& kfelements, const KFElementData& elementdata )

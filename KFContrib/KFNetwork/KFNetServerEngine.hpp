@@ -39,7 +39,7 @@ namespace KFrame
         uint32 GetHandleCount();
 
         // 连接列表
-        void GetHandleList( NetDataList& outlist );
+        void GetHandleList( NetDataList& out_list );
 
         // 获得连接ip
         const std::string& GetHandleIp( uint64 handleid );
@@ -57,14 +57,14 @@ namespace KFrame
         ///////////////////////////////////////////////////////////////////////////////////////////////////
     public:
         // 绑定消息事件
-        template< class T >
+        template<class T>
         void BindNetFunction( T* object, void ( T::*handle )( const Route& route, uint32 msgid, const char* data, uint32 length ) )
         {
             _net_function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
         }
 
         // 绑定断开事件
-        template< class T >
+        template<class T>
         void BindLostFunction( T* object, void ( T::*handle )( const KFNetData* ) )
         {
             _server_lost_function = std::bind( handle, object, std::placeholders::_1 );

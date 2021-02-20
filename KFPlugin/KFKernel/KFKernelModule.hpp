@@ -27,45 +27,45 @@ namespace KFrame
         virtual void AfterRun();
         /////////////////////////////////////////////////////////////////////////////////////////////
         // 查找组件
-        virtual KFComponent* FindComponent( const std::string& dataname );
+        virtual KFComponent* FindComponent( const std::string& data_name );
 
         // 查找实体
-        virtual KFEntity* FindEntity( const std::string& dataname, uint64 key, const char* function, uint32 line );
+        virtual KFEntity* FindEntity( const std::string& data_name, uint64 key, const char* function, uint32 line );
         /////////////////////////////////////////////////////////////////////////////////////////////
         // 创建数据
-        virtual KFData* CreateData( const KFDataSetting* datasetting );
+        virtual DataPtr CreateData( const KFDataSetting* datasetting );
 
         // 释放数据
-        virtual void DestroyData( KFData* kfdata );
+        virtual void DestroyData( DataPtr kfdata );
         /////////////////////////////////////////////////////////////////////////////////////////////
         // 反序列化
-        virtual bool ParseFromProto( KFData* kfdata, const KFMsg::PBObject* proto );
+        virtual bool ParseFromProto( DataPtr kfdata, const KFMsg::PBObject* proto );
 
         // 序列化
-        virtual KFMsg::PBObject* Serialize( KFData* kfdata );
+        virtual KFMsg::PBObject* Serialize( DataPtr kfdata );
 
         // 序列化存储到数据库
-        virtual KFMsg::PBObject* SerializeToData( KFData* kfdata );
+        virtual KFMsg::PBObject* SerializeToData( DataPtr kfdata );
 
         // 序列化到观察者
-        virtual KFMsg::PBObject* SerializeToView( KFData* kfdata );
+        virtual KFMsg::PBObject* SerializeToView( DataPtr kfdata );
 
         // 序列化到客户端
-        virtual KFMsg::PBObject* SerializeToClient( KFData* kfdata );
+        virtual KFMsg::PBObject* SerializeToClient( DataPtr kfdata );
 
         // 序列化到客户端( 优化上线的数据量, 登录时才使用 )
         virtual KFMsg::PBObject* SerializeToOnline( KFEntity* kfentity, uint32 delaytime = 0u );
         /////////////////////////////////////////////////////////////////////////////////////////////
     public:
         // 初始化
-        void CopyFromObject( KFData* kfdata, const KFMsg::PBObject* proto );
+        void CopyFromObject( DataPtr kfdata, const KFMsg::PBObject* proto );
 
         // 序列号
-        KFMsg::PBObject* SerializeObject( KFData* kfdata, uint32 datamask, bool online, uint32 delaytime );
+        KFMsg::PBObject* SerializeObject( DataPtr kfdata, uint32 datamask, bool online, uint32 delaytime );
 
         // 保存
-        void SaveToEntity( KFData* kfdata, KFMsg::PBObject* proto, uint32 datamask, bool online, uint32 delaytime );
-        void SaveToObject( KFData* kfdata, KFMsg::PBObject* proto, uint32 datamask, bool online = false, uint32 delaytime = 0u );
+        void SaveToEntity( DataPtr kfdata, KFMsg::PBObject* proto, uint32 datamask, bool online, uint32 delaytime );
+        void SaveToObject( DataPtr kfdata, KFMsg::PBObject* proto, uint32 datamask, bool online = false, uint32 delaytime = 0u );
 
     private:
         // 组件列表

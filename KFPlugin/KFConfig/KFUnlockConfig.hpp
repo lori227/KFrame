@@ -10,19 +10,19 @@ namespace KFrame
 	class KFUnlockSetting : public KFIntSetting
 	{
 	public:
-		// Êý¾ÝÃû
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		std::string _data_name;
 
-		// Êý¾Ýid
+		// ï¿½ï¿½ï¿½ï¿½id
 		uint32 _data_key = 0u;
 
-		// ×ÓÊý¾ÝÃû³Æ
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		std::string _child_name;
 
-		// Êý¾ÝÖµ
+		// ï¿½ï¿½ï¿½ï¿½Öµ
 		uint32 _data_value = 0u;
 
-		// ½âËøÌõ¼þ
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		DynamicConditionGroupPtr _unlock_condition;
 
 	};
@@ -42,9 +42,9 @@ namespace KFrame
 	protected:
 		virtual void ReadSetting( KFXmlNode& xmlnode, KFUnlockSetting* kfsetting )
 		{
-			kfsetting->_data_name = xmlnode.ReadString( "dataname", true );
+			kfsetting->_data_name = xmlnode.ReadString( "data_name", true );
 			kfsetting->_data_key = xmlnode.ReadUInt32( "datakey", true );
-			kfsetting->_child_name = xmlnode.ReadString( "childname", true );
+			kfsetting->_child_name = xmlnode.ReadString( "child_name", true );
 			kfsetting->_data_value = xmlnode.ReadUInt32( "datavalue", true );
 			kfsetting->_unlock_condition = xmlnode.ReadDynamicConditionGroup( "unlockcondition", true );
 		}

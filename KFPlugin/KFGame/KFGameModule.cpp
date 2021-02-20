@@ -117,12 +117,12 @@ namespace KFrame
 
             // 把gate信息发送给world
             {
-                NetDataList outlist;
-                _kf_tcp_server->GetHandleList( outlist );
+                NetDataList out_list;
+                _kf_tcp_server->GetHandleList( out_list );
 
                 KFMsg::S2SAddGateToWorldReq req;
                 req.set_gameid( KFGlobal::Instance()->_app_id->GetId() );
-                for ( auto ipaddress : outlist )
+                for ( auto ipaddress : out_list )
                 {
                     if ( ipaddress->_type == __STRING__( gate ) )
                     {
@@ -192,7 +192,7 @@ namespace KFrame
     }
 
     // 发送到玩家
-    bool KFGameModule::SendToPlayer( uint64 sendid, KFData* kfbasic, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFGameModule::SendToPlayer( uint64 sendid, DataPtr kfbasic, uint32 msgid, ::google::protobuf::Message* message )
     {
         auto playerid = kfbasic->Get( __STRING__( id ) );
         auto serverid = kfbasic->Get( __STRING__( serverid ) );

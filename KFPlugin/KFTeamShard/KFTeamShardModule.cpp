@@ -70,7 +70,7 @@ namespace KFrame
         }
     }
 
-    void KFTeamShardModule::SendMessageToMember( KFData* kfmember, uint32 msgid, ::google::protobuf::Message* message )
+    void KFTeamShardModule::SendMessageToMember( DataPtr kfmember, uint32 msgid, ::google::protobuf::Message* message )
     {
         auto serverid = kfmember->Get<uint64>( __STRING__( basic ), __STRING__( serverid ) );
         _kf_route->SendToEntity( serverid, kfmember->GetKeyID(), msgid, message );
@@ -157,7 +157,7 @@ namespace KFrame
         }
     }
 
-    void KFTeamShardModule::SetTeamCaptain( KFEntity* kfteam, KFData* kfmember, bool update )
+    void KFTeamShardModule::SetTeamCaptain( KFEntity* kfteam, DataPtr kfmember, bool update )
     {
         if ( !update )
         {
@@ -171,7 +171,7 @@ namespace KFrame
         }
     }
 
-    void KFTeamShardModule::SendJoinTeamToMember( KFEntity* kfteam, KFData* kfmember )
+    void KFTeamShardModule::SendJoinTeamToMember( KFEntity* kfteam, DataPtr kfmember )
     {
         auto pbteam = _kf_kernel->SerializeToClient( kfteam );
 

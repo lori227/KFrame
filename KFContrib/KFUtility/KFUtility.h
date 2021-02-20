@@ -9,31 +9,31 @@ namespace KFrame
     {
     public:
         // 算术操作
-        template< class T = uint64 > static T Operate( uint32 operate, T basevalue, T value );
+        template<class T = uint64> static T Operate( uint32 operate, T basevalue, T value );
 
         // 判断是否满足条件
-        template< class T = uint64 > static bool CheckOperate( T basevalue, uint32 operate, T operatevalue );
+        template<class T = uint64> static bool CheckOperate( T basevalue, uint32 operate, T operatevalue );
 
         // 转换成字符串
-        template< class T = uint64 > static std::string ToString( const T& value );
+        template<class T = uint64> static std::string ToString( const T& value );
 
         // 转换成数值
-        template< class T = uint64 > static T ToValue( const char* srcstring );
-        template< class T = uint64 > static T ToValue( const std::string& srcstring );
+        template<class T = uint64> static T ToValue( const char* srcstring );
+        template<class T = uint64> static T ToValue( const std::string& srcstring );
 
         // 切割字符串
-        template< class T = uint64 > static T SplitValue( std::string& srcstring, const std::string& split );
+        template<class T = uint64> static T SplitValue( std::string& srcstring, const std::string& split );
 
         // 标记
         template< class T = uint32 > static bool HaveBitMask( T value, T bitmask );
         template< class T = uint32 > static void ClearBitMask( T& value, T bitmask );
         template< class T = uint32 > static void AddBitMask( T& value, T bitmask );
 
-        template< class T > static void SplitList( T& outlist, std::string& srcstring, const std::string& split );
-        template< class T > static void SplitSet( T& outlist, std::string& srcstring, const std::string& split );
+        template<class T> static void SplitList( T& out_list, std::string& srcstring, const std::string& split );
+        template<class T> static void SplitSet( T& out_list, std::string& srcstring, const std::string& split );
 
-        template< class T > static bool ParseArrayList( T& arraylist, const std::string& srcstring );
-        template< class T > static bool ParseArraySet( T& arrayset, const std::string& srcstring );
+        template<class T> static bool ParseArrayList( T& arraylist, const std::string& srcstring );
+        template<class T> static bool ParseArraySet( T& arrayset, const std::string& srcstring );
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////

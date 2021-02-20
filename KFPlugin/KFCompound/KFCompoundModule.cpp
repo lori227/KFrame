@@ -23,10 +23,10 @@ namespace KFrame
         }
 
         // 扣除材料
-        auto& dataname = kfentity->RemoveElement( &kfsetting->_cost_data, _default_multiple, __STRING__( compound ), kfsetting->_id, __FUNC_LINE__ );
-        if ( !dataname.empty() )
+        auto& data_name = kfentity->RemoveElement( &kfsetting->_cost_data, _default_multiple, __STRING__( compound ), kfsetting->_id, __FUNC_LINE__ );
+        if ( !data_name.empty() )
         {
-            return _kf_display->SendToClient( kfentity, KFMsg::DataNotEnough, dataname );
+            return _kf_display->SendToClient( kfentity, KFMsg::DataNotEnough, data_name );
         }
 
         // 添加合成的属性

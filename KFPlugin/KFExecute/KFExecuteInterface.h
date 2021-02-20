@@ -20,7 +20,7 @@ namespace KFrame
         virtual bool Execute( KFEntity* player, const ExecuteDataPtr& executedata, const std::string& modulename, uint64 moduleid, const char* function, uint32 line ) = 0;
         //////////////////////////////////////////////////////////////////////////////////////////////////
         // 注册执行函数
-        template< class T >
+        template<class T>
         void RegisterExecuteFunction( const std::string& name, T* module, bool( T::*handle )( KFEntity*, const ExecuteDataPtr&, const std::string&, uint64, const char*, uint32 ) )
         {
             KFExecuteFunction function = std::bind( handle, module, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,

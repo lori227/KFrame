@@ -18,26 +18,26 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////
         // 创建一个属性
-        KFData* CreateData( const KFDataSetting* datasetting, bool addautolist );
+        DataPtr CreateData( const KFDataSetting* datasetting, bool addautolist );
 
         // 释放资源
-        void DestroyData( KFData* kfdata );
+        void DestroyData( DataPtr kfdata );
 
         // 初始化对象池对象
-        void InitPoolData( KFData* kfdata );
+        void InitPoolData( DataPtr kfdata );
 
         // 初始化创建对象
-        void InitCreateData( KFData* kfdata, const KFDataSetting* datasetting );
+        void InitCreateData( DataPtr kfdata, const KFDataSetting* datasetting );
 
         // 初始化数组
-        void InitArray( KFData* kfarray, uint32 size );
+        void InitArray( DataPtr kfarray, uint32 size );
 
         // 添加数组元素
-        KFData* AddArray( KFData* kfarray );
+        DataPtr AddArray( DataPtr kfarray );
 
         ////////////////////////////////////////////////////////////////////////////////////
         // 对象池
-        KFData* CreateFromDataPool( const KFDataSetting* datasetting );
+        DataPtr CreateFromDataPool( const KFDataSetting* datasetting );
 
         ////////////////////////////////////////////////////////////////////////////////////
         // 自动回收数据
@@ -45,27 +45,27 @@ namespace KFrame
 
     protected:
         // 创建
-        KFData* Create( uint32 type );
-        KFData* Create( const std::string& type );
+        DataPtr Create( uint32 type );
+        DataPtr Create( const std::string& type );
 
         // 对象池
-        void DestroyToDataPool( KFData* kfdata );
-        void DestroyRecordToDataPool( KFData* kfdata );
-        void DestroyObjectToDataPool( KFData* kfdata );
+        void DestroyToDataPool( DataPtr kfdata );
+        void DestroyRecordToDataPool( DataPtr kfdata );
+        void DestroyObjectToDataPool( DataPtr kfdata );
 
         // 清空对象池
         void ClearDataPool();
 
         // 添加自动回收数据
-        void AddDestroyData( KFData* kfdata );
-        void RemoveDestroyData( KFData* kfdata );
+        void AddDestroyData( DataPtr kfdata );
+        void RemoveDestroyData( DataPtr kfdata );
 
     protected:
         // 对象池
-        std::unordered_map< std::string, std::set< KFData* > > _data_pool;
+        std::unordered_map< std::string, std::set< DataPtr > > _data_pool;
 
         // 自动gc的列表
-        std::unordered_set< KFData* > _auto_destroy_list;
+        std::unordered_set< DataPtr > _auto_destroy_list;
     };
 }
 

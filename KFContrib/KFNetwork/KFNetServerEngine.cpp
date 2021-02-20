@@ -87,14 +87,14 @@ namespace KFrame
         return _kf_handles.Size();
     }
 
-    void KFNetServerEngine::GetHandleList( NetDataList& outlist )
+    void KFNetServerEngine::GetHandleList( NetDataList& out_list )
     {
-        outlist.clear();
+        out_list.clear();
 
         auto kfhandle = _kf_handles.First();
         while ( kfhandle != nullptr )
         {
-            outlist.push_back( &kfhandle->_net_data );
+            out_list.push_back( &kfhandle->_net_data );
             kfhandle = _kf_handles.Next();
         }
     }

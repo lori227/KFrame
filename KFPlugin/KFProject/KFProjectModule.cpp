@@ -88,17 +88,17 @@ namespace KFrame
 
         return result;
     }
-    const std::string& KFProjectModule::FormatIntString( const std::string& dataname, uint32 datavalue, uint32 dataid )
+    const std::string& KFProjectModule::FormatIntString( const std::string& data_name, uint32 datavalue, uint32 dataid )
     {
-        return FormatStrString( dataname, __TO_STRING__( datavalue ), dataid );
+        return FormatStrString( data_name, __TO_STRING__( datavalue ), dataid );
     }
 
-    const std::string& KFProjectModule::FormatStrString( const std::string& dataname, const std::string& datavalue, uint32 dataid )
+    const std::string& KFProjectModule::FormatStrString( const std::string& data_name, const std::string& datavalue, uint32 dataid )
     {
         static std::string _str_element = _invalid_string;
         _str_element.clear();
 
-        auto kfsetting = KFTemplateConfig::Instance()->FindSetting( dataname );
+        auto kfsetting = KFTemplateConfig::Instance()->FindSetting( data_name );
         if ( kfsetting != nullptr )
         {
             _str_element = "[";
@@ -107,7 +107,7 @@ namespace KFrame
         }
         else
         {
-            __LOG_ERROR__( "dataname=[{}] no template", dataname );
+            __LOG_ERROR__( "data_name=[{}] no template", data_name );
         }
 
         return _str_element;
@@ -122,14 +122,14 @@ namespace KFrame
         _str_element = "[";
         for ( auto& tupledata : elementdata._data_list )
         {
-            auto& dataname = std::get<0>( tupledata );
+            auto& data_name = std::get<0>( tupledata );
             auto& datavalue = std::get<1>( tupledata );
             auto& dataid = std::get<2>( tupledata );
 
-            auto kfrewardsetting = KFTemplateConfig::Instance()->FindSetting( dataname );
+            auto kfrewardsetting = KFTemplateConfig::Instance()->FindSetting( data_name );
             if ( kfrewardsetting == nullptr )
             {
-                __LOG_ERROR__( "dataname=[{}] no template", dataname );
+                __LOG_ERROR__( "data_name=[{}] no template", data_name );
                 continue;
             }
 

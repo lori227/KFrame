@@ -61,7 +61,7 @@ namespace KFrame
         // 发送结果提示到客户端
         // Game ==> Player
         template< class...Args >
-        inline void SendToPlayer( KFData* kfbasic, uint32 result, Args&& ... args )
+        inline void SendToPlayer( DataPtr kfbasic, uint32 result, Args&& ... args )
         {
             StringList params;
             FormatParam( params, std::forward< Args >( args )... );
@@ -85,7 +85,7 @@ namespace KFrame
         template< class T, class...Args >
         inline void FormatParam( StringList& params, T head, Args&& ... args )
         {
-            params.push_back( KFUtility::ToString< T >( head ) );
+            params.push_back( KFUtility::ToString<T>( head ) );
             FormatParam( params, args... );
         }
 
@@ -101,7 +101,7 @@ namespace KFrame
         virtual void SendToGroup( KFEntity* player, uint32 result, StringList& params ) = 0;
 
         // Game ==> Route ==> Game
-        virtual void SendToPlayer( KFData* kfbasic, uint32 result, StringList& params ) = 0;
+        virtual void SendToPlayer( DataPtr kfbasic, uint32 result, StringList& params ) = 0;
         virtual void SendToPlayer( uint64 serverid, uint64 playerid, uint32 result, StringList& params ) = 0;
         virtual void SendToPlayer( const Route& route, uint32 result, StringList& params ) = 0;
 

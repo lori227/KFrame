@@ -13,21 +13,21 @@ namespace KFrame
         _data.Resize( size );
     }
 
-    void KFArray::Reset( bool isdelete /* = true */ )
+    void KFArray::Reset()
     {
-        for ( auto kfchild = First(); kfchild != nullptr; kfchild = Next() )
+        for ( auto child = First(); child != nullptr; child = Next() )
         {
-            kfchild->Reset( isdelete );
+            child->Reset();
         }
 
-        KFData::Reset( isdelete );
+        KFData::Reset();
     }
 
     bool KFArray::IsValid()
     {
-        for ( auto kfchild = First(); kfchild != nullptr; kfchild = Next() )
+        for ( auto child = First(); child != nullptr; child = Next() )
         {
-            if ( kfchild->IsValid() )
+            if ( child->IsValid() )
             {
                 return true;
             }
@@ -40,18 +40,18 @@ namespace KFrame
     {
         if ( _data_setting->_int_init_value != _invalid_int )
         {
-            for ( auto kfchild = First(); kfchild != nullptr; kfchild = Next() )
+            for ( auto child = First(); child != nullptr; child = Next() )
             {
-                kfchild->Set( _data_setting->_int_init_value );
+                child->Set( _data_setting->_int_init_value );
             }
         }
     }
 
     bool KFArray::IsFull()
     {
-        for ( auto kfchild = First(); kfchild != nullptr; kfchild = Next() )
+        for ( auto child = First(); child != nullptr; child = Next() )
         {
-            auto value = kfchild->Get();
+            auto value = child->Get();
             if ( value == 0u )
             {
                 return false;
@@ -70,9 +70,9 @@ namespace KFrame
     uint32 KFArray::Size()
     {
         auto count = 0u;
-        for ( auto kfchild = First(); kfchild != nullptr; kfchild = Next() )
+        for ( auto child = First(); child != nullptr; child = Next() )
         {
-            auto value = kfchild->Get();
+            auto value = child->Get();
             if ( value != 0u )
             {
                 ++count;
@@ -82,36 +82,44 @@ namespace KFrame
         return count;
     }
 
-    KFData* KFArray::First()
+    DataPtr KFArray::First()
     {
-        auto kfdata = _data.First();
+        auto data = _data.First();
         if ( KFGlobal::Instance()->_array_index == 1u )
         {
-            kfdata = _data.Next();
+            data = _data.Next();
         }
 
-        return kfdata;
+        return data;
     }
 
-    KFData* KFArray::Next()
+    DataPtr KFArray::Next()
     {
         return _data.Next();
     }
 
-    void KFArray::CopyFrom( KFData* kfother )
-    {
-        kfother->SaveTo( this );
-    }
-
-    void KFArray::SaveTo( KFData* kfother )
+    void KFArray::CopyFrom( DataPtr& other )
     {
         uint32 key = KFGlobal::Instance()->_array_index;
-        for ( auto kfchild = First(); kfchild != nullptr; kfchild = Next() )
+        for ( auto child = First(); child != nullptr; child = Next() )
         {
-            auto finddata = kfother->Find( key++ );
-            if ( finddata != nullptr )
+            auto find_data = child->Find( key++ );
+            if ( find_data != nullptr )
             {
-                kfchild->SaveTo( finddata );
+                child->CopyFrom( find_data );
+            }
+        }
+    }
+
+    void KFArray::SaveTo( DataPtr& other )
+    {
+        uint32 key = KFGlobal::Instance()->_array_index;
+        for ( auto child = First(); child != nullptr; child = Next() )
+        {
+            auto find_data = child->Find( key++ );
+            if ( find_data != nullptr )
+            {
+                child->SaveTo( find_data );
             }
         }
     }
@@ -121,8 +129,8 @@ namespace KFrame
         auto maxsize = _data.MaxSize();
         for ( uint32 i = KFGlobal::Instance()->_array_index; i < maxsize; ++i )
         {
-            auto kfdata = Find( i );
-            if ( kfdata != nullptr && kfdata->Get() == 0u )
+            auto data = Find( i );
+            if ( data != nullptr && data->Get() == 0u )
             {
                 return i;
             }
@@ -136,8 +144,8 @@ namespace KFrame
         auto maxsize = _data.MaxSize();
         for ( uint32 i = KFGlobal::Instance()->_array_index; i < maxsize; ++i )
         {
-            auto kfdata = Find( i );
-            if ( kfdata != nullptr && kfdata->Get() == value )
+            auto data = Find( i );
+            if ( data != nullptr && data->Get() == value )
             {
                 return i;
             }
@@ -147,66 +155,66 @@ namespace KFrame
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    KFData* KFArray::Find( uint64 key )
+    DataPtr KFArray::Find( uint64 key )
     {
         return _data.Find( static_cast<uint32>( key ) );
     }
 
-    KFData* KFArray::Find( uint64 key, const std::string& dataname )
+    DataPtr KFArray::Find( uint64 key, const std::string& data_name )
     {
-        auto kfdata = Find( key );
-        if ( kfdata == nullptr )
+        auto data = Find( key );
+        if ( data == nullptr )
         {
             return nullptr;
         }
 
-        return kfdata->Find( dataname );
+        return data->Find( data_name );
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    KFData* KFArray::Insert( uint64 value )
+    DataPtr KFArray::Insert( uint64 value )
     {
-        for ( auto kfchild = First(); kfchild != nullptr; kfchild = Next() )
+        for ( auto child = First(); child != nullptr; child = Next() )
         {
-            if ( kfchild->Get() == 0u )
+            if ( child->Get() == 0u )
             {
-                kfchild->Set( value );
-                return kfchild;
+                child->Set( value );
+                return child;
             }
         }
 
         return nullptr;
     }
 
-    bool KFArray::Add( uint64 key, KFData* data )
+    bool KFArray::Add( uint64 key, DataPtr& data )
     {
         data->SetParent( this );
         _data.Insert( static_cast<uint32>( key ), data );
         return true;
     }
 
-    bool KFArray::Add( uint64 key, const std::string& dataname, KFData* data )
+    bool KFArray::Add( uint64 key, const std::string& data_name, DataPtr& data )
     {
-        auto kfdata = Find( key );
-        if ( kfdata == nullptr )
+        auto child = Find( key );
+        if ( child == nullptr )
         {
             return false;
         }
 
-        return kfdata->Add( dataname, data );
+        return child->Add( data_name, data );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFArray::Remove( uint64 key )
+    DataPtr KFArray::Remove( uint64 key )
     {
-        auto kfdata = Find( key );
-        if ( kfdata == nullptr )
+        auto data = Find( key );
+        if ( data == nullptr )
         {
-            return false;
+            return nullptr;
         }
 
-        kfdata->Reset();
-        return true;
+        data->Reset();
+        return nullptr;
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -214,11 +222,11 @@ namespace KFrame
     std::string KFArray::ToString()
     {
         __JSON_ARRAY_DOCUMENT__( kfjson );
-        for ( auto kfchild = First(); kfchild != nullptr; kfchild = Next() )
+        for ( auto child = First(); child != nullptr; child = Next() )
         {
-            if ( kfchild != nullptr )
+            if ( child != nullptr )
             {
-                __JSON_ADD_VALUE__( kfjson, kfchild->Get< int64 >() );
+                __JSON_ADD_VALUE__( kfjson, child->Get< int64 >() );
             }
         }
 
@@ -232,11 +240,11 @@ namespace KFrame
         auto size = __JSON_ARRAY_SIZE__( kfjson );
         for ( uint32 i = 0u; i < size; ++i )
         {
-            auto kfdata = Find( i + KFGlobal::Instance()->_array_index );
-            if ( kfdata != nullptr )
+            auto data = Find( i + KFGlobal::Instance()->_array_index );
+            if ( data != nullptr )
             {
                 auto& object = __JSON_ARRAY_INDEX__( kfjson, i );
-                kfdata->Set( object.GetInt64() );
+                data->Set( object.GetInt64() );
             }
         }
     }

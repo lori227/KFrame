@@ -1,51 +1,122 @@
 ﻿#ifndef __KF_DATA_H__
 #define __KF_DATA_H__
 
-#include "KFMath3D/Math3D.h"
 #include "KFDataSetting.h"
+#include "KFMath3D/Math3D.h"
 
 namespace KFrame
 {
-    class KFData
+    class KFData;
+    typedef std::shared_ptr<KFData> DataPtr;
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    class KFData : public std::enable_shared_from_this<KFData>
     {
+    public:
     public:
         KFData() = default;
         virtual ~KFData() = default;
 
-        template< class T > T InvalidValue();
+        // 无效值
+        template<class T> T InvalidValue();
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        template< class T = uint64 > T Get();
-        template< class T = uint64 > T Get( uint64 key );
-        template< class T = uint64 > T Get( const std::string& dataname );
-        template< class T = uint64 > T Get( const std::string& parentname, const std::string& dataname );
-        template< class T = uint64 > T Get( uint64 key, const std::string& dataname );
-        template< class T = uint64 > T Get( const std::string& dataname, uint64 key );
-        template< class T = uint64 > T Get( const std::string& parentname, uint64 key, const std::string& dataname );
+        // int/uint32等读取数值
+        template<class T = uint64> T Get();
+
+        // array读取数值
+        // @key : 键值
+        template<class T = uint64> T Get( uint64 key );
+
+        // object读取数值
+        // @data_name : 属性名
+        template<class T = uint64> T Get( const std::string& data_name );
+
+        // object读取数值
+        // @parent_name : 父属性名
+        // @data_name : 属性名
+        template<class T = uint64> T Get( const std::string& parent_name, const std::string& data_name );
+
+        // record读取数值
+        // @key : 键值
+        // @data_name : 属性名
+        template<class T = uint64> T Get( uint64 key, const std::string& data_name );
+
+        // object读取数值
+        // @data_name : 属性名
+        // @key : 键值
+        template<class T = uint64> T Get( const std::string& data_name, uint64 key );
+
+        // object读取数值
+        // @parent_name : 父属性名
+        // @key : 键值
+        // @data_name : 属性名
+        template<class T = uint64> T Get( const std::string& parent_name, uint64 key, const std::string& data_name );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // data设置数值
+        // @value : 数值
+        template<class T = uint64> T Set( T value );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        template< class T = uint64 > T Set( T value );
-        template< class T = uint64 > T Set( uint64 key, T value );
-        template< class T = uint64 > T Set( const std::string& dataname, T value );
-        template< class T = uint64 > T Set( const std::string& parentname, const std::string& dataname, T value );
-        template< class T = uint64 > T Set( uint64 key, const std::string& dataname, T value );
-        template< class T = uint64 > T Set( const std::string& dataname, uint64 key, T value );
-        template< class T = uint64 > T Set( const std::string& parentname, uint64 key, const std::string& dataname, T value );
+        // data设置数值
+        // @operate : 操作类型
+        // @value : 数值
+        template<class T = uint64> T Operate( uint32 operate, T value );
+
+        // object设置数值
+        // @data_name : 属性名
+        // @operate : 操作类型
+        // @value : 数值
+        template<class T = uint64> T Operate( const std::string& data_name, uint32 operate, T value );
+
+        // object设置数值
+        // @parent_name : 父属性名
+        // @data_name : 属性名
+        // @operate : 操作类型
+        // @value : 数值
+        template<class T = uint64> T Operate( const std::string& parent_name, const std::string& data_name, uint32 operate, T value );
+
+        // record设置数值
+        // @key : 键值
+        // @data_name : 属性名
+        // @operate : 操作类型
+        // @value : 数值
+        template<class T = uint64> T Operate( uint64 key, const std::string& data_name, uint32 operate, T value );
+
+        // record设置数值
+        // @data_name : 属性名
+        // @key : 键值
+        // @operate : 操作类型
+        // @value : 数值
+        template<class T = uint64> T Operate( const std::string& data_name, uint64 key, uint32 operate, T value );
+
+        // object设置数值
+        // @parent_name : 父属性名
+        // @key : 键值
+        // @data_name : 属性名
+        // @operate : 操作类型
+        // @value : 数值
+        template<class T = uint64> T Operate( const std::string& parent_name, uint64 key, const std::string& data_name, uint32 operate, T value );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 转成成字符串
+        // @data_name : 属性名
+        std::string ToString( const std::string& data_name );
+
+        // 转成成字符串
+        // @parent_name : 父属性名
+        // @data_name : 属性名
+        std::string ToString( const std::string& parent_name, const std::string& data_name );
+
+        // 转成成字符串
+        // @key : 键值
+        // @data_name : 属性名
+        std::string ToString( uint64 key, const std::string& data_name );
+
+        // 转成成字符串
+        // @parent_name : 父属性名
+        // @key : 键值
+        // @data_name : 属性名
+        std::string ToString( const std::string& parent_name, uint64 key, const std::string& data_name );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        template< class T = uint64 > T Operate( uint32 operate, T value );
-        template< class T = uint64 > T Operate( const std::string& dataname, uint32 operate, T value );
-        template< class T = uint64 > T Operate( const std::string& parentname, const std::string& dataname, uint32 operate, T value );
-        template< class T = uint64 > T Operate( uint64 key, const std::string& dataname, uint32 operate, T value );
-        template< class T = uint64 > T Operate( const std::string& dataname, uint64 key, uint32 operate, T value );
-        template< class T = uint64 > T Operate( const std::string& parentname, uint64 key, const std::string& dataname, uint32 operate, T value );
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////
-        std::string ToString( const std::string& dataname );
-        std::string ToString( const std::string& parentname, const std::string& dataname );
-        std::string ToString( uint64 key, const std::string& dataname );
-        std::string ToString( const std::string& parentname, uint64 key, const std::string& dataname );
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 重置
-        virtual void Reset( bool isdelete = true );
+        virtual void Reset();
 
         // 是否有效
         virtual bool IsValid();
@@ -62,7 +133,7 @@ namespace KFrame
         // 重置数量
         virtual void Resize( uint32 size );
 
-        // configid
+        // config id
         virtual uint32 GetConfigID();
 
         // keyid
@@ -70,7 +141,7 @@ namespace KFrame
         virtual void SetKeyID( uint64 id );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         // 初始化
-        virtual void Initialize( const KFDataSetting* datasetting );
+        void InitSetting( std::shared_ptr<const KFDataSetting> data_setting );
 
         // 初始化数值
         virtual void InitData();
@@ -99,12 +170,12 @@ namespace KFrame
         void SetParent( KFData* data );
 
         // 遍历节点
-        virtual KFData* First();
-        virtual KFData* Next();
+        virtual DataPtr First();
+        virtual DataPtr Next();
 
         // 赋值/保存
-        virtual void CopyFrom( KFData* kfother ) = 0;
-        virtual void SaveTo( KFData* kfother ) = 0;
+        virtual void CopyFrom( DataPtr& other ) = 0;
+        virtual void SaveTo( DataPtr& other ) = 0;
 
         // 格式化成字串
         virtual std::string ToString() = 0;
@@ -117,57 +188,57 @@ namespace KFrame
         // object
 
         // 如:money
-        virtual KFData* Find( const std::string& dataname );
+        virtual DataPtr Find( const std::string& data_name );
 
         // 如:hero->1
-        virtual KFData* Find( const std::string& dataname, uint64 key );
+        virtual DataPtr Find( const std::string& data_name, uint64 key );
 
         // 如: basic->id
-        virtual KFData* Find( const std::string& parentname, const std::string& childname );
+        virtual DataPtr Find( const std::string& parent_name, const std::string& child_name );
 
         // 如: hero->1->level
-        virtual KFData* Find( const std::string& parentname, uint64 key, const std::string& childname );
+        virtual DataPtr Find( const std::string& parent_name, uint64 key, const std::string& child_name );
 
         // 如: sign->day->1
-        virtual KFData* Find( const std::string& parentname, const std::string& childname, uint64 key );
+        virtual DataPtr Find( const std::string& parent_name, const std::string& child_name, uint64 key );
 
         // 如: sign->day->value
-        virtual KFData* Find( const std::string& parentname, const std::string& childname, const std::string& dataname );
+        virtual DataPtr Find( const std::string& parent_name, const std::string& child_name, const std::string& data_name );
 
-        virtual bool Add( const std::string& dataname, KFData* data );
-        virtual bool Add( const std::string& dataname, uint64 key, KFData* data );
-        virtual bool Add( const std::string& parentname, const std::string& childname, KFData* data );
+        // 添加
+        virtual bool Add( const std::string& data_name, DataPtr& data );
+        virtual bool Add( const std::string& data_name, uint64 key, DataPtr& data );
+        virtual bool Add( const std::string& parent_name, const std::string& child_name, DataPtr& data );
 
-        virtual KFData* Move( const std::string& dataname, bool usekey );
-        virtual bool Remove( const std::string& dataname );
-        virtual bool Remove( const std::string& dataname, uint64 key );
+        // 删除
+        virtual DataPtr Remove( const std::string& data_name );
+        virtual DataPtr Remove( const std::string& data_name, uint64 key );
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         // record
-        virtual KFData* Find( uint64 key );
-        virtual KFData* Find( uint64 key, const std::string& dataname );
-        virtual KFData* Find( uint64 parentkey, uint64 childkey );
-        virtual KFData* Find( uint64 parentkey, uint64 childkey, const std::string& dataname );
-        virtual KFData* Find( uint64 parentkey, const std::string& dataname, uint64 childkey );
+        virtual DataPtr Find( uint64 key );
+        virtual DataPtr Find( uint64 key, const std::string& data_name );
+        virtual DataPtr Find( uint64 parent_key, uint64 child_key );
+        virtual DataPtr Find( uint64 parent_key, uint64 child_key, const std::string& data_name );
+        virtual DataPtr Find( uint64 parent_key, const std::string& data_name, uint64 child_key );
 
-        virtual bool Add( uint64 key, KFData* data );
-        virtual bool Add( uint64 parentkey, uint64 childkey, KFData* data );
-        virtual bool Add( uint64 key, const std::string& dataname, KFData* data );
+        virtual bool Add( uint64 key, DataPtr& data );
+        virtual bool Add( uint64 parent_key, uint64 child_key, DataPtr& data );
+        virtual bool Add( uint64 key, const std::string& data_name, DataPtr& data );
 
-        virtual KFData* Move( uint64 key );
-        virtual bool Remove( uint64 key );
+        virtual DataPtr Remove( uint64 key );
 
-        virtual void Find( const std::string& dataname, uint64 value, std::list< KFData* >& findlist, bool findall );
-        virtual bool Check( const std::string& dataname, uint64 value, const std::string& checkname, uint64 checkvalue );
+        virtual void Find( const std::string& data_name, uint64 value, std::list<DataPtr>& find_list, bool find_all );
+        virtual bool Check( const std::string& data_name, uint64 value, const std::string& check_name, uint64 check_value );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
         // array
-        template< class T > void GetLists( T& outlist );
-        template< class T > void GetLists( const std::string& dataname, T& outlist );
-        template< class T > void GetHashs( T& outlist );
-        template< class T > void GetHashs( const std::string& dataname, T& outlist );
+        template<class T> void GetLists( T& out_list );
+        template<class T> void GetLists( const std::string& data_name, T& out_list );
+        template<class T> void GetHashs( T& out_list );
+        template<class T> void GetHashs( const std::string& data_name, T& out_list );
 
-        virtual KFData* Insert( uint64 value );
+        virtual DataPtr Insert( uint64 value );
         virtual uint32 GetEmpty();
         virtual uint32 GetIndex( uint64 value );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -200,7 +271,7 @@ namespace KFrame
         uint32 _data_type = 0u;
 
         // 属性配置
-        const KFDataSetting* _data_setting = nullptr;
+        std::shared_ptr<const KFDataSetting> _data_setting = nullptr;
     protected:
         // 运行时标记
         uint32 _run_mask = 0u;

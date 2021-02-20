@@ -138,7 +138,7 @@ namespace KFrame
             return reflection->GetRepeatedField< float >( *message, field ).size();
             break;
         case google::protobuf::FieldDescriptor::TYPE_DOUBLE:
-            return reflection->GetRepeatedField< double >( *message, field ).size();
+            return reflection->GetRepeatedField<double>( *message, field ).size();
             break;
         case google::protobuf::FieldDescriptor::TYPE_STRING:
         case google::protobuf::FieldDescriptor::TYPE_BYTES:

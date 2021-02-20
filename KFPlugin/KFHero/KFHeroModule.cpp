@@ -77,7 +77,7 @@ namespace KFrame
         auto kfherorecord = player->Find( __STRING__( hero ) );
 
         // 查找时间英雄
-        std::unordered_map< KFData*, uint64 > timehero;
+        std::unordered_map< DataPtr, uint64 > timehero;
         auto kfhero = kfherorecord->First();
         while ( kfhero != nullptr )
         {

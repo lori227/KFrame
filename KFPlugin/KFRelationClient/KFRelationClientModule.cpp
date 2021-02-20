@@ -73,7 +73,7 @@ namespace KFrame
         }
     }
 
-    void KFRelationClientModule::PBRelationToKFData( const KFMsg::PBRelation* pbrelation, KFData* kfrelation )
+    void KFRelationClientModule::PBRelationToKFData( const KFMsg::PBRelation* pbrelation, DataPtr kfrelation )
     {
         auto pbbasicdata = &pbrelation->basicdata();
         auto kfbasic = kfrelation->Find( __STRING__( basic ) );
@@ -248,10 +248,10 @@ namespace KFrame
         }
     }
 
-    void KFRelationClientModule::UpdateIntValueToRelation( KFEntity* player, const std::string& relationname, const std::string& dataname, uint64 datavalue )
+    void KFRelationClientModule::UpdateIntValueToRelation( KFEntity* player, const std::string& relationname, const std::string& data_name, uint64 datavalue )
     {
         StringUInt64 values;
-        values[ dataname ] = datavalue;
+        values[ data_name ] = datavalue;
         UpdateIntValueToRelation( player, relationname, values );
     }
 
@@ -269,12 +269,12 @@ namespace KFrame
         SendMessageToRelation( player, relationname, KFMsg::S2S_UPDATE_INT_VALUE_TO_RELATION_REQ, &req );
     }
 
-    void KFRelationClientModule::UpdateStrValueToRelation( KFEntity* player, const std::string& relationname, const std::string& dataname, const std::string& datavalue )
+    void KFRelationClientModule::UpdateStrValueToRelation( KFEntity* player, const std::string& relationname, const std::string& data_name, const std::string& datavalue )
     {
         KFMsg::S2SUpdateStrValueToRelationReq req;
         req.set_relationname( relationname );
         req.set_playerid( player->GetKeyID() );
-        ( *req.mutable_pbdata() )[ dataname ] = datavalue;
+        ( *req.mutable_pbdata() )[ data_name ] = datavalue;
         SendMessageToRelation( player, relationname, KFMsg::S2S_UPDATE_STR_VALUE_TO_RELATION_REQ, &req );
     }
 
@@ -448,7 +448,7 @@ namespace KFrame
         }
     }
 
-    void KFRelationClientModule::ReplyRelationAllInvite( KFEntity* player, KFData* kfinviterecord, const KFRelationSetting* kfsetting, uint32 operate )
+    void KFRelationClientModule::ReplyRelationAllInvite( KFEntity* player, DataPtr kfinviterecord, const KFRelationSetting* kfsetting, uint32 operate )
     {
         UInt64Set removelist;
         for ( auto kfinvite = kfinviterecord->First(); kfinvite != nullptr; kfinvite = kfinviterecord->Next() )
@@ -467,7 +467,7 @@ namespace KFrame
         }
     }
 
-    void KFRelationClientModule::ReplyRelationInvite( KFEntity* player, KFData* kfinviterecord, const KFRelationSetting* kfsetting, uint32 operate, uint64 playerid )
+    void KFRelationClientModule::ReplyRelationInvite( KFEntity* player, DataPtr kfinviterecord, const KFRelationSetting* kfsetting, uint32 operate, uint64 playerid )
     {
         auto kfinvite = kfinviterecord->Find( playerid );
         if ( kfinvite == nullptr )
@@ -482,7 +482,7 @@ namespace KFrame
         }
     }
 
-    uint64 KFRelationClientModule::ReplyInvite( KFEntity* player, const KFRelationSetting* kfsetting, uint32 operate, KFData* kfinvite )
+    uint64 KFRelationClientModule::ReplyInvite( KFEntity* player, const KFRelationSetting* kfsetting, uint32 operate, DataPtr kfinvite )
     {
         auto removeid = _invalid_int;
         switch ( operate )
@@ -528,7 +528,7 @@ namespace KFrame
         return removeid;
     }
 
-    void KFRelationClientModule::AddRelationToRelation( KFEntity* player, uint64 playerid, const std::string& playername, KFData* kfrelationrecord, const KFRelationSetting* kfsetting )
+    void KFRelationClientModule::AddRelationToRelation( KFEntity* player, uint64 playerid, const std::string& playername, DataPtr kfrelationrecord, const KFRelationSetting* kfsetting )
     {
         // 判断数量
         if ( kfrelationrecord->Size() >= kfsetting->_max_count )

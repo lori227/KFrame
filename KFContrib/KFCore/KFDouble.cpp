@@ -18,10 +18,10 @@ namespace KFrame
         return _data;
     }
 
-    void KFDouble::Reset( bool isdelete /* = true */ )
+    void KFDouble::Reset()
     {
         _data = 0.0f;
-        KFData::Reset( isdelete );
+        KFData::Reset();
     }
 
     bool KFDouble::IsValid()
@@ -34,14 +34,14 @@ namespace KFrame
         _data = _data_setting->_int_init_value;
     }
 
-    void KFDouble::CopyFrom( KFData* kfother )
+    void KFDouble::CopyFrom( DataPtr& other )
     {
-        Set( kfother->Get<double>() );
+        Set( other->Get<double>() );
     }
 
-    void KFDouble::SaveTo( KFData* kfother )
+    void KFDouble::SaveTo( DataPtr& other )
     {
-        kfother->Set( Get<double>() );
+        other->Set( Get<double>() );
     }
 
     std::string KFDouble::ToString()

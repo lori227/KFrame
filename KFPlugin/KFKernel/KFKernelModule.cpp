@@ -30,32 +30,32 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     static std::string _global_class = "Global";
-    KFComponent* KFKernelModule::FindComponent( const std::string& dataname )
+    KFComponent* KFKernelModule::FindComponent( const std::string& data_name )
     {
-        auto kfcomponent = _kf_component.Find( dataname );
+        auto kfcomponent = _kf_component.Find( data_name );
         if ( kfcomponent == nullptr )
         {
-            kfcomponent = _kf_component.Create( dataname );
-            kfcomponent->_component_name = dataname;
-            kfcomponent->_data_setting = KFDataConfig::Instance()->FindDataSetting( _global_class, dataname );
+            kfcomponent = _kf_component.Create( data_name );
+            kfcomponent->_component_name = data_name;
+            kfcomponent->_data_setting = KFDataConfig::Instance()->FindDataSetting( _global_class, data_name );
         }
 
         return kfcomponent;
     }
 
-    KFEntity* KFKernelModule::FindEntity( const std::string& dataname, uint64 key, const char* function, uint32 line )
+    KFEntity* KFKernelModule::FindEntity( const std::string& data_name, uint64 key, const char* function, uint32 line )
     {
-        auto kfcomponet = FindComponent( dataname );
+        auto kfcomponet = FindComponent( data_name );
         return kfcomponet->FindEntity( key, function, line );
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    KFData* KFKernelModule::CreateData( const KFDataSetting* datasetting )
+    DataPtr KFKernelModule::CreateData( const KFDataSetting* datasetting )
     {
         return KFDataFactory::Instance()->CreateData( datasetting, true );
     }
 
-    void KFKernelModule::DestroyData( KFData* kfdata )
+    void KFKernelModule::DestroyData( DataPtr kfdata )
     {
         KFDataFactory::Instance()->DestroyData( kfdata );
     }
@@ -63,28 +63,28 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFKernelModule::ParseFromProto( KFData* kfdata, const KFMsg::PBObject* proto )
+    bool KFKernelModule::ParseFromProto( DataPtr kfdata, const KFMsg::PBObject* proto )
     {
         CopyFromObject( kfdata, proto );
         return true;
     }
 
-    KFMsg::PBObject* KFKernelModule::Serialize( KFData* kfdata )
+    KFMsg::PBObject* KFKernelModule::Serialize( DataPtr kfdata )
     {
         return SerializeObject( kfdata, KFDataDefine::DataMaskNull, false, 0u );
     }
 
-    KFMsg::PBObject* KFKernelModule::SerializeToData( KFData* kfdata )
+    KFMsg::PBObject* KFKernelModule::SerializeToData( DataPtr kfdata )
     {
         return SerializeObject( kfdata, KFDataDefine::DataMaskSave, false, 0u );
     }
 
-    KFMsg::PBObject* KFKernelModule::SerializeToView( KFData* kfdata )
+    KFMsg::PBObject* KFKernelModule::SerializeToView( DataPtr kfdata )
     {
         return SerializeObject( kfdata, KFDataDefine::DataMaskView, false, 0u );
     }
 
-    KFMsg::PBObject* KFKernelModule::SerializeToClient( KFData* kfdata )
+    KFMsg::PBObject* KFKernelModule::SerializeToClient( DataPtr kfdata )
     {
         return SerializeObject( kfdata, KFDataDefine::DataMaskSync, false, 0u );
     }
@@ -95,7 +95,7 @@ namespace KFrame
         return SerializeObject( kfentity, KFDataDefine::DataMaskSync, true, delaytime );
     }
 
-    KFMsg::PBObject* KFKernelModule::SerializeObject( KFData* kfdata, uint32 datamask, bool online, uint32 delaytime )
+    KFMsg::PBObject* KFKernelModule::SerializeObject( DataPtr kfdata, uint32 datamask, bool online, uint32 delaytime )
     {
         static KFMsg::PBObject pbobject;
         pbobject.Clear();
@@ -121,7 +121,7 @@ namespace KFrame
         }\
     }\
 
-    void KFKernelModule::CopyFromObject( KFData* kfdata, const KFMsg::PBObject* proto )
+    void KFKernelModule::CopyFromObject( DataPtr kfdata, const KFMsg::PBObject* proto )
     {
         // int32
         __COPY_FROM_PROTO__( kfdata, proto, pbint32 );
@@ -210,7 +210,7 @@ case datatype:\
     }\
 
 
-    void KFKernelModule::SaveToEntity( KFData* kfdata, KFMsg::PBObject* proto, uint32 datamask, bool online, uint32 delaytime )
+    void KFKernelModule::SaveToEntity( DataPtr kfdata, KFMsg::PBObject* proto, uint32 datamask, bool online, uint32 delaytime )
     {
         auto datasetting = kfdata->_data_setting;
         if ( !datasetting->HaveMask( datamask ) )
@@ -221,7 +221,7 @@ case datatype:\
         SaveToObject( kfdata, proto, datamask, online, delaytime );
     }
 
-    void KFKernelModule::SaveToObject( KFData* kfdata, KFMsg::PBObject* proto, uint32 datamask, bool online /* = false */, uint32 delaytime /* = 0u */ )
+    void KFKernelModule::SaveToObject( DataPtr kfdata, KFMsg::PBObject* proto, uint32 datamask, bool online /* = false */, uint32 delaytime /* = 0u */ )
     {
         for ( auto kfchild = kfdata->First(); kfchild != nullptr; kfchild = kfdata->Next() )
         {

@@ -26,7 +26,7 @@ namespace KFrame
         KFXmlNode FindNode( const char* key );
         /////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////
-        template< class T >
+        template<class T>
         T ReadT( const char* key, bool optional = false )
         {
             return ReadUInt32( key, optional );
@@ -102,7 +102,7 @@ namespace KFrame
         ExecuteDataPtr ReadExecuteData( const char* key, bool optional = false );
         /////////////////////////////////////////////////////////////////////////////////////
     protected:
-        void GetKeyList( StringList& outlist );
+        void GetKeyList( StringList& out_list );
 
         // 是否有子属性
         bool HaveChild( const char* key );

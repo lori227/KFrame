@@ -10,16 +10,16 @@ namespace KFrame
 	class KFCompoundSetting : public KFIntSetting
 	{
 	public:
-		// ÊôÐÔÃû×Ö
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		std::string _data_name;
 
-		// ÊôÐÔid
+		// ï¿½ï¿½ï¿½ï¿½id
 		uint32 _data_key = 0u;
 
-		// ÏûºÄÎïÆ·
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·
 		KFElements _cost_data;
 
-		// ºÏ³ÉµÄÎïÆ·
+		// ï¿½Ï³Éµï¿½ï¿½ï¿½Æ·
 		KFElements _compound_data;
 
 	};
@@ -50,7 +50,7 @@ namespace KFrame
 	protected:
 		virtual void ReadSetting( KFXmlNode& xmlnode, KFCompoundSetting* kfsetting )
 		{
-			kfsetting->_data_name = xmlnode.ReadString( "dataname", true );
+			kfsetting->_data_name = xmlnode.ReadString( "data_name", true );
 			kfsetting->_data_key = xmlnode.ReadUInt32( "datakey", true );
 			kfsetting->_cost_data._str_parse = xmlnode.ReadString( "costdata", true );
 			kfsetting->_compound_data._str_parse = xmlnode.ReadString( "compounddata", true );

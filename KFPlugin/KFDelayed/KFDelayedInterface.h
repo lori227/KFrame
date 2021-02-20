@@ -14,7 +14,7 @@ namespace KFrame
     {
     public:
         // 注册定时功能
-        template< class T >
+        template<class T>
         void RegisterDelayed( uint64 time, uint64 objectid, const int8* data, uint32 size,
                               T* module, void ( T::*handle )( uint64, const int8*, uint32 ) )
         {
@@ -23,7 +23,7 @@ namespace KFrame
         }
 
         // 注册定时功能
-        template< class T >
+        template<class T>
         void RegisterDelayed( KFTimeData* timedata, uint64 objectid, const int8* data, uint32 size,
                               T* module, void ( T::*handle )( uint64, const int8*, uint32 ) )
         {
@@ -32,14 +32,14 @@ namespace KFrame
         }
 
         // 删除定时功能
-        template< class T >
+        template<class T>
         void UnRegisterDelayed( T* module )
         {
             RemoveDelayedFunction( module );
         }
 
         // 删除计划功能
-        template< class T >
+        template<class T>
         void UnRegisterDelayed( T* module, uint64 objectid )
         {
             RemoveDelayedFunction( module, objectid );
