@@ -95,8 +95,8 @@ namespace KFrame
         if ( keeper != nullptr )
         {
             __NEW_RESULT__( std::string );
-            kfresult->_value = keeper->_player_data;
-            return kfresult;
+            result->_value = keeper->_player_data;
+            return result;
         }
 
         return LoadData( zoneid, playeid );
