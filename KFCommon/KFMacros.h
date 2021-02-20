@@ -26,6 +26,7 @@
 #ifndef __MAX__
     #define __MAX__( x, y ) ( (x) > (y) ? (x) : (y) )
 #endif
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 #ifndef __NEW_ARRAY__
     #define __NEW_ARRAY__( name, size ) new name[size]
@@ -42,6 +43,15 @@
 #ifndef __DELETE_OBJECT__
     #define __DELETE_OBJECT__( p ) if ( p != nullptr ) { delete p; p = nullptr; }
 #endif
+
+#ifndef __SHARED_OBJECT__
+#define __SHARED_OBJECT__(name, object) std::shared_ptr<name> object = nullptr;
+#endif // !__SHARED_OBJECT__
+
+#ifndef __MAKE_SHARED__
+#define __MAKE_SHARED__(name, ...) std::make_shared<name>( __VA_ARGS__ )
+#endif // !__MAKE_SHARED__
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 #ifndef __TO_STRING__
     #define __TO_STRING__( value ) std::to_string( value )
