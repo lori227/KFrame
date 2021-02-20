@@ -42,7 +42,7 @@ namespace KFrame
                     Poco::MongoDB::Document::Ptr doc = response.documents()[ 0 ];
                     try
                     {
-                        kfresult->_value = doc->get<ValueType>( field );
+                        result->_value = doc->get<ValueType>( field );
                     }
                     catch ( Poco::Exception& )
                     {
@@ -51,10 +51,10 @@ namespace KFrame
             }
             else
             {
-                kfresult->SetResult( KFEnum::Error );
+                result->SetResult( KFEnum::Error );
             }
 
-            return kfresult;
+            return result;
         }
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 查询数值
@@ -86,7 +86,7 @@ namespace KFrame
                         auto value = doc->get<Poco::MongoDB::Binary::Ptr>( field );
                         if ( !value.isNull() )
                         {
-                            kfresult->_value = value->toRawString();
+                            result->_value = value->toRawString();
                         }
                     }
                     catch ( Poco::Exception& )
@@ -96,10 +96,10 @@ namespace KFrame
             }
             else
             {
-                kfresult->SetResult( KFEnum::Error );
+                result->SetResult( KFEnum::Error );
             }
 
-            return kfresult;
+            return result;
         }
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 查询数值列表
@@ -132,7 +132,7 @@ namespace KFrame
                             for ( auto iter = elements->begin(); iter != elements->end(); ++iter )
                             {
                                 auto concrete = dynamic_cast< const ConcreteElement<ValueType>* >( ( *iter ).get() );
-                                kfresult->_value.push_back( concrete->value() );
+                                result->_value.push_back( concrete->value() );
                             }
                         }
                     }
@@ -144,10 +144,10 @@ namespace KFrame
             }
             else
             {
-                kfresult->SetResult( KFEnum::Error );
+                result->SetResult( KFEnum::Error );
             }
 
-            return kfresult;
+            return result;
         }
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -195,7 +195,7 @@ namespace KFrame
                                 auto concrete = dynamic_cast< const ConcreteElement<Poco::Int64>* >( ( *iter ).get() );
                                 if ( concrete != nullptr )
                                 {
-                                    kfresult->_value.AddValue( name, concrete->value() );
+                                    result->_value.AddValue( name, concrete->value() );
                                 }
                             }
                             else if ( type == ElementTraits<std::string>::TypeId )
@@ -203,7 +203,7 @@ namespace KFrame
                                 auto concrete = dynamic_cast< const ConcreteElement<std::string>* >( ( *iter ).get() );
                                 if ( concrete != nullptr )
                                 {
-                                    kfresult->_value.AddValue( name, concrete->value(), false );
+                                    result->_value.AddValue( name, concrete->value(), false );
                                 }
                             }
                             else if ( type == ElementTraits<Poco::MongoDB::Binary::Ptr>::TypeId )
@@ -211,7 +211,7 @@ namespace KFrame
                                 auto concrete = dynamic_cast< const ConcreteElement<Poco::MongoDB::Binary::Ptr>* >( ( *iter ).get() );
                                 if ( concrete != nullptr )
                                 {
-                                    kfresult->_value.AddValue( name, concrete->value()->toRawString(), true );
+                                    result->_value.AddValue( name, concrete->value()->toRawString(), true );
                                 }
                             }
                         }
@@ -223,10 +223,10 @@ namespace KFrame
             }
             else
             {
-                kfresult->SetResult( KFEnum::Error );
+                result->SetResult( KFEnum::Error );
             }
 
-            return kfresult;
+            return result;
         }
 
         // 查询结合

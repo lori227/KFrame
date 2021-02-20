@@ -17,7 +17,7 @@ namespace KFrame
             Poco::MongoDB::Document::Ptr doc = response.documents()[ 0 ];
             try
             {
-                kfresult->_value = doc->getInteger( "n" );
+                result->_value = doc->getInteger( "n" );
             }
             catch ( Poco::Exception& )
             {
@@ -26,10 +26,10 @@ namespace KFrame
         }
         else
         {
-            kfresult->SetResult( KFEnum::Error );
+            result->SetResult( KFEnum::Error );
         }
 
-        return kfresult;
+        return result;
     }
 
     KFResult< uint64 >::UniqueType KFMongoReadExecute::Count( const std::string& table, const std::string& field, uint64 key )
@@ -48,14 +48,14 @@ namespace KFrame
         auto ok = SendRequest( request, response );
         if ( ok )
         {
-            kfresult->_value = response.documents().size();
+            result->_value = response.documents().size();
         }
         else
         {
-            kfresult->SetResult( KFEnum::Error );
+            result->SetResult( KFEnum::Error );
         }
 
-        return kfresult;
+        return result;
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -141,14 +141,14 @@ namespace KFrame
                     __LOG_ERROR__( "mongo error=[{}]", ex.displayText() );
                 }
 
-                kfresult->_value.emplace_back( dbvalue );
+                result->_value.emplace_back( dbvalue );
             }
         }
         else
         {
-            kfresult->SetResult( KFEnum::Error );
+            result->SetResult( KFEnum::Error );
         }
 
-        return kfresult;
+        return result;
     }
 }

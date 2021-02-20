@@ -225,14 +225,14 @@ namespace KFrame
         auto ok = ExecuteSql( statement, strsql );
         if ( ok )
         {
-            kfresult->SetResult( KFEnum::Ok );
+            result->SetResult( KFEnum::Ok );
         }
         else
         {
-            kfresult->SetResult( KFEnum::Error );
+            result->SetResult( KFEnum::Error );
         }
 
-        return kfresult;
+        return result;
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -318,15 +318,15 @@ namespace KFrame
                         mapvalues[ field ] = row[ field ].toString();
                     }
                 }
-                kfresult->_value.push_back( mapvalues );
+                result->_value.push_back( mapvalues );
             }
         }
         else
         {
-            kfresult->SetResult( KFEnum::Error );
+            result->SetResult( KFEnum::Error );
         }
 
-        return kfresult;
+        return result;
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -344,15 +344,15 @@ namespace KFrame
             RecordSet recordset( statement );
             if ( recordset.rowCount() > 0u )
             {
-                kfresult->_value = recordset.value( 0, 0 );
+                result->_value = recordset.value( 0, 0 );
             }
         }
         else
         {
-            kfresult->SetResult( KFEnum::Error );
+            result->SetResult( KFEnum::Error );
         }
 
-        return kfresult;
+        return result;
     }
 
     KFResult< uint64 >::UniqueType KFMySQLReadExecute::UInt64Execute( std::string& strsql )
@@ -366,15 +366,15 @@ namespace KFrame
             RecordSet recordset( statement );
             if ( recordset.rowCount() > 0u )
             {
-                kfresult->_value = recordset.value( 0, 0 );
+                result->_value = recordset.value( 0, 0 );
             }
         }
         else
         {
-            kfresult->SetResult( KFEnum::Error );
+            result->SetResult( KFEnum::Error );
         }
 
-        return kfresult;
+        return result;
     }
 
     KFResult< std::string >::UniqueType KFMySQLReadExecute::StringExecute( std::string& strsql )
@@ -388,15 +388,15 @@ namespace KFrame
             RecordSet recordset( statement );
             if ( recordset.rowCount() > 0u )
             {
-                kfresult->_value = recordset.value( 0, 0 ).toString();
+                result->_value = recordset.value( 0, 0 ).toString();
             }
         }
         else
         {
-            kfresult->SetResult( KFEnum::Error );
+            result->SetResult( KFEnum::Error );
         }
 
-        return kfresult;
+        return result;
     }
 
     KFResult< StringMap >::UniqueType KFMySQLReadExecute::MapExecute( std::string& strsql )
@@ -417,16 +417,16 @@ namespace KFrame
                 auto size = names->size();
                 for ( auto j = 0u; j < size; ++j )
                 {
-                    kfresult->_value[ names->at( j ) ] = values.at( j ).toString();
+                    result->_value[ names->at( j ) ] = values.at( j ).toString();
                 }
             }
         }
         else
         {
-            kfresult->SetResult( KFEnum::Error );
+            result->SetResult( KFEnum::Error );
         }
 
-        return kfresult;
+        return result;
     }
 
 
@@ -444,15 +444,15 @@ namespace KFrame
                 const auto& row = recordset.row( i );
                 auto& values = row.values();
 
-                kfresult->_value.push_back( values.at( 0 ).toString() );
+                result->_value.push_back( values.at( 0 ).toString() );
             }
         }
         else
         {
-            kfresult->SetResult( KFEnum::Error );
+            result->SetResult( KFEnum::Error );
         }
 
-        return kfresult;
+        return result;
     }
 
     KFResult< StringMapList >::UniqueType KFMySQLReadExecute::ListMapExecute( std::string& strsql )
@@ -477,14 +477,14 @@ namespace KFrame
                     mapvalues[ names->at( j ) ] = values.at( j ).toString();
                 }
 
-                kfresult->_value.push_back( mapvalues );
+                result->_value.push_back( mapvalues );
             }
         }
         else
         {
-            kfresult->SetResult( KFEnum::Error );
+            result->SetResult( KFEnum::Error );
         }
 
-        return kfresult;
+        return result;
     }
 }
