@@ -1,5 +1,4 @@
 ﻿#include "KFStartup.h"
-#include "KFLibrary.h"
 #include "KFAppConfig.h"
 #include "Poco/File.h"
 

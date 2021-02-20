@@ -2,12 +2,11 @@
 #define __KF_STARTUP_H__
 
 #include "KFMap.h"
-#include "KFLink.h"
+#include "KFLibrary.h"
 #include "KFSingleton.h"
 
 namespace KFrame
 {
-    class KFLibrary;
     class KFAppSetting;
     class KFStartup : public KFSingleton< KFStartup >
     {
