@@ -32,7 +32,7 @@ namespace KFrame
 
         // 执行语句
         redisReply* Execute( const std::string& strsql );
-        redisReply* TryExecute( KFBaseResult* kfresult, const std::string& strsql );
+        redisReply* TryExecute( const std::string& strsql );
 
     protected:
         // 名字

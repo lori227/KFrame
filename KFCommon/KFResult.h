@@ -3,63 +3,46 @@
 
 #include "KFEnum.h"
 #include "KFDefine.h"
-#include "KFUtility/KFMutex.h"
 
 namespace KFrame
 {
-    class KFBaseResult
+    template< class T >
+    class KFResult
     {
     public:
-        KFBaseResult()
+        typedef std::unique_ptr< KFResult< T > > UniqueType;
+
+        // 构造函数
+        KFResult()
         {
-            _result = KFEnum::Ok;
+            _value = T();
+            _code = KFEnum::Ok;
         }
-        virtual ~KFBaseResult() = default;
 
         inline bool IsOk() const
         {
-            return _result == KFEnum::Ok;
+            return _code == KFEnum::Ok;
         }
 
         inline void Reset()
         {
-            _result = KFEnum::Ok;
+            _value = T();
+            _code = KFEnum::Ok;
         }
 
-        inline int32 GetResult() const
+        inline int32 GetCode() const
         {
-            return _result;
+            return _code;
         }
 
-        inline void SetResult( int32 result )
+        inline void SetCode( int32 code )
         {
-            _result = result;
+            _code = code;
         }
 
     protected:
         // 执行结果
-        int32 _result;
-    };
-
-    ///////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////
-    template< class T >
-    class KFResult : public KFBaseResult
-    {
-    public:
-        typedef std::unique_ptr< KFResult< T > > UniqueType;
-    public:
-
-        KFResult()
-        {
-            _value = T();
-        }
-
-        inline void Reset()
-        {
-            _value = T();
-            _result = KFEnum::Ok;
-        }
+        int32 _code;
 
     public:
         // 数值

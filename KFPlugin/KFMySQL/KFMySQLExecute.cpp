@@ -223,13 +223,9 @@ namespace KFrame
 
         Statement statement( *_session );
         auto ok = ExecuteSql( statement, strsql );
-        if ( ok )
+        if ( !ok )
         {
-            result->SetResult( KFEnum::Ok );
-        }
-        else
-        {
-            result->SetResult( KFEnum::Error );
+            result->SetCode( KFEnum::Error );
         }
 
         return result;
@@ -323,7 +319,7 @@ namespace KFrame
         }
         else
         {
-            result->SetResult( KFEnum::Error );
+            result->SetCode( KFEnum::Error );
         }
 
         return result;
@@ -349,7 +345,7 @@ namespace KFrame
         }
         else
         {
-            result->SetResult( KFEnum::Error );
+            result->SetCode( KFEnum::Error );
         }
 
         return result;
@@ -371,7 +367,7 @@ namespace KFrame
         }
         else
         {
-            result->SetResult( KFEnum::Error );
+            result->SetCode( KFEnum::Error );
         }
 
         return result;
@@ -393,7 +389,7 @@ namespace KFrame
         }
         else
         {
-            result->SetResult( KFEnum::Error );
+            result->SetCode( KFEnum::Error );
         }
 
         return result;
@@ -423,7 +419,7 @@ namespace KFrame
         }
         else
         {
-            result->SetResult( KFEnum::Error );
+            result->SetCode( KFEnum::Error );
         }
 
         return result;
@@ -449,7 +445,7 @@ namespace KFrame
         }
         else
         {
-            result->SetResult( KFEnum::Error );
+            result->SetCode( KFEnum::Error );
         }
 
         return result;
@@ -482,7 +478,7 @@ namespace KFrame
         }
         else
         {
-            result->SetResult( KFEnum::Error );
+            result->SetCode( KFEnum::Error );
         }
 
         return result;
