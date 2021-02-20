@@ -18,9 +18,9 @@ namespace KFrame
         _range.SetValue( value );
     }
 
-    uint64 KFIntValue::CalcUseValue( const KFDataSetting* kfsetting, double multiple )
+    uint64 KFIntValue::CalcUseValue( const KFDataSetting* setting, double multiple )
     {
-        _data_setting = kfsetting;
+        _data_setting = setting;
         _use_value = _range.CalcValue();
 
         if ( !KFUtility::IsDoubleEqual( multiple, _default_multiple ) && _data_setting != nullptr && _data_setting->HaveMask( KFDataDefine::DataMaskMultiple ) )
@@ -32,11 +32,11 @@ namespace KFrame
         return _use_value;
     }
 
-    uint64 KFIntValue::CalcUseValue( const KFDataSetting* kfsetting, const std::string& dataname, double multiple )
+    uint64 KFIntValue::CalcUseValue( const KFDataSetting* setting, const std::string& data_name, double multiple )
     {
         if ( _data_setting == nullptr )
         {
-            _data_setting = kfsetting->_class_setting->FindSetting( dataname );
+            _data_setting = setting->_class_setting->FindSetting( data_name );
         }
 
         return CalcUseValue( _data_setting, multiple );
@@ -66,24 +66,20 @@ namespace KFrame
     KFObjValue::KFObjValue()
     {
         _type = KFDataDefine::DataTypeObject;
-        _element = __KF_NEW__( KFElementObject );
+        _element = __MAKE_SHARED__( KFElementObject );
     }
 
     KFObjValue::~KFObjValue()
     {
-        __KF_DELETE__( KFElementObject, _element );
     }
     //////////////////////////////////////////////////////////////////////////////////////
-
     bool KFElement::IsNeedShow() const
     {
         return _data_setting != nullptr && _data_setting->HaveMask( KFDataDefine::DataMaskShow );
     }
     //////////////////////////////////////////////////////////////////////////////////////
-
     KFElementValue::~KFElementValue()
     {
-        __KF_DELETE__( KFValue, _value );
     }
 
     bool KFElementValue::IsValue() const
@@ -95,11 +91,11 @@ namespace KFrame
     {
         if ( KFUtility::IsNumber( value ) )
         {
-            _value = __KF_NEW__( KFIntValue );
+            _value = __MAKE_SHARED__( KFIntValue );
         }
         else
         {
-            _value = __KF_NEW__( KFStrValue );
+            _value = __MAKE_SHARED__( KFStrValue );
         }
 
         _value->SetValue( value );
@@ -130,54 +126,54 @@ namespace KFrame
         return true;
     }
 
-    void KFElementObject::SetValue( const std::string& dataname, std::string value )
+    void KFElementObject::SetValue( const std::string& data_name, std::string value )
     {
-        KFValue* kfvalue = nullptr;
+        std::shared_ptr<KFValue> value_object = nullptr;
         if ( KFUtility::IsNumber( value ) )
         {
-            kfvalue = __KF_NEW__( KFIntValue );
+            value_object = __MAKE_SHARED__( KFIntValue );
         }
         else
         {
-            kfvalue = __KF_NEW__( KFStrValue );
+            value_object = __MAKE_SHARED__( KFStrValue );
         }
 
-        kfvalue->SetValue( value );
-        _values.Insert( dataname, kfvalue );
+        value_object->SetValue( value );
+        _values.Insert( data_name, value_object );
     }
 
-    uint64 KFElementObject::CalcValue( const KFDataSetting* kfsetting, const std::string& dataname, double multiple /* = _default_multiple */ )
+    uint64 KFElementObject::CalcValue( const KFDataSetting* setting, const std::string& data_name, double multiple /* = _default_multiple */ )
     {
-        auto kfvalue = _values.Find( dataname );
-        if ( kfvalue == nullptr || !kfvalue->IsType( KFDataDefine::DataTypeUInt32 ) )
+        auto value_object = _values.Find( data_name );
+        if ( value_object == nullptr || !value_object->IsType( KFDataDefine::DataTypeUInt32 ) )
         {
             return _invalid_int;
         }
 
-        return kfvalue->CalcUseValue( kfsetting, dataname, multiple );
+        return value_object->CalcUseValue( setting, data_name, multiple );
     }
 
-    uint64 KFElementObject::GetValue( const std::string& dataname ) const
+    uint64 KFElementObject::GetValue( const std::string& data_name ) const
     {
-        auto kfvalue = _values.Find( dataname );
-        if ( kfvalue == nullptr || !kfvalue->IsType( KFDataDefine::DataTypeUInt32 ) )
+        auto value_object = _values.Find( data_name );
+        if ( value_object == nullptr || !value_object->IsType( KFDataDefine::DataTypeUInt32 ) )
         {
             return _invalid_int;
         }
 
-        return kfvalue->GetUseValue();
+        return value_object->GetUseValue();
     }
 
-    KFObjValue* KFElementObject::CreateObjectValue( const std::string& dataname )
+    std::shared_ptr<KFObjValue> KFElementObject::CreateObjectValue( const std::string& data_name )
     {
-        auto kfobject = _values.Find( dataname );
-        if ( kfobject == nullptr )
+        auto object = _values.Find( data_name );
+        if ( object == nullptr )
         {
-            kfobject = __KF_NEW__( KFObjValue );
-            _values.Insert( dataname, kfobject );
+            object = __MAKE_SHARED__( KFObjValue );
+            _values.Insert( data_name, object );
         }
 
-        return static_cast< KFObjValue* >( kfobject );
+        return static_pointer_cast< KFObjValue >( object );
     }
 
     const std::string& KFElementObject::ToString() const
@@ -194,29 +190,29 @@ namespace KFrame
 
         for ( auto& iter : _values._objects )
         {
-            auto kfvalue = iter.second;
-            switch ( kfvalue->_type )
+            auto value_object = iter.second;
+            switch ( value_object->_type )
             {
             case KFDataDefine::DataTypeUInt32:
-                __JSON_SET_VALUE__( kfobject, iter.first, kfvalue->GetUseValue() );
+                __JSON_SET_VALUE__( kfobject, iter.first, value_object->GetUseValue() );
                 break;
             case KFDataDefine::DataTypeString:
-                __JSON_SET_VALUE__( kfobject, iter.first, kfvalue->GetValue() );
+                __JSON_SET_VALUE__( kfobject, iter.first, value_object->GetValue() );
                 break;
             case KFDataDefine::DataTypeObject:
             {
                 __JSON_OBJECT__( kfchild );
-                auto objvalue = static_cast< KFObjValue* >( kfvalue );
-                for ( auto& iter : objvalue->_element->_values._objects )
+                auto obj_value = static_pointer_cast< KFObjValue >( value_object );
+                for ( auto& iter : obj_value->_element->_values._objects )
                 {
-                    auto kfvalue = iter.second;
-                    switch ( kfvalue->_type )
+                    auto value = iter.second;
+                    switch ( value->_type )
                     {
                     case KFDataDefine::DataTypeUInt32:
-                        __JSON_SET_VALUE__( kfchild, iter.first, kfvalue->GetUseValue() );
+                        __JSON_SET_VALUE__( kfchild, iter.first, value->GetUseValue() );
                         break;
                     case KFDataDefine::DataTypeString:
-                        __JSON_SET_VALUE__( kfchild, iter.first, kfvalue->GetValue() );
+                        __JSON_SET_VALUE__( kfchild, iter.first, value->GetValue() );
                         break;
                     }
                 }
@@ -242,18 +238,14 @@ namespace KFrame
 
     void KFElements::Clear()
     {
-        for ( auto kfelenemt : _element_list )
-        {
-            __KF_DELETE__( KFElement, kfelenemt );
-        }
         _element_list.clear();
     }
 
     void KFElements::SetOperate( uint32 operate )
     {
-        for ( auto kfelement : _element_list )
+        for ( auto& element : _element_list )
         {
-            kfelement->SetOperate( operate );
+            element->SetOperate( operate );
         }
     }
 
@@ -266,77 +258,77 @@ namespace KFrame
             return true;
         }
 
-        rapidjson::Document kfjson;
-        kfjson.Parse( data.c_str() );
-        if ( kfjson.HasParseError() )
+        rapidjson::Document json;
+        json.Parse( data.c_str() );
+        if ( json.HasParseError() )
         {
             __LOG_ERROR_FUNCTION__( function, line, "data=[{}] parse error", data );
             return false;
         }
 
-        if ( !kfjson.IsArray() )
+        if ( !json.IsArray() )
         {
             __LOG_ERROR_FUNCTION__( function, line, "data=[{}] is not array", data );
             return false;
         }
 
         _str_element = data;
-        auto size = __JSON_ARRAY_SIZE__( kfjson );
+        auto size = __JSON_ARRAY_SIZE__( json );
         for ( auto i = 0u; i < size; ++i )
         {
-            auto& jsonobject = __JSON_ARRAY_INDEX__( kfjson, i );
-            if ( !jsonobject.IsObject() )
+            auto& json_object = __JSON_ARRAY_INDEX__( json, i );
+            if ( !json_object.IsObject() )
             {
                 continue;
             }
 
-            auto iter = jsonobject.MemberBegin();
+            auto iter = json_object.MemberBegin();
             auto name = iter->name.GetString();
-            auto& jsonvalue = iter->value;
-            if ( jsonvalue.IsString() )
+            auto& json_value = iter->value;
+            if ( json_value.IsString() )
             {
-                auto kfelement = __KF_NEW__( KFElementValue );
-                kfelement->_data_name = name;
-                kfelement->SetValue( jsonvalue.GetString() );
-                _element_list.push_back( kfelement );
+                auto element = __MAKE_SHARED__( KFElementValue );
+                element->_data_name = name;
+                element->SetValue( json_value.GetString() );
+                _element_list.push_back( element );
             }
-            else if ( jsonvalue.IsObject() )
+            else if ( json_value.IsObject() )
             {
-                auto kfelement = __KF_NEW__( KFElementObject );
-                kfelement->_data_name = name;
+                auto element = __MAKE_SHARED__( KFElementObject );
+                element->_data_name = name;
 
-                for ( auto iter = jsonvalue.MemberBegin(); iter != jsonvalue.MemberEnd(); ++iter )
+                for ( auto iter = json_value.MemberBegin(); iter != json_value.MemberEnd(); ++iter )
                 {
-                    auto childname = iter->name.GetString();
-                    auto& jsonchild = iter->value;
-                    if ( !jsonchild.IsString() )
+                    auto child_name = iter->name.GetString();
+                    auto& json_child = iter->value;
+                    if ( !json_child.IsString() )
                     {
-                        __LOG_ERROR_FUNCTION__( function, line, "data=[{}] child[{}] not string", data, childname );
+                        __LOG_ERROR_FUNCTION__( function, line, "data=[{}] child[{}] not string", data, child_name );
                         continue;
                     }
 
-                    std::string strname = childname;
-                    if ( strname == __STRING__( id ) )
+                    std::string name = child_name;
+                    if ( name == __STRING__( id ) )
                     {
-                        kfelement->_config_id = __TO_UINT32__( jsonchild.GetString() );
+                        element->_config_id = __TO_UINT32__( json_child.GetString() );
                     }
                     else
                     {
-                        auto parentname = KFUtility::SplitString( strname, __RANGE_STRING__ );
-                        auto dataname = KFUtility::SplitString( strname, __RANGE_STRING__ );
-                        if ( dataname.empty() )
+                        auto parent_name = KFUtility::SplitString( name, __RANGE_STRING__ );
+                        auto data_name = KFUtility::SplitString( name, __RANGE_STRING__ );
+                        if ( data_name.empty() )
                         {
-                            kfelement->SetValue( parentname, jsonchild.GetString() );
+                            element->SetValue( parent_name, json_child.GetString() );
                         }
                         else
                         {
-                            auto kfobjvalue = kfelement->CreateObjectValue( parentname );
-                            kfobjvalue->_element->SetValue( dataname, jsonchild.GetString() );
+                            auto obj_value = element->CreateObjectValue( parent_name );
+                            obj_value->_element->SetValue( data_name, json_child.GetString() );
                         }
                     }
                 }
 
-                _element_list.push_back( kfelement );
+                _element_list.push_back( element );
             }
             else
             {
@@ -364,20 +356,20 @@ namespace KFrame
 
         // 可以计算的都是比较简单的资源
         __JSON_ARRAY_DOCUMENT__( kfjson );
-        for ( auto kfelement : _element_list )
+        for ( auto& element : _element_list )
         {
-            if ( !kfelement->IsValue() )
+            if ( !element->IsValue() )
             {
                 continue;
             }
 
-            auto kfelementvalue = static_cast< KFElementValue* >( kfelement );
-            if ( kfelementvalue->_value->IsType( KFDataDefine::DataTypeUInt32 ) )
+            auto element_value = static_pointer_cast< KFElementValue >( element );
+            if ( element_value->_value->IsType( KFDataDefine::DataTypeUInt32 ) )
             {
-                auto value = static_cast< uint64 >( kfelementvalue->_value->GetUseValue() * multiple );
+                auto value = static_cast< uint64 >( element_value->_value->GetUseValue() * multiple );
 
                 __JSON_OBJECT__( kfobject );
-                __JSON_SET_VALUE__( kfobject, kfelement->_data_name, __TO_STRING__( value ) );
+                __JSON_SET_VALUE__( kfobject, element->_data_name, __TO_STRING__( value ) );
                 __JSON_ADD_VALUE__( kfjson, kfobject );
             }
         }
