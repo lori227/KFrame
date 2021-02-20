@@ -51,7 +51,7 @@ namespace KFrame
             }
             else
             {
-                result->SetResult( KFEnum::Error );
+                result->SetCode( KFEnum::Error );
             }
 
             return result;
@@ -96,7 +96,7 @@ namespace KFrame
             }
             else
             {
-                result->SetResult( KFEnum::Error );
+                result->SetCode( KFEnum::Error );
             }
 
             return result;
@@ -144,7 +144,7 @@ namespace KFrame
             }
             else
             {
-                result->SetResult( KFEnum::Error );
+                result->SetCode( KFEnum::Error );
             }
 
             return result;
