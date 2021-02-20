@@ -85,7 +85,7 @@ namespace KFrame
         __LOG_INFO__( "agent table name = [{}]", _deploy_table_name );
 
         // deploy server
-        _deploy_server_strid = kfquery->_value[ "serverid" ];
+        _deploy_server_strid = kfquery->_value[ "server_id" ];
         _deploy_server_ip = kfquery->_value[ "serverip" ];
         _deploy_server_port = __TO_UINT32__( kfquery->_value[ "serverport" ] );
 
@@ -596,7 +596,7 @@ namespace KFrame
         deploydata->_startup_time = KFUtility::SplitValue< uint64 >( strdata, __OR_STRING__ );
     }
 
-    bool KFDeployAgentModule::IsAgentDeploy( const std::string& command, const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid )
+    bool KFDeployAgentModule::IsAgentDeploy( const std::string& command, const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zone_id )
     {
         if ( command == __STRING__( launch ) )
         {
@@ -607,7 +607,7 @@ namespace KFrame
         {
             auto deploydata = iter.second;
 
-            auto isserver = deploydata->IsAppServer( appname, apptype, appid, zoneid );
+            auto isserver = deploydata->IsAppServer( appname, apptype, appid, zone_id );
             if ( isserver )
             {
                 return true;
@@ -617,7 +617,7 @@ namespace KFrame
         return false;
     }
 
-    void KFDeployAgentModule::FindAppDeployPath( const std::string& appname, uint32 zoneid, StringSet& deploypathlist )
+    void KFDeployAgentModule::FindAppDeployPath( const std::string& appname, uint32 zone_id, StringSet& deploypathlist )
     {
         deploypathlist.clear();
 
@@ -628,7 +628,7 @@ namespace KFrame
             {
                 if ( appname == deploydata->_app_name )
                 {
-                    if ( appname != __STRING__( zone ) || zoneid == _invalid_int || deploydata->_zone_id == zoneid )
+                    if ( appname != __STRING__( zone ) || zone_id == _invalid_int || deploydata->_zone_id == zone_id )
                     {
                         deploypathlist.insert( deploydata->_deploy_path );
                     }
@@ -658,10 +658,10 @@ namespace KFrame
     {
         auto pbdeploy = &kfmsg->deploycommand();
         LogDeploy( "command=[{}:{}|{}:{}:{}:{}]",
-                   pbdeploy->command(), pbdeploy->value(), pbdeploy->appname(), pbdeploy->apptype(), pbdeploy->appid(), pbdeploy->zoneid() );
+                   pbdeploy->command(), pbdeploy->value(), pbdeploy->appname(), pbdeploy->apptype(), pbdeploy->appid(), pbdeploy->zone_id() );
 
         // 判断是否agent的进程
-        auto ok = IsAgentDeploy( pbdeploy->command(), pbdeploy->appname(), pbdeploy->apptype(), pbdeploy->appid(), pbdeploy->zoneid() );
+        auto ok = IsAgentDeploy( pbdeploy->command(), pbdeploy->appname(), pbdeploy->apptype(), pbdeploy->appid(), pbdeploy->zone_id() );
         if ( !ok )
         {
             return;
@@ -743,7 +743,7 @@ namespace KFrame
         kftask->_app_name = pbdeploy->appname();
         kftask->_app_type = pbdeploy->apptype();
         kftask->_app_id = pbdeploy->appid();
-        kftask->_zone_id = pbdeploy->zoneid();
+        kftask->_zone_id = pbdeploy->zone_id();
 
         if ( _kf_task == nullptr )
         {

@@ -16,7 +16,7 @@ namespace KFrame
         void AddConstant( const std::string& name, uint32 key, const std::string& value );
         //////////////////////////////////////////////////////////////////////////////////////////////////
         // 获得常量
-        const KFConstant* FindConstant( const std::string& name, uint32 key = 0u );
+        std::shared_ptr<const KFConstant> FindConstant( const std::string& name, uint32 key = 0u );
         //////////////////////////////////////////////////////////////////////////////////////////////////
         // uint32配置
         uint32 GetUInt32( const std::string& name, uint32 key = 0u );

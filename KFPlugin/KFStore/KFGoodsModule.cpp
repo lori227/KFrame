@@ -104,9 +104,9 @@ namespace KFrame
         return KFMsg::StoreBuyOK;
     }
 
-    const KFElements* KFGoodsModule::CalcBuyPrice( const KFGoodsSetting* kfsetting, uint64 nowtime )
+    const KFElements* KFGoodsModule::CalcBuyPrice( const KFGoodsSetting* kfsetting, uint64 now_time )
     {
-        if ( KFDate::CheckInTime( kfsetting->_discount_start_time, kfsetting->_discount_finish_time, nowtime ) )
+        if ( KFDate::CheckInTime( kfsetting->_discount_start_time, kfsetting->_discount_finish_time, now_time ) )
         {
             return &kfsetting->_discount;
         }

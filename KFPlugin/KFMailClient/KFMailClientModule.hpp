@@ -36,13 +36,13 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////
         // 发送全局邮件
-        virtual bool SendMail( uint32 configid, const KFElements* kfelements = nullptr );
+        virtual bool SendMail( uint32 configid, const KFElements* elements = nullptr );
 
         // 系统给某人发送邮件
-        virtual bool SendMail( uint64 recvid, uint32 configid, const KFElements* kfelements = nullptr );
+        virtual bool SendMail( uint64 recvid, uint32 configid, const KFElements* elements = nullptr );
 
         // 某人给某人发送邮件
-        virtual bool SendMail( KFEntity* player, uint64 recvid, uint32 configid, const KFElements* kfelements = nullptr );
+        virtual bool SendMail( KFEntity* player, uint64 recvid, uint32 configid, const KFElements* elements = nullptr );
 
     protected:
 
@@ -100,7 +100,7 @@ namespace KFrame
         void ReceiveMailReward( KFEntity* player, uint64 id );
 
         // 格式化邮件内容
-        StringMap& FormatMailData( KFEntity* sender, const KFMailSetting* kfsetting, const KFElements* kfelements );
+        StringMap& FormatMailData( KFEntity* sender, const KFMailSetting* kfsetting, const KFElements* elements );
 
         // 发送添加邮件
         bool SendAddMailToShard( uint64 sendid, uint32 flag, uint64 recvid, const StringMap& maildata );

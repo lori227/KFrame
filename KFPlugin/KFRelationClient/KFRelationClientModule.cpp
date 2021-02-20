@@ -63,13 +63,13 @@ namespace KFrame
 
         for ( auto kfrelation = kfrecord->First(); kfrelation != nullptr; kfrelation = kfrecord->Next() )
         {
-            auto serverid = kfrelation->Get( __STRING__( basic ), __STRING__( serverid ) );
-            if ( serverid == 0u )
+            auto server_id = kfrelation->Get( __STRING__( basic ), __STRING__( server_id ) );
+            if ( server_id == 0u )
             {
                 continue;
             }
 
-            _kf_route->RepeatToEntity( player->GetKeyID(), serverid, kfrelation->GetKeyID(), msgid, message );
+            _kf_route->RepeatToEntity( player->GetKeyID(), server_id, kfrelation->GetKeyID(), msgid, message );
         }
     }
 
@@ -200,7 +200,7 @@ namespace KFrame
         auto kfbasic = player->Find( __STRING__( basic ) );
 
         StringUInt64 values;
-        values[ __STRING__( serverid ) ] = kfbasic->Get( __STRING__( serverid ) );
+        values[ __STRING__( server_id ) ] = kfbasic->Get( __STRING__( server_id ) );
         values[ __STRING__( status ) ] = kfbasic->Get( __STRING__( status ) );
         values[ __STRING__( statustime ) ] = kfbasic->Get( __STRING__( statustime ) );
         UpdateIntValueToRelation( player, relationname, values );
@@ -248,10 +248,10 @@ namespace KFrame
         }
     }
 
-    void KFRelationClientModule::UpdateIntValueToRelation( KFEntity* player, const std::string& relationname, const std::string& data_name, uint64 datavalue )
+    void KFRelationClientModule::UpdateIntValueToRelation( KFEntity* player, const std::string& relationname, const std::string& data_name, uint64 data_value )
     {
         StringUInt64 values;
-        values[ data_name ] = datavalue;
+        values[ data_name ] = data_value;
         UpdateIntValueToRelation( player, relationname, values );
     }
 
@@ -269,12 +269,12 @@ namespace KFrame
         SendMessageToRelation( player, relationname, KFMsg::S2S_UPDATE_INT_VALUE_TO_RELATION_REQ, &req );
     }
 
-    void KFRelationClientModule::UpdateStrValueToRelation( KFEntity* player, const std::string& relationname, const std::string& data_name, const std::string& datavalue )
+    void KFRelationClientModule::UpdateStrValueToRelation( KFEntity* player, const std::string& relationname, const std::string& data_name, const std::string& data_value )
     {
         KFMsg::S2SUpdateStrValueToRelationReq req;
         req.set_relationname( relationname );
         req.set_playerid( player->GetKeyID() );
-        ( *req.mutable_pbdata() )[ data_name ] = datavalue;
+        ( *req.mutable_pbdata() )[ data_name ] = data_value;
         SendMessageToRelation( player, relationname, KFMsg::S2S_UPDATE_STR_VALUE_TO_RELATION_REQ, &req );
     }
 
@@ -504,7 +504,7 @@ namespace KFrame
         }
         case KFMsg::Refuse:		// 拒绝, 通知对方
         {
-            auto targetserverid = kfinvite->Get( __STRING__( basic ), __STRING__( serverid ) );
+            auto targetserverid = kfinvite->Get( __STRING__( basic ), __STRING__( server_id ) );
             auto selfname = player->Get< std::string >( __STRING__( basic ), __STRING__( name ) );
             _kf_display->SendToPlayer( targetserverid, kfinvite->GetKeyID(), KFMsg::RelationRefuseYourInvite, selfname );
         }

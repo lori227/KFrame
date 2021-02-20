@@ -103,7 +103,7 @@ namespace KFrame
         virtual void RemoveConnectionFunction( const std::string& name );
 
         // 调用注册函数
-        void CallClusterConnectionFunction( uint64 serverid );
+        void CallClusterConnectionFunction( uint64 server_id );
 
         // 连接master
         void ReconnectClusterMaster();

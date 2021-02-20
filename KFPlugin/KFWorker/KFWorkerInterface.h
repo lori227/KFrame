@@ -27,7 +27,7 @@ namespace KFrame
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 发送消息
         virtual void SendToClient( const Route& route, uint32 msgid, google::protobuf::Message* message ) = 0;
-        virtual void SendToClient( const Route& route, uint64 serverid, uint32 msgid, google::protobuf::Message* message ) = 0;
+        virtual void SendToClient( const Route& route, uint64 server_id, uint32 msgid, google::protobuf::Message* message ) = 0;
 
     protected:
 

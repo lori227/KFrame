@@ -38,7 +38,7 @@ namespace KFrame
         void UnInitTeam( KFEntity* team );
 
         // 连接成功
-        void OnRouteConnectCluster( uint64 serverid );
+        void OnRouteConnectCluster( uint64 server_id );
 
         // 更换队长
         void ChangeTeamCaptain( KFEntity* kfteam, uint64 captainid );

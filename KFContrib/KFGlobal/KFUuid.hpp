@@ -15,11 +15,11 @@ namespace KFrame
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 初始化配置
-        void AddData( const std::string& name, uint64 projecttime, uint32 timebits, uint32 zonebits, uint32 workerbits, uint32 seqbits );
+        void AddData( const std::string& name, uint64 project_time, uint32 time_bits, uint32 zone_bits, uint32 worker_bits, uint32 seq_bits );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        uint64 STMake( const std::string& name, uint32 zoneid, uint32 workerid, uint64 nowtime );
-        uint64 MTMake( const std::string& name, uint32 zoneid, uint32 workerid, uint64 nowtime );
+        uint64 STMake( const std::string& name, uint32 zone_id, uint32 worker_id, uint64 now_time );
+        uint64 MTMake( const std::string& name, uint32 zone_id, uint32 worker_id, uint64 now_time );
 
         // 获得zoneid
         uint32 STZoneId( const std::string& name, uint64 uuid );

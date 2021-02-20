@@ -72,10 +72,10 @@ namespace KFrame
     {
         _str_app_id = strappid;
 
-        int32 type, zoneid, workid = 0;
-        sscanf( strappid.c_str(), "%d.%d.%d", &type, &zoneid, &workid );
+        int32 type, zone_id, workid = 0;
+        sscanf( strappid.c_str(), "%d.%d.%d", &type, &zone_id, &workid );
         _data->_app_data._server_type = type;
-        _data->_app_data._zone_id = zoneid;
+        _data->_app_data._zone_id = zone_id;
         _data->_app_data._worker_id = workid;
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////

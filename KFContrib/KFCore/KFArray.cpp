@@ -126,8 +126,8 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     uint32 KFArray::GetEmpty()
     {
-        auto maxsize = _data.MaxSize();
-        for ( uint32 i = KFGlobal::Instance()->_array_index; i < maxsize; ++i )
+        auto max_size = _data.MaxSize();
+        for ( uint32 i = KFGlobal::Instance()->_array_index; i < max_size; ++i )
         {
             auto data = Find( i );
             if ( data != nullptr && data->Get() == 0u )
@@ -136,13 +136,13 @@ namespace KFrame
             }
         }
 
-        return maxsize;
+        return max_size;
     }
 
     uint32 KFArray::GetIndex( uint64 value )
     {
-        auto maxsize = _data.MaxSize();
-        for ( uint32 i = KFGlobal::Instance()->_array_index; i < maxsize; ++i )
+        auto max_size = _data.MaxSize();
+        for ( uint32 i = KFGlobal::Instance()->_array_index; i < max_size; ++i )
         {
             auto data = Find( i );
             if ( data != nullptr && data->Get() == value )

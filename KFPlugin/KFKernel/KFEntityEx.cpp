@@ -1062,9 +1062,9 @@ namespace KFrame
         return Find( kfdatasetting->_name );
     }
 
-    const std::string& KFEntityEx::CheckAddElement( const KFElements* kfelements, double multiple, const char* function, uint32 line )
+    const std::string& KFEntityEx::CheckAddElement( const KFElements* elements, double multiple, const char* function, uint32 line )
     {
-        for ( auto kfelement : kfelements->_element_list )
+        for ( auto kfelement : elements->_element_list )
         {
             auto ok = CheckAddElement( kfelement, multiple, function, line );
             if ( !ok )
@@ -1100,16 +1100,16 @@ namespace KFrame
         return !kfdata->IsFull();
     }
 
-    void KFEntityEx::AddElement( const KFElements* kfelements, double multiple, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
+    void KFEntityEx::AddElement( const KFElements* elements, double multiple, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
     {
-        if ( kfelements->_element_list.empty() )
+        if ( elements->_element_list.empty() )
         {
-            return __LOG_ERROR_FUNCTION__( function, line, "{}=[{}] element=[{}] is empty", _kf_component->_component_name, GetKeyID(), kfelements->GetElement() );
+            return __LOG_ERROR_FUNCTION__( function, line, "{}=[{}] element=[{}] is empty", _kf_component->_component_name, GetKeyID(), elements->GetElement() );
         }
 
-        __LOG_INFO_FUNCTION__( function, line, "{}=[{}] start add elements={} multiple=[{:0.2f}]", _kf_component->_component_name, GetKeyID(), kfelements->GetElement(), multiple );
+        __LOG_INFO_FUNCTION__( function, line, "{}=[{}] start add elements={} multiple=[{:0.2f}]", _kf_component->_component_name, GetKeyID(), elements->GetElement(), multiple );
         _element_sequence = KFGlobal::Instance()->STMakeUuid();
-        for ( auto kfelement : kfelements->_element_list )
+        for ( auto kfelement : elements->_element_list )
         {
             AddElement( kfelement, multiple, modulename, moduleid, function, line );
         }
@@ -1313,9 +1313,9 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     // 判断元数据是否满足条件
-    const std::string& KFEntityEx::CheckRemoveElement( const KFElements* kfelements, double multiple, const char* function, uint32 line )
+    const std::string& KFEntityEx::CheckRemoveElement( const KFElements* elements, double multiple, const char* function, uint32 line )
     {
-        for ( auto kfelement : kfelements->_element_list )
+        for ( auto kfelement : elements->_element_list )
         {
             auto ok = CheckRemoveElement( kfelement, multiple, function, line  );
             if ( !ok )
@@ -1379,9 +1379,9 @@ namespace KFrame
             return false;
         }
 
-        auto datavalue = kfdata->Get();
+        auto data_value = kfdata->Get();
         auto elementvalue = kfelementvalue->_value->CalcUseValue( kfdata->_data_setting, multiple );
-        return datavalue >= elementvalue;
+        return data_value >= elementvalue;
     }
 
     bool KFEntityEx::CheckObjectElement( DataPtr kfparent, KFElement* kfelement, double multiple, const char* function, uint32 line )
@@ -1409,9 +1409,9 @@ namespace KFrame
                 return false;
             }
 
-            auto datavalue = kfchild->Get() ;
+            auto data_value = kfchild->Get() ;
             auto elementvalue = kfvalue->CalcUseValue( kfchild->_data_setting, multiple );
-            if ( datavalue < elementvalue )
+            if ( data_value < elementvalue )
             {
                 return false;
             }
@@ -1446,19 +1446,19 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////
-    const std::string& KFEntityEx::RemoveElement( const KFElements* kfelements, double multiple, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
+    const std::string& KFEntityEx::RemoveElement( const KFElements* elements, double multiple, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
     {
-        if ( kfelements->IsEmpty() )
+        if ( elements->IsEmpty() )
         {
             return _invalid_string;
         }
 
-        auto& data_name = CheckRemoveElement( kfelements, multiple, function, line );
+        auto& data_name = CheckRemoveElement( elements, multiple, function, line );
         if ( data_name.empty() )
         {
-            __LOG_INFO_FUNCTION__( function, line, "{}=[{}] start remove elements={} multiple=[{:0.2f}]", _kf_component->_component_name, GetKeyID(), kfelements->GetElement(), multiple );
+            __LOG_INFO_FUNCTION__( function, line, "{}=[{}] start remove elements={} multiple=[{:0.2f}]", _kf_component->_component_name, GetKeyID(), elements->GetElement(), multiple );
             _element_sequence = KFGlobal::Instance()->STMakeUuid();
-            for ( auto kfelement : kfelements->_element_list )
+            for ( auto kfelement : elements->_element_list )
             {
                 RemoveElement( kfelement, multiple, modulename, moduleid, function, line );
             }

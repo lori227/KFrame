@@ -52,7 +52,7 @@ namespace KFrame
         listendata->set_appname( kfglobal->_app_name );
         listendata->set_apptype( kfglobal->_app_type );
         listendata->set_appid( kfglobal->_app_id->GetId() );
-        listendata->set_ip( kfglobal->_interanet_ip );
+        listendata->set_ip( kfglobal->_intranet_ip );
         listendata->set_port( kfglobal->_listen_port );
         SendNetMessage( netdata->_id, KFMsg::S2S_REGISTER_TO_SERVER_REQ, &req );
     }
@@ -81,16 +81,16 @@ namespace KFrame
         _client_engine->SendNetMessage( msgid, strdata.data(), strdata.size(), delay );
     }
 
-    bool KFTcpClientModule::SendNetMessage( uint64 serverid, uint32 msgid, google::protobuf::Message* message, uint32 delay )
+    bool KFTcpClientModule::SendNetMessage( uint64 server_id, uint32 msgid, google::protobuf::Message* message, uint32 delay )
     {
         auto strdata = message->SerializeAsString();
-        return _client_engine->SendNetMessage( serverid, msgid, strdata.data(), strdata.size(), delay );
+        return _client_engine->SendNetMessage( server_id, msgid, strdata.data(), strdata.size(), delay );
     }
 
-    bool KFTcpClientModule::SendNetMessage( uint64 serverid, uint64 recvid, uint32 msgid, google::protobuf::Message* message, uint32 delay )
+    bool KFTcpClientModule::SendNetMessage( uint64 server_id, uint64 recvid, uint32 msgid, google::protobuf::Message* message, uint32 delay )
     {
         auto strdata = message->SerializeAsString();
-        return _client_engine->SendNetMessage( serverid, recvid, msgid, strdata.data(), strdata.size(), delay );
+        return _client_engine->SendNetMessage( server_id, recvid, msgid, strdata.data(), strdata.size(), delay );
     }
 
     void KFTcpClientModule::SendNetMessage( uint32 msgid, const char* data, uint32 length )
@@ -98,14 +98,14 @@ namespace KFrame
         _client_engine->SendNetMessage( msgid, data, length );
     }
 
-    bool KFTcpClientModule::SendNetMessage( uint64 serverid, uint32 msgid, const char* data, uint32 length )
+    bool KFTcpClientModule::SendNetMessage( uint64 server_id, uint32 msgid, const char* data, uint32 length )
     {
-        return _client_engine->SendNetMessage( serverid, msgid, data, length );
+        return _client_engine->SendNetMessage( server_id, msgid, data, length );
     }
 
-    bool KFTcpClientModule::SendNetMessage( uint64 serverid, uint64 recvid, uint32 msgid, const char* data, uint32 length )
+    bool KFTcpClientModule::SendNetMessage( uint64 server_id, uint64 recvid, uint32 msgid, const char* data, uint32 length )
     {
-        return _client_engine->SendNetMessage( serverid, recvid, msgid, data, length );
+        return _client_engine->SendNetMessage( server_id, recvid, msgid, data, length );
     }
 
     // 给某一类型服务器发送消息
@@ -205,11 +205,11 @@ namespace KFrame
         return false;
     }
 
-    void KFTcpClientModule::CloseClient( uint64 serverid, const char* function, uint32 line )
+    void KFTcpClientModule::CloseClient( uint64 server_id, const char* function, uint32 line )
     {
-        _client_engine->CloseClient( serverid, function, line );
+        _client_engine->CloseClient( server_id, function, line );
 
-        __LOG_DEBUG_FUNCTION__( function, line, "[{}] connect close", KFAppId::ToString( serverid ) );
+        __LOG_DEBUG_FUNCTION__( function, line, "[{}] connect close", KFAppId::ToString( server_id ) );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////

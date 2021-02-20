@@ -51,7 +51,7 @@ namespace KFrame
         __UN_MESSAGE__( KFMsg::S2S_TEAM_AGREE_TO_TEAM_REQ );
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFTeamShardModule::OnRouteConnectCluster( uint64 serverid )
+    void KFTeamShardModule::OnRouteConnectCluster( uint64 server_id )
     {
         RouteObjectList teamlist;
         for ( auto kfteam = _kf_component->FirstEntity(); kfteam != nullptr; kfteam = _kf_component->NextEntity() )
@@ -72,8 +72,8 @@ namespace KFrame
 
     void KFTeamShardModule::SendMessageToMember( DataPtr kfmember, uint32 msgid, ::google::protobuf::Message* message )
     {
-        auto serverid = kfmember->Get<uint64>( __STRING__( basic ), __STRING__( serverid ) );
-        _kf_route->SendToEntity( serverid, kfmember->GetKeyID(), msgid, message );
+        auto server_id = kfmember->Get<uint64>( __STRING__( basic ), __STRING__( server_id ) );
+        _kf_route->SendToEntity( server_id, kfmember->GetKeyID(), msgid, message );
     }
 
     void KFTeamShardModule::InitTeam( KFEntity* team )
@@ -296,7 +296,7 @@ namespace KFrame
             kfteam->UpdateObject( kfmember, iter->first, KFEnum::Set, iter->second );
 
             // 如果是队长下线, 需要更换队长
-            if ( iter->first == __STRING__( serverid ) && iter->second == _invalid_int )
+            if ( iter->first == __STRING__( server_id ) && iter->second == _invalid_int )
             {
                 auto captainid = kfteam->Get( __STRING__( captainid ) );
                 if ( captainid == kfmember->GetKeyID() )

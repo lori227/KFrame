@@ -19,7 +19,7 @@ namespace KFrame
         ~KFGlobal();
 
         // 创建
-        static void Initialize( KFGlobal* kfglobal );
+        static void Initialize( KFGlobal* global );
 
         // 接口
         static KFGlobal* Instance();
@@ -50,21 +50,21 @@ namespace KFrame
         double RandDouble( double first, double second );
 
         // 判断游戏分区id
-        bool IsServerSameZone( uint64 serverid );
+        bool IsServerSameZone( uint64 server_id );
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // 初始化网络
-        void InitNetType( std::string& strtype );
+        void InitNetType( std::string& net_type );
 
         // 渠道类型
-        void InitChannelService( std::string& strtype );
+        void InitChannelService( std::string& channel_service );
 
         // 判断渠道和服务类型
         bool CheckChannelService( uint32 channel, uint32 service );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 初始化配置
-        void AddUuidData( const std::string& name, uint32 timebits, uint32 zonebits, uint32 workerbits, uint32 seqbits );
+        void AddUuidData( const std::string& name, uint32 time_bits, uint32 zone_bits, uint32 worker_bits, uint32 seq_bits );
 
         // 生成uuid
         uint64 STMakeUuid();
@@ -73,8 +73,8 @@ namespace KFrame
         uint64 STMakeUuid( const std::string& name );
         uint64 MTMakeUuid( const std::string& name );
 
-        uint64 STMakeUuid( const std::string& name, uint32 zoneid );
-        uint64 MTMakeUuid( const std::string& name, uint32 zoneid );
+        uint64 STMakeUuid( const std::string& name, uint32 zone_id );
+        uint64 MTMakeUuid( const std::string& name, uint32 zone_id );
 
         // 获得zoneid
         uint32 STUuidZoneId( const std::string& name, uint64 uuid );
@@ -91,7 +91,7 @@ namespace KFrame
         void AddConstant( const std::string& name, uint32 key, const std::string& value );
 
         // 获得常量
-        const KFConstant* FindConstant( const std::string& name, uint32 key = 0u );
+        std::shared_ptr<const KFConstant> FindConstant( const std::string& name, uint32 key = 0u );
 
         // uint32配置
         uint32 GetUInt32( const std::string& name, uint32 key = 0u );
@@ -136,18 +136,18 @@ namespace KFrame
         void BindDataToElementStringFunction( KFDataToElementStringFunction& function );
 
         // 解析元数据字串
-        const std::string& ParseString( const std::string& strparse );
+        const std::string& ParseString( const std::string& str_parse );
 
         // 格式化成元数据结构
-        const std::string& FormatString( const std::string& data_name, uint32 datavalue, uint32 dataid = 0u );
-        const std::string& FormatString( const std::string& data_name, const std::string& datavalue, uint32 dataid = 0u );
-        const std::string& FormatString( const KFElementData& elementdata );
+        const std::string& FormatString( const std::string& data_name, uint32 data_value, uint32 data_id = 0u );
+        const std::string& FormatString( const std::string& data_name, const std::string& data_value, uint32 data_id = 0u );
+        const std::string& FormatString( const KFElementData& element_data );
 
         // 格式化
-        bool FormatElement( KFElements& kfelements, const std::string& data_name, uint32 datavalue, uint32 dataid = 0u );
-        bool FormatElement( KFElements& kfelements, const std::string& data_name, const std::string& datavalue, uint32 dataid = 0u );
-        bool FormatElement( KFElements& kfelements, const KFElementData& elementdata );
-        bool ParseElement( KFElements& kfelements, const char* file, uint64 id );
+        bool FormatElement( KFElements& elements, const std::string& data_name, uint32 data_value, uint32 data_id = 0u );
+        bool FormatElement( KFElements& elements, const std::string& data_name, const std::string& data_value, uint32 data_id = 0u );
+        bool FormatElement( KFElements& elements, const KFElementData& element_data );
+        bool ParseElement( KFElements& elements, const char* file, uint64 id );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     protected:
@@ -168,7 +168,7 @@ namespace KFrame
         // 上一次循环消耗时间
         uint64 _last_frame_use_time = 0u;
 
-        // appid
+        // app id
         KFAppId* _app_id;
 
         // 类型
@@ -190,7 +190,7 @@ namespace KFrame
         std::string _local_ip;
 
         // 外网ip
-        std::string _interanet_ip;
+        std::string _intranet_ip;
 
         // 监听端口
         uint32 _listen_port;

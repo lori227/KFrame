@@ -102,11 +102,11 @@ namespace KFrame
         return accountdata;
     }
 
-    void KFAccountMongo::SaveZoneToken( const std::string& account, uint32 channel, uint64 accountid, uint32 zoneid, const std::string& token, uint32 expiretime )
+    void KFAccountMongo::SaveZoneToken( const std::string& account, uint32 channel, uint64 accountid, uint32 zone_id, const std::string& token, uint32 expiretime )
     {
         auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
 
-        auto table = __FORMAT__( "{}:{}", __STRING__( zonetoken ), zoneid );
+        auto table = __FORMAT__( "{}:{}", __STRING__( zonetoken ), zone_id );
         mongodriver->CreateIndex( table, MongoKeyword::_expire );
 
         KFDBValue dbvalue;
@@ -118,12 +118,12 @@ namespace KFrame
         mongodriver->Insert( table, accountid, dbvalue );
     }
 
-    StringMap KFAccountMongo::VerifyZoneToken( uint64 accountid, uint32 zoneid, const std::string& token )
+    StringMap KFAccountMongo::VerifyZoneToken( uint64 accountid, uint32 zone_id, const std::string& token )
     {
         StringMap accountdata;
         auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
 
-        auto table = __FORMAT__( "{}:{}", __STRING__( zonetoken ), zoneid );
+        auto table = __FORMAT__( "{}:{}", __STRING__( zonetoken ), zone_id );
         auto kftokenresult = mongodriver->QueryRecord( table, accountid );
         if ( kftokenresult->IsOk() )
         {
@@ -137,22 +137,22 @@ namespace KFrame
         return accountdata;
     }
 
-    void KFAccountMongo::SaveLoginData( uint64 accountid, const std::string& ip, uint32 zoneid )
+    void KFAccountMongo::SaveLoginData( uint64 accountid, const std::string& ip, uint32 zone_id )
     {
         KFDBValue dbvalue;
         dbvalue.AddValue( __STRING__( ip ), ip );
-        dbvalue.AddValue( __STRING__( zoneid ), zoneid );
+        dbvalue.AddValue( __STRING__( zone_id ), zone_id );
 
         auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
         mongodriver->Insert( __STRING__( accountid ), accountid, dbvalue );
     }
 
-    std::tuple<uint64, bool> KFAccountMongo::QueryCreatePlayer( uint64 accountid, uint32 zoneid )
+    std::tuple<uint64, bool> KFAccountMongo::QueryCreatePlayer( uint64 accountid, uint32 zone_id )
     {
         auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
 
         // 查询是否存在
-        auto strkey = __FORMAT__( "{}:{}", __STRING__( zone ), zoneid );
+        auto strkey = __FORMAT__( "{}:{}", __STRING__( zone ), zone_id );
         auto queryplayerid = mongodriver->QueryUInt64( __STRING__( accountid ), accountid, strkey );
         if ( !queryplayerid->IsOk() )
         {
@@ -166,7 +166,7 @@ namespace KFrame
         }
 
         // 创建playerid
-        auto playerid = KFGlobal::Instance()->MTMakeUuid( __STRING__( player ), zoneid );
+        auto playerid = KFGlobal::Instance()->MTMakeUuid( __STRING__( player ), zone_id );
         mongodriver->Insert( __STRING__( player ), playerid, __STRING__( accountid ), accountid );
         if ( !mongodriver->Insert( __STRING__( accountid ), accountid, strkey, playerid ) )
         {

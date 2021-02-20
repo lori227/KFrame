@@ -35,7 +35,7 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
     protected:
         // 连接成功
-        void OnRouteConnectCluster( uint64 serverid );
+        void OnRouteConnectCluster( uint64 server_id );
 
         // 更新属性回调
         __KF_UPDATE_DATA_FUNCTION__( OnUpdateDataCallBack );
@@ -53,8 +53,8 @@ namespace KFrame
 
         // 更新公共数据
         void UpdateBasicIntValueToBasic( uint64 playerid, StringUInt64& values );
-        void UpdateBasicIntValueToBasic( uint64 playerid, const std::string& data_name, uint64 datavalue );
-        void UpdateBasicStrValueToBasic( uint64 playerid, const std::string& data_name, const std::string& datavalue );
+        void UpdateBasicIntValueToBasic( uint64 playerid, const std::string& data_name, uint64 data_value );
+        void UpdateBasicStrValueToBasic( uint64 playerid, const std::string& data_name, const std::string& data_value );
 
         // 检查名字的有效性
         uint32 CheckNameValid( const std::string& name, uint32 maxlength );

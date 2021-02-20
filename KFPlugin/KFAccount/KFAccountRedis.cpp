@@ -114,10 +114,10 @@ namespace KFrame
         return _result;
     }
 
-    void KFAccountRedis::SaveZoneToken( const std::string& account, uint32 channel, uint64 accountid, uint32 zoneid, const std::string& token, uint32 expiretime )
+    void KFAccountRedis::SaveZoneToken( const std::string& account, uint32 channel, uint64 accountid, uint32 zone_id, const std::string& token, uint32 expiretime )
     {
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
-        auto tokenkey = __FORMAT__( "{}:{}:{}", __STRING__( token ), zoneid, accountid );
+        auto tokenkey = __FORMAT__( "{}:{}:{}", __STRING__( token ), zone_id, accountid );
 
         // 保存验证信息
         StringMap values;
@@ -132,10 +132,10 @@ namespace KFrame
         redisdriver->WriteExec();
     }
 
-    StringMap KFAccountRedis::VerifyZoneToken( uint64 accountid, uint32 zoneid, const std::string& token )
+    StringMap KFAccountRedis::VerifyZoneToken( uint64 accountid, uint32 zone_id, const std::string& token )
     {
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
-        auto kftoken = redisdriver->HGetAll( __DATABASE_KEY_3__( __STRING__( token ), zoneid, accountid ) );
+        auto kftoken = redisdriver->HGetAll( __DATABASE_KEY_3__( __STRING__( token ), zone_id, accountid ) );
         if ( !kftoken->_value.empty() )
         {
             auto querytoken = kftoken->_value[ __STRING__( token ) ];
@@ -149,22 +149,22 @@ namespace KFrame
         return _result;
     }
 
-    void KFAccountRedis::SaveLoginData( uint64 accountid, const std::string& ip, uint32 zoneid )
+    void KFAccountRedis::SaveLoginData( uint64 accountid, const std::string& ip, uint32 zone_id )
     {
         StringMap values;
         values[ __STRING__( ip ) ] = ip;
-        values[ __STRING__( zoneid ) ] = __TO_STRING__( zoneid );
+        values[ __STRING__( zone_id ) ] = __TO_STRING__( zone_id );
 
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
         redisdriver->HMSet( __DATABASE_KEY_2__( __STRING__( accountid ), accountid ), values );
     }
 
-    std::tuple<uint64, bool> KFAccountRedis::QueryCreatePlayer( uint64 accountid, uint32 zoneid )
+    std::tuple<uint64, bool> KFAccountRedis::QueryCreatePlayer( uint64 accountid, uint32 zone_id )
     {
         auto redisdriver = __ACCOUNT_REDIS_DRIVER__;
 
         // 查询是否存在
-        auto queryplayerid = redisdriver->HGetUInt64( __DATABASE_KEY_2__( __STRING__( accountid ), accountid ), __DATABASE_KEY_2__( __STRING__( zone ), zoneid ) );
+        auto queryplayerid = redisdriver->HGetUInt64( __DATABASE_KEY_2__( __STRING__( accountid ), accountid ), __DATABASE_KEY_2__( __STRING__( zone ), zone_id ) );
         if ( !queryplayerid->IsOk() )
         {
             return std::make_tuple( _invalid_int, false );
@@ -177,12 +177,12 @@ namespace KFrame
         }
 
         // 创建playerid
-        auto playerid = KFGlobal::Instance()->MTMakeUuid( __STRING__( player ), zoneid );
+        auto playerid = KFGlobal::Instance()->MTMakeUuid( __STRING__( player ), zone_id );
 
         // 保存玩家id信息
         redisdriver->WriteMulti();
         redisdriver->HSet( __DATABASE_KEY_2__( __STRING__( player ), playerid ), __STRING__( accountid ), accountid );
-        redisdriver->HSet( __DATABASE_KEY_2__( __STRING__( accountid ), accountid ), __DATABASE_KEY_2__( __STRING__( zone ), zoneid ), playerid );
+        redisdriver->HSet( __DATABASE_KEY_2__( __STRING__( accountid ), accountid ), __DATABASE_KEY_2__( __STRING__( zone ), zone_id ), playerid );
         auto kfresult = redisdriver->WriteExec();
         if ( !kfresult->IsOk() )
         {

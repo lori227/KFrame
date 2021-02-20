@@ -21,7 +21,7 @@ namespace KFrame
         int32 StartEngine( const std::string& ip, uint32 port );
 
         // 逻辑
-        void RunEngine( uint64 nowtime );
+        void RunEngine( uint64 now_time );
 
         // 关闭引擎
         void ShutEngine();
@@ -91,8 +91,8 @@ namespace KFrame
         void RunCloseHandle();
 
         // 处理网络消息
-        void RunTrusteeMessage( uint64 nowtime );
-        void RunHandleMessage( uint64 nowtime );
+        void RunTrusteeMessage( uint64 now_time );
+        void RunHandleMessage( uint64 now_time );
 
     protected:
         // 服务器服务

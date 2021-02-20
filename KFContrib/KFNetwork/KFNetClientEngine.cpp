@@ -17,13 +17,13 @@ namespace KFrame
         __DELETE_OBJECT__( _net_client_services );
     }
 
-    void KFNetClientEngine::InitEngine( uint64 nowtime, uint32 queuesize, uint32 messagetype )
+    void KFNetClientEngine::InitEngine( uint64 now_time, uint32 queuesize, uint32 messagetype )
     {
         // 网络服务
         _net_client_services = __NEW_OBJECT__( KFNetClientServices );
         _net_client_services->InitServices( 100, queuesize, messagetype );
         _net_client_services->StartServices( nullptr );
-        _net_client_services->_now_time = nowtime;
+        _net_client_services->_now_time = now_time;
 
         // 注册网络时间
         _net_client_services->_net_event->BindDisconnectFunction( this, &KFNetClientEngine::OnClientDisconnect );
@@ -44,10 +44,10 @@ namespace KFrame
         _net_client_services->ShutServices();
     }
 
-    void KFNetClientEngine::RunEngine( uint64 nowtime )
+    void KFNetClientEngine::RunEngine( uint64 now_time )
     {
         // 网络事件
-        _net_client_services->_now_time = nowtime;
+        _net_client_services->_now_time = now_time;
         _net_client_services->_net_event->RunEvent();
 
         // 添加客户端
@@ -195,24 +195,24 @@ namespace KFrame
         }
     }
 
-    bool KFNetClientEngine::SendNetMessage( uint64 serverid, uint32 msgid, const char* data, uint32 length, uint32 delay )
+    bool KFNetClientEngine::SendNetMessage( uint64 server_id, uint32 msgid, const char* data, uint32 length, uint32 delay )
     {
-        auto netclient = _kf_clients.Find( serverid );
+        auto netclient = _kf_clients.Find( server_id );
         if ( netclient == nullptr )
         {
-            __LOG_ERROR__( "msgid[{}] can't find server[{}]", msgid, KFAppId::ToString( serverid ) );
+            __LOG_ERROR__( "msgid[{}] can't find server[{}]", msgid, KFAppId::ToString( server_id ) );
             return false;
         }
 
         return netclient->SendNetMessage( msgid, data, length, delay );
     }
 
-    bool KFNetClientEngine::SendNetMessage( uint64 serverid, uint64 recvid, uint32 msgid, const char* data, uint32 length, uint32 delay )
+    bool KFNetClientEngine::SendNetMessage( uint64 server_id, uint64 recvid, uint32 msgid, const char* data, uint32 length, uint32 delay )
     {
-        auto netclient = _kf_clients.Find( serverid );
+        auto netclient = _kf_clients.Find( server_id );
         if ( netclient == nullptr )
         {
-            __LOG_ERROR__( "msgid[{}] can't find server[{}]", msgid, KFAppId::ToString( serverid ) );
+            __LOG_ERROR__( "msgid[{}] can't find server[{}]", msgid, KFAppId::ToString( server_id ) );
             return false;
         }
 

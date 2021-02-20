@@ -88,17 +88,17 @@ namespace KFrame
 
     private:
         // 连接Cluster Server 成功
-        void OnClientConnectionClusterMaster( const std::string& servername, uint64 serverid );
+        void OnClientConnectionClusterMaster( const std::string& servername, uint64 server_id );
 
         // 连接Cluster Server 成功
-        void OnClientConnectionClusterShard( const std::string& servername, uint64 serverid );
+        void OnClientConnectionClusterShard( const std::string& servername, uint64 server_id );
 
         // 断开连接
-        void OnClientLostClusterMaster( const std::string& servername, uint64 serverid );
-        void OnClientLostClusterShard( const std::string& servername, uint64 serverid );
+        void OnClientLostClusterMaster( const std::string& servername, uint64 server_id );
+        void OnClientLostClusterShard( const std::string& servername, uint64 server_id );
 
         // 验证集群客户端登录
-        uint64 ClusterVerifyLogin( const std::string& token, uint64 serverid );
+        uint64 ClusterVerifyLogin( const std::string& token, uint64 server_id );
 
     private:
         // 是否在服务中

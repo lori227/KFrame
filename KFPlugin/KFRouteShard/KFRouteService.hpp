@@ -12,16 +12,16 @@ namespace KFrame
         ~KFRouteService() = default;
 
         // 添加服务器
-        void AddServer( uint64 serverid );
+        void AddServer( uint64 server_id );
 
         // 添加对象
-        void AddObject( uint64 serverid, uint64 objectid, uint32 objectcount );
+        void AddObject( uint64 server_id, uint64 objectid, uint32 objectcount );
 
         // 删除服务器
-        void RemoveServer( uint64 serverid );
+        void RemoveServer( uint64 server_id );
 
         // 删除对象
-        void RemoveObject( uint64 serverid, uint64 objectid, uint32 objectcount );
+        void RemoveObject( uint64 server_id, uint64 objectid, uint32 objectcount );
 
         // 获得随机服务器
         uint64 RandServer( uint64 clientid );

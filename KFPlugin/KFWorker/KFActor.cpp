@@ -107,14 +107,14 @@ namespace KFrame
     }
 
 
-    bool KFActor::PushAckMessage( uint64 serverid, uint32 msgid, google::protobuf::Message* message )
+    bool KFActor::PushAckMessage( uint64 server_id, uint32 msgid, google::protobuf::Message* message )
     {
         if ( _ack_message_queue.IsFull() )
         {
             return false;
         }
 
-        Route route( 0, 0, serverid );
+        Route route( 0, 0, server_id );
         auto strdata = message->SerializeAsString();
 
         auto workermessage = __KF_NEW__( KFWorkerMessage );

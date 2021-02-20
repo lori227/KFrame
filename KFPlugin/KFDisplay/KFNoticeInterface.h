@@ -13,7 +13,7 @@ namespace KFrame
         virtual void SendToPlayer( DataPtr kfbasic, uint32 type, uint32 count = 1u ) = 0;
 
         virtual void SendToPlayer( const Route& route, uint32 type, uint32 count = 1u ) = 0;
-        virtual void SendToPlayer( uint64 serverid, uint64 playerid, uint32 type, uint32 count = 1u ) = 0;
+        virtual void SendToPlayer( uint64 server_id, uint64 playerid, uint32 type, uint32 count = 1u ) = 0;
     };
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

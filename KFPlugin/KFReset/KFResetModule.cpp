@@ -95,7 +95,7 @@ namespace KFrame
         return player->Get( __STRING__( time ), timeid, __STRING__( value ) );
     }
 
-    void KFResetModule::SetResetTime( KFEntity* player, uint32 timeid, uint64 nowtime )
+    void KFResetModule::SetResetTime( KFEntity* player, uint32 timeid, uint64 now_time )
     {
         if ( timeid == 0u )
         {
@@ -103,7 +103,7 @@ namespace KFrame
         }
 
         auto kftimerecord = player->Find( __STRING__( time ) );
-        player->UpdateRecord( kftimerecord, timeid, kftimerecord->_data_setting->_value_key_name, KFEnum::Set, nowtime );
+        player->UpdateRecord( kftimerecord, timeid, kftimerecord->_data_setting->_value_key_name, KFEnum::Set, now_time );
     }
 
     __KF_PLAYER_RUN_FUNCTION__( KFResetModule::RunResetPlayerData )

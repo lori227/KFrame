@@ -308,11 +308,11 @@ namespace KFrame
             return;
         }
 
-        KFElements kfelements;
-        auto ok = kfelements.Parse( strelement, __FUNC_LINE__ );
+        KFElements elements;
+        auto ok = elements.Parse( strelement, __FUNC_LINE__ );
         if ( ok )
         {
-            kfentity->AddElement( &kfelements, _default_multiple, modulename, 0u, __FUNC_LINE__ );
+            kfentity->AddElement( &elements, _default_multiple, modulename, 0u, __FUNC_LINE__ );
         }
     }
 
@@ -324,12 +324,12 @@ namespace KFrame
             return;
         }
 
-        KFElements kfelements;
-        auto ok = kfelements.Parse( strelement, __FUNC_LINE__ );
+        KFElements elements;
+        auto ok = elements.Parse( strelement, __FUNC_LINE__ );
         if ( ok )
         {
-            kfelements.SetOperate( KFEnum::Set );
-            kfentity->AddElement( &kfelements, _default_multiple, modulename, 0u, __FUNC_LINE__ );
+            elements.SetOperate( KFEnum::Set );
+            kfentity->AddElement( &elements, _default_multiple, modulename, 0u, __FUNC_LINE__ );
         }
     }
 
@@ -341,11 +341,11 @@ namespace KFrame
             return;
         }
 
-        KFElements kfelements;
-        auto ok = kfelements.Parse( strelement, __FUNC_LINE__ );
+        KFElements elements;
+        auto ok = elements.Parse( strelement, __FUNC_LINE__ );
         if ( ok )
         {
-            kfentity->RemoveElement( &kfelements, _default_multiple, modulename, 0u, __FUNC_LINE__ );
+            kfentity->RemoveElement( &elements, _default_multiple, modulename, 0u, __FUNC_LINE__ );
         }
     }
 

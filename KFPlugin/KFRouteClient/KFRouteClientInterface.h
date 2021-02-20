@@ -65,21 +65,21 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 转发给指定服务器( 只发送一次 )
-        virtual bool SendToServer( uint64 serverid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
-        virtual bool SendToServer( uint64 sendid, uint64 serverid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
+        virtual bool SendToServer( uint64 server_id, uint32 msgid, ::google::protobuf::Message* message ) = 0;
+        virtual bool SendToServer( uint64 sendid, uint64 server_id, uint32 msgid, ::google::protobuf::Message* message ) = 0;
 
         // 转发给指定服务器( 失败重复发送 )
-        virtual bool RepeatToServer( uint64 serverid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
-        virtual bool RepeatToServer( uint64 sendid, uint64 serverid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
+        virtual bool RepeatToServer( uint64 server_id, uint32 msgid, ::google::protobuf::Message* message ) = 0;
+        virtual bool RepeatToServer( uint64 sendid, uint64 server_id, uint32 msgid, ::google::protobuf::Message* message ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 发送到指定实体对象, 包括玩家, 工会, 队伍等( 只发送一次 )
-        virtual bool SendToEntity( uint64 serverid, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
-        virtual bool SendToEntity( uint64 sendid, uint64 serverid, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
+        virtual bool SendToEntity( uint64 server_id, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
+        virtual bool SendToEntity( uint64 sendid, uint64 server_id, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
 
         // 发送到指定实体对象, 包括玩家, 工会, 队伍等( 失败重复发送 )
-        virtual bool RepeatToEntity( uint64 serverid, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
-        virtual bool RepeatToEntity( uint64 sendid, uint64 serverid, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
+        virtual bool RepeatToEntity( uint64 server_id, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
+        virtual bool RepeatToEntity( uint64 sendid, uint64 server_id, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 注册连接回调

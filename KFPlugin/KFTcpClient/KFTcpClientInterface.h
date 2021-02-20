@@ -13,17 +13,17 @@ namespace KFrame
         virtual void StartClient( const std::string& name, const std::string& type, uint64 id, const std::string& ip, uint32 port ) = 0;
 
         // 断开连接
-        virtual void CloseClient( uint64 serverid, const char* function, uint32 line ) = 0;
+        virtual void CloseClient( uint64 server_id, const char* function, uint32 line ) = 0;
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // 发送消息
         virtual void SendNetMessage( uint32 msgid, google::protobuf::Message* message, uint32 delay = 0 ) = 0;
-        virtual bool SendNetMessage( uint64 serverid, uint32 msgid, google::protobuf::Message* message, uint32 delay = 0 ) = 0;
-        virtual bool SendNetMessage( uint64 serverid, uint64 recvid, uint32 msgid, google::protobuf::Message* message, uint32 delay = 0 ) = 0;
+        virtual bool SendNetMessage( uint64 server_id, uint32 msgid, google::protobuf::Message* message, uint32 delay = 0 ) = 0;
+        virtual bool SendNetMessage( uint64 server_id, uint64 recvid, uint32 msgid, google::protobuf::Message* message, uint32 delay = 0 ) = 0;
 
         virtual void SendNetMessage( uint32 msgid, const char* data, uint32 length ) = 0;
-        virtual bool SendNetMessage( uint64 serverid, uint32 msgid, const char* data, uint32 length ) = 0;
-        virtual bool SendNetMessage( uint64 serverid, uint64 recvid, uint32 msgid, const char* data, uint32 length ) = 0;
+        virtual bool SendNetMessage( uint64 server_id, uint32 msgid, const char* data, uint32 length ) = 0;
+        virtual bool SendNetMessage( uint64 server_id, uint64 recvid, uint32 msgid, const char* data, uint32 length ) = 0;
 
         // 给某一类型服务器发送消息
         virtual void SendMessageToName( const std::string& servername, uint32 msgid, google::protobuf::Message* message ) = 0;

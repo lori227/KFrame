@@ -127,13 +127,13 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
         // 判断是否能够添加元数据
-        virtual const std::string& CheckAddElement( const KFElements* kfelements, double multiple, const char* function, uint32 line );
+        virtual const std::string& CheckAddElement( const KFElements* elements, double multiple, const char* function, uint32 line );
 
         // 添加元数据
-        virtual void AddElement( const KFElements* kfelements, double multiple, const std::string& modulename, uint64 moduleid, const char* function, uint32 line );
+        virtual void AddElement( const KFElements* elements, double multiple, const std::string& modulename, uint64 moduleid, const char* function, uint32 line );
 
         // 删除元数据( 删除前会判断是否满足 )
-        virtual const std::string& RemoveElement( const KFElements* kfelements, double multiple, const std::string& modulename, uint64 moduleid, const char* function, uint32 line );
+        virtual const std::string& RemoveElement( const KFElements* elements, double multiple, const std::string& modulename, uint64 moduleid, const char* function, uint32 line );
 
         // 设置element到kfdata对象
         virtual void UpdateElementToData( DataPtr kfdata, KFElementObject* kfelement, double multiple );
@@ -195,7 +195,7 @@ namespace KFrame
         bool AddRecordElement( DataPtr kfparent, KFElementResult* kfresult, const char* function, uint32 line );
 
         // 判断元数据是否满足条件
-        const std::string& CheckRemoveElement( const KFElements* kfelements, double multiple, const char* function, uint32 line );
+        const std::string& CheckRemoveElement( const KFElements* elements, double multiple, const char* function, uint32 line );
         bool CheckRemoveElement( const KFElement* kfelement, double multiple, const char* function, uint32 line );
         bool CheckNormalElement( DataPtr kfdata, KFElement* kfelement, double multiple, const char* function, uint32 line );
         bool CheckObjectElement( DataPtr kfparent, KFElement* kfelement, double multiple, const char* function, uint32 line );

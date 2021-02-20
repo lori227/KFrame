@@ -36,11 +36,11 @@ namespace KFrame
     {
         // 删除过期的token信息
         StringSet removelist;
-        auto nowtime = KFGlobal::Instance()->_game_time;
+        auto now_time = KFGlobal::Instance()->_game_time;
         for ( auto& iter : _kf_token_list._objects )
         {
             auto kftoken = iter.second;
-            if ( kftoken->_valid_time < nowtime )
+            if ( kftoken->_valid_time < now_time )
             {
                 removelist.insert( kftoken->_token );
             }
@@ -74,10 +74,10 @@ namespace KFrame
         }
     }
 
-    void KFClusterProxyModule::OnClientConnectionClusterMaster( const std::string& servername, uint64 serverid )
+    void KFClusterProxyModule::OnClientConnectionClusterMaster( const std::string& servername, uint64 server_id )
     {
         // 注册定时器
-        __LOOP_TIMER_1__( serverid, 5000, 1, &KFClusterProxyModule::OnTimerSendClusterRegisterMessage );
+        __LOOP_TIMER_1__( server_id, 5000, 1, &KFClusterProxyModule::OnTimerSendClusterRegisterMessage );
     }
 
     __KF_TIMER_FUNCTION__( KFClusterProxyModule::OnTimerSendClusterRegisterMessage )
@@ -95,7 +95,7 @@ namespace KFrame
         listendata->set_appname( kfglobal->_app_name );
         listendata->set_apptype( kfglobal->_app_type );
         listendata->set_appid( kfglobal->_app_id->GetId() );
-        listendata->set_ip( kfglobal->_interanet_ip );
+        listendata->set_ip( kfglobal->_intranet_ip );
         listendata->set_port( kfglobal->_listen_port );
         auto ok = _kf_tcp_client->SendNetMessage( objectid, KFMsg::S2S_CLUSTER_REGISTER_TO_MASTER_REQ, &req );
         if ( ok )
@@ -106,10 +106,10 @@ namespace KFrame
         }
     }
 
-    void KFClusterProxyModule::OnClientConnectionClusterShard( const std::string& servername, uint64 serverid )
+    void KFClusterProxyModule::OnClientConnectionClusterShard( const std::string& servername, uint64 server_id )
     {
         _in_service = true;
-        _kf_hash.AddHashNode( servername, serverid, 100 );
+        _kf_hash.AddHashNode( servername, server_id, 100 );
 
         // 自己所有的连接注册到Cluster中
         NetDataList clientlist;
@@ -120,7 +120,7 @@ namespace KFrame
         {
             req.add_clientid( ipaddress->_id );
         }
-        _kf_tcp_client->SendNetMessage( serverid, KFMsg::S2S_CLUSTER_CLIENT_DISCOVER_TO_SHARD_REQ, &req );
+        _kf_tcp_client->SendNetMessage( server_id, KFMsg::S2S_CLUSTER_CLIENT_DISCOVER_TO_SHARD_REQ, &req );
     }
 
     __KF_NET_EVENT_FUNCTION__( KFClusterProxyModule::OnServerDiscoverClient )
@@ -172,14 +172,14 @@ namespace KFrame
         }
     }
 
-    void KFClusterProxyModule::OnClientLostClusterMaster( const std::string& servername, uint64 serverid )
+    void KFClusterProxyModule::OnClientLostClusterMaster( const std::string& servername, uint64 server_id )
     {
-        __UN_TIMER_1__( serverid );
+        __UN_TIMER_1__( server_id );
     }
 
-    void KFClusterProxyModule::OnClientLostClusterShard( const std::string& servername, uint64 serverid )
+    void KFClusterProxyModule::OnClientLostClusterShard( const std::string& servername, uint64 server_id )
     {
-        _kf_hash.RemoveHashNode( serverid );
+        _kf_hash.RemoveHashNode( server_id );
     }
 
     __KF_MESSAGE_FUNCTION__( KFClusterProxyModule::HandleClusterTokenToProxyReq, KFMsg::S2SClusterTokenToProxyReq )
@@ -202,28 +202,28 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFClusterProxyModule::HandleClusterVerifyToProxyReq, KFMsg::S2SClusterVerifyToProxyReq )
     {
         auto clientid = __ROUTE_SERVER_ID__;
-        auto serverid = ClusterVerifyLogin( kfmsg->token(), kfmsg->serverid() );
+        auto server_id = ClusterVerifyLogin( kfmsg->token(), kfmsg->server_id() );
 
         KFMsg::S2SClusterVerifyToClientAck ack;
-        ack.set_serverid( serverid );
+        ack.set_serverid( server_id );
         _kf_tcp_server->SendNetMessage( clientid, KFMsg::S2S_CLUSTER_VERIFY_TO_CLIENT_ACK, &ack );
 
-        if ( serverid == _invalid_int )
+        if ( server_id == _invalid_int )
         {
-            return __LOG_ERROR__( "cluster client[{}] verify failed", KFAppId::ToString( kfmsg->serverid() ) );
+            return __LOG_ERROR__( "cluster client[{}] verify failed", KFAppId::ToString( kfmsg->server_id() ) );
         }
 
         // 删除定时器
-        __UN_TIMER_1__( serverid );
+        __UN_TIMER_1__( server_id );
 
         // 通知shard
         KFMsg::S2SClusterClientDiscoverToShardReq req;
-        req.add_clientid( serverid );
+        req.add_clientid( server_id );
         _kf_tcp_client->SendMessageToType( __STRING__( shard ), KFMsg::S2S_CLUSTER_CLIENT_DISCOVER_TO_SHARD_REQ, &req );
-        __LOG_DEBUG__( "cluster client [{}] verify ok", KFAppId::ToString( kfmsg->serverid() ) );
+        __LOG_DEBUG__( "cluster client [{}] verify ok", KFAppId::ToString( kfmsg->server_id() ) );
     }
 
-    uint64 KFClusterProxyModule::ClusterVerifyLogin( const std::string& token, uint64 serverid )
+    uint64 KFClusterProxyModule::ClusterVerifyLogin( const std::string& token, uint64 server_id )
     {
         auto kftoken = _kf_token_list.Find( token );
         if ( kftoken == nullptr )
@@ -234,12 +234,12 @@ namespace KFrame
         auto clientid = kftoken->_client_id;
         _kf_token_list.Remove( token );
 
-        if ( clientid != serverid )
+        if ( clientid != server_id )
         {
             return _invalid_int;
         }
 
-        return serverid;
+        return server_id;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////

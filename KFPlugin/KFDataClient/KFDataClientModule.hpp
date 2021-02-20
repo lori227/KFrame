@@ -73,7 +73,7 @@ namespace KFrame
         virtual void SetQueryPlayerFunction( KFQueryPlayerFunction& function );
 
         // 保存数据
-        void SaveKeeperData( uint32 zoneid, uint64 playerid, const KFMsg::PBObject* pbplayerdata, uint32 saveflag );
+        void SaveKeeperData( uint32 zone_id, uint64 playerid, const KFMsg::PBObject* pbplayerdata, uint32 saveflag );
 
         // 加载数据
         void LoadKeeperData( const KFMsg::PBLoginData* pblogin );

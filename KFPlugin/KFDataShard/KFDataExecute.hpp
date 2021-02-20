@@ -28,7 +28,7 @@ namespace KFrame
 
     public:
         // 设置保存时间
-        void SetSaveTime( uint64 nowtime );
+        void SetSaveTime( uint64 now_time );
     };
 
     class KFDataExecute
@@ -44,20 +44,20 @@ namespace KFrame
         void RunDataKeeper();
 
         // 保存玩家数据
-        void SavePlayerData( uint32 zoneid, uint64 playerid, const KFMsg::PBObject* pbobject, uint32 saveflag );
+        void SavePlayerData( uint32 zone_id, uint64 playerid, const KFMsg::PBObject* pbobject, uint32 saveflag );
 
         // 读取玩家数据
-        KFResult< std::string >::UniqueType LoadPlayerData( uint32 zoneid, uint64 playeid );
+        KFResult< std::string >::UniqueType LoadPlayerData( uint32 zone_id, uint64 playeid );
 
     protected:
         // 初始化
         virtual void InitExecute() = 0;
 
         // 保存数据
-        virtual bool SaveData( uint32 zoneid, uint64 playerid, const std::string& playerdata, uint32 saveflag ) = 0;
+        virtual bool SaveData( uint32 zone_id, uint64 playerid, const std::string& playerdata, uint32 saveflag ) = 0;
 
         // 读取数据
-        virtual KFResult< std::string >::UniqueType LoadData( uint32 zoneid, uint64 playerid ) = 0;
+        virtual KFResult< std::string >::UniqueType LoadData( uint32 zone_id, uint64 playerid ) = 0;
 
     public:
         // 数据配置
@@ -75,10 +75,10 @@ namespace KFrame
         virtual void InitExecute() {};
 
         // 保存玩家数据
-        virtual bool SaveData( uint32 zoneid, uint64 playerid, const std::string& playerdata, uint32 saveflag );
+        virtual bool SaveData( uint32 zone_id, uint64 playerid, const std::string& playerdata, uint32 saveflag );
 
         // 读取玩家数据
-        virtual KFResult< std::string >::UniqueType LoadData( uint32 zoneid, uint64 playerid );
+        virtual KFResult< std::string >::UniqueType LoadData( uint32 zone_id, uint64 playerid );
     };
     ///////////////////////////////////////////////////////////////////////////////////
     class KFMongoDriver;
@@ -89,10 +89,10 @@ namespace KFrame
         virtual void InitExecute() {}
 
         // 保存玩家数据
-        virtual bool SaveData( uint32 zoneid, uint64 playerid, const std::string& playerdata, uint32 saveflag );
+        virtual bool SaveData( uint32 zone_id, uint64 playerid, const std::string& playerdata, uint32 saveflag );
 
         // 读取玩家数据
-        virtual KFResult< std::string >::UniqueType LoadData( uint32 zoneid, uint64 playerid );
+        virtual KFResult< std::string >::UniqueType LoadData( uint32 zone_id, uint64 playerid );
     };
     ///////////////////////////////////////////////////////////////////////////////////
     class KFMySQLDataExecute : public KFDataExecute
@@ -102,10 +102,10 @@ namespace KFrame
         virtual void InitExecute() {};
 
         // 保存玩家数据
-        virtual bool SaveData( uint32 zoneid, uint64 playerid, const std::string& playerdata, uint32 saveflag );
+        virtual bool SaveData( uint32 zone_id, uint64 playerid, const std::string& playerdata, uint32 saveflag );
 
         // 读取玩家数据
-        virtual KFResult< std::string >::UniqueType LoadData( uint32 zoneid, uint64 playerid );
+        virtual KFResult< std::string >::UniqueType LoadData( uint32 zone_id, uint64 playerid );
     };
     ///////////////////////////////////////////////////////////////////////////////////
 }

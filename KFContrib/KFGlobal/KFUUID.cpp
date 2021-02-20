@@ -26,7 +26,7 @@ namespace KFrame
         _uuid_setting_list.clear();
     }
 
-    void KFUuid::AddData( const std::string& name, uint64 projecttime, uint32 timebits, uint32 zonebits, uint32 workerbits, uint32 seqbits )
+    void KFUuid::AddData( const std::string& name, uint64 project_time, uint32 time_bits, uint32 zone_bits, uint32 worker_bits, uint32 seq_bits )
     {
         auto iter = _uuid_setting_list.find( name );
         if ( iter == _uuid_setting_list.end() )
@@ -35,7 +35,7 @@ namespace KFrame
             iter = _uuid_setting_list.insert( std::make_pair( name, kfsetting ) ).first;
         }
 
-        iter->second->InitData( projecttime, timebits, zonebits, workerbits, seqbits );
+        iter->second->InitData( project_time, time_bits, zone_bits, worker_bits, seq_bits );
     }
 
     const KFUuidData* KFUuid::FindUuidData( const std::string& name )
@@ -57,28 +57,28 @@ namespace KFrame
             return iter->second;
         }
 
-        auto kfdata = FindUuidData( name );
-        auto kfuuidgenerate = __NEW_OBJECT__( KFUuidGenerate, kfdata );
-        _uuid_data_list[ name ] = kfuuidgenerate;
-        return kfuuidgenerate;
+        auto data = FindUuidData( name );
+        auto uuid_generate = __NEW_OBJECT__( KFUuidGenerate, data );
+        _uuid_data_list[ name ] = uuid_generate;
+        return uuid_generate;
     }
 
-    uint64 KFUuid::STMake( const std::string& name, uint32 zoneid, uint32 workerid, uint64 nowtime )
+    uint64 KFUuid::STMake( const std::string& name, uint32 zone_id, uint32 worker_id, uint64 now_time )
     {
-        auto kfuuiddata = CreateUuidGenerate( name );
-        return kfuuiddata->Make( zoneid, workerid, nowtime );
+        auto uuid_data = CreateUuidGenerate( name );
+        return uuid_data->Make( zone_id, worker_id, now_time );
     }
 
-    uint64 KFUuid::MTMake( const std::string& name, uint32 zoneid, uint32 workerid, uint64 nowtime )
+    uint64 KFUuid::MTMake( const std::string& name, uint32 zone_id, uint32 worker_id, uint64 now_time )
     {
         KFLocker locker( *_kf_mutex );
-        return STMake( name, zoneid, workerid, nowtime );
+        return STMake( name, zone_id, worker_id, now_time );
     }
 
     uint32 KFUuid::STZoneId( const std::string& name, uint64 uuid )
     {
-        auto kfuuiddata = CreateUuidGenerate( name );
-        return kfuuiddata->ZoneId( uuid );
+        auto uuid_data = CreateUuidGenerate( name );
+        return uuid_data->ZoneId( uuid );
     }
 
     uint32 KFUuid::MTZoneId( const std::string& name, uint64 uuid )
@@ -89,8 +89,8 @@ namespace KFrame
 
     std::tuple<uint64, uint32, uint32, uint32> KFUuid::STParse( const std::string& name, uint64 uuid )
     {
-        auto kfuuiddata = CreateUuidGenerate( name );
-        return kfuuiddata->Parse( uuid );
+        auto uuid_data = CreateUuidGenerate( name );
+        return uuid_data->Parse( uuid );
     }
 
     std::tuple<uint64, uint32, uint32, uint32> KFUuid::MTParse( const std::string& name, uint64 uuid )

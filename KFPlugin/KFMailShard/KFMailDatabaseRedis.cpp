@@ -75,9 +75,9 @@ namespace KFrame
             return;
         }
 
-        for ( auto zoneid : kflist->_value )
+        for ( auto zone_id : kflist->_value )
         {
-            auto globalmailkey = __DATABASE_KEY_2__( __STRING__( globalmail ), zoneid );
+            auto globalmailkey = __DATABASE_KEY_2__( __STRING__( globalmail ), zone_id );
             auto kfmailmap = _redis_driver->ZRangeByScore( globalmailkey, 0, __MAX_UINT64__ );
             if ( kfmailmap->_value.empty() )
             {
@@ -101,9 +101,9 @@ namespace KFrame
         }
     }
 
-    void KFMailDatabaseRedis::LoadGlobalMailToPerson( uint64 playerid, uint32 zoneid )
+    void KFMailDatabaseRedis::LoadGlobalMailToPerson( uint64 playerid, uint32 zone_id )
     {
-        auto mailinfokey = __DATABASE_KEY_3__( __STRING__( mailinfo ), playerid, zoneid );
+        auto mailinfokey = __DATABASE_KEY_3__( __STRING__( mailinfo ), playerid, zone_id );
 
         // 获取玩家已经加载的最近一封GM邮件id
         auto kfmailid = _redis_driver->HGetUInt64( mailinfokey, __STRING__( gmmailid ) );
@@ -113,7 +113,7 @@ namespace KFrame
         }
 
         // 查询全局邮件列表
-        auto listresult = _redis_driver->ZRangeByScore( __DATABASE_KEY_2__( __STRING__( globalmail ), zoneid ), kfmailid->_value, __MAX_UINT64__ );
+        auto listresult = _redis_driver->ZRangeByScore( __DATABASE_KEY_2__( __STRING__( globalmail ), zone_id ), kfmailid->_value, __MAX_UINT64__ );
         if ( listresult->_value.empty() )
         {
             return;
@@ -217,22 +217,22 @@ namespace KFrame
         return ok;
     }
 
-    void KFMailDatabaseRedis::InitNewPlayerMail( uint64 playerid, uint32 zoneid )
+    void KFMailDatabaseRedis::InitNewPlayerMail( uint64 playerid, uint32 zone_id )
     {
         // 全区的邮件
         InitNewPlayerGlobalMail( playerid, 0u );
 
         // 本小区的邮件
-        InitNewPlayerGlobalMail( playerid, zoneid );
+        InitNewPlayerGlobalMail( playerid, zone_id );
     }
 
-    void KFMailDatabaseRedis::InitNewPlayerGlobalMail( uint64 playerid, uint32 zoneid )
+    void KFMailDatabaseRedis::InitNewPlayerGlobalMail( uint64 playerid, uint32 zone_id )
     {
-        auto listresult = _redis_driver->ZRevRange( __DATABASE_KEY_2__( __STRING__( globalmail ), zoneid ), 0, 0 );
+        auto listresult = _redis_driver->ZRevRange( __DATABASE_KEY_2__( __STRING__( globalmail ), zone_id ), 0, 0 );
         if ( !listresult->_value.empty() )
         {
             auto& strmaxmailid = listresult->_value.front().first;
-            _redis_driver->HSet( __DATABASE_KEY_3__( __STRING__( mailinfo ), playerid, zoneid ), __STRING__( gmmailid ), strmaxmailid );
+            _redis_driver->HSet( __DATABASE_KEY_3__( __STRING__( mailinfo ), playerid, zone_id ), __STRING__( gmmailid ), strmaxmailid );
         }
     }
 }

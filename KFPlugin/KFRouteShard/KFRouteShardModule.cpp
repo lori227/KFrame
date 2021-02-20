@@ -82,27 +82,27 @@ namespace KFrame
         __FIND_ROUTE_SERVICE__( kfmsg->name() );
 
         auto pbroute = &kfmsg->pbroute();
-        auto randid = ( pbroute->sendid() != 0u ? pbroute->sendid() : pbroute->serverid() );
-        auto serverid = routeservice->RandServer( randid );
-        if ( serverid == _invalid_int )
+        auto randid = ( pbroute->sendid() != 0u ? pbroute->sendid() : pbroute->server_id() );
+        auto server_id = routeservice->RandServer( randid );
+        if ( server_id == _invalid_int )
         {
             return __LOG_ERROR__( "service[{}] no server", kfmsg->name() );
         }
 
-        SendRouteMessage( serverid, pbroute, kfmsg->msgid(), kfmsg->msgdata() );
+        SendRouteMessage( server_id, pbroute, kfmsg->msgid(), kfmsg->msgdata() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRouteShardModule::HandleRouteMessageToNameBalanceReq, KFMsg::S2SRouteMessageToNameBalanceReq )
     {
         __FIND_ROUTE_SERVICE__( kfmsg->name() );
-        auto serverid = routeservice->BalanceServer();
-        if ( serverid == _invalid_int )
+        auto server_id = routeservice->BalanceServer();
+        if ( server_id == _invalid_int )
         {
             return __LOG_ERROR__( "service[{}] no server", kfmsg->name() );
         }
 
         auto pbroute = &kfmsg->pbroute();
-        SendRouteMessage( serverid, pbroute, kfmsg->msgid(), kfmsg->msgdata() );
+        SendRouteMessage( server_id, pbroute, kfmsg->msgid(), kfmsg->msgdata() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRouteShardModule::HandleRouteMessageToNameObjectReq, KFMsg::S2SRouteMessageToNameObjectReq )
@@ -110,13 +110,13 @@ namespace KFrame
         __FIND_ROUTE_SERVICE__( kfmsg->name() );
 
         auto pbroute = &kfmsg->pbroute();
-        auto serverid = routeservice->ObjectServer( pbroute->recvid() );
-        if ( serverid == _invalid_int )
+        auto server_id = routeservice->ObjectServer( pbroute->recvid() );
+        if ( server_id == _invalid_int )
         {
             return __LOG_ERROR__( "service[{}] no server", kfmsg->name() );
         }
 
-        SendRouteMessage( serverid, pbroute, kfmsg->msgid(), kfmsg->msgdata() );
+        SendRouteMessage( server_id, pbroute, kfmsg->msgid(), kfmsg->msgdata() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRouteShardModule::HandleRouteMessageToServerReq, KFMsg::S2SRouteMessageToServerReq )
@@ -157,7 +157,7 @@ namespace KFrame
         auto ok = _kf_cluster_shard->SendToClient( clientid, KFMsg::S2S_ROUTE_MESSAGE_TO_CLIENT_ACK, &ack );
         if ( !ok )
         {
-            __LOG_ERROR__( "send=[{}] msg[{}] to recv=[{}] failed", KFAppId::ToString( pbroute->serverid() ), msgid, KFAppId::ToString( clientid ) );
+            __LOG_ERROR__( "send=[{}] msg[{}] to recv=[{}] failed", KFAppId::ToString( pbroute->server_id() ), msgid, KFAppId::ToString( clientid ) );
         }
     }
 

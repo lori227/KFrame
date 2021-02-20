@@ -23,21 +23,21 @@ namespace KFrame
         return iter->second;
     }
 
-    bool KFActivitySetting::CheckInTime( uint64 nowtime, uint64 createtime ) const
+    bool KFActivitySetting::CheckInTime( uint64 now_time, uint64 createtime ) const
     {
         switch ( _time_type )
         {
         case KFActivityEnum::DynamicTime:
-            return !KFDate::CheckPassTime( nowtime, createtime, _duration );
+            return !KFDate::CheckPassTime( now_time, createtime, _duration );
             break;
         default:
             break;
         }
 
-        return KFDate::CheckInTime( _start_time, _end_time, nowtime );
+        return KFDate::CheckInTime( _start_time, _end_time, now_time );
     }
 
-    bool KFActivitySetting::CheckResetActivity( uint64 nowtime, uint64 createtime, uint64 eventtime ) const
+    bool KFActivitySetting::CheckResetActivity( uint64 now_time, uint64 createtime, uint64 eventtime ) const
     {
         // 不在活动时间范围内了
         if ( !CheckInTime( eventtime, createtime ) )
@@ -49,7 +49,7 @@ namespace KFrame
         switch ( _reset_type )
         {
         case KFActivityEnum::ResetDaily:
-            return KFDate::CheckPassDay( eventtime, nowtime, _reset_hour );
+            return KFDate::CheckPassDay( eventtime, now_time, _reset_hour );
             break;
         default:
             break;

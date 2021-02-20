@@ -42,7 +42,7 @@ namespace KFrame
         return apppath + file;
     }
 
-    bool KFDeployData::IsAppServer( const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid )
+    bool KFDeployData::IsAppServer( const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zone_id )
     {
         // 指定appid
         if ( appid != _globbing_string )
@@ -68,12 +68,12 @@ namespace KFrame
             }
         }
 
-        // zoneid
+        // zone_id
         if ( appname == __STRING__( zone ) )
         {
-            if ( zoneid != _invalid_int )
+            if ( zone_id != _invalid_int )
             {
-                if ( zoneid != _zone_id )
+                if ( zone_id != _zone_id )
                 {
                     return false;
                 }

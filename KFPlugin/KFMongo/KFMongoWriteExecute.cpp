@@ -4,13 +4,13 @@ namespace KFrame
 {
     void KFMongoWriteExecute::AddExpireTime( Document& pocodocument, uint64 value, const KFDBValue& dbvalue )
     {
-        auto nowtime = dbvalue.FindValue( __STRING__( time ) );
-        if ( nowtime == 0u )
+        auto now_time = dbvalue.FindValue( __STRING__( time ) );
+        if ( now_time == 0u )
         {
-            nowtime = KFGlobal::Instance()->_real_time;
+            now_time = KFGlobal::Instance()->_real_time;
         }
 
-        Poco::Timestamp timestmp( ( nowtime + value ) * 1000000 );
+        Poco::Timestamp timestmp( ( now_time + value ) * 1000000 );
         pocodocument.add( MongoKeyword::_expire, timestmp );
     }
 

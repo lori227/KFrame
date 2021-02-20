@@ -126,14 +126,14 @@ namespace KFrame
     static uint64 _log_interval_time = 300000u;
     void KFMalloc::Run()
     {
-        auto nowtime = KFGlobal::Instance()->_game_time;
-        if ( _next_log_time == 0u || nowtime < _next_log_time )
+        auto now_time = KFGlobal::Instance()->_game_time;
+        if ( _next_log_time == 0u || now_time < _next_log_time )
         {
             return;
         }
 
         PrintMemoryLog();
-        _next_log_time = nowtime + _log_interval_time;
+        _next_log_time = now_time + _log_interval_time;
     }
 
     void KFMalloc::SetLogOpen( bool open )

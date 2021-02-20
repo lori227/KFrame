@@ -1,6 +1,7 @@
 ﻿#ifndef __KF_ELEMENT_FORMAT_H__
 #define __KF_ELEMENT_FORMAT_H__
 
+#include "KFMacros.h"
 #include "KFUtility/KFElement.h"
 
 namespace KFrame
@@ -43,18 +44,18 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 解析元数据字串
-        const std::string& ParseString( const std::string& strparse );
+        const std::string& ParseString( const std::string& str_parse );
 
         // 格式化成元数据结构
-        const std::string& FormatString( const std::string& data_name, uint32 datavalue, uint32 dataid = 0u );
-        const std::string& FormatString( const std::string& data_name, const std::string& datavalue, uint32 dataid = 0u );
-        const std::string& FormatString( const KFElementData& elementdata );
+        const std::string& FormatString( const std::string& data_name, uint32 data_value, uint32 data_id = 0u );
+        const std::string& FormatString( const std::string& data_name, const std::string& data_value, uint32 data_id = 0u );
+        const std::string& FormatString( const KFElementData& element_data );
 
         // 格式化
-        bool FormatElement( KFElements& kfelements, const std::string& data_name, uint32 datavalue, uint32 dataid = 0u );
-        bool FormatElement( KFElements& kfelements, const std::string& data_name, const std::string& datavalue, uint32 dataid = 0u );
-        bool FormatElement( KFElements& kfelements, const KFElementData& elementdata );
-        bool ParseElement( KFElements& kfelements, const char* file, uint64 id );
+        bool FormatElement( KFElements& elements, const std::string& data_name, uint32 data_value, uint32 data_id = 0u );
+        bool FormatElement( KFElements& elements, const std::string& data_name, const std::string& data_value, uint32 data_id = 0u );
+        bool FormatElement( KFElements& elements, const KFElementData& element_data );
+        bool ParseElement( KFElements& elements, const char* file, uint64 id );
 
     private:
         // 解析函数

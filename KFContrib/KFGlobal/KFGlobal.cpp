@@ -35,14 +35,14 @@ namespace KFrame
         __DELETE_OBJECT__( _kf_element_format );
     }
 
-    void KFGlobal::Initialize( KFGlobal* kfglobal )
+    void KFGlobal::Initialize( KFGlobal* global )
     {
-        if ( kfglobal == nullptr )
+        if ( global == nullptr )
         {
-            kfglobal = new KFGlobal;
+            global = new KFGlobal;
         }
 
-        KFGlobal::_kf_global = kfglobal;
+        KFGlobal::_kf_global = global;
     }
 
     KFGlobal* KFGlobal::Instance()
@@ -52,22 +52,22 @@ namespace KFrame
 
     bool KFGlobal::LoadVersion( const std::string& file )
     {
-        std::ifstream versionfile( file );
-        if ( !versionfile )
+        std::ifstream version_file( file );
+        if ( !version_file )
         {
             return false;
         }
 
-        std::string strdata;
+        std::string data;
 
-        versionfile >> strdata;
-        KFUtility::SplitString( strdata, ":" );
-        _kf_version->FromString( strdata );
+        version_file >> data;
+        KFUtility::SplitString( data, ":" );
+        _kf_version->FromString( data );
 
-        strdata.clear();
-        versionfile >> strdata;
-        KFUtility::SplitString( strdata, ":" );
-        _kf_version->_repository_version = strdata;
+        data.clear();
+        version_file >> data;
+        KFUtility::SplitString( data, ":" );
+        _kf_version->_repository_version = data;
 
         return true;
     }
@@ -135,32 +135,32 @@ namespace KFrame
         return min + rand * range;
     }
 
-    bool KFGlobal::IsServerSameZone( uint64 serverid )
+    bool KFGlobal::IsServerSameZone( uint64 server_id )
     {
         static KFAppId _kf_app_id;
-        _kf_app_id.FromUInt64( serverid );
+        _kf_app_id.FromUInt64( server_id );
 
         return _kf_app_id.GetZoneId() == _app_id->GetZoneId();
     }
 
-    void KFGlobal::InitNetType( std::string& strtype )
+    void KFGlobal::InitNetType( std::string& net_type )
     {
-        _net_type = __TO_UINT32__( strtype );
+        _net_type = __TO_UINT32__( net_type );
         if ( _net_type == 0u )
         {
             _net_type = KFServerEnum::Local;
         }
     }
 
-    void KFGlobal::InitChannelService( std::string& strtype )
+    void KFGlobal::InitChannelService( std::string& channel_service )
     {
-        _channel = KFUtility::SplitValue< uint32 >( strtype, "." );
+        _channel = KFUtility::SplitValue< uint32 >( channel_service, "." );
         if ( _channel == 0 )
         {
             _channel = 1;
         }
 
-        _service = KFUtility::SplitValue< uint32 >( strtype, "." );
+        _service = KFUtility::SplitValue< uint32 >( channel_service, "." );
         if ( _service == 0u )
         {
             _service = KFServerEnum::Debug;
@@ -186,9 +186,9 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     // 初始化配置
-    void KFGlobal::AddUuidData( const std::string& name, uint32 timebits, uint32 zonebits, uint32 workerbits, uint32 seqbits )
+    void KFGlobal::AddUuidData( const std::string& name, uint32 time_bits, uint32 zone_bits, uint32 worker_bits, uint32 seq_bits )
     {
-        _kf_uuid->AddData( name, _project_time, timebits, zonebits, workerbits, seqbits );
+        _kf_uuid->AddData( name, _project_time, time_bits, zone_bits, worker_bits, seq_bits );
     }
 
     uint64 KFGlobal::STMakeUuid()
@@ -211,14 +211,14 @@ namespace KFrame
         return _kf_uuid->MTMake( name, _app_id->GetZoneId(), _app_id->GetWorkId(), _real_time );
     }
 
-    uint64 KFGlobal::STMakeUuid( const std::string& name, uint32 zoneid )
+    uint64 KFGlobal::STMakeUuid( const std::string& name, uint32 zone_id )
     {
-        return _kf_uuid->STMake( name, zoneid, _app_id->GetWorkId(), _real_time );
+        return _kf_uuid->STMake( name, zone_id, _app_id->GetWorkId(), _real_time );
     }
 
-    uint64 KFGlobal::MTMakeUuid( const std::string& name, uint32 zoneid )
+    uint64 KFGlobal::MTMakeUuid( const std::string& name, uint32 zone_id )
     {
-        return _kf_uuid->MTMake( name, zoneid, _app_id->GetWorkId(), _real_time );
+        return _kf_uuid->MTMake( name, zone_id, _app_id->GetWorkId(), _real_time );
     }
 
     uint32 KFGlobal::STUuidZoneId( const std::string& name, uint64 uuid )
@@ -259,7 +259,7 @@ namespace KFrame
     }
 
     // 获得常量
-    const KFConstant* KFGlobal::FindConstant( const std::string& name, uint32 key )
+    std::shared_ptr<const KFConstant> KFGlobal::FindConstant( const std::string& name, uint32 key )
     {
         return _kf_constant_data->FindConstant( name, key );
     }
@@ -305,43 +305,43 @@ namespace KFrame
         _kf_element_format->BindDataToElementStringFunction( function );
     }
 
-    const std::string& KFGlobal::ParseString( const std::string& strparse )
+    const std::string& KFGlobal::ParseString( const std::string& str_parse )
     {
-        return _kf_element_format->ParseString( strparse );
+        return _kf_element_format->ParseString( str_parse );
     }
 
-    const std::string& KFGlobal::FormatString( const std::string& data_name, uint32 datavalue, uint32 dataid )
+    const std::string& KFGlobal::FormatString( const std::string& data_name, uint32 data_value, uint32 data_id )
     {
-        return _kf_element_format->FormatString( data_name, datavalue, dataid );
+        return _kf_element_format->FormatString( data_name, data_value, data_id );
     }
 
-    const std::string& KFGlobal::FormatString( const std::string& data_name, const std::string& datavalue, uint32 dataid )
+    const std::string& KFGlobal::FormatString( const std::string& data_name, const std::string& data_value, uint32 data_id )
     {
-        return _kf_element_format->FormatString( data_name, datavalue, dataid );
+        return _kf_element_format->FormatString( data_name, data_value, data_id );
     }
 
-    const std::string& KFGlobal::FormatString( const KFElementData& elementdata )
+    const std::string& KFGlobal::FormatString( const KFElementData& element_data )
     {
-        return _kf_element_format->FormatString( elementdata );
+        return _kf_element_format->FormatString( element_data );
     }
 
-    bool KFGlobal::FormatElement( KFElements& kfelements, const std::string& data_name, uint32 datavalue, uint32 dataid  )
+    bool KFGlobal::FormatElement( KFElements& elements, const std::string& data_name, uint32 data_value, uint32 data_id  )
     {
-        return _kf_element_format->FormatElement( kfelements, data_name, datavalue, dataid );
+        return _kf_element_format->FormatElement( elements, data_name, data_value, data_id );
     }
 
-    bool KFGlobal::FormatElement( KFElements& kfelements, const std::string& data_name, const std::string& datavalue, uint32 dataid )
+    bool KFGlobal::FormatElement( KFElements& elements, const std::string& data_name, const std::string& data_value, uint32 data_id )
     {
-        return _kf_element_format->FormatElement( kfelements, data_name, datavalue, dataid );
+        return _kf_element_format->FormatElement( elements, data_name, data_value, data_id );
     }
 
-    bool KFGlobal::FormatElement( KFElements& kfelements, const KFElementData& elementdata )
+    bool KFGlobal::FormatElement( KFElements& elements, const KFElementData& element_data )
     {
-        return _kf_element_format->FormatElement( kfelements, elementdata );
+        return _kf_element_format->FormatElement( elements, element_data );
     }
 
-    bool KFGlobal::ParseElement( KFElements& kfelements, const char* file, uint64 id )
+    bool KFGlobal::ParseElement( KFElements& elements, const char* file, uint64 id )
     {
-        return _kf_element_format->ParseElement( kfelements, file, id );
+        return _kf_element_format->ParseElement( elements, file, id );
     }
 }

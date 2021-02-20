@@ -100,13 +100,13 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 判断是否能够添加元数据
-        virtual const std::string& CheckAddElement( const KFElements* kfelements, double multiple, const char* function, uint32 line ) = 0;
+        virtual const std::string& CheckAddElement( const KFElements* elements, double multiple, const char* function, uint32 line ) = 0;
 
         // 添加元数据
-        virtual void AddElement( const KFElements* kfelements, double multiple, const std::string& modulename, uint64 moduleid, const char* function, uint32 line ) = 0;
+        virtual void AddElement( const KFElements* elements, double multiple, const std::string& modulename, uint64 moduleid, const char* function, uint32 line ) = 0;
 
         // 删除元数据
-        virtual const std::string& RemoveElement( const KFElements* kfelements, double multiple, const std::string& modulename, uint64 moduleid, const char* function, uint32 line ) = 0;
+        virtual const std::string& RemoveElement( const KFElements* elements, double multiple, const std::string& modulename, uint64 moduleid, const char* function, uint32 line ) = 0;
 
         // 设置element到kfdata对象
         virtual void UpdateElementToData( DataPtr kfdata, KFElementObject* kfelement, double multiple ) = 0;

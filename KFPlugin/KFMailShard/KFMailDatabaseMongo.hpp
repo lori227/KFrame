@@ -25,7 +25,7 @@ namespace KFrame
         virtual void ClearOverdueGlobalMail();
 
         // 把全局邮件列表加到玩家列表中
-        virtual void LoadGlobalMailToPerson( uint64 playerid, uint32 zoneid );
+        virtual void LoadGlobalMailToPerson( uint64 playerid, uint32 zone_id );
 
         // 查询邮件列表
         virtual KFResult< StringMapList >::UniqueType QueryMailList( uint64 playerid, uint64 lastmailid );
@@ -34,11 +34,11 @@ namespace KFrame
         virtual bool UpdateMailStatus( uint32 flag, uint64 playerid, uint64 mailid, uint32 status );
 
         // 初始化新玩家邮件数据
-        virtual void InitNewPlayerMail( uint64 playerid, uint32 zoneid );
+        virtual void InitNewPlayerMail( uint64 playerid, uint32 zone_id );
 
     protected:
         // 初始化全局邮件id
-        void InitNewPlayerGlobalMail( uint64 playerid, uint32 zoneid );
+        void InitNewPlayerGlobalMail( uint64 playerid, uint32 zone_id );
 
     private:
         KFMongoDriver* _mongo_driver = nullptr;

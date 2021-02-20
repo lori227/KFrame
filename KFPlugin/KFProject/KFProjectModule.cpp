@@ -88,12 +88,12 @@ namespace KFrame
 
         return result;
     }
-    const std::string& KFProjectModule::FormatIntString( const std::string& data_name, uint32 datavalue, uint32 dataid )
+    const std::string& KFProjectModule::FormatIntString( const std::string& data_name, uint32 data_value, uint32 data_id )
     {
-        return FormatStrString( data_name, __TO_STRING__( datavalue ), dataid );
+        return FormatStrString( data_name, __TO_STRING__( data_value ), data_id );
     }
 
-    const std::string& KFProjectModule::FormatStrString( const std::string& data_name, const std::string& datavalue, uint32 dataid )
+    const std::string& KFProjectModule::FormatStrString( const std::string& data_name, const std::string& data_value, uint32 data_id )
     {
         static std::string _str_element = _invalid_string;
         _str_element.clear();
@@ -102,7 +102,7 @@ namespace KFrame
         if ( kfsetting != nullptr )
         {
             _str_element = "[";
-            _str_element += __FORMAT__( kfsetting->_template, datavalue, dataid );
+            _str_element += __FORMAT__( kfsetting->_template, data_value, data_id );
             _str_element += "]";
         }
         else
@@ -113,18 +113,18 @@ namespace KFrame
         return _str_element;
     }
 
-    const std::string& KFProjectModule::FormatDataString( const KFElementData& elementdata )
+    const std::string& KFProjectModule::FormatDataString( const KFElementData& element_data )
     {
         static std::string _str_element = _invalid_string;
         _str_element.clear();
 
         auto index = 0u;
         _str_element = "[";
-        for ( auto& tupledata : elementdata._data_list )
+        for ( auto& tupledata : element_data._data_list )
         {
             auto& data_name = std::get<0>( tupledata );
-            auto& datavalue = std::get<1>( tupledata );
-            auto& dataid = std::get<2>( tupledata );
+            auto& data_value = std::get<1>( tupledata );
+            auto& data_id = std::get<2>( tupledata );
 
             auto kfrewardsetting = KFTemplateConfig::Instance()->FindSetting( data_name );
             if ( kfrewardsetting == nullptr )
@@ -139,7 +139,7 @@ namespace KFrame
             }
 
             ++index;
-            _str_element += __FORMAT__( kfrewardsetting->_template, datavalue, dataid );
+            _str_element += __FORMAT__( kfrewardsetting->_template, data_value, data_id );
         }
 
         _str_element += "]";

@@ -15,13 +15,13 @@ namespace KFrame
         ~KFNetClientEngine();
 
         // 初始化引擎
-        void InitEngine( uint64 nowtime, uint32 queuesize, uint32 messagetype );
+        void InitEngine( uint64 now_time, uint32 queuesize, uint32 messagetype );
 
         // 关闭引擎
         void ShutEngine();
 
         // 执行逻辑
-        void RunEngine( uint64 nowtime );
+        void RunEngine( uint64 now_time );
 
         // 开始一个客户端
         bool StartClient( const KFNetData* netdata );
@@ -35,8 +35,8 @@ namespace KFrame
 
         // 发送消息
         void SendNetMessage( uint32 msgid, const char* data, uint32 length, uint32 delay = 0 );
-        bool SendNetMessage( uint64 serverid, uint32 msgid, const char* data, uint32 length, uint32 delay = 0 );
-        bool SendNetMessage( uint64 serverid, uint64 recvid, uint32 msgid, const char* data, uint32 length, uint32 delay = 0 );
+        bool SendNetMessage( uint64 server_id, uint32 msgid, const char* data, uint32 length, uint32 delay = 0 );
+        bool SendNetMessage( uint64 server_id, uint64 recvid, uint32 msgid, const char* data, uint32 length, uint32 delay = 0 );
 
         // 指定发送消息
         void SendMessageToName( const std::string& servername, uint32 msgid, const char* data, uint32 length );

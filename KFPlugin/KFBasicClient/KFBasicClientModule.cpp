@@ -38,7 +38,7 @@ namespace KFrame
         __UN_MESSAGE__( KFMsg::S2S_QUERY_ATTRIBUTE_TO_GAME_ACK );
     }
 
-    void KFBasicClientModule::OnRouteConnectCluster( uint64 serverid )
+    void KFBasicClientModule::OnRouteConnectCluster( uint64 server_id )
     {
         if ( !_need_refresh_online )
         {
@@ -47,7 +47,7 @@ namespace KFrame
 
         _need_refresh_online = false;
 
-        // 清空该服务器上的玩家基础属性(serverid)
+        // 清空该服务器上的玩家基础属性(server_id)
         KFMsg::S2SClearOnlineToBasicReq req;
         req.set_serverid( KFGlobal::Instance()->_app_id->GetId() );
         _kf_route->RepeatToRand( __ROUTE_NAME__, KFMsg::S2S_CLEAR_ONLINE_TO_BASIC_REQ, &req );
@@ -60,17 +60,17 @@ namespace KFrame
         _kf_route->RepeatToRand( playerid, __ROUTE_NAME__, KFMsg::S2S_UPDATE_INT_VALUE_TO_BASIC_REQ, &req );
     }
 
-    void KFBasicClientModule::UpdateBasicIntValueToBasic( uint64 playerid, const std::string& data_name, uint64 datavalue )
+    void KFBasicClientModule::UpdateBasicIntValueToBasic( uint64 playerid, const std::string& data_name, uint64 data_value )
     {
         StringUInt64 values;
-        values[ data_name ] = datavalue;
+        values[ data_name ] = data_value;
         UpdateBasicIntValueToBasic( playerid, values );
     }
 
-    void KFBasicClientModule::UpdateBasicStrValueToBasic( uint64 playerid, const std::string& data_name, const std::string& datavalue )
+    void KFBasicClientModule::UpdateBasicStrValueToBasic( uint64 playerid, const std::string& data_name, const std::string& data_value )
     {
         KFMsg::S2SUpdateStrValueToBasicReq req;
-        ( *req.mutable_pbdata() )[ data_name ] = datavalue;
+        ( *req.mutable_pbdata() )[ data_name ] = data_value;
         _kf_route->RepeatToRand( playerid, __ROUTE_NAME__, KFMsg::S2S_UPDATE_STR_VALUE_TO_BASIC_REQ, &req );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -90,7 +90,7 @@ namespace KFrame
 
         StringUInt64 values;
         values[ __STRING__( id ) ] = player->GetKeyID();
-        values[ __STRING__( serverid ) ] = kfbasic->Get( __STRING__( serverid ) );
+        values[ __STRING__( server_id ) ] = kfbasic->Get( __STRING__( server_id ) );
         values[ __STRING__( status ) ] = kfbasic->Get( __STRING__( status ) );
         values[ __STRING__( statustime ) ] = kfbasic->Get( __STRING__( statustime ) );
         UpdateBasicIntValueToBasic( player->GetKeyID(), values );
@@ -245,11 +245,11 @@ namespace KFrame
 
         if ( kfmsg->costdata() != _invalid_string )
         {
-            KFElements kfelements;
-            auto ok = kfelements.Parse( kfmsg->costdata(), __FUNC_LINE__ );
+            KFElements elements;
+            auto ok = elements.Parse( kfmsg->costdata(), __FUNC_LINE__ );
             if ( ok )
             {
-                kfentity->RemoveElement( &kfelements, _default_multiple, __STRING__( name ), 0u, __FUNC_LINE__ );
+                kfentity->RemoveElement( &elements, _default_multiple, __STRING__( name ), 0u, __FUNC_LINE__ );
             }
         }
     }

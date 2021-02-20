@@ -18,7 +18,7 @@ namespace KFrame
         virtual void UpdateGateToDir( uint64 appid, const std::string& ip, uint32 port, uint32 count, uint32 expiretime ) = 0;
 
         // 更新小区的负载均衡
-        virtual void ZoneBalanceToDir( uint32 zoneid, uint32 count ) = 0;
+        virtual void ZoneBalanceToDir( uint32 zone_id, uint32 count ) = 0;
     };
 
     ////////////////////////////////////////////////////////////////////////////////

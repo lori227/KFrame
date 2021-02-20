@@ -44,13 +44,13 @@ namespace KFrame
             auto value = kfglobal->GetString( __STRING__( vpn ), kfglobal->_app_id->GetZoneId() );
             if ( !value.empty() )
             {
-                kfglobal->_interanet_ip = KFUtility::SplitString( value, __DOMAIN_STRING__ );
+                kfglobal->_intranet_ip = KFUtility::SplitString( value, __DOMAIN_STRING__ );
                 auto port = KFUtility::SplitValue<uint32>( value, __DOMAIN_STRING__ );
                 if ( port != 0u )
                 {
                     kfglobal->_listen_port = port;
                 }
-                __LOG_INFO__( "use vpn ip=[{}] port=[{}]", kfglobal->_interanet_ip, kfglobal->_listen_port );
+                __LOG_INFO__( "use vpn ip=[{}] port=[{}]", kfglobal->_intranet_ip, kfglobal->_listen_port );
             }
         }
     }
@@ -69,21 +69,21 @@ namespace KFrame
         __JSON_OBJECT_DOCUMENT__( kfjson );
         __JSON_SET_VALUE__( kfjson, __STRING__( appname ), kfglobal->_app_name );
         __JSON_SET_VALUE__( kfjson, __STRING__( appid ), kfglobal->_app_id->GetId() );
-        __JSON_SET_VALUE__( kfjson, __STRING__( zoneid ), kfglobal->_app_id->GetZoneId() );
-        __JSON_SET_VALUE__( kfjson, __STRING__( ip ), kfglobal->_interanet_ip );
+        __JSON_SET_VALUE__( kfjson, __STRING__( zone_id ), kfglobal->_app_id->GetZoneId() );
+        __JSON_SET_VALUE__( kfjson, __STRING__( ip ), kfglobal->_intranet_ip );
         __JSON_SET_VALUE__( kfjson, __STRING__( port ), kfglobal->_listen_port );
         __JSON_SET_VALUE__( kfjson, __STRING__( time ), 70u );	// 失效时间70秒
         _kf_http_client->MTGet<KFIpAddressModule>( _url, kfjson );
     }
 
-    const KFNetData* KFIpAddressModule::GetMasterIp( const std::string& appname, uint32 zoneid )
+    const KFNetData* KFIpAddressModule::GetMasterIp( const std::string& appname, uint32 zone_id )
     {
         auto kfglobal = KFGlobal::Instance();
         static auto _url = GetDirUrl() + __STRING__( querymasterip );
 
         __JSON_OBJECT_DOCUMENT__( kfjson );
         __JSON_SET_VALUE__( kfjson, __STRING__( appname ), appname );
-        __JSON_SET_VALUE__( kfjson, __STRING__( zoneid ), zoneid );
+        __JSON_SET_VALUE__( kfjson, __STRING__( zone_id ), zone_id );
 
         auto recvdata = _kf_http_client->STGet( _url, kfjson );
         __JSON_PARSE_STRING__( kfresult, recvdata );
@@ -111,7 +111,7 @@ namespace KFrame
         return &_ip_address;
     }
 
-    const std::list<KFNetData>& KFIpAddressModule::GetMasterList( const std::string& appname, uint32 zoneid )
+    const std::list<KFNetData>& KFIpAddressModule::GetMasterList( const std::string& appname, uint32 zone_id )
     {
         auto kfglobal = KFGlobal::Instance();
         static auto _url = GetDirUrl() + __STRING__( querymasterlist );
@@ -121,7 +121,7 @@ namespace KFrame
 
         __JSON_OBJECT_DOCUMENT__( kfjson );
         __JSON_SET_VALUE__( kfjson, __STRING__( appname ), appname );
-        __JSON_SET_VALUE__( kfjson, __STRING__( zoneid ), zoneid );
+        __JSON_SET_VALUE__( kfjson, __STRING__( zone_id ), zone_id );
 
         auto recvdata = _kf_http_client->STGet( _url, kfjson );
         __JSON_PARSE_STRING__( kfresult, recvdata );
@@ -188,7 +188,7 @@ namespace KFrame
         auto kfglobal = KFGlobal::Instance();
         if ( kfglobal->_net_type == KFServerEnum::Local )
         {
-            kfglobal->_interanet_ip = kfglobal->_local_ip;
+            kfglobal->_intranet_ip = kfglobal->_local_ip;
         }
         else
         {
@@ -199,12 +199,12 @@ namespace KFrame
                 auto interanetip = _kf_http_client->STGet( dnsurl, _invalid_string );
                 if ( !interanetip.empty() )
                 {
-                    kfglobal->_interanet_ip = KFUtility::SplitString( interanetip, "\n" );
+                    kfglobal->_intranet_ip = KFUtility::SplitString( interanetip, "\n" );
                 }
-            } while ( kfglobal->_interanet_ip.empty() );
+            } while ( kfglobal->_intranet_ip.empty() );
         }
 
-        __LOG_INFO__( "interanetip=[{}]", kfglobal->_interanet_ip );
+        __LOG_INFO__( "interanetip=[{}]", kfglobal->_intranet_ip );
     }
 
     static std::string _default_ip = "127.0.0.1";

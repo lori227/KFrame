@@ -18,22 +18,22 @@ namespace KFrame
         virtual StringMapList QueryZoneList( const std::string& flag ) = 0;
 
         // 查询小区ip
-        virtual StringMap QueryZoneIp( uint32 zoneid ) = 0;
+        virtual StringMap QueryZoneIp( uint32 zone_id ) = 0;
 
         // 小区人数负载均衡
-        virtual bool ZoneBalance( uint32 zoneid, uint32 count ) = 0;
+        virtual bool ZoneBalance( uint32 zone_id, uint32 count ) = 0;
 
         // 设置推荐小区
-        virtual bool SetZoneRecommend( const std::string& flag, uint32 zoneid, bool isrecommend ) = 0;
+        virtual bool SetZoneRecommend( const std::string& flag, uint32 zone_id, bool isrecommend ) = 0;
 
         // 分配玩家小区
-        virtual StringMap AllocPlayerZone( const std::string& flag, uint32 zoneid ) = 0;
+        virtual StringMap AllocPlayerZone( const std::string& flag, uint32 zone_id ) = 0;
 
         // 查询小区状态
-        virtual uint32 QueryZoneStatus( uint32 zoneid ) = 0;
+        virtual uint32 QueryZoneStatus( uint32 zone_id ) = 0;
 
         // 更新小区状态
-        virtual bool UpdateZoneStatus( uint32 zoneid,  uint32 status ) = 0;
+        virtual bool UpdateZoneStatus( uint32 zone_id,  uint32 status ) = 0;
 
         // world http地址注册
         virtual bool SetWorldUrl( uint64 worldid, const std::string& url ) = 0;

@@ -2,20 +2,20 @@
 
 namespace KFrame
 {
-    void KFRouteService::AddServer( uint64 serverid )
+    void KFRouteService::AddServer( uint64 server_id )
     {
-        _server_hash.AddHashNode( _name, serverid, 100 );
-        _server_object_count_list[ serverid ] = _invalid_int;
+        _server_hash.AddHashNode( _name, server_id, 100 );
+        _server_object_count_list[ server_id ] = _invalid_int;
 
         _min_balance_count = _invalid_int;
-        _min_balance_server_id = serverid;
+        _min_balance_server_id = server_id;
     }
 
-    void KFRouteService::AddObject( uint64 serverid, uint64 objectid, uint32 objectcount )
+    void KFRouteService::AddObject( uint64 server_id, uint64 objectid, uint32 objectcount )
     {
-        _object_list[ objectid ].insert( serverid );
+        _object_list[ objectid ].insert( server_id );
 
-        auto iter = _server_object_count_list.find( serverid );
+        auto iter = _server_object_count_list.find( server_id );
         if ( iter != _server_object_count_list.end() )
         {
             iter->second = objectcount;
@@ -37,13 +37,13 @@ namespace KFrame
         }
     }
 
-    void KFRouteService::RemoveServer( uint64 serverid )
+    void KFRouteService::RemoveServer( uint64 server_id )
     {
-        _server_hash.RemoveHashNode( serverid );
-        _server_object_count_list.erase( serverid );
+        _server_hash.RemoveHashNode( server_id );
+        _server_object_count_list.erase( server_id );
         for ( auto iter = _object_list.begin(); iter != _object_list.end(); )
         {
-            iter->second.erase( serverid );
+            iter->second.erase( server_id );
             if ( iter->second.empty() )
             {
                 iter = _object_list.erase( iter );
@@ -57,13 +57,13 @@ namespace KFrame
         CalcMinBalance();
     }
 
-    void KFRouteService::RemoveObject( uint64 serverid, uint64 objectid, uint32 objectcount )
+    void KFRouteService::RemoveObject( uint64 server_id, uint64 objectid, uint32 objectcount )
     {
         {
             auto iter = _object_list.find( objectid );
             if ( iter != _object_list.end() )
             {
-                iter->second.erase( serverid );
+                iter->second.erase( server_id );
                 if ( iter->second.empty() )
                 {
                     _object_list.erase( objectid );
@@ -71,14 +71,14 @@ namespace KFrame
             }
         }
 
-        auto iter = _server_object_count_list.find( serverid );
+        auto iter = _server_object_count_list.find( server_id );
         if ( iter != _server_object_count_list.end() )
         {
             iter->second = objectcount;
             if ( iter->second < _min_balance_count )
             {
                 _min_balance_count = iter->second;
-                _min_balance_server_id = serverid;
+                _min_balance_server_id = server_id;
             }
         }
     }

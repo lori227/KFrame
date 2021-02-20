@@ -54,13 +54,13 @@ namespace KFrame
         _kf_connection_function.Remove( name );
     }
 
-    void KFClusterClientModule::CallClusterConnectionFunction( uint64 serverid )
+    void KFClusterClientModule::CallClusterConnectionFunction( uint64 server_id )
     {
         // 执行回调函数
         for ( auto& iter : _kf_connection_function._objects )
         {
             auto kffunction = iter.second;
-            kffunction->_function( serverid );
+            kffunction->_function( server_id );
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -159,7 +159,7 @@ namespace KFrame
         // 停止定时器
         __UN_TIMER_1__( _cluster_proxy_id );
 
-        if ( kfmsg->serverid() == 0 )
+        if ( kfmsg->server_id() == 0 )
         {
             // 重新连接
             ReconnectClusterMaster();

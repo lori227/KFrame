@@ -63,9 +63,9 @@ namespace KFrame
         _net_server_services->ShutServices();
     }
 
-    void KFNetServerEngine::RunEngine( uint64 nowtime )
+    void KFNetServerEngine::RunEngine( uint64 now_time )
     {
-        _net_server_services->_now_time = nowtime;
+        _net_server_services->_now_time = now_time;
         _net_server_services->_net_event->RunEvent();
 
         // 判断托管超时
@@ -75,11 +75,11 @@ namespace KFrame
         RunCloseHandle();
 
         // 托管连接消息
-        RunTrusteeMessage( nowtime );
+        RunTrusteeMessage( now_time );
         RunRemoveTrusteeHandle();
 
         // 注册连接消息
-        RunHandleMessage( nowtime );
+        RunHandleMessage( now_time );
     }
 
     uint32 KFNetServerEngine::GetHandleCount()
@@ -294,7 +294,7 @@ namespace KFrame
         }
     }
 
-    void KFNetServerEngine::RunTrusteeMessage( uint64 nowtime )
+    void KFNetServerEngine::RunTrusteeMessage( uint64 now_time )
     {
         // 每次取1个消息, 只处理认证消息
         static const uint32 _max_message_count = 1;
@@ -306,7 +306,7 @@ namespace KFrame
         }
     }
 
-    void KFNetServerEngine::RunHandleMessage( uint64 nowtime )
+    void KFNetServerEngine::RunHandleMessage( uint64 now_time )
     {
         // 每次取设置消息数量, 防止占用过多的cpu
         for ( auto& iter : _kf_handles._objects )

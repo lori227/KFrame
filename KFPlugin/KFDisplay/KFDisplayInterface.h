@@ -41,11 +41,11 @@ namespace KFrame
         // 发送结果提示到客户端
         // Route ==> Player
         template< class...Args >
-        inline void SendToPlayer( uint64 serverid, uint64 playerid, uint32 result, Args&& ... args )
+        inline void SendToPlayer( uint64 server_id, uint64 playerid, uint32 result, Args&& ... args )
         {
             StringList params;
             FormatParam( params, std::forward< Args >( args )... );
-            SendToPlayer( serverid, playerid, result, params );
+            SendToPlayer( server_id, playerid, result, params );
         }
 
         // 发送结果提示到客户端
@@ -102,7 +102,7 @@ namespace KFrame
 
         // Game ==> Route ==> Game
         virtual void SendToPlayer( DataPtr kfbasic, uint32 result, StringList& params ) = 0;
-        virtual void SendToPlayer( uint64 serverid, uint64 playerid, uint32 result, StringList& params ) = 0;
+        virtual void SendToPlayer( uint64 server_id, uint64 playerid, uint32 result, StringList& params ) = 0;
         virtual void SendToPlayer( const Route& route, uint32 result, StringList& params ) = 0;
 
     };

@@ -256,7 +256,7 @@ namespace KFrame
     void KFPlayerModule::UnInitPlayer( KFEntity* player )
     {
         auto kfbasic = player->Find( __STRING__( basic ) );
-        kfbasic->Set( __STRING__( serverid ), 0 );
+        kfbasic->Set( __STRING__( server_id ), 0 );
         kfbasic->Set( __STRING__( status ), ( uint32 )KFMsg::OfflineStatus );
         kfbasic->Set( __STRING__( statustime ), KFGlobal::Instance()->_real_time );
 
@@ -322,7 +322,7 @@ namespace KFrame
         auto kfbasic = player->Find( __STRING__( basic ) );
         kfbasic->Set( __STRING__( status ), ( uint32 )KFMsg::OnlineStatus );
         kfbasic->Set( __STRING__( statustime ), KFGlobal::Instance()->_real_time );
-        kfbasic->Set( __STRING__( serverid ), KFGlobal::Instance()->_app_id->GetId() );
+        kfbasic->Set( __STRING__( server_id ), KFGlobal::Instance()->_app_id->GetId() );
 
         // 渠道数据
         auto pbchanneldata = &pblogin->channeldata();
@@ -479,12 +479,12 @@ namespace KFrame
 
         auto& strdata = params[ 0 ];
 
-        KFElements kfelements;
-        auto ok = kfelements.Parse( strdata, __FUNC_LINE__ );
+        KFElements elements;
+        auto ok = elements.Parse( strdata, __FUNC_LINE__ );
         if ( ok )
         {
-            kfelements.SetOperate( KFEnum::Add );
-            player->AddElement( &kfelements, _default_multiple, __STRING__( command ), 0u, __FUNC_LINE__ );
+            elements.SetOperate( KFEnum::Add );
+            player->AddElement( &elements, _default_multiple, __STRING__( command ), 0u, __FUNC_LINE__ );
         }
     }
 
@@ -497,12 +497,12 @@ namespace KFrame
 
         auto& strdata = params[ 0 ];
 
-        KFElements kfelements;
-        auto ok = kfelements.Parse( strdata, __FUNC_LINE__ );
+        KFElements elements;
+        auto ok = elements.Parse( strdata, __FUNC_LINE__ );
         if ( ok )
         {
-            kfelements.SetOperate( KFEnum::Set );
-            player->AddElement( &kfelements, _default_multiple, __STRING__( command ), 0u, __FUNC_LINE__ );
+            elements.SetOperate( KFEnum::Set );
+            player->AddElement( &elements, _default_multiple, __STRING__( command ), 0u, __FUNC_LINE__ );
         }
     }
 
@@ -515,12 +515,12 @@ namespace KFrame
 
         auto& stragent = params[ 0 ];
 
-        KFElements kfelements;
-        auto ok = kfelements.Parse( stragent, __FUNC_LINE__ );
+        KFElements elements;
+        auto ok = elements.Parse( stragent, __FUNC_LINE__ );
         if ( ok )
         {
-            kfelements.SetOperate( KFEnum::Dec );
-            player->RemoveElement( &kfelements, _default_multiple, __STRING__( command ), 0u, __FUNC_LINE__ );
+            elements.SetOperate( KFEnum::Dec );
+            player->RemoveElement( &elements, _default_multiple, __STRING__( command ), 0u, __FUNC_LINE__ );
         }
     }
 

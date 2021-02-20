@@ -101,10 +101,10 @@ namespace KFrame
     void KFMailClientModule::SendQueryMailMessage( KFEntity* player )
     {
         auto maxmailid = GetMaxMailId( player );
-        auto zoneid = KFGlobal::Instance()->_app_id->GetZoneId();
+        auto zone_id = KFGlobal::Instance()->_app_id->GetZoneId();
 
         KFMsg::S2SQueryMailReq req;
-        req.set_zoneid( zoneid );
+        req.set_zoneid( zone_id );
         req.set_maxid( maxmailid );
         req.set_playerid( player->GetKeyID() );
         SendMessageToMail( player->GetKeyID(), KFMsg::S2S_QUERY_MAIL_REQ, &req );
@@ -271,18 +271,18 @@ namespace KFrame
             return __LOG_ERROR__( "player={} mail={} no reward", player->GetKeyID(), id );
         }
 
-        KFElements kfelements;
-        auto ok = kfelements.Parse( reward, __FUNC_LINE__ );
+        KFElements elements;
+        auto ok = elements.Parse( reward, __FUNC_LINE__ );
         if ( !ok )
         {
             return __LOG_ERROR__( "player={} mail={} reward={} error", player->GetKeyID(), id, reward );
         }
 
         player->UpdateObject( kfmail, __STRING__( status ), KFEnum::Set, KFMsg::ReceiveStatus );
-        player->AddElement( &kfelements, _default_multiple, __STRING__( mail ), id, __FUNC_LINE__ );
+        player->AddElement( &elements, _default_multiple, __STRING__( mail ), id, __FUNC_LINE__ );
     }
 
-    StringMap& KFMailClientModule::FormatMailData( KFEntity* sender, const KFMailSetting* kfsetting, const KFElements* kfelements )
+    StringMap& KFMailClientModule::FormatMailData( KFEntity* sender, const KFMailSetting* kfsetting, const KFElements* elements )
     {
         // 有优化的空间, 服务器只发configid到客户端, 客户端根据邮件配置表来获得邮件的基础数据
         // 暂时先发给客户端, 省去客户端读取邮件配置表
@@ -305,9 +305,9 @@ namespace KFrame
         _mail_data.insert( std::make_pair( __STRING__( validtime ), __TO_STRING__( kfsetting->_valid_time ) ) );
 
         // 奖励
-        if ( kfelements != nullptr )
+        if ( elements != nullptr )
         {
-            _mail_data.insert( std::make_pair( __STRING__( reward ), kfelements->GetElement() ) );
+            _mail_data.insert( std::make_pair( __STRING__( reward ), elements->GetElement() ) );
         }
         else if ( !kfsetting->_reward.GetElement().empty() )
         {
@@ -355,7 +355,7 @@ namespace KFrame
         return ok;
     }
 
-    bool KFMailClientModule::SendMail( uint32 configid, const KFElements* kfelements )
+    bool KFMailClientModule::SendMail( uint32 configid, const KFElements* elements )
     {
         auto kfsetting = KFMailConfig::Instance()->FindSetting( configid );
         if ( kfsetting == nullptr )
@@ -363,14 +363,14 @@ namespace KFrame
             return false;
         }
 
-        auto zoneid = KFGlobal::Instance()->_app_id->GetZoneId();
+        auto zone_id = KFGlobal::Instance()->_app_id->GetZoneId();
 
-        auto& maildata = FormatMailData( nullptr, kfsetting, kfelements );
-        return SendAddMailToShard( _invalid_int, KFMsg::GlobalMail, zoneid, maildata );
+        auto& maildata = FormatMailData( nullptr, kfsetting, elements );
+        return SendAddMailToShard( _invalid_int, KFMsg::GlobalMail, zone_id, maildata );
     }
 
 
-    bool KFMailClientModule::SendMail( uint64 recvid, uint32 configid, const KFElements* kfelements )
+    bool KFMailClientModule::SendMail( uint64 recvid, uint32 configid, const KFElements* elements )
     {
         auto kfsetting = KFMailConfig::Instance()->FindSetting( configid );
         if ( kfsetting == nullptr )
@@ -378,11 +378,11 @@ namespace KFrame
             return false;
         }
 
-        auto& maildata = FormatMailData( nullptr, kfsetting, kfelements );
+        auto& maildata = FormatMailData( nullptr, kfsetting, elements );
         return SendAddMailToShard( _invalid_int, KFMsg::PersonMail, recvid, maildata );
     }
 
-    bool KFMailClientModule::SendMail( KFEntity* player, uint64 recvid, uint32 configid, const KFElements* kfelements )
+    bool KFMailClientModule::SendMail( KFEntity* player, uint64 recvid, uint32 configid, const KFElements* elements )
     {
         auto kfsetting = KFMailConfig::Instance()->FindSetting( configid );
         if ( kfsetting == nullptr )
@@ -390,7 +390,7 @@ namespace KFrame
             return false;
         }
 
-        auto& maildata = FormatMailData( player, kfsetting, kfelements );
+        auto& maildata = FormatMailData( player, kfsetting, elements );
         return SendAddMailToShard( player->GetKeyID(), KFMsg::PersonMail, recvid, maildata );
     }
 }

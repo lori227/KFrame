@@ -200,7 +200,7 @@ namespace KFrame
         LogDeploy( 0, "deploy tool=[{}|{}] req", kfmsg->toolid(), kfmsg->ip() );
         LogDeploy( 0, "recv=[{}:{} | {}:{}:{}:{}]",
                    pbcommand->command(), pbcommand->value(),
-                   pbcommand->appname(), pbcommand->apptype(), pbcommand->zoneid(), pbcommand->appid() );
+                   pbcommand->appname(), pbcommand->apptype(), pbcommand->zone_id(), pbcommand->appid() );
 
         if ( pbcommand->command() == __STRING__( unschedule ) )
         {
@@ -284,7 +284,7 @@ namespace KFrame
         pbdeploy->set_appname( __JSON_GET_STRING__( request, __STRING__( appname ) ) );
         pbdeploy->set_apptype( __JSON_GET_STRING__( request, __STRING__( apptype ) ) );
         pbdeploy->set_appid( __JSON_GET_STRING__( request, __STRING__( appid ) ) );
-        pbdeploy->set_zoneid( __JSON_GET_UINT32__( request, __STRING__( zoneid ) ) );
+        pbdeploy->set_zoneid( __JSON_GET_UINT32__( request, __STRING__( zone_id ) ) );
         _kf_tcp_server->SendNetMessage( KFMsg::S2S_DEPLOY_COMMAND_TO_AGENT_REQ, &req );
 
         LogDeploy( 0, "distribute=[{}]", data );

@@ -39,7 +39,7 @@ namespace KFrame
 
     protected:
         // 获得购买价格
-        const KFElements* CalcBuyPrice( const KFGoodsSetting* kfsetting, uint64 nowtime );
+        const KFElements* CalcBuyPrice( const KFGoodsSetting* kfsetting, uint64 now_time );
 
     };
 

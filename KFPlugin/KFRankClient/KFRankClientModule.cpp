@@ -63,27 +63,27 @@ namespace KFrame
 
     uint32 KFRankClientModule::CalcRankZoneId( uint64 playerid, const KFRankSetting* kfsetting )
     {
-        auto zoneid = _invalid_int;
+        auto zone_id = _invalid_int;
         if ( kfsetting->_zone_type == KFMsg::ZoneRank )
         {
-            zoneid = KFGlobal::Instance()->STUuidZoneId( __STRING__( player ), playerid );
+            zone_id = KFGlobal::Instance()->STUuidZoneId( __STRING__( player ), playerid );
         }
 
-        return zoneid;
+        return zone_id;
     }
 
     void KFRankClientModule::UpdateRankDataToShard( KFEntity* player, const KFRankSetting* kfsetting )
     {
         // 计算分区id
         auto playerid = player->GetKeyID();
-        auto zoneid = CalcRankZoneId( playerid, kfsetting );
+        auto zone_id = CalcRankZoneId( playerid, kfsetting );
 
         // 计算排行榜积分
         auto rankscore = CalcRankDataScore( player, kfsetting );
 
         // 更新到排行榜
         KFMsg::S2SUpdateRankDataReq req;
-        req.set_zoneid( zoneid );
+        req.set_zoneid( zone_id );
         req.set_playerid( playerid );
         req.set_rankid( kfsetting->_id );
 

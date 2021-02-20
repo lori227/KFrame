@@ -137,7 +137,7 @@ namespace KFrame
                 listen->set_appid( kfhandle->_id );
                 listen->set_ip( kfhandle->_ip );
                 listen->set_port( kfhandle->_port );
-                _kf_tcp_client->SendNetMessage( kfmsg->serverid(), KFMsg::S2S_TELL_REGISTER_SERVER_TO_MASTER, &tell );
+                _kf_tcp_client->SendNetMessage( kfmsg->server_id(), KFMsg::S2S_TELL_REGISTER_SERVER_TO_MASTER, &tell );
             }
         }
     }
@@ -146,7 +146,7 @@ namespace KFrame
     {
         KFMsg::TellRegisterToServer tell;
         tell.mutable_listen()->CopyFrom( kfmsg->listen() );
-        _kf_tcp_server->SendNetMessage( kfmsg->serverid(), KFMsg::S2S_TELL_REGISTER_TO_SERVER, &tell );
+        _kf_tcp_server->SendNetMessage( kfmsg->server_id(), KFMsg::S2S_TELL_REGISTER_TO_SERVER, &tell );
     }
 
     __KF_NET_EVENT_FUNCTION__( KFTcpDiscoverModule::OnServerLostClient )

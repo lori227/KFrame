@@ -37,7 +37,7 @@ namespace KFrame
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFRankShardModule::OnRouteConnectCluster( uint64 serverid )
+    void KFRankShardModule::OnRouteConnectCluster( uint64 server_id )
     {
         // 把worker id广播给所有的rank shard
         KFMsg::S2SNoticeRankWorkerReq req;
@@ -47,13 +47,13 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFRankShardModule::HandleNoticeRankWorkerReq, KFMsg::S2SNoticeRankWorkerReq )
     {
-        if ( kfmsg->workerid() < _max_rank_worker_id )
+        if ( kfmsg->worker_id() < _max_rank_worker_id )
         {
             return;
         }
 
         _refresh_rank_id_list.clear();
-        _max_rank_worker_id = kfmsg->workerid();
+        _max_rank_worker_id = kfmsg->worker_id();
         for ( auto& iter : KFRankConfig::Instance()->_settings._objects )
         {
             auto kfsetting = iter.second;
@@ -79,17 +79,17 @@ namespace KFrame
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    std::string& KFRankShardModule::FormatRankDataKey( uint32 rankid, uint32 zoneid )
+    std::string& KFRankShardModule::FormatRankDataKey( uint32 rankid, uint32 zone_id )
     {
         static std::string rankdatakey = "";
-        rankdatakey = __DATABASE_KEY_3__( __STRING__( rankdata ), rankid, zoneid );
+        rankdatakey = __DATABASE_KEY_3__( __STRING__( rankdata ), rankid, zone_id );
         return rankdatakey;
     }
 
-    std::string& KFRankShardModule::FormatRankSortKey( uint32 rankid, uint32 zoneid )
+    std::string& KFRankShardModule::FormatRankSortKey( uint32 rankid, uint32 zone_id )
     {
         static std::string ranksortkey = "";
-        ranksortkey = __DATABASE_KEY_3__( __STRING__( ranksort ), rankid, zoneid );
+        ranksortkey = __DATABASE_KEY_3__( __STRING__( ranksort ), rankid, zone_id );
         return ranksortkey;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -99,7 +99,7 @@ namespace KFrame
 
         StringMap rankdata;
         rankdata[ __STRING__( id ) ] = __TO_STRING__( kfrankdata->_rank_id );
-        rankdata[ __STRING__( zoneid ) ] = __TO_STRING__( kfrankdata->_zone_id );
+        rankdata[ __STRING__( zone_id ) ] = __TO_STRING__( kfrankdata->_zone_id );
         rankdata[ __STRING__( time ) ] = __TO_STRING__( kfrankdata->_next_refresh_time );
         rankdata[ __STRING__( minrankscore ) ] = __TO_STRING__( kfrankdata->_min_rank_score );
         rankdata[ __STRING__( rankdata ) ] = strrankdata;
@@ -110,13 +110,13 @@ namespace KFrame
         }
     }
 
-    KFRankData* KFRankShardModule::LoadRankData( uint32 rankid, uint32 zoneid )
+    KFRankData* KFRankShardModule::LoadRankData( uint32 rankid, uint32 zone_id )
     {
-        auto kfrankdata = _kf_rank_data.Create( RankKey( rankid, zoneid ) );
+        auto kfrankdata = _kf_rank_data.Create( RankKey( rankid, zone_id ) );
         kfrankdata->_rank_id = rankid;
-        kfrankdata->_zone_id = zoneid;
+        kfrankdata->_zone_id = zone_id;
 
-        auto querydata = _rank_redis_driver->HGetAll( __DATABASE_KEY_3__( __STRING__( rank ), rankid, zoneid ) );
+        auto querydata = _rank_redis_driver->HGetAll( __DATABASE_KEY_3__( __STRING__( rank ), rankid, zone_id ) );
         if ( !querydata->_value.empty() )
         {
             auto strrankata = querydata->_value[ __STRING__( rankdata ) ];
@@ -185,16 +185,16 @@ namespace KFrame
         auto queryzonelist = _rank_redis_driver->SMembers( __DATABASE_KEY_2__( __STRING__( ranksortlist ), rankid ) );
         for ( auto& strzoneid : queryzonelist->_value )
         {
-            auto zoneid = __TO_UINT32__( strzoneid );
-            refreshok |= RefreshRankData( kfranksetting, zoneid, timedata );
+            auto zone_id = __TO_UINT32__( strzoneid );
+            refreshok |= RefreshRankData( kfranksetting, zone_id, timedata );
         }
 
         return refreshok;
     }
 
-    bool KFRankShardModule::RefreshRankData( const KFRankSetting* kfsetting, uint32 zoneid, const KFTimeData* timedata )
+    bool KFRankShardModule::RefreshRankData( const KFRankSetting* kfsetting, uint32 zone_id, const KFTimeData* timedata )
     {
-        auto kfrankdata = _kf_rank_data.Create( RankKey( kfsetting->_id, zoneid ) );
+        auto kfrankdata = _kf_rank_data.Create( RankKey( kfsetting->_id, zone_id ) );
         if ( !KFDate::CheckPassTime(  KFGlobal::Instance()->_real_time, kfrankdata->_next_refresh_time ) )
         {
             return false;
@@ -202,12 +202,12 @@ namespace KFrame
 
         kfrankdata->_rank_datas.Clear();
         kfrankdata->_rank_id = kfsetting->_id;
-        kfrankdata->_zone_id = zoneid;
+        kfrankdata->_zone_id = zone_id;
         kfrankdata->_min_rank_score = 0;
         kfrankdata->_next_refresh_time = KFDate::CalcTimeData( timedata, KFGlobal::Instance()->_real_time, 1 );
 
-        auto& ranksortkey = FormatRankSortKey( kfsetting->_id, zoneid );
-        auto& rankdatakey = FormatRankDataKey( kfsetting->_id, zoneid );
+        auto& ranksortkey = FormatRankSortKey( kfsetting->_id, zone_id );
+        auto& rankdatakey = FormatRankDataKey( kfsetting->_id, zone_id );
 
         auto queryidlist = _rank_redis_driver->ZRevRange( ranksortkey, 0, kfsetting->_max_count - 1 );
         if ( queryidlist->_value.empty() )
@@ -267,7 +267,7 @@ namespace KFrame
             // 最小积分
             //auto playerid = idlist.back();
             //std::string minscore = "";
-            //_rank_driver->StringExecute( minscore, "zscore {}:{}:{} {}", __STRING__( ranksort ), rankid, zoneid, playerid );
+            //_rank_driver->StringExecute( minscore, "zscore {}:{}:{} {}", __STRING__( ranksort ), rankid, zone_id, playerid );
             //kfrankdata->_min_rank_score = __TO_UINT64__( minscore );
 
             // 删除指定数量以后的排序
@@ -295,8 +295,8 @@ namespace KFrame
     // 处理打榜请求
     __KF_MESSAGE_FUNCTION__( KFRankShardModule::HandleUpdateRankDataReq, KFMsg::S2SUpdateRankDataReq )
     {
-        auto& ranksortkey = FormatRankSortKey( kfmsg->rankid(), kfmsg->zoneid() );
-        auto& rankdatakey = FormatRankDataKey( kfmsg->rankid(), kfmsg->zoneid() );
+        auto& ranksortkey = FormatRankSortKey( kfmsg->rankid(), kfmsg->zone_id() );
+        auto& rankdatakey = FormatRankDataKey( kfmsg->rankid(), kfmsg->zone_id() );
 
         auto pbrankdata = &kfmsg->pbrankdata();
 
@@ -307,10 +307,10 @@ namespace KFrame
         _rank_redis_driver->HSet( rankdatakey, kfmsg->playerid(), strrankdata );
 
         // 判断最低的分数
-        // if ( IsNeedUpdateRankData( kfmsg->rankid(), kfmsg->zoneid(), kfmsg->rankscore() ) )
+        // if ( IsNeedUpdateRankData( kfmsg->rankid(), kfmsg->zone_id(), kfmsg->rankscore() ) )
         {
             // 添加到排行榜的zone列表
-            _rank_redis_driver->SAdd(  __DATABASE_KEY_2__( __STRING__( ranksortlist ), kfmsg->rankid() ), kfmsg->zoneid() );
+            _rank_redis_driver->SAdd(  __DATABASE_KEY_2__( __STRING__( ranksortlist ), kfmsg->rankid() ), kfmsg->zone_id() );
 
             // 积分排行列表
             _rank_redis_driver->ZAdd( ranksortkey, kfmsg->playerid(), pbrankdata->rankscore() );
@@ -319,9 +319,9 @@ namespace KFrame
         _rank_redis_driver->WriteExec();
     }
 
-    bool KFRankShardModule::IsNeedUpdateRankData( uint32 rankid, uint32 zoneid, uint64 rankscore )
+    bool KFRankShardModule::IsNeedUpdateRankData( uint32 rankid, uint32 zone_id, uint64 rankscore )
     {
-        auto kfrankdata = _kf_rank_data.Find( RankKey( rankid, zoneid ) );
+        auto kfrankdata = _kf_rank_data.Find( RankKey( rankid, zone_id ) );
         if ( kfrankdata == nullptr )
         {
             return true;
@@ -332,15 +332,15 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFRankShardModule::HandleQueryRanklistReq, KFMsg::S2SQueryRankListReq )
     {
-        auto kfrankdata = _kf_rank_data.Find( RankKey( kfmsg->rankid(), kfmsg->zoneid() ) );
+        auto kfrankdata = _kf_rank_data.Find( RankKey( kfmsg->rankid(), kfmsg->zone_id() ) );
         if ( kfrankdata == nullptr || KFDate::CheckPassTime( KFGlobal::Instance()->_real_time, kfrankdata->_next_refresh_time ) )
         {
-            kfrankdata = LoadRankData( kfmsg->rankid(), kfmsg->zoneid() );
+            kfrankdata = LoadRankData( kfmsg->rankid(), kfmsg->zone_id() );
         }
 
         KFMsg::MsgQueryRankListAck ack;
         ack.set_rankid( kfmsg->rankid() );
-        ack.set_selfindex( QueryPlayerRank( __ROUTE_SEND_ID__, kfmsg->rankid(), kfmsg->zoneid() ) );
+        ack.set_selfindex( QueryPlayerRank( __ROUTE_SEND_ID__, kfmsg->rankid(), kfmsg->zone_id() ) );
 
         if ( kfmsg->start() == 1u && kfmsg->count() >= ( uint32 )kfrankdata->_rank_datas.rankdata_size() )
         {
@@ -365,9 +365,9 @@ namespace KFrame
         _kf_route->SendToRoute( route, KFMsg::MSG_QUERY_RANK_LIST_ACK, &ack );
     }
 
-    uint32 KFRankShardModule::QueryPlayerRank( uint64 playerid, uint32 rankid, uint32 zoneid )
+    uint32 KFRankShardModule::QueryPlayerRank( uint64 playerid, uint32 rankid, uint32 zone_id )
     {
-        auto& ranksortkey = FormatRankSortKey( rankid, zoneid );
+        auto& ranksortkey = FormatRankSortKey( rankid, zone_id );
         auto kfresult = _rank_redis_driver->ZRank( ranksortkey, playerid );
         return ( uint32 )kfresult->_value;
     }
@@ -407,12 +407,12 @@ namespace KFrame
 
     uint32 KFRankShardModule::CalcRankZoneId( uint64 playerid, const KFRankSetting* kfsetting )
     {
-        auto zoneid = _invalid_int;
+        auto zone_id = _invalid_int;
         if ( kfsetting->_zone_type == KFMsg::ZoneRank )
         {
-            zoneid = KFGlobal::Instance()->STUuidZoneId( __STRING__( player ), playerid );
+            zone_id = KFGlobal::Instance()->STUuidZoneId( __STRING__( player ), playerid );
         }
 
-        return zoneid;
+        return zone_id;
     }
 }

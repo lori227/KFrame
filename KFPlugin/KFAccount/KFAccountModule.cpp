@@ -48,25 +48,25 @@ namespace KFrame
         return _account_logic->VerifyAccountToken( accountid, token );
     }
 
-    void KFAccountModule::SaveZoneToken( const std::string& account, uint32 channel, uint64 accountid, uint32 zoneid, const std::string& token, uint32 expiretime )
+    void KFAccountModule::SaveZoneToken( const std::string& account, uint32 channel, uint64 accountid, uint32 zone_id, const std::string& token, uint32 expiretime )
     {
-        _account_logic->SaveZoneToken( account, channel, accountid, zoneid, token, expiretime );
+        _account_logic->SaveZoneToken( account, channel, accountid, zone_id, token, expiretime );
     }
 
-    StringMap KFAccountModule::VerifyZoneToken( uint64 accountid, uint32 zoneid, const std::string& token )
+    StringMap KFAccountModule::VerifyZoneToken( uint64 accountid, uint32 zone_id, const std::string& token )
     {
-        return _account_logic->VerifyZoneToken( accountid, zoneid, token );
+        return _account_logic->VerifyZoneToken( accountid, zone_id, token );
     }
 
-    void KFAccountModule::SaveLoginData( uint64 accountid, const std::string& ip, uint32 zoneid )
+    void KFAccountModule::SaveLoginData( uint64 accountid, const std::string& ip, uint32 zone_id )
     {
-        _account_logic->SaveLoginData( accountid, ip, zoneid );
+        _account_logic->SaveLoginData( accountid, ip, zone_id );
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////
-    std::tuple<uint64, bool> KFAccountModule::QueryCreatePlayer( uint64 accountid, uint32 zoneid )
+    std::tuple<uint64, bool> KFAccountModule::QueryCreatePlayer( uint64 accountid, uint32 zone_id )
     {
-        return _account_logic->QueryCreatePlayer( accountid, zoneid );
+        return _account_logic->QueryCreatePlayer( accountid, zone_id );
     }
 
     // 更新玩家在线信息

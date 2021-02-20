@@ -33,7 +33,7 @@ namespace KFrame
 
         // 添加响应消息
         bool PushAckMessage( const Route& route, uint32 msgid, google::protobuf::Message* message );
-        bool PushAckMessage( uint64 serverid, uint32 msgid, google::protobuf::Message* message );
+        bool PushAckMessage( uint64 server_id, uint32 msgid, google::protobuf::Message* message );
 
     protected:
         // 执行线程逻辑

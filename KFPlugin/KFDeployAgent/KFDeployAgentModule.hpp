@@ -47,7 +47,7 @@ namespace KFrame
         // appid
         std::string _app_id;
 
-        // zoneid
+        // zone_id
         uint32 _zone_id;
 
         // 开始时间
@@ -105,7 +105,7 @@ namespace KFrame
         void StartConnectDeployServer();
 
         // 判断是否agent进程
-        bool IsAgentDeploy( const std::string& command, const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid );
+        bool IsAgentDeploy( const std::string& command, const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zone_id );
 
         // 更新数据到部署服务
         void UpdateDeployToDatabase( KFDeployData* deploydata );
@@ -129,7 +129,7 @@ namespace KFrame
         void ReadProcessFromFile( KFDeployData* deploydata );
 
         // 获得部署路径
-        void FindAppDeployPath( const std::string& appname, uint32 zoneid, StringSet& deploypathlist );
+        void FindAppDeployPath( const std::string& appname, uint32 zone_id, StringSet& deploypathlist );
 
 #if __KF_SYSTEM__ == __KF_WIN__
         // 启动进程

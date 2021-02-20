@@ -35,9 +35,9 @@ namespace KFrame
 
     protected:
         // 获取奖励字符串
-        const std::string& FormatIntString( const std::string& data_name, uint32 datavalue, uint32 dataid );
-        const std::string& FormatStrString( const std::string& data_name, const std::string& datavalue, uint32 dataid );
-        const std::string& FormatDataString( const KFElementData& elementdata );
+        const std::string& FormatIntString( const std::string& data_name, uint32 data_value, uint32 data_id );
+        const std::string& FormatStrString( const std::string& data_name, const std::string& data_value, uint32 data_id );
+        const std::string& FormatDataString( const KFElementData& element_data );
         const std::string& ParseString( const std::string& strparse );
 
         // 保存type和code的对应

@@ -144,10 +144,10 @@ namespace KFrame
         _kf_route->RepeatToObject( __TEAM_ROUTE_NAME__, teamid, KFMsg::S2S_TEAM_STR_VALUE_TO_TEAM_REQ, &req );
     }
 
-    void KFTeamClientModule::UpdateMemberIntValueToTeam( KFEntity* player, const std::string& data_name, uint64 datavalue )
+    void KFTeamClientModule::UpdateMemberIntValueToTeam( KFEntity* player, const std::string& data_name, uint64 data_value )
     {
         StringUInt64 values;
-        values[ data_name ] = datavalue;
+        values[ data_name ] = data_value;
         UpdateMemberIntValueToTeam( player, values );
     }
 
@@ -167,14 +167,14 @@ namespace KFrame
         _kf_route->RepeatToObject( __TEAM_ROUTE_NAME__, teamid, KFMsg::S2S_TEAM_MEMBER_INT_VALUE_TO_TEAM_REQ, &req );
     }
 
-    void KFTeamClientModule::UpdateMemberStrValueToTeam( KFEntity* player, const std::string& data_name, const std::string& datavalue )
+    void KFTeamClientModule::UpdateMemberStrValueToTeam( KFEntity* player, const std::string& data_name, const std::string& data_value )
     {
         auto teamid = player->Get( __STRING__( team ), __STRING__( id ) );
 
         KFMsg::S2STeamMemberStrValueToTeamReq req;
         req.set_teamid( teamid );
         req.set_playerid( player->GetKeyID() );
-        ( *req.mutable_pbdata() )[ data_name ] = datavalue;
+        ( *req.mutable_pbdata() )[ data_name ] = data_value;
         _kf_route->RepeatToObject( __TEAM_ROUTE_NAME__, teamid, KFMsg::S2S_TEAM_MEMBER_STR_VALUE_TO_TEAM_REQ, &req );
     }
 
@@ -183,7 +183,7 @@ namespace KFrame
         auto kfbasic = player->Find( __STRING__( basic ) );
 
         StringUInt64 values;
-        values[ __STRING__( serverid ) ] = kfbasic->Get( __STRING__( serverid ) );
+        values[ __STRING__( server_id ) ] = kfbasic->Get( __STRING__( server_id ) );
         values[ __STRING__( status ) ] = kfbasic->Get( __STRING__( status ) );
         values[ __STRING__( statustime ) ] = kfbasic->Get( __STRING__( statustime ) );
         UpdateMemberIntValueToTeam( player, values );
@@ -366,10 +366,10 @@ namespace KFrame
             return _kf_display->SendToClient( kfentity, KFMsg::TeamIsFull );
         }
 
-        SendTeamInviteToTarget( kfentity, kfteam, kfmsg->serverid(), kfmsg->playerid() );
+        SendTeamInviteToTarget( kfentity, kfteam, kfmsg->server_id(), kfmsg->playerid() );
     }
 
-    void KFTeamClientModule::SendTeamInviteToTarget( KFEntity* player, DataPtr kfteam, uint64 serverid, uint64 playerid )
+    void KFTeamClientModule::SendTeamInviteToTarget( KFEntity* player, DataPtr kfteam, uint64 server_id, uint64 playerid )
     {
         auto pbteam = _kf_kernel->SerializeToView( kfteam );
         auto pbbasic = _kf_kernel->SerializeToView( player->Find( __STRING__( basic ) ) );
@@ -378,7 +378,7 @@ namespace KFrame
         KFMsg::S2STeamTellInviteToGameAck tell;
         tell.mutable_pbteam()->CopyFrom( *pbteam );
         tell.mutable_pbplayer()->CopyFrom( *pbbasic );
-        auto ok = _kf_route->SendToEntity( player->GetKeyID(), serverid, playerid, KFMsg::S2S_TEAM_TELL_INVITE_TO_GAME_ACK, &tell );
+        auto ok = _kf_route->SendToEntity( player->GetKeyID(), server_id, playerid, KFMsg::S2S_TEAM_TELL_INVITE_TO_GAME_ACK, &tell );
         if ( !ok )
         {
             _kf_display->SendToClient( player, KFMsg::RouteServerBusy );
@@ -416,7 +416,7 @@ namespace KFrame
 
         KFMsg::S2STeamTellApplyToGameAck tell;
         tell.mutable_pbplayer()->CopyFrom( *pbbasic );
-        auto ok = _kf_route->SendToEntity( kfentity->GetKeyID(), kfmsg->serverid(), kfmsg->playerid(), KFMsg::S2S_TEAM_TELL_APPLY_TO_GAME_ACK, &tell );
+        auto ok = _kf_route->SendToEntity( kfentity->GetKeyID(), kfmsg->server_id(), kfmsg->playerid(), KFMsg::S2S_TEAM_TELL_APPLY_TO_GAME_ACK, &tell );
         if ( !ok )
         {
             _kf_display->SendToClient( kfentity, KFMsg::RouteServerBusy );

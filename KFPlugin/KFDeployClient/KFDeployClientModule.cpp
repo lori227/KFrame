@@ -89,11 +89,11 @@ namespace KFrame
         auto pbdeploy = &kfmsg->deploycommand();
 
         // 部署命令
-        DeployCommand( pbdeploy->command(), pbdeploy->value(), pbdeploy->appname(), pbdeploy->apptype(), pbdeploy->appid(), pbdeploy->zoneid() );
+        DeployCommand( pbdeploy->command(), pbdeploy->value(), pbdeploy->appname(), pbdeploy->apptype(), pbdeploy->appid(), pbdeploy->zone_id() );
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFDeployClientModule::IsSelfServer( const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid )
+    bool KFDeployClientModule::IsSelfServer( const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zone_id )
     {
         auto kfglobal = KFGlobal::Instance();
 
@@ -121,12 +121,12 @@ namespace KFrame
             }
         }
 
-        // zoneid
+        // zone_id
         if ( kfglobal->_app_name == __STRING__( zone ) )
         {
-            if ( zoneid != _invalid_int )
+            if ( zone_id != _invalid_int )
             {
-                if ( zoneid != kfglobal->_app_id->GetZoneId() )
+                if ( zone_id != kfglobal->_app_id->GetZoneId() )
                 {
                     return false;
                 }
@@ -137,16 +137,16 @@ namespace KFrame
     }
 
     void KFDeployClientModule::DeployCommand( const std::string& command, const std::string& value,
-            const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid )
+            const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zone_id )
     {
         // 判断是不是自己
-        auto ok = IsSelfServer( appname, apptype, appid, zoneid );
+        auto ok = IsSelfServer( appname, apptype, appid, zone_id );
         if ( !ok )
         {
             return;
         }
 
-        __LOG_INFO__( "[{}:{} | {}:{}:{}:{}] deploy command req", command, value, appname, apptype, appid, zoneid );
+        __LOG_INFO__( "[{}:{} | {}:{}:{}:{}] deploy command req", command, value, appname, apptype, appid, zone_id );
         CallDeployFunction( command, value );
     }
 

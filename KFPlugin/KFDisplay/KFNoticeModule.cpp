@@ -34,7 +34,7 @@ namespace KFrame
         _kf_game->SendToPlayer( 0u, kfbasic, KFMsg::MSG_TELL_NOTICE, &tell );
     }
 
-    void KFNoticeModule::SendToPlayer( uint64 serverid, uint64 playerid, uint32 type, uint32 count )
+    void KFNoticeModule::SendToPlayer( uint64 server_id, uint64 playerid, uint32 type, uint32 count )
     {
         if ( _kf_route == nullptr )
         {
@@ -42,7 +42,7 @@ namespace KFrame
         }
 
         __NOTICE_MESSAGE__();
-        _kf_route->RepeatToEntity( 0u, serverid, playerid, KFMsg::MSG_TELL_NOTICE, &tell );
+        _kf_route->RepeatToEntity( 0u, server_id, playerid, KFMsg::MSG_TELL_NOTICE, &tell );
     }
 
     void KFNoticeModule::SendToPlayer( const Route& route, uint32 type, uint32 count )

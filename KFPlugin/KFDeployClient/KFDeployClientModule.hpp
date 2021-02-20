@@ -42,10 +42,10 @@ namespace KFrame
         virtual void RemoveFunction( const std::string& command, const std::string& module );
 
         // 部署命令
-        void DeployCommand( const std::string& command, const std::string& value, const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid );
+        void DeployCommand( const std::string& command, const std::string& value, const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zone_id );
 
         // 判断是不是自己
-        bool IsSelfServer( const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zoneid );
+        bool IsSelfServer( const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zone_id );
 
         // 调用部署命令
         void CallDeployFunction( const std::string& command, const std::string& value );

@@ -44,17 +44,17 @@ namespace KFrame
         virtual StringMap VerifyAccountToken( uint64 accountid, const std::string& token );
 
         // 保存小区token, 默认保存一个月
-        virtual void SaveZoneToken( const std::string& account, uint32 channel, uint64 accountid, uint32 zoneid, const std::string& token, uint32 expiretime = 2592000u );
+        virtual void SaveZoneToken( const std::string& account, uint32 channel, uint64 accountid, uint32 zone_id, const std::string& token, uint32 expiretime = 2592000u );
 
         // 查询小区token
-        virtual StringMap VerifyZoneToken( uint64 accountid, uint32 zoneid, const std::string& token );
+        virtual StringMap VerifyZoneToken( uint64 accountid, uint32 zone_id, const std::string& token );
 
         // 保存登录的ip和zoneid
-        virtual void SaveLoginData( uint64 accountid, const std::string& ip, uint32 zoneid );
+        virtual void SaveLoginData( uint64 accountid, const std::string& ip, uint32 zone_id );
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 创建账号里的角色
-        virtual std::tuple<uint64, bool> QueryCreatePlayer( uint64 accountid, uint32 zoneid );
+        virtual std::tuple<uint64, bool> QueryCreatePlayer( uint64 accountid, uint32 zone_id );
 
         // 更新玩家在线信息
         virtual bool UpdateOnline( uint64 accountid, uint64 playerid, uint64 worldid, uint64 gameid );

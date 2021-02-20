@@ -66,8 +66,8 @@ namespace KFrame
         void AddActivityData( KFActivityData* data );
 
         // 判断是否在时间内
-        bool CheckInTime( uint64 nowtime, uint64 createtime ) const;
-        bool CheckResetActivity( uint64 nowtime, uint64 createtime, uint64 eventtime ) const;
+        bool CheckInTime( uint64 now_time, uint64 createtime ) const;
+        bool CheckResetActivity( uint64 now_time, uint64 createtime, uint64 eventtime ) const;
 
         // 判断是否可以更新
         bool CheckCanUpdate( uint32 key, uint32 level, uint32 operate ) const;

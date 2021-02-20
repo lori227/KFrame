@@ -62,7 +62,7 @@ namespace KFrame
     {
         // 更新给dir服务器
         auto kfglobal = KFGlobal::Instance();
-        _kf_dir_client->UpdateGateToDir( kfglobal->_app_id->GetId(), kfglobal->_interanet_ip, kfglobal->_listen_port, _kf_role_list.Size(), 60u );
+        _kf_dir_client->UpdateGateToDir( kfglobal->_app_id->GetId(), kfglobal->_intranet_ip, kfglobal->_listen_port, _kf_role_list.Size(), 60u );
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_NET_EVENT_FUNCTION__( KFGateModule::OnClientConnectionServer )

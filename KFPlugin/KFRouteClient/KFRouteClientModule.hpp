@@ -133,21 +133,21 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 转发给指定服务器( 只发送一次 )
-        virtual bool SendToServer( uint64 serverid, uint32 msgid, ::google::protobuf::Message* message ) ;
-        virtual bool SendToServer( uint64 sendid, uint64 serverid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToServer( uint64 server_id, uint32 msgid, ::google::protobuf::Message* message ) ;
+        virtual bool SendToServer( uint64 sendid, uint64 server_id, uint32 msgid, ::google::protobuf::Message* message );
 
         // 转发给指定服务器( 失败重复发送 )
-        virtual bool RepeatToServer( uint64 serverid, uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool RepeatToServer( uint64 sendid, uint64 serverid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool RepeatToServer( uint64 server_id, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool RepeatToServer( uint64 sendid, uint64 server_id, uint32 msgid, ::google::protobuf::Message* message );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 发送到指定玩家( 只发送一次 )
-        virtual bool SendToEntity( uint64 serverid, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool SendToEntity( uint64 sendid, uint64 serverid, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToEntity( uint64 server_id, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToEntity( uint64 sendid, uint64 server_id, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message );
 
         // 发送到指定玩家( 失败重复发送 )
-        virtual bool RepeatToEntity( uint64 serverid, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool RepeatToEntity( uint64 sendid, uint64 serverid, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool RepeatToEntity( uint64 server_id, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool RepeatToEntity( uint64 sendid, uint64 server_id, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     protected:
@@ -170,11 +170,11 @@ namespace KFrame
         void RunSendRouteMessage();
 
         // 转发消息成功
-        void SendRouteMessageOk( uint64 serverid, uint64 serial );
+        void SendRouteMessageOk( uint64 server_id, uint64 serial );
 
     protected:
         // 连接成功
-        void OnRouteConnectCluster( uint64 serverid );
+        void OnRouteConnectCluster( uint64 server_id );
 
         // 发送同步对象消息
         void RouteSyncObjectToProxy( uint64 shardid );

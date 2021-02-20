@@ -15,17 +15,17 @@ namespace KFrame
         static bool CheckPassTime( uint64 starttime, uint64 keeptime );
 
         // 判断是否已经过了
-        static bool CheckPassTime( uint64 nowtime, uint64 starttime, uint64 keeptime );
+        static bool CheckPassTime( uint64 now_time, uint64 starttime, uint64 keeptime );
 
         // 获得消耗了的时间
-        static uint64 GetPassTime( uint64 nowtime, uint64 starttime );
+        static uint64 GetPassTime( uint64 now_time, uint64 starttime );
 
         // 获得剩余时间
-        static uint64 GetLeftTime( uint64 nowtime, uint64 starttime, uint64 keeptime );
+        static uint64 GetLeftTime( uint64 now_time, uint64 starttime, uint64 keeptime );
 
     protected:
         //  时间判断
-        static bool _CheckPassTime( uint64 nowtime, uint64 endtime );
+        static bool _CheckPassTime( uint64 now_time, uint64 endtime );
     };
 }
 

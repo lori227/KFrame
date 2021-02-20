@@ -39,13 +39,13 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFBasicShardModule::HandleClearOnlineToBasicReq, KFMsg::S2SClearOnlineToBasicReq )
     {
-        _kf_basic_database->ClearBasicServerId( kfmsg->serverid() );
+        _kf_basic_database->ClearBasicServerId( kfmsg->server_id() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFBasicShardModule::HandleQueryAttributeToBasicReq, KFMsg::S2SQueryAttributeToBasicReq )
     {
         StringMap values;
-        auto result = _kf_basic_database->QueryBasicAttribute( kfmsg->name(), kfmsg->zoneid(), values );
+        auto result = _kf_basic_database->QueryBasicAttribute( kfmsg->name(), kfmsg->zone_id(), values );
 
         KFMsg::S2SQueryAttributeToGameAck ack;
         ack.set_result( result );
@@ -58,7 +58,7 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFBasicShardModule::HandleSetPlayerNameToBasicReq, KFMsg::S2SSetPlayerNameToBasicReq )
     {
-        auto result = _kf_basic_database->SetPlayerName( kfmsg->zoneid(), kfmsg->playerid(), kfmsg->oldname(), kfmsg->newname() );
+        auto result = _kf_basic_database->SetPlayerName( kfmsg->zone_id(), kfmsg->playerid(), kfmsg->oldname(), kfmsg->newname() );
 
         KFMsg::S2SSetPlayerNameToGameAck ack;
         ack.set_result( result );

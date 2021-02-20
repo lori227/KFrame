@@ -24,7 +24,7 @@ namespace KFrame
         virtual void ClearOverdueGlobalMail() = 0;
 
         // 把全局邮件列表加到玩家列表中
-        virtual void LoadGlobalMailToPerson( uint64 playerid, uint32 zoneid ) = 0;
+        virtual void LoadGlobalMailToPerson( uint64 playerid, uint32 zone_id ) = 0;
 
         // 查询邮件列表, 会返回nullptr
         virtual KFResult< StringMapList >::UniqueType QueryMailList( uint64 playerid, uint64 lastmailid ) = 0;
@@ -33,7 +33,7 @@ namespace KFrame
         virtual bool UpdateMailStatus( uint32 flag, uint64 playerid, uint64 mailid, uint32 status ) = 0;
 
         // 初始化新玩家邮件数据
-        virtual void InitNewPlayerMail( uint64 playerid, uint32 zoneid ) = 0;
+        virtual void InitNewPlayerMail( uint64 playerid, uint32 zone_id ) = 0;
     };
 }
 

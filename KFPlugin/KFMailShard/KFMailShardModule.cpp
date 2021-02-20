@@ -82,18 +82,18 @@ namespace KFrame
 
         // 小区列表
         UInt64Set zonelist;
-        if ( __JSON_HAS_MEMBER__( request, __STRING__( zoneid ) ) )
+        if ( __JSON_HAS_MEMBER__( request, __STRING__( zone_id ) ) )
         {
-            auto strzoneid = __JSON_GET_STRING__( request, __STRING__( zoneid ) );
+            auto strzoneid = __JSON_GET_STRING__( request, __STRING__( zone_id ) );
             while ( !strzoneid.empty() )
             {
-                auto zoneid = KFUtility::SplitValue( strzoneid, "," );
-                if ( zoneid != _invalid_int )
+                auto zone_id = KFUtility::SplitValue( strzoneid, "," );
+                if ( zone_id != _invalid_int )
                 {
-                    zonelist.insert( zoneid );
+                    zonelist.insert( zone_id );
                 }
             }
-            __JSON_REMOVE__( request, __STRING__( zoneid ) );
+            __JSON_REMOVE__( request, __STRING__( zone_id ) );
         }
 
         // 邮件内容
@@ -102,9 +102,9 @@ namespace KFrame
 
         if ( playerlist.empty() )
         {
-            for ( auto zoneid : zonelist )
+            for ( auto zone_id : zonelist )
             {
-                AddMail( KFMsg::GlobalMail, zoneid, values );
+                AddMail( KFMsg::GlobalMail, zone_id, values );
             }
         }
         else
@@ -148,7 +148,7 @@ namespace KFrame
         _mail_database_logic->LoadGlobalMailToPerson( kfmsg->playerid(), _invalid_int );
 
         // 小区邮件
-        _mail_database_logic->LoadGlobalMailToPerson( kfmsg->playerid(), kfmsg->zoneid() );
+        _mail_database_logic->LoadGlobalMailToPerson( kfmsg->playerid(), kfmsg->zone_id() );
 
         // 查询邮件列表
         auto kfmailist = _mail_database_logic->QueryMailList( kfmsg->playerid(), kfmsg->maxid() );
@@ -199,12 +199,12 @@ namespace KFrame
         if ( mailid != 0u && flag == KFMsg::PersonMail )
         {
             // 通知玩家有新邮件
-            auto serverid = _kf_basic_database->QueryBasicServerId( objectid );
-            if ( serverid != _invalid_int )
+            auto server_id = _kf_basic_database->QueryBasicServerId( objectid );
+            if ( server_id != _invalid_int )
             {
                 KFMsg::S2SNoticeNewMailReq notice;
                 notice.set_playerid( objectid );
-                _kf_route->RepeatToEntity( 0, serverid, objectid, KFMsg::S2S_NOTICE_NEW_MAIL_REQ, &notice );
+                _kf_route->RepeatToEntity( 0, server_id, objectid, KFMsg::S2S_NOTICE_NEW_MAIL_REQ, &notice );
             }
         }
 
@@ -230,6 +230,6 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFMailShardModule::HandleNewPlayerMailReq, KFMsg::S2SNewPlayerMailReq )
     {
         // 设置最大的gm邮件id
-        _mail_database_logic->InitNewPlayerMail( kfmsg->playerid(), kfmsg->zoneid() );
+        _mail_database_logic->InitNewPlayerMail( kfmsg->playerid(), kfmsg->zone_id() );
     }
 }

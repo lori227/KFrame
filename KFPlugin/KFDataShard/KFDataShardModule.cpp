@@ -76,7 +76,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFDataShardModule::HandleSavePlayerToDataReq, KFMsg::S2SSavePlayerToDataReq )
     {
-        auto ok = SavePlayerData( kfmsg->zoneid(), kfmsg->id(), &kfmsg->data(), kfmsg->flag() );
+        auto ok = SavePlayerData( kfmsg->zone_id(), kfmsg->id(), &kfmsg->data(), kfmsg->flag() );
         if ( ok )
         {
             KFMsg::S2SSavePlayerToGameAck ack;
@@ -91,7 +91,7 @@ namespace KFrame
 
         KFMsg::S2SLoadPlayerToGameAck ack;
         ack.mutable_pblogin()->CopyFrom( *pblogin );
-        bool ok = LoadPlayerData( pblogin->zoneid(), pblogin->playerid(), ack.mutable_playerdata() );
+        bool ok = LoadPlayerData( pblogin->zone_id(), pblogin->playerid(), ack.mutable_playerdata() );
         if ( ok )
         {
             ack.set_result( KFMsg::Ok );
@@ -107,7 +107,7 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFDataShardModule::HandleQueryPlayerToDataReq, KFMsg::S2SQueryPlayerToDataReq )
     {
         KFMsg::S2SQueryPlayerToGameAck ack;
-        auto ok = LoadPlayerData( kfmsg->zoneid(), kfmsg->playerid(), ack.mutable_playerdata() );
+        auto ok = LoadPlayerData( kfmsg->zone_id(), kfmsg->playerid(), ack.mutable_playerdata() );
         if ( ok )
         {
             ack.set_result( KFMsg::Ok );
@@ -121,7 +121,7 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFDataShardModule::LoadPlayerData( uint32 zoneid, uint64 playerid, KFMsg::PBObject* pbobject )
+    bool KFDataShardModule::LoadPlayerData( uint32 zone_id, uint64 playerid, KFMsg::PBObject* pbobject )
     {
         auto loadok = false;
         for ( auto& iter : _data_execute._objects )
@@ -130,7 +130,7 @@ namespace KFrame
             auto dataexecute = iter.second;
 
             // 加载数据
-            auto kfresult = dataexecute->LoadPlayerData( zoneid, playerid );
+            auto kfresult = dataexecute->LoadPlayerData( zone_id, playerid );
             if ( kfresult == nullptr )
             {
                 continue;
@@ -146,12 +146,12 @@ namespace KFrame
             auto ok = KFProto::Parse( pbobject, kfresult->_value, dataexecute->_kf_setting->_compress_type, true );
             if ( !ok )
             {
-                __LOG_ERROR__( "database=[{}] player[{}:{}] parse failed", dataexecute->_kf_setting->_id, zoneid, playerid );
+                __LOG_ERROR__( "database=[{}] player[{}:{}] parse failed", dataexecute->_kf_setting->_id, zone_id, playerid );
                 continue;
             }
             else
             {
-                __LOG_INFO__( "database=[{}] player[{}:{}] load ok", dataexecute->_kf_setting->_id, zoneid, playerid );
+                __LOG_INFO__( "database=[{}] player[{}:{}] load ok", dataexecute->_kf_setting->_id, zone_id, playerid );
                 return true;
             }
         }
@@ -159,13 +159,13 @@ namespace KFrame
         return loadok;
     }
 
-    bool KFDataShardModule::SavePlayerData( uint32 zoneid, uint64 playerid, const KFMsg::PBObject* pbobject, uint32 saveflag )
+    bool KFDataShardModule::SavePlayerData( uint32 zone_id, uint64 playerid, const KFMsg::PBObject* pbobject, uint32 saveflag )
     {
         // 保存数据
         for ( auto& iter : _data_execute._objects )
         {
             auto dataexecute = iter.second;
-            dataexecute->SavePlayerData( zoneid, playerid, pbobject, saveflag );
+            dataexecute->SavePlayerData( zone_id, playerid, pbobject, saveflag );
         }
 
         return true;

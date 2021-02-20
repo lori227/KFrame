@@ -72,7 +72,7 @@ namespace KFrame
 
     protected:
         // 连接成功
-        void OnRouteConnectCluster( uint64 serverid );
+        void OnRouteConnectCluster( uint64 server_id );
         //////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////
         // 开启刷新定时器
@@ -83,14 +83,14 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////
         // 格式化排行榜数据key
-        std::string& FormatRankDataKey( uint32 rankid, uint32 zoneid );
-        std::string& FormatRankSortKey( uint32 rankid, uint32 zoneid );
+        std::string& FormatRankDataKey( uint32 rankid, uint32 zone_id );
+        std::string& FormatRankSortKey( uint32 rankid, uint32 zone_id );
 
         // 判断是否需要更新排行榜数据
-        bool IsNeedUpdateRankData( uint32 rankid, uint32 zoneid, uint64 rankscore );
+        bool IsNeedUpdateRankData( uint32 rankid, uint32 zone_id, uint64 rankscore );
 
         // 读取排行榜数据
-        KFRankData* LoadRankData( uint32 rankid, uint32 zoneid );
+        KFRankData* LoadRankData( uint32 rankid, uint32 zone_id );
 
         // 保存
         void SaveRankData( KFRankData* kfrankdata );
@@ -98,7 +98,7 @@ namespace KFrame
         // 刷新排行榜
         void SyncRefreshRankData( uint32 rankid );
         bool RefreshRankData( uint32 rankid );
-        bool RefreshRankData( const KFRankSetting* kfsetting, uint32 zoneid, const KFTimeData* timedata );
+        bool RefreshRankData( const KFRankSetting* kfsetting, uint32 zone_id, const KFTimeData* timedata );
 
         // 计算zoneid
         uint32 CalcRankZoneId( uint64 playerid, const KFRankSetting* kfsetting );
@@ -107,7 +107,7 @@ namespace KFrame
         void ClearRankData( const std::string& rankdatakey, const std::string&  ranksortkey, const KFRankSetting* kfsetting );
 
         // 查询玩家排名
-        uint32 QueryPlayerRank( uint64 playerid, uint32 rankid, uint32 zoneid );
+        uint32 QueryPlayerRank( uint64 playerid, uint32 rankid, uint32 zone_id );
     private:
         // 排行榜
         KFRedisDriver* _rank_redis_driver = nullptr;

@@ -46,7 +46,7 @@ namespace KFrame
             // 推荐小区
             static auto _recommend_url = _kf_ip_address->GetDirUrl() + __STRING__( zonerecommend );
             __JSON_OBJECT_DOCUMENT__( kfjson );
-            __JSON_SET_VALUE__( kfjson, __STRING__( zoneid ), kfsetting->_id );
+            __JSON_SET_VALUE__( kfjson, __STRING__( zone_id ), kfsetting->_id );
             __JSON_SET_VALUE__( kfjson, __STRING__( flag ), kfsetting->_flag );
             __JSON_SET_VALUE__( kfjson, __STRING__( recommend ), kfsetting->_recommend );
             _kf_http_client->MTGet<KFDirClientModule>( _recommend_url, kfjson );
@@ -61,7 +61,7 @@ namespace KFrame
 
             __JSON_OBJECT_DOCUMENT__( kfjson );
             __JSON_SET_VALUE__( kfjson, __STRING__( name ), zonename );
-            __JSON_SET_VALUE__( kfjson, __STRING__( zoneid ), kfsetting->_id );
+            __JSON_SET_VALUE__( kfjson, __STRING__( zone_id ), kfsetting->_id );
             __JSON_SET_VALUE__( kfjson, __STRING__( flag ), kfsetting->_flag );
             __JSON_SET_VALUE__( kfjson, __STRING__( loginzoneid ), kfsetting->_login_id );
 
@@ -86,13 +86,13 @@ namespace KFrame
         return ( retcode == KFEnum::Ok );
     }
 
-    void KFDirClientModule::ZoneBalanceToDir( uint32 zoneid, uint32 count )
+    void KFDirClientModule::ZoneBalanceToDir( uint32 zone_id, uint32 count )
     {
         static auto _update_url = _kf_ip_address->GetDirUrl() + __STRING__( zonebalance );
 
         __JSON_OBJECT_DOCUMENT__( sendjson );
         __JSON_SET_VALUE__( sendjson, __STRING__( count ), count );
-        __JSON_SET_VALUE__( sendjson, __STRING__( zoneid ), zoneid );
+        __JSON_SET_VALUE__( sendjson, __STRING__( zone_id ), zone_id );
         _kf_http_client->MTGet< KFDirClientModule >( _update_url, sendjson );
     }
 

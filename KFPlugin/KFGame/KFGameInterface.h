@@ -22,7 +22,7 @@ namespace KFrame
 
         // 发送到玩家
         virtual bool SendToPlayer( uint64 sendid, DataPtr kfbasic, uint32 msgid, ::google::protobuf::Message* message ) = 0;
-        virtual bool SendToPlayer( uint64 sendid, uint64 serverid, uint64 playerid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
+        virtual bool SendToPlayer( uint64 sendid, uint64 server_id, uint64 playerid, uint32 msgid, ::google::protobuf::Message* message ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////
         // 广播消息到客户端
         virtual void BroadcastToGate( uint32 msgid, ::google::protobuf::Message* message ) = 0;

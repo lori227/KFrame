@@ -9,7 +9,7 @@ namespace KFrame
     {
     public:
         // 设置数据排列格式
-        void InitData( uint64 projecttime, uint32 timebits, uint32 zonebits, uint32 workerbits, uint32 seqbits );
+        void InitData( uint64 project_time, uint32 time_bits, uint32 zone_bits, uint32 worker_bits, uint32 seq_bits );
 
     public:
         // 时间戳缩减值

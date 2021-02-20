@@ -42,7 +42,7 @@ namespace KFrame
         virtual uint64 CalcNextResetTime( KFEntity* player, uint32 timeid );
 
         // 设置重置时间
-        virtual void SetResetTime( KFEntity* player, uint32 timeid, uint64 nowtime );
+        virtual void SetResetTime( KFEntity* player, uint32 timeid, uint64 now_time );
 
     protected:
         // 添加重置函数

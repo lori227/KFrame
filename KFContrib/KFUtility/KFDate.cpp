@@ -88,8 +88,8 @@ namespace KFrame
 
     uint64 KFDate::GetTimeEx()
     {
-        KFDate nowtime = KFDate::GetDate();
-        return nowtime.GetTime();
+        KFDate now_time = KFDate::GetDate();
+        return now_time.GetTime();
     }
 
     uint32 KFDate::GetYear() const
@@ -153,35 +153,35 @@ namespace KFrame
         return GetTimeString( KFDate::GetTimeEx() );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFDate::CheckInTime( uint64 starttime, uint64 endtime, uint64 nowtime )
+    bool KFDate::CheckInTime( uint64 starttime, uint64 endtime, uint64 now_time )
     {
         if ( starttime == 0u || endtime == 0u )
         {
             return false;
         }
 
-        return nowtime >= starttime && nowtime <= endtime;
+        return now_time >= starttime && now_time <= endtime;
     }
 
     bool KFDate::CheckTimeout( uint64 starttime, uint64 keeptime )
     {
-        auto nowtime = KFDate::GetTimeEx();
-        return nowtime >= ( starttime + keeptime );
+        auto now_time = KFDate::GetTimeEx();
+        return now_time >= ( starttime + keeptime );
     }
 
-    bool KFDate::CheckTimeout( uint64 nowtime, uint64 starttime, uint64 keeptime )
+    bool KFDate::CheckTimeout( uint64 now_time, uint64 starttime, uint64 keeptime )
     {
-        return nowtime >= ( starttime + keeptime );
+        return now_time >= ( starttime + keeptime );
     }
 
-    uint64 KFDate::CalcLeftTime( uint64 nowtime, uint64 starttime, uint32 keeptime )
+    uint64 KFDate::CalcLeftTime( uint64 now_time, uint64 starttime, uint32 keeptime )
     {
-        if ( starttime > nowtime )
+        if ( starttime > now_time )
         {
             return 0;
         }
 
-        auto passtime = nowtime - starttime;
+        auto passtime = now_time - starttime;
         if ( passtime >= keeptime )
         {
             return 0;
@@ -190,9 +190,9 @@ namespace KFrame
         return keeptime - passtime;
     }
 
-    bool KFDate::CheckSameDay( uint64 lasttime, uint64 nowtime )
+    bool KFDate::CheckSameDay( uint64 lasttime, uint64 now_time )
     {
-        KFDate nowdate( nowtime );
+        KFDate nowdate( now_time );
         KFDate lastdate( lasttime );
         return CheckSameDay( lastdate, nowdate );
     }
@@ -209,9 +209,9 @@ namespace KFrame
         return nowdate.GetDay() == lastdate.GetDay();
     }
 
-    bool KFDate::CheckPassTime( uint64 nowtime, uint64 nexttime )
+    bool KFDate::CheckPassTime( uint64 now_time, uint64 nexttime )
     {
-        return nowtime >= nexttime;
+        return now_time >= nexttime;
     }
 
     bool KFDate::CheckPassTime( uint32 year, uint32 month, uint32 day, uint32 hour, uint32 minute )
@@ -306,22 +306,22 @@ namespace KFrame
         return result;
     }
 
-    bool KFDate::CheckLoopTimeData( const KFTimeData* timedata, uint64 lasttime, uint64 nowtime )
+    bool KFDate::CheckLoopTimeData( const KFTimeData* timedata, uint64 lasttime, uint64 now_time )
     {
         switch ( timedata->_flag )
         {
         case KFTimeEnum::Minute:	// 分钟
-            return CheckLoopMinute( timedata, lasttime, nowtime );
+            return CheckLoopMinute( timedata, lasttime, now_time );
             break;
         case KFTimeEnum::Hour:		// 小时
-            return CheckLoopHour( timedata, lasttime, nowtime );
+            return CheckLoopHour( timedata, lasttime, now_time );
             break;
         case KFTimeEnum::Ever:
             return CheckLoopEver( lasttime );
             break;
         }
 
-        KFDate nowdate( nowtime );
+        KFDate nowdate( now_time );
         KFDate lastdate( lasttime );
         return CheckLoopTimeData( timedata, lastdate, nowdate );
     }
@@ -361,10 +361,10 @@ namespace KFrame
         return CheckLoopMinute( timedata, lastdate.GetTime(), nowdate.GetTime() );
     }
 
-    bool KFDate::CheckLoopMinute( const KFTimeData* timedata, uint64 lasttime, uint64 nowtime )
+    bool KFDate::CheckLoopMinute( const KFTimeData* timedata, uint64 lasttime, uint64 now_time )
     {
         auto second = timedata->_minute * KFTimeEnum::OneMinuteSecond;
-        return nowtime >= ( lasttime + second );
+        return now_time >= ( lasttime + second );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFDate::CheckLoopHour( const KFTimeData* timedata, KFDate& lastdate, KFDate& nowdate )
@@ -372,10 +372,10 @@ namespace KFrame
         return CheckLoopHour( timedata, lastdate.GetTime(), nowdate.GetTime() );
     }
 
-    bool KFDate::CheckLoopHour( const KFTimeData* timedata, uint64 lasttime, uint64 nowtime )
+    bool KFDate::CheckLoopHour( const KFTimeData* timedata, uint64 lasttime, uint64 now_time )
     {
         auto second = timedata->_hour * KFTimeEnum::OneHourSecond;
-        return nowtime >= ( lasttime + second );
+        return now_time >= ( lasttime + second );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFDate::CheckLoopDay( const KFTimeData* timedata, KFDate& lastdate, KFDate& nowdate )

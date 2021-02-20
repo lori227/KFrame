@@ -98,8 +98,8 @@ namespace KFrame
 
         // 发送好友更新消息
         void UpdateIntValueToRelation( KFEntity* player, const std::string& relationname, const StringUInt64& values );
-        void UpdateIntValueToRelation( KFEntity* player, const std::string& relationname, const std::string& data_name, uint64 datavalue );
-        void UpdateStrValueToRelation( KFEntity* player, const std::string& relationname, const std::string& data_name, const std::string& datavalue );
+        void UpdateIntValueToRelation( KFEntity* player, const std::string& relationname, const std::string& data_name, uint64 data_value );
+        void UpdateStrValueToRelation( KFEntity* player, const std::string& relationname, const std::string& data_name, const std::string& data_value );
 
         // 好友申请操作
         void ReplyRelationAllInvite( KFEntity* player, DataPtr kfinviterecord, const KFRelationSetting* kfsetting, uint32 operate );

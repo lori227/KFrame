@@ -17,22 +17,22 @@ namespace KFrame
     }
 
     // 判断是否已经过了
-    bool KFClock::CheckPassTime( uint64 nowtime, uint64 starttime, uint64 keeptime )
+    bool KFClock::CheckPassTime( uint64 now_time, uint64 starttime, uint64 keeptime )
     {
         uint64 endtime = static_cast<uint64>( starttime ) + static_cast<uint64>( keeptime );
-        return _CheckPassTime( nowtime, endtime );
+        return _CheckPassTime( now_time, endtime );
     }
 
     // 获得消耗了的时间
-    uint64 KFClock::GetPassTime( uint64 nowtime, uint64 starttime )
+    uint64 KFClock::GetPassTime( uint64 now_time, uint64 starttime )
     {
-        return nowtime - starttime;
+        return now_time - starttime;
     }
 
     // 获得剩余时间
-    uint64 KFClock::GetLeftTime( uint64 nowtime, uint64 starttime, uint64 keeptime )
+    uint64 KFClock::GetLeftTime( uint64 now_time, uint64 starttime, uint64 keeptime )
     {
-        uint64 passtime = GetPassTime( nowtime, starttime );
+        uint64 passtime = GetPassTime( now_time, starttime );
 
         uint64 nLeftTime = 0;
         if ( passtime < keeptime )
@@ -43,8 +43,8 @@ namespace KFrame
         return nLeftTime;
     }
 
-    bool KFClock::_CheckPassTime( uint64 nowtime, uint64 endtime )
+    bool KFClock::_CheckPassTime( uint64 now_time, uint64 endtime )
     {
-        return nowtime >= endtime;
+        return now_time >= endtime;
     }
 }

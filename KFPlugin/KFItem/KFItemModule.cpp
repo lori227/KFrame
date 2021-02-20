@@ -850,11 +850,11 @@ namespace KFrame
     void KFItemModule::StartItemCheckTimer( KFEntity* player, DataPtr kfitem )
     {
         auto intervaltime = 1000u;
-        auto nowtime = KFGlobal::Instance()->_real_time;
+        auto now_time = KFGlobal::Instance()->_real_time;
         auto itemtime = kfitem->Get<uint64>( __STRING__( time ) );
-        if ( itemtime > nowtime )
+        if ( itemtime > now_time )
         {
-            intervaltime = ( itemtime - nowtime + 1 ) * 1000;
+            intervaltime = ( itemtime - now_time + 1 ) * 1000;
         }
 
         __LIMIT_TIMER_2__( player->GetKeyID(), kfitem->GetKeyID(), intervaltime, 1, &KFItemModule::OnTimerRemoveTimeItem );

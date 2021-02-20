@@ -8,16 +8,16 @@ namespace KFrame
 {
     // 每次间隔的时间
 #define __PER_SAVE_TIME__ 10000
-#define __REDIS_DATA_DRIVER__( zoneid ) _kf_redis->Create( __STRING__( data ), zoneid )
-#define __MYSQL_DATA_DRIVER__( zoneid ) _kf_mysql->Create( __STRING__( data ), zoneid )
-#define __MONGO_DATA_DRIVER__( zoneid ) _kf_mongo->Create( __STRING__( data ), zoneid )
+#define __REDIS_DATA_DRIVER__( zone_id ) _kf_redis->Create( __STRING__( data ), zone_id )
+#define __MYSQL_DATA_DRIVER__( zone_id ) _kf_mysql->Create( __STRING__( data ), zone_id )
+#define __MONGO_DATA_DRIVER__( zone_id ) _kf_mongo->Create( __STRING__( data ), zone_id )
     /////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////
 
-    void KFDataKeeper::SetSaveTime( uint64 nowtime )
+    void KFDataKeeper::SetSaveTime( uint64 now_time )
     {
         ++_save_count;
-        _next_save_time = nowtime + ( _save_count * __PER_SAVE_TIME__ );
+        _next_save_time = now_time + ( _save_count * __PER_SAVE_TIME__ );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////
@@ -30,13 +30,13 @@ namespace KFrame
     void KFDataExecute::RunDataKeeper()
     {
         UInt64Set removes;
-        auto nowtime = KFGlobal::Instance()->_real_time;
+        auto now_time = KFGlobal::Instance()->_real_time;
         for ( auto& iter : _data_keeper._objects )
         {
             auto keeper = iter.second;
-            if ( keeper->_next_save_time <= nowtime )
+            if ( keeper->_next_save_time <= now_time )
             {
-                keeper->SetSaveTime( nowtime );
+                keeper->SetSaveTime( now_time );
                 auto ok = SaveData( keeper->_zone_id, keeper->_player_id, keeper->_player_data, keeper->_save_flag );
                 if ( ok )
                 {
@@ -52,7 +52,7 @@ namespace KFrame
         }
     }
 
-    void KFDataExecute::SavePlayerData( uint32 zoneid, uint64 playerid, const KFMsg::PBObject* pbobject, uint32 saveflag )
+    void KFDataExecute::SavePlayerData( uint32 zone_id, uint64 playerid, const KFMsg::PBObject* pbobject, uint32 saveflag )
     {
         // 没有保存标记
         if ( !KFUtility::HaveBitMask( _kf_setting->_save_flag, saveflag ) )
@@ -63,14 +63,14 @@ namespace KFrame
         auto playerdata = KFProto::Serialize( pbobject, _kf_setting->_compress_type, _kf_setting->_compress_level, true );
         if ( playerdata == _invalid_string )
         {
-            return __LOG_ERROR__( "player[{}:{}] serialize failed", zoneid, playerid );
+            return __LOG_ERROR__( "player[{}:{}] serialize failed", zone_id, playerid );
         }
 
         // 不在keeper中
         auto keeper = _data_keeper.Find( playerid );
         if ( keeper == nullptr )
         {
-            auto ok = SaveData( zoneid, playerid, playerdata, saveflag );
+            auto ok = SaveData( zone_id, playerid, playerdata, saveflag );
             if ( ok )
             {
                 return;
@@ -79,7 +79,7 @@ namespace KFrame
 
         // 保存失败 先缓存下来
         keeper = _data_keeper.Create( playerid );
-        keeper->_zone_id = zoneid;
+        keeper->_zone_id = zone_id;
         keeper->_player_id = playerid;
         keeper->_save_flag = saveflag;
         keeper->_player_data = playerdata;
@@ -89,7 +89,7 @@ namespace KFrame
         }
     }
 
-    KFResult< std::string >::UniqueType KFDataExecute::LoadPlayerData( uint32 zoneid, uint64 playeid )
+    KFResult< std::string >::UniqueType KFDataExecute::LoadPlayerData( uint32 zone_id, uint64 playeid )
     {
         auto keeper = _data_keeper.Find( playeid );
         if ( keeper != nullptr )
@@ -99,16 +99,16 @@ namespace KFrame
             return result;
         }
 
-        return LoadData( zoneid, playeid );
+        return LoadData( zone_id, playeid );
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFRedisDataExecute::SaveData( uint32 zoneid, uint64 playerid, const std::string& playerdata, uint32 saveflag )
+    bool KFRedisDataExecute::SaveData( uint32 zone_id, uint64 playerid, const std::string& playerdata, uint32 saveflag )
     {
-        auto redisdriver = __REDIS_DATA_DRIVER__( zoneid );
+        auto redisdriver = __REDIS_DATA_DRIVER__( zone_id );
         if ( redisdriver == nullptr )
         {
-            __LOG_ERROR__( "player[{}:{}] can't find redis", zoneid, playerid );
+            __LOG_ERROR__( "player[{}:{}] can't find redis", zone_id, playerid );
             return false;
         }
 
@@ -116,7 +116,7 @@ namespace KFrame
         auto kfresult = redisdriver->HSet( strplayerkey, __STRING__( data ), playerdata );
         if ( !kfresult->IsOk() )
         {
-            __LOG_ERROR__( "redis player[{}:{}] save failed", zoneid, playerid );
+            __LOG_ERROR__( "redis player[{}:{}] save failed", zone_id, playerid );
             return false;
         }
 
@@ -126,28 +126,28 @@ namespace KFrame
             redisdriver->Expire( strplayerkey, _kf_setting->_cache_time );
         }
 
-        __LOG_INFO__( "redis player [{}:{}] size=[{}] save ok", zoneid, playerid, playerdata.size() );
+        __LOG_INFO__( "redis player [{}:{}] size=[{}] save ok", zone_id, playerid, playerdata.size() );
         return true;
     }
 
-    KFResult< std::string >::UniqueType KFRedisDataExecute::LoadData( uint32 zoneid, uint64 playerid )
+    KFResult< std::string >::UniqueType KFRedisDataExecute::LoadData( uint32 zone_id, uint64 playerid )
     {
-        auto redisdriver = __REDIS_DATA_DRIVER__( zoneid );
+        auto redisdriver = __REDIS_DATA_DRIVER__( zone_id );
         if ( redisdriver == nullptr )
         {
-            __LOG_ERROR__( "player[{}:{}] can't find redis", zoneid, playerid );
+            __LOG_ERROR__( "player[{}:{}] can't find redis", zone_id, playerid );
             return nullptr;
         }
 
         return redisdriver->HGet( __DATABASE_KEY_2__( __STRING__( player ), playerid ), __STRING__( data ) );
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFMongoDataExecute::SaveData( uint32 zoneid, uint64 playerid, const std::string& playerdata, uint32 saveflag )
+    bool KFMongoDataExecute::SaveData( uint32 zone_id, uint64 playerid, const std::string& playerdata, uint32 saveflag )
     {
-        auto mongodriver = __MONGO_DATA_DRIVER__( zoneid );
+        auto mongodriver = __MONGO_DATA_DRIVER__( zone_id );
         if ( mongodriver == nullptr )
         {
-            __LOG_ERROR__( "player[{}:{}] can't find mongo", zoneid, playerid );
+            __LOG_ERROR__( "player[{}:{}] can't find mongo", zone_id, playerid );
             return false;
         }
 
@@ -164,24 +164,24 @@ namespace KFrame
         return ok;
     }
 
-    KFResult< std::string >::UniqueType KFMongoDataExecute::LoadData( uint32 zoneid, uint64 playerid )
+    KFResult< std::string >::UniqueType KFMongoDataExecute::LoadData( uint32 zone_id, uint64 playerid )
     {
-        auto mongodriver = __MONGO_DATA_DRIVER__( zoneid );
+        auto mongodriver = __MONGO_DATA_DRIVER__( zone_id );
         if ( mongodriver == nullptr )
         {
-            __LOG_ERROR__( "player[{}:{}] can't find mongo", zoneid, playerid );
+            __LOG_ERROR__( "player[{}:{}] can't find mongo", zone_id, playerid );
             return nullptr;
         }
 
         return mongodriver->QueryString( __STRING__( player ), playerid, __STRING__( data ) );
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFMySQLDataExecute::SaveData( uint32 zoneid, uint64 playerid, const std::string& playerdata, uint32 saveflag )
+    bool KFMySQLDataExecute::SaveData( uint32 zone_id, uint64 playerid, const std::string& playerdata, uint32 saveflag )
     {
-        auto mysqldriver = __MYSQL_DATA_DRIVER__( zoneid );
+        auto mysqldriver = __MYSQL_DATA_DRIVER__( zone_id );
         if ( mysqldriver == nullptr )
         {
-            __LOG_ERROR__( "player[{}:{}] can't find mysql", zoneid, playerid );
+            __LOG_ERROR__( "player[{}:{}] can't find mysql", zone_id, playerid );
             return false;
         }
 
@@ -192,20 +192,20 @@ namespace KFrame
         auto ok = mysqldriver->Insert( __STRING__( player ), values );
         if ( !ok )
         {
-            __LOG_ERROR__( "mysql player[{}:{}] save failed", zoneid, playerid );
+            __LOG_ERROR__( "mysql player[{}:{}] save failed", zone_id, playerid );
             return false;
         }
 
-        __LOG_INFO__( "mysql player [{}:{}] size=[{}] save ok", zoneid, playerid, playerdata.size() );
+        __LOG_INFO__( "mysql player [{}:{}] size=[{}] save ok", zone_id, playerid, playerdata.size() );
         return true;
     }
 
-    KFResult< std::string >::UniqueType KFMySQLDataExecute::LoadData( uint32 zoneid, uint64 playerid )
+    KFResult< std::string >::UniqueType KFMySQLDataExecute::LoadData( uint32 zone_id, uint64 playerid )
     {
-        auto mysqldriver = __MYSQL_DATA_DRIVER__( zoneid );
+        auto mysqldriver = __MYSQL_DATA_DRIVER__( zone_id );
         if ( mysqldriver == nullptr )
         {
-            __LOG_ERROR__( "player[{}:{}] can't find mysql", zoneid, playerid );
+            __LOG_ERROR__( "player[{}:{}] can't find mysql", zone_id, playerid );
             return nullptr;
         }
 

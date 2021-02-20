@@ -109,8 +109,8 @@ namespace KFrame
 
         // 查询小区信息, 返回给客户端
         auto zoneflag = __JSON_GET_STRING__( request, __STRING__( flag ) );
-        auto zoneid = __TO_UINT32__( accountdata[ __STRING__( zoneid ) ] );
-        auto zonedata = _kf_dir_database->AllocPlayerZone( zoneflag, zoneid );
+        auto zone_id = __TO_UINT32__( accountdata[ __STRING__( zone_id ) ] );
+        auto zonedata = _kf_dir_database->AllocPlayerZone( zoneflag, zone_id );
 
         __JSON_OBJECT_DOCUMENT__( response );
         __JSON_SET_VALUE__( response, __STRING__( token ), token );
@@ -120,7 +120,7 @@ namespace KFrame
         __JSON_SET_VALUE__( kfzone, __STRING__( name ), zonedata[ __STRING__( name ) ] );
         __JSON_SET_VALUE__( kfzone, __STRING__( ip ), zonedata[ __STRING__( ip ) ] );
         __JSON_SET_VALUE__( kfzone, __STRING__( port ), __TO_UINT32__( zonedata[ __STRING__( port ) ] ) );
-        __JSON_SET_VALUE__( kfzone, __STRING__( zoneid ), __TO_UINT32__( zonedata[ __STRING__( zoneid ) ] ) );
+        __JSON_SET_VALUE__( kfzone, __STRING__( zone_id ), __TO_UINT32__( zonedata[ __STRING__( zone_id ) ] ) );
         __JSON_SET_VALUE__( response, __STRING__( zone ), kfzone );
         return _kf_http_server->SendResponse( response );
     }
@@ -131,11 +131,11 @@ namespace KFrame
 
         auto loginip = __JSON_GET_STRING__( request, __STRING__( ip ) );
         auto token = __JSON_GET_STRING__( request, __STRING__( token ) );
-        auto zoneid = __JSON_GET_UINT32__( request, __STRING__( zoneid ) );
+        auto zone_id = __JSON_GET_UINT32__( request, __STRING__( zone_id ) );
         auto accountid = __JSON_GET_UINT64__( request, __STRING__( accountid ) );
 
         // 查询小区服务器状态
-        auto status = _kf_dir_database->QueryZoneStatus( zoneid );
+        auto status = _kf_dir_database->QueryZoneStatus( zone_id );
         if ( status == KFMsg::ServerStopStatus )
         {
             return _kf_http_server->SendCode( KFMsg::LoginServerStopStatus );
@@ -173,11 +173,11 @@ namespace KFrame
         auto isnew = std::get<1>( playerdata );
         if ( isnew )
         {
-            _kf_dir_database->ZoneBalance( zoneid, 1u );
+            _kf_dir_database->ZoneBalance( zone_id, 1u );
         }
 
         // 保存登录ip
-        _kf_account->SaveLoginData( accountid, loginip, zoneid );
+        _kf_account->SaveLoginData( accountid, loginip, zone_id );
 
         // 获得账号和渠道 小区信息
         auto account = accountdata[ __STRING__( account ) ];
