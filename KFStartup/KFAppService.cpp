@@ -101,7 +101,7 @@ namespace KFrame
         }
 
         // 开启主逻辑线程
-        KFThread::CreateThread( this, &KFAppService::Run, __FUNC_LINE__ );
+        KFThread::Create( this, &KFAppService::Run, __FUNC_LINE__ );
         __LOG_INFO__( "[{}:{}:{}] version[{}] startup ok", global->_app_name, global->_app_type, global->_app_id->ToString(), global->GetVersion() );
         return true;
     }

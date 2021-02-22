@@ -3,12 +3,12 @@
 
 namespace KFrame
 {
-    ThreadId KFThread::GetThreadID()
+    ThreadId KFThread::GetID()
     {
         return std::this_thread::get_id();
     }
 
-    ThreadId KFThread::CreateThread( KFThreadFunction& function, const char* file, uint32 line )
+    ThreadId KFThread::Create( KFThreadFunction& function, const char* file, uint32 line )
     {
         auto runnable = KFRunnablePool::Instance()->Create( function, file, line );
         return runnable->GetID();

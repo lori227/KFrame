@@ -10,14 +10,14 @@ namespace KFrame
     {
     public:
         // 当前线程id
-        static ThreadId GetThreadID();
+        static ThreadId GetID();
 
         // 创建线程
         template<class T>
-        static ThreadId CreateThread( T* object, void( T::*handle )(), const char* file, uint32 line )
+        static ThreadId Create( T* object, void( T::*handle )(), const char* file, uint32 line )
         {
             KFThreadFunction function = std::bind( handle, object );
-            return CreateThread( function, file, line );
+            return Create( function, file, line );
         }
 
         // 睡眠
@@ -25,7 +25,7 @@ namespace KFrame
 
     protected:
         // 创建线程
-        static ThreadId CreateThread( KFThreadFunction& function, const char* file, uint32 line );
+        static ThreadId Create( KFThreadFunction& function, const char* file, uint32 line );
     };
 
 
