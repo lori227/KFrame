@@ -131,13 +131,13 @@ namespace KFrame
             return __LOG_ERROR__( "parent=[{}] not have object=[{}]", _data_setting->_name, parent_name );
         }
 
-        auto kfobject = kfparent->Find( key );
-        if ( kfobject == nullptr )
+        auto object_data = kfparent->Find( key );
+        if ( object_data == nullptr )
         {
             return __LOG_ERROR__( "record=[{}] not have object=[{}]", parent_name, key );
         }
 
-        UpdateObject( kfobject, data_name, value, callback );
+        UpdateObject( object_data, data_name, value, callback );
     }
 
     uint64 KFEntityEx::UpdateData( const std::string& data_name, uint32 operate, uint64 value, bool callback )
@@ -211,20 +211,20 @@ namespace KFrame
     uint64 KFEntityEx::UpdateRecord( DataPtr kfparent, uint64 key, const std::string& data_name, uint32 operate, uint64 value, bool callback )
     {
         // 不存在, 创建
-        auto kfobject = kfparent->Find( key );
-        if ( kfobject == nullptr )
+        auto object_data = kfparent->Find( key );
+        if ( object_data == nullptr )
         {
-            kfobject = CreateData( kfparent );
-            value = kfobject->Operate( data_name, operate, value );
-            AddRecord( kfparent, key, kfobject, callback );
+            object_data = CreateData( kfparent );
+            value = object_data->Operate( data_name, operate, value );
+            AddRecord( kfparent, key, object_data, callback );
             return value;
         }
 
         // 存在就更新
-        auto kfdata = kfobject->Find( data_name );
+        auto kfdata = object_data->Find( data_name );
         if ( kfdata == nullptr )
         {
-            __LOG_ERROR__( "object=[{}] not have data=[{}]", kfobject->_data_setting->_name, data_name );
+            __LOG_ERROR__( "object=[{}] not have data=[{}]", object_data->_data_setting->_name, data_name );
             return _invalid_int;
         }
 
@@ -233,33 +233,33 @@ namespace KFrame
 
     uint64 KFEntityEx::UpdateArray( const std::string& data_name, uint64 index, uint32 operate, uint64 value, bool callback )
     {
-        auto kfarray = Find( data_name );
-        if ( kfarray == nullptr )
+        auto array_data = Find( data_name );
+        if ( array_data == nullptr )
         {
             __LOG_ERROR__( "object=[{}] not have array=[{}]", _data_setting->_name, data_name );
             return _invalid_int;
         }
 
-        if ( !kfarray->IsArray() )
+        if ( !array_data->IsArray() )
         {
             __LOG_ERROR__( "data=[{}] is not array", data_name );
             return _invalid_int;
         }
 
-        return UpdateObjectArray( index, kfarray, index, operate, value );
+        return UpdateObjectArray( index, array_data, index, operate, value );
     }
 
-    uint64 KFEntityEx::UpdateArray( DataPtr kfarray, uint64 index, uint32 operate, uint64 value, bool callback )
+    uint64 KFEntityEx::UpdateArray( DataPtr array_data, uint64 index, uint32 operate, uint64 value, bool callback )
     {
-        return UpdateObjectArray( index, kfarray, index, operate, value );
+        return UpdateObjectArray( index, array_data, index, operate, value );
     }
 
-    uint64 KFEntityEx::UpdateObjectArray( uint64 key, DataPtr kfarray, uint64 index, uint32 operate, uint64 value, bool callback )
+    uint64 KFEntityEx::UpdateObjectArray( uint64 key, DataPtr array_data, uint64 index, uint32 operate, uint64 value, bool callback )
     {
-        auto kfdata = kfarray->Find( index );
+        auto kfdata = array_data->Find( index );
         if ( kfdata == nullptr )
         {
-            __LOG_ERROR__( "array=[{}] not index=[{}] max=[{}]", kfarray->_data_setting->_name, index, kfarray->MaxSize() );
+            __LOG_ERROR__( "array=[{}] not index=[{}] max=[{}]", array_data->_data_setting->_name, index, array_data->MaxSize() );
             return _invalid_int;
         }
 
@@ -326,14 +326,14 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFEntityEx::InitArray( DataPtr kfarray, uint32 size )
+    void KFEntityEx::InitArray( DataPtr array_data, uint32 size )
     {
-        KFDataFactory::Instance()->InitArray( kfarray, size );
+        KFDataFactory::Instance()->InitArray( array_data, size );
     }
 
-    DataPtr KFEntityEx::AddArray( DataPtr kfarray, int64 value )
+    DataPtr KFEntityEx::AddArray( DataPtr array_data, int64 value )
     {
-        auto kfdata = KFDataFactory::Instance()->AddArray( kfarray );
+        auto kfdata = KFDataFactory::Instance()->AddArray( array_data );
         kfdata->Set( value );
         return kfdata;
     }
@@ -358,12 +358,12 @@ namespace KFrame
         {\
             return __LOG_ERROR__( "data=[{}] is not object", kfdata->_data_setting->_name );\
         }\
-        auto kfarray = kfdata->Find( data_name );\
-        if ( kfarray == nullptr )\
+        auto array_data = kfdata->Find( data_name );\
+        if ( array_data == nullptr )\
         {\
             return __LOG_ERROR__( "parent=[{}] not have data=[{}]", kfdata->_data_setting->_name, data_name );\
         }\
-        AddArray( kfarray, inlist );\
+        AddArray( array_data, inlist );\
     }\
 
     __ADD_ARRAY_DATA__( UInt32Set );
@@ -1545,7 +1545,7 @@ namespace KFrame
         return true;
     }
 
-    bool KFEntityEx::RemoveObjectElement( DataPtr kfobject, KFElementResult* kfresult, const char* function, uint32 line )
+    bool KFEntityEx::RemoveObjectElement( DataPtr object_data, KFElementResult* kfresult, const char* function, uint32 line )
     {
         if ( !kfresult->_element->IsObject() )
         {
@@ -1564,7 +1564,7 @@ namespace KFrame
                 continue;
             }
 
-            UpdateObject( kfobject, name, KFEnum::Dec, kfvalue->GetUseValue() );
+            UpdateObject( object_data, name, KFEnum::Dec, kfvalue->GetUseValue() );
         }
 
         return true;
@@ -1585,8 +1585,8 @@ namespace KFrame
             return false;
         }
 
-        auto kfobject = kfparent->Find( kfelementobject->_config_id );
-        if ( kfobject == nullptr )
+        auto object_data = kfparent->Find( kfelementobject->_config_id );
+        if ( object_data == nullptr )
         {
             __LOG_ERROR_FUNCTION__( function, line, "element=[{}] can't find id=[{}]", kfelementobject->_data_name, kfelementobject->_config_id );
             return false;
@@ -1602,7 +1602,7 @@ namespace KFrame
                 continue;
             }
 
-            UpdateObject( kfobject, name, KFEnum::Dec, kfvalue->GetUseValue() );
+            UpdateObject( object_data, name, KFEnum::Dec, kfvalue->GetUseValue() );
         }
 
         return true;
@@ -1639,26 +1639,26 @@ namespace KFrame
     datahierarchy.pop_front();\
     if ( savedata->_data_type == KFDataDefine::DataTypeObject )\
     {\
-        pbobject = &( ( *pbobject->mutable_pbobject() )[ savedata->_data_setting->_name ] );\
+        proto_object = &( ( *proto_object->mutable_pbobject() )[ savedata->_data_setting->_name ] );\
     }\
     else if ( savedata->_data_type == KFDataDefine::DataTypeRecord )\
     {\
-        auto pbrecord = &( ( *pbobject->mutable_pbrecord() )[ savedata->_data_setting->_name ] );\
+        auto pbrecord = &( ( *proto_object->mutable_pbrecord() )[ savedata->_data_setting->_name ] );\
         savedata = datahierarchy.front();\
         datahierarchy.pop_front(); \
-        pbobject = &( ( *pbrecord->mutable_pbobject() )[ savedata->GetKeyID() ] ); \
+        proto_object = &( ( *pbrecord->mutable_pbobject() )[ savedata->GetKeyID() ] ); \
     }\
 
     void KFEntityEx::SyncAddDataToClient( DataPtr kfdata, uint64 key )
     {
         __PREPARE_SYNC__( _kf_component->_entity_sync_add_function );
-        auto pbobject = CreateSyncPBObject( KFEnum::Add );
+        auto proto_object = CreateSyncPBObject( KFEnum::Add );
         do
         {
             __FIND_PROTO_OBJECT__;
             if ( savedata == kfdata )
             {
-                static_cast<KFKernelModule*>( _kf_kernel )->SaveToObject( savedata, pbobject, KFDataDefine::DataMaskSync );
+                static_cast<KFKernelModule*>( _kf_kernel )->SaveToObject( savedata, proto_object, KFDataDefine::DataMaskSync );
             }
         } while ( !datahierarchy.empty() );
     }
@@ -1666,7 +1666,7 @@ namespace KFrame
     void KFEntityEx::SyncRemoveDataToClient( DataPtr kfdata, uint64 key )
     {
         __PREPARE_SYNC__( _kf_component->_entity_sync_remove_function );
-        auto pbobject = CreateSyncPBObject( KFEnum::Dec );
+        auto proto_object = CreateSyncPBObject( KFEnum::Dec );
         do
         {
             __FIND_PROTO_OBJECT__;
@@ -1684,13 +1684,13 @@ namespace KFrame
     void KFEntityEx::SyncUpdateDataToClient( DataPtr kfdata, uint64 key )
     {
         __PREPARE_SYNC__( _kf_component->_entity_sync_update_function );
-        auto pbobject = CreateSyncPBObject( KFEnum::Set );
+        auto proto_object = CreateSyncPBObject( KFEnum::Set );
         do
         {
             __FIND_PROTO_OBJECT__;
             if ( savedata->_data_type == KFDataDefine::DataTypeArray )
             {
-                auto pbarray = &( ( *pbobject->mutable_pbarray() )[ savedata->_data_setting->_name ] );
+                auto pbarray = &( ( *proto_object->mutable_pbarray() )[ savedata->_data_setting->_name ] );
                 savedata = datahierarchy.front();
                 datahierarchy.pop_front();
 
@@ -1700,37 +1700,37 @@ namespace KFrame
             {
                 if ( savedata == kfdata )
                 {
-                    AddSyncUpdateDataToPBObject( savedata, pbobject );
+                    AddSyncUpdateDataToPBObject( savedata, proto_object );
                 }
             }
         } while ( !datahierarchy.empty() );
     }
 
-    void KFEntityEx::AddSyncUpdateDataToPBObject( DataPtr kfdata, KFMsg::PBObject* pbobject )
+    void KFEntityEx::AddSyncUpdateDataToPBObject( DataPtr kfdata, KFMsg::PBObject* proto_object )
     {
         auto datasetting = kfdata->_data_setting;
         switch ( kfdata->_data_type )
         {
         case KFDataDefine::DataTypeInt32:
-            ( *pbobject->mutable_pbint32() )[ datasetting->_name ] = kfdata->Get< int32 >();
+            ( *proto_object->mutable_pbint32() )[ datasetting->_name ] = kfdata->Get< int32 >();
             break;
         case KFDataDefine::DataTypeUInt32:
-            ( *pbobject->mutable_pbuint32() )[ datasetting->_name ] = kfdata->Get< uint32 >();
+            ( *proto_object->mutable_pbuint32() )[ datasetting->_name ] = kfdata->Get< uint32 >();
             break;
         case KFDataDefine::DataTypeInt64:
-            ( *pbobject->mutable_pbint64() )[ datasetting->_name ] = kfdata->Get< int64 >();
+            ( *proto_object->mutable_pbint64() )[ datasetting->_name ] = kfdata->Get< int64 >();
             break;
         case KFDataDefine::DataTypeUInt64:
-            ( *pbobject->mutable_pbuint64() )[ datasetting->_name ] = kfdata->Get< uint64 >();
+            ( *proto_object->mutable_pbuint64() )[ datasetting->_name ] = kfdata->Get< uint64 >();
             break;
         case KFDataDefine::DataTypeDouble:
-            ( *pbobject->mutable_pbdouble() )[ datasetting->_name ] = kfdata->Get<double>();
+            ( *proto_object->mutable_pbdouble() )[ datasetting->_name ] = kfdata->Get<double>();
             break;
         case KFDataDefine::DataTypeString:
-            ( *pbobject->mutable_pbstring() )[ datasetting->_name ] = kfdata->Get< std::string >();
+            ( *proto_object->mutable_pbstring() )[ datasetting->_name ] = kfdata->Get< std::string >();
             break;
         case KFDataDefine::DataTypeObject:
-            static_cast< KFKernelModule* >( _kf_kernel )->SaveToObject( kfdata, pbobject, KFDataDefine::DataMaskSync );
+            static_cast< KFKernelModule* >( _kf_kernel )->SaveToObject( kfdata, proto_object, KFDataDefine::DataMaskSync );
             break;
         }
     }
@@ -1823,10 +1823,10 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////
 #define __SYNC_UPDATE_INT_DATA__( datatype, pbdata )\
     {\
-        auto pbdata = &pbobject->pbdata();\
+        auto pbdata = &proto_object->pbdata();\
         for ( auto iter = pbdata->begin(); iter != pbdata->end(); ++iter )\
         {\
-            auto kfdata = kfobject->Find( iter->first );\
+            auto kfdata = object_data->Find( iter->first );\
             if ( kfdata != nullptr )\
             {\
                 UpdateData( kfdata, KFEnum::Set, iter->second );\
@@ -1836,10 +1836,10 @@ namespace KFrame
 
 #define __SYNC_UPDATE_STR_DATA__( datatype, pbdata )\
     {\
-        auto pbdata = &pbobject->pbdata();\
+        auto pbdata = &proto_object->pbdata();\
         for ( auto iter = pbdata->begin(); iter != pbdata->end(); ++iter )\
         {\
-            auto kfdata = kfobject->Find( iter->first );\
+            auto kfdata = object_data->Find( iter->first );\
             if ( kfdata != nullptr )\
             {\
                 UpdateData( kfdata, iter->second );\
@@ -1847,28 +1847,28 @@ namespace KFrame
         }\
     }
 
-    void KFEntityEx::SyncUpdateDataFromServer( DataPtr kfobject, const KFMsg::PBObject* pbobject )
+    void KFEntityEx::SyncUpdateDataFromServer( DataPtr object_data, const KFMsg::PBObject* proto_object )
     {
         __SYNC_UPDATE_INT_DATA__( int32, pbint32 );
         __SYNC_UPDATE_INT_DATA__( uint32, pbuint32 );
         __SYNC_UPDATE_INT_DATA__( int64, pbint64 );
-        __SYNC_UPDATE_INT_DATA__( uint64, pbuint64 );
+        __SYNC_UPDATE_INT_DATA__( uint64, proto_uint64 );
         __SYNC_UPDATE_INT_DATA__( double, pbdouble );
         __SYNC_UPDATE_STR_DATA__( std::string, pbstring );
 
         // array
         {
-            auto pbarray = &pbobject->pbarray();
+            auto pbarray = &proto_object->pbarray();
             for ( auto iter = pbarray->begin(); iter != pbarray->end(); ++iter )
             {
-                auto kfdata = kfobject->Find( iter->first );
+                auto kfdata = object_data->Find( iter->first );
                 if ( kfdata == nullptr )
                 {
                     continue;
                 }
 
-                auto pbuint64 = &iter->second.pbuint64();
-                for ( auto citer = pbuint64->begin(); citer != pbuint64->end(); ++citer )
+                auto proto_uint64 = &iter->second.proto_uint64();
+                for ( auto citer = proto_uint64->begin(); citer != proto_uint64->end(); ++citer )
                 {
                     auto kfchilddata = kfdata->Find( citer->first );
                     if ( kfchilddata != nullptr )
@@ -1882,10 +1882,10 @@ namespace KFrame
 
         // object
         {
-            auto pbchild = &pbobject->pbobject();
+            auto pbchild = &proto_object->proto_object();
             for ( auto iter = pbchild->begin(); iter != pbchild->end(); ++iter )
             {
-                auto kfdata = kfobject->Find( iter->first );
+                auto kfdata = object_data->Find( iter->first );
                 if ( kfdata != nullptr )
                 {
                     SyncUpdateDataFromServer( kfdata, &iter->second );
@@ -1895,16 +1895,16 @@ namespace KFrame
 
         // record
         {
-            auto pbchild = &pbobject->pbrecord();
+            auto pbchild = &proto_object->pbrecord();
             for ( auto iter = pbchild->begin(); iter != pbchild->end(); ++iter )
             {
-                auto kfrecord = kfobject->Find( iter->first );
+                auto kfrecord = object_data->Find( iter->first );
                 if ( kfrecord == nullptr )
                 {
                     continue;
                 }
 
-                auto pbchildobject = &iter->second.pbobject();
+                auto pbchildobject = &iter->second.proto_object();
                 for ( auto citer = pbchildobject->begin(); citer != pbchildobject->end(); ++citer )
                 {
                     auto kfchildobject = kfrecord->Find( citer->first );
@@ -1917,14 +1917,14 @@ namespace KFrame
         }
     }
 
-    void KFEntityEx::SyncAddDataFromServer( DataPtr kfobject, const KFMsg::PBObject* pbobject )
+    void KFEntityEx::SyncAddDataFromServer( DataPtr object_data, const KFMsg::PBObject* proto_object )
     {
         // 对象
         {
-            auto pbchild = &pbobject->pbobject();
+            auto pbchild = &proto_object->proto_object();
             for ( auto iter = pbchild->begin(); iter != pbchild->end(); ++iter )
             {
-                auto kfdata = kfobject->Find( iter->first );
+                auto kfdata = object_data->Find( iter->first );
                 if ( kfdata == nullptr )
                 {
                     continue;
@@ -1936,10 +1936,10 @@ namespace KFrame
 
         // 集合
         {
-            auto pbchild = &pbobject->pbrecord();
+            auto pbchild = &proto_object->pbrecord();
             for ( auto iter = pbchild->begin(); iter != pbchild->end(); ++iter )
             {
-                auto kfdata = kfobject->Find( iter->first );
+                auto kfdata = object_data->Find( iter->first );
                 if ( kfdata == nullptr )
                 {
                     continue;
@@ -1952,7 +1952,7 @@ namespace KFrame
 
     void KFEntityEx::SyncAddRecordFormServer( DataPtr kfrecord, const KFMsg::PBRecord* pbrecord )
     {
-        auto pbchild = &pbrecord->pbobject();
+        auto pbchild = &pbrecord->proto_object();
         for ( auto iter = pbchild->begin(); iter != pbchild->end(); ++iter )
         {
             auto kfdata = CreateData( kfrecord );
@@ -1968,14 +1968,14 @@ namespace KFrame
         }
     }
 
-    void KFEntityEx::SyncRemoveDataFromServer( DataPtr kfobject, const KFMsg::PBObject* pbobject )
+    void KFEntityEx::SyncRemoveDataFromServer( DataPtr object_data, const KFMsg::PBObject* proto_object )
     {
         // object
         {
-            auto pbchild = &pbobject->pbobject();
+            auto pbchild = &proto_object->proto_object();
             for ( auto iter = pbchild->begin(); iter != pbchild->end(); ++iter )
             {
-                auto kfdata = kfobject->Find( iter->first );
+                auto kfdata = object_data->Find( iter->first );
                 if ( kfdata != nullptr )
                 {
                     SyncRemoveDataFromServer( kfdata, &iter->second );
@@ -1985,16 +1985,16 @@ namespace KFrame
 
         // record
         {
-            auto pbchild = &pbobject->pbrecord();
+            auto pbchild = &proto_object->pbrecord();
             for ( auto iter = pbchild->begin(); iter != pbchild->end(); ++iter )
             {
-                auto kfrecord = kfobject->Find( iter->first );
+                auto kfrecord = object_data->Find( iter->first );
                 if ( kfrecord == nullptr )
                 {
                     continue;
                 }
 
-                auto pbchildobject = &iter->second.pbobject();
+                auto pbchildobject = &iter->second.proto_object();
                 for ( auto citer = pbchildobject->begin(); citer != pbchildobject->end(); ++citer )
                 {
                     RemoveRecord( kfrecord, citer->first );
@@ -2013,10 +2013,10 @@ namespace KFrame
             return kffunction->CallEx<uint64>( this, id, maxvalue );
         }
 
-        auto kfobject = Find( name, id );
-        if ( kfobject != nullptr )
+        auto object_data = Find( name, id );
+        if ( object_data != nullptr )
         {
-            return kfobject->Get<uint64>( kfobject->_data_setting->_value_key_name );
+            return object_data->Get<uint64>( object_data->_data_setting->_value_key_name );
         }
 
         return _invalid_int;

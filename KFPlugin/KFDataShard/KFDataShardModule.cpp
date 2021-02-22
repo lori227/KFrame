@@ -121,7 +121,7 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFDataShardModule::LoadPlayerData( uint32 zone_id, uint64 playerid, KFMsg::PBObject* pbobject )
+    bool KFDataShardModule::LoadPlayerData( uint32 zone_id, uint64 playerid, KFMsg::PBObject* proto_object )
     {
         auto loadok = false;
         for ( auto& iter : _data_execute._objects )
@@ -143,7 +143,7 @@ namespace KFrame
             }
 
             // 反序列化数据
-            auto ok = KFProto::Parse( pbobject, kfresult->_value, dataexecute->_kf_setting->_compress_type, true );
+            auto ok = KFProto::Parse( proto_object, kfresult->_value, dataexecute->_kf_setting->_compress_type, true );
             if ( !ok )
             {
                 __LOG_ERROR__( "database=[{}] player[{}:{}] parse failed", dataexecute->_kf_setting->_id, zone_id, playerid );
@@ -159,13 +159,13 @@ namespace KFrame
         return loadok;
     }
 
-    bool KFDataShardModule::SavePlayerData( uint32 zone_id, uint64 playerid, const KFMsg::PBObject* pbobject, uint32 saveflag )
+    bool KFDataShardModule::SavePlayerData( uint32 zone_id, uint64 playerid, const KFMsg::PBObject* proto_object, uint32 saveflag )
     {
         // 保存数据
         for ( auto& iter : _data_execute._objects )
         {
             auto dataexecute = iter.second;
-            dataexecute->SavePlayerData( zone_id, playerid, pbobject, saveflag );
+            dataexecute->SavePlayerData( zone_id, playerid, proto_object, saveflag );
         }
 
         return true;

@@ -631,7 +631,7 @@ namespace KFrame
 
     void KFRelationClientModule::AddFriendLiness( KFEntity* player, uint64 friendid, uint32 type, uint32 value )
     {
-        //auto kfobject = player->GetData();
+        //auto object_data = player->GetData();
         //auto kffriend = player->Find( __STRING__( friend ), friendid );
         //if ( kffriend == nullptr )
         //{
@@ -711,7 +711,7 @@ namespace KFrame
     //        __ADD_PB_STRING__( __STRING__( time ), __TO_STRING__( KFGlobal::Instance()->_real_time ) );
     //
     //        // 其他战斗数据属性
-    //        auto kfobject = player->GetData();
+    //        auto object_data = player->GetData();
     //        auto kfrecentrecord = player->Find( __STRING__( recentplayer ) );
     //        auto kfclasssetting = kfrecentrecord->GetClassSetting();
     //        for ( auto i = 0; i < pbscore->pbdata_size(); ++i )
@@ -743,7 +743,7 @@ namespace KFrame
     //    {
     //        __SERVER_PROTO_PARSE__( KFMsg::S2SQueryRecentListAck );
     //
-    //        auto kfobject = player->GetData();
+    //        auto object_data = player->GetData();
     //        auto kfrecentplayer = player->Find( __STRING__( recentplayer ) );
     //
     //        for ( auto i = 0; i < kfmsg->pbrelation_size(); ++i )

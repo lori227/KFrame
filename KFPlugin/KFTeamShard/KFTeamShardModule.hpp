@@ -54,13 +54,13 @@ namespace KFrame
         void SendJoinTeamToMember( KFEntity* kfteam, DataPtr kfmember );
 
         // 同步更新属性到客户端
-        void SendTeamUpdateDataToMember( KFEntity* kfteam, KFMsg::PBObject& pbobject );
+        void SendTeamUpdateDataToMember( KFEntity* kfteam, KFMsg::PBObject& proto_object );
 
         // 同步添加属性到客户端
-        void SendTeamAddDataToMember( KFEntity* kfteam, KFMsg::PBObject& pbobject );
+        void SendTeamAddDataToMember( KFEntity* kfteam, KFMsg::PBObject& proto_object );
 
         // 同步删除属性到客户端
-        void SendTeamRemoveDataToMember( KFEntity* kfteam, KFMsg::PBObject& pbobject );
+        void SendTeamRemoveDataToMember( KFEntity* kfteam, KFMsg::PBObject& proto_object );
 
         // 删除队员
         void RemoveTeamMember( KFEntity* kfteam, uint64 memberid );

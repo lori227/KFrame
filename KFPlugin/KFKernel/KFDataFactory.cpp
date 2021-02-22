@@ -241,23 +241,23 @@ namespace KFrame
         }
     }
 
-    void KFDataFactory::InitArray( DataPtr kfarray, uint32 size )
+    void KFDataFactory::InitArray( DataPtr array_data, uint32 size )
     {
         size += KFGlobal::Instance()->_array_index;
-        kfarray->Resize( size );
+        array_data->Resize( size );
         for ( auto i = KFGlobal::Instance()->_array_index; i < size; ++i )
         {
-            auto kfarraydata = Create( kfarray->_data_setting->_contain_class );
-            kfarraydata->Initialize( kfarray->_data_setting );
-            kfarray->Add( i, kfarraydata );
+            auto kfarraydata = Create( array_data->_data_setting->_contain_class );
+            kfarraydata->Initialize( array_data->_data_setting );
+            array_data->Add( i, kfarraydata );
         }
     }
 
-    DataPtr KFDataFactory::AddArray( DataPtr kfarray )
+    DataPtr KFDataFactory::AddArray( DataPtr array_data )
     {
-        auto kfarraydata = Create( kfarray->_data_setting->_contain_class );
-        kfarraydata->Initialize( kfarray->_data_setting );
-        kfarray->Add( kfarray->MaxSize(), kfarraydata );
+        auto kfarraydata = Create( array_data->_data_setting->_contain_class );
+        kfarraydata->Initialize( array_data->_data_setting );
+        array_data->Add( array_data->MaxSize(), kfarraydata );
         return kfarraydata;
     }
 

@@ -70,7 +70,7 @@ namespace KFrame
         auto zonedatalist = _kf_dir_database->QueryZoneList( flag );
 
         __JSON_OBJECT_DOCUMENT__( response );
-        __JSON_ARRAY__( kfarray );
+        __JSON_ARRAY__( array_data );
         for ( auto& zonedata : zonedatalist )
         {
             __JSON_OBJECT__( kfzone );
@@ -78,9 +78,9 @@ namespace KFrame
             __JSON_SET_VALUE__( kfzone, __STRING__( name ), zonedata[ __STRING__( name ) ] );
             __JSON_SET_VALUE__( kfzone, __STRING__( ip ), zonedata[ __STRING__( ip ) ] );
             __JSON_SET_VALUE__( kfzone, __STRING__( port ), __TO_UINT32__( zonedata[ __STRING__( port ) ] ) );
-            __JSON_ADD_VALUE__( kfarray, kfzone );
+            __JSON_ADD_VALUE__( array_data, kfzone );
         }
-        __JSON_SET_VALUE__( response, __STRING__( zonelist ), kfarray );
+        __JSON_SET_VALUE__( response, __STRING__( zonelist ), array_data );
         return _kf_http_server->SendResponse( response );
     }
 
@@ -151,14 +151,14 @@ namespace KFrame
         auto masterdatalist = _kf_dir_database->QueryMasterList( request );
 
         __JSON_OBJECT_DOCUMENT__( response );
-        __JSON_ARRAY__( kfarray );
+        __JSON_ARRAY__( array_data );
         for ( auto& masterdata : masterdatalist )
         {
             __JSON_OBJECT__( masterjson );
             __JSON_FROM_MAP__( masterjson, masterdata );
-            __JSON_ADD_VALUE__( kfarray, masterjson );
+            __JSON_ADD_VALUE__( array_data, masterjson );
         }
-        __JSON_SET_VALUE__( response, __STRING__( masterlist ), kfarray );
+        __JSON_SET_VALUE__( response, __STRING__( masterlist ), array_data );
         return _kf_http_server->SendResponse( response );
     }
 }

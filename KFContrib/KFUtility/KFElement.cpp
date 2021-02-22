@@ -191,10 +191,10 @@ namespace KFrame
         _result.clear();
 
         __JSON_OBJECT_DOCUMENT__( kfjson );
-        __JSON_OBJECT__( kfobject );
+        __JSON_OBJECT__( object_data );
         if ( _config_id != _invalid_int )
         {
-            __JSON_SET_VALUE__( kfobject, __STRING__( id ), _config_id );
+            __JSON_SET_VALUE__( object_data, __STRING__( id ), _config_id );
         }
 
         for ( auto& iter : _values._objects )
@@ -203,10 +203,10 @@ namespace KFrame
             switch ( value_object->_type )
             {
             case KFDataDefine::DataTypeUInt32:
-                __JSON_SET_VALUE__( kfobject, iter.first, value_object->GetUseValue() );
+                __JSON_SET_VALUE__( object_data, iter.first, value_object->GetUseValue() );
                 break;
             case KFDataDefine::DataTypeString:
-                __JSON_SET_VALUE__( kfobject, iter.first, value_object->GetValue() );
+                __JSON_SET_VALUE__( object_data, iter.first, value_object->GetValue() );
                 break;
             case KFDataDefine::DataTypeObject:
             {
@@ -225,12 +225,12 @@ namespace KFrame
                         break;
                     }
                 }
-                __JSON_SET_VALUE__( kfobject, iter.first, kfchild );
+                __JSON_SET_VALUE__( object_data, iter.first, kfchild );
             }
             }
         }
 
-        __JSON_SET_VALUE__( kfjson, _data_name, kfobject );
+        __JSON_SET_VALUE__( kfjson, _data_name, object_data );
         _result = __JSON_SERIALIZE__( kfjson );
         return _result;
     }
@@ -377,9 +377,9 @@ namespace KFrame
             {
                 auto value = static_cast< uint64 >( element_value->_value->GetUseValue() * multiple );
 
-                __JSON_OBJECT__( kfobject );
-                __JSON_SET_VALUE__( kfobject, element->_data_name, __TO_STRING__( value ) );
-                __JSON_ADD_VALUE__( kfjson, kfobject );
+                __JSON_OBJECT__( object_data );
+                __JSON_SET_VALUE__( object_data, element->_data_name, __TO_STRING__( value ) );
+                __JSON_ADD_VALUE__( kfjson, object_data );
             }
         }
 

@@ -30,10 +30,10 @@ namespace KFrame
         void InitCreateData( DataPtr kfdata, const KFDataSetting* datasetting );
 
         // 初始化数组
-        void InitArray( DataPtr kfarray, uint32 size );
+        void InitArray( DataPtr array_data, uint32 size );
 
         // 添加数组元素
-        DataPtr AddArray( DataPtr kfarray );
+        DataPtr AddArray( DataPtr array_data );
 
         ////////////////////////////////////////////////////////////////////////////////////
         // 对象池

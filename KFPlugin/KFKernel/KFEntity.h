@@ -25,11 +25,11 @@ namespace KFrame
         virtual DataPtr CreateData( DataPtr kfdata ) = 0;
         virtual DataPtr CreateData( const std::string& data_name ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // 初始化数组( kfarray )
-        virtual void InitArray( DataPtr kfarray, uint32 size ) = 0;
+        // 初始化数组( array_data )
+        virtual void InitArray( DataPtr array_data, uint32 size ) = 0;
 
-        // 添加数组元素( kfarray )
-        virtual DataPtr AddArray( DataPtr kfarray, int64 value ) = 0;
+        // 添加数组元素( array_data )
+        virtual DataPtr AddArray( DataPtr array_data, int64 value ) = 0;
 
         // array 添加数组
         virtual void AddArray( DataPtr kfdata, const UInt32Set& inlist ) = 0;
@@ -93,10 +93,10 @@ namespace KFrame
         virtual uint64 UpdateRecord( DataPtr kfparent, uint64 key, const std::string& data_name, uint32 operate, uint64 value, bool callback = true ) = 0;
 
         // 更新array属性kfdata的index值
-        virtual uint64 UpdateArray( DataPtr kfarray, uint64 index, uint32 operate, uint64 value, bool callback = true ) = 0;
+        virtual uint64 UpdateArray( DataPtr array_data, uint64 index, uint32 operate, uint64 value, bool callback = true ) = 0;
         virtual uint64 UpdateArray( const std::string& data_name, uint64 index, uint32 operate, uint64 value, bool callback = true ) = 0;
 
-        virtual uint64 UpdateObjectArray( uint64 key, DataPtr kfarray, uint64 index, uint32 operate, uint64 value, bool callback = true ) = 0;
+        virtual uint64 UpdateObjectArray( uint64 key, DataPtr array_data, uint64 index, uint32 operate, uint64 value, bool callback = true ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 判断是否能够添加元数据
@@ -141,9 +141,9 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 同步来自服务器的数据 更新, 添加, 删除
-        virtual void SyncUpdateDataFromServer( DataPtr kfobject, const KFMsg::PBObject* pbobject ) = 0;
-        virtual void SyncAddDataFromServer( DataPtr kfobject, const KFMsg::PBObject* pbobject ) = 0;
-        virtual void SyncRemoveDataFromServer( DataPtr kfobject, const KFMsg::PBObject* pbobject ) = 0;
+        virtual void SyncUpdateDataFromServer( DataPtr object_data, const KFMsg::PBObject* proto_object ) = 0;
+        virtual void SyncAddDataFromServer( DataPtr object_data, const KFMsg::PBObject* proto_object ) = 0;
+        virtual void SyncRemoveDataFromServer( DataPtr object_data, const KFMsg::PBObject* proto_object ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

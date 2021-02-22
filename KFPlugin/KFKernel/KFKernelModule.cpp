@@ -97,106 +97,106 @@ namespace KFrame
 
     KFMsg::PBObject* KFKernelModule::SerializeObject( DataPtr kfdata, uint32 datamask, bool online, uint32 delaytime )
     {
-        static KFMsg::PBObject pbobject;
-        pbobject.Clear();
+        static KFMsg::PBObject proto_object;
+        proto_object.Clear();
 
-        SaveToEntity( kfdata, &pbobject, datamask, online, delaytime );
-        return &pbobject;
+        SaveToEntity( kfdata, &proto_object, datamask, online, delaytime );
+        return &proto_object;
     }
 
-#define __COPY_FROM_PROTO__( kfdata, proto, pbdata ) \
+#define __COPY_FROM_PROTO__( data, proto, pbdata ) \
     {\
-        auto pbdata = &(proto->pbdata());\
-        for ( auto iter = pbdata->begin(); iter != pbdata->end(); ++iter )\
+        auto proto_data = &(proto->pbdata());\
+        for ( auto iter = proto_data->begin(); iter != proto_data->end(); ++iter )\
         {\
-            auto kfchild = kfdata->Find( iter->first );\
-            if ( kfchild != nullptr )\
+            auto child = data->Find( iter->first );\
+            if ( child != nullptr )\
             {\
-                kfchild->Set( iter->second );\
+                child->Set( iter->second );\
             }\
             else\
             {\
-                __LOG_CRITICAL__( "playerdata parent=[{}] not data=[{}]", kfdata->_data_setting->_name, iter->first);\
+                __LOG_CRITICAL__( "playerdata parent=[{}] not data=[{}]", data->_data_setting->_name, iter->first);\
             }\
         }\
     }\
 
-    void KFKernelModule::CopyFromObject( DataPtr kfdata, const KFMsg::PBObject* proto )
+    void KFKernelModule::CopyFromObject( DataPtr parent_data, const KFMsg::PBObject* proto )
     {
         // int32
-        __COPY_FROM_PROTO__( kfdata, proto, pbint32 );
+        __COPY_FROM_PROTO__( parent_data, proto, pbint32 );
 
         // uint32
-        __COPY_FROM_PROTO__( kfdata, proto, pbuint32 );
+        __COPY_FROM_PROTO__( parent_data, proto, pbuint32 );
 
         // int64
-        __COPY_FROM_PROTO__( kfdata, proto, pbint64 );
+        __COPY_FROM_PROTO__( parent_data, proto, pbint64 );
 
         // uint64
-        __COPY_FROM_PROTO__( kfdata, proto, pbuint64 );
+        __COPY_FROM_PROTO__( parent_data, proto, proto_uint64 );
 
         // double
-        __COPY_FROM_PROTO__( kfdata, proto, pbdouble );
+        __COPY_FROM_PROTO__( parent_data, proto, pbdouble );
 
         // string
-        __COPY_FROM_PROTO__( kfdata, proto, pbstring );
+        __COPY_FROM_PROTO__( parent_data, proto, pbstring );
 
-        // kfarray
-        auto pbarray = &proto->pbarray();
-        for ( auto iter = pbarray->begin(); iter != pbarray->end(); ++iter )
+        // array_data
+        auto proto_array = &proto->pbarray();
+        for ( auto iter = proto_array->begin(); iter != proto_array->end(); ++iter )
         {
-            auto kfarray = kfdata->Find( iter->first );
-            if ( kfarray == nullptr )
+            auto array_data = parent_data->Find( iter->first );
+            if ( array_data == nullptr )
             {
-                __LOG_CRITICAL__( "playerdata parent=[{}] not array=[{}]", kfdata->_data_setting->_name, iter->first );
+                __LOG_CRITICAL__( "playerdata parent=[{}] not array=[{}]", parent_data->_data_setting->_name, iter->first );
                 continue;
             }
 
             // 数组列表
-            auto pbuint64 = &iter->second.pbuint64();
-            for ( auto citer = pbuint64->begin(); citer != pbuint64->end(); ++citer )
+            auto proto_uint64 = &iter->second.pbuint64();
+            for ( auto citer = proto_uint64->begin(); citer != proto_uint64->end(); ++citer )
             {
-                auto kfchild = kfarray->Find( citer->first );
-                if ( kfchild == nullptr )
+                auto child_data = array_data->Find( citer->first );
+                if ( child_data == nullptr )
                 {
-                    kfchild = KFDataFactory::Instance()->AddArray( kfarray );
+                    child_data = KFDataFactory::Instance()->AddArray( array_data );
                 }
-                kfchild->Set<int64>( citer->second );
+                child_data->Set( citer->second );
             }
         }
 
-        // kfobject
-        auto pbobject = &proto->pbobject();
-        for ( auto iter = pbobject->begin(); iter != pbobject->end(); ++iter )
+        // object_data
+        auto proto_object = &proto->pbobject();
+        for ( auto iter = proto_object->begin(); iter != proto_object->end(); ++iter )
         {
-            auto kfobject = kfdata->Find( iter->first );
-            if ( kfobject == nullptr )
+            auto object_data = parent_data->Find( iter->first );
+            if ( object_data == nullptr )
             {
-                __LOG_CRITICAL__( "playerdata parent=[{}] not object=[{}]", kfdata->_data_setting->_name, iter->first );
+                __LOG_CRITICAL__( "playerdata parent=[{}] not object=[{}]", parent_data->_data_setting->_name, iter->first );
                 continue;
             }
 
-            CopyFromObject( kfobject, &iter->second );
+            CopyFromObject( object_data, &iter->second );
         }
 
         // kfrecord
-        auto pbrecord = &proto->pbrecord();
-        for ( auto iter = pbrecord->begin(); iter != pbrecord->end(); ++iter )
+        auto proto_record = &proto->pbrecord();
+        for ( auto iter = proto_record->begin(); iter != proto_record->end(); ++iter )
         {
-            auto kfrecord = kfdata->Find( iter->first );
-            if ( kfrecord == nullptr )
+            auto record_data = parent_data->Find( iter->first );
+            if ( record_data == nullptr )
             {
-                __LOG_CRITICAL__( "playerdata parent=[{}] not record=[{}]", kfdata->_data_setting->_name, iter->first );
+                __LOG_CRITICAL__( "playerdata parent=[{}] not record=[{}]", parent_data->_data_setting->_name, iter->first );
                 continue;
             }
 
             // 对象列表
-            auto pbobject = &( iter->second.pbobject() );
-            for ( auto citer = pbobject->begin(); citer != pbobject->end(); ++citer )
+            auto proto_object = &( iter->second.pbobject() );
+            for ( auto citer = proto_object->begin(); citer != proto_object->end(); ++citer )
             {
-                auto kfobject = KFDataFactory::Instance()->CreateData( kfrecord->_data_setting, false );
-                CopyFromObject( kfobject, &citer->second );
-                kfrecord->Add( citer->first, kfobject );
+                auto object_data = KFDataFactory::Instance()->CreateData( record_data->_data_setting, false );
+                CopyFromObject( object_data, &citer->second );
+                object_data->Add( citer->first, object_data );
             }
         }
     }
@@ -238,7 +238,7 @@ case datatype:\
                 __SAVE_TO_PROTO__( KFDataDefine::DataTypeInt32, pbint32, int32 );
                 __SAVE_TO_PROTO__( KFDataDefine::DataTypeUInt32, pbuint32, uint32 );
                 __SAVE_TO_PROTO__( KFDataDefine::DataTypeInt64, pbint64, int64 );
-                __SAVE_TO_PROTO__( KFDataDefine::DataTypeUInt64, pbuint64, uint64 );
+                __SAVE_TO_PROTO__( KFDataDefine::DataTypeUInt64, proto_uint64, uint64 );
                 __SAVE_TO_PROTO__( KFDataDefine::DataTypeDouble, pbdouble, double );
                 __SAVE_TO_PROTO__( KFDataDefine::DataTypeString, pbstring, std::string );
 
@@ -259,17 +259,17 @@ case datatype:\
             }
             case KFDataDefine::DataTypeObject:
             {
-                auto& pbobject = ( *proto->mutable_pbobject() )[ datasetting->_name ];
-                SaveToObject( kfchild, &pbobject, datamask );
+                auto& proto_object = ( *proto->mutable_pbobject() )[ datasetting->_name ];
+                SaveToObject( kfchild, &proto_object, datamask );
                 break;
             }
             case KFDataDefine::DataTypeRecord:
             {
                 auto& pbrecord = ( *proto->mutable_pbrecord() )[ datasetting->_name ];
-                for ( auto kfobject = kfchild->First(); kfobject != nullptr; kfobject = kfchild->Next() )
+                for ( auto object_data = kfchild->First(); object_data != nullptr; object_data = kfchild->Next() )
                 {
-                    auto& pbobject = ( *pbrecord.mutable_pbobject() )[ kfobject->GetKeyID() ];
-                    SaveToObject( kfobject, &pbobject, datamask );
+                    auto& proto_object = ( *pbrecord.mutable_pbobject() )[ object_data->GetKeyID() ];
+                    SaveToObject( object_data, &proto_object, datamask );
                 }
                 break;
             }

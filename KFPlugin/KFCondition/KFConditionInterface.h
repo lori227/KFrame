@@ -9,7 +9,7 @@ namespace KFrame
     {
     public:
         // 判断静态配置条件
-        virtual bool CheckStaticCondition( DataPtr kfobject, const StaticConditionsPtr& kfconditions ) = 0;
+        virtual bool CheckStaticCondition( DataPtr object_data, const StaticConditionsPtr& kfconditions ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////
         // 初始化条件
         virtual void AddCondition( KFEntity* kfentity, DataPtr kfconditionobject, const DynamicConditionGroupPtr& conditiongroup ) = 0;

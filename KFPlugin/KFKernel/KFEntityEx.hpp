@@ -46,11 +46,11 @@ namespace KFrame
         virtual DataPtr CreateData( DataPtr kfdata );
         virtual DataPtr CreateData( const std::string& data_name );
         //////////////////////////////////////////////////////////////////////////////////////////
-        // 初始化数组( kfarray )
-        virtual void InitArray( DataPtr kfarray, uint32 size );
+        // 初始化数组( array_data )
+        virtual void InitArray( DataPtr array_data, uint32 size );
 
-        // 添加数组元素( kfarray )
-        virtual DataPtr AddArray( DataPtr kfarray, int64 value );
+        // 添加数组元素( array_data )
+        virtual DataPtr AddArray( DataPtr array_data, int64 value );
 
         // array 添加数组
         virtual void AddArray( DataPtr kfdata, const UInt32Set& inlist );
@@ -120,10 +120,10 @@ namespace KFrame
 
         // 更新array属性
         // kfdata的index值
-        virtual uint64 UpdateArray( DataPtr kfarray, uint64 index, uint32 operate, uint64 value, bool callback = true );
+        virtual uint64 UpdateArray( DataPtr array_data, uint64 index, uint32 operate, uint64 value, bool callback = true );
         virtual uint64 UpdateArray( const std::string& data_name, uint64 index, uint32 operate, uint64 value, bool callback = true );
 
-        virtual uint64 UpdateObjectArray( uint64 key, DataPtr kfarray, uint64 index, uint32 operate, uint64 value, bool callback = true );
+        virtual uint64 UpdateObjectArray( uint64 key, DataPtr array_data, uint64 index, uint32 operate, uint64 value, bool callback = true );
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
         // 判断是否能够添加元数据
@@ -170,9 +170,9 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
         // 同步来自服务器的数据 更新, 添加, 删除
-        virtual void SyncUpdateDataFromServer( DataPtr kfobject, const KFMsg::PBObject* pbobject );
-        virtual void SyncAddDataFromServer( DataPtr kfobject, const KFMsg::PBObject* pbobject );
-        virtual void SyncRemoveDataFromServer( DataPtr kfobject, const KFMsg::PBObject* pbobject );
+        virtual void SyncUpdateDataFromServer( DataPtr object_data, const KFMsg::PBObject* proto_object );
+        virtual void SyncAddDataFromServer( DataPtr object_data, const KFMsg::PBObject* proto_object );
+        virtual void SyncRemoveDataFromServer( DataPtr object_data, const KFMsg::PBObject* proto_object );
 
         // 添加集合
         void SyncAddRecordFormServer( DataPtr kfrecord, const KFMsg::PBRecord* pbrecord );
@@ -241,7 +241,7 @@ namespace KFrame
     protected:
 
         // 添加属性到pb中
-        void AddSyncUpdateDataToPBObject( DataPtr kfdata, KFMsg::PBObject* pbobject );
+        void AddSyncUpdateDataToPBObject( DataPtr kfdata, KFMsg::PBObject* proto_object );
 
         // 发送显示奖励
         void SendShowElementToClient();

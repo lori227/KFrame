@@ -25,7 +25,7 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 判断属性条件
-        virtual bool CheckStaticCondition( DataPtr kfobject, const StaticConditionsPtr& kfconditions );
+        virtual bool CheckStaticCondition( DataPtr object_data, const StaticConditionsPtr& kfconditions );
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 初始化条件
@@ -51,16 +51,16 @@ namespace KFrame
 
     protected:
         // 判断属性条件
-        bool CheckStaticCondition( DataPtr kfobject, const KFStaticCondition* kfcondition );
+        bool CheckStaticCondition( DataPtr object_data, const KFStaticCondition* kfcondition );
 
         // 计算条件表达式
-        uint32 CalcExpression( DataPtr kfobject, const KFStaticConditionExpression* kfexpression );
+        uint32 CalcExpression( DataPtr object_data, const KFStaticConditionExpression* kfexpression );
 
         // 计算属性值
-        uint32 CalcConditionData( DataPtr kfobject, const KFStaticConditionAbstract* kfconditiondata );
+        uint32 CalcConditionData( DataPtr object_data, const KFStaticConditionAbstract* kfconditiondata );
 
         // 判断限制条件
-        bool CheckStaticConditionLimit( DataPtr kfobject, const KFConditionSetting* kfsetting );
+        bool CheckStaticConditionLimit( DataPtr object_data, const KFConditionSetting* kfsetting );
 
         // 计算触发值
         bool CalcTriggerUpdateValue( const ConditionTrigger* trigger, uint64 operate, uint64& operate_value, uint64 nowvalue );

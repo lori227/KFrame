@@ -52,7 +52,7 @@ namespace KFrame
         }
     }
 
-    void KFDataExecute::SavePlayerData( uint32 zone_id, uint64 playerid, const KFMsg::PBObject* pbobject, uint32 saveflag )
+    void KFDataExecute::SavePlayerData( uint32 zone_id, uint64 playerid, const KFMsg::PBObject* proto_object, uint32 saveflag )
     {
         // 没有保存标记
         if ( !KFUtility::HaveBitMask( _kf_setting->_save_flag, saveflag ) )
@@ -60,7 +60,7 @@ namespace KFrame
             return;
         }
 
-        auto playerdata = KFProto::Serialize( pbobject, _kf_setting->_compress_type, _kf_setting->_compress_level, true );
+        auto playerdata = KFProto::Serialize( proto_object, _kf_setting->_compress_type, _kf_setting->_compress_level, true );
         if ( playerdata == _invalid_string )
         {
             return __LOG_ERROR__( "player[{}:{}] serialize failed", zone_id, playerid );

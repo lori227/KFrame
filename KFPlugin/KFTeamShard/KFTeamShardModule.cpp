@@ -88,27 +88,27 @@ namespace KFrame
         _kf_route->RemoveObject( teamuuid );
     }
 
-    void KFTeamShardModule::SendTeamUpdateDataToMember( KFEntity* kfteam, KFMsg::PBObject& pbobject )
+    void KFTeamShardModule::SendTeamUpdateDataToMember( KFEntity* kfteam, KFMsg::PBObject& proto_object )
     {
         KFMsg::S2SSyncUpdateDataFromServer sync;
         sync.set_dataname( __STRING__( team ) );
-        sync.mutable_pbdata()->Swap( &pbobject );
+        sync.mutable_pbdata()->Swap( &proto_object );
         SendMessageToTeam( kfteam, KFMsg::S2S_SYNC_UPDATE_DATA_FROM_SERVER, &sync );
     }
 
-    void KFTeamShardModule::SendTeamAddDataToMember( KFEntity* kfteam, KFMsg::PBObject& pbobject )
+    void KFTeamShardModule::SendTeamAddDataToMember( KFEntity* kfteam, KFMsg::PBObject& proto_object )
     {
         KFMsg::S2SSyncAddDataFromServer sync;
         sync.set_dataname( __STRING__( team ) );
-        sync.mutable_pbdata()->Swap( &pbobject );
+        sync.mutable_pbdata()->Swap( &proto_object );
         SendMessageToTeam( kfteam, KFMsg::S2S_SYNC_ADD_DATA_FROM_SERVER, &sync );
     }
 
-    void KFTeamShardModule::SendTeamRemoveDataToMember( KFEntity* kfteam, KFMsg::PBObject& pbobject )
+    void KFTeamShardModule::SendTeamRemoveDataToMember( KFEntity* kfteam, KFMsg::PBObject& proto_object )
     {
         KFMsg::S2SSyncRemoveDataFromServer sync;
         sync.set_dataname( __STRING__( team ) );
-        sync.mutable_pbdata()->Swap( &pbobject );
+        sync.mutable_pbdata()->Swap( &proto_object );
         SendMessageToTeam( kfteam, KFMsg::S2S_SYNC_REMOVE_DATA_FROM_SERVER, &sync );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////

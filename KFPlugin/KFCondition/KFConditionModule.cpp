@@ -20,7 +20,7 @@ namespace KFrame
         }\
     }\
 
-    bool KFConditionModule::CheckStaticCondition( DataPtr kfobject, const StaticConditionsPtr& kfconditions )
+    bool KFConditionModule::CheckStaticCondition( DataPtr object_data, const StaticConditionsPtr& kfconditions )
     {
         if ( !kfconditions->IsValid() )
         {
@@ -37,32 +37,32 @@ namespace KFrame
 
         // 取出第一个
         auto conditionindex = 0u;
-        auto result = CheckStaticCondition( kfobject, kfconditions->_condition_list[ conditionindex++ ] );
+        auto result = CheckStaticCondition( object_data, kfconditions->_condition_list[ conditionindex++ ] );
         for ( auto i = 0u; i < conditioncount && i < linkcount; ++i )
         {
             auto linktype = kfconditions->_link_type[ i ];
             __CHECK_CONDITION_RESULT__( linktype, result );
 
-            auto ok = CheckStaticCondition( kfobject, kfconditions->_condition_list[ conditionindex + i ] );
+            auto ok = CheckStaticCondition( object_data, kfconditions->_condition_list[ conditionindex + i ] );
             __CHECK_CONDITION_RESULT__( linktype, ok );
         }
 
         return result;
     }
 
-    bool KFConditionModule::CheckStaticCondition( DataPtr kfobject, const KFStaticCondition* kfcondition )
+    bool KFConditionModule::CheckStaticCondition( DataPtr object_data, const KFStaticCondition* kfcondition )
     {
         // 计算左值
-        auto leftvalue = CalcExpression( kfobject, kfcondition->_left );
+        auto leftvalue = CalcExpression( object_data, kfcondition->_left );
 
         // 计算右值
-        auto rightvalue = CalcExpression( kfobject, kfcondition->_right );
+        auto rightvalue = CalcExpression( object_data, kfcondition->_right );
 
         // 判断左有值
         return KFUtility::CheckOperate( leftvalue, kfcondition->_check_type, rightvalue );
     }
 
-    uint32 KFConditionModule::CalcExpression( DataPtr kfobject, const KFStaticConditionExpression* kfexpression )
+    uint32 KFConditionModule::CalcExpression( DataPtr object_data, const KFStaticConditionExpression* kfexpression )
     {
         if ( kfexpression->_data_list.empty() )
         {
@@ -74,18 +74,18 @@ namespace KFrame
 
         // 取出第一个
         auto dataindex = 0u;
-        auto result = CalcConditionData( kfobject, kfexpression->_data_list[ dataindex++ ] );
+        auto result = CalcConditionData( object_data, kfexpression->_data_list[ dataindex++ ] );
         for ( auto i = 0u; i < datacount && i < operatorcount; ++i )
         {
             auto operatortype = kfexpression->_operator_list[ i ];
-            auto value = CalcConditionData( kfobject, kfexpression->_data_list[ dataindex + i ] );
+            auto value = CalcConditionData( object_data, kfexpression->_data_list[ dataindex + i ] );
             result = KFUtility::Operate( result, operatortype, value );
         }
 
         return result;
     }
 
-    uint32 KFConditionModule::CalcConditionData( DataPtr kfobject, const KFStaticConditionAbstract* kfconditiondata )
+    uint32 KFConditionModule::CalcConditionData( DataPtr object_data, const KFStaticConditionAbstract* kfconditiondata )
     {
         auto result = 0u;
         if ( kfconditiondata->IsConstant() )
@@ -101,20 +101,20 @@ namespace KFrame
             {
                 if ( kfvariable->_data_id == 0u )
                 {
-                    result = kfobject->Get<uint32>( kfvariable->_parent_name, kfvariable->_data_name );
+                    result = object_data->Get<uint32>( kfvariable->_parent_name, kfvariable->_data_name );
                 }
                 else
                 {
-                    result = kfobject->Get<uint32>( kfvariable->_parent_name, kfvariable->_data_id, kfvariable->_data_name );
+                    result = object_data->Get<uint32>( kfvariable->_parent_name, kfvariable->_data_id, kfvariable->_data_name );
                 }
             }
             else if ( kfvariable->_data_id == 0u )
             {
-                result = kfobject->Get<uint32>( kfvariable->_data_name );
+                result = object_data->Get<uint32>( kfvariable->_data_name );
             }
             else
             {
-                result = kfobject->GetConfigValue( kfvariable->_data_name, kfvariable->_data_id );
+                result = object_data->GetConfigValue( kfvariable->_data_name, kfvariable->_data_id );
             }
         }
 
@@ -125,7 +125,7 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFConditionModule::CheckStaticConditionLimit( DataPtr kfobject, const KFConditionSetting* kfsetting )
+    bool KFConditionModule::CheckStaticConditionLimit( DataPtr object_data, const KFConditionSetting* kfsetting )
     {
         if ( kfsetting->_static_condition_limit->_conditions_list.empty() )
         {
@@ -135,7 +135,7 @@ namespace KFrame
         auto result = ( kfsetting->_static_condition_limit->_check_type == KFEnum::And ) ? true : false;
         for ( auto& limits : kfsetting->_static_condition_limit->_conditions_list )
         {
-            auto ok = CheckStaticCondition( kfobject, limits );
+            auto ok = CheckStaticCondition( object_data, limits );
             __CHECK_CONDITION_RESULT__( kfsetting->_static_condition_limit->_check_type, ok );
         }
         return result;
