@@ -18,13 +18,13 @@ namespace KFrame
     {
         for ( auto& iter : _int8_list )
         {
-            free( iter.second._buffer );
+            free( iter.second._data );
         }
         _int8_list.clear();
 
         for ( auto& iter : _uint8_list )
         {
-            free( iter.second._buffer );
+            free( iter.second._data );
         }
         _uint8_list.clear();
 
@@ -103,9 +103,9 @@ namespace KFrame
             iter = _log_data_list.insert( std::make_pair( name, MemoryLogData() ) ).first;
         }
 
-        auto logdata = &iter->second;
-        logdata->_count++;
-        logdata->_total_size += size;
+        auto log_data = &iter->second;
+        log_data->_count++;
+        log_data->_total_size += size;
     }
 
     void KFMalloc::RemoveLogMemory( const std::string& name, uint32 size )
@@ -116,9 +116,9 @@ namespace KFrame
             return;
         }
 
-        auto logdata = &iter->second;
-        logdata->_count--;
-        logdata->_total_size -= size;
+        auto log_data = &iter->second;
+        log_data->_count--;
+        log_data->_total_size -= size;
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -179,15 +179,15 @@ namespace KFrame
             iter = _int8_list.insert( std::make_pair( thread_id, KFThreadBuffer< int8 >() ) ).first;
         }
 
-        auto kfbuffer = &iter->second;
-        if ( kfbuffer->_length < length )
+        auto buffer = &iter->second;
+        if ( buffer->_length < length )
         {
-            kfbuffer->_length = length;
-            kfbuffer->_buffer = reinterpret_cast< int8* >( realloc( kfbuffer->_buffer, length ) );
+            buffer->_length = length;
+            buffer->_data = reinterpret_cast< int8* >( realloc( buffer->_data, length ) );
             __LOG_INFO__( "thread[{}] malloc int8[{}]", thread_id, length );
         }
 
-        return kfbuffer->_buffer;
+        return buffer->_data;
     }
 
     uint8* KFMalloc::GetUInt8( uint32 length, const char* function, uint32 line )
@@ -205,11 +205,11 @@ namespace KFrame
         if ( buffer->_length < length )
         {
             buffer->_length = length;
-            buffer->_buffer = reinterpret_cast< uint8* >( realloc( buffer->_buffer, length ) );
+            buffer->_data = reinterpret_cast<uint8*>( realloc( buffer->_data, length ) );
             __LOG_INFO__( "thread[{}] malloc uint8[{}]", thread_id, length );
         }
 
-        return buffer->_buffer;
+        return buffer->_data;
     }
 
     int8* KFMalloc::CreateShareMemory( const std::string& name, uint32 length )
@@ -220,7 +220,7 @@ namespace KFrame
         {
             KFShareMemory share_memory;
             share_memory._size = length;
-            share_memory._memory = new Poco::SharedMemory( name, length, Poco::SharedMemory::AM_WRITE );
+            share_memory._data = new Poco::SharedMemory( name, length, Poco::SharedMemory::AM_WRITE );
             iter = _share_memory_list.insert( std::make_pair( name, share_memory ) ).first;
         }
 
@@ -230,7 +230,7 @@ namespace KFrame
             __LOG_ERROR__( "share memory[{}] length[{} != {}] error", name, length );
         }
 
-        auto memory = reinterpret_cast< Poco::SharedMemory* >( share_memory->_memory );
+        auto memory = reinterpret_cast<Poco::SharedMemory*>( share_memory->_data );
         return memory->begin();
     }
 }

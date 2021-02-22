@@ -14,7 +14,7 @@ namespace KFrame
         // 析构函数
         virtual ~KFQueue()
         {
-            ClearObject();
+            Clear();
         }
 
         // 初始化队列
@@ -84,7 +84,7 @@ namespace KFrame
 
         // 添加元素
         // @object : 对象指针
-        bool PushObject( ObjectPtr object )
+        bool Push( ObjectPtr object )
         {
             if ( _extends.empty() )
             {
@@ -127,7 +127,7 @@ namespace KFrame
         }
 
         // 弹出元素
-        ObjectPtr PopObject()
+        ObjectPtr Pop()
         {
             auto object = _objects[ _pop_index ];
             if ( object != nullptr )
@@ -145,7 +145,7 @@ namespace KFrame
             return _objects[ _pop_index ];
         }
 
-        inline void ClearObject()
+        inline void Clear()
         {
             _pop_index = 0;
             _push_index = 0;

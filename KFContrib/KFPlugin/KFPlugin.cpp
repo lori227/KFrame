@@ -126,24 +126,23 @@ namespace KFrame
         _modules[ name ] = module;
     }
 
-    void KFPlugin::UnBindModule( const std::string& name, bool savedata )
+    void KFPlugin::UnBindModule( const std::string& name, bool save_data )
     {
         auto iter = _modules.find( name );
         if ( iter == _modules.end() )
         {
-            return ;
+            return;
         }
 
-        auto kfmodule = iter->second;
-        if ( savedata )
+        auto module = iter->second;
+        if ( save_data )
         {
-            kfmodule->SaveData();
-
-            kfmodule->BeforeShut();
-            kfmodule->ShutDown();
-            kfmodule->AfterShut();
+            module->SaveData();
         }
 
+        module->BeforeShut();
+        module->ShutDown();
+        module->AfterShut();
         _modules.erase( iter );
     }
 }

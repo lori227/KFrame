@@ -4,87 +4,87 @@
 #include "KFrame.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#define __KF_PLUGIN_ENRTY__( classname )\
-    KFrame::KFPlugin* DllPluginEntry( KFrame::KFPluginManage* pluginmanage, KFrame::KFGlobal* kfglobal, KFrame::KFMalloc* kfmalloc, KFrame::KFLogger* kflogger )\
+#define __KF_PLUGIN_ENTRY__( class_name )\
+    KFrame::KFPlugin* DllPluginEntry( KFrame::KFPluginManage* plugin_manage, KFrame::KFGlobal* global_data, KFrame::KFMalloc* malloc_data, KFrame::KFLogger* logger_data )\
     {\
-        KFrame::KFGlobal::Initialize( kfglobal );\
-        KFrame::KFMalloc::Initialize( kfmalloc );\
-        KFrame::KFLogger::Initialize( kflogger );\
-        return pluginmanage->RegistPlugin< classname >();\
+        KFrame::KFGlobal::Initialize( global_data );\
+        KFrame::KFMalloc::Initialize( malloc_data );\
+        KFrame::KFLogger::Initialize( logger_data );\
+        return plugin_manage->RegisterPlugin<class_name>();\
     }\
 
-#define __KF_PLUGIN_LEAVE__( classname ) \
-    void DllPluginLeave( KFrame::KFPluginManage* pluginmanage, bool savedata )\
+#define __KF_PLUGIN_LEAVE__( class_name ) \
+    void DllPluginLeave( KFrame::KFPluginManage* plugin_manage, bool save_data )\
     {\
-        pluginmanage->UnRegistPlugin< classname >( savedata );\
+        plugin_manage->UnRegisterPlugin<class_name>( save_data );\
     }\
 
 #if __KF_SYSTEM__ == __KF_WIN__
-#define __CHECK_PLUGIN_FUNCTION__( module, function )\
-    std::string basename = typeid( &KFModule::function ).name();\
-    std::string child_name = typeid( &module::function ).name();\
-    if ( basename != child_name )\
+#define __CHECK_PLUGIN_FUNCTION__( module_name, function )\
+    std::string base_function_name = typeid( &KFModule::function ).name();\
+    std::string child_function_name = typeid( &module_name::function ).name();\
+    if ( base_function_name != child_function_name )\
 
 #else
-#define __CHECK_PLUGIN_FUNCTION__( module, function )\
-    KFModule kfbase;\
-    void ( KFModule::*basemfp )() = &KFModule::function; \
-    auto bassaddress = ( void* )( kfbase.*basemfp ); \
-    void ( module::*childmfp )() = &module::function; \
-    auto childaddress = (void*)( kfmodule->*childmfp );\
-    if ( bassaddress != childaddress )\
+#define __CHECK_PLUGIN_FUNCTION__( module_name, function )\
+    KFModule base_module;\
+    void ( KFModule::*base_mfp )() = &KFModule::function; \
+    auto bass_address = ( void* )( kfbase.*base_mfp ); \
+    void ( module_name::*child_mfp )() = &module_name::function; \
+    auto child_address = (void*)( module->*child_mfp );\
+    if ( bass_address != child_address )\
 
 #endif
 
-#define __REGISTER_PLUGIN__( module, function )\
+#define __REGISTER_PLUGIN_FUNCTION__( module_name, function )\
     {\
-        __CHECK_PLUGIN_FUNCTION__( module, function )\
+        __CHECK_PLUGIN_FUNCTION__( module_name, function )\
         {   \
-            auto ok = _kf_plugin_manage->Register##function##Function< module >( _sort, kfmodule, &module::function );\
+            auto ok = _kf_plugin_manage->Register##function##Function<module_name>( _sort, module, &module_name::function );\
             if ( ok )\
             {\
-                __LOG_INFO__( "module=[{}] sort=[{}] function=[{}] register ok", #module, _sort, #function );\
+                __LOG_INFO__( "module=[{}] sort=[{}] function=[{}] register ok", #module_name, _sort, #function );\
             }\
             else\
             {\
-                __LOG_ERROR__( "module=[{}] sort=[{}] function=[{}] register failed", #module, _sort, #function );\
+                __LOG_ERROR__( "module=[{}] sort=[{}] function=[{}] register failed", #module_name, _sort, #function );\
             }\
         }\
     }
 
-#define __UN_PLUGIN_FUNCTION__( module, function )\
+#define __UN_PLUGIN_FUNCTION__( module_name, function )\
     {\
-        __CHECK_PLUGIN_FUNCTION__( module, function )\
+        __CHECK_PLUGIN_FUNCTION__( module_name, function )\
         {   \
             _kf_plugin_manage->UnRegister##function##Function( _sort );\
         }\
     }
 
 // 注册模块
-#define __REGISTER_MODULE__( modulename ) \
+#define __REGISTER_MODULE__( module_name ) \
     {\
-        auto kfmodule = __NEW_OBJECT__( modulename##Module ); \
-        kfmodule->_plugin_name = #modulename;\
-        _kf_plugin_manage->RegistModule < modulename##Interface >( this, kfmodule );\
-        __REGISTER_PLUGIN__( modulename##Module, Run );\
-        __REGISTER_PLUGIN__( modulename##Module, AfterRun );\
+        auto module = __NEW_OBJECT__( module_name##Module ); \
+        module->_plugin_name = #module_name;\
+        _kf_plugin_manage->RegisterModule<module_name##Interface>( this, module );\
+        __REGISTER_PLUGIN_FUNCTION__( module_name##Module, Run );\
+        __REGISTER_PLUGIN_FUNCTION__( module_name##Module, AfterRun );\
     }\
 
 // 卸载模块
-#define __UN_MODULE__( modulename ) \
+#define __UN_MODULE__( module_name ) \
     {\
-        auto kfmodule = (modulename##Module*)FindModule( typeid( modulename##Interface ).name());\
-        __UN_PLUGIN_FUNCTION__( modulename##Module, Run ); \
-        __UN_PLUGIN_FUNCTION__( modulename##Module, AfterRun );\
-        _kf_plugin_manage->UnRegistModule< modulename##Interface >( this, _save_data );\
-        __DELETE_OBJECT__( kfmodule );\
+        auto module = (module_name##Module*)FindModule( typeid( module_name##Interface ).name());\
+        __UN_PLUGIN_FUNCTION__( module_name##Module, Run ); \
+        __UN_PLUGIN_FUNCTION__( module_name##Module, AfterRun );\
+        _kf_plugin_manage->UnRegisterModule<module_name##Interface>( this, _save_data );\
+        __DELETE_OBJECT__( module );\
     }\
 
-#define __FIND_MODULE__( module, classname ) \
-    module = _kf_plugin_manage->FindModule< classname >( __FILE__, __LINE__ )
+#define __FIND_MODULE__( module, class_name ) \
+    module = _kf_plugin_manage->FindModule<class_name>( __FILE__, __LINE__ )
 
-#define __FIND_MODULE_NO_LOG__( module, classname ) \
-    module = _kf_plugin_manage->FindModule< classname >()
+#define __FIND_MODULE_NO_LOG__( module, class_name ) \
+    module = _kf_plugin_manage->FindModule<class_name>()
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 namespace KFrame
@@ -111,7 +111,7 @@ namespace KFrame
         bool InitPlugin();
 
         // 重新加载插件
-        void ReloadPlugin( KFPlugin* kfplugin );
+        void ReloadPlugin( KFPlugin* plugin );
 
         // 关闭
         void ShutDown();
@@ -129,39 +129,39 @@ namespace KFrame
         void AfterLoad();
 
         // 设置模块开关
-        void SetModuleOpen( const std::string& modulename, bool isopen );
+        void SetModuleOpen( const std::string& module_name, bool is_open );
         /////////////////////////////////////////////////////////////////////////
 
         // 注册插件
         template<class T>
-        T* RegistPlugin()
+        T* RegisterPlugin()
         {
             auto plugin = __NEW_OBJECT__( T );
-            return dynamic_cast<T*>( RegistPlugin( typeid( T ).name(), plugin ) );
+            return dynamic_cast<T*>( RegisterPlugin( typeid( T ).name(), plugin ) );
         }
 
         // 卸载插件
         template<class T>
-        void UnRegistPlugin( bool savedata )
+        void UnRegisterPlugin( bool save_data )
         {
             std::string name = typeid( T ).name();
-            UnRegistPlugin( name, savedata );
+            UnRegisterPlugin( name, save_data );
         }
 
         /////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////
         // 注册模块
         template< class InterfaceType >
-        void RegistModule( KFPlugin* plugin, InterfaceType* module )
+        void RegisterModule( KFPlugin* plugin, InterfaceType* module )
         {
             plugin->BindModule( typeid( InterfaceType ).name(), module );
         }
 
         // 卸载模块
         template< class InterfaceType >
-        void UnRegistModule( KFPlugin* plugin, bool savedata )
+        void UnRegisterModule( KFPlugin* plugin, bool save_data )
         {
-            plugin->UnBindModule( typeid( InterfaceType ).name(), savedata );
+            plugin->UnBindModule( typeid( InterfaceType ).name(), save_data );
         }
 
         // 查找模块
@@ -182,8 +182,8 @@ namespace KFrame
         template<class T>
         void RegisterCommandFunction( const std::string& command, T* module, void ( T::*handle )( const StringVector& ) )
         {
-            auto kffunction = _command_functions.Create( command );
-            kffunction->_function = std::bind( handle, module, std::placeholders::_1 );
+            auto function = _command_functions.Create( command );
+            function->SetFunction( module, std::bind( handle, module, std::placeholders::_1 ) );
         }
 
         void UnRegisterCommandFunction( const std::string& command )
@@ -195,15 +195,14 @@ namespace KFrame
         template<class T>
         bool RegisterRunFunction( uint32 sort, T* module, void ( T::*handle )() )
         {
-            auto kffunction = _run_functions.Find( sort );
-            if ( kffunction != nullptr )
+            auto function = _run_functions.Find( sort );
+            if ( function != nullptr )
             {
                 return false;
             }
 
-            kffunction = _run_functions.Create( sort );
-            kffunction->_module = module;
-            kffunction->_function = std::bind( handle, module );
+            function = _run_functions.Create( sort );
+            function->SetFunction( module, std::bind( handle, module ) );
             return true;
         }
 
@@ -216,15 +215,14 @@ namespace KFrame
         template<class T>
         bool RegisterAfterRunFunction( uint32 sort, T* module, void ( T::*handle )( ) )
         {
-            auto kffunction = _after_run_functions.Find( sort );
-            if ( kffunction != nullptr )
+            auto function = _after_run_functions.Find( sort );
+            if ( function != nullptr )
             {
                 return false;
             }
 
-            kffunction = _after_run_functions.Create( sort );
-            kffunction->_module = module;
-            kffunction->_function = std::bind( handle, module );
+            function = _after_run_functions.Create( sort );
+            function->SetFunction( module, std::bind( handle, module ) );
             return true;
         }
 
@@ -260,10 +258,10 @@ namespace KFrame
         void RunCommand();
         ////////////////////////////////////////////////////////////////////
         // 注册插件
-        KFPlugin* RegistPlugin( const std::string& name, KFPlugin* plugin );
+        KFPlugin* RegisterPlugin( const std::string& name, KFPlugin* plugin );
 
         // 卸载插件
-        void UnRegistPlugin( const std::string& name, bool savedata );
+        void UnRegisterPlugin( const std::string& name, bool save_data );
 
         // 查找插件
         KFPlugin* FindPlugin( const std::string& name );
@@ -273,16 +271,21 @@ namespace KFrame
         KFModule* FindModule( const std::string& name );
 
     protected:
+        // 正在初始化的插件
         KFPlugin* _init_plugin = nullptr;
-        std::vector< KFPlugin* > _plugins;
+
+        // 插件列表
+        std::vector<KFPlugin*> _plugins;
 
         // 命令列表
-        KFQueue< KFDebugCommand > _commands;
-        KFMapFunction< std::string, KFCmdFunction > _command_functions;
+        KFQueue<KFDebugCommand> _commands;
+
+        // 命令回调函数列表
+        KFMapFunction<std::string, KFCmdFunction> _command_functions;
 
         // 注册的Run函数
-        KFMapFunction< uint32, KFRunFunction > _run_functions;
-        KFMapFunction< uint32, KFRunFunction > _after_run_functions;
+        KFMapFunction<uint32, KFRunFunction> _run_functions;
+        KFMapFunction<uint32, KFRunFunction> _after_run_functions;
     };
 }
 

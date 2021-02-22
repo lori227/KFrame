@@ -64,7 +64,7 @@ namespace KFrame
             return _result;
         }
 
-    public:
+    private:
         // 执行函数
         T _function;
 

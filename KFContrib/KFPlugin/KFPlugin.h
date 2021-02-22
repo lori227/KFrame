@@ -52,21 +52,21 @@ namespace KFrame
         void BindModule( const std::string& name, KFModule* module );
 
         // 卸载模块
-        void UnBindModule( const std::string& name, bool savedata );
+        void UnBindModule( const std::string& name, bool save_data );
 
         // 查找模块
         KFModule* FindModule( const std::string& name );
 
     public:
         // 排序
-        uint32 _sort;
+        uint32 _sort = 0;
 
         // 配置文件
         std::string _param;
 
         // 绑定模块
         KFModule* _init_module = nullptr;
-        std::map< std::string, KFModule* > _modules;
+        std::map<std::string, KFModule*> _modules;
 
         // 是否需要保存数据
         bool _save_data = false;

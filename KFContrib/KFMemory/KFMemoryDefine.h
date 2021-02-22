@@ -12,7 +12,7 @@ namespace KFrame
         std::string _name;
 
         // 内存大小
-        uint32 _size{ 0 };
+        uint32 _size = 0;
     };
 
     // 内存日志数据
@@ -20,10 +20,10 @@ namespace KFrame
     {
     public:
         // 当前使用数量
-        uint32 _count{ 0 };
+        uint32 _count = 0;
 
         // 当前使用的总量
-        uint64 _total_size{ 0 };
+        uint64 _total_size = 0;
     };
 
     // 线程buffer
@@ -32,10 +32,10 @@ namespace KFrame
     {
     public:
         // 长度
-        uint32 _length{ 0 };
+        uint32 _length = 0;
 
         // 数据块
-        T* _buffer{ nullptr };
+        T* _data = nullptr;
     };
 
     // 共享内存
@@ -43,10 +43,10 @@ namespace KFrame
     {
     public:
         // 大小
-        uint32 _size{ 0 };
+        uint32 _size = 0;
 
         // 内存数据
-        void* _memory{ nullptr };
+        void* _data = nullptr;
     };
 }
 

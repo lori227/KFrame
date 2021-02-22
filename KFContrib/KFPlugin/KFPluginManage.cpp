@@ -16,9 +16,9 @@ namespace KFrame
         _plugins.clear();
     }
 
-    KFPlugin* KFPluginManage::RegistPlugin( const std::string& name, KFPlugin* plugin )
+    KFPlugin* KFPluginManage::RegisterPlugin( const std::string& name, KFPlugin* plugin )
     {
-        UnRegistPlugin( name, false );
+        UnRegisterPlugin( name, false );
 
         plugin->_class_name = name;
         plugin->_kf_plugin_manage = this;
@@ -26,14 +26,14 @@ namespace KFrame
         return plugin;
     }
 
-    void KFPluginManage::UnRegistPlugin( const std::string& name, bool savedata )
+    void KFPluginManage::UnRegisterPlugin( const std::string& name, bool save_data )
     {
         for ( auto iter = _plugins.begin(); iter != _plugins.end(); ++iter )
         {
             auto plugin = *iter;
             if ( plugin->_class_name == name )
             {
-                plugin->_save_data = savedata;
+                plugin->_save_data = save_data;
                 plugin->UnInstall();
 
                 __DELETE_OBJECT__( plugin );
@@ -72,76 +72,76 @@ namespace KFrame
 
     KFModule* KFPluginManage::FindModule( const std::string& name, const char* file, uint32 line )
     {
-        auto kfmodule = FindModule( name );
-        if ( kfmodule == nullptr )
+        auto module = FindModule( name );
+        if ( module == nullptr )
         {
             static std::string error = __FORMAT__( "[{}:{}] can't find [{}] module", file, line, name );
             throw std::runtime_error( error );
         }
 
-        return kfmodule;
+        return module;
     }
     ///////////////////////////////////////////////////////////////
     void KFPluginManage::LoadModule()
     {
-        for ( auto kfplugin : _plugins )
+        for ( auto plugin : _plugins )
         {
-            _init_plugin = kfplugin;
-            kfplugin->LoadModule();
+            _init_plugin = plugin;
+            plugin->LoadModule();
         }
     }
 
     void KFPluginManage::InitModule()
     {
-        for ( auto kfplugin : _plugins )
+        for ( auto plugin : _plugins )
         {
-            _init_plugin = kfplugin;
-            kfplugin->InitModule();
+            _init_plugin = plugin;
+            plugin->InitModule();
         }
     }
 
     void KFPluginManage::AddConfig()
     {
-        for ( auto kfplugin : _plugins )
+        for ( auto plugin : _plugins )
         {
-            _init_plugin = kfplugin;
-            kfplugin->AddConfig();
+            _init_plugin = plugin;
+            plugin->AddConfig();
         }
     }
 
     void KFPluginManage::LoadConfig()
     {
-        for ( auto kfplugin : _plugins )
+        for ( auto plugin : _plugins )
         {
-            _init_plugin = kfplugin;
-            kfplugin->LoadConfig();
+            _init_plugin = plugin;
+            plugin->LoadConfig();
         }
     }
 
     void KFPluginManage::AfterLoad()
     {
-        for ( auto kfplugin : _plugins )
+        for ( auto plugin : _plugins )
         {
-            _init_plugin = kfplugin;
-            kfplugin->AfterLoad();
+            _init_plugin = plugin;
+            plugin->AfterLoad();
         }
     }
 
     void KFPluginManage::BeforeRun()
     {
-        for ( auto kfplugin : _plugins )
+        for ( auto plugin : _plugins )
         {
-            _init_plugin = kfplugin;
-            kfplugin->BeforeRun();
+            _init_plugin = plugin;
+            plugin->BeforeRun();
         }
     }
 
     void KFPluginManage::PrepareRun()
     {
-        for ( auto kfplugin : _plugins )
+        for ( auto plugin : _plugins )
         {
-            _init_plugin = kfplugin;
-            kfplugin->PrepareRun();
+            _init_plugin = plugin;
+            plugin->PrepareRun();
         }
     }
 
@@ -202,9 +202,9 @@ namespace KFrame
         return false;
     }
 
-    void KFPluginManage::ReloadPlugin( KFPlugin* kfplugin )
+    void KFPluginManage::ReloadPlugin( KFPlugin* plugin )
     {
-        kfplugin->Reload();
+        plugin->Reload();
 
         // 重新初始化插件
         LoadModule();
@@ -212,19 +212,19 @@ namespace KFrame
 
     void KFPluginManage::ShutDown()
     {
-        for ( auto kfplugin : _plugins )
+        for ( auto plugin : _plugins )
         {
-            kfplugin->BeforeShut();
+            plugin->BeforeShut();
         }
 
-        for ( auto kfplugin : _plugins )
+        for ( auto plugin : _plugins )
         {
-            kfplugin->ShutDown();
+            plugin->ShutDown();
         }
 
-        for ( auto kfplugin : _plugins )
+        for ( auto plugin : _plugins )
         {
-            kfplugin->AfterShut();
+            plugin->AfterShut();
         }
     }
 
@@ -235,27 +235,19 @@ namespace KFrame
         // 逻辑run
         for ( auto& iter : _run_functions._objects )
         {
-            auto kfmodule = iter.second;
-            if ( kfmodule->IsOpen() )
-            {
-                kfmodule->_function();
-            }
+            iter.second->Call();
         }
 
         // 延迟执行的逻辑
         for ( auto& iter : _after_run_functions._objects )
         {
-            auto kfmodule = iter.second;
-            if ( kfmodule->IsOpen() )
-            {
-                kfmodule->_function();
-            }
+            iter.second->Call();
         }
     }
 
     ///////////////////////////////////////////////////////////////
     template <class T>
-    struct PluginLesser : std::binary_function <T, T, bool>
+    struct PluginLesser : std::binary_function<T, T, bool>
     {
         bool operator() ( const T* x, const T* y ) const
         {
@@ -265,14 +257,14 @@ namespace KFrame
 
     void KFPluginManage::InstallPlugin()
     {
-        for ( auto kfplugin : _plugins )
+        for ( auto plugin : _plugins )
         {
-            _init_plugin = kfplugin;
-            kfplugin->Install();
+            _init_plugin = plugin;
+            plugin->Install();
         }
 
         // 排序
-        std::sort( _plugins.begin(), _plugins.end(), PluginLesser< KFPlugin >() );
+        std::sort( _plugins.begin(), _plugins.end(), PluginLesser<KFPlugin>() );
     }
 
     ///////////////////////////////////////////////////////////////
@@ -285,46 +277,45 @@ namespace KFrame
 
         static std::string _split = "=";
 
-        auto kfcommand = __KF_NEW__( KFDebugCommand );
-        kfcommand->_command = KFUtility::SplitString( command, _split );
+        auto command_data = __MAKE_SHARED__( KFDebugCommand );
+        command_data->_command = KFUtility::SplitString( command, _split );
         while ( !command.empty() )
         {
-            auto paramvalue = KFUtility::SplitString( command, _split );
-            if ( !paramvalue.empty() )
+            auto param_value = KFUtility::SplitString( command, _split );
+            if ( !param_value.empty() )
             {
-                kfcommand->_params.push_back( paramvalue );
+                command_data->_params.push_back( param_value );
             }
         }
 
-        _commands.PushObject( kfcommand, 0u, __FUNC_LINE__ );
+        _commands.Push( command_data );
     }
 
     void KFPluginManage::RunCommand()
     {
-        auto kfcommand = _commands.PopObject();
-        while ( kfcommand != nullptr )
+        auto command_data = _commands.Pop();
+        while ( command_data != nullptr )
         {
-            auto kffunction = _command_functions.Find( kfcommand->_command );
-            if ( kffunction != nullptr && kffunction->IsOpen() )
+            auto function = _command_functions.Find( command_data->_command );
+            if ( function != nullptr )
             {
-                kffunction->_function( kfcommand->_params );
+                function->Call( command_data->_params );
             }
 
-            __KF_DELETE__( KFDebugCommand, kfcommand );
-            kfcommand = _commands.PopObject();
+            command_data = _commands.Pop();
         }
     }
 
-    void KFPluginManage::SetModuleOpen( const std::string& modulename, bool isopen )
+    void KFPluginManage::SetModuleOpen( const std::string& module_name, bool is_open )
     {
-        for ( auto kfplugin : _plugins )
+        for ( auto plugin : _plugins )
         {
-            for ( auto& iter : kfplugin->_modules )
+            for ( auto& iter : plugin->_modules )
             {
-                auto kfmodule = iter.second;
-                if ( kfmodule->_plugin_name == modulename )
+                auto module = iter.second;
+                if ( module->_plugin_name == module_name )
                 {
-                    kfmodule->_is_open = isopen;
+                    module->_is_open = is_open;
                     return;
                 }
             }
