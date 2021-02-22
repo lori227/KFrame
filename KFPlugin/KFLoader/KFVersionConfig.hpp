@@ -24,9 +24,9 @@ namespace KFrame
 
     protected:
         // 读取配置
-        virtual void ReadSetting( KFXmlNode& xmlnode, KFVersionSetting* kfsetting )
+        virtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KFVersionSetting> setting )
         {
-            kfsetting->_version = xmlnode.ReadString( "version" );
+            setting->_version = xml_node.ReadString( "version" );
         }
     };
 }

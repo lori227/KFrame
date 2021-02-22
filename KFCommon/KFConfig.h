@@ -144,7 +144,7 @@ namespace KFrame
         {
             for ( auto iter = _settings._objects.begin(); iter != _settings._objects.end(); )
             {
-                if ( iter.second->_file_path == file_path )
+                if ( iter->second->_file_path == file_path )
                 {
                     iter = _settings._objects.erase( iter );
                 }

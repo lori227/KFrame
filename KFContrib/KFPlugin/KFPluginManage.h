@@ -29,7 +29,7 @@
 #define __CHECK_PLUGIN_FUNCTION__( module_name, function )\
     KFModule base_module;\
     void ( KFModule::*base_mfp )() = &KFModule::function; \
-    auto bass_address = ( void* )( kfbase.*base_mfp ); \
+    auto bass_address = ( void* )( base_module.*base_mfp ); \
     void ( module_name::*child_mfp )() = &module_name::function; \
     auto child_address = (void*)( module->*child_mfp );\
     if ( bass_address != child_address )\

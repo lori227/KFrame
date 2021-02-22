@@ -47,16 +47,15 @@ namespace KFrame
 		~KFLoaderConfig() = default;
 
 	protected:
-		virtual void ReadSetting( KFXmlNode& xmlnode, KFLoaderSetting* kfsetting )
+		virtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KFLoaderSetting> setting )
 		{
-		
-			KFConfigData configdata;
-			configdata._name = xmlnode.ReadString( "name", true );
-			configdata._path = xmlnode.ReadString( "path", true );
-			configdata._parent_name = xmlnode.ReadString( "parent_name", true );
-			configdata._can_reload = xmlnode.ReadBool( "canreload", true );
-			configdata._clear_type = xmlnode.ReadUInt32( "cleartype", true );
-			kfsetting->_config_data.push_back( configdata );
+			KFConfigData config_data;
+            config_data._name = xml_node.ReadString( "name", true );
+            config_data._path = xml_node.ReadString( "path", true );
+            config_data._parent_name = xml_node.ReadString( "parent_name", true );
+            config_data._can_reload = xml_node.ReadBool( "canreload", true );
+            config_data._clear_type = xml_node.ReadUInt32( "cleartype", true );
+            setting->_config_data.push_back( config_data );
 		}
 
 	};
