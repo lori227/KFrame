@@ -1,5 +1,5 @@
-﻿#ifndef __KF_CONHASH_H__
-#define __KF_CONHASH_H__
+﻿#ifndef __KF_HASH_H__
+#define __KF_HASH_H__
 
 #include "KFDefine.h"
 namespace KFrame
@@ -8,22 +8,22 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
     // 一致性hash算法
-    class KFConHash
+    class KFHash
     {
     public:
-        KFConHash();
-        ~KFConHash();
+        KFHash();
+        ~KFHash();
 
         // 添加Hash节点
-        void AddHashNode( const std::string& name, uint64 id, uint32 virtualcount );
+        void AddHashNode( const std::string& name, uint64 id, uint32 virtual_count );
 
         // 删除Hash节点
         bool RemoveHashNode( uint64 id );
 
         // 查抄Hash节点
-        uint64 FindHashNode( uint64 objectid, bool cache = false );
+        uint64 FindHashNode( uint64 object_id, bool cache = false );
         uint64 FindHashNode( const std::string& data, bool cache = false );
-        uint64 FindHashNode( const std::string& data, uint64 objectid, bool cache = false );
+        uint64 FindHashNode( const std::string& data, uint64 object_id, bool cache = false );
 
         // 获得所有节点
         void GetAllHashNode( UInt64List& nodes );

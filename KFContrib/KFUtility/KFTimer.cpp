@@ -65,8 +65,8 @@ namespace KFrame
     uint32 KFTimer::GetLeftTime() const
     {
         auto now_time = KFGlobal::Instance()->_game_time;
-        auto passtime = now_time - _start_time;
-        return _interval - static_cast< uint32 >( passtime );
+        auto pass_time = now_time - _start_time;
+        return _interval - static_cast< uint32 >( pass_time );
     }
 
 

@@ -11,22 +11,22 @@ namespace KFrame
         KFLibrary();
         ~KFLibrary();
 
-        // 加载插件
+        // 鍔犺浇鎻掍欢
         bool Load( const std::string& path, const std::string& name );
 
-        // 卸载插件
+        // 鍗歌浇鎻掍欢
         void UnLoad();
 
-        // 获得函数地址
+        // 鏌ユ壘鍑芥暟
         void* GetFunction( const char* function );
 
-    protected:
-        // 插件句柄
-        void* _instance;
-
     public:
-        // 插件路径
+        // 璺緞
         std::string _path;
+
+    protected:
+        // 鍙ユ焺
+        void* _instance;
     };
 }
 

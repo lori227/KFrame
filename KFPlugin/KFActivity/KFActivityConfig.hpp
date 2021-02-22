@@ -71,8 +71,8 @@ namespace KFrame
 
         // 判断是否可以更新
         bool CheckCanUpdate( uint32 key, uint32 level, uint32 operate ) const;
-        uint32 CheckTriggerValue( uint32 operatevalue, uint32 nowvalue ) const;
-        uint32 GetUseValue( uint32 operatevalue ) const;
+        uint32 CheckTriggerValue( uint32 operate_value, uint32 nowvalue ) const;
+        uint32 GetUseValue( uint32 operate_value ) const;
     };
 
     ///////////////////////////////////////////////////////////////////////////////

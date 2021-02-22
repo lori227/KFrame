@@ -11,6 +11,8 @@ namespace KFrame
     class KFValue
     {
     public:
+        virtual ~KFValue() = default;
+
         // 设置数值
         virtual void SetValue( std::string value ) = 0;
 
@@ -21,12 +23,12 @@ namespace KFrame
         }
 
         // 计算数值
-        virtual uint64 CalcUseValue( const KFDataSetting* setting, double multiple )
+        virtual uint64 CalcUseValue( std::shared_ptr<const KFDataSetting>& setting, double multiple )
         {
             return _invalid_int;
         }
 
-        virtual uint64 CalcUseValue( const KFDataSetting* setting, const std::string& data_name, double multiple )
+        virtual uint64 CalcUseValue( std::shared_ptr<const KFDataSetting>& setting, const std::string& data_name, double multiple )
         {
             return _invalid_int;
         }
@@ -51,7 +53,7 @@ namespace KFrame
         uint32 _type = 0;
 
         // 配置属性
-        const KFDataSetting* _data_setting = nullptr;
+        std::shared_ptr<const KFDataSetting> _data_setting = nullptr;
     };
     //////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////
@@ -59,13 +61,14 @@ namespace KFrame
     {
     public:
         KFIntValue();
+        virtual ~KFIntValue();
 
         // 设置数值
         virtual void SetValue( std::string value );
 
         // 计算数值
-        virtual uint64 CalcUseValue( const KFDataSetting* setting, double multiple );
-        virtual uint64 CalcUseValue( const KFDataSetting* setting, const std::string& data_name, double multiple );
+        virtual uint64 CalcUseValue( std::shared_ptr<const KFDataSetting>& setting, double multiple );
+        virtual uint64 CalcUseValue( std::shared_ptr<const KFDataSetting>& setting, const std::string& data_name, double multiple );
 
         // 获得使用数值
         virtual uint64 GetUseValue() const;
@@ -79,6 +82,7 @@ namespace KFrame
     {
     public:
         KFStrValue();
+        virtual ~KFStrValue();
 
         // 设置数值
         virtual void SetValue( std::string value );
@@ -96,7 +100,7 @@ namespace KFrame
     {
     public:
         KFObjValue();
-        ~KFObjValue();
+        virtual ~KFObjValue();
 
         virtual void SetValue( std::string value ) {};
     public:
@@ -177,7 +181,7 @@ namespace KFrame
         void SetValue( const std::string& data_name, std::string value );
 
         // 获得数值
-        uint64 CalcValue( const KFDataSetting* setting, const std::string& data_name, double multiple = _default_multiple );
+        uint64 CalcValue( std::shared_ptr<const KFDataSetting>& setting, const std::string& data_name, double multiple = _default_multiple );
         uint64 GetValue( const std::string& data_name ) const;
 
         // 格式化

@@ -8,7 +8,7 @@
 namespace KFrame
 {
     class KFAppSetting;
-    class KFStartup : public KFSingleton< KFStartup >
+    class KFStartup : public KFSingleton<KFStartup>
     {
     public:
         KFStartup() = default;
@@ -24,16 +24,16 @@ namespace KFrame
         void ShutDown();
 
     public:
-        KFPlugin* LoadPluginLibrary( const KFAppSetting* kfsetting );
+        KFPlugin* LoadPluginLibrary( const KFAppSetting* setting );
 
         // 卸载
-        bool UnLoadPluginLibrary( const std::string& pluginname );
+        bool UnLoadPluginLibrary( const std::string& plugin_name );
 
         // 重新加载插件
         void ReloadPlugin( const StringVector& params );
     private:
         // 插件列表
-        KFHashMap< std::string, KFLibrary > _kf_library;
+        KFHashMap<std::string, KFLibrary> _library_list;
     };
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////

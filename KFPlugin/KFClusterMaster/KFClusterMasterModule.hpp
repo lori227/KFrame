@@ -94,7 +94,7 @@ namespace KFrame
 
     private:
         // proxy连接列表
-        KFConHash _proxy_hash;
+        KFHash _proxy_hash;
         KFHashMap< uint64, KFProxyData > _kf_proxy_list;
 
         // token列表

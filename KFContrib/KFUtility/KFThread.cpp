@@ -1,22 +1,21 @@
 ﻿#include "KFThread.h"
-#include "KFRunable.hpp"
+#include "KFRunnable.hpp"
+
 namespace KFrame
 {
-    uint32 KFThread::GetThreadID()
+    ThreadId KFThread::GetThreadID()
     {
-        uint32 threadid = Poco::Thread::currentTid();
-        return threadid;
+        return std::this_thread::get_id();
     }
 
-    uint32 KFThread::CreateThread( KFThreadFunction& function, const char* file, uint32 line )
+    ThreadId KFThread::CreateThread( KFThreadFunction& function, const char* file, uint32 line )
     {
-        auto kfrunable = KFRunablePool::Instance()->CreateRunable();
-        kfrunable->StartThread( function, file, line );
-        return kfrunable->GetID();
+        auto runnable = KFRunnablePool::Instance()->Create( function, file, line );
+        return runnable->GetID();
     }
 
     void KFThread::Sleep( uint32 milliseconds )
     {
-        Poco::Thread::sleep( 1 );
+        std::this_thread::sleep_for( std::chrono::milliseconds( milliseconds ) );
     }
 }

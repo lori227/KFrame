@@ -51,7 +51,7 @@ public:
 		/// Returns true iff the parameter is const.
 
 	bool hasDefaultValue() const;
-		/// Returns true if a defaultvalue was set at this parameter,
+		/// Returns true if a default_value was set at this parameter,
 		/// Example: const std::string& data = std::string("default").
 
 	const std::string& declType() const;

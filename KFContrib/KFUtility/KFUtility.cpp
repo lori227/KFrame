@@ -34,97 +34,97 @@ namespace KFrame
         return std::abs( first - second ) <= 1e-15;
     }
 
-    uint32 KFUtility::CalcDistance( uint32 nowx, uint32 nowy, uint32 targetx, uint32 targety )
+    uint32 KFUtility::CalcDistance( uint32 now_x, uint32 now_y, uint32 target_x, uint32 target_y )
     {
-        auto x = __MAX__( nowx, targetx ) - __MIN__( nowx, targetx );
-        auto y = __MAX__( nowy, targety ) - __MIN__( nowy, targety );
+        auto x = __MAX__( now_x, target_x ) - __MIN__( now_x, target_x );
+        auto y = __MAX__( now_y, target_y ) - __MIN__( now_y, target_y );
 
         auto length = sqrt( x * x + y * y );
         return static_cast<uint32>( length );
     }
 
-    bool KFUtility::CheckInDistance( uint32 nowx, uint32 nowy, uint32 targetx, uint32 targety, uint32 distance )
+    bool KFUtility::CheckInDistance( uint32 now_x, uint32 now_y, uint32 target_x, uint32 target_y, uint32 distance )
     {
-        auto length = CalcDistance( nowx, nowy, targetx, targety );
+        auto length = CalcDistance( now_x, now_y, target_x, target_y );
         return length <= distance;
     }
 
-    std::string KFUtility::SplitString( std::string& srcstring, const std::string& split )
+    std::string KFUtility::SplitString( std::string& source, const std::string& split )
     {
-        if ( srcstring.empty() )
+        if ( source.empty() )
         {
             return "";
         }
 
         std::string result = "";
-        auto pos = srcstring.find( split );
+        auto pos = source.find( split );
         if ( pos == std::string::npos )
         {
-            result = srcstring;
-            srcstring.clear();
+            result = source;
+            source.clear();
             return result;
         }
 
-        result = srcstring.substr( 0, pos );
-        srcstring = srcstring.substr( pos + split.size() );
+        result = source.substr( 0, pos );
+        source = source.substr( pos + split.size() );
         return result;
     }
 
-    void KFUtility::ReplaceString( std::string& srcstring, const std::string& strold, const std::string& strnew )
+    void KFUtility::ReplaceString( std::string& source, const std::string& str_old, const std::string& str_new )
     {
         std::string::size_type pos = 0;
-        auto oldlength = strold.size();
-        auto newlength = strnew.size();
+        auto old_length = str_old.size();
+        auto new_length = str_new.size();
 
-        while ( ( pos = srcstring.find( strold, pos ) ) != std::string::npos )
+        while ( ( pos = source.find( str_old, pos ) ) != std::string::npos )
         {
-            srcstring.replace( pos, oldlength, strnew );
-            pos += newlength;
+            source.replace( pos, old_length, str_new );
+            pos += new_length;
         }
     }
 
-    void KFUtility::ReplaceString( std::string& srcstring, const std::string& strold, const StringVector& params )
+    void KFUtility::ReplaceString( std::string& source, const std::string& str_old, const StringVector& params )
     {
         size_t pos = 0;
-        auto oldlength = strold.size();
-        for ( auto& strnew : params )
+        auto old_length = str_old.size();
+        for ( auto& str_new : params )
         {
-            pos = srcstring.find( strold, pos );
+            pos = source.find( str_old, pos );
             if ( pos == std::string::npos )
             {
                 break;
             }
 
-            srcstring.replace( pos, oldlength, strnew );
-            pos += strnew.size();
+            source.replace( pos, old_length, str_new );
+            pos += str_new.size();
         }
     }
 
-    bool KFUtility::DelString( std::string& srcstring, const std::string& delstr, std::string& strnew )
+    bool KFUtility::DelString( std::string& source, const std::string& str_del, std::string& str_new )
     {
-        if ( delstr.size() > srcstring.size() )
+        if ( str_del.size() > source.size() )
         {
             return false;
         }
-        auto npos = srcstring.find( delstr );
-        if ( npos == std::string::npos )
-        {
-            return false;
-        }
-
-        if ( npos + delstr.size() > srcstring.size() )
+        auto pos = source.find( str_del );
+        if ( pos == std::string::npos )
         {
             return false;
         }
 
-        strnew = srcstring.substr( 0, npos ) + srcstring.substr( npos + delstr.size(), std::string::npos );
+        if ( pos + str_del.size() > source.size() )
+        {
+            return false;
+        }
+
+        str_new = source.substr( 0, pos ) + source.substr( pos + str_del.size(), std::string::npos );
         return true;
     }
 
     // 格式化标题
-    std::string KFUtility::FormatTitleText( const std::string& appname, const std::string& apptype, const std::string& strappid )
+    std::string KFUtility::FormatTitleText( const std::string& app_name, const std::string& app_type, const std::string& app_id )
     {
-        return __FORMAT__( "{}.{}.{}", appname, apptype, strappid );
+        return __FORMAT__( "{}.{}.{}", app_name, app_type, app_id );
     }
 
     uint32 KFUtility::GetHashValue( const std::string& data )
@@ -147,53 +147,53 @@ namespace KFrame
         //return hash;
     }
 
-    std::string KFUtility::FormatConfigFile( const std::string& filename, uint32 channel, uint32 service )
+    std::string KFUtility::FormatConfigFile( const std::string& file_name, uint32 channel, uint32 service )
     {
-        if ( filename.empty() )
+        if ( file_name.empty() )
         {
             return _invalid_string;
         }
 
-        auto configfile = __FORMAT__( filename, channel, service );
+        auto configfile = __FORMAT__( file_name, channel, service );
 
         // 判断文件是否存在
         Poco::File file( configfile );
         if ( !file.exists() )
         {
-            configfile = __FORMAT__( filename, channel, _invalid_int );
+            configfile = __FORMAT__( file_name, channel, _invalid_int );
             Poco::File file( configfile );
             if ( !file.exists() )
             {
-                configfile = __FORMAT__( filename, _invalid_int, _invalid_int );
+                configfile = __FORMAT__( file_name, _invalid_int, _invalid_int );
             }
         }
 
         return configfile;
     }
 
-    uint32 KFUtility::GetMaxMapValue( const UInt32Map& mapvalues, uint32 value )
+    uint32 KFUtility::GetMaxMapValue( const UInt32Map& map_values, uint32 value )
     {
-        auto findvalue = 0u;
-        for ( auto& iter : mapvalues )
+        auto find_value = 0u;
+        for ( auto& iter : map_values )
         {
             if ( value < iter.first )
             {
                 break;
             }
 
-            findvalue = iter.second;
+            find_value = iter.second;
         }
 
-        return findvalue;
+        return find_value;
     }
 
-    uint32 KFUtility::RandMapValue( const UInt32Map& mapvalues, uint32 totalweight, uint32 rand )
+    uint32 KFUtility::RandMapValue( const UInt32Map& map_values, uint32 total_weight, uint32 rand )
     {
-        if ( totalweight > 0u )
+        if ( total_weight > 0u )
         {
             auto value = 0u;
-            rand = rand % totalweight;
-            for ( auto& iter : mapvalues )
+            rand = rand % total_weight;
+            for ( auto& iter : map_values )
             {
                 value += iter.second;
                 if ( rand < value )
@@ -206,31 +206,31 @@ namespace KFrame
         return 0u;
     }
 
-    uint32 KFUtility::RandVectorValue( const UInt32Vector& vectorvalues, const UInt32Set& excludes )
+    uint32 KFUtility::RandVectorValue( const UInt32Vector& vector_values, const UInt32Set& exclude_list )
     {
-        UInt32Vector tempvalues;
-        if ( excludes.empty() || excludes.size() >= vectorvalues.size() )
+        UInt32Vector temp_values;
+        if ( exclude_list.empty() || exclude_list.size() >= vector_values.size() )
         {
-            tempvalues = vectorvalues;
+            temp_values = vector_values;
         }
         else
         {
-            for ( auto value : vectorvalues )
+            for ( auto value : vector_values )
             {
-                if ( excludes.find( value ) == excludes.end() )
+                if ( exclude_list.find( value ) == exclude_list.end() )
                 {
-                    tempvalues.push_back( value );
+                    temp_values.push_back( value );
                 }
             }
         }
 
-        auto size = ( uint32 )tempvalues.size();
+        auto size = ( uint32 )temp_values.size();
         if ( size == 0u )
         {
             return 0u;
         }
 
         auto index = KFGlobal::Instance()->RandRatio( size );
-        return tempvalues.at( index );
+        return temp_values.at( index );
     }
 }

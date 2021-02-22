@@ -9,28 +9,28 @@ namespace KFrame
 
     KFTcpSetting* KFTcpServerModule::FindTcpServerSetting()
     {
-        auto kfglobal = KFGlobal::Instance();
+        auto global = KFGlobal::Instance();
 
-        auto kftcpsetting = FindTcpSetting( kfglobal->_app_name, kfglobal->_app_type );
+        auto kftcpsetting = FindTcpSetting( global->_app_name, global->_app_type );
         if ( kftcpsetting == nullptr )
         {
-            kftcpsetting = FindTcpSetting( _globbing_string, kfglobal->_app_type );
+            kftcpsetting = FindTcpSetting( _globbing_string, global->_app_type );
             if ( kftcpsetting == nullptr )
             {
-                kftcpsetting = FindTcpSetting( kfglobal->_app_name, _globbing_string );
+                kftcpsetting = FindTcpSetting( global->_app_name, _globbing_string );
                 if ( kftcpsetting == nullptr )
                 {
                     kftcpsetting = FindTcpSetting( _globbing_string, _globbing_string );
                     if ( kftcpsetting == nullptr )
                     {
-                        __LOG_ERROR__( "can't find [{}:{}] setting", kfglobal->_app_name, kfglobal->_app_type );
+                        __LOG_ERROR__( "can't find [{}:{}] setting", global->_app_name, global->_app_type );
                         return nullptr;
                     }
                 }
             }
         }
 
-        kftcpsetting->_port = _kf_ip_address->CalcListenPort( kftcpsetting->_port_type, kftcpsetting->_port, kfglobal->_app_id->GetId() );
+        kftcpsetting->_port = _kf_ip_address->CalcListenPort( kftcpsetting->_port_type, kftcpsetting->_port, global->_app_id->GetId() );
         return kftcpsetting;
     }
 
@@ -70,18 +70,18 @@ namespace KFrame
         _server_engine->BindLostFunction( this, &KFTcpServerModule::OnServerLostHandle );
 
         // 启动tcp服务器
-        auto kfglobal = KFGlobal::Instance();
-        kfglobal->_listen_port = _kf_tcp_setting->_port;
+        auto global = KFGlobal::Instance();
+        global->_listen_port = _kf_tcp_setting->_port;
         auto result = _server_engine->StartEngine( _kf_tcp_setting->_local_ip, _kf_tcp_setting->_port );
         if ( result == 0 )
         {
             __LOG_INFO__( "[{}:{}|{}:{}] tcp services ok",
-                          kfglobal->_app_name, kfglobal->_app_type, kfglobal->_intranet_ip, kfglobal->_listen_port );
+                          global->_app_name, global->_app_type, global->_intranet_ip, global->_listen_port );
         }
         else
         {
             __LOG_ERROR__( "[{}:{}|{}:{}] tcp services failed[{}]",
-                           kfglobal->_app_name, kfglobal->_app_type, kfglobal->_intranet_ip, kfglobal->_listen_port, result );
+                           global->_app_name, global->_app_type, global->_intranet_ip, global->_listen_port, result );
         }
     }
 
@@ -263,11 +263,11 @@ namespace KFrame
         net_data->_str_id = KFAppId::ToString( listendata->appid() );
 
         // 注册回馈
-        auto kfglobal = KFGlobal::Instance();
+        auto global = KFGlobal::Instance();
         KFMsg::RegisterToServerAck ack;
-        ack.set_apptype( kfglobal->_app_type );
-        ack.set_appname( kfglobal->_app_name );
-        ack.set_appid( kfglobal->_app_id->GetId() );
+        ack.set_apptype( global->_app_type );
+        ack.set_appname( global->_app_name );
+        ack.set_appid( global->_app_id->GetId() );
         ack.set_compresslength( _kf_tcp_setting->_compress_length );
         ack.set_compresstype( _kf_tcp_setting->_compress_type );
         ack.set_compresslevel( _kf_tcp_setting->_compress_level );

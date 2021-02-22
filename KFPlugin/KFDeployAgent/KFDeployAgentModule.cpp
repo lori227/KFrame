@@ -68,8 +68,8 @@ namespace KFrame
             return __LOG_ERROR__( "agent=[{}] appid is empty", localip );
         }
 
-        auto kfglobal = KFGlobal::Instance();
-        kfglobal->_app_id->FromString( strappid );
+        auto global = KFGlobal::Instance();
+        global->_app_id->FromString( strappid );
 
         auto strservice = kfquery->_value[ __STRING__( service ) ];
         if ( strservice.empty() )
@@ -77,11 +77,11 @@ namespace KFrame
             return __LOG_ERROR__( "agent=[{}] service is empty", localip );
         }
 
-        kfglobal->_channel = KFUtility::SplitValue< uint32 >( strservice, "." );
-        kfglobal->_service = KFUtility::SplitValue< uint32 >( strservice, "." );
+        global->_channel = KFUtility::SplitValue< uint32 >( strservice, "." );
+        global->_service = KFUtility::SplitValue< uint32 >( strservice, "." );
 
         // 部署表
-        _deploy_table_name = __FORMAT__( "{}_{}_deploy", kfglobal->_channel, kfglobal->_service );
+        _deploy_table_name = __FORMAT__( "{}_{}_deploy", global->_channel, global->_service );
         __LOG_INFO__( "agent table name = [{}]", _deploy_table_name );
 
         // deploy server
@@ -148,16 +148,16 @@ namespace KFrame
         if ( net_data->_name == __STRING__( deploy ) && net_data->_type == __STRING__( server ) )
         {
             _deploy_server_id = net_data->_id;
-            auto kfglobal = KFGlobal::Instance();
+            auto global = KFGlobal::Instance();
 
             // 把自己注册到Services
             KFMsg::S2SRegisterAgentToServerReq req;
-            req.set_agentid( kfglobal->_app_id->ToString() );
-            req.set_name( kfglobal->_app_name );
-            req.set_type( kfglobal->_app_type );
-            req.set_localip( kfglobal->_local_ip );
-            req.set_port( kfglobal->_listen_port );
-            req.set_service( __FORMAT__( "{}.{}", kfglobal->_channel, kfglobal->_service ) );
+            req.set_agentid( global->_app_id->ToString() );
+            req.set_name( global->_app_name );
+            req.set_type( global->_app_type );
+            req.set_localip( global->_local_ip );
+            req.set_port( global->_listen_port );
+            req.set_service( __FORMAT__( "{}.{}", global->_channel, global->_service ) );
             _kf_tcp_client->SendNetMessage( net_data->_id, KFMsg::S2S_REGISTER_AGENT_TO_SERVER_REQ, &req );
         }
     }
@@ -340,7 +340,7 @@ namespace KFrame
 #if __KF_SYSTEM__ == __KF_WIN__
     bool KFDeployAgentModule::StartupWinProcess( KFDeployData* deploydata )
     {
-        auto kfglobal = KFGlobal::Instance();
+        auto global = KFGlobal::Instance();
 
         // 启动进程
         STARTUPINFO startupinfo;
@@ -357,7 +357,7 @@ namespace KFrame
                                  __STRING__( id ), deploydata->_app_id,
                                  __STRING__( service ), deploydata->_service_type,
                                  __STRING__( net ), deploydata->_net_type,
-                                 __STRING__( agent ), kfglobal->_app_id->ToString(), kfglobal->_local_ip, kfglobal->_listen_port );
+                                 __STRING__( agent ), global->_app_id->ToString(), global->_local_ip, global->_listen_port );
 
         // 启动进程
         PROCESS_INFORMATION processinfo;
@@ -414,7 +414,7 @@ namespace KFrame
     bool KFDeployAgentModule::StartupLinuxProcess( KFDeployData* deploydata )
     {
         std::vector<char*> args;
-        auto kfglobal = KFGlobal::Instance();
+        auto global = KFGlobal::Instance();
 
 #define __ADD_ARGS__( strparam )\
     {\
@@ -440,7 +440,7 @@ namespace KFrame
         auto strnet = __FORMAT__( "{}={}", __STRING__( net ), deploydata->_net_type );
         __ADD_ARGS__( strnet );
 
-        auto stragent = __FORMAT__( "{}={}|{}|{}", __STRING__( agent ), kfglobal->_app_id->ToString(), kfglobal->_local_ip, kfglobal->_listen_port );
+        auto stragent = __FORMAT__( "{}={}|{}|{}", __STRING__( agent ), global->_app_id->ToString(), global->_local_ip, global->_listen_port );
         __ADD_ARGS__( stragent );
 
         auto params = deploydata->_params;

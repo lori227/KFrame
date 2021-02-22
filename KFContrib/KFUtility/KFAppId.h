@@ -5,32 +5,29 @@
 
 namespace KFrame
 {
-    union AppIdData;
+    union AppIdUnion;
     class KFAppId
     {
     public:
         KFAppId();
-        KFAppId( uint64 appid );
-        KFAppId( const std::string& strappid );
-        KFAppId( const KFAppId& appid );
-        KFAppId& operator = ( const KFAppId& appid );
+        KFAppId( uint64 app_id );
+        KFAppId( const std::string& app_id );
+        KFAppId( const KFAppId& app_id );
+        KFAppId& operator = ( const KFAppId& app_id );
 
         ~KFAppId();
         /////////////////////////////////////////////////////////////////////////////////////
-        void FromUInt64( uint64 appid );
-        void FromString( std::string strappid );
+        void FromUInt64( uint64 app_id );
+        void FromString( std::string app_id );
         /////////////////////////////////////////////////////////////////////////////////////
         // 类型
         uint32 GetType() const;
-        void SetType( uint32 value );
 
         // 小区id
         uint32 GetZoneId() const;
-        void SetZoneId( uint32 value );
 
         // 进程id
         uint32 GetWorkId() const;
-        void SetWorkId( uint32 value );
 
         // id
         uint64 GetId() const;
@@ -39,14 +36,14 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////
         // 转换
-        static std::string ToString( uint64 appid );
-        static uint64 ToUInt64( const std::string& strappid );
+        static std::string ToString( uint64 app_id );
+        static uint64 ToUInt64( const std::string& app_id );
 
     private:
-        AppIdData* _data = nullptr;
+        AppIdUnion* _union = nullptr;
 
         // 保存id字串
-        std::string _str_app_id;
+        std::string _app_id;
     };
 }
 

@@ -103,7 +103,7 @@ namespace KFrame
         std::unordered_map< std::string, KFRole* > _token_list;
 
         // login服务器列表
-        KFConHash _login_conhash;
+        KFHash _login_conhash;
         uint64 _login_server_id = _invalid_int;
 
         // 广播的序号

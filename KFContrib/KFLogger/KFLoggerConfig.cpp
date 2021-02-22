@@ -43,7 +43,7 @@ namespace KFrame
                 auto mode_node = node.FindNode( "Release" );
 #endif
                 setting->_level = mode_node.ReadUInt32( "Level", true );
-                setting->_console = mode_node.ReadBoolen( "Console", true );
+                setting->_console = mode_node.ReadBool( "Console", true );
                 setting->_pattern = mode_node.ReadString( "Pattern", true );
             }
 

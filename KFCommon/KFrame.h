@@ -30,7 +30,7 @@
 #include "KFUtility/KFConvert.h"
 #include "KFUtility/KFUtility.h"
 #include "KFUtility/KFCompress.h"
-#include "KFUtility/KFConHash.h"
+#include "KFUtility/KFHash.h"
 #include "KFUtility/KFStaticCondition.h"
 #include "KFUtility/KFDynamicCondition.h"
 #include "KFGlobal/KFGlobal.h"

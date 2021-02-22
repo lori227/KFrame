@@ -35,19 +35,19 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 设置时间
-        auto kfglobal = KFGlobal::Instance();
-        kfglobal->_game_time = KFClock::GetTime();
-        kfglobal->_real_time = KFDate::GetTimeEx();
+        auto global = KFGlobal::Instance();
+        global->_game_time = KFClock::GetTime();
+        global->_real_time = KFDate::GetTimeEx();
 
-        kfglobal->_app_name = __STRING__( deploy );
-        kfglobal->_app_type = __STRING__( tool );
-        kfglobal->_app_id->FromString( "10.0.0" );
+        global->_app_name = __STRING__( deploy );
+        global->_app_type = __STRING__( tool );
+        global->_app_id->FromString( "10.0.0" );
 
-        KFDeployDump kfdump( kfglobal->_app_name.c_str(), kfglobal->_app_type.c_str(), "10.0.0" );
+        KFDeployDump kfdump( global->_app_name.c_str(), global->_app_type.c_str(), "10.0.0" );
 
         // 初始化服务类型
         std::string strnetservice = "1.1";
-        kfglobal->InitChannelService( strnetservice );
+        global->InitChannelService( strnetservice );
 
         // 初始化logger
         KFLogger::Instance()->InitLogger( "./setting/logger.xml" );
@@ -57,13 +57,13 @@ namespace KFrame
 
         // 读取启动配置
         std::string startupfile = "";
-        if ( kfglobal->_app_type.empty() )
+        if ( global->_app_type.empty() )
         {
-            startupfile = __FORMAT__( "./startup/{}.startup", kfglobal->_app_name );
+            startupfile = __FORMAT__( "./startup/{}.startup", global->_app_name );
         }
         else
         {
-            startupfile = __FORMAT__( "./startup/{}.{}.startup", kfglobal->_app_name, kfglobal->_app_type );
+            startupfile = __FORMAT__( "./startup/{}.{}.startup", global->_app_name, global->_app_type );
         }
 
         if ( !_kf_deploy_startup->InitStartup( startupfile ) )

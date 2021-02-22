@@ -41,9 +41,6 @@ namespace KFrame
         }
     }
 
-    //m_now = chrono::system_clock::now();
-    //m_milli = chrono::time_point_cast< chrono::milliseconds >( m_now ).time_since_epoch().count();
-
     uint64 KFDate::FromString( const std::string& ymd )
     {
         if ( ymd.empty() )
@@ -55,8 +52,8 @@ namespace KFrame
         int32 year = 0, month = 0, day = 0, hour = 0, minute = 0, second = 0;
         sscanf( ymd.c_str(), "%d-%d-%d %d:%d:%d", &year, &month, &day, &hour, &minute, &second );
 
-        KFDate kfdate( year, month, day, hour, minute, second );
-        return kfdate.GetTime();
+        KFDate date( year, month, day, hour, minute, second );
+        return date.GetTime();
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -134,8 +131,8 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     std::string KFDate::GetTimeString( uint64 time )
     {
-        time_t temptime = time;
-        auto ptm = localtime( &temptime );
+        time_t temp_time = time;
+        auto ptm = localtime( &temp_time );
 
         auto year = ptm->tm_year + KFTimeEnum::SinceYear;
         auto month = ptm->tm_mon + 1;
@@ -144,8 +141,7 @@ namespace KFrame
         auto minute = ptm->tm_min;
         auto second = ptm->tm_sec;
 
-        return __FORMAT__( "{:04d}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}",
-                           year, month, day, hour, minute, second );
+        return __FORMAT__( "{:04d}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}", year, month, day, hour, minute, second );
     }
 
     std::string KFDate::GetTimeString()
@@ -153,150 +149,150 @@ namespace KFrame
         return GetTimeString( KFDate::GetTimeEx() );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFDate::CheckInTime( uint64 starttime, uint64 endtime, uint64 now_time )
+    bool KFDate::CheckInTime( uint64 start_time, uint64 end_time, uint64 now_time )
     {
-        if ( starttime == 0u || endtime == 0u )
+        if ( start_time == 0u || end_time == 0u )
         {
             return false;
         }
 
-        return now_time >= starttime && now_time <= endtime;
+        return now_time >= start_time && now_time <= end_time;
     }
 
-    bool KFDate::CheckTimeout( uint64 starttime, uint64 keeptime )
+    bool KFDate::CheckTimeout( uint64 start_time, uint64 keep_time )
     {
         auto now_time = KFDate::GetTimeEx();
-        return now_time >= ( starttime + keeptime );
+        return now_time >= ( start_time + keep_time );
     }
 
-    bool KFDate::CheckTimeout( uint64 now_time, uint64 starttime, uint64 keeptime )
+    bool KFDate::CheckTimeout( uint64 now_time, uint64 start_time, uint64 keep_time )
     {
-        return now_time >= ( starttime + keeptime );
+        return now_time >= ( start_time + keep_time );
     }
 
-    uint64 KFDate::CalcLeftTime( uint64 now_time, uint64 starttime, uint32 keeptime )
+    uint64 KFDate::CalcLeftTime( uint64 now_time, uint64 start_time, uint32 keep_time )
     {
-        if ( starttime > now_time )
+        if ( start_time > now_time )
         {
             return 0;
         }
 
-        auto passtime = now_time - starttime;
-        if ( passtime >= keeptime )
+        auto pass_time = now_time - start_time;
+        if ( pass_time >= keep_time )
         {
             return 0;
         }
 
-        return keeptime - passtime;
+        return keep_time - pass_time;
     }
 
-    bool KFDate::CheckSameDay( uint64 lasttime, uint64 now_time )
+    bool KFDate::CheckSameDay( uint64 last_time, uint64 now_time )
     {
-        KFDate nowdate( now_time );
-        KFDate lastdate( lasttime );
-        return CheckSameDay( lastdate, nowdate );
+        KFDate now_date( now_time );
+        KFDate last_date( last_time );
+        return CheckSameDay( last_date, now_date );
     }
 
-    bool KFDate::CheckSameDay( KFDate& lastdate, KFDate& nowdate )
+    bool KFDate::CheckSameDay( KFDate& last_date, KFDate& now_date )
     {
         // 相差时间超过1天
-        if ( nowdate.GetTime() >= lastdate.GetTime() + KFTimeEnum::OneDaySecond )
+        if ( now_date.GetTime() >= last_date.GetTime() + KFTimeEnum::OneDaySecond )
         {
             return false;
         }
 
         // 判断日期相同
-        return nowdate.GetDay() == lastdate.GetDay();
+        return now_date.GetDay() == last_date.GetDay();
     }
 
-    bool KFDate::CheckPassTime( uint64 now_time, uint64 nexttime )
+    bool KFDate::CheckPassTime( uint64 now_time, uint64 next_time )
     {
-        return now_time >= nexttime;
+        return now_time >= next_time;
     }
 
     bool KFDate::CheckPassTime( uint32 year, uint32 month, uint32 day, uint32 hour, uint32 minute )
     {
-        auto nowdate = KFDate::GetDate();
+        auto now_date = KFDate::GetDate();
 
-        year = ( year != 0 ? year : nowdate.GetYear() );
-        month = ( month != 0 ? month : nowdate.GetMonth() );
-        day = ( day != 0 ? day : nowdate.GetDay() );
+        year = ( year != 0 ? year : now_date.GetYear() );
+        month = ( month != 0 ? month : now_date.GetMonth() );
+        day = ( day != 0 ? day : now_date.GetDay() );
 
         KFDate checkdate( year, month, day, hour, minute );
-        return nowdate.GetTime() >= checkdate.GetTime();
+        return now_date.GetTime() >= checkdate.GetTime();
     }
 
-    uint64 KFDate::CalcZeroTime( uint64 time, int32 daycount /* = 0 */ )
+    uint64 KFDate::CalcZeroTime( uint64 time, int32 day_count /* = 0 */ )
     {
-        KFDate date( ( int64 )time + daycount * KFTimeEnum::OneDaySecond );
-        KFDate newdate( date.GetYear(), date.GetMonth(), date.GetDay(), 0, 0 );
-        return newdate.GetTime();
+        KFDate date( ( int64 )time + day_count * KFTimeEnum::OneDaySecond );
+        KFDate new_date( date.GetYear(), date.GetMonth(), date.GetDay(), 0, 0 );
+        return new_date.GetTime();
     }
 
-    uint64 KFDate::CalcTimeData( const KFTimeData* timedata, uint64 time, int32 count /* = 0 */ )
+    uint64 KFDate::CalcTimeData( const KFTimeData* time_data, uint64 time, int32 count /* = 0 */ )
     {
         auto result = time;
-        switch ( timedata->_flag )
+        switch ( time_data->_flag )
         {
         case KFTimeEnum::Minute:
         {
             int64 minute = time / KFTimeEnum::OneMinuteSecond;
-            minute += count * timedata->_minute;
+            minute += count * time_data->_minute;
             result = ( uint64 )minute * KFTimeEnum::OneMinuteSecond;
         }
         break;
         case KFTimeEnum::Hour:
         {
             int64 hour = time / KFTimeEnum::OneHourSecond;
-            hour += count * timedata->_hour;
+            hour += count * time_data->_hour;
             result = ( uint64 )hour * KFTimeEnum::OneHourSecond;
         }
         break;
         case KFTimeEnum::Day:
         {
             KFDate date( time );
-            auto datetime = date.GetHour() * KFTimeEnum::OneHourMinute + date.GetMinute();
-            auto checktime = timedata->_hour * KFTimeEnum::OneHourMinute + timedata->_minute;
-            if ( datetime < checktime )
+            auto date_time = date.GetHour() * KFTimeEnum::OneHourMinute + date.GetMinute();
+            auto check_time = time_data->_hour * KFTimeEnum::OneHourMinute + time_data->_minute;
+            if ( date_time < check_time )
             {
                 count -= 1;
             }
 
             // 计算0点时间
             result = CalcZeroTime( time, count );
-            result += timedata->_hour * KFTimeEnum::OneHourSecond + timedata->_minute * KFTimeEnum::OneMinuteSecond;
+            result += time_data->_hour * KFTimeEnum::OneHourSecond + time_data->_minute * KFTimeEnum::OneMinuteSecond;
         }
         break;
         case KFTimeEnum::Week:
         {
             int64 week = time / KFTimeEnum::OneWeekSecond;
-            auto daysecond = ( timedata->_day_of_week - __MIN__( timedata->_day_of_week, 1 ) ) * KFTimeEnum::OneDaySecond;
-            daysecond += timedata->_hour * KFTimeEnum::OneHourSecond + timedata->_minute * KFTimeEnum::OneMinuteSecond;
-            if ( time - ( uint64 )week * KFTimeEnum::OneWeekSecond < daysecond )
+            auto day_second = ( time_data->_day_of_week - __MIN__( time_data->_day_of_week, 1 ) ) * KFTimeEnum::OneDaySecond;
+            day_second += time_data->_hour * KFTimeEnum::OneHourSecond + time_data->_minute * KFTimeEnum::OneMinuteSecond;
+            if ( time - ( uint64 )week * KFTimeEnum::OneWeekSecond < day_second )
             {
                 week -= 1;
             }
 
             week += count;
             // 1970/1/1是周4, 所以我们加上4天时间, 把时间从周1作为周期开始
-            result = CalcZeroTime( ( uint64 )week * KFTimeEnum::OneWeekSecond + 4 * KFTimeEnum::OneDaySecond ) + daysecond;
+            result = CalcZeroTime( ( uint64 )week * KFTimeEnum::OneWeekSecond + 4 * KFTimeEnum::OneDaySecond ) + day_second;
         }
         break;
         case KFTimeEnum::Month:
         {
             KFDate date( time );
-            auto datetime = date.GetDay() * KFTimeEnum::OneDayMinute + date.GetHour() * KFTimeEnum::OneHourMinute + date.GetMinute();
-            auto checktime = timedata->_day * KFTimeEnum::OneDayMinute + timedata->_hour * KFTimeEnum::OneHourMinute + timedata->_minute;
-            if ( datetime < checktime )
+            auto date_time = date.GetDay() * KFTimeEnum::OneDayMinute + date.GetHour() * KFTimeEnum::OneHourMinute + date.GetMinute();
+            auto check_time = time_data->_day * KFTimeEnum::OneDayMinute + time_data->_hour * KFTimeEnum::OneHourMinute + time_data->_minute;
+            if ( date_time < check_time )
             {
                 count -= 1;
             }
 
-            auto totalmonth = date.GetYear() * 12 + date.GetMonth() + count;
-            auto year = totalmonth / 12;
-            auto month = totalmonth % 12;
-            KFDate newdate( year, month, timedata->_day, timedata->_hour, timedata->_minute );
-            result = newdate.GetTime();
+            auto total_month = date.GetYear() * 12 + date.GetMonth() + count;
+            auto year = total_month / 12;
+            auto month = total_month % 12;
+            KFDate new_date( year, month, time_data->_day, time_data->_hour, time_data->_minute );
+            result = new_date.GetTime();
         }
         break;
         default:
@@ -306,47 +302,47 @@ namespace KFrame
         return result;
     }
 
-    bool KFDate::CheckLoopTimeData( const KFTimeData* timedata, uint64 lasttime, uint64 now_time )
+    bool KFDate::CheckLoopTimeData( const KFTimeData* time_data, uint64 last_time, uint64 now_time )
     {
-        switch ( timedata->_flag )
+        switch ( time_data->_flag )
         {
         case KFTimeEnum::Minute:	// 分钟
-            return CheckLoopMinute( timedata, lasttime, now_time );
+            return CheckLoopMinute( time_data, last_time, now_time );
             break;
         case KFTimeEnum::Hour:		// 小时
-            return CheckLoopHour( timedata, lasttime, now_time );
+            return CheckLoopHour( time_data, last_time, now_time );
             break;
         case KFTimeEnum::Ever:
-            return CheckLoopEver( lasttime );
+            return CheckLoopEver( last_time );
             break;
         }
 
-        KFDate nowdate( now_time );
-        KFDate lastdate( lasttime );
-        return CheckLoopTimeData( timedata, lastdate, nowdate );
+        KFDate now_date( now_time );
+        KFDate last_date( last_time );
+        return CheckLoopTimeData( time_data, last_date, now_date );
     }
 
-    bool KFDate::CheckLoopTimeData( const KFTimeData* timedata, KFDate& lastdate, KFDate& nowdate )
+    bool KFDate::CheckLoopTimeData( const KFTimeData* time_data, KFDate& last_date, KFDate& now_date )
     {
-        switch ( timedata->_flag )
+        switch ( time_data->_flag )
         {
         case KFTimeEnum::Minute:	// 分钟
-            return CheckLoopMinute( timedata, lastdate, nowdate );
+            return CheckLoopMinute( time_data, last_date, now_date );
             break;
         case KFTimeEnum::Hour:		// 小时
-            return CheckLoopHour( timedata, lastdate, nowdate );
+            return CheckLoopHour( time_data, last_date, now_date );
             break;
         case KFTimeEnum::Day:		// 每天
-            return CheckLoopDay( timedata, lastdate, nowdate );
+            return CheckLoopDay( time_data, last_date, now_date );
             break;
         case KFTimeEnum::Week:		// 星期
-            return CheckLoopWeek( timedata, lastdate, nowdate );
+            return CheckLoopWeek( time_data, last_date, now_date );
             break;
         case KFTimeEnum::Month:		// 月份
-            return CheckLoopMonth( timedata, lastdate, nowdate );
+            return CheckLoopMonth( time_data, last_date, now_date );
             break;
         case KFTimeEnum::Ever:		// 永久
-            return CheckLoopEver( lastdate );
+            return CheckLoopEver( last_date );
         default:
             break;
         }
@@ -356,161 +352,161 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFDate::CheckLoopMinute( const KFTimeData* timedata, KFDate& lastdate, KFDate& nowdate )
+    bool KFDate::CheckLoopMinute( const KFTimeData* time_data, KFDate& last_date, KFDate& now_date )
     {
-        return CheckLoopMinute( timedata, lastdate.GetTime(), nowdate.GetTime() );
+        return CheckLoopMinute( time_data, last_date.GetTime(), now_date.GetTime() );
     }
 
-    bool KFDate::CheckLoopMinute( const KFTimeData* timedata, uint64 lasttime, uint64 now_time )
+    bool KFDate::CheckLoopMinute( const KFTimeData* time_data, uint64 last_time, uint64 now_time )
     {
-        auto second = timedata->_minute * KFTimeEnum::OneMinuteSecond;
-        return now_time >= ( lasttime + second );
+        auto second = time_data->_minute * KFTimeEnum::OneMinuteSecond;
+        return now_time >= ( last_time + second );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFDate::CheckLoopHour( const KFTimeData* timedata, KFDate& lastdate, KFDate& nowdate )
+    bool KFDate::CheckLoopHour( const KFTimeData* time_data, KFDate& last_date, KFDate& now_date )
     {
-        return CheckLoopHour( timedata, lastdate.GetTime(), nowdate.GetTime() );
+        return CheckLoopHour( time_data, last_date.GetTime(), now_date.GetTime() );
     }
 
-    bool KFDate::CheckLoopHour( const KFTimeData* timedata, uint64 lasttime, uint64 now_time )
+    bool KFDate::CheckLoopHour( const KFTimeData* time_data, uint64 last_time, uint64 now_time )
     {
-        auto second = timedata->_hour * KFTimeEnum::OneHourSecond;
-        return now_time >= ( lasttime + second );
+        auto second = time_data->_hour * KFTimeEnum::OneHourSecond;
+        return now_time >= ( last_time + second );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFDate::CheckLoopDay( const KFTimeData* timedata, KFDate& lastdate, KFDate& nowdate )
+    bool KFDate::CheckLoopDay( const KFTimeData* time_data, KFDate& last_date, KFDate& now_date )
     {
         // 间隔时间大于一天
-        auto timedistance = nowdate.GetTime() - lastdate.GetTime();
-        if ( timedistance >= KFTimeEnum::OneDaySecond )
+        auto time_distance = now_date.GetTime() - last_date.GetTime();
+        if ( time_distance >= KFTimeEnum::OneDaySecond )
         {
             return true;
         }
 
-        auto checkminute = timedata->_hour * KFTimeEnum::OneHourMinute + timedata->_minute;
-        auto nowminute = nowdate.GetHour() * KFTimeEnum::OneHourMinute + nowdate.GetMinute();
-        auto lastminute = lastdate.GetHour() * KFTimeEnum::OneHourMinute + lastdate.GetMinute();
+        auto check_minute = time_data->_hour * KFTimeEnum::OneHourMinute + time_data->_minute;
+        auto now_minute = now_date.GetHour() * KFTimeEnum::OneHourMinute + now_date.GetMinute();
+        auto last_minute = last_date.GetHour() * KFTimeEnum::OneHourMinute + last_date.GetMinute();
 
-        auto nowday = nowdate.GetDay();
-        auto lastday = lastdate.GetDay();
+        auto now_day = now_date.GetDay();
+        auto last_day = last_date.GetDay();
 
         // 不同天了
-        if ( nowday != lastday )
+        if ( now_day != last_day )
         {
-            return lastminute < checkminute || nowminute >= checkminute;
+            return last_minute < check_minute || now_minute >= check_minute;
         }
 
         // 同一天
-        return ( lastminute < checkminute && nowminute >= checkminute );
+        return ( last_minute < check_minute && now_minute >= check_minute );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFDate::CheckLoopWeek( const KFTimeData* timedata, KFDate& lastdate, KFDate& nowdate )
+    bool KFDate::CheckLoopWeek( const KFTimeData* time_data, KFDate& last_date, KFDate& now_date )
     {
         // 跨度超过1周
-        auto timedistance = nowdate.GetTime() - lastdate.GetTime();
-        if ( timedistance >= KFTimeEnum::OneWeekSecond )
+        auto time_distance = now_date.GetTime() - last_date.GetTime();
+        if ( time_distance >= KFTimeEnum::OneWeekSecond )
         {
             return true;
         }
 
-        auto checkminute = timedata->_day_of_week * KFTimeEnum::OneDayMinute + timedata->_hour * KFTimeEnum::OneHourMinute + timedata->_minute;
-        auto nowminute = nowdate.GetDayOfWeek() * KFTimeEnum::OneDayMinute + nowdate.GetHour() * KFTimeEnum::OneHourMinute + nowdate.GetMinute();
-        auto lastminute = lastdate.GetDayOfWeek() * KFTimeEnum::OneDayMinute + lastdate.GetHour() * KFTimeEnum::OneHourMinute + lastdate.GetMinute();
+        auto check_minute = time_data->_day_of_week * KFTimeEnum::OneDayMinute + time_data->_hour * KFTimeEnum::OneHourMinute + time_data->_minute;
+        auto now_minute = now_date.GetDayOfWeek() * KFTimeEnum::OneDayMinute + now_date.GetHour() * KFTimeEnum::OneHourMinute + now_date.GetMinute();
+        auto last_minute = last_date.GetDayOfWeek() * KFTimeEnum::OneDayMinute + last_date.GetHour() * KFTimeEnum::OneHourMinute + last_date.GetMinute();
 
-        auto nowweek = nowdate.GetTime() / KFTimeEnum::OneWeekSecond;
-        auto lastweek = lastdate.GetTime() / KFTimeEnum::OneWeekSecond;
+        auto now_week = now_date.GetTime() / KFTimeEnum::OneWeekSecond;
+        auto last_week = last_date.GetTime() / KFTimeEnum::OneWeekSecond;
 
         // 不同周
-        if ( nowweek != lastweek )
+        if ( now_week != last_week )
         {
-            return lastminute < checkminute || nowminute >= checkminute;
+            return last_minute < check_minute || now_minute >= check_minute;
         }
 
         // 不同周
-        return ( lastminute < checkminute && nowminute >= checkminute );
+        return ( last_minute < check_minute && now_minute >= check_minute );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFDate::CheckLoopMonth( const KFTimeData* timedata, KFDate& lastdate, KFDate& nowdate )
+    bool KFDate::CheckLoopMonth( const KFTimeData* time_data, KFDate& last_date, KFDate& now_date )
     {
         // 间隔超过一个月
-        auto monthdistance = ( nowdate.GetYear() - lastdate.GetYear() ) * 12 + nowdate.GetMonth() - lastdate.GetMonth();
-        if ( monthdistance > 1u )
+        auto month_distance = ( now_date.GetYear() - last_date.GetYear() ) * 12 + now_date.GetMonth() - last_date.GetMonth();
+        if ( month_distance > 1u )
         {
             return true;
         }
 
-        auto checkminute = timedata->_day * KFTimeEnum::OneDayMinute + timedata->_hour * KFTimeEnum::OneHourMinute + timedata->_minute;
-        auto nowminute = nowdate.GetDay() * KFTimeEnum::OneDayMinute + nowdate.GetHour() * KFTimeEnum::OneHourMinute + nowdate.GetMinute();
-        auto lastminute = lastdate.GetDay() * KFTimeEnum::OneDayMinute + lastdate.GetHour() * KFTimeEnum::OneHourMinute + lastdate.GetMinute();
+        auto check_minute = time_data->_day * KFTimeEnum::OneDayMinute + time_data->_hour * KFTimeEnum::OneHourMinute + time_data->_minute;
+        auto now_minute = now_date.GetDay() * KFTimeEnum::OneDayMinute + now_date.GetHour() * KFTimeEnum::OneHourMinute + now_date.GetMinute();
+        auto last_minute = last_date.GetDay() * KFTimeEnum::OneDayMinute + last_date.GetHour() * KFTimeEnum::OneHourMinute + last_date.GetMinute();
 
         // 不同月
-        if ( monthdistance == 1u )
+        if ( month_distance == 1u )
         {
-            return lastminute < checkminute || nowminute >= checkminute;
+            return last_minute < check_minute || now_minute >= check_minute;
         }
 
         // 相同月
-        return ( lastminute < checkminute && nowminute >= checkminute );
+        return ( last_minute < check_minute && now_minute >= check_minute );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFDate::CheckLoopYear( const KFTimeData* timedata, KFDate& lastdate, KFDate& nowdate )
+    bool KFDate::CheckLoopYear( const KFTimeData* time_data, KFDate& last_date, KFDate& now_date )
     {
         // 间隔超过一年
-        auto yeardistance = ( nowdate.GetYear() - lastdate.GetYear() );
-        if ( yeardistance > 1u )
+        auto year_distance = ( now_date.GetYear() - last_date.GetYear() );
+        if ( year_distance > 1u )
         {
             return true;
         }
 
-        KFDate checkdate( nowdate.GetYear(), timedata->_month, timedata->_day, timedata->_hour, timedata->_minute );
-        return ( lastdate.GetTime() < checkdate.GetTime() && nowdate.GetTime() >= checkdate.GetTime() );
+        KFDate check_date( now_date.GetYear(), time_data->_month, time_data->_day, time_data->_hour, time_data->_minute );
+        return ( last_date.GetTime() < check_date.GetTime() && now_date.GetTime() >= check_date.GetTime() );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFDate::CheckLoopEver( uint64 lasttime )
+    bool KFDate::CheckLoopEver( uint64 last_time )
     {
-        return lasttime == 0u;
+        return last_time == 0u;
     }
 
-    bool KFDate::CheckLoopEver( KFDate& lastdate )
+    bool KFDate::CheckLoopEver( KFDate& last_date )
     {
-        return lastdate.GetTime() == 0u;
+        return last_date.GetTime() == 0u;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFDate::CheckInTimeSection( const KFTimeSection* timesection, uint64 time )
+    bool KFDate::CheckInTimeSection( const KFTimeSection* time_section, uint64 time )
     {
         KFDate date( time );
-        return CheckInTimeSection( timesection, date );
+        return CheckInTimeSection( time_section, date );
     }
 
-    bool KFDate::CheckInTimeSection( const KFTimeSection* timesection, KFDate& date )
+    bool KFDate::CheckInTimeSection( const KFTimeSection* time_section, KFDate& date )
     {
-        return CheckSectionTimeData( &timesection->_start_time_data, date ) &&
-               !CheckSectionTimeData( &timesection->_finish_time_data, date );
+        return CheckSectionTimeData( &time_section->_start_time_data, date ) &&
+               !CheckSectionTimeData( &time_section->_finish_time_data, date );
     }
 
-    bool KFDate::CheckSectionTimeData( const KFTimeData* timedata, KFDate& date )
+    bool KFDate::CheckSectionTimeData( const KFTimeData* time_data, KFDate& date )
     {
-        switch ( timedata->_flag )
+        switch ( time_data->_flag )
         {
         case KFTimeEnum::Minute:	// 分钟
-            return CheckSectionMinute( timedata, date );
+            return CheckSectionMinute( time_data, date );
             break;
         case KFTimeEnum::Hour:		// 小时
-            return CheckSectionHour( timedata, date );
+            return CheckSectionHour( time_data, date );
             break;
         case KFTimeEnum::Day:		// 每天
-            return CheckSectionDay( timedata, date );
+            return CheckSectionDay( time_data, date );
             break;
         case KFTimeEnum::Week:		// 星期
-            return CheckSectionWeek( timedata, date );
+            return CheckSectionWeek( time_data, date );
             break;
         case KFTimeEnum::Month:		// 月份
-            return CheckSectionMonth( timedata, date );
+            return CheckSectionMonth( time_data, date );
             break;
         case KFTimeEnum::Year:		// 年份
-            return CheckSectionYear( timedata, date );
+            return CheckSectionYear( time_data, date );
             break;
         default:
             break;
@@ -519,43 +515,43 @@ namespace KFrame
         return false;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFDate::CheckSectionMinute( const KFTimeData* timedata, KFDate& date )
+    bool KFDate::CheckSectionMinute( const KFTimeData* time_data, KFDate& date )
     {
-        return date.GetMinute() > timedata->_minute;
+        return date.GetMinute() > time_data->_minute;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFDate::CheckSectionHour( const KFTimeData* timedata, KFDate& date )
+    bool KFDate::CheckSectionHour( const KFTimeData* time_data, KFDate& date )
     {
-        auto datetime = date.GetHour() * KFTimeEnum::OneHourMinute + date.GetMinute();
-        auto checktime = timedata->_hour * KFTimeEnum::OneHourMinute + timedata->_minute;
-        return datetime >= checktime;
+        auto date_time = date.GetHour() * KFTimeEnum::OneHourMinute + date.GetMinute();
+        auto check_time = time_data->_hour * KFTimeEnum::OneHourMinute + time_data->_minute;
+        return date_time >= check_time;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFDate::CheckSectionDay( const KFTimeData* timedata, KFDate& date )
+    bool KFDate::CheckSectionDay( const KFTimeData* time_data, KFDate& date )
     {
-        auto datetime = date.GetDay() * KFTimeEnum::OneDayMinute + date.GetHour() * KFTimeEnum::OneHourMinute + date.GetMinute();
-        auto checktime = timedata->_day * KFTimeEnum::OneDayMinute +  timedata->_hour * KFTimeEnum::OneHourMinute + timedata->_minute;
-        return datetime >= checktime;
+        auto date_time = date.GetDay() * KFTimeEnum::OneDayMinute + date.GetHour() * KFTimeEnum::OneHourMinute + date.GetMinute();
+        auto check_time = time_data->_day * KFTimeEnum::OneDayMinute +  time_data->_hour * KFTimeEnum::OneHourMinute + time_data->_minute;
+        return date_time >= check_time;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFDate::CheckSectionWeek( const KFTimeData* timedata, KFDate& date )
+    bool KFDate::CheckSectionWeek( const KFTimeData* time_data, KFDate& date )
     {
-        auto datetime = date.GetDayOfWeek() * KFTimeEnum::OneDayMinute + date.GetHour() * KFTimeEnum::OneHourMinute + date.GetMinute();
-        auto checktime = timedata->_day_of_week * KFTimeEnum::OneDayMinute + timedata->_hour * KFTimeEnum::OneHourMinute + timedata->_minute;
-        return datetime >= checktime;
+        auto date_time = date.GetDayOfWeek() * KFTimeEnum::OneDayMinute + date.GetHour() * KFTimeEnum::OneHourMinute + date.GetMinute();
+        auto check_time = time_data->_day_of_week * KFTimeEnum::OneDayMinute + time_data->_hour * KFTimeEnum::OneHourMinute + time_data->_minute;
+        return date_time >= check_time;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFDate::CheckSectionMonth( const KFTimeData* timedata, KFDate& date )
+    bool KFDate::CheckSectionMonth( const KFTimeData* time_data, KFDate& date )
     {
-        auto datetime = ( date.GetMonth() * KFTimeEnum::OneMonthDay +  date.GetDay() ) * KFTimeEnum::OneDayMinute + date.GetHour() * KFTimeEnum::OneHourMinute + date.GetMinute();
-        auto checktime = ( timedata->_month * KFTimeEnum::OneMonthDay + timedata->_day ) * KFTimeEnum::OneDayMinute + timedata->_hour * KFTimeEnum::OneHourMinute + timedata->_minute;
-        return datetime >= checktime;
+        auto date_time = ( date.GetMonth() * KFTimeEnum::OneMonthDay +  date.GetDay() ) * KFTimeEnum::OneDayMinute + date.GetHour() * KFTimeEnum::OneHourMinute + date.GetMinute();
+        auto check_time = ( time_data->_month * KFTimeEnum::OneMonthDay + time_data->_day ) * KFTimeEnum::OneDayMinute + time_data->_hour * KFTimeEnum::OneHourMinute + time_data->_minute;
+        return date_time >= check_time;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFDate::CheckSectionYear( const KFTimeData* timedata, KFDate& date )
+    bool KFDate::CheckSectionYear( const KFTimeData* time_data, KFDate& date )
     {
-        KFDate checkdate( timedata->_year, timedata->_month, timedata->_day, timedata->_hour, timedata->_month );
-        return date.GetTime() >= checkdate.GetTime();
+        KFDate check_date( time_data->_year, time_data->_month, time_data->_day, time_data->_hour, time_data->_month );
+        return date.GetTime() >= check_date.GetTime();
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

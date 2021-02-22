@@ -5,18 +5,16 @@
 
 namespace KFrame
 {
-    typedef std::function< void() > KFThreadFunction;
-
     ///////////////////////////////////////////////////////////////////////////////////////////
     class KFThread
     {
     public:
         // 当前线程id
-        static uint32 GetThreadID();
+        static ThreadId GetThreadID();
 
         // 创建线程
         template<class T>
-        static uint32 CreateThread( T* object, void( T::*handle )(), const char* file, uint32 line )
+        static ThreadId CreateThread( T* object, void( T::*handle )(), const char* file, uint32 line )
         {
             KFThreadFunction function = std::bind( handle, object );
             return CreateThread( function, file, line );
@@ -27,7 +25,7 @@ namespace KFrame
 
     protected:
         // 创建线程
-        static uint32 CreateThread( KFThreadFunction& function, const char* file, uint32 line );
+        static ThreadId CreateThread( KFThreadFunction& function, const char* file, uint32 line );
     };
 
 

@@ -183,7 +183,7 @@ namespace KFrame
         void RegisterCommandFunction( const std::string& command, T* module, void ( T::*handle )( const StringVector& ) )
         {
             auto function = _command_functions.Create( command );
-            function->SetFunction( module, std::bind( handle, module, std::placeholders::_1 ) );
+            function->SetFunction( std::bind( handle, module, std::placeholders::_1 ) );
         }
 
         void UnRegisterCommandFunction( const std::string& command )
@@ -284,8 +284,8 @@ namespace KFrame
         KFMapFunction<std::string, KFCmdFunction> _command_functions;
 
         // 注册的Run函数
-        KFMapFunction<uint32, KFRunFunction> _run_functions;
-        KFMapFunction<uint32, KFRunFunction> _after_run_functions;
+        KFMapModuleFunction<uint32, KFRunFunction> _run_functions;
+        KFMapModuleFunction<uint32, KFRunFunction> _after_run_functions;
     };
 }
 

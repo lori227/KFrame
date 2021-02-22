@@ -25,14 +25,14 @@ namespace KFrame
     void KFBusModule::PrepareRun()
     {
         // 如果是master, 不执行
-        auto kfglobal = KFGlobal::Instance();
-        if ( kfglobal->_app_type == __STRING__( master ) )
+        auto global = KFGlobal::Instance();
+        if ( global->_app_type == __STRING__( master ) )
         {
             return;
         }
 
         // 查找需要连接的master服务器, 自动连接
-        auto kfsetting = FindMasterConnection( kfglobal->_app_name, kfglobal->_app_type, kfglobal->_app_id->ToString() );
+        auto kfsetting = FindMasterConnection( global->_app_name, global->_app_type, global->_app_id->ToString() );
         if ( kfsetting != nullptr )
         {
             // 启动定时器
@@ -42,8 +42,8 @@ namespace KFrame
 
     __KF_TIMER_FUNCTION__( KFBusModule::OnTimerConnectionMaster )
     {
-        auto kfglobal = KFGlobal::Instance();
-        auto kfaddress = _kf_ip_address->GetMasterIp( kfglobal->_app_name, kfglobal->_app_id->GetZoneId() );
+        auto global = KFGlobal::Instance();
+        auto kfaddress = _kf_ip_address->GetMasterIp( global->_app_name, global->_app_id->GetZoneId() );
         if ( kfaddress == nullptr )
         {
             return;
@@ -106,14 +106,14 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFBusModule::CheckNeedConnection( const std::string& connectname, const std::string& connecttype, uint64 connectid )
     {
-        auto kfglobal = KFGlobal::Instance();
+        auto global = KFGlobal::Instance();
 
         // 不是同一类服务器
         // 如果是master, 返回false, 因为master会主动连, 不需要再这里再次连接
         // 自己不能连接自己
-        if ( connectname != kfglobal->_app_name ||
+        if ( connectname != global->_app_name ||
                 connecttype == __STRING__( master ) ||
-                connectid == kfglobal->_app_id->GetId() )
+                connectid == global->_app_id->GetId() )
         {
             return false;
         }
@@ -122,17 +122,17 @@ namespace KFrame
         for ( auto& iter : KFBusConfig::Instance()->_settings._objects )
         {
             auto kfsetting = iter.second;
-            if ( kfsetting->_app_name != _globbing_string && kfsetting->_app_name != kfglobal->_app_name )
+            if ( kfsetting->_app_name != _globbing_string && kfsetting->_app_name != global->_app_name )
             {
                 continue;
             }
 
-            if ( kfsetting->_app_type != _globbing_string && kfsetting->_app_type != kfglobal->_app_type )
+            if ( kfsetting->_app_type != _globbing_string && kfsetting->_app_type != global->_app_type )
             {
                 continue;
             }
 
-            if ( kfsetting->_app_id != _globbing_string && kfsetting->_app_id != kfglobal->_app_id->ToString() )
+            if ( kfsetting->_app_id != _globbing_string && kfsetting->_app_id != global->_app_id->ToString() )
             {
                 continue;
             }
@@ -158,7 +158,7 @@ namespace KFrame
             {
                 KFAppId kfappid( connectid );
                 auto connectworkid = kfappid.GetWorkId();
-                auto workid = ( kfglobal->_app_id->GetWorkId() + kfsetting->_multi - 1 ) / kfsetting->_multi;
+                auto workid = ( global->_app_id->GetWorkId() + kfsetting->_multi - 1 ) / kfsetting->_multi;
                 if ( ( __MAX__( workid, connectworkid ) ) - ( __MIN__( workid, connectworkid ) ) > kfsetting->_interval )
                 {
                     return false;

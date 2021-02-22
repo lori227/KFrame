@@ -5,8 +5,8 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////
     void KFDropGroupConfig::ReadSetting( KFXmlNode& xmlnode, KFDropSetting* kfsetting )
     {
-        kfsetting->_is_drop_count = xmlnode.ReadBoolen( "dropcount", true );
-        kfsetting->_is_exclude = xmlnode.ReadBoolen( "exclude", true );
+        kfsetting->_is_drop_count = xmlnode.ReadBool( "dropcount", true );
+        kfsetting->_is_exclude = xmlnode.ReadBool( "exclude", true );
         kfsetting->_condition_type = xmlnode.ReadUInt32( "conditiontype", true );
         kfsetting->_rand_type = xmlnode.ReadUInt32( "randtype", true );
 
@@ -25,7 +25,7 @@ namespace KFrame
             drop_weight = kfsetting->_rand_list.Create( ++id, weight );
         }
 
-        drop_weight->_is_clear_var = xmlnode.ReadBoolen( "reset", true );
+        drop_weight->_is_clear_var = xmlnode.ReadBool( "reset", true );
         drop_weight->_drop_data_id = xmlnode.ReadUInt32( "dropdataid", true );
 
         // 条件

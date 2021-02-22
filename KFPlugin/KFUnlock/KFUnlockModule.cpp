@@ -37,7 +37,7 @@ namespace KFrame
                 continue;
             }
 
-            if ( kfsetting->_unlock_condition->_ids.empty() )
+            if ( kfsetting->_unlock_condition->_id_list.empty() )
             {
                 UnlockPlayerData( player, kfsetting, kfdatarecord );
                 continue;

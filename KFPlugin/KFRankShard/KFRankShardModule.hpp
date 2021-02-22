@@ -98,7 +98,7 @@ namespace KFrame
         // 刷新排行榜
         void SyncRefreshRankData( uint32 rankid );
         bool RefreshRankData( uint32 rankid );
-        bool RefreshRankData( const KFRankSetting* kfsetting, uint32 zone_id, const KFTimeData* timedata );
+        bool RefreshRankData( const KFRankSetting* kfsetting, uint32 zone_id, const KFTimeData* time_data );
 
         // 计算zoneid
         uint32 CalcRankZoneId( uint64 playerid, const KFRankSetting* kfsetting );

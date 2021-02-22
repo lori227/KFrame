@@ -128,17 +128,17 @@ namespace KFrame
         CalcNextCheckRunTime();
 
         // 检查计划任务状态
-        KFDate nowdate( KFGlobal::Instance()->_real_time );
+        KFDate now_date( KFGlobal::Instance()->_real_time );
         for ( auto& iter : _kf_schedule_list._objects )
         {
             auto schedulelist = iter.second;
             switch ( schedulelist->_status )
             {
             case KFScheduleEnum::Stop:
-                ExecuteScheduleStart( schedulelist, nowdate );
+                ExecuteScheduleStart( schedulelist, now_date );
                 break;
             case KFScheduleEnum::Runing:
-                ExecuteScheduleFinish( schedulelist, nowdate );
+                ExecuteScheduleFinish( schedulelist, now_date );
                 break;
             default:
                 break;
@@ -146,7 +146,7 @@ namespace KFrame
         }
     }
 
-    void KFScheduleModule::ExecuteScheduleStart( KFScheduleDataList* schedulelist, KFDate& nowdate )
+    void KFScheduleModule::ExecuteScheduleStart( KFScheduleDataList* schedulelist, KFDate& now_date )
     {
         auto kftimesetting = KFTimeSectionConfig::Instance()->FindSetting( schedulelist->_time_section_id );
         if ( kftimesetting == nullptr )
@@ -154,14 +154,14 @@ namespace KFrame
             return;
         }
 
-        for ( auto& timesection : kftimesetting->_time_section )
+        for ( auto& time_section : kftimesetting->_time_section )
         {
             // 在[starttime,endtime]区间内
-            if ( KFDate::CheckInTimeSection( &timesection, nowdate ) )
+            if ( KFDate::CheckInTimeSection( &time_section, now_date ) )
             {
                 schedulelist->_status = KFScheduleEnum::Runing;
-                schedulelist->_finish_time_data = timesection._finish_time_data;
-                //schedulelist->_duration_time = CaclSectionTimeDataDuration( &timesection._start_time, &timesection._end_time );
+                schedulelist->_finish_time_data = time_section._finish_time_data;
+                //schedulelist->_duration_time = CaclSectionTimeDataDuration( &time_section._start_time, &time_section._end_time );
 
                 // 功能函数回调
                 for ( auto& iter : schedulelist->_schedule_data_list._objects )
@@ -175,10 +175,10 @@ namespace KFrame
         }
     }
 
-    void KFScheduleModule::ExecuteScheduleFinish( KFScheduleDataList* schedulelist, KFDate& nowdate )
+    void KFScheduleModule::ExecuteScheduleFinish( KFScheduleDataList* schedulelist, KFDate& now_date )
     {
         // 没有过结束时间
-        if ( !KFDate::CheckSectionTimeData( &schedulelist->_finish_time_data, nowdate ) )
+        if ( !KFDate::CheckSectionTimeData( &schedulelist->_finish_time_data, now_date ) )
         {
             return;
         }

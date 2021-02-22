@@ -21,7 +21,7 @@ namespace KFrame
         std::string _param;
     };
     //////////////////////////////////////////////////////////////////////////////
-    class KFAppConfig : public KFSingleton< KFAppConfig >
+    class KFAppConfig : public KFSingleton<KFAppConfig>
     {
     public:
         KFAppConfig() = default;
@@ -44,7 +44,7 @@ namespace KFrame
         std::string _plugin_path;
 
         // 配置
-        std::list< KFAppSetting > _startups;
+        std::list<KFAppSetting> _startups;
     };
 
     ///////////////////////////////////////////////////////////////////////////////////////////////

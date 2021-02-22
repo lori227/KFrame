@@ -439,7 +439,7 @@ namespace KFrame
     void KFPlayerModule::OnEnterCreatePlayer( KFEntity* player, uint64 playerid )
     {
         // 判断新玩家
-        auto kfglobal = KFGlobal::Instance();
+        auto global = KFGlobal::Instance();
         auto basicid = player->Get( __STRING__( basic ), __STRING__( id ) );
         if ( basicid == playerid )
         {
@@ -448,7 +448,7 @@ namespace KFrame
 
         player->InitData();
         player->SetNew( true );
-        player->Set( __STRING__( birthday ), kfglobal->_real_time );
+        player->Set( __STRING__( birthday ), global->_real_time );
         player->Set( __STRING__( basic ), __STRING__( id ), playerid );
 
         for ( auto& iter : _new_player_function._objects )

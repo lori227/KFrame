@@ -51,13 +51,13 @@ namespace KFrame
         _kf_delayed_register.push_back( delayeddata );
     }
 
-    void KFDelayedModule::AddDelayedFunction( KFTimeData* timedata, uint64 objectid, const int8* data, uint32 size,
+    void KFDelayedModule::AddDelayedFunction( KFTimeData* time_data, uint64 objectid, const int8* data, uint32 size,
             KFModule* module, KFDelayedFunction& function )
     {
         auto delayeddata = __KF_NEW__( KFDelayedData, data, size );
         delayeddata->_loop_type = KFDelayedEnum::Loop;
-        delayeddata->_time_data = *timedata;
-        delayeddata->_next_execute_time = KFDate::CalcTimeData( timedata, KFGlobal::Instance()->_real_time, 1 );
+        delayeddata->_time_data = *time_data;
+        delayeddata->_next_execute_time = KFDate::CalcTimeData( time_data, KFGlobal::Instance()->_real_time, 1 );
         delayeddata->_object_id = objectid;
         delayeddata->_function.SetFunction( module, function );
         _kf_delayed_register.push_back( delayeddata );

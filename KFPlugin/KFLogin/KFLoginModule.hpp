@@ -61,7 +61,7 @@ namespace KFrame
         void SendLoginAckToGate( uint32 result, uint64 gateid, uint64 sessionid, uint64 accountid, uint64 bantime );
     private:
         // 世界服务器id
-        KFConHash _world_hash;
+        KFHash _world_hash;
         uint64 _world_server_id = _invalid_int;
     };
 }

@@ -181,18 +181,18 @@ namespace KFrame
 
         // 获得排行榜列表
         auto refreshok = false;
-        auto timedata = &kftimesetting->_time_data;
+        auto time_data = &kftimesetting->_time_data;
         auto queryzonelist = _rank_redis_driver->SMembers( __DATABASE_KEY_2__( __STRING__( ranksortlist ), rankid ) );
         for ( auto& strzoneid : queryzonelist->_value )
         {
             auto zone_id = __TO_UINT32__( strzoneid );
-            refreshok |= RefreshRankData( kfranksetting, zone_id, timedata );
+            refreshok |= RefreshRankData( kfranksetting, zone_id, time_data );
         }
 
         return refreshok;
     }
 
-    bool KFRankShardModule::RefreshRankData( const KFRankSetting* kfsetting, uint32 zone_id, const KFTimeData* timedata )
+    bool KFRankShardModule::RefreshRankData( const KFRankSetting* kfsetting, uint32 zone_id, const KFTimeData* time_data )
     {
         auto kfrankdata = _kf_rank_data.Create( RankKey( kfsetting->_id, zone_id ) );
         if ( !KFDate::CheckPassTime(  KFGlobal::Instance()->_real_time, kfrankdata->_next_refresh_time ) )
@@ -204,7 +204,7 @@ namespace KFrame
         kfrankdata->_rank_id = kfsetting->_id;
         kfrankdata->_zone_id = zone_id;
         kfrankdata->_min_rank_score = 0;
-        kfrankdata->_next_refresh_time = KFDate::CalcTimeData( timedata, KFGlobal::Instance()->_real_time, 1 );
+        kfrankdata->_next_refresh_time = KFDate::CalcTimeData( time_data, KFGlobal::Instance()->_real_time, 1 );
 
         auto& ranksortkey = FormatRankSortKey( kfsetting->_id, zone_id );
         auto& rankdatakey = FormatRankDataKey( kfsetting->_id, zone_id );

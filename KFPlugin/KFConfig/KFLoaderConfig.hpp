@@ -54,7 +54,7 @@ namespace KFrame
 			configdata._name = xmlnode.ReadString( "name", true );
 			configdata._path = xmlnode.ReadString( "path", true );
 			configdata._parent_name = xmlnode.ReadString( "parent_name", true );
-			configdata._can_reload = xmlnode.ReadBoolen( "canreload", true );
+			configdata._can_reload = xmlnode.ReadBool( "canreload", true );
 			configdata._clear_type = xmlnode.ReadUInt32( "cleartype", true );
 			kfsetting->_config_data.push_back( configdata );
 		}

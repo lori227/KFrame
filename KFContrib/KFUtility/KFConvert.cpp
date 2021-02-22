@@ -6,48 +6,48 @@ namespace KFrame
     static const char* _gb_code = "gb2312";
     static const char* _utf8_code = "utf-8";
 
-    std::string KFConvert::ToCovert( void* iconvhandle, const std::string& source )
+    std::string KFConvert::ToCovert( void* iconv_handle, const std::string& source )
     {
-        auto insize = source.size();
-        const char* inbuff = source.data();
+        auto in_size = source.size();
+        const char* in_buff = source.data();
 
         static const uint32 _length = 1024 * 10;
 
-        char iconvbuff[ _length ];
-        auto outbuff = iconvbuff;
-        uint32 iconvsize = _length;
+        char iconv_buff[ _length ];
+        auto out_buff = iconv_buff;
+        uint32 iconv_size = _length;
 
-        auto iconvresult = iconv( iconvhandle, ( char** )( &inbuff ), ( size_t* )&insize, ( char** )( &outbuff ), ( size_t* )&iconvsize );
+        auto iconv_result = iconv( iconv_handle, ( char** )( &in_buff ), ( size_t* )&in_size, ( char** )( &out_buff ), ( size_t* )&iconv_size );
 
         //关闭字符集转换
-        iconv_close( iconvhandle );
+        iconv_close( iconv_handle );
 
         std::string result;
-        result.assign( iconvbuff, _length - iconvsize );
+        result.assign( iconv_buff, _length - iconv_size );
         return result;
     }
 
     std::string KFConvert::ToUTF8( const std::string& source )
     {
         //打开字符集转换
-        auto iconvhandle = iconv_open( _utf8_code, _gb_code );
-        if ( iconvhandle == ( iconv_t ) -1 )
+        auto iconv_handle = iconv_open( _utf8_code, _gb_code );
+        if ( iconv_handle == ( iconv_t ) -1 )
         {
             return "";
         }
 
-        return ToCovert( iconvhandle, source );
+        return ToCovert( iconv_handle, source );
     }
 
     std::string KFConvert::ToAscii( const std::string& source )
     {
         //打开字符集转换
-        auto iconvhandle = iconv_open( _gb_code, _utf8_code );
-        if ( iconvhandle == ( iconv_t ) -1 )
+        auto iconv_handle = iconv_open( _gb_code, _utf8_code );
+        if ( iconv_handle == ( iconv_t ) -1 )
         {
             return "";
         }
 
-        return ToCovert( iconvhandle, source );
+        return ToCovert( iconv_handle, source );
     }
 }

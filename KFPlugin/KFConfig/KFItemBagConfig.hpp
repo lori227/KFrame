@@ -10,40 +10,40 @@ namespace KFrame
 	class KFItemBagSetting : public KFStrSetting
 	{
 	public:
-		// ×î´óÊýÁ¿
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		uint32 _max_count = 0u;
 
-		// Ö÷Ë÷ÒýµÄÃû×Ö
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		std::string _index_name;
 
-		// Ò³Ç©ÁÐ±í
+		// Ò³Ç©ï¿½Ð±ï¿½
 		StringSet _tab_list;
 
-		// Âú°üÊÇ·ñµ¯³ö¶îÍâ±³°ü
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ñµ¯³ï¿½ï¿½ï¿½ï¿½â±³ï¿½ï¿½
 		std::string _extend_bag;
 
-		// ¿ÉÍ¬Ê±Ê¹ÓÃµÄ±³°ü
+		// ï¿½ï¿½Í¬Ê±Ê¹ï¿½ÃµÄ±ï¿½ï¿½ï¿½
 		StringList _use_child_bag;
 
-		// À´×ÔÔ´±³°üµÄÒÆ¶¯µÀ¾ßÌí¼ÓÐèÒª¸üÐÂ
+		// ï¿½ï¿½ï¿½ï¿½Ô´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½
 		StringSet _update_add_from_source;
 
-		// ÒÆ¶¯µ½Ä¿±ê±³°üµÄµÀ¾ßÐèÒª¸üÐÂ
+		// ï¿½Æ¶ï¿½ï¿½ï¿½Ä¿ï¿½ê±³ï¿½ï¿½ï¿½Äµï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½
 		StringSet _update_move_to_target;
 
-		// ÒÆ¶¯ÐèÒª¿Í»§¶ËÆ®×ÖµÄ±³°ü
+		// ï¿½Æ¶ï¿½ï¿½ï¿½Òªï¿½Í»ï¿½ï¿½ï¿½Æ®ï¿½ÖµÄ±ï¿½ï¿½ï¿½
 		StringSet _show_move_to_target;
 
-		// Ìí¼ÓµÀ¾ßÊÇ·ñÍ¨Öª¿Í»§¶ËÆ®×Ö
+		// ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½Ç·ï¿½Í¨Öªï¿½Í»ï¿½ï¿½ï¿½Æ®ï¿½ï¿½
 		bool _show_when_add = false;
 
-		// ÊÇ·ñÖ§³ÖÖ±½ÓÒÆ¶¯
+		// ï¿½Ç·ï¿½Ö§ï¿½ï¿½Ö±ï¿½ï¿½ï¿½Æ¶ï¿½
 		bool _can_move = false;
 
-		// ÊÇ·ñÖ§³ÖÒ»¼üÒÆ¶¯ËùÓÐ
+		// ï¿½Ç·ï¿½Ö§ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½
 		bool _can_move_all = false;
 
-		// ÊÇ·ñÖ§³ÖÒ»¼üÇå¿Õ
+		// ï¿½Ç·ï¿½Ö§ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½
 		bool _can_cleanup = false;
 
 	};
@@ -71,10 +71,10 @@ namespace KFrame
 			kfsetting->_update_add_from_source = xmlnode.ReadStringSet( "updateaddfromsource", true );
 			kfsetting->_update_move_to_target = xmlnode.ReadStringSet( "updatemovetotarget", true );
 			kfsetting->_show_move_to_target = xmlnode.ReadStringSet( "showmovetotarget", true );
-			kfsetting->_show_when_add = xmlnode.ReadBoolen( "showwhenadd", true );
-			kfsetting->_can_move = xmlnode.ReadBoolen( "canmove", true );
-			kfsetting->_can_move_all = xmlnode.ReadBoolen( "canmoveall", true );
-			kfsetting->_can_cleanup = xmlnode.ReadBoolen( "cancleanup", true );
+			kfsetting->_show_when_add = xmlnode.ReadBool( "showwhenadd", true );
+			kfsetting->_can_move = xmlnode.ReadBool( "canmove", true );
+			kfsetting->_can_move_all = xmlnode.ReadBool( "canmoveall", true );
+			kfsetting->_can_cleanup = xmlnode.ReadBool( "cancleanup", true );
 		}
 
 	};

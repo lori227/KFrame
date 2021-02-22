@@ -3,7 +3,7 @@
 
 namespace KFrame
 {
-    void KFHashLogic::AddHashNode( const std::string& name, uint64 id, uint32 virtualcount /* = 1 */ )
+    void KFHashLogic::AddHashNode( const std::string& name, uint64 id, uint32 virtual_count /* = 1 */ )
     {
         auto node = _node_list.Create( id );
 
@@ -12,24 +12,24 @@ namespace KFrame
 
         if ( node->_virtual_list.empty() )
         {
-            AddVirtualNode( node, virtualcount );
+            AddVirtualNode( node, virtual_count );
         }
 
         _select_list.clear();
     }
 
-    void KFHashLogic::AddVirtualNode( HashNode* node, uint32 virtualcount )
+    void KFHashLogic::AddVirtualNode( std::shared_ptr<HashNode>& node, uint32 virtual_count )
     {
-        for ( auto i = 0u; i < virtualcount; ++i )
+        for ( auto i = 0u; i < virtual_count; ++i )
         {
             auto temp = __FORMAT__( "{}:{}:{}", node->_name, node->_id, i );
 
-            auto hashkey = KFUtility::GetHashValue( temp );
-            node->_virtual_list.push_back( hashkey );
+            auto hash_key = KFUtility::GetHashValue( temp );
+            node->_virtual_list.push_back( hash_key );
 
-            auto virtualnode = _virtual_list.Create( hashkey );
-            virtualnode->_hash_key = hashkey;
-            virtualnode->_hash_node = node;
+            auto virtual_node = _virtual_list.Create( hash_key );
+            virtual_node->_hash_key = hash_key;
+            virtual_node->_hash_node = node.get();
         }
     }
 
@@ -41,9 +41,9 @@ namespace KFrame
             return false;
         }
 
-        for ( auto hashkey : node->_virtual_list )
+        for ( auto hash_key : node->_virtual_list )
         {
-            _virtual_list.Remove( hashkey );
+            _virtual_list.Remove( hash_key );
         }
 
         _node_list.Remove( id );
@@ -56,10 +56,10 @@ namespace KFrame
         // 现在已经选择的列表中查找, 优化一下 不要每次都算hash和查找
         if ( cache )
         {
-            auto nodeid = FindSelectNode( data );
-            if ( nodeid != _invalid_int )
+            auto node_id = FindSelectNode( data );
+            if ( node_id != _invalid_int )
             {
-                return nodeid;
+                return node_id;
             }
         }
 
@@ -68,41 +68,40 @@ namespace KFrame
             return _invalid_int;
         }
 
-        auto hashkey = KFUtility::GetHashValue( data );
+        auto hash_key = KFUtility::GetHashValue( data );
 
         // 查找
-        auto iter = _virtual_list._objects.lower_bound( hashkey );
+        auto iter = _virtual_list._objects.lower_bound( hash_key );
         if ( iter == _virtual_list._objects.end() )
         {
             iter = _virtual_list._objects.begin();
         }
 
-        auto virtualnode = iter->second;
-        auto nodeid = virtualnode->_hash_node->_id;
+        auto virtual_node = iter->second;
+        auto node_id = virtual_node->_hash_node->_id;
         if ( cache )
         {
-            _select_list[ data ] = nodeid;
+            _select_list[ data ] = node_id;
         }
 
-        return nodeid;
+        return node_id;
     }
 
-    uint64 KFHashLogic::FindHashNode( uint64 objectid, bool cache )
+    uint64 KFHashLogic::FindHashNode( uint64 object_id, bool cache )
     {
-        auto strdata = __FORMAT__( "object:{}", objectid );
-        return FindHashNode( strdata, cache );
+        auto hash_data = __FORMAT__( "object:{}", object_id );
+        return FindHashNode( hash_data, cache );
     }
 
-    uint64 KFHashLogic::FindHashNode( const std::string& data, uint64 objectid, bool cache )
+    uint64 KFHashLogic::FindHashNode( const std::string& data, uint64 object_id, bool cache )
     {
-        auto strdata = __FORMAT__( "{}:{}", data, objectid );
-        return FindHashNode( strdata, cache );
+        auto hash_data = __FORMAT__( "{}:{}", data, object_id );
+        return FindHashNode( hash_data, cache );
     }
 
     void KFHashLogic::GetAllHashNode( UInt64List& nodes )
     {
         nodes.clear();
-
         for ( auto iter : _node_list._objects )
         {
             nodes.push_back( iter.first );

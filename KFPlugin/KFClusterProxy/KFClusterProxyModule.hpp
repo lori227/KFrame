@@ -108,7 +108,7 @@ namespace KFrame
         KFHashMap< std::string, KFClusterToken > _kf_token_list;
 
         // hash一致性列表
-        KFConHash _kf_hash;
+        KFHash _kf_hash;
     };
 }
 #endif

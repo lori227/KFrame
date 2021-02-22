@@ -1,31 +1,30 @@
-﻿#ifndef __KF_MUTEX_H__
+﻿ #ifndef __KF_MUTEX_H__
 #define __KF_MUTEX_H__
+
+#include "KFDefine.h"
 
 namespace KFrame
 {
-    class KFMutex
+    class KFMutex final
     {
     public:
-        KFMutex();
-        ~KFMutex();
-
         void Lock();
         void Unlock();
 
     private:
-        char _buff[ 128 ];
+        std::mutex _mutex;
     };
 
     ///////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////
-    class KFLocker
+    class KFLocker final
     {
     public:
-        KFLocker( KFMutex& kfmutex );
+        KFLocker( KFMutex& mutex );
         ~KFLocker();
 
     private:
-        KFMutex& _kf_mutex;
+        KFMutex& _mutex;
     };
 }
 

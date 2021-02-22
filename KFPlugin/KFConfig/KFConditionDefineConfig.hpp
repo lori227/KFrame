@@ -73,7 +73,7 @@ namespace KFrame
 			kfsetting->_parent_name = xmlnode.ReadString( "parent_name", true );
 			kfsetting->_data_name = xmlnode.ReadString( "data_name", true );
 			kfsetting->_init_calc_type = xmlnode.ReadUInt32( "initcalctype", true );
-			kfsetting->_save_uuid = xmlnode.ReadBoolen( "saveuuid", true );
+			kfsetting->_save_uuid = xmlnode.ReadBool( "saveuuid", true );
 		
 			ConditionTrigger conditiontrigger;
 			conditiontrigger._call_type = xmlnode.ReadUInt32( "calltype", true );

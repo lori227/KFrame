@@ -45,7 +45,7 @@ namespace KFrame
 
     void KFRand::SetRand()
     {
-        register uint32 a = _aa, b = _bb, x, y, i;
+        uint32 a = _aa, b = _bb, x, y, i;
 
         for ( i = 0; i < 256; ++i )
         {

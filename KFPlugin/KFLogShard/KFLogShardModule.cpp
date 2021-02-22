@@ -28,14 +28,14 @@ namespace KFrame
 
         __LOG_INFO__( "[{}:{}:{}] request address req", appname, apptype, appid );
 
-        auto kfglobal = KFGlobal::Instance();
+        auto global = KFGlobal::Instance();
 
         __JSON_OBJECT_DOCUMENT__( response );
-        __JSON_SET_VALUE__( response, __STRING__( appname ), kfglobal->_app_name );
-        __JSON_SET_VALUE__( response, __STRING__( apptype ), kfglobal->_app_type );
-        __JSON_SET_VALUE__( response, __STRING__( appid ), kfglobal->_app_id->GetId() );
-        __JSON_SET_VALUE__( response, __STRING__( ip ), kfglobal->_intranet_ip );
-        __JSON_SET_VALUE__( response, __STRING__( port ), kfglobal->_listen_port );
+        __JSON_SET_VALUE__( response, __STRING__( appname ), global->_app_name );
+        __JSON_SET_VALUE__( response, __STRING__( apptype ), global->_app_type );
+        __JSON_SET_VALUE__( response, __STRING__( appid ), global->_app_id->GetId() );
+        __JSON_SET_VALUE__( response, __STRING__( ip ), global->_intranet_ip );
+        __JSON_SET_VALUE__( response, __STRING__( port ), global->_listen_port );
         return _kf_http_server->SendResponse( response );
     }
 

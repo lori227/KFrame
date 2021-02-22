@@ -10,10 +10,10 @@ namespace KFrame
     public:
 
         // 压缩
-        static bool Compress( const std::string& value, std::string& result, uint32 compresstype, uint32 compresslevel, bool convert );
+        static bool Compress( const std::string& value, std::string& result, uint32 compress_type, uint32 compress_level, bool convert );
 
         // 解压缩
-        static bool UnCompress( const std::string& value, std::string& result, uint32 compresstype, bool convert );
+        static bool UnCompress( const std::string& value, std::string& result, uint32 compress_type, bool convert );
 
     protected:
     };

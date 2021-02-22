@@ -58,8 +58,8 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_NET_EVENT_FUNCTION__( KFClusterProxyModule::OnClientConnectionServer )
     {
-        auto kfglobal = KFGlobal::Instance();
-        if ( kfglobal->_app_name != net_data->_name )
+        auto global = KFGlobal::Instance();
+        if ( global->_app_name != net_data->_name )
         {
             return;
         }
@@ -87,16 +87,16 @@ namespace KFrame
             return;
         }
 
-        auto kfglobal = KFGlobal::Instance();
+        auto global = KFGlobal::Instance();
 
         KFMsg::S2SClusterRegisterToMasterReq req;
         auto listendata = req.mutable_listen();
 
-        listendata->set_appname( kfglobal->_app_name );
-        listendata->set_apptype( kfglobal->_app_type );
-        listendata->set_appid( kfglobal->_app_id->GetId() );
-        listendata->set_ip( kfglobal->_intranet_ip );
-        listendata->set_port( kfglobal->_listen_port );
+        listendata->set_appname( global->_app_name );
+        listendata->set_apptype( global->_app_type );
+        listendata->set_appid( global->_app_id->GetId() );
+        listendata->set_ip( global->_intranet_ip );
+        listendata->set_port( global->_listen_port );
         auto ok = _kf_tcp_client->SendNetMessage( objectid, KFMsg::S2S_CLUSTER_REGISTER_TO_MASTER_REQ, &req );
         if ( ok )
         {
@@ -156,8 +156,8 @@ namespace KFrame
 
     __KF_NET_EVENT_FUNCTION__( KFClusterProxyModule::OnClientLostServer )
     {
-        auto kfglobal = KFGlobal::Instance();
-        if ( kfglobal->_app_name != net_data->_name )
+        auto global = KFGlobal::Instance();
+        if ( global->_app_name != net_data->_name )
         {
             return;
         }

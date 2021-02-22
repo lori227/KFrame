@@ -127,7 +127,7 @@ namespace KFrame
         void SendLoginToGateAck( uint32 result, const KFMsg::PBLoginData* pblogin );
     private:
         // 世界服务器id
-        KFConHash _world_hash;
+        KFHash _world_hash;
         uint64 _world_server_id = _invalid_int;
 
         // 玩家组建

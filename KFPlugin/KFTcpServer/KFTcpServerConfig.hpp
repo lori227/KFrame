@@ -46,7 +46,7 @@ namespace KFrame
             kfsetting->_max_queue_size = xmlnode.ReadUInt32( "maxqueue" );
             kfsetting->_handle_message_count = xmlnode.ReadUInt32( "handlemessage", true, 500 );
             kfsetting->_message_type = xmlnode.ReadUInt32( "messagetype", true, KFMessageEnum::Server );
-            kfsetting->_open_encrypt = xmlnode.ReadBoolen( "openencrypt" );
+            kfsetting->_open_encrypt = xmlnode.ReadBool( "openencrypt" );
             kfsetting->_encrypt_key = xmlnode.ReadString( "encryptkey" );
             kfsetting->_compress_type = xmlnode.ReadUInt32( "compresstype" );
             kfsetting->_compress_level = xmlnode.ReadUInt32( "compresslevel" );

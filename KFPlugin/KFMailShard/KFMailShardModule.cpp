@@ -47,10 +47,10 @@ namespace KFrame
         // 每天5点 清理过期的全局邮件
         if ( KFGlobal::Instance()->_app_id->GetWorkId() == 1u )
         {
-            KFTimeData timedata;
-            timedata._flag = KFTimeEnum::Day;
-            timedata._hour = 5;
-            __REGISTER_DELAYED_NO_DATA__( &timedata, 0, &KFMailShardModule::OnDelayedClearWholeOverdueMail );
+            KFTimeData time_data;
+            time_data._flag = KFTimeEnum::Day;
+            time_data._hour = 5;
+            __REGISTER_DELAYED_NO_DATA__( &time_data, 0, &KFMailShardModule::OnDelayedClearWholeOverdueMail );
         }
     }
 

@@ -19,19 +19,19 @@ namespace KFrame
 
     void KFProjectModule::BeforeRun()
     {
-        auto kfglobal = KFGlobal::Instance();
+        auto global = KFGlobal::Instance();
 
     }
 
     void KFProjectModule::AfterLoad()
     {
-        auto kfglobal = KFGlobal::Instance();
+        auto global = KFGlobal::Instance();
         if ( KFConstantConfig::Instance()->_load_ok )
         {
             for ( auto& iter : KFConstantConfig::Instance()->_settings._objects )
             {
                 auto kfsetting = iter.second;
-                kfglobal->AddConstant( kfsetting->_name,0u, kfsetting->_value );
+                global->AddConstant( kfsetting->_name,0u, kfsetting->_value );
             }
         }
 
@@ -40,11 +40,11 @@ namespace KFrame
             for ( auto& iter : KFProjectConfig::Instance()->_settings._objects )
             {
                 auto kfsetting = iter.second;
-                kfglobal->AddConstant( kfsetting->_name, 0, kfsetting->_value );
+                global->AddConstant( kfsetting->_name, 0, kfsetting->_value );
             }
 
-            kfglobal->_project_time = kfglobal->GetUInt32( __STRING__( projecttime ) );
-            kfglobal->_array_index = kfglobal->GetUInt32( __STRING__( arrayindex ) );
+            global->_project_time = global->GetUInt32( __STRING__( projecttime ) );
+            global->_array_index = global->GetUInt32( __STRING__( arrayindex ) );
         }
 
         if ( KFUuidConfig::Instance()->_load_ok )
@@ -52,7 +52,7 @@ namespace KFrame
             for ( auto& iter : KFUuidConfig::Instance()->_settings._objects )
             {
                 auto kfsetting = iter.second;
-                kfglobal->AddUuidData( kfsetting->_id, kfsetting->_time, kfsetting->_zone, kfsetting->_worker, kfsetting->_seq );
+                global->AddUuidData( kfsetting->_id, kfsetting->_time, kfsetting->_zone, kfsetting->_worker, kfsetting->_seq );
             }
         }
 

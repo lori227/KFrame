@@ -27,7 +27,7 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////
 int main( int argc, char* argv[] )
 {
-    _kf_appliction = KFrame::KFApplication::Instance();
-    return _kf_appliction->run( argc, argv );
+    _application = KFrame::KFApplication::Instance();
+    return _application->run( argc, argv );
 }
 

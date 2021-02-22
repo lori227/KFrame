@@ -36,33 +36,31 @@ namespace KFrame
         static uint32 GetLinkType( int8 value );
 
         // 解析
-        static StaticConditionsPtr Parse( std::string& strcondition );
+        static StaticConditionsPtr Parse( std::string& condition );
 
         // 解析条件
-        static std::tuple<KFStaticCondition*, uint32, bool> ParseCondition( const int8* data, uint32 size, uint32 startpos, uint32& endpos );
+        static std::tuple<std::shared_ptr<KFStaticCondition>, uint32, bool> ParseCondition( const int8* data, uint32 size, uint32 start_pos, uint32& end_pos );
 
         // 读取条件
-        static uint32 ReadCondition( const int8* data, uint32 size, uint32 startpos, uint32& endpos );
+        static uint32 ReadCondition( const int8* data, uint32 size, uint32 start_pos, uint32& end_pos );
 
         // 读取判断类型
-        static std::tuple<uint32, uint32, uint32> ReadCheckType( const int8* data, uint32 size, uint32 startpos );
+        static std::tuple<uint32, uint32, uint32> ReadCheckType( const int8* data, uint32 size, uint32 start_pos );
 
         // 解析表达式
-        static std::tuple<KFStaticConditionExpression*, bool> ParseExpression( const int8* data, uint32 size, uint32 startpos );
+        static std::tuple<std::shared_ptr<KFStaticConditionExpression>, bool> ParseExpression( const int8* data, uint32 size, uint32 start_pos );
 
         // 解析数字
-        static KFStaticConditionAbstract* ParseConstant( const int8* data, uint32& size, uint32& startpos );
+        static std::shared_ptr<KFStaticConditionAbstract> ParseConstant( const int8* data, uint32& size, uint32& start_pos );
 
         // 解析属性名
-        static KFStaticConditionAbstract* ParseVariable( const int8* data, uint32& size, uint32& startpos );
+        static std::shared_ptr<KFStaticConditionAbstract> ParseVariable( const int8* data, uint32& size, uint32& start_pos );
 
         // 读取Integer
-        static uint32 ReadInteger( const int8* data, uint32& size, uint32& startpos );
+        static uint32 ReadInteger( const int8* data, uint32& size, uint32& start_pos );
 
         // 读取变量
-        static std::string ReadLetter( const int8* data, uint32& size, uint32& startpos );
-
-
+        static std::string ReadLetter( const int8* data, uint32& size, uint32& start_pos );
     };
 }
 

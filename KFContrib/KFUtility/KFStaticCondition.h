@@ -9,6 +9,8 @@ namespace KFrame
     class KFStaticConditionAbstract
     {
     public:
+        virtual ~KFStaticConditionAbstract() = default;
+
         virtual bool IsConstant() const
         {
             return false;
@@ -58,11 +60,11 @@ namespace KFrame
     public:
         ~KFStaticConditionExpression();
     public:
-        // 数据列表
-        std::vector< KFStaticConditionAbstract* > _data_list;
-
         // 计算符号列表
         UInt32Vector _operator_list;
+
+        // 数据列表
+        std::vector<std::shared_ptr<KFStaticConditionAbstract>> _data_list;
     };
 
     // 静态条件
@@ -72,10 +74,10 @@ namespace KFrame
         ~KFStaticCondition();
     public:
         // 左表达式
-        KFStaticConditionExpression* _left = nullptr;
+        std::shared_ptr<KFStaticConditionExpression> _left = nullptr;
 
         // 右表达式
-        KFStaticConditionExpression* _right = nullptr;
+        std::shared_ptr<KFStaticConditionExpression> _right = nullptr;
 
         // 判断类型
         uint32 _check_type = 0u;
@@ -101,12 +103,12 @@ namespace KFrame
         bool _is_valid = true;
 
         // 条件列表
-        std::vector< KFStaticCondition* > _condition_list;
+        std::vector<std::shared_ptr<KFStaticCondition>> _condition_list;
 
         // 连接列表
         UInt32Vector _link_type;
     };
-    typedef std::shared_ptr< KFStaticConditions > StaticConditionsPtr;
+    typedef std::shared_ptr<KFStaticConditions> StaticConditionsPtr;
 
     // 静态条件列表
     class KFStaticConditionList
@@ -116,9 +118,9 @@ namespace KFrame
         uint32 _check_type = 0;
 
         // 静态条件列表
-        std::vector< StaticConditionsPtr > _conditions_list;
+        std::vector<StaticConditionsPtr> _conditions_list;
     };
-    typedef std::shared_ptr< KFStaticConditionList > StaticConditionListPtr;
+    typedef std::shared_ptr<KFStaticConditionList> StaticConditionListPtr;
 
 }
 

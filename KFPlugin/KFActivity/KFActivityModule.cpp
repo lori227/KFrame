@@ -130,8 +130,8 @@ namespace KFrame
             }
 
             // 检查出发值
-            auto operatevalue = activitysetting->CheckTriggerValue( value, newvalue );
-            if ( operatevalue == _invalid_int )
+            auto operate_value = activitysetting->CheckTriggerValue( value, newvalue );
+            if ( operate_value == _invalid_int )
             {
                 continue;
             }
@@ -155,7 +155,7 @@ namespace KFrame
                 }
             }
 
-            auto usevalue = activitysetting->GetUseValue( operatevalue );
+            auto usevalue = activitysetting->GetUseValue( operate_value );
             player->UpdateData( kfactivityrecord, activitysetting->_type, __STRING__( value ), activitysetting->_operate, usevalue );
         }
     }

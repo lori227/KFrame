@@ -83,30 +83,30 @@ namespace KFrame
         return false;
     }
 
-    uint32 KFActivitySetting::CheckTriggerValue( uint32 operatevalue, uint32 nowvalue ) const
+    uint32 KFActivitySetting::CheckTriggerValue( uint32 operate_value, uint32 nowvalue ) const
     {
         switch ( _use_type )
         {
         case KFActivityEnum::UseFinal:
-            operatevalue = nowvalue;
+            operate_value = nowvalue;
             break;
         default:
             break;
         }
 
-        if ( operatevalue < _trigger_value )
+        if ( operate_value < _trigger_value )
         {
             return 0;
         }
 
-        return operatevalue;
+        return operate_value;
     }
 
-    uint32 KFActivitySetting::GetUseValue( uint32 operatevalue ) const
+    uint32 KFActivitySetting::GetUseValue( uint32 operate_value ) const
     {
         if ( _use_value == 0 )
         {
-            return operatevalue;
+            return operate_value;
         }
 
         return _use_value;

@@ -19,7 +19,7 @@
     <ClInclude Include="KFMutex.h">
       <Filter>Thread</Filter>
     </ClInclude>
-    <ClInclude Include="KFRunable.hpp">
+    <ClInclude Include="KFRunnable.hpp">
       <Filter>Thread</Filter>
     </ClInclude>
     <ClInclude Include="KFThread.h">
@@ -40,7 +40,7 @@
     <ClInclude Include="KFHashLogic.hpp">
       <Filter>Hash</Filter>
     </ClInclude>
-    <ClInclude Include="KFConHash.h">
+    <ClInclude Include="KFHash.h">
       <Filter>Hash</Filter>
     </ClInclude>
     <ClInclude Include="KFAppId.h">
@@ -93,7 +93,7 @@
     <ClCompile Include="KFMutex.cpp">
       <Filter>Thread</Filter>
     </ClCompile>
-    <ClCompile Include="KFRunable.cpp">
+    <ClCompile Include="KFRunnable.cpp">
       <Filter>Thread</Filter>
     </ClCompile>
     <ClCompile Include="KFThread.cpp">
@@ -114,7 +114,7 @@
     <ClCompile Include="KFHashLogic.cpp">
       <Filter>Hash</Filter>
     </ClCompile>
-    <ClCompile Include="KFConHash.cpp">
+    <ClCompile Include="KFHash.cpp">
       <Filter>Hash</Filter>
     </ClCompile>
     <ClCompile Include="KFAppId.cpp">

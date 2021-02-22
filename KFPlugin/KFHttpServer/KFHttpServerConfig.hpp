@@ -54,7 +54,7 @@ namespace KFrame
             kfsetting->_app_type = xmlnode.ReadString( "apptype" );
             kfsetting->_port_type = xmlnode.ReadUInt32( "porttype" );
             kfsetting->_port = xmlnode.ReadUInt32( "port" );
-            kfsetting->_keep_alive = xmlnode.ReadBoolen( "keepalive" );
+            kfsetting->_keep_alive = xmlnode.ReadBool( "keepalive" );
             kfsetting->_max_thread = xmlnode.ReadUInt32( "maxthread" );
             kfsetting->_max_queue = xmlnode.ReadUInt32( "maxqueue" );
             kfsetting->_idle_time = xmlnode.ReadUInt32( "idletime" );

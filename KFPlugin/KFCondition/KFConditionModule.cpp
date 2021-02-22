@@ -79,7 +79,7 @@ namespace KFrame
         {
             auto operatortype = kfexpression->_operator_list[ i ];
             auto value = CalcConditionData( kfobject, kfexpression->_data_list[ dataindex + i ] );
-            result = KFUtility::Operate( operatortype, result, value );
+            result = KFUtility::Operate( result, operatortype, value );
         }
 
         return result;
@@ -143,7 +143,7 @@ namespace KFrame
 
     void KFConditionModule::AddCondition( KFEntity* kfentity, DataPtr kfconditionobject, const DynamicConditionGroupPtr& conditiongroup )
     {
-        if ( conditiongroup->_ids.empty() )
+        if ( conditiongroup->_id_list.empty() )
         {
             return;
         }
@@ -155,7 +155,7 @@ namespace KFrame
         }
 
         kfconditionobject->Set( __STRING__( type ), conditiongroup->_type );
-        for ( auto conditionid : conditiongroup->_ids )
+        for ( auto conditionid : conditiongroup->_id_list )
         {
             auto kfsetting = KFConditionConfig::Instance()->FindSetting( conditionid );
             if ( kfsetting == nullptr )
@@ -465,13 +465,13 @@ namespace KFrame
         return KFConditionEnum::UpdateDone;\
     }\
     auto operatetype = 0u;\
-    auto operatevalue = 0u;\
+    auto operate_value = 0u;\
     if ( kfsetting->_clean._condition_define != nullptr )\
     {\
-        std::tie( operatetype, operatevalue ) = cleanfunction;\
+        std::tie( operatetype, operate_value ) = cleanfunction;\
         if ( operatetype != 0u )\
         {\
-            kfentity->UpdateObject( kfcondition, kfcondition->_data_setting->_value_key_name, operatetype, operatevalue );\
+            kfentity->UpdateObject( kfcondition, kfcondition->_data_setting->_value_key_name, operatetype, operate_value );\
             return KFConditionEnum::UpdateOk;\
         }\
     }\
@@ -490,7 +490,7 @@ namespace KFrame
     {\
         return KFConditionEnum::UpdateOk; \
     }\
-    std::tie( operatetype, operatevalue ) = updatefunction; \
+    std::tie( operatetype, operate_value ) = updatefunction; \
     if ( operatetype == 0u )\
     {   \
         return KFConditionEnum::UpdateFailed;\
@@ -500,7 +500,7 @@ namespace KFrame
         return KFConditionEnum::UpdateFailed; \
     }\
     SaveConditionDataUUid( kfentity, kfcondition, limitdata, kfsetting->_condition._condition_define );\
-    auto finalvalue = kfentity->UpdateObject( kfcondition, kfcondition->_data_setting->_value_key_name, operatetype, operatevalue ); \
+    auto finalvalue = kfentity->UpdateObject( kfcondition, kfcondition->_data_setting->_value_key_name, operatetype, operate_value ); \
     auto ok = KFUtility::CheckOperate<uint32>( finalvalue, kfsetting->_done_type, kfsetting->_done_value ); \
     if ( ok )\
     {   \
@@ -705,7 +705,7 @@ namespace KFrame
         return kfuuid != nullptr;
     }
 
-    bool KFConditionModule::CalcTriggerUpdateValue( const ConditionTrigger* trigger, uint64 operate, uint64& operatevalue, uint64 nowvalue )
+    bool KFConditionModule::CalcTriggerUpdateValue( const ConditionTrigger* trigger, uint64 operate, uint64& operate_value, uint64 nowvalue )
     {
         if ( trigger->_trigger_type != 0u && trigger->_trigger_type != operate )
         {
@@ -715,7 +715,7 @@ namespace KFrame
         // 触发值
         if ( trigger->_trigger_check != 0u )
         {
-            auto triggervalue = operatevalue;
+            auto triggervalue = operate_value;
             if ( trigger->_trigger_use == KFConditionEnum::UseFinal )
             {
                 triggervalue = nowvalue;
@@ -732,10 +732,10 @@ namespace KFrame
         switch ( trigger->_use_type )
         {
         case KFConditionEnum::UseSetting:
-            operatevalue = trigger->_use_value;
+            operate_value = trigger->_use_value;
             break;
         case KFConditionEnum::UseFinal:
-            operatevalue = nowvalue;
+            operate_value = nowvalue;
             break;
         default:
             break;

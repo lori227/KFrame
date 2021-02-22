@@ -174,7 +174,7 @@ namespace KFrame
     T KFData::Operate( uint32 operate, T value )
     {
         auto base = Get<T>();
-        auto final = KFUtility::Operate<T>( operate, base, value );
+        auto final = KFUtility::Operate<T>( base, operate, value );
         final = Set<T>( final );
         return final;
     }

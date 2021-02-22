@@ -29,8 +29,8 @@ namespace KFrame
 
     void KFTcpDiscoverModule::PrepareRun()
     {
-        auto kfglobal = KFGlobal::Instance();
-        if ( kfglobal->_app_type != __STRING__( master ) )
+        auto global = KFGlobal::Instance();
+        if ( global->_app_type != __STRING__( master ) )
         {
             return;
         }
@@ -52,14 +52,14 @@ namespace KFrame
     __KF_NET_EVENT_FUNCTION__( KFTcpDiscoverModule::OnServerDiscoverClient )
     {
         // 不是相同服务不要广播
-        auto kfglobal = KFGlobal::Instance();
-        if ( kfglobal->_app_name != net_data->_name )
+        auto global = KFGlobal::Instance();
+        if ( global->_app_name != net_data->_name )
         {
             return;
         }
 
         // 如果是master, 则连接( 为了做master多点 )
-        if ( net_data->_type == kfglobal->_app_type )
+        if ( net_data->_type == global->_app_type )
         {
             _kf_tcp_client->StartClient( net_data );
         }
@@ -104,7 +104,7 @@ namespace KFrame
 
             // 通知其他master, 有新的连接
             KFMsg::S2STellDiscoverServerToMaster tell;
-            tell.set_serverid( kfglobal->_app_id->GetId() );
+            tell.set_serverid( global->_app_id->GetId() );
             tell.mutable_listen()->CopyFrom( listendata );
             _kf_tcp_client->SendMessageToType( __STRING__( master ), KFMsg::S2S_TELL_DISCOVER_SERVER_TO_MASTER, &tell );
         }
@@ -152,13 +152,13 @@ namespace KFrame
     __KF_NET_EVENT_FUNCTION__( KFTcpDiscoverModule::OnServerLostClient )
     {
         // 不是相同服务不要广播
-        auto kfglobal = KFGlobal::Instance();
-        if ( kfglobal->_app_name != net_data->_name )
+        auto global = KFGlobal::Instance();
+        if ( global->_app_name != net_data->_name )
         {
             return;
         }
 
-        if ( net_data->_type == kfglobal->_app_type )
+        if ( net_data->_type == global->_app_type )
         {
             _kf_tcp_client->CloseClient( net_data->_id, __FUNC_LINE__ );
         }
@@ -194,8 +194,8 @@ namespace KFrame
 
     __KF_NET_EVENT_FUNCTION__( KFTcpDiscoverModule::OnClientConnectServer )
     {
-        auto kfglobal = KFGlobal::Instance();
-        if ( kfglobal->_app_name != net_data->_name && kfglobal->_app_type != net_data->_type )
+        auto global = KFGlobal::Instance();
+        if ( global->_app_name != net_data->_name && global->_app_type != net_data->_type )
         {
             return;
         }

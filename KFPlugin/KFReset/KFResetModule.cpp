@@ -59,11 +59,11 @@ namespace KFrame
         {
             auto kfsetting = iter.second;
             auto ok = false;
-            auto lasttime = _invalid_int;
-            std::tie( ok, lasttime ) = UpdateResetTime( player, kftimerecord, kfsetting );
+            auto last_time = _invalid_int;
+            std::tie( ok, last_time ) = UpdateResetTime( player, kftimerecord, kfsetting );
             if ( ok )
             {
-                _time_id_list[ iter.first ] = lasttime;
+                _time_id_list[ iter.first ] = last_time;
             }
         }
 
@@ -187,8 +187,8 @@ namespace KFrame
         {
             return;
         }
-        auto timedata = &kftimesetting->_time_data;
-        auto nowresettime = KFDate::CalcTimeData( timedata, KFGlobal::Instance()->_real_time );
+        auto time_data = &kftimesetting->_time_data;
+        auto nowresettime = KFDate::CalcTimeData( time_data, KFGlobal::Instance()->_real_time );
 
         // 如果只计算一次
         if ( resetlogicdata->_count <= 1u || player->IsInited() || lastresettime == 0u )
@@ -198,15 +198,15 @@ namespace KFrame
 
         // 计算多次
         // 计算出n周期前的时间
-        auto calcresettime = KFDate::CalcTimeData( timedata, nowresettime, 0 - ( int32 )resetlogicdata->_count );
+        auto calcresettime = KFDate::CalcTimeData( time_data, nowresettime, 0 - ( int32 )resetlogicdata->_count );
 
         // 上次重置时间
-        lastresettime = KFDate::CalcTimeData( timedata, lastresettime, -1 );
+        lastresettime = KFDate::CalcTimeData( time_data, lastresettime, -1 );
         lastresettime = __MAX__( lastresettime, calcresettime );
 
         for ( auto i = 0u; i < resetlogicdata->_count; ++i )
         {
-            auto resettime = KFDate::CalcTimeData( timedata, lastresettime, 1 );
+            auto resettime = KFDate::CalcTimeData( time_data, lastresettime, 1 );
             if ( resettime > nowresettime )
             {
                 break;

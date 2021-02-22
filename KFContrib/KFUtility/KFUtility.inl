@@ -9,76 +9,76 @@
 namespace KFrame
 {
     template<class T>
-    inline T KFUtility::Operate( uint32 operate, T basevalue, T value )
+    inline T KFUtility::Operate( T base_value, uint32 operate, T value )
     {
         static T element = 1u;
 
         switch ( operate )
         {
         case KFEnum::Set:
-            basevalue = value;
+            base_value = value;
             break;
         case KFEnum::Add:
-            basevalue += value;
+            base_value += value;
             break;
         case KFEnum::Dec:
-            basevalue -= __MIN__( basevalue, value );
+            base_value -= __MIN__( base_value, value );
             break;
         case KFEnum::And:
-            basevalue = ( basevalue & value );
+            base_value = ( base_value & value );
             break;
         case KFEnum::Or:
-            basevalue |= ( element << value );
+            base_value |= ( element << value );
             break;
         case KFEnum::Xor:
-            basevalue &= ~( element << value );
+            base_value &= ~( element << value );
             break;
         case KFEnum::Mul:
-            basevalue = ( basevalue * value );
+            base_value = ( base_value * value );
             break;
         case KFEnum::Div:
             if ( value != 0u )
             {
-                basevalue = ( basevalue / value );
+                base_value = ( base_value / value );
             }
             break;
         case KFEnum::Greater:
-            if ( basevalue < value )
+            if ( base_value < value )
             {
-                basevalue = value;
+                base_value = value;
             }
             break;
         case KFEnum::Less:
-            if ( basevalue > value )
+            if ( base_value > value )
             {
-                basevalue = value;
+                base_value = value;
             }
             break;
         default:
             break;
         }
 
-        return basevalue;
+        return base_value;
     }
 
 
     template<class T>
-    inline bool KFUtility::CheckOperate( T basevalue, uint32 operate, T operatevalue )
+    inline bool KFUtility::CheckOperate( T base_value, uint32 operate, T operate_value )
     {
         switch ( operate )
         {
         case KFEnum::Less:
-            return ( basevalue < operatevalue );
+            return ( base_value < operate_value );
         case KFEnum::Greater:
-            return ( basevalue > operatevalue );
+            return ( base_value > operate_value );
         case KFEnum::Equal:
-            return ( basevalue == operatevalue );
+            return ( base_value == operate_value );
         case KFEnum::LessEqual:
-            return ( basevalue <= operatevalue );
+            return ( base_value <= operate_value );
         case KFEnum::GreaterEqual:
-            return ( basevalue >= operatevalue );
+            return ( base_value >= operate_value );
         case KFEnum::UnEqual:
-            return ( basevalue != operatevalue );
+            return ( base_value != operate_value );
         default:
             break;
         }
@@ -101,107 +101,107 @@ namespace KFrame
     }
 
     template<class T>
-    inline T KFUtility::ToValue( const std::string& srcstring )
+    inline T KFUtility::ToValue( const std::string& source )
     {
-        return ToValue<T>( srcstring.c_str() );
+        return ToValue<T>( source.c_str() );
     }
 
     template<class T>
-    inline T KFUtility::ToValue( const char* srcstring )
+    inline T KFUtility::ToValue( const char* source )
     {
-        return static_cast<T>( atoll( srcstring ) );
+        return static_cast<T>( atoll( source ) );
     }
 
     template<>
-    inline std::string KFUtility::ToValue( const std::string& srcstring )
+    inline std::string KFUtility::ToValue( const std::string& source )
     {
-        return srcstring;
+        return source;
     }
 
     template<>
-    inline std::string KFUtility::ToValue( const char* srcstring )
+    inline std::string KFUtility::ToValue( const char* source )
     {
-        return srcstring;
+        return source;
     }
 
     template<>
-    inline double KFUtility::ToValue( const char* srcstring )
+    inline double KFUtility::ToValue( const char* source )
     {
-        return static_cast<double>( atof( srcstring ) );
+        return static_cast<double>( atof( source ) );
     }
 
     template<class T>
-    inline T KFUtility::SplitValue( std::string& srcstring, const std::string& split )
+    inline T KFUtility::SplitValue( std::string& source, const std::string& split )
     {
-        auto data = SplitString( srcstring, split );
+        auto data = SplitString( source, split );
         return ToValue<T>( data );
     }
 
     template<class T>
-    inline void KFUtility::SplitList( T& out_list, std::string& srcstring, const std::string& split )
+    inline void KFUtility::SplitList( std::string source, const std::string& split, T& out_list )
     {
         out_list.clear();
-        while ( !srcstring.empty() )
+        while ( !source.empty() )
         {
-            auto value = SplitValue< uint32 >( srcstring, split );
+            auto value = SplitValue< uint32 >( source, split );
             out_list.push_back( value );
         }
     }
 
     template< >
-    inline void KFUtility::SplitList( StringList& out_list, std::string& srcstring, const std::string& split )
+    inline void KFUtility::SplitList( std::string source, const std::string& split, StringList& out_list )
     {
         out_list.clear();
-        while ( !srcstring.empty() )
+        while ( !source.empty() )
         {
-            auto value = SplitString( srcstring, split );
+            auto value = SplitString( source, split );
             out_list.push_back( value );
         }
     }
 
     template< >
-    inline void KFUtility::SplitList( StringVector& out_list, std::string& srcstring, const std::string& split )
+    inline void KFUtility::SplitList( std::string source, const std::string& split, StringVector& out_list )
     {
         out_list.clear();
-        while ( !srcstring.empty() )
+        while ( !source.empty() )
         {
-            auto value = SplitString( srcstring, split );
+            auto value = SplitString( source, split );
             out_list.push_back( value );
         }
     }
 
     template<class T>
-    inline void KFUtility::SplitSet( T& out_list, std::string& srcstring, const std::string& split )
+    inline void KFUtility::SplitSet( std::string source, const std::string& split, T& out_set )
     {
-        out_list.clear();
-        while ( !srcstring.empty() )
+        out_set.clear();
+        while ( !source.empty() )
         {
-            auto value = SplitValue< uint32 >( srcstring, split );
-            out_list.insert( value );
+            auto value = SplitValue< uint32 >( source, split );
+            out_set.insert( value );
         }
     }
 
     template<>
-    inline void KFUtility::SplitSet( StringSet& out_list, std::string& srcstring, const std::string& split )
+    inline void KFUtility::SplitSet( std::string source, const std::string& split, StringSet& out_set )
+    {
+        out_set.clear();
+        while ( !source.empty() )
+        {
+            auto value = SplitString( source, split );
+            out_set.insert( value );
+        }
+    }
+
+    template<class T>
+    inline bool KFUtility::ParseArrayList( const std::string& source, T& out_list )
     {
         out_list.clear();
-        while ( !srcstring.empty() )
-        {
-            auto value = SplitString( srcstring, split );
-            out_list.insert( value );
-        }
-    }
-
-    template<class T>
-    inline bool KFUtility::ParseArrayList( T& arraylist, const std::string& srcstring )
-    {
-        arraylist.clear();
-        if ( srcstring.empty() )
+        if ( source.empty() )
         {
             return true;
         }
 
-        __JSON_PARSE_STRING__( kfjson, srcstring );
+        __JSON_PARSE_STRING__( kfjson, source );
         if ( !kfjson.IsArray() )
         {
             return false;
@@ -210,22 +210,22 @@ namespace KFrame
         auto size = __JSON_ARRAY_SIZE__( kfjson );
         for ( auto i = 0u; i < size; ++i )
         {
-            arraylist.push_back( kfjson[i].GetUint() );
+            out_list.push_back( kfjson[i].GetUint() );
         }
 
         return true;
     }
 
     template<class T>
-    inline bool KFUtility::ParseArraySet( T& arrayset, const std::string& srcstring )
+    inline bool KFUtility::ParseArraySet( const std::string& source, T& out_set )
     {
-        arrayset.clear();
-        if ( srcstring.empty() )
+        out_set.clear();
+        if ( source.empty() )
         {
             return true;
         }
 
-        __JSON_PARSE_STRING__( kfjson, srcstring );
+        __JSON_PARSE_STRING__( kfjson, source );
         if ( !kfjson.IsArray() )
         {
             return false;
@@ -234,33 +234,29 @@ namespace KFrame
         auto size = __JSON_ARRAY_SIZE__( kfjson );
         for ( auto i = 0u; i < size; ++i )
         {
-            arrayset.insert( kfjson[i].GetUint() );
+            out_set.insert( kfjson[i].GetUint() );
         }
 
         return true;
     }
 
-
-    ///////////////////////////////////////////////////////////////////////
-
-
     ///////////////////////////////////////////////////////////////////////
     template<class T>
-    inline bool KFUtility::HaveBitMask( T value, T bitmask )
+    inline bool KFUtility::HaveBitMask( T value, T bit_mask )
     {
-        return ( value & bitmask ) != 0u;
+        return ( value & bit_mask ) != 0u;
     }
 
     template<class T>
-    inline void KFUtility::ClearBitMask( T& value, T bitmask )
+    inline void KFUtility::ClearBitMask( T& value, T bit_mask )
     {
-        value &= ~bitmask;
+        value &= ~bit_mask;
     }
 
     template<class T>
-    inline void KFUtility::AddBitMask( T& value, T bitmask )
+    inline void KFUtility::AddBitMask( T& value, T bit_mask )
     {
-        value |= bitmask;
+        value |= bit_mask;
     }
 
 }

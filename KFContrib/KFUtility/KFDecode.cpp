@@ -5,65 +5,65 @@ namespace KFrame
 {
     static uint8 _decode_bit_mask[ 5 ] = { 0xfc, 0xf8, 0xf0, 0xe0, 0xc0 };
 
-    uint32 KFDecode::UByteToString( const uint8* source, uint32 sourcelength, int8* target, uint32 targetlength )
+    uint32 KFDecode::UByteToString( const uint8* source, uint32 source_length, int8* target, uint32 target_length )
     {
         uint8 made = 0;
         uint8 rest = 0;
-        uint32 targetposition = 0;
-        uint32 restcount = 0;
+        uint32 target_position = 0;
+        uint32 rest_count = 0;
 
-        for ( uint32 i = 0; i < sourcelength; ++i )
+        for ( uint32 i = 0; i < source_length; ++i )
         {
-            if ( targetposition >= targetlength )
+            if ( target_position >= target_length )
             {
                 break;
             }
 
-            made = ( ( rest | ( source[ i ] >> ( 2 + restcount ) ) ) & 0x3f );
-            rest = ( ( ( source[ i ] << ( 8 - ( 2 + restcount ) ) ) >> 2 ) & 0x3f );
+            made = ( ( rest | ( source[ i ] >> ( 2 + rest_count ) ) ) & 0x3f );
+            rest = ( ( ( source[ i ] << ( 8 - ( 2 + rest_count ) ) ) >> 2 ) & 0x3f );
 
-            restcount += 2;
+            rest_count += 2;
 
-            if ( restcount < 6 )
+            if ( rest_count < 6 )
             {
-                target[ targetposition++ ] = made + 0x3c;
+                target[ target_position++ ] = made + 0x3c;
             }
             else
             {
-                if ( targetposition < targetlength - 1 )
+                if ( target_position < target_length - 1 )
                 {
-                    target[ targetposition++ ] = made + 0x3c;
-                    target[ targetposition++ ] = rest + 0x3c;
+                    target[ target_position++ ] = made + 0x3c;
+                    target[ target_position++ ] = rest + 0x3c;
                 }
                 else
                 {
-                    target[ targetposition++ ] = made + 0x3c;
+                    target[ target_position++ ] = made + 0x3c;
                 }
 
-                restcount = 0;
+                rest_count = 0;
                 rest = 0;
             }
         }
 
-        if ( restcount > 0 )
+        if ( rest_count > 0 )
         {
-            target[ targetposition++ ] = rest + 0x3c;
+            target[ target_position++ ] = rest + 0x3c;
         }
 
-        target[ targetposition ] = '\0';
-        return targetposition;
+        target[ target_position ] = '\0';
+        return target_position;
     }
 
-    uint32 KFDecode::StringToUByte( const int8* source, uint32 sourcelength, uint8* target, uint32 targetlength )
+    uint32 KFDecode::StringToUByte( const int8* source, uint32 source_length, uint8* target, uint32 target_length )
     {
-        uint32 targetposition = 0;
-        uint32 bitposition = 2;
-        uint32 madebit = 0;
+        uint32 target_position = 0;
+        uint32 bit_position = 2;
+        uint32 made_bit = 0;
         uint8 chars = 0;
         uint8 code = 0;
         uint8 temp = 0;
 
-        for ( uint32 i = 0; i < sourcelength; ++i )
+        for ( uint32 i = 0; i < source_length; ++i )
         {
             if ( ( ( uint8 )source[ i ] - 0x3c ) >= 0 )
             {
@@ -71,37 +71,37 @@ namespace KFrame
             }
             else
             {
-                targetposition = 0;
+                target_position = 0;
                 break;
             }
 
-            if ( targetposition >= targetlength )
+            if ( target_position >= target_length )
             {
                 break;
             }
 
-            if ( ( madebit + 6 ) >= 8 )
+            if ( ( made_bit + 6 ) >= 8 )
             {
-                code = ( temp | ( ( chars & 0x3f ) >> ( 6 - bitposition ) ) );
-                target[ targetposition++ ] = code;
+                code = ( temp | ( ( chars & 0x3f ) >> ( 6 - bit_position ) ) );
+                target[ target_position++ ] = code;
 
-                madebit = 0;
+                made_bit = 0;
 
-                if ( bitposition < 6 )
+                if ( bit_position < 6 )
                 {
-                    bitposition += 2;
+                    bit_position += 2;
                 }
                 else
                 {
-                    bitposition = 2;
+                    bit_position = 2;
                     continue;
                 }
             }
 
-            temp = ( ( chars << bitposition ) & _decode_bit_mask[ bitposition - 2 ] );
-            madebit += ( 8 - bitposition );
+            temp = ( ( chars << bit_position ) & _decode_bit_mask[ bit_position - 2 ] );
+            made_bit += ( 8 - bit_position );
         }
-        return targetposition;
+        return target_position;
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////

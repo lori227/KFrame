@@ -26,7 +26,7 @@ namespace KFrame
 
     protected:
         virtual void AddDelayedFunction( uint64 time, uint64 objectid, const int8* data, uint32 size, KFModule* module, KFDelayedFunction& function );
-        virtual void AddDelayedFunction( KFTimeData* timedata, uint64 objectid, const int8* data, uint32 size, KFModule* module, KFDelayedFunction& function );
+        virtual void AddDelayedFunction( KFTimeData* time_data, uint64 objectid, const int8* data, uint32 size, KFModule* module, KFDelayedFunction& function );
         virtual void RemoveDelayedFunction( KFModule* module );
         virtual void RemoveDelayedFunction( KFModule* module, uint64 objectid );
 

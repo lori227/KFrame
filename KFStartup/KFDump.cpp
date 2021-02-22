@@ -13,11 +13,10 @@ namespace KFrame
     static char _app_name[ MAX_PATH ];
     ////////////////////////////////////////////////////////////////////////////////////////
 
-    KFDump::KFDump( const char* appname, const char* apptype, const char* strappid )
+    KFDump::KFDump( const char* appn_ame, const char* app_type, const char* app_id )
     {
         memset( _app_name, 0, sizeof( _app_name ) );
-
-        sprintf_s( _app_name, "%s-%s-%s", appname, apptype, strappid );
+        sprintf_s( _app_name, "%s-%s-%s", app_name, app_type, app_id );
         ::SetUnhandledExceptionFilter( MyExceptionFilter );
     }
 
@@ -26,7 +25,7 @@ namespace KFrame
 
     }
 
-    LONG KFDump::MyExceptionFilter( struct _EXCEPTION_POINTERS* pExceptionInfo )
+    LONG KFDump::MyExceptionFilter( struct _EXCEPTION_POINTERS* exception_info )
     {
         SYSTEMTIME time;
         GetLocalTime( &time );

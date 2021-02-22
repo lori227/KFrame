@@ -7,9 +7,9 @@
 
 namespace KFrame
 {
-    KFXmlNode::KFXmlNode( KFXml* kfxml )
+    KFXmlNode::KFXmlNode( KFXml* xml )
     {
-        _kf_xml = kfxml;
+        _xml = xml;
         _node = nullptr;
     }
 
@@ -25,118 +25,118 @@ namespace KFrame
 
     void KFXmlNode::NextNode( const char* key /* = nullptr */ )
     {
-        auto xmlnode = reinterpret_cast<rapidxml::xml_node<>*>( _node );
-        _node = xmlnode->next_sibling( key );
+        auto xml_node = reinterpret_cast<rapidxml::xml_node<>*>( _node );
+        _node = xml_node->next_sibling( key );
     }
 
     KFXmlNode KFXmlNode::FindNode( const char* key )
     {
-        auto xmlnode = reinterpret_cast<rapidxml::xml_node<>*>( _node );
+        auto xml_node = reinterpret_cast<rapidxml::xml_node<>*>( _node );
 
-        KFXmlNode kfnode( _kf_xml );
-        kfnode._node = xmlnode->first_node( key );
-        return kfnode;
+        KFXmlNode node( _xml );
+        node._node = xml_node->first_node( key );
+        return node;
     }
 
-    bool KFXmlNode::ReadBoolen( const char* key, bool optional /* = false */, bool defaultvale /* = false */ )
+    bool KFXmlNode::ReadBool( const char* key, bool optional /* = false */, bool default_value /* = false */ )
     {
-        auto xmlnode = reinterpret_cast<rapidxml::xml_node<>*>( _node );
+        auto xml_node = reinterpret_cast<rapidxml::xml_node<>*>( _node );
 
-        auto attribute = xmlnode->first_attribute( key );
+        auto attribute = xml_node->first_attribute( key );
         if ( attribute == nullptr )
         {
             if ( !optional )
             {
-                __LOG_ERROR__( "[{}] can't find node = [{}]", _kf_xml->GetFileName(), key );
+                __LOG_ERROR__( "[{}] can't find node = [{}]", _xml->GetFileName(), key );
             }
-            return defaultvale;
+            return default_value;
         }
 
         return __TO_UINT32__( attribute->value() ) == 1;
     }
 
-    int32 KFXmlNode::ReadInt32( const char* key, bool optional /* = false */, int32 defaultvalue /* = 0 */ )
+    int32 KFXmlNode::ReadInt32( const char* key, bool optional /* = false */, int32 default_value /* = 0 */ )
     {
-        auto xmlnode = reinterpret_cast< rapidxml::xml_node<>* >( _node );
+        auto xml_node = reinterpret_cast< rapidxml::xml_node<>* >( _node );
 
-        auto attribute = xmlnode->first_attribute( key );
+        auto attribute = xml_node->first_attribute( key );
         if ( attribute == nullptr )
         {
             if ( !optional )
             {
-                __LOG_ERROR__( "[{}] can't find node = [{}]", _kf_xml->GetFileName(), key );
+                __LOG_ERROR__( "[{}] can't find node = [{}]", _xml->GetFileName(), key );
             }
-            return defaultvalue;
+            return default_value;
         }
 
         return __TO_INT32__( attribute->value() );
     }
 
 
-    uint32 KFXmlNode::ReadUInt32( const char* key, bool optional /* = false */, uint32 defaultvalue /* = 0 */ )
+    uint32 KFXmlNode::ReadUInt32( const char* key, bool optional /* = false */, uint32 default_value /* = 0 */ )
     {
-        auto xmlnode = reinterpret_cast<rapidxml::xml_node<>*>( _node );
+        auto xml_node = reinterpret_cast<rapidxml::xml_node<>*>( _node );
 
-        auto attribute = xmlnode->first_attribute( key );
+        auto attribute = xml_node->first_attribute( key );
         if ( attribute == nullptr )
         {
             if ( !optional )
             {
-                __LOG_ERROR__( "[{}] can't find node = [{}]", _kf_xml->GetFileName(), key );
+                __LOG_ERROR__( "[{}] can't find node = [{}]", _xml->GetFileName(), key );
             }
-            return defaultvalue;
+            return default_value;
         }
 
         return __TO_UINT32__( attribute->value() );
     }
 
-    uint64 KFXmlNode::ReadUInt64( const char* key, bool optional /* = false */, uint64 defaultvalue /* = 0 */ )
+    uint64 KFXmlNode::ReadUInt64( const char* key, bool optional /* = false */, uint64 default_value /* = 0 */ )
     {
-        auto xmlnode = reinterpret_cast< rapidxml::xml_node<>* >( _node );
+        auto xml_node = reinterpret_cast< rapidxml::xml_node<>* >( _node );
 
-        auto attribute = xmlnode->first_attribute( key );
+        auto attribute = xml_node->first_attribute( key );
         if ( attribute == nullptr )
         {
             if ( !optional )
             {
-                __LOG_ERROR__( "[{}] can't find node = [{}]", _kf_xml->GetFileName(), key );
+                __LOG_ERROR__( "[{}] can't find node = [{}]", _xml->GetFileName(), key );
             }
-            return defaultvalue;
+            return default_value;
         }
 
         return __TO_UINT64__( attribute->value() );
     }
 
-    std::string KFXmlNode::ReadString( const char* key, bool optional /* = false */, std::string defaultvalue/* = _invalid_string */ )
+    std::string KFXmlNode::ReadString( const char* key, bool optional /* = false */, std::string default_value/* = _invalid_string */ )
     {
-        auto xmlnode = reinterpret_cast<rapidxml::xml_node<>*>( _node );
+        auto xml_node = reinterpret_cast<rapidxml::xml_node<>*>( _node );
 
-        auto attribute = xmlnode->first_attribute( key );
+        auto attribute = xml_node->first_attribute( key );
         if ( attribute == nullptr )
         {
             if ( !optional )
             {
-                __LOG_ERROR__( "[{}] can't find node = [{}]", _kf_xml->GetFileName(), key );
+                __LOG_ERROR__( "[{}] can't find node = [{}]", _xml->GetFileName(), key );
             }
 
-            return defaultvalue;
+            return default_value;
         }
 
         return attribute->value();
     }
 
-    double KFXmlNode::ReadDouble( const char* key, bool optional /* = false */, double defaultvalue /* = 0.0f */ )
+    double KFXmlNode::ReadDouble( const char* key, bool optional /* = false */, double default_value /* = 0.0f */ )
     {
-        auto xmlnode = reinterpret_cast< rapidxml::xml_node<>* >( _node );
+        auto xml_node = reinterpret_cast< rapidxml::xml_node<>* >( _node );
 
-        auto attribute = xmlnode->first_attribute( key );
+        auto attribute = xml_node->first_attribute( key );
         if ( attribute == nullptr )
         {
             if ( !optional )
             {
-                __LOG_ERROR__( "[{}] can't find node = [{}]", _kf_xml->GetFileName(), key );
+                __LOG_ERROR__( "[{}] can't find node = [{}]", _xml->GetFileName(), key );
             }
-            return defaultvalue;
+            return default_value;
         }
 
         return atof( attribute->value() );
@@ -148,8 +148,8 @@ namespace KFrame
         static UInt32Vector _result;
         _result.clear();
 
-        auto strdata = ReadString( key, optional );
-        KFUtility::SplitList( _result, strdata, __SPLIT_STRING__ );
+        auto data = ReadString( key, optional );
+        KFUtility::SplitList( data, __SPLIT_STRING__, _result );
         return _result;
     }
 
@@ -159,14 +159,14 @@ namespace KFrame
         static UInt32Map _result;
         _result.clear();
 
-        auto strline = ReadString( key, optional );
-        while ( !strline.empty() )
+        auto str_line = ReadString( key, optional );
+        while ( !str_line.empty() )
         {
-            auto strdata = KFUtility::SplitString( strline, __SPLIT_STRING__ );
-            if ( !strdata.empty() )
+            auto data = KFUtility::SplitString( str_line, __SPLIT_STRING__ );
+            if ( !data.empty() )
             {
-                auto key = KFUtility::SplitValue<uint32>( strdata, __DOMAIN_STRING__ );
-                auto value = KFUtility::SplitValue<uint32>( strdata, __DOMAIN_STRING__ );
+                auto key = KFUtility::SplitValue<uint32>( data, __DOMAIN_STRING__ );
+                auto value = KFUtility::SplitValue<uint32>( data, __DOMAIN_STRING__ );
                 _result[ key ] = value;
             }
         }
@@ -180,8 +180,8 @@ namespace KFrame
         static UInt32Set _result;
         _result.clear();
 
-        auto strdata = ReadString( key, optional );
-        KFUtility::SplitSet( _result, strdata, __SPLIT_STRING__ );
+        auto data = ReadString( key, optional );
+        KFUtility::SplitSet( data, __SPLIT_STRING__, _result );
         return _result;
     }
 
@@ -191,8 +191,8 @@ namespace KFrame
         static StringSet _result;
         _result.clear();
 
-        auto strdata = ReadString( key, optional );
-        KFUtility::SplitSet( _result, strdata, __SPLIT_STRING__ );
+        auto data = ReadString( key, optional );
+        KFUtility::SplitSet( data, __SPLIT_STRING__, _result );
         return _result;
     }
 
@@ -202,8 +202,8 @@ namespace KFrame
         static StringList _result;
         _result.clear();
 
-        auto strdata = ReadString( key, optional );
-        KFUtility::SplitList( _result, strdata, __SPLIT_STRING__ );
+        auto data = ReadString( key, optional );
+        KFUtility::SplitList( data, __SPLIT_STRING__, _result );
         return _result;
     }
 
@@ -213,8 +213,8 @@ namespace KFrame
         static StringVector _result;
         _result.clear();
 
-        auto strdata = ReadString( key, optional );
-        KFUtility::SplitList( _result, strdata, __SPLIT_STRING__ );
+        auto data = ReadString( key, optional );
+        KFUtility::SplitList( data, __SPLIT_STRING__, _result );
         return _result;
     }
 
@@ -224,14 +224,14 @@ namespace KFrame
         static StringUInt64 _result;
         _result.clear();
 
-        auto strline = ReadString( key, optional );
-        while ( !strline.empty() )
+        auto str_line = ReadString( key, optional );
+        while ( !str_line.empty() )
         {
-            auto strdata = KFUtility::SplitString( strline, __SPLIT_STRING__ );
-            if ( !strdata.empty() )
+            auto data = KFUtility::SplitString( str_line, __SPLIT_STRING__ );
+            if ( !data.empty() )
             {
-                auto key = KFUtility::SplitString( strdata, __DOMAIN_STRING__ );
-                auto value = KFUtility::SplitValue<uint32>( strdata, __DOMAIN_STRING__ );
+                auto key = KFUtility::SplitString( data, __DOMAIN_STRING__ );
+                auto value = KFUtility::SplitValue<uint32>( data, __DOMAIN_STRING__ );
                 _result[ key ] = value;
             }
         }
@@ -245,14 +245,14 @@ namespace KFrame
         static UInt64String _result;
         _result.clear();
 
-        auto strline = ReadString( key, optional );
-        while ( !strline.empty() )
+        auto str_line = ReadString( key, optional );
+        while ( !str_line.empty() )
         {
-            auto strdata = KFUtility::SplitString( strline, __SPLIT_STRING__ );
-            if ( !strdata.empty() )
+            auto data = KFUtility::SplitString( str_line, __SPLIT_STRING__ );
+            if ( !data.empty() )
             {
-                auto key = KFUtility::SplitValue<uint32>( strdata, __DOMAIN_STRING__ );
-                auto value = KFUtility::SplitString( strdata, __DOMAIN_STRING__ );
+                auto key = KFUtility::SplitValue<uint32>( data, __DOMAIN_STRING__ );
+                auto value = KFUtility::SplitString( data, __DOMAIN_STRING__ );
                 _result[ key ] = value;
             }
         }
@@ -264,8 +264,8 @@ namespace KFrame
     {
         out_list.clear();
 
-        auto xmlnode = reinterpret_cast< rapidxml::xml_node<>* >( _node );
-        auto attribute = xmlnode->first_attribute();
+        auto xml_node = reinterpret_cast< rapidxml::xml_node<>* >( _node );
+        auto attribute = xml_node->first_attribute();
         while ( attribute != nullptr )
         {
             out_list.push_back( attribute->name() );
@@ -275,118 +275,120 @@ namespace KFrame
 
     bool KFXmlNode::HaveChild( const char* key )
     {
-        auto xmlnode = reinterpret_cast< rapidxml::xml_node<>* >( _node );
-        auto attribute = xmlnode->first_attribute( key );
+        auto xml_node = reinterpret_cast< rapidxml::xml_node<>* >( _node );
+        auto attribute = xml_node->first_attribute( key );
         return attribute != nullptr;
     }
 
     DynamicConditionGroupPtr KFXmlNode::ReadDynamicConditionGroup( const char* key, bool optional /* = false */ )
     {
-        DynamicConditionGroupPtr conditiongroup( new KFDynamicConditionGroup() );
-        conditiongroup->_type = KFEnum::Or;
+        auto condition_group = __MAKE_SHARED__( KFDynamicConditionGroup );
+        condition_group->_type = KFEnum::Or;
 
-        auto strline = ReadString( key, optional );
-        if ( !strline.empty() )
+        auto str_line = ReadString( key, optional );
+        if ( !str_line.empty() )
         {
-            if ( strline.find( __OR_STRING__ ) != std::string::npos )
+            if ( str_line.find( __OR_STRING__ ) != std::string::npos )
             {
-                conditiongroup->_type = KFEnum::Or;
-                KFUtility::SplitList( conditiongroup->_ids, strline, __OR_STRING__ );
+                condition_group->_type = KFEnum::Or;
+                KFUtility::SplitList( str_line, __OR_STRING__, condition_group->_id_list );
             }
-            else if ( strline.find( __AND_STRING__ ) != std::string::npos )
+            else if ( str_line.find( __AND_STRING__ ) != std::string::npos )
             {
-                conditiongroup->_type = KFEnum::And;
-                KFUtility::SplitList( conditiongroup->_ids, strline, __AND_STRING__ );
+                condition_group->_type = KFEnum::And;
+                KFUtility::SplitList( str_line, __AND_STRING__, condition_group->_id_list );
             }
             else
             {
-                auto conditionid = __TO_UINT32__( strline );
-                if ( conditionid != 0u )
+                auto condition_id = __TO_UINT32__( str_line );
+                if ( condition_id != 0u )
                 {
-                    conditiongroup->_ids.push_back( conditionid );
+                    condition_group->_id_list.push_back( condition_id );
                 }
             }
         }
 
-        return conditiongroup;
+        return condition_group;
     }
 
     ExecuteDataPtr KFXmlNode::ReadExecuteData( const char* key, bool optional /* = false */ )
     {
-        ExecuteDataPtr executedata( new KFExecuteData() );
-        executedata->_name = ReadString( key, optional );
+        auto execute_data = __MAKE_SHARED__( KFExecuteData );
+        execute_data->_name = ReadString( key, optional );
 
         auto index = 1u;
         while ( true )
         {
-            auto strkey = __FORMAT__( "ExecuteParam{}", index++ );
-            auto ok = HaveChild( strkey.c_str() );
+            auto param_key = __FORMAT__( "ExecuteParam{}", index++ );
+            auto ok = HaveChild( param_key.c_str() );
             if ( !ok )
             {
                 break;
             }
 
-            auto param = executedata->_param_list.AddParam();
-            param->_str_value = ReadString( strkey.c_str() );
-            param->_int_value = ReadUInt32( strkey.c_str() );
-            param->_map_value = ReadUInt32Map( strkey.c_str() );
-            param->_vector_value = ReadUInt32Vector( strkey.c_str() );
+            auto param = execute_data->_param_list.AddParam();
+            param->_str_value = ReadString( param_key.c_str() );
+            param->_int_value = ReadUInt32( param_key.c_str() );
+            param->_map_value = ReadUInt32Map( param_key.c_str() );
+            param->_vector_value = ReadUInt32Vector( param_key.c_str() );
         }
 
-        return executedata;
+        return execute_data;
     }
 
     StaticConditionsPtr KFXmlNode::ReadStaticConditions( const char* key, bool optional /* = false */ )
     {
-        auto strcondition = ReadString( key, optional );
-        return KFStaticConditionAnalysis::Parse( strcondition );
+        auto condition = ReadString( key, optional );
+        return KFStaticConditionAnalysis::Parse( condition );
     }
 
     StaticConditionListPtr KFXmlNode::ReadStaticConditionList( const char* key, bool optional /* = false */ )
     {
-        StaticConditionListPtr conditionlist( new KFStaticConditionList() );
-        conditionlist->_check_type = KFEnum::And;
+        auto condition_list = __MAKE_SHARED__( KFStaticConditionList );
+        condition_list->_check_type = KFEnum::And;
 
-        auto strcondition = ReadString( key, optional );
-        auto conditions = KFStaticConditionAnalysis::Parse( strcondition );
-        conditionlist->_conditions_list.push_back( conditions );
+        {
+            auto condition = ReadString( key, optional );
+            auto static_conditions = KFStaticConditionAnalysis::Parse( condition );
+            condition_list->_conditions_list.push_back( static_conditions );
+        }
 
         auto index = 1u;
         while ( true )
         {
-            auto strkey = __FORMAT__( "{}{}", key, index++ );
-            auto ok = HaveChild( strkey.c_str() );
+            auto condition_key = __FORMAT__( "{}{}", key, index++ );
+            auto ok = HaveChild( condition_key.c_str() );
             if ( !ok )
             {
                 break;
             }
 
-            auto strcondition = ReadString( strkey.c_str() );
-            auto conditions = KFStaticConditionAnalysis::Parse( strcondition );
-            conditionlist->_conditions_list.push_back( conditions );
+            auto condition = ReadString( condition_key.c_str() );
+            auto static_conditions = KFStaticConditionAnalysis::Parse( condition );
+            condition_list->_conditions_list.push_back( static_conditions );
         }
 
-        return conditionlist;
+        return condition_list;
     }
 
     uint64 KFXmlNode::ReadDate( const char* key, bool optional /* = false */ )
     {
-        auto strdata = ReadString( key, optional );
-        return KFDate::FromString( strdata );
+        auto data = ReadString( key, optional );
+        return KFDate::FromString( data );
     }
 
     uint32 KFXmlNode::ReadOperateType( const char* key, bool optional /* = false */ )
     {
-        auto strtemp = ReadString( key, optional );
-        if ( strtemp.empty() )
+        auto data = ReadString( key, optional );
+        if ( data.empty() )
         {
             return KFEnum::Null;
         }
 
-        auto type = KFStaticConditionAnalysis::GetOperatorType( strtemp.at( 0 ) );
+        auto type = KFStaticConditionAnalysis::GetOperatorType( data.at( 0 ) );
         if ( type == KFEnum::Null )
         {
-            type = __TO_UINT32__( strtemp );
+            type = __TO_UINT32__( data );
         }
 
         return type;
@@ -394,11 +396,11 @@ namespace KFrame
 
     uint32 KFXmlNode::ReadCheckType( const char* key, bool optional /* = false */ )
     {
-        auto strtemp = ReadString( key, optional );
-        auto type = KFStaticConditionAnalysis::GetCheckType( strtemp );
+        auto data = ReadString( key, optional );
+        auto type = KFStaticConditionAnalysis::GetCheckType( data );
         if ( type == KFEnum::Null )
         {
-            type = __TO_UINT32__( strtemp );
+            type = __TO_UINT32__( data );
         }
 
         return type;
@@ -407,10 +409,10 @@ namespace KFrame
     KFRange<uint32> KFXmlNode::ReadRange( const char* key, bool optional /* = false */ )
     {
         KFRange<uint32> range;
-        auto strtemp = ReadString( key, optional );
+        auto data = ReadString( key, optional );
 
-        range._min_value = KFUtility::SplitValue<uint32>( strtemp, __RANGE_STRING__ );
-        range._max_value = KFUtility::SplitValue<uint32>( strtemp, __RANGE_STRING__ );
+        range._min_value = KFUtility::SplitValue<uint32>( data, __RANGE_STRING__ );
+        range._max_value = KFUtility::SplitValue<uint32>( data, __RANGE_STRING__ );
         if ( range._max_value < range._min_value )
         {
             range._max_value = range._min_value;
@@ -421,8 +423,8 @@ namespace KFrame
 
     std::string KFXmlNode::ReadChannelString( const char* key, bool optional /* = false */ )
     {
-        auto strtemp = ReadString( key, optional );
-        auto result = __FORMAT__( strtemp, KFGlobal::Instance()->_channel, KFGlobal::Instance()->_service );
+        auto data = ReadString( key, optional );
+        auto result = __FORMAT__( data, KFGlobal::Instance()->_channel, KFGlobal::Instance()->_service );
         return result;
     }
 }

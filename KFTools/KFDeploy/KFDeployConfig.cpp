@@ -48,26 +48,26 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////
         auto plugins = root.FindNode( "Plugins" );
-        auto kfglobal = KFGlobal::Instance();
+        auto global = KFGlobal::Instance();
 
         auto node = plugins.FindNode( "Plugin" );
         while ( node.IsValid() )
         {
             auto channel = node.GetUInt32( "Channel", true, _invalid_int );
-            if ( kfglobal->CheckChannelService( channel, _invalid_int ) )
+            if ( global->CheckChannelService( channel, _invalid_int ) )
             {
                 KFDeploySetting setting;
                 setting._name = node.GetString( "Name" );
                 setting._config_file = node.GetString( "Config" );
                 if ( !setting._config_file.empty() )
                 {
-                    auto configfile = __FORMAT__( setting._config_file, kfglobal->_channel, kfglobal->_service );
+                    auto configfile = __FORMAT__( setting._config_file, global->_channel, global->_service );
 
                     // 判断文件是否存在
                     Poco::File file( configfile );
                     if ( !file.exists() )
                     {
-                        configfile = __FORMAT__( setting._config_file, kfglobal->_channel, _invalid_int );
+                        configfile = __FORMAT__( setting._config_file, global->_channel, _invalid_int );
                         Poco::File file( configfile );
                         if ( !file.exists() )
                         {

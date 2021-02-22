@@ -63,7 +63,7 @@ namespace KFrame
         bool CheckStaticConditionLimit( DataPtr kfobject, const KFConditionSetting* kfsetting );
 
         // 计算触发值
-        bool CalcTriggerUpdateValue( const ConditionTrigger* trigger, uint64 operate, uint64& operatevalue, uint64 nowvalue );
+        bool CalcTriggerUpdateValue( const ConditionTrigger* trigger, uint64 operate, uint64& operate_value, uint64 nowvalue );
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // 初始化条件

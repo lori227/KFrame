@@ -13,7 +13,7 @@ namespace KFrame
         static std::string ToAscii( const std::string& source );
 
     protected:
-        static std::string ToCovert( void* iconvhandle, const std::string& source );
+        static std::string ToCovert( void* iconv_handle, const std::string& source );
     };
 }
 

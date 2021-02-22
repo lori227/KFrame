@@ -13,7 +13,7 @@ namespace KFrame
         uint32 _type = 0u;
 
         // 条件的id列表
-        UInt32Vector _ids;
+        UInt32Vector _id_list;
     };
     typedef std::shared_ptr< KFDynamicConditionGroup > DynamicConditionGroupPtr;
     ////////////////////////////////////////////////////////////

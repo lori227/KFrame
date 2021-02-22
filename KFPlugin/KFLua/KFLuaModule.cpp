@@ -284,7 +284,7 @@ namespace KFrame
     uint32 KFLuaModule::LuaOperateVariable( uint32 varid, uint32 operate, uint32 value )
     {
         auto base = LuaGetVariable( varid );
-        auto final = KFUtility::Operate( operate, base, value );
+        auto final = KFUtility::Operate( base, operate, value );
         _run_variable[ varid ] = final;
 
         return final;

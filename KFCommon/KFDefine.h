@@ -4,7 +4,6 @@
 #include "stdarg.h"
 #include <stdio.h>
 #include <string>
-#include <string.h>
 #include <vector>
 #include <list>
 #include <map>
@@ -27,6 +26,7 @@
 #include <atomic>
 #include <cctype>
 #include <thread>
+#include <chrono>
 //////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////
 #include "KFMacros.h"
@@ -110,6 +110,12 @@ namespace KFrame
     class KFElements;
     class KFElementData;
     //////////////////////////////////////////////////////////////////////////
+    typedef std::thread::id ThreadId;
+
+    // 线程函数
+    typedef std::function< void() > KFThreadFunction;
+    //////////////////////////////////////////////////////////////////////////
+
     // 消息函数
     // 参数1 : Route 路由信息
     // 参数2 : msg_id 消息id

@@ -27,7 +27,7 @@
 
 	<!-- 类型列表 -->
 	<types>
-		<type name="bool" cpp="bool" cppfunction="ReadBoolen" cppextend="" csharp="bool" lua="local"/>
+		<type name="bool" cpp="bool" cppfunction="ReadBool" cppextend="" csharp="bool" lua="local"/>
 		<type name="uint32" cpp="uint32" cppfunction="ReadUInt32" cppextend="" csharp="UInt32" lua="local"/>
 		<type name="uint64" cpp="uint64" cppfunction="ReadUInt64" cppextend="" csharp="UInt64" lua="local"/>
 		<type name="string" cpp="std::string" cppfunction="ReadString" cppextend="" csharp="string" lua="local"/>

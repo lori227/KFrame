@@ -27,40 +27,40 @@ namespace KFrame
 
     const char* KFXml::Data()
     {
-        auto xmlfile = reinterpret_cast< rapidxml::file<>* >( _data );
-        return xmlfile->data();
+        auto xml_file = reinterpret_cast< rapidxml::file<>* >( _data );
+        return xml_file->data();
     }
 
     uint32 KFXml::Size()
     {
-        auto xmlfile = reinterpret_cast< rapidxml::file<>* >( _data );
-        return static_cast< uint32 >( xmlfile->size() );
+        auto xml_file = reinterpret_cast< rapidxml::file<>* >( _data );
+        return static_cast<uint32>( xml_file->size() );
     }
 
     void KFXml::Parse()
     {
-        auto xmlfile = reinterpret_cast<rapidxml::file<>*>( _data );
-        auto xmldocument = reinterpret_cast<rapidxml::xml_document<>*>( _document );
+        auto xml_file = reinterpret_cast<rapidxml::file<>*>( _data );
+        auto xml_document = reinterpret_cast<rapidxml::xml_document<>*>( _document );
 
-        xmlfile->from( _file.c_str() );
-        xmldocument->parse<0>( xmlfile->data() );
+        xml_file->from( _file.c_str() );
+        xml_document->parse<0>( xml_file->data() );
     }
 
     KFXmlNode KFXml::RootNode()
     {
-        auto xmldocument = reinterpret_cast<rapidxml::xml_document<>*>( _document );
+        auto xml_document = reinterpret_cast<rapidxml::xml_document<>*>( _document );
 
-        KFXmlNode kfnode( this );
-        kfnode._node = xmldocument->first_node();
-        return kfnode;
+        KFXmlNode xml_node( this );
+        xml_node._node = xml_document->first_node();
+        return xml_node;
     }
 
     KFXmlNode KFXml::FindNode( const char* key )
     {
-        auto xmldocument = reinterpret_cast<rapidxml::xml_document<>*>( _document );
+        auto xml_document = reinterpret_cast<rapidxml::xml_document<>*>( _document );
 
-        KFXmlNode kfnode( this );
-        kfnode._node = xmldocument->first_node( key );
-        return kfnode;
+        KFXmlNode xml_node( this );
+        xml_node._node = xml_document->first_node( key );
+        return xml_node;
     }
 }

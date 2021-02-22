@@ -61,30 +61,30 @@ namespace KFrame
 
     void KFAppConfig::ReadStartupConfig( const std::string& file )
     {
-        KFXml kfxml( file );
-        auto root = kfxml.FindNode( "Setting" );
+        KFXml xml( file );
+        auto root = xml.FindNode( "Setting" );
         //////////////////////////////////////////////////////////////////////////
-        auto includesnode = root.FindNode( "Includes" );
-        if ( includesnode.IsValid() )
+        auto includes_node = root.FindNode( "Includes" );
+        if ( includes_node.IsValid() )
         {
-            auto includenode = includesnode.FindNode( "Include" );
-            while ( includenode.IsValid() )
+            auto include_node = includes_node.FindNode( "Include" );
+            while ( include_node.IsValid() )
             {
-                auto filename = includenode.ReadString( "File" );
+                auto filename = include_node.ReadString( "File" );
                 ReadStartupConfig( filename );
-                includenode.NextNode();
+                include_node.NextNode();
             }
         }
         //////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////
         auto plugins = root.FindNode( "Plugins" );
-        auto kfglobal = KFGlobal::Instance();
+        auto global = KFGlobal::Instance();
 
         auto node = plugins.FindNode( "Plugin" );
         while ( node.IsValid() )
         {
             auto channel = node.ReadUInt32( "Channel", true, _invalid_int );
-            if ( kfglobal->CheckChannelService( channel, _invalid_int ) )
+            if ( global->CheckChannelService( channel, _invalid_int ) )
             {
                 KFAppSetting setting;
                 setting._name = node.ReadString( "Name" );

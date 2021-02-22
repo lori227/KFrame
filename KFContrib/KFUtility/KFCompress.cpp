@@ -9,7 +9,7 @@ namespace KFrame
     static uint32 _compress_length = KFBufferEnum::Buff_20M;
     static uint32 _data_length = KFBufferEnum::Buff_40M;
 
-    bool KFCompress::Compress( const std::string& value, std::string& result, uint32 compresstype, uint32 compresslevel, bool convert )
+    bool KFCompress::Compress( const std::string& value, std::string& result, uint32 compress_type, uint32 compress_level, bool convert )
     {
         result.clear();
         if ( value.empty() )
@@ -19,14 +19,14 @@ namespace KFrame
 
         // 压缩数据
         auto length = 0;
-        auto compressbuffer = __KF_UINT8__( _compress_length );
-        switch ( compresstype )
+        auto compress_buffer = __KF_UINT8__( _compress_length );
+        switch ( compress_type )
         {
         case KFCompressEnum::LZ4:
-            length = LZ4_compress_fast( value.data(), ( int8* )compressbuffer, ( int32 )value.size(), ( int32 )_compress_length, ( int32 )compresslevel );
+            length = LZ4_compress_fast( value.data(), ( int8* )compress_buffer, ( int32 )value.size(), ( int32 )_compress_length, ( int32 )compress_level );
             break;
         case KFCompressEnum::ZSTD:
-            length = ( int32 )ZSTD_compress( compressbuffer, _compress_length, value.data(), value.size(), ( int32 )compresslevel );
+            length = ( int32 )ZSTD_compress( compress_buffer, _compress_length, value.data(), value.size(), ( int32 )compress_level );
             break;
         default:
             result = value;
@@ -37,17 +37,15 @@ namespace KFrame
         {
             if ( convert )
             {
-                auto databuffer = __KF_INT8__( _data_length );
+                auto data_buffer = __KF_INT8__( _data_length );
 
                 // 转为可视字符串
-                auto datalength = KFDecode::UByteToString( compressbuffer, length, databuffer, _data_length );
-                result.assign( databuffer, datalength );
-
-                // __LOG_DEBUG__( "compress source=[{}] fast=[{}] string=[{}]", value.size(), length, datalength );
+                auto data_length = KFDecode::UByteToString( compress_buffer, length, data_buffer, _data_length );
+                result.assign( data_buffer, data_length );
             }
             else
             {
-                result.assign( ( int8* )compressbuffer, length );
+                result.assign( ( int8* )compress_buffer, length );
             }
         }
         else if ( length < 0 )
@@ -58,7 +56,7 @@ namespace KFrame
         return length >= 0;
     }
 
-    bool KFCompress::UnCompress( const std::string& value, std::string& result, uint32 compresstype, bool convert )
+    bool KFCompress::UnCompress( const std::string& value, std::string& result, uint32 compress_type, bool convert )
     {
         result.clear();
         if ( value.empty() )
@@ -76,30 +74,30 @@ namespace KFrame
         }
 
         // 解压缩
-        auto datalength = 0;
-        auto databuffer = __KF_INT8__( _data_length );
-        switch ( compresstype )
+        auto data_length = 0;
+        auto data_buffer = __KF_INT8__( _data_length );
+        switch ( compress_type )
         {
         case KFCompressEnum::LZ4:
-            datalength = LZ4_decompress_safe( ( int8* )buffer, databuffer, length, _data_length );
+            data_length = LZ4_decompress_safe( ( int8* )buffer, data_buffer, length, _data_length );
             break;
         case KFCompressEnum::ZSTD:
-            datalength = ( int32 )ZSTD_decompress( databuffer, _data_length, buffer, length );
+            data_length = ( int32 )ZSTD_decompress( data_buffer, _data_length, buffer, length );
             break;
         default:
             result = value;
             break;
         }
 
-        if ( datalength > 0 )
+        if ( data_length > 0 )
         {
-            result.assign( databuffer, datalength );
+            result.assign( data_buffer, data_length );
         }
-        else if ( datalength < 0 )
+        else if ( data_length < 0 )
         {
-            __LOG_ERROR__( "uncompress failed=[{}]", datalength );
+            __LOG_ERROR__( "uncompress failed=[{}]", data_length );
         }
 
-        return datalength >= 0;
+        return data_length >= 0;
     }
 }

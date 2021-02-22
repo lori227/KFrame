@@ -9,11 +9,11 @@ namespace KFrame
     class KFDump
     {
     public:
-        KFDump( const char* appname, const char* apptype, const char* appid );
+        KFDump( const char* app_name, const char* app_type, const char* app_id );
         ~KFDump();
 
         // 异常回调
-        static LONG WINAPI MyExceptionFilter( struct _EXCEPTION_POINTERS* pexceptioninfo );
+        static LONG WINAPI MyExceptionFilter( struct _EXCEPTION_POINTERS* exception_info );
     };
 
 }

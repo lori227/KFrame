@@ -76,14 +76,14 @@ namespace KFrame
             templist.swap( _log_data_list );
         }
 
-        auto kfglobal = KFGlobal::Instance();
+        auto global = KFGlobal::Instance();
 
         KFMsg::S2SRemoteLogToServerReq req;
-        req.set_appname( kfglobal->_app_name );
-        req.set_apptype( kfglobal->_app_type );
-        req.set_strappid( kfglobal->_app_id->ToString() );
-        req.set_appid( kfglobal->_app_id->GetId() );
-        req.set_zoneid( kfglobal->_app_id->GetZoneId() );
+        req.set_appname( global->_app_name );
+        req.set_apptype( global->_app_type );
+        req.set_strappid( global->_app_id->ToString() );
+        req.set_appid( global->_app_id->GetId() );
+        req.set_zoneid( global->_app_id->GetZoneId() );
 
         for ( auto kfdata : templist )
         {

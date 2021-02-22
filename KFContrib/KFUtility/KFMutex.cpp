@@ -1,36 +1,26 @@
 ﻿#include "KFMutex.h"
-#include "Poco/Mutex.h"
 
 namespace KFrame
 {
-    KFMutex::KFMutex()
-    {
-        auto mutex = new ( _buff ) Poco::FastMutex();
-    }
-
-    KFMutex::~KFMutex()
-    {
-    }
-
     void KFMutex::Lock()
     {
-        reinterpret_cast< Poco::FastMutex* >( _buff )->lock();
+        _mutex.lock();
     }
 
     void KFMutex::Unlock()
     {
-        reinterpret_cast< Poco::FastMutex* >( _buff )->unlock();
+        _mutex.unlock();
     }
 
     //////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////
-    KFLocker::KFLocker( KFMutex& kfmutex ) : _kf_mutex( kfmutex )
+    KFLocker::KFLocker( KFMutex& mutex ) : _mutex( mutex )
     {
-        _kf_mutex.Lock();
+        _mutex.Lock();
     }
 
     KFLocker::~KFLocker()
     {
-        _kf_mutex.Unlock();
+        _mutex.Unlock();
     }
 }

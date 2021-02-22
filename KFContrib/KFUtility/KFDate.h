@@ -122,37 +122,37 @@ namespace KFrame
         static uint64 FromString( const std::string& ymd );
 
         // 判断同一天
-        static bool CheckSameDay( uint64 lasttime, uint64 now_time );
-        static bool CheckSameDay( KFDate& lastdate, KFDate& nowdate );
+        static bool CheckSameDay( uint64 last_time, uint64 now_time );
+        static bool CheckSameDay( KFDate& last_date, KFDate& now_date );
 
         // 判断在时间内
-        static bool CheckInTime( uint64 starttime, uint64 endtime, uint64 now_time );
+        static bool CheckInTime( uint64 start_time, uint64 end_time, uint64 now_time );
 
         // 判断是否过期了
-        static bool CheckTimeout( uint64 starttime, uint64 keeptime );
-        static bool CheckTimeout( uint64 now_time, uint64 starttime, uint64 keeptime );
+        static bool CheckTimeout( uint64 start_time, uint64 keep_time );
+        static bool CheckTimeout( uint64 now_time, uint64 start_time, uint64 keep_time );
 
         // 计算剩余时间
-        static uint64 CalcLeftTime( uint64 now_time, uint64 starttime, uint32 keeptime );
+        static uint64 CalcLeftTime( uint64 now_time, uint64 start_time, uint32 keep_time );
 
         // 判断是否过了时间点
-        static bool CheckPassTime( uint64 now_time, uint64 nexttime );
+        static bool CheckPassTime( uint64 now_time, uint64 next_time );
         static bool CheckPassTime( uint32 year, uint32 month, uint32 day, uint32 hour, uint32 minute );
 
         // 获得0点0分的时间
-        static uint64 CalcZeroTime( uint64 time, int32 daycount = 0 );
+        static uint64 CalcZeroTime( uint64 time, int32 day_count = 0 );
 
         // 获得上次重置时间
-        static uint64 CalcTimeData( const KFTimeData* timedata, uint64 time, int32 count = 0 );
+        static uint64 CalcTimeData( const KFTimeData* time_data, uint64 time, int32 count = 0 );
 
         // 判断时间( 循环时间, 需要上一次时间参与判断 )
-        static bool CheckLoopTimeData( const KFTimeData* timedata, uint64 lasttime, uint64 now_time );
-        static bool CheckLoopTimeData( const KFTimeData* timedata, KFDate& lastdate, KFDate& nowdate );
+        static bool CheckLoopTimeData( const KFTimeData* time_data, uint64 last_time, uint64 now_time );
+        static bool CheckLoopTimeData( const KFTimeData* time_data, KFDate& last_date, KFDate& now_date );
 
         // 判断时间( 区间时间, 是否过了某一个时间点 )
-        static bool CheckInTimeSection( const KFTimeSection* timesection, uint64 time );
-        static bool CheckInTimeSection( const KFTimeSection* timesection, KFDate& date );
-        static bool CheckSectionTimeData( const KFTimeData* timedata, KFDate& date );
+        static bool CheckInTimeSection( const KFTimeSection* time_section, uint64 time );
+        static bool CheckInTimeSection( const KFTimeSection* time_section, KFDate& date );
+        static bool CheckSectionTimeData( const KFTimeData* time_data, KFDate& date );
         //////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -161,46 +161,46 @@ namespace KFrame
         void ConvertTimeDate();
 
         // 判断是否过了分钟
-        static bool CheckLoopMinute( const KFTimeData* timedata, uint64 lasttime, uint64 now_time );
-        static bool CheckLoopMinute( const KFTimeData* timedata, KFDate& lastdate, KFDate& nowdate );
+        static bool CheckLoopMinute( const KFTimeData* time_data, uint64 last_time, uint64 now_time );
+        static bool CheckLoopMinute( const KFTimeData* time_data, KFDate& last_date, KFDate& now_date );
 
         // 判断是否过了小时
-        static bool CheckLoopHour( const KFTimeData* timedata, uint64 lasttime, uint64 now_time );
-        static bool CheckLoopHour( const KFTimeData* timedata, KFDate& lastdate, KFDate& nowdate );
+        static bool CheckLoopHour( const KFTimeData* time_data, uint64 last_time, uint64 now_time );
+        static bool CheckLoopHour( const KFTimeData* time_data, KFDate& last_date, KFDate& now_date );
 
         // 判断是否过了天
-        static bool CheckLoopDay( const KFTimeData* timedata, KFDate& lastdate, KFDate& nowdate );
+        static bool CheckLoopDay( const KFTimeData* time_data, KFDate& last_date, KFDate& now_date );
 
         // 判断是否过了周
-        static bool CheckLoopWeek( const KFTimeData* timedata, KFDate& lastdate, KFDate& nowdate );
+        static bool CheckLoopWeek( const KFTimeData* time_data, KFDate& last_date, KFDate& now_date );
 
         // 判断是否过了月
-        static bool CheckLoopMonth( const KFTimeData* timedata, KFDate& lastdate, KFDate& nowdate );
+        static bool CheckLoopMonth( const KFTimeData* time_data, KFDate& last_date, KFDate& now_date );
 
         // 判断是否过了一年
-        static bool CheckLoopYear( const KFTimeData* timedata, KFDate& lastdate, KFDate& nowdate );
+        static bool CheckLoopYear( const KFTimeData* time_data, KFDate& last_date, KFDate& now_date );
 
         // 判断是否过了永久
-        static bool CheckLoopEver( uint64 lasttime );
-        static bool CheckLoopEver( KFDate& lastdate );
+        static bool CheckLoopEver( uint64 last_time );
+        static bool CheckLoopEver( KFDate& last_date );
 
         // 判断是否过了某分钟
-        static bool CheckSectionMinute( const KFTimeData* timedata, KFDate& date );
+        static bool CheckSectionMinute( const KFTimeData* time_data, KFDate& date );
 
         // 判断是否过了某小时某分钟
-        static bool CheckSectionHour( const KFTimeData* timedata, KFDate& date );
+        static bool CheckSectionHour( const KFTimeData* time_data, KFDate& date );
 
         // 判断是否过了某天某小时某分钟
-        static bool CheckSectionDay( const KFTimeData* timedata, KFDate& date );
+        static bool CheckSectionDay( const KFTimeData* time_data, KFDate& date );
 
         // 判断是否过了星期几的某小时某分钟
-        static bool CheckSectionWeek( const KFTimeData* timedata, KFDate& date );
+        static bool CheckSectionWeek( const KFTimeData* time_data, KFDate& date );
 
         // 判断是否过了某月某号的某小时某分钟
-        static bool CheckSectionMonth( const KFTimeData* timedata, KFDate& date );
+        static bool CheckSectionMonth( const KFTimeData* time_data, KFDate& date );
 
         // 判断是否过了某年某月某号的某小时某分钟
-        static bool CheckSectionYear( const KFTimeData* timedata, KFDate& date );
+        static bool CheckSectionYear( const KFTimeData* time_data, KFDate& date );
 
     private:
         time_t _time;

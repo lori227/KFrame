@@ -54,7 +54,7 @@ namespace KFrame
 
     __KF_NET_EVENT_FUNCTION__( KFRouteClientModule::OnClientConnectRouteMasterFailed )
     {
-        auto kfglobal = KFGlobal::Instance();
+        auto global = KFGlobal::Instance();
         if ( net_data->_name == __STRING__( route ) && net_data->_type == __STRING__( master ) )
         {
             ++_connect_route_master_failed_count;

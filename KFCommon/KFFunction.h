@@ -22,7 +22,7 @@ namespace KFrame
             return true;
         }
 
-        inline void SetFunction( T& function )
+        inline void SetFunction( T function )
         {
             _is_open = true;
             _function = function;
@@ -91,37 +91,16 @@ namespace KFrame
             return KFFunction<T>::IsOpen();
         }
 
-        inline void SetFunction( KFModule* module, T& function )
+        inline void SetFunction( KFModule* module, T function )
         {
             _module = module;
-            SetFunction( function );
+            KFFunction<T>::SetFunction( function );
         }
 
         inline void Reset()
         {
             _module = nullptr;
             KFFunction<T>::Reset();
-        }
-
-        template< class ... Arg >
-        inline void Call( Arg&& ...params ) const
-        {
-            if ( IsOpen() )
-            {
-                _function( std::forward<Arg>( params )... );
-            }
-        }
-
-        template< class ReturnType, class ... Arg >
-        inline ReturnType CallEx( Arg&& ...params ) const
-        {
-            if ( IsOpen() )
-            {
-                return _function( std::forward<Arg>( params )... );
-            }
-
-            static ReturnType _result;
-            return _result;
         }
 
     protected:

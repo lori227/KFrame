@@ -16,7 +16,7 @@ namespace KFrame
 
     bool KFDeployStartup::LoadPlugin()
     {
-        auto kfglobal = KFGlobal::Instance();
+        auto global = KFGlobal::Instance();
 
         for ( auto& kfsetting : _deploy_config->_startups )
         {
@@ -34,7 +34,7 @@ namespace KFrame
         return true;
     }
 
-    typedef KFPlugin* ( *PluginEntryFunction )( KFPluginManage* manage, KFGlobal* kfglobal, KFMalloc* kfmalloc, KFLogger* kflogger );
+    typedef KFPlugin* ( *PluginEntryFunction )( KFPluginManage* manage, KFGlobal* global, KFMalloc* kfmalloc, KFLogger* kflogger );
     bool KFDeployStartup::LoadPluginLibrary( const std::string& file, const KFDeploySetting* kfsetting )
     {
         auto library = _kf_library.Create( kfsetting->_name );

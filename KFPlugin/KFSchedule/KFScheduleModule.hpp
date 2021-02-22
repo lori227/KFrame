@@ -47,8 +47,8 @@ namespace KFrame
         void CalcNextCheckRunTime();
 
         // 执行计划任务状态更新
-        void ExecuteScheduleStart( KFScheduleDataList* schedulelist, KFDate& nowdate );
-        void ExecuteScheduleFinish( KFScheduleDataList* schedulelist, KFDate& nowdate );
+        void ExecuteScheduleStart( KFScheduleDataList* schedulelist, KFDate& now_date );
+        void ExecuteScheduleFinish( KFScheduleDataList* schedulelist, KFDate& now_date );
 
     private:
         // 下一次执行时间

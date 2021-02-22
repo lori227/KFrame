@@ -10,34 +10,34 @@ namespace KFrame
 	class KFRelationSetting : public KFStrSetting
 	{
 	public:
-		// ×î´óÊýÁ¿
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		uint32 _max_count = 0u;
 
-		// ÊÇ·ñÊÇË«ÏòµÄ
+		// ï¿½Ç·ï¿½ï¿½ï¿½Ë«ï¿½ï¿½ï¿½
 		bool _both_way = false;
 
-		// ÊÇ·ñÐèÒª¸üÐÂÊôÐÔ
+		// ï¿½Ç·ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		bool _need_update = false;
 
-		// ÊÇ·ñÐèÒªÖ÷¶¯¼ÓÔØ
+		// ï¿½Ç·ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		bool _online_load = false;
 
-		// ÑûÇëÁÐ±í×î´óÊýÁ¿
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		uint32 _invite_list_count = 0u;
 
-		// ÑûÇë±£ÁôÊ±¼ä(Ãë)
+		// ï¿½ï¿½ï¿½ë±£ï¿½ï¿½Ê±ï¿½ï¿½(ï¿½ï¿½)
 		uint32 _invite_keep_time = 0u;
 
-		// Êý¾Ý¿âÁÐ±íÃû×Ö(·þÎñÆ÷Ê¹ÓÃ,Îð¸Ä)
+		// ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½Ð±ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½,ï¿½ï¿½ï¿½)
 		std::string _data_list_name;
 
-		// ÑûÇëÁÐ±íÊôÐÔÃû×Ö(¿Õ¾ÍÊÇ²»ÐèÒªÑûÇë)
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½Õ¾ï¿½ï¿½Ç²ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½)
 		std::string _invite_data_name;
 
-		// ÑûÇëÁÐ±íÊôÐÔÃû×Ö(·þÎñÆ÷Ê¹ÓÃ,Îð¸Ä)
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½,ï¿½ï¿½ï¿½)
 		std::string _invite_list_name;
 
-		// ¾Ü¾øÉêÇë(·þÎñÆ÷Ê¹ÓÃ)
+		// ï¿½Ü¾ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½)
 		std::string _refuse_name;
 
 	};
@@ -58,9 +58,9 @@ namespace KFrame
 		virtual void ReadSetting( KFXmlNode& xmlnode, KFRelationSetting* kfsetting )
 		{
 			kfsetting->_max_count = xmlnode.ReadUInt32( "maxcount", true );
-			kfsetting->_both_way = xmlnode.ReadBoolen( "bothway", true );
-			kfsetting->_need_update = xmlnode.ReadBoolen( "needupdate", true );
-			kfsetting->_online_load = xmlnode.ReadBoolen( "onlineload", true );
+			kfsetting->_both_way = xmlnode.ReadBool( "bothway", true );
+			kfsetting->_need_update = xmlnode.ReadBool( "needupdate", true );
+			kfsetting->_online_load = xmlnode.ReadBool( "onlineload", true );
 			kfsetting->_invite_list_count = xmlnode.ReadUInt32( "invitelistcount", true );
 			kfsetting->_invite_keep_time = xmlnode.ReadUInt32( "invitekeeptime", true );
 			kfsetting->_data_list_name = xmlnode.ReadString( "datalistname", true );

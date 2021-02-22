@@ -17,7 +17,7 @@
     <ClCompile Include="KFCompress.cpp" />
     <ClCompile Include="KFDynamicCondition.cpp" />
     <ClCompile Include="KFStaticCondition.cpp" />
-    <ClCompile Include="KFConHash.cpp" />
+    <ClCompile Include="KFHash.cpp" />
     <ClCompile Include="KFConvert.cpp" />
     <ClCompile Include="KFCrypto.cpp" />
     <ClCompile Include="KFDate.cpp" />
@@ -28,7 +28,7 @@
     <ClCompile Include="KFMutex.cpp" />
     <ClCompile Include="KFTar.cpp" />
     <ClCompile Include="KFXmlNode.cpp" />
-    <ClCompile Include="KFRunable.cpp" />
+    <ClCompile Include="KFRunnable.cpp" />
     <ClCompile Include="KFThread.cpp" />
     <ClCompile Include="KFTimer.cpp" />
     <ClCompile Include="KFUtility.cpp" />
@@ -43,7 +43,7 @@
     <ClInclude Include="KFCompress.h" />
     <ClInclude Include="KFDynamicCondition.h" />
     <ClInclude Include="KFStaticCondition.h" />
-    <ClInclude Include="KFConHash.h" />
+    <ClInclude Include="KFHash.h" />
     <ClInclude Include="KFConvert.h" />
     <ClInclude Include="KFCrypto.h" />
     <ClInclude Include="KFDate.h" />
@@ -54,7 +54,7 @@
     <ClInclude Include="KFMutex.h" />
     <ClInclude Include="KFTar.h" />
     <ClInclude Include="KFXmlNode.h" />
-    <ClInclude Include="KFRunable.hpp" />
+    <ClInclude Include="KFRunnable.hpp" />
     <ClInclude Include="KFThread.h" />
     <ClInclude Include="KFTimer.h" />
     <ClInclude Include="KFUtility.h" />

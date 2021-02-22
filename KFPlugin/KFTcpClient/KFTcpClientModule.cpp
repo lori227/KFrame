@@ -44,16 +44,16 @@ namespace KFrame
     // 连接成功
     __KF_NET_EVENT_FUNCTION__( KFTcpClientModule::OnClientConnected )
     {
-        auto kfglobal = KFGlobal::Instance();
+        auto global = KFGlobal::Instance();
 
         // 把自己注册到服务器
         KFMsg::RegisterToServerReq req;
         auto listendata = req.mutable_listen();
-        listendata->set_appname( kfglobal->_app_name );
-        listendata->set_apptype( kfglobal->_app_type );
-        listendata->set_appid( kfglobal->_app_id->GetId() );
-        listendata->set_ip( kfglobal->_intranet_ip );
-        listendata->set_port( kfglobal->_listen_port );
+        listendata->set_appname( global->_app_name );
+        listendata->set_apptype( global->_app_type );
+        listendata->set_appid( global->_app_id->GetId() );
+        listendata->set_ip( global->_intranet_ip );
+        listendata->set_port( global->_listen_port );
         SendNetMessage( net_data->_id, KFMsg::S2S_REGISTER_TO_SERVER_REQ, &req );
     }
 
@@ -196,8 +196,8 @@ namespace KFrame
 
     bool KFTcpClientModule::IsSelfConnection( const std::string& name, const std::string& type, uint64 id )
     {
-        auto kfglobal = KFGlobal::Instance();
-        if ( kfglobal->_app_id->GetId() == id )
+        auto global = KFGlobal::Instance();
+        if ( global->_app_id->GetId() == id )
         {
             return true;
         }

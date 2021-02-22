@@ -38,19 +38,19 @@ namespace KFrame
     void KFIpAddressModule::OnceRun()
     {
         // 初始化vpn地址( 只有zone.gate需要处理 )
-        auto kfglobal = KFGlobal::Instance();
-        if ( kfglobal->_app_name == __STRING__( zone ) && kfglobal->_app_type == __STRING__( gate ) )
+        auto global = KFGlobal::Instance();
+        if ( global->_app_name == __STRING__( zone ) && global->_app_type == __STRING__( gate ) )
         {
-            auto value = kfglobal->GetString( __STRING__( vpn ), kfglobal->_app_id->GetZoneId() );
+            auto value = global->GetString( __STRING__( vpn ), global->_app_id->GetZoneId() );
             if ( !value.empty() )
             {
-                kfglobal->_intranet_ip = KFUtility::SplitString( value, __DOMAIN_STRING__ );
+                global->_intranet_ip = KFUtility::SplitString( value, __DOMAIN_STRING__ );
                 auto port = KFUtility::SplitValue<uint32>( value, __DOMAIN_STRING__ );
                 if ( port != 0u )
                 {
-                    kfglobal->_listen_port = port;
+                    global->_listen_port = port;
                 }
-                __LOG_INFO__( "use vpn ip=[{}] port=[{}]", kfglobal->_intranet_ip, kfglobal->_listen_port );
+                __LOG_INFO__( "use vpn ip=[{}] port=[{}]", global->_intranet_ip, global->_listen_port );
             }
         }
     }
@@ -63,22 +63,22 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_TIMER_FUNCTION__( KFIpAddressModule::OnTimerUpdateMasterIp )
     {
-        auto kfglobal = KFGlobal::Instance();
+        auto global = KFGlobal::Instance();
         static auto _url = GetDirUrl() + __STRING__( updatemasterip );
 
         __JSON_OBJECT_DOCUMENT__( kfjson );
-        __JSON_SET_VALUE__( kfjson, __STRING__( appname ), kfglobal->_app_name );
-        __JSON_SET_VALUE__( kfjson, __STRING__( appid ), kfglobal->_app_id->GetId() );
-        __JSON_SET_VALUE__( kfjson, __STRING__( zone_id ), kfglobal->_app_id->GetZoneId() );
-        __JSON_SET_VALUE__( kfjson, __STRING__( ip ), kfglobal->_intranet_ip );
-        __JSON_SET_VALUE__( kfjson, __STRING__( port ), kfglobal->_listen_port );
+        __JSON_SET_VALUE__( kfjson, __STRING__( appname ), global->_app_name );
+        __JSON_SET_VALUE__( kfjson, __STRING__( appid ), global->_app_id->GetId() );
+        __JSON_SET_VALUE__( kfjson, __STRING__( zone_id ), global->_app_id->GetZoneId() );
+        __JSON_SET_VALUE__( kfjson, __STRING__( ip ), global->_intranet_ip );
+        __JSON_SET_VALUE__( kfjson, __STRING__( port ), global->_listen_port );
         __JSON_SET_VALUE__( kfjson, __STRING__( time ), 70u );	// 失效时间70秒
         _kf_http_client->MTGet<KFIpAddressModule>( _url, kfjson );
     }
 
     const KFNetData* KFIpAddressModule::GetMasterIp( const std::string& appname, uint32 zone_id )
     {
-        auto kfglobal = KFGlobal::Instance();
+        auto global = KFGlobal::Instance();
         static auto _url = GetDirUrl() + __STRING__( querymasterip );
 
         __JSON_OBJECT_DOCUMENT__( kfjson );
@@ -113,7 +113,7 @@ namespace KFrame
 
     const std::list<KFNetData>& KFIpAddressModule::GetMasterList( const std::string& appname, uint32 zone_id )
     {
-        auto kfglobal = KFGlobal::Instance();
+        auto global = KFGlobal::Instance();
         static auto _url = GetDirUrl() + __STRING__( querymasterlist );
 
         static std::list< KFNetData > _ip_address_list;
@@ -185,45 +185,45 @@ namespace KFrame
 
     void KFIpAddressModule::InitInteranetIp()
     {
-        auto kfglobal = KFGlobal::Instance();
-        if ( kfglobal->_net_type == KFServerEnum::Local )
+        auto global = KFGlobal::Instance();
+        if ( global->_net_type == KFServerEnum::Local )
         {
-            kfglobal->_intranet_ip = kfglobal->_local_ip;
+            global->_intranet_ip = global->_local_ip;
         }
         else
         {
-            auto& dnsurl = kfglobal->GetString( __STRING__( dnsurl ) );
+            auto& dnsurl = global->GetString( __STRING__( dnsurl ) );
             do
             {
                 // 获得外网地址
                 auto interanetip = _kf_http_client->STGet( dnsurl, _invalid_string );
                 if ( !interanetip.empty() )
                 {
-                    kfglobal->_intranet_ip = KFUtility::SplitString( interanetip, "\n" );
+                    global->_intranet_ip = KFUtility::SplitString( interanetip, "\n" );
                 }
-            } while ( kfglobal->_intranet_ip.empty() );
+            } while ( global->_intranet_ip.empty() );
         }
 
-        __LOG_INFO__( "interanetip=[{}]", kfglobal->_intranet_ip );
+        __LOG_INFO__( "interanetip=[{}]", global->_intranet_ip );
     }
 
     static std::string _default_ip = "127.0.0.1";
     void KFIpAddressModule::InitLocalIp()
     {
-        auto kfglobal = KFGlobal::Instance();
+        auto global = KFGlobal::Instance();
 
 #if __KF_SYSTEM__ == __KF_WIN__
-        kfglobal->_local_ip = GetWinLocalIp();
+        global->_local_ip = GetWinLocalIp();
 #else
-        kfglobal->_local_ip = GetLinuxLocalIp();
+        global->_local_ip = GetLinuxLocalIp();
 #endif
-        if ( kfglobal->_local_ip.empty() )
+        if ( global->_local_ip.empty() )
         {
-            kfglobal->_local_ip = _default_ip;
+            global->_local_ip = _default_ip;
         }
 
         // 初始化外网ip
-        __LOG_INFO__( "localip=[{}]", kfglobal->_local_ip );
+        __LOG_INFO__( "localip=[{}]", global->_local_ip );
     }
 
 #if __KF_SYSTEM__ == __KF_WIN__

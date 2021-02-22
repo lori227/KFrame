@@ -13,12 +13,17 @@ namespace KFrame
         _type = KFDataDefine::DataTypeUInt32;
     }
 
+    KFIntValue::~KFIntValue()
+    {
+
+    }
+
     void KFIntValue::SetValue( std::string value )
     {
         _range.SetValue( value );
     }
 
-    uint64 KFIntValue::CalcUseValue( const KFDataSetting* setting, double multiple )
+    uint64 KFIntValue::CalcUseValue( std::shared_ptr<const KFDataSetting>& setting, double multiple )
     {
         _data_setting = setting;
         _use_value = _range.CalcValue();
@@ -32,7 +37,7 @@ namespace KFrame
         return _use_value;
     }
 
-    uint64 KFIntValue::CalcUseValue( const KFDataSetting* setting, const std::string& data_name, double multiple )
+    uint64 KFIntValue::CalcUseValue( std::shared_ptr<const KFDataSetting>& setting, const std::string& data_name, double multiple )
     {
         if ( _data_setting == nullptr )
         {
@@ -51,6 +56,10 @@ namespace KFrame
     KFStrValue::KFStrValue()
     {
         _type = KFDataDefine::DataTypeString;
+    }
+
+    KFStrValue::~KFStrValue()
+    {
     }
 
     void KFStrValue::SetValue( std::string value )
@@ -142,7 +151,7 @@ namespace KFrame
         _values.Insert( data_name, value_object );
     }
 
-    uint64 KFElementObject::CalcValue( const KFDataSetting* setting, const std::string& data_name, double multiple /* = _default_multiple */ )
+    uint64 KFElementObject::CalcValue( std::shared_ptr<const KFDataSetting>& setting, const std::string& data_name, double multiple /* = _default_multiple */ )
     {
         auto value_object = _values.Find( data_name );
         if ( value_object == nullptr || !value_object->IsType( KFDataDefine::DataTypeUInt32 ) )

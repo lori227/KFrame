@@ -137,100 +137,99 @@ namespace KFrame
     // level>=1&money>100
     // level>100|item:1>=2
     // level>money+1&money>100|item:1>2
-    StaticConditionsPtr KFStaticConditionAnalysis::Parse( std::string& strcondition )
+    StaticConditionsPtr KFStaticConditionAnalysis::Parse( std::string& condition )
     {
-        // Cleanup( strcondition );
-        StaticConditionsPtr staticconditions( new KFStaticConditions() );
-        if ( !strcondition.empty() )
+        // Cleanup( condition );
+        StaticConditionsPtr static_conditions( new KFStaticConditions() );
+        if ( !condition.empty() )
         {
-            auto startpos = 0u;
-            auto endpos = 0u;
-            auto data = strcondition.data();
-            auto size = ( uint32 )strcondition.length();
+            auto start_pos = 0u;
+            auto end_pos = 0u;
+            auto data = condition.data();
+            auto size = ( uint32 )condition.length();
 
             do
             {
                 // 解析条件
                 auto ok = false;
-                uint32 linktype = 0u;
-                KFStaticCondition* kfcondition = nullptr;
-                std::tie( kfcondition, linktype, ok ) = ParseCondition( data, size, startpos, endpos );
-
-                staticconditions->_condition_list.push_back( kfcondition );
+                uint32 link_type = 0u;
+                std::shared_ptr<KFStaticCondition> static_condition = nullptr;
+                std::tie( static_condition, link_type, ok ) = ParseCondition( data, size, start_pos, end_pos );
+                static_conditions->_condition_list.push_back( static_condition );
                 if ( ok )
                 {
-                    startpos = endpos + 2;
-                    if ( linktype != 0u )
+                    start_pos = end_pos + 2;
+                    if ( link_type != 0u )
                     {
-                        staticconditions->_link_type.push_back( linktype );
+                        static_conditions->_link_type.push_back( link_type );
                     }
                 }
-            } while ( startpos < size );
+            } while ( start_pos < size );
         }
 
-        return staticconditions;
+        return static_conditions;
     }
 
-    uint32 KFStaticConditionAnalysis::ReadCondition( const int8* data, uint32 size, uint32 startpos, uint32& endpos )
+    uint32 KFStaticConditionAnalysis::ReadCondition( const int8* data, uint32 size, uint32 start_pos, uint32& end_pos )
     {
-        uint32 linktype = KFEnum::Null;
-        for ( auto i = startpos; i < size; ++i )
+        uint32 link_type = KFEnum::Null;
+        for ( auto i = start_pos; i < size; ++i )
         {
-            endpos = i;
+            end_pos = i;
 
             auto value = data[ i ];
-            linktype = GetLinkType( value );
-            if ( linktype != KFEnum::Null )
+            link_type = GetLinkType( value );
+            if ( link_type != KFEnum::Null )
             {
-                --endpos;
+                --end_pos;
                 break;
             }
         }
 
-        return linktype;
+        return link_type;
     }
 
-    std::tuple<KFStaticCondition*, uint32, bool> KFStaticConditionAnalysis::ParseCondition( const int8* data, uint32 size, uint32 startpos, uint32& endpos )
+    std::tuple<std::shared_ptr<KFStaticCondition>, uint32, bool> KFStaticConditionAnalysis::ParseCondition( const int8* data, uint32 size, uint32 start_pos, uint32& end_pos )
     {
-        auto kfcondition = __KF_NEW__( KFStaticCondition );
-        auto linktype = ReadCondition( data, size, startpos, endpos );
+        auto static_condition = __MAKE_SHARED__( KFStaticCondition );
+        auto link_type = ReadCondition( data, size, start_pos, end_pos );
 
         // 计算因子的长度
-        size = endpos - startpos + 1;
+        size = end_pos - start_pos + 1;
 
         // 读取判断类型
-        auto checkendpos = 0u;
-        auto checksize = 0u;
-        std::tie( kfcondition->_check_type, checkendpos, checksize ) = ReadCheckType( data, size, startpos );
-        if ( kfcondition->_check_type == KFEnum::Null )
+        auto check_end_pos = 0u;
+        auto check_size = 0u;
+        std::tie( static_condition->_check_type, check_end_pos, check_size ) = ReadCheckType( data, size, start_pos );
+        if ( static_condition->_check_type == KFEnum::Null )
         {
-            return std::make_tuple( kfcondition, linktype, false );
+            return std::make_tuple( static_condition, link_type, false );
         }
 
         // 读取左边的表达式
         auto ok = false;
-        std::tie( kfcondition->_left, ok ) = ParseExpression( data, checkendpos - startpos + 1, startpos );
+        std::tie( static_condition->_left, ok ) = ParseExpression( data, check_end_pos - start_pos + 1, start_pos );
         if ( !ok )
         {
-            return std::make_tuple( kfcondition, linktype, false );
+            return std::make_tuple( static_condition, link_type, false );
         }
 
-        startpos = checkendpos + checksize + 1;
-        std::tie( kfcondition->_right, ok ) = ParseExpression( data, endpos - startpos + 1, startpos );
+        start_pos = check_end_pos + check_size + 1;
+        std::tie( static_condition->_right, ok ) = ParseExpression( data, end_pos - start_pos + 1, start_pos );
         if ( !ok )
         {
-            return std::make_tuple( kfcondition, linktype, false );
+            return std::make_tuple( static_condition, link_type, false );
         }
 
-        return std::make_tuple( kfcondition, linktype, true );
+        return std::make_tuple( static_condition, link_type, true );
     }
 
-    std::tuple<uint32, uint32, uint32> KFStaticConditionAnalysis::ReadCheckType( const int8* data, uint32 size, uint32 startpos )
+    std::tuple<uint32, uint32, uint32> KFStaticConditionAnalysis::ReadCheckType( const int8* data, uint32 size, uint32 start_pos )
     {
-        auto endpos = startpos + size;
-        uint32 checktype = KFEnum::Null;
-        auto checksize = 0u;
-        for ( auto i = startpos; i < endpos; ++i )
+        auto end_pos = start_pos + size;
+        uint32 check_type = KFEnum::Null;
+        auto check_size = 0u;
+        for ( auto i = start_pos; i < end_pos; ++i )
         {
             auto ch = data[ i ];
             if ( IsInteger( ch ) || IsLetter( ch ) )
@@ -241,27 +240,27 @@ namespace KFrame
             std::string value = "";
             value.push_back( data[ i ] );
 
-            auto firsttype = GetCheckType( value );
-            if ( firsttype != KFEnum::Null )
+            auto first_type = GetCheckType( value );
+            if ( first_type != KFEnum::Null )
             {
-                if ( i + 1 >= endpos )
+                if ( i + 1 >= end_pos )
                 {
                     break;
                 }
 
-                endpos = i - 1u;
-                checktype = firsttype;
-                checksize = ( uint32 )value.length();
+                end_pos = i - 1u;
+                check_type = first_type;
+                check_size = ( uint32 )value.length();
 
                 auto ch = data[ i + 1 ];
                 if ( !IsInteger( ch ) && !IsLetter( ch ) )
                 {
                     value.push_back( data[i + 1] );
-                    auto secondtype = GetCheckType( value );
-                    if ( secondtype != KFEnum::Null )
+                    auto second_type = GetCheckType( value );
+                    if ( second_type != KFEnum::Null )
                     {
-                        checktype = secondtype;
-                        checksize = ( uint32 )value.length();
+                        check_type = second_type;
+                        check_size = ( uint32 )value.length();
                     }
                 }
 
@@ -269,50 +268,50 @@ namespace KFrame
             }
         }
 
-        return std::make_tuple( checktype, endpos, checksize );
+        return std::make_tuple( check_type, end_pos, check_size );
     }
 
     //level>money+1
-    std::tuple<KFStaticConditionExpression*, bool> KFStaticConditionAnalysis::ParseExpression( const int8* data, uint32 size, uint32 startpos )
+    std::tuple<std::shared_ptr<KFStaticConditionExpression>, bool> KFStaticConditionAnalysis::ParseExpression( const int8* data, uint32 size, uint32 start_pos )
     {
-        auto kfexpression = __KF_NEW__( KFStaticConditionExpression );
+        auto static_expression = __MAKE_SHARED__( KFStaticConditionExpression );
 
-        auto endpos = startpos + size;
-        while ( startpos < endpos )
+        auto end_pos = start_pos + size;
+        while ( start_pos < end_pos )
         {
-            auto value = data[ startpos ];
+            auto value = data[ start_pos ];
             if ( IsLetter( value ) )
             {
-                auto kfdata = ParseVariable( data, size, startpos );
-                kfexpression->_data_list.push_back( kfdata );
+                auto variable = ParseVariable( data, size, start_pos );
+                static_expression->_data_list.push_back( variable );
             }
             else if ( IsInteger( value ) )
             {
-                auto kfdata = ParseConstant( data, size, startpos );
-                kfexpression->_data_list.push_back( kfdata );
+                auto constant = ParseConstant( data, size, start_pos );
+                static_expression->_data_list.push_back( constant );
             }
             else if ( IsOperatorType( value ) )
             {
                 --size;
-                ++startpos;
-                auto operatortype = GetOperatorType( value );
-                kfexpression->_operator_list.push_back( operatortype );
+                ++start_pos;
+                auto operator_type = GetOperatorType( value );
+                static_expression->_operator_list.push_back( operator_type );
             }
             else
             {
-                return std::make_tuple( kfexpression, false );
+                return std::make_tuple( static_expression, false );
             }
         }
 
-        return std::make_tuple( kfexpression, true );
+        return std::make_tuple( static_expression, true );
     }
 
 
-    uint32 KFStaticConditionAnalysis::ReadInteger( const int8* data, uint32& size, uint32& startpos )
+    uint32 KFStaticConditionAnalysis::ReadInteger( const int8* data, uint32& size, uint32& start_pos )
     {
         auto count = 0u;
-        auto endpos = startpos + size;
-        for ( auto i = startpos; i < endpos; ++i )
+        auto end_pos = start_pos + size;
+        for ( auto i = start_pos; i < end_pos; ++i )
         {
             auto value = data[ i ];
             if ( IsInteger( value ) )
@@ -326,18 +325,18 @@ namespace KFrame
         }
 
         std::string value = "";
-        value.assign( data + startpos, count );
+        value.assign( data + start_pos, count );
 
         size -= count;
-        startpos += count;
+        start_pos += count;
         return __TO_UINT32__( value );
     }
 
-    std::string KFStaticConditionAnalysis::ReadLetter( const int8* data, uint32& size, uint32& startpos )
+    std::string KFStaticConditionAnalysis::ReadLetter( const int8* data, uint32& size, uint32& start_pos )
     {
         auto count = 0u;
-        auto endpos = startpos + size;
-        for ( auto i = startpos; i < endpos; ++i )
+        auto end_pos = start_pos + size;
+        for ( auto i = start_pos; i < end_pos; ++i )
         {
             auto value = data[ i ];
             if ( IsLetter( value ) )
@@ -351,47 +350,46 @@ namespace KFrame
         }
 
         std::string value = "";
-        value.assign( data + startpos, count );
+        value.assign( data + start_pos, count );
 
         size -= count;
-        startpos += count;
+        start_pos += count;
 
         return value;
     }
 
-    KFStaticConditionAbstract* KFStaticConditionAnalysis::ParseConstant( const int8* data, uint32& size, uint32& startpos )
+    std::shared_ptr<KFStaticConditionAbstract> KFStaticConditionAnalysis::ParseConstant( const int8* data, uint32& size, uint32& start_pos )
     {
-        auto kfdata = __KF_NEW__( KFStaticConditionConstant );
-        kfdata->_value = ReadInteger( data, size, startpos );
-        return kfdata;
+        auto constant = __MAKE_SHARED__( KFStaticConditionConstant );
+        constant->_value = ReadInteger( data, size, start_pos );
+        return constant;
     }
 
-    KFStaticConditionAbstract* KFStaticConditionAnalysis::ParseVariable( const int8* data, uint32& size, uint32& startpos )
+    std::shared_ptr<KFStaticConditionAbstract> KFStaticConditionAnalysis::ParseVariable( const int8* data, uint32& size, uint32& start_pos )
     {
-        auto kfdata = __KF_NEW__( KFStaticConditionVariable );
+        auto variable = __MAKE_SHARED__( KFStaticConditionVariable );
 
-        auto endpos = startpos + size;
-        kfdata->_data_name = ReadLetter( data, size, startpos );
+        auto end_pos = start_pos + size;
+        variable->_data_name = ReadLetter( data, size, start_pos );
 
-        if ( startpos < endpos &&
-                IsDataKey( data[ startpos ] ) )
+        if ( start_pos < end_pos && IsDataKey( data[ start_pos ] ) )
         {
             --size;
-            ++startpos;
+            ++start_pos;
 
-            auto value = data[ startpos ];
+            auto value = data[ start_pos ];
             if ( IsInteger( value ) )
             {
-                kfdata->_data_id = ReadInteger( data, size, startpos );
+                variable->_data_id = ReadInteger( data, size, start_pos );
             }
             else if ( IsLetter( value ) )
             {
-                kfdata->_parent_name = kfdata->_data_name;
-                kfdata->_data_name = ReadLetter( data, size, startpos );
+                variable->_parent_name = variable->_data_name;
+                variable->_data_name = ReadLetter( data, size, start_pos );
             }
         }
 
-        return kfdata;
+        return variable;
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////

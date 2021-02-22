@@ -6,7 +6,7 @@
 namespace KFrame
 {
     class KFApplication;
-    class KFServices : public KFSingleton< KFServices >
+    class KFServices : public KFSingleton<KFServices>
     {
     public:
         // 构造

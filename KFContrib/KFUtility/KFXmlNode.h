@@ -13,7 +13,7 @@ namespace KFrame
     class KFXmlNode
     {
     public:
-        KFXmlNode( KFXml* kfxml );
+        KFXmlNode( KFXml* xml );
         ~KFXmlNode();
 
         // 是否有效
@@ -33,22 +33,22 @@ namespace KFrame
         }
 
         // 读取bool
-        bool ReadBoolen( const char* key, bool optional = false, bool defaultvale = false );
+        bool ReadBool( const char* key, bool optional = false, bool default_value = false );
 
         // 读取int32
-        int32 ReadInt32( const char* key, bool optional = false, int32 defaultvalue = 0 );
+        int32 ReadInt32( const char* key, bool optional = false, int32 default_value = 0 );
 
         // 读取uint32
-        uint32 ReadUInt32( const char* key, bool optional = false, uint32 defaultvalue = 0 );
+        uint32 ReadUInt32( const char* key, bool optional = false, uint32 default_value = 0 );
 
         // 读取uint64
-        uint64 ReadUInt64( const char* key, bool optional = false, uint64 defaultvalue = 0 );
+        uint64 ReadUInt64( const char* key, bool optional = false, uint64 default_value = 0 );
 
         // 读取string
-        std::string ReadString( const char* key, bool optional = false, std::string defaultvalue = "" );
+        std::string ReadString( const char* key, bool optional = false, std::string default_value = "" );
 
         // 读取double
-        double ReadDouble( const char* key, bool optional = false, double defaultvalue = 0.0f );
+        double ReadDouble( const char* key, bool optional = false, double default_value = 0.0f );
 
         // 读取uint32 vector
         UInt32Vector& ReadUInt32Vector( const char* key, bool optional = false );
@@ -108,7 +108,7 @@ namespace KFrame
         bool HaveChild( const char* key );
     private:
         friend class KFXml;
-        KFXml* _kf_xml;
+        KFXml* _xml;
         // 节点
         void* _node;
     };
@@ -116,7 +116,7 @@ namespace KFrame
     template<>
     inline bool KFXmlNode::ReadT( const char* key, bool optional /* = false */ )
     {
-        return ReadBoolen( key, optional );
+        return ReadBool( key, optional );
     }
 
     template<>

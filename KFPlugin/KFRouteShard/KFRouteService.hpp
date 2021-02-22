@@ -41,7 +41,7 @@ namespace KFrame
         std::string _name;
 
         // 服务器hash列表
-        KFConHash _server_hash;
+        KFHash _server_hash;
 
         // 对象列表( 对象所在的服务器 )
         std::unordered_map< uint64, UInt64Set > _object_list;
