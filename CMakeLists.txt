@@ -40,6 +40,7 @@ include_directories(
 )
 
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -Wall")
 if(CMAKE_BUILD_TYPE MATCHES "Debug")
     set(LIB_DIR ${ROOT_DIR}/_lib/linux/debug)
