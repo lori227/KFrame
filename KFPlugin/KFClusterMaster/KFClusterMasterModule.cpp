@@ -37,7 +37,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_NET_EVENT_FUNCTION__( KFClusterMasterModule::OnClientConnectClusterMaster )
     {
-        if ( netdata->_type != __STRING__( master ) )
+        if ( net_data->_type != __STRING__( master ) )
         {
             return;
         }
@@ -58,12 +58,12 @@ namespace KFrame
             listen->set_ip( kfproxy->_ip );
             listen->set_port( kfproxy->_port );
         }
-        _kf_tcp_client->SendNetMessage( netdata->_id, KFMsg::S2S_CLUSTER_SYNC_PROXY_TO_MASTER_REQ, &req );
+        _kf_tcp_client->SendNetMessage( net_data->_id, KFMsg::S2S_CLUSTER_SYNC_PROXY_TO_MASTER_REQ, &req );
     }
 
     __KF_NET_EVENT_FUNCTION__( KFClusterMasterModule::OnClientLostClusterMaster )
     {
-        if ( netdata->_type != __STRING__( master ) )
+        if ( net_data->_type != __STRING__( master ) )
         {
             return;
         }
@@ -72,7 +72,7 @@ namespace KFrame
         for ( auto& iter : _kf_proxy_list._objects )
         {
             auto kfproxy = iter.second;
-            if ( kfproxy->_master_id == netdata->_id )
+            if ( kfproxy->_master_id == net_data->_id )
             {
                 removes.insert( kfproxy->_id );
             }
@@ -87,20 +87,20 @@ namespace KFrame
 
     __KF_NET_EVENT_FUNCTION__( KFClusterMasterModule::OnServerLostClusterProxy )
     {
-        if ( netdata->_type != __STRING__( proxy ) )
+        if ( net_data->_type != __STRING__( proxy ) )
         {
             return;
         }
 
-        _kf_proxy_list.Remove( netdata->_id );
-        _proxy_hash.RemoveHashNode( netdata->_id );
+        _kf_proxy_list.Remove( net_data->_id );
+        _proxy_hash.RemoveHashNode( net_data->_id );
 
         // 发送给其他master服务器
         KFMsg::S2SClusterLostProxyToMasterReq req;
-        req.set_proxyid( netdata->_id );
+        req.set_proxyid( net_data->_id );
         _kf_tcp_client->SendMessageToType( KFGlobal::Instance()->_app_type, KFMsg::S2S_CLUSTER_LOST_PROXY_TO_MASTER_REQ, &req );
 
-        __LOG_ERROR__( "[{}|{}:{}] lost", netdata->_name, netdata->_type, netdata->_str_id );
+        __LOG_ERROR__( "[{}|{}:{}] lost", net_data->_name, net_data->_type, net_data->_str_id );
     }
 
     __KF_MESSAGE_FUNCTION__( KFClusterMasterModule::HandleClusterLostProxyToMasterReq, KFMsg::S2SClusterLostProxyToMasterReq )

@@ -227,7 +227,7 @@ namespace KFrame
         _kf_component->RemoveEntity( player );
     }
 
-    bool KFPlayerModule::SendToClient( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message, uint32 delay /* = 0 */ )
+    bool KFPlayerModule::SendToClient( KFEntity* player, uint32 msg_id, ::google::protobuf::Message* message, uint32 delay /* = 0 */ )
     {
         if ( !player->IsInited() )
         {
@@ -240,7 +240,7 @@ namespace KFrame
             return false;
         }
 
-        return _kf_tcp_server->SendNetMessage( gateid, player->GetKeyID(), msgid, message, delay );
+        return _kf_tcp_server->SendNetMessage( gateid, player->GetKeyID(), msg_id, message, delay );
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFPlayerModule::InitPlayer( KFEntity* player )

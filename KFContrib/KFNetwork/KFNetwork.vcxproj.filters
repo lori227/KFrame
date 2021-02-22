@@ -10,7 +10,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KFNetEvent.cpp" />
-    <ClCompile Include="KFNetClientServices.cpp">
+    <ClCompile Include="KFNetClientService.cpp">
       <Filter>NetClient</Filter>
     </ClCompile>
     <ClCompile Include="KFNetClient.cpp">
@@ -18,7 +18,7 @@
     </ClCompile>
     <ClCompile Include="KFNetConnector.cpp" />
     <ClCompile Include="KFNetSession.cpp" />
-    <ClCompile Include="KFNetServerServices.cpp">
+    <ClCompile Include="KFNetServerService.cpp">
       <Filter>NetServer</Filter>
     </ClCompile>
     <ClCompile Include="KFNetHandle.cpp">
@@ -30,7 +30,7 @@
     <ClCompile Include="KFNetServerEngine.cpp">
       <Filter>NetServer</Filter>
     </ClCompile>
-    <ClCompile Include="KFNetServices.cpp" />
+    <ClCompile Include="KFNetService.cpp" />
     <ClCompile Include="KFNetLocker.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -40,7 +40,7 @@
     <ClInclude Include="KFNetClientEngine.hpp">
       <Filter>NetClient</Filter>
     </ClInclude>
-    <ClInclude Include="KFNetClientServices.hpp">
+    <ClInclude Include="KFNetClientService.hpp">
       <Filter>NetClient</Filter>
     </ClInclude>
     <ClInclude Include="KFNetHandle.hpp">
@@ -49,7 +49,7 @@
     <ClInclude Include="KFNetServerEngine.hpp">
       <Filter>NetServer</Filter>
     </ClInclude>
-    <ClInclude Include="KFNetServerServices.hpp">
+    <ClInclude Include="KFNetServerService.hpp">
       <Filter>NetServer</Filter>
     </ClInclude>
     <ClInclude Include="KFNetConnector.hpp" />
@@ -57,7 +57,7 @@
     <ClInclude Include="KFNetEvent.hpp" />
     <ClInclude Include="KFNetLocker.hpp" />
     <ClInclude Include="KFNetMessage.hpp" />
-    <ClInclude Include="KFNetServices.hpp" />
+    <ClInclude Include="KFNetService.hpp" />
     <ClInclude Include="KFNetSession.hpp" />
   </ItemGroup>
 </Project>

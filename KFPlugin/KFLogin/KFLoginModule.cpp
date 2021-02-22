@@ -25,43 +25,43 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_NET_EVENT_FUNCTION__( KFLoginModule::OnClientConnectionWorld )
     {
-        if ( netdata->_type != __STRING__( world ) )
+        if ( net_data->_type != __STRING__( world ) )
         {
             return;
         }
 
-        _world_hash.AddHashNode( netdata->_name, netdata->_id, 100 );
+        _world_hash.AddHashNode( net_data->_name, net_data->_id, 100 );
         _world_server_id = _world_hash.FindHashNode( KFGlobal::Instance()->_app_id->GetId() );
     }
 
     __KF_NET_EVENT_FUNCTION__( KFLoginModule::OnClientLostWorld )
     {
-        if ( netdata->_type != __STRING__( world ) )
+        if ( net_data->_type != __STRING__( world ) )
         {
             return;
         }
 
-        _world_hash.RemoveHashNode( netdata->_id );
-        if ( netdata->_id == _world_server_id )
+        _world_hash.RemoveHashNode( net_data->_id );
+        if ( net_data->_id == _world_server_id )
         {
             _world_server_id = _world_hash.FindHashNode( KFGlobal::Instance()->_app_id->GetId() );
         }
     }
 
-    bool KFLoginModule::SendToWorld( uint32 msgid, ::google::protobuf::Message* message )
+    bool KFLoginModule::SendToWorld( uint32 msg_id, ::google::protobuf::Message* message )
     {
         if ( _world_server_id == _invalid_int )
         {
             return false;
         }
 
-        return _kf_tcp_client->SendNetMessage( _world_server_id, msgid, message );
+        return _kf_tcp_client->SendNetMessage( _world_server_id, msg_id, message );
     }
 
     // 发送消息到Gate服务器
-    bool KFLoginModule::SendToGate( uint64 gateid, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFLoginModule::SendToGate( uint64 gateid, uint32 msg_id, ::google::protobuf::Message* message )
     {
-        return _kf_tcp_server->SendNetMessage( gateid, msgid, message );
+        return _kf_tcp_server->SendNetMessage( gateid, msg_id, message );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////

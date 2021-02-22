@@ -45,15 +45,15 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////////////////////
     __KF_NET_EVENT_FUNCTION__( KFDeployServerModule::OnServerLostClient )
     {
-        if ( netdata->_name == __STRING__( deploy ) )
+        if ( net_data->_name == __STRING__( deploy ) )
         {
-            if ( netdata->_type == __STRING__( agent ) )
+            if ( net_data->_type == __STRING__( agent ) )
             {
-                auto kfagent = _agent_list.Find( netdata->_str_id );
+                auto kfagent = _agent_list.Find( net_data->_str_id );
                 if ( kfagent != nullptr )
                 {
                     UpdateAgentToDatabase( kfagent, 0u );
-                    _agent_list.Remove( netdata->_str_id );
+                    _agent_list.Remove( net_data->_str_id );
                 }
             }
         }

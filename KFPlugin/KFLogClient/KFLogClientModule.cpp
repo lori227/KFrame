@@ -44,11 +44,11 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////
     __KF_NET_EVENT_FUNCTION__( KFLogClientModule::OnClientConnectLogServer )
     {
-        if ( netdata->_name == __STRING__( log ) )
+        if ( net_data->_name == __STRING__( log ) )
         {
-            __LOG_INFO__( "remote log[{}] ok", netdata->_str_id );
+            __LOG_INFO__( "remote log[{}] ok", net_data->_str_id );
 
-            _log_server_id = netdata->_id;
+            _log_server_id = net_data->_id;
             KFLogger::Instance()->RegisterLogFunction( this, &KFLogClientModule::LogRemote );
         }
     }

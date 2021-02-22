@@ -55,10 +55,10 @@ namespace KFrame
         _net_client->StartClient( &ipaddress );
     }
 
-    bool KFRobot::SendNetMessage( uint32 msgid, google::protobuf::Message* message )
+    bool KFRobot::SendNetMessage( uint32 msg_id, google::protobuf::Message* message )
     {
         auto strdata = message->SerializeAsString();
-        return _net_client->SendNetMessage( _client_id, msgid, strdata.data(), strdata.size() );
+        return _net_client->SendNetMessage( _client_id, msg_id, strdata.data(), strdata.size() );
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

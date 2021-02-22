@@ -94,7 +94,7 @@ namespace KFrame
         void PBRelationToKFData( const KFMsg::PBRelation* pbrelation, DataPtr kfrelation );
 
         // 发送消息到好友
-        void SendMessageToRelation( KFEntity* player, const std::string& relationname, uint32 msgid, google::protobuf::Message* message );
+        void SendMessageToRelation( KFEntity* player, const std::string& relationname, uint32 msg_id, google::protobuf::Message* message );
 
         // 发送好友更新消息
         void UpdateIntValueToRelation( KFEntity* player, const std::string& relationname, const StringUInt64& values );

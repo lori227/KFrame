@@ -101,7 +101,7 @@ BOOL CKFDeployDlg::OnInitDialog()
 
     // TODO: 在此添加额外的初始化代码
     SetTimer( __SERVICE_TIMER_ID__, 10, NULL );
-    _kf_deploy_service->InitServices();
+    _kf_deploy_service->InitService();
     _deploy_manage->_dlg_deploy = this;
 
     InitPlugin();
@@ -293,9 +293,9 @@ void CKFDeployDlg::InitPlugin()
     _kf_tcp_client = kfpluginmanage->FindModule< KFTcpClientInterface >();
 }
 
-void CKFDeployDlg::SendDeployMessage( uint32 msgid, google::protobuf::Message* message )
+void CKFDeployDlg::SendDeployMessage( uint32 msg_id, google::protobuf::Message* message )
 {
-    auto ok = _kf_tcp_client->SendNetMessage( _deploy_manage->_connect_deploy_id, msgid, message );
+    auto ok = _kf_tcp_client->SendNetMessage( _deploy_manage->_connect_deploy_id, msg_id, message );
     if ( !ok )
     {
         AddDeployLog( 0, "发送消息失败, 请检查网络" );
@@ -570,7 +570,7 @@ __KF_NET_EVENT_FUNCTION__( CKFDeployDlg::OnClientConnectServer )
     }
     else
     {
-        AddDeployLog( 0, __FORMAT__( "{}:{} connect ok", netdata->_ip, netdata->_port ) );
+        AddDeployLog( 0, __FORMAT__( "{}:{} connect ok", net_data->_ip, net_data->_port ) );
 
         // 查询agent列表
         QueryAgentData();
@@ -587,12 +587,12 @@ __KF_MESSAGE_FUNCTION__( CKFDeployDlg::HandleDeployQueryToolIdAck )
 
 __KF_NET_EVENT_FUNCTION__( CKFDeployDlg::OnClientConnectFailed )
 {
-    AddDeployLog( 0, __FORMAT__( "{}:{} connect failed", netdata->_ip, netdata->_port ) );
+    AddDeployLog( 0, __FORMAT__( "{}:{} connect failed", net_data->_ip, net_data->_port ) );
 }
 
 __KF_NET_EVENT_FUNCTION__( CKFDeployDlg::OnClientLostServer )
 {
-    AddDeployLog( 0, __FORMAT__( "{}:{} disconnect", netdata->_ip, netdata->_port ) );
+    AddDeployLog( 0, __FORMAT__( "{}:{} disconnect", net_data->_ip, net_data->_port ) );
 }
 
 __KF_MESSAGE_FUNCTION__( CKFDeployDlg::HandleDeployLogToToolAck )

@@ -90,64 +90,64 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 发送到路由( 只发送一次 )
-        virtual bool SendToRoute( const Route& route, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToRoute( const Route& route, uint32 msg_id, ::google::protobuf::Message* message );
 
         // 发送到路由( 失败重复发送 )
-        virtual bool RepeatToRoute( const Route& route, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool RepeatToRoute( const Route& route, uint32 msg_id, ::google::protobuf::Message* message );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 转给到指定类型的所有( 只发送一次 )
-        virtual bool SendToAll( const std::string& name, uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool SendToAll( uint64 sendid, const std::string& name, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToAll( const std::string& name, uint32 msg_id, ::google::protobuf::Message* message );
+        virtual bool SendToAll( uint64 sendid, const std::string& name, uint32 msg_id, ::google::protobuf::Message* message );
 
         // 转给到指定类型的所有( 失败重复发送 )
-        virtual bool RepeatToAll( const std::string& name, uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool RepeatToAll( uint64 sendid, const std::string& name, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool RepeatToAll( const std::string& name, uint32 msg_id, ::google::protobuf::Message* message );
+        virtual bool RepeatToAll( uint64 sendid, const std::string& name, uint32 msg_id, ::google::protobuf::Message* message );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 转发到随机服务器( 只发送一次 )
-        virtual bool SendToRand( const std::string& name, uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool SendToRand( uint64 sendid, const std::string& name, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToRand( const std::string& name, uint32 msg_id, ::google::protobuf::Message* message );
+        virtual bool SendToRand( uint64 sendid, const std::string& name, uint32 msg_id, ::google::protobuf::Message* message );
 
         // 转发到随机服务器( 失败重复发送 )
-        virtual bool RepeatToRand( const std::string& name, uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool RepeatToRand( uint64 sendid, const std::string& name, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool RepeatToRand( const std::string& name, uint32 msg_id, ::google::protobuf::Message* message );
+        virtual bool RepeatToRand( uint64 sendid, const std::string& name, uint32 msg_id, ::google::protobuf::Message* message );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 转发到负载最小的服务器( 只发送一次 )
-        virtual bool SendToBalance( const std::string& name, uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool SendToBalance( uint64 sendid, const std::string& name, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToBalance( const std::string& name, uint32 msg_id, ::google::protobuf::Message* message );
+        virtual bool SendToBalance( uint64 sendid, const std::string& name, uint32 msg_id, ::google::protobuf::Message* message );
 
         // 转发到负载最小的服务器( 失败重复发送 )
-        virtual bool RepeatToBalance( const std::string& name, uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool RepeatToBalance( uint64 sendid, const std::string& name, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool RepeatToBalance( const std::string& name, uint32 msg_id, ::google::protobuf::Message* message );
+        virtual bool RepeatToBalance( uint64 sendid, const std::string& name, uint32 msg_id, ::google::protobuf::Message* message );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 发送到对象所在的服务器( 只发送一次 )
-        virtual bool SendToObject( const std::string& name, uint64 objectid, uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool SendToObject( uint64 sendid, const std::string& name, uint64 objectid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToObject( const std::string& name, uint64 objectid, uint32 msg_id, ::google::protobuf::Message* message );
+        virtual bool SendToObject( uint64 sendid, const std::string& name, uint64 objectid, uint32 msg_id, ::google::protobuf::Message* message );
 
         // 发送到对象所在的服务器( 失败重复发送 )
-        virtual bool RepeatToObject( const std::string& name, uint64 objectid, uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool RepeatToObject( uint64 sendid, const std::string& name, uint64 objectid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool RepeatToObject( const std::string& name, uint64 objectid, uint32 msg_id, ::google::protobuf::Message* message );
+        virtual bool RepeatToObject( uint64 sendid, const std::string& name, uint64 objectid, uint32 msg_id, ::google::protobuf::Message* message );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 转发给指定服务器( 只发送一次 )
-        virtual bool SendToServer( uint64 server_id, uint32 msgid, ::google::protobuf::Message* message ) ;
-        virtual bool SendToServer( uint64 sendid, uint64 server_id, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToServer( uint64 server_id, uint32 msg_id, ::google::protobuf::Message* message ) ;
+        virtual bool SendToServer( uint64 sendid, uint64 server_id, uint32 msg_id, ::google::protobuf::Message* message );
 
         // 转发给指定服务器( 失败重复发送 )
-        virtual bool RepeatToServer( uint64 server_id, uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool RepeatToServer( uint64 sendid, uint64 server_id, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool RepeatToServer( uint64 server_id, uint32 msg_id, ::google::protobuf::Message* message );
+        virtual bool RepeatToServer( uint64 sendid, uint64 server_id, uint32 msg_id, ::google::protobuf::Message* message );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 发送到指定玩家( 只发送一次 )
-        virtual bool SendToEntity( uint64 server_id, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool SendToEntity( uint64 sendid, uint64 server_id, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToEntity( uint64 server_id, uint64 recv_id, uint32 msg_id, ::google::protobuf::Message* message );
+        virtual bool SendToEntity( uint64 sendid, uint64 server_id, uint64 recv_id, uint32 msg_id, ::google::protobuf::Message* message );
 
         // 发送到指定玩家( 失败重复发送 )
-        virtual bool RepeatToEntity( uint64 server_id, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool RepeatToEntity( uint64 sendid, uint64 server_id, uint64 recvid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool RepeatToEntity( uint64 server_id, uint64 recv_id, uint32 msg_id, ::google::protobuf::Message* message );
+        virtual bool RepeatToEntity( uint64 sendid, uint64 server_id, uint64 recv_id, uint32 msg_id, ::google::protobuf::Message* message );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     protected:
@@ -164,7 +164,7 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////
         // 发送转发消息
-        bool SendRouteMessage( uint32 msgid, ::google::protobuf::Message* message );
+        bool SendRouteMessage( uint32 msg_id, ::google::protobuf::Message* message );
 
         // 发送转发消息
         void RunSendRouteMessage();

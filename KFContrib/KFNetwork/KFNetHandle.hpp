@@ -9,8 +9,7 @@ typedef struct uv_tcp_s uv_tcp_t;
 
 namespace KFrame
 {
-    class KFNetServerEngine;
-    class KFNetServerServices;
+    class KFNetServerService;
     class KFNetHandle : public KFNetConnector
     {
     public:
@@ -18,7 +17,7 @@ namespace KFrame
         virtual ~KFNetHandle();
 
         // 初始化
-        void InitHandle( uint64 id, void* uvtcp, KFNetServerServices* netservices );
+        void InitHandle( uint64 id, void* uv_tcp, KFNetServerService* net_service );
 
         // 关闭服务
         void CloseHandle();

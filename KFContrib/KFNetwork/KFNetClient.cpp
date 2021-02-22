@@ -1,7 +1,6 @@
 ﻿#include "KFNetClient.hpp"
 #include "KFNetEvent.hpp"
-#include "KFNetClientEngine.hpp"
-#include "KFNetClientServices.hpp"
+#include "KFNetClientService.hpp"
 #include "uv.h"
 
 namespace KFrame
@@ -20,13 +19,13 @@ namespace KFrame
         __DELETE_OBJECT__( _uv_connect_timer );
     }
 
-    void KFNetClient::StartClient( KFNetClientServices* netservices, const KFNetData& netdata )
+    void KFNetClient::StartClient( KFNetClientService* net_service, const KFNetData& net_data )
     {
         // 连接配置
-        _net_data = netdata;
+        _net_data = net_data;
         _object_id = _net_data._id;
         _session_id = _net_data._id;
-        _net_services = netservices;
+        _net_service = net_service;
 
         // 初始化客户端
         _uv_client->data = this;
@@ -34,14 +33,14 @@ namespace KFrame
         uv_tcp_keepalive( _uv_client, 1, 20 );
 
         // 添加到服务
-        uv_timer_init( netservices->_uv_loop, _uv_connect_timer );
+        uv_timer_init( net_service->_uv_loop, _uv_connect_timer );
 
         _uv_connect->data = this;
         _uv_connect_timer->data = this;
-        InitConnector( _net_data._id, netservices, &_net_compress_encrypt );
+        InitConnector( _net_data._id, net_service, &_net_compress_encrypt );
 
         // 启动连接
-        netservices->SendEventToServices( this, KFNetDefine::ConnectEvent );
+        SendServiceEvent( KFNetDefine::ConnectEvent );
     }
 
     void KFNetClient::StartSession()
@@ -58,10 +57,10 @@ namespace KFrame
 
     void KFNetClient::OnTimerConnectCallBack( uv_timer_t* handle )
     {
-        auto netclient = reinterpret_cast< KFNetClient* >( handle->data );
-        if ( !netclient->_is_shutdown )
+        auto client = reinterpret_cast< KFNetClient* >( handle->data );
+        if ( !client->_is_shutdown )
         {
-            netclient->TryConnect();
+            client->TryConnect();
         }
     }
 
@@ -70,7 +69,7 @@ namespace KFrame
         _uv_client->data = this;
         _uv_connect->data = this;
 
-        uv_tcp_init( _net_services->_uv_loop, _uv_client );
+        uv_tcp_init( _net_service->_uv_loop, _uv_client );
 
         sockaddr_in addr;
         uv_ip4_addr( _net_data._ip.c_str(), _net_data._port, &addr );
@@ -79,14 +78,14 @@ namespace KFrame
 
     void KFNetClient::OnConnectCallBack( uv_connect_t* handle, int status )
     {
-        auto netclient = reinterpret_cast< KFNetClient* >( handle->data );
+        auto client = reinterpret_cast< KFNetClient* >( handle->data );
         if ( status != 0 )
         {
-            netclient->ConnectFailed( status );
+            client->ConnectFailed( status );
         }
         else
         {
-            netclient->ConnectSuccess( handle->handle );
+            client->ConnectSuccess( handle->handle );
         }
     }
 
@@ -99,40 +98,40 @@ namespace KFrame
         }
 
         // 再次启动一个定时器
-        StartConnectTimer( KFNetDefine::ConncectTime );
-        _net_services->_net_event->AddEvent( KFNetDefine::FailedEvent, _object_id );
+        StartConnectTimer( KFNetDefine::ConnectTime );
+        _net_service->_net_event->AddEvent( KFNetDefine::FailedEvent, _object_id );
     }
 
-    void KFNetClient::ConnectSuccess( uv_stream_t* uvstream )
+    void KFNetClient::ConnectSuccess( uv_stream_t* uv_stream )
     {
         // 连接成功回调
-        uvstream->data = this;
-        OnConnect( uvstream );
+        uv_stream->data = this;
+        OnConnect( uv_stream );
 
         // 添加连接成功时间
-        _net_services->_net_event->AddEvent( KFNetDefine::ConnectEvent, _object_id );
+        _net_service->_net_event->AddEvent( KFNetDefine::ConnectEvent, _object_id );
     }
 
     void KFNetClient::OnDisconnect( int32 code, const char* function, uint32 line )
     {
         KFNetSession::OnDisconnect( code, function, line );
-        _net_services->_net_event->AddEvent( KFNetDefine::DisconnectEvent, _object_id );
+        _net_service->_net_event->AddEvent( KFNetDefine::DisconnectEvent, _object_id );
 
         // 关闭连接
         TryShutDown();
     }
 
-    void KFNetClient::InitCompressEncrypt( uint32 compresstype, uint32 compresslevel, uint32 compresslength, const std::string& encryptkey, bool openencrypt )
+    void KFNetClient::InitCompressEncrypt( uint32 compress_type, uint32 compress_level, uint32 compress_length, const std::string& encrypt_key, bool open_encrypt )
     {
-        _net_compress_encrypt._compress_type = compresstype;
-        _net_compress_encrypt._compress_level = compresslevel;
-        if ( compresslength != 0u )
+        _net_compress_encrypt._compress_type = compress_type;
+        _net_compress_encrypt._compress_level = compress_level;
+        if ( compress_length != 0u )
         {
-            _net_compress_encrypt._compress_length = compresslength;
+            _net_compress_encrypt._compress_length = compress_length;
         }
 
-        _net_compress_encrypt._encrypt_key = encryptkey;
-        _net_compress_encrypt._open_encrypt = openencrypt;
+        _net_compress_encrypt._encrypt_key = encrypt_key;
+        _net_compress_encrypt._open_encrypt = open_encrypt;
     }
 
     void KFNetClient::CloseClient()
@@ -140,7 +139,7 @@ namespace KFrame
         // 关闭连接
         if ( !_is_shutdown )
         {
-            _net_services->SendEventToServices( this, KFNetDefine::CloseEvent );
+            SendServiceEvent( KFNetDefine::CloseEvent );
         }
     }
 
@@ -164,7 +163,7 @@ namespace KFrame
         _uv_client->data = this;
         if ( uv_is_closing( reinterpret_cast< uv_handle_t* >( _uv_client ) ) )
         {
-            _net_services->_net_event->AddEvent( KFNetDefine::ShutEvent, _object_id );
+            _net_service->_net_event->AddEvent( KFNetDefine::ShutEvent, _object_id );
         }
         else
         {
@@ -174,7 +173,7 @@ namespace KFrame
 
     void KFNetClient::OnShutDownCallBack( uv_handle_t* handle )
     {
-        auto* netclient = reinterpret_cast< KFNetClient* >( handle->data );
-        netclient->_net_services->_net_event->AddEvent( KFNetDefine::ShutEvent, netclient->_object_id );
+        auto client = reinterpret_cast< KFNetClient* >( handle->data );
+        client->_net_service->_net_event->AddEvent( KFNetDefine::ShutEvent, client->_object_id );
     }
 }

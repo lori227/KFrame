@@ -29,11 +29,11 @@ namespace KFrame
         bool IsBusy();
 
         // 添加请求消息
-        bool PushReqMessage( const Route& route, uint32 msgid, const char* data, uint32 length );
+        bool PushReqMessage( const Route& route, uint32 msg_id, const char* data, uint32 length );
 
         // 添加响应消息
-        bool PushAckMessage( const Route& route, uint32 msgid, google::protobuf::Message* message );
-        bool PushAckMessage( uint64 server_id, uint32 msgid, google::protobuf::Message* message );
+        bool PushAckMessage( const Route& route, uint32 msg_id, google::protobuf::Message* message );
+        bool PushAckMessage( uint64 server_id, uint32 msg_id, google::protobuf::Message* message );
 
     protected:
         // 执行线程逻辑

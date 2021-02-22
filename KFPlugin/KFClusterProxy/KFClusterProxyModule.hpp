@@ -59,12 +59,12 @@ namespace KFrame
 
     protected:
         // 转发消息到shard
-        virtual bool TranspondToShard( const Route& route, uint32 msgid, const char* data, uint32 length );
-        virtual bool TranspondToShard( const Route& route, uint32 msgid, const google::protobuf::Message* message );
+        virtual bool TranspondToShard( const Route& route, uint32 msg_id, const char* data, uint32 length );
+        virtual bool TranspondToShard( const Route& route, uint32 msg_id, const google::protobuf::Message* message );
 
         // 转发消息到client
-        virtual bool TranspondToClient( const Route& route, uint32 msgid, const char* data, uint32 length );
-        virtual bool TranspondToClient( const Route& route, uint32 msgid, const google::protobuf::Message* message );
+        virtual bool TranspondToClient( const Route& route, uint32 msg_id, const char* data, uint32 length );
+        virtual bool TranspondToClient( const Route& route, uint32 msg_id, const google::protobuf::Message* message );
 
     protected:
         // 更新

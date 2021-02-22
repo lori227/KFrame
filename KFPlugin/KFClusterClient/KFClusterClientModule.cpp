@@ -69,29 +69,29 @@ namespace KFrame
     {
         // cluster 只会连接和自己不同类型的服务
         static auto _cluster_name_constant = KFGlobal::Instance()->FindConstant( __STRING__( clustername ) );
-        if ( netdata->_name != _cluster_name_constant->_str_value )
+        if ( net_data->_name != _cluster_name_constant->_str_value )
         {
             return;
         }
 
-        __LOG_DEBUG__( "connect cluster server[{}:{}:{}]", netdata->_name, netdata->_type, netdata->_str_id );
+        __LOG_DEBUG__( "connect cluster server[{}:{}:{}]", net_data->_name, net_data->_type, net_data->_str_id );
 
-        if ( netdata->_type == __STRING__( master ) )
+        if ( net_data->_type == __STRING__( master ) )
         {
             // 保存信息
-            _cluster_name = netdata->_name;
-            _cluster_type = netdata->_type;
-            _cluster_master_id = netdata->_id;
-            _cluster_master_ip = netdata->_ip;
-            _cluster_master_port = netdata->_port;
+            _cluster_name = net_data->_name;
+            _cluster_type = net_data->_type;
+            _cluster_master_id = net_data->_id;
+            _cluster_master_ip = net_data->_ip;
+            _cluster_master_port = net_data->_port;
 
             // 开启认证定时器
-            __LOOP_TIMER_1__( netdata->_id, 10000, 1000, &KFClusterClientModule::OnTimerSendClusterAuthMessage );
+            __LOOP_TIMER_1__( net_data->_id, 10000, 1000, &KFClusterClientModule::OnTimerSendClusterAuthMessage );
         }
-        else if ( netdata->_type == __STRING__( proxy ) )
+        else if ( net_data->_type == __STRING__( proxy ) )
         {
             // 发送登录消息定时器
-            __LOOP_TIMER_1__( netdata->_id, 3000, 1, &KFClusterClientModule::OnTimerSendClusterTokenMessage );
+            __LOOP_TIMER_1__( net_data->_id, 3000, 1, &KFClusterClientModule::OnTimerSendClusterTokenMessage );
         }
     }
 
@@ -130,7 +130,7 @@ namespace KFrame
     __KF_NET_EVENT_FUNCTION__( KFClusterClientModule::OnClientLostClusterProxy )
     {
         // 不是转发集群
-        if ( _cluster_name == netdata->_name && netdata->_type == __STRING__( proxy ) )
+        if ( _cluster_name == net_data->_name && net_data->_type == __STRING__( proxy ) )
         {
             // 重新启动连接
             ReconnectClusterMaster();
@@ -194,81 +194,81 @@ namespace KFrame
         return _cluster_in_services;
     }
 
-    bool KFClusterClientModule::SendToProxy( uint32 msgid, const char* data, uint32 length )
+    bool KFClusterClientModule::SendToProxy( uint32 msg_id, const char* data, uint32 length )
     {
-        return SendToProxy( _invalid_int, msgid, data, length );
+        return SendToProxy( _invalid_int, msg_id, data, length );
     }
 
-    bool KFClusterClientModule::SendToProxy( uint32 msgid, google::protobuf::Message* message )
+    bool KFClusterClientModule::SendToProxy( uint32 msg_id, google::protobuf::Message* message )
     {
-        return SendToProxy( _invalid_int, msgid, message );
+        return SendToProxy( _invalid_int, msg_id, message );
     }
 
-    bool KFClusterClientModule::SendToProxy( uint64 shardid, uint32 msgid, google::protobuf::Message* message )
+    bool KFClusterClientModule::SendToProxy( uint64 shardid, uint32 msg_id, google::protobuf::Message* message )
     {
         auto strdata = message->SerializeAsString();
-        return SendToProxy( shardid, msgid, strdata.data(), strdata.size() );
+        return SendToProxy( shardid, msg_id, strdata.data(), strdata.size() );
     }
 
-    bool KFClusterClientModule::SendToProxy( uint64 shardid, uint32 msgid, const char* data, uint32 length )
+    bool KFClusterClientModule::SendToProxy( uint64 shardid, uint32 msg_id, const char* data, uint32 length )
     {
         if ( !_cluster_in_services )
         {
-            __LOG_ERROR__( "cluster not in service, send msgid=[{}] shardid=[{}] failed", msgid );
+            __LOG_ERROR__( "cluster not in service, send msg_id=[{}] shardid=[{}] failed", msg_id );
             return false;
         }
 
-        return _kf_tcp_client->SendNetMessage( _cluster_proxy_id, shardid, msgid, data, length );
+        return _kf_tcp_client->SendNetMessage( _cluster_proxy_id, shardid, msg_id, data, length );
     }
 
-    bool KFClusterClientModule::RepeatToProxy( uint32 msgid, const char* data, uint32 length )
+    bool KFClusterClientModule::RepeatToProxy( uint32 msg_id, const char* data, uint32 length )
     {
-        return RepeatToProxy( _invalid_int, msgid, data, length );
+        return RepeatToProxy( _invalid_int, msg_id, data, length );
     }
 
-    bool KFClusterClientModule::RepeatToProxy( uint32 msgid, google::protobuf::Message* message )
+    bool KFClusterClientModule::RepeatToProxy( uint32 msg_id, google::protobuf::Message* message )
     {
-        return RepeatToProxy( _invalid_int, msgid, message );
+        return RepeatToProxy( _invalid_int, msg_id, message );
     }
 
-    bool KFClusterClientModule::RepeatToProxy( uint64 shardid, uint32 msgid, google::protobuf::Message* message )
+    bool KFClusterClientModule::RepeatToProxy( uint64 shardid, uint32 msg_id, google::protobuf::Message* message )
     {
         auto strdata = message->SerializeAsString();
-        return RepeatToProxy( shardid, msgid, strdata.data(), strdata.length() );
+        return RepeatToProxy( shardid, msg_id, strdata.data(), strdata.length() );
     }
 
-    bool KFClusterClientModule::RepeatToProxy( uint64 shardid, uint32 msgid, const char* data, uint32 length )
+    bool KFClusterClientModule::RepeatToProxy( uint64 shardid, uint32 msg_id, const char* data, uint32 length )
     {
         if ( !_cluster_in_services )
         {
             // 不在服务中
-            AddSendKeeper( shardid, msgid, data, length );
+            AddSendKeeper( shardid, msg_id, data, length );
         }
         else
         {
             if ( _send_keeper.empty() )
             {
                 // 发送队列为空
-                auto ok = _kf_tcp_client->SendNetMessage( _cluster_proxy_id, shardid, msgid, data, length );
+                auto ok = _kf_tcp_client->SendNetMessage( _cluster_proxy_id, shardid, msg_id, data, length );
                 if ( !ok )
                 {
-                    AddSendKeeper( shardid, msgid, data, length );
+                    AddSendKeeper( shardid, msg_id, data, length );
                 }
             }
             else
             {
-                AddSendKeeper( shardid, msgid, data, length );
+                AddSendKeeper( shardid, msg_id, data, length );
             }
         }
 
         return true;
     }
 
-    void KFClusterClientModule::AddSendKeeper( uint64 shardid, uint32 msgid, const char* data, uint32 length )
+    void KFClusterClientModule::AddSendKeeper( uint64 shardid, uint32 msg_id, const char* data, uint32 length )
     {
         auto keeper = __KF_NEW__( SendKeeper, length );
         keeper->_shard_id = shardid;
-        keeper->_msg_id = msgid;
+        keeper->_msg_id = msg_id;
         memcpy( keeper->_data, data, length );
         _send_keeper.push_back( keeper );
     }

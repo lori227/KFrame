@@ -61,19 +61,19 @@ namespace KFrame
         _kf_route->SyncObject( teamlist );
     }
 
-    void KFTeamShardModule::SendMessageToTeam( KFEntity* kfteam, uint32 msgid, ::google::protobuf::Message* message )
+    void KFTeamShardModule::SendMessageToTeam( KFEntity* kfteam, uint32 msg_id, ::google::protobuf::Message* message )
     {
         auto kfmemberrecord = kfteam->Find( __STRING__( member ) );
         for ( auto kfmember = kfmemberrecord->First(); kfmember != nullptr; kfmember = kfmemberrecord->Next() )
         {
-            SendMessageToMember( kfmember, msgid, message );
+            SendMessageToMember( kfmember, msg_id, message );
         }
     }
 
-    void KFTeamShardModule::SendMessageToMember( DataPtr kfmember, uint32 msgid, ::google::protobuf::Message* message )
+    void KFTeamShardModule::SendMessageToMember( DataPtr kfmember, uint32 msg_id, ::google::protobuf::Message* message )
     {
         auto server_id = kfmember->Get<uint64>( __STRING__( basic ), __STRING__( server_id ) );
-        _kf_route->SendToEntity( server_id, kfmember->GetKeyID(), msgid, message );
+        _kf_route->SendToEntity( server_id, kfmember->GetKeyID(), msg_id, message );
     }
 
     void KFTeamShardModule::InitTeam( KFEntity* team )

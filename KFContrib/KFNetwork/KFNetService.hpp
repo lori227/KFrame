@@ -1,5 +1,5 @@
-﻿#ifndef __NET_SERVICES_H__
-#define __NET_SERVICES_H__
+﻿#ifndef __NET_SERVICE_H__
+#define __NET_SERVICE_H__
 
 #include "KFNetEvent.hpp"
 
@@ -11,41 +11,40 @@ typedef struct uv_async_s uv_async_t;
 
 namespace KFrame
 {
-    class KFNetSession;
-    class KFNetServices
+    class KFNetService
     {
     public:
-        KFNetServices();
-        virtual ~KFNetServices();
+        KFNetService();
+        virtual ~KFNetService();
 
         // 初始化
-        virtual void InitServices( uint32 eventcount, uint32 queuecount, uint32 messagetype );
+        virtual void InitService( uint32 event_count, uint32 queue_count, uint32 message_type );
 
         // 开始服务
-        virtual int32 StartServices( const KFNetData* netdata );
+        virtual int32 StartService( const KFNetData* net_data );
 
         // 关闭服务
-        virtual void ShutServices();
+        virtual void CloseService();
 
         // 获得buffer
-        char* GetBuffAddress( uint32 msgid, uint32 length );
+        char* GetBuffAddress( uint32 msg_id, uint32 msg_length );
 
         // 发送事件到网络服务
-        void SendEventToServices( KFNetSession* netsession, uint32 eventtype );
+        void SendEventToService( uint32 event_type, std::shared_ptr<KFNetSession> net_session );
 
         //////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////
         // 初始化压缩设置
-        void InitCompress( uint32 compresstype, uint32 compresslevel, uint32 compresslength );
+        void InitCompress( uint32 compress_type, uint32 compress_level, uint32 compress_length );
 
         // 初始化加密设置
-        void InitEncrypt( const std::string& encryptkey, bool openencrypt );
+        void InitEncrypt( const std::string& encrypt_key, bool open_encrypt );
 
         // 消息加密
-        std::tuple< const char*, uint32, uint16 > Encode( const KFNetCompressEncrypt* compressencrypt, const char* data, uint32 length );
+        std::tuple< const char*, uint32, uint16 > Encode( const KFNetCompressEncrypt* compress_encrypt, const char* data, uint32 length );
 
         // 消息解密
-        std::tuple< const char*, uint32 > Decode( const KFNetCompressEncrypt* compressencrypt, const char* data, uint32 length, uint16 flag );
+        std::tuple< const char*, uint32 > Decode( const KFNetCompressEncrypt* compress_encrypt, const char* data, uint32 length, uint16 flag );
 
     protected:
         // 线程逻辑
@@ -58,16 +57,16 @@ namespace KFrame
         static void OnAsyncCloseCallBack( uv_async_t* handle );
 
         // 压缩数据
-        const char* CompressData( const KFNetCompressEncrypt* compressencrypt, const char* data, uint32& length );
-        const char* DeCompressData( const KFNetCompressEncrypt* compressencrypt, const char* data, uint32& length );
+        const char* CompressData( const KFNetCompressEncrypt* compress_encrypt, const char* data, uint32& length );
+        const char* DeCompressData( const KFNetCompressEncrypt* compress_encrypt, const char* data, uint32& length );
 
         // 计算压缩buff长度
-        void LZ4CalcCompressLength( const char* data, uint32 length, bool iscompress );
-        void ZSTDCalcCompressLength( const char* data, uint32 length, bool iscompress );
+        void LZ4CalcCompressLength( const char* data, uint32 length, bool is_compress );
+        void ZSTDCalcCompressLength( const char* data, uint32 length, bool is_compress );
 
         // 加密数据
-        const char* EncryptData( const KFNetCompressEncrypt* compressencrypt, const char* data, uint32& length );
-        const char* DeEncryptData( const KFNetCompressEncrypt* compressencrypt, const char* data, uint32& length );
+        const char* EncryptData( const KFNetCompressEncrypt* compress_encrypt, const char* data, uint32& length );
+        const char* DeEncryptData( const KFNetCompressEncrypt* compress_encrypt, const char* data, uint32& length );
 
     public:
         // 消息序列化buff地址
@@ -98,6 +97,9 @@ namespace KFrame
 
         // 压缩和加密设置
         KFNetCompressEncrypt _compress_encrypt;
+
+        // 消息函数
+        KFMessageFunction _net_function = nullptr;
     protected:
         // 线程逻辑标识
         std::atomic<bool> _thread_run;
@@ -107,7 +109,7 @@ namespace KFrame
 
         // 异步事件
         uv_async_t* _uv_event_async = nullptr;
-        KFQueue< KFNetSession, false > _event_session;
+        KFQueue<KFAsyncEvent> _async_event_list;
 
         // 关闭服务
         uv_async_t* _uv_close_async = nullptr;

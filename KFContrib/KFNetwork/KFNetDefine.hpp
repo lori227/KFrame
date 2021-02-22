@@ -5,7 +5,7 @@
 
 namespace KFrame
 {
-    class KFNetConnector;
+    class KFNetSession;
     namespace KFNetDefine
     {
         enum EConstDefine
@@ -16,7 +16,7 @@ namespace KFrame
             MaxRecvBuffLength = 2 * MaxReqBuffLength,		// 接收消息的最大长度
 
             SerializeBuffLength = 1024 * 1024 * 20 + 100,	// 序列化消息的buff长度
-            ConncectTime = 5000,							// 重连定时器
+            ConnectTime = 5000,							    // 重连定时器
             PingTime = 20000,								// 20秒发送一个ping
             PingTimeout = 60000,							// 断线超时时间
 
@@ -58,7 +58,7 @@ namespace KFrame
         uint64 _id;
 
         // 数据
-        void* _data;
+        std::shared_ptr<void> _data;
 
         // 错误码
         int32 _code;
@@ -87,6 +87,17 @@ namespace KFrame
 
         // 是否开启加密
         bool _open_encrypt = false;
+    };
+    ///////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
+    class KFAsyncEvent
+    {
+    public:
+        // 事件类型
+        uint32 _type = 0u;
+
+        // session
+        std::shared_ptr<KFNetSession> _session = nullptr;
     };
 }
 

@@ -25,7 +25,7 @@ namespace KFrame
 
         //////////////////////////////////////////////////////////////////////////
         // 发送消息
-        bool SendNetMessage( uint32 msgid, google::protobuf::Message* message );
+        bool SendNetMessage( uint32 msg_id, google::protobuf::Message* message );
 
         // 改变状态
         void ChangeState( uint32 state );

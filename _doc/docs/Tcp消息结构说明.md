@@ -2,23 +2,23 @@
 
 消息头结构定义
 
- 	class KFNetHead
+ 	class KFNetHeader
     {
     public:
         uint32 _length;		// 消息长度
-        uint16 _msgid;		// 消息类型
+        uint16 _msg_id;		// 消息类型
         uint16 _child;		// 子消息个数( 包括自己 )
     };
 
     // 客户端与服务器之间的消息头
-    class KFClientHead : public KFNetHead
+    class KFClientHeader : public KFNetHeader
     {
     public:
 
     };
 
     // 服务器之间的消息头
-    class KFServerHead : public KFNetHead
+    class KFServerHeader : public KFNetHeader
     {
     public:
         KFRoute _route;		// 路由信息
@@ -27,12 +27,12 @@
 
 客户端与服务器之间网络传送消息结构如下:  
 
-	_length | _msgid | _child | _data |
+	_length | _msg_id | _child | _data |
 	4字节   | 2字节   | 2字节  | proto消息序列化的数据, 长度为_length |
 
 服务器与服务器之间网络传送消息结构如下:  
 
-	_length | _msgid | _child | _route | _data |
+	_length | _msg_id | _child | _route | _data |
 	4字节   | 2字节   | 2字节  | 24字节 | proto消息序列化的数据, 长度为_length |
 
 网络端接收到的数据长度是不确定的( 因为网络`mtu`一般是1500 字节),  

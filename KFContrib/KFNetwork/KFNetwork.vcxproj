@@ -12,30 +12,30 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KFNetClientEngine.cpp" />
-    <ClCompile Include="KFNetClientServices.cpp" />
+    <ClCompile Include="KFNetClientService.cpp" />
     <ClCompile Include="KFNetConnector.cpp" />
     <ClCompile Include="KFNetEvent.cpp" />
     <ClCompile Include="KFNetClient.cpp" />
     <ClCompile Include="KFNetHandle.cpp" />
     <ClCompile Include="KFNetLocker.cpp" />
-    <ClCompile Include="KFNetServices.cpp" />
+    <ClCompile Include="KFNetService.cpp" />
     <ClCompile Include="KFNetSession.cpp" />
-    <ClCompile Include="KFNetServerServices.cpp" />
+    <ClCompile Include="KFNetServerService.cpp" />
     <ClCompile Include="KFNetServerEngine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFNetClientEngine.hpp" />
-    <ClInclude Include="KFNetClientServices.hpp" />
+    <ClInclude Include="KFNetClientService.hpp" />
     <ClInclude Include="KFNetConnector.hpp" />
     <ClInclude Include="KFNetDefine.hpp" />
     <ClInclude Include="KFNetEvent.hpp" />
     <ClInclude Include="KFNetHandle.hpp" />
     <ClInclude Include="KFNetLocker.hpp" />
-    <ClInclude Include="KFNetServices.hpp" />
+    <ClInclude Include="KFNetService.hpp" />
     <ClInclude Include="KFNetSession.hpp" />
     <ClInclude Include="KFNetClient.hpp" />
     <ClInclude Include="KFNetMessage.hpp" />
-    <ClInclude Include="KFNetServerServices.hpp" />
+    <ClInclude Include="KFNetServerService.hpp" />
     <ClInclude Include="KFNetServerEngine.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

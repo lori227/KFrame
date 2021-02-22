@@ -50,7 +50,7 @@ namespace KFrame
                 break;
             }
 
-            //_kf_cluster_shard->SendToClient( message->_kfid, message->_msgid, message->_data, message->_length );
+            //_kf_cluster_shard->SendToClient( message->_kfid, message->_msg_id, message->_data, message->_length );
             __KF_DELETE__( KFWorkerMessage, message );
         } while ( ++count < _max_message_count );
     }
@@ -72,13 +72,13 @@ namespace KFrame
                 auto* kfactor = reinterpret_cast< uint64* >( &message->_route );
                 *kfactor = reinterpret_cast< uint64 >( this );
 
-                _kf_worker_moduler->CallFunction( message->_route, message->_msgid, message->_data, message->_length );
+                _kf_worker_moduler->CallFunction( message->_route, message->_msg_id, message->_data, message->_length );
                 __KF_DELETE__( KFWorkerMessage, message );
             }
         }
     }
 
-    bool KFActor::PushReqMessage( const Route& route, uint32 msgid, const char* data, uint32 length )
+    bool KFActor::PushReqMessage( const Route& route, uint32 msg_id, const char* data, uint32 length )
     {
         if ( _req_message_queue.IsFull() )
         {
@@ -86,12 +86,12 @@ namespace KFrame
         }
 
         auto message = __KF_NEW__( KFWorkerMessage );
-        message->CopyFrom( route, msgid, data, length );
+        message->CopyFrom( route, msg_id, data, length );
         _req_message_queue.PushObject( message, 0, __FUNC_LINE__ );
         return true;
     }
 
-    bool KFActor::PushAckMessage( const Route& route, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFActor::PushAckMessage( const Route& route, uint32 msg_id, ::google::protobuf::Message* message )
     {
         if ( _ack_message_queue.IsFull() )
         {
@@ -101,13 +101,13 @@ namespace KFrame
         auto strdata = message->SerializeAsString();
 
         auto workermessage = __KF_NEW__( KFWorkerMessage );
-        workermessage->CopyFrom( _route, msgid, strdata.data(), static_cast< uint32 >( strdata.size() ) );
+        workermessage->CopyFrom( _route, msg_id, strdata.data(), static_cast< uint32 >( strdata.size() ) );
         _ack_message_queue.PushObject( workermessage, 0, __FUNC_LINE__ );
         return true;
     }
 
 
-    bool KFActor::PushAckMessage( uint64 server_id, uint32 msgid, google::protobuf::Message* message )
+    bool KFActor::PushAckMessage( uint64 server_id, uint32 msg_id, google::protobuf::Message* message )
     {
         if ( _ack_message_queue.IsFull() )
         {
@@ -118,7 +118,7 @@ namespace KFrame
         auto strdata = message->SerializeAsString();
 
         auto workermessage = __KF_NEW__( KFWorkerMessage );
-        workermessage->CopyFrom( route, msgid, strdata.data(), static_cast< uint32 >( strdata.size() ) );
+        workermessage->CopyFrom( route, msg_id, strdata.data(), static_cast< uint32 >( strdata.size() ) );
         _ack_message_queue.PushObject( workermessage, 0, __FUNC_LINE__ );
         return true;
     }

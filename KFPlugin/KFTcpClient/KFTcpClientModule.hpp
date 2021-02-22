@@ -35,7 +35,7 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////
         // 添加客户端连接
-        virtual void StartClient( const KFNetData* netdata );
+        virtual void StartClient( const KFNetData* net_data );
         virtual void StartClient( const std::string& name, const std::string& type, uint64 id, const std::string& ip, uint32 port );
 
         // 断开连接
@@ -43,22 +43,22 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////
 
         // 发送消息
-        virtual void SendNetMessage( uint32 msgid, google::protobuf::Message* message, uint32 delay = 0 );
-        virtual bool SendNetMessage( uint64 server_id, uint32 msgid, google::protobuf::Message* message, uint32 delay = 0 );
-        virtual bool SendNetMessage( uint64 server_id, uint64 recvid, uint32 msgid, google::protobuf::Message* message, uint32 delay = 0 );
+        virtual void SendNetMessage( uint32 msg_id, google::protobuf::Message* message, uint32 delay = 0 );
+        virtual bool SendNetMessage( uint64 server_id, uint32 msg_id, google::protobuf::Message* message, uint32 delay = 0 );
+        virtual bool SendNetMessage( uint64 server_id, uint64 recv_id, uint32 msg_id, google::protobuf::Message* message, uint32 delay = 0 );
 
-        virtual void SendNetMessage( uint32 msgid, const char* data, uint32 length );
-        virtual bool SendNetMessage( uint64 server_id, uint32 msgid, const char* data, uint32 length );
-        virtual bool SendNetMessage( uint64 server_id, uint64 recvid, uint32 msgid, const char* data, uint32 length );
+        virtual void SendNetMessage( uint32 msg_id, const char* data, uint32 length );
+        virtual bool SendNetMessage( uint64 server_id, uint32 msg_id, const char* data, uint32 length );
+        virtual bool SendNetMessage( uint64 server_id, uint64 recv_id, uint32 msg_id, const char* data, uint32 length );
 
-        virtual void SendMessageToName( const std::string& servername, uint32 msgid, google::protobuf::Message* message );
-        virtual void SendMessageToName( const std::string& servername, uint32 msgid, const char* data, uint32 length );;
+        virtual void SendMessageToName( const std::string& servername, uint32 msg_id, google::protobuf::Message* message );
+        virtual void SendMessageToName( const std::string& servername, uint32 msg_id, const char* data, uint32 length );;
 
-        virtual void SendMessageToType( const std::string& servertype, uint32 msgid, google::protobuf::Message* message );
-        virtual void SendMessageToType( const std::string& servertype, uint32 msgid, const char* data, uint32 length );
+        virtual void SendMessageToType( const std::string& servertype, uint32 msg_id, google::protobuf::Message* message );
+        virtual void SendMessageToType( const std::string& servertype, uint32 msg_id, const char* data, uint32 length );
 
-        virtual void SendMessageToServer( const std::string& servername, const std::string& servertype, uint32 msgid, google::protobuf::Message* message );
-        virtual void SendMessageToServer( const std::string& servername, const std::string& servertype, uint32 msgid, const char* data, uint32 length );
+        virtual void SendMessageToServer( const std::string& servername, const std::string& servertype, uint32 msg_id, google::protobuf::Message* message );
+        virtual void SendMessageToServer( const std::string& servername, const std::string& servertype, uint32 msg_id, const char* data, uint32 length );
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -81,29 +81,29 @@ namespace KFrame
         // 连接回调
         void AddConnectionFunction( KFModule* module, KFNetEventFunction& function );
         void RemoveConnectionFunction( KFModule* module );
-        void CallClientConnectionFunction( const KFNetData* netdata );
+        void CallClientConnectionFunction( const KFNetData* net_data );
 
         // 断线函数
         virtual void AddLostFunction( KFModule* module, KFNetEventFunction& function );
         void RemoveLostFunction( KFModule* module );
-        void CallClientLostFunction( const KFNetData* netdata );
+        void CallClientLostFunction( const KFNetData* net_data );
 
         // 添加关闭函数
         virtual void AddShutdownFunction( KFModule* module, KFNetEventFunction& function );
         virtual void RemoveShutdownFunction( KFModule* module );
-        void CallClientShutdownFunction( const KFNetData* netdata );
+        void CallClientShutdownFunction( const KFNetData* net_data );
 
         // 添加失败函数
         virtual void AddFailedFunction( KFModule* module, KFNetEventFunction& function );
         virtual void RemoveFailedFunction( KFModule* module );
-        void CallClientFailedFunction( const KFNetData* netdata );
+        void CallClientFailedFunction( const KFNetData* net_data );
 
         // 转发函数
         virtual void AddTranspondFunction( KFModule* module, KFForwardFunction& function );
         virtual void RemoveTranspondFunction( KFModule* module );
         ////////////////////////////////////////////////////////////////
         // 处理客户端消息
-        void HandleNetMessage( const Route& route, uint32 msgid, const char* data, uint32 length );
+        void HandleNetMessage( const Route& route, uint32 msg_id, const char* data, uint32 length );
 
         // 是否连接自己
         bool IsSelfConnection( const std::string& name, const std::string& type, uint64 id );

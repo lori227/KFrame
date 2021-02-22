@@ -34,10 +34,10 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
     protected:
         // 发送消息到世界服务器
-        bool SendToWorld( uint32 msgid, ::google::protobuf::Message* message );
+        bool SendToWorld( uint32 msg_id, ::google::protobuf::Message* message );
 
         // 发送消息到Gate服务器
-        bool SendToGate( uint64 gateid, uint32 msgid, ::google::protobuf::Message* message );
+        bool SendToGate( uint64 gateid, uint32 msg_id, ::google::protobuf::Message* message );
 
     protected:
         // 连接成功

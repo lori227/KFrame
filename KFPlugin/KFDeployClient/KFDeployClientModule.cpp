@@ -46,7 +46,7 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_NET_EVENT_FUNCTION__( KFDeployClientModule::OnClientConnectAgent )
     {
-        if ( netdata->_id == _agent_id )
+        if ( net_data->_id == _agent_id )
         {
             // 启动定时器
             __LOOP_TIMER_1__( _agent_id, 45000, 10000, &KFDeployClientModule::OnTimerSendHeartbeatToAgent );
@@ -55,7 +55,7 @@ namespace KFrame
 
     __KF_NET_EVENT_FUNCTION__( KFDeployClientModule::OnClientLostAgent )
     {
-        if ( netdata->_id == _agent_id )
+        if ( net_data->_id == _agent_id )
         {
             __UN_TIMER_1__( _agent_id );
 

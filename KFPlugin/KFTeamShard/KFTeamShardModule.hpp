@@ -47,8 +47,8 @@ namespace KFrame
         void SetTeamCaptain( KFEntity* kfteam, DataPtr kfmember, bool update );
 
         // 发送消息到队伍
-        void SendMessageToTeam( KFEntity* kfteam, uint32 msgid, ::google::protobuf::Message* message );
-        void SendMessageToMember( DataPtr kfmember, uint32 msgid, ::google::protobuf::Message* message );
+        void SendMessageToTeam( KFEntity* kfteam, uint32 msg_id, ::google::protobuf::Message* message );
+        void SendMessageToMember( DataPtr kfmember, uint32 msg_id, ::google::protobuf::Message* message );
 
         // 通知加入队伍
         void SendJoinTeamToMember( KFEntity* kfteam, DataPtr kfmember );

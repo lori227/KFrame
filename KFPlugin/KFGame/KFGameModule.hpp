@@ -36,25 +36,25 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 发送消息到世界服务器
-        virtual bool SendToWorld( uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToWorld( uint32 msg_id, ::google::protobuf::Message* message );
 
         // 发送消息到Gate服务器
-        virtual void SendToGate( uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool SendToGate( uint64 gateid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual void SendToGate( uint32 msg_id, ::google::protobuf::Message* message );
+        virtual bool SendToGate( uint64 gateid, uint32 msg_id, ::google::protobuf::Message* message );
 
         // 发送消息到客户端
-        virtual bool SendToClient( uint64 gateid, uint64 playerid, uint32 msgid, ::google::protobuf::Message* message, uint32 delay = 0u );
-        virtual bool SendToClient( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message, uint32 delay = 0u );
+        virtual bool SendToClient( uint64 gateid, uint64 playerid, uint32 msg_id, ::google::protobuf::Message* message, uint32 delay = 0u );
+        virtual bool SendToClient( KFEntity* player, uint32 msg_id, ::google::protobuf::Message* message, uint32 delay = 0u );
 
         // 发送到玩家
-        virtual bool SendToPlayer( uint64 sendid, DataPtr kfbasic, uint32 msgid, ::google::protobuf::Message* message );
-        virtual bool SendToPlayer( uint64 sendid, uint64 server_id, uint64 playerid, uint32 msgid, ::google::protobuf::Message* message );
+        virtual bool SendToPlayer( uint64 sendid, DataPtr kfbasic, uint32 msg_id, ::google::protobuf::Message* message );
+        virtual bool SendToPlayer( uint64 sendid, uint64 server_id, uint64 playerid, uint32 msg_id, ::google::protobuf::Message* message );
 
         // 广播消息到客户端
-        virtual void BroadcastToGate( uint32 msgid, ::google::protobuf::Message* message );
-        virtual void BroadcastToGame( uint32 msgid, ::google::protobuf::Message* message );
-        virtual void BroadcastToWorld( uint32 msgid, ::google::protobuf::Message* message );
-        virtual void BroadcastToServer( uint32 msgid, ::google::protobuf::Message* message );
+        virtual void BroadcastToGate( uint32 msg_id, ::google::protobuf::Message* message );
+        virtual void BroadcastToGame( uint32 msg_id, ::google::protobuf::Message* message );
+        virtual void BroadcastToWorld( uint32 msg_id, ::google::protobuf::Message* message );
+        virtual void BroadcastToServer( uint32 msg_id, ::google::protobuf::Message* message );
 
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////

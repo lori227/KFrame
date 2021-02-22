@@ -36,9 +36,9 @@ namespace KFrame
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFMailClientModule::SendMessageToMail( uint64 playerid, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFMailClientModule::SendMessageToMail( uint64 playerid, uint32 msg_id, ::google::protobuf::Message* message )
     {
-        return _kf_route->SendToRand( playerid, __STRING__( mail ), msgid, message );
+        return _kf_route->SendToRand( playerid, __STRING__( mail ), msg_id, message );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_PLAYER_ENTER_FUNCTION__( KFMailClientModule::OnEnterMailModule )
@@ -332,11 +332,11 @@ namespace KFrame
         return _mail_data;
     }
 
-    bool KFMailClientModule::SendAddMailToShard( uint64 sendid, uint32 flag, uint64 recvid, const StringMap& maildata )
+    bool KFMailClientModule::SendAddMailToShard( uint64 sendid, uint32 flag, uint64 recv_id, const StringMap& maildata )
     {
         KFMsg::S2SAddMailReq req;
         req.set_flag( flag );
-        req.set_objectid( recvid );
+        req.set_objectid( recv_id );
 
         auto pbdata = req.mutable_pbmail()->mutable_data();
         for ( auto& iter : maildata )
@@ -370,7 +370,7 @@ namespace KFrame
     }
 
 
-    bool KFMailClientModule::SendMail( uint64 recvid, uint32 configid, const KFElements* elements )
+    bool KFMailClientModule::SendMail( uint64 recv_id, uint32 configid, const KFElements* elements )
     {
         auto kfsetting = KFMailConfig::Instance()->FindSetting( configid );
         if ( kfsetting == nullptr )
@@ -379,10 +379,10 @@ namespace KFrame
         }
 
         auto& maildata = FormatMailData( nullptr, kfsetting, elements );
-        return SendAddMailToShard( _invalid_int, KFMsg::PersonMail, recvid, maildata );
+        return SendAddMailToShard( _invalid_int, KFMsg::PersonMail, recv_id, maildata );
     }
 
-    bool KFMailClientModule::SendMail( KFEntity* player, uint64 recvid, uint32 configid, const KFElements* elements )
+    bool KFMailClientModule::SendMail( KFEntity* player, uint64 recv_id, uint32 configid, const KFElements* elements )
     {
         auto kfsetting = KFMailConfig::Instance()->FindSetting( configid );
         if ( kfsetting == nullptr )
@@ -391,7 +391,7 @@ namespace KFrame
         }
 
         auto& maildata = FormatMailData( player, kfsetting, elements );
-        return SendAddMailToShard( player->GetKeyID(), KFMsg::PersonMail, recvid, maildata );
+        return SendAddMailToShard( player->GetKeyID(), KFMsg::PersonMail, recv_id, maildata );
     }
 }
 

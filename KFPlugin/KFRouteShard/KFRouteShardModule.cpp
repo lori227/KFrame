@@ -2,11 +2,11 @@
 
 namespace KFrame
 {
-    void KFMessageData::AddNetMessage( uint32 msgid, const google::protobuf::Message* message )
+    void KFMessageData::AddNetMessage( uint32 msg_id, const google::protobuf::Message* message )
     {
         auto strdata = message->SerializeAsString();
         auto netmessge = KFNetMessage::Create( strdata.length() );
-        netmessge->_head._msgid = msgid;
+        netmessge->_header._msg_id = msg_id;
         netmessge->CopyData( strdata.data(), strdata.length() );
         _messages.push_back( netmessge );
     }
@@ -20,7 +20,7 @@ namespace KFrame
 
         for ( auto netmessage : _messages )
         {
-            __HANDLE_MESSAGE__( netmessage->_head._route, netmessage->_head._msgid, netmessage->_data, netmessage->_head._length );
+            __HANDLE_MESSAGE__( netmessage->_header._route, netmessage->_header._msg_id, netmessage->_data, netmessage->_header._length );
             netmessage->Release();
         }
         _messages.clear();
@@ -62,7 +62,7 @@ namespace KFrame
     auto routeservice = _route_service_list.Find( name );\
     if ( routeservice == nullptr )\
     {\
-        AddRouteFailedMessage( name, msgid, kfmsg );\
+        AddRouteFailedMessage( name, msg_id, kfmsg );\
         return __LOG_ERROR__( "can't find service[{}]", name );\
     }\
 
@@ -73,7 +73,7 @@ namespace KFrame
         auto pbroute = &kfmsg->pbroute();
         for ( auto& iter : routeservice->_server_object_count_list )
         {
-            SendRouteMessage( iter.first, pbroute, kfmsg->msgid(), kfmsg->msgdata() );
+            SendRouteMessage( iter.first, pbroute, kfmsg->msg_id(), kfmsg->msgdata() );
         }
     }
 
@@ -89,7 +89,7 @@ namespace KFrame
             return __LOG_ERROR__( "service[{}] no server", kfmsg->name() );
         }
 
-        SendRouteMessage( server_id, pbroute, kfmsg->msgid(), kfmsg->msgdata() );
+        SendRouteMessage( server_id, pbroute, kfmsg->msg_id(), kfmsg->msgdata() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRouteShardModule::HandleRouteMessageToNameBalanceReq, KFMsg::S2SRouteMessageToNameBalanceReq )
@@ -102,7 +102,7 @@ namespace KFrame
         }
 
         auto pbroute = &kfmsg->pbroute();
-        SendRouteMessage( server_id, pbroute, kfmsg->msgid(), kfmsg->msgdata() );
+        SendRouteMessage( server_id, pbroute, kfmsg->msg_id(), kfmsg->msgdata() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRouteShardModule::HandleRouteMessageToNameObjectReq, KFMsg::S2SRouteMessageToNameObjectReq )
@@ -110,31 +110,31 @@ namespace KFrame
         __FIND_ROUTE_SERVICE__( kfmsg->name() );
 
         auto pbroute = &kfmsg->pbroute();
-        auto server_id = routeservice->ObjectServer( pbroute->recvid() );
+        auto server_id = routeservice->ObjectServer( pbroute->recv_id() );
         if ( server_id == _invalid_int )
         {
             return __LOG_ERROR__( "service[{}] no server", kfmsg->name() );
         }
 
-        SendRouteMessage( server_id, pbroute, kfmsg->msgid(), kfmsg->msgdata() );
+        SendRouteMessage( server_id, pbroute, kfmsg->msg_id(), kfmsg->msgdata() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRouteShardModule::HandleRouteMessageToServerReq, KFMsg::S2SRouteMessageToServerReq )
     {
         auto pbroute = &kfmsg->pbroute();
-        SendRouteMessage( kfmsg->targetid(), pbroute, kfmsg->msgid(), kfmsg->msgdata() );
+        SendRouteMessage( kfmsg->targetid(), pbroute, kfmsg->msg_id(), kfmsg->msgdata() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRouteShardModule::HandleRouteMessageToEntityReq, KFMsg::S2SRouteMessageToEntityReq )
     {
         auto pbroute = &kfmsg->pbroute();
-        SendRouteMessage( kfmsg->targetid(), pbroute, kfmsg->msgid(), kfmsg->msgdata() );
+        SendRouteMessage( kfmsg->targetid(), pbroute, kfmsg->msg_id(), kfmsg->msgdata() );
     }
 
-    void KFRouteShardModule::AddRouteFailedMessage( const std::string& name, uint32 msgid, const google::protobuf::Message* message )
+    void KFRouteShardModule::AddRouteFailedMessage( const std::string& name, uint32 msg_id, const google::protobuf::Message* message )
     {
         auto messagedata = _route_message_list.Create( name );
-        messagedata->AddNetMessage( msgid, message );
+        messagedata->AddNetMessage( msg_id, message );
     }
 
     void KFRouteShardModule::SendRouteFailedMessage( const std::string& name )
@@ -148,16 +148,16 @@ namespace KFrame
         messagedata->SendNetMessage();
     }
 
-    void KFRouteShardModule::SendRouteMessage( uint64 clientid, const KFMsg::PBRoute* pbroute, uint32 msgid, const std::string& msgdata )
+    void KFRouteShardModule::SendRouteMessage( uint64 clientid, const KFMsg::PBRoute* pbroute, uint32 msg_id, const std::string& msgdata )
     {
         KFMsg::S2SRouteMessageToClientAck ack;
-        ack.set_msgid( msgid );
+        ack.set_msgid( msg_id );
         ack.set_msgdata( msgdata );
         ack.mutable_pbroute()->CopyFrom( *pbroute );
         auto ok = _kf_cluster_shard->SendToClient( clientid, KFMsg::S2S_ROUTE_MESSAGE_TO_CLIENT_ACK, &ack );
         if ( !ok )
         {
-            __LOG_ERROR__( "send=[{}] msg[{}] to recv=[{}] failed", KFAppId::ToString( pbroute->server_id() ), msgid, KFAppId::ToString( clientid ) );
+            __LOG_ERROR__( "send=[{}] msg[{}] to recv=[{}] failed", KFAppId::ToString( pbroute->server_id() ), msg_id, KFAppId::ToString( clientid ) );
         }
     }
 

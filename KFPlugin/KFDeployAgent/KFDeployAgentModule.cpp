@@ -145,9 +145,9 @@ namespace KFrame
     __KF_NET_EVENT_FUNCTION__( KFDeployAgentModule::OnClientConnectServer )
     {
         // 连接成功
-        if ( netdata->_name == __STRING__( deploy ) && netdata->_type == __STRING__( server ) )
+        if ( net_data->_name == __STRING__( deploy ) && net_data->_type == __STRING__( server ) )
         {
-            _deploy_server_id = netdata->_id;
+            _deploy_server_id = net_data->_id;
             auto kfglobal = KFGlobal::Instance();
 
             // 把自己注册到Services
@@ -158,14 +158,14 @@ namespace KFrame
             req.set_localip( kfglobal->_local_ip );
             req.set_port( kfglobal->_listen_port );
             req.set_service( __FORMAT__( "{}.{}", kfglobal->_channel, kfglobal->_service ) );
-            _kf_tcp_client->SendNetMessage( netdata->_id, KFMsg::S2S_REGISTER_AGENT_TO_SERVER_REQ, &req );
+            _kf_tcp_client->SendNetMessage( net_data->_id, KFMsg::S2S_REGISTER_AGENT_TO_SERVER_REQ, &req );
         }
     }
 
     __KF_NET_EVENT_FUNCTION__( KFDeployAgentModule::OnClientLostServer )
     {
         // 断开server
-        if ( netdata->_name == __STRING__( deploy ) && netdata->_type == __STRING__( server ) )
+        if ( net_data->_name == __STRING__( deploy ) && net_data->_type == __STRING__( server ) )
         {
             _kf_tcp_client->StartClient( __STRING__( deploy ), __STRING__( server ), _deploy_server_id, _deploy_server_ip, _deploy_server_port );
         }
@@ -186,7 +186,7 @@ namespace KFrame
 
     __KF_NET_EVENT_FUNCTION__( KFDeployAgentModule::OnServerDiscoverClient )
     {
-        auto kfdeploydata = _deploy_list.Find( netdata->_str_id );
+        auto kfdeploydata = _deploy_list.Find( net_data->_str_id );
         if ( kfdeploydata == nullptr )
         {
             return;
@@ -197,7 +197,7 @@ namespace KFrame
 
     __KF_NET_EVENT_FUNCTION__( KFDeployAgentModule::OnServerLostClient )
     {
-        auto kfdeploydata = _deploy_list.Find( netdata->_str_id );
+        auto kfdeploydata = _deploy_list.Find( net_data->_str_id );
         if ( kfdeploydata == nullptr )
         {
             return;

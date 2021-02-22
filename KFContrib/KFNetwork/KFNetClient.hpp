@@ -1,7 +1,6 @@
 ﻿#ifndef __NET_CLIENT_H__
 #define __NET_CLIENT_H__
 
-#include "KFrame.h"
 #include "KFNetConnector.hpp"
 
 struct uv_tcp_s;
@@ -15,7 +14,7 @@ typedef struct uv_timer_s uv_timer_t;
 
 namespace KFrame
 {
-    class KFNetClientServices;
+    class KFNetClientService;
     class KFNetClient : public KFNetConnector
     {
     public:
@@ -25,7 +24,7 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////
         // 初始化服务
-        void StartClient( KFNetClientServices* netservices, const KFNetData& netdata );
+        void StartClient( KFNetClientService* net_service, const KFNetData& net_data );
 
         // 关闭服务
         void CloseClient();
@@ -40,7 +39,7 @@ namespace KFrame
         virtual void OnDisconnect( int32 code, const char* function, uint32 line );
 
         // 设置压缩数据
-        void InitCompressEncrypt( uint32 compresstype, uint32 compresslevel, uint32 compresslength, const std::string& encryptkey, bool openencrypt );
+        void InitCompressEncrypt( uint32 compress_type, uint32 compress_level, uint32 compress_length, const std::string& encrypt_key, bool open_encrypt );
 
     private:
         // 启动连接定时器

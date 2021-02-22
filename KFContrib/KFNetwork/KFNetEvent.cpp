@@ -2,95 +2,47 @@
 
 namespace KFrame
 {
-    KFNetEvent::KFNetEvent()
+    void KFNetEvent::InitEvent( uint32 max_count )
     {
-        _kf_connect_function = nullptr;
-        _kf_disconnect_function = nullptr;
-        _kf_failed_function = nullptr;
-        _kf_shut_function = nullptr;
+        _event_data_queue.InitQueue( max_count, max_count );
     }
 
-    KFNetEvent::~KFNetEvent()
+    void KFNetEvent::AddEvent( uint32 type, uint64 id, std::shared_ptr<void> data, const char* describe /* = "" */, int32 code /* = 0 */ )
     {
-    }
+        auto event_data = __MAKE_SHARED__( KFNetEventData );
 
-    void KFNetEvent::InitEvent( uint32 maxcount )
-    {
-        _net_event_data.InitQueue( maxcount, maxcount );
-    }
-
-    void KFNetEvent::AddEvent( uint32 type, uint64 id, void* data, const char* describe /* = "" */, int32 code /* = 0 */ )
-    {
-        auto eventdata = __KF_NEW__( KFNetEventData );
-
-        eventdata->_id = id;
-        eventdata->_type = type;
-        eventdata->_code = code;
-        eventdata->_describe = describe;
-        eventdata->_data = data;
-        _net_event_data.PushObject( eventdata, 0u, __FUNC_LINE__ );
+        event_data->_id = id;
+        event_data->_type = type;
+        event_data->_code = code;
+        event_data->_data = data;
+        event_data->_describe = describe;
+        _event_data_queue.Push( event_data );
     }
 
     void KFNetEvent::RunEvent()
     {
-        auto eventdata = _net_event_data.PopObject();
-        while ( eventdata != nullptr )
+        auto event_data = _event_data_queue.Pop();
+        while ( event_data != nullptr )
         {
-            HandleBindEventFunction( eventdata );
-            __KF_DELETE__( KFNetEventData, eventdata );
-
-            eventdata = _net_event_data.PopObject();
+            HandleBindEventFunction( event_data );
+            event_data = _event_data_queue.Pop();
         }
     }
 
     void KFNetEvent::ShutEvent()
     {
-        _kf_connect_function = nullptr;
-        _kf_disconnect_function = nullptr;
-        _kf_failed_function = nullptr;
-        _kf_shut_function = nullptr;
-
-        _net_event_data.ClearObject();
+        _event_data_queue.Clear();
+        _event_function_list.Clear();
     }
 
-    void KFNetEvent::HandleBindEventFunction( const KFNetEventData* eventdata )
+    void KFNetEvent::HandleBindEventFunction( std::shared_ptr<KFNetEventData>& event_data )
     {
-        switch ( eventdata->_type )
+        auto function = _event_function_list.Find( event_data->_type );
+        if ( function == nullptr )
         {
-        case KFNetDefine::ConnectEvent:
-        {
-            if ( _kf_connect_function != nullptr )
-            {
-                _kf_connect_function( eventdata );
-            }
+            return;
         }
-        break;
-        case KFNetDefine::DisconnectEvent:
-        {
-            if ( _kf_disconnect_function != nullptr )
-            {
-                _kf_disconnect_function( eventdata );
-            }
-        }
-        break;
-        case KFNetDefine::FailedEvent:
-        {
-            if ( _kf_failed_function != nullptr )
-            {
-                _kf_failed_function( eventdata );
-            }
-        }
-        break;
-        case KFNetDefine::ShutEvent:
-        {
-            if ( _kf_shut_function != nullptr )
-            {
-                _kf_shut_function( eventdata );
-            }
-        }
-        break;
-        default:
-            break;
-        }
+
+        function->Call( event_data );
     }
 }

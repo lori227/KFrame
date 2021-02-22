@@ -19,7 +19,8 @@ struct uv_buf_t;
 
 namespace KFrame
 {
-    class KFNetSession
+    class KFNetService;
+    class KFNetSession : public std::enable_shared_from_this<KFNetSession>
     {
     public:
         KFNetSession();
@@ -27,7 +28,7 @@ namespace KFrame
 
         /////////////////////////////////////////////////////////////////////////
         // 处理连接成功
-        virtual void OnConnect( uv_stream_t* uvstream );
+        virtual void OnConnect( uv_stream_t* stream );
 
         // 断线
         virtual void OnDisconnect( int32 code, const char* function, uint32 line );
@@ -48,21 +49,21 @@ namespace KFrame
         // 开始发送消息
         void StartSendMessage();
 
-        // 设置主线程事件
-        bool SetMainLoopEvent( uint32 eventtype );
+        // 发送事件
+        void SendServiceEvent( uint32 event_type );
 
-        // 处理主线程事件
-        void HandleMainLoopEvent();
+        // 处理事件
+        void HandleServiceEvent( uint32 event_type );
 
     protected:
         // 初始化
-        void InitSession( uint64 id, uint32 queuecount, uint32 headlength );
+        void InitSession( uint64 id, uint32 queue_count, uint32 header_length );
 
         // 添加发送消息
-        bool AddSendMessage( KFNetMessage* message );
+        bool AddSendMessage( std::shared_ptr<KFNetMessage>& message );
 
         // 添加收到的消息
-        bool AddRecvMessage( KFNetMessage* message );
+        bool AddRecvMessage( std::shared_ptr<KFNetMessage>& message );
     protected:
         // 开始接受消息
         void StartRecvData();
@@ -71,16 +72,16 @@ namespace KFrame
         void OnRecvData( const char* buffer, uint32 length );
 
         // 申请接受内存
-        static void AllocRecvBuffer( uv_handle_t* handle, size_t size, uv_buf_t* pbuffer );
+        static void AllocRecvBuffer( uv_handle_t* handle, size_t size, uv_buf_t* uv_buffer );
 
         // 接受消息
-        static void OnRecvCallBack( uv_stream_t* pstream, ssize_t length, const uv_buf_t* pbuffer );
+        static void OnRecvCallBack( uv_stream_t* stream, ssize_t length, const uv_buf_t* uv_buffer );
 
         // 格式化消息
         void ParseBuffToMessage();
 
         // 判断消息的有效性
-        KFNetHead* CheckRecvBuffValid( uint32 position );
+        KFNetHeader* CheckRecvBuffValid( uint32 position );
 
     protected:
 
@@ -89,13 +90,13 @@ namespace KFrame
         void OnSendOK();
 
         // 发送消息回调
-        static void OnSendCallBack( uv_write_t* uvwrite, int32 status );
+        static void OnSendCallBack( uv_write_t* uv_write, int32 status );
 
         // 准备发送数据
         uint32 SendQueueMessage();
 
         // 检测发送消息长度
-        bool CheckBufferLength( uint32 totallength, uint32 messagelength );
+        bool CheckBufferLength( uint32 total_length, uint32 message_length );
 
         // 是否是服务器
         bool IsServerSession();
@@ -113,8 +114,10 @@ namespace KFrame
         // 已经关闭
         std::atomic<bool> _is_shutdown;
 
-
     protected:
+        // 网络服务
+        KFNetService* _net_service = nullptr;
+
         // 发送消息队列
         KFQueue< KFNetMessage > _send_queue;
 
@@ -131,10 +134,6 @@ namespace KFrame
         // 发送消息句柄
         uv_write_t* _uv_write = nullptr;
         uv_stream_t* _uv_stream = nullptr;
-
-    private:
-        // 事件类型
-        std::atomic<uint32> _event_type;
 
         // 是否正在发送
         std::atomic<bool> _is_sending;

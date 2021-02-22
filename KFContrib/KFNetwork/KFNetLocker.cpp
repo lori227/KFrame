@@ -2,9 +2,9 @@
 
 namespace KFrame
 {
-    KFNetLocker::KFNetLocker( uv_mutex_t* uvmutex )
+    KFNetLocker::KFNetLocker( uv_mutex_t* uv_mutex )
     {
-        _uv_mutex = uvmutex;
+        _uv_mutex = uv_mutex;
         uv_mutex_lock( _uv_mutex );
     }
 

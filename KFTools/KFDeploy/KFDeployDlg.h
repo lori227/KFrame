@@ -66,7 +66,7 @@ protected:
     void ClearDeployLog();
 
     // 发送消息
-    void SendDeployMessage( uint32 msgid, google::protobuf::Message* message );
+    void SendDeployMessage( uint32 msg_id, google::protobuf::Message* message );
 
     // 获得局域网ip
     std::string GetLocalIp();

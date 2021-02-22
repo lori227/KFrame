@@ -36,7 +36,7 @@ namespace KFrame
     // 网络事件函数
     // 参数1 : 网络连接数据
     typedef std::function< void( const KFNetData* ) > KFNetEventFunction;
-#define __KF_NET_EVENT_FUNCTION__( function )  void function( const KFNetData* netdata )
+#define __KF_NET_EVENT_FUNCTION__( function )  void function( const KFNetData* net_data )
     //////////////////////////////////////////////////////////////////////////////
 }
 

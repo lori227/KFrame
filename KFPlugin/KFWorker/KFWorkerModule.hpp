@@ -33,15 +33,15 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 执行函数
-        bool CallFunction( const Route& route, uint32 msgid, const char* data, uint32 length );
+        bool CallFunction( const Route& route, uint32 msg_id, const char* data, uint32 length );
 
         // 取消注册
-        virtual void UnRegisterFunction( uint32 msgid );
+        virtual void UnRegisterFunction( uint32 msg_id );
 
         //////////////////////////////////////////////////////////////////////////////////////////
         // 发送消息
-        virtual void SendToClient( const Route& route, uint32 msgid, ::google::protobuf::Message* message );
-        virtual void SendToClient( const Route& route, uint64 server_id, uint32 msgid, google::protobuf::Message* message );
+        virtual void SendToClient( const Route& route, uint32 msg_id, ::google::protobuf::Message* message );
+        virtual void SendToClient( const Route& route, uint64 server_id, uint32 msg_id, google::protobuf::Message* message );
 
     protected:
         // 转发消息到工作线程
@@ -50,7 +50,7 @@ namespace KFrame
     protected:
 
         // 添加函数
-        virtual void AddFunction( uint32 msgid, KFMessageFunction& function );
+        virtual void AddFunction( uint32 msg_id, KFMessageFunction& function );
 
         // 查找工作线程
         KFActor* CreateWorkActor();

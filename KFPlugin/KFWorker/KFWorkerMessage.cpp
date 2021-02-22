@@ -4,7 +4,7 @@ namespace KFrame
 {
     KFWorkerMessage::KFWorkerMessage()
     {
-        _msgid = 0;
+        _msg_id = 0;
         _data = nullptr;
         _length = 0;
     }
@@ -17,10 +17,10 @@ namespace KFrame
         }
     }
 
-    void KFWorkerMessage::CopyFrom( const Route& route, uint32 msgid, const char* data, uint32 length )
+    void KFWorkerMessage::CopyFrom( const Route& route, uint32 msg_id, const char* data, uint32 length )
     {
         _route = route;
-        _msgid = msgid;
+        _msg_id = msg_id;
         _length = length;
         if ( _length > 0 )
         {

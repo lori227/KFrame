@@ -53,7 +53,7 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFRelationClientModule::SendMessageToRelation( KFEntity* player, const std::string& relationname, uint32 msgid, google::protobuf::Message* message )
+    void KFRelationClientModule::SendMessageToRelation( KFEntity* player, const std::string& relationname, uint32 msg_id, google::protobuf::Message* message )
     {
         auto kfrecord = player->Find( relationname );
         if ( kfrecord == nullptr )
@@ -69,7 +69,7 @@ namespace KFrame
                 continue;
             }
 
-            _kf_route->RepeatToEntity( player->GetKeyID(), server_id, kfrelation->GetKeyID(), msgid, message );
+            _kf_route->RepeatToEntity( player->GetKeyID(), server_id, kfrelation->GetKeyID(), msg_id, message );
         }
     }
 

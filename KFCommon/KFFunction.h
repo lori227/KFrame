@@ -6,17 +6,15 @@
 
 namespace KFrame
 {
-    class KFModule;
+    //////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////
     template<class T>
     class KFFunction
     {
     public:
         inline bool IsOpen() const
         {
-            if ( !_is_open ||
-                _function == nullptr ||
-                _module == nullptr ||
-                !_module->_is_open  )
+            if ( !_is_open || _function == nullptr )
             {
                 return false;
             }
@@ -24,10 +22,9 @@ namespace KFrame
             return true;
         }
 
-        inline void SetFunction( KFModule* module, T& function )
+        inline void SetFunction( T& function )
         {
             _is_open = true;
-            _module = module;
             _function = function;
         }
 
@@ -39,7 +36,6 @@ namespace KFrame
         inline void Reset()
         {
             _is_open = false;
-            _module = nullptr;
             _function = nullptr;
         }
 
@@ -64,21 +60,77 @@ namespace KFrame
             return _result;
         }
 
-    private:
+    protected:
         // 执行函数
         T _function;
 
         // 是否打开
         bool _is_open = false;
+    };
 
+    template< class KeyType, class ObjectType >
+    class KFMapFunction : public KFHashMap<KeyType, KFFunction<ObjectType>>
+    {
+    public:
+    };
+    //////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////
+    class KFModule;
+
+    template<class T>
+    class KFModuleFunction : public KFFunction<T>
+    {
+    public:
+        inline bool IsOpen() const
+        {
+            if ( _module == nullptr || !_module->_is_open  )
+            {
+                return false;
+            }
+
+            return KFFunction<T>::IsOpen();
+        }
+
+        inline void SetFunction( KFModule* module, T& function )
+        {
+            _module = module;
+            SetFunction( function );
+        }
+
+        inline void Reset()
+        {
+            _module = nullptr;
+            KFFunction<T>::Reset();
+        }
+
+        template< class ... Arg >
+        inline void Call( Arg&& ...params ) const
+        {
+            if ( IsOpen() )
+            {
+                _function( std::forward<Arg>( params )... );
+            }
+        }
+
+        template< class ReturnType, class ... Arg >
+        inline ReturnType CallEx( Arg&& ...params ) const
+        {
+            if ( IsOpen() )
+            {
+                return _function( std::forward<Arg>( params )... );
+            }
+
+            static ReturnType _result;
+            return _result;
+        }
+
+    protected:
         // 模块指针
         KFModule* _module = nullptr;
     };
 
-    //////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////
     template< class KeyType, class ObjectType >
-    class KFMapFunction : public KFHashMap<KeyType, KFFunction<ObjectType>>
+    class KFMapModuleFunction : public KFHashMap<KeyType, KFModuleFunction<ObjectType>>
     {
     public:
     };

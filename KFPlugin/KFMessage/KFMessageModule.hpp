@@ -21,17 +21,17 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 关闭消息处理
-        virtual bool OpenFunction( uint32 msgid, bool open );
+        virtual bool OpenFunction( uint32 msg_id, bool open );
 
         // 执行函数
-        virtual bool HandleMessage( const Route& route, uint32 msgid, const char* data, uint32 length );
+        virtual bool HandleMessage( const Route& route, uint32 msg_id, const char* data, uint32 length );
         //////////////////////////////////////////////////////////////////////////////////////////
     protected:
         // 添加消息函数
         virtual void AddMessageHandle( KFMessageHandleAbstract* messagehandle );
 
         // 删除消息函数
-        virtual bool RemoveMessageHandle( uint32 msgid, KFModule* module );
+        virtual bool RemoveMessageHandle( uint32 msg_id, KFModule* module );
 
         virtual void BindFindEntityFunction( uint32 type, KFModule* module, KFFindEntityFunction& function );
         virtual void UnBindFindEntityFunction( uint32 type );

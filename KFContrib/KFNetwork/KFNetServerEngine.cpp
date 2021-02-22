@@ -4,69 +4,68 @@ namespace KFrame
 {
     KFNetServerEngine::KFNetServerEngine()
     {
-        _net_function = nullptr;
-        _net_server_services = nullptr;
-        _server_lost_function = nullptr;
+        _net_server_service = nullptr;
     }
 
     KFNetServerEngine::~KFNetServerEngine()
     {
-        __DELETE_OBJECT__( _net_server_services );
+        __DELETE_OBJECT__( _net_server_service );
     }
 
     ////////////////////////////////////////////////////
-    void KFNetServerEngine::InitEngine( uint32 maxqueuesize, uint32 handlecount, uint32 messagetype,
-                                        uint32 compresstype, uint32 compresslevel, uint32 compresslength,
-                                        const std::string& encryptkey, bool openencrypt )
+    void KFNetServerEngine::InitEngine( uint32 max_queue_size, uint32 handle_count, uint32 message_type,
+                                        uint32 compress_type, uint32 compress_level, uint32 compress_length,
+                                        const std::string& encrypt_key, bool open_encrypt )
     {
-        _handle_message_count = handlecount;
-        _net_server_services = __NEW_OBJECT__( KFNetServerServices );
-        _net_server_services->InitServices( 10000, maxqueuesize, messagetype );
-        _net_server_services->InitCompress( compresstype, compresslevel, compresslength );
-        _net_server_services->InitEncrypt( encryptkey, openencrypt );
+        _handle_message_count = handle_count;
+        _net_server_service = __NEW_OBJECT__( KFNetServerService );
+        _net_server_service->InitService( 10000, max_queue_size, message_type );
+        _net_server_service->InitCompress( compress_type, compress_level, compress_length );
+        _net_server_service->InitEncrypt( encrypt_key, open_encrypt );
         ///////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////
-        _net_server_services->_net_event->BindConnectFunction( this, &KFNetServerEngine::OnServerConnected );
-        _net_server_services->_net_event->BindShutFunction( this, &KFNetServerEngine::OnServerShutDown );
-        _net_server_services->_net_event->BindDisconnectFunction( this, &KFNetServerEngine::OnServerDisconnect );
+        _net_server_service->_net_event->BindEventFunction( KFNetDefine::ShutEvent, this, &KFNetServerEngine::OnServerShutDown );
+        _net_server_service->_net_event->BindEventFunction( KFNetDefine::ShutEvent, this, &KFNetServerEngine::OnServerDisconnect );
+        _net_server_service->_net_event->BindEventFunction( KFNetDefine::ConnectEvent, this, &KFNetServerEngine::OnServerConnected );
+
     }
 
     int32 KFNetServerEngine::StartEngine( const std::string& ip, uint32 port )
     {
-        KFNetData netdata;
-        netdata._ip = ip;
-        netdata._port = port;
-        return _net_server_services->StartServices( &netdata );
+        KFNetData net_data;
+        net_data._ip = ip;
+        net_data._port = port;
+        return _net_server_service->StartService( &net_data );
     }
 
     void KFNetServerEngine::ShutEngine()
     {
         {
-            auto kfhandle = _trustee_handles.First();
-            while ( kfhandle != nullptr )
+            auto handle = _trustee_handle_list.First();
+            while ( handle != nullptr )
             {
-                kfhandle->CloseHandle();
-                kfhandle = _trustee_handles.Next();
+                handle->CloseHandle();
+                handle = _trustee_handle_list.Next();
             }
         }
 
         {
-            auto kfhandle = _kf_handles.First();
-            while ( kfhandle != nullptr )
+            auto handle = _work_handle_list.First();
+            while ( handle != nullptr )
             {
-                kfhandle->CloseHandle();
-                kfhandle = _kf_handles.Next();
+                handle->CloseHandle();
+                handle = _work_handle_list.Next();
             }
         }
 
         _bind_timeout_list.clear();
-        _net_server_services->ShutServices();
+        _net_server_service->CloseService();
     }
 
     void KFNetServerEngine::RunEngine( uint64 now_time )
     {
-        _net_server_services->_now_time = now_time;
-        _net_server_services->_net_event->RunEvent();
+        _net_server_service->_now_time = now_time;
+        _net_server_service->_net_event->RunEvent();
 
         // 判断托管超时
         RunCheckBindTimeout();
@@ -84,213 +83,211 @@ namespace KFrame
 
     uint32 KFNetServerEngine::GetHandleCount()
     {
-        return _kf_handles.Size();
+        return _work_handle_list.Size();
     }
 
     void KFNetServerEngine::GetHandleList( NetDataList& out_list )
     {
         out_list.clear();
 
-        auto kfhandle = _kf_handles.First();
-        while ( kfhandle != nullptr )
+        auto handle = _work_handle_list.First();
+        while ( handle != nullptr )
         {
-            out_list.push_back( &kfhandle->_net_data );
-            kfhandle = _kf_handles.Next();
+            out_list.push_back( &handle->_net_data );
+            handle = _work_handle_list.Next();
         }
     }
 
-    KFNetHandle* KFNetServerEngine::FindNetHandle( uint64 handleid )
+    std::shared_ptr<KFNetHandle> KFNetServerEngine::FindNetHandle( uint64 handle_id )
     {
-        return _kf_handles.Find( handleid );
+        return _work_handle_list.Find( handle_id );
     }
 
-    const std::string& KFNetServerEngine::GetHandleIp( uint64 handleid )
+    const std::string& KFNetServerEngine::GetHandleIp( uint64 handle_id )
     {
-        auto kfhandle = FindNetHandle( handleid );
-        if ( kfhandle == nullptr )
+        auto handle = FindNetHandle( handle_id );
+        if ( handle == nullptr )
         {
             return _invalid_string;
         }
 
-        return kfhandle->_remote_ip;
+        return handle->_remote_ip;
     }
 
-    void KFNetServerEngine::OnServerConnected( const KFNetEventData* eventdata )
+    void KFNetServerEngine::OnServerConnected( std::shared_ptr<KFNetEventData>& event_data )
     {
         // 加入托管列表
-        auto kfhandle = reinterpret_cast< KFNetHandle* >( eventdata->_data );
-        _trustee_handles.Insert( eventdata->_id, kfhandle );
+        auto handle = static_pointer_cast<KFNetHandle>( event_data->_data );
+        _trustee_handle_list.Insert( event_data->_id, handle );
 
         // 1分钟没有验证绑定, 自动断开
-        _bind_timeout_list[ eventdata->_id ] = _net_server_services->_now_time + 60000;
+        _bind_timeout_list[ event_data->_id ] = _net_server_service->_now_time + 60000;
     }
 
-    void KFNetServerEngine::OnServerShutDown( const KFNetEventData* eventdata )
+    void KFNetServerEngine::OnServerShutDown( std::shared_ptr<KFNetEventData>& event_data )
     {
-        auto istrustee = reinterpret_cast< uint64 >( eventdata->_data ) == 1 ? true : false;
-        if ( istrustee )
+        auto handle = _trustee_handle_list.Remove( event_data->_id );
+        if ( handle == nullptr )
         {
-            auto ok = _trustee_handles.Remove( eventdata->_id );
-            if ( !ok )
+            handle = _work_handle_list.Remove( event_data->_id );
+            if ( handle == nullptr )
             {
-                __LOG_ERROR__( "trustee handle[{}:{}] shutdown failed", eventdata->_id, KFAppId::ToString( eventdata->_id ) );
+                return __LOG_ERROR__( "handle[{}:{}] shutdown failed", event_data->_id, KFAppId::ToString( event_data->_id ) );
             }
         }
-        else
-        {
-            auto ok = _kf_handles.Remove( eventdata->_id );
-            if ( !ok )
-            {
-                __LOG_ERROR__( "handle[{}:{}] shutdown failed", eventdata->_id, KFAppId::ToString( eventdata->_id ) );
-            }
-        }
-        __LOG_DEBUG__( "handle[{}:{}|{}] shutdown ok", eventdata->_id, KFAppId::ToString( eventdata->_id ), reinterpret_cast< uint64 >( eventdata->_data ) );
+
+        __LOG_INFO__( "handle[{}:{}] shutdown ok", event_data->_id, KFAppId::ToString( event_data->_id ) );
     }
 
-    void KFNetServerEngine::OnServerDisconnect( const KFNetEventData* eventdata )
+    void KFNetServerEngine::OnServerDisconnect( std::shared_ptr<KFNetEventData>& event_data )
     {
         // 断开连接
-        auto kfhandle = _kf_handles.Find( eventdata->_id );
-        if ( kfhandle != nullptr )
+        auto handle = _work_handle_list.Find( event_data->_id );
+        if ( handle != nullptr )
         {
-            if ( _server_lost_function != nullptr )
+            auto function = _event_function_list.Find( KFNetDefine::DisconnectEvent );
+            if ( function != nullptr )
             {
-                _server_lost_function( &kfhandle->_net_data );
+                function->Call( &handle->_net_data );
             }
         }
         else
         {
-            kfhandle = _trustee_handles.Find( eventdata->_id );
-            if ( kfhandle == nullptr )
+            handle = _trustee_handle_list.Find( event_data->_id );
+            if ( handle == nullptr )
             {
-                return __LOG_ERROR__( "can't find handle[{}]", eventdata->_id );
+                return __LOG_ERROR__( "can't find handle[{}]", event_data->_id );
             }
         }
 
-        kfhandle->CloseHandle();
+        handle->CloseHandle();
     }
 
-    bool KFNetServerEngine::CloseHandle( uint64 id, uint32 delaytime, const char* function, uint32 line )
+    bool KFNetServerEngine::CloseHandle( uint64 id, uint32 delay_time, const char* function, uint32 line )
     {
         __LOG_DEBUG_FUNCTION__( function, line, "add close handle[{}:{}]", id, KFAppId::ToString( id ) );
 
-        _close_handles[ id ] = _net_server_services->_now_time + delaytime;
+        _close_handle_list[ id ] = _net_server_service->_now_time + delay_time;
         return true;
     }
 
-    bool KFNetServerEngine::BindObjectId( uint64 handleid, uint64 objectid )
+    bool KFNetServerEngine::BindObjectId( uint64 handle_id, uint64 object_id )
     {
         // 正在关闭队列
-        if ( _close_handles.find( handleid ) != _close_handles.end() )
+        if ( _close_handle_list.find( handle_id ) != _close_handle_list.end() )
         {
             return false;
         }
 
         // 找不到处理器, 或者正在关闭
-        auto kfhandle = _kf_handles.Find( handleid );
-        if ( kfhandle == nullptr || kfhandle->_is_shutdown )
+        auto handle = _work_handle_list.Find( handle_id );
+        if ( handle == nullptr || handle->_is_shutdown )
         {
             return false;
         }
 
-        kfhandle->_object_id = objectid;
-        kfhandle->_net_data._id = objectid;
-        kfhandle->_net_data._session = handleid;
+        handle->_object_id = object_id;
+        handle->_net_data._id = object_id;
+        handle->_net_data._session = handle_id;
 
         // 删除超时列表
-        _bind_timeout_list.erase( handleid );
+        _bind_timeout_list.erase( handle_id );
         return true;
     }
 
-    KFNetHandle* KFNetServerEngine::RegisteHandle( uint64 trusteeid, uint64 handleid, uint64 objectid )
+    std::shared_ptr<KFNetHandle> KFNetServerEngine::RegisterHandle( uint64 trustee_id, uint64 handle_id, uint64 object_id )
     {
-        auto kfhandle = _trustee_handles.Find( trusteeid );
-        if ( kfhandle == nullptr || kfhandle->_is_shutdown || !kfhandle->_is_connected )
+        auto handle = _trustee_handle_list.Find( trustee_id );
+        if ( handle == nullptr || handle->_is_shutdown || !handle->_is_connected )
         {
-            __LOG_ERROR__( "trustee handle[{}:{}] can't find", trusteeid, handleid );
+            __LOG_ERROR__( "trustee handle[{}:{}] can't find", trustee_id, handle_id );
             return nullptr;
         }
 
         // 已经在列表中
-        if ( _kf_handles.Find( handleid ) != nullptr )
+        if ( _work_handle_list.Find( handle_id ) != nullptr )
         {
-            __LOG_ERROR__( "handle[{}:{}] already exist", handleid, KFAppId::ToString( handleid ) );
+            __LOG_ERROR__( "handle[{}:{}] already exist", handle_id, KFAppId::ToString( handle_id ) );
             return nullptr;
         }
 
         // 加入删除列表( 不能直接删除, 应为在托管队列的消息循环中 )
-        _remove_trustees.insert( trusteeid );
+        _remove_trustee_list.insert( trustee_id );
 
         // 设置属性, 并加入注册列表中
-        kfhandle->_is_trustee = false;
-        kfhandle->_object_id = objectid;
-        kfhandle->_session_id = handleid;
-        _kf_handles.Insert( handleid, kfhandle );
-        return kfhandle;
+        handle->_is_trustee = false;
+        handle->_object_id = object_id;
+        handle->_session_id = handle_id;
+        _work_handle_list.Insert( handle_id, handle );
+        return handle;
     }
 
     void KFNetServerEngine::RunRemoveTrusteeHandle()
     {
-        if ( _remove_trustees.empty() )
+        if ( _remove_trustee_list.empty() )
         {
             return;
         }
 
-        for ( auto id : _remove_trustees )
+        for ( auto id : _remove_trustee_list )
         {
-            _trustee_handles.Remove( id, false );
+            _trustee_handle_list.Remove( id );
         }
 
-        _remove_trustees.clear();
+        _remove_trustee_list.clear();
     }
 
     void KFNetServerEngine::RunCheckBindTimeout()
     {
-        std::list< uint64 > removes;
+        std::list<uint64> remove_list;
         for ( auto iter : _bind_timeout_list )
         {
-            if ( _net_server_services->_now_time < iter.second )
+            if ( _net_server_service->_now_time < iter.second )
             {
                 continue;
             }
 
-            // 已经超时
-            auto kfhandle = _trustee_handles.Find( iter.first );
-            if ( kfhandle == nullptr )
-            {
-                kfhandle = _kf_handles.Find( iter.first );
-            }
-            if ( kfhandle != nullptr )
-            {
-                kfhandle->CloseHandle();
-            }
+            remove_list.push_back( iter.first );
 
-            removes.push_back( iter.first );
+            // 已经超时
+            auto handle = _trustee_handle_list.Find( iter.first );
+            if ( handle != nullptr )
+            {
+                handle->CloseHandle();
+            }
+            else
+            {
+                handle = _work_handle_list.Find( iter.first );
+                if ( handle != nullptr )
+                {
+                    handle->CloseHandle();
+                }
+            }
         }
 
-        for ( auto handleid : removes )
+        for ( auto handle_id : remove_list )
         {
-            _bind_timeout_list.erase( handleid );
+            _bind_timeout_list.erase( handle_id );
         }
     }
 
     void KFNetServerEngine::RunCloseHandle()
     {
-        for ( auto iter = _close_handles.begin(); iter != _close_handles.end(); )
+        for ( auto iter = _close_handle_list.begin(); iter != _close_handle_list.end(); )
         {
-            if ( iter->second > _net_server_services->_now_time )
+            if ( iter->second > _net_server_service->_now_time )
             {
                 ++iter;
                 continue;
             }
 
-            auto kfhandle = _kf_handles.Find( iter->first );
-            if ( kfhandle != nullptr )
+            auto handle = _work_handle_list.Find( iter->first );
+            if ( handle != nullptr )
             {
-                kfhandle->CloseHandle();
+                handle->CloseHandle();
             }
 
-            iter = _close_handles.erase( iter );
+            iter = _close_handle_list.erase( iter );
         }
     }
 
@@ -299,88 +296,88 @@ namespace KFrame
         // 每次取1个消息, 只处理认证消息
         static const uint32 _max_message_count = 1;
 
-        for ( auto& iter : _trustee_handles._objects )
+        for ( auto& iter : _trustee_handle_list._objects )
         {
-            auto kfhandle = iter.second;
-            kfhandle->RunUpdate( _net_function, _max_message_count );
+            auto handle = iter.second;
+            handle->RunUpdate( _max_message_count );
         }
     }
 
     void KFNetServerEngine::RunHandleMessage( uint64 now_time )
     {
         // 每次取设置消息数量, 防止占用过多的cpu
-        for ( auto& iter : _kf_handles._objects )
+        for ( auto& iter : _work_handle_list._objects )
         {
-            auto kfhandle = iter.second;
-            kfhandle->RunUpdate( _net_function, _handle_message_count );
+            auto handle = iter.second;
+            handle->RunUpdate( _handle_message_count );
         }
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFNetServerEngine::SendNetMessage( uint32 msgid, const char* data, uint32 length, uint64 excludeid /* = 0 */ )
+    void KFNetServerEngine::SendNetMessage( uint32 msg_id, const char* data, uint32 length, uint64 exclude_id /* = 0 */ )
     {
-        auto kfhandle = _kf_handles.First();
-        while ( kfhandle != nullptr )
+        auto handle = _work_handle_list.First();
+        while ( handle != nullptr )
         {
-            if ( kfhandle->_object_id != excludeid )
+            if ( handle->_object_id != exclude_id )
             {
-                kfhandle->SendNetMessage( kfhandle->_object_id, msgid, data, length );
+                handle->SendNetMessage( handle->_object_id, msg_id, data, length );
             }
 
-            kfhandle = _kf_handles.Next();
+            handle = _work_handle_list.Next();
         }
     }
 
-    void KFNetServerEngine::SendMessageToName( const std::string& name, uint32 msgid, const char* data, uint32 length )
+    void KFNetServerEngine::SendMessageToName( const std::string& name, uint32 msg_id, const char* data, uint32 length )
     {
-        auto kfhandle = _kf_handles.First();
-        while ( kfhandle != nullptr )
+        auto handle = _work_handle_list.First();
+        while ( handle != nullptr )
         {
-            if ( kfhandle->_net_data._name == name )
+            if ( handle->_net_data._name == name )
             {
-                kfhandle->SendNetMessage( kfhandle->_object_id, msgid, data, length );
+                handle->SendNetMessage( handle->_object_id, msg_id, data, length );
             }
 
-            kfhandle = _kf_handles.Next();
+            handle = _work_handle_list.Next();
         }
     }
 
-    void KFNetServerEngine::SendMessageToType( const std::string& type, uint32 msgid, const char* data, uint32 length )
+    void KFNetServerEngine::SendMessageToType( const std::string& type, uint32 msg_id, const char* data, uint32 length )
     {
-        auto kfhandle = _kf_handles.First();
-        while ( kfhandle != nullptr )
+        auto handle = _work_handle_list.First();
+        while ( handle != nullptr )
         {
-            if ( kfhandle->_net_data._type == type )
+            if ( handle->_net_data._type == type )
             {
-                kfhandle->SendNetMessage( kfhandle->_object_id, msgid, data, length );
+                handle->SendNetMessage( handle->_object_id, msg_id, data, length );
             }
 
-            kfhandle = _kf_handles.Next();
+            handle = _work_handle_list.Next();
         }
     }
 
-    bool KFNetServerEngine::SendNetMessage( uint64 handleid, uint32 msgid, const char* data, uint32 length, uint32 delay )
+    bool KFNetServerEngine::SendNetMessage( uint64 handle_id, uint32 msg_id, const char* data, uint32 length, uint32 delay )
     {
-        KFNetHandle* handle = FindNetHandle( handleid );
+        auto handle = FindNetHandle( handle_id );
         if ( handle == nullptr )
         {
-            __LOG_ERROR__( "msgid[{}] can't find handle[{}]", msgid, KFAppId::ToString( handleid ) );
+            __LOG_ERROR__( "msg_id[{}] can't find handle[{}]", msg_id, KFAppId::ToString( handle_id ) );
             return false;
         }
 
-        return handle->SendNetMessage( handleid, msgid, data, length, delay );
+        return handle->SendNetMessage( handle_id, msg_id, data, length, delay );
     }
 
-    bool KFNetServerEngine::SendNetMessage( uint64 handleid, uint64 recvid, uint32 msgid, const char* data, uint32 length, uint32 delay )
+    bool KFNetServerEngine::SendNetMessage( uint64 handle_id, uint64 recv_id, uint32 msg_id, const char* data, uint32 length, uint32 delay )
     {
-        KFNetHandle* handle = FindNetHandle( handleid );
+        auto handle = FindNetHandle( handle_id );
         if ( handle == nullptr )
         {
-            __LOG_ERROR__( "msgid[{}] can't find handle[{}]", msgid, KFAppId::ToString( handleid ) );
+            __LOG_ERROR__( "msg_id[{}] can't find handle[{}]", msg_id, KFAppId::ToString( handle_id ) );
             return false;
         }
 
-        return handle->SendNetMessage( recvid, msgid, data, length, delay );
+        return handle->SendNetMessage( recv_id, msg_id, data, length, delay );
     }
 }

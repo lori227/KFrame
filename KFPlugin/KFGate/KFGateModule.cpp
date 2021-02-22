@@ -67,18 +67,18 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_NET_EVENT_FUNCTION__( KFGateModule::OnClientConnectionServer )
     {
-        if ( netdata->_type == __STRING__( login ) )
+        if ( net_data->_type == __STRING__( login ) )
         {
-            _login_conhash.AddHashNode( netdata->_type, netdata->_id, 100 );
+            _login_conhash.AddHashNode( net_data->_type, net_data->_id, 100 );
             _login_server_id = _login_conhash.FindHashNode( KFGlobal::Instance()->_app_id->GetId() );
         }
-        else if ( netdata->_type == __STRING__( game ) )
+        else if ( net_data->_type == __STRING__( game ) )
         {
             KFMsg::S2SConnectToGameReq req;
             for ( auto iter : _kf_role_list._objects )
             {
                 auto kfrole = iter.second;
-                if ( kfrole->_game_id == netdata->_id )
+                if ( kfrole->_game_id == net_data->_id )
                 {
                     auto pblogin = req.add_pblogin();
                     pblogin->set_token( kfrole->_token );
@@ -89,16 +89,16 @@ namespace KFrame
                     pblogin->set_gateid( KFGlobal::Instance()->_app_id->GetId() );
                 }
             }
-            _kf_tcp_client->SendNetMessage( netdata->_id, KFMsg::S2S_CONNECT_TO_GAME_REQ, &req );
+            _kf_tcp_client->SendNetMessage( net_data->_id, KFMsg::S2S_CONNECT_TO_GAME_REQ, &req );
         }
     }
 
     __KF_NET_EVENT_FUNCTION__( KFGateModule::OnClientLostServer )
     {
-        if ( netdata->_type == __STRING__( login ) )
+        if ( net_data->_type == __STRING__( login ) )
         {
-            _login_conhash.RemoveHashNode( netdata->_id );
-            if ( _login_server_id == netdata->_id )
+            _login_conhash.RemoveHashNode( net_data->_id );
+            if ( _login_server_id == net_data->_id )
             {
                 _login_server_id = _login_conhash.FindHashNode( KFGlobal::Instance()->_app_id->GetId() );
             }
@@ -111,7 +111,7 @@ namespace KFrame
     __KF_TRANSPOND_MESSAGE_FUNCTION__( KFGateModule::TranspondToClient )
     {
         auto playerid = __ROUTE_RECV_ID__;
-        if ( playerid == _invalid_int || msgid >= __KF_MAX_CLIENT_MSG_ID__ )
+        if ( playerid == _invalid_int || msg_id >= __KF_MAX_CLIENT_MSG_ID__ )
         {
             return false;
         }
@@ -119,7 +119,7 @@ namespace KFrame
         auto kfrole = FindRole( playerid );
         if ( kfrole != nullptr )
         {
-            kfrole->SendToClient( msgid, data, length );
+            kfrole->SendToClient( msg_id, data, length );
         }
 
         return true;
@@ -128,7 +128,7 @@ namespace KFrame
     __KF_TRANSPOND_MESSAGE_FUNCTION__( KFGateModule::TranspondToGame )
     {
         auto playerid = __ROUTE_SEND_ID__;
-        if ( playerid == _invalid_int || msgid >= __KF_MAX_CLIENT_MSG_ID__ )
+        if ( playerid == _invalid_int || msg_id >= __KF_MAX_CLIENT_MSG_ID__ )
         {
             return false;
         }
@@ -141,7 +141,7 @@ namespace KFrame
         auto kfrole = FindRole( playerid );
         if ( kfrole != nullptr )
         {
-            kfrole->SendToGame( msgid, data, length );
+            kfrole->SendToGame( msg_id, data, length );
         }
 
         return true;
@@ -168,7 +168,7 @@ namespace KFrame
         for ( auto& iter : _kf_role_list._objects )
         {
             auto kfrole = iter.second;
-            kfrole->SendToClient( kfmsg->msgid(), msgdata.data(), static_cast< uint32 >( msgdata.length() ) );
+            kfrole->SendToClient( kfmsg->msg_id(), msgdata.data(), static_cast< uint32 >( msgdata.length() ) );
         }
     }
 
@@ -180,7 +180,7 @@ namespace KFrame
             auto kfrole = iter.second;
             if ( kfrole->_game_id == __ROUTE_SERVER_ID__ )
             {
-                kfrole->SendToClient( kfmsg->msgid(), msgdata.data(), static_cast< uint32 >( msgdata.length() ) );
+                kfrole->SendToClient( kfmsg->msg_id(), msgdata.data(), static_cast< uint32 >( msgdata.length() ) );
             }
         }
     }
@@ -407,13 +407,13 @@ namespace KFrame
 
     __KF_NET_EVENT_FUNCTION__( KFGateModule::OnPlayerDisconnection )
     {
-        auto kfrole = FindRole( netdata->_id );
+        auto kfrole = FindRole( net_data->_id );
         if ( kfrole == nullptr )
         {
             return;
         }
 
-        __LOG_DEBUG__( "client[{}] disconnection", netdata->_id );
+        __LOG_DEBUG__( "client[{}] disconnection", net_data->_id );
 
         KFMsg::S2SDisconnectToGameReq req;
         req.set_playerid( kfrole->_id );

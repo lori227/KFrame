@@ -3,10 +3,10 @@
 
 namespace KFrame
 {
-#define __REGISTER_ROBOT_MESSAGE__( msgid, handle ) \
+#define __REGISTER_ROBOT_MESSAGE__( msg_id, handle ) \
     {\
         KFMessageFunction function = std::bind( handle, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );\
-        auto kffunction = _message_function.Create( msgid );\
+        auto kffunction = _message_function.Create( msg_id );\
         kffunction->_function = function;\
     }
 
@@ -62,17 +62,17 @@ namespace KFrame
         _net_client->RunEngine( KFGlobal::Instance()->_game_time );
     }
 
-    void KFRobotModule::HandleNetMessage( const Route& route, uint32 msgid, const char* data, uint32 length )
+    void KFRobotModule::HandleNetMessage( const Route& route, uint32 msg_id, const char* data, uint32 length )
     {
-        if ( msgid == 0u )
+        if ( msg_id == 0u )
         {
             return;
         }
 
-        auto kffunction = _message_function.Find( msgid );
+        auto kffunction = _message_function.Find( msg_id );
         if ( kffunction == nullptr )
         {
-            return __LOG_ERROR__( "msgid=[{}] no function!", msgid );
+            return __LOG_ERROR__( "msg_id=[{}] no function!", msg_id );
         }
 
         kffunction->_function( route, data, length );
@@ -80,29 +80,29 @@ namespace KFrame
 
     __KF_NET_EVENT_FUNCTION__( KFRobotModule::OnClientConnectGate )
     {
-        auto robot = _robots.Find( netdata->_id );
+        auto robot = _robots.Find( net_data->_id );
         if ( robot == nullptr )
         {
             return;
         }
 
-        robot->_client_id = netdata->_id;
+        robot->_client_id = net_data->_id;
     }
 
     __KF_NET_EVENT_FUNCTION__( KFRobotModule::OnClientLostGate )
     {
-        auto robot = _robots.Find( netdata->_id );
+        auto robot = _robots.Find( net_data->_id );
         if ( robot == nullptr )
         {
             return;
         }
 
-        _net_client->CloseClient( netdata->_id, __FUNC_LINE__ );
+        _net_client->CloseClient( net_data->_id, __FUNC_LINE__ );
     }
 
     __KF_NET_EVENT_FUNCTION__( KFRobotModule::OnClientShutdownGate )
     {
-        auto robot = _robots.Find( netdata->_id );
+        auto robot = _robots.Find( net_data->_id );
         if ( robot == nullptr )
         {
             return;

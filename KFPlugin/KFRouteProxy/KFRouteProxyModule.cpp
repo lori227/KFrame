@@ -33,18 +33,18 @@ namespace KFrame
     {
         // 通知到shard
         KFMsg::S2SRouteClientLostToShardReq req;
-        req.set_name( netdata->_name );
-        req.set_clientid( netdata->_id );
+        req.set_name( net_data->_name );
+        req.set_clientid( net_data->_id );
         _kf_tcp_client->SendMessageToType( __STRING__( shard ), KFMsg::S2S_ROUTE_CLIENT_LOST_TO_SHARD_REQ, &req );
     }
 
     __KF_NET_EVENT_FUNCTION__( KFRouteProxyModule::OnClientConnectServer )
     {
-        if ( netdata->_type == __STRING__( shard ) )
+        if ( net_data->_type == __STRING__( shard ) )
         {
             // 通知所有客户端, 请求同步信息
             KFMsg::S2SRouteDiscoverToClientReq req;
-            req.set_shardid( netdata->_id );
+            req.set_shardid( net_data->_id );
             _kf_tcp_server->SendNetMessage( KFMsg::S2S_ROUTE_DISCOVER_TO_CLIENT_REQ, &req );
         }
     }
@@ -95,7 +95,7 @@ namespace KFrame
         if ( havehandle )
         {
             KFMsg::S2SRouteMessageToClientAck ack;
-            ack.set_msgid( kfmsg->msgid() );
+            ack.set_msgid( kfmsg->msg_id() );
             ack.set_msgdata( kfmsg->msgdata() );
             ack.mutable_pbroute()->CopyFrom( *pbroute );
             _kf_tcp_server->SendNetMessage( kfmsg->targetid(), KFMsg::S2S_ROUTE_MESSAGE_TO_CLIENT_ACK, &ack );
@@ -113,14 +113,14 @@ namespace KFrame
         if ( havehandle )
         {
             KFMsg::S2SRouteMessageToClientAck ack;
-            ack.set_msgid( kfmsg->msgid() );
+            ack.set_msgid( kfmsg->msg_id() );
             ack.set_msgdata( kfmsg->msgdata() );
             ack.mutable_pbroute()->CopyFrom( kfmsg->pbroute() );
             _kf_tcp_server->SendNetMessage( kfmsg->targetid(), KFMsg::S2S_ROUTE_MESSAGE_TO_CLIENT_ACK, &ack );
         }
         else
         {
-            _kf_cluster_proxy->TranspondToShard( route, msgid, kfmsg );
+            _kf_cluster_proxy->TranspondToShard( route, msg_id, kfmsg );
         }
     }
 }

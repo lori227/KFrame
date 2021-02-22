@@ -71,7 +71,7 @@ namespace KFrame
 
     protected:
         // 处理消息
-        void HandleNetMessage( const Route& route, uint32 msgid, const char* data, uint32 length );
+        void HandleNetMessage( const Route& route, uint32 msg_id, const char* data, uint32 length );
 
         // 处理机器人命令
         void ProcessRobotCommand( const StringVector& params );

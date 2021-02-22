@@ -37,39 +37,39 @@ namespace KFrame
         virtual void ShutDown();
 
         // 发送消息
-        virtual void SendNetMessage( uint32 msgid, const char* data, uint32 length, uint64 excludeid = 0 );
-        virtual void SendNetMessage( uint32 msgid, google::protobuf::Message* message, uint64 excludeid = 0 );
+        virtual void SendNetMessage( uint32 msg_id, const char* data, uint32 length, uint64 exclude_id = 0 );
+        virtual void SendNetMessage( uint32 msg_id, google::protobuf::Message* message, uint64 exclude_id = 0 );
 
-        virtual bool SendNetMessage( uint64 handleid, uint32 msgid, const char* data, uint32 length, uint32 delay = 0u );
-        virtual bool SendNetMessage( uint64 handleid, uint32 msgid, google::protobuf::Message* message, uint32 delay = 0u );
+        virtual bool SendNetMessage( uint64 handle_id, uint32 msg_id, const char* data, uint32 length, uint32 delay = 0u );
+        virtual bool SendNetMessage( uint64 handle_id, uint32 msg_id, google::protobuf::Message* message, uint32 delay = 0u );
 
         // 给指定对象发送消息
-        virtual bool SendNetMessage( uint64 handleid, uint64 recvid, uint32 msgid, const char* data, uint32 length, uint32 delay = 0u );
-        virtual bool SendNetMessage( uint64 handleid, uint64 recvid, uint32 msgid, google::protobuf::Message* message, uint32 delay = 0u );
+        virtual bool SendNetMessage( uint64 handle_id, uint64 recv_id, uint32 msg_id, const char* data, uint32 length, uint32 delay = 0u );
+        virtual bool SendNetMessage( uint64 handle_id, uint64 recv_id, uint32 msg_id, google::protobuf::Message* message, uint32 delay = 0u );
 
         // 给指定类型发送消息
-        virtual void SendMessageToName( const std::string& name, uint32 msgid, google::protobuf::Message* message );
-        virtual void SendMessageToType( const std::string& type, uint32 msgid, google::protobuf::Message* message );
-        virtual void SendMessageToType( const std::string& type, uint32 msgid, const char* data, uint32 length );
+        virtual void SendMessageToName( const std::string& name, uint32 msg_id, google::protobuf::Message* message );
+        virtual void SendMessageToType( const std::string& type, uint32 msg_id, google::protobuf::Message* message );
+        virtual void SendMessageToType( const std::string& type, uint32 msg_id, const char* data, uint32 length );
         /////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////
         // 注册到连接器
-        virtual bool RegisteNetHandle( uint64 sessionid, uint64 handleid, uint64 objectid );
+        virtual bool RegisteNetHandle( uint64 sessionid, uint64 handle_id, uint64 objectid );
 
         // 删除连接器
-        virtual bool CloseNetHandle( uint64 handleid, uint32 delaytime, const char* function, uint32 line );
+        virtual bool CloseNetHandle( uint64 handle_id, uint32 delaytime, const char* function, uint32 line );
 
         // 连接数量
         virtual uint32 GetHandleCount();
 
         // 是否存在连接
-        virtual bool HaveHandle( uint64 handleid );
+        virtual bool HaveHandle( uint64 handle_id );
 
         // 获得连接ip
-        virtual const std::string& GetHandleIp( uint64 handleid );
+        virtual const std::string& GetHandleIp( uint64 handle_id );
 
         // 设置id
-        virtual bool BindObjectId( uint64 handleid, uint64 objectid );
+        virtual bool BindObjectId( uint64 handle_id, uint64 objectid );
 
         // 连接列表
         virtual void GetHandleList( NetDataList& out_list );
@@ -94,7 +94,7 @@ namespace KFrame
         __KF_NET_EVENT_FUNCTION__( OnServerLostHandle );
 
         // 消息处理函数
-        void HandleNetMessage( const Route& route, uint32 msgid, const char* data, uint32 length );
+        void HandleNetMessage( const Route& route, uint32 msg_id, const char* data, uint32 length );
 
         // 发现客户端回调
         void CallDiscoverFunction( KFNetHandle* tcphandle );

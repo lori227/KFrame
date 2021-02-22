@@ -22,7 +22,7 @@ namespace KFrame
     {
     public:
         // 添加消息
-        void AddNetMessage( uint32 msgid, const google::protobuf::Message* message );
+        void AddNetMessage( uint32 msg_id, const google::protobuf::Message* message );
 
         // 发送消息
         void SendNetMessage();
@@ -77,10 +77,10 @@ namespace KFrame
 
     protected:
         // 转发消息
-        void SendRouteMessage( uint64 clientid, const KFMsg::PBRoute* pbroute, uint32 msgid, const std::string& msgdata );
+        void SendRouteMessage( uint64 clientid, const KFMsg::PBRoute* pbroute, uint32 msg_id, const std::string& msgdata );
 
         // 添加转发失败的消息
-        void AddRouteFailedMessage( const std::string& name, uint32 msgid, const google::protobuf::Message* message );
+        void AddRouteFailedMessage( const std::string& name, uint32 msg_id, const google::protobuf::Message* message );
 
         // 发送转发失败的消息
         void SendRouteFailedMessage( const std::string& name );

@@ -56,22 +56,22 @@ namespace KFrame
 
     __KF_NET_EVENT_FUNCTION__( KFBusModule::OnClientConnectMasterFailed )
     {
-        if ( netdata->_name == KFGlobal::Instance()->_app_name &&
-                netdata->_type == __STRING__( master ) )
+        if ( net_data->_name == KFGlobal::Instance()->_app_name &&
+                net_data->_type == __STRING__( master ) )
         {
             ++_connect_master_failed_count;
             if ( _connect_master_failed_count > 5u )
             {
                 // 超过设定次数, 重新连接
-                _kf_tcp_client->CloseClient( netdata->_id, __FUNC_LINE__ );
+                _kf_tcp_client->CloseClient( net_data->_id, __FUNC_LINE__ );
             }
         }
     }
 
     __KF_NET_EVENT_FUNCTION__( KFBusModule::OnClientDisconnectMaster )
     {
-        if ( netdata->_name == KFGlobal::Instance()->_app_name &&
-                netdata->_type == __STRING__( master ) )
+        if ( net_data->_name == KFGlobal::Instance()->_app_name &&
+                net_data->_type == __STRING__( master ) )
         {
             // 启动定时器
             __LOOP_TIMER_0__( 6000u, 1000u, &KFBusModule::OnTimerConnectionMaster );

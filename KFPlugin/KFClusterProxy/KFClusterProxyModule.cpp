@@ -59,18 +59,18 @@ namespace KFrame
     __KF_NET_EVENT_FUNCTION__( KFClusterProxyModule::OnClientConnectionServer )
     {
         auto kfglobal = KFGlobal::Instance();
-        if ( kfglobal->_app_name != netdata->_name )
+        if ( kfglobal->_app_name != net_data->_name )
         {
             return;
         }
 
-        if ( netdata->_type == __STRING__( master ) )
+        if ( net_data->_type == __STRING__( master ) )
         {
-            OnClientConnectionClusterMaster( netdata->_name, netdata->_id );
+            OnClientConnectionClusterMaster( net_data->_name, net_data->_id );
         }
-        else if ( netdata->_type == __STRING__( shard ) )
+        else if ( net_data->_type == __STRING__( shard ) )
         {
-            OnClientConnectionClusterShard( netdata->_name, netdata->_id );
+            OnClientConnectionClusterShard( net_data->_name, net_data->_id );
         }
     }
 
@@ -129,16 +129,16 @@ namespace KFrame
         for ( auto& iter : _kf_token_list._objects )
         {
             auto kftoken = iter.second;
-            if ( kftoken->_client_id == netdata->_id )
+            if ( kftoken->_client_id == net_data->_id )
             {
                 // 启动定时器, 10秒钟内不验证, 关闭连接
-                __LIMIT_TIMER_1__( netdata->_id, 10000, 1, &KFClusterProxyModule::OnTimerClusterAuthTimeOut );
+                __LIMIT_TIMER_1__( net_data->_id, 10000, 1, &KFClusterProxyModule::OnTimerClusterAuthTimeOut );
                 return;
             }
         }
 
         // 没有则认为是非法的连接, 直接关闭
-        _kf_tcp_server->CloseNetHandle( netdata->_id, 1000, __FUNC_LINE__ );
+        _kf_tcp_server->CloseNetHandle( net_data->_id, 1000, __FUNC_LINE__ );
     }
 
     __KF_TIMER_FUNCTION__( KFClusterProxyModule::OnTimerClusterAuthTimeOut )
@@ -150,25 +150,25 @@ namespace KFrame
     __KF_NET_EVENT_FUNCTION__( KFClusterProxyModule::OnServerLostClient )
     {
         KFMsg::S2SClusterClientLostToShardReq req;
-        req.set_clientid( netdata->_id );
+        req.set_clientid( net_data->_id );
         _kf_tcp_client->SendMessageToType( __STRING__( shard ), KFMsg::S2S_CLUSTER_CLIENT_LOST_TO_SHARD_REQ, &req );
     }
 
     __KF_NET_EVENT_FUNCTION__( KFClusterProxyModule::OnClientLostServer )
     {
         auto kfglobal = KFGlobal::Instance();
-        if ( kfglobal->_app_name != netdata->_name )
+        if ( kfglobal->_app_name != net_data->_name )
         {
             return;
         }
 
-        if ( netdata->_type == __STRING__( master ) )
+        if ( net_data->_type == __STRING__( master ) )
         {
-            OnClientLostClusterMaster( netdata->_name, netdata->_id );
+            OnClientLostClusterMaster( net_data->_name, net_data->_id );
         }
-        else if ( netdata->_type == __STRING__( shard ) )
+        else if ( net_data->_type == __STRING__( shard ) )
         {
-            OnClientLostClusterShard( netdata->_name, netdata->_id );
+            OnClientLostClusterShard( net_data->_name, net_data->_id );
         }
     }
 
@@ -243,13 +243,13 @@ namespace KFrame
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFClusterProxyModule::TranspondToShard( const Route& route, uint32 msgid, const google::protobuf::Message* message )
+    bool KFClusterProxyModule::TranspondToShard( const Route& route, uint32 msg_id, const google::protobuf::Message* message )
     {
         auto strdata = message->SerializeAsString();
-        return TranspondToShard( route, msgid, strdata.data(), strdata.length() );
+        return TranspondToShard( route, msg_id, strdata.data(), strdata.length() );
     }
 
-    bool KFClusterProxyModule::TranspondToShard( const Route& route, uint32 msgid, const char* data, uint32 length )
+    bool KFClusterProxyModule::TranspondToShard( const Route& route, uint32 msg_id, const char* data, uint32 length )
     {
         auto clientid = __ROUTE_SERVER_ID__;
         auto shardid = __ROUTE_RECV_ID__;
@@ -258,23 +258,23 @@ namespace KFrame
             shardid = _kf_hash.FindHashNode( clientid, true );
             if ( shardid == _invalid_int )
             {
-                __LOG_ERROR__( "msgid[{}] transpond failed", msgid );
+                __LOG_ERROR__( "msg_id[{}] transpond failed", msg_id );
                 return false;
             }
         }
 
-        return _kf_tcp_client->SendNetMessage( shardid, clientid, msgid, data, length );
+        return _kf_tcp_client->SendNetMessage( shardid, clientid, msg_id, data, length );
     }
 
-    bool KFClusterProxyModule::TranspondToClient( const Route& route, uint32 msgid, const google::protobuf::Message* message )
+    bool KFClusterProxyModule::TranspondToClient( const Route& route, uint32 msg_id, const google::protobuf::Message* message )
     {
         auto strdata = message->SerializeAsString();
-        return TranspondToClient( route, msgid, strdata.data(), strdata.length() );
+        return TranspondToClient( route, msg_id, strdata.data(), strdata.length() );
     }
 
-    bool KFClusterProxyModule::TranspondToClient( const Route& route, uint32 msgid, const char* data, uint32 length )
+    bool KFClusterProxyModule::TranspondToClient( const Route& route, uint32 msg_id, const char* data, uint32 length )
     {
         auto clientid = __ROUTE_RECV_ID__;
-        return _kf_tcp_server->SendNetMessage( clientid, msgid, data, length );
+        return _kf_tcp_server->SendNetMessage( clientid, msg_id, data, length );
     }
 }

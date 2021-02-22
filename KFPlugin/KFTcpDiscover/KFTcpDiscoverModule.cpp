@@ -53,30 +53,30 @@ namespace KFrame
     {
         // 不是相同服务不要广播
         auto kfglobal = KFGlobal::Instance();
-        if ( kfglobal->_app_name != netdata->_name )
+        if ( kfglobal->_app_name != net_data->_name )
         {
             return;
         }
 
         // 如果是master, 则连接( 为了做master多点 )
-        if ( netdata->_type == kfglobal->_app_type )
+        if ( net_data->_type == kfglobal->_app_type )
         {
-            _kf_tcp_client->StartClient( netdata );
+            _kf_tcp_client->StartClient( net_data );
         }
         else
         {
             KFMsg::ListenData listendata;
-            listendata.set_appname( netdata->_name );
-            listendata.set_apptype( netdata->_type );
-            listendata.set_appid( netdata->_id );
-            listendata.set_ip( netdata->_ip );
-            listendata.set_port( netdata->_port );
+            listendata.set_appname( net_data->_name );
+            listendata.set_apptype( net_data->_type );
+            listendata.set_appid( net_data->_id );
+            listendata.set_ip( net_data->_ip );
+            listendata.set_port( net_data->_port );
 
             // 广播新连接给所有连接
             {
                 KFMsg::TellRegisterToServer tell;
                 tell.mutable_listen()->CopyFrom( listendata );
-                _kf_tcp_server->SendNetMessage( KFMsg::S2S_TELL_REGISTER_TO_SERVER, &tell, netdata->_id );
+                _kf_tcp_server->SendNetMessage( KFMsg::S2S_TELL_REGISTER_TO_SERVER, &tell, net_data->_id );
             }
 
             // 所有连接信息发送给新连接
@@ -86,7 +86,7 @@ namespace KFrame
 
                 for ( auto kfhandle : handlelist )
                 {
-                    if ( kfhandle->_id == netdata->_id )
+                    if ( kfhandle->_id == net_data->_id )
                     {
                         continue;
                     }
@@ -98,7 +98,7 @@ namespace KFrame
                     listen->set_appid( kfhandle->_id );
                     listen->set_ip( kfhandle->_ip );
                     listen->set_port( kfhandle->_port );
-                    _kf_tcp_server->SendNetMessage( netdata->_id, KFMsg::S2S_TELL_REGISTER_TO_SERVER, &tell );
+                    _kf_tcp_server->SendNetMessage( net_data->_id, KFMsg::S2S_TELL_REGISTER_TO_SERVER, &tell );
                 }
             }
 
@@ -153,31 +153,31 @@ namespace KFrame
     {
         // 不是相同服务不要广播
         auto kfglobal = KFGlobal::Instance();
-        if ( kfglobal->_app_name != netdata->_name )
+        if ( kfglobal->_app_name != net_data->_name )
         {
             return;
         }
 
-        if ( netdata->_type == kfglobal->_app_type )
+        if ( net_data->_type == kfglobal->_app_type )
         {
-            _kf_tcp_client->CloseClient( netdata->_id, __FUNC_LINE__ );
+            _kf_tcp_client->CloseClient( net_data->_id, __FUNC_LINE__ );
         }
         else
         {
             {
                 KFMsg::TellUnRegisterFromServer tell;
-                tell.set_appname( netdata->_name );
-                tell.set_apptype( netdata->_type );
-                tell.set_appid( netdata->_id );
-                _kf_tcp_server->SendNetMessage( KFMsg::S2S_TELL_UNREGISTER_FROM_SERVER, &tell, netdata->_id );
+                tell.set_appname( net_data->_name );
+                tell.set_apptype( net_data->_type );
+                tell.set_appid( net_data->_id );
+                _kf_tcp_server->SendNetMessage( KFMsg::S2S_TELL_UNREGISTER_FROM_SERVER, &tell, net_data->_id );
             }
 
             {
                 // 通知其他master
                 KFMsg::S2STellLostServerToMaster tell;
-                tell.set_appname( netdata->_name );
-                tell.set_apptype( netdata->_type );
-                tell.set_appid( netdata->_id );
+                tell.set_appname( net_data->_name );
+                tell.set_apptype( net_data->_type );
+                tell.set_appid( net_data->_id );
                 _kf_tcp_client->SendMessageToType( __STRING__( master ), KFMsg::S2S_TELL_LOST_SERVER_TO_MASTER, &tell );
             }
         }
@@ -195,7 +195,7 @@ namespace KFrame
     __KF_NET_EVENT_FUNCTION__( KFTcpDiscoverModule::OnClientConnectServer )
     {
         auto kfglobal = KFGlobal::Instance();
-        if ( kfglobal->_app_name != netdata->_name && kfglobal->_app_type != netdata->_type )
+        if ( kfglobal->_app_name != net_data->_name && kfglobal->_app_type != net_data->_type )
         {
             return;
         }
@@ -214,7 +214,7 @@ namespace KFrame
             listen->set_port( kfhandle->_port );
         }
 
-        _kf_tcp_client->SendNetMessage( netdata->_id, KFMsg::S2S_TELL_SERVER_LIST_TO_MASTER, &tell );
+        _kf_tcp_client->SendNetMessage( net_data->_id, KFMsg::S2S_TELL_SERVER_LIST_TO_MASTER, &tell );
     }
 
     __KF_MESSAGE_FUNCTION__( KFTcpDiscoverModule::HandleTellServerListToMaster, KFMsg::S2STellServerListToMaster )

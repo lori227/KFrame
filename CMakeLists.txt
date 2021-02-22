@@ -39,7 +39,7 @@ include_directories(
     ${ROOT_DIR}/KFLibrary/poco/MongoDB/include
 )
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fPIC -Wall")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -fPIC -Wall")
 if(CMAKE_BUILD_TYPE MATCHES "Debug")
     set(LIB_DIR ${ROOT_DIR}/_lib/linux/debug)
     set(BIN_DIR ${ROOT_DIR}/_bin/bin/linux/debug)
@@ -60,7 +60,13 @@ endif()
 
 message("${CMAKE_CXX_FLAGS}")
 ADD_DEFINITIONS(
- -Wno-unused-variable -Wno-unused-parameter -Wno-unused-function -Wno-strict-aliasing -Wno-pmf-conversions -Wno-comment
+        -Wno-unused-variable
+        -Wno-unused-parameter
+        -Wno-unused-function
+        -Wno-strict-aliasing
+        -Wno-pmf-conversions
+        -Wno-comment
+        -Wno-c++2a-extensions
 )
 
 set(LDFLAGS "$ENV{LDFLAGS} -stdlib=libc++")

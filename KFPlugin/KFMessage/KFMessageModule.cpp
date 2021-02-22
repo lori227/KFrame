@@ -6,18 +6,18 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFMessageModule::AddMessageHandle( KFMessageHandleAbstract* messagehandle )
     {
-        auto ok = RemoveMessageHandle( messagehandle->_msgid, messagehandle->GetModule() );
+        auto ok = RemoveMessageHandle( messagehandle->_msg_id, messagehandle->GetModule() );
         if ( ok )
         {
-            __LOG_ERROR__( "msgid=[{}] already register", messagehandle->_msgid );
+            __LOG_ERROR__( "msg_id=[{}] already register", messagehandle->_msg_id );
         }
 
-        _handles[ messagehandle->_msgid ] = messagehandle;
+        _handles[ messagehandle->_msg_id ] = messagehandle;
     }
 
-    bool KFMessageModule::RemoveMessageHandle( uint32 msgid, KFModule* module )
+    bool KFMessageModule::RemoveMessageHandle( uint32 msg_id, KFModule* module )
     {
-        auto iter = _handles.find( msgid );
+        auto iter = _handles.find( msg_id );
         if ( iter == _handles.end() )
         {
             return false;
@@ -28,9 +28,9 @@ namespace KFrame
         return true;
     }
 
-    bool KFMessageModule::HandleMessage( const Route& route, uint32 msgid, const char* data, uint32 length )
+    bool KFMessageModule::HandleMessage( const Route& route, uint32 msg_id, const char* data, uint32 length )
     {
-        auto iter = _handles.find( msgid );
+        auto iter = _handles.find( msg_id );
         if ( iter == _handles.end() )
         {
             return false;
@@ -44,7 +44,7 @@ namespace KFrame
             kfentity = findentityfunction->_function( route._recv_id );
             if ( kfentity == nullptr )
             {
-                __LOG_WARN__( "msgid=[{}:{}] can't find entity=[{}]!", kfhandle->_type, kfhandle->_message->GetTypeName(), route._recv_id );
+                __LOG_WARN__( "msg_id=[{}:{}] can't find entity=[{}]!", kfhandle->_type, kfhandle->_message->GetTypeName(), route._recv_id );
                 return true;
             }
         }
@@ -53,9 +53,9 @@ namespace KFrame
         return true;
     }
 
-    bool KFMessageModule::OpenFunction( uint32 msgid, bool open )
+    bool KFMessageModule::OpenFunction( uint32 msg_id, bool open )
     {
-        auto iter = _handles.find( msgid );
+        auto iter = _handles.find( msg_id );
         if ( iter == _handles.end() )
         {
             return false;

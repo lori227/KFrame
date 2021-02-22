@@ -1,12 +1,12 @@
 ﻿#ifndef __CLIENT_ENGINE_H__
 #define __CLIENT_ENGINE_H__
 
-#include "KFrame.h"
 #include "KFNetClient.hpp"
+#include "KFNetClientService.hpp"
 
 namespace KFrame
 {
-    class KFNetClientServices;
+    class KFNetClientService;
     class KFNetClientEngine
     {
     public:
@@ -15,7 +15,7 @@ namespace KFrame
         ~KFNetClientEngine();
 
         // 初始化引擎
-        void InitEngine( uint64 now_time, uint32 queuesize, uint32 messagetype );
+        void InitEngine( uint64 now_time, uint32 queue_size, uint32 message_type );
 
         // 关闭引擎
         void ShutEngine();
@@ -24,59 +24,39 @@ namespace KFrame
         void RunEngine( uint64 now_time );
 
         // 开始一个客户端
-        bool StartClient( const KFNetData* netdata );
+        bool StartClient( const KFNetData* net_data );
 
         // 关闭一个客户端
         void CloseClient( uint64 id, const char* function, uint32 line );
 
         // 查找客户端
-        KFNetClient* FindClient( uint64 id );
+        std::shared_ptr<KFNetClient> FindClient( uint64 id );
         //////////////////////////////////////////////////////////////////////////////////////////////////
 
         // 发送消息
-        void SendNetMessage( uint32 msgid, const char* data, uint32 length, uint32 delay = 0 );
-        bool SendNetMessage( uint64 server_id, uint32 msgid, const char* data, uint32 length, uint32 delay = 0 );
-        bool SendNetMessage( uint64 server_id, uint64 recvid, uint32 msgid, const char* data, uint32 length, uint32 delay = 0 );
+        void SendNetMessage( uint32 msg_id, const char* data, uint32 length, uint32 delay = 0 );
+        bool SendNetMessage( uint64 server_id, uint32 msg_id, const char* data, uint32 length, uint32 delay = 0 );
+        bool SendNetMessage( uint64 server_id, uint64 recv_id, uint32 msg_id, const char* data, uint32 length, uint32 delay = 0 );
 
         // 指定发送消息
-        void SendMessageToName( const std::string& servername, uint32 msgid, const char* data, uint32 length );
-        void SendMessageToType( const std::string& servertype, uint32 msgid, const char* data, uint32 length );
-        void SendMessageToServer( const std::string& servername, const std::string& servertype, uint32 msgid, const char* data, uint32 length );
+        void SendMessageToName( const std::string& server_name, uint32 msg_id, const char* data, uint32 length );
+        void SendMessageToType( const std::string& server_type, uint32 msg_id, const char* data, uint32 length );
+        void SendMessageToServer( const std::string& server_name, const std::string& server_type, uint32 msg_id, const char* data, uint32 length );
 
     public:
         // 绑定消息事件
         template<class T>
-        void BindNetFunction( T* object, void ( T::*handle )( const Route& route, uint32 msgid, const char* data, uint32 length ) )
+        void BindNetFunction( T* object, void ( T::*handle )( const Route& route, uint32 msg_id, const char* data, uint32 length ) )
         {
-            _net_function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
+            net_client_service->_net_function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
         }
 
-        // 绑定连接事件
+        // 绑定网络事件
         template<class T>
-        void BindConnectFunction( T* object, void ( T::*handle )( const KFNetData* ) )
+        void BindNetEventFunction( uint32 type, T* object, void ( T::*handle )( const KFNetData* ) )
         {
-            _client_connect_function = std::bind( handle, object, std::placeholders::_1 );
-        }
-
-        // 绑定断开事件
-        template<class T>
-        void BindDisconnectFunction( T* object, void ( T::*handle )( const KFNetData* ) )
-        {
-            _client_disconnect_function = std::bind( handle, object, std::placeholders::_1 );
-        }
-
-        // 绑定关闭时间
-        template<class T>
-        void BindShutdownFunction( T* object, void ( T::*handle )( const KFNetData* ) )
-        {
-            _client_shutdown_function = std::bind( handle, object, std::placeholders::_1 );
-        }
-
-        // 绑定关闭时间
-        template<class T>
-        void BindFailedFunction( T* object, void ( T::*handle )( const KFNetData* ) )
-        {
-            _client_failed_function = std::bind( handle, object, std::placeholders::_1 );
+            auto function = _net_event_function_list.Create( type );
+            function->SetFunction( object, std::bind( handle, object, std::placeholders::_1 ) );
         }
 
     protected:
@@ -87,44 +67,33 @@ namespace KFrame
         void HandleClientMessage();
 
         // 客户端连接成功
-        void OnClientConnected( const KFNetEventData* eventdata );
+        void OnClientConnected( std::shared_ptr<KFNetEventData>& event_data );
 
         // 客户端断开连接
-        void OnClientDisconnect( const KFNetEventData* eventdata );
+        void OnClientDisconnect( std::shared_ptr<KFNetEventData>& event_data );
 
         // 客户端关闭
-        void OnClientShutDown( const KFNetEventData* eventdata );
+        void OnClientShutDown( std::shared_ptr<KFNetEventData>& event_data );
 
         // 连接失败
-        void OnClientFailed( const KFNetEventData* eventdata );
+        void OnClientFailed( std::shared_ptr<KFNetEventData>& event_data );
 
+        // 回调网络事件函数
+        void CallNetEventFunction( std::shared_ptr<KFNetEventData>& event_data, const KFNetData* net_data );
     public:
-
         // 网络服务
-        KFNetClientServices* _net_client_services;
+        KFNetClientService* net_client_service;
 
     protected:
         // 等待启动的客户端
-        std::unordered_map< uint64, KFNetData > _wait_clients;
+        std::unordered_map<uint64, KFNetData> _wait_clients;
 
         // 客户端列表
-        KFHashMap< uint64, KFNetClient > _kf_clients;
+        KFHashMap<uint64, KFNetClient> _kf_clients;
 
     protected:
-        // 消息函数
-        KFMessageFunction _net_function;
-
-        // 客户端连接
-        KFNetEventFunction _client_connect_function;
-
-        // 客户端断开
-        KFNetEventFunction _client_disconnect_function;
-
-        // 客户端关闭
-        KFNetEventFunction _client_shutdown_function;
-
-        //客户端连接失败
-        KFNetEventFunction _client_failed_function;
+        // 网络事件回调函数列表
+        KFMapFunction<uint32, KFNetEventFunction> _net_event_function_list;
     };
 }
 

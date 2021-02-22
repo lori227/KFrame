@@ -84,35 +84,35 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_NET_EVENT_FUNCTION__( KFGameModule::OnServerDiscoverGate )
     {
-        if ( netdata->_type != __STRING__( gate ) )
+        if ( net_data->_type != __STRING__( gate ) )
         {
             return;
         }
 
         KFMsg::S2SAddGateToWorldReq req;
-        req.add_gateid( netdata->_id );
+        req.add_gateid( net_data->_id );
         req.set_gameid( KFGlobal::Instance()->_app_id->GetId() );
         _kf_tcp_client->SendMessageToType( __STRING__( world ), KFMsg::S2S_ADD_GATE_TO_WORLD_REQ, &req );
     }
 
     __KF_NET_EVENT_FUNCTION__( KFGameModule::OnServerLostGate )
     {
-        if ( netdata->_type != __STRING__( gate ) )
+        if ( net_data->_type != __STRING__( gate ) )
         {
             return;
         }
 
         KFMsg::S2SRemoveGateToWorldReq req;
-        req.set_gateid( netdata->_id );
+        req.set_gateid( net_data->_id );
         req.set_gameid( KFGlobal::Instance()->_app_id->GetId() );
         _kf_tcp_client->SendMessageToType( __STRING__( world ), KFMsg::S2S_REMOVE_GATE_TO_WORLD_REQ, &req );
     }
 
     __KF_NET_EVENT_FUNCTION__( KFGameModule::OnClientConnectionWorld )
     {
-        if ( netdata->_type == __STRING__( world ) )
+        if ( net_data->_type == __STRING__( world ) )
         {
-            _world_hash.AddHashNode( netdata->_type, netdata->_id, 100 );
+            _world_hash.AddHashNode( net_data->_type, net_data->_id, 100 );
             _world_server_id = _world_hash.FindHashNode( KFGlobal::Instance()->_app_id->GetId() );
 
             // 把gate信息发送给world
@@ -129,17 +129,17 @@ namespace KFrame
                         req.add_gateid( ipaddress->_id );
                     }
                 }
-                _kf_tcp_client->SendNetMessage( netdata->_id, KFMsg::S2S_ADD_GATE_TO_WORLD_REQ, &req );
+                _kf_tcp_client->SendNetMessage( net_data->_id, KFMsg::S2S_ADD_GATE_TO_WORLD_REQ, &req );
             }
         }
     }
 
     __KF_NET_EVENT_FUNCTION__( KFGameModule::OnClientLostWorld )
     {
-        if ( netdata->_type == __STRING__( world ) )
+        if ( net_data->_type == __STRING__( world ) )
         {
-            _world_hash.RemoveHashNode( netdata->_id );
-            if ( _world_server_id == netdata->_id )
+            _world_hash.RemoveHashNode( net_data->_id );
+            if ( _world_server_id == net_data->_id )
             {
                 _world_server_id = _world_hash.FindHashNode( KFGlobal::Instance()->_app_id->GetId() );
             }
@@ -147,35 +147,35 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFGameModule::SendToWorld( uint32 msgid, ::google::protobuf::Message* message )
+    bool KFGameModule::SendToWorld( uint32 msg_id, ::google::protobuf::Message* message )
     {
         if ( _world_server_id == _invalid_int )
         {
             return false;
         }
 
-        return _kf_tcp_client->SendNetMessage( _world_server_id, msgid, message );
+        return _kf_tcp_client->SendNetMessage( _world_server_id, msg_id, message );
     }
 
-    void KFGameModule::SendToGate( uint32 msgid, ::google::protobuf::Message* message )
+    void KFGameModule::SendToGate( uint32 msg_id, ::google::protobuf::Message* message )
     {
-        _kf_tcp_server->SendNetMessage( msgid, message );
+        _kf_tcp_server->SendNetMessage( msg_id, message );
     }
 
     // 发送消息到Gate服务器
-    bool KFGameModule::SendToGate( uint64 gateid, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFGameModule::SendToGate( uint64 gateid, uint32 msg_id, ::google::protobuf::Message* message )
     {
-        return _kf_tcp_server->SendNetMessage( gateid, msgid, message );
+        return _kf_tcp_server->SendNetMessage( gateid, msg_id, message );
     }
 
     // 发送消息到客户端
-    bool KFGameModule::SendToClient( uint64 gateid, uint64 playerid, uint32 msgid, ::google::protobuf::Message* message, uint32 delay )
+    bool KFGameModule::SendToClient( uint64 gateid, uint64 playerid, uint32 msg_id, ::google::protobuf::Message* message, uint32 delay )
     {
-        return _kf_tcp_server->SendNetMessage( gateid, playerid, msgid, message, delay );
+        return _kf_tcp_server->SendNetMessage( gateid, playerid, msg_id, message, delay );
     }
 
     // 发送消息到客户端
-    bool KFGameModule::SendToClient( KFEntity* player, uint32 msgid, ::google::protobuf::Message* message, uint32 delay )
+    bool KFGameModule::SendToClient( KFEntity* player, uint32 msg_id, ::google::protobuf::Message* message, uint32 delay )
     {
         if ( !player->IsInited() )
         {
@@ -188,11 +188,11 @@ namespace KFrame
             return false;
         }
 
-        return _kf_tcp_server->SendNetMessage( gateid, player->GetKeyID(), msgid, message, delay );
+        return _kf_tcp_server->SendNetMessage( gateid, player->GetKeyID(), msg_id, message, delay );
     }
 
     // 发送到玩家
-    bool KFGameModule::SendToPlayer( uint64 sendid, DataPtr kfbasic, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFGameModule::SendToPlayer( uint64 sendid, DataPtr kfbasic, uint32 msg_id, ::google::protobuf::Message* message )
     {
         auto playerid = kfbasic->Get( __STRING__( id ) );
         auto server_id = kfbasic->Get( __STRING__( server_id ) );
@@ -201,11 +201,11 @@ namespace KFrame
             return false;
         }
 
-        return SendToPlayer( sendid, server_id, playerid, msgid, message );
+        return SendToPlayer( sendid, server_id, playerid, msg_id, message );
     }
 
     // 发送到玩家
-    bool KFGameModule::SendToPlayer( uint64 sendid, uint64 server_id, uint64 playerid, uint32 msgid, ::google::protobuf::Message* message )
+    bool KFGameModule::SendToPlayer( uint64 sendid, uint64 server_id, uint64 playerid, uint32 msg_id, ::google::protobuf::Message* message )
     {
         // 本服务器
         if ( server_id == KFGlobal::Instance()->_app_id->GetId() )
@@ -216,11 +216,11 @@ namespace KFrame
                 return false;
             }
 
-            return SendToClient( player, msgid, message );
+            return SendToClient( player, msg_id, message );
         }
 
         // 转发消息
-        return _kf_route->SendToEntity( sendid, server_id, playerid, msgid, message );
+        return _kf_route->SendToEntity( sendid, server_id, playerid, msg_id, message );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -239,39 +239,39 @@ namespace KFrame
             return true;
         }
 
-        return _kf_tcp_server->SendNetMessage( gateid, playerid, msgid, data, length );
+        return _kf_tcp_server->SendNetMessage( gateid, playerid, msg_id, data, length );
     }
 
-    void KFGameModule::BroadcastToGate( uint32 msgid, ::google::protobuf::Message* message )
+    void KFGameModule::BroadcastToGate( uint32 msg_id, ::google::protobuf::Message* message )
     {
         KFMsg::S2SBroadcastToGateReq req;
-        req.set_msgid( msgid );
+        req.set_msgid( msg_id );
         req.set_msgdata( message->SerializeAsString() );
         _kf_tcp_server->SendNetMessage( KFMsg::S2S_BROADCAST_TO_GATE_REQ, &req );
     }
 
-    void KFGameModule::BroadcastToServer( uint32 msgid, ::google::protobuf::Message* message )
+    void KFGameModule::BroadcastToServer( uint32 msg_id, ::google::protobuf::Message* message )
     {
         KFMsg::S2SBroadcastToServerReq req;
-        req.set_msgid( msgid );
+        req.set_msgid( msg_id );
         req.set_msgdata( message->SerializeAsString() );
         _kf_tcp_server->SendNetMessage( KFMsg::S2S_BROADCAST_TO_SERVER_REQ, &req );
     }
 
     // 转发服务器
-    void KFGameModule::BroadcastToGame( uint32 msgid, ::google::protobuf::Message* message )
+    void KFGameModule::BroadcastToGame( uint32 msg_id, ::google::protobuf::Message* message )
     {
         KFMsg::S2SBroadcastToGameReq req;
-        req.set_msgid( msgid );
+        req.set_msgid( msg_id );
         req.set_msgdata( message->SerializeAsString() );
         SendToWorld( KFMsg::S2S_BROADCAST_TO_GAME_REQ, &req );
     }
 
     // 转发服务器
-    void KFGameModule::BroadcastToWorld( uint32 msgid, ::google::protobuf::Message* message )
+    void KFGameModule::BroadcastToWorld( uint32 msg_id, ::google::protobuf::Message* message )
     {
         KFMsg::S2SBroadcastToWorldReq req;
-        req.set_msgid( msgid );
+        req.set_msgid( msg_id );
         req.set_msgdata( message->SerializeAsString() );
         SendToWorld( KFMsg::S2S_BROADCAST_TO_WORLD_REQ, &req );
     }
@@ -279,7 +279,7 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFGameModule::HandleBroadcastToGameAck, KFMsg::S2SBroadcastToGameAck )
     {
         KFMsg::S2SBroadcastToGateReq req;
-        req.set_msgid( kfmsg->msgid() );
+        req.set_msgid( kfmsg->msg_id() );
         req.set_msgdata( kfmsg->msgdata() );
         req.set_serial( kfmsg->serial() );
         req.set_worldid( kfmsg->worldid() );

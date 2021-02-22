@@ -9,7 +9,7 @@ namespace KFrame
     {
     public:
         // 开始服务
-        void InitServices();
+        void InitService();
 
         // 关闭服务
         void ShutDown();

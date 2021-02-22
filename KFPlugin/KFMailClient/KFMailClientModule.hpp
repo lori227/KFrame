@@ -39,10 +39,10 @@ namespace KFrame
         virtual bool SendMail( uint32 configid, const KFElements* elements = nullptr );
 
         // 系统给某人发送邮件
-        virtual bool SendMail( uint64 recvid, uint32 configid, const KFElements* elements = nullptr );
+        virtual bool SendMail( uint64 recv_id, uint32 configid, const KFElements* elements = nullptr );
 
         // 某人给某人发送邮件
-        virtual bool SendMail( KFEntity* player, uint64 recvid, uint32 configid, const KFElements* elements = nullptr );
+        virtual bool SendMail( KFEntity* player, uint64 recv_id, uint32 configid, const KFElements* elements = nullptr );
 
     protected:
 
@@ -85,7 +85,7 @@ namespace KFrame
         uint64 GetMaxMailId( KFEntity* player );
 
         // 发送消息到邮件
-        bool SendMessageToMail( uint64 playerid, uint32 msgid, ::google::protobuf::Message* message );
+        bool SendMessageToMail( uint64 playerid, uint32 msg_id, ::google::protobuf::Message* message );
 
         // 发送查询邮件消息
         void SendQueryMailMessage( KFEntity* player );
@@ -103,7 +103,7 @@ namespace KFrame
         StringMap& FormatMailData( KFEntity* sender, const KFMailSetting* kfsetting, const KFElements* elements );
 
         // 发送添加邮件
-        bool SendAddMailToShard( uint64 sendid, uint32 flag, uint64 recvid, const StringMap& maildata );
+        bool SendAddMailToShard( uint64 sendid, uint32 flag, uint64 recv_id, const StringMap& maildata );
     };
 }
 

@@ -65,18 +65,18 @@ namespace KFrame
         virtual bool IsInService();
 
         // 发送消息( 只发送一次, 不管成功还是失败 )
-        virtual bool SendToProxy( uint32 msgid, const char* data, uint32 length );
-        virtual bool SendToProxy( uint32 msgid, google::protobuf::Message* message );
+        virtual bool SendToProxy( uint32 msg_id, const char* data, uint32 length );
+        virtual bool SendToProxy( uint32 msg_id, google::protobuf::Message* message );
 
-        virtual bool SendToProxy( uint64 shardid, uint32 msgid, const char* data, uint32 length );
-        virtual bool SendToProxy( uint64 shardid, uint32 msgid, google::protobuf::Message* message );
+        virtual bool SendToProxy( uint64 shardid, uint32 msg_id, const char* data, uint32 length );
+        virtual bool SendToProxy( uint64 shardid, uint32 msg_id, google::protobuf::Message* message );
 
         // 发送消息( 失败重复发送, 一直到发送成功 )
-        virtual bool RepeatToProxy( uint32 msgid, const char* data, uint32 length );
-        virtual bool RepeatToProxy( uint32 msgid, google::protobuf::Message* message );
+        virtual bool RepeatToProxy( uint32 msg_id, const char* data, uint32 length );
+        virtual bool RepeatToProxy( uint32 msg_id, google::protobuf::Message* message );
 
-        virtual bool RepeatToProxy( uint64 shardid, uint32 msgid, const char* data, uint32 length );
-        virtual bool RepeatToProxy( uint64 shardid, uint32 msgid, google::protobuf::Message* message );
+        virtual bool RepeatToProxy( uint64 shardid, uint32 msg_id, const char* data, uint32 length );
+        virtual bool RepeatToProxy( uint64 shardid, uint32 msg_id, google::protobuf::Message* message );
 
     protected:
         // 认证回馈
@@ -109,7 +109,7 @@ namespace KFrame
         void ReconnectClusterMaster();
 
         // 添加重发消息
-        void AddSendKeeper( uint64 shardid, uint32 msgid, const char* data, uint32 length );
+        void AddSendKeeper( uint64 shardid, uint32 msg_id, const char* data, uint32 length );
 
         // 发送重发消息
         void RunSendKeeper();

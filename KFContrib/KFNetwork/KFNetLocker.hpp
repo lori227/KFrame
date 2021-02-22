@@ -8,7 +8,7 @@ namespace KFrame
     class KFNetLocker
     {
     public:
-        KFNetLocker( uv_mutex_t* uvmutex );
+        KFNetLocker( uv_mutex_t* uv_mutex );
         ~KFNetLocker();
 
     private:

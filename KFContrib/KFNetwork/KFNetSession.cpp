@@ -2,6 +2,7 @@
 #include "KFNetSession.hpp"
 #include "KFNetEvent.hpp"
 #include "KFNetConnector.hpp"
+#include "KFNetService.hpp"
 #include "uv.h"
 
 namespace KFrame
@@ -11,8 +12,6 @@ namespace KFrame
         _is_connected = false;
         _is_shutdown = false;
         _is_sending = false;
-        _event_type = 0u;
-
         _uv_write = __NEW_OBJECT__( uv_write_t );
     }
 
@@ -21,16 +20,16 @@ namespace KFrame
         __DELETE_OBJECT__( _uv_write );
     }
 
-    void KFNetSession::InitSession( uint64 id, uint32 queuecount, uint32 headlength )
+    void KFNetSession::InitSession( uint64 id, uint32 queue_count, uint32 header_length )
     {
         _session_id = id;
         _uv_write->data = this;
-        _message_head_length = headlength;
+        _message_head_length = header_length;
 
-        auto extendcount = IsServerSession() ? queuecount : 0u;
+        auto extend_count = IsServerSession() ? queue_count : 0u;
 
-        _send_queue.InitQueue( queuecount, extendcount );
-        _recv_queue.InitQueue( queuecount, extendcount );
+        _send_queue.InitQueue( queue_count, extend_count );
+        _recv_queue.InitQueue( queue_count, extend_count );
     }
 
     bool KFNetSession::IsConnected() const
@@ -76,17 +75,17 @@ namespace KFrame
         uv_write( _uv_write, _uv_stream, &buff, 1, OnSendCallBack );
     }
 
-    void KFNetSession::OnSendCallBack( uv_write_t* uvwrite, int32 status )
+    void KFNetSession::OnSendCallBack( uv_write_t* uv_write, int32 status )
     {
-        auto netsession = reinterpret_cast< KFNetSession* >( uvwrite->data );
+        auto net_session = reinterpret_cast< KFNetSession* >( uv_write->data );
         if ( status != 0 )
         {
-            netsession->OnDisconnect( status, __FUNC_LINE__ );
+            net_session->OnDisconnect( status, __FUNC_LINE__ );
         }
         else
         {
-            netsession->OnSendOK();
-            netsession->StartSendMessage();
+            net_session->OnSendOK();
+            net_session->StartSendMessage();
         }
     }
 
@@ -110,22 +109,22 @@ namespace KFrame
                 }
 
                 // 超过最大长度
-                if ( !CheckBufferLength( _send_length, message->_head._length ) )
+                if ( !CheckBufferLength( _send_length, message->_header._length ) )
                 {
                     break;
                 }
 
-                memcpy( _req_send_buffer + _send_length, &message->_head, _message_head_length );
+                memcpy( _req_send_buffer + _send_length, &message->_header, _message_head_length );
                 _send_length += _message_head_length;
 
-                if ( message->_head._length > 0 )	// 不是空消息
+                if ( message->_header._length > 0 )	// 不是空消息
                 {
-                    memcpy( _req_send_buffer + _send_length, message->_data, message->_head._length );
-                    _send_length += message->_head._length;
+                    memcpy( _req_send_buffer + _send_length, message->_data, message->_header._length );
+                    _send_length += message->_header._length;
                 }
 
                 // 释放内存
-                _send_queue.PopRemove();
+                _send_queue.Pop();
             } while ( true );
         }
 
@@ -137,9 +136,9 @@ namespace KFrame
         return _send_length;
     }
 
-    bool KFNetSession::CheckBufferLength( uint32 totallength, uint32 messagelength )
+    bool KFNetSession::CheckBufferLength( uint32 total_length, uint32 message_length )
     {
-        if ( totallength + _message_head_length + messagelength <= KFNetDefine::MaxReqBuffLength )
+        if ( total_length + _message_head_length + message_length <= KFNetDefine::MaxReqBuffLength )
         {
             return true;
         }
@@ -161,60 +160,60 @@ namespace KFrame
     void KFNetSession::ParseBuffToMessage()
     {
         // 长度不足一个消息头
-        uint32 nowposition = 0;
-        auto nethead = CheckRecvBuffValid( nowposition );
-        if ( nethead == nullptr )
+        uint32 now_position = 0;
+        auto net_header = CheckRecvBuffValid( now_position );
+        if ( net_header == nullptr )
         {
             return;
         }
 
-        while ( _recv_length >= ( nowposition + _message_head_length + nethead->_length ) )
+        while ( _recv_length >= ( now_position + _message_head_length + net_header->_length ) )
         {
-            auto recvmessage = KFNetMessage::Create( nethead->_length );
-            memcpy( &recvmessage->_head, nethead, _message_head_length );
+            auto recv_message = __MAKE_SHARED__( KFNetMessage, net_header->_length );
+            memcpy( &recv_message->_header, net_header, _message_head_length );
 
-            nowposition += _message_head_length;
-            if ( nethead->_length > 0 )
+            now_position += _message_head_length;
+            if ( net_header->_length > 0 )
             {
-                recvmessage->CopyData( _req_recv_buffer + nowposition, nethead->_length );
-                nowposition += nethead->_length;
+                recv_message->CopyData( _req_recv_buffer + now_position, net_header->_length );
+                now_position += net_header->_length;
             }
 
-            AddRecvMessage( recvmessage );
+            AddRecvMessage( recv_message );
 
             // 检查消息的有效性
-            nethead = CheckRecvBuffValid( nowposition );
-            if ( nethead == nullptr )
+            net_header = CheckRecvBuffValid( now_position );
+            if ( net_header == nullptr )
             {
                 break;
             }
         }
 
         // 设置长度
-        _recv_length -= __MIN__( _recv_length, nowposition );
-        if ( _recv_length > 0 && nowposition > 0 )
+        _recv_length -= __MIN__( _recv_length, now_position );
+        if ( _recv_length > 0 && now_position > 0 )
         {
-            memmove( _req_recv_buffer, _req_recv_buffer + nowposition, _recv_length );
+            memmove( _req_recv_buffer, _req_recv_buffer + now_position, _recv_length );
         }
     }
 
-    KFNetHead* KFNetSession::CheckRecvBuffValid( uint32 position )
+    KFNetHeader* KFNetSession::CheckRecvBuffValid( uint32 position )
     {
         if ( _recv_length < ( position + _message_head_length ) )
         {
             return nullptr;
         }
 
-        auto nethead = reinterpret_cast< KFNetHead* >( _req_recv_buffer + position );
+        auto net_header = reinterpret_cast< KFNetHeader* >( _req_recv_buffer + position );
 
         // 收到的消息长度有错误
-        if ( nethead->_length > KFNetDefine::MaxMessageLength )
+        if ( net_header->_length > KFNetDefine::MaxMessageLength )
         {
             _recv_length = 0;
             return nullptr;
         }
 
-        return nethead;
+        return net_header;
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -227,10 +226,10 @@ namespace KFrame
         }
     }
 
-    void KFNetSession::OnConnect( uv_stream_t* uvstream )
+    void KFNetSession::OnConnect( uv_stream_t* uv_stream )
     {
         _is_connected = true;
-        _uv_stream = uvstream;
+        _uv_stream = uv_stream;
 
         // 开始接受消息
         StartRecvData();
@@ -247,25 +246,28 @@ namespace KFrame
         uv_read_start( _uv_stream, AllocRecvBuffer, OnRecvCallBack );
     }
 
-    void KFNetSession::AllocRecvBuffer( uv_handle_t* handle, size_t size, uv_buf_t* pbuffer )
+    void KFNetSession::AllocRecvBuffer( uv_handle_t* handle, size_t size, uv_buf_t* uv_buffer )
     {
-        auto netsession = reinterpret_cast< KFNetSession* >( handle->data );
+        auto net_session = reinterpret_cast< KFNetSession* >( handle->data );
 
-        pbuffer->base = netsession->_req_recv_buffer + netsession->_recv_length;
-        pbuffer->len = KFNetDefine::MaxRecvBuffLength - netsession->_recv_length;
+        uv_buffer->base = net_session->_req_recv_buffer + net_session->_recv_length;
+        uv_buffer->len = KFNetDefine::MaxRecvBuffLength - net_session->_recv_length;
     }
 
-    void KFNetSession::OnRecvCallBack( uv_stream_t* uvstream, ssize_t length, const uv_buf_t* pbuffer )
+    void KFNetSession::OnRecvCallBack( uv_stream_t* uv_stream, ssize_t length, const uv_buf_t* uv_buffer )
     {
-        auto netsession = reinterpret_cast< KFNetSession* >( uvstream->data );
+        auto net_session = reinterpret_cast< KFNetSession* >( uv_stream->data );
         if ( length < 0 )
         {
-            return netsession->OnDisconnect( static_cast< int32 >( length ), __FUNC_LINE__ );
+            // 错误, 断开连接
+            net_session->OnDisconnect( static_cast< int32 >( length ), __FUNC_LINE__ );
         }
-
-        // 接受数据
-        netsession->OnRecvData( pbuffer->base, static_cast< uint32 >( length ) );
-        netsession->StartRecvData();
+        else
+        {
+            // 接收数据
+            net_session->OnRecvData( uv_buffer->base, static_cast< uint32 >( length ) );
+            net_session->StartRecvData();
+        }
     }
 
     void KFNetSession::OnDisconnect( int32 code, const char* function, uint32 line )
@@ -281,9 +283,9 @@ namespace KFrame
         }
     }
 
-    bool KFNetSession::AddSendMessage( KFNetMessage* message )
+    bool KFNetSession::AddSendMessage( std::shared_ptr<KFNetMessage>& message )
     {
-        auto ok = _send_queue.PushObject( message, _object_id, __FUNC_LINE__ );
+        auto ok = _send_queue.Push( message );
         if ( !ok )
         {
             if ( !_is_send_queue_full )
@@ -292,11 +294,11 @@ namespace KFrame
 
                 if ( IsServerSession() )
                 {
-                    __LOG_ERROR__( "session[{}:{}] send msgid[{}] failed", _session_id, KFAppId::ToString( _session_id ), message->_head._msgid );
+                    __LOG_ERROR__( "session[{}:{}] send msg_id[{}] failed", _session_id, KFAppId::ToString( _session_id ), message->_header._msg_id );
                 }
                 else
                 {
-                    __LOG_ERROR__( "session[{}:{}] send msgid[{}] failed", _session_id, _object_id, message->_head._msgid );
+                    __LOG_ERROR__( "session[{}:{}] send msg_id[{}] failed", _session_id, _object_id, message->_header._msg_id );
                 }
             }
         }
@@ -308,9 +310,9 @@ namespace KFrame
         return ok;
     }
 
-    bool KFNetSession::AddRecvMessage( KFNetMessage* message )
+    bool KFNetSession::AddRecvMessage( std::shared_ptr<KFNetMessage>& message )
     {
-        auto ok = _recv_queue.PushObject( message, _object_id, __FUNC_LINE__ );
+        auto ok = _recv_queue.Push( message );
         if ( !ok )
         {
             if ( !_is_recv_queue_full )
@@ -319,11 +321,11 @@ namespace KFrame
 
                 if ( IsServerSession() )
                 {
-                    __LOG_ERROR__( "session[{}:{}] recv msgid[{}] failed", _session_id, KFAppId::ToString( _session_id ), message->_head._msgid );
+                    __LOG_ERROR__( "session[{}:{}] recv msg_id[{}] failed", _session_id, KFAppId::ToString( _session_id ), message->_header._msg_id );
                 }
                 else
                 {
-                    __LOG_ERROR__( "session[{}:{}] recv msgid[{}] failed", _session_id, _object_id, message->_head._msgid );
+                    __LOG_ERROR__( "session[{}:{}] recv msg_id[{}] failed", _session_id, _object_id, message->_header._msg_id );
                 }
             }
         }
@@ -335,23 +337,24 @@ namespace KFrame
         return ok;
     }
 
-    bool KFNetSession::SetMainLoopEvent( uint32 eventtype )
+    void KFNetSession::SendServiceEvent( uint32 event_type )
     {
-        // 已经在关闭, 不再加入队列
-        if ( _is_shutdown ||
-                _event_type == KFNetDefine::CloseEvent )
+        if ( _is_shutdown )
         {
-            return false;
+            return;
         }
 
-        _event_type = eventtype;
-        return true;
+        _net_service->SendEventToService( event_type, shared_from_this() );
     }
 
-    void KFNetSession::HandleMainLoopEvent()
+    void KFNetSession::HandleServiceEvent( uint32 event_type )
     {
-        uint32 eventtype = _event_type.exchange( 0u );
-        switch ( eventtype )
+        if ( _is_shutdown )
+        {
+            return;
+        }
+
+        switch ( event_type )
         {
         case KFNetDefine::ConnectEvent:
             StartSession();

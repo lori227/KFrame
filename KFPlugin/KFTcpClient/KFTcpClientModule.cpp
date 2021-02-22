@@ -54,97 +54,97 @@ namespace KFrame
         listendata->set_appid( kfglobal->_app_id->GetId() );
         listendata->set_ip( kfglobal->_intranet_ip );
         listendata->set_port( kfglobal->_listen_port );
-        SendNetMessage( netdata->_id, KFMsg::S2S_REGISTER_TO_SERVER_REQ, &req );
+        SendNetMessage( net_data->_id, KFMsg::S2S_REGISTER_TO_SERVER_REQ, &req );
     }
 
     // 连接断开
     __KF_NET_EVENT_FUNCTION__( KFTcpClientModule::OnClientDisconnect )
     {
-        CallClientLostFunction( netdata );
+        CallClientLostFunction( net_data );
     }
 
     // 连接关闭
     __KF_NET_EVENT_FUNCTION__( KFTcpClientModule::OnClientShutdown )
     {
-        CallClientShutdownFunction( netdata );
+        CallClientShutdownFunction( net_data );
     }
 
     // 连接失败
     __KF_NET_EVENT_FUNCTION__( KFTcpClientModule::OnClientFailed )
     {
-        CallClientFailedFunction( netdata );
+        CallClientFailedFunction( net_data );
     }
 
-    void KFTcpClientModule::SendNetMessage( uint32 msgid, google::protobuf::Message* message, uint32 delay )
+    void KFTcpClientModule::SendNetMessage( uint32 msg_id, google::protobuf::Message* message, uint32 delay )
     {
         auto strdata = message->SerializeAsString();
-        _client_engine->SendNetMessage( msgid, strdata.data(), strdata.size(), delay );
+        _client_engine->SendNetMessage( msg_id, strdata.data(), strdata.size(), delay );
     }
 
-    bool KFTcpClientModule::SendNetMessage( uint64 server_id, uint32 msgid, google::protobuf::Message* message, uint32 delay )
+    bool KFTcpClientModule::SendNetMessage( uint64 server_id, uint32 msg_id, google::protobuf::Message* message, uint32 delay )
     {
         auto strdata = message->SerializeAsString();
-        return _client_engine->SendNetMessage( server_id, msgid, strdata.data(), strdata.size(), delay );
+        return _client_engine->SendNetMessage( server_id, msg_id, strdata.data(), strdata.size(), delay );
     }
 
-    bool KFTcpClientModule::SendNetMessage( uint64 server_id, uint64 recvid, uint32 msgid, google::protobuf::Message* message, uint32 delay )
+    bool KFTcpClientModule::SendNetMessage( uint64 server_id, uint64 recv_id, uint32 msg_id, google::protobuf::Message* message, uint32 delay )
     {
         auto strdata = message->SerializeAsString();
-        return _client_engine->SendNetMessage( server_id, recvid, msgid, strdata.data(), strdata.size(), delay );
+        return _client_engine->SendNetMessage( server_id, recv_id, msg_id, strdata.data(), strdata.size(), delay );
     }
 
-    void KFTcpClientModule::SendNetMessage( uint32 msgid, const char* data, uint32 length )
+    void KFTcpClientModule::SendNetMessage( uint32 msg_id, const char* data, uint32 length )
     {
-        _client_engine->SendNetMessage( msgid, data, length );
+        _client_engine->SendNetMessage( msg_id, data, length );
     }
 
-    bool KFTcpClientModule::SendNetMessage( uint64 server_id, uint32 msgid, const char* data, uint32 length )
+    bool KFTcpClientModule::SendNetMessage( uint64 server_id, uint32 msg_id, const char* data, uint32 length )
     {
-        return _client_engine->SendNetMessage( server_id, msgid, data, length );
+        return _client_engine->SendNetMessage( server_id, msg_id, data, length );
     }
 
-    bool KFTcpClientModule::SendNetMessage( uint64 server_id, uint64 recvid, uint32 msgid, const char* data, uint32 length )
+    bool KFTcpClientModule::SendNetMessage( uint64 server_id, uint64 recv_id, uint32 msg_id, const char* data, uint32 length )
     {
-        return _client_engine->SendNetMessage( server_id, recvid, msgid, data, length );
+        return _client_engine->SendNetMessage( server_id, recv_id, msg_id, data, length );
     }
 
     // 给某一类型服务器发送消息
-    void KFTcpClientModule::SendMessageToType( const std::string& servertype, uint32 msgid, google::protobuf::Message* message )
+    void KFTcpClientModule::SendMessageToType( const std::string& servertype, uint32 msg_id, google::protobuf::Message* message )
     {
         auto strdata = message->SerializeAsString();
-        SendMessageToType( servertype, msgid, strdata.data(), strdata.size() );
+        SendMessageToType( servertype, msg_id, strdata.data(), strdata.size() );
     }
 
-    void KFTcpClientModule::SendMessageToType( const std::string& servertype, uint32 msgid, const char* data, uint32 length )
+    void KFTcpClientModule::SendMessageToType( const std::string& servertype, uint32 msg_id, const char* data, uint32 length )
     {
-        _client_engine->SendMessageToType( servertype, msgid, data, length );
+        _client_engine->SendMessageToType( servertype, msg_id, data, length );
     }
 
-    void KFTcpClientModule::SendMessageToName( const std::string& servername, uint32 msgid, google::protobuf::Message* message )
-    {
-        auto strdata = message->SerializeAsString();
-        SendMessageToName( servername, msgid, strdata.data(), strdata.size() );
-    }
-
-    void KFTcpClientModule::SendMessageToName( const std::string& servername, uint32 msgid, const char* data, uint32 length )
-    {
-        _client_engine->SendMessageToName( servername, msgid, data, length );
-    }
-
-    void KFTcpClientModule::SendMessageToServer( const std::string& servername, const std::string& servertype, uint32 msgid, google::protobuf::Message* message )
+    void KFTcpClientModule::SendMessageToName( const std::string& servername, uint32 msg_id, google::protobuf::Message* message )
     {
         auto strdata = message->SerializeAsString();
-        SendMessageToServer( servername, servertype, msgid, strdata.data(), strdata.size() );
+        SendMessageToName( servername, msg_id, strdata.data(), strdata.size() );
     }
 
-    void KFTcpClientModule::SendMessageToServer( const std::string& servername, const std::string& servertype, uint32 msgid, const char* data, uint32 length )
+    void KFTcpClientModule::SendMessageToName( const std::string& servername, uint32 msg_id, const char* data, uint32 length )
     {
-        _client_engine->SendMessageToServer( servername, servertype, msgid, data, length );
+        _client_engine->SendMessageToName( servername, msg_id, data, length );
     }
 
-    void KFTcpClientModule::HandleNetMessage( const Route& route, uint32 msgid, const char* data, uint32 length )
+    void KFTcpClientModule::SendMessageToServer( const std::string& servername, const std::string& servertype, uint32 msg_id, google::protobuf::Message* message )
     {
-        bool handleresult = __HANDLE_MESSAGE__( route, msgid, data, length );
+        auto strdata = message->SerializeAsString();
+        SendMessageToServer( servername, servertype, msg_id, strdata.data(), strdata.size() );
+    }
+
+    void KFTcpClientModule::SendMessageToServer( const std::string& servername, const std::string& servertype, uint32 msg_id, const char* data, uint32 length )
+    {
+        _client_engine->SendMessageToServer( servername, servertype, msg_id, data, length );
+    }
+
+    void KFTcpClientModule::HandleNetMessage( const Route& route, uint32 msg_id, const char* data, uint32 length )
+    {
+        bool handleresult = __HANDLE_MESSAGE__( route, msg_id, data, length );
         if ( handleresult )
         {
             return;
@@ -152,28 +152,28 @@ namespace KFrame
 
         if ( _kf_transpond_function != nullptr )
         {
-            auto ok = _kf_transpond_function( route, msgid, data, length );
+            auto ok = _kf_transpond_function( route, msg_id, data, length );
             if ( !ok )
             {
-                __LOG_ERROR__( "tcp client transpond msgid[{}] failed", msgid );
+                __LOG_ERROR__( "tcp client transpond msg_id[{}] failed", msg_id );
             }
         }
         else
         {
-            __LOG_ERROR__( "msgid[{}] can't find function", msgid );
+            __LOG_ERROR__( "msg_id[{}] can't find function", msg_id );
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFTcpClientModule::StartClient( const KFNetData* netdata )
+    void KFTcpClientModule::StartClient( const KFNetData* net_data )
     {
-        if ( IsSelfConnection( netdata->_name, netdata->_type, netdata->_id ) )
+        if ( IsSelfConnection( net_data->_name, net_data->_type, net_data->_id ) )
         {
             return;
         }
 
         KFNetData kfnetdata;
-        kfnetdata = *netdata;
+        kfnetdata = *net_data;
         kfnetdata._str_id = KFAppId::ToString( kfnetdata._id );
         auto ok = _client_engine->StartClient( &kfnetdata );
         if ( ok )
@@ -185,13 +185,13 @@ namespace KFrame
 
     void KFTcpClientModule::StartClient( const std::string& name, const std::string& type, uint64 id, const std::string& ip, uint32 port )
     {
-        KFNetData netdata;
-        netdata._name = name;
-        netdata._type = type;
-        netdata._id = id;
-        netdata._ip = ip;
-        netdata._port = port;
-        StartClient( &netdata );
+        KFNetData net_data;
+        net_data._name = name;
+        net_data._type = type;
+        net_data._id = id;
+        net_data._ip = ip;
+        net_data._port = port;
+        StartClient( &net_data );
     }
 
     bool KFTcpClientModule::IsSelfConnection( const std::string& name, const std::string& type, uint64 id )
@@ -224,12 +224,12 @@ namespace KFrame
         _kf_connection_function.Remove( module );
     }
 
-    void KFTcpClientModule::CallClientConnectionFunction( const KFNetData* netdata )
+    void KFTcpClientModule::CallClientConnectionFunction( const KFNetData* net_data )
     {
         for ( auto& iter : _kf_connection_function._objects )
         {
             auto kffunction = iter.second;
-            kffunction->_function( netdata );
+            kffunction->_function( net_data );
         }
     }
 
@@ -244,12 +244,12 @@ namespace KFrame
         _kf_lost_function.Remove( module );
     }
 
-    void KFTcpClientModule::CallClientLostFunction( const KFNetData* netdata )
+    void KFTcpClientModule::CallClientLostFunction( const KFNetData* net_data )
     {
         for ( auto& iter : _kf_lost_function._objects )
         {
             auto kffunction = iter.second;
-            kffunction->_function( netdata );
+            kffunction->_function( net_data );
         }
     }
 
@@ -264,12 +264,12 @@ namespace KFrame
         _kf_shutdown_function.Remove( module );
     }
 
-    void KFTcpClientModule::CallClientShutdownFunction( const KFNetData* netdata )
+    void KFTcpClientModule::CallClientShutdownFunction( const KFNetData* net_data )
     {
         for ( auto& iter : _kf_shutdown_function._objects )
         {
             auto kffunction = iter.second;
-            kffunction->_function( netdata );
+            kffunction->_function( net_data );
         }
     }
 
@@ -284,12 +284,12 @@ namespace KFrame
         _kf_failed_function.Remove( module );
     }
 
-    void KFTcpClientModule::CallClientFailedFunction( const KFNetData* netdata )
+    void KFTcpClientModule::CallClientFailedFunction( const KFNetData* net_data )
     {
         for ( auto& iter : _kf_failed_function._objects )
         {
             auto kffunction = iter.second;
-            kffunction->_function( netdata );
+            kffunction->_function( net_data );
         }
     }
 
@@ -310,13 +310,13 @@ namespace KFrame
         auto kfclient = _client_engine->FindClient( __ROUTE_SERVER_ID__ );
         if ( kfclient != nullptr )
         {
-            auto netdata = &kfclient->_net_data;
-            __LOG_INFO__( "[{}:{}:{}|{}:{}] service ok", netdata->_name, netdata->_type, netdata->_str_id, netdata->_ip, netdata->_port );
+            auto net_data = &kfclient->_net_data;
+            __LOG_INFO__( "[{}:{}:{}|{}:{}] service ok", net_data->_name, net_data->_type, net_data->_str_id, net_data->_ip, net_data->_port );
 
             kfclient->InitCompressEncrypt( kfmsg->compresstype(), kfmsg->compresslevel(), kfmsg->compresslength(), kfmsg->encryptkey(), kfmsg->openencrypt() );
 
             // 处理回调函数
-            CallClientConnectionFunction( netdata );
+            CallClientConnectionFunction( net_data );
         }
         else
         {

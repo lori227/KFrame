@@ -9,7 +9,7 @@ namespace KFrame
     {
     public:
         // 添加连接
-        virtual void StartClient( const KFNetData* netdata ) = 0;
+        virtual void StartClient( const KFNetData* net_data ) = 0;
         virtual void StartClient( const std::string& name, const std::string& type, uint64 id, const std::string& ip, uint32 port ) = 0;
 
         // 断开连接
@@ -17,23 +17,23 @@ namespace KFrame
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // 发送消息
-        virtual void SendNetMessage( uint32 msgid, google::protobuf::Message* message, uint32 delay = 0 ) = 0;
-        virtual bool SendNetMessage( uint64 server_id, uint32 msgid, google::protobuf::Message* message, uint32 delay = 0 ) = 0;
-        virtual bool SendNetMessage( uint64 server_id, uint64 recvid, uint32 msgid, google::protobuf::Message* message, uint32 delay = 0 ) = 0;
+        virtual void SendNetMessage( uint32 msg_id, google::protobuf::Message* message, uint32 delay = 0 ) = 0;
+        virtual bool SendNetMessage( uint64 server_id, uint32 msg_id, google::protobuf::Message* message, uint32 delay = 0 ) = 0;
+        virtual bool SendNetMessage( uint64 server_id, uint64 recv_id, uint32 msg_id, google::protobuf::Message* message, uint32 delay = 0 ) = 0;
 
-        virtual void SendNetMessage( uint32 msgid, const char* data, uint32 length ) = 0;
-        virtual bool SendNetMessage( uint64 server_id, uint32 msgid, const char* data, uint32 length ) = 0;
-        virtual bool SendNetMessage( uint64 server_id, uint64 recvid, uint32 msgid, const char* data, uint32 length ) = 0;
+        virtual void SendNetMessage( uint32 msg_id, const char* data, uint32 length ) = 0;
+        virtual bool SendNetMessage( uint64 server_id, uint32 msg_id, const char* data, uint32 length ) = 0;
+        virtual bool SendNetMessage( uint64 server_id, uint64 recv_id, uint32 msg_id, const char* data, uint32 length ) = 0;
 
         // 给某一类型服务器发送消息
-        virtual void SendMessageToName( const std::string& servername, uint32 msgid, google::protobuf::Message* message ) = 0;
-        virtual void SendMessageToName( const std::string& servername, uint32 msgid, const char* data, uint32 length ) = 0;
+        virtual void SendMessageToName( const std::string& servername, uint32 msg_id, google::protobuf::Message* message ) = 0;
+        virtual void SendMessageToName( const std::string& servername, uint32 msg_id, const char* data, uint32 length ) = 0;
 
-        virtual void SendMessageToType( const std::string& servertype, uint32 msgid, google::protobuf::Message* message ) = 0;
-        virtual void SendMessageToType( const std::string& servertype, uint32 msgid, const char* data, uint32 length ) = 0;
+        virtual void SendMessageToType( const std::string& servertype, uint32 msg_id, google::protobuf::Message* message ) = 0;
+        virtual void SendMessageToType( const std::string& servertype, uint32 msg_id, const char* data, uint32 length ) = 0;
 
-        virtual void SendMessageToServer( const std::string& servername, const std::string& servertype, uint32 msgid, google::protobuf::Message* message ) = 0;
-        virtual void SendMessageToServer( const std::string& servername, const std::string& servertype, uint32 msgid, const char* data, uint32 length ) = 0;
+        virtual void SendMessageToServer( const std::string& servername, const std::string& servertype, uint32 msg_id, google::protobuf::Message* message ) = 0;
+        virtual void SendMessageToServer( const std::string& servername, const std::string& servertype, uint32 msg_id, const char* data, uint32 length ) = 0;
 
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -99,7 +99,7 @@ namespace KFrame
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 注册转发
         template<class T>
-        void RegisterTranspondFunction( T* module, bool ( T::*handle )( const Route& route, uint32 msgid, const char* data, uint32 length ) )
+        void RegisterTranspondFunction( T* module, bool ( T::*handle )( const Route& route, uint32 msg_id, const char* data, uint32 length ) )
         {
             KFForwardFunction function = std::bind( handle, module, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
             AddTranspondFunction( module, function );

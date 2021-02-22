@@ -13,12 +13,12 @@ namespace KFrame
 
         //////////////////////////////////////////////////////////////////////////////////////////
         // 发送消息到Client
-        bool SendToClient( uint32 msgid, const char* data, uint32 length );
-        bool SendToClient( uint32 msgid, ::google::protobuf::Message* message );
+        bool SendToClient( uint32 msg_id, const char* data, uint32 length );
+        bool SendToClient( uint32 msg_id, ::google::protobuf::Message* message );
 
         // 发送消息到Game
-        bool SendToGame( uint32 msgid, const char* data, uint32 length );
-        bool SendToGame( uint32 msgid, ::google::protobuf::Message* message );
+        bool SendToGame( uint32 msg_id, const char* data, uint32 length );
+        bool SendToGame( uint32 msg_id, ::google::protobuf::Message* message );
     public:
         // 角色id( playerid )
         uint64 _id = _invalid_int;
