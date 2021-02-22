@@ -38,22 +38,22 @@ namespace KFrame
 
 		virtual void LoadAllComplete()
 		{
-			for ( auto& iter : _settings._objects )
+			for ( auto& iter : _setting_list._objects )
 			{
-				auto kfsetting = iter.second;
+				auto setting = iter.second;
 
-				KFGlobal::Instance()->ParseElement( kfsetting->_reward, _file_name.c_str(), kfsetting->_row );
-				KFGlobal::Instance()->ParseElement( kfsetting->_first_reward, _file_name.c_str(), kfsetting->_row );
+				KFGlobal::Instance()->ParseElement( setting->_reward, _file_name.c_str(), setting->_row );
+				KFGlobal::Instance()->ParseElement( setting->_first_reward, _file_name.c_str(), setting->_row );
 			}
 		}
 
 	protected:
-		virtual void ReadSetting( KFXmlNode& xmlnode, KFPaySetting* kfsetting )
+		virtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KFPaySetting> setting )
 		{
-			kfsetting->_price = xmlnode.ReadUInt32( "price", true );
-			kfsetting->_reward._str_parse = xmlnode.ReadString( "reward", true );
-			kfsetting->_note_id = xmlnode.ReadUInt32( "noteid", true );
-			kfsetting->_first_reward._str_parse = xmlnode.ReadString( "firstreward", true );
+			setting->_price = xml_node.ReadUInt32( "price", true );
+			setting->_reward._str_parse = xml_node.ReadString( "reward", true );
+			setting->_note_id = xml_node.ReadUInt32( "noteid", true );
+			setting->_first_reward._str_parse = xml_node.ReadString( "firstreward", true );
 		}
 
 	};

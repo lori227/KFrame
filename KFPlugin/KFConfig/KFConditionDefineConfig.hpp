@@ -9,28 +9,28 @@ namespace KFrame
 	class ConditionTrigger
 	{
 	public:
-		// ï¿½ï¿½ï¿½Â»Øµï¿½ï¿½ï¿½Ê½
+		// ¸üÐÂ»Øµ÷·½Ê½
 		uint32 _call_type = 0u;
 
-		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		// ´¥·¢Ìõ¼þ
 		uint32 _trigger_type = 0u;
 
-		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½
+		// ´¥·¢±í´ïÊ½
 		uint32 _trigger_check = 0u;
 
-		// ï¿½ï¿½ï¿½ï¿½ÖµÊ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		// ´¥·¢ÖµÊ¹ÓÃÀàÐÍ
 		uint32 _trigger_use = 0u;
 
-		// ï¿½ï¿½ï¿½ï¿½Öµ
+		// ´¥·¢Öµ
 		uint32 _trigger_value = 0u;
 
-		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		// ²Ù×÷ÀàÐÍ
 		uint32 _use_operate = 0u;
 
-		// Ê¹ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½
+		// Ê¹ÓÃµÄÀàÐÍ
 		uint32 _use_type = 0u;
 
-		// ï¿½ï¿½ï¿½Ãµï¿½Ê¹ï¿½ï¿½ï¿½ï¿½Öµ
+		// ÅäÖÃµÄÊ¹ÓÃÊýÖµ
 		uint32 _use_value = 0u;
 
 	};
@@ -39,19 +39,19 @@ namespace KFrame
 	class KFConditionDefineSetting : public KFStrSetting
 	{
 	public:
-		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		// ¸¸ÊôÐÔÃû
 		std::string _parent_name;
 
-		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		// ×ÓÊôÐÔÃû
 		std::string _data_name;
 
-		// ï¿½ï¿½Ê¼Öµ
+		// ³õÊ¼Öµ
 		uint32 _init_calc_type = 0u;
 
-		// ï¿½Ç·ñ±£´ï¿½uuid
+		// ÊÇ·ñ±£´æuuid
 		bool _save_uuid = false;
 
-		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		// Ìõ¼þ´¥·¢Êý¾Ý
 		std::vector<ConditionTrigger> _condition_trigger;
 	};
 
@@ -68,23 +68,23 @@ namespace KFrame
 		~KFConditionDefineConfig() = default;
 
 	protected:
-		virtual void ReadSetting( KFXmlNode& xmlnode, KFConditionDefineSetting* kfsetting )
+		virtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KFConditionDefineSetting> setting )
 		{
-			kfsetting->_parent_name = xmlnode.ReadString( "parent_name", true );
-			kfsetting->_data_name = xmlnode.ReadString( "data_name", true );
-			kfsetting->_init_calc_type = xmlnode.ReadUInt32( "initcalctype", true );
-			kfsetting->_save_uuid = xmlnode.ReadBool( "saveuuid", true );
+			setting->_parent_name = xml_node.ReadString( "parentname", true );
+			setting->_data_name = xml_node.ReadString( "dataname", true );
+			setting->_init_calc_type = xml_node.ReadUInt32( "initcalctype", true );
+			setting->_save_uuid = xml_node.ReadBool( "saveuuid", true );
 		
 			ConditionTrigger conditiontrigger;
-			conditiontrigger._call_type = xmlnode.ReadUInt32( "calltype", true );
-			conditiontrigger._trigger_type = xmlnode.ReadUInt32( "triggertype", true );
-			conditiontrigger._trigger_check = xmlnode.ReadUInt32( "triggercheck", true );
-			conditiontrigger._trigger_use = xmlnode.ReadUInt32( "triggeruse", true );
-			conditiontrigger._trigger_value = xmlnode.ReadUInt32( "triggervalue", true );
-			conditiontrigger._use_operate = xmlnode.ReadUInt32( "useoperate", true );
-			conditiontrigger._use_type = xmlnode.ReadUInt32( "usetype", true );
-			conditiontrigger._use_value = xmlnode.ReadUInt32( "usevalue", true );
-			kfsetting->_condition_trigger.push_back( conditiontrigger );
+			conditiontrigger._call_type = xml_node.ReadUInt32( "calltype", true );
+			conditiontrigger._trigger_type = xml_node.ReadUInt32( "triggertype", true );
+			conditiontrigger._trigger_check = xml_node.ReadUInt32( "triggercheck", true );
+			conditiontrigger._trigger_use = xml_node.ReadUInt32( "triggeruse", true );
+			conditiontrigger._trigger_value = xml_node.ReadUInt32( "triggervalue", true );
+			conditiontrigger._use_operate = xml_node.ReadUInt32( "useoperate", true );
+			conditiontrigger._use_type = xml_node.ReadUInt32( "usetype", true );
+			conditiontrigger._use_value = xml_node.ReadUInt32( "usevalue", true );
+			setting->_condition_trigger.push_back( conditiontrigger );
 		}
 
 	};

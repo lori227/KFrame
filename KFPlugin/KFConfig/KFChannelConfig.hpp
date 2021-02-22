@@ -46,15 +46,15 @@ namespace KFrame
 		~KFChannelConfig() = default;
 
 	protected:
-		virtual void ReadSetting( KFXmlNode& xmlnode, KFChannelSetting* kfsetting )
+		virtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KFChannelSetting> setting )
 		{
-			kfsetting->_support = xmlnode.ReadUInt32Set( "support", true );
-			kfsetting->_debug = xmlnode.ReadUInt32( "debug", true );
-			kfsetting->_release = xmlnode.ReadUInt32( "release", true );
-			kfsetting->_app_id = xmlnode.ReadString( "appid", true );
-			kfsetting->_app_key = xmlnode.ReadString( "appkey", true );
-			kfsetting->_login_url = xmlnode.ReadString( "loginurl", true );
-			kfsetting->_pay_url = xmlnode.ReadString( "payurl", true );
+			setting->_support = xml_node.ReadUInt32Set( "support", true );
+			setting->_debug = xml_node.ReadUInt32( "debug", true );
+			setting->_release = xml_node.ReadUInt32( "release", true );
+			setting->_app_id = xml_node.ReadString( "appid", true );
+			setting->_app_key = xml_node.ReadString( "appkey", true );
+			setting->_login_url = xml_node.ReadString( "loginurl", true );
+			setting->_pay_url = xml_node.ReadString( "payurl", true );
 		}
 
 	};

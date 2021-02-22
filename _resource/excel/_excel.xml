@@ -1,7 +1,5 @@
 <?xml version = '1.0' encoding = 'utf-8' ?>
 <config>
-	<file name="111111.xlsx" type="3" md5client="" md5server="7a74ccc8379280e028427c0ee00edaac"/>
-	<file name="555555.xlsx" type="3" md5client="" md5server="7a74ccc8379280e028427c0ee00edaac"/>
 	<file name="C-成就-成就配置-(框架定义,策划填写).xlsx" type="3" md5client="" md5server="7a74ccc8379280e028427c0ee00edaac"/>
 	<file name="C-充值-充值配置-(后端定义,策划填写).xlsx" type="3" md5client="" md5server="de0032c144ccb766776057d821700dba"/>
 	<file name="D-道具-道具背包-(框架定义,后端填写).xlsx" type="3" md5client="" md5server="2f7bd484e42d813151285ebb62ccd4a1"/>

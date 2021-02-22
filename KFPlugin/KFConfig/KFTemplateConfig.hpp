@@ -34,11 +34,11 @@ namespace KFrame
 		~KFTemplateConfig() = default;
 
 	protected:
-		virtual void ReadSetting( KFXmlNode& xmlnode, KFTemplateSetting* kfsetting )
+		virtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KFTemplateSetting> setting )
 		{
-			kfsetting->_type = xmlnode.ReadUInt32( "type", true );
-			kfsetting->_code = xmlnode.ReadUInt32( "code", true );
-			kfsetting->_template = xmlnode.ReadString( "template", true );
+			setting->_type = xml_node.ReadUInt32( "type", true );
+			setting->_code = xml_node.ReadUInt32( "code", true );
+			setting->_template = xml_node.ReadString( "template", true );
 		}
 
 	};

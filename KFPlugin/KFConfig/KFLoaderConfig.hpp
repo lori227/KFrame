@@ -9,19 +9,19 @@ namespace KFrame
 	class KFConfigData
 	{
 	public:
-		// О©╫О©╫О©╫О©╫О©╫О©╫
+		// еДжццШ
 		std::string _name;
 
-		// О©╫О©╫О©╫О©╫О©╫д╪О©╫б╥О©╫О©╫
+		// еДжцнд╪Чб╥╬╤
 		std::string _path;
 
-		// О©╫О©╫О©╫д╪О©╫О©╫О©╫О©╫О©╫О©╫О©╫(О©╫О©╫О©╫д╪О©╫О©╫О©╫О©╫б╪О©╫О©╫ь╨О©╫О©╫О©╫р╙О©╫О©╫О©╫б╪О©╫О©╫О©╫)
+		// жВнд╪ЧеДжццШ(жВнд╪Чжьпб╪сть╨СпХр╙жьпб╪сть)
 		std::string _parent_name;
 
-		// О©╫г╥О©╫О©╫О©╫О©╫О©╫О©╫О©╫б╪О©╫О©╫О©╫
+		// йг╥Я©иртжьпб╪сть
 		bool _can_reload = false;
 
-		// О©╫г╥О©╫О©╫О©╫р╙О©╫О©╫О©╫О©╫О©╫О©╫О©╫
+		// йг╥ЯпХр╙гЕ©уйЩ╬щ
 		uint32 _clear_type = 0u;
 
 	};
@@ -30,7 +30,7 @@ namespace KFrame
 	class KFLoaderSetting : public KFStrSetting
 	{
 	public:
-		// О©╫О©╫О©╫О©╫О©╫д╪О©╫О©╫п╠О©╫
+		// еДжцнд╪Чап╠М
 		std::vector<KFConfigData> _config_data;
 	};
 
@@ -49,13 +49,14 @@ namespace KFrame
 	protected:
 		virtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KFLoaderSetting> setting )
 		{
-			KFConfigData config_data;
-            config_data._name = xml_node.ReadString( "name", true );
-            config_data._path = xml_node.ReadString( "path", true );
-            config_data._parent_name = xml_node.ReadString( "parent_name", true );
-            config_data._can_reload = xml_node.ReadBool( "canreload", true );
-            config_data._clear_type = xml_node.ReadUInt32( "cleartype", true );
-            setting->_config_data.push_back( config_data );
+		
+			KFConfigData configdata;
+			configdata._name = xml_node.ReadString( "name", true );
+			configdata._path = xml_node.ReadString( "path", true );
+			configdata._parent_name = xml_node.ReadString( "parentname", true );
+			configdata._can_reload = xml_node.ReadBool( "canreload", true );
+			configdata._clear_type = xml_node.ReadUInt32( "cleartype", true );
+			setting->_config_data.push_back( configdata );
 		}
 
 	};

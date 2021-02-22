@@ -40,13 +40,13 @@ namespace KFrame
 		~KFItemTypeConfig() = default;
 
 	protected:
-		virtual void ReadSetting( KFXmlNode& xmlnode, KFItemTypeSetting* kfsetting )
+		virtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KFItemTypeSetting> setting )
 		{
-			kfsetting->_obtain_bag = xmlnode.ReadString( "obtainbag", true );
-			kfsetting->_move_bag_list = xmlnode.ReadStringSet( "movebaglist", true );
-			kfsetting->_tab_list = xmlnode.ReadStringSet( "tablist", true );
-			kfsetting->_use_limit = xmlnode.ReadUInt32( "uselimit", true );
-			kfsetting->_sort = xmlnode.ReadUInt32( "sort", true );
+			setting->_obtain_bag = xml_node.ReadString( "obtainbag", true );
+			setting->_move_bag_list = xml_node.ReadStringSet( "movebaglist", true );
+			setting->_tab_list = xml_node.ReadStringSet( "tablist", true );
+			setting->_use_limit = xml_node.ReadUInt32( "uselimit", true );
+			setting->_sort = xml_node.ReadUInt32( "sort", true );
 		}
 
 	};

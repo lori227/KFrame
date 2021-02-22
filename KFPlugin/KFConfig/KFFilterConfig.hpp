@@ -28,9 +28,9 @@ namespace KFrame
 		~KFFilterConfig() = default;
 
 	protected:
-		virtual void ReadSetting( KFXmlNode& xmlnode, KFFilterSetting* kfsetting )
+		virtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KFFilterSetting> setting )
 		{
-			kfsetting->_word = xmlnode.ReadString( "word", true );
+			setting->_word = xml_node.ReadString( "word", true );
 		}
 
 	};

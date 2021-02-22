@@ -28,9 +28,9 @@ namespace KFrame
 		~KFTeamConfig() = default;
 
 	protected:
-		virtual void ReadSetting( KFXmlNode& xmlnode, KFTeamSetting* kfsetting )
+		virtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KFTeamSetting> setting )
 		{
-			kfsetting->_max_count = xmlnode.ReadUInt32( "maxcount", true );
+			setting->_max_count = xml_node.ReadUInt32( "maxcount", true );
 		}
 
 	};

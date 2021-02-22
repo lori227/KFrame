@@ -1,12 +1,7 @@
 # CMake generation dependency list for this directory.
+C:/Program Files/CMake/share/cmake-3.13/Modules/CheckFunctionExists.cmake
+C:/Program Files/CMake/share/cmake-3.13/Modules/CheckIncludeFile.cmake
+C:/Program Files/CMake/share/cmake-3.13/Modules/CheckIncludeFileCXX.cmake
+C:/Program Files/CMake/share/cmake-3.13/Modules/CheckTypeSize.cmake
 D:/KFrame/Frame/trunk/KFLibrary/libgit2/deps/pcre/CMakeLists.txt
 D:/KFrame/Frame/trunk/KFLibrary/libgit2/deps/pcre/config.h.in
-D:/KFrame/Frame/trunk/KFLibrary/libgit2/vsbuild/CMakeFiles/CheckTypeSize/LONG_LONG.c
-D:/KFrame/Frame/trunk/KFLibrary/libgit2/vsbuild/CMakeFiles/CheckTypeSize/UNSIGNED_LONG_LONG.c
-D:/Program Files/CMake/share/cmake-3.17/Modules/CheckFunctionExists.c
-D:/Program Files/CMake/share/cmake-3.17/Modules/CheckFunctionExists.cmake
-D:/Program Files/CMake/share/cmake-3.17/Modules/CheckIncludeFile.c.in
-D:/Program Files/CMake/share/cmake-3.17/Modules/CheckIncludeFile.cmake
-D:/Program Files/CMake/share/cmake-3.17/Modules/CheckIncludeFileCXX.cmake
-D:/Program Files/CMake/share/cmake-3.17/Modules/CheckTypeSize.c.in
-D:/Program Files/CMake/share/cmake-3.17/Modules/CheckTypeSize.cmake

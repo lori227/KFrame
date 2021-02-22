@@ -115,7 +115,7 @@ namespace KFrame
         // 获取配置
         inline const ObjectPtr FindSetting( const KeyType& id ) const
         {
-            return _settings.Find( id );
+            return _setting_list.Find( id );
         }
 
     protected:
@@ -137,16 +137,16 @@ namespace KFrame
         virtual void ClearSetting()
         {
             _version.clear();
-            _settings.Clear();
+            _setting_list.Clear();
         }
 
         virtual void ClearFileSetting( const std::string& file_path )
         {
-            for ( auto iter = _settings._objects.begin(); iter != _settings._objects.end(); )
+            for ( auto iter = _setting_list._objects.begin(); iter != _setting_list._objects.end(); )
             {
                 if ( iter->second->_file_path == file_path )
                 {
-                    iter = _settings._objects.erase( iter );
+                    iter = _setting_list._objects.erase( iter );
                 }
                 else
                 {
@@ -166,7 +166,7 @@ namespace KFrame
             }
 
             auto id = xml_node.ReadT<KeyType>( _key_name.c_str(), true );
-            auto setting = _settings.Create( id );
+            auto setting = _setting_list.Create( id );
             setting->_id = id;
             setting->_row = xml_node.ReadUInt32( __STRING__( row ).c_str(), true );
             return setting;
@@ -177,7 +177,7 @@ namespace KFrame
 
     public:
         // 列表
-        KFHashMap< KeyType, T > _settings;
+        KFHashMap<KeyType, T> _setting_list;
     };
 
     ///////////////////////////////////////////////////////////////

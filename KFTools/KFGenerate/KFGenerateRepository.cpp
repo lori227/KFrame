@@ -51,7 +51,7 @@ namespace KFrame
                 return false;
             }
 
-            return _git_svn->Open( data );
+            return _git_svn->Open( data.get() );
         }
 
         return true;

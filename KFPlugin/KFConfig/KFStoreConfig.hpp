@@ -25,7 +25,7 @@ namespace KFrame
 		~KFStoreConfig() = default;
 
 	protected:
-		virtual void ReadSetting( KFXmlNode& xmlnode, KFStoreSetting* kfsetting )
+		virtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KFStoreSetting> setting )
 		{
 		}
 

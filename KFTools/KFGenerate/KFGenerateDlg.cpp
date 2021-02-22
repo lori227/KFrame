@@ -186,7 +186,7 @@ void CKFGenerateDlg::InitGenerateDialog()
     InitRepository();
 
     // 启动文件检查线程
-    KFThread::CreateThread( _logic, &KFGenerateLogic::RunCheckExcelMd5Thread, __FILE__, __LINE__ );
+    KFThread::Create( _logic, &KFGenerateLogic::RunCheckExcelMd5Thread, __FILE__, __LINE__ );
 }
 
 void CKFGenerateDlg::InitEventFunction()
@@ -599,7 +599,7 @@ void CKFGenerateDlg::ParseExcelFinish( EventData* eventdata )
 
     if ( _need_repository )
     {
-        KFThread::CreateThread( this, &CKFGenerateDlg::ThreadRunPushCommit, __FUNC_LINE__ );
+        KFThread::Create( this, &CKFGenerateDlg::ThreadRunPushCommit, __FUNC_LINE__ );
     }
 }
 
@@ -651,7 +651,7 @@ void CKFGenerateDlg::ThreadRunPushCommit()
 void CKFGenerateDlg::RepositoryPushOk( EventData* eventdata )
 {
     _button_repository.EnableWindow( TRUE );
-    KFThread::CreateThread( this, &CKFGenerateDlg::ThreadRunSSHCommand, __FUNC_LINE__ );
+    KFThread::Create( this, &CKFGenerateDlg::ThreadRunSSHCommand, __FUNC_LINE__ );
 }
 
 void CKFGenerateDlg::ExecuteSSHOk( EventData* eventdata )

@@ -32,19 +32,19 @@ namespace KFrame
 
 		virtual void LoadAllComplete()
 		{
-			for ( auto& iter : _settings._objects )
+			for ( auto& iter : _setting_list._objects )
 			{
-				auto kfsetting = iter.second;
+				auto setting = iter.second;
 
-				KFGlobal::Instance()->ParseElement( kfsetting->_reward, _file_name.c_str(), kfsetting->_row );
+				KFGlobal::Instance()->ParseElement( setting->_reward, _file_name.c_str(), setting->_row );
 			}
 		}
 
 	protected:
-		virtual void ReadSetting( KFXmlNode& xmlnode, KFAchieveSetting* kfsetting )
+		virtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KFAchieveSetting> setting )
 		{
-			kfsetting->_complete_condition = xmlnode.ReadDynamicConditionGroup( "completecondition", true );
-			kfsetting->_reward._str_parse = xmlnode.ReadString( "reward", true );
+			setting->_complete_condition = xml_node.ReadDynamicConditionGroup( "completecondition", true );
+			setting->_reward._str_parse = xml_node.ReadString( "reward", true );
 		}
 
 	};

@@ -5,8 +5,8 @@
 
 namespace KFrame
 {
-    typedef std::function< void( EventData* ) > KFEventFunction;
-    class KFGenerateEvent : public KFSingleton< KFGenerateEvent >
+    typedef std::function<void( EventData* )> KFEventFunction;
+    class KFGenerateEvent : public KFSingleton<KFGenerateEvent>
     {
     public:
         // 抛出一个事件
@@ -19,7 +19,7 @@ namespace KFrame
         void RegisterEventFunction( uint32 type, T* object, void ( T::*handle )( EventData* ) )
         {
             auto kffunction = _event_function.Create( type );
-            kffunction->_function = std::bind( handle, object, std::placeholders::_1 );
+            kffunction->SetFunction( std::bind( handle, object, std::placeholders::_1 ) );
         }
 
         template<typename... P>
@@ -37,7 +37,7 @@ namespace KFrame
         std::list< EventData* > _event_list;
 
         // 事件回调列表
-        KFMapFunction< uint32, KFEventFunction > _event_function;
+        KFMapFunction<uint32, KFEventFunction> _event_function;
     };
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////

@@ -31,7 +31,7 @@ namespace KFrame
             auto kffunction = _event_function.Find( eventdata->_type );
             if ( kffunction != nullptr )
             {
-                kffunction->_function( eventdata );
+                kffunction->Call( eventdata );
             }
             __KF_DELETE__( EventData, eventdata );
         }

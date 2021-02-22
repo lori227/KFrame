@@ -45,34 +45,34 @@ namespace KFrame
 
 		virtual void LoadAllComplete()
 		{
-			for ( auto& iter : _settings._objects )
+			for ( auto& iter : _setting_list._objects )
 			{
-				auto kfsetting = iter.second;
+				auto setting = iter.second;
 
-				kfsetting->_condition._condition_define = KFConditionDefineConfig::Instance()->FindSetting( kfsetting->_condition._str_condition );
-				if ( !kfsetting->_condition._str_condition.empty() && kfsetting->_condition._condition_define == nullptr )
+				kfsetting->_condition._condition_define = KFConditionDefineConfig::Instance()->FindSetting( setting->_condition._str_condition );
+				if ( !setting->_condition._str_condition.empty() && setting->_condition._condition_define == nullptr )
 				{
-					__LOG_ERROR__( "condition=[{}] can't find define=[{}]", kfsetting->_id, kfsetting->_condition._str_condition );
+					__LOG_ERROR__( "condition=[{}] can't find define=[{}]", setting->_id, setting->_condition._str_condition );
 				}
 
-				kfsetting->_clean._condition_define = KFConditionDefineConfig::Instance()->FindSetting( kfsetting->_clean._str_condition );
-				if ( !kfsetting->_clean._str_condition.empty() && kfsetting->_clean._condition_define == nullptr )
+				kfsetting->_clean._condition_define = KFConditionDefineConfig::Instance()->FindSetting( setting->_clean._str_condition );
+				if ( !setting->_clean._str_condition.empty() && setting->_clean._condition_define == nullptr )
 				{
-					__LOG_ERROR__( "condition=[{}] can't find define=[{}]", kfsetting->_id, kfsetting->_clean._str_condition );
+					__LOG_ERROR__( "condition=[{}] can't find define=[{}]", setting->_id, setting->_clean._str_condition );
 				}
 
 			}
 		}
 
 	protected:
-		virtual void ReadSetting( KFXmlNode& xmlnode, KFConditionSetting* kfsetting )
+		virtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KFConditionSetting> setting )
 		{
-			kfsetting->_condition._str_condition = xmlnode.ReadString( "condition", true );
-			kfsetting->_done_type = xmlnode.ReadUInt32( "donetype", true );
-			kfsetting->_done_value = xmlnode.ReadUInt32( "donevalue", true );
-			kfsetting->_clean._str_condition = xmlnode.ReadString( "clean", true );
-			kfsetting->_dynamic_condition_limit = xmlnode.ReadDynamicConditionGroup( "dynamicconditionlimit", true );
-			kfsetting->_static_condition_limit = xmlnode.ReadStaticConditionList( "staticconditionlimit", true );
+			setting->_condition._str_condition = xml_node.ReadString( "condition", true );
+			setting->_done_type = xml_node.ReadUInt32( "donetype", true );
+			setting->_done_value = xml_node.ReadUInt32( "donevalue", true );
+			setting->_clean._str_condition = xml_node.ReadString( "clean", true );
+			setting->_dynamic_condition_limit = xml_node.ReadDynamicConditionGroup( "dynamicconditionlimit", true );
+			setting->_static_condition_limit = xml_node.ReadStaticConditionList( "staticconditionlimit", true );
 		}
 
 	};

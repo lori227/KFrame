@@ -44,23 +44,23 @@ namespace KFrame
 
 		virtual void LoadAllComplete()
 		{
-			for ( auto& iter : _settings._objects )
+			for ( auto& iter : _setting_list._objects )
 			{
-				auto kfsetting = iter.second;
+				auto setting = iter.second;
 
-				KFGlobal::Instance()->ParseElement( kfsetting->_reward, _file_name.c_str(), kfsetting->_row );
+				KFGlobal::Instance()->ParseElement( setting->_reward, _file_name.c_str(), setting->_row );
 			}
 		}
 
 	protected:
-		virtual void ReadSetting( KFXmlNode& xmlnode, KFMailSetting* kfsetting )
+		virtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KFMailSetting> setting )
 		{
-			kfsetting->_type = xmlnode.ReadUInt32( "type", true );
-			kfsetting->_title = xmlnode.ReadString( "title", true );
-			kfsetting->_content = xmlnode.ReadString( "content", true );
-			kfsetting->_valid_time = xmlnode.ReadUInt32( "validtime", true );
-			kfsetting->_reward._str_parse = xmlnode.ReadString( "reward", true );
-			kfsetting->_reply_id = xmlnode.ReadUInt32( "replyid", true );
+			setting->_type = xml_node.ReadUInt32( "type", true );
+			setting->_title = xml_node.ReadString( "title", true );
+			setting->_content = xml_node.ReadString( "content", true );
+			setting->_valid_time = xml_node.ReadUInt32( "validtime", true );
+			setting->_reward._str_parse = xml_node.ReadString( "reward", true );
+			setting->_reply_id = xml_node.ReadUInt32( "replyid", true );
 		}
 
 	};

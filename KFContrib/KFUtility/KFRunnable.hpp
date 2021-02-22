@@ -55,6 +55,9 @@ namespace KFrame
 
         // 正在运行的线程( 保持生命周期 )
         KFHashMap<ThreadId, KFRunnable> _runnable_list;
+
+        // 空闲的献出
+        std::list<std::shared_ptr<KFRunnable>> _idle_list;
     };
 }
 

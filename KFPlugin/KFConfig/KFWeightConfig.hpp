@@ -27,13 +27,13 @@ namespace KFrame
 		~KFWeightConfig() = default;
 
 	protected:
-		virtual void ReadSetting( KFXmlNode& xmlnode, KFWeightSetting* kfsetting )
+		virtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KFWeightSetting> setting )
 		{
 		
 			KFWeight weight;
-			weight._value = xmlnode.ReadUInt32( "value", true );
-			weight._weight = xmlnode.ReadUInt32( "weight", true );
-			kfsetting->_weight.Create( weight._value, weight._weight );
+			weight._value = xml_node.ReadUInt32( "value", true );
+			weight._weight = xml_node.ReadUInt32( "weight", true );
+			setting->_weight.Create( weight._value, weight._weight );
 		}
 
 	};

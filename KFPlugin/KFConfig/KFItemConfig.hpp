@@ -47,24 +47,24 @@ namespace KFrame
 
 		virtual void LoadAllComplete()
 		{
-			for ( auto& iter : _settings._objects )
+			for ( auto& iter : _setting_list._objects )
 			{
-				auto kfsetting = iter.second;
+				auto setting = iter.second;
 
-				KFGlobal::Instance()->ParseElement( kfsetting->_sell, _file_name.c_str(), kfsetting->_row );
+				KFGlobal::Instance()->ParseElement( setting->_sell, _file_name.c_str(), setting->_row );
 			}
 		}
 
 	protected:
-		virtual void ReadSetting( KFXmlNode& xmlnode, KFItemSetting* kfsetting )
+		virtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KFItemSetting> setting )
 		{
-			kfsetting->_type = xmlnode.ReadUInt32( "type", true );
-			kfsetting->_quality = xmlnode.ReadUInt32( "quality", true );
-			kfsetting->_overlay_type = xmlnode.ReadUInt32( "overlaytype", true );
-			kfsetting->_overlay_count = xmlnode.ReadUInt32( "overlaycount", true );
-			kfsetting->_use_count = xmlnode.ReadUInt32( "usecount", true );
-			kfsetting->_use_limit = xmlnode.ReadUInt32( "uselimit", true );
-			kfsetting->_sell._str_parse = xmlnode.ReadString( "sell", true );
+			setting->_type = xml_node.ReadUInt32( "type", true );
+			setting->_quality = xml_node.ReadUInt32( "quality", true );
+			setting->_overlay_type = xml_node.ReadUInt32( "overlaytype", true );
+			setting->_overlay_count = xml_node.ReadUInt32( "overlaycount", true );
+			setting->_use_count = xml_node.ReadUInt32( "usecount", true );
+			setting->_use_limit = xml_node.ReadUInt32( "uselimit", true );
+			setting->_sell._str_parse = xml_node.ReadString( "sell", true );
 		}
 
 	};

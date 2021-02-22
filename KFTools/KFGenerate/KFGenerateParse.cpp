@@ -15,7 +15,7 @@ namespace KFrame
         _finish_count = 0u;
         for ( auto i = 0; i < __MAX_PARSE_THREAD__; ++i )
         {
-            KFThread::CreateThread( this, &KFGenerateParse::ParseExecelThread, __FILE__, __LINE__ );
+            KFThread::Create( this, &KFGenerateParse::ParseExecelThread, __FILE__, __LINE__ );
         }
     }
 
@@ -709,50 +709,50 @@ namespace KFrame
             {
                 xmlfile << "\t\tvirtual void LoadAllComplete()\n";
                 xmlfile << "\t\t{\n";
-                xmlfile << "\t\t\tfor ( auto& iter : _settings._objects )\n";
+                xmlfile << "\t\t\tfor ( auto& iter : _setting_list._objects )\n";
                 xmlfile << "\t\t\t{\n";
-                xmlfile << "\t\t\t\tauto kfsetting = iter.second;\n\n";
+                xmlfile << "\t\t\t\tauto setting = iter.second;\n\n";
 
                 for ( auto& iter : exceldata->_attributes )
                 {
                     auto attribute = &iter.second;
                     if ( attribute->_cpp_class == _str_element )
                     {
-                        xmlfile << __FORMAT__( "\t\t\t\tKFGlobal::Instance()->ParseElement( kfsetting->{}, _file_name.c_str(), kfsetting->_row );\n", attribute->_cpp_name );
+                        xmlfile << __FORMAT__( "\t\t\t\tKFGlobal::Instance()->ParseElement( setting->{}, _file_name.c_str(), setting->_row );\n", attribute->_cpp_name );
                     }
                     else if ( attribute->_cpp_class == _str_condition_define )
                     {
-                        xmlfile << __FORMAT__( "\t\t\t\tkfsetting->{}._condition_define = KFConditionDefineConfig::Instance()->FindSetting( kfsetting->{}._str_condition );\n", attribute->_cpp_name, attribute->_cpp_name );
-                        xmlfile << __FORMAT__( "\t\t\t\tif ( !kfsetting->{}._str_condition.empty() && kfsetting->{}._condition_define == nullptr )\n", attribute->_cpp_name, attribute->_cpp_name );
+                        xmlfile << __FORMAT__( "\t\t\t\tkfsetting->{}._condition_define = KFConditionDefineConfig::Instance()->FindSetting( setting->{}._str_condition );\n", attribute->_cpp_name, attribute->_cpp_name );
+                        xmlfile << __FORMAT__( "\t\t\t\tif ( !setting->{}._str_condition.empty() && setting->{}._condition_define == nullptr )\n", attribute->_cpp_name, attribute->_cpp_name );
                         xmlfile << "\t\t\t\t{\n";
-                        xmlfile << __FORMAT__( "\t\t\t\t\t__LOG_ERROR__( \"condition=[{{}}] can't find define=[{{}}]\", kfsetting->_id, kfsetting->{}._str_condition );\n", attribute->_cpp_name );
+                        xmlfile << __FORMAT__( "\t\t\t\t\t__LOG_ERROR__( \"condition=[{{}}] can't find define=[{{}}]\", setting->_id, setting->{}._str_condition );\n", attribute->_cpp_name );
                         xmlfile << "\t\t\t\t}\n\n";
                     }
                     else if ( attribute->_cpp_class == _str_execute )
                     {
                         if ( attribute->_cpp_parent_class.empty() )
                         {
-                            xmlfile << __FORMAT__( "\t\t\t\tauto execute = kfsetting->{};\n", attribute->_cpp_name );
+                            xmlfile << __FORMAT__( "\t\t\t\tauto execute = setting->{};\n", attribute->_cpp_name );
                             xmlfile << __FORMAT__( "\t\t\t\tif ( execute->_name == __STRING__( data ) )\n",  );
                             xmlfile << "\t\t\t\t{\n";
-                            xmlfile << "\t\t\t\t\t\tauto& datavalue = execute->_param_list._params[ 0 ]->_str_value;\n";
+                            xmlfile << "\t\t\t\t\t\tauto& data_value = execute->_param_list._params[ 0 ]->_str_value;\n";
                             xmlfile << "\t\t\t\t\t\tauto& data_name = execute->_param_list._params[ 1 ]->_str_value;\n";
-                            xmlfile << "\t\t\t\t\t\tauto& datakey = execute->_param_list._params[ 2 ]->_int_value;\n";
-                            xmlfile << "\t\t\t\t\t\tKFGlobal::Instance()->FormatElement( execute->_elements, data_name, datavalue, datakey );\n";
+                            xmlfile << "\t\t\t\t\t\tauto& data_key = execute->_param_list._params[ 2 ]->_int_value;\n";
+                            xmlfile << "\t\t\t\t\t\tKFGlobal::Instance()->FormatElement( execute->_elements, data_name, data_value, data_key );\n";
                             xmlfile << "\t\t\t\t}\n\n";
                         }
                         else
                         {
                             auto subname = FormatParentVariable( attribute->_cpp_parent_class );
-                            xmlfile << __FORMAT__( "\t\t\t\tfor ( auto& executedata : kfsetting->{})\n", subname );
+                            xmlfile << __FORMAT__( "\t\t\t\tfor ( auto& executedata : setting->{})\n", subname );
                             xmlfile << "\t\t\t\t{\n";
                             xmlfile << __FORMAT__( "\t\t\t\t\tauto& execute = executedata.{};\n", attribute->_cpp_name );
                             xmlfile << __FORMAT__( "\t\t\t\t\tif ( execute->_name == __STRING__( data ) )\n", );
                             xmlfile << "\t\t\t\t\t{\n";
-                            xmlfile << "\t\t\t\t\t\tauto& datavalue = execute->_param_list._params[ 0 ]->_str_value;\n";
+                            xmlfile << "\t\t\t\t\t\tauto& data_value = execute->_param_list._params[ 0 ]->_str_value;\n";
                             xmlfile << "\t\t\t\t\t\tauto& data_name = execute->_param_list._params[ 1 ]->_str_value;\n";
-                            xmlfile << "\t\t\t\t\t\tauto& datakey = execute->_param_list._params[ 2 ]->_int_value;\n";
-                            xmlfile << "\t\t\t\t\t\tKFGlobal::Instance()->FormatElement( execute->_elements, data_name, datavalue, datakey );\n";
+                            xmlfile << "\t\t\t\t\t\tauto& data_key = execute->_param_list._params[ 2 ]->_int_value;\n";
+                            xmlfile << "\t\t\t\t\t\tKFGlobal::Instance()->FormatElement( execute->_elements, data_name, data_value, data_key );\n";
                             xmlfile << "\t\t\t\t\t}\n";
                             xmlfile << "\t\t\t\t}\n\n";
                         }
@@ -767,7 +767,7 @@ namespace KFrame
 
             // 读取配置
             {
-                xmlfile << __FORMAT__( "\t\tvirtual void ReadSetting( KFXmlNode& xmlnode, KF{}Setting* kfsetting )\n", filename );
+                xmlfile << __FORMAT__( "\t\tvirtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KF{}Setting> setting )\n", filename );
                 xmlfile << "\t\t{\n";
                 for ( auto& iter : exceldata->_attributes )
                 {
@@ -786,11 +786,11 @@ namespace KFrame
 
                     if ( attribute->_cpp_class == "rowofstringvector" )
                     {
-                        xmlfile << __FORMAT__( "\t\t\tkfsetting->{}{}.push_back( xmlnode.{}( \"{}\", {} ) );\n", attribute->_cpp_name, typeinfo->_cpp_extend, typeinfo->_cpp_function, attribute->_config_name, attribute->_optional );
+                        xmlfile << __FORMAT__( "\t\t\tsetting->{}{}.push_back( xml_node.{}( \"{}\", {} ) );\n", attribute->_cpp_name, typeinfo->_cpp_extend, typeinfo->_cpp_function, attribute->_config_name, attribute->_optional );
                     }
                     else
                     {
-                        xmlfile << __FORMAT__( "\t\t\tkfsetting->{}{} = xmlnode.{}( \"{}\", {} );\n", attribute->_cpp_name, typeinfo->_cpp_extend, typeinfo->_cpp_function, attribute->_config_name, attribute->_optional );
+                        xmlfile << __FORMAT__( "\t\t\tsetting->{}{} = xml_node.{}( \"{}\", {} );\n", attribute->_cpp_name, typeinfo->_cpp_extend, typeinfo->_cpp_function, attribute->_config_name, attribute->_optional );
                     }
                 }
 
@@ -818,22 +818,22 @@ namespace KFrame
                             return false;
                         }
 
-                        xmlfile << __FORMAT__( "\t\t\t{}.{}{} = xmlnode.{}( \"{}\", {} );\n", variablename, attribute->_cpp_name, typeinfo->_cpp_extend, typeinfo->_cpp_function, attribute->_config_name, attribute->_optional );
+                        xmlfile << __FORMAT__( "\t\t\t{}.{}{} = xml_node.{}( \"{}\", {} );\n", variablename, attribute->_cpp_name, typeinfo->_cpp_extend, typeinfo->_cpp_function, attribute->_config_name, attribute->_optional );
                     }
 
                     // 加入列表
                     auto subname = FormatParentVariable( iter.first );
                     if ( IsParentCppClass( exceldata, iter.first, _str_vector ) )
                     {
-                        xmlfile << __FORMAT__( "\t\t\tkfsetting->{}.push_back( {} );\n", subname, variablename );
+                        xmlfile << __FORMAT__( "\t\t\tsetting->{}.push_back( {} );\n", subname, variablename );
                     }
                     else if ( IsParentCppClass( exceldata, iter.first, _str_weight ) )
                     {
-                        xmlfile << __FORMAT__( "\t\t\tkfsetting->{}.Create( {}._value, {}._weight );\n", subname, variablename, variablename );
+                        xmlfile << __FORMAT__( "\t\t\tsetting->{}.Create( {}._value, {}._weight );\n", subname, variablename, variablename );
                     }
                     else
                     {
-                        xmlfile << __FORMAT__( "\t\t\tkfsetting->{} = {};\n", subname, variablename );
+                        xmlfile << __FORMAT__( "\t\t\tsetting->{} = {};\n", subname, variablename );
                     }
                 }
 

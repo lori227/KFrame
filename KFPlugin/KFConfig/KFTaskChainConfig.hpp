@@ -50,17 +50,17 @@ namespace KFrame
 		~KFTaskChainConfig() = default;
 
 	protected:
-		virtual void ReadSetting( KFXmlNode& xmlnode, KFTaskChainSetting* kfsetting )
+		virtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KFTaskChainSetting> setting )
 		{
 		
 			TaskChainData taskchaindata;
-			taskchaindata._index = xmlnode.ReadUInt32( "index", true );
-			taskchaindata._type = xmlnode.ReadUInt32( "type", true );
-			taskchaindata._task = xmlnode.ReadUInt32( "task", true );
-			taskchaindata._task_status = xmlnode.ReadUInt32( "taskstatus", true );
-			taskchaindata._extend_type = xmlnode.ReadUInt32( "extendtype", true );
-			taskchaindata._extend_chain = xmlnode.ReadUInt32( "extendchain", true );
-			kfsetting->_task_chain_data.push_back( taskchaindata );
+			taskchaindata._index = xml_node.ReadUInt32( "index", true );
+			taskchaindata._type = xml_node.ReadUInt32( "type", true );
+			taskchaindata._task = xml_node.ReadUInt32( "task", true );
+			taskchaindata._task_status = xml_node.ReadUInt32( "taskstatus", true );
+			taskchaindata._extend_type = xml_node.ReadUInt32( "extendtype", true );
+			taskchaindata._extend_chain = xml_node.ReadUInt32( "extendchain", true );
+			setting->_task_chain_data.push_back( taskchaindata );
 		}
 
 	};

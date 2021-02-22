@@ -40,13 +40,13 @@ namespace KFrame
 		~KFZoneConfig() = default;
 
 	protected:
-		virtual void ReadSetting( KFXmlNode& xmlnode, KFZoneSetting* kfsetting )
+		virtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KFZoneSetting> setting )
 		{
-			kfsetting->_login_id = xmlnode.ReadUInt32( "loginid", true );
-			kfsetting->_data_id = xmlnode.ReadUInt32( "dataid", true );
-			kfsetting->_name = xmlnode.ReadString( "name", true );
-			kfsetting->_flag = xmlnode.ReadUInt32( "flag", true );
-			kfsetting->_recommend = xmlnode.ReadUInt32( "recommend", true );
+			setting->_login_id = xml_node.ReadUInt32( "loginid", true );
+			setting->_data_id = xml_node.ReadUInt32( "dataid", true );
+			setting->_name = xml_node.ReadString( "name", true );
+			setting->_flag = xml_node.ReadUInt32( "flag", true );
+			setting->_recommend = xml_node.ReadUInt32( "recommend", true );
 		}
 
 	};

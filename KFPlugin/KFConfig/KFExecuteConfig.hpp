@@ -9,7 +9,7 @@ namespace KFrame
 	class ExecuteData
 	{
 	public:
-		// Ö´ï¿½ï¿½ï¿½ß¼ï¿½ï¿½Ð±ï¿½
+		// Ö´ÐÐÂß¼­ÁÐ±í
 		ExecuteDataPtr _execute;
 
 	};
@@ -18,7 +18,7 @@ namespace KFrame
 	class KFExecuteSetting : public KFIntSetting
 	{
 	public:
-		// ï¿½ï¿½ï¿½Ö´ï¿½ï¿½ï¿½Ð±ï¿½
+		// Êä³öÖ´ÐÐÁÐ±í
 		std::vector<ExecuteData> _execute_data;
 	};
 
@@ -36,19 +36,19 @@ namespace KFrame
 
 		virtual void LoadAllComplete()
 		{
-			for ( auto& iter : _settings._objects )
+			for ( auto& iter : _setting_list._objects )
 			{
-				auto kfsetting = iter.second;
+				auto setting = iter.second;
 
-				for ( auto& executedata : kfsetting->_execute_data)
+				for ( auto& executedata : setting->_execute_data)
 				{
 					auto& execute = executedata._execute;
 					if ( execute->_name == __STRING__( data ) )
 					{
-						auto& datavalue = execute->_param_list._params[ 0 ]->_str_value;
+						auto& data_value = execute->_param_list._params[ 0 ]->_str_value;
 						auto& data_name = execute->_param_list._params[ 1 ]->_str_value;
-						auto& datakey = execute->_param_list._params[ 2 ]->_int_value;
-						KFGlobal::Instance()->FormatElement( execute->_elements, data_name, datavalue, datakey );
+						auto& data_key = execute->_param_list._params[ 2 ]->_int_value;
+						KFGlobal::Instance()->FormatElement( execute->_elements, data_name, data_value, data_key );
 					}
 				}
 
@@ -56,12 +56,12 @@ namespace KFrame
 		}
 
 	protected:
-		virtual void ReadSetting( KFXmlNode& xmlnode, KFExecuteSetting* kfsetting )
+		virtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KFExecuteSetting> setting )
 		{
 		
 			ExecuteData executedata;
-			executedata._execute = xmlnode.ReadExecuteData( "execute", true );
-			kfsetting->_execute_data.push_back( executedata );
+			executedata._execute = xml_node.ReadExecuteData( "execute", true );
+			setting->_execute_data.push_back( executedata );
 		}
 
 	};

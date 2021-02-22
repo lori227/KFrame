@@ -10,40 +10,40 @@ namespace KFrame
 	class KFItemBagSetting : public KFStrSetting
 	{
 	public:
-		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		// ×î´óÊýÁ¿
 		uint32 _max_count = 0u;
 
-		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		// Ö÷Ë÷ÒýµÄÃû×Ö
 		std::string _index_name;
 
-		// Ò³Ç©ï¿½Ð±ï¿½
+		// Ò³Ç©ÁÐ±í
 		StringSet _tab_list;
 
-		// ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ñµ¯³ï¿½ï¿½ï¿½ï¿½â±³ï¿½ï¿½
+		// Âú°üÊÇ·ñµ¯³ö¶îÍâ±³°ü
 		std::string _extend_bag;
 
-		// ï¿½ï¿½Í¬Ê±Ê¹ï¿½ÃµÄ±ï¿½ï¿½ï¿½
+		// ¿ÉÍ¬Ê±Ê¹ÓÃµÄ±³°ü
 		StringList _use_child_bag;
 
-		// ï¿½ï¿½ï¿½ï¿½Ô´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½
+		// À´×ÔÔ´±³°üµÄÒÆ¶¯µÀ¾ßÌí¼ÓÐèÒª¸üÐÂ
 		StringSet _update_add_from_source;
 
-		// ï¿½Æ¶ï¿½ï¿½ï¿½Ä¿ï¿½ê±³ï¿½ï¿½ï¿½Äµï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½
+		// ÒÆ¶¯µ½Ä¿±ê±³°üµÄµÀ¾ßÐèÒª¸üÐÂ
 		StringSet _update_move_to_target;
 
-		// ï¿½Æ¶ï¿½ï¿½ï¿½Òªï¿½Í»ï¿½ï¿½ï¿½Æ®ï¿½ÖµÄ±ï¿½ï¿½ï¿½
+		// ÒÆ¶¯ÐèÒª¿Í»§¶ËÆ®×ÖµÄ±³°ü
 		StringSet _show_move_to_target;
 
-		// ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½Ç·ï¿½Í¨Öªï¿½Í»ï¿½ï¿½ï¿½Æ®ï¿½ï¿½
+		// Ìí¼ÓµÀ¾ßÊÇ·ñÍ¨Öª¿Í»§¶ËÆ®×Ö
 		bool _show_when_add = false;
 
-		// ï¿½Ç·ï¿½Ö§ï¿½ï¿½Ö±ï¿½ï¿½ï¿½Æ¶ï¿½
+		// ÊÇ·ñÖ§³ÖÖ±½ÓÒÆ¶¯
 		bool _can_move = false;
 
-		// ï¿½Ç·ï¿½Ö§ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½
+		// ÊÇ·ñÖ§³ÖÒ»¼üÒÆ¶¯ËùÓÐ
 		bool _can_move_all = false;
 
-		// ï¿½Ç·ï¿½Ö§ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½
+		// ÊÇ·ñÖ§³ÖÒ»¼üÇå¿Õ
 		bool _can_cleanup = false;
 
 	};
@@ -61,20 +61,20 @@ namespace KFrame
 		~KFItemBagConfig() = default;
 
 	protected:
-		virtual void ReadSetting( KFXmlNode& xmlnode, KFItemBagSetting* kfsetting )
+		virtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KFItemBagSetting> setting )
 		{
-			kfsetting->_max_count = xmlnode.ReadUInt32( "maxcount", true );
-			kfsetting->_index_name = xmlnode.ReadString( "indexname", true );
-			kfsetting->_tab_list = xmlnode.ReadStringSet( "tablist", true );
-			kfsetting->_extend_bag = xmlnode.ReadString( "extendbag", true );
-			kfsetting->_use_child_bag = xmlnode.ReadStringList( "usechildbag", true );
-			kfsetting->_update_add_from_source = xmlnode.ReadStringSet( "updateaddfromsource", true );
-			kfsetting->_update_move_to_target = xmlnode.ReadStringSet( "updatemovetotarget", true );
-			kfsetting->_show_move_to_target = xmlnode.ReadStringSet( "showmovetotarget", true );
-			kfsetting->_show_when_add = xmlnode.ReadBool( "showwhenadd", true );
-			kfsetting->_can_move = xmlnode.ReadBool( "canmove", true );
-			kfsetting->_can_move_all = xmlnode.ReadBool( "canmoveall", true );
-			kfsetting->_can_cleanup = xmlnode.ReadBool( "cancleanup", true );
+			setting->_max_count = xml_node.ReadUInt32( "maxcount", true );
+			setting->_index_name = xml_node.ReadString( "indexname", true );
+			setting->_tab_list = xml_node.ReadStringSet( "tablist", true );
+			setting->_extend_bag = xml_node.ReadString( "extendbag", true );
+			setting->_use_child_bag = xml_node.ReadStringList( "usechildbag", true );
+			setting->_update_add_from_source = xml_node.ReadStringSet( "updateaddfromsource", true );
+			setting->_update_move_to_target = xml_node.ReadStringSet( "updatemovetotarget", true );
+			setting->_show_move_to_target = xml_node.ReadStringSet( "showmovetotarget", true );
+			setting->_show_when_add = xml_node.ReadBool( "showwhenadd", true );
+			setting->_can_move = xml_node.ReadBool( "canmove", true );
+			setting->_can_move_all = xml_node.ReadBool( "canmoveall", true );
+			setting->_can_cleanup = xml_node.ReadBool( "cancleanup", true );
 		}
 
 	};

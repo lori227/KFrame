@@ -40,13 +40,13 @@ namespace KFrame
 		~KFTaskConfig() = default;
 
 	protected:
-		virtual void ReadSetting( KFXmlNode& xmlnode, KFTaskSetting* kfsetting )
+		virtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KFTaskSetting> setting )
 		{
-			kfsetting->_type = xmlnode.ReadUInt32( "type", true );
-			kfsetting->_quality = xmlnode.ReadUInt32( "quality", true );
-			kfsetting->_complete_mode = xmlnode.ReadUInt32( "completemode", true );
-			kfsetting->_complete_condition = xmlnode.ReadDynamicConditionGroup( "completecondition", true );
-			kfsetting->_execute = xmlnode.ReadUInt32Vector( "execute", true );
+			setting->_type = xml_node.ReadUInt32( "type", true );
+			setting->_quality = xml_node.ReadUInt32( "quality", true );
+			setting->_complete_mode = xml_node.ReadUInt32( "completemode", true );
+			setting->_complete_condition = xml_node.ReadDynamicConditionGroup( "completecondition", true );
+			setting->_execute = xml_node.ReadUInt32Vector( "execute", true );
 		}
 
 	};
