@@ -1,4 +1,4 @@
-﻿#include "KFServices.h"
+﻿#include "KFAppService.h"
 #include "KFStartup.h"
 #include "KFAppConfig.h"
 #include "KFApplication.h"
@@ -9,7 +9,7 @@
 
 namespace KFrame
 {
-    void KFServices::Run()
+    void KFAppService::Run()
     {
         do
         {
@@ -42,7 +42,7 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFServices::InitService( KFApplication* application, StringMap& params )
+    bool KFAppService::InitService( KFApplication* application, StringMap& params )
     {
         _application = application;
 
@@ -101,12 +101,12 @@ namespace KFrame
         }
 
         // 开启主逻辑线程
-        KFThread::CreateThread( this, &KFServices::Run, __FUNC_LINE__ );
+        KFThread::CreateThread( this, &KFAppService::Run, __FUNC_LINE__ );
         __LOG_INFO__( "[{}:{}:{}] version[{}] startup ok", global->_app_name, global->_app_type, global->_app_id->ToString(), global->GetVersion() );
         return true;
     }
 
-    void KFServices::RunUpdate()
+    void KFAppService::RunUpdate()
     {
         // 更新时间
         UpdateTime();
@@ -118,19 +118,19 @@ namespace KFrame
         KFPluginManage::Instance()->Run();
     }
 
-    void KFServices::ShutDown()
+    void KFAppService::ShutDown()
     {
         _kf_startup->ShutDown();
 
         _application = nullptr;
     }
 
-    bool KFServices::IsShutDown()
+    bool KFAppService::IsShutDown()
     {
         return _application == nullptr;
     }
 
-    void KFServices::UpdateTime()
+    void KFAppService::UpdateTime()
     {
         auto global = KFGlobal::Instance();
 

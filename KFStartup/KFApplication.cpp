@@ -1,4 +1,4 @@
-﻿#include "KFServices.h"
+﻿#include "KFAppService.h"
 #include "KFApplication.h"
 
 #if __KF_SYSTEM__ == __KF_LINUX__
@@ -13,7 +13,7 @@ namespace KFrame
 {
     KFApplication::KFApplication()
     {
-        _kf_services = nullptr;
+        _app_service = nullptr;
 
 #if __KF_SYSTEM__ == __KF_WIN__
         _in_handle = INVALID_HANDLE_VALUE;
@@ -22,7 +22,7 @@ namespace KFrame
 
     KFApplication::~KFApplication()
     {
-        delete _kf_services;
+        delete _app_service;
     }
 
     void KFApplication::initialize( Poco::Util::Application& self )
@@ -55,8 +55,8 @@ namespace KFrame
 
         SetupAppConsole();
 
-        _kf_services = new KFServices();
-        if ( !_kf_services->InitService( this, params ) )
+        _app_service = new KFAppService();
+        if ( !_app_service->InitService( this, params ) )
         {
             SetAppPause();
             return Poco::Util::Application::EXIT_CONFIG;
@@ -66,7 +66,7 @@ namespace KFrame
         ProcessKeyEvent();
 
         // 等待服务关闭
-        while ( !_kf_services->IsShutDown() )
+        while ( !_app_service->IsShutDown() )
         {
             KFThread::Sleep( 20 );
         }

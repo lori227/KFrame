@@ -16,7 +16,7 @@
     <ClCompile Include="KFDump.cpp" />
     <ClCompile Include="KFLibrary.cpp" />
     <ClCompile Include="KFMain.cpp" />
-    <ClCompile Include="KFServices.cpp" />
+    <ClCompile Include="KFAppService.cpp" />
     <ClCompile Include="KFStartup.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -24,7 +24,7 @@
     <ClInclude Include="KFApplication.h" />
     <ClInclude Include="KFDump.h" />
     <ClInclude Include="KFLibrary.h" />
-    <ClInclude Include="KFServices.h" />
+    <ClInclude Include="KFAppService.h" />
     <ClInclude Include="KFStartup.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

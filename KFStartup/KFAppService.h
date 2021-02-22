@@ -6,12 +6,12 @@
 namespace KFrame
 {
     class KFApplication;
-    class KFServices : public KFSingleton<KFServices>
+    class KFAppService : public KFSingleton<KFAppService>
     {
     public:
         // 构造
-        KFServices() = default;
-        ~KFServices() = default;
+        KFAppService() = default;
+        ~KFAppService() = default;
 
         // run
         void Run();

@@ -7,7 +7,7 @@
 
 namespace KFrame
 {
-    class KFServices;
+    class KFAppService;
     class KFApplication : public Poco::Util::ServerApplication, public KFSingleton< KFApplication >
     {
     public:
@@ -49,7 +49,7 @@ namespace KFrame
     protected:
 
         // 服务
-        KFServices* _kf_services;
+        KFAppService* _app_service;
 
 #if __KF_SYSTEM__ == __KF_WIN__
         // 输入句柄
