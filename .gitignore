@@ -48,3 +48,5 @@ Debug
 Release
 Debug_lib
 Release_lib
+cmake-build-debug
+.idea
