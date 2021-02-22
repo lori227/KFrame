@@ -39,7 +39,8 @@ include_directories(
     ${ROOT_DIR}/KFLibrary/poco/MongoDB/include
 )
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -fPIC -Wall")
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -Wall")
 if(CMAKE_BUILD_TYPE MATCHES "Debug")
     set(LIB_DIR ${ROOT_DIR}/_lib/linux/debug)
     set(BIN_DIR ${ROOT_DIR}/_bin/bin/linux/debug)
