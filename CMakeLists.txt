@@ -51,6 +51,10 @@ else()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
 endif()
 
+if (APPLE)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_APPLE")
+endif ()
+
 set(3RD_LIB_DIR ${ROOT_DIR}/_lib/linux/3rd)
 LINK_DIRECTORIES(${LIB_DIR} ${3RD_LIB_DIR})
 if(COROUTINE MATCHES "Enable")

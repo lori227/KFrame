@@ -144,7 +144,7 @@ namespace KFrame
     {
 #if __KF_SYSTEM__ == __KF_WIN__
         SetConsoleTitle( text );
-#else
+#elif __KF_SYSTEM__ == __KF_LINUX__
         prctl( PR_SET_NAME, text );
 #endif
     }
@@ -188,7 +188,6 @@ namespace KFrame
         {
             ProcessInputKeyEvent( keycode );
         }
-
 #endif
     }
 
@@ -219,7 +218,6 @@ namespace KFrame
             break;
         }
 #endif
-
     }
 
 }

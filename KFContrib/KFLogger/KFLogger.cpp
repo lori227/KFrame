@@ -118,7 +118,7 @@ namespace KFrame
 #if __KF_SYSTEM__ == __KF_WIN__
 
 
-#else
+#elif __KF_SYSTEM__ == __KF_LINUX__
         Log( KFLogEnum::Error, error );
         Log( KFLogEnum::Error, "========================================" );
 

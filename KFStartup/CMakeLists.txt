@@ -12,11 +12,11 @@ include_directories(
     ${ROOT_DIR}/KFLibrary/poco/Data/SQLite/include
 )
 
-aux_source_directory(. KFSTARTUP_SRC)
-list(REMOVE_ITEM KFSTARTUP_SRC "./KFDump.h")
-list(REMOVE_ITEM KFSTARTUP_SRC "./KFDump.cpp")
+aux_source_directory(. STARTUP_SRC)
+list(REMOVE_ITEM STARTUP_SRC "./KFDump.h")
+list(REMOVE_ITEM STARTUP_SRC "./KFDump.cpp")
 
-add_executable(KFStartup ${KFSTARTUP_SRC})
+add_executable(KFStartup ${STARTUP_SRC})
 add_dependencies(KFStartup KFUtility)
 add_dependencies(KFStartup KFLogger)
 add_dependencies(KFStartup KFGlobal)
@@ -31,7 +31,6 @@ set_target_properties(KFStartup PROPERTIES
 add_definitions(
     -D_CONSOLE
 )
-
 
 if(CMAKE_BUILD_TYPE MATCHES "Debug")
     target_link_libraries(KFStartup 

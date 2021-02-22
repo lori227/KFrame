@@ -14,10 +14,13 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////
 #define __KF_WIN__ 1
-#define __KF_LINUX__ 2
+#define __KF_APPLE__ 2
+#define __KF_LINUX__ 3
 
 #ifdef _WIN32
     #define __KF_SYSTEM__ __KF_WIN__
+#elif _APPLE
+    #define __KF_SYSTEM__ __KF_APPLE__
 #else
     #define __KF_SYSTEM__ __KF_LINUX__
 #endif // _WIN32
@@ -44,7 +47,7 @@
 #endif
 
 // linux
-#if __KF_SYSTEM__ == __KF_LINUX__
+#if __KF_SYSTEM__ != __KF_WIN__
     #define __KF_EXPORT__ extern "C" __attribute ((visibility("default")))
 
     #ifndef MAX_PATH
