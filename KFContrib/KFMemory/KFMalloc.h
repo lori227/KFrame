@@ -139,8 +139,8 @@ namespace KFrame
         KFMutex* _thread_buffer_mutex;
 
         // 线程buffer列表
-        std::unordered_map<uint32, KFThreadBuffer<int8>> _int8_list;
-        std::unordered_map<uint32, KFThreadBuffer<uint8>> _uint8_list;
+        std::unordered_map<ThreadId, KFThreadBuffer<int8>> _int8_list;
+        std::unordered_map<ThreadId, KFThreadBuffer<uint8>> _uint8_list;
 
         // 共享内存
         KFMutex* _share_memory_mutex;

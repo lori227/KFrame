@@ -170,7 +170,7 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////
     int8* KFMalloc::GetInt8( uint32 length, const char* function, uint32 line )
     {
-        auto thread_id = KFThread::GetThreadID();
+        auto thread_id = KFThread::GetID();
 
         KFLocker locker( *_thread_buffer_mutex );
         auto iter = _int8_list.find( thread_id );
@@ -192,7 +192,7 @@ namespace KFrame
 
     uint8* KFMalloc::GetUInt8( uint32 length, const char* function, uint32 line )
     {
-        auto thread_id = KFThread::GetThreadID();
+        auto thread_id = KFThread::GetID();
 
         KFLocker locker( *_thread_buffer_mutex );
         auto iter = _uint8_list.find( thread_id );

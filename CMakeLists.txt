@@ -72,7 +72,6 @@ ADD_DEFINITIONS(
         -Wno-strict-aliasing
         -Wno-pmf-conversions
         -Wno-comment
-        -Wno-c++2a-extensions
 )
 
 set(LDFLAGS "$ENV{LDFLAGS} -stdlib=libc++")
