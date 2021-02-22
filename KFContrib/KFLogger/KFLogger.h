@@ -62,8 +62,8 @@ namespace KFrame
 
             static const std::string _function_line_fmt = "[{}:{}] ";
 
-            auto newfmt = _function_line_fmt + my_fmt;
-            auto content = __FORMAT__( newfmt, function, line, std::forward<P>( args )... );
+            auto new_fmt = _function_line_fmt + my_fmt;
+            auto content = __FORMAT__( new_fmt, function, line, std::forward<P>( args )... );
             _log_function( level, content );
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////

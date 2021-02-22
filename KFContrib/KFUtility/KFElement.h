@@ -195,7 +195,7 @@ namespace KFrame
         uint32 _config_id = _invalid_int;
 
         // 属性数据
-        KFHashMap< std::string, KFValue > _values;
+        KFHashMap<std::string, KFValue> _values;
     };
     /////////////////////////////////////////////////////////////////////////////////
     class KFElements

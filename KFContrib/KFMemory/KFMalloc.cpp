@@ -184,7 +184,7 @@ namespace KFrame
         {
             buffer->_length = length;
             buffer->_data = reinterpret_cast< int8* >( realloc( buffer->_data, length ) );
-            __LOG_INFO__( "thread[{}] malloc int8[{}]", thread_id, length );
+            __LOG_INFO_FUNCTION__( function, line, "malloc int8[{}]", length );
         }
 
         return buffer->_data;
@@ -206,7 +206,7 @@ namespace KFrame
         {
             buffer->_length = length;
             buffer->_data = reinterpret_cast<uint8*>( realloc( buffer->_data, length ) );
-            __LOG_INFO__( "thread[{}] malloc uint8[{}]", thread_id, length );
+            __LOG_INFO_FUNCTION__( function, line, "malloc uint8[{}]", thread_id, length );
         }
 
         return buffer->_data;

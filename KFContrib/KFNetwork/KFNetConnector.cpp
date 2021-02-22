@@ -266,7 +266,7 @@ namespace KFrame
 
     void KFNetConnector::RunMessage( uint32 max_count )
     {
-        for ( int i = 0u; i < max_count; ++i )
+        for ( auto i = 0u; i < max_count; ++i )
         {
             auto message = PickNetMessage();
             if ( message == nullptr )
