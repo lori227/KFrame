@@ -5,14 +5,14 @@
 
 namespace KFrame
 {
-#define __GET_VALUE_DECLARATION__( outtype, gettype )\
-    outtype Get##gettype( google::protobuf::Message* message, const std::string& name );
-#define __SET_VALUE_DECLARATION__( intype, settype )\
-    void Set##settype( google::protobuf::Message* message, const std::string& name, intype value );
-#define __GET_REPEATED_DECLARATION__( outtype, gettype )\
-    outtype GetRepeated##gettype( const google::protobuf::Message* message, const std::string& name, int32 index );
-#define __ADD_REPEATED_DECLARATION__( intype, settype )\
-    void AddRepeated##settype( google::protobuf::Message* message, const std::string& name, intype value );
+#define __GET_VALUE_DECLARATION__( out_type, get_type )\
+    out_type Get##get_type( google::protobuf::Message* message, const std::string& name );
+#define __SET_VALUE_DECLARATION__( in_type, set_type )\
+    void Set##set_type( google::protobuf::Message* message, const std::string& name, in_type value );
+#define __GET_REPEATED_DECLARATION__( out_type, get_type )\
+    out_type GetRepeated##get_type( const google::protobuf::Message* message, const std::string& name, int32 index );
+#define __ADD_REPEATED_DECLARATION__( in_type, set_type )\
+    void AddRepeated##set_type( google::protobuf::Message* message, const std::string& name, in_type value );
 
     class KFProtoFactory : public KFSingleton< KFProtoFactory >
     {

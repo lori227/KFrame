@@ -1,18 +1,16 @@
 ﻿#ifndef __KF_KFRAME_H__
 #define __KF_KFRAME_H__
 
-#include "KFMacros.h"
 #include "KFMap.h"
 #include "KFEnum.h"
 #include "KFJson.h"
+#include "KFField.h"
 #include "KFRoute.h"
 #include "KFQueue.h"
-#include "KFDefine.h"
-#include "KFVector.h"
-#include "KFWeight.h"
-#include "KFField.h"
 #include "KFRange.h"
 #include "KFParam.h"
+#include "KFVector.h"
+#include "KFWeight.h"
 #include "KFResult.h"
 #include "KFNetData.h"
 #include "KFDBValue.h"

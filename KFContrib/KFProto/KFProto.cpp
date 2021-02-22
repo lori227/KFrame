@@ -21,21 +21,21 @@ namespace KFrame
         return result;
     }
 
-    std::string& KFProto::Serialize( const ::google::protobuf::Message* proto, uint32 compresstype, uint32 compresslevel, bool convert )
+    std::string& KFProto::Serialize( const ::google::protobuf::Message* proto, uint32 compress_type, uint32 compress_level, bool convert )
     {
         static std::string result = "";
         result.clear();
 
         auto data = proto->SerializeAsString();
-        KFCompress::Compress( data, result, compresstype, compresslevel, convert );
+        KFCompress::Compress( data, result, compress_type, compress_level, convert );
 
         return result;
     }
 
-    bool KFProto::Parse( ::google::protobuf::Message* proto, const std::string& data, uint32 compresstype, bool convert )
+    bool KFProto::Parse( ::google::protobuf::Message* proto, const std::string& data, uint32 compress_type, bool convert )
     {
         std::string result = "";
-        auto ok = KFCompress::UnCompress( data, result, compresstype, convert );
+        auto ok = KFCompress::UnCompress( data, result, compress_type, convert );
         if ( !result.empty() )
         {
             ok = proto->ParseFromString( result );

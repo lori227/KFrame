@@ -32,8 +32,8 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#define __SET_VALUE_DEFINE__( intype, settype ) \
-    void KFProtoFactory::Set##settype( google::protobuf::Message* message, const std::string& name, intype value )\
+#define __SET_VALUE_DEFINE__( in_type, set_type ) \
+    void KFProtoFactory::Set##set_type( google::protobuf::Message* message, const std::string& name, in_type value )\
     {\
         auto field = message->GetDescriptor()->FindFieldByName( name );\
         if ( field == nullptr )\
@@ -42,20 +42,20 @@ namespace KFrame
             return;\
         }\
         auto reflection = message->GetReflection();\
-        reflection->Set##settype( message, field, value );\
+        reflection->Set##set_type( message, field, value );\
     }
 
-#define __GET_VALUE_DEFINE__( outtype, gettype, defalutvalue ) \
-    outtype KFProtoFactory::Get##gettype( google::protobuf::Message* message, const std::string& name )\
+#define __GET_VALUE_DEFINE__( out_type, get_type, default_value ) \
+    out_type KFProtoFactory::Get##get_type( google::protobuf::Message* message, const std::string& name )\
     {\
         auto field = message->GetDescriptor()->FindFieldByName( name );\
         if ( field == nullptr )\
         {   \
             __LOG_ERROR__( "message[{}] can't find [{}] descriptor", message->GetTypeName(), name );\
-            return defalutvalue; \
+            return default_value; \
         }\
         auto reflection = message->GetReflection();\
-        return reflection->Get##gettype( *message, field );\
+        return reflection->Get##get_type( *message, field );\
     }
 
     __SET_VALUE_DEFINE__( int32, Int32 );
@@ -155,8 +155,8 @@ namespace KFrame
     }
 
 
-#define __ADD_REPEATED_DEFINE__( intype, settype ) \
-    void KFProtoFactory::AddRepeated##settype( google::protobuf::Message* message, const std::string& name, intype value )\
+#define __ADD_REPEATED_DEFINE__( in_type, set_type ) \
+    void KFProtoFactory::AddRepeated##set_type( google::protobuf::Message* message, const std::string& name, in_type value )\
     {   \
         auto field = message->GetDescriptor()->FindFieldByName( name );  \
         if ( field == nullptr )\
@@ -170,25 +170,25 @@ namespace KFrame
             return; \
         }\
         auto reflection = message->GetReflection(); \
-        reflection->Add##settype( message, field, value );\
+        reflection->Add##set_type( message, field, value );\
     }
 
-#define __GET_REPEATED_DEFINE__( outtype, gettype, defalutvalue ) \
-    outtype KFProtoFactory::GetRepeated##gettype( const google::protobuf::Message* message, const std::string& name, int32 index )\
+#define __GET_REPEATED_DEFINE__( out_type, get_type, default_value ) \
+    out_type KFProtoFactory::GetRepeated##get_type( const google::protobuf::Message* message, const std::string& name, int32 index )\
     {\
         auto field = message->GetDescriptor()->FindFieldByName( name );\
         if ( field == nullptr )\
         {   \
             __LOG_ERROR__( "message[{}] can't find [{}] descriptor", message->GetTypeName(), name );  \
-            return defalutvalue; \
+            return default_value; \
         }\
         if ( !field->is_repeated() )\
         {\
             __LOG_ERROR__( "message[{}] descriptor[{}] is not repeated", message->GetTypeName(), name );  \
-            return defalutvalue; \
+            return default_value; \
         }\
         auto reflection = message->GetReflection();\
-        return reflection->GetRepeated##gettype( *message, field, index );\
+        return reflection->GetRepeated##get_type( *message, field, index );\
     }
 
     __ADD_REPEATED_DEFINE__( int32, Int32 );
@@ -230,8 +230,8 @@ namespace KFrame
 
         }
         auto reflection = message->GetReflection();
-        auto submessage = reflection->AddMessage( message, field );
-        submessage->CopyFrom( *value );
+        auto sub_message = reflection->AddMessage( message, field );
+        sub_message->CopyFrom( *value );
     }
 
     const google::protobuf::Message* KFProtoFactory::GetRepeatedMessage( const google::protobuf::Message* message, const std::string& name, int32 index )

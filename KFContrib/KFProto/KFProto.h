@@ -21,10 +21,10 @@ namespace KFrame
 
         ///////////////////////////////////////////////////////////////////////////////////////////
         // 序列化字串游戏中
-        static std::string& Serialize( const ::google::protobuf::Message* proto, uint32 compresstype, uint32 compresslevel, bool convert );
+        static std::string& Serialize( const ::google::protobuf::Message* proto, uint32 compress_type, uint32 compress_level, bool convert );
 
         // 解析
-        static bool Parse( ::google::protobuf::Message* proto, const std::string& data, uint32 compresstype, bool convert );
+        static bool Parse( ::google::protobuf::Message* proto, const std::string& data, uint32 compress_type, bool convert );
 
         ///////////////////////////////////////////////////////////////////////////////////////////
     };
