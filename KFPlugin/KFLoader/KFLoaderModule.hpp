@@ -40,7 +40,7 @@ namespace KFrame
         void ProcessReloadCommand( const StringVector& params );
 
         // 创建config
-        virtual void AddConfig( const std::string& name, KFConfig* kfconfig );
+        virtual void AddConfig( const std::string& name, KFConfig* config );
 
         // 查找config
         virtual KFConfig* FindConfig( const std::string& name );
@@ -52,7 +52,7 @@ namespace KFrame
         void LoadConfigFile( KFConfig* config, const std::string& filepath, uint32 cleartype );
 
         // 判断是否需要重新加载
-        const std::string& CheckConfigFileNeedReload( KFConfig* config, const KFConfigData* configdata, StringSet& reloadlist );
+        const std::string& CheckConfigFileNeedReload( KFConfig* config, const KFConfigData* config_data, StringSet& reload_list );
     private:
         // 配置列表
         KFLoaderConfig* _kf_loader_config = nullptr;
@@ -61,7 +61,7 @@ namespace KFrame
         KFVersionConfig* _kf_version_config = nullptr;
 
         // 配置列表
-        std::unordered_map< std::string, KFConfig* > _config_list;
+        std::unordered_map<std::string, KFConfig*> _config_list;
     };
 }
 

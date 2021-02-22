@@ -560,10 +560,10 @@ int KFURLCharacter::encodeURIValue( char* resultBuffer, const char* sourceStr, s
         return ERR_NULL_PARAMS;
     }
 
-    register size_t blen = resultBufferSize - 1,
+     size_t blen = resultBufferSize - 1,
                     c = 0;
-    register unsigned char* p = ( unsigned char* )sourceStr;
-    register encodeURIDefineNode* tmp = NULL;
+     unsigned char* p = ( unsigned char* )sourceStr;
+     encodeURIDefineNode* tmp = NULL;
     int res = OK;
 
 
@@ -642,12 +642,12 @@ int KFURLCharacter::decodeURIValue( char* resultBuffer, const char* sourceStr, s
         return ERR_NULL_PARAMS;
     }
 
-    register size_t blen = resultBufferSize - 1,
+    size_t blen = resultBufferSize - 1,
                     c = 0;
 
-    register unsigned char* p = ( unsigned char* )sourceStr;
-    register decodeURIDefineNode* tmph = NULL;
-    register decodeURIDefineNode* tmpl = NULL;
+    unsigned char* p = ( unsigned char* )sourceStr;
+    decodeURIDefineNode* tmph = NULL;
+    decodeURIDefineNode* tmpl = NULL;
     int res = OK;
 
     while ( *p != '\0' ) {
