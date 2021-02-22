@@ -5,17 +5,7 @@
 #include "KFQueue.h"
 #include "KFNetDefine.hpp"
 #include "KFNetMessage.hpp"
-
-struct uv_stream_s;
-typedef struct uv_stream_s uv_stream_t;
-
-struct uv_handle_s;
-typedef struct uv_handle_s uv_handle_t;
-
-struct uv_write_s;
-typedef uv_write_s uv_write_t;
-
-struct uv_buf_t;
+#include "uv.h"
 
 namespace KFrame
 {

@@ -2,12 +2,7 @@
 #define __NET_SERVICE_H__
 
 #include "KFNetEvent.hpp"
-
-struct uv_loop_s;
-typedef struct uv_loop_s uv_loop_t;
-
-struct uv_async_s;
-typedef struct uv_async_s uv_async_t;
+#include "uv.h"
 
 namespace KFrame
 {

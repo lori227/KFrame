@@ -67,12 +67,6 @@
     <ClInclude Include="md5.hpp">
       <Filter>Crypto</Filter>
     </ClInclude>
-    <ClInclude Include="tar.hpp">
-      <Filter>Tar</Filter>
-    </ClInclude>
-    <ClInclude Include="KFTar.h">
-      <Filter>Tar</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KFXmlNode.cpp">
@@ -141,12 +135,6 @@
     <ClCompile Include="md5.cpp">
       <Filter>Crypto</Filter>
     </ClCompile>
-    <ClCompile Include="tar.cpp">
-      <Filter>Tar</Filter>
-    </ClCompile>
-    <ClCompile Include="KFTar.cpp">
-      <Filter>Tar</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Xml">
@@ -175,9 +163,6 @@
     </Filter>
     <Filter Include="Data">
       <UniqueIdentifier>{69da87a5-e469-43aa-8845-a0bb181542cf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Tar">
-      <UniqueIdentifier>{f64220b9-b9c7-4100-b28a-56923a0762cf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

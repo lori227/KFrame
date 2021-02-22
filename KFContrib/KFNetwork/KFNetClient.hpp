@@ -2,15 +2,7 @@
 #define __NET_CLIENT_H__
 
 #include "KFNetConnector.hpp"
-
-struct uv_tcp_s;
-typedef struct uv_tcp_s uv_tcp_t;
-
-struct uv_connect_s;
-typedef struct uv_connect_s uv_connect_t;
-
-struct uv_timer_s;
-typedef struct uv_timer_s uv_timer_t;
+#include "uv.h"
 
 namespace KFrame
 {

@@ -1,7 +1,6 @@
 ﻿#include "KFNetClient.hpp"
 #include "KFNetEvent.hpp"
 #include "KFNetClientService.hpp"
-#include "uv.h"
 
 namespace KFrame
 {

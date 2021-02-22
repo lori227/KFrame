@@ -3,7 +3,6 @@
 #include "KFNetEvent.hpp"
 #include "KFNetConnector.hpp"
 #include "KFNetService.hpp"
-#include "uv.h"
 
 namespace KFrame
 {

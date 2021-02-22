@@ -3,9 +3,7 @@
 
 #include "KFDefine.h"
 #include "KFNetConnector.hpp"
-
-struct uv_tcp_s;
-typedef struct uv_tcp_s uv_tcp_t;
+#include "uv.h"
 
 namespace KFrame
 {
