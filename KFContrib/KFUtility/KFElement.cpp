@@ -182,7 +182,7 @@ namespace KFrame
             _values.Insert( data_name, object );
         }
 
-        return static_pointer_cast< KFObjValue >( object );
+        return std::static_pointer_cast< KFObjValue >( object );
     }
 
     const std::string& KFElementObject::ToString() const
@@ -211,7 +211,7 @@ namespace KFrame
             case KFDataDefine::DataTypeObject:
             {
                 __JSON_OBJECT__( kfchild );
-                auto obj_value = static_pointer_cast< KFObjValue >( value_object );
+                auto obj_value = std::static_pointer_cast< KFObjValue >( value_object );
                 for ( auto& iter : obj_value->_element->_values._objects )
                 {
                     auto value = iter.second;
@@ -372,7 +372,7 @@ namespace KFrame
                 continue;
             }
 
-            auto element_value = static_pointer_cast< KFElementValue >( element );
+            auto element_value = std::static_pointer_cast< KFElementValue >( element );
             if ( element_value->_value->IsType( KFDataDefine::DataTypeUInt32 ) )
             {
                 auto value = static_cast< uint64 >( element_value->_value->GetUseValue() * multiple );

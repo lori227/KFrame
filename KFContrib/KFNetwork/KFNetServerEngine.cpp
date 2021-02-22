@@ -117,7 +117,7 @@ namespace KFrame
     void KFNetServerEngine::OnServerConnected( std::shared_ptr<KFNetEventData>& event_data )
     {
         // 加入托管列表
-        auto handle = static_pointer_cast<KFNetHandle>( event_data->_data );
+        auto handle = std::static_pointer_cast<KFNetHandle>( event_data->_data );
         _trustee_handle_list.Insert( event_data->_id, handle );
 
         // 1分钟没有验证绑定, 自动断开
