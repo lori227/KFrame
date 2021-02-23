@@ -132,7 +132,7 @@ namespace KFrame
             if ( token_data->_client_id == net_data->_id )
             {
                 // 启动定时器, 10秒钟内不验证, 关闭连接
-                __LIMIT_TIMER_1__( net_data->_id, 10000, 1, &KFClusterProxyModule::OnTimerClusterAuthTimeOut );
+                __COUNT_TIMER_1__( net_data->_id, 10000, 1, &KFClusterProxyModule::OnTimerClusterAuthTimeOut );
                 return;
             }
         }

@@ -144,7 +144,7 @@ namespace KFrame
                     auto kfchilddata = kfdata->FindData( citer->first );
                     if ( kfchilddata != nullptr )
                     {
-                        kfchilddata->SetValue< uint64 >( citer->second );
+                        kfchilddata->SetValue<uint64>( citer->second );
                     }
                 }
             }

@@ -805,7 +805,7 @@ namespace KFrame
 
     __KF_ADD_DATA_FUNCTION__( KFItemModule::OnAddItemCallBack )
     {
-        auto itemtime = kfdata->Get< uint64 >();
+        auto itemtime = kfdata->Get<uint64>();
         if ( itemtime != 0u )
         {
             StartItemCheckTimer( player, kfdata );
@@ -857,7 +857,7 @@ namespace KFrame
             intervaltime = ( itemtime - now_time + 1 ) * 1000;
         }
 
-        __LIMIT_TIMER_2__( player->GetKeyID(), kfitem->GetKeyID(), intervaltime, 1, &KFItemModule::OnTimerRemoveTimeItem );
+        __COUNT_TIMER_2__( player->GetKeyID(), kfitem->GetKeyID(), intervaltime, 1, &KFItemModule::OnTimerRemoveTimeItem );
     }
 
     __KF_TIMER_FUNCTION__( KFItemModule::OnTimerRemoveTimeItem )

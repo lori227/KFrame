@@ -14,9 +14,9 @@ namespace KFrame
 
 
         std::string GetAppPath();
-        std::string GetStartupFile( bool isdebug );
+        std::string GetStartupFile( bool is_debug );
 
-        bool IsAppServer( const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zone_id );
+        bool IsAppServer( const std::string& app_name, const std::string& app_type, const std::string& app_id, uint32 zone_id );
         void CopyFrom( StringMap& values );
         void SaveTo( StringMap& values );
 
@@ -77,7 +77,7 @@ namespace KFrame
         bool _is_shutdown;
 
         // 是否连接
-        bool _is_conencted = false;
+        bool _is_connected = false;
 
         // 超时时间
         uint64 _heartbeat_timeout = 0u;

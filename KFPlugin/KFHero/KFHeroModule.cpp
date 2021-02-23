@@ -69,7 +69,7 @@ namespace KFrame
 
         // 转换成间隔时间(毫秒) 启动定时器
         auto intervaltime = ( _min_valid_time - KFGlobal::Instance()->_real_time + 1 ) * 1000;
-        __LIMIT_TIMER_1__( player->GetKeyID(), intervaltime, 1, &KFHeroModule::OnTimerCheckHeroValidTime );
+        __COUNT_TIMER_1__( player->GetKeyID(), intervaltime, 1, &KFHeroModule::OnTimerCheckHeroValidTime );
     }
 
     void KFHeroModule::RemoveInvalidTimeHero( EntityPtr player )
@@ -181,7 +181,7 @@ namespace KFrame
 
     __KF_ADD_DATA_FUNCTION__( KFHeroModule::OnAddHeroCallBack )
     {
-        auto validtime = kfdata->Get< uint64 >( __STRING__( time ) );
+        auto validtime = kfdata->Get<uint64>( __STRING__( time ) );
         if ( validtime == _invalid_int )
         {
             return;
@@ -193,7 +193,7 @@ namespace KFrame
 
     __KF_REMOVE_DATA_FUNCTION__( KFHeroModule::OnRemoveHeroCallBack )
     {
-        auto kfsetting = KFHeroConfig::Instance()->FindSetting( static_cast< uint32 >( key ) );
+        auto kfsetting = KFHeroConfig::Instance()->FindSetting( static_cast<uint32>( key ) );
         if ( kfsetting == nullptr )
         {
             return;

@@ -23,7 +23,7 @@ namespace KFrame
         // 大小
         inline uint32 Size()
         {
-            return static_cast< uint32 >( _objects.size() );
+            return static_cast<uint32>( _objects.size() );
         }
 
         // 清除

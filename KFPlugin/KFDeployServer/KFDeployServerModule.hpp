@@ -101,23 +101,23 @@ namespace KFrame
 
     protected:
         // 更新Agnet状态
-        void UpdateAgentToDatabase( KFAgentData* kfagent, uint32 status );
+        void UpdateAgentToDatabase( std::shared_ptr<KFAgentData> agent_data, uint32 status );
 
         // 回发日志消息
         template<typename... P>
-        void LogDeploy( uint64 agentid, const char* myfmt, P&& ... args )
+        void LogDeploy( uint64 agent_id, const char* fmt, P&& ... args )
         {
-            auto msg = __FORMAT__( myfmt, std::forward<P>( args )... );
-            return SendLogMessage( agentid, msg );
+            auto msg = __FORMAT__( fmt, std::forward<P>( args )... );
+            return SendLogMessage( agent_id, msg );
         }
 
-        void SendLogMessage( uint64 agentid, const std::string& msg );
+        void SendLogMessage( uint64 agent_id, const std::string& msg );
 
     private:
-        KFMySQLDriver* _mysql_driver{ nullptr };
+        std::shared_ptr<KFMySQLDriver> _mysql_driver = nullptr;
 
         // Agent列表
-        KFHashMap< std::string, KFAgentData > _agent_list;
+        KFHashMap<std::string, KFAgentData> _agent_list;
 
         // 定时任务id
         uint64 _delayed_id = 0u;

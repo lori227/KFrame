@@ -26,7 +26,7 @@ namespace KFrame
         _tm_date.tm_sec = static_cast< int32 >( second );
         _tm_date.tm_isdst = -1;
 
-        _time = static_cast< uint64 >( mktime( &_tm_date ) );
+        _time = static_cast<uint64>( mktime( &_tm_date ) );
         ConvertTimeDate();
     }
 

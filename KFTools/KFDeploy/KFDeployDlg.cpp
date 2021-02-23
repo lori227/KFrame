@@ -895,8 +895,8 @@ void CKFDeployDlg::RefreshServerList( const KFMsg::PBMySQLDatas* pbdatas )
         // service
         {
             auto strservice = pbvalues[ __STRING__( service ) ];
-            auto channel = KFUtility::SplitValue< uint32 >( strservice, "." );
-            auto service = KFUtility::SplitValue< uint32 >( strservice, "." );
+            auto channel = KFUtility::SplitValue<uint32>( strservice, "." );
+            auto service = KFUtility::SplitValue<uint32>( strservice, "." );
             strservice = __FORMAT__( "{}{}|{}.{}",
                                      _deploy_manage->_channel_name[ channel ],
                                      _deploy_manage->_service_name[ service ],
@@ -1141,7 +1141,7 @@ void CKFDeployDlg::OnCbnSelchangeComboName()
     std::string name = strtext.GetBuffer();
 
     StringSet typelist;
-    std::set< uint32 > zonelist;
+    std::set<uint32> zonelist;
     zonelist.insert( 0 );
     StringSet idlist;
 

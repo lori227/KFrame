@@ -20,10 +20,10 @@ namespace KFrame
 
         // 注册指定次数定时器
         template<class T>
-        void RegisterLimitTimer( uint64 object_id, uint64 data_id, uint32 interval_time, uint32 count, T* module, void ( T::*handle )( uint64, uint64, uint32 ) )
+        void RegisterCountTimer( uint64 object_id, uint64 data_id, uint32 interval_time, uint32 count, T* module, void ( T::*handle )( uint64, uint64, uint32 ) )
         {
             KFTimerFunction function = std::bind( handle, module, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 );
-            AddLimitTimer( object_id, data_id, interval_time, count, module, function );
+            AddCountTimer( object_id, data_id, interval_time, count, module, function );
         }
 
         // 注册延迟定时器( 一定时间内只执行一次 )
@@ -44,7 +44,7 @@ namespace KFrame
     protected:
         // 注册定时器
         virtual void AddLoopTimer( uint64 object_id, uint64 data_id, uint32 interval_time, uint32 delay_time, KFModule* module, KFTimerFunction& function ) = 0;
-        virtual void AddLimitTimer( uint64 object_id, uint64 data_id, uint32 interval_time, uint32 count, KFModule* module, KFTimerFunction& function ) = 0;
+        virtual void AddCountTimer( uint64 object_id, uint64 data_id, uint32 interval_time, uint32 count, KFModule* module, KFTimerFunction& function ) = 0;
         virtual void AddDelayTimer( uint64 object_id, uint64 data_id, uint32 interval_time, KFModule* module, KFTimerFunction& function ) = 0;
         virtual void RemoveTimer( uint64 object_id, uint64 data_id, KFModule* module ) = 0;
     };
@@ -63,12 +63,12 @@ namespace KFrame
 #define __LOOP_TIMER_2__( object_id, data_id, interval_time, delay_time, function ) \
     _kf_timer->RegisterLoopTimer( object_id, data_id, interval_time, delay_time, this, function )
 
-#define __LIMIT_TIMER_0__( interval_time, count, function ) \
-    _kf_timer->RegisterLimitTimer( 0u, 0u, interval_time, count, this, function )
-#define __LIMIT_TIMER_1__( object_id, interval_time, count, function ) \
-    _kf_timer->RegisterLimitTimer( object_id, 0u, interval_time, count, this, function )
-#define __LIMIT_TIMER_2__( object_id, data_id, interval_time, count, function ) \
-    _kf_timer->RegisterLimitTimer( object_id, data_id, interval_time, count, this, function )
+#define __COUNT_TIMER_0__( interval_time, count, function ) \
+    _kf_timer->RegisterCountTimer( 0u, 0u, interval_time, count, this, function )
+#define __COUNT_TIMER_1__( object_id, interval_time, count, function ) \
+    _kf_timer->RegisterCountTimer( object_id, 0u, interval_time, count, this, function )
+#define __COUNT_TIMER_2__( object_id, data_id, interval_time, count, function ) \
+    _kf_timer->RegisterCountTimer( object_id, data_id, interval_time, count, this, function )
 
 #define __DELAY_TIMER_0__( interval_time, function ) \
     _kf_timer->RegisterDelayTimer( 0u, 0u,interval_time, this, function )

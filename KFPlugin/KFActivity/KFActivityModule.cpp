@@ -198,7 +198,7 @@ namespace KFrame
             return;
         }
 
-        std::list< uint64 > removes;
+        std::list<uint64> removes;
 
         auto birthday = player->Get( __STRING__( birthday ) );
         auto realtime = KFGlobal::Instance()->_real_time;

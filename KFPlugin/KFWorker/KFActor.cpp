@@ -70,7 +70,7 @@ namespace KFrame
                 _route = message->_route;
 
                 auto* kfactor = reinterpret_cast< uint64* >( &message->_route );
-                *kfactor = reinterpret_cast< uint64 >( this );
+                *kfactor = reinterpret_cast<uint64>( this );
 
                 _kf_worker_moduler->CallFunction( message->_route, message->_msg_id, message->_data, message->_length );
                 __KF_DELETE__( KFWorkerMessage, message );

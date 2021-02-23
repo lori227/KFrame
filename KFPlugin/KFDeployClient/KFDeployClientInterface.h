@@ -14,21 +14,21 @@ namespace KFrame
     {
     public:
         template<class T>
-        void RegisterFunction( const std::string& command, T* object, void( T::*handle )( const std::string& param ) )
+        void RegisterFunction( const std::string& command, T* module, void( T::*handle )( const std::string& ) )
         {
-            KFDeployFunction function = std::bind( handle, object, std::placeholders::_1 );
-            AddFunction( command, typeid( T ).name(), function );
+            KFDeployFunction function = std::bind( handle, module, std::placeholders::_1 );
+            AddFunction( command, module, function );
         }
 
         template<class T>
-        void UnRegisterFunction( const std::string& command, T* object )
+        void UnRegisterFunction( const std::string& command, T* module )
         {
-            RemoveFunction( command, typeid( T ).name() );
+            RemoveFunction( command, module );
         }
 
     protected:
-        virtual void AddFunction( const std::string& command, const std::string& module, KFDeployFunction& function ) = 0;
-        virtual void RemoveFunction( const std::string& command, const std::string& module ) = 0;
+        virtual void AddFunction( const std::string& command, KFModule* module, KFDeployFunction& function ) = 0;
+        virtual void RemoveFunction( const std::string& command, KFModule* module ) = 0;
     };
 
     ///////////////////////////////////////////////////////////////////////

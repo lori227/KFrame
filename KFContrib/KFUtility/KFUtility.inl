@@ -143,7 +143,7 @@ namespace KFrame
         out_list.clear();
         while ( !source.empty() )
         {
-            auto value = SplitValue< uint32 >( source, split );
+            auto value = SplitValue<uint32>( source, split );
             out_list.push_back( value );
         }
     }
@@ -176,7 +176,7 @@ namespace KFrame
         out_set.clear();
         while ( !source.empty() )
         {
-            auto value = SplitValue< uint32 >( source, split );
+            auto value = SplitValue<uint32>( source, split );
             out_set.insert( value );
         }
     }

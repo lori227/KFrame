@@ -180,7 +180,7 @@ namespace KFrame
         _register_timer_data.push_back( timer_data );
     }
 
-    void KFTimerModule::AddLimitTimer( uint64 object_id, uint64 data_id, uint32 interval_time, uint32 count, KFModule* module, KFTimerFunction& function )
+    void KFTimerModule::AddCountTimer( uint64 object_id, uint64 data_id, uint32 interval_time, uint32 count, KFModule* module, KFTimerFunction& function )
     {
         if ( interval_time == 0u )
         {

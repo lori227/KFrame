@@ -165,7 +165,7 @@ namespace KFrame
             return _invalid_int;
         }
 
-        auto oldvalue = kfdata->Get< uint64 >();
+        auto oldvalue = kfdata->Get<uint64>();
         auto newvalue = kfdata->Operate( operate, value );
         _kf_component->UpdateDataCallBack( this, key, kfdata, _invalid_int, operate, value, oldvalue, newvalue, callback );
 
@@ -263,7 +263,7 @@ namespace KFrame
             return _invalid_int;
         }
 
-        auto oldvalue = kfdata->Get< uint64 >();
+        auto oldvalue = kfdata->Get<uint64>();
         auto newvalue = kfdata->Operate( operate, value );
         _kf_component->UpdateDataCallBack( this, key, kfdata, index, operate, value, oldvalue, newvalue, callback );
 
@@ -1715,13 +1715,13 @@ namespace KFrame
             ( *proto_object->mutable_pbint32() )[ datasetting->_name ] = kfdata->Get< int32 >();
             break;
         case KFDataDefine::DataTypeUInt32:
-            ( *proto_object->mutable_pbuint32() )[ datasetting->_name ] = kfdata->Get< uint32 >();
+            ( *proto_object->mutable_pbuint32() )[ datasetting->_name ] = kfdata->Get<uint32>();
             break;
         case KFDataDefine::DataTypeInt64:
             ( *proto_object->mutable_pbint64() )[ datasetting->_name ] = kfdata->Get< int64 >();
             break;
         case KFDataDefine::DataTypeUInt64:
-            ( *proto_object->mutable_pbuint64() )[ datasetting->_name ] = kfdata->Get< uint64 >();
+            ( *proto_object->mutable_pbuint64() )[ datasetting->_name ] = kfdata->Get<uint64>();
             break;
         case KFDataDefine::DataTypeDouble:
             ( *proto_object->mutable_pbdouble() )[ datasetting->_name ] = kfdata->Get<double>();

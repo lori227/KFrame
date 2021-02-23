@@ -21,7 +21,7 @@ namespace KFrame
     class KFDeployCommand
     {
     public:
-        KFMapFunction< std::string, KFDeployFunction > _functions;
+        KFMapModuleFunction<KFModule*, KFDeployFunction> _function_list;
     };
 
     class KFDeployClientModule : public KFDeployClientInterface
@@ -38,14 +38,14 @@ namespace KFrame
         virtual void ShutDown();
 
     protected:
-        virtual void AddFunction( const std::string& command, const std::string& module, KFDeployFunction& function );
-        virtual void RemoveFunction( const std::string& command, const std::string& module );
+        virtual void AddFunction( const std::string& command, KFModule* module, KFDeployFunction& function );
+        virtual void RemoveFunction( const std::string& command, KFModule* module );
 
         // 部署命令
-        void DeployCommand( const std::string& command, const std::string& value, const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zone_id );
+        void DeployCommand( const std::string& command, const std::string& value, const std::string& app_name, const std::string& app_type, const std::string& app_id, uint32 zone_id );
 
         // 判断是不是自己
-        bool IsSelfServer( const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zone_id );
+        bool IsSelfServer( const std::string& app_name, const std::string& app_type, const std::string& app_id, uint32 zone_id );
 
         // 调用部署命令
         void CallDeployFunction( const std::string& command, const std::string& value );

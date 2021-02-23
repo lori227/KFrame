@@ -154,13 +154,13 @@ namespace KFrame
 
     void KFGlobal::InitChannelService( std::string& channel_service )
     {
-        _channel = KFUtility::SplitValue< uint32 >( channel_service, "." );
+        _channel = KFUtility::SplitValue<uint32>( channel_service, "." );
         if ( _channel == 0 )
         {
             _channel = 1;
         }
 
-        _service = KFUtility::SplitValue< uint32 >( channel_service, "." );
+        _service = KFUtility::SplitValue<uint32>( channel_service, "." );
         if ( _service == 0u )
         {
             _service = KFServerEnum::Debug;

@@ -326,7 +326,7 @@ namespace KFrame
             _mail_data.insert( std::make_pair( __STRING__( sendname ), kfbasic->Get< std::string >( __STRING__( name ) ) ) );
 
             // 性别
-            _mail_data.insert( std::make_pair( __STRING__( sex ), __TO_STRING__( kfbasic->Get< uint32 >( __STRING__( sex ) ) ) ) );
+            _mail_data.insert( std::make_pair( __STRING__( sex ), __TO_STRING__( kfbasic->Get<uint32>( __STRING__( sex ) ) ) ) );
         }
 
         return _mail_data;

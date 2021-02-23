@@ -191,7 +191,7 @@ namespace KFrame
             {
                 if ( xml_node.ReadString( iter.first.c_str(), true ) == "1" )
                 {
-                    KFUtility::AddBitMask< uint32 >( data_setting->_data_mask, iter.second );
+                    KFUtility::AddBitMask<uint32>( data_setting->_data_mask, iter.second );
                 }
             }
         }

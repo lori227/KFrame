@@ -423,7 +423,7 @@ namespace KFrame
         kfrole->_session_id = _invalid_int;
 
         static auto _disconnect_time_constant = KFGlobal::Instance()->FindConstant( __STRING__( disconnecttime ) );
-        __LIMIT_TIMER_1__( kfrole->_id, _disconnect_time_constant->_uint32_value, 1, &KFGateModule::OnTimerPlayerDisconnetion );
+        __COUNT_TIMER_1__( kfrole->_id, _disconnect_time_constant->_uint32_value, 1, &KFGateModule::OnTimerPlayerDisconnetion );
     }
 
     __KF_TIMER_FUNCTION__( KFGateModule::OnTimerPlayerDisconnetion )

@@ -26,7 +26,7 @@ namespace KFrame
                 LuaPlus::LuaObject luaobject = _lua_state->GetGlobal( function.c_str() );
                 if ( luaobject.IsFunction() )
                 {
-                    auto result = ( ( LuaPlus::LuaFunction< uint64 > )luaobject )( objectid, std::forward<T>( params )... );
+                    auto result = ( ( LuaPlus::LuaFunction<uint64> )luaobject )( objectid, std::forward<T>( params )... );
                     return result;
                 }
             }

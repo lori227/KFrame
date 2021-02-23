@@ -396,7 +396,7 @@ namespace KFrame
         {
             if ( delaytime > 0u )
             {
-                __LIMIT_TIMER_2__( player->GetKeyID(), delaytime, delaytime, 1u, &KFPlayerModule::OnTimerSyncEntityToOnline );
+                __COUNT_TIMER_2__( player->GetKeyID(), delaytime, delaytime, 1u, &KFPlayerModule::OnTimerSyncEntityToOnline );
             }
         }
     }

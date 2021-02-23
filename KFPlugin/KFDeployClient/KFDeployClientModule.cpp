@@ -32,15 +32,15 @@ namespace KFrame
 
     void KFDeployClientModule::PrepareRun()
     {
-        auto agentdata = KFGlobal::Instance()->_startup_params[ __STRING__( agent ) ];
-        if ( agentdata.empty() )
+        auto agent_data = KFGlobal::Instance()->_startup_params[ __STRING__( agent ) ];
+        if ( agent_data.empty() )
         {
             return;
         }
 
-        _agent_id = KFUtility::SplitValue<uint64>( agentdata, "|" );
-        _agent_ip = KFUtility::SplitString( agentdata, "|" );
-        _agent_port = KFUtility::SplitValue< uint32 >( agentdata, "|" );
+        _agent_id = KFUtility::SplitValue<uint64>( agent_data, "|" );
+        _agent_ip = KFUtility::SplitString( agent_data, "|" );
+        _agent_port = KFUtility::SplitValue<uint32>( agent_data, "|" );
         _kf_tcp_client->StartClient( __STRING__( deploy ), __STRING__( agent ), _agent_id, _agent_ip, _agent_port );
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -71,51 +71,55 @@ namespace KFrame
         _kf_tcp_client->SendNetMessage( _agent_id, KFMsg::S2S_DEPLOY_HEARTBEAT_TO_AGENT_REQ, &req );
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFDeployClientModule::AddFunction( const std::string& command, const std::string& module, KFDeployFunction& function )
+    void KFDeployClientModule::AddFunction( const std::string& command, KFModule* module, KFDeployFunction& function )
     {
-        auto kfcommand = _command_data.Create( command );
-        auto kffunction = kfcommand->_functions.Create( module );
-        kffunction->_function = function;
+        auto command_data = _command_data.Create( command );
+        auto function_data = command_data->_function_list.Create( module );
+        function_data->SetFunction( module, function );
     }
 
-    void KFDeployClientModule::RemoveFunction( const std::string& command, const std::string& module )
+    void KFDeployClientModule::RemoveFunction( const std::string& command, KFModule* module )
     {
-        auto kfcommand = _command_data.Create( command );
-        kfcommand->_functions.Remove( module );
+        auto command_data = _command_data.Find( command );
+        if ( command_data != nullptr )
+        {
+            command_data->_function_list.Remove( module );
+        }
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFDeployClientModule::HandleDeployCommandToClientReq, KFMsg::S2SDeployCommandToClientReq )
     {
-        auto pbdeploy = &kfmsg->deploycommand();
+        auto deploy_command = &kfmsg->deploycommand();
 
         // 部署命令
-        DeployCommand( pbdeploy->command(), pbdeploy->value(), pbdeploy->appname(), pbdeploy->apptype(), pbdeploy->appid(), pbdeploy->zone_id() );
+        DeployCommand( deploy_command->command(), deploy_command->value(),
+                       deploy_command->appname(), deploy_command->apptype(), deploy_command->appid(), deploy_command->zoneid() );
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFDeployClientModule::IsSelfServer( const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zone_id )
+    bool KFDeployClientModule::IsSelfServer( const std::string& app_name, const std::string& app_type, const std::string& app_id, uint32 zone_id )
     {
         auto global = KFGlobal::Instance();
 
         // 指定appid
-        if ( appid != _globbing_string )
+        if ( app_id != _globbing_string )
         {
-            return ( appid == global->_app_id->ToString() );
+            return ( app_id == global->_app_id->ToString() );
         }
 
         // appname
-        if ( appname != _globbing_string )
+        if ( app_name != _globbing_string )
         {
-            if ( appname != global->_app_name )
+            if ( app_name != global->_app_name )
             {
                 return false;
             }
         }
 
         // apptype
-        if ( apptype != _globbing_string )
+        if ( app_type != _globbing_string )
         {
-            if ( apptype != global->_app_type )
+            if ( app_type != global->_app_type )
             {
                 return false;
             }
@@ -137,31 +141,31 @@ namespace KFrame
     }
 
     void KFDeployClientModule::DeployCommand( const std::string& command, const std::string& value,
-            const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zone_id )
+            const std::string& app_name, const std::string& app_type, const std::string& app_id, uint32 zone_id )
     {
         // 判断是不是自己
-        auto ok = IsSelfServer( appname, apptype, appid, zone_id );
+        auto ok = IsSelfServer( app_name, app_type, app_id, zone_id );
         if ( !ok )
         {
             return;
         }
 
-        __LOG_INFO__( "[{}:{} | {}:{}:{}:{}] deploy command req", command, value, appname, apptype, appid, zone_id );
+        __LOG_INFO__( "[{}:{} | {}:{}:{}:{}] deploy command req", command, value, app_name, app_type, app_id, zone_id );
         CallDeployFunction( command, value );
     }
 
     void KFDeployClientModule::CallDeployFunction( const std::string& command, const std::string& value )
     {
-        auto kfcommand = _command_data.Find( command );
-        if ( kfcommand == nullptr )
+        auto command_data = _command_data.Find( command );
+        if ( command_data == nullptr )
         {
             return;
         }
 
-        for ( auto& iter : kfcommand->_functions._objects )
+        for ( auto& iter : command_data->_function_list._objects )
         {
-            auto kffunction = iter.second;
-            kffunction->_function( value );
+            auto function = iter.second;
+            function->Call( value );
         }
     }
 
@@ -173,23 +177,23 @@ namespace KFrame
         }
 
         auto global = KFGlobal::Instance();
-        auto delaytime = __TO_UINT32__( param );
-        __LOG_INFO__( "[{}:{}:{}:{}] shutdown start", global->_app_name, global->_app_type, global->_app_id->ToString(), delaytime );
+        auto delay_time = __TO_UINT32__( param );
+        __LOG_INFO__( "[{}:{}:{}:{}] shutdown start", global->_app_name, global->_app_type, global->_app_id->ToString(), delay_time );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-        delaytime = __MAX__( delaytime, 10000u );
+        delay_time = __MAX__( delay_time, 10000u );
         if ( global->_app_name != __STRING__( zone ) )
         {
-            delaytime += 30000;
+            delay_time += 30000;
         }
         else
         {
             if ( global->_app_type == __STRING__( world ) )
             {
-                delaytime += 20000;
+                delay_time += 20000;
             }
         }
-        __LIMIT_TIMER_1__( global->_app_id->GetId(), delaytime, 1u, &KFDeployClientModule::OnTimerShutDownServer );
+        __COUNT_TIMER_1__( global->_app_id->GetId(), delay_time, 1u, &KFDeployClientModule::OnTimerShutDownServer );
     }
 
     __KF_TIMER_FUNCTION__( KFDeployClientModule::OnTimerShutDownServer )
@@ -224,29 +228,27 @@ namespace KFrame
 
     __KF_DEPLOY_FUNCTION__( KFDeployClientModule::OnDeployLoadPlugin )
     {
-        auto strcommand = __FORMAT__( "{}={}", __STRING__( loadplugin ), param );
-        _kf_plugin_manage->AddCommand( strcommand );
+        auto str_command = __FORMAT__( "{}={}", __STRING__( loadplugin ), param );
+        _kf_plugin_manage->AddCommand( str_command );
     }
 
     __KF_DEPLOY_FUNCTION__( KFDeployClientModule::OnDeployMessageOpen )
     {
-        UInt32List messagelist;
-        auto strvalue = param;
-        KFUtility::SplitList( messagelist, strvalue, __SPLIT_STRING__ );
-        for ( auto messageid : messagelist )
+        UInt32List message_list;
+        KFUtility::SplitList( param, __SPLIT_STRING__, message_list );
+        for ( auto message_id : message_list )
         {
-            _kf_message->OpenFunction( messageid, true );
+            _kf_message->OpenFunction( message_id, true );
         }
     }
 
     __KF_DEPLOY_FUNCTION__( KFDeployClientModule::OnDeployMessageClose )
     {
-        UInt32List messagelist;
-        auto strvalue = param;
-        KFUtility::SplitList( messagelist, strvalue, __SPLIT_STRING__ );
-        for ( auto messageid : messagelist )
+        UInt32List message_list;
+        KFUtility::SplitList( param, __SPLIT_STRING__, message_list );
+        for ( auto message_id : message_list )
         {
-            _kf_message->OpenFunction( messageid, false );
+            _kf_message->OpenFunction( message_id, false );
         }
     }
 

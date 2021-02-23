@@ -30,7 +30,7 @@ namespace KFrame
 
         if ( !KFUtility::IsDoubleEqual( multiple, _default_multiple ) && _data_setting != nullptr && _data_setting->HaveMask( KFDataDefine::DataMaskMultiple ) )
         {
-            _use_value = static_cast< uint64 >( std::round( _use_value * multiple ) );
+            _use_value = static_cast<uint64>( std::round( _use_value * multiple ) );
             _use_value = __MAX__( 1u, _use_value );
         }
 
@@ -375,7 +375,7 @@ namespace KFrame
             auto element_value = std::static_pointer_cast< KFElementValue >( element );
             if ( element_value->_value->IsType( KFDataDefine::DataTypeUInt32 ) )
             {
-                auto value = static_cast< uint64 >( element_value->_value->GetUseValue() * multiple );
+                auto value = static_cast<uint64>( element_value->_value->GetUseValue() * multiple );
 
                 __JSON_OBJECT__( object_data );
                 __JSON_SET_VALUE__( object_data, element->_data_name, __TO_STRING__( value ) );

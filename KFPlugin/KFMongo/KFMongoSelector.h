@@ -135,7 +135,7 @@ namespace KFrame
         std::string _condition;
 
         // 表达式列表
-        std::list< KFMongoExpression< uint64 >* > _int_expressions;
+        std::list< KFMongoExpression<uint64>* > _int_expressions;
         std::list< KFMongoExpression< std::string >* > _str_expressions;
 
         // 包含的条件列表

@@ -78,22 +78,22 @@
 #endif
 
 #ifndef __FORMAT__
-    #define __FORMAT__( myfmt, ... ) fmt::format( myfmt, __VA_ARGS__ )
+    #define __FORMAT__( my_fmt, ... ) fmt::format( my_fmt, __VA_ARGS__ )
 #endif
 
 #ifndef __PROTO_TO_MAP__
-#define __PROTO_TO_MAP__( pbdata, values )\
-    for ( auto iter = pbdata->begin(); iter != pbdata->end(); ++iter )\
+#define __PROTO_TO_MAP__( pb_data, values )\
+    for ( auto iter = pb_data->begin(); iter != pb_data->end(); ++iter )\
     {\
         values[ iter->first ] = iter->second;\
     }
 #endif
 
 #ifndef __MAP_TO_PROTO__
-#define __MAP_TO_PROTO__( values, pbdata )\
+#define __MAP_TO_PROTO__( values, pb_data )\
     for ( auto iter = values.begin(); iter != values.end(); ++iter )\
     {\
-        pbdata[ iter->first ] = iter->second;\
+        pb_data[ iter->first ] = iter->second;\
     }
 #endif
 ///////////////////////////////////////////////////////////////////////////////////////////////

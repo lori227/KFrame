@@ -14,23 +14,23 @@ namespace KFrame
 
     std::string KFDeployData::GetAppPath()
     {
-        auto apppath = _invalid_string;
+        auto app_path = _invalid_string;
         if ( _app_path.empty() )
         {
-            apppath = _deploy_path + "/";
+            app_path = _deploy_path + "/";
         }
         else
         {
-            apppath = _deploy_path + "/" + _app_path + "/";
+            app_path = _deploy_path + "/" + _app_path + "/";
         }
 
-        return apppath;
+        return app_path;
     }
 
-    std::string KFDeployData::GetStartupFile( bool isdebug )
+    std::string KFDeployData::GetStartupFile( bool is_debug )
     {
         auto file = _app_file;
-        if ( isdebug )
+        if ( is_debug )
         {
             file += "d";
         }
@@ -38,38 +38,38 @@ namespace KFrame
 #if __KF_SYSTEM__ == __KF_WIN__
         file += ".exe";
 #endif
-        auto apppath = GetAppPath();
-        return apppath + file;
+        auto app_path = GetAppPath();
+        return app_path + file;
     }
 
-    bool KFDeployData::IsAppServer( const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zone_id )
+    bool KFDeployData::IsAppServer( const std::string& app_name, const std::string& app_type, const std::string& app_id, uint32 zone_id )
     {
         // 指定appid
-        if ( appid != _globbing_string )
+        if ( app_id != _globbing_string )
         {
-            return ( appid == _app_id );
+            return ( app_id == _app_id );
         }
 
         // appname
-        if ( appname != _globbing_string )
+        if ( app_name != _globbing_string )
         {
-            if ( appname != _app_name )
+            if ( app_name != _app_name )
             {
                 return false;
             }
         }
 
         // apptype
-        if ( apptype != _globbing_string )
+        if ( app_type != _globbing_string )
         {
-            if ( apptype != _app_type )
+            if ( app_type != _app_type )
             {
                 return false;
             }
         }
 
         // zone_id
-        if ( appname == __STRING__( zone ) )
+        if ( app_name == __STRING__( zone ) )
         {
             if ( zone_id != _invalid_int )
             {
@@ -90,8 +90,8 @@ namespace KFrame
         _app_file = values[ __STRING__( appfile ) ];
 
         _app_id = values[ __STRING__( appid ) ];
-        KFAppId kfappid( _app_id );
-        _zone_id = kfappid.GetZoneId();
+        KFAppId app_id( _app_id );
+        _zone_id = app_id.GetZoneId();
 
         _app_name = values[ __STRING__( appname ) ];
         _app_type = values[ __STRING__( apptype ) ];

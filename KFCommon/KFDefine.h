@@ -87,13 +87,13 @@ namespace KFrame
     typedef std::list< StringMap > StringMapList;
     typedef std::list< StringPair > StringPairList;
 
-    typedef std::set< uint32 > UInt32Set;
-    typedef std::list< uint32 > UInt32List;
-    typedef std::vector< uint32 > UInt32Vector;
+    typedef std::set<uint32> UInt32Set;
+    typedef std::list<uint32> UInt32List;
+    typedef std::vector<uint32> UInt32Vector;
 
-    typedef std::set< uint64 > UInt64Set;
-    typedef std::list< uint64 > UInt64List;
-    typedef std::vector< uint64 > UInt64Vector;
+    typedef std::set<uint64> UInt64Set;
+    typedef std::list<uint64> UInt64List;
+    typedef std::vector<uint64> UInt64Vector;
 
     typedef std::unordered_map< uint32, uint32 > UInt32Map;
     typedef std::unordered_map< uint64, uint64 > UInt64Map;

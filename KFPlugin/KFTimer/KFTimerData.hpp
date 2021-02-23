@@ -125,7 +125,7 @@ namespace KFrame
         inline bool AddTimerData( std::shared_ptr<KFTimerData> timer_data )
         {
             auto object_data = _object_list.Create( timer_data->_object_id );
-            object_data->AddTimerData( timer_data->_data_id, timer_data );
+            return object_data->AddTimerData( timer_data->_data_id, timer_data );
         }
     public:
         KFHashMap<uint64, KFObjectTimerData> _object_list;

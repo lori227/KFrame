@@ -8,7 +8,7 @@ namespace KFrame
         auto strskins = xml_node.GetString( "Skins" );
         while ( !strskins.empty() )
         {
-            auto skinid = KFUtility::SplitValue< uint32 >( strskins, __SPLIT_STRING__ );
+            auto skinid = KFUtility::SplitValue<uint32>( strskins, __SPLIT_STRING__ );
             if ( skinid != _invalid_int )
             {
                 kfsetting->_skin_list.insert( skinid );

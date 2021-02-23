@@ -237,7 +237,7 @@ namespace KFrame
         else
         {
             // 新加的任务, 启动一个定时器
-            __LIMIT_TIMER_2__( player->GetKeyID(), setting->_id, 10u, 1, &KFTaskModule::OnTimerTaskFinish );
+            __COUNT_TIMER_2__( player->GetKeyID(), setting->_id, 10u, 1, &KFTaskModule::OnTimerTaskFinish );
         }
     }
 
@@ -281,7 +281,7 @@ namespace KFrame
             lefttime = ( timeout - KFGlobal::Instance()->_real_time ) * 1000u;
         }
 
-        __LIMIT_TIMER_2__( player->GetKeyID(), taskid, lefttime, 1, &KFTaskModule::OnTimerTaskTimeout );
+        __COUNT_TIMER_2__( player->GetKeyID(), taskid, lefttime, 1, &KFTaskModule::OnTimerTaskTimeout );
     }
 
     __KF_TIMER_FUNCTION__( KFTaskModule::OnTimerTaskTimeout )

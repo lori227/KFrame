@@ -92,9 +92,9 @@ namespace KFrame
     rapidjson::Value kfjson( rapidjson::kArrayType )
 
 #define __JSON_GET_INT32__( kfjson, name ) GetJsonNumber< int32 >( kfjson, name )
-#define __JSON_GET_UINT32__( kfjson, name ) GetJsonNumber< uint32 >( kfjson, name )
+#define __JSON_GET_UINT32__( kfjson, name ) GetJsonNumber<uint32>( kfjson, name )
 #define __JSON_GET_INT64__( kfjson, name ) GetJsonNumber< int64 >( kfjson, name )
-#define __JSON_GET_UINT64__( kfjson, name ) GetJsonNumber< uint64 >( kfjson, name )
+#define __JSON_GET_UINT64__( kfjson, name ) GetJsonNumber<uint64>( kfjson, name )
 #define __JSON_GET_FLOAT__( kfjson, name ) GetJsonNumber< float >( kfjson, name )
 #define __JSON_GET_DOUBLE__( kfjson, name ) GetJsonNumber<double>( kfjson, name )
 #define __JSON_GET_STRING__( kfjson, name ) GetJsonString( kfjson, name )

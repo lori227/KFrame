@@ -27,7 +27,7 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFSignModule::HandleReceiveSevenRewardReq, KFMsg::MsgSevenSignRewardReq )
     {
-        auto day = kfentity->Get< uint32 >( __STRING__( sevenday ) );
+        auto day = kfentity->Get<uint32>( __STRING__( sevenday ) );
         if ( day < kfmsg->day() )
         {
             return _kf_display->SendToClient( kfentity, KFMsg::SignInNotDay );
@@ -39,9 +39,9 @@ namespace KFrame
             return _kf_display->SendToClient( kfentity, KFMsg::SignInCanNotFind );
         }
 
-        auto sevenflag = kfentity->Get< uint32 >( __STRING__( sevenreward ) );
+        auto sevenflag = kfentity->Get<uint32>( __STRING__( sevenreward ) );
         auto flag = 1u << kfmsg->day();
-        if ( KFUtility::HaveBitMask< uint32 >( sevenflag, flag ) )
+        if ( KFUtility::HaveBitMask<uint32>( sevenflag, flag ) )
         {
             return _kf_display->SendToClient( kfentity, KFMsg::SignInRewardAlready );
         }
@@ -73,12 +73,12 @@ namespace KFrame
     void KFSignModule::CalcSignDay( EntityPtr player )
     {
         // 签到逻辑, 只有到前一天奖励领取了, 才算成功签到
-        auto day = player->Get< uint32 >( __STRING__( sevenday ) );
+        auto day = player->Get<uint32>( __STRING__( sevenday ) );
         if ( day > 0u )
         {
-            auto sevenflag = player->Get< uint32 >( __STRING__( sevenreward ) );
+            auto sevenflag = player->Get<uint32>( __STRING__( sevenreward ) );
             auto flag = 1u << day;
-            if ( !KFUtility::HaveBitMask< uint32 >( sevenflag, flag ) )
+            if ( !KFUtility::HaveBitMask<uint32>( sevenflag, flag ) )
             {
                 return;
             }

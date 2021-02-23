@@ -53,7 +53,7 @@ namespace KFrame
         // 最大数量
         inline uint32 MaxSize() const
         {
-            return static_cast< uint32 >( _objects.size() );
+            return static_cast<uint32>( _objects.size() );
         }
 
         // 是否为空

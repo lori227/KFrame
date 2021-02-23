@@ -105,47 +105,46 @@ namespace KFrame
         void StartConnectDeployServer();
 
         // 判断是否agent进程
-        bool IsAgentDeploy( const std::string& command, const std::string& appname, const std::string& apptype, const std::string& appid, uint32 zone_id );
+        bool IsAgentDeploy( const std::string& command, const std::string& app_name, const std::string& app_type, const std::string& app_id, uint32 zone_id );
 
         // 更新数据到部署服务
-        void UpdateDeployToDatabase( KFDeployData* deploydata );
+        void UpdateDeployToDatabase( std::shared_ptr<KFDeployData> deploy_data );
 
         // 启动服务器进程
-        void StartupServerProcess( KFDeployData* deploydata );
+        void StartupServerProcess( std::shared_ptr<KFDeployData> deploy_data );
 
         // 检查服务器进程
-        void CheckServerProcess( KFDeployData* deploydata );
+        void CheckServerProcess( std::shared_ptr<KFDeployData> deploy_data );
 
         // 绑定继承
         void BindServerProcess();
 
         // 杀死进程
-        void KillServerProcess( uint32 processid );
+        void KillServerProcess( uint32 process_id );
 
         // 保存进程信息到文件中
-        std::string FormatPidFileName( KFDeployData* deploydata );
+        std::string FormatPidFileName( std::shared_ptr<KFDeployData> deploy_data );
 
-        void SaveProcessToFile( KFDeployData* deploydata );
-        void ReadProcessFromFile( KFDeployData* deploydata );
+        void SaveProcessToFile( std::shared_ptr<KFDeployData> deploy_data );
+        void ReadProcessFromFile( std::shared_ptr<KFDeployData> deploy_data );
 
         // 获得部署路径
-        void FindAppDeployPath( const std::string& appname, uint32 zone_id, StringSet& deploypathlist );
+        void FindAppDeployPath( const std::string& app_name, uint32 zone_id, StringSet& deploy_path_list );
 
 #if __KF_SYSTEM__ == __KF_WIN__
         // 启动进程
-        bool StartupWinProcess( KFDeployData* deploydata );
+        bool StartupWinProcess( std::shared_ptr<KFDeployData> deploy_data );
 
         // 检查进程是否存在
-        void CheckWinProcess( KFDeployData* deploydata );
+        void CheckWinProcess( std::shared_ptr<KFDeployData> deploy_data );
 
         // 杀死进程
-        void KillWinProcess( uint32 processid );
+        void KillWinProcess( uint32 process_id );
 #else
-
         template<typename... P>
-        std::string ExecuteShell( const char* myfmt, P&& ... args )
+        std::string ExecuteShell( const char* my_fmt, P&& ... args )
         {
-            auto command = __FORMAT__( myfmt, std::forward<P>( args )... );
+            auto command = __FORMAT__( my_fmt, std::forward<P>( args )... );
             return ExecuteShellCommand( command );
         }
 
@@ -153,21 +152,21 @@ namespace KFrame
         std::string ExecuteShellCommand( const std::string& command );
 
         // 启动进程
-        bool StartupLinuxProcess( KFDeployData* deploydata );
+        bool StartupLinuxProcess( std::shared_ptr<KFDeployData> deploy_data );
 
         // 获得linux进程id
-        uint32 FindProcessIdByName( KFDeployData* deploydata );
+        uint32 FindProcessIdByName( std::shared_ptr<KFDeployData> deploy_data );
 
         // 检查进程是否存在
-        void CheckLinuxProcess( KFDeployData* deploydata );
+        void CheckLinuxProcess( std::shared_ptr<KFDeployData> deploy_data );
 
         // 杀死进程
-        void KillLinuxProcess( uint32 processid );
+        void KillLinuxProcess( uint32 process_id );
 
 #endif
     protected:
         // 添加部署任务
-        void AddDeployTask( const std::string& command, const KFMsg::PBDeployCommand* pbdeploy );
+        void AddDeployTask( const std::string& command, const KFMsg::PBDeployCommand* deploy_command );
 
         // 开始任务
         void StartDeployTask();
@@ -204,9 +203,9 @@ namespace KFrame
     private:
         // 回发日志消息
         template<typename... P>
-        void LogDeploy( const char* myfmt, P&& ... args )
+        void LogDeploy( const char* my_fmt, P&& ... args )
         {
-            auto msg = __FORMAT__( myfmt, std::forward<P>( args )... );
+            auto msg = __FORMAT__( my_fmt, std::forward<P>( args )... );
             SendLogMessage( msg );
         }
         void SendLogMessage( const std::string& msg );
@@ -215,24 +214,24 @@ namespace KFrame
 
         // 部署服务器
         uint64 _deploy_server_id = 0u;
-        std::string _deploy_server_strid;
+        std::string _str_deploy_server_id;
         std::string _deploy_server_ip;
         uint32 _deploy_server_port = 0u;
 
         // mysql
-        KFMySQLDriver* _deploy_driver = nullptr;
+        std::shared_ptr<KFMySQLDriver> _deploy_driver = nullptr;
 
         // deploy 表名字
         std::string _deploy_table_name;
 
         // deploy列表
-        KFHashMap< std::string, KFDeployData > _deploy_list;
+        KFHashMap<std::string, KFDeployData> _deploy_list;
 
         // 当前执行的任务
-        KFDeployTask* _kf_task = nullptr;
+        std::shared_ptr<KFDeployTask> _deploy_task = nullptr;
 
         // 部署任务队列
-        std::list< KFDeployTask* > _deploy_task;
+        std::list<std::shared_ptr<KFDeployTask>> _deploy_task_list;
     };
 }
 

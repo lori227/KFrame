@@ -133,7 +133,7 @@ namespace KFrame
         auto kfpayorder = player->Find( __STRING__( payorder ) );
         auto querytime = kfpayorder->_data_setting->_int_run_param;
         auto querycount = kfpayorder->_data_setting->_int_max_value;
-        __LIMIT_TIMER_1__( player->GetKeyID(), querytime, querycount, &KFPayClientModule::OnTimerQueryPayData );
+        __COUNT_TIMER_1__( player->GetKeyID(), querytime, querycount, &KFPayClientModule::OnTimerQueryPayData );
     }
 
     __KF_TIMER_FUNCTION__( KFPayClientModule::OnTimerQueryPayData )
@@ -198,7 +198,7 @@ namespace KFrame
         }
 
         // 判断是否首冲
-        auto firstvalue = player->Get< uint64 >( __STRING__( pay ), setting->_note_id, __STRING__( value ) );
+        auto firstvalue = player->Get<uint64>( __STRING__( pay ), setting->_note_id, __STRING__( value ) );
 
         // 添加元素
         player->AddElement( &setting->_reward, _default_multiple, __STRING__( pay ), firstvalue, __FUNC_LINE__ );
