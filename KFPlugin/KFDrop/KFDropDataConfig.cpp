@@ -22,7 +22,7 @@ namespace KFrame
 
     void KFDropDataConfig::LoadAllComplete()
     {
-        for ( auto& iter : _settings._objects )
+        for ( auto& iter : _setting_list._objects )
         {
             auto setting = iter.second;
             for ( auto kfdropweight : setting->_drop_data_list._weight_data )

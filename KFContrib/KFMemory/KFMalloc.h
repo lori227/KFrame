@@ -68,7 +68,7 @@ namespace KFrame
         template< class T, class ... P >
         inline T* New( const char* function, uint32 line, P&& ...params )
         {
-            auto size = static_cast< uint32 >( sizeof( T ) );
+            auto size = static_cast<uint32>( sizeof( T ) );
             auto* object = malloc( size );
             AddMemory( typeid( T ).name(), object, size );
             return new ( object ) T( std::forward< P >( params )... );

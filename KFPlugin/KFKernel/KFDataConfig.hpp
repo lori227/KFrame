@@ -58,7 +58,7 @@ namespace KFrame
         virtual void LoadComplete()
         {
             // 初始化包含的类, 优化每次创建都要去查找的问题
-            for ( auto& iter : _settings._objects )
+            for ( auto& iter : _setting_list._objects )
             {
                 auto class_setting = iter.second;
                 for ( auto& data_iter : class_setting->_static_data._objects )
@@ -79,7 +79,7 @@ namespace KFrame
         // 所有加载完成
         virtual void LoadAllComplete()
         {
-            for ( auto& iter : KFDataConfig::Instance()->_settings._objects )
+            for ( auto& iter : KFDataConfig::Instance()->_setting_list._objects )
             {
                 auto class_setting = iter.second;
 

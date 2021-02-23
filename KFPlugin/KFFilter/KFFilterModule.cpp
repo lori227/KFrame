@@ -28,13 +28,13 @@ namespace KFrame
 
     KFFilterData* KFFilterData::InsertChild( int8 word )
     {
-        auto kfdata = FindChild( word );
-        if ( kfdata == nullptr )
+        auto filter_data = FindChild( word );
+        if ( filter_data == nullptr )
         {
-            kfdata = &( _child.insert( std::make_pair( word, KFFilterData() ) ).first->second );
+            filter_data = &( _child.insert( std::make_pair( word, KFFilterData() ) ).first->second );
         }
 
-        return kfdata;
+        return filter_data;
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -45,16 +45,16 @@ namespace KFrame
     {
         if ( KFFilterConfig::Instance()->_load_ok )
         {
-            for ( auto& iter : KFFilterConfig::Instance()->_settings._objects )
+            for ( auto& iter : KFFilterConfig::Instance()->_setting_list._objects )
             {
                 auto setting = iter.second;
-                InsertWord( &_root_word_data, setting->_word.data(), static_cast< uint32 >( setting->_word.length() ), 0 );
+                InsertWord( &_root_filter_data, setting->_word.data(), static_cast<uint32>( setting->_word.length() ), 0 );
             }
         }
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-    void KFFilterModule::InsertWord( KFFilterData* kffilterdata, const char* source, uint32 length, uint32 index )
+    void KFFilterModule::InsertWord( KFFilterData* filter_data, const char* source, uint32 length, uint32 index )
     {
         if ( index >= length )
         {
@@ -62,11 +62,11 @@ namespace KFrame
         }
 
         auto word = source[ index ];
-        auto kfchilddata = kffilterdata->InsertChild( word );
-        InsertWord( kfchilddata, source, length, ++index );
+        auto child_data = filter_data->InsertChild( word );
+        InsertWord( child_data, source, length, ++index );
     }
 
-    uint32 KFFilterModule::FindWord( KFFilterData* kffilterdata, const char* source, uint32 length, uint32 index, uint32& count )
+    uint32 KFFilterModule::FindWord( KFFilterData* filter_data, const char* source, uint32 length, uint32 index, uint32& count )
     {
         // 已经查找完
         if ( index >= length )
@@ -75,8 +75,8 @@ namespace KFrame
         }
 
         auto word = source[ index ];
-        auto kfchilddata = kffilterdata->FindChild( word );
-        if ( kfchilddata == nullptr )
+        auto child_data = filter_data->FindChild( word );
+        if ( child_data == nullptr )
         {
             // 不在字典中
             return 0u;
@@ -84,12 +84,12 @@ namespace KFrame
 
         // 字典查完了, 说明已经找到屏蔽字
         ++count;
-        if ( kfchilddata->IsEmpty() )
+        if ( child_data->IsEmpty() )
         {
             return count;
         }
 
-        return FindWord( kfchilddata, source, length, ++index, count );
+        return FindWord( child_data, source, length, ++index, count );
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFFilterModule::CheckFilter( const std::string& source )
@@ -102,7 +102,7 @@ namespace KFrame
         }
 
         auto data = source.data();
-        auto length = static_cast< uint32 >( source.size() );
+        auto length = static_cast<uint32>( source.size() );
 
         for ( auto i = 0u; i < length; ++i )
         {
@@ -119,14 +119,14 @@ namespace KFrame
     bool KFFilterModule::CheckFilter( const char* source, uint32 length )
     {
         auto count = 0u;
-        count = FindWord( &_root_word_data, source, length, 0, count );
+        count = FindWord( &_root_filter_data, source, length, 0, count );
         return count != 0u;
     }
 
     bool KFFilterModule::CensorFilter( std::string& source )
     {
         bool filter = false;
-        auto length = static_cast< uint32 >( source.size() );
+        auto length = static_cast<uint32>( source.size() );
 
         for ( auto i = 0u; i < length; ++i )
         {
@@ -138,7 +138,7 @@ namespace KFrame
                 source.replace( i, count, "**" );
 
                 i += 1;
-                length = static_cast< uint32 >( source.size() );
+                length = static_cast<uint32>( source.size() );
             }
         }
 
@@ -148,6 +148,6 @@ namespace KFrame
     uint32 KFFilterModule::CensorFilter( const char* source, uint32 length )
     {
         auto count = 0u;
-        return FindWord( &_root_word_data, source, length, 0, count );
+        return FindWord( &_root_filter_data, source, length, 0, count );
     }
 }

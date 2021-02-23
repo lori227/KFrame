@@ -264,7 +264,7 @@ namespace KFrame
         else
         {
             // 接收数据
-            net_session->OnRecvData( uv_buffer->base, static_cast< uint32 >( length ) );
+            net_session->OnRecvData( uv_buffer->base, static_cast<uint32>( length ) );
             net_session->StartRecvData();
         }
     }

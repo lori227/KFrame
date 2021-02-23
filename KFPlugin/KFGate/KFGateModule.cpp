@@ -168,7 +168,7 @@ namespace KFrame
         for ( auto& iter : _kf_role_list._objects )
         {
             auto kfrole = iter.second;
-            kfrole->SendToClient( kfmsg->msg_id(), msgdata.data(), static_cast< uint32 >( msgdata.length() ) );
+            kfrole->SendToClient( kfmsg->msg_id(), msgdata.data(), static_cast<uint32>( msgdata.length() ) );
         }
     }
 
@@ -180,7 +180,7 @@ namespace KFrame
             auto kfrole = iter.second;
             if ( kfrole->_game_id == __ROUTE_SERVER_ID__ )
             {
-                kfrole->SendToClient( kfmsg->msg_id(), msgdata.data(), static_cast< uint32 >( msgdata.length() ) );
+                kfrole->SendToClient( kfmsg->msg_id(), msgdata.data(), static_cast<uint32>( msgdata.length() ) );
             }
         }
     }

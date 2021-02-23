@@ -4,7 +4,7 @@ namespace KFrame
 {
     std::shared_ptr<const KFLoggerSetting> KFLoggerConfig::FindSetting( const std::string& name )
     {
-        return _settings.Find( name );
+        return _setting_list.Find( name );
     }
 
     void KFLoggerConfig::LoadConfig( const std::string& file )
@@ -21,7 +21,7 @@ namespace KFrame
             auto name = node.ReadString( "Name", true );
             if ( !name.empty() )
             {
-                auto setting = _settings.Create( name );
+                auto setting = _setting_list.Create( name );
 
                 setting->_queue_count = node.ReadUInt32( "QueueCount", true );
                 setting->_sink_type = node.ReadUInt32( "SinkType", true );

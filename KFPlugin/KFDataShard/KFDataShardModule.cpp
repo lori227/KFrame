@@ -23,7 +23,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFDataShardModule::PrepareRun()
     {
-        for ( auto& iter : KFDataSaveConfig::Instance()->_settings._objects )
+        for ( auto& iter : KFDataSaveConfig::Instance()->_setting_list._objects )
         {
             auto setting = iter.second;
             if ( !setting->_is_open )

@@ -425,7 +425,7 @@ namespace KFrame
                 kffunction->_function( player );
             }
 
-            for ( auto& iter : KFPlayerConfig::Instance()->_settings._objects )
+            for ( auto& iter : KFPlayerConfig::Instance()->_setting_list._objects )
             {
                 auto setting = iter.second;
                 if ( setting->_type == NewPlayerEnum::NewRole )
@@ -458,7 +458,7 @@ namespace KFrame
         }
 
         // 新玩家添加道具
-        for ( auto& iter : KFPlayerConfig::Instance()->_settings._objects )
+        for ( auto& iter : KFPlayerConfig::Instance()->_setting_list._objects )
         {
             auto setting = iter.second;
             if ( setting->_type == NewPlayerEnum::NewAccount )

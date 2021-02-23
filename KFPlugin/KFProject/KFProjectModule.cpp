@@ -28,16 +28,16 @@ namespace KFrame
         auto global = KFGlobal::Instance();
         if ( KFConstantConfig::Instance()->_load_ok )
         {
-            for ( auto& iter : KFConstantConfig::Instance()->_settings._objects )
+            for ( auto& iter : KFConstantConfig::Instance()->_setting_list._objects )
             {
                 auto setting = iter.second;
-                global->AddConstant( setting->_name,0u, setting->_value );
+                global->AddConstant( setting->_name, 0u, setting->_value );
             }
         }
 
         if ( KFProjectConfig::Instance()->_load_ok )
         {
-            for ( auto& iter : KFProjectConfig::Instance()->_settings._objects )
+            for ( auto& iter : KFProjectConfig::Instance()->_setting_list._objects )
             {
                 auto setting = iter.second;
                 global->AddConstant( setting->_name, 0, setting->_value );
@@ -49,7 +49,7 @@ namespace KFrame
 
         if ( KFUuidConfig::Instance()->_load_ok )
         {
-            for ( auto& iter : KFUuidConfig::Instance()->_settings._objects )
+            for ( auto& iter : KFUuidConfig::Instance()->_setting_list._objects )
             {
                 auto setting = iter.second;
                 global->AddUuidData( setting->_id, setting->_time, setting->_zone, setting->_worker, setting->_seq );
@@ -59,7 +59,7 @@ namespace KFrame
         if ( KFTemplateConfig::Instance()->_load_ok )
         {
             _id_name_list.clear();
-            for ( auto& iter : KFTemplateConfig::Instance()->_settings._objects )
+            for ( auto& iter : KFTemplateConfig::Instance()->_setting_list._objects )
             {
                 auto setting = iter.second;
 
@@ -120,14 +120,14 @@ namespace KFrame
 
         auto index = 0u;
         _str_element = "[";
-        for ( auto& tupledata : element_data._data_list )
+        for ( auto& tuple_data : element_data._data_list )
         {
-            auto& data_name = std::get<0>( tupledata );
-            auto& data_value = std::get<1>( tupledata );
-            auto& data_id = std::get<2>( tupledata );
+            auto& data_name = std::get<0>( tuple_data );
+            auto& data_value = std::get<1>( tuple_data );
+            auto& data_id = std::get<2>( tuple_data );
 
-            auto kfrewardsetting = KFTemplateConfig::Instance()->FindSetting( data_name );
-            if ( kfrewardsetting == nullptr )
+            auto template_setting = KFTemplateConfig::Instance()->FindSetting( data_name );
+            if ( template_setting == nullptr )
             {
                 __LOG_ERROR__( "data_name=[{}] no template", data_name );
                 continue;
@@ -139,61 +139,61 @@ namespace KFrame
             }
 
             ++index;
-            _str_element += __FORMAT__( kfrewardsetting->_template, data_value, data_id );
+            _str_element += __FORMAT__( template_setting->_template, data_value, data_id );
         }
 
         _str_element += "]";
         return _str_element;
     }
 
-    const std::string& KFProjectModule::ParseString( const std::string& strparse )
+    const std::string& KFProjectModule::ParseString( const std::string& data )
     {
-        static auto rewardtype = KFGlobal::Instance()->GetUInt32( __STRING__( rewardtype ) );
-        switch ( rewardtype )
+        static auto reward_type = KFGlobal::Instance()->GetUInt32( __STRING__( rewardtype ) );
+        switch ( reward_type )
         {
         case KFRewardEnum::CodeJson:
-            return ParseCodeString( strparse );
+            return ParseCodeString( data );
             break;
         }
 
-        return strparse;
+        return data;
     }
 
     // [1,1,2]
-    const std::string& KFProjectModule::ParseCodeString( const std::string& strparse )
+    const std::string& KFProjectModule::ParseCodeString( const std::string& data )
     {
         static std::string _str_element = _invalid_string;
         _str_element.clear();
 
         // 将字符串解析成数组
-        __JSON_PARSE_STRING__( kfjson, strparse );
-        if ( !kfjson.IsArray() )
+        __JSON_PARSE_STRING__( json_data, data );
+        if ( !json_data.IsArray() )
         {
             return _str_element;
         }
 
         _str_element = "[";
-        auto size = __JSON_ARRAY_SIZE__( kfjson );
+        auto size = __JSON_ARRAY_SIZE__( json_data );
         for ( uint32 i = 0u; i < size; ++i )
         {
-            auto& jsonarray = __JSON_ARRAY_INDEX__( kfjson, i );
-            if ( !jsonarray.IsArray() )
+            auto& array_data = __JSON_ARRAY_INDEX__( json_data, i );
+            if ( !array_data.IsArray() )
             {
                 continue;
             }
 
-            auto len = __JSON_ARRAY_SIZE__( jsonarray );
+            auto len = __JSON_ARRAY_SIZE__( array_data );
             if ( len != 3u )
             {
                 continue;
             }
 
-            auto type = jsonarray[ 0 ].GetUint();
-            auto code = jsonarray[ 1 ].GetUint();
-            auto num = jsonarray[ 2 ].GetUint();
+            auto type = array_data[ 0 ].GetUint();
+            auto code = array_data[ 1 ].GetUint();
+            auto num = array_data[ 2 ].GetUint();
 
-            auto& strreward = FormatRewardString( type, code, num );
-            if ( strreward.empty() )
+            auto& reward = FormatRewardString( type, code, num );
+            if ( reward.empty() )
             {
                 continue;
             }
@@ -203,7 +203,7 @@ namespace KFrame
                 _str_element += ",";
             }
 
-            _str_element += strreward;
+            _str_element += reward;
         }
         _str_element += "]";
 
@@ -213,8 +213,8 @@ namespace KFrame
 
     const std::string& KFProjectModule::FormatRewardString( uint32 type, uint32 code, uint32 num )
     {
-        auto idvalue = CalcTypeCodeValue( type, code );
-        auto iter = _id_name_list.find( idvalue );
+        auto id_value = CalcTypeCodeValue( type, code );
+        auto iter = _id_name_list.find( id_value );
         if ( iter == _id_name_list.end() )
         {
             return _invalid_string;

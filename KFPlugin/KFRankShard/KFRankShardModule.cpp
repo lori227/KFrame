@@ -54,7 +54,7 @@ namespace KFrame
 
         _refresh_rank_id_list.clear();
         _max_rank_worker_id = kfmsg->worker_id();
-        for ( auto& iter : KFRankConfig::Instance()->_settings._objects )
+        for ( auto& iter : KFRankConfig::Instance()->_setting_list._objects )
         {
             auto setting = iter.second;
             auto value = setting->_id % _max_rank_worker_id;

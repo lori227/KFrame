@@ -28,7 +28,7 @@ namespace KFrame
     __KF_PLAYER_ENTER_FUNCTION__( KFUnlockModule::OnEnterUnlockModule )
     {
         auto kfunlockrecord = player->Find( __STRING__( unlock ) );
-        for ( auto& iter : KFUnlockConfig::Instance()->_settings._objects )
+        for ( auto& iter : KFUnlockConfig::Instance()->_setting_list._objects )
         {
             auto setting = iter.second;
             auto kfdatarecord = player->Find( setting->_data_name );

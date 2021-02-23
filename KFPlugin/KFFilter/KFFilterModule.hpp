@@ -59,10 +59,10 @@ namespace KFrame
     protected:
 
         // 插入单词
-        void InsertWord( KFFilterData* kfworddata, const char* source, uint32 length, uint32 index );
+        void InsertWord( KFFilterData* filter_data, const char* source, uint32 length, uint32 index );
 
         // 查找屏蔽单词
-        uint32 FindWord( KFFilterData* kfworddata, const char* source, uint32 length, uint32 index, uint32& count );
+        uint32 FindWord( KFFilterData* filter_data, const char* source, uint32 length, uint32 index, uint32& count );
 
         // 检查是否有屏蔽字符
         bool CheckFilter( const char* source, uint32 length );
@@ -72,7 +72,7 @@ namespace KFrame
 
     private:
         // 屏蔽字字典
-        KFFilterData _root_word_data;
+        KFFilterData _root_filter_data;
     };
 }
 

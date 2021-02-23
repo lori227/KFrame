@@ -101,7 +101,7 @@ namespace KFrame
         auto strdata = message->SerializeAsString();
 
         auto workermessage = __KF_NEW__( KFWorkerMessage );
-        workermessage->CopyFrom( _route, msg_id, strdata.data(), static_cast< uint32 >( strdata.size() ) );
+        workermessage->CopyFrom( _route, msg_id, strdata.data(), static_cast<uint32>( strdata.size() ) );
         _ack_message_queue.PushObject( workermessage, 0, __FUNC_LINE__ );
         return true;
     }
@@ -118,7 +118,7 @@ namespace KFrame
         auto strdata = message->SerializeAsString();
 
         auto workermessage = __KF_NEW__( KFWorkerMessage );
-        workermessage->CopyFrom( route, msg_id, strdata.data(), static_cast< uint32 >( strdata.size() ) );
+        workermessage->CopyFrom( route, msg_id, strdata.data(), static_cast<uint32>( strdata.size() ) );
         _ack_message_queue.PushObject( workermessage, 0, __FUNC_LINE__ );
         return true;
     }

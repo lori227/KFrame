@@ -451,7 +451,7 @@ namespace KFrame
         }
 
         auto msgdata = kfmsg->msgdata().data();
-        auto msglength = static_cast< uint32 >( kfmsg->msgdata().length() );
+        auto msglength = static_cast<uint32>( kfmsg->msgdata().length() );
         Route temproute( pbroute->server_id(), pbroute->sendid(), pbroute->recv_id() );
         bool ok = __HANDLE_MESSAGE__( temproute, kfmsg->msg_id(), msgdata, msglength );
         if ( ok )

@@ -18,7 +18,7 @@ namespace KFrame
     };
 
     /////////////////////////////////////////////////////////////////////////////////
-    class KFProjectConfig : public KFConfigT< KFProjectSetting >, public KFInstance< KFProjectConfig >
+    class KFProjectConfig : public KFConfigT<KFProjectSetting>, public KFInstance<KFProjectConfig>
     {
     public:
         KFProjectConfig()
@@ -30,10 +30,10 @@ namespace KFrame
         ~KFProjectConfig() = default;
 
     protected:
-        virtual void ReadSetting( KFXmlNode& xmlnode, KFProjectSetting* kfsetting )
+        virtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KFProjectSetting> setting )
         {
-            kfsetting->_name = xmlnode.ReadString( "name", true );
-            kfsetting->_value = xmlnode.ReadString( "value", true );
+            setting->_name = xml_node.ReadString( "name", true );
+            setting->_value = xml_node.ReadString( "value", true );
         }
     };
 

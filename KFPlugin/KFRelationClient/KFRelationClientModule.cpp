@@ -105,7 +105,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_PLAYER_ENTER_FUNCTION__( KFRelationClientModule::OnEnterQueryRelation )
     {
-        for ( auto& iter : KFRelationConfig::Instance()->_settings._objects )
+        for ( auto& iter : KFRelationConfig::Instance()->_setting_list._objects )
         {
             auto setting = iter.second;
             if ( !setting->_online_load )
@@ -182,7 +182,7 @@ namespace KFrame
 
     __KF_PLAYER_LEAVE_FUNCTION__( KFRelationClientModule::OnLeaveUpdateRelation )
     {
-        for ( auto& iter : KFRelationConfig::Instance()->_settings._objects )
+        for ( auto& iter : KFRelationConfig::Instance()->_setting_list._objects )
         {
             auto setting = iter.second;
             if ( !setting->_need_update )
@@ -215,7 +215,7 @@ namespace KFrame
         }
 
         // 更新给关系, 属性变化了
-        for ( auto& iter : KFRelationConfig::Instance()->_settings._objects )
+        for ( auto& iter : KFRelationConfig::Instance()->_setting_list._objects )
         {
             auto setting = iter.second;
             if ( !setting->_need_update )
@@ -236,7 +236,7 @@ namespace KFrame
         }
 
         // 更新给关系, 属性变化了
-        for ( auto& iter : KFRelationConfig::Instance()->_settings._objects )
+        for ( auto& iter : KFRelationConfig::Instance()->_setting_list._objects )
         {
             auto setting = iter.second;
             if ( !setting->_need_update )
@@ -410,7 +410,7 @@ namespace KFrame
     // 查找关系配置
     const KFRelationSetting* KFRelationClientModule::FindRelationSettingByInviteName( const std::string& name )
     {
-        for ( auto& iter : KFRelationConfig::Instance()->_settings._objects )
+        for ( auto& iter : KFRelationConfig::Instance()->_setting_list._objects )
         {
             auto setting = iter.second;
             if ( setting->_invite_data_name == name )

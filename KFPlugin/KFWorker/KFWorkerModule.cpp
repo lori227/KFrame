@@ -71,7 +71,7 @@ namespace KFrame
         kfactor->InitActor( this, 5000, 5000 );
         _kf_actor.push_back( kfactor );
 
-        _actor_index = static_cast< uint32 >( _kf_actor.size() ) - 1;
+        _actor_index = static_cast<uint32>( _kf_actor.size() ) - 1;
         return kfactor;
     }
 

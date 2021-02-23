@@ -5,7 +5,7 @@ namespace KFrame
     KFRand::KFRand()
     {
         _result_count = 0;
-        Init( static_cast< uint32 >( time( nullptr ) ) );
+        Init( static_cast<uint32>( time( nullptr ) ) );
     }
 
     KFRand::~KFRand()

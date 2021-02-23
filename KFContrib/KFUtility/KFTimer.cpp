@@ -66,7 +66,7 @@ namespace KFrame
     {
         auto now_time = KFGlobal::Instance()->_game_time;
         auto pass_time = now_time - _start_time;
-        return _interval - static_cast< uint32 >( pass_time );
+        return _interval - static_cast<uint32>( pass_time );
     }
 
 

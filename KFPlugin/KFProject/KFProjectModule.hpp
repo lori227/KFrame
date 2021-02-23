@@ -38,7 +38,7 @@ namespace KFrame
         const std::string& FormatIntString( const std::string& data_name, uint32 data_value, uint32 data_id );
         const std::string& FormatStrString( const std::string& data_name, const std::string& data_value, uint32 data_id );
         const std::string& FormatDataString( const KFElementData& element_data );
-        const std::string& ParseString( const std::string& strparse );
+        const std::string& ParseString( const std::string& data );
 
         // 保存type和code的对应
         uint64 CalcTypeCodeValue( uint64 type, uint64 code );

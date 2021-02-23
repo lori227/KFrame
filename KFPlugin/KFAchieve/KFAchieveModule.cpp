@@ -29,7 +29,7 @@ namespace KFrame
     __KF_PLAYER_ENTER_FUNCTION__( KFAchieveModule::OnEnterAchieveModule )
     {
         auto kfachieverecord = player->Find( __STRING__( achieve ) );
-        for ( auto& iter : KFAchieveConfig::Instance()->_settings._objects )
+        for ( auto& iter : KFAchieveConfig::Instance()->_setting_list._objects )
         {
             auto setting = iter.second;
             auto kfachieve = kfachieverecord->Find( setting->_id );

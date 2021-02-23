@@ -24,7 +24,7 @@ namespace KFrame
     };
 
     /////////////////////////////////////////////////////////////////////////////////
-    class KFUuidConfig : public KFConfigT< KFUuidSetting >, public KFInstance< KFUuidConfig >
+    class KFUuidConfig : public KFConfigT<KFUuidSetting>, public KFInstance<KFUuidConfig>
     {
     public:
         KFUuidConfig()
@@ -36,12 +36,12 @@ namespace KFrame
         ~KFUuidConfig() = default;
 
     protected:
-        virtual void ReadSetting( KFXmlNode& xmlnode, KFUuidSetting* kfsetting )
+        virtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KFUuidSetting> setting )
         {
-            kfsetting->_time = xmlnode.ReadUInt32( "time", true );
-            kfsetting->_zone = xmlnode.ReadUInt32( "zone", true );
-            kfsetting->_worker = xmlnode.ReadUInt32( "worker", true );
-            kfsetting->_seq = xmlnode.ReadUInt32( "seq", true );
+            setting->_time = xml_node.ReadUInt32( "time", true );
+            setting->_zone = xml_node.ReadUInt32( "zone", true );
+            setting->_worker = xml_node.ReadUInt32( "worker", true );
+            setting->_seq = xml_node.ReadUInt32( "seq", true );
         }
     };
 

@@ -55,7 +55,7 @@ namespace KFrame
         static UInt64Map _time_id_list;
         _time_id_list.clear();
 
-        for ( auto& iter : KFTimeLoopConfig::Instance()->_settings._objects )
+        for ( auto& iter : KFTimeLoopConfig::Instance()->_setting_list._objects )
         {
             auto setting = iter.second;
             auto ok = false;

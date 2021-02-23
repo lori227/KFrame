@@ -20,7 +20,7 @@ namespace KFrame
         _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
         if ( KFItemBagConfig::Instance()->_load_ok )
         {
-            for ( auto& iter : KFItemBagConfig::Instance()->_settings._objects )
+            for ( auto& iter : KFItemBagConfig::Instance()->_setting_list._objects )
             {
                 auto setting = iter.second;
                 for ( auto& tabname : setting->_tab_list )
@@ -36,7 +36,7 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////////////
         __UN_ADD_LOGIC__( __STRING__( item ) );
         __UN_REMOVE_LOGIC__( __STRING__( item ) );
-        for ( auto& iter : KFItemBagConfig::Instance()->_settings._objects )
+        for ( auto& iter : KFItemBagConfig::Instance()->_setting_list._objects )
         {
             auto setting = iter.second;
             for ( auto& tabname : setting->_tab_list )
@@ -151,7 +151,7 @@ namespace KFrame
 
     __KF_PLAYER_ENTER_FUNCTION__( KFItemMoveModule::OnEnterItemMoveModule )
     {
-        for ( auto& iter : KFItemBagConfig::Instance()->_settings._objects )
+        for ( auto& iter : KFItemBagConfig::Instance()->_setting_list._objects )
         {
             auto setting = iter.second;
             if ( setting->_tab_list.empty() )
@@ -171,7 +171,7 @@ namespace KFrame
 
     __KF_PLAYER_LEAVE_FUNCTION__( KFItemMoveModule::OnLeaveItemMoveModule )
     {
-        for ( auto& iter : KFItemBagConfig::Instance()->_settings._objects )
+        for ( auto& iter : KFItemBagConfig::Instance()->_setting_list._objects )
         {
             auto setting = iter.second;
             if ( setting->_tab_list.empty() )

@@ -13,7 +13,7 @@ namespace KFrame
             }
         }
 
-        setting._sort = static_cast< uint32 >( _startups.size() + 1 );
+        setting._sort = static_cast<uint32>( _startups.size() + 1 );
         _startups.push_back( setting );
     }
 

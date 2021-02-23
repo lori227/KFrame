@@ -19,7 +19,7 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         auto playerid = player->GetKeyID();
         auto kfnoterecord = player->Find( __STRING__( note ) );
-        for ( auto& iter : KFEnterConfig::Instance()->_settings._objects )
+        for ( auto& iter : KFEnterConfig::Instance()->_setting_list._objects )
         {
             auto setting = iter.second;
             if ( setting->_id != _invalid_int )

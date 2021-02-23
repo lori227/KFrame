@@ -828,7 +828,7 @@ namespace KFrame
 
     __KF_PLAYER_ENTER_FUNCTION__( KFItemModule::OnEnterItemModule )
     {
-        for ( auto& iter : KFItemBagConfig::Instance()->_settings._objects )
+        for ( auto& iter : KFItemBagConfig::Instance()->_setting_list._objects )
         {
             auto kfitemrecord = player->Find( iter.first );
             for ( auto kfitem = kfitemrecord->First(); kfitem != nullptr; kfitem = kfitemrecord->Next() )
@@ -883,7 +883,7 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     std::tuple<DataPtr, DataPtr> KFItemModule::FindItem( EntityPtr player, uint64 itemuuid )
     {
-        for ( auto& iter : KFItemBagConfig::Instance()->_settings._objects )
+        for ( auto& iter : KFItemBagConfig::Instance()->_setting_list._objects )
         {
             auto kfitemrecord = player->Find( iter.first );
             auto kfitem = kfitemrecord->Find( itemuuid );

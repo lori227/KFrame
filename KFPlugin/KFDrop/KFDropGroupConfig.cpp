@@ -34,7 +34,7 @@ namespace KFrame
 
     void KFDropGroupConfig::LoadAllComplete()
     {
-        for ( auto iter : _settings._objects )
+        for ( auto iter : _setting_list._objects )
         {
             auto setting = iter.second;
             for ( auto& drop_group_weight : setting->_necessary_list._objects )

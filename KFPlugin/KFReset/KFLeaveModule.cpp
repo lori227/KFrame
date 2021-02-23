@@ -20,7 +20,7 @@ namespace KFrame
         ///////////////////////////////////////////////////////////////////////////////////////////
         auto playerid = player->GetKeyID();
         auto kfnoteparent = player->Find( __STRING__( note ) );
-        for ( auto& iter : KFLeaveConfig::Instance()->_settings._objects )
+        for ( auto& iter : KFLeaveConfig::Instance()->_setting_list._objects )
         {
             auto setting = iter.second;
             if ( setting->_id != _invalid_int )
