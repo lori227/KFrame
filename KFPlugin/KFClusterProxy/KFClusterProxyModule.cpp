@@ -97,11 +97,11 @@ namespace KFrame
         listen_data->set_appid( global->_app_id->GetId() );
         listen_data->set_ip( global->_internet_ip );
         listen_data->set_port( global->_listen_port );
-        auto ok = _kf_tcp_client->SendNetMessage( objectid, KFMsg::S2S_CLUSTER_REGISTER_TO_MASTER_REQ, &req );
+        auto ok = _kf_tcp_client->SendNetMessage( object_id, KFMsg::S2S_CLUSTER_REGISTER_TO_MASTER_REQ, &req );
         if ( ok )
         {
             // 取消定时器
-            __UN_TIMER_1__( objectid );
+            __UN_TIMER_1__( object_id );
             __LOG_INFO__( "cluster proxy register to master ok" );
         }
     }
@@ -144,7 +144,7 @@ namespace KFrame
     __KF_TIMER_FUNCTION__( KFClusterProxyModule::OnTimerClusterAuthTimeOut )
     {
         // 认证超时, 关闭连接
-        _kf_tcp_server->CloseNetHandle( objectid, 1000, __FUNC_LINE__ );
+        _kf_tcp_server->CloseNetHandle( object_id, 1000, __FUNC_LINE__ );
     }
 
     __KF_NET_EVENT_FUNCTION__( KFClusterProxyModule::OnServerLostClient )
