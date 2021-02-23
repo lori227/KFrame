@@ -21,9 +21,6 @@ namespace KFrame
 
         virtual ~KFMessageHandleAbstract() = default;
 
-        // 获取模块id
-        virtual KFModule* GetModule() = 0;
-
         // 设置开关
         virtual void OpenFunction( bool open ) = 0;
 
@@ -50,12 +47,6 @@ namespace KFrame
             : KFMessageHandleAbstract( type, msg_id )
         {
             _message = __MAKE_SHARED__( T );
-        }
-
-        // 获取模块id
-        virtual KFModule* GetModule()
-        {
-            return _function._module;
         }
 
         // 设置开关
@@ -90,7 +81,7 @@ namespace KFrame
         {
             auto message_handle = __MAKE_SHARED__( KFMessageHandleData<MessageType>, type, msg_id );
             typename KFMessageHandleData<MessageType>::HandleFunctionType handle_function =
-                    std::bind( function, module, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
+                std::bind( function, module, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
             message_handle->_function.SetFunction( module, handle_function );
             AddMessageHandle( message_handle );
         }
@@ -99,7 +90,7 @@ namespace KFrame
         template<typename ModuleType>
         void UnRegisterHandle( uint32 msg_id, ModuleType* module )
         {
-            RemoveMessageHandle( msg_id, module );
+            RemoveMessageHandle( msg_id );
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -131,7 +122,7 @@ namespace KFrame
         virtual void AddMessageHandle( std::shared_ptr<KFMessageHandleAbstract> message_handle ) = 0;
 
         // 删除消息函数
-        virtual bool RemoveMessageHandle( uint32 msg_id, KFModule* module ) = 0;
+        virtual bool RemoveMessageHandle( uint32 msg_id ) = 0;
 
         virtual void BindFindEntityFunction( uint32 type, KFModule* module, KFFindEntityFunction& function ) = 0;
         virtual void UnBindFindEntityFunction( uint32 type ) = 0;

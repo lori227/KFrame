@@ -5,50 +5,50 @@
 namespace KFrame
 {
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFProto::Parse( google::protobuf::Message* proto, const int8* data, uint32 length )
+    bool KFProto::Parse( std::shared_ptr<google::protobuf::Message> message, const int8* data, uint32 length )
     {
         if ( data == nullptr || length == 0 )
         {
             return true;
         }
 
-        bool result = proto->ParseFromArray( data, length );
+        bool result = message->ParseFromArray( data, length );
         if ( !result )
         {
-            __LOG_ERROR__( "message[{}] parse failed", proto->GetTypeName() );
+            __LOG_ERROR__( "message[{}] parse failed", message->GetTypeName() );
         }
 
         return result;
     }
 
-    std::string& KFProto::Serialize( const ::google::protobuf::Message* proto, uint32 compress_type, uint32 compress_level, bool convert )
+    std::string& KFProto::Serialize( std::shared_ptr<const google::protobuf::Message> message, uint32 compress_type, uint32 compress_level, bool convert )
     {
         static std::string result = "";
         result.clear();
 
-        auto data = proto->SerializeAsString();
+        auto data = message->SerializeAsString();
         KFCompress::Compress( data, result, compress_type, compress_level, convert );
 
         return result;
     }
 
-    bool KFProto::Parse( ::google::protobuf::Message* proto, const std::string& data, uint32 compress_type, bool convert )
+    bool KFProto::Parse( std::shared_ptr<google::protobuf::Message> message, const std::string& data, uint32 compress_type, bool convert )
     {
         std::string result = "";
         auto ok = KFCompress::UnCompress( data, result, compress_type, convert );
         if ( !result.empty() )
         {
-            ok = proto->ParseFromString( result );
+            ok = message->ParseFromString( result );
             if ( !ok )
             {
-                __LOG_ERROR__( "message[{}] parse failed", proto->GetTypeName() );
+                __LOG_ERROR__( "message[{}] parse failed", message->GetTypeName() );
             }
         }
         else
         {
             if ( !ok )
             {
-                __LOG_ERROR__( "message[{}] data empty", proto->GetTypeName() );
+                __LOG_ERROR__( "message[{}] data empty", message->GetTypeName() );
             }
         }
 

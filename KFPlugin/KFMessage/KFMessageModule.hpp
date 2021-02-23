@@ -31,7 +31,7 @@ namespace KFrame
         virtual void AddMessageHandle( std::shared_ptr<KFMessageHandleAbstract> message_handle );
 
         // 删除消息函数
-        virtual bool RemoveMessageHandle( uint32 msg_id, KFModule* module );
+        virtual bool RemoveMessageHandle( uint32 msg_id );
 
         virtual void BindFindEntityFunction( uint32 type, KFModule* module, KFFindEntityFunction& function );
         virtual void UnBindFindEntityFunction( uint32 type );

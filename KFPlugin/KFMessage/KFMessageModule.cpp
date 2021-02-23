@@ -6,7 +6,7 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFMessageModule::AddMessageHandle( std::shared_ptr<KFMessageHandleAbstract> message_handle )
     {
-        auto ok = RemoveMessageHandle( message_handle->_msg_id, message_handle->GetModule() );
+        auto ok = RemoveMessageHandle( message_handle->_msg_id );
         if ( ok )
         {
             __LOG_ERROR__( "msg_id=[{}] already register", message_handle->_msg_id );
@@ -15,7 +15,7 @@ namespace KFrame
         _handle_list.Insert( message_handle->_msg_id, message_handle );
     }
 
-    bool KFMessageModule::RemoveMessageHandle( uint32 msg_id, KFModule* module )
+    bool KFMessageModule::RemoveMessageHandle( uint32 msg_id )
     {
         return _handle_list.Remove( msg_id ) != nullptr;
     }

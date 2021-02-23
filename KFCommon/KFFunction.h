@@ -103,6 +103,11 @@ namespace KFrame
             KFFunction<T>::Reset();
         }
 
+        inline KFModule* GetModule() const
+        {
+            return _module;
+        }
+
     protected:
         // 模块指针
         KFModule* _module = nullptr;
