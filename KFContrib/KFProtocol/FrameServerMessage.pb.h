@@ -2985,18 +2985,18 @@ class LIBPROTOC_EXPORT S2SSyncUpdateDataFromServer : public ::google::protobuf::
   // accessors -------------------------------------------------------
 
   // bytes data_name = 1;
-  void clear_dataname();
-  static const int kDatanameFieldNumber = 1;
+  void clear_data_name();
+  static const int kDataNameFieldNumber = 1;
   const ::std::string& data_name() const;
-  void set_dataname(const ::std::string& value);
+  void set_data_name(const ::std::string& value);
   #if LANG_CXX11
-  void set_dataname(::std::string&& value);
+  void set_data_name(::std::string&& value);
   #endif
-  void set_dataname(const char* value);
-  void set_dataname(const void* value, size_t size);
-  ::std::string* mutable_dataname();
-  ::std::string* release_dataname();
-  void set_allocated_dataname(::std::string* data_name);
+  void set_data_name(const char* value);
+  void set_data_name(const void* value, size_t size);
+  ::std::string* mutable_data_name();
+  ::std::string* release_data_name();
+  void set_allocated_data_name(::std::string* data_name);
 
   // .KFMsg.PBObject pbdata = 2;
   bool has_pbdata() const;
@@ -3014,7 +3014,7 @@ class LIBPROTOC_EXPORT S2SSyncUpdateDataFromServer : public ::google::protobuf::
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::internal::ArenaStringPtr dataname_;
+  ::google::protobuf::internal::ArenaStringPtr data_name_;
   ::KFMsg::PBObject* pbdata_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameServerMessage_2eproto::TableStruct;
@@ -3109,18 +3109,18 @@ class LIBPROTOC_EXPORT S2SSyncAddDataFromServer : public ::google::protobuf::Mes
   // accessors -------------------------------------------------------
 
   // bytes data_name = 1;
-  void clear_dataname();
-  static const int kDatanameFieldNumber = 1;
+  void clear_data_name();
+  static const int kDataNameFieldNumber = 1;
   const ::std::string& data_name() const;
-  void set_dataname(const ::std::string& value);
+  void set_data_name(const ::std::string& value);
   #if LANG_CXX11
-  void set_dataname(::std::string&& value);
+  void set_data_name(::std::string&& value);
   #endif
-  void set_dataname(const char* value);
-  void set_dataname(const void* value, size_t size);
-  ::std::string* mutable_dataname();
-  ::std::string* release_dataname();
-  void set_allocated_dataname(::std::string* data_name);
+  void set_data_name(const char* value);
+  void set_data_name(const void* value, size_t size);
+  ::std::string* mutable_data_name();
+  ::std::string* release_data_name();
+  void set_allocated_data_name(::std::string* data_name);
 
   // .KFMsg.PBObject pbdata = 2;
   bool has_pbdata() const;
@@ -3138,7 +3138,7 @@ class LIBPROTOC_EXPORT S2SSyncAddDataFromServer : public ::google::protobuf::Mes
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::internal::ArenaStringPtr dataname_;
+  ::google::protobuf::internal::ArenaStringPtr data_name_;
   ::KFMsg::PBObject* pbdata_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameServerMessage_2eproto::TableStruct;
@@ -3233,18 +3233,18 @@ class LIBPROTOC_EXPORT S2SSyncRemoveDataFromServer : public ::google::protobuf::
   // accessors -------------------------------------------------------
 
   // bytes data_name = 1;
-  void clear_dataname();
-  static const int kDatanameFieldNumber = 1;
+  void clear_data_name();
+  static const int kDataNameFieldNumber = 1;
   const ::std::string& data_name() const;
-  void set_dataname(const ::std::string& value);
+  void set_data_name(const ::std::string& value);
   #if LANG_CXX11
-  void set_dataname(::std::string&& value);
+  void set_data_name(::std::string&& value);
   #endif
-  void set_dataname(const char* value);
-  void set_dataname(const void* value, size_t size);
-  ::std::string* mutable_dataname();
-  ::std::string* release_dataname();
-  void set_allocated_dataname(::std::string* data_name);
+  void set_data_name(const char* value);
+  void set_data_name(const void* value, size_t size);
+  ::std::string* mutable_data_name();
+  ::std::string* release_data_name();
+  void set_allocated_data_name(::std::string* data_name);
 
   // .KFMsg.PBObject pbdata = 2;
   bool has_pbdata() const;
@@ -3262,7 +3262,7 @@ class LIBPROTOC_EXPORT S2SSyncRemoveDataFromServer : public ::google::protobuf::
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::internal::ArenaStringPtr dataname_;
+  ::google::protobuf::internal::ArenaStringPtr data_name_;
   ::KFMsg::PBObject* pbdata_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_FrameServerMessage_2eproto::TableStruct;
@@ -12280,55 +12280,55 @@ inline void S2SQueryPlayerToGameAck::set_allocated_playerdata(::KFMsg::PBObject*
 // S2SSyncUpdateDataFromServer
 
 // bytes data_name = 1;
-inline void S2SSyncUpdateDataFromServer::clear_dataname() {
-  dataname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+inline void S2SSyncUpdateDataFromServer::clear_data_name() {
+  data_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline const ::std::string& S2SSyncUpdateDataFromServer::data_name() const {
   // @@protoc_insertion_point(field_get:KFMsg.S2SSyncUpdateDataFromServer.data_name)
-  return dataname_.GetNoArena();
+  return data_name_.GetNoArena();
 }
-inline void S2SSyncUpdateDataFromServer::set_dataname(const ::std::string& value) {
+inline void S2SSyncUpdateDataFromServer::set_data_name(const ::std::string& value) {
   
-  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  data_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
   // @@protoc_insertion_point(field_set:KFMsg.S2SSyncUpdateDataFromServer.data_name)
 }
 #if LANG_CXX11
-inline void S2SSyncUpdateDataFromServer::set_dataname(::std::string&& value) {
+inline void S2SSyncUpdateDataFromServer::set_data_name(::std::string&& value) {
   
-  dataname_.SetNoArena(
+  data_name_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
   // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SSyncUpdateDataFromServer.data_name)
 }
 #endif
-inline void S2SSyncUpdateDataFromServer::set_dataname(const char* value) {
+inline void S2SSyncUpdateDataFromServer::set_data_name(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
-  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  data_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:KFMsg.S2SSyncUpdateDataFromServer.data_name)
 }
-inline void S2SSyncUpdateDataFromServer::set_dataname(const void* value, size_t size) {
+inline void S2SSyncUpdateDataFromServer::set_data_name(const void* value, size_t size) {
   
-  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+  data_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
   // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SSyncUpdateDataFromServer.data_name)
 }
-inline ::std::string* S2SSyncUpdateDataFromServer::mutable_dataname() {
+inline ::std::string* S2SSyncUpdateDataFromServer::mutable_data_name() {
   
   // @@protoc_insertion_point(field_mutable:KFMsg.S2SSyncUpdateDataFromServer.data_name)
-  return dataname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  return data_name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* S2SSyncUpdateDataFromServer::release_dataname() {
+inline ::std::string* S2SSyncUpdateDataFromServer::release_data_name() {
   // @@protoc_insertion_point(field_release:KFMsg.S2SSyncUpdateDataFromServer.data_name)
   
-  return dataname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  return data_name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void S2SSyncUpdateDataFromServer::set_allocated_dataname(::std::string* data_name) {
+inline void S2SSyncUpdateDataFromServer::set_allocated_data_name(::std::string* data_name) {
   if (data_name != NULL) {
     
   } else {
     
   }
-  dataname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), data_name);
+  data_name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), data_name);
   // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SSyncUpdateDataFromServer.data_name)
 }
 
@@ -12385,55 +12385,55 @@ inline void S2SSyncUpdateDataFromServer::set_allocated_pbdata(::KFMsg::PBObject*
 // S2SSyncAddDataFromServer
 
 // bytes data_name = 1;
-inline void S2SSyncAddDataFromServer::clear_dataname() {
-  dataname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+inline void S2SSyncAddDataFromServer::clear_data_name() {
+  data_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline const ::std::string& S2SSyncAddDataFromServer::data_name() const {
   // @@protoc_insertion_point(field_get:KFMsg.S2SSyncAddDataFromServer.data_name)
-  return dataname_.GetNoArena();
+  return data_name_.GetNoArena();
 }
-inline void S2SSyncAddDataFromServer::set_dataname(const ::std::string& value) {
+inline void S2SSyncAddDataFromServer::set_data_name(const ::std::string& value) {
   
-  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  data_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
   // @@protoc_insertion_point(field_set:KFMsg.S2SSyncAddDataFromServer.data_name)
 }
 #if LANG_CXX11
-inline void S2SSyncAddDataFromServer::set_dataname(::std::string&& value) {
+inline void S2SSyncAddDataFromServer::set_data_name(::std::string&& value) {
   
-  dataname_.SetNoArena(
+  data_name_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
   // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SSyncAddDataFromServer.data_name)
 }
 #endif
-inline void S2SSyncAddDataFromServer::set_dataname(const char* value) {
+inline void S2SSyncAddDataFromServer::set_data_name(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
-  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  data_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:KFMsg.S2SSyncAddDataFromServer.data_name)
 }
-inline void S2SSyncAddDataFromServer::set_dataname(const void* value, size_t size) {
+inline void S2SSyncAddDataFromServer::set_data_name(const void* value, size_t size) {
   
-  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+  data_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
   // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SSyncAddDataFromServer.data_name)
 }
-inline ::std::string* S2SSyncAddDataFromServer::mutable_dataname() {
+inline ::std::string* S2SSyncAddDataFromServer::mutable_data_name() {
   
   // @@protoc_insertion_point(field_mutable:KFMsg.S2SSyncAddDataFromServer.data_name)
-  return dataname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  return data_name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* S2SSyncAddDataFromServer::release_dataname() {
+inline ::std::string* S2SSyncAddDataFromServer::release_data_name() {
   // @@protoc_insertion_point(field_release:KFMsg.S2SSyncAddDataFromServer.data_name)
   
-  return dataname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  return data_name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void S2SSyncAddDataFromServer::set_allocated_dataname(::std::string* data_name) {
+inline void S2SSyncAddDataFromServer::set_allocated_data_name(::std::string* data_name) {
   if (data_name != NULL) {
     
   } else {
     
   }
-  dataname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), data_name);
+  data_name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), data_name);
   // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SSyncAddDataFromServer.data_name)
 }
 
@@ -12490,55 +12490,55 @@ inline void S2SSyncAddDataFromServer::set_allocated_pbdata(::KFMsg::PBObject* pb
 // S2SSyncRemoveDataFromServer
 
 // bytes data_name = 1;
-inline void S2SSyncRemoveDataFromServer::clear_dataname() {
-  dataname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+inline void S2SSyncRemoveDataFromServer::clear_data_name() {
+  data_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline const ::std::string& S2SSyncRemoveDataFromServer::data_name() const {
   // @@protoc_insertion_point(field_get:KFMsg.S2SSyncRemoveDataFromServer.data_name)
-  return dataname_.GetNoArena();
+  return data_name_.GetNoArena();
 }
-inline void S2SSyncRemoveDataFromServer::set_dataname(const ::std::string& value) {
+inline void S2SSyncRemoveDataFromServer::set_data_name(const ::std::string& value) {
   
-  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  data_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
   // @@protoc_insertion_point(field_set:KFMsg.S2SSyncRemoveDataFromServer.data_name)
 }
 #if LANG_CXX11
-inline void S2SSyncRemoveDataFromServer::set_dataname(::std::string&& value) {
+inline void S2SSyncRemoveDataFromServer::set_data_name(::std::string&& value) {
   
-  dataname_.SetNoArena(
+  data_name_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
   // @@protoc_insertion_point(field_set_rvalue:KFMsg.S2SSyncRemoveDataFromServer.data_name)
 }
 #endif
-inline void S2SSyncRemoveDataFromServer::set_dataname(const char* value) {
+inline void S2SSyncRemoveDataFromServer::set_data_name(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
-  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  data_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:KFMsg.S2SSyncRemoveDataFromServer.data_name)
 }
-inline void S2SSyncRemoveDataFromServer::set_dataname(const void* value, size_t size) {
+inline void S2SSyncRemoveDataFromServer::set_data_name(const void* value, size_t size) {
   
-  dataname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+  data_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
   // @@protoc_insertion_point(field_set_pointer:KFMsg.S2SSyncRemoveDataFromServer.data_name)
 }
-inline ::std::string* S2SSyncRemoveDataFromServer::mutable_dataname() {
+inline ::std::string* S2SSyncRemoveDataFromServer::mutable_data_name() {
   
   // @@protoc_insertion_point(field_mutable:KFMsg.S2SSyncRemoveDataFromServer.data_name)
-  return dataname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  return data_name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* S2SSyncRemoveDataFromServer::release_dataname() {
+inline ::std::string* S2SSyncRemoveDataFromServer::release_data_name() {
   // @@protoc_insertion_point(field_release:KFMsg.S2SSyncRemoveDataFromServer.data_name)
   
-  return dataname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  return data_name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void S2SSyncRemoveDataFromServer::set_allocated_dataname(::std::string* data_name) {
+inline void S2SSyncRemoveDataFromServer::set_allocated_data_name(::std::string* data_name) {
   if (data_name != NULL) {
     
   } else {
     
   }
-  dataname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), data_name);
+  data_name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), data_name);
   // @@protoc_insertion_point(field_set_allocated:KFMsg.S2SSyncRemoveDataFromServer.data_name)
 }
 

@@ -42,10 +42,10 @@ namespace KFrame
     __KF_TIMER_FUNCTION__( KFTcpDiscoverModule::OnTimerQueryMasterList )
     {
         // 查询master列表
-        auto& iplist = _kf_ip_address->GetMasterList( KFGlobal::Instance()->_app_name, KFGlobal::Instance()->_app_id->GetZoneId() );
-        for ( auto& ipaddress : iplist )
+        auto& ip_list = _kf_ip_address->GetMasterList( KFGlobal::Instance()->_app_name, KFGlobal::Instance()->_app_id->GetZoneId() );
+        for ( auto& ip_address : ip_list )
         {
-            _kf_tcp_client->StartClient( ipaddress._name, ipaddress._type, ipaddress._id, ipaddress._ip, ipaddress._port );
+            _kf_tcp_client->StartClient( ip_address._name, ip_address._type, ip_address._id, ip_address._ip, ip_address._port );
         }
     }
 
@@ -65,39 +65,39 @@ namespace KFrame
         }
         else
         {
-            KFMsg::ListenData listendata;
-            listendata.set_appname( net_data->_name );
-            listendata.set_apptype( net_data->_type );
-            listendata.set_appid( net_data->_id );
-            listendata.set_ip( net_data->_ip );
-            listendata.set_port( net_data->_port );
+            KFMsg::ListenData listen_data;
+            listen_data.set_appname( net_data->_name );
+            listen_data.set_apptype( net_data->_type );
+            listen_data.set_appid( net_data->_id );
+            listen_data.set_ip( net_data->_ip );
+            listen_data.set_port( net_data->_port );
 
             // 广播新连接给所有连接
             {
                 KFMsg::TellRegisterToServer tell;
-                tell.mutable_listen()->CopyFrom( listendata );
+                tell.mutable_listen()->CopyFrom( listen_data );
                 _kf_tcp_server->SendNetMessage( KFMsg::S2S_TELL_REGISTER_TO_SERVER, &tell, net_data->_id );
             }
 
             // 所有连接信息发送给新连接
             {
-                NetDataList handlelist;
-                _kf_tcp_server->GetHandleList( handlelist );
+                NetDataList handle_list;
+                _kf_tcp_server->GetHandleList( handle_list );
 
-                for ( auto kfhandle : handlelist )
+                for ( auto net_handle : handle_list )
                 {
-                    if ( kfhandle->_id == net_data->_id )
+                    if ( net_handle->_id == net_data->_id )
                     {
                         continue;
                     }
 
                     KFMsg::TellRegisterToServer tell;
                     auto listen = tell.mutable_listen();
-                    listen->set_appname( kfhandle->_name );
-                    listen->set_apptype( kfhandle->_type );
-                    listen->set_appid( kfhandle->_id );
-                    listen->set_ip( kfhandle->_ip );
-                    listen->set_port( kfhandle->_port );
+                    listen->set_appname( net_handle->_name );
+                    listen->set_apptype( net_handle->_type );
+                    listen->set_appid( net_handle->_id );
+                    listen->set_ip( net_handle->_ip );
+                    listen->set_port( net_handle->_port );
                     _kf_tcp_server->SendNetMessage( net_data->_id, KFMsg::S2S_TELL_REGISTER_TO_SERVER, &tell );
                 }
             }
@@ -105,39 +105,39 @@ namespace KFrame
             // 通知其他master, 有新的连接
             KFMsg::S2STellDiscoverServerToMaster tell;
             tell.set_serverid( global->_app_id->GetId() );
-            tell.mutable_listen()->CopyFrom( listendata );
+            tell.mutable_listen()->CopyFrom( listen_data );
             _kf_tcp_client->SendMessageToType( __STRING__( master ), KFMsg::S2S_TELL_DISCOVER_SERVER_TO_MASTER, &tell );
         }
     }
 
     __KF_MESSAGE_FUNCTION__( KFTcpDiscoverModule::HandleTellDiscoverServerToMaster, KFMsg::S2STellDiscoverServerToMaster )
     {
-        auto listendata = &kfmsg->listen();
+        auto listen_data = &kfmsg->listen();
 
         // 广播新连接给所有连接
         {
             KFMsg::TellRegisterToServer tell;
-            tell.mutable_listen()->CopyFrom( *listendata );
+            tell.mutable_listen()->CopyFrom( *listen_data );
             _kf_tcp_server->SendNetMessage( KFMsg::S2S_TELL_REGISTER_TO_SERVER, &tell );
         }
 
         // 所有连接信息发送给新连接
         {
-            NetDataList handlelist;
-            _kf_tcp_server->GetHandleList( handlelist );
+            NetDataList handle_list;
+            _kf_tcp_server->GetHandleList( handle_list );
 
-            for ( auto kfhandle : handlelist )
+            for ( auto net_handle : handle_list )
             {
                 KFMsg::S2STellRegisterServerToMaster tell;
-                tell.set_serverid( listendata->appid() );
+                tell.set_serverid( listen_data->appid() );
 
                 auto listen = tell.mutable_listen();
-                listen->set_appname( kfhandle->_name );
-                listen->set_apptype( kfhandle->_type );
-                listen->set_appid( kfhandle->_id );
-                listen->set_ip( kfhandle->_ip );
-                listen->set_port( kfhandle->_port );
-                _kf_tcp_client->SendNetMessage( kfmsg->server_id(), KFMsg::S2S_TELL_REGISTER_SERVER_TO_MASTER, &tell );
+                listen->set_appname( net_handle->_name );
+                listen->set_apptype( net_handle->_type );
+                listen->set_appid( net_handle->_id );
+                listen->set_ip( net_handle->_ip );
+                listen->set_port( net_handle->_port );
+                _kf_tcp_client->SendNetMessage( kfmsg->serverid(), KFMsg::S2S_TELL_REGISTER_SERVER_TO_MASTER, &tell );
             }
         }
     }
@@ -146,7 +146,7 @@ namespace KFrame
     {
         KFMsg::TellRegisterToServer tell;
         tell.mutable_listen()->CopyFrom( kfmsg->listen() );
-        _kf_tcp_server->SendNetMessage( kfmsg->server_id(), KFMsg::S2S_TELL_REGISTER_TO_SERVER, &tell );
+        _kf_tcp_server->SendNetMessage( kfmsg->serverid(), KFMsg::S2S_TELL_REGISTER_TO_SERVER, &tell );
     }
 
     __KF_NET_EVENT_FUNCTION__( KFTcpDiscoverModule::OnServerLostClient )

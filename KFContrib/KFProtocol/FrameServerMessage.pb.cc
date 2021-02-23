@@ -2175,21 +2175,21 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SSyncUpdateDataFromServer, dataname_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SSyncUpdateDataFromServer, data_name_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SSyncUpdateDataFromServer, pbdata_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SSyncAddDataFromServer, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SSyncAddDataFromServer, dataname_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SSyncAddDataFromServer, data_name_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SSyncAddDataFromServer, pbdata_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SSyncRemoveDataFromServer, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SSyncRemoveDataFromServer, dataname_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SSyncRemoveDataFromServer, data_name_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SSyncRemoveDataFromServer, pbdata_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::KFMsg::S2SPlayerEnterToWorldReq, _internal_metadata_),
@@ -3028,240 +3028,240 @@ void AddDescriptorsImpl() {
       " \001(\004\";\n\027S2SQueryPlayerToDataReq\022\020\n\010playe"
       "rid\030\001 \001(\004\022\016\n\006zoneid\030\002 \001(\r\"N\n\027S2SQueryPla"
       "yerToGameAck\022\016\n\006result\030\001 \001(\r\022#\n\nplayerda"
-      "ta\030\002 \001(\0132\017.KFMsg.PBObject\"P\n\033S2SSyncUpda"
-      "teDataFromServer\022\020\n\010dataname\030\001 \001(\014\022\037\n\006pb"
-      "data\030\002 \001(\0132\017.KFMsg.PBObject\"M\n\030S2SSyncAd"
-      "dDataFromServer\022\020\n\010dataname\030\001 \001(\014\022\037\n\006pbd"
-      "ata\030\002 \001(\0132\017.KFMsg.PBObject\"P\n\033S2SSyncRem"
-      "oveDataFromServer\022\020\n\010dataname\030\001 \001(\014\022\037\n\006p"
-      "bdata\030\002 \001(\0132\017.KFMsg.PBObject\"\?\n\030S2SPlaye"
-      "rEnterToWorldReq\022\020\n\010playerid\030\001 \001(\004\022\021\n\tac"
-      "countid\030\002 \001(\004\"\?\n\030S2SPlayerLeaveToWorldRe"
-      "q\022\020\n\010playerid\030\001 \001(\004\022\021\n\taccountid\030\002 \001(\004\"8"
-      "\n\026S2SKickPlayerToGameReq\022\014\n\004type\030\001 \001(\r\022\020"
-      "\n\010playerid\030\002 \001(\004\"8\n\026S2SKickPlayerToGateR"
-      "eq\022\014\n\004type\030\001 \001(\r\022\020\n\010playerid\030\002 \001(\004\"7\n\025S2"
-      "SBroadcastToGameReq\022\r\n\005msgid\030\001 \001(\r\022\017\n\007ms"
-      "gdata\030\002 \001(\014\"X\n\025S2SBroadcastToGameAck\022\r\n\005"
-      "msgid\030\001 \001(\r\022\017\n\007msgdata\030\002 \001(\014\022\016\n\006serial\030\003"
-      " \001(\r\022\017\n\007worldid\030\004 \001(\004\"X\n\025S2SBroadcastToG"
-      "ateReq\022\r\n\005msgid\030\001 \001(\r\022\017\n\007msgdata\030\002 \001(\014\022\016"
-      "\n\006serial\030\003 \001(\r\022\017\n\007worldid\030\004 \001(\004\"9\n\027S2SBr"
-      "oadcastToServerReq\022\r\n\005msgid\030\001 \001(\r\022\017\n\007msg"
-      "data\030\002 \001(\014\"8\n\026S2SBroadcastToWorldReq\022\r\n\005"
-      "msgid\030\001 \001(\r\022\017\n\007msgdata\030\002 \001(\014\"Y\n\026S2SBroad"
-      "castToWorldAck\022\r\n\005msgid\030\001 \001(\r\022\017\n\007msgdata"
-      "\030\002 \001(\014\022\016\n\006serial\030\003 \001(\r\022\017\n\007worldid\030\004 \001(\004\""
-      "\\\n\006PBMail\022%\n\004data\030\001 \003(\0132\027.KFMsg.PBMail.D"
-      "ataEntry\032+\n\tDataEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005va"
-      "lue\030\002 \001(\014:\0028\001\"B\n\017S2SQueryMailReq\022\020\n\010play"
-      "erid\030\001 \001(\004\022\016\n\006zoneid\030\002 \001(\r\022\r\n\005maxid\030\003 \001("
-      "\004\"@\n\017S2SQueryMailAck\022\020\n\010playerid\030\001 \001(\004\022\033"
-      "\n\004mail\030\002 \003(\0132\r.KFMsg.PBMail\"N\n\rS2SAddMai"
-      "lReq\022\014\n\004flag\030\001 \001(\r\022\020\n\010objectid\030\002 \001(\004\022\035\n\006"
-      "pbmail\030\003 \001(\0132\r.KFMsg.PBMail\"\'\n\023S2SNotice"
-      "NewMailReq\022\020\n\010playerid\030\001 \001(\004\"7\n\023S2SNewPl"
-      "ayerMailReq\022\020\n\010playerid\030\001 \001(\004\022\016\n\006zoneid\030"
-      "\002 \001(\r\"T\n\026S2SUpdateMailStatusReq\022\020\n\010playe"
-      "rid\030\001 \001(\004\022\n\n\002id\030\002 \001(\004\022\014\n\004flag\030\003 \001(\r\022\016\n\006s"
-      "tatus\030\004 \001(\r\"F\n\026S2SUpdateMailStatusAck\022\020\n"
-      "\010playerid\030\001 \001(\004\022\n\n\002id\030\002 \001(\004\022\016\n\006status\030\003 "
-      "\001(\r\"*\n\026S2SNoticeRankWorkerReq\022\020\n\010workeri"
-      "d\030\001 \001(\r\"$\n\022S2SSyncRefreshRank\022\016\n\006rankid\030"
-      "\001 \001(\r\"o\n\024S2SUpdateRankDataReq\022\020\n\010playeri"
-      "d\030\001 \001(\004\022\016\n\006rankid\030\002 \001(\r\022\016\n\006zoneid\030\003 \001(\r\022"
-      "%\n\npbrankdata\030\004 \001(\0132\021.KFMsg.PBRankData\"S"
-      "\n\023S2SQueryRankListReq\022\016\n\006rankid\030\001 \001(\r\022\016\n"
-      "\006zoneid\030\002 \001(\r\022\r\n\005start\030\003 \001(\r\022\r\n\005count\030\004 "
-      "\001(\r\"=\n\031S2SQueryFriendRankListReq\022\016\n\006rank"
-      "id\030\001 \001(\r\022\020\n\010friendid\030\002 \003(\004\"\214\001\n\033S2SUpdate"
-      "IntValueToBasicReq\022>\n\006pbdata\030\001 \003(\0132..KFM"
-      "sg.S2SUpdateIntValueToBasicReq.PbdataEnt"
-      "ry\032-\n\013PbdataEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030"
-      "\002 \001(\004:\0028\001\"\214\001\n\033S2SUpdateStrValueToBasicRe"
-      "q\022>\n\006pbdata\030\001 \003(\0132..KFMsg.S2SUpdateStrVa"
-      "lueToBasicReq.PbdataEntry\032-\n\013PbdataEntry"
-      "\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:\0028\001\",\n\030S2SC"
-      "learOnlineToBasicReq\022\020\n\010serverid\030\001 \001(\004\";"
-      "\n\033S2SQueryAttributeToBasicReq\022\014\n\004name\030\001 "
-      "\001(\014\022\016\n\006zoneid\030\002 \001(\r\"\250\001\n\032S2SQueryAttribut"
-      "eToGameAck\022\014\n\004name\030\001 \001(\014\022\016\n\006result\030\002 \001(\r"
-      "\022=\n\006pbdata\030\003 \003(\0132-.KFMsg.S2SQueryAttribu"
-      "teToGameAck.PbdataEntry\032-\n\013PbdataEntry\022\013"
-      "\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:\0028\001\"r\n\032S2SSet"
-      "PlayerNameToBasicReq\022\016\n\006zoneid\030\001 \001(\r\022\020\n\010"
-      "playerid\030\002 \001(\004\022\017\n\007oldname\030\003 \001(\014\022\017\n\007newna"
-      "me\030\004 \001(\014\022\020\n\010costdata\030\005 \001(\014\"]\n\031S2SSetPlay"
-      "erNameToGameAck\022\016\n\006result\030\001 \001(\r\022\020\n\010playe"
-      "rid\030\002 \001(\004\022\014\n\004name\030\003 \001(\014\022\020\n\010costdata\030\004 \001("
-      "\014\"\365\001\n\nPBRelation\022\020\n\010playerid\030\001 \001(\004\0223\n\tba"
-      "sicdata\030\002 \003(\0132 .KFMsg.PBRelation.Basicda"
-      "taEntry\0229\n\014relationdata\030\003 \003(\0132#.KFMsg.PB"
-      "Relation.RelationdataEntry\0320\n\016BasicdataE"
-      "ntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:\0028\001\0323\n\021"
-      "RelationdataEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030"
-      "\002 \001(\014:\0028\001\"G\n\035S2SQueryRelationToRelationR"
-      "eq\022\024\n\014relationname\030\001 \001(\014\022\020\n\010playerid\030\002 \001"
-      "(\004\"j\n\031S2SQueryRelationToGameAck\022\024\n\014relat"
-      "ionname\030\001 \001(\014\022\020\n\010playerid\030\002 \001(\004\022%\n\npbrel"
-      "ation\030\003 \003(\0132\021.KFMsg.PBRelation\"M\n#S2SQue"
-      "ryRelationInviteToRelationReq\022\024\n\014relatio"
-      "nname\030\001 \001(\014\022\020\n\010playerid\030\002 \001(\004\"n\n\037S2SQuer"
-      "yRelationInviteToGameAck\022\024\n\014relationname"
-      "\030\001 \001(\014\022\020\n\010playerid\030\002 \001(\004\022#\n\010pbinvite\030\003 \003"
-      "(\0132\021.KFMsg.PBRelation\"\272\001\n\036S2SUpdateIntVa"
-      "lueToRelationReq\022\024\n\014relationname\030\001 \001(\014\022\020"
-      "\n\010playerid\030\002 \001(\004\022A\n\006pbdata\030\003 \003(\01321.KFMsg"
-      ".S2SUpdateIntValueToRelationReq.PbdataEn"
-      "try\032-\n\013PbdataEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value"
-      "\030\002 \001(\004:\0028\001\"\272\001\n\036S2SUpdateStrValueToRelati"
+      "ta\030\002 \001(\0132\017.KFMsg.PBObject\"Q\n\033S2SSyncUpda"
+      "teDataFromServer\022\021\n\tdata_name\030\001 \001(\014\022\037\n\006p"
+      "bdata\030\002 \001(\0132\017.KFMsg.PBObject\"N\n\030S2SSyncA"
+      "ddDataFromServer\022\021\n\tdata_name\030\001 \001(\014\022\037\n\006p"
+      "bdata\030\002 \001(\0132\017.KFMsg.PBObject\"Q\n\033S2SSyncR"
+      "emoveDataFromServer\022\021\n\tdata_name\030\001 \001(\014\022\037"
+      "\n\006pbdata\030\002 \001(\0132\017.KFMsg.PBObject\"\?\n\030S2SPl"
+      "ayerEnterToWorldReq\022\020\n\010playerid\030\001 \001(\004\022\021\n"
+      "\taccountid\030\002 \001(\004\"\?\n\030S2SPlayerLeaveToWorl"
+      "dReq\022\020\n\010playerid\030\001 \001(\004\022\021\n\taccountid\030\002 \001("
+      "\004\"8\n\026S2SKickPlayerToGameReq\022\014\n\004type\030\001 \001("
+      "\r\022\020\n\010playerid\030\002 \001(\004\"8\n\026S2SKickPlayerToGa"
+      "teReq\022\014\n\004type\030\001 \001(\r\022\020\n\010playerid\030\002 \001(\004\"7\n"
+      "\025S2SBroadcastToGameReq\022\r\n\005msgid\030\001 \001(\r\022\017\n"
+      "\007msgdata\030\002 \001(\014\"X\n\025S2SBroadcastToGameAck\022"
+      "\r\n\005msgid\030\001 \001(\r\022\017\n\007msgdata\030\002 \001(\014\022\016\n\006seria"
+      "l\030\003 \001(\r\022\017\n\007worldid\030\004 \001(\004\"X\n\025S2SBroadcast"
+      "ToGateReq\022\r\n\005msgid\030\001 \001(\r\022\017\n\007msgdata\030\002 \001("
+      "\014\022\016\n\006serial\030\003 \001(\r\022\017\n\007worldid\030\004 \001(\004\"9\n\027S2"
+      "SBroadcastToServerReq\022\r\n\005msgid\030\001 \001(\r\022\017\n\007"
+      "msgdata\030\002 \001(\014\"8\n\026S2SBroadcastToWorldReq\022"
+      "\r\n\005msgid\030\001 \001(\r\022\017\n\007msgdata\030\002 \001(\014\"Y\n\026S2SBr"
+      "oadcastToWorldAck\022\r\n\005msgid\030\001 \001(\r\022\017\n\007msgd"
+      "ata\030\002 \001(\014\022\016\n\006serial\030\003 \001(\r\022\017\n\007worldid\030\004 \001"
+      "(\004\"\\\n\006PBMail\022%\n\004data\030\001 \003(\0132\027.KFMsg.PBMai"
+      "l.DataEntry\032+\n\tDataEntry\022\013\n\003key\030\001 \001(\t\022\r\n"
+      "\005value\030\002 \001(\014:\0028\001\"B\n\017S2SQueryMailReq\022\020\n\010p"
+      "layerid\030\001 \001(\004\022\016\n\006zoneid\030\002 \001(\r\022\r\n\005maxid\030\003"
+      " \001(\004\"@\n\017S2SQueryMailAck\022\020\n\010playerid\030\001 \001("
+      "\004\022\033\n\004mail\030\002 \003(\0132\r.KFMsg.PBMail\"N\n\rS2SAdd"
+      "MailReq\022\014\n\004flag\030\001 \001(\r\022\020\n\010objectid\030\002 \001(\004\022"
+      "\035\n\006pbmail\030\003 \001(\0132\r.KFMsg.PBMail\"\'\n\023S2SNot"
+      "iceNewMailReq\022\020\n\010playerid\030\001 \001(\004\"7\n\023S2SNe"
+      "wPlayerMailReq\022\020\n\010playerid\030\001 \001(\004\022\016\n\006zone"
+      "id\030\002 \001(\r\"T\n\026S2SUpdateMailStatusReq\022\020\n\010pl"
+      "ayerid\030\001 \001(\004\022\n\n\002id\030\002 \001(\004\022\014\n\004flag\030\003 \001(\r\022\016"
+      "\n\006status\030\004 \001(\r\"F\n\026S2SUpdateMailStatusAck"
+      "\022\020\n\010playerid\030\001 \001(\004\022\n\n\002id\030\002 \001(\004\022\016\n\006status"
+      "\030\003 \001(\r\"*\n\026S2SNoticeRankWorkerReq\022\020\n\010work"
+      "erid\030\001 \001(\r\"$\n\022S2SSyncRefreshRank\022\016\n\006rank"
+      "id\030\001 \001(\r\"o\n\024S2SUpdateRankDataReq\022\020\n\010play"
+      "erid\030\001 \001(\004\022\016\n\006rankid\030\002 \001(\r\022\016\n\006zoneid\030\003 \001"
+      "(\r\022%\n\npbrankdata\030\004 \001(\0132\021.KFMsg.PBRankDat"
+      "a\"S\n\023S2SQueryRankListReq\022\016\n\006rankid\030\001 \001(\r"
+      "\022\016\n\006zoneid\030\002 \001(\r\022\r\n\005start\030\003 \001(\r\022\r\n\005count"
+      "\030\004 \001(\r\"=\n\031S2SQueryFriendRankListReq\022\016\n\006r"
+      "ankid\030\001 \001(\r\022\020\n\010friendid\030\002 \003(\004\"\214\001\n\033S2SUpd"
+      "ateIntValueToBasicReq\022>\n\006pbdata\030\001 \003(\0132.."
+      "KFMsg.S2SUpdateIntValueToBasicReq.Pbdata"
+      "Entry\032-\n\013PbdataEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005val"
+      "ue\030\002 \001(\004:\0028\001\"\214\001\n\033S2SUpdateStrValueToBasi"
+      "cReq\022>\n\006pbdata\030\001 \003(\0132..KFMsg.S2SUpdateSt"
+      "rValueToBasicReq.PbdataEntry\032-\n\013PbdataEn"
+      "try\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:\0028\001\",\n\030S"
+      "2SClearOnlineToBasicReq\022\020\n\010serverid\030\001 \001("
+      "\004\";\n\033S2SQueryAttributeToBasicReq\022\014\n\004name"
+      "\030\001 \001(\014\022\016\n\006zoneid\030\002 \001(\r\"\250\001\n\032S2SQueryAttri"
+      "buteToGameAck\022\014\n\004name\030\001 \001(\014\022\016\n\006result\030\002 "
+      "\001(\r\022=\n\006pbdata\030\003 \003(\0132-.KFMsg.S2SQueryAttr"
+      "ibuteToGameAck.PbdataEntry\032-\n\013PbdataEntr"
+      "y\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:\0028\001\"r\n\032S2S"
+      "SetPlayerNameToBasicReq\022\016\n\006zoneid\030\001 \001(\r\022"
+      "\020\n\010playerid\030\002 \001(\004\022\017\n\007oldname\030\003 \001(\014\022\017\n\007ne"
+      "wname\030\004 \001(\014\022\020\n\010costdata\030\005 \001(\014\"]\n\031S2SSetP"
+      "layerNameToGameAck\022\016\n\006result\030\001 \001(\r\022\020\n\010pl"
+      "ayerid\030\002 \001(\004\022\014\n\004name\030\003 \001(\014\022\020\n\010costdata\030\004"
+      " \001(\014\"\365\001\n\nPBRelation\022\020\n\010playerid\030\001 \001(\004\0223\n"
+      "\tbasicdata\030\002 \003(\0132 .KFMsg.PBRelation.Basi"
+      "cdataEntry\0229\n\014relationdata\030\003 \003(\0132#.KFMsg"
+      ".PBRelation.RelationdataEntry\0320\n\016Basicda"
+      "taEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:\0028\001\032"
+      "3\n\021RelationdataEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005val"
+      "ue\030\002 \001(\014:\0028\001\"G\n\035S2SQueryRelationToRelati"
       "onReq\022\024\n\014relationname\030\001 \001(\014\022\020\n\010playerid\030"
-      "\002 \001(\004\022A\n\006pbdata\030\003 \003(\01321.KFMsg.S2SUpdateS"
-      "trValueToRelationReq.PbdataEntry\032-\n\013Pbda"
-      "taEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:\0028\001\""
-      "o\n S2SApplyAddRelationToRelationReq\022\024\n\014r"
-      "elationname\030\001 \001(\014\022\022\n\nplayername\030\002 \001(\014\022\020\n"
-      "\010playerid\030\003 \001(\004\022\017\n\007message\030\004 \001(\014\"k\n\034S2SA"
-      "pplyAddRelationToGameAck\022\024\n\014relationname"
-      "\030\001 \001(\014\022\020\n\010playerid\030\002 \001(\004\022#\n\010pbinvite\030\003 \001"
-      "(\0132\021.KFMsg.PBRelation\"y\n!S2SDelRelationI"
-      "nviteToRelationReq\022\024\n\014relationname\030\001 \001(\014"
-      "\022\020\n\010listname\030\002 \001(\014\022\024\n\014selfplayerid\030\003 \001(\004"
-      "\022\026\n\016targetplayerid\030\004 \001(\004\"Y\n\033S2SAddRelati"
-      "onToRelationReq\022\024\n\014relationname\030\001 \001(\014\022\020\n"
-      "\010playerid\030\002 \001(\004\022\022\n\nplayername\030\003 \001(\014\"h\n\027S"
-      "2SAddRelationToGameAck\022\024\n\014relationname\030\001"
-      " \001(\014\022\020\n\010playerid\030\002 \001(\004\022%\n\npbrelation\030\004 \001"
-      "(\0132\021.KFMsg.PBRelation\"E\n\033S2SDelRelationT"
-      "oRelationReq\022\024\n\014relationname\030\001 \001(\014\022\020\n\010pl"
-      "ayerid\030\002 \001(\004\"U\n\027S2SDelRelationToGameAck\022"
-      "\024\n\014relationname\030\001 \001(\014\022\020\n\010playerid\030\002 \001(\004\022"
-      "\022\n\nrelationid\030\003 \001(\004\"v\n\"S2SUpdateFriendLi"
-      "nessToRelationReq\022\014\n\004type\030\001 \001(\r\022\024\n\014selfp"
-      "layerid\030\002 \001(\004\022\026\n\016targetplayerid\030\003 \001(\004\022\024\n"
-      "\014friendliness\030\004 \001(\r\"`\n\036S2SUpdateFriendLi"
-      "nessToGameAck\022\020\n\010playerid\030\001 \001(\004\022\026\n\016targe"
-      "tplayerid\030\002 \001(\004\022\024\n\014friendliness\030\003 \001(\r\"[\n"
-      "\036S2SRefuseRelationToRelationReq\022\022\n\nrefus"
-      "ename\030\001 \001(\014\022\020\n\010playerid\030\002 \001(\004\022\023\n\013refusev"
-      "alue\030\003 \001(\004\"d\n\026S2STeamCreateToTeamReq\022\n\n\002"
-      "id\030\001 \001(\r\022\014\n\004name\030\002 \001(\014\022\014\n\004info\030\003 \001(\014\022\"\n\t"
-      "pbcaptain\030\004 \001(\0132\017.KFMsg.PBObject\"C\n\024S2ST"
-      "eamJoinToGameAck\022\n\n\002id\030\001 \001(\004\022\037\n\006pbteam\030\002"
-      " \001(\0132\017.KFMsg.PBObject\">\n\032S2STeamJoinFail"
-      "edToTeamReq\022\016\n\006teamid\030\001 \001(\004\022\020\n\010playerid\030"
-      "\002 \001(\004\"\?\n\033S2STeamOnlineQueryToTeamReq\022\016\n\006"
-      "teamid\030\001 \001(\004\022\020\n\010playerid\030\002 \001(\004\">\n\033S2STea"
-      "mOnlineQueryToGameAck\022\037\n\006pbteam\030\001 \001(\0132\017."
-      "KFMsg.PBObject\"\250\001\n\030S2STeamIntValueToTeam"
-      "Req\022\016\n\006teamid\030\001 \001(\004\022\020\n\010playerid\030\002 \001(\004\022;\n"
-      "\006pbdata\030\003 \003(\0132+.KFMsg.S2STeamIntValueToT"
-      "eamReq.PbdataEntry\032-\n\013PbdataEntry\022\013\n\003key"
-      "\030\001 \001(\t\022\r\n\005value\030\002 \001(\004:\0028\001\"\250\001\n\030S2STeamStr"
-      "ValueToTeamReq\022\016\n\006teamid\030\001 \001(\004\022\020\n\010player"
-      "id\030\002 \001(\004\022;\n\006pbdata\030\003 \003(\0132+.KFMsg.S2STeam"
-      "StrValueToTeamReq.PbdataEntry\032-\n\013PbdataE"
-      "ntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:\0028\001\"\264\001\n"
-      "\036S2STeamMemberIntValueToTeamReq\022\016\n\006teami"
-      "d\030\001 \001(\004\022\020\n\010playerid\030\002 \001(\004\022A\n\006pbdata\030\003 \003("
-      "\01321.KFMsg.S2STeamMemberIntValueToTeamReq"
-      ".PbdataEntry\032-\n\013PbdataEntry\022\013\n\003key\030\001 \001(\t"
-      "\022\r\n\005value\030\002 \001(\004:\0028\001\"\264\001\n\036S2STeamMemberStr"
-      "ValueToTeamReq\022\016\n\006teamid\030\001 \001(\004\022\020\n\010player"
-      "id\030\002 \001(\004\022A\n\006pbdata\030\003 \003(\01321.KFMsg.S2STeam"
-      "MemberStrValueToTeamReq.PbdataEntry\032-\n\013P"
+      "\002 \001(\004\"j\n\031S2SQueryRelationToGameAck\022\024\n\014re"
+      "lationname\030\001 \001(\014\022\020\n\010playerid\030\002 \001(\004\022%\n\npb"
+      "relation\030\003 \003(\0132\021.KFMsg.PBRelation\"M\n#S2S"
+      "QueryRelationInviteToRelationReq\022\024\n\014rela"
+      "tionname\030\001 \001(\014\022\020\n\010playerid\030\002 \001(\004\"n\n\037S2SQ"
+      "ueryRelationInviteToGameAck\022\024\n\014relationn"
+      "ame\030\001 \001(\014\022\020\n\010playerid\030\002 \001(\004\022#\n\010pbinvite\030"
+      "\003 \003(\0132\021.KFMsg.PBRelation\"\272\001\n\036S2SUpdateIn"
+      "tValueToRelationReq\022\024\n\014relationname\030\001 \001("
+      "\014\022\020\n\010playerid\030\002 \001(\004\022A\n\006pbdata\030\003 \003(\01321.KF"
+      "Msg.S2SUpdateIntValueToRelationReq.Pbdat"
+      "aEntry\032-\n\013PbdataEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005va"
+      "lue\030\002 \001(\004:\0028\001\"\272\001\n\036S2SUpdateStrValueToRel"
+      "ationReq\022\024\n\014relationname\030\001 \001(\014\022\020\n\010player"
+      "id\030\002 \001(\004\022A\n\006pbdata\030\003 \003(\01321.KFMsg.S2SUpda"
+      "teStrValueToRelationReq.PbdataEntry\032-\n\013P"
       "bdataEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:\002"
-      "8\001\"9\n\025S2STeamLeaveToTeamReq\022\016\n\006teamid\030\001 "
-      "\001(\004\022\020\n\010playerid\030\002 \001(\004\"K\n\024S2STeamKickToTe"
-      "amReq\022\016\n\006teamid\030\001 \001(\004\022\021\n\tcaptainid\030\002 \001(\004"
-      "\022\020\n\010memberid\030\003 \001(\004\"5\n\025S2STeamLeaveToGame"
-      "Ack\022\016\n\006teamid\030\001 \001(\004\022\014\n\004type\030\002 \001(\r\"`\n\032S2S"
-      "TeamTellInviteToGameAck\022!\n\010pbplayer\030\001 \001("
-      "\0132\017.KFMsg.PBObject\022\037\n\006pbteam\030\002 \001(\0132\017.KFM"
-      "sg.PBObject\">\n\031S2STeamTellApplyToGameAck"
-      "\022!\n\010pbplayer\030\001 \001(\0132\017.KFMsg.PBObject\"J\n\025S"
-      "2STeamAgreeToTeamReq\022\016\n\006teamid\030\001 \001(\004\022!\n\010"
-      "pbplayer\030\002 \001(\0132\017.KFMsg.PBObject*\367\027\n\023Fram"
-      "eServerProtocol\022#\n\037S2S_FRAME_SERVER_PROT"
-      "OCOL_BEGIN\020\000\022\037\n\031S2S_ADD_GATE_TO_WORLD_RE"
-      "Q\020\242\234\001\022\"\n\034S2S_REMOVE_GATE_TO_WORLD_REQ\020\243\234"
-      "\001\022\034\n\026S2S_LOGIN_TO_LOGIN_REQ\020\205\235\001\022\033\n\025S2S_L"
-      "OGIN_TO_GATE_ACK\020\206\235\001\022\034\n\026S2S_LOGIN_TO_WOR"
-      "LD_REQ\020\207\235\001\022\034\n\026S2S_LOGIN_TO_LOGIN_ACK\020\210\235\001"
-      "\022\033\n\025S2S_LOGIN_TO_GAME_REQ\020\211\235\001\022\034\n\026S2S_LOG"
-      "OUT_TO_GAME_REQ\020\212\235\001\022 \n\032S2S_DISCONNECT_TO"
-      "_GAME_REQ\020\213\235\001\022\033\n\025S2S_LEAVE_TO_GAME_REQ\020\214"
-      "\235\001\022\033\n\025S2S_ENTER_TO_GATE_ACK\020\215\235\001\022\035\n\027S2S_R"
-      "ELOGIN_TO_GAME_REQ\020\216\235\001\022\035\n\027S2S_RELOGIN_TO"
-      "_GATE_ACK\020\217\235\001\022\035\n\027S2S_CONNECT_TO_GAME_REQ"
-      "\020\220\235\001\022#\n\035S2S_PLAYER_ENTER_TO_WORLD_REQ\020\352\235"
-      "\001\022#\n\035S2S_PLAYER_LEAVE_TO_WORLD_REQ\020\353\235\001\022!"
-      "\n\033S2S_KICK_PLAYER_TO_GAME_REQ\020\354\235\001\022!\n\033S2S"
-      "_KICK_PLAYER_TO_GATE_REQ\020\355\235\001\022\037\n\031S2S_BROA"
-      "DCAST_TO_GAME_REQ\020\315\236\001\022\037\n\031S2S_BROADCAST_T"
-      "O_GAME_ACK\020\316\236\001\022 \n\032S2S_BROADCAST_TO_WORLD"
-      "_REQ\020\317\236\001\022 \n\032S2S_BROADCAST_TO_WORLD_ACK\020\320"
-      "\236\001\022\037\n\031S2S_BROADCAST_TO_GATE_REQ\020\321\236\001\022!\n\033S"
-      "2S_BROADCAST_TO_SERVER_REQ\020\322\236\001\022!\n\033S2S_LO"
-      "AD_PLAYER_TO_DATA_REQ\020\261\237\001\022!\n\033S2S_LOAD_PL"
-      "AYER_TO_GAME_ACK\020\262\237\001\022!\n\033S2S_SAVE_PLAYER_"
-      "TO_DATA_REQ\020\263\237\001\022!\n\033S2S_SAVE_PLAYER_TO_GA"
-      "ME_ACK\020\264\237\001\022\"\n\034S2S_QUERY_PLAYER_TO_DATA_R"
-      "EQ\020\265\237\001\022\"\n\034S2S_QUERY_PLAYER_TO_GAME_ACK\020\266"
-      "\237\001\022&\n S2S_SYNC_UPDATE_DATA_FROM_SERVER\020\267"
-      "\237\001\022#\n\035S2S_SYNC_ADD_DATA_FROM_SERVER\020\270\237\001\022"
-      "&\n S2S_SYNC_REMOVE_DATA_FROM_SERVER\020\271\237\001\022"
-      "\035\n\027S2S_NEW_PLAYER_MAIL_REQ\020\225\240\001\022\030\n\022S2S_QU"
-      "ERY_MAIL_REQ\020\226\240\001\022\030\n\022S2S_QUERY_MAIL_ACK\020\227"
-      "\240\001\022\026\n\020S2S_ADD_MAIL_REQ\020\230\240\001\022\035\n\027S2S_NOTICE"
-      "_NEW_MAIL_REQ\020\231\240\001\022 \n\032S2S_UPDATE_MAIL_STA"
-      "TUS_REQ\020\232\240\001\022 \n\032S2S_UPDATE_MAIL_STATUS_AC"
-      "K\020\233\240\001\022 \n\032S2S_NOTICE_RANK_WORKER_REQ\020\371\240\001\022"
-      "\033\n\025S2S_SYNC_REFRESH_RANK\020\372\240\001\022\036\n\030S2S_UPDA"
-      "TE_RANK_DATA_REQ\020\373\240\001\022\035\n\027S2S_QUERY_RANK_L"
-      "IST_REQ\020\374\240\001\022$\n\036S2S_QUERY_FRIEND_RANK_LIS"
-      "T_REQ\020\375\240\001\022\'\n!S2S_UPDATE_INT_VALUE_TO_BAS"
-      "IC_REQ\020\335\241\001\022\'\n!S2S_UPDATE_STR_VALUE_TO_BA"
-      "SIC_REQ\020\336\241\001\022&\n S2S_QUERY_ATTRIBUTE_TO_BA"
-      "SIC_REQ\020\337\241\001\022%\n\037S2S_QUERY_ATTRIBUTE_TO_GA"
-      "ME_ACK\020\340\241\001\022#\n\035S2S_CLEAR_ONLINE_TO_BASIC_"
-      "REQ\020\341\241\001\022&\n S2S_SET_PLAYER_NAME_TO_BASIC_"
-      "REQ\020\342\241\001\022%\n\037S2S_SET_PLAYER_NAME_TO_GAME_A"
-      "CK\020\343\241\001\022(\n\"S2S_QUERY_RELATION_TO_RELATION"
-      "_REQ\020\301\242\001\022$\n\036S2S_QUERY_RELATION_TO_GAME_A"
-      "CK\020\302\242\001\022/\n)S2S_QUERY_RELATION_INVITE_TO_R"
-      "ELATION_REQ\020\303\242\001\022+\n%S2S_QUERY_RELATION_IN"
-      "VITE_TO_GAME_ACK\020\304\242\001\022*\n$S2S_UPDATE_INT_V"
-      "ALUE_TO_RELATION_REQ\020\305\242\001\022*\n$S2S_UPDATE_S"
-      "TR_VALUE_TO_RELATION_REQ\020\306\242\001\022,\n&S2S_APPL"
-      "Y_ADD_RELATION_TO_RELATION_REQ\020\307\242\001\022(\n\"S2"
-      "S_APPLY_ADD_RELATION_TO_GAME_ACK\020\310\242\001\022-\n\'"
-      "S2S_DEL_RELATION_INVITE_TO_RELATION_REQ\020"
-      "\311\242\001\022&\n S2S_ADD_RELATION_TO_RELATION_REQ\020"
-      "\312\242\001\022\"\n\034S2S_ADD_RELATION_TO_GAME_ACK\020\313\242\001\022"
-      "&\n S2S_DEL_RELATION_TO_RELATION_REQ\020\314\242\001\022"
-      "\"\n\034S2S_DEL_RELATION_TO_GAME_ACK\020\315\242\001\022-\n\'S"
-      "2S_UPDATE_FRIENDLINESS_TO_RELATION_REQ\020\316"
-      "\242\001\022)\n#S2S_UPDATE_FRIENDLINESS_TO_GAME_AC"
-      "K\020\317\242\001\022)\n#S2S_REFUSE_RELATION_TO_RELATION"
-      "_REQ\020\320\242\001\022!\n\033S2S_TEAM_CREATE_TO_TEAM_REQ\020"
-      "\245\243\001\022\036\n\030S2S_TEAM_JON_TO_GAME_ACK\020\246\243\001\022&\n S"
-      "2S_TEAM_JION_FAILED_TO_TEAM_REQ\020\247\243\001\022\'\n!S"
-      "2S_TEAM_ONLINE_QUERY_TO_TEAM_REQ\020\250\243\001\022\'\n!"
-      "S2S_TEAM_ONLINE_QUERY_TO_GAME_ACK\020\251\243\001\022$\n"
-      "\036S2S_TEAM_INT_VALUE_TO_TEAM_REQ\020\252\243\001\022$\n\036S"
-      "2S_TEAM_STR_VALUE_TO_TEAM_REQ\020\253\243\001\022+\n%S2S"
-      "_TEAM_MEMBER_INT_VALUE_TO_TEAM_REQ\020\254\243\001\022+"
-      "\n%S2S_TEAM_MEMBER_STR_VALUE_TO_TEAM_REQ\020"
-      "\255\243\001\022 \n\032S2S_TEAM_LEAVE_TO_TEAM_REQ\020\256\243\001\022\037\n"
-      "\031S2S_TEAM_KICK_TO_TEAM_REQ\020\257\243\001\022 \n\032S2S_TE"
-      "AM_LEAVE_TO_GAME_ACK\020\260\243\001\022&\n S2S_TEAM_TEL"
-      "L_INVITE_TO_GAME_ACK\020\261\243\001\022%\n\037S2S_TEAM_TEL"
-      "L_APPLY_TO_GAME_ACK\020\262\243\001\022 \n\032S2S_TEAM_AGRE"
-      "E_TO_TEAM_REQ\020\263\243\001b\006proto3"
+      "8\001\"o\n S2SApplyAddRelationToRelationReq\022\024"
+      "\n\014relationname\030\001 \001(\014\022\022\n\nplayername\030\002 \001(\014"
+      "\022\020\n\010playerid\030\003 \001(\004\022\017\n\007message\030\004 \001(\014\"k\n\034S"
+      "2SApplyAddRelationToGameAck\022\024\n\014relationn"
+      "ame\030\001 \001(\014\022\020\n\010playerid\030\002 \001(\004\022#\n\010pbinvite\030"
+      "\003 \001(\0132\021.KFMsg.PBRelation\"y\n!S2SDelRelati"
+      "onInviteToRelationReq\022\024\n\014relationname\030\001 "
+      "\001(\014\022\020\n\010listname\030\002 \001(\014\022\024\n\014selfplayerid\030\003 "
+      "\001(\004\022\026\n\016targetplayerid\030\004 \001(\004\"Y\n\033S2SAddRel"
+      "ationToRelationReq\022\024\n\014relationname\030\001 \001(\014"
+      "\022\020\n\010playerid\030\002 \001(\004\022\022\n\nplayername\030\003 \001(\014\"h"
+      "\n\027S2SAddRelationToGameAck\022\024\n\014relationnam"
+      "e\030\001 \001(\014\022\020\n\010playerid\030\002 \001(\004\022%\n\npbrelation\030"
+      "\004 \001(\0132\021.KFMsg.PBRelation\"E\n\033S2SDelRelati"
+      "onToRelationReq\022\024\n\014relationname\030\001 \001(\014\022\020\n"
+      "\010playerid\030\002 \001(\004\"U\n\027S2SDelRelationToGameA"
+      "ck\022\024\n\014relationname\030\001 \001(\014\022\020\n\010playerid\030\002 \001"
+      "(\004\022\022\n\nrelationid\030\003 \001(\004\"v\n\"S2SUpdateFrien"
+      "dLinessToRelationReq\022\014\n\004type\030\001 \001(\r\022\024\n\014se"
+      "lfplayerid\030\002 \001(\004\022\026\n\016targetplayerid\030\003 \001(\004"
+      "\022\024\n\014friendliness\030\004 \001(\r\"`\n\036S2SUpdateFrien"
+      "dLinessToGameAck\022\020\n\010playerid\030\001 \001(\004\022\026\n\016ta"
+      "rgetplayerid\030\002 \001(\004\022\024\n\014friendliness\030\003 \001(\r"
+      "\"[\n\036S2SRefuseRelationToRelationReq\022\022\n\nre"
+      "fusename\030\001 \001(\014\022\020\n\010playerid\030\002 \001(\004\022\023\n\013refu"
+      "sevalue\030\003 \001(\004\"d\n\026S2STeamCreateToTeamReq\022"
+      "\n\n\002id\030\001 \001(\r\022\014\n\004name\030\002 \001(\014\022\014\n\004info\030\003 \001(\014\022"
+      "\"\n\tpbcaptain\030\004 \001(\0132\017.KFMsg.PBObject\"C\n\024S"
+      "2STeamJoinToGameAck\022\n\n\002id\030\001 \001(\004\022\037\n\006pbtea"
+      "m\030\002 \001(\0132\017.KFMsg.PBObject\">\n\032S2STeamJoinF"
+      "ailedToTeamReq\022\016\n\006teamid\030\001 \001(\004\022\020\n\010player"
+      "id\030\002 \001(\004\"\?\n\033S2STeamOnlineQueryToTeamReq\022"
+      "\016\n\006teamid\030\001 \001(\004\022\020\n\010playerid\030\002 \001(\004\">\n\033S2S"
+      "TeamOnlineQueryToGameAck\022\037\n\006pbteam\030\001 \001(\013"
+      "2\017.KFMsg.PBObject\"\250\001\n\030S2STeamIntValueToT"
+      "eamReq\022\016\n\006teamid\030\001 \001(\004\022\020\n\010playerid\030\002 \001(\004"
+      "\022;\n\006pbdata\030\003 \003(\0132+.KFMsg.S2STeamIntValue"
+      "ToTeamReq.PbdataEntry\032-\n\013PbdataEntry\022\013\n\003"
+      "key\030\001 \001(\t\022\r\n\005value\030\002 \001(\004:\0028\001\"\250\001\n\030S2STeam"
+      "StrValueToTeamReq\022\016\n\006teamid\030\001 \001(\004\022\020\n\010pla"
+      "yerid\030\002 \001(\004\022;\n\006pbdata\030\003 \003(\0132+.KFMsg.S2ST"
+      "eamStrValueToTeamReq.PbdataEntry\032-\n\013Pbda"
+      "taEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:\0028\001\""
+      "\264\001\n\036S2STeamMemberIntValueToTeamReq\022\016\n\006te"
+      "amid\030\001 \001(\004\022\020\n\010playerid\030\002 \001(\004\022A\n\006pbdata\030\003"
+      " \003(\01321.KFMsg.S2STeamMemberIntValueToTeam"
+      "Req.PbdataEntry\032-\n\013PbdataEntry\022\013\n\003key\030\001 "
+      "\001(\t\022\r\n\005value\030\002 \001(\004:\0028\001\"\264\001\n\036S2STeamMember"
+      "StrValueToTeamReq\022\016\n\006teamid\030\001 \001(\004\022\020\n\010pla"
+      "yerid\030\002 \001(\004\022A\n\006pbdata\030\003 \003(\01321.KFMsg.S2ST"
+      "eamMemberStrValueToTeamReq.PbdataEntry\032-"
+      "\n\013PbdataEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001("
+      "\014:\0028\001\"9\n\025S2STeamLeaveToTeamReq\022\016\n\006teamid"
+      "\030\001 \001(\004\022\020\n\010playerid\030\002 \001(\004\"K\n\024S2STeamKickT"
+      "oTeamReq\022\016\n\006teamid\030\001 \001(\004\022\021\n\tcaptainid\030\002 "
+      "\001(\004\022\020\n\010memberid\030\003 \001(\004\"5\n\025S2STeamLeaveToG"
+      "ameAck\022\016\n\006teamid\030\001 \001(\004\022\014\n\004type\030\002 \001(\r\"`\n\032"
+      "S2STeamTellInviteToGameAck\022!\n\010pbplayer\030\001"
+      " \001(\0132\017.KFMsg.PBObject\022\037\n\006pbteam\030\002 \001(\0132\017."
+      "KFMsg.PBObject\">\n\031S2STeamTellApplyToGame"
+      "Ack\022!\n\010pbplayer\030\001 \001(\0132\017.KFMsg.PBObject\"J"
+      "\n\025S2STeamAgreeToTeamReq\022\016\n\006teamid\030\001 \001(\004\022"
+      "!\n\010pbplayer\030\002 \001(\0132\017.KFMsg.PBObject*\367\027\n\023F"
+      "rameServerProtocol\022#\n\037S2S_FRAME_SERVER_P"
+      "ROTOCOL_BEGIN\020\000\022\037\n\031S2S_ADD_GATE_TO_WORLD"
+      "_REQ\020\242\234\001\022\"\n\034S2S_REMOVE_GATE_TO_WORLD_REQ"
+      "\020\243\234\001\022\034\n\026S2S_LOGIN_TO_LOGIN_REQ\020\205\235\001\022\033\n\025S2"
+      "S_LOGIN_TO_GATE_ACK\020\206\235\001\022\034\n\026S2S_LOGIN_TO_"
+      "WORLD_REQ\020\207\235\001\022\034\n\026S2S_LOGIN_TO_LOGIN_ACK\020"
+      "\210\235\001\022\033\n\025S2S_LOGIN_TO_GAME_REQ\020\211\235\001\022\034\n\026S2S_"
+      "LOGOUT_TO_GAME_REQ\020\212\235\001\022 \n\032S2S_DISCONNECT"
+      "_TO_GAME_REQ\020\213\235\001\022\033\n\025S2S_LEAVE_TO_GAME_RE"
+      "Q\020\214\235\001\022\033\n\025S2S_ENTER_TO_GATE_ACK\020\215\235\001\022\035\n\027S2"
+      "S_RELOGIN_TO_GAME_REQ\020\216\235\001\022\035\n\027S2S_RELOGIN"
+      "_TO_GATE_ACK\020\217\235\001\022\035\n\027S2S_CONNECT_TO_GAME_"
+      "REQ\020\220\235\001\022#\n\035S2S_PLAYER_ENTER_TO_WORLD_REQ"
+      "\020\352\235\001\022#\n\035S2S_PLAYER_LEAVE_TO_WORLD_REQ\020\353\235"
+      "\001\022!\n\033S2S_KICK_PLAYER_TO_GAME_REQ\020\354\235\001\022!\n\033"
+      "S2S_KICK_PLAYER_TO_GATE_REQ\020\355\235\001\022\037\n\031S2S_B"
+      "ROADCAST_TO_GAME_REQ\020\315\236\001\022\037\n\031S2S_BROADCAS"
+      "T_TO_GAME_ACK\020\316\236\001\022 \n\032S2S_BROADCAST_TO_WO"
+      "RLD_REQ\020\317\236\001\022 \n\032S2S_BROADCAST_TO_WORLD_AC"
+      "K\020\320\236\001\022\037\n\031S2S_BROADCAST_TO_GATE_REQ\020\321\236\001\022!"
+      "\n\033S2S_BROADCAST_TO_SERVER_REQ\020\322\236\001\022!\n\033S2S"
+      "_LOAD_PLAYER_TO_DATA_REQ\020\261\237\001\022!\n\033S2S_LOAD"
+      "_PLAYER_TO_GAME_ACK\020\262\237\001\022!\n\033S2S_SAVE_PLAY"
+      "ER_TO_DATA_REQ\020\263\237\001\022!\n\033S2S_SAVE_PLAYER_TO"
+      "_GAME_ACK\020\264\237\001\022\"\n\034S2S_QUERY_PLAYER_TO_DAT"
+      "A_REQ\020\265\237\001\022\"\n\034S2S_QUERY_PLAYER_TO_GAME_AC"
+      "K\020\266\237\001\022&\n S2S_SYNC_UPDATE_DATA_FROM_SERVE"
+      "R\020\267\237\001\022#\n\035S2S_SYNC_ADD_DATA_FROM_SERVER\020\270"
+      "\237\001\022&\n S2S_SYNC_REMOVE_DATA_FROM_SERVER\020\271"
+      "\237\001\022\035\n\027S2S_NEW_PLAYER_MAIL_REQ\020\225\240\001\022\030\n\022S2S"
+      "_QUERY_MAIL_REQ\020\226\240\001\022\030\n\022S2S_QUERY_MAIL_AC"
+      "K\020\227\240\001\022\026\n\020S2S_ADD_MAIL_REQ\020\230\240\001\022\035\n\027S2S_NOT"
+      "ICE_NEW_MAIL_REQ\020\231\240\001\022 \n\032S2S_UPDATE_MAIL_"
+      "STATUS_REQ\020\232\240\001\022 \n\032S2S_UPDATE_MAIL_STATUS"
+      "_ACK\020\233\240\001\022 \n\032S2S_NOTICE_RANK_WORKER_REQ\020\371"
+      "\240\001\022\033\n\025S2S_SYNC_REFRESH_RANK\020\372\240\001\022\036\n\030S2S_U"
+      "PDATE_RANK_DATA_REQ\020\373\240\001\022\035\n\027S2S_QUERY_RAN"
+      "K_LIST_REQ\020\374\240\001\022$\n\036S2S_QUERY_FRIEND_RANK_"
+      "LIST_REQ\020\375\240\001\022\'\n!S2S_UPDATE_INT_VALUE_TO_"
+      "BASIC_REQ\020\335\241\001\022\'\n!S2S_UPDATE_STR_VALUE_TO"
+      "_BASIC_REQ\020\336\241\001\022&\n S2S_QUERY_ATTRIBUTE_TO"
+      "_BASIC_REQ\020\337\241\001\022%\n\037S2S_QUERY_ATTRIBUTE_TO"
+      "_GAME_ACK\020\340\241\001\022#\n\035S2S_CLEAR_ONLINE_TO_BAS"
+      "IC_REQ\020\341\241\001\022&\n S2S_SET_PLAYER_NAME_TO_BAS"
+      "IC_REQ\020\342\241\001\022%\n\037S2S_SET_PLAYER_NAME_TO_GAM"
+      "E_ACK\020\343\241\001\022(\n\"S2S_QUERY_RELATION_TO_RELAT"
+      "ION_REQ\020\301\242\001\022$\n\036S2S_QUERY_RELATION_TO_GAM"
+      "E_ACK\020\302\242\001\022/\n)S2S_QUERY_RELATION_INVITE_T"
+      "O_RELATION_REQ\020\303\242\001\022+\n%S2S_QUERY_RELATION"
+      "_INVITE_TO_GAME_ACK\020\304\242\001\022*\n$S2S_UPDATE_IN"
+      "T_VALUE_TO_RELATION_REQ\020\305\242\001\022*\n$S2S_UPDAT"
+      "E_STR_VALUE_TO_RELATION_REQ\020\306\242\001\022,\n&S2S_A"
+      "PPLY_ADD_RELATION_TO_RELATION_REQ\020\307\242\001\022(\n"
+      "\"S2S_APPLY_ADD_RELATION_TO_GAME_ACK\020\310\242\001\022"
+      "-\n\'S2S_DEL_RELATION_INVITE_TO_RELATION_R"
+      "EQ\020\311\242\001\022&\n S2S_ADD_RELATION_TO_RELATION_R"
+      "EQ\020\312\242\001\022\"\n\034S2S_ADD_RELATION_TO_GAME_ACK\020\313"
+      "\242\001\022&\n S2S_DEL_RELATION_TO_RELATION_REQ\020\314"
+      "\242\001\022\"\n\034S2S_DEL_RELATION_TO_GAME_ACK\020\315\242\001\022-"
+      "\n\'S2S_UPDATE_FRIENDLINESS_TO_RELATION_RE"
+      "Q\020\316\242\001\022)\n#S2S_UPDATE_FRIENDLINESS_TO_GAME"
+      "_ACK\020\317\242\001\022)\n#S2S_REFUSE_RELATION_TO_RELAT"
+      "ION_REQ\020\320\242\001\022!\n\033S2S_TEAM_CREATE_TO_TEAM_R"
+      "EQ\020\245\243\001\022\036\n\030S2S_TEAM_JON_TO_GAME_ACK\020\246\243\001\022&"
+      "\n S2S_TEAM_JION_FAILED_TO_TEAM_REQ\020\247\243\001\022\'"
+      "\n!S2S_TEAM_ONLINE_QUERY_TO_TEAM_REQ\020\250\243\001\022"
+      "\'\n!S2S_TEAM_ONLINE_QUERY_TO_GAME_ACK\020\251\243\001"
+      "\022$\n\036S2S_TEAM_INT_VALUE_TO_TEAM_REQ\020\252\243\001\022$"
+      "\n\036S2S_TEAM_STR_VALUE_TO_TEAM_REQ\020\253\243\001\022+\n%"
+      "S2S_TEAM_MEMBER_INT_VALUE_TO_TEAM_REQ\020\254\243"
+      "\001\022+\n%S2S_TEAM_MEMBER_STR_VALUE_TO_TEAM_R"
+      "EQ\020\255\243\001\022 \n\032S2S_TEAM_LEAVE_TO_TEAM_REQ\020\256\243\001"
+      "\022\037\n\031S2S_TEAM_KICK_TO_TEAM_REQ\020\257\243\001\022 \n\032S2S"
+      "_TEAM_LEAVE_TO_GAME_ACK\020\260\243\001\022&\n S2S_TEAM_"
+      "TELL_INVITE_TO_GAME_ACK\020\261\243\001\022%\n\037S2S_TEAM_"
+      "TELL_APPLY_TO_GAME_ACK\020\262\243\001\022 \n\032S2S_TEAM_A"
+      "GREE_TO_TEAM_REQ\020\263\243\001b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 10705);
+      descriptor, 10708);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "FrameServerMessage.proto", &protobuf_RegisterTypes);
   ::protobuf_FrameDefineMessage_2eproto::AddDescriptors();
@@ -9081,7 +9081,7 @@ void S2SSyncUpdateDataFromServer::clear_pbdata() {
   pbdata_ = NULL;
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int S2SSyncUpdateDataFromServer::kDatanameFieldNumber;
+const int S2SSyncUpdateDataFromServer::kDataNameFieldNumber;
 const int S2SSyncUpdateDataFromServer::kPbdataFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -9096,9 +9096,9 @@ S2SSyncUpdateDataFromServer::S2SSyncUpdateDataFromServer(const S2SSyncUpdateData
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
-  dataname_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  data_name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (from.data_name().size() > 0) {
-    dataname_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.dataname_);
+    data_name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.data_name_);
   }
   if (from.has_pbdata()) {
     pbdata_ = new ::KFMsg::PBObject(*from.pbdata_);
@@ -9109,7 +9109,7 @@ S2SSyncUpdateDataFromServer::S2SSyncUpdateDataFromServer(const S2SSyncUpdateData
 }
 
 void S2SSyncUpdateDataFromServer::SharedCtor() {
-  dataname_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  data_name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   pbdata_ = NULL;
 }
 
@@ -9119,7 +9119,7 @@ S2SSyncUpdateDataFromServer::~S2SSyncUpdateDataFromServer() {
 }
 
 void S2SSyncUpdateDataFromServer::SharedDtor() {
-  dataname_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  data_name_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (this != internal_default_instance()) delete pbdata_;
 }
 
@@ -9143,7 +9143,7 @@ void S2SSyncUpdateDataFromServer::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  dataname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  data_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (GetArenaNoVirtual() == NULL && pbdata_ != NULL) {
     delete pbdata_;
   }
@@ -9166,7 +9166,7 @@ bool S2SSyncUpdateDataFromServer::MergePartialFromCodedStream(
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
-                input, this->mutable_dataname()));
+                input, this->mutable_data_name()));
         } else {
           goto handle_unusual;
         }
@@ -9311,7 +9311,7 @@ void S2SSyncUpdateDataFromServer::MergeFrom(const S2SSyncUpdateDataFromServer& f
 
   if (from.data_name().size() > 0) {
 
-    dataname_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.dataname_);
+    data_name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.data_name_);
   }
   if (from.has_pbdata()) {
     mutable_pbdata()->::KFMsg::PBObject::MergeFrom(from.pbdata());
@@ -9342,7 +9342,7 @@ void S2SSyncUpdateDataFromServer::Swap(S2SSyncUpdateDataFromServer* other) {
 }
 void S2SSyncUpdateDataFromServer::InternalSwap(S2SSyncUpdateDataFromServer* other) {
   using std::swap;
-  dataname_.Swap(&other->dataname_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+  data_name_.Swap(&other->data_name_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
   swap(pbdata_, other->pbdata_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
@@ -9367,7 +9367,7 @@ void S2SSyncAddDataFromServer::clear_pbdata() {
   pbdata_ = NULL;
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int S2SSyncAddDataFromServer::kDatanameFieldNumber;
+const int S2SSyncAddDataFromServer::kDataNameFieldNumber;
 const int S2SSyncAddDataFromServer::kPbdataFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -9382,9 +9382,9 @@ S2SSyncAddDataFromServer::S2SSyncAddDataFromServer(const S2SSyncAddDataFromServe
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
-  dataname_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  data_name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (from.data_name().size() > 0) {
-    dataname_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.dataname_);
+    data_name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.data_name_);
   }
   if (from.has_pbdata()) {
     pbdata_ = new ::KFMsg::PBObject(*from.pbdata_);
@@ -9395,7 +9395,7 @@ S2SSyncAddDataFromServer::S2SSyncAddDataFromServer(const S2SSyncAddDataFromServe
 }
 
 void S2SSyncAddDataFromServer::SharedCtor() {
-  dataname_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  data_name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   pbdata_ = NULL;
 }
 
@@ -9405,7 +9405,7 @@ S2SSyncAddDataFromServer::~S2SSyncAddDataFromServer() {
 }
 
 void S2SSyncAddDataFromServer::SharedDtor() {
-  dataname_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  data_name_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (this != internal_default_instance()) delete pbdata_;
 }
 
@@ -9429,7 +9429,7 @@ void S2SSyncAddDataFromServer::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  dataname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  data_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (GetArenaNoVirtual() == NULL && pbdata_ != NULL) {
     delete pbdata_;
   }
@@ -9452,7 +9452,7 @@ bool S2SSyncAddDataFromServer::MergePartialFromCodedStream(
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
-                input, this->mutable_dataname()));
+                input, this->mutable_data_name()));
         } else {
           goto handle_unusual;
         }
@@ -9597,7 +9597,7 @@ void S2SSyncAddDataFromServer::MergeFrom(const S2SSyncAddDataFromServer& from) {
 
   if (from.data_name().size() > 0) {
 
-    dataname_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.dataname_);
+    data_name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.data_name_);
   }
   if (from.has_pbdata()) {
     mutable_pbdata()->::KFMsg::PBObject::MergeFrom(from.pbdata());
@@ -9628,7 +9628,7 @@ void S2SSyncAddDataFromServer::Swap(S2SSyncAddDataFromServer* other) {
 }
 void S2SSyncAddDataFromServer::InternalSwap(S2SSyncAddDataFromServer* other) {
   using std::swap;
-  dataname_.Swap(&other->dataname_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+  data_name_.Swap(&other->data_name_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
   swap(pbdata_, other->pbdata_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
@@ -9653,7 +9653,7 @@ void S2SSyncRemoveDataFromServer::clear_pbdata() {
   pbdata_ = NULL;
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int S2SSyncRemoveDataFromServer::kDatanameFieldNumber;
+const int S2SSyncRemoveDataFromServer::kDataNameFieldNumber;
 const int S2SSyncRemoveDataFromServer::kPbdataFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -9668,9 +9668,9 @@ S2SSyncRemoveDataFromServer::S2SSyncRemoveDataFromServer(const S2SSyncRemoveData
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
-  dataname_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  data_name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (from.data_name().size() > 0) {
-    dataname_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.dataname_);
+    data_name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.data_name_);
   }
   if (from.has_pbdata()) {
     pbdata_ = new ::KFMsg::PBObject(*from.pbdata_);
@@ -9681,7 +9681,7 @@ S2SSyncRemoveDataFromServer::S2SSyncRemoveDataFromServer(const S2SSyncRemoveData
 }
 
 void S2SSyncRemoveDataFromServer::SharedCtor() {
-  dataname_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  data_name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   pbdata_ = NULL;
 }
 
@@ -9691,7 +9691,7 @@ S2SSyncRemoveDataFromServer::~S2SSyncRemoveDataFromServer() {
 }
 
 void S2SSyncRemoveDataFromServer::SharedDtor() {
-  dataname_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  data_name_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (this != internal_default_instance()) delete pbdata_;
 }
 
@@ -9715,7 +9715,7 @@ void S2SSyncRemoveDataFromServer::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  dataname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  data_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (GetArenaNoVirtual() == NULL && pbdata_ != NULL) {
     delete pbdata_;
   }
@@ -9738,7 +9738,7 @@ bool S2SSyncRemoveDataFromServer::MergePartialFromCodedStream(
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
-                input, this->mutable_dataname()));
+                input, this->mutable_data_name()));
         } else {
           goto handle_unusual;
         }
@@ -9883,7 +9883,7 @@ void S2SSyncRemoveDataFromServer::MergeFrom(const S2SSyncRemoveDataFromServer& f
 
   if (from.data_name().size() > 0) {
 
-    dataname_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.dataname_);
+    data_name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.data_name_);
   }
   if (from.has_pbdata()) {
     mutable_pbdata()->::KFMsg::PBObject::MergeFrom(from.pbdata());
@@ -9914,7 +9914,7 @@ void S2SSyncRemoveDataFromServer::Swap(S2SSyncRemoveDataFromServer* other) {
 }
 void S2SSyncRemoveDataFromServer::InternalSwap(S2SSyncRemoveDataFromServer* other) {
   using std::swap;
-  dataname_.Swap(&other->dataname_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+  data_name_.Swap(&other->data_name_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
   swap(pbdata_, other->pbdata_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
