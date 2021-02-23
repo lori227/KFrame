@@ -48,7 +48,7 @@ namespace KFrame
         KFMutex _kf_mutex;
 
         // 缓存的log队列
-        std::list< KFLogData* > _log_data_list;
+        std::list<std::shared_ptr<KFLogData>> _log_data_list;
     };
 }
 

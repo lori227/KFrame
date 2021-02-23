@@ -23,21 +23,21 @@ namespace KFrame
         __JSON_SET_VALUE__( request, __STRING__( appid ), KFGlobal::Instance()->_app_id->ToString() );
 
         auto data = __JSON_SERIALIZE__( request );
-        auto recvdata = _kf_http_client->STGet( url, _invalid_string );
+        auto recv_data = _kf_http_client->STGet( url, _invalid_string );
 
-        __JSON_PARSE_STRING__( response, recvdata );
-        auto retcode = _kf_http_client->GetCode( response );
-        if ( retcode != KFEnum::Ok )
+        __JSON_PARSE_STRING__( response, recv_data );
+        auto ret_code = _kf_http_client->GetCode( response );
+        if ( ret_code != KFEnum::Ok )
         {
-            return __LOG_ERROR__( "request log address error={}", retcode );
+            return __LOG_ERROR__( "request log address error={}", ret_code );
         }
 
         auto ip = __JSON_GET_STRING__( response, __STRING__( ip ) );
         auto port = __JSON_GET_UINT32__( response, __STRING__( port ) );
-        auto appname = __JSON_GET_STRING__( response, __STRING__( appname ) );
-        auto apptype = __JSON_GET_STRING__( response, __STRING__( apptype ) );
-        auto appid = __JSON_GET_UINT64__( response, __STRING__( appid ) );
-        _kf_tcp_client->StartClient( appname, apptype, appid, ip, port );
+        auto app_name = __JSON_GET_STRING__( response, __STRING__( appname ) );
+        auto app_type = __JSON_GET_STRING__( response, __STRING__( apptype ) );
+        auto app_id = __JSON_GET_UINT64__( response, __STRING__( appid ) );
+        _kf_tcp_client->StartClient( app_name, app_type, app_id, ip, port );
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////
@@ -55,17 +55,17 @@ namespace KFrame
 
     void KFLogClientModule::LogRemote( uint32 level, const std::string& content )
     {
-        auto kfdata = __KF_NEW__( KFLogData );
-        kfdata->_level = level;
-        kfdata->_content = content;
+        auto log_data = __MAKE_SHARED__( KFLogData );
+        log_data->_level = level;
+        log_data->_content = content;
 
         KFLocker locker( _kf_mutex );
-        _log_data_list.push_back( kfdata );
+        _log_data_list.push_back( log_data );
     }
 
     void KFLogClientModule::Run()
     {
-        std::list< KFLogData* > templist;
+        std::list<std::shared_ptr<KFLogData>> temp_list;
         {
             KFLocker locker( _kf_mutex );
             if ( _log_data_list.empty() )
@@ -73,7 +73,7 @@ namespace KFrame
                 return;
             }
 
-            templist.swap( _log_data_list );
+            temp_list.swap( _log_data_list );
         }
 
         auto global = KFGlobal::Instance();
@@ -85,13 +85,11 @@ namespace KFrame
         req.set_appid( global->_app_id->GetId() );
         req.set_zoneid( global->_app_id->GetZoneId() );
 
-        for ( auto kfdata : templist )
+        for ( auto log_data : temp_list )
         {
-            auto pblog = req.add_logdata();
-            pblog->set_level( kfdata->_level );
-            pblog->set_content( kfdata->_content );
-
-            __KF_DELETE__( KFLogData, kfdata );
+            auto pb_data = req.add_logdata();
+            pb_data->set_level( log_data->_level );
+            pb_data->set_content( log_data->_content );
         }
 
         auto ok = _kf_tcp_client->SendNetMessage( _log_server_id, KFMsg::S2S_REMOTE_LOG_TO_SERVER_REQ, &req );
