@@ -49,10 +49,10 @@ namespace KFrame
 
     protected:
         // 判断是否需要连接
-        bool CheckNeedConnection( const std::string& connectname, const std::string& connecttype, uint64 connectid );
+        bool CheckNeedConnection( const std::string& connect_name, const std::string& connect_type, uint64 connect_id );
 
         // 查找连接
-        const KFBusSetting* FindMasterConnection( const std::string& appname, const std::string& apptype, const std::string& appid );
+        std::shared_ptr<const KFBusSetting> FindMasterConnection( const std::string& app_name, const std::string& app_type, const std::string& app_id );
 
     private:
         // 连接master失败次数
