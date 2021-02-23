@@ -1,5 +1,6 @@
 #ifndef __KF_MEMORY_DEFINE_H__
 #define __KF_MEMORY_DEFINE_H__
+
 #include "KFDefine.h"
 
 namespace KFrame
@@ -8,7 +9,7 @@ namespace KFrame
     class MemoryData
     {
     public:
-        // 对象名
+        // 内存名称
         std::string _name;
 
         // 内存大小
@@ -19,10 +20,10 @@ namespace KFrame
     class MemoryLogData
     {
     public:
-        // 当前申请的次数
+        // 内存申请次数
         uint32 _count = 0;
 
-        // 当前使用的总量
+        // 内存使用大小
         uint64 _total_size = 0;
     };
 
@@ -31,10 +32,10 @@ namespace KFrame
     class KFThreadBuffer
     {
     public:
-        // 大小
+        // 长度
         uint32 _length = 0;
 
-        // 数据
+        // 内存数据
         T* _data = nullptr;
     };
 
@@ -49,5 +50,4 @@ namespace KFrame
         void* _data = nullptr;
     };
 }
-
 #endif
