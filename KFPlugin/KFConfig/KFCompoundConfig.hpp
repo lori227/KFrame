@@ -25,7 +25,7 @@ namespace KFrame
 	};
 
 	/////////////////////////////////////////////////////////////////////////////////
-	class KFCompoundConfig : public KFConfigT< KFCompoundSetting >, public KFInstance< KFCompoundConfig >
+	class KFCompoundConfig : public KFConfigT<KFCompoundSetting>, public KFInstance<KFCompoundConfig>
 	{
 	public:
 		KFCompoundConfig()

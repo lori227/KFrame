@@ -22,7 +22,7 @@ namespace KFrame
 	};
 
 	/////////////////////////////////////////////////////////////////////////////////
-	class KFTemplateConfig : public KFConfigT< KFTemplateSetting >, public KFInstance< KFTemplateConfig >
+	class KFTemplateConfig : public KFConfigT<KFTemplateSetting>, public KFInstance<KFTemplateConfig>
 	{
 	public:
 		KFTemplateConfig()

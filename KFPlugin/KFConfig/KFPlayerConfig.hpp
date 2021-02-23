@@ -19,7 +19,7 @@ namespace KFrame
 	};
 
 	/////////////////////////////////////////////////////////////////////////////////
-	class KFPlayerConfig : public KFConfigT< KFPlayerSetting >, public KFInstance< KFPlayerConfig >
+	class KFPlayerConfig : public KFConfigT<KFPlayerSetting>, public KFInstance<KFPlayerConfig>
 	{
 	public:
 		KFPlayerConfig()

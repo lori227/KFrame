@@ -31,7 +31,7 @@ namespace KFrame
 	};
 
 	/////////////////////////////////////////////////////////////////////////////////
-	class KFMailConfig : public KFConfigT< KFMailSetting >, public KFInstance< KFMailConfig >
+	class KFMailConfig : public KFConfigT<KFMailSetting>, public KFInstance<KFMailConfig>
 	{
 	public:
 		KFMailConfig()

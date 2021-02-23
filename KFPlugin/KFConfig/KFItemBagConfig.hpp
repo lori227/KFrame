@@ -49,7 +49,7 @@ namespace KFrame
 	};
 
 	/////////////////////////////////////////////////////////////////////////////////
-	class KFItemBagConfig : public KFConfigT< KFItemBagSetting >, public KFInstance< KFItemBagConfig >
+	class KFItemBagConfig : public KFConfigT<KFItemBagSetting>, public KFInstance<KFItemBagConfig>
 	{
 	public:
 		KFItemBagConfig()

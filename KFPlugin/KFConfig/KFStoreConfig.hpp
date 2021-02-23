@@ -13,7 +13,7 @@ namespace KFrame
 	};
 
 	/////////////////////////////////////////////////////////////////////////////////
-	class KFStoreConfig : public KFConfigT< KFStoreSetting >, public KFInstance< KFStoreConfig >
+	class KFStoreConfig : public KFConfigT<KFStoreSetting>, public KFInstance<KFStoreConfig>
 	{
 	public:
 		KFStoreConfig()

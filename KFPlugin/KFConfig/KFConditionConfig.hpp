@@ -32,7 +32,7 @@ namespace KFrame
 	};
 
 	/////////////////////////////////////////////////////////////////////////////////
-	class KFConditionConfig : public KFConfigT< KFConditionSetting >, public KFInstance< KFConditionConfig >
+	class KFConditionConfig : public KFConfigT<KFConditionSetting>, public KFInstance<KFConditionConfig>
 	{
 	public:
 		KFConditionConfig()

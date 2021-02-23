@@ -23,7 +23,7 @@ namespace KFrame
 	};
 
 	/////////////////////////////////////////////////////////////////////////////////
-	class KFExecuteConfig : public KFConfigT< KFExecuteSetting >, public KFInstance< KFExecuteConfig >
+	class KFExecuteConfig : public KFConfigT<KFExecuteSetting>, public KFInstance<KFExecuteConfig>
 	{
 	public:
 		KFExecuteConfig()
@@ -40,9 +40,9 @@ namespace KFrame
 			{
 				auto setting = iter.second;
 
-				for ( auto& executedata : setting->_execute_data)
+				for ( auto& execute_data : setting->_execute_data)
 				{
-					auto& execute = executedata._execute;
+					auto& execute = execute_data._execute;
 					if ( execute->_name == __STRING__( data ) )
 					{
 						auto& data_value = execute->_param_list._params[ 0 ]->_str_value;
@@ -59,9 +59,9 @@ namespace KFrame
 		virtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KFExecuteSetting> setting )
 		{
 		
-			ExecuteData executedata;
-			executedata._execute = xml_node.ReadExecuteData( "execute", true );
-			setting->_execute_data.push_back( executedata );
+			ExecuteData execute_data;
+			execute_data._execute = xml_node.ReadExecuteData( "execute", true );
+			setting->_execute_data.push_back( execute_data );
 		}
 
 	};

@@ -19,7 +19,7 @@ namespace KFrame
 	};
 
 	/////////////////////////////////////////////////////////////////////////////////
-	class KFAchieveConfig : public KFConfigT< KFAchieveSetting >, public KFInstance< KFAchieveConfig >
+	class KFAchieveConfig : public KFConfigT<KFAchieveSetting>, public KFInstance<KFAchieveConfig>
 	{
 	public:
 		KFAchieveConfig()

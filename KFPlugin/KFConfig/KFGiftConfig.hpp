@@ -19,7 +19,7 @@ namespace KFrame
 	};
 
 	/////////////////////////////////////////////////////////////////////////////////
-	class KFGiftConfig : public KFConfigT< KFGiftSetting >, public KFInstance< KFGiftConfig >
+	class KFGiftConfig : public KFConfigT<KFGiftSetting>, public KFInstance<KFGiftConfig>
 	{
 	public:
 		KFGiftConfig()

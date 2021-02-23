@@ -25,7 +25,7 @@ namespace KFrame
 	};
 
 	/////////////////////////////////////////////////////////////////////////////////
-	class KFPayConfig : public KFConfigT< KFPaySetting >, public KFInstance< KFPayConfig >
+	class KFPayConfig : public KFConfigT<KFPaySetting>, public KFInstance<KFPayConfig>
 	{
 	public:
 		KFPayConfig()

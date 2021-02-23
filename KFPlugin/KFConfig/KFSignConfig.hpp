@@ -22,7 +22,7 @@ namespace KFrame
 	};
 
 	/////////////////////////////////////////////////////////////////////////////////
-	class KFSignConfig : public KFConfigT< KFSignSetting >, public KFInstance< KFSignConfig >
+	class KFSignConfig : public KFConfigT<KFSignSetting>, public KFInstance<KFSignConfig>
 	{
 	public:
 		KFSignConfig()

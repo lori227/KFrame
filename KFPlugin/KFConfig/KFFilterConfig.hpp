@@ -16,7 +16,7 @@ namespace KFrame
 	};
 
 	/////////////////////////////////////////////////////////////////////////////////
-	class KFFilterConfig : public KFConfigT< KFFilterSetting >, public KFInstance< KFFilterConfig >
+	class KFFilterConfig : public KFConfigT<KFFilterSetting>, public KFInstance<KFFilterConfig>
 	{
 	public:
 		KFFilterConfig()

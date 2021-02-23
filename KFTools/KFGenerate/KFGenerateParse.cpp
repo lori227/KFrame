@@ -687,7 +687,7 @@ namespace KFrame
 
         // 写配置config
         {
-            xmlfile << __FORMAT__( "\tclass KF{}Config : public KFConfigT< KF{}Setting >, public KFInstance< KF{}Config >\n", filename, filename, filename );
+            xmlfile << __FORMAT__( "\tclass KF{}Config : public KFConfigT<KF{}Setting>, public KFInstance<KF{}Config>\n", filename, filename, filename );
             xmlfile << "\t{\n";
             xmlfile << "\tpublic:\n";
             // 构造函数
@@ -744,9 +744,9 @@ namespace KFrame
                         else
                         {
                             auto subname = FormatParentVariable( attribute->_cpp_parent_class );
-                            xmlfile << __FORMAT__( "\t\t\t\tfor ( auto& executedata : setting->{})\n", subname );
+                            xmlfile << __FORMAT__( "\t\t\t\tfor ( auto& execute_data : setting->{})\n", subname );
                             xmlfile << "\t\t\t\t{\n";
-                            xmlfile << __FORMAT__( "\t\t\t\t\tauto& execute = executedata.{};\n", attribute->_cpp_name );
+                            xmlfile << __FORMAT__( "\t\t\t\t\tauto& execute = execute_data.{};\n", attribute->_cpp_name );
                             xmlfile << __FORMAT__( "\t\t\t\t\tif ( execute->_name == __STRING__( data ) )\n", );
                             xmlfile << "\t\t\t\t\t{\n";
                             xmlfile << "\t\t\t\t\t\tauto& data_value = execute->_param_list._params[ 0 ]->_str_value;\n";
@@ -799,7 +799,17 @@ namespace KFrame
                 {
                     xmlfile << __FORMAT__( "\t\t\n" );
 
-                    auto variablename = RemovePrefix( iter.first, _str_kf_prefix );
+                    auto temp_name = RemovePrefix( iter.first, _str_kf_prefix );
+                    std::string variablename;
+                    for ( auto i = 0; i < temp_name.size(); ++i ) {
+                        auto ch = temp_name[ i ];
+                        if ( i > 0 && ch >= 'A' && ch <= 'Z' ) {
+                            variablename.append( "_" );
+                        }
+
+                        variablename.append( 1, ch );
+                    }
+
                     std::transform( variablename.begin(), variablename.end(), variablename.begin(), ::tolower );
                     xmlfile << __FORMAT__( "\t\t\t{} {};\n", iter.first, variablename );
 

@@ -28,7 +28,7 @@ namespace KFrame
 	};
 
 	/////////////////////////////////////////////////////////////////////////////////
-	class KFItemTypeConfig : public KFConfigT< KFItemTypeSetting >, public KFInstance< KFItemTypeConfig >
+	class KFItemTypeConfig : public KFConfigT<KFItemTypeSetting>, public KFInstance<KFItemTypeConfig>
 	{
 	public:
 		KFItemTypeConfig()

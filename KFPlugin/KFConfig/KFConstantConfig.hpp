@@ -22,7 +22,7 @@ namespace KFrame
 	};
 
 	/////////////////////////////////////////////////////////////////////////////////
-	class KFConstantConfig : public KFConfigT< KFConstantSetting >, public KFInstance< KFConstantConfig >
+	class KFConstantConfig : public KFConfigT<KFConstantSetting>, public KFInstance<KFConstantConfig>
 	{
 	public:
 		KFConstantConfig()

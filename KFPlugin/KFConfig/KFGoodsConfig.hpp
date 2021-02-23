@@ -49,7 +49,7 @@ namespace KFrame
 	};
 
 	/////////////////////////////////////////////////////////////////////////////////
-	class KFGoodsConfig : public KFConfigT< KFGoodsSetting >, public KFInstance< KFGoodsConfig >
+	class KFGoodsConfig : public KFConfigT<KFGoodsSetting>, public KFInstance<KFGoodsConfig>
 	{
 	public:
 		KFGoodsConfig()

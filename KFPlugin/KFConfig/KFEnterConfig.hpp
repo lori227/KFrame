@@ -19,7 +19,7 @@ namespace KFrame
 	};
 
 	/////////////////////////////////////////////////////////////////////////////////
-	class KFEnterConfig : public KFConfigT< KFEnterSetting >, public KFInstance< KFEnterConfig >
+	class KFEnterConfig : public KFConfigT<KFEnterSetting>, public KFInstance<KFEnterConfig>
 	{
 	public:
 		KFEnterConfig()

@@ -28,7 +28,7 @@ namespace KFrame
 	};
 
 	/////////////////////////////////////////////////////////////////////////////////
-	class KFUnlockConfig : public KFConfigT< KFUnlockSetting >, public KFInstance< KFUnlockConfig >
+	class KFUnlockConfig : public KFConfigT<KFUnlockSetting>, public KFInstance<KFUnlockConfig>
 	{
 	public:
 		KFUnlockConfig()

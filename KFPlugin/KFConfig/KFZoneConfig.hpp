@@ -28,7 +28,7 @@ namespace KFrame
 	};
 
 	/////////////////////////////////////////////////////////////////////////////////
-	class KFZoneConfig : public KFConfigT< KFZoneSetting >, public KFInstance< KFZoneConfig >
+	class KFZoneConfig : public KFConfigT<KFZoneSetting>, public KFInstance<KFZoneConfig>
 	{
 	public:
 		KFZoneConfig()

@@ -19,7 +19,7 @@ namespace KFrame
 	};
 
 	/////////////////////////////////////////////////////////////////////////////////
-	class KFLeaveConfig : public KFConfigT< KFLeaveSetting >, public KFInstance< KFLeaveConfig >
+	class KFLeaveConfig : public KFConfigT<KFLeaveSetting>, public KFInstance<KFLeaveConfig>
 	{
 	public:
 		KFLeaveConfig()

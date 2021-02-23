@@ -16,7 +16,7 @@ namespace KFrame
 	};
 
 	/////////////////////////////////////////////////////////////////////////////////
-	class KFTeamConfig : public KFConfigT< KFTeamSetting >, public KFInstance< KFTeamConfig >
+	class KFTeamConfig : public KFConfigT<KFTeamSetting>, public KFInstance<KFTeamConfig>
 	{
 	public:
 		KFTeamConfig()

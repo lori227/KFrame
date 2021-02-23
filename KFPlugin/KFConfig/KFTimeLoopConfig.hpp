@@ -15,7 +15,7 @@ namespace KFrame
 	};
 
 	/////////////////////////////////////////////////////////////////////////////////
-	class KFTimeLoopConfig : public KFConfigT< KFTimeLoopSetting >, public KFInstance< KFTimeLoopConfig >
+	class KFTimeLoopConfig : public KFConfigT<KFTimeLoopSetting>, public KFInstance<KFTimeLoopConfig>
 	{
 	public:
 		KFTimeLoopConfig()
@@ -30,14 +30,14 @@ namespace KFrame
 		virtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KFTimeLoopSetting> setting )
 		{
 		
-			KFTimeData timedata;
-			timedata._flag = xml_node.ReadUInt32( "flag", true );
-			timedata._month = xml_node.ReadUInt32( "month", true );
-			timedata._day = xml_node.ReadUInt32( "day", true );
-			timedata._day_of_week = xml_node.ReadUInt32( "dayofweek", true );
-			timedata._hour = xml_node.ReadUInt32( "hour", true );
-			timedata._minute = xml_node.ReadUInt32( "minute", true );
-			setting->_time_data = timedata;
+			KFTimeData time_data;
+			time_data._flag = xml_node.ReadUInt32( "flag", true );
+			time_data._month = xml_node.ReadUInt32( "month", true );
+			time_data._day = xml_node.ReadUInt32( "day", true );
+			time_data._day_of_week = xml_node.ReadUInt32( "dayofweek", true );
+			time_data._hour = xml_node.ReadUInt32( "hour", true );
+			time_data._minute = xml_node.ReadUInt32( "minute", true );
+			setting->_time_data = time_data;
 		}
 
 	};
