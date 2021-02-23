@@ -84,17 +84,17 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFBusModule::HanldeTellRegisterToServer, KFMsg::TellRegisterToServer )
     {
         auto listen_data = &kfmsg->listen();
-        if ( !CheckNeedConnection( listen_data->app_name(), listen_data->app_type(), listen_data->appid() ) )
+        if ( !CheckNeedConnection( listen_data->appname(), listen_data->apptype(), listen_data->appid() ) )
         {
             return;
         }
 
-        _kf_tcp_client->StartClient( listen_data->app_name(), listen_data->app_type(), listen_data->appid(), listen_data->ip(), listen_data->port() );
+        _kf_tcp_client->StartClient( listen_data->appname(), listen_data->apptype(), listen_data->appid(), listen_data->ip(), listen_data->port() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFBusModule::HanldeTellUnRegisterFromServer, KFMsg::TellUnRegisterFromServer )
     {
-        if ( !CheckNeedConnection( kfmsg->app_name(), kfmsg->app_type(), kfmsg->appid() ) )
+        if ( !CheckNeedConnection( kfmsg->appname(), kfmsg->apptype(), kfmsg->appid() ) )
         {
             return;
         }
