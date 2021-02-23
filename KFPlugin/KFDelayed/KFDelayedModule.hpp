@@ -25,17 +25,17 @@ namespace KFrame
         virtual void BeforeRun();
 
     protected:
-        virtual void AddDelayedFunction( uint64 time, uint64 objectid, const int8* data, uint32 size, KFModule* module, KFDelayedFunction& function );
-        virtual void AddDelayedFunction( KFTimeData* time_data, uint64 objectid, const int8* data, uint32 size, KFModule* module, KFDelayedFunction& function );
+        virtual void AddDelayedFunction( uint64 time, uint64 object_id, const int8* data, uint32 size, KFModule* module, KFDelayedFunction& function );
+        virtual void AddDelayedFunction( KFTimeData* time_data, uint64 object_id, const int8* data, uint32 size, KFModule* module, KFDelayedFunction& function );
         virtual void RemoveDelayedFunction( KFModule* module );
-        virtual void RemoveDelayedFunction( KFModule* module, uint64 objectid );
+        virtual void RemoveDelayedFunction( uint64 object_id, KFModule* module );
 
     protected:
         // 添加定时任务
-        void AddDelayedData( KFDelayedData* kfdata );
+        void AddDelayedData( std::shared_ptr<KFDelayedData> delay_data );
 
         // 删除定时任务
-        void RemoveDelayedData( KFModule* module, uint64 objectid );
+        void RemoveDelayedData( uint64 object_id, KFModule* module );
 
         void RunDelayedUpdate();
         void RunDelayedRegister();
@@ -49,13 +49,13 @@ namespace KFrame
         uint64 _next_check_run_time = 0u;
 
         // 需要注册的定时任务
-        std::list< KFDelayedData* > _kf_delayed_register;
+        std::list<std::shared_ptr<KFDelayedData>> _delayed_register_list;
 
         // 计划任务
-        std::unordered_map< KFModule*, std::unordered_map< uint64, KFDelayedData* > > _kf_delayed_data;
+        KFHashMap<KFModule*, KFHashMap<uint64, KFDelayedData>> _delayed_data_list;
 
         // 需要删除的任务
-        std::list< std::tuple< KFModule*, uint64 > > _kf_delayed_remove;
+        std::list<std::tuple<uint64, KFModule*>> _delayed_remove_list;
 
     };
 }

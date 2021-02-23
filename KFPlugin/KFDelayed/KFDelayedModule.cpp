@@ -4,22 +4,10 @@ namespace KFrame
 {
     KFDelayedModule::~KFDelayedModule()
     {
-        for ( auto iter : _kf_delayed_data )
-        {
-            for ( auto miter : iter.second )
-            {
-                __KF_DELETE__( KFDelayedData, miter.second );
-            }
-        }
-        _kf_delayed_data.clear();
-
-        for ( auto data : _kf_delayed_register )
-        {
-            __KF_DELETE__( KFDelayedData, data );
-        }
-        _kf_delayed_register.clear();
+        _delayed_data_list.Clear();
+        _delayed_remove_list.clear();
+        _delayed_register_list.clear();
     }
-
 
     void KFDelayedModule::BeforeRun()
     {
@@ -40,118 +28,102 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFDelayedModule::AddDelayedFunction( uint64 time, uint64 objectid, const int8* data, uint32 size,
+    void KFDelayedModule::AddDelayedFunction( uint64 time, uint64 object_id, const int8* data, uint32 size,
             KFModule* module, KFDelayedFunction& function )
     {
-        auto delayeddata = __KF_NEW__( KFDelayedData, data, size );
-        delayeddata->_loop_type = KFDelayedEnum::Once;
-        delayeddata->_next_execute_time = time;
-        delayeddata->_object_id = objectid;
-        delayeddata->_function.SetFunction( module, function );
-        _kf_delayed_register.push_back( delayeddata );
+        auto delayed_data = __MAKE_SHARED__( KFDelayedData, data, size );
+        delayed_data->_loop_type = KFDelayedEnum::Once;
+        delayed_data->_next_execute_time = time;
+        delayed_data->_object_id = object_id;
+        delayed_data->_function.SetFunction( module, function );
+        _delayed_register_list.push_back( delayed_data );
     }
 
-    void KFDelayedModule::AddDelayedFunction( KFTimeData* time_data, uint64 objectid, const int8* data, uint32 size,
+    void KFDelayedModule::AddDelayedFunction( KFTimeData* time_data, uint64 object_id, const int8* data, uint32 size,
             KFModule* module, KFDelayedFunction& function )
     {
-        auto delayeddata = __KF_NEW__( KFDelayedData, data, size );
-        delayeddata->_loop_type = KFDelayedEnum::Loop;
-        delayeddata->_time_data = *time_data;
-        delayeddata->_next_execute_time = KFDate::CalcTimeData( time_data, KFGlobal::Instance()->_real_time, 1 );
-        delayeddata->_object_id = objectid;
-        delayeddata->_function.SetFunction( module, function );
-        _kf_delayed_register.push_back( delayeddata );
+        auto delayed_data = __MAKE_SHARED__( KFDelayedData, data, size );
+        delayed_data->_loop_type = KFDelayedEnum::Loop;
+        delayed_data->_time_data = *time_data;
+        delayed_data->_next_execute_time = KFDate::CalcTimeData( time_data, KFGlobal::Instance()->_real_time, 1 );
+        delayed_data->_object_id = object_id;
+        delayed_data->_function.SetFunction( module, function );
+        _delayed_register_list.push_back( delayed_data );
     }
 
     void KFDelayedModule::RemoveDelayedFunction( KFModule* module )
     {
-        RemoveDelayedFunction( module, _invalid_int );
+        RemoveDelayedFunction( _invalid_int, module );
     }
 
-    void KFDelayedModule::RemoveDelayedFunction( KFModule* module, uint64 objectid )
+    void KFDelayedModule::RemoveDelayedFunction( uint64 object_id, KFModule* module )
     {
-        _kf_delayed_remove.emplace_back( std::make_tuple( module, objectid ) );
+        _delayed_remove_list.emplace_back( std::make_tuple( object_id, module ) );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFDelayedModule::RunDelayedRemove()
     {
         // 删除无效和执行过的任务
-        if ( _kf_delayed_remove.empty() )
+        if ( _delayed_remove_list.empty() )
         {
             return;
         }
 
-        for ( auto& data : _kf_delayed_remove )
+        for ( auto& tuple_data : _delayed_remove_list )
         {
-            KFModule* module = nullptr;
-            uint64 objectid = 0u;
-            std::tie( module, objectid ) = data;
-            RemoveDelayedData( module, objectid );
+            auto object_id = std::get<0>( tuple_data );
+            auto module = std::get<1>( tuple_data );
+            RemoveDelayedData( object_id, module );
         }
 
-        _kf_delayed_remove.clear();
+        _delayed_remove_list.clear();
     }
 
-    void KFDelayedModule::RemoveDelayedData( KFModule* module, uint64 objectid )
+    void KFDelayedModule::RemoveDelayedData( uint64 object_id, KFModule* module )
     {
-        auto iter = _kf_delayed_data.find( module );
-        if ( iter == _kf_delayed_data.end() )
+        auto module_delayed_list = _delayed_data_list.Find( module );
+        if ( module_delayed_list == nullptr )
         {
             return;
         }
 
-        if ( objectid != _invalid_int )
+        if ( object_id != _invalid_int )
         {
-            auto miter = iter->second.find( objectid );
-            if ( miter != iter->second.end() )
-            {
-                __KF_DELETE__( KFDelayedData, miter->second );
-                iter->second.erase( miter );
-            }
+            module_delayed_list->Remove( object_id );
         }
         else
         {
-            for ( auto& miter : iter->second )
-            {
-                __KF_DELETE__( KFDelayedData, miter.second );
-            }
-            iter->second.clear();
+            module_delayed_list->Clear();
         }
 
-        if ( iter->second.empty() )
+        if ( module_delayed_list->IsEmpty() )
         {
-            _kf_delayed_data.erase( iter );
+            _delayed_data_list.Remove( module );
         }
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFDelayedModule::RunDelayedRegister()
     {
-        if ( _kf_delayed_register.empty() )
+        if ( _delayed_register_list.empty() )
         {
             return;
         }
 
-        for ( auto kfdata : _kf_delayed_register )
+        for ( auto delayed_data : _delayed_register_list )
         {
-            RemoveDelayedData( kfdata->_function._module, kfdata->_object_id );
-            AddDelayedData( kfdata );
+            RemoveDelayedData( delayed_data->_object_id, delayed_data->_function.GetModule() );
+            AddDelayedData( delayed_data );
         }
 
-        _kf_delayed_register.clear();
+        _delayed_register_list.clear();
     }
 
-    void KFDelayedModule::AddDelayedData( KFDelayedData* kfdata )
+    void KFDelayedModule::AddDelayedData( std::shared_ptr<KFDelayedData> delayed_data )
     {
-        auto iter = _kf_delayed_data.find( kfdata->_function._module );
-        if ( iter == _kf_delayed_data.end() )
-        {
-            std::unordered_map< uint64, KFDelayedData* > temp;
-            iter = _kf_delayed_data.emplace( std::make_pair( kfdata->_function._module, temp ) ).first;
-        }
-
-        iter->second.emplace( std::make_pair( kfdata->_object_id, kfdata ) );
+        auto module_delay_list = _delayed_data_list.Create( delayed_data->_function.GetModule() );
+        module_delay_list->Insert( delayed_data->_object_id, delayed_data );
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -163,29 +135,29 @@ namespace KFrame
         }
         CalcNextCheckRunTime();
 
-        for ( auto& iter : _kf_delayed_data )
+        for ( auto& iter : _delayed_data_list._objects )
         {
-            for ( auto& miter : iter.second )
+            for ( auto& object_iter : iter.second->_objects )
             {
-                auto delayeddata = miter.second;
-                if ( delayeddata->_next_execute_time < KFGlobal::Instance()->_real_time )
+                auto delayed_data = object_iter.second;
+                if ( delayed_data->_next_execute_time < KFGlobal::Instance()->_real_time )
                 {
                     continue;
                 }
 
                 // 时间到了, 执行回调
-                delayeddata->_function.Call( delayeddata->_object_id, delayeddata->_data, delayeddata->_size );
-                if ( delayeddata->_loop_type == KFDelayedEnum::Once )
+                delayed_data->_function.Call( delayed_data->_object_id, delayed_data->_data, delayed_data->_size );
+                if ( delayed_data->_loop_type == KFDelayedEnum::Once )
                 {
-                    RemoveDelayedFunction( delayeddata->_function._module, delayeddata->_object_id );
+                    RemoveDelayedFunction(  delayed_data->_object_id, delayed_data->_function.GetModule() );
                 }
                 else
                 {
                     // 计算下一次时间
-                    delayeddata->_next_execute_time = KFDate::CalcTimeData( &delayeddata->_time_data, KFGlobal::Instance()->_real_time, 1 );
-                    if ( delayeddata->_next_execute_time <= KFGlobal::Instance()->_real_time )
+                    delayed_data->_next_execute_time = KFDate::CalcTimeData( &delayed_data->_time_data, KFGlobal::Instance()->_real_time, 1 );
+                    if ( delayed_data->_next_execute_time <= KFGlobal::Instance()->_real_time )
                     {
-                        RemoveDelayedFunction( delayeddata->_function._module, delayeddata->_object_id );
+                        RemoveDelayedFunction( delayed_data->_object_id, delayed_data->_function.GetModule() );
                     }
                 }
             }
