@@ -49,7 +49,7 @@ namespace KFrame
         uint32 _loop_type = KFDelayedEnum::Once;
 
         // 回调函数
-        KFFunction< KFDelayedFunction > _function;
+        KFModuleFunction<KFDelayedFunction> _function;
 
         // 回调参数
         uint64 _object_id = 0u;

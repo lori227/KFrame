@@ -10,8 +10,8 @@ namespace KFrame
     {
         enum MyEnum
         {
-            Stop = 0,	// 停止状态
-            Runing = 1,	// 执行状态
+            Stop = 0,	    // 停止状态
+            Running = 1,	// 执行状态
         };
     }
 
@@ -26,10 +26,10 @@ namespace KFrame
         uint64 _object_id = 0u;
 
         // 开始回调函数
-        KFFunction< KFScheduleFunction > _start_function;
+        KFModuleFunction<KFScheduleFunction> _start_function;
 
         // 结束回调函数
-        KFFunction < KFScheduleFunction > _finish_function;
+        KFModuleFunction<KFScheduleFunction> _finish_function;
     };
     /////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////
@@ -49,7 +49,7 @@ namespace KFrame
         KFTimeData _finish_time_data;
 
         // 计划任务列表
-        KFHashMap< KFModule*, KFScheduleData > _schedule_data_list;
+        KFHashMap<KFModule*, KFScheduleData> _schedule_data_list;
     };
 }
 

@@ -2,10 +2,10 @@
 
 namespace KFrame
 {
-    void KFHeroConfig::ReadSetting( KFNode& xmlnode, KFHeroSetting* kfsetting )
+    void KFHeroConfig::ReadSetting( KFNode& xml_node, KFHeroSetting* kfsetting )
     {
         kfsetting->_skin_list.clear();
-        auto strskins = xmlnode.GetString( "Skins" );
+        auto strskins = xml_node.GetString( "Skins" );
         while ( !strskins.empty() )
         {
             auto skinid = KFUtility::SplitValue< uint32 >( strskins, __SPLIT_STRING__ );

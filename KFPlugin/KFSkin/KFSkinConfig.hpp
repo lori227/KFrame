@@ -24,7 +24,7 @@ namespace KFrame
         }
     protected:
         // 读取配置
-        virtual void ReadSetting( KFNode& xmlnode, KFSkinSetting* kfsetting );
+        virtual void ReadSetting( KFNode& xml_node, KFSkinSetting* kfsetting );
     };
 }
 

@@ -2,9 +2,9 @@
 
 namespace KFrame
 {
-    void KFSkinConfig::ReadSetting( KFNode& xmlnode, KFSkinSetting* kfsetting )
+    void KFSkinConfig::ReadSetting( KFNode& xml_node, KFSkinSetting* kfsetting )
     {
-        kfsetting->_quality = xmlnode.GetUInt32( "Quality" );
+        kfsetting->_quality = xml_node.GetUInt32( "Quality" );
     }
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////

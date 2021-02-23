@@ -84,14 +84,14 @@ namespace KFrame
 
     protected:
         // 读取配置
-        virtual void ReadSetting( KFXmlNode& xmlnode, KFCountCostSetting* kfsetting )
+        virtual void ReadSetting( KFXmlNode& xml_node, KFCountCostSetting* kfsetting )
         {
-            kfsetting->_refresh_time_id = xmlnode.ReadUInt32( "refreshtimeid" );
+            kfsetting->_refresh_time_id = xml_node.ReadUInt32( "refreshtimeid" );
 
             auto countcostdata = __KF_NEW__( KFCountCostData );
-            countcostdata->_min_count = xmlnode.ReadUInt32( "mincount" );
-            countcostdata->_max_count = xmlnode.ReadUInt32( "maxcount" );
-            countcostdata->_cost_elements._str_parse = xmlnode.ReadString( "cost" );
+            countcostdata->_min_count = xml_node.ReadUInt32( "mincount" );
+            countcostdata->_max_count = xml_node.ReadUInt32( "maxcount" );
+            countcostdata->_cost_elements._str_parse = xml_node.ReadString( "cost" );
             kfsetting->_count_cost_list.Add( countcostdata );
         }
     };

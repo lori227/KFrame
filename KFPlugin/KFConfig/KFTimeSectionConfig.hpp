@@ -12,7 +12,7 @@ namespace KFrame
         std::vector< KFTimeSection > _time_section;
     };
 
-    class KFTimeSectionConfig : public KFConfigT< KFTimeSectionSetting >, public KFInstance< KFTimeSectionConfig >
+    class KFTimeSectionConfig : public KFConfigT<KFTimeSectionSetting>, public KFInstance<KFTimeSectionConfig>
     {
     public:
         KFTimeSectionConfig()
@@ -23,26 +23,26 @@ namespace KFrame
 
     protected:
         // 读取配置
-        virtual void ReadSetting( KFXmlNode& xmlnode, KFTimeSectionSetting* kfsetting )
+        virtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KFTimeSectionSetting> setting )
         {
             KFTimeSection time_section;
-            time_section._start_time_data._flag = xmlnode.ReadUInt32( "flag" );
-            time_section._start_time_data._year = xmlnode.ReadUInt32( "startyear" );
-            time_section._start_time_data._month = xmlnode.ReadUInt32( "startmonth" );
-            time_section._start_time_data._day = xmlnode.ReadUInt32( "startDay" );
-            time_section._start_time_data._day_of_week = xmlnode.ReadUInt32( "startdayofweek" );
-            time_section._start_time_data._hour = xmlnode.ReadUInt32( "starthour" );
-            time_section._start_time_data._minute = xmlnode.ReadUInt32( "startminute" );
+            time_section._start_time_data._flag = xml_node.ReadUInt32( "flag" );
+            time_section._start_time_data._year = xml_node.ReadUInt32( "startyear" );
+            time_section._start_time_data._month = xml_node.ReadUInt32( "startmonth" );
+            time_section._start_time_data._day = xml_node.ReadUInt32( "startDay" );
+            time_section._start_time_data._day_of_week = xml_node.ReadUInt32( "startdayofweek" );
+            time_section._start_time_data._hour = xml_node.ReadUInt32( "starthour" );
+            time_section._start_time_data._minute = xml_node.ReadUInt32( "startminute" );
 
-            time_section._finish_time_data._flag = xmlnode.ReadUInt32( "flag" );
-            time_section._finish_time_data._year = xmlnode.ReadUInt32( "finishyear" );
-            time_section._finish_time_data._month = xmlnode.ReadUInt32( "finishmonth" );
-            time_section._finish_time_data._day = xmlnode.ReadUInt32( "finishday" );
-            time_section._finish_time_data._day_of_week = xmlnode.ReadUInt32( "finishdayofweek" );
-            time_section._finish_time_data._hour = xmlnode.ReadUInt32( "finishhour" );
-            time_section._finish_time_data._minute = xmlnode.ReadUInt32( "finishminute" );
+            time_section._finish_time_data._flag = xml_node.ReadUInt32( "flag" );
+            time_section._finish_time_data._year = xml_node.ReadUInt32( "finishyear" );
+            time_section._finish_time_data._month = xml_node.ReadUInt32( "finishmonth" );
+            time_section._finish_time_data._day = xml_node.ReadUInt32( "finishday" );
+            time_section._finish_time_data._day_of_week = xml_node.ReadUInt32( "finishdayofweek" );
+            time_section._finish_time_data._hour = xml_node.ReadUInt32( "finishhour" );
+            time_section._finish_time_data._minute = xml_node.ReadUInt32( "finishminute" );
 
-            kfsetting->_time_section.emplace_back( time_section );
+            setting->_time_section.emplace_back( time_section );
         }
     };
 }

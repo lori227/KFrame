@@ -4,12 +4,8 @@ namespace KFrame
 {
     KFScheduleModule::~KFScheduleModule()
     {
-        for ( auto data : _kf_schedule_register )
-        {
-            __KF_DELETE__( KFScheduleData, data );
-        }
-
-        _kf_schedule_register.clear();
+        _schedule_run_list.Clear();
+        _schedule_register_list.clear();
     }
 
     void KFScheduleModule::Run()
@@ -31,90 +27,90 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFScheduleModule::AddSchedule( uint32 timesectionid, KFModule* module, uint64 objectid,
-                                        KFScheduleFunction& startfunction,
-                                        KFScheduleFunction& finishfunction )
+    void KFScheduleModule::AddSchedule( uint32 time_section_id, uint64 object_id, KFModule* module,
+                                        KFScheduleFunction& start_function,
+                                        KFScheduleFunction& finish_function )
     {
-        auto scheduledata = __KF_NEW__( KFScheduleData );
-        scheduledata->_time_section_id = timesectionid;
-        scheduledata->_object_id = objectid;
-        scheduledata->_start_function.SetFunction( module, startfunction );
-        scheduledata->_finish_function.SetFunction( module, finishfunction );
-        _kf_schedule_register.push_back( scheduledata );
+        auto schedule_data = __MAKE_SHARED__( KFScheduleData );
+        schedule_data->_time_section_id = time_section_id;
+        schedule_data->_object_id = object_id;
+        schedule_data->_start_function.SetFunction( module, start_function );
+        schedule_data->_finish_function.SetFunction( module, finish_function );
+        _schedule_register_list.push_back( schedule_data );
     }
 
     void KFScheduleModule::RemoveSchedule( KFModule* module )
     {
-        for ( auto& iter : _kf_schedule_list._objects )
+        for ( auto& iter : _schedule_run_list._objects )
         {
             for ( auto& miter : iter.second->_schedule_data_list._objects )
             {
-                auto scheduledata = miter.second;
-                if ( scheduledata->_start_function._module == module )
+                auto schedule_data = miter.second;
+                if ( schedule_data->_start_function.GetModule() == module )
                 {
-                    _kf_schedule_remove.emplace_back( std::make_tuple( scheduledata->_time_section_id, scheduledata->_start_function._module ) );
+                    _schedule_remove_list.emplace_back( std::make_tuple( schedule_data->_time_section_id, schedule_data->_start_function.GetModule() ) );
                 }
             }
         }
     }
 
-    void KFScheduleModule::RemoveSchedule( uint32 timeid, KFModule* module )
+    void KFScheduleModule::RemoveSchedule( uint32 time_section_id, KFModule* module )
     {
-        _kf_schedule_remove.emplace_back( std::make_tuple( timeid, module ) );
+        _schedule_remove_list.emplace_back( std::make_tuple( time_section_id, module ) );
     }
 
     void KFScheduleModule::RunScheduleRemove()
     {
         // 删除无效和执行过的任务
-        if ( _kf_schedule_remove.empty() )
+        if ( _schedule_remove_list.empty() )
         {
             return;
         }
 
-        for ( auto& data : _kf_schedule_remove )
+        for ( auto& data : _schedule_remove_list )
         {
-            auto _time_section_id = std::get<0>( data );
+            auto time_section_id = std::get<0>( data );
             auto module = std::get<1>( data );
 
-            auto kfschedulelist = _kf_schedule_list.Find( _time_section_id );
-            if ( kfschedulelist != nullptr )
+            auto schedule_list = _schedule_run_list.Find( time_section_id );
+            if ( schedule_list != nullptr )
             {
-                kfschedulelist->_schedule_data_list.Remove( module );
-                if ( kfschedulelist->_schedule_data_list.IsEmpty() )
+                schedule_list->_schedule_data_list.Remove( module );
+                if ( schedule_list->_schedule_data_list.IsEmpty() )
                 {
-                    _kf_schedule_list.Remove( _time_section_id );
+                    _schedule_run_list.Remove( time_section_id );
                 }
             }
         }
 
-        _kf_schedule_remove.clear();
+        _schedule_remove_list.clear();
     }
 
     void KFScheduleModule::RunScheduleRegister()
     {
-        if ( _kf_schedule_register.empty() )
+        if ( _schedule_register_list.empty() )
         {
             return;
         }
 
-        for ( auto kfdata : _kf_schedule_register )
+        for ( auto schedule_data : _schedule_register_list )
         {
-            AddSchedule( kfdata );
+            AddSchedule( schedule_data );
         }
 
-        _kf_schedule_register.clear();
+        _schedule_register_list.clear();
     }
 
-    void KFScheduleModule::AddSchedule( KFScheduleData* scheduledata )
+    void KFScheduleModule::AddSchedule( std::shared_ptr<KFScheduleData> schedule_data )
     {
-        auto schedulelist = _kf_schedule_list.Create( scheduledata->_time_section_id );
-        schedulelist->_time_section_id = scheduledata->_time_section_id;
-        schedulelist->_schedule_data_list.Insert( scheduledata->_start_function._module, scheduledata );
+        auto schedule_list = _schedule_run_list.Create( schedule_data->_time_section_id );
+        schedule_list->_time_section_id = schedule_data->_time_section_id;
+        schedule_list->_schedule_data_list.Insert( schedule_data->_start_function.GetModule(), schedule_data );
 
         // 如果正在执行, 需要执行回调
-        if ( schedulelist->_status == KFScheduleEnum::Runing )
+        if ( schedule_list->_status == KFScheduleEnum::Running )
         {
-            scheduledata->_start_function.Call( scheduledata->_object_id, schedulelist->_duration_time );
+            schedule_data->_start_function.Call( schedule_data->_object_id, schedule_list->_duration_time );
         }
     }
 
@@ -129,16 +125,16 @@ namespace KFrame
 
         // 检查计划任务状态
         KFDate now_date( KFGlobal::Instance()->_real_time );
-        for ( auto& iter : _kf_schedule_list._objects )
+        for ( auto& iter : _schedule_run_list._objects )
         {
-            auto schedulelist = iter.second;
-            switch ( schedulelist->_status )
+            auto schedule_list = iter.second;
+            switch ( schedule_list->_status )
             {
             case KFScheduleEnum::Stop:
-                ExecuteScheduleStart( schedulelist, now_date );
+                ExecuteScheduleStart( schedule_list, now_date );
                 break;
-            case KFScheduleEnum::Runing:
-                ExecuteScheduleFinish( schedulelist, now_date );
+            case KFScheduleEnum::Running:
+                ExecuteScheduleFinish( schedule_list, now_date );
                 break;
             default:
                 break;
@@ -146,28 +142,28 @@ namespace KFrame
         }
     }
 
-    void KFScheduleModule::ExecuteScheduleStart( KFScheduleDataList* schedulelist, KFDate& now_date )
+    void KFScheduleModule::ExecuteScheduleStart( std::shared_ptr<KFScheduleDataList> schedule_list, KFDate& now_date )
     {
-        auto kftimesetting = KFTimeSectionConfig::Instance()->FindSetting( schedulelist->_time_section_id );
-        if ( kftimesetting == nullptr )
+        auto time_section_setting = KFTimeSectionConfig::Instance()->FindSetting( schedule_list->_time_section_id );
+        if ( time_section_setting == nullptr )
         {
             return;
         }
 
-        for ( auto& time_section : kftimesetting->_time_section )
+        for ( auto& time_section : time_section_setting->_time_section )
         {
             // 在[starttime,endtime]区间内
             if ( KFDate::CheckInTimeSection( &time_section, now_date ) )
             {
-                schedulelist->_status = KFScheduleEnum::Runing;
-                schedulelist->_finish_time_data = time_section._finish_time_data;
-                //schedulelist->_duration_time = CaclSectionTimeDataDuration( &time_section._start_time, &time_section._end_time );
+                schedule_list->_status = KFScheduleEnum::Running;
+                schedule_list->_finish_time_data = time_section._finish_time_data;
+                //schedule_list->_duration_time = CaclSectionTimeDataDuration( &time_section._start_time, &time_section._end_time );
 
                 // 功能函数回调
-                for ( auto& iter : schedulelist->_schedule_data_list._objects )
+                for ( auto& iter : schedule_list->_schedule_data_list._objects )
                 {
-                    auto scheduledata = iter.second;
-                    scheduledata->_start_function.Call( scheduledata->_object_id, schedulelist->_duration_time );
+                    auto schedule_data = iter.second;
+                    schedule_data->_start_function.Call( schedule_data->_object_id, schedule_list->_duration_time );
                 }
             }
 
@@ -175,21 +171,21 @@ namespace KFrame
         }
     }
 
-    void KFScheduleModule::ExecuteScheduleFinish( KFScheduleDataList* schedulelist, KFDate& now_date )
+    void KFScheduleModule::ExecuteScheduleFinish( std::shared_ptr<KFScheduleDataList> schedule_list, KFDate& now_date )
     {
         // 没有过结束时间
-        if ( !KFDate::CheckSectionTimeData( &schedulelist->_finish_time_data, now_date ) )
+        if ( !KFDate::CheckSectionTimeData( &schedule_list->_finish_time_data, now_date ) )
         {
             return;
         }
 
-        schedulelist->_status = KFScheduleEnum::Stop;
+        schedule_list->_status = KFScheduleEnum::Stop;
 
         // 功能函数回调
-        for ( auto& iter : schedulelist->_schedule_data_list._objects )
+        for ( auto& iter : schedule_list->_schedule_data_list._objects )
         {
-            auto scheduledata = iter.second;
-            scheduledata->_finish_function.Call( scheduledata->_object_id, schedulelist->_duration_time );
+            auto schedule_data = iter.second;
+            schedule_data->_finish_function.Call( schedule_data->_object_id, schedule_list->_duration_time );
         }
     }
 }

@@ -13,14 +13,17 @@ namespace KFrame
         // objectid
         uint64 _object_id = 0;
 
-        // subid
-        uint64 _sub_id = 0;
+        // 数据id
+        uint64 _data_id = 0;
 
         // 类型
         uint32 _type = 0;
 
-        // 次数
+        // 总共的次数
         uint32 _count = 0;
+
+        // 执行的次数
+        uint32 _turns = 0;
 
         // 时间间隔
         uint32 _interval = 0;
@@ -35,11 +38,11 @@ namespace KFrame
         uint32 _slot = 0;
 
         // 回调函数
-        KFFunction< KFTimerFunction > _function;
+        KFModuleFunction<KFTimerFunction> _function;
 
         // 链表
-        KFTimerData* _prev = nullptr;
-        KFTimerData* _next = nullptr;
+        std::shared_ptr<KFTimerData> _prev = nullptr;
+        std::shared_ptr<KFTimerData> _next = nullptr;
 
         // 是否准备删除
         bool _is_prepare_remove = false;
@@ -47,126 +50,85 @@ namespace KFrame
 
     //////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////
-    class KFObjectData
+    class KFObjectTimerData
     {
     public:
-        KFObjectData() = default;
-        virtual ~KFObjectData()
+        KFObjectTimerData() = default;
+        virtual ~KFObjectTimerData()
         {
-            for ( auto& iter : _timer_list )
-            {
-                __KF_DELETE__( KFTimerData, iter.second );
-            }
-            _timer_list.clear();
+            _timer_list.Clear();
         }
 
-        inline KFTimerData* FindTimerData( uint64 id )
+        inline std::shared_ptr<KFTimerData> FindTimerData( uint64 data_id )
         {
-            auto iter = _timer_list.find( id );
-            if ( iter == _timer_list.end() )
-            {
-                return nullptr;
-            }
-
-            return iter->second;
+            return _timer_list.Find( data_id );
         }
 
-        inline bool AddTimerData( uint64 id, KFTimerData* timerdata )
+        inline bool AddTimerData( uint64 data_id, std::shared_ptr<KFTimerData> timer_data )
         {
-            return _timer_list.insert( std::make_pair( id, timerdata ) ).second;
-        }
-
-        inline bool RemoveTimerData( uint64 id )
-        {
-            auto iter = _timer_list.find( id );
-            if ( iter == _timer_list.end() )
-            {
-                return false;
-            }
-
-            __KF_DELETE__( KFTimerData, iter->second );
-            _timer_list.erase( iter );
+            _timer_list.Insert( data_id, timer_data );
             return true;
+        }
+
+        inline std::shared_ptr<KFTimerData> RemoveTimerData( uint64 data_id )
+        {
+            return _timer_list.Remove( data_id );
         }
 
     public:
         // 定时器列表
-        std::unordered_map< uint64, KFTimerData* > _timer_list;
+        KFHashMap<uint64, KFTimerData> _timer_list;
     };
     //////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////
-    class KFModuleData
+    class KFModuleTimerData
     {
     public:
-        KFModuleData() = default;
-        virtual ~KFModuleData()
+        KFModuleTimerData() = default;
+        virtual ~KFModuleTimerData()
         {
-            for ( auto& iter : _object_list )
-            {
-                __KF_DELETE__( KFObjectData, iter.second );
-            }
-            _object_list.clear();
+            _object_list.Clear();
         }
 
-        inline KFObjectData* FindObjectData( uint64 objectid )
+        inline std::shared_ptr<KFObjectTimerData> FindObjectData( uint64 object_id )
         {
-            auto iter = _object_list.find( objectid );
-            if ( iter == _object_list.end() )
+            return _object_list.Find( object_id );
+        }
+
+        inline std::shared_ptr<KFTimerData> FindTimerData( uint64 object_id, uint64 data_id )
+        {
+            auto object_data = FindObjectData( object_id );
+            if ( object_data == nullptr )
             {
                 return nullptr;
             }
 
-            return iter->second;
+            return object_data->FindTimerData( data_id );
         }
 
-        inline KFTimerData* FindTimerData( uint64 objectid, uint64 subid )
+        inline std::shared_ptr<KFObjectTimerData> RemoveObjectData( uint64 object_id )
         {
-            auto objectdata = FindObjectData( objectid );
-            if ( objectdata == nullptr )
+            return _object_list.Remove( object_id );
+        }
+
+        inline std::shared_ptr<KFTimerData> RemoveTimerData( uint64 object_id, uint64 data_id )
+        {
+            auto object_data = FindObjectData( object_id );
+            if ( object_data == nullptr )
             {
                 return nullptr;
             }
 
-            return objectdata->FindTimerData( subid );
+            return object_data->RemoveTimerData( data_id );
         }
 
-        inline bool RemoveObjectData( uint64 objectid )
+        inline bool AddTimerData( std::shared_ptr<KFTimerData> timer_data )
         {
-            auto iter = _object_list.find( objectid );
-            if ( iter == _object_list.end() )
-            {
-                return false;
-            }
-
-            __KF_DELETE__( KFObjectData, iter->second );
-            _object_list.erase( iter );
-            return true;
-        }
-
-        inline bool RemoveTimerData( uint64 objectid, uint64 subid )
-        {
-            auto objectdata = FindObjectData( objectid );
-            if ( objectdata == nullptr )
-            {
-                return false;
-            }
-
-            return objectdata->RemoveTimerData( subid );
-        }
-
-        inline bool AddTimerData( KFTimerData* timerdata )
-        {
-            auto iter = _object_list.find( timerdata->_object_id );
-            if ( iter == _object_list.end() )
-            {
-                auto objectdata = __KF_NEW__( KFObjectData );
-                iter = _object_list.insert( std::make_pair( timerdata->_object_id, objectdata ) ).first;
-            }
-
-            return iter->second->AddTimerData( timerdata->_sub_id, timerdata );
+            auto object_data = _object_list.Create( timer_data->_object_id );
+            object_data->AddTimerData( timer_data->_data_id, timer_data );
         }
     public:
-        std::unordered_map< uint64, KFObjectData* > _object_list;
+        KFHashMap<uint64, KFObjectTimerData> _object_list;
     };
 }
 

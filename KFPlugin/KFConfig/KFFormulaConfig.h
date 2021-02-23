@@ -116,24 +116,24 @@ namespace KFrame
 
     protected:
         // 读取配置
-        virtual void ReadSetting( KFNode& xmlnode, KFFormulaSetting* kfsetting )
+        virtual void ReadSetting( KFNode& xml_node, KFFormulaSetting* kfsetting )
         {
             auto kfformulaparam = __KF_NEW__( KFFormulaParam );
             kfsetting->_formula_param_list.Add( kfformulaparam );
             /////////////////////////////////////////////////////////////////////////////////
-            kfformulaparam->_type = xmlnode.ReadString( "Type" );
+            kfformulaparam->_type = xml_node.ReadString( "Type" );
 
             auto index = 1u;
             while ( true )
             {
                 auto strkey = __FORMAT__( "Param{}", index++ );
-                auto ok = xmlnode.HaveChild( strkey.c_str() );
+                auto ok = xml_node.HaveChild( strkey.c_str() );
                 if ( !ok )
                 {
                     break;
                 }
 
-                auto strvalue = xmlnode.ReadString( strkey.c_str() );
+                auto strvalue = xml_node.ReadString( strkey.c_str() );
                 auto param = kfformulaparam->AddParam();
                 param->_str_value = strvalue;
                 param->_int_value = __TO_UINT32__( strvalue );

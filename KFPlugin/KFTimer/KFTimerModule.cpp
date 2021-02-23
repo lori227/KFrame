@@ -11,13 +11,11 @@ namespace KFrame
 
     KFTimerModule::~KFTimerModule()
     {
-        for ( auto& iter : _kf_timer_data )
+        _module_timer_data_list.Clear();
+        for ( auto i = 0u; i < TimerEnum::MaxSlot; ++i )
         {
-            __KF_DELETE__( KFModuleData, iter.second );
+            _slot_timer_data[i] = nullptr;
         }
-        _kf_timer_data.clear();
-
-        memset( _slot_timer_data, 0u, sizeof( _slot_timer_data ) );
     }
 
     void KFTimerModule::BeforeRun()
@@ -32,39 +30,32 @@ namespace KFrame
         RunTimerUpdate();
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    KFTimerData* KFTimerModule::FindTimerData( KFModule* module, uint64 objectid, uint64 subid )
+    std::shared_ptr<KFTimerData> KFTimerModule::FindTimerData( uint64 object_id, uint64 data_id, KFModule* module )
     {
-        auto iter = _kf_timer_data.find( module );
-        if ( iter == _kf_timer_data.end() )
+        auto module_timer_data = _module_timer_data_list.Find( module );
+        if ( module_timer_data == nullptr )
         {
             return nullptr;
         }
 
-        return iter->second->FindTimerData( objectid, subid );
+        return module_timer_data->FindTimerData( object_id, data_id );
     }
 
-    bool KFTimerModule::AddTimerData( KFModule* module, KFTimerData* kfdata )
+    bool KFTimerModule::AddTimerData( KFModule* module, std::shared_ptr<KFTimerData> timer_data )
     {
-        auto iter = _kf_timer_data.find( module );
-        if ( iter == _kf_timer_data.end() )
-        {
-            auto moduledata = __KF_NEW__( KFModuleData );
-            iter = _kf_timer_data.insert( std::make_pair( module, moduledata ) ).first;
-        }
-
-        return iter->second->AddTimerData( kfdata );
+        auto module_timer_data = _module_timer_data_list.Create( module );
+        return module_timer_data->AddTimerData( timer_data );
     }
 
-    void KFTimerModule::RemoveRegisterData( KFModule* module, uint64 objectid, uint64 subid )
+    void KFTimerModule::RemoveRegisterTimerData( uint64 object_id, uint64 data_id, KFModule* module )
     {
         for ( auto iter = _register_timer_data.begin(); iter != _register_timer_data.end(); )
         {
-            auto kfdata = *iter;
-            if ( kfdata->_function._module == module &&
-                    ( objectid == 0u || kfdata->_object_id == objectid ) &&
-                    ( subid == 0u || subid == kfdata->_sub_id ) )
+            auto timer_data = *iter;
+            if ( ( timer_data->_function.GetModule() == module ) &&
+                    ( object_id == 0u || timer_data->_object_id == object_id ) &&
+                    ( data_id == 0u || data_id == timer_data->_data_id ) )
             {
-                __KF_DELETE__( KFTimerData, kfdata );
                 iter = _register_timer_data.erase( iter );
             }
             else
@@ -74,212 +65,206 @@ namespace KFrame
         }
     }
 
-    bool KFTimerModule::RemoveTimerData( KFModule* module, uint64 objectid, uint64 subid )
+    bool KFTimerModule::RemoveTimerData( uint64 object_id, uint64 data_id, KFModule* module )
     {
-        auto iter = _kf_timer_data.find( module );
-        if ( iter == _kf_timer_data.end() )
+        auto module_timer_data = _module_timer_data_list.Find( module );
+        if ( module_timer_data == nullptr )
         {
             return false;
         }
 
-        auto moduledata = iter->second;
-
         // 删除所有
-        if ( objectid == 0u )
+        if ( object_id == 0u )
         {
-            for ( auto& siter : moduledata->_object_list )
+            for ( auto& object_iter : module_timer_data->_object_list._objects )
             {
-                auto objectdata = siter.second;
-                for ( auto& miter : objectdata->_timer_list )
+                auto object_data = object_iter.second;
+                for ( auto& timer_iter : object_data->_timer_list._objects )
                 {
-                    RemoveSlotTimer( miter.second );
+                    RemoveSlotTimer( timer_iter.second );
                 }
             }
-            __KF_DELETE__( KFModuleData, moduledata );
-            _kf_timer_data.erase( iter );
+            _module_timer_data_list.Remove( module );
         }
-        else if ( subid == 0 )
+        else if ( data_id == 0 )
         {
-            auto objectdata = moduledata->FindObjectData( objectid );
-            if ( objectdata != nullptr )
+            auto object_data = module_timer_data->RemoveObjectData( object_id );
+            if ( object_data != nullptr )
             {
-                for ( auto& miter : objectdata->_timer_list )
+                for ( auto& iter : object_data->_timer_list._objects )
                 {
-                    RemoveSlotTimer( miter.second );
+                    RemoveSlotTimer( iter.second );
                 }
-                moduledata->RemoveObjectData( objectid );
             }
         }
         else
         {
-            auto timerdata = moduledata->FindTimerData( objectid, subid );
-            if ( timerdata != nullptr )
+            auto timer_data = module_timer_data->RemoveTimerData( object_id, data_id );
+            if ( timer_data != nullptr )
             {
-                RemoveSlotTimer( timerdata );
-                moduledata->RemoveTimerData( objectid, subid );
+                RemoveSlotTimer( timer_data );
             }
         }
 
         return true;
     }
 
-    void KFTimerModule::AddSlotTimer( KFTimerData* timerdata )
+    void KFTimerModule::AddSlotTimer( std::shared_ptr<KFTimerData> timer_data )
     {
         auto ticks = 0u;
-        if ( timerdata->_delay != 0u )
+        if ( timer_data->_delay != 0u )
         {
-            ticks = timerdata->_delay / TimerEnum::SlotTime;
-            timerdata->_delay = 0u;
+            ticks = timer_data->_delay / TimerEnum::SlotTime;
+            timer_data->_delay = 0u;
         }
         else
         {
-            ticks = timerdata->_interval / TimerEnum::SlotTime;
+            ticks = timer_data->_interval / TimerEnum::SlotTime;
         }
 
         // 设置圈数
-        timerdata->_rotation = ticks / TimerEnum::MaxSlot;
+        timer_data->_rotation = ticks / TimerEnum::MaxSlot;
 
         // _slot和_now_slot相同时, 会多跑一圈 slot+1 保证下次可以执行
         auto slot = ticks % TimerEnum::MaxSlot;
-        timerdata->_slot = ( slot + _now_slot + 1u ) % TimerEnum::MaxSlot;
+        timer_data->_slot = ( slot + _now_slot + 1u ) % TimerEnum::MaxSlot;
 
-        auto wheeldata = _slot_timer_data[ timerdata->_slot ];
-        if ( wheeldata != nullptr )
+        auto wheel_data = _slot_timer_data[ timer_data->_slot ];
+        if ( wheel_data != nullptr )
         {
-            timerdata->_next = wheeldata;
-            wheeldata->_prev = timerdata;
+            timer_data->_next = wheel_data;
+            wheel_data->_prev = timer_data;
         }
 
-        _slot_timer_data[ timerdata->_slot ] = timerdata;
+        _slot_timer_data[ timer_data->_slot ] = timer_data;
     }
 
-    void KFTimerModule::RemoveSlotTimer( KFTimerData* timerdata )
+    void KFTimerModule::RemoveSlotTimer( std::shared_ptr<KFTimerData> timer_data )
     {
-        auto prevdata = timerdata->_prev;
-        if ( prevdata != nullptr )
+        auto prev_data = timer_data->_prev;
+        if ( prev_data != nullptr )
         {
-            prevdata->_next = timerdata->_next;
+            prev_data->_next = timer_data->_next;
         }
 
-        auto nextdata = timerdata->_next;
-        if ( nextdata != nullptr )
+        auto next_data = timer_data->_next;
+        if ( next_data != nullptr )
         {
-            nextdata->_prev = timerdata->_prev;
+            next_data->_prev = timer_data->_prev;
         }
 
-        if ( timerdata == _slot_timer_data[ timerdata->_slot ] )
+        if ( timer_data == _slot_timer_data[ timer_data->_slot ] )
         {
-            _slot_timer_data[ timerdata->_slot ] = nextdata;
+            _slot_timer_data[ timer_data->_slot ] = next_data;
         }
 
-        timerdata->_prev = nullptr;
-        timerdata->_next = nullptr;
+        timer_data->_prev = nullptr;
+        timer_data->_next = nullptr;
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFTimerModule::AddLoopTimer( KFModule* module, uint64 objectid, uint64 subid, uint32 intervaltime, uint32 delaytime, KFTimerFunction& function )
+    void KFTimerModule::AddLoopTimer( uint64 object_id, uint64 data_id, uint32 interval_time, uint32 delay_time, KFModule* module, KFTimerFunction& function )
     {
-        if ( intervaltime == 0u )
+        if ( interval_time == 0u )
         {
-            intervaltime = __MAX_UINT32__;
-            __LOG_ERROR__( "module=[{}] id=[{}] intervaltime error", module->_plugin_name, objectid );
+            interval_time = __MAX_UINT32__;
+            __LOG_ERROR__( "module=[{}] id=[{}] interval_time error", module->_plugin_name, object_id );
         }
 
-        auto kfdata = __KF_NEW__( KFTimerData );
-        kfdata->_object_id = objectid;
-        kfdata->_sub_id = subid;
-        kfdata->_type = TimerEnum::Loop;
-        kfdata->_delay = delaytime;
-        kfdata->_interval = intervaltime;
-        kfdata->_function.SetFunction( module, function );
-        _register_timer_data.push_back( kfdata );
+        auto timer_data = __MAKE_SHARED__( KFTimerData );
+        timer_data->_object_id = object_id;
+        timer_data->_data_id = data_id;
+        timer_data->_type = TimerEnum::Loop;
+        timer_data->_delay = delay_time;
+        timer_data->_interval = interval_time;
+        timer_data->_function.SetFunction( module, function );
+        _register_timer_data.push_back( timer_data );
     }
 
-    void KFTimerModule::AddLimitTimer( KFModule* module, uint64 objectid, uint64 subid, uint32 intervaltime, uint32 count, KFTimerFunction& function )
+    void KFTimerModule::AddLimitTimer( uint64 object_id, uint64 data_id, uint32 interval_time, uint32 count, KFModule* module, KFTimerFunction& function )
     {
-        if ( intervaltime == 0u )
+        if ( interval_time == 0u )
         {
-            intervaltime = 1u;
-            __LOG_ERROR__( "module=[{}] id=[{}] intervaltime error", module->_plugin_name, objectid );
+            interval_time = 1u;
+            __LOG_ERROR__( "module=[{}] id=[{}] interval_time error", module->_plugin_name, object_id );
         }
 
-        auto kfdata = __KF_NEW__( KFTimerData );
-        kfdata->_object_id = objectid;
-        kfdata->_sub_id = subid;
-        kfdata->_type = TimerEnum::Limit;
-        kfdata->_count = __MAX__( 1u, count );
-        kfdata->_delay = 0u;
-        kfdata->_interval = intervaltime;
-        kfdata->_function.SetFunction( module, function );
-        _register_timer_data.push_back( kfdata );
+        auto timer_data = __MAKE_SHARED__( KFTimerData );
+        timer_data->_object_id = object_id;
+        timer_data->_data_id = data_id;
+        timer_data->_type = TimerEnum::Limit;
+        timer_data->_count = __MAX__( 1u, count );
+        timer_data->_delay = 0u;
+        timer_data->_interval = interval_time;
+        timer_data->_function.SetFunction( module, function );
+        _register_timer_data.push_back( timer_data );
     }
 
-    void KFTimerModule::AddDelayTimer( KFModule* module, uint64 objectid, uint64 subid, uint32 intervaltime, KFTimerFunction& function )
+    void KFTimerModule::AddDelayTimer( uint64 object_id, uint64 data_id, uint32 interval_time, KFModule* module, KFTimerFunction& function )
     {
-        if ( intervaltime == 0u )
+        if ( interval_time == 0u )
         {
-            intervaltime = 1u;
-            __LOG_ERROR__( "module=[{}] id=[{}] intervaltime error", module->_plugin_name, objectid );
+            interval_time = 1u;
+            __LOG_ERROR__( "module=[{}] id=[{}] interval_time error", module->_plugin_name, object_id );
         }
 
         // 已经存在就不继续注册
-        auto kfdata = FindTimerData( module, objectid, subid );
-        if ( kfdata != nullptr )
+        auto timer_data = FindTimerData( object_id, data_id, module );
+        if ( timer_data != nullptr )
         {
             return;
         }
 
-        kfdata = __KF_NEW__( KFTimerData );
-        kfdata->_object_id = objectid;
-        kfdata->_sub_id = subid;
-        kfdata->_type = TimerEnum::Limit;
-        kfdata->_count = 1u;
-        kfdata->_delay = 0u;
-        kfdata->_interval = intervaltime;
-        kfdata->_function.SetFunction( module, function );
-        _register_timer_data.push_back( kfdata );
+        timer_data = __MAKE_SHARED__( KFTimerData );
+        timer_data->_object_id = object_id;
+        timer_data->_data_id = data_id;
+        timer_data->_type = TimerEnum::Limit;
+        timer_data->_count = 1u;
+        timer_data->_delay = 0u;
+        timer_data->_interval = interval_time;
+        timer_data->_function.SetFunction( module, function );
+        _register_timer_data.push_back( timer_data );
     }
 
-    void KFTimerModule::RemoveTimer( KFModule* module, uint64 objectid, uint64 subid )
+    void KFTimerModule::RemoveTimer( uint64 object_id, uint64 data_id, KFModule* module )
     {
-        auto remove = std::make_tuple( module, objectid, subid );
-        _remove_timer_data.push_back( remove );
+        auto tuple_data = std::make_tuple( object_id, data_id, module );
+        _remove_timer_data.push_back( tuple_data );
         //////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////
-        auto iter = _kf_timer_data.find( module );
-        if ( iter == _kf_timer_data.end() )
+        auto module_timer_data = _module_timer_data_list.Find( module );
+        if ( module_timer_data == nullptr )
         {
             return;
         }
 
-        auto moduledata = iter->second;
-        if ( objectid == 0u )
+        if ( object_id == 0u )
         {
-            for ( auto& siter : moduledata->_object_list )
+            for ( auto& object_iter : module_timer_data->_object_list._objects )
             {
-                auto objectdata = siter.second;
-                for ( auto& miter : objectdata->_timer_list )
+                auto object_data = object_iter.second;
+                for ( auto& timer_iter : object_data->_timer_list._objects )
                 {
-                    miter.second->_is_prepare_remove = true;
+                    timer_iter.second->_is_prepare_remove = true;
                 }
             }
         }
-        else if ( subid == 0 )
+        else if ( data_id == 0 )
         {
-            auto objectdata = moduledata->FindObjectData( objectid );
-            if ( objectdata != nullptr )
+            auto object_data = module_timer_data->FindObjectData( object_id );
+            if ( object_data != nullptr )
             {
-                for ( auto& miter : objectdata->_timer_list )
+                for ( auto& iter : object_data->_timer_list._objects )
                 {
-                    miter.second->_is_prepare_remove = true;
+                    iter.second->_is_prepare_remove = true;
                 }
             }
         }
         else
         {
-            auto timerdata = moduledata->FindTimerData( objectid, subid );
-            if ( timerdata != nullptr )
+            auto timer_data = module_timer_data->FindTimerData( object_id, data_id );
+            if ( timer_data != nullptr )
             {
-                timerdata->_is_prepare_remove = true;
+                timer_data->_is_prepare_remove = true;
             }
         }
     }
@@ -291,13 +276,12 @@ namespace KFrame
             return;
         }
 
-        for ( auto& data : _remove_timer_data )
+        for ( auto& tuple_data: _remove_timer_data )
         {
-            KFModule* module;
-            uint64 objectid = 0u;
-            uint64 subid = 0u;
-            std::tie( module, objectid, subid ) = data;
-            RemoveTimerData( module, objectid, subid );
+            auto object_id = std::get<0>( tuple_data );
+            auto data_id = std::get<1>( tuple_data );
+            auto module= std::get<2>( tuple_data );
+            RemoveTimerData( object_id, data_id, module );
         }
 
         _remove_timer_data.clear();
@@ -310,16 +294,16 @@ namespace KFrame
             return;
         }
 
-        for ( auto kfdata : _register_timer_data )
+        for ( auto timer_data : _register_timer_data )
         {
             // 先删除列表
-            RemoveTimerData( kfdata->_function._module, kfdata->_object_id, kfdata->_sub_id );
+            RemoveTimerData( timer_data->_object_id, timer_data->_data_id, timer_data->_function.GetModule() );
 
             // 添加进列表
-            AddTimerData( kfdata->_function._module, kfdata );
+            AddTimerData( timer_data->_function.GetModule(), timer_data );
 
             // 加入时间轮中
-            AddSlotTimer( kfdata );
+            AddSlotTimer( timer_data );
         }
 
         _register_timer_data.clear();
@@ -329,14 +313,14 @@ namespace KFrame
     {
         // 添加总使用时间, 计算时间轮走过的槽数
         _total_run_use_time += KFGlobal::Instance()->_last_frame_use_time;
-        auto passslot = _total_run_use_time / TimerEnum::SlotTime;
-        if ( passslot == 0u )
+        auto pass_slot = _total_run_use_time / TimerEnum::SlotTime;
+        if ( pass_slot == 0u )
         {
             return;
         }
-        _total_run_use_time -= passslot * TimerEnum::SlotTime;
+        _total_run_use_time -= pass_slot * TimerEnum::SlotTime;
 
-        for ( auto i = 0u; i < passslot; ++i )
+        for ( auto i = 0u; i < pass_slot; ++i )
         {
             _now_slot = ( _now_slot + 1u ) % TimerEnum::MaxSlot;
             RunSlotTimer();
@@ -345,58 +329,58 @@ namespace KFrame
 
     void KFTimerModule::RunSlotTimer()
     {
-        std::list< KFTimerData* > donetimerlist;
+        std::list<std::shared_ptr<KFTimerData>> done_timer_data_list;
 
-        auto timerdata = _slot_timer_data[ _now_slot ];
-        while ( timerdata != nullptr )
+        auto timer_data = _slot_timer_data[ _now_slot ];
+        while ( timer_data != nullptr )
         {
-            if ( timerdata->_rotation > 0u )
+            if ( timer_data->_rotation > 0u )
             {
-                --timerdata->_rotation;
+                --timer_data->_rotation;
             }
             else
             {
-                donetimerlist.push_front( timerdata );
+                done_timer_data_list.push_front( timer_data );
             }
 
-            timerdata = timerdata->_next;
+            timer_data = timer_data->_next;
         }
 
-        for ( auto timerdata : donetimerlist )
+        for ( auto timer_data : done_timer_data_list )
         {
-            if ( !timerdata->_is_prepare_remove )
+            if ( !timer_data->_is_prepare_remove )
             {
-                ExecuteDoneTimer( timerdata );
+                ExecuteDoneTimer( timer_data );
             }
         }
     }
 
-    void KFTimerModule::ExecuteDoneTimer( KFTimerData* timerdata )
+    void KFTimerModule::ExecuteDoneTimer( std::shared_ptr<KFTimerData> timer_data )
     {
         // 先从列表中删除
-        RemoveSlotTimer( timerdata );
+        RemoveSlotTimer( timer_data );
 
         // 执行回调函数
-        timerdata->_function.Call( timerdata->_object_id, timerdata->_sub_id );
-        if ( timerdata->_type == TimerEnum::Loop )
+        timer_data->_function.Call( timer_data->_object_id, timer_data->_data_id, ++timer_data->_turns );
+        if ( timer_data->_type == TimerEnum::Loop )
         {
-            AddSlotTimer( timerdata );
+            AddSlotTimer( timer_data );
         }
-        else if ( timerdata->_type == TimerEnum::Limit )
+        else if ( timer_data->_type == TimerEnum::Limit )
         {
-            --timerdata->_count;
-            if ( timerdata->_count == 0u )
+            --timer_data->_count;
+            if ( timer_data->_count == 0u )
             {
-                RemoveTimerData( timerdata->_function._module, timerdata->_object_id, timerdata->_sub_id );
+                RemoveTimerData( timer_data->_object_id, timer_data->_data_id, timer_data->_function.GetModule() );
             }
             else
             {
-                AddSlotTimer( timerdata );
+                AddSlotTimer( timer_data );
             }
         }
         else
         {
-            RemoveTimerData( timerdata->_function._module, timerdata->_object_id, timerdata->_sub_id );
+            RemoveTimerData( timer_data->_object_id, timer_data->_data_id, timer_data->_function.GetModule() );
         }
     }
 }
