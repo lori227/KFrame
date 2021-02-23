@@ -15,14 +15,14 @@ namespace KFrame
         __KF_DELETE__( Connection::SocketFactory, _factory );
     }
 
-    void KFMongo::InitMongo( const KFMongoConnectOption* connectoption, const KFMongoConnnectData* connectdata )
+    void KFMongo::InitMongo( const KFMongoConnectOption* connect_option, const KFMongoConnnectData* connect_data )
     {
-        _database = connectoption->_database;
+        _database = connect_option->_database;
 
         ///     mongodb://<user>:<password>@hostname.com:<port>/database-name?options
         _connect_data = __FORMAT__( "mongodb://{}:{}@{}:{}/{}?ssl={}&connectTimeoutMS={}&socketTimeoutMS={}&authMechanism={}",
-                                    connectoption->_user, connectoption->_password, connectdata->_ip, connectdata->_port, connectoption->_database,
-                                    connectoption->_use_ssl, connectoption->_connect_timeout, connectoption->_execute_timeout, connectoption->_auth_type );
+                                    connect_option->_user, connect_option->_password, connectdata->_ip, connectdata->_port, connect_option->_database,
+                                    connect_option->_use_ssl, connect_option->_connect_timeout, connect_option->_execute_timeout, connect_option->_auth_type );
 
         ConnectMongo();
     }
@@ -71,7 +71,7 @@ namespace KFrame
 
     bool KFMongo::SendRequest( RequestMessage& request )
     {
-        uint32 repeatcount = 0u;
+        uint32 repeat_count = 0u;
         do
         {
             try
@@ -89,7 +89,7 @@ namespace KFrame
 
                 ConnectMongo();
             }
-        } while ( ++repeatcount < 3 );
+        } while ( ++repeat_count < 3 );
 
         __LOG_ERROR__( "mongo disconnected" );
         return false;
@@ -97,7 +97,7 @@ namespace KFrame
 
     bool KFMongo::SendRequest( RequestMessage& request, ResponseMessage& response )
     {
-        uint32 repeatcount = 0u;
+        uint32 repeat_count = 0u;
         do
         {
             try
@@ -115,7 +115,7 @@ namespace KFrame
 
                 ConnectMongo();
             }
-        } while ( ++repeatcount < 3 );
+        } while ( ++repeat_count < 3 );
 
         __LOG_ERROR__( "mongo disconnected" );
         return false;

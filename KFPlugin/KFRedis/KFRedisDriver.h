@@ -13,214 +13,214 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////
         // 数据库
-        template< typename T >
+        template<typename T>
         inline KFResult<uint64>::UniqueType Del( const T& key )
         {
-            auto strvalue = KFRedisFormat::ToString( key );
-            auto strsql = __FORMAT__( "del {}", strvalue );
-            return WriteUInt64( strsql );
+            auto str_value = KFRedisFormat::ToString( key );
+            auto sql = __FORMAT__( "del {}", str_value );
+            return WriteUInt64( sql );
         }
 
-        template< typename T >
-        inline KFResult<voidptr>::UniqueType Rename( const T& oldkey, const T& newkey )
+        template<typename T>
+        inline KFResult<voidptr>::UniqueType Rename( const T& old_key, const T& new_key )
         {
-            auto strsql = __FORMAT__( "rename {}", oldkey, newkey );
-            return WriteVoid( strsql );
+            auto sql = __FORMAT__( "rename {}", old_key, new_key );
+            return WriteVoid( sql );
         }
 
-        template< typename T >
-        inline KFResult<voidptr>::UniqueType RenameNX( const T& oldkey, const T& newkey )
+        template<typename T>
+        inline KFResult<voidptr>::UniqueType RenameNx( const T& old_key, const T& new_key )
         {
-            auto strsql = __FORMAT__( "renamenx {}", oldkey, newkey );
-            return WriteVoid( strsql );
+            auto sql = __FORMAT__( "renamenx {}", old_key, new_key );
+            return WriteVoid( sql );
         }
 
-        template< typename T >
+        template<typename T>
         inline KFResult<uint64>::UniqueType Exists( const T& key )
         {
-            auto strsql = __FORMAT__( "exists {}", key );
-            return ReadUInt64( strsql );
+            auto sql = __FORMAT__( "exists {}", key );
+            return ReadUInt64( sql );
         }
 
-        template< typename T >
+        template<typename T>
         inline KFResult<std::string>::UniqueType Type( const T& key )
         {
-            auto strsql = __FORMAT__( "type {}", key );
-            return ReadString( strsql );
+            auto sql = __FORMAT__( "type {}", key );
+            return ReadString( sql );
         }
 
         inline KFResult<voidptr>::UniqueType Select( uint64 index )
         {
-            auto strsql = __FORMAT__( "select {}", index );
-            return WriteVoid( strsql );
+            auto sql = __FORMAT__( "select {}", index );
+            return WriteVoid( sql );
         }
         //////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////
         // 字段(key, ttl)
         inline KFResult<voidptr>::UniqueType Expire( const std::string& key, uint32 seconds )
         {
-            auto strsql = __FORMAT__( "expire {} {}", key, seconds );
-            return WriteVoid( strsql );
+            auto sql = __FORMAT__( "expire {} {}", key, seconds );
+            return WriteVoid( sql );
         }
 
         inline KFResult<voidptr>::UniqueType ExpireAt( const std::string& key, uint64 time )
         {
-            auto strsql = __FORMAT__( "expireat {} {}", key, time );
-            return WriteVoid( strsql );
+            auto sql = __FORMAT__( "expireat {} {}", key, time );
+            return WriteVoid( sql );
         }
 
         // -1 key not exists or notexpire time
         inline KFResult<uint64>::UniqueType Ttl( const std::string& key )
         {
-            auto strsql = __FORMAT__( "ttl {}", key );
-            return ReadUInt64( strsql );
+            auto sql = __FORMAT__( "ttl {}", key );
+            return ReadUInt64( sql );
         }
 
         // remove expire time
         inline KFResult<uint64>::UniqueType Persist( const std::string& key )
         {
-            auto strsql = __FORMAT__( "persist {}", key );
-            return WriteUInt64( strsql );
+            auto sql = __FORMAT__( "persist {}", key );
+            return WriteUInt64( sql );
         }
 
         inline KFResult<voidptr>::UniqueType PExpire( const std::string& key, uint32 milliseconds )
         {
-            auto strsql = __FORMAT__( "pexpire {} {}", key, milliseconds );
-            return WriteVoid( strsql );
+            auto sql = __FORMAT__( "pexpire {} {}", key, milliseconds );
+            return WriteVoid( sql );
         }
 
-        inline KFResult<voidptr>::UniqueType PExpireAt( const std::string& key, uint64 millitime )
+        inline KFResult<voidptr>::UniqueType PExpireAt( const std::string& key, uint64 milli_time )
         {
-            auto strsql = __FORMAT__( "pexpireat {} {}", key, millitime );
-            return WriteVoid( strsql );
+            auto sql = __FORMAT__( "pexpireat {} {}", key, milli_time );
+            return WriteVoid( sql );
         }
 
         // -1 key not exists or notexpire time
         inline KFResult<uint64>::UniqueType  PTtl( const std::string& key )
         {
-            auto strsql = __FORMAT__( "pttl {}", key );
-            return ReadUInt64( strsql );
+            auto sql = __FORMAT__( "pttl {}", key );
+            return ReadUInt64( sql );
         }
         //////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////
         // 字符串(string)
         // set
-        template< typename T >
+        template<typename T>
         inline KFResult<voidptr>::UniqueType Set( const std::string& key, const T& value )
         {
-            auto strsql = __FORMAT__( "set {} {}", key, value );
-            return WriteVoid( strsql );
+            auto sql = __FORMAT__( "set {} {}", key, value );
+            return WriteVoid( sql );
         }
 
         // set if not exists
-        template< typename T >
+        template<typename T>
         inline KFResult<voidptr>::UniqueType SetNX( const std::string& key, const T& value )
         {
-            auto strsql = __FORMAT__( "setnx {} {}", key, value );
-            return WriteVoid( strsql );
+            auto sql = __FORMAT__( "setnx {} {}", key, value );
+            return WriteVoid( sql );
         }
 
         // set and ttl( second )
-        template< typename T >
+        template<typename T>
         inline KFResult<voidptr>::UniqueType SetEX( const std::string& key, const T& value, uint32 seconds )
         {
-            auto strsql = __FORMAT__( "setex {} {} {}", key, seconds, value );
-            return WriteVoid( strsql );
+            auto sql = __FORMAT__( "setex {} {} {}", key, seconds, value );
+            return WriteVoid( sql );
         }
 
         // set and ttl( millisecond )
-        template< typename T >
+        template<typename T>
         inline KFResult<voidptr>::UniqueType PSetEX( const std::string& key, const T& value, uint32 milliseconds )
         {
-            auto strsql = __FORMAT__( "psetex {} {} {}", key, milliseconds, value );
-            return WriteVoid( strsql );
+            auto sql = __FORMAT__( "psetex {} {} {}", key, milliseconds, value );
+            return WriteVoid( sql );
         }
 
         // get
         inline KFResult<std::string>::UniqueType Get( const std::string& key )
         {
-            auto strsql = __FORMAT__( "get {}", key );
-            return ReadString( strsql );
+            auto sql = __FORMAT__( "get {}", key );
+            return ReadString( sql );
         }
 
         inline KFResult<uint64>::UniqueType GetUInt64( const std::string& key )
         {
-            auto strsql = __FORMAT__( "get {}", key );
-            return ReadUInt64( strsql );
+            auto sql = __FORMAT__( "get {}", key );
+            return ReadUInt64( sql );
         }
 
         // get
-        template< typename T >
+        template<typename T>
         inline KFResult<std::string>::UniqueType GetSet( const std::string& key, T& value )
         {
-            auto strsql = __FORMAT__( "getset {} {}", key, value );
-            return WriteString( strsql );
+            auto sql = __FORMAT__( "getset {} {}", key, value );
+            return WriteString( sql );
         }
 
         inline KFResult<uint64>::UniqueType GetSetUInt64( const std::string& key, uint64 value )
         {
-            auto strsql = __FORMAT__( "getset {} {}", key, value );
-            return WriteUInt64( strsql );
+            auto sql = __FORMAT__( "getset {} {}", key, value );
+            return WriteUInt64( sql );
         }
 
         // value length
         inline KFResult<uint64>::UniqueType StrLen( const std::string& key )
         {
-            auto strsql = __FORMAT__( "strlen {}", key );
-            return ReadUInt64( strsql );
+            auto sql = __FORMAT__( "strlen {}", key );
+            return ReadUInt64( sql );
         }
 
         // append value
-        template< typename T >
+        template<typename T>
         inline KFResult<voidptr>::UniqueType Append( const std::string& key, const T& value )
         {
-            auto strsql = __FORMAT__( "append {} {}", key, value );
-            return WriteVoid( strsql );
+            auto sql = __FORMAT__( "append {} {}", key, value );
+            return WriteVoid( sql );
         }
 
         // set range  (return new length, 0=false)
-        template< typename T >
+        template<typename T>
         inline KFResult<voidptr>::UniqueType SetRange( const std::string& key, uint32 offset, const T& value )
         {
-            auto strsql = __FORMAT__( "setrange {} {} {}", key, offset, value );
-            return WriteUInt64( strsql );
+            auto sql = __FORMAT__( "setrange {} {} {}", key, offset, value );
+            return WriteUInt64( sql );
         }
 
         // get range
-        inline KFResult<std::string>::UniqueType GetRange( const std::string& key, uint32 startoffset, uint32 endoffset )
+        inline KFResult<std::string>::UniqueType GetRange( const std::string& key, uint32 start_offset, uint32 end_offset )
         {
-            auto strsql = __FORMAT__( "getrange {} {} {}", key, startoffset, endoffset );
-            return ReadString( strsql );
+            auto sql = __FORMAT__( "getrange {} {} {}", key, start_offset, end_offset );
+            return ReadString( sql );
         }
 
         // incr
         inline KFResult<uint64>::UniqueType Incr( const std::string& key, int64 value = 1 )
         {
-            auto strsql = __FORMAT__( "incrby {} {}", key, value );
-            return WriteUInt64( strsql );
+            auto sql = __FORMAT__( "incrby {} {}", key, value );
+            return WriteUInt64( sql );
         }
 
         // decr
         inline KFResult<uint64>::UniqueType Decr( const std::string& key, int64 value = 1 )
         {
-            auto strsql = __FORMAT__( "decrby {} {}", key, value );
-            return WriteUInt64( strsql );
+            auto sql = __FORMAT__( "decrby {} {}", key, value );
+            return WriteUInt64( sql );
         }
 
         // mset
         inline KFResult<voidptr>::UniqueType MSet( const StringMap& values )
         {
-            auto strvalue = KFRedisFormat::ToString( values );
-            auto strsql = __FORMAT__( "mset {}", strvalue );
-            return WriteVoid( strsql );
+            auto str_value = KFRedisFormat::ToString( values );
+            auto sql = __FORMAT__( "mset {}", str_value );
+            return WriteVoid( sql );
         }
 
         // msetnx
         inline KFResult<uint64>::UniqueType MSetNX( const StringMap& values )
         {
-            auto strvalue = KFRedisFormat::ToString( values );
-            auto strsql = __FORMAT__( "mset {}", strvalue );
-            return WriteUInt64( strsql );
+            auto str_value = KFRedisFormat::ToString( values );
+            auto sql = __FORMAT__( "mset {}", str_value );
+            return WriteUInt64( sql );
         }
 
         // mget
@@ -229,9 +229,9 @@ namespace KFrame
             StringMap values;
             if ( !keys.empty() )
             {
-                auto strvalue = KFRedisFormat::ToString( keys );
-                auto strsql = __FORMAT__( "mget {}", strvalue );
-                auto result = ReadVector( strsql );
+                auto str_value = KFRedisFormat::ToString( keys );
+                auto sql = __FORMAT__( "mget {}", str_value );
+                auto result = ReadVector( sql );
                 for ( auto i = 0u; i < keys.size(); ++i )
                 {
                     values[ keys[ i ] ] = result->_value[ i ];
@@ -243,72 +243,72 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////
         // 哈希表(hash)
-        template< typename T, typename U >
+        template<typename T, typename U>
         inline KFResult<voidptr>::UniqueType HSet( const std::string& key, const T& field, const U& value )
         {
-            auto strsql = __FORMAT__( "hset {} {} {}", key, field, value );
-            return WriteVoid( strsql );
+            auto sql = __FORMAT__( "hset {} {} {}", key, field, value );
+            return WriteVoid( sql );
         }
 
-        template< typename T >
+        template<typename T>
         inline KFResult<voidptr>::UniqueType HSetNX( const std::string& key, const std::string& field, const T& value )
         {
-            auto strsql = __FORMAT__( "hsetnx {} {} {}", key, field, value );
-            return WriteVoid( strsql );
+            auto sql = __FORMAT__( "hsetnx {} {} {}", key, field, value );
+            return WriteVoid( sql );
         }
 
-        template< typename T >
+        template<typename T>
         inline KFResult<std::string>::UniqueType HGet( const std::string& key, const T& field )
         {
-            auto strsql = __FORMAT__( "hget {} {}", key, field );
-            return ReadString( strsql );
+            auto sql = __FORMAT__( "hget {} {}", key, field );
+            return ReadString( sql );
         }
 
-        template< typename T >
+        template<typename T>
         inline KFResult<uint64>::UniqueType HGetUInt64( const std::string& key, const T& field )
         {
-            auto strsql = __FORMAT__( "hget {} {}", key, field );
-            return ReadUInt64( strsql );
+            auto sql = __FORMAT__( "hget {} {}", key, field );
+            return ReadUInt64( sql );
         }
 
-        template< typename T >
+        template<typename T>
         inline KFResult<uint64>::UniqueType HExists( const std::string& key, const T& field )
         {
-            auto strsql = __FORMAT__( "hexists {} {}", key, field );
-            return ReadUInt64( strsql );
+            auto sql = __FORMAT__( "hexists {} {}", key, field );
+            return ReadUInt64( sql );
         }
 
-        template< typename T >
+        template<typename T>
         inline KFResult<uint64>::UniqueType HDel( const std::string& key, const T& fields )
         {
-            auto strvalue = KFRedisFormat::ToString( fields );
-            auto strsql = __FORMAT__( "hdel {} {}", key, strvalue );
-            return WriteUInt64( strsql );
+            auto str_value = KFRedisFormat::ToString( fields );
+            auto sql = __FORMAT__( "hdel {} {}", key, str_value );
+            return WriteUInt64( sql );
         }
 
         inline KFResult<uint64>::UniqueType HLen( const std::string& key )
         {
-            auto strsql = __FORMAT__( "hlen {}", key );
-            return ReadUInt64( strsql );
+            auto sql = __FORMAT__( "hlen {}", key );
+            return ReadUInt64( sql );
         }
 
         inline KFResult<uint64>::UniqueType HStrLen( const std::string& key, const std::string& field )
         {
-            auto strsql = __FORMAT__( "hstrlen {} {}", key, field );
-            return ReadUInt64( strsql );
+            auto sql = __FORMAT__( "hstrlen {} {}", key, field );
+            return ReadUInt64( sql );
         }
 
         inline KFResult<uint64>::UniqueType HIncrby( const std::string& key, const std::string& field, int64 value )
         {
-            auto strsql = __FORMAT__( "hincrby {} {} {}", key, field, value );
-            return WriteUInt64( strsql );
+            auto sql = __FORMAT__( "hincrby {} {} {}", key, field, value );
+            return WriteUInt64( sql );
         }
 
         inline KFResult<voidptr>::UniqueType HMSet( const std::string& key, const StringMap& values )
         {
-            auto strvalue = KFRedisFormat::ToString( values );
-            auto strsql = __FORMAT__( "hmset {} {}", key, strvalue );
-            return WriteVoid( strsql );
+            auto str_value = KFRedisFormat::ToString( values );
+            auto sql = __FORMAT__( "hmset {} {}", key, str_value );
+            return WriteVoid( sql );
         }
 
         inline StringMap HMGet( const std::string& key, const StringVector& fields )
@@ -316,9 +316,9 @@ namespace KFrame
             StringMap values;
             if ( !fields.empty() )
             {
-                auto strvalue = KFRedisFormat::ToString( fields );
-                auto strsql = __FORMAT__( "hmget {} {}", key, strvalue );
-                auto result = ReadVector( strsql );
+                auto str_value = KFRedisFormat::ToString( fields );
+                auto sql = __FORMAT__( "hmget {} {}", key, str_value );
+                auto result = ReadVector( sql );
                 for ( auto i = 0u; i < fields.size(); ++i )
                 {
                     values[ fields[ i ] ] = result->_value[ i ];
@@ -330,449 +330,449 @@ namespace KFrame
 
         inline KFResult<StringVector>::UniqueType HKeys( const std::string& key )
         {
-            auto strsql = __FORMAT__( "hkeys {}", key );
-            return ReadVector( strsql );
+            auto sql = __FORMAT__( "hkeys {}", key );
+            return ReadVector( sql );
         }
 
         inline KFResult<StringVector>::UniqueType  HVals( const std::string& key )
         {
-            auto strsql = __FORMAT__( "hvals {}", key );
-            return ReadVector( strsql );
+            auto sql = __FORMAT__( "hvals {}", key );
+            return ReadVector( sql );
         }
 
         inline KFResult<StringMap>::UniqueType HGetAll( const std::string& key )
         {
-            auto strsql = __FORMAT__( "hgetall {}", key );
-            return ReadMap( strsql );
+            auto sql = __FORMAT__( "hgetall {}", key );
+            return ReadMap( sql );
         }
         //////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////
         // 列表(list)
-        template< typename T >
+        template<typename T>
         inline KFResult<uint64>::UniqueType LPush( const std::string& key, const T& value )
         {
-            auto strvalue = KFRedisFormat::ToString( value );
-            auto strsql = __FORMAT__( "lpush {} {}", key, strvalue );
-            return WriteUInt64( strsql );
+            auto str_value = KFRedisFormat::ToString( value );
+            auto sql = __FORMAT__( "lpush {} {}", key, str_value );
+            return WriteUInt64( sql );
         }
 
-        template< typename T >
+        template<typename T>
         inline KFResult<uint64>::UniqueType LPushX( const std::string& key, const T& value )
         {
-            auto strvalue = KFRedisFormat::ToString( value );
-            auto strsql = __FORMAT__( "lpushx {} {}", key, strvalue );
-            return WriteUInt64( strsql );
+            auto str_value = KFRedisFormat::ToString( value );
+            auto sql = __FORMAT__( "lpushx {} {}", key, str_value );
+            return WriteUInt64( sql );
         }
 
-        template< typename T >
+        template<typename T>
         inline KFResult<uint64>::UniqueType RPush( const std::string& key, const T& value )
         {
-            auto strvalue = KFRedisFormat::ToString( value );
-            auto strsql = __FORMAT__( "rpush {} {}", key, strvalue );
-            return WriteUInt64( strsql );
+            auto str_value = KFRedisFormat::ToString( value );
+            auto sql = __FORMAT__( "rpush {} {}", key, str_value );
+            return WriteUInt64( sql );
         }
 
-        template< typename T >
+        template<typename T>
         inline KFResult<uint64>::UniqueType RPushX( const std::string& key, const T& value )
         {
-            auto strvalue = KFRedisFormat::ToString( value );
-            auto strsql = __FORMAT__( "rpushx {} {}", key, strvalue );
-            return WriteUInt64( strsql );
+            auto str_value = KFRedisFormat::ToString( value );
+            auto sql = __FORMAT__( "rpushx {} {}", key, str_value );
+            return WriteUInt64( sql );
         }
 
         inline KFResult<std::string>::UniqueType LPop( const std::string& key )
         {
-            auto strsql = __FORMAT__( "lpop {}", key );
-            return ReadString( strsql );
+            auto sql = __FORMAT__( "lpop {}", key );
+            return ReadString( sql );
         }
 
         inline KFResult<uint64>::UniqueType LPopUInt64( const std::string& key )
         {
-            auto strsql = __FORMAT__( "lpop {}", key );
-            return ReadUInt64( strsql );
+            auto sql = __FORMAT__( "lpop {}", key );
+            return ReadUInt64( sql );
         }
 
         inline KFResult<std::string>::UniqueType RPop( const std::string& key )
         {
-            auto strsql = __FORMAT__( "rpop {}", key );
-            return ReadString( strsql );
+            auto sql = __FORMAT__( "rpop {}", key );
+            return ReadString( sql );
         }
 
         inline KFResult<uint64>::UniqueType RPopUInt64( const std::string& key )
         {
-            auto strsql = __FORMAT__( "rpop {}", key );
-            return ReadUInt64( strsql );
+            auto sql = __FORMAT__( "rpop {}", key );
+            return ReadUInt64( sql );
         }
 
-        inline KFResult<std::string>::UniqueType RPopLPush( const std::string& sourcekey, const std::string& destkey )
+        inline KFResult<std::string>::UniqueType RPopLPush( const std::string& source_key, const std::string& dest_key )
         {
-            auto strsql = __FORMAT__( "rpoplpush {} {}", sourcekey, destkey );
-            return ReadString( strsql );
+            auto sql = __FORMAT__( "rpoplpush {} {}", source_key, dest_key );
+            return ReadString( sql );
         }
 
-        inline KFResult<uint64>::UniqueType RPopLPushUInt64( const std::string& sourcekey, const std::string& destkey )
+        inline KFResult<uint64>::UniqueType RPopLPushUInt64( const std::string& source_key, const std::string& dest_key )
         {
-            auto strsql = __FORMAT__( "rpoplpush {} {}", sourcekey, destkey );
-            return ReadUInt64( strsql );
+            auto sql = __FORMAT__( "rpoplpush {} {}", source_key, dest_key );
+            return ReadUInt64( sql );
         }
 
-        template< typename T >
+        template<typename T>
         inline KFResult<uint64>::UniqueType LRem( const std::string& key, const T& value, int64 count )
         {
-            auto strsql = __FORMAT__( "lrem {} {} {}", key, count, value );
-            return WriteUInt64( strsql );
+            auto sql = __FORMAT__( "lrem {} {} {}", key, count, value );
+            return WriteUInt64( sql );
         }
 
         inline KFResult<uint64>::UniqueType LLen( const std::string& key )
         {
-            auto strsql = __FORMAT__( "llen {}", key );
-            return ReadUInt64( strsql );
+            auto sql = __FORMAT__( "llen {}", key );
+            return ReadUInt64( sql );
         }
 
         inline KFResult<std::string>::UniqueType LIndex( const std::string& key, int64 index )
         {
-            auto strsql = __FORMAT__( "lindex {} {}", key, index );
-            return ReadString( strsql );
+            auto sql = __FORMAT__( "lindex {} {}", key, index );
+            return ReadString( sql );
         }
 
         inline KFResult<uint64>::UniqueType LIndexUInt64( const std::string& key, int64 index )
         {
-            auto strsql = __FORMAT__( "lindex {} {}", key, index );
-            return ReadUInt64( strsql );
+            auto sql = __FORMAT__( "lindex {} {}", key, index );
+            return ReadUInt64( sql );
         }
 
-        template< typename T >
-        inline KFResult<uint64>::UniqueType LInsertBefore( const std::string& key, const T& findvalue, const T& insertvalue )
+        template<typename T>
+        inline KFResult<uint64>::UniqueType LInsertBefore( const std::string& key, const T& find_value, const T& insert_value )
         {
-            auto strsql = __FORMAT__( "linsert {} before {} {}", key, findvalue, insertvalue );
-            return WriteUInt64( strsql );
+            auto sql = __FORMAT__( "linsert {} before {} {}", key, find_value, insert_value );
+            return WriteUInt64( sql );
         }
 
-        template< typename T >
-        inline KFResult<uint64>::UniqueType LInsertAfter( const std::string& key, const T& findvalue, const T& insertvalue )
+        template<typename T>
+        inline KFResult<uint64>::UniqueType LInsertAfter( const std::string& key, const T& find_value, const T& insert_value )
         {
-            auto strsql = __FORMAT__( "linsert {} after {} {}", key, findvalue, insertvalue );
-            return WriteUInt64( strsql );
+            auto sql = __FORMAT__( "linsert {} after {} {}", key, find_value, insert_value );
+            return WriteUInt64( sql );
         }
 
-        template< typename T >
+        template<typename T>
         inline KFResult<voidptr>::UniqueType LSet( const std::string& key, int64 index, const T& value )
         {
-            auto strsql = __FORMAT__( "lset {} {} {}", key, index, value );
-            return WriteVoid( strsql );
+            auto sql = __FORMAT__( "lset {} {} {}", key, index, value );
+            return WriteVoid( sql );
         }
 
-        inline KFResult<StringList>::UniqueType LRange( const std::string& key, int64 startindex, int64 endindex )
+        inline KFResult<StringList>::UniqueType LRange( const std::string& key, int64 start_index, int64 end_index )
         {
-            auto strsql = __FORMAT__( "lrange {} {} {}", key, startindex, endindex );
-            return ReadList( strsql );
+            auto sql = __FORMAT__( "lrange {} {} {}", key, start_index, end_index );
+            return ReadList( sql );
         }
 
-        inline KFResult<voidptr>::UniqueType LTrim( const std::string& key, int64 startindex, int64 endindex )
+        inline KFResult<voidptr>::UniqueType LTrim( const std::string& key, int64 start_index, int64 end_index )
         {
-            auto strsql = __FORMAT__( "ltrim {} {} {}", key, startindex, endindex );
-            return WriteVoid( strsql );
+            auto sql = __FORMAT__( "ltrim {} {} {}", key, start_index, end_index );
+            return WriteVoid( sql );
         }
 
-        template< typename T >
-        inline KFResult<StringPair>::UniqueType BLPop( const T& keylist, uint64 timeout )
+        template<typename T>
+        inline KFResult<StringPair>::UniqueType BLPop( const T& key_list, uint64 timeout )
         {
-            auto strvalue = KFRedisFormat::ToString( keylist );
-            auto strsql = __FORMAT__( "blpop {} {}", strvalue, timeout );
-            return ReadPair( strsql );
+            auto str_value = KFRedisFormat::ToString( key_list );
+            auto sql = __FORMAT__( "blpop {} {}", str_value, timeout );
+            return ReadPair( sql );
         }
 
-        template< typename T >
-        inline KFResult<StringPair>::UniqueType BRPop( const T& keylist, uint64 timeout )
+        template<typename T>
+        inline KFResult<StringPair>::UniqueType BRPop( const T& key_list, uint64 timeout )
         {
-            auto strvalue = KFRedisFormat::ToString( keylist );
-            auto strsql = __FORMAT__( "brpop {} {}", strvalue, timeout );
-            return ReadPair( strsql );
+            auto str_value = KFRedisFormat::ToString( key_list );
+            auto sql = __FORMAT__( "brpop {} {}", str_value, timeout );
+            return ReadPair( sql );
         }
 
-        inline KFResult<std::string>::UniqueType BRPopLPush( const std::string& sourcekey, const std::string& destkey, uint64 timeout )
+        inline KFResult<std::string>::UniqueType BRPopLPush( const std::string& source_key, const std::string& dest_key, uint64 timeout )
         {
-            auto strsql = __FORMAT__( "brpoplpush {} {} {}", sourcekey, destkey, timeout );
-            return ReadString( strsql );
+            auto sql = __FORMAT__( "brpoplpush {} {} {}", source_key, dest_key, timeout );
+            return ReadString( sql );
         }
 
-        inline KFResult<uint64>::UniqueType BRPopLPushUInt64( const std::string& sourcekey, const std::string& destkey, uint64 timeout )
+        inline KFResult<uint64>::UniqueType BRPopLPushUInt64( const std::string& source_key, const std::string& dest_key, uint64 timeout )
         {
-            auto strsql = __FORMAT__( "brpoplpush {} {} {}", sourcekey, destkey, timeout );
-            return ReadUInt64( strsql );
+            auto sql = __FORMAT__( "brpoplpush {} {} {}", source_key, dest_key, timeout );
+            return ReadUInt64( sql );
         }
         //////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////
         // 集合
-        template< typename T >
+        template<typename T>
         inline KFResult<uint64>::UniqueType SAdd( const std::string& key, const T& value )
         {
-            auto strvalue = KFRedisFormat::ToString( value );
-            auto strsql = __FORMAT__( "sadd {} {}", key, strvalue );
-            return WriteUInt64( strsql );
+            auto str_value = KFRedisFormat::ToString( value );
+            auto sql = __FORMAT__( "sadd {} {}", key, str_value );
+            return WriteUInt64( sql );
         }
 
-        template< typename T >
+        template<typename T>
         inline KFResult<uint64>::UniqueType SIsMember( const std::string& key, const T& value )
         {
-            auto strsql = __FORMAT__( "sismember {} {}", key, value );
-            return ReadUInt64( strsql );
+            auto sql = __FORMAT__( "sismember {} {}", key, value );
+            return ReadUInt64( sql );
         }
 
         inline KFResult<std::string>::UniqueType SPop( const std::string& key )
         {
-            auto strsql = __FORMAT__( "spop {}", key );
-            return WriteString( strsql );
+            auto sql = __FORMAT__( "spop {}", key );
+            return WriteString( sql );
         }
 
         inline KFResult<uint64>::UniqueType SPopUInt64( const std::string& key )
         {
-            auto strsql = __FORMAT__( "spop {}", key );
-            return WriteUInt64( strsql );
+            auto sql = __FORMAT__( "spop {}", key );
+            return WriteUInt64( sql );
         }
 
         inline KFResult<std::string>::UniqueType SRandMember( const std::string& key )
         {
-            auto strsql = __FORMAT__( "srandmember {}", key );
-            return ReadString( strsql );
+            auto sql = __FORMAT__( "srandmember {}", key );
+            return ReadString( sql );
         }
 
         inline KFResult<uint64>::UniqueType SRandMemberUInt64( const std::string& key )
         {
-            auto strsql = __FORMAT__( "srandmember {}", key );
-            return ReadUInt64( strsql );
+            auto sql = __FORMAT__( "srandmember {}", key );
+            return ReadUInt64( sql );
         }
 
         inline KFResult<StringVector>::UniqueType SRandMember( const std::string& key, int64 count )
         {
-            auto strsql = __FORMAT__( "srandmember {} {}", key, count );
-            return ReadVector( strsql );
+            auto sql = __FORMAT__( "srandmember {} {}", key, count );
+            return ReadVector( sql );
         }
 
-        template< typename T >
+        template<typename T>
         inline KFResult<uint64>::UniqueType SRem( const std::string& key, const T& value )
         {
-            auto strvalue = KFRedisFormat::ToString( value );
-            auto strsql = __FORMAT__( "srem {} {}", key, strvalue );
-            return WriteUInt64( strsql );
+            auto str_value = KFRedisFormat::ToString( value );
+            auto sql = __FORMAT__( "srem {} {}", key, str_value );
+            return WriteUInt64( sql );
         }
 
-        template< typename T >
-        inline KFResult<uint64>::UniqueType SMove( const std::string& sourcekey, const T& value, const std::string& destkey )
+        template<typename T>
+        inline KFResult<uint64>::UniqueType SMove( const std::string& source_key, const T& value, const std::string& dest_key )
         {
-            auto strsql = __FORMAT__( "smove {} {} {}", sourcekey, destkey, value );
-            return WriteUInt64( strsql );
+            auto sql = __FORMAT__( "smove {} {} {}", source_key, dest_key, value );
+            return WriteUInt64( sql );
         }
 
         inline KFResult<uint64>::UniqueType SCard( const std::string& key )
         {
-            auto strsql = __FORMAT__( "scard {}", key );
-            return ReadUInt64( strsql );
+            auto sql = __FORMAT__( "scard {}", key );
+            return ReadUInt64( sql );
         }
 
         inline KFResult<StringVector>::UniqueType SMembers( const std::string& key )
         {
-            auto strsql = __FORMAT__( "smembers {}", key );
-            return ReadVector( strsql );
+            auto sql = __FORMAT__( "smembers {}", key );
+            return ReadVector( sql );
         }
 
         // 交集
-        template< typename T >
+        template<typename T>
         inline KFResult<StringVector>::UniqueType SInter( const T& key )
         {
-            auto strvalue = KFRedisFormat::ToString( key );
-            auto strsql = __FORMAT__( "sinter {}", strvalue );
-            return ReadVector( strsql );
+            auto str_value = KFRedisFormat::ToString( key );
+            auto sql = __FORMAT__( "sinter {}", str_value );
+            return ReadVector( sql );
         }
 
-        template< typename T >
-        inline KFResult<uint64>::UniqueType SInterStore( const T& key, const std::string& destkey )
+        template<typename T>
+        inline KFResult<uint64>::UniqueType SInterStore( const T& key, const std::string& dest_key )
         {
-            auto strvalue = KFRedisFormat::ToString( key );
-            auto strsql = __FORMAT__( "sinterstore {} {}", destkey, strvalue );
-            return WriteUInt64( strsql );
+            auto str_value = KFRedisFormat::ToString( key );
+            auto sql = __FORMAT__( "sinterstore {} {}", dest_key, str_value );
+            return WriteUInt64( sql );
         }
 
         // 并集
-        template< typename T >
+        template<typename T>
         inline KFResult<StringVector>::UniqueType SUnion( const T& key )
         {
-            auto strvalue = KFRedisFormat::ToString( key );
-            auto strsql = __FORMAT__( "sunion {}", strvalue );
-            return ReadVector( strsql );
+            auto str_value = KFRedisFormat::ToString( key );
+            auto sql = __FORMAT__( "sunion {}", str_value );
+            return ReadVector( sql );
         }
 
-        template< typename T >
-        inline KFResult<uint64>::UniqueType SUnionStore( const T& key, const std::string& destkey )
+        template<typename T>
+        inline KFResult<uint64>::UniqueType SUnionStore( const T& key, const std::string& dest_key )
         {
-            auto strvalue = KFRedisFormat::ToString( key );
-            auto strsql = __FORMAT__( "sunionstore {} {}", destkey, strvalue );
-            return WriteUInt64( strsql );
+            auto str_value = KFRedisFormat::ToString( key );
+            auto sql = __FORMAT__( "sunionstore {} {}", dest_key, str_value );
+            return WriteUInt64( sql );
         }
 
         // 差集
-        template< typename T >
+        template<typename T>
         inline KFResult<StringVector>::UniqueType SDiff( const T& key )
         {
-            auto strvalue = KFRedisFormat::ToString( key );
-            auto strsql = __FORMAT__( "sdiff {}", strvalue );
-            return ReadVector( strsql );
+            auto str_value = KFRedisFormat::ToString( key );
+            auto sql = __FORMAT__( "sdiff {}", str_value );
+            return ReadVector( sql );
         }
 
-        template< typename T >
-        inline KFResult<uint64>::UniqueType SDiffStore( const T& key, const std::string& destkey )
+        template<typename T>
+        inline KFResult<uint64>::UniqueType SDiffStore( const T& key, const std::string& dest_key )
         {
-            auto strvalue = KFRedisFormat::ToString( key );
-            auto strsql = __FORMAT__( "sdiffstore {} {}", destkey, strvalue );
-            return WriteUInt64( strsql );
+            auto str_value = KFRedisFormat::ToString( key );
+            auto sql = __FORMAT__( "sdiffstore {} {}", dest_key, str_value );
+            return WriteUInt64( sql );
         }
         //////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////
         // 有序集合
-        template< typename T >
+        template<typename T>
         inline KFResult<uint64>::UniqueType ZAdd( const std::string& key, const T& member, uint64 source )
         {
-            auto strsql = __FORMAT__( "zadd {} {} {}", key, source, member );
-            return WriteUInt64( strsql );
+            auto sql = __FORMAT__( "zadd {} {} {}", key, source, member );
+            return WriteUInt64( sql );
         }
 
-        template< typename T >
+        template<typename T>
         inline KFResult<uint64>::UniqueType ZAdd( const std::string& key, const T& values )
         {
-            auto strvalue = KFRedisFormat::ToString( values );
-            auto strsql = __FORMAT__( "zadd {} {}", key, strvalue );
-            return WriteUInt64( strsql );
+            auto str_value = KFRedisFormat::ToString( values );
+            auto sql = __FORMAT__( "zadd {} {}", key, str_value );
+            return WriteUInt64( sql );
         }
 
-        template< typename T >
+        template<typename T>
         inline KFResult<uint64>::UniqueType ZScore( const std::string& key, const T& member )
         {
-            auto strsql = __FORMAT__( "zscore {} {}", key, member );
-            return ReadUInt64( strsql );
+            auto sql = __FORMAT__( "zscore {} {}", key, member );
+            return ReadUInt64( sql );
         }
 
-        template< typename T >
+        template<typename T>
         inline KFResult<uint64>::UniqueType ZIncrby( const std::string& key, const T& member, int64 score )
         {
-            auto strsql = __FORMAT__( "zincrby {} {} {}", key, score, member );
-            return WriteUInt64( strsql );
+            auto sql = __FORMAT__( "zincrby {} {} {}", key, score, member );
+            return WriteUInt64( sql );
         }
 
         inline KFResult<uint64>::UniqueType ZCard( const std::string& key )
         {
-            auto strsql = __FORMAT__( "zcard {}", key );
-            return ReadUInt64( strsql );
+            auto sql = __FORMAT__( "zcard {}", key );
+            return ReadUInt64( sql );
         }
 
-        // 返回集合中[minsorce,maxscore]的成员个数
-        inline KFResult<uint64>::UniqueType ZCount( const std::string& key, uint64 minscore, uint64 maxscore )
+        // 返回集合中[minsorce,max_score]的成员个数
+        inline KFResult<uint64>::UniqueType ZCount( const std::string& key, uint64 min_score, uint64 max_score )
         {
-            auto strsql = __FORMAT__( "zcount {} {}", key, minscore, maxscore );
-            return ReadUInt64( strsql );
+            auto sql = __FORMAT__( "zcount {} {}", key, min_score, max_score );
+            return ReadUInt64( sql );
         }
 
         // 返回集合中区间的成员( 从小到大 )
-        inline KFResult<StringPairList>::UniqueType ZRange( const std::string& key, uint64 startindex = 0, int64 endindex = -1 )
+        inline KFResult<StringPairList>::UniqueType ZRange( const std::string& key, uint64 start_index = 0, int64 end_index = -1 )
         {
-            auto strsql = __FORMAT__( "zrange {} {} {} withscores", key, startindex, endindex );
-            return ReadPairList( strsql );
+            auto sql = __FORMAT__( "zrange {} {} {} withscores", key, start_index, end_index );
+            return ReadPairList( sql );
         }
 
         // 返回集合中区间的成员( 从大到小 )
-        inline KFResult<StringPairList>::UniqueType ZRevRange( const std::string& key, uint64 startindex = 0, int64 endindex = -1 )
+        inline KFResult<StringPairList>::UniqueType ZRevRange( const std::string& key, uint64 start_index = 0, int64 end_index = -1 )
         {
-            auto strsql = __FORMAT__( "zrevrange {} {} {} withscores", key, startindex, endindex );
-            return ReadPairList( strsql );
+            auto sql = __FORMAT__( "zrevrange {} {} {} withscores", key, start_index, end_index );
+            return ReadPairList( sql );
         }
 
         // 返回集合中score在区间的成员( 从小到大 )
-        inline KFResult<StringPairList>::UniqueType ZRangeByScore( const std::string& key, uint64 minscore = 0, uint64 maxscore = __MAX_UINT64__ )
+        inline KFResult<StringPairList>::UniqueType ZRangeByScore( const std::string& key, uint64 min_score = 0, uint64 max_score = __MAX_UINT64__ )
         {
-            auto strsql = __FORMAT__( "zrangebyscore {} ({} {} withscores", key, minscore, maxscore );
-            return ReadPairList( strsql );
+            auto sql = __FORMAT__( "zrangebyscore {} ({} {} withscores", key, min_score, max_score );
+            return ReadPairList( sql );
         }
 
         // 返回集合中score在区间的成员( 从大到小 )
-        inline KFResult<StringPairList>::UniqueType ZRevRangeByScore( const std::string& key, uint64 minscore = 0, uint64 maxscore = __MAX_UINT64__ )
+        inline KFResult<StringPairList>::UniqueType ZRevRangeByScore( const std::string& key, uint64 min_score = 0, uint64 max_score = __MAX_UINT64__ )
         {
-            auto strsql = __FORMAT__( "zrevrangebyscore {} ({} {} withscores", key, minscore, maxscore );
-            return ReadPairList( strsql );
+            auto sql = __FORMAT__( "zrevrangebyscore {} ({} {} withscores", key, min_score, max_score );
+            return ReadPairList( sql );
         }
 
-        template< typename T >
+        template<typename T>
         inline KFResult<uint64>::UniqueType ZRank( const std::string& key, const T& member )
         {
-            auto strsql = __FORMAT__( "zrank {} {}", key, member );
-            return ReadUInt64( strsql );
+            auto sql = __FORMAT__( "zrank {} {}", key, member );
+            return ReadUInt64( sql );
         }
 
-        template< typename T >
+        template<typename T>
         inline KFResult<uint64>::UniqueType ZRevRank( const std::string& key, const T& member )
         {
-            auto strsql = __FORMAT__( "zrevrank {} {}", key, member );
-            return ReadUInt64( strsql );
+            auto sql = __FORMAT__( "zrevrank {} {}", key, member );
+            return ReadUInt64( sql );
         }
 
-        template< typename T >
+        template<typename T>
         inline KFResult<uint64>::UniqueType ZRem( const std::string& key, const T& member )
         {
-            auto strvalue = KFRedisFormat::ToString( member );
-            auto strsql = __FORMAT__( "zrem {} {}", key, strvalue );
-            return WriteUInt64( strsql );
+            auto str_value = KFRedisFormat::ToString( member );
+            auto sql = __FORMAT__( "zrem {} {}", key, str_value );
+            return WriteUInt64( sql );
         }
 
-        inline KFResult<uint64>::UniqueType ZRemRangeByRank( const std::string& key, uint64 startindex, int64 endindex )
+        inline KFResult<uint64>::UniqueType ZRemRangeByRank( const std::string& key, uint64 start_index, int64 end_index )
         {
-            auto strsql = __FORMAT__( "zremrangebyrank {} {}", key, startindex, endindex );
-            return WriteUInt64( strsql );
+            auto sql = __FORMAT__( "zremrangebyrank {} {}", key, start_index, end_index );
+            return WriteUInt64( sql );
         }
 
-        inline KFResult<uint64>::UniqueType ZRemRangeByRank( const std::string& key, uint64 minscore, uint64 maxscore )
+        inline KFResult<uint64>::UniqueType ZRemRangeByRank( const std::string& key, uint64 min_score, uint64 max_score )
         {
-            auto strsql = __FORMAT__( "zremrangebyscore {} {}", key, minscore, minscore );
-            return WriteUInt64( strsql );
+            auto sql = __FORMAT__( "zremrangebyscore {} {}", key, min_score, max_score );
+            return WriteUInt64( sql );
         }
         //////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////
         // 位图
         inline KFResult<uint64>::UniqueType SetBit( const std::string& key, uint32 offset, uint32 value )
         {
-            auto strsql = __FORMAT__( "setbit {} {}", key, offset, value );
-            return WriteUInt64( strsql );
+            auto sql = __FORMAT__( "setbit {} {}", key, offset, value );
+            return WriteUInt64( sql );
         }
 
         inline KFResult<uint64>::UniqueType GetBit( const std::string& key, uint32 offset )
         {
-            auto strsql = __FORMAT__( "getbit {} {}", key, offset );
-            return ReadUInt64( strsql );
+            auto sql = __FORMAT__( "getbit {} {}", key, offset );
+            return ReadUInt64( sql );
         }
 
         inline KFResult<uint64>::UniqueType BitCount( const std::string& key )
         {
-            auto strsql = __FORMAT__( "bitcount {}", key );
-            return ReadUInt64( strsql );
+            auto sql = __FORMAT__( "bitcount {}", key );
+            return ReadUInt64( sql );
         }
 
-        inline KFResult<uint64>::UniqueType BitCount( const std::string& key, int32 startoffset, int32 endoffset )
+        inline KFResult<uint64>::UniqueType BitCount( const std::string& key, int32 start_offset, int32 end_offset )
         {
-            auto strsql = __FORMAT__( "bitcount {} {} {}", key, startoffset, endoffset );
-            return ReadUInt64( strsql );
+            auto sql = __FORMAT__( "bitcount {} {} {}", key, start_offset, end_offset );
+            return ReadUInt64( sql );
         }
 
         inline KFResult<uint64>::UniqueType BitPos( const std::string& key, uint32 value )
         {
-            auto strsql = __FORMAT__( "bitpos {} {}", key, value );
-            return ReadUInt64( strsql );
+            auto sql = __FORMAT__( "bitpos {} {}", key, value );
+            return ReadUInt64( sql );
         }
 
-        inline KFResult<uint64>::UniqueType BitPos( const std::string& key, uint32 value, int32 startoffset, int32 endoffset )
+        inline KFResult<uint64>::UniqueType BitPos( const std::string& key, uint32 value, int32 start_offset, int32 end_offset )
         {
-            auto strsql = __FORMAT__( "bitpos {} {} {} {}", key, value, startoffset, endoffset );
-            return ReadUInt64( strsql );
+            auto sql = __FORMAT__( "bitpos {} {} {} {}", key, value, start_offset, end_offset );
+            return ReadUInt64( sql );
         }
 
-        template< typename T >
-        inline KFResult<uint64>::UniqueType BitOp( const T& key, uint32 operate, const std::string& destkey )
+        template<typename T>
+        inline KFResult<uint64>::UniqueType BitOp( const T& key, uint32 operate, const std::string& dest_key )
         {
             static auto _op_string = []( uint32 operate )->const std::string&
             {
@@ -793,10 +793,10 @@ namespace KFrame
                 return iter->second;
             };
 
-            auto& opstring = _op_string( operate );
-            auto strvalue = KFRedisFormat::ToString( key );
-            auto strsql = __FORMAT__( "bitop {} {} {} {}", key, opstring, destkey, strvalue );
-            return WriteUInt64( strsql );
+            auto& op_string = _op_string( operate );
+            auto str_value = KFRedisFormat::ToString( key );
+            auto sql = __FORMAT__( "bitop {} {} {} {}", key, op_string, dest_key, str_value );
+            return WriteUInt64( sql );
         }
         //////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////
@@ -823,19 +823,19 @@ namespace KFrame
             return WriteVoid( _str_multi );
         }
 
-        KFResult< StringList >::UniqueType ReadListExec()
+        KFResult<StringList>::UniqueType ReadListExec()
         {
             static std::string _str_exec = "exec";
             return ReadList( _str_exec );
         }
 
-        KFResult< StringVector >::UniqueType ReadVectorExec()
+        KFResult<StringVector>::UniqueType ReadVectorExec()
         {
             static std::string _str_exec = "exec";
             return ReadVector( _str_exec );
         }
 
-        KFResult< StringMapList >::UniqueType ReadMapListExec()
+        KFResult<StringMapList>::UniqueType ReadMapListExec()
         {
             static std::string _str_exec = "exec";
             return ReadMapList( _str_exec );
@@ -843,75 +843,75 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////
         // 执行数据库
-        template< typename... P >
-        KFResult< voidptr >::UniqueType ExecuteVoid( const char* myfmt, P&& ... args )
+        template<typename... P>
+        KFResult<voidptr>::UniqueType ExecuteVoid( const char* fmt, P&& ... args )
         {
-            auto strsql = __FORMAT__( myfmt, std::forward<P>( args )... );
-            return WriteVoid( strsql );
+            auto sql = __FORMAT__( fmt, std::forward<P>( args )... );
+            return WriteVoid( sql );
         }
 
-        template< typename... P >
-        KFResult< uint64 >::UniqueType ExecuteUInt64( const char* myfmt, P&& ... args )
+        template<typename... P>
+        KFResult<uint64>::UniqueType ExecuteUInt64( const char* fmt, P&& ... args )
         {
-            auto strsql = __FORMAT__( myfmt, std::forward<P>( args )... );
-            return WriteUInt64( strsql );
+            auto sql = __FORMAT__( fmt, std::forward<P>( args )... );
+            return WriteUInt64( sql );
         }
 
-        template< typename... P >
-        KFResult< std::string >::UniqueType ExecuteString( const char* myfmt, P&& ... args )
+        template<typename... P>
+        KFResult<std::string>::UniqueType ExecuteString( const char* fmt, P&& ... args )
         {
-            auto strsql = __FORMAT__( myfmt, std::forward<P>( args )... );
-            return WriteVoid( strsql );
+            auto sql = __FORMAT__( fmt, std::forward<P>( args )... );
+            return WriteVoid( sql );
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////
-        template< typename... P >
-        KFResult< uint64 >::UniqueType QueryUInt64( const char* myfmt, P&& ... args )
+        template<typename... P>
+        KFResult<uint64>::UniqueType QueryUInt64( const char* fmt, P&& ... args )
         {
-            auto strsql = __FORMAT__( myfmt, std::forward<P>( args )... );
-            return ReadUInt64( strsql );
+            auto sql = __FORMAT__( fmt, std::forward<P>( args )... );
+            return ReadUInt64( sql );
         }
 
-        template< typename... P >
-        KFResult< std::string >::UniqueType QueryString( const char* myfmt, P&& ... args )
+        template<typename... P>
+        KFResult<std::string>::UniqueType QueryString( const char* fmt, P&& ... args )
         {
-            auto strsql = __FORMAT__( myfmt, std::forward<P>( args )... );
-            return ReadString( strsql );
+            auto sql = __FORMAT__( fmt, std::forward<P>( args )... );
+            return ReadString( sql );
         }
 
-        template< typename... P >
-        KFResult< StringMap >::UniqueType QueryMap( const char* myfmt, P&& ... args )
+        template<typename... P>
+        KFResult<StringMap>::UniqueType QueryMap( const char* fmt, P&& ... args )
         {
-            auto strsql = __FORMAT__( myfmt, std::forward<P>( args )... );
-            return ReadMap( strsql );
+            auto sql = __FORMAT__( fmt, std::forward<P>( args )... );
+            return ReadMap( sql );
         }
 
-        template< typename... P >
-        KFResult< StringList >::UniqueType QueryList( const char* myfmt, P&& ... args )
+        template<typename... P>
+        KFResult<StringList>::UniqueType QueryList( const char* fmt, P&& ... args )
         {
-            auto strsql = __FORMAT__( myfmt, std::forward<P>( args )... );
-            return ReadList( strsql );
+            auto sql = __FORMAT__( fmt, std::forward<P>( args )... );
+            return ReadList( sql );
         }
 
-        template< typename... P >
-        KFResult< StringVector >::UniqueType QueryVector( const char* myfmt, P&& ... args )
+        template<typename... P>
+        KFResult<StringVector>::UniqueType QueryVector( const char* fmt, P&& ... args )
         {
-            auto strsql = __FORMAT__( myfmt, std::forward<P>( args )... );
-            return ReadVector( strsql );
+            auto sql = __FORMAT__( fmt, std::forward<P>( args )... );
+            return ReadVector( sql );
         }
 
-        template< typename... P >
-        KFResult< StringMapList >::UniqueType QueryMapList( const char* myfmt, P&& ... args )
+        template<typename... P>
+        KFResult<StringMapList>::UniqueType QueryMapList( const char* fmt, P&& ... args )
         {
-            auto strsql = __FORMAT__( myfmt, std::forward<P>( args )... );
-            return ReadMapList( strsql );
+            auto sql = __FORMAT__( fmt, std::forward<P>( args )... );
+            return ReadMapList( sql );
         }
 
-        template< typename... P >
-        KFResult< StringPairList >::UniqueType QueryPairList( const char* myfmt, P&& ... args )
+        template<typename... P>
+        KFResult<StringPairList>::UniqueType QueryPairList( const char* fmt, P&& ... args )
         {
-            auto strsql = __FORMAT__( myfmt, std::forward<P>( args )... );
-            return ReadPairList( strsql );
+            auto sql = __FORMAT__( fmt, std::forward<P>( args )... );
+            return ReadPairList( sql );
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -919,19 +919,19 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////////////////////
     protected:
         // 写操作
-        virtual KFResult< voidptr >::UniqueType WriteVoid( const std::string& strsql ) = 0;
-        virtual KFResult< uint64 >::UniqueType WriteUInt64( const std::string& strsql ) = 0;
-        virtual KFResult< std::string >::UniqueType WriteString( const std::string& strsql ) = 0;
+        virtual KFResult<voidptr>::UniqueType WriteVoid( const std::string& sql ) = 0;
+        virtual KFResult<uint64>::UniqueType WriteUInt64( const std::string& sql ) = 0;
+        virtual KFResult<std::string>::UniqueType WriteString( const std::string& sql ) = 0;
 
         // 读操作
-        virtual KFResult< uint64 >::UniqueType ReadUInt64( const std::string& strsql ) = 0;
-        virtual KFResult< std::string >::UniqueType ReadString( const std::string& strsql ) = 0;
-        virtual KFResult< StringMap >::UniqueType ReadMap( const std::string& strsql ) = 0;
-        virtual KFResult< StringPair >::UniqueType ReadPair( const std::string& strsql ) = 0;
-        virtual KFResult< StringList >::UniqueType ReadList( const std::string& strsql ) = 0;
-        virtual KFResult< StringVector >::UniqueType ReadVector( const std::string& strsql ) = 0;
-        virtual KFResult< StringMapList >::UniqueType ReadMapList( const std::string& strsql ) = 0;
-        virtual KFResult< StringPairList >::UniqueType ReadPairList( const std::string& strsql ) = 0;
+        virtual KFResult<uint64>::UniqueType ReadUInt64( const std::string& sql ) = 0;
+        virtual KFResult<std::string>::UniqueType ReadString( const std::string& sql ) = 0;
+        virtual KFResult<StringMap>::UniqueType ReadMap( const std::string& sql ) = 0;
+        virtual KFResult<StringPair>::UniqueType ReadPair( const std::string& sql ) = 0;
+        virtual KFResult<StringList>::UniqueType ReadList( const std::string& sql ) = 0;
+        virtual KFResult<StringVector>::UniqueType ReadVector( const std::string& sql ) = 0;
+        virtual KFResult<StringMapList>::UniqueType ReadMapList( const std::string& sql ) = 0;
+        virtual KFResult<StringPairList>::UniqueType ReadPairList( const std::string& sql ) = 0;
     };
 }
 

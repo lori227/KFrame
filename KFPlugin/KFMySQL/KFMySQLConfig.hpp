@@ -52,7 +52,7 @@ namespace KFrame
     };
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
-    class KFMySQLConfig : public KFConfigT< KFMySQLSetting >, public KFInstance< KFMySQLConfig >
+    class KFMySQLConfig : public KFConfigT<KFMySQLSetting>, public KFInstance<KFMySQLConfig>
     {
     public:
         KFMySQLConfig()
@@ -62,7 +62,7 @@ namespace KFrame
         }
 
     public:
-        virtual void ReadSetting( KFXmlNode& xml_node, KFMySQLSetting* setting )
+        virtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KFMySQLSetting> setting )
         {
             KFMySQLConnectOption option;
             option._min_logic_id = xml_node.ReadUInt32( "minid" );

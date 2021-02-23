@@ -12,8 +12,8 @@ namespace KFrame
         virtual ~KFMongoReadExecute() = default;
 
         // 查询数量
-        KFResult< uint64 >::UniqueType Count( const std::string& table );
-        KFResult< uint64 >::UniqueType Count( const std::string& table, const std::string& field, uint64 key );
+        KFResult<uint64>::UniqueType Count( const std::string& table );
+        KFResult<uint64>::UniqueType Count( const std::string& table, const std::string& field, uint64 key );
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 查询数值
@@ -125,10 +125,10 @@ namespace KFrame
                     Poco::MongoDB::Document::Ptr doc = response.documents()[ 0 ];
                     try
                     {
-                        auto arrayptr = doc->get< Array::Ptr >( field );
-                        if ( !arrayptr.isNull() )
+                        auto array_value = doc->get< Array::Ptr >( field );
+                        if ( !array_value.isNull() )
                         {
-                            auto elements = arrayptr->getSet();
+                            auto elements = array_value->getSet();
                             for ( auto iter = elements->begin(); iter != elements->end(); ++iter )
                             {
                                 auto concrete = dynamic_cast< const ConcreteElement<ValueType>* >( ( *iter ).get() );
@@ -153,7 +153,7 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 查询集合
         template< class KeyType >
-        typename KFResult< KFDBValue >::UniqueType QueryRecord( const std::string& table, const KeyType& key, const StringList& fields )
+        typename KFResult<KFDBValue>::UniqueType QueryRecord( const std::string& table, const KeyType& key, const StringList& field_list )
         {
             auto fullname = __FORMAT__( "{}.{}", _database, table );
             QueryRequest request( fullname, QueryRequest::QUERY_DEFAULT );
@@ -161,12 +161,12 @@ namespace KFrame
             // 查询条件
             request.selector().add( MongoKeyword::_id, key );
 
-            if ( !fields.empty() )
+            if ( !field_list.empty() )
             {
-                auto& returnfields = request.returnFieldSelector();
-                for ( auto& field : fields )
+                auto& return_field_list = request.returnFieldSelector();
+                for ( auto& field : field_list )
                 {
-                    returnfields.add( field, 1 );
+                    return_field_list.add( field, 1 );
                 }
             }
 
@@ -230,7 +230,7 @@ namespace KFrame
         }
 
         // 查询结合
-        KFResult< std::list< KFDBValue > >::UniqueType QueryListRecord( const std::string& table, const KFMongoSelector& kfseletor );
+        KFResult<std::list<KFDBValue>>::UniqueType QueryListRecord( const std::string& table, const KFMongoSelector& selector_data );
     };
 }
 

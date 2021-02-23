@@ -9,7 +9,7 @@ namespace KFrame
     class KFRedisFormat
     {
     public:
-        template< typename T >
+        template<typename T>
         inline static std::string ToString( const T& value )
         {
             return KFUtility::ToString<T>( value );

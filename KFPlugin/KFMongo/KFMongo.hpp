@@ -14,7 +14,7 @@ namespace KFrame
         virtual ~KFMongo();
 
         // 初始化
-        virtual void InitMongo( const KFMongoConnectOption* connectoption, const KFMongoConnnectData* connectdata );
+        virtual void InitMongo( const KFMongoConnectOption* connect_option, const KFMongoConnnectData* connect_data );
 
         // 关闭
         virtual void ShutDown();

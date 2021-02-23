@@ -31,7 +31,7 @@ namespace KFrame
         FormatSlashes( sql );
         statement << sql;
 
-        uint32 repeatcount = 0u;
+        uint32 repeat_count = 0u;
         do
         {
             try
@@ -48,9 +48,9 @@ namespace KFrame
                 }
 
                 // 断线重复执行
-                ++repeatcount;
+                ++repeat_count;
             }
-        } while ( repeatcount < 3 );
+        } while ( repeat_count < 3 );
 
         // 与mysql断开了
         __LOG_ERROR__( "mysql disconnected [{}]", statement.toString() );
@@ -63,113 +63,113 @@ namespace KFrame
         KFUtility::ReplaceString( sql, "\\", "\\\\" );
     }
 
-    std::string KFMySQLExecute::FormatKeyString( const StringMap& keyvalue )
+    std::string KFMySQLExecute::FormatKeyString( const StringMap& values )
     {
-        std::ostringstream osskeys;
-        bool isbegin = true;
-        for ( auto& iter : keyvalue )
+        std::ostringstream string_stream;
+        bool is_begin = true;
+        for ( auto& iter : values )
         {
-            if ( isbegin )
+            if ( is_begin )
             {
-                isbegin = false;
+                is_begin = false;
             }
             else
             {
-                osskeys << " and ";
+                string_stream << " and ";
             }
 
-            osskeys << "`" << iter.first << "`=" << "'" << iter.second << "'";
+            string_stream << "`" << iter.first << "`=" << "'" << iter.second << "'";
         }
 
-        return osskeys.str();
+        return string_stream.str();
     }
 
-    std::string KFMySQLExecute::FormatFieldString( const StringList& fields )
+    std::string KFMySQLExecute::FormatFieldString( const StringList& field_list )
     {
-        if ( fields.empty() )
+        if ( field_list.empty() )
         {
             return "*";
         }
 
-        std::ostringstream ossfields;
+        std::ostringstream field_stream;
 
-        bool isbegin = true;
-        for ( auto& iter : fields )
+        bool is_begin = true;
+        for ( auto& iter : field_list )
         {
-            if ( isbegin )
+            if ( is_begin )
             {
-                isbegin = false;
+                is_begin = false;
             }
             else
             {
-                ossfields << ",";
+                field_stream << ",";
             }
 
-            ossfields << "`" << iter << "`";
+            field_stream << "`" << iter << "`";
         }
 
-        return ossfields.str();
+        return field_stream.str();
     }
 
-    std::string KFMySQLExecute::FormatUpdateString( const StringMap& updatevalue )
+    std::string KFMySQLExecute::FormatUpdateString( const StringMap& values )
     {
-        std::ostringstream oss;
+        std::ostringstream value_stream;
 
-        auto isbegin = true;
-        for ( auto& iter : updatevalue )
+        auto is_begin = true;
+        for ( auto& iter : values )
         {
-            if ( isbegin )
+            if ( is_begin )
             {
-                isbegin = false;
+                is_begin = false;
             }
             else
             {
-                oss << ",";
+                value_stream << ",";
             }
 
-            oss << '`' << iter.first << "`='" << iter.second << "'";
+            value_stream << '`' << iter.first << "`='" << iter.second << "'";
         }
 
-        return oss.str();
+        return value_stream.str();
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFMySQLWriteExecute::Pipeline( StringList& commands )
+    void KFMySQLWriteExecute::Pipeline( StringList& command_list )
     {
-        for ( auto& command : commands )
+        for ( auto& command : command_list )
         {
             ExecuteSql( command );
         }
     }
 
-    bool KFMySQLWriteExecute::Insert( const std::string& table, const StringMap& invalue )
+    bool KFMySQLWriteExecute::Insert( const std::string& table, const StringMap& values )
     {
-        std::ostringstream ossfields;
-        std::ostringstream ossvalues;
-        std::ostringstream ossupdate;
+        std::ostringstream field_stream;
+        std::ostringstream value_stream;
+        std::ostringstream update_stream;
 
-        bool isbegin = true;
-        for ( auto& iter : invalue )
+        bool is_begin = true;
+        for ( auto& iter : values )
         {
-            if ( isbegin )
+            if ( is_begin )
             {
-                isbegin = false;
+                is_begin = false;
             }
             else
             {
-                ossfields << ",";
-                ossvalues << ",";
-                ossupdate << ",";
+                field_stream << ",";
+                value_stream << ",";
+                update_stream << ",";
             }
 
-            ossfields << "`" << iter.first << "`";
-            ossvalues << "'" << iter.second << "'";
-            ossupdate << '`' << iter.first << "`='" << iter.second << "'";
+            field_stream << "`" << iter.first << "`";
+            value_stream << "'" << iter.second << "'";
+            update_stream << '`' << iter.first << "`='" << iter.second << "'";
         }
 
         auto sql = __FORMAT__( "insert into {}({}) values({}) on duplicate key update {};",
-                               table, ossfields.str(), ossvalues.str(), ossupdate.str() );
+                               table, field_stream.str(), value_stream.str(), update_stream.str() );
 
         return ExecuteSql( sql );
     }
@@ -183,46 +183,46 @@ namespace KFrame
 
     bool KFMySQLWriteExecute::Delete( const std::string& table, const std::string& key )
     {
-        StringMap keyvalue;
-        keyvalue[ __STRING__( id ) ] = key;
-        return Delete( table, keyvalue );
+        StringMap keys;
+        keys[ __STRING__( id ) ] = key;
+        return Delete( table, keys );
     }
 
-    bool KFMySQLWriteExecute::Delete( const std::string& table, const StringMap& keyvalues )
+    bool KFMySQLWriteExecute::Delete( const std::string& table, const StringMap& keys )
     {
-        auto strkey = FormatKeyString( keyvalues );
-        auto sql = __FORMAT__( "delete from {} where {};", table, strkey );
+        auto str_key = FormatKeyString( keys );
+        auto sql = __FORMAT__( "delete from {} where {};", table, str_key );
         return ExecuteSql( sql );
     }
 
-    bool KFMySQLWriteExecute::Update( const std::string& table, const StringMap& invalue )
+    bool KFMySQLWriteExecute::Update( const std::string& table, const StringMap& values )
     {
-        auto strupdate = FormatUpdateString( invalue );
-        auto sql = __FORMAT__( "update {} set {};", table, strupdate );
+        auto str_update = FormatUpdateString( values );
+        auto sql = __FORMAT__( "update {} set {};", table, str_update );
         return ExecuteSql( sql );
     }
 
-    bool KFMySQLWriteExecute::Update( const std::string& table, const std::string& key, const StringMap& invalue )
+    bool KFMySQLWriteExecute::Update( const std::string& table, const std::string& key, const StringMap& values )
     {
-        StringMap keyvalue;
-        keyvalue[ __STRING__( id ) ] = key;
-        return Update( table, keyvalue, invalue );
+        StringMap keys;
+        keys[ __STRING__( id ) ] = key;
+        return Update( table, keys, values );
     }
 
-    bool KFMySQLWriteExecute::Update( const std::string& table, const StringMap& keyvalue, const StringMap& invalue )
+    bool KFMySQLWriteExecute::Update( const std::string& table, const StringMap& keys, const StringMap& values )
     {
-        auto strupdate = FormatUpdateString( invalue );
-        auto strkey = FormatKeyString( keyvalue );
-        auto sql = __FORMAT__( "update {} set {} where {};", table, strupdate, strkey );
+        auto str_update = FormatUpdateString( values );
+        auto str_key = FormatKeyString( keys );
+        auto sql = __FORMAT__( "update {} set {} where {};", table, str_update, str_key );
         return ExecuteSql( sql );
     }
 
-    KFResult< voidptr >::UniqueType KFMySQLWriteExecute::VoidExecute( std::string& strsql )
+    KFResult<voidptr>::UniqueType KFMySQLWriteExecute::VoidExecute( std::string& sql )
     {
         __NEW_RESULT__( voidptr );
 
         Statement statement( *_session );
-        auto ok = ExecuteSql( statement, strsql );
+        auto ok = ExecuteSql( statement, sql );
         if ( !ok )
         {
             result->SetCode( KFEnum::Error );
@@ -232,7 +232,7 @@ namespace KFrame
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    KFResult< StringMapList >::UniqueType KFMySQLReadExecute::Select( const std::string& table )
+    KFResult<StringMapList>::UniqueType KFMySQLReadExecute::Select( const std::string& table )
     {
         static StringMap _empty_key;
         static StringList _empty_field;
@@ -240,13 +240,13 @@ namespace KFrame
         return Select( table, _empty_key, _empty_field );
     }
 
-    KFResult< StringMapList >::UniqueType KFMySQLReadExecute::Select( const std::string& table, const StringList& fields )
+    KFResult<StringMapList>::UniqueType KFMySQLReadExecute::Select( const std::string& table, const StringList& field_list )
     {
         static StringMap _empty_key;
-        return Select( table, _empty_key, fields );
+        return Select( table, _empty_key, field_list );
     }
 
-    KFResult< StringMapList >::UniqueType KFMySQLReadExecute::Select( const std::string& table, const std::string& key )
+    KFResult<StringMapList>::UniqueType KFMySQLReadExecute::Select( const std::string& table, const std::string& key )
     {
         static StringList _empty_field;
 
@@ -255,66 +255,66 @@ namespace KFrame
         return Select( table, keyvalue, _empty_field );
     }
 
-    KFResult< StringMapList >::UniqueType KFMySQLReadExecute::Select( const std::string& table, const std::string& key, const StringList& fields )
+    KFResult<StringMapList>::UniqueType KFMySQLReadExecute::Select( const std::string& table, const std::string& key, const StringList& field_list )
     {
         StringMap keyvalue;
         keyvalue[ __STRING__( id ) ] = key;
-        return Select( table, keyvalue, fields );
+        return Select( table, keyvalue, field_list );
     }
 
-    KFResult< StringMapList >::UniqueType KFMySQLReadExecute::Select( const std::string& table, const StringMap& keyvalue )
+    KFResult<StringMapList>::UniqueType KFMySQLReadExecute::Select( const std::string& table, const StringMap& keys )
     {
         static StringList _empty_field;
-        return Select( table, keyvalue, _empty_field );
+        return Select( table, keys, _empty_field );
     }
 
-    KFResult< StringMapList >::UniqueType KFMySQLReadExecute::Select( const std::string& table, const StringMap& keyvalue, const StringList& fields )
+    KFResult<StringMapList>::UniqueType KFMySQLReadExecute::Select( const std::string& table, const StringMap& keys, const StringList& field_list )
     {
         __NEW_RESULT__( StringMapList );
 
         std::string sql = "";
-        auto strfield = FormatFieldString( fields );
+        auto str_field = FormatFieldString( field_list );
 
-        if ( keyvalue.empty() )
+        if ( keys.empty() )
         {
-            sql = __FORMAT__( "select {} from {};", strfield, table );
+            sql = __FORMAT__( "select {} from {};", str_field, table );
         }
         else
         {
-            auto strkey = FormatKeyString( keyvalue );
-            sql = __FORMAT__( "select {} from {} where {};", strfield, table, strkey );
+            auto str_key = FormatKeyString( keys );
+            sql = __FORMAT__( "select {} from {} where {};", str_field, table, str_key );
         }
 
         Statement statement( *_session );
         auto ok = ExecuteSql( statement, sql );
         if ( ok )
         {
-            RecordSet recordset( statement );
-            auto rowcount = recordset.rowCount();
+            RecordSet record_set( statement );
+            auto rowcount = record_set.rowCount();
             for ( auto i = 0u; i < rowcount; ++i )
             {
-                StringMap mapvalues;
-                if ( fields.empty() )
+                StringMap values;
+                if ( field_list.empty() )
                 {
-                    const auto& row = recordset.row( i );
+                    const auto& row = record_set.row( i );
                     auto names = row.names();
                     auto& values = row.values();
 
                     auto size = names->size();
                     for ( auto j = 0u; j < size; ++j )
                     {
-                        mapvalues[ names->at( j ) ] = values.at( j ).toString();
+                        values[ names->at( j ) ] = values.at( j ).toString();
                     }
                 }
                 else
                 {
-                    auto& row = recordset.row( i );
-                    for ( auto& field : fields )
+                    auto& row = record_set.row( i );
+                    for ( auto& field : field_list )
                     {
-                        mapvalues[ field ] = row[ field ].toString();
+                        values[ field ] = row[ field ].toString();
                     }
                 }
-                result->_value.push_back( mapvalues );
+                result->_value.push_back( values );
             }
         }
         else
@@ -327,20 +327,18 @@ namespace KFrame
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-    KFResult< uint32 >::UniqueType KFMySQLReadExecute::UInt32Execute( std::string& strsql )
+    KFResult<uint32>::UniqueType KFMySQLReadExecute::UInt32Execute( std::string& sql )
     {
         __NEW_RESULT__( uint32 );
 
         Statement statement( *_session );
-        auto ok = ExecuteSql( statement, strsql );
+        auto ok = ExecuteSql( statement, sql );
         if ( ok )
         {
-            RecordSet recordset( statement );
-            if ( recordset.rowCount() > 0u )
+            RecordSet record_set( statement );
+            if ( record_set.rowCount() > 0u )
             {
-                result->_value = recordset.value( 0, 0 );
+                result->_value = record_set.value( 0, 0 );
             }
         }
         else
@@ -351,18 +349,18 @@ namespace KFrame
         return result;
     }
 
-    KFResult< uint64 >::UniqueType KFMySQLReadExecute::UInt64Execute( std::string& strsql )
+    KFResult<uint64>::UniqueType KFMySQLReadExecute::UInt64Execute( std::string& sql )
     {
         __NEW_RESULT__( uint64 );
 
         Statement statement( *_session );
-        auto ok = ExecuteSql( statement, strsql );
+        auto ok = ExecuteSql( statement, sql );
         if ( ok )
         {
-            RecordSet recordset( statement );
-            if ( recordset.rowCount() > 0u )
+            RecordSet record_set( statement );
+            if ( record_set.rowCount() > 0u )
             {
-                result->_value = recordset.value( 0, 0 );
+                result->_value = record_set.value( 0, 0 );
             }
         }
         else
@@ -373,18 +371,18 @@ namespace KFrame
         return result;
     }
 
-    KFResult< std::string >::UniqueType KFMySQLReadExecute::StringExecute( std::string& strsql )
+    KFResult<std::string>::UniqueType KFMySQLReadExecute::StringExecute( std::string& sql )
     {
         __NEW_RESULT__( std::string );
 
         Statement statement( *_session );
-        auto ok = ExecuteSql( statement, strsql );
+        auto ok = ExecuteSql( statement, sql );
         if ( ok )
         {
-            RecordSet recordset( statement );
-            if ( recordset.rowCount() > 0u )
+            RecordSet record_set( statement );
+            if ( record_set.rowCount() > 0u )
             {
-                result->_value = recordset.value( 0, 0 ).toString();
+                result->_value = record_set.value( 0, 0 ).toString();
             }
         }
         else
@@ -395,18 +393,18 @@ namespace KFrame
         return result;
     }
 
-    KFResult< StringMap >::UniqueType KFMySQLReadExecute::MapExecute( std::string& strsql )
+    KFResult<StringMap>::UniqueType KFMySQLReadExecute::MapExecute( std::string& sql )
     {
         __NEW_RESULT__( StringMap );
 
         Statement statement( *_session );
-        auto ok = ExecuteSql( statement, strsql );
+        auto ok = ExecuteSql( statement, sql );
         if ( ok )
         {
-            RecordSet recordset( statement );
-            if ( recordset.rowCount() > 0u )
+            RecordSet record_set( statement );
+            if ( record_set.rowCount() > 0u )
             {
-                const auto& row = recordset.row( 0 );
+                const auto& row = record_set.row( 0 );
                 auto names = row.names();
                 auto& values = row.values();
 
@@ -426,18 +424,18 @@ namespace KFrame
     }
 
 
-    KFResult< StringList >::UniqueType KFMySQLReadExecute::ListExecute( std::string& strsql )
+    KFResult<StringList>::UniqueType KFMySQLReadExecute::ListExecute( std::string& sql )
     {
         __NEW_RESULT__( StringList );
 
         Statement statement( *_session );
-        auto ok = ExecuteSql( statement, strsql );
+        auto ok = ExecuteSql( statement, sql );
         if ( ok )
         {
-            RecordSet recordset( statement );
-            for ( auto i = 0u; i < recordset.rowCount(); ++i )
+            RecordSet record_set( statement );
+            for ( auto i = 0u; i < record_set.rowCount(); ++i )
             {
-                const auto& row = recordset.row( i );
+                const auto& row = record_set.row( i );
                 auto& values = row.values();
 
                 result->_value.push_back( values.at( 0 ).toString() );
@@ -451,29 +449,29 @@ namespace KFrame
         return result;
     }
 
-    KFResult< StringMapList >::UniqueType KFMySQLReadExecute::ListMapExecute( std::string& strsql )
+    KFResult<StringMapList>::UniqueType KFMySQLReadExecute::ListMapExecute( std::string& sql )
     {
         __NEW_RESULT__( StringMapList );
 
         Statement statement( *_session );
-        auto ok = ExecuteSql( statement, strsql );
+        auto ok = ExecuteSql( statement, sql );
         if ( ok )
         {
-            RecordSet recordset( statement );
-            for ( auto i = 0u; i < recordset.rowCount(); ++i )
+            RecordSet record_set( statement );
+            for ( auto i = 0u; i < record_set.rowCount(); ++i )
             {
-                const auto& row = recordset.row( i );
+                const auto& row = record_set.row( i );
                 auto names = row.names();
                 auto& values = row.values();
 
-                StringMap mapvalues;
+                StringMap key_values;
                 auto size = names->size();
                 for ( auto j = 0u; j < size; ++j )
                 {
-                    mapvalues[ names->at( j ) ] = values.at( j ).toString();
+                    key_values[ names->at( j ) ] = values.at( j ).toString();
                 }
 
-                result->_value.push_back( mapvalues );
+                result->_value.push_back( key_values );
             }
         }
         else

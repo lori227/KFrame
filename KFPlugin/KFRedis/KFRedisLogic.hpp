@@ -20,23 +20,23 @@ namespace KFrame
         void ShutDown();
 
         // 初始化
-        void Initialize( const std::string& name, const KFRedisConnectOption* kfredisoption );
+        void Initialize( const std::string& name, const KFRedisConnectOption* redis_option );
 
     protected:
         // 写操作
-        virtual KFResult< voidptr >::UniqueType WriteVoid( const std::string& strsql );
-        virtual KFResult< uint64 >::UniqueType WriteUInt64( const std::string& strsql );
-        virtual KFResult< std::string >::UniqueType WriteString( const std::string& strsql );
+        virtual KFResult<voidptr>::UniqueType WriteVoid( const std::string& sql );
+        virtual KFResult<uint64>::UniqueType WriteUInt64( const std::string& sql );
+        virtual KFResult<std::string>::UniqueType WriteString( const std::string& sql );
 
         // 读操作
-        virtual KFResult< uint64 >::UniqueType ReadUInt64( const std::string& strsql );
-        virtual KFResult< std::string >::UniqueType ReadString( const std::string& strsql );
-        virtual KFResult< StringMap >::UniqueType ReadMap( const std::string& strsql );
-        virtual KFResult< StringPair >::UniqueType ReadPair( const std::string& strsql );
-        virtual KFResult< StringList >::UniqueType ReadList( const std::string& strsql );
-        virtual KFResult< StringVector >::UniqueType ReadVector( const std::string& strsql );
-        virtual KFResult< StringMapList >::UniqueType ReadMapList( const std::string& strsql );
-        virtual KFResult< StringPairList >::UniqueType ReadPairList( const std::string& strsql );
+        virtual KFResult<uint64>::UniqueType ReadUInt64( const std::string& sql );
+        virtual KFResult<std::string>::UniqueType ReadString( const std::string& sql );
+        virtual KFResult<StringMap>::UniqueType ReadMap( const std::string& sql );
+        virtual KFResult<StringPair>::UniqueType ReadPair( const std::string& sql );
+        virtual KFResult<StringList>::UniqueType ReadList( const std::string& sql );
+        virtual KFResult<StringVector>::UniqueType ReadVector( const std::string& sql );
+        virtual KFResult<StringMapList>::UniqueType ReadMapList( const std::string& sql );
+        virtual KFResult<StringPairList>::UniqueType ReadPairList( const std::string& sql );
 
     private:
 

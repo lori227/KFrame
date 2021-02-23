@@ -36,12 +36,12 @@ namespace KFrame
         virtual bool Update( const std::string& table, const StringMap& keyvalue, const StringMap& invalue );
 
         // 查询所有
-        virtual KFResult< StringMapList >::UniqueType Select( const std::string& table );
-        virtual KFResult< StringMapList >::UniqueType Select( const std::string& table, const StringList& fields );
-        virtual KFResult< StringMapList >::UniqueType Select( const std::string& table, const std::string& key );
-        virtual KFResult< StringMapList >::UniqueType Select( const std::string& table, const std::string& key, const StringList& fields );
-        virtual KFResult< StringMapList >::UniqueType Select( const std::string& table, const StringMap& key );
-        virtual KFResult< StringMapList >::UniqueType Select( const std::string& table, const StringMap& key, const StringList& fields );
+        virtual KFResult<StringMapList>::UniqueType Select( const std::string& table );
+        virtual KFResult<StringMapList>::UniqueType Select( const std::string& table, const StringList& fields );
+        virtual KFResult<StringMapList>::UniqueType Select( const std::string& table, const std::string& key );
+        virtual KFResult<StringMapList>::UniqueType Select( const std::string& table, const std::string& key, const StringList& fields );
+        virtual KFResult<StringMapList>::UniqueType Select( const std::string& table, const StringMap& key );
+        virtual KFResult<StringMapList>::UniqueType Select( const std::string& table, const StringMap& key, const StringList& fields );
 
         // 事务( 目前没有加mysql事务功能 )
         virtual void Pipeline( StringList& commands );
@@ -49,13 +49,13 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
     protected:
 
-        virtual KFResult< voidptr >::UniqueType VoidExecute( std::string& strsql );
-        virtual KFResult< uint32 >::UniqueType UInt32Execute( std::string& strsql );
-        virtual KFResult< uint64 >::UniqueType UInt64Execute( std::string& strsql );
-        virtual KFResult< std::string >::UniqueType StringExecute( std::string& strsql );
-        virtual KFResult< StringMap >::UniqueType MapExecute( std::string& strsql );
-        virtual KFResult< StringList >::UniqueType ListExecute( std::string& strsql );
-        virtual KFResult< StringMapList >::UniqueType ListMapExecute( std::string& strsql );
+        virtual KFResult<voidptr>::UniqueType VoidExecute( std::string& strsql );
+        virtual KFResult<uint32>::UniqueType UInt32Execute( std::string& strsql );
+        virtual KFResult<uint64>::UniqueType UInt64Execute( std::string& strsql );
+        virtual KFResult<std::string>::UniqueType StringExecute( std::string& strsql );
+        virtual KFResult<StringMap>::UniqueType MapExecute( std::string& strsql );
+        virtual KFResult<StringList>::UniqueType ListExecute( std::string& strsql );
+        virtual KFResult<StringMapList>::UniqueType ListMapExecute( std::string& strsql );
 
     private:
         // 读执行器

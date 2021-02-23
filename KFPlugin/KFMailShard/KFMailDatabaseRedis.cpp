@@ -128,7 +128,7 @@ namespace KFrame
         _redis_driver->WriteExec();
     }
 
-    KFResult< StringMapList >::UniqueType KFMailDatabaseRedis::QueryMailList( uint64 playerid, uint64 lastmailid )
+    KFResult<StringMapList>::UniqueType KFMailDatabaseRedis::QueryMailList( uint64 playerid, uint64 lastmailid )
     {
         // 查询邮件列表
         auto mailkeylist = _redis_driver->HGetAll( __DATABASE_KEY_2__( __STRING__( maillist ), playerid ) );

@@ -29,25 +29,25 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 创建Execute
-        virtual KFMySQLDriver* Create( const std::string& module, uint32 logicid = 0 );
+        virtual std::shared_ptr<KFMySQLDriver> Create( const std::string& module, uint32 logic_id = 0 );
 
     protected:
         // 查找mysql配置
-        const KFMySQLConnectOption* FindMySQLConnectOption( const std::string& module, uint32 logicid );
+        const KFMySQLConnectOption* FindMySQLConnectOption( const std::string& module, uint32 logic_id );
 
         // 查询
-        KFMySQLLogic* FindMySQLLogic( uint32 id );
+        std::shared_ptr<KFMySQLLogic> FindMySQLLogic( uint32 logic_id );
 
         // 插入
-        void InsertMySQLLogic( uint32 id, KFMySQLLogic* kflogic );
+        void InsertMySQLLogic( uint32 id, std::shared_ptr<KFMySQLLogic> mysql_logic );
 
     private:
         // 互斥量
         KFMutex _kf_mutex;
 
         // 数据库列表
-        typedef std::pair< uint32, uint32 > MySQLKey;
-        KFMap< MySQLKey, KFMySQLLogic > _mysql_logic_map;
+        typedef std::pair<ThreadId, uint32> MySQLKey;
+        KFMap<MySQLKey, KFMySQLLogic> _mysql_logic_map;
     };
 }
 

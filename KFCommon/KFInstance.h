@@ -6,7 +6,7 @@
 ////////////////////////////////////////////////////////////////////
 namespace KFrame
 {
-    template< typename T >
+    template<typename T>
     class KFInstance
     {
     public:
@@ -28,7 +28,7 @@ namespace KFrame
         static T* _instance;
     };
 
-    template< typename T >
+    template<typename T>
     T* KFInstance<T>::_instance = nullptr;
 }
 

@@ -27,7 +27,7 @@ namespace KFrame
         virtual void LoadGlobalMailToPerson( uint64 playerid, uint32 zone_id ) = 0;
 
         // 查询邮件列表, 会返回nullptr
-        virtual KFResult< StringMapList >::UniqueType QueryMailList( uint64 playerid, uint64 lastmailid ) = 0;
+        virtual KFResult<StringMapList>::UniqueType QueryMailList( uint64 playerid, uint64 lastmailid ) = 0;
 
         // 更新邮件状态
         virtual bool UpdateMailStatus( uint32 flag, uint64 playerid, uint64 mailid, uint32 status ) = 0;

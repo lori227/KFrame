@@ -91,27 +91,27 @@ namespace KFrame
         }
     }
 
-    redisReply* KFRedisExecute::Execute( const std::string& strsql )
+    redisReply* KFRedisExecute::Execute( const std::string& sql )
     {
         if ( _redis_context == nullptr )
         {
-            __LOG_ERROR__( "_redis_context = nullptr, sql=[{}]", strsql );
+            __LOG_ERROR__( "_redis_context = nullptr, sql=[{}]", sql );
             return nullptr;
         }
 
-        auto reply = ( redisReply* )redisCommand( _redis_context, strsql.c_str() );
+        auto reply = ( redisReply* )redisCommand( _redis_context, sql.c_str() );
         if ( reply == nullptr )
         {
             if ( !IsDisconnected() )
             {
-                __LOG_ERROR__( "redisreply = nullptr, [{}:{}] sql=[{}]", _redis_context->err, _redis_context->errstr, strsql );
+                __LOG_ERROR__( "reply = nullptr, [{}:{}] sql=[{}]", _redis_context->err, _redis_context->errstr, sql );
             }
             return nullptr;
         }
 
         if ( reply->type == REDIS_REPLY_ERROR )
         {
-            __LOG_ERROR__( "reply error [{}:{}] sql=[{}]", reply->type, reply->str, strsql );
+            __LOG_ERROR__( "reply error [{}:{}] sql=[{}]", reply->type, reply->str, sql );
             __FREE_REPLY__( reply );
             return nullptr;
         }
@@ -157,33 +157,33 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////
-    KFResult< voidptr >::UniqueType KFRedisWriteExecute::WriteVoid( const std::string& strsql )
+    KFResult<voidptr>::UniqueType KFRedisWriteExecute::WriteVoid( const std::string& sql )
     {
         __NEW_RESULT__( voidptr );
-        auto redisreply = TryExecute( strsql );
-        if ( redisreply == nullptr )
+        auto redis_reply = TryExecute( sql );
+        if ( redis_reply == nullptr )
         {
             result->SetCode( KFEnum::Error );
         }
-        __FREE_REPLY__( redisreply );
+        __FREE_REPLY__( redis_reply );
         return result;
     }
 
-    KFResult<uint64>::UniqueType KFRedisWriteExecute::WriteUInt64( const std::string& strsql )
+    KFResult<uint64>::UniqueType KFRedisWriteExecute::WriteUInt64( const std::string& sql )
     {
         __NEW_RESULT__( uint64 );
-        auto redisreply = TryExecute( strsql );
-        if ( redisreply != nullptr )
+        auto redis_reply = TryExecute( sql );
+        if ( redis_reply != nullptr )
         {
-            if ( redisreply->type == REDIS_REPLY_INTEGER )
+            if ( redis_reply->type == REDIS_REPLY_INTEGER )
             {
-                result->_value = redisreply->integer;
+                result->_value = redis_reply->integer;
             }
-            else if ( redisreply->type == REDIS_REPLY_STRING )
+            else if ( redis_reply->type == REDIS_REPLY_STRING )
             {
-                if ( !KFRedisFormat::IsEmptyString( redisreply->str ) )
+                if ( !KFRedisFormat::IsEmptyString( redis_reply->str ) )
                 {
-                    result->_value = __TO_UINT64__( redisreply->str );
+                    result->_value = __TO_UINT64__( redis_reply->str );
                 }
             }
         }
@@ -191,42 +191,42 @@ namespace KFrame
         {
             result->SetCode( KFEnum::Error );
         }
-        __FREE_REPLY__( redisreply );
+        __FREE_REPLY__( redis_reply );
         return result;
     }
 
-    KFResult<std::string>::UniqueType KFRedisWriteExecute::WriteString( const std::string& strsql )
+    KFResult<std::string>::UniqueType KFRedisWriteExecute::WriteString( const std::string& sql )
     {
         __NEW_RESULT__( std::string );
-        auto redisreply = TryExecute( strsql );
-        if ( redisreply != nullptr )
+        auto redis_reply = TryExecute( sql );
+        if ( redis_reply != nullptr )
         {
-            result->_value = ( KFRedisFormat::IsEmptyString( redisreply->str ) ? _invalid_string : redisreply->str );
+            result->_value = ( KFRedisFormat::IsEmptyString( redis_reply->str ) ? _invalid_string : redis_reply->str );
         }
         else
         {
             result->SetCode( KFEnum::Error );
         }
-        __FREE_REPLY__( redisreply );
+        __FREE_REPLY__( redis_reply );
         return result;
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    KFResult<uint64>::UniqueType KFRedisReadExecute::ReadUInt64( const std::string& strsql )
+    KFResult<uint64>::UniqueType KFRedisReadExecute::ReadUInt64( const std::string& sql )
     {
         __NEW_RESULT__( uint64 );
-        auto redisreply = TryExecute( strsql );
-        if ( redisreply != nullptr )
+        auto redis_reply = TryExecute( sql );
+        if ( redis_reply != nullptr )
         {
-            if ( redisreply->type == REDIS_REPLY_INTEGER )
+            if ( redis_reply->type == REDIS_REPLY_INTEGER )
             {
-                result->_value = redisreply->integer;
+                result->_value = redis_reply->integer;
             }
-            else if ( redisreply->type == REDIS_REPLY_STRING )
+            else if ( redis_reply->type == REDIS_REPLY_STRING )
             {
-                if ( !KFRedisFormat::IsEmptyString( redisreply->str ) )
+                if ( !KFRedisFormat::IsEmptyString( redis_reply->str ) )
                 {
-                    result->_value = __TO_UINT64__( redisreply->str );
+                    result->_value = __TO_UINT64__( redis_reply->str );
                 }
             }
         }
@@ -235,42 +235,42 @@ namespace KFrame
             result->SetCode( KFEnum::Error );
         }
 
-        __FREE_REPLY__( redisreply );
+        __FREE_REPLY__( redis_reply );
         return result;
     }
 
-    KFResult<std::string>::UniqueType KFRedisReadExecute::ReadString( const std::string& strsql )
+    KFResult<std::string>::UniqueType KFRedisReadExecute::ReadString( const std::string& sql )
     {
         __NEW_RESULT__( std::string );
-        auto redisreply = TryExecute( strsql );
-        if ( redisreply != nullptr )
+        auto redis_reply = TryExecute( sql );
+        if ( redis_reply != nullptr )
         {
-            result->_value = ( KFRedisFormat::IsEmptyString( redisreply->str ) ? _invalid_string : redisreply->str );
+            result->_value = ( KFRedisFormat::IsEmptyString( redis_reply->str ) ? _invalid_string : redis_reply->str );
         }
         else
         {
             result->SetCode( KFEnum::Error );
         }
 
-        __FREE_REPLY__( redisreply );
+        __FREE_REPLY__( redis_reply );
         return result;
     }
 
-    KFResult< StringMap >::UniqueType KFRedisReadExecute::ReadMap( const std::string& strsql )
+    KFResult<StringMap>::UniqueType KFRedisReadExecute::ReadMap( const std::string& sql )
     {
         __NEW_RESULT__( StringMap );
-        auto redisreply = TryExecute( strsql );
-        if ( redisreply != nullptr )
+        auto redis_reply = TryExecute( sql );
+        if ( redis_reply != nullptr )
         {
-            for ( size_t i = 0u; i < redisreply->elements; i += 2 )
+            for ( size_t i = 0u; i < redis_reply->elements; i += 2 )
             {
-                auto keyelement = redisreply->element[ i ];
-                auto valueelement = redisreply->element[ i + 1 ];
+                auto key_element = redis_reply->element[ i ];
+                auto value_element = redis_reply->element[ i + 1 ];
 
-                if ( !KFRedisFormat::IsEmptyString( keyelement->str ) &&
-                        !KFRedisFormat::IsEmptyString( valueelement->str ) )
+                if ( !KFRedisFormat::IsEmptyString( key_element->str ) &&
+                        !KFRedisFormat::IsEmptyString( value_element->str ) )
                 {
-                    result->_value[ keyelement->str ] = valueelement->str;
+                    result->_value[ key_element->str ] = value_element->str;
                 }
             }
         }
@@ -279,19 +279,19 @@ namespace KFrame
             result->SetCode( KFEnum::Error );
         }
 
-        __FREE_REPLY__( redisreply );
+        __FREE_REPLY__( redis_reply );
         return result;
     }
 
-    KFResult< StringPair >::UniqueType KFRedisReadExecute::ReadPair( const std::string& strsql )
+    KFResult<StringPair>::UniqueType KFRedisReadExecute::ReadPair( const std::string& sql )
     {
         __NEW_RESULT__( StringPair );
-        auto redisreply = TryExecute( strsql );
-        if ( redisreply != nullptr )
+        auto redis_reply = TryExecute( sql );
+        if ( redis_reply != nullptr )
         {
-            if ( redisreply->elements >= 2 )
+            if ( redis_reply->elements >= 2 )
             {
-                result->_value = StringPair( redisreply->element[ 0 ]->str, redisreply->element[ 1 ]->str );
+                result->_value = StringPair( redis_reply->element[ 0 ]->str, redis_reply->element[ 1 ]->str );
             }
         }
         else
@@ -299,19 +299,19 @@ namespace KFrame
             result->SetCode( KFEnum::Error );
         }
 
-        __FREE_REPLY__( redisreply );
+        __FREE_REPLY__( redis_reply );
         return result;
     }
 
-    KFResult<StringList>::UniqueType KFRedisReadExecute::ReadList( const std::string& strsql )
+    KFResult<StringList>::UniqueType KFRedisReadExecute::ReadList( const std::string& sql )
     {
         __NEW_RESULT__( StringList );
-        auto redisreply = TryExecute( strsql );
-        if ( redisreply != nullptr )
+        auto redis_reply = TryExecute( sql );
+        if ( redis_reply != nullptr )
         {
-            for ( size_t i = 0; i < redisreply->elements; ++i )
+            for ( size_t i = 0; i < redis_reply->elements; ++i )
             {
-                auto element = redisreply->element[ i ];
+                auto element = redis_reply->element[ i ];
                 result->_value.push_back( KFRedisFormat::IsEmptyString( element->str ) ? _invalid_string : element->str );
             }
         }
@@ -320,19 +320,19 @@ namespace KFrame
             result->SetCode( KFEnum::Error );
         }
 
-        __FREE_REPLY__( redisreply );
+        __FREE_REPLY__( redis_reply );
         return result;
     }
 
-    KFResult< StringVector >::UniqueType KFRedisReadExecute::ReadVector( const std::string& strsql )
+    KFResult<StringVector>::UniqueType KFRedisReadExecute::ReadVector( const std::string& sql )
     {
         __NEW_RESULT__( StringVector );
-        auto redisreply = TryExecute( strsql );
-        if ( redisreply != nullptr )
+        auto redis_reply = TryExecute( sql );
+        if ( redis_reply != nullptr )
         {
-            for ( size_t i = 0; i < redisreply->elements; ++i )
+            for ( size_t i = 0; i < redis_reply->elements; ++i )
             {
-                auto element = redisreply->element[ i ];
+                auto element = redis_reply->element[ i ];
                 result->_value.push_back( KFRedisFormat::IsEmptyString( element->str ) ? _invalid_string : element->str );
             }
         }
@@ -341,20 +341,20 @@ namespace KFrame
             result->SetCode( KFEnum::Error );
         }
 
-        __FREE_REPLY__( redisreply );
+        __FREE_REPLY__( redis_reply );
         return result;
     }
 
-    KFResult< StringMapList >::UniqueType KFRedisReadExecute::ReadMapList( const std::string& strsql )
+    KFResult<StringMapList>::UniqueType KFRedisReadExecute::ReadMapList( const std::string& sql )
     {
         __NEW_RESULT__( StringMapList );
-        auto redisreply = TryExecute( strsql );
-        if ( redisreply != nullptr )
+        auto redis_reply = TryExecute( sql );
+        if ( redis_reply != nullptr )
         {
-            //for ( size_t i = 0; i < redisreply->elements; ++i )
+            //for ( size_t i = 0; i < redis_reply->elements; ++i )
             //{
-            //	auto element = redisreply->element[ i ];
-            //	kfresult->_value.push_back( KFRedisFormat::IsEmptyString( element->str ) ? _invalid_string : element->str );
+            //	auto element = redis_reply->element[ i ];
+            //	result->_value.push_back( KFRedisFormat::IsEmptyString( element->str ) ? _invalid_string : element->str );
             //}
         }
         else
@@ -362,25 +362,25 @@ namespace KFrame
             result->SetCode( KFEnum::Error );
         }
 
-        __FREE_REPLY__( redisreply );
+        __FREE_REPLY__( redis_reply );
         return result;
     }
 
-    KFResult< StringPairList >::UniqueType KFRedisReadExecute::ReadPairList( const std::string& strsql )
+    KFResult<StringPairList>::UniqueType KFRedisReadExecute::ReadPairList( const std::string& sql )
     {
         __NEW_RESULT__( StringPairList );
-        auto redisreply = TryExecute( strsql );
-        if ( redisreply != nullptr )
+        auto redis_reply = TryExecute( sql );
+        if ( redis_reply != nullptr )
         {
-            for ( size_t i = 0u; i < redisreply->elements; i += 2 )
+            for ( size_t i = 0u; i < redis_reply->elements; i += 2 )
             {
-                auto keyelement = redisreply->element[ i ];
-                auto valueelement = redisreply->element[ i + 1 ];
+                auto key_element = redis_reply->element[ i ];
+                auto value_element = redis_reply->element[ i + 1 ];
 
-                if ( !KFRedisFormat::IsEmptyString( keyelement->str ) &&
-                        !KFRedisFormat::IsEmptyString( valueelement->str ) )
+                if ( !KFRedisFormat::IsEmptyString( key_element->str ) &&
+                        !KFRedisFormat::IsEmptyString( value_element->str ) )
                 {
-                    result->_value.emplace_back( StringPair( keyelement->str, valueelement->str ) );
+                    result->_value.emplace_back( StringPair( key_element->str, value_element->str ) );
                 }
             }
         }
@@ -389,7 +389,7 @@ namespace KFrame
             result->SetCode( KFEnum::Error );
         }
 
-        __FREE_REPLY__( redisreply );
+        __FREE_REPLY__( redis_reply );
         return result;
     }
 

@@ -13,7 +13,7 @@ namespace KFrame
 
         // 设置过期时间
         template< class KeyType >
-        bool ExpireAt( const std::string& table, const KeyType& key, uint64 expiretime )
+        bool ExpireAt( const std::string& table, const KeyType& key, uint64 expire_time )
         {
             auto fullname = __FORMAT__( "{}.{}", _database, table );
             UpdateRequest request( fullname, UpdateRequest::UPDATE_UPSERT );
@@ -22,21 +22,21 @@ namespace KFrame
             request.selector().add( MongoKeyword::_id, key );
 
             Poco::MongoDB::Document::Ptr update = new Poco::MongoDB::Document();
-            Poco::Timestamp timestmp( expiretime * 1000000 );
-            update->add( MongoKeyword::_expire, timestmp );
+            Poco::Timestamp timestamp( expire_time * 1000000 );
+            update->add( MongoKeyword::_expire, timestamp );
             request.update().add( MongoKeyword::_set, update );
             return SendRequest( request );
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////
         // 插入数据
-        bool Insert( const std::string& table, const KFDBValue& dbvalue );
+        bool Insert( const std::string& table, const KFDBValue& db_value );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 更新数据
-        bool Update( const std::string& table, const KFDBValue& dbvalue );
-        bool Update( const std::string& table, const KFDBValue& dbvalue, const KFMongoSelector& kfseletor );
+        bool Update( const std::string& table, const KFDBValue& db_value );
+        bool Update( const std::string& table, const KFDBValue& db_value, const KFMongoSelector& selector_data );
 
         template< class KeyType >
-        bool Update( const std::string& table, const KeyType& key, const KFDBValue& dbvalue )
+        bool Update( const std::string& table, const KeyType& key, const KFDBValue& db_value )
         {
             auto fullname = __FORMAT__( "{}.{}", _database, table );
             UpdateRequest request( fullname, UpdateRequest::UPDATE_UPSERT );
@@ -46,20 +46,20 @@ namespace KFrame
 
             // values
             Poco::MongoDB::Document::Ptr update = new Poco::MongoDB::Document();
-            AddDBValue( *update, dbvalue );
+            AddDBValue( *update, db_value );
             request.update().add( MongoKeyword::_set, update );
 
             return SendRequest( request );
         }
 
         template< class KeyType, class ValueType >
-        bool Update( const std::string& table, const std::string& keyname, const KeyType& keyvalue, const std::string& field, const ValueType& value )
+        bool Update( const std::string& table, const std::string& key_name, const KeyType& key_value, const std::string& field, const ValueType& value )
         {
             auto fullname = __FORMAT__( "{}.{}", _database, table );
             UpdateRequest request( fullname, UpdateRequest::UPDATE_UPSERT );
 
             // key
-            request.selector().add( keyname, keyvalue );
+            request.selector().add( key_name, key_value );
 
             // value
             Poco::MongoDB::Document::Ptr update = new Poco::MongoDB::Document();
@@ -70,13 +70,13 @@ namespace KFrame
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         template< class KeyType >
-        uint64 Operate( const std::string& table, const std::string& keyname, const KeyType& keyvalue, const std::string& field, uint32 operate, uint64 value )
+        uint64 Operate( const std::string& table, const std::string& key_name, const KeyType& key_value, const std::string& field, uint32 operate, uint64 value )
         {
             auto fullname = __FORMAT__( "{}.{}", _database, table );
             UpdateRequest request( fullname, UpdateRequest::UPDATE_UPSERT );
-            if ( !keyname.empty() )
+            if ( !key_name.empty() )
             {
-                request.selector().add( keyname, keyvalue );
+                request.selector().add( key_name, key_value );
             }
 
             uint64 result = 0u;
@@ -121,15 +121,15 @@ namespace KFrame
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 删除数据
         bool Delete( const std::string& table );
-        bool Delete( const std::string& table, const KFMongoSelector& kfselector );
+        bool Delete( const std::string& table, const KFMongoSelector& selector_data );
 
         template< class ValueType >
-        bool Delete( const std::string& table, const std::string& keyname, const ValueType& keyvalue )
+        bool Delete( const std::string& table, const std::string& key_name, const ValueType& key_value )
         {
             auto fullname = __FORMAT__( "{}.{}", _database, table );
             DeleteRequest request( fullname, DeleteRequest::DELETE_DEFAULT );
 
-            request.selector().add( keyname, keyvalue );
+            request.selector().add( key_name, key_value );
             return SendRequest( request );
         }
 
@@ -152,13 +152,13 @@ namespace KFrame
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 添加数组元素
         template< class KeyType, class ValueType >
-        bool Push( const std::string& table, const std::string& keyname, const KeyType& keyvalue, const std::string& field, const std::list<ValueType>& values )
+        bool Push( const std::string& table, const std::string& key_name, const KeyType& key_value, const std::string& field, const std::list<ValueType>& values )
         {
             auto fullname = __FORMAT__( "{}.{}", _database, table );
             UpdateRequest request( fullname, UpdateRequest::UPDATE_UPSERT );
 
             // selector
-            request.selector().add( keyname, keyvalue );
+            request.selector().add( key_name, key_value );
 
             auto index = 0u;
             Poco::MongoDB::Array::Ptr array = new Poco::MongoDB::Array();
@@ -179,13 +179,13 @@ namespace KFrame
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 删除数组元素
         template< class KeyType, class ValueType >
-        bool Pull( const std::string& table, const std::string& keyname, const KeyType& keyvalue, const std::string& field, const std::list<ValueType>& values )
+        bool Pull( const std::string& table, const std::string& key_name, const KeyType& key_value, const std::string& field, const std::list<ValueType>& values )
         {
             auto fullname = __FORMAT__( "{}.{}", _database, table );
             UpdateRequest request( fullname, UpdateRequest::UPDATE_DEFAULT );
 
             // selector
-            request.selector().add( keyname, keyvalue );
+            request.selector().add( key_name, key_value );
 
             auto index = 0u;
             Poco::MongoDB::Array::Ptr array = new Poco::MongoDB::Array();
@@ -207,10 +207,10 @@ namespace KFrame
 
     protected:
         // 添加有效时间
-        void AddExpireTime( Document& pocodocument, uint64 value, const KFDBValue& dbvalue );
+        void AddExpireTime( Document& poco_document, uint64 value, const KFDBValue& db_value );
 
         // 添加数据
-        void AddDBValue( Document& pocodocument, const KFDBValue& dbvalue );
+        void AddDBValue( Document& poco_document, const KFDBValue& db_value );
     };
 }
 

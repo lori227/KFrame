@@ -23,23 +23,23 @@ namespace KFrame
         _write_execute->ShutDown();
     }
 
-    void KFRedisLogic::Initialize( const std::string& name, const KFRedisConnectOption* kfredisoption )
+    void KFRedisLogic::Initialize( const std::string& name, const KFRedisConnectOption* redis_option )
     {
         {
-            auto connectdata = &kfredisoption->_read_connect_data;
-            auto result = _read_execute->Initialize( name, connectdata->_ip, connectdata->_port, kfredisoption->_password );
+            auto connect_data = &redis_option->_read_connect_data;
+            auto result = _read_execute->Initialize( name, connect_data->_ip, connect_data->_port, redis_option->_password );
             if ( result != KFEnum::Ok )
             {
-                __LOG_ERROR__( "read redis connect[module={} ip={}:{}] failed", name, connectdata->_ip, connectdata->_port );
+                __LOG_ERROR__( "read redis connect[module={} ip={}:{}] failed", name, connect_data->_ip, connect_data->_port );
             }
         }
 
         {
-            auto connectdata = &kfredisoption->_write_connect_data;
-            auto result = _write_execute->Initialize( name, connectdata->_ip, connectdata->_port, kfredisoption->_password );
+            auto connect_data = &redis_option->_write_connect_data;
+            auto result = _write_execute->Initialize( name, connect_data->_ip, connect_data->_port, redis_option->_password );
             if ( result != KFEnum::Ok )
             {
-                __LOG_ERROR__( "read redis connect[module={} ip={}:{}] failed", name, connectdata->_ip, connectdata->_port );
+                __LOG_ERROR__( "read redis connect[module={} ip={}:{}] failed", name, connect_data->_ip, connect_data->_port );
             }
         }
     }
@@ -47,59 +47,59 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // 写操作
-    KFResult< voidptr >::UniqueType KFRedisLogic::WriteVoid( const std::string& strsql )
+    KFResult<voidptr>::UniqueType KFRedisLogic::WriteVoid( const std::string& sql )
     {
-        return _write_execute->WriteVoid( strsql );
+        return _write_execute->WriteVoid( sql );
     }
 
-    KFResult< uint64 >::UniqueType KFRedisLogic::WriteUInt64( const std::string& strsql )
+    KFResult<uint64>::UniqueType KFRedisLogic::WriteUInt64( const std::string& sql )
     {
-        return _write_execute->WriteUInt64( strsql );
+        return _write_execute->WriteUInt64( sql );
     }
 
-    KFResult< std::string >::UniqueType KFRedisLogic::WriteString( const std::string& strsql )
+    KFResult<std::string>::UniqueType KFRedisLogic::WriteString( const std::string& sql )
     {
-        return _write_execute->WriteString( strsql );
+        return _write_execute->WriteString( sql );
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // 读操作
-    KFResult< uint64 >::UniqueType KFRedisLogic::ReadUInt64( const std::string& strsql )
+    KFResult<uint64>::UniqueType KFRedisLogic::ReadUInt64( const std::string& sql )
     {
-        return _read_execute->ReadUInt64( strsql );
+        return _read_execute->ReadUInt64( sql );
     }
 
-    KFResult< std::string >::UniqueType KFRedisLogic::ReadString( const std::string& strsql )
+    KFResult<std::string>::UniqueType KFRedisLogic::ReadString( const std::string& sql )
     {
-        return _read_execute->ReadString( strsql );
+        return _read_execute->ReadString( sql );
     }
 
-    KFResult< StringMap >::UniqueType KFRedisLogic::ReadMap( const std::string& strsql )
+    KFResult<StringMap>::UniqueType KFRedisLogic::ReadMap( const std::string& sql )
     {
-        return _read_execute->ReadMap( strsql );
+        return _read_execute->ReadMap( sql );
     }
 
-    KFResult< StringPair >::UniqueType KFRedisLogic::ReadPair( const std::string& strsql )
+    KFResult<StringPair>::UniqueType KFRedisLogic::ReadPair( const std::string& sql )
     {
-        return _read_execute->ReadPair( strsql );
+        return _read_execute->ReadPair( sql );
     }
 
-    KFResult< StringList >::UniqueType KFRedisLogic::ReadList( const std::string& strsql )
+    KFResult<StringList>::UniqueType KFRedisLogic::ReadList( const std::string& sql )
     {
-        return _read_execute->ReadList( strsql );
+        return _read_execute->ReadList( sql );
     }
 
-    KFResult< StringVector >::UniqueType KFRedisLogic::ReadVector( const std::string& strsql )
+    KFResult<StringVector>::UniqueType KFRedisLogic::ReadVector( const std::string& sql )
     {
-        return _read_execute->ReadVector( strsql );
+        return _read_execute->ReadVector( sql );
     }
 
-    KFResult< StringMapList >::UniqueType KFRedisLogic::ReadMapList( const std::string& strsql )
+    KFResult<StringMapList>::UniqueType KFRedisLogic::ReadMapList( const std::string& sql )
     {
-        return _read_execute->ReadMapList( strsql );
+        return _read_execute->ReadMapList( sql );
     }
 
-    KFResult< StringPairList >::UniqueType KFRedisLogic::ReadPairList( const std::string& strsql )
+    KFResult<StringPairList>::UniqueType KFRedisLogic::ReadPairList( const std::string& sql )
     {
-        return _read_execute->ReadPairList( strsql );
+        return _read_execute->ReadPairList( sql );
     }
 }

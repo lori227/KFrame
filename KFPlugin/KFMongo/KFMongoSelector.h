@@ -146,9 +146,9 @@ namespace KFrame
     class KFMongoSelector
     {
     public:
-        void AddReturn( const std::string& value, int32 ordertype = MongoKeyword::_asc )
+        void AddReturn( const std::string& value, int32 order_type = MongoKeyword::_asc )
         {
-            _returns[ value ] = ordertype;
+            _returns[ value ] = order_type;
         }
 
         void AddLimitReturn( const std::string& value )

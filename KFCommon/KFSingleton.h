@@ -15,7 +15,7 @@
 
 namespace KFrame
 {
-    template< typename T >
+    template<typename T>
     class KFSingleton
     {
     public:
@@ -58,7 +58,7 @@ namespace KFrame
         static T* _instance;
     };
 
-    template< typename T >
+    template<typename T>
     T* KFSingleton<T>::_instance = nullptr;
 }
 

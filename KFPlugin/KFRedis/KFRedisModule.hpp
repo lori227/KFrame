@@ -26,25 +26,25 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 创建
-        virtual KFRedisDriver* Create( const std::string& module, uint32 logicid = 0 );
+        virtual std::shared_ptr<KFRedisDriver> Create( const std::string& module, uint32 logic_id = 0 );
 
     protected:
         // 查找redis配置
-        const KFRedisConnectOption* FindRedisConnectOption( const std::string& module, uint32 logicid );
+        const KFRedisConnectOption* FindRedisConnectOption( const std::string& module, uint32 logic_id );
 
         // 查找
-        KFRedisLogic* FindRedisLogic( uint32 id );
+        std::shared_ptr<KFRedisLogic> FindRedisLogic( uint32 logic_id );
 
         // 插入redis
-        void InsertRedisLogic( uint32 id, KFRedisLogic* kfredislogic );
+        void InsertRedisLogic( uint32 id, std::shared_ptr<KFRedisLogic> redis_logic );
 
     private:
         // 线程锁
         KFMutex _mt_mutex;
 
         // 多线程列表
-        typedef std::pair< uint32, uint32 > RedisKey;
-        KFMap< RedisKey,  KFRedisLogic > _redis_logic;
+        typedef std::pair<ThreadId, uint32> RedisKey;
+        KFMap<RedisKey,  KFRedisLogic> _redis_logic;
     };
 }
 

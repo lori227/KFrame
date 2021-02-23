@@ -13,72 +13,69 @@ namespace KFrame
         KFLocker lock( _kf_mutex );
         for ( auto& iter : _mysql_logic_map._objects )
         {
-            auto kflogic = iter.second;
-            kflogic->ShutDown();
+            iter.second->ShutDown();
         }
 
         MySQL::Connector::unregisterConnector();
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    const KFMySQLConnectOption* KFMySQLModule::FindMySQLConnectOption( const std::string& module, uint32 logicid )
+    const KFMySQLConnectOption* KFMySQLModule::FindMySQLConnectOption( const std::string& module, uint32 logic_id )
     {
         auto setting = KFMySQLConfig::Instance()->FindSetting( module );
         if ( setting == nullptr )
         {
-            __LOG_ERROR__( "[{}:{}] can't find mysql setting", module, logicid );
+            __LOG_ERROR__( "[{}:{}] can't find mysql setting", module, logic_id );
             return nullptr;
         }
 
-        for ( auto& connectoption : setting->_connect_option )
+        for ( auto& connect_option : setting->_connect_option )
         {
-            if ( logicid >= connectoption._min_logic_id && logicid <= connectoption._max_logic_id )
+            if ( logic_id >= connect_option._min_logic_id && logic_id <= connect_option._max_logic_id )
             {
-                return &connectoption;
+                return &connect_option;
             }
         }
 
         return nullptr;
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    KFMySQLLogic* KFMySQLModule::FindMySQLLogic( uint32 id )
+    std::shared_ptr<KFMySQLLogic> KFMySQLModule::FindMySQLLogic( uint32 id )
     {
-        auto threadid = KFThread::GetThreadID();
-        auto key = MySQLKey( threadid, id );
+        auto thread_id = KFThread::GetID();
+        auto key = MySQLKey( thread_id, id );
 
         KFLocker lock( _kf_mutex );
         return _mysql_logic_map.Find( key );
     }
 
-    void KFMySQLModule::InsertMySQLLogic( uint32 id, KFMySQLLogic* kflogic )
+    void KFMySQLModule::InsertMySQLLogic( uint32 logic_id, std::shared_ptr<KFMySQLLogic> mysql_logic )
     {
-        auto threadid = KFThread::GetThreadID();
-        auto key = MySQLKey( threadid, id );
+        auto thread_id = KFThread::GetID();
+        auto key = MySQLKey( thread_id, logic_id );
 
         KFLocker lock( _kf_mutex );
-        _mysql_logic_map.Insert( key, kflogic );
+        _mysql_logic_map.Insert( key, mysql_logic );
     }
 
-    KFMySQLDriver* KFMySQLModule::Create( const std::string& module, uint32 logicid /* = 0 */ )
+    std::shared_ptr<KFMySQLDriver> KFMySQLModule::Create( const std::string& module, uint32 logic_id /* = 0 */ )
     {
-        auto kfmysqloption = FindMySQLConnectOption( module, logicid );
-        if ( kfmysqloption == nullptr )
+        auto mysql_option = FindMySQLConnectOption( module, logic_id );
+        if ( mysql_option == nullptr )
         {
-            __LOG_ERROR__( "[{}:{}] can't find mysql option", module, logicid );
+            __LOG_ERROR__( "[{}:{}] can't find mysql option", module, logic_id );
             return nullptr;
         }
 
-        auto kflogic = FindMySQLLogic( kfmysqloption->_runtime_id );
-        if ( kflogic != nullptr )
+        auto mysql_logic = FindMySQLLogic( mysql_option->_runtime_id );
+        if ( mysql_logic == nullptr )
         {
-            return kflogic;
+            mysql_logic = __MAKE_SHARED__( KFMySQLLogic );
+            mysql_logic->Initialize( module, mysql_option );
+            InsertMySQLLogic( mysql_option->_runtime_id, mysql_logic );
         }
 
-        kflogic = __KF_NEW__( KFMySQLLogic );
-        kflogic->Initialize( module, kfmysqloption );
-        InsertMySQLLogic( kfmysqloption->_runtime_id, kflogic );
-
-        return kflogic;
+        return mysql_logic;
     }
 
 }

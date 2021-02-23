@@ -39,7 +39,7 @@ namespace KFrame
     };
 
     // 消息处理模板
-    template< typename T >
+    template<typename T>
     class KFMessageHandleData : public KFMessageHandleAbstract
     {
     public:
@@ -96,14 +96,14 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 为了减少game逻辑, 提供一个查找玩家的回调函数
-        template< typename T >
+        template<typename T>
         void RegisterFindEntityFunction( uint32 type, T* module, KFEntity * ( T::* function )( uint64 ) )
         {
             KFFindEntityFunction bind_function = std::bind( function, module, std::placeholders::_1 );
             BindFindEntityFunction( type, module, bind_function );
         }
 
-        template< typename T >
+        template<typename T>
         void RegisterFindEntityFunction( uint32 type, T* module )
         {
             UnBindFindEntityFunction( type );

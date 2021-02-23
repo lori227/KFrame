@@ -130,7 +130,7 @@ namespace KFrame
         _mongo_driver->Insert( __STRING__( mailinfo ), playerid, tablename, maxmailid );
     }
 
-    KFResult< StringMapList >::UniqueType KFMailDatabaseMongo::QueryMailList( uint64 playerid, uint64 lastmailid )
+    KFResult<StringMapList>::UniqueType KFMailDatabaseMongo::QueryMailList( uint64 playerid, uint64 lastmailid )
     {
         auto tablename = __DATABASE_KEY_2__( __STRING__( maillist ), playerid );
 

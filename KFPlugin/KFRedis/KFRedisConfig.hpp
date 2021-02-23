@@ -5,7 +5,7 @@
 
 namespace KFrame
 {
-    class KFRedisConnnectData
+    class KFRedisConnectData
     {
     public:
         // ip
@@ -31,10 +31,10 @@ namespace KFrame
         std::string _password;
 
         // 写连接
-        KFRedisConnnectData _write_connect_data;
+        KFRedisConnectData _write_connect_data;
 
         // 读连接
-        KFRedisConnnectData _read_connect_data;
+        KFRedisConnectData _read_connect_data;
     };
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
@@ -46,7 +46,7 @@ namespace KFrame
     };
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
-    class KFRedisConfig : public KFConfigT< KFRedisSetting >, public KFInstance< KFRedisConfig >
+    class KFRedisConfig : public KFConfigT<KFRedisSetting>, public KFInstance<KFRedisConfig>
     {
     public:
         KFRedisConfig()
@@ -56,7 +56,7 @@ namespace KFrame
         }
 
     public:
-        virtual void ReadSetting( KFXmlNode& xml_node, KFRedisSetting* setting )
+        virtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KFRedisSetting> setting )
         {
             KFRedisConnectOption option;
             option._min_logic_id = xml_node.ReadUInt32( "minid" );
