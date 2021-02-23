@@ -23,43 +23,43 @@ namespace KFrame
         virtual ~KFMongoExecute() = default;
 
         // 初始化
-        virtual void InitMongo( const KFMongoConnectOption* connectoption, const KFMongoConnnectData* connectdata );
+        virtual void InitMongo( const KFMongoConnectOption* connect_option, const KFMongoConnnectData* connect_data );
 
         // 创建索引
-        bool CreateIndex( const std::string& table, const std::string& indexname, const MongoIndexType& values, bool unique, uint32 ttl );
+        bool CreateIndex( const std::string& table, const std::string& index_name, const MongoIndexType& values, bool unique, uint32 ttl );
 
     protected:
         // 添加选择器
-        void AddPocoDocument( Document& pocodocument, const KFMongoSelector& kfselector );
-        void AddPocoDocument( Document& pocodocument, const KFMongoDocument* kfdocument );
+        void AddPocoDocument( Document& poco_document, const KFMongoSelector& selector_data );
+        void AddPocoDocument( Document& poco_document, const KFMongoDocument* mongo_document );
 
         // 添加数值
         template<class T>
-        void AddDocumentValue( Document& pocodocument, const KFMongoExpression<T>* kfexpression )
+        void AddDocumentValue( Document& poco_document, const KFMongoExpression<T>* expression )
         {
-            if ( kfexpression->_keyword == MongoKeyword::_eq )
+            if ( expression->_keyword == MongoKeyword::_eq )
             {
-                pocodocument.add( kfexpression->_name, kfexpression->_value1 );
+                poco_document.add( expression->_name, expression->_value1 );
             }
-            else if ( kfexpression->_keyword == MongoKeyword::_in )
+            else if ( expression->_keyword == MongoKeyword::_in )
             {
-                Poco::MongoDB::Array::Ptr valuearray = new Poco::MongoDB::Array();
-                valuearray->add( "0", kfexpression->_value1 );
-                valuearray->add( "1", kfexpression->_value2 );
+                Poco::MongoDB::Array::Ptr array_value = new Poco::MongoDB::Array();
+                array_value->add( "0", expression->_value1 );
+                array_value->add( "1", expression->_value2 );
 
                 Poco::MongoDB::Document::Ptr child = new Poco::MongoDB::Document();
-                child->add( MongoKeyword::_in, valuearray );
-                pocodocument.add( kfexpression->_name, child );
+                child->add( MongoKeyword::_in, array_value );
+                poco_document.add( expression->_name, child );
             }
             else
             {
                 Poco::MongoDB::Document::Ptr child = new Poco::MongoDB::Document();
-                child->add( kfexpression->_keyword, kfexpression->_value1 );
-                pocodocument.add( kfexpression->_name, child );
+                child->add( expression->_keyword, expression->_value1 );
+                poco_document.add( expression->_name, child );
             }
         }
 
-        bool IsIndexCreate( const std::string& table, const std::string& indexname );
+        bool IsIndexCreate( const std::string& table, const std::string& index_name );
 
     private:
         // 创建的索引列表

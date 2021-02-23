@@ -22,121 +22,121 @@ namespace KFrame
         _write_execute->ShutDown();
     }
 
-    void KFMongoLogic::Initialize( const std::string& name, const KFMongoConnectOption* kfmongooption )
+    void KFMongoLogic::Initialize( const std::string& name, const KFMongoConnectOption* mongo_option )
     {
         {
-            _read_execute->InitMongo( kfmongooption, &kfmongooption->_read_connect_data );
+            _read_execute->InitMongo( mongo_option, &mongo_option->_read_connect_data );
         }
 
         {
-            _write_execute->InitMongo( kfmongooption, &kfmongooption->_write_connect_data );
+            _write_execute->InitMongo( mongo_option, &mongo_option->_write_connect_data );
         }
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////
-    bool KFMongoLogic::CreateIndex( const std::string& table, const std::string& indexname, bool unique, uint32 ttl )
+    bool KFMongoLogic::CreateIndex( const std::string& table, const std::string& index_name, bool unique, uint32 ttl )
     {
         MongoIndexType values;
-        values[ indexname ] = MongoKeyword::_asc;
-        return CreateIndex( table, indexname, values, unique, ttl );
+        values[ index_name ] = MongoKeyword::_asc;
+        return CreateIndex( table, index_name, values, unique, ttl );
     }
 
-    bool KFMongoLogic::CreateIndex( const std::string& table, const std::string& indexname, const MongoIndexType& values, bool unique /* = false */, uint32 ttl /* = 0u */ )
+    bool KFMongoLogic::CreateIndex( const std::string& table, const std::string& index_name, const MongoIndexType& values, bool unique /* = false */, uint32 ttl /* = 0u */ )
     {
         // 如果是过期时间
-        if ( indexname == MongoKeyword::_expire && ttl == 0u )
+        if ( index_name == MongoKeyword::_expire && ttl == 0u )
         {
             ttl = 1u;
         }
 
-        auto ok1 = _write_execute->CreateIndex( table, indexname, values, unique, ttl );
-        auto ok2 = _read_execute->CreateIndex( table, indexname, values, unique, ttl );
+        auto ok1 = _write_execute->CreateIndex( table, index_name, values, unique, ttl );
+        auto ok2 = _read_execute->CreateIndex( table, index_name, values, unique, ttl );
         return ok1 & ok2;
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFMongoLogic::Expire( const std::string& table, uint64 key, uint64 validtime )
+    bool KFMongoLogic::Expire( const std::string& table, uint64 key, uint64 valid_time )
     {
-        auto expiretime = KFGlobal::Instance()->_real_time + validtime;
-        return _write_execute->ExpireAt( table, key, expiretime );
+        auto expire_time = KFGlobal::Instance()->_real_time + valid_time;
+        return _write_execute->ExpireAt( table, key, expire_time );
     }
 
-    bool KFMongoLogic::Expire( const std::string& table, const std::string& key, uint64 validtime )
+    bool KFMongoLogic::Expire( const std::string& table, const std::string& key, uint64 valid_time )
     {
-        auto expiretime = KFGlobal::Instance()->_real_time + validtime;
-        return _write_execute->ExpireAt( table, key, expiretime );
+        auto expire_time = KFGlobal::Instance()->_real_time + valid_time;
+        return _write_execute->ExpireAt( table, key, expire_time );
     }
 
     // 具体时间点
-    bool KFMongoLogic::ExpireAt( const std::string& table, uint64 key, uint64 expiretime )
+    bool KFMongoLogic::ExpireAt( const std::string& table, uint64 key, uint64 expire_time )
     {
-        return _write_execute->ExpireAt( table, key, expiretime );
+        return _write_execute->ExpireAt( table, key, expire_time );
     }
 
-    bool KFMongoLogic::ExpireAt( const std::string& table, const std::string& key, uint64 expiretime )
+    bool KFMongoLogic::ExpireAt( const std::string& table, const std::string& key, uint64 expire_time )
     {
-        return _write_execute->ExpireAt( table, key, expiretime );
+        return _write_execute->ExpireAt( table, key, expire_time );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    KFResult< uint64 >::UniqueType KFMongoLogic::Count( const std::string& table )
+    KFResult<uint64>::UniqueType KFMongoLogic::Count( const std::string& table )
     {
         return _read_execute->Count( table );
     }
 
-    KFResult< uint64 >::UniqueType KFMongoLogic::Count( const std::string& table, const std::string& field, uint64 key )
+    KFResult<uint64>::UniqueType KFMongoLogic::Count( const std::string& table, const std::string& field, uint64 key )
     {
         return _read_execute->Count( table, field, key );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFMongoLogic::Insert( const std::string& table, const KFDBValue& dbvalue )
+    bool KFMongoLogic::Insert( const std::string& table, const KFDBValue& db_value )
     {
         auto uuid = KFGlobal::Instance()->MTMakeUuid( table );
-        const_cast< KFDBValue& >( dbvalue ).AddValue( MongoKeyword::_id, uuid );
-        return _write_execute->Insert( table, dbvalue );
+        const_cast< KFDBValue& >( db_value ).AddValue( MongoKeyword::_id, uuid );
+        return _write_execute->Insert( table, db_value );
     }
 
     bool KFMongoLogic::Insert( const std::string& table, const std::string& field, uint64 value )
     {
-        KFDBValue dbvalue;
-        dbvalue.AddValue( field, value );
-        return _write_execute->Update( table, dbvalue );
+        KFDBValue db_value;
+        db_value.AddValue( field, value );
+        return _write_execute->Update( table, db_value );
     }
 
-    bool KFMongoLogic::Insert( const std::string& table, const std::string& field, const std::string& value, bool isbinary )
+    bool KFMongoLogic::Insert( const std::string& table, const std::string& field, const std::string& value, bool is_binary )
     {
-        KFDBValue dbvalue;
-        dbvalue.AddValue( field, value, isbinary );
-        return _write_execute->Update( table, dbvalue );
+        KFDBValue db_value;
+        db_value.AddValue( field, value, is_binary );
+        return _write_execute->Update( table, db_value );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFMongoLogic::Insert( const std::string& table, uint64 key, const KFDBValue& dbvalue )
+    bool KFMongoLogic::Insert( const std::string& table, uint64 key, const KFDBValue& db_value )
     {
-        return _write_execute->Update( table, key, dbvalue );
+        return _write_execute->Update( table, key, db_value );
     }
 
-    bool KFMongoLogic::Insert( const std::string& table, const std::string& key, const KFDBValue& dbvalue )
+    bool KFMongoLogic::Insert( const std::string& table, const std::string& key, const KFDBValue& db_value )
     {
-        return _write_execute->Update( table, key, dbvalue );
+        return _write_execute->Update( table, key, db_value );
     }
 
-    bool KFMongoLogic::Insert( const std::string& table, const KFDBValue& dbvalue, const KFMongoSelector& kfseletor )
+    bool KFMongoLogic::Insert( const std::string& table, const KFDBValue& db_value, const KFMongoSelector& selector_data )
     {
-        return _write_execute->Update( table, dbvalue, kfseletor );
+        return _write_execute->Update( table, db_value, selector_data );
     }
 
-    bool KFMongoLogic::Insert( const std::string& table, const std::string& field, uint64 value, const KFMongoSelector& kfseletor )
+    bool KFMongoLogic::Insert( const std::string& table, const std::string& field, uint64 value, const KFMongoSelector& selector_data )
     {
-        KFDBValue dbvalue;
-        dbvalue.AddValue( field, value );
-        return _write_execute->Update( table, dbvalue, kfseletor );
+        KFDBValue db_value;
+        db_value.AddValue( field, value );
+        return _write_execute->Update( table, db_value, selector_data );
     }
 
-    bool KFMongoLogic::Insert( const std::string& table, const std::string& field, const std::string& value, const KFMongoSelector& kfseletor )
+    bool KFMongoLogic::Insert( const std::string& table, const std::string& field, const std::string& value, const KFMongoSelector& selector_data )
     {
-        KFDBValue dbvalue;
-        dbvalue.AddValue( field, value );
-        return _write_execute->Update( table, dbvalue, kfseletor );
+        KFDBValue db_value;
+        db_value.AddValue( field, value );
+        return _write_execute->Update( table, db_value, selector_data );
     }
 
     bool KFMongoLogic::Insert( const std::string& table, uint64 key, const std::string& field, uint64 value )
@@ -144,9 +144,9 @@ namespace KFrame
         return _write_execute->Update( table, MongoKeyword::_id, key, field, value );
     }
 
-    bool KFMongoLogic::Insert( const std::string& table, uint64 key, const std::string& field, const std::string& value, bool isbinary )
+    bool KFMongoLogic::Insert( const std::string& table, uint64 key, const std::string& field, const std::string& value, bool is_binary )
     {
-        if ( isbinary )
+        if ( is_binary )
         {
             Poco::MongoDB::Binary::Ptr binary = new Poco::MongoDB::Binary( value );
             return _write_execute->Update( table, MongoKeyword::_id, key, field, binary );
@@ -160,9 +160,9 @@ namespace KFrame
         return _write_execute->Update( table, MongoKeyword::_id, key, field, value );
     }
 
-    bool KFMongoLogic::Insert( const std::string& table, const std::string& key, const std::string& field, const std::string& value, bool isbinary )
+    bool KFMongoLogic::Insert( const std::string& table, const std::string& key, const std::string& field, const std::string& value, bool is_binary )
     {
-        if ( isbinary )
+        if ( is_binary )
         {
             Poco::MongoDB::Binary::Ptr binary = new Poco::MongoDB::Binary( value );
             return _write_execute->Update( table, MongoKeyword::_id, key, field, binary );
@@ -201,19 +201,19 @@ namespace KFrame
         return _write_execute->Delete( table, MongoKeyword::_id, key );
     }
 
-    bool KFMongoLogic::Delete( const std::string& table, const std::string& keyname, uint64 keyvalue )
+    bool KFMongoLogic::Delete( const std::string& table, const std::string& key_name, uint64 value )
     {
-        return _write_execute->Delete( table, keyname, keyvalue );
+        return _write_execute->Delete( table, key_name, value );
     }
 
-    bool KFMongoLogic::Delete( const std::string& table, const std::string& keyname, const std::string& keyvalue )
+    bool KFMongoLogic::Delete( const std::string& table, const std::string& key_name, const std::string& value )
     {
-        return _write_execute->Delete( table, keyname, keyvalue );
+        return _write_execute->Delete( table, key_name, value );
     }
 
-    bool KFMongoLogic::Delete( const std::string& table, const KFMongoSelector& kfseletor )
+    bool KFMongoLogic::Delete( const std::string& table, const KFMongoSelector& selector_data )
     {
-        return _write_execute->Delete( table, kfseletor );
+        return _write_execute->Delete( table, selector_data );
     }
 
     bool KFMongoLogic::DeleteField( const std::string& table, uint64 key, const std::string& field )
@@ -319,86 +319,86 @@ namespace KFrame
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    KFResult< uint64 >::UniqueType KFMongoLogic::QueryUInt64( const std::string& table, uint64 key, const std::string& field )
+    KFResult<uint64>::UniqueType KFMongoLogic::QueryUInt64( const std::string& table, uint64 key, const std::string& field )
     {
         return _read_execute->QueryValue< uint64, Poco::UInt64, Poco::UInt64>( table, key, field );
     }
 
-    KFResult< uint64 >::UniqueType KFMongoLogic::QueryUInt64( const std::string& table, const std::string& key, const std::string& field )
+    KFResult<uint64>::UniqueType KFMongoLogic::QueryUInt64( const std::string& table, const std::string& key, const std::string& field )
     {
         return _read_execute->QueryValue<uint64, std::string, Poco::UInt64>( table, key, field );
     }
 
-    KFResult< std::string >::UniqueType KFMongoLogic::QueryString( const std::string& table, uint64 key, const std::string& field )
+    KFResult<std::string>::UniqueType KFMongoLogic::QueryString( const std::string& table, uint64 key, const std::string& field )
     {
         return _read_execute->QueryValue<std::string, Poco::UInt64, std::string>( table, key, field );
     }
 
-    KFResult< std::string >::UniqueType KFMongoLogic::QueryString( const std::string& table, const std::string& key, const std::string& field )
+    KFResult<std::string>::UniqueType KFMongoLogic::QueryString( const std::string& table, const std::string& key, const std::string& field )
     {
         return _read_execute->QueryValue<std::string, std::string, std::string>( table, key, field );
     }
 
-    KFResult< std::string >::UniqueType KFMongoLogic::QueryBinary( const std::string& table, uint64 key, const std::string& field )
+    KFResult<std::string>::UniqueType KFMongoLogic::QueryBinary( const std::string& table, uint64 key, const std::string& field )
     {
         return _read_execute->QueryBinary<Poco::UInt64>( table, key, field );
     }
 
-    KFResult< std::string >::UniqueType KFMongoLogic::QueryBinary( const std::string& table, const std::string& key, const std::string& field )
+    KFResult<std::string>::UniqueType KFMongoLogic::QueryBinary( const std::string& table, const std::string& key, const std::string& field )
     {
         return _read_execute->QueryBinary<std::string>( table, key, field );
     }
 
-    KFResult< UInt64List >::UniqueType KFMongoLogic::QueryListUInt64( const std::string& table, uint64 key, const std::string& field )
+    KFResult<UInt64List>::UniqueType KFMongoLogic::QueryListUInt64( const std::string& table, uint64 key, const std::string& field )
     {
         return _read_execute->QueryList<UInt64List, Poco::UInt64, Poco::UInt64>( table, key, field );
     }
 
-    KFResult< UInt64List >::UniqueType KFMongoLogic::QueryListUInt64( const std::string& table, const std::string& key, const std::string& field )
+    KFResult<UInt64List>::UniqueType KFMongoLogic::QueryListUInt64( const std::string& table, const std::string& key, const std::string& field )
     {
         return _read_execute->QueryList<UInt64List, std::string, Poco::UInt64>( table, key, field );
     }
 
-    KFResult< StringList >::UniqueType KFMongoLogic::QueryListString( const std::string& table, uint64 key, const std::string& field )
+    KFResult<StringList>::UniqueType KFMongoLogic::QueryListString( const std::string& table, uint64 key, const std::string& field )
     {
         return _read_execute->QueryList<StringList, Poco::UInt64, std::string>( table, key, field );
     }
 
-    KFResult< StringList >::UniqueType KFMongoLogic::QueryListString( const std::string& table, const std::string& key, const std::string& field )
+    KFResult<StringList>::UniqueType KFMongoLogic::QueryListString( const std::string& table, const std::string& key, const std::string& field )
     {
         return _read_execute->QueryList<StringList, std::string, std::string>( table, key, field );
     }
 
-    KFResult< KFDBValue >::UniqueType KFMongoLogic::QueryRecord( const std::string& table, uint64 key )
+    KFResult<KFDBValue>::UniqueType KFMongoLogic::QueryRecord( const std::string& table, uint64 key )
     {
         static StringList _fields;
         return _read_execute->QueryRecord( table, key, _fields );
     }
 
-    KFResult< KFDBValue >::UniqueType KFMongoLogic::QueryRecord( const std::string& table, const std::string& key )
+    KFResult<KFDBValue>::UniqueType KFMongoLogic::QueryRecord( const std::string& table, const std::string& key )
     {
         static StringList _fields;
         return _read_execute->QueryRecord( table, key, _fields );
     }
 
-    KFResult< KFDBValue >::UniqueType KFMongoLogic::QueryRecord( const std::string& table, uint64 key, const StringList& fields )
+    KFResult<KFDBValue>::UniqueType KFMongoLogic::QueryRecord( const std::string& table, uint64 key, const StringList& field_list )
     {
-        return _read_execute->QueryRecord( table, key, fields );
+        return _read_execute->QueryRecord( table, key, field_list );
     }
 
-    KFResult< KFDBValue >::UniqueType KFMongoLogic::QueryRecord( const std::string& table, const std::string& key, const StringList& fields )
+    KFResult<KFDBValue>::UniqueType KFMongoLogic::QueryRecord( const std::string& table, const std::string& key, const StringList& field_list )
     {
-        return _read_execute->QueryRecord( table, key, fields );
+        return _read_execute->QueryRecord( table, key, field_list );
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    KFResult< std::list< KFDBValue > >::UniqueType KFMongoLogic::QueryListRecord( const std::string& table )
+    KFResult<std::list<KFDBValue>>::UniqueType KFMongoLogic::QueryListRecord( const std::string& table )
     {
-        static KFMongoSelector kfseletor;
-        return _read_execute->QueryListRecord( table, kfseletor );
+        static KFMongoSelector selector_data;
+        return _read_execute->QueryListRecord( table, selector_data );
     }
 
-    KFResult< std::list< KFDBValue > >::UniqueType KFMongoLogic::QueryListRecord( const std::string& table, const KFMongoSelector& kfseletor )
+    KFResult<std::list<KFDBValue>>::UniqueType KFMongoLogic::QueryListRecord( const std::string& table, const KFMongoSelector& selector_data )
     {
-        return _read_execute->QueryListRecord( table, kfseletor );
+        return _read_execute->QueryListRecord( table, selector_data );
     }
 }

@@ -2,7 +2,7 @@
 
 namespace KFrame
 {
-    KFResult< uint64 >::UniqueType KFMongoReadExecute::Count( const std::string& table )
+    KFResult<uint64>::UniqueType KFMongoReadExecute::Count( const std::string& table )
     {
         Poco::MongoDB::Database db( _database );
         auto request = db.createQueryRequest( "$cmd" );
@@ -32,7 +32,7 @@ namespace KFrame
         return result;
     }
 
-    KFResult< uint64 >::UniqueType KFMongoReadExecute::Count( const std::string& table, const std::string& field, uint64 key )
+    KFResult<uint64>::UniqueType KFMongoReadExecute::Count( const std::string& table, const std::string& field, uint64 key )
     {
         auto fullname = __FORMAT__( "{}.{}", _database, table );
         QueryRequest request( fullname, QueryRequest::QUERY_DEFAULT );
@@ -59,37 +59,37 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    KFResult< std::list< KFDBValue > >::UniqueType KFMongoReadExecute::QueryListRecord( const std::string& table, const KFMongoSelector& kfselector )
+    KFResult<std::list<KFDBValue>>::UniqueType KFMongoReadExecute::QueryListRecord( const std::string& table, const KFMongoSelector& selector_data )
     {
         auto fullname = __FORMAT__( "{}.{}", _database, table );
         QueryRequest request( fullname, QueryRequest::QUERY_DEFAULT );
 
         // 查询条件
-        AddPocoDocument( request.selector(), kfselector );
+        AddPocoDocument( request.selector(), selector_data );
 
         // 返回的字段
-        if ( !kfselector._returns.empty() )
+        if ( !selector_data._returns.empty() )
         {
             auto& fields = request.returnFieldSelector();
-            auto iter = kfselector._returns.find( MongoKeyword::_id );
-            if ( iter == kfselector._returns.end() )
+            auto iter = selector_data._returns.find( MongoKeyword::_id );
+            if ( iter == selector_data._returns.end() )
             {
                 fields.add( MongoKeyword::_id, 0 );
             }
 
-            for ( auto& iter : kfselector._returns )
+            for ( auto& iter : selector_data._returns )
             {
                 fields.add( iter.first, iter.second );
             }
         }
 
         // 数量限制
-        if ( kfselector._limit_count != 0u )
+        if ( selector_data._limit_count != 0u )
         {
-            request.setNumberToReturn( kfselector._limit_count );
+            request.setNumberToReturn( selector_data._limit_count );
         }
         ///////////////////////////////////////////////////////////////////////////////////
-        __NEW_RESULT__( std::list< KFDBValue > );
+        __NEW_RESULT__( std::list<KFDBValue> );
         ResponseMessage response;
         auto ok = SendRequest( request, response );
         if ( ok )
@@ -104,7 +104,7 @@ namespace KFrame
                     for ( auto iter = elements->begin(); iter != elements->end(); ++iter )
                     {
                         auto& name = ( *iter )->name();
-                        if ( kfselector._limit_returns.find( name ) != kfselector._limit_returns.end() )
+                        if ( selector_data._limit_returns.find( name ) != selector_data._limit_returns.end() )
                         {
                             continue;
                         }

@@ -89,7 +89,7 @@ namespace KFrame
         }
     }
 
-    KFResult< std::string >::UniqueType KFDataExecute::LoadPlayerData( uint32 zone_id, uint64 playeid )
+    KFResult<std::string>::UniqueType KFDataExecute::LoadPlayerData( uint32 zone_id, uint64 playeid )
     {
         auto keeper = _data_keeper.Find( playeid );
         if ( keeper != nullptr )
@@ -130,7 +130,7 @@ namespace KFrame
         return true;
     }
 
-    KFResult< std::string >::UniqueType KFRedisDataExecute::LoadData( uint32 zone_id, uint64 playerid )
+    KFResult<std::string>::UniqueType KFRedisDataExecute::LoadData( uint32 zone_id, uint64 playerid )
     {
         auto redisdriver = __REDIS_DATA_DRIVER__( zone_id );
         if ( redisdriver == nullptr )
@@ -164,7 +164,7 @@ namespace KFrame
         return ok;
     }
 
-    KFResult< std::string >::UniqueType KFMongoDataExecute::LoadData( uint32 zone_id, uint64 playerid )
+    KFResult<std::string>::UniqueType KFMongoDataExecute::LoadData( uint32 zone_id, uint64 playerid )
     {
         auto mongodriver = __MONGO_DATA_DRIVER__( zone_id );
         if ( mongodriver == nullptr )
@@ -200,7 +200,7 @@ namespace KFrame
         return true;
     }
 
-    KFResult< std::string >::UniqueType KFMySQLDataExecute::LoadData( uint32 zone_id, uint64 playerid )
+    KFResult<std::string>::UniqueType KFMySQLDataExecute::LoadData( uint32 zone_id, uint64 playerid )
     {
         auto mysqldriver = __MYSQL_DATA_DRIVER__( zone_id );
         if ( mysqldriver == nullptr )

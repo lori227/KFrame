@@ -119,12 +119,12 @@ namespace KFrame
         return _read_execute->UInt32Execute( strsql );
     }
 
-    KFResult< uint64 >::UniqueType KFMySQLLogic::UInt64Execute( std::string& strsql )
+    KFResult<uint64>::UniqueType KFMySQLLogic::UInt64Execute( std::string& strsql )
     {
         return _read_execute->UInt64Execute( strsql );
     }
 
-    KFResult< std::string >::UniqueType KFMySQLLogic::StringExecute( std::string& strsql )
+    KFResult<std::string>::UniqueType KFMySQLLogic::StringExecute( std::string& strsql )
     {
         return _read_execute->StringExecute( strsql );
     }
@@ -134,7 +134,7 @@ namespace KFrame
         return _read_execute->MapExecute( strsql );
     }
 
-    KFResult< StringList >::UniqueType KFMySQLLogic::ListExecute( std::string& strsql )
+    KFResult<StringList>::UniqueType KFMySQLLogic::ListExecute( std::string& strsql )
     {
         return _read_execute->ListExecute( strsql );
     }

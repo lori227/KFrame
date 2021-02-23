@@ -47,7 +47,7 @@ namespace KFrame
         void SavePlayerData( uint32 zone_id, uint64 playerid, const KFMsg::PBObject* proto_object, uint32 saveflag );
 
         // 读取玩家数据
-        KFResult< std::string >::UniqueType LoadPlayerData( uint32 zone_id, uint64 playeid );
+        KFResult<std::string>::UniqueType LoadPlayerData( uint32 zone_id, uint64 playeid );
 
     protected:
         // 初始化
@@ -57,7 +57,7 @@ namespace KFrame
         virtual bool SaveData( uint32 zone_id, uint64 playerid, const std::string& playerdata, uint32 saveflag ) = 0;
 
         // 读取数据
-        virtual KFResult< std::string >::UniqueType LoadData( uint32 zone_id, uint64 playerid ) = 0;
+        virtual KFResult<std::string>::UniqueType LoadData( uint32 zone_id, uint64 playerid ) = 0;
 
     public:
         // 数据配置
@@ -78,7 +78,7 @@ namespace KFrame
         virtual bool SaveData( uint32 zone_id, uint64 playerid, const std::string& playerdata, uint32 saveflag );
 
         // 读取玩家数据
-        virtual KFResult< std::string >::UniqueType LoadData( uint32 zone_id, uint64 playerid );
+        virtual KFResult<std::string>::UniqueType LoadData( uint32 zone_id, uint64 playerid );
     };
     ///////////////////////////////////////////////////////////////////////////////////
     class KFMongoDriver;
@@ -92,7 +92,7 @@ namespace KFrame
         virtual bool SaveData( uint32 zone_id, uint64 playerid, const std::string& playerdata, uint32 saveflag );
 
         // 读取玩家数据
-        virtual KFResult< std::string >::UniqueType LoadData( uint32 zone_id, uint64 playerid );
+        virtual KFResult<std::string>::UniqueType LoadData( uint32 zone_id, uint64 playerid );
     };
     ///////////////////////////////////////////////////////////////////////////////////
     class KFMySQLDataExecute : public KFDataExecute
@@ -105,7 +105,7 @@ namespace KFrame
         virtual bool SaveData( uint32 zone_id, uint64 playerid, const std::string& playerdata, uint32 saveflag );
 
         // 读取玩家数据
-        virtual KFResult< std::string >::UniqueType LoadData( uint32 zone_id, uint64 playerid );
+        virtual KFResult<std::string>::UniqueType LoadData( uint32 zone_id, uint64 playerid );
     };
     ///////////////////////////////////////////////////////////////////////////////////
 }

@@ -25,25 +25,25 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 创建Execute
-        virtual KFMongoDriver* Create( const std::string& module, uint32 logicid = 0 );
+        virtual std::shared_ptr<KFMongoDriver> Create( const std::string& module, uint32 logic_id = 0 );
 
     protected:
         // 查找mongo配置
-        const KFMongoConnectOption* FindMongoConnectOption( const std::string& module, uint32 logicid );
+        const KFMongoConnectOption* FindMongoConnectOption( const std::string& module, uint32 logic_id );
 
         // 查询
-        KFMongoLogic* FindMongoLogic( uint32 id );
+        std::shared_ptr<KFMongoLogic> FindMongoLogic( uint32 id );
 
         // 插入
-        void InsertMongoLogic( uint32 id, KFMongoLogic* kflogic );
+        void InsertMongoLogic( uint32 id, std::shared_ptr<KFMongoLogic> mongo_logic );
 
     private:
         // 互斥量
-        KFMutex _kf_mongo_mutex;
+        KFMutex _mongo_mutex;
 
         // 数据库列表
-        typedef std::pair< uint32, uint32 > MongoKey;
-        KFMap< MongoKey, KFMongoLogic > _mongo_logic_map;
+        typedef std::pair<ThreadId, uint32> MongoKey;
+        KFMap<MongoKey, KFMongoLogic> _mongo_logic_map;
     };
 }
 

@@ -60,11 +60,11 @@ namespace KFrame
     {
     public:
         // redis 连接配置
-        std::vector< KFMongoConnectOption > _connect_option;
+        std::vector<KFMongoConnectOption> _connect_option;
     };
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
-    class KFMongoConfig : public KFConfigT< KFMongoSetting >, public KFInstance< KFMongoConfig >
+    class KFMongoConfig : public KFConfigT<KFMongoSetting>, public KFInstance<KFMongoConfig>
     {
     public:
         KFMongoConfig()
@@ -74,7 +74,7 @@ namespace KFrame
         }
 
     public:
-        virtual void ReadSetting( KFXmlNode& xml_node, KFMongoSetting* setting )
+        virtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KFMongoSetting> setting )
         {
             KFMongoConnectOption option;
             option._min_logic_id = xml_node.ReadUInt32( "minid" );

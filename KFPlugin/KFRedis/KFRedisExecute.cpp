@@ -169,7 +169,7 @@ namespace KFrame
         return result;
     }
 
-    KFResult< uint64 >::UniqueType KFRedisWriteExecute::WriteUInt64( const std::string& strsql )
+    KFResult<uint64>::UniqueType KFRedisWriteExecute::WriteUInt64( const std::string& strsql )
     {
         __NEW_RESULT__( uint64 );
         auto redisreply = TryExecute( strsql );
@@ -195,7 +195,7 @@ namespace KFrame
         return result;
     }
 
-    KFResult< std::string >::UniqueType KFRedisWriteExecute::WriteString( const std::string& strsql )
+    KFResult<std::string>::UniqueType KFRedisWriteExecute::WriteString( const std::string& strsql )
     {
         __NEW_RESULT__( std::string );
         auto redisreply = TryExecute( strsql );
@@ -212,7 +212,7 @@ namespace KFrame
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    KFResult< uint64 >::UniqueType KFRedisReadExecute::ReadUInt64( const std::string& strsql )
+    KFResult<uint64>::UniqueType KFRedisReadExecute::ReadUInt64( const std::string& strsql )
     {
         __NEW_RESULT__( uint64 );
         auto redisreply = TryExecute( strsql );
@@ -239,7 +239,7 @@ namespace KFrame
         return result;
     }
 
-    KFResult< std::string >::UniqueType KFRedisReadExecute::ReadString( const std::string& strsql )
+    KFResult<std::string>::UniqueType KFRedisReadExecute::ReadString( const std::string& strsql )
     {
         __NEW_RESULT__( std::string );
         auto redisreply = TryExecute( strsql );
@@ -303,7 +303,7 @@ namespace KFrame
         return result;
     }
 
-    KFResult< StringList >::UniqueType KFRedisReadExecute::ReadList( const std::string& strsql )
+    KFResult<StringList>::UniqueType KFRedisReadExecute::ReadList( const std::string& strsql )
     {
         __NEW_RESULT__( StringList );
         auto redisreply = TryExecute( strsql );

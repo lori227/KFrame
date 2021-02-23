@@ -60,8 +60,8 @@ namespace KFrame
         virtual ~KFRedisWriteExecute() = default;
 
         KFResult< voidptr >::UniqueType WriteVoid( const std::string& strsql );
-        KFResult< uint64 >::UniqueType WriteUInt64( const std::string& strsql );
-        KFResult< std::string >::UniqueType WriteString( const std::string& strsql );
+        KFResult<uint64>::UniqueType WriteUInt64( const std::string& strsql );
+        KFResult<std::string>::UniqueType WriteString( const std::string& strsql );
         /////////////////////////////////////////////////////////////////////////////////////////////
     };
     /////////////////////////////////////////////////////////////////////////////////////////////
@@ -73,11 +73,11 @@ namespace KFrame
         virtual ~KFRedisReadExecute() = default;
 
         ///////////////////////////////////////////////////////
-        KFResult< uint64 >::UniqueType ReadUInt64( const std::string& strsql );
-        KFResult< std::string >::UniqueType ReadString( const std::string& strsql );
+        KFResult<uint64>::UniqueType ReadUInt64( const std::string& strsql );
+        KFResult<std::string>::UniqueType ReadString( const std::string& strsql );
         KFResult< StringMap >::UniqueType ReadMap( const std::string& strsql );
         KFResult< StringPair >::UniqueType ReadPair( const std::string& strsql );
-        KFResult< StringList >::UniqueType ReadList( const std::string& strsql );
+        KFResult<StringList>::UniqueType ReadList( const std::string& strsql );
         KFResult< StringVector >::UniqueType ReadVector( const std::string& strsql );
         KFResult< StringMapList >::UniqueType ReadMapList( const std::string& strsql );
         KFResult< StringPairList >::UniqueType ReadPairList( const std::string& strsql );

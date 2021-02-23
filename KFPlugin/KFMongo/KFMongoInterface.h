@@ -10,7 +10,7 @@ namespace KFrame
     {
     public:
         // 创建Execute
-        virtual KFMongoDriver* Create( const std::string& module, uint32 logicid = 0 ) = 0;
+        virtual std::shared_ptr<KFMongoDriver> Create( const std::string& module, uint32 logic_id = 0 ) = 0;
 
     };
     ///////////////////////////////////////////////////////////////////////////////////////////////

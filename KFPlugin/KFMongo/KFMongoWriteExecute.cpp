@@ -2,73 +2,73 @@
 
 namespace KFrame
 {
-    void KFMongoWriteExecute::AddExpireTime( Document& pocodocument, uint64 value, const KFDBValue& dbvalue )
+    void KFMongoWriteExecute::AddExpireTime( Document& poco_document, uint64 value, const KFDBValue& db_value )
     {
-        auto now_time = dbvalue.FindValue( __STRING__( time ) );
+        auto now_time = db_value.FindValue( __STRING__( time ) );
         if ( now_time == 0u )
         {
             now_time = KFGlobal::Instance()->_real_time;
         }
 
-        Poco::Timestamp timestmp( ( now_time + value ) * 1000000 );
-        pocodocument.add( MongoKeyword::_expire, timestmp );
+        Poco::Timestamp timestamp( ( now_time + value ) * 1000000 );
+        poco_document.add( MongoKeyword::_expire, timestamp );
     }
 
-    void KFMongoWriteExecute::AddDBValue( Document& pocodocument, const KFDBValue& dbvalue )
+    void KFMongoWriteExecute::AddDBValue( Document& poco_document, const KFDBValue& db_value )
     {
-        for ( auto& iter : dbvalue._int_list )
+        for ( auto& iter : db_value._int_list )
         {
             auto& name = iter.first;
             if ( name == MongoKeyword::_expire )
             {
-                AddExpireTime( pocodocument, iter.second, dbvalue );
+                AddExpireTime( poco_document, iter.second, db_value );
             }
             else
             {
-                pocodocument.add( name, iter.second );
+                poco_document.add( name, iter.second );
             }
         }
 
-        for ( auto& iter : dbvalue._str_list )
+        for ( auto& iter : db_value._str_list )
         {
-            pocodocument.add( iter.first, iter.second );
+            poco_document.add( iter.first, iter.second );
         }
 
-        for ( auto& iter : dbvalue._bin_list )
+        for ( auto& iter : db_value._bin_list )
         {
             Poco::MongoDB::Binary::Ptr binary = new Poco::MongoDB::Binary( iter.second );
-            pocodocument.add( iter.first, binary );
+            poco_document.add( iter.first, binary );
         }
     }
 
-    bool KFMongoWriteExecute::Insert( const std::string& table, const KFDBValue& dbvalue )
+    bool KFMongoWriteExecute::Insert( const std::string& table, const KFDBValue& db_value )
     {
         auto fullname = __FORMAT__( "{}.{}", _database, table );
         InsertRequest request( fullname, InsertRequest::INSERT_DEFAULT );
 
         // values
-        AddDBValue( request.addNewDocument(), dbvalue );
+        AddDBValue( request.addNewDocument(), db_value );
 
         return SendRequest( request );
     }
 
-    bool KFMongoWriteExecute::Update( const std::string& table, const KFDBValue& dbvalue )
+    bool KFMongoWriteExecute::Update( const std::string& table, const KFDBValue& db_value )
     {
-        static KFMongoSelector kfseletor;
-        return Update( table, dbvalue, kfseletor );
+        static KFMongoSelector selector_data;
+        return Update( table, db_value, selector_data );
     }
 
-    bool KFMongoWriteExecute::Update( const std::string& table, const KFDBValue& dbvalue, const KFMongoSelector& kfseletor )
+    bool KFMongoWriteExecute::Update( const std::string& table, const KFDBValue& db_value, const KFMongoSelector& selector_data )
     {
         auto fullname = __FORMAT__( "{}.{}", _database, table );
         UpdateRequest request( fullname, UpdateRequest::UPDATE_MULTIUPDATE );
 
         // seletor
-        AddPocoDocument( request.selector(), kfseletor );
+        AddPocoDocument( request.selector(), selector_data );
 
         // values
         Poco::MongoDB::Document::Ptr update = new Poco::MongoDB::Document();
-        AddDBValue( *update, dbvalue );
+        AddDBValue( *update, db_value );
         request.update().add( MongoKeyword::_set, update );
 
         return SendRequest( request );
@@ -81,12 +81,12 @@ namespace KFrame
         return SendRequest( request );
     }
 
-    bool KFMongoWriteExecute::Delete( const std::string& table, const KFMongoSelector& kfselector )
+    bool KFMongoWriteExecute::Delete( const std::string& table, const KFMongoSelector& selector_data )
     {
         auto fullname = __FORMAT__( "{}.{}", _database, table );
         DeleteRequest request( fullname, DeleteRequest::DELETE_DEFAULT );
 
-        AddPocoDocument( request.selector(), kfselector );
+        AddPocoDocument( request.selector(), selector_data );
 
         return SendRequest( request );
     }

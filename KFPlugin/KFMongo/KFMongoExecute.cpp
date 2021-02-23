@@ -4,12 +4,12 @@ namespace KFrame
 {
     /////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////
-    void KFMongoExecute::InitMongo( const KFMongoConnectOption* connectoption, const KFMongoConnnectData* connectdata )
+    void KFMongoExecute::InitMongo( const KFMongoConnectOption* connect_option, const KFMongoConnnectData* connect_data )
     {
-        return KFMongo::InitMongo( connectoption, connectdata );
+        return KFMongo::InitMongo( connect_option, connect_data );
     }
 
-    bool KFMongoExecute::IsIndexCreate( const std::string& table, const std::string& indexname )
+    bool KFMongoExecute::IsIndexCreate( const std::string& table, const std::string& index_name )
     {
         auto iter = _table_index_list.find( table );
         if ( iter == _table_index_list.end() )
@@ -17,12 +17,12 @@ namespace KFrame
             return false;
         }
 
-        return iter->second.find( indexname ) != iter->second.end();
+        return iter->second.find( index_name ) != iter->second.end();
     }
 
-    bool KFMongoExecute::CreateIndex( const std::string& table, const std::string& indexname, const MongoIndexType& values, bool unique, uint32 ttl )
+    bool KFMongoExecute::CreateIndex( const std::string& table, const std::string& index_name, const MongoIndexType& values, bool unique, uint32 ttl )
     {
-        if ( IsIndexCreate( table, indexname ) )
+        if ( IsIndexCreate( table, index_name ) )
         {
             return true;
         }
@@ -36,8 +36,8 @@ namespace KFrame
             }
 
             Poco::MongoDB::Database db( _database );
-            auto newindexname = __FORMAT__( "idx_{}", indexname );
-            auto doc = db.ensureIndex( *_connection, table, newindexname, temp, unique, false, 0, ttl );
+            auto new_index_name = __FORMAT__( "idx_{}", index_name );
+            auto doc = db.ensureIndex( *_connection, table, new_index_name, temp, unique, false, 0, ttl );
             bool err = doc->get( "err" ).isNull();
             if ( !err )
             {
@@ -53,43 +53,43 @@ namespace KFrame
         return false;
     }
 
-    void KFMongoExecute::AddPocoDocument( Document& pocodocument, const KFMongoSelector& kfselector )
+    void KFMongoExecute::AddPocoDocument( Document& poco_document, const KFMongoSelector& selector_data )
     {
-        if ( kfselector._key != 0u )
+        if ( selector_data._key != 0u )
         {
-            pocodocument.add( MongoKeyword::_id, kfselector._key );
+            poco_document.add( MongoKeyword::_id, selector_data._key );
         }
 
-        auto kfdocument = &kfselector._document;
-        if ( !kfdocument->_int_expressions.empty() ||
-                !kfdocument->_str_expressions.empty() ||
-                !kfdocument->_documents.empty() )
+        auto mongo_document = &selector_data._document;
+        if ( !mongo_document->_int_expressions.empty() ||
+                !mongo_document->_str_expressions.empty() ||
+                !mongo_document->_documents.empty() )
         {
             Poco::MongoDB::Array::Ptr array = new Poco::MongoDB::Array();
-            AddPocoDocument( *array, kfdocument );
-            pocodocument.add( kfdocument->_condition, array );
+            AddPocoDocument( *array, mongo_document );
+            poco_document.add( mongo_document->_condition, array );
         }
     }
 
-    void KFMongoExecute::AddPocoDocument( Document& pocodocument, const KFMongoDocument* kfdocument )
+    void KFMongoExecute::AddPocoDocument( Document& poco_document, const KFMongoDocument* mongo_document )
     {
-        for ( auto expression : kfdocument->_int_expressions )
+        for ( auto expression : mongo_document->_int_expressions )
         {
             Poco::MongoDB::Document::Ptr temp = new Poco::MongoDB::Document();
             AddDocumentValue( *temp, expression );
-            pocodocument.add( __TO_STRING__( pocodocument.size() ), temp );
+            poco_document.add( __TO_STRING__( poco_document.size() ), temp );
         }
 
-        for ( auto expression : kfdocument->_str_expressions )
+        for ( auto expression : mongo_document->_str_expressions )
         {
             Poco::MongoDB::Document::Ptr temp = new Poco::MongoDB::Document();
             AddDocumentValue( *temp, expression );
-            pocodocument.add( __TO_STRING__( pocodocument.size() ), temp );
+            poco_document.add( __TO_STRING__( poco_document.size() ), temp );
         }
 
-        for ( auto document : kfdocument->_documents )
+        for ( auto document : mongo_document->_documents )
         {
-            AddPocoDocument( pocodocument, document );
+            AddPocoDocument( poco_document, document );
         }
     }
 }

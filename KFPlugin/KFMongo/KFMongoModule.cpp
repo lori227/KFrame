@@ -4,72 +4,69 @@ namespace KFrame
 {
     void KFMongoModule::ShutDown()
     {
-        KFLocker lock( _kf_mongo_mutex );
+        KFLocker lock( _mongo_mutex );
         for ( auto& iter : _mongo_logic_map._objects )
         {
-            auto kflogic = iter.second;
-            kflogic->ShutDown();
+            iter.second->ShutDown();
         }
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    const KFMongoConnectOption* KFMongoModule::FindMongoConnectOption( const std::string& module, uint32 logicid )
+    const KFMongoConnectOption* KFMongoModule::FindMongoConnectOption( const std::string& module, uint32 logic_id )
     {
         auto setting = KFMongoConfig::Instance()->FindSetting( module );
         if ( setting == nullptr )
         {
-            __LOG_ERROR__( "[{}:{}] can't find mongo setting", module, logicid );
+            __LOG_ERROR__( "[{}:{}] can't find mongo setting", module, logic_id );
             return nullptr;
         }
 
-        for ( auto& connectoption : setting->_connect_option )
+        for ( auto& connect_option : setting->_connect_option )
         {
-            if ( logicid >= connectoption._min_logic_id && logicid <= connectoption._max_logic_id )
+            if ( logic_id >= connect_option._min_logic_id && logic_id <= connect_option._max_logic_id )
             {
-                return &connectoption;
+                return &connect_option;
             }
         }
 
         return nullptr;
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    KFMongoLogic* KFMongoModule::FindMongoLogic( uint32 id )
+    std::shared_ptr<KFMongoLogic> KFMongoModule::FindMongoLogic( uint32 logic_id )
     {
-        auto threadid = KFThread::GetThreadID();
-        auto key = MongoKey( threadid, id );
+        auto thread_id = KFThread::GetID();
+        auto key = MongoKey( thread_id, logic_id );
 
-        KFLocker lock( _kf_mongo_mutex );
+        KFLocker lock( _mongo_mutex );
         return _mongo_logic_map.Find( key );
     }
 
-    void KFMongoModule::InsertMongoLogic( uint32 id, KFMongoLogic* kflogic )
+    void KFMongoModule::InsertMongoLogic( uint32 logic_id, std::shared_ptr<KFMongoLogic> mongo_logic )
     {
-        auto threadid = KFThread::GetThreadID();
-        auto key = MongoKey( threadid, id );
+        auto thread_id = KFThread::GetID();
+        auto key = MongoKey( thread_id, logic_id );
 
-        KFLocker lock( _kf_mongo_mutex );
-        _mongo_logic_map.Insert( key, kflogic );
+        KFLocker lock( _mongo_mutex );
+        _mongo_logic_map.Insert( key, mongo_logic );
     }
 
-    KFMongoDriver* KFMongoModule::Create( const std::string& module, uint32 logicid /* = 0 */ )
+    std::shared_ptr<KFMongoDriver> KFMongoModule::Create( const std::string& module, uint32 logic_id /* = 0 */ )
     {
-        auto kfmongooption = FindMongoConnectOption( module, logicid );
-        if ( kfmongooption == nullptr )
+        auto mongo_option = FindMongoConnectOption( module, logic_id );
+        if ( mongo_option == nullptr )
         {
-            __LOG_ERROR__( "[{}:{}] can't find mongo option", module, logicid );
+            __LOG_ERROR__( "[{}:{}] can't find mongo option", module, logic_id );
             return nullptr;
         }
 
-        auto kflogic = FindMongoLogic( kfmongooption->_runtime_id );
-        if ( kflogic != nullptr )
+        auto mongo_logic = FindMongoLogic( mongo_option->_runtime_id );
+        if ( mongo_logic == nullptr )
         {
-            return kflogic;
+            mongo_logic = __MAKE_SHARED__( KFMongoLogic );
+            mongo_logic->Initialize( module, mongo_option );
+            InsertMongoLogic( mongo_option->_runtime_id, mongo_logic );
         }
 
-        kflogic = __KF_NEW__( KFMongoLogic );
-        kflogic->Initialize( module, kfmongooption );
-        InsertMongoLogic( kfmongooption->_runtime_id, kflogic );
-
-        return kflogic;
+        return mongo_logic;
     }
 
 }
