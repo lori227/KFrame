@@ -1,7 +1,7 @@
 #ifndef __KF_MEMORY_DEFINE_H__
 #define __KF_MEMORY_DEFINE_H__
-
 #include "KFDefine.h"
+
 namespace KFrame
 {
     // 内存数据
@@ -19,7 +19,7 @@ namespace KFrame
     class MemoryLogData
     {
     public:
-        // 当前使用数量
+        // 当前申请的次数
         uint32 _count = 0;
 
         // 当前使用的总量
@@ -31,10 +31,10 @@ namespace KFrame
     class KFThreadBuffer
     {
     public:
-        // 长度
+        // 大小
         uint32 _length = 0;
 
-        // 数据块
+        // 数据
         T* _data = nullptr;
     };
 
