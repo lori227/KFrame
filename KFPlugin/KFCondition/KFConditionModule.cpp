@@ -141,7 +141,7 @@ namespace KFrame
         return result;
     }
 
-    void KFConditionModule::AddCondition( KFEntity* kfentity, DataPtr kfconditionobject, const DynamicConditionGroupPtr& conditiongroup )
+    void KFConditionModule::AddCondition( EntityPtr kfentity, DataPtr kfconditionobject, const DynamicConditionGroupPtr& conditiongroup )
     {
         if ( conditiongroup->_id_list.empty() )
         {
@@ -227,12 +227,12 @@ namespace KFrame
     }\
     return complete;\
 
-    bool KFConditionModule::InitCondition( KFEntity* kfentity, DataPtr kfconditionobject, bool update )
+    bool KFConditionModule::InitCondition( EntityPtr kfentity, DataPtr kfconditionobject, bool update )
     {
         __CHECK_CONDITION__( InitConditionData( kfentity, kfcondition, update ) );
     }
 
-    uint32 KFConditionModule::InitConditionData( KFEntity* kfentity, DataPtr kfcondition, bool update )
+    uint32 KFConditionModule::InitConditionData( EntityPtr kfentity, DataPtr kfcondition, bool update )
     {
         // 限制条件初始化
         {
@@ -295,7 +295,7 @@ namespace KFrame
         return KFConditionEnum::UpdateOk;
     }
 
-    std::list< DataPtr >& KFConditionModule::FindRecordList( KFEntity* kfentity, const std::string& name )
+    std::list< DataPtr >& KFConditionModule::FindRecordList( EntityPtr kfentity, const std::string& name )
     {
         static std::list< DataPtr > _recrods;
         _recrods.clear();
@@ -319,7 +319,7 @@ namespace KFrame
         return _recrods;
     }
 
-    uint32 KFConditionModule::InitCalcRecordCount( KFEntity* kfentity, DataPtr kfcondition, const KFConditionSetting* kfsetting )
+    uint32 KFConditionModule::InitCalcRecordCount( EntityPtr kfentity, DataPtr kfcondition, const KFConditionSetting* kfsetting )
     {
         auto recordcount = 0u;
         auto& kfrecords = FindRecordList( kfentity, kfsetting->_condition._condition_define->_parent_name );
@@ -340,7 +340,7 @@ namespace KFrame
     }
 
 
-    uint32 KFConditionModule::InitCalcRecordValue( KFEntity* kfentity, DataPtr kfcondition, const KFConditionSetting* kfsetting )
+    uint32 KFConditionModule::InitCalcRecordValue( EntityPtr kfentity, DataPtr kfcondition, const KFConditionSetting* kfsetting )
     {
         auto recordvalue = 0u;
         auto& kfrecords = FindRecordList( kfentity, kfsetting->_condition._condition_define->_parent_name );
@@ -360,7 +360,7 @@ namespace KFrame
         return recordvalue;
     }
 
-    uint32 KFConditionModule::InitCalcRecordExist( KFEntity* kfentity, DataPtr kfcondition, const KFConditionSetting* kfsetting )
+    uint32 KFConditionModule::InitCalcRecordExist( EntityPtr kfentity, DataPtr kfcondition, const KFConditionSetting* kfsetting )
     {
         auto& kfrecords = FindRecordList( kfentity, kfsetting->_condition._condition_define->_parent_name );
         //for ( auto kfrecord : kfrecords )
@@ -384,7 +384,7 @@ namespace KFrame
         return 0u;
     }
 
-    uint32 KFConditionModule::InitCalcGetValue( KFEntity* kfentity, DataPtr kfcondition, const KFConditionSetting* kfsetting )
+    uint32 KFConditionModule::InitCalcGetValue( EntityPtr kfentity, DataPtr kfcondition, const KFConditionSetting* kfsetting )
     {
         if ( kfsetting->_condition._condition_define->_parent_name == __STRING__( player ) )
         {
@@ -410,7 +410,7 @@ namespace KFrame
         return recordvalue;
     }
 
-    uint32 KFConditionModule::CheckConditionData( KFEntity* kfentity, DataPtr kfcondition )
+    uint32 KFConditionModule::CheckConditionData( EntityPtr kfentity, DataPtr kfcondition )
     {
         auto conditionid = kfcondition->Get( kfcondition->_data_setting->_config_key_name );
         auto kfsetting = KFConditionConfig::Instance()->FindSetting( conditionid );
@@ -430,27 +430,27 @@ namespace KFrame
         return KFConditionEnum::UpdateOk;
     }
 
-    bool KFConditionModule::CheckCondition( KFEntity* kfentity, DataPtr kfconditionobject )
+    bool KFConditionModule::CheckCondition( EntityPtr kfentity, DataPtr kfconditionobject )
     {
         __CHECK_CONDITION__( CheckConditionData( kfentity, kfcondition ) );
     }
 
-    bool KFConditionModule::UpdateCondition( KFEntity* kfentity, DataPtr kfconditionobject, uint32 conditionid, uint32 operate, uint32 conditionvalue )
+    bool KFConditionModule::UpdateCondition( EntityPtr kfentity, DataPtr kfconditionobject, uint32 conditionid, uint32 operate, uint32 conditionvalue )
     {
         __CHECK_CONDITION__( UpdateConditionData( kfentity, kfcondition, conditionid, operate, conditionvalue ) );
     }
 
-    bool KFConditionModule::UpdateAddCondition( KFEntity* kfentity, DataPtr kfconditionobject, DataPtr kfdata )
+    bool KFConditionModule::UpdateAddCondition( EntityPtr kfentity, DataPtr kfconditionobject, DataPtr kfdata )
     {
         __CHECK_CONDITION__( UpdateAddConditionData( kfentity, kfcondition, kfdata ) );
     }
 
-    bool KFConditionModule::UpdateRemoveCondition( KFEntity* kfentity, DataPtr kfconditionobject, DataPtr kfdata )
+    bool KFConditionModule::UpdateRemoveCondition( EntityPtr kfentity, DataPtr kfconditionobject, DataPtr kfdata )
     {
         __CHECK_CONDITION__( UpdateRemoveConditionData( kfentity, kfcondition, kfdata ) );
     }
 
-    bool KFConditionModule::UpdateUpdateCondition( KFEntity* kfentity, DataPtr kfconditionobject, DataPtr kfdata, uint32 operate, uint64 value, uint64 nowvalue )
+    bool KFConditionModule::UpdateUpdateCondition( EntityPtr kfentity, DataPtr kfconditionobject, DataPtr kfdata, uint32 operate, uint64 value, uint64 nowvalue )
     {
         __CHECK_CONDITION__( UpdateUpdateConditionData( kfentity, kfcondition, kfdata, operate, value, nowvalue ) );
     }
@@ -508,7 +508,7 @@ namespace KFrame
     }\
     return KFConditionEnum::UpdateOk; \
 
-    uint32 KFConditionModule::UpdateAddConditionData( KFEntity* kfentity, DataPtr kfcondition, DataPtr kfdata )
+    uint32 KFConditionModule::UpdateAddConditionData( EntityPtr kfentity, DataPtr kfcondition, DataPtr kfdata )
     {
         // 前置条件
         {
@@ -523,7 +523,7 @@ namespace KFrame
         __UPDATE_CONDITION__( CalcAddConditionValue( kfentity, kfsetting->_condition._condition_define, kfdata ), kfdata );
     }
 
-    uint32 KFConditionModule::UpdateRemoveConditionData( KFEntity* kfentity, DataPtr kfcondition, DataPtr kfdata )
+    uint32 KFConditionModule::UpdateRemoveConditionData( EntityPtr kfentity, DataPtr kfcondition, DataPtr kfdata )
     {
         // 前置条件
         {
@@ -538,7 +538,7 @@ namespace KFrame
         __UPDATE_CONDITION__( CalcRemoveConditionValue( kfentity, kfsetting->_condition._condition_define, kfdata ), kfdata );
     }
 
-    uint32 KFConditionModule::UpdateUpdateConditionData( KFEntity* kfentity, DataPtr kfcondition, DataPtr kfdata, uint32 operate, uint64 value, uint64 nowvalue )
+    uint32 KFConditionModule::UpdateUpdateConditionData( EntityPtr kfentity, DataPtr kfcondition, DataPtr kfdata, uint32 operate, uint64 value, uint64 nowvalue )
     {
         // 前置条件
         {
@@ -553,7 +553,7 @@ namespace KFrame
         __UPDATE_CONDITION__( CalcUpdateConditionValue( kfentity, kfsetting->_condition._condition_define, kfdata, operate, value, nowvalue ), kfdata->GetParent() );
     }
 
-    std::tuple<uint32, uint32> KFConditionModule::CalcAddConditionValue( KFEntity* kfentity, const KFConditionDefineSetting* kfsetting, DataPtr kfdata )
+    std::tuple<uint32, uint32> KFConditionModule::CalcAddConditionValue( EntityPtr kfentity, const KFConditionDefineSetting* kfsetting, DataPtr kfdata )
     {
         if ( kfdata->_data_setting->_name != kfsetting->_parent_name &&
                 kfdata->_data_setting->_logic_name != kfsetting->_parent_name )
@@ -584,7 +584,7 @@ namespace KFrame
         return std::make_tuple( 0u, 0u );
     }
 
-    std::tuple<uint32, uint32> KFConditionModule::CalcRemoveConditionValue( KFEntity* kfentity, const KFConditionDefineSetting* kfsetting, DataPtr kfdata )
+    std::tuple<uint32, uint32> KFConditionModule::CalcRemoveConditionValue( EntityPtr kfentity, const KFConditionDefineSetting* kfsetting, DataPtr kfdata )
     {
         if ( kfdata->_data_setting->_name != kfsetting->_parent_name &&
                 kfdata->_data_setting->_logic_name != kfsetting->_parent_name )
@@ -615,7 +615,7 @@ namespace KFrame
         return std::make_tuple( 0u, 0u );
     }
 
-    std::tuple<uint32, uint32> KFConditionModule::CalcUpdateConditionValue( KFEntity* kfentity, const KFConditionDefineSetting* kfsetting, DataPtr kfdata, uint32 operate, uint64 value, uint64 nowvalue )
+    std::tuple<uint32, uint32> KFConditionModule::CalcUpdateConditionValue( EntityPtr kfentity, const KFConditionDefineSetting* kfsetting, DataPtr kfdata, uint32 operate, uint64 value, uint64 nowvalue )
     {
         if ( ( kfdata->GetParent()->_data_setting->_name != kfsetting->_parent_name && kfdata->GetParent()->_data_setting->_logic_name != kfsetting->_parent_name ) )
         {
@@ -645,7 +645,7 @@ namespace KFrame
         return std::make_tuple( 0u, 0u );
     }
 
-    uint32 KFConditionModule::UpdateConditionData( KFEntity* kfentity, DataPtr kfcondition, uint32 conditionid, uint32 operate, uint32 conditionvalue )
+    uint32 KFConditionModule::UpdateConditionData( EntityPtr kfentity, DataPtr kfcondition, uint32 conditionid, uint32 operate, uint32 conditionvalue )
     {
         auto updateconditionid = kfcondition->GetKeyID();
         auto kfsetting = KFConditionConfig::Instance()->FindSetting( updateconditionid );
@@ -673,7 +673,7 @@ namespace KFrame
         return KFConditionEnum::UpdateOk;
     }
 
-    void KFConditionModule::SaveConditionDataUUid( KFEntity* kfentity, DataPtr kfcondition, DataPtr kfdata, const KFConditionDefineSetting* kfsetting )
+    void KFConditionModule::SaveConditionDataUUid( EntityPtr kfentity, DataPtr kfcondition, DataPtr kfdata, const KFConditionDefineSetting* kfsetting )
     {
         if ( !kfsetting->_save_uuid )
         {
@@ -693,7 +693,7 @@ namespace KFrame
         kfuuidrecord->Add( uuid, kfuuid );
     }
 
-    bool KFConditionModule::CheckUUidInConditionData( KFEntity* kfentity, DataPtr kfcondition, DataPtr kfdata, const KFConditionDefineSetting* kfsetting )
+    bool KFConditionModule::CheckUUidInConditionData( EntityPtr kfentity, DataPtr kfcondition, DataPtr kfdata, const KFConditionDefineSetting* kfsetting )
     {
         if ( !kfsetting->_save_uuid )
         {

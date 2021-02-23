@@ -84,7 +84,7 @@ namespace KFrame
         EnterLeaveUpdateAttributeToBasic( player );
     }
 
-    void KFBasicClientModule::EnterLeaveUpdateAttributeToBasic( KFEntity* player )
+    void KFBasicClientModule::EnterLeaveUpdateAttributeToBasic( EntityPtr player )
     {
         auto kfbasic = player->Find( __STRING__( basic ) );
 

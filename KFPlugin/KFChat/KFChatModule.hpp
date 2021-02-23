@@ -41,7 +41,7 @@ namespace KFrame
 
     protected:
         // 判断老天请求间隔
-        bool CheckChatIntervalTime( KFEntity* player );
+        bool CheckChatIntervalTime( EntityPtr player );
 
         // 离开游戏
         __KF_PLAYER_LEAVE_FUNCTION__( OnLeaveChatModule );

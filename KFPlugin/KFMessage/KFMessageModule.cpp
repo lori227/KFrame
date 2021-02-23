@@ -4,71 +4,62 @@ namespace KFrame
 {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFMessageModule::AddMessageHandle( KFMessageHandleAbstract* messagehandle )
+    void KFMessageModule::AddMessageHandle( std::shared_ptr<KFMessageHandleAbstract>& message_handle )
     {
-        auto ok = RemoveMessageHandle( messagehandle->_msg_id, messagehandle->GetModule() );
+        auto ok = RemoveMessageHandle( message_handle->_msg_id, message_handle->GetModule() );
         if ( ok )
         {
-            __LOG_ERROR__( "msg_id=[{}] already register", messagehandle->_msg_id );
+            __LOG_ERROR__( "msg_id=[{}] already register", message_handle->_msg_id );
         }
 
-        _handles[ messagehandle->_msg_id ] = messagehandle;
+        _handle_list.Insert( message_handle->_msg_id, message_handle );
     }
 
     bool KFMessageModule::RemoveMessageHandle( uint32 msg_id, KFModule* module )
     {
-        auto iter = _handles.find( msg_id );
-        if ( iter == _handles.end() )
-        {
-            return false;
-        }
-
-        __KF_DELETE__( KFMessageHandleAbstract, iter->second );
-        _handles.erase( iter );
-        return true;
+        return _handle_list.Remove( msg_id ) != nullptr;
     }
 
     bool KFMessageModule::HandleMessage( const Route& route, uint32 msg_id, const char* data, uint32 length )
     {
-        auto iter = _handles.find( msg_id );
-        if ( iter == _handles.end() )
+        auto message_handle = _handle_list.Find( msg_id );
+        if ( message_handle == nullptr )
         {
             return false;
         }
 
-        KFEntity* kfentity = nullptr;
-        auto kfhandle = iter->second;
-        auto findentityfunction = _find_entity_function.Find( kfhandle->_type );
-        if ( findentityfunction != nullptr )
+        EntityPtr entity = nullptr;
+        auto find_entity_function = _find_entity_function.Find( message_handle->_type );
+        if ( find_entity_function != nullptr )
         {
-            kfentity = findentityfunction->_function( route._recv_id );
-            if ( kfentity == nullptr )
+            entity = find_entity_function->CallEx<EntityPtr>( route._recv_id );
+            if ( entity == nullptr )
             {
-                __LOG_WARN__( "msg_id=[{}:{}] can't find entity=[{}]!", kfhandle->_type, kfhandle->_message->GetTypeName(), route._recv_id );
+                __LOG_WARN__( "msg_id=[{}:{}] can't find entity=[{}]!", message_handle->_type, message_handle->_message->GetTypeName(), route._recv_id );
                 return true;
             }
         }
 
-        kfhandle->CallFunction( kfentity, route, data, length );
+        message_handle->CallFunction( entity, route, data, length );
         return true;
     }
 
     bool KFMessageModule::OpenFunction( uint32 msg_id, bool open )
     {
-        auto iter = _handles.find( msg_id );
-        if ( iter == _handles.end() )
+        auto message_handle = _handle_list.Find( msg_id );
+        if ( message_handle == nullptr )
         {
             return false;
         }
 
-        iter->second->OpenFunction( open );
+        message_handle->OpenFunction( open );
         return true;
     }
 
     void KFMessageModule::BindFindEntityFunction( uint32 type, KFModule* module, KFFindEntityFunction& function )
     {
-        auto kffunction = _find_entity_function.Create( type );
-        kffunction->SetFunction( module, function );
+        auto module_function = _find_entity_function.Create( type );
+        module_function->SetFunction( module, function );
     }
 
     void KFMessageModule::UnBindFindEntityFunction( uint32 type )

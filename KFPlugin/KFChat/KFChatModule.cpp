@@ -67,7 +67,7 @@ namespace KFrame
         _kf_game->BroadcastToServer( KFMsg::MSG_TELL_SERVER_CHAT, &chat );
     }
 
-    bool KFChatModule::CheckChatIntervalTime( KFEntity* player )
+    bool KFChatModule::CheckChatIntervalTime( EntityPtr player )
     {
         auto iter = _chat_interval_time.find( player->GetKeyID() );
         if ( iter != _chat_interval_time.end() )

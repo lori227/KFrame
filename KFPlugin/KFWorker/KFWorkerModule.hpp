@@ -45,7 +45,7 @@ namespace KFrame
 
     protected:
         // 转发消息到工作线程
-        __KF_TRANSPOND_MESSAGE_FUNCTION__( SendMessageToWorker );
+        __KF_FORWARD_MESSAGE_FUNCTION__( SendMessageToWorker );
 
     protected:
 

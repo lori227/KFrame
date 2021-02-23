@@ -43,7 +43,7 @@ namespace KFrame
         return kfcomponent;
     }
 
-    KFEntity* KFKernelModule::FindEntity( const std::string& data_name, uint64 key, const char* function, uint32 line )
+    EntityPtr KFKernelModule::FindEntity( const std::string& data_name, uint64 key, const char* function, uint32 line )
     {
         auto kfcomponet = FindComponent( data_name );
         return kfcomponet->FindEntity( key, function, line );
@@ -89,7 +89,7 @@ namespace KFrame
         return SerializeObject( kfdata, KFDataDefine::DataMaskSync, false, 0u );
     }
 
-    KFMsg::PBObject* KFKernelModule::SerializeToOnline( KFEntity* kfentity, uint32 delaytime /* = 0u */ )
+    KFMsg::PBObject* KFKernelModule::SerializeToOnline( EntityPtr kfentity, uint32 delaytime /* = 0u */ )
     {
         // 把直接发送的数据返回给客户端
         return SerializeObject( kfentity, KFDataDefine::DataMaskSync, true, delaytime );

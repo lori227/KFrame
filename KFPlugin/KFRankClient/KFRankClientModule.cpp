@@ -72,7 +72,7 @@ namespace KFrame
         return zone_id;
     }
 
-    void KFRankClientModule::UpdateRankDataToShard( KFEntity* player, const KFRankSetting* kfsetting )
+    void KFRankClientModule::UpdateRankDataToShard( EntityPtr player, const KFRankSetting* kfsetting )
     {
         // 计算分区id
         auto playerid = player->GetKeyID();
@@ -110,7 +110,7 @@ namespace KFrame
         _kf_route->RepeatToRand( playerid, __STRING__( rank ), KFMsg::S2S_UPDATE_RANK_DATA_REQ, &req );
     }
 
-    uint64 KFRankClientModule::CalcRankDataScore( KFEntity* player, const KFRankSetting* kfsetting )
+    uint64 KFRankClientModule::CalcRankDataScore( EntityPtr player, const KFRankSetting* kfsetting )
     {
         // 排行榜积分
         uint64 rankscore = 0u;

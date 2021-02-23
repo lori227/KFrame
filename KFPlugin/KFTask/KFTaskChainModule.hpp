@@ -34,13 +34,13 @@ namespace KFrame
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         // 判断是否是任务链任务
-        bool IsTaskChain( KFEntity* player, DataPtr kftask );
+        bool IsTaskChain( EntityPtr player, DataPtr kftask );
 
         // 清除任务链
-        void CleanTaskChain( KFEntity* player, uint32 chainid );
+        void CleanTaskChain( EntityPtr player, uint32 chainid );
 
         // 开启任务链
-        bool OpenTaskChain( KFEntity* player, uint32 chainid, uint32 chainindex, uint32 validtime );
+        bool OpenTaskChain( EntityPtr player, uint32 chainid, uint32 chainindex, uint32 validtime );
     protected:
         // 添加任务链
         __KF_ADD_ELEMENT_FUNCTION__( AddTaskChainElement );
@@ -49,13 +49,13 @@ namespace KFrame
         __KF_REMOVE_DATA_FUNCTION__( OnRemoveTaskTaskChainModule );
 
         // 开启任务链数据
-        bool OpenTaskChainLogicData( KFEntity* player, const TaskChainData* taskchaindata, uint32 chainid, uint32 chainindex, uint32 validtime );
+        bool OpenTaskChainLogicData( EntityPtr player, const TaskChainData* taskchaindata, uint32 chainid, uint32 chainindex, uint32 validtime );
 
         // 开启附加任务链
-        void OpenExtendChain( KFEntity* player, uint32 chainid, const TaskChainData* taskchaindata );
+        void OpenExtendChain( EntityPtr player, uint32 chainid, const TaskChainData* taskchaindata );
 
         // 完成任务链任务
-        void FinishTaskChain( KFEntity* player, DataPtr kftask );
+        void FinishTaskChain( EntityPtr player, DataPtr kftask );
     protected:
         // 玩家组件上下文
         KFComponent* _kf_component = nullptr;

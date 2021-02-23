@@ -39,7 +39,7 @@ namespace KFrame
 
     private:
         // 领取成就奖励
-        uint32 ReceiveAchieveReward( KFEntity* player, uint32 achieveid );
+        uint32 ReceiveAchieveReward( EntityPtr player, uint32 achieveid );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 属性更新回调
         __KF_UPDATE_DATA_FUNCTION__( OnUpdateDataAchieveModule );

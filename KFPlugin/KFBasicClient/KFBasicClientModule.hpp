@@ -48,7 +48,7 @@ namespace KFrame
         __KF_PLAYER_LEAVE_FUNCTION__( OnLeaveUpdateBasicAttribute );
 
         // 上下线更新玩家数据
-        void EnterLeaveUpdateAttributeToBasic( KFEntity* player );
+        void EnterLeaveUpdateAttributeToBasic( EntityPtr player );
 
 
         // 更新公共数据

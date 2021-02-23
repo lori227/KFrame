@@ -50,26 +50,26 @@ namespace KFrame
         void AfterRun();
         //////////////////////////////////////////////////////////////////////////////////////////////
         // 创建实体
-        virtual KFEntity* CreateEntity( uint64 key );
-        virtual KFEntity* CreateEntity( uint64 key, const KFMsg::PBObject* proto );
+        virtual EntityPtr CreateEntity( uint64 key );
+        virtual EntityPtr CreateEntity( uint64 key, const KFMsg::PBObject* proto );
 
         // 添加实体
-        virtual void AddEntity( uint64 key, KFEntity* kfentity );
+        virtual void AddEntity( uint64 key, EntityPtr kfentity );
 
         // 查找实体
-        virtual KFEntity* FindEntity( uint64 key );
-        virtual KFEntity* FindEntity( uint64 key, const char* function, uint32 line );
+        virtual EntityPtr FindEntity( uint64 key );
+        virtual EntityPtr FindEntity( uint64 key, const char* function, uint32 line );
 
         // 删除实体
         virtual bool RemoveEntity( uint64 key );
-        virtual bool RemoveEntity( KFEntity* kfentity );
+        virtual bool RemoveEntity( EntityPtr kfentity );
 
         // 实体数量
         virtual uint32 GetEntityCount();
 
         // 遍历列表
-        virtual KFEntity* FirstEntity();
-        virtual KFEntity* NextEntity();
+        virtual EntityPtr FirstEntity();
+        virtual EntityPtr NextEntity();
 
         // 获得属性列表
         virtual StringVector& GetDataList( const std::string& data_name );
@@ -88,28 +88,28 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////
 
         // 启动保存定时器
-        void StartSaveEntityTimer( KFEntity* kfentity, DataPtr kfdata );
+        void StartSaveEntityTimer( EntityPtr kfentity, DataPtr kfdata );
 
         // 停止保存定时器
-        void DeleteSaveEntity( KFEntity* kfentity );
+        void DeleteSaveEntity( EntityPtr kfentity );
         //////////////////////////////////////////////////////////////////////////////////////
         // 属性更新回调函数
-        void UpdateDataCallBack( KFEntity* kfentity, DataPtr kfdata, const std::string& oldvalue, const std::string& newvalue, bool callback );
-        void UpdateDataCallBack( KFEntity* kfentity, uint64 key, DataPtr kfdata, uint64 index, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue, bool callback );
+        void UpdateDataCallBack( EntityPtr kfentity, DataPtr kfdata, const std::string& oldvalue, const std::string& newvalue, bool callback );
+        void UpdateDataCallBack( EntityPtr kfentity, uint64 key, DataPtr kfdata, uint64 index, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue, bool callback );
 
         // 属性添加回调函数
-        void AddDataCallBack( KFEntity* kfentity, DataPtr kfparent, uint64 key, DataPtr kfdata, bool callback );
+        void AddDataCallBack( EntityPtr kfentity, DataPtr kfparent, uint64 key, DataPtr kfdata, bool callback );
 
         // 属性删除回调函数
-        void RemoveDataCallBack( KFEntity* kfentity, DataPtr kfparent, uint64 key, DataPtr kfdata, bool callback );
+        void RemoveDataCallBack( EntityPtr kfentity, DataPtr kfparent, uint64 key, DataPtr kfdata, bool callback );
 
         // 添加更新的对象
-        void AddSyncEntity( KFEntity* entity );
+        void AddSyncEntity( EntityPtr entity );
 
         ///////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////
-        void CallLogElementFunction( KFEntity* kfentity, const KFElementResult* kfresult );
-        bool CallElementResultFunction( KFEntity* kfentity, const KFElementResult* kfresult );
+        void CallLogElementFunction( EntityPtr kfentity, const KFElementResult* kfresult );
+        bool CallElementResultFunction( EntityPtr kfentity, const KFElementResult* kfresult );
         ///////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////
         virtual void BindCheckAddElementFunction( const std::string& data_name, KFCheckAddElementFunction& function );
@@ -197,16 +197,16 @@ namespace KFrame
         __KF_TIMER_FUNCTION__( OnTimerSaveEntity );
 
         // 初始化
-        void InitEntity( KFEntity* kfentity );
+        void InitEntity( EntityPtr kfentity );
 
         // 卸载
-        void UnInitEntity( KFEntity* kfentity );
+        void UnInitEntity( EntityPtr kfentity );
 
         // 保存
-        void SaveEntity( KFEntity* kfentity, uint32 flag, const char* function, uint32 line );
+        void SaveEntity( EntityPtr kfentity, uint32 flag, const char* function, uint32 line );
 
         // 删除
-        void DeleteEntity( KFEntity* kfentity );
+        void DeleteEntity( EntityPtr kfentity );
 
         // 格式化数据Key
         const DataKeyType& FormatDataKey( DataPtr kfdata );
@@ -281,7 +281,7 @@ namespace KFrame
         KFMapFunction< std::string, KFElementResultFunction > _element_result_function;
     protected:
         // 需要发送消息的对象
-        std::set< KFEntity* > _sync_entitys;
+        std::set< EntityPtr > _sync_entitys;
     public:
         // 组件名称
         std::string _component_name;

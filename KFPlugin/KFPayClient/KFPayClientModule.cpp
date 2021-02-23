@@ -128,7 +128,7 @@ namespace KFrame
         QueryPayData( playerid );
     }
 
-    void KFPayClientModule::StartQueryPayTimer( KFEntity* player )
+    void KFPayClientModule::StartQueryPayTimer( EntityPtr player )
     {
         auto kfpayorder = player->Find( __STRING__( payorder ) );
         auto querytime = kfpayorder->_data_setting->_int_run_param;
@@ -187,7 +187,7 @@ namespace KFrame
         __UN_TIMER_1__( playerid );
     }
 
-    void KFPayClientModule::ProcessPay( KFEntity* player, const std::string& payid, const std::string& order )
+    void KFPayClientModule::ProcessPay( EntityPtr player, const std::string& payid, const std::string& order )
     {
         __LOG_INFO__( "player=[{}] payid=[{}] order=[{}] add element", player->GetKeyID(), payid, order );
 

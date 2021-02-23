@@ -46,14 +46,14 @@ namespace KFrame
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     protected:
         // 初始化
-        void OnEnterStartSkinTimer( KFEntity* player );
-        void OnLeaveStopSkinTimer( KFEntity* player );
+        void OnEnterStartSkinTimer( EntityPtr player );
+        void OnLeaveStopSkinTimer( EntityPtr player );
 
         // 检查启动时间定时器
-        void CheckStartSkinTimer( KFEntity* player );
+        void CheckStartSkinTimer( EntityPtr player );
 
         // 删除超时的皮肤
-        void RemoveInvalidTimeSkin( KFEntity* player );
+        void RemoveInvalidTimeSkin( EntityPtr player );
 
     protected:
         // 检测时间道具

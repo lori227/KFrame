@@ -53,7 +53,7 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFRelationClientModule::SendMessageToRelation( KFEntity* player, const std::string& relationname, uint32 msg_id, google::protobuf::Message* message )
+    void KFRelationClientModule::SendMessageToRelation( EntityPtr player, const std::string& relationname, uint32 msg_id, google::protobuf::Message* message )
     {
         auto kfrecord = player->Find( relationname );
         if ( kfrecord == nullptr )
@@ -195,7 +195,7 @@ namespace KFrame
         }
     }
 
-    void KFRelationClientModule::EnterLeaveUpdateToRelation( KFEntity* player, const std::string& relationname )
+    void KFRelationClientModule::EnterLeaveUpdateToRelation( EntityPtr player, const std::string& relationname )
     {
         auto kfbasic = player->Find( __STRING__( basic ) );
 
@@ -248,14 +248,14 @@ namespace KFrame
         }
     }
 
-    void KFRelationClientModule::UpdateIntValueToRelation( KFEntity* player, const std::string& relationname, const std::string& data_name, uint64 data_value )
+    void KFRelationClientModule::UpdateIntValueToRelation( EntityPtr player, const std::string& relationname, const std::string& data_name, uint64 data_value )
     {
         StringUInt64 values;
         values[ data_name ] = data_value;
         UpdateIntValueToRelation( player, relationname, values );
     }
 
-    void KFRelationClientModule::UpdateIntValueToRelation( KFEntity* player, const std::string& relationname, const StringUInt64& values )
+    void KFRelationClientModule::UpdateIntValueToRelation( EntityPtr player, const std::string& relationname, const StringUInt64& values )
     {
         KFMsg::S2SUpdateIntValueToRelationReq req;
         req.set_relationname( relationname );
@@ -269,7 +269,7 @@ namespace KFrame
         SendMessageToRelation( player, relationname, KFMsg::S2S_UPDATE_INT_VALUE_TO_RELATION_REQ, &req );
     }
 
-    void KFRelationClientModule::UpdateStrValueToRelation( KFEntity* player, const std::string& relationname, const std::string& data_name, const std::string& data_value )
+    void KFRelationClientModule::UpdateStrValueToRelation( EntityPtr player, const std::string& relationname, const std::string& data_name, const std::string& data_value )
     {
         KFMsg::S2SUpdateStrValueToRelationReq req;
         req.set_relationname( relationname );
@@ -448,7 +448,7 @@ namespace KFrame
         }
     }
 
-    void KFRelationClientModule::ReplyRelationAllInvite( KFEntity* player, DataPtr kfinviterecord, const KFRelationSetting* kfsetting, uint32 operate )
+    void KFRelationClientModule::ReplyRelationAllInvite( EntityPtr player, DataPtr kfinviterecord, const KFRelationSetting* kfsetting, uint32 operate )
     {
         UInt64Set removelist;
         for ( auto kfinvite = kfinviterecord->First(); kfinvite != nullptr; kfinvite = kfinviterecord->Next() )
@@ -467,7 +467,7 @@ namespace KFrame
         }
     }
 
-    void KFRelationClientModule::ReplyRelationInvite( KFEntity* player, DataPtr kfinviterecord, const KFRelationSetting* kfsetting, uint32 operate, uint64 playerid )
+    void KFRelationClientModule::ReplyRelationInvite( EntityPtr player, DataPtr kfinviterecord, const KFRelationSetting* kfsetting, uint32 operate, uint64 playerid )
     {
         auto kfinvite = kfinviterecord->Find( playerid );
         if ( kfinvite == nullptr )
@@ -482,7 +482,7 @@ namespace KFrame
         }
     }
 
-    uint64 KFRelationClientModule::ReplyInvite( KFEntity* player, const KFRelationSetting* kfsetting, uint32 operate, DataPtr kfinvite )
+    uint64 KFRelationClientModule::ReplyInvite( EntityPtr player, const KFRelationSetting* kfsetting, uint32 operate, DataPtr kfinvite )
     {
         auto removeid = _invalid_int;
         switch ( operate )
@@ -528,7 +528,7 @@ namespace KFrame
         return removeid;
     }
 
-    void KFRelationClientModule::AddRelationToRelation( KFEntity* player, uint64 playerid, const std::string& playername, DataPtr kfrelationrecord, const KFRelationSetting* kfsetting )
+    void KFRelationClientModule::AddRelationToRelation( EntityPtr player, uint64 playerid, const std::string& playername, DataPtr kfrelationrecord, const KFRelationSetting* kfsetting )
     {
         // 判断数量
         if ( kfrelationrecord->Size() >= kfsetting->_max_count )
@@ -629,7 +629,7 @@ namespace KFrame
         _kf_route->RepeatToRand( kfentity->GetKeyID(), __RELATION_ROUTE_NAME__, KFMsg::S2S_REFUSE_RELATION_TO_RELATION_REQ, &req );
     }
 
-    void KFRelationClientModule::AddFriendLiness( KFEntity* player, uint64 friendid, uint32 type, uint32 value )
+    void KFRelationClientModule::AddFriendLiness( EntityPtr player, uint64 friendid, uint32 type, uint32 value )
     {
         //auto object_data = player->GetData();
         //auto kffriend = player->Find( __STRING__( friend ), friendid );
@@ -654,7 +654,7 @@ namespace KFrame
         //SendToRelation( player->GetKeyID(), KFMsg::S2S_UPDATE_FRIENDLINESS_TO_RELATION_REQ, &req );
     }
 
-    void KFRelationClientModule::AddFriendLinessOnce( KFEntity* player, uint64 friendid, uint32 type, uint32 value )
+    void KFRelationClientModule::AddFriendLinessOnce( EntityPtr player, uint64 friendid, uint32 type, uint32 value )
     {
         // 好友度是双向的, 数据只保存了一条, 所以更新的时候使用id比较小的一个来做逻辑
         if ( player->GetKeyID() > friendid )
@@ -681,7 +681,7 @@ namespace KFrame
         _kf_display->SendToClient( kfentity, KFMsg::FriendLinessAdd, friendname, kfmsg->friendliness() );
     }
 
-    //    void KFRelationClientModule::AddRecentPlayer( KFEntity* player, uint64 roomid, const KFMsg::PBBattleScore* pbscore )
+    //    void KFRelationClientModule::AddRecentPlayer( EntityPtr player, uint64 roomid, const KFMsg::PBBattleScore* pbscore )
     //    {
     //#define __ADD_PB_STRING__( name, value ) \
     //    {\

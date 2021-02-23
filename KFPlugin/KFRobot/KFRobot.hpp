@@ -64,7 +64,7 @@ namespace KFrame
 
         // 角色id
         uint64 _player_id = 0u;
-        KFEntity* _player = nullptr;
+        EntityPtr _player = nullptr;
         KFComponent* _kf_component = nullptr;
 
     private:

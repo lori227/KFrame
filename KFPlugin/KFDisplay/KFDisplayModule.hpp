@@ -29,8 +29,8 @@ namespace KFrame
         virtual void SendToClient( uint64 playerid, uint32 result, StringList& params );
 
         // Game ==> Client
-        virtual void SendToClient( KFEntity* player, uint32 result, StringList& params );
-        virtual void DelayToClient( KFEntity* player, uint32 result, StringList& params );
+        virtual void SendToClient( EntityPtr player, uint32 result, StringList& params );
+        virtual void DelayToClient( EntityPtr player, uint32 result, StringList& params );
 
         // Route ==> Player
         virtual void SendToPlayer( DataPtr kfbasic, uint32 result, StringList& params );
@@ -38,7 +38,7 @@ namespace KFrame
         virtual void SendToPlayer( uint64 server_id, uint64 playerid, uint32 result, StringList& params );
 
         // Game ==> Client
-        virtual void SendToGroup( KFEntity* player, uint32 result, StringList& params );
+        virtual void SendToGroup( EntityPtr player, uint32 result, StringList& params );
 
     };
 }

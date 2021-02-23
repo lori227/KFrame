@@ -24,7 +24,7 @@ namespace KFrame
         _kf_tcp_server->SendNetMessage( playerid, KFMsg::MSG_RESULT_DISPLAY, &display );
     }
 
-    void KFDisplayModule::SendToClient( KFEntity* player, uint32 result, StringList& params )
+    void KFDisplayModule::SendToClient( EntityPtr player, uint32 result, StringList& params )
     {
         if ( _kf_game == nullptr || !player->IsInited() )
         {
@@ -35,7 +35,7 @@ namespace KFrame
         _kf_game->SendToClient( player, KFMsg::MSG_RESULT_DISPLAY, &display );
     }
 
-    void KFDisplayModule::DelayToClient( KFEntity* player, uint32 result, StringList& params )
+    void KFDisplayModule::DelayToClient( EntityPtr player, uint32 result, StringList& params )
     {
         if ( _kf_game == nullptr || !player->IsInited() )
         {
@@ -80,7 +80,7 @@ namespace KFrame
     }
 
 
-    void KFDisplayModule::SendToGroup( KFEntity* player, uint32 result, StringList& params )
+    void KFDisplayModule::SendToGroup( EntityPtr player, uint32 result, StringList& params )
     {
         //KFMsg::MsgResultDisplay display;
         //display.set_result( result );

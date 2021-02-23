@@ -61,7 +61,7 @@ namespace KFrame
         _kf_route->SyncObject( teamlist );
     }
 
-    void KFTeamShardModule::SendMessageToTeam( KFEntity* kfteam, uint32 msg_id, ::google::protobuf::Message* message )
+    void KFTeamShardModule::SendMessageToTeam( EntityPtr kfteam, uint32 msg_id, ::google::protobuf::Message* message )
     {
         auto kfmemberrecord = kfteam->Find( __STRING__( member ) );
         for ( auto kfmember = kfmemberrecord->First(); kfmember != nullptr; kfmember = kfmemberrecord->Next() )
@@ -76,19 +76,19 @@ namespace KFrame
         _kf_route->SendToEntity( server_id, kfmember->GetKeyID(), msg_id, message );
     }
 
-    void KFTeamShardModule::InitTeam( KFEntity* team )
+    void KFTeamShardModule::InitTeam( EntityPtr team )
     {
         auto teamuuid = team->GetKeyID();
         _kf_route->AddObject( teamuuid );
     }
 
-    void KFTeamShardModule::UnInitTeam( KFEntity* team )
+    void KFTeamShardModule::UnInitTeam( EntityPtr team )
     {
         auto teamuuid = team->GetKeyID();
         _kf_route->RemoveObject( teamuuid );
     }
 
-    void KFTeamShardModule::SendTeamUpdateDataToMember( KFEntity* kfteam, KFMsg::PBObject& proto_object )
+    void KFTeamShardModule::SendTeamUpdateDataToMember( EntityPtr kfteam, KFMsg::PBObject& proto_object )
     {
         KFMsg::S2SSyncUpdateDataFromServer sync;
         sync.set_dataname( __STRING__( team ) );
@@ -96,7 +96,7 @@ namespace KFrame
         SendMessageToTeam( kfteam, KFMsg::S2S_SYNC_UPDATE_DATA_FROM_SERVER, &sync );
     }
 
-    void KFTeamShardModule::SendTeamAddDataToMember( KFEntity* kfteam, KFMsg::PBObject& proto_object )
+    void KFTeamShardModule::SendTeamAddDataToMember( EntityPtr kfteam, KFMsg::PBObject& proto_object )
     {
         KFMsg::S2SSyncAddDataFromServer sync;
         sync.set_dataname( __STRING__( team ) );
@@ -104,7 +104,7 @@ namespace KFrame
         SendMessageToTeam( kfteam, KFMsg::S2S_SYNC_ADD_DATA_FROM_SERVER, &sync );
     }
 
-    void KFTeamShardModule::SendTeamRemoveDataToMember( KFEntity* kfteam, KFMsg::PBObject& proto_object )
+    void KFTeamShardModule::SendTeamRemoveDataToMember( EntityPtr kfteam, KFMsg::PBObject& proto_object )
     {
         KFMsg::S2SSyncRemoveDataFromServer sync;
         sync.set_dataname( __STRING__( team ) );
@@ -143,7 +143,7 @@ namespace KFrame
         SendJoinTeamToMember( kfteam, kfmember );
     }
 
-    void KFTeamShardModule::ChangeTeamCaptain( KFEntity* kfteam, uint64 captainid )
+    void KFTeamShardModule::ChangeTeamCaptain( EntityPtr kfteam, uint64 captainid )
     {
         auto kfmemberrecord = kfteam->Find( __STRING__( member ) );
         for ( auto kfmember = kfmemberrecord->First(); kfmember != nullptr; kfmember = kfmemberrecord->Next() )
@@ -157,7 +157,7 @@ namespace KFrame
         }
     }
 
-    void KFTeamShardModule::SetTeamCaptain( KFEntity* kfteam, DataPtr kfmember, bool update )
+    void KFTeamShardModule::SetTeamCaptain( EntityPtr kfteam, DataPtr kfmember, bool update )
     {
         if ( !update )
         {
@@ -171,7 +171,7 @@ namespace KFrame
         }
     }
 
-    void KFTeamShardModule::SendJoinTeamToMember( KFEntity* kfteam, DataPtr kfmember )
+    void KFTeamShardModule::SendJoinTeamToMember( EntityPtr kfteam, DataPtr kfmember )
     {
         auto pbteam = _kf_kernel->SerializeToClient( kfteam );
 
@@ -191,7 +191,7 @@ namespace KFrame
         RemoveTeamMember( kfteam, kfmsg->playerid() );
     }
 
-    void KFTeamShardModule::RemoveTeamMember( KFEntity* kfteam, uint64 memberid )
+    void KFTeamShardModule::RemoveTeamMember( EntityPtr kfteam, uint64 memberid )
     {
         // 删除队员
         auto kfmemberrecord = kfteam->Find( __STRING__( member ) );

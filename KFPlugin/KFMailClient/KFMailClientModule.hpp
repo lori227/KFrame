@@ -42,7 +42,7 @@ namespace KFrame
         virtual bool SendMail( uint64 recv_id, uint32 configid, const KFElements* elements = nullptr );
 
         // 某人给某人发送邮件
-        virtual bool SendMail( KFEntity* player, uint64 recv_id, uint32 configid, const KFElements* elements = nullptr );
+        virtual bool SendMail( EntityPtr player, uint64 recv_id, uint32 configid, const KFElements* elements = nullptr );
 
     protected:
 
@@ -82,25 +82,25 @@ namespace KFrame
 
         //////////////////////////////////////////////////////////////////////////////////////
         // 获得最大邮件id
-        uint64 GetMaxMailId( KFEntity* player );
+        uint64 GetMaxMailId( EntityPtr player );
 
         // 发送消息到邮件
         bool SendMessageToMail( uint64 playerid, uint32 msg_id, ::google::protobuf::Message* message );
 
         // 发送查询邮件消息
-        void SendQueryMailMessage( KFEntity* player );
+        void SendQueryMailMessage( EntityPtr player );
 
         // 判断邮件过期
         bool CheckMailTimeOut( DataPtr kfmail );
 
         // 更新状态到邮件
-        void UpdateMailStatusToShard( KFEntity* player, DataPtr kfmail, uint32 status );
+        void UpdateMailStatusToShard( EntityPtr player, DataPtr kfmail, uint32 status );
 
         // 领取邮件奖励
-        void ReceiveMailReward( KFEntity* player, uint64 id );
+        void ReceiveMailReward( EntityPtr player, uint64 id );
 
         // 格式化邮件内容
-        StringMap& FormatMailData( KFEntity* sender, const KFMailSetting* kfsetting, const KFElements* elements );
+        StringMap& FormatMailData( EntityPtr sender, const KFMailSetting* kfsetting, const KFElements* elements );
 
         // 发送添加邮件
         bool SendAddMailToShard( uint64 sendid, uint32 flag, uint64 recv_id, const StringMap& maildata );

@@ -46,13 +46,13 @@ namespace KFrame
         virtual void UnBindItemUseFunction( uint32 itemtype, const std::string& module );
 
         // 判断道具是否能使用
-        bool CheckCanUseItem( KFEntity* player, DataPtr kfitem, const KFItemSetting* kfitemsetting, const KFItemTypeSetting* kftypesetting );
+        bool CheckCanUseItem( EntityPtr player, DataPtr kfitem, const KFItemSetting* kfitemsetting, const KFItemTypeSetting* kftypesetting );
 
         // 使用道具
-        bool UseItem( KFEntity* player, DataPtr kfitem, const KFItemSetting* kfitemsetting, const KFItemTypeSetting* kftypesetting );
+        bool UseItem( EntityPtr player, DataPtr kfitem, const KFItemSetting* kfitemsetting, const KFItemTypeSetting* kftypesetting );
 
         // 使用扣除物品
-        void UseCoseItem( KFEntity* player, DataPtr kfitem, const KFItemSetting* kfsetting );
+        void UseCoseItem( EntityPtr player, DataPtr kfitem, const KFItemSetting* kfsetting );
 
     private:
         // 检查道具是否能使用

@@ -82,7 +82,7 @@ namespace KFrame
         SendQueryMailMessage( kfentity );
     }
 
-    uint64 KFMailClientModule::GetMaxMailId( KFEntity* player )
+    uint64 KFMailClientModule::GetMaxMailId( EntityPtr player )
     {
         auto maxmailid = 0u;
         auto kfmailrecord = player->Find( __STRING__( mail ) );
@@ -98,7 +98,7 @@ namespace KFrame
         return maxmailid;
     }
 
-    void KFMailClientModule::SendQueryMailMessage( KFEntity* player )
+    void KFMailClientModule::SendQueryMailMessage( EntityPtr player )
     {
         auto maxmailid = GetMaxMailId( player );
         auto zone_id = KFGlobal::Instance()->_app_id->GetZoneId();
@@ -210,7 +210,7 @@ namespace KFrame
         UpdateMailStatusToShard( kfentity, kfmail, KFMsg::ReceiveRemove );
     }
 
-    void KFMailClientModule::UpdateMailStatusToShard( KFEntity* player, DataPtr kfmail, uint32 status )
+    void KFMailClientModule::UpdateMailStatusToShard( EntityPtr player, DataPtr kfmail, uint32 status )
     {
         auto mailid = kfmail->GetKeyID();
         auto flag = kfmail->Get( __STRING__( flag ) );
@@ -257,7 +257,7 @@ namespace KFrame
         }
     }
 
-    void KFMailClientModule::ReceiveMailReward( KFEntity* player, uint64 id )
+    void KFMailClientModule::ReceiveMailReward( EntityPtr player, uint64 id )
     {
         auto kfmail = player->Find( __STRING__( mail ), id );
         if ( kfmail == nullptr )
@@ -282,7 +282,7 @@ namespace KFrame
         player->AddElement( &elements, _default_multiple, __STRING__( mail ), id, __FUNC_LINE__ );
     }
 
-    StringMap& KFMailClientModule::FormatMailData( KFEntity* sender, const KFMailSetting* kfsetting, const KFElements* elements )
+    StringMap& KFMailClientModule::FormatMailData( EntityPtr sender, const KFMailSetting* kfsetting, const KFElements* elements )
     {
         // 有优化的空间, 服务器只发configid到客户端, 客户端根据邮件配置表来获得邮件的基础数据
         // 暂时先发给客户端, 省去客户端读取邮件配置表
@@ -382,7 +382,7 @@ namespace KFrame
         return SendAddMailToShard( _invalid_int, KFMsg::PersonMail, recv_id, maildata );
     }
 
-    bool KFMailClientModule::SendMail( KFEntity* player, uint64 recv_id, uint32 configid, const KFElements* elements )
+    bool KFMailClientModule::SendMail( EntityPtr player, uint64 recv_id, uint32 configid, const KFElements* elements )
     {
         auto kfsetting = KFMailConfig::Instance()->FindSetting( configid );
         if ( kfsetting == nullptr )

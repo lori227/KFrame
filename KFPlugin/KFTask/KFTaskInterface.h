@@ -14,7 +14,7 @@ namespace KFrame
         // @validtime		task valid time( must be finish in time )
         // @chainid			task chain config id
         // @chainindex		index in the task chain( default start from 1 )
-        virtual DataPtr OpenTask( KFEntity* player, uint32 taskid, uint32 status, uint64 validtime = 0u,
+        virtual DataPtr OpenTask( EntityPtr player, uint32 taskid, uint32 status, uint64 validtime = 0u,
                                   uint32 chainid = 0u, uint32 chainindex = 1u ) = 0;
     };
 

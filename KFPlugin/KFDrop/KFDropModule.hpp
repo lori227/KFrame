@@ -36,9 +36,9 @@ namespace KFrame
 
         ////////////////////////////////////////////////////////////////////////////////
         // 掉落
-        virtual const DropDataList& Drop( KFEntity* player, uint32 dropid, const std::string& modulename, uint64 moduleid, const char* function, uint32 line );
-        virtual const DropDataList& Drop( KFEntity* player, const UInt32Vector& droplist, const std::string& modulename, uint64 moduleid, const char* function, uint32 line );
-        virtual const DropDataList& Drop( KFEntity* player, uint32 dropid, uint32 count, const std::string& modulename, uint64 moduleid, const char* function, uint32 line );
+        virtual const DropDataList& Drop( EntityPtr player, uint32 dropid, const std::string& modulename, uint64 moduleid, const char* function, uint32 line );
+        virtual const DropDataList& Drop( EntityPtr player, const UInt32Vector& droplist, const std::string& modulename, uint64 moduleid, const char* function, uint32 line );
+        virtual const DropDataList& Drop( EntityPtr player, uint32 dropid, uint32 count, const std::string& modulename, uint64 moduleid, const char* function, uint32 line );
     protected:
         // 关闭, 开启掉落功能
         __KF_DEPLOY_FUNCTION__( OnDeployDropClose );
@@ -57,27 +57,27 @@ namespace KFrame
         __KF_DROP_LOGIC_FUNCTION__( OnDropDataElement );
 
         // 随机掉落逻辑
-        void RandDropLogic( KFEntity* player, uint32 dropid, uint32 count, DropDataList& out_list, const char* function, uint32 line );
-        void RandDropLogic( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& out_list );
+        void RandDropLogic( EntityPtr player, uint32 dropid, uint32 count, DropDataList& out_list, const char* function, uint32 line );
+        void RandDropLogic( EntityPtr player, const KFDropSetting* kfsetting, DropDataList& out_list );
 
         // 执行掉落逻辑
-        void ExecuteDropLogic( KFEntity* player, const DropDataList& out_list, const std::string& modulename, uint64 moduleid, const char* function, uint32 line );
+        void ExecuteDropLogic( EntityPtr player, const DropDataList& out_list, const std::string& modulename, uint64 moduleid, const char* function, uint32 line );
 
         // 互斥条件掉落
-        void DropMutexCondition( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& out_list );
-        void DropOverlayCondition( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& out_list );
+        void DropMutexCondition( EntityPtr player, const KFDropSetting* kfsetting, DropDataList& out_list );
+        void DropOverlayCondition( EntityPtr player, const KFDropSetting* kfsetting, DropDataList& out_list );
 
         // 掉落
-        void RandDropDataList( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& out_list, const UInt32Set& excludelist );
-        void RandDropDataByWeight( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& out_list, const UInt32Set& excludelist );
-        void RandDropDataByProbability( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& out_list, const UInt32Set& excludelist );
+        void RandDropDataList( EntityPtr player, const KFDropSetting* kfsetting, DropDataList& out_list, const UInt32Set& excludelist );
+        void RandDropDataByWeight( EntityPtr player, const KFDropSetting* kfsetting, DropDataList& out_list, const UInt32Set& excludelist );
+        void RandDropDataByProbability( EntityPtr player, const KFDropSetting* kfsetting, DropDataList& out_list, const UInt32Set& excludelist );
 
         // 添加掉落返回数据
-        void RandDropData( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& out_list, const KFDropGroupWeight* kfdropweight, UInt32Set& excludedatalist, const char* function, uint32 line );
+        void RandDropData( EntityPtr player, const KFDropSetting* kfsetting, DropDataList& out_list, const KFDropGroupWeight* kfdropweight, UInt32Set& excludedatalist, const char* function, uint32 line );
 
         // 发送掉落数据到客户端
 #ifdef __KF_DEBUG__
-        void SendDropDataToClient( KFEntity* player, uint32 dropid, uint32 count, const DropDataList& droplist );
+        void SendDropDataToClient( EntityPtr player, uint32 dropid, uint32 count, const DropDataList& droplist );
 #endif
     private:
         // 玩家组件上下文

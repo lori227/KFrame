@@ -140,7 +140,7 @@ namespace KFrame
         __UN_TIMER_1__( player->GetKeyID() );
     }
 
-    DataPtr KFTaskModule::OpenTask( KFEntity* player, uint32 taskid, uint32 status, uint64 validtime /* = 0u */,
+    DataPtr KFTaskModule::OpenTask( EntityPtr player, uint32 taskid, uint32 status, uint64 validtime /* = 0u */,
                                     uint32 chainid /* = 0u */, uint32 chainindex /* = 1u */ )
     {
         auto kfsetting = KFTaskConfig::Instance()->FindSetting( taskid );
@@ -157,7 +157,7 @@ namespace KFrame
         return kftask;
     }
 
-    DataPtr KFTaskModule::CreateTask( KFEntity* player, const KFTaskSetting* kfsetting, uint32 status, uint64 validtime /* = 0u */ )
+    DataPtr KFTaskModule::CreateTask( EntityPtr player, const KFTaskSetting* kfsetting, uint32 status, uint64 validtime /* = 0u */ )
     {
         auto kftaskrecord = player->Find( __STRING__( task ) );
         auto kftask = kftaskrecord->Find( kfsetting->_id );
@@ -183,7 +183,7 @@ namespace KFrame
         return kftask;
     }
 
-    void KFTaskModule::UpdataTaskStatus( KFEntity* player, const KFTaskSetting* kfsetting, DataPtr kftask, uint32 status, uint64 validtime )
+    void KFTaskModule::UpdataTaskStatus( EntityPtr player, const KFTaskSetting* kfsetting, DataPtr kftask, uint32 status, uint64 validtime )
     {
         auto laststatus = kftask->Get<uint32>( __STRING__( status ) );
         if ( laststatus == status )
@@ -201,7 +201,7 @@ namespace KFrame
         InitTaskCondition( player, kfsetting, kftask, status, true );
     }
 
-    void KFTaskModule::SetTaskTime( KFEntity* player, DataPtr kftask, const KFTaskSetting* kfsetting, uint64 validtime, bool update )
+    void KFTaskModule::SetTaskTime( EntityPtr player, DataPtr kftask, const KFTaskSetting* kfsetting, uint64 validtime, bool update )
     {
         if ( validtime == 0u )
         {
@@ -222,7 +222,7 @@ namespace KFrame
         StartTaskTimeoutTimer( player, kfsetting->_id, validtime );
     }
 
-    void KFTaskModule::AddFinishTask( KFEntity* player, DataPtr kftask, const KFTaskSetting* kfsetting, bool update )
+    void KFTaskModule::AddFinishTask( EntityPtr player, DataPtr kftask, const KFTaskSetting* kfsetting, bool update )
     {
         // 不是自动提交
         if ( kfsetting->_complete_mode != KFTaskEnum::ComplelteAuto )
@@ -241,7 +241,7 @@ namespace KFrame
         }
     }
 
-    void KFTaskModule::FinishTask( KFEntity* player, uint32 taskid )
+    void KFTaskModule::FinishTask( EntityPtr player, uint32 taskid )
     {
         auto kftask = player->Find( __STRING__( task ), taskid );
         if ( kftask == nullptr )
@@ -258,7 +258,7 @@ namespace KFrame
         FinishTask( player, kftask, kfsetting );
     }
 
-    void KFTaskModule::FinishTask( KFEntity* player, DataPtr kftask, const KFTaskSetting* kfsetting )
+    void KFTaskModule::FinishTask( EntityPtr player, DataPtr kftask, const KFTaskSetting* kfsetting )
     {
         kftask->Set<uint32>( __STRING__( type ), kfsetting->_type );
         kftask->Set<uint32>( __STRING__( status ), KFMsg::ReceiveStatus );
@@ -273,7 +273,7 @@ namespace KFrame
         _kf_display->DelayToClient( player, KFMsg::TaskRewardOk, kfsetting->_id );
     }
 
-    void KFTaskModule::StartTaskTimeoutTimer( KFEntity* player, uint32 taskid, uint64 timeout )
+    void KFTaskModule::StartTaskTimeoutTimer( EntityPtr player, uint32 taskid, uint64 timeout )
     {
         auto lefttime = 1u;
         if ( timeout > KFGlobal::Instance()->_real_time )
@@ -295,7 +295,7 @@ namespace KFrame
         player->RemoveRecord( __STRING__( task ), subid );
     }
 
-    void KFTaskModule::StopTaskTimeoutTimer( KFEntity* player, DataPtr kftask, uint32 taskid )
+    void KFTaskModule::StopTaskTimeoutTimer( EntityPtr player, DataPtr kftask, uint32 taskid )
     {
         auto time = kftask->Get( __STRING__( time ) );
         if ( time != 0u )
@@ -305,7 +305,7 @@ namespace KFrame
         }
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFTaskModule::InitTaskCondition( KFEntity* player, const KFTaskSetting* kfsetting, DataPtr kftask, uint32 status, bool update )
+    void KFTaskModule::InitTaskCondition( EntityPtr player, const KFTaskSetting* kfsetting, DataPtr kftask, uint32 status, bool update )
     {
         // 不在领取状态, 不初始化任务条件
         if ( status != KFMsg::ExecuteStatus )
@@ -324,7 +324,7 @@ namespace KFrame
         _kf_display->DelayToClient( player, KFMsg::TaskReceiveOk, kfsetting->_id );
     }
 
-    void KFTaskModule::DoneTask( KFEntity* player, DataPtr kftask, const KFTaskSetting* kfsetting, bool update )
+    void KFTaskModule::DoneTask( EntityPtr player, DataPtr kftask, const KFTaskSetting* kfsetting, bool update )
     {
         auto kfstatus = kftask->Find( __STRING__( status ) );
         auto status = kfstatus->Get<uint32>();

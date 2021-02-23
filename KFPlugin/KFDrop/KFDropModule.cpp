@@ -83,12 +83,12 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    const DropDataList& KFDropModule::Drop( KFEntity* player, uint32 dropid, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
+    const DropDataList& KFDropModule::Drop( EntityPtr player, uint32 dropid, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
     {
         return Drop( player, dropid, 1u, modulename, moduleid, function, line );
     }
 
-    const DropDataList& KFDropModule::Drop( KFEntity* player, const UInt32Vector& droplist, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
+    const DropDataList& KFDropModule::Drop( EntityPtr player, const UInt32Vector& droplist, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
     {
         // 逻辑里面可能还会触发drop, 所以这里不能使用static
         DropDataList dropdatalist;
@@ -106,7 +106,7 @@ namespace KFrame
         return _drop_data_list;
     }
 
-    const DropDataList& KFDropModule::Drop( KFEntity* player, uint32 dropid, uint32 count, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
+    const DropDataList& KFDropModule::Drop( EntityPtr player, uint32 dropid, uint32 count, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
     {
         // 逻辑里面可能还会触发drop, 所以这里不能使用static
         DropDataList dropdatalist;
@@ -121,7 +121,7 @@ namespace KFrame
         return _drop_data_list;
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFDropModule::ExecuteDropLogic( KFEntity* player, const DropDataList& dropdatalist, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
+    void KFDropModule::ExecuteDropLogic( EntityPtr player, const DropDataList& dropdatalist, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
     {
         player->SetDataShowModule( modulename, moduleid );
 
@@ -144,7 +144,7 @@ namespace KFrame
     }
 
 #ifdef __KF_DEBUG__
-    void KFDropModule::SendDropDataToClient( KFEntity* player, uint32 dropid, uint32 count, const DropDataList& droplist )
+    void KFDropModule::SendDropDataToClient( EntityPtr player, uint32 dropid, uint32 count, const DropDataList& droplist )
     {
         KFMsg::MsgDebugShowDrop show;
         show.set_dropid( dropid );
@@ -163,7 +163,7 @@ namespace KFrame
     }
 #endif // __KF_DEBUG__
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFDropModule::RandDropLogic( KFEntity* player, uint32 dropid, uint32 count, DropDataList& out_list, const char* function, uint32 line )
+    void KFDropModule::RandDropLogic( EntityPtr player, uint32 dropid, uint32 count, DropDataList& out_list, const char* function, uint32 line )
     {
         __LOG_INFO_FUNCTION__( function, line, "player=[{}] drop=[{}] count=[{}]", player->GetKeyID(), dropid, count );
         auto kfsetting = KFDropGroupConfig::Instance()->FindSetting( dropid );
@@ -186,7 +186,7 @@ namespace KFrame
         out_list.splice( out_list.end(), dropdatalist );
     }
 
-    void KFDropModule::RandDropLogic( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& out_list )
+    void KFDropModule::RandDropLogic( EntityPtr player, const KFDropSetting* kfsetting, DropDataList& out_list )
     {
         if ( kfsetting->_is_drop_count )
         {
@@ -220,7 +220,7 @@ namespace KFrame
         }
     }
 
-    void KFDropModule::DropMutexCondition( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& out_list )
+    void KFDropModule::DropMutexCondition( EntityPtr player, const KFDropSetting* kfsetting, DropDataList& out_list )
     {
         bool ishaveconditiondrop = false;
         UInt32Set excludelist;
@@ -252,7 +252,7 @@ namespace KFrame
         RandDropDataList( player, kfsetting, out_list, excludelist );
     }
 
-    void KFDropModule::DropOverlayCondition( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& out_list )
+    void KFDropModule::DropOverlayCondition( EntityPtr player, const KFDropSetting* kfsetting, DropDataList& out_list )
     {
         UInt32Set excludelist;
         for ( auto kfdropweight : kfsetting->_rand_list._weight_data )
@@ -267,7 +267,7 @@ namespace KFrame
         RandDropDataList( player, kfsetting, out_list, excludelist );
     }
 
-    void KFDropModule::RandDropDataList( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& out_list, const UInt32Set& excludelist )
+    void KFDropModule::RandDropDataList( EntityPtr player, const KFDropSetting* kfsetting, DropDataList& out_list, const UInt32Set& excludelist )
     {
         switch ( kfsetting->_rand_type )
         {
@@ -283,7 +283,7 @@ namespace KFrame
         }
     }
 
-    void KFDropModule::RandDropDataByWeight( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& out_list, const UInt32Set& excludelist )
+    void KFDropModule::RandDropDataByWeight( EntityPtr player, const KFDropSetting* kfsetting, DropDataList& out_list, const UInt32Set& excludelist )
     {
         auto kfdropweight = kfsetting->_rand_list.Rand( excludelist, true );
         if ( kfdropweight != nullptr )
@@ -293,7 +293,7 @@ namespace KFrame
         }
     }
 
-    void KFDropModule::RandDropDataByProbability( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& out_list, const UInt32Set& excludelist )
+    void KFDropModule::RandDropDataByProbability( EntityPtr player, const KFDropSetting* kfsetting, DropDataList& out_list, const UInt32Set& excludelist )
     {
         UInt32Set excludedropdata;
         for ( auto kfdropweight : kfsetting->_rand_list._weight_data )
@@ -317,7 +317,7 @@ namespace KFrame
         }
     }
 
-    void KFDropModule::RandDropData( KFEntity* player, const KFDropSetting* kfsetting, DropDataList& out_list, const KFDropGroupWeight* kfdropweight, UInt32Set& excludedatalist, const char* function, uint32 line )
+    void KFDropModule::RandDropData( EntityPtr player, const KFDropSetting* kfsetting, DropDataList& out_list, const KFDropGroupWeight* kfdropweight, UInt32Set& excludedatalist, const char* function, uint32 line )
     {
         // 如果需要重置
         if ( kfdropweight->_is_clear_var && kfsetting->_is_drop_count )

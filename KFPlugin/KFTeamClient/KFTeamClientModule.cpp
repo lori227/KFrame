@@ -113,7 +113,7 @@ namespace KFrame
         UpdateMemberStrValueToTeam( player, kfdata->_data_setting->_name, newvalue );
     }
 
-    void KFTeamClientModule::UpdateIntValueToTeam( KFEntity* player, const StringUInt64& values )
+    void KFTeamClientModule::UpdateIntValueToTeam( EntityPtr player, const StringUInt64& values )
     {
         auto teamid = player->Get( __STRING__( team ), __STRING__( id ) );
 
@@ -129,7 +129,7 @@ namespace KFrame
         _kf_route->RepeatToObject( __TEAM_ROUTE_NAME__, teamid, KFMsg::S2S_TEAM_INT_VALUE_TO_TEAM_REQ, &req );
     }
 
-    void KFTeamClientModule::UpdateStrValueToTeam( KFEntity* player, const StringMap& values )
+    void KFTeamClientModule::UpdateStrValueToTeam( EntityPtr player, const StringMap& values )
     {
         auto teamid = player->Get( __STRING__( team ), __STRING__( id ) );
 
@@ -144,14 +144,14 @@ namespace KFrame
         _kf_route->RepeatToObject( __TEAM_ROUTE_NAME__, teamid, KFMsg::S2S_TEAM_STR_VALUE_TO_TEAM_REQ, &req );
     }
 
-    void KFTeamClientModule::UpdateMemberIntValueToTeam( KFEntity* player, const std::string& data_name, uint64 data_value )
+    void KFTeamClientModule::UpdateMemberIntValueToTeam( EntityPtr player, const std::string& data_name, uint64 data_value )
     {
         StringUInt64 values;
         values[ data_name ] = data_value;
         UpdateMemberIntValueToTeam( player, values );
     }
 
-    void KFTeamClientModule::UpdateMemberIntValueToTeam( KFEntity* player, const StringUInt64& values )
+    void KFTeamClientModule::UpdateMemberIntValueToTeam( EntityPtr player, const StringUInt64& values )
     {
         auto teamid = player->Get( __STRING__( team ), __STRING__( id ) );
 
@@ -167,7 +167,7 @@ namespace KFrame
         _kf_route->RepeatToObject( __TEAM_ROUTE_NAME__, teamid, KFMsg::S2S_TEAM_MEMBER_INT_VALUE_TO_TEAM_REQ, &req );
     }
 
-    void KFTeamClientModule::UpdateMemberStrValueToTeam( KFEntity* player, const std::string& data_name, const std::string& data_value )
+    void KFTeamClientModule::UpdateMemberStrValueToTeam( EntityPtr player, const std::string& data_name, const std::string& data_value )
     {
         auto teamid = player->Get( __STRING__( team ), __STRING__( id ) );
 
@@ -178,7 +178,7 @@ namespace KFrame
         _kf_route->RepeatToObject( __TEAM_ROUTE_NAME__, teamid, KFMsg::S2S_TEAM_MEMBER_STR_VALUE_TO_TEAM_REQ, &req );
     }
 
-    void KFTeamClientModule::EnterLeaveUpdateToTeam( KFEntity* player )
+    void KFTeamClientModule::EnterLeaveUpdateToTeam( EntityPtr player )
     {
         auto kfbasic = player->Find( __STRING__( basic ) );
 
@@ -369,7 +369,7 @@ namespace KFrame
         SendTeamInviteToTarget( kfentity, kfteam, kfmsg->server_id(), kfmsg->playerid() );
     }
 
-    void KFTeamClientModule::SendTeamInviteToTarget( KFEntity* player, DataPtr kfteam, uint64 server_id, uint64 playerid )
+    void KFTeamClientModule::SendTeamInviteToTarget( EntityPtr player, DataPtr kfteam, uint64 server_id, uint64 playerid )
     {
         auto pbteam = _kf_kernel->SerializeToView( kfteam );
         auto pbbasic = _kf_kernel->SerializeToView( player->Find( __STRING__( basic ) ) );

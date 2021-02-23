@@ -80,19 +80,19 @@ namespace KFrame
 
     protected:
         // 更新队伍信息
-        void UpdateIntValueToTeam( KFEntity* player, const StringUInt64& values );
-        void UpdateStrValueToTeam( KFEntity* player, const StringMap& values );
+        void UpdateIntValueToTeam( EntityPtr player, const StringUInt64& values );
+        void UpdateStrValueToTeam( EntityPtr player, const StringMap& values );
 
         // 更新队伍成员信息
-        void UpdateMemberIntValueToTeam( KFEntity* player, const StringUInt64& values );
-        void UpdateMemberIntValueToTeam( KFEntity* player, const std::string& data_name, uint64 data_value );
-        void UpdateMemberStrValueToTeam( KFEntity* player, const std::string& data_name, const std::string& data_value );
+        void UpdateMemberIntValueToTeam( EntityPtr player, const StringUInt64& values );
+        void UpdateMemberIntValueToTeam( EntityPtr player, const std::string& data_name, uint64 data_value );
+        void UpdateMemberStrValueToTeam( EntityPtr player, const std::string& data_name, const std::string& data_value );
 
         // 更新属性到组队
-        void EnterLeaveUpdateToTeam( KFEntity* player );
+        void EnterLeaveUpdateToTeam( EntityPtr player );
 
         // 发送队伍邀请到目标
-        void SendTeamInviteToTarget( KFEntity* player, DataPtr kfteam, uint64 server_id, uint64 playerid );
+        void SendTeamInviteToTarget( EntityPtr player, DataPtr kfteam, uint64 server_id, uint64 playerid );
     private:
         // 玩家组件
         KFComponent* _kf_component = nullptr;

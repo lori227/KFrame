@@ -54,12 +54,12 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFExecuteModule::Execute( KFEntity* player, uint32 executeid, const char* function, uint32 line )
+    bool KFExecuteModule::Execute( EntityPtr player, uint32 executeid, const char* function, uint32 line )
     {
         return Execute( player, executeid, _invalid_string, _invalid_int, function, line );
     }
 
-    bool KFExecuteModule::Execute( KFEntity* player, uint32 executeid, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
+    bool KFExecuteModule::Execute( EntityPtr player, uint32 executeid, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
     {
         auto kfsetting = KFExecuteConfig::Instance()->FindSetting( executeid );
         if ( kfsetting == nullptr )
@@ -76,12 +76,12 @@ namespace KFrame
         return true;
     }
 
-    bool KFExecuteModule::Execute( KFEntity* player, const UInt32Vector& executelist, const char* function, uint32 line )
+    bool KFExecuteModule::Execute( EntityPtr player, const UInt32Vector& executelist, const char* function, uint32 line )
     {
         return Execute( player, executelist, _invalid_string, _invalid_int, function, line );
     }
 
-    bool KFExecuteModule::Execute( KFEntity* player, const UInt32Vector& executelist, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
+    bool KFExecuteModule::Execute( EntityPtr player, const UInt32Vector& executelist, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
     {
         for ( auto executeid : executelist )
         {
@@ -101,12 +101,12 @@ namespace KFrame
         return true;
     }
 
-    bool KFExecuteModule::Execute( KFEntity* player, const ExecuteDataPtr& executedata, const char* function, uint32 line )
+    bool KFExecuteModule::Execute( EntityPtr player, const ExecuteDataPtr& executedata, const char* function, uint32 line )
     {
         return Execute( player, executedata, _invalid_string, _invalid_int, function, line );
     }
 
-    bool KFExecuteModule::Execute( KFEntity* player, const ExecuteDataPtr& executedata, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
+    bool KFExecuteModule::Execute( EntityPtr player, const ExecuteDataPtr& executedata, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
     {
         // 注册的执行逻辑
         auto kffunction = _execute_function.Find( executedata->_name );

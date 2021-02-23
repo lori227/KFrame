@@ -28,7 +28,7 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////
     protected:
         // 添加消息函数
-        virtual void AddMessageHandle( KFMessageHandleAbstract* messagehandle );
+        virtual void AddMessageHandle( std::shared_ptr<KFMessageHandleAbstract>& message_handle );
 
         // 删除消息函数
         virtual bool RemoveMessageHandle( uint32 msg_id, KFModule* module );
@@ -37,9 +37,10 @@ namespace KFrame
         virtual void UnBindFindEntityFunction( uint32 type );
     private:
         // 处理器函数
-        std::unordered_map<uint32, KFMessageHandleAbstract*> _handles;
+        KFHashMap<uint32, KFMessageHandleAbstract> _handle_list;
 
-        KFMapFunction<uint32, KFFindEntityFunction> _find_entity_function;
+        // 查找函数
+        KFMapModuleFunction<uint32, KFFindEntityFunction> _find_entity_function;
     };
 }
 

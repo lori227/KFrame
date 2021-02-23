@@ -7,14 +7,14 @@ namespace KFrame
 {
     class KFItemSetting;
     class KFItemTypeSetting;
-    typedef std::function< bool( KFEntity*, DataPtr, const KFItemSetting*, const KFItemTypeSetting* ) > KFItemUseFunction;
+    typedef std::function< bool( EntityPtr, DataPtr, const KFItemSetting*, const KFItemTypeSetting* ) > KFItemUseFunction;
     //////////////////////////////////////////////////////////////////////////
     class KFItemUseInterface : public KFModule
     {
     public:
         // 注册检查道具是否可以使用函数
         template<class T>
-        void RegisteCheckItemUseFunction( uint32 itemtype, T* object, bool ( T::*handle )( KFEntity*, DataPtr, const KFItemSetting*, const KFItemTypeSetting* ) )
+        void RegisteCheckItemUseFunction( uint32 itemtype, T* object, bool ( T::*handle )( EntityPtr, DataPtr, const KFItemSetting*, const KFItemTypeSetting* ) )
         {
             KFItemUseFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
             BindCheckItemUseFunction( itemtype, typeid( T ).name(), function );
@@ -29,7 +29,7 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 注册道具使用函数
         template<class T>
-        void RegisteItemUseFunction( uint32 itemtype, T* object, bool ( T::*handle )( KFEntity*, DataPtr, const KFItemSetting*, const KFItemTypeSetting* ) )
+        void RegisteItemUseFunction( uint32 itemtype, T* object, bool ( T::*handle )( EntityPtr, DataPtr, const KFItemSetting*, const KFItemTypeSetting* ) )
         {
             KFItemUseFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
             BindItemUseFunction( itemtype, typeid( T ).name(), function );
@@ -52,14 +52,14 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////
 #define __KF_ITEM_USE_FUNCTION__( function )\
-    void function( KFEntity* player, DataPtr kfitem, const KFItemSetting* kfitemsetting, const KFItemTypeSetting* kftypesetting )
+    void function( EntityPtr player, DataPtr kfitem, const KFItemSetting* kfitemsetting, const KFItemTypeSetting* kftypesetting )
 #define __REGISTER_ITEM_USE__( itemtype, function )\
     _kf_item->RegisteItemUseFunction( itemtype, this, function )
 #define __UN_ITEM_USE__( itemtype )\
     _kf_item->UnRegisteItemUseFunction( this, itemtype )
 
 #define __KF_CHECK_ITEM_USE_FUNCTION__( function )\
-    void function( KFEntity* player, DataPtr kfitem, const KFItemSetting* kfitemsetting, const KFItemTypeSetting* kftypesetting )
+    void function( EntityPtr player, DataPtr kfitem, const KFItemSetting* kfitemsetting, const KFItemTypeSetting* kftypesetting )
 #define __REGISTER_CHECK_ITEM_USE__( itemtype, function )\
     _kf_item->RegisteItemUseFunction( itemtype, this, function )
 #define __UN_CHECK_ITEM_USE__( itemtype )\

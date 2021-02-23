@@ -17,7 +17,7 @@ namespace KFrame
         virtual KFComponent* FindComponent( const std::string& data_name ) = 0;
 
         // 查找实体
-        virtual KFEntity* FindEntity( const std::string& data_name, uint64 key, const char* function, uint32 line ) = 0;
+        virtual EntityPtr FindEntity( const std::string& data_name, uint64 key, const char* function, uint32 line ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////
         // 创建数据
         virtual DataPtr CreateData( const KFDataSetting* datasetting ) = 0;
@@ -42,7 +42,7 @@ namespace KFrame
         virtual KFMsg::PBObject* SerializeToClient( DataPtr kfdata ) = 0;
 
         // 序列化到客户端( 优化上线的数据量, 登录时才使用 )
-        virtual KFMsg::PBObject* SerializeToOnline( KFEntity* kfentity, uint32 delaytime = 0u ) = 0;
+        virtual KFMsg::PBObject* SerializeToOnline( EntityPtr kfentity, uint32 delaytime = 0u ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////
     };
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////

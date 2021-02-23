@@ -9,7 +9,7 @@ namespace KFrame
     {
     public:
         // 发送小红点信息
-        virtual void SendToPlayer( KFEntity* player, uint32 type, uint32 count = 1u ) = 0;
+        virtual void SendToPlayer( EntityPtr player, uint32 type, uint32 count = 1u ) = 0;
         virtual void SendToPlayer( DataPtr kfbasic, uint32 type, uint32 count = 1u ) = 0;
 
         virtual void SendToPlayer( const Route& route, uint32 type, uint32 count = 1u ) = 0;

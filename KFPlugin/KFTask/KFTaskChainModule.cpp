@@ -48,7 +48,7 @@ namespace KFrame
         return true;
     }
 
-    bool KFTaskChainModule::OpenTaskChain( KFEntity* player, uint32 chainid, uint32 chainindex, uint32 validtime )
+    bool KFTaskChainModule::OpenTaskChain( EntityPtr player, uint32 chainid, uint32 chainindex, uint32 validtime )
     {
         auto kftaskchainsetting = KFTaskChainConfig::Instance()->FindSetting( chainid );
         if ( kftaskchainsetting == nullptr )
@@ -68,7 +68,7 @@ namespace KFrame
         return OpenTaskChainLogicData( player, taskchaindata, chainid, chainindex, validtime );
     }
 
-    bool KFTaskChainModule::OpenTaskChainLogicData( KFEntity* player, const TaskChainData* taskchaindata, uint32 chainid, uint32 chainindex, uint32 validtime )
+    bool KFTaskChainModule::OpenTaskChainLogicData( EntityPtr player, const TaskChainData* taskchaindata, uint32 chainid, uint32 chainindex, uint32 validtime )
     {
         auto taskid = taskchaindata->_task;
         if ( taskchaindata->_type == KFTaskChainEnum::ChainTypePool )
@@ -95,7 +95,7 @@ namespace KFrame
         return kftask != nullptr;
     }
 
-    void KFTaskChainModule::CleanTaskChain( KFEntity* player, uint32 chainid )
+    void KFTaskChainModule::CleanTaskChain( EntityPtr player, uint32 chainid )
     {
         auto kftaskrecord = player->Find( __STRING__( task ) );
 
@@ -109,7 +109,7 @@ namespace KFrame
         }
     }
 
-    void KFTaskChainModule::OpenExtendChain( KFEntity* player, uint32 chainid, const TaskChainData* taskchaindata )
+    void KFTaskChainModule::OpenExtendChain( EntityPtr player, uint32 chainid, const TaskChainData* taskchaindata )
     {
         if ( taskchaindata->_extend_chain == 0u )
         {
@@ -137,7 +137,7 @@ namespace KFrame
         OpenTaskChain( player, extendchainid, 0u, 0u );
     }
 
-    bool KFTaskChainModule::IsTaskChain( KFEntity* player, DataPtr kftask )
+    bool KFTaskChainModule::IsTaskChain( EntityPtr player, DataPtr kftask )
     {
         auto taskchainid = kftask->Get<uint32>( __STRING__( chain ) );
         return taskchainid != 0u;
@@ -153,7 +153,7 @@ namespace KFrame
         }
     }
 
-    void KFTaskChainModule::FinishTaskChain( KFEntity* player, DataPtr kftask )
+    void KFTaskChainModule::FinishTaskChain( EntityPtr player, DataPtr kftask )
     {
         auto taskchainid = kftask->Get<uint32>( __STRING__( chain ) );
         auto chainindex = kftask->Get<uint32>( __STRING__( index ) );

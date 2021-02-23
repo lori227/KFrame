@@ -109,6 +109,8 @@ namespace KFrame
     class KFEntity;
     class KFElements;
     class KFElementData;
+
+    typedef std::shared_ptr<KFEntity> EntityPtr;
     //////////////////////////////////////////////////////////////////////////
     typedef std::thread::id ThreadId;
 

@@ -12,7 +12,7 @@ namespace KFrame
 
     //////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////
-    void KFNoticeModule::SendToPlayer( KFEntity* player, uint32 type, uint32 count )
+    void KFNoticeModule::SendToPlayer( EntityPtr player, uint32 type, uint32 count )
     {
         if ( _kf_game == nullptr || !player->IsInited() )
         {

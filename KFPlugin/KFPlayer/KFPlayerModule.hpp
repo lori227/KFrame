@@ -32,18 +32,18 @@ namespace KFrame
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         // 创建玩家
-        virtual KFEntity* Login( const KFMsg::PBLoginData* pblogin, const KFMsg::PBObject* pbplayerdata );
-        virtual KFEntity* ReLogin( uint64 playerid, uint64 gateid );
+        virtual EntityPtr Login( const KFMsg::PBLoginData* pblogin, const KFMsg::PBObject* pbplayerdata );
+        virtual EntityPtr ReLogin( uint64 playerid, uint64 gateid );
 
         // 查找玩家
-        virtual KFEntity* FindPlayer( uint64 playerid );
+        virtual EntityPtr FindPlayer( uint64 playerid );
 
         // 删除玩家
         virtual void RemovePlayer();
         virtual void RemovePlayer( uint64 playerid );
-        virtual void RemovePlayer( KFEntity* player );
+        virtual void RemovePlayer( EntityPtr player );
         ////////////////////////////////////////////////////////////////////////////////
-        virtual bool SendToClient( KFEntity* player, uint32 msg_id, ::google::protobuf::Message* message, uint32 delay = 0 );
+        virtual bool SendToClient( EntityPtr player, uint32 msg_id, ::google::protobuf::Message* message, uint32 delay = 0 );
         ////////////////////////////////////////////////////////////////////////////////
     protected:
         virtual void AddInitDataFunction( const std::string& moudle, KFEntityFunction& function );
@@ -81,18 +81,18 @@ namespace KFrame
 
     protected:
         // 初始化
-        void InitPlayer( KFEntity* player );
-        void UnInitPlayer( KFEntity* player );
+        void InitPlayer( EntityPtr player );
+        void UnInitPlayer( EntityPtr player );
 
         // 逻辑刷新
-        void RunPlayer( KFEntity* player );
-        void AfterRunPlayer( KFEntity* player );
+        void RunPlayer( EntityPtr player );
+        void AfterRunPlayer( EntityPtr player );
 
         // 创建角色
-        void OnEnterCreatePlayer( KFEntity* player, uint64 playerid );
+        void OnEnterCreatePlayer( EntityPtr player, uint64 playerid );
 
         // 启动上线同步数据定时器
-        void StartSyncOnlineTimer( KFEntity* player );
+        void StartSyncOnlineTimer( EntityPtr player );
         // 同步上线数据
         __KF_TIMER_FUNCTION__( OnTimerSyncEntityToOnline );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -107,16 +107,16 @@ namespace KFrame
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 同步更新属性到客户端
-        void SendUpdateDataToClient( KFEntity* player, KFMsg::PBObject& pbobect );
+        void SendUpdateDataToClient( EntityPtr player, KFMsg::PBObject& pbobect );
 
         // 同步添加属性到客户端
-        void SendAddDataToClient( KFEntity* player, KFMsg::PBObject& pbobect );
+        void SendAddDataToClient( EntityPtr player, KFMsg::PBObject& pbobect );
 
         // 同步删除属性到客户端
-        void SendRemoveDataToClient( KFEntity* player, KFMsg::PBObject& pbobect );
+        void SendRemoveDataToClient( EntityPtr player, KFMsg::PBObject& pbobect );
 
         // 显示添加奖励消息
-        void SendElementToClient( KFEntity* player, KFMsg::PBShowElements& pbelements );
+        void SendElementToClient( EntityPtr player, KFMsg::PBShowElements& pbelements );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     protected:
         // 删除属性请求

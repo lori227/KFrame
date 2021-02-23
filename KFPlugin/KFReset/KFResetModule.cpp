@@ -50,7 +50,7 @@ namespace KFrame
         }
     }
 
-    UInt64Map& KFResetModule::UpdateAllResetTime( KFEntity* player, DataPtr kftimerecord )
+    UInt64Map& KFResetModule::UpdateAllResetTime( EntityPtr player, DataPtr kftimerecord )
     {
         static UInt64Map _time_id_list;
         _time_id_list.clear();
@@ -70,7 +70,7 @@ namespace KFrame
         return _time_id_list;
     }
 
-    std::tuple<bool, uint64> KFResetModule::UpdateResetTime( KFEntity* player, DataPtr kftimerecord, const KFTimeLoopSetting* kfsetting )
+    std::tuple<bool, uint64> KFResetModule::UpdateResetTime( EntityPtr player, DataPtr kftimerecord, const KFTimeLoopSetting* kfsetting )
     {
         auto kftime = kftimerecord->Find( kfsetting->_id );
         if ( kftime == nullptr )
@@ -90,12 +90,12 @@ namespace KFrame
         return std::make_tuple( ok, nexttime );
     }
 
-    uint64 KFResetModule::CalcNextResetTime( KFEntity* player, uint32 timeid )
+    uint64 KFResetModule::CalcNextResetTime( EntityPtr player, uint32 timeid )
     {
         return player->Get( __STRING__( time ), timeid, __STRING__( value ) );
     }
 
-    void KFResetModule::SetResetTime( KFEntity* player, uint32 timeid, uint64 now_time )
+    void KFResetModule::SetResetTime( EntityPtr player, uint32 timeid, uint64 now_time )
     {
         if ( timeid == 0u )
         {
@@ -147,7 +147,7 @@ namespace KFrame
         }
     }
 
-    void KFResetModule::ResetPlayerData( KFEntity* player, const ResetData* resetdata )
+    void KFResetModule::ResetPlayerData( EntityPtr player, const ResetData* resetdata )
     {
         if ( resetdata->_parent_name.empty() )
         {
@@ -174,7 +174,7 @@ namespace KFrame
         }
     }
 
-    void KFResetModule::ResetPlayerLogic( KFEntity* player, uint32 timeid, uint64 lastresettime, const std::string& functionname )
+    void KFResetModule::ResetPlayerLogic( EntityPtr player, uint32 timeid, uint64 lastresettime, const std::string& functionname )
     {
         auto resetlogicdata = _reset_logic_list.Find( functionname );
         if ( resetlogicdata == nullptr )

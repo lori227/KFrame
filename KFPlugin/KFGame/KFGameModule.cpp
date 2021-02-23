@@ -74,7 +74,7 @@ namespace KFrame
         __LOG_INFO__( "shutdown save player data finish=[{}]", param );
     }
 
-    void KFGameModule::SavePlayer( KFEntity* player, uint32 saveflag )
+    void KFGameModule::SavePlayer( EntityPtr player, uint32 saveflag )
     {
         // 保存数据库
         auto pbplayerdata = _kf_kernel->SerializeToData( player );
@@ -175,7 +175,7 @@ namespace KFrame
     }
 
     // 发送消息到客户端
-    bool KFGameModule::SendToClient( KFEntity* player, uint32 msg_id, ::google::protobuf::Message* message, uint32 delay )
+    bool KFGameModule::SendToClient( EntityPtr player, uint32 msg_id, ::google::protobuf::Message* message, uint32 delay )
     {
         if ( !player->IsInited() )
         {
@@ -224,7 +224,7 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    __KF_TRANSPOND_MESSAGE_FUNCTION__( KFGameModule::TranspondToPlayer )
+    __KF_FORWARD_MESSAGE_FUNCTION__( KFGameModule::TranspondToPlayer )
     {
         auto playerid = __ROUTE_RECV_ID__;
         auto player = _kf_player->FindPlayer( playerid );

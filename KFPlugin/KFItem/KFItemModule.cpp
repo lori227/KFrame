@@ -126,7 +126,7 @@ namespace KFrame
         return GetItemCount( player, kfitemrecord, id, maxvalue );
     }
 
-    uint32 KFItemModule::GetItemCount( KFEntity* player, DataPtr kfitemrecord, uint32 itemid, uint32 maxcount /* = __MAX_UINT32__ */ )
+    uint32 KFItemModule::GetItemCount( EntityPtr player, DataPtr kfitemrecord, uint32 itemid, uint32 maxcount /* = __MAX_UINT32__ */ )
     {
         auto totalcount = 0u;
         for ( auto kfitem = kfitemrecord->First(); kfitem != nullptr; kfitem = kfitemrecord->Next() )
@@ -177,7 +177,7 @@ namespace KFrame
         return !CheckItemBagFull( player, kfparent, kfsetting, itemcount );
     }
 
-    bool KFItemModule::CheckItemBagFull( KFEntity* player, DataPtr kfitemrecord, const KFItemSetting* kfsetting, uint32 itemcount )
+    bool KFItemModule::CheckItemBagFull( EntityPtr player, DataPtr kfitemrecord, const KFItemSetting* kfsetting, uint32 itemcount )
     {
         auto maxsize = GetItemBagMaxCount( player, kfitemrecord );
         auto maxoverlaycount = kfsetting->_overlay_count;
@@ -226,7 +226,7 @@ namespace KFrame
         return sourcecount <= canaddcount ? sourcecount : canaddcount;
     }
 
-    uint32 KFItemModule::GetCanAddItemCount( KFEntity* player, uint32 itemid, uint32 itemcount )
+    uint32 KFItemModule::GetCanAddItemCount( EntityPtr player, uint32 itemid, uint32 itemcount )
     {
         auto kfsetting = KFItemConfig::Instance()->FindSetting( itemid );
         if ( kfsetting == nullptr )
@@ -279,7 +279,7 @@ namespace KFrame
         return canaddcount;
     }
 
-    uint32 KFItemModule::GetItemBagMaxCount( KFEntity* player, DataPtr kfitemrecord )
+    uint32 KFItemModule::GetItemBagMaxCount( EntityPtr player, DataPtr kfitemrecord )
     {
         auto kfitembagsetting = KFItemBagConfig::Instance()->FindSetting( kfitemrecord->_data_setting->_name );
         if ( kfitembagsetting == nullptr )
@@ -290,13 +290,13 @@ namespace KFrame
         return kfitembagsetting->_max_count;
     }
 
-    uint32 KFItemModule::GetItemEmptyCount( KFEntity* player, DataPtr kfitemrecord )
+    uint32 KFItemModule::GetItemEmptyCount( EntityPtr player, DataPtr kfitemrecord )
     {
         auto maxcount = GetItemBagMaxCount( player, kfitemrecord );
         return maxcount - kfitemrecord->Size();
     }
 
-    bool KFItemModule::CheckItemBagFull( KFEntity* player, DataPtr kfitemrecord )
+    bool KFItemModule::CheckItemBagFull( EntityPtr player, DataPtr kfitemrecord )
     {
         auto maxcount = GetItemBagMaxCount( player, kfitemrecord );
         return kfitemrecord->Size() >= maxcount;
@@ -375,7 +375,7 @@ namespace KFrame
         return true;
     }
 
-    void KFItemModule::AddOverlayTimeItem( KFEntity* player, DataPtr kfparent, KFElementResult* kfresult,
+    void KFItemModule::AddOverlayTimeItem( EntityPtr player, DataPtr kfparent, KFElementResult* kfresult,
                                            const KFItemSetting* kfitemsetting, const KFItemTypeSetting* kftypesetting, uint32 count, uint32 time )
     {
         std::list< DataPtr > finditem;
@@ -395,7 +395,7 @@ namespace KFrame
         AddItemResult( kfresult, kfitemsetting->_id, kfitem );
     }
 
-    void KFItemModule::AddOverlayCountItem( KFEntity* player, DataPtr kfparent, KFElementResult* kfresult,
+    void KFItemModule::AddOverlayCountItem( EntityPtr player, DataPtr kfparent, KFElementResult* kfresult,
                                             const KFItemSetting* kfitemsetting, const KFItemTypeSetting* kftypesetting, uint32 count )
     {
         auto maxoverlaycount = kfitemsetting->_overlay_count;
@@ -446,7 +446,7 @@ namespace KFrame
         } while ( count > 0u );
     }
 
-    void KFItemModule::AddNotOverlayItem( KFEntity* player, DataPtr kfparent, KFElementResult* kfresult,
+    void KFItemModule::AddNotOverlayItem( EntityPtr player, DataPtr kfparent, KFElementResult* kfresult,
                                           const KFItemSetting* kfitemsetting, const KFItemTypeSetting* kftypesetting, uint32 count )
     {
         // 添加新物品
@@ -457,7 +457,7 @@ namespace KFrame
         } while ( count > 0u );
     }
 
-    DataPtr KFItemModule::AddNewItemData( KFEntity* player, DataPtr kfparent,
+    DataPtr KFItemModule::AddNewItemData( EntityPtr player, DataPtr kfparent,
                                           const KFItemSetting* kfitemsetting, const KFItemTypeSetting* kftypesetting, uint32& count, uint32 time )
     {
         auto maxoverlaycount = kfitemsetting->_overlay_count;
@@ -491,7 +491,7 @@ namespace KFrame
         return kfitem;
     }
 
-    void KFItemModule::CallItemInitFunction( KFEntity* player, DataPtr kfitem, const KFItemSetting* kfitemsetting )
+    void KFItemModule::CallItemInitFunction( EntityPtr player, DataPtr kfitem, const KFItemSetting* kfitemsetting )
     {
         auto kffunctionmap = _item_init_function.Find( kfitemsetting->_type );
         if ( kffunctionmap == nullptr )
@@ -506,7 +506,7 @@ namespace KFrame
         }
     }
 
-    DataPtr KFItemModule::CreateItem( KFEntity* player, uint32 itemid, DataPtr kfitem, const char* function, uint32 line )
+    DataPtr KFItemModule::CreateItem( EntityPtr player, uint32 itemid, DataPtr kfitem, const char* function, uint32 line )
     {
         // 没有传入item, 创建一个新的item
         if ( kfitem == nullptr )
@@ -546,13 +546,13 @@ namespace KFrame
         return kfitem;
     }
 
-    DataPtr KFItemModule::FindItemBag( KFEntity* player, DataPtr kfitem )
+    DataPtr KFItemModule::FindItemBag( EntityPtr player, DataPtr kfitem )
     {
         auto itemid = kfitem->Get<uint32>( __STRING__( id ) );
         return FindItemBag( player, itemid );
     }
 
-    DataPtr KFItemModule::FindItemBag( KFEntity* player, uint32 itemid )
+    DataPtr KFItemModule::FindItemBag( EntityPtr player, uint32 itemid )
     {
         auto kfitemsetting = KFItemConfig::Instance()->FindSetting( itemid );
         if ( kfitemsetting == nullptr )
@@ -579,7 +579,7 @@ namespace KFrame
     }
 
 
-    DataPtr KFItemModule::FindFinalItemBag( KFEntity* player, DataPtr kfitemrecord, const KFItemSetting* kfitemsetting, const KFItemTypeSetting* kftypesetting, uint32 itemcount )
+    DataPtr KFItemModule::FindFinalItemBag( EntityPtr player, DataPtr kfitemrecord, const KFItemSetting* kfitemsetting, const KFItemTypeSetting* kftypesetting, uint32 itemcount )
     {
         {
             auto kffindrecord = player->Find( kftypesetting->_obtain_bag );
@@ -627,7 +627,7 @@ namespace KFrame
         player->RemoveRecord( kfdata->GetParent()->GetParent(), key );
     }
 
-    const std::list<DataPtr>& KFItemModule::FindRemoveItemList( KFEntity* player, DataPtr kfparent, const KFItemSetting* kfsetting, uint32 itemcount )
+    const std::list<DataPtr>& KFItemModule::FindRemoveItemList( EntityPtr player, DataPtr kfparent, const KFItemSetting* kfsetting, uint32 itemcount )
     {
         std::list<DataPtr> itemrecordlist;
         itemrecordlist.push_back( kfparent );
@@ -752,7 +752,7 @@ namespace KFrame
         return true;
     }
 
-    uint32 KFItemModule::RemoveItemCount( KFEntity* player, DataPtr kfitem, uint32 itemcount )
+    uint32 KFItemModule::RemoveItemCount( EntityPtr player, DataPtr kfitem, uint32 itemcount )
     {
         auto oldcount = kfitem->Get<uint32>( __STRING__( count ) );
         if ( itemcount >= oldcount )
@@ -768,7 +768,7 @@ namespace KFrame
         return itemcount;
     }
 
-    void KFItemModule::RemoveItem( KFEntity* player, DataPtr kfitemrecord, uint32 itemid, uint32 itemcount )
+    void KFItemModule::RemoveItem( EntityPtr player, DataPtr kfitemrecord, uint32 itemid, uint32 itemcount )
     {
         if ( itemcount == 0u )
         {
@@ -847,7 +847,7 @@ namespace KFrame
         __UN_TIMER_1__( player->GetKeyID() );
     }
 
-    void KFItemModule::StartItemCheckTimer( KFEntity* player, DataPtr kfitem )
+    void KFItemModule::StartItemCheckTimer( EntityPtr player, DataPtr kfitem )
     {
         auto intervaltime = 1000u;
         auto now_time = KFGlobal::Instance()->_real_time;
@@ -881,7 +881,7 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    std::tuple<DataPtr, DataPtr> KFItemModule::FindItem( KFEntity* player, uint64 itemuuid )
+    std::tuple<DataPtr, DataPtr> KFItemModule::FindItem( EntityPtr player, uint64 itemuuid )
     {
         for ( auto& iter : KFItemBagConfig::Instance()->_settings._objects )
         {

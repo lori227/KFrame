@@ -38,10 +38,10 @@ namespace KFrame
         __KF_RESET_FUNCTION__( OnResetSigninData );
 
         // 计算签到天数
-        void CalcSignDay( KFEntity* player );
+        void CalcSignDay( EntityPtr player );
 
         // 计算连续签到
-        void CalcContinuousSign( KFEntity* player, uint64 lastresettime, uint64 nowresettime );
+        void CalcContinuousSign( EntityPtr player, uint64 lastresettime, uint64 nowresettime );
     };
 }
 

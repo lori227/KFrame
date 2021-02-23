@@ -47,7 +47,7 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    uint32 KFGoodsModule::BuyGoods( KFEntity* player, uint32 storeid, uint32 goodsid, uint32 buycount )
+    uint32 KFGoodsModule::BuyGoods( EntityPtr player, uint32 storeid, uint32 goodsid, uint32 buycount )
     {
         auto kfsetting = KFGoodsConfig::Instance()->FindSetting( goodsid );
         if ( kfsetting == nullptr )

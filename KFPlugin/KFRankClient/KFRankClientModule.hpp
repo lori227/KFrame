@@ -48,10 +48,10 @@ namespace KFrame
 
     protected:
         // 更新排行榜数据
-        void UpdateRankDataToShard( KFEntity* player, const KFRankSetting* kfsetting );
+        void UpdateRankDataToShard( EntityPtr player, const KFRankSetting* kfsetting );
 
         // 计算排行榜的打榜分值
-        uint64 CalcRankDataScore( KFEntity* player, const KFRankSetting* kfsetting );
+        uint64 CalcRankDataScore( EntityPtr player, const KFRankSetting* kfsetting );
 
         // 计算zoneid
         uint32 CalcRankZoneId( uint64 playerid, const KFRankSetting* kfsetting );

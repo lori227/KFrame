@@ -70,7 +70,7 @@ namespace KFrame
         CalcContinuousSign( player, lastresettime, nowresettime );
     }
 
-    void KFSignModule::CalcSignDay( KFEntity* player )
+    void KFSignModule::CalcSignDay( EntityPtr player )
     {
         // 签到逻辑, 只有到前一天奖励领取了, 才算成功签到
         auto day = player->Get< uint32 >( __STRING__( sevenday ) );
@@ -87,7 +87,7 @@ namespace KFrame
         player->UpdateData( __STRING__( sevenday ), KFEnum::Add, 1u );
     }
 
-    void KFSignModule::CalcContinuousSign( KFEntity* player, uint64 lastresettime, uint64 nowresettime )
+    void KFSignModule::CalcContinuousSign( EntityPtr player, uint64 lastresettime, uint64 nowresettime )
     {
         auto kfsignintime = player->Find( __STRING__( signtime ) );
 

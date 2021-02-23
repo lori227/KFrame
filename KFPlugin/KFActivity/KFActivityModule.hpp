@@ -39,7 +39,7 @@ namespace KFrame
 
     private:
         // 领取成就奖励
-        uint32 ReceiveActivityReward( KFEntity* player, uint32 type, uint32 activityid );
+        uint32 ReceiveActivityReward( EntityPtr player, uint32 type, uint32 activityid );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 活动数值更新回调
         __KF_UPDATE_DATA_FUNCTION__( OnActivityValueUpdateCallBack );
@@ -50,11 +50,11 @@ namespace KFrame
         __KF_UPDATE_DATA_FUNCTION__( OnUpdateDataCallBack );
 
         // 更新成就
-        void UpdateDataActivityValue( KFEntity* player, uint64 key, DataPtr kfdata, uint32 operate, uint64 value, uint64 newvalue );
-        void UpdateObjectActivityValue( KFEntity* player, uint64 key, DataPtr kfdata, uint32 operate );
+        void UpdateDataActivityValue( EntityPtr player, uint64 key, DataPtr kfdata, uint32 operate, uint64 value, uint64 newvalue );
+        void UpdateObjectActivityValue( EntityPtr player, uint64 key, DataPtr kfdata, uint32 operate );
 
         // 判断每日活动重置
-        void CheckResetDailyActivity( KFEntity* player );
+        void CheckResetDailyActivity( EntityPtr player );
 
     private:
         // 玩家组件上下文

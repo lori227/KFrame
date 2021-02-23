@@ -38,7 +38,7 @@ namespace KFrame
         _kf_display->SendToClient( player, result );
     }
 
-    uint32 KFActivityModule::ReceiveActivityReward( KFEntity* player, uint32 type, uint32 activityid )
+    uint32 KFActivityModule::ReceiveActivityReward( EntityPtr player, uint32 type, uint32 activityid )
     {
         auto kfsetting = KFActivityConfig::Instance()->FindActivityData( type, activityid );
         if ( kfsetting == nullptr )
@@ -91,7 +91,7 @@ namespace KFrame
         kfdata->Operate<uint64>( KFEnum::Set, activitysetting->_max_value );
     }
 
-    void KFActivityModule::UpdateDataActivityValue( KFEntity* player, uint64 key, DataPtr kfdata, uint32 operate, uint64 value, uint64 newvalue )
+    void KFActivityModule::UpdateDataActivityValue( EntityPtr player, uint64 key, DataPtr kfdata, uint32 operate, uint64 value, uint64 newvalue )
     {
         if ( value == _invalid_int )
         {
@@ -165,7 +165,7 @@ namespace KFrame
         UpdateDataActivityValue( player, key, kfdata, operate, value, newvalue );
     }
 
-    void KFActivityModule::UpdateObjectActivityValue( KFEntity* player, uint64 key, DataPtr kfdata, uint32 operate )
+    void KFActivityModule::UpdateObjectActivityValue( EntityPtr player, uint64 key, DataPtr kfdata, uint32 operate )
     {
         auto child = kfdata->First();
         while ( child != nullptr )
@@ -190,7 +190,7 @@ namespace KFrame
         UpdateObjectActivityValue( player, key, kfdata, KFEnum::Dec );
     }
 
-    void KFActivityModule::CheckResetDailyActivity( KFEntity* player )
+    void KFActivityModule::CheckResetDailyActivity( EntityPtr player )
     {
         auto kfactivityrecord = player->Find( __STRING__( activity ) );
         if ( kfactivityrecord == nullptr )

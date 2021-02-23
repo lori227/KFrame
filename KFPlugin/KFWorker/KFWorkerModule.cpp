@@ -97,7 +97,7 @@ namespace KFrame
         return CreateWorkActor();
     }
 
-    __KF_TRANSPOND_MESSAGE_FUNCTION__( KFWorkerModule::SendMessageToWorker )
+    __KF_FORWARD_MESSAGE_FUNCTION__( KFWorkerModule::SendMessageToWorker )
     {
         auto kfactor = FindWorkActor();
         kfactor->PushReqMessage( route, msg_id, data, length );

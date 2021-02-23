@@ -51,7 +51,7 @@ namespace KFrame
     void KFPlayerModule::BeforeShut()
     {
         __UN_TIMER_0__();
-        __UN_FIND_ENGITY__( KFMessageEnum::Player );
+        __UN_FIND_ENTITY__( KFMessageEnum::Player );
 
         // 卸载逻辑函数
         _kf_component->UnRegisterEntityInitializeFunction();
@@ -205,7 +205,7 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////3
     void KFPlayerModule::RemovePlayer()
     {
-        std::list< KFEntity* > playerlist;
+        std::list< EntityPtr > playerlist;
         for ( auto player = _kf_component->FirstEntity(); player != nullptr; player = _kf_component->NextEntity() )
         {
             playerlist.push_back( player );
@@ -222,12 +222,12 @@ namespace KFrame
         _kf_component->RemoveEntity( playerid );
     }
 
-    void KFPlayerModule::RemovePlayer( KFEntity* player )
+    void KFPlayerModule::RemovePlayer( EntityPtr player )
     {
         _kf_component->RemoveEntity( player );
     }
 
-    bool KFPlayerModule::SendToClient( KFEntity* player, uint32 msg_id, ::google::protobuf::Message* message, uint32 delay /* = 0 */ )
+    bool KFPlayerModule::SendToClient( EntityPtr player, uint32 msg_id, ::google::protobuf::Message* message, uint32 delay /* = 0 */ )
     {
         if ( !player->IsInited() )
         {
@@ -243,7 +243,7 @@ namespace KFrame
         return _kf_tcp_server->SendNetMessage( gateid, player->GetKeyID(), msg_id, message, delay );
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFPlayerModule::InitPlayer( KFEntity* player )
+    void KFPlayerModule::InitPlayer( EntityPtr player )
     {
         // 初始化个模块数据
         for ( auto& iter : _player_init_function._objects )
@@ -253,7 +253,7 @@ namespace KFrame
         }
     }
 
-    void KFPlayerModule::UnInitPlayer( KFEntity* player )
+    void KFPlayerModule::UnInitPlayer( EntityPtr player )
     {
         auto kfbasic = player->Find( __STRING__( basic ) );
         kfbasic->Set( __STRING__( server_id ), 0 );
@@ -275,7 +275,7 @@ namespace KFrame
         }
     }
 
-    void KFPlayerModule::RunPlayer( KFEntity* player )
+    void KFPlayerModule::RunPlayer( EntityPtr player )
     {
         // 逻辑更新
         for ( auto& iter : _player_run_function._objects )
@@ -285,7 +285,7 @@ namespace KFrame
         }
     }
 
-    void KFPlayerModule::AfterRunPlayer( KFEntity* player )
+    void KFPlayerModule::AfterRunPlayer( EntityPtr player )
     {
         for ( auto& iter : _player_after_run_function._objects )
         {
@@ -295,13 +295,13 @@ namespace KFrame
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    KFEntity* KFPlayerModule::FindPlayer( uint64 playerid )
+    EntityPtr KFPlayerModule::FindPlayer( uint64 playerid )
     {
         return _kf_component->FindEntity( playerid );
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    KFEntity* KFPlayerModule::Login( const KFMsg::PBLoginData* pblogin, const KFMsg::PBObject* pbplayerdata )
+    EntityPtr KFPlayerModule::Login( const KFMsg::PBLoginData* pblogin, const KFMsg::PBObject* pbplayerdata )
     {
         auto player = _kf_component->CreateEntity( pblogin->playerid(), pbplayerdata );
         if ( player == nullptr )
@@ -375,7 +375,7 @@ namespace KFrame
         return player;
     }
 
-    KFEntity* KFPlayerModule::ReLogin( uint64 playerid, uint64 gateid )
+    EntityPtr KFPlayerModule::ReLogin( uint64 playerid, uint64 gateid )
     {
         auto player = FindPlayer( playerid );
         if ( player == nullptr )
@@ -390,7 +390,7 @@ namespace KFrame
         return player;
     }
 
-    void KFPlayerModule::StartSyncOnlineTimer( KFEntity* player )
+    void KFPlayerModule::StartSyncOnlineTimer( EntityPtr player )
     {
         for ( auto delaytime : player->_data_setting->_class_setting->_online_sync_time )
         {
@@ -436,7 +436,7 @@ namespace KFrame
         }
     }
 
-    void KFPlayerModule::OnEnterCreatePlayer( KFEntity* player, uint64 playerid )
+    void KFPlayerModule::OnEnterCreatePlayer( EntityPtr player, uint64 playerid )
     {
         // 判断新玩家
         auto global = KFGlobal::Instance();
@@ -527,7 +527,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
     static uint32 _print = 0u;
-    void KFPlayerModule::SendUpdateDataToClient( KFEntity* player, KFMsg::PBObject& proto_object )
+    void KFPlayerModule::SendUpdateDataToClient( EntityPtr player, KFMsg::PBObject& proto_object )
     {
 #ifdef __KF_DEBUG__
         if ( _print == 1u )
@@ -542,7 +542,7 @@ namespace KFrame
         SendToClient( player, KFMsg::MSG_SYNC_UPDATE_DATA, &sync );
     }
 
-    void KFPlayerModule::SendAddDataToClient( KFEntity* player, KFMsg::PBObject& proto_object )
+    void KFPlayerModule::SendAddDataToClient( EntityPtr player, KFMsg::PBObject& proto_object )
     {
 #ifdef __KF_DEBUG__
         if ( _print == 1 )
@@ -557,7 +557,7 @@ namespace KFrame
         SendToClient( player, KFMsg::MSG_SYNC_ADD_DATA, &sync );
     }
 
-    void KFPlayerModule::SendRemoveDataToClient( KFEntity* player, KFMsg::PBObject& proto_object )
+    void KFPlayerModule::SendRemoveDataToClient( EntityPtr player, KFMsg::PBObject& proto_object )
     {
 #ifdef __KF_DEBUG__
         if ( _print == 1 )
@@ -572,7 +572,7 @@ namespace KFrame
         SendToClient( player, KFMsg::MSG_SYNC_REMOVE_DATA, &sync );
     }
 
-    void KFPlayerModule::SendElementToClient( KFEntity* player, KFMsg::PBShowElements& pbelements )
+    void KFPlayerModule::SendElementToClient( EntityPtr player, KFMsg::PBShowElements& pbelements )
     {
         KFMsg::MsgShowElement show;
         show.mutable_elements()->Swap( &pbelements );

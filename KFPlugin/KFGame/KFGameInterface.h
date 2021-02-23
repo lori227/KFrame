@@ -18,7 +18,7 @@ namespace KFrame
 
         // 发送消息到客户端
         virtual bool SendToClient( uint64 gateid, uint64 playerid, uint32 msg_id, ::google::protobuf::Message* message, uint32 delay = 0u ) = 0;
-        virtual bool SendToClient( KFEntity* player, uint32 msg_id, ::google::protobuf::Message* message, uint32 delay = 0u ) = 0;
+        virtual bool SendToClient( EntityPtr player, uint32 msg_id, ::google::protobuf::Message* message, uint32 delay = 0u ) = 0;
 
         // 发送到玩家
         virtual bool SendToPlayer( uint64 sendid, DataPtr kfbasic, uint32 msg_id, ::google::protobuf::Message* message ) = 0;

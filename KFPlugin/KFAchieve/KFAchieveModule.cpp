@@ -60,7 +60,7 @@ namespace KFrame
         _kf_display->SendToClient( kfentity, result, kfmsg->id() );
     }
 
-    uint32 KFAchieveModule::ReceiveAchieveReward( KFEntity* player, uint32 achieveid )
+    uint32 KFAchieveModule::ReceiveAchieveReward( EntityPtr player, uint32 achieveid )
     {
         auto kfsetting = KFAchieveConfig::Instance()->FindSetting( achieveid );
         if ( kfsetting == nullptr )

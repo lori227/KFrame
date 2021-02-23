@@ -44,14 +44,14 @@ namespace KFrame
         __KF_TIMER_FUNCTION__( OnTimerCheckHeroValidTime );
     protected:
         // 初始化
-        void OnEnterStartHeroTimer( KFEntity* player );
-        void OnLeaveStopHeroTimer( KFEntity* player );
+        void OnEnterStartHeroTimer( EntityPtr player );
+        void OnLeaveStopHeroTimer( EntityPtr player );
 
         // 检查启动时间定时器
-        void CheckStartHeroTimer( KFEntity* player );
+        void CheckStartHeroTimer( EntityPtr player );
 
         // 删除超时的英雄
-        void RemoveInvalidTimeHero( KFEntity* player );
+        void RemoveInvalidTimeHero( EntityPtr player );
 
     protected:
         // 玩家组件上下文

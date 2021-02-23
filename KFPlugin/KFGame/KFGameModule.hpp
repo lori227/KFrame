@@ -44,7 +44,7 @@ namespace KFrame
 
         // 发送消息到客户端
         virtual bool SendToClient( uint64 gateid, uint64 playerid, uint32 msg_id, ::google::protobuf::Message* message, uint32 delay = 0u );
-        virtual bool SendToClient( KFEntity* player, uint32 msg_id, ::google::protobuf::Message* message, uint32 delay = 0u );
+        virtual bool SendToClient( EntityPtr player, uint32 msg_id, ::google::protobuf::Message* message, uint32 delay = 0u );
 
         // 发送到玩家
         virtual bool SendToPlayer( uint64 sendid, DataPtr kfbasic, uint32 msg_id, ::google::protobuf::Message* message );
@@ -102,7 +102,7 @@ namespace KFrame
         __KF_NET_EVENT_FUNCTION__( OnClientLostWorld );
 
         // 转发消息到玩家
-        __KF_TRANSPOND_MESSAGE_FUNCTION__( TranspondToPlayer );
+        __KF_FORWARD_MESSAGE_FUNCTION__( TranspondToPlayer );
 
         // 服务器关闭命令
         __KF_DEPLOY_FUNCTION__( OnDeployShutDownServer );
@@ -118,7 +118,7 @@ namespace KFrame
         void OnAfterLoadPlayerData( uint32 result, const KFMsg::PBLoginData* pblogin, const KFMsg::PBObject* pbplayerdata );
 
         // 保存玩家
-        void SavePlayer( KFEntity* player, uint32 saveflag );
+        void SavePlayer( EntityPtr player, uint32 saveflag );
 
         // 查询玩家数据
         void OnAfterQueryPlayerData( uint32 result, uint64 playerid, const KFMsg::PBObject* playerdata );

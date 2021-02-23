@@ -27,17 +27,17 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFHeroModule::OnEnterStartHeroTimer( KFEntity* player )
+    void KFHeroModule::OnEnterStartHeroTimer( EntityPtr player )
     {
         CheckStartHeroTimer( player );
     }
 
-    void KFHeroModule::OnLeaveStopHeroTimer( KFEntity* player )
+    void KFHeroModule::OnLeaveStopHeroTimer( EntityPtr player )
     {
         __UN_TIMER_1__( player->GetKeyID() );
     }
 
-    void KFHeroModule::CheckStartHeroTimer( KFEntity* player )
+    void KFHeroModule::CheckStartHeroTimer( EntityPtr player )
     {
         auto kfherorecord = player->Find( __STRING__( hero ) );
 
@@ -72,7 +72,7 @@ namespace KFrame
         __LIMIT_TIMER_1__( player->GetKeyID(), intervaltime, 1, &KFHeroModule::OnTimerCheckHeroValidTime );
     }
 
-    void KFHeroModule::RemoveInvalidTimeHero( KFEntity* player )
+    void KFHeroModule::RemoveInvalidTimeHero( EntityPtr player )
     {
         auto kfherorecord = player->Find( __STRING__( hero ) );
 

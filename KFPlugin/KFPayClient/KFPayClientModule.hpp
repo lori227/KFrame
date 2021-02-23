@@ -48,7 +48,7 @@ namespace KFrame
         __KF_PLAYER_LEAVE_FUNCTION__( OnLeavePayModule );
 
         // 开启查询充值定时器
-        void StartQueryPayTimer( KFEntity* player );
+        void StartQueryPayTimer( EntityPtr player );
         __KF_TIMER_FUNCTION__( OnTimerQueryPayData );
 
         // 查询充值信息
@@ -61,7 +61,7 @@ namespace KFrame
         __KF_HTTP_CALL_BACK_FUNCTION__( OnHttpQueryPayCallBack );
 
         // 初始充值逻辑
-        void ProcessPay( KFEntity* player, const std::string& payid, const std::string& order );
+        void ProcessPay( EntityPtr player, const std::string& payid, const std::string& order );
     };
 
 }

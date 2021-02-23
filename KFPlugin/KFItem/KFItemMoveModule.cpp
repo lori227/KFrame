@@ -183,7 +183,7 @@ namespace KFrame
         }
     }
 
-    void KFItemMoveModule::InitItemEmptyIndexData( KFEntity* player, DataPtr kfitembag, const KFItemBagSetting* kfbagsetting )
+    void KFItemMoveModule::InitItemEmptyIndexData( EntityPtr player, DataPtr kfitembag, const KFItemBagSetting* kfbagsetting )
     {
         auto maxitemcount = _kf_item->GetItemBagMaxCount( player, kfitembag );
 
@@ -241,13 +241,13 @@ namespace KFrame
         }
     }
 
-    void KFItemMoveModule::UnInitItemEmptyIndexData( KFEntity* player, const std::string& name )
+    void KFItemMoveModule::UnInitItemEmptyIndexData( EntityPtr player, const std::string& name )
     {
         ItemIndexKey key( player->GetKeyID(), name );
         _player_item_index.Remove( key );
     }
 
-    uint32 KFItemMoveModule::GetItemMaxIndex( KFEntity* player, DataPtr kfitemrecord )
+    uint32 KFItemMoveModule::GetItemMaxIndex( EntityPtr player, DataPtr kfitemrecord )
     {
         ItemIndexKey key( player->GetKeyID(), kfitemrecord->_data_setting->_name );
         auto kfbagindex = _player_item_index.Find( key );
@@ -259,7 +259,7 @@ namespace KFrame
         return kfbagindex->GetMaxIndex();
     }
 
-    void KFItemMoveModule::AddItemMaxIndex( KFEntity* player, DataPtr kfitemrecord, uint32 count )
+    void KFItemMoveModule::AddItemMaxIndex( EntityPtr player, DataPtr kfitemrecord, uint32 count )
     {
         ItemIndexKey key( player->GetKeyID(), kfitemrecord->_data_setting->_name );
         auto kfbagindex = _player_item_index.Find( key );
@@ -271,7 +271,7 @@ namespace KFrame
         kfbagindex->AddMaxIndex( count );
     }
 
-    void KFItemMoveModule::AddItemEmptyIndex( KFEntity* player, DataPtr kfitembag, DataPtr kfitem )
+    void KFItemMoveModule::AddItemEmptyIndex( EntityPtr player, DataPtr kfitembag, DataPtr kfitem )
     {
         auto kfitemsetting = KFItemConfig::Instance()->FindSetting( kfitem->Get<uint32>( __STRING__( id ) ) );
         if ( kfitemsetting == nullptr )
@@ -305,7 +305,7 @@ namespace KFrame
         }
     }
 
-    DataPtr KFItemMoveModule::FindIndexItem( KFEntity* player, DataPtr kfitembag, uint32 index )
+    DataPtr KFItemMoveModule::FindIndexItem( EntityPtr player, DataPtr kfitembag, uint32 index )
     {
         auto kfbagsetting = KFItemBagConfig::Instance()->FindSetting( kfitembag->_data_setting->_name );
         if ( kfbagsetting == nullptr || kfbagsetting->_tab_list.empty() )
@@ -363,7 +363,7 @@ namespace KFrame
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    uint32 KFItemMoveModule::SplitItemLogic( KFEntity* player, const KFItemSetting* kfitemsetting,
+    uint32 KFItemMoveModule::SplitItemLogic( EntityPtr player, const KFItemSetting* kfitemsetting,
             const KFItemBagSetting* kfsourcebagsetting, DataPtr kfsourcebag, DataPtr kfsourceitem, uint32 splitcount,
             const KFItemBagSetting* kftargetbagsetting, DataPtr kftargetbag, uint32 splitindex )
     {
@@ -390,7 +390,7 @@ namespace KFrame
         return KFMsg::Ok;
     }
 
-    uint32 KFItemMoveModule::MoveItemLogic( KFEntity* player, const KFItemSetting* kfitemsetting,
+    uint32 KFItemMoveModule::MoveItemLogic( EntityPtr player, const KFItemSetting* kfitemsetting,
                                             const KFItemBagSetting* kfsourcebagsetting, DataPtr kfsourcebag, DataPtr kfsourceitem,
                                             const KFItemBagSetting* kftargetbagsetting, DataPtr kftargetbag, uint32 targetindex )
     {
@@ -427,7 +427,7 @@ namespace KFrame
         return KFMsg::Ok;
     }
 
-    uint32 KFItemMoveModule::ExchangeItemLogic( KFEntity* player,
+    uint32 KFItemMoveModule::ExchangeItemLogic( EntityPtr player,
             const KFItemSetting* kfsourceitemsetting, const KFItemBagSetting* kfsourcebagsetting, DataPtr kfsourcebag, DataPtr kfsourceitem,
             const KFItemSetting* kftargetitemsetting, const KFItemBagSetting* kftargetbagsetting, DataPtr kftargetbag, DataPtr kftargetitem )
     {
@@ -545,7 +545,7 @@ namespace KFrame
         return KFMsg::Ok;
     }
 
-    uint32 KFItemMoveModule::MergeItemLogic( KFEntity* player, const KFItemSetting* kfitemsetting,
+    uint32 KFItemMoveModule::MergeItemLogic( EntityPtr player, const KFItemSetting* kfitemsetting,
             const KFItemBagSetting* kfsourcebagsetting, DataPtr kfsourceitem, uint32 mergecount,
             const KFItemBagSetting* kftargetbagsetting, DataPtr kftargetitem )
     {
@@ -585,7 +585,7 @@ namespace KFrame
         return sourcecount <= canaddcount ? sourcecount : canaddcount;
     }
 
-    void KFItemMoveModule::MoveItemCountLogic( KFEntity* player, const KFItemSetting* kfitemsetting,
+    void KFItemMoveModule::MoveItemCountLogic( EntityPtr player, const KFItemSetting* kfitemsetting,
             const KFItemBagSetting* kfsourcebagsetting, DataPtr kfsourceitem, uint32 movecount,
             const KFItemBagSetting* kftargetbagsetting, DataPtr kftargetitem )
     {
@@ -634,7 +634,7 @@ namespace KFrame
         return kftypesetting->_move_bag_list.find( targetname ) != kftypesetting->_move_bag_list.end();
     }
 
-    DataPtr KFItemMoveModule::FindCanMoveItemBag( KFEntity* player, const KFItemSetting* kfsetting, const std::string& sourcename, const std::string& excludename )
+    DataPtr KFItemMoveModule::FindCanMoveItemBag( EntityPtr player, const KFItemSetting* kfsetting, const std::string& sourcename, const std::string& excludename )
     {
         auto kftypesetting = KFItemTypeConfig::Instance()->FindSetting( kfsetting->_type );
         if ( kftypesetting == nullptr )
@@ -664,7 +664,7 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    uint32 KFItemMoveModule::MoveItem( KFEntity* player, DataPtr kfsourcebag, DataPtr kfsourceitem, DataPtr kftargetbag, uint32 targetindex )
+    uint32 KFItemMoveModule::MoveItem( EntityPtr player, DataPtr kfsourcebag, DataPtr kfsourceitem, DataPtr kftargetbag, uint32 targetindex )
     {
         // 判断是否限制
         auto kfsourceitemsetting = KFItemConfig::Instance()->FindSetting( kfsourceitem->Get<uint32>( __STRING__( id ) ) );
@@ -782,7 +782,7 @@ namespace KFrame
         }
     }
 
-    uint32 KFItemMoveModule::MoveBagItem( KFEntity* player, const std::string& sourcename, uint64 itemuuid, const std::string& targetname, uint32 targetindex )
+    uint32 KFItemMoveModule::MoveBagItem( EntityPtr player, const std::string& sourcename, uint64 itemuuid, const std::string& targetname, uint32 targetindex )
     {
         auto kfsourcebagsetting = KFItemBagConfig::Instance()->FindSetting( sourcename );
         if ( kfsourcebagsetting != nullptr && !kfsourcebagsetting->_can_move )
@@ -825,7 +825,7 @@ namespace KFrame
         return result;
     }
 
-    uint32 KFItemMoveModule::MoveTabItem( KFEntity* player, const std::string& bagname, const std::string& tabname, uint64 itemuuid, uint32 targetindex )
+    uint32 KFItemMoveModule::MoveTabItem( EntityPtr player, const std::string& bagname, const std::string& tabname, uint64 itemuuid, uint32 targetindex )
     {
         auto kfitembag = player->Find( bagname );
         if ( kfitembag == nullptr )
@@ -933,7 +933,7 @@ namespace KFrame
         }
     }
 
-    uint32 KFItemMoveModule::MoveItemDataLogic( KFEntity* player, const KFItemSetting* kfitemsetting,
+    uint32 KFItemMoveModule::MoveItemDataLogic( EntityPtr player, const KFItemSetting* kfitemsetting,
             const KFItemBagSetting* kfsourcebagsetting, DataPtr kfsourcerecord, DataPtr kfsourceitem,
             const KFItemBagSetting* kftargetbagsetting, DataPtr kftargetrecord )
     {
@@ -996,7 +996,7 @@ namespace KFrame
         SortItem( kfentity, kfmsg->bagname(), kfmsg->tabname() );
     }
 
-    void KFItemMoveModule::SortItem( KFEntity* player, const std::string& bagname, const std::string& tabname )
+    void KFItemMoveModule::SortItem( EntityPtr player, const std::string& bagname, const std::string& tabname )
     {
         auto kfitemrecord = player->Find( bagname );
         if ( kfitemrecord == nullptr )
@@ -1114,7 +1114,7 @@ namespace KFrame
         return kffind;
     }
 
-    void KFItemMoveModule::SortItem( KFEntity* player, const KFItemSetting* kfitemsetting, const KFItemBagSetting* kfbagsetting,
+    void KFItemMoveModule::SortItem( EntityPtr player, const KFItemSetting* kfitemsetting, const KFItemBagSetting* kfbagsetting,
                                      KFItemTabIndex* kftabindex, DataPtr kfitemrecord, std::set<DataPtr>& itemlist )
     {
         auto maxoverlaycount = GetOverlayCount( kfitemsetting, kfitemrecord->_data_setting->_name );
@@ -1164,7 +1164,7 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFItemMoveModule::MoveItemDataToShow( KFEntity* player, const KFItemSetting* kfsetting, DataPtr kfsourcerecord, DataPtr kftargetrecord, uint32 count )
+    void KFItemMoveModule::MoveItemDataToShow( EntityPtr player, const KFItemSetting* kfsetting, DataPtr kfsourcerecord, DataPtr kftargetrecord, uint32 count )
     {
         StringUInt64 values;
         values[ __STRING__( count ) ] = count;
@@ -1172,7 +1172,7 @@ namespace KFrame
         player->AddDataToShow( kfsourcerecord->_data_setting->_name, 0u, __STRING__( item ), kfsetting->_id, values, true );
     }
 
-    void KFItemMoveModule::MoveItemDataToShow( KFEntity* player, const KFItemSetting* kfsetting, DataPtr kfsourcerecord, DataPtr kftargetrecord, DataPtr kfitem )
+    void KFItemMoveModule::MoveItemDataToShow( EntityPtr player, const KFItemSetting* kfsetting, DataPtr kfsourcerecord, DataPtr kftargetrecord, DataPtr kfitem )
     {
         if ( IsOverlayItem( kfsetting ) )
         {

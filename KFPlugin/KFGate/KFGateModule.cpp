@@ -108,7 +108,7 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////
 #define __KF_MAX_CLIENT_MSG_ID__ 10000
-    __KF_TRANSPOND_MESSAGE_FUNCTION__( KFGateModule::TranspondToClient )
+    __KF_FORWARD_MESSAGE_FUNCTION__( KFGateModule::TranspondToClient )
     {
         auto playerid = __ROUTE_RECV_ID__;
         if ( playerid == _invalid_int || msg_id >= __KF_MAX_CLIENT_MSG_ID__ )
@@ -125,7 +125,7 @@ namespace KFrame
         return true;
     }
 
-    __KF_TRANSPOND_MESSAGE_FUNCTION__( KFGateModule::TranspondToGame )
+    __KF_FORWARD_MESSAGE_FUNCTION__( KFGateModule::TranspondToGame )
     {
         auto playerid = __ROUTE_SEND_ID__;
         if ( playerid == _invalid_int || msg_id >= __KF_MAX_CLIENT_MSG_ID__ )

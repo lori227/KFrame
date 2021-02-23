@@ -21,7 +21,7 @@ namespace KFrame
         // 发送结果提示到客户端
         // Game ==> Client
         template< class...Args >
-        inline void SendToClient( KFEntity* player, uint32 result, Args&& ... args )
+        inline void SendToClient( EntityPtr player, uint32 result, Args&& ... args )
         {
             StringList params;
             FormatParam( params, std::forward< Args >( args )... );
@@ -31,7 +31,7 @@ namespace KFrame
         // 发送结果提示到客户端
         // Game ==> Client
         template< class...Args >
-        inline void DelayToClient( KFEntity* player, uint32 result, Args&& ... args )
+        inline void DelayToClient( EntityPtr player, uint32 result, Args&& ... args )
         {
             StringList params;
             FormatParam( params, std::forward< Args >( args )... );
@@ -71,7 +71,7 @@ namespace KFrame
         // 发送结果提示到客户端
         // Game ==> Client
         template< class...Args >
-        inline void SendToGroup( KFEntity* player, uint32 result, Args&& ... args )
+        inline void SendToGroup( EntityPtr player, uint32 result, Args&& ... args )
         {
             StringList params;
             FormatParam( params, std::forward< Args >( args )... );
@@ -94,11 +94,11 @@ namespace KFrame
         virtual void SendToClient( uint64 playerid, uint32 result, StringList& params ) = 0;
 
         // Game ==> Client
-        virtual void SendToClient( KFEntity* player, uint32 result, StringList& params ) = 0;
-        virtual void DelayToClient( KFEntity* player, uint32 result, StringList& params ) = 0;
+        virtual void SendToClient( EntityPtr player, uint32 result, StringList& params ) = 0;
+        virtual void DelayToClient( EntityPtr player, uint32 result, StringList& params ) = 0;
 
         // Game ==> Client
-        virtual void SendToGroup( KFEntity* player, uint32 result, StringList& params ) = 0;
+        virtual void SendToGroup( EntityPtr player, uint32 result, StringList& params ) = 0;
 
         // Game ==> Route ==> Game
         virtual void SendToPlayer( DataPtr kfbasic, uint32 result, StringList& params ) = 0;

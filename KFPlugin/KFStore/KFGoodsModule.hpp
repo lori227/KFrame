@@ -31,7 +31,7 @@ namespace KFrame
         virtual void BeforeShut();
 
         // 购买商品
-        virtual uint32 BuyGoods( KFEntity* player, uint32 storeid, uint32 goodsid, uint32 buycount );
+        virtual uint32 BuyGoods( EntityPtr player, uint32 storeid, uint32 goodsid, uint32 buycount );
 
     protected:
         // 刷新限购商品

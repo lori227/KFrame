@@ -28,17 +28,17 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFSkinModule::OnEnterStartSkinTimer( KFEntity* player )
+    void KFSkinModule::OnEnterStartSkinTimer( EntityPtr player )
     {
         CheckStartSkinTimer( player );
     }
 
-    void KFSkinModule::OnLeaveStopSkinTimer( KFEntity* player )
+    void KFSkinModule::OnLeaveStopSkinTimer( EntityPtr player )
     {
         __UN_TIMER_1__( player->GetKeyID() );
     }
 
-    void KFSkinModule::CheckStartSkinTimer( KFEntity* player )
+    void KFSkinModule::CheckStartSkinTimer( EntityPtr player )
     {
         auto kfskinrecord = player->Find( __STRING__( skin ) );
 
@@ -73,7 +73,7 @@ namespace KFrame
         __LIMIT_TIMER_1__( player->GetKeyID(), intervaltime, 1, &KFSkinModule::OnTimerCheckSkinValidTime );
     }
 
-    void KFSkinModule::RemoveInvalidTimeSkin( KFEntity* player )
+    void KFSkinModule::RemoveInvalidTimeSkin( EntityPtr player )
     {
         auto kfskinrecord = player->Find( __STRING__( skin ) );
 

@@ -65,7 +65,7 @@ namespace KFrame
         }
     }
 
-    void KFUnlockModule::UnlockPlayerData( KFEntity* player, const KFUnlockSetting* kfsetting )
+    void KFUnlockModule::UnlockPlayerData( EntityPtr player, const KFUnlockSetting* kfsetting )
     {
         auto kfdatarecord = player->Find( kfsetting->_data_name );
         if ( kfdatarecord == nullptr || !CheckNeedUnlock( player, kfsetting, kfdatarecord ) )
@@ -76,7 +76,7 @@ namespace KFrame
         UnlockPlayerData( player, kfsetting, kfdatarecord );
     }
 
-    bool KFUnlockModule::CheckNeedUnlock( KFEntity* player, const KFUnlockSetting* kfsetting, DataPtr kfdatarecord )
+    bool KFUnlockModule::CheckNeedUnlock( EntityPtr player, const KFUnlockSetting* kfsetting, DataPtr kfdatarecord )
     {
         auto kfdata = kfdatarecord->Find( kfsetting->_data_key );
         if ( kfsetting->_child_name.empty() )
@@ -97,7 +97,7 @@ namespace KFrame
         return true;
     }
 
-    void KFUnlockModule::UnlockPlayerData( KFEntity* player, const KFUnlockSetting* kfsetting, DataPtr kfdatarecord )
+    void KFUnlockModule::UnlockPlayerData( EntityPtr player, const KFUnlockSetting* kfsetting, DataPtr kfdatarecord )
     {
         auto kfdata = kfdatarecord->Find( kfsetting->_data_key );
         if ( kfsetting->_child_name.empty() )

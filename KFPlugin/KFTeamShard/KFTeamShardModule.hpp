@@ -34,36 +34,36 @@ namespace KFrame
 
     protected:
         // 初始化
-        void InitTeam( KFEntity* team );
-        void UnInitTeam( KFEntity* team );
+        void InitTeam( EntityPtr team );
+        void UnInitTeam( EntityPtr team );
 
         // 连接成功
         void OnRouteConnectCluster( uint64 server_id );
 
         // 更换队长
-        void ChangeTeamCaptain( KFEntity* kfteam, uint64 captainid );
+        void ChangeTeamCaptain( EntityPtr kfteam, uint64 captainid );
 
         // 设置队长信息
-        void SetTeamCaptain( KFEntity* kfteam, DataPtr kfmember, bool update );
+        void SetTeamCaptain( EntityPtr kfteam, DataPtr kfmember, bool update );
 
         // 发送消息到队伍
-        void SendMessageToTeam( KFEntity* kfteam, uint32 msg_id, ::google::protobuf::Message* message );
+        void SendMessageToTeam( EntityPtr kfteam, uint32 msg_id, ::google::protobuf::Message* message );
         void SendMessageToMember( DataPtr kfmember, uint32 msg_id, ::google::protobuf::Message* message );
 
         // 通知加入队伍
-        void SendJoinTeamToMember( KFEntity* kfteam, DataPtr kfmember );
+        void SendJoinTeamToMember( EntityPtr kfteam, DataPtr kfmember );
 
         // 同步更新属性到客户端
-        void SendTeamUpdateDataToMember( KFEntity* kfteam, KFMsg::PBObject& proto_object );
+        void SendTeamUpdateDataToMember( EntityPtr kfteam, KFMsg::PBObject& proto_object );
 
         // 同步添加属性到客户端
-        void SendTeamAddDataToMember( KFEntity* kfteam, KFMsg::PBObject& proto_object );
+        void SendTeamAddDataToMember( EntityPtr kfteam, KFMsg::PBObject& proto_object );
 
         // 同步删除属性到客户端
-        void SendTeamRemoveDataToMember( KFEntity* kfteam, KFMsg::PBObject& proto_object );
+        void SendTeamRemoveDataToMember( EntityPtr kfteam, KFMsg::PBObject& proto_object );
 
         // 删除队员
-        void RemoveTeamMember( KFEntity* kfteam, uint64 memberid );
+        void RemoveTeamMember( EntityPtr kfteam, uint64 memberid );
     protected:
         // 创建队伍请求
         __KF_MESSAGE_FUNCTION__( HandleTeamCreateToTeamReq, KFMsg::S2STeamCreateToTeamReq );
