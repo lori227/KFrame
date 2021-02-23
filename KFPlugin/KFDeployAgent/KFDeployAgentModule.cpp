@@ -114,7 +114,7 @@ namespace KFrame
     {
         if ( _deploy_table_name.empty() )
         {
-            return __LOG_ERROR__( "depoly table name is empty" );
+            return __LOG_ERROR__( "deploy table name is empty" );
         }
 
         try
@@ -546,7 +546,7 @@ namespace KFrame
         values[ __STRING__( time ) ] = __TO_STRING__( deploy_data->_startup_time );
 
         StringMap keys;
-        keys[ __STRING__( app_id ) ] = deploy_data->_app_id;
+        keys[ __STRING__( appid ) ] = deploy_data->_app_id;
         _deploy_driver->Update( _deploy_table_name, keys, values );
     }
 
