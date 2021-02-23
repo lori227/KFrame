@@ -21,9 +21,9 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////
-    void KFDataExecute::InitExecute( const KFDataSaveSetting* kfsetting )
+    void KFDataExecute::InitExecute( const KFDataSaveSetting* setting )
     {
-        _kf_setting = kfsetting;
+        _kf_setting = setting;
         InitExecute();
     }
 

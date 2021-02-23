@@ -13,7 +13,6 @@ namespace KFrame
 
     KFHttpData::~KFHttpData()
     {
-        __KF_DELETE__( KFHttp, _http );
     }
 
     void KFHttpData::Request()
@@ -27,7 +26,7 @@ namespace KFrame
         {
             try
             {
-                _function( _data, _result, _args );
+                _function( _data, _result, _pass_back_data );
             }
             catch ( ... )
             {

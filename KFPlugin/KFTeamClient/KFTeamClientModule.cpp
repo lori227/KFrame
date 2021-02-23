@@ -210,8 +210,8 @@ namespace KFrame
         }
 
         // 队伍配置
-        auto kfsetting = KFTeamConfig::Instance()->FindSetting( kfmsg->id() );
-        if ( kfsetting == nullptr )
+        auto setting = KFTeamConfig::Instance()->FindSetting( kfmsg->id() );
+        if ( setting == nullptr )
         {
             return _kf_display->SendToClient( kfentity, KFMsg::TeamSettingError );
         }

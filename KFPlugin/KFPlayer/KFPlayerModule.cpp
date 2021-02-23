@@ -427,10 +427,10 @@ namespace KFrame
 
             for ( auto& iter : KFPlayerConfig::Instance()->_settings._objects )
             {
-                auto kfsetting = iter.second;
-                if ( kfsetting->_type == NewPlayerEnum::NewRole )
+                auto setting = iter.second;
+                if ( setting->_type == NewPlayerEnum::NewRole )
                 {
-                    player->AddElement( &kfsetting->_reward, _default_multiple, __STRING__( newrole ), 0u, __FUNC_LINE__ );
+                    player->AddElement( &setting->_reward, _default_multiple, __STRING__( newrole ), 0u, __FUNC_LINE__ );
                 }
             }
         }
@@ -460,10 +460,10 @@ namespace KFrame
         // 新玩家添加道具
         for ( auto& iter : KFPlayerConfig::Instance()->_settings._objects )
         {
-            auto kfsetting = iter.second;
-            if ( kfsetting->_type == NewPlayerEnum::NewAccount )
+            auto setting = iter.second;
+            if ( setting->_type == NewPlayerEnum::NewAccount )
             {
-                player->AddElement( &kfsetting->_reward, _default_multiple, __STRING__( newplayer ), 0u, __FUNC_LINE__ );
+                player->AddElement( &setting->_reward, _default_multiple, __STRING__( newplayer ), 0u, __FUNC_LINE__ );
             }
         }
     }

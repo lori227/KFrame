@@ -47,8 +47,8 @@ namespace KFrame
         {
             for ( auto& iter : KFFilterConfig::Instance()->_settings._objects )
             {
-                auto kfsetting = iter.second;
-                InsertWord( &_root_word_data, kfsetting->_word.data(), static_cast< uint32 >( kfsetting->_word.length() ), 0 );
+                auto setting = iter.second;
+                InsertWord( &_root_word_data, setting->_word.data(), static_cast< uint32 >( setting->_word.length() ), 0 );
             }
         }
     }

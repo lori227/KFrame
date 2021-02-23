@@ -19,8 +19,8 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFStoreModule::HandleStoreBuyGoodsReq, KFMsg::MsgStoreBuyGoodsReq )
     {
-        auto kfsetting = KFStoreConfig::Instance()->FindSetting( kfmsg->storeid() );
-        if ( kfsetting == nullptr )
+        auto setting = KFStoreConfig::Instance()->FindSetting( kfmsg->storeid() );
+        if ( setting == nullptr )
         {
             return _kf_display->SendToClient( kfentity, KFMsg::StoreSettingError, kfmsg->storeid() );
         }

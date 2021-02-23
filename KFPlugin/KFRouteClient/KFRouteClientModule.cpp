@@ -83,7 +83,7 @@ namespace KFrame
 
     void KFRouteClientModule::SetTranspondFunction( KFForwardFunction& function )
     {
-        _kf_transpond_function = function;
+        _kf_forward_function = function;
     }
 
     void KFRouteClientModule::OnRouteConnectCluster( uint64 server_id )
@@ -163,13 +163,13 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     const std::string& KFRouteClientModule::FindRouteProcess( const std::string& module )
     {
-        auto kfsetting = KFRouteConfig::Instance()->FindSetting( module );
-        if ( kfsetting == nullptr )
+        auto setting = KFRouteConfig::Instance()->FindSetting( module );
+        if ( setting == nullptr )
         {
             return module;
         }
 
-        return kfsetting->_target;
+        return setting->_target;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -459,9 +459,9 @@ namespace KFrame
             return;
         }
 
-        if ( _kf_transpond_function != nullptr )
+        if ( _kf_forward_function != nullptr )
         {
-            auto ok = _kf_transpond_function( temproute, kfmsg->msg_id(), msgdata, msglength );
+            auto ok = _kf_forward_function( temproute, kfmsg->msg_id(), msgdata, msglength );
             if ( !ok )
             {
                 __LOG_ERROR__( "route msg_id[{}] failed", kfmsg->msg_id() );

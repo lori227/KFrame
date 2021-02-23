@@ -44,15 +44,15 @@ namespace KFrame
         virtual std::string SendResponse( KFJson& json );
 
     protected:
-        virtual void MTGetRequest( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& args );
-        virtual void MTPostRequest( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& args );
+        virtual void MTGetRequest( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& pass_back_data );
+        virtual void MTPostRequest( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& pass_back_data );
 
-        virtual void MTGetRequest( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& args );
-        virtual void MTPostRequest( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& args );
+        virtual void MTGetRequest( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& pass_back_data );
+        virtual void MTPostRequest( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& pass_back_data );
 
     private:
         // 添加异步请求
-        void AddHttpData( KFHttpData* httpdata );
+        void AddHttpData( std::shared_ptr<KFHttpData> http_data );
 
         // 判断是否是https
         bool IsHttpsClient( const std::string& url );
@@ -62,11 +62,11 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////
         std::string STRequest( uint32 type, const std::string& url, const std::string& data );
-        void MTRequest( uint32 type, KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& args );
+        void MTRequest( uint32 type, KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& pass_back_data );
 
     private:
         // http线程列表
-        std::vector< KFHttpThread* > _http_thread_list;
+        std::vector<std::shared_ptr<KFHttpThread>> _http_thread_list;
 
         // 当前的索引
         uint32 _thread_index = 0u;

@@ -7,19 +7,19 @@ namespace KFrame
     void KFHttpServerModule::BeforeRun()
     {
         //////////////////////////////////////////////////////////////////////////////////
-        auto kfglogal = KFGlobal::Instance();
-        auto kfsetting = FindHttpSetting( kfglogal->_app_name, kfglogal->_app_type );
+        auto global = KFGlobal::Instance();
+        auto setting = FindHttpSetting( global->_app_name, global->_app_type );
 
         // 计算端口
-        kfsetting->_port = _kf_ip_address->CalcListenPort( kfsetting->_port_type, kfsetting->_port, kfglogal->_app_id->GetId() );
+        setting->_port = _kf_ip_address->CalcListenPort( setting->_port_type, setting->_port, global->_app_id->GetId() );
 
         _http_server = __NEW_OBJECT__( KFHttpServer );
-        _http_server->Start( kfsetting->_local_ip, kfsetting->_port, kfsetting->_max_thread,
-                             kfsetting->_max_queue, kfsetting->_idle_time, kfsetting->_keep_alive );
+        _http_server->Start( setting->_local_ip, setting->_port, setting->_max_thread,
+                             setting->_max_queue, setting->_idle_time, setting->_keep_alive );
 
         // 重新获得外网ip
-        kfglogal->_http_server_url = __FORMAT__( "http://{}:{}/", kfglogal->_local_ip, kfsetting->_port );
-        __LOG_INFO__( "http server[{}] startup ok", kfglogal->_http_server_url );
+        global->_http_server_url = __FORMAT__( "http://{}:{}/", global->_local_ip, setting->_port );
+        __LOG_INFO__( "http server[{}] startup ok", global->_http_server_url );
     }
 
     void KFHttpServerModule::Run()
@@ -51,15 +51,15 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    KFHttpSetting* KFHttpServerModule::FindHttpSetting( const std::string& appname, const std::string& apptype )
+    std::shared_ptr<KFHttpSetting> KFHttpServerModule::FindHttpSetting( const std::string& app_name, const std::string& app_type )
     {
-        for ( auto& iter : KFHttpServerConfig::Instance()->_settings._objects )
+        for ( auto& iter : KFHttpServerConfig::Instance()->_setting_list._objects )
         {
-            auto kfsetting = iter.second;
-            if ( kfsetting->_app_name == appname &&
-                    kfsetting->_app_type == apptype )
+            auto setting = iter.second;
+            if ( setting->_app_name == app_name &&
+                    setting->_app_type == app_type )
             {
-                return kfsetting;
+                return setting;
             }
         }
 

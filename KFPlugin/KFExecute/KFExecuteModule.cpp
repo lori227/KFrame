@@ -61,14 +61,14 @@ namespace KFrame
 
     bool KFExecuteModule::Execute( EntityPtr player, uint32 executeid, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
     {
-        auto kfsetting = KFExecuteConfig::Instance()->FindSetting( executeid );
-        if ( kfsetting == nullptr )
+        auto setting = KFExecuteConfig::Instance()->FindSetting( executeid );
+        if ( setting == nullptr )
         {
             __LOG_ERROR_FUNCTION__( function, line, "execute=[{}] can't find setting", executeid );
             return false;
         }
 
-        for ( auto& executedata : kfsetting->_execute_data )
+        for ( auto& executedata : setting->_execute_data )
         {
             Execute( player, executedata._execute, modulename, moduleid, function, line );
         }
@@ -85,14 +85,14 @@ namespace KFrame
     {
         for ( auto executeid : executelist )
         {
-            auto kfsetting = KFExecuteConfig::Instance()->FindSetting( executeid );
-            if ( kfsetting == nullptr )
+            auto setting = KFExecuteConfig::Instance()->FindSetting( executeid );
+            if ( setting == nullptr )
             {
                 __LOG_ERROR_FUNCTION__( function, line, "execute=[{}] can't find setting", executeid );
                 continue;
             }
 
-            for ( auto& executedata : kfsetting->_execute_data )
+            for ( auto& executedata : setting->_execute_data )
             {
                 Execute( player, executedata._execute, modulename, moduleid, function, line );
             }

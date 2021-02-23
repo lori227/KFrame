@@ -11,7 +11,7 @@ namespace KFrame
     public:
         // 添加服务函数
         template<typename T>
-        void RegisterFunction( const std::string& url, bool sync, T* module, std::string ( T::*handle )( const std::string& ip, const std::string& data ) )
+        void RegisterFunction( const std::string& url, bool sync, T* module, std::string ( T::*handle )( const std::string&, const std::string& ) )
         {
             KFHttpMethodFunction function = std::bind( handle, module, std::placeholders::_1, std::placeholders::_2 );
             RegisterMethodFunction( url, sync, function );

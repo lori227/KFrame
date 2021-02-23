@@ -5,11 +5,11 @@
 
 namespace KFrame
 {
-    std::string KFSteam::RequestLogin( KFJson& json, const KFChannelSetting* kfsetting )
+    std::string KFSteam::RequestLogin( KFJson& json, const KFChannelSetting* setting )
     {
         auto token = __JSON_GET_STRING__( json, __STRING__( token ) );
 
-        auto urldata = __FORMAT__( "{}?key={}&appid={}&ticket={}", kfsetting->_login_url, kfsetting->_app_key, kfsetting->_app_id, token );
+        auto urldata = __FORMAT__( "{}?key={}&appid={}&ticket={}", setting->_login_url, setting->_app_key, setting->_app_id, token );
 
         auto resultdata = _kf_http_client->STGet( urldata, _invalid_string );
         if ( resultdata.empty() )
@@ -46,11 +46,11 @@ namespace KFrame
 
         __JSON_OBJECT_DOCUMENT__( response );
         __JSON_SET_VALUE__( response, __STRING__( account ), steamid );
-        __JSON_SET_VALUE__( response, __STRING__( channel ), kfsetting->_id );
+        __JSON_SET_VALUE__( response, __STRING__( channel ), setting->_id );
         return _kf_http_server->SendResponse( response );
     }
 
-    std::string KFSteam::RequestPay( const std::string& data, const KFChannelSetting* kfsetting )
+    std::string KFSteam::RequestPay( const std::string& data, const KFChannelSetting* setting )
     {
         return _invalid_string;
     }

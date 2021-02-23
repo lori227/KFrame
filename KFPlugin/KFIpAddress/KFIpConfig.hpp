@@ -12,7 +12,7 @@ namespace KFrame
     };
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
-    class KFIpConfig : public KFConfigT<KFIpSetting>, public KFInstance< KFIpConfig >
+    class KFIpConfig : public KFConfigT<KFIpSetting>, public KFInstance<KFIpConfig>
     {
     public:
         KFIpConfig()
@@ -22,11 +22,11 @@ namespace KFrame
         ~KFIpConfig() = default;
 
     public:
-        virtual void ReadSetting( KFXmlNode& xmlnode, KFIpSetting* kfsetting )
+        virtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KFIpSetting> setting )
         {
-            auto name = xmlnode.ReadString( "name", false );
-            auto key = xmlnode.ReadUInt32( "key", true );
-            auto value = xmlnode.ReadString( "value", false );
+            auto name = xml_node.ReadString( "name", false );
+            auto key = xml_node.ReadUInt32( "key", true );
+            auto value = xml_node.ReadString( "value", false );
             KFGlobal::Instance()->AddConstant( name, key, value );
         }
     };

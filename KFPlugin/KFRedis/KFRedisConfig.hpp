@@ -56,21 +56,21 @@ namespace KFrame
         }
 
     public:
-        virtual void ReadSetting( KFXmlNode& xmlnode, KFRedisSetting* kfsetting )
+        virtual void ReadSetting( KFXmlNode& xml_node, KFRedisSetting* setting )
         {
             KFRedisConnectOption option;
-            option._min_logic_id = xmlnode.ReadUInt32( "minid" );
-            option._max_logic_id = xmlnode.ReadUInt32( "maxid" );
-            option._password = xmlnode.ReadString( "password" );
+            option._min_logic_id = xml_node.ReadUInt32( "minid" );
+            option._max_logic_id = xml_node.ReadUInt32( "maxid" );
+            option._password = xml_node.ReadString( "password" );
 
-            option._write_connect_data._ip = xmlnode.ReadString( "writeip" );
-            option._write_connect_data._port = xmlnode.ReadUInt32( "writeport" );
+            option._write_connect_data._ip = xml_node.ReadString( "writeip" );
+            option._write_connect_data._port = xml_node.ReadUInt32( "writeport" );
 
-            option._read_connect_data._ip = xmlnode.ReadString( "readip" );
-            option._read_connect_data._port = xmlnode.ReadUInt32( "readport" );
+            option._read_connect_data._ip = xml_node.ReadString( "readip" );
+            option._read_connect_data._port = xml_node.ReadUInt32( "readport" );
 
-            option._runtime_id = ( uint32 )kfsetting->_connect_option.size() + 1u;
-            kfsetting->_connect_option.push_back( option );
+            option._runtime_id = ( uint32 )setting->_connect_option.size() + 1u;
+            setting->_connect_option.push_back( option );
         }
     };
 }

@@ -7,7 +7,7 @@ namespace KFrame
     {
         _thread_run = true;
         _http_response_list.InitQueue( 20000u, 20000u );
-        KFThread::CreateThread( this, &KFHttpThread::RunHttpRequest, __FUNC_LINE__ );
+        KFThread::Create( this, &KFHttpThread::RunHttpRequest, __FUNC_LINE__ );
     }
 
     KFHttpThread::~KFHttpThread()
@@ -15,10 +15,6 @@ namespace KFrame
         _thread_run = false;
         {
             KFLocker locker( _kf_req_mutex );
-            for ( auto httpdata : _http_request_list )
-            {
-                __KF_DELETE__( KFHttpData, httpdata );
-            }
             _http_request_list.clear();
         }
     }
@@ -28,32 +24,28 @@ namespace KFrame
         _thread_run = false;
     }
 
-    void KFHttpThread::AddHttpRequest( KFHttpData* httpdata )
+    void KFHttpThread::AddHttpRequest( std::shared_ptr<KFHttpData> http_data )
     {
         KFLocker locker( _kf_req_mutex );
-        _http_request_list.push_back( httpdata );
+        _http_request_list.push_back( http_data );
     }
 
     void KFHttpThread::RunHttpRequest()
     {
         while ( _thread_run )
         {
-            std::list< KFHttpData* > templist;
+            std::list<std::shared_ptr<KFHttpData>> temp_list;
             {
                 KFLocker locker( _kf_req_mutex );
-                templist.swap( _http_request_list );
+                temp_list.swap( _http_request_list );
             }
 
-            for ( auto httpdata : templist )
+            for ( auto http_data : temp_list )
             {
-                httpdata->Request();
-                if ( httpdata->_function == nullptr )
+                http_data->Request();
+                if ( http_data->_function != nullptr )
                 {
-                    __KF_DELETE__( KFHttpData, httpdata );
-                }
-                else
-                {
-                    _http_response_list.PushObject( httpdata, 0u, __FUNC_LINE__ );
+                    _http_response_list.Push( http_data );
                 }
             }
 
@@ -66,15 +58,14 @@ namespace KFrame
         auto responsecount = 0u;
         do
         {
-            auto httpdata = _http_response_list.PopObject();
-            if ( httpdata == nullptr )
+            auto http_data = _http_response_list.Pop();
+            if ( http_data == nullptr )
             {
                 break;
             }
 
             ++responsecount;
-            httpdata->Response();
-            __KF_DELETE__( KFHttpData, httpdata );
+            http_data->Response();
         } while ( responsecount <= 200u );
     }
 

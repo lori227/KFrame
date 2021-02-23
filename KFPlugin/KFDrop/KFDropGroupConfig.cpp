@@ -3,33 +3,33 @@
 namespace KFrame
 {
     /////////////////////////////////////////////////////////////////////////////////
-    void KFDropGroupConfig::ReadSetting( KFXmlNode& xmlnode, KFDropSetting* kfsetting )
+    void KFDropGroupConfig::ReadSetting( KFXmlNode& xml_node, KFDropSetting* setting )
     {
-        kfsetting->_is_drop_count = xmlnode.ReadBool( "dropcount", true );
-        kfsetting->_is_exclude = xmlnode.ReadBool( "exclude", true );
-        kfsetting->_condition_type = xmlnode.ReadUInt32( "conditiontype", true );
-        kfsetting->_rand_type = xmlnode.ReadUInt32( "randtype", true );
+        setting->_is_drop_count = xml_node.ReadBool( "dropcount", true );
+        setting->_is_exclude = xml_node.ReadBool( "exclude", true );
+        setting->_condition_type = xml_node.ReadUInt32( "conditiontype", true );
+        setting->_rand_type = xml_node.ReadUInt32( "randtype", true );
 
         std::shared_ptr<KFDropGroupWeight> drop_weight = nullptr;
-        auto weight = xmlnode.ReadUInt32( "weight", true );
+        auto weight = xml_node.ReadUInt32( "weight", true );
 
         if ( weight == KFRandEnum::TenThousand )
         {
             drop_weight = __MAKE_SHARED__( KFDropGroupWeight );
-            kfsetting->_necessary_list.Add( drop_weight );
-            drop_weight->_value = kfsetting->_necessary_list._objects.size();
+            setting->_necessary_list.Add( drop_weight );
+            drop_weight->_value = setting->_necessary_list._objects.size();
         }
         else
         {
-            auto id = kfsetting->_rand_list.Size();
-            drop_weight = kfsetting->_rand_list.Create( ++id, weight );
+            auto id = setting->_rand_list.Size();
+            drop_weight = setting->_rand_list.Create( ++id, weight );
         }
 
-        drop_weight->_is_clear_var = xmlnode.ReadBool( "reset", true );
-        drop_weight->_drop_data_id = xmlnode.ReadUInt32( "dropdataid", true );
+        drop_weight->_is_clear_var = xml_node.ReadBool( "reset", true );
+        drop_weight->_drop_data_id = xml_node.ReadUInt32( "dropdataid", true );
 
         // 条件
-        drop_weight->_conditions = xmlnode.ReadStaticConditions( "condition", true );
+        drop_weight->_conditions = xml_node.ReadStaticConditions( "condition", true );
     }
 
     void KFDropGroupConfig::LoadAllComplete()
@@ -68,7 +68,7 @@ namespace KFrame
         }
     }
 
-    void KFDropGroupConfig::InitDropConditonSetting( KFDropSetting* kfsetting, KFStaticConditionExpression* kfexpression )
+    void KFDropGroupConfig::InitDropConditonSetting( KFDropSetting* setting, KFStaticConditionExpression* kfexpression )
     {
         if ( kfexpression == nullptr )
         {
@@ -87,7 +87,7 @@ namespace KFrame
             {
                 kfvariable->_parent_name = __STRING__( drop );
                 kfvariable->_data_name = __STRING__( value );
-                kfvariable->_data_id = kfsetting->_id;
+                kfvariable->_data_id = setting->_id;
             }
         }
     }

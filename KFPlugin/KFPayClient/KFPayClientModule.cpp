@@ -48,8 +48,8 @@ namespace KFrame
         __CLIENT_PROTO_PARSE__( KFMsg::MsgApplyPayOrderReq );
 
         // 申请充值订单号
-        auto kfsetting = KFPayConfig::Instance()->FindSetting( kfmsg->payid() );
-        if ( kfsetting == nullptr )
+        auto setting = KFPayConfig::Instance()->FindSetting( kfmsg->payid() );
+        if ( setting == nullptr )
         {
             return _kf_display->SendToClient( player, KFMsg::PayIdError );
         }
@@ -63,8 +63,8 @@ namespace KFrame
         __JSON_OBJECT_DOCUMENT__( kfjson );
         __JSON_SET_VALUE__( kfjson, __STRING__( payorder ), order );
         __JSON_SET_VALUE__( kfjson, __STRING__( playerid ), playerid );
-        __JSON_SET_VALUE__( kfjson, __STRING__( payid ), kfsetting->_id );
-        __JSON_SET_VALUE__( kfjson, __STRING__( price ), kfsetting->_price );
+        __JSON_SET_VALUE__( kfjson, __STRING__( payid ), setting->_id );
+        __JSON_SET_VALUE__( kfjson, __STRING__( price ), setting->_price );
         _kf_http_client->MTGet( _url, kfjson, this, &KFPayClientModule::OnHttpApplyOrderCallBack );
     }
 
@@ -191,25 +191,25 @@ namespace KFrame
     {
         __LOG_INFO__( "player=[{}] payid=[{}] order=[{}] add element", player->GetKeyID(), payid, order );
 
-        auto kfsetting = KFPayConfig::Instance()->FindSetting( payid );
-        if ( kfsetting == nullptr )
+        auto setting = KFPayConfig::Instance()->FindSetting( payid );
+        if ( setting == nullptr )
         {
             return __LOG_ERROR__( "payid=[{}] can't find setting", payid );
         }
 
         // 判断是否首冲
-        auto firstvalue = player->Get< uint64 >( __STRING__( pay ), kfsetting->_note_id, __STRING__( value ) );
+        auto firstvalue = player->Get< uint64 >( __STRING__( pay ), setting->_note_id, __STRING__( value ) );
 
         // 添加元素
-        player->AddElement( &kfsetting->_reward, _default_multiple, __STRING__( pay ), firstvalue, __FUNC_LINE__ );
+        player->AddElement( &setting->_reward, _default_multiple, __STRING__( pay ), firstvalue, __FUNC_LINE__ );
         if ( firstvalue == _invalid_int )
         {
             // 添加元素
-            player->AddElement( &kfsetting->_first_reward, _default_multiple, __STRING__( firstpay ), firstvalue, __FUNC_LINE__ );
+            player->AddElement( &setting->_first_reward, _default_multiple, __STRING__( firstpay ), firstvalue, __FUNC_LINE__ );
         }
 
         // 更新变量
-        player->UpdateRecord( __STRING__( pay ), kfsetting->_note_id, __STRING__( value ), KFEnum::Add, 1 );
+        player->UpdateRecord( __STRING__( pay ), setting->_note_id, __STRING__( value ), KFEnum::Add, 1 );
 
         // 清空order
         auto playerorder = player->Get< std::string>( __STRING__( payorder ) );

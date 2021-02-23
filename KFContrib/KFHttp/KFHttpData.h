@@ -1,8 +1,6 @@
 #ifndef __KF_HTTP_DATA_H__
 #define __KF_HTTP_DATA_H__
-
 #include "KFrame.h"
-
 namespace KFrame
 {
     class KFHttp;
@@ -12,34 +10,33 @@ namespace KFrame
         KFHttpData();
         ~KFHttpData();
 
-        // 执行逻辑
+        // send request to server
         void Request();
 
-        // 访问结束
+        // response and call back
         void Response();
     public:
-        // 访问地址
-        std::string _url;
-
-        // 访问类型
+        // request type
         uint32 _type;
 
-        // 发送数据
+        // server address
+        std::string _url;
+
+        // send data
         std::string _data;
 
-        // 回传数据
-        std::string _args;
+        // pass back data
+        std::string _pass_back_data;
 
-        // 接受数据
+        // recv data from server
         std::string _result;
 
-        // 回调函数
+        // call back function
         KFHttpClientFunction _function;
 
-        // httpclient
-        KFHttp* _http;
+        // http logic data
+        std::shared_ptr<KFHttp> _http;
     };
 }
-
 
 #endif

@@ -56,7 +56,7 @@ namespace KFrame
         void BindNetEventFunction( uint32 type, T* object, void ( T::*handle )( const KFNetData* ) )
         {
             auto function = _net_event_function_list.Create( type );
-            function->SetFunction( object, std::bind( handle, object, std::placeholders::_1 ) );
+            function->SetFunction( std::bind( handle, object, std::placeholders::_1 ) );
         }
 
     protected:

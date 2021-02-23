@@ -51,14 +51,14 @@ namespace KFrame
         virtual bool SendNetMessage( uint64 server_id, uint32 msg_id, const char* data, uint32 length );
         virtual bool SendNetMessage( uint64 server_id, uint64 recv_id, uint32 msg_id, const char* data, uint32 length );
 
-        virtual void SendMessageToName( const std::string& servername, uint32 msg_id, google::protobuf::Message* message );
-        virtual void SendMessageToName( const std::string& servername, uint32 msg_id, const char* data, uint32 length );;
+        virtual void SendMessageToName( const std::string& server_name, uint32 msg_id, google::protobuf::Message* message );
+        virtual void SendMessageToName( const std::string& server_name, uint32 msg_id, const char* data, uint32 length );;
 
-        virtual void SendMessageToType( const std::string& servertype, uint32 msg_id, google::protobuf::Message* message );
-        virtual void SendMessageToType( const std::string& servertype, uint32 msg_id, const char* data, uint32 length );
+        virtual void SendMessageToType( const std::string& server_type, uint32 msg_id, google::protobuf::Message* message );
+        virtual void SendMessageToType( const std::string& server_type, uint32 msg_id, const char* data, uint32 length );
 
-        virtual void SendMessageToServer( const std::string& servername, const std::string& servertype, uint32 msg_id, google::protobuf::Message* message );
-        virtual void SendMessageToServer( const std::string& servername, const std::string& servertype, uint32 msg_id, const char* data, uint32 length );
+        virtual void SendMessageToServer( const std::string& server_name, const std::string& server_type, uint32 msg_id, google::protobuf::Message* message );
+        virtual void SendMessageToServer( const std::string& server_name, const std::string& server_type, uint32 msg_id, const char* data, uint32 length );
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -99,8 +99,8 @@ namespace KFrame
         void CallClientFailedFunction( const KFNetData* net_data );
 
         // 转发函数
-        virtual void AddTranspondFunction( KFModule* module, KFForwardFunction& function );
-        virtual void RemoveTranspondFunction( KFModule* module );
+        virtual void AddForwardFunction( KFModule* module, KFForwardFunction& function );
+        virtual void RemoveForwardFunction( KFModule* module );
         ////////////////////////////////////////////////////////////////
         // 处理客户端消息
         void HandleNetMessage( const Route& route, uint32 msg_id, const char* data, uint32 length );
@@ -112,19 +112,19 @@ namespace KFrame
         KFNetClientEngine* _client_engine = nullptr;
 
         // 转发函数
-        KFForwardFunction _kf_transpond_function = nullptr;
+        KFModuleFunction<KFForwardFunction> _kf_forward_function;
 
         // 注册成功回调函数
-        KFMapFunction< KFModule*, KFNetEventFunction > _kf_connection_function;
+        KFMapModuleFunction<KFModule*, KFNetEventFunction> _kf_connection_function;
 
         // 客户端掉线
-        KFMapFunction< KFModule*, KFNetEventFunction > _kf_lost_function;
+        KFMapModuleFunction<KFModule*, KFNetEventFunction> _kf_lost_function;
 
         // 客户端关闭
-        KFMapFunction< KFModule*, KFNetEventFunction > _kf_shutdown_function;
+        KFMapModuleFunction<KFModule*, KFNetEventFunction> _kf_shutdown_function;
 
         // 客户端失败
-        KFMapFunction< KFModule*, KFNetEventFunction > _kf_failed_function;
+        KFMapModuleFunction<KFModule*, KFNetEventFunction> _kf_failed_function;
     };
 }
 

@@ -30,10 +30,10 @@ namespace KFrame
         }
 
         auto& ranksettinglist = KFRankConfig::Instance()->FindRankSetting( kfparent->_data_setting->_name, key, kfdata->_data_setting->_name );
-        for ( auto kfsetting : ranksettinglist )
+        for ( auto setting : ranksettinglist )
         {
             // 属性更新顺序无法保证, 所以先保存到一个列表中, 在AfterRun中更新排行榜数据
-            _update_rank_list[ player->GetKeyID() ].insert( kfsetting );
+            _update_rank_list[ player->GetKeyID() ].insert( setting );
         }
     }
 
@@ -52,19 +52,19 @@ namespace KFrame
                 continue;
             }
 
-            for ( auto kfsetting : iter.second )
+            for ( auto setting : iter.second )
             {
-                UpdateRankDataToShard( player, kfsetting );
+                UpdateRankDataToShard( player, setting );
             }
         }
 
         _update_rank_list.clear();
     }
 
-    uint32 KFRankClientModule::CalcRankZoneId( uint64 playerid, const KFRankSetting* kfsetting )
+    uint32 KFRankClientModule::CalcRankZoneId( uint64 playerid, const KFRankSetting* setting )
     {
         auto zone_id = _invalid_int;
-        if ( kfsetting->_zone_type == KFMsg::ZoneRank )
+        if ( setting->_zone_type == KFMsg::ZoneRank )
         {
             zone_id = KFGlobal::Instance()->STUuidZoneId( __STRING__( player ), playerid );
         }
@@ -72,20 +72,20 @@ namespace KFrame
         return zone_id;
     }
 
-    void KFRankClientModule::UpdateRankDataToShard( EntityPtr player, const KFRankSetting* kfsetting )
+    void KFRankClientModule::UpdateRankDataToShard( EntityPtr player, const KFRankSetting* setting )
     {
         // 计算分区id
         auto playerid = player->GetKeyID();
-        auto zone_id = CalcRankZoneId( playerid, kfsetting );
+        auto zone_id = CalcRankZoneId( playerid, setting );
 
         // 计算排行榜积分
-        auto rankscore = CalcRankDataScore( player, kfsetting );
+        auto rankscore = CalcRankDataScore( player, setting );
 
         // 更新到排行榜
         KFMsg::S2SUpdateRankDataReq req;
         req.set_zoneid( zone_id );
         req.set_playerid( playerid );
-        req.set_rankid( kfsetting->_id );
+        req.set_rankid( setting->_id );
 
         auto pbrankdata = req.mutable_pbrankdata();
         pbrankdata->set_playerid( playerid );
@@ -93,7 +93,7 @@ namespace KFrame
 
         // 显示的数据
         auto pbdatas = pbrankdata->mutable_pbdata();
-        for ( auto& calcdata : kfsetting->_calc_data )
+        for ( auto& calcdata : setting->_calc_data )
         {
             auto kfdata = player->Find( calcdata._parent_name, calcdata._child_name );
             if ( kfdata == nullptr )
@@ -110,14 +110,14 @@ namespace KFrame
         _kf_route->RepeatToRand( playerid, __STRING__( rank ), KFMsg::S2S_UPDATE_RANK_DATA_REQ, &req );
     }
 
-    uint64 KFRankClientModule::CalcRankDataScore( EntityPtr player, const KFRankSetting* kfsetting )
+    uint64 KFRankClientModule::CalcRankDataScore( EntityPtr player, const KFRankSetting* setting )
     {
         // 排行榜积分
         uint64 rankscore = 0u;
 
         // 倍率系数
         uint64 coefficient = 1u;
-        for ( auto iter = kfsetting->_calc_data.rbegin(); iter != kfsetting->_calc_data.rend(); ++iter )
+        for ( auto iter = setting->_calc_data.rbegin(); iter != setting->_calc_data.rend(); ++iter )
         {
             auto& calcdata = *iter;
 
@@ -138,8 +138,8 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFRankClientModule::HandleQueryRankListReq, KFMsg::MsgQueryRankListReq )
     {
-        auto kfsetting = KFRankConfig::Instance()->FindSetting( kfmsg->rankid() );
-        if ( kfsetting == nullptr )
+        auto setting = KFRankConfig::Instance()->FindSetting( kfmsg->rankid() );
+        if ( setting == nullptr )
         {
             return _kf_display->SendToClient( kfentity, KFMsg::RankNotExist );
         }
@@ -148,7 +148,7 @@ namespace KFrame
         req.set_rankid( kfmsg->rankid() );
         req.set_start( kfmsg->start() == 0u ? 1u : kfmsg->start() );
         req.set_count( kfmsg->count() );
-        req.set_zoneid( CalcRankZoneId( kfentity->GetKeyID(), kfsetting ) );
+        req.set_zoneid( CalcRankZoneId( kfentity->GetKeyID(), setting ) );
         auto ok = _kf_route->SendToRand( kfentity->GetKeyID(), __STRING__( rank ), KFMsg::S2S_QUERY_RANK_LIST_REQ, &req );
         if ( !ok )
         {
@@ -158,8 +158,8 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFRankClientModule::HandleQueryFriendRankListReq, KFMsg::MsgQueryFriendRankListReq )
     {
-        auto kfsetting = KFRankConfig::Instance()->FindSetting( kfmsg->rankid() );
-        if ( kfsetting == nullptr )
+        auto setting = KFRankConfig::Instance()->FindSetting( kfmsg->rankid() );
+        if ( setting == nullptr )
         {
             return _kf_display->SendToClient( kfentity, KFMsg::RankNotExist );
         }

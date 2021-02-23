@@ -64,7 +64,7 @@ namespace KFrame
         UInt64Map& UpdateAllResetTime( EntityPtr player, DataPtr kftimerecord );
 
         // 判断重置时间, 返回是否成功, 上次重置时间
-        std::tuple<bool, uint64> UpdateResetTime( EntityPtr player, DataPtr kftimerecord, const KFTimeLoopSetting* kfsetting );
+        std::tuple<bool, uint64> UpdateResetTime( EntityPtr player, DataPtr kftimerecord, const KFTimeLoopSetting* setting );
 
         // 重置玩家属性
         void ResetPlayerData( EntityPtr player, const ResetData* resetdata );

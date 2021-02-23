@@ -26,14 +26,14 @@ namespace KFrame
         virtual bool SendNetMessage( uint64 server_id, uint64 recv_id, uint32 msg_id, const char* data, uint32 length ) = 0;
 
         // 给某一类型服务器发送消息
-        virtual void SendMessageToName( const std::string& servername, uint32 msg_id, google::protobuf::Message* message ) = 0;
-        virtual void SendMessageToName( const std::string& servername, uint32 msg_id, const char* data, uint32 length ) = 0;
+        virtual void SendMessageToName( const std::string& server_name, uint32 msg_id, google::protobuf::Message* message ) = 0;
+        virtual void SendMessageToName( const std::string& server_name, uint32 msg_id, const char* data, uint32 length ) = 0;
 
-        virtual void SendMessageToType( const std::string& servertype, uint32 msg_id, google::protobuf::Message* message ) = 0;
-        virtual void SendMessageToType( const std::string& servertype, uint32 msg_id, const char* data, uint32 length ) = 0;
+        virtual void SendMessageToType( const std::string& server_type, uint32 msg_id, google::protobuf::Message* message ) = 0;
+        virtual void SendMessageToType( const std::string& server_type, uint32 msg_id, const char* data, uint32 length ) = 0;
 
-        virtual void SendMessageToServer( const std::string& servername, const std::string& servertype, uint32 msg_id, google::protobuf::Message* message ) = 0;
-        virtual void SendMessageToServer( const std::string& servername, const std::string& servertype, uint32 msg_id, const char* data, uint32 length ) = 0;
+        virtual void SendMessageToServer( const std::string& server_name, const std::string& server_type, uint32 msg_id, google::protobuf::Message* message ) = 0;
+        virtual void SendMessageToServer( const std::string& server_name, const std::string& server_type, uint32 msg_id, const char* data, uint32 length ) = 0;
 
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -99,16 +99,16 @@ namespace KFrame
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 注册转发
         template<class T>
-        void RegisterTranspondFunction( T* module, bool ( T::*handle )( const Route& route, uint32 msg_id, const char* data, uint32 length ) )
+        void RegisterForwardFunction( T* module, bool ( T::*handle )( const Route&, uint32, const char*, uint32 ) )
         {
             KFForwardFunction function = std::bind( handle, module, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
-            AddTranspondFunction( module, function );
+            AddForwardFunction( module, function );
         }
 
         template<class T>
-        void UnRegisterTranspondFunction( T* module )
+        void UnRegisterForwardFunction( T* module )
         {
-            RemoveTranspondFunction( module );
+            RemoveForwardFunction( module );
         }
 
     protected:
@@ -129,8 +129,8 @@ namespace KFrame
         virtual void RemoveFailedFunction( KFModule* module ) = 0;
 
         // 转发函数
-        virtual void AddTranspondFunction( KFModule* module, KFForwardFunction& function ) = 0;
-        virtual void RemoveTranspondFunction( KFModule* module ) = 0;
+        virtual void AddForwardFunction( KFModule* module, KFForwardFunction& function ) = 0;
+        virtual void RemoveForwardFunction( KFModule* module ) = 0;
     };
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -163,10 +163,10 @@ namespace KFrame
     _kf_tcp_client->UnRegisterFailedFunction( this )
 
 #define __REGISTER_TCP_CLIENT_TRANSPOND__( function ) \
-    _kf_tcp_client->RegisterTranspondFunction( this, function )
+    _kf_tcp_client->RegisterForwardFunction( this, function )
 
 #define __UN_TCP_CLIENT_TRANSPOND__() \
-    _kf_tcp_client->UnRegisterTranspondFunction( this )
+    _kf_tcp_client->UnRegisterForwardFunction( this )
 }
 
 #endif

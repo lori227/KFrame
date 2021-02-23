@@ -21,21 +21,21 @@ namespace KFrame
         auto kfnoterecord = player->Find( __STRING__( note ) );
         for ( auto& iter : KFEnterConfig::Instance()->_settings._objects )
         {
-            auto kfsetting = iter.second;
-            if ( kfsetting->_id != _invalid_int )
+            auto setting = iter.second;
+            if ( setting->_id != _invalid_int )
             {
-                auto notevalue = kfnoterecord->Get( kfsetting->_id, __STRING__( value ) );
+                auto notevalue = kfnoterecord->Get( setting->_id, __STRING__( value ) );
                 if ( notevalue != _invalid_int )
                 {
                     continue;
                 }
 
                 // 设置属性
-                player->UpdateRecord( kfnoterecord, kfsetting->_id, __STRING__( value ), KFEnum::Set, 1 );
+                player->UpdateRecord( kfnoterecord, setting->_id, __STRING__( value ), KFEnum::Set, 1 );
             }
 
             // 调用脚本
-            _kf_lua->Call( kfsetting->_lua_file, kfsetting->_lua_function, playerid );
+            _kf_lua->Call( setting->_lua_file, setting->_lua_function, playerid );
         }
     }
 }

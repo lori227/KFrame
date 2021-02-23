@@ -168,19 +168,19 @@ namespace KFrame
             kfparent = kfitemrecord;
         }
 
-        auto kfsetting = KFItemConfig::Instance()->FindSetting( kfelementobject->_config_id );
-        if ( kfsetting == nullptr )
+        auto setting = KFItemConfig::Instance()->FindSetting( kfelementobject->_config_id );
+        if ( setting == nullptr )
         {
             return false;
         }
 
-        return !CheckItemBagFull( player, kfparent, kfsetting, itemcount );
+        return !CheckItemBagFull( player, kfparent, setting, itemcount );
     }
 
-    bool KFItemModule::CheckItemBagFull( EntityPtr player, DataPtr kfitemrecord, const KFItemSetting* kfsetting, uint32 itemcount )
+    bool KFItemModule::CheckItemBagFull( EntityPtr player, DataPtr kfitemrecord, const KFItemSetting* setting, uint32 itemcount )
     {
         auto maxsize = GetItemBagMaxCount( player, kfitemrecord );
-        auto maxoverlaycount = kfsetting->_overlay_count;
+        auto maxoverlaycount = setting->_overlay_count;
 
         // 计算占用格子数
         auto cursize = kfitemrecord->Size();
@@ -191,13 +191,13 @@ namespace KFrame
             return false;
         }
 
-        if ( kfsetting->_overlay_count > 1u )
+        if ( setting->_overlay_count > 1u )
         {
             // 剩余格子可叠加物品数
             auto canaddcount = leftsize * maxoverlaycount;
             for ( auto kfitem = kfitemrecord->First(); kfitem != nullptr; kfitem = kfitemrecord->Next() )
             {
-                if ( kfsetting->_id != kfitem->Get( __STRING__( id ) ) )
+                if ( setting->_id != kfitem->Get( __STRING__( id ) ) )
                 {
                     continue;
                 }
@@ -228,10 +228,10 @@ namespace KFrame
 
     uint32 KFItemModule::GetCanAddItemCount( EntityPtr player, uint32 itemid, uint32 itemcount )
     {
-        auto kfsetting = KFItemConfig::Instance()->FindSetting( itemid );
-        if ( kfsetting == nullptr )
+        auto setting = KFItemConfig::Instance()->FindSetting( itemid );
+        if ( setting == nullptr )
         {
-            __LOG_ERROR__( "item=[{}] no setting", kfsetting->_id );
+            __LOG_ERROR__( "item=[{}] no setting", setting->_id );
             return 0u;
         }
 
@@ -242,7 +242,7 @@ namespace KFrame
         }
 
         auto maxsize = GetItemBagMaxCount( player, kfitemrecord );
-        auto maxoverlaycount = kfsetting->_overlay_count;
+        auto maxoverlaycount = setting->_overlay_count;
 
         // 计算占用格子数
         auto cursize = kfitemrecord->Size();
@@ -254,7 +254,7 @@ namespace KFrame
         }
 
         // 不能叠加
-        if ( kfsetting->_overlay_count == 1u )
+        if ( setting->_overlay_count == 1u )
         {
             return leftsize;
         }
@@ -263,7 +263,7 @@ namespace KFrame
         auto canaddcount = leftsize * maxoverlaycount;
         for ( auto kfitem = kfitemrecord->First(); kfitem != nullptr; kfitem = kfitemrecord->Next() )
         {
-            if ( kfsetting->_id != kfitem->Get<uint32>( __STRING__( id ) ) )
+            if ( setting->_id != kfitem->Get<uint32>( __STRING__( id ) ) )
             {
                 continue;
             }
@@ -524,8 +524,8 @@ namespace KFrame
             }
         }
 
-        auto kfsetting = KFItemConfig::Instance()->FindSetting( itemid );
-        if ( kfsetting == nullptr )
+        auto setting = KFItemConfig::Instance()->FindSetting( itemid );
+        if ( setting == nullptr )
         {
             __LOG_ERROR_FUNCTION__( function, line, "item=[{}] can't find setting", itemid );
             _kf_display->SendToClient( player, KFMsg::ItemSettingNotExist, itemid );
@@ -533,7 +533,7 @@ namespace KFrame
         }
 
         // id
-        kfitem->Set( __STRING__( id ), kfsetting->_id );
+        kfitem->Set( __STRING__( id ), setting->_id );
 
         // count
         kfitem->Set( __STRING__( count ), 1u );
@@ -542,7 +542,7 @@ namespace KFrame
         kfitem->SetKeyID( KFGlobal::Instance()->STMakeUuid( __STRING__( item ) ) );
 
         // 初始化数据
-        CallItemInitFunction( player, kfitem, kfsetting );
+        CallItemInitFunction( player, kfitem, setting );
         return kfitem;
     }
 
@@ -627,7 +627,7 @@ namespace KFrame
         player->RemoveRecord( kfdata->GetParent()->GetParent(), key );
     }
 
-    const std::list<DataPtr>& KFItemModule::FindRemoveItemList( EntityPtr player, DataPtr kfparent, const KFItemSetting* kfsetting, uint32 itemcount )
+    const std::list<DataPtr>& KFItemModule::FindRemoveItemList( EntityPtr player, DataPtr kfparent, const KFItemSetting* setting, uint32 itemcount )
     {
         std::list<DataPtr> itemrecordlist;
         itemrecordlist.push_back( kfparent );
@@ -653,7 +653,7 @@ namespace KFrame
         {
             for ( auto kfitem = kfitemrecord->First(); kfitem != nullptr; kfitem = kfitemrecord->Next() )
             {
-                if ( kfsetting->_id != kfitem->Get( __STRING__( id  ) ) )
+                if ( setting->_id != kfitem->Get( __STRING__( id  ) ) )
                 {
                     continue;
                 }
@@ -694,15 +694,15 @@ namespace KFrame
             return false;
         }
 
-        auto kfsetting = KFItemConfig::Instance()->FindSetting( kfelementobject->_config_id );
-        if ( kfsetting == nullptr )
+        auto setting = KFItemConfig::Instance()->FindSetting( kfelementobject->_config_id );
+        if ( setting == nullptr )
         {
             __LOG_ERROR_FUNCTION__( function, line, "item id=[{}] setting = nullptr", kfelementobject->_config_id );
             _kf_display->SendToClient( player, KFMsg::ItemSettingNotExist, kfelementobject->_config_id );
             return false;
         }
 
-        auto& itemlist = FindRemoveItemList( player, kfparent, kfsetting, itemcount );
+        auto& itemlist = FindRemoveItemList( player, kfparent, setting, itemcount );
         return !itemlist.empty();
     }
 
@@ -729,20 +729,20 @@ namespace KFrame
             return false;
         }
 
-        auto kfsetting = KFItemConfig::Instance()->FindSetting( kfelementobject->_config_id );
-        if ( kfsetting == nullptr )
+        auto setting = KFItemConfig::Instance()->FindSetting( kfelementobject->_config_id );
+        if ( setting == nullptr )
         {
             __LOG_ERROR_FUNCTION__( function, line, "item id=[{}] can't find setting", kfelementobject->_config_id );
             return false;
         }
 
         // 删除道具数量
-        auto& itemlist = FindRemoveItemList( player, kfparent, kfsetting, itemcount );
+        auto& itemlist = FindRemoveItemList( player, kfparent, setting, itemcount );
         for ( auto kfitem : itemlist )
         {
             auto removecount = RemoveItemCount( player, kfitem, itemcount );
             itemcount -= removecount;
-            kfresult->AddResult( kfsetting->_id, kfitem->_data_setting->_name, __STRING__( count ), removecount );
+            kfresult->AddResult( setting->_id, kfitem->_data_setting->_name, __STRING__( count ), removecount );
             if ( itemcount == _invalid_int )
             {
                 break;
@@ -901,8 +901,8 @@ namespace KFrame
         kfresult->AddResult( itemid, kfitem );
 
         // 判断是否需要显示
-        auto kfsetting = KFItemBagConfig::Instance()->FindSetting( kfitem->_data_setting->_name );
-        if ( kfsetting != nullptr && !kfsetting->_show_when_add )
+        auto setting = KFItemBagConfig::Instance()->FindSetting( kfitem->_data_setting->_name );
+        if ( setting != nullptr && !setting->_show_when_add )
         {
             kfresult->_is_need_show = false;
         }
@@ -913,8 +913,8 @@ namespace KFrame
         kfresult->AddResult( itemid, itemname, __STRING__( count ), count );
 
         // 判断是否需要显示
-        auto kfsetting = KFItemBagConfig::Instance()->FindSetting( itemname );
-        if ( kfsetting != nullptr && !kfsetting->_show_when_add )
+        auto setting = KFItemBagConfig::Instance()->FindSetting( itemname );
+        if ( setting != nullptr && !setting->_show_when_add )
         {
             kfresult->_is_need_show = false;
         }
@@ -933,13 +933,13 @@ namespace KFrame
         }
 
         auto itemid = kfitem->Get<uint32>( __STRING__( id ) );
-        auto kfsetting = KFItemConfig::Instance()->FindSetting( itemid );
-        if ( kfsetting == nullptr )
+        auto setting = KFItemConfig::Instance()->FindSetting( itemid );
+        if ( setting == nullptr )
         {
             return _kf_display->SendToClient( kfentity, KFMsg::ItemSettingNotExist );
         }
 
-        if ( kfsetting->_sell.IsEmpty() )
+        if ( setting->_sell.IsEmpty() )
         {
             return _kf_display->SendToClient( kfentity, KFMsg::ItemCanNotSell );
         }
@@ -954,7 +954,7 @@ namespace KFrame
         kfentity->UpdateObject( kfitem, __STRING__( count ), KFEnum::Dec, kfmsg->count() );
 
         // 添加道具
-        kfentity->AddElement( &kfsetting->_sell, kfmsg->count(), __STRING__( sell ), itemid, __FUNC_LINE__ );
+        kfentity->AddElement( &setting->_sell, kfmsg->count(), __STRING__( sell ), itemid, __FUNC_LINE__ );
 
         KFMsg::MsgSellItemAck ack;
         ack.set_itemid( itemid );

@@ -16,14 +16,14 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     const KFRedisConnectOption* KFRedisModule::FindRedisConnectOption( const std::string& module, uint32 logicid )
     {
-        auto kfsetting = KFRedisConfig::Instance()->FindSetting( module );
-        if ( kfsetting == nullptr )
+        auto setting = KFRedisConfig::Instance()->FindSetting( module );
+        if ( setting == nullptr )
         {
             __LOG_ERROR__( "[{}:{}] can't find redis setting", module, logicid );
             return nullptr;
         }
 
-        for ( auto& connectoption : kfsetting->_connect_option )
+        for ( auto& connectoption : setting->_connect_option )
         {
             if ( logicid >= connectoption._min_logic_id && logicid <= connectoption._max_logic_id )
             {

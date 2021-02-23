@@ -63,7 +63,7 @@ namespace KFrame
     __KF_INTERFACE__( _kf_item, KFItemInterface );
 
 #define __KF_ITEM_INIT_FUNCTION__( function )\
-    void function( EntityPtr player, DataPtr kfitem, const KFItemSetting* kfsetting )
+    void function( EntityPtr player, DataPtr kfitem, const KFItemSetting* setting )
 #define __REGISTER_ITEM_INIT__( itemtype, function )\
     _kf_item->RegisteItemInitFunction( itemtype, this, function )
 #define __UN_ITEM_INIT__( itemtype )\

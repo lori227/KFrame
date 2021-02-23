@@ -102,12 +102,12 @@ namespace KFrame
         void UpdateStrValueToRelation( EntityPtr player, const std::string& relationname, const std::string& data_name, const std::string& data_value );
 
         // 好友申请操作
-        void ReplyRelationAllInvite( EntityPtr player, DataPtr kfinviterecord, const KFRelationSetting* kfsetting, uint32 operate );
-        void ReplyRelationInvite( EntityPtr player, DataPtr kfinviterecord, const KFRelationSetting* kfsetting, uint32 operate, uint64 playerid );
-        uint64 ReplyInvite( EntityPtr player, const KFRelationSetting* kfsetting, uint32 operate, DataPtr kfinvite );
+        void ReplyRelationAllInvite( EntityPtr player, DataPtr kfinviterecord, const KFRelationSetting* setting, uint32 operate );
+        void ReplyRelationInvite( EntityPtr player, DataPtr kfinviterecord, const KFRelationSetting* setting, uint32 operate, uint64 playerid );
+        uint64 ReplyInvite( EntityPtr player, const KFRelationSetting* setting, uint32 operate, DataPtr kfinvite );
 
         // 添加关系
-        void AddRelationToRelation( EntityPtr player, uint64 playerid, const std::string& playername, DataPtr kfrelationrecord, const KFRelationSetting* kfsetting );
+        void AddRelationToRelation( EntityPtr player, uint64 playerid, const std::string& playername, DataPtr kfrelationrecord, const KFRelationSetting* setting );
 
         // 通过邀请名查找关系属性配置
         const KFRelationSetting* FindRelationSettingByInviteName( const std::string& name );

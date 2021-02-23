@@ -54,10 +54,10 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////
         // 注册到连接器
-        virtual bool RegisteNetHandle( uint64 sessionid, uint64 handle_id, uint64 objectid );
+        virtual bool RegisteNetHandle( uint64 session_id, uint64 handle_id, uint64 object_id );
 
         // 删除连接器
-        virtual bool CloseNetHandle( uint64 handle_id, uint32 delaytime, const char* function, uint32 line );
+        virtual bool CloseNetHandle( uint64 handle_id, uint32 delay_time, const char* function, uint32 line );
 
         // 连接数量
         virtual uint32 GetHandleCount();
@@ -69,7 +69,7 @@ namespace KFrame
         virtual const std::string& GetHandleIp( uint64 handle_id );
 
         // 设置id
-        virtual bool BindObjectId( uint64 handle_id, uint64 objectid );
+        virtual bool BindObjectId( uint64 handle_id, uint64 object_id );
 
         // 连接列表
         virtual void GetHandleList( NetDataList& out_list );
@@ -83,8 +83,8 @@ namespace KFrame
         virtual void AddLostFunction( KFModule* module, KFNetEventFunction& function );
         virtual void RemoveLostFunction( KFModule* module );
 
-        virtual void AddTranspondFunction( KFModule* module, KFForwardFunction& function );
-        virtual void RemoveTranspondFunction( KFModule* module );
+        virtual void AddForwardFunction( KFModule* module, KFForwardFunction& function );
+        virtual void RemoveForwardFunction( KFModule* module );
 
     protected:
         // 处理客户端注册
@@ -97,29 +97,29 @@ namespace KFrame
         void HandleNetMessage( const Route& route, uint32 msg_id, const char* data, uint32 length );
 
         // 发现客户端回调
-        void CallDiscoverFunction( KFNetHandle* tcphandle );
+        void CallDiscoverFunction( std::shared_ptr<KFNetHandle> handle );
 
         // 丢失客户端回调
-        void CallLostFunction( KFNetHandle* tcphandle );
+        void CallLostFunction( std::shared_ptr<KFNetHandle> handle );
 
         // 查找tcpdata
-        KFTcpSetting* FindTcpServerSetting();
-        KFTcpSetting* FindTcpSetting( const std::string& appname, const std::string& apptype );
+        std::shared_ptr<KFTcpSetting> FindTcpServerSetting();
+        std::shared_ptr<KFTcpSetting> FindTcpSetting( const std::string& app_name, const std::string& app_type );
     private:
         // 网络服务器引擎
         KFNetServerEngine* _server_engine = nullptr;
 
         // 网路配置
-        KFTcpSetting* _kf_tcp_setting = nullptr;
+        std::shared_ptr<KFTcpSetting> _tcp_setting = nullptr;
 
         // 发现客户端回调
-        KFMapFunction< KFModule*, KFNetEventFunction > _kf_discover_function;
+        KFMapModuleFunction<KFModule*, KFNetEventFunction> _kf_discover_function;
 
         // 丢失客户端回调
-        KFMapFunction< KFModule*, KFNetEventFunction > _kf_lost_function;
+        KFMapModuleFunction<KFModule*, KFNetEventFunction> _kf_lost_function;
 
         // 转发函数
-        KFForwardFunction _kf_transpond_function = nullptr;
+        KFModuleFunction<KFForwardFunction> _kf_forward_function;
     };
 }
 

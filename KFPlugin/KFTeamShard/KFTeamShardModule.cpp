@@ -114,8 +114,8 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamCreateToTeamReq, KFMsg::S2STeamCreateToTeamReq )
     {
-        auto kfsetting = KFTeamConfig::Instance()->FindSetting( kfmsg->id() );
-        if ( kfsetting == nullptr )
+        auto setting = KFTeamConfig::Instance()->FindSetting( kfmsg->id() );
+        if ( setting == nullptr )
         {
             return _kf_display->SendToPlayer( route, KFMsg::TeamSettingError );
         }
@@ -127,7 +127,7 @@ namespace KFrame
         kfteam->Set( __STRING__( configid ), kfmsg->id() );
         kfteam->Set( __STRING__( name ), kfmsg->name() );
         kfteam->Set( __STRING__( info ), kfmsg->info() );
-        kfteam->Set( __STRING__( maxcount ), kfsetting->_max_count );
+        kfteam->Set( __STRING__( maxcount ), setting->_max_count );
 
         auto kfmemberrecord = kfteam->Find( __STRING__( member ) );
         auto kfmember = kfteam->CreateData( kfmemberrecord );

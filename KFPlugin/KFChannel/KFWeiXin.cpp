@@ -6,7 +6,7 @@
 
 namespace KFrame
 {
-    std::string KFWeiXin::RequestLogin( KFJson& json, const KFChannelSetting* kfsetting )
+    std::string KFWeiXin::RequestLogin( KFJson& json, const KFChannelSetting* setting )
     {
         auto machinecode = __JSON_GET_STRING__( json, __STRING__( machine ) );
         auto weixincode = __JSON_GET_STRING__( json, __STRING__( code ) );
@@ -18,7 +18,7 @@ namespace KFrame
         {
             // 去请求access_token
             auto urldata = __FORMAT__( "{}/sns/oauth2/access_token?appid={}&secret={}&code={}&grant_type=authorization_code",
-                                       kfsetting->_login_url, kfsetting->_app_id, kfsetting->_app_key, weixincode );
+                                       setting->_login_url, setting->_app_id, setting->_app_key, weixincode );
 
             auto accessdata = _kf_http_client->STGet( urldata, _invalid_string );
             if ( accessdata.empty() )
@@ -62,7 +62,7 @@ namespace KFrame
 
                 // 刷新access_token
                 auto urldata = __FORMAT__( "{}/sns/oauth2/refresh_token?grant_type=refresh_token&appid={}&refresh_token={}",
-                                           kfsetting->_login_url, kfsetting->_app_id, refreshtoken );
+                                           setting->_login_url, setting->_app_id, refreshtoken );
 
                 auto accessdata = _kf_http_client->STGet( urldata, _invalid_string );
                 if ( accessdata.empty() )
@@ -83,7 +83,7 @@ namespace KFrame
         }
 
         // 获取用户资料
-        auto urldata = __FORMAT__( "{}/sns/userinfo?access_token={}&openid={}", kfsetting->_login_url, accesstoken, openid );
+        auto urldata = __FORMAT__( "{}/sns/userinfo?access_token={}&openid={}", setting->_login_url, accesstoken, openid );
         auto userdata = _kf_http_client->STGet( urldata, _invalid_string );
         if ( userdata.empty() )
         {
@@ -100,7 +100,7 @@ namespace KFrame
 
         __JSON_OBJECT_DOCUMENT__( response );
         __JSON_SET_VALUE__( response, __STRING__( account ), openid );
-        __JSON_SET_VALUE__( response, __STRING__( channel ), kfsetting->_id );
+        __JSON_SET_VALUE__( response, __STRING__( channel ), setting->_id );
 
         //KFJson kfextend;
         //kfextend.SetValue( __STRING__( name ), userjson.GetString( __STRING__( nickname ) ) );
@@ -118,7 +118,7 @@ namespace KFrame
         _kf_account->SaveWeiXinAccessToken( machinecode, openid, scope, accesstoken, expirestime - 200 );
     }
 
-    std::string KFWeiXin::RequestPay( const std::string& data, const KFChannelSetting* kfsetting )
+    std::string KFWeiXin::RequestPay( const std::string& data, const KFChannelSetting* setting )
     {
         return _invalid_string;
     }

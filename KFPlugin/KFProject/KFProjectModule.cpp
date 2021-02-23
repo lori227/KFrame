@@ -30,8 +30,8 @@ namespace KFrame
         {
             for ( auto& iter : KFConstantConfig::Instance()->_settings._objects )
             {
-                auto kfsetting = iter.second;
-                global->AddConstant( kfsetting->_name,0u, kfsetting->_value );
+                auto setting = iter.second;
+                global->AddConstant( setting->_name,0u, setting->_value );
             }
         }
 
@@ -39,8 +39,8 @@ namespace KFrame
         {
             for ( auto& iter : KFProjectConfig::Instance()->_settings._objects )
             {
-                auto kfsetting = iter.second;
-                global->AddConstant( kfsetting->_name, 0, kfsetting->_value );
+                auto setting = iter.second;
+                global->AddConstant( setting->_name, 0, setting->_value );
             }
 
             global->_project_time = global->GetUInt32( __STRING__( projecttime ) );
@@ -51,8 +51,8 @@ namespace KFrame
         {
             for ( auto& iter : KFUuidConfig::Instance()->_settings._objects )
             {
-                auto kfsetting = iter.second;
-                global->AddUuidData( kfsetting->_id, kfsetting->_time, kfsetting->_zone, kfsetting->_worker, kfsetting->_seq );
+                auto setting = iter.second;
+                global->AddUuidData( setting->_id, setting->_time, setting->_zone, setting->_worker, setting->_seq );
             }
         }
 
@@ -61,10 +61,10 @@ namespace KFrame
             _id_name_list.clear();
             for ( auto& iter : KFTemplateConfig::Instance()->_settings._objects )
             {
-                auto kfsetting = iter.second;
+                auto setting = iter.second;
 
-                auto id = CalcTypeCodeValue( kfsetting->_type, kfsetting->_code );
-                _id_name_list[ id ] = kfsetting->_id;
+                auto id = CalcTypeCodeValue( setting->_type, setting->_code );
+                _id_name_list[ id ] = setting->_id;
             }
         }
     }
@@ -98,11 +98,11 @@ namespace KFrame
         static std::string _str_element = _invalid_string;
         _str_element.clear();
 
-        auto kfsetting = KFTemplateConfig::Instance()->FindSetting( data_name );
-        if ( kfsetting != nullptr )
+        auto setting = KFTemplateConfig::Instance()->FindSetting( data_name );
+        if ( setting != nullptr )
         {
             _str_element = "[";
-            _str_element += __FORMAT__( kfsetting->_template, data_value, data_id );
+            _str_element += __FORMAT__( setting->_template, data_value, data_id );
             _str_element += "]";
         }
         else
@@ -220,14 +220,14 @@ namespace KFrame
             return _invalid_string;
         }
 
-        auto kfsetting = KFTemplateConfig::Instance()->FindSetting( iter->second );
-        if ( kfsetting == nullptr )
+        auto setting = KFTemplateConfig::Instance()->FindSetting( iter->second );
+        if ( setting == nullptr )
         {
             return _invalid_string;
         }
 
         static std::string _str_element;
-        _str_element = __FORMAT__( kfsetting->_template, num, code );
+        _str_element = __FORMAT__( setting->_template, num, code );
         return _str_element;
     }
 }

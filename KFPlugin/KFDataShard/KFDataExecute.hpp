@@ -38,7 +38,7 @@ namespace KFrame
         virtual ~KFDataExecute() = default;
 
         // 初始化
-        void InitExecute( const KFDataSaveSetting* kfsetting );
+        void InitExecute( const KFDataSaveSetting* setting );
 
         // 逻辑执行
         void RunDataKeeper();

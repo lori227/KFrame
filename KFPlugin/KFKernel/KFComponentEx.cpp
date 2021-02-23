@@ -61,10 +61,10 @@ namespace KFrame
         auto classsetting = _data_setting->_class_setting;
         for ( auto& iter : classsetting->_static_data._objects )
         {
-            auto kfsetting = iter.second;
-            if ( kfsetting->_logic_name == data_name )
+            auto setting = iter.second;
+            if ( setting->_logic_name == data_name )
             {
-                _result.push_back( kfsetting->_name );
+                _result.push_back( setting->_name );
             }
         }
 
@@ -79,13 +79,13 @@ namespace KFrame
 
     const KFClassSetting* KFComponentEx::FindClassSetting( const std::string& data_name )
     {
-        auto kfsetting = _data_setting->_class_setting->FindSetting( data_name );
-        if ( kfsetting == nullptr )
+        auto setting = _data_setting->_class_setting->FindSetting( data_name );
+        if ( setting == nullptr )
         {
             return nullptr;
         }
 
-        return kfsetting->_class_setting;
+        return setting->_class_setting;
     }
 
     const KFDataSetting* KFComponentEx::FindDataSetting()
@@ -100,13 +100,13 @@ namespace KFrame
 
     const KFDataSetting* KFComponentEx::FindDataSetting( const std::string& parent_name, const std::string& data_name )
     {
-        auto kfsetting = _data_setting->_class_setting->FindSetting( parent_name );
-        if ( kfsetting == nullptr || kfsetting->_class_setting == nullptr )
+        auto setting = _data_setting->_class_setting->FindSetting( parent_name );
+        if ( setting == nullptr || setting->_class_setting == nullptr )
         {
             return nullptr;
         }
 
-        return kfsetting->_class_setting->FindSetting( data_name );
+        return setting->_class_setting->FindSetting( data_name );
     }
     /////////////////////////////////////////////////////////////////////////////////////
     EntityPtr KFComponentEx::FirstEntity()
@@ -218,14 +218,14 @@ namespace KFrame
 
     void KFComponentEx::SetMaxValue( const std::string& data_name, uint32 value )
     {
-        auto kfsetting = FindDataSetting( data_name );
-        const_cast< KFDataSetting* >( kfsetting )->_int_max_value = value;
+        auto setting = FindDataSetting( data_name );
+        const_cast< KFDataSetting* >( setting )->_int_max_value = value;
     }
 
     void KFComponentEx::SetMaxValue( const std::string& parent_name, const std::string& data_name, uint32 value )
     {
-        auto kfsetting = FindDataSetting( parent_name, data_name );
-        const_cast<KFDataSetting*>( kfsetting )->_int_max_value = value;
+        auto setting = FindDataSetting( parent_name, data_name );
+        const_cast<KFDataSetting*>( setting )->_int_max_value = value;
     }
     ////////////////////////////////////////////////////////////////////////////////////////
     void KFComponentEx::BindCheckAddElementFunction( const std::string& data_name, KFCheckAddElementFunction& function )

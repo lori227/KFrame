@@ -68,8 +68,8 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFLoginModule::HandleLoginToLoginReq, KFMsg::S2SLoginToLoginReq )
     {
         auto gateid = __ROUTE_SERVER_ID__;
-        auto kfsetting = KFZoneConfig::Instance()->FindSetting( KFGlobal::Instance()->_app_id->GetZoneId() );
-        if ( kfsetting == nullptr )
+        auto setting = KFZoneConfig::Instance()->FindSetting( KFGlobal::Instance()->_app_id->GetZoneId() );
+        if ( setting == nullptr )
         {
             return __LOG_ERROR__( "can't find zone=[{}] setting", KFGlobal::Instance()->_app_id->GetZoneId() );
         }
@@ -88,8 +88,8 @@ namespace KFrame
         __JSON_SET_VALUE__( sendjson, __STRING__( token ), kfmsg->token() );
         __JSON_SET_VALUE__( sendjson, __STRING__( sessionid ), sessionid );
         __JSON_SET_VALUE__( sendjson, __STRING__( accountid ), kfmsg->accountid() );
-        __JSON_SET_VALUE__( sendjson, __STRING__( zone_id ), kfsetting->_id );
-        __JSON_SET_VALUE__( sendjson, __STRING__( datazoneid ), kfsetting->_data_id );
+        __JSON_SET_VALUE__( sendjson, __STRING__( zone_id ), setting->_id );
+        __JSON_SET_VALUE__( sendjson, __STRING__( datazoneid ), setting->_data_id );
         _kf_http_client->MTGet( _url, sendjson, this, &KFLoginModule::OnHttpAuthLoginVerifyCallBack );
     }
 

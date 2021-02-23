@@ -31,8 +31,8 @@ namespace KFrame
         auto iter = _uuid_setting_list.find( name );
         if ( iter == _uuid_setting_list.end() )
         {
-            auto kfsetting = __NEW_OBJECT__( KFUuidData );
-            iter = _uuid_setting_list.insert( std::make_pair( name, kfsetting ) ).first;
+            auto setting = __NEW_OBJECT__( KFUuidData );
+            iter = _uuid_setting_list.insert( std::make_pair( name, setting ) ).first;
         }
 
         iter->second->InitData( project_time, time_bits, zone_bits, worker_bits, seq_bits );

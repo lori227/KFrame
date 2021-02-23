@@ -7,10 +7,6 @@ namespace KFrame
 {
     KFHttpClientModule::~KFHttpClientModule()
     {
-        for ( auto httpthread : _http_thread_list )
-        {
-            __KF_DELETE__( KFHttpThread, httpthread );
-        }
         _http_thread_list.clear();
     }
 
@@ -89,50 +85,50 @@ namespace KFrame
         return httpclient.RunHttp( type, url, data );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFHttpClientModule::MTGetRequest( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& args )
+    void KFHttpClientModule::MTGetRequest( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& pass_back_data )
     {
-        MTRequest( KFHttp::Get, function, url, data, _invalid_string );
+        MTRequest( KFHttp::Get, function, url, data, pass_back_data );
     }
 
-    void KFHttpClientModule::MTGetRequest( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& args )
+    void KFHttpClientModule::MTGetRequest( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& pass_back_data )
     {
         auto data = __JSON_SERIALIZE__( json );
-        MTRequest( KFHttp::Get, function, url, data, _invalid_string );
+        MTRequest( KFHttp::Get, function, url, data, pass_back_data );
     }
 
-    void KFHttpClientModule::MTPostRequest( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& args )
+    void KFHttpClientModule::MTPostRequest( KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& pass_back_data )
     {
-        MTRequest( KFHttp::Post, function, url, data, args );
+        MTRequest( KFHttp::Post, function, url, data, pass_back_data );
     }
 
-    void KFHttpClientModule::MTPostRequest( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& args )
+    void KFHttpClientModule::MTPostRequest( KFHttpClientFunction& function, const std::string& url, KFJson& json, const std::string& pass_back_data )
     {
         auto data = __JSON_SERIALIZE__( json );
-        MTRequest( KFHttp::Post, function, url, data, args );
+        MTRequest( KFHttp::Post, function, url, data, pass_back_data );
     }
 
-    void KFHttpClientModule::MTRequest( uint32 type, KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& args )
+    void KFHttpClientModule::MTRequest( uint32 type, KFHttpClientFunction& function, const std::string& url, const std::string& data, const std::string& pass_back_data )
     {
-        auto httpdata = __KF_NEW__( KFHttpData );
-        httpdata->_url = url;
-        httpdata->_type = type;
-        httpdata->_data = data;
-        httpdata->_args = args;
-        httpdata->_function = function;
+        auto http_data = __MAKE_SHARED__( KFHttpData );
+        http_data->_url = url;
+        http_data->_type = type;
+        http_data->_data = data;
+        http_data->_pass_back_data = pass_back_data;
+        http_data->_function = function;
 
         if ( IsHttpsClient( url ) )
         {
-            httpdata->_http = __KF_NEW__( KFHttpsClient );
+            http_data->_http = __MAKE_SHARED__( KFHttpsClient );
         }
         else
         {
-            httpdata->_http = __KF_NEW__( KFHttpClient );
+            http_data->_http = __MAKE_SHARED__( KFHttpClient );
         }
 
-        AddHttpData( httpdata );
+        AddHttpData( http_data );
     }
 
-    void KFHttpClientModule::AddHttpData( KFHttpData* httpdata )
+    void KFHttpClientModule::AddHttpData( std::shared_ptr<KFHttpData> http_data )
     {
         // 先创建http异步线程
         CreateHttpThread();
@@ -144,7 +140,7 @@ namespace KFrame
         }
 
         auto httpthread = _http_thread_list[ index ];
-        httpthread->AddHttpRequest( httpdata );
+        httpthread->AddHttpRequest( http_data );
     }
 
     void KFHttpClientModule::CreateHttpThread()
@@ -157,7 +153,7 @@ namespace KFrame
         // 创建4个线程来执行异步http逻辑
         for ( auto i = 0u; i < 4u; ++i )
         {
-            _http_thread_list.push_back( __KF_NEW__( KFHttpThread ) );
+            _http_thread_list.push_back( __MAKE_SHARED__( KFHttpThread ) );
         }
     }
 }

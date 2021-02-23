@@ -33,8 +33,8 @@ namespace KFrame
             return _kf_display->SendToClient( kfentity, KFMsg::SignInNotDay );
         }
 
-        auto kfsetting = KFSignConfig::Instance()->FindSetting( kfmsg->day() );
-        if ( kfsetting == nullptr )
+        auto setting = KFSignConfig::Instance()->FindSetting( kfmsg->day() );
+        if ( setting == nullptr )
         {
             return _kf_display->SendToClient( kfentity, KFMsg::SignInCanNotFind );
         }
@@ -50,12 +50,12 @@ namespace KFrame
         kfentity->UpdateData( __STRING__( sevenreward ), KFEnum::Or, kfmsg->day() );
 
         // 添加奖励
-        kfentity->AddElement( &kfsetting->_reward, _default_multiple, __STRING__( sign ), kfmsg->day(), __FUNC_LINE__ );
+        kfentity->AddElement( &setting->_reward, _default_multiple, __STRING__( sign ), kfmsg->day(), __FUNC_LINE__ );
 
         // 额外的奖励
-        if ( KFGlobal::Instance()->RandCheck( KFRandEnum::TenThousand, kfsetting->_probability ) )
+        if ( KFGlobal::Instance()->RandCheck( KFRandEnum::TenThousand, setting->_probability ) )
         {
-            kfentity->AddElement( &kfsetting->_extend_reward, _default_multiple, __STRING__( sign ), kfmsg->day(), __FUNC_LINE__ );
+            kfentity->AddElement( &setting->_extend_reward, _default_multiple, __STRING__( sign ), kfmsg->day(), __FUNC_LINE__ );
         }
 
         _kf_display->SendToClient( kfentity, KFMsg::SignInRewardOk );

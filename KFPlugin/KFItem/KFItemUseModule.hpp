@@ -52,7 +52,7 @@ namespace KFrame
         bool UseItem( EntityPtr player, DataPtr kfitem, const KFItemSetting* kfitemsetting, const KFItemTypeSetting* kftypesetting );
 
         // 使用扣除物品
-        void UseCoseItem( EntityPtr player, DataPtr kfitem, const KFItemSetting* kfsetting );
+        void UseCoseItem( EntityPtr player, DataPtr kfitem, const KFItemSetting* setting );
 
     private:
         // 检查道具是否能使用

@@ -125,8 +125,8 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFBasicClientModule::HandleQueryBasicReq, KFMsg::MsgQueryBasicReq )
     {
-        auto kfsetting = KFZoneConfig::Instance()->FindSetting( KFGlobal::Instance()->_app_id->GetZoneId() );
-        if ( kfsetting == nullptr )
+        auto setting = KFZoneConfig::Instance()->FindSetting( KFGlobal::Instance()->_app_id->GetZoneId() );
+        if ( setting == nullptr )
         {
             return __LOG_ERROR__( "can't find zone=[{}] setting", KFGlobal::Instance()->_app_id->GetZoneId() );
         }
@@ -141,7 +141,7 @@ namespace KFrame
         // 发送到basic
         KFMsg::S2SQueryAttributeToBasicReq req;
         req.set_name( kfmsg->name() );
-        req.set_zoneid( kfsetting->_data_id );
+        req.set_zoneid( setting->_data_id );
         _kf_route->SendToRand( kfentity->GetKeyID(), __ROUTE_NAME__, KFMsg::S2S_QUERY_ATTRIBUTE_TO_BASIC_REQ, &req );
     }
 
@@ -213,8 +213,8 @@ namespace KFrame
             return _kf_display->SendToClient( kfentity, result );
         }
 
-        auto kfsetting = KFZoneConfig::Instance()->FindSetting( KFGlobal::Instance()->_app_id->GetZoneId() );
-        if ( kfsetting == nullptr )
+        auto setting = KFZoneConfig::Instance()->FindSetting( KFGlobal::Instance()->_app_id->GetZoneId() );
+        if ( setting == nullptr )
         {
             return __LOG_ERROR__( "can't find zone=[{}] setting", KFGlobal::Instance()->_app_id->GetZoneId() );
         }
@@ -224,7 +224,7 @@ namespace KFrame
         req.set_oldname( name );
         req.set_newname( kfmsg->name() );
         req.set_costdata( _invalid_string );
-        req.set_zoneid( kfsetting->_data_id );
+        req.set_zoneid( setting->_data_id );
         req.set_playerid( kfentity->GetKeyID() );
         auto ok = _kf_route->SendToRand( kfentity->GetKeyID(), __ROUTE_NAME__, KFMsg::S2S_SET_PLAYER_NAME_TO_BASIC_REQ, &req );
         if ( !ok )

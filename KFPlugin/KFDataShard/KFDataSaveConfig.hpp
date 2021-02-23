@@ -39,14 +39,14 @@ namespace KFrame
         }
 
     public:
-        virtual void ReadSetting( KFXmlNode& xmlnode, KFDataSaveSetting* kfsetting )
+        virtual void ReadSetting( KFXmlNode& xml_node, KFDataSaveSetting* setting )
         {
-            kfsetting->_is_open = xmlnode.ReadUInt32( "open" );
-            kfsetting->_sort = xmlnode.ReadUInt32( "sort" );
-            kfsetting->_save_flag = xmlnode.ReadUInt32( "saveflag" );
-            kfsetting->_cache_time = xmlnode.ReadUInt32( "cachetime" );
-            kfsetting->_compress_type = xmlnode.ReadUInt32( "compresstype" );
-            kfsetting->_compress_level = xmlnode.ReadUInt32( "compresslevel" );
+            setting->_is_open = xml_node.ReadUInt32( "open" );
+            setting->_sort = xml_node.ReadUInt32( "sort" );
+            setting->_save_flag = xml_node.ReadUInt32( "saveflag" );
+            setting->_cache_time = xml_node.ReadUInt32( "cachetime" );
+            setting->_compress_type = xml_node.ReadUInt32( "compresstype" );
+            setting->_compress_level = xml_node.ReadUInt32( "compresslevel" );
         }
     };
 }

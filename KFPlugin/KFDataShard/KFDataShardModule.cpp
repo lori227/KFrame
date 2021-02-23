@@ -25,22 +25,22 @@ namespace KFrame
     {
         for ( auto& iter : KFDataSaveConfig::Instance()->_settings._objects )
         {
-            auto kfsetting = iter.second;
-            if ( !kfsetting->_is_open )
+            auto setting = iter.second;
+            if ( !setting->_is_open )
             {
                 continue;
             }
 
             // 创建数据执行器
-            auto sort = kfsetting->_sort;
+            auto sort = setting->_sort;
             auto kfexecute = _data_execute.Find( sort );
             if ( kfexecute != nullptr )
             {
                 sort = _data_execute._objects.rbegin()->first + 1;
-                __LOG_WARN__( "dataexecute=[{}] sort=[{}] already exist", kfsetting->_id, kfsetting->_sort );
+                __LOG_WARN__( "dataexecute=[{}] sort=[{}] already exist", setting->_id, setting->_sort );
             }
 
-            switch ( kfsetting->_id )
+            switch ( setting->_id )
             {
             case KFDatabaseEnum::Redis:
                 kfexecute = __KF_NEW__( KFRedisDataExecute );
@@ -52,13 +52,13 @@ namespace KFrame
                 kfexecute = __KF_NEW__( KFMySQLDataExecute );
                 break;
             default:
-                __LOG_ERROR__( "dataexecute=[{}] not support", kfsetting->_id );
+                __LOG_ERROR__( "dataexecute=[{}] not support", setting->_id );
                 break;
             }
 
             if ( kfexecute != nullptr )
             {
-                kfexecute->InitExecute( kfsetting );
+                kfexecute->InitExecute( setting );
                 _data_execute.Insert( sort, kfexecute );
             }
         }

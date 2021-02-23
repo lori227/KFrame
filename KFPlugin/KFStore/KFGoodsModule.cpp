@@ -25,13 +25,13 @@ namespace KFrame
         for ( auto kfgoods = kfgoodsrecord->First(); kfgoods != nullptr; kfgoods = kfgoodsrecord->Next() )
         {
             // 永久限购
-            auto kfsetting = KFGoodsConfig::Instance()->FindSetting( kfgoods->GetKeyID() );
-            if ( kfsetting == nullptr || kfsetting->_limit_time_id != timeid )
+            auto setting = KFGoodsConfig::Instance()->FindSetting( kfgoods->GetKeyID() );
+            if ( setting == nullptr || setting->_limit_time_id != timeid )
             {
                 continue;
             }
 
-            removelist.insert( kfsetting->_id );
+            removelist.insert( setting->_id );
         }
 
         if ( removelist.empty() )
@@ -49,13 +49,13 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     uint32 KFGoodsModule::BuyGoods( EntityPtr player, uint32 storeid, uint32 goodsid, uint32 buycount )
     {
-        auto kfsetting = KFGoodsConfig::Instance()->FindSetting( goodsid );
-        if ( kfsetting == nullptr )
+        auto setting = KFGoodsConfig::Instance()->FindSetting( goodsid );
+        if ( setting == nullptr )
         {
             return KFMsg::StoreGoodsSettingError;
         }
 
-        if ( kfsetting->_store_id != storeid )
+        if ( setting->_store_id != storeid )
         {
             return KFMsg::StoreNotHaveGoods;
         }
@@ -67,20 +67,20 @@ namespace KFrame
         }
 
         // 不在购买时间内
-        if ( !KFDate::CheckInTime( kfsetting->_buy_start_time, kfsetting->_buy_finish_time, KFGlobal::Instance()->_real_time ) )
+        if ( !KFDate::CheckInTime( setting->_buy_start_time, setting->_buy_finish_time, KFGlobal::Instance()->_real_time ) )
         {
             return KFMsg::StoreGoodsBuyTimeError;
         }
 
         // 判断包裹是否满了
-        auto& checkname = player->CheckAddElement( &kfsetting->_buy_data, buycount, __FUNC_LINE__ );
+        auto& checkname = player->CheckAddElement( &setting->_buy_data, buycount, __FUNC_LINE__ );
         if ( !checkname.empty() )
         {
             return KFMsg::ItemBagIsFull;
         }
 
         // 判断价钱
-        auto costprice = CalcBuyPrice( kfsetting, KFGlobal::Instance()->_real_time );
+        auto costprice = CalcBuyPrice( setting, KFGlobal::Instance()->_real_time );
         auto& data_name = player->RemoveElement( costprice, buycount, __STRING__( goods ), goodsid, __FUNC_LINE__ );
         if ( !data_name.empty() )
         {
@@ -88,10 +88,10 @@ namespace KFrame
         }
 
         // 判断如果是限购商品
-        if ( kfsetting->_limit_time_id != 0u )
+        if ( setting->_limit_time_id != 0u )
         {
             auto hasbuycount = player->Get<uint32>( __STRING__( goods ), goodsid, __STRING__( count ) );
-            if ( hasbuycount + buycount > kfsetting->_limit_count )
+            if ( hasbuycount + buycount > setting->_limit_count )
             {
                 return KFMsg::StoreOutOfLimits;
             }
@@ -100,17 +100,17 @@ namespace KFrame
         }
 
         // 添加商品
-        player->AddElement( &kfsetting->_buy_data, buycount, __STRING__( goods ), goodsid, __FUNC_LINE__ );
+        player->AddElement( &setting->_buy_data, buycount, __STRING__( goods ), goodsid, __FUNC_LINE__ );
         return KFMsg::StoreBuyOK;
     }
 
-    const KFElements* KFGoodsModule::CalcBuyPrice( const KFGoodsSetting* kfsetting, uint64 now_time )
+    const KFElements* KFGoodsModule::CalcBuyPrice( const KFGoodsSetting* setting, uint64 now_time )
     {
-        if ( KFDate::CheckInTime( kfsetting->_discount_start_time, kfsetting->_discount_finish_time, now_time ) )
+        if ( KFDate::CheckInTime( setting->_discount_start_time, setting->_discount_finish_time, now_time ) )
         {
-            return &kfsetting->_discount;
+            return &setting->_discount;
         }
 
-        return &kfsetting->_price;
+        return &setting->_price;
     }
 }

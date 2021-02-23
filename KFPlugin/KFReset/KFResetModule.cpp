@@ -37,8 +37,8 @@ namespace KFrame
         for ( auto kftime = kftimerecord->First(); kftime != nullptr; kftime = kftimerecord->Next() )
         {
             auto id = kftime->GetKeyID();
-            auto kfsetting = KFTimeLoopConfig::Instance()->FindSetting( id );
-            if ( kfsetting == nullptr )
+            auto setting = KFTimeLoopConfig::Instance()->FindSetting( id );
+            if ( setting == nullptr )
             {
                 removes.push_back( id );
             }
@@ -57,10 +57,10 @@ namespace KFrame
 
         for ( auto& iter : KFTimeLoopConfig::Instance()->_settings._objects )
         {
-            auto kfsetting = iter.second;
+            auto setting = iter.second;
             auto ok = false;
             auto last_time = _invalid_int;
-            std::tie( ok, last_time ) = UpdateResetTime( player, kftimerecord, kfsetting );
+            std::tie( ok, last_time ) = UpdateResetTime( player, kftimerecord, setting );
             if ( ok )
             {
                 _time_id_list[ iter.first ] = last_time;
@@ -70,20 +70,20 @@ namespace KFrame
         return _time_id_list;
     }
 
-    std::tuple<bool, uint64> KFResetModule::UpdateResetTime( EntityPtr player, DataPtr kftimerecord, const KFTimeLoopSetting* kfsetting )
+    std::tuple<bool, uint64> KFResetModule::UpdateResetTime( EntityPtr player, DataPtr kftimerecord, const KFTimeLoopSetting* setting )
     {
-        auto kftime = kftimerecord->Find( kfsetting->_id );
+        auto kftime = kftimerecord->Find( setting->_id );
         if ( kftime == nullptr )
         {
             kftime = player->CreateData( kftimerecord );
-            kftimerecord->Add( kfsetting->_id, kftime );
+            kftimerecord->Add( setting->_id, kftime );
         }
 
         auto nexttime = kftime->Get<uint64>( __STRING__( value ) );
         auto ok = KFDate::CheckPassTime( KFGlobal::Instance()->_real_time, nexttime );
         if ( ok )
         {
-            auto newtime = KFDate::CalcTimeData( &kfsetting->_time_data, KFGlobal::Instance()->_real_time, 1 );
+            auto newtime = KFDate::CalcTimeData( &setting->_time_data, KFGlobal::Instance()->_real_time, 1 );
             kftime->Set( __STRING__( value ), newtime );
         }
 
@@ -127,13 +127,13 @@ namespace KFrame
         auto& timeidlist = UpdateAllResetTime( player, kftimerecord );
         for ( auto& iter  : timeidlist )
         {
-            auto kfsetting = KFResetConfig::Instance()->FindSetting( iter.first );
-            if ( kfsetting == nullptr )
+            auto setting = KFResetConfig::Instance()->FindSetting( iter.first );
+            if ( setting == nullptr )
             {
                 continue;
             }
 
-            for ( auto& resetdata : kfsetting->_reset_data )
+            for ( auto& resetdata : setting->_reset_data )
             {
                 if ( resetdata._function_name.empty() )
                 {

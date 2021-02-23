@@ -76,7 +76,7 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////
         // 开启刷新定时器
-        void StartRefreshRankDataTimer( const KFRankSetting* kfsetting );
+        void StartRefreshRankDataTimer( const KFRankSetting* setting );
 
         // 刷新排行榜定时器
         __KF_TIMER_FUNCTION__( OnTimerRefreshRankData );
@@ -98,13 +98,13 @@ namespace KFrame
         // 刷新排行榜
         void SyncRefreshRankData( uint32 rankid );
         bool RefreshRankData( uint32 rankid );
-        bool RefreshRankData( const KFRankSetting* kfsetting, uint32 zone_id, const KFTimeData* time_data );
+        bool RefreshRankData( const KFRankSetting* setting, uint32 zone_id, const KFTimeData* time_data );
 
         // 计算zoneid
-        uint32 CalcRankZoneId( uint64 playerid, const KFRankSetting* kfsetting );
+        uint32 CalcRankZoneId( uint64 playerid, const KFRankSetting* setting );
 
         // 删除数据
-        void ClearRankData( const std::string& rankdatakey, const std::string&  ranksortkey, const KFRankSetting* kfsetting );
+        void ClearRankData( const std::string& rankdatakey, const std::string&  ranksortkey, const KFRankSetting* setting );
 
         // 查询玩家排名
         uint32 QueryPlayerRank( uint64 playerid, uint32 rankid, uint32 zone_id );

@@ -85,10 +85,10 @@ namespace KFrame
         uint32 CalcItemAddCount( uint32 sourcecount, uint32 targetcount, uint32 maxcount );
 
         // 判断是否能移动道具
-        bool CheckItemCanMove( const KFItemSetting* kfsetting, const std::string& sourcename, const std::string& targetname );
+        bool CheckItemCanMove( const KFItemSetting* setting, const std::string& sourcename, const std::string& targetname );
 
         // 找到可以移动的背包
-        DataPtr FindCanMoveItemBag( EntityPtr player, const KFItemSetting* kfsetting, const std::string& sourcename, const std::string& excludename );
+        DataPtr FindCanMoveItemBag( EntityPtr player, const KFItemSetting* setting, const std::string& sourcename, const std::string& excludename );
 
         // 判断是否能合并
         bool CheckItemCanMerge( const KFItemSetting* kfsourcesetting, DataPtr kfsourceitem, const KFItemSetting* kftargetsetting, DataPtr kftargetitem );
@@ -128,8 +128,8 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 移动物品显示
-        void MoveItemDataToShow( EntityPtr player, const KFItemSetting* kfsetting, DataPtr kfsourcerecord, DataPtr kftargetrecord, DataPtr kfitem );
-        void MoveItemDataToShow( EntityPtr player, const KFItemSetting* kfsetting, DataPtr kfsourcerecord, DataPtr kftargetrecord, uint32 count );
+        void MoveItemDataToShow( EntityPtr player, const KFItemSetting* setting, DataPtr kfsourcerecord, DataPtr kftargetrecord, DataPtr kfitem );
+        void MoveItemDataToShow( EntityPtr player, const KFItemSetting* setting, DataPtr kfsourcerecord, DataPtr kftargetrecord, uint32 count );
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 移动背包道具
         uint32 MoveBagItem( EntityPtr player, const std::string& sourcename, uint64 itemuuid, const std::string& targetname, uint32 targetindex );

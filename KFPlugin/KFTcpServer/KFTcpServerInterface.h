@@ -11,7 +11,7 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////
         // 注册到连接器
-        virtual bool RegisteNetHandle( uint64 sessionid, uint64 handle_id, uint64 objectid ) = 0;
+        virtual bool RegisteNetHandle( uint64 session_id, uint64 handle_id, uint64 object_id ) = 0;
 
         // 关闭连接器
         virtual bool CloseNetHandle( uint64 handle_id, uint32 delaytime, const char* function, uint32 line ) = 0;
@@ -26,7 +26,7 @@ namespace KFrame
         virtual const std::string& GetHandleIp( uint64 handle_id ) = 0;
 
         // 设置id
-        virtual bool BindObjectId( uint64 handle_id, uint64 objectid ) = 0;
+        virtual bool BindObjectId( uint64 handle_id, uint64 object_id ) = 0;
 
         // 连接列表
         virtual void GetHandleList( NetDataList& out_list ) = 0;
@@ -85,16 +85,16 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////
         // 注册转发
         template<class T>
-        void RegisterTranspondFunction( T* module, bool ( T::*handle )( const Route& route, uint32 msg_id, const char* data, uint32 length ) )
+        void RegisterForwardFunction( T* module, bool ( T::*handle )( const Route&, uint32, const char*, uint32 ) )
         {
             KFForwardFunction function = std::bind( handle, module, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
-            AddTranspondFunction( module, function );
+            AddForwardFunction( module, function );
         }
 
         template<class T>
-        void UnRegisterTranspondFunction( T* module )
+        void UnRegisterForwardFunction( T* module )
         {
-            RemoveTranspondFunction( module );
+            RemoveForwardFunction( module );
         }
 
     private:
@@ -104,8 +104,8 @@ namespace KFrame
         virtual void AddLostFunction( KFModule* module, KFNetEventFunction& function ) = 0;
         virtual void RemoveLostFunction( KFModule* module ) = 0;
 
-        virtual void AddTranspondFunction( KFModule* module, KFForwardFunction& function ) = 0;
-        virtual void RemoveTranspondFunction( KFModule* module ) = 0;
+        virtual void AddForwardFunction( KFModule* module, KFForwardFunction& function ) = 0;
+        virtual void RemoveForwardFunction( KFModule* module ) = 0;
 
     };
 
@@ -126,10 +126,10 @@ namespace KFrame
     _kf_tcp_server->UnRegisterLostFunction( this )
 
 #define __REGISTER_TCP_SERVER_TRANSPOND__( function ) \
-    _kf_tcp_server->RegisterTranspondFunction( this, function )
+    _kf_tcp_server->RegisterForwardFunction( this, function )
 
 #define __UN_TCP_SERVER_TRANSPOND__() \
-    _kf_tcp_server->UnRegisterTranspondFunction( this )
+    _kf_tcp_server->UnRegisterForwardFunction( this )
 
 }
 

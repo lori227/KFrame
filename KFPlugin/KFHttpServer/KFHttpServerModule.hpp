@@ -54,7 +54,7 @@ namespace KFrame
         virtual void RegisterMethodFunction( const std::string& url, bool sync, KFHttpMethodFunction& function );
 
         // 查找配置
-        KFHttpSetting* FindHttpSetting( const std::string& appname, const std::string& apptype );
+        std::shared_ptr<KFHttpSetting> FindHttpSetting( const std::string& appname, const std::string& apptype );
     private:
         // http服务器
         KFHttpServer* _http_server;

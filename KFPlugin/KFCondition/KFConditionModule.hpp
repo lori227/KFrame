@@ -60,7 +60,7 @@ namespace KFrame
         uint32 CalcConditionData( DataPtr object_data, const KFStaticConditionAbstract* kfconditiondata );
 
         // 判断限制条件
-        bool CheckStaticConditionLimit( DataPtr object_data, const KFConditionSetting* kfsetting );
+        bool CheckStaticConditionLimit( DataPtr object_data, const KFConditionSetting* setting );
 
         // 计算触发值
         bool CalcTriggerUpdateValue( const ConditionTrigger* trigger, uint64 operate, uint64& operate_value, uint64 nowvalue );
@@ -69,13 +69,13 @@ namespace KFrame
         // 初始化条件
         uint32 InitConditionData( EntityPtr kfentity, DataPtr kfcondition, bool update );
         // 初始化计算数量
-        uint32 InitCalcRecordCount( EntityPtr kfentity, DataPtr kfcondition, const KFConditionSetting* kfsetting );
+        uint32 InitCalcRecordCount( EntityPtr kfentity, DataPtr kfcondition, const KFConditionSetting* setting );
         // 计算是否存在
-        uint32 InitCalcRecordExist( EntityPtr kfentity, DataPtr kfcondition, const KFConditionSetting* kfsetting );
+        uint32 InitCalcRecordExist( EntityPtr kfentity, DataPtr kfcondition, const KFConditionSetting* setting );
         // 计算获得数值
-        uint32 InitCalcGetValue( EntityPtr kfentity, DataPtr kfcondition, const KFConditionSetting* kfsetting );
+        uint32 InitCalcGetValue( EntityPtr kfentity, DataPtr kfcondition, const KFConditionSetting* setting );
         // 初始化计算数值
-        uint32 InitCalcRecordValue( EntityPtr kfentity, DataPtr kfcondition, const KFConditionSetting* kfsetting );
+        uint32 InitCalcRecordValue( EntityPtr kfentity, DataPtr kfcondition, const KFConditionSetting* setting );
         // 获得集合列表
         std::list< DataPtr >& FindRecordList( EntityPtr kfentity, const std::string& name );
 
@@ -95,19 +95,19 @@ namespace KFrame
         uint32 CheckConditionData( EntityPtr kfentity, DataPtr kfcondition );
 
         // 计算添加数值
-        std::tuple<uint32, uint32> CalcAddConditionValue( EntityPtr kfentity, const KFConditionDefineSetting* kfsetting, DataPtr kfdata );
+        std::tuple<uint32, uint32> CalcAddConditionValue( EntityPtr kfentity, const KFConditionDefineSetting* setting, DataPtr kfdata );
 
         // 计算删除数值
-        std::tuple<uint32, uint32> CalcRemoveConditionValue( EntityPtr kfentity, const KFConditionDefineSetting* kfsetting, DataPtr kfdata );
+        std::tuple<uint32, uint32> CalcRemoveConditionValue( EntityPtr kfentity, const KFConditionDefineSetting* setting, DataPtr kfdata );
 
         // 计算更新数值
-        std::tuple<uint32, uint32> CalcUpdateConditionValue( EntityPtr kfentity, const KFConditionDefineSetting* kfsetting, DataPtr kfdata, uint32 operate, uint64 value, uint64 nowvalue );
+        std::tuple<uint32, uint32> CalcUpdateConditionValue( EntityPtr kfentity, const KFConditionDefineSetting* setting, DataPtr kfdata, uint32 operate, uint64 value, uint64 nowvalue );
 
         // 保存纪录的keyid
-        void SaveConditionDataUUid( EntityPtr kfentity, DataPtr kfcondition, DataPtr kfdata, const KFConditionDefineSetting* kfsetting );
+        void SaveConditionDataUUid( EntityPtr kfentity, DataPtr kfcondition, DataPtr kfdata, const KFConditionDefineSetting* setting );
 
         // 判断是否存在key
-        bool CheckUUidInConditionData( EntityPtr kfentity, DataPtr kfcondition, DataPtr kfdata, const KFConditionDefineSetting* kfsetting );
+        bool CheckUUidInConditionData( EntityPtr kfentity, DataPtr kfcondition, DataPtr kfdata, const KFConditionDefineSetting* setting );
     };
 }
 

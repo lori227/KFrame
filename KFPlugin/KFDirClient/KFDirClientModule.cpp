@@ -15,15 +15,15 @@ namespace KFrame
     {
         static auto _url = _kf_ip_address->GetDirUrl() + __STRING__( zoneupdate );
 
-        auto kfsetting = KFZoneConfig::Instance()->FindSetting( KFGlobal::Instance()->_app_id->GetZoneId() );
-        if ( kfsetting == nullptr )
+        auto setting = KFZoneConfig::Instance()->FindSetting( KFGlobal::Instance()->_app_id->GetZoneId() );
+        if ( setting == nullptr )
         {
             return __LOG_ERROR__( "can't find zone=[{}] setting", KFGlobal::Instance()->_app_id->GetZoneId() );
         }
 
         __JSON_OBJECT_DOCUMENT__( kfjson );
         __JSON_SET_VALUE__( kfjson, __STRING__( appid ), appid );
-        __JSON_SET_VALUE__( kfjson, __STRING__( loginzoneid ), kfsetting->_login_id );
+        __JSON_SET_VALUE__( kfjson, __STRING__( loginzoneid ), setting->_login_id );
         __JSON_SET_VALUE__( kfjson, __STRING__( ip ), ip );
         __JSON_SET_VALUE__( kfjson, __STRING__( port ), port );
         __JSON_SET_VALUE__( kfjson, __STRING__( count ), count );
@@ -33,8 +33,8 @@ namespace KFrame
 
     bool KFDirClientModule::ZoneRegisterToDir()
     {
-        auto kfsetting = KFZoneConfig::Instance()->FindSetting( KFGlobal::Instance()->_app_id->GetZoneId() );
-        if ( kfsetting == nullptr )
+        auto setting = KFZoneConfig::Instance()->FindSetting( KFGlobal::Instance()->_app_id->GetZoneId() );
+        if ( setting == nullptr )
         {
             __LOG_ERROR__( "can't find zone=[{}] setting", KFGlobal::Instance()->_app_id->GetZoneId() );
             return false;
@@ -46,9 +46,9 @@ namespace KFrame
             // 推荐小区
             static auto _recommend_url = _kf_ip_address->GetDirUrl() + __STRING__( zonerecommend );
             __JSON_OBJECT_DOCUMENT__( kfjson );
-            __JSON_SET_VALUE__( kfjson, __STRING__( zone_id ), kfsetting->_id );
-            __JSON_SET_VALUE__( kfjson, __STRING__( flag ), kfsetting->_flag );
-            __JSON_SET_VALUE__( kfjson, __STRING__( recommend ), kfsetting->_recommend );
+            __JSON_SET_VALUE__( kfjson, __STRING__( zone_id ), setting->_id );
+            __JSON_SET_VALUE__( kfjson, __STRING__( flag ), setting->_flag );
+            __JSON_SET_VALUE__( kfjson, __STRING__( recommend ), setting->_recommend );
             _kf_http_client->MTGet<KFDirClientModule>( _recommend_url, kfjson );
         }
 
@@ -57,13 +57,13 @@ namespace KFrame
             auto _register_url = _kf_ip_address->GetDirUrl() + __STRING__( zoneregister );
 
             // 注册小区信息
-            auto zonename = __FORMAT__( kfsetting->_name, kfsetting->_id );
+            auto zonename = __FORMAT__( setting->_name, setting->_id );
 
             __JSON_OBJECT_DOCUMENT__( kfjson );
             __JSON_SET_VALUE__( kfjson, __STRING__( name ), zonename );
-            __JSON_SET_VALUE__( kfjson, __STRING__( zone_id ), kfsetting->_id );
-            __JSON_SET_VALUE__( kfjson, __STRING__( flag ), kfsetting->_flag );
-            __JSON_SET_VALUE__( kfjson, __STRING__( loginzoneid ), kfsetting->_login_id );
+            __JSON_SET_VALUE__( kfjson, __STRING__( zone_id ), setting->_id );
+            __JSON_SET_VALUE__( kfjson, __STRING__( flag ), setting->_flag );
+            __JSON_SET_VALUE__( kfjson, __STRING__( loginzoneid ), setting->_login_id );
 
             auto recvdata = _kf_http_client->STGet( _register_url, kfjson );
             __JSON_PARSE_STRING__( kfresult, recvdata );

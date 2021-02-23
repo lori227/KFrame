@@ -15,7 +15,7 @@ namespace KFrame
         void ShutDown();
 
         // 添加异步请求
-        void AddHttpRequest( KFHttpData* httpdata );
+        void AddHttpRequest( std::shared_ptr<KFHttpData> http_data );
 
         // http相应
         void RunHttpResponse();
@@ -27,10 +27,10 @@ namespace KFrame
 
         // 请求的数据队列
         KFMutex _kf_req_mutex;
-        std::list< KFHttpData* > _http_request_list;
+        std::list<std::shared_ptr<KFHttpData>> _http_request_list;
 
         // 完成的数据队列
-        KFQueue< KFHttpData > _http_response_list;
+        KFQueue<KFHttpData> _http_response_list;
     };
 }
 

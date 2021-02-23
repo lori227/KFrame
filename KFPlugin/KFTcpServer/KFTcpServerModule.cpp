@@ -7,21 +7,21 @@ namespace KFrame
         _server_engine = __NEW_OBJECT__( KFNetServerEngine );
     }
 
-    KFTcpSetting* KFTcpServerModule::FindTcpServerSetting()
+    std::shared_ptr<KFTcpSetting> KFTcpServerModule::FindTcpServerSetting()
     {
         auto global = KFGlobal::Instance();
 
-        auto kftcpsetting = FindTcpSetting( global->_app_name, global->_app_type );
-        if ( kftcpsetting == nullptr )
+        auto tcp_setting = FindTcpSetting( global->_app_name, global->_app_type );
+        if ( tcp_setting == nullptr )
         {
-            kftcpsetting = FindTcpSetting( _globbing_string, global->_app_type );
-            if ( kftcpsetting == nullptr )
+            tcp_setting = FindTcpSetting( _globbing_string, global->_app_type );
+            if ( tcp_setting == nullptr )
             {
-                kftcpsetting = FindTcpSetting( global->_app_name, _globbing_string );
-                if ( kftcpsetting == nullptr )
+                tcp_setting = FindTcpSetting( global->_app_name, _globbing_string );
+                if ( tcp_setting == nullptr )
                 {
-                    kftcpsetting = FindTcpSetting( _globbing_string, _globbing_string );
-                    if ( kftcpsetting == nullptr )
+                    tcp_setting = FindTcpSetting( _globbing_string, _globbing_string );
+                    if ( tcp_setting == nullptr )
                     {
                         __LOG_ERROR__( "can't find [{}:{}] setting", global->_app_name, global->_app_type );
                         return nullptr;
@@ -30,19 +30,19 @@ namespace KFrame
             }
         }
 
-        kftcpsetting->_port = _kf_ip_address->CalcListenPort( kftcpsetting->_port_type, kftcpsetting->_port, global->_app_id->GetId() );
-        return kftcpsetting;
+        tcp_setting->_port = _kf_ip_address->CalcListenPort( tcp_setting->_port_type, tcp_setting->_port, global->_app_id->GetId() );
+        return tcp_setting;
     }
 
-    KFTcpSetting* KFTcpServerModule::FindTcpSetting( const std::string& appname, const std::string& apptype )
+    std::shared_ptr<KFTcpSetting> KFTcpServerModule::FindTcpSetting( const std::string& app_name, const std::string& app_type )
     {
-        for ( auto& iter : KFTcpServerConfig::Instance()->_settings._objects )
+        for ( auto& iter : KFTcpServerConfig::Instance()->_setting_list._objects )
         {
-            auto kfsetting = iter.second;
-            if ( kfsetting->_app_name == appname &&
-                    kfsetting->_app_type == apptype )
+            auto setting = iter.second;
+            if ( setting->_app_name == app_name &&
+                    setting->_app_type == app_type )
             {
-                return kfsetting;
+                return setting;
             }
         }
 
@@ -56,23 +56,23 @@ namespace KFrame
         __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_REGISTER_TO_SERVER_REQ, &KFTcpServerModule::HandleRegisterReq );
         ////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////
-        _kf_tcp_setting = FindTcpServerSetting();
-        _server_engine->InitEngine( _kf_tcp_setting->_max_queue_size,
-                                    _kf_tcp_setting->_handle_message_count,
-                                    _kf_tcp_setting->_message_type,
-                                    _kf_tcp_setting->_compress_type,
-                                    _kf_tcp_setting->_compress_level,
-                                    _kf_tcp_setting->_compress_length,
-                                    _kf_tcp_setting->_encrypt_key,
-                                    _kf_tcp_setting->_open_encrypt );
+        _tcp_setting = FindTcpServerSetting();
+        _server_engine->InitEngine( _tcp_setting->_max_queue_size,
+                                    _tcp_setting->_handle_message_count,
+                                    _tcp_setting->_message_type,
+                                    _tcp_setting->_compress_type,
+                                    _tcp_setting->_compress_level,
+                                    _tcp_setting->_compress_length,
+                                    _tcp_setting->_encrypt_key,
+                                    _tcp_setting->_open_encrypt );
 
         _server_engine->BindNetFunction( this, &KFTcpServerModule::HandleNetMessage );
-        _server_engine->BindLostFunction( this, &KFTcpServerModule::OnServerLostHandle );
+        _server_engine->BindEventFunction( KFNetDefine::DisconnectEvent,  this, &KFTcpServerModule::OnServerLostHandle );
 
         // 启动tcp服务器
         auto global = KFGlobal::Instance();
-        global->_listen_port = _kf_tcp_setting->_port;
-        auto result = _server_engine->StartEngine( _kf_tcp_setting->_local_ip, _kf_tcp_setting->_port );
+        global->_listen_port = _tcp_setting->_port;
+        auto result = _server_engine->StartEngine( _tcp_setting->_local_ip, _tcp_setting->_port );
         if ( result == 0 )
         {
             __LOG_INFO__( "[{}:{}|{}:{}] tcp services ok",
@@ -114,36 +114,28 @@ namespace KFrame
             __LOG_DEBUG__( "[{}:{}] lost connect", net_data->_session, net_data->_id );
         }
 
-        auto kfhandle = _server_engine->FindNetHandle( net_data->_session );
-        if ( kfhandle == nullptr )
+        auto handle = _server_engine->FindNetHandle( net_data->_session );
+        if ( handle != nullptr )
         {
-            return;
+            CallLostFunction( handle );
         }
-
-        CallLostFunction( kfhandle );
     }
-
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFTcpServerModule::RegisteNetHandle( uint64 sessionid, uint64 handle_id, uint64 objectid )
+    bool KFTcpServerModule::RegisteNetHandle( uint64 session_id, uint64 handle_id, uint64 object_id )
     {
-        auto kfhandle = _server_engine->RegisterHandle( sessionid, handle_id, objectid );
-        if ( kfhandle == nullptr )
-        {
-            return false;
-        }
-
-        return true;
+        auto handle = _server_engine->RegisterHandle( session_id, handle_id, object_id );
+        return handle != nullptr;
     }
 
-    bool KFTcpServerModule::CloseNetHandle( uint64 handle_id, uint32 delaytime, const char* function, uint32 line )
+    bool KFTcpServerModule::CloseNetHandle( uint64 handle_id, uint32 delay_time, const char* function, uint32 line )
     {
-        return _server_engine->CloseHandle( handle_id, delaytime, function, line );
+        return _server_engine->CloseHandle( handle_id, delay_time, function, line );
     }
 
     bool KFTcpServerModule::HaveHandle( uint64 handle_id )
     {
-        auto kfhandle = _server_engine->FindNetHandle( handle_id );
-        return kfhandle != nullptr;
+        auto handle = _server_engine->FindNetHandle( handle_id );
+        return handle != nullptr;
     }
 
     uint32 KFTcpServerModule::GetHandleCount()
@@ -161,16 +153,16 @@ namespace KFrame
         return _server_engine->GetHandleIp( handle_id );
     }
 
-    bool KFTcpServerModule::BindObjectId( uint64 handle_id, uint64 objectid )
+    bool KFTcpServerModule::BindObjectId( uint64 handle_id, uint64 object_id )
     {
-        return _server_engine->BindObjectId( handle_id, objectid );
+        return _server_engine->BindObjectId( handle_id, object_id );
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFTcpServerModule::AddDiscoverFunction( KFModule* module, KFNetEventFunction& function )
     {
-        auto kffunction = _kf_discover_function.Create( module );
-        kffunction->_function = function;
+        auto function_data = _kf_discover_function.Create( module );
+        function_data->SetFunction( module, function );
     }
 
     void KFTcpServerModule::RemoveDiscoverFunction( KFModule* module )
@@ -178,19 +170,19 @@ namespace KFrame
         _kf_discover_function.Remove( module );
     }
 
-    void KFTcpServerModule::CallDiscoverFunction( KFNetHandle* tcphandle )
+    void KFTcpServerModule::CallDiscoverFunction( std::shared_ptr<KFNetHandle> handle )
     {
         for ( auto& iter : _kf_discover_function._objects )
         {
-            auto kffunction = iter.second;
-            kffunction->_function( &tcphandle->_net_data );
+            auto function = iter.second;
+            function->Call( &handle->_net_data );
         }
     }
 
     void KFTcpServerModule::AddLostFunction( KFModule* module, KFNetEventFunction& function )
     {
-        auto kffunction = _kf_lost_function.Create( module );
-        kffunction->_function = function;
+        auto function_data = _kf_lost_function.Create( module );
+        function_data->SetFunction( module, function );
     }
 
     void KFTcpServerModule::RemoveLostFunction( KFModule* module )
@@ -198,69 +190,60 @@ namespace KFrame
         _kf_lost_function.Remove( module );
     }
 
-    void KFTcpServerModule::CallLostFunction( KFNetHandle* tcphandle )
+    void KFTcpServerModule::CallLostFunction( std::shared_ptr<KFNetHandle> handle )
     {
         for ( auto& iter : _kf_lost_function._objects )
         {
-            auto kffunction = iter.second;
-            kffunction->_function( &tcphandle->_net_data );
+            auto function = iter.second;
+            function->Call( &handle->_net_data );
         }
     }
 
-    void KFTcpServerModule::AddTranspondFunction( KFModule* module, KFForwardFunction& function )
+    void KFTcpServerModule::AddForwardFunction( KFModule* module, KFForwardFunction& function )
     {
-        _kf_transpond_function = function;
+        _kf_forward_function.SetFunction( module, function );
     }
 
-    void KFTcpServerModule::RemoveTranspondFunction( KFModule* module )
+    void KFTcpServerModule::RemoveForwardFunction( KFModule* module )
     {
-        _kf_transpond_function = nullptr;
+        _kf_forward_function.Reset();
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFTcpServerModule::HandleNetMessage( const Route& route, uint32 msg_id, const char* data, uint32 length )
     {
         bool result = __HANDLE_MESSAGE__( route, msg_id, data, length );
-        if ( result )
+        if ( !result )
         {
-            return;
-        }
-
-        if ( _kf_transpond_function != nullptr )
-        {
-            auto ok = _kf_transpond_function( route, msg_id, data, length );
+            auto ok = _kf_forward_function.CallEx<bool>( route, msg_id, data, length );
             if ( !ok )
             {
-                __LOG_ERROR__( "tcp server transpond msg_id[{}] failed", msg_id );
+                __LOG_ERROR__( "tcp server forward msg_id=[{}] failed", msg_id );
             }
-        }
-        else
-        {
-            __LOG_ERROR__( "msg_id[{}] can't find function", msg_id );
         }
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFTcpServerModule::HandleRegisterReq, KFMsg::RegisterToServerReq )
     {
-        auto sessionid = __ROUTE_SERVER_ID__;
+        auto session_id = __ROUTE_SERVER_ID__;
 
-        auto listendata = &kfmsg->listen();
-        auto handlid = listendata->appid();
-        auto kfhandle = _server_engine->RegisterHandle( sessionid, handlid, handlid );
-        if ( kfhandle == nullptr )
+        auto listen_data = &kfmsg->listen();
+        auto handle_id = listen_data->appid();
+        auto net_handle = _server_engine->RegisterHandle( session_id, handle_id, handle_id );
+        if ( net_handle == nullptr )
         {
             return;
         }
 
         // handle 数据
-        auto net_data = &kfhandle->_net_data;
-        net_data->_session = handlid;
-        net_data->_name = listendata->appname();
-        net_data->_type = listendata->apptype();
-        net_data->_id = listendata->appid();
-        net_data->_ip = listendata->ip();
-        net_data->_port = listendata->port();
-        net_data->_str_id = KFAppId::ToString( listendata->appid() );
+        auto net_data = &net_handle->_net_data;
+        net_data->_session = handle_id;
+        net_data->_name = listen_data->appname();
+        net_data->_type = listen_data->apptype();
+        net_data->_id = listen_data->appid();
+        net_data->_ip = listen_data->ip();
+        net_data->_port = listen_data->port();
+        net_data->_str_id = KFAppId::ToString( listen_data->appid() );
 
         // 注册回馈
         auto global = KFGlobal::Instance();
@@ -268,19 +251,19 @@ namespace KFrame
         ack.set_apptype( global->_app_type );
         ack.set_appname( global->_app_name );
         ack.set_appid( global->_app_id->GetId() );
-        ack.set_compresslength( _kf_tcp_setting->_compress_length );
-        ack.set_compresstype( _kf_tcp_setting->_compress_type );
-        ack.set_compresslevel( _kf_tcp_setting->_compress_level );
-        ack.set_openencrypt( _kf_tcp_setting->_open_encrypt );
-        ack.set_encryptkey( _kf_tcp_setting->_encrypt_key );
-        SendNetMessage( handlid, KFMsg::S2S_REGISTER_TO_SERVER_ACK, &ack );
+        ack.set_compresslength( _tcp_setting->_compress_length );
+        ack.set_compresstype( _tcp_setting->_compress_type );
+        ack.set_compresslevel( _tcp_setting->_compress_level );
+        ack.set_openencrypt( _tcp_setting->_open_encrypt );
+        ack.set_encryptkey( _tcp_setting->_encrypt_key );
+        SendNetMessage( handle_id, KFMsg::S2S_REGISTER_TO_SERVER_ACK, &ack );
 
         // 初始化压缩加密
-        kfhandle->InitCompressEncrypt();
+        net_handle->InitCompressEncrypt();
         /////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////
         // 注册新客户端回调
-        CallDiscoverFunction( kfhandle );
+        CallDiscoverFunction( net_handle );
         __LOG_INFO__( "[{}:{}:{}|{}:{}] register ok", net_data->_name, net_data->_type, net_data->_str_id, net_data->_ip, net_data->_port );
     }
 

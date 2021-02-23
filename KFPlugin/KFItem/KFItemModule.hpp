@@ -115,7 +115,7 @@ namespace KFrame
         DataPtr FindFinalItemBag( EntityPtr player, DataPtr kfitemrecord, const KFItemSetting* kfitemsetting, const KFItemTypeSetting* kftypesetting, uint32 itemcount );
 
         //背包是否满了
-        bool CheckItemBagFull( EntityPtr player, DataPtr kfitemrecord, const KFItemSetting* kfsetting, uint32 itemcount );
+        bool CheckItemBagFull( EntityPtr player, DataPtr kfitemrecord, const KFItemSetting* setting, uint32 itemcount );
 
         // 添加时间叠加数量
         void AddOverlayTimeItem( EntityPtr player, DataPtr kfparent, KFElementResult* kfresult,
@@ -149,7 +149,7 @@ namespace KFrame
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 如果不满足itemcount, 返回空列表
-        const std::list<DataPtr>& FindRemoveItemList( EntityPtr player, DataPtr kfparent, const KFItemSetting* kfsetting, uint32 itemcount );
+        const std::list<DataPtr>& FindRemoveItemList( EntityPtr player, DataPtr kfparent, const KFItemSetting* setting, uint32 itemcount );
 
     protected:
         // 玩家组件上下文

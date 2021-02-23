@@ -195,7 +195,7 @@ namespace KFrame
         __KF_NET_EVENT_FUNCTION__( OnClientConnectRouteMasterFailed );
     private:
         // 转发函数
-        KFForwardFunction _kf_transpond_function = nullptr;
+        KFForwardFunction _kf_forward_function = nullptr;
 
         // 服务器名字
         std::string _service_name;

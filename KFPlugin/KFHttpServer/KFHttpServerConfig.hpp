@@ -38,7 +38,7 @@ namespace KFrame
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
-    class KFHttpServerConfig : public KFConfigT< KFHttpSetting >, public KFInstance< KFHttpServerConfig >
+    class KFHttpServerConfig : public KFConfigT<KFHttpSetting>, public KFInstance<KFHttpServerConfig>
     {
     public:
         KFHttpServerConfig()
@@ -48,16 +48,16 @@ namespace KFrame
         }
 
     public:
-        virtual void ReadSetting( KFXmlNode& xmlnode, KFHttpSetting* kfsetting )
+        virtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KFHttpSetting> setting )
         {
-            kfsetting->_app_name = xmlnode.ReadString( "appname" );
-            kfsetting->_app_type = xmlnode.ReadString( "apptype" );
-            kfsetting->_port_type = xmlnode.ReadUInt32( "porttype" );
-            kfsetting->_port = xmlnode.ReadUInt32( "port" );
-            kfsetting->_keep_alive = xmlnode.ReadBool( "keepalive" );
-            kfsetting->_max_thread = xmlnode.ReadUInt32( "maxthread" );
-            kfsetting->_max_queue = xmlnode.ReadUInt32( "maxqueue" );
-            kfsetting->_idle_time = xmlnode.ReadUInt32( "idletime" );
+            setting->_app_name = xml_node.ReadString( "appname" );
+            setting->_app_type = xml_node.ReadString( "apptype" );
+            setting->_port_type = xml_node.ReadUInt32( "porttype" );
+            setting->_port = xml_node.ReadUInt32( "port" );
+            setting->_keep_alive = xml_node.ReadBool( "keepalive" );
+            setting->_max_thread = xml_node.ReadUInt32( "maxthread" );
+            setting->_max_queue = xml_node.ReadUInt32( "maxqueue" );
+            setting->_idle_time = xml_node.ReadUInt32( "idletime" );
         }
     };
 }

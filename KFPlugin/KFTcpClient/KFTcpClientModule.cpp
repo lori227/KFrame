@@ -13,11 +13,10 @@ namespace KFrame
         _client_engine->InitEngine( KFGlobal::Instance()->_game_time, 20000, KFMessageEnum::Server );
 
         _client_engine->BindNetFunction( this, &KFTcpClientModule::HandleNetMessage );
-        _client_engine->BindConnectFunction( this, &KFTcpClientModule::OnClientConnected );
-        _client_engine->BindDisconnectFunction( this, &KFTcpClientModule::OnClientDisconnect );
-        _client_engine->BindShutdownFunction( this, &KFTcpClientModule::OnClientShutdown );
-        _client_engine->BindFailedFunction( this, &KFTcpClientModule::OnClientFailed );
-
+        _client_engine->BindNetEventFunction( KFNetDefine::ShutEvent, this, &KFTcpClientModule::OnClientShutdown );
+        _client_engine->BindNetEventFunction( KFNetDefine::FailedEvent, this, &KFTcpClientModule::OnClientFailed );
+        _client_engine->BindNetEventFunction( KFNetDefine::ConnectEvent, this, &KFTcpClientModule::OnClientConnected );
+        _client_engine->BindNetEventFunction( KFNetDefine::DisconnectEvent, this, &KFTcpClientModule::OnClientDisconnect );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_REGISTER_TO_SERVER_ACK, &KFTcpClientModule::HandleRegisterAck );
     }
@@ -48,12 +47,12 @@ namespace KFrame
 
         // 把自己注册到服务器
         KFMsg::RegisterToServerReq req;
-        auto listendata = req.mutable_listen();
-        listendata->set_appname( global->_app_name );
-        listendata->set_apptype( global->_app_type );
-        listendata->set_appid( global->_app_id->GetId() );
-        listendata->set_ip( global->_internet_ip );
-        listendata->set_port( global->_listen_port );
+        auto listen_data = req.mutable_listen();
+        listen_data->set_appname( global->_app_name );
+        listen_data->set_apptype( global->_app_type );
+        listen_data->set_appid( global->_app_id->GetId() );
+        listen_data->set_ip( global->_internet_ip );
+        listen_data->set_port( global->_listen_port );
         SendNetMessage( net_data->_id, KFMsg::S2S_REGISTER_TO_SERVER_REQ, &req );
     }
 
@@ -109,58 +108,49 @@ namespace KFrame
     }
 
     // 给某一类型服务器发送消息
-    void KFTcpClientModule::SendMessageToType( const std::string& servertype, uint32 msg_id, google::protobuf::Message* message )
+    void KFTcpClientModule::SendMessageToType( const std::string& server_type, uint32 msg_id, google::protobuf::Message* message )
     {
         auto strdata = message->SerializeAsString();
-        SendMessageToType( servertype, msg_id, strdata.data(), strdata.size() );
+        SendMessageToType( server_type, msg_id, strdata.data(), strdata.size() );
     }
 
-    void KFTcpClientModule::SendMessageToType( const std::string& servertype, uint32 msg_id, const char* data, uint32 length )
+    void KFTcpClientModule::SendMessageToType( const std::string& server_type, uint32 msg_id, const char* data, uint32 length )
     {
-        _client_engine->SendMessageToType( servertype, msg_id, data, length );
+        _client_engine->SendMessageToType( server_type, msg_id, data, length );
     }
 
-    void KFTcpClientModule::SendMessageToName( const std::string& servername, uint32 msg_id, google::protobuf::Message* message )
-    {
-        auto strdata = message->SerializeAsString();
-        SendMessageToName( servername, msg_id, strdata.data(), strdata.size() );
-    }
-
-    void KFTcpClientModule::SendMessageToName( const std::string& servername, uint32 msg_id, const char* data, uint32 length )
-    {
-        _client_engine->SendMessageToName( servername, msg_id, data, length );
-    }
-
-    void KFTcpClientModule::SendMessageToServer( const std::string& servername, const std::string& servertype, uint32 msg_id, google::protobuf::Message* message )
+    void KFTcpClientModule::SendMessageToName( const std::string& server_name, uint32 msg_id, google::protobuf::Message* message )
     {
         auto strdata = message->SerializeAsString();
-        SendMessageToServer( servername, servertype, msg_id, strdata.data(), strdata.size() );
+        SendMessageToName( server_name, msg_id, strdata.data(), strdata.size() );
     }
 
-    void KFTcpClientModule::SendMessageToServer( const std::string& servername, const std::string& servertype, uint32 msg_id, const char* data, uint32 length )
+    void KFTcpClientModule::SendMessageToName( const std::string& server_name, uint32 msg_id, const char* data, uint32 length )
     {
-        _client_engine->SendMessageToServer( servername, servertype, msg_id, data, length );
+        _client_engine->SendMessageToName( server_name, msg_id, data, length );
+    }
+
+    void KFTcpClientModule::SendMessageToServer( const std::string& server_name, const std::string& server_type, uint32 msg_id, google::protobuf::Message* message )
+    {
+        auto strdata = message->SerializeAsString();
+        SendMessageToServer( server_name, server_type, msg_id, strdata.data(), strdata.size() );
+    }
+
+    void KFTcpClientModule::SendMessageToServer( const std::string& server_name, const std::string& server_type, uint32 msg_id, const char* data, uint32 length )
+    {
+        _client_engine->SendMessageToServer( server_name, server_type, msg_id, data, length );
     }
 
     void KFTcpClientModule::HandleNetMessage( const Route& route, uint32 msg_id, const char* data, uint32 length )
     {
-        bool handleresult = __HANDLE_MESSAGE__( route, msg_id, data, length );
-        if ( handleresult )
+        bool result = __HANDLE_MESSAGE__( route, msg_id, data, length );
+        if ( !result )
         {
-            return;
-        }
-
-        if ( _kf_transpond_function != nullptr )
-        {
-            auto ok = _kf_transpond_function( route, msg_id, data, length );
+            auto ok = _kf_forward_function.CallEx<bool>( route, msg_id, data, length );
             if ( !ok )
             {
-                __LOG_ERROR__( "tcp client transpond msg_id[{}] failed", msg_id );
+                __LOG_ERROR__( "tcp client froward msg_id=[{}] failed", msg_id );
             }
-        }
-        else
-        {
-            __LOG_ERROR__( "msg_id[{}] can't find function", msg_id );
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -215,8 +205,8 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFTcpClientModule::AddConnectionFunction( KFModule* module, KFNetEventFunction& function )
     {
-        auto kffunction = _kf_connection_function.Create( module );
-        kffunction->_function = function;
+        auto function_data = _kf_connection_function.Create( module );
+        function_data->SetFunction( module, function );
     }
 
     void KFTcpClientModule::RemoveConnectionFunction( KFModule* module )
@@ -228,15 +218,15 @@ namespace KFrame
     {
         for ( auto& iter : _kf_connection_function._objects )
         {
-            auto kffunction = iter.second;
-            kffunction->_function( net_data );
+            auto function = iter.second;
+            function->Call( net_data );
         }
     }
 
     void KFTcpClientModule::AddLostFunction( KFModule* module, KFNetEventFunction& function )
     {
-        auto kffunction = _kf_lost_function.Create( module );
-        kffunction->_function = function;
+        auto function_data = _kf_lost_function.Create( module );
+        function_data->SetFunction( module, function );
     }
 
     void KFTcpClientModule::RemoveLostFunction( KFModule* module )
@@ -248,15 +238,15 @@ namespace KFrame
     {
         for ( auto& iter : _kf_lost_function._objects )
         {
-            auto kffunction = iter.second;
-            kffunction->_function( net_data );
+            auto function = iter.second;
+            function->Call( net_data );
         }
     }
 
     void KFTcpClientModule::AddShutdownFunction( KFModule* module, KFNetEventFunction& function )
     {
-        auto kffunction = _kf_shutdown_function.Create( module );
-        kffunction->_function = function;
+        auto function_data = _kf_shutdown_function.Create( module );
+        function_data->SetFunction( module, function );
     }
 
     void KFTcpClientModule::RemoveShutdownFunction( KFModule* module )
@@ -268,15 +258,15 @@ namespace KFrame
     {
         for ( auto& iter : _kf_shutdown_function._objects )
         {
-            auto kffunction = iter.second;
-            kffunction->_function( net_data );
+            auto function = iter.second;
+            function->Call( net_data );
         }
     }
 
     void KFTcpClientModule::AddFailedFunction( KFModule* module, KFNetEventFunction& function )
     {
-        auto kffunction = _kf_failed_function.Create( module );
-        kffunction->_function = function;
+        auto function_data = _kf_failed_function.Create( module );
+        function_data->SetFunction( module, function );
     }
 
     void KFTcpClientModule::RemoveFailedFunction( KFModule* module )
@@ -288,32 +278,32 @@ namespace KFrame
     {
         for ( auto& iter : _kf_failed_function._objects )
         {
-            auto kffunction = iter.second;
-            kffunction->_function( net_data );
+            auto function = iter.second;
+            function->Call( net_data );
         }
     }
 
-    void KFTcpClientModule::RemoveTranspondFunction( KFModule* module )
+    void KFTcpClientModule::RemoveForwardFunction( KFModule* module )
     {
-        _kf_transpond_function = nullptr;
+        _kf_forward_function.Reset();
     }
 
-    void KFTcpClientModule::AddTranspondFunction( KFModule* module, KFForwardFunction& function )
+    void KFTcpClientModule::AddForwardFunction( KFModule* module, KFForwardFunction& function )
     {
-        _kf_transpond_function = function;
+        _kf_forward_function.SetFunction( module, function );
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////
     // 注册回馈
     __KF_MESSAGE_FUNCTION__( KFTcpClientModule::HandleRegisterAck, KFMsg::RegisterToServerAck )
     {
-        auto kfclient = _client_engine->FindClient( __ROUTE_SERVER_ID__ );
-        if ( kfclient != nullptr )
+        auto client = _client_engine->FindClient( __ROUTE_SERVER_ID__ );
+        if ( client != nullptr )
         {
-            auto net_data = &kfclient->_net_data;
+            auto net_data = &client->_net_data;
             __LOG_INFO__( "[{}:{}:{}|{}:{}] service ok", net_data->_name, net_data->_type, net_data->_str_id, net_data->_ip, net_data->_port );
 
-            kfclient->InitCompressEncrypt( kfmsg->compresstype(), kfmsg->compresslevel(), kfmsg->compresslength(), kfmsg->encryptkey(), kfmsg->openencrypt() );
+            client->InitCompressEncrypt( kfmsg->compresstype(), kfmsg->compresslevel(), kfmsg->compresslength(), kfmsg->encryptkey(), kfmsg->openencrypt() );
 
             // 处理回调函数
             CallClientConnectionFunction( net_data );

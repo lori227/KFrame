@@ -18,13 +18,13 @@ namespace KFrame
     {
         auto global = KFGlobal::Instance();
 
-        for ( auto& kfsetting : _deploy_config->_startups )
+        for ( auto& setting : _deploy_config->_startups )
         {
-            auto loadplguin = kfsetting._name;
+            auto loadplguin = setting._name;
 #ifdef __KF_DEBUG__
             loadplguin += "d";
 #endif
-            bool result = LoadPluginLibrary( loadplguin, &kfsetting );
+            bool result = LoadPluginLibrary( loadplguin, &setting );
             if ( !result )
             {
                 return false;
@@ -35,9 +35,9 @@ namespace KFrame
     }
 
     typedef KFPlugin* ( *PluginEntryFunction )( KFPluginManage* manage, KFGlobal* global, KFMalloc* kfmalloc, KFLogger* kflogger );
-    bool KFDeployStartup::LoadPluginLibrary( const std::string& file, const KFDeploySetting* kfsetting )
+    bool KFDeployStartup::LoadPluginLibrary( const std::string& file, const KFDeploySetting* setting )
     {
-        auto library = _kf_library.Create( kfsetting->_name );
+        auto library = _kf_library.Create( setting->_name );
         if ( !library->Load( _deploy_config->_plugin_path, file ) )
         {
             __LOG_ERROR__( "load [{}] failed", library->_path );
@@ -53,9 +53,9 @@ namespace KFrame
 
         // 设置插件信息
         auto plugin = function( KFPluginManage::Instance(), KFGlobal::Instance(), KFMalloc::Instance(), KFLogger::Instance() );
-        plugin->_sort = kfsetting->_sort;
-        plugin->_plugin_name = kfsetting->_name;
-        plugin->_config = kfsetting->_config_file;
+        plugin->_sort = setting->_sort;
+        plugin->_plugin_name = setting->_name;
+        plugin->_config = setting->_config_file;
 
         __LOG_INFO__( "load [{}] ok", library->_path );
         return true;

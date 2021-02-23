@@ -100,7 +100,7 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 注册转发消息
         template<class T>
-        void RegisterTranspondFunction( T* object, bool ( T::*handle )( const Route& route, uint32 msg_id, const char* data, uint32 length ) )
+        void RegisterForwardFunction( T* object, bool ( T::*handle )( const Route& route, uint32 msg_id, const char* data, uint32 length ) )
         {
             KFForwardFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
             SetTranspondFunction( function );
@@ -108,7 +108,7 @@ namespace KFrame
 
         // 卸载
         template<class T>
-        void UnRegisterTranspondFunction( T* object )
+        void UnRegisterForwardFunction( T* object )
         {
             KFForwardFunction function = nullptr;
             SetTranspondFunction( function );
@@ -125,10 +125,10 @@ namespace KFrame
     __KF_INTERFACE__( _kf_route, KFRouteClientInterface );
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #define __REGISTER_ROUTE_MESSAGE_FUNCTION__( function )\
-    _kf_route->RegisterTranspondFunction( this, function )
+    _kf_route->RegisterForwardFunction( this, function )
 
 #define __UN_ROUTE_MESSAGE_FUNCTION__()\
-    _kf_route->UnRegisterTranspondFunction( this )
+    _kf_route->UnRegisterForwardFunction( this )
 }
 
 

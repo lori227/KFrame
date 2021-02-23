@@ -66,13 +66,13 @@ namespace KFrame
 
     protected:
         // 读取配置
-        virtual void ReadSetting( KFXmlNode& xmlnode, KFDropSetting* kfsetting );
+        virtual void ReadSetting( KFXmlNode& xml_node, KFDropSetting* setting );
 
         // 初始化掉落
         void InitDropDataSetting( KFDropSetting* setting, std::shared_ptr<KFDropGroupWeight>& drop_group_weight );
 
         // 初始化掉落条件
-        void InitDropConditonSetting( KFDropSetting* kfsetting, KFStaticConditionExpression* kfexpression );
+        void InitDropConditonSetting( KFDropSetting* setting, KFStaticConditionExpression* kfexpression );
     };
 }
 

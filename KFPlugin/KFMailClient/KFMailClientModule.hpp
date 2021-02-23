@@ -100,7 +100,7 @@ namespace KFrame
         void ReceiveMailReward( EntityPtr player, uint64 id );
 
         // 格式化邮件内容
-        StringMap& FormatMailData( EntityPtr sender, const KFMailSetting* kfsetting, const KFElements* elements );
+        StringMap& FormatMailData( EntityPtr sender, const KFMailSetting* setting, const KFElements* elements );
 
         // 发送添加邮件
         bool SendAddMailToShard( uint64 sendid, uint32 flag, uint64 recv_id, const StringMap& maildata );

@@ -25,23 +25,23 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFChannelModule::IsOpen( const KFChannelSetting* kfsetting ) const
+    bool KFChannelModule::IsOpen( const KFChannelSetting* setting ) const
     {
 #ifdef __KF_DEBUG__
-        return kfsetting->_debug;
+        return setting->_debug;
 #else
-        return kfsetting->_release;
+        return setting->_release;
 #endif
     }
 
-    bool KFChannelModule::IsSupport( const KFChannelSetting* kfsetting, uint32 channel ) const
+    bool KFChannelModule::IsSupport( const KFChannelSetting* setting, uint32 channel ) const
     {
-        if ( kfsetting->_support.empty() )
+        if ( setting->_support.empty() )
         {
             return false;
         }
 
-        return kfsetting->_support.find( channel ) != kfsetting->_support.end();
+        return setting->_support.find( channel ) != setting->_support.end();
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -53,16 +53,16 @@ namespace KFrame
         if ( channel != KFGlobal::Instance()->_channel )
         {
             // 渠道不同, 判断是否支持
-            auto kfsetting = KFChannelConfig::Instance()->FindSetting( KFGlobal::Instance()->_channel );
-            if ( !IsSupport( kfsetting, channel ) )
+            auto setting = KFChannelConfig::Instance()->FindSetting( KFGlobal::Instance()->_channel );
+            if ( !IsSupport( setting, channel ) )
             {
                 return _kf_http_server->SendCode( KFMsg::ChannelNotSupport );
             }
         }
 
         // 渠道是否开启
-        auto kfsetting = KFChannelConfig::Instance()->FindSetting( channel );
-        if ( kfsetting == nullptr || !IsOpen( kfsetting ) )
+        auto setting = KFChannelConfig::Instance()->FindSetting( channel );
+        if ( setting == nullptr || !IsOpen( setting ) )
         {
             return _kf_http_server->SendCode( KFMsg::ChannelNotOpen );
         }
@@ -75,7 +75,7 @@ namespace KFrame
         }
 
         // 执行回调
-        return kffunction->_function( request, kfsetting );
+        return kffunction->_function( request, setting );
     }
 
     std::string KFChannelModule::AuthPay( uint32 channel, const std::string& data )
@@ -83,8 +83,8 @@ namespace KFrame
         if ( channel != KFGlobal::Instance()->_channel )
         {
             // 渠道不同, 判断是否支持
-            auto kfsetting = KFChannelConfig::Instance()->FindSetting( KFGlobal::Instance()->_channel );
-            if ( !IsSupport( kfsetting, channel ) )
+            auto setting = KFChannelConfig::Instance()->FindSetting( KFGlobal::Instance()->_channel );
+            if ( !IsSupport( setting, channel ) )
             {
                 __LOG_ERROR__( "channel=[{}] not support", channel );
                 return _invalid_string;
@@ -92,8 +92,8 @@ namespace KFrame
         }
 
         // 渠道是否开启
-        auto kfsetting = KFChannelConfig::Instance()->FindSetting( channel );
-        if ( kfsetting == nullptr || !IsOpen( kfsetting ) )
+        auto setting = KFChannelConfig::Instance()->FindSetting( channel );
+        if ( setting == nullptr || !IsOpen( setting ) )
         {
             __LOG_ERROR__( "channel=[{}] no setting", channel );
             return _invalid_string;
@@ -106,6 +106,6 @@ namespace KFrame
             return _invalid_string;
         }
 
-        return kffunction->_function( data, kfsetting );
+        return kffunction->_function( data, setting );
     }
 }

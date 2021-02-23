@@ -58,10 +58,10 @@ namespace KFrame
 
     protected:
         // 渠道是否开放
-        bool IsOpen( const KFChannelSetting* kfsetting ) const;
+        bool IsOpen( const KFChannelSetting* setting ) const;
 
         // 渠道是否支持
-        bool IsSupport( const KFChannelSetting* kfsetting, uint32 channel ) const;
+        bool IsSupport( const KFChannelSetting* setting, uint32 channel ) const;
 
     private:
         // 绑定的登录函数

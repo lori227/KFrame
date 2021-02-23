@@ -3,19 +3,19 @@
 namespace KFrame
 {
     /////////////////////////////////////////////////////////////////////////////////
-    void KFDropDataConfig::ReadSetting( KFXmlNode& xmlnode, KFDropDataSetting* kfsetting )
+    void KFDropDataConfig::ReadSetting( KFXmlNode& xml_node, KFDropDataSetting* setting )
     {
-        auto id = kfsetting->_drop_data_list._weight_data.size();
-        auto weight = xmlnode.ReadUInt32( "weight", true );
-        auto kfdropdataweight = kfsetting->_drop_data_list.Create( ++id, weight );
+        auto id = setting->_drop_data_list._weight_data.size();
+        auto weight = xml_node.ReadUInt32( "weight", true );
+        auto kfdropdataweight = setting->_drop_data_list.Create( ++id, weight );
 
         kfdropdataweight->_drop_data._data_index = id;
-        kfdropdataweight->_drop_data._drop_data_id = kfsetting->_id;
-        kfdropdataweight->_drop_data._logic_name = xmlnode.ReadString( "logicname", true );
-        kfdropdataweight->_drop_data._data_name = xmlnode.ReadString( "data_name", true );
-        kfdropdataweight->_drop_data._data_key = xmlnode.ReadUInt32( "dropkey", true );
+        kfdropdataweight->_drop_data._drop_data_id = setting->_id;
+        kfdropdataweight->_drop_data._logic_name = xml_node.ReadString( "logicname", true );
+        kfdropdataweight->_drop_data._data_name = xml_node.ReadString( "data_name", true );
+        kfdropdataweight->_drop_data._data_key = xml_node.ReadUInt32( "dropkey", true );
 
-        auto strdropvalue = xmlnode.ReadString( "dropvalue", true );
+        auto strdropvalue = xml_node.ReadString( "dropvalue", true );
         kfdropdataweight->_drop_data._data_value = strdropvalue;
         kfdropdataweight->_drop_data._data_range.SetValue( strdropvalue );
     }
@@ -24,8 +24,8 @@ namespace KFrame
     {
         for ( auto& iter : _settings._objects )
         {
-            auto kfsetting = iter.second;
-            for ( auto kfdropweight : kfsetting->_drop_data_list._weight_data )
+            auto setting = iter.second;
+            for ( auto kfdropweight : setting->_drop_data_list._weight_data )
             {
                 auto dropdata = &kfdropweight->_drop_data;
                 if ( !dropdata->_data_name.empty() )
