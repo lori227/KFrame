@@ -25,7 +25,7 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
-    class KFBusConfig : public KFConfigT< KFBusSetting >, public KFInstance< KFBusConfig >
+    class KFBusConfig : public KFConfigT<KFBusSetting>, public KFInstance<KFBusConfig>
     {
     public:
         KFBusConfig()
@@ -35,16 +35,16 @@ namespace KFrame
         }
 
     public:
-        virtual void ReadSetting( KFXmlNode& xmlnode, KFBusSetting* kfsetting )
+        virtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KFBusSetting> setting )
         {
-            kfsetting->_app_name = xmlnode.ReadString( "appname", false );
-            kfsetting->_app_type = xmlnode.ReadString( "apptype", false );
-            kfsetting->_app_id = xmlnode.ReadString( "appid", false );
-            kfsetting->_connect_name = xmlnode.ReadString( "connectname", false );
-            kfsetting->_connect_type = xmlnode.ReadString( "connecttype", false );
-            kfsetting->_connect_id = xmlnode.ReadString( "connectid", false );
-            kfsetting->_interval = xmlnode.ReadUInt32( "interval", false );
-            kfsetting->_multi = xmlnode.ReadUInt32( "multi", false );
+            setting->_app_name = xml_node.ReadString( "appname", false );
+            setting->_app_type = xml_node.ReadString( "apptype", false );
+            setting->_app_id = xml_node.ReadString( "appid", false );
+            setting->_connect_name = xml_node.ReadString( "connectname", false );
+            setting->_connect_type = xml_node.ReadString( "connecttype", false );
+            setting->_connect_id = xml_node.ReadString( "connectid", false );
+            setting->_interval = xml_node.ReadUInt32( "interval", false );
+            setting->_multi = xml_node.ReadUInt32( "multi", false );
         }
     };
 }
