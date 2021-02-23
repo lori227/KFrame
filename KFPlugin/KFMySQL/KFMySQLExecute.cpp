@@ -293,7 +293,7 @@ namespace KFrame
             auto rowcount = record_set.rowCount();
             for ( auto i = 0u; i < rowcount; ++i )
             {
-                StringMap values;
+                StringMap key_values;
                 if ( field_list.empty() )
                 {
                     const auto& row = record_set.row( i );
@@ -303,7 +303,7 @@ namespace KFrame
                     auto size = names->size();
                     for ( auto j = 0u; j < size; ++j )
                     {
-                        values[ names->at( j ) ] = values.at( j ).toString();
+                        key_values[ names->at( j ) ] = values.at( j ).toString();
                     }
                 }
                 else
@@ -311,10 +311,10 @@ namespace KFrame
                     auto& row = record_set.row( i );
                     for ( auto& field : field_list )
                     {
-                        values[ field ] = row[ field ].toString();
+                        key_values[ field ] = row[ field ].toString();
                     }
                 }
-                result->_value.push_back( values );
+                result->_value.push_back( key_values );
             }
         }
         else

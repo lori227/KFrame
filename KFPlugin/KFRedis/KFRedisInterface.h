@@ -10,7 +10,7 @@ namespace KFrame
     {
     public:
         // 创建redis
-        virtual std::shared_ptr<KFRedisLogic> Create( const std::string& module, uint32 logic_id = 0 ) = 0;
+        virtual std::shared_ptr<KFRedisDriver> Create( const std::string& module, uint32 logic_id = 0 ) = 0;
     };
 
     ///////////////////////////////////////////////////////////////////////////////

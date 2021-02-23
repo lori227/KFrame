@@ -21,7 +21,7 @@ namespace KFrame
 
         ///     mongodb://<user>:<password>@hostname.com:<port>/database-name?options
         _connect_data = __FORMAT__( "mongodb://{}:{}@{}:{}/{}?ssl={}&connectTimeoutMS={}&socketTimeoutMS={}&authMechanism={}",
-                                    connect_option->_user, connect_option->_password, connectdata->_ip, connectdata->_port, connect_option->_database,
+                                    connect_option->_user, connect_option->_password, connect_data->_ip, connect_data->_port, connect_option->_database,
                                     connect_option->_use_ssl, connect_option->_connect_timeout, connect_option->_execute_timeout, connect_option->_auth_type );
 
         ConnectMongo();
