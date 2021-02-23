@@ -52,7 +52,7 @@ namespace KFrame
         listendata->set_appname( global->_app_name );
         listendata->set_apptype( global->_app_type );
         listendata->set_appid( global->_app_id->GetId() );
-        listendata->set_ip( global->_intranet_ip );
+        listendata->set_ip( global->_internet_ip );
         listendata->set_port( global->_listen_port );
         SendNetMessage( net_data->_id, KFMsg::S2S_REGISTER_TO_SERVER_REQ, &req );
     }

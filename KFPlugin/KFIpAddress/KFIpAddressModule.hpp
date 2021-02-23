@@ -32,7 +32,7 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 计算监听端口
-        virtual uint32 CalcListenPort( uint32 type, uint32 port, uint64 appid );
+        virtual uint32 CalcListenPort( uint32 type, uint32 port, uint64 app_id );
 
         // 获得log地址
         virtual const std::string& GetLogUrl();
@@ -47,10 +47,10 @@ namespace KFrame
         virtual const std::string& GetPayUrl();
 
         // 获得master ip
-        virtual const KFNetData* GetMasterIp( const std::string& appname, uint32 zone_id );
+        virtual const KFNetData* GetMasterIp( const std::string& app_name, uint32 zone_id );
 
         // 查询master列表
-        virtual const std::list< KFNetData >& GetMasterList( const std::string& appname, uint32 zone_id );
+        virtual const std::list< KFNetData >& GetMasterList( const std::string& app_name, uint32 zone_id );
     protected:
 #if __KF_SYSTEM__ == __KF_WIN__
         std::string GetWinLocalIp();
@@ -58,14 +58,14 @@ namespace KFrame
         std::string GetLinuxLocalIp();
 #endif
 
-        // 更新masterip
+        // 更新master ip
         __KF_TIMER_FUNCTION__( OnTimerUpdateMasterIp );
 
         // 获得本机局域网ip
         void InitLocalIp();
 
         // 获得本机外网ip
-        void InitInteranetIp();
+        void InitInternetIp();
     };
 }
 

@@ -20,8 +20,9 @@ namespace KFrame
     {
         // 初始化内网ip地址
         InitLocalIp();
+
         // 初始化外网ip地址
-        InitInteranetIp();
+        InitInternetIp();
     }
 
     void KFIpAddressModule::BeforeRun()
@@ -44,13 +45,13 @@ namespace KFrame
             auto value = global->GetString( __STRING__( vpn ), global->_app_id->GetZoneId() );
             if ( !value.empty() )
             {
-                global->_intranet_ip = KFUtility::SplitString( value, __DOMAIN_STRING__ );
+                global->_internet_ip = KFUtility::SplitString( value, __DOMAIN_STRING__ );
                 auto port = KFUtility::SplitValue<uint32>( value, __DOMAIN_STRING__ );
                 if ( port != 0u )
                 {
                     global->_listen_port = port;
                 }
-                __LOG_INFO__( "use vpn ip=[{}] port=[{}]", global->_intranet_ip, global->_listen_port );
+                __LOG_INFO__( "use vpn ip=[{}] port=[{}]", global->_internet_ip, global->_listen_port );
             }
         }
     }
@@ -69,49 +70,49 @@ namespace KFrame
         __JSON_OBJECT_DOCUMENT__( kfjson );
         __JSON_SET_VALUE__( kfjson, __STRING__( appname ), global->_app_name );
         __JSON_SET_VALUE__( kfjson, __STRING__( appid ), global->_app_id->GetId() );
-        __JSON_SET_VALUE__( kfjson, __STRING__( zone_id ), global->_app_id->GetZoneId() );
-        __JSON_SET_VALUE__( kfjson, __STRING__( ip ), global->_intranet_ip );
+        __JSON_SET_VALUE__( kfjson, __STRING__( zoneid ), global->_app_id->GetZoneId() );
+        __JSON_SET_VALUE__( kfjson, __STRING__( ip ), global->_internet_ip );
         __JSON_SET_VALUE__( kfjson, __STRING__( port ), global->_listen_port );
         __JSON_SET_VALUE__( kfjson, __STRING__( time ), 70u );	// 失效时间70秒
         _kf_http_client->MTGet<KFIpAddressModule>( _url, kfjson );
     }
 
-    const KFNetData* KFIpAddressModule::GetMasterIp( const std::string& appname, uint32 zone_id )
+    const KFNetData* KFIpAddressModule::GetMasterIp( const std::string& app_name, uint32 zone_id )
     {
         auto global = KFGlobal::Instance();
         static auto _url = GetDirUrl() + __STRING__( querymasterip );
 
         __JSON_OBJECT_DOCUMENT__( kfjson );
-        __JSON_SET_VALUE__( kfjson, __STRING__( appname ), appname );
-        __JSON_SET_VALUE__( kfjson, __STRING__( zone_id ), zone_id );
+        __JSON_SET_VALUE__( kfjson, __STRING__( appname ), app_name );
+        __JSON_SET_VALUE__( kfjson, __STRING__( zoneid ), zone_id );
 
-        auto recvdata = _kf_http_client->STGet( _url, kfjson );
-        __JSON_PARSE_STRING__( kfresult, recvdata );
-        auto retcode = _kf_http_client->GetCode( kfresult );
-        if ( retcode != KFEnum::Ok )
+        auto recv_data = _kf_http_client->STGet( _url, kfjson );
+        __JSON_PARSE_STRING__( kfresult, recv_data );
+        auto ret_code = _kf_http_client->GetCode( kfresult );
+        if ( ret_code != KFEnum::Ok )
         {
             return nullptr;
         }
 
         auto ip = __JSON_GET_STRING__( kfresult, __STRING__( ip ) );
         auto port = __TO_UINT32__( __JSON_GET_STRING__( kfresult, __STRING__( port ) ) );
-        auto appid = __TO_UINT64__( __JSON_GET_STRING__( kfresult, __STRING__( appid ) ) );
-        if ( ip.empty() || port == 0u || appid == 0u )
+        auto app_id = __TO_UINT64__( __JSON_GET_STRING__( kfresult, __STRING__( appid ) ) );
+        if ( ip.empty() || port == 0u || app_id == 0u )
         {
             return nullptr;
         }
 
         static KFNetData _ip_address;
-        _ip_address._id = appid;
+        _ip_address._id = app_id;
         _ip_address._ip = ip;
         _ip_address._port = port;
-        _ip_address._name = appname;
+        _ip_address._name = app_name;
         _ip_address._type = __STRING__( master );
         _ip_address._port_type = __FIX_PORT__;
         return &_ip_address;
     }
 
-    const std::list<KFNetData>& KFIpAddressModule::GetMasterList( const std::string& appname, uint32 zone_id )
+    const std::list<KFNetData>& KFIpAddressModule::GetMasterList( const std::string& app_name, uint32 zone_id )
     {
         auto global = KFGlobal::Instance();
         static auto _url = GetDirUrl() + __STRING__( querymasterlist );
@@ -120,28 +121,28 @@ namespace KFrame
         _ip_address_list.clear();
 
         __JSON_OBJECT_DOCUMENT__( kfjson );
-        __JSON_SET_VALUE__( kfjson, __STRING__( appname ), appname );
-        __JSON_SET_VALUE__( kfjson, __STRING__( zone_id ), zone_id );
+        __JSON_SET_VALUE__( kfjson, __STRING__( appname ), app_name );
+        __JSON_SET_VALUE__( kfjson, __STRING__( zoneid ), zone_id );
 
-        auto recvdata = _kf_http_client->STGet( _url, kfjson );
-        __JSON_PARSE_STRING__( kfresult, recvdata );
-        auto retcode = _kf_http_client->GetCode( kfresult );
-        if ( retcode == KFEnum::Ok )
+        auto recv_data = _kf_http_client->STGet( _url, kfjson );
+        __JSON_PARSE_STRING__( kfresult, recv_data );
+        auto ret_code = _kf_http_client->GetCode( kfresult );
+        if ( ret_code == KFEnum::Ok )
         {
-            auto& kfmasterlist = __JSON_GET_OBJECT__( kfresult, __STRING__( masterlist ) );
-            auto size = __JSON_ARRAY_SIZE__( kfmasterlist );
+            auto& master_list = __JSON_GET_OBJECT__( kfresult, __STRING__( masterlist ) );
+            auto size = __JSON_ARRAY_SIZE__( master_list );
             for ( auto i = 0u; i < size; ++i )
             {
-                auto& jsonobject = __JSON_ARRAY_INDEX__( kfmasterlist, i );
+                auto& json_object = __JSON_ARRAY_INDEX__( master_list, i );
 
-                KFNetData ipaddress;
-                ipaddress._id = __TO_UINT64__( __JSON_GET_STRING__( jsonobject, __STRING__( appid ) ) );
-                ipaddress._ip = __JSON_GET_STRING__( jsonobject, __STRING__( ip ) );
-                ipaddress._port = __TO_UINT32__( __JSON_GET_STRING__( jsonobject, __STRING__( port ) ) );
-                ipaddress._name = appname;
-                ipaddress._type = __STRING__( master );
-                ipaddress._port_type = __FIX_PORT__;
-                _ip_address_list.emplace_back( ipaddress );
+                KFNetData ip_address;
+                ip_address._id = __TO_UINT64__( __JSON_GET_STRING__( json_object, __STRING__( appid ) ) );
+                ip_address._ip = __JSON_GET_STRING__( json_object, __STRING__( ip ) );
+                ip_address._port = __TO_UINT32__( __JSON_GET_STRING__( json_object, __STRING__( port ) ) );
+                ip_address._name = app_name;
+                ip_address._type = __STRING__( master );
+                ip_address._port_type = __FIX_PORT__;
+                _ip_address_list.emplace_back( ip_address );
             }
         }
 
@@ -149,14 +150,14 @@ namespace KFrame
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    uint32 KFIpAddressModule::CalcListenPort( uint32 type, uint32 port, uint64 appid )
+    uint32 KFIpAddressModule::CalcListenPort( uint32 type, uint32 port, uint64 app_id )
     {
         switch ( type )
         {
         case __ID_PORT__:
         {
-            KFAppId kfappid( appid );
-            port = port + kfappid.GetWorkId();
+            KFAppId kf_app_id( app_id );
+            port = port + kf_app_id.GetWorkId();
         }
         break;
         case __SH_PORT__:
@@ -164,16 +165,16 @@ namespace KFrame
             // 共享内存结算
             auto address = __KF_SHARE_MEMORY__( __STRING__( port ), 10240 );
 
-            auto kframeport = reinterpret_cast< KFramePort* >( address );
-            if ( kframeport->_is_inited == 0 )
+            auto frame_port = reinterpret_cast< KFramePort* >( address );
+            if ( frame_port->_is_inited == 0 )
             {
-                kframeport = new ( address ) KFramePort();
-                kframeport->_is_inited = 1;
+                frame_port = new ( address ) KFramePort();
+                frame_port->_is_inited = 1;
             }
 
             // 查找自己是否在列表中
-            auto kfport = kframeport->FindPort( appid );
-            port = port + kfport->_port;
+            auto port_data = frame_port->FindPort( app_id );
+            port = port + port_data->_port;
         }
         break;
         default:
@@ -183,28 +184,28 @@ namespace KFrame
         return port;
     }
 
-    void KFIpAddressModule::InitInteranetIp()
+    void KFIpAddressModule::InitInternetIp()
     {
         auto global = KFGlobal::Instance();
         if ( global->_net_type == KFServerEnum::Local )
         {
-            global->_intranet_ip = global->_local_ip;
+            global->_internet_ip = global->_local_ip;
         }
         else
         {
-            auto& dnsurl = global->GetString( __STRING__( dnsurl ) );
+            auto& dns_url = global->GetString( __STRING__( dnsurl ) );
             do
             {
                 // 获得外网地址
-                auto interanetip = _kf_http_client->STGet( dnsurl, _invalid_string );
-                if ( !interanetip.empty() )
+                auto internet_ip = _kf_http_client->STGet( dns_url, _invalid_string );
+                if ( !internet_ip.empty() )
                 {
-                    global->_intranet_ip = KFUtility::SplitString( interanetip, "\n" );
+                    global->_internet_ip = KFUtility::SplitString( internet_ip, "\n" );
                 }
-            } while ( global->_intranet_ip.empty() );
+            } while ( global->_internet_ip.empty() );
         }
 
-        __LOG_INFO__( "interanetip=[{}]", global->_intranet_ip );
+        __LOG_INFO__( "internet ip=[{}]", global->_internet_ip );
     }
 
     static std::string _default_ip = "127.0.0.1";
@@ -223,7 +224,7 @@ namespace KFrame
         }
 
         // 初始化外网ip
-        __LOG_INFO__( "localip=[{}]", global->_local_ip );
+        __LOG_INFO__( "local ip=[{}]", global->_local_ip );
     }
 
 #if __KF_SYSTEM__ == __KF_WIN__

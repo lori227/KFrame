@@ -34,7 +34,7 @@ namespace KFrame
         __JSON_SET_VALUE__( response, __STRING__( appname ), global->_app_name );
         __JSON_SET_VALUE__( response, __STRING__( apptype ), global->_app_type );
         __JSON_SET_VALUE__( response, __STRING__( appid ), global->_app_id->GetId() );
-        __JSON_SET_VALUE__( response, __STRING__( ip ), global->_intranet_ip );
+        __JSON_SET_VALUE__( response, __STRING__( ip ), global->_internet_ip );
         __JSON_SET_VALUE__( response, __STRING__( port ), global->_listen_port );
         return _kf_http_server->SendResponse( response );
     }

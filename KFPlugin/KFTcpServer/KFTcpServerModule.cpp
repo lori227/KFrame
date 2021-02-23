@@ -76,12 +76,12 @@ namespace KFrame
         if ( result == 0 )
         {
             __LOG_INFO__( "[{}:{}|{}:{}] tcp services ok",
-                          global->_app_name, global->_app_type, global->_intranet_ip, global->_listen_port );
+                          global->_app_name, global->_app_type, global->_internet_ip, global->_listen_port );
         }
         else
         {
             __LOG_ERROR__( "[{}:{}|{}:{}] tcp services failed[{}]",
-                           global->_app_name, global->_app_type, global->_intranet_ip, global->_listen_port, result );
+                           global->_app_name, global->_app_type, global->_internet_ip, global->_listen_port, result );
         }
     }
 

@@ -190,7 +190,7 @@ namespace KFrame
         std::string _local_ip;
 
         // 外网ip
-        std::string _intranet_ip;
+        std::string _internet_ip;
 
         // 监听端口
         uint32 _listen_port;
