@@ -4,7 +4,7 @@ namespace KFrame
 {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFMessageModule::AddMessageHandle( std::shared_ptr<KFMessageHandleAbstract>& message_handle )
+    void KFMessageModule::AddMessageHandle( std::shared_ptr<KFMessageHandleAbstract> message_handle )
     {
         auto ok = RemoveMessageHandle( message_handle->_msg_id, message_handle->GetModule() );
         if ( ok )

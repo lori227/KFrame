@@ -28,7 +28,7 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////
     protected:
         // 添加消息函数
-        virtual void AddMessageHandle( std::shared_ptr<KFMessageHandleAbstract>& message_handle );
+        virtual void AddMessageHandle( std::shared_ptr<KFMessageHandleAbstract> message_handle );
 
         // 删除消息函数
         virtual bool RemoveMessageHandle( uint32 msg_id, KFModule* module );

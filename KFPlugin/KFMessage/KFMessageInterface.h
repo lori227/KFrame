@@ -89,7 +89,7 @@ namespace KFrame
         void RegisterHandle( uint32 type, uint32 msg_id, ModuleType* module, void( ModuleType::* function )( EntityPtr, const Route&, uint32, std::shared_ptr<const MessageType> ) )
         {
             auto message_handle = __MAKE_SHARED__( KFMessageHandleData<MessageType>, type, msg_id );
-            typename KFMessageHandleData< MessageType >::HandleFunctionType handle_function =
+            typename KFMessageHandleData<MessageType>::HandleFunctionType handle_function =
                     std::bind( function, module, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
             message_handle->_function.SetFunction( module, handle_function );
             AddMessageHandle( message_handle );
@@ -128,7 +128,7 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////
     protected:
         // 添加消息函数
-        virtual void AddMessageHandle( std::shared_ptr<KFMessageHandleAbstract>& message_handle ) = 0;
+        virtual void AddMessageHandle( std::shared_ptr<KFMessageHandleAbstract> message_handle ) = 0;
 
         // 删除消息函数
         virtual bool RemoveMessageHandle( uint32 msg_id, KFModule* module ) = 0;
