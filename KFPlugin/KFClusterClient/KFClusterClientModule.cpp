@@ -112,11 +112,11 @@ namespace KFrame
         KFMsg::S2SClusterVerifyToProxyReq req;
         req.set_token( _auth_token );
         req.set_serverid( KFGlobal::Instance()->_app_id->GetId() );
-        auto ok = _kf_tcp_client->SendNetMessage( objectid, KFMsg::S2S_CLUSTER_VERIFY_TO_PROXY_REQ, &req );
+        auto ok = _kf_tcp_client->SendNetMessage( object_id, KFMsg::S2S_CLUSTER_VERIFY_TO_PROXY_REQ, &req );
         if ( !ok )
         {
             // 删除定时器
-            __UN_TIMER_1__( objectid );
+            __UN_TIMER_1__( object_id );
 
             // 重新连接
             ReconnectClusterMaster();
