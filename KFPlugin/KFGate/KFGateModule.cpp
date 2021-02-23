@@ -10,8 +10,8 @@ namespace KFrame
         __REGISTER_TCP_CLIENT_CONNECTION__( &KFGateModule::OnClientConnectionServer );
         __REGISTER_TCP_CLIENT_SHUTDOWN__( &KFGateModule::OnClientLostServer );
         __REGISTER_TCP_SERVER_LOST__( &KFGateModule::OnPlayerDisconnection );
-        __REGISTER_TCP_SERVER_TRANSPOND__( &KFGateModule::TranspondToGame );
-        __REGISTER_TCP_CLIENT_TRANSPOND__( &KFGateModule::TranspondToClient );
+        __REGISTER_TCP_SERVER_FORWARD__( &KFGateModule::TranspondToGame );
+        __REGISTER_TCP_CLIENT_FORWARD__( &KFGateModule::ForwardToClient );
 
         __REGISTER_DEPLOY_FUNCTION__( __STRING__( shutdown ), &KFGateModule::OnDeployShutDownServer );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -32,8 +32,8 @@ namespace KFrame
         __UN_TCP_CLIENT_SHUTDOWN__();
         __UN_TCP_CLIENT_CONNECTION__();
         __UN_TCP_SERVER_LOST__();
-        __UN_TCP_SERVER_TRANSPOND__();
-        __UN_TCP_CLIENT_TRANSPOND__();
+        __UN_TCP_SERVER_FORWARD__();
+        __UN_TCP_CLIENT_FORWARD__();
 
         __UN_DEPLOY_FUNCTION__( __STRING__( shutdown ) );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -108,7 +108,7 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////
 #define __KF_MAX_CLIENT_MSG_ID__ 10000
-    __KF_FORWARD_MESSAGE_FUNCTION__( KFGateModule::TranspondToClient )
+    __KF_FORWARD_MESSAGE_FUNCTION__( KFGateModule::ForwardToClient )
     {
         auto playerid = __ROUTE_RECV_ID__;
         if ( playerid == _invalid_int || msg_id >= __KF_MAX_CLIENT_MSG_ID__ )

@@ -10,7 +10,7 @@ namespace KFrame
         __REGISTER_TCP_CLIENT_SHUTDOWN__( &KFGameModule::OnClientLostWorld );
 
         __REGISTER_ROUTE_MESSAGE_FUNCTION__( &KFGameModule::TranspondToPlayer );
-        __REGISTER_TCP_CLIENT_TRANSPOND__( &KFGameModule::TranspondToPlayer );
+        __REGISTER_TCP_CLIENT_FORWARD__( &KFGameModule::TranspondToPlayer );
 
         _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
         _kf_component->RegisterEntitySaveFunction( this, &KFGameModule::SavePlayer );
@@ -43,7 +43,7 @@ namespace KFrame
         __UN_TCP_CLIENT_CONNECTION__();
         __UN_TCP_CLIENT_SHUTDOWN__();
         __UN_ROUTE_MESSAGE_FUNCTION__();
-        __UN_TCP_CLIENT_TRANSPOND__();
+        __UN_TCP_CLIENT_FORWARD__();
 
         __UN_PLAYER_ENTER__();
         __UN_PLAYER_LEAVE__();

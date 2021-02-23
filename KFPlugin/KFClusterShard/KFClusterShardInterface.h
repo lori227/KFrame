@@ -10,12 +10,12 @@ namespace KFrame
     public:
         // 发送消息到proxy
         virtual void SendToProxy( uint32 msg_id, google::protobuf::Message* message ) = 0;
-        virtual bool SendToProxy( uint64 proxyid, uint32 msg_id, google::protobuf::Message* message ) = 0;
+        virtual bool SendToProxy( uint64 proxy_id, uint32 msg_id, google::protobuf::Message* message ) = 0;
 
         // 发送消息到client
         virtual bool SendToClient( uint32 msg_id, google::protobuf::Message* message ) = 0;
-        virtual bool SendToClient( uint64 clientid, uint32 msg_id, google::protobuf::Message* message ) = 0;
-        virtual bool SendToClient( uint64 proxyid, uint64 clientid, uint32 msg_id, google::protobuf::Message* message ) = 0;
+        virtual bool SendToClient( uint64 client_id, uint32 msg_id, google::protobuf::Message* message ) = 0;
+        virtual bool SendToClient( uint64 proxy_id, uint64 client_id, uint32 msg_id, google::protobuf::Message* message ) = 0;
     };
 
 

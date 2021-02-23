@@ -41,15 +41,15 @@ namespace KFrame
     __KF_TIMER_FUNCTION__( KFRouteClientModule::OnTimerConnectionRouteMaster )
     {
         // 找到route 地址自动连接, 不需要bus对每个节点都配置一条连接信息
-        auto kfaddress = _kf_ip_address->GetMasterIp( __STRING__( route ), 0u );
-        if ( kfaddress == nullptr )
+        auto ip_address = _kf_ip_address->GetMasterIp( __STRING__( route ), 0u );
+        if ( ip_address == nullptr )
         {
             return;
         }
 
         __UN_TIMER_0__();
         _connect_route_master_failed_count = 0u;
-        _kf_tcp_client->StartClient( kfaddress->_name, kfaddress->_type, kfaddress->_id, kfaddress->_ip, kfaddress->_port );
+        _kf_tcp_client->StartClient( ip_address->_name, ip_address->_type, ip_address->_id, ip_address->_ip, ip_address->_port );
     }
 
     __KF_NET_EVENT_FUNCTION__( KFRouteClientModule::OnClientConnectRouteMasterFailed )
@@ -70,20 +70,27 @@ namespace KFrame
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFRouteClientModule::AddConnectionFunction( const std::string& name, KFClusterConnectionFunction& function )
+    void KFRouteClientModule::AddConnectionFunction( KFModule* module, KFClusterConnectionFunction& function )
     {
-        auto kffunction = _kf_connection_function.Create( name );
-        kffunction->_function = function;
+        auto function_data = _kf_connection_function.Create( module );
+        function_data->SetFunction( module, function );
     }
 
-    void KFRouteClientModule::RemoveConnectionFunction( const std::string& name )
+    void KFRouteClientModule::RemoveConnectionFunction( KFModule* module )
     {
-        _kf_connection_function.Remove( name );
+        _kf_connection_function.Remove( module );
     }
 
-    void KFRouteClientModule::SetTranspondFunction( KFForwardFunction& function )
+    void KFRouteClientModule::SetForwardFunction( KFModule* module, KFForwardFunction& function )
     {
-        _kf_forward_function = function;
+        if ( function == nullptr )
+        {
+            _kf_forward_function.Reset();
+        }
+        else
+        {
+            _kf_forward_function.SetFunction( module, function );
+        }
     }
 
     void KFRouteClientModule::OnRouteConnectCluster( uint64 server_id )
@@ -93,17 +100,17 @@ namespace KFrame
         // 连接成功回调
         for ( auto& iter : _kf_connection_function._objects )
         {
-            auto kffunction = iter.second;
-            kffunction->_function( server_id );
+            auto function = iter.second;
+            function->Call( server_id );
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFRouteClientModule::SyncObject( RouteObjectList& objectlist )
+    void KFRouteClientModule::SyncObject( UInt64Set& object_list )
     {
-        _service_object_list.swap( objectlist );
+        _service_object_list.swap( object_list );
 
         // 如果在服务中, 同步给转发集群
         if ( _kf_cluster_client->IsInService() )
@@ -112,41 +119,41 @@ namespace KFrame
         }
     }
 
-    void KFRouteClientModule::RouteSyncObjectToProxy( uint64 shardid )
+    void KFRouteClientModule::RouteSyncObjectToProxy( uint64 shard_id )
     {
         // 发送给shard
         KFMsg::S2SRouteSyncObjectToProxyReq req;
         req.set_name( _service_name );
-        req.set_shardid( shardid );
+        req.set_shardid( shard_id );
         req.set_clientid( KFGlobal::Instance()->_app_id->GetId() );
 
-        for ( auto objectid : _service_object_list )
+        for ( auto object_id : _service_object_list )
         {
-            req.add_objectid( objectid );
+            req.add_objectid( object_id );
         }
 
         _kf_cluster_client->RepeatToProxy( KFMsg::S2S_ROUTE_SYNC_OBJECT_TO_PROXY_REQ, &req );
     }
 
-    void KFRouteClientModule::AddObject( uint64 objectid )
+    void KFRouteClientModule::AddObject( uint64 object_id )
     {
-        _service_object_list.insert( objectid );
+        _service_object_list.insert( object_id );
 
         KFMsg::S2SRouteAddObjectToProxyReq req;
         req.set_name( _service_name );
-        req.set_objectid( objectid );
+        req.set_objectid( object_id );
         req.set_objectcount( _service_object_list.size() );
         req.set_clientid( KFGlobal::Instance()->_app_id->GetId() );
         _kf_cluster_client->SendToProxy( KFMsg::S2S_ROUTE_ADD_OBJECT_TO_PROXY_REQ, &req );
     }
 
-    void KFRouteClientModule::RemoveObject( uint64 objectid )
+    void KFRouteClientModule::RemoveObject( uint64 object_id )
     {
-        _service_object_list.erase( objectid );
+        _service_object_list.erase( object_id );
 
         KFMsg::S2SRouteRemoveObjectToProxyReq req;
         req.set_name( _service_name );
-        req.set_objectid( objectid );
+        req.set_objectid( object_id );
         req.set_objectcount( _service_object_list.size() );
         req.set_clientid( KFGlobal::Instance()->_app_id->GetId() );
         _kf_cluster_client->SendToProxy( KFMsg::S2S_ROUTE_REMOVE_OBJECT_TO_PROXY_REQ, &req );
@@ -176,19 +183,19 @@ namespace KFrame
     bool KFRouteClientModule::SendToRoute( const Route& route, uint32 msg_id, ::google::protobuf::Message* message )
     {
         auto server_id = __ROUTE_SERVER_ID__;
-        auto sendid = __ROUTE_RECV_ID__;
+        auto send_id = __ROUTE_RECV_ID__;
         auto recv_id = __ROUTE_SEND_ID__;
 
-        return SendToEntity( sendid, server_id, recv_id, msg_id, message );
+        return SendToEntity( send_id, server_id, recv_id, msg_id, message );
     }
 
     bool KFRouteClientModule::RepeatToRoute( const Route& route, uint32 msg_id, ::google::protobuf::Message* message )
     {
         auto server_id = __ROUTE_SERVER_ID__;
-        auto sendid = __ROUTE_RECV_ID__;
+        auto send_id = __ROUTE_RECV_ID__;
         auto recv_id = __ROUTE_SEND_ID__;
 
-        return RepeatToEntity( sendid, server_id, recv_id, msg_id, message );
+        return RepeatToEntity( send_id, server_id, recv_id, msg_id, message );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -197,14 +204,14 @@ namespace KFrame
         return SendToAll( 0u, name, msg_id, message );
     }
 
-    bool KFRouteClientModule::SendToAll( uint64 sendid, const std::string& name, uint32 msg_id, ::google::protobuf::Message* message )
+    bool KFRouteClientModule::SendToAll( uint64 send_id, const std::string& name, uint32 msg_id, ::google::protobuf::Message* message )
     {
         auto& process = FindRouteProcess( name );
 
         KFMsg::S2SRouteMessageToNameAllReq req;
-        auto pbroute = req.mutable_pbroute();
-        pbroute->set_sendid( sendid );
-        pbroute->set_serverid( KFGlobal::Instance()->_app_id->GetId() );
+        auto pb_route = req.mutable_pbroute();
+        pb_route->set_sendid( send_id );
+        pb_route->set_serverid( KFGlobal::Instance()->_app_id->GetId() );
 
         req.set_name( process );
         req.set_msgid( msg_id );
@@ -217,15 +224,15 @@ namespace KFrame
         return RepeatToAll( 0u, name, msg_id, message );
     }
 
-    bool KFRouteClientModule::RepeatToAll( uint64 sendid, const std::string& name, uint32 msg_id, ::google::protobuf::Message* message )
+    bool KFRouteClientModule::RepeatToAll( uint64 send_id, const std::string& name, uint32 msg_id, ::google::protobuf::Message* message )
     {
         auto& process = FindRouteProcess( name );
 
         KFMsg::S2SRouteMessageToNameAllReq req;
-        auto pbroute = req.mutable_pbroute();
-        pbroute->set_sendid( sendid );
-        pbroute->set_serverid( KFGlobal::Instance()->_app_id->GetId() );
-        pbroute->set_serial( ++_route_serial );
+        auto pb_route = req.mutable_pbroute();
+        pb_route->set_sendid( send_id );
+        pb_route->set_serverid( KFGlobal::Instance()->_app_id->GetId() );
+        pb_route->set_serial( ++_route_serial );
 
         req.set_name( process );
         req.set_msgid( msg_id );
@@ -239,14 +246,14 @@ namespace KFrame
         return SendToRand( 0u, name, msg_id, message );
     }
 
-    bool KFRouteClientModule::SendToRand( uint64 sendid, const std::string& name, uint32 msg_id, ::google::protobuf::Message* message )
+    bool KFRouteClientModule::SendToRand( uint64 send_id, const std::string& name, uint32 msg_id, ::google::protobuf::Message* message )
     {
         auto& process = FindRouteProcess( name );
 
         KFMsg::S2SRouteMessageToNameRandReq req;
-        auto pbroute = req.mutable_pbroute();
-        pbroute->set_sendid( sendid );
-        pbroute->set_serverid( KFGlobal::Instance()->_app_id->GetId() );
+        auto pb_route = req.mutable_pbroute();
+        pb_route->set_sendid( send_id );
+        pb_route->set_serverid( KFGlobal::Instance()->_app_id->GetId() );
 
         req.set_name( process );
         req.set_msgid( msg_id );
@@ -259,15 +266,15 @@ namespace KFrame
         return RepeatToRand( 0u, name, msg_id, message );
     }
 
-    bool KFRouteClientModule::RepeatToRand( uint64 sendid, const std::string& name, uint32 msg_id, ::google::protobuf::Message* message )
+    bool KFRouteClientModule::RepeatToRand( uint64 send_id, const std::string& name, uint32 msg_id, ::google::protobuf::Message* message )
     {
         auto& process = FindRouteProcess( name );
 
         KFMsg::S2SRouteMessageToNameRandReq req;
-        auto pbroute = req.mutable_pbroute();
-        pbroute->set_sendid( sendid );
-        pbroute->set_serverid( KFGlobal::Instance()->_app_id->GetId() );
-        pbroute->set_serial( ++_route_serial );
+        auto pb_route = req.mutable_pbroute();
+        pb_route->set_sendid( send_id );
+        pb_route->set_serverid( KFGlobal::Instance()->_app_id->GetId() );
+        pb_route->set_serial( ++_route_serial );
 
         req.set_name( process );
         req.set_msgid( msg_id );
@@ -281,14 +288,14 @@ namespace KFrame
         return SendToBalance( 0u, name, msg_id, message );
     }
 
-    bool KFRouteClientModule::SendToBalance( uint64 sendid, const std::string& name, uint32 msg_id, ::google::protobuf::Message* message )
+    bool KFRouteClientModule::SendToBalance( uint64 send_id, const std::string& name, uint32 msg_id, ::google::protobuf::Message* message )
     {
         auto& process = FindRouteProcess( name );
 
         KFMsg::S2SRouteMessageToNameBalanceReq req;
-        auto pbroute = req.mutable_pbroute();
-        pbroute->set_sendid( sendid );
-        pbroute->set_serverid( KFGlobal::Instance()->_app_id->GetId() );
+        auto pb_route = req.mutable_pbroute();
+        pb_route->set_sendid( send_id );
+        pb_route->set_serverid( KFGlobal::Instance()->_app_id->GetId() );
 
         req.set_name( process );
         req.set_msgid( msg_id );
@@ -301,15 +308,15 @@ namespace KFrame
         return RepeatToBalance( 0u, name, msg_id, message );
     }
 
-    bool KFRouteClientModule::RepeatToBalance( uint64 sendid, const std::string& name, uint32 msg_id, ::google::protobuf::Message* message )
+    bool KFRouteClientModule::RepeatToBalance( uint64 send_id, const std::string& name, uint32 msg_id, ::google::protobuf::Message* message )
     {
         auto& process = FindRouteProcess( name );
 
         KFMsg::S2SRouteMessageToNameBalanceReq req;
-        auto pbroute = req.mutable_pbroute();
-        pbroute->set_sendid( sendid );
-        pbroute->set_serverid( KFGlobal::Instance()->_app_id->GetId() );
-        pbroute->set_serial( ++_route_serial );
+        auto pb_route = req.mutable_pbroute();
+        pb_route->set_sendid( send_id );
+        pb_route->set_serverid( KFGlobal::Instance()->_app_id->GetId() );
+        pb_route->set_serial( ++_route_serial );
 
         req.set_name( process );
         req.set_msgid( msg_id );
@@ -323,15 +330,15 @@ namespace KFrame
         return SendToObject( 0u, name, objectid, msg_id, message );
     }
 
-    bool KFRouteClientModule::SendToObject( uint64 sendid, const std::string& name, uint64 objectid, uint32 msg_id, ::google::protobuf::Message* message )
+    bool KFRouteClientModule::SendToObject( uint64 send_id, const std::string& name, uint64 objectid, uint32 msg_id, ::google::protobuf::Message* message )
     {
         auto& process = FindRouteProcess( name );
 
         KFMsg::S2SRouteMessageToNameObjectReq req;
-        auto pbroute = req.mutable_pbroute();
-        pbroute->set_sendid( sendid );
-        pbroute->set_recvid( objectid );
-        pbroute->set_serverid( KFGlobal::Instance()->_app_id->GetId() );
+        auto pb_route = req.mutable_pbroute();
+        pb_route->set_sendid( send_id );
+        pb_route->set_recvid( objectid );
+        pb_route->set_serverid( KFGlobal::Instance()->_app_id->GetId() );
 
         req.set_name( process );
         req.set_msgid( msg_id );
@@ -344,16 +351,16 @@ namespace KFrame
         return RepeatToObject( 0u, name, objectid, msg_id, message );
     }
 
-    bool KFRouteClientModule::RepeatToObject( uint64 sendid, const std::string& name, uint64 objectid, uint32 msg_id, ::google::protobuf::Message* message )
+    bool KFRouteClientModule::RepeatToObject( uint64 send_id, const std::string& name, uint64 objectid, uint32 msg_id, ::google::protobuf::Message* message )
     {
         auto& process = FindRouteProcess( name );
 
         KFMsg::S2SRouteMessageToNameObjectReq req;
-        auto pbroute = req.mutable_pbroute();
-        pbroute->set_sendid( sendid );
-        pbroute->set_recvid( objectid );
-        pbroute->set_serverid( KFGlobal::Instance()->_app_id->GetId() );
-        pbroute->set_serial( ++_route_serial );
+        auto pb_route = req.mutable_pbroute();
+        pb_route->set_sendid( send_id );
+        pb_route->set_recvid( objectid );
+        pb_route->set_serverid( KFGlobal::Instance()->_app_id->GetId() );
+        pb_route->set_serial( ++_route_serial );
 
         req.set_name( process );
         req.set_msgid( msg_id );
@@ -367,13 +374,13 @@ namespace KFrame
         return SendToServer( 0u, server_id, msg_id, message );
     }
 
-    bool KFRouteClientModule::SendToServer( uint64 sendid, uint64 server_id, uint32 msg_id, ::google::protobuf::Message* message )
+    bool KFRouteClientModule::SendToServer( uint64 send_id, uint64 server_id, uint32 msg_id, ::google::protobuf::Message* message )
     {
         KFMsg::S2SRouteMessageToServerReq req;
-        auto pbroute = req.mutable_pbroute();
-        pbroute->set_sendid( sendid );
-        pbroute->set_recvid( server_id );
-        pbroute->set_serverid( KFGlobal::Instance()->_app_id->GetId() );
+        auto pb_route = req.mutable_pbroute();
+        pb_route->set_sendid( send_id );
+        pb_route->set_recvid( server_id );
+        pb_route->set_serverid( KFGlobal::Instance()->_app_id->GetId() );
 
         req.set_targetid( server_id );
         req.set_msgid( msg_id );
@@ -386,14 +393,14 @@ namespace KFrame
         return RepeatToServer( 0u, server_id, msg_id, message );
     }
 
-    bool KFRouteClientModule::RepeatToServer( uint64 sendid, uint64 server_id, uint32 msg_id, ::google::protobuf::Message* message )
+    bool KFRouteClientModule::RepeatToServer( uint64 send_id, uint64 server_id, uint32 msg_id, ::google::protobuf::Message* message )
     {
         KFMsg::S2SRouteMessageToServerReq req;
-        auto pbroute = req.mutable_pbroute();
-        pbroute->set_sendid( sendid );
-        pbroute->set_recvid( server_id );
-        pbroute->set_serverid( KFGlobal::Instance()->_app_id->GetId() );
-        pbroute->set_serial( ++_route_serial );
+        auto pb_route = req.mutable_pbroute();
+        pb_route->set_sendid( send_id );
+        pb_route->set_recvid( server_id );
+        pb_route->set_serverid( KFGlobal::Instance()->_app_id->GetId() );
+        pb_route->set_serial( ++_route_serial );
 
         req.set_targetid( server_id );
         req.set_msgid( msg_id );
@@ -407,13 +414,13 @@ namespace KFrame
         return SendToEntity( recv_id, server_id, recv_id, msg_id, message );
     }
 
-    bool KFRouteClientModule::SendToEntity( uint64 sendid, uint64 server_id, uint64 recv_id, uint32 msg_id, ::google::protobuf::Message* message )
+    bool KFRouteClientModule::SendToEntity( uint64 send_id, uint64 server_id, uint64 recv_id, uint32 msg_id, ::google::protobuf::Message* message )
     {
         KFMsg::S2SRouteMessageToEntityReq req;
-        auto pbroute = req.mutable_pbroute();
-        pbroute->set_sendid( sendid );
-        pbroute->set_recvid( recv_id );
-        pbroute->set_serverid( KFGlobal::Instance()->_app_id->GetId() );
+        auto pb_route = req.mutable_pbroute();
+        pb_route->set_sendid( send_id );
+        pb_route->set_recvid( recv_id );
+        pb_route->set_serverid( KFGlobal::Instance()->_app_id->GetId() );
 
         req.set_targetid( server_id );
         req.set_msgid( msg_id );
@@ -426,14 +433,14 @@ namespace KFrame
         return RepeatToEntity( recv_id, server_id, recv_id, msg_id, message );
     }
 
-    bool KFRouteClientModule::RepeatToEntity( uint64 sendid, uint64 server_id, uint64 recv_id, uint32 msg_id, ::google::protobuf::Message* message )
+    bool KFRouteClientModule::RepeatToEntity( uint64 send_id, uint64 server_id, uint64 recv_id, uint32 msg_id, ::google::protobuf::Message* message )
     {
         KFMsg::S2SRouteMessageToEntityReq req;
-        auto pbroute = req.mutable_pbroute();
-        pbroute->set_sendid( sendid );
-        pbroute->set_recvid( recv_id );
-        pbroute->set_serverid( KFGlobal::Instance()->_app_id->GetId() );
-        pbroute->set_serial( ++_route_serial );
+        auto pb_route = req.mutable_pbroute();
+        pb_route->set_sendid( send_id );
+        pb_route->set_recvid( recv_id );
+        pb_route->set_serverid( KFGlobal::Instance()->_app_id->GetId() );
+        pb_route->set_serial( ++_route_serial );
 
         req.set_targetid( server_id );
         req.set_msgid( msg_id );
@@ -444,32 +451,23 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFRouteClientModule::HandleRouteMessageToClientAck, KFMsg::S2SRouteMessageToClientAck )
     {
-        auto pbroute = &kfmsg->pbroute();
+        auto pb_route = &kfmsg->pbroute();
         {
             // 回复转发消息成功
-            SendRouteMessageOk( pbroute->server_id(), pbroute->serial() );
+            SendRouteMessageOk( pb_route->serverid(), pb_route->serial() );
         }
 
-        auto msgdata = kfmsg->msgdata().data();
-        auto msglength = static_cast<uint32>( kfmsg->msgdata().length() );
-        Route temproute( pbroute->server_id(), pbroute->sendid(), pbroute->recv_id() );
-        bool ok = __HANDLE_MESSAGE__( temproute, kfmsg->msg_id(), msgdata, msglength );
-        if ( ok )
+        auto msg_data = kfmsg->msgdata().data();
+        auto msg_length = static_cast<uint32>( kfmsg->msgdata().length() );
+        Route temp_route( pb_route->serverid(), pb_route->sendid(), pb_route->recvid() );
+        bool ok = __HANDLE_MESSAGE__( temp_route, kfmsg->msgid(), msg_data, msg_length );
+        if ( !ok )
         {
-            return;
-        }
-
-        if ( _kf_forward_function != nullptr )
-        {
-            auto ok = _kf_forward_function( temproute, kfmsg->msg_id(), msgdata, msglength );
+            ok = _kf_forward_function.CallEx<bool>( temp_route, kfmsg->msgid(), msg_data, msg_length );
             if ( !ok )
             {
-                __LOG_ERROR__( "route msg_id[{}] failed", kfmsg->msg_id() );
+                __LOG_ERROR__( "route msg_id=[{}] failed", kfmsg->msgid() );
             }
-        }
-        else
-        {
-            __LOG_ERROR__( "msg_id[{}] can't find handle", kfmsg->msg_id() );
         }
     }
 
@@ -492,16 +490,16 @@ namespace KFrame
 
     bool KFRouteClientModule::SendRouteMessage( uint32 msg_id, ::google::protobuf::Message* message )
     {
-        auto strdata = message->SerializeAsString();
+        auto data = message->SerializeAsString();
 
         // 添加到队列中
         if ( _route_message_list.Size() <= 20000u )
         {
-            auto routemessage = __KF_NEW__( KFRouteMessage, strdata.size() );
-            routemessage->_msg_id = msg_id;
-            memcpy( routemessage->_data, strdata.data(), strdata.size() );
-            routemessage->SetRouteTime();
-            _route_message_list.Insert( _route_serial, routemessage );
+            auto route_message = __MAKE_SHARED__( KFRouteMessage, data.size() );
+            route_message->_msg_id = msg_id;
+            memcpy( route_message->_data, data.data(), data.size() );
+            route_message->SetRouteTime();
+            _route_message_list.Insert( _route_serial, route_message );
         }
         else
         {
@@ -509,7 +507,7 @@ namespace KFrame
         }
 
         // 发送消息
-        return _kf_cluster_client->SendToProxy( msg_id, strdata.data(), strdata.size() );
+        return _kf_cluster_client->SendToProxy( msg_id, data.data(), data.size() );
     }
 
     // 更新逻辑
@@ -517,14 +515,14 @@ namespace KFrame
     {
         for ( auto& iter : _route_message_list._objects )
         {
-            auto kfroutemessage = iter.second;
-            if ( !kfroutemessage->IsRouteTime() )
+            auto route_message = iter.second;
+            if ( !route_message->IsRouteTime() )
             {
                 continue;
             }
 
-            kfroutemessage->SetRouteTime();
-            auto ok = _kf_cluster_client->SendToProxy( kfroutemessage->_msg_id, kfroutemessage->_data, kfroutemessage->_length );
+            route_message->SetRouteTime();
+            auto ok = _kf_cluster_client->SendToProxy( route_message->_msg_id, route_message->_data, route_message->_length );
             if ( !ok )
             {
                 break;
@@ -534,7 +532,4 @@ namespace KFrame
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 }

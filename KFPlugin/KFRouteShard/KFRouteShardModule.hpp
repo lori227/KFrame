@@ -22,13 +22,13 @@ namespace KFrame
     {
     public:
         // 添加消息
-        void AddNetMessage( uint32 msg_id, const google::protobuf::Message* message );
+        void AddNetMessage( uint32 msg_id, std::shared_ptr<const google::protobuf::Message> message );
 
         // 发送消息
         void SendNetMessage();
     public:
         // 消息列表
-        std::list< KFNetMessage* > _messages;
+        std::list<std::shared_ptr<KFNetMessage>> _message_list;
     };
 
     class KFRouteShardModule : public KFRouteShardInterface
@@ -77,19 +77,19 @@ namespace KFrame
 
     protected:
         // 转发消息
-        void SendRouteMessage( uint64 clientid, const KFMsg::PBRoute* pbroute, uint32 msg_id, const std::string& msgdata );
+        void SendRouteMessage( uint64 client_id, const KFMsg::PBRoute* pb_route, uint32 msg_id, const std::string& msg_data );
 
         // 添加转发失败的消息
-        void AddRouteFailedMessage( const std::string& name, uint32 msg_id, const google::protobuf::Message* message );
+        void AddRouteFailedMessage( const std::string& name, uint32 msg_id, std::shared_ptr<const google::protobuf::Message> message );
 
         // 发送转发失败的消息
         void SendRouteFailedMessage( const std::string& name );
     private:
         // 注册的转发服务
-        KFHashMap< std::string, KFRouteService > _route_service_list;
+        KFHashMap<std::string, KFRouteService> _route_service_list;
 
         // 转发失败的消息
-        KFHashMap< std::string, KFMessageData > _route_message_list;
+        KFHashMap<std::string, KFMessageData> _route_message_list;
     };
 }
 

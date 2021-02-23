@@ -125,10 +125,10 @@ namespace KFrame
 #define __UN_TCP_SERVER_LOST__() \
     _kf_tcp_server->UnRegisterLostFunction( this )
 
-#define __REGISTER_TCP_SERVER_TRANSPOND__( function ) \
+#define __REGISTER_TCP_SERVER_FORWARD__( function ) \
     _kf_tcp_server->RegisterForwardFunction( this, function )
 
-#define __UN_TCP_SERVER_TRANSPOND__() \
+#define __UN_TCP_SERVER_FORWARD__() \
     _kf_tcp_server->UnRegisterForwardFunction( this )
 
 }

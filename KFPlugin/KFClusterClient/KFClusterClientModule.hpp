@@ -68,15 +68,15 @@ namespace KFrame
         virtual bool SendToProxy( uint32 msg_id, const char* data, uint32 length );
         virtual bool SendToProxy( uint32 msg_id, google::protobuf::Message* message );
 
-        virtual bool SendToProxy( uint64 shardid, uint32 msg_id, const char* data, uint32 length );
-        virtual bool SendToProxy( uint64 shardid, uint32 msg_id, google::protobuf::Message* message );
+        virtual bool SendToProxy( uint64 shard_id, uint32 msg_id, const char* data, uint32 length );
+        virtual bool SendToProxy( uint64 shard_id, uint32 msg_id, google::protobuf::Message* message );
 
         // 发送消息( 失败重复发送, 一直到发送成功 )
         virtual bool RepeatToProxy( uint32 msg_id, const char* data, uint32 length );
         virtual bool RepeatToProxy( uint32 msg_id, google::protobuf::Message* message );
 
-        virtual bool RepeatToProxy( uint64 shardid, uint32 msg_id, const char* data, uint32 length );
-        virtual bool RepeatToProxy( uint64 shardid, uint32 msg_id, google::protobuf::Message* message );
+        virtual bool RepeatToProxy( uint64 shard_id, uint32 msg_id, const char* data, uint32 length );
+        virtual bool RepeatToProxy( uint64 shard_id, uint32 msg_id, google::protobuf::Message* message );
 
     protected:
         // 认证回馈
@@ -109,7 +109,7 @@ namespace KFrame
         void ReconnectClusterMaster();
 
         // 添加重发消息
-        void AddSendKeeper( uint64 shardid, uint32 msg_id, const char* data, uint32 length );
+        void AddSendKeeper( uint64 shard_id, uint32 msg_id, const char* data, uint32 length );
 
         // 发送重发消息
         void RunSendKeeper();
@@ -137,10 +137,10 @@ namespace KFrame
         bool _cluster_in_services = false;
 
         // 集群认证成功的回调函数
-        KFMapFunction< std::string, KFClusterConnectionFunction >_kf_connection_function;
+        KFMapFunction<std::string, KFClusterConnectionFunction> _kf_connection_function;
 
         // 需要重新发送的消息
-        std::list < SendKeeper* > _send_keeper;
+        std::list<std::shared_ptr<SendKeeper>> _send_keeper_list;
     };
 }
 

@@ -10,8 +10,8 @@ namespace KFrame
         __REGISTER_TCP_SERVER_DISCOVER__( &KFClusterProxyModule::OnServerDiscoverClient );
         __REGISTER_TCP_SERVER_LOST__( &KFClusterProxyModule::OnServerLostClient );
 
-        __REGISTER_TCP_CLIENT_TRANSPOND__( &KFClusterProxyModule::TranspondToClient );
-        __REGISTER_TCP_SERVER_TRANSPOND__( &KFClusterProxyModule::TranspondToShard );
+        __REGISTER_TCP_SERVER_FORWARD__( &KFClusterProxyModule::ForwardToShard );
+        __REGISTER_TCP_CLIENT_FORWARD__( &KFClusterProxyModule::ForwardToClient );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_CLUSTER_TOKEN_TO_PROXY_REQ, &KFClusterProxyModule::HandleClusterTokenToProxyReq );
         __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_CLUSTER_VERIFY_TO_PROXY_REQ, &KFClusterProxyModule::HandleClusterVerifyToProxyReq );
@@ -22,11 +22,11 @@ namespace KFrame
         __UN_TIMER_0__();
         __UN_TCP_CLIENT_SHUTDOWN__();
         __UN_TCP_CLIENT_CONNECTION__();
-        __UN_TCP_CLIENT_TRANSPOND__();
+        __UN_TCP_CLIENT_FORWARD__();
 
         __UN_TCP_SERVER_DISCOVER__();
         __UN_TCP_SERVER_LOST__();
-        __UN_TCP_SERVER_TRANSPOND__();
+        __UN_TCP_SERVER_FORWARD__();
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::S2S_CLUSTER_TOKEN_TO_PROXY_REQ );
         __UN_MESSAGE__( KFMsg::S2S_CLUSTER_VERIFY_TO_PROXY_REQ );
@@ -35,20 +35,20 @@ namespace KFrame
     void KFClusterProxyModule::Run()
     {
         // 删除过期的token信息
-        StringSet removelist;
+        StringSet remove_list;
         auto now_time = KFGlobal::Instance()->_game_time;
         for ( auto& iter : _kf_token_list._objects )
         {
-            auto kftoken = iter.second;
-            if ( kftoken->_valid_time < now_time )
+            auto token_data = iter.second;
+            if ( token_data->_valid_time < now_time )
             {
-                removelist.insert( kftoken->_token );
+                remove_list.insert( token_data->_token );
             }
         }
 
-        if ( !removelist.empty() )
+        if ( !remove_list.empty() )
         {
-            for ( auto& token : removelist )
+            for ( auto& token : remove_list )
             {
                 _kf_token_list.Remove( token );
             }
@@ -90,13 +90,13 @@ namespace KFrame
         auto global = KFGlobal::Instance();
 
         KFMsg::S2SClusterRegisterToMasterReq req;
-        auto listendata = req.mutable_listen();
+        auto listen_data = req.mutable_listen();
 
-        listendata->set_appname( global->_app_name );
-        listendata->set_apptype( global->_app_type );
-        listendata->set_appid( global->_app_id->GetId() );
-        listendata->set_ip( global->_internet_ip );
-        listendata->set_port( global->_listen_port );
+        listen_data->set_appname( global->_app_name );
+        listen_data->set_apptype( global->_app_type );
+        listen_data->set_appid( global->_app_id->GetId() );
+        listen_data->set_ip( global->_internet_ip );
+        listen_data->set_port( global->_listen_port );
         auto ok = _kf_tcp_client->SendNetMessage( objectid, KFMsg::S2S_CLUSTER_REGISTER_TO_MASTER_REQ, &req );
         if ( ok )
         {
@@ -112,13 +112,13 @@ namespace KFrame
         _kf_hash.AddHashNode( servername, server_id, 100 );
 
         // 自己所有的连接注册到Cluster中
-        NetDataList clientlist;
-        _kf_tcp_server->GetHandleList( clientlist );
+        NetDataList client_list;
+        _kf_tcp_server->GetHandleList( client_list );
 
         KFMsg::S2SClusterClientDiscoverToShardReq req;
-        for ( auto ipaddress : clientlist )
+        for ( auto ip_address : client_list )
         {
-            req.add_clientid( ipaddress->_id );
+            req.add_clientid( ip_address->_id );
         }
         _kf_tcp_client->SendNetMessage( server_id, KFMsg::S2S_CLUSTER_CLIENT_DISCOVER_TO_SHARD_REQ, &req );
     }
@@ -128,8 +128,8 @@ namespace KFrame
         // 判断是否有token验证
         for ( auto& iter : _kf_token_list._objects )
         {
-            auto kftoken = iter.second;
-            if ( kftoken->_client_id == net_data->_id )
+            auto token_data = iter.second;
+            if ( token_data->_client_id == net_data->_id )
             {
                 // 启动定时器, 10秒钟内不验证, 关闭连接
                 __LIMIT_TIMER_1__( net_data->_id, 10000, 1, &KFClusterProxyModule::OnTimerClusterAuthTimeOut );
@@ -184,10 +184,10 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFClusterProxyModule::HandleClusterTokenToProxyReq, KFMsg::S2SClusterTokenToProxyReq )
     {
-        auto kftoken = _kf_token_list.Create( kfmsg->token() );
-        kftoken->_token = kfmsg->token();
-        kftoken->_client_id = kfmsg->clientid();
-        kftoken->_valid_time = KFGlobal::Instance()->_game_time + 60000;
+        auto token_data = _kf_token_list.Create( kfmsg->token() );
+        token_data->_token = kfmsg->token();
+        token_data->_client_id = kfmsg->clientid();
+        token_data->_valid_time = KFGlobal::Instance()->_game_time + 60000;
 
         KFMsg::S2SClusterTokenToProxyAck ack;
         ack.set_token( kfmsg->token() );
@@ -196,21 +196,21 @@ namespace KFrame
         ack.set_masterid( kfmsg->masterid() );
         _kf_tcp_client->SendNetMessage( __ROUTE_SERVER_ID__, KFMsg::S2S_CLUSTER_TOKEN_TO_PROXY_ACK, &ack );
 
-        __LOG_DEBUG__( "update client[{}] token[{}]", KFAppId::ToString( kftoken->_client_id ), kftoken->_token );
+        __LOG_DEBUG__( "update client[{}] token[{}]", KFAppId::ToString( token_data->_client_id ), token_data->_token );
     }
 
     __KF_MESSAGE_FUNCTION__( KFClusterProxyModule::HandleClusterVerifyToProxyReq, KFMsg::S2SClusterVerifyToProxyReq )
     {
-        auto clientid = __ROUTE_SERVER_ID__;
-        auto server_id = ClusterVerifyLogin( kfmsg->token(), kfmsg->server_id() );
+        auto client_id = __ROUTE_SERVER_ID__;
+        auto server_id = ClusterVerifyLogin( kfmsg->token(), kfmsg->serverid() );
 
         KFMsg::S2SClusterVerifyToClientAck ack;
         ack.set_serverid( server_id );
-        _kf_tcp_server->SendNetMessage( clientid, KFMsg::S2S_CLUSTER_VERIFY_TO_CLIENT_ACK, &ack );
+        _kf_tcp_server->SendNetMessage( client_id, KFMsg::S2S_CLUSTER_VERIFY_TO_CLIENT_ACK, &ack );
 
         if ( server_id == _invalid_int )
         {
-            return __LOG_ERROR__( "cluster client[{}] verify failed", KFAppId::ToString( kfmsg->server_id() ) );
+            return __LOG_ERROR__( "cluster client[{}] verify failed", KFAppId::ToString( kfmsg->serverid() ) );
         }
 
         // 删除定时器
@@ -220,21 +220,13 @@ namespace KFrame
         KFMsg::S2SClusterClientDiscoverToShardReq req;
         req.add_clientid( server_id );
         _kf_tcp_client->SendMessageToType( __STRING__( shard ), KFMsg::S2S_CLUSTER_CLIENT_DISCOVER_TO_SHARD_REQ, &req );
-        __LOG_DEBUG__( "cluster client [{}] verify ok", KFAppId::ToString( kfmsg->server_id() ) );
+        __LOG_DEBUG__( "cluster client [{}] verify ok", KFAppId::ToString( kfmsg->serverid() ) );
     }
 
     uint64 KFClusterProxyModule::ClusterVerifyLogin( const std::string& token, uint64 server_id )
     {
-        auto kftoken = _kf_token_list.Find( token );
-        if ( kftoken == nullptr )
-        {
-            return _invalid_int;
-        }
-
-        auto clientid = kftoken->_client_id;
-        _kf_token_list.Remove( token );
-
-        if ( clientid != server_id )
+        auto token_data = _kf_token_list.Remove( token );
+        if ( token_data == nullptr || token_data->_client_id != server_id )
         {
             return _invalid_int;
         }
@@ -243,38 +235,38 @@ namespace KFrame
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFClusterProxyModule::TranspondToShard( const Route& route, uint32 msg_id, const google::protobuf::Message* message )
+    bool KFClusterProxyModule::ForwardToShard( const Route& route, uint32 msg_id, const google::protobuf::Message* message )
     {
-        auto strdata = message->SerializeAsString();
-        return TranspondToShard( route, msg_id, strdata.data(), strdata.length() );
+        auto data = message->SerializeAsString();
+        return ForwardToShard( route, msg_id, data.data(), data.length() );
     }
 
-    bool KFClusterProxyModule::TranspondToShard( const Route& route, uint32 msg_id, const char* data, uint32 length )
+    bool KFClusterProxyModule::ForwardToShard( const Route& route, uint32 msg_id, const char* data, uint32 length )
     {
-        auto clientid = __ROUTE_SERVER_ID__;
-        auto shardid = __ROUTE_RECV_ID__;
-        if ( shardid == _invalid_int )
+        auto client_id = __ROUTE_SERVER_ID__;
+        auto shard_id = __ROUTE_RECV_ID__;
+        if ( shard_id == _invalid_int )
         {
-            shardid = _kf_hash.FindHashNode( clientid, true );
-            if ( shardid == _invalid_int )
+            shard_id = _kf_hash.FindHashNode( client_id, true );
+            if ( shard_id == _invalid_int )
             {
-                __LOG_ERROR__( "msg_id[{}] transpond failed", msg_id );
+                __LOG_ERROR__( "msg_id[{}] forward failed", msg_id );
                 return false;
             }
         }
 
-        return _kf_tcp_client->SendNetMessage( shardid, clientid, msg_id, data, length );
+        return _kf_tcp_client->SendNetMessage( shard_id, client_id, msg_id, data, length );
     }
 
-    bool KFClusterProxyModule::TranspondToClient( const Route& route, uint32 msg_id, const google::protobuf::Message* message )
+    bool KFClusterProxyModule::ForwardToClient( const Route& route, uint32 msg_id, const google::protobuf::Message* message )
     {
-        auto strdata = message->SerializeAsString();
-        return TranspondToClient( route, msg_id, strdata.data(), strdata.length() );
+        auto data = message->SerializeAsString();
+        return ForwardToClient( route, msg_id, data.data(), data.length() );
     }
 
-    bool KFClusterProxyModule::TranspondToClient( const Route& route, uint32 msg_id, const char* data, uint32 length )
+    bool KFClusterProxyModule::ForwardToClient( const Route& route, uint32 msg_id, const char* data, uint32 length )
     {
-        auto clientid = __ROUTE_RECV_ID__;
-        return _kf_tcp_server->SendNetMessage( clientid, msg_id, data, length );
+        auto client_id = __ROUTE_RECV_ID__;
+        return _kf_tcp_server->SendNetMessage( client_id, msg_id, data, length );
     }
 }

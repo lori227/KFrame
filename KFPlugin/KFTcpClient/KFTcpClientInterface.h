@@ -162,10 +162,10 @@ namespace KFrame
 #define __UN_TCP_CLIENT_FAILED__() \
     _kf_tcp_client->UnRegisterFailedFunction( this )
 
-#define __REGISTER_TCP_CLIENT_TRANSPOND__( function ) \
+#define __REGISTER_TCP_CLIENT_FORWARD__( function ) \
     _kf_tcp_client->RegisterForwardFunction( this, function )
 
-#define __UN_TCP_CLIENT_TRANSPOND__() \
+#define __UN_TCP_CLIENT_FORWARD__() \
     _kf_tcp_client->UnRegisterForwardFunction( this )
 }
 

@@ -5,20 +5,20 @@ namespace KFrame
     void KFRouteService::AddServer( uint64 server_id )
     {
         _server_hash.AddHashNode( _name, server_id, 100 );
-        _server_object_count_list[ server_id ] = _invalid_int;
+        _server_object_count_list[server_id] = _invalid_int;
 
         _min_balance_count = _invalid_int;
         _min_balance_server_id = server_id;
     }
 
-    void KFRouteService::AddObject( uint64 server_id, uint64 objectid, uint32 objectcount )
+    void KFRouteService::AddObject( uint64 server_id, uint64 object_id, uint32 object_count )
     {
-        _object_list[ objectid ].insert( server_id );
+        _object_list[object_id].insert( server_id );
 
         auto iter = _server_object_count_list.find( server_id );
         if ( iter != _server_object_count_list.end() )
         {
-            iter->second = objectcount;
+            iter->second = object_count;
             CalcMinBalance();
         }
     }
@@ -57,16 +57,16 @@ namespace KFrame
         CalcMinBalance();
     }
 
-    void KFRouteService::RemoveObject( uint64 server_id, uint64 objectid, uint32 objectcount )
+    void KFRouteService::RemoveObject( uint64 server_id, uint64 object_id, uint32 object_count )
     {
         {
-            auto iter = _object_list.find( objectid );
+            auto iter = _object_list.find( object_id );
             if ( iter != _object_list.end() )
             {
                 iter->second.erase( server_id );
                 if ( iter->second.empty() )
                 {
-                    _object_list.erase( objectid );
+                    _object_list.erase( object_id );
                 }
             }
         }
@@ -74,7 +74,7 @@ namespace KFrame
         auto iter = _server_object_count_list.find( server_id );
         if ( iter != _server_object_count_list.end() )
         {
-            iter->second = objectcount;
+            iter->second = object_count;
             if ( iter->second < _min_balance_count )
             {
                 _min_balance_count = iter->second;
@@ -83,9 +83,9 @@ namespace KFrame
         }
     }
 
-    uint64 KFRouteService::RandServer( uint64 randid )
+    uint64 KFRouteService::RandServer( uint64 rand_id )
     {
-        return _server_hash.FindHashNode( randid, false );
+        return _server_hash.FindHashNode( rand_id, false );
     }
 
     uint64 KFRouteService::BalanceServer()
@@ -93,9 +93,9 @@ namespace KFrame
         return _min_balance_server_id;
     }
 
-    uint64 KFRouteService::ObjectServer( uint64 objectid )
+    uint64 KFRouteService::ObjectServer( uint64 object_id )
     {
-        auto iter = _object_list.find( objectid );
+        auto iter = _object_list.find( object_id );
         if ( iter == _object_list.end() )
         {
             return _invalid_int;

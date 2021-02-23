@@ -18,7 +18,7 @@ namespace KFrame
     };
 
     /////////////////////////////////////////////////////////////////////////////////
-    class KFRouteConfig : public KFConfigT< KFRouteSetting >, public KFInstance< KFRouteConfig >
+    class KFRouteConfig : public KFConfigT<KFRouteSetting>, public KFInstance<KFRouteConfig>
     {
     public:
         KFRouteConfig()
@@ -30,10 +30,10 @@ namespace KFrame
         ~KFRouteConfig() = default;
 
     protected:
-        virtual void ReadSetting( KFXmlNode& xmlnode, KFRouteSetting* kfsetting )
+        virtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KFRouteSetting> setting )
         {
-            kfsetting->_source = xmlnode.ReadString( "source", true );
-            kfsetting->_target = xmlnode.ReadString( "target", true );
+            setting->_source = xml_node.ReadString( "source", true );
+            setting->_target = xml_node.ReadString( "target", true );
         }
 
     };

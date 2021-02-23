@@ -21,17 +21,10 @@ namespace KFrame
     class KFClusterToken
     {
     public:
-        KFClusterToken()
-        {
-            _client_id = 0;
-            _valid_time = 0;
-        }
-
-    public:
 
         std::string _token;
-        uint64 _client_id;
-        uint64 _valid_time;
+        uint64 _client_id = 0u;
+        uint64 _valid_time = 0u;
     };
 
     ///////////////////////////////////////////////////////////////////////////////////
@@ -59,12 +52,12 @@ namespace KFrame
 
     protected:
         // 转发消息到shard
-        virtual bool TranspondToShard( const Route& route, uint32 msg_id, const char* data, uint32 length );
-        virtual bool TranspondToShard( const Route& route, uint32 msg_id, const google::protobuf::Message* message );
+        virtual bool ForwardToShard( const Route& route, uint32 msg_id, const char* data, uint32 length );
+        virtual bool ForwardToShard( const Route& route, uint32 msg_id, const google::protobuf::Message* message );
 
         // 转发消息到client
-        virtual bool TranspondToClient( const Route& route, uint32 msg_id, const char* data, uint32 length );
-        virtual bool TranspondToClient( const Route& route, uint32 msg_id, const google::protobuf::Message* message );
+        virtual bool ForwardToClient( const Route& route, uint32 msg_id, const char* data, uint32 length );
+        virtual bool ForwardToClient( const Route& route, uint32 msg_id, const google::protobuf::Message* message );
 
     protected:
         // 更新
@@ -88,27 +81,27 @@ namespace KFrame
 
     private:
         // 连接Cluster Server 成功
-        void OnClientConnectionClusterMaster( const std::string& servername, uint64 server_id );
+        void OnClientConnectionClusterMaster( const std::string& server_name, uint64 server_id );
 
         // 连接Cluster Server 成功
-        void OnClientConnectionClusterShard( const std::string& servername, uint64 server_id );
+        void OnClientConnectionClusterShard( const std::string& server_name, uint64 server_id );
 
         // 断开连接
-        void OnClientLostClusterMaster( const std::string& servername, uint64 server_id );
-        void OnClientLostClusterShard( const std::string& servername, uint64 server_id );
+        void OnClientLostClusterMaster( const std::string& server_name, uint64 server_id );
+        void OnClientLostClusterShard( const std::string& server_name, uint64 server_id );
 
         // 验证集群客户端登录
         uint64 ClusterVerifyLogin( const std::string& token, uint64 server_id );
 
     private:
         // 是否在服务中
-        bool _in_service{ false };
-
-        // 认证的token列表
-        KFHashMap< std::string, KFClusterToken > _kf_token_list;
+        bool _in_service = false;
 
         // hash一致性列表
         KFHash _kf_hash;
+
+        // 认证的token列表
+        KFHashMap<std::string, KFClusterToken> _kf_token_list;
     };
 }
 #endif

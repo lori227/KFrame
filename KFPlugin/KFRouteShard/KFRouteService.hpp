@@ -15,22 +15,22 @@ namespace KFrame
         void AddServer( uint64 server_id );
 
         // 添加对象
-        void AddObject( uint64 server_id, uint64 objectid, uint32 objectcount );
+        void AddObject( uint64 server_id, uint64 object_id, uint32 object_count );
 
         // 删除服务器
         void RemoveServer( uint64 server_id );
 
         // 删除对象
-        void RemoveObject( uint64 server_id, uint64 objectid, uint32 objectcount );
+        void RemoveObject( uint64 server_id, uint64 object_id, uint32 object_count );
 
         // 获得随机服务器
-        uint64 RandServer( uint64 clientid );
+        uint64 RandServer( uint64 client_id );
 
         // 获得最小负载服务器
         uint64 BalanceServer();
 
         // 获得对象服务器
-        uint64 ObjectServer( uint64 objectid );
+        uint64 ObjectServer( uint64 object_id );
 
     protected:
         // 计算最小负载
@@ -44,7 +44,7 @@ namespace KFrame
         KFHash _server_hash;
 
         // 对象列表( 对象所在的服务器 )
-        std::unordered_map< uint64, UInt64Set > _object_list;
+        std::unordered_map<uint64, UInt64Set> _object_list;
 
         // 服务器的对象总数
         UInt64Map _server_object_count_list;

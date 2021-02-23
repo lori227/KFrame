@@ -44,7 +44,7 @@ namespace KFrame
         __KF_NET_EVENT_FUNCTION__( OnPlayerDisconnection );
 
         // 发送消息到客户端
-        __KF_FORWARD_MESSAGE_FUNCTION__( TranspondToClient );
+        __KF_FORWARD_MESSAGE_FUNCTION__( ForwardToClient );
 
         // 发送消息到游戏服务器
         __KF_FORWARD_MESSAGE_FUNCTION__( TranspondToGame );

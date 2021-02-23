@@ -20,12 +20,12 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFClusterShardModule::HandleClusterClientDiscoverToShardReq, KFMsg::S2SClusterClientDiscoverToShardReq )
     {
-        auto proxyid = __ROUTE_SERVER_ID__;
+        auto proxy_id = __ROUTE_SERVER_ID__;
         for ( auto i = 0; i < kfmsg->clientid_size(); ++i )
         {
-            auto clientid = kfmsg->clientid( i );
-            _proxy_client_list[ clientid ] = proxyid;
-            __LOG_INFO__( "route discover client=[{}] proxy=[{}] ", KFAppId::ToString( clientid ), KFAppId::ToString( proxyid ) );
+            auto client_id = kfmsg->clientid( i );
+            _proxy_client_list[ client_id ] = proxy_id;
+            __LOG_INFO__( "route discover client=[{}] proxy=[{}] ", KFAppId::ToString( client_id ), KFAppId::ToString( proxy_id ) );
         }
     }
 
@@ -37,7 +37,7 @@ namespace KFrame
 
     __KF_NET_EVENT_FUNCTION__( KFClusterShardModule::OnServerLostHandle )
     {
-        UInt64Set removelist;
+        UInt64Set remove_list;
 
         __LOG_ERROR__( "route lost proxy=[{}]", net_data->_str_id );
 
@@ -45,14 +45,14 @@ namespace KFrame
         {
             if ( iter.second == net_data->_id )
             {
-                removelist.insert( iter.first );
+                remove_list.insert( iter.first );
             }
         }
 
-        for ( auto clientid : removelist )
+        for ( auto client_id : remove_list )
         {
-            _proxy_client_list.erase( clientid );
-            __LOG_ERROR__( "route lost client=[{}]", KFAppId::ToString( clientid ) );
+            _proxy_client_list.erase( client_id );
+            __LOG_ERROR__( "route lost client=[{}]", KFAppId::ToString( client_id ) );
         }
     }
 
@@ -63,14 +63,14 @@ namespace KFrame
         _kf_tcp_server->SendNetMessage( msg_id, message );
     }
 
-    bool KFClusterShardModule::SendToProxy( uint64 proxyid, uint32 msg_id, google::protobuf::Message* message )
+    bool KFClusterShardModule::SendToProxy( uint64 proxy_id, uint32 msg_id, google::protobuf::Message* message )
     {
-        return _kf_tcp_server->SendNetMessage( proxyid, msg_id, message );
+        return _kf_tcp_server->SendNetMessage( proxy_id, msg_id, message );
     }
 
-    uint64 KFClusterShardModule::FindProxyId( uint64 clientid )
+    uint64 KFClusterShardModule::FindProxyId( uint64 client_id )
     {
-        auto iter = _proxy_client_list.find( clientid );
+        auto iter = _proxy_client_list.find( client_id );
         if ( iter == _proxy_client_list.end() )
         {
             return _invalid_int;
@@ -83,27 +83,27 @@ namespace KFrame
     {
         for ( auto& iter : _proxy_client_list )
         {
-            auto clientid = iter.first;
-            auto proxyid = iter.second;
-            _kf_tcp_server->SendNetMessage( proxyid, clientid, msg_id, message );
+            auto client_id = iter.first;
+            auto proxy_id = iter.second;
+            _kf_tcp_server->SendNetMessage( proxy_id, client_id, msg_id, message );
         }
 
         return true;
     }
 
-    bool KFClusterShardModule::SendToClient( uint64 clientid, uint32 msg_id, google::protobuf::Message* message )
+    bool KFClusterShardModule::SendToClient( uint64 client_id, uint32 msg_id, google::protobuf::Message* message )
     {
-        auto proxyid = FindProxyId( clientid );
-        if ( proxyid == _invalid_int )
+        auto proxy_id = FindProxyId( client_id );
+        if ( proxy_id == _invalid_int )
         {
             return false;
         }
 
-        return _kf_tcp_server->SendNetMessage( proxyid, clientid, msg_id, message );
+        return _kf_tcp_server->SendNetMessage( proxy_id, client_id, msg_id, message );
     }
 
-    bool KFClusterShardModule::SendToClient( uint64 proxyid, uint64 clientid, uint32 msg_id, google::protobuf::Message* message )
+    bool KFClusterShardModule::SendToClient( uint64 proxy_id, uint64 client_id, uint32 msg_id, google::protobuf::Message* message )
     {
-        return _kf_tcp_server->SendNetMessage( proxyid, clientid, msg_id, message );
+        return _kf_tcp_server->SendNetMessage( proxy_id, client_id, msg_id, message );
     }
 }

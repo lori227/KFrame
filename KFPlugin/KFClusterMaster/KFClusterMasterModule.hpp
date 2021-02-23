@@ -84,13 +84,13 @@ namespace KFrame
         __KF_NET_EVENT_FUNCTION__( OnServerLostClusterProxy );
 
         // 选择proxy
-        KFProxyData* SelectProxyServer( uint64 clientid );
+        std::shared_ptr<KFProxyData> SelectProxyServer( uint64 client_id );
 
         // 创建Token
-        std::string CreateToken( uint64 clientid );
+        std::string CreateToken( uint64 client_id );
 
         // 删除Token
-        std::string FindToken( uint64 clientid );
+        std::string FindToken( uint64 client_id );
 
     private:
         // proxy连接列表

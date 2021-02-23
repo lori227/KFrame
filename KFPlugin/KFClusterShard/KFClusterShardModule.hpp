@@ -37,8 +37,8 @@ namespace KFrame
 
         // 发送消息到client
         virtual bool SendToClient( uint32 msg_id, google::protobuf::Message* message );
-        virtual bool SendToClient( uint64 clientid, uint32 msg_id, google::protobuf::Message* message );
-        virtual bool SendToClient( uint64 proxyid, uint64 clientid, uint32 msg_id, google::protobuf::Message* message );
+        virtual bool SendToClient( uint64 client_id, uint32 msg_id, google::protobuf::Message* message );
+        virtual bool SendToClient( uint64 proxy_id, uint64 client_id, uint32 msg_id, google::protobuf::Message* message );
 
 
     protected:
@@ -53,7 +53,7 @@ namespace KFrame
 
     protected:
         // 查找路由信息
-        uint64 FindProxyId( uint64 clientid );
+        uint64 FindProxyId( uint64 client_id );
 
     protected:
         // 客户端路由信息

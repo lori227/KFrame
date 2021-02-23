@@ -4,11 +4,7 @@ namespace KFrame
 {
     KFClusterClientModule::~KFClusterClientModule()
     {
-        for ( auto keeper : _send_keeper )
-        {
-            __KF_DELETE__( SendKeeper, keeper );
-        }
-        _send_keeper.clear();
+        _send_keeper_list.clear();
     }
 
     void KFClusterClientModule::BeforeRun()
@@ -45,8 +41,8 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFClusterClientModule::AddConnectionFunction( const std::string& name, KFClusterConnectionFunction& function )
     {
-        auto kffunction = _kf_connection_function.Create( name );
-        kffunction->_function = function;
+        auto function_data = _kf_connection_function.Create( name );
+        function_data->SetFunction( function );
     }
 
     void KFClusterClientModule::RemoveConnectionFunction( const std::string& name )
@@ -59,8 +55,8 @@ namespace KFrame
         // 执行回调函数
         for ( auto& iter : _kf_connection_function._objects )
         {
-            auto kffunction = iter.second;
-            kffunction->_function( server_id );
+            auto function = iter.second;
+            function->Call( server_id );
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -159,7 +155,7 @@ namespace KFrame
         // 停止定时器
         __UN_TIMER_1__( _cluster_proxy_id );
 
-        if ( kfmsg->server_id() == 0 )
+        if ( kfmsg->serverid() == 0 )
         {
             // 重新连接
             ReconnectClusterMaster();
@@ -204,13 +200,13 @@ namespace KFrame
         return SendToProxy( _invalid_int, msg_id, message );
     }
 
-    bool KFClusterClientModule::SendToProxy( uint64 shardid, uint32 msg_id, google::protobuf::Message* message )
+    bool KFClusterClientModule::SendToProxy( uint64 shard_id, uint32 msg_id, google::protobuf::Message* message )
     {
-        auto strdata = message->SerializeAsString();
-        return SendToProxy( shardid, msg_id, strdata.data(), strdata.size() );
+        auto data = message->SerializeAsString();
+        return SendToProxy( shard_id, msg_id, data.data(), data.size() );
     }
 
-    bool KFClusterClientModule::SendToProxy( uint64 shardid, uint32 msg_id, const char* data, uint32 length )
+    bool KFClusterClientModule::SendToProxy( uint64 shard_id, uint32 msg_id, const char* data, uint32 length )
     {
         if ( !_cluster_in_services )
         {
@@ -218,7 +214,7 @@ namespace KFrame
             return false;
         }
 
-        return _kf_tcp_client->SendNetMessage( _cluster_proxy_id, shardid, msg_id, data, length );
+        return _kf_tcp_client->SendNetMessage( _cluster_proxy_id, shard_id, msg_id, data, length );
     }
 
     bool KFClusterClientModule::RepeatToProxy( uint32 msg_id, const char* data, uint32 length )
@@ -231,54 +227,54 @@ namespace KFrame
         return RepeatToProxy( _invalid_int, msg_id, message );
     }
 
-    bool KFClusterClientModule::RepeatToProxy( uint64 shardid, uint32 msg_id, google::protobuf::Message* message )
+    bool KFClusterClientModule::RepeatToProxy( uint64 shard_id, uint32 msg_id, google::protobuf::Message* message )
     {
-        auto strdata = message->SerializeAsString();
-        return RepeatToProxy( shardid, msg_id, strdata.data(), strdata.length() );
+        auto data = message->SerializeAsString();
+        return RepeatToProxy( shard_id, msg_id, data.data(), data.length() );
     }
 
-    bool KFClusterClientModule::RepeatToProxy( uint64 shardid, uint32 msg_id, const char* data, uint32 length )
+    bool KFClusterClientModule::RepeatToProxy( uint64 shard_id, uint32 msg_id, const char* data, uint32 length )
     {
         if ( !_cluster_in_services )
         {
             // 不在服务中
-            AddSendKeeper( shardid, msg_id, data, length );
+            AddSendKeeper( shard_id, msg_id, data, length );
         }
         else
         {
-            if ( _send_keeper.empty() )
+            if ( _send_keeper_list.empty() )
             {
                 // 发送队列为空
-                auto ok = _kf_tcp_client->SendNetMessage( _cluster_proxy_id, shardid, msg_id, data, length );
+                auto ok = _kf_tcp_client->SendNetMessage( _cluster_proxy_id, shard_id, msg_id, data, length );
                 if ( !ok )
                 {
-                    AddSendKeeper( shardid, msg_id, data, length );
+                    AddSendKeeper( shard_id, msg_id, data, length );
                 }
             }
             else
             {
-                AddSendKeeper( shardid, msg_id, data, length );
+                AddSendKeeper( shard_id, msg_id, data, length );
             }
         }
 
         return true;
     }
 
-    void KFClusterClientModule::AddSendKeeper( uint64 shardid, uint32 msg_id, const char* data, uint32 length )
+    void KFClusterClientModule::AddSendKeeper( uint64 shard_id, uint32 msg_id, const char* data, uint32 length )
     {
-        auto keeper = __KF_NEW__( SendKeeper, length );
-        keeper->_shard_id = shardid;
+        auto keeper = __MAKE_SHARED__( SendKeeper, length );
+        keeper->_shard_id = shard_id;
         keeper->_msg_id = msg_id;
         memcpy( keeper->_data, data, length );
-        _send_keeper.push_back( keeper );
+        _send_keeper_list.push_back( keeper );
     }
 
     void KFClusterClientModule::RunSendKeeper()
     {
-        while ( !_send_keeper.empty() )
+        while ( !_send_keeper_list.empty() )
         {
             // 把消息发送出去
-            auto keeper = _send_keeper.front();
+            auto keeper = _send_keeper_list.front();
             auto ok = _kf_tcp_client->SendNetMessage( _cluster_proxy_id, keeper->_shard_id, keeper->_msg_id, keeper->_data, keeper->_length );
             if ( !ok )
             {
@@ -286,8 +282,7 @@ namespace KFrame
                 break;
             }
 
-            _send_keeper.pop_front();
-            __KF_DELETE__( SendKeeper, keeper );
+            _send_keeper_list.pop_front();
         }
     }
 }

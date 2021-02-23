@@ -90,37 +90,37 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFRouteProxyModule::HandleRouteMessageToServerReq, KFMsg::S2SRouteMessageToServerReq )
     {
         // 判断是否在本服务器上
-        auto pbroute = &kfmsg->pbroute();
-        bool havehandle = _kf_tcp_server->HaveHandle( kfmsg->targetid() );
-        if ( havehandle )
+        auto pb_route = &kfmsg->pbroute();
+        bool have_handle = _kf_tcp_server->HaveHandle( kfmsg->targetid() );
+        if ( have_handle )
         {
             KFMsg::S2SRouteMessageToClientAck ack;
-            ack.set_msgid( kfmsg->msg_id() );
+            ack.set_msgid( kfmsg->msgid() );
             ack.set_msgdata( kfmsg->msgdata() );
-            ack.mutable_pbroute()->CopyFrom( *pbroute );
+            ack.mutable_pbroute()->CopyFrom( *pb_route );
             _kf_tcp_server->SendNetMessage( kfmsg->targetid(), KFMsg::S2S_ROUTE_MESSAGE_TO_CLIENT_ACK, &ack );
         }
         else
         {
-            _kf_cluster_proxy->TranspondToShard( route, KFMsg::S2S_ROUTE_MESSAGE_TO_SERVER_REQ, kfmsg );
+            _kf_cluster_proxy->ForwardToShard( route, KFMsg::S2S_ROUTE_MESSAGE_TO_SERVER_REQ, kfmsg.get() );
         }
     }
 
     __KF_MESSAGE_FUNCTION__( KFRouteProxyModule::HandleRouteMessageToEntityReq, KFMsg::S2SRouteMessageToEntityReq )
     {
         // 判断是否在本服务器上
-        bool havehandle = _kf_tcp_server->HaveHandle( kfmsg->targetid() );
-        if ( havehandle )
+        bool have_handle = _kf_tcp_server->HaveHandle( kfmsg->targetid() );
+        if ( have_handle )
         {
             KFMsg::S2SRouteMessageToClientAck ack;
-            ack.set_msgid( kfmsg->msg_id() );
+            ack.set_msgid( kfmsg->msgid() );
             ack.set_msgdata( kfmsg->msgdata() );
             ack.mutable_pbroute()->CopyFrom( kfmsg->pbroute() );
             _kf_tcp_server->SendNetMessage( kfmsg->targetid(), KFMsg::S2S_ROUTE_MESSAGE_TO_CLIENT_ACK, &ack );
         }
         else
         {
-            _kf_cluster_proxy->TranspondToShard( route, msg_id, kfmsg );
+            _kf_cluster_proxy->ForwardToShard( route, msg_id, kfmsg.get() );
         }
     }
 }
