@@ -9,13 +9,16 @@ namespace KFrame
     KFChannelModule::~KFChannelModule()
     {
         _kf_channel_list.Clear();
+        _kf_pay_function.Clear();
+        _kf_login_function.Clear();
     }
+
     void KFChannelModule::BeforeRun()
     {
         /////////////////////////////////////////////////////////////////////////////////
-        RegisterChannel( KFMsg::Internal, __MAKE_SHARED__( KFInternal ) );
-        RegisterChannel( KFMsg::WeiXin, __MAKE_SHARED__( KFWeiXin ) );
-        RegisterChannel( KFMsg::Steam, __MAKE_SHARED__( KFSteam ) );
+        RegisterChannel< KFInternal >( KFMsg::Internal );
+        RegisterChannel< KFWeiXin >( KFMsg::WeiXin );
+        RegisterChannel< KFWeiXin >( KFMsg::Steam );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////

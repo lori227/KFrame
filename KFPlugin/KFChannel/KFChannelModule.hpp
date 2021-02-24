@@ -33,8 +33,9 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         template<class T>
-        void RegisterChannel( uint32 channel, std::shared_ptr<T> object )
+        void RegisterChannel( uint32 channel )
         {
+            auto object = __MAKE_SHARED__( T );
             _kf_channel_list.Insert( channel, object );
 
             {

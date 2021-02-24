@@ -41,7 +41,7 @@ namespace KFrame
         // 添加
         // @key : 主键索引
         // @object : 数据对象
-        inline void Insert( const KeyType& key, ObjectPtr& object )
+        inline void Insert( const KeyType& key, ObjectPtr object )
         {
             _objects[ key ] = object;
         }
@@ -71,7 +71,7 @@ namespace KFrame
                 return object;
             }
 
-            object = std::make_shared<ObjectType>( std::forward<P>(params)... );
+            object = std::make_shared<ObjectType>( std::forward<P>( params )... );
             _objects[ key ] = object;
             return object;
         }
