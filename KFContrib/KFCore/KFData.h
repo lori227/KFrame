@@ -6,8 +6,6 @@
 
 namespace KFrame
 {
-    class KFData;
-    typedef std::shared_ptr<KFData> DataPtr;
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     class KFData : public std::enable_shared_from_this<KFData>
     {
