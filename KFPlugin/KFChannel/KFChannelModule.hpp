@@ -19,8 +19,8 @@ namespace KFrame
 {
     class KFChannel;
     class KFChannelSetting;
-    typedef std::function< std::string( KFJson&, const KFChannelSetting* )> KFLoginFunction;
-    typedef std::function< std::string( const std::string&, const KFChannelSetting* )> KFPayFunction;
+    typedef std::function< std::string( KFJson&, std::shared_ptr<const KFChannelSetting> )> KFLoginFunction;
+    typedef std::function< std::string( const std::string&, std::shared_ptr<const KFChannelSetting> )> KFPayFunction;
 
     class KFChannelModule : public KFChannelInterface
     {
@@ -33,20 +33,20 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         template<class T>
-        void RegisterChannel( uint32 channel, T* object )
+        void RegisterChannel( uint32 channel, std::shared_ptr<T> object )
         {
-            _kf_channel_list.insert( std::make_pair( channel, object ) );
+            _kf_channel_list.Insert( channel, object );
 
             {
-                KFLoginFunction loginfunction = std::bind( &T::RequestLogin, object, std::placeholders::_1, std::placeholders::_2 );
-                auto kfloginfunction = _kf_login_function.Create( channel );
-                kfloginfunction->_function = loginfunction;
+                KFLoginFunction login_function = std::bind( &T::RequestLogin, object, std::placeholders::_1, std::placeholders::_2 );
+                auto function_data = _kf_login_function.Create( channel );
+                function_data->SetFunction( login_function );
             }
 
             {
-                KFPayFunction payfunction = std::bind( &T::RequestPay, object, std::placeholders::_1, std::placeholders::_2 );
-                auto kfpayfunction = _kf_pay_function.Create( channel );
-                kfpayfunction->_function = payfunction;
+                KFPayFunction pay_function = std::bind( &T::RequestPay, object, std::placeholders::_1, std::placeholders::_2 );
+                auto function_data = _kf_pay_function.Create( channel );
+                function_data->SetFunction( pay_function );
             }
         }
 
@@ -58,20 +58,20 @@ namespace KFrame
 
     protected:
         // 渠道是否开放
-        bool IsOpen( const KFChannelSetting* setting ) const;
+        bool IsOpen( std::shared_ptr<const KFChannelSetting> setting ) const;
 
         // 渠道是否支持
-        bool IsSupport( const KFChannelSetting* setting, uint32 channel ) const;
+        bool IsSupport( std::shared_ptr<const KFChannelSetting> setting, uint32 channel ) const;
 
     private:
         // 绑定的登录函数
-        KFMapFunction< uint32, KFLoginFunction > _kf_login_function;
+        KFMapFunction<uint32, KFLoginFunction> _kf_login_function;
 
         // 充值函数
-        KFMapFunction< uint32, KFPayFunction > _kf_pay_function;
+        KFMapFunction<uint32, KFPayFunction> _kf_pay_function;
 
         // 注册的渠道
-        std::unordered_map< uint32, KFChannel* > _kf_channel_list;
+        KFHashMap<uint32, KFChannel> _kf_channel_list;
     };
 }
 

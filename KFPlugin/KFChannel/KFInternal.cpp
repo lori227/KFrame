@@ -3,7 +3,7 @@
 
 namespace KFrame
 {
-    std::string KFInternal::RequestLogin( KFJson& json, const KFChannelSetting* setting )
+    std::string KFInternal::RequestLogin( KFJson& json, std::shared_ptr<const KFChannelSetting> setting )
     {
         auto account = __JSON_GET_STRING__( json, __STRING__( account ) );
 
@@ -14,7 +14,7 @@ namespace KFrame
         return _kf_http_server->SendResponse( response );
     }
 
-    std::string KFInternal::RequestPay( const std::string& data, const KFChannelSetting* setting )
+    std::string KFInternal::RequestPay( const std::string& data, std::shared_ptr<const KFChannelSetting> setting )
     {
         __JSON_PARSE_STRING__( request, data );
 

@@ -12,10 +12,10 @@ namespace KFrame
         virtual ~KFSteam() = default;
 
         // 登录请求
-        std::string RequestLogin( KFJson& json, const KFChannelSetting* setting );
+        std::string RequestLogin( KFJson& json, std::shared_ptr<const KFChannelSetting> setting );
 
         // 充值请求
-        std::string RequestPay( const std::string& data, const KFChannelSetting* setting );
+        std::string RequestPay( const std::string& data, std::shared_ptr<const KFChannelSetting> setting );
     };
 }
 

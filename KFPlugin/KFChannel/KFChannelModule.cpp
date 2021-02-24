@@ -8,24 +8,18 @@ namespace KFrame
 {
     KFChannelModule::~KFChannelModule()
     {
-        for ( auto iter : _kf_channel_list )
-        {
-            __DELETE_OBJECT__( iter.second );
-        }
-        _kf_channel_list.clear();
+        _kf_channel_list.Clear();
     }
-
-
     void KFChannelModule::BeforeRun()
     {
         /////////////////////////////////////////////////////////////////////////////////
-        RegisterChannel( KFMsg::Internal, __NEW_OBJECT__( KFInternal ) );
-        RegisterChannel( KFMsg::WeiXin, __NEW_OBJECT__( KFWeiXin ) );
-        RegisterChannel( KFMsg::Steam, __NEW_OBJECT__( KFSteam ) );
+        RegisterChannel( KFMsg::Internal, __MAKE_SHARED__( KFInternal ) );
+        RegisterChannel( KFMsg::WeiXin, __MAKE_SHARED__( KFWeiXin ) );
+        RegisterChannel( KFMsg::Steam, __MAKE_SHARED__( KFSteam ) );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFChannelModule::IsOpen( const KFChannelSetting* setting ) const
+    bool KFChannelModule::IsOpen( std::shared_ptr<const KFChannelSetting> setting ) const
     {
 #ifdef __KF_DEBUG__
         return setting->_debug;
@@ -34,7 +28,7 @@ namespace KFrame
 #endif
     }
 
-    bool KFChannelModule::IsSupport( const KFChannelSetting* setting, uint32 channel ) const
+    bool KFChannelModule::IsSupport( std::shared_ptr<const KFChannelSetting> setting, uint32 channel ) const
     {
         if ( setting->_support.empty() )
         {
@@ -68,14 +62,14 @@ namespace KFrame
         }
 
         // 查找回调函数
-        auto kffunction = _kf_login_function.Find( channel );
-        if ( kffunction == nullptr )
+        auto login_function_data = _kf_login_function.Find( channel );
+        if ( login_function_data == nullptr )
         {
             return _kf_http_server->SendCode( KFMsg::ChannelError );
         }
 
         // 执行回调
-        return kffunction->_function( request, setting );
+        return login_function_data->CallEx<std::string>( request, setting );
     }
 
     std::string KFChannelModule::AuthPay( uint32 channel, const std::string& data )
@@ -99,13 +93,13 @@ namespace KFrame
             return _invalid_string;
         }
 
-        auto kffunction = _kf_pay_function.Find( channel );
-        if ( kffunction == nullptr )
+        auto pay_function_data = _kf_pay_function.Find( channel );
+        if ( pay_function_data == nullptr )
         {
             __LOG_ERROR__( "channel=[{}] no function", channel );
             return _invalid_string;
         }
 
-        return kffunction->_function( data, setting );
+        return pay_function_data->CallEx<std::string>( data, setting );
     }
 }
