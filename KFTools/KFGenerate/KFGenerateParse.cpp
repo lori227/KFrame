@@ -722,7 +722,7 @@ namespace KFrame
                     }
                     else if ( attribute->_cpp_class == _str_condition_define )
                     {
-                        xmlfile << __FORMAT__( "\t\t\t\tkfsetting->{}._condition_define = KFConditionDefineConfig::Instance()->FindSetting( setting->{}._str_condition );\n", attribute->_cpp_name, attribute->_cpp_name );
+                        xmlfile << __FORMAT__( "\t\t\t\tsetting->{}._condition_define = KFConditionDefineConfig::Instance()->FindSetting( setting->{}._str_condition );\n", attribute->_cpp_name, attribute->_cpp_name );
                         xmlfile << __FORMAT__( "\t\t\t\tif ( !setting->{}._str_condition.empty() && setting->{}._condition_define == nullptr )\n", attribute->_cpp_name, attribute->_cpp_name );
                         xmlfile << "\t\t\t\t{\n";
                         xmlfile << __FORMAT__( "\t\t\t\t\t__LOG_ERROR__( \"condition=[{{}}] can't find define=[{{}}]\", setting->_id, setting->{}._str_condition );\n", attribute->_cpp_name );
