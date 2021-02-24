@@ -174,7 +174,7 @@ namespace KFrame
         virtual void SetStatus( uint32 status );
 
         // 获得配置数值
-        uint64 GetConfigValue( const std::string& name, uint64 id, uint64 max_value )
+        uint64 GetConfigValue( const std::string& name, uint64 id, uint64 max_value );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     protected:
         // 查找属性

@@ -4,8 +4,6 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="KFDropModule.cpp" />
     <ClCompile Include="KFDropPlugin.cpp" />
-    <ClCompile Include="KFDropDataConfig.cpp" />
-    <ClCompile Include="KFDropGroupConfig.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KFDropInterface.h" />

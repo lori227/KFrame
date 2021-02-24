@@ -530,7 +530,7 @@ namespace KFrame
         {
             __LOG_ERROR__( "record=[{}] not have object=[{}]", source_data->_data_setting->_name, key );
         }
-        
+
         return data;
     }
 
@@ -1803,13 +1803,13 @@ namespace KFrame
                 switch ( sync_data->_type )
                 {
                 case KFEnum::Add:
-                    _component->_entity_sync_add_function.Call( __SHARED_FROM_ENTITY__, kfsyncdata->_object );
+                    _component->_entity_sync_add_function.Call( __SHARED_FROM_ENTITY__, sync_data->_object );
                     break;
                 case KFEnum::Dec:
-                    _component->_entity_sync_remove_function.Call( __SHARED_FROM_ENTITY__, kfsyncdata->_object );
+                    _component->_entity_sync_remove_function.Call( __SHARED_FROM_ENTITY__, sync_data->_object );
                     break;
                 case KFEnum::Set:
-                    _component->_entity_sync_update_function.Call( __SHARED_FROM_ENTITY__, kfsyncdata->_object );
+                    _component->_entity_sync_update_function.Call( __SHARED_FROM_ENTITY__, sync_data->_object );
                     break;
                 }
 

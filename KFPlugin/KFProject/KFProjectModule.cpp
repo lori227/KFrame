@@ -31,7 +31,7 @@ namespace KFrame
             for ( auto& iter : KFConstantConfig::Instance()->_setting_list._objects )
             {
                 auto setting = iter.second;
-                global->AddConstant( setting->_name, 0u, setting->_value );
+                global->AddConstant( iter.first, 0u, setting->_value );
             }
         }
 
